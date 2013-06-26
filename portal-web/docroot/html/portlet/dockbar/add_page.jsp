@@ -137,6 +137,7 @@
 							<aui:nav-item cssClass="lfr-page-template" data-search="portlet">
 								<div class="lfr-page-template-title toggler-header toggler-header-collapsed" data-type="portlet">
 									<aui:input label="copy-of-a-page" name="selectedPageTemplate" type="radio" />
+
 									<div class="lfr-page-template-description">
 										<small><%= LanguageUtil.get(pageContext, "copy-of-a-page-description" ) %></small>
 									</div>
@@ -199,6 +200,4 @@ Layout addedLayout = (Layout)SessionMessages.get(renderRequest, portletDisplay.g
 			selected: !A.one('#<portlet:namespace />addPageFm').ancestor().hasClass('hide')
 		}
 	);
-
-
 </aui:script>

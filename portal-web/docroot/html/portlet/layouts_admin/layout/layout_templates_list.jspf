@@ -20,9 +20,7 @@
 		<%
 		layoutTemplates = PluginUtil.restrictPlugins(layoutTemplates, user);
 
-		int layoutTemplatesSize = layoutTemplates.size();
-
-		for (int i = 0; i < layoutTemplatesSize; i++) {
+		for (int i = 0; i < layoutTemplates.size(); i++) {
 			LayoutTemplate layoutTemplate = layoutTemplates.get(i);
 		%>
 			<div class="lfr-layout-template">
@@ -30,6 +28,7 @@
 					<aui:input checked="<%= layoutTemplateId.equals(layoutTemplate.getLayoutTemplateId()) %>" id='<%= "layoutTemplateId" + i %>' label="" name="layoutTemplateId" type="radio" value="<%= layoutTemplate.getLayoutTemplateId() %>" />
 
 					<img alt="" class="layout-template-entry modify-link <%= layoutTemplateId.equals(layoutTemplate.getLayoutTemplateId()) ? "layout-selected" : StringPool.BLANK %>" height="25" onclick="document.getElementById('<portlet:namespace />layoutTemplateId<%= i %>').checked = true;" src="<%= layoutTemplate.getStaticResourcePath() %><%= layoutTemplate.getThumbnailPath() %>" width="25" />
+
 					<span><%= layoutTemplate.getName() %></span>
 				</label>
 			</div>

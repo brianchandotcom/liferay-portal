@@ -278,12 +278,23 @@ public class SystemEventLocalServiceWrapper implements SystemEventLocalService,
 	}
 
 	@Override
-	public void addSystemEvent(long userId, long groupId,
+	public com.liferay.portal.model.SystemEvent addSystemEvent(long userId,
+		long groupId, java.lang.String className, long classPK,
+		java.lang.String classUuid, java.lang.String referrerClassName,
+		int type, java.lang.String extraData)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _systemEventLocalService.addSystemEvent(userId, groupId,
+			className, classPK, classUuid, referrerClassName, type, extraData);
+	}
+
+	@Override
+	public com.liferay.portal.model.SystemEvent addSystemEvent(long companyId,
 		java.lang.String className, long classPK, java.lang.String classUuid,
 		java.lang.String referrerClassName, int type, java.lang.String extraData)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_systemEventLocalService.addSystemEvent(userId, groupId, className,
+		return _systemEventLocalService.addSystemEvent(companyId, className,
 			classPK, classUuid, referrerClassName, type, extraData);
 	}
 

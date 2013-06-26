@@ -27,14 +27,7 @@ import java.util.Map;
 	</#if>
 </#list>
 
-public class ${seleniumBuilderContext.getPathSimpleClassName(pathName)}
-
-<#if extendedPath != "">
-	extends ${seleniumBuilderContext.getPathSimpleClassName(extendedPath)}
-</#if>
-
-{
-
+public class ${seleniumBuilderContext.getPathSimpleClassName(pathName)} {
 	public static Map<String, String> getPaths() {
 		Map<String, String> paths = new HashMap<String, String>();
 
@@ -47,9 +40,10 @@ public class ${seleniumBuilderContext.getPathSimpleClassName(pathName)}
 		<#list trElements as trElement>
 			<#assign tdElements = trElement.elements("td")>
 
-			<#if tdElements[0].getText() != "" &&
-				 tdElements[0].getText() != "EXTEND_ACTION_PATH">
-
+			<#if
+				(tdElements[0].getText() != "") &&
+				(tdElements[0].getText() != "EXTEND_ACTION_PATH")
+			>
 				paths.put("${tdElements[0].getText()}", "${tdElements[1].getText()}");
 			</#if>
 		</#list>

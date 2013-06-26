@@ -19,13 +19,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Attribute;
 import com.liferay.portal.kernel.xml.Element;
 
-import java.io.File;
-
-import java.lang.reflect.Method;
-
-import java.net.URL;
-import java.net.URLClassLoader;
-
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -378,6 +371,42 @@ public class SeleniumBuilderContext {
 
 	public String getPathJavaFileName(String pathName) {
 		return _pathJavaFileNames.get(pathName);
+	}
+
+	public Set<String> getPathLocatorKeys(Element rootElement) {
+		Set<String> pathLocatorKeys = new HashSet<String>();
+
+		Element bodyElement = rootElement.element("body");
+
+		Element tableElement = bodyElement.element("table");
+
+		Element tbodyElement = tableElement.element("tbody");
+
+		List<Element> trElements = tbodyElement.elements();
+
+		for (Element trElement : trElements) {
+			List<Element> tdElements = trElement.elements("td");
+
+			Element pathLocatorElement = tdElements.get(0);
+
+			String pathLocatorKey = pathLocatorElement.getText();
+
+			if (pathLocatorKey.equals("EXTEND_ACTION_PATH")) {
+				Element pathNameElement = tdElements.get(1);
+
+				String extendedPathName = pathNameElement.getText();
+
+				Element extendedPathElement = getPathRootElement(
+					extendedPathName);
+
+				pathLocatorKeys.addAll(getPathLocatorKeys(extendedPathElement));
+			}
+			else {
+				pathLocatorKeys.add(pathLocatorKey);
+			}
+		}
+
+		return pathLocatorKeys;
 	}
 
 	public Set<String> getPathNames() {
@@ -858,83 +887,57 @@ public class SeleniumBuilderContext {
 	private boolean _isValidLocatorKey(
 		String actionName, String caseComparator, String locatorKey) {
 
-		try {
-			String pathFileName = getPathJavaFileName(actionName);
+		Element pathRootElement = getPathRootElement(actionName);
 
-			File file = new File("test-classes" + "/" + pathFileName);
+		Set<String> pathLocatorKeys = getPathLocatorKeys(pathRootElement);
 
-			String pathFileURL = "file:///" + file.getAbsolutePath();
+		String[] partialKeys = {};
 
-			URL classUrl = new URL(pathFileURL);
+		if (locatorKey.contains("${") && locatorKey.contains("}")) {
+			caseComparator = "partial";
 
-			URL[] classUrls = { classUrl };
+			partialKeys = locatorKey.split("\\$\\{[^}]*?\\}");
+		}
 
-			URLClassLoader urlClassLoader = new URLClassLoader(classUrls);
-
-			String pathClassName = getPathClassName(actionName);
-
-			Class pathClass = urlClassLoader.loadClass(pathClassName);
-
-			Method method = pathClass.getMethod("getPaths", null);
-
-			HashMap<String, String> paths =
-				(HashMap<String, String>)method.invoke(pathClass, null);
-
-			Set<String> pathLocatorKeys = paths.keySet();
-
-			String[] partialKeys = {};
-
-			if (locatorKey.contains("${") && locatorKey.contains("}")) {
-				caseComparator = "partial";
-
-				partialKeys = locatorKey.split("\\$\\{[^}]*?\\}");
+		for (String pathLocatorKey : pathLocatorKeys) {
+			if (caseComparator == null) {
+				if (pathLocatorKey.equals(locatorKey)) {
+					return true;
+				}
 			}
+			else {
+				if (caseComparator.equals("contains") &&
+					pathLocatorKey.contains(locatorKey)) {
 
-			for (String pathLocatorKey : pathLocatorKeys) {
-				if (caseComparator == null) {
-					if (pathLocatorKey.equals(locatorKey)) {
+					return true;
+				}
+				else if (caseComparator.equals("endsWith") &&
+						 pathLocatorKey.endsWith(locatorKey)) {
+
+					return true;
+				}
+				else if (caseComparator.equals("partial")) {
+					boolean containsAll = true;
+
+					for (String s : partialKeys) {
+						if (!pathLocatorKey.contains(s)) {
+							containsAll = false;
+						}
+					}
+
+					if (containsAll) {
 						return true;
 					}
 				}
-				else {
-					if (caseComparator.equals("contains") &&
-						pathLocatorKey.contains(locatorKey)) {
+				else if (caseComparator.equals("startsWith") &&
+						 pathLocatorKey.startsWith(locatorKey)) {
 
-						return true;
-					}
-					else if (caseComparator.equals("endsWith") &&
-							 pathLocatorKey.endsWith(locatorKey)) {
-
-						return true;
-					}
-					else if (caseComparator.equals("partial")) {
-						boolean containsAll = true;
-
-						for (String s : partialKeys) {
-							if (!pathLocatorKey.contains(s)) {
-								containsAll = false;
-							}
-						}
-
-						if (containsAll) {
-							return true;
-						}
-					}
-					else if (caseComparator.equals("startsWith") &&
-							 pathLocatorKey.startsWith(locatorKey)) {
-
-						return true;
-					}
+					return true;
 				}
 			}
-
-			return false;
 		}
-		catch (Exception e) {
-			e.printStackTrace();
 
-			return false;
-		}
+		return false;
 	}
 
 	private String _normalizeFileName(String fileName) {

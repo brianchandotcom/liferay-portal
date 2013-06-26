@@ -16,7 +16,6 @@ import com.liferay.portalweb2.util.block.action.BaseLiferayAction;
 
 import java.util.Map;
 
-
 <#assign rootElement = seleniumBuilderContext.getPathRootElement(actionName)>
 
 <#assign bodyElement = rootElement.element("body")>

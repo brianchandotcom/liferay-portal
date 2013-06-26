@@ -129,7 +129,7 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 
 <aui:script>
 	function <portlet:namespace />deleteEntries() {
-		if (confirm('<%=  UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-delete-the-selected-entries") %>')) {
+		if (confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-delete-the-selected-entries") %>')) {
 			Liferay.fire(
 				'<%= renderResponse.getNamespace() %>editEntry',
 				{

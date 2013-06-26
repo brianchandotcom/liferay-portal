@@ -15,6 +15,8 @@
 package com.liferay.portal.jsonwebservice;
 
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceAction;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 
@@ -36,12 +38,21 @@ import org.springframework.mock.web.MockHttpServletRequest;
 /**
  * @author Igor Spasic
  */
-@PrepareForTest(ServiceContextFactory.class)
+@PrepareForTest({ServiceContextFactory.class, PropsUtil.class})
 @RunWith(PowerMockRunner.class)
 public class JSONWebServiceTest extends BaseJSONWebServiceTestCase {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
+		mockStatic(PropsUtil.class);
+
+		when(
+			PropsUtil.getArray(
+				PropsKeys.JSONWS_WEB_SERVICE_INVALID_HTTP_METHODS)
+		).thenReturn(
+			null
+		);
+
 		initPortalServices();
 
 		registerActionClass(CamelFooService.class);

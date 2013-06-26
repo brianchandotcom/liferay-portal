@@ -965,6 +965,8 @@
 		<property name="classUuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="referrerClassNameId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="type" type="com.liferay.portal.dao.orm.hibernate.IntegerType" column="type_" />
+		<property name="eventSetId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="parentSystemEventId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="extraData" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="com.liferay.portal.model.impl.TeamImpl" table="Team">

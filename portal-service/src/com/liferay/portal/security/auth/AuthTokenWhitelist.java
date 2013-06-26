@@ -26,6 +26,9 @@ public interface AuthTokenWhitelist {
 
 	public Set<String> getPortletInvocationWhitelistActions();
 
+	public boolean isPortletInvocationWhitelisted(
+		long companyId, String portletId, String strutsAction);
+
 	public Set<String> resetPortletInvocationWhitelist();
 
 	public Set<String> resetPortletInvocationWhitelistActions();

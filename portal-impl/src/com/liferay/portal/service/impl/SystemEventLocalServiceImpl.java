@@ -33,7 +33,7 @@ public class SystemEventLocalServiceImpl
 	extends SystemEventLocalServiceBaseImpl {
 
 	@Override
-	public void addSystemEvent(
+	public SystemEvent addSystemEvent(
 			long userId, long groupId, String className, long classPK,
 			String classUuid, String referrerClassName, int type,
 			String extraData)
@@ -52,36 +52,26 @@ public class SystemEventLocalServiceImpl
 			companyId = user.getCompanyId();
 			userName = user.getFullName();
 		}
+		else if (groupId > 0) {
+			Group group = groupPersistence.findByPrimaryKey(groupId);
 
-		if (companyId == 0) {
-			if (groupId > 0) {
-				Group group = groupPersistence.findByPrimaryKey(groupId);
-
-				companyId = group.getCompanyId();
-			}
-			else {
-				throw new IllegalArgumentException(
-					"Unable to determine company");
-			}
+			companyId = group.getCompanyId();
 		}
 
-		long systemEventId = counterLocalService.increment();
+		return doAddSystemEvent(
+			userId, companyId, groupId, className, classPK, classUuid,
+			referrerClassName, type, extraData, userName);
+	}
 
-		SystemEvent systemEvent = systemEventPersistence.create(systemEventId);
+	@Override
+	public SystemEvent addSystemEvent(
+			long companyId, String className, long classPK, String classUuid,
+			String referrerClassName, int type, String extraData)
+		throws PortalException, SystemException {
 
-		systemEvent.setGroupId(groupId);
-		systemEvent.setCompanyId(companyId);
-		systemEvent.setUserId(userId);
-		systemEvent.setUserName(userName);
-		systemEvent.setCreateDate(new Date());
-		systemEvent.setClassName(className);
-		systemEvent.setClassPK(classPK);
-		systemEvent.setClassUuid(classUuid);
-		systemEvent.setReferrerClassName(referrerClassName);
-		systemEvent.setType(type);
-		systemEvent.setExtraData(extraData);
-
-		systemEventPersistence.update(systemEvent);
+		return doAddSystemEvent(
+				0L, companyId, 0L, className, classPK, classUuid,
+				referrerClassName, type, extraData, StringPool.BLANK);
 	}
 
 	@Override
@@ -114,6 +104,35 @@ public class SystemEventLocalServiceImpl
 
 		return systemEventPersistence.findByG_C_C_T(
 			groupId, classNameId, classPK, type);
+	}
+
+	protected SystemEvent doAddSystemEvent(
+			long userId, long companyId, long groupId, String className,
+			long classPK, String classUuid, String referrerClassName, int type,
+			String extraData, String userName)
+		throws SystemException {
+
+		if (companyId == 0) {
+			throw new IllegalArgumentException("Unable to determine company");
+		}
+
+		long systemEventId = counterLocalService.increment();
+
+		SystemEvent systemEvent = systemEventPersistence.create(systemEventId);
+
+		systemEvent.setGroupId(groupId);
+		systemEvent.setCompanyId(companyId);
+		systemEvent.setUserId(userId);
+		systemEvent.setUserName(userName);
+		systemEvent.setCreateDate(new Date());
+		systemEvent.setClassName(className);
+		systemEvent.setClassPK(classPK);
+		systemEvent.setClassUuid(classUuid);
+		systemEvent.setReferrerClassName(referrerClassName);
+		systemEvent.setType(type);
+		systemEvent.setExtraData(extraData);
+
+		return systemEventPersistence.update(systemEvent);
 	}
 
 }

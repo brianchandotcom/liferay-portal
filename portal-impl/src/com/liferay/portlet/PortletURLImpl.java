@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.QName;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletApp;
 import com.liferay.portal.model.PublicRenderParameter;
@@ -772,27 +773,30 @@ public class PortletURLImpl
 			return;
 		}
 
-		HttpServletRequest request = PortalUtil.getOriginalServletRequest(
-			_request);
+		if (!_portlet.isAddDefaultResource()) {
+			return;
+		}
 
-		String ppauth = ParamUtil.getString(request, "p_p_auth");
+		String strutsAction = getParameter("struts_action");
 
-		String actualPortletAuthenticationToken = AuthTokenUtil.getToken(
-			_request, _plid, _portletId);
-
-		if (Validator.isNotNull(ppauth) &&
-			ppauth.equals(actualPortletAuthenticationToken)) {
-
-			sb.append("p_p_auth");
-			sb.append(StringPool.EQUAL);
-			sb.append(processValue(key, ppauth));
-			sb.append(StringPool.AMPERSAND);
+		if (AuthTokenWhitelistUtil.isPortletInvocationWhitelisted(
+				_portlet.getCompanyId(), _portletId, strutsAction)) {
 
 			return;
 		}
 
-		if (!_portlet.isAddDefaultResource()) {
-			return;
+		try {
+			LayoutTypePortlet targetLayoutTypePortlet =
+				(LayoutTypePortlet)getLayout().getLayoutType();
+
+			if (targetLayoutTypePortlet.hasPortletId(_portletId)) {
+				return;
+			}
+		}
+		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(e.getMessage(), e);
+			}
 		}
 
 		Portlet portlet = (Portlet)_request.getAttribute(
@@ -801,23 +805,16 @@ public class PortletURLImpl
 		if (portlet != null) {
 			String portletId = portlet.getPortletId();
 
-			if (portletId.equals(_portletId) ||
-				portletId.equals(PortletKeys.CONTROL_PANEL_MENU)) {
-
+			if (portletId.equals(PortletKeys.CONTROL_PANEL_MENU)) {
 				return;
 			}
 		}
 
-		Set<String> whiteList =
-			AuthTokenWhitelistUtil.getPortletInvocationWhitelist();
-
-		if (whiteList.contains(_portletId)) {
-			return;
-		}
+		String tokenValue = AuthTokenUtil.getToken(_request, _plid, _portletId);
 
 		sb.append("p_p_auth");
 		sb.append(StringPool.EQUAL);
-		sb.append(processValue(key, actualPortletAuthenticationToken));
+		sb.append(processValue(key, tokenValue));
 		sb.append(StringPool.AMPERSAND);
 	}
 

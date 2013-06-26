@@ -278,26 +278,6 @@ public class SeleniumBuilderFileUtil {
 		return fileName.substring(0, x);
 	}
 
-	public Set<String> getPathLocatorKeys(Element rootElement) {
-		Set<String> pathLocatorKeys = new HashSet<String>();
-
-		Element bodyElement = rootElement.element("body");
-
-		Element tableElement = bodyElement.element("table");
-
-		Element tbodyElement = tableElement.element("tbody");
-
-		List<Element> trElements = tbodyElement.elements();
-
-		for (Element trElement : trElements) {
-			Element tdElement = trElement.element("td");
-
-			pathLocatorKeys.add(tdElement.getText());
-		}
-
-		return pathLocatorKeys;
-	}
-
 	public String getReturnType(String name) {
 		if (name.startsWith("Is")) {
 			return "boolean";

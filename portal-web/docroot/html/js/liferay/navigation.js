@@ -6,6 +6,8 @@ AUI.add(
 		var Util = Liferay.Util;
 		var Lang = A.Lang;
 
+		var STATUS_CODE = Liferay.STATUS_CODE;
+
 		var STR_LAYOUT_ID = 'layoutId';
 
 		var STR_EMPTY = '';
@@ -721,7 +723,7 @@ AUI.add(
 									processRemovePageFailure(
 										{
 											message: Liferay.Language.get('your-request-failed-to-complete'),
-											status: -1
+											status: STATUS_CODE.BAD_REQUEST
 										}
 									);
 								},
@@ -730,7 +732,7 @@ AUI.add(
 
 									var removePageFn = processRemovePageFailure;
 
-									if (result.status === 0) {
+									if (result.status === STATUS_CODE.OK) {
 										removePageFn = processRemovePageSuccess;
 									}
 

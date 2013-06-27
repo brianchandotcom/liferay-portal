@@ -100,44 +100,36 @@ public class SimpleRuleHandler implements RuleHandler {
 
 		Dimensions screenPhysicalSize = device.getScreenPhysicalSize();
 
-		if (!isValidValue(
-				screenPhysicalSize.getHeight(),
-				typeSettingsProperties.get(
-					PROPERTY_SCREEN_PHYSICAL_HEIGHT_MAX),
-				typeSettingsProperties.get(
-					PROPERTY_SCREEN_PHYSICAL_HEIGHT_MIN))) {
+		if (!isValidRangeValue(
+				mdrRule, PROPERTY_SCREEN_PHYSICAL_HEIGHT_MAX,
+				PROPERTY_SCREEN_PHYSICAL_HEIGHT_MIN,
+				screenPhysicalSize.getHeight())) {
 
 			return false;
 		}
 
-		if (!isValidValue(
-				screenPhysicalSize.getWidth(),
-				typeSettingsProperties.get(
-					PROPERTY_SCREEN_PHYSICAL_WIDTH_MAX),
-				typeSettingsProperties.get(
-					PROPERTY_SCREEN_PHYSICAL_WIDTH_MIN))) {
+		if (!isValidRangeValue(
+				mdrRule, PROPERTY_SCREEN_PHYSICAL_WIDTH_MAX,
+				PROPERTY_SCREEN_PHYSICAL_WIDTH_MIN,
+				screenPhysicalSize.getWidth())) {
 
 			return false;
 		}
 
 		Dimensions screenResolution = device.getScreenResolution();
 
-		if (!isValidValue(
-				screenResolution.getHeight(),
-				typeSettingsProperties.get(
-					PROPERTY_SCREEN_RESOLUTION_HEIGHT_MAX),
-				typeSettingsProperties.get(
-					PROPERTY_SCREEN_RESOLUTION_HEIGHT_MIN))) {
+		if (!isValidRangeValue(
+				mdrRule, PROPERTY_SCREEN_RESOLUTION_HEIGHT_MAX,
+				PROPERTY_SCREEN_RESOLUTION_HEIGHT_MIN,
+				screenResolution.getHeight())) {
 
 			return false;
 		}
 
-		if (!isValidValue(
-				screenResolution.getWidth(),
-				typeSettingsProperties.get(
-					PROPERTY_SCREEN_RESOLUTION_WIDTH_MAX),
-				typeSettingsProperties.get(
-					PROPERTY_SCREEN_RESOLUTION_WIDTH_MIN))) {
+		if (!isValidRangeValue(
+				mdrRule, PROPERTY_SCREEN_RESOLUTION_WIDTH_MAX,
+				PROPERTY_SCREEN_RESOLUTION_WIDTH_MIN,
+				screenResolution.getWidth())) {
 
 			return false;
 		}
@@ -155,7 +147,15 @@ public class SimpleRuleHandler implements RuleHandler {
 		return getHandlerType();
 	}
 
-	protected boolean isValidValue(float value, String max, String min) {
+	protected boolean isValidRangeValue(
+		MDRRule mdrRule, String maxProperty, String minProperty, float value) {
+
+		UnicodeProperties typeSettingsProperties =
+			mdrRule.getTypeSettingsProperties();
+
+		String max = typeSettingsProperties.get(maxProperty);
+		String min = typeSettingsProperties.get(minProperty);
+
 		if (Validator.isNull(max) && Validator.isNull(min)) {
 			return true;
 		}
@@ -169,9 +169,9 @@ public class SimpleRuleHandler implements RuleHandler {
 		}
 
 		if (Validator.isNotNull(min)) {
-			float minFLoat = GetterUtil.getFloat(min);
+			float minFloat = GetterUtil.getFloat(min);
 
-			if (value < minFLoat) {
+			if (value < minFloat) {
 				return false;
 			}
 		}

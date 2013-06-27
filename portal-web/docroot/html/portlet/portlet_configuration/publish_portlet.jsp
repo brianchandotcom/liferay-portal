@@ -257,19 +257,17 @@ else if (stagingGroup.isLayout()) {
 										</aui:fieldset>
 									</div>
 
+									<liferay-util:buffer var="selectedLabelsHTML">
+										<span class="selected-labels" id="<portlet:namespace />selectedRange"></span>
+
+										<aui:a cssClass="modify-link" href="javascript:;" id="rangeLink" label="change" method="get" />
+									</liferay-util:buffer>
+
 									<liferay-ui:icon
 										image="calendar"
 										label="<%= true %>"
-										message="date-range"
+										message='<%= LanguageUtil.get(locale, "date-range") + selectedLabelsHTML %>'
 									/>
-
-									<ul>
-										<li>
-											<div class="selected-labels" id="<portlet:namespace />selectedRange"></div>
-
-											<aui:a cssClass="modify-link" href="javascript:;" id="rangeLink" label="change" method="get" />
-										</li>
-									</ul>
 								</li>
 
 								<c:if test="<%= exportModelCount != 0 %>">

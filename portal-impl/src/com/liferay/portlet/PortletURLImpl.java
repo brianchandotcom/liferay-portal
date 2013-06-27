@@ -755,10 +755,11 @@ public class PortletURLImpl
 			return;
 		}
 
-		Set<String> authTokenIgnorePortlets =
-			PortalUtil.getAuthTokenIgnorePortlets();
+		String strutsAction = getParameter("struts_action");
 
-		if (authTokenIgnorePortlets.contains(_portletId)) {
+		if (AuthTokenWhitelistUtil.isPortletCSRFWhitelisted(
+				_portlet.getCompanyId(), _portletId, strutsAction)) {
+
 			return;
 		}
 

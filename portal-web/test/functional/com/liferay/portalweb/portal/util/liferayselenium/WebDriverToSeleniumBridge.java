@@ -14,6 +14,8 @@
 
 package com.liferay.portalweb.portal.util.liferayselenium;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -524,14 +526,20 @@ public class WebDriverToSeleniumBridge
 	}
 
 	public Node getHtmlNode(String locator) {
-		XPathFactory xPathFactory = XPathFactory.newInstance();
-
-		XPath xPath = xPathFactory.newXPath();
-
 		try {
+			XPathFactory xPathFactory = XPathFactory.newInstance();
+
+			XPath xPath = xPathFactory.newXPath();
+
 			locator = StringUtil.replace(locator, "x:", "");
 
 			XPathExpression xPathExpression = xPath.compile(locator);
+
+			DocumentBuilderFactory documentBuilderFactory =
+				DocumentBuilderFactory.newInstance();
+
+			DocumentBuilder documentBuilder =
+				documentBuilderFactory.newDocumentBuilder();
 
 			String htmlSource = getHtmlSource();
 
@@ -540,12 +548,6 @@ public class WebDriverToSeleniumBridge
 			StringReader stringReader = new StringReader(htmlSource);
 
 			InputSource inputSource = new InputSource(stringReader);
-
-			DocumentBuilderFactory documentBuilderFactory =
-				DocumentBuilderFactory.newInstance();
-
-			DocumentBuilder documentBuilder =
-				documentBuilderFactory.newDocumentBuilder();
 
 			Document document = documentBuilder.parse(inputSource);
 
@@ -559,7 +561,7 @@ public class WebDriverToSeleniumBridge
 			return nodeList.item(0);
 		}
 		catch (Exception e) {
-			e.printStackTrace();
+			_log.error(e, e);
 		}
 
 		return null;
@@ -1735,6 +1737,9 @@ public class WebDriverToSeleniumBridge
 		_keysSpecialChars.put("(", "9");
 		_keysSpecialChars.put(")", "0");
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		WebDriverToSeleniumBridge.class);
 
 	private String _defaultWindowHandle;
 	private Keys[] _keysArray = new Keys[128];

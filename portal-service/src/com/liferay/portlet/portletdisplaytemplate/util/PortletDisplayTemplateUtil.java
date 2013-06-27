@@ -36,8 +36,8 @@ public class PortletDisplayTemplateUtil {
 			groupId, displayStyle);
 	}
 
-	public static long getDDMTemplateGroupId(ThemeDisplay themeDisplay) {
-		return getPortletDisplayTemplate().getDDMTemplateGroupId(themeDisplay);
+	public static long getDDMTemplateGroupId(long groupId) {
+		return getPortletDisplayTemplate().getDDMTemplateGroupId(groupId);
 	}
 
 	public static PortletDisplayTemplate getPortletDisplayTemplate() {

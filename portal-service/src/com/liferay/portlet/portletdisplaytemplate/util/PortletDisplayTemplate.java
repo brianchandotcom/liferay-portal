@@ -30,7 +30,7 @@ public interface PortletDisplayTemplate {
 
 	public DDMTemplate fetchDDMTemplate(long groupId, String displayStyle);
 
-	public long getDDMTemplateGroupId(ThemeDisplay themeDisplay);
+	public long getDDMTemplateGroupId(long groupId);
 
 	public long getPortletDisplayTemplateDDMTemplateId(
 		ThemeDisplay themeDisplay, String displayStyle);

@@ -115,16 +115,16 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 	}
 
 	@Override
-	public long getDDMTemplateGroupId(ThemeDisplay themeDisplay) {
+	public long getDDMTemplateGroupId(long groupId) {
 		try {
-			Group scopeGroup = themeDisplay.getScopeGroup();
+			Group group = GroupLocalServiceUtil.getGroup(groupId);
 
-			if (scopeGroup.isLayout()) {
-				scopeGroup = scopeGroup.getParentGroup();
+			if (group.isLayout()) {
+				group = group.getParentGroup();
 			}
 
-			if (scopeGroup.isStagingGroup()) {
-				Group liveGroup = scopeGroup.getLiveGroup();
+			if (group.isStagingGroup()) {
+				Group liveGroup = group.getLiveGroup();
 
 				if (!liveGroup.isStagedPortlet(
 						PortletKeys.PORTLET_DISPLAY_TEMPLATES)) {
@@ -133,7 +133,7 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 				}
 			}
 
-			return scopeGroup.getGroupId();
+			return group.getGroupId();
 		}
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {
@@ -141,7 +141,7 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 			}
 		}
 
-		return themeDisplay.getScopeGroupId();
+		return groupId;
 	}
 
 	@Override
@@ -151,7 +151,7 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 		long portletDisplayDDMTemplateId = 0;
 
 		long portletDisplayDDMTemplateGroupId = getDDMTemplateGroupId(
-			themeDisplay);
+			themeDisplay.getScopeGroupId());
 
 		if (displayStyle.startsWith("ddmTemplate_")) {
 			DDMTemplate portletDisplayDDMTemplate = fetchDDMTemplate(

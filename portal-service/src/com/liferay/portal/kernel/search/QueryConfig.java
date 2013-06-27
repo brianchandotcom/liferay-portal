@@ -215,31 +215,16 @@ public class QueryConfig implements Serializable {
 		"hitsProcessingEnabled";
 
 	private static final boolean
-		_INDEX_SEARCH_AUTOCOMPLETE_SUGGESTIONS_ENABLED = GetterUtil.getBoolean(
-			PropsUtil.get(
-				PropsKeys.INDEX_SEARCH_AUTOCOMPLETE_SUGGESTIONS_ENABLED), true);
-
-	private static final int _INDEX_SEARCH_AUTOCOMPLETE_SUGGESTIONS_MAX =
-		GetterUtil.getInteger(
-			PropsUtil.get(
-				PropsKeys.INDEX_SEARCH_AUTOCOMPLETE_SUGGESTIONS_MAX), 5);
-
-	private static final int
-		_INDEX_SEARCH_AUTOCOMPLETE_SUGGESTIONS_QUERY_DELAY_MILLIS =
-			GetterUtil.getInteger(PropsUtil.get(
-				PropsKeys.
-					INDEX_SEARCH_AUTOCOMPLETE_SUGGESTIONS_QUERY_DELAY_MILLIS),
-				500);
-
-	private static final boolean
 		_INDEX_SEARCH_COLLATED_SPELL_CHECK_RESULT_ENABLED =
-			GetterUtil.getBoolean(PropsUtil.get(
-				PropsKeys.
-					INDEX_SEARCH_COLLATED_SPELL_CHECK_RESULT_ENABLED), true);
+		GetterUtil.getBoolean(
+			PropsUtil.get(
+				PropsKeys.INDEX_SEARCH_COLLATED_SPELL_CHECK_RESULT_ENABLED),
+			true);
 
 	private static final int
 		_INDEX_SEARCH_COLLATED_SPELL_CHECK_RESULT_SCORING_THRESHOLD =
-			GetterUtil.getInteger(PropsUtil.get(
+		GetterUtil.getInteger(
+			PropsUtil.get(
 				PropsKeys.
 					INDEX_SEARCH_COLLATED_SPELL_CHECK_RESULT_SCORING_THRESHOLD),
 				50);

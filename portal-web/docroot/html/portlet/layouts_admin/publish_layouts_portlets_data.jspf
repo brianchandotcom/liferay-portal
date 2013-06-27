@@ -213,7 +213,11 @@ if (endDateTime > 0) {
 
 				<c:if test="<%= GetterUtil.getBoolean(liveGroupTypeSettings.getProperty(StagingConstants.STAGED_PORTLET + portlet.getRootPortletId()), portletDataHandler.isPublishToLiveByDefault()) && (exportModelCount != 0) %>">
 					<li>
-						<aui:input label='<%= portletTitle + (exportModelCount > 0 ? " (" + exportModelCount + ")" : StringPool.BLANK) %>' name="<%= PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE + portlet.getRootPortletId() %>" type="checkbox" value="<%= true %>" />
+								<liferay-util:buffer var="badgeHTML">
+									<span class="badge badge-info"><%= exportModelCount > 0 ? exportModelCount : StringPool.BLANK %></span>
+								</liferay-util:buffer>
+
+								<aui:input label="<%= portletTitle + badgeHTML %>" name="<%= PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE + portlet.getRootPortletId() %>" type="checkbox" value="<%= true %>" />
 
 						<%
 						PortletDataHandlerControl[] exportControls = portletDataHandler.getExportControls();

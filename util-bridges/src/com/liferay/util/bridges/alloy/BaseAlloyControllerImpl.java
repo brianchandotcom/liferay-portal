@@ -119,8 +119,7 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 		initMethods();
 		initPaths();
 		initIndexer();
-		initScheduler();
-		initControllerMessageListener();
+		initMessageListeners();
 	}
 
 	@Override
@@ -333,6 +332,17 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 		return ConstantsBeanFactoryUtil.getConstantsBean(clazz);
 	}
 
+	protected String getControllerDestinationName() {
+		return "liferay/alloy/controller/".concat(
+			getMessageListenerGroupName());
+	}
+
+	protected String getMessageListenerGroupName() {
+		String rootPortletId = portlet.getRootPortletId();
+
+		return rootPortletId.concat(StringPool.SLASH).concat(controllerPath);
+	}
+
 	protected Method getMethod(String methodName, Class<?>... parameterTypes) {
 		String methodKey = getMethodKey(methodName, parameterTypes);
 
@@ -355,22 +365,12 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 		return sb.toString();
 	}
 
-	protected String getControllerDestinationName() {
-		return "liferay/alloy/controller/".concat(getSchedulerGroupName());
-	}
-
 	protected String getSchedulerDestinationName() {
-		return "liferay/alloy/scheduler/".concat(getSchedulerGroupName());
-	}
-
-	protected String getSchedulerGroupName() {
-		String rootPortletId = portlet.getRootPortletId();
-
-		return rootPortletId.concat(StringPool.SLASH).concat(controllerPath);
+		return "liferay/alloy/scheduler/".concat(getMessageListenerGroupName());
 	}
 
 	protected String getSchedulerJobName() {
-		return getSchedulerGroupName();
+		return getMessageListenerGroupName();
 	}
 
 	protected Trigger getSchedulerTrigger() {
@@ -378,7 +378,7 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 			CalendarFactoryUtil.getCalendar(), CronText.DAILY_FREQUENCY, 1);
 
 		return new CronTrigger(
-			getSchedulerJobName(), getSchedulerGroupName(),
+			getSchedulerJobName(), getMessageListenerGroupName(),
 			cronText.toString());
 	}
 
@@ -411,17 +411,6 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 	protected void initClass() {
 		clazz = getClass();
 		classLoader = clazz.getClassLoader();
-	}
-
-	protected void initControllerMessageListener() {
-		controllerMessageListener = buildControllerMessageListener();
-
-		if (controllerMessageListener == null) {
-			return;
-		}
-
-		initMessageListener(
-			getControllerDestinationName(), controllerMessageListener, false);
 	}
 
 	protected void initIndexer() {
@@ -473,7 +462,7 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 		MessageBus messageBus = MessageBusUtil.getMessageBus();
 
 		Destination destination = messageBus.getDestination(destinationName);
-		
+
 		if (destination != null) {
 			Set<MessageListener> messageListeners =
 				destination.getMessageListeners();
@@ -486,20 +475,19 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 				InvokerMessageListener invokerMessageListener =
 					(InvokerMessageListener)curMessageListener;
 
-				curMessageListener = 
+				curMessageListener =
 					invokerMessageListener.getMessageListener();
 
 				if (messageListener == curMessageListener) {
 					return;
 				}
 
-				Class<?> messageListenerClass = 
-					messageListener.getClass();
+				Class<?> messageListenerClass = messageListener.getClass();
 
 				String messageListenerClassName =
 					messageListenerClass.getName();
 
-				Class<?> curMessageListenerClass = 
+				Class<?> curMessageListenerClass =
 					curMessageListener.getClass();
 
 				if (!messageListenerClassName.equals(
@@ -511,7 +499,8 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 				try {
 					if (enableScheduler) {
 						SchedulerEngineHelperUtil.unschedule(
-							getSchedulerJobName(), getSchedulerGroupName(),
+							getSchedulerJobName(),
+							getMessageListenerGroupName(),
 							StorageType.MEMORY_CLUSTERED);
 					}
 
@@ -544,12 +533,27 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 					getSchedulerTrigger(), StorageType.MEMORY_CLUSTERED, null,
 					destinationName, null, 0);
 			}
-			
 		}
 		catch (Exception e) {
 			log.error(e, e);
 		}
-		
+	}
+
+	protected void initMessageListeners() {
+		controllerMessageListener = buildControllerMessageListener();
+
+		if (controllerMessageListener != null) {
+			initMessageListener(
+				getControllerDestinationName(), controllerMessageListener,
+				false);
+		}
+
+		schedulerMessageListener = buildSchedulerMessageListener();
+
+		if (schedulerMessageListener != null) {
+			initMessageListener(
+				getSchedulerDestinationName(), schedulerMessageListener, true);
+		}
 	}
 
 	protected void initMethods() {
@@ -659,17 +663,6 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 			resourceRequest = (ResourceRequest)portletRequest;
 			resourceResponse = (ResourceResponse)portletResponse;
 		}
-	}
-
-	protected void initScheduler() {
-		schedulerMessageListener = buildSchedulerMessageListener();
-
-		if (schedulerMessageListener == null) {
-			return;
-		}
-		
-		initMessageListener(
-			getSchedulerDestinationName(), schedulerMessageListener, true);
 	}
 
 	protected void initServletVariables() {

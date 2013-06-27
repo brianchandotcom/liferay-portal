@@ -73,29 +73,27 @@ public class AlloyPortlet extends GenericPortlet {
 			MessageListener controllerMessageListener =
 				baseAlloyControllerImpl.controllerMessageListener;
 
+			if (controllerMessageListener != null) {
+				MessageBusUtil.removeDestination(
+					baseAlloyControllerImpl.getControllerDestinationName());
+			}
+
 			MessageListener schedulerMessageListener =
 				baseAlloyControllerImpl.schedulerMessageListener;
 
-			if ((controllerMessageListener == null) || 
-				(schedulerMessageListener == null)) {
+			if (schedulerMessageListener != null) {
+				try {
+					SchedulerEngineHelperUtil.unschedule(
+						baseAlloyControllerImpl.getSchedulerJobName(),
+						baseAlloyControllerImpl.getMessageListenerGroupName(),
+						StorageType.MEMORY_CLUSTERED);
 
-				continue;
-			}
-
-			try {
-				MessageBusUtil.removeDestination(
-					baseAlloyControllerImpl.getControllerDestinationName());
-
-				SchedulerEngineHelperUtil.unschedule(
-					baseAlloyControllerImpl.getSchedulerJobName(),
-					baseAlloyControllerImpl.getSchedulerGroupName(),
-					StorageType.MEMORY_CLUSTERED);
-
-				MessageBusUtil.removeDestination(
-					baseAlloyControllerImpl.getSchedulerDestinationName());
-			}
-			catch (Exception e) {
-				_log.error(e, e);
+					MessageBusUtil.removeDestination(
+						baseAlloyControllerImpl.getSchedulerDestinationName());
+				}
+				catch (Exception e) {
+					_log.error(e, e);
+				}
 			}
 		}
 	}

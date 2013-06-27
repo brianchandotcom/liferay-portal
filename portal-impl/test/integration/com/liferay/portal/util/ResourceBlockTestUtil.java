@@ -24,11 +24,6 @@ import com.liferay.portal.service.ServiceTestUtil;
  */
 public class ResourceBlockTestUtil {
 
-	public static ResourceBlock addResourceBlock() throws Exception {
-		return addResourceBlock(
-			ServiceTestUtil.nextLong(), ServiceTestUtil.randomString());
-	}
-
 	public static ResourceBlock addResourceBlock(long groupId, String name)
 		throws Exception {
 

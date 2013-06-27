@@ -2026,6 +2026,13 @@
 
 	Liferay.Util = Util;
 
+	Liferay.STATUS_CODE = {
+		BAD_REQUEST: 400,
+		INTERNAL_SERVER_ERROR: 500,
+		OK: 200,
+		SC_DUPLICATE_FILE_EXCEPTION: 490
+	};
+
 	// 0-200: Theme Developer
 	// 200-400: Portlet Developer
 	// 400+: Liferay

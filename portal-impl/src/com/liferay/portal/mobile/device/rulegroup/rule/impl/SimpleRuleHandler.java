@@ -78,17 +78,8 @@ public class SimpleRuleHandler implements RuleHandler {
 			return false;
 		}
 
-		UnicodeProperties typeSettingsProperties =
-			mdrRule.getTypeSettingsProperties();
-
-		String os = typeSettingsProperties.get(PROPERTY_OS);
-
-		if (Validator.isNotNull(os)) {
-			String[] operatingSystems = StringUtil.split(os);
-
-			if (!ArrayUtil.contains(operatingSystems, device.getOS())) {
-				return false;
-			}
+		if (!isValidMultiValue(mdrRule, PROPERTY_OS, device.getOS())) {
+			return false;
 		}
 
 		if (!isValidBooleanValue(mdrRule, PROPERTY_TABLET, device.isTablet())) {
@@ -187,6 +178,31 @@ public class SimpleRuleHandler implements RuleHandler {
 		return true;
 	}
 
+	protected boolean isValidMultiValue(
+		MDRRule mdrRule, String property, String value) {
+
+		UnicodeProperties typeSettingsProperties =
+			mdrRule.getTypeSettingsProperties();
+
+		String validValueString = typeSettingsProperties.get(property);
+
+		if (Validator.isNull(validValueString)) {
+			return true;
+		}
+
+		String[] validValues = StringUtil.split(validValueString);
+
+		if (!ArrayUtil.contains(validValues, value)) {
+			logMultiValue(mdrRule, property, value, validValues, false);
+
+			return false;
+		}
+
+		logMultiValue(mdrRule, property, value, validValues, true);
+
+		return true;
+	}
+
 	protected boolean isValidRangeValue(
 		MDRRule mdrRule, String maxProperty, String minProperty, float value) {
 
@@ -245,6 +261,24 @@ public class SimpleRuleHandler implements RuleHandler {
 			mdrRule, String.valueOf(value), valid);
 
 		sb.append("the value configured for the property ");
+		sb.append(property);
+
+		_log.debug(sb.toString());
+	}
+
+	protected void logMultiValue(
+		MDRRule mdrRule, String property, String value, String[] validValues,
+		boolean valid) {
+
+		if (!_log.isDebugEnabled()) {
+			return;
+		}
+
+		StringBundler sb = getLogStringBundler(mdrRule, value, valid);
+
+		sb.append("within the allowed values (");
+		sb.append(StringUtil.merge(validValues));
+		sb.append(") for property ");
 		sb.append(property);
 
 		_log.debug(sb.toString());

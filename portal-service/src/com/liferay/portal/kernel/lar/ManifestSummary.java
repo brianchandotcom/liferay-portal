@@ -51,6 +51,15 @@ public class ManifestSummary implements Serializable {
 		return referrerModelName.concat(StringPool.POUND).concat(modelName);
 	}
 
+	public void addConfigurationPortlet(Portlet portlet) {
+		String rootPortletId = portlet.getRootPortletId();
+
+		if (!_configurationRootPortletIds.contains(rootPortletId)) {
+			_configurationPortlets.add(portlet);
+			_configurationRootPortletIds.add(rootPortletId);
+		}
+	}
+
 	public void addDataPortlet(Portlet portlet) {
 		String rootPortletId = portlet.getRootPortletId();
 
@@ -120,13 +129,8 @@ public class ManifestSummary implements Serializable {
 		_manifestSummaryKeys.add(manifestSummaryKey);
 	}
 
-	public void addSetupPortlet(Portlet portlet) {
-		String rootPortletId = portlet.getRootPortletId();
-
-		if (!_setupRootPortletIds.contains(rootPortletId)) {
-			_setupPortlets.add(portlet);
-			_setupRootPortletIds.add(rootPortletId);
-		}
+	public List<Portlet> getConfigurationPortlets() {
+		return _configurationPortlets;
 	}
 
 	public List<Portlet> getDataPortlets() {
@@ -193,10 +197,6 @@ public class ManifestSummary implements Serializable {
 
 	public Map<String, LongWrapper> getModelDeletionCounters() {
 		return _modelDeletionCounters;
-	}
-
-	public List<Portlet> getSetupPortlets() {
-		return _setupPortlets;
 	}
 
 	public void incrementModelAdditionCount(
@@ -268,6 +268,8 @@ public class ManifestSummary implements Serializable {
 		return sb.toString();
 	}
 
+	private List<Portlet> _configurationPortlets = new ArrayList<Portlet>();
+	private Set<String> _configurationRootPortletIds = new HashSet<String>();
 	private List<Portlet> _dataPortlets = new ArrayList<Portlet>();
 	private Set<String> _dataRootPortletIds = new HashSet<String>();
 	private Date _exportDate;
@@ -276,7 +278,5 @@ public class ManifestSummary implements Serializable {
 		new HashMap<String, LongWrapper>();
 	private Map<String, LongWrapper> _modelDeletionCounters =
 		new HashMap<String, LongWrapper>();
-	private List<Portlet> _setupPortlets = new ArrayList<Portlet>();
-	private Set<String> _setupRootPortletIds = new HashSet<String>();
 
 }

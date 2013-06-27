@@ -217,7 +217,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 								<aui:input name="<%= PortletDataHandlerKeys.PORTLET_CONFIGURATION %>" type="hidden" value="<%= true %>" />
 
 								<%
-								List<Portlet> setupPortlets = ListUtil.sort(manifestSummary.getSetupPortlets(), new PortletTitleComparator(application, locale));
+								List<Portlet> setupPortlets = ListUtil.sort(manifestSummary.getConfigurationPortlets(), new PortletTitleComparator(application, locale));
 
 								for (Portlet portlet : setupPortlets) {
 									PortletDataHandler portletDataHandler = portlet.getPortletDataHandlerInstance();

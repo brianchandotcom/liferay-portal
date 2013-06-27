@@ -348,7 +348,8 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 										element.attributeValue(
 											"portlet-setup"))) {
 
-									manifestSummary.addSetupPortlet(portlet);
+									manifestSummary.addConfigurationPortlet(
+										portlet);
 								}
 							}
 						}

@@ -35,9 +35,9 @@ public class QueryIndexingHitsProcessor implements HitsProcessor {
 			return true;
 		}
 
-		int threshold = queryConfig.getQueryIndexingThreshold();
+		int queryIndexingThreshold = queryConfig.getQueryIndexingThreshold();
 
-		if (hits.getLength() >= threshold) {
+		if (hits.getLength() >= queryIndexingThreshold) {
 			addDocument(
 				searchContext.getCompanyId(), searchContext.getKeywords(),
 				searchContext.getLocale());

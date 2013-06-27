@@ -25,13 +25,14 @@ JournalArticleResource articleResource = JournalArticleResourceLocalServiceUtil.
 String templateId = (String)request.getAttribute(WebKeys.JOURNAL_TEMPLATE_ID);
 String languageId = LanguageUtil.getLanguageId(request);
 int articlePage = ParamUtil.getInteger(request, "page", 1);
-String xmlRequest = PortletRequestUtil.toXML(renderRequest, renderResponse);
 
 boolean workflowAssetPreview = ParamUtil.getBoolean(request, "workflowAssetPreview");
 
 JournalArticleDisplay articleDisplay = null;
 
 if (!workflowAssetPreview && article.isApproved()) {
+	String xmlRequest = PortletRequestUtil.toXML(renderRequest, renderResponse);
+
 	articleDisplay = JournalContentUtil.getDisplay(articleResource.getGroupId(), articleResource.getArticleId(), article.getVersion(), templateId, null, languageId, themeDisplay, articlePage, xmlRequest);
 }
 else {

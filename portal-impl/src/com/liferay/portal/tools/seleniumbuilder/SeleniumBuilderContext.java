@@ -373,6 +373,42 @@ public class SeleniumBuilderContext {
 		return _pathJavaFileNames.get(pathName);
 	}
 
+	public Set<String> getPathLocatorKeys(Element rootElement) {
+		Set<String> pathLocatorKeys = new HashSet<String>();
+
+		Element bodyElement = rootElement.element("body");
+
+		Element tableElement = bodyElement.element("table");
+
+		Element tbodyElement = tableElement.element("tbody");
+
+		List<Element> trElements = tbodyElement.elements();
+
+		for (Element trElement : trElements) {
+			List<Element> tdElements = trElement.elements("td");
+
+			Element pathLocatorElement = tdElements.get(0);
+
+			String pathLocatorKey = pathLocatorElement.getText();
+
+			if (pathLocatorKey.equals("EXTEND_ACTION_PATH")) {
+				Element pathNameElement = tdElements.get(1);
+
+				String extendedPathName = pathNameElement.getText();
+
+				Element extendedPathElement = getPathRootElement(
+					extendedPathName);
+
+				pathLocatorKeys.addAll(getPathLocatorKeys(extendedPathElement));
+			}
+			else {
+				pathLocatorKeys.add(pathLocatorKey);
+			}
+		}
+
+		return pathLocatorKeys;
+	}
+
 	public Set<String> getPathNames() {
 		return _pathNames;
 	}
@@ -853,8 +889,7 @@ public class SeleniumBuilderContext {
 
 		Element pathRootElement = getPathRootElement(actionName);
 
-		Set<String> pathLocatorKeys =
-			_seleniumBuilderFileUtil.getPathLocatorKeys(pathRootElement);
+		Set<String> pathLocatorKeys = getPathLocatorKeys(pathRootElement);
 
 		String[] partialKeys = {};
 

@@ -86,16 +86,8 @@
 		<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_CONTENT_1" value1="${entryContentEdit}" />
 	</command>
 
-	<command name="moveToRecycleBinNoPermissionPG">
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute action="PGBlogs#assertElementNotPresent" locator-key1="ENTRY_RECYCLE_BIN_1" />
-	</command>
-
 	<command name="moveToRecycleBinCP">
-		<execute macro="Page#cpGotoContent">
+		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Blogs" />
 		</execute>
 
@@ -105,6 +97,14 @@
 		<execute action="CPBlogs#assertClick" locator-key1="ENTRY_TABLE_ACTIONS" value1="Actions" />
 		<execute action="CPBlogs#assertClick" locator-key1="ENTRY_MENULIST_MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
 		<execute action="CPBlogs#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="The selected item was moved to the Recycle Bin. Undo" />
+	</command>
+
+	<command name="moveToRecycleBinNoPermissionPG">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute action="PGBlogs#assertElementNotPresent" locator-key1="ENTRY_RECYCLE_BIN_1" />
 	</command>
 
 	<command name="moveToRecycleBinPG">
@@ -137,7 +137,7 @@
 	</command>
 
 	<command name="viewCP">
-		<execute macro="Page#cpGotoContent">
+		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Blogs" />
 		</execute>
 
@@ -149,12 +149,31 @@
 		<execute action="CPBlogs#assertElementPresent" locator-key1="ENTRY_TABLE_CREATE_DATE" />
 		<execute action="CPBlogs#assertTextEquals" locator-key1="ENTRY_TABLE_STATUS" value1="Approved" />
 		<execute action="CPBlogs#assertClick" locator-key1="ENTRY_TABLE_TITLE" value1="${entryTitle}" />
+
 		<execute action="CPBlogsEntry#assertTextEquals" locator-key1="ENTRY_TITLE_HEADER" value1="${entryTitle}" />
+		<execute action="CPBlogsEntry#assertTextEquals" locator-key1="ENTRY_TITLE_LINK" value1="${entryTitle}" />
+		<execute action="CPBlogsEntry#assertTextEquals" locator-key1="ENTRY_CONTENT" value1="${entryContent}" />
+		<execute action="CPBlogsEntry#assertElementNotPresent" locator-key1="ENTRY_WORKFLOW_STATUS" />
+	</command>
+
+	<command name="viewCPWithWorkflow">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<var name="key_entryTitle" value="${entryTitle}" />
+
+		<execute action="CPBlogs#assertTextEquals" locator-key1="ENTRY_TABLE_TITLE" value1="${entryTitle}" />
+		<execute action="CPBlogs#click" locator-key1="ENTRY_TABLE_TITLE" value1="${entryTitle}" />
+
+		<execute action="CPBlogsEntry#assertTextEquals" locator-key1="ENTRY_TITLE_HEADER" value1="${entryTitle}" />
+		<execute action="CPBlogsEntry#assertTextEquals" locator-key1="ENTRY_WORKFLOW_STATUS" value1="Pending Approval" />
+		<execute action="CPBlogsEntry#assertTextEquals" locator-key1="ENTRY_TITLE_LINK" value1="${entryTitle}" />
 		<execute action="CPBlogsEntry#assertTextEquals" locator-key1="ENTRY_CONTENT" value1="${entryContent}" />
 	</command>
 
 	<command name="viewDefaultCP">
-		<execute macro="Page#cpGotoContent">
+		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Blogs" />
 		</execute>
 
@@ -184,37 +203,5 @@
 		<execute action="PGBlogs#assertTextEquals" locator-key1="PERMISSIONS_BUTTON" value1="Permissions" />
 		<execute action="PGBlogs#assertTextEquals" locator-key1="SUBSCRIBE_LINK" value1="Subscribe" />
 		<execute action="PGBlogs#assertTextEquals" locator-key1="RSS_LINK" value1="RSS" />
-	</command>
-
-	<command name="viewCP">
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Blogs" />
-		</execute>
-
-		<var name="key_entryTitle" value="${entryTitle}" />
-
-		<execute action="CPBlogs#assertTextEquals" locator-key1="ENTRY_TABLE_TITLE" value1="${entryTitle}" />
-		<execute action="CPBlogs#click" locator-key1="ENTRY_TABLE_TITLE" value1="${entryTitle}" />
-
-		<execute action="CPBlogsEntry#assertTextEquals" locator-key1="ENTRY_TITLE_HEADER" value1="${entryTitle}" />
-		<execute action="CPBlogsEntry#assertTextEquals" locator-key1="ENTRY_TITLE_LINK" value1="${entryTitle}" />
-		<execute action="CPBlogsEntry#assertTextEquals" locator-key1="ENTRY_CONTENT" value1="${entryContent}" />
-		<execute action="CPBlogsEntry#assertElementNotPresent" locator-key1="ENTRY_WORKFLOW_STATUS" />
-	</command>
-
-	<command name="viewCPWithWorkflow">
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Blogs" />
-		</execute>
-
-		<var name="key_entryTitle" value="${entryTitle}" />
-
-		<execute action="CPBlogs#assertTextEquals" locator-key1="ENTRY_TABLE_TITLE" value1="${entryTitle}" />
-		<execute action="CPBlogs#click" locator-key1="ENTRY_TABLE_TITLE" value1="${entryTitle}" />
-
-		<execute action="CPBlogsEntry#assertTextEquals" locator-key1="ENTRY_TITLE_HEADER" value1="${entryTitle}" />
-		<execute action="CPBlogsEntry#assertTextEquals" locator-key1="ENTRY_WORKFLOW_STATUS" value1="Pending Approval" />
-		<execute action="CPBlogsEntry#assertTextEquals" locator-key1="ENTRY_TITLE_LINK" value1="${entryTitle}" />
-		<execute action="CPBlogsEntry#assertTextEquals" locator-key1="ENTRY_CONTENT" value1="${entryContent}" />
 	</command>
 </definition>

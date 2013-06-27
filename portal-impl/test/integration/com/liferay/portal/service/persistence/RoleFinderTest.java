@@ -60,7 +60,7 @@ public class RoleFinderTest {
 	@BeforeClass
 	public static void setUpClass() throws Exception {
 		List<Role> roles = RoleLocalServiceUtil.getRoles(
-				RoleConstants.TYPE_REGULAR, StringPool.BLANK);
+			RoleConstants.TYPE_REGULAR, StringPool.BLANK);
 
 		_arbitraryRole = roles.get(0);
 
@@ -112,7 +112,7 @@ public class RoleFinderTest {
 
 		Assert.fail(
 			"The method findByC_N_S_P_A should have returned the role " +
-			_arbitraryRole.getRoleId());
+				_arbitraryRole.getRoleId());
 	}
 
 	@Test
@@ -129,7 +129,7 @@ public class RoleFinderTest {
 
 		Assert.fail(
 			"The method findByR_N_A should have returned the role " +
-			_arbitraryRole.getRoleId());
+				_arbitraryRole.getRoleId());
 	}
 
 	private static ResourceAction _arbitraryResourceAction;

@@ -1170,7 +1170,7 @@ public class PortletExporter {
 		element.addAttribute("path", path);
 		element.addAttribute("portlet-data", String.valueOf(exportPortletData));
 
-		StringBundler configurationOptionsSb = new StringBundler();
+		StringBundler configurationOptionsSb = new StringBundler(6);
 
 		if (exportPortletSetup) {
 			configurationOptionsSb.append("setup");

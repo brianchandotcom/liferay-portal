@@ -70,14 +70,22 @@ public class AlloyPortlet extends GenericPortlet {
 				IndexerRegistryUtil.unregister(indexer);
 			}
 
+			MessageListener controllerMessageListener =
+				baseAlloyControllerImpl.controllerMessageListener;
+
 			MessageListener schedulerMessageListener =
 				baseAlloyControllerImpl.schedulerMessageListener;
 
-			if (schedulerMessageListener == null) {
+			if ((controllerMessageListener == null) || 
+				(schedulerMessageListener == null)) {
+
 				continue;
 			}
 
 			try {
+				MessageBusUtil.removeDestination(
+					baseAlloyControllerImpl.getControllerDestinationName());
+
 				SchedulerEngineHelperUtil.unschedule(
 					baseAlloyControllerImpl.getSchedulerJobName(),
 					baseAlloyControllerImpl.getSchedulerGroupName(),

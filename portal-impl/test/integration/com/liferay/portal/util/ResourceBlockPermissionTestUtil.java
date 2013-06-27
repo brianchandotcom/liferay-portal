@@ -24,14 +24,6 @@ import com.liferay.portal.service.ServiceTestUtil;
  */
 public class ResourceBlockPermissionTestUtil {
 
-	public static ResourceBlockPermission addResourceBlockPermission()
-		throws Exception {
-
-		return addResourceBlockPermission(
-			ServiceTestUtil.nextLong(), ServiceTestUtil.nextLong(),
-			ServiceTestUtil.nextLong());
-	}
-
 	public static ResourceBlockPermission addResourceBlockPermission(
 			long resourceBlockId, long roleId, long actionIds)
 		throws Exception {

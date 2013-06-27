@@ -44,9 +44,7 @@ AUI.add(
 						instance._config = config;
 
 						instance._addContentForm = instance.byId('addContentForm');
-						instance._addPanelContainer = instance.byId('addPanelContainer');
-						instance._closePanel = instance._addPanelContainer.one('#closePanel');
-						instance._entriesContainer = instance.byId('entriesContainer');
+						instance._entriesPanel = instance.byId('entriesContainer');
 						instance._numItems = instance.byId('numItems');
 						instance._styleButtonsList = instance.byId('styleButtons');
 						instance._styleButtons = instance._styleButtonsList.all(SELECTOR_BUTTON);
@@ -111,15 +109,13 @@ AUI.add(
 					_afterSuccess: function(event) {
 						var instance = this;
 
-						instance._entriesContainer.setContent(event.currentTarget.get(STR_RESPONSE_DATA));
+						instance._entriesPanel.setContent(event.currentTarget.get(STR_RESPONSE_DATA));
 					},
 
 					_bindUI: function() {
 						var instance = this;
 
 						instance._numItems.on('change', instance._onChangeNumItems, instance);
-
-						instance._closePanel.on(STR_CLICK, Dockbar.loadPanel, Dockbar);
 
 						instance._styleButtonsList.delegate(STR_CLICK, instance._onChangeDisplayStyle, SELECTOR_BUTTON, instance);
 
@@ -131,8 +127,6 @@ AUI.add(
 						);
 
 						Liferay.on('AddContent:refreshContentList', instance._refreshContentList, instance);
-
-						Liferay.on('closePortlet', instance._onPortletClose, instance);
 
 						Liferay.once('dockbarAddContentDD:init', instance._onDockbarAddContentDDInit, instance);
 

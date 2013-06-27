@@ -35,7 +35,7 @@ AUI.add(
 
 				EXTENDS: Dockbar.AddBase,
 
-				NAME: 'addapplicationsearch',
+				NAME: 'addapplication',
 
 				prototype: {
 					initializer: function(config) {
@@ -44,9 +44,7 @@ AUI.add(
 						instance._config = config;
 
 						instance._addApplicationForm = instance.byId('addApplicationForm');
-						instance._addPanelContainer = instance.byId('addPanelContainer');
-						instance._closePanel = instance._addPanelContainer.one('#closePanel');
-						instance._entriesContainer = instance.byId('entriesContainer');
+						instance._entriesPanel = instance.byId('applicationList');
 
 						instance._bindUI();
 					},
@@ -113,18 +111,14 @@ AUI.add(
 						}
 					},
 
-					_afterSuccess: function(event) {
-						var instance = this;
-
-						instance._entriesContainer.setContent(event.currentTarget.get(STR_RESPONSE_DATA));
-					},
-
 					_bindUI: function() {
 						var instance = this;
 
-						instance._addPanelContainer.delegate(STR_CLICK, instance._addApplication, SELECTOR_ADD_CONTENT_ITEM, instance);
+						instance._entriesPanel.delegate(STR_CLICK, instance._addApplication, SELECTOR_ADD_CONTENT_ITEM, instance);
 
 						Liferay.on('closePortlet', instance._onPortletClose, instance);
+
+						Liferay.once('dockbarAddContentDD:init', instance._onDockbarAddContentDDInit, instance);
 
 						Liferay.on('showTab', instance._onShowTab, instance);
 					},
@@ -204,6 +198,12 @@ AUI.add(
 
 							Liferay.Store('liferay_addpanel_tab', event.names[index]);
 						}
+					},
+
+					_onDockbarAddContentDDInit: function(event) {
+						var instance = this;
+
+						instance._portletItem.delegate.dd.addInvalid(SELECTOR_ADD_CONTENT_ITEM);
 					},
 
 					_onPortletClose: function(event) {

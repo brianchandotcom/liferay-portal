@@ -24,7 +24,7 @@ AUI.add(
 
 				var portletItemOptions = {
 					delegateConfig: {
-						container: instance._addPanelContainer,
+						container: instance._entriesPanel,
 						dragConfig: {
 							clickPixelThresh: 0,
 							clickTimeThresh: 0

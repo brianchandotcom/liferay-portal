@@ -30,6 +30,9 @@ public interface AuthTokenWhitelist {
 
 	public Set<String> getPortletInvocationWhitelistActions();
 
+	public boolean isPortletCSRFWhitelisted(
+		long companyId, String portletId, String strutsAction);
+
 	public boolean isPortletInvocationWhitelisted(
 		long companyId, String portletId, String strutsAction);
 

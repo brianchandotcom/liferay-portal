@@ -46,6 +46,13 @@ public class AuthTokenWhitelistUtil {
 		return getAuthTokenWhitelist().getPortletInvocationWhitelistActions();
 	}
 
+	public static boolean isPortletCSRFWhitelisted(
+		long companyId, String portletId, String strutsAction) {
+
+		return getAuthTokenWhitelist().isPortletCSRFWhitelisted(
+			companyId, portletId, strutsAction);
+	}
+
 	public static boolean isPortletInvocationWhitelisted(
 		long companyId, String portletId, String strutsAction) {
 

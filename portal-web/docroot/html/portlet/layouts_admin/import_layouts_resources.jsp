@@ -163,7 +163,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 
 			<c:if test="<%= !group.isLayoutPrototype() %>">
 				<aui:fieldset cssClass="options-group" label="pages">
-					<div class="selected-labels" id="<portlet:namespace />selectedPages"></div>
+					<span class="selected-labels" id="<portlet:namespace />selectedPages"></span>
 
 					<aui:a cssClass="modify-link" href="javascript:;" id="pagesLink" label="change" method="get" />
 
@@ -190,7 +190,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 
 						<ul id="<portlet:namespace />showGlobalConfiguration">
 							<li class="tree-item">
-								<div class="selected-labels" id="<portlet:namespace />selectedGlobalConfiguration"></div>
+								<span class="selected-labels" id="<portlet:namespace />selectedGlobalConfiguration"></span>
 
 								<aui:a cssClass="modify-link" href="javascript:;" id="globalConfigurationLink" label="change" method="get" />
 							</li>
@@ -251,7 +251,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 
 										<ul class="hide" id="<portlet:namespace />showChangeConfiguration_<%= portlet.getRootPortletId() %>">
 											<li>
-												<div class="selected-labels" id="<portlet:namespace />selectedConfiguration_<%= portlet.getRootPortletId() %>"></div>
+												<span class="selected-labels" id="<portlet:namespace />selectedConfiguration_<%= portlet.getRootPortletId() %>"></span>
 
 												<%
 												Map<String,Object> data = new HashMap<String,Object>();
@@ -286,7 +286,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 
 						<ul id="<portlet:namespace />showChangeGlobalContent">
 							<li>
-								<div class="selected-labels" id="<portlet:namespace />selectedGlobalContent"></div>
+								<span class="selected-labels" id="<portlet:namespace />selectedGlobalContent"></span>
 
 								<aui:a cssClass="modify-link" href="javascript:;" id="globalContentLink" label="change" method="get" />
 							</li>
@@ -407,7 +407,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 
 											<ul class="hide" id="<portlet:namespace />showChangeContent_<%= portlet.getRootPortletId() %>">
 												<li>
-													<div class="selected-labels" id="<portlet:namespace />selectedContent_<%= portlet.getRootPortletId() %>"></div>
+															<span class="selected-labels" id="<portlet:namespace />selectedContent_<%= portlet.getRootPortletId() %>"></span>
 
 													<%
 													Map<String,Object> data = new HashMap<String,Object>();
@@ -437,7 +437,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 
 							<li>
 								<aui:fieldset cssClass="comments-and-ratings" label="for-each-of-the-selected-content-types,-import-their">
-									<div class="selected-labels" id="<portlet:namespace />selectedCommentsAndRatings"></div>
+									<span class="selected-labels" id="<portlet:namespace />selectedCommentsAndRatings"></span>
 
 									<aui:a cssClass="modify-link" href="javascript:;" id="commentsAndRatingsLink" label="change" method="get" />
 

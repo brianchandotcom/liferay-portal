@@ -9,7 +9,7 @@ AUI().add(
 			'<tpl for=".">',
 				'<span class="lfr-token" data-fieldValues="{fieldValues}" data-clearFields="{clearFields}">',
 					'<span class="lfr-token-text">{text:this.getTokenText}</span>',
-					'<a class="icon icon-close lfr-token-close" href="javascript:;"></a>',
+					'<a class="icon icon-remove lfr-token-close" href="javascript:;"></a>',
 				'</span>',
 			'</tpl>',
 			{

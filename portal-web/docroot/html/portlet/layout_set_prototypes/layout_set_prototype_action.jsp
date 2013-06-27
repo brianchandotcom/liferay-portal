@@ -123,7 +123,7 @@ Group group = layoutSetPrototype.getGroup();
 
 		<liferay-ui:icon
 			cssClass="import-layoutset-prototype layoutset-prototype-action"
-			image="../aui/arrowthick-1-t"
+			image="../aui/arrow-up"
 			message="import"
 			method="get"
 			url="<%= importPagesURL %>"

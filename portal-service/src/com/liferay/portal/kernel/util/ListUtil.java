@@ -267,6 +267,20 @@ public class ListUtil {
 		return list;
 	}
 
+	public static List<Character> toList(char[] array) {
+		if ((array == null) || (array.length == 0)) {
+			return new ArrayList<Character>();
+		}
+
+		List<Character> list = new ArrayList<Character>(array.length);
+
+		for (char value : array) {
+			list.add(value);
+		}
+
+		return list;
+	}
+
 	public static List<Double> toList(double[] array) {
 		if ((array == null) || (array.length == 0)) {
 			return new ArrayList<Double>();

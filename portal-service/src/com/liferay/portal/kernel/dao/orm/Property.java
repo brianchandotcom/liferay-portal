@@ -69,11 +69,23 @@ public interface Property extends Projection {
 
 	public Criterion gtSome(DynamicQuery subselect);
 
+	public Criterion in(char[] values);
+
 	public Criterion in(Collection<Object> values);
+
+	public Criterion in(double[] values);
 
 	public Criterion in(DynamicQuery subselect);
 
+	public Criterion in(float[] values);
+
+	public Criterion in(int[] values);
+
+	public Criterion in(long[] values);
+
 	public Criterion in(Object[] values);
+
+	public Criterion in(short[] values);
 
 	public Criterion isEmpty();
 

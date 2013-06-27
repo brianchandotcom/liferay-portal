@@ -5,11 +5,11 @@
 	<set-up>
 		<execute macro="User#pgFirstLogin" />
 
-		<execute macro="Page#pgAdd">
+		<execute macro="Page#addPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="Portlet#pgAdd">
+		<execute macro="Portlet#addPG">
 			<var name="pageName" value="${pageName}" />
 			<var name="portletName" value="${portletName}" />
 		</execute>
@@ -205,7 +205,7 @@
 		<execute macro="DMFolderDocument#moveToFolderPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
-	</command>-->
+	</command>
 
 	<tear-down>
 		<execute macro="DMDocument#tearDownPG">
@@ -216,6 +216,6 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="Page#pgTearDown" />
+		<execute macro="Page#tearDownPG" />
 	</tear-down>
 </definition>

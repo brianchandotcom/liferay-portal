@@ -23,6 +23,7 @@ import com.liferay.portal.model.ResourceAction;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.ResourcePermission;
 import com.liferay.portal.model.ResourceTypePermission;
+import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ResourceActionLocalServiceUtil;
 import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
@@ -36,6 +37,7 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.ResourcePermissionTestUtil;
 import com.liferay.portal.util.ResourceTypePermissionTestUtil;
 import com.liferay.portal.util.TestPropsValues;
+import com.liferay.portlet.bookmarks.model.BookmarksFolder;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -74,11 +76,9 @@ public class GroupFinderTest {
 			StringUtil.valueOf(_group.getGroupId()),
 			ResourceConstants.SCOPE_GROUP);
 
-		// BookmarkFolder supports ResourceType permissions
-
 		_bookmarkFolderResourceAction =
 			ResourceActionLocalServiceUtil.getResourceAction(
-				"com.liferay.portlet.bookmarks.model.BookmarksFolder", "VIEW");
+				BookmarksFolder.class.getName(), ActionKeys.VIEW);
 
 		_resourceTypePermission =
 			ResourceTypePermissionTestUtil.addResourceTypePermission(
@@ -105,15 +105,15 @@ public class GroupFinderTest {
 			_arbitraryResourceAction.getActionId(),
 			_resourcePermission.getName(), _resourcePermission.getRoleId());
 
-		for (Group curGroup : groups) {
-			if (curGroup.getGroupId() == _group.getGroupId()) {
+		for (Group group : groups) {
+			if (group.getGroupId() == _group.getGroupId()) {
 				return;
 			}
 		}
 
 		Assert.fail(
 			"The method findByC_C_N_D should have returned the group " +
-			_group.getGroupId());
+				_group.getGroupId());
 	}
 
 	@Test
@@ -125,8 +125,8 @@ public class GroupFinderTest {
 			_resourceTypePermission.getName(),
 			_resourceTypePermission.getRoleId());
 
-		for (Group curGroup : groups) {
-			if (curGroup.getGroupId() == _group.getGroupId()) {
+		for (Group group : groups) {
+			if (group.getGroupId() == _group.getGroupId()) {
 				return;
 			}
 		}

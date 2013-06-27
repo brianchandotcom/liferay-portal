@@ -88,8 +88,8 @@ public class JournalArticleStagedModelDataHandler
 	}
 
 	@Override
-	public Integer[] getExportableStatuses() {
-		return new Integer[] {
+	public int[] getExportableStatuses() {
+		return new int[] {
 			WorkflowConstants.STATUS_APPROVED, WorkflowConstants.STATUS_EXPIRED
 		};
 	}

@@ -74,8 +74,8 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 	}
 
 	@Override
-	public Integer[] getExportableStatuses() {
-		return new Integer[] {WorkflowConstants.STATUS_APPROVED};
+	public int[] getExportableStatuses() {
+		return new int[] {WorkflowConstants.STATUS_APPROVED};
 	}
 
 	@Override

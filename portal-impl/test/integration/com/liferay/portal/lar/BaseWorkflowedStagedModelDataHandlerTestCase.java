@@ -60,7 +60,7 @@ public abstract class BaseWorkflowedStagedModelDataHandlerTestCase
 
 		for (StagedModel stagedModel : stagedModels) {
 			Assert.assertTrue(
-				"StagedModel is not WorkflowedModel",
+				"Staged model is not a workflowed model",
 				stagedModel instanceof WorkflowedModel);
 
 			StagedModelDataHandlerUtil.exportStagedModel(
@@ -78,24 +78,24 @@ public abstract class BaseWorkflowedStagedModelDataHandlerTestCase
 
 		Element rootElement = portletDataContext.getExportDataRootElement();
 
-		Class modelClass = stagedModel.getModelClass();
+		Class<?> modelClass = stagedModel.getModelClass();
 
-		Element groupElement = rootElement.element(modelClass.getSimpleName());
+		Element modelElement = rootElement.element(modelClass.getSimpleName());
 
-		Assert.assertNotNull("Unable to find model element", groupElement);
+		Assert.assertNotNull("Unable to find model element", modelElement);
 
 		XPath xPath = SAXReaderUtil.createXPath(
 			"staged-model[@path ='" +
 				ExportImportPathUtil.getModelPath(stagedModel) + "']");
 
-		return (Element)xPath.selectSingleNode(groupElement);
+		return (Element)xPath.selectSingleNode(modelElement);
 	}
 
 	protected void validateWorkflowedExport(
 			PortletDataContext portletDataContext, StagedModel stagedModel)
 		throws Exception {
 
-		StagedModelDataHandler stagedModelDataHandler =
+		StagedModelDataHandler<?> stagedModelDataHandler =
 			StagedModelDataHandlerRegistryUtil.getStagedModelDataHandler(
 				stagedModel.getModelClassName());
 
@@ -109,11 +109,12 @@ public abstract class BaseWorkflowedStagedModelDataHandlerTestCase
 				workflowedModel.getStatus())) {
 
 			Assert.assertNotNull(
-				"StagedModel should be exported", exportStagedModelElement);
+				"Staged model should be exported", exportStagedModelElement);
 		}
 		else {
 			Assert.assertNull(
-				"StagedModel should not be exported", exportStagedModelElement);
+				"Staged model should not be exported",
+				exportStagedModelElement);
 		}
 	}
 

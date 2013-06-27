@@ -38,7 +38,7 @@ List<DLFileEntryType> fileEntryTypes = DLFileEntryTypeLocalServiceUtil.getFolder
 		modelVar="fileEntryType"
 	>
 		<liferay-ui:search-container-column-text name="name">
-			<a class="select-file-entry-type" data-rowId="<%= fileEntryType.getFileEntryTypeId() %>" href="javascript:;"><%= LanguageUtil.get(pageContext, fileEntryType.getName(locale)) %></a>
+			<a class="select-file-entry-type" data-rowId="<%= fileEntryType.getFileEntryTypeId() %>" href="javascript:;"><%= HtmlUtil.escape(fileEntryType.getName(locale)) %></a>
 		</liferay-ui:search-container-column-text>
 	</liferay-ui:search-container-row>
 

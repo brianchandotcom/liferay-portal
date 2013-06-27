@@ -15,11 +15,13 @@
 package com.liferay.portlet.documentlibrary.model.impl;
 
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 
 import java.util.List;
+import java.util.Locale;
 
 /**
  * @author Alexander Chow
@@ -45,6 +47,19 @@ public class DLFileEntryTypeImpl extends DLFileEntryTypeBaseImpl {
 		}
 
 		return true;
+	}
+
+	@Override
+	public String getName(Locale locale) {
+		String name = super.getName(locale);
+
+		if (getFileEntryTypeId() ==
+				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT) {
+
+			name = LanguageUtil.get(locale, name);
+		}
+
+		return name;
 	}
 
 }

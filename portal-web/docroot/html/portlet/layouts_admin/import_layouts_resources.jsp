@@ -224,7 +224,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 
 									PortletDataHandlerControl[] portletDataHandlerControls = portletDataHandler.getImportConfigurationControls(portlet, manifestSummary);
 
-									if (Validator.isNull(portletDataHandlerControls)) {
+									if ((portletDataHandlerControls == null) || (portletDataHandlerControls.length == 0)) {
 										continue;
 									}
 

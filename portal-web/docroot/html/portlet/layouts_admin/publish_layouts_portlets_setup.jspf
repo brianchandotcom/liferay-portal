@@ -47,7 +47,7 @@
 
 				PortletDataHandlerControl[] configurationControls = portletDataHandler.getExportConfigurationControls(company.getCompanyId(), stagingGroupId, portlet, privateLayout);
 
-				if (Validator.isNull(configurationControls)) {
+				if ((configurationControls == null) || (configurationControls.length == 0)) {
 					continue;
 				}
 

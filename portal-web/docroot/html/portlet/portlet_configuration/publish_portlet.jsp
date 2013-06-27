@@ -101,7 +101,7 @@ else if (stagingGroup.isLayout()) {
 				}
 				%>
 
-				<c:if test="<%= Validator.isNotNull(configurationControls) %>">
+				<c:if test="<%= (configurationControls != null) && (configurationControls.length > 0) %>">
 					<aui:fieldset cssClass="options-group" label="application">
 						<ul class="lfr-tree unstyled">
 							<li class="tree-item">

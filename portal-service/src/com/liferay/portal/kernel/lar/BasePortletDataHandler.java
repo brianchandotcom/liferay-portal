@@ -160,7 +160,7 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 						true, false, null, null, null));
 		}
 
-		// Archived Setups
+		// Archived setups
 
 		if (PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
 				PortletKeys.PREFS_OWNER_TYPE_ARCHIVED,
@@ -173,7 +173,7 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 			);
 		}
 
-		// User Preferences
+		// User preferences
 
 		if ((PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
 				companyId, groupId, -1, PortletKeys.PREFS_OWNER_TYPE_USER, plid,
@@ -250,17 +250,16 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 					false, null, null, null));
 		}
 
-		// Archived Setups
+		// Archived setups
 
 		if (ArrayUtil.contains(configurationOptions, "archived-setups")) {
 			configurationControls.add(
 				new PortletDataHandlerBoolean(
 					null, PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS,
-					"archived-setups", true, false, null, null, null)
-			);
+					"archived-setups", true, false, null, null, null));
 		}
 
-		// User Preferences
+		// User preferences
 
 		if (ArrayUtil.contains(configurationOptions, "user-preferences")) {
 			configurationControls.add(

@@ -1153,15 +1153,15 @@ public class PortletExporter {
 
 		// Zip
 
-		StringBundler sb = new StringBundler(4);
+		StringBundler pathSB = new StringBundler(4);
 
-		sb.append(
+		pathSB.append(
 			ExportImportPathUtil.getPortletPath(portletDataContext, portletId));
-		sb.append(StringPool.SLASH);
-		sb.append(plid);
-		sb.append("/portlet.xml");
+		pathSB.append(StringPool.SLASH);
+		pathSB.append(plid);
+		pathSB.append("/portlet.xml");
 
-		String path = sb.toString();
+		String path = pathSB.toString();
 
 		Element element = parentElement.addElement("portlet");
 
@@ -1170,29 +1170,29 @@ public class PortletExporter {
 		element.addAttribute("path", path);
 		element.addAttribute("portlet-data", String.valueOf(exportPortletData));
 
-		StringBundler configurationOptionsSb = new StringBundler(6);
+		StringBundler configurationOptionsSB = new StringBundler(6);
 
 		if (exportPortletSetup) {
-			configurationOptionsSb.append("setup");
-			configurationOptionsSb.append(StringPool.COMMA);
+			configurationOptionsSB.append("setup");
+			configurationOptionsSB.append(StringPool.COMMA);
 		}
 
 		if (exportPortletArchivedSetups) {
-			configurationOptionsSb.append("archived-setups");
-			configurationOptionsSb.append(StringPool.COMMA);
+			configurationOptionsSB.append("archived-setups");
+			configurationOptionsSB.append(StringPool.COMMA);
 		}
 
 		if (exportPortletUserPreferences) {
-			configurationOptionsSb.append("user-preferences");
-			configurationOptionsSb.append(StringPool.COMMA);
+			configurationOptionsSB.append("user-preferences");
+			configurationOptionsSB.append(StringPool.COMMA);
 		}
 
-		if (configurationOptionsSb.index() > 0) {
-			configurationOptionsSb.setIndex(configurationOptionsSb.index() -1);
+		if (configurationOptionsSB.index() > 0) {
+			configurationOptionsSB.setIndex(configurationOptionsSB.index() -1);
 		}
 
 		element.addAttribute(
-			"portlet-configuration", configurationOptionsSb.toString());
+			"portlet-configuration", configurationOptionsSB.toString());
 
 		if (portletDataContext.isPathNotProcessed(path)) {
 			try {

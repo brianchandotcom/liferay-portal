@@ -146,7 +146,7 @@ if (endDateTime > 0) {
 
 										PortletDataHandlerControl[] configurationControls = portletDataHandler.getExportConfigurationControls(company.getCompanyId(), groupId, portlet, privateLayout);
 
-										if (Validator.isNotNull(configurationControls)) {
+										if ((configurationControls != null) && (configurationControls.length > 0)) {
 											String portletTitle = PortalUtil.getPortletTitle(portlet, application, locale);
 									%>
 

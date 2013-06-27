@@ -30,8 +30,20 @@ import java.util.Set;
 public class AuthTokenWhitelistImpl implements AuthTokenWhitelist {
 
 	public AuthTokenWhitelistImpl() {
+		resetPortletCSRFWhitelist();
+		resetPortletCSRFWhitelistActions();
 		resetPortletInvocationWhitelist();
 		resetPortletInvocationWhitelistActions();
+	}
+
+	@Override
+	public Set<String> getPortletCSRFWhitelist() {
+		return _portletCSRFWhitelist;
+	}
+
+	@Override
+	public Set<String> getPortletCSRFWhitelistActions() {
+		return _portletCSRFWhitelistActions;
 	}
 
 	@Override
@@ -67,6 +79,26 @@ public class AuthTokenWhitelistImpl implements AuthTokenWhitelist {
 	}
 
 	@Override
+	public Set<String> resetPortletCSRFWhitelist() {
+		_portletCSRFWhitelist = SetUtil.fromArray(
+			PropsValues.AUTH_TOKEN_IGNORE_PORTLETS);
+		_portletCSRFWhitelist = Collections.unmodifiableSet(
+			_portletCSRFWhitelist);
+
+		return _portletCSRFWhitelist;
+	}
+
+	@Override
+	public Set<String> resetPortletCSRFWhitelistActions() {
+		_portletCSRFWhitelistActions = SetUtil.fromArray(
+			PropsValues.AUTH_TOKEN_IGNORE_ACTIONS);
+		_portletCSRFWhitelistActions = Collections.unmodifiableSet(
+			_portletCSRFWhitelistActions);
+
+		return _portletCSRFWhitelistActions;
+	}
+
+	@Override
 	public Set<String> resetPortletInvocationWhitelist() {
 		_portletInvocationWhitelist = SetUtil.fromArray(
 			PropsValues.PORTLET_ADD_DEFAULT_RESOURCE_CHECK_WHITELIST);
@@ -86,6 +118,8 @@ public class AuthTokenWhitelistImpl implements AuthTokenWhitelist {
 		return _portletInvocationWhitelistActions;
 	}
 
+	private Set<String> _portletCSRFWhitelist;
+	private Set<String> _portletCSRFWhitelistActions;
 	private Set<String> _portletInvocationWhitelist;
 	private Set<String> _portletInvocationWhitelistActions;
 

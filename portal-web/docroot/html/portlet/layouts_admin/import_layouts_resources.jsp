@@ -341,6 +341,11 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 								<c:if test="<%= importModelCount != 0 %>">
 									<li>
 										<aui:input checked="<%= true %>" label='<%= portletTitle + (importModelCount > 0 ? " (" + importModelCount + ")" : StringPool.BLANK) %>' name="<%= PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE + portlet.getRootPortletId() %>" type="checkbox" />
+												<liferay-util:buffer var="badgeHTML">
+													<span class="badge badge-info"><%= importModelCount > 0 ? importModelCount : StringPool.BLANK %></span>
+												</liferay-util:buffer>
+
+												<aui:input checked="<%= true %>" label="<%= portletTitle + badgeHTML %>" name="<%= PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE + portlet.getRootPortletId() %>" type="checkbox" />
 
 										<%
 										PortletDataHandlerControl[] importControls = portletDataHandler.getImportControls();

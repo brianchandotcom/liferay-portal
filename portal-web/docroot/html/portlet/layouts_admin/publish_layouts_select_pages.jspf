@@ -37,7 +37,7 @@ rowChecker.setValign("top");
 searchContainer.setRowChecker(rowChecker);
 %>
 
-<div class="selected-labels" id="<portlet:namespace />selectedPages"></div>
+<span class="selected-labels" id="<portlet:namespace />selectedPages"></span>
 
 <aui:a cssClass="modify-link" href="javascript:;" id="pagesLink" label="change" method="get" />
 

@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.lar;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
@@ -227,24 +228,50 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 
 	@Override
 	public PortletDataHandlerControl[] getImportConfigurationControls(
-			Portlet portlet)
+			Portlet portlet, ManifestSummary manifestSummary)
 		throws PortletDataException {
 
 		if (Validator.isNull(portlet.getConfigurationActionClass())) {
 			return null;
 		}
 
-		return new PortletDataHandlerBoolean[] {
-			new PortletDataHandlerBoolean(
-				null, PortletDataHandlerKeys.PORTLET_SETUP, "setup", true,
-				false, null, null, null),
-			new PortletDataHandlerBoolean(
-				null, PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS,
-				"archived-setups", true, false, null, null, null),
-			new PortletDataHandlerBoolean(
-				null, PortletDataHandlerKeys.PORTLET_USER_PREFERENCES,
-				"user-preferences", true, false, null, null, null)
-		};
+		String[] configurationOptions =
+			manifestSummary.getConfigurationPortletOptions(
+				portlet.getRootPortletId());
+
+		List<PortletDataHandlerBoolean> configurationControls =
+			new ArrayList<PortletDataHandlerBoolean>();
+
+		// Setup
+
+		if (ArrayUtil.contains(configurationOptions, "setup")) {
+			configurationControls.add(
+				new PortletDataHandlerBoolean(
+					null, PortletDataHandlerKeys.PORTLET_SETUP, "setup", true,
+					false, null, null, null));
+		}
+
+		// Archived Setups
+
+		if (ArrayUtil.contains(configurationOptions, "archived-setups")) {
+			configurationControls.add(
+				new PortletDataHandlerBoolean(
+					null, PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS,
+					"archived-setups", true, false, null, null, null)
+			);
+		}
+
+		// User Preferences
+
+		if (ArrayUtil.contains(configurationOptions, "user-preferences")) {
+			configurationControls.add(
+				new PortletDataHandlerBoolean(
+					null, PortletDataHandlerKeys.PORTLET_USER_PREFERENCES,
+					"user-preferences", true, false, null, null, null));
+		}
+
+		return configurationControls.toArray(
+			new PortletDataHandlerBoolean[configurationControls.size()]);
 	}
 
 	@Override

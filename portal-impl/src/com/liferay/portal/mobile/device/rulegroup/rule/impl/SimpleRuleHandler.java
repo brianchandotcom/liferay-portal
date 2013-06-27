@@ -14,11 +14,14 @@
 
 package com.liferay.portal.mobile.device.rulegroup.rule.impl;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.mobile.device.Device;
 import com.liferay.portal.kernel.mobile.device.Dimensions;
 import com.liferay.portal.kernel.mobile.device.rulegroup.rule.RuleHandler;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
@@ -157,6 +160,9 @@ public class SimpleRuleHandler implements RuleHandler {
 		String min = typeSettingsProperties.get(minProperty);
 
 		if (Validator.isNull(max) && Validator.isNull(min)) {
+			logRangeValue(
+				mdrRule, maxProperty, minProperty, value, max, min, true);
+
 			return true;
 		}
 
@@ -164,21 +170,71 @@ public class SimpleRuleHandler implements RuleHandler {
 			float maxFloat = GetterUtil.getFloat(max);
 
 			if (value > maxFloat) {
+				logRangeValue(
+					mdrRule, maxProperty, minProperty, value, max, min, false);
+
 				return false;
 			}
+
+			logRangeValue(
+				mdrRule, maxProperty, minProperty, value, max, min, true);
 		}
 
 		if (Validator.isNotNull(min)) {
 			float minFloat = GetterUtil.getFloat(min);
 
 			if (value < minFloat) {
+				logRangeValue(
+					mdrRule, maxProperty, minProperty, value, max, min, false);
+
 				return false;
 			}
+
+			logRangeValue(
+				mdrRule, maxProperty, minProperty, value, max, min, true);
 		}
 
 		return true;
 	}
 
+	protected void logRangeValue(
+		MDRRule mdrRule, String maxProperty, String minProperty, float value,
+		String max, String min, boolean valid) {
+
+		if (!_log.isDebugEnabled()) {
+			return;
+		}
+
+		StringBundler sb = new StringBundler();
+
+		sb.append("Rule ");
+		sb.append(mdrRule.getNameCurrentValue());
+		sb.append(": The value ");
+		sb.append(value);
+		sb.append("' is '");
+
+		if (!valid) {
+			sb.append("NOT ");
+		}
+
+		sb.append("within the allowed range");
+
+		if (Validator.isNotNull(max) && Validator.isNotNull(min)) {
+			sb.append(" (");
+			sb.append(minProperty);
+			sb.append(": ");
+			sb.append(min);
+			sb.append(", ");
+			sb.append(maxProperty);
+			sb.append(": ");
+			sb.append(max);
+			sb.append(")");
+		}
+
+		_log.debug(sb.toString());
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(SimpleRuleHandler.class);
 	private static Collection<String> _propertyNames;
 
 	static {

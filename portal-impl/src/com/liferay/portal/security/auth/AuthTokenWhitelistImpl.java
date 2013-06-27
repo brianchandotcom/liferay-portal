@@ -15,8 +15,12 @@
 package com.liferay.portal.security.auth;
 
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.Portlet;
+import com.liferay.portal.model.PortletConstants;
+import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.Collections;
@@ -57,6 +61,31 @@ public class AuthTokenWhitelistImpl implements AuthTokenWhitelist {
 	}
 
 	@Override
+	public boolean isPortletCSRFWhitelisted(
+		long companyId, String portletId, String strutsAction) {
+
+		String rootPortletId = PortletConstants.getRootPortletId(portletId);
+
+		Set<String> whitelist = getPortletCSRFWhitelist();
+
+		if (whitelist.contains(rootPortletId)) {
+			return true;
+		}
+
+		if (Validator.isNotNull(strutsAction)) {
+			Set<String> whitelistActions = getPortletCSRFWhitelistActions();
+
+			if (whitelistActions.contains(strutsAction) &&
+				isStrutsActionValid(companyId, rootPortletId, strutsAction)) {
+
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	@Override
 	public boolean isPortletInvocationWhitelisted(
 		long companyId, String portletId, String strutsAction) {
 
@@ -70,7 +99,9 @@ public class AuthTokenWhitelistImpl implements AuthTokenWhitelist {
 			Set<String> whitelistActions =
 				getPortletInvocationWhitelistActions();
 
-			if (whitelistActions.contains(strutsAction)) {
+			if (whitelistActions.contains(strutsAction) &&
+				isStrutsActionValid(companyId, portletId, strutsAction)) {
+
 				return true;
 			}
 		}
@@ -116,6 +147,32 @@ public class AuthTokenWhitelistImpl implements AuthTokenWhitelist {
 			_portletInvocationWhitelistActions);
 
 		return _portletInvocationWhitelistActions;
+	}
+
+	protected boolean isStrutsActionValid(
+		long companyId, String portletId, String strutsAction) {
+
+		try {
+			Portlet portlet = PortletLocalServiceUtil.getPortletById(
+				companyId, portletId);
+
+			if (portlet == null) {
+				return false;
+			}
+
+			String strutsPath = strutsAction.substring(
+				1, strutsAction.lastIndexOf(CharPool.SLASH));
+
+			if (strutsPath.equals(portlet.getStrutsPath()) ||
+				strutsPath.equals(portlet.getParentStrutsPath())) {
+
+				return true;
+			}
+		}
+		catch (Exception e) {
+		}
+
+		return false;
 	}
 
 	private Set<String> _portletCSRFWhitelist;

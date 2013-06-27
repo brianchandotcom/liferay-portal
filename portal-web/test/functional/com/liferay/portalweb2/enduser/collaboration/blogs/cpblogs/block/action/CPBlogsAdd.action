@@ -3,6 +3,9 @@
 		<case locator-key1="PUBLISH_BUTTON">
 			<execute function="AssertClick#assertTextClickAtAndWaitCKEditor" />
 		</case>
+		<case locator-key1="SUBMIT_FOR_PUBLICATION_BUTTON">
+			<execute function="AssertClick#assertTextClickAtAndWaitCKEditor" />
+		</case>
 	</command>
 
 	<command name="type">

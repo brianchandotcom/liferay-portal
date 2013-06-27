@@ -912,6 +912,7 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 			}
 
 			ServiceContext serviceContext = ldapUser.getServiceContext();
+
 			serviceContext.setAttribute("ldapServerId", ldapServerId);
 
 			boolean isNew = false;

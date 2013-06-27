@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model;
 
+import com.liferay.portal.kernel.util.Validator;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -670,6 +672,26 @@ public class LayoutSetPrototypeWrapper implements LayoutSetPrototype,
 	public void setSettingsProperties(
 		com.liferay.portal.kernel.util.UnicodeProperties settingsProperties) {
 		_layoutSetPrototype.setSettingsProperties(settingsProperties);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof LayoutSetPrototypeWrapper)) {
+			return false;
+		}
+
+		LayoutSetPrototypeWrapper layoutSetPrototypeWrapper = (LayoutSetPrototypeWrapper)obj;
+
+		if (Validator.equals(_layoutSetPrototype,
+					layoutSetPrototypeWrapper._layoutSetPrototype)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**

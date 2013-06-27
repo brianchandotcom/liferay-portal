@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model;
 
+import com.liferay.portal.kernel.util.Validator;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -486,6 +488,26 @@ public class WorkflowInstanceLinkWrapper implements WorkflowInstanceLink,
 	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_workflowInstanceLink.persist();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof WorkflowInstanceLinkWrapper)) {
+			return false;
+		}
+
+		WorkflowInstanceLinkWrapper workflowInstanceLinkWrapper = (WorkflowInstanceLinkWrapper)obj;
+
+		if (Validator.equals(_workflowInstanceLink,
+					workflowInstanceLinkWrapper._workflowInstanceLink)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**

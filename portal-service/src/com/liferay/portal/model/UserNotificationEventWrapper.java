@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model;
 
+import com.liferay.portal.kernel.util.Validator;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -490,6 +492,26 @@ public class UserNotificationEventWrapper implements UserNotificationEvent,
 	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_userNotificationEvent.persist();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof UserNotificationEventWrapper)) {
+			return false;
+		}
+
+		UserNotificationEventWrapper userNotificationEventWrapper = (UserNotificationEventWrapper)obj;
+
+		if (Validator.equals(_userNotificationEvent,
+					userNotificationEventWrapper._userNotificationEvent)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**

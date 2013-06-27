@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.expando.model;
 
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelWrapper;
 
 import java.util.Date;
@@ -313,6 +314,25 @@ public class ExpandoRowWrapper implements ExpandoRow, ModelWrapper<ExpandoRow> {
 	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_expandoRow.persist();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof ExpandoRowWrapper)) {
+			return false;
+		}
+
+		ExpandoRowWrapper expandoRowWrapper = (ExpandoRowWrapper)obj;
+
+		if (Validator.equals(_expandoRow, expandoRowWrapper._expandoRow)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**

@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.messageboards.model;
 
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelWrapper;
 
 import java.util.Date;
@@ -919,6 +920,25 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	@Override
 	public boolean isRoot() {
 		return _mbCategory.isRoot();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof MBCategoryWrapper)) {
+			return false;
+		}
+
+		MBCategoryWrapper mbCategoryWrapper = (MBCategoryWrapper)obj;
+
+		if (Validator.equals(_mbCategory, mbCategoryWrapper._mbCategory)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**

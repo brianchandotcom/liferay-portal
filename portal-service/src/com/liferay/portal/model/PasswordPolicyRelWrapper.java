@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model;
 
+import com.liferay.portal.kernel.util.Validator;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -299,6 +301,26 @@ public class PasswordPolicyRelWrapper implements PasswordPolicyRel,
 	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_passwordPolicyRel.persist();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof PasswordPolicyRelWrapper)) {
+			return false;
+		}
+
+		PasswordPolicyRelWrapper passwordPolicyRelWrapper = (PasswordPolicyRelWrapper)obj;
+
+		if (Validator.equals(_passwordPolicyRel,
+					passwordPolicyRelWrapper._passwordPolicyRel)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**

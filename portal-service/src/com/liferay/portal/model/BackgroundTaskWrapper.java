@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model;
 
+import com.liferay.portal.kernel.util.Validator;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -625,6 +627,26 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 	@Override
 	public java.util.Map<java.lang.String, java.io.Serializable> getTaskContextMap() {
 		return _backgroundTask.getTaskContextMap();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof BackgroundTaskWrapper)) {
+			return false;
+		}
+
+		BackgroundTaskWrapper backgroundTaskWrapper = (BackgroundTaskWrapper)obj;
+
+		if (Validator.equals(_backgroundTask,
+					backgroundTaskWrapper._backgroundTask)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**

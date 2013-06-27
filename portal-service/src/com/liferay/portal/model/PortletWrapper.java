@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model;
 
+import com.liferay.portal.kernel.util.Validator;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -357,17 +359,6 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	public void addSchedulerEntry(
 		com.liferay.portal.kernel.scheduler.SchedulerEntry schedulerEntry) {
 		_portlet.addSchedulerEntry(schedulerEntry);
-	}
-
-	/**
-	* Checks whether this portlet is equal to the specified object.
-	*
-	* @param obj the object to compare this portlet against
-	* @return <code>true</code> if the portlet is equal to the specified object
-	*/
-	@Override
-	public boolean equals(java.lang.Object obj) {
-		return _portlet.equals(obj);
 	}
 
 	/**
@@ -3337,6 +3328,25 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	@Override
 	public void setXmlRpcMethodClass(java.lang.String xmlRpcMethodClass) {
 		_portlet.setXmlRpcMethodClass(xmlRpcMethodClass);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof PortletWrapper)) {
+			return false;
+		}
+
+		PortletWrapper portletWrapper = (PortletWrapper)obj;
+
+		if (Validator.equals(_portlet, portletWrapper._portlet)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**

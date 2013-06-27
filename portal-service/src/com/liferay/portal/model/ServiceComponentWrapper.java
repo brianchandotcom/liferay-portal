@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model;
 
+import com.liferay.portal.kernel.util.Validator;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -326,6 +328,26 @@ public class ServiceComponentWrapper implements ServiceComponent,
 	@Override
 	public java.lang.String getTablesSQL() {
 		return _serviceComponent.getTablesSQL();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof ServiceComponentWrapper)) {
+			return false;
+		}
+
+		ServiceComponentWrapper serviceComponentWrapper = (ServiceComponentWrapper)obj;
+
+		if (Validator.equals(_serviceComponent,
+					serviceComponentWrapper._serviceComponent)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**

@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.expando.model;
 
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelWrapper;
 
 import java.util.HashMap;
@@ -306,6 +307,25 @@ public class ExpandoTableWrapper implements ExpandoTable,
 	@Override
 	public boolean isDefaultTable() {
 		return _expandoTable.isDefaultTable();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof ExpandoTableWrapper)) {
+			return false;
+		}
+
+		ExpandoTableWrapper expandoTableWrapper = (ExpandoTableWrapper)obj;
+
+		if (Validator.equals(_expandoTable, expandoTableWrapper._expandoTable)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**

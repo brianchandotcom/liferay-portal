@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model;
 
+import com.liferay.portal.kernel.util.Validator;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -1899,6 +1901,26 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	public void setTypeSettingsProperties(
 		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties) {
 		_layoutRevision.setTypeSettingsProperties(typeSettingsProperties);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof LayoutRevisionWrapper)) {
+			return false;
+		}
+
+		LayoutRevisionWrapper layoutRevisionWrapper = (LayoutRevisionWrapper)obj;
+
+		if (Validator.equals(_layoutRevision,
+					layoutRevisionWrapper._layoutRevision)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**

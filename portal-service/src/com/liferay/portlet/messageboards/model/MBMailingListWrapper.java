@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.messageboards.model;
 
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelWrapper;
 
 import java.util.Date;
@@ -953,6 +954,25 @@ public class MBMailingListWrapper implements MBMailingList,
 	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_mbMailingList.persist();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof MBMailingListWrapper)) {
+			return false;
+		}
+
+		MBMailingListWrapper mbMailingListWrapper = (MBMailingListWrapper)obj;
+
+		if (Validator.equals(_mbMailingList, mbMailingListWrapper._mbMailingList)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**

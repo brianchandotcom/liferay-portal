@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.asset.model;
 
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelWrapper;
 
 import java.util.Date;
@@ -444,6 +445,26 @@ public class AssetTagPropertyWrapper implements AssetTagProperty,
 	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_assetTagProperty.persist();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof AssetTagPropertyWrapper)) {
+			return false;
+		}
+
+		AssetTagPropertyWrapper assetTagPropertyWrapper = (AssetTagPropertyWrapper)obj;
+
+		if (Validator.equals(_assetTagProperty,
+					assetTagPropertyWrapper._assetTagProperty)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**

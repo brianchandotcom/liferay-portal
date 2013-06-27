@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.announcements.model;
 
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelWrapper;
 
 import java.util.Date;
@@ -692,6 +693,26 @@ public class AnnouncementsEntryWrapper implements AnnouncementsEntry,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _announcementsEntry.getGroupId();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof AnnouncementsEntryWrapper)) {
+			return false;
+		}
+
+		AnnouncementsEntryWrapper announcementsEntryWrapper = (AnnouncementsEntryWrapper)obj;
+
+		if (Validator.equals(_announcementsEntry,
+					announcementsEntryWrapper._announcementsEntry)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**

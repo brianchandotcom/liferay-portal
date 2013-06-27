@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model;
 
+import com.liferay.portal.kernel.util.Validator;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -948,6 +950,25 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	public void setTypeSettingsProperties(
 		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties) {
 		_group.setTypeSettingsProperties(typeSettingsProperties);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof GroupWrapper)) {
+			return false;
+		}
+
+		GroupWrapper groupWrapper = (GroupWrapper)obj;
+
+		if (Validator.equals(_group, groupWrapper._group)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**

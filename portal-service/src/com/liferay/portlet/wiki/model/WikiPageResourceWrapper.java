@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.wiki.model;
 
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelWrapper;
 
 import java.util.HashMap;
@@ -286,6 +287,26 @@ public class WikiPageResourceWrapper implements WikiPageResource,
 	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_wikiPageResource.persist();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof WikiPageResourceWrapper)) {
+			return false;
+		}
+
+		WikiPageResourceWrapper wikiPageResourceWrapper = (WikiPageResourceWrapper)obj;
+
+		if (Validator.equals(_wikiPageResource,
+					wikiPageResourceWrapper._wikiPageResource)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**

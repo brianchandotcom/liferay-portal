@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.trash.model;
 
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelWrapper;
 
 import java.util.Date;
@@ -517,6 +518,25 @@ public class TrashEntryWrapper implements TrashEntry, ModelWrapper<TrashEntry> {
 	public void setTypeSettingsProperties(
 		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties) {
 		_trashEntry.setTypeSettingsProperties(typeSettingsProperties);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof TrashEntryWrapper)) {
+			return false;
+		}
+
+		TrashEntryWrapper trashEntryWrapper = (TrashEntryWrapper)obj;
+
+		if (Validator.equals(_trashEntry, trashEntryWrapper._trashEntry)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**

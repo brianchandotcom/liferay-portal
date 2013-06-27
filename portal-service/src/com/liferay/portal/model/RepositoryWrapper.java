@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model;
 
+import com.liferay.portal.kernel.util.Validator;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -601,6 +603,25 @@ public class RepositoryWrapper implements Repository, ModelWrapper<Repository> {
 	public void setTypeSettingsProperties(
 		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties) {
 		_repository.setTypeSettingsProperties(typeSettingsProperties);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof RepositoryWrapper)) {
+			return false;
+		}
+
+		RepositoryWrapper repositoryWrapper = (RepositoryWrapper)obj;
+
+		if (Validator.equals(_repository, repositoryWrapper._repository)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**

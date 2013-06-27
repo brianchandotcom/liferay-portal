@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.blogs.model;
 
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelWrapper;
 
 import java.util.Date;
@@ -993,6 +994,25 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	@Override
 	public void setSmallImageType(java.lang.String smallImageType) {
 		_blogsEntry.setSmallImageType(smallImageType);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof BlogsEntryWrapper)) {
+			return false;
+		}
+
+		BlogsEntryWrapper blogsEntryWrapper = (BlogsEntryWrapper)obj;
+
+		if (Validator.equals(_blogsEntry, blogsEntryWrapper._blogsEntry)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**

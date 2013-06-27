@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.shopping.model;
 
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelWrapper;
 
 import java.util.Date;
@@ -449,6 +450,26 @@ public class ShoppingOrderItemWrapper implements ShoppingOrderItem,
 	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_shoppingOrderItem.persist();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof ShoppingOrderItemWrapper)) {
+			return false;
+		}
+
+		ShoppingOrderItemWrapper shoppingOrderItemWrapper = (ShoppingOrderItemWrapper)obj;
+
+		if (Validator.equals(_shoppingOrderItem,
+					shoppingOrderItemWrapper._shoppingOrderItem)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**

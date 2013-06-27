@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model;
 
+import com.liferay.portal.kernel.util.Validator;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -416,6 +418,25 @@ public class WebDAVPropsWrapper implements WebDAVProps,
 	@Override
 	public void store() throws java.lang.Exception {
 		_webDAVProps.store();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof WebDAVPropsWrapper)) {
+			return false;
+		}
+
+		WebDAVPropsWrapper webDAVPropsWrapper = (WebDAVPropsWrapper)obj;
+
+		if (Validator.equals(_webDAVProps, webDAVPropsWrapper._webDAVProps)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**

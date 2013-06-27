@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.wiki.model;
 
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelWrapper;
 
 import java.util.Date;
@@ -793,6 +794,25 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getDeletedAttachmentsFiles()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _wikiNode.getDeletedAttachmentsFiles();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof WikiNodeWrapper)) {
+			return false;
+		}
+
+		WikiNodeWrapper wikiNodeWrapper = (WikiNodeWrapper)obj;
+
+		if (Validator.equals(_wikiNode, wikiNodeWrapper._wikiNode)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**

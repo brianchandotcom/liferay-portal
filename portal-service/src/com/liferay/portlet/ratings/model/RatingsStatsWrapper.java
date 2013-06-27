@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.ratings.model;
 
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelWrapper;
 
 import java.util.HashMap;
@@ -355,6 +356,25 @@ public class RatingsStatsWrapper implements RatingsStats,
 	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_ratingsStats.persist();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof RatingsStatsWrapper)) {
+			return false;
+		}
+
+		RatingsStatsWrapper ratingsStatsWrapper = (RatingsStatsWrapper)obj;
+
+		if (Validator.equals(_ratingsStats, ratingsStatsWrapper._ratingsStats)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**

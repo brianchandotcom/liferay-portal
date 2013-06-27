@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model;
 
+import com.liferay.portal.kernel.util.Validator;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -462,6 +464,26 @@ public class UserNotificationDeliveryWrapper implements UserNotificationDelivery
 	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_userNotificationDelivery.persist();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof UserNotificationDeliveryWrapper)) {
+			return false;
+		}
+
+		UserNotificationDeliveryWrapper userNotificationDeliveryWrapper = (UserNotificationDeliveryWrapper)obj;
+
+		if (Validator.equals(_userNotificationDelivery,
+					userNotificationDeliveryWrapper._userNotificationDelivery)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**

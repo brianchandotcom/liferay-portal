@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model;
 
+import com.liferay.portal.kernel.util.Validator;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -554,6 +556,25 @@ public class EmailAddressWrapper implements EmailAddress,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _emailAddress.getType();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof EmailAddressWrapper)) {
+			return false;
+		}
+
+		EmailAddressWrapper emailAddressWrapper = (EmailAddressWrapper)obj;
+
+		if (Validator.equals(_emailAddress, emailAddressWrapper._emailAddress)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**

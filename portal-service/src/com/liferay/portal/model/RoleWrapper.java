@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model;
 
+import com.liferay.portal.kernel.util.Validator;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -856,6 +858,25 @@ public class RoleWrapper implements Role, ModelWrapper<Role> {
 	@Override
 	public boolean isTeam() {
 		return _role.isTeam();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof RoleWrapper)) {
+			return false;
+		}
+
+		RoleWrapper roleWrapper = (RoleWrapper)obj;
+
+		if (Validator.equals(_role, roleWrapper._role)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**

@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.asset.model;
 
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelWrapper;
 
 import java.util.Date;
@@ -442,6 +443,25 @@ public class AssetLinkWrapper implements AssetLink, ModelWrapper<AssetLink> {
 	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_assetLink.persist();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof AssetLinkWrapper)) {
+			return false;
+		}
+
+		AssetLinkWrapper assetLinkWrapper = (AssetLinkWrapper)obj;
+
+		if (Validator.equals(_assetLink, assetLinkWrapper._assetLink)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**

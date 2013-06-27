@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model;
 
+import com.liferay.portal.kernel.util.Validator;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -313,6 +315,25 @@ public class RegionWrapper implements Region, ModelWrapper<Region> {
 	@Override
 	public java.lang.String toXmlString() {
 		return _region.toXmlString();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof RegionWrapper)) {
+			return false;
+		}
+
+		RegionWrapper regionWrapper = (RegionWrapper)obj;
+
+		if (Validator.equals(_region, regionWrapper._region)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**

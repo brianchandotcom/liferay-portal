@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.journal.model;
 
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelWrapper;
 
 import java.util.HashMap;
@@ -378,6 +379,26 @@ public class JournalContentSearchWrapper implements JournalContentSearch,
 	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_journalContentSearch.persist();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof JournalContentSearchWrapper)) {
+			return false;
+		}
+
+		JournalContentSearchWrapper journalContentSearchWrapper = (JournalContentSearchWrapper)obj;
+
+		if (Validator.equals(_journalContentSearch,
+					journalContentSearchWrapper._journalContentSearch)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**

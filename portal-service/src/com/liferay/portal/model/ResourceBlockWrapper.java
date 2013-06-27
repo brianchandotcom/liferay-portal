@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model;
 
+import com.liferay.portal.kernel.util.Validator;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -337,6 +339,25 @@ public class ResourceBlockWrapper implements ResourceBlock,
 	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_resourceBlock.persist();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof ResourceBlockWrapper)) {
+			return false;
+		}
+
+		ResourceBlockWrapper resourceBlockWrapper = (ResourceBlockWrapper)obj;
+
+		if (Validator.equals(_resourceBlock, resourceBlockWrapper._resourceBlock)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**

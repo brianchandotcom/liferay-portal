@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.social.model;
 
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelWrapper;
 
 import java.util.HashMap;
@@ -588,6 +589,25 @@ public class SocialRequestWrapper implements SocialRequest,
 	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_socialRequest.persist();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof SocialRequestWrapper)) {
+			return false;
+		}
+
+		SocialRequestWrapper socialRequestWrapper = (SocialRequestWrapper)obj;
+
+		if (Validator.equals(_socialRequest, socialRequestWrapper._socialRequest)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**

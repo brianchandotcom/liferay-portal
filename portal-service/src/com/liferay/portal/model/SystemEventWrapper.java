@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model;
 
+import com.liferay.portal.kernel.util.Validator;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -547,6 +549,25 @@ public class SystemEventWrapper implements SystemEvent,
 	@Override
 	public void setReferrerClassName(java.lang.String referrerClassName) {
 		_systemEvent.setReferrerClassName(referrerClassName);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof SystemEventWrapper)) {
+			return false;
+		}
+
+		SystemEventWrapper systemEventWrapper = (SystemEventWrapper)obj;
+
+		if (Validator.equals(_systemEvent, systemEventWrapper._systemEvent)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model;
 
+import com.liferay.portal.kernel.util.Validator;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -263,6 +265,25 @@ public class OrgGroupRoleWrapper implements OrgGroupRole,
 	public boolean containsOrganization(
 		java.util.List<com.liferay.portal.model.Organization> organizations) {
 		return _orgGroupRole.containsOrganization(organizations);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof OrgGroupRoleWrapper)) {
+			return false;
+		}
+
+		OrgGroupRoleWrapper orgGroupRoleWrapper = (OrgGroupRoleWrapper)obj;
+
+		if (Validator.equals(_orgGroupRole, orgGroupRoleWrapper._orgGroupRole)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**

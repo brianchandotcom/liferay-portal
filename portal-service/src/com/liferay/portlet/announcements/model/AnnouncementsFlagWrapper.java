@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.announcements.model;
 
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelWrapper;
 
 import java.util.Date;
@@ -336,6 +337,26 @@ public class AnnouncementsFlagWrapper implements AnnouncementsFlag,
 	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_announcementsFlag.persist();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof AnnouncementsFlagWrapper)) {
+			return false;
+		}
+
+		AnnouncementsFlagWrapper announcementsFlagWrapper = (AnnouncementsFlagWrapper)obj;
+
+		if (Validator.equals(_announcementsFlag,
+					announcementsFlagWrapper._announcementsFlag)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**

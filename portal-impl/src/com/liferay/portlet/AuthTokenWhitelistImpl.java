@@ -14,7 +14,7 @@
 
 package com.liferay.portlet;
 
-import com.liferay.portal.kernel.portlet.PortletSecurity;
+import com.liferay.portal.kernel.portlet.AuthTokenWhitelist;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.util.PropsValues;
@@ -26,9 +26,9 @@ import java.util.Set;
  * @author Raymond Augé
  */
 @DoPrivileged
-public class PortletSecurityImpl implements PortletSecurity {
+public class AuthTokenWhitelistImpl implements AuthTokenWhitelist {
 
-	public PortletSecurityImpl() {
+	public AuthTokenWhitelistImpl() {
 		resetWhitelist();
 		resetWhitelistActions();
 	}

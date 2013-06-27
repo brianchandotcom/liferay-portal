@@ -271,8 +271,8 @@
 			<bean class="com.liferay.portal.kernel.poller.comet.CometHandlerPool" />
 		</property>
 	</bean>
-	<bean id="com.liferay.portal.kernel.portlet.PortletSecurityUtil" class="com.liferay.portal.kernel.portlet.PortletSecurityUtil">
-		<property name="portletSecurity" ref="com.liferay.portlet.PortletSecurity" />
+	<bean id="com.liferay.portal.kernel.portlet.AuthTokenWhitelistUtil" class="com.liferay.portal.kernel.portlet.AuthTokenWhitelistUtil">
+		<property name="authTokenWhitelist" ref="com.liferay.portlet.AuthTokenWhitelist" />
 	</bean>
 	<bean id="com.liferay.portal.kernel.portlet.PortletContainerUtil" class="com.liferay.portal.kernel.portlet.PortletContainerUtil">
 		<property name="portletContainer" ref="com.liferay.portlet.RestrictPortletContainerWrapper" />
@@ -846,10 +846,10 @@
 	</bean>
 	<bean id="com.liferay.portlet.DefaultControlPanelEntryFactory" class="com.liferay.portlet.DefaultControlPanelEntryFactory" />
 	<bean id="com.liferay.portlet.PortletContainerImpl" class="com.liferay.portlet.PortletContainerImpl" />
-	<bean id="com.liferay.portlet.PortletSecurity" class="com.liferay.portlet.PortletSecurityImpl" />
+	<bean id="com.liferay.portlet.AuthTokenWhitelist" class="com.liferay.portlet.AuthTokenWhitelistImpl" />
 	<bean id="com.liferay.portlet.SecurityPortletContainerWrapper" class="com.liferay.portlet.SecurityPortletContainerWrapper" factory-method="createSecurityPortletContainerWrapper">
 		<constructor-arg name="portletContainer" ref="com.liferay.portal.resiliency.mpi.portlet.PortalResiliencyPortletContainerWrapper" />
-		<constructor-arg name="portletSecurity" ref="com.liferay.portlet.PortletSecurity" />
+		<constructor-arg name="authTokenWhitelist" ref="com.liferay.portlet.AuthTokenWhitelist" />
 	</bean>
 	<bean id="com.liferay.portlet.RestrictPortletContainerWrapper" class="com.liferay.portlet.RestrictPortletContainerWrapper" factory-method="createRestrictPortletContainerWrapper">
 		<constructor-arg name="portletContainer" ref="com.liferay.portlet.SecurityPortletContainerWrapper" />

@@ -2265,15 +2265,10 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		serviceContext.setAssetTagNames(assetTagNames);
 
-		Map<String, Serializable> expandoBridgeAttributes =
-			serviceContext.getExpandoBridgeAttributes();
+		ExpandoBridge expandoBridge = page.getExpandoBridge();
 
-		if (expandoBridgeAttributes.isEmpty()) {
-			ExpandoBridge expandoBridge = page.getExpandoBridge();
-
-			serviceContext.setExpandoBridgeAttributes(
-				expandoBridge.getAttributes());
-		}
+		serviceContext.setExpandoBridgeAttributes(
+			expandoBridge.getAttributes());
 	}
 
 	protected String replaceStyles(String html) {

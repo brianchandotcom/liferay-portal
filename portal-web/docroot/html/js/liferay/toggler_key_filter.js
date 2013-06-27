@@ -30,7 +30,7 @@ AUI.add(
 				},
 
 				prototype: {
-					initializer: function(){
+					initializer: function() {
 						var instance = this;
 
 						instance.beforeHostMethod('headerEventHandler', instance._headerEventHandler, instance);

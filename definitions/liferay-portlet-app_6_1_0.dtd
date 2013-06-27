@@ -638,10 +638,20 @@ portal's context path.
 <!ELEMENT header-portal-css (#PCDATA)>
 
 <!--
+Set to true if you want the CSS to load only once per layout.
+-->
+<!ATTLIST header-portal-css singleton (true|false) "false">
+
+<!--
 Set the path of CSS that will be referenced in the page's header relative to the
 portlet's context path.
 -->
 <!ELEMENT header-portlet-css (#PCDATA)>
+
+<!--
+Set to true if you want the CSS to load only once per layout.
+-->
+<!ATTLIST header-portlet-css singleton (true|false) "false">
 
 <!--
 Set the path of JavaScript that will be referenced in the page's header relative
@@ -650,10 +660,20 @@ to the portal's context path.
 <!ELEMENT header-portal-javascript (#PCDATA)>
 
 <!--
+Set to true if you want the JavaScript to load only once per layout.
+-->
+<!ATTLIST header-portal-javascript singleton (true|false) "false">
+
+<!--
 Set the path of JavaScript that will be referenced in the page's header relative
 to the portlet's context path.
 -->
 <!ELEMENT header-portlet-javascript (#PCDATA)>
+
+<!--
+Set to true if you want the JavaScript to load only once per layout.
+-->
+<!ATTLIST header-portlet-javascript singleton (true|false) "false">
 
 <!--
 Set the path of CSS that will be referenced in the page's footer relative to the
@@ -662,10 +682,20 @@ portal's context path.
 <!ELEMENT footer-portal-css (#PCDATA)>
 
 <!--
+Set to true if you want the CSS to load only once per layout.
+-->
+<!ATTLIST footer-portal-css singleton (true|false) "false">
+
+<!--
 Set the path of CSS that will be referenced in the page's footer relative to the
 portlet's context path.
 -->
 <!ELEMENT footer-portlet-css (#PCDATA)>
+
+<!--
+Set to true if you want the CSS to load only once per layout.
+-->
+<!ATTLIST footer-portlet-css singleton (true|false) "false">
 
 <!--
 Set the path of JavaScript that will be referenced in the page's footer relative
@@ -674,10 +704,20 @@ to the portal's context path.
 <!ELEMENT footer-portal-javascript (#PCDATA)>
 
 <!--
+Set to true if you want the JavaScript to load only once per layout.
+-->
+<!ATTLIST footer-portal-javascript singleton (true|false) "false">
+
+<!--
 Set the path of JavaScript that will be referenced in the page's footer relative
 to the portlet's context path.
 -->
 <!ELEMENT footer-portlet-javascript (#PCDATA)>
+
+<!--
+Set to true if you want the JavaScript to load only once per layout.
+-->
+<!ATTLIST footer-portlet-javascript singleton (true|false) "false">
 
 <!--
 Set name of the CSS class that will be injected in the DIV that wraps this

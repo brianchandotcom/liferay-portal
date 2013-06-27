@@ -120,6 +120,7 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 		initPaths();
 		initIndexer();
 		initScheduler();
+		initControllerMessageListener();
 	}
 
 	@Override
@@ -213,6 +214,10 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 			portletRequest, "successMessage");
 
 		SessionMessages.add(portletRequest, "requestProcessed", successMessage);
+	}
+
+	protected MessageListener buildControllerMessageListener() {
+		return null;
 	}
 
 	protected String buildIncludePath(String viewPath) {
@@ -350,8 +355,12 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 		return sb.toString();
 	}
 
+	protected String getControllerDestinationName() {
+		return "liferay/alloy/controller/".concat(getSchedulerGroupName());
+	}
+
 	protected String getSchedulerDestinationName() {
-		return "liferay/alloy/".concat(getSchedulerGroupName());
+		return "liferay/alloy/scheduler/".concat(getSchedulerGroupName());
 	}
 
 	protected String getSchedulerGroupName() {
@@ -404,6 +413,17 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 		classLoader = clazz.getClassLoader();
 	}
 
+	protected void initControllerMessageListener() {
+		controllerMessageListener = buildControllerMessageListener();
+
+		if (controllerMessageListener == null) {
+			return;
+		}
+
+		initMessageListener(
+			getControllerDestinationName(), controllerMessageListener, false);
+	}
+
 	protected void initIndexer() {
 		indexer = buildIndexer();
 
@@ -444,6 +464,92 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 		IndexerRegistryUtil.register(indexer);
 
 		indexerInstances.add(indexer);
+	}
+
+	protected void initMessageListener(
+		String destinationName, MessageListener messageListener,
+		boolean enableScheduler) {
+
+		MessageBus messageBus = MessageBusUtil.getMessageBus();
+
+		Destination destination = messageBus.getDestination(destinationName);
+		
+		if (destination != null) {
+			Set<MessageListener> messageListeners =
+				destination.getMessageListeners();
+
+			for (MessageListener curMessageListener : messageListeners) {
+				if (!(curMessageListener instanceof InvokerMessageListener)) {
+					continue;
+				}
+
+				InvokerMessageListener invokerMessageListener =
+					(InvokerMessageListener)curMessageListener;
+
+				curMessageListener = 
+					invokerMessageListener.getMessageListener();
+
+				if (messageListener == curMessageListener) {
+					return;
+				}
+
+				Class<?> messageListenerClass = 
+					messageListener.getClass();
+
+				String messageListenerClassName =
+					messageListenerClass.getName();
+
+				Class<?> curMessageListenerClass = 
+					curMessageListener.getClass();
+
+				if (!messageListenerClassName.equals(
+						curMessageListenerClass.getName())) {
+
+					continue;
+				}
+
+				try {
+					if (enableScheduler) {
+						SchedulerEngineHelperUtil.unschedule(
+							getSchedulerJobName(), getSchedulerGroupName(),
+							StorageType.MEMORY_CLUSTERED);
+					}
+
+					MessageBusUtil.unregisterMessageListener(
+						destinationName, curMessageListener);
+				}
+				catch (Exception e) {
+					log.error(e, e);
+				}
+
+				break;
+			}
+		}
+		else {
+			SerialDestination serialDestination = new SerialDestination();
+
+			serialDestination.setName(destinationName);
+
+			serialDestination.open();
+
+			MessageBusUtil.addDestination(serialDestination);
+		}
+
+		try {
+			MessageBusUtil.registerMessageListener(
+				destinationName, messageListener);
+
+			if (enableScheduler) {
+				SchedulerEngineHelperUtil.schedule(
+					getSchedulerTrigger(), StorageType.MEMORY_CLUSTERED, null,
+					destinationName, null, 0);
+			}
+			
+		}
+		catch (Exception e) {
+			log.error(e, e);
+		}
+		
 	}
 
 	protected void initMethods() {
@@ -561,80 +667,9 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 		if (schedulerMessageListener == null) {
 			return;
 		}
-
-		MessageBus messageBus = MessageBusUtil.getMessageBus();
-
-		Destination destination = messageBus.getDestination(
-			getSchedulerDestinationName());
-
-		if (destination != null) {
-			Set<MessageListener> messageListeners =
-				destination.getMessageListeners();
-
-			for (MessageListener messageListener : messageListeners) {
-				if (!(messageListener instanceof InvokerMessageListener)) {
-					continue;
-				}
-
-				InvokerMessageListener invokerMessageListener =
-					(InvokerMessageListener)messageListener;
-
-				messageListener = invokerMessageListener.getMessageListener();
-
-				if (schedulerMessageListener == messageListener) {
-					return;
-				}
-
-				Class<?> schedulerMessageListenerClass =
-					schedulerMessageListener.getClass();
-
-				String schedulerMessageListenerClassName =
-					schedulerMessageListenerClass.getName();
-
-				Class<?> messageListenerClass = messageListener.getClass();
-
-				if (!schedulerMessageListenerClassName.equals(
-						messageListenerClass.getName())) {
-
-					continue;
-				}
-
-				try {
-					SchedulerEngineHelperUtil.unschedule(
-						getSchedulerJobName(), getSchedulerGroupName(),
-						StorageType.MEMORY_CLUSTERED);
-
-					MessageBusUtil.unregisterMessageListener(
-						getSchedulerDestinationName(), messageListener);
-				}
-				catch (Exception e) {
-					log.error(e, e);
-				}
-
-				break;
-			}
-		}
-		else {
-			SerialDestination serialDestination = new SerialDestination();
-
-			serialDestination.setName(getSchedulerDestinationName());
-
-			serialDestination.open();
-
-			MessageBusUtil.addDestination(serialDestination);
-		}
-
-		try {
-			MessageBusUtil.registerMessageListener(
-				getSchedulerDestinationName(), schedulerMessageListener);
-
-			SchedulerEngineHelperUtil.schedule(
-				getSchedulerTrigger(), StorageType.MEMORY_CLUSTERED, null,
-				getSchedulerDestinationName(), null, 0);
-		}
-		catch (Exception e) {
-			log.error(e, e);
-		}
+		
+		initMessageListener(
+			getSchedulerDestinationName(), schedulerMessageListener, true);
 	}
 
 	protected void initServletVariables() {
@@ -858,6 +893,7 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 	protected ClassLoader classLoader;
 	protected Class<?> clazz;
 	protected Company company;
+	protected MessageListener controllerMessageListener;
 	protected String controllerPath;
 	protected EventRequest eventRequest;
 	protected EventResponse eventResponse;

@@ -213,7 +213,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 						<aui:input id="chooseApplications" label="choose-applications" name="<%= PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL %>" type="radio" value="<%= false %>" />
 
 						<c:if test="<%= !group.isLayoutPrototype() %>">
-							<ul class="hide" id="<portlet:namespace />selectApplications">
+							<ul class="hide options portlet-list select-options" id="<portlet:namespace />selectApplications">
 								<aui:input name="<%= PortletDataHandlerKeys.PORTLET_CONFIGURATION %>" type="hidden" value="<%= true %>" />
 
 								<%

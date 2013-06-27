@@ -234,7 +234,7 @@ long assetClassPK = 0;
 		</c:if>
 	</liferay-ui:panel-container>
 
-	<aui:field-wrapper label="permissions">
+	<aui:field-wrapper cssClass="upload-multiple-file-permissions" label="permissions">
 		<liferay-ui:input-permissions
 			modelName="<%= DLFileEntryConstants.getClassName() %>"
 		/>

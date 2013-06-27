@@ -574,6 +574,10 @@
 			background-color: #EEF4FF;
 		}
 	}
+
+	.upload-multiple-file-permissions {
+		overflow: auto;
+	}
 }
 
 .active-area-proxy {

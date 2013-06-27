@@ -38,9 +38,6 @@
 	<classpathentry kind="lib" path="lib/development/hamcrest-core.jar"/>
 	<classpathentry kind="lib" path="lib/development/hamcrest-library.jar"/>
 	<classpathentry kind="lib" path="lib/development/hsql.jar"/>
-	<classpathentry kind="lib" path="lib/development/icefaces.jar"/>
-	<classpathentry kind="lib" path="lib/development/icefaces-comps.jar"/>
-	<classpathentry kind="lib" path="lib/development/icefaces-facelets.jar"/>
 	<classpathentry kind="lib" path="lib/development/interbase.jar"/>
 	<classpathentry kind="lib" path="lib/development/j2h.jar"/>
 	<classpathentry kind="lib" path="lib/development/jaas.jar"/>
@@ -56,20 +53,13 @@
 	<classpathentry kind="lib" path="lib/development/jms.jar"/>
 	<classpathentry kind="lib" path="lib/development/jndi.jar"/>
 	<classpathentry kind="lib" path="lib/development/jnet.jar"/>
-	<classpathentry kind="lib" path="lib/development/jsf-api.jar"/>
-	<classpathentry kind="lib" path="lib/development/jsf-facelets.jar"/>
-	<classpathentry kind="lib" path="lib/development/jsf-impl.jar"/>
-	<classpathentry kind="lib" path="lib/development/jsf-portlet.jar"/>
 	<classpathentry kind="lib" path="lib/development/jsp-api.jar"/>
 	<classpathentry kind="lib" path="lib/development/jta.jar"/>
 	<classpathentry kind="lib" path="lib/development/junit.jar"/>
-	<classpathentry kind="lib" path="lib/development/just-ice.jar"/>
 	<classpathentry kind="lib" path="lib/development/jutf7.jar"/>
 	<classpathentry kind="lib" path="lib/development/jymsg.jar"/>
 	<classpathentry kind="lib" path="lib/development/mail.jar"/>
 	<classpathentry kind="lib" path="lib/development/mockito.jar"/>
-	<classpathentry kind="lib" path="lib/development/myfaces-api.jar"/>
-	<classpathentry kind="lib" path="lib/development/myfaces-impl.jar"/>
 	<classpathentry kind="lib" path="lib/development/mysql.jar"/>
 	<classpathentry kind="lib" path="lib/development/objenesis.jar"/>
 	<classpathentry kind="lib" path="lib/development/orangevolt-ant-tasks.jar"/>

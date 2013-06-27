@@ -137,7 +137,7 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 		</liferay-portlet:resourceURL>
 
 		<liferay-ui:rss resourceURL="<%= rssURL %>" />
-	</c:if>	
+	</c:if>
 </div>
 
 <%

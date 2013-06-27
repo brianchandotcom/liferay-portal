@@ -43,7 +43,7 @@ Layout exportableLayout = ExportImportHelperUtil.getExportableLayout(themeDispla
 		PortletDataHandlerControl[] configurationControls = null;
 
 		if (portletDataHandler != null) {
-			configurationControls = portletDataHandler.getConfigurationControls(company.getCompanyId(), themeDisplay.getScopeGroupId(), selPortlet, exportableLayout.getPlid(), false);
+			configurationControls = portletDataHandler.getExportConfigurationControls(company.getCompanyId(), themeDisplay.getScopeGroupId(), selPortlet, exportableLayout.getPlid(), false);
 		}
 		%>
 

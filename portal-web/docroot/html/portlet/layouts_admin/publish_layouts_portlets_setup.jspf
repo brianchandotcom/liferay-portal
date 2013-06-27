@@ -45,7 +45,7 @@
 			for (Portlet portlet : portletDataHandlerPortlets) {
 				PortletDataHandler portletDataHandler = portlet.getPortletDataHandlerInstance();
 
-				PortletDataHandlerControl[] configurationControls = portletDataHandler.getConfigurationControls(company.getCompanyId(), stagingGroupId, portlet, privateLayout);
+				PortletDataHandlerControl[] configurationControls = portletDataHandler.getExportConfigurationControls(company.getCompanyId(), stagingGroupId, portlet, privateLayout);
 
 				if (Validator.isNull(configurationControls)) {
 					continue;

@@ -144,7 +144,7 @@ if (endDateTime > 0) {
 									for (Portlet portlet : portletDataHandlerPortlets) {
 										PortletDataHandler portletDataHandler = portlet.getPortletDataHandlerInstance();
 
-										PortletDataHandlerControl[] configurationControls = portletDataHandler.getConfigurationControls(company.getCompanyId(), groupId, portlet, privateLayout);
+										PortletDataHandlerControl[] configurationControls = portletDataHandler.getExportConfigurationControls(company.getCompanyId(), groupId, portlet, privateLayout);
 
 										if (Validator.isNotNull(configurationControls)) {
 											String portletTitle = PortalUtil.getPortletTitle(portlet, application, locale);

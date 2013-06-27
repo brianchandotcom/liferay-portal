@@ -85,7 +85,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 			PortletDataHandler portletDataHandler = selPortlet.getPortletDataHandlerInstance();
 			%>
 
-			<c:if test="<%= (portletDataHandler != null) && (portletDataHandler.getConfigurationControls(selPortlet) != null) %>">
+			<c:if test="<%= (portletDataHandler != null) && (portletDataHandler.getImportConfigurationControls(selPortlet) != null) %>">
 				<aui:fieldset cssClass="options-group" label="application">
 					<ul class="lfr-tree unstyled">
 						<li class="tree-item">
@@ -99,7 +99,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 
 										<%
 										request.setAttribute("render_controls.jsp-action", Constants.IMPORT);
-										request.setAttribute("render_controls.jsp-controls", portletDataHandler.getConfigurationControls(selPortlet));
+										request.setAttribute("render_controls.jsp-controls", portletDataHandler.getImportConfigurationControls(selPortlet));
 										request.setAttribute("render_controls.jsp-portletId", selPortlet.getRootPortletId());
 										%>
 

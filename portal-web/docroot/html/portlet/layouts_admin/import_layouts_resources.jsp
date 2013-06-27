@@ -222,7 +222,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 								for (Portlet portlet : setupPortlets) {
 									PortletDataHandler portletDataHandler = portlet.getPortletDataHandlerInstance();
 
-									if ((portletDataHandler == null) || (portletDataHandler.getConfigurationControls(portlet) == null)) {
+									if ((portletDataHandler == null) || (portletDataHandler.getImportConfigurationControls(portlet) == null)) {
 										continue;
 									}
 
@@ -238,7 +238,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 
 													<%
 													request.setAttribute("render_controls.jsp-action", Constants.IMPORT);
-													request.setAttribute("render_controls.jsp-controls", portletDataHandler.getConfigurationControls(portlet));
+													request.setAttribute("render_controls.jsp-controls", portletDataHandler.getImportConfigurationControls(portlet));
 													request.setAttribute("render_controls.jsp-portletId", portlet.getRootPortletId());
 													%>
 

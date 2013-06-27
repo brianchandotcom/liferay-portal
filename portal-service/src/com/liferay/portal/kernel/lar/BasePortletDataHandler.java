@@ -103,17 +103,32 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 	}
 
 	@Override
-	public PortletDataHandlerControl[] getConfigurationControls(
+	public DataLevel getDataLevel() {
+		return _dataLevel;
+	}
+
+	@Override
+	public String[] getDataPortletPreferences() {
+		return _dataPortletPreferences;
+	}
+
+	@Override
+	public String[] getDeletionSystemEventClassNames() {
+		return _deletionSystemEventClassNames;
+	}
+
+	@Override
+	public PortletDataHandlerControl[] getExportConfigurationControls(
 			long companyId, long groupId, Portlet portlet,
 			boolean privateLayout)
 		throws Exception {
 
-		return getConfigurationControls(
+		return getExportConfigurationControls(
 			companyId, groupId, portlet, -1, privateLayout);
 	}
 
 	@Override
-	public PortletDataHandlerControl[] getConfigurationControls(
+	public PortletDataHandlerControl[] getExportConfigurationControls(
 			long companyId, long groupId, Portlet portlet, long plid,
 			boolean privateLayout)
 		throws Exception {
@@ -177,21 +192,6 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 	}
 
 	@Override
-	public DataLevel getDataLevel() {
-		return _dataLevel;
-	}
-
-	@Override
-	public String[] getDataPortletPreferences() {
-		return _dataPortletPreferences;
-	}
-
-	@Override
-	public String[] getDeletionSystemEventClassNames() {
-		return _deletionSystemEventClassNames;
-	}
-
-	@Override
 	public PortletDataHandlerControl[] getExportControls() {
 		return _exportControls;
 	}
@@ -223,6 +223,28 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 		}
 
 		return totalModelCount;
+	}
+
+	@Override
+	public PortletDataHandlerControl[] getImportConfigurationControls(
+			Portlet portlet)
+		throws PortletDataException {
+
+		if (Validator.isNull(portlet.getConfigurationActionClass())) {
+			return null;
+		}
+
+		return new PortletDataHandlerBoolean[] {
+			new PortletDataHandlerBoolean(
+				null, PortletDataHandlerKeys.PORTLET_SETUP, "setup", true,
+				false, null, null, null),
+			new PortletDataHandlerBoolean(
+				null, PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS,
+				"archived-setups", true, false, null, null, null),
+			new PortletDataHandlerBoolean(
+				null, PortletDataHandlerKeys.PORTLET_USER_PREFERENCES,
+				"user-preferences", true, false, null, null, null)
+		};
 	}
 
 	@Override

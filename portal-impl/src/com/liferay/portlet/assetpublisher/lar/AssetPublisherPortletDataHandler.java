@@ -136,7 +136,8 @@ public class AssetPublisherPortletDataHandler
 			anyAssetTypeClassName = PortalUtil.getClassName(anyAssetType);
 		}
 
-		Portlet portlet = PortletLocalServiceUtil.getPortletById(portletId);
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			portletDataContext.getCompanyId(), portletId);
 
 		Enumeration<String> enu = portletPreferences.getNames();
 

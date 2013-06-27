@@ -67,7 +67,8 @@ public class AssetCategoriesNavigationPortletDataHandler
 			Element rootElement)
 		throws Exception {
 
-		Portlet portlet = PortletLocalServiceUtil.getPortletById(portletId);
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			portletDataContext.getCompanyId(), portletId);
 
 		Enumeration<String> enu = portletPreferences.getNames();
 

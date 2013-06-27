@@ -23,6 +23,7 @@ import com.liferay.portal.model.ResourceBlockPermission;
 import com.liferay.portal.model.ResourcePermission;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
+import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ResourceActionLocalServiceUtil;
 import com.liferay.portal.service.ResourceBlockLocalServiceUtil;
 import com.liferay.portal.service.ResourceBlockPermissionLocalServiceUtil;
@@ -38,6 +39,7 @@ import com.liferay.portal.util.ResourcePermissionTestUtil;
 
 import java.util.List;
 
+import com.liferay.portlet.bookmarks.model.BookmarksFolder;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -72,11 +74,9 @@ public class RoleFinderTest {
 			_arbitraryResourceAction.getBitwiseValue(),
 			_arbitraryResourceAction.getName(), _arbitraryRole.getRoleId());
 
-		// BookmarkFolder supports ResourceBlock permissions
-
 		_bookmarkFolderResourceAction =
 			ResourceActionLocalServiceUtil.getResourceAction(
-				"com.liferay.portlet.bookmarks.model.BookmarksFolder", "VIEW");
+				BookmarksFolder.class.getName(), ActionKeys.VIEW);
 
 		_resourceBlock = ResourceBlockTestUtil.addResourceBlock(
 			_bookmarkFolderResourceAction.getName());
@@ -100,14 +100,13 @@ public class RoleFinderTest {
 
 	@Test
 	public void testFindByC_N_S_P_A() throws Exception {
-
 		List<Role> roles = RoleFinderUtil.findByC_N_S_P_A(
 			_resourcePermission.getCompanyId(), _resourcePermission.getName(),
 			_resourcePermission.getScope(), _resourcePermission.getPrimKey(),
 			_arbitraryResourceAction.getActionId());
 
-		for (Role curRole : roles) {
-			if (curRole.getRoleId() == _arbitraryRole.getRoleId()) {
+		for (Role role : roles) {
+			if (role.getRoleId() == _arbitraryRole.getRoleId()) {
 				return;
 			}
 		}
@@ -119,13 +118,12 @@ public class RoleFinderTest {
 
 	@Test
 	public void testFindByR_N_A() throws Exception {
-
 		List<Role> roles = RoleFinderUtil.findByR_N_A(
 			_resourceBlock.getResourceBlockId(), _resourceBlock.getName(),
 			_bookmarkFolderResourceAction.getActionId());
 
-		for (Role curRole : roles) {
-			if (curRole.getRoleId() == _arbitraryRole.getRoleId()) {
+		for (Role role : roles) {
+			if (role.getRoleId() == _arbitraryRole.getRoleId()) {
 				return;
 			}
 		}

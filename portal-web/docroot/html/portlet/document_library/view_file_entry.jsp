@@ -136,6 +136,12 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 </c:if>
 
 <div class="view">
+	<c:if test="<%= showActions %>">
+		<liferay-ui:app-view-toolbar>
+			<aui:button-row cssClass="edit-toolbar" id='<%= renderResponse.getNamespace() + "fileEntryToolbar" %>' />
+		</liferay-ui:app-view-toolbar>
+	</c:if>
+
 	<aui:row>
 		<aui:col cssClass="lfr-asset-column-details" width="<%= 70 %>">
 			<c:if test="<%= showActions %>">
@@ -444,12 +450,6 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 		</aui:col>
 
 		<aui:col cssClass="lfr-asset-column-details context-pane" last="<%= true %>" width="<%= 30 %>">
-			<c:if test="<%= showActions %>">
-				<liferay-ui:app-view-toolbar>
-					<aui:button-row cssClass="edit-toolbar" id='<%= renderResponse.getNamespace() + "fileEntryToolbar" %>' />
-				</liferay-ui:app-view-toolbar>
-			</c:if>
-
 			<div class="body-row asset-details">
 				<c:if test="<%= showAssetMetadata %>">
 					<div class="asset-details-content">

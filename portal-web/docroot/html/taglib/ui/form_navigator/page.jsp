@@ -28,8 +28,6 @@ String htmlTop = (String)request.getAttribute("liferay-ui:form-navigator:htmlTop
 String jspPath = (String)request.getAttribute("liferay-ui:form-navigator:jspPath");
 boolean showButtons = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:form-navigator:showButtons"));
 
-boolean error = false;
-
 if (Validator.isNull(backURL)) {
 	String redirect = ParamUtil.getString(request, "redirect");
 
@@ -99,6 +97,8 @@ if (Validator.isNotNull(historyKey)) {
 				modifiedSections = null;
 			}
 
+			boolean error = false;
+
 			for (int i = 0; i < categoryNames.length; i++) {
 				String category = categoryNames[i];
 				String[] sections = categorySections[i];
@@ -113,6 +113,7 @@ if (Validator.isNotNull(historyKey)) {
 					<%
 					if (Validator.isNotNull(errorSection)) {
 						curSection = StringPool.BLANK;
+
 						error = true;
 					}
 

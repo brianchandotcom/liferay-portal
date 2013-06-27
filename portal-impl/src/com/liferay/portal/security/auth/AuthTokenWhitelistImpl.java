@@ -12,9 +12,8 @@
  * details.
  */
 
-package com.liferay.portlet;
+package com.liferay.portal.security.auth;
 
-import com.liferay.portal.kernel.portlet.AuthTokenWhitelist;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.util.PropsValues;

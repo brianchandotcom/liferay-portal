@@ -742,7 +742,7 @@ AUI.add(
 						if (lifecycle == LIFECYCLE_RENDER) {
 							url = Liferay.PortletURL.createURL(config.baseRenderURL);
 						}
-						else if (lifecycle == LIFECYCLE_PROCESS) {
+						else if (lifecycle == LIFECYCLE_ACTION) {
 							url = Liferay.PortletURL.createURL(config.baseActionURL);
 						}
 						else {

@@ -75,6 +75,12 @@ public class SimpleRuleHandler implements RuleHandler {
 		Device device = themeDisplay.getDevice();
 
 		if (device == null) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Rule evaluation is not possible because the information " +
+						"about the device is not available");
+			}
+
 			return false;
 		}
 

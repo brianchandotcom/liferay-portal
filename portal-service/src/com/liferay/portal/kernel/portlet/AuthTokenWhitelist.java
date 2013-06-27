@@ -20,7 +20,7 @@ import java.util.Set;
  * @author Tomas Polesovsky
  * @author Raymond Augé
  */
-public interface PortletSecurity {
+public interface AuthTokenWhitelist {
 
 	public Set<String> getWhitelist();
 

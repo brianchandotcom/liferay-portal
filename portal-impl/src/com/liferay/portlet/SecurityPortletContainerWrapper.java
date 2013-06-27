@@ -19,11 +19,11 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.ActionResult;
+import com.liferay.portal.kernel.portlet.AuthTokenWhitelist;
 import com.liferay.portal.kernel.portlet.PortletContainer;
 import com.liferay.portal.kernel.portlet.PortletContainerException;
 import com.liferay.portal.kernel.portlet.PortletContainerUtil;
 import com.liferay.portal.kernel.portlet.PortletModeFactory;
-import com.liferay.portal.kernel.portlet.PortletSecurity;
 import com.liferay.portal.kernel.resiliency.spi.SPIUtil;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
@@ -74,21 +74,23 @@ import javax.servlet.http.HttpServletResponse;
 public class SecurityPortletContainerWrapper implements PortletContainer {
 
 	public static PortletContainer createSecurityPortletContainerWrapper(
-		PortletContainer portletContainer, PortletSecurity portletSecurity) {
+		PortletContainer portletContainer,
+		AuthTokenWhitelist authTokenWhitelist) {
 
 		if (!SPIUtil.isSPI()) {
 			portletContainer = new SecurityPortletContainerWrapper(
-				portletContainer, portletSecurity);
+				portletContainer, authTokenWhitelist);
 		}
 
 		return portletContainer;
 	}
 
 	public SecurityPortletContainerWrapper(
-		PortletContainer portletContainer, PortletSecurity portletSecurity) {
+		PortletContainer portletContainer,
+		AuthTokenWhitelist authTokenWhitelist) {
 
 		_portletContainer = portletContainer;
-		_portletSecurity = portletSecurity;
+		_authTokenWhitelist = authTokenWhitelist;
 	}
 
 	@Override
@@ -404,7 +406,7 @@ public class SecurityPortletContainerWrapper implements PortletContainer {
 			return true;
 		}
 
-		Set<String> whitelist = _portletSecurity.getWhitelist();
+		Set<String> whitelist = _authTokenWhitelist.getWhitelist();
 
 		if (whitelist.contains(portletId)) {
 			return true;
@@ -419,7 +421,8 @@ public class SecurityPortletContainerWrapper implements PortletContainer {
 			strutsAction = ParamUtil.getString(request, "struts_action");
 		}
 
-		Set<String> whitelistActions = _portletSecurity.getWhitelistActions();
+		Set<String> whitelistActions =
+			_authTokenWhitelist.getWhitelistActions();
 
 		if (whitelistActions.contains(strutsAction)) {
 			return true;
@@ -663,7 +666,7 @@ public class SecurityPortletContainerWrapper implements PortletContainer {
 	private static Log _log = LogFactoryUtil.getLog(
 		SecurityPortletContainerWrapper.class);
 
+	private AuthTokenWhitelist _authTokenWhitelist;
 	private PortletContainer _portletContainer;
-	private PortletSecurity _portletSecurity;
 
 }

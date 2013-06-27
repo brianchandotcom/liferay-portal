@@ -22,36 +22,36 @@ import java.util.Set;
  * @author Tomas Polesovsky
  * @author Raymond Augé
  */
-public class PortletSecurityUtil {
+public class AuthTokenWhitelistUtil {
 
-	public static PortletSecurity getPortletSecurity() {
-		PortalRuntimePermission.checkGetBeanProperty(PortletSecurity.class);
+	public static AuthTokenWhitelist getAuthTokenWhitelist() {
+		PortalRuntimePermission.checkGetBeanProperty(AuthTokenWhitelist.class);
 
-		return _portletSecurity;
+		return _authTokenWhitelist;
 	}
 
 	public static Set<String> getWhitelist() {
-		return getPortletSecurity().getWhitelist();
+		return getAuthTokenWhitelist().getWhitelist();
 	}
 
 	public static Set<String> getWhitelistActions() {
-		return getPortletSecurity().getWhitelistActions();
+		return getAuthTokenWhitelist().getWhitelistActions();
 	}
 
 	public static Set<String> resetWhitelist() {
-		return getPortletSecurity().resetWhitelist();
+		return getAuthTokenWhitelist().resetWhitelist();
 	}
 
 	public static Set<String> resetWhitelistActions() {
-		return getPortletSecurity().resetWhitelistActions();
+		return getAuthTokenWhitelist().resetWhitelistActions();
 	}
 
-	public void setPortletSecurity(PortletSecurity portletSecurity) {
+	public void setAuthTokenWhitelist(AuthTokenWhitelist authTokenWhitelist) {
 		PortalRuntimePermission.checkSetBeanProperty(getClass());
 
-		_portletSecurity = portletSecurity;
+		_authTokenWhitelist = authTokenWhitelist;
 	}
 
-	private static PortletSecurity _portletSecurity;
+	private static AuthTokenWhitelist _authTokenWhitelist;
 
 }

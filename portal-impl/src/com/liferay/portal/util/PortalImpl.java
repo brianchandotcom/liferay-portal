@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.AuthTokenWhitelistUtil;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapperThreadLocal;
 import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
@@ -40,7 +41,6 @@ import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletBag;
 import com.liferay.portal.kernel.portlet.PortletBagPool;
-import com.liferay.portal.kernel.portlet.PortletSecurityUtil;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
@@ -3803,12 +3803,12 @@ public class PortalImpl implements Portal {
 
 	@Override
 	public Set<String> getPortletAddDefaultResourceCheckWhitelist() {
-		return PortletSecurityUtil.getWhitelist();
+		return AuthTokenWhitelistUtil.getWhitelist();
 	}
 
 	@Override
 	public Set<String> getPortletAddDefaultResourceCheckWhitelistActions() {
-		return PortletSecurityUtil.getWhitelistActions();
+		return AuthTokenWhitelistUtil.getWhitelistActions();
 	}
 
 	/**
@@ -5662,7 +5662,7 @@ public class PortalImpl implements Portal {
 			return true;
 		}
 
-		Set<String> whiteList = PortletSecurityUtil.getWhitelist();
+		Set<String> whiteList = AuthTokenWhitelistUtil.getWhitelist();
 
 		if (whiteList.contains(portletId)) {
 			return true;
@@ -5678,7 +5678,7 @@ public class PortalImpl implements Portal {
 		}
 
 		Set<String> whitelistActions =
-			PortletSecurityUtil.getWhitelistActions();
+			AuthTokenWhitelistUtil.getWhitelistActions();
 
 		if (whitelistActions.contains(strutsAction)) {
 			return true;
@@ -6151,12 +6151,12 @@ public class PortalImpl implements Portal {
 
 	@Override
 	public Set<String> resetPortletAddDefaultResourceCheckWhitelist() {
-		return PortletSecurityUtil.resetWhitelist();
+		return AuthTokenWhitelistUtil.resetWhitelist();
 	}
 
 	@Override
 	public Set<String> resetPortletAddDefaultResourceCheckWhitelistActions() {
-		return PortletSecurityUtil.resetWhitelistActions();
+		return AuthTokenWhitelistUtil.resetWhitelistActions();
 	}
 
 	@Override

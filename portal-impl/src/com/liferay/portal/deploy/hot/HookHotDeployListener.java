@@ -45,7 +45,7 @@ import com.liferay.portal.kernel.lock.LockListenerRegistryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.plugin.PluginPackage;
-import com.liferay.portal.kernel.portlet.PortletSecurityUtil;
+import com.liferay.portal.kernel.portlet.AuthTokenWhitelistUtil;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.search.Indexer;
@@ -2459,14 +2459,14 @@ public class HookHotDeployListener
 				portalProperties,
 				PORTLET_ADD_DEFAULT_RESOURCE_CHECK_WHITELIST)) {
 
-			PortletSecurityUtil.resetWhitelist();
+			AuthTokenWhitelistUtil.resetWhitelist();
 		}
 
 		if (containsKey(
 				portalProperties,
 				PORTLET_ADD_DEFAULT_RESOURCE_CHECK_WHITELIST_ACTIONS)) {
 
-			PortletSecurityUtil.resetWhitelistActions();
+			AuthTokenWhitelistUtil.resetWhitelistActions();
 		}
 
 		CacheUtil.clearCache();

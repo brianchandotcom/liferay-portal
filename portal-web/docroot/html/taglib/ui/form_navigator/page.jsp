@@ -26,8 +26,9 @@ String formName = GetterUtil.getString((String)request.getAttribute("liferay-ui:
 String htmlBottom = (String)request.getAttribute("liferay-ui:form-navigator:htmlBottom");
 String htmlTop = (String)request.getAttribute("liferay-ui:form-navigator:htmlTop");
 String jspPath = (String)request.getAttribute("liferay-ui:form-navigator:jspPath");
-boolean error = false;
 boolean showButtons = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:form-navigator:showButtons"));
+
+boolean error = false;
 
 if (Validator.isNull(backURL)) {
 	String redirect = ParamUtil.getString(request, "redirect");

@@ -44,7 +44,7 @@ if (scheduleCMD.equals("schedule_copy_from_live")) {
 
 		<aui:input id="publishingEventSchedule" label="schedule" name="schedule" type="radio" value="<%= true %>" />
 
-		<ul class="hide" id="<portlet:namespace />selectSchedule">
+		<ul class="hide options portlet-list select-options" id="<portlet:namespace />selectSchedule">
 			<li>
 				<aui:input name="jobName" type="hidden" />
 

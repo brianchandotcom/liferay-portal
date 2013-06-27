@@ -1169,8 +1169,30 @@ public class PortletExporter {
 		element.addAttribute("layout-id", String.valueOf(layoutId));
 		element.addAttribute("path", path);
 		element.addAttribute("portlet-data", String.valueOf(exportPortletData));
+
+		StringBundler configurationOptionsSb = new StringBundler();
+
+		if (exportPortletSetup) {
+			configurationOptionsSb.append("setup");
+			configurationOptionsSb.append(StringPool.COMMA);
+		}
+
+		if (exportPortletArchivedSetups) {
+			configurationOptionsSb.append("archived-setups");
+			configurationOptionsSb.append(StringPool.COMMA);
+		}
+
+		if (exportPortletUserPreferences) {
+			configurationOptionsSb.append("user-preferences");
+			configurationOptionsSb.append(StringPool.COMMA);
+		}
+
+		if (configurationOptionsSb.index() > 0) {
+			configurationOptionsSb.setIndex(configurationOptionsSb.index() -1);
+		}
+
 		element.addAttribute(
-			"portlet-setup", String.valueOf(exportPortletSetup));
+			"portlet-configuration", configurationOptionsSb.toString());
 
 		if (portletDataContext.isPathNotProcessed(path)) {
 			try {

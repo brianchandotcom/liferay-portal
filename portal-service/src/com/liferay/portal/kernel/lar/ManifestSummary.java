@@ -51,12 +51,12 @@ public class ManifestSummary implements Serializable {
 		return referrerModelName.concat(StringPool.POUND).concat(modelName);
 	}
 
-	public void addConfigurationPortlet(Portlet portlet) {
+	public void addConfigurationPortlet(Portlet portlet, String[] options) {
 		String rootPortletId = portlet.getRootPortletId();
 
-		if (!_configurationRootPortletIds.contains(rootPortletId)) {
+		if (!_configurationPortletOptions.containsKey(rootPortletId)) {
 			_configurationPortlets.add(portlet);
-			_configurationRootPortletIds.add(rootPortletId);
+			_configurationPortletOptions.put(rootPortletId, options);
 		}
 	}
 
@@ -127,6 +127,10 @@ public class ManifestSummary implements Serializable {
 		modelDeletionCounter.setValue(count);
 
 		_manifestSummaryKeys.add(manifestSummaryKey);
+	}
+
+	public String[] getConfigurationPortletOptions(String rootPortletId) {
+		return _configurationPortletOptions.get(rootPortletId);
 	}
 
 	public List<Portlet> getConfigurationPortlets() {
@@ -268,8 +272,9 @@ public class ManifestSummary implements Serializable {
 		return sb.toString();
 	}
 
+	private Map<String, String[]> _configurationPortletOptions =
+		new HashMap<String, String[]>();
 	private List<Portlet> _configurationPortlets = new ArrayList<Portlet>();
-	private Set<String> _configurationRootPortletIds = new HashSet<String>();
 	private List<Portlet> _dataPortlets = new ArrayList<Portlet>();
 	private Set<String> _dataRootPortletIds = new HashSet<String>();
 	private Date _exportDate;

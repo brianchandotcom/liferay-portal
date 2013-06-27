@@ -66,6 +66,13 @@ public class MBThreadExportActionableDynamicQuery
 	@Override
 	protected void addCriteria(DynamicQuery dynamicQuery) {
 		_portletDataContext.addDateRangeCriteria(dynamicQuery, "modifiedDate");
+
+		StagedModelDataHandler<?> stagedModelDataHandler = StagedModelDataHandlerRegistryUtil.getStagedModelDataHandler(MBThread.class.getName());
+
+		Property workflowStatusProperty = PropertyFactoryUtil.forName("status");
+
+		dynamicQuery.add(workflowStatusProperty.in(
+				stagedModelDataHandler.getExportableStatuses()));
 	}
 
 	protected long getModelDeletionCount()

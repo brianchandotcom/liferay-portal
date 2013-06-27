@@ -15,10 +15,6 @@
 package com.liferay.portlet.wiki.lar;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.dao.orm.Property;
-import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.BasePortletDataHandler;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataException;
@@ -26,7 +22,6 @@ import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.portal.kernel.lar.PortletDataHandlerControl;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.service.PortletLocalServiceUtil;
@@ -130,7 +125,7 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 		nodeActionableDynamicQuery.performActions();
 
 		ActionableDynamicQuery pageActionableDynamicQuery =
-			getPageActionableDynamicQuery(portletDataContext);
+			new WikiPageExportActionableDynamicQuery(portletDataContext);
 
 		pageActionableDynamicQuery.performActions();
 
@@ -193,7 +188,7 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 		nodeActionableDynamicQuery.performCount();
 
 		ActionableDynamicQuery pageExportActionableDynamicQuery =
-			getPageActionableDynamicQuery(portletDataContext);
+			new WikiPageExportActionableDynamicQuery(portletDataContext);
 
 		pageExportActionableDynamicQuery.performCount();
 	}
@@ -237,25 +232,6 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 		}
 
 		return portletPreferences;
-	}
-
-	protected ActionableDynamicQuery getPageActionableDynamicQuery(
-			final PortletDataContext portletDataContext)
-		throws SystemException {
-
-		return new WikiPageExportActionableDynamicQuery(portletDataContext) {
-
-			@Override
-			protected void addCriteria(DynamicQuery dynamicQuery) {
-				super.addCriteria(dynamicQuery);
-
-				Property statusProperty = PropertyFactoryUtil.forName("status");
-
-				dynamicQuery.add(
-					statusProperty.eq(WorkflowConstants.STATUS_APPROVED));
-			}
-
-		};
 	}
 
 }

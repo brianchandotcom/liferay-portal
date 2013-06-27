@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
-import com.liferay.portal.lar.BaseStagedModelDataHandlerTestCase;
+import com.liferay.portal.lar.BaseWorkflowedStagedModelDataHandlerTestCase;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Repository;
 import com.liferay.portal.model.StagedModel;
@@ -36,6 +36,7 @@ import com.liferay.portlet.wiki.service.WikiNodeLocalServiceUtil;
 import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.portlet.wiki.util.WikiTestUtil;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -53,7 +54,7 @@ import org.junit.runner.RunWith;
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class WikiPageStagedModelDataHandlerTest
-	extends BaseStagedModelDataHandlerTestCase {
+	extends BaseWorkflowedStagedModelDataHandlerTestCase {
 
 	@Override
 	protected Map<String, List<StagedModel>> addDependentStagedModelsMap(
@@ -120,6 +121,31 @@ public class WikiPageStagedModelDataHandlerTest
 			dependentStagedModelsMap, Repository.class, repository);
 
 		return page;
+	}
+
+	@Override
+	protected List<StagedModel> addWorkflowedStagedModels(Group group)
+		throws Exception {
+
+		List<StagedModel> stagedModels = new ArrayList<StagedModel>();
+
+		WikiNode node = WikiTestUtil.addNode(
+			TestPropsValues.getUserId(), group.getGroupId(),
+			ServiceTestUtil.randomString(), ServiceTestUtil.randomString());
+
+		WikiPage page = WikiTestUtil.addPage(
+			TestPropsValues.getUserId(), group.getGroupId(), node.getNodeId(),
+			ServiceTestUtil.randomString(), true);
+
+		stagedModels.add(page);
+
+		WikiPage draftPage = WikiTestUtil.addPage(
+			TestPropsValues.getUserId(), group.getGroupId(), node.getNodeId(),
+			ServiceTestUtil.randomString(), false);
+
+		stagedModels.add(draftPage);
+
+		return stagedModels;
 	}
 
 	@Override

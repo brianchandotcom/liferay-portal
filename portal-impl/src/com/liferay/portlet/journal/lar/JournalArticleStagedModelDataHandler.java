@@ -88,6 +88,13 @@ public class JournalArticleStagedModelDataHandler
 	}
 
 	@Override
+	public Integer[] getExportableStatuses() {
+		return new Integer[] {
+			WorkflowConstants.STATUS_APPROVED, WorkflowConstants.STATUS_EXPIRED
+		};
+	}
+
+	@Override
 	protected boolean countStagedModel(
 		PortletDataContext portletDataContext, JournalArticle article) {
 
@@ -107,12 +114,6 @@ public class JournalArticleStagedModelDataHandler
 	protected void doExportStagedModel(
 			PortletDataContext portletDataContext, JournalArticle article)
 		throws Exception {
-
-		if ((article.getStatus() != WorkflowConstants.STATUS_APPROVED) &&
-			(article.getStatus() != WorkflowConstants.STATUS_EXPIRED)) {
-
-			return;
-		}
 
 		Element articleElement = portletDataContext.getExportDataElement(
 			article);
@@ -562,11 +563,6 @@ public class JournalArticleStagedModelDataHandler
 
 		serviceContext.setAddGroupPermissions(addGroupPermissions);
 		serviceContext.setAddGuestPermissions(addGuestPermissions);
-
-		if (article.getStatus() != WorkflowConstants.STATUS_APPROVED) {
-			serviceContext.setWorkflowAction(
-				WorkflowConstants.ACTION_SAVE_DRAFT);
-		}
 
 		JournalArticle importedArticle = null;
 

@@ -32,6 +32,8 @@ public interface StagedModelDataHandler<T extends StagedModel> {
 
 	public String getDisplayName(T StagedModel);
 
+	public Integer[] getExportableStatuses();
+
 	public String getManifestSummaryKey(StagedModel stagedModel);
 
 	public void importStagedModel(

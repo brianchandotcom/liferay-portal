@@ -52,6 +52,14 @@ public class ${entity.name}ExportActionableDynamicQuery extends ${entity.name}Ac
 	@Override
 	protected void addCriteria(DynamicQuery dynamicQuery) {
 		_portletDataContext.addDateRangeCriteria(dynamicQuery, "modifiedDate");
+
+		<#if entity.isWorkflowEnabled()>
+			StagedModelDataHandler<?> stagedModelDataHandler = StagedModelDataHandlerRegistryUtil.getStagedModelDataHandler(${entity.name}.class.getName());
+
+			Property workflowStatusProperty = PropertyFactoryUtil.forName("status");
+
+			dynamicQuery.add(workflowStatusProperty.in(stagedModelDataHandler.getExportableStatuses()));
+		</#if>
 	}
 
 	protected long getModelDeletionCount() throws PortalException, SystemException {

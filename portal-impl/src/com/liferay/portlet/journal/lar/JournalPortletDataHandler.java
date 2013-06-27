@@ -186,7 +186,8 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 
 		if (portletDataContext.getBooleanParameter(NAMESPACE, "web-content")) {
 			ActionableDynamicQuery folderActionableDynamicQuery =
-				getFolderActionableDynamicQuery(portletDataContext);
+				new JournalFolderExportActionableDynamicQuery(
+					portletDataContext);
 
 			folderActionableDynamicQuery.performActions();
 
@@ -310,7 +311,7 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 		feedActionableDynamicQuery.performCount();
 
 		ActionableDynamicQuery folderActionableDynamicQuery =
-			getFolderActionableDynamicQuery(portletDataContext);
+			new JournalFolderExportActionableDynamicQuery(portletDataContext);
 
 		folderActionableDynamicQuery.performCount();
 	}
@@ -321,20 +322,6 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 
 		return new JournalArticleExportActionableDynamicQuery(
 			portletDataContext) {
-
-			@Override
-			protected void addCriteria(DynamicQuery dynamicQuery) {
-				super.addCriteria(dynamicQuery);
-
-				Property statusProperty = PropertyFactoryUtil.forName("status");
-
-				dynamicQuery.add(
-					statusProperty.in(
-						new Integer[] {
-							WorkflowConstants.STATUS_APPROVED,
-							WorkflowConstants.STATUS_EXPIRED
-						}));
-			}
 
 			@Override
 			protected Projection getCountProjection() {
@@ -444,26 +431,6 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 			protected String getManifestSummaryKey() {
 				return ManifestSummary.getManifestSummaryKey(
 					DDMTemplate.class.getName(), DDMStructure.class.getName());
-			}
-
-		};
-	}
-
-	protected ActionableDynamicQuery getFolderActionableDynamicQuery(
-			final PortletDataContext portletDataContext)
-		throws SystemException {
-
-		return new JournalFolderExportActionableDynamicQuery(
-			portletDataContext) {
-
-			@Override
-			protected void addCriteria(DynamicQuery dynamicQuery) {
-				super.addCriteria(dynamicQuery);
-
-				Property statusProperty = PropertyFactoryUtil.forName("status");
-
-				dynamicQuery.add(
-					statusProperty.ne(WorkflowConstants.STATUS_IN_TRASH));
 			}
 
 		};

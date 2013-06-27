@@ -24,36 +24,12 @@ import com.liferay.portal.service.ServiceTestUtil;
  */
 public class ResourcePermissionTestUtil {
 
-	public static ResourcePermission addResourcePermission() throws Exception {
-		return addResourcePermission(
-			ServiceTestUtil.nextLong(), ServiceTestUtil.randomString(),
-			ServiceTestUtil.randomString(), ServiceTestUtil.nextLong(),
-			ServiceTestUtil.nextInt());
-	}
-
-	public static ResourcePermission addResourcePermission(long roleId)
-		throws Exception {
-
-		return addResourcePermission(
-			ServiceTestUtil.nextLong(), ServiceTestUtil.randomString(),
-			ServiceTestUtil.randomString(), roleId, ServiceTestUtil.nextInt());
-	}
-
 	public static ResourcePermission addResourcePermission(
 			long actionIds, String name, long roleId)
 		throws Exception {
 
 		return addResourcePermission(
 			actionIds, name, ServiceTestUtil.randomString(), roleId,
-			ServiceTestUtil.nextInt());
-	}
-
-	public static ResourcePermission addResourcePermission(
-			long actionIds, String name, String primKey)
-		throws Exception {
-
-		return addResourcePermission(
-			actionIds, name, primKey, ServiceTestUtil.nextLong(),
 			ServiceTestUtil.nextInt());
 	}
 
@@ -85,14 +61,6 @@ public class ResourcePermissionTestUtil {
 
 		return ResourcePermissionLocalServiceUtil.addResourcePermission(
 			resourcePermission);
-	}
-
-	public static ResourcePermission addResourcePermission(String primKey)
-		throws Exception {
-
-		return addResourcePermission(
-			ServiceTestUtil.nextLong(), ServiceTestUtil.randomString(), primKey,
-			ServiceTestUtil.nextLong(), ServiceTestUtil.nextInt());
 	}
 
 }

@@ -146,12 +146,11 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 
 	@Override
 	public long getPortletDisplayTemplateDDMTemplateId(
-		ThemeDisplay themeDisplay, String displayStyle) {
+		long groupId, String displayStyle) {
 
 		long portletDisplayDDMTemplateId = 0;
 
-		long portletDisplayDDMTemplateGroupId = getDDMTemplateGroupId(
-			themeDisplay.getScopeGroupId());
+		long portletDisplayDDMTemplateGroupId = getDDMTemplateGroupId(groupId);
 
 		if (displayStyle.startsWith("ddmTemplate_")) {
 			DDMTemplate portletDisplayDDMTemplate = fetchDDMTemplate(

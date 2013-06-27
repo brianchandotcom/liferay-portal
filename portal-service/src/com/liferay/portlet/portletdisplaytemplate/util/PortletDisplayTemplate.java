@@ -15,7 +15,6 @@
 package com.liferay.portlet.portletdisplaytemplate.util;
 
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 
 import java.util.List;
@@ -33,7 +32,7 @@ public interface PortletDisplayTemplate {
 	public long getDDMTemplateGroupId(long groupId);
 
 	public long getPortletDisplayTemplateDDMTemplateId(
-		ThemeDisplay themeDisplay, String displayStyle);
+		long groupId, String displayStyle);
 
 	public Map<String, TemplateVariableGroup> getTemplateVariableGroups(
 		String language);

@@ -14,13 +14,18 @@
 	<td>PGWebcontentlist</td>
 </tr>
 <tr>
+	<td>EXTEND_ACTION_PATH</td>
+	<td>BasePortlet</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
 </tr>
 <tr>
 	<td>INFO_MESSAGE</td>
-	<td>//div[@class='alert alert-info portlet-configuration']/a	</td>
+	<td>//div[@class='alert alert-info portlet-configuration']/a</td>
 	<td></td>
 </tr>
 <tr>

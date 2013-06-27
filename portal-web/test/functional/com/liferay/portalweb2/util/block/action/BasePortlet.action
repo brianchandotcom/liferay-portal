@@ -1,7 +1,7 @@
 <definition>
-	<command name="click">
-		<case locator-key1="OPTIONS_MENULIST_CONFIGURATION">
-			<execute function="Click#textClickAtAndWait" value1="Configuration" />
+	<command name="assertClick">
+		<case locator-key1="OPTIONS_ICON">
+			<execute function="AssertClick#pauseAssertTextClickAt" />
 		</case>
 	</command>
 </definition>

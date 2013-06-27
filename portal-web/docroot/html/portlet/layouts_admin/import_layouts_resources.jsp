@@ -217,12 +217,14 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 								<aui:input name="<%= PortletDataHandlerKeys.PORTLET_CONFIGURATION %>" type="hidden" value="<%= true %>" />
 
 								<%
-								List<Portlet> setupPortlets = ListUtil.sort(manifestSummary.getSetupPortlets(), new PortletTitleComparator(application, locale));
+								List<Portlet> setupPortlets = ListUtil.sort(manifestSummary.getConfigurationPortlets(), new PortletTitleComparator(application, locale));
 
 								for (Portlet portlet : setupPortlets) {
 									PortletDataHandler portletDataHandler = portlet.getPortletDataHandlerInstance();
 
-									if ((portletDataHandler == null) || (portletDataHandler.getConfigurationControls(portlet) == null)) {
+									PortletDataHandlerControl[] portletDataHandlerControls = portletDataHandler.getImportConfigurationControls(portlet, manifestSummary);
+
+									if (Validator.isNull(portletDataHandlerControls)) {
 										continue;
 									}
 
@@ -238,7 +240,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 
 													<%
 													request.setAttribute("render_controls.jsp-action", Constants.IMPORT);
-													request.setAttribute("render_controls.jsp-controls", portletDataHandler.getConfigurationControls(portlet));
+													request.setAttribute("render_controls.jsp-controls", portletDataHandlerControls);
 													request.setAttribute("render_controls.jsp-portletId", portlet.getRootPortletId());
 													%>
 

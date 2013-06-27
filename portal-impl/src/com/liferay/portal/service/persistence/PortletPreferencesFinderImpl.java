@@ -19,8 +19,11 @@ import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.PortletPreferences;
 import com.liferay.portal.model.impl.PortletPreferencesImpl;
@@ -28,6 +31,7 @@ import com.liferay.portal.model.impl.PortletPreferencesModelImpl;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -37,6 +41,9 @@ import java.util.List;
 public class PortletPreferencesFinderImpl
 	extends BasePersistenceImpl<PortletPreferences>
 	implements PortletPreferencesFinder {
+
+	public static final String COUNT_BY_C_G_O_O_P_P_P =
+		PortletPreferencesFinder.class.getName() + ".countByC_G_O_O_P_P_P";
 
 	public static final String FIND_BY_PORTLET_ID =
 		PortletPreferencesFinder.class.getName() + ".findByPortletId";
@@ -58,6 +65,77 @@ public class PortletPreferencesFinderImpl
 				String.class.getName(), Boolean.class.getName()
 			}
 		);
+
+	@Override
+	public long countByC_G_O_O_P_P_P(
+			long companyId, long groupId, long ownerId, int ownerType,
+			String portletId, long plid, boolean privateLayout)
+		throws SystemException {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(COUNT_BY_C_G_O_O_P_P_P);
+
+			if (ownerId == -1) {
+				sql = StringUtil.replace(sql, _OWNER_ID_SQL, StringPool.BLANK);
+			}
+
+			if (plid == -1) {
+				sql = StringUtil.replace(sql, _PLID_SQL, StringPool.BLANK);
+			}
+			else {
+				sql = StringUtil.replace(
+					sql, _PRIVATE_LAYOUT_SQL, StringPool.BLANK);
+			}
+
+			SQLQuery q = session.createSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(companyId);
+			qPos.add(groupId);
+
+			if (ownerId != -1) {
+				qPos.add(ownerId);
+			}
+
+			qPos.add(ownerType);
+			qPos.add(portletId);
+			qPos.add(portletId.concat("%_INSTANCE_%"));
+
+			if (plid != -1) {
+				qPos.add(plid);
+			}
+			else {
+				qPos.add(privateLayout);
+			}
+
+			int count = 0;
+
+			Iterator<Long> itr = q.iterate();
+
+			while (itr.hasNext()) {
+				Long l = itr.next();
+
+				if (l != null) {
+					count += l.intValue();
+				}
+			}
+
+			return count;
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
 
 	@Override
 	public List<PortletPreferences> findByPortletId(String portletId)
@@ -178,5 +256,13 @@ public class PortletPreferencesFinderImpl
 
 		return false;
 	}
+
+	private static final String _OWNER_ID_SQL =
+		"(PortletPreferences.ownerId = ?) AND";
+
+	private static final String _PLID_SQL = "(Layout.plid = ?) AND";
+
+	private static final String _PRIVATE_LAYOUT_SQL =
+		"AND (Layout.privateLayout = ?)";
 
 }

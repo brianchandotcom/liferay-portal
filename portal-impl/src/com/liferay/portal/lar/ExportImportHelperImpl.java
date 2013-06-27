@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.lar.MissingReference;
 import com.liferay.portal.kernel.lar.MissingReferences;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataContextFactoryUtil;
+import com.liferay.portal.kernel.lar.PortletDataHandler;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.kernel.lar.StagedModelDataHandler;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerRegistryUtil;
@@ -327,13 +328,12 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 								PortletLocalServiceUtil.getPortletById(
 									group.getCompanyId(), portletId);
 
-							String portletDataHandlerClass =
-								portlet.getPortletDataHandlerClass();
+							PortletDataHandler portletDataHandler =
+								portlet.getPortletDataHandlerInstance();
 
-							if (Validator.isNotNull(portletDataHandlerClass)) {
-								if (!portletDataHandlerClass.equals(
-										DefaultConfigurationPortletDataHandler.
-											class.getName()) &&
+							if (portletDataHandler != null) {
+								if (!(portletDataHandler instanceof
+									DefaultConfigurationPortletDataHandler) &&
 									GetterUtil.getBoolean(
 										element.attributeValue(
 											"portlet-data"))) {
@@ -341,14 +341,15 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 									manifestSummary.addDataPortlet(portlet);
 								}
 
-								if (portletDataHandlerClass.equals(
-										DefaultConfigurationPortletDataHandler.
-											class.getName()) &&
-									GetterUtil.getBoolean(
-										element.attributeValue(
-											"portlet-setup"))) {
+								if (Validator.isNotNull(
+										portlet.
+											getConfigurationActionClass())) {
 
-									manifestSummary.addSetupPortlet(portlet);
+									manifestSummary.addConfigurationPortlet(
+										portlet,
+										StringUtil.split(
+											element.attributeValue(
+												"portlet-configuration")));
 								}
 							}
 						}

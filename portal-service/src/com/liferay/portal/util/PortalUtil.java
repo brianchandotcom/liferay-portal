@@ -236,10 +236,18 @@ public class PortalUtil {
 			canonicalURL, themeDisplay, locale, layout);
 	}
 
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link
+	 * com.liferay.portal.security.auth.AuthTokenWhitelistUtil#getPortletCSRFWhitelistActions()}
+	 */
 	public static Set<String> getAuthTokenIgnoreActions() {
 		return getPortal().getAuthTokenIgnoreActions();
 	}
 
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link
+	 * com.liferay.portal.security.auth.AuthTokenWhitelistUtil#getPortletCSRFWhitelist()}
+	 */
 	public static Set<String> getAuthTokenIgnorePortlets() {
 		return getPortal().getAuthTokenIgnorePortlets();
 	}

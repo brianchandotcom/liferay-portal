@@ -77,7 +77,6 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
-import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringComparator;
 import com.liferay.portal.kernel.util.StringPool;
@@ -415,13 +414,6 @@ public class PortalImpl implements Portal {
 			_allSystemSiteRoles.length);
 
 		Arrays.sort(_sortedSystemSiteRoles, new StringComparator());
-
-		// Authentication token ignore actions and tokens
-
-		_authTokenIgnoreActions = SetUtil.fromArray(
-			PropsValues.AUTH_TOKEN_IGNORE_ACTIONS);
-		_authTokenIgnorePortlets = SetUtil.fromArray(
-			PropsValues.AUTH_TOKEN_IGNORE_PORTLETS);
 
 		// Reserved parameter names
 
@@ -1007,14 +999,22 @@ public class PortalImpl implements Portal {
 		return canonicalURL.concat(i18nPath);
 	}
 
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link
+	 * com.liferay.portal.security.auth.AuthTokenWhitelistUtil#getPortletCSRFWhitelistActions()}
+	 */
 	@Override
 	public Set<String> getAuthTokenIgnoreActions() {
-		return _authTokenIgnoreActions;
+		return AuthTokenWhitelistUtil.getPortletCSRFWhitelistActions();
 	}
 
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link
+	 * com.liferay.portal.security.auth.AuthTokenWhitelistUtil#getPortletCSRFWhitelist()}
+	 */
 	@Override
 	public Set<String> getAuthTokenIgnorePortlets() {
-		return _authTokenIgnorePortlets;
+		return AuthTokenWhitelistUtil.getPortletCSRFWhitelist();
 	}
 
 	@Override
@@ -7415,8 +7415,6 @@ public class PortalImpl implements Portal {
 	private String[] _allSystemOrganizationRoles;
 	private String[] _allSystemRoles;
 	private String[] _allSystemSiteRoles;
-	private Set<String> _authTokenIgnoreActions;
-	private Set<String> _authTokenIgnorePortlets;
 	private Pattern _bannedResourceIdPattern = Pattern.compile(
 		PropsValues.PORTLET_RESOURCE_ID_BANNED_PATHS_REGEXP,
 		Pattern.CASE_INSENSITIVE);

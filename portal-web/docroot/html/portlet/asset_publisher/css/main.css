@@ -161,10 +161,11 @@
 	}
 
 	.subscribe-action {
-		float: right;
-		margin-right: 10px;
-		margin-top: -30px;
-		text-align: right
+		text-align: right;
+
+		.taglib-rss {
+			margin-left: 10px;
+		}
     }
 
 	.taglib-asset-categories-summary {

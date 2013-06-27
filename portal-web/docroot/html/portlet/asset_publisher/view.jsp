@@ -130,6 +130,14 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 			</c:otherwise>
 		</c:choose>
 	</c:if>
+
+	<c:if test="<%= enableRSS %>">
+		<liferay-portlet:resourceURL varImpl="rssURL">
+			<portlet:param name="struts_action" value="/asset_publisher/rss" />
+		</liferay-portlet:resourceURL>
+
+		<liferay-ui:rss resourceURL="<%= rssURL %>" />
+	</c:if>	
 </div>
 
 <%
@@ -169,16 +177,6 @@ contextObjects.put(PortletDisplayTemplateConstants.ASSET_PUBLISHER_HELPER, Asset
 
 <c:if test='<%= !paginationType.equals("none") && (searchContainer.getTotal() > searchContainer.getResults().size()) %>'>
 	<liferay-ui:search-paginator searchContainer="<%= searchContainer %>" type="<%= paginationType %>" />
-</c:if>
-
-<c:if test="<%= enableRSS %>">
-	<liferay-portlet:resourceURL varImpl="rssURL">
-		<portlet:param name="struts_action" value="/asset_publisher/rss" />
-	</liferay-portlet:resourceURL>
-
-	<div class="subscribe">
-		<liferay-ui:rss resourceURL="<%= rssURL %>" />
-	</div>
 </c:if>
 
 <%!

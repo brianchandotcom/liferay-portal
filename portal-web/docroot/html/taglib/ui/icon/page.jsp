@@ -98,35 +98,27 @@ if (Validator.isNotNull(src) && themeDisplay.isThemeImagesFastLoad() && !auiImag
 	}
 }
 
-String imgClass = "icon";
-
-if (auiImage) {
-	StringBundler sb = new StringBundler(4);
-
-	sb.append(details);
-	sb.append(" style=\"background-image: url('");
-	sb.append(themeDisplay.getPathThemeImages());
-	sb.append("/aui/icon_sprite.png'); height: 16px; width: 16px;\"");
-
-	details = sb.toString();
-
-	imgClass = imgClass.concat(" icon-").concat(image.substring(_AUI_PATH.length()));
-}
-
 boolean urlIsNotNull = Validator.isNotNull(url);
 %>
 
 <liferay-util:buffer var="linkContent">
-	<c:if test="<%= Validator.isNotNull(src) %>">
-		<c:choose>
-			<c:when test="<%= urlIsNotNull %>">
-				<img class="<%= imgClass %>" src="<%= src %>" <%= details %> />
-			</c:when>
-			<c:otherwise>
-				<img class="<%= imgClass %>" id="<%= id %>" src="<%= src %>" <%= details %> />
-			</c:otherwise>
-		</c:choose>
-	</c:if>
+	<c:choose>
+		<c:when test="<%= auiImage %>">
+			<aui:icon image="<%= image.substring(_AUI_PATH.length()) %>" />
+		</c:when>
+		<c:otherwise>
+			<c:if test="<%= Validator.isNotNull(src) %>">
+				<c:choose>
+					<c:when test="<%= urlIsNotNull %>">
+						<img src="<%= src %>" <%= details %> />
+					</c:when>
+					<c:otherwise>
+						<img id="<%= id %>" src="<%= src %>" <%= details %> />
+					</c:otherwise>
+				</c:choose>
+			</c:if>
+		</c:otherwise>
+	</c:choose>
 
 	<c:choose>
 		<c:when test="<%= (iconMenuIconCount != null) && ((iconMenuSingleIcon == null) || iconMenuShowWhenSingleIcon) %>">

@@ -15,7 +15,7 @@
 package com.liferay.portlet.journal.lar;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
-import com.liferay.portal.lar.BaseStagedModelDataHandlerTestCase;
+import com.liferay.portal.lar.BaseWorkflowedStagedModelDataHandlerTestCase;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.service.ServiceTestUtil;
@@ -23,6 +23,7 @@ import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
@@ -37,6 +38,7 @@ import com.liferay.portlet.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.portlet.journal.service.persistence.JournalArticleResourceUtil;
 import com.liferay.portlet.journal.util.JournalTestUtil;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,7 +56,7 @@ import org.junit.runner.RunWith;
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class JournalArticleStagedModelDataHandlerTest
-	extends BaseStagedModelDataHandlerTestCase {
+	extends BaseWorkflowedStagedModelDataHandlerTestCase {
 
 	@Override
 	protected Map<String, List<StagedModel>> addDependentStagedModelsMap(
@@ -114,6 +116,31 @@ public class JournalArticleStagedModelDataHandlerTest
 			PortalUtil.getClassNameId(DDMStructure.class),
 			DDMStructureTestUtil.getSampleStructuredContent(),
 			ddmStructure.getStructureKey(), ddmTemplate.getTemplateKey());
+	}
+
+	@Override
+	protected List<StagedModel> addWorkflowedStagedModels(Group group)
+		throws Exception {
+
+		List<StagedModel> stagedModels = new ArrayList<StagedModel>();
+
+		stagedModels.add(
+			JournalTestUtil.addArticleWithWorkflow(group.getGroupId(), true));
+
+		stagedModels.add(
+			JournalTestUtil.addArticleWithWorkflow(group.getGroupId(), false));
+
+		JournalArticle expiredArticle = JournalTestUtil.addArticleWithWorkflow(
+			group.getGroupId(), true);
+
+		expiredArticle = JournalArticleLocalServiceUtil.expireArticle(
+			TestPropsValues.getUserId(), group.getGroupId(),
+			expiredArticle.getArticleId(), expiredArticle.getVersion(),
+			expiredArticle.getUrlTitle(), ServiceTestUtil.getServiceContext());
+
+		stagedModels.add(expiredArticle);
+
+		return stagedModels;
 	}
 
 	@Override

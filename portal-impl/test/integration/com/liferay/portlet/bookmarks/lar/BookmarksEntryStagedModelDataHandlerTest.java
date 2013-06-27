@@ -15,7 +15,7 @@
 package com.liferay.portlet.bookmarks.lar;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
-import com.liferay.portal.lar.BaseStagedModelDataHandlerTestCase;
+import com.liferay.portal.lar.BaseWorkflowedStagedModelDataHandlerTestCase;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.service.ServiceContext;
@@ -29,6 +29,7 @@ import com.liferay.portlet.bookmarks.service.BookmarksEntryLocalServiceUtil;
 import com.liferay.portlet.bookmarks.service.BookmarksFolderLocalServiceUtil;
 import com.liferay.portlet.bookmarks.util.BookmarksTestUtil;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,7 +47,7 @@ import org.junit.runner.RunWith;
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class BookmarksEntryStagedModelDataHandlerTest
-	extends BaseStagedModelDataHandlerTestCase {
+	extends BaseWorkflowedStagedModelDataHandlerTestCase {
 
 	@Override
 	protected Map<String, List<StagedModel>> addDependentStagedModelsMap(
@@ -81,6 +82,18 @@ public class BookmarksEntryStagedModelDataHandlerTest
 
 		return BookmarksTestUtil.addEntry(
 			folder.getFolderId(), true, serviceContext);
+	}
+
+	@Override
+	protected List<StagedModel> addWorkflowedStagedModels(Group group)
+		throws Exception {
+
+		List<StagedModel> stagedModels = new ArrayList<StagedModel>();
+
+		stagedModels.add(BookmarksTestUtil.addEntry(group.getGroupId(), true));
+		stagedModels.add(BookmarksTestUtil.addEntry(group.getGroupId(), false));
+
+		return stagedModels;
 	}
 
 	@Override

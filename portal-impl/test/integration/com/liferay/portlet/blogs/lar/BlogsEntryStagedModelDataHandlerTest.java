@@ -15,7 +15,7 @@
 package com.liferay.portlet.blogs.lar;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
-import com.liferay.portal.lar.BaseStagedModelDataHandlerTestCase;
+import com.liferay.portal.lar.BaseWorkflowedStagedModelDataHandlerTestCase;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
@@ -26,6 +26,7 @@ import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portlet.blogs.util.BlogsTestUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -41,7 +42,7 @@ import org.junit.runner.RunWith;
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class BlogsEntryStagedModelDataHandlerTest
-	extends BaseStagedModelDataHandlerTestCase {
+	extends BaseWorkflowedStagedModelDataHandlerTestCase {
 
 	@Override
 	protected StagedModel addStagedModel(
@@ -50,6 +51,21 @@ public class BlogsEntryStagedModelDataHandlerTest
 		throws Exception {
 
 		return BlogsTestUtil.addEntry(TestPropsValues.getUserId(), group, true);
+	}
+
+	@Override
+	protected List<StagedModel> addWorkflowedStagedModels(Group group)
+		throws Exception {
+
+		List<StagedModel> stagedModels = new ArrayList<StagedModel>();
+
+		stagedModels.add(
+			BlogsTestUtil.addEntry(TestPropsValues.getUserId(), group, true));
+
+		stagedModels.add(
+			BlogsTestUtil.addEntry(TestPropsValues.getUserId(), group, false));
+
+		return stagedModels;
 	}
 
 	@Override

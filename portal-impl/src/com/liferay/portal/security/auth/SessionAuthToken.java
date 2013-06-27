@@ -14,20 +14,14 @@
 
 package com.liferay.portal.security.auth;
 
-import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.model.Portlet;
-import com.liferay.portal.model.PortletConstants;
-import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.util.Encryptor;
 import com.liferay.util.PwdGenerator;
-
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -39,7 +33,18 @@ public class SessionAuthToken implements AuthToken {
 
 	@Override
 	public void check(HttpServletRequest request) throws PrincipalException {
-		if (isIgnoreAction(request) || isIgnorePortlet(request)) {
+		long companyId = PortalUtil.getCompanyId(request);
+
+		String ppid = ParamUtil.getString(request, "p_p_id");
+
+		String portletNamespace = PortalUtil.getPortletNamespace(ppid);
+
+		String strutsAction = ParamUtil.getString(
+			request, portletNamespace + "struts_action");
+
+		if (AuthTokenWhitelistUtil.isPortletCSRFWhitelisted(
+				companyId, ppid, strutsAction)) {
+
 			return;
 		}
 
@@ -93,67 +98,6 @@ public class SessionAuthToken implements AuthToken {
 		}
 
 		return sessionAuthenticationToken;
-	}
-
-	protected boolean isIgnoreAction(HttpServletRequest request) {
-		long companyId = PortalUtil.getCompanyId(request);
-
-		String ppid = ParamUtil.getString(request, "p_p_id");
-
-		String portletNamespace = PortalUtil.getPortletNamespace(ppid);
-
-		String strutsAction = ParamUtil.getString(
-			request, portletNamespace + "struts_action");
-
-		return isIgnoreAction(companyId, ppid, strutsAction);
-	}
-
-	protected boolean isIgnoreAction(
-		long companyId, String ppid, String strutsAction) {
-
-		Set<String> authTokenIgnoreActions =
-			AuthTokenWhitelistUtil.getPortletCSRFWhitelistActions();
-
-		if (!authTokenIgnoreActions.contains(strutsAction)) {
-			return false;
-		}
-
-		try {
-			Portlet portlet = PortletLocalServiceUtil.getPortletById(
-				companyId, ppid);
-
-			if (portlet == null) {
-				return false;
-			}
-
-			String strutsPath = strutsAction.substring(
-				1, strutsAction.lastIndexOf(CharPool.SLASH));
-
-			if (strutsPath.equals(portlet.getStrutsPath()) ||
-				strutsPath.equals(portlet.getParentStrutsPath())) {
-
-				return true;
-			}
-		}
-		catch (Exception e) {
-		}
-
-		return false;
-	}
-
-	protected boolean isIgnorePortlet(HttpServletRequest request) {
-		String ppid = ParamUtil.getString(request, "p_p_id");
-
-		return isIgnorePortlet(ppid);
-	}
-
-	protected boolean isIgnorePortlet(String portletId) {
-		String rootPortletId = PortletConstants.getRootPortletId(portletId);
-
-		Set<String> authTokenIgnorePortlets =
-			AuthTokenWhitelistUtil.getPortletCSRFWhitelist();
-
-		return authTokenIgnorePortlets.contains(rootPortletId);
 	}
 
 	private static final String _PORTAL = "PORTAL";

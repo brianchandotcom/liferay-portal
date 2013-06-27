@@ -30,20 +30,21 @@ public class AuthTokenWhitelistUtil {
 		return _authTokenWhitelist;
 	}
 
-	public static Set<String> getWhitelist() {
-		return getAuthTokenWhitelist().getWhitelist();
+	public static Set<String> getPortletInvocationWhitelist() {
+		return getAuthTokenWhitelist().getPortletInvocationWhitelist();
 	}
 
-	public static Set<String> getWhitelistActions() {
-		return getAuthTokenWhitelist().getWhitelistActions();
+	public static Set<String> getPortletInvocationWhitelistActions() {
+		return getAuthTokenWhitelist().getPortletInvocationWhitelistActions();
 	}
 
-	public static Set<String> resetWhitelist() {
-		return getAuthTokenWhitelist().resetWhitelist();
+
+	public static Set<String> resetPortletInvocationWhitelist() {
+		return getAuthTokenWhitelist().resetPortletInvocationWhitelist();
 	}
 
-	public static Set<String> resetWhitelistActions() {
-		return getAuthTokenWhitelist().resetWhitelistActions();
+	public static Set<String> resetPortletInvocationWhitelistActions() {
+		return getAuthTokenWhitelist().resetPortletInvocationWhitelistActions();
 	}
 
 	public void setAuthTokenWhitelist(AuthTokenWhitelist authTokenWhitelist) {

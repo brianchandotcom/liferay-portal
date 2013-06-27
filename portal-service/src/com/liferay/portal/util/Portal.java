@@ -897,13 +897,13 @@ public interface Portal {
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link
-	 * com.liferay.portal.security.auth.AuthTokenWhitelistUtil#getWhitelist()}
+	 * com.liferay.portal.security.auth.AuthTokenWhitelistUtil#getPortletInvocationWhitelist()}
 	 */
 	public Set<String> getPortletAddDefaultResourceCheckWhitelist();
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link
-	 * com.liferay.portal.security.auth.AuthTokenWhitelistUtil#getWhitelistActions()}
+	 * com.liferay.portal.security.auth.AuthTokenWhitelistUtil#getPortletInvocationWhitelistActions()}
 	 */
 	public Set<String> getPortletAddDefaultResourceCheckWhitelistActions();
 
@@ -1252,13 +1252,13 @@ public interface Portal {
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link
-	 * com.liferay.portal.security.auth.AuthTokenWhitelistUtil#resetWhitelist()}
+	 * com.liferay.portal.security.auth.AuthTokenWhitelistUtil#resetPortletInvocationWhitelist()}
 	 */
 	public Set<String> resetPortletAddDefaultResourceCheckWhitelist();
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link
-	 * com.liferay.portal.security.auth.AuthTokenWhitelistUtil#resetWhitelistActions()}
+	 * com.liferay.portal.security.auth.AuthTokenWhitelistUtil#resetPortletInvocationWhitelistActions()}
 	 */
 	public Set<String> resetPortletAddDefaultResourceCheckWhitelistActions();
 

@@ -3803,12 +3803,12 @@ public class PortalImpl implements Portal {
 
 	@Override
 	public Set<String> getPortletAddDefaultResourceCheckWhitelist() {
-		return AuthTokenWhitelistUtil.getWhitelist();
+		return AuthTokenWhitelistUtil.getPortletInvocationWhitelist();
 	}
 
 	@Override
 	public Set<String> getPortletAddDefaultResourceCheckWhitelistActions() {
-		return AuthTokenWhitelistUtil.getWhitelistActions();
+		return AuthTokenWhitelistUtil.getPortletInvocationWhitelistActions();
 	}
 
 	/**
@@ -5662,7 +5662,8 @@ public class PortalImpl implements Portal {
 			return true;
 		}
 
-		Set<String> whiteList = AuthTokenWhitelistUtil.getWhitelist();
+		Set<String> whiteList =
+			AuthTokenWhitelistUtil.getPortletInvocationWhitelist();
 
 		if (whiteList.contains(portletId)) {
 			return true;
@@ -5678,7 +5679,7 @@ public class PortalImpl implements Portal {
 		}
 
 		Set<String> whitelistActions =
-			AuthTokenWhitelistUtil.getWhitelistActions();
+			AuthTokenWhitelistUtil.getPortletInvocationWhitelistActions();
 
 		if (whitelistActions.contains(strutsAction)) {
 			return true;
@@ -6151,12 +6152,12 @@ public class PortalImpl implements Portal {
 
 	@Override
 	public Set<String> resetPortletAddDefaultResourceCheckWhitelist() {
-		return AuthTokenWhitelistUtil.resetWhitelist();
+		return AuthTokenWhitelistUtil.resetPortletInvocationWhitelist();
 	}
 
 	@Override
 	public Set<String> resetPortletAddDefaultResourceCheckWhitelistActions() {
-		return AuthTokenWhitelistUtil.resetWhitelistActions();
+		return AuthTokenWhitelistUtil.resetPortletInvocationWhitelistActions();
 	}
 
 	@Override

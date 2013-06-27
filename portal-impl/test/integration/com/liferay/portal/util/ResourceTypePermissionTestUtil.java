@@ -24,14 +24,6 @@ import com.liferay.portal.service.ServiceTestUtil;
  */
 public class ResourceTypePermissionTestUtil {
 
-	public static ResourceTypePermission addResourceTypePermission()
-		throws Exception {
-
-		return addResourceTypePermission(
-			ServiceTestUtil.nextLong(), ServiceTestUtil.nextLong(),
-			ServiceTestUtil.randomString(), ServiceTestUtil.nextLong());
-	}
-
 	public static ResourceTypePermission addResourceTypePermission(
 			long actionIds, long groupId, String name)
 		throws Exception {
@@ -59,15 +51,6 @@ public class ResourceTypePermissionTestUtil {
 
 		return ResourceTypePermissionLocalServiceUtil.addResourceTypePermission(
 			resourceTypePermission);
-	}
-
-	public static ResourceTypePermission addResourceTypePermission(
-			long groupId, String name)
-		throws Exception {
-
-		return addResourceTypePermission(
-			ServiceTestUtil.nextLong(), groupId, name,
-			ServiceTestUtil.nextLong());
 	}
 
 }

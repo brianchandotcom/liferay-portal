@@ -52,12 +52,12 @@ public class ResourcePermissionTestUtil {
 			ResourcePermissionLocalServiceUtil.createResourcePermission(
 				resourcePermissionId);
 
-		resourcePermission.setActionIds(actionIds);
 		resourcePermission.setCompanyId(TestPropsValues.getCompanyId());
 		resourcePermission.setName(name);
+		resourcePermission.setScope(scope);
 		resourcePermission.setPrimKey(primKey);
 		resourcePermission.setRoleId(roleId);
-		resourcePermission.setScope(scope);
+		resourcePermission.setActionIds(actionIds);
 
 		return ResourcePermissionLocalServiceUtil.addResourcePermission(
 			resourcePermission);

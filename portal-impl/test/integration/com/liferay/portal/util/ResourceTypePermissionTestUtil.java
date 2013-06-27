@@ -43,11 +43,11 @@ public class ResourceTypePermissionTestUtil {
 			ResourceTypePermissionLocalServiceUtil.createResourceTypePermission(
 				resourceTypePermissionId);
 
-		resourceTypePermission.setActionIds(actionIds);
 		resourceTypePermission.setCompanyId(TestPropsValues.getCompanyId());
 		resourceTypePermission.setGroupId(groupId);
 		resourceTypePermission.setName(name);
 		resourceTypePermission.setRoleId(roleId);
+		resourceTypePermission.setActionIds(actionIds);
 
 		return ResourceTypePermissionLocalServiceUtil.addResourceTypePermission(
 			resourceTypePermission);

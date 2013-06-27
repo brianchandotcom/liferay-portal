@@ -109,13 +109,12 @@ public class WikiPageServiceTest {
 			ServiceTestUtil.randomString(), originalContent, true,
 			serviceContext);
 
-		ExpandoTable table = null;
 		ExpandoColumn column = null;
 		ExpandoValue value = null;
 		ExpandoBridge expandoBridge = null;
 
 		if (checkCustomField) {
-			table = ExpandoTestUtil.addTable(
+			ExpandoTable table = ExpandoTestUtil.addTable(
 				PortalUtil.getClassNameId(WikiPage.class),
 				ServiceTestUtil.randomString());
 
@@ -140,11 +139,11 @@ public class WikiPageServiceTest {
 		sb.append(StringPool.NEW_LINE);
 		sb.append("Added second line");
 
-		originalPage.setContent(sb.toString());
-
 		WikiPage updatedWikiPage = WikiTestUtil.updatePage(
 			originalPage, TestPropsValues.getUserId(), sb.toString(),
 			serviceContext);
+
+		Assert.assertNotEquals(originalContent, updatedWikiPage.getContent());
 
 		sb = new StringBuilder(3);
 
@@ -152,17 +151,16 @@ public class WikiPageServiceTest {
 		sb.append(StringPool.NEW_LINE);
 		sb.append("Added third line");
 
-		updatedWikiPage.setContent(sb.toString());
-
 		WikiPage updatedWikiPage2 = WikiTestUtil.updatePage(
 			updatedWikiPage, TestPropsValues.getUserId(), sb.toString(),
 			serviceContext);
 
-		double originalVersion = originalPage.getVersion();
+		Assert.assertNotEquals(originalContent, updatedWikiPage2.getContent());
 
 		WikiPage revertedPage = WikiPageLocalServiceUtil.revertPage(
 			TestPropsValues.getUserId(), _node.getNodeId(),
-			updatedWikiPage2.getTitle(), originalVersion, serviceContext);
+			updatedWikiPage2.getTitle(), originalPage.getVersion(),
+			serviceContext);
 
 		Assert.assertEquals(originalContent, revertedPage.getContent());
 

@@ -39,17 +39,6 @@ public class DLFileEntryTypeImpl extends DLFileEntryTypeBaseImpl {
 	}
 
 	@Override
-	public boolean isExportable() {
-		if (getFileEntryTypeId() ==
-				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT) {
-
-			return false;
-		}
-
-		return true;
-	}
-
-	@Override
 	public String getName(Locale locale) {
 		String name = super.getName(locale);
 
@@ -60,6 +49,17 @@ public class DLFileEntryTypeImpl extends DLFileEntryTypeBaseImpl {
 		}
 
 		return name;
+	}
+
+	@Override
+	public boolean isExportable() {
+		if (getFileEntryTypeId() ==
+				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 }

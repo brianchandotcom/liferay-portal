@@ -22,12 +22,12 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  */
 public class PortletPreferencesFinderUtil {
 	public static long countByC_G_O_O_P_P_P(long companyId, long groupId,
-		long ownerId, int ownerType, java.lang.String portletId, long plid,
+		long ownerId, int ownerType, long plid, java.lang.String portletId,
 		boolean privateLayout)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getFinder()
 				   .countByC_G_O_O_P_P_P(companyId, groupId, ownerId,
-			ownerType, portletId, plid, privateLayout);
+			ownerType, plid, portletId, privateLayout);
 	}
 
 	public static java.util.List<com.liferay.portal.model.PortletPreferences> findByPortletId(

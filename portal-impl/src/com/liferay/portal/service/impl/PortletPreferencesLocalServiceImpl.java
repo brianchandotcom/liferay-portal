@@ -230,7 +230,7 @@ public class PortletPreferencesLocalServiceImpl
 		}
 
 		return portletPreferencesFinder.countByC_G_O_O_P_P_P(
-			companyId, groupId, ownerId, ownerType, portletId, plid,
+			companyId, groupId, ownerId, ownerType, plid, portletId,
 			privateLayout);
 	}
 

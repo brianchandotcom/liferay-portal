@@ -69,7 +69,7 @@ public class PortletPreferencesFinderImpl
 	@Override
 	public long countByC_G_O_O_P_P_P(
 			long companyId, long groupId, long ownerId, int ownerType,
-			String portletId, long plid, boolean privateLayout)
+			long plid, String portletId, boolean privateLayout)
 		throws SystemException {
 
 		Session session = null;

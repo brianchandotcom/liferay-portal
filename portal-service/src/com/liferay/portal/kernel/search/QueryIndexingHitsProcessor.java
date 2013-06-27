@@ -17,30 +17,30 @@ package com.liferay.portal.kernel.search;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.util.PortletKeys;
 
-import java.util.Arrays;
 import java.util.Locale;
 
 /**
  * @author Michael C. Han
+ * @author Josef Sustacek
  */
 public class QueryIndexingHitsProcessor implements HitsProcessor {
-
-	public static final float SCORES_THRESHOLD_DEFAULT = 0.5f;
 
 	@Override
 	public boolean process(SearchContext searchContext, Hits hits)
 		throws SearchException {
 
-		float[] scores = hits.getScores();
+		QueryConfig queryConfig = searchContext.getQueryConfig();
 
-		if ((scores != null) && (scores.length != 0)) {
-			Arrays.sort(scores);
+		if (!queryConfig.isQueryIndexingEnabled()) {
+			return true;
+		}
 
-			if (scores[0] >= _scoresThreshold) {
-				addDocument(
-					searchContext.getCompanyId(), searchContext.getKeywords(),
-					searchContext.getLocale());
-			}
+		int threshold = queryConfig.getQueryIndexingThreshold();
+
+		if (hits.getLength() >= threshold) {
+			addDocument(
+				searchContext.getCompanyId(), searchContext.getKeywords(),
+				searchContext.getLocale());
 		}
 
 		return true;
@@ -48,10 +48,6 @@ public class QueryIndexingHitsProcessor implements HitsProcessor {
 
 	public void setDocument(Document document) {
 		_document = document;
-	}
-
-	public void setScoresThreshold(float scoresThreshold) {
-		_scoresThreshold = scoresThreshold;
 	}
 
 	protected void addDocument(long companyId, String keywords, Locale locale)
@@ -69,6 +65,5 @@ public class QueryIndexingHitsProcessor implements HitsProcessor {
 	}
 
 	private Document _document;
-	private float _scoresThreshold = SCORES_THRESHOLD_DEFAULT;
 
 }

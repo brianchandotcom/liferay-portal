@@ -18,6 +18,7 @@ import com.liferay.portal.LayoutTypeException;
 import com.liferay.portal.events.EventsProcessorUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.servlet.ServletResponseConstants;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -92,11 +93,14 @@ public class UpdateLayoutAction extends JSONAction {
 			else if (cmd.equals("priority")) {
 				updatePriority(request);
 			}
+
+			jsonObject.put("status", HttpServletResponse.SC_OK);
 		}
 		catch (LayoutTypeException lte) {
 			jsonObject.put(
 				"message", getLayoutTypeExceptionMessage(themeDisplay, lte));
-			jsonObject.put("status", -1);
+			jsonObject.put(
+				"status", HttpServletResponse.SC_BAD_REQUEST);
 		}
 
 		return jsonObject.toString();

@@ -7,6 +7,8 @@ AUI.add(
 
 		var formatSelectorNS = A.Node.formatSelectorNS;
 
+		var STATUS_CODE = Liferay.STATUS_CODE;
+
 		var STR_BLANK = '';
 
 		var STR_PARAM_FALLBACK = 'uploader=fallback';
@@ -751,7 +753,7 @@ AUI.add(
 						catch (err) {
 						}
 
-						if (data.status && (data.status >= 490 && data.status < 500)) {
+						if (data.status && (data.status >= STATUS_CODE.SC_DUPLICATE_FILE_EXCEPTION && data.status < STATUS_CODE.INTERNAL_SERVER_ERROR)) {
 							file.error = data.message || strings.unexpectedErrorOnUploadText;
 
 							file.messageListItems = data.messageListItems;

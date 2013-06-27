@@ -28,7 +28,7 @@ String tag = ParamUtil.getString(request, "tag");
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-String tagsNavigation = _buildTagsNavigation(scopeGroupId, tag, portletURL, classNameId, displayStyle, maxAssetTags, showAssetCount, showZeroAssetCount);
+String tagsNavigation = _buildTagsNavigation(scopeGroupId, themeDisplay.getSiteGroupId(), tag, portletURL, classNameId, displayStyle, maxAssetTags, showAssetCount, showZeroAssetCount);
 
 if (Validator.isNotNull(tagsNavigation)) {
 %>
@@ -58,11 +58,11 @@ if (Validator.isNotNull(tag)) {
 %>
 
 <%!
-private String _buildTagsNavigation(long groupId, String selectedTagName, PortletURL portletURL, long classNameId, String displayStyle, int maxAssetTags, boolean showAssetCount, boolean showZeroAssetCount) throws Exception {
+private String _buildTagsNavigation(long scopeGroupId, long groupId, String selectedTagName, PortletURL portletURL, long classNameId, String displayStyle, int maxAssetTags, boolean showAssetCount, boolean showZeroAssetCount) throws Exception {
 	List<AssetTag> tags = null;
 
 	if (classNameId > 0) {
-		tags = AssetTagServiceUtil.getTags(groupId, classNameId, null, 0, maxAssetTags, new AssetTagCountComparator());
+		tags = AssetTagServiceUtil.getTags(scopeGroupId, classNameId, null, 0, maxAssetTags, new AssetTagCountComparator());
 	}
 	else {
 		tags = AssetTagServiceUtil.getGroupTags(groupId, 0, maxAssetTags, new AssetTagCountComparator());
@@ -97,10 +97,10 @@ private String _buildTagsNavigation(long groupId, String selectedTagName, Portle
 			int count = 0;
 
 			if (classNameId > 0) {
-				count = AssetTagServiceUtil.getTagsCount(groupId, classNameId, tagName);
+				count = AssetTagServiceUtil.getTagsCount(scopeGroupId, classNameId, tagName);
 			}
 			else {
-				count = AssetTagServiceUtil.getTagsCount(groupId, tagName);
+				count = AssetTagServiceUtil.getTagsCount(scopeGroupId, tagName);
 			}
 
 			if (!showZeroAssetCount && (count == 0)) {
@@ -124,10 +124,10 @@ private String _buildTagsNavigation(long groupId, String selectedTagName, Portle
 		int count = 0;
 
 		if (classNameId > 0) {
-			count = AssetTagServiceUtil.getTagsCount(groupId, classNameId, tagName);
+			count = AssetTagServiceUtil.getTagsCount(scopeGroupId, classNameId, tagName);
 		}
 		else {
-			count = AssetTagServiceUtil.getTagsCount(groupId, tagName);
+			count = AssetTagServiceUtil.getTagsCount(scopeGroupId, tagName);
 		}
 
 		int popularity = (int)(1 + ((maxCount - (maxCount - (count - minCount))) * multiplier));

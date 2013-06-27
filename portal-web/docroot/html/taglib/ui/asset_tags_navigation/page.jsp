@@ -61,7 +61,7 @@ if (Validator.isNotNull(tag)) {
 private String _buildTagsNavigation(long scopeGroupId, long groupId, String selectedTagName, PortletURL portletURL, long classNameId, String displayStyle, int maxAssetTags, boolean showAssetCount, boolean showZeroAssetCount) throws Exception {
 	List<AssetTag> tags = null;
 
-	if (classNameId > 0) {
+	if (showAssetCount && classNameId > 0) {
 		tags = AssetTagServiceUtil.getTags(scopeGroupId, classNameId, null, 0, maxAssetTags, new AssetTagCountComparator());
 	}
 	else {

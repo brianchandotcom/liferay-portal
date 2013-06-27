@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.service.persistence;
+package com.liferay.portal.service.persistence;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -29,17 +29,16 @@ import com.liferay.portal.service.ResourceBlockLocalServiceUtil;
 import com.liferay.portal.service.ResourceBlockPermissionLocalServiceUtil;
 import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
-import com.liferay.portal.service.persistence.RoleFinderUtil;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
 import com.liferay.portal.util.ResourceBlockPermissionTestUtil;
 import com.liferay.portal.util.ResourceBlockTestUtil;
 import com.liferay.portal.util.ResourcePermissionTestUtil;
+import com.liferay.portlet.bookmarks.model.BookmarksFolder;
 
 import java.util.List;
 
-import com.liferay.portlet.bookmarks.model.BookmarksFolder;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;

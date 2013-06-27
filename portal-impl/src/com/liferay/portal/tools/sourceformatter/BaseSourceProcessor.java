@@ -34,7 +34,9 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -265,6 +267,42 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 	protected abstract void doFormat() throws Exception;
 
+	protected String fixCompatClassImports(String fileName, String content)
+		throws IOException {
+
+		if (portalSource ||
+			!mainReleaseVersion.equals(MAIN_RELEASE_VERSION_6_1_0) ||
+			fileName.contains("/portal-compat-shared/")) {
+
+			return content;
+		}
+
+		Map<String, String> compatClassNamesMap = getCompatClassNamesMap();
+
+		String newContent = content;
+
+		for (Map.Entry<String, String> entry : compatClassNamesMap.entrySet()) {
+			String compatClassName = entry.getKey();
+			String extendedClassName = entry.getValue();
+
+			Pattern pattern = Pattern.compile(extendedClassName + "\\W");
+
+			for (;;) {
+				Matcher matcher = pattern.matcher(newContent);
+
+				if (!matcher.find()) {
+					break;
+				}
+
+				newContent =
+					newContent.substring(0, matcher.start()) + compatClassName +
+						newContent.substring(matcher.end() - 1);
+			}
+		}
+
+		return newContent;
+	}
+
 	protected String fixCopyright(
 			String content, String copyright, String oldCopyright, File file,
 			String fileName)
@@ -406,6 +444,48 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		while (matcher.find());
 
 		return newContent;
+	}
+
+	protected Map<String, String> getCompatClassNamesMap() throws IOException {
+		if (_compatClassNamesMap != null) {
+			return _compatClassNamesMap;
+		}
+
+		_compatClassNamesMap = new HashMap<String, String>();
+
+		String[] includes = new String[] {
+			"**\\portal-compat-shared\\src\\com\\liferay\\compat\\**\\*.java"
+		};
+
+		List<String> fileNames = getFileNames(new String[0], includes);
+
+		for (String fileName : fileNames) {
+			File file = new File(fileName);
+
+			String content = fileUtil.read(file);
+
+			fileName = StringUtil.replace(
+				fileName, StringPool.BACK_SLASH, StringPool.SLASH);
+
+			fileName = StringUtil.replace(
+				fileName, StringPool.SLASH, StringPool.PERIOD);
+
+			int pos = fileName.indexOf("com.");
+
+			String compatClassName = fileName.substring(pos);
+
+			compatClassName = compatClassName.substring(
+				0, compatClassName.length() - 5);
+
+			String extendedClassName = StringUtil.replace(
+				compatClassName, "compat.", StringPool.BLANK);
+
+			if (content.contains("extends " + extendedClassName)) {
+				_compatClassNamesMap.put(compatClassName, extendedClassName);
+			}
+		}
+
+		return _compatClassNamesMap;
 	}
 
 	protected String getCopyright() throws IOException {
@@ -802,6 +882,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 	}
 
+	private Map<String, String> _compatClassNamesMap;
 	private static List<String> _errorMessages = new ArrayList<String>();
 	private static String[] _excludes;
 	private static boolean _initialized;

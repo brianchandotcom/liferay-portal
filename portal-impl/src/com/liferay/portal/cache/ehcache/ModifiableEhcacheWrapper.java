@@ -308,13 +308,13 @@ public class ModifiableEhcacheWrapper implements Ehcache {
 	}
 
 	@Override
-	public int hashCode() {
-		return _ehcache.hashCode();
+	public boolean hasAbortedSizeOf() {
+		return _ehcache.hasAbortedSizeOf();
 	}
 
 	@Override
-	public boolean hasAbortedSizeOf() {
-		return _ehcache.hasAbortedSizeOf();
+	public int hashCode() {
+		return _ehcache.hashCode();
 	}
 
 	@Override

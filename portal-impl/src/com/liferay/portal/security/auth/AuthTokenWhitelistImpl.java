@@ -28,39 +28,41 @@ import java.util.Set;
 public class AuthTokenWhitelistImpl implements AuthTokenWhitelist {
 
 	public AuthTokenWhitelistImpl() {
-		resetWhitelist();
-		resetWhitelistActions();
+		resetPortletInvocationWhitelist();
+		resetPortletInvocationWhitelistActions();
 	}
 
 	@Override
-	public Set<String> getWhitelist() {
-		return _whitelist;
+	public Set<String> getPortletInvocationWhitelist() {
+		return _portletInvocationWhitelist;
 	}
 
 	@Override
-	public Set<String> getWhitelistActions() {
-		return _whitelistActions;
+	public Set<String> getPortletInvocationWhitelistActions() {
+		return _portletInvocationWhitelistActions;
 	}
 
 	@Override
-	public Set<String> resetWhitelist() {
-		_whitelist = SetUtil.fromArray(
+	public Set<String> resetPortletInvocationWhitelist() {
+		_portletInvocationWhitelist = SetUtil.fromArray(
 			PropsValues.PORTLET_ADD_DEFAULT_RESOURCE_CHECK_WHITELIST);
-		_whitelist = Collections.unmodifiableSet(_whitelist);
+		_portletInvocationWhitelist = Collections.unmodifiableSet(
+			_portletInvocationWhitelist);
 
-		return _whitelist;
+		return _portletInvocationWhitelist;
 	}
 
 	@Override
-	public Set<String> resetWhitelistActions() {
-		_whitelistActions = SetUtil.fromArray(
+	public Set<String> resetPortletInvocationWhitelistActions() {
+		_portletInvocationWhitelistActions = SetUtil.fromArray(
 			PropsValues.PORTLET_ADD_DEFAULT_RESOURCE_CHECK_WHITELIST_ACTIONS);
-		_whitelistActions = Collections.unmodifiableSet(_whitelistActions);
+		_portletInvocationWhitelistActions = Collections.unmodifiableSet(
+			_portletInvocationWhitelistActions);
 
-		return _whitelistActions;
+		return _portletInvocationWhitelistActions;
 	}
 
-	private Set<String> _whitelist;
-	private Set<String> _whitelistActions;
+	private Set<String> _portletInvocationWhitelist;
+	private Set<String> _portletInvocationWhitelistActions;
 
 }

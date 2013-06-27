@@ -808,7 +808,8 @@ public class PortletURLImpl
 			}
 		}
 
-		Set<String> whiteList = AuthTokenWhitelistUtil.getWhitelist();
+		Set<String> whiteList =
+			AuthTokenWhitelistUtil.getPortletInvocationWhitelist();
 
 		if (whiteList.contains(_portletId)) {
 			return;

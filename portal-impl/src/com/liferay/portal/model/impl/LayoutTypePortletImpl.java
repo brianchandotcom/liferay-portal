@@ -1384,7 +1384,8 @@ public class LayoutTypePortletImpl
 					PortletKeys.PREFS_OWNER_TYPE_USER, layout.getPlid()));
 		}
 
-		Set<String> whiteList = AuthTokenWhitelistUtil.getWhitelist();
+		Set<String> whiteList =
+			AuthTokenWhitelistUtil.getPortletInvocationWhitelist();
 
 		for (PortletPreferences portletPreference : portletPreferences) {
 			String portletId = portletPreference.getPortletId();

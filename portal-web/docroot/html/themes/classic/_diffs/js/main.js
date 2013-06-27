@@ -24,7 +24,7 @@ AUI().ready(
 					var signInURL = event.currentTarget.attr('href');
 
 					var redirectPage = function() {
-						A.config.win.location = signInURL;
+						A.config.win.location.href = signInURL;
 					};
 
 					A.io.request(

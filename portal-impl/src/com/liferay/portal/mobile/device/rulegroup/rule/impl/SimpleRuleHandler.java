@@ -69,7 +69,7 @@ public class SimpleRuleHandler implements RuleHandler {
 	public static String getHandlerType() {
 		return SimpleRuleHandler.class.getName();
 	}
-	
+
 	public SimpleRuleHandler() {
 		_propertyNames = new ArrayList<String>(10);
 
@@ -165,12 +165,12 @@ public class SimpleRuleHandler implements RuleHandler {
 
 		sb.append("Rule ");
 		sb.append(mdrRule.getNameCurrentValue());
-		sb.append(": The value ");
+		sb.append(" with the value ");
 		sb.append(value);
-		sb.append("' is '");
+		sb.append(" is ");
 
 		if (!valid) {
-			sb.append("NOT ");
+			sb.append("not ");
 		}
 
 		return sb;
@@ -299,10 +299,11 @@ public class SimpleRuleHandler implements RuleHandler {
 
 		StringBundler sb = getLogStringBundler(mdrRule, value, valid);
 
-		sb.append("within the allowed values (");
+		sb.append("among the allowed values of ");
 		sb.append(StringUtil.merge(validValues));
-		sb.append(") for property ");
+		sb.append(" for the property \"");
 		sb.append(property);
+		sb.append("\"");
 
 		_log.debug(sb.toString());
 	}
@@ -321,15 +322,15 @@ public class SimpleRuleHandler implements RuleHandler {
 		sb.append("within the allowed range");
 
 		if (Validator.isNotNull(max) && Validator.isNotNull(min)) {
-			sb.append(" (");
-			sb.append(minProperty);
-			sb.append(": ");
+			sb.append(" of ");
 			sb.append(min);
-			sb.append(", ");
-			sb.append(maxProperty);
-			sb.append(": ");
+			sb.append(" and ");
 			sb.append(max);
-			sb.append(")");
+			sb.append(" for the minimum property \"");
+			sb.append(minProperty);
+			sb.append("\" and the maximum property \"");
+			sb.append(maxProperty);
+			sb.append("\"");
 		}
 
 		_log.debug(sb.toString());

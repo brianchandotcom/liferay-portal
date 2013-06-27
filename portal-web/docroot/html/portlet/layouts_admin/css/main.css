@@ -331,7 +331,7 @@
 	}
 
 	.import-file-details {
-		margin: 1em 0;
+		margin: 0 1em 0 1.5em;
 
 		dt {
 			clear: left;

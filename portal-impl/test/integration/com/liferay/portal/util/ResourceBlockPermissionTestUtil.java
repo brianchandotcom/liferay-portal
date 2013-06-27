@@ -17,7 +17,6 @@ package com.liferay.portal.util;
 import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.model.ResourceBlockPermission;
 import com.liferay.portal.service.ResourceBlockPermissionLocalServiceUtil;
-import com.liferay.portal.service.ServiceTestUtil;
 
 /**
  * @author Alberto Chaparro

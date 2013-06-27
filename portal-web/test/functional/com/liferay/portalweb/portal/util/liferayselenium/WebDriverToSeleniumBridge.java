@@ -25,6 +25,8 @@ import com.liferay.portalweb.portal.util.TestPropsValues;
 
 import com.thoughtworks.selenium.Selenium;
 
+import java.io.StringReader;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +34,13 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpression;
+import javax.xml.xpath.XPathFactory;
 
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
@@ -46,6 +55,13 @@ import org.openqa.selenium.internal.WrapsDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
+import org.xml.sax.InputSource;
 
 /**
  * @author Brian Wing Shun Chan
@@ -174,36 +190,50 @@ public class WebDriverToSeleniumBridge
 
 	@Override
 	public void click(String locator) {
-		WebElement webElement = getWebElement(locator);
+		if (locator.contains("x:")) {
+			String url = getHtmlNodeHref(locator);
 
-		webElement.click();
+			open(url);
+		}
+		else {
+			WebElement webElement = getWebElement(locator);
+
+			webElement.click();
+		}
 	}
 
 	@Override
 	public void clickAt(String locator, String coordString) {
-		WebElement webElement = getWebElement(locator);
+		if (locator.contains("x:")) {
+			String url = getHtmlNodeHref(locator);
 
-		if (coordString.contains(",")) {
-			WrapsDriver wrapsDriver = (WrapsDriver)webElement;
-
-			WebDriver webDriver = wrapsDriver.getWrappedDriver();
-
-			Actions actions = new Actions(webDriver);
-
-			String[] coords = coordString.split(",");
-
-			int x = GetterUtil.getInteger(coords[0]);
-			int y = GetterUtil.getInteger(coords[1]);
-
-			actions.moveToElement(webElement, x, y);
-			actions.click();
-
-			Action action = actions.build();
-
-			action.perform();
+			open(url);
 		}
 		else {
-			webElement.click();
+			WebElement webElement = getWebElement(locator);
+
+			if (coordString.contains(",")) {
+				WrapsDriver wrapsDriver = (WrapsDriver)webElement;
+
+				WebDriver webDriver = wrapsDriver.getWrappedDriver();
+
+				Actions actions = new Actions(webDriver);
+
+				String[] coords = coordString.split(",");
+
+				int x = GetterUtil.getInteger(coords[0]);
+				int y = GetterUtil.getInteger(coords[1]);
+
+				actions.moveToElement(webElement, x, y);
+				actions.click();
+
+				Action action = actions.build();
+
+				action.perform();
+			}
+			else {
+				webElement.click();
+			}
 		}
 	}
 
@@ -493,6 +523,64 @@ public class WebDriverToSeleniumBridge
 		throw new UnsupportedOperationException();
 	}
 
+	public Node getHtmlNode(String locator) {
+		XPathFactory xPathFactory = XPathFactory.newInstance();
+
+		XPath xPath = xPathFactory.newXPath();
+
+		try {
+			locator = StringUtil.replace(locator, "x:", "");
+
+			XPathExpression xPathExpression = xPath.compile(locator);
+
+			String htmlSource = getHtmlSource();
+
+			htmlSource = htmlSource.substring(htmlSource.indexOf("<html"));
+
+			StringReader stringReader = new StringReader(htmlSource);
+
+			InputSource inputSource = new InputSource(stringReader);
+
+			DocumentBuilderFactory documentBuilderFactory =
+				DocumentBuilderFactory.newInstance();
+
+			DocumentBuilder documentBuilder =
+				documentBuilderFactory.newDocumentBuilder();
+
+			Document document = documentBuilder.parse(inputSource);
+
+			NodeList nodeList = (NodeList)xPathExpression.evaluate(
+				document, XPathConstants.NODESET);
+
+			if (nodeList.getLength() < 1) {
+				throw new Exception(locator + " is not present");
+			}
+
+			return nodeList.item(0);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+
+	public String getHtmlNodeHref(String locator) {
+		Node elementNode = getHtmlNode(locator);
+
+		NamedNodeMap namedNodeMap = elementNode.getAttributes();
+
+		Node attributeNode = namedNodeMap.getNamedItem("href");
+
+		return attributeNode.getTextContent();
+	}
+
+	public String getHtmlNodeText(String locator) {
+		Node node = getHtmlNode(locator);
+
+		return node.getTextContent();
+	}
+
 	@Override
 	public String getHtmlSource() {
 		return getPageSource();
@@ -604,13 +692,18 @@ public class WebDriverToSeleniumBridge
 	}
 
 	public String getText(String locator, String timeout) {
-		WebElement webElement = getWebElement(locator, timeout);
+		if (locator.contains("x:")) {
+			return getHtmlNodeText(locator);
+		}
+		else {
+			WebElement webElement = getWebElement(locator, timeout);
 
-		String text = webElement.getText();
+			String text = webElement.getText();
 
-		text = text.trim();
+			text = text.trim();
 
-		return text.replace("\n", " ");
+			return text.replace("\n", " ");
+		}
 	}
 
 	@Override

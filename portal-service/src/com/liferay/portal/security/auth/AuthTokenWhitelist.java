@@ -22,12 +22,20 @@ import java.util.Set;
  */
 public interface AuthTokenWhitelist {
 
+	public Set<String> getPortletCSRFWhitelist();
+
+	public Set<String> getPortletCSRFWhitelistActions();
+
 	public Set<String> getPortletInvocationWhitelist();
 
 	public Set<String> getPortletInvocationWhitelistActions();
 
 	public boolean isPortletInvocationWhitelisted(
 		long companyId, String portletId, String strutsAction);
+
+	public Set<String> resetPortletCSRFWhitelist();
+
+	public Set<String> resetPortletCSRFWhitelistActions();
 
 	public Set<String> resetPortletInvocationWhitelist();
 

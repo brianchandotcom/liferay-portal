@@ -30,6 +30,14 @@ public class AuthTokenWhitelistUtil {
 		return _authTokenWhitelist;
 	}
 
+	public static Set<String> getPortletCSRFWhitelist() {
+		return getAuthTokenWhitelist().getPortletCSRFWhitelist();
+	}
+
+	public static Set<String> getPortletCSRFWhitelistActions() {
+		return getAuthTokenWhitelist().getPortletCSRFWhitelistActions();
+	}
+
 	public static Set<String> getPortletInvocationWhitelist() {
 		return getAuthTokenWhitelist().getPortletInvocationWhitelist();
 	}
@@ -43,6 +51,14 @@ public class AuthTokenWhitelistUtil {
 
 		return getAuthTokenWhitelist().isPortletInvocationWhitelisted(
 			companyId, portletId, strutsAction);
+	}
+
+	public static Set<String> resetPortletCSRFWhitelist() {
+		return getAuthTokenWhitelist().resetPortletCSRFWhitelist();
+	}
+
+	public static Set<String> resetPortletCSRFWhitelistActions() {
+		return getAuthTokenWhitelist().resetPortletCSRFWhitelistActions();
 	}
 
 	public static Set<String> resetPortletInvocationWhitelist() {

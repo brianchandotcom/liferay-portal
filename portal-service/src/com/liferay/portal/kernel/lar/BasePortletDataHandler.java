@@ -228,8 +228,7 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 
 	@Override
 	public PortletDataHandlerControl[] getImportConfigurationControls(
-			Portlet portlet, ManifestSummary manifestSummary)
-		throws PortletDataException {
+		Portlet portlet, ManifestSummary manifestSummary) {
 
 		if (Validator.isNull(portlet.getConfigurationActionClass())) {
 			return null;

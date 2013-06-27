@@ -23,6 +23,10 @@ AUI().ready(
 
 					var signInURL = event.currentTarget.attr('href');
 
+					var redirectPage = function() {
+						A.config.win.location.href = signInURL;
+					};
+
 					A.io.request(
 						signInURL,
 						{
@@ -51,7 +55,7 @@ AUI().ready(
 									}
 
 									if (!modal) {
-										A.config.win.location.href = signInURL;
+										redirectPage();
 									}
 								}
 							}

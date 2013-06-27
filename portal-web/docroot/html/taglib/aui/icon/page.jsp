@@ -22,8 +22,6 @@
 	<liferay-ui:message key="<%= label %>" />
 </liferay-util:buffer>
 
-<%= url %>
-
 <c:choose>
 	<c:when test="<%= Validator.isNotNull(url) %>">
 		<aui:a cssClass="<%= cssClass %>" data="<%= data %>" href="<%= url %>" id="<%= id %>" target="<%= target %>">
@@ -31,7 +29,7 @@
 		</aui:a>
 	</c:when>
 	<c:otherwise>
-		<span class="<%= cssClass %>" data="<%= AUIUtil.buildData(data) %>" id="<%= id %>">
+		<span class="<%= cssClass %>" <%= AUIUtil.buildData(data) %> id="<%= id %>">
 			<%= iconContent %>
 		</span>
 	</c:otherwise>

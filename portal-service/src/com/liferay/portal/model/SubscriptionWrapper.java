@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model;
 
+import com.liferay.portal.kernel.util.Validator;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -456,6 +458,25 @@ public class SubscriptionWrapper implements Subscription,
 	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_subscription.persist();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof SubscriptionWrapper)) {
+			return false;
+		}
+
+		SubscriptionWrapper subscriptionWrapper = (SubscriptionWrapper)obj;
+
+		if (Validator.equals(_subscription, subscriptionWrapper._subscription)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**

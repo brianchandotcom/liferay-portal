@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.social.model;
 
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelWrapper;
 
 import java.util.HashMap;
@@ -560,6 +561,26 @@ public class SocialActivityCounterWrapper implements SocialActivityCounter,
 	@Override
 	public boolean isActivePeriod(int periodLength) {
 		return _socialActivityCounter.isActivePeriod(periodLength);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof SocialActivityCounterWrapper)) {
+			return false;
+		}
+
+		SocialActivityCounterWrapper socialActivityCounterWrapper = (SocialActivityCounterWrapper)obj;
+
+		if (Validator.equals(_socialActivityCounter,
+					socialActivityCounterWrapper._socialActivityCounter)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**

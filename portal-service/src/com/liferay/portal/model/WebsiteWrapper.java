@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model;
 
+import com.liferay.portal.kernel.util.Validator;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -553,6 +555,25 @@ public class WebsiteWrapper implements Website, ModelWrapper<Website> {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _website.getType();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof WebsiteWrapper)) {
+			return false;
+		}
+
+		WebsiteWrapper websiteWrapper = (WebsiteWrapper)obj;
+
+		if (Validator.equals(_website, websiteWrapper._website)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**

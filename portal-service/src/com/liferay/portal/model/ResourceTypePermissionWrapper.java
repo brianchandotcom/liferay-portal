@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model;
 
+import com.liferay.portal.kernel.util.Validator;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -350,6 +352,26 @@ public class ResourceTypePermissionWrapper implements ResourceTypePermission,
 	@Override
 	public boolean isGroupScope() {
 		return _resourceTypePermission.isGroupScope();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof ResourceTypePermissionWrapper)) {
+			return false;
+		}
+
+		ResourceTypePermissionWrapper resourceTypePermissionWrapper = (ResourceTypePermissionWrapper)obj;
+
+		if (Validator.equals(_resourceTypePermission,
+					resourceTypePermissionWrapper._resourceTypePermission)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**

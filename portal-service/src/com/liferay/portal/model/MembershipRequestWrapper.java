@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model;
 
+import com.liferay.portal.kernel.util.Validator;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -491,6 +493,26 @@ public class MembershipRequestWrapper implements MembershipRequest,
 	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_membershipRequest.persist();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof MembershipRequestWrapper)) {
+			return false;
+		}
+
+		MembershipRequestWrapper membershipRequestWrapper = (MembershipRequestWrapper)obj;
+
+		if (Validator.equals(_membershipRequest,
+					membershipRequestWrapper._membershipRequest)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**

@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.social.model;
 
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelWrapper;
 
 import java.util.HashMap;
@@ -638,6 +639,26 @@ public class SocialActivityWrapper implements SocialActivity,
 	public void setAssetEntry(
 		com.liferay.portlet.asset.model.AssetEntry assetEntry) {
 		_socialActivity.setAssetEntry(assetEntry);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof SocialActivityWrapper)) {
+			return false;
+		}
+
+		SocialActivityWrapper socialActivityWrapper = (SocialActivityWrapper)obj;
+
+		if (Validator.equals(_socialActivity,
+					socialActivityWrapper._socialActivity)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**

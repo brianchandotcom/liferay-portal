@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.softwarecatalog.model;
 
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelWrapper;
 
 import java.util.Date;
@@ -651,6 +652,26 @@ public class SCProductEntryWrapper implements SCProductEntry,
 	public java.util.List<com.liferay.portlet.softwarecatalog.model.SCProductScreenshot> getScreenshots()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _scProductEntry.getScreenshots();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof SCProductEntryWrapper)) {
+			return false;
+		}
+
+		SCProductEntryWrapper scProductEntryWrapper = (SCProductEntryWrapper)obj;
+
+		if (Validator.equals(_scProductEntry,
+					scProductEntryWrapper._scProductEntry)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**

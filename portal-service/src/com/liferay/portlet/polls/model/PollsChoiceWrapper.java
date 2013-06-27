@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.polls.model;
 
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelWrapper;
 
 import java.util.Date;
@@ -633,6 +634,25 @@ public class PollsChoiceWrapper implements PollsChoice,
 	public int getVotesCount()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _pollsChoice.getVotesCount();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof PollsChoiceWrapper)) {
+			return false;
+		}
+
+		PollsChoiceWrapper pollsChoiceWrapper = (PollsChoiceWrapper)obj;
+
+		if (Validator.equals(_pollsChoice, pollsChoiceWrapper._pollsChoice)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**

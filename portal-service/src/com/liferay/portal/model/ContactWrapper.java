@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model;
 
+import com.liferay.portal.kernel.util.Validator;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -1123,6 +1125,25 @@ public class ContactWrapper implements Contact, ModelWrapper<Contact> {
 	@Override
 	public boolean isUser() {
 		return _contact.isUser();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof ContactWrapper)) {
+			return false;
+		}
+
+		ContactWrapper contactWrapper = (ContactWrapper)obj;
+
+		if (Validator.equals(_contact, contactWrapper._contact)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**

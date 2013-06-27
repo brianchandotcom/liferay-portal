@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model;
 
+import com.liferay.portal.kernel.util.Validator;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -278,6 +280,26 @@ public class BrowserTrackerWrapper implements BrowserTracker,
 	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_browserTracker.persist();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof BrowserTrackerWrapper)) {
+			return false;
+		}
+
+		BrowserTrackerWrapper browserTrackerWrapper = (BrowserTrackerWrapper)obj;
+
+		if (Validator.equals(_browserTracker,
+					browserTrackerWrapper._browserTracker)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**

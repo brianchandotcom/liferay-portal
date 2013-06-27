@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.softwarecatalog.model;
 
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelWrapper;
 
 import java.util.Date;
@@ -508,6 +509,26 @@ public class SCFrameworkVersionWrapper implements SCFrameworkVersion,
 	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_scFrameworkVersion.persist();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof SCFrameworkVersionWrapper)) {
+			return false;
+		}
+
+		SCFrameworkVersionWrapper scFrameworkVersionWrapper = (SCFrameworkVersionWrapper)obj;
+
+		if (Validator.equals(_scFrameworkVersion,
+					scFrameworkVersionWrapper._scFrameworkVersion)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**

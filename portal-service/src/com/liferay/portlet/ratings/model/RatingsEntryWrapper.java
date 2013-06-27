@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.ratings.model;
 
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelWrapper;
 
 import java.util.Date;
@@ -459,6 +460,25 @@ public class RatingsEntryWrapper implements RatingsEntry,
 	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_ratingsEntry.persist();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof RatingsEntryWrapper)) {
+			return false;
+		}
+
+		RatingsEntryWrapper ratingsEntryWrapper = (RatingsEntryWrapper)obj;
+
+		if (Validator.equals(_ratingsEntry, ratingsEntryWrapper._ratingsEntry)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**

@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.shopping.model;
 
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelWrapper;
 
 import java.util.Date;
@@ -531,6 +532,25 @@ public class ShoppingCartWrapper implements ShoppingCart,
 	@Override
 	public int getItemsSize() {
 		return _shoppingCart.getItemsSize();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof ShoppingCartWrapper)) {
+			return false;
+		}
+
+		ShoppingCartWrapper shoppingCartWrapper = (ShoppingCartWrapper)obj;
+
+		if (Validator.equals(_shoppingCart, shoppingCartWrapper._shoppingCart)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**

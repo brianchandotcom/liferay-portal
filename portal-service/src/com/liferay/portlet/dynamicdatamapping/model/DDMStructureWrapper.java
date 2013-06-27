@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.dynamicdatamapping.model;
 
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelWrapper;
 
 import java.util.Date;
@@ -1125,6 +1126,25 @@ public class DDMStructureWrapper implements DDMStructure,
 	public void setLocalizedTransientFieldsMap(
 		java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.util.Map<java.lang.String, java.lang.String>>> localizedTransientFieldsMap) {
 		_ddmStructure.setLocalizedTransientFieldsMap(localizedTransientFieldsMap);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof DDMStructureWrapper)) {
+			return false;
+		}
+
+		DDMStructureWrapper ddmStructureWrapper = (DDMStructureWrapper)obj;
+
+		if (Validator.equals(_ddmStructure, ddmStructureWrapper._ddmStructure)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model;
 
+import com.liferay.portal.kernel.util.Validator;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -507,6 +509,26 @@ public class RepositoryEntryWrapper implements RepositoryEntry,
 	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_repositoryEntry.persist();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof RepositoryEntryWrapper)) {
+			return false;
+		}
+
+		RepositoryEntryWrapper repositoryEntryWrapper = (RepositoryEntryWrapper)obj;
+
+		if (Validator.equals(_repositoryEntry,
+					repositoryEntryWrapper._repositoryEntry)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**

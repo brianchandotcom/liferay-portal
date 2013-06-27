@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model;
 
+import com.liferay.portal.kernel.util.Validator;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -1207,6 +1209,26 @@ public class PasswordPolicyWrapper implements PasswordPolicy,
 	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_passwordPolicy.persist();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof PasswordPolicyWrapper)) {
+			return false;
+		}
+
+		PasswordPolicyWrapper passwordPolicyWrapper = (PasswordPolicyWrapper)obj;
+
+		if (Validator.equals(_passwordPolicy,
+					passwordPolicyWrapper._passwordPolicy)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**

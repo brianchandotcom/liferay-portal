@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model;
 
+import com.liferay.portal.kernel.util.Validator;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -300,6 +302,25 @@ public class UserGroupRoleWrapper implements UserGroupRole,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _userGroupRole.getUser();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof UserGroupRoleWrapper)) {
+			return false;
+		}
+
+		UserGroupRoleWrapper userGroupRoleWrapper = (UserGroupRoleWrapper)obj;
+
+		if (Validator.equals(_userGroupRole, userGroupRoleWrapper._userGroupRole)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**

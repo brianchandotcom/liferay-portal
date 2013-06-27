@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model;
 
+import com.liferay.portal.kernel.util.Validator;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -298,6 +300,25 @@ public class ClusterGroupWrapper implements ClusterGroup,
 	@Override
 	public java.lang.String[] getClusterNodeIdsArray() {
 		return _clusterGroup.getClusterNodeIdsArray();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof ClusterGroupWrapper)) {
+			return false;
+		}
+
+		ClusterGroupWrapper clusterGroupWrapper = (ClusterGroupWrapper)obj;
+
+		if (Validator.equals(_clusterGroup, clusterGroupWrapper._clusterGroup)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**

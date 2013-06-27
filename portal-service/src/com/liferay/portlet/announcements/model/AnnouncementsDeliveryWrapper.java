@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.announcements.model;
 
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelWrapper;
 
 import java.util.HashMap;
@@ -420,6 +421,26 @@ public class AnnouncementsDeliveryWrapper implements AnnouncementsDelivery,
 	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_announcementsDelivery.persist();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof AnnouncementsDeliveryWrapper)) {
+			return false;
+		}
+
+		AnnouncementsDeliveryWrapper announcementsDeliveryWrapper = (AnnouncementsDeliveryWrapper)obj;
+
+		if (Validator.equals(_announcementsDelivery,
+					announcementsDeliveryWrapper._announcementsDelivery)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**

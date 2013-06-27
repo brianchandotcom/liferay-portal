@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.trash.model;
 
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelWrapper;
 
 import java.util.HashMap;
@@ -322,6 +323,25 @@ public class TrashVersionWrapper implements TrashVersion,
 	@Override
 	public java.lang.String toXmlString() {
 		return _trashVersion.toXmlString();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof TrashVersionWrapper)) {
+			return false;
+		}
+
+		TrashVersionWrapper trashVersionWrapper = (TrashVersionWrapper)obj;
+
+		if (Validator.equals(_trashVersion, trashVersionWrapper._trashVersion)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**

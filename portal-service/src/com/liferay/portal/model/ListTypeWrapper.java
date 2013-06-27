@@ -14,6 +14,8 @@
 
 package com.liferay.portal.model;
 
+import com.liferay.portal.kernel.util.Validator;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -249,6 +251,25 @@ public class ListTypeWrapper implements ListType, ModelWrapper<ListType> {
 	@Override
 	public java.lang.String toXmlString() {
 		return _listType.toXmlString();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof ListTypeWrapper)) {
+			return false;
+		}
+
+		ListTypeWrapper listTypeWrapper = (ListTypeWrapper)obj;
+
+		if (Validator.equals(_listType, listTypeWrapper._listType)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**

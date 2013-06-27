@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.messageboards.model;
 
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelWrapper;
 
 import java.util.Date;
@@ -513,6 +514,25 @@ public class MBDiscussionWrapper implements MBDiscussion,
 	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_mbDiscussion.persist();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof MBDiscussionWrapper)) {
+			return false;
+		}
+
+		MBDiscussionWrapper mbDiscussionWrapper = (MBDiscussionWrapper)obj;
+
+		if (Validator.equals(_mbDiscussion, mbDiscussionWrapper._mbDiscussion)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**

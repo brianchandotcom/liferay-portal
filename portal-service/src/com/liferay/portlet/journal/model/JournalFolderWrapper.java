@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.journal.model;
 
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelWrapper;
 
 import java.util.Date;
@@ -805,6 +806,25 @@ public class JournalFolderWrapper implements JournalFolder,
 	@Override
 	public boolean isRoot() {
 		return _journalFolder.isRoot();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof JournalFolderWrapper)) {
+			return false;
+		}
+
+		JournalFolderWrapper journalFolderWrapper = (JournalFolderWrapper)obj;
+
+		if (Validator.equals(_journalFolder, journalFolderWrapper._journalFolder)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**

@@ -38,7 +38,6 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.security.auth.AuthTokenUtil;
-import com.liferay.portal.security.auth.AuthTokenWhitelist;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -73,23 +72,18 @@ import javax.servlet.http.HttpServletResponse;
 public class SecurityPortletContainerWrapper implements PortletContainer {
 
 	public static PortletContainer createSecurityPortletContainerWrapper(
-		PortletContainer portletContainer,
-		AuthTokenWhitelist authTokenWhitelist) {
+		PortletContainer portletContainer) {
 
 		if (!SPIUtil.isSPI()) {
 			portletContainer = new SecurityPortletContainerWrapper(
-				portletContainer, authTokenWhitelist);
+				portletContainer);
 		}
 
 		return portletContainer;
 	}
 
-	public SecurityPortletContainerWrapper(
-		PortletContainer portletContainer,
-		AuthTokenWhitelist authTokenWhitelist) {
-
+	public SecurityPortletContainerWrapper(PortletContainer portletContainer) {
 		_portletContainer = portletContainer;
-		_authTokenWhitelist = authTokenWhitelist;
 	}
 
 	@Override
@@ -648,7 +642,6 @@ public class SecurityPortletContainerWrapper implements PortletContainer {
 	private static Log _log = LogFactoryUtil.getLog(
 		SecurityPortletContainerWrapper.class);
 
-	private AuthTokenWhitelist _authTokenWhitelist;
 	private PortletContainer _portletContainer;
 
 }

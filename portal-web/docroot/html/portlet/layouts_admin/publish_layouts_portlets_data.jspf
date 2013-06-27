@@ -58,7 +58,7 @@ if (endDateTime > 0) {
 
 			<ul class="hide" id="<portlet:namespace />showChangeGlobalContent">
 				<li>
-					<div class="selected-labels" id="<portlet:namespace />selectedGlobalContent"></div>
+					<span class="selected-labels" id="<portlet:namespace />selectedGlobalContent"></span>
 
 					<aui:a cssClass="modify-link" href="javascript:;" id="globalContentLink" label="change" method="get" />
 				</li>
@@ -284,7 +284,7 @@ if (endDateTime > 0) {
 
 							<ul class="hide" id="<portlet:namespace />showChangeContent_<%= portlet.getRootPortletId() %>">
 								<li>
-									<div class="selected-labels" id="<portlet:namespace />selectedContent_<%= portlet.getRootPortletId() %>"></div>
+											<span class="selected-labels" id="<portlet:namespace />selectedContent_<%= portlet.getRootPortletId() %>"></span>
 
 									<%
 									Map<String,Object> data = new HashMap<String,Object>();
@@ -314,7 +314,7 @@ if (endDateTime > 0) {
 
 			<li>
 				<aui:fieldset cssClass="comments-and-ratings" label="for-each-of-the-selected-content-types,-publish-their">
-					<div class="selected-labels" id="<portlet:namespace />selectedCommentsAndRatings"></div>
+					<span class="selected-labels" id="<portlet:namespace />selectedCommentsAndRatings"></span>
 
 					<aui:a cssClass="modify-link" href="javascript:;" id="commentsAndRatingsLink" label="change" method="get" />
 

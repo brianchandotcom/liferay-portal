@@ -28,7 +28,7 @@
 
 		<ul class="hide" id="<portlet:namespace />showChangeGlobalConfiguration">
 			<li class="tree-item">
-				<div class="selected-labels" id="<portlet:namespace />selectedGlobalConfiguration"></div>
+				<span class="selected-labels" id="<portlet:namespace />selectedGlobalConfiguration"></span>
 
 				<aui:a cssClass="modify-link" href="javascript:;" id="globalConfigurationLink" label="change" method="get" />
 			</li>
@@ -75,7 +75,7 @@
 
 						<ul class="hide" id="<portlet:namespace />showChangeConfiguration_<%= portlet.getRootPortletId() %>">
 							<li>
-								<div class="selected-labels" id="<portlet:namespace />selectedConfiguration_<%= portlet.getRootPortletId() %>"></div>
+								<span class="selected-labels" id="<portlet:namespace />selectedConfiguration_<%= portlet.getRootPortletId() %>"></span>
 
 								<%
 								Map<String,Object> data = new HashMap<String,Object>();

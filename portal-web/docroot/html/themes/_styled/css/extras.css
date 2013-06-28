@@ -42,10 +42,38 @@
 	@include box-shadow(inset 0 0 5px rgba(0, 0, 0, 0.8));
 }
 
-.lfr-device-preview .lfr-device-size-status-content {
-	@include border-radius(3px);
-	@include box-shadow(0 0 1px #FFF);
-	@include opacity(0.90);
+.lfr-device-preview {
+ 	.lfr-device-size-status-content {
+		@include border-radius(3px);
+		@include box-shadow(0 0 1px #FFF);
+		@include opacity(0.90);
+	}
+
+	.lfr-device {
+		&:after, &:before {
+			@include box-shadow(#888 0 1px 0);
+		}
+
+		&:after {
+			@include border-radius(15px);
+		}
+
+		&.rotated {
+			&:after, &:before {
+				@include box-shadow(#888 -1px 1px 0);
+			}
+		}
+
+		&.smartphone, &.tablet {
+			@include border-radius(25px);
+		}
+
+		&.tablet {
+			&:before {
+				@include border-radius(5px);
+			}
+		}
+	}
 }
 
 .dockbar .menu-button-active .menu-button {

@@ -132,7 +132,6 @@ portletURL.setParameter("target", target);
 
 			results.addAll(sites);
 
-
 			pageContext.setAttribute("results", results);
 			pageContext.setAttribute("total", total);
 			%>

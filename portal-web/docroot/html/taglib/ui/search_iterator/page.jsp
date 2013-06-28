@@ -157,7 +157,6 @@ int sortColumnIndex = -1;
 						<c:if test="<%= orderKey != null %>">
 							<div class="table-sort-liner">
 
-
 								<%
 								String orderByJS = searchContainer.getOrderByJS();
 								%>

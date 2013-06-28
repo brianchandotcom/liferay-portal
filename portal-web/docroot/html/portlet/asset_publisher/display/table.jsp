@@ -95,7 +95,6 @@ request.setAttribute("view.jsp-showIconLabel", false);
 	<tbody class="table-data">
 </c:if>
 
-
 <tr>
 	<td class="table-cell">
 		<c:choose>

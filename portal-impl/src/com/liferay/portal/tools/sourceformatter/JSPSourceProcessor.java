@@ -279,12 +279,12 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 				new String[] {
 					"<br/>", "\"/>", "\" >", "@page import", "\"%>", ")%>",
 					"else{", "for(", "function (", "if(", "javascript: ",
-					"while(", "){\n"
+					"while(", "){\n", "\n\n\n"
 				},
 				new String[] {
 					"<br />", "\" />", "\">", "@ page import", "\" %>", ") %>",
 					"else {", "for (", "function(", "if (", "javascript:",
-					"while (", ") {\n"
+					"while (", ") {\n", "\n\n"
 				});
 
 			newContent = fixCompatClassImports(fileName, newContent);

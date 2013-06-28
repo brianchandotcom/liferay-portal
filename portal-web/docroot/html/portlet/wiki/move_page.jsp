@@ -144,7 +144,16 @@ String newTitle = ParamUtil.get(request, "newTitle", StringPool.BLANK);
 				%>
 
 				<aui:button-row>
-					<aui:button disabled="<%= !newParentAvailable %>" type="submit" value="change-parent" />
+
+					<%
+					String saveButtonLabel = "change-parent";
+
+					if (WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, WikiPage.class.getName())) {
+						saveButtonLabel = "submit-for-publication";
+					}
+					%>
+
+					<aui:button disabled="<%= !newParentAvailable %>" type="submit" value="<%= saveButtonLabel %>" />
 
 					<aui:button href="<%= redirect %>" type="cancel" />
 				</aui:button-row>
@@ -158,6 +167,12 @@ String newTitle = ParamUtil.get(request, "newTitle", StringPool.BLANK);
 		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "changeParent";
 
 		submitForm(document.<portlet:namespace />fm);
+	}
+
+	function <portlet:namespace />publishPage() {
+		document.<portlet:namespace />fm.<portlet:namespace />workflowAction.value = "<%= WorkflowConstants.ACTION_PUBLISH %>";
+
+		<portlet:namespace />changeParent();
 	}
 
 	function <portlet:namespace />renamePage() {

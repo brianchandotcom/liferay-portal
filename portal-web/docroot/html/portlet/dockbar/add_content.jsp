@@ -90,15 +90,32 @@ int delta = ParamUtil.getInteger(request, "delta", deltaDefault);
 	</div>
 </aui:form>
 
-<aui:script use="liferay-dockbar-add-content">
+<aui:script use="liferay-dockbar-portlet-dd,liferay-dockbar-add-content">
 	var searchContent = A.one('#<portlet:namespace />searchContent');
 
-	new Liferay.Dockbar.AddContent(
+	var addContent = new Liferay.Dockbar.AddContent(
 		{
 			focusItem: searchContent,
 			inputNode: searchContent,
 			namespace: '<portlet:namespace />',
 			selected: !A.one('#<portlet:namespace />addContentForm').ancestor().hasClass('hide')
+		}
+	);
+
+	addContent.plug(
+		Liferay.Dockbar.PortletDragDrop,
+		{
+			on: {
+				dragEnd: function(event) {
+					addContent._addPortlet(
+						event.portletNode,
+						{
+							item: event.appendNode
+						}
+					);
+				}
+			},
+			srcNode: '#<portlet:namespace />entriesContainer'
 		}
 	);
 </aui:script>

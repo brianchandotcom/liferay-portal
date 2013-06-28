@@ -3,17 +3,10 @@ AUI.add(
 	function(A) {
 		var Dockbar = Liferay.Dockbar;
 		var Layout = Liferay.Layout;
-		var Portlet = Liferay.Portlet;
 
 		var CSS_LFR_PORTLET_USED = 'lfr-portlet-used';
 
-		var DATA_CLASS_NAME = 'data-class-name';
-
-		var DATA_CLASS_PK = 'data-class-pk';
-
 		var DATA_PORTLET_ID = 'data-portlet-id';
-
-		var DATA_STYLE = 'data-style';
 
 		var SELECTOR_BUTTON = '.btn';
 
@@ -23,15 +16,11 @@ AUI.add(
 
 		var STR_CLICK = 'click';
 
-		var STR_EMPTY = '';
-
 		var STR_RESPONSE_DATA = 'responseData';
-
-		var TPL_LOADING = '<div class="loading-animation" />';
 
 		var AddApplication = A.Component.create(
 			{
-				AUGMENTS: [Dockbar.AddContentDragDrop, Dockbar.AddApplicationSearch, Liferay.PortletBase],
+				AUGMENTS: [Dockbar.AddApplicationSearch, Liferay.PortletBase],
 
 				EXTENDS: Dockbar.AddBase,
 
@@ -57,60 +46,6 @@ AUI.add(
 						instance._addPortlet(portlet);
 					},
 
-					_addPortlet: function(portlet, options) {
-						var instance = this;
-
-						var portletMetaData = instance._getPortletMetaData(portlet);
-
-						if (!portletMetaData.portletUsed) {
-							var portletId = portletMetaData.portletId;
-
-							if (!portletMetaData.instanceable) {
-								instance._disablePortletEntry(portletId);
-							}
-
-							var beforePortletLoaded = null;
-							var placeHolder = A.Node.create(TPL_LOADING);
-
-							if (options) {
-								var item = options.item;
-
-								item.placeAfter(placeHolder);
-								item.remove(true);
-
-								beforePortletLoaded = options.beforePortletLoaded;
-							}
-							else {
-								var firstColumn = Layout.getActiveDropNodes().item(0);
-
-								if (firstColumn) {
-									var dropColumn = firstColumn.one(Layout.options.dropContainer);
-									var referencePortlet = Layout.findReferencePortlet(dropColumn);
-
-									if (referencePortlet) {
-										referencePortlet.placeBefore(placeHolder);
-									}
-									else {
-										if (dropColumn) {
-											dropColumn.append(placeHolder);
-										}
-									}
-								}
-							}
-
-							Portlet.add(
-								{
-									beforePortletLoaded: beforePortletLoaded,
-									placeHolder: placeHolder,
-									plid: portletMetaData.plid,
-									portletData: portletMetaData.portletData,
-									portletId: portletId,
-									portletItemId: portletMetaData.portletItemId
-								}
-							);
-						}
-					},
-
 					_bindUI: function() {
 						var instance = this;
 
@@ -118,76 +53,7 @@ AUI.add(
 
 						Liferay.on('closePortlet', instance._onPortletClose, instance);
 
-						Liferay.once('dockbarAddContentDD:init', instance._onDockbarAddContentDDInit, instance);
-
 						Liferay.on('showTab', instance._onShowTab, instance);
-					},
-
-					_disablePortletEntry: function(portletId) {
-						var instance = this;
-
-						instance._eachPortletEntry(
-							portletId,
-							function(item, index) {
-								item.addClass(CSS_LFR_PORTLET_USED);
-							}
-						);
-					},
-
-					_eachPortletEntry: function(portletId, callback) {
-						var instance = this;
-
-						var portlets = A.all('[data-portlet-id=' + portletId + ']');
-
-						portlets.each(callback);
-					},
-
-					_enablePortletEntry: function(portletId) {
-						var instance = this;
-
-						instance._eachPortletEntry(
-							portletId,
-							function(item, index) {
-								item.removeClass(CSS_LFR_PORTLET_USED);
-							}
-						);
-					},
-
-					_getPortletMetaData: function(portlet) {
-						var instance = this;
-
-						var portletMetaData = portlet._LFR_portletMetaData;
-
-						if (!portletMetaData) {
-							var classPK = portlet.attr(DATA_CLASS_PK);
-							var className = portlet.attr(DATA_CLASS_NAME);
-
-							var instanceable = (portlet.attr('data-instanceable') == 'true');
-							var plid = portlet.attr('data-plid');
-
-							var portletData = STR_EMPTY;
-
-							if ((className != STR_EMPTY) && (classPK != STR_EMPTY)) {
-								portletData = classPK + ',' + className;
-							}
-
-							var portletId = portlet.attr(DATA_PORTLET_ID);
-							var portletItemId = portlet.attr('data-portlet-item-id');
-							var portletUsed = portlet.hasClass(CSS_LFR_PORTLET_USED);
-
-							portletMetaData = {
-								instanceable: instanceable,
-								plid: plid,
-								portletData: portletData,
-								portletId: portletId,
-								portletItemId: portletItemId,
-								portletUsed: portletUsed
-							};
-
-							portlet._LFR_portletMetaData = portletMetaData;
-						}
-
-						return portletMetaData;
 					},
 
 					_onShowTab: function(event) {
@@ -198,12 +64,6 @@ AUI.add(
 
 							Liferay.Store('liferay_addpanel_tab', event.names[index]);
 						}
-					},
-
-					_onDockbarAddContentDDInit: function(event) {
-						var instance = this;
-
-						instance._portletItem.delegate.dd.addInvalid(SELECTOR_ADD_CONTENT_ITEM);
 					},
 
 					_onPortletClose: function(event) {
@@ -225,6 +85,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-io-request', 'liferay-dockbar', 'liferay-dockbar-add-base', 'liferay-dockbar-add-content-drag-drop', 'liferay-dockbar-add-application-search']
+		requires: ['aui-io-request', 'liferay-dockbar', 'liferay-dockbar-add-base', 'liferay-dockbar-add-application-search']
 	}
 );

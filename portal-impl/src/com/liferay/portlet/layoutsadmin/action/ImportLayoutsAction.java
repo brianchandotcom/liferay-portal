@@ -51,6 +51,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.Portlet;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.LayoutServiceUtil;
@@ -342,6 +343,11 @@ public class ImportLayoutsAction extends PortletAction {
 
 				String referrerDisplayName = entry.getKey();
 				String referrerClasName = entry.getValue();
+
+				if (referrerClasName.equals(Portlet.class.getName())) {
+					referrerDisplayName = PortalUtil.getPortletTitle(
+						referrerDisplayName, themeDisplay.getLocale());
+				}
 
 				errorMessageJSONObject.put(
 					"info",

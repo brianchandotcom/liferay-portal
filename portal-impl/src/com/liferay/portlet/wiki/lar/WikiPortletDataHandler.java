@@ -199,7 +199,8 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences, Element rootElement)
 		throws Exception {
 
-		Portlet portlet = PortletLocalServiceUtil.getPortletById(portletId);
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			portletDataContext.getCompanyId(), portletId);
 
 		String hiddenNodeNames = portletPreferences.getValue(
 			"hiddenNodes", null);

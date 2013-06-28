@@ -33,6 +33,11 @@ public class UserStagedModelDataHandler
 	}
 
 	@Override
+	public String getDisplayName(User user) {
+		return user.getFullName();
+	}
+
+	@Override
 	protected void doExportStagedModel(
 			PortletDataContext portletDataContext, User user)
 		throws Exception {

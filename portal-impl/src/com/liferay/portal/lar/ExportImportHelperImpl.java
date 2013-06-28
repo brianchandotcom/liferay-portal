@@ -62,6 +62,7 @@ import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutSet;
+import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.StagedModel;
@@ -70,8 +71,10 @@ import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutServiceUtil;
 import com.liferay.portal.service.LayoutSetLocalServiceUtil;
+import com.liferay.portal.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.service.persistence.OrganizationUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
@@ -968,6 +971,20 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 							PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
 					}
 				}
+				else if (className.equals(Organization.class.getName())) {
+					Organization organization =
+						OrganizationLocalServiceUtil.getOrganization(
+							primaryKeyLong);
+
+					if (organization != null) {
+						uuid = organization.getUuid();
+
+						portletDataContext.addReferenceElement(
+							portlet, rootElement, organization,
+							Organization.class,
+							PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
+					}
+				}
 
 				if (Validator.isNull(uuid)) {
 					if (_log.isWarnEnabled()) {
@@ -1084,6 +1101,15 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 						if (dlFileEntryType != null) {
 							newPrimaryKey =
 								dlFileEntryType.getFileEntryTypeId();
+						}
+					}
+					else if (className.equals(Organization.class.getName())) {
+						Organization organization =
+							OrganizationUtil.fetchByUuid_C_First(
+								uuid, portletDataContext.getCompanyId(), null);
+
+						if (organization != null) {
+							newPrimaryKey = organization.getOrganizationId();
 						}
 					}
 				}

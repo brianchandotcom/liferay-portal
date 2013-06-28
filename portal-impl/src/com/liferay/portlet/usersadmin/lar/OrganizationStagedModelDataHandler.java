@@ -517,4 +517,19 @@ public class OrganizationStagedModelDataHandler
 			importedOrganization.getOrganizationId(), websites);
 	}
 
+	@Override
+	protected boolean validateMissingReference(
+		String uuid, long companyId, long groupId) {
+
+		try {
+			OrganizationLocalServiceUtil.getOrganizationByUuidAndCompanyId(
+				uuid, companyId);
+		}
+		catch (Exception e) {
+			return false;
+		}
+
+		return true;
+	}
+
 }

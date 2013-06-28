@@ -235,7 +235,8 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 		if (rootFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 			Folder folder = DLAppLocalServiceUtil.getFolder(rootFolderId);
 
-			Portlet portlet = PortletLocalServiceUtil.getPortletById(portletId);
+			Portlet portlet = PortletLocalServiceUtil.getPortletById(
+				portletDataContext.getCompanyId(), portletId);
 
 			portletDataContext.addReferenceElement(
 				portlet, rootElement, folder, Folder.class,

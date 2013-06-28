@@ -184,7 +184,8 @@ public class BookmarksPortletDataHandler extends BasePortletDataHandler {
 			BookmarksFolder folder = BookmarksFolderLocalServiceUtil.getFolder(
 				rootFolderId);
 
-			Portlet portlet = PortletLocalServiceUtil.getPortletById(portletId);
+			Portlet portlet = PortletLocalServiceUtil.getPortletById(
+				portletDataContext.getCompanyId(), portletId);
 
 			portletDataContext.addReferenceElement(
 				portlet, rootElement, folder, BookmarksFolder.class,

@@ -303,10 +303,6 @@
 
 		<action path="/asset_tags_navigation/view" forward="portlet.asset_tags_navigation.view" />
 
-		<!-- Background Tasks -->
-
-		<action path="/background_task/get_background_task_attachment" type="com.liferay.portlet.backgroundtask.action.GetBackgroundTaskAttachmentAction" />
-
 		<!-- Blogs -->
 
 		<action path="/blogs/edit_entry" type="com.liferay.portlet.blogs.action.EditEntryAction">

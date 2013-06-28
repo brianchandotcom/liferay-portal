@@ -83,8 +83,7 @@ public class UserNotificationManagerImpl implements UserNotificationManager {
 			userNotificationHandlers =
 				new HashMap<String, UserNotificationHandler>();
 
-			_userNotificationHandlers.put(
-				selector, userNotificationHandlers);
+			_userNotificationHandlers.put(selector, userNotificationHandlers);
 		}
 
 		userNotificationHandlers.put(
@@ -98,9 +97,7 @@ public class UserNotificationManagerImpl implements UserNotificationManager {
 	 * @param portletId the portletId of the user notifications definitions
 	 */
 	@Override
-	public void deleteUserNotificationDefinitions(
-		String portletId) {
-
+	public void deleteUserNotificationDefinitions(String portletId) {
 		_userNotificationDefinitions.remove(portletId);
 	}
 
@@ -122,8 +119,44 @@ public class UserNotificationManagerImpl implements UserNotificationManager {
 			return;
 		}
 
-		userNotificationHandlers.remove(
-			userNotificationHandler.getPortletId());
+		userNotificationHandlers.remove(userNotificationHandler.getPortletId());
+	}
+
+	@Override
+	public boolean deliver(
+			String portletId, long userId, long classNameId,
+			int notificationType, int deliveryType)
+		throws PortalException, SystemException {
+
+		return deliver(
+			StringPool.BLANK, portletId, userId, classNameId, notificationType,
+			deliveryType, null);
+	}
+
+	@Override
+	public boolean deliver(
+			String selector, String portletId, long userId, long classNameId,
+			int notificationType, int deliveryType,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		Map<String, UserNotificationHandler> userNotificationHandlers =
+			_userNotificationHandlers.get(selector);
+
+		if (userNotificationHandlers == null) {
+			return false;
+		}
+
+		UserNotificationHandler userNotificationHandler =
+			userNotificationHandlers.get(portletId);
+
+		if (userNotificationHandler == null) {
+			return false;
+		}
+
+		return userNotificationHandler.deliver(
+			userId, classNameId, notificationType, deliveryType,
+			serviceContext);
 	}
 
 	public UserNotificationDefinition fetchUserNotificationDefinition(
@@ -201,50 +234,12 @@ public class UserNotificationManagerImpl implements UserNotificationManager {
 			userNotificationEvent, serviceContext);
 	}
 
-	@Override
-	public boolean deliver(
-			String portletId, long userId, long classNameId,
-			int notificationType, int deliveryType)
-		throws PortalException, SystemException {
-
-		return deliver(
-			StringPool.BLANK, portletId, userId, classNameId, notificationType,
-			deliveryType, null);
-	}
-
-	@Override
-	public boolean deliver(
-			String selector, String portletId, long userId, long classNameId,
-			int notificationType, int deliveryType,
-			ServiceContext serviceContext)
-		throws PortalException, SystemException {
-
-		Map<String, UserNotificationHandler> userNotificationHandlers =
-			_userNotificationHandlers.get(selector);
-
-		if (userNotificationHandlers == null) {
-			return false;
-		}
-
-		UserNotificationHandler userNotificationHandler =
-			userNotificationHandlers.get(portletId);
-
-		if (userNotificationHandler == null) {
-			return false;
-		}
-
-		return userNotificationHandler.deliver(
-			userId, classNameId, notificationType, deliveryType,
-			serviceContext);
-	}
-
 	private static Log _log = LogFactoryUtil.getLog(
 		UserNotificationManagerImpl.class);
 
 	private Map<String, List<UserNotificationDefinition>>
 		_userNotificationDefinitions =
 			new HashMap<String, List<UserNotificationDefinition>>();
-
 	private Map<String, Map<String, UserNotificationHandler>>
 		_userNotificationHandlers =
 			new HashMap<String, Map<String, UserNotificationHandler>>();

@@ -72,11 +72,11 @@ import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.language.LiferayResourceBundle;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletApp;
+import com.liferay.portal.notifications.UserNotificationHandlerImpl;
 import com.liferay.portal.poller.PollerProcessorUtil;
 import com.liferay.portal.pop.POPServerUtil;
 import com.liferay.portal.security.permission.PermissionPropagator;
 import com.liferay.portal.service.PortletLocalServiceUtil;
-import com.liferay.portal.notifications.UserNotificationHandlerImpl;
 import com.liferay.portal.util.ClassLoaderUtil;
 import com.liferay.portal.util.JavaFieldsParser;
 import com.liferay.portal.util.PortalUtil;
@@ -343,13 +343,13 @@ public class PortletBagFactory {
 			templateHandlerInstance, portletLayoutListenerInstance,
 			pollerProcessorInstance, popMessageListenerInstance,
 			socialActivityInterpreterInstances,
-			socialRequestInterpreterInstance,
-			userNotificationHandlerInstances, webDAVStorageInstance,
-			xmlRpcMethodInstance, controlPanelEntryInstance,
-			assetRendererFactoryInstances, atomCollectionAdapterInstances,
-			customAttributesDisplayInstances, permissionPropagatorInstance,
-			trashHandlerInstances, workflowHandlerInstances,
-			preferencesValidatorInstance, resourceBundles);
+			socialRequestInterpreterInstance, userNotificationHandlerInstances,
+			webDAVStorageInstance, xmlRpcMethodInstance,
+			controlPanelEntryInstance, assetRendererFactoryInstances,
+			atomCollectionAdapterInstances, customAttributesDisplayInstances,
+			permissionPropagatorInstance, trashHandlerInstances,
+			workflowHandlerInstances, preferencesValidatorInstance,
+			resourceBundles);
 
 		PortletBagPool.put(portlet.getRootPortletId(), portletBag);
 
@@ -601,7 +601,6 @@ public class PortletBagFactory {
 
 			for (Element deliveryTypeElement :
 					notificationElement.elements("delivery-type")) {
-
 
 				String name = deliveryTypeElement.elementText("name");
 
@@ -1010,15 +1009,13 @@ public class PortletBagFactory {
 
 		UserNotificationHandler userNotificationHandlerInstance =
 			(UserNotificationHandler)newInstance(
-				UserNotificationHandler.class,
-				userNotificationHandlerClass);
+				UserNotificationHandler.class, userNotificationHandlerClass);
 
-		userNotificationHandlerInstance =
-			new UserNotificationHandlerImpl(
-				userNotificationHandlerInstance);
+		userNotificationHandlerInstance = new UserNotificationHandlerImpl(
+			userNotificationHandlerInstance);
 
-		UserNotificationManagerUtil.
-			addUserNotificationHandler(userNotificationHandlerInstance);
+		UserNotificationManagerUtil.addUserNotificationHandler(
+			userNotificationHandlerInstance);
 
 		return userNotificationHandlerInstance;
 	}

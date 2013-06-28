@@ -259,7 +259,7 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 
 		if (userNotificationHandlers != null) {
 			for (UserNotificationHandler userNotificationHandler :
-				userNotificationHandlers) {
+					userNotificationHandlers) {
 
 				UserNotificationManagerUtil.deleteUserNotificationHandler(
 					userNotificationHandler);

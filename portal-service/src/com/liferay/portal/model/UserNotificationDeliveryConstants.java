@@ -23,9 +23,9 @@ public class UserNotificationDeliveryConstants {
 
 	public static final int TYPE_IM = 10003;
 
-	public static final int TYPE_SMS = 10001;
-
 	public static final int TYPE_PRIVATE_MESSAGE = 10004;
+
+	public static final int TYPE_SMS = 10001;
 
 	public static final int TYPE_WEBSITE = 10002;
 

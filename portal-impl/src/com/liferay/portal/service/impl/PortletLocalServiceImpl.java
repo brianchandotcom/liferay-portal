@@ -1420,8 +1420,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 				portletElement.elementText("social-request-interpreter-class"),
 				portletModel.getSocialRequestInterpreterClass()));
 
-		List<String> userNotificationHandlerClasses =
-			new ArrayList<String>();
+		List<String> userNotificationHandlerClasses = new ArrayList<String>();
 
 		for (Element userNotificationHandlerClassElement :
 				portletElement.elements(

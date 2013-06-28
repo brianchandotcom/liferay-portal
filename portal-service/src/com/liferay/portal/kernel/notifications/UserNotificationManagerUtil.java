@@ -17,11 +17,9 @@ package com.liferay.portal.kernel.notifications;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.UserNotificationEvent;
 import com.liferay.portal.service.ServiceContext;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -33,8 +31,8 @@ public class UserNotificationManagerUtil {
 		String portletId,
 		UserNotificationDefinition userNotificationDefinition) {
 
-		getUserNotificationManager().addUserNotificationDefinition(portletId,
-			userNotificationDefinition);
+		getUserNotificationManager().addUserNotificationDefinition(
+			portletId, userNotificationDefinition);
 	}
 
 	public static void addUserNotificationHandler(
@@ -105,7 +103,7 @@ public class UserNotificationManagerUtil {
 			deliveryType, serviceContext);
 	}
 
-	public void setUserNotificationManager (
+	public void setUserNotificationManager(
 		UserNotificationManager userNotificationManager) {
 
 		PortalRuntimePermission.checkSetBeanProperty(getClass());

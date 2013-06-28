@@ -27,7 +27,6 @@ public class UserNotificationDefinition {
 		String description) {
 
 		_classNameId = classNameId;
-		_deliveryTypes = new HashMap<Integer, UserNotificationDeliveryType>();
 		_description = description;
 		_notificationType = notificationType;
 		_portletId = portletId;
@@ -36,7 +35,7 @@ public class UserNotificationDefinition {
 	public void addUserNotificationDeliveryType(
 		UserNotificationDeliveryType userNotificationDeliveryType) {
 
-		_deliveryTypes.put(
+		_userNotificationDeliveryTypes.put(
 			userNotificationDeliveryType.getType(),
 			userNotificationDeliveryType);
 	}
@@ -57,24 +56,24 @@ public class UserNotificationDefinition {
 		return _portletId;
 	}
 
-	public UserNotificationDeliveryType getDeliveryType(int type) {
-		return _deliveryTypes.get(type);
+	public UserNotificationDeliveryType getUserNotificationDeliveryType(
+		int type) {
+
+		return _userNotificationDeliveryTypes.get(type);
 	}
 
 	public Map<Integer, UserNotificationDeliveryType>
-		getDeliveryTypes() {
+		getUserNotificationDeliveryTypes() {
 
-		return _deliveryTypes;
-	}
-
-	public boolean hasDeliveryType(int type) {
-		return _deliveryTypes.containsKey(type);
+		return _userNotificationDeliveryTypes;
 	}
 
 	private long _classNameId;
-	private Map<Integer, UserNotificationDeliveryType> _deliveryTypes;
 	private String _description;
 	private int _notificationType;
 	private String _portletId;
+	private Map<Integer, UserNotificationDeliveryType>
+		_userNotificationDeliveryTypes =
+			new HashMap<Integer, UserNotificationDeliveryType>();
 
 }

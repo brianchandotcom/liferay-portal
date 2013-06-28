@@ -224,10 +224,8 @@ public class PortletImpl extends PortletBaseImpl {
 		_popMessageListenerClass = popMessageListenerClass;
 		_socialActivityInterpreterClasses = socialActivityInterpreterClasses;
 		_socialRequestInterpreterClass = socialRequestInterpreterClass;
-		_userNotificationHandlerClasses =
-			userNotificationHandlerClasses;
-		_userNotificationDefinitions =
-			userNotificationDefinitions;
+		_userNotificationHandlerClasses = userNotificationHandlerClasses;
+		_userNotificationDefinitions = userNotificationDefinitions;
 		_webDAVStorageToken = webDAVStorageToken;
 		_webDAVStorageClass = webDAVStorageClass;
 		_xmlRpcMethodClass = xmlRpcMethodClass;
@@ -3673,22 +3671,6 @@ public class PortletImpl extends PortletBaseImpl {
 	}
 
 	/**
-	 * Sets the names of the classes that represent user notification
-	 * interpreters associated with the portlet.
-	 *
-	 * @param userNotificationHandlerClasses the names of the classes that
-	 *        represent user notification interpreters associated with the
-	 *        portlet
-	 */
-	@Override
-	public void setUserNotificationHandlerClasses(
-		List<String> userNotificationHandlerClasses) {
-
-		_userNotificationHandlerClasses =
-			userNotificationHandlerClasses;
-	}
-
-	/**
 	 * Sets the class loader resource path to the user notification definitions
 	 * of the portlet.
 	 *
@@ -3700,6 +3682,21 @@ public class PortletImpl extends PortletBaseImpl {
 		String userNotificationDefinitions) {
 
 		_userNotificationDefinitions = userNotificationDefinitions;
+	}
+
+	/**
+	 * Sets the names of the classes that represent user notification
+	 * interpreters associated with the portlet.
+	 *
+	 * @param userNotificationHandlerClasses the names of the classes that
+	 *        represent user notification interpreters associated with the
+	 *        portlet
+	 */
+	@Override
+	public void setUserNotificationHandlerClasses(
+		List<String> userNotificationHandlerClasses) {
+
+		_userNotificationHandlerClasses = userNotificationHandlerClasses;
 	}
 
 	/**
@@ -4307,16 +4304,16 @@ public class PortletImpl extends PortletBaseImpl {
 	private boolean _useDefaultTemplate = true;
 
 	/**
-	 * The names of the classes that represents user notification interpreters
-	 * associated with the portlet.
-	 */
-	private List<String> _userNotificationHandlerClasses;
-
-	/**
 	 * The the class loader resource path to the user notification definitions
 	 * of the portlet.
 	 */
 	private String _userNotificationDefinitions;
+
+	/**
+	 * The names of the classes that represents user notification interpreters
+	 * associated with the portlet.
+	 */
+	private List<String> _userNotificationHandlerClasses;
 
 	/**
 	 * The user principal strategy of the portlet.

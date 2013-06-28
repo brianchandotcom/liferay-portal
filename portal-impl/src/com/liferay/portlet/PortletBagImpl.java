@@ -99,8 +99,7 @@ public class PortletBagImpl implements PortletBag {
 		_socialActivityInterpreterInstances =
 			socialActivityInterpreterInstances;
 		_socialRequestInterpreterInstance = socialRequestInterpreterInstance;
-		_userNotificationHandlerInstances =
-			userNotificationHandlerInstances;
+		_userNotificationHandlerInstances = userNotificationHandlerInstances;
 		_webDAVStorageInstance = webDAVStorageInstance;
 		_xmlRpcMethodInstance = xmlRpcMethodInstance;
 		_controlPanelEntryInstance = controlPanelEntryInstance;
@@ -126,9 +125,9 @@ public class PortletBagImpl implements PortletBag {
 			getPopMessageListenerInstance(),
 			getSocialActivityInterpreterInstances(),
 			getSocialRequestInterpreterInstance(),
-			getUserNotificationHandlerInstances(),
-			getWebDAVStorageInstance(), getXmlRpcMethodInstance(),
-			getControlPanelEntryInstance(), getAssetRendererFactoryInstances(),
+			getUserNotificationHandlerInstances(), getWebDAVStorageInstance(),
+			getXmlRpcMethodInstance(), getControlPanelEntryInstance(),
+			getAssetRendererFactoryInstances(),
 			getAtomCollectionAdapterInstances(),
 			getCustomAttributesDisplayInstances(),
 			getPermissionPropagatorInstance(), getTrashHandlerInstances(),

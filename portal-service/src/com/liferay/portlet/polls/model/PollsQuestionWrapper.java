@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.polls.model;
 
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelWrapper;
 
@@ -831,6 +832,11 @@ public class PollsQuestionWrapper implements PollsQuestion,
 		}
 
 		return false;
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return _pollsQuestion.getStagedModelType();
 	}
 
 	/**

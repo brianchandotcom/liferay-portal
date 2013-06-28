@@ -17,6 +17,7 @@ package com.liferay.portal.model.impl;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSON;
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -1293,6 +1294,12 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 
 	public int getOriginalStatus() {
 		return _originalStatus;
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return new StagedModelType(PortalUtil.getClassNameId(
+				User.class.getName()));
 	}
 
 	public long getColumnBitmask() {

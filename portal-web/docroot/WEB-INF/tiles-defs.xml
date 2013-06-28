@@ -248,6 +248,14 @@
 		<put name="portlet_content" value="/portlet/asset_tags_navigation/view.jsp" />
 	</definition>
 
+	<!-- Background Task-->
+
+	<definition name="portlet.background_task" extends="portlet" />
+
+	<definition name="portlet.background_task.error" extends="portlet.background_task">
+		<put name="portlet_content" value="/portlet/background_task/error.jsp" />
+	</definition>
+
 	<!-- Blogs -->
 
 	<definition name="portlet.blogs" extends="portlet" />

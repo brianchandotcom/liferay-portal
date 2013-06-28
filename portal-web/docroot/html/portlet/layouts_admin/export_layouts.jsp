@@ -531,6 +531,10 @@ if (endDateTime > 0) {
 					name="user-name"
 					value="<%= backgroundTask.getUserName() %>"
 				/>
+				<liferay-ui:search-container-column-text
+					name="task-name"
+					value="<%= backgroundTask.getName() %>"
+				/>
 
 				<%
 				int status = backgroundTask.getStatus();
@@ -576,7 +580,6 @@ if (endDateTime > 0) {
 						List<FileEntry> attachmentsFileEntries = backgroundTask.getAttachmentsFileEntries();
 
 						for (FileEntry fileEntry : attachmentsFileEntries) {
-
 					%>
 
 					<portlet:actionURL var="attachmentURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
@@ -600,9 +603,35 @@ if (endDateTime > 0) {
 						message="<%= sb.toString() %>"
 						url="<%= attachmentURL %>"
 					/>
+
 				<%
 					}
 				%>
+
+				</liferay-ui:search-container-column-text>
+				<liferay-ui:search-container-column-text
+					name="delete">
+
+					<portlet:renderURL var="exportPagesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+						<portlet:param name="struts_action" value="/layouts_admin/export_layouts" />
+						<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EXPORT %>" />
+						<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+						<portlet:param name="liveGroupId" value="<%= String.valueOf(liveGroupId) %>" />
+						<portlet:param name="privateLayout" value=" String.valueOf(privateLayout) %>" />
+						<portlet:param name="rootNodeName" value="<%= rootNodeName %>" />
+					</portlet:renderURL>
+
+					<portlet:actionURL var="deleteBackgroundTaskURL">
+						<portlet:param name="struts_action" value="/group_pages/delete_background_task" />
+						<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
+						<portlet:param name="backgroundTaskId" value="<%= String.valueOf(backgroundTask.getBackgroundTaskId()) %>" />
+						<portlet:param name="redirect" value="<%= exportPagesURL %>" />
+					</portlet:actionURL>
+
+					<liferay-ui:icon-delete
+						label="true"
+						url="<%= deleteBackgroundTaskURL %>"
+					/>
 				</liferay-ui:search-container-column-text>
 			</liferay-ui:search-container-row>
 

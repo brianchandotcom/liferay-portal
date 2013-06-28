@@ -303,6 +303,10 @@
 
 		<action path="/asset_tags_navigation/view" forward="portlet.asset_tags_navigation.view" />
 
+		<!-- Background Tasks -->
+
+		<action path="/background_task/get_background_task_attachment" type="com.liferay.portlet.backgroundtask.action.GetBackgroundTaskAttachmentAction" />
+
 		<!-- Blogs -->
 
 		<action path="/blogs/edit_entry" type="com.liferay.portlet.blogs.action.EditEntryAction">
@@ -693,6 +697,8 @@
 		</action>
 
 		<!-- Group Pages -->
+
+		<action path="/group_pages/get_background_task_attachment" type="com.liferay.portlet.backgroundtask.action.GetBackgroundTaskAttachmentAction" />
 
 		<action path="/group_pages/edit_layout_branch" type="com.liferay.portlet.stagingbar.action.EditLayoutBranchAction">
 			<forward name="portlet.staging_bar.edit_layout_branch" path="portlet.staging_bar.edit_layout_branch" />

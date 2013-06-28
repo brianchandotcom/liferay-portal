@@ -567,6 +567,43 @@ if (endDateTime > 0) {
 					name="completion-date"
 					value="<%= backgroundTask.getCompletionDate() != null ? String.valueOf(backgroundTask.getCompletionDate()) : StringPool.BLANK %>"
 				/>
+
+				<liferay-ui:search-container-column-text
+					name="archive-file">
+
+
+					<%
+						List<FileEntry> attachmentsFileEntries = backgroundTask.getAttachmentsFileEntries();
+
+						for (FileEntry fileEntry : attachmentsFileEntries) {
+
+					%>
+
+					<portlet:actionURL var="attachmentURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
+						<portlet:param name="struts_action" value="/group_pages/get_background_task_attachment" />
+						<portlet:param name="backgroundTaskId" value="<%= String.valueOf(backgroundTask.getBackgroundTaskId()) %>" />
+						<portlet:param name="attachment" value="<%= fileEntry.getTitle() %>" />
+					</portlet:actionURL>
+
+					<%
+					StringBundler sb = new StringBundler(4);
+
+					sb.append(fileEntry.getTitle());
+					sb.append(StringPool.OPEN_PARENTHESIS);
+					sb.append(TextFormatter.formatStorageSize(fileEntry.getSize(), locale));
+					sb.append(StringPool.CLOSE_PARENTHESIS);
+					%>
+
+					<liferay-ui:icon
+						image='<%= "../file_system/small/" + DLUtil.getFileIcon(fileEntry.getExtension()) %>'
+						label="<%= true %>"
+						message="<%= sb.toString() %>"
+						url="<%= attachmentURL %>"
+					/>
+				<%
+					}
+				%>
+				</liferay-ui:search-container-column-text>
 			</liferay-ui:search-container-row>
 
 			<liferay-ui:search-iterator paginate="<%= false %>" />

@@ -46,7 +46,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 	<div class="export-dialog-tree">
 		<div id="<portlet:namespace />importConfiguration">
 			<aui:fieldset cssClass="options-group" label="file">
-				<dl class="import-file-details">
+				<dl class="import-file-details options">
 					<dt>
 						<liferay-ui:message key="name" />
 					</dt>
@@ -93,44 +93,48 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 
 			<c:if test="<%= (configurationControls != null) && (configurationControls.length > 0) %>">
 				<aui:fieldset cssClass="options-group" label="application">
-					<ul class="lfr-tree unstyled">
-						<li class="tree-item">
-							<aui:input name="<%= PortletDataHandlerKeys.PORTLET_CONFIGURATION %>" type="hidden" value="<%= true %>" />
+					<ul class="lfr-tree select-options unstyled">
+						<li class="options">
+							<ul class="portlet-list">
+								<li class="tree-item">
+									<aui:input name="<%= PortletDataHandlerKeys.PORTLET_CONFIGURATION %>" type="hidden" value="<%= true %>" />
 
-							<aui:input label="configuration" name="<%= PortletDataHandlerKeys.PORTLET_CONFIGURATION + StringPool.UNDERLINE + selPortlet.getRootPortletId() %>" type="checkbox" value="<%= true %>" />
+									<aui:input label="configuration" name="<%= PortletDataHandlerKeys.PORTLET_CONFIGURATION + StringPool.UNDERLINE + selPortlet.getRootPortletId() %>" type="checkbox" value="<%= true %>" />
 
-							<div class="hide" id="<portlet:namespace />configuration_<%= selPortlet.getRootPortletId() %>">
-								<aui:fieldset cssClass="portlet-type-data-section" label="configuration">
-									<ul class="lfr-tree unstyled">
+									<div class="hide" id="<portlet:namespace />configuration_<%= selPortlet.getRootPortletId() %>">
+										<aui:fieldset cssClass="portlet-type-data-section" label="configuration">
+											<ul class="lfr-tree unstyled">
 
-										<%
-										request.setAttribute("render_controls.jsp-action", Constants.IMPORT);
-										request.setAttribute("render_controls.jsp-controls", configurationControls);
-										request.setAttribute("render_controls.jsp-portletId", selPortlet.getRootPortletId());
-										%>
+												<%
+												request.setAttribute("render_controls.jsp-action", Constants.IMPORT);
+												request.setAttribute("render_controls.jsp-controls", configurationControls);
+												request.setAttribute("render_controls.jsp-portletId", selPortlet.getRootPortletId());
+												%>
 
-										<liferay-util:include page="/html/portlet/layouts_admin/render_controls.jsp" />
+												<liferay-util:include page="/html/portlet/layouts_admin/render_controls.jsp" />
+											</ul>
+										</aui:fieldset>
+									</div>
+
+									<ul class="hide" id="<portlet:namespace />showChangeConfiguration_<%= selPortlet.getRootPortletId() %>">
+										<li>
+											<span class="selected-labels" id="<portlet:namespace />selectedConfiguration_<%= selPortlet.getRootPortletId() %>"></span>
+
+											<%
+											Map<String,Object> data = new HashMap<String,Object>();
+
+											data.put("portletid", selPortlet.getRootPortletId());
+											%>
+
+											<aui:a cssClass="configuration-link modify-link" data="<%= data %>" href="javascript:;" label="change" method="get" />
+										</li>
 									</ul>
-								</aui:fieldset>
-							</div>
 
-							<ul class="hide" id="<portlet:namespace />showChangeConfiguration_<%= selPortlet.getRootPortletId() %>">
-								<li>
-									<div class="selected-labels" id="<portlet:namespace />selectedConfiguration_<%= selPortlet.getRootPortletId() %>"></div>
-
-									<%
-									Map<String,Object> data = new HashMap<String,Object>();
-
-									data.put("portletid", selPortlet.getRootPortletId());
-									%>
-
-									<aui:a cssClass="configuration-link modify-link" data="<%= data %>" href="javascript:;" label="change" method="get" />
+									<aui:script>
+										Liferay.Util.toggleBoxes('<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_CONFIGURATION + StringPool.UNDERLINE + selPortlet.getRootPortletId() %>Checkbox', '<portlet:namespace />showChangeConfiguration<%= StringPool.UNDERLINE + selPortlet.getRootPortletId() %>');
+									</aui:script>
 								</li>
 							</ul>
-
-							<aui:script>
-								Liferay.Util.toggleBoxes('<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_CONFIGURATION + StringPool.UNDERLINE + selPortlet.getRootPortletId() %>Checkbox', '<portlet:namespace />showChangeConfiguration<%= StringPool.UNDERLINE + selPortlet.getRootPortletId() %>');
-							</aui:script>
 						</li>
 					</ul>
 				</aui:fieldset>
@@ -142,116 +146,124 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 
 			<c:if test="<%= (importModelCount != 0) && (portletDataHandler != null) %>">
 				<aui:fieldset cssClass="options-group" label="content">
-					<ul class="lfr-tree unstyled">
-						<li class="tree-item">
-							<aui:input name="<%= PortletDataHandlerKeys.PORTLET_DATA_CONTROL_DEFAULT %>" type="hidden" value="<%= false %>" />
+					<ul class="lfr-tree select-options unstyled">
+						<li class="options">
+							<ul class="portlet-list">
+								<li class="tree-item">
+									<aui:input name="<%= PortletDataHandlerKeys.PORTLET_DATA_CONTROL_DEFAULT %>" type="hidden" value="<%= false %>" />
 
-							<aui:input label='<%= LanguageUtil.get(pageContext, "content") + (importModelCount > 0 ? " (" + importModelCount + ")" : StringPool.BLANK) %>' name='<%= PortletDataHandlerKeys.PORTLET_DATA + "_" + selPortlet.getRootPortletId() %>' type="checkbox" value="<%= portletDataHandler.isPublishToLiveByDefault() %>" />
+									<liferay-util:buffer var="badgeHTML">
+										<span class="badge badge-info"><%= importModelCount > 0 ? importModelCount : StringPool.BLANK %></span>
+									</liferay-util:buffer>
 
-							<%
-							PortletDataHandlerControl[] importControls = portletDataHandler.getImportControls();
-							PortletDataHandlerControl[] metadataControls = portletDataHandler.getImportMetadataControls();
+									<aui:input label='<%= LanguageUtil.get(pageContext, "content") + badgeHTML %>' name='<%= PortletDataHandlerKeys.PORTLET_DATA + "_" + selPortlet.getRootPortletId() %>' type="checkbox" value="<%= portletDataHandler.isPublishToLiveByDefault() %>" />
 
-							if (Validator.isNotNull(importControls) || Validator.isNotNull(metadataControls)) {
-							%>
+									<%
+									PortletDataHandlerControl[] importControls = portletDataHandler.getImportControls();
+									PortletDataHandlerControl[] metadataControls = portletDataHandler.getImportMetadataControls();
 
-								<div class="hide" id="<portlet:namespace />content_<%= selPortlet.getRootPortletId() %>">
-									<aui:field-wrapper label='<%= Validator.isNotNull(metadataControls) ? "content" : StringPool.BLANK %>'>
-										<aui:input data-name='<%= LanguageUtil.get(locale, "delete-portlet-data") %>' label="delete-portlet-data-before-importing" name="<%= PortletDataHandlerKeys.DELETE_PORTLET_DATA %>" type="checkbox" />
+									if (Validator.isNotNull(importControls) || Validator.isNotNull(metadataControls)) {
+									%>
 
-										<div id="<portlet:namespace />showDeleteContentWarning">
-											<div class="alert alert-block">
-												<liferay-ui:message key="delete-content-before-importing-warning" />
+										<div class="hide" id="<portlet:namespace />content_<%= selPortlet.getRootPortletId() %>">
+											<aui:field-wrapper label='<%= Validator.isNotNull(metadataControls) ? "content" : StringPool.BLANK %>'>
+												<aui:input data-name='<%= LanguageUtil.get(locale, "delete-portlet-data") %>' label="delete-portlet-data-before-importing" name="<%= PortletDataHandlerKeys.DELETE_PORTLET_DATA %>" type="checkbox" />
 
-												<liferay-ui:message key="delete-content-before-importing-suggestion" />
-											</div>
-										</div>
+												<div id="<portlet:namespace />showDeleteContentWarning">
+													<div class="alert alert-block">
+														<liferay-ui:message key="delete-content-before-importing-warning" />
 
-										<aui:script>
-											Liferay.Util.toggleBoxes('<portlet:namespace /><%= PortletDataHandlerKeys.DELETE_PORTLET_DATA %>Checkbox', '<portlet:namespace />showDeleteContentWarning');
-										</aui:script>
+														<liferay-ui:message key="delete-content-before-importing-suggestion" />
+													</div>
+												</div>
 
-										<c:if test="<%= importControls != null %>">
+												<aui:script>
+													Liferay.Util.toggleBoxes('<portlet:namespace /><%= PortletDataHandlerKeys.DELETE_PORTLET_DATA %>Checkbox', '<portlet:namespace />showDeleteContentWarning');
+												</aui:script>
 
-											<%
-											request.setAttribute("render_controls.jsp-action", Constants.IMPORT);
-											request.setAttribute("render_controls.jsp-controls", importControls);
-											request.setAttribute("render_controls.jsp-manifestSummary", manifestSummary);
-											request.setAttribute("render_controls.jsp-portletDisabled", !portletDataHandler.isPublishToLiveByDefault());
-											%>
+												<c:if test="<%= importControls != null %>">
 
-											<ul class="lfr-tree unstyled">
-												<liferay-util:include page="/html/portlet/layouts_admin/render_controls.jsp" />
-											</ul>
-										</c:if>
-									</aui:field-wrapper>
+													<%
+													request.setAttribute("render_controls.jsp-action", Constants.IMPORT);
+													request.setAttribute("render_controls.jsp-controls", importControls);
+													request.setAttribute("render_controls.jsp-manifestSummary", manifestSummary);
+													request.setAttribute("render_controls.jsp-portletDisabled", !portletDataHandler.isPublishToLiveByDefault());
+													%>
 
-									<c:if test="<%= metadataControls != null %>">
-
-										<%
-										for (PortletDataHandlerControl metadataControl : metadataControls) {
-											PortletDataHandlerBoolean control = (PortletDataHandlerBoolean)metadataControl;
-
-											PortletDataHandlerControl[] childrenControls = control.getChildren();
-
-											if ((childrenControls != null) && (childrenControls.length > 0)) {
-												request.setAttribute("render_controls.jsp-controls", childrenControls);
-											%>
-
-												<aui:field-wrapper label="content-metadata">
 													<ul class="lfr-tree unstyled">
 														<liferay-util:include page="/html/portlet/layouts_admin/render_controls.jsp" />
 													</ul>
-												</aui:field-wrapper>
+												</c:if>
+											</aui:field-wrapper>
 
-											<%
-											}
-										}
-										%>
+											<c:if test="<%= metadataControls != null %>">
 
-									</c:if>
-								</div>
+												<%
+												for (PortletDataHandlerControl metadataControl : metadataControls) {
+													PortletDataHandlerBoolean control = (PortletDataHandlerBoolean)metadataControl;
 
-								<ul id="<portlet:namespace />showChangeContent">
-									<li class="tree-item">
-										<div class="selected-labels" id="<portlet:namespace />selectedContent_<%= selPortlet.getRootPortletId() %>"></div>
+													PortletDataHandlerControl[] childrenControls = control.getChildren();
 
-										<%
-										Map<String,Object> data = new HashMap<String,Object>();
+													if ((childrenControls != null) && (childrenControls.length > 0)) {
+														request.setAttribute("render_controls.jsp-controls", childrenControls);
+													%>
 
-										data.put("portletid", selPortlet.getRootPortletId());
-										%>
+														<aui:field-wrapper label="content-metadata">
+															<ul class="lfr-tree unstyled">
+																<liferay-util:include page="/html/portlet/layouts_admin/render_controls.jsp" />
+															</ul>
+														</aui:field-wrapper>
 
-										<aui:a cssClass="content-link modify-link" data="<%= data %>" href="javascript:;" id='<%= "contentLink_" + selPortlet.getRootPortletId() %>' label="change" method="get" />
-									</li>
-								</ul>
+													<%
+													}
+												}
+												%>
 
-								<aui:script>
-									Liferay.Util.toggleBoxes('<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE + selPortlet.getRootPortletId() %>Checkbox', '<portlet:namespace />showChangeContent');
-								</aui:script>
+											</c:if>
+										</div>
 
-							<%
-							}
-							%>
+										<ul id="<portlet:namespace />showChangeContent">
+											<li class="tree-item">
+												<span class="selected-labels" id="<portlet:namespace />selectedContent_<%= selPortlet.getRootPortletId() %>"></span>
 
-						</li>
+												<%
+												Map<String,Object> data = new HashMap<String,Object>();
 
-						<li>
-							<aui:fieldset cssClass="comments-and-ratings" label="for-each-of-the-selected-content-types,-import-their">
-								<div class="selected-labels" id="<portlet:namespace />selectedCommentsAndRatings"></div>
+												data.put("portletid", selPortlet.getRootPortletId());
+												%>
 
-								<aui:a cssClass="modify-link" href="javascript:;" id="commentsAndRatingsLink" label="change" method="get" />
+												<aui:a cssClass="content-link modify-link" data="<%= data %>" href="javascript:;" id='<%= "contentLink_" + selPortlet.getRootPortletId() %>' label="change" method="get" />
+											</li>
+										</ul>
 
-								<div class="hide" id="<portlet:namespace />commentsAndRatings">
-									<ul class="lfr-tree unstyled">
-										<li class="tree-item">
-											<aui:input label="comments" name="<%= PortletDataHandlerKeys.COMMENTS %>" type="checkbox" value="<%= true %>" />
+										<aui:script>
+											Liferay.Util.toggleBoxes('<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE + selPortlet.getRootPortletId() %>Checkbox', '<portlet:namespace />showChangeContent');
+										</aui:script>
 
-											<aui:input label="ratings" name="<%= PortletDataHandlerKeys.RATINGS %>" type="checkbox" value="<%= true %>" />
-										</li>
-									</ul>
-								</div>
-							</aui:fieldset>
+									<%
+									}
+									%>
+
+								</li>
+							</ul>
+
+							<ul>
+								<aui:fieldset cssClass="comments-and-ratings" label="for-each-of-the-selected-content-types,-import-their">
+									<span class="selected-labels" id="<portlet:namespace />selectedCommentsAndRatings"></span>
+
+									<aui:a cssClass="modify-link" href="javascript:;" id="commentsAndRatingsLink" label="change" method="get" />
+
+									<div class="hide" id="<portlet:namespace />commentsAndRatings">
+										<ul class="lfr-tree unstyled">
+											<li class="tree-item">
+												<aui:input label="comments" name="<%= PortletDataHandlerKeys.COMMENTS %>" type="checkbox" value="<%= true %>" />
+
+												<aui:input label="ratings" name="<%= PortletDataHandlerKeys.RATINGS %>" type="checkbox" value="<%= true %>" />
+											</li>
+										</ul>
+									</div>
+								</aui:fieldset>
+							</ul>
 						</li>
 					</ul>
 				</aui:fieldset>

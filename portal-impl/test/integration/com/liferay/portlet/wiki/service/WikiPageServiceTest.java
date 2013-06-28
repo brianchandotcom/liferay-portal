@@ -17,7 +17,6 @@ package com.liferay.portlet.wiki.service;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
@@ -87,18 +86,12 @@ public class WikiPageServiceTest {
 	}
 
 	@Test
-	public void testRevertWikiPage() throws Exception {
-		testRevertWikiPage(false);
+	public void testRevertPage() throws Exception {
+		testRevertPage(false);
+		testRevertPage(true);
 	}
 
-	@Test
-	public void testRevertWikiPageWithCustomField() throws Exception {
-		testRevertWikiPage(true);
-	}
-
-	protected void testRevertWikiPage(boolean checkCustomField)
-		throws Exception {
-
+	protected void testRevertPage(boolean hasExpandoValues) throws Exception {
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
 			_group.getGroupId());
 
@@ -113,7 +106,7 @@ public class WikiPageServiceTest {
 		ExpandoValue value = null;
 		ExpandoBridge expandoBridge = null;
 
-		if (checkCustomField) {
+		if (hasExpandoValues) {
 			ExpandoTable table = ExpandoTestUtil.addTable(
 				PortalUtil.getClassNameId(WikiPage.class),
 				ServiceTestUtil.randomString());
@@ -133,38 +126,25 @@ public class WikiPageServiceTest {
 				value.getString());
 		}
 
-		StringBuilder sb = new StringBuilder(3);
+		WikiPage updatedPage1 = WikiTestUtil.updatePage(
+			originalPage, TestPropsValues.getUserId(),
+			originalContent + "\nAdded second line.", serviceContext);
 
-		sb.append(originalContent);
-		sb.append(StringPool.NEW_LINE);
-		sb.append("Added second line");
+		Assert.assertNotEquals(originalContent, updatedPage1.getContent());
 
-		WikiPage updatedWikiPage = WikiTestUtil.updatePage(
-			originalPage, TestPropsValues.getUserId(), sb.toString(),
-			serviceContext);
+		WikiPage updatedPage2 = WikiTestUtil.updatePage(
+			updatedPage1, TestPropsValues.getUserId(),
+			updatedPage1.getContent() + "\nAdded third line.", serviceContext);
 
-		Assert.assertNotEquals(originalContent, updatedWikiPage.getContent());
-
-		sb = new StringBuilder(3);
-
-		sb.append(updatedWikiPage.getContent());
-		sb.append(StringPool.NEW_LINE);
-		sb.append("Added third line");
-
-		WikiPage updatedWikiPage2 = WikiTestUtil.updatePage(
-			updatedWikiPage, TestPropsValues.getUserId(), sb.toString(),
-			serviceContext);
-
-		Assert.assertNotEquals(originalContent, updatedWikiPage2.getContent());
+		Assert.assertNotEquals(originalContent, updatedPage2.getContent());
 
 		WikiPage revertedPage = WikiPageLocalServiceUtil.revertPage(
 			TestPropsValues.getUserId(), _node.getNodeId(),
-			updatedWikiPage2.getTitle(), originalPage.getVersion(),
-			serviceContext);
+			updatedPage2.getTitle(), originalPage.getVersion(), serviceContext);
 
 		Assert.assertEquals(originalContent, revertedPage.getContent());
 
-		if (checkCustomField) {
+		if (hasExpandoValues) {
 			expandoBridge = revertedPage.getExpandoBridge();
 
 			Map<String, Serializable> attributes =

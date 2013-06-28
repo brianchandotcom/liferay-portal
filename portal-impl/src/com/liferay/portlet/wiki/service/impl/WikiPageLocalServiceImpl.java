@@ -90,7 +90,6 @@ import com.liferay.portlet.wiki.util.comparator.PageVersionComparator;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.Serializable;
 
 import java.util.Calendar;
 import java.util.Date;

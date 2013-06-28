@@ -448,7 +448,8 @@ public class LayoutServiceHttp {
 		HttpPrincipal httpPrincipal, java.lang.String taskName, long groupId,
 		boolean privateLayout, long[] layoutIds,
 		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
-		java.util.Date startDate, java.util.Date endDate)
+		java.util.Date startDate, java.util.Date endDate,
+		java.lang.String fileName)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
@@ -458,7 +459,7 @@ public class LayoutServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					taskName, groupId, privateLayout, layoutIds, parameterMap,
-					startDate, endDate);
+					startDate, endDate, fileName);
 
 			Object returnObj = null;
 
@@ -650,7 +651,8 @@ public class LayoutServiceHttp {
 		HttpPrincipal httpPrincipal, long userId, java.lang.String taskName,
 		java.lang.String portletId,
 		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
-		java.util.Date startDate, java.util.Date endDate)
+		java.util.Date startDate, java.util.Date endDate,
+		java.lang.String fileName)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
@@ -659,7 +661,8 @@ public class LayoutServiceHttp {
 					_exportPortletInfoAsFileInBackgroundParameterTypes15);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, userId,
-					taskName, portletId, parameterMap, startDate, endDate);
+					taskName, portletId, parameterMap, startDate, endDate,
+					fileName);
 
 			Object returnObj = null;
 
@@ -691,7 +694,8 @@ public class LayoutServiceHttp {
 		HttpPrincipal httpPrincipal, java.lang.String taskName, long plid,
 		long groupId, java.lang.String portletId,
 		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
-		java.util.Date startDate, java.util.Date endDate)
+		java.util.Date startDate, java.util.Date endDate,
+		java.lang.String fileName)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
@@ -701,7 +705,7 @@ public class LayoutServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					taskName, plid, groupId, portletId, parameterMap,
-					startDate, endDate);
+					startDate, endDate, fileName);
 
 			Object returnObj = null;
 
@@ -2117,7 +2121,8 @@ public class LayoutServiceHttp {
 	private static final Class<?>[] _exportLayoutsAsFileInBackgroundParameterTypes10 =
 		new Class[] {
 			java.lang.String.class, long.class, boolean.class, long[].class,
-			java.util.Map.class, java.util.Date.class, java.util.Date.class
+			java.util.Map.class, java.util.Date.class, java.util.Date.class,
+			java.lang.String.class
 		};
 	private static final Class<?>[] _exportPortletInfoParameterTypes11 = new Class[] {
 			long.class, long.class, java.lang.String.class, java.util.Map.class,
@@ -2138,13 +2143,14 @@ public class LayoutServiceHttp {
 	private static final Class<?>[] _exportPortletInfoAsFileInBackgroundParameterTypes15 =
 		new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,
-			java.util.Map.class, java.util.Date.class, java.util.Date.class
+			java.util.Map.class, java.util.Date.class, java.util.Date.class,
+			java.lang.String.class
 		};
 	private static final Class<?>[] _exportPortletInfoAsFileInBackgroundParameterTypes16 =
 		new Class[] {
 			java.lang.String.class, long.class, long.class,
 			java.lang.String.class, java.util.Map.class, java.util.Date.class,
-			java.util.Date.class
+			java.util.Date.class, java.lang.String.class
 		};
 	private static final Class<?>[] _getAncestorLayoutsParameterTypes17 = new Class[] {
 			long.class

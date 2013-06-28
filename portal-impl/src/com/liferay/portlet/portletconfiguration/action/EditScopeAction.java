@@ -187,7 +187,7 @@ public class EditScopeAction extends PortletAction {
 					GroupConstants.DEFAULT_PARENT_GROUP_ID,
 					Layout.class.getName(), scopeLayout.getPlid(),
 					GroupConstants.DEFAULT_LIVE_GROUP_ID, name, null, 0, null,
-					false, true, null);
+					false, true, true, null);
 			}
 
 			scopeGroupId = scopeLayout.getGroupId();

@@ -322,7 +322,7 @@ public class GroupServiceTest {
 			Layout.class.getName(), layout.getPlid(),
 			GroupConstants.DEFAULT_LIVE_GROUP_ID,
 			layout.getName(LocaleUtil.getDefault()), null, 0, null, false, true,
-			null);
+			true, null);
 
 		Assert.assertFalse(scope.isRoot());
 		Assert.assertEquals(scope.getParentGroupId(), group.getGroupId());
@@ -349,6 +349,7 @@ public class GroupServiceTest {
 				group1.getGroupId(), group11.getGroupId(), group1.getName(),
 				group1.getDescription(), group1.getType(),
 				group1.getFriendlyURL(), group1.isActive(),
+				group1.isManualMembership(),
 				ServiceTestUtil.getServiceContext());
 
 			Assert.fail("A child group cannot be its parent group");
@@ -376,6 +377,7 @@ public class GroupServiceTest {
 				group1.getGroupId(), group1111.getGroupId(), group1.getName(),
 				group1.getDescription(), group1.getType(),
 				group1.getFriendlyURL(), group1.isActive(),
+				group1.isManualMembership(),
 				ServiceTestUtil.getServiceContext());
 
 			Assert.fail("A child group cannot be its parent group");
@@ -401,7 +403,8 @@ public class GroupServiceTest {
 				stagingGroup.getGroupId(), group.getGroupId(),
 				stagingGroup.getName(), stagingGroup.getDescription(),
 				stagingGroup.getType(), stagingGroup.getFriendlyURL(),
-				stagingGroup.isActive(), ServiceTestUtil.getServiceContext());
+				stagingGroup.isActive(), stagingGroup.isManualMembership(),
+				ServiceTestUtil.getServiceContext());
 
 			Assert.fail("A group cannot have its live group as parent");
 		}
@@ -419,7 +422,8 @@ public class GroupServiceTest {
 			GroupLocalServiceUtil.updateGroup(
 				group.getGroupId(), group.getGroupId(), group.getName(),
 				group.getDescription(), group.getType(), group.getFriendlyURL(),
-				group.isActive(), ServiceTestUtil.getServiceContext());
+				group.isActive(), group.isManualMembership(),
+				ServiceTestUtil.getServiceContext());
 
 			Assert.fail("A group cannot be its own parent");
 		}
@@ -531,7 +535,7 @@ public class GroupServiceTest {
 				GroupConstants.DEFAULT_PARENT_GROUP_ID, Layout.class.getName(),
 				scopeLayout.getPlid(), GroupConstants.DEFAULT_LIVE_GROUP_ID,
 				ServiceTestUtil.randomString(), null, 0, null, false, true,
-				null);
+				true, null);
 		}
 		else if (layoutPrototype) {
 			Group group = GroupTestUtil.addGroup(

@@ -106,7 +106,7 @@ public class PortalImplActualURLTest {
 			TestPropsValues.getUserId(), GroupConstants.DEFAULT_PARENT_GROUP_ID,
 			StringPool.BLANK, 0, GroupConstants.DEFAULT_LIVE_GROUP_ID,
 			"Test " + ServiceTestUtil.nextInt(), StringPool.BLANK,
-			GroupConstants.TYPE_SITE_OPEN, StringPool.BLANK, true, true,
+			GroupConstants.TYPE_SITE_OPEN, StringPool.BLANK, true, true, true,
 			serviceContext);
 
 		LayoutLocalServiceUtil.addLayout(

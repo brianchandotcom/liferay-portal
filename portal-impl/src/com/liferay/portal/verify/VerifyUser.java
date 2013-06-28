@@ -100,7 +100,8 @@ public class VerifyUser extends VerifyProcess {
 				user.getUserId(), GroupConstants.DEFAULT_PARENT_GROUP_ID,
 				User.class.getName(), user.getUserId(),
 				GroupConstants.DEFAULT_LIVE_GROUP_ID, null, null, 0,
-				StringPool.SLASH + user.getScreenName(), false, true, null);
+				StringPool.SLASH + user.getScreenName(), false, true, true,
+				null);
 		}
 
 		if (_log.isDebugEnabled()) {

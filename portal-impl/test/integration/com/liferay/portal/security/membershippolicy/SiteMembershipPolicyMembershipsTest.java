@@ -260,7 +260,7 @@ public class SiteMembershipPolicyMembershipsTest
 			group.getGroupId(), group.getParentGroupId(),
 			ServiceTestUtil.randomString(), group.getDescription(),
 			group.getType(), group.getFriendlyURL(), group.isActive(),
-			ServiceTestUtil.getServiceContext());
+			group.isManualMembership(), ServiceTestUtil.getServiceContext());
 
 		Assert.assertTrue(isVerify());
 	}

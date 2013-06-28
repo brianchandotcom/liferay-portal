@@ -500,7 +500,7 @@ public class StagingImpl implements Staging {
 				liveGroup.getGroupId(), liveGroup.getDescriptiveName(),
 				liveGroup.getDescription(), liveGroup.getType(),
 				liveGroup.getFriendlyURL(), false, liveGroup.isActive(),
-				serviceContext);
+				liveGroup.isManualMembership(), serviceContext);
 
 			GroupLocalServiceUtil.updateGroup(
 				liveGroup.getGroupId(), typeSettingsProperties.toString());

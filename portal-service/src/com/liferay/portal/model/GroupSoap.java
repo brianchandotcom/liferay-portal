@@ -46,6 +46,8 @@ public class GroupSoap implements Serializable {
 		soapModel.setFriendlyURL(model.getFriendlyURL());
 		soapModel.setSite(model.getSite());
 		soapModel.setActive(model.getActive());
+		soapModel.setManualMembership(model.getManualMembership());
+		soapModel.setMembershipRestriction(model.getMembershipRestriction());
 
 		return soapModel;
 	}
@@ -234,6 +236,26 @@ public class GroupSoap implements Serializable {
 		_active = active;
 	}
 
+	public boolean getManualMembership() {
+		return _manualMembership;
+	}
+
+	public boolean isManualMembership() {
+		return _manualMembership;
+	}
+
+	public void setManualMembership(boolean manualMembership) {
+		_manualMembership = manualMembership;
+	}
+
+	public int getMembershipRestriction() {
+		return _membershipRestriction;
+	}
+
+	public void setMembershipRestriction(int membershipRestriction) {
+		_membershipRestriction = membershipRestriction;
+	}
+
 	private String _uuid;
 	private long _groupId;
 	private long _companyId;
@@ -250,4 +272,6 @@ public class GroupSoap implements Serializable {
 	private String _friendlyURL;
 	private boolean _site;
 	private boolean _active;
+	private boolean _manualMembership;
+	private int _membershipRestriction;
 }

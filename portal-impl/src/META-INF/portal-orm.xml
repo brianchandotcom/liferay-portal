@@ -290,6 +290,8 @@
 			<basic name="active">
 				<column name="ACTIVE_" />
 			</basic>
+			<basic name="manualMembership" />
+			<basic name="membershipRestriction" />
 			<transient name="className" />
 			<transient name="creatorUserUuid" />
 			<transient name="modelAttributes" />

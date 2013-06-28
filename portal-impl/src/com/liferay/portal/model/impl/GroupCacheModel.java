@@ -34,7 +34,7 @@ import java.io.ObjectOutput;
 public class GroupCacheModel implements CacheModel<Group>, Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -68,6 +68,10 @@ public class GroupCacheModel implements CacheModel<Group>, Externalizable {
 		sb.append(site);
 		sb.append(", active=");
 		sb.append(active);
+		sb.append(", manualMembership=");
+		sb.append(manualMembership);
+		sb.append(", membershipRestriction=");
+		sb.append(membershipRestriction);
 		sb.append("}");
 
 		return sb.toString();
@@ -131,6 +135,8 @@ public class GroupCacheModel implements CacheModel<Group>, Externalizable {
 
 		groupImpl.setSite(site);
 		groupImpl.setActive(active);
+		groupImpl.setManualMembership(manualMembership);
+		groupImpl.setMembershipRestriction(membershipRestriction);
 
 		groupImpl.resetOriginalValues();
 
@@ -155,6 +161,8 @@ public class GroupCacheModel implements CacheModel<Group>, Externalizable {
 		friendlyURL = objectInput.readUTF();
 		site = objectInput.readBoolean();
 		active = objectInput.readBoolean();
+		manualMembership = objectInput.readBoolean();
+		membershipRestriction = objectInput.readInt();
 	}
 
 	@Override
@@ -214,6 +222,8 @@ public class GroupCacheModel implements CacheModel<Group>, Externalizable {
 
 		objectOutput.writeBoolean(site);
 		objectOutput.writeBoolean(active);
+		objectOutput.writeBoolean(manualMembership);
+		objectOutput.writeInt(membershipRestriction);
 	}
 
 	public String uuid;
@@ -232,4 +242,6 @@ public class GroupCacheModel implements CacheModel<Group>, Externalizable {
 	public String friendlyURL;
 	public boolean site;
 	public boolean active;
+	public boolean manualMembership;
+	public int membershipRestriction;
 }

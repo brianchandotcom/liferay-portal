@@ -6985,6 +6985,8 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		groupImpl.setFriendlyURL(group.getFriendlyURL());
 		groupImpl.setSite(group.isSite());
 		groupImpl.setActive(group.isActive());
+		groupImpl.setManualMembership(group.isManualMembership());
+		groupImpl.setMembershipRestriction(group.getMembershipRestriction());
 
 		return groupImpl;
 	}

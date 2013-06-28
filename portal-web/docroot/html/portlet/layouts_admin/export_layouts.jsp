@@ -536,30 +536,9 @@ if (endDateTime > 0) {
 					value="<%= backgroundTask.getName() %>"
 				/>
 
-				<%
-				int status = backgroundTask.getStatus();
-				String statusName = StringPool.BLANK;
-
-				if (status == BackgroundTaskConstants.STATUS_FAILED) {
-					statusName = "failed";
-				}
-				else if (status == BackgroundTaskConstants.STATUS_IN_PROGRESS) {
-					statusName = "in-progress";
-				}
-				else if (status == BackgroundTaskConstants.STATUS_NEW) {
-					statusName = "new";
-				}
-				else if (status == BackgroundTaskConstants.STATUS_QUEUED) {
-					statusName = "queued";
-				}
-				else if (status == BackgroundTaskConstants.STATUS_SUCCESSFUL) {
-					statusName = "successful";
-				}
-				%>
-
 				<liferay-ui:search-container-column-text
 					name="status"
-					value="<%= statusName %>"
+					value="<%= BackgroundTaskConstants.toLabel(backgroundTask.getStatus()) %>"
 				/>
 
 				<liferay-ui:search-container-column-text

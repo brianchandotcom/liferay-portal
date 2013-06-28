@@ -14,10 +14,23 @@
 
 package com.liferay.portal.model;
 
+import com.liferay.portal.kernel.util.StringPool;
+
 /**
  * @author Daniel Kocsis
+ * @author Eduardo Garcia
  */
 public class BackgroundTaskConstants {
+
+	public static final String LABEL_FAILED = "failed";
+
+	public static final String LABEL_IN_PROGRESS = "in-progress";
+
+	public static final String LABEL_NEW = "new";
+
+	public static final String LABEL_QUEUED = "queued";
+
+	public static final String LABEL_SUCCESSFUL = "successful";
 
 	public static final int STATUS_FAILED = 2;
 
@@ -28,5 +41,26 @@ public class BackgroundTaskConstants {
 	public static final int STATUS_QUEUED = 4;
 
 	public static final int STATUS_SUCCESSFUL = 3;
+
+	public static String toLabel(int status) {
+		if (status == STATUS_FAILED) {
+			return LABEL_FAILED;
+		}
+		else if (status == STATUS_IN_PROGRESS) {
+			return LABEL_IN_PROGRESS;
+		}
+		else if (status == STATUS_NEW) {
+			return LABEL_NEW;
+		}
+		else if (status == STATUS_QUEUED) {
+			return LABEL_QUEUED;
+		}
+		else if (status == STATUS_SUCCESSFUL) {
+			return LABEL_SUCCESSFUL;
+		}
+		else {
+			return StringPool.BLANK;
+		}
+	}
 
 }

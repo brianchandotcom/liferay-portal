@@ -95,7 +95,8 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	public Group addGroup(
 			long parentGroupId, long liveGroupId, String name,
 			String description, int type, String friendlyURL, boolean site,
-			boolean active, ServiceContext serviceContext)
+			boolean active, boolean manualMembership,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		if (parentGroupId == GroupConstants.DEFAULT_PARENT_GROUP_ID) {
@@ -110,7 +111,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 
 		Group group = groupLocalService.addGroup(
 			getUserId(), parentGroupId, null, 0, liveGroupId, name, description,
-			type, friendlyURL, site, active, serviceContext);
+			type, friendlyURL, site, active, manualMembership, serviceContext);
 
 		if (site) {
 			SiteMembershipPolicyUtil.verifyPolicy(group);
@@ -153,7 +154,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 
 		return addGroup(
 			parentGroupId, GroupConstants.DEFAULT_LIVE_GROUP_ID, name,
-			description, type, friendlyURL, site, active, serviceContext);
+			description, type, friendlyURL, site, active, true, serviceContext);
 	}
 
 	/**
@@ -1071,7 +1072,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	public Group updateGroup(
 			long groupId, long parentGroupId, String name, String description,
 			int type, String friendlyURL, boolean active,
-			ServiceContext serviceContext)
+			boolean manualMembership, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		Group group = groupPersistence.findByPrimaryKey(groupId);
@@ -1108,7 +1109,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 
 			group = groupLocalService.updateGroup(
 				groupId, parentGroupId, name, description, type, friendlyURL,
-				active, serviceContext);
+				active, manualMembership, serviceContext);
 
 			SiteMembershipPolicyUtil.verifyPolicy(
 				group, oldGroup, oldAssetCategories, oldAssetTags,
@@ -1119,7 +1120,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 		else {
 			return groupLocalService.updateGroup(
 				groupId, parentGroupId, name, description, type, friendlyURL,
-				active, serviceContext);
+				active, manualMembership, serviceContext);
 		}
 	}
 

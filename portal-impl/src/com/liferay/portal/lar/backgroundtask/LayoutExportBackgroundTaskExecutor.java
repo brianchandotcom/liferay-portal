@@ -63,8 +63,8 @@ public class LayoutExportBackgroundTaskExecutor
 		long userId = MapUtil.getLong(taskContextMap, "userId");
 
 		BackgroundTaskLocalServiceUtil.addBackgroundTaskAttachment(
-			userId, backgroundTask.getBackgroundTaskId(), larFile.getName(),
-			larFile);
+			userId, backgroundTask.getBackgroundTaskId(),
+			backgroundTask.getName(), larFile);
 
 		return BackgroundTaskResult.SUCCESS;
 	}

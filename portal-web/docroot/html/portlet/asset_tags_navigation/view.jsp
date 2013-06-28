@@ -26,7 +26,7 @@ long portletDisplayDDMTemplateId = PortletDisplayTemplateUtil.getPortletDisplayT
 		<%
 		List<AssetTag> assetTags = null;
 
-		if (showAssetCount && classNameId > 0) {
+		if (showAssetCount && (classNameId > 0)) {
 			assetTags = AssetTagServiceUtil.getTags(scopeGroupId, classNameId, null, 0, maxAssetTags, new AssetTagCountComparator());
 		}
 		else {

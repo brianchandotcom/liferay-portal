@@ -58,14 +58,14 @@ if (Validator.isNotNull(tag)) {
 %>
 
 <%!
-private String _buildTagsNavigation(long scopeGroupId, long groupId, String selectedTagName, PortletURL portletURL, long classNameId, String displayStyle, int maxAssetTags, boolean showAssetCount, boolean showZeroAssetCount) throws Exception {
+private String _buildTagsNavigation(long scopeGroupId, long siteGroupId, String selectedTagName, PortletURL portletURL, long classNameId, String displayStyle, int maxAssetTags, boolean showAssetCount, boolean showZeroAssetCount) throws Exception {
 	List<AssetTag> tags = null;
 
-	if (showAssetCount && classNameId > 0) {
+	if (showAssetCount && (classNameId > 0)) {
 		tags = AssetTagServiceUtil.getTags(scopeGroupId, classNameId, null, 0, maxAssetTags, new AssetTagCountComparator());
 	}
 	else {
-		tags = AssetTagServiceUtil.getGroupTags(groupId, 0, maxAssetTags, new AssetTagCountComparator());
+		tags = AssetTagServiceUtil.getGroupTags(siteGroupId, 0, maxAssetTags, new AssetTagCountComparator());
 	}
 
 	if (tags.isEmpty()) {

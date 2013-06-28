@@ -125,7 +125,7 @@ if (showPrototypes && (group != null)) {
 			</aui:field-wrapper>
 		</c:when>
 		<c:otherwise>
-			<aui:input name="name" />
+			<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="name" />
 		</c:otherwise>
 	</c:choose>
 

@@ -51,7 +51,7 @@ if (publicLayoutSetId != 0) {
 			<liferay-ui:error exception="<%= UploadException.class %>" message="an-unexpected-error-occurred-while-uploading-your-file" />
 
 			<aui:fieldset>
-				<aui:input label="upload-a-logo-for-the-organization-pages-that-will-be-used-instead-of-the-default-enterprise-logo-in-both-public-and-private-pages" name="fileName" size="50" type="file" />
+				<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" label="upload-a-logo-for-the-organization-pages-that-will-be-used-instead-of-the-default-enterprise-logo-in-both-public-and-private-pages" name="fileName" size="50" type="file" />
 
 				<div class="lfr-change-logo lfr-portrait-preview" id="<portlet:namespace />portraitPreview">
 					<img class="lfr-portrait-preview-img" id="<portlet:namespace />portraitPreviewImg" src="<%= HtmlUtil.escape(logoURL) %>" />
@@ -64,12 +64,6 @@ if (publicLayoutSetId != 0) {
 				</aui:button-row>
 			</aui:fieldset>
 		</aui:form>
-
-		<c:if test="<%= windowState.equals(WindowState.MAXIMIZED) %>">
-			<aui:script>
-				Liferay.Util.focusFormField(document.<portlet:namespace />fm.<portlet:namespace />fileName);
-			</aui:script>
-		</c:if>
 
 		<aui:script use="liferay-logo-editor">
 			new Liferay.LogoEditor(

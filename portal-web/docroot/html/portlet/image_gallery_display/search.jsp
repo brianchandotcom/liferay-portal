@@ -118,7 +118,7 @@ boolean useAssetEntryQuery = false;
 
 	<div id="<portlet:namespace />imageGalleryAssetInfo">
 			<span class="form-search">
-				<aui:input inlineField="<%= true %>" label="" name="keywords" size="30" title="search-images" type="text" value="<%= keywords %>" />
+				<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" inlineField="<%= true %>" label="" name="keywords" size="30" title="search-images" type="text" value="<%= keywords %>" />
 
 				<aui:button type="submit" value="search" />
 			</span>
@@ -149,12 +149,6 @@ boolean useAssetEntryQuery = false;
 	%>
 
 </aui:form>
-
-<c:if test="<%= windowState.equals(WindowState.MAXIMIZED) %>">
-	<aui:script>
-		Liferay.Util.focusFormField(document.<portlet:namespace />fm.<portlet:namespace />keywords);
-	</aui:script>
-</c:if>
 
 <%
 if (searchFolderId > 0) {

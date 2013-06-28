@@ -237,10 +237,6 @@ String[][] categorySections = {mainSections, seoSections, advancedSections, misc
 			submitForm(document.<portlet:namespace />fm);
 		}
 	}
-
-	<c:if test="<%= windowState.equals(WindowState.MAXIMIZED) %>">
-		Liferay.Util.focusFormField(document.<portlet:namespace />fm.<portlet:namespace />name);
-	</c:if>
 </aui:script>
 
 <aui:script use="aui-base">

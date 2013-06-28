@@ -36,7 +36,7 @@ decimalFormat.setMinimumFractionDigits(2);
 
 <input type="submit" value="<liferay-ui:message key="convert" />" />
 
-<input name="<portlet:namespace />number" size="3" type="text" value="<%= number %>" />
+<input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="<portlet:namespace />number" size="3" type="text" value="<%= number %>" />
 
 <select name="<portlet:namespace />from">
 
@@ -194,9 +194,3 @@ decimalFormat.setMinimumFractionDigits(2);
 </c:choose>
 
 </form>
-
-<c:if test="<%= windowState.equals(WindowState.MAXIMIZED) %>">
-	<aui:script>
-		Liferay.Util.focusFormField(document.<portlet:namespace />fm.<portlet:namespace />number);
-	</aui:script>
-</c:if>

@@ -40,7 +40,7 @@ String htmlAttributes =
 	<liferay-ui:panel-container extended="<%= true %>" id="iframeSettingsPanelContainer" persistState="<%= true %>">
 		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="iframeGeneralPanel" persistState="<%= true %>" title="general">
 			<aui:fieldset>
-				<aui:input cssClass="lfr-input-text-container" label="source-url" name="preferences--src--" prefix="<%= relative ? StringPool.TRIPLE_PERIOD : StringPool.BLANK %>" type="text" value="<%= src %>" />
+				<aui:input autoFocus="<%= (windowState.equals(WindowState.MAXIMIZED) || windowState.equals(LiferayWindowState.POP_UP)) %>" cssClass="lfr-input-text-container" label="source-url" name="preferences--src--" prefix="<%= relative ? StringPool.TRIPLE_PERIOD : StringPool.BLANK %>" type="text" value="<%= src %>" />
 
 				<aui:input label="relative-to-context-path" name="preferences--relative--" type="checkbox" value="<%= relative %>" />
 			</aui:fieldset>
@@ -140,10 +140,6 @@ String htmlAttributes =
 </aui:form>
 
 <aui:script>
-	<c:if test="<%= windowState.equals(WindowState.MAXIMIZED) || windowState.equals(LiferayWindowState.POP_UP) %>">
-		Liferay.Util.focusFormField(document.<portlet:namespace />fm.<portlet:namespace />src);
-	</c:if>
-
 	Liferay.Util.toggleBoxes('<portlet:namespace />authCheckbox','<portlet:namespace />authenticationOptions');
 	Liferay.Util.toggleBoxes('<portlet:namespace />resizeAutomaticallyCheckbox','<portlet:namespace />displaySettings', true);
 	Liferay.Util.toggleSelectBox('<portlet:namespace />authType', 'form', '<portlet:namespace />formAuthOptions');

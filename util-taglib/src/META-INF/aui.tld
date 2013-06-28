@@ -1415,6 +1415,12 @@
 		<tag-class>com.liferay.taglib.aui.InputTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<name>autoFocus</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
 			<name>autoSize</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

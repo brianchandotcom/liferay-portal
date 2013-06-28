@@ -108,7 +108,7 @@ List addresses = AddressServiceUtil.getAddresses(Contact.class.getName(), contac
 				</c:if>
 
 				<aui:col width="<%= 50 %>">
-					<aui:input label="first-name" name="billingFirstName" />
+					<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" label="first-name" name="billingFirstName" />
 
 					<aui:input label="last-name" name="billingLastName" />
 
@@ -364,8 +364,4 @@ List addresses = AddressServiceUtil.getAddresses(Contact.class.getName(), contac
 		%>
 
 	}
-
-	<c:if test="<%= windowState.equals(WindowState.MAXIMIZED) %>">
-		Liferay.Util.focusFormField(document.<portlet:namespace />fm.<portlet:namespace />billingFirstName);
-	</c:if>
 </aui:script>

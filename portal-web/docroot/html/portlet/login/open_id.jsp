@@ -35,7 +35,7 @@ String openId = ParamUtil.getString(request, "openId");
 	<liferay-ui:error exception="<%= MessageException.class %>" message="an-error-occurred-while-communicating-with-the-open-id-provider" />
 
 	<aui:fieldset>
-		<aui:input cssClass="openid-login" name="openId" type="text" value="<%= openId %>" />
+		<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" cssClass="openid-login" name="openId" type="text" value="<%= openId %>" />
 
 		<aui:button-row>
 			<aui:button type="submit" value="sign-in" />
@@ -44,9 +44,3 @@ String openId = ParamUtil.getString(request, "openId");
 </aui:form>
 
 <liferay-util:include page="/html/portlet/login/navigation.jsp" />
-
-<c:if test="<%= windowState.equals(WindowState.MAXIMIZED) %>">
-	<aui:script>
-		Liferay.Util.focusFormField(document.<portlet:namespace />fm.<portlet:namespace />openId);
-	</aui:script>
-</c:if>

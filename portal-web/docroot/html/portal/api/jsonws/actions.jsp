@@ -43,7 +43,7 @@ Set<String> contextPaths = JSONWebServiceActionsManagerUtil.getContextPaths();
 	</aui:select>
 </c:if>
 
-<aui:input cssClass="lfr-api-service-search" label="" name="serviceSearch" placeholder="search" />
+<aui:input autoFocus="<%= true %>" cssClass="lfr-api-service-search" label="" name="serviceSearch" placeholder="search" />
 
 <div class="services" id="services">
 
@@ -192,11 +192,9 @@ Set<String> contextPaths = JSONWebServiceActionsManagerUtil.getContextPaths();
 
 	var cache = {};
 
-	var serviceSearch = A.one('#serviceSearch');
-
 	var filter = new ServiceFilter(
 		{
-			inputNode: serviceSearch,
+			inputNode: A.one('#serviceSearch'),
 			minQueryLength: 0,
 			queryDelay: 0,
 			resultFilters: function(query, results) {
@@ -318,6 +316,4 @@ Set<String> contextPaths = JSONWebServiceActionsManagerUtil.getContextPaths();
 			50
 		)
 	);
-
-	Liferay.Util.focusFormField(serviceSearch);
 </aui:script>

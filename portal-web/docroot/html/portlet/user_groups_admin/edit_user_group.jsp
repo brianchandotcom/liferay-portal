@@ -68,7 +68,7 @@ long userGroupId = BeanParamUtil.getLong(userGroup, request, "userGroupId");
 			</aui:field-wrapper>
 		</c:if>
 
-		<aui:input label='<%= (userGroup != null) ? "new-name" : "name" %>' name="name" />
+		<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" label='<%= (userGroup != null) ? "new-name" : "name" %>' name="name" />
 
 		<aui:input name="description" />
 
@@ -301,10 +301,6 @@ long userGroupId = BeanParamUtil.getLong(userGroup, request, "userGroupId");
 		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= (userGroup == null) ? Constants.ADD : Constants.UPDATE %>";
 		submitForm(document.<portlet:namespace />fm, "<portlet:actionURL><portlet:param name="struts_action" value="/users_admin/edit_user_group" /></portlet:actionURL>");
 	}
-
-	<c:if test="<%= windowState.equals(WindowState.MAXIMIZED) %>">
-		Liferay.Util.focusFormField(document.<portlet:namespace />fm.<portlet:namespace />name);
-	</c:if>
 
 	Liferay.Util.toggleSelectBox('<portlet:namespace />publicLayoutSetPrototypeId', <portlet:namespace />isVisible, '<portlet:namespace />publicLayoutSetPrototypeIdOptions');
 	Liferay.Util.toggleSelectBox('<portlet:namespace />privateLayoutSetPrototypeId', <portlet:namespace />isVisible, '<portlet:namespace />privateLayoutSetPrototypeIdOptions');

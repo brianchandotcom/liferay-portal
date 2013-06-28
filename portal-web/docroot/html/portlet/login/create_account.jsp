@@ -128,7 +128,7 @@ birthdayCalendar.set(Calendar.YEAR, 1970);
 				<aui:input model="<%= User.class %>" name="screenName" />
 			</c:if>
 
-			<aui:input model="<%= User.class %>" name="emailAddress">
+			<aui:input autoFocus="<%= true %>" model="<%= User.class %>" name="emailAddress">
 				<c:if test="<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.USERS_EMAIL_ADDRESS_REQUIRED) %>">
 					<aui:validator name="required" />
 				</c:if>
@@ -180,9 +180,3 @@ birthdayCalendar.set(Calendar.YEAR, 1970);
 </aui:form>
 
 <liferay-util:include page="/html/portlet/login/navigation.jsp" />
-
-<c:if test="<%= windowState.equals(WindowState.MAXIMIZED) %>">
-	<aui:script>
-		Liferay.Util.focusFormField(document.<portlet:namespace />fm.<portlet:namespace />firstName);
-	</aui:script>
-</c:if>

@@ -23,12 +23,13 @@ GroupDisplayTerms displayTerms = (GroupDisplayTerms)searchContainer.getDisplayTe
 %>
 
 <liferay-ui:search-toggle
+	autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>"
 	buttonLabel="search"
 	displayTerms="<%= displayTerms %>"
 	id="toggle_id_users_admin_group_search"
 >
 	<aui:fieldset>
-		<aui:input name="<%= displayTerms.NAME %>" size="30" value="<%= displayTerms.getName() %>" />
+		<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="<%= displayTerms.NAME %>" size="30" value="<%= displayTerms.getName() %>" />
 
 		<aui:input name="<%= displayTerms.DESCRIPTION %>" size="30" value="<%= displayTerms.getDescription() %>" />
 	</aui:fieldset>

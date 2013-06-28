@@ -124,7 +124,7 @@
 			String taglibOnFocus = "if (this.value == '" + unicodeDefaultKeywords + "') { this.value = ''; }";
 			%>
 
-			<aui:input cssClass="lfr-search-keywords" inlineField="<%= true %>" label="" name="keywords" onBlur="<%= taglibOnBlur %>" onFocus="<%= taglibOnFocus %>" size="30" title="search-web-content" type="text" value="<%= HtmlUtil.escape(keywords) %>" />
+			<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" cssClass="lfr-search-keywords" inlineField="<%= true %>" label="" name="keywords" onBlur="<%= taglibOnBlur %>" onFocus="<%= taglibOnFocus %>" size="30" title="search-web-content" type="text" value="<%= HtmlUtil.escape(keywords) %>" />
 
 			<aui:input align="absmiddle" alt='<%= LanguageUtil.get(pageContext, "search") %>' border="0" cssClass="lfr-search-button" inlineField="<%= true %>" label="" name="search" src='<%= themeDisplay.getPathThemeImages() + "/common/search.png" %>' title="search" type="image" />
 
@@ -142,14 +142,6 @@
 			%>
 
 		</aui:form>
-
-		<c:if test="<%= windowState.equals(WindowState.MAXIMIZED) %>">
-			<aui:script>
-				if (document.<portlet:namespace />fm.<portlet:namespace />keywords) {
-					Liferay.Util.focusFormField(document.<portlet:namespace />fm.<portlet:namespace />keywords);
-				}
-			</aui:script>
-		</c:if>
 	</c:when>
 	<c:otherwise>
 		<liferay-ui:journal-content-search

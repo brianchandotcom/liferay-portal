@@ -27,6 +27,10 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class InputDateTag extends IncludeTag {
 
+	public void setAutoFocus(boolean autoFocus) {
+		_autoFocus = autoFocus;
+	}
+
 	public void setCssClass(String cssClass) {
 		_cssClass = cssClass;
 	}
@@ -109,6 +113,7 @@ public class InputDateTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		_autoFocus = false;
 		_cssClass = null;
 		_dayNullable = false;
 		_dayParam = null;
@@ -137,6 +142,8 @@ public class InputDateTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
+		request.setAttribute(
+			"liferay-ui:input-date:autoFocus", String.valueOf(_autoFocus));
 		request.setAttribute("liferay-ui:input-date:cssClass",_cssClass);
 		request.setAttribute(
 			"liferay-ui:input-date:dayNullable", String.valueOf(_dayNullable));
@@ -191,6 +198,7 @@ public class InputDateTag extends IncludeTag {
 
 	private static final String _PAGE = "/html/taglib/ui/input_date/page.jsp";
 
+	private boolean _autoFocus;
 	private String _cssClass;
 	private boolean _dayNullable;
 	private String _dayParam;

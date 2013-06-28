@@ -213,10 +213,6 @@ portletURL.setParameter("target", target);
 	</liferay-ui:search-container>
 </aui:form>
 
-<aui:script>
-	Liferay.Util.focusFormField(document.<portlet:namespace />fm.<portlet:namespace />name);
-</aui:script>
-
 <%!
 private List<Group> _filterGroups(List<Group> groups, String filter) throws Exception {
 	List<Group> filteredGroups = new ArrayList();

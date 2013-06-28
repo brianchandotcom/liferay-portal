@@ -66,7 +66,7 @@ String ticketKey = ParamUtil.getString(request, "ticketKey");
 		</c:choose>
 	</c:if>
 
-	<aui:input class="lfr-input-text-container" label="email-verification-code" name="ticketKey" size="36" type="text" value="<%= ticketKey %>" />
+	<aui:input autoFocus="<%= true %>" class="lfr-input-text-container" label="email-verification-code" name="ticketKey" size="36" type="text" value="<%= ticketKey %>" />
 
 	<aui:button-row>
 		<aui:button type="submit" value="verify" />
@@ -78,7 +78,3 @@ String ticketKey = ParamUtil.getString(request, "ticketKey");
 		</c:if>
 	</aui:button-row>
 </aui:form>
-
-<aui:script>
-	Liferay.Util.focusFormField(document.fm.ticketKey);
-</aui:script>

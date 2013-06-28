@@ -58,7 +58,7 @@ String emailAddress2 = ParamUtil.getString(request, "emailAddress2");
 	</c:choose>
 
 	<aui:fieldset label="email-address">
-		<aui:input class="lfr-input-text-container" label="email-address" name="emailAddress1" type="text" value="<%= emailAddress1 %>" />
+		<aui:input autoFocus="<%= true %>" class="lfr-input-text-container" label="email-address" name="emailAddress1" type="text" value="<%= emailAddress1 %>" />
 
 		<aui:input class="lfr-input-text-container" label="enter-again" name="emailAddress2" type="text" value="<%= emailAddress2 %>" />
 	</aui:fieldset>
@@ -67,7 +67,3 @@ String emailAddress2 = ParamUtil.getString(request, "emailAddress2");
 		<aui:button type="submit" />
 	</aui:button-row>
 </aui:form>
-
-<aui:script>
-	Liferay.Util.focusFormField(document.fm.emailAddress1);
-</aui:script>

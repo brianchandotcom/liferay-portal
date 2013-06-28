@@ -25,7 +25,7 @@ showSearch = showSearch && !results.isEmpty();
 	<div class="portlet-toolbar search-form">
 		<div class="form-search">
 			<c:if test="<%= showSearch %>">
-				<aui:input inlineField="<%= true %>" label="" name="keywords" size="30" title="search-entries" type="text" />
+				<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" inlineField="<%= true %>" label="" name="keywords" size="30" title="search-entries" type="text" />
 
 				<aui:button type="submit" value="search" />
 			</c:if>

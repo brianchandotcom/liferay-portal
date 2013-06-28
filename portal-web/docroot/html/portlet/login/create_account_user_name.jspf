@@ -14,7 +14,7 @@
  */
 --%>
 
-<aui:input model="<%= User.class %>" name="firstName" />
+<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" model="<%= User.class %>" name="firstName" />
 
 <aui:input model="<%= User.class %>" name="middleName" />
 

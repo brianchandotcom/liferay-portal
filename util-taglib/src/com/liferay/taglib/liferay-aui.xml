@@ -452,6 +452,11 @@
 	<component name="Input">
 		<attributes>
 			<attribute>
+				<name>autoFocus</name>
+				<inputType>boolean</inputType>
+				<outputType>boolean</outputType>
+			</attribute>
+			<attribute>
 				<name>autoSize</name>
 				<inputType>boolean</inputType>
 				<outputType>boolean</outputType>

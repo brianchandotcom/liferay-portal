@@ -237,10 +237,6 @@ if (step == 1) {
 				<liferay-ui:search-iterator />
 			</liferay-ui:search-container>
 
-			<aui:script>
-				Liferay.Util.focusFormField(document.<portlet:namespace />selectSiteRoleFm.<portlet:namespace />name);
-			</aui:script>
-
 			<aui:script use="aui-base">
 				var Util = Liferay.Util;
 

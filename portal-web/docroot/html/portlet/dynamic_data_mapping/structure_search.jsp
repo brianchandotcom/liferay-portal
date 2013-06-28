@@ -26,7 +26,7 @@ StructureDisplayTerms displayTerms = new StructureDisplayTerms(renderRequest);
 	id="toggle_id_ddm_structure_search"
 >
 	<aui:fieldset cssClass="lfr-ddm-search-form">
-		<aui:input name="<%= displayTerms.NAME %>" size="20" value="<%= displayTerms.getName() %>" />
+		<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="<%= displayTerms.NAME %>" size="20" value="<%= displayTerms.getName() %>" />
 
 		<aui:input name="<%= displayTerms.DESCRIPTION %>" size="20" value="<%= displayTerms.getDescription() %>" />
 
@@ -64,9 +64,3 @@ StructureDisplayTerms displayTerms = new StructureDisplayTerms(renderRequest);
 		</c:choose>
 	</aui:fieldset>
 </liferay-ui:search-toggle>
-
-<aui:script>
-	<c:if test="<%= windowState.equals(WindowState.MAXIMIZED) %>">
-		Liferay.Util.focusFormField(document.<portlet:namespace />fm.<portlet:namespace /><%= displayTerms.NAME %>);
-	</c:if>
-</aui:script>

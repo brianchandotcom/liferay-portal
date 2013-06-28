@@ -84,7 +84,7 @@ if (message != null) {
 			<aui:workflow-status status="<%= message.getStatus() %>" />
 		</c:if>
 
-		<aui:input name="body" style='<%= "height: " + ModelHintsConstants.TEXTAREA_DISPLAY_HEIGHT + "px; width: " + ModelHintsConstants.TEXTAREA_DISPLAY_WIDTH + "px;" %>' type="textarea" wrap="soft" />
+		<aui:input autoFocus="<%= (windowState.equals(WindowState.MAXIMIZED) && !themeDisplay.isFacebook()) %>" name="body" style='<%= "height: " + ModelHintsConstants.TEXTAREA_DISPLAY_HEIGHT + "px; width: " + ModelHintsConstants.TEXTAREA_DISPLAY_WIDTH + "px;" %>' type="textarea" wrap="soft" />
 	</aui:fieldset>
 
 	<c:if test="<%= curParentMessage != null %>">
@@ -126,10 +126,6 @@ if (message != null) {
 
 		submitForm(document.<portlet:namespace />fm);
 	}
-
-	<c:if test="<%= windowState.equals(WindowState.MAXIMIZED) && !themeDisplay.isFacebook() %>">
-		Liferay.Util.focusFormField(document.<portlet:namespace />fm.<portlet:namespace />body);
-	</c:if>
 </aui:script>
 
 <%

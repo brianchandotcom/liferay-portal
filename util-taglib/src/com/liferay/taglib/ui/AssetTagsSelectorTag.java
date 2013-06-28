@@ -30,6 +30,10 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class AssetTagsSelectorTag extends IncludeTag {
 
+	public void setAutoFocus(boolean autoFocus) {
+		_autoFocus = autoFocus;
+	}
+
 	public void setClassName(String className) {
 		_className = className;
 	}
@@ -46,10 +50,6 @@ public class AssetTagsSelectorTag extends IncludeTag {
 		_curTags = curTags;
 	}
 
-	public void setFocus(boolean focus) {
-		_focus = focus;
-	}
-
 	public void setGroupIds(long[] groupIds) {
 		_groupIds = groupIds;
 	}
@@ -64,11 +64,11 @@ public class AssetTagsSelectorTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		_autoFocus = false;
 		_className = null;
 		_classPK = 0;
 		_contentCallback = null;
 		_curTags = null;
-		_focus = false;
 		_groupIds = null;
 		_hiddenInput = "assetTagNames";
 		_id = null;
@@ -90,6 +90,8 @@ public class AssetTagsSelectorTag extends IncludeTag {
 		}
 
 		request.setAttribute(
+			"liferay-ui:asset-tags-selector:autoFocus", String.valueOf(_autoFocus));
+		request.setAttribute(
 			"liferay-ui:asset-tags-selector:className", _className);
 		request.setAttribute(
 			"liferay-ui:asset-tags-selector:classPK", String.valueOf(_classPK));
@@ -98,8 +100,6 @@ public class AssetTagsSelectorTag extends IncludeTag {
 			String.valueOf(_contentCallback));
 		request.setAttribute(
 			"liferay-ui:asset-tags-selector:curTags", _curTags);
-		request.setAttribute(
-			"liferay-ui:asset-tags-selector:focus", String.valueOf(_focus));
 
 		if (_groupIds == null) {
 			ThemeDisplay themeDisplay = (ThemeDisplay)pageContext.getAttribute(
@@ -135,11 +135,11 @@ public class AssetTagsSelectorTag extends IncludeTag {
 	private static final String _PAGE =
 		"/html/taglib/ui/asset_tags_selector/page.jsp";
 
+	private boolean _autoFocus;
 	private String _className;
 	private long _classPK;
 	private String _contentCallback;
 	private String _curTags;
-	private boolean _focus;
 	private long[] _groupIds;
 	private String _hiddenInput = "assetTagNames";
 	private String _id;

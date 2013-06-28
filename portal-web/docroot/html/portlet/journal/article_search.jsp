@@ -31,6 +31,7 @@ ArticleDisplayTerms displayTerms = (ArticleDisplayTerms)searchContainer.getDispl
 
 <aui:form action="<%= portletURL.toString() %>" method="post" name="fm1" onSubmit="event.preventDefault();">
 	<liferay-ui:search-toggle
+		autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>"
 		buttonLabel="search"
 		displayTerms="<%= displayTerms %>"
 		id="<%= renderResponse.getNamespace() %>"
@@ -118,9 +119,3 @@ ArticleDisplayTerms displayTerms = (ArticleDisplayTerms)searchContainer.getDispl
 		</aui:fieldset>
 	</liferay-ui:search-toggle>
 </aui:form>
-
-<c:if test="<%= windowState.equals(WindowState.MAXIMIZED) %>">
-	<aui:script>
-		Liferay.Util.focusFormField(document.<portlet:namespace />fm1.<portlet:namespace /><%= displayTerms.KEYWORDS %>);
-	</aui:script>
-</c:if>

@@ -154,7 +154,7 @@ if (categoryId > 0) {
 					<aui:input name="nodeId" type="hidden" value="<%= node.getNodeId() %>" />
 
 					<div class="input-append">
-						<input class="search-query span9" id="<portlet:namespace/>keywords" name="<portlet:namespace/>keywords" placeholder="<liferay-ui:message key="keywords" />" type="text" value="<%= HtmlUtil.escapeAttribute(keywords) %>" />
+						<input class="search-query span9" id="<portlet:namespace/>keywords1" name="<portlet:namespace/>keywords" placeholder="<liferay-ui:message key="keywords" />" type="text" value="<%= HtmlUtil.escapeAttribute(keywords) %>" />
 
 						<aui:button primary="<%= false %>" type="submit" value="search" />
 					</div>
@@ -165,7 +165,7 @@ if (categoryId > 0) {
 
 	<c:if test="<%= windowState.equals(WindowState.MAXIMIZED) %>">
 		<aui:script>
-			Liferay.Util.focusFormField(document.<portlet:namespace />searchFm.<portlet:namespace />keywords);
+			Liferay.Util.focusFormField(document.getElementById('<portlet:namespace />keywords1'));
 		</aui:script>
 	</c:if>
 </c:if>

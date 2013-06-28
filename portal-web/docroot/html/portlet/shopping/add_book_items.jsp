@@ -41,7 +41,7 @@ long categoryId = ParamUtil.getLong(request, "categoryId", ShoppingCategoryConst
 	</div>
 
 	<aui:fieldset>
-		<aui:input cssClass="lfr-textarea-container" label="add-all-isbn-numbers-separated-by-spaces" name="isbns" type="textarea" wrap="soft" />
+		<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" cssClass="lfr-textarea-container" label="add-all-isbn-numbers-separated-by-spaces" name="isbns" type="textarea" wrap="soft" />
 	</aui:fieldset>
 
 	<aui:button-row>
@@ -57,8 +57,4 @@ long categoryId = ParamUtil.getLong(request, "categoryId", ShoppingCategoryConst
 
 		submitForm(this);
 	}
-
-	<c:if test="<%= windowState.equals(WindowState.MAXIMIZED) %>">
-		Liferay.Util.focusFormField(document.<portlet:namespace />fm.<portlet:namespace />isbns);
-	</c:if>
 </aui:script>

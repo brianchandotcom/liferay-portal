@@ -24,7 +24,7 @@ OrderDisplayTerms displayTerms = (OrderDisplayTerms)searchContainer.getDisplayTe
 
 <aui:fieldset column="<%= true %>">
 	<aui:col width="<%= 33 %>">
-		<aui:input name="<%= displayTerms.NUMBER %>" size="20" type="text" value="<%= displayTerms.getNumber() %>" />
+		<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="<%= displayTerms.NUMBER %>" size="20" type="text" value="<%= displayTerms.getNumber() %>" />
 
 		<aui:select label="" name="<%= displayTerms.AND_OPERATOR %>">
 			<aui:option label="and" selected="<%= displayTerms.isAndOperator() %>" value="1" />
@@ -60,9 +60,3 @@ OrderDisplayTerms displayTerms = (OrderDisplayTerms)searchContainer.getDisplayTe
 <aui:button-row>
 	<aui:button type="submit" value="search" />
 </aui:button-row>
-
-<c:if test="<%= windowState.equals(WindowState.MAXIMIZED) %>">
-	<aui:script>
-		Liferay.Util.focusFormField(document.<portlet:namespace />fm.<portlet:namespace /><%= displayTerms.NUMBER %>);
-	</aui:script>
-</c:if>

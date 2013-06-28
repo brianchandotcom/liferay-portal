@@ -342,6 +342,4 @@ String emailBodyParam = emailParam + "Body_" + currentLanguageId;
 	);
 
 	Liferay.Util.toggleSelectBox('<portlet:namespace />anyAssetType','false','<portlet:namespace />classNamesBoxes');
-
-	Liferay.Util.focusFormField(document.<portlet:namespace />fm.<portlet:namespace />selectionStyle);
 </aui:script>

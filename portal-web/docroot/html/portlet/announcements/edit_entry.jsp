@@ -85,7 +85,7 @@ if (entry == null) {
 			</c:otherwise>
 		</c:choose>
 
-		<aui:input name="title" />
+		<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="title" />
 
 		<aui:input name="url" />
 
@@ -152,9 +152,6 @@ if (entry == null) {
 		document.<portlet:namespace />fm.<portlet:namespace />content.value = <portlet:namespace />getContent();
 		submitForm(document.<portlet:namespace />fm);
 	}
-	<c:if test="<%= windowState.equals(WindowState.MAXIMIZED) %>">
-		Liferay.Util.focusFormField(document.<portlet:namespace />fm.<portlet:namespace />title);
-	</c:if>
 </aui:script>
 
 <%!

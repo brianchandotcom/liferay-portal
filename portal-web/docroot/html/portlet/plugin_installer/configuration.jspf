@@ -17,7 +17,7 @@
 <aui:fieldset>
 	<aui:input name="enabled" type="checkbox" value="<%= PrefsPropsUtil.getBoolean(PropsKeys.AUTO_DEPLOY_ENABLED, PropsValues.AUTO_DEPLOY_ENABLED) %>" />
 
-	<aui:input cssClass="lfr-input-text-container" label="deploy-directory" name="deployDir" size="75" type="text" value="<%= PrefsPropsUtil.getString(PropsKeys.AUTO_DEPLOY_DEPLOY_DIR, PropsValues.AUTO_DEPLOY_DEPLOY_DIR) %>" />
+	<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" cssClass="lfr-input-text-container" label="deploy-directory" name="deployDir" size="75" type="text" value="<%= PrefsPropsUtil.getString(PropsKeys.AUTO_DEPLOY_DEPLOY_DIR, PropsValues.AUTO_DEPLOY_DEPLOY_DIR) %>" />
 
 	<aui:input cssClass="lfr-input-text-container" helpMessage='<%= LanguageUtil.format(pageContext, "plugins-will-be-deployed-to-x-if-this-field-is-left-blank", DeployUtil.getAutoDeployServerDestDir()) %>' label="dest-directory" name="destDir" size="75" type="text" value="<%= PrefsPropsUtil.getString(PropsKeys.AUTO_DEPLOY_DEST_DIR, PropsValues.AUTO_DEPLOY_DEST_DIR) %>" />
 
@@ -113,9 +113,3 @@
 <aui:button-row>
 	<aui:button onClick='<%= renderResponse.getNamespace() + "saveDeployConfiguration();" %>' value="save" />
 </aui:button-row>
-
-<c:if test="<%= windowState.equals(WindowState.MAXIMIZED) %>">
-	<aui:script>
-		Liferay.Util.focusFormField(document.<portlet:namespace />fm.<portlet:namespace />deployDir);
-	</aui:script>
-</c:if>

@@ -115,7 +115,7 @@ portletURL.setParameter("categoryId", String.valueOf(categoryId));
 				<c:if test="<%= showAddCategoryButton || showPermissionsButton || showSearch %>">
 					<aui:fieldset>
 						<c:if test="<%= showSearch %>">
-							<aui:input id="keywords1" label="search" name="keywords" size="30" type="text" />
+							<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" id="keywords1" label="search" name="keywords" size="30" type="text" />
 						</c:if>
 					</aui:fieldset>
 
@@ -323,7 +323,7 @@ portletURL.setParameter("categoryId", String.valueOf(categoryId));
 				<c:if test="<%= showAddItemButton || showSearch %>">
 					<aui:fieldset>
 						<c:if test="<%= showSearch %>">
-							<aui:input id="keyworkds2" label="search" name="keywords" size="30" type="text" />
+							<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" id="keywords2" label="search" name="keywords" size="30" type="text" />
 						</c:if>
 					</aui:fieldset>
 
@@ -359,10 +359,3 @@ portletURL.setParameter("categoryId", String.valueOf(categoryId));
 		</liferay-ui:panel-container>
 	</aui:form>
 </liferay-ui:panel-container>
-
-<c:if test="<%= windowState.equals(WindowState.MAXIMIZED) %>">
-	<aui:script>
-		Liferay.Util.focusFormField(document.<portlet:namespace />fm2.<portlet:namespace />keywords);
-		Liferay.Util.focusFormField(document.<portlet:namespace />fm1.<portlet:namespace />keywords);
-	</aui:script>
-</c:if>

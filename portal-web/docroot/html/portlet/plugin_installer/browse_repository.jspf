@@ -40,7 +40,7 @@ try {
 %>
 
 	<aui:fieldset cssClass="field-row search-params">
-		<aui:input name="keywords" size="30" type="text" value="<%= HtmlUtil.escape(keywords) %>" />
+		<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="keywords" size="30" type="text" value="<%= HtmlUtil.escape(keywords) %>" />
 
 		<aui:select name="tag">
 			<aui:option label="all" value="" />
@@ -309,12 +309,6 @@ catch (PluginPackageException ppe) {
 	<div class="alert alert-error">
 		<liferay-ui:message key="an-error-occurred-while-retrieving-available-plugins" />
 	</div>
-
-	<c:if test="<%= windowState.equals(WindowState.MAXIMIZED) %>">
-		<aui:script>
-			Liferay.Util.focusFormField(document.<portlet:namespace />fm.<portlet:namespace />keywords);
-		</aui:script>
-	</c:if>
 
 <%
 }

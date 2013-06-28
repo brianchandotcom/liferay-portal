@@ -84,7 +84,7 @@ if (choiceName > 0) {
 	<aui:model-context bean="<%= question %>" model="<%= PollsQuestion.class %>" />
 
 	<aui:fieldset>
-		<aui:input name="title" />
+		<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="title" />
 
 		<aui:input label="polls-question" name="description" />
 
@@ -168,10 +168,6 @@ if (choiceName > 0) {
 		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= (question == null) ? Constants.ADD : Constants.UPDATE %>";
 		submitForm(document.<portlet:namespace />fm);
 	}
-
-	<c:if test="<%= windowState.equals(WindowState.MAXIMIZED) %>">
-		Liferay.Util.focusFormField(document.<portlet:namespace />fm.<portlet:namespace />title);
-	</c:if>
 </aui:script>
 
 <%

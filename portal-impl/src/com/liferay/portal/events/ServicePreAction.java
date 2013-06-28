@@ -384,8 +384,7 @@ public class ServicePreAction extends Action {
 				(LiferayWindowState.isPopUp(request) ||
 				 LiferayWindowState.isExclusive(request))) {
 
-				controlPanelCategory =
-					_CONTROL_PANEL_CATEGORY_PORTLET_PREFIX + ppid;
+				controlPanelCategory = PortletCategoryKeys.PORTLET;
 			}
 			else if (Validator.isNotNull(ppid)) {
 				Portlet portlet = PortletLocalServiceUtil.getPortletById(
@@ -411,11 +410,14 @@ public class ServicePreAction extends Action {
 				}
 			}
 
-			boolean viewableGroup = LayoutPermissionUtil.contains(
-				permissionChecker, layout, controlPanelCategory, true,
-				ActionKeys.VIEW);
-			boolean viewableStaging = GroupPermissionUtil.contains(
-				permissionChecker, group.getGroupId(), ActionKeys.VIEW_STAGING);
+			boolean viewableGroup = hasAccessPermission(
+				permissionChecker, layout, doAsGroupId, controlPanelCategory,
+				true);
+			boolean viewableStaging =
+				!group.isControlPanel() &&
+				GroupPermissionUtil.contains(
+					permissionChecker, group.getGroupId(),
+					ActionKeys.VIEW_STAGING);
 
 			if (viewableStaging) {
 				layouts = LayoutLocalServiceUtil.getLayouts(
@@ -428,9 +430,9 @@ public class ServicePreAction extends Action {
 			else if (!isLoginRequest(request) &&
 					 (!viewableGroup ||
 					  (!redirectToDefaultLayout &&
-					   !LayoutPermissionUtil.contains(
-						   permissionChecker, layout, controlPanelCategory,
-						   false, ActionKeys.VIEW)))) {
+					   !hasAccessPermission(
+						   permissionChecker, layout, doAsGroupId,
+						   controlPanelCategory, false)))) {
 
 				if (user.isDefaultUser() &&
 					PropsValues.AUTH_LOGIN_PROMPT_ENABLED) {
@@ -482,7 +484,7 @@ public class ServicePreAction extends Action {
 		}
 
 		Object[] viewableLayouts = getViewableLayouts(
-			request, user, permissionChecker, layout, layouts,
+			request, user, permissionChecker, layout, layouts, doAsGroupId,
 			controlPanelCategory);
 
 		String layoutSetLogo = null;
@@ -503,7 +505,7 @@ public class ServicePreAction extends Action {
 		LayoutTypePortlet layoutTypePortlet = null;
 
 		layouts = mergeAdditionalLayouts(
-			request, user, permissionChecker, layout, layouts,
+			request, user, permissionChecker, layout, layouts, doAsGroupId,
 			controlPanelCategory);
 
 		LayoutSet layoutSet = null;
@@ -515,10 +517,12 @@ public class ServicePreAction extends Action {
 			request, "customized_view", true);
 
 		if (layout != null) {
-			hasCustomizeLayoutPermission = LayoutPermissionUtil.contains(
-				permissionChecker, layout, ActionKeys.CUSTOMIZE);
-			hasUpdateLayoutPermission = LayoutPermissionUtil.contains(
-				permissionChecker, layout, ActionKeys.UPDATE);
+			if (!layout.isTypeControlPanel()) {
+				hasCustomizeLayoutPermission = LayoutPermissionUtil.contains(
+					permissionChecker, layout, ActionKeys.CUSTOMIZE);
+				hasUpdateLayoutPermission = LayoutPermissionUtil.contains(
+					permissionChecker, layout, ActionKeys.UPDATE);
+			}
 
 			layoutSet = layout.getLayoutSet();
 
@@ -960,8 +964,7 @@ public class ServicePreAction extends Action {
 
 				if (PropsValues.DOCKBAR_ADMINISTRATIVE_LINKS_SHOW_IN_POP_UP) {
 					pageSettingsURL.setControlPanelCategory(
-						_CONTROL_PANEL_CATEGORY_PORTLET_PREFIX +
-							PortletKeys.LAYOUTS_ADMIN);
+						PortletCategoryKeys.PORTLET);
 					pageSettingsURL.setParameter("closeRedirect", currentURL);
 					pageSettingsURL.setWindowState(LiferayWindowState.POP_UP);
 				}
@@ -1007,8 +1010,7 @@ public class ServicePreAction extends Action {
 							DOCKBAR_ADMINISTRATIVE_LINKS_SHOW_IN_POP_UP) {
 
 						manageSiteMembershipsURL.setControlPanelCategory(
-							_CONTROL_PANEL_CATEGORY_PORTLET_PREFIX +
-								PortletKeys.SITE_MEMBERSHIPS_ADMIN);
+							PortletCategoryKeys.PORTLET);
 						manageSiteMembershipsURL.setWindowState(
 							LiferayWindowState.POP_UP);
 					}
@@ -1033,6 +1035,7 @@ public class ServicePreAction extends Action {
 			boolean hasAddLayoutGroupPermission = GroupPermissionUtil.contains(
 				permissionChecker, scopeGroupId, ActionKeys.ADD_LAYOUT);
 			boolean hasAddLayoutLayoutPermission =
+				!layout.isTypeControlPanel() &&
 				LayoutPermissionUtil.contains(
 					permissionChecker, layout, ActionKeys.ADD_LAYOUT);
 			boolean hasManageLayoutsGroupPermission =
@@ -1067,8 +1070,7 @@ public class ServicePreAction extends Action {
 
 				if (PropsValues.DOCKBAR_ADMINISTRATIVE_LINKS_SHOW_IN_POP_UP) {
 					siteSettingsURL.setControlPanelCategory(
-						_CONTROL_PANEL_CATEGORY_PORTLET_PREFIX +
-							PortletKeys.SITE_SETTINGS);
+						PortletCategoryKeys.PORTLET);
 					siteSettingsURL.setParameter("closeRedirect", currentURL);
 					siteSettingsURL.setWindowState(LiferayWindowState.POP_UP);
 				}
@@ -1110,8 +1112,7 @@ public class ServicePreAction extends Action {
 
 				if (PropsValues.DOCKBAR_ADMINISTRATIVE_LINKS_SHOW_IN_POP_UP) {
 					siteMapSettingsURL.setControlPanelCategory(
-						_CONTROL_PANEL_CATEGORY_PORTLET_PREFIX +
-							PortletKeys.LAYOUTS_ADMIN);
+						PortletCategoryKeys.PORTLET);
 					siteMapSettingsURL.setParameter(
 						"closeRedirect", currentURL);
 					siteMapSettingsURL.setWindowState(
@@ -1674,7 +1675,7 @@ public class ServicePreAction extends Action {
 	protected Object[] getViewableLayouts(
 			HttpServletRequest request, User user,
 			PermissionChecker permissionChecker, Layout layout,
-			List<Layout> layouts, String controlPanelCategory)
+			List<Layout> layouts, long doAsGroupId, String controlPanelCategory)
 		throws PortalException, SystemException {
 
 		if ((layouts == null) || layouts.isEmpty()) {
@@ -1686,13 +1687,14 @@ public class ServicePreAction extends Action {
 		boolean hasViewLayoutPermission = false;
 		boolean hasViewStagingPermission =
 			(group.isStagingGroup() || group.isStagedRemotely()) &&
+			 !group.isControlPanel() &&
 			 GroupPermissionUtil.contains(
 				 permissionChecker, group.getGroupId(),
 				 ActionKeys.VIEW_STAGING);
 
-		if (LayoutPermissionUtil.contains(
-				permissionChecker, layout, controlPanelCategory, false,
-				ActionKeys.VIEW) ||
+		if (hasAccessPermission(
+				permissionChecker, layout, doAsGroupId, controlPanelCategory,
+				false) ||
 			hasViewStagingPermission) {
 
 			hasViewLayoutPermission = true;
@@ -1704,9 +1706,9 @@ public class ServicePreAction extends Action {
 			Layout curLayout = layouts.get(i);
 
 			if (!curLayout.isHidden() &&
-				(LayoutPermissionUtil.contains(
-					permissionChecker, curLayout, controlPanelCategory, false,
-					ActionKeys.VIEW) ||
+				(hasAccessPermission(
+					permissionChecker, curLayout, doAsGroupId,
+					controlPanelCategory, false) ||
 				 hasViewStagingPermission)) {
 
 				if (accessibleLayouts.isEmpty() && !hasViewLayoutPermission) {
@@ -1736,6 +1738,49 @@ public class ServicePreAction extends Action {
 		}
 
 		return new Object[] {layout, layouts};
+	}
+
+	protected boolean hasAccessPermission(
+			PermissionChecker permissionChecker, Layout layout,
+			long doAsGroupId, String controlPanelCategory,
+			boolean checkViewableGroup)
+		throws PortalException, SystemException {
+
+		if (layout.isTypeControlPanel()) {
+			if (!permissionChecker.isSignedIn()) {
+				return false;
+			}
+
+			if (controlPanelCategory.equals(PortletCategoryKeys.CURRENT_SITE)) {
+				if (doAsGroupId <= 0) {
+					return false;
+				}
+
+				Group group = GroupLocalServiceUtil.getGroup(doAsGroupId);
+
+				if (group.isLayout()) {
+					group = group.getParentGroup();
+				}
+
+				if (GroupPermissionUtil.contains(
+						permissionChecker, group.getGroupId(),
+						ActionKeys.VIEW_SITE_ADMINISTRATION)) {
+
+					return true;
+				}
+			}
+			else if (controlPanelCategory.equals(PortletCategoryKeys.MY) ||
+					 controlPanelCategory.equals(PortletCategoryKeys.PORTLET)) {
+
+				return true;
+			}
+
+			return PortalPermissionUtil.contains(
+				permissionChecker, ActionKeys.VIEW_CONTROL_PANEL);
+		}
+
+		return LayoutPermissionUtil.contains(
+			permissionChecker, layout, checkViewableGroup, ActionKeys.VIEW);
 	}
 
 	protected Boolean hasPowerUserRole(User user) throws Exception {
@@ -1826,13 +1871,13 @@ public class ServicePreAction extends Action {
 
 		return LayoutPermissionUtil.contains(
 			permissionChecker, groupId, privateLayout, layoutId,
-			controlPanelCategory, ActionKeys.VIEW);
+			ActionKeys.VIEW);
 	}
 
 	protected List<Layout> mergeAdditionalLayouts(
 			HttpServletRequest request, User user,
 			PermissionChecker permissionChecker, Layout layout,
-			List<Layout> layouts, String controlPanelCategory)
+			List<Layout> layouts, long doAsGroupId, String controlPanelCategory)
 		throws PortalException, SystemException {
 
 		if ((layout == null) || layout.isPrivateLayout()) {
@@ -1863,7 +1908,7 @@ public class ServicePreAction extends Action {
 
 			Object[] viewableLayouts = getViewableLayouts(
 				request, user, permissionChecker, layout, guestLayouts,
-				controlPanelCategory);
+				doAsGroupId, controlPanelCategory);
 
 			guestLayouts = (List<Layout>)viewableLayouts[1];
 
@@ -1914,7 +1959,7 @@ public class ServicePreAction extends Action {
 
 				Object[] viewableLayouts = getViewableLayouts(
 					request, user, permissionChecker, layout, previousLayouts,
-					controlPanelCategory);
+					doAsGroupId, controlPanelCategory);
 
 				previousLayouts = (List<Layout>)viewableLayouts[1];
 
@@ -2155,9 +2200,6 @@ public class ServicePreAction extends Action {
 
 	protected File privateLARFile;
 	protected File publicLARFile;
-
-	private static final String _CONTROL_PANEL_CATEGORY_PORTLET_PREFIX =
-		"portlet_";
 
 	private static final String _PATH_PORTAL_LAYOUT = "/portal/layout";
 

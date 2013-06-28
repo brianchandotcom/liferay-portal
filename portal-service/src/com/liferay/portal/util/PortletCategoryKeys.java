@@ -48,6 +48,8 @@ public class PortletCategoryKeys {
 	 */
 	public static final String PORTAL = CONFIGURATION;
 
+	public static final String PORTLET = "portlet";
+
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #APPS}
 	 */

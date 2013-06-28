@@ -116,6 +116,23 @@ public class LayoutPermissionUtil {
 
 	public static boolean containsWithoutViewableGroup(
 			PermissionChecker permissionChecker, Layout layout,
+			boolean checkLayoutUpdateable, String actionId)
+		throws PortalException, SystemException {
+
+		return getLayoutPermission().containsWithoutViewableGroup(
+			permissionChecker, layout, checkLayoutUpdateable, actionId);
+	}
+
+	public static boolean containsWithoutViewableGroup(
+			PermissionChecker permissionChecker, Layout layout, String actionId)
+		throws PortalException, SystemException {
+
+		return getLayoutPermission().containsWithoutViewableGroup(
+			permissionChecker, layout, true, actionId);
+	}
+
+	public static boolean containsWithoutViewableGroup(
+			PermissionChecker permissionChecker, Layout layout,
 			String controlPanelCategory, boolean checkLayoutUpdateable,
 			String actionId)
 		throws PortalException, SystemException {

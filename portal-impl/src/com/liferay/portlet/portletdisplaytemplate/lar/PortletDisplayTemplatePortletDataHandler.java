@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.lar.BasePortletDataHandler;
 import com.liferay.portal.kernel.lar.ManifestSummary;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.xml.Element;
@@ -31,6 +32,7 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants;
 import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMTemplateExportActionableDynamicQuery;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.PortletPreferences;
@@ -44,17 +46,27 @@ public class PortletDisplayTemplatePortletDataHandler
 	public static final String NAMESPACE = "portlet_display_templates";
 
 	public PortletDisplayTemplatePortletDataHandler() {
-		setDeletionSystemEventClassNames(DDMTemplate.class.getName());
+		long ddmTemplateClassNameId = PortalUtil.getClassNameId(
+			DDMTemplate.class);
+
+		for (long classNameId : TemplateHandlerRegistryUtil.getClassNameIds()) {
+			modelTypes.add(
+				new StagedModelType(ddmTemplateClassNameId, classNameId));
+		}
+	}
+
+	@Override
+	public StagedModelType[] getDeletionSystemEventModelTypes() {
+		return modelTypes.toArray(new StagedModelType[modelTypes.size()]);
 	}
 
 	@Override
 	public long getExportModelCount(ManifestSummary manifestSummary) {
 		long totalModelCount = -1;
 
-		for (long classNameId : TemplateHandlerRegistryUtil.getClassNameIds()) {
+		for (StagedModelType modelType : modelTypes) {
 			long modelCount = manifestSummary.getModelAdditionCount(
-				DDMTemplate.class.getName(),
-				PortalUtil.getClassName(classNameId));
+				modelType.getClassName(), modelType.getReferrerClassName());
 
 			if (modelCount == -1) {
 				continue;
@@ -83,7 +95,9 @@ public class PortletDisplayTemplatePortletDataHandler
 
 		ActionableDynamicQuery actionableDynamicQuery =
 			getDDMTemplateActionableDynamicQuery(
-				portletDataContext, ArrayUtil.toArray(classNameIds), null);
+				portletDataContext, ArrayUtil.toArray(classNameIds),
+				new StagedModelType(
+					PortalUtil.getClassNameId(DDMTemplate.class), -1));
 
 		actionableDynamicQuery.performActions();
 
@@ -114,13 +128,11 @@ public class PortletDisplayTemplatePortletDataHandler
 			PortletDataContext portletDataContext)
 		throws Exception {
 
-		for (long classNameId : TemplateHandlerRegistryUtil.getClassNameIds()) {
+		for (StagedModelType modeType : modelTypes) {
 			ActionableDynamicQuery actionableDynamicQuery =
 				getDDMTemplateActionableDynamicQuery(
-					portletDataContext, new Long[] {classNameId},
-					ManifestSummary.getManifestSummaryKey(
-						DDMTemplate.class.getName(),
-						PortalUtil.getClassName(classNameId)));
+					portletDataContext,
+					new Long[] {modeType.getReferrerClassNameId()}, modeType);
 
 			actionableDynamicQuery.performCount();
 		}
@@ -128,7 +140,7 @@ public class PortletDisplayTemplatePortletDataHandler
 
 	protected ActionableDynamicQuery getDDMTemplateActionableDynamicQuery(
 			final PortletDataContext portletDataContext,
-			final Long[] classNameIds, final String manifestSummaryKey)
+			final Long[] classNameIds, final StagedModelType stagedModelType)
 		throws SystemException {
 
 		return new DDMTemplateExportActionableDynamicQuery(
@@ -156,11 +168,13 @@ public class PortletDisplayTemplatePortletDataHandler
 			}
 
 			@Override
-			protected String getManifestSummaryKey() {
-				return manifestSummaryKey;
+			protected StagedModelType getStagedModelType() {
+				return stagedModelType;
 			}
-
 		};
 	}
+
+	protected List<StagedModelType> modelTypes =
+		new ArrayList<StagedModelType>();
 
 }

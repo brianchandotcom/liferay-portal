@@ -59,9 +59,19 @@ boolean inlineEdit = GetterUtil.getBoolean((String)request.getAttribute("liferay
 String inlineEditSaveURL = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:inlineEditSaveURL"));
 
 String onChangeMethod = (String)request.getAttribute("liferay-ui:input-editor:onChangeMethod");
+String onBlurMethod = (String)request.getAttribute("liferay-ui:input-editor:onBlurMethod");
+String onFocusMethod = (String)request.getAttribute("liferay-ui:input-editor:onFocusMethod");
 
 if (Validator.isNotNull(onChangeMethod)) {
 	onChangeMethod = namespace + onChangeMethod;
+}
+
+if (Validator.isNotNull(onBlurMethod)) {
+	onBlurMethod = namespace + onBlurMethod;
+}
+
+if (Validator.isNotNull(onFocusMethod)) {
+	onFocusMethod = namespace + onFocusMethod;
 }
 
 boolean resizable = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-editor:resizable"));
@@ -110,6 +120,19 @@ if (!inlineEdit) {
 		</script>
 	</liferay-util:html-top>
 </c:if>
+
+
+<%
+String textareaName = name;
+
+String modules = StringPool.BLANK;
+
+if (inlineEdit && (inlineEditSaveURL != null)) {
+	textareaName = name + "_original";
+
+	modules = "inline-editor-ckeditor";
+}
+%>
 
 <aui:script>
 	window['<%= name %>'] = {
@@ -160,23 +183,35 @@ if (!inlineEdit) {
 		}
 		%>
 
+		<%
+		if (Validator.isNotNull(onBlurMethod)) {
+		%>
+
+			onBlurCallback: function() {
+				<%= HtmlUtil.escapeJS(onBlurMethod) %>(CKEDITOR.instances['<%= name %>']);
+			},
+
+		<%
+		}
+		%>
+
+		<%
+		if (Validator.isNotNull(onFocusMethod)) {
+		%>
+
+			onFocusCallback: function() {
+				<%= HtmlUtil.escapeJS(onFocusMethod) %>(CKEDITOR.instances['<%= name %>']);
+			},
+
+		<%
+		}
+		%>
+
 		setHTML: function(value) {
 			CKEDITOR.instances['<%= name %>'].setData(value);
 		}
 	};
 </aui:script>
-
-<%
-String textareaName = name;
-
-String modules = StringPool.BLANK;
-
-if (inlineEdit && (inlineEditSaveURL != null)) {
-	textareaName = name + "_original";
-
-	modules = "inline-editor-ckeditor";
-}
-%>
 
 <div class="<%= cssClass %>">
 	<textarea id="<%= textareaName %>" name="<%= textareaName %>" style="display: none;"></textarea>
@@ -286,7 +321,7 @@ if (inlineEdit && (inlineEditSaveURL != null)) {
 				</c:otherwise>
 			</c:choose>
 
-	<%
+			<%
 			if (Validator.isNotNull(onChangeMethod)) {
 				%>
 
@@ -301,6 +336,22 @@ if (inlineEdit && (inlineEditSaveURL != null)) {
 						300
 					);
 
+				<%
+				}
+				%>
+
+				<%
+				if (Validator.isNotNull(onBlurMethod)) {
+				%>
+					CKEDITOR.instances['<%= name %>'].on('blur', window['<%= name %>'].onBlurCallback);
+				<%
+				}
+				%>
+
+				<%
+				if (Validator.isNotNull(onFocusMethod)) {
+				%>
+					CKEDITOR.instances['<%= name %>'].on('focus', window['<%= name %>'].onFocusCallback);
 				<%
 				}
 				%>

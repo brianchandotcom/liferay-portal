@@ -72,7 +72,8 @@ if ((locales.length > 1) && !Validator.isNull(languageId)) {
 List<String> languageIds = new ArrayList<String>();
 %>
 
-<span class="input-localized liferay-input-localized" id="<portlet:namespace /><%= id %>BoundingBox">
+<span class="input-localized input-localized-<%= type %>" id="<portlet:namespace /><%= id %>BoundingBox">
+
 	<c:choose>
 		<c:when test='<%= type.equals("input") %>'>
 			<input class="language-value <%= cssClass %>" dir="<%= mainLanguageDir %>" <%= disabled ? "disabled=\"disabled\"" : "" %> id="<portlet:namespace /><%= HtmlUtil.escapeAttribute(id + fieldSuffix) %>" name="<portlet:namespace /><%= HtmlUtil.escapeAttribute(name + fieldSuffix) %>" type="text" value="<%= HtmlUtil.escapeAttribute(mainLanguageValue) %>" <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %> />
@@ -85,6 +86,57 @@ List<String> languageIds = new ArrayList<String>();
 					A.one('#<portlet:namespace /><%= HtmlUtil.escapeJS(id + fieldSuffix) %>').plug(A.Plugin.Autosize);
 				</aui:script>
 			</c:if>
+		</c:when>
+		<c:when test='<%= type.equals("editor") %>'>
+			<%
+			String fieldName = HtmlUtil.escapeAttribute(name + fieldSuffix);
+			String fieldId = HtmlUtil.escapeAttribute(id + fieldSuffix);
+			%>
+
+			<aui:script>
+				function <portlet:namespace /><%= fieldName  %>InitEditor() {
+					return "<%= UnicodeFormatter.toString(HtmlUtil.escape(mainLanguageValue)) %>";
+				}
+
+				Liferay.provide(
+					window,
+					'<portlet:namespace /><%= fieldName  %>OnFocus',
+					function() {
+						Liferay.component('<portlet:namespace /><%= fieldName %>').focus();
+					}
+				);
+
+				Liferay.provide(
+					window,
+					'<portlet:namespace /><%= fieldName  %>OnBlur',
+					function() {
+						Liferay.component('<portlet:namespace /><%= fieldName %>').blur();
+					}
+				);
+
+				Liferay.provide(
+					window,
+					'<portlet:namespace /><%= fieldName  %>ChangeEditor',
+					function() {
+						var inputLocalized = Liferay.component('<portlet:namespace /><%= fieldName %>');
+						var editor = window.<portlet:namespace /><%= fieldName %>;
+
+						inputLocalized.updateInputLanguage(editor.getHTML());
+					}
+				);
+			</aui:script>
+
+			<aui:script use="aui-base">
+				A.all('#<portlet:namespace /><%= id %>ContentBox .palette-item-inner').on(
+					'click',
+					function() {
+						window.<portlet:namespace /><%= fieldName %>.focus();
+					}
+				)
+			</aui:script>
+
+			<liferay-ui:input-editor name="<%= fieldName %>" editorImpl="ckeditor" initMethod="<%= fieldName + \"InitEditor\" %>" onFocusMethod="<%= fieldName + \"OnFocus\" %>"  onBlurMethod="<%= fieldName + \"OnBlur\" %>"  onChangeMethod="<%= fieldName + \"ChangeEditor\" %>" cssClass="<%= \"language-value \" + cssClass %>" />
+
 		</c:when>
 	</c:choose>
 
@@ -210,8 +262,12 @@ List<String> languageIds = new ArrayList<String>();
 				boundingBox: '#<portlet:namespace /><%= id %>BoundingBox',
 				columns: 20,
 				contentBox: '#<portlet:namespace /><%= id %>ContentBox',
+				<c:if test='<%= type.equals("editor") %>'>
+					editor: '<portlet:namespace /><%= name + fieldSuffix %>',
+				</c:if>
 				inputNamespace: '<portlet:namespace /><%= id + StringPool.UNDERLINE %>',
 				inputPlaceholder: '#<portlet:namespace /><%= HtmlUtil.escapeJS(id + fieldSuffix) %>',
+				lazy: <%= !type.equals("editor") %>,
 				toggleSelection: false,
 				translatedLanguages: '<%= StringUtil.merge(languageIds) %>'
 			}

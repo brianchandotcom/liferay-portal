@@ -72,6 +72,14 @@ public class InputEditorTag extends IncludeTag {
 		_onChangeMethod = onChangeMethod;
 	}
 
+	public void setOnBlurMethod(String onBlurMethod) {
+		_onBlurMethod = onBlurMethod;
+	}
+
+	public void setOnFocusMethod(String onFocusMethod) {
+		_onFocusMethod = onFocusMethod;
+	}
+
 	public void setResizable(boolean resizable) {
 		_resizable = resizable;
 	}
@@ -101,6 +109,8 @@ public class InputEditorTag extends IncludeTag {
 		_inlineEditSaveURL = null;
 		_name = "editor";
 		_onChangeMethod = null;
+		_onBlurMethod = null;
+		_onFocusMethod = null;
 		_page = null;
 		_resizable = true;
 		_skipEditorLoading = false;
@@ -146,6 +156,10 @@ public class InputEditorTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-ui:input-editor:onChangeMethod", _onChangeMethod);
 		request.setAttribute(
+				"liferay-ui:input-editor:onBlurMethod", _onBlurMethod);
+		request.setAttribute(
+				"liferay-ui:input-editor:onFocusMethod", _onFocusMethod);
+		request.setAttribute(
 			"liferay-ui:input-editor:resizable", String.valueOf(_resizable));
 		request.setAttribute(
 			"liferay-ui:input-editor:skipEditorLoading",
@@ -165,6 +179,8 @@ public class InputEditorTag extends IncludeTag {
 	private String _inlineEditSaveURL;
 	private String _name = "editor";
 	private String _onChangeMethod;
+	private String _onBlurMethod;
+	private String _onFocusMethod;
 	private String _page;
 	private boolean _resizable = true;
 	private boolean _skipEditorLoading;

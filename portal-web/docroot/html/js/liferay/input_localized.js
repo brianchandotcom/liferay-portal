@@ -23,6 +23,12 @@ AUI.add(
 						value: 'highlight-animation'
 					},
 
+					editor: {
+						setter: function(name) {
+							return window[name];
+						}
+					},
+
 					inputNamespace: {},
 
 					inputPlaceholder: {
@@ -112,6 +118,68 @@ AUI.add(
 						var selected = instance.get('selected');
 
 						return items[selected];
+					},
+
+					selectFlag: function(languageId) {
+						var instance = this;
+
+						var inputPlaceholder = instance.get('inputPlaceholder');
+
+						var inputLanguage = instance._getInputLanguage(languageId);
+
+						var defaultInputLanguage = instance._getInputLanguage(defaultLanguageId);
+
+						var defaultLanguageValue = defaultInputLanguage.val();
+
+						var editor = instance.get('editor');
+
+						inputPlaceholder.val(inputLanguage.val());
+
+						inputPlaceholder.attr('dir', Liferay.Language.direction[languageId]);
+
+						inputPlaceholder.attr('placeholder', defaultLanguageValue);
+
+						instance._animate(inputPlaceholder);
+						instance._clearFormValidator(inputPlaceholder);
+
+						if (defaultLanguageValue) {
+							instance._fillDefaultLanguage = false;
+						}
+						else {
+							instance._fillDefaultLanguage = true;
+						}
+
+						if (editor) {
+							editor.setHTML(inputPlaceholder.val());
+						}
+					},
+
+					updateInputLanguage: function(value) {
+						var instance = this;
+
+						var selectedLanguageId = instance.getSelectedLanguageId();
+
+						var inputLanguage = instance._getInputLanguage(selectedLanguageId);
+						var defaultInputLanguage = instance._getInputLanguage(defaultLanguageId);
+
+						instance.activateFlags();
+
+						var currentValue = value;
+
+						inputLanguage.val(currentValue);
+
+						if (instance._fillDefaultLanguage) {
+							defaultInputLanguage.val(currentValue);
+						}
+
+						var translatedLanguages = instance.get('translatedLanguages');
+
+						if (currentValue) {
+							translatedLanguages.add(selectedLanguageId);
+						}
+						else {
+							translatedLanguages.remove(selectedLanguageId);
+						}
 					},
 
 					_afterRenderUI: function() {
@@ -234,62 +302,14 @@ AUI.add(
 					_onInputValueChange: function(event, input) {
 						var instance = this;
 
-						var selectedLanguageId = instance.getSelectedLanguageId();
-
-						var inputLanguage = instance._getInputLanguage(selectedLanguageId);
-						var defaultInputLanguage = instance._getInputLanguage(defaultLanguageId);
-
-						instance.activateFlags();
-
-						input = input || event.currentTarget;
-
-						var currentValue = input.val();
-
-						inputLanguage.val(currentValue);
-
-						if (instance._fillDefaultLanguage) {
-							defaultInputLanguage.val(currentValue);
-						}
-
-						var translatedLanguages = instance.get('translatedLanguages');
-
-						if (currentValue) {
-							translatedLanguages.add(selectedLanguageId);
-						}
-						else {
-							translatedLanguages.remove(selectedLanguageId);
-						}
+						instance.updateInputLanguage(event.currentTarget.val());
 					},
 
 					_onSelectFlag: function(event) {
 						var instance = this;
 
 						if (!event.domEvent) {
-							var languageId = event.value;
-
-							var inputPlaceholder = instance.get(STR_INPUT_PLACEHOLDER);
-
-							var inputLanguage = instance._getInputLanguage(languageId);
-
-							var defaultInputLanguage = instance._getInputLanguage(defaultLanguageId);
-
-							var defaultLanguageValue = defaultInputLanguage.val();
-
-							inputPlaceholder.val(inputLanguage.val());
-
-							inputPlaceholder.attr('dir', Liferay.Language.direction[languageId]);
-
-							inputPlaceholder.attr('placeholder', defaultLanguageValue);
-
-							instance._animate(inputPlaceholder);
-							instance._clearFormValidator(inputPlaceholder);
-
-							if (defaultLanguageValue) {
-								instance._fillDefaultLanguage = false;
-							}
-							else {
-								instance._fillDefaultLanguage = true;
-							}
+							instance.selectFlag(event.value);
 						}
 					},
 
@@ -319,15 +339,26 @@ AUI.add(
 				},
 
 				_handleDoc: null,
+				_instances: {},
 				_registered: {},
 
 				register: function(id, config) {
 					var instance = this;
 
-					InputLocalized._registered[id] = config;
+					Liferay.component(id, function() {
+						if (!instance._instances[id]) {
+							instance._instances[id] = new InputLocalized(config);
+						}
+						return instance._instances[id];
+					});
 
-					if (!InputLocalized._handleDoc) {
-						InputLocalized._handleDoc = A.getDoc().delegate(['focus', 'input'], InputLocalized._onInputUserInteraction, '.language-value');
+					if (config.lazy) {
+						instance._registerConfiguration(id, config);
+					}
+					else {
+						var inputLocalized = Liferay.component(id);
+
+						inputLocalized.render();
 					}
 				},
 
@@ -341,11 +372,19 @@ AUI.add(
 					var config = InputLocalized._registered[id];
 
 					if (config) {
-						var inputLocalized = new InputLocalized(config).render();
+						var inputLocalized = Liferay.component(id).render();
 
 						inputLocalized._onDocFocus(event);
 
 						delete InputLocalized._registered[id];
+					}
+				},
+
+				_registerConfiguration: function(id, config) {
+					InputLocalized._registered[id] = config;
+
+					if (!InputLocalized._handleDoc) {
+						InputLocalized._handleDoc = A.getDoc().delegate(['focus', 'input'], InputLocalized._onInputUserInteraction, '.language-value');
 					}
 				}
 			}

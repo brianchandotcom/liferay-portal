@@ -863,7 +863,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		Map<String, Serializable> taskContextMap = buildTaskContextMap(
-			groupId, privateLayout, layoutIds, parameterMap, startDate,
+			userId, groupId, privateLayout, layoutIds, parameterMap, startDate,
 			endDate);
 
 		BackgroundTask backgroundTask =
@@ -962,7 +962,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		Map<String, Serializable> taskContextMap = buildTaskContextMap(
-			plid, groupId, portletId, parameterMap, startDate, endDate);
+			userId, plid, groupId, portletId, parameterMap, startDate, endDate);
 
 		BackgroundTask backgroundTask =
 			backgroundTaskLocalService.addBackgroundTask(
@@ -1726,7 +1726,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		Map<String, Serializable> taskContextMap = buildTaskContextMap(
-			groupId, privateLayout, null, parameterMap, null, null);
+			userId, groupId, privateLayout, null, parameterMap, null, null);
 
 		BackgroundTask backgroundTask =
 			backgroundTaskLocalService.addBackgroundTask(
@@ -1876,7 +1876,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		Map<String, Serializable> taskContextMap = buildTaskContextMap(
-			plid, groupId, portletId, parameterMap, null, null);
+			userId, plid, groupId, portletId, parameterMap, null, null);
 
 		BackgroundTask backgroundTask =
 			backgroundTaskLocalService.addBackgroundTask(
@@ -2753,7 +2753,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	}
 
 	protected Map<String, Serializable> buildTaskContextMap(
-		long groupId, boolean privateLayout, long[] layoutIds,
+		long userId, long groupId, boolean privateLayout, long[] layoutIds,
 		Map<String, String[]> parameterMap, Date startDate, Date endDate) {
 
 		Map<String, Serializable> taskContextMap =
@@ -2765,7 +2765,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			taskContextMap.put("endDate", endDate);
 		}
 
-		if (layoutIds != null) {
+		if ((layoutIds != null) && (layoutIds.length > 0)) {
 			taskContextMap.put("layoutIds", layoutIds);
 		}
 
@@ -2782,11 +2782,13 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			taskContextMap.put("startDate", startDate);
 		}
 
+		taskContextMap.put("userId", userId);
+
 		return taskContextMap;
 	}
 
 	protected Map<String, Serializable> buildTaskContextMap(
-		long plid, long groupId, String portletId,
+		long userId, long plid, long groupId, String portletId,
 		Map<String, String[]> parameterMap, Date startDate, Date endDate) {
 
 		Map<String, Serializable> taskContextMap =
@@ -2814,6 +2816,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		if (startDate != null) {
 			taskContextMap.put("startDate", startDate);
 		}
+
+		taskContextMap.put("userId", userId);
 
 		return taskContextMap;
 	}

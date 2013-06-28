@@ -18,11 +18,14 @@ import com.liferay.portal.DuplicateLockException;
 import com.liferay.portal.backgroundtask.executor.BackgroundTaskExecutor;
 import com.liferay.portal.backgroundtask.executor.ClassLoaderAwareBackgroundTaskExecutor;
 import com.liferay.portal.backgroundtask.executor.SerialBackgroundTaskExecutor;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
+import com.liferay.portal.kernel.util.StackTraceUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.BackgroundTask;
@@ -50,6 +53,7 @@ public class BackgroundTaskMessageListener extends BaseMessageListener {
 			BackgroundTaskLocalServiceUtil.getBackgroundTask(backgroundTaskId);
 
 		int status = backgroundTask.getStatus();
+		String statusMessage = null;
 
 		try {
 			ClassLoader classLoader = ClassLoaderUtil.getPortalClassLoader();
@@ -78,10 +82,18 @@ public class BackgroundTaskMessageListener extends BaseMessageListener {
 		}
 		catch (Exception e) {
 			status = BackgroundTaskConstants.STATUS_FAILED;
+
+			statusMessage =
+				"Unable to executed background task: " +
+					StackTraceUtil.getStackTrace(e);
+
+			if (_log.isErrorEnabled()) {
+				_log.error("Unable to execute background task", e);
+			}
 		}
 		finally {
 			BackgroundTaskLocalServiceUtil.updateBackgroundTask(
-				backgroundTaskId, null, status, serviceContext);
+				backgroundTaskId, null, status, statusMessage, serviceContext);
 
 			Message responseMessage = new Message();
 
@@ -115,5 +127,8 @@ public class BackgroundTaskMessageListener extends BaseMessageListener {
 
 		return backgroundTaskExecutor;
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		BackgroundTaskMessageListener.class);
 
 }

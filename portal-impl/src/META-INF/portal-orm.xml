@@ -106,6 +106,7 @@
 				<temporal>TIMESTAMP</temporal>
 			</basic>
 			<basic name="status" />
+			<basic name="statusMessage" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />

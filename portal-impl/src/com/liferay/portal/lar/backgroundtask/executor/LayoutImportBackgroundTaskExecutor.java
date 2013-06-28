@@ -16,6 +16,7 @@ package com.liferay.portal.lar.backgroundtask.executor;
 
 import com.liferay.portal.backgroundtask.executor.BaseBackgroundTaskExecutor;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.model.BackgroundTask;
 import com.liferay.portal.service.LayoutServiceUtil;
 
@@ -39,8 +40,9 @@ public class LayoutImportBackgroundTaskExecutor
 		Map<String, Serializable> taskContextMap =
 			backgroundTask.getTaskContextMap();
 
-		long groupId = (Long)taskContextMap.get("groupId");
-		boolean privateLayout = (Boolean)taskContextMap.get("privateLayout");
+		long groupId = MapUtil.getLong(taskContextMap, "groupId");
+		boolean privateLayout = MapUtil.getBoolean(
+			taskContextMap, "privateLayout");
 		Map<String, String[]> parameterMap =
 			(Map<String, String[]>)taskContextMap.get("parameterMap");
 

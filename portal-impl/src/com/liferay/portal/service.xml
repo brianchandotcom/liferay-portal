@@ -122,6 +122,7 @@
 		<column name="completed" type="boolean" />
 		<column name="completionDate" type="Date" />
 		<column name="status" type="int" />
+		<column name="statusMessage" type="String" />
 
 		<!-- Order -->
 

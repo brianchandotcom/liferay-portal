@@ -15,6 +15,8 @@
 package com.liferay.portal.lar.backgroundtask.executor;
 
 import com.liferay.portal.backgroundtask.executor.BaseBackgroundTaskExecutor;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.model.BackgroundTask;
 import com.liferay.portal.service.BackgroundTaskLocalServiceUtil;
 import com.liferay.portal.service.LayoutServiceUtil;
@@ -41,9 +43,13 @@ public class LayoutExportBackgroundTaskExecutor
 		Map<String, Serializable> taskContextMap =
 			backgroundTask.getTaskContextMap();
 
-		long groupId = (Long)taskContextMap.get("groupId");
-		boolean privateLayout = (Boolean)taskContextMap.get("privateLayout");
-		long[] layoutIds = (long[])taskContextMap.get("layoutIds");
+		long groupId = MapUtil.getLong(taskContextMap, "groupId");
+		boolean privateLayout = MapUtil.getBoolean(
+			taskContextMap, "privateLayout");
+
+		long[] layoutIds = GetterUtil.getLongValues(
+			taskContextMap.get("layoutIds"));
+
 		Map<String, String[]> parameterMap =
 			(Map<String, String[]>)taskContextMap.get("parameterMap");
 		Date startDate = (Date)taskContextMap.get("startDate");
@@ -53,7 +59,7 @@ public class LayoutExportBackgroundTaskExecutor
 			groupId, privateLayout, layoutIds, parameterMap, startDate,
 			endDate);
 
-		long userId = (Long)taskContextMap.get("userId");
+		long userId = MapUtil.getLong(taskContextMap, "userId");
 
 		BackgroundTaskLocalServiceUtil.addBackgroundTaskAttachment(
 			userId, backgroundTask.getBackgroundTaskId(), larFile.getName(),

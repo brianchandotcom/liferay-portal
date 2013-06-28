@@ -379,6 +379,18 @@ public class BackgroundTaskLocalServiceWrapper
 			taskContextMap, status, serviceContext);
 	}
 
+	@Override
+	public com.liferay.portal.model.BackgroundTask updateBackgroundTask(
+		long backgroundTaskId,
+		java.util.Map<java.lang.String, java.io.Serializable> taskContextMap,
+		int status, java.lang.String statusMessage,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _backgroundTaskLocalService.updateBackgroundTask(backgroundTaskId,
+			taskContextMap, status, statusMessage, serviceContext);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

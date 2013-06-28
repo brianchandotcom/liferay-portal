@@ -37,7 +37,7 @@ public class BackgroundTaskCacheModel implements CacheModel<BackgroundTask>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{backgroundTaskId=");
 		sb.append(backgroundTaskId);
@@ -67,6 +67,8 @@ public class BackgroundTaskCacheModel implements CacheModel<BackgroundTask>,
 		sb.append(completionDate);
 		sb.append(", status=");
 		sb.append(status);
+		sb.append(", statusMessage=");
+		sb.append(statusMessage);
 		sb.append("}");
 
 		return sb.toString();
@@ -141,6 +143,13 @@ public class BackgroundTaskCacheModel implements CacheModel<BackgroundTask>,
 
 		backgroundTaskImpl.setStatus(status);
 
+		if (statusMessage == null) {
+			backgroundTaskImpl.setStatusMessage(StringPool.BLANK);
+		}
+		else {
+			backgroundTaskImpl.setStatusMessage(statusMessage);
+		}
+
 		backgroundTaskImpl.resetOriginalValues();
 
 		return backgroundTaskImpl;
@@ -162,6 +171,7 @@ public class BackgroundTaskCacheModel implements CacheModel<BackgroundTask>,
 		completed = objectInput.readBoolean();
 		completionDate = objectInput.readLong();
 		status = objectInput.readInt();
+		statusMessage = objectInput.readUTF();
 	}
 
 	@Override
@@ -213,6 +223,13 @@ public class BackgroundTaskCacheModel implements CacheModel<BackgroundTask>,
 		objectOutput.writeBoolean(completed);
 		objectOutput.writeLong(completionDate);
 		objectOutput.writeInt(status);
+
+		if (statusMessage == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(statusMessage);
+		}
 	}
 
 	public long backgroundTaskId;
@@ -229,4 +246,5 @@ public class BackgroundTaskCacheModel implements CacheModel<BackgroundTask>,
 	public boolean completed;
 	public long completionDate;
 	public int status;
+	public String statusMessage;
 }

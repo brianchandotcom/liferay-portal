@@ -15,6 +15,7 @@
 package com.liferay.portal.lar.backgroundtask.executor;
 
 import com.liferay.portal.backgroundtask.executor.BaseBackgroundTaskExecutor;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.model.BackgroundTask;
 import com.liferay.portal.service.BackgroundTaskLocalServiceUtil;
 import com.liferay.portal.service.LayoutServiceUtil;
@@ -41,9 +42,9 @@ public class PortletExportBackgroundTaskExecutor
 		Map<String, Serializable> taskContextMap =
 			backgroundTask.getTaskContextMap();
 
-		long plid = (Long)taskContextMap.get("plid");
-		long groupId = (Long)taskContextMap.get("groupId");
-		String portletId = (String)taskContextMap.get("portletId");
+		long plid = MapUtil.getLong(taskContextMap, "plid");
+		long groupId = MapUtil.getLong(taskContextMap, "groupId");
+		String portletId = MapUtil.getString(taskContextMap, "portletId");
 		Map<String, String[]> parameterMap =
 			(Map<String, String[]>)taskContextMap.get("parameterMap");
 		Date startDate = (Date)taskContextMap.get("startDate");
@@ -52,7 +53,7 @@ public class PortletExportBackgroundTaskExecutor
 		File larFile = LayoutServiceUtil.exportPortletInfoAsFile(
 			plid, groupId, portletId, parameterMap, startDate, endDate);
 
-		long userId = (Long)taskContextMap.get("userId");
+		long userId = MapUtil.getLong(taskContextMap, "userId");
 
 		BackgroundTaskLocalServiceUtil.addBackgroundTaskAttachment(
 			userId, backgroundTask.getBackgroundTaskId(), larFile.getName(),

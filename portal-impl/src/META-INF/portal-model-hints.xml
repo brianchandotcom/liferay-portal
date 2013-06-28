@@ -93,6 +93,9 @@
 		<field name="completed" type="boolean" />
 		<field name="completionDate" type="Date" />
 		<field name="status" type="int" />
+		<field name="statusMessage" type="String">
+			<hint-collection name="CLOB" />
+		</field>
 	</model>
 	<model name="com.liferay.portal.model.BrowserTracker">
 		<field name="browserTrackerId" type="long" />

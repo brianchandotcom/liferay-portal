@@ -220,7 +220,8 @@ create table BackgroundTask (
 	taskContext TEXT null,
 	completed BOOLEAN,
 	completionDate DATE null,
-	status INTEGER
+	status INTEGER,
+	statusMessage TEXT null
 );
 
 create table BlogsEntry (

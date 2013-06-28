@@ -363,6 +363,18 @@ public class BackgroundTaskLocalServiceUtil {
 			status, serviceContext);
 	}
 
+	public static com.liferay.portal.model.BackgroundTask updateBackgroundTask(
+		long backgroundTaskId,
+		java.util.Map<java.lang.String, java.io.Serializable> taskContextMap,
+		int status, java.lang.String statusMessage,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .updateBackgroundTask(backgroundTaskId, taskContextMap,
+			status, statusMessage, serviceContext);
+	}
+
 	public static BackgroundTaskLocalService getService() {
 		if (_service == null) {
 			_service = (BackgroundTaskLocalService)PortalBeanLocatorUtil.locate(BackgroundTaskLocalService.class.getName());

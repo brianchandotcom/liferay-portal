@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackRegistryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.BackgroundTask;
 import com.liferay.portal.model.BackgroundTaskConstants;
 import com.liferay.portal.model.User;
@@ -58,6 +59,7 @@ public class BackgroundTaskLocalServiceImpl
 		throws PortalException, SystemException {
 
 		User user = userPersistence.findByPrimaryKey(userId);
+
 		Date now = new Date();
 
 		final long backgroundTaskId = counterLocalService.increment();
@@ -246,6 +248,16 @@ public class BackgroundTaskLocalServiceImpl
 			int status, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
+		return updateBackgroundTask(
+			backgroundTaskId, taskContextMap, status, null, serviceContext);
+	}
+
+	@Override
+	public BackgroundTask updateBackgroundTask(
+			long backgroundTaskId, Map<String, Serializable> taskContextMap,
+			int status, String statusMessage, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
 		Date now = new Date();
 
 		BackgroundTask backgroundTask =
@@ -264,6 +276,10 @@ public class BackgroundTaskLocalServiceImpl
 
 			backgroundTask.setCompleted(true);
 			backgroundTask.setCompletionDate(now);
+		}
+
+		if (Validator.isNotNull(statusMessage)) {
+			backgroundTask.setStatusMessage(statusMessage);
 		}
 
 		backgroundTask.setStatus(status);

@@ -44,6 +44,7 @@ public class BackgroundTaskSoap implements Serializable {
 		soapModel.setCompleted(model.getCompleted());
 		soapModel.setCompletionDate(model.getCompletionDate());
 		soapModel.setStatus(model.getStatus());
+		soapModel.setStatusMessage(model.getStatusMessage());
 
 		return soapModel;
 	}
@@ -212,6 +213,14 @@ public class BackgroundTaskSoap implements Serializable {
 		_status = status;
 	}
 
+	public String getStatusMessage() {
+		return _statusMessage;
+	}
+
+	public void setStatusMessage(String statusMessage) {
+		_statusMessage = statusMessage;
+	}
+
 	private long _backgroundTaskId;
 	private long _groupId;
 	private long _companyId;
@@ -226,4 +235,5 @@ public class BackgroundTaskSoap implements Serializable {
 	private boolean _completed;
 	private Date _completionDate;
 	private int _status;
+	private String _statusMessage;
 }

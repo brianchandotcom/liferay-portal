@@ -296,6 +296,21 @@ public interface BackgroundTaskModel extends BaseModel<BackgroundTask>,
 	 */
 	public void setStatus(int status);
 
+	/**
+	 * Returns the status message of this background task.
+	 *
+	 * @return the status message of this background task
+	 */
+	@AutoEscape
+	public String getStatusMessage();
+
+	/**
+	 * Sets the status message of this background task.
+	 *
+	 * @param statusMessage the status message of this background task
+	 */
+	public void setStatusMessage(String statusMessage);
+
 	@Override
 	public boolean isNew();
 

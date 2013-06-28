@@ -137,6 +137,8 @@ public class BackgroundTaskPersistenceTest {
 
 		newBackgroundTask.setStatus(ServiceTestUtil.nextInt());
 
+		newBackgroundTask.setStatusMessage(ServiceTestUtil.randomString());
+
 		_persistence.update(newBackgroundTask);
 
 		BackgroundTask existingBackgroundTask = _persistence.findByPrimaryKey(newBackgroundTask.getPrimaryKey());
@@ -172,6 +174,8 @@ public class BackgroundTaskPersistenceTest {
 			Time.getShortTimestamp(newBackgroundTask.getCompletionDate()));
 		Assert.assertEquals(existingBackgroundTask.getStatus(),
 			newBackgroundTask.getStatus());
+		Assert.assertEquals(existingBackgroundTask.getStatusMessage(),
+			newBackgroundTask.getStatusMessage());
 	}
 
 	@Test
@@ -214,7 +218,7 @@ public class BackgroundTaskPersistenceTest {
 			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "name", true, "servletContextNames", true,
 			"taskExecutorClassName", true, "taskContext", true, "completed",
-			true, "completionDate", true, "status", true);
+			true, "completionDate", true, "status", true, "statusMessage", true);
 	}
 
 	@Test
@@ -359,6 +363,8 @@ public class BackgroundTaskPersistenceTest {
 		backgroundTask.setCompletionDate(ServiceTestUtil.nextDate());
 
 		backgroundTask.setStatus(ServiceTestUtil.nextInt());
+
+		backgroundTask.setStatusMessage(ServiceTestUtil.randomString());
 
 		_persistence.update(backgroundTask);
 

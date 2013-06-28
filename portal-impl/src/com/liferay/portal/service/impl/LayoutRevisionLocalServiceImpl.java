@@ -450,10 +450,10 @@ public class LayoutRevisionLocalServiceImpl
 		}
 		else {
 			if (_layoutRevisionId.get() > 0) {
-				layoutRevision = 
-					layoutRevisionPersistence.findByPrimaryKey(
-						_layoutRevisionId.get());
-			} else {
+				layoutRevision = layoutRevisionPersistence.findByPrimaryKey(
+					_layoutRevisionId.get());
+			}
+			else {
 				layoutRevision = oldLayoutRevision;
 			}
 

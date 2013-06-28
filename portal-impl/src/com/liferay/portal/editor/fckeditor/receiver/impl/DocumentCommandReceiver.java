@@ -171,8 +171,17 @@ public class DocumentCommandReceiver extends BaseCommandReceiver {
 
 			filesElement.appendChild(fileElement);
 
-			fileElement.setAttribute("name", fileEntry.getTitle());
-			fileElement.setAttribute("desc", fileEntry.getTitle());
+			String name = fileEntry.getTitle();
+
+			String periodAndExtension = StringPool.PERIOD.concat(
+				fileEntry.getExtension());
+
+			if (!name.endsWith(periodAndExtension)) {
+				name = name.concat(periodAndExtension);
+			}
+
+			fileElement.setAttribute("name", name);
+			fileElement.setAttribute("desc", name);
 			fileElement.setAttribute("size", getSize(fileEntry.getSize()));
 
 			ThemeDisplay themeDisplay = commandArgument.getThemeDisplay();

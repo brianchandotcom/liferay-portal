@@ -55,6 +55,15 @@ long endDateTime = ParamUtil.getLong(request, "endDate");
 if (endDateTime > 0) {
 	endDate = new Date(endDateTime);
 }
+
+PortletURL portletURL = renderResponse.createRenderURL();
+
+portletURL.setParameter("struts_action", "/layouts_admin/export_layouts");
+portletURL.setParameter("tabs2", "all-export-processes");
+portletURL.setParameter("groupId", String.valueOf(groupId));
+portletURL.setParameter("liveGroupId", String.valueOf(liveGroupId));
+portletURL.setParameter("privateLayout", String.valueOf(privateLayout));
+portletURL.setParameter("rootNodeName", rootNodeName);
 %>
 
 <liferay-ui:tabs
@@ -73,6 +82,7 @@ if (endDateTime > 0) {
 
 			<aui:form action='<%= exportPagesURL + "&etag=0&strip=0" %>' cssClass="lfr-export-dialog" method="post" name="fm1">
 				<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.EXPORT %>" />
+				<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
 
 				<div class="export-dialog-tree">
 					<aui:input cssClass="file-selector" label="export-the-selected-data-to-the-given-lar-file-name" name="exportFileName" size="50" value='<%= HtmlUtil.escape(StringUtil.replace(rootNodeName, " ", "_")) + "-" + Time.getShortTimestamp() + ".lar" %>' />
@@ -517,10 +527,33 @@ if (endDateTime > 0) {
 	</liferay-ui:section>
 
 	<liferay-ui:section>
-		<liferay-ui:search-container>
+
+		<%
+		String orderByCol = ParamUtil.getString(request, "orderByCol");
+		String orderByType = ParamUtil.getString(request, "orderByType");
+
+		if (Validator.isNotNull(orderByCol) && Validator.isNotNull(orderByType)) {
+			portalPreferences.setValue(PortletKeys.BACKGROUND_TASK, "entries-order-by-col", orderByCol);
+			portalPreferences.setValue(PortletKeys.BACKGROUND_TASK, "entries-order-by-type", orderByType);
+		}
+		else {
+			orderByCol = portalPreferences.getValue(PortletKeys.BACKGROUND_TASK, "entries-order-by-col", "create-date");
+			orderByType = portalPreferences.getValue(PortletKeys.BACKGROUND_TASK, "entries-order-by-type", "desc");
+		}
+
+		OrderByComparator orderByComparator = BackgroundTaskUtil.getBackgroundTaskOrderByComparator(orderByCol, orderByType);
+		%>
+
+		<liferay-ui:search-container
+			emptyResultsMessage="no-export-processes-were-found"
+			iteratorURL="<%= portletURL %>"
+			orderByCol="<%= orderByCol %>"
+			orderByComparator="<%= orderByComparator %>"
+			orderByType="<%= orderByType %>"
+			total="<%= BackgroundTaskLocalServiceUtil.getBackgroundTasksCount(groupId, LayoutExportBackgroundTaskExecutor.class.getName()) %>"
+		>
 			<liferay-ui:search-container-results
-				results="<%= BackgroundTaskLocalServiceUtil.getBackgroundTasks(groupId, LayoutExportBackgroundTaskExecutor.class.getName()) %>"
-				total="<%= BackgroundTaskLocalServiceUtil.getBackgroundTasks(groupId, LayoutExportBackgroundTaskExecutor.class.getName()).size() %>"
+				results="<%= BackgroundTaskLocalServiceUtil.getBackgroundTasks(groupId, LayoutExportBackgroundTaskExecutor.class.getName(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>"
 			/>
 
 			<liferay-ui:search-container-row
@@ -531,80 +564,90 @@ if (endDateTime > 0) {
 					name="user-name"
 					value="<%= backgroundTask.getUserName() %>"
 				/>
-				<liferay-ui:search-container-column-text
-					name="task-name"
-					value="<%= backgroundTask.getName() %>"
-				/>
 
 				<liferay-ui:search-container-column-text
 					name="status"
-					value="<%= BackgroundTaskConstants.toLabel(backgroundTask.getStatus()) %>"
+					value="<%= LanguageUtil.get(pageContext, BackgroundTaskConstants.toLabel(backgroundTask.getStatus())) %>"
 				/>
 
 				<liferay-ui:search-container-column-text
 					name="create-date"
-					value="<%= String.valueOf(backgroundTask.getCreateDate()) %>"
+					orderable="<%= true %>"
+					orderableProperty="createDate"
+					value="<%= dateFormatDateTime.format(backgroundTask.getCreateDate()) %>"
 				/>
 
 				<liferay-ui:search-container-column-text
 					name="completion-date"
-					value="<%= backgroundTask.getCompletionDate() != null ? String.valueOf(backgroundTask.getCompletionDate()) : StringPool.BLANK %>"
+					orderable="<%= true %>"
+					orderableProperty="completionDate"
+					value="<%= backgroundTask.getCompletionDate() != null ? dateFormatDateTime.format(backgroundTask.getCompletionDate()) : StringPool.BLANK %>"
 				/>
 
 				<liferay-ui:search-container-column-text
-					name="archive-file">
-
-
-					<%
-						List<FileEntry> attachmentsFileEntries = backgroundTask.getAttachmentsFileEntries();
-
-						for (FileEntry fileEntry : attachmentsFileEntries) {
-					%>
-
-					<portlet:actionURL var="attachmentURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
-						<portlet:param name="struts_action" value="/group_pages/get_background_task_attachment" />
-						<portlet:param name="backgroundTaskId" value="<%= String.valueOf(backgroundTask.getBackgroundTaskId()) %>" />
-						<portlet:param name="attachment" value="<%= fileEntry.getTitle() %>" />
-					</portlet:actionURL>
+					name="download"
+				>
 
 					<%
-					StringBundler sb = new StringBundler(4);
-
-					sb.append(fileEntry.getTitle());
-					sb.append(StringPool.OPEN_PARENTHESIS);
-					sb.append(TextFormatter.formatStorageSize(fileEntry.getSize(), locale));
-					sb.append(StringPool.CLOSE_PARENTHESIS);
+					List<FileEntry> attachmentsFileEntries = backgroundTask.getAttachmentsFileEntries();
 					%>
 
-					<liferay-ui:icon
-						image='<%= "../file_system/small/" + DLUtil.getFileIcon(fileEntry.getExtension()) %>'
-						label="<%= true %>"
-						message="<%= sb.toString() %>"
-						url="<%= attachmentURL %>"
-					/>
+					<c:choose>
+						<c:when test="<%= !attachmentsFileEntries.isEmpty() %>">
 
-				<%
-					}
-				%>
+							<%
+							for (FileEntry fileEntry : attachmentsFileEntries) {
+							%>
+
+								<portlet:actionURL var="attachmentURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
+									<portlet:param name="struts_action" value="/group_pages/get_background_task_attachment" />
+									<portlet:param name="backgroundTaskId" value="<%= String.valueOf(backgroundTask.getBackgroundTaskId()) %>" />
+									<portlet:param name="attachment" value="<%= fileEntry.getTitle() %>" />
+								</portlet:actionURL>
+
+								<%
+								StringBundler sb = new StringBundler(4);
+
+								sb.append(fileEntry.getTitle());
+								sb.append(StringPool.OPEN_PARENTHESIS);
+								sb.append(TextFormatter.formatStorageSize(fileEntry.getSize(), locale));
+								sb.append(StringPool.CLOSE_PARENTHESIS);
+								%>
+
+								<liferay-ui:icon
+									image="download"
+									label="<%= true %>"
+									message="<%= sb.toString() %>"
+									url="<%= attachmentURL %>"
+								/>
+
+							<%
+							}
+							%>
+
+						</c:when>
+						<c:otherwise>
+
+							<%
+							Map taskContextMap = backgroundTask.getTaskContextMap();
+							%>
+
+							<liferay-ui:icon
+								image="download"
+								label="<%= true %>"
+								message='<%= MapUtil.getString(taskContextMap, "fileName") %>'
+							/>
+						</c:otherwise>
+					</c:choose>
 
 				</liferay-ui:search-container-column-text>
-				<liferay-ui:search-container-column-text
-					name="delete">
 
-					<portlet:renderURL var="exportPagesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-						<portlet:param name="struts_action" value="/layouts_admin/export_layouts" />
-						<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EXPORT %>" />
-						<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-						<portlet:param name="liveGroupId" value="<%= String.valueOf(liveGroupId) %>" />
-						<portlet:param name="privateLayout" value=" String.valueOf(privateLayout) %>" />
-						<portlet:param name="rootNodeName" value="<%= rootNodeName %>" />
-					</portlet:renderURL>
-
+				<liferay-ui:search-container-column-text>
 					<portlet:actionURL var="deleteBackgroundTaskURL">
 						<portlet:param name="struts_action" value="/group_pages/delete_background_task" />
 						<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 						<portlet:param name="backgroundTaskId" value="<%= String.valueOf(backgroundTask.getBackgroundTaskId()) %>" />
-						<portlet:param name="redirect" value="<%= exportPagesURL %>" />
+						<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
 					</portlet:actionURL>
 
 					<liferay-ui:icon-delete
@@ -614,7 +657,7 @@ if (endDateTime > 0) {
 				</liferay-ui:search-container-column-text>
 			</liferay-ui:search-container-row>
 
-			<liferay-ui:search-iterator paginate="<%= false %>" />
+			<liferay-ui:search-iterator />
 		</liferay-ui:search-container>
 	</liferay-ui:section>
 </liferay-ui:tabs>

@@ -599,6 +599,10 @@ public class ClusterLinkImplTest extends BaseClusterTestCase {
 
 		clusterLinkImpl.afterPropertiesSet();
 
+		if (clusterLinkImpl.isEnabled()) {
+			Assert.assertNotNull(clusterLinkImpl.getBindInetAddress());
+		}
+
 		List<JChannel> jChannels = getJChannels(clusterLinkImpl);
 
 		if (jChannels != null) {

@@ -517,6 +517,60 @@ if (endDateTime > 0) {
 	</liferay-ui:section>
 
 	<liferay-ui:section>
+		<liferay-ui:search-container>
+			<liferay-ui:search-container-results
+				results="<%= BackgroundTaskLocalServiceUtil.getBackgroundTasks(groupId, LayoutExportBackgroundTaskExecutor.class.getName()) %>"
+				total="<%= BackgroundTaskLocalServiceUtil.getBackgroundTasks(groupId, LayoutExportBackgroundTaskExecutor.class.getName()).size() %>"
+			/>
+
+			<liferay-ui:search-container-row
+				className="com.liferay.portal.model.BackgroundTask"
+				modelVar="backgroundTask"
+			>
+				<liferay-ui:search-container-column-text
+					name="user-name"
+					value="<%= backgroundTask.getUserName() %>"
+				/>
+
+				<%
+				int status = backgroundTask.getStatus();
+				String statusName = StringPool.BLANK;
+
+				if (status == BackgroundTaskConstants.STATUS_FAILED) {
+					statusName = "failed";
+				}
+				else if (status == BackgroundTaskConstants.STATUS_IN_PROGRESS) {
+					statusName = "in-progress";
+				}
+				else if (status == BackgroundTaskConstants.STATUS_NEW) {
+					statusName = "new";
+				}
+				else if (status == BackgroundTaskConstants.STATUS_QUEUED) {
+					statusName = "queued";
+				}
+				else if (status == BackgroundTaskConstants.STATUS_SUCCESSFUL) {
+					statusName = "successful";
+				}
+				%>
+
+				<liferay-ui:search-container-column-text
+					name="status"
+					value="<%= statusName %>"
+				/>
+
+				<liferay-ui:search-container-column-text
+					name="create-date"
+					value="<%= String.valueOf(backgroundTask.getCreateDate()) %>"
+				/>
+
+				<liferay-ui:search-container-column-text
+					name="completion-date"
+					value="<%= backgroundTask.getCompletionDate() != null ? String.valueOf(backgroundTask.getCompletionDate()) : StringPool.BLANK %>"
+				/>
+			</liferay-ui:search-container-row>
+
+			<liferay-ui:search-iterator paginate="<%= false %>" />
+		</liferay-ui:search-container>
 	</liferay-ui:section>
 </liferay-ui:tabs>
 

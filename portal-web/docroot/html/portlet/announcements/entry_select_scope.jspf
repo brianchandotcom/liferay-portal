@@ -83,7 +83,7 @@ boolean hasDistributionScope = false;
 
 			<%
 			for (Role role : roles) {
-				if (RolePermissionUtil.contains(permissionChecker, role.getRoleId(), ActionKeys.MANAGE_ANNOUNCEMENTS)) {
+				if (RolePermissionUtil.contains(permissionChecker, themeDisplay.getScopeGroupId(), role.getRoleId(), ActionKeys.MANAGE_ANNOUNCEMENTS)) {
 					hasDistributionScope = true;
 			%>
 

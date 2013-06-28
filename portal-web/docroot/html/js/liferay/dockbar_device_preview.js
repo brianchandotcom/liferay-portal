@@ -38,6 +38,8 @@ AUI.add(
 
 		var SELECTOR_SELECTED = '.' + CSS_SELECTED;
 
+		var STR_BOUNDING_BOX = 'boundingBox';
+
 		var STR_CLICK = 'click';
 
 		var STR_DEVICE = 'device';
@@ -230,7 +232,7 @@ AUI.add(
 
 							var path = WIN.location.pathname;
 
-							if (AUA.ie && AUA.ie < 10 && path === '/') {
+							if (path === '/') {
 								uri += '?';
 							}
 
@@ -250,25 +252,36 @@ AUI.add(
 											align: true,
 											after: {
 												end: function(event) {
-													instance._deviceSkin.addClass(instance._selectedDevice.skin);
+													if (instance._selectedDevice.skin) {
+														dialogWindow.get(STR_BOUNDING_BOX).addClass(instance._selectedDevice.skin);
+													}
 
 													dialogWindow.sizeanim.set(STR_PREVENT_TRANSITION, instance._selectedDevice.preventTransition || false);
 												},
 												start: function(event) {
-													instance._deviceSkin.set('className', 'lfr-device-skin');
+													var dialogBoundingBox = dialogWindow.get(STR_BOUNDING_BOX);
+
+													AObject.each(
+														instance.get(STR_DEVICES),
+														function(item, index, collection) {
+															if (item.skin) {
+																dialogBoundingBox.removeClass(item.skin);
+															}
+														}
+													);
 												}
 											},
 											preventTransition: true
 										}
 									);
 
+									dialogWindow.get(STR_BOUNDING_BOX).addClass(device.skin);
+
 									instance._eventHandles.push(
 										dialogWindow.on('resize:end', instance._onResizeEnd, instance),
 										dialogWindow.on('resize:resize', instance._onResize, instance),
 										dialogWindow.on('resize:start', instance._onResizeStart, instance)
 									);
-
-									dialogWindow.get('boundingBox').prepend(instance._deviceSkin);
 								}
 							);
 						}
@@ -282,11 +295,16 @@ AUI.add(
 							dialog.show();
 						}
 
-						if (rotation) {
-							instance._deviceSkin.addClass('rotated');
-						}
-						else {
-							instance._deviceSkin.removeClass('rotated');
+						if (dialog) {
+							var dialogBoundingBox = dialog.get(STR_BOUNDING_BOX);
+
+							var action = 'addClass';
+
+							if (!rotation) {
+								action = 'removeClass';
+							}
+
+							dialogBoundingBox[action](STR_ROTATED);
 						}
 
 						instance._selectedDevice = device;
@@ -364,7 +382,7 @@ AUI.add(
 						if (!sizeStatus) {
 							sizeStatus = A.Node.create(TPL_DEVICE_SIZE_STATUS);
 
-							dialog.get('boundingBox').append(sizeStatus);
+							dialog.get(STR_BOUNDING_BOX).append(sizeStatus);
 
 							sizeStatusContent = sizeStatus.one('.lfr-device-size-status-content');
 

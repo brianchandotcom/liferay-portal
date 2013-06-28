@@ -57,6 +57,10 @@ public class UserNotificationDefinition {
 		return _portletId;
 	}
 
+	public UserNotificationDeliveryType getDeliveryType(int type) {
+		return _deliveryTypes.get(type);
+	}
+
 	public Map<Integer, UserNotificationDeliveryType>
 		getDeliveryTypes() {
 

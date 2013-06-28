@@ -16,6 +16,7 @@
 package com.liferay.portal.kernel.notifications;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.UserNotificationEvent;
 import com.liferay.portal.service.ServiceContext;
 
@@ -39,6 +40,9 @@ public interface UserNotificationManager {
 	public void deleteUserNotificationHandler(
 		UserNotificationHandler userNotificationHandler);
 
+	public UserNotificationDefinition fetchUserNotificationDefinition(
+		String portletId, long classNameId, int notificationType);
+
 	public Map<String, Map<String, UserNotificationHandler>>
 		getUserNotificationHandlers();
 
@@ -46,5 +50,16 @@ public interface UserNotificationManager {
 			String selector, UserNotificationEvent userNotificationEvent,
 			ServiceContext serviceContext)
 		throws PortalException;
+
+	public boolean deliver(
+			String portletId, long userId, long classNameId,
+			int notificationType, int deliveryType)
+		throws PortalException, SystemException;
+
+	public boolean deliver(
+			String selector, String portletId, long userId, long classNameId,
+			int notificationType, int deliveryType,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException;
 
 }

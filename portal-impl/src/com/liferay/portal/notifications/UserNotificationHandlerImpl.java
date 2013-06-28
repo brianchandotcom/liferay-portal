@@ -15,6 +15,7 @@
 package com.liferay.portal.notifications;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.notifications.UserNotificationFeedEntry;
 import com.liferay.portal.kernel.notifications.UserNotificationHandler;
 import com.liferay.portal.model.UserNotificationEvent;
@@ -50,6 +51,19 @@ public class UserNotificationHandlerImpl implements UserNotificationHandler {
 		return _userNotificationHandler.interpret(
 			userNotificationEvent, serviceContext);
 	}
+
+	@Override
+	public boolean deliver(
+			long userId, long classNameId, int notificationType,
+			int deliveryType, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return _userNotificationHandler.deliver(
+			userId, classNameId, notificationType, deliveryType,
+			serviceContext);
+	}
+
+
 
 	private UserNotificationHandler _userNotificationHandler;
 

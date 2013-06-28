@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.notifications;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.UserNotificationEvent;
 import com.liferay.portal.service.ServiceContext;
 
@@ -31,5 +32,10 @@ public interface UserNotificationHandler {
 			UserNotificationEvent userNotificationEvent,
 			ServiceContext serviceContext)
 		throws PortalException;
+
+	public boolean deliver(
+			long userId, long classNameId, int notificationType,
+			int deliveryType, ServiceContext serviceContext)
+		throws PortalException, SystemException;
 
 }

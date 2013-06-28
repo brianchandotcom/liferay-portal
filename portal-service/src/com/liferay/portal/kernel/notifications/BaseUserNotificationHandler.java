@@ -15,10 +15,14 @@
 package com.liferay.portal.kernel.notifications;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.UserNotificationDelivery;
+import com.liferay.portal.model.UserNotificationDeliveryConstants;
 import com.liferay.portal.model.UserNotificationEvent;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.UserNotificationDeliveryLocalServiceUtil;
 
 /**
  * @author Jonathan Lee
@@ -55,6 +59,17 @@ public abstract class BaseUserNotificationHandler
 		}
 	}
 
+	@Override
+	public boolean deliver(
+			long userId, long classNameId, int notificationType,
+			int deliveryType, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return doDeliver(
+			userId, classNameId, notificationType, deliveryType,
+			serviceContext);
+	}
+
 	protected UserNotificationFeedEntry doInterpret(
 			UserNotificationEvent userNotificationEvent,
 			ServiceContext serviceContext)
@@ -69,6 +84,28 @@ public abstract class BaseUserNotificationHandler
 		String link = getLink(userNotificationEvent, serviceContext);
 
 		return new UserNotificationFeedEntry(body, link);
+	}
+
+	protected boolean doDeliver(
+			long userId, long classNameId, int notificationType,
+			int deliveryType, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		UserNotificationDefinition userNotificationDefinition =
+			UserNotificationManagerUtil.fetchUserNotificationDefinition(
+				_portletId, classNameId, notificationType);
+
+		UserNotificationDeliveryType userNotificationDeliveryType =
+			userNotificationDefinition.getDeliveryType(deliveryType);
+
+		UserNotificationDelivery userNotificationDelivery =
+			UserNotificationDeliveryLocalServiceUtil.
+				getUserNotificationDelivery(
+					userId, _portletId, classNameId, notificationType,
+					deliveryType, userNotificationDeliveryType.isDefault()
+				);
+
+		return userNotificationDelivery.isDeliver();
 	}
 
 	protected String getBody(

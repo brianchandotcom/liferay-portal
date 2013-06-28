@@ -15,12 +15,14 @@
 package com.liferay.portal.notifications;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.notifications.UserNotificationFeedEntry;
 import com.liferay.portal.kernel.notifications.UserNotificationHandler;
 import com.liferay.portal.kernel.notifications.UserNotificationManager;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.UserNotificationEvent;
 import com.liferay.portal.service.ServiceContext;
 
@@ -124,6 +126,30 @@ public class UserNotificationManagerImpl implements UserNotificationManager {
 			userNotificationHandler.getPortletId());
 	}
 
+	public UserNotificationDefinition fetchUserNotificationDefinition(
+		String portletId, long classNameId, int notificationType) {
+
+		List<UserNotificationDefinition> userNotificationDefinitions =
+			_userNotificationDefinitions.get(portletId);
+
+		if (userNotificationDefinitions == null) {
+			return null;
+		}
+
+		for (UserNotificationDefinition userNotificationDefinition :
+				userNotificationDefinitions) {
+
+			if ((userNotificationDefinition.getClassNameId() == classNameId) &&
+				(userNotificationDefinition.getNotificationType() ==
+					notificationType)) {
+
+				return userNotificationDefinition;
+			}
+		}
+
+		return null;
+	}
+
 	@Override
 	public Map<String, Map<String, UserNotificationHandler>>
 		getUserNotificationHandlers() {
@@ -173,6 +199,43 @@ public class UserNotificationManagerImpl implements UserNotificationManager {
 
 		return userNotificationHandler.interpret(
 			userNotificationEvent, serviceContext);
+	}
+
+	@Override
+	public boolean deliver(
+			String portletId, long userId, long classNameId,
+			int notificationType, int deliveryType)
+		throws PortalException, SystemException {
+
+		return deliver(
+			StringPool.BLANK, portletId, userId, classNameId, notificationType,
+			deliveryType, null);
+	}
+
+	@Override
+	public boolean deliver(
+			String selector, String portletId, long userId, long classNameId,
+			int notificationType, int deliveryType,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		Map<String, UserNotificationHandler> userNotificationHandlers =
+			_userNotificationHandlers.get(selector);
+
+		if (userNotificationHandlers == null) {
+			return false;
+		}
+
+		UserNotificationHandler userNotificationHandler =
+			userNotificationHandlers.get(portletId);
+
+		if (userNotificationHandler == null) {
+			return false;
+		}
+
+		return userNotificationHandler.deliver(
+			userId, classNameId, notificationType, deliveryType,
+			serviceContext);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

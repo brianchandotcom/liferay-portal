@@ -2442,21 +2442,23 @@
 
 		<!-- Other fields -->
 
+		<column name="portletId" type="String" />
 		<column name="classNameId" type="long" />
-		<column name="type" type="int" />
-		<column name="email" type="boolean" />
-		<column name="sms" type="boolean" />
-		<column name="website" type="boolean" />
+		<column name="notificationType" type="int" />
+		<column name="deliveryType" type="int" />
+		<column name="deliver" type="boolean" />
 
 		<!-- Finder methods -->
 
 		<finder name="UserId" return-type="Collection">
 			<finder-column name="userId" />
 		</finder>
-		<finder name="U_C_T" return-type="UserNotificationDelivery" unique="true">
+		<finder name="U_P_C_N_D" return-type="UserNotificationDelivery" unique="true">
 			<finder-column name="userId" />
+			<finder-column name="portletId" />
 			<finder-column name="classNameId" />
-			<finder-column name="type" />
+			<finder-column name="notificationType" />
+			<finder-column name="deliveryType" />
 		</finder>
 	</entity>
 	<entity name="UserNotificationEvent" uuid="true" local-service="true" remote-service="false">

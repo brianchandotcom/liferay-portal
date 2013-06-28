@@ -93,9 +93,6 @@
 <liferay-ui:input-repeat />
 
 <aui:script>
-	Liferay.Util.toggleRadio('<portlet:namespace />schedulerEndBy', '<portlet:namespace />schedulerEndDateType');
-	Liferay.Util.toggleRadio('<portlet:namespace />schedulerNoEndDate', '', ['<portlet:namespace />schedulerEndDateType']);
-
 	function <portlet:namespace />showTable(id) {
 		document.getElementById("<portlet:namespace />neverTable").style.display = "none";
 		document.getElementById("<portlet:namespace />dailyTable").style.display = "none";
@@ -105,4 +102,7 @@
 
 		document.getElementById(id).style.display = "block";
 	}
+
+	Liferay.Util.toggleRadio('<portlet:namespace />schedulerEndBy', '<portlet:namespace />schedulerEndDateType');
+	Liferay.Util.toggleRadio('<portlet:namespace />schedulerNoEndDate', '', ['<portlet:namespace />schedulerEndDateType']);
 </aui:script>

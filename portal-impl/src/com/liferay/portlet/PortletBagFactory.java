@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.lar.StagedModelDataHandler;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
+import com.liferay.portal.kernel.notifications.UserNotificationDeliveryType;
 import com.liferay.portal.kernel.notifications.UserNotificationHandler;
 import com.liferay.portal.kernel.notifications.UserNotificationManagerUtil;
 import com.liferay.portal.kernel.poller.PollerProcessor;
@@ -76,6 +78,7 @@ import com.liferay.portal.security.permission.PermissionPropagator;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.notifications.UserNotificationHandlerImpl;
 import com.liferay.portal.util.ClassLoaderUtil;
+import com.liferay.portal.util.JavaFieldsParser;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.xmlrpc.XmlRpcServlet;
@@ -193,6 +196,8 @@ public class PortletBagFactory {
 
 		List<UserNotificationHandler> userNotificationHandlerInstances =
 			newUserNotificationHandlerInstances(portlet);
+
+		initUserNotificationDefinition(portlet);
 
 		WebDAVStorage webDAVStorageInstance = null;
 
@@ -556,6 +561,66 @@ public class PortletBagFactory {
 
 		for (SchedulerEntry schedulerEntry : schedulerEntries) {
 			initScheduler(schedulerEntry, portlet.getPortletId());
+		}
+	}
+
+	protected void initUserNotificationDefinition(Portlet portlet)
+		throws Exception {
+
+		if (Validator.isNull(portlet.getUserNotificationDefinitions())) {
+			return;
+		}
+
+		String xml = getContent(portlet.getUserNotificationDefinitions());
+
+		xml = JavaFieldsParser.parse(_classLoader, xml);
+
+		Document document = SAXReaderUtil.read(xml);
+
+		Element rootElement = document.getRootElement();
+
+		for (Element notificationElement : rootElement.elements("definition")) {
+			String modelName = notificationElement.elementText("model-name");
+
+			long classNameId = 0;
+
+			if (Validator.isNotNull(modelName)) {
+				classNameId = PortalUtil.getClassNameId(modelName);
+			}
+
+			int notificationType = GetterUtil.getInteger(
+				notificationElement.elementText("notification-type"));
+
+			String description = GetterUtil.getString(
+				notificationElement.elementText("description"));
+
+			UserNotificationDefinition userNotificationDefinition =
+				new UserNotificationDefinition(
+					portlet.getPortletId(), classNameId, notificationType,
+					description);
+
+			for (Element deliveryTypeElement :
+					notificationElement.elements("delivery-type")) {
+
+
+				String name = deliveryTypeElement.elementText("name");
+
+				int type = GetterUtil.getInteger(
+					deliveryTypeElement.elementText("type"));
+
+				boolean defualt = GetterUtil.getBoolean(
+					deliveryTypeElement.elementText("default"));
+
+				boolean modifiable = GetterUtil.getBoolean(
+					deliveryTypeElement.elementText("modifiable"));
+
+				userNotificationDefinition.addUserNotificationDeliveryType(
+					new UserNotificationDeliveryType(
+						name, type, defualt, modifiable));
+			}
+
+			UserNotificationManagerUtil.addUserNotificationDefinition(
+				portlet.getPortletId(), userNotificationDefinition);
 		}
 	}
 

@@ -22,16 +22,16 @@ staged-model-data-handler-class*, template-handler?,
 portlet-layout-listener-class?, poller-processor-class?,
 pop-message-listener-class?, social-activity-interpreter-class*,
 social-request-interpreter-class?, user-notification-handler-class*,
-webdav-storage-token?, webdav-storage-class?, xml-rpc-method-class?,
-control-panel-entry-category?, control-panel-entry-weight?,
-control-panel-entry-class?, asset-renderer-factory*, atom-collection-adapter*,
-custom-attributes-display*, ddm-display?, permission-propagator?,
-trash-handler*, workflow-handler*, preferences-company-wide?,
-preferences-unique-per-layout?, preferences-owned-by-group?,
-use-default-template?, show-portlet-access-denied?, show-portlet-inactive?,
-action-url-redirect?, restore-current-view?, maximize-edit?, maximize-help?,
-pop-up-print?, layout-cacheable?, instanceable?, remoteable?, scopeable?,
-user-principal-strategy?, private-request-attributes?,
+user-notification-definitions?, webdav-storage-token?, webdav-storage-class?,
+xml-rpc-method-class?, control-panel-entry-category?,
+control-panel-entry-weight?, control-panel-entry-class?,
+asset-renderer-factory*, atom-collection-adapter*, custom-attributes-display*,
+ddm-display?, permission-propagator?, trash-handler*, workflow-handler*,
+preferences-company-wide?, preferences-unique-per-layout?,
+preferences-owned-by-group?, use-default-template?, show-portlet-access-denied?,
+show-portlet-inactive?, action-url-redirect?, restore-current-view?,
+maximize-edit?, maximize-help?, pop-up-print?, layout-cacheable?, instanceable?,
+remoteable?, scopeable?, user-principal-strategy?, private-request-attributes?,
 private-session-attributes?, autopropagated-parameters?, action-timeout?,
 render-timeout?, render-weight?, ajaxable?, header-portal-css*,
 header-portlet-css*, header-portal-javascript*, header-portlet-javascript*,
@@ -324,6 +324,11 @@ See:
 http://docs.liferay.com/portal/6.2/javadocs/portal-service/com/liferay/portal/kernel/notifications/UserNotificationHandler.html
 -->
 <!ELEMENT user-notification-handler-class (#PCDATA)>
+
+<!--
+The user-notification-definitions points to the XML file that defines the user notifications for this portlet. This file is read by the class loader.
+-->
+<!ELEMENT user-notification-definitions (#PCDATA)>
 
 <!--
 The webdav-storage-token value is the WebDAV directory name for data managed by

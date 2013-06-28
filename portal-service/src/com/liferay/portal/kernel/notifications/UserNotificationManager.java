@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.model.UserNotificationEvent;
 import com.liferay.portal.service.ServiceContext;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -26,8 +27,14 @@ import java.util.Map;
  */
 public interface UserNotificationManager {
 
+	public void addUserNotificationDefinition(
+		String portletIf,
+		UserNotificationDefinition userNotificationDefinition);
+
 	public void addUserNotificationHandler(
 		UserNotificationHandler userNotificationHandler);
+
+	public void deleteUserNotificationDefinitions(String portletId);
 
 	public void deleteUserNotificationHandler(
 		UserNotificationHandler userNotificationHandler);

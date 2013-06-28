@@ -17,14 +17,17 @@ package com.liferay.portal.notifications;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.notifications.UserNotificationFeedEntry;
 import com.liferay.portal.kernel.notifications.UserNotificationHandler;
 import com.liferay.portal.kernel.notifications.UserNotificationManager;
 import com.liferay.portal.model.UserNotificationEvent;
 import com.liferay.portal.service.ServiceContext;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -32,6 +35,32 @@ import java.util.Map;
  * @author Brian Wing Shun Chan
  */
 public class UserNotificationManagerImpl implements UserNotificationManager {
+
+	/**
+	 * Adds the use notification definition to the list of available
+	 * definitions based on portletId.
+	 *
+	 * @param portletId the portletId of the user notifications definitions
+	 * @param userNotificationDefinition the user notification definitions
+	 */
+	@Override
+	public void addUserNotificationDefinition(
+		String portletId,
+		UserNotificationDefinition userNotificationDefinition) {
+
+		List<UserNotificationDefinition> userNotificationDefinitions =
+			_userNotificationDefinitions.get(portletId);
+
+		if (userNotificationDefinitions == null) {
+			userNotificationDefinitions =
+				new ArrayList<UserNotificationDefinition>();
+
+			_userNotificationDefinitions.put(
+				portletId, userNotificationDefinitions);
+		}
+
+		userNotificationDefinitions.add(userNotificationDefinition);
+	}
 
 	/**
 	 * Adds the use notification handler to the list of available
@@ -64,6 +93,19 @@ public class UserNotificationManagerImpl implements UserNotificationManager {
 	 * Removes the user notification handler from the list of available
 	 * handlers.
 	 *
+	 * @param portletId the portletId of the user notifications definitions
+	 */
+	@Override
+	public void deleteUserNotificationDefinitions(
+		String portletId) {
+
+		_userNotificationDefinitions.remove(portletId);
+	}
+
+	/**
+	 * Removes the user notification handler from the list of available
+	 * handlers.
+	 *
 	 * @param userNotificationHandler the user notification handler
 	 */
 	@Override
@@ -78,7 +120,7 @@ public class UserNotificationManagerImpl implements UserNotificationManager {
 			return;
 		}
 
-		_userNotificationHandlers.remove(
+		userNotificationHandlers.remove(
 			userNotificationHandler.getPortletId());
 	}
 
@@ -135,6 +177,10 @@ public class UserNotificationManagerImpl implements UserNotificationManager {
 
 	private static Log _log = LogFactoryUtil.getLog(
 		UserNotificationManagerImpl.class);
+
+	private Map<String, List<UserNotificationDefinition>>
+		_userNotificationDefinitions =
+			new HashMap<String, List<UserNotificationDefinition>>();
 
 	private Map<String, Map<String, UserNotificationHandler>>
 		_userNotificationHandlers =

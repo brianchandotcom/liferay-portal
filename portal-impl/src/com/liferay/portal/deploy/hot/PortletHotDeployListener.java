@@ -266,6 +266,9 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 			}
 		}
 
+		UserNotificationManagerUtil.deleteUserNotificationDefinitions(
+			portlet.getPortletId());
+
 		WebDAVUtil.deleteStorage(portlet.getWebDAVStorageInstance());
 
 		XmlRpcServlet.unregisterMethod(portlet.getXmlRpcMethodInstance());

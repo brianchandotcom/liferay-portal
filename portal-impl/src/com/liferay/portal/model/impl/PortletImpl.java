@@ -159,10 +159,10 @@ public class PortletImpl extends PortletBaseImpl {
 		List<String> socialActivityInterpreterClasses,
 		String socialRequestInterpreterClass,
 		List<String> userNotificationHandlerClasses,
-		String webDAVStorageToken, String webDAVStorageClass,
-		String xmlRpcMethodClass, String controlPanelEntryCategory,
-		double controlPanelEntryWeight, String controlPanelClass,
-		List<String> assetRendererFactoryClasses,
+		String userNotificationDefinitions, String webDAVStorageToken,
+		String webDAVStorageClass, String xmlRpcMethodClass,
+		String controlPanelEntryCategory, double controlPanelEntryWeight,
+		String controlPanelClass, List<String> assetRendererFactoryClasses,
 		List<String> atomCollectionAdapterClasses,
 		List<String> customAttributesDisplayClasses, String ddmDisplayClass,
 		String permissionPropagatorClass, List<String> trashHandlerClasses,
@@ -226,6 +226,8 @@ public class PortletImpl extends PortletBaseImpl {
 		_socialRequestInterpreterClass = socialRequestInterpreterClass;
 		_userNotificationHandlerClasses =
 			userNotificationHandlerClasses;
+		_userNotificationDefinitions =
+			userNotificationDefinitions;
 		_webDAVStorageToken = webDAVStorageToken;
 		_webDAVStorageClass = webDAVStorageClass;
 		_xmlRpcMethodClass = xmlRpcMethodClass;
@@ -371,7 +373,8 @@ public class PortletImpl extends PortletBaseImpl {
 			getPollerProcessorClass(), getPopMessageListenerClass(),
 			getSocialActivityInterpreterClasses(),
 			getSocialRequestInterpreterClass(),
-			getUserNotificationHandlerClasses(), getWebDAVStorageToken(),
+			getUserNotificationHandlerClasses(),
+			getUserNotificationDefinitions(), getWebDAVStorageToken(),
 			getWebDAVStorageClass(), getXmlRpcMethodClass(),
 			getControlPanelEntryCategory(), getControlPanelEntryWeight(),
 			getControlPanelEntryClass(), getAssetRendererFactoryClasses(),
@@ -1962,6 +1965,18 @@ public class PortletImpl extends PortletBaseImpl {
 	@Override
 	public long getUserId() {
 		return PortletConstants.getUserId(getPortletId());
+	}
+
+	/**
+	 * Returns the class loader resource path to the use notification
+	 * definitions of the portlet.
+	 *
+	 * @return the class loader resource path to the use notification
+	 *         definitions of the portlet
+	 */
+	@Override
+	public String getUserNotificationDefinitions() {
+		return _userNotificationDefinitions;
 	}
 
 	/**
@@ -3674,6 +3689,20 @@ public class PortletImpl extends PortletBaseImpl {
 	}
 
 	/**
+	 * Sets the class loader resource path to the user notification definitions
+	 * of the portlet.
+	 *
+	 * @param userNotificationDefinitions the class loader resource path to the
+	 *        user notification definitions of the portlet
+	 */
+	@Override
+	public void setUserNotificationDefinitions(
+		String userNotificationDefinitions) {
+
+		_userNotificationDefinitions = userNotificationDefinitions;
+	}
+
+	/**
 	 * Sets the user principal strategy of the portlet.
 	 *
 	 * @param userPrincipalStrategy the user principal strategy of the portlet
@@ -4282,6 +4311,12 @@ public class PortletImpl extends PortletBaseImpl {
 	 * associated with the portlet.
 	 */
 	private List<String> _userNotificationHandlerClasses;
+
+	/**
+	 * The the class loader resource path to the user notification definitions
+	 * of the portlet.
+	 */
+	private String _userNotificationDefinitions;
 
 	/**
 	 * The user principal strategy of the portlet.

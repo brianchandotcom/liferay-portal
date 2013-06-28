@@ -1043,6 +1043,15 @@ public interface Portlet extends PortletModel, PersistedModel {
 	public long getUserId();
 
 	/**
+	* Returns the class loader resource path to the use notification
+	* definitions of the portlet.
+	*
+	* @return the class loader resource path to the use notification
+	definitions of the portlet
+	*/
+	public java.lang.String getUserNotificationDefinitions();
+
+	/**
 	* Returns the names of the classes that represent user notification
 	* interpreters associated with the portlet.
 	*
@@ -2187,6 +2196,16 @@ public interface Portlet extends PortletModel, PersistedModel {
 	*/
 	public void setUserNotificationHandlerClasses(
 		java.util.List<java.lang.String> userNotificationHandlerClasses);
+
+	/**
+	* Sets the class loader resource path to the user notification definitions
+	* of the portlet.
+	*
+	* @param userNotificationDefinitions the class loader resource path to the
+	user notification definitions of the portlet
+	*/
+	public void setUserNotificationDefinitions(
+		java.lang.String userNotificationDefinitions);
 
 	/**
 	* Sets the user principal strategy of the portlet.

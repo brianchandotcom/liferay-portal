@@ -58,6 +58,7 @@ page import="com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse" %>
 page import="com.liferay.portal.kernel.staging.StagingConstants" %><%@
 page import="com.liferay.portal.kernel.staging.StagingUtil" %><%@
 page import="com.liferay.portal.lar.LayoutExporter" %><%@
+page import="com.liferay.portal.lar.backgroundtask.executor.LayoutExportBackgroundTaskExecutor" %><%@
 page import="com.liferay.portal.layoutconfiguration.util.RuntimePageUtil" %><%@
 page import="com.liferay.portal.plugin.PluginUtil" %><%@
 page import="com.liferay.portal.util.LayoutLister" %><%@

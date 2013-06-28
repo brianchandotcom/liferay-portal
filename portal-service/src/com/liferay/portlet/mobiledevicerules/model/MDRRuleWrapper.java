@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.mobiledevicerules.model;
 
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelWrapper;
 
@@ -831,6 +832,11 @@ public class MDRRuleWrapper implements MDRRule, ModelWrapper<MDRRule> {
 		}
 
 		return false;
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return _mdrRule.getStagedModelType();
 	}
 
 	/**

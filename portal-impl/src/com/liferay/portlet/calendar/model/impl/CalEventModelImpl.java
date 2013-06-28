@@ -16,6 +16,7 @@ package com.liferay.portlet.calendar.model.impl;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
@@ -675,6 +676,12 @@ public class CalEventModelImpl extends BaseModelImpl<CalEvent>
 	@Override
 	public void setSecondReminder(int secondReminder) {
 		_secondReminder = secondReminder;
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return new StagedModelType(PortalUtil.getClassNameId(
+				CalEvent.class.getName()));
 	}
 
 	public long getColumnBitmask() {

@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.dynamicdatalists.model;
 
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelWrapper;
 
@@ -695,6 +696,11 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 		}
 
 		return false;
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return _ddlRecord.getStagedModelType();
 	}
 
 	/**

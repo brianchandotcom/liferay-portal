@@ -526,51 +526,53 @@ public class ServicePreAction extends Action {
 		boolean customizedView = SessionParamUtil.getBoolean(
 			request, "customized_view", true);
 
-		if ((layout != null) && !layout.isTypeControlPanel()) {
-			hasCustomizeLayoutPermission = LayoutPermissionUtil.contains(
-				permissionChecker, layout, ActionKeys.CUSTOMIZE);
-			hasUpdateLayoutPermission = LayoutPermissionUtil.contains(
-				permissionChecker, layout, ActionKeys.UPDATE);
+		if ((layout != null)) {
+			if (!layout.isTypeControlPanel()) {
+				hasCustomizeLayoutPermission = LayoutPermissionUtil.contains(
+					permissionChecker, layout, ActionKeys.CUSTOMIZE);
+				hasUpdateLayoutPermission = LayoutPermissionUtil.contains(
+					permissionChecker, layout, ActionKeys.UPDATE);
 
-			layoutSet = layout.getLayoutSet();
+				layoutSet = layout.getLayoutSet();
 
-			if (company.isSiteLogo()) {
-				long logoId = 0;
+				if (company.isSiteLogo()) {
+					long logoId = 0;
 
-				if (layoutSet.isLogo()) {
-					logoId = layoutSet.getLogoId();
+					if (layoutSet.isLogo()) {
+						logoId = layoutSet.getLogoId();
 
-					if (logoId == 0) {
-						logoId = layoutSet.getLiveLogoId();
+						if (logoId == 0) {
+							logoId = layoutSet.getLiveLogoId();
+						}
 					}
-				}
-				else {
-					LayoutSet siblingLayoutSet =
-						LayoutSetLocalServiceUtil.getLayoutSet(
-							layout.getGroupId(), !layout.isPrivateLayout());
+					else {
+						LayoutSet siblingLayoutSet =
+							LayoutSetLocalServiceUtil.getLayoutSet(
+								layout.getGroupId(), !layout.isPrivateLayout());
 
-					if (siblingLayoutSet.isLogo()) {
-						logoId = siblingLayoutSet.getLogoId();
+						if (siblingLayoutSet.isLogo()) {
+							logoId = siblingLayoutSet.getLogoId();
+						}
 					}
-				}
 
-				if (logoId > 0) {
-					sb = new StringBundler(5);
+					if (logoId > 0) {
+						sb = new StringBundler(5);
 
-					sb.append(imagePath);
-					sb.append("/layout_set_logo?img_id=");
-					sb.append(logoId);
-					sb.append("&t=");
-					sb.append(WebServerServletTokenUtil.getToken(logoId));
+						sb.append(imagePath);
+						sb.append("/layout_set_logo?img_id=");
+						sb.append(logoId);
+						sb.append("&t=");
+						sb.append(WebServerServletTokenUtil.getToken(logoId));
 
-					layoutSetLogo = sb.toString();
+						layoutSetLogo = sb.toString();
 
-					Image layoutSetLogoImage =
-						ImageLocalServiceUtil.getCompanyLogo(logoId);
+						Image layoutSetLogoImage =
+							ImageLocalServiceUtil.getCompanyLogo(logoId);
 
-					companyLogo = layoutSetLogo;
-					companyLogoHeight = layoutSetLogoImage.getHeight();
-					companyLogoWidth = layoutSetLogoImage.getWidth();
+						companyLogo = layoutSetLogo;
+						companyLogoHeight = layoutSetLogoImage.getHeight();
+						companyLogoWidth = layoutSetLogoImage.getWidth();
+					}
 				}
 			}
 

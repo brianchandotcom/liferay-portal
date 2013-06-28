@@ -285,6 +285,20 @@ public interface BackgroundTaskLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.BackgroundTask> getBackgroundTasks(
+		long groupId, java.lang.String taskExecutorClassName, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.BackgroundTask> getBackgroundTasks(
+		long groupId, java.lang.String name,
+		java.lang.String taskExecutorClassName, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.BackgroundTask> getBackgroundTasks(
 		java.lang.String taskExecutorClassName, int status)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -292,6 +306,16 @@ public interface BackgroundTaskLocalService extends BaseLocalService,
 	public java.util.List<com.liferay.portal.model.BackgroundTask> getBackgroundTasks(
 		java.lang.String taskExecutorClassName, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getBackgroundTasksCount(long groupId,
+		java.lang.String taskExecutorClassName)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getBackgroundTasksCount(long groupId, java.lang.String name,
+		java.lang.String taskExecutorClassName)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public void resumeBackgroundTask(long backgroundTaskId)

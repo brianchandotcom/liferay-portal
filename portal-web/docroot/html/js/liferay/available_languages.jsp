@@ -31,7 +31,6 @@ Locale locale = LocaleUtil.fromLanguageId(languageId);
 Locale[] locales = LanguageUtil.getAvailableLocales();
 %>
 
-
 AUI.add(
 	'portal-available-languages',
 	function(A) {

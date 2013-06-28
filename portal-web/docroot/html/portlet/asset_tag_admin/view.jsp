@@ -35,7 +35,6 @@
 				<aui:nav-item data-url="<%= permissionsURL %>" id="tagsPermissionsButton" label="permissions" />
 			</c:if>
 
-
 			<aui:nav-item dropdown="<%= true %>" label="actions">
 				<aui:nav-item iconClass="icon-remove" id="deleteSelectedTags" label="delete" />
 

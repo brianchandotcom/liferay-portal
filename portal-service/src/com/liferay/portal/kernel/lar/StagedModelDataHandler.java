@@ -34,8 +34,6 @@ public interface StagedModelDataHandler<T extends StagedModel> {
 
 	public int[] getExportableStatuses();
 
-	public String getManifestSummaryKey(StagedModel stagedModel);
-
 	public void importStagedModel(
 			PortletDataContext portletDataContext, T stagedModel)
 		throws PortletDataException;

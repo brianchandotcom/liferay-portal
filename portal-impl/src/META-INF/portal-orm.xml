@@ -1361,13 +1361,11 @@
 			<id name="userNotificationDeliveryId" />
 			<basic name="companyId" />
 			<basic name="userId" />
+			<basic name="portletId" />
 			<basic name="classNameId" />
-			<basic name="type">
-				<column name="TYPE_" />
-			</basic>
-			<basic name="email" />
-			<basic name="sms" />
-			<basic name="website" />
+			<basic name="notificationType" />
+			<basic name="deliveryType" />
+			<basic name="deliver" />
 			<transient name="className" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
@@ -4128,7 +4126,8 @@
 			<transient name="undeployedPortlet" />
 			<transient name="unlinkedRoles" />
 			<transient name="useDefaultTemplate" />
-			<transient name="userNotificationInterpreterClasses" />
+			<transient name="userNotificationDefinitions" />
+			<transient name="userNotificationHandlerClasses" />
 			<transient name="userPrincipalStrategy" />
 			<transient name="virtualPath" />
 			<transient name="webDAVStorageClass" />

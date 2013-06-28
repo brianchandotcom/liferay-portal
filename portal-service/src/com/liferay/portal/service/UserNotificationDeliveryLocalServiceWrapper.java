@@ -282,12 +282,12 @@ public class UserNotificationDeliveryLocalServiceWrapper
 
 	@Override
 	public com.liferay.portal.model.UserNotificationDelivery addUserNotificationDelivery(
-		long userId, long classNameId, int type, boolean email, boolean sms,
-		boolean website)
+		long userId, java.lang.String portletId, long classNameId,
+		int notificationType, int deliveryType, boolean deliver)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _userNotificationDeliveryLocalService.addUserNotificationDelivery(userId,
-			classNameId, type, email, sms, website);
+			portletId, classNameId, notificationType, deliveryType, deliver);
 	}
 
 	@Override
@@ -297,31 +297,31 @@ public class UserNotificationDeliveryLocalServiceWrapper
 	}
 
 	@Override
+	public void deleteUserNotificationDelivery(long userId,
+		java.lang.String portletId, long classNameId, int notificationType,
+		int deliveryType)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_userNotificationDeliveryLocalService.deleteUserNotificationDelivery(userId,
+			portletId, classNameId, notificationType, deliveryType);
+	}
+
+	@Override
 	public com.liferay.portal.model.UserNotificationDelivery fetchUserNotificationDelivery(
-		long userId, long classNameId, int type)
+		long userId, java.lang.String portletId, long classNameId,
+		int notificationType, int deliveryType)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _userNotificationDeliveryLocalService.fetchUserNotificationDelivery(userId,
-			classNameId, type);
+			portletId, classNameId, notificationType, deliveryType);
 	}
 
 	@Override
 	public com.liferay.portal.model.UserNotificationDelivery getUserNotificationDelivery(
-		long userId, long classNameId, int type, boolean email, boolean sms,
-		boolean website)
+		long userId, java.lang.String portletId, long classNameId,
+		int notificationType, int deliveryType, boolean deliver)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _userNotificationDeliveryLocalService.getUserNotificationDelivery(userId,
-			classNameId, type, email, sms, website);
-	}
-
-	@Override
-	public com.liferay.portal.model.UserNotificationDelivery updateUserNotificationDelivery(
-		long userId, long classNameId, int type, boolean email, boolean sms,
-		boolean website)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _userNotificationDeliveryLocalService.updateUserNotificationDelivery(userId,
-			classNameId, type, email, sms, website);
+			portletId, classNameId, notificationType, deliveryType, deliver);
 	}
 
 	/**

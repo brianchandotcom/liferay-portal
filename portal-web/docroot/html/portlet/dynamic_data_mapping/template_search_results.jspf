@@ -24,19 +24,11 @@ if (showGlobalScope) {
 }
 
 long[] classNameIds = ddmDisplay.getTemplateClassNameIds(classNameId);
-long[] classPKs = new long[] {classPK};
-
-if (classNameIds.length > 1) {
-	classPKs = null;
-}
+long[] classPKs = ddmDisplay.getTemplateClassPKs(company.getCompanyId(), classNameId, classPK);
 
 if (searchTerms.isAdvancedSearch()) {
 	results = DDMTemplateServiceUtil.search(company.getCompanyId(), groupIds, classNameIds, classPKs, searchTerms.getName(), searchTerms.getDescription(), templateTypeValue, ddmDisplay.getTemplateMode(), null, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 	total = DDMTemplateServiceUtil.searchCount(company.getCompanyId(), groupIds, classNameIds, classPKs, searchTerms.getName(), searchTerms.getDescription(), templateTypeValue, null, null, searchTerms.isAndOperator());
-}
-else if ((classNameIds.length == 1) && (classPK == 0)) {
-	results = DDMTemplateServiceUtil.getTemplatesByStructureClassNameId(scopeGroupId, PortalUtil.getClassNameId(ddmDisplay.getStructureType()), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
-	total = DDMTemplateServiceUtil.getTemplatesByStructureClassNameIdCount(scopeGroupId, PortalUtil.getClassNameId(ddmDisplay.getStructureType()));
 }
 else {
 	results = DDMTemplateServiceUtil.search(company.getCompanyId(), groupIds, classNameIds, classPKs, searchTerms.getKeywords(), templateTypeValue, ddmDisplay.getTemplateMode(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());

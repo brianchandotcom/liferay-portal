@@ -65,6 +65,10 @@ public interface DDMDisplay {
 
 	public long[] getTemplateClassNameIds(long classNameId);
 
+	public long[] getTemplateClassPKs(
+			long companyId, long classNameId, long classPK)
+		throws Exception;
+
 	public long getTemplateHandlerClassNameId(
 		DDMTemplate template, long classNameId);
 

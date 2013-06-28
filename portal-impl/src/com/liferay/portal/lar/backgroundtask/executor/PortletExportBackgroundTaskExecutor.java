@@ -56,8 +56,8 @@ public class PortletExportBackgroundTaskExecutor
 		long userId = MapUtil.getLong(taskContextMap, "userId");
 
 		BackgroundTaskLocalServiceUtil.addBackgroundTaskAttachment(
-			userId, backgroundTask.getBackgroundTaskId(), larFile.getName(),
-			larFile);
+			userId, backgroundTask.getBackgroundTaskId(),
+			backgroundTask.getName(), larFile);
 	}
 
 }

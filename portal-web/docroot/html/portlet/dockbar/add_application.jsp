@@ -233,7 +233,7 @@ private static PortletCategory _getRelevantPortletCategory(PermissionChecker per
 			inputNode: searchApplication,
 			namespace: '<portlet:namespace />',
 			nodeList: A.one('#<portlet:namespace />applicationList'),
-			nodeSelector: '.lfr-content-item',
+			nodeSelector: '.drag-content-item',
 			selected: !A.one('#<portlet:namespace />addApplicationForm').ancestor().hasClass('hide')
 		}
 	);

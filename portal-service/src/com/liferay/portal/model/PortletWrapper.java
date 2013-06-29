@@ -1703,6 +1703,18 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	}
 
 	/**
+	* Returns the class loader resource path to the use notification
+	* definitions of the portlet.
+	*
+	* @return the class loader resource path to the use notification
+	definitions of the portlet
+	*/
+	@Override
+	public java.lang.String getUserNotificationDefinitions() {
+		return _portlet.getUserNotificationDefinitions();
+	}
+
+	/**
 	* Returns the names of the classes that represent user notification
 	* interpreters associated with the portlet.
 	*
@@ -1710,8 +1722,8 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	interpreters associated with the portlet
 	*/
 	@Override
-	public java.util.List<java.lang.String> getUserNotificationInterpreterClasses() {
-		return _portlet.getUserNotificationInterpreterClasses();
+	public java.util.List<java.lang.String> getUserNotificationHandlerClasses() {
+		return _portlet.getUserNotificationHandlerClasses();
 	}
 
 	/**
@@ -1720,8 +1732,8 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	* @return the user notification interpreter instances of the portlet
 	*/
 	@Override
-	public java.util.List<com.liferay.portal.kernel.notifications.UserNotificationInterpreter> getUserNotificationInterpreterInstances() {
-		return _portlet.getUserNotificationInterpreterInstances();
+	public java.util.List<com.liferay.portal.kernel.notifications.UserNotificationHandler> getUserNotificationHandlerInstances() {
+		return _portlet.getUserNotificationHandlerInstances();
 	}
 
 	/**
@@ -3240,17 +3252,30 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	}
 
 	/**
+	* Sets the class loader resource path to the user notification definitions
+	* of the portlet.
+	*
+	* @param userNotificationDefinitions the class loader resource path to the
+	user notification definitions of the portlet
+	*/
+	@Override
+	public void setUserNotificationDefinitions(
+		java.lang.String userNotificationDefinitions) {
+		_portlet.setUserNotificationDefinitions(userNotificationDefinitions);
+	}
+
+	/**
 	* Sets the names of the classes that represent user notification
 	* interpreters associated with the portlet.
 	*
-	* @param userNotificationInterpreterClasses the names of the classes that
+	* @param userNotificationHandlerClasses the names of the classes that
 	represent user notification interpreters associated with the
 	portlet
 	*/
 	@Override
-	public void setUserNotificationInterpreterClasses(
-		java.util.List<java.lang.String> userNotificationInterpreterClasses) {
-		_portlet.setUserNotificationInterpreterClasses(userNotificationInterpreterClasses);
+	public void setUserNotificationHandlerClasses(
+		java.util.List<java.lang.String> userNotificationHandlerClasses) {
+		_portlet.setUserNotificationHandlerClasses(userNotificationHandlerClasses);
 	}
 
 	/**

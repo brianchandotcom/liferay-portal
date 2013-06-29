@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!DOCTYPE user-notification-definitions PUBLIC "-//Liferay//DTD User Notification Definitions 6.2.0//EN" "http://www.liferay.com/dtd/liferay-user-notification-definitions_6_2_0.dtd">
+
+<user-notification-definitions>
+	<definition>
+		<notification-type>${com.liferay.portal.kernel.workflow.WorkflowConstants.TYPE_ASSIGN}</notification-type>
+		<description>when-a-workflow-task-is-assigned-to-you</description>
+		<delivery-type>
+			<name>email</name>
+			<type>${com.liferay.portal.model.UserNotificationDeliveryConstants.TYPE_EMAIL}</type>
+			<defualt>true</defualt>
+			<modifiable>true</modifiable>
+		</delivery-type>
+		<delivery-type>
+			<name>website</name>
+			<type>${com.liferay.portal.model.UserNotificationDeliveryConstants.TYPE_WEBSITE}</type>
+			<defualt>true</defualt>
+			<modifiable>true</modifiable>
+		</delivery-type>
+	</definition>
+	<definition>
+		<notification-type>${com.liferay.portal.kernel.workflow.WorkflowConstants.TYPE_COMPLETE}</notification-type>
+		<description>when-a-workflow-task-is-completed</description>
+		<delivery-type>
+			<name>email</name>
+			<type>${com.liferay.portal.model.UserNotificationDeliveryConstants.TYPE_EMAIL}</type>
+			<defualt>true</defualt>
+			<modifiable>true</modifiable>
+		</delivery-type>
+		<delivery-type>
+			<name>website</name>
+			<type>${com.liferay.portal.model.UserNotificationDeliveryConstants.TYPE_WEBSITE}</type>
+			<defualt>true</defualt>
+			<modifiable>true</modifiable>
+		</delivery-type>
+	</definition>
+</user-notification-definitions>

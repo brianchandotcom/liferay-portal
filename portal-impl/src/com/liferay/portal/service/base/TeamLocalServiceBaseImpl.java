@@ -3830,25 +3830,6 @@ public abstract class TeamLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Returns the user notification interpreter local service.
-	 *
-	 * @return the user notification interpreter local service
-	 */
-	public com.liferay.portal.service.UserNotificationInterpreterLocalService getUserNotificationInterpreterLocalService() {
-		return userNotificationInterpreterLocalService;
-	}
-
-	/**
-	 * Sets the user notification interpreter local service.
-	 *
-	 * @param userNotificationInterpreterLocalService the user notification interpreter local service
-	 */
-	public void setUserNotificationInterpreterLocalService(
-		com.liferay.portal.service.UserNotificationInterpreterLocalService userNotificationInterpreterLocalService) {
-		this.userNotificationInterpreterLocalService = userNotificationInterpreterLocalService;
-	}
-
-	/**
 	 * Returns the user tracker local service.
 	 *
 	 * @return the user tracker local service
@@ -4548,8 +4529,6 @@ public abstract class TeamLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected com.liferay.portal.service.UserNotificationEventLocalService userNotificationEventLocalService;
 	@BeanReference(type = UserNotificationEventPersistence.class)
 	protected UserNotificationEventPersistence userNotificationEventPersistence;
-	@BeanReference(type = com.liferay.portal.service.UserNotificationInterpreterLocalService.class)
-	protected com.liferay.portal.service.UserNotificationInterpreterLocalService userNotificationInterpreterLocalService;
 	@BeanReference(type = com.liferay.portal.service.UserTrackerLocalService.class)
 	protected com.liferay.portal.service.UserTrackerLocalService userTrackerLocalService;
 	@BeanReference(type = UserTrackerPersistence.class)

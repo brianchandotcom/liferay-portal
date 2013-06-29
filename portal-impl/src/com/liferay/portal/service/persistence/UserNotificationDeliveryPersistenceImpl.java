@@ -29,11 +29,11 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnmodifiableList;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.UserNotificationDelivery;
@@ -46,7 +46,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 /**
  * The persistence implementation for the user notification delivery service.
@@ -572,55 +571,68 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 	}
 
 	private static final String _FINDER_COLUMN_USERID_USERID_2 = "userNotificationDelivery.userId = ?";
-	public static final FinderPath FINDER_PATH_FETCH_BY_U_C_T = new FinderPath(UserNotificationDeliveryModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_FETCH_BY_U_P_C_N_D = new FinderPath(UserNotificationDeliveryModelImpl.ENTITY_CACHE_ENABLED,
 			UserNotificationDeliveryModelImpl.FINDER_CACHE_ENABLED,
 			UserNotificationDeliveryImpl.class, FINDER_CLASS_NAME_ENTITY,
-			"fetchByU_C_T",
+			"fetchByU_P_C_N_D",
 			new String[] {
-				Long.class.getName(), Long.class.getName(),
+				Long.class.getName(), String.class.getName(),
+				Long.class.getName(), Integer.class.getName(),
 				Integer.class.getName()
 			},
 			UserNotificationDeliveryModelImpl.USERID_COLUMN_BITMASK |
+			UserNotificationDeliveryModelImpl.PORTLETID_COLUMN_BITMASK |
 			UserNotificationDeliveryModelImpl.CLASSNAMEID_COLUMN_BITMASK |
-			UserNotificationDeliveryModelImpl.TYPE_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_U_C_T = new FinderPath(UserNotificationDeliveryModelImpl.ENTITY_CACHE_ENABLED,
+			UserNotificationDeliveryModelImpl.NOTIFICATIONTYPE_COLUMN_BITMASK |
+			UserNotificationDeliveryModelImpl.DELIVERYTYPE_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_U_P_C_N_D = new FinderPath(UserNotificationDeliveryModelImpl.ENTITY_CACHE_ENABLED,
 			UserNotificationDeliveryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_C_T",
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByU_P_C_N_D",
 			new String[] {
-				Long.class.getName(), Long.class.getName(),
+				Long.class.getName(), String.class.getName(),
+				Long.class.getName(), Integer.class.getName(),
 				Integer.class.getName()
 			});
 
 	/**
-	 * Returns the user notification delivery where userId = &#63; and classNameId = &#63; and type = &#63; or throws a {@link com.liferay.portal.NoSuchUserNotificationDeliveryException} if it could not be found.
+	 * Returns the user notification delivery where userId = &#63; and portletId = &#63; and classNameId = &#63; and notificationType = &#63; and deliveryType = &#63; or throws a {@link com.liferay.portal.NoSuchUserNotificationDeliveryException} if it could not be found.
 	 *
 	 * @param userId the user ID
+	 * @param portletId the portlet ID
 	 * @param classNameId the class name ID
-	 * @param type the type
+	 * @param notificationType the notification type
+	 * @param deliveryType the delivery type
 	 * @return the matching user notification delivery
 	 * @throws com.liferay.portal.NoSuchUserNotificationDeliveryException if a matching user notification delivery could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public UserNotificationDelivery findByU_C_T(long userId, long classNameId,
-		int type)
+	public UserNotificationDelivery findByU_P_C_N_D(long userId,
+		String portletId, long classNameId, int notificationType,
+		int deliveryType)
 		throws NoSuchUserNotificationDeliveryException, SystemException {
-		UserNotificationDelivery userNotificationDelivery = fetchByU_C_T(userId,
-				classNameId, type);
+		UserNotificationDelivery userNotificationDelivery = fetchByU_P_C_N_D(userId,
+				portletId, classNameId, notificationType, deliveryType);
 
 		if (userNotificationDelivery == null) {
-			StringBundler msg = new StringBundler(8);
+			StringBundler msg = new StringBundler(12);
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
 			msg.append("userId=");
 			msg.append(userId);
 
+			msg.append(", portletId=");
+			msg.append(portletId);
+
 			msg.append(", classNameId=");
 			msg.append(classNameId);
 
-			msg.append(", type=");
-			msg.append(type);
+			msg.append(", notificationType=");
+			msg.append(notificationType);
+
+			msg.append(", deliveryType=");
+			msg.append(deliveryType);
 
 			msg.append(StringPool.CLOSE_CURLY_BRACE);
 
@@ -635,39 +647,48 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 	}
 
 	/**
-	 * Returns the user notification delivery where userId = &#63; and classNameId = &#63; and type = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the user notification delivery where userId = &#63; and portletId = &#63; and classNameId = &#63; and notificationType = &#63; and deliveryType = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param userId the user ID
+	 * @param portletId the portlet ID
 	 * @param classNameId the class name ID
-	 * @param type the type
+	 * @param notificationType the notification type
+	 * @param deliveryType the delivery type
 	 * @return the matching user notification delivery, or <code>null</code> if a matching user notification delivery could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public UserNotificationDelivery fetchByU_C_T(long userId, long classNameId,
-		int type) throws SystemException {
-		return fetchByU_C_T(userId, classNameId, type, true);
+	public UserNotificationDelivery fetchByU_P_C_N_D(long userId,
+		String portletId, long classNameId, int notificationType,
+		int deliveryType) throws SystemException {
+		return fetchByU_P_C_N_D(userId, portletId, classNameId,
+			notificationType, deliveryType, true);
 	}
 
 	/**
-	 * Returns the user notification delivery where userId = &#63; and classNameId = &#63; and type = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the user notification delivery where userId = &#63; and portletId = &#63; and classNameId = &#63; and notificationType = &#63; and deliveryType = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param userId the user ID
+	 * @param portletId the portlet ID
 	 * @param classNameId the class name ID
-	 * @param type the type
+	 * @param notificationType the notification type
+	 * @param deliveryType the delivery type
 	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching user notification delivery, or <code>null</code> if a matching user notification delivery could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public UserNotificationDelivery fetchByU_C_T(long userId, long classNameId,
-		int type, boolean retrieveFromCache) throws SystemException {
-		Object[] finderArgs = new Object[] { userId, classNameId, type };
+	public UserNotificationDelivery fetchByU_P_C_N_D(long userId,
+		String portletId, long classNameId, int notificationType,
+		int deliveryType, boolean retrieveFromCache) throws SystemException {
+		Object[] finderArgs = new Object[] {
+				userId, portletId, classNameId, notificationType, deliveryType
+			};
 
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_U_C_T,
+			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_U_P_C_N_D,
 					finderArgs, this);
 		}
 
@@ -675,22 +696,41 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 			UserNotificationDelivery userNotificationDelivery = (UserNotificationDelivery)result;
 
 			if ((userId != userNotificationDelivery.getUserId()) ||
+					!Validator.equals(portletId,
+						userNotificationDelivery.getPortletId()) ||
 					(classNameId != userNotificationDelivery.getClassNameId()) ||
-					(type != userNotificationDelivery.getType())) {
+					(notificationType != userNotificationDelivery.getNotificationType()) ||
+					(deliveryType != userNotificationDelivery.getDeliveryType())) {
 				result = null;
 			}
 		}
 
 		if (result == null) {
-			StringBundler query = new StringBundler(5);
+			StringBundler query = new StringBundler(7);
 
 			query.append(_SQL_SELECT_USERNOTIFICATIONDELIVERY_WHERE);
 
-			query.append(_FINDER_COLUMN_U_C_T_USERID_2);
+			query.append(_FINDER_COLUMN_U_P_C_N_D_USERID_2);
 
-			query.append(_FINDER_COLUMN_U_C_T_CLASSNAMEID_2);
+			boolean bindPortletId = false;
 
-			query.append(_FINDER_COLUMN_U_C_T_TYPE_2);
+			if (portletId == null) {
+				query.append(_FINDER_COLUMN_U_P_C_N_D_PORTLETID_1);
+			}
+			else if (portletId.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_U_P_C_N_D_PORTLETID_3);
+			}
+			else {
+				bindPortletId = true;
+
+				query.append(_FINDER_COLUMN_U_P_C_N_D_PORTLETID_2);
+			}
+
+			query.append(_FINDER_COLUMN_U_P_C_N_D_CLASSNAMEID_2);
+
+			query.append(_FINDER_COLUMN_U_P_C_N_D_NOTIFICATIONTYPE_2);
+
+			query.append(_FINDER_COLUMN_U_P_C_N_D_DELIVERYTYPE_2);
 
 			String sql = query.toString();
 
@@ -705,14 +745,20 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 
 				qPos.add(userId);
 
+				if (bindPortletId) {
+					qPos.add(portletId);
+				}
+
 				qPos.add(classNameId);
 
-				qPos.add(type);
+				qPos.add(notificationType);
+
+				qPos.add(deliveryType);
 
 				List<UserNotificationDelivery> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_U_C_T,
+					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_U_P_C_N_D,
 						finderArgs, list);
 				}
 				else {
@@ -723,15 +769,19 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 					cacheResult(userNotificationDelivery);
 
 					if ((userNotificationDelivery.getUserId() != userId) ||
+							(userNotificationDelivery.getPortletId() == null) ||
+							!userNotificationDelivery.getPortletId()
+														 .equals(portletId) ||
 							(userNotificationDelivery.getClassNameId() != classNameId) ||
-							(userNotificationDelivery.getType() != type)) {
-						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_U_C_T,
+							(userNotificationDelivery.getNotificationType() != notificationType) ||
+							(userNotificationDelivery.getDeliveryType() != deliveryType)) {
+						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_U_P_C_N_D,
 							finderArgs, userNotificationDelivery);
 					}
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_U_C_T,
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_U_P_C_N_D,
 					finderArgs);
 
 				throw processException(e);
@@ -750,53 +800,77 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 	}
 
 	/**
-	 * Removes the user notification delivery where userId = &#63; and classNameId = &#63; and type = &#63; from the database.
+	 * Removes the user notification delivery where userId = &#63; and portletId = &#63; and classNameId = &#63; and notificationType = &#63; and deliveryType = &#63; from the database.
 	 *
 	 * @param userId the user ID
+	 * @param portletId the portlet ID
 	 * @param classNameId the class name ID
-	 * @param type the type
+	 * @param notificationType the notification type
+	 * @param deliveryType the delivery type
 	 * @return the user notification delivery that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public UserNotificationDelivery removeByU_C_T(long userId,
-		long classNameId, int type)
+	public UserNotificationDelivery removeByU_P_C_N_D(long userId,
+		String portletId, long classNameId, int notificationType,
+		int deliveryType)
 		throws NoSuchUserNotificationDeliveryException, SystemException {
-		UserNotificationDelivery userNotificationDelivery = findByU_C_T(userId,
-				classNameId, type);
+		UserNotificationDelivery userNotificationDelivery = findByU_P_C_N_D(userId,
+				portletId, classNameId, notificationType, deliveryType);
 
 		return remove(userNotificationDelivery);
 	}
 
 	/**
-	 * Returns the number of user notification deliveries where userId = &#63; and classNameId = &#63; and type = &#63;.
+	 * Returns the number of user notification deliveries where userId = &#63; and portletId = &#63; and classNameId = &#63; and notificationType = &#63; and deliveryType = &#63;.
 	 *
 	 * @param userId the user ID
+	 * @param portletId the portlet ID
 	 * @param classNameId the class name ID
-	 * @param type the type
+	 * @param notificationType the notification type
+	 * @param deliveryType the delivery type
 	 * @return the number of matching user notification deliveries
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByU_C_T(long userId, long classNameId, int type)
+	public int countByU_P_C_N_D(long userId, String portletId,
+		long classNameId, int notificationType, int deliveryType)
 		throws SystemException {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_U_C_T;
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_U_P_C_N_D;
 
-		Object[] finderArgs = new Object[] { userId, classNameId, type };
+		Object[] finderArgs = new Object[] {
+				userId, portletId, classNameId, notificationType, deliveryType
+			};
 
 		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
 				this);
 
 		if (count == null) {
-			StringBundler query = new StringBundler(4);
+			StringBundler query = new StringBundler(6);
 
 			query.append(_SQL_COUNT_USERNOTIFICATIONDELIVERY_WHERE);
 
-			query.append(_FINDER_COLUMN_U_C_T_USERID_2);
+			query.append(_FINDER_COLUMN_U_P_C_N_D_USERID_2);
 
-			query.append(_FINDER_COLUMN_U_C_T_CLASSNAMEID_2);
+			boolean bindPortletId = false;
 
-			query.append(_FINDER_COLUMN_U_C_T_TYPE_2);
+			if (portletId == null) {
+				query.append(_FINDER_COLUMN_U_P_C_N_D_PORTLETID_1);
+			}
+			else if (portletId.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_U_P_C_N_D_PORTLETID_3);
+			}
+			else {
+				bindPortletId = true;
+
+				query.append(_FINDER_COLUMN_U_P_C_N_D_PORTLETID_2);
+			}
+
+			query.append(_FINDER_COLUMN_U_P_C_N_D_CLASSNAMEID_2);
+
+			query.append(_FINDER_COLUMN_U_P_C_N_D_NOTIFICATIONTYPE_2);
+
+			query.append(_FINDER_COLUMN_U_P_C_N_D_DELIVERYTYPE_2);
 
 			String sql = query.toString();
 
@@ -811,9 +885,15 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 
 				qPos.add(userId);
 
+				if (bindPortletId) {
+					qPos.add(portletId);
+				}
+
 				qPos.add(classNameId);
 
-				qPos.add(type);
+				qPos.add(notificationType);
+
+				qPos.add(deliveryType);
 
 				count = (Long)q.uniqueResult();
 
@@ -832,9 +912,13 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_U_C_T_USERID_2 = "userNotificationDelivery.userId = ? AND ";
-	private static final String _FINDER_COLUMN_U_C_T_CLASSNAMEID_2 = "userNotificationDelivery.classNameId = ? AND ";
-	private static final String _FINDER_COLUMN_U_C_T_TYPE_2 = "userNotificationDelivery.type = ?";
+	private static final String _FINDER_COLUMN_U_P_C_N_D_USERID_2 = "userNotificationDelivery.userId = ? AND ";
+	private static final String _FINDER_COLUMN_U_P_C_N_D_PORTLETID_1 = "userNotificationDelivery.portletId IS NULL AND ";
+	private static final String _FINDER_COLUMN_U_P_C_N_D_PORTLETID_2 = "userNotificationDelivery.portletId = ? AND ";
+	private static final String _FINDER_COLUMN_U_P_C_N_D_PORTLETID_3 = "(userNotificationDelivery.portletId IS NULL OR userNotificationDelivery.portletId = '') AND ";
+	private static final String _FINDER_COLUMN_U_P_C_N_D_CLASSNAMEID_2 = "userNotificationDelivery.classNameId = ? AND ";
+	private static final String _FINDER_COLUMN_U_P_C_N_D_NOTIFICATIONTYPE_2 = "userNotificationDelivery.notificationType = ? AND ";
+	private static final String _FINDER_COLUMN_U_P_C_N_D_DELIVERYTYPE_2 = "userNotificationDelivery.deliveryType = ?";
 
 	/**
 	 * Caches the user notification delivery in the entity cache if it is enabled.
@@ -847,11 +931,13 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 			UserNotificationDeliveryImpl.class,
 			userNotificationDelivery.getPrimaryKey(), userNotificationDelivery);
 
-		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_U_C_T,
+		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_U_P_C_N_D,
 			new Object[] {
 				userNotificationDelivery.getUserId(),
+				userNotificationDelivery.getPortletId(),
 				userNotificationDelivery.getClassNameId(),
-				userNotificationDelivery.getType()
+				userNotificationDelivery.getNotificationType(),
+				userNotificationDelivery.getDeliveryType()
 			}, userNotificationDelivery);
 
 		userNotificationDelivery.resetOriginalValues();
@@ -937,29 +1023,33 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 		if (userNotificationDelivery.isNew()) {
 			Object[] args = new Object[] {
 					userNotificationDelivery.getUserId(),
+					userNotificationDelivery.getPortletId(),
 					userNotificationDelivery.getClassNameId(),
-					userNotificationDelivery.getType()
+					userNotificationDelivery.getNotificationType(),
+					userNotificationDelivery.getDeliveryType()
 				};
 
-			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_U_C_T, args,
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_U_P_C_N_D, args,
 				Long.valueOf(1));
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_U_C_T, args,
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_U_P_C_N_D, args,
 				userNotificationDelivery);
 		}
 		else {
 			UserNotificationDeliveryModelImpl userNotificationDeliveryModelImpl = (UserNotificationDeliveryModelImpl)userNotificationDelivery;
 
 			if ((userNotificationDeliveryModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_U_C_T.getColumnBitmask()) != 0) {
+					FINDER_PATH_FETCH_BY_U_P_C_N_D.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						userNotificationDelivery.getUserId(),
+						userNotificationDelivery.getPortletId(),
 						userNotificationDelivery.getClassNameId(),
-						userNotificationDelivery.getType()
+						userNotificationDelivery.getNotificationType(),
+						userNotificationDelivery.getDeliveryType()
 					};
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_U_C_T, args,
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_U_P_C_N_D, args,
 					Long.valueOf(1));
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_U_C_T, args,
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_U_P_C_N_D, args,
 					userNotificationDelivery);
 			}
 		}
@@ -971,23 +1061,27 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 
 		Object[] args = new Object[] {
 				userNotificationDelivery.getUserId(),
+				userNotificationDelivery.getPortletId(),
 				userNotificationDelivery.getClassNameId(),
-				userNotificationDelivery.getType()
+				userNotificationDelivery.getNotificationType(),
+				userNotificationDelivery.getDeliveryType()
 			};
 
-		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_U_C_T, args);
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_U_C_T, args);
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_U_P_C_N_D, args);
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_U_P_C_N_D, args);
 
 		if ((userNotificationDeliveryModelImpl.getColumnBitmask() &
-				FINDER_PATH_FETCH_BY_U_C_T.getColumnBitmask()) != 0) {
+				FINDER_PATH_FETCH_BY_U_P_C_N_D.getColumnBitmask()) != 0) {
 			args = new Object[] {
 					userNotificationDeliveryModelImpl.getOriginalUserId(),
+					userNotificationDeliveryModelImpl.getOriginalPortletId(),
 					userNotificationDeliveryModelImpl.getOriginalClassNameId(),
-					userNotificationDeliveryModelImpl.getOriginalType()
+					userNotificationDeliveryModelImpl.getOriginalNotificationType(),
+					userNotificationDeliveryModelImpl.getOriginalDeliveryType()
 				};
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_U_C_T, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_U_C_T, args);
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_U_P_C_N_D, args);
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_U_P_C_N_D, args);
 		}
 	}
 
@@ -1178,11 +1272,11 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 		userNotificationDeliveryImpl.setUserNotificationDeliveryId(userNotificationDelivery.getUserNotificationDeliveryId());
 		userNotificationDeliveryImpl.setCompanyId(userNotificationDelivery.getCompanyId());
 		userNotificationDeliveryImpl.setUserId(userNotificationDelivery.getUserId());
+		userNotificationDeliveryImpl.setPortletId(userNotificationDelivery.getPortletId());
 		userNotificationDeliveryImpl.setClassNameId(userNotificationDelivery.getClassNameId());
-		userNotificationDeliveryImpl.setType(userNotificationDelivery.getType());
-		userNotificationDeliveryImpl.setEmail(userNotificationDelivery.isEmail());
-		userNotificationDeliveryImpl.setSms(userNotificationDelivery.isSms());
-		userNotificationDeliveryImpl.setWebsite(userNotificationDelivery.isWebsite());
+		userNotificationDeliveryImpl.setNotificationType(userNotificationDelivery.getNotificationType());
+		userNotificationDeliveryImpl.setDeliveryType(userNotificationDelivery.getDeliveryType());
+		userNotificationDeliveryImpl.setDeliver(userNotificationDelivery.isDeliver());
 
 		return userNotificationDeliveryImpl;
 	}
@@ -1462,11 +1556,6 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 		return count.intValue();
 	}
 
-	@Override
-	protected Set<String> getBadColumnNames() {
-		return _badColumnNames;
-	}
-
 	/**
 	 * Initializes the user notification delivery persistence.
 	 */
@@ -1508,9 +1597,6 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No UserNotificationDelivery exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = com.liferay.portal.util.PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE;
 	private static Log _log = LogFactoryUtil.getLog(UserNotificationDeliveryPersistenceImpl.class);
-	private static Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
-				"type"
-			});
 	private static UserNotificationDelivery _nullUserNotificationDelivery = new UserNotificationDeliveryImpl() {
 			@Override
 			public Object clone() {

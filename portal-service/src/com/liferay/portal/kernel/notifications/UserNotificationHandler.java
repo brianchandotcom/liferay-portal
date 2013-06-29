@@ -12,46 +12,30 @@
  * details.
  */
 
-package com.liferay.portal.service.impl;
+package com.liferay.portal.kernel.notifications;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.notifications.UserNotificationFeedEntry;
-import com.liferay.portal.kernel.notifications.UserNotificationInterpreter;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.UserNotificationEvent;
 import com.liferay.portal.service.ServiceContext;
 
 /**
  * @author Jonathan Lee
  */
-public class UserNotificationInterpreterImpl
-	implements UserNotificationInterpreter {
+public interface UserNotificationHandler {
 
-	public UserNotificationInterpreterImpl(
-		UserNotificationInterpreter userNotificationInterpreter) {
+	public boolean deliver(
+			long userId, long classNameId, int notificationType,
+			int deliveryType, ServiceContext serviceContext)
+		throws PortalException, SystemException;
 
-		_userNotificationInterpreter = userNotificationInterpreter;
-	}
+	public String getPortletId();
 
-	@Override
-	public String getPortletId() {
-		return _userNotificationInterpreter.getPortletId();
-	}
+	public String getSelector();
 
-	@Override
-	public String getSelector() {
-		return _userNotificationInterpreter.getSelector();
-	}
-
-	@Override
 	public UserNotificationFeedEntry interpret(
 			UserNotificationEvent userNotificationEvent,
 			ServiceContext serviceContext)
-		throws PortalException {
-
-		return _userNotificationInterpreter.interpret(
-			userNotificationEvent, serviceContext);
-	}
-
-	private UserNotificationInterpreter _userNotificationInterpreter;
+		throws PortalException;
 
 }

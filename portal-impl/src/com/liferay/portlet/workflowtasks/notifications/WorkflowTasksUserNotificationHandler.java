@@ -16,7 +16,7 @@ package com.liferay.portlet.workflowtasks.notifications;
 
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.notifications.BaseUserNotificationInterpreter;
+import com.liferay.portal.kernel.notifications.BaseUserNotificationHandler;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.model.UserNotificationEvent;
@@ -31,10 +31,10 @@ import javax.portlet.WindowState;
 /**
  * @author Jonathan Lee
  */
-public class WorkflowTasksUserNotificationInterpreter
-	extends BaseUserNotificationInterpreter {
+public class WorkflowTasksUserNotificationHandler
+	extends BaseUserNotificationHandler {
 
-	public WorkflowTasksUserNotificationInterpreter() {
+	public WorkflowTasksUserNotificationHandler() {
 		setPortletId(PortletKeys.MY_WORKFLOW_TASKS);
 	}
 

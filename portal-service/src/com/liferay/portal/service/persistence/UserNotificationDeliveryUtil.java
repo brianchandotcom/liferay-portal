@@ -273,82 +273,106 @@ public class UserNotificationDeliveryUtil {
 	}
 
 	/**
-	* Returns the user notification delivery where userId = &#63; and classNameId = &#63; and type = &#63; or throws a {@link com.liferay.portal.NoSuchUserNotificationDeliveryException} if it could not be found.
+	* Returns the user notification delivery where userId = &#63; and portletId = &#63; and classNameId = &#63; and notificationType = &#63; and deliveryType = &#63; or throws a {@link com.liferay.portal.NoSuchUserNotificationDeliveryException} if it could not be found.
 	*
 	* @param userId the user ID
+	* @param portletId the portlet ID
 	* @param classNameId the class name ID
-	* @param type the type
+	* @param notificationType the notification type
+	* @param deliveryType the delivery type
 	* @return the matching user notification delivery
 	* @throws com.liferay.portal.NoSuchUserNotificationDeliveryException if a matching user notification delivery could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portal.model.UserNotificationDelivery findByU_C_T(
-		long userId, long classNameId, int type)
+	public static com.liferay.portal.model.UserNotificationDelivery findByU_P_C_N_D(
+		long userId, java.lang.String portletId, long classNameId,
+		int notificationType, int deliveryType)
 		throws com.liferay.portal.NoSuchUserNotificationDeliveryException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findByU_C_T(userId, classNameId, type);
+		return getPersistence()
+				   .findByU_P_C_N_D(userId, portletId, classNameId,
+			notificationType, deliveryType);
 	}
 
 	/**
-	* Returns the user notification delivery where userId = &#63; and classNameId = &#63; and type = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	* Returns the user notification delivery where userId = &#63; and portletId = &#63; and classNameId = &#63; and notificationType = &#63; and deliveryType = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	*
 	* @param userId the user ID
+	* @param portletId the portlet ID
 	* @param classNameId the class name ID
-	* @param type the type
+	* @param notificationType the notification type
+	* @param deliveryType the delivery type
 	* @return the matching user notification delivery, or <code>null</code> if a matching user notification delivery could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portal.model.UserNotificationDelivery fetchByU_C_T(
-		long userId, long classNameId, int type)
+	public static com.liferay.portal.model.UserNotificationDelivery fetchByU_P_C_N_D(
+		long userId, java.lang.String portletId, long classNameId,
+		int notificationType, int deliveryType)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().fetchByU_C_T(userId, classNameId, type);
+		return getPersistence()
+				   .fetchByU_P_C_N_D(userId, portletId, classNameId,
+			notificationType, deliveryType);
 	}
 
 	/**
-	* Returns the user notification delivery where userId = &#63; and classNameId = &#63; and type = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	* Returns the user notification delivery where userId = &#63; and portletId = &#63; and classNameId = &#63; and notificationType = &#63; and deliveryType = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
 	* @param userId the user ID
+	* @param portletId the portlet ID
 	* @param classNameId the class name ID
-	* @param type the type
+	* @param notificationType the notification type
+	* @param deliveryType the delivery type
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching user notification delivery, or <code>null</code> if a matching user notification delivery could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portal.model.UserNotificationDelivery fetchByU_C_T(
-		long userId, long classNameId, int type, boolean retrieveFromCache)
+	public static com.liferay.portal.model.UserNotificationDelivery fetchByU_P_C_N_D(
+		long userId, java.lang.String portletId, long classNameId,
+		int notificationType, int deliveryType, boolean retrieveFromCache)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence()
-				   .fetchByU_C_T(userId, classNameId, type, retrieveFromCache);
+				   .fetchByU_P_C_N_D(userId, portletId, classNameId,
+			notificationType, deliveryType, retrieveFromCache);
 	}
 
 	/**
-	* Removes the user notification delivery where userId = &#63; and classNameId = &#63; and type = &#63; from the database.
+	* Removes the user notification delivery where userId = &#63; and portletId = &#63; and classNameId = &#63; and notificationType = &#63; and deliveryType = &#63; from the database.
 	*
 	* @param userId the user ID
+	* @param portletId the portlet ID
 	* @param classNameId the class name ID
-	* @param type the type
+	* @param notificationType the notification type
+	* @param deliveryType the delivery type
 	* @return the user notification delivery that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.portal.model.UserNotificationDelivery removeByU_C_T(
-		long userId, long classNameId, int type)
+	public static com.liferay.portal.model.UserNotificationDelivery removeByU_P_C_N_D(
+		long userId, java.lang.String portletId, long classNameId,
+		int notificationType, int deliveryType)
 		throws com.liferay.portal.NoSuchUserNotificationDeliveryException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().removeByU_C_T(userId, classNameId, type);
+		return getPersistence()
+				   .removeByU_P_C_N_D(userId, portletId, classNameId,
+			notificationType, deliveryType);
 	}
 
 	/**
-	* Returns the number of user notification deliveries where userId = &#63; and classNameId = &#63; and type = &#63;.
+	* Returns the number of user notification deliveries where userId = &#63; and portletId = &#63; and classNameId = &#63; and notificationType = &#63; and deliveryType = &#63;.
 	*
 	* @param userId the user ID
+	* @param portletId the portlet ID
 	* @param classNameId the class name ID
-	* @param type the type
+	* @param notificationType the notification type
+	* @param deliveryType the delivery type
 	* @return the number of matching user notification deliveries
 	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByU_C_T(long userId, long classNameId, int type)
+	public static int countByU_P_C_N_D(long userId, java.lang.String portletId,
+		long classNameId, int notificationType, int deliveryType)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByU_C_T(userId, classNameId, type);
+		return getPersistence()
+				   .countByU_P_C_N_D(userId, portletId, classNameId,
+			notificationType, deliveryType);
 	}
 
 	/**

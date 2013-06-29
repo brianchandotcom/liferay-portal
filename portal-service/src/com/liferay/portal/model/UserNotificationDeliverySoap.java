@@ -33,11 +33,11 @@ public class UserNotificationDeliverySoap implements Serializable {
 		soapModel.setUserNotificationDeliveryId(model.getUserNotificationDeliveryId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
+		soapModel.setPortletId(model.getPortletId());
 		soapModel.setClassNameId(model.getClassNameId());
-		soapModel.setType(model.getType());
-		soapModel.setEmail(model.getEmail());
-		soapModel.setSms(model.getSms());
-		soapModel.setWebsite(model.getWebsite());
+		soapModel.setNotificationType(model.getNotificationType());
+		soapModel.setDeliveryType(model.getDeliveryType());
+		soapModel.setDeliver(model.getDeliver());
 
 		return soapModel;
 	}
@@ -117,6 +117,14 @@ public class UserNotificationDeliverySoap implements Serializable {
 		_userId = userId;
 	}
 
+	public String getPortletId() {
+		return _portletId;
+	}
+
+	public void setPortletId(String portletId) {
+		_portletId = portletId;
+	}
+
 	public long getClassNameId() {
 		return _classNameId;
 	}
@@ -125,56 +133,40 @@ public class UserNotificationDeliverySoap implements Serializable {
 		_classNameId = classNameId;
 	}
 
-	public int getType() {
-		return _type;
+	public int getNotificationType() {
+		return _notificationType;
 	}
 
-	public void setType(int type) {
-		_type = type;
+	public void setNotificationType(int notificationType) {
+		_notificationType = notificationType;
 	}
 
-	public boolean getEmail() {
-		return _email;
+	public int getDeliveryType() {
+		return _deliveryType;
 	}
 
-	public boolean isEmail() {
-		return _email;
+	public void setDeliveryType(int deliveryType) {
+		_deliveryType = deliveryType;
 	}
 
-	public void setEmail(boolean email) {
-		_email = email;
+	public boolean getDeliver() {
+		return _deliver;
 	}
 
-	public boolean getSms() {
-		return _sms;
+	public boolean isDeliver() {
+		return _deliver;
 	}
 
-	public boolean isSms() {
-		return _sms;
-	}
-
-	public void setSms(boolean sms) {
-		_sms = sms;
-	}
-
-	public boolean getWebsite() {
-		return _website;
-	}
-
-	public boolean isWebsite() {
-		return _website;
-	}
-
-	public void setWebsite(boolean website) {
-		_website = website;
+	public void setDeliver(boolean deliver) {
+		_deliver = deliver;
 	}
 
 	private long _userNotificationDeliveryId;
 	private long _companyId;
 	private long _userId;
+	private String _portletId;
 	private long _classNameId;
-	private int _type;
-	private boolean _email;
-	private boolean _sms;
-	private boolean _website;
+	private int _notificationType;
+	private int _deliveryType;
+	private boolean _deliver;
 }

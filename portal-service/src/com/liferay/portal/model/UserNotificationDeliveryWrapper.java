@@ -53,11 +53,11 @@ public class UserNotificationDeliveryWrapper implements UserNotificationDelivery
 			getUserNotificationDeliveryId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
+		attributes.put("portletId", getPortletId());
 		attributes.put("classNameId", getClassNameId());
-		attributes.put("type", getType());
-		attributes.put("email", getEmail());
-		attributes.put("sms", getSms());
-		attributes.put("website", getWebsite());
+		attributes.put("notificationType", getNotificationType());
+		attributes.put("deliveryType", getDeliveryType());
+		attributes.put("deliver", getDeliver());
 
 		return attributes;
 	}
@@ -83,34 +83,34 @@ public class UserNotificationDeliveryWrapper implements UserNotificationDelivery
 			setUserId(userId);
 		}
 
+		String portletId = (String)attributes.get("portletId");
+
+		if (portletId != null) {
+			setPortletId(portletId);
+		}
+
 		Long classNameId = (Long)attributes.get("classNameId");
 
 		if (classNameId != null) {
 			setClassNameId(classNameId);
 		}
 
-		Integer type = (Integer)attributes.get("type");
+		Integer notificationType = (Integer)attributes.get("notificationType");
 
-		if (type != null) {
-			setType(type);
+		if (notificationType != null) {
+			setNotificationType(notificationType);
 		}
 
-		Boolean email = (Boolean)attributes.get("email");
+		Integer deliveryType = (Integer)attributes.get("deliveryType");
 
-		if (email != null) {
-			setEmail(email);
+		if (deliveryType != null) {
+			setDeliveryType(deliveryType);
 		}
 
-		Boolean sms = (Boolean)attributes.get("sms");
+		Boolean deliver = (Boolean)attributes.get("deliver");
 
-		if (sms != null) {
-			setSms(sms);
-		}
-
-		Boolean website = (Boolean)attributes.get("website");
-
-		if (website != null) {
-			setWebsite(website);
+		if (deliver != null) {
+			setDeliver(deliver);
 		}
 	}
 
@@ -217,6 +217,26 @@ public class UserNotificationDeliveryWrapper implements UserNotificationDelivery
 	}
 
 	/**
+	* Returns the portlet ID of this user notification delivery.
+	*
+	* @return the portlet ID of this user notification delivery
+	*/
+	@Override
+	public java.lang.String getPortletId() {
+		return _userNotificationDelivery.getPortletId();
+	}
+
+	/**
+	* Sets the portlet ID of this user notification delivery.
+	*
+	* @param portletId the portlet ID of this user notification delivery
+	*/
+	@Override
+	public void setPortletId(java.lang.String portletId) {
+		_userNotificationDelivery.setPortletId(portletId);
+	}
+
+	/**
 	* Returns the fully qualified class name of this user notification delivery.
 	*
 	* @return the fully qualified class name of this user notification delivery
@@ -252,113 +272,73 @@ public class UserNotificationDeliveryWrapper implements UserNotificationDelivery
 	}
 
 	/**
-	* Returns the type of this user notification delivery.
+	* Returns the notification type of this user notification delivery.
 	*
-	* @return the type of this user notification delivery
+	* @return the notification type of this user notification delivery
 	*/
 	@Override
-	public int getType() {
-		return _userNotificationDelivery.getType();
+	public int getNotificationType() {
+		return _userNotificationDelivery.getNotificationType();
 	}
 
 	/**
-	* Sets the type of this user notification delivery.
+	* Sets the notification type of this user notification delivery.
 	*
-	* @param type the type of this user notification delivery
+	* @param notificationType the notification type of this user notification delivery
 	*/
 	@Override
-	public void setType(int type) {
-		_userNotificationDelivery.setType(type);
+	public void setNotificationType(int notificationType) {
+		_userNotificationDelivery.setNotificationType(notificationType);
 	}
 
 	/**
-	* Returns the email of this user notification delivery.
+	* Returns the delivery type of this user notification delivery.
 	*
-	* @return the email of this user notification delivery
+	* @return the delivery type of this user notification delivery
 	*/
 	@Override
-	public boolean getEmail() {
-		return _userNotificationDelivery.getEmail();
+	public int getDeliveryType() {
+		return _userNotificationDelivery.getDeliveryType();
 	}
 
 	/**
-	* Returns <code>true</code> if this user notification delivery is email.
+	* Sets the delivery type of this user notification delivery.
 	*
-	* @return <code>true</code> if this user notification delivery is email; <code>false</code> otherwise
+	* @param deliveryType the delivery type of this user notification delivery
 	*/
 	@Override
-	public boolean isEmail() {
-		return _userNotificationDelivery.isEmail();
+	public void setDeliveryType(int deliveryType) {
+		_userNotificationDelivery.setDeliveryType(deliveryType);
 	}
 
 	/**
-	* Sets whether this user notification delivery is email.
+	* Returns the deliver of this user notification delivery.
 	*
-	* @param email the email of this user notification delivery
+	* @return the deliver of this user notification delivery
 	*/
 	@Override
-	public void setEmail(boolean email) {
-		_userNotificationDelivery.setEmail(email);
+	public boolean getDeliver() {
+		return _userNotificationDelivery.getDeliver();
 	}
 
 	/**
-	* Returns the sms of this user notification delivery.
+	* Returns <code>true</code> if this user notification delivery is deliver.
 	*
-	* @return the sms of this user notification delivery
+	* @return <code>true</code> if this user notification delivery is deliver; <code>false</code> otherwise
 	*/
 	@Override
-	public boolean getSms() {
-		return _userNotificationDelivery.getSms();
+	public boolean isDeliver() {
+		return _userNotificationDelivery.isDeliver();
 	}
 
 	/**
-	* Returns <code>true</code> if this user notification delivery is sms.
+	* Sets whether this user notification delivery is deliver.
 	*
-	* @return <code>true</code> if this user notification delivery is sms; <code>false</code> otherwise
+	* @param deliver the deliver of this user notification delivery
 	*/
 	@Override
-	public boolean isSms() {
-		return _userNotificationDelivery.isSms();
-	}
-
-	/**
-	* Sets whether this user notification delivery is sms.
-	*
-	* @param sms the sms of this user notification delivery
-	*/
-	@Override
-	public void setSms(boolean sms) {
-		_userNotificationDelivery.setSms(sms);
-	}
-
-	/**
-	* Returns the website of this user notification delivery.
-	*
-	* @return the website of this user notification delivery
-	*/
-	@Override
-	public boolean getWebsite() {
-		return _userNotificationDelivery.getWebsite();
-	}
-
-	/**
-	* Returns <code>true</code> if this user notification delivery is website.
-	*
-	* @return <code>true</code> if this user notification delivery is website; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isWebsite() {
-		return _userNotificationDelivery.isWebsite();
-	}
-
-	/**
-	* Sets whether this user notification delivery is website.
-	*
-	* @param website the website of this user notification delivery
-	*/
-	@Override
-	public void setWebsite(boolean website) {
-		_userNotificationDelivery.setWebsite(website);
+	public void setDeliver(boolean deliver) {
+		_userNotificationDelivery.setDeliver(deliver);
 	}
 
 	@Override

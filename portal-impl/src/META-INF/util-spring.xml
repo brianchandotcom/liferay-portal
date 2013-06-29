@@ -246,6 +246,11 @@
 			<bean class="com.liferay.portal.microsofttranslator.MicrosoftTranslatorFactoryImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portal.kernel.notifications.UserNotificationManagerUtil" class="com.liferay.portal.kernel.notifications.UserNotificationManagerUtil">
+		<property name="userNotificationManager">
+			<bean class="com.liferay.portal.notifications.UserNotificationManagerImpl" />
+		</property>
+	</bean>
 	<bean id="com.liferay.portal.kernel.oauth.OAuthFactoryUtil" class="com.liferay.portal.kernel.oauth.OAuthFactoryUtil">
 		<property name="OAuthFactory">
 			<bean class="com.liferay.portal.oauth.OAuthFactoryImpl" />

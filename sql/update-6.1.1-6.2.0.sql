@@ -581,11 +581,11 @@ create table UserNotificationDelivery (
 	userNotificationDeliveryId LONG not null primary key,
 	companyId LONG,
 	userId LONG,
+	portletId VARCHAR(75) null,
 	classNameId LONG,
-	type_ INTEGER,
-	email BOOLEAN,
-	sms BOOLEAN,
-	website BOOLEAN
+	notificationType INTEGER,
+	deliveryType INTEGER,
+	deliver BOOLEAN
 );
 
 alter table UserNotificationEvent add delivered BOOLEAN;

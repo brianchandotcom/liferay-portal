@@ -1927,6 +1927,25 @@
 
 	Liferay.provide(
 		Util,
+		'toggleSearchContainerButton',
+		function(buttonId, searchContainerId, form, ignoreFieldName) {
+			var searchContainer = A.one(searchContainerId);
+
+			if (searchContainer) {
+				searchContainer.delegate(
+					'change',
+					function() {
+						Liferay.Util.toggleDisabled(buttonId, !Liferay.Util.listCheckedExcept(form, ignoreFieldName));
+					},
+					'input[type=checkbox]'
+				);
+			}
+		},
+		['aui-base', 'liferay-util-list-fields']
+	);
+
+	Liferay.provide(
+		Util,
 		'updateCheckboxValue',
 		function(checkbox) {
 			checkbox = A.one(checkbox);

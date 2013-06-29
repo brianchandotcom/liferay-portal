@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.SearchContainerReference;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.util.ParamAndPropertyAncestorTagImpl;
@@ -125,6 +126,14 @@ public class SearchContainerTag<R> extends ParamAndPropertyAncestorTagImpl {
 			}
 
 			pageContext.setAttribute(_var, _searchContainer);
+
+			SearchContainerReference searchContainerReference =
+				(SearchContainerReference)pageContext.getAttribute(
+					"searchContainerReference");
+
+			if (searchContainerReference != null) {
+				searchContainerReference.register(_var, _searchContainer);
+			}
 
 			return EVAL_BODY_INCLUDE;
 		}

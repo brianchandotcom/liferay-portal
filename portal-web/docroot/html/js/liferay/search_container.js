@@ -34,6 +34,9 @@ AUI.add(
 				},
 
 				constructor: function(config) {
+					var id = config.id;
+
+					config.boundingBox = config.boundingBox || '#' + id;
 					config.contentBox = config.contentBox || '#' + config.id + 'SearchContainer';
 
 					SearchContainer.superclass.constructor.apply(this, arguments);

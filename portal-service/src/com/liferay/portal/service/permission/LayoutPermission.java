@@ -86,6 +86,15 @@ public interface LayoutPermission {
 			PermissionChecker permissionChecker, long plid, String actionId)
 		throws PortalException, SystemException;
 
+	public boolean containsWithoutViewableGroup(
+			PermissionChecker permissionChecker, Layout layout,
+			boolean checkLayoutUpdateable, String actionId)
+		throws PortalException, SystemException;
+
+	public boolean containsWithoutViewableGroup(
+			PermissionChecker permissionChecker, Layout layout, String actionId)
+		throws PortalException, SystemException;
+
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link
 	 *             #containsWithoutViewableGroup(PermissionChecker, Layout,
@@ -105,15 +114,6 @@ public interface LayoutPermission {
 	public boolean containsWithoutViewableGroup(
 			PermissionChecker permissionChecker, Layout layout,
 			String controlPanelCategory, String actionId)
-		throws PortalException, SystemException;
-
-	boolean containsWithoutViewableGroup(
-			PermissionChecker permissionChecker, Layout layout,
-			boolean checkLayoutUpdateable, String actionId)
-		throws PortalException, SystemException;
-
-	boolean containsWithoutViewableGroup(
-			PermissionChecker permissionChecker, Layout layout, String actionId)
 		throws PortalException, SystemException;
 
 }

@@ -14,22 +14,39 @@
 
 package com.liferay.portal.kernel.notifications;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.model.UserNotificationEvent;
-import com.liferay.portal.service.ServiceContext;
-
 /**
  * @author Jonathan Lee
  */
-public interface UserNotificationInterpreter {
+public class UserNotificationDeliveryType {
 
-	public String getPortletId();
+	public UserNotificationDeliveryType(
+		String name, int type, boolean defualtValue, boolean modifiable) {
 
-	public String getSelector();
+		_default = defualtValue;
+		_modifiable = modifiable;
+		_name = name;
+		_type = type;
+	}
 
-	public UserNotificationFeedEntry interpret(
-			UserNotificationEvent userNotificationEvent,
-			ServiceContext serviceContext)
-		throws PortalException;
+	public String getName() {
+		return _name;
+	}
+
+	public int getType() {
+		return _type;
+	}
+
+	public boolean isDefault() {
+		return _default;
+	}
+
+	public boolean isModifiable() {
+		return _modifiable;
+	}
+
+	private static boolean _default;
+	private static boolean _modifiable;
+	private static String _name;
+	private static int _type;
 
 }

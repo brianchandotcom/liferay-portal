@@ -14,6 +14,7 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.portal.NoSuchUserNotificationDeliveryException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.User;
@@ -28,8 +29,8 @@ public class UserNotificationDeliveryLocalServiceImpl
 
 	@Override
 	public UserNotificationDelivery addUserNotificationDelivery(
-			long userId, long classNameId, int type, boolean email, boolean sms,
-			boolean website)
+			long userId, String portletId, long classNameId,
+			int notificationType, int deliveryType, boolean deliver)
 		throws PortalException, SystemException {
 
 		User user = userPersistence.findByPrimaryKey(userId);
@@ -42,11 +43,11 @@ public class UserNotificationDeliveryLocalServiceImpl
 
 		userNotificationDelivery.setCompanyId(user.getCompanyId());
 		userNotificationDelivery.setUserId(user.getUserId());
+		userNotificationDelivery.setPortletId(portletId);
 		userNotificationDelivery.setClassNameId(classNameId);
-		userNotificationDelivery.setType(type);
-		userNotificationDelivery.setEmail(email);
-		userNotificationDelivery.setSms(sms);
-		userNotificationDelivery.setWebsite(website);
+		userNotificationDelivery.setNotificationType(notificationType);
+		userNotificationDelivery.setDeliveryType(deliveryType);
+		userNotificationDelivery.setDeliver(deliver);
 
 		return userNotificationDeliveryPersistence.update(
 			userNotificationDelivery);
@@ -59,53 +60,46 @@ public class UserNotificationDeliveryLocalServiceImpl
 		userNotificationDeliveryPersistence.removeByUserId(userId);
 	}
 
-	@Override
-	public UserNotificationDelivery fetchUserNotificationDelivery(
-			long userId, long classNameId, int type)
+	public void deleteUserNotificationDelivery(
+			long userId, String portletId, long classNameId,
+			int notificationType, int deliveryType)
 		throws SystemException {
 
-		return userNotificationDeliveryPersistence.fetchByU_C_T(
-			userId, classNameId, type);
+		try {
+			userNotificationDeliveryPersistence.removeByU_P_C_N_D(
+				userId, portletId, classNameId, notificationType, deliveryType);
+		}
+		catch (NoSuchUserNotificationDeliveryException nsnde) {
+		}
+	}
+
+	@Override
+	public UserNotificationDelivery fetchUserNotificationDelivery(
+			long userId, String portletId, long classNameId,
+			int notificationType, int deliveryType)
+		throws SystemException {
+
+		return userNotificationDeliveryPersistence.fetchByU_P_C_N_D(
+			userId, portletId, classNameId, notificationType, deliveryType);
 	}
 
 	@Override
 	public UserNotificationDelivery getUserNotificationDelivery(
-			long userId, long classNameId, int type, boolean email, boolean sms,
-			boolean website)
+			long userId, String portletId, long classNameId,
+			int notificationType, int deliveryType, boolean deliver)
 		throws PortalException, SystemException {
 
 		UserNotificationDelivery userNotificationDelivery =
-			fetchUserNotificationDelivery(userId, classNameId, type);
+			fetchUserNotificationDelivery(
+				userId, portletId, classNameId, notificationType, deliveryType);
 
 		if (userNotificationDelivery != null) {
 			return userNotificationDelivery;
 		}
 
 		return userNotificationDeliveryLocalService.addUserNotificationDelivery(
-			userId, classNameId, type, email, sms, website);
-	}
-
-	@Override
-	public UserNotificationDelivery updateUserNotificationDelivery(
-			long userId, long classNameId, int type, boolean email, boolean sms,
-			boolean website)
-		throws PortalException, SystemException {
-
-		UserNotificationDelivery userNotificationDelivery =
-			userNotificationDeliveryPersistence.fetchByU_C_T(
-				userId, classNameId, type);
-
-		if (userNotificationDelivery == null) {
-			return addUserNotificationDelivery(
-				userId, classNameId, type, email, sms, website);
-		}
-
-		userNotificationDelivery.setEmail(email);
-		userNotificationDelivery.setSms(sms);
-		userNotificationDelivery.setWebsite(website);
-
-		return userNotificationDeliveryPersistence.update(
-			userNotificationDelivery);
+			userId, portletId, classNameId, notificationType, deliveryType,
+			deliver);
 	}
 
 }

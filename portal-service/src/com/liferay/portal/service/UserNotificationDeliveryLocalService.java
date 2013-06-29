@@ -242,29 +242,29 @@ public interface UserNotificationDeliveryLocalService extends BaseLocalService,
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	public com.liferay.portal.model.UserNotificationDelivery addUserNotificationDelivery(
-		long userId, long classNameId, int type, boolean email, boolean sms,
-		boolean website)
+		long userId, java.lang.String portletId, long classNameId,
+		int notificationType, int deliveryType, boolean deliver)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public void deleteUserNotificationDeliveries(long userId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	public void deleteUserNotificationDelivery(long userId,
+		java.lang.String portletId, long classNameId, int notificationType,
+		int deliveryType)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.UserNotificationDelivery fetchUserNotificationDelivery(
-		long userId, long classNameId, int type)
+		long userId, java.lang.String portletId, long classNameId,
+		int notificationType, int deliveryType)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.UserNotificationDelivery getUserNotificationDelivery(
-		long userId, long classNameId, int type, boolean email, boolean sms,
-		boolean website)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	public com.liferay.portal.model.UserNotificationDelivery updateUserNotificationDelivery(
-		long userId, long classNameId, int type, boolean email, boolean sms,
-		boolean website)
+		long userId, java.lang.String portletId, long classNameId,
+		int notificationType, int deliveryType, boolean deliver)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 }

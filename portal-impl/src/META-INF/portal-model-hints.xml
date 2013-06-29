@@ -992,11 +992,11 @@
 		<field name="userNotificationDeliveryId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
+		<field name="portletId" type="String" />
 		<field name="classNameId" type="long" />
-		<field name="type" type="int" />
-		<field name="email" type="boolean" />
-		<field name="sms" type="boolean" />
-		<field name="website" type="boolean" />
+		<field name="notificationType" type="int" />
+		<field name="deliveryType" type="int" />
+		<field name="deliver" type="boolean" />
 	</model>
 	<model name="com.liferay.portal.model.UserNotificationEvent">
 		<field name="uuid" type="String" />

@@ -68,7 +68,6 @@
 	<import class="com.liferay.portal.model.UserIdMapper" />
 	<import class="com.liferay.portal.model.UserNotificationDelivery" />
 	<import class="com.liferay.portal.model.UserNotificationEvent" />
-	<import class="com.liferay.portal.model.UserNotificationInterpreter" />
 	<import class="com.liferay.portal.model.UserTracker" />
 	<import class="com.liferay.portal.model.UserTrackerPath" />
 	<import class="com.liferay.portal.model.VirtualHost" />
@@ -1087,11 +1086,11 @@
 		</id>
 		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="portletId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="classNameId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="type" type="com.liferay.portal.dao.orm.hibernate.IntegerType" column="type_" />
-		<property name="email" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
-		<property name="sms" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
-		<property name="website" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="notificationType" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="deliveryType" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="deliver" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 	</class>
 	<class name="com.liferay.portal.model.impl.UserNotificationEventImpl" table="UserNotificationEvent">
 		<cache usage="read-write" />

@@ -15,6 +15,7 @@
 package com.liferay.portal.model.impl;
 
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.UserNotificationDelivery;
 
@@ -42,16 +43,16 @@ public class UserNotificationDeliveryCacheModel implements CacheModel<UserNotifi
 		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
+		sb.append(", portletId=");
+		sb.append(portletId);
 		sb.append(", classNameId=");
 		sb.append(classNameId);
-		sb.append(", type=");
-		sb.append(type);
-		sb.append(", email=");
-		sb.append(email);
-		sb.append(", sms=");
-		sb.append(sms);
-		sb.append(", website=");
-		sb.append(website);
+		sb.append(", notificationType=");
+		sb.append(notificationType);
+		sb.append(", deliveryType=");
+		sb.append(deliveryType);
+		sb.append(", deliver=");
+		sb.append(deliver);
 		sb.append("}");
 
 		return sb.toString();
@@ -64,11 +65,18 @@ public class UserNotificationDeliveryCacheModel implements CacheModel<UserNotifi
 		userNotificationDeliveryImpl.setUserNotificationDeliveryId(userNotificationDeliveryId);
 		userNotificationDeliveryImpl.setCompanyId(companyId);
 		userNotificationDeliveryImpl.setUserId(userId);
+
+		if (portletId == null) {
+			userNotificationDeliveryImpl.setPortletId(StringPool.BLANK);
+		}
+		else {
+			userNotificationDeliveryImpl.setPortletId(portletId);
+		}
+
 		userNotificationDeliveryImpl.setClassNameId(classNameId);
-		userNotificationDeliveryImpl.setType(type);
-		userNotificationDeliveryImpl.setEmail(email);
-		userNotificationDeliveryImpl.setSms(sms);
-		userNotificationDeliveryImpl.setWebsite(website);
+		userNotificationDeliveryImpl.setNotificationType(notificationType);
+		userNotificationDeliveryImpl.setDeliveryType(deliveryType);
+		userNotificationDeliveryImpl.setDeliver(deliver);
 
 		userNotificationDeliveryImpl.resetOriginalValues();
 
@@ -80,11 +88,11 @@ public class UserNotificationDeliveryCacheModel implements CacheModel<UserNotifi
 		userNotificationDeliveryId = objectInput.readLong();
 		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
+		portletId = objectInput.readUTF();
 		classNameId = objectInput.readLong();
-		type = objectInput.readInt();
-		email = objectInput.readBoolean();
-		sms = objectInput.readBoolean();
-		website = objectInput.readBoolean();
+		notificationType = objectInput.readInt();
+		deliveryType = objectInput.readInt();
+		deliver = objectInput.readBoolean();
 	}
 
 	@Override
@@ -93,19 +101,26 @@ public class UserNotificationDeliveryCacheModel implements CacheModel<UserNotifi
 		objectOutput.writeLong(userNotificationDeliveryId);
 		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
+
+		if (portletId == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(portletId);
+		}
+
 		objectOutput.writeLong(classNameId);
-		objectOutput.writeInt(type);
-		objectOutput.writeBoolean(email);
-		objectOutput.writeBoolean(sms);
-		objectOutput.writeBoolean(website);
+		objectOutput.writeInt(notificationType);
+		objectOutput.writeInt(deliveryType);
+		objectOutput.writeBoolean(deliver);
 	}
 
 	public long userNotificationDeliveryId;
 	public long companyId;
 	public long userId;
+	public String portletId;
 	public long classNameId;
-	public int type;
-	public boolean email;
-	public boolean sms;
-	public boolean website;
+	public int notificationType;
+	public int deliveryType;
+	public boolean deliver;
 }

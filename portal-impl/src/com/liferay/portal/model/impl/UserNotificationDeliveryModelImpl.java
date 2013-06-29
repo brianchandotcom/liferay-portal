@@ -62,13 +62,13 @@ public class UserNotificationDeliveryModelImpl extends BaseModelImpl<UserNotific
 			{ "userNotificationDeliveryId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
+			{ "portletId", Types.VARCHAR },
 			{ "classNameId", Types.BIGINT },
-			{ "type_", Types.INTEGER },
-			{ "email", Types.BOOLEAN },
-			{ "sms", Types.BOOLEAN },
-			{ "website", Types.BOOLEAN }
+			{ "notificationType", Types.INTEGER },
+			{ "deliveryType", Types.INTEGER },
+			{ "deliver", Types.BOOLEAN }
 		};
-	public static final String TABLE_SQL_CREATE = "create table UserNotificationDelivery (userNotificationDeliveryId LONG not null primary key,companyId LONG,userId LONG,classNameId LONG,type_ INTEGER,email BOOLEAN,sms BOOLEAN,website BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table UserNotificationDelivery (userNotificationDeliveryId LONG not null primary key,companyId LONG,userId LONG,portletId VARCHAR(75) null,classNameId LONG,notificationType INTEGER,deliveryType INTEGER,deliver BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table UserNotificationDelivery";
 	public static final String ORDER_BY_JPQL = " ORDER BY userNotificationDelivery.userNotificationDeliveryId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY UserNotificationDelivery.userNotificationDeliveryId ASC";
@@ -85,9 +85,11 @@ public class UserNotificationDeliveryModelImpl extends BaseModelImpl<UserNotific
 				"value.object.column.bitmask.enabled.com.liferay.portal.model.UserNotificationDelivery"),
 			true);
 	public static long CLASSNAMEID_COLUMN_BITMASK = 1L;
-	public static long TYPE_COLUMN_BITMASK = 2L;
-	public static long USERID_COLUMN_BITMASK = 4L;
-	public static long USERNOTIFICATIONDELIVERYID_COLUMN_BITMASK = 8L;
+	public static long DELIVERYTYPE_COLUMN_BITMASK = 2L;
+	public static long NOTIFICATIONTYPE_COLUMN_BITMASK = 4L;
+	public static long PORTLETID_COLUMN_BITMASK = 8L;
+	public static long USERID_COLUMN_BITMASK = 16L;
+	public static long USERNOTIFICATIONDELIVERYID_COLUMN_BITMASK = 32L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portal.model.UserNotificationDelivery"));
 
@@ -132,11 +134,11 @@ public class UserNotificationDeliveryModelImpl extends BaseModelImpl<UserNotific
 			getUserNotificationDeliveryId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
+		attributes.put("portletId", getPortletId());
 		attributes.put("classNameId", getClassNameId());
-		attributes.put("type", getType());
-		attributes.put("email", getEmail());
-		attributes.put("sms", getSms());
-		attributes.put("website", getWebsite());
+		attributes.put("notificationType", getNotificationType());
+		attributes.put("deliveryType", getDeliveryType());
+		attributes.put("deliver", getDeliver());
 
 		return attributes;
 	}
@@ -162,34 +164,34 @@ public class UserNotificationDeliveryModelImpl extends BaseModelImpl<UserNotific
 			setUserId(userId);
 		}
 
+		String portletId = (String)attributes.get("portletId");
+
+		if (portletId != null) {
+			setPortletId(portletId);
+		}
+
 		Long classNameId = (Long)attributes.get("classNameId");
 
 		if (classNameId != null) {
 			setClassNameId(classNameId);
 		}
 
-		Integer type = (Integer)attributes.get("type");
+		Integer notificationType = (Integer)attributes.get("notificationType");
 
-		if (type != null) {
-			setType(type);
+		if (notificationType != null) {
+			setNotificationType(notificationType);
 		}
 
-		Boolean email = (Boolean)attributes.get("email");
+		Integer deliveryType = (Integer)attributes.get("deliveryType");
 
-		if (email != null) {
-			setEmail(email);
+		if (deliveryType != null) {
+			setDeliveryType(deliveryType);
 		}
 
-		Boolean sms = (Boolean)attributes.get("sms");
+		Boolean deliver = (Boolean)attributes.get("deliver");
 
-		if (sms != null) {
-			setSms(sms);
-		}
-
-		Boolean website = (Boolean)attributes.get("website");
-
-		if (website != null) {
-			setWebsite(website);
+		if (deliver != null) {
+			setDeliver(deliver);
 		}
 	}
 
@@ -246,6 +248,31 @@ public class UserNotificationDeliveryModelImpl extends BaseModelImpl<UserNotific
 	}
 
 	@Override
+	public String getPortletId() {
+		if (_portletId == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _portletId;
+		}
+	}
+
+	@Override
+	public void setPortletId(String portletId) {
+		_columnBitmask |= PORTLETID_COLUMN_BITMASK;
+
+		if (_originalPortletId == null) {
+			_originalPortletId = _portletId;
+		}
+
+		_portletId = portletId;
+	}
+
+	public String getOriginalPortletId() {
+		return GetterUtil.getString(_originalPortletId);
+	}
+
+	@Override
 	public String getClassName() {
 		if (getClassNameId() <= 0) {
 			return StringPool.BLANK;
@@ -288,70 +315,62 @@ public class UserNotificationDeliveryModelImpl extends BaseModelImpl<UserNotific
 	}
 
 	@Override
-	public int getType() {
-		return _type;
+	public int getNotificationType() {
+		return _notificationType;
 	}
 
 	@Override
-	public void setType(int type) {
-		_columnBitmask |= TYPE_COLUMN_BITMASK;
+	public void setNotificationType(int notificationType) {
+		_columnBitmask |= NOTIFICATIONTYPE_COLUMN_BITMASK;
 
-		if (!_setOriginalType) {
-			_setOriginalType = true;
+		if (!_setOriginalNotificationType) {
+			_setOriginalNotificationType = true;
 
-			_originalType = _type;
+			_originalNotificationType = _notificationType;
 		}
 
-		_type = type;
+		_notificationType = notificationType;
 	}
 
-	public int getOriginalType() {
-		return _originalType;
-	}
-
-	@Override
-	public boolean getEmail() {
-		return _email;
+	public int getOriginalNotificationType() {
+		return _originalNotificationType;
 	}
 
 	@Override
-	public boolean isEmail() {
-		return _email;
+	public int getDeliveryType() {
+		return _deliveryType;
 	}
 
 	@Override
-	public void setEmail(boolean email) {
-		_email = email;
+	public void setDeliveryType(int deliveryType) {
+		_columnBitmask |= DELIVERYTYPE_COLUMN_BITMASK;
+
+		if (!_setOriginalDeliveryType) {
+			_setOriginalDeliveryType = true;
+
+			_originalDeliveryType = _deliveryType;
+		}
+
+		_deliveryType = deliveryType;
+	}
+
+	public int getOriginalDeliveryType() {
+		return _originalDeliveryType;
 	}
 
 	@Override
-	public boolean getSms() {
-		return _sms;
+	public boolean getDeliver() {
+		return _deliver;
 	}
 
 	@Override
-	public boolean isSms() {
-		return _sms;
+	public boolean isDeliver() {
+		return _deliver;
 	}
 
 	@Override
-	public void setSms(boolean sms) {
-		_sms = sms;
-	}
-
-	@Override
-	public boolean getWebsite() {
-		return _website;
-	}
-
-	@Override
-	public boolean isWebsite() {
-		return _website;
-	}
-
-	@Override
-	public void setWebsite(boolean website) {
-		_website = website;
+	public void setDeliver(boolean deliver) {
+		_deliver = deliver;
 	}
 
 	public long getColumnBitmask() {
@@ -388,11 +407,11 @@ public class UserNotificationDeliveryModelImpl extends BaseModelImpl<UserNotific
 		userNotificationDeliveryImpl.setUserNotificationDeliveryId(getUserNotificationDeliveryId());
 		userNotificationDeliveryImpl.setCompanyId(getCompanyId());
 		userNotificationDeliveryImpl.setUserId(getUserId());
+		userNotificationDeliveryImpl.setPortletId(getPortletId());
 		userNotificationDeliveryImpl.setClassNameId(getClassNameId());
-		userNotificationDeliveryImpl.setType(getType());
-		userNotificationDeliveryImpl.setEmail(getEmail());
-		userNotificationDeliveryImpl.setSms(getSms());
-		userNotificationDeliveryImpl.setWebsite(getWebsite());
+		userNotificationDeliveryImpl.setNotificationType(getNotificationType());
+		userNotificationDeliveryImpl.setDeliveryType(getDeliveryType());
+		userNotificationDeliveryImpl.setDeliver(getDeliver());
 
 		userNotificationDeliveryImpl.resetOriginalValues();
 
@@ -449,13 +468,19 @@ public class UserNotificationDeliveryModelImpl extends BaseModelImpl<UserNotific
 
 		userNotificationDeliveryModelImpl._setOriginalUserId = false;
 
+		userNotificationDeliveryModelImpl._originalPortletId = userNotificationDeliveryModelImpl._portletId;
+
 		userNotificationDeliveryModelImpl._originalClassNameId = userNotificationDeliveryModelImpl._classNameId;
 
 		userNotificationDeliveryModelImpl._setOriginalClassNameId = false;
 
-		userNotificationDeliveryModelImpl._originalType = userNotificationDeliveryModelImpl._type;
+		userNotificationDeliveryModelImpl._originalNotificationType = userNotificationDeliveryModelImpl._notificationType;
 
-		userNotificationDeliveryModelImpl._setOriginalType = false;
+		userNotificationDeliveryModelImpl._setOriginalNotificationType = false;
+
+		userNotificationDeliveryModelImpl._originalDeliveryType = userNotificationDeliveryModelImpl._deliveryType;
+
+		userNotificationDeliveryModelImpl._setOriginalDeliveryType = false;
 
 		userNotificationDeliveryModelImpl._columnBitmask = 0;
 	}
@@ -470,15 +495,21 @@ public class UserNotificationDeliveryModelImpl extends BaseModelImpl<UserNotific
 
 		userNotificationDeliveryCacheModel.userId = getUserId();
 
+		userNotificationDeliveryCacheModel.portletId = getPortletId();
+
+		String portletId = userNotificationDeliveryCacheModel.portletId;
+
+		if ((portletId != null) && (portletId.length() == 0)) {
+			userNotificationDeliveryCacheModel.portletId = null;
+		}
+
 		userNotificationDeliveryCacheModel.classNameId = getClassNameId();
 
-		userNotificationDeliveryCacheModel.type = getType();
+		userNotificationDeliveryCacheModel.notificationType = getNotificationType();
 
-		userNotificationDeliveryCacheModel.email = getEmail();
+		userNotificationDeliveryCacheModel.deliveryType = getDeliveryType();
 
-		userNotificationDeliveryCacheModel.sms = getSms();
-
-		userNotificationDeliveryCacheModel.website = getWebsite();
+		userNotificationDeliveryCacheModel.deliver = getDeliver();
 
 		return userNotificationDeliveryCacheModel;
 	}
@@ -493,16 +524,16 @@ public class UserNotificationDeliveryModelImpl extends BaseModelImpl<UserNotific
 		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
+		sb.append(", portletId=");
+		sb.append(getPortletId());
 		sb.append(", classNameId=");
 		sb.append(getClassNameId());
-		sb.append(", type=");
-		sb.append(getType());
-		sb.append(", email=");
-		sb.append(getEmail());
-		sb.append(", sms=");
-		sb.append(getSms());
-		sb.append(", website=");
-		sb.append(getWebsite());
+		sb.append(", notificationType=");
+		sb.append(getNotificationType());
+		sb.append(", deliveryType=");
+		sb.append(getDeliveryType());
+		sb.append(", deliver=");
+		sb.append(getDeliver());
 		sb.append("}");
 
 		return sb.toString();
@@ -529,24 +560,24 @@ public class UserNotificationDeliveryModelImpl extends BaseModelImpl<UserNotific
 		sb.append(getUserId());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>portletId</column-name><column-value><![CDATA[");
+		sb.append(getPortletId());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>classNameId</column-name><column-value><![CDATA[");
 		sb.append(getClassNameId());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>type</column-name><column-value><![CDATA[");
-		sb.append(getType());
+			"<column><column-name>notificationType</column-name><column-value><![CDATA[");
+		sb.append(getNotificationType());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>email</column-name><column-value><![CDATA[");
-		sb.append(getEmail());
+			"<column><column-name>deliveryType</column-name><column-value><![CDATA[");
+		sb.append(getDeliveryType());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>sms</column-name><column-value><![CDATA[");
-		sb.append(getSms());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>website</column-name><column-value><![CDATA[");
-		sb.append(getWebsite());
+			"<column><column-name>deliver</column-name><column-value><![CDATA[");
+		sb.append(getDeliver());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
@@ -564,15 +595,18 @@ public class UserNotificationDeliveryModelImpl extends BaseModelImpl<UserNotific
 	private String _userUuid;
 	private long _originalUserId;
 	private boolean _setOriginalUserId;
+	private String _portletId;
+	private String _originalPortletId;
 	private long _classNameId;
 	private long _originalClassNameId;
 	private boolean _setOriginalClassNameId;
-	private int _type;
-	private int _originalType;
-	private boolean _setOriginalType;
-	private boolean _email;
-	private boolean _sms;
-	private boolean _website;
+	private int _notificationType;
+	private int _originalNotificationType;
+	private boolean _setOriginalNotificationType;
+	private int _deliveryType;
+	private int _originalDeliveryType;
+	private boolean _setOriginalDeliveryType;
+	private boolean _deliver;
 	private long _columnBitmask;
 	private UserNotificationDelivery _escapedModel;
 }

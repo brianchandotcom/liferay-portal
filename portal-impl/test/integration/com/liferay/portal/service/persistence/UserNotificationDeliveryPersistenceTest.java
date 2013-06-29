@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.UserNotificationDelivery;
 import com.liferay.portal.model.impl.UserNotificationDeliveryModelImpl;
 import com.liferay.portal.service.ServiceTestUtil;
@@ -116,15 +117,15 @@ public class UserNotificationDeliveryPersistenceTest {
 
 		newUserNotificationDelivery.setUserId(ServiceTestUtil.nextLong());
 
+		newUserNotificationDelivery.setPortletId(ServiceTestUtil.randomString());
+
 		newUserNotificationDelivery.setClassNameId(ServiceTestUtil.nextLong());
 
-		newUserNotificationDelivery.setType(ServiceTestUtil.nextInt());
+		newUserNotificationDelivery.setNotificationType(ServiceTestUtil.nextInt());
 
-		newUserNotificationDelivery.setEmail(ServiceTestUtil.randomBoolean());
+		newUserNotificationDelivery.setDeliveryType(ServiceTestUtil.nextInt());
 
-		newUserNotificationDelivery.setSms(ServiceTestUtil.randomBoolean());
-
-		newUserNotificationDelivery.setWebsite(ServiceTestUtil.randomBoolean());
+		newUserNotificationDelivery.setDeliver(ServiceTestUtil.randomBoolean());
 
 		_persistence.update(newUserNotificationDelivery);
 
@@ -136,16 +137,16 @@ public class UserNotificationDeliveryPersistenceTest {
 			newUserNotificationDelivery.getCompanyId());
 		Assert.assertEquals(existingUserNotificationDelivery.getUserId(),
 			newUserNotificationDelivery.getUserId());
+		Assert.assertEquals(existingUserNotificationDelivery.getPortletId(),
+			newUserNotificationDelivery.getPortletId());
 		Assert.assertEquals(existingUserNotificationDelivery.getClassNameId(),
 			newUserNotificationDelivery.getClassNameId());
-		Assert.assertEquals(existingUserNotificationDelivery.getType(),
-			newUserNotificationDelivery.getType());
-		Assert.assertEquals(existingUserNotificationDelivery.getEmail(),
-			newUserNotificationDelivery.getEmail());
-		Assert.assertEquals(existingUserNotificationDelivery.getSms(),
-			newUserNotificationDelivery.getSms());
-		Assert.assertEquals(existingUserNotificationDelivery.getWebsite(),
-			newUserNotificationDelivery.getWebsite());
+		Assert.assertEquals(existingUserNotificationDelivery.getNotificationType(),
+			newUserNotificationDelivery.getNotificationType());
+		Assert.assertEquals(existingUserNotificationDelivery.getDeliveryType(),
+			newUserNotificationDelivery.getDeliveryType());
+		Assert.assertEquals(existingUserNotificationDelivery.getDeliver(),
+			newUserNotificationDelivery.getDeliver());
 	}
 
 	@Test
@@ -186,8 +187,8 @@ public class UserNotificationDeliveryPersistenceTest {
 	protected OrderByComparator getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("UserNotificationDelivery",
 			"userNotificationDeliveryId", true, "companyId", true, "userId",
-			true, "classNameId", true, "type", true, "email", true, "sms",
-			true, "website", true);
+			true, "portletId", true, "classNameId", true, "notificationType",
+			true, "deliveryType", true, "deliver", true);
 	}
 
 	@Test
@@ -323,10 +324,15 @@ public class UserNotificationDeliveryPersistenceTest {
 
 		Assert.assertEquals(existingUserNotificationDeliveryModelImpl.getUserId(),
 			existingUserNotificationDeliveryModelImpl.getOriginalUserId());
+		Assert.assertTrue(Validator.equals(
+				existingUserNotificationDeliveryModelImpl.getPortletId(),
+				existingUserNotificationDeliveryModelImpl.getOriginalPortletId()));
 		Assert.assertEquals(existingUserNotificationDeliveryModelImpl.getClassNameId(),
 			existingUserNotificationDeliveryModelImpl.getOriginalClassNameId());
-		Assert.assertEquals(existingUserNotificationDeliveryModelImpl.getType(),
-			existingUserNotificationDeliveryModelImpl.getOriginalType());
+		Assert.assertEquals(existingUserNotificationDeliveryModelImpl.getNotificationType(),
+			existingUserNotificationDeliveryModelImpl.getOriginalNotificationType());
+		Assert.assertEquals(existingUserNotificationDeliveryModelImpl.getDeliveryType(),
+			existingUserNotificationDeliveryModelImpl.getOriginalDeliveryType());
 	}
 
 	protected UserNotificationDelivery addUserNotificationDelivery()
@@ -339,15 +345,15 @@ public class UserNotificationDeliveryPersistenceTest {
 
 		userNotificationDelivery.setUserId(ServiceTestUtil.nextLong());
 
+		userNotificationDelivery.setPortletId(ServiceTestUtil.randomString());
+
 		userNotificationDelivery.setClassNameId(ServiceTestUtil.nextLong());
 
-		userNotificationDelivery.setType(ServiceTestUtil.nextInt());
+		userNotificationDelivery.setNotificationType(ServiceTestUtil.nextInt());
 
-		userNotificationDelivery.setEmail(ServiceTestUtil.randomBoolean());
+		userNotificationDelivery.setDeliveryType(ServiceTestUtil.nextInt());
 
-		userNotificationDelivery.setSms(ServiceTestUtil.randomBoolean());
-
-		userNotificationDelivery.setWebsite(ServiceTestUtil.randomBoolean());
+		userNotificationDelivery.setDeliver(ServiceTestUtil.randomBoolean());
 
 		_persistence.update(userNotificationDelivery);
 

@@ -15,26 +15,29 @@
 package com.liferay.portal.kernel.scripting;
 
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+import com.liferay.portal.kernel.util.ClassLoaderPool;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletContext;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 
 /**
  * @author Alberto Montero
  * @author Brian Wing Shun Chan
+ * @author Shuyang Zhou
  */
 public class ScriptingUtil {
-
-	public static void addScriptingExecutor(
-		String language, ScriptingExecutor scriptingExecutor) {
-
-		getScripting().addScriptingExecutor(language, scriptingExecutor);
-	}
 
 	public static void clearCache(String language) throws ScriptingException {
 		getScripting().clearCache(language);
@@ -48,7 +51,7 @@ public class ScriptingUtil {
 
 		return getScripting().eval(
 			allowedClasses, inputObjects, outputNames, language, script,
-			classLoaders);
+			toServletContextNames(classLoaders));
 	}
 
 	public static void exec(
@@ -57,15 +60,50 @@ public class ScriptingUtil {
 		throws ScriptingException {
 
 		getScripting().exec(
-			allowedClasses, inputObjects, language, script, classLoaders);
+			allowedClasses, inputObjects, language, script,
+			toServletContextNames(classLoaders));
 	}
 
 	public static Map<String, Object> getPortletObjects(
 		PortletConfig portletConfig, PortletContext portletContext,
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		return getScripting().getPortletObjects(
-			portletConfig, portletContext, portletRequest, portletResponse);
+		Map<String, Object> objects = new HashMap<String, Object>();
+
+		objects.put("portletConfig", portletConfig);
+		objects.put("portletContext", portletContext);
+		objects.put("preferences", portletRequest.getPreferences());
+
+		if (portletRequest instanceof ActionRequest) {
+			objects.put("actionRequest", portletRequest);
+		}
+		else if (portletRequest instanceof RenderRequest) {
+			objects.put("renderRequest", portletRequest);
+		}
+		else if (portletRequest instanceof ResourceRequest) {
+			objects.put("resourceRequest", portletRequest);
+		}
+		else {
+			objects.put("portletRequest", portletRequest);
+		}
+
+		if (portletResponse instanceof ActionResponse) {
+			objects.put("actionResponse", portletResponse);
+		}
+		else if (portletResponse instanceof RenderResponse) {
+			objects.put("renderResponse", portletResponse);
+		}
+		else if (portletResponse instanceof ResourceResponse) {
+			objects.put("resourceResponse", portletResponse);
+		}
+		else {
+			objects.put("portletResponse", portletResponse);
+		}
+
+		objects.put(
+			"userInfo", portletRequest.getAttribute(PortletRequest.USER_INFO));
+
+		return objects;
 	}
 
 	public static Scripting getScripting() {
@@ -82,6 +120,17 @@ public class ScriptingUtil {
 		PortalRuntimePermission.checkSetBeanProperty(getClass());
 
 		_scripting = scripting;
+	}
+
+	private static String[] toServletContextNames(ClassLoader[] classLoaders) {
+		String[] servletContextNames = new String[classLoaders.length];
+
+		for (int i = 0; i < classLoaders.length; i++) {
+			servletContextNames[i] = ClassLoaderPool.getContextName(
+				classLoaders[i]);
+		}
+
+		return servletContextNames;
 	}
 
 	private static Scripting _scripting;

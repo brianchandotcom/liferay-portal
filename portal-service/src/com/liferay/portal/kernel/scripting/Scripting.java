@@ -20,41 +20,27 @@ import com.liferay.portal.kernel.messaging.proxy.ProxyMode;
 import java.util.Map;
 import java.util.Set;
 
-import javax.portlet.PortletConfig;
-import javax.portlet.PortletContext;
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
-
 /**
  * @author Alberto Montero
  * @author Brian Wing Shun Chan
+ * @author Shuyang Zhou
  */
 @MessagingProxy(mode = ProxyMode.SYNC)
 public interface Scripting {
-
-	public void addScriptingExecutor(
-		String language, ScriptingExecutor scriptingExecutor);
 
 	public void clearCache(String language) throws ScriptingException;
 
 	public Map<String, Object> eval(
 			Set<String> allowedClasses, Map<String, Object> inputObjects,
 			Set<String> outputNames, String language, String script,
-			ClassLoader... classLoaders)
+			String... servletContextNames)
 		throws ScriptingException;
 
 	public void exec(
 			Set<String> allowedClasses, Map<String, Object> inputObjects,
-			String language, String script, ClassLoader... classLoaders)
+			String language, String script, String... servletContextNames)
 		throws ScriptingException;
 
-	public Map<String, Object> getPortletObjects(
-		PortletConfig portletConfig, PortletContext portletContext,
-		PortletRequest portletRequest, PortletResponse portletResponse);
-
 	public Set<String> getSupportedLanguages();
-
-	public void setScriptingExecutors(
-		Map<String, ScriptingExecutor> scriptingExecutors);
 
 }

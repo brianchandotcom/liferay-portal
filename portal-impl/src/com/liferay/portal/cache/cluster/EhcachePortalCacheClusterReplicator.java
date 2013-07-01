@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.cache.cluster.PortalCacheClusterEventType;
 import com.liferay.portal.kernel.cache.cluster.PortalCacheClusterLinkUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 
+import java.io.Serializable;
+
 import java.util.Properties;
 
 import net.sf.ehcache.CacheException;
@@ -86,13 +88,16 @@ public class EhcachePortalCacheClusterReplicator implements CacheReplicator {
 			return;
 		}
 
+		Serializable key = (Serializable)element.getObjectKey();
+
 		PortalCacheClusterEvent portalCacheClusterEvent =
 			new PortalCacheClusterEvent(
-				ehcache.getName(), element.getKey(),
-				PortalCacheClusterEventType.PUT);
+				ehcache.getName(), key, PortalCacheClusterEventType.PUT);
 
 		if (_replicatePutsViaCopy) {
-			portalCacheClusterEvent.setElementValue(element.getValue());
+			Serializable value = (Serializable)element.getObjectValue();
+
+			portalCacheClusterEvent.setElementValue(value);
 		}
 
 		PortalCacheClusterLinkUtil.sendEvent(portalCacheClusterEvent);
@@ -106,10 +111,11 @@ public class EhcachePortalCacheClusterReplicator implements CacheReplicator {
 			return;
 		}
 
+		Serializable key = (Serializable)element.getObjectKey();
+
 		PortalCacheClusterEvent portalCacheClusterEvent =
 			new PortalCacheClusterEvent(
-				ehcache.getName(), element.getKey(),
-				PortalCacheClusterEventType.REMOVE);
+				ehcache.getName(), key, PortalCacheClusterEventType.REMOVE);
 
 		PortalCacheClusterLinkUtil.sendEvent(portalCacheClusterEvent);
 	}
@@ -122,13 +128,16 @@ public class EhcachePortalCacheClusterReplicator implements CacheReplicator {
 			return;
 		}
 
+		Serializable key = (Serializable)element.getObjectKey();
+
 		PortalCacheClusterEvent portalCacheClusterEvent =
 			new PortalCacheClusterEvent(
-				ehcache.getName(), element.getKey(),
-				PortalCacheClusterEventType.UPDATE);
+				ehcache.getName(), key, PortalCacheClusterEventType.UPDATE);
 
 		if (_replicateUpdatesViaCopy) {
-			portalCacheClusterEvent.setElementValue(element.getValue());
+			Serializable value = (Serializable)element.getObjectValue();
+
+			portalCacheClusterEvent.setElementValue(value);
 		}
 
 		PortalCacheClusterLinkUtil.sendEvent(portalCacheClusterEvent);

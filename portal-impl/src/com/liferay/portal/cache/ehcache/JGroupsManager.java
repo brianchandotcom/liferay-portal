@@ -248,7 +248,7 @@ public class JGroupsManager implements CacheManagerPeerProvider, CachePeer {
 		else if (event == JGroupEventMessage.PUT) {
 			Element element = jGroupEventMessage.getElement();
 
-			cache.put(new Element(key, element.getValue()), true);
+			cache.put(new Element(key, element.getObjectValue()), true);
 		}
 	}
 

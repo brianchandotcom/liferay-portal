@@ -16,7 +16,6 @@ package com.liferay.portal.cache.ehcache;
 
 import java.util.Properties;
 
-import net.sf.ehcache.bootstrap.BootstrapCacheLoader;
 import net.sf.ehcache.bootstrap.BootstrapCacheLoaderFactory;
 
 /**
@@ -24,10 +23,10 @@ import net.sf.ehcache.bootstrap.BootstrapCacheLoaderFactory;
  * @author Sherry Yang
  */
 public class EhcacheStreamBootstrapCacheLoaderFactory
-	extends BootstrapCacheLoaderFactory {
+	extends BootstrapCacheLoaderFactory<EhcacheStreamBootstrapCacheLoader> {
 
 	@Override
-	public BootstrapCacheLoader createBootstrapCacheLoader(
+	public EhcacheStreamBootstrapCacheLoader createBootstrapCacheLoader(
 		Properties properties) {
 
 		return new EhcacheStreamBootstrapCacheLoader(properties);

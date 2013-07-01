@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.messaging.proxy.MessageValuesThreadLocal;
 import com.liferay.portal.kernel.scripting.ScriptingException;
+import com.liferay.portal.kernel.scripting.ScriptingHelperUtil;
 import com.liferay.portal.kernel.scripting.ScriptingUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
@@ -486,8 +487,9 @@ public class EditServerAction extends PortletAction {
 
 		PortletContext portletContext = portletConfig.getPortletContext();
 
-		Map<String, Object> portletObjects = ScriptingUtil.getPortletObjects(
-			portletConfig, portletContext, actionRequest, actionResponse);
+		Map<String, Object> portletObjects =
+			ScriptingHelperUtil.getPortletObjects(
+				portletConfig, portletContext, actionRequest, actionResponse);
 
 		UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
 			new UnsyncByteArrayOutputStream();

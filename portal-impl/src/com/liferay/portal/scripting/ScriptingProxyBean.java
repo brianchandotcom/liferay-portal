@@ -16,27 +16,15 @@ package com.liferay.portal.scripting;
 
 import com.liferay.portal.kernel.messaging.proxy.BaseProxyBean;
 import com.liferay.portal.kernel.scripting.Scripting;
-import com.liferay.portal.kernel.scripting.ScriptingExecutor;
 
 import java.util.Map;
 import java.util.Set;
 
-import javax.portlet.PortletConfig;
-import javax.portlet.PortletContext;
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
-
 /**
  * @author Michael C. Han
+ * @author Shuyang Zhou
  */
 public class ScriptingProxyBean extends BaseProxyBean implements Scripting {
-
-	@Override
-	public void addScriptingExecutor(
-		String language, ScriptingExecutor scriptingExecutor) {
-
-		throw new UnsupportedOperationException();
-	}
 
 	@Override
 	public void clearCache(String language) {
@@ -47,7 +35,7 @@ public class ScriptingProxyBean extends BaseProxyBean implements Scripting {
 	public Map<String, Object> eval(
 		Set<String> allowedClasses, Map<String, Object> inputObjects,
 		Set<String> outputNames, String language, String script,
-		ClassLoader... classLoaders) {
+		String... servletContextNames) {
 
 		throw new UnsupportedOperationException();
 	}
@@ -55,28 +43,13 @@ public class ScriptingProxyBean extends BaseProxyBean implements Scripting {
 	@Override
 	public void exec(
 		Set<String> allowedClasses, Map<String, Object> inputObjects,
-		String language, String script, ClassLoader... classLoaders) {
-
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public Map<String, Object> getPortletObjects(
-		PortletConfig portletConfig, PortletContext portletContext,
-		PortletRequest portletRequest, PortletResponse portletResponse) {
+		String language, String script, String... servletContextNames) {
 
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public Set<String> getSupportedLanguages() {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public void setScriptingExecutors(
-		Map<String, ScriptingExecutor> scriptingExecutors) {
-
 		throw new UnsupportedOperationException();
 	}
 

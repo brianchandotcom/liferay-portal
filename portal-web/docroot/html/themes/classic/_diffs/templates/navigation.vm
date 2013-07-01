@@ -1,7 +1,3 @@
-<a class="brand $logo_css_class" href="$site_default_url" title="#language ("go-to") $site_name">
-	<img alt="$logo_description" height="$site_logo_height" src="$site_logo" width="$site_logo_width" />
-</a>
-
 <nav class="$nav_css_class navbar site-navigation" id="navigation">
 	<div class="navbar-inner">
 

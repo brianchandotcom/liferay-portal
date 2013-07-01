@@ -127,7 +127,12 @@
 	}
 
 	.lfr-meta-actions {
+		margin-right: 1em;
 		padding-top: 0;
+	}
+
+	.add-asset-selector {
+		margin-right: 0;
 	}
 
 	.metadata-author {

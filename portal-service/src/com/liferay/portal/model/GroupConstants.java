@@ -29,6 +29,8 @@ public class GroupConstants {
 
 	public static final long DEFAULT_LIVE_GROUP_ID = 0;
 
+	public static final int DEFAULT_MEMBERSHIP_RESTRICTION = 0;
+
 	public static final long DEFAULT_PARENT_GROUP_ID = 0;
 
 	public static final String GLOBAL = "Global";

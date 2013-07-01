@@ -95,7 +95,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	public Group addGroup(
 			long parentGroupId, long liveGroupId, String name,
 			String description, int type, String friendlyURL, boolean site,
-			boolean active, boolean manualMembership,
+			boolean active, boolean manualMembership, int membershipType,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
@@ -111,7 +111,8 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 
 		Group group = groupLocalService.addGroup(
 			getUserId(), parentGroupId, null, 0, liveGroupId, name, description,
-			type, friendlyURL, site, active, manualMembership, serviceContext);
+			type, friendlyURL, site, active, manualMembership, membershipType,
+			serviceContext);
 
 		if (site) {
 			SiteMembershipPolicyUtil.verifyPolicy(group);
@@ -154,7 +155,8 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 
 		return addGroup(
 			parentGroupId, GroupConstants.DEFAULT_LIVE_GROUP_ID, name,
-			description, type, friendlyURL, site, active, true, serviceContext);
+			description, type, friendlyURL, site, active, true,
+			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, serviceContext);
 	}
 
 	/**
@@ -1072,7 +1074,8 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	public Group updateGroup(
 			long groupId, long parentGroupId, String name, String description,
 			int type, String friendlyURL, boolean active,
-			boolean manualMembership, ServiceContext serviceContext)
+			boolean manualMembership, int membershipRestriction,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		Group group = groupPersistence.findByPrimaryKey(groupId);
@@ -1109,7 +1112,8 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 
 			group = groupLocalService.updateGroup(
 				groupId, parentGroupId, name, description, type, friendlyURL,
-				active, manualMembership, serviceContext);
+				active, manualMembership, membershipRestriction,
+				serviceContext);
 
 			SiteMembershipPolicyUtil.verifyPolicy(
 				group, oldGroup, oldAssetCategories, oldAssetTags,
@@ -1120,7 +1124,8 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 		else {
 			return groupLocalService.updateGroup(
 				groupId, parentGroupId, name, description, type, friendlyURL,
-				active, manualMembership, serviceContext);
+				active, manualMembership, membershipRestriction,
+				serviceContext);
 		}
 	}
 

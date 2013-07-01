@@ -229,7 +229,7 @@ AUI.add(
 					instance._backgroundColorPicker = new A.ColorPickerPopover(
 						{
 							trigger: backgroundColor,
-							zIndex: 1000
+							plugins: [Liferay.WidgetZIndex]
 						}
 					).render(instance._currentPopup.get(BOUNDING_BOX));
 				}
@@ -1904,7 +1904,7 @@ AUI.add(
 					instance._fontColorPicker = new A.ColorPickerPopover(
 						{
 							trigger: fontColor,
-							zIndex: 1000
+							plugins: [Liferay.WidgetZIndex]
 						}
 					).render(instance._currentPopup.get(BOUNDING_BOX));
 				}
@@ -2008,6 +2008,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-color-picker-popover', 'aui-io-plugin-deprecated', 'aui-io-request', 'aui-tabview', 'liferay-util-window']
+		requires: ['aui-color-picker-popover', 'aui-io-plugin-deprecated', 'aui-io-request', 'aui-tabview',  'liferay-util-window', 'liferay-widget-zindex']
 	}
 );

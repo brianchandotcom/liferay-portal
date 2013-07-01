@@ -199,10 +199,10 @@ AUI.add(
 
 										return formattedValue;
 									},
+									plugins: [Liferay.WidgetStack],
 									position: 'bottom',
 									trigger: '.palette-item',
-									visible: false,
-									zIndex: Liferay.zIndex.WINDOW + 2
+									visible: false
 								}
 							);
 						}

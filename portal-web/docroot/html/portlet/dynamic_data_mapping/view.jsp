@@ -174,9 +174,6 @@ portletURL.setParameter("tabs1", tabs1);
 	function <portlet:namespace />copyStructure(uri) {
 		Liferay.Util.openWindow(
 			{
-				dialog: {
-					zIndex: Liferay.zIndex.WINDOW + 2
-				},
 				id: '<portlet:namespace />copyStructure',
 				refreshWindow: window,
 				title: '<%= UnicodeLanguageUtil.get(pageContext, "copy-data-definition") %>',

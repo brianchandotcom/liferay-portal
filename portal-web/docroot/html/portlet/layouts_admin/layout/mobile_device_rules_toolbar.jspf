@@ -96,8 +96,7 @@
 <aui:script use="aui-base">
 	var config = {
 		dialog: {
-			width: 820,
-			zIndex: Liferay.zIndex.WINDOW + 2
+			width: 820
 		}
 	};
 

@@ -113,7 +113,6 @@ List<Group> groups = (List<Group>)request.getAttribute("user.groups");
 						dialog: {
 							constrain: true,
 							modal: true,
-							zIndex: Liferay.zIndex.WINDOW + 2,
 							width: 600
 						},
 						id: '<portlet:namespace />selectGroup',

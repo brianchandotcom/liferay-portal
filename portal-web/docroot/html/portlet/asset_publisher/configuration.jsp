@@ -263,9 +263,6 @@ String emailBodyParam = emailParam + "Body_" + currentLanguageId;
 
 			Liferay.Util.openWindow(
 				{
-					dialog: {
-						zIndex: Liferay.zIndex.WINDOW + 2
-					},
 					id: link.attr('id'),
 					title: link.html(),
 					uri: link.attr('href')

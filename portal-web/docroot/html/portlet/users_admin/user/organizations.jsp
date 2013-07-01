@@ -133,7 +133,6 @@ List<Organization> organizations = (List<Organization>)request.getAttribute("use
 						dialog: {
 							constrain: true,
 							modal: true,
-							zIndex: Liferay.zIndex.WINDOW + 2,
 							width: 600
 						},
 						id: '<portlet:namespace />selectOrganization',

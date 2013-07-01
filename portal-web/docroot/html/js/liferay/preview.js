@@ -286,8 +286,8 @@ AUI.add(
 									centered: true,
 									cssClass: 'lfr-preview-file-image-overlay',
 									height: '90%',
-									width: '85%',
-									zIndex: 1005
+									plugins: [Liferay.WidgetStack],
+									width: '85%'
 								}
 							).render();
 

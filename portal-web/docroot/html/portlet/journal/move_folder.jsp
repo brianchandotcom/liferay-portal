@@ -100,7 +100,6 @@ long parentFolderId = BeanParamUtil.getLong(folder, request, "parentFolderId", J
 					dialog: {
 						constrain: true,
 						modal: true,
-						zIndex: Liferay.zIndex.WINDOW + 2,
 						width: 680
 					},
 					id: '<portlet:namespace />selectFolder',

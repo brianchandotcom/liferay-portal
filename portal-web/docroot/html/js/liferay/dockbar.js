@@ -59,7 +59,7 @@ AUI.add(
 				}
 			},
 
-			fetchPanelNode: function(panelId) {
+			getPanelNode: function(panelId) {
 				var instance = this;
 
 				var panelNode = null;
@@ -173,7 +173,7 @@ AUI.add(
 			_setLoadingAnimation: function() {
 				var instance = this;
 
-				instance.fetchPanelNode(STR_ADD_PANEL).html(TPL_LOADING);
+				instance.getPanelNode(STR_ADD_PANEL).html(TPL_LOADING);
 			},
 
 			_toggleAppShortcut: function(item, force) {
@@ -206,7 +206,7 @@ AUI.add(
 					var panelNode = panel.node;
 
 					if (!panelNode) {
-						panelNode = instance.fetchPanelNode(panel.id);
+						panelNode = instance.getPanelNode(panel.id);
 					}
 
 					BODY.toggleClass(panel.css);
@@ -389,7 +389,7 @@ AUI.add(
 								success: function(event, id, obj) {
 									var response = this.get('responseData');
 
-									var panelNode = instance.fetchPanelNode(STR_ADD_PANEL);
+									var panelNode = instance.getPanelNode(STR_ADD_PANEL);
 
 									panelNode.plug(A.Plugin.ParseContent);
 
@@ -421,7 +421,7 @@ AUI.add(
 								success: function(event, id, obj) {
 									var response = this.get('responseData');
 
-									var panelNode = instance.fetchPanelNode(STR_PREVIEW_PANEL);
+									var panelNode = instance.getPanelNode(STR_PREVIEW_PANEL);
 
 									panelNode.removeClass('loading-animation');
 

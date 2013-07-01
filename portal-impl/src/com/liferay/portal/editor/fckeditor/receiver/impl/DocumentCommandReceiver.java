@@ -173,11 +173,14 @@ public class DocumentCommandReceiver extends BaseCommandReceiver {
 
 			String name = fileEntry.getTitle();
 
-			String periodAndExtension = StringPool.PERIOD.concat(
-				fileEntry.getExtension());
+			String extension = fileEntry.getExtension();
 
-			if (!name.endsWith(periodAndExtension)) {
-				name = name.concat(periodAndExtension);
+			if (Validator.isNotNull(extension)) {
+				String periodAndExtension = StringPool.PERIOD.concat(extension);
+
+				if (!name.endsWith(periodAndExtension)) {
+					name = name.concat(periodAndExtension);
+				}
 			}
 
 			fileElement.setAttribute("name", name);

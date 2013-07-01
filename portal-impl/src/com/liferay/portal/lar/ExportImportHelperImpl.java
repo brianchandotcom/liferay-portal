@@ -959,7 +959,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 				}
 				else if (className.equals(DLFileEntryType.class.getName())) {
 					DLFileEntryType dlFileEntryType =
-						DLFileEntryTypeLocalServiceUtil.getFileEntryType(
+						DLFileEntryTypeLocalServiceUtil.fetchFileEntryType(
 							primaryKeyLong);
 
 					if (dlFileEntryType != null) {
@@ -973,7 +973,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 				}
 				else if (className.equals(Organization.class.getName())) {
 					Organization organization =
-						OrganizationLocalServiceUtil.getOrganization(
+						OrganizationLocalServiceUtil.fetchOrganization(
 							primaryKeyLong);
 
 					if (organization != null) {

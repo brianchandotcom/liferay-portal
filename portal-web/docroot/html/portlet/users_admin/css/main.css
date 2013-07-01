@@ -157,6 +157,10 @@
 		}
 	}
 
+	.membership-restriction-container {
+		margin-top: 1em;
+	}
+
 	.instant-messenger, .social-network {
 		clear: both;
 		overflow: hidden;

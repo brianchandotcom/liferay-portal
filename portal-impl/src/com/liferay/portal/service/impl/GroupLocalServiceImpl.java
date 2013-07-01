@@ -277,6 +277,11 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			friendlyURL = friendlyURL.concat("-staging");
 		}
 
+		if (parentGroupId == GroupConstants.DEFAULT_PARENT_GROUP_ID) {
+			membershipRestriction =
+				GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION;
+		}
+
 		if (className.equals(Group.class.getName())) {
 			if (!site && (liveGroupId == 0) &&
 				!name.equals(GroupConstants.CONTROL_PANEL)) {

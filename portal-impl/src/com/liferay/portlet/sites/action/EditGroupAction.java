@@ -462,8 +462,19 @@ public class EditGroupAction extends PortletAction {
 		String friendlyURL = null;
 		boolean active = false;
 		boolean manualMembership = true;
+
 		int membershipRestriction =
 			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION;
+
+		boolean membershipRestrictionParam = ParamUtil.getBoolean(
+			actionRequest, "membershipRestriction");
+
+		if (membershipRestrictionParam &&
+			(parentGroupId != GroupConstants.DEFAULT_PARENT_GROUP_ID)) {
+
+			membershipRestriction =
+				GroupConstants.MEMBERSHIP_RESTRICTION_TO_PARENT_SITE_MEMBERS;
+		}
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			Group.class.getName(), actionRequest);
@@ -483,8 +494,6 @@ public class EditGroupAction extends PortletAction {
 			active = ParamUtil.getBoolean(actionRequest, "active");
 			manualMembership = ParamUtil.getBoolean(
 				actionRequest, "manualMembership");
-			membershipRestriction = ParamUtil.getInteger(
-				actionRequest, "membershipRestriction");
 
 			liveGroup = GroupServiceUtil.addGroup(
 				parentGroupId, GroupConstants.DEFAULT_LIVE_GROUP_ID, name,
@@ -515,9 +524,6 @@ public class EditGroupAction extends PortletAction {
 			manualMembership = ParamUtil.getBoolean(
 				actionRequest, "manualMembership",
 				liveGroup.isManualMembership());
-			membershipRestriction = ParamUtil.getInteger(
-				actionRequest, "membershipRestriction",
-				liveGroup.getMembershipRestriction());
 
 			liveGroup = GroupServiceUtil.updateGroup(
 				liveGroupId, parentGroupId, name, description, type,

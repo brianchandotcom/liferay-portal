@@ -10,4 +10,8 @@
 	.staging-types .field-choice label {
 		font-weight: normal;
 	}
+
+	.membership-restriction-container {
+		margin-top: 1em;
+	}
 }

@@ -201,6 +201,9 @@ public interface PortletDataContext extends Serializable {
 
 	public boolean getBooleanParameter(String namespace, String name);
 
+	public boolean getBooleanParameter(
+		String namespace, String name, boolean useDefaultValue);
+
 	public ClassLoader getClassLoader();
 
 	public Map<String, List<MBMessage>> getComments();

@@ -45,6 +45,15 @@ public class PollsDisplayPortletDataHandler extends PollsPortletDataHandler {
 	public PollsDisplayPortletDataHandler() {
 		setDataLevel(DataLevel.PORTLET_INSTANCE);
 		setDataPortletPreferences("questionId");
+		setExportControls(
+			new PortletDataHandlerBoolean(
+				NAMESPACE, "selected-question", true, true,
+				new PortletDataHandlerControl[] {
+					new PortletDataHandlerBoolean(
+						NAMESPACE, "votes", true, false, null,
+						PollsVote.class.getName())
+				},
+				PollsQuestion.class.getName()));
 		setPublishToLiveByDefault(true);
 	}
 

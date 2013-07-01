@@ -16,6 +16,8 @@ package com.liferay.portlet.journal.service.persistence;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Projection;
+import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -73,6 +75,11 @@ public class JournalArticleExportActionableDynamicQuery
 
 		dynamicQuery.add(workflowStatusProperty.in(
 				stagedModelDataHandler.getExportableStatuses()));
+	}
+
+	@Override
+	protected Projection getCountProjection() {
+		return ProjectionFactoryUtil.countDistinct("resourcePrimKey");
 	}
 
 	protected long getModelDeletionCount()

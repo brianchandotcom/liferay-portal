@@ -17,60 +17,46 @@
 <%@ include file="/html/portlet/dockbar/init.jsp" %>
 
 <div id="<portlet:namespace />devicePreviewContainer">
+
 	<button class="close pull-right" id="closePanel" type="button">&#x00D7;</button>
 
 	<h1><%= LanguageUtil.get(pageContext, "preview") %></h1>
 
-	<div class="device-preview-content">
-		<aui:nav cssClass="nav-list">
-			<aui:nav-item cssClass="lfr-device-item row-fluid" data-device="autosize">
-				<div class="span4">
-					<div class="device autosize"></div>
-				</div>
-				<div class="span8">
-					<div><%= LanguageUtil.get(pageContext, "autosize") %></div>
-					<div><small>100%</small></div>
-				</div>
-			</aui:nav-item>
+	<aui:nav cssClass="nav-list">
+		<aui:nav-item cssClass="lfr-device-item autosize" data-device="autosize">
+			<div class="device-info">
+				<span class="device-name"><%= LanguageUtil.get(pageContext, "autosize") %></span>
+				<span class="device-dimensions">100%</span>
+			</div>
+		</aui:nav-item>
 
-			<aui:nav-item cssClass="lfr-device-item lfr-device-rotation row-fluid selected" data-device="smartphone">
-				<div class="span4">
-					<div class="rotation smartphone"></div>
-					<div class="device smartphone"></div>
-				</div>
-				<div class="span8">
-					<div><%= LanguageUtil.get(pageContext, "smartphone") %></div>
-					<div><small>768px</small></div>
-				</div>
-			</aui:nav-item>
+		<aui:nav-item cssClass="lfr-device-item selected smartphone" data-device="smartphone">
+			<div class="device-info">
+				<span class="device-name"><%= LanguageUtil.get(pageContext, "smartphone") %></span>
+				<span class="device-dimensions">768px</span>
+			</div>
+		</aui:nav-item>
 
-			<aui:nav-item cssClass="lfr-device-item lfr-device-rotation row-fluid" data-device="tablet">
-				<div class="span4">
-					<div class="rotation tablet"></div>
-					<div class="device tablet"></div>
-				</div>
-				<div class="span8">
-					<div><%= LanguageUtil.get(pageContext, "tablet") %></div>
-					<div><small>1024px</small></div>
-				</div>
-			</aui:nav-item>
+		<aui:nav-item cssClass="lfr-device-item tablet" data-device="tablet">
+			<div class="device-info">
+				<span class="device-name"><%= LanguageUtil.get(pageContext, "tablet") %></span>
+				<span class="device-dimensions">1024px</span>
+			</div>
+		</aui:nav-item>
 
-			<aui:nav-item cssClass="lfr-device-item row-fluid" data-device="desktop">
-				<div class="span4">
-					<div class="device desktop"></div>
-				</div>
-				<div class="span8">
-					<div><%= LanguageUtil.get(pageContext, "desktop") %></div>
-					<div><small>1280px</small></div>
-				</div>
-			</aui:nav-item>
+		<aui:nav-item cssClass="lfr-device-item desktop" data-device="desktop">
+			<div class="device-info">
+				<span class="device-name"><%= LanguageUtil.get(pageContext, "desktop") %></span>
+				<span class="device-dimensions">1280px</span>
+			</div>
+		</aui:nav-item>
 
-			<aui:nav-item cssClass="lfr-device-item row-fluid" data-device="custom">
-				<p><%= LanguageUtil.get(pageContext, "custom") %> (px)</p>
-				<aui:input cssClass="input-mini" inlineField="<%= true %>" label="" name="width" value="400" /><span> X </span><aui:input cssClass="input-mini" inlineField="<%= true %>" label="" name="height" value="400" />
-			</aui:nav-item>
-		</aui:nav>
-	</div>
+		<aui:nav-item cssClass="lfr-device-item" data-device="custom">
+			<p><%= LanguageUtil.get(pageContext, "custom") %> (px)</p>
+			<aui:input cssClass="input-mini" inlineField="<%= true %>" label="" name="width" value="400" /><span> &times; </span><aui:input cssClass="input-mini" inlineField="<%= true %>" label="" name="height" value="400" />
+		</aui:nav-item>
+	</aui:nav>
+
 	<div class="alert"><small><%= LanguageUtil.get(pageContext, "preview-may-not-be-really-accurate") %></small></div>
 </div>
 
@@ -91,6 +77,7 @@
 				'smartphone': {
 					height: 640,
 					preventTransition: true,
+					rotation: true,
 					selected: true,
 					skin: 'smartphone',
 					width: 400
@@ -98,6 +85,7 @@
 				'tablet': {
 					height: 900,
 					preventTransition: true,
+					rotation: true,
 					skin: 'tablet',
 					width: 760
 				}

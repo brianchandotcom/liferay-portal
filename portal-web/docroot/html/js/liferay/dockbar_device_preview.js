@@ -34,8 +34,6 @@ AUI.add(
 
 		var SELECTOR_DEVICE_ITEM = '.lfr-device-item';
 
-		var SELECTOR_DEVICE_PREVIEW_CONTENT = '.device-preview-content';
-
 		var SELECTOR_SELECTED = '.' + CSS_SELECTED;
 
 		var STR_BOUNDING_BOX = 'boundingBox';
@@ -92,7 +90,6 @@ AUI.add(
 
 						var devicePreviewContainer = instance.byId('devicePreviewContainer');
 
-						instance._devicePreviewContent = devicePreviewContainer.one(SELECTOR_DEVICE_PREVIEW_CONTENT);
 						instance._closePanelButton = devicePreviewContainer.one('#closePanel');
 
 						instance._devicePreviewNode = A.Node.create(Lang.sub(TPL_DEVICE_PREVIEW));
@@ -134,7 +131,7 @@ AUI.add(
 
 						eventHandles.push(
 							instance._closePanelButton.on(STR_CLICK, instance._closePanel, instance),
-							instance._devicePreviewContent.delegate(STR_CLICK, instance._onDeviceClick, SELECTOR_DEVICE_ITEM, instance)
+							instance._devicePreviewContainer.delegate(STR_CLICK, instance._onDeviceClick, SELECTOR_DEVICE_ITEM, instance)
 						);
 
 						var inputWidth = instance.get(STR_INPUT_WIDTH);
@@ -228,22 +225,17 @@ AUI.add(
 								width: dialogAttrs.size.width
 							};
 
-							var uri = WIN.location.href;
-
-							var path = WIN.location.pathname;
-
-							if (path === '/') {
-								uri += '?';
-							}
-
 							Liferay.Util.openWindow(
 								{
+									cache: false,
 									dialog: A.merge(DIALOG_DEFAULTS, dialogConfig),
 									dialogIframe: DIALOG_IFRAME_DEFAULTS,
 									id: instance._dialogId,
-									uri: uri
+									uri: WIN.location.href
 								},
 								function(dialogWindow) {
+									var dialogBoundingBox = dialogWindow.get(STR_BOUNDING_BOX);
+
 									dialogWindow.align(instance._devicePreviewNode, DIALOG_ALIGN_POINTS);
 
 									dialogWindow.plug(
@@ -253,14 +245,12 @@ AUI.add(
 											after: {
 												end: function(event) {
 													if (instance._selectedDevice.skin) {
-														dialogWindow.get(STR_BOUNDING_BOX).addClass(instance._selectedDevice.skin);
+														dialogBoundingBox.addClass(instance._selectedDevice.skin);
 													}
 
 													dialogWindow.sizeanim.set(STR_PREVENT_TRANSITION, instance._selectedDevice.preventTransition || false);
 												},
 												start: function(event) {
-													var dialogBoundingBox = dialogWindow.get(STR_BOUNDING_BOX);
-
 													AObject.each(
 														instance.get(STR_DEVICES),
 														function(item, index, collection) {
@@ -275,27 +265,18 @@ AUI.add(
 										}
 									);
 
-									dialogWindow.get(STR_BOUNDING_BOX).addClass(device.skin);
+									dialogBoundingBox.addClass(device.skin);
 
 									instance._eventHandles.push(
 										dialogWindow.on('resize:end', instance._onResizeEnd, instance),
 										dialogWindow.on('resize:resize', instance._onResize, instance),
-										dialogWindow.on('resize:start', instance._onResizeStart, instance)
+										dialogWindow.on('resize:start', instance._onResizeStart, instance),
+										dialogWindow.on('visibleChange', instance._onDialogVisibleChange, instance)
 									);
 								}
 							);
 						}
 						else {
-							if (!device.preventTransition) {
-								dialog.sizeanim.set(STR_PREVENT_TRANSITION, false);
-							}
-
-							dialog.setAttrs(dialogAttrs);
-
-							dialog.show();
-						}
-
-						if (dialog) {
 							var dialogBoundingBox = dialog.get(STR_BOUNDING_BOX);
 
 							var action = 'addClass';
@@ -305,6 +286,14 @@ AUI.add(
 							}
 
 							dialogBoundingBox[action](STR_ROTATED);
+
+							if (!device.preventTransition) {
+								dialog.sizeanim.set(STR_PREVENT_TRANSITION, false);
+							}
+
+							dialog.setAttrs(dialogAttrs);
+
+							dialog.show();
 						}
 
 						instance._selectedDevice = device;
@@ -328,7 +317,7 @@ AUI.add(
 
 							instance._deviceItems.removeClass(CSS_SELECTED);
 
-							if (deviceSelected && deviceItem.hasClass('lfr-device-rotation')) {
+							if (deviceSelected && device.rotation) {
 								deviceItem.toggleClass(STR_ROTATED);
 							}
 
@@ -336,6 +325,16 @@ AUI.add(
 
 							instance._openDeviceDialog(device, deviceItem.hasClass(STR_ROTATED));
 						}
+					},
+
+					_onDialogVisibleChange: function(event) {
+						var instance = this;
+
+						if (!event.newVal) {
+							instance._closePanel();
+						}
+
+						event.preventDefault();
 					},
 
 					_onResize: function(event) {

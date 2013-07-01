@@ -51,7 +51,7 @@
 
 	.lfr-device {
 		&:after, &:before {
-			@include box-shadow(#888 0 1px 0);
+			@include box-shadow(#111 0 1px 0);
 		}
 
 		&:after {
@@ -60,7 +60,7 @@
 
 		&.rotated {
 			&:after, &:before {
-				@include box-shadow(#888 -1px 1px 0);
+				@include box-shadow(#111 -1px 1px 0);
 			}
 		}
 

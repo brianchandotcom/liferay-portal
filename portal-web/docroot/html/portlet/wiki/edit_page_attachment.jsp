@@ -69,11 +69,23 @@ WikiPage wikiPage = (WikiPage)request.getAttribute(WebKeys.WIKI_PAGE);
 
 	<div class="lfr-fallback hide" id="<portlet:namespace />fallback">
 		<aui:fieldset label="upload-files">
-			<aui:input label='<%= LanguageUtil.get(pageContext, "file") + " 1" %>' name="file1" type="file" />
+			<aui:input label='<%= LanguageUtil.get(pageContext, "file") + " 1" %>' name="file1" type="file">
+				<aui:validator name="acceptFiles">
+					'<%= StringUtil.merge(PrefsPropsUtil.getStringArray(PropsKeys.DL_FILE_EXTENSIONS, StringPool.COMMA)) %>'
+				</aui:validator>
+			</aui:input>
 
-			<aui:input label='<%= LanguageUtil.get(pageContext, "file") + " 2" %>' name="file2" type="file" />
+			<aui:input label='<%= LanguageUtil.get(pageContext, "file") + " 2" %>' name="file2" type="file">
+				<aui:validator name="acceptFiles">
+					'<%= StringUtil.merge(PrefsPropsUtil.getStringArray(PropsKeys.DL_FILE_EXTENSIONS, StringPool.COMMA)) %>'
+				</aui:validator>
+			</aui:input>
 
-			<aui:input label='<%= LanguageUtil.get(pageContext, "file") + " 3" %>' name="file3" type="file" />
+			<aui:input label='<%= LanguageUtil.get(pageContext, "file") + " 3" %>' name="file3" type="file">
+				<aui:validator name="acceptFiles">
+					'<%= StringUtil.merge(PrefsPropsUtil.getStringArray(PropsKeys.DL_FILE_EXTENSIONS, StringPool.COMMA)) %>'
+				</aui:validator>
+			</aui:input>
 		</aui:fieldset>
 
 		<aui:button-row>
@@ -87,39 +99,6 @@ WikiPage wikiPage = (WikiPage)request.getAttribute(WebKeys.WIKI_PAGE);
 		</aui:button-row>
 	</div>
 </aui:form>
-
-<aui:script use="aui-base">
-	var validateFile = function(fileField) {
-		var value = fileField.val();
-
-		if (value) {
-			var extension = value.substring(value.lastIndexOf('.')).toLowerCase();
-			var validExtensions = ['<%= StringUtil.merge(PrefsPropsUtil.getStringArray(PropsKeys.DL_FILE_EXTENSIONS, StringPool.COMMA), "', '") %>'];
-
-			if ((A.Array.indexOf(validExtensions, '*') == -1) &&
-				(A.Array.indexOf(validExtensions, extension) == -1)) {
-
-				alert('<%= UnicodeLanguageUtil.get(pageContext, "document-names-must-end-with-one-of-the-following-extensions") %> <%= StringUtil.merge(PrefsPropsUtil.getStringArray(PropsKeys.DL_FILE_EXTENSIONS, StringPool.COMMA), StringPool.COMMA_AND_SPACE) %>');
-
-				fileField.val('');
-			}
-		}
-	};
-
-	var onFileChange = function(event) {
-		validateFile(event.currentTarget);
-	};
-
-	for (var i = 1; i < 4; i++) {
-		var fileField = A.one('#<portlet:namespace />file' + i);
-
-		if (fileField) {
-			fileField.on('change', onFileChange);
-
-			validateFile(fileField);
-		}
-	}
-</aui:script>
 
 <%
 Date expirationDate = new Date(System.currentTimeMillis() + PropsValues.SESSION_TIMEOUT * Time.MINUTE);

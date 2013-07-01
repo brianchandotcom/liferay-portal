@@ -27,6 +27,7 @@
 		<model-name>com.liferay.portlet.dynamicdatamapping.model.DDMStructure</model-name>
 		<portlet-ref>
 			<portlet-name>166</portlet-name>
+			<portlet-name>169</portlet-name>
 		</portlet-ref>
 		<permissions>
 			<supports>
@@ -50,6 +51,7 @@
 		<model-name>com.liferay.portlet.dynamicdatamapping.model.DDMTemplate</model-name>
 		<portlet-ref>
 			<portlet-name>166</portlet-name>
+			<portlet-name>169</portlet-name>
 		</portlet-ref>
 		<permissions>
 			<supports>

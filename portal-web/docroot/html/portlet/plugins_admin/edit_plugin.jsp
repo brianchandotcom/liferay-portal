@@ -135,7 +135,6 @@ if (pluginType.equals(Plugin.TYPE_PORTLET)) {
 											<portlet:param name="tabs1" value="roles" />
 											<portlet:param name="roleId" value="<%= String.valueOf(role.getRoleId()) %>" />
 											<portlet:param name="portletResource" value="<%= portlet.getPortletId() %>" />
-											<portlet:param name="showModelResources" value="0" />
 										</liferay-portlet:renderURL>
 
 										<liferay-ui:icon image="edit" label="<%= true %>" message="change" url="<%= editURL %>" />
@@ -178,7 +177,6 @@ if (pluginType.equals(Plugin.TYPE_PORTLET)) {
 											<portlet:param name="tabs1" value="roles" />
 											<portlet:param name="roleId" value="<%= String.valueOf(role.getRoleId()) %>" />
 											<portlet:param name="portletResource" value="<%= portlet.getPortletId() %>" />
-											<portlet:param name="showModelResources" value="0" />
 										</liferay-portlet:renderURL>
 
 										<liferay-ui:icon image="edit" label="<%= true %>" message="change" url="<%= editURL %>" />

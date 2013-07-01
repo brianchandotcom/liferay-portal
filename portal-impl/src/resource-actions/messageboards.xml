@@ -45,6 +45,7 @@
 		<model-name>com.liferay.portlet.messageboards</model-name>
 		<portlet-ref>
 			<portlet-name>19</portlet-name>
+			<portlet-name>162</portlet-name>
 		</portlet-ref>
 		<permissions>
 			<supports>
@@ -85,6 +86,7 @@
 		<model-name>com.liferay.portlet.messageboards.model.MBCategory</model-name>
 		<portlet-ref>
 			<portlet-name>19</portlet-name>
+			<portlet-name>162</portlet-name>
 		</portlet-ref>
 		<permissions>
 			<supports>
@@ -125,6 +127,7 @@
 		<model-name>com.liferay.portlet.messageboards.model.MBMessage</model-name>
 		<portlet-ref>
 			<portlet-name>19</portlet-name>
+			<portlet-name>162</portlet-name>
 		</portlet-ref>
 		<permissions>
 			<supports>
@@ -151,6 +154,7 @@
 		<model-name>com.liferay.portlet.messageboards.model.MBThread</model-name>
 		<portlet-ref>
 			<portlet-name>19</portlet-name>
+			<portlet-name>162</portlet-name>
 		</portlet-ref>
 		<permissions>
 			<supports>

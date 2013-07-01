@@ -42,6 +42,7 @@
 		<model-name>com.liferay.portlet.wiki</model-name>
 		<portlet-ref>
 			<portlet-name>36</portlet-name>
+			<portlet-name>154</portlet-name>
 		</portlet-ref>
 		<permissions>
 			<supports>
@@ -62,6 +63,7 @@
 		<model-name>com.liferay.portlet.wiki.model.WikiNode</model-name>
 		<portlet-ref>
 			<portlet-name>36</portlet-name>
+			<portlet-name>154</portlet-name>
 		</portlet-ref>
 		<permissions>
 			<supports>
@@ -94,6 +96,7 @@
 		<model-name>com.liferay.portlet.wiki.model.WikiPage</model-name>
 		<portlet-ref>
 			<portlet-name>36</portlet-name>
+			<portlet-name>154</portlet-name>
 		</portlet-ref>
 		<permissions>
 			<supports>

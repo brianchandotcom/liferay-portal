@@ -16,17 +16,17 @@
 
 <%@ include file="/html/portlet/roles_admin/init.jsp" %>
 
-<h3><liferay-ui:message key="summary" /></h3>
+<h3><liferay-ui:message key="all" /></h3>
 
 <%
 Role role = (Role)request.getAttribute("edit_role_permissions.jsp-role");
 
-PortletURL permissionsSummaryURL = renderResponse.createRenderURL();
+PortletURL permissionsAllURL = renderResponse.createRenderURL();
 
-permissionsSummaryURL.setParameter("struts_action", "/roles_admin/edit_role_permissions");
-permissionsSummaryURL.setParameter(Constants.CMD, Constants.VIEW);
-permissionsSummaryURL.setParameter("tabs1", "roles");
-permissionsSummaryURL.setParameter("roleId", String.valueOf(role.getRoleId()));
+permissionsAllURL.setParameter("struts_action", "/roles_admin/edit_role_permissions");
+permissionsAllURL.setParameter(Constants.CMD, Constants.VIEW);
+permissionsAllURL.setParameter("tabs1", "roles");
+permissionsAllURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 
 List<String> headerNames = new ArrayList<String>();
 
@@ -40,7 +40,7 @@ if (role.getType() == RoleConstants.TYPE_REGULAR) {
 
 headerNames.add(StringPool.BLANK);
 
-SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, permissionsSummaryURL, headerNames, "this-role-does-not-have-any-permissions");
+SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, permissionsAllURL, headerNames, "this-role-does-not-have-any-permissions");
 
 List<Permission> permissions = PermissionConverterUtil.convertPermissions(role);
 
@@ -85,12 +85,7 @@ for (int i = 0; i < permissions.size(); i++) {
 
 	Portlet portlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), curPortletName);
 
-	if (portlet.getPortletId().equals(PortletKeys.PORTAL)) {
-		curPortletLabel = LanguageUtil.get(pageContext, "general");
-	}
-	else {
-		curPortletLabel = PortalUtil.getPortletLongTitle(portlet, application, locale);
-	}
+	curPortletLabel = PortalUtil.getPortletLongTitle(portlet, application, locale);
 
 	PermissionDisplay permissionDisplay = new PermissionDisplay(permission, resource, curPortletName, curPortletLabel, curModelName, curModelLabel, actionId, actionLabel);
 
@@ -173,15 +168,8 @@ for (int i = 0; i < results.size(); i++) {
 	editPermissionsURL.setParameter(Constants.CMD, Constants.EDIT);
 	editPermissionsURL.setParameter("tabs1", "roles");
 	editPermissionsURL.setParameter("roleId", String.valueOf(role.getRoleId()));
-	editPermissionsURL.setParameter("redirect", permissionsSummaryURL.toString());
+	editPermissionsURL.setParameter("redirect", permissionsAllURL.toString());
 	editPermissionsURL.setParameter("portletResource", curPortletName);
-
-	if (curPortletName.equals(PortletKeys.PORTAL) || curPortletName.equals(curResource)) {
-		editPermissionsURL.setParameter("showModelResources", "0");
-	}
-	else {
-		editPermissionsURL.setParameter("showModelResources", "1");
-	}
 
 	row.addText(curPortletLabel, editPermissionsURL);
 	row.addText(curModelLabel);

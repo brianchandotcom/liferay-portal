@@ -29,17 +29,13 @@ Role role = (Role)request.getAttribute(WebKeys.ROLE);
 
 String portletResource = ParamUtil.getString(request, "portletResource");
 
+Portlet portlet = null;
 String portletResourceLabel = null;
 
 if (Validator.isNotNull(portletResource)) {
-	Portlet portlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), portletResource);
+	portlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), portletResource);
 
-	if (portlet.getPortletId().equals(PortletKeys.PORTAL)) {
-		portletResourceLabel = LanguageUtil.get(pageContext, "general");
-	}
-	else {
-		portletResourceLabel = PortalUtil.getPortletLongTitle(portlet, application, locale);
-	}
+	portletResourceLabel = PortalUtil.getPortletLongTitle(portlet, application, locale);
 }
 
 List modelResources = null;
@@ -47,8 +43,6 @@ List modelResources = null;
 if (Validator.isNotNull(portletResource)) {
 	modelResources = ResourceActionsUtil.getPortletModelResources(portletResource);
 }
-
-boolean showModelResources = ParamUtil.getBoolean(request, "showModelResources", true);
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
@@ -98,102 +92,218 @@ editPermissionsURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 <liferay-ui:success key="permissionDeleted" message="the-permission-was-deleted" />
 <liferay-ui:success key="permissionsUpdated" message="the-role-permissions-were-updated" />
 
-<c:if test="<%= !portletName.equals(PortletKeys.ADMIN_SERVER) %>">
-	<%@ include file="/html/portlet/roles_admin/edit_role_permissions_navigation.jspf" %>
-</c:if>
-
-<c:choose>
-	<c:when test="<%= cmd.equals(Constants.VIEW) %>">
-		<liferay-util:include page="/html/portlet/roles_admin/edit_role_permissions_summary.jsp" />
-
-		<c:if test="<%= portletName.equals(PortletKeys.ADMIN_SERVER) %>">
-			<br />
-
-			<aui:button href="<%= redirect %>" type="cancel" />
+<aui:container>
+	<aui:row>
+		<c:if test="<%= !portletName.equals(PortletKeys.ADMIN_SERVER) %>">
+			<aui:col width="<%= 25 %>">
+				<%@ include file="/html/portlet/roles_admin/edit_role_permissions_navigation.jspf" %>
+			</aui:col>
 		</c:if>
-	</c:when>
-	<c:otherwise>
-		<portlet:actionURL var="editRolePermissionsURL">
-			<portlet:param name="struts_action" value="/roles_admin/edit_role_permissions" />
-		</portlet:actionURL>
 
-		<aui:form action="<%= editRolePermissionsURL %>" method="post" name="fm">
-			<aui:input name="<%= Constants.CMD %>" type="hidden" />
-			<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
-			<aui:input name="redirect" type="hidden" />
-			<aui:input name="roleId" type="hidden" value="<%= role.getRoleId() %>" />
-			<aui:input name="portletResource" type="hidden" value="<%= portletResource %>" />
-			<aui:input name="modelResources" type="hidden" value='<%= (modelResources == null) ? "" : StringUtil.merge(modelResources) %>' />
-			<aui:input name="showModelResources" type="hidden" value="<%= String.valueOf(showModelResources) %>" />
-			<aui:input name="selectedTargets" type="hidden" />
-
+		<aui:col width="<%= portletName.equals(PortletKeys.ADMIN_SERVER) ? 100 : 75 %>">
 			<c:choose>
-				<c:when test="<%= !showModelResources %>">
-					<h3><%= portletResourceLabel %></h3>
+				<c:when test="<%= cmd.equals(Constants.VIEW) %>">
+					<liferay-util:include page="/html/portlet/roles_admin/edit_role_permissions_summary.jsp" />
 
-					<%
-					request.setAttribute("edit_role_permissions.jsp-curPortletResource", portletResource);
-					%>
+					<c:if test="<%= portletName.equals(PortletKeys.ADMIN_SERVER) %>">
+						<br />
 
-					<liferay-util:include page="/html/portlet/roles_admin/edit_role_permissions_resource.jsp" />
+						<aui:button href="<%= redirect %>" type="cancel" />
+					</c:if>
 				</c:when>
-				<c:when test="<%= (modelResources != null) && !modelResources.isEmpty() %>">
+				<c:otherwise>
+					<portlet:actionURL var="editRolePermissionsURL">
+						<portlet:param name="struts_action" value="/roles_admin/edit_role_permissions" />
+					</portlet:actionURL>
 
-					<%
-					modelResources = ListUtil.sort(modelResources, new ModelResourceComparator(locale));
+					<aui:form action="<%= editRolePermissionsURL %>" method="post" name="fm">
+						<aui:input name="<%= Constants.CMD %>" type="hidden" />
+						<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
+						<aui:input name="redirect" type="hidden" />
+						<aui:input name="roleId" type="hidden" value="<%= role.getRoleId() %>" />
+						<aui:input name="portletResource" type="hidden" value="<%= portletResource %>" />
+						<aui:input name="modelResources" type="hidden" value='<%= (modelResources == null) ? "" : StringUtil.merge(modelResources) %>' />
+						<aui:input name="selectedTargets" type="hidden" />
 
-					for (int i = 0; i < modelResources.size(); i++) {
-						String curModelResource = (String)modelResources.get(i);
-
-						String curModelResourceName = ResourceActionsUtil.getModelResource(pageContext, curModelResource);
-						%>
-
-						<h3><%= curModelResourceName %></h3>
+						<h3><%= portletResourceLabel %></h3>
 
 						<%
-						request.removeAttribute("edit_role_permissions.jsp-curPortletResource");
+						request.setAttribute("edit_role_permissions.jsp-curPortletResource", portletResource);
 
-						request.setAttribute("edit_role_permissions.jsp-curModelResource", curModelResource);
-						request.setAttribute("edit_role_permissions.jsp-curModelResourceName", curModelResourceName);
+						String applicationPermissionsLabel = "application-permissions";
+
+						if (portletResource.equals(PortletKeys.PORTAL)) {
+							applicationPermissionsLabel = StringPool.BLANK;
+						}
+						else if ((portlet != null) && Validator.isNotNull(portlet.getControlPanelEntryCategory())) {
+							applicationPermissionsLabel = "general-permissions";
+						}
 						%>
+
+						<h4><liferay-ui:message key="<%= applicationPermissionsLabel %>" /></h4>
 
 						<liferay-util:include page="/html/portlet/roles_admin/edit_role_permissions_resource.jsp" />
 
-					<%
-					}
-					%>
+						<c:if test="<%= (modelResources != null) && !modelResources.isEmpty() %>">
 
-				</c:when>
+							<h4><liferay-ui:message key="resource-permissions" /></h4>
+
+							<div class="permission-group">
+
+								<%
+								modelResources = ListUtil.sort(modelResources, new ModelResourceComparator(locale));
+
+								for (int i = 0; i < modelResources.size(); i++) {
+									String curModelResource = (String)modelResources.get(i);
+
+									String curModelResourceName = ResourceActionsUtil.getModelResource(pageContext, curModelResource);
+									%>
+
+									<h5><%= curModelResourceName %></h5>
+
+									<%
+									request.removeAttribute("edit_role_permissions.jsp-curPortletResource");
+
+									request.setAttribute("edit_role_permissions.jsp-curModelResource", curModelResource);
+									request.setAttribute("edit_role_permissions.jsp-curModelResourceName", curModelResourceName);
+									%>
+
+									<liferay-util:include page="/html/portlet/roles_admin/edit_role_permissions_resource.jsp" />
+
+								<%
+								}
+								%>
+
+							</div>
+						</c:if>
+
+						<aui:button-row>
+							<aui:button onClick='<%= renderResponse.getNamespace() + "updateActions();" %>' value="save" />
+
+							<aui:button href="<%= redirect %>" type="cancel" />
+						</aui:button-row>
+					</aui:form>
+				</c:otherwise>
 			</c:choose>
+		</aui:col>
+	</aui:row>
+</aui:container>
 
-			<aui:button-row>
-				<aui:button onClick='<%= renderResponse.getNamespace() + "updateActions();" %>' value="save" />
+<aui:script use="aui-toggler,autocomplete-base,autocomplete-filters">
+	var AArray = A.Array;
 
-				<aui:button href="<%= redirect %>" type="cancel" />
-			</aui:button-row>
-		</aui:form>
-	</c:otherwise>
-</c:choose>
+	var permissionNavigationDataContainer = A.one('#<portlet:namespace />permissionNavigationDataContainer');
 
-<aui:script>
-	function <portlet:namespace />addPermissions(field) {
-		var permissionsURL = field.value;
+	function createLiveSearch() {
+		var instance = this;
 
-		if (permissionsURL == '') {
+		var trim = A.Lang.trim;
 
-			<%
-			PortletURL viewPermissionsURL = renderResponse.createRenderURL();
+		var PermissionNavigationSearch = A.Component.create (
+			{
+				AUGMENTS: [A.AutoCompleteBase],
 
-			viewPermissionsURL.setParameter("struts_action", "/roles_admin/edit_role_permissions");
-			viewPermissionsURL.setParameter(Constants.CMD, Constants.VIEW);
-			viewPermissionsURL.setParameter("tabs1", "roles");
-			viewPermissionsURL.setParameter("roleId", String.valueOf(role.getRoleId()));
-			%>
+				EXTENDS: A.Base,
 
-			permissionsURL = '<%= viewPermissionsURL %>';
-		}
+				NAME: 'searchpermissioNnavigation',
 
-		location.href = permissionsURL;
+				prototype: {
+					initializer: function() {
+						var instance = this;
+
+						instance._bindUIACBase();
+						instance._syncUIACBase();
+					}
+				}
+			}
+		);
+
+		var getItems = function() {
+			var results = [];
+
+			permissionNavigationItems.each(
+				function(node) {
+					results.push(
+						{
+							node: node.ancestor(),
+							data: trim(node.text())
+						}
+					);
+				}
+			);
+
+			return results;
+		};
+
+		var getNoResultsNode = function() {
+			if (!noResultsNode) {
+				noResultsNode = A.Node.create('<div class="alert"><%= LanguageUtil.get(pageContext, "there-are-no-results") %></div>');
+			}
+
+			return noResultsNode;
+		};
+
+		var permissionNavigationItems = permissionNavigationDataContainer.all('.permission-navigation-item');
+
+		var permissionNavigationSectionsNode = permissionNavigationDataContainer.all('.permission-navigation-section');
+
+		var noResultsNode;
+
+		var permissionNavigationSearch = new PermissionNavigationSearch(
+			{
+				inputNode: '#<portlet:namespace />permissionNavigationSearch',
+				minQueryLength: 0,
+				nodes: '.permission-navigation-item-container',
+				resultFilters: 'phraseMatch',
+				resultTextLocator: 'data',
+				source: getItems()
+			}
+		);
+
+		permissionNavigationSearch.on(
+			'results',
+			function(event) {
+				permissionNavigationItems.each(
+					function(item, index, collection) {
+						item.ancestor().addClass('hide');
+					}
+				);
+
+				AArray.each(
+					event.results,
+					function(item, index, collection) {
+						item.raw.node.removeClass('hide');
+					}
+				);
+
+				var foundVisibleSection;
+
+				permissionNavigationSectionsNode.each(
+					function(item, index, collection) {
+						var action = 'addClass';
+
+						var visibleItem = item.one('.permission-navigation-item-container:not(.hide)');
+
+						if (visibleItem) {
+							action = 'removeClass';
+
+							foundVisibleSection = true;
+						}
+
+						item[action]('hide');
+					}
+				);
+
+				var noResultsNode = getNoResultsNode();
+
+				if (foundVisibleSection) {
+					noResultsNode.remove();
+				}
+				else {
+					permissionNavigationDataContainer.appendChild(noResultsNode);
+				}
+			}
+		);
 	}
 
 	function <portlet:namespace />removeGroup(pos, target) {
@@ -258,6 +368,22 @@ editPermissionsURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 
 		nameEl.innerHTML = groupsHTML;
 	}
+
+	A.on(
+		'domready',
+		function(event) {
+			var togglerDelegate = new A.TogglerDelegate(
+				{
+					animated: true,
+					container: <portlet:namespace />permissionNavigationDataContainer,
+					content: '.permission-navigation-item-content',
+					header: '.permission-navigation-item-header'
+				}
+			);
+
+			createLiveSearch();
+		}
+	);
 
 	Liferay.provide(
 		window,

@@ -61,6 +61,18 @@ for (int i = 0; i < results.size(); i++) {
 		continue;
 	}
 
+	if (Validator.isNotNull(curPortletResource)) {
+		Portlet curPortlet = PortletLocalServiceUtil.getPortletById(themeDisplay.getCompanyId(), curPortletResource);
+
+		if (actionId.equals(ActionKeys.ACCESS_IN_CONTROL_PANEL) && Validator.isNull(curPortlet.getControlPanelEntryCategory())) {
+			continue;
+		}
+
+		if (actionId.equals(ActionKeys.ADD_TO_PAGE) && _isPortletCategoryHidden(curPortlet)) {
+			continue;
+		}
+	}
+
 	String curResource = null;
 
 	if (Validator.isNull(curModelResource)) {
@@ -152,3 +164,19 @@ for (int i = 0; i < results.size(); i++) {
 %>
 
 <liferay-ui:search-iterator paginate="<%= false %>" searchContainer="<%= searchContainer %>" />
+
+<%!
+private boolean _isPortletCategoryHidden(Portlet portlet) {
+	PortletCategory portletCategory = (PortletCategory)WebAppPool.get(portlet.getCompanyId(), WebKeys.PORTLET_CATEGORY);
+
+	PortletCategory undefinedCategory = portletCategory.getCategory("category.hidden");
+
+	Set<String> portletIds = undefinedCategory.getPortletIds();
+
+	if (portletIds.contains(portlet.getPortletId())) {
+		return true;
+	}
+
+	return false;
+}
+%>

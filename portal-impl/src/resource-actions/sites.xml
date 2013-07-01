@@ -24,8 +24,7 @@
 	<model-resource>
 		<model-name>com.liferay.portal.model.Layout</model-name>
 		<portlet-ref>
-			<portlet-name>125</portlet-name>
-			<portlet-name>134</portlet-name>
+			<portlet-name>156</portlet-name>
 		</portlet-ref>
 		<permissions>
 			<supports>
@@ -64,8 +63,7 @@
 	<model-resource>
 		<model-name>com.liferay.portal.model.Team</model-name>
 		<portlet-ref>
-			<portlet-name>125</portlet-name>
-			<portlet-name>134</portlet-name>
+			<portlet-name>174</portlet-name>
 		</portlet-ref>
 		<permissions>
 			<supports>

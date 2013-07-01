@@ -26,6 +26,7 @@
 		<model-name>com.liferay.portlet.polls</model-name>
 		<portlet-ref>
 			<portlet-name>25</portlet-name>
+			<portlet-name>59</portlet-name>
 		</portlet-ref>
 		<permissions>
 			<supports>
@@ -42,6 +43,7 @@
 		<model-name>com.liferay.portlet.polls.model.PollsQuestion</model-name>
 		<portlet-ref>
 			<portlet-name>25</portlet-name>
+			<portlet-name>59</portlet-name>
 		</portlet-ref>
 		<permissions>
 			<supports>

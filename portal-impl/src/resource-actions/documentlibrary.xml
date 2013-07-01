@@ -69,6 +69,8 @@
 		<model-name>com.liferay.portlet.documentlibrary.model.DLFileEntry</model-name>
 		<portlet-ref>
 			<portlet-name>20</portlet-name>
+			<portlet-name>31</portlet-name>
+			<portlet-name>110</portlet-name>
 		</portlet-ref>
 		<permissions>
 			<supports>
@@ -103,6 +105,8 @@
 		<model-name>com.liferay.portlet.documentlibrary.model.DLFileEntryType</model-name>
 		<portlet-ref>
 			<portlet-name>20</portlet-name>
+			<portlet-name>31</portlet-name>
+			<portlet-name>110</portlet-name>
 		</portlet-ref>
 		<permissions>
 			<supports>
@@ -128,6 +132,8 @@
 		<model-name>com.liferay.portlet.documentlibrary.model.DLFileShortcut</model-name>
 		<portlet-ref>
 			<portlet-name>20</portlet-name>
+			<portlet-name>31</portlet-name>
+			<portlet-name>110</portlet-name>
 		</portlet-ref>
 		<permissions>
 			<supports>
@@ -160,6 +166,8 @@
 		<model-name>com.liferay.portlet.documentlibrary.model.DLFolder</model-name>
 		<portlet-ref>
 			<portlet-name>20</portlet-name>
+			<portlet-name>31</portlet-name>
+			<portlet-name>110</portlet-name>
 		</portlet-ref>
 		<permissions>
 			<supports>

@@ -127,9 +127,7 @@ List<LayoutRevision> rootLayoutRevisions = LayoutRevisionLocalServiceUtil.getChi
 									int status = curLayoutRevision.getStatus();
 									%>
 
-									<c:if test="<%= status == WorkflowConstants.STATUS_PENDING %>">
-										<aui:workflow-status bean="<%= curLayoutRevision %>" status="<%= status %>" />
-									</c:if>
+									<aui:workflow-status bean="<%= curLayoutRevision %>" status="<%= status %>" />
 								</c:otherwise>
 							</c:choose>
 

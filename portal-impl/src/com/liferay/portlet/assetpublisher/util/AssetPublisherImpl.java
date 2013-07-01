@@ -699,7 +699,8 @@ public class AssetPublisherImpl implements AssetPublisher {
 					Layout.class.getName(), scopeIdLayout.getPlid(),
 					GroupConstants.DEFAULT_LIVE_GROUP_ID,
 					String.valueOf(scopeIdLayout.getPlid()), null, 0, null,
-					false, true, true, null);
+					false, true, true,
+					GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, null);
 			}
 
 			return scopeIdGroup.getGroupId();

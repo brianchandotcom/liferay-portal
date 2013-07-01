@@ -386,7 +386,8 @@ public class EditGroupAction extends PortletAction {
 		GroupServiceUtil.updateGroup(
 			groupId, group.getParentGroupId(), group.getName(),
 			group.getDescription(), group.getType(), group.getFriendlyURL(),
-			active, group.isManualMembership(), serviceContext);
+			active, group.isManualMembership(),
+			group.getMembershipRestriction(), serviceContext);
 	}
 
 	protected String updateCloseRedirect(
@@ -461,6 +462,8 @@ public class EditGroupAction extends PortletAction {
 		String friendlyURL = null;
 		boolean active = false;
 		boolean manualMembership = true;
+		int membershipRestriction =
+			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION;
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			Group.class.getName(), actionRequest);
@@ -480,11 +483,13 @@ public class EditGroupAction extends PortletAction {
 			active = ParamUtil.getBoolean(actionRequest, "active");
 			manualMembership = ParamUtil.getBoolean(
 				actionRequest, "manualMembership");
+			membershipRestriction = ParamUtil.getInteger(
+				actionRequest, "membershipRestriction");
 
 			liveGroup = GroupServiceUtil.addGroup(
 				parentGroupId, GroupConstants.DEFAULT_LIVE_GROUP_ID, name,
 				description, type, friendlyURL, true, active, manualMembership,
-				serviceContext);
+				membershipRestriction, serviceContext);
 
 			LiveUsers.joinGroup(
 				themeDisplay.getCompanyId(), liveGroup.getGroupId(), userId);
@@ -510,10 +515,14 @@ public class EditGroupAction extends PortletAction {
 			manualMembership = ParamUtil.getBoolean(
 				actionRequest, "manualMembership",
 				liveGroup.isManualMembership());
+			membershipRestriction = ParamUtil.getInteger(
+				actionRequest, "membershipRestriction",
+				liveGroup.getMembershipRestriction());
 
 			liveGroup = GroupServiceUtil.updateGroup(
 				liveGroupId, parentGroupId, name, description, type,
-				friendlyURL, active, manualMembership, serviceContext);
+				friendlyURL, active, manualMembership, membershipRestriction,
+				serviceContext);
 
 			if (type == GroupConstants.TYPE_SITE_OPEN) {
 				List<MembershipRequest> membershipRequests =

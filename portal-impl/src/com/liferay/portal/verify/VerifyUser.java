@@ -101,7 +101,7 @@ public class VerifyUser extends VerifyProcess {
 				User.class.getName(), user.getUserId(),
 				GroupConstants.DEFAULT_LIVE_GROUP_ID, null, null, 0,
 				StringPool.SLASH + user.getScreenName(), false, true, true,
-				null);
+				GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, null);
 		}
 
 		if (_log.isDebugEnabled()) {

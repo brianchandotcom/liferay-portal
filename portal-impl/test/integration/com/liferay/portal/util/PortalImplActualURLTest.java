@@ -107,7 +107,7 @@ public class PortalImplActualURLTest {
 			StringPool.BLANK, 0, GroupConstants.DEFAULT_LIVE_GROUP_ID,
 			"Test " + ServiceTestUtil.nextInt(), StringPool.BLANK,
 			GroupConstants.TYPE_SITE_OPEN, StringPool.BLANK, true, true, true,
-			serviceContext);
+			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, serviceContext);
 
 		LayoutLocalServiceUtil.addLayout(
 			TestPropsValues.getUserId(), group.getGroupId(), false,

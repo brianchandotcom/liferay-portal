@@ -1783,7 +1783,8 @@ public class PortletImporter {
 						GroupConstants.DEFAULT_PARENT_GROUP_ID,
 						Layout.class.getName(), scopeLayout.getPlid(),
 						GroupConstants.DEFAULT_LIVE_GROUP_ID, name, null, 0,
-						null, false, true, true, null);
+						null, false, true, true,
+						GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, null);
 				}
 
 				Group group = scopeLayout.getGroup();

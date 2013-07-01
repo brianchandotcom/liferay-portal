@@ -100,7 +100,8 @@ public class LayoutSetPrototypeLocalServiceImpl
 			layoutSetPrototype.getLayoutSetPrototypeId(),
 			GroupConstants.DEFAULT_LIVE_GROUP_ID,
 			layoutSetPrototype.getName(LocaleUtil.getDefault()), null, 0,
-			friendlyURL, false, true, true, serviceContext);
+			friendlyURL, false, true, true,
+			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, serviceContext);
 
 		if (GetterUtil.getBoolean(
 				serviceContext.getAttribute("addDefaultLayout"), true)) {

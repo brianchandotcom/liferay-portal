@@ -73,6 +73,7 @@ public class MembershipPolicyTestUtil {
 			GroupConstants.DEFAULT_PARENT_GROUP_ID,
 			GroupConstants.DEFAULT_LIVE_GROUP_ID, name, "This is a test group",
 			GroupConstants.TYPE_SITE_OPEN, friendlyURL, true, true, true,
+			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION,
 			populateServiceContext(true));
 	}
 

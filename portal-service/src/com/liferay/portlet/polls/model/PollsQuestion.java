@@ -37,6 +37,13 @@ public interface PollsQuestion extends PollsQuestionModel, PersistedModel {
 	public int getVotesCount()
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	public java.util.List<com.liferay.portlet.polls.model.PollsVote> getVotes(
+		int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public java.util.List<com.liferay.portlet.polls.model.PollsVote> getVotes()
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	public boolean isExpired();
 
 	public boolean isExpired(

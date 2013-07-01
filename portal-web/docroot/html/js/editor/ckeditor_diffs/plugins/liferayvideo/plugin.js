@@ -17,55 +17,59 @@
 
 (function() {
 
-CKEDITOR.plugins.add('liferayvideo',
-		{
+CKEDITOR.plugins.add(
+	'liferayvideo',
+	{
+		afterInit: function(editor) {
+			var dataProcessor = editor.dataProcessor;
+			var htmlFilter = dataProcessor && dataProcessor.htmlFilter;
+			var	dataFilter = dataProcessor && dataProcessor.dataFilter;
 
-	afterInit: function(editor) {
-		var dataProcessor = editor.dataProcessor;
-		var htmlFilter = dataProcessor && dataProcessor.htmlFilter;
-		var	dataFilter = dataProcessor && dataProcessor.dataFilter;
+			dataFilter.addRules(
+				{
+					elements: {
+						'div': function(realElement) {
+							var attributes = realElement.attributes;
 
-		dataFilter.addRules(
-			{
-			elements : {
-					'div' : function(realElement) {
-								var attributes = realElement.attributes;
+							if (attributes['class'] && attributes['class'].indexOf('liferayckevideo') >= 0) {
+								var fakeElement = editor.createFakeParserElement(realElement, 'liferay_cke_video', 'liferayvideo', false);
 
-								if (attributes['class'] && attributes['class'].indexOf('liferayckevideo') >= 0) {
-									var fakeElement = editor.createFakeParserElement(realElement, 'liferay_cke_video', 'liferayvideo', false);
-									var fakeStyle = fakeElement.attributes.style || '';
+								var fakeStyle = fakeElement.attributes.style || '';
 
-									var width = attributes['data-width'];
-									var height = attributes['data-height'];
-									var poster = attributes['data-poster'];
+								var height = attributes['data-height'];
+								var poster = attributes['data-poster'];
+								var width = attributes['data-width'];
 
-									if (typeof width != 'undefined') {
-										fakeElement.attributes.style = fakeStyle + 'width:' + CKEDITOR.tools.cssLength(width) + ';';
-										fakeStyle = fakeElement.attributes.style;
-									}
+								if (typeof width != 'undefined') {
+									fakeElement.attributes.style = fakeStyle + 'width:' + CKEDITOR.tools.cssLength(width) + ';';
 
-									if (typeof height != 'undefined') {
-										fakeElement.attributes.style = fakeStyle + 'height:' + CKEDITOR.tools.cssLength(height) + ';';
-										fakeStyle = fakeElement.attributes.style;
-									}
-
-									if (poster) {
-										fakeElement.attributes.style = fakeStyle + 'background-image:url(' + poster + ');';
-										fakeStyle = fakeElement.attributes.style;
-									}
-
-									return fakeElement;
+									fakeStyle = fakeElement.attributes.style;
 								}
+
+								if (typeof height != 'undefined') {
+									fakeElement.attributes.style = fakeStyle + 'height:' + CKEDITOR.tools.cssLength(height) + ';';
+
+									fakeStyle = fakeElement.attributes.style;
+								}
+
+								if (poster) {
+									fakeElement.attributes.style = fakeStyle + 'background-image:url(' + poster + ');';
+
+									fakeStyle = fakeElement.attributes.style;
+								}
+
+								return fakeElement;
+							}
 						}
+					}
 				}
-			}
-		);
-	},
+			);
+		},
 
-	getPlaceholderCss : function() {
-		var instance = this;
+		getPlaceholderCss: function() {
+			var instance = this;
 
-		return 'img.cke_video' +
+			return 'img.cke_video' +
 				'{' +
 					'background-image: url(' + CKEDITOR.getUrl(instance.path + 'icons/placeholder.png' ) + ');' +
 					'background-position: center center;' +
@@ -75,72 +79,74 @@ CKEDITOR.plugins.add('liferayvideo',
 					'width: 80px;' +
 					'height: 80px;' +
 				'}';
-	},
+		},
 
-	init : function(editor) {
-		var instance = this;
+		init: function(editor) {
+			var instance = this;
 
-		var lang = editor.lang.liferayvideo;
+			var lang = editor.lang.liferayvideo;
 
-		CKEDITOR.dialog.add('liferayvideo', instance.path + 'dialogs/video.js');
+			CKEDITOR.dialog.add('liferayvideo', instance.path + 'dialogs/video.js');
 
-		editor.addCommand('LiferayVideo', new CKEDITOR.dialogCommand('liferayvideo'));
+			editor.addCommand('LiferayVideo', new CKEDITOR.dialogCommand('liferayvideo'));
 
-		editor.ui.addButton('LiferayVideo',
-			{
-				command : 'LiferayVideo',
-				icon : instance.path + 'icons/icon.png',
-				label : lang.toolbar
-			}
-		);
-
-		if (editor.addMenuItems) {
-			editor.addMenuItems(
+			editor.ui.addButton('LiferayVideo',
 				{
-					liferayvideo :
-					{
-						command : 'LiferayVideo',
-						group : 'flash',
-						label : lang.properties
-					}
-				});
-		}
-
-		editor.on(
-				'doubleclick', 
-				function(evt) {
-					var element = evt.data.element;
-
-					if ( element.is('img') && element.data('cke-real-element-type') === 'liferayvideo') {
-						evt.data.dialog = 'liferayvideo';
-					}
+					command: 'LiferayVideo',
+					icon: instance.path + 'icons/icon.png',
+					label: lang.toolbar
 				}
-		);
+			);
 
-		if (editor.contextMenu) {
-			editor.contextMenu.addListener(
-					function(element, selection) {
-						if (element && element.is('img') && !element.isReadOnly()
-							&& element.data('cke-real-element-type') === 'liferayvideo') {
-							return { video : CKEDITOR.TRISTATE_OFF };
+			if (editor.addMenuItems) {
+				editor.addMenuItems(
+					{
+						liferayvideo: {
+							command: 'LiferayVideo',
+							group: 'flash',
+							label: lang.properties
+						}
+					}
+				);
+			}
+
+			editor.on(
+					'doubleclick',
+					function(event) {
+						var element = event.data.element;
+
+						if (element.is('img') && element.data('cke-real-element-type') === 'liferayvideo') {
+							event.data.dialog = 'liferayvideo';
 						}
 					}
 			);
-		}
-		
-		editor.lang.fakeobjects.liferayvideo = lang.fakeObject;
-	},
 
-	lang : ['en', 'es'],
+			if (editor.contextMenu) {
+				editor.contextMenu.addListener(
+						function(element, selection) {
+							if (element && element.is('img') && !element.isReadOnly() && (element.data('cke-real-element-type') === 'liferayvideo')) {
 
-	onLoad : function() {
-		var instance = this;
+								return {
+									video: CKEDITOR.TRISTATE_OFF
+								};
+							}
+						}
+				);
+			}
 
-		if (CKEDITOR.addCss) {
-			CKEDITOR.addCss(instance.getPlaceholderCss());
+			editor.lang.fakeobjects.liferayvideo = lang.fakeObject;
+		},
+
+		lang: ['en', 'es'],
+
+		onLoad: function() {
+			var instance = this;
+
+			if (CKEDITOR.addCss) {
+				CKEDITOR.addCss(instance.getPlaceholderCss());
+			}
 		}
 	}
-
-} ); 
+);
 
 })();

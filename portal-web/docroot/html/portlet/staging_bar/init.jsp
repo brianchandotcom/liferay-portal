@@ -18,7 +18,6 @@
 
 <%@ page import="com.liferay.portal.LayoutBranchNameException" %><%@
 page import="com.liferay.portal.LayoutSetBranchNameException" %><%@
-page import="com.liferay.portal.NoSuchWorkflowInstanceLinkException" %><%@
 page import="com.liferay.portal.kernel.staging.StagingUtil" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowTask" %><%@
 page import="com.liferay.portal.service.LayoutSetBranchLocalServiceUtil" %><%@

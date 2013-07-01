@@ -49,6 +49,14 @@ public class BaseWorkflowStatusTag extends com.liferay.taglib.util.IncludeTag {
 		return _model;
 	}
 
+	public boolean getShowIcon() {
+		return _showIcon;
+	}
+
+	public boolean getShowLabel() {
+		return _showLabel;
+	}
+
 	public java.lang.Integer getStatus() {
 		return _status;
 	}
@@ -85,6 +93,18 @@ public class BaseWorkflowStatusTag extends com.liferay.taglib.util.IncludeTag {
 		setScopedAttribute("model", model);
 	}
 
+	public void setShowIcon(boolean showIcon) {
+		_showIcon = showIcon;
+
+		setScopedAttribute("showIcon", showIcon);
+	}
+
+	public void setShowLabel(boolean showLabel) {
+		_showLabel = showLabel;
+
+		setScopedAttribute("showLabel", showLabel);
+	}
+
 	public void setStatus(java.lang.Integer status) {
 		_status = status;
 
@@ -109,6 +129,8 @@ public class BaseWorkflowStatusTag extends com.liferay.taglib.util.IncludeTag {
 		_helpMessage = null;
 		_id = null;
 		_model = null;
+		_showIcon = true;
+		_showLabel = true;
 		_status = null;
 		_statusMessage = null;
 		_version = null;
@@ -125,6 +147,8 @@ public class BaseWorkflowStatusTag extends com.liferay.taglib.util.IncludeTag {
 		setNamespacedAttribute(request, "helpMessage", _helpMessage);
 		setNamespacedAttribute(request, "id", _id);
 		setNamespacedAttribute(request, "model", _model);
+		setNamespacedAttribute(request, "showIcon", _showIcon);
+		setNamespacedAttribute(request, "showLabel", _showLabel);
 		setNamespacedAttribute(request, "status", _status);
 		setNamespacedAttribute(request, "statusMessage", _statusMessage);
 		setNamespacedAttribute(request, "version", _version);
@@ -139,6 +163,8 @@ public class BaseWorkflowStatusTag extends com.liferay.taglib.util.IncludeTag {
 	private java.lang.String _helpMessage = null;
 	private java.lang.String _id = null;
 	private java.lang.Class<?> _model = null;
+	private boolean _showIcon = true;
+	private boolean _showLabel = true;
 	private java.lang.Integer _status = null;
 	private java.lang.String _statusMessage = null;
 	private java.lang.String _version = null;

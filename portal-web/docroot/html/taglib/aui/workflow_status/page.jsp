@@ -31,7 +31,7 @@
 	if (Validator.isNull(statusMessage)) {
 		statusMessage = WorkflowConstants.toLabel(status);
 
-		if (status == WorkflowConstants.STATUS_PENDING) {
+		if ((status == WorkflowConstants.STATUS_PENDING) && (bean != null) && (model != null)) {
 			long companyId = BeanPropertiesUtil.getLong(bean, "companyId");
 			long groupId = BeanPropertiesUtil.getLong(bean, "groupId");
 			long classPK = BeanPropertiesUtil.getLong(bean, "primaryKey");
@@ -54,9 +54,40 @@
 	}
 	%>
 
-	<span class="workflow-status"><liferay-ui:message key="status" />: <strong class="workflow-status-<%= statusMessage %>"><liferay-ui:message key="<%= statusMessage %>" /><%= additionalText %></strong></span>
+	<span class='<%= showIcon ? "workflow-status workflow-status-icon" : "workflow-status" %>'>
+		<c:if test="<%= showLabel %>">
+			<liferay-ui:message key="status" />:
+		</c:if>
+
+		<strong class="<%= _getStatusCssClass(status) %>">
+			<liferay-ui:message key="<%= statusMessage %>" /><%= additionalText %>
+		</strong>
+	</span>
 
 	<c:if test="<%= Validator.isNotNull(helpMessage) %>">
 		<liferay-ui:icon-help message="<%= helpMessage %>" />
 	</c:if>
 </div>
+
+<%!
+private String _getStatusCssClass(int status) {
+	String statusLabel = WorkflowConstants.toLabel(status);
+
+	String labelCssClass = "label workflow-status-" + statusLabel;
+
+	if (status == WorkflowConstants.STATUS_APPROVED) {
+		labelCssClass += " label-success";
+	}
+	else if (status == WorkflowConstants.STATUS_DRAFT) {
+		labelCssClass += " label-info";
+	}
+	else if (status == WorkflowConstants.STATUS_EXPIRED) {
+		labelCssClass += " label-important";
+	}
+	else if (status == WorkflowConstants.STATUS_PENDING) {
+		labelCssClass += " label-warning";
+	}
+
+	return labelCssClass;
+}
+%>

@@ -807,6 +807,20 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 	@Override
 	public boolean getBooleanParameter(String namespace, String name) {
+		return getBooleanParameter(namespace, name, true);
+	}
+
+	@Override
+	public boolean getBooleanParameter(
+		String namespace, String name, boolean useDefaultValue) {
+
+		if (!useDefaultValue) {
+			return MapUtil.getBoolean(
+				getParameterMap(),
+				PortletDataHandlerControl.getNamespacedControlName(
+					namespace, name));
+		}
+
 		boolean defaultValue = MapUtil.getBoolean(
 			getParameterMap(),
 			PortletDataHandlerKeys.PORTLET_DATA_CONTROL_DEFAULT, true);

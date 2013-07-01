@@ -114,6 +114,9 @@ public class GroupFinderImpl
 	public static final String JOIN_BY_MANUAL_MEMBERSHIP =
 		GroupFinder.class.getName() + ".joinByManualMembership";
 
+	public static final String JOIN_BY_MEMBERSHIP_RESTRICTION =
+		GroupFinder.class.getName() + ".joinByMembershipRestriction";
+
 	public static final String JOIN_BY_PAGE_COUNT =
 		GroupFinder.class.getName() + ".joinByPageCount";
 
@@ -1745,6 +1748,9 @@ public class GroupFinderImpl
 		joinMap.put(
 			"pageCount", _removeWhere(CustomSQLUtil.get(JOIN_BY_PAGE_COUNT)));
 		joinMap.put(
+			"membershipRestriction",
+			_removeWhere(CustomSQLUtil.get(JOIN_BY_MEMBERSHIP_RESTRICTION)));
+		joinMap.put(
 			"rolePermissions",
 			_removeWhere(CustomSQLUtil.get(JOIN_BY_ROLE_PERMISSIONS)));
 		joinMap.put(
@@ -1796,6 +1802,9 @@ public class GroupFinderImpl
 		whereMap.put(
 			"manualMembership",
 			_getCondition(CustomSQLUtil.get(JOIN_BY_MANUAL_MEMBERSHIP)));
+		whereMap.put(
+			"membershipRestriction",
+			_getCondition(CustomSQLUtil.get(JOIN_BY_MEMBERSHIP_RESTRICTION)));
 		whereMap.put(
 			"pageCount", _getCondition(CustomSQLUtil.get(JOIN_BY_PAGE_COUNT)));
 		whereMap.put(

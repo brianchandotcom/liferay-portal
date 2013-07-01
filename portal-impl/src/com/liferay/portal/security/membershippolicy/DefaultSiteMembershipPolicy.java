@@ -168,9 +168,10 @@ public class DefaultSiteMembershipPolicy extends BaseSiteMembershipPolicy {
 			new LinkedHashMap<String, Object>();
 
 		groupParams.put("groupsTree", parentGroups);
-		groupParams.put("site", Boolean.TRUE);
 		groupParams.put(
-			"type", GroupConstants.TYPE_SITE_LIMITED_TO_PARENT_SITE_MEMBERS);
+			"membershipRestriction",
+			GroupConstants.MEMBERSHIP_RESTRICTION_TO_PARENT_SITE_MEMBERS);
+		groupParams.put("site", Boolean.TRUE);
 
 		List<Group> childrenGroups = GroupLocalServiceUtil.search(
 			group.getCompanyId(), null, StringPool.BLANK, groupParams,

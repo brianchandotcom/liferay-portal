@@ -25,7 +25,7 @@ AUI.add(
 
 		var STR_NODE = 'node';
 
-		var TPL_LOADING = '<div class="loading-animation" />';		
+		var TPL_LOADING = '<div class="loading-animation" />';
 
 		var AddBase = A.Component.create(
 			{
@@ -120,7 +120,7 @@ AUI.add(
 						(new A.EventHandle(instance._eventHandles)).detach();
 					},
 
-					_addPortlet: function(portlet, options) {
+					addPortlet: function(portlet, options) {
 						var instance = this;
 
 						var portletMetaData = instance._getPortletMetaData(portlet);
@@ -172,7 +172,7 @@ AUI.add(
 								}
 							);
 						}
-					},					
+					},
 
 					_bindUIDABase: function() {
 						var instance = this;

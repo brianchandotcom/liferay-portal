@@ -43,7 +43,7 @@ AUI.add(
 
 						var portlet = event.currentTarget;
 
-						instance._addPortlet(portlet);
+						instance.addPortlet(portlet);
 					},
 
 					_bindUI: function() {
@@ -85,6 +85,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-io-request', 'liferay-dockbar', 'liferay-dockbar-add-base', 'liferay-dockbar-add-application-search']
+		requires: ['liferay-dockbar', 'liferay-dockbar-add-base', 'liferay-dockbar-add-application-search']
 	}
 );

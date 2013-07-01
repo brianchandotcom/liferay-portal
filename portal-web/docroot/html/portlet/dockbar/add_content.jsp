@@ -98,24 +98,27 @@ int delta = ParamUtil.getInteger(request, "delta", deltaDefault);
 			focusItem: searchContent,
 			inputNode: searchContent,
 			namespace: '<portlet:namespace />',
+			plugins: [
+				{
+					cfg: {
+						srcNode: '#<portlet:namespace />entriesContainer'
+					},
+					fn: Liferay.Dockbar.PortletDragDrop
+				}
+			],
 			selected: !A.one('#<portlet:namespace />addContentForm').ancestor().hasClass('hide')
 		}
 	);
 
-	addContent.plug(
-		Liferay.Dockbar.PortletDragDrop,
-		{
-			on: {
-				dragEnd: function(event) {
-					addContent._addPortlet(
-						event.portletNode,
-						{
-							item: event.appendNode
-						}
-					);
+	addContent.portletdd.on(
+		'dragEnd',
+		function(event) {
+			addContent.addPortlet(
+				event.portletNode,
+				{
+					item: event.appendNode
 				}
-			},
-			srcNode: '#<portlet:namespace />entriesContainer'
+			);
 		}
 	);
 </aui:script>

@@ -243,7 +243,7 @@ private static PortletCategory _getRelevantPortletCategory(PermissionChecker per
 		{
 			on: {
 				dragEnd: function(event) {
-					addApplication._addPortlet(
+					addApplication.addPortlet(
 						event.portletNode,
 						{
 							item: event.appendNode

@@ -71,7 +71,7 @@ AUI.add(
 				if (appendNode && appendNode.inDoc()) {
 					var portletNode = event.target.get(STR_NODE);
 
-					instance._addPortlet(
+					instance.addPortlet(
 						portletNode,
 						{
 							item: appendNode

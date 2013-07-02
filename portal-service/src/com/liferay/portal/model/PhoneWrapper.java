@@ -14,6 +14,7 @@
 
 package com.liferay.portal.model;
 
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Date;
@@ -601,6 +602,11 @@ public class PhoneWrapper implements Phone, ModelWrapper<Phone> {
 		}
 
 		return false;
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return _phone.getStagedModelType();
 	}
 
 	/**

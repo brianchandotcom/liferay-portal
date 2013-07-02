@@ -16,6 +16,7 @@ package com.liferay.portal.repository.cmis.model;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.RepositoryException;
@@ -404,6 +405,11 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 	@Override
 	public long getSize() {
 		return _document.getContentStreamLength();
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return new StagedModelType(FileEntry.class);
 	}
 
 	@Override

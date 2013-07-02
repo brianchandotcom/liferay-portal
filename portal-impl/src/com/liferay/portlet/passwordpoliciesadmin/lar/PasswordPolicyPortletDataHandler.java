@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.lar.BasePortletDataHandler;
 import com.liferay.portal.kernel.lar.DataLevel;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.PasswordPolicy;
 import com.liferay.portal.service.PasswordPolicyLocalServiceUtil;
@@ -38,9 +39,9 @@ public class PasswordPolicyPortletDataHandler extends BasePortletDataHandler {
 	public static final String NAMESPACE = "password_policies_admin";
 
 	public PasswordPolicyPortletDataHandler() {
-		super();
-
 		setDataLevel(DataLevel.PORTAL);
+		setDeletionSystemEventModelTypes(
+			new StagedModelType(PasswordPolicy.class));
 	}
 
 	@Override

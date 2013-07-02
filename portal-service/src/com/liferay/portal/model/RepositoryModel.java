@@ -38,7 +38,7 @@ import java.util.Date;
  * @generated
  */
 public interface RepositoryModel extends BaseModel<Repository>,
-	StagedGroupedModel {
+	StagedGroupedModel, TypedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -209,6 +209,7 @@ public interface RepositoryModel extends BaseModel<Repository>,
 	 *
 	 * @return the fully qualified class name of this repository
 	 */
+	@Override
 	public String getClassName();
 
 	public void setClassName(String className);
@@ -218,6 +219,7 @@ public interface RepositoryModel extends BaseModel<Repository>,
 	 *
 	 * @return the class name ID of this repository
 	 */
+	@Override
 	public long getClassNameId();
 
 	/**
@@ -225,6 +227,7 @@ public interface RepositoryModel extends BaseModel<Repository>,
 	 *
 	 * @param classNameId the class name ID of this repository
 	 */
+	@Override
 	public void setClassNameId(long classNameId);
 
 	/**

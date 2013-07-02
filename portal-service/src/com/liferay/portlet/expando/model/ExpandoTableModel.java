@@ -17,6 +17,7 @@ package com.liferay.portlet.expando.model;
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.TypedModel;
 import com.liferay.portal.service.ServiceContext;
 
 import java.io.Serializable;
@@ -34,7 +35,7 @@ import java.io.Serializable;
  * @see com.liferay.portlet.expando.model.impl.ExpandoTableModelImpl
  * @generated
  */
-public interface ExpandoTableModel extends BaseModel<ExpandoTable> {
+public interface ExpandoTableModel extends BaseModel<ExpandoTable>, TypedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -88,6 +89,7 @@ public interface ExpandoTableModel extends BaseModel<ExpandoTable> {
 	 *
 	 * @return the fully qualified class name of this expando table
 	 */
+	@Override
 	public String getClassName();
 
 	public void setClassName(String className);
@@ -97,6 +99,7 @@ public interface ExpandoTableModel extends BaseModel<ExpandoTable> {
 	 *
 	 * @return the class name ID of this expando table
 	 */
+	@Override
 	public long getClassNameId();
 
 	/**
@@ -104,6 +107,7 @@ public interface ExpandoTableModel extends BaseModel<ExpandoTable> {
 	 *
 	 * @param classNameId the class name ID of this expando table
 	 */
+	@Override
 	public void setClassNameId(long classNameId);
 
 	/**

@@ -1,6 +1,7 @@
 package ${packagePath}.model;
 
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelWrapper;
 import com.liferay.portal.service.ServiceContext;
@@ -76,6 +77,10 @@ public class ${entity.name}Wrapper implements ${entity.name}, ModelWrapper<${ent
 
 	<#list methods as method>
 		<#if !method.isConstructor() && !method.isStatic() && method.isPublic() && !serviceBuilder.isDuplicateMethod(method, tempMap) && !(method.name == "equals" && (parameters?size == 1))>
+			<#if method.name == "getStagedModelType">
+				<#assign hasGetStagedModelTypeMethod = true>
+			</#if>
+
 			<#assign parameters = method.parameters>
 
 			${serviceBuilder.getJavadocComment(method)}
@@ -148,6 +153,13 @@ public class ${entity.name}Wrapper implements ${entity.name}, ModelWrapper<${ent
 
 		return false;
 	}
+
+	<#if entity.isStagedModel() && !hasGetStagedModelTypeMethod!false>
+		@Override
+		public StagedModelType getStagedModelType() {
+			return _${entity.varName}.getStagedModelType();
+		}
+	</#if>
 
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}

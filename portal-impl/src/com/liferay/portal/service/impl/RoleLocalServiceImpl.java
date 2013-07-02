@@ -491,8 +491,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 
 		// Expando
 
-		expandoValueLocalService.deleteValues(
-			Role.class.getName(), role.getRoleId());
+		expandoRowLocalService.deleteRows(role.getRoleId());
 
 		// Permission cache
 

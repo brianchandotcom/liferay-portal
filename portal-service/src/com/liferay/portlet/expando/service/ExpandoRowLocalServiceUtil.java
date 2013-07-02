@@ -306,6 +306,11 @@ public class ExpandoRowLocalServiceUtil {
 		getService().deleteRow(companyId, className, tableName, classPK);
 	}
 
+	public static void deleteRows(long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteRows(classPK);
+	}
+
 	public static java.util.List<com.liferay.portlet.expando.model.ExpandoRow> getDefaultTableRows(
 		long companyId, long classNameId, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {

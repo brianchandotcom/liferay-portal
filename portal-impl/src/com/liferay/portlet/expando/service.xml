@@ -58,6 +58,9 @@
 		<finder name="TableId" return-type="Collection">
 			<finder-column name="tableId" />
 		</finder>
+		<finder name="ClassPK" return-type="Collection">
+			<finder-column name="classPK" />
+		</finder>
 		<finder name="T_C" return-type="ExpandoRow" unique="true">
 			<finder-column name="tableId" />
 			<finder-column name="classPK" />

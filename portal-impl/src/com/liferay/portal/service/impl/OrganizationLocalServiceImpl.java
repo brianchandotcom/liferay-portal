@@ -471,8 +471,7 @@ public class OrganizationLocalServiceImpl
 
 		// Expando
 
-		expandoValueLocalService.deleteValues(
-			Organization.class.getName(), organization.getOrganizationId());
+		expandoRowLocalService.deleteRows(organization.getOrganizationId());
 
 		// Password policy relation
 

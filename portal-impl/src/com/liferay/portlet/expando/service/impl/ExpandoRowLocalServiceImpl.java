@@ -102,6 +102,15 @@ public class ExpandoRowLocalServiceImpl extends ExpandoRowLocalServiceBaseImpl {
 	}
 
 	@Override
+	public void deleteRows(long classPK) throws SystemException {
+		List<ExpandoRow> rows = expandoRowPersistence.findByClassPK(classPK);
+
+		for (ExpandoRow row : rows) {
+			deleteRow(row);
+		}
+	}
+
+	@Override
 	public List<ExpandoRow> getDefaultTableRows(
 			long companyId, long classNameId, int start, int end)
 		throws SystemException {

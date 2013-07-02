@@ -28,6 +28,8 @@ public class ${entity.name}ExportActionableDynamicQuery extends ${entity.name}Ac
 	public ${entity.name}ExportActionableDynamicQuery(PortletDataContext portletDataContext) throws SystemException {
 		_portletDataContext = portletDataContext;
 
+		setCompanyId(_portletDataContext.getCompanyId());
+
 		<#if entity.isStagedGroupedModel()>
 			setGroupId(_portletDataContext.getScopeGroupId());
 		</#if>

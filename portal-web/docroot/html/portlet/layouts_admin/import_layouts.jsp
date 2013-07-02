@@ -18,6 +18,7 @@
 
 <%
 long groupId = ParamUtil.getLong(request, "groupId");
+boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 boolean validate = ParamUtil.getBoolean(request, "validate", true);
 
 String[] tempFileEntryNames = LayoutServiceUtil.getTempFileEntryNames(groupId, ExportImportHelper.TEMP_FOLDER_NAME);
@@ -57,18 +58,25 @@ String[] tempFileEntryNames = LayoutServiceUtil.getTempFileEntryNames(groupId, E
 		}
 
 		OrderByComparator orderByComparator = BackgroundTaskUtil.getBackgroundTaskOrderByComparator(orderByCol, orderByType);
+
+		PortletURL portletURL = renderResponse.createRenderURL();
+
+		portletURL.setParameter("struts_action", "/layouts_admin/import_layouts");
+		portletURL.setParameter("tabs2", "all-import-processes");
+		portletURL.setParameter("groupId", String.valueOf(groupId));
+		portletURL.setParameter("privateLayout", String.valueOf(privateLayout));
 		%>
 
 		<liferay-ui:search-container
-			emptyResultsMessage="no-export-processes-were-found"
+			emptyResultsMessage="no-import-processes-were-found"
 			iteratorURL="<%= portletURL %>"
 			orderByCol="<%= orderByCol %>"
 			orderByComparator="<%= orderByComparator %>"
 			orderByType="<%= orderByType %>"
-			total="<%= BackgroundTaskLocalServiceUtil.getBackgroundTasksCount(groupId, LayoutExportBackgroundTaskExecutor.class.getName()) %>"
+			total="<%= BackgroundTaskLocalServiceUtil.getBackgroundTasksCount(groupId, LayoutImportBackgroundTaskExecutor.class.getName()) %>"
 		>
 			<liferay-ui:search-container-results
-				results="<%= BackgroundTaskLocalServiceUtil.getBackgroundTasks(groupId, LayoutExportBackgroundTaskExecutor.class.getName(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>"
+				results="<%= BackgroundTaskLocalServiceUtil.getBackgroundTasks(groupId, LayoutImportBackgroundTaskExecutor.class.getName(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>"
 			/>
 
 			<liferay-ui:search-container-row
@@ -99,64 +107,6 @@ String[] tempFileEntryNames = LayoutServiceUtil.getTempFileEntryNames(groupId, E
 					value="<%= backgroundTask.getCompletionDate() != null ? dateFormatDateTime.format(backgroundTask.getCompletionDate()) : StringPool.BLANK %>"
 				/>
 
-				<liferay-ui:search-container-column-text
-					name="download"
-				>
-
-					<%
-					List<FileEntry> attachmentsFileEntries = backgroundTask.getAttachmentsFileEntries();
-					%>
-
-					<c:choose>
-						<c:when test="<%= !attachmentsFileEntries.isEmpty() %>">
-
-							<%
-							for (FileEntry fileEntry : attachmentsFileEntries) {
-							%>
-
-								<portlet:actionURL var="attachmentURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
-									<portlet:param name="struts_action" value="/group_pages/get_background_task_attachment" />
-									<portlet:param name="backgroundTaskId" value="<%= String.valueOf(backgroundTask.getBackgroundTaskId()) %>" />
-									<portlet:param name="attachment" value="<%= fileEntry.getTitle() %>" />
-								</portlet:actionURL>
-
-								<%
-								StringBundler sb = new StringBundler(4);
-
-								sb.append(fileEntry.getTitle());
-								sb.append(StringPool.OPEN_PARENTHESIS);
-								sb.append(TextFormatter.formatStorageSize(fileEntry.getSize(), locale));
-								sb.append(StringPool.CLOSE_PARENTHESIS);
-								%>
-
-								<liferay-ui:icon
-									image="download"
-									label="<%= true %>"
-									message="<%= sb.toString() %>"
-									url="<%= attachmentURL %>"
-								/>
-
-							<%
-							}
-							%>
-
-						</c:when>
-						<c:otherwise>
-
-							<%
-							Map taskContextMap = backgroundTask.getTaskContextMap();
-							%>
-
-							<liferay-ui:icon
-								image="download"
-								label="<%= true %>"
-								message='<%= MapUtil.getString(taskContextMap, "fileName") %>'
-							/>
-						</c:otherwise>
-					</c:choose>
-
-				</liferay-ui:search-container-column-text>
-
 				<liferay-ui:search-container-column-text>
 					<portlet:actionURL var="deleteBackgroundTaskURL">
 						<portlet:param name="struts_action" value="/group_pages/delete_background_task" />
@@ -174,23 +124,5 @@ String[] tempFileEntryNames = LayoutServiceUtil.getTempFileEntryNames(groupId, E
 
 			<liferay-ui:search-iterator />
 		</liferay-ui:search-container>
-
 	</liferay-ui:section>
 </liferay-ui:tabs>
-
-<c:if test='<%= SessionMessages.contains(liferayPortletRequest, "requestProcessed") %>'>
-	<aui:script>
-		var opener = Liferay.Util.getOpener();
-
-		if (opener.<portlet:namespace />saveLayoutset) {
-			Liferay.fire(
-				'closeWindow',
-				{
-					id: '<portlet:namespace />importDialog'
-				}
-			);
-
-			opener.<portlet:namespace />saveLayoutset('view');
-		}
-	</aui:script>
-</c:if>

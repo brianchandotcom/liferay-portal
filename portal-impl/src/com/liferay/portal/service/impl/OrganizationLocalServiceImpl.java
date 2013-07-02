@@ -288,7 +288,7 @@ public class OrganizationLocalServiceImpl
 		Group group = groupLocalService.addGroup(
 			userId, parentGroupId, Organization.class.getName(), organizationId,
 			GroupConstants.DEFAULT_LIVE_GROUP_ID, name, null,
-			GroupConstants.TYPE_SITE_PRIVATE, null, site, true, true, null);
+			GroupConstants.TYPE_SITE_PRIVATE, null, site, true, false, null);
 
 		// Role
 

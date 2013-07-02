@@ -188,6 +188,10 @@ public class LanguageUtil {
 		return getLanguage().getAvailableLocales();
 	}
 
+	public static Locale[] getAvailableLocales(long groupId) {
+		return getLanguage().getAvailableLocales(groupId);
+	}
+
 	public static String getCharset(Locale locale) {
 		return getLanguage().getCharset(locale);
 	}
@@ -264,6 +268,18 @@ public class LanguageUtil {
 		return getLanguage().isAvailableLocale(locale);
 	}
 
+	public static boolean isAvailableLocale(long groupId, Locale locale) {
+		return getLanguage().isAvailableLocale(groupId, locale);
+	}
+
+	public static boolean isAvailableLocale(long groupId, String languageId) {
+		return getLanguage().isAvailableLocale(groupId, languageId);
+	}
+
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link #isAvailableLocale(long,
+	 *  String)}
+	 */
 	public static boolean isAvailableLocale(String languageId) {
 		return getLanguage().isAvailableLocale(languageId);
 	}

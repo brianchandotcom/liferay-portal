@@ -103,6 +103,8 @@ public interface Language {
 
 	public Locale[] getAvailableLocales();
 
+	public Locale[] getAvailableLocales(long groupId);
+
 	public String getCharset(Locale locale);
 
 	public String getLanguageId(HttpServletRequest request);
@@ -136,6 +138,10 @@ public interface Language {
 	public boolean isAvailableLanguageCode(String languageCode);
 
 	public boolean isAvailableLocale(Locale locale);
+
+	public boolean isAvailableLocale(long groupId, Locale locale);
+
+	public boolean isAvailableLocale(long groupId, String languageId);
 
 	public boolean isAvailableLocale(String languageId);
 

@@ -53,7 +53,9 @@ public class GroupTestUtil {
 		return GroupLocalServiceUtil.addGroup(
 			userId, parentGroupId, Layout.class.getName(), layout.getPlid(),
 			GroupConstants.DEFAULT_LIVE_GROUP_ID,
-			String.valueOf(layout.getPlid()), null, 0, null, false, true, null);
+			String.valueOf(layout.getPlid()), null, 0, true,
+			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, null, false, true,
+			null);
 	}
 
 	public static Group addGroup(long parentGroupId, String name)
@@ -72,11 +74,15 @@ public class GroupTestUtil {
 			StringPool.SLASH + FriendlyURLNormalizerUtil.normalize(name);
 		boolean site = true;
 		boolean active = true;
+		boolean manualMembership = true;
+		int membershipRestriction =
+			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION;
 
 		return GroupLocalServiceUtil.addGroup(
 			TestPropsValues.getUserId(), parentGroupId, null, 0,
 			GroupConstants.DEFAULT_LIVE_GROUP_ID, name, description, type,
-			friendlyURL, site, active, ServiceTestUtil.getServiceContext());
+			manualMembership, membershipRestriction, friendlyURL, site, active,
+			ServiceTestUtil.getServiceContext());
 	}
 
 	public static Group addGroup(String name) throws Exception {
@@ -100,6 +106,9 @@ public class GroupTestUtil {
 			StringPool.SLASH + FriendlyURLNormalizerUtil.normalize(name);
 		boolean site = true;
 		boolean active = true;
+		boolean manualMembership = true;
+		int membershipRestriction =
+			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION;
 
 		if (serviceContext == null) {
 			serviceContext = ServiceTestUtil.getServiceContext();
@@ -107,7 +116,8 @@ public class GroupTestUtil {
 
 		return GroupServiceUtil.addGroup(
 			parentGroupId, GroupConstants.DEFAULT_LIVE_GROUP_ID, name,
-			description, type, friendlyURL, site, active, serviceContext);
+			description, type, friendlyURL, site, active, manualMembership,
+			membershipRestriction, serviceContext);
 	}
 
 	public static void enableLocalStaging(Group group) throws Exception {

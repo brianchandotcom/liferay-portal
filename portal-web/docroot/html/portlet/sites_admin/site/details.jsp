@@ -32,6 +32,18 @@ LayoutSet publicLayoutSet = null;
 LayoutSetPrototype publicLayoutSetPrototype = null;
 boolean publicLayoutSetPrototypeLinkEnabled = true;
 
+boolean manualMembership = true;
+
+if (liveGroup != null) {
+	manualMembership = GetterUtil.getBoolean(liveGroup.isManualMembership(), true);
+}
+
+boolean membershipRestriction = false;
+
+if ((liveGroup != null) && (liveGroup.getMembershipRestriction() == GroupConstants.MEMBERSHIP_RESTRICTION_TO_PARENT_SITE_MEMBERS)) {
+	membershipRestriction = true;
+}
+
 if (showPrototypes && (group != null)) {
 	try {
 		LayoutLocalServiceUtil.getLayouts(liveGroup.getGroupId(), true, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
@@ -84,10 +96,6 @@ if (showPrototypes && (group != null)) {
 		<liferay-ui:message key="the-site-cannot-have-a-child-as-its-parent-site" />
 	</c:if>
 
-	<c:if test="<%= gpe.getType() == GroupParentException.MISSING_PARENT %>">
-		<liferay-ui:message key="the-site-must-have-a-parent-site-if-the-membership-type-is-limited-to-parent-site-members" />
-	</c:if>
-
 	<c:if test="<%= gpe.getType() == GroupParentException.SELF_DESCENDANT %>">
 		<liferay-ui:message key="the-site-cannot-be-its-own-parent-site" />
 	</c:if>
@@ -132,14 +140,19 @@ if (showPrototypes && (group != null)) {
 	<aui:input name="description" />
 
 	<c:if test="<%= (group == null) || !group.isCompany() %>">
+		<aui:input name="active" value="<%= true %>" />
+	</c:if>
+
+	<h3><liferay-ui:message key="membership-options" /></h3>
+
+	<c:if test="<%= (group == null) || !group.isCompany() %>">
 		<aui:select label="membership-type" name="type">
 			<aui:option label="open" value="<%= GroupConstants.TYPE_SITE_OPEN %>" />
-			<aui:option label="limited-to-parent-site-members" value="<%= GroupConstants.TYPE_SITE_LIMITED_TO_PARENT_SITE_MEMBERS %>" />
 			<aui:option label="restricted" value="<%= GroupConstants.TYPE_SITE_RESTRICTED %>" />
 			<aui:option label="private" value="<%= GroupConstants.TYPE_SITE_PRIVATE %>" />
 		</aui:select>
 
-		<aui:input name="active" value="<%= true %>" />
+		<aui:input label="allow-manual-membership-management" name="manualMembership" value="<%= manualMembership %>" />
 	</c:if>
 
 	<c:if test="<%= (group != null) && !group.isCompany() %>">
@@ -284,7 +297,7 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 								<c:choose>
 									<c:when test="<%= hasUnlinkLayoutSetPrototypePermission %>">
 										<div class="hide" id="<portlet:namespace />privateLayoutSetPrototypeIdOptions">
-											<aui:input helpMessage="enable-propagation-of-changes-from-the-site-template-help"  label="enable-propagation-of-changes-from-the-site-template" name="privateLayoutSetPrototypeLinkEnabled" type="checkbox" value="<%= privateLayoutSetPrototypeLinkEnabled %>" />
+											<aui:input helpMessage="enable-propagation-of-changes-from-the-site-template-help" label="enable-propagation-of-changes-from-the-site-template" name="privateLayoutSetPrototypeLinkEnabled" type="checkbox" value="<%= privateLayoutSetPrototypeLinkEnabled %>" />
 										</div>
 									</c:when>
 									<c:otherwise>
@@ -496,8 +509,6 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 		<liferay-ui:search-iterator paginate="<%= false %>" />
 	</liferay-ui:search-container>
 
-	<br />
-
 	<liferay-ui:icon
 		cssClass="modify-link"
 		id="selectParentSiteLink"
@@ -509,8 +520,12 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 
 	<br />
 
+	<div class="<%= parentGroups.isEmpty() ? "membership-restriction-container hide" : "membership-restriction-container" %>" id="<portlet:namespace />membershipRestrictionContainer">
+		<aui:input label="limit-membership-to-members-of-the-parent-site" name="membershipRestriction" type="checkbox" value="<%= membershipRestriction %>" />
+	</div>
+
 	<portlet:renderURL var="groupSelectorURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-		<portlet:param name="struts_action" value="/users_admin/select_site" />
+		<portlet:param name="struts_action" value="/sites_admin/select_site" />
 		<portlet:param name="groupId" value='<%= (group != null) ? String.valueOf(group.getGroupId()) : "0" %>' />
 	</portlet:renderURL>
 
@@ -557,6 +572,10 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 						searchContainer.deleteRow(1, searchContainer.getData());
 						searchContainer.addRow(rowColumns, event.groupid);
 						searchContainer.updateDataStore(event.groupid);
+
+						var membershipRestrictionContainer = A.one('#<portlet:namespace />membershipRestrictionContainer');
+
+						membershipRestrictionContainer.show();
 					}
 				);
 			}
@@ -572,6 +591,10 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 				var tr = link.ancestor('tr');
 
 				searchContainer.deleteRow(tr, link.getAttribute('data-rowId'));
+
+				var membershipRestrictionContainer = A.one('#<portlet:namespace />membershipRestrictionContainer');
+
+				membershipRestrictionContainer.hide();
 			},
 			'.modify-link'
 		);

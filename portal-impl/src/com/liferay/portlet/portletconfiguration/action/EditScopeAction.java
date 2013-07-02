@@ -186,8 +186,9 @@ public class EditScopeAction extends PortletAction {
 					themeDisplay.getUserId(),
 					GroupConstants.DEFAULT_PARENT_GROUP_ID,
 					Layout.class.getName(), scopeLayout.getPlid(),
-					GroupConstants.DEFAULT_LIVE_GROUP_ID, name, null, 0, null,
-					false, true, null);
+					GroupConstants.DEFAULT_LIVE_GROUP_ID, name, null, 0, true,
+					GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, null, false,
+					true, null);
 			}
 
 			scopeGroupId = scopeLayout.getGroupId();

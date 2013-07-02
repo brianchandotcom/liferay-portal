@@ -321,7 +321,8 @@ public class GroupServiceTest {
 			TestPropsValues.getUserId(), GroupConstants.DEFAULT_PARENT_GROUP_ID,
 			Layout.class.getName(), layout.getPlid(),
 			GroupConstants.DEFAULT_LIVE_GROUP_ID,
-			layout.getName(LocaleUtil.getDefault()), null, 0, null, false, true,
+			layout.getName(LocaleUtil.getDefault()), null, 0, true,
+			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, null, false, true,
 			null);
 
 		Assert.assertFalse(scope.isRoot());
@@ -348,6 +349,7 @@ public class GroupServiceTest {
 			GroupLocalServiceUtil.updateGroup(
 				group1.getGroupId(), group11.getGroupId(), group1.getName(),
 				group1.getDescription(), group1.getType(),
+				group1.isManualMembership(), group1.getMembershipRestriction(),
 				group1.getFriendlyURL(), group1.isActive(),
 				ServiceTestUtil.getServiceContext());
 
@@ -375,6 +377,7 @@ public class GroupServiceTest {
 			GroupLocalServiceUtil.updateGroup(
 				group1.getGroupId(), group1111.getGroupId(), group1.getName(),
 				group1.getDescription(), group1.getType(),
+				group1.isManualMembership(), group1.getMembershipRestriction(),
 				group1.getFriendlyURL(), group1.isActive(),
 				ServiceTestUtil.getServiceContext());
 
@@ -400,8 +403,10 @@ public class GroupServiceTest {
 			GroupLocalServiceUtil.updateGroup(
 				stagingGroup.getGroupId(), group.getGroupId(),
 				stagingGroup.getName(), stagingGroup.getDescription(),
-				stagingGroup.getType(), stagingGroup.getFriendlyURL(),
-				stagingGroup.isActive(), ServiceTestUtil.getServiceContext());
+				stagingGroup.getType(), stagingGroup.isManualMembership(),
+				stagingGroup.getMembershipRestriction(),
+				stagingGroup.getFriendlyURL(), stagingGroup.isActive(),
+				ServiceTestUtil.getServiceContext());
 
 			Assert.fail("A group cannot have its live group as parent");
 		}
@@ -418,8 +423,10 @@ public class GroupServiceTest {
 		try {
 			GroupLocalServiceUtil.updateGroup(
 				group.getGroupId(), group.getGroupId(), group.getName(),
-				group.getDescription(), group.getType(), group.getFriendlyURL(),
-				group.isActive(), ServiceTestUtil.getServiceContext());
+				group.getDescription(), group.getType(),
+				group.isManualMembership(), group.getMembershipRestriction(),
+				group.getFriendlyURL(), group.isActive(),
+				ServiceTestUtil.getServiceContext());
 
 			Assert.fail("A group cannot be its own parent");
 		}
@@ -530,8 +537,9 @@ public class GroupServiceTest {
 				TestPropsValues.getUserId(),
 				GroupConstants.DEFAULT_PARENT_GROUP_ID, Layout.class.getName(),
 				scopeLayout.getPlid(), GroupConstants.DEFAULT_LIVE_GROUP_ID,
-				ServiceTestUtil.randomString(), null, 0, null, false, true,
-				null);
+				ServiceTestUtil.randomString(), null, 0, true,
+				GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, null, false,
+				true, null);
 		}
 		else if (layoutPrototype) {
 			Group group = GroupTestUtil.addGroup(

@@ -82,13 +82,15 @@ public class GroupServiceUtil {
 	*/
 	public static com.liferay.portal.model.Group addGroup(long parentGroupId,
 		long liveGroupId, java.lang.String name, java.lang.String description,
-		int type, java.lang.String friendlyURL, boolean site, boolean active,
+		int type, boolean manualMembership, int membershipRestriction,
+		java.lang.String friendlyURL, boolean site, boolean active,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .addGroup(parentGroupId, liveGroupId, name, description,
-			type, friendlyURL, site, active, serviceContext);
+			type, manualMembership, membershipRestriction, friendlyURL, site,
+			active, serviceContext);
 	}
 
 	/**
@@ -114,7 +116,8 @@ public class GroupServiceUtil {
 	if a valid friendly URL could not be created for the group
 	* @throws SystemException if a system exception occurred
 	* @deprecated As of 6.2.0, replaced by {@link #addGroup(long, long, String,
-	String, int, String, boolean, boolean, ServiceContext)}
+	String, int, boolean, int, String, boolean, boolean,
+	ServiceContext)}
 	*/
 	public static com.liferay.portal.model.Group addGroup(long parentGroupId,
 		java.lang.String name, java.lang.String description, int type,
@@ -290,7 +293,8 @@ public class GroupServiceUtil {
 	access
 	* @throws PortalException if a portal exception occurred
 	* @throws SystemException if a system exception occurred
-	* @deprecated As of 6.2.0, replaced by {@link #getManageableSiteGroups(Collection, int)}
+	* @deprecated As of 6.2.0, replaced by {@link
+	#getManageableSiteGroups(Collection, int)}
 	*/
 	public static java.util.List<com.liferay.portal.model.Group> getManageableSites(
 		java.util.Collection<com.liferay.portal.model.Portlet> portlets, int max)
@@ -806,13 +810,15 @@ public class GroupServiceUtil {
 	*/
 	public static com.liferay.portal.model.Group updateGroup(long groupId,
 		long parentGroupId, java.lang.String name,
-		java.lang.String description, int type, java.lang.String friendlyURL,
+		java.lang.String description, int type, boolean manualMembership,
+		int membershipRestriction, java.lang.String friendlyURL,
 		boolean active, com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .updateGroup(groupId, parentGroupId, name, description,
-			type, friendlyURL, active, serviceContext);
+			type, manualMembership, membershipRestriction, friendlyURL, active,
+			serviceContext);
 	}
 
 	/**

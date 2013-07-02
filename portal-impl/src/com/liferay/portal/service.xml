@@ -399,6 +399,8 @@
 		<column name="friendlyURL" type="String" />
 		<column name="site" type="boolean" />
 		<column name="active" type="boolean" />
+		<column name="manualMembership" type="boolean" />
+		<column name="membershipRestriction" type="int" />
 
 		<!-- Relationships -->
 

@@ -59,7 +59,7 @@ String tabs1 = (String)request.getAttribute("view.jsp-tabs1");
 				/>
 			</c:if>
 
-			<c:if test="<%= ((group.getType() == GroupConstants.TYPE_SITE_OPEN) || (group.getType() == GroupConstants.TYPE_SITE_RESTRICTED)) && GroupLocalServiceUtil.hasUserGroup(user.getUserId(), group.getGroupId(), false) && !SiteMembershipPolicyUtil.isMembershipRequired(user.getUserId(), group.getGroupId()) %>">
+			<c:if test="<%= ((group.getType() == GroupConstants.TYPE_SITE_OPEN) || (group.getType() == GroupConstants.TYPE_SITE_RESTRICTED)) && GroupLocalServiceUtil.hasUserGroup(user.getUserId(), group.getGroupId(), false) && !SiteMembershipPolicyUtil.isMembershipRequired(user.getUserId(), group.getGroupId()) && group.isManualMembership() %>">
 				<portlet:actionURL var="leaveURL">
 					<portlet:param name="struts_action" value="/sites_admin/edit_site_assignments" />
 					<portlet:param name="<%= Constants.CMD %>" value="group_users" />
@@ -74,7 +74,7 @@ String tabs1 = (String)request.getAttribute("view.jsp-tabs1");
 				/>
 			</c:if>
 		</c:when>
-		<c:otherwise>
+		<c:when test="<%= group.isManualMembership() %>">
 			<c:choose>
 				<c:when test="<%= !GroupLocalServiceUtil.hasUserGroup(user.getUserId(), group.getGroupId()) && SiteMembershipPolicyUtil.isMembershipAllowed(user.getUserId(), group.getGroupId()) %>">
 					<c:choose>
@@ -114,7 +114,6 @@ String tabs1 = (String)request.getAttribute("view.jsp-tabs1");
 					</c:choose>
 				</c:when>
 				<c:otherwise>
-
 					<c:if test="<%= ((group.getType() == GroupConstants.TYPE_SITE_OPEN) || (group.getType() == GroupConstants.TYPE_SITE_RESTRICTED)) && GroupLocalServiceUtil.hasUserGroup(user.getUserId(), group.getGroupId(), false) && !SiteMembershipPolicyUtil.isMembershipRequired(user.getUserId(), group.getGroupId()) %>">
 						<portlet:actionURL var="leaveURL">
 							<portlet:param name="struts_action" value="/sites_admin/edit_site_assignments" />
@@ -131,6 +130,6 @@ String tabs1 = (String)request.getAttribute("view.jsp-tabs1");
 					</c:if>
 				</c:otherwise>
 			</c:choose>
-		</c:otherwise>
+		</c:when>
 	</c:choose>
 </liferay-ui:icon-menu>

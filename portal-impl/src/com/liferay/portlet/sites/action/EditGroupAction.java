@@ -385,8 +385,9 @@ public class EditGroupAction extends PortletAction {
 
 		GroupServiceUtil.updateGroup(
 			groupId, group.getParentGroupId(), group.getName(),
-			group.getDescription(), group.getType(), group.getFriendlyURL(),
-			active, serviceContext);
+			group.getDescription(), group.getType(), group.isManualMembership(),
+			group.getMembershipRestriction(), group.getFriendlyURL(), active,
+			serviceContext);
 	}
 
 	protected String updateCloseRedirect(
@@ -460,6 +461,19 @@ public class EditGroupAction extends PortletAction {
 		int type = 0;
 		String friendlyURL = null;
 		boolean active = false;
+		boolean manualMembership = true;
+		int membershipRestriction =
+			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION;
+
+		boolean membershipRestrictionParam = ParamUtil.getBoolean(
+			actionRequest, "membershipRestriction");
+
+		if (membershipRestrictionParam &&
+			(parentGroupId != GroupConstants.DEFAULT_PARENT_GROUP_ID)) {
+
+			membershipRestriction =
+				GroupConstants.MEMBERSHIP_RESTRICTION_TO_PARENT_SITE_MEMBERS;
+		}
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			Group.class.getName(), actionRequest);
@@ -477,10 +491,13 @@ public class EditGroupAction extends PortletAction {
 			type = ParamUtil.getInteger(actionRequest, "type");
 			friendlyURL = ParamUtil.getString(actionRequest, "friendlyURL");
 			active = ParamUtil.getBoolean(actionRequest, "active");
+			manualMembership = ParamUtil.getBoolean(
+				actionRequest, "manualMembership");
 
 			liveGroup = GroupServiceUtil.addGroup(
 				parentGroupId, GroupConstants.DEFAULT_LIVE_GROUP_ID, name,
-				description, type, friendlyURL, true, active, serviceContext);
+				description, type, manualMembership, membershipRestriction,
+				friendlyURL, true, active, serviceContext);
 
 			LiveUsers.joinGroup(
 				themeDisplay.getCompanyId(), liveGroup.getGroupId(), userId);
@@ -503,10 +520,14 @@ public class EditGroupAction extends PortletAction {
 				actionRequest, "friendlyURL", liveGroup.getFriendlyURL());
 			active = ParamUtil.getBoolean(
 				actionRequest, "active", liveGroup.getActive());
+			manualMembership = ParamUtil.getBoolean(
+				actionRequest, "manualMembership",
+				liveGroup.isManualMembership());
 
 			liveGroup = GroupServiceUtil.updateGroup(
 				liveGroupId, parentGroupId, name, description, type,
-				friendlyURL, active, serviceContext);
+				manualMembership, membershipRestriction, friendlyURL, active,
+				serviceContext);
 
 			if (type == GroupConstants.TYPE_SITE_OPEN) {
 				List<MembershipRequest> membershipRequests =

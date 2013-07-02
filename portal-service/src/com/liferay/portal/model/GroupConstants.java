@@ -29,6 +29,8 @@ public class GroupConstants {
 
 	public static final long DEFAULT_LIVE_GROUP_ID = 0;
 
+	public static final int DEFAULT_MEMBERSHIP_RESTRICTION = 0;
+
 	public static final long DEFAULT_PARENT_GROUP_ID = 0;
 
 	public static final String GLOBAL = "Global";
@@ -37,14 +39,11 @@ public class GroupConstants {
 
 	public static final String GUEST = "Guest";
 
+	public static final int MEMBERSHIP_RESTRICTION_TO_PARENT_SITE_MEMBERS = 1;
+
 	public static final String[] SYSTEM_GROUPS = {
 		CONTROL_PANEL, GUEST, GroupConstants.USER_PERSONAL_SITE
 	};
-
-	public static final int TYPE_SITE_LIMITED_TO_PARENT_SITE_MEMBERS = 5;
-
-	public static final String TYPE_SITE_LIMITED_TO_PARENT_SITE_MEMBERS_LABEL =
-		"limited-to-parent-site-members";
 
 	public static final int TYPE_SITE_OPEN = 1;
 
@@ -68,10 +67,7 @@ public class GroupConstants {
 		"/personal_site";
 
 	public static String getTypeLabel(int type) {
-		if (type == TYPE_SITE_LIMITED_TO_PARENT_SITE_MEMBERS) {
-			return TYPE_SITE_LIMITED_TO_PARENT_SITE_MEMBERS_LABEL;
-		}
-		else if (type == TYPE_SITE_OPEN) {
+		if (type == TYPE_SITE_OPEN) {
 			return TYPE_SITE_OPEN_LABEL;
 		}
 		else if (type == TYPE_SITE_PRIVATE) {

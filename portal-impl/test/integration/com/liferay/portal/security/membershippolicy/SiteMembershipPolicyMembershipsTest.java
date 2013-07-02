@@ -259,8 +259,9 @@ public class SiteMembershipPolicyMembershipsTest
 		GroupServiceUtil.updateGroup(
 			group.getGroupId(), group.getParentGroupId(),
 			ServiceTestUtil.randomString(), group.getDescription(),
-			group.getType(), group.getFriendlyURL(), group.isActive(),
-			ServiceTestUtil.getServiceContext());
+			group.getType(), group.isManualMembership(),
+			group.getMembershipRestriction(), group.getFriendlyURL(),
+			group.isActive(), ServiceTestUtil.getServiceContext());
 
 		Assert.assertTrue(isVerify());
 	}

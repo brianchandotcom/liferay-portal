@@ -588,8 +588,8 @@ public class GroupImpl extends GroupBaseImpl {
 	@Override
 	public boolean isLimitedToParentSiteMembers() {
 		if ((getParentGroupId() != GroupConstants.DEFAULT_PARENT_GROUP_ID) &&
-			(getType() ==
-				GroupConstants.TYPE_SITE_LIMITED_TO_PARENT_SITE_MEMBERS)) {
+			(getMembershipRestriction() ==
+				GroupConstants.MEMBERSHIP_RESTRICTION_TO_PARENT_SITE_MEMBERS)) {
 
 			return true;
 		}

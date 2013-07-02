@@ -377,6 +377,18 @@
 				(LayoutSet.pageCount != 0)
 		]]>
 	</sql>
+	<sql id="com.liferay.portal.service.persistence.GroupFinder.joinByManualMembership">
+		<![CDATA[
+			WHERE
+				(Group_.manualMembership = ?)
+		]]>
+	</sql>
+	<sql id="com.liferay.portal.service.persistence.GroupFinder.joinByMembershipRestriction">
+		<![CDATA[
+			WHERE
+				(Group_.membershipRestriction = ?)
+		]]>
+	</sql>
 	<sql id="com.liferay.portal.service.persistence.GroupFinder.joinByPageCount">
 		<![CDATA[
 			INNER JOIN

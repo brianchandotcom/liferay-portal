@@ -790,6 +790,19 @@ public class PollsQuestionWrapper implements PollsQuestion,
 	}
 
 	@Override
+	public java.util.List<com.liferay.portlet.polls.model.PollsVote> getVotes(
+		int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _pollsQuestion.getVotes(start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portlet.polls.model.PollsVote> getVotes()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _pollsQuestion.getVotes();
+	}
+
+	@Override
 	public boolean isExpired() {
 		return _pollsQuestion.isExpired();
 	}

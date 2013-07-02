@@ -240,46 +240,52 @@ Layout exportableLayout = ExportImportHelperUtil.getExportableLayout(themeDispla
 										%>
 
 											<div class="hide" id="<portlet:namespace />content_<%= selPortlet.getRootPortletId() %>">
-												<c:if test="<%= exportControls != null %>">
+												<ul class="lfr-tree unstyled">
+													<li class="tree-item">
+														<aui:fieldset cssClass="portlet-type-data-section" label="content">
+															<c:if test="<%= exportControls != null %>">
 
-													<%
-													request.setAttribute("render_controls.jsp-action", Constants.EXPORT);
-													request.setAttribute("render_controls.jsp-controls", exportControls);
-													request.setAttribute("render_controls.jsp-manifestSummary", manifestSummary);
-													request.setAttribute("render_controls.jsp-portletDisabled", !portletDataHandler.isPublishToLiveByDefault());
-													%>
+																<%
+																request.setAttribute("render_controls.jsp-action", Constants.EXPORT);
+																request.setAttribute("render_controls.jsp-controls", exportControls);
+																request.setAttribute("render_controls.jsp-manifestSummary", manifestSummary);
+																request.setAttribute("render_controls.jsp-portletDisabled", !portletDataHandler.isPublishToLiveByDefault());
+																%>
 
-													<aui:field-wrapper label='<%= Validator.isNotNull(metadataControls) ? "content" : StringPool.BLANK %>'>
-														<ul class="lfr-tree unstyled">
-															<liferay-util:include page="/html/portlet/layouts_admin/render_controls.jsp" />
-														</ul>
-													</aui:field-wrapper>
-												</c:if>
+																<aui:field-wrapper label='<%= Validator.isNotNull(metadataControls) ? "content" : StringPool.BLANK %>'>
+																	<ul class="lfr-tree unstyled">
+																		<liferay-util:include page="/html/portlet/layouts_admin/render_controls.jsp" />
+																	</ul>
+																</aui:field-wrapper>
+															</c:if>
 
-												<c:if test="<%= metadataControls != null %>">
+															<c:if test="<%= metadataControls != null %>">
 
-													<%
-													for (PortletDataHandlerControl metadataControl : metadataControls) {
-														PortletDataHandlerBoolean control = (PortletDataHandlerBoolean)metadataControl;
+																<%
+																for (PortletDataHandlerControl metadataControl : metadataControls) {
+																	PortletDataHandlerBoolean control = (PortletDataHandlerBoolean)metadataControl;
 
-														PortletDataHandlerControl[] childrenControls = control.getChildren();
+																	PortletDataHandlerControl[] childrenControls = control.getChildren();
 
-														if ((childrenControls != null) && (childrenControls.length > 0)) {
-															request.setAttribute("render_controls.jsp-controls", childrenControls);
-														%>
+																	if ((childrenControls != null) && (childrenControls.length > 0)) {
+																		request.setAttribute("render_controls.jsp-controls", childrenControls);
+																	%>
 
-															<aui:field-wrapper label="content-metadata">
-																<ul class="lfr-tree unstyled">
-																	<liferay-util:include page="/html/portlet/layouts_admin/render_controls.jsp" />
-																</ul>
-															</aui:field-wrapper>
+																		<aui:field-wrapper label="content-metadata">
+																			<ul class="lfr-tree unstyled">
+																				<liferay-util:include page="/html/portlet/layouts_admin/render_controls.jsp" />
+																			</ul>
+																		</aui:field-wrapper>
 
-														<%
-														}
-													}
-													%>
+																	<%
+																	}
+																}
+																%>
 
-												</c:if>
+															</c:if>
+														</aui:fieldset>
+													</li>
+												</ul>
 											</div>
 
 											<ul id="<portlet:namespace />showChangeContent">

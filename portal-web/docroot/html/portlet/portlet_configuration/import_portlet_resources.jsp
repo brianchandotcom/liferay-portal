@@ -166,60 +166,70 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 									%>
 
 										<div class="hide" id="<portlet:namespace />content_<%= selPortlet.getRootPortletId() %>">
-											<aui:field-wrapper label='<%= Validator.isNotNull(metadataControls) ? "content" : StringPool.BLANK %>'>
-												<aui:input data-name='<%= LanguageUtil.get(locale, "delete-portlet-data") %>' label="delete-portlet-data-before-importing" name="<%= PortletDataHandlerKeys.DELETE_PORTLET_DATA %>" type="checkbox" />
-
-												<div id="<portlet:namespace />showDeleteContentWarning">
-													<div class="alert alert-block">
-														<liferay-ui:message key="delete-content-before-importing-warning" />
-
-														<liferay-ui:message key="delete-content-before-importing-suggestion" />
-													</div>
-												</div>
-
-												<aui:script>
-													Liferay.Util.toggleBoxes('<portlet:namespace /><%= PortletDataHandlerKeys.DELETE_PORTLET_DATA %>Checkbox', '<portlet:namespace />showDeleteContentWarning');
-												</aui:script>
-
-												<c:if test="<%= importControls != null %>">
-
-													<%
-													request.setAttribute("render_controls.jsp-action", Constants.IMPORT);
-													request.setAttribute("render_controls.jsp-controls", importControls);
-													request.setAttribute("render_controls.jsp-manifestSummary", manifestSummary);
-													request.setAttribute("render_controls.jsp-portletDisabled", !portletDataHandler.isPublishToLiveByDefault());
-													%>
-
-													<ul class="lfr-tree unstyled">
-														<liferay-util:include page="/html/portlet/layouts_admin/render_controls.jsp" />
-													</ul>
-												</c:if>
-											</aui:field-wrapper>
-
-											<c:if test="<%= metadataControls != null %>">
-
-												<%
-												for (PortletDataHandlerControl metadataControl : metadataControls) {
-													PortletDataHandlerBoolean control = (PortletDataHandlerBoolean)metadataControl;
-
-													PortletDataHandlerControl[] childrenControls = control.getChildren();
-
-													if ((childrenControls != null) && (childrenControls.length > 0)) {
-														request.setAttribute("render_controls.jsp-controls", childrenControls);
-													%>
-
-														<aui:field-wrapper label="content-metadata">
+											<ul class="lfr-tree unstyled">
+												<li class="tree-item">
+													<aui:fieldset cssClass="portlet-type-data-section" label="content">
+														<aui:field-wrapper label='<%= Validator.isNotNull(metadataControls) ? "content" : StringPool.BLANK %>'>
 															<ul class="lfr-tree unstyled">
-																<liferay-util:include page="/html/portlet/layouts_admin/render_controls.jsp" />
+																<li class="tree-item">
+																	<aui:input data-name='<%= LanguageUtil.get(locale, "delete-portlet-data") %>' label="delete-portlet-data-before-importing" name="<%= PortletDataHandlerKeys.DELETE_PORTLET_DATA %>" type="checkbox" />
+
+																	<div id="<portlet:namespace />showDeleteContentWarning">
+																		<div class="alert alert-block">
+																			<liferay-ui:message key="delete-content-before-importing-warning" />
+
+																			<liferay-ui:message key="delete-content-before-importing-suggestion" />
+																		</div>
+																	</div>
+																</li>
 															</ul>
+
+															<aui:script>
+																Liferay.Util.toggleBoxes('<portlet:namespace /><%= PortletDataHandlerKeys.DELETE_PORTLET_DATA %>Checkbox', '<portlet:namespace />showDeleteContentWarning');
+															</aui:script>
+
+															<c:if test="<%= importControls != null %>">
+
+																<%
+																request.setAttribute("render_controls.jsp-action", Constants.IMPORT);
+																request.setAttribute("render_controls.jsp-controls", importControls);
+																request.setAttribute("render_controls.jsp-manifestSummary", manifestSummary);
+																request.setAttribute("render_controls.jsp-portletDisabled", !portletDataHandler.isPublishToLiveByDefault());
+																%>
+
+																<ul class="lfr-tree unstyled">
+																	<liferay-util:include page="/html/portlet/layouts_admin/render_controls.jsp" />
+																</ul>
+															</c:if>
 														</aui:field-wrapper>
 
-													<%
-													}
-												}
-												%>
+														<c:if test="<%= metadataControls != null %>">
 
-											</c:if>
+															<%
+															for (PortletDataHandlerControl metadataControl : metadataControls) {
+																PortletDataHandlerBoolean control = (PortletDataHandlerBoolean)metadataControl;
+
+																PortletDataHandlerControl[] childrenControls = control.getChildren();
+
+																if ((childrenControls != null) && (childrenControls.length > 0)) {
+																	request.setAttribute("render_controls.jsp-controls", childrenControls);
+																%>
+
+																	<aui:field-wrapper label="content-metadata">
+																		<ul class="lfr-tree unstyled">
+																			<liferay-util:include page="/html/portlet/layouts_admin/render_controls.jsp" />
+																		</ul>
+																	</aui:field-wrapper>
+
+																<%
+																}
+															}
+															%>
+
+														</c:if>
+													</aui:fieldset>
+												</li>
+											</ul>
 										</div>
 
 										<ul id="<portlet:namespace />showChangeContent">

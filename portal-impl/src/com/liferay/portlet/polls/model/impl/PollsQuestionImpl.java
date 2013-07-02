@@ -14,9 +14,11 @@
 
 package com.liferay.portlet.polls.model.impl;
 
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.polls.model.PollsChoice;
+import com.liferay.portlet.polls.model.PollsVote;
 import com.liferay.portlet.polls.service.PollsChoiceLocalServiceUtil;
 import com.liferay.portlet.polls.service.PollsVoteLocalServiceUtil;
 
@@ -34,6 +36,18 @@ public class PollsQuestionImpl extends PollsQuestionBaseImpl {
 	@Override
 	public List<PollsChoice> getChoices() throws SystemException {
 		return PollsChoiceLocalServiceUtil.getChoices(getQuestionId());
+	}
+
+	@Override
+	public List<PollsVote> getVotes() throws SystemException {
+		return PollsVoteLocalServiceUtil.getQuestionVotes(
+			getQuestionId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+	}
+
+	@Override
+	public List<PollsVote> getVotes(int start, int end) throws SystemException {
+		return PollsVoteLocalServiceUtil.getQuestionVotes(
+			getQuestionId(), start, end);
 	}
 
 	@Override

@@ -106,15 +106,16 @@ public class PollsPortletDataHandler extends BasePortletDataHandler {
 				new PollsChoiceExportActionableDynamicQuery(portletDataContext);
 
 			choiceActionableDynamicQuery.performActions();
-		}
 
-		if (portletDataContext.getBooleanParameter(
-				PollsPortletDataHandler.NAMESPACE, "votes")) {
+			if (portletDataContext.getBooleanParameter(
+					PollsPortletDataHandler.NAMESPACE, "votes")) {
 
-			ActionableDynamicQuery voteActionableDynamicQuery =
-				new PollsVoteExportActionableDynamicQuery(portletDataContext);
+				ActionableDynamicQuery voteActionableDynamicQuery =
+					new PollsVoteExportActionableDynamicQuery(
+						portletDataContext);
 
-			voteActionableDynamicQuery.performActions();
+				voteActionableDynamicQuery.performActions();
+			}
 		}
 
 		return getExportDataRootElementString(rootElement);

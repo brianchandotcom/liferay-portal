@@ -16,6 +16,8 @@ package com.liferay.portlet.polls.lar;
 
 import com.liferay.portal.kernel.lar.DataLevel;
 import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
+import com.liferay.portal.kernel.lar.PortletDataHandlerControl;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -43,6 +45,15 @@ public class PollsDisplayPortletDataHandler extends PollsPortletDataHandler {
 	public PollsDisplayPortletDataHandler() {
 		setDataLevel(DataLevel.PORTLET_INSTANCE);
 		setDataPortletPreferences("questionId");
+		setExportControls(
+			new PortletDataHandlerBoolean(
+				NAMESPACE, "selected-question", true, true,
+				new PortletDataHandlerControl[] {
+					new PortletDataHandlerBoolean(
+						NAMESPACE, "votes", true, false, null,
+						PollsVote.class.getName())
+				},
+				PollsQuestion.class.getName()));
 		setPublishToLiveByDefault(true);
 	}
 
@@ -104,6 +115,20 @@ public class PollsDisplayPortletDataHandler extends PollsPortletDataHandler {
 
 		StagedModelDataHandlerUtil.exportStagedModel(
 			portletDataContext, question);
+
+		for (PollsChoice choice : question.getChoices()) {
+			StagedModelDataHandlerUtil.exportStagedModel(
+				portletDataContext, choice);
+		}
+
+		if (portletDataContext.getBooleanParameter(
+				PollsPortletDataHandler.NAMESPACE, "votes")) {
+
+			for (PollsVote vote : question.getVotes()) {
+				StagedModelDataHandlerUtil.exportStagedModel(
+					portletDataContext, vote);
+			}
+		}
 
 		return getExportDataRootElementString(rootElement);
 	}

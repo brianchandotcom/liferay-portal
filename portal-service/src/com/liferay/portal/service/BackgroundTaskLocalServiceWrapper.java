@@ -347,6 +347,16 @@ public class BackgroundTaskLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.portal.model.BackgroundTask> getBackgroundTasks(
+		long groupId, java.lang.String taskExecutorClassName, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _backgroundTaskLocalService.getBackgroundTasks(groupId,
+			taskExecutorClassName, start, end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.model.BackgroundTask> getBackgroundTasks(
 		java.lang.String taskExecutorClassName, int status)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _backgroundTaskLocalService.getBackgroundTasks(taskExecutorClassName,
@@ -360,6 +370,14 @@ public class BackgroundTaskLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _backgroundTaskLocalService.getBackgroundTasks(taskExecutorClassName,
 			status, start, end, orderByComparator);
+	}
+
+	@Override
+	public int getBackgroundTasksCount(long groupId,
+		java.lang.String taskExecutorClassName)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _backgroundTaskLocalService.getBackgroundTasksCount(groupId,
+			taskExecutorClassName);
 	}
 
 	@Override

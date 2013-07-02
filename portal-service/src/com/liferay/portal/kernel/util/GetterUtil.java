@@ -830,6 +830,10 @@ public class GetterUtil {
 	}
 
 	public static long[] getLongValues(Object value, long[] defaultValue) {
+		if (value == null) {
+			return defaultValue;
+		}
+
 		Class<?> clazz = value.getClass();
 
 		if (!clazz.isArray()) {

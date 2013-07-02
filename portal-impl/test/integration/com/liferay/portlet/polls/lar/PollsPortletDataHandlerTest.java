@@ -48,8 +48,6 @@ public class PollsPortletDataHandlerTest
 		PollsChoice choice = PollsTestUtil.addChoice(
 			stagingGroup.getGroupId(), question.getQuestionId());
 
-		PollsChoiceUtil.update(choice);
-
 		PollsTestUtil.addVote(
 			stagingGroup.getGroupId(), question.getQuestionId(),
 			choice.getChoiceId());

@@ -21,9 +21,9 @@ import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.polls.model.PollsChoice;
 import com.liferay.portlet.polls.model.PollsQuestion;
 import com.liferay.portlet.polls.model.PollsVote;
+import com.liferay.portlet.polls.service.PollsChoiceLocalServiceUtil;
 import com.liferay.portlet.polls.service.PollsQuestionLocalServiceUtil;
-import com.liferay.portlet.polls.service.persistence.PollsChoiceUtil;
-import com.liferay.portlet.polls.service.persistence.PollsVoteUtil;
+import com.liferay.portlet.polls.service.PollsVoteLocalServiceUtil;
 
 /**
  * @author Shinn Lok
@@ -33,23 +33,13 @@ public class PollsTestUtil {
 	public static PollsChoice addChoice(long groupId, long questionId)
 		throws Exception {
 
+
 		User user = UserLocalServiceUtil.getUser(TestPropsValues.getUserId());
 
-		PollsChoice choice = PollsChoiceUtil.create(
-			ServiceTestUtil.randomLong());
-
-		choice.setUuid(ServiceTestUtil.randomString());
-		choice.setGroupId(groupId);
-		choice.setCompanyId(user.getCompanyId());
-		choice.setUserId(user.getUserId());
-		choice.setUserName(user.getFullName());
-		choice.setCreateDate(ServiceTestUtil.newDate());
-		choice.setModifiedDate(ServiceTestUtil.newDate());
-		choice.setQuestionId(questionId);
-		choice.setName(ServiceTestUtil.randomString());
-		choice.setDescription(ServiceTestUtil.randomString());
-
-		return choice;
+		return PollsChoiceLocalServiceUtil.addChoice(
+			user.getUserId(), questionId, ServiceTestUtil.randomString(),
+			ServiceTestUtil.randomString(),
+			ServiceTestUtil.getServiceContext(groupId));
 	}
 
 	public static PollsQuestion addQuestion(long groupId) throws Exception {
@@ -66,20 +56,9 @@ public class PollsTestUtil {
 
 		User user = UserLocalServiceUtil.getUser(TestPropsValues.getUserId());
 
-		PollsVote vote = PollsVoteUtil.create(ServiceTestUtil.randomLong());
-
-		vote.setUuid(ServiceTestUtil.randomString());
-		vote.setGroupId(groupId);
-		vote.setCompanyId(user.getCompanyId());
-		vote.setUserId(user.getUserId());
-		vote.setUserName(user.getFullName());
-		vote.setCreateDate(ServiceTestUtil.newDate());
-		vote.setModifiedDate(ServiceTestUtil.newDate());
-		vote.setQuestionId(questionId);
-		vote.setChoiceId(choiceId);
-		vote.setVoteDate(ServiceTestUtil.newDate());
-
-		return vote;
+		return PollsVoteLocalServiceUtil.addVote(
+			user.getUserId(), questionId, choiceId,
+			ServiceTestUtil.getServiceContext(groupId));
 	}
 
 }

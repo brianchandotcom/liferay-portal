@@ -95,8 +95,6 @@ import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortalPreferences;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 
-import java.io.File;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -205,17 +203,9 @@ public class StagingImpl implements Staging {
 		Map<String, String[]> parameterMap = getStagingParameters(
 			portletRequest);
 
-		File file = LayoutLocalServiceUtil.exportPortletInfoAsFile(
-			sourcePlid, sourceGroupId, portletId, parameterMap, null, null);
-
-		try {
-			LayoutLocalServiceUtil.importPortletInfo(
-				userId, targetPlid, targetGroupId, portletId, parameterMap,
-				file);
-		}
-		finally {
-			file.delete();
-		}
+		LayoutLocalServiceUtil.publishPortletInBackground(
+			userId, portletId, sourcePlid, targetPlid, sourceGroupId,
+			targetGroupId, portletId, parameterMap, null, null);
 	}
 
 	@Override

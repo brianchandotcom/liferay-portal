@@ -408,6 +408,20 @@ public class SocialActivitySetLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.liferay.portlet.social.model.SocialActivitySet> getUserViewableActivitySets(
+		long userId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _socialActivitySetLocalService.getUserViewableActivitySets(userId,
+			start, end);
+	}
+
+	@Override
+	public int getUserViewableActivitySetsCount(long userId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _socialActivitySetLocalService.getUserViewableActivitySetsCount(userId);
+	}
+
+	@Override
 	public void incrementActivityCount(long activitySetId, long activityId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

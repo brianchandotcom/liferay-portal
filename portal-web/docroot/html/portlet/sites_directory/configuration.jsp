@@ -51,7 +51,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 	<aui:col width="<%= 50 %>">
 		<liferay-portlet:preview
 			portletName="<%= portletResource %>"
-			queryString="struts_action=/navigation/view"
+			queryString="struts_action=/sites_directory/view"
 			showBorders="<%= true %>"
 		/>
 	</aui:col>

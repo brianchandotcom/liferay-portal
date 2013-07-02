@@ -293,13 +293,6 @@ public class ServicePreAction extends Action {
 
 		PermissionThreadLocal.setPermissionChecker(permissionChecker);
 
-		// Locale
-
-		String i18nLanguageId = (String)request.getAttribute(
-			WebKeys.I18N_LANGUAGE_ID);
-
-		Locale locale = PortalUtil.getLocale(request, response, true);
-
 		// Cookie support
 
 		try {
@@ -655,6 +648,13 @@ public class ServicePreAction extends Action {
 		}
 
 		long siteGroupId = PortalUtil.getSiteGroupId(scopeGroupId);
+
+		// Locale
+
+		String i18nLanguageId = (String)request.getAttribute(
+			WebKeys.I18N_LANGUAGE_ID);
+
+		Locale locale = PortalUtil.getLocale(request, response, true);
 
 		// Theme and color scheme
 

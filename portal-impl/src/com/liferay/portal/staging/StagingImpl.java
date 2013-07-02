@@ -1070,25 +1070,13 @@ public class StagingImpl implements Staging {
 			Map<String, String[]> parameterMap, Date startDate, Date endDate)
 		throws Exception {
 
-		lockGroup(userId, targetGroupId);
-
 		parameterMap.put(
 			PortletDataHandlerKeys.PERFORM_DIRECT_BINARY_IMPORT,
 			new String[] {Boolean.TRUE.toString()});
 
-		File file = LayoutLocalServiceUtil.exportLayoutsAsFile(
-			sourceGroupId, privateLayout, layoutIds, parameterMap, startDate,
-			endDate);
-
-		try {
-			LayoutLocalServiceUtil.importLayouts(
-				userId, targetGroupId, privateLayout, parameterMap, file);
-		}
-		finally {
-			file.delete();
-
-			unlockGroup(targetGroupId);
-		}
+		LayoutLocalServiceUtil.publishLayoutsInBackground(
+			userId, StringPool.BLANK, sourceGroupId, targetGroupId,
+			privateLayout, layoutIds, parameterMap, startDate, endDate);
 	}
 
 	@Override

@@ -1,12 +1,18 @@
 AUI.add(
 	'liferay-input-localized',
 	function(A) {
+		var AArray = A.Array;
+
+		var STR_INPUT_PLACEHOLDER = 'inputPlaceholder';
+
+		var STR_INPUT_VALUE_CHANGE = '_onInputValueChange';
+
 		var defaultLanguageId = themeDisplay.getDefaultLanguageId();
 		var userLanguageId = themeDisplay.getLanguageId();
 
 		var availableLanguages = Liferay.Language.available;
 
-		var availableLanguageIds = A.Array.dedupe(
+		var availableLanguageIds = AArray.dedupe(
 			[defaultLanguageId, userLanguageId].concat(A.Object.keys(availableLanguages))
 		);
 
@@ -29,7 +35,7 @@ AUI.add(
 
 					selected: {
 						valueFn: function() {
-							return A.Array.indexOf(availableLanguageIds, defaultLanguageId);
+							return AArray.indexOf(availableLanguageIds, defaultLanguageId);
 						}
 					},
 
@@ -40,7 +46,7 @@ AUI.add(
 							var set = new A.Set();
 
 							if (A.Lang.isString(val)) {
-								A.Array.each(val.split(','), set.add, set);
+								AArray.each(val.split(','), set.add, set);
 							}
 
 							return set;
@@ -68,18 +74,27 @@ AUI.add(
 					initializer: function() {
 						var instance = this;
 
-						var inputPlaceholder = instance.get('inputPlaceholder');
+						var inputPlaceholder = instance.get(STR_INPUT_PLACEHOLDER);
 
-						A.after(instance._afterRenderUI, instance, 'renderUI');
+						var eventHandles = [
+							A.after(instance._afterRenderUI, instance, 'renderUI'),
+							instance.on(
+								{
+									focusedChange: instance._onFocusedChange,
+									select: instance._onSelectFlag
+								}
+							),
+							inputPlaceholder.on('input', A.debounce(STR_INPUT_VALUE_CHANGE, 100, instance)),
+							Liferay.on('submitForm', A.rbind(STR_INPUT_VALUE_CHANGE, instance, inputPlaceholder))
+						];
 
-						instance.on(
-							{
-								focusedChange: instance._onFocusedChange,
-								select: instance._onSelectFlag
-							}
-						);
+						instance._eventHandles = eventHandles;
+					},
 
-						inputPlaceholder.on('input', A.debounce('_onInputValueChange', 100, instance));
+					destructor: function() {
+						var instance = this;
+
+						(new A.EventHandle(instance._eventHandles)).detach();
 					},
 
 					activateFlags: function() {
@@ -216,7 +231,7 @@ AUI.add(
 						instance.activateFlags();
 					},
 
-					_onInputValueChange: function(event) {
+					_onInputValueChange: function(event, input) {
 						var instance = this;
 
 						var selectedLanguageId = instance.getSelectedLanguageId();
@@ -226,7 +241,9 @@ AUI.add(
 
 						instance.activateFlags();
 
-						var currentValue = event.currentTarget.val();
+						input = input || event.currentTarget;
+
+						var currentValue = input.val();
 
 						inputLanguage.val(currentValue);
 
@@ -250,7 +267,7 @@ AUI.add(
 						if (!event.domEvent) {
 							var languageId = event.value;
 
-							var inputPlaceholder = instance.get('inputPlaceholder');
+							var inputPlaceholder = instance.get(STR_INPUT_PLACEHOLDER);
 
 							var inputLanguage = instance._getInputLanguage(languageId);
 
@@ -283,7 +300,7 @@ AUI.add(
 
 						var translatedLanguages = instance.get('translatedLanguages');
 
-						A.Array.each(
+						AArray.each(
 							flags,
 							function(item, index, collection) {
 								var flagNode = instance.getItemByIndex(index);

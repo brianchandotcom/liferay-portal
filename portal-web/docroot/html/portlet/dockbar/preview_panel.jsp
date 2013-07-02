@@ -17,13 +17,12 @@
 <%@ include file="/html/portlet/dockbar/init.jsp" %>
 
 <div id="<portlet:namespace />devicePreviewContainer">
-
-	<button class="close pull-right" id="closePanel" type="button">&#x00D7;</button>
+	<button class="close pull-right" id="closePanel" type="button">&times;</button>
 
 	<h1><%= LanguageUtil.get(pageContext, "preview") %></h1>
 
 	<aui:nav cssClass="nav-list">
-		<aui:nav-item cssClass="lfr-device-item autosize" data-device="autosize">
+		<aui:nav-item cssClass="autosize lfr-device-item" data-device="autosize">
 			<div class="device-info">
 				<span class="device-name"><%= LanguageUtil.get(pageContext, "autosize") %></span>
 				<span class="device-dimensions">100%</span>
@@ -44,7 +43,7 @@
 			</div>
 		</aui:nav-item>
 
-		<aui:nav-item cssClass="lfr-device-item desktop" data-device="desktop">
+		<aui:nav-item cssClass="desktop lfr-device-item" data-device="desktop">
 			<div class="device-info">
 				<span class="device-name"><%= LanguageUtil.get(pageContext, "desktop") %></span>
 				<span class="device-dimensions">1280px</span>
@@ -53,28 +52,31 @@
 
 		<aui:nav-item cssClass="lfr-device-item" data-device="custom">
 			<p><%= LanguageUtil.get(pageContext, "custom") %> (px)</p>
+
 			<aui:input cssClass="input-mini" inlineField="<%= true %>" label="" name="width" value="400" /><span> &times; </span><aui:input cssClass="input-mini" inlineField="<%= true %>" label="" name="height" value="400" />
 		</aui:nav-item>
 	</aui:nav>
 
-	<div class="alert"><small><%= LanguageUtil.get(pageContext, "preview-may-not-be-really-accurate") %></small></div>
+	<div class="alert">
+		<small><%= LanguageUtil.get(pageContext, "preview-may-not-be-really-accurate") %></small>
+	</div>
 </div>
 
 <aui:script use="liferay-dockbar-device-preview">
 	new Liferay.Dockbar.DevicePreview(
 		{
 			devices: {
-				'autosize': {},
-				'custom': {
+				autosize: {},
+				custom: {
 					height: '#<portlet:namespace />height',
 					resizable: true,
 					width: '#<portlet:namespace />width'
 				},
-				'desktop': {
+				desktop: {
 					height: 1050,
 					width: 1300
 				},
-				'smartphone': {
+				smartphone: {
 					height: 640,
 					preventTransition: true,
 					rotation: true,
@@ -82,7 +84,7 @@
 					skin: 'smartphone',
 					width: 400
 				},
-				'tablet': {
+				tablet: {
 					height: 900,
 					preventTransition: true,
 					rotation: true,

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.backgroundtask.executor;
 
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
 import com.liferay.portal.model.BackgroundTask;
 
 /**
@@ -31,7 +33,9 @@ public class ClassLoaderAwareBackgroundTaskExecutor
 	}
 
 	@Override
-	public void execute(BackgroundTask backgroundTask) throws Exception {
+	public BackgroundTaskResult execute(BackgroundTask backgroundTask)
+		throws Exception {
+
 		Thread currentThread = Thread.currentThread();
 
 		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
@@ -41,7 +45,7 @@ public class ClassLoaderAwareBackgroundTaskExecutor
 		}
 
 		try {
-			_backgroundTaskExecutor.execute(backgroundTask);
+			return _backgroundTaskExecutor.execute(backgroundTask);
 		}
 		finally {
 			if (_classLoader != contextClassLoader) {

@@ -12,17 +12,21 @@
  * details.
  */
 
-package com.liferay.portal.backgroundtask.executor;
-
-import com.liferay.portal.model.BackgroundTask;
+package com.liferay.portal.kernel.backgroundtask;
 
 /**
- * @author Michael C. Han
+ * @author Daniel Kocsis
  */
-public interface BackgroundTaskExecutor {
+public class BackgroundTaskConstants {
 
-	public void execute(BackgroundTask backgroundTask) throws Exception;
+	public static final int STATUS_FAILED = 2;
 
-	public boolean isSerial();
+	public static final int STATUS_IN_PROGRESS = 1;
+
+	public static final int STATUS_NEW = 0;
+
+	public static final int STATUS_QUEUED = 4;
+
+	public static final int STATUS_SUCCESSFUL = 3;
 
 }

@@ -15,6 +15,7 @@
 package com.liferay.portal.lar.backgroundtask.executor;
 
 import com.liferay.portal.backgroundtask.executor.BaseBackgroundTaskExecutor;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.model.BackgroundTask;
@@ -36,7 +37,9 @@ public class LayoutImportBackgroundTaskExecutor
 	}
 
 	@Override
-	public void execute(BackgroundTask backgroundTask) throws Exception {
+	public BackgroundTaskResult execute(BackgroundTask backgroundTask)
+		throws Exception {
+
 		Map<String, Serializable> taskContextMap =
 			backgroundTask.getTaskContextMap();
 
@@ -54,6 +57,8 @@ public class LayoutImportBackgroundTaskExecutor
 				groupId, privateLayout, parameterMap,
 				attachmentsFileEntry.getContentStream());
 		}
+
+		return BackgroundTaskResult.SUCCESS;
 	}
 
 }

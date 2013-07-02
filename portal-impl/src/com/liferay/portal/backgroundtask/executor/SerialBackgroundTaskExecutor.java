@@ -14,6 +14,8 @@
 
 package com.liferay.portal.backgroundtask.executor;
 
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.BackgroundTask;
 import com.liferay.portal.model.Lock;
@@ -31,7 +33,9 @@ public class SerialBackgroundTaskExecutor implements BackgroundTaskExecutor {
 	}
 
 	@Override
-	public void execute(BackgroundTask backgroundTask) throws Exception {
+	public BackgroundTaskResult execute(BackgroundTask backgroundTask)
+		throws Exception {
+
 		Lock lock = null;
 
 		try {
@@ -46,7 +50,7 @@ public class SerialBackgroundTaskExecutor implements BackgroundTaskExecutor {
 					backgroundTask.getTaskExecutorClassName(), owner, false, 0);
 			}
 
-			_backgroundTaskExecutor.execute(backgroundTask);
+			return _backgroundTaskExecutor.execute(backgroundTask);
 		}
 		finally {
 			if (lock != null) {

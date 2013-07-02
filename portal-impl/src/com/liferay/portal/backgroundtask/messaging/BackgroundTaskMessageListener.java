@@ -15,9 +15,11 @@
 package com.liferay.portal.backgroundtask.messaging;
 
 import com.liferay.portal.DuplicateLockException;
-import com.liferay.portal.backgroundtask.executor.BackgroundTaskExecutor;
 import com.liferay.portal.backgroundtask.executor.ClassLoaderAwareBackgroundTaskExecutor;
 import com.liferay.portal.backgroundtask.executor.SerialBackgroundTaskExecutor;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
@@ -29,7 +31,6 @@ import com.liferay.portal.kernel.util.StackTraceUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.BackgroundTask;
-import com.liferay.portal.model.BackgroundTaskConstants;
 import com.liferay.portal.service.BackgroundTaskLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.ClassLoaderUtil;
@@ -73,9 +74,11 @@ public class BackgroundTaskMessageListener extends BaseMessageListener {
 			backgroundTaskExecutor = wrapBackgroundTaskExecutor(
 				backgroundTaskExecutor, classLoader);
 
-			backgroundTaskExecutor.execute(backgroundTask);
+			BackgroundTaskResult backgroundTaskResult =
+				backgroundTaskExecutor.execute(backgroundTask);
 
-			status = BackgroundTaskConstants.STATUS_SUCCESSFUL;
+			status = backgroundTaskResult.getStatus();
+			statusMessage = backgroundTaskResult.getStatusMessage();
 		}
 		catch (DuplicateLockException e) {
 			status = BackgroundTaskConstants.STATUS_QUEUED;
@@ -83,8 +86,11 @@ public class BackgroundTaskMessageListener extends BaseMessageListener {
 		catch (Exception e) {
 			status = BackgroundTaskConstants.STATUS_FAILED;
 			statusMessage =
-				"Unable to executed background task: " +
-					StackTraceUtil.getStackTrace(e);
+				"Unable to executed background task: " + e.getMessage();
+
+			if (_log.isInfoEnabled()) {
+				statusMessage.concat(StackTraceUtil.getStackTrace(e));
+			}
 
 			_log.error("Unable to execute background task", e);
 		}

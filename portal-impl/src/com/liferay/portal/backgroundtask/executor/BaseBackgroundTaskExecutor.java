@@ -14,6 +14,8 @@
 
 package com.liferay.portal.backgroundtask.executor;
 
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
+
 /**
  * @author Michael C. Han
  */

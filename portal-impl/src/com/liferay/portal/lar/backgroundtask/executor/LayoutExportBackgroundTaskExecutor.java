@@ -15,6 +15,7 @@
 package com.liferay.portal.lar.backgroundtask.executor;
 
 import com.liferay.portal.backgroundtask.executor.BaseBackgroundTaskExecutor;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.model.BackgroundTask;
@@ -39,7 +40,9 @@ public class LayoutExportBackgroundTaskExecutor
 	}
 
 	@Override
-	public void execute(BackgroundTask backgroundTask) throws Exception {
+	public BackgroundTaskResult execute(BackgroundTask backgroundTask)
+		throws Exception {
+
 		Map<String, Serializable> taskContextMap =
 			backgroundTask.getTaskContextMap();
 
@@ -62,6 +65,8 @@ public class LayoutExportBackgroundTaskExecutor
 		BackgroundTaskLocalServiceUtil.addBackgroundTaskAttachment(
 			userId, backgroundTask.getBackgroundTaskId(), larFile.getName(),
 			larFile);
+
+		return BackgroundTaskResult.SUCCESS;
 	}
 
 }

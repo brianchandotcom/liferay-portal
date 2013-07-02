@@ -52,6 +52,7 @@
 
 		<execute macro="RecycleBin#restoreCP">
 			<var name="assetName" value="${threadSubject}" />
+			<var name="assetRestoreLocation" value="${assetRestoreLocation}" />
 			<var name="assetRestoreType" value="${assetRestoreType}" />
 		</execute>
 

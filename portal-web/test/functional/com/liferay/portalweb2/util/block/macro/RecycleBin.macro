@@ -12,7 +12,7 @@
 			</then>
 		</if>
 	</command>
-	
+
 	<command name="deleteCP">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Recycle Bin" />
@@ -42,7 +42,7 @@
 		<execute action="CPRecyclebin#assertClick" locator-key1="RECYCLE_BIN_TABLE_ACTIONS" value1="Actions" />
 		<execute action="CPRecyclebin#assertClick" locator-key1="RECYCLE_BIN_MENULIST_RESTORE" value1="Restore" />
 		<execute action="CPRecyclebin#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="The item has been restored to ${assetRestoreLocation}" />
-		<execute action="CPRecyclebin#assertTextEquals" locator-key1="INFO_MESSAGE" value1="The Recycle Bin is empty." />	
+		<execute action="CPRecyclebin#assertTextEquals" locator-key1="INFO_MESSAGE" value1="The Recycle Bin is empty." />
 		<execute action="CPRecyclebin#assertTextNotPresent" value1="${assetName}" />
 	</command>
 
@@ -66,8 +66,8 @@
 			<var name="portletName" value="Recycle Bin" />
 		</execute>
 
-		<execute action="CPRecyclebin#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="Entries that have been in the Recycle Bin for more than 1 month will be automatically deleted." />	
+		<execute action="CPRecyclebin#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="Entries that have been in the Recycle Bin for more than 1 month will be automatically deleted." />
 		<execute action="CPRecyclebin#assertTextEquals" locator-key1="INFO_MESSAGE" value1="The Recycle Bin is empty." />
-		<execute action="CPRecyclebin#assertTextNotPresent" value1="${assetName}" />	
+		<execute action="CPRecyclebin#assertTextNotPresent" value1="${assetName}" />
 	</command>
 </definition>

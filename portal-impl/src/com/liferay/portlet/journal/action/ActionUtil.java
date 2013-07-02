@@ -284,19 +284,13 @@ public class ActionUtil {
 
 	public static Object[] getContentAndImages(
 			long groupId, String structureId, Locale locale,
-			ThemeDisplay themeDisplay, ServiceContext serviceContext)
+			ServiceContext serviceContext)
 		throws Exception {
 
 		DDMStructure ddmStructure =
-			DDMStructureLocalServiceUtil.fetchStructure(
+			DDMStructureLocalServiceUtil.getStructure(
 				groupId, PortalUtil.getClassNameId(JournalArticle.class),
-				structureId);
-
-		if (ddmStructure == null) {
-			ddmStructure = DDMStructureLocalServiceUtil.fetchStructure(
-				themeDisplay.getCompanyGroupId(),
-				PortalUtil.getClassNameId(JournalArticle.class), structureId);
-		}
+				structureId, true);
 
 		Fields fields = DDMUtil.getFields(
 			ddmStructure.getStructureId(), serviceContext);

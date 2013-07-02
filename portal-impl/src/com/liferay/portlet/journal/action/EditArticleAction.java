@@ -615,7 +615,7 @@ public class EditArticleAction extends PortletAction {
 			Locale locale = LocaleUtil.fromLanguageId(languageId);
 
 			Object[] returnValue = ActionUtil.getContentAndImages(
-				groupId, structureId, locale, themeDisplay, serviceContext);
+				groupId, structureId, locale, serviceContext);
 
 			content = (String)returnValue[0];
 			images = (HashMap<String, byte[]>)returnValue[1];

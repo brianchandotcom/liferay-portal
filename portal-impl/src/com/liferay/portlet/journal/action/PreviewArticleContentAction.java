@@ -94,7 +94,7 @@ public class PreviewArticleContentAction extends PortletAction {
 
 				Object[] returnValue = ActionUtil.getContentAndImages(
 					groupId, structureId, themeDisplay.getLocale(),
-					themeDisplay, serviceContext);
+					serviceContext);
 
 				String content = (String)returnValue[0];
 

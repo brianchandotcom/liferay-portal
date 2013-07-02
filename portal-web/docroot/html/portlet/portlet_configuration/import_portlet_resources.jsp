@@ -31,6 +31,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 <portlet:renderURL var="importPortletRenderURL">
 	<portlet:param name="struts_action" value="/portlet_configuration/export_import" />
 	<portlet:param name="tabs2" value="import" />
+	<portlet:param name="tabs3" value="all-import-processes" />
 	<portlet:param name="portletResource" value="<%= portletResource %>" />
 </portlet:renderURL>
 

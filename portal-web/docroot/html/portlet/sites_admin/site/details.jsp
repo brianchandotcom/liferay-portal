@@ -551,7 +551,6 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 						dialog: {
 							constrain: true,
 							modal: true,
-							zIndex: Liferay.zIndex.WINDOW + 2,
 							width: 600
 						},
 						id: '<portlet:namespace />selectGroup',

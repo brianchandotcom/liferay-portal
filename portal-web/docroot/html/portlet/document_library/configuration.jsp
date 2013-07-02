@@ -237,7 +237,6 @@ String emailBody = PrefsParamUtil.getString(portletPreferences, request, emailBo
 								dialog: {
 									constrain: true,
 									modal: true,
-									zIndex: Liferay.zIndex.WINDOW + 2,
 									width: 600
 								},
 								id: '_<%= HtmlUtil.escapeJS(portletResource) %>_selectFolder',

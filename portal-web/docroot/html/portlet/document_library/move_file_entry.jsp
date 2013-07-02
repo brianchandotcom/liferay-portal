@@ -163,7 +163,6 @@ portletURL.setParameter("fileEntryId", String.valueOf(fileEntryId));
 					dialog: {
 						constrain: true,
 						modal: true,
-						zIndex: Liferay.zIndex.WINDOW + 2,
 						width: 680
 					},
 					id: '<portlet:namespace />selectFolder',

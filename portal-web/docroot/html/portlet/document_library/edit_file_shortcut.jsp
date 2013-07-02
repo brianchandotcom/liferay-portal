@@ -156,7 +156,6 @@ portletURL.setParameter("fileShortcutId", String.valueOf(fileShortcutId));
 					dialog: {
 						constrain: true,
 						modal: true,
-						zIndex: Liferay.zIndex.WINDOW + 2,
 						width: 680
 					},
 					id: '<portlet:namespace />selectGroup',
@@ -191,7 +190,6 @@ portletURL.setParameter("fileShortcutId", String.valueOf(fileShortcutId));
 					dialog: {
 						constrain: true,
 						modal: true,
-						zIndex: Liferay.zIndex.WINDOW + 2,
 						width: 680
 					},
 					id: <portlet:namespace />createSelectFileEntryId(),

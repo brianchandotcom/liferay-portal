@@ -53,7 +53,6 @@ Boolean supportsFilterByGroup = (Boolean)objArray[5];
 						dialog: {
 							constrain: true,
 							modal: true,
-							zIndex: Liferay.zIndex.WINDOW + 2,
 							width: 600
 						},
 						id: '<portlet:namespace />selectGroup<%= targetId %>',

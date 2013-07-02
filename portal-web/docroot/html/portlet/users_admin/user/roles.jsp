@@ -101,7 +101,6 @@ userGroupRoles.addAll(siteRoles);
 						dialog: {
 							constrain: true,
 							modal: true,
-							zIndex: Liferay.zIndex.WINDOW + 2,
 							width: 600
 						},
 						id: '<portlet:namespace />selectRegularRole',
@@ -270,7 +269,6 @@ userGroupRoles.addAll(siteRoles);
 					{
 						dialog: {
 							modal: true,
-							zIndex: Liferay.zIndex.WINDOW + 2,
 							width: 600
 						},
 						id: '<portlet:namespace />selectOrganizationRole',
@@ -385,7 +383,6 @@ userGroupRoles.addAll(siteRoles);
 								dialog: {
 									constrain: true,
 									modal: true,
-									zIndex: Liferay.zIndex.WINDOW + 2,
 									width: 600
 								},
 								id: '<portlet:namespace />selectSiteRole',

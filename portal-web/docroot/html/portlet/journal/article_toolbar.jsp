@@ -77,8 +77,7 @@ if ((article != null) && article.isDraft()) {
 							permissionPopUp = Liferay.Util.openWindow(
 								{
 									dialog: {
-										cssClass: 'portlet-asset-categories-admin-dialog permissions-change',
-										zIndex: Liferay.zIndex.WINDOW + 2
+										cssClass: 'portlet-asset-categories-admin-dialog permissions-change'
 									},
 									id: '<portlet:namespace />articlePermissions',
 									title: '<%= UnicodeLanguageUtil.get(pageContext, "permissions") %>',

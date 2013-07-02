@@ -88,7 +88,6 @@ boolean mergeWithParentFolderDisabled = ParamUtil.getBoolean(request, "mergeWith
 									dialog: {
 										constrain: true,
 										modal: true,
-										zIndex: Liferay.zIndex.WINDOW + 2,
 										width: 680
 									},
 									id: '<portlet:namespace />selectFolder',

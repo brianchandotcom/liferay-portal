@@ -272,9 +272,6 @@ boolean hasViewPagesPermission = (pagesCount > 0) && (liveGroup.isStaged() || se
 
 			Liferay.Util.openWindow(
 				{
-					dialog: {
-						zIndex: Liferay.zIndex.WINDOW + 2
-					},
 					id: '<portlet:namespace />importDialog',
 					title: '<%= UnicodeLanguageUtil.get(pageContext, "import") %>',
 					uri: '<%= importPagesURL.toString() %>'
@@ -293,9 +290,6 @@ boolean hasViewPagesPermission = (pagesCount > 0) && (liveGroup.isStaged() || se
 
 			Liferay.Util.openWindow(
 				{
-					dialog: {
-						zIndex: Liferay.zIndex.WINDOW + 2
-					},
 					id: '<portlet:namespace />exportDialog',
 					title: '<%= UnicodeLanguageUtil.get(pageContext, "export") %>',
 					uri: '<%= exportPagesURL.toString() %>'

@@ -90,7 +90,6 @@ List<UserGroup> userGroups = (List<UserGroup>)request.getAttribute("user.userGro
 						dialog: {
 							constrain: true,
 							modal: true,
-							zIndex: Liferay.zIndex.WINDOW + 2,
 							width: 680
 						},
 						id: '<portlet:namespace />selectUserGroup',

@@ -709,7 +709,6 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 					dialog: {
 						constrain: true,
 						modal: true,
-						zIndex: Liferay.zIndex.WINDOW + 2,
 						width: 600
 					},
 					eventName: '<portlet:namespace />selectDDMStructureField',

@@ -192,6 +192,15 @@ AUI.add(
 					if (!modal) {
 						var titleNode = A.Node.create(instance.TITLE_TEMPLATE);
 
+						if (config.stack !== false) {
+							A.mix(
+								modalConfig,
+								{
+									plugins: [Liferay.WidgetZIndex]
+								}
+							);
+						}
+
 						modal = new LiferayModal(
 							A.merge(
 								{
@@ -209,6 +218,10 @@ AUI.add(
 						instance._bindWindowHooks(modal, config);
 					}
 					else {
+						if (!config.zIndex && modal.hasPlugin('zindex')) {
+							delete modalConfig.zIndex;
+						}
+
 						modal.setAttrs(modalConfig);
 					}
 
@@ -393,6 +406,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-modal', 'aui-dialog-iframe-deprecated', 'event-resize']
+		requires: ['aui-modal', 'aui-dialog-iframe-deprecated', 'event-resize', 'liferay-widget-zindex']
 	}
 );

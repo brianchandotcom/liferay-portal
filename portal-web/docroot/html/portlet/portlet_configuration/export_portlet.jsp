@@ -18,6 +18,10 @@
 
 <%
 Layout exportableLayout = ExportImportHelperUtil.getExportableLayout(themeDisplay);
+
+PortletURL portletURL = currentURLObj;
+
+portletURL.setParameter("tabs3", "all-export-processes");
 %>
 
 <liferay-ui:tabs
@@ -33,7 +37,7 @@ Layout exportableLayout = ExportImportHelperUtil.getExportableLayout(themeDispla
 		<aui:form action='<%= exportPortletURL + "&etag=0&strip=0" %>' cssClass="lfr-export-dialog" method="post" name="fm1">
 			<aui:input name="tabs1" type="hidden" value="export_import" />
 			<aui:input name="tabs2" type="hidden" value="export" />
-			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+			<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
 			<aui:input name="plid" type="hidden" value="<%= exportableLayout.getPlid() %>" />
 			<aui:input name="groupId" type="hidden" value="<%= themeDisplay.getScopeGroupId() %>" />
 			<aui:input name="portletResource" type="hidden" value="<%= portletResource %>" />
@@ -390,10 +394,10 @@ Layout exportableLayout = ExportImportHelperUtil.getExportableLayout(themeDispla
 			orderByCol="<%= orderByCol %>"
 			orderByComparator="<%= orderByComparator %>"
 			orderByType="<%= orderByType %>"
-			total="<%= BackgroundTaskLocalServiceUtil.getBackgroundTasksCount(groupId, LayoutExportBackgroundTaskExecutor.class.getName()) %>"
+			total="<%= BackgroundTaskLocalServiceUtil.getBackgroundTasksCount(themeDisplay.getScopeGroupId(), selPortlet.getPortletId(), PortletExportBackgroundTaskExecutor.class.getName()) %>"
 		>
 			<liferay-ui:search-container-results
-				results="<%= BackgroundTaskLocalServiceUtil.getBackgroundTasks(groupId, LayoutExportBackgroundTaskExecutor.class.getName(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>"
+				results="<%= BackgroundTaskLocalServiceUtil.getBackgroundTasks(themeDisplay.getScopeGroupId(), selPortlet.getPortletId(), PortletExportBackgroundTaskExecutor.class.getName(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>"
 			/>
 
 			<liferay-ui:search-container-row

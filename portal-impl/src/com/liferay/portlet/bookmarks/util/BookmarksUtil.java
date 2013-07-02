@@ -217,7 +217,7 @@ public class BookmarksUtil {
 		Map<Locale, String> map = LocalizationUtil.getLocalizationMap(
 			preferences, "emailEntryAddedBody");
 
-		Locale defaultLocale = LocaleUtil.getDefault();
+		Locale defaultLocale = LocaleUtil.getSiteDefault();
 
 		String defaultValue = map.get(defaultLocale);
 
@@ -254,7 +254,7 @@ public class BookmarksUtil {
 		Map<Locale, String> map = LocalizationUtil.getLocalizationMap(
 			preferences, "emailEntryAddedSubject");
 
-		Locale defaultLocale = LocaleUtil.getDefault();
+		Locale defaultLocale = LocaleUtil.getSiteDefault();
 
 		String defaultValue = map.get(defaultLocale);
 
@@ -276,7 +276,7 @@ public class BookmarksUtil {
 		Map<Locale, String> map = LocalizationUtil.getLocalizationMap(
 			preferences, "emailEntryUpdatedBody");
 
-		Locale defaultLocale = LocaleUtil.getDefault();
+		Locale defaultLocale = LocaleUtil.getSiteDefault();
 
 		String defaultValue = map.get(defaultLocale);
 
@@ -313,7 +313,7 @@ public class BookmarksUtil {
 		Map<Locale, String> map = LocalizationUtil.getLocalizationMap(
 			preferences, "emailEntryUpdatedSubject");
 
-		Locale defaultLocale = LocaleUtil.getDefault();
+		Locale defaultLocale = LocaleUtil.getSiteDefault();
 
 		String defaultValue = map.get(defaultLocale);
 

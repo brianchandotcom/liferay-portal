@@ -96,10 +96,6 @@ if (showPrototypes && (group != null)) {
 		<liferay-ui:message key="the-site-cannot-have-a-child-as-its-parent-site" />
 	</c:if>
 
-	<c:if test="<%= gpe.getType() == GroupParentException.MISSING_PARENT %>">
-		<liferay-ui:message key="the-site-must-have-a-parent-site-if-the-membership-type-is-limited-to-parent-site-members" />
-	</c:if>
-
 	<c:if test="<%= gpe.getType() == GroupParentException.SELF_DESCENDANT %>">
 		<liferay-ui:message key="the-site-cannot-be-its-own-parent-site" />
 	</c:if>

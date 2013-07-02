@@ -305,7 +305,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		validateFriendlyURL(
 			user.getCompanyId(), groupId, classNameId, classPK, friendlyURL);
 
-		validateParentGroup(groupId, parentGroupId, membershipRestriction);
+		validateParentGroup(groupId, parentGroupId);
 
 		Group group = groupPersistence.create(groupId);
 
@@ -3285,8 +3285,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			group.getCompanyId(), group.getGroupId(), group.getClassNameId(),
 			group.getClassPK(), friendlyURL);
 
-		validateParentGroup(
-			group.getGroupId(), parentGroupId, membershipRestriction);
+		validateParentGroup(group.getGroupId(), parentGroupId);
 
 		group.setParentGroupId(parentGroupId);
 		group.setTreePath(group.buildTreePath());
@@ -3960,16 +3959,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		}
 	}
 
-	protected void validateParentGroup(
-			long groupId, long parentGroupId, int membershipRestriction)
+	protected void validateParentGroup(long groupId, long parentGroupId)
 		throws PortalException, SystemException {
-
-		if ((membershipRestriction ==
-				GroupConstants.MEMBERSHIP_RESTRICTION_TO_PARENT_SITE_MEMBERS) &&
-			(parentGroupId == GroupConstants.DEFAULT_PARENT_GROUP_ID)) {
-
-			throw new GroupParentException(GroupParentException.MISSING_PARENT);
-		}
 
 		if (parentGroupId == GroupConstants.DEFAULT_PARENT_GROUP_ID) {
 			return;

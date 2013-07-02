@@ -474,6 +474,7 @@ String emailBody = PrefsParamUtil.getString(portletPreferences, request, emailBo
 
 	function <portlet:namespace />updateLanguage() {
 		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '';
+
 		submitForm(document.<portlet:namespace />fm);
 	}
 

@@ -42,6 +42,7 @@ if (filterManageableOrganizations) {
 		<liferay-ui:search-container
 			rowChecker="<%= new RowChecker(renderResponse) %>"
 			searchContainer="<%= new OrganizationSearch(renderRequest, portletURL) %>"
+			var="organizationSearch"
 		>
 			<aui:input disabled="<%= true %>" name="organizationsRedirect" type="hidden" value="<%= portletURL.toString() %>" />
 			<aui:input name="deleteOrganizationIds" type="hidden" />
@@ -63,7 +64,7 @@ if (filterManageableOrganizations) {
 			</c:if>
 
 			<%
-			OrganizationSearchTerms searchTerms = (OrganizationSearchTerms)searchContainer.getSearchTerms();
+			OrganizationSearchTerms searchTerms = (OrganizationSearchTerms)organizationSearch.getSearchTerms();
 
 			long parentOrganizationId = ParamUtil.getLong(request, "parentOrganizationId", OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID);
 
@@ -91,7 +92,7 @@ if (filterManageableOrganizations) {
 			>
 				<liferay-portlet:renderURL varImpl="rowURL">
 					<portlet:param name="struts_action" value="/users_admin/view" />
-					<portlet:param name="redirect" value="<%= searchContainer.getIteratorURL().toString() %>" />
+					<portlet:param name="redirect" value="<%= organizationSearch.getIteratorURL().toString() %>" />
 					<portlet:param name="organizationId" value="<%= String.valueOf(organization.getOrganizationId()) %>" />
 					<portlet:param name="usersListView" value="<%= UserConstants.LIST_VIEW_TREE %>" />
 				</liferay-portlet:renderURL>
@@ -113,7 +114,7 @@ if (filterManageableOrganizations) {
 			<c:if test="<%= !results.isEmpty() %>">
 				<div class="separator"><!-- --></div>
 
-				<aui:button cssClass="delete-organizations" onClick='<%= renderResponse.getNamespace() + "deleteOrganizations();" %>' value="delete" />
+				<aui:button cssClass="delete-organizations" disabled="<%= true %>" name="delete" onClick='<%= renderResponse.getNamespace() + "deleteOrganizations();" %>' value="delete" />
 			</c:if>
 
 			<liferay-ui:search-iterator />
@@ -125,3 +126,7 @@ if (filterManageableOrganizations) {
 		</div>
 	</c:otherwise>
 </c:choose>
+
+<aui:script>
+	Liferay.Util.toggleSearchContainerButton('#<portlet:namespace />delete', '#<portlet:namespace /><%= searchContainerReference.getId("organizationSearch") %>SearchContainer', document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
+</aui:script>

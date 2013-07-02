@@ -299,6 +299,7 @@ long userGroupId = BeanParamUtil.getLong(userGroup, request, "userGroupId");
 
 	function <portlet:namespace />saveUserGroup() {
 		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= (userGroup == null) ? Constants.ADD : Constants.UPDATE %>";
+
 		submitForm(document.<portlet:namespace />fm, "<portlet:actionURL><portlet:param name="struts_action" value="/users_admin/edit_user_group" /></portlet:actionURL>");
 	}
 

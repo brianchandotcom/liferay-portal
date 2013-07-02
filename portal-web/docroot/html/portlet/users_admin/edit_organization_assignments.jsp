@@ -71,13 +71,14 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "ass
 	<liferay-ui:search-container
 		rowChecker="<%= new UserOrganizationChecker(renderResponse, organization) %>"
 		searchContainer="<%= new UserSearch(renderRequest, portletURL) %>"
+		var="userSearch"
 	>
 		<liferay-ui:search-form
 			page="/html/portlet/users_admin/user_search.jsp"
 		/>
 
 		<%
-		UserSearchTerms searchTerms = (UserSearchTerms)searchContainer.getSearchTerms();
+		UserSearchTerms searchTerms = (UserSearchTerms)userSearch.getSearchTerms();
 
 		LinkedHashMap<String, Object> userParams = new LinkedHashMap<String, Object>();
 
@@ -132,8 +133,9 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "ass
 		function(assignmentsRedirect) {
 			document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "organization_users";
 			document.<portlet:namespace />fm.<portlet:namespace />assignmentsRedirect.value = assignmentsRedirect;
-			document.<portlet:namespace />fm.<portlet:namespace />addUserIds.value = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, "<portlet:namespace />allRowIds");
-			document.<portlet:namespace />fm.<portlet:namespace />removeUserIds.value = Liferay.Util.listUncheckedExcept(document.<portlet:namespace />fm, "<portlet:namespace />allRowIds");
+			document.<portlet:namespace />fm.<portlet:namespace />addUserIds.value = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
+			document.<portlet:namespace />fm.<portlet:namespace />removeUserIds.value = Liferay.Util.listUncheckedExcept(document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
+
 			submitForm(document.<portlet:namespace />fm);
 		},
 		['liferay-util-list-fields']

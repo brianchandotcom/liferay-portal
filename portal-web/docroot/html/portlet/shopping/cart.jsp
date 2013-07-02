@@ -54,6 +54,7 @@ boolean minQuantityMultiple = PrefsPropsUtil.getBoolean(company.getCompanyId(), 
 	function <portlet:namespace />emptyCart() {
 		document.<portlet:namespace />fm.<portlet:namespace />itemIds.value = "";
 		document.<portlet:namespace />fm.<portlet:namespace />couponCodes.value = "";
+
 		submitForm(document.<portlet:namespace />fm);
 	}
 
@@ -82,6 +83,7 @@ boolean minQuantityMultiple = PrefsPropsUtil.getBoolean(company.getCompanyId(), 
 		%>
 
 		document.<portlet:namespace />fm.<portlet:namespace />itemIds.value = itemIds;
+
 		submitForm(document.<portlet:namespace />fm);
 	}
 </aui:script>

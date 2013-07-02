@@ -39,6 +39,8 @@ searchContainer.setRowChecker(rowChecker);
 />
 
 <%
+SearchContainer userSearch = searchContainer;
+
 UserSearchTerms searchTerms = (UserSearchTerms)searchContainer.getSearchTerms();
 
 List<User> results = null;

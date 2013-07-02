@@ -597,17 +597,20 @@ long orderId = BeanParamUtil.getLong(order, request, "orderId");
 	function <portlet:namespace />deleteOrder() {
 		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= Constants.DELETE %>";
 		document.<portlet:namespace />fm.<portlet:namespace />redirect.value = "<%= HtmlUtil.escapeURL(redirect) %>";
+
 		submitForm(document.<portlet:namespace />fm);
 	}
 
 	function <portlet:namespace />saveOrder() {
 		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= Constants.UPDATE %>";
+
 		submitForm(document.<portlet:namespace />fm);
 	}
 
 	function <portlet:namespace />sendEmail(emailType) {
 		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "sendEmail";
 		document.<portlet:namespace />fm.<portlet:namespace />emailType.value = emailType;
+
 		submitForm(document.<portlet:namespace />fm);
 	}
 </aui:script>

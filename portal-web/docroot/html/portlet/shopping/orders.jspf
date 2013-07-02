@@ -28,6 +28,8 @@ portletURL.setParameter("tabs1", tabs1);
 	<%
 	OrderSearch searchContainer = new OrderSearch(renderRequest, portletURL);
 
+	searchContainerReference.register(searchContainer);
+
 	List headerNames = searchContainer.getHeaderNames();
 
 	headerNames.add(StringPool.BLANK);
@@ -61,7 +63,7 @@ portletURL.setParameter("tabs1", tabs1);
 	<div class="separator"><!-- --></div>
 
 	<aui:button-row>
-		<aui:button onClick='<%= renderResponse.getNamespace() + "deleteOrders();" %>' value="delete" />
+		<aui:button disabled="true" name="delete" onClick='<%= renderResponse.getNamespace() + "deleteOrders();" %>' value="delete" />
 	</aui:button-row>
 
 	<%
@@ -110,13 +112,16 @@ portletURL.setParameter("tabs1", tabs1);
 </aui:form>
 
 <aui:script>
+	Liferay.Util.toggleSearchContainerButton('#<portlet:namespace />delete', '#<portlet:namespace /><%= searchContainerReference.getId() %>SearchContainer', document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
+
 	Liferay.provide(
 		window,
 		'<portlet:namespace />deleteOrders',
 		function() {
 			if (confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-delete-the-selected-orders") %>')) {
 				document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= Constants.DELETE %>";
-				document.<portlet:namespace />fm.<portlet:namespace />deleteOrderIds.value = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, "<portlet:namespace />allRowIds");
+				document.<portlet:namespace />fm.<portlet:namespace />deleteOrderIds.value = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
+
 				submitForm(document.<portlet:namespace />fm, "<portlet:actionURL><portlet:param name="struts_action" value="/shopping/edit_order" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>");
 			}
 		},

@@ -168,6 +168,7 @@ else {
 <aui:script>
 	function <portlet:namespace />saveFolder() {
 		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= (folder == null) ? Constants.ADD : Constants.UPDATE %>";
+
 		submitForm(document.<portlet:namespace />fm);
 	}
 </aui:script>

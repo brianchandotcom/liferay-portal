@@ -137,6 +137,7 @@ if ((classNameId == 0) && (classPK == 0) && !permissionChecker.isOmniadmin()) {
 
 	function <portlet:namespace />selectDistributionScope(distributionScope) {
 		var url = "<%= portletURL.toString() %>&<portlet:namespace />distributionScope=" + distributionScope;
+
 		submitForm(document.<portlet:namespace />fm, url);
 	}
 </aui:script>

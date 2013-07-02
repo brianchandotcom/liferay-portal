@@ -111,6 +111,7 @@ catch (Exception e) {
 <aui:script>
 	function <portlet:namespace />saveCompany() {
 		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= (selCompany == null) ? Constants.ADD : Constants.UPDATE %>";
+
 		submitForm(document.<portlet:namespace />fm);
 	}
 </aui:script>

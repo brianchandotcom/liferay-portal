@@ -120,6 +120,7 @@ long parentCategoryId = BeanParamUtil.getLong(category, request, "parentCategory
 <aui:script>
 	function <portlet:namespace />saveCategory() {
 		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= (category == null) ? Constants.ADD : Constants.UPDATE %>";
+
 		submitForm(document.<portlet:namespace />fm);
 	}
 

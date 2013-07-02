@@ -92,33 +92,20 @@ String searchURLString = searchURL.toString();
 </aui:form>
 
 <aui:script>
-	function <portlet:namespace />doDeleteSite(id) {
-		var ids = id;
-
-		if (confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-delete-this") %>')) {
-			<portlet:namespace />doDeleteSites(ids);
-		}
-	}
-
-	function <portlet:namespace />doDeleteSites(siteIds) {
-		document.<portlet:namespace />fm.method = "post";
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= Constants.DELETE %>";
-		document.<portlet:namespace />fm.<portlet:namespace />redirect.value = document.<portlet:namespace />fm.<portlet:namespace />sitesRedirect.value;
-		document.<portlet:namespace />fm.<portlet:namespace />deleteGroupIds.value = siteIds;
-		submitForm(document.<portlet:namespace />fm, "<portlet:actionURL><portlet:param name="struts_action" value="/sites_admin/edit_site" /></portlet:actionURL>");
-	}
+	Liferay.Util.toggleSearchContainerButton('#<portlet:namespace />delete', '#<portlet:namespace /><%= searchContainerReference.getId() %>SearchContainer', document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
 
 	Liferay.provide(
 		window,
 		'<portlet:namespace />deleteSites',
 		function() {
-			var siteIds = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, "<portlet:namespace />allRowIds");
+			if (confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-delete-this") %>')) {
+				document.<portlet:namespace />fm.method = "post";
+				document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= Constants.DELETE %>";
+				document.<portlet:namespace />fm.<portlet:namespace />redirect.value = document.<portlet:namespace />fm.<portlet:namespace />sitesRedirect.value;
+				document.<portlet:namespace />fm.<portlet:namespace />deleteGroupIds.value = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
 
-			if (!siteIds) {
-				return;
+				submitForm(document.<portlet:namespace />fm, '<portlet:actionURL><portlet:param name="struts_action" value="/sites_admin/edit_site" /></portlet:actionURL>');
 			}
-
-			<portlet:namespace />doDeleteSite(siteIds);
 		},
 		['liferay-util-list-fields']
 	);

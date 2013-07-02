@@ -22,16 +22,16 @@
 <%
 userParams.put("expandoAttributes", searchTerms.getKeywords());
 
-Sort sort = SortFactoryUtil.getSort(User.class, searchContainer.getOrderByCol(), searchContainer.getOrderByType());
+Sort sort = SortFactoryUtil.getSort(User.class, userSearch.getOrderByCol(), userSearch.getOrderByType());
 
 while (true) {
 	Hits hits = null;
 
 	if (searchTerms.isAdvancedSearch()) {
-		hits = UserLocalServiceUtil.search(company.getCompanyId(), searchTerms.getFirstName(), searchTerms.getMiddleName(), searchTerms.getLastName(), searchTerms.getScreenName(), searchTerms.getEmailAddress(), searchTerms.getStatus(), userParams, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), sort);
+		hits = UserLocalServiceUtil.search(company.getCompanyId(), searchTerms.getFirstName(), searchTerms.getMiddleName(), searchTerms.getLastName(), searchTerms.getScreenName(), searchTerms.getEmailAddress(), searchTerms.getStatus(), userParams, searchTerms.isAndOperator(), userSearch.getStart(), userSearch.getEnd(), sort);
 	}
 	else {
-		hits = UserLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), searchTerms.getStatus(), userParams, searchContainer.getStart(), searchContainer.getEnd(), sort);
+		hits = UserLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), searchTerms.getStatus(), userParams, userSearch.getStart(), userSearch.getEnd(), sort);
 	}
 
 	Tuple tuple = UsersAdminUtil.getUsers(hits);

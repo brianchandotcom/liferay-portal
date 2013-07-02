@@ -68,6 +68,7 @@ long nodeId = BeanParamUtil.getLong(node, request, "nodeId");
 <aui:script>
 	function <portlet:namespace />saveNode() {
 		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= (node == null) ? Constants.ADD : Constants.UPDATE %>";
+
 		submitForm(document.<portlet:namespace />fm);
 	}
 </aui:script>

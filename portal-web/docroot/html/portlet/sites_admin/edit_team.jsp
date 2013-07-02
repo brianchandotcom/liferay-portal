@@ -80,6 +80,7 @@ if (group.isOrganization()) {
 <aui:script>
 	function <portlet:namespace />saveTeam() {
 		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= (team == null) ? Constants.ADD : Constants.UPDATE %>";
+
 		submitForm(document.<portlet:namespace />fm);
 	}
 </aui:script>

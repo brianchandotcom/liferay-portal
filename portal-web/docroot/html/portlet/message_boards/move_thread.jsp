@@ -101,6 +101,7 @@ boolean splitThread = false;
 <aui:script>
 	function <portlet:namespace />moveThread() {
 		document.<portlet:namespace />fm.<portlet:namespace />body.value = <portlet:namespace />getHTML();
+
 		submitForm(document.<portlet:namespace />fm);
 	}
 

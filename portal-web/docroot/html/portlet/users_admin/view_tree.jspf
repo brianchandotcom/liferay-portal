@@ -261,17 +261,18 @@ if (organization != null) {
 							</c:if>
 
 							<%
-							SearchContainer organizationSearch = new OrganizationSearch(renderRequest, "cur1", currentURLObj);
+							SearchContainer searchContainer = new OrganizationSearch(renderRequest, "cur1", currentURLObj);
 
-							organizationSearch.setRowChecker(new RowChecker(renderResponse));
+							searchContainer.setRowChecker(new RowChecker(renderResponse));
 							%>
 
 							<liferay-ui:search-container
-								searchContainer="<%= organizationSearch %>"
+								searchContainer="<%= searchContainer %>"
+								var="organizationSearch"
 							>
 
 								<%
-								OrganizationSearchTerms searchTerms = (OrganizationSearchTerms)searchContainer.getSearchTerms();
+								OrganizationSearchTerms searchTerms = (OrganizationSearchTerms)organizationSearch.getSearchTerms();
 
 								long parentOrganizationId = _getParentOrganizationId(request, organization, filterManageableOrganizations);
 
@@ -332,7 +333,7 @@ if (organization != null) {
 									</c:choose>
 
 									<c:if test="<%= !results.isEmpty() %>">
-										<aui:button cssClass="delete-organizations" onClick='<%= renderResponse.getNamespace() + "deleteOrganizations();" %>' value="delete" />
+										<aui:button cssClass="delete-organizations" disabled="<%= true %>" name="delete" onClick='<%= renderResponse.getNamespace() + "deleteOrganizations();" %>' value="delete" />
 									</c:if>
 								</liferay-ui:search-container-results>
 
@@ -460,6 +461,10 @@ if (organization != null) {
 		</div>
 	</c:otherwise>
 </c:choose>
+
+<aui:script>
+	Liferay.Util.toggleSearchContainerButton('#<portlet:namespace />delete', '#<portlet:namespace /><%= searchContainerReference.getId("organizationSearch") %>SearchContainer', document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
+</aui:script>
 
 <%!
 private long _getParentOrganizationId(HttpServletRequest request, Organization organization, boolean filterManageableOrganizations) {

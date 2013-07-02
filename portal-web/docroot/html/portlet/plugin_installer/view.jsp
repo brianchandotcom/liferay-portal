@@ -127,16 +127,19 @@
 				}
 
 				document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = cmd;
+
 				submitForm(document.<portlet:namespace />fm, "<portlet:actionURL><portlet:param name="struts_action" value="/plugin_installer/install_plugin" /></portlet:actionURL>");
 			}
 
 			function <portlet:namespace />reloadRepositories() {
 				document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "reloadRepositories";
+
 				submitForm(document.<portlet:namespace />fm, "<portlet:actionURL><portlet:param name="struts_action" value="/plugin_installer/install_plugin" /></portlet:actionURL>");
 			}
 
 			function <portlet:namespace />saveDeployConfiguration() {
 				document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = 'deployConfiguration';
+
 				submitForm(document.<portlet:namespace />fm, "<portlet:actionURL><portlet:param name="struts_action" value="/plugin_installer/install_plugin" /></portlet:actionURL>");
 			}
 		</aui:script>

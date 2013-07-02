@@ -293,16 +293,19 @@ int screenshotsCount = ParamUtil.getInteger(request, "screenshotsCount", product
 <aui:script>
 	function <portlet:namespace />addScreenShot() {
 		document.<portlet:namespace />fm.<portlet:namespace />screenshotsCount.value = "<%= screenshotsCount + 1 %>";
+
 		submitForm(document.<portlet:namespace />fm);
 	}
 
 	function <portlet:namespace />removeScreenShot() {
 		document.<portlet:namespace />fm.<portlet:namespace />screenshotsCount.value = "<%= screenshotsCount - 1 %>";
+
 		submitForm(document.<portlet:namespace />fm);
 	}
 
 	function <portlet:namespace />saveProductEntry() {
 		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= (productEntry == null) ? Constants.ADD : Constants.UPDATE %>";
+
 		submitForm(document.<portlet:namespace />fm);
 	}
 </aui:script>

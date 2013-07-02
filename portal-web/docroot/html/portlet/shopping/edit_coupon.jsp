@@ -161,6 +161,7 @@ String discountType = BeanParamUtil.getString(coupon, request, "discountType");
 <aui:script>
 	function <portlet:namespace />saveCoupon() {
 		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= (coupon == null) ? Constants.ADD : Constants.UPDATE %>";
+
 		submitForm(document.<portlet:namespace />fm);
 	}
 

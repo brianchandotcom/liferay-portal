@@ -64,13 +64,14 @@ portletURL.setParameter("userGroupId", String.valueOf(userGroup.getUserGroupId()
 	<liferay-ui:search-container
 		rowChecker="<%= new UserUserGroupChecker(renderResponse, userGroup) %>"
 		searchContainer="<%= new UserSearch(renderRequest, portletURL) %>"
+		var="userSearch"
 	>
 		<liferay-ui:search-form
 			page="/html/portlet/users_admin/user_search.jsp"
 		/>
 
 		<%
-		UserSearchTerms searchTerms = (UserSearchTerms)searchContainer.getSearchTerms();
+		UserSearchTerms searchTerms = (UserSearchTerms)userSearch.getSearchTerms();
 
 		LinkedHashMap<String, Object> userParams = new LinkedHashMap<String, Object>();
 
@@ -126,8 +127,9 @@ portletURL.setParameter("userGroupId", String.valueOf(userGroup.getUserGroupId()
 		function(assignmentsRedirect) {
 			document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "user_group_users";
 			document.<portlet:namespace />fm.<portlet:namespace />assignmentsRedirect.value = assignmentsRedirect;
-			document.<portlet:namespace />fm.<portlet:namespace />addUserIds.value = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, "<portlet:namespace />allRowIds");
-			document.<portlet:namespace />fm.<portlet:namespace />removeUserIds.value = Liferay.Util.listUncheckedExcept(document.<portlet:namespace />fm, "<portlet:namespace />allRowIds");
+			document.<portlet:namespace />fm.<portlet:namespace />addUserIds.value = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
+			document.<portlet:namespace />fm.<portlet:namespace />removeUserIds.value = Liferay.Util.listUncheckedExcept(document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
+
 			submitForm(document.<portlet:namespace />fm);
 		},
 		['liferay-util-list-fields']

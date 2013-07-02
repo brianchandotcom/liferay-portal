@@ -87,6 +87,7 @@ String editorContent = emailMessageBody;
 
 	function <portlet:namespace />saveConfiguration() {
 		document.<portlet:namespace />fm.<portlet:namespace /><%= editorParam %>.value = window.<portlet:namespace />editor.getHTML();
+
 		submitForm(document.<portlet:namespace />fm);
 	}
 </aui:script>

@@ -38,13 +38,14 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_role_assignments.
 <liferay-ui:search-container
 	rowChecker="<%= new OrganizationRoleChecker(renderResponse, role) %>"
 	searchContainer="<%= new OrganizationSearch(renderRequest, portletURL) %>"
+	var="organizationSearch"
 >
 	<liferay-ui:search-form
 		page="/html/portlet/users_admin/organization_search.jsp"
 	/>
 
 	<%
-	OrganizationSearchTerms searchTerms = (OrganizationSearchTerms)searchContainer.getSearchTerms();
+	OrganizationSearchTerms searchTerms = (OrganizationSearchTerms)organizationSearch.getSearchTerms();
 
 	long parentOrganizationId = OrganizationConstants.ANY_PARENT_ORGANIZATION_ID;
 

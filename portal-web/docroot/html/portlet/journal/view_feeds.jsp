@@ -31,6 +31,8 @@ portletURL.setParameter("struts_action", "/journal/view_feeds");
 	<%
 	FeedSearch searchContainer = new FeedSearch(renderRequest, portletURL);
 
+	searchContainerReference.register(searchContainer);
+
 	List headerNames = searchContainer.getHeaderNames();
 
 	headerNames.add(StringPool.BLANK);
@@ -51,7 +53,7 @@ portletURL.setParameter("struts_action", "/journal/view_feeds");
 
 	<div class="separator"><!-- --></div>
 
-	<aui:button onClick='<%= renderResponse.getNamespace() + "deleteFeeds();" %>' value="delete" />
+	<aui:button disabled="true" name="delete" onClick='<%= renderResponse.getNamespace() + "deleteFeeds();" %>' value="delete" />
 
 	<br /><br />
 
@@ -101,6 +103,8 @@ portletURL.setParameter("struts_action", "/journal/view_feeds");
 </aui:form>
 
 <aui:script>
+	Liferay.Util.toggleSearchContainerButton('#<portlet:namespace />delete', '#<portlet:namespace /><%= searchContainerReference.getId() %>SearchContainer', document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
+
 	Liferay.provide(
 		window,
 		'<portlet:namespace />deleteFeeds',
@@ -108,7 +112,8 @@ portletURL.setParameter("struts_action", "/journal/view_feeds");
 			if (confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-delete-the-selected-feeds") %>')) {
 				document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= Constants.DELETE %>";
 				document.<portlet:namespace />fm.<portlet:namespace />groupId.value = "<%= scopeGroupId %>";
-				document.<portlet:namespace />fm.<portlet:namespace />deleteFeedIds.value = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, "<portlet:namespace />allRowIds");
+				document.<portlet:namespace />fm.<portlet:namespace />deleteFeedIds.value = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
+
 				submitForm(document.<portlet:namespace />fm, "<portlet:actionURL><portlet:param name="struts_action" value="/journal/edit_feed" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>");
 			}
 		},

@@ -94,6 +94,7 @@ long frameworkVersionId = BeanParamUtil.getLong(frameworkVersion, request, "fram
 <aui:script>
 	function <portlet:namespace />saveFrameworkVersion() {
 		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= (frameworkVersion == null) ? Constants.ADD : Constants.UPDATE %>";
+
 		submitForm(document.<portlet:namespace />fm);
 	}
 </aui:script>

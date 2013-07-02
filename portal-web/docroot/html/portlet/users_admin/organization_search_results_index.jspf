@@ -22,16 +22,16 @@
 <%
 organizationParams.put("expandoAttributes", searchTerms.getKeywords());
 
-Sort sort = SortFactoryUtil.getSort(Organization.class, searchContainer.getOrderByCol(), searchContainer.getOrderByType());
+Sort sort = SortFactoryUtil.getSort(Organization.class, organizationSearch.getOrderByCol(), organizationSearch.getOrderByType());
 
 while (true) {
 	Hits hits = null;
 
 	if (searchTerms.isAdvancedSearch()) {
-		hits = OrganizationLocalServiceUtil.search(company.getCompanyId(), parentOrganizationId, searchTerms.getName(), searchTerms.getType(), searchTerms.getStreet(), searchTerms.getCity(), searchTerms.getZip(), searchTerms.getRegionName(), searchTerms.getCountryName(), organizationParams, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), sort);
+		hits = OrganizationLocalServiceUtil.search(company.getCompanyId(), parentOrganizationId, searchTerms.getName(), searchTerms.getType(), searchTerms.getStreet(), searchTerms.getCity(), searchTerms.getZip(), searchTerms.getRegionName(), searchTerms.getCountryName(), organizationParams, searchTerms.isAndOperator(), organizationSearch.getStart(), organizationSearch.getEnd(), sort);
 	}
 	else {
-		hits = OrganizationLocalServiceUtil.search(company.getCompanyId(), parentOrganizationId, searchTerms.getKeywords(), organizationParams, searchContainer.getStart(), searchContainer.getEnd(), sort);
+		hits = OrganizationLocalServiceUtil.search(company.getCompanyId(), parentOrganizationId, searchTerms.getKeywords(), organizationParams, organizationSearch.getStart(), organizationSearch.getEnd(), sort);
 	}
 
 	Tuple tuple = UsersAdminUtil.getOrganizations(hits);

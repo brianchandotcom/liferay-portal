@@ -465,23 +465,9 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 			ManifestSummary manifestSummary =
 				portletDataContext.getManifestSummary();
 
-			StagedModelDataHandler<?> stagedModelDataHandler =
-				StagedModelDataHandlerRegistryUtil.getStagedModelDataHandler(
-					portletDataHandlerControl.getClassName());
-
-			String manifestSummaryKey = null;
-
-			if (Validator.isNotNull(
-					portletDataHandlerBoolean.getReferrerClassName())) {
-
-				ManifestSummary.getManifestSummaryKey(
-					portletDataHandlerControl.getClassName(),
-					portletDataHandlerBoolean.getReferrerClassName());
-			}
-			else {
-				manifestSummaryKey =
-					stagedModelDataHandler.getManifestSummaryKey(null);
-			}
+			String manifestSummaryKey = ManifestSummary.getManifestSummaryKey(
+				portletDataHandlerControl.getClassName(),
+				portletDataHandlerBoolean.getReferrerClassName());
 
 			manifestSummary.addModelAdditionCount(manifestSummaryKey, 0);
 		}

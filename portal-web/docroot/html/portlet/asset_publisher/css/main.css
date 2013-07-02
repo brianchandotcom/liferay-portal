@@ -131,6 +131,10 @@
 		padding-top: 0;
 	}
 
+	.add-asset-selector {
+		margin-right: 0;
+	}
+
 	.metadata-author {
 		background: url(@theme_image_path@/portlet/edit_guest.png) no-repeat 0 0;
 		float: left;

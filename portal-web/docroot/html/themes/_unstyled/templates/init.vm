@@ -314,7 +314,7 @@
 #end
 
 #if ($is_guest_group)
-	#set ($show_site_name = false)
+	#set ($show_site_name = true)
 #else
 	#set ($show_site_name_supported = $getterUtil.getBoolean($theme_settings.getProperty("show-site-name-supported"), true))
 

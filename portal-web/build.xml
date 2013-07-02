@@ -672,9 +672,19 @@
 					</replacevalue>
 				</replace>
 
+				<replace file="docroot/html/js/editor/fckeditor/editor/filemanager/browser/liferay/frmresourceslist.html">
+					<replacetoken><![CDATA[oListManager.GetFileRowHtml = function( fileName, fileUrl, fileSize )]]></replacetoken>
+					<replacevalue><![CDATA[oListManager.GetFileRowHtml = function( fileName, fileUrl, fileSize, errorMessage )]]></replacevalue>
+				</replace>
+
+				<replace file="docroot/html/js/editor/fckeditor/editor/filemanager/browser/liferay/frmresourceslist.html">
+					<replacetoken><![CDATA[var sLink = '<a href="#" onclick="OpenFile(\'' + ProtectPath( fileUrl ) + '\');return false;">' ;]]></replacetoken>
+					<replacevalue><![CDATA[var errorMessageText = (errorMessage ? '\'' + errorMessage + '\'' : null);var sLink = '<a href="#" onclick="OpenFile(\'' + ProtectPath( fileUrl ) + '\' , ' + errorMessageText + ');return false;">' ;]]></replacevalue>
+				</replace>
+
 				<replaceregexp file="docroot/html/js/editor/fckeditor/editor/filemanager/browser/liferay/frmresourceslist.html"
 					match="(\t*)// Get the optional [^;]*?;\r?(\n).*?sFileSize \) \) ;"
-					replace="\1var sFileDesc = oNode.attributes.getNamedItem('desc').value ;\2\1var sFileUrl = oNode.attributes.getNamedItem('url').value ;\2\2\1oHtml.Append( oListManager.GetFileRowHtml( sFileDesc, sFileUrl, sFileSize ) ) ;"
+					replace="\1var sFileDesc = oNode.attributes.getNamedItem('desc').value ;\2\1var sFileErrorMessageNamedItem = oNode.attributes.getNamedItem('errorMessage');\2\1var sFileErrorMessage = null;\2\1 if (sFileErrorMessageNamedItem) {sFileErrorMessage = sFileErrorMessageNamedItem.value;}\2\1var sFileUrl = oNode.attributes.getNamedItem('url').value ;\2\2\1oHtml.Append( oListManager.GetFileRowHtml( sFileDesc, sFileUrl, sFileSize, sFileErrorMessage ) ) ;"
 					flags="s"
 				/>
 
@@ -682,7 +692,7 @@
 
 				<replaceregexp file="docroot/html/js/editor/fckeditor/editor/filemanager/browser/liferay/frmresourcetype.html"
 					match="var aTypes = \[\r?(\n)(\t*)(.)+\] ;"
-					replace="var aTypes = [\1\2['Document','Document'],\1\2['Page','Page'],\1\2['Attachment', 'Attachment']\1] ;"
+					replace="var aTypes = [\1\2['Document','Document'],\1\2['Page','Page'],\1\2['Attachment', 'Attachment'],\1\2['Video', 'Video']\1] ;"
 					flags="s"
 				/>
 
@@ -767,7 +777,9 @@
 							case 209:
 								alert( 'An internal server error occured.' );
 								break ;
-
+							case 210:
+								alert( 'You cannot upload a video file whithout enabling video preview generation.' );
+								break ;
 							default :
 						]]>
 					</replacevalue>
@@ -811,14 +823,24 @@
 				</replace>
 
 				<replace file="docroot/html/js/editor/ckeditor/editor/filemanager/browser/liferay/frmresourceslist.html">
+					<replacetoken><![CDATA[function OpenFile( fileUrl )]]></replacetoken>
+					<replacevalue><![CDATA[function OpenFile( fileUrl, errorMessage )]]></replacevalue>
+				</replace>
+
+				<replace file="docroot/html/js/editor/ckeditor/editor/filemanager/browser/liferay/frmresourceslist.html">
 					<replacetoken><![CDATA[window.top.opener.SetUrl( encodeURI( fileUrl ).replace( '#', '%23' ) ) ;]]></replacetoken>
 					<replacevalue>
 						<![CDATA[
-							var match = window.top.location.search.match(/(?:[\?&]|&amp;)CKEditorFuncNum=([^&]+)/i);
+							if (!errorMessage) {
+								var match = window.top.location.search.match(/(?:[\?&]|&amp;)CKEditorFuncNum=([^&]+)/i);
 
-							var funcNum = (match && match.length) ? match[1] : '';
+								var funcNum = (match && match.length) ? match[1] : '';
 
-							window.top.opener.CKEDITOR.tools.callFunction(funcNum, fileUrl);
+								window.top.opener.CKEDITOR.tools.callFunction(funcNum, fileUrl);
+						    }
+						    else {
+						 		alert(errorMessage);
+						    }
 						]]>
 					</replacevalue>
 				</replace>

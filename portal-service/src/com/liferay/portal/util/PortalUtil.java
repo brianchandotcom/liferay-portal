@@ -238,7 +238,8 @@ public class PortalUtil {
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link
-	 * com.liferay.portal.security.auth.AuthTokenWhitelistUtil#getPortletCSRFWhitelistActions()}
+	 *             com.liferay.portal.security.auth.AuthTokenWhitelistUtil#getPortletCSRFWhitelistActions(
+	 *             )}
 	 */
 	public static Set<String> getAuthTokenIgnoreActions() {
 		return getPortal().getAuthTokenIgnoreActions();
@@ -246,7 +247,8 @@ public class PortalUtil {
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link
-	 * com.liferay.portal.security.auth.AuthTokenWhitelistUtil#getPortletCSRFWhitelist()}
+	 *             com.liferay.portal.security.auth.AuthTokenWhitelistUtil#getPortletCSRFWhitelist(
+	 *             )}
 	 */
 	public static Set<String> getAuthTokenIgnorePortlets() {
 		return getPortal().getAuthTokenIgnorePortlets();
@@ -1062,7 +1064,8 @@ public class PortalUtil {
 
 	/**
 	 * @deprecated As of 6.2.0 replaced by {@link
-	 * com.liferay.portal.security.auth.AuthTokenWhitelistUtil#getPortletInvocationWhitelist()}
+	 *             com.liferay.portal.security.auth.AuthTokenWhitelistUtil#getPortletInvocationWhitelist(
+	 *             )}
 	 */
 	public static Set<String> getPortletAddDefaultResourceCheckWhitelist() {
 		return getPortal().getPortletAddDefaultResourceCheckWhitelist();
@@ -1070,7 +1073,8 @@ public class PortalUtil {
 
 	/**
 	 * @deprecated As of 6.2.0 replaced by {@link
-	 * com.liferay.portal.security.auth.AuthTokenWhitelistUtil#getPortletInvocationWhitelistActions()}
+	 *             com.liferay.portal.security.auth.AuthTokenWhitelistUtil#getPortletInvocationWhitelistActions(
+	 *             )}
 	 */
 	public static Set<String>
 		getPortletAddDefaultResourceCheckWhitelistActions() {
@@ -1754,7 +1758,8 @@ public class PortalUtil {
 
 	/**
 	 * @deprecated As of 6.2.0 replaced by {@link
-	 * com.liferay.portal.security.auth.AuthTokenWhitelistUtil#resetPortletInvocationWhitelist()}
+	 *             com.liferay.portal.security.auth.AuthTokenWhitelistUtil#resetPortletInvocationWhitelist(
+	 *             )}
 	 */
 	public static Set<String> resetPortletAddDefaultResourceCheckWhitelist() {
 		return getPortal().resetPortletAddDefaultResourceCheckWhitelist();
@@ -1762,7 +1767,8 @@ public class PortalUtil {
 
 	/**
 	 * @deprecated As of 6.2.0 replaced by {@link
-	 * com.liferay.portal.security.auth.AuthTokenWhitelistUtil#resetPortletInvocationWhitelistActions()}
+	 *             com.liferay.portal.security.auth.AuthTokenWhitelistUtil#resetPortletInvocationWhitelistActions(
+	 *             )}
 	 */
 	public static Set<String>
 		resetPortletAddDefaultResourceCheckWhitelistActions() {

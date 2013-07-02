@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.security.pacl.permission;
 
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -40,7 +41,7 @@ public class PortalSocketPermission {
 		int port = -1;
 
 		if (domainAndPortArray.length > 1) {
-			port = Integer.parseInt(domainAndPortArray[1]);
+			port = GetterUtil.getInteger(domainAndPortArray[1]);
 		}
 
 		String protocol = HttpUtil.getProtocol(location);

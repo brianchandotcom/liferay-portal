@@ -117,12 +117,9 @@ Map<String, TemplateVariableGroup> templateVariableGroups = TemplateContextHelpe
 
 	<c:if test="<%= !templateVariableGroups.isEmpty() %>">
 		var paletteContainer = panelScriptContainer.one('#<portlet:namespace />templatePaletteContainer');
-
 		var paletteDataContainer = panelScriptContainer.one('#<portlet:namespace />paletteDataContainer');
 
 		function createLiveSearch() {
-			var instance = this;
-
 			var trim = A.Lang.trim;
 
 			var PaletteSearch = A.Component.create(
@@ -148,11 +145,11 @@ Map<String, TemplateVariableGroup> templateVariableGroups = TemplateContextHelpe
 				var results = [];
 
 				paletteItems.each(
-					function(node) {
+					function(item, index, collection) {
 						results.push(
 							{
-								node: node.ancestor(),
-								data: trim(node.text())
+								node: item.ancestor(),
+								data: trim(item.text())
 							}
 						);
 					}
@@ -170,8 +167,7 @@ Map<String, TemplateVariableGroup> templateVariableGroups = TemplateContextHelpe
 			};
 
 			var paletteItems = paletteDataContainer.all('.palette-item');
-
-			var paletteSectonsNode = paletteDataContainer.all('.palette-section');
+			var paletteSectionsNode = paletteDataContainer.all('.palette-section');
 
 			var noResultsNode;
 
@@ -204,19 +200,15 @@ Map<String, TemplateVariableGroup> templateVariableGroups = TemplateContextHelpe
 
 					var foundVisibleSection;
 
-					paletteSectonsNode.each(
+					paletteSectionsNode.each(
 						function(item, index, collection) {
-							var action = 'addClass';
-
 							var visibleItem = item.one('.palette-item-container:not(.hide)');
 
 							if (visibleItem) {
-								action = 'removeClass';
-
 								foundVisibleSection = true;
 							}
 
-							item[action]('hide');
+							item.toggleClass('hide', visibleItem);
 						}
 					);
 

@@ -18,7 +18,7 @@
 (function() {
 
 CKEDITOR.plugins.add(
-	'liferayvideo',
+	'video',
 	{
 		afterInit: function(editor) {
 			var dataProcessor = editor.dataProcessor;
@@ -32,7 +32,7 @@ CKEDITOR.plugins.add(
 							var attributes = realElement.attributes;
 
 							if (attributes['class'] && attributes['class'].indexOf('liferayckevideo') >= 0) {
-								var fakeElement = editor.createFakeParserElement(realElement, 'liferay_cke_video', 'liferayvideo', false);
+								var fakeElement = editor.createFakeParserElement(realElement, 'liferay_cke_video', 'video', false);
 
 								var fakeStyle = fakeElement.attributes.style || '';
 
@@ -84,15 +84,15 @@ CKEDITOR.plugins.add(
 		init: function(editor) {
 			var instance = this;
 
-			var lang = editor.lang.liferayvideo;
+			var lang = editor.lang.video;
 
-			CKEDITOR.dialog.add('liferayvideo', instance.path + 'dialogs/video.js');
+			CKEDITOR.dialog.add('video', instance.path + 'dialogs/video.js');
 
-			editor.addCommand('LiferayVideo', new CKEDITOR.dialogCommand('liferayvideo'));
+			editor.addCommand('Video', new CKEDITOR.dialogCommand('video'));
 
-			editor.ui.addButton('LiferayVideo',
+			editor.ui.addButton('Video',
 				{
-					command: 'LiferayVideo',
+					command: 'Video',
 					icon: instance.path + 'icons/icon.png',
 					label: lang.toolbar
 				}
@@ -101,8 +101,8 @@ CKEDITOR.plugins.add(
 			if (editor.addMenuItems) {
 				editor.addMenuItems(
 					{
-						liferayvideo: {
-							command: 'LiferayVideo',
+						video: {
+							command: 'Video',
 							group: 'flash',
 							label: lang.properties
 						}
@@ -115,8 +115,8 @@ CKEDITOR.plugins.add(
 					function(event) {
 						var element = event.data.element;
 
-						if (element.is('img') && element.data('cke-real-element-type') === 'liferayvideo') {
-							event.data.dialog = 'liferayvideo';
+						if (element.is('img') && element.data('cke-real-element-type') === 'video') {
+							event.data.dialog = 'video';
 						}
 					}
 			);
@@ -124,7 +124,7 @@ CKEDITOR.plugins.add(
 			if (editor.contextMenu) {
 				editor.contextMenu.addListener(
 						function(element, selection) {
-							if (element && element.is('img') && !element.isReadOnly() && (element.data('cke-real-element-type') === 'liferayvideo')) {
+							if (element && element.is('img') && !element.isReadOnly() && (element.data('cke-real-element-type') === 'video')) {
 
 								return {
 									video: CKEDITOR.TRISTATE_OFF
@@ -134,7 +134,7 @@ CKEDITOR.plugins.add(
 				);
 			}
 
-			editor.lang.fakeobjects.liferayvideo = lang.fakeObject;
+			editor.lang.fakeobjects.video = lang.fakeObject;
 		},
 
 		lang: ['en', 'es'],

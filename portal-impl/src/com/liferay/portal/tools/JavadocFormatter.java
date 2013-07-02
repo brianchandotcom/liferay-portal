@@ -1365,7 +1365,7 @@ public class JavadocFormatter {
 		return false;
 	}
 
-	private boolean _isFromHigherJavaAPIVersion(JavaMethod javaMethod) {
+	private boolean _overridesHigherJavaAPIVersion(JavaMethod javaMethod) {
 		Annotation[] annotations = javaMethod.getAnnotations();
 
 		if (annotations == null) {
@@ -1377,14 +1377,15 @@ public class JavadocFormatter {
 
 			JavaClass javaClass = type.getJavaClass();
 
-			if (javaClass.getFullyQualifiedName().equals(
-					SinceJava.class.getName())) {
+			String javaClassName = javaClass.getFullyQualifiedName();
 
+			if (javaClassName.equals(SinceJava.class.getName())) {
 				AnnotationValue value = annotation.getProperty("value");
 
-				double since = GetterUtil.getDouble(value.getParameterValue());
+				double sinceJava = GetterUtil.getDouble(
+					value.getParameterValue());
 
-				if (since > 1.6 /* our current minimum */) {
+				if (sinceJava > _LOWEST_SUPPORTED_JAVA_VERSION) {
 					return true;
 				}
 			}
@@ -1398,7 +1399,8 @@ public class JavadocFormatter {
 		Collection<Tuple> ancestorJavaClassTuples) {
 
 		if (javaMethod.isConstructor() || javaMethod.isPrivate() ||
-			javaMethod.isStatic() || _isFromHigherJavaAPIVersion(javaMethod)) {
+			javaMethod.isStatic() ||
+			_overridesHigherJavaAPIVersion(javaMethod)) {
 
 			return false;
 		}
@@ -1887,6 +1889,8 @@ public class JavadocFormatter {
 
 		return text;
 	}
+
+	private static final double _LOWEST_SUPPORTED_JAVA_VERSION = 1.6;
 
 	private static FileImpl _fileUtil = FileImpl.getInstance();
 	private static SAXReaderImpl _saxReaderUtil = SAXReaderImpl.getInstance();

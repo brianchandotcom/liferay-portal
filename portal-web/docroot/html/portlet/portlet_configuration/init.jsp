@@ -42,6 +42,7 @@ page import="com.liferay.portal.kernel.repository.model.FileEntry" %><%@
 page import="com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil" %><%@
 page import="com.liferay.portal.kernel.util.MapUtil" %><%@
 page import="com.liferay.portal.lar.backgroundtask.executor.PortletExportBackgroundTaskExecutor" %><%@
+page import="com.liferay.portal.lar.backgroundtask.executor.PortletImportBackgroundTaskExecutor" %><%@
 page import="com.liferay.portal.service.permission.RolePermissionUtil" %><%@
 page import="com.liferay.portal.service.permission.TeamPermissionUtil" %><%@
 page import="com.liferay.portal.util.ResourcePermissionUtil" %><%@

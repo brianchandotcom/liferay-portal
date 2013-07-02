@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.DateRange;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Layout;
@@ -34,8 +33,6 @@ import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutServiceUtil;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portlet.sites.action.ActionUtil;
-
-import java.io.File;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -66,8 +63,6 @@ public class ExportLayoutsAction extends PortletAction {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
-		File file = null;
-
 		try {
 			long groupId = ParamUtil.getLong(actionRequest, "groupId");
 			boolean privateLayout = ParamUtil.getBoolean(
@@ -87,7 +82,8 @@ public class ExportLayoutsAction extends PortletAction {
 			if (Validator.isNotNull(cmd)) {
 				LayoutServiceUtil.exportLayoutsAsFileInBackground(
 					fileName, groupId, privateLayout, layoutIds,
-					actionRequest.getParameterMap(), startDate, endDate);
+					actionRequest.getParameterMap(), startDate, endDate,
+					fileName);
 
 				String redirect = ParamUtil.getString(
 					actionRequest, "redirect");
@@ -115,9 +111,6 @@ public class ExportLayoutsAction extends PortletAction {
 				actionRequest, "pagesRedirect");
 
 			sendRedirect(actionRequest, actionResponse, pagesRedirect);
-		}
-		finally {
-			FileUtil.delete(file);
 		}
 	}
 

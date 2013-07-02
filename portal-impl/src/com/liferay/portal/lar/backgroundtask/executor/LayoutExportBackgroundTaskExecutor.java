@@ -52,6 +52,7 @@ public class LayoutExportBackgroundTaskExecutor
 			(Map<String, String[]>)taskContextMap.get("parameterMap");
 		Date startDate = (Date)taskContextMap.get("startDate");
 		Date endDate = (Date)taskContextMap.get("endDate");
+		String fileName = MapUtil.getString(taskContextMap, "fileName");
 
 		File larFile = LayoutServiceUtil.exportLayoutsAsFile(
 			groupId, privateLayout, layoutIds, parameterMap, startDate,
@@ -60,8 +61,7 @@ public class LayoutExportBackgroundTaskExecutor
 		long userId = MapUtil.getLong(taskContextMap, "userId");
 
 		BackgroundTaskLocalServiceUtil.addBackgroundTaskAttachment(
-			userId, backgroundTask.getBackgroundTaskId(),
-			backgroundTask.getName(), larFile);
+			userId, backgroundTask.getBackgroundTaskId(), fileName, larFile);
 	}
 
 }

@@ -568,6 +568,11 @@ public class JournalArticleStagedModelDataHandler
 		serviceContext.setAddGroupPermissions(addGroupPermissions);
 		serviceContext.setAddGuestPermissions(addGuestPermissions);
 
+		if (article.getStatus() != WorkflowConstants.STATUS_APPROVED) {
+			serviceContext.setWorkflowAction(
+				WorkflowConstants.ACTION_SAVE_DRAFT);
+		}
+
 		JournalArticle importedArticle = null;
 
 		String articleResourceUuid = articleElement.attributeValue(

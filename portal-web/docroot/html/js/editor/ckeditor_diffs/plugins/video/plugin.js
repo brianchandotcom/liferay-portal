@@ -1,7 +1,7 @@
 (function() {
 
 CKEDITOR.plugins.add(
-	'liferayvideo',
+	'video',
 	{
 		afterInit: function(editor) {
 			var dataProcessor = editor.dataProcessor;
@@ -18,7 +18,7 @@ CKEDITOR.plugins.add(
 								var fakeElement;
 
 								if (attributeClass && attributeClass.indexOf('liferayckevideo') >= 0) {
-									fakeElement = editor.createFakeParserElement(realElement, 'liferay_cke_video', 'liferayvideo', false);
+									fakeElement = editor.createFakeParserElement(realElement, 'liferay_cke_video', 'video', false);
 
 									var fakeStyle = fakeElement.attributes.style || '';
 
@@ -67,14 +67,14 @@ CKEDITOR.plugins.add(
 		init: function(editor) {
 			var instance = this;
 
-			CKEDITOR.dialog.add('liferayvideo', instance.path + 'dialogs/video.js');
+			CKEDITOR.dialog.add('video', instance.path + 'dialogs/video.js');
 
-			editor.addCommand('LiferayVideo', new CKEDITOR.dialogCommand('liferayvideo'));
+			editor.addCommand('Video', new CKEDITOR.dialogCommand('video'));
 
 			editor.ui.addButton(
-				'LiferayVideo',
+				'Video',
 				{
-					command: 'LiferayVideo',
+					command: 'Video',
 					icon: instance.path + 'icons/icon.png',
 					label: Liferay.Language.get('video')
 				}
@@ -84,7 +84,7 @@ CKEDITOR.plugins.add(
 				editor.addMenuItems(
 					{
 						video: {
-							command: 'LiferayVideo',
+							command: 'Video',
 							group: 'flash',
 							label: Liferay.Language.get('edit-video')
 						}
@@ -98,7 +98,7 @@ CKEDITOR.plugins.add(
 					var element = event.data.element;
 
 					if (instance.isVideoElement(element)) {
-						event.data.dialog = 'liferayvideo';
+						event.data.dialog = 'video';
 					}
 				}
 			);
@@ -123,7 +123,7 @@ CKEDITOR.plugins.add(
 		isVideoElement: function(el) {
 			var instance = this;
 
-			return (el && el.is('img') && el.data('cke-real-element-type') === 'liferayvideo');
+			return (el && el.is('img') && el.data('cke-real-element-type') === 'video');
 		},
 
 		onLoad: function() {

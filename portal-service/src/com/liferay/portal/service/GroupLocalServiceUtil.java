@@ -1038,6 +1038,18 @@ public class GroupLocalServiceUtil {
 		getService().checkSystemGroups(companyId);
 	}
 
+	public static void disableStaging(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().disableStaging(groupId);
+	}
+
+	public static void enableStaging(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().enableStaging(groupId);
+	}
+
 	/**
 	* Returns the group with the matching friendly URL.
 	*

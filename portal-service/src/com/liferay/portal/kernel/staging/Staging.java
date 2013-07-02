@@ -137,6 +137,8 @@ public interface Staging {
 
 	public String getSchedulerGroupName(String destinationName, long groupId);
 
+	public String getStagedPortletId(String portletId);
+
 	public Map<String, String[]> getStagingParameters();
 
 	public Map<String, String[]> getStagingParameters(

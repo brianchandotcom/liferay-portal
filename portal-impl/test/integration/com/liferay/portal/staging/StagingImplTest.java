@@ -15,7 +15,6 @@
 package com.liferay.portal.staging;
 
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
-import com.liferay.portal.kernel.staging.StagingConstants;
 import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -139,11 +138,10 @@ public class StagingImplTest {
 			new String[] {String.valueOf(stageJournal)});
 
 		serviceContext.setAttribute(
-			StagingConstants.STAGED_PORTLET + PortletDataHandlerKeys.CATEGORIES,
-				stageCategories);
+			StagingUtil.getStagedPortletId(PortletDataHandlerKeys.CATEGORIES),
+			stageCategories);
 		serviceContext.setAttribute(
-			StagingConstants.STAGED_PORTLET + PortletKeys.JOURNAL,
-			stageJournal);
+			StagingUtil.getStagedPortletId(PortletKeys.JOURNAL), stageJournal);
 
 		for (String parameterName : parameters.keySet()) {
 			serviceContext.setAttribute(

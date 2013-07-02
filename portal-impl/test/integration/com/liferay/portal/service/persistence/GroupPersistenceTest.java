@@ -143,6 +143,8 @@ public class GroupPersistenceTest {
 
 		newGroup.setActive(ServiceTestUtil.randomBoolean());
 
+		newGroup.setRemoteStagingGroupCount(ServiceTestUtil.nextInt());
+
 		_persistence.update(newGroup);
 
 		Group existingGroup = _persistence.findByPrimaryKey(newGroup.getPrimaryKey());
@@ -171,6 +173,8 @@ public class GroupPersistenceTest {
 			newGroup.getFriendlyURL());
 		Assert.assertEquals(existingGroup.getSite(), newGroup.getSite());
 		Assert.assertEquals(existingGroup.getActive(), newGroup.getActive());
+		Assert.assertEquals(existingGroup.getRemoteStagingGroupCount(),
+			newGroup.getRemoteStagingGroupCount());
 	}
 
 	@Test
@@ -212,7 +216,7 @@ public class GroupPersistenceTest {
 			"classNameId", true, "classPK", true, "parentGroupId", true,
 			"liveGroupId", true, "treePath", true, "name", true, "description",
 			true, "type", true, "typeSettings", true, "friendlyURL", true,
-			"site", true, "active", true);
+			"site", true, "active", true, "remoteStagingGroupCount", true);
 	}
 
 	@Test
@@ -414,6 +418,8 @@ public class GroupPersistenceTest {
 		group.setSite(ServiceTestUtil.randomBoolean());
 
 		group.setActive(ServiceTestUtil.randomBoolean());
+
+		group.setRemoteStagingGroupCount(ServiceTestUtil.nextInt());
 
 		_persistence.update(group);
 

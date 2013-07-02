@@ -773,7 +773,8 @@ create table Group_ (
 	typeSettings TEXT null,
 	friendlyURL VARCHAR(255) null,
 	site BOOLEAN,
-	active_ BOOLEAN
+	active_ BOOLEAN,
+	remoteStagingGroupCount INTEGER
 );
 
 create table Groups_Orgs (

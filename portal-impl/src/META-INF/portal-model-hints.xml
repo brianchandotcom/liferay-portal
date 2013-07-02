@@ -233,6 +233,7 @@
 		</field>
 		<field name="site" type="boolean" />
 		<field name="active" type="boolean" />
+		<field name="remoteStagingGroupCount" type="int" />
 	</model>
 	<model name="com.liferay.portal.model.Image">
 		<field name="imageId" type="long" />

@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
 import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.spring.aop.Skip;
+import com.liferay.portal.kernel.staging.StagingConstants;
 import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -48,6 +49,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UniqueList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.zip.ZipWriter;
@@ -889,6 +891,55 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		Group group = groupPersistence.findByPrimaryKey(groupId);
 
 		return deleteGroup(group);
+	}
+
+	@Override
+	public synchronized void disableStaging(long groupId)
+		throws PortalException, SystemException {
+
+		Group group = groupPersistence.findByPrimaryKey(groupId);
+
+		int stagingGroupCount = group.getRemoteStagingGroupCount();
+
+		if (stagingGroupCount > 0) {
+			stagingGroupCount = stagingGroupCount - 1;
+
+			group.setRemoteStagingGroupCount(stagingGroupCount);
+
+			if (stagingGroupCount == 0) {
+				UnicodeProperties typeSettingsProperties =
+					group.getTypeSettingsProperties();
+
+				List<String> keys = new ArrayList<String>();
+
+				for (String key : typeSettingsProperties.keySet()) {
+					if (key.startsWith(StagingConstants.STAGED_PORTLET)) {
+						keys.add(key);
+					}
+				}
+
+				for (String key : keys) {
+					typeSettingsProperties.remove(key);
+				}
+
+				group.setTypeSettingsProperties(typeSettingsProperties);
+			}
+
+			groupPersistence.update(group);
+		}
+	}
+
+	@Override
+	public synchronized void enableStaging(long groupId)
+		throws PortalException, SystemException {
+
+		Group group = groupPersistence.findByPrimaryKey(groupId);
+
+		int stagingGroupCount = group.getRemoteStagingGroupCount() + 1;
+
+		group.setRemoteStagingGroupCount(stagingGroupCount);
+
+		groupPersistence.update(group);
 	}
 
 	/**

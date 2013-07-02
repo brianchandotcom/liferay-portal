@@ -227,6 +227,10 @@ public class StagingUtil {
 		return getStaging().getSchedulerGroupName(destinationName, groupId);
 	}
 
+	public static String getStagedPortletId(String portletId) {
+		return getStaging().getStagedPortletId(portletId);
+	}
+
 	public static Staging getStaging() {
 		PortalRuntimePermission.checkGetBeanProperty(StagingUtil.class);
 

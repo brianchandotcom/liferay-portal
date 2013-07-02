@@ -34,7 +34,7 @@ import java.io.ObjectOutput;
 public class GroupCacheModel implements CacheModel<Group>, Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(35);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -68,6 +68,8 @@ public class GroupCacheModel implements CacheModel<Group>, Externalizable {
 		sb.append(site);
 		sb.append(", active=");
 		sb.append(active);
+		sb.append(", remoteStagingGroupCount=");
+		sb.append(remoteStagingGroupCount);
 		sb.append("}");
 
 		return sb.toString();
@@ -131,6 +133,7 @@ public class GroupCacheModel implements CacheModel<Group>, Externalizable {
 
 		groupImpl.setSite(site);
 		groupImpl.setActive(active);
+		groupImpl.setRemoteStagingGroupCount(remoteStagingGroupCount);
 
 		groupImpl.resetOriginalValues();
 
@@ -155,6 +158,7 @@ public class GroupCacheModel implements CacheModel<Group>, Externalizable {
 		friendlyURL = objectInput.readUTF();
 		site = objectInput.readBoolean();
 		active = objectInput.readBoolean();
+		remoteStagingGroupCount = objectInput.readInt();
 	}
 
 	@Override
@@ -214,6 +218,7 @@ public class GroupCacheModel implements CacheModel<Group>, Externalizable {
 
 		objectOutput.writeBoolean(site);
 		objectOutput.writeBoolean(active);
+		objectOutput.writeInt(remoteStagingGroupCount);
 	}
 
 	public String uuid;
@@ -232,4 +237,5 @@ public class GroupCacheModel implements CacheModel<Group>, Externalizable {
 	public String friendlyURL;
 	public boolean site;
 	public boolean active;
+	public int remoteStagingGroupCount;
 }

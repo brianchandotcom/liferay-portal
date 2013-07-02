@@ -1716,10 +1716,10 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 
 	/**
 	* Returns the names of the classes that represent user notification
-	* interpreters associated with the portlet.
+	* handlers associated with the portlet.
 	*
 	* @return the names of the classes that represent user notification
-	interpreters associated with the portlet
+	handlers associated with the portlet
 	*/
 	@Override
 	public java.util.List<java.lang.String> getUserNotificationHandlerClasses() {
@@ -1727,9 +1727,9 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	}
 
 	/**
-	* Returns the user notification interpreter instances of the portlet.
+	* Returns the user notification handler instances of the portlet.
 	*
-	* @return the user notification interpreter instances of the portlet
+	* @return the user notification handler instances of the portlet
 	*/
 	@Override
 	public java.util.List<com.liferay.portal.kernel.notifications.UserNotificationHandler> getUserNotificationHandlerInstances() {
@@ -3266,11 +3266,10 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 
 	/**
 	* Sets the names of the classes that represent user notification
-	* interpreters associated with the portlet.
+	* handlers associated with the portlet.
 	*
 	* @param userNotificationHandlerClasses the names of the classes that
-	represent user notification interpreters associated with the
-	portlet
+	represent user notification handlers associated with the portlet
 	*/
 	@Override
 	public void setUserNotificationHandlerClasses(

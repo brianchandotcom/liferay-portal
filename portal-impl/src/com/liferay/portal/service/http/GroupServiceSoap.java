@@ -243,6 +243,28 @@ public class GroupServiceSoap {
 		}
 	}
 
+	public static void disableStaging(long groupId) throws RemoteException {
+		try {
+			GroupServiceUtil.disableStaging(groupId);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static void enableStaging(long groupId) throws RemoteException {
+		try {
+			GroupServiceUtil.enableStaging(groupId);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	/**
 	* Returns the company group.
 	*
@@ -1110,6 +1132,18 @@ public class GroupServiceSoap {
 					typeSettings);
 
 			return com.liferay.portal.model.GroupSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static void updateStagedPortlets(long groupId,
+		java.lang.String stagedPortletIds) throws RemoteException {
+		try {
+			GroupServiceUtil.updateStagedPortlets(groupId, stagedPortletIds);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

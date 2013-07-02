@@ -63,6 +63,7 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 		attributes.put("friendlyURL", getFriendlyURL());
 		attributes.put("site", getSite());
 		attributes.put("active", getActive());
+		attributes.put("remoteStagingGroupCount", getRemoteStagingGroupCount());
 
 		return attributes;
 	}
@@ -163,6 +164,13 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 
 		if (active != null) {
 			setActive(active);
+		}
+
+		Integer remoteStagingGroupCount = (Integer)attributes.get(
+				"remoteStagingGroupCount");
+
+		if (remoteStagingGroupCount != null) {
+			setRemoteStagingGroupCount(remoteStagingGroupCount);
 		}
 	}
 
@@ -563,6 +571,26 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 		_group.setActive(active);
 	}
 
+	/**
+	* Returns the remote staging group count of this group.
+	*
+	* @return the remote staging group count of this group
+	*/
+	@Override
+	public int getRemoteStagingGroupCount() {
+		return _group.getRemoteStagingGroupCount();
+	}
+
+	/**
+	* Sets the remote staging group count of this group.
+	*
+	* @param remoteStagingGroupCount the remote staging group count of this group
+	*/
+	@Override
+	public void setRemoteStagingGroupCount(int remoteStagingGroupCount) {
+		_group.setRemoteStagingGroupCount(remoteStagingGroupCount);
+	}
+
 	@Override
 	public boolean isNew() {
 		return _group.isNew();
@@ -832,6 +860,11 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	@Override
 	public boolean hasPublicLayouts() {
 		return _group.hasPublicLayouts();
+	}
+
+	@Override
+	public boolean hasRemoteOrLocalStagingGroup() {
+		return _group.hasRemoteOrLocalStagingGroup();
 	}
 
 	@Override

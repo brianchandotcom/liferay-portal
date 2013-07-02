@@ -109,6 +109,8 @@ public interface Group extends GroupModel, PersistedModel {
 
 	public boolean hasPublicLayouts();
 
+	public boolean hasRemoteOrLocalStagingGroup();
+
 	public boolean hasStagingGroup();
 
 	/**

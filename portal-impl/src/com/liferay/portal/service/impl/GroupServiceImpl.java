@@ -18,9 +18,11 @@ import com.liferay.portal.NoSuchGroupException;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UniqueList;
 import com.liferay.portal.model.Group;
@@ -240,6 +242,30 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 			getPermissionChecker(), groupId, ActionKeys.DELETE);
 
 		groupLocalService.deleteGroup(groupId);
+	}
+
+	@Override
+	public void disableStaging(long groupId)
+		throws PortalException, SystemException {
+
+		Group group = groupLocalService.getGroup(groupId);
+
+		GroupPermissionUtil.check(
+			getPermissionChecker(), group, ActionKeys.UPDATE);
+
+		groupLocalService.disableStaging(groupId);
+	}
+
+	@Override
+	public void enableStaging(long groupId)
+		throws PortalException, SystemException {
+
+		Group group = groupLocalService.getGroup(groupId);
+
+		GroupPermissionUtil.check(
+			getPermissionChecker(), group, ActionKeys.UPDATE);
+
+		groupLocalService.enableStaging(groupId);
 	}
 
 	/**
@@ -1159,6 +1185,26 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 		else {
 			return groupLocalService.updateGroup(groupId, typeSettings);
 		}
+	}
+
+	@Override
+	public void updateStagedPortlets(long groupId, String stagedPortletIds)
+		throws PortalException, SystemException {
+
+		GroupPermissionUtil.check(
+			getPermissionChecker(), groupId, ActionKeys.UPDATE);
+
+		Group group = groupPersistence.findByPrimaryKey(groupId);
+
+		UnicodeProperties typeSettings = group.getTypeSettingsProperties();
+
+		for (String stagedPortletId : StringUtil.split(stagedPortletIds)) {
+			typeSettings.setProperty(
+				StagingUtil.getStagedPortletId(stagedPortletId),
+				Boolean.TRUE.toString());
+		}
+
+		groupLocalService.updateGroup(group);
 	}
 
 	protected List<Group> filterGroups(List<Group> groups)

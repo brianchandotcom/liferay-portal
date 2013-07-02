@@ -399,6 +399,7 @@
 		<column name="friendlyURL" type="String" />
 		<column name="site" type="boolean" />
 		<column name="active" type="boolean" />
+		<column name="remoteStagingGroupCount" type="int" />
 
 		<!-- Relationships -->
 

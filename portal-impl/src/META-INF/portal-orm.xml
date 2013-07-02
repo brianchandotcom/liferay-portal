@@ -290,6 +290,7 @@
 			<basic name="active">
 				<column name="ACTIVE_" />
 			</basic>
+			<basic name="remoteStagingGroupCount" />
 			<transient name="className" />
 			<transient name="creatorUserUuid" />
 			<transient name="modelAttributes" />

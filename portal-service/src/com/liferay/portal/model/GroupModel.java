@@ -329,6 +329,20 @@ public interface GroupModel extends AttachedModel, BaseModel<Group> {
 	 */
 	public void setActive(boolean active);
 
+	/**
+	 * Returns the remote staging group count of this group.
+	 *
+	 * @return the remote staging group count of this group
+	 */
+	public int getRemoteStagingGroupCount();
+
+	/**
+	 * Sets the remote staging group count of this group.
+	 *
+	 * @param remoteStagingGroupCount the remote staging group count of this group
+	 */
+	public void setRemoteStagingGroupCount(int remoteStagingGroupCount);
+
 	@Override
 	public boolean isNew();
 

@@ -46,6 +46,7 @@ public class GroupSoap implements Serializable {
 		soapModel.setFriendlyURL(model.getFriendlyURL());
 		soapModel.setSite(model.getSite());
 		soapModel.setActive(model.getActive());
+		soapModel.setRemoteStagingGroupCount(model.getRemoteStagingGroupCount());
 
 		return soapModel;
 	}
@@ -234,6 +235,14 @@ public class GroupSoap implements Serializable {
 		_active = active;
 	}
 
+	public int getRemoteStagingGroupCount() {
+		return _remoteStagingGroupCount;
+	}
+
+	public void setRemoteStagingGroupCount(int remoteStagingGroupCount) {
+		_remoteStagingGroupCount = remoteStagingGroupCount;
+	}
+
 	private String _uuid;
 	private long _groupId;
 	private long _companyId;
@@ -250,4 +259,5 @@ public class GroupSoap implements Serializable {
 	private String _friendlyURL;
 	private boolean _site;
 	private boolean _active;
+	private int _remoteStagingGroupCount;
 }

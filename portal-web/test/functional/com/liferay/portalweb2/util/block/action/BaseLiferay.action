@@ -161,6 +161,12 @@
 		</default>
 	</command>
 
+	<command name="makeVisible">
+		<default>
+			<execute function="MakeVisible#makeVisible" />
+		</default>
+	</command>
+
 	<command name="mouseOver">
 		<default>
 			<execute function="MouseOver#mouseOver" />

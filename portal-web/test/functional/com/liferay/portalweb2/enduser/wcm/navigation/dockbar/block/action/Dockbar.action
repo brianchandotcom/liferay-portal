@@ -1,7 +1,7 @@
 <definition>
 	<command name="assertClick">
 		<case locator-key1="ADD">
-			<execute function="AssertClick#assertTextClickAtClickDockbar" />
+			<execute function="AssertClick#assertTextClickAtClickSidebar" />
 		</case>
 		<case locator-key1="ADD_APPLICATION_LINK">
 			<execute function="AssertClick#assertTextClickAtAddApplication" />

@@ -1510,15 +1510,6 @@ public class PortletExporter {
 		return sb.toString();
 	}
 
-	protected String getPortletDataPath(
-		PortletDataContext portletDataContext, String portletId) {
-
-		String portletPath = ExportImportPathUtil.getPortletPath(
-			portletDataContext, portletId);
-
-		return portletPath + "/portlet-data.xml";
-	}
-
 	protected String getPortletPreferencesPath(
 		PortletDataContext portletDataContext, String portletId, long ownerId,
 		int ownerType, long plid) {

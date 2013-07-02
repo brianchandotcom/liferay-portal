@@ -57,7 +57,7 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 					portletDataContext.getManifestSummary();
 
 				manifestSummary.incrementModelAdditionCount(
-					getManifestSummaryKey(stagedModel));
+					stagedModel.getStagedModelType());
 			}
 		}
 		catch (Exception e) {
@@ -105,7 +105,7 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 				portletDataContext.getManifestSummary();
 
 			manifestSummary.incrementModelAdditionCount(
-				getManifestSummaryKey(stagedModel));
+				stagedModel.getStagedModelType());
 		}
 		catch (Exception e) {
 			throw new PortletDataException(e);

@@ -521,7 +521,7 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 	<br />
 
 	<div class="<%= parentGroups.isEmpty() ? "membership-restriction-container hide" : "membership-restriction-container" %>" id="<portlet:namespace />membershipRestrictionContainer">
-		<aui:input label="limit-membership-to-parent-site-members" name="membershipRestriction" type="checkbox" value="<%= membershipRestriction %>" />
+		<aui:input label="limit-membership-to-members-of-the-parent-site" name="membershipRestriction" type="checkbox" value="<%= membershipRestriction %>" />
 	</div>
 
 	<portlet:renderURL var="groupSelectorURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">

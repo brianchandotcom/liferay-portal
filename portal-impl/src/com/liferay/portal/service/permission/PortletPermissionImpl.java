@@ -223,10 +223,6 @@ public class PortletPermissionImpl implements PortletPermission {
 			return false;
 		}
 
-		if (portlet.isSystem() && actionId.equals(ActionKeys.VIEW)) {
-			return true;
-		}
-
 		return contains(
 			permissionChecker, groupId, layout, portlet.getPortletId(),
 			actionId, strict);

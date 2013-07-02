@@ -342,10 +342,6 @@ public class SecurityPortletContainerWrapper implements PortletContainer {
 			HttpServletRequest request, Portlet portlet)
 		throws PortalException, SystemException {
 
-		if (portlet.isSystem()) {
-			return;
-		}
-
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 

@@ -1123,6 +1123,11 @@ public class DLFileEntryWrapper implements DLFileEntry,
 	}
 
 	@Override
+	public com.liferay.portal.kernel.lar.StagedModelType getStagedModelType() {
+		return _dlFileEntry.getStagedModelType();
+	}
+
+	@Override
 	public com.liferay.portlet.documentlibrary.model.DLFolder getTrashContainer() {
 		return _dlFileEntry.getTrashContainer();
 	}

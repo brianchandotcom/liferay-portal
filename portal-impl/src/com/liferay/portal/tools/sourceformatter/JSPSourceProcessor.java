@@ -133,8 +133,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 				className.lastIndexOf(StringPool.PERIOD) + 1);
 
 			if (!isClassOrVariableRequired(
-					fileName, importLine, className, includeFileNames,
-					checkedFileNames)) {
+					fileName, className, includeFileNames, checkedFileNames)) {
 
 				unneededImports.add(importLine);
 			}
@@ -821,11 +820,11 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		Set<String> checkedFileNames = new HashSet<String>();
 
 		return !isClassOrVariableRequired(
-			fileName, line, variableName, includeFileNames, checkedFileNames);
+			fileName, variableName, includeFileNames, checkedFileNames);
 	}
 
 	protected boolean isClassOrVariableRequired(
-		String fileName, String line, String name, Set<String> includeFileNames,
+		String fileName, String name, Set<String> includeFileNames,
 		Set<String> checkedFileNames) {
 
 		if (checkedFileNames.contains(fileName)) {
@@ -836,8 +835,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 		String content = _jspContents.get(fileName);
 
-		content = StringUtil.replace(content, line, StringPool.BLANK);
-
 		if (Validator.isNull(content)) {
 			return false;
 		}
@@ -847,7 +844,9 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 		Matcher matcher = pattern.matcher(content);
 
-		if (matcher.find()) {
+		if (matcher.find() &&
+			((checkedFileNames.size() > 1) || matcher.find())) {
+
 			return true;
 		}
 
@@ -870,7 +869,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		for (String includeFileName : includeFileNamesArray) {
 			if (!checkedFileNames.contains(includeFileName) &&
 				isClassOrVariableRequired(
-					includeFileName, line, name, includeFileNames,
+					includeFileName, name, includeFileNames,
 					checkedFileNames)) {
 
 				return true;

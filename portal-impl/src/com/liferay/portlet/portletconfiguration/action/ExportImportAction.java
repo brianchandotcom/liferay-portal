@@ -123,7 +123,7 @@ public class ExportImportAction extends ImportLayoutsAction {
 						ExportImportHelper.TEMP_FOLDER_NAME +
 							portlet.getPortletId());
 
-					sendRedirect(actionRequest, actionResponse);
+					sendRedirect(actionRequest, actionResponse, redirect);
 				}
 				else if (cmd.equals("publish_to_live")) {
 					StagingUtil.publishToLive(actionRequest, portlet);
@@ -271,8 +271,8 @@ public class ExportImportAction extends ImportLayoutsAction {
 
 		Portlet portlet = ActionUtil.getPortlet(actionRequest);
 
-		LayoutServiceUtil.importPortletInfo(
-			plid, groupId, portlet.getPortletId(),
+		LayoutServiceUtil.importPortletInfoInBackground(
+			portlet.getPortletId(), plid, groupId, portlet.getPortletId(),
 			actionRequest.getParameterMap(), file);
 	}
 

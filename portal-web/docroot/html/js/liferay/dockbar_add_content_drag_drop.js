@@ -24,7 +24,7 @@ AUI.add(
 
 				var portletItemOptions = {
 					delegateConfig: {
-						container: instance._addPanelContainer,
+						container: instance._entriesPanel,
 						dragConfig: {
 							clickPixelThresh: 0,
 							clickTimeThresh: 0
@@ -71,7 +71,7 @@ AUI.add(
 				if (appendNode && appendNode.inDoc()) {
 					var portletNode = event.target.get(STR_NODE);
 
-					instance._addPortlet(
+					instance.addPortlet(
 						portletNode,
 						{
 							item: appendNode

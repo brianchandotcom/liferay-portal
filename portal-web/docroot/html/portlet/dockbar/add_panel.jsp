@@ -80,3 +80,7 @@
 		<liferay-ui:message key="please-sign-in-to-continue" />
 	</c:otherwise>
 </c:choose>
+
+<aui:script use="liferay-dockbar">
+	A.one('#closePanel').on('click', Liferay.Dockbar.loadPanel, Liferay.Dockbar);
+</aui:script>

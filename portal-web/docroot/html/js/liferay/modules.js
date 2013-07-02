@@ -120,7 +120,6 @@ window.YUI_config = {
 						'event-mouseenter',
 						'liferay-dockbar',
 						'liferay-dockbar-add-base',
-						'liferay-dockbar-add-content-drag-drop',
 						'liferay-dockbar-add-application-search',
 						'liferay-portlet-base'
 					]
@@ -147,7 +146,6 @@ window.YUI_config = {
 						'event-mouseenter',
 						'liferay-dockbar',
 						'liferay-dockbar-add-content-content-preview',
-						'liferay-dockbar-add-content-drag-drop',
 						'liferay-dockbar-add-content-search',
 						'liferay-portlet-base'
 					]
@@ -160,8 +158,8 @@ window.YUI_config = {
 						'event-mouseenter'
 					]
 				},
-				'liferay-dockbar-add-content-drag-drop': {
-					path: 'dockbar_add_content_drag_drop.js',
+				'liferay-dockbar-portlet-dd': {
+					path: 'dockbar_portlet_dd.js',
 					requires: [
 						'aui-base',
 						'dd',

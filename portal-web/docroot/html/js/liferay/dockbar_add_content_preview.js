@@ -55,7 +55,7 @@ AUI.add(
 
 				var portlet = event.currentTarget;
 
-				instance._addPortlet(portlet);
+				instance.addPortlet(portlet);
 			},
 
 			_afterPreviewFailure: function(event) {

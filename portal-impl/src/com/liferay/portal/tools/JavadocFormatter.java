@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.tools.javadocformatter.SinceJava;
 import com.liferay.portal.tools.servicebuilder.ServiceBuilder;
 import com.liferay.portal.util.FileImpl;
 import com.liferay.portal.xml.SAXReaderImpl;
@@ -41,6 +42,7 @@ import com.thoughtworks.qdox.model.JavaMethod;
 import com.thoughtworks.qdox.model.JavaPackage;
 import com.thoughtworks.qdox.model.JavaParameter;
 import com.thoughtworks.qdox.model.Type;
+import com.thoughtworks.qdox.model.annotation.AnnotationValue;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -1368,7 +1370,8 @@ public class JavadocFormatter {
 		Collection<Tuple> ancestorJavaClassTuples) {
 
 		if (javaMethod.isConstructor() || javaMethod.isPrivate() ||
-			javaMethod.isStatic()) {
+			javaMethod.isStatic() ||
+			_overridesHigherJavaAPIVersion(javaMethod)) {
 
 			return false;
 		}
@@ -1461,6 +1464,35 @@ public class JavadocFormatter {
 				}
 				else {
 					return false;
+				}
+			}
+		}
+
+		return false;
+	}
+
+	private boolean _overridesHigherJavaAPIVersion(JavaMethod javaMethod) {
+		Annotation[] annotations = javaMethod.getAnnotations();
+
+		if (annotations == null) {
+			return false;
+		}
+
+		for (Annotation annotation : annotations) {
+			Type type = annotation.getType();
+
+			JavaClass javaClass = type.getJavaClass();
+
+			String javaClassName = javaClass.getFullyQualifiedName();
+
+			if (javaClassName.equals(SinceJava.class.getName())) {
+				AnnotationValue value = annotation.getProperty("value");
+
+				double sinceJava = GetterUtil.getDouble(
+					value.getParameterValue());
+
+				if (sinceJava > _LOWEST_SUPPORTED_JAVA_VERSION) {
+					return true;
 				}
 			}
 		}
@@ -1857,6 +1889,8 @@ public class JavadocFormatter {
 
 		return text;
 	}
+
+	private static final double _LOWEST_SUPPORTED_JAVA_VERSION = 1.6;
 
 	private static FileImpl _fileUtil = FileImpl.getInstance();
 	private static SAXReaderImpl _saxReaderUtil = SAXReaderImpl.getInstance();

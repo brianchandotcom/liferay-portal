@@ -519,21 +519,21 @@ Please set the environment variable ANT_OPTS to the recommended value of
 	</target>
 
 	<target name="format-javadoc">
-				<echo>Run "ant compile compile-test" before using format-javadoc to generate @Override tags.</echo>
+		<echo>Run "ant compile compile-test" before using format-javadoc to generate @Override tags.</echo>
 
-				<java
-					classname="com.liferay.portal.tools.JavadocFormatter"
-					classpathref="project.classpath"
-					fork="true"
-					newenvironment="true"
-				>
-					<jvmarg value="-Xmx1024m" />
-					<arg value="javadoc.init=${init}" />
-					<arg value="javadoc.input.dir=${input.dir}" />
-					<arg value="javadoc.limit=${limit}" />
-					<arg value="javadoc.output.file.prefix=${output.file.prefix}" />
-					<arg value="javadoc.update=${update}" />
-				</java>
+		<java
+			classname="com.liferay.portal.tools.JavadocFormatter"
+			classpathref="project.classpath"
+			fork="true"
+			newenvironment="true"
+		>
+			<jvmarg value="-Xmx1024m" />
+			<arg value="javadoc.init=${init}" />
+			<arg value="javadoc.input.dir=${input.dir}" />
+			<arg value="javadoc.limit=${limit}" />
+			<arg value="javadoc.output.file.prefix=${output.file.prefix}" />
+			<arg value="javadoc.update=${update}" />
+		</java>
 	</target>
 
 	<target name="print-current-time">

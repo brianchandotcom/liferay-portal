@@ -17,39 +17,28 @@ package com.liferay.portlet.journal.action;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.xml.Document;
-import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.model.User;
-import com.liferay.portal.service.ImageLocalServiceUtil;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.portal.webserver.WebServerServletTokenUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalArticleConstants;
 import com.liferay.portlet.journal.model.impl.JournalArticleImpl;
-import com.liferay.portlet.journal.service.JournalArticleImageLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalArticleServiceUtil;
 import com.liferay.portlet.journal.util.JournalUtil;
 
-import java.io.File;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
-import javax.portlet.PortletRequest;
 
-import com.liferay.util.PwdGenerator;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionMapping;
 
@@ -99,19 +88,15 @@ public class PreviewArticleContentAction extends PortletAction {
 
 				User user = PortalUtil.getUser(actionRequest);
 
-				String xml = ParamUtil.getString(actionRequest, "xml");
+				ServiceContext serviceContext =
+					ServiceContextFactory.getInstance(
+						JournalArticle.class.getName(), actionRequest);
 
-				Document doc = SAXReaderUtil.read(xml);
+				Object[] returnValue = ActionUtil.getContentAndImages(
+					groupId, structureId, themeDisplay.getLocale(),
+					themeDisplay, serviceContext);
 
-				Element root = doc.getRootElement();
-
-				String previewArticleId =
-					"PREVIEW_" +
-						PwdGenerator.getPassword(PwdGenerator.KEY3, 10);
-
-				format(
-					groupId, articleId, version, previewArticleId, root,
-					actionRequest);
+				String content = (String)returnValue[0];
 
 				Map<String, String> tokens = JournalUtil.getTokens(
 					groupId, themeDisplay);
@@ -130,7 +115,7 @@ public class PreviewArticleContentAction extends PortletAction {
 				article.setVersion(version);
 				article.setTitle(title);
 				article.setDescription(description);
-				article.setContent(xml);
+				article.setContent(content);
 				article.setType(type);
 				article.setStructureId(structureId);
 				article.setTemplateId(templateId);
@@ -167,78 +152,6 @@ public class PreviewArticleContentAction extends PortletAction {
 			SessionErrors.add(actionRequest, e.getClass());
 
 			setForward(actionRequest, "portlet.journal.error");
-		}
-	}
-
-	protected void format(
-			long groupId, String articleId, double version,
-			String previewArticleId, Element root,
-			PortletRequest portletRequest)
-		throws Exception {
-
-		List<Element> elements = root.elements();
-
-		for (Element element : elements) {
-			Element dynamicContent = element.element("dynamic-content");
-
-			String elInstanceId = element.attributeValue(
-				"instance-id", StringPool.BLANK);
-			String elName = element.attributeValue("name", StringPool.BLANK);
-			String elType = element.attributeValue("type", StringPool.BLANK);
-			String elContent = StringPool.BLANK;
-			String elLanguage = StringPool.BLANK;
-
-			if (dynamicContent != null) {
-				elContent = dynamicContent.getTextTrim();
-
-				elLanguage = dynamicContent.attributeValue(
-					"language-id", StringPool.BLANK);
-
-				if (!elLanguage.equals(StringPool.BLANK)) {
-					elLanguage = "_" + elLanguage;
-				}
-			}
-
-			if (elType.equals("image") && Validator.isNull(elContent)) {
-				File file = portletRequest.getFile(
-					"structure_image_" + elName + elLanguage);
-				byte[] bytes = FileUtil.getBytes(file);
-
-				if ((bytes != null) && (bytes.length > 0)) {
-					long imageId =
-						JournalArticleImageLocalServiceUtil.getArticleImageId(
-							groupId, previewArticleId, version, elInstanceId,
-							elName, elLanguage, true);
-
-					String token = WebServerServletTokenUtil.getToken(imageId);
-
-					dynamicContent.setText(
-						"/image/journal/article?img_id=" + imageId + "&t=" +
-							token);
-
-					ImageLocalServiceUtil.updateImage(imageId, bytes);
-				}
-				else {
-					if (Validator.isNotNull(articleId)) {
-						long imageId =
-							JournalArticleImageLocalServiceUtil.
-								getArticleImageId(
-									groupId, articleId, version, elInstanceId,
-									elName, elLanguage);
-
-						String token = WebServerServletTokenUtil.getToken(
-							imageId);
-
-						dynamicContent.setText(
-							"/image/journal/article?img_id=" + imageId +
-								"&t=" + token);
-					}
-				}
-			}
-
-			format(
-				groupId, articleId, version, previewArticleId, element,
-				portletRequest);
 		}
 	}
 

@@ -78,14 +78,3 @@ if (selLayout != null) {
 		</aui:select>
 	</aui:fieldset>
 </c:if>
-
-<aui:fieldset>
-
-	<%
-	boolean showAlternateLinks = GetterUtil.getBoolean(layoutTypeSettings.getProperty("show-alternate-links"), true);
-	%>
-
-	<h3><liferay-ui:message key="alternate-links" /></h3>
-
-	<aui:input helpMessage="show-alternate-links-help" label="show-alternate-links" name="TypeSettingsProperties--show-alternate-links--" type="checkbox" value="<%= showAlternateLinks %>" />
-</aui:fieldset>

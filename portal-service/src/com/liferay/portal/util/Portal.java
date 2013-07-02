@@ -261,6 +261,9 @@ public interface Portal {
 	 * @return the array of alternate locales
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
+	 *
+	 * @deprecated As of 6.2.0, replaced by {@link
+	 * com.liferay.portal.kernel.language.LanguageUtil.getAvailableLocales()}
 	 */
 	public Locale[] getAlternateLocales(HttpServletRequest request)
 		throws PortalException, SystemException;
@@ -275,7 +278,8 @@ public interface Portal {
 	 * @return the alternate URL
 	 */
 	public String getAlternateURL(
-		String canonicalURL, ThemeDisplay themeDisplay, Locale locale);
+		String canonicalURL, ThemeDisplay themeDisplay, Locale locale,
+		Layout layout);
 
 	/**
 	 * Returns the set of struts actions that should not be checked for an
@@ -681,6 +685,8 @@ public interface Portal {
 			Group group, boolean privateLayoutSet, ThemeDisplay themeDisplay,
 			Locale locale)
 		throws PortalException, SystemException;
+
+	public int[] getGroupFriendlyURLPos(String requestURI);
 
 	public String[] getGroupPermissions(HttpServletRequest request);
 

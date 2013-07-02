@@ -217,6 +217,10 @@ public class PortalUtil {
 			requestContext);
 	}
 
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link
+	 * com.liferay.portal.kernel.language.LanguageUtil.getAvailableLocales()}
+	 */
 	public static Locale[] getAlternateLocales(HttpServletRequest request)
 		throws PortalException, SystemException {
 
@@ -224,9 +228,11 @@ public class PortalUtil {
 	}
 
 	public static String getAlternateURL(
-		String canonicalURL, ThemeDisplay themeDisplay, Locale locale) {
+		String canonicalURL, ThemeDisplay themeDisplay, Locale locale,
+		Layout layout) {
 
-		return getPortal().getAlternateURL(canonicalURL, themeDisplay, locale);
+		return getPortal().getAlternateURL(
+			canonicalURL, themeDisplay, locale, layout);
 	}
 
 	public static Set<String> getAuthTokenIgnoreActions() {
@@ -605,6 +611,10 @@ public class PortalUtil {
 
 		return getPortal().getGroupFriendlyURL(
 			group, privateLayoutSet, themeDisplay, locale);
+	}
+
+	public static int[] getGroupFriendlyURLPos(String requestURI) {
+		return getPortal().getGroupFriendlyURLPos(requestURI);
 	}
 
 	public static String[] getGroupPermissions(HttpServletRequest request) {

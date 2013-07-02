@@ -37,32 +37,22 @@ if (!themeDisplay.isSignedIn() && layout.isPublicLayout()) {
 	<link href="<%= HtmlUtil.escapeAttribute(canonicalURL) %>" rel="canonical" />
 
 	<%
-	Locale defaultLocale = LocaleUtil.getDefault();
+	Locale[] availableLocales = LanguageUtil.getAvailableLocales();
+
+	if (availableLocales.length > 1) {
+		for (Locale curLocale : availableLocales) {
 	%>
 
-	<c:if test="<%= locale.equals(defaultLocale) %>">
+			<c:if test="<%= curLocale.equals(LocaleUtil.getDefault()) %>">
+				<link href="<%= PortalUtil.getCanonicalURL(completeURL, themeDisplay, layout) %>" hreflang="x-default" rel="alternate" />
+			</c:if>
 
-		<%
-		boolean showAlternateLinks = GetterUtil.getBoolean(layout.getTypeSettingsProperty("show-alternate-links"), true);
+			<link href="<%= HtmlUtil.escapeAttribute(PortalUtil.getAlternateURL(canonicalURL, themeDisplay, curLocale, layout)) %>" hreflang="<%= LocaleUtil.toW3cLanguageId(curLocale) %>" rel="alternate" />
 
-		if (showAlternateLinks) {
-			Locale[] availableLocales = PortalUtil.getAlternateLocales(request);
-
-			if (availableLocales.length > 1) {
-				for (Locale curLocale : availableLocales) {
-					if (!curLocale.equals(defaultLocale)) {
-		%>
-
-						<link href="<%= HtmlUtil.escapeAttribute(PortalUtil.getAlternateURL(canonicalURL, themeDisplay, curLocale)) %>" hreflang="<%= LocaleUtil.toW3cLanguageId(curLocale) %>" rel="alternate" />
-
-		<%
-					}
-				}
-			}
+	<%
 		}
-		%>
-
-	</c:if>
+	}
+	%>
 
 <%
 }

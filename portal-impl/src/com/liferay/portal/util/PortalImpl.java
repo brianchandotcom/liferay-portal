@@ -919,53 +919,21 @@ public class PortalImpl implements Portal {
 		return actualURL;
 	}
 
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link
+	 * com.liferay.portal.kernel.language.LanguageUtil.getAvailableLocales()}
+	 */
 	@Override
 	public Locale[] getAlternateLocales(HttpServletRequest request)
 		throws PortalException, SystemException {
 
-		Locale[] availableLocales = LanguageUtil.getAvailableLocales();
-
-		long mainJournalArticleId = ParamUtil.getLong(request, "p_j_a_id");
-
-		if (mainJournalArticleId <= 0) {
-			return availableLocales;
-		}
-
-		JournalArticle mainJournalArticle =
-			JournalArticleLocalServiceUtil.getJournalArticle(
-				mainJournalArticleId);
-
-		if (mainJournalArticle == null) {
-			return availableLocales;
-		}
-
-		String[] articleLocales = mainJournalArticle.getAvailableLocales();
-
-		if (articleLocales.length > 1) {
-			Locale[] alternateLocales = new Locale[
-				availableLocales.length - articleLocales.length];
-
-			int i = 0;
-
-			for (Locale locale : availableLocales) {
-				if (!ArrayUtil.contains(
-						articleLocales, LocaleUtil.toLanguageId(locale))) {
-
-					alternateLocales[i] = locale;
-
-					i++;
-				}
-			}
-
-			return alternateLocales;
-		}
-
-		return availableLocales;
+		return LanguageUtil.getAvailableLocales();
 	}
 
 	@Override
 	public String getAlternateURL(
-		String canonicalURL, ThemeDisplay themeDisplay, Locale locale) {
+		String canonicalURL, ThemeDisplay themeDisplay, Locale locale,
+		Layout layout) {
 
 		LayoutSet layoutSet = themeDisplay.getLayoutSet();
 
@@ -1002,6 +970,37 @@ public class PortalImpl implements Portal {
 			}
 
 			if ((pos > 0) && (pos < canonicalURL.length())) {
+				String friendlyURL = canonicalURL.substring(pos);
+
+				int[] friendlyURLPos = getGroupFriendlyURLPos(friendlyURL);
+
+				if (friendlyURLPos != null) {
+					int y = friendlyURLPos[1];
+
+					friendlyURL = friendlyURL.substring(y);
+
+					if (friendlyURL.equals(StringPool.SLASH)) {
+						friendlyURL = StringPool.BLANK;
+					}
+				}
+
+				if (Validator.isNotNull(friendlyURL)) {
+					String canonicalURLPrefix = canonicalURL.substring(0, pos);
+
+					String canonicalURLSuffix = canonicalURL.substring(pos);
+
+					canonicalURLSuffix = StringUtil.replaceFirst(
+						canonicalURLSuffix, friendlyURL,
+						layout.getFriendlyURL(locale));
+
+					canonicalURL = canonicalURLPrefix.concat(
+						canonicalURLSuffix);
+				}
+
+				if (LocaleUtil.getDefault() == locale) {
+					return canonicalURL;
+				}
+
 				return canonicalURL.substring(0, pos).concat(
 					i18nPath).concat(canonicalURL.substring(pos));
 			}
@@ -1189,7 +1188,7 @@ public class PortalImpl implements Portal {
 		String canonicalLayoutFriendlyURL = StringPool.BLANK;
 
 		String layoutFriendlyURL = layout.getFriendlyURL(
-			themeDisplay.getLocale());
+			LocaleUtil.getDefault());
 
 		if ((groupFriendlyURL.contains(layoutFriendlyURL) ||
 			 groupFriendlyURL.contains(
@@ -2373,6 +2372,42 @@ public class PortalImpl implements Portal {
 		finally {
 			resetThemeDisplayI18n(themeDisplay, i18nLanguageId, i18nPath);
 		}
+	}
+
+	public int[] getGroupFriendlyURLPos(String requestURI) {
+		int x = 0;
+		int y = 0;
+
+		if (requestURI.startsWith(_PRIVATE_GROUP_SERVLET_MAPPING) ||
+			requestURI.startsWith(_PRIVATE_USER_SERVLET_MAPPING) ||
+			requestURI.startsWith(_PUBLIC_GROUP_SERVLET_MAPPING)) {
+
+			x = requestURI.indexOf(StringPool.SLASH, 1);
+
+			if (x == -1) {
+
+				// /web
+
+				requestURI += StringPool.SLASH;
+
+				x = requestURI.indexOf(CharPool.SLASH, 1);
+			}
+
+			y = requestURI.indexOf(CharPool.SLASH, x + 1);
+
+			if (y == -1) {
+
+				// /web/alpha
+
+				requestURI += StringPool.SLASH;
+
+				y = requestURI.indexOf(CharPool.SLASH, x + 1);
+			}
+
+			return new int[] {x, y};
+		}
+
+		return null;
 	}
 
 	@Override

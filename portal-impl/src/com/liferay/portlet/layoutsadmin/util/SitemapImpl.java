@@ -44,9 +44,11 @@ import com.liferay.portlet.journal.service.JournalArticleServiceUtil;
 import java.text.DateFormat;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -74,7 +76,9 @@ public class SitemapImpl implements Sitemap {
 		document.setXMLEncoding(StringPool.UTF8);
 
 		Element rootElement = document.addElement(
-			"urlset", "http://www.google.com/schemas/sitemap/0.84");
+			"urlset", "http://www.google.com/schemas/sitemap/0.9");
+
+		rootElement.addAttribute("xmlns:xhtml", "http://www.w3.org/1999/xhtml");
 
 		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
 			groupId, privateLayout, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
@@ -86,7 +90,8 @@ public class SitemapImpl implements Sitemap {
 
 	protected void addURLElement(
 		Element element, String url, UnicodeProperties typeSettingsProperties,
-		Date modifiedDate) {
+		Date modifiedDate, String canonicalURL,
+		Map<Locale, String> alternateURLs) {
 
 		Element urlElement = element.addElement("url");
 
@@ -156,6 +161,41 @@ public class SitemapImpl implements Sitemap {
 
 			modifiedDateElement.addText(iso8601DateFormat.format(modifiedDate));
 		}
+
+		if (alternateURLs != null) {
+			for (Map.Entry<Locale, String> entry : alternateURLs.entrySet()) {
+				Locale locale = entry.getKey();
+				String href = entry.getValue();
+
+				Element alternateURLElement = urlElement.addElement("link");
+
+				alternateURLElement.addAttribute("rel", "alternate");
+				alternateURLElement.addAttribute(
+					"hreflang", LocaleUtil.toW3cLanguageId(locale));
+				alternateURLElement.addAttribute("href", href);
+			}
+
+			Element alternateURLElement = urlElement.addElement("link");
+
+			alternateURLElement.addAttribute("rel", "alternate");
+			alternateURLElement.addAttribute("hreflang", "x-default");
+			alternateURLElement.addAttribute("href", canonicalURL);
+		}
+	}
+
+	protected Map<Locale, String> getAlternateURLs(
+		String canonicalURL, ThemeDisplay themeDisplay, Layout layout) {
+
+		Map<Locale, String> alternateURLs = new HashMap<Locale, String>();
+
+		for (Locale curLocale : LanguageUtil.getAvailableLocales()) {
+			String alternateURL = PortalUtil.getAlternateURL(
+				canonicalURL, themeDisplay, curLocale, layout);
+
+			alternateURLs.put(curLocale, alternateURL);
+		}
+
+		return alternateURLs;
 	}
 
 	protected void visitArticles(
@@ -201,7 +241,8 @@ public class SitemapImpl implements Sitemap {
 				sb.toString(), themeDisplay, layout);
 
 			addURLElement(
-				element, articleURL, null, journalArticle.getModifiedDate());
+				element, articleURL, null, journalArticle.getModifiedDate(),
+				articleURL, getAlternateURLs(articleURL, themeDisplay, layout));
 
 			Locale[] availableLocales = LanguageUtil.getAvailableLocales();
 
@@ -211,11 +252,12 @@ public class SitemapImpl implements Sitemap {
 				for (Locale availableLocale : availableLocales) {
 					if (!availableLocale.equals(defaultLocale)) {
 						String alternateURL = PortalUtil.getAlternateURL(
-							articleURL, themeDisplay, availableLocale);
+							articleURL, themeDisplay, availableLocale, layout);
 
 						addURLElement(
 							element, alternateURL, null,
-							journalArticle.getModifiedDate());
+							journalArticle.getModifiedDate(), articleURL,
+							getAlternateURLs(articleURL, themeDisplay, layout));
 					}
 				}
 			}
@@ -246,7 +288,8 @@ public class SitemapImpl implements Sitemap {
 
 		addURLElement(
 			element, layoutFullURL, typeSettingsProperties,
-			layout.getModifiedDate());
+			layout.getModifiedDate(), layoutFullURL,
+			getAlternateURLs(layoutFullURL, themeDisplay, layout));
 
 		Locale[] availableLocales = LanguageUtil.getAvailableLocales();
 
@@ -259,11 +302,12 @@ public class SitemapImpl implements Sitemap {
 				}
 
 				String alternateURL = PortalUtil.getAlternateURL(
-					layoutFullURL, themeDisplay, availableLocale);
+					layoutFullURL, themeDisplay, availableLocale, layout);
 
 				addURLElement(
 					element, alternateURL, typeSettingsProperties,
-					layout.getModifiedDate());
+					layout.getModifiedDate(), layoutFullURL,
+					getAlternateURLs(layoutFullURL, themeDisplay, layout));
 			}
 		}
 

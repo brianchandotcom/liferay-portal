@@ -160,9 +160,9 @@ public class PropsValues {
 
 	public static final boolean AUTH_TOKEN_CHECK_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.AUTH_TOKEN_CHECK_ENABLED));
 
-	public static final String[] AUTH_TOKEN_IGNORE_ACTIONS = PropsUtil.getArray(PropsKeys.AUTH_TOKEN_IGNORE_ACTIONS);
+	public static String[] AUTH_TOKEN_IGNORE_ACTIONS = PropsUtil.getArray(PropsKeys.AUTH_TOKEN_IGNORE_ACTIONS);
 
-	public static final String[] AUTH_TOKEN_IGNORE_PORTLETS = PropsUtil.getArray(PropsKeys.AUTH_TOKEN_IGNORE_PORTLETS);
+	public static String[] AUTH_TOKEN_IGNORE_PORTLETS = PropsUtil.getArray(PropsKeys.AUTH_TOKEN_IGNORE_PORTLETS);
 
 	public static final String AUTH_TOKEN_IMPL = PropsUtil.get(PropsKeys.AUTH_TOKEN_IMPL);
 

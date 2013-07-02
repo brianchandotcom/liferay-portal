@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletLayoutListener;
-import com.liferay.portal.kernel.portlet.PortletSecurityUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
@@ -45,6 +44,7 @@ import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.PortletPreferences;
 import com.liferay.portal.model.PortletPreferencesIds;
 import com.liferay.portal.model.Theme;
+import com.liferay.portal.security.auth.AuthTokenWhitelistUtil;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
@@ -1384,7 +1384,8 @@ public class LayoutTypePortletImpl
 					PortletKeys.PREFS_OWNER_TYPE_USER, layout.getPlid()));
 		}
 
-		Set<String> whiteList = PortletSecurityUtil.getWhitelist();
+		Set<String> whiteList =
+			AuthTokenWhitelistUtil.getPortletInvocationWhitelist();
 
 		for (PortletPreferences portletPreference : portletPreferences) {
 			String portletId = portletPreference.getPortletId();

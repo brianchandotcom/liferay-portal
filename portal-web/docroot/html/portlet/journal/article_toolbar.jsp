@@ -39,12 +39,30 @@ if ((article != null) && article.isDraft()) {
 
 	var toolbarButtonGroup = [];
 
-	<c:if test="<%= (article != null) && Validator.isNotNull(structureId) && (classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT) %>">
+	<c:if test="<%= (article != null) && (classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT) %>">
 		toolbarButtonGroup.push(
 			{
 				icon: 'icon-search',
-				id: '<portlet:namespace />previewArticleButton',
-				label: '<%= UnicodeLanguageUtil.get(pageContext, "preview") %>'
+				label: '<%= UnicodeLanguageUtil.get(pageContext, "preview") %>',
+				on: {
+					click: function(event) {
+						var form = A.one('#<portlet:namespace />fm1');
+
+						var orginalFormAction = form.attr('action');
+
+						form.attr('target', '_blank');
+
+						form.one('#<portlet:namespace /><%= Constants.CMD %>').val('<%= Constants.PREVIEW %>');
+
+						<portlet:actionURL var="previewURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
+							<portlet:param name="struts_action" value="/journal/preview_article_content" />
+						</portlet:actionURL>
+
+						submitForm(form, '<%= previewURL.toString() %>', false);
+
+						form.attr('action', orginalFormAction);
+					}
+				}
 			}
 		);
 	</c:if>

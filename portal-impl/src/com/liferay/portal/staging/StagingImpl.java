@@ -1014,6 +1014,24 @@ public class StagingImpl implements Staging {
 		return false;
 	}
 
+	public void lockGroup(long userId, long groupId) throws Exception {
+		if (!PropsValues.STAGING_LOCK_ENABLED) {
+			return;
+		}
+
+		if (LockLocalServiceUtil.isLocked(Staging.class.getName(), groupId)) {
+			Lock lock = LockLocalServiceUtil.getLock(
+				Staging.class.getName(), groupId);
+
+			throw new DuplicateLockException(lock);
+		}
+
+		LockLocalServiceUtil.lock(
+			userId, Staging.class.getName(), String.valueOf(groupId),
+			StagingImpl.class.getName(), false,
+			StagingConstants.LOCK_EXPIRATION_TIME);
+	}
+
 	@Override
 	public void publishLayout(
 			long userId, long plid, long liveGroupId, boolean includeChildren)
@@ -1308,6 +1326,14 @@ public class StagingImpl implements Staging {
 		portalPreferences.setValue(
 			Staging.class.getName(), getRecentLayoutSetBranchIdKey(layoutSetId),
 			String.valueOf(layoutSetBranchId));
+	}
+
+	public void unlockGroup(long groupId) throws SystemException {
+		if (!PropsValues.STAGING_LOCK_ENABLED) {
+			return;
+		}
+
+		LockLocalServiceUtil.unlock(Staging.class.getName(), groupId);
 	}
 
 	@Override
@@ -1882,24 +1908,6 @@ public class StagingImpl implements Staging {
 			GetterUtil.getString(group.getTypeSettingsProperty(param)));
 	}
 
-	protected void lockGroup(long userId, long groupId) throws Exception {
-		if (!PropsValues.STAGING_LOCK_ENABLED) {
-			return;
-		}
-
-		if (LockLocalServiceUtil.isLocked(Staging.class.getName(), groupId)) {
-			Lock lock = LockLocalServiceUtil.getLock(
-				Staging.class.getName(), groupId);
-
-			throw new DuplicateLockException(lock);
-		}
-
-		LockLocalServiceUtil.lock(
-			userId, Staging.class.getName(), String.valueOf(groupId),
-			StagingImpl.class.getName(), false,
-			StagingConstants.LOCK_EXPIRATION_TIME);
-	}
-
 	protected void publishLayouts(
 			PortletRequest portletRequest, long sourceGroupId,
 			long targetGroupId, Map<String, String[]> parameterMap,
@@ -2273,14 +2281,6 @@ public class StagingImpl implements Staging {
 		}
 
 		return remoteAddress;
-	}
-
-	protected void unlockGroup(long groupId) throws SystemException {
-		if (!PropsValues.STAGING_LOCK_ENABLED) {
-			return;
-		}
-
-		LockLocalServiceUtil.unlock(Staging.class.getName(), groupId);
 	}
 
 	protected void updateGroupTypeSettingsProperties(

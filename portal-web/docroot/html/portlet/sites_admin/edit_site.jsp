@@ -234,6 +234,10 @@ String[][] categorySections = {mainSections, seoSections, advancedSections, misc
 		</c:if>
 
 		if (ok) {
+			<c:if test="<%= (group != null) %>">
+				<portlet:namespace />saveLocales();
+			</c:if>
+
 			submitForm(document.<portlet:namespace />fm);
 		}
 	}

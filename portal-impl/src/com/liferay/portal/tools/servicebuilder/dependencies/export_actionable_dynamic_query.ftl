@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.ManifestSummary;
 import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.lar.StagedModelDataHandler;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
@@ -38,15 +39,17 @@ public class ${entity.name}ExportActionableDynamicQuery extends ${entity.name}Ac
 
 	@Override
 	public long performCount() throws PortalException, SystemException {
+		StagedModelType stagedModelType = getStagedModelType();
+
 		ManifestSummary manifestSummary = _portletDataContext.getManifestSummary();
 
 		long modelAdditionCount = super.performCount();
 
-		manifestSummary.addModelAdditionCount(getManifestSummaryKey(), modelAdditionCount);
+		manifestSummary.addModelAdditionCount(stagedModelType.toString(), modelAdditionCount);
 
 		long modelDeletionCount = getModelDeletionCount();
 
-		manifestSummary.addModelDeletionCount(getManifestSummaryKey(), modelDeletionCount);
+		manifestSummary.addModelDeletionCount(stagedModelType.toString(), modelDeletionCount);
 
 		return modelAdditionCount;
 	}
@@ -119,11 +122,8 @@ public class ${entity.name}ExportActionableDynamicQuery extends ${entity.name}Ac
 			return ProjectionFactoryUtil.countDistinct("resourcePrimKey");
 		}
 	</#if>
-
-	protected String getManifestSummaryKey() {
-		StagedModelDataHandler<?> stagedModelDataHandler = StagedModelDataHandlerRegistryUtil.getStagedModelDataHandler(${entity.name}.class.getName());
-
-		return stagedModelDataHandler.getManifestSummaryKey(null);
+	protected StagedModelType getStagedModelType() {
+		return new StagedModelType(PortalUtil.getClassNameId(${entity.name}.class.getName()));
 	}
 
 	@Override

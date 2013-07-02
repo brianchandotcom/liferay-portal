@@ -158,24 +158,27 @@ portletURL.setParameter("fileEntryId", String.valueOf(fileEntryId));
 	</c:choose>
 </c:if>
 
-<%
-boolean localizeTitle = true;
-String headerTitle = LanguageUtil.get(pageContext, "new-document");
+<c:if test="<%= showHeader %>">
 
-if (fileVersion != null) {
-	headerTitle = fileVersion.getTitle();
-	localizeTitle= false;
-}
-else if (dlFileEntryType != null) {
-	headerTitle = LanguageUtil.format(pageContext, "new-x", new Object[] {dlFileEntryType.getName(locale)});
-}
-%>
+	<%
+	boolean localizeTitle = true;
+	String headerTitle = LanguageUtil.get(pageContext, "new-document");
 
-<liferay-ui:header
-	backURL="<%= backURL %>"
-	localizeTitle="<%= localizeTitle %>"
-	title="<%= headerTitle %>"
-/>
+	if (fileVersion != null) {
+		headerTitle = fileVersion.getTitle();
+		localizeTitle= false;
+	}
+	else if (dlFileEntryType != null) {
+		headerTitle = LanguageUtil.format(pageContext, "new-x", new Object[] {dlFileEntryType.getName(locale)});
+	}
+	%>
+
+	<liferay-ui:header
+		backURL="<%= backURL %>"
+		localizeTitle="<%= localizeTitle %>"
+		title="<%= headerTitle %>"
+	/>
+</c:if>
 
 <portlet:actionURL var="editFileEntryURL">
 	<portlet:param name="struts_action" value="/document_library/edit_file_entry" />

@@ -36,7 +36,7 @@ long ddmTemplateGroupId = PortletDisplayTemplateUtil.getDDMTemplateGroupId(theme
 Group ddmTemplateGroup = GroupLocalServiceUtil.getGroup(ddmTemplateGroupId);
 %>
 
-<aui:select id="displayStyle" label="<%= label %>" name='<%= "preferences--" + preferenceName + "--" %>'>
+<aui:select id="displayStyle" inlineField="<%= true %>" label="<%= label %>" name='<%= "preferences--" + preferenceName + "--" %>'>
 	<c:if test="<%= showEmptyOption %>">
 		<aui:option label="default" selected="<%= Validator.isNull(preferenceValue) %>" />
 	</c:if>
@@ -115,13 +115,16 @@ Group ddmTemplateGroup = GroupLocalServiceUtil.getGroup(ddmTemplateGroupId);
 </aui:select>
 
 <liferay-ui:icon
-	cssClass="manage-display-templates"
 	id="selectDDMTemplate"
 	image="<%= icon %>"
 	label="<%= true %>"
 	message='<%= LanguageUtil.format(pageContext, "manage-display-templates-for-x", HtmlUtil.escape(ddmTemplateGroup.getDescriptiveName(locale)), false) %>'
 	url="javascript:;"
 />
+
+<liferay-portlet:renderURL plid="<%= themeDisplay.getPlid() %>" portletName="<%= PortletKeys.DYNAMIC_DATA_MAPPING %>" var="basePortletURL">
+	<portlet:param name="showHeader" value="<%= Boolean.FALSE.toString() %>" />
+</liferay-portlet:renderURL>
 
 <aui:script use="aui-base">
 	var selectDDMTemplate = A.one('#<portlet:namespace />selectDDMTemplate');
@@ -134,7 +137,7 @@ Group ddmTemplateGroup = GroupLocalServiceUtil.getGroup(ddmTemplateGroupId);
 			function(event) {
 				Liferay.Util.openDDMPortlet(
 					{
-						basePortletURL: '<%= PortletURLFactoryUtil.create(request, PortletKeys.DYNAMIC_DATA_MAPPING, themeDisplay.getPlid(), PortletRequest.RENDER_PHASE) %>',
+						basePortletURL: '<%= basePortletURL %>',
 						classNameId: '<%= classNameId %>',
 						dialog: {
 							zIndex: Liferay.zIndex.WINDOW + 2

@@ -19,6 +19,7 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 String backURL = ParamUtil.getString(request, "backURL");
+boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 
 String referringPortletResource = ParamUtil.getString(request, "referringPortletResource");
 
@@ -60,11 +61,13 @@ else {
 	<aui:input name="entryId" type="hidden" value="<%= entryId %>" />
 	<aui:input name="folderId" type="hidden" value="<%= folderId %>" />
 
-	<liferay-ui:header
-		backURL="<%= backURL %>"
-		localizeTitle="<%= (entry == null) %>"
-		title='<%= (entry == null) ? "add-bookmark" : LanguageUtil.format(pageContext, "edit-x", entry.getName()) %>'
-	/>
+	<c:if test="<%= showHeader %>">
+		<liferay-ui:header
+			backURL="<%= backURL %>"
+			localizeTitle="<%= (entry == null) %>"
+			title='<%= (entry == null) ? "add-bookmark" : LanguageUtil.format(pageContext, "edit-x", entry.getName()) %>'
+		/>
+	</c:if>
 
 	<liferay-ui:error exception="<%= EntryURLException.class %>" message="please-enter-a-valid-url" />
 	<liferay-ui:error exception="<%= NoSuchFolderException.class %>" message="please-enter-a-valid-folder" />

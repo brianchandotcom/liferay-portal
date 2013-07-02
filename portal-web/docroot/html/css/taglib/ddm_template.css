@@ -1,8 +1,3 @@
 .display-template .field-content {
     display: inline-block;
 }
-
-.display-template .manage-display-templates {
-    position: relative;
-    top: -5px;
-}

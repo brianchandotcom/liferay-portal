@@ -21,6 +21,7 @@ String tabs1 = ParamUtil.getString(request, "tabs1", "templates");
 
 long classNameId = ParamUtil.getLong(request, "classNameId");
 long classPK = ParamUtil.getLong(request, "classPK");
+boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 
 DDMStructure structure = null;
 
@@ -54,10 +55,12 @@ String title = ddmDisplay.getViewTemplatesTitle(structure, controlPanel, locale)
 	<liferay-ui:message key="they-are-referenced-by-web-contents" />
 </liferay-ui:error>
 
-<liferay-ui:header
-	backURL="<%= ddmDisplay.getViewTemplatesBackURL(liferayPortletRequest, liferayPortletResponse, classPK) %>"
-	title="<%= title %>"
-/>
+<c:if test="<%= showHeader %>">
+	<liferay-ui:header
+		backURL="<%= ddmDisplay.getViewTemplatesBackURL(liferayPortletRequest, liferayPortletResponse, classPK) %>"
+		title="<%= title %>"
+	/>
+</c:if>
 
 <aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />

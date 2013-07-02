@@ -71,6 +71,7 @@
 					PortletURL addPortletURL = entry.getValue();
 
 					addPortletURL.setParameter("groupId", String.valueOf(groupId));
+					addPortletURL.setParameter("showHeader", Boolean.FALSE.toString());
 
 					String addPortletURLString = addPortletURL.toString();
 

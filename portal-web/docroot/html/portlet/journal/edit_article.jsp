@@ -42,6 +42,8 @@ String portletResource = ParamUtil.getString(request, "portletResource");
 
 String referringPortletResource = ParamUtil.getString(request, "referringPortletResource");
 
+boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
+
 JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_ARTICLE);
 
 long groupId = BeanParamUtil.getLong(article, request, "groupId", scopeGroupId);
@@ -137,7 +139,9 @@ request.setAttribute("edit_article.jsp-defaultLanguageId", defaultLanguageId);
 request.setAttribute("edit_article.jsp-toLanguageId", toLanguageId);
 %>
 
-<liferay-util:include page="/html/portlet/journal/article_header.jsp" />
+<c:if test="<%= showHeader %>">
+	<liferay-util:include page="/html/portlet/journal/article_header.jsp" />
+</c:if>
 
 <aui:form enctype="multipart/form-data" method="post" name="fm2">
 	<input name="groupId" type="hidden" value="" />

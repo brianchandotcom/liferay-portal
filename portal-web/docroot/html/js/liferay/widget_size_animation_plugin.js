@@ -3,6 +3,8 @@ AUI.add(
 	function(A) {
 		var Lang = A.Lang;
 
+		var NAME = 'sizeanim';
+
 		var STR_END = 'end';
 
 		var STR_HOST = 'host';
@@ -10,8 +12,6 @@ AUI.add(
 		var STR_SIZE = 'size';
 
 		var STR_START = 'start';
-
-		var NAME = 'sizeanim';
 
 		var SizeAnim = A.Component.create(
 			{
@@ -47,7 +47,7 @@ AUI.add(
 						host.addAttr(
 							STR_SIZE,
 							{
-								setter: A.bind(instance._animWidgetSize, instance)
+								setter: A.bind('_animWidgetSize', instance)
 							}
 						);
 
@@ -60,8 +60,8 @@ AUI.add(
 						);
 
 						var eventHandles = [
-							instance._anim.after(STR_END, A.bind(instance.fire, instance, STR_END)),
-							instance._anim.after(STR_START, A.bind(instance.fire, instance, STR_START)),
+							instance._anim.after(STR_END, A.bind('fire', instance, STR_END)),
+							instance._anim.after(STR_START, A.bind('fire', instance, STR_START)),
 							instance._anim.after('tween', instance._alignWidget, instance)
 						];
 
@@ -91,22 +91,21 @@ AUI.add(
 
 						instance._anim.stop();
 
+						var attrs = {
+							height: size.height,
+							width: size.width
+						};
+
 						if (!instance.get('preventTransition')) {
-							instance._anim.set(
-								'to',
-								{
-									width: size.width,
-									height: size.height
-								}
-							);
+							instance._anim.set('to', attrs);
 
 							instance._anim.run();
 						}
 						else {
 							instance.fire(STR_START);
 
-							host.set('height', size.height);
-							host.set('width', size.width);
+							host.setAttrs(attrs);
+
 							instance._alignWidget();
 
 							instance.fire(STR_END);

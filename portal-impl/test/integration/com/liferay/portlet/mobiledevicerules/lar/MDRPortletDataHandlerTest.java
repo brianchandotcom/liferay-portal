@@ -28,6 +28,8 @@ import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup;
 import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance;
 import com.liferay.portlet.mobiledevicerules.util.MDRTestUtil;
 
+import java.util.Map;
+
 import org.junit.runner.RunWith;
 
 /**
@@ -40,6 +42,14 @@ import org.junit.runner.RunWith;
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class MDRPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
+
+	@Override
+	protected void addParameters(Map<String, String[]> parameterMap) {
+		addBooleanParameter(
+			parameterMap, MDRPortletDataHandler.NAMESPACE, "rules", true);
+		addBooleanParameter(
+			parameterMap, MDRPortletDataHandler.NAMESPACE, "actions", true);
+	}
 
 	@Override
 	protected void addStagedModels() throws Exception {
@@ -55,6 +65,11 @@ public class MDRPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 				layout.getPlid(), ruleGroup.getRuleGroupId());
 
 		MDRTestUtil.addRule(ruleGroup.getRuleGroupId());
+
+		MDRTestUtil.addAction(ruleGroupInstance.getRuleGroupInstanceId());
+
+		ruleGroupInstance = MDRTestUtil.addRuleGroupInstance(
+			stagingGroup.getGroupId(), ruleGroup.getRuleGroupId());
 
 		MDRTestUtil.addAction(ruleGroupInstance.getRuleGroupInstanceId());
 	}

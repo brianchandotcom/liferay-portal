@@ -49,18 +49,16 @@ public class MDRPortletDataHandler extends BasePortletDataHandler {
 
 	public MDRPortletDataHandler() {
 		setDeletionSystemEventModelTypes(
-			new StagedModelType(MDRAction.class),
 			new StagedModelType(MDRAction.class, Layout.class),
 			new StagedModelType(MDRRule.class),
 			new StagedModelType(MDRRuleGroup.class),
-			new StagedModelType(MDRRuleGroupInstance.class),
 			new StagedModelType(MDRRuleGroupInstance.class, Layout.class));
 		setExportControls(
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "rules", true, false, null, MDRRule.class.getName()),
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "actions", true, false, null,
-				MDRAction.class.getName()));
+				MDRAction.class.getName(), Layout.class.getName()));
 		setImportControls(getExportControls());
 		setPublishToLiveByDefault(true);
 	}
@@ -174,11 +172,6 @@ public class MDRPortletDataHandler extends BasePortletDataHandler {
 
 		actionsActionableDynamicQuery.performCount();
 
-		actionsActionableDynamicQuery =
-			new MDRActionExportActionableDynamicQuery(portletDataContext);
-
-		actionsActionableDynamicQuery.performCount();
-
 		ActionableDynamicQuery rulesActionableDynamicQuery =
 			new MDRRuleExportActionableDynamicQuery(portletDataContext);
 
@@ -200,12 +193,6 @@ public class MDRPortletDataHandler extends BasePortletDataHandler {
 						Layout.class.getName());
 				}
 			};
-
-		ruleGroupInstancesActionableDynamicQuery.performCount();
-
-		ruleGroupInstancesActionableDynamicQuery =
-			new MDRRuleGroupInstanceExportActionableDynamicQuery(
-				portletDataContext);
 
 		ruleGroupInstancesActionableDynamicQuery.performCount();
 	}

@@ -33,6 +33,7 @@ import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 
 /**
@@ -105,6 +106,12 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 
 			return fileEntryId;
 		}
+		catch (SQLException sqle) {
+			_log.warn(
+				"Error adding file entry " + name + ": " + sqle.getMessage());
+
+			return -1;
+		}
 		finally {
 			DataAccess.cleanUp(con, ps);
 		}
@@ -163,6 +170,11 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 			ps.setTimestamp(23, createDate);
 
 			ps.executeUpdate();
+		}
+		catch (SQLException sqle) {
+			_log.warn(
+				"Error adding file version for " + title + ": " +
+				sqle.getMessage());
 		}
 		finally {
 			DataAccess.cleanUp(con, ps);
@@ -223,6 +235,12 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 
 			return folderId;
 		}
+		catch (SQLException sqle) {
+			_log.warn(
+				"Error adding folder for " + name + ": " + sqle.getMessage());
+
+			return -1;
+		}
 		finally {
 			DataAccess.cleanUp(con, ps);
 		}
@@ -239,6 +257,10 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 			increment(), groupId, companyId, userId, userName, createDate,
 			repositoryId, true, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			portletId, true);
+
+		if (folderId < 0) {
+			return -1;
+		}
 
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -274,6 +296,13 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 			ps.executeUpdate();
 
 			return repositoryId;
+		}
+		catch (SQLException sqle) {
+			_log.warn(
+				"Error adding repository for " + portletId + ": " +
+				sqle.getMessage());
+
+			return -1;
 		}
 		finally {
 			DataAccess.cleanUp(con, ps);
@@ -326,6 +355,10 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 			Timestamp createDate, long repositoryId, long parentFolderId,
 			String name, boolean hidden)
 		throws Exception {
+
+		if (repositoryId < 0 || parentFolderId < 0) {
+			return -1;
+		}
 
 		Connection con = null;
 		PreparedStatement ps = null;
@@ -418,9 +451,18 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 			groupId, companyId, userId, userName, createDate,
 			PortalUtil.getClassNameId(_LIFERAY_REPOSITORY_CLASS_NAME),
 			getPortletId());
+
+		if (repositoryId < 0) {
+			return;
+		}
+
 		long containerModelFolderId = getContainerModelFolderId(
 			groupId, companyId, resourcePrimKey, containerModelId, userId,
 			userName, createDate);
+
+		if (containerModelFolderId < 0) {
+			return;
+		}
 
 		for (String attachment : attachments) {
 			String name = String.valueOf(
@@ -439,6 +481,10 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 				groupId, companyId, userId, getClassName(), resourcePrimKey,
 				userName, createDate, repositoryId, containerModelFolderId,
 				name, extension, mimeType, title, size);
+
+			if (fileEntryId < 0) {
+				continue;
+			}
 
 			addDLFileVersion(
 				increment(), groupId, companyId, userId, userName, createDate,

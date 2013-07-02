@@ -16,6 +16,7 @@ package com.liferay.portal.repository.liferayrepository.model;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -204,6 +205,11 @@ public class LiferayFolder extends LiferayModel implements Folder {
 	@Override
 	public long getRepositoryId() {
 		return _dlFolder.getRepositoryId();
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return new StagedModelType(Folder.class);
 	}
 
 	@Override

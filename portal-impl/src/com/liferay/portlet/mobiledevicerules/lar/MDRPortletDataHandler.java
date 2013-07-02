@@ -19,7 +19,10 @@ import com.liferay.portal.kernel.lar.BasePortletDataHandler;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.model.Layout;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.mobiledevicerules.model.MDRAction;
 import com.liferay.portlet.mobiledevicerules.model.MDRRule;
 import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup;
@@ -45,9 +48,13 @@ public class MDRPortletDataHandler extends BasePortletDataHandler {
 	public static final String NAMESPACE = "mobile_device_rules";
 
 	public MDRPortletDataHandler() {
-		setDeletionSystemEventClassNames(
-			MDRAction.class.getName(), MDRRuleGroup.class.getName(),
-			MDRRuleGroupInstance.class.getName());
+		setDeletionSystemEventModelTypes(
+			new StagedModelType(MDRAction.class),
+			new StagedModelType(MDRAction.class, Layout.class),
+			new StagedModelType(MDRRule.class),
+			new StagedModelType(MDRRuleGroup.class),
+			new StagedModelType(MDRRuleGroupInstance.class),
+			new StagedModelType(MDRRuleGroupInstance.class, Layout.class));
 		setExportControls(
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "rules", true, false, null, MDRRule.class.getName()),
@@ -96,7 +103,15 @@ public class MDRPortletDataHandler extends BasePortletDataHandler {
 
 		if (portletDataContext.getBooleanParameter(NAMESPACE, "actions")) {
 			ActionableDynamicQuery actionsActionableDynamicQuery =
-				new MDRActionExportActionableDynamicQuery(portletDataContext);
+				new MDRActionExportActionableDynamicQuery(portletDataContext) {
+
+				@Override
+				protected StagedModelType getStagedModelType() {
+					return new StagedModelType(
+						PortalUtil.getClassNameId(MDRAction.class), -1);
+				}
+
+			};
 
 			actionsActionableDynamicQuery.performActions();
 		}
@@ -147,6 +162,19 @@ public class MDRPortletDataHandler extends BasePortletDataHandler {
 		throws Exception {
 
 		ActionableDynamicQuery actionsActionableDynamicQuery =
+			new MDRActionExportActionableDynamicQuery(portletDataContext) {
+
+			@Override
+			protected StagedModelType getStagedModelType() {
+				return new StagedModelType(
+					MDRAction.class.getName(), Layout.class.getName());
+			}
+
+		};
+
+		actionsActionableDynamicQuery.performCount();
+
+		actionsActionableDynamicQuery =
 			new MDRActionExportActionableDynamicQuery(portletDataContext);
 
 		actionsActionableDynamicQuery.performCount();
@@ -162,6 +190,20 @@ public class MDRPortletDataHandler extends BasePortletDataHandler {
 		ruleGroupsActionableDynamicQuery.performCount();
 
 		ActionableDynamicQuery ruleGroupInstancesActionableDynamicQuery =
+			new MDRRuleGroupInstanceExportActionableDynamicQuery(
+				portletDataContext) {
+
+				@Override
+				protected StagedModelType getStagedModelType() {
+					return new StagedModelType(
+						MDRRuleGroupInstance.class.getName(),
+						Layout.class.getName());
+				}
+			};
+
+		ruleGroupInstancesActionableDynamicQuery.performCount();
+
+		ruleGroupInstancesActionableDynamicQuery =
 			new MDRRuleGroupInstanceExportActionableDynamicQuery(
 				portletDataContext);
 

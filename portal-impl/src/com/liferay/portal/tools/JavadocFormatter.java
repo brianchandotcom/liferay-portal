@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.tools.javadocformatter.SinceJava;
 import com.liferay.portal.tools.servicebuilder.ServiceBuilder;
 import com.liferay.portal.util.FileImpl;
 import com.liferay.portal.xml.SAXReaderImpl;
@@ -41,6 +42,7 @@ import com.thoughtworks.qdox.model.JavaMethod;
 import com.thoughtworks.qdox.model.JavaPackage;
 import com.thoughtworks.qdox.model.JavaParameter;
 import com.thoughtworks.qdox.model.Type;
+import com.thoughtworks.qdox.model.annotation.AnnotationValue;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -1363,12 +1365,40 @@ public class JavadocFormatter {
 		return false;
 	}
 
+	private boolean _isFromHigherJavaAPIVersion(JavaMethod javaMethod) {
+		Annotation[] annotations = javaMethod.getAnnotations();
+
+		if (annotations == null) {
+			return false;
+		}
+
+		for (Annotation annotation : annotations) {
+			Type type = annotation.getType();
+
+			JavaClass javaClass = type.getJavaClass();
+
+			if (javaClass.getFullyQualifiedName().equals(
+					SinceJava.class.getName())) {
+
+				AnnotationValue value = annotation.getProperty("value");
+
+				double since = GetterUtil.getDouble(value.getParameterValue());
+
+				if (since > 1.6 /* our current minimum */) {
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+
 	private boolean _isOverrideMethod(
 		JavaClass javaClass, JavaMethod javaMethod,
 		Collection<Tuple> ancestorJavaClassTuples) {
 
 		if (javaMethod.isConstructor() || javaMethod.isPrivate() ||
-			javaMethod.isStatic()) {
+			javaMethod.isStatic() || _isFromHigherJavaAPIVersion(javaMethod)) {
 
 			return false;
 		}

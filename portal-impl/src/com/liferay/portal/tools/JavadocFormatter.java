@@ -1365,35 +1365,6 @@ public class JavadocFormatter {
 		return false;
 	}
 
-	private boolean _overridesHigherJavaAPIVersion(JavaMethod javaMethod) {
-		Annotation[] annotations = javaMethod.getAnnotations();
-
-		if (annotations == null) {
-			return false;
-		}
-
-		for (Annotation annotation : annotations) {
-			Type type = annotation.getType();
-
-			JavaClass javaClass = type.getJavaClass();
-
-			String javaClassName = javaClass.getFullyQualifiedName();
-
-			if (javaClassName.equals(SinceJava.class.getName())) {
-				AnnotationValue value = annotation.getProperty("value");
-
-				double sinceJava = GetterUtil.getDouble(
-					value.getParameterValue());
-
-				if (sinceJava > _LOWEST_SUPPORTED_JAVA_VERSION) {
-					return true;
-				}
-			}
-		}
-
-		return false;
-	}
-
 	private boolean _isOverrideMethod(
 		JavaClass javaClass, JavaMethod javaMethod,
 		Collection<Tuple> ancestorJavaClassTuples) {
@@ -1493,6 +1464,35 @@ public class JavadocFormatter {
 				}
 				else {
 					return false;
+				}
+			}
+		}
+
+		return false;
+	}
+
+	private boolean _overridesHigherJavaAPIVersion(JavaMethod javaMethod) {
+		Annotation[] annotations = javaMethod.getAnnotations();
+
+		if (annotations == null) {
+			return false;
+		}
+
+		for (Annotation annotation : annotations) {
+			Type type = annotation.getType();
+
+			JavaClass javaClass = type.getJavaClass();
+
+			String javaClassName = javaClass.getFullyQualifiedName();
+
+			if (javaClassName.equals(SinceJava.class.getName())) {
+				AnnotationValue value = annotation.getProperty("value");
+
+				double sinceJava = GetterUtil.getDouble(
+					value.getParameterValue());
+
+				if (sinceJava > _LOWEST_SUPPORTED_JAVA_VERSION) {
+					return true;
 				}
 			}
 		}

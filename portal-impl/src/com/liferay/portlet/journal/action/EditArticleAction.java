@@ -614,9 +614,11 @@ public class EditArticleAction extends PortletAction {
 
 			Locale locale = LocaleUtil.fromLanguageId(languageId);
 
-			content = ActionUtil.getContentAndImages(
-				groupId, structureId, locale, cmd, themeDisplay,
-				serviceContext);
+			Object[] returnValue = ActionUtil.getContentAndImages(
+				groupId, structureId, locale, themeDisplay, serviceContext);
+
+			content = (String)returnValue[0];
+			images = (HashMap<String, byte[]>)returnValue[1];
 		}
 
 		Boolean fileItemThresholdSizeExceeded =

@@ -282,8 +282,8 @@ public class ActionUtil {
 		getArticles(request);
 	}
 
-	public static String getContentAndImages(
-			long groupId, String structureId, Locale locale, String cmd,
+	public static Object[] getContentAndImages(
+			long groupId, String structureId, Locale locale,
 			ThemeDisplay themeDisplay, ServiceContext serviceContext)
 		throws Exception {
 
@@ -303,7 +303,8 @@ public class ActionUtil {
 
 		Map<String, byte[]> images = getImages(fields, locale);
 
-		return JournalConverterUtil.getContent(ddmStructure, fields);
+		return new Object[] {
+			JournalConverterUtil.getContent(ddmStructure, fields), images};
 	}
 
 	public static void getFeed(HttpServletRequest request) throws Exception {

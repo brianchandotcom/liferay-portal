@@ -141,7 +141,7 @@ public abstract class BasePortletDataHandlerTestCase extends PowerMockito {
 		}
 
 		Assert.assertEquals(
-			modelAdditionCounters.size(), expectedModelAdditionCountersSize);
+			expectedModelAdditionCountersSize, modelAdditionCounters.size());
 	}
 
 	protected abstract PortletDataHandler createPortletDataHandler();

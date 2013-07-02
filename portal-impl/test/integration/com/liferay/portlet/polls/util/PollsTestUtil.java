@@ -21,9 +21,9 @@ import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.polls.model.PollsChoice;
 import com.liferay.portlet.polls.model.PollsQuestion;
 import com.liferay.portlet.polls.model.PollsVote;
+import com.liferay.portlet.polls.service.PollsChoiceLocalServiceUtil;
 import com.liferay.portlet.polls.service.PollsQuestionLocalServiceUtil;
-import com.liferay.portlet.polls.service.persistence.PollsChoiceUtil;
-import com.liferay.portlet.polls.service.persistence.PollsVoteUtil;
+import com.liferay.portlet.polls.service.PollsVoteLocalServiceUtil;
 
 /**
  * @author Shinn Lok
@@ -35,7 +35,7 @@ public class PollsTestUtil {
 
 		User user = UserLocalServiceUtil.getUser(TestPropsValues.getUserId());
 
-		PollsChoice choice = PollsChoiceUtil.create(
+		PollsChoice choice = PollsChoiceLocalServiceUtil.createPollsChoice(
 			ServiceTestUtil.randomLong());
 
 		choice.setUuid(ServiceTestUtil.randomString());
@@ -48,6 +48,8 @@ public class PollsTestUtil {
 		choice.setQuestionId(questionId);
 		choice.setName(ServiceTestUtil.randomString());
 		choice.setDescription(ServiceTestUtil.randomString());
+
+		PollsChoiceLocalServiceUtil.updatePollsChoice(choice);
 
 		return choice;
 	}
@@ -66,7 +68,8 @@ public class PollsTestUtil {
 
 		User user = UserLocalServiceUtil.getUser(TestPropsValues.getUserId());
 
-		PollsVote vote = PollsVoteUtil.create(ServiceTestUtil.randomLong());
+		PollsVote vote = PollsVoteLocalServiceUtil.createPollsVote(
+			ServiceTestUtil.randomLong());
 
 		vote.setUuid(ServiceTestUtil.randomString());
 		vote.setGroupId(groupId);
@@ -78,6 +81,8 @@ public class PollsTestUtil {
 		vote.setQuestionId(questionId);
 		vote.setChoiceId(choiceId);
 		vote.setVoteDate(ServiceTestUtil.newDate());
+
+		PollsVoteLocalServiceUtil.updatePollsVote(vote);
 
 		return vote;
 	}

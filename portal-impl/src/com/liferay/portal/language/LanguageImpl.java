@@ -980,7 +980,8 @@ public class LanguageImpl implements Language {
 
 	private Map<String, String> _charEncodings;
 	private Set<String> _duplicateLanguageCodes;
-	private Map<Long, Locale[]> _groupLocalesMap = new HashMap<Long, Locale[]>();
+	private Map<Long, Locale[]> _groupLocalesMap =
+		new HashMap<Long, Locale[]>();
 	private Map<Long, Set<Locale>> _groupLocalesSetMap =
 		new HashMap<Long, Set<Locale>>();
 	private Locale[] _locales;

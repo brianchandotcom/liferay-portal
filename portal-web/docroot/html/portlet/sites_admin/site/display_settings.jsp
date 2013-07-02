@@ -17,12 +17,12 @@
 <%@ include file="/html/portlet/sites_admin/init.jsp" %>
 
 <%
-User user2 = company.getDefaultUser();
+Group liveGroup = (Group)request.getAttribute("site.liveGroup");
 
-Locale[] locales = LanguageUtil.getAvailableLocales();
+Locale[] locales = LanguageUtil.getAvailableLocales(liveGroup.getGroupId());
 String[] languageIds = LocaleUtil.toLanguageIds(locales);
 
-String languageId = ParamUtil.getString(request, "languageId", user2.getLanguageId());
+String languageId = LocaleUtil.toLanguageId(PortalUtil.getSiteDefaultLocale(liveGroup.getGroupId()));
 String availableLocales = StringUtil.merge(languageIds);
 %>
 
@@ -33,7 +33,7 @@ String availableLocales = StringUtil.merge(languageIds);
 <aui:fieldset>
 	<liferay-ui:error exception="<%= LocaleException.class %>" message="please-enter-a-valid-locale" />
 
-	<aui:select label="default-language" name="languageId">
+	<aui:select label="default-language" name="TypeSettingsProperties--languageId--">
 
 		<%
 		Locale locale2 = LocaleUtil.fromLanguageId(languageId);
@@ -50,10 +50,10 @@ String availableLocales = StringUtil.merge(languageIds);
 	</aui:select>
 
 	<aui:fieldset cssClass="available-languages" label="available-languages">
-		<aui:input name='<%= "settings--" + PropsKeys.LOCALES + "--" %>' type="hidden" value="<%= availableLocales %>" />
+		<aui:input name='<%= "TypeSettingsProperties--" + PropsKeys.LOCALES + "--" %>' type="hidden" value="<%= availableLocales %>" />
 
 		<%
-		Set<String> availableLanguageIdsSet = SetUtil.fromArray(PropsValues.LOCALES);
+		Locale[] availableLanguageIdsSet = LanguageUtil.getAvailableLocales();
 
 		// Left list
 
@@ -69,9 +69,11 @@ String availableLocales = StringUtil.merge(languageIds);
 
 		Arrays.sort(languageIds);
 
-		for (String curLanguageId : availableLanguageIdsSet) {
+		for (Locale curLocale : availableLanguageIdsSet) {
+			String curLanguageId = LocaleUtil.toLanguageId(curLocale);
+
 			if (Arrays.binarySearch(languageIds, curLanguageId) < 0) {
-				rightList.add(new KeyValuePair(curLanguageId, LocaleUtil.fromLanguageId(curLanguageId).getDisplayName(locale)));
+				rightList.add(new KeyValuePair(curLanguageId, curLocale.getDisplayName(locale)));
 			}
 		}
 

@@ -46,6 +46,7 @@ import com.liferay.portal.lar.backgroundtask.LayoutImportBackgroundTaskExecutor;
 import com.liferay.portal.lar.backgroundtask.LayoutStagingBackgroundTaskExecutor;
 import com.liferay.portal.lar.backgroundtask.PortletExportBackgroundTaskExecutor;
 import com.liferay.portal.lar.backgroundtask.PortletImportBackgroundTaskExecutor;
+import com.liferay.portal.lar.backgroundtask.PortletStagingBackgroundTaskExecutor;
 import com.liferay.portal.model.BackgroundTask;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
@@ -2003,6 +2004,32 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			backgroundTaskLocalService.addBackgroundTask(
 				userId, sourceGroupId, taskName, null,
 				LayoutStagingBackgroundTaskExecutor.class, taskContextMap,
+				new ServiceContext());
+
+		return backgroundTask.getBackgroundTaskId();
+	}
+
+	@Override
+	public long publishPortletInBackground(
+			long userId, String taskName, long sourcePlid, long targetPlid,
+			long sourceGroupId, long targetGroupId, String portletId,
+			Map<String, String[]> parameterMap, Date startDate, Date endDate)
+		throws PortalException, SystemException {
+
+		Map<String, Serializable> taskContextMap = buildTaskContextMap(
+			userId, sourceGroupId, false, null, parameterMap, startDate,
+			endDate, StringPool.BLANK);
+
+		taskContextMap.put("sourcePlid", sourcePlid);
+		taskContextMap.put("targetPlid", targetPlid);
+		taskContextMap.put("sourceGroupId", sourceGroupId);
+		taskContextMap.put("targetGroupId", targetGroupId);
+		taskContextMap.put("portletId", portletId);
+
+		BackgroundTask backgroundTask =
+			backgroundTaskLocalService.addBackgroundTask(
+				userId, sourceGroupId, taskName, null,
+				PortletStagingBackgroundTaskExecutor.class, taskContextMap,
 				new ServiceContext());
 
 		return backgroundTask.getBackgroundTaskId();

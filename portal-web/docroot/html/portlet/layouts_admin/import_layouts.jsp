@@ -23,16 +23,27 @@ boolean validate = ParamUtil.getBoolean(request, "validate", true);
 String[] tempFileEntryNames = LayoutServiceUtil.getTempFileEntryNames(groupId, ExportImportHelper.TEMP_FOLDER_NAME);
 %>
 
-<div id="<portlet:namespace />exportImportOptions">
-	<c:choose>
-		<c:when test="<%= (tempFileEntryNames.length > 0) && !validate %>">
-			<liferay-util:include page="/html/portlet/layouts_admin/import_layouts_resources.jsp" />
-		</c:when>
-		<c:otherwise>
-			<liferay-util:include page="/html/portlet/layouts_admin/import_layouts_validation.jsp" />
-		</c:otherwise>
-	</c:choose>
-</div>
+<liferay-ui:tabs
+	names="new-import-process,all-import-processes"
+	param="tabs2"
+	refresh="<%= false %>"
+>
+	<liferay-ui:section>
+		<div id="<portlet:namespace />exportImportOptions">
+			<c:choose>
+				<c:when test="<%= (tempFileEntryNames.length > 0) && !validate %>">
+					<liferay-util:include page="/html/portlet/layouts_admin/import_layouts_resources.jsp" />
+				</c:when>
+				<c:otherwise>
+					<liferay-util:include page="/html/portlet/layouts_admin/import_layouts_validation.jsp" />
+				</c:otherwise>
+			</c:choose>
+		</div>
+	</liferay-ui:section>
+
+	<liferay-ui:section>
+	</liferay-ui:section>
+</liferay-ui:tabs>
 
 <c:if test='<%= SessionMessages.contains(liferayPortletRequest, "requestProcessed") %>'>
 	<aui:script>

@@ -43,6 +43,7 @@ import com.liferay.portal.lar.PortletExporter;
 import com.liferay.portal.lar.PortletImporter;
 import com.liferay.portal.lar.backgroundtask.LayoutExportBackgroundTaskExecutor;
 import com.liferay.portal.lar.backgroundtask.LayoutImportBackgroundTaskExecutor;
+import com.liferay.portal.lar.backgroundtask.LayoutStagingBackgroundTaskExecutor;
 import com.liferay.portal.lar.backgroundtask.PortletExportBackgroundTaskExecutor;
 import com.liferay.portal.lar.backgroundtask.PortletImportBackgroundTaskExecutor;
 import com.liferay.portal.model.BackgroundTask;
@@ -1982,6 +1983,29 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		finally {
 			FileUtil.delete(file);
 		}
+	}
+
+	@Override
+	public long publishLayoutsInBackground(
+			long userId, String taskName, long sourceGroupId,
+			long targetGroupId, boolean privateLayout, long[] layoutIds,
+			Map<String, String[]> parameterMap, Date startDate, Date endDate)
+		throws PortalException, SystemException {
+
+		Map<String, Serializable> taskContextMap = buildTaskContextMap(
+			userId, sourceGroupId, privateLayout, layoutIds, parameterMap,
+			startDate, endDate, StringPool.BLANK);
+
+		taskContextMap.put("sourceGroupId", sourceGroupId);
+		taskContextMap.put("targetGroupId", targetGroupId);
+
+		BackgroundTask backgroundTask =
+			backgroundTaskLocalService.addBackgroundTask(
+				userId, sourceGroupId, taskName, null,
+				LayoutStagingBackgroundTaskExecutor.class, taskContextMap,
+				new ServiceContext());
+
+		return backgroundTask.getBackgroundTaskId();
 	}
 
 	/**

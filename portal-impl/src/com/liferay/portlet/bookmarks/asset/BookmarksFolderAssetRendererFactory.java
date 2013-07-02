@@ -30,7 +30,7 @@ import com.liferay.portlet.bookmarks.service.permission.BookmarksFolderPermissio
 public class BookmarksFolderAssetRendererFactory
 	extends BaseAssetRendererFactory {
 
-	public static final String TYPE = "folder";
+	public static final String TYPE = "bookmark_folder";
 
 	@Override
 	public AssetRenderer getAssetRenderer(long classPK, int type)

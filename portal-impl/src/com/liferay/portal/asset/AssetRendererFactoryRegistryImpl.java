@@ -14,6 +14,8 @@
 
 package com.liferay.portal.asset;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistry;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
@@ -94,10 +96,28 @@ public class AssetRendererFactoryRegistryImpl
 
 	@Override
 	public void register(AssetRendererFactory assetRendererFactory) {
-		_assetRenderFactoriesMapByClassName.put(
-			assetRendererFactory.getClassName(), assetRendererFactory);
-		_assetRenderFactoriesMapByClassType.put(
-			assetRendererFactory.getType(), assetRendererFactory);
+		String className = assetRendererFactory.getClassName();
+
+		AssetRendererFactory oldByClassName =
+			_assetRenderFactoriesMapByClassName.put(
+				className, assetRendererFactory);
+
+		if (_log.isWarnEnabled() && (oldByClassName != null)) {
+			_log.warn(
+				"Replacing " + oldByClassName + " for className " +
+				className + " with " + assetRendererFactory);
+		}
+
+		String type = assetRendererFactory.getType();
+
+		AssetRendererFactory oldByType =
+			_assetRenderFactoriesMapByClassType.put(type, assetRendererFactory);
+
+		if (_log.isWarnEnabled() && (oldByType != null)) {
+			_log.warn(
+				"Replacing " + oldByType + " for type " + type +
+				" with " + assetRendererFactory);
+		}
 	}
 
 	@Override
@@ -127,6 +147,9 @@ public class AssetRendererFactoryRegistryImpl
 
 		return filteredAssetRendererFactories;
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		AssetRendererFactoryRegistryImpl.class);
 
 	private Map<String, AssetRendererFactory>
 		_assetRenderFactoriesMapByClassName =

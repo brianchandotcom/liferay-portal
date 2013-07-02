@@ -30,7 +30,7 @@ import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission
  */
 public class DLFolderAssetRendererFactory extends BaseAssetRendererFactory {
 
-	public static final String TYPE = "folder";
+	public static final String TYPE = "document_folder";
 
 	@Override
 	public AssetRenderer getAssetRenderer(long classPK, int type)

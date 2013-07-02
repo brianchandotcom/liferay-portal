@@ -193,7 +193,7 @@ if (!portletName.equals(PortletKeys.RELATED_ASSETS) || (assetEntryQuery.getLinke
 			if (!results.isEmpty()) {
 %>
 
-				<h3 class="asset-entries-group-label"><liferay-ui:message key="<%= groupAssetRendererFactory.getType() %>" /></h3>
+				<h3 class="asset-entries-group-label"><%= ResourceActionsUtil.getModelResource(locale, groupAssetRendererFactory.getClassName()) %></h3>
 
 				<c:choose>
 					<c:when test="<%= portletDisplayDDMTemplateId > 0 %>">

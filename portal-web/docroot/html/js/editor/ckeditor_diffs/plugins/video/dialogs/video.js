@@ -1,5 +1,5 @@
 CKEDITOR.dialog.add(
-	'liferayvideo',
+	'video',
 	function(editor) {
 		var TPL_SCRIPT_PREFIX = 'AUI().use(' +
 								'	\'aui-base\',\'aui-video\',' +
@@ -19,7 +19,7 @@ CKEDITOR.dialog.add(
 								'	}' +
 								');';
 
-		var lang = editor.lang.liferayvideo;
+		var lang = editor.lang.video;
 
 		function commitValue(videoNode, extraStyles) {
 			var instance = this;
@@ -233,7 +233,7 @@ CKEDITOR.dialog.add(
 
 					var fakeImage = instance.getSelectedElement();
 
-					if (fakeImage && fakeImage.data('cke-real-element-type') && fakeImage.data('cke-real-element-type') === 'liferayvideo') {
+					if (fakeImage && fakeImage.data('cke-real-element-type') && fakeImage.data('cke-real-element-type') === 'video') {
 							instance.fakeImage = fakeImage;
 							var videoNode = editor.restoreRealElement(fakeImage);
 							instance.videoNode = videoNode;
@@ -265,7 +265,7 @@ CKEDITOR.dialog.add(
 
 					instance.commitContent(divNode, extraStyles);
 
-					var newFakeImage = editor.createFakeElement(divNode, 'liferay_cke_video', 'liferayvideo', false);
+					var newFakeImage = editor.createFakeElement(divNode, 'liferay_cke_video', 'video', false);
 					newFakeImage.setStyles(extraStyles);
 
 					if (instance.fakeImage) {

@@ -55,7 +55,7 @@ CKEDITOR.config.removePlugins = [
 	'save',
 	'showblocks',
 	'templates',
-	'liferayvideo'
+	'video'
 ].join(',');
 
 CKEDITOR.config.toolbar_bbcode = [

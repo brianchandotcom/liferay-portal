@@ -56,6 +56,7 @@ import org.apache.struts.action.ActionMapping;
 /**
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
+ * @deprecated As of 6.2.0, replaced by {@link PreviewArticleContentAction}
  */
 public class ViewArticleContentAction extends Action {
 

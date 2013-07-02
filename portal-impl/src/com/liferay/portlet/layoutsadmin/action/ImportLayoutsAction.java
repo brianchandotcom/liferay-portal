@@ -685,8 +685,9 @@ public class ImportLayoutsAction extends PortletAction {
 		boolean privateLayout = ParamUtil.getBoolean(
 			actionRequest, "privateLayout");
 
-		LayoutServiceUtil.importLayouts(
-			groupId, privateLayout, actionRequest.getParameterMap(), file);
+		LayoutServiceUtil.importLayoutsInBackground(
+			file.getName(), groupId, privateLayout,
+			actionRequest.getParameterMap(), file);
 	}
 
 	protected void validateFile(

@@ -86,10 +86,10 @@
 
 					<c:choose>
 						<c:when test="<%= addPortletURLs.size() == 1 %>">
-							<aui:nav-item href="<%= taglibEditURL %>" label='<%= LanguageUtil.format(pageContext, "add-x", HtmlUtil.escape(message)) %>' />
+							<aui:nav-item href="<%= taglibEditURL %>" iconClass="icon-file" label='<%= LanguageUtil.format(pageContext, "add-x", HtmlUtil.escape(message)) %>' />
 						</c:when>
 						<c:otherwise>
-							<aui:nav-item href="<%= taglibEditURL %>" label="<%= HtmlUtil.escape(message) %>" />
+							<aui:nav-item href="<%= taglibEditURL %>" iconClass="icon-file" label="<%= HtmlUtil.escape(message) %>" />
 						</c:otherwise>
 					</c:choose>
 

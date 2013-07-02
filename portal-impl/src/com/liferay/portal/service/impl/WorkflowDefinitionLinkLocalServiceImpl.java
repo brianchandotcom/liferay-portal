@@ -136,9 +136,7 @@ public class WorkflowDefinitionLinkLocalServiceImpl
 
 		WorkflowDefinitionLink workflowDefinitionLink = null;
 
-		if (groupId > 0) {
-			groupId = StagingUtil.getLiveGroupId(groupId);
-		}
+		groupId = StagingUtil.getLiveGroupId(groupId);
 
 		workflowDefinitionLink =
 			workflowDefinitionLinkPersistence.fetchByG_C_C_C_T(

@@ -133,6 +133,7 @@ boolean splitThread = true;
 <aui:script>
 	function <portlet:namespace />splitThread() {
 		document.<portlet:namespace />fm.<portlet:namespace />body.value = <portlet:namespace />getHTML();
+
 		submitForm(document.<portlet:namespace />fm);
 	}
 

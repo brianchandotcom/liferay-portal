@@ -158,11 +158,13 @@ boolean hasViewPagesPermission = (pagesCount > 0) && (liveGroup.isStaged() || se
 	function <portlet:namespace />updateLogo() {
 		document.<portlet:namespace />fm.encoding = 'multipart/form-data';
 		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = 'logo';
+
 		submitForm(document.<portlet:namespace />fm);
 	}
 
 	function <portlet:namespace />updateRobots() {
 		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = 'robots';
+
 		submitForm(document.<portlet:namespace />fm);
 	}
 
@@ -187,6 +189,7 @@ boolean hasViewPagesPermission = (pagesCount > 0) && (liveGroup.isStaged() || se
 		function() {
 			document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = 'display_order';
 			document.<portlet:namespace />fm.<portlet:namespace />layoutIds.value = Liferay.Util.listSelect(document.<portlet:namespace />fm.<portlet:namespace />layoutIdsBox);
+
 			submitForm(document.<portlet:namespace />fm);
 		},
 		['liferay-util-list-fields']
@@ -216,6 +219,7 @@ boolean hasViewPagesPermission = (pagesCount > 0) && (liveGroup.isStaged() || se
 
 			if (ok) {
 				document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = 'staging';
+
 				submitForm(document.<portlet:namespace />fm);
 			}
 		},

@@ -92,6 +92,7 @@ long licenseId = BeanParamUtil.getLong(license, request, "licenseId");
 <aui:script>
 	function <portlet:namespace />saveLicense() {
 		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= (license == null) ? Constants.ADD : Constants.UPDATE %>";
+
 		submitForm(document.<portlet:namespace />fm);
 	}
 </aui:script>

@@ -72,6 +72,7 @@ boolean showPermissionsButton = JournalPermission.contains(permissionChecker, sc
 		}
 		else {
 			document.<portlet:namespace />fm.method = 'post';
+
 			submitForm(document.<portlet:namespace />fm, url);
 		}
 	}

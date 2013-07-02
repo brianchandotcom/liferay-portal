@@ -514,12 +514,14 @@ int priceId = ParamUtil.getInteger(request, "priceId", -1);
 	function <portlet:namespace />addField() {
 		document.<portlet:namespace />fm.scroll.value = "<portlet:namespace />fields";
 		document.<portlet:namespace />fm.<portlet:namespace />fieldsCount.value = <%= fieldsCount + 1 %>;
+
 		submitForm(document.<portlet:namespace />fm);
 	}
 
 	function <portlet:namespace />addPrice() {
 		document.<portlet:namespace />fm.scroll.value = "<portlet:namespace />prices";
 		document.<portlet:namespace />fm.<portlet:namespace />pricesCount.value = <%= pricesCount + 1 %>;
+
 		submitForm(document.<portlet:namespace />fm);
 	}
 
@@ -527,6 +529,7 @@ int priceId = ParamUtil.getInteger(request, "priceId", -1);
 		document.<portlet:namespace />fm.scroll.value = "<portlet:namespace />fields";
 		document.<portlet:namespace />fm.<portlet:namespace />fieldsCount.value = <%= fieldsCount - 1 %>;
 		document.<portlet:namespace />fm.<portlet:namespace />fieldId.value = i;
+
 		submitForm(document.<portlet:namespace />fm);
 	}
 
@@ -538,6 +541,7 @@ int priceId = ParamUtil.getInteger(request, "priceId", -1);
 			document.<portlet:namespace />fm.scroll.value = "<portlet:namespace />prices";
 			document.<portlet:namespace />fm.<portlet:namespace />pricesCount.value = <%= pricesCount - 1 %>;
 			document.<portlet:namespace />fm.<portlet:namespace />priceId.value = i;
+
 			submitForm(document.<portlet:namespace />fm);
 		}
 	}
@@ -574,6 +578,7 @@ int priceId = ParamUtil.getInteger(request, "priceId", -1);
 
 	function <portlet:namespace />saveItem() {
 		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= (item == null) ? Constants.ADD : Constants.UPDATE %>";
+
 		submitForm(document.<portlet:namespace />fm);
 	}
 

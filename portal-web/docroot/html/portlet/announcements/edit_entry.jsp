@@ -150,6 +150,7 @@ if (entry == null) {
 		document.<portlet:namespace />fm.target = '';
 		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= (entry == null) ? Constants.ADD : Constants.UPDATE %>";
 		document.<portlet:namespace />fm.<portlet:namespace />content.value = <portlet:namespace />getContent();
+
 		submitForm(document.<portlet:namespace />fm);
 	}
 </aui:script>

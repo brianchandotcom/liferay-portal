@@ -93,6 +93,7 @@ request.setAttribute("edit_layout_prototype.jsp-redirect", redirect);
 <aui:script>
 	function <portlet:namespace />saveLayoutPrototype() {
 		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= (layoutPrototype == null) ? Constants.ADD : Constants.UPDATE %>";
+
 		submitForm(document.<portlet:namespace />fm, "<portlet:actionURL><portlet:param name="struts_action" value="/layout_prototypes/edit_layout_prototype" /></portlet:actionURL>");
 	}
 </aui:script>

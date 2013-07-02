@@ -72,6 +72,7 @@ rightList = ListUtil.sort(rightList, new KeyValuePairComparator(false, true));
 		'<portlet:namespace />saveCurrency',
 		function() {
 			document.<portlet:namespace />fm.<portlet:namespace />symbols.value = Liferay.Util.listSelect(document.<portlet:namespace />fm.<portlet:namespace />current_actions);
+
 			submitForm(document.<portlet:namespace />fm);
 		},
 		['liferay-util-list-fields']

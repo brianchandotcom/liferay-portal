@@ -155,17 +155,20 @@ if (choiceName > 0) {
 		</liferay-portlet:actionURL>
 
 		document.<portlet:namespace />fm.<portlet:namespace />choicesCount.value = '<%= choicesCount + 1 %>';
+
 		submitForm(document.<portlet:namespace />fm, '<%= addPollChoiceURL %>');
 	}
 
 	function <portlet:namespace />deletePollChoice(choiceName) {
 		document.<portlet:namespace />fm.<portlet:namespace />choicesCount.value = '<%= choicesCount - 1 %>';
 		document.<portlet:namespace />fm.<portlet:namespace />choiceName.value = '<%= choiceName %>';
+
 		submitForm(document.<portlet:namespace />fm);
 	}
 
 	function <portlet:namespace />saveQuestion() {
 		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= (question == null) ? Constants.ADD : Constants.UPDATE %>";
+
 		submitForm(document.<portlet:namespace />fm);
 	}
 </aui:script>

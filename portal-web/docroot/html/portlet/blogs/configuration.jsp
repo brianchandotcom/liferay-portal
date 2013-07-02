@@ -305,6 +305,7 @@ String[] socialBookmarksTypesArray = StringUtil.split(portletPreferences.getValu
 
 	function <portlet:namespace />updateLanguage() {
 		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '';
+
 		submitForm(document.<portlet:namespace />fm);
 	}
 

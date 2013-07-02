@@ -223,11 +223,13 @@ configurationRenderURL.setParameter("portletResource", portletResource);
 <aui:script>
 	function <portlet:namespace />removeSelectionForFooter() {
 		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = 'remove-footer-article';
+
 		submitForm(document.<portlet:namespace />fm, '<%= configurationActionURL.toString() %>');
 	}
 
 	function <portlet:namespace />removeSelectionForHeader() {
 		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = 'remove-header-article';
+
 		submitForm(document.<portlet:namespace />fm, '<%= configurationActionURL.toString() %>');
 	}
 
@@ -242,24 +244,28 @@ configurationRenderURL.setParameter("portletResource", portletResource);
 		document.<portlet:namespace />fm.<portlet:namespace />articleGroupId.value = articleGroupId;
 		document.<portlet:namespace />fm.<portlet:namespace />articleId.value = articleId;
 		document.<portlet:namespace />fm.<portlet:namespace />typeSelection.value = '';
+
 		submitForm(document.<portlet:namespace />fm, '<%= configurationActionURL.toString() %>');
 	}
 
 	function <portlet:namespace />saveSettings() {
 		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= Constants.UPDATE %>';
 		document.<portlet:namespace />fm.<portlet:namespace />typeSelection.value = '';
+
 		submitForm(document.<portlet:namespace />fm, '<%= configurationActionURL.toString() %>');
 	}
 
 	function <portlet:namespace />selectionForHeader() {
 		document.<portlet:namespace />fm.<portlet:namespace />typeSelection.value = '<%= JournalArticle.class.getName() %>';
 		document.<portlet:namespace />fm.<portlet:namespace />assetOrder.value = 0;
+
 		submitForm(document.<portlet:namespace />fm);
 	}
 
 	function <portlet:namespace />selectionForFooter() {
 		document.<portlet:namespace />fm.<portlet:namespace />typeSelection.value = '<%= JournalArticle.class.getName() %>';
 		document.<portlet:namespace />fm.<portlet:namespace />assetOrder.value = 1;
+
 		submitForm(document.<portlet:namespace />fm);
 	}
 </aui:script>

@@ -224,7 +224,7 @@ private static PortletCategory _getRelevantPortletCategory(PermissionChecker per
 }
 %>
 
-<aui:script use="liferay-dockbar-portlet-dd,liferay-dockbar-add-application">
+<aui:script use="liferay-dockbar-add-application,liferay-dockbar-portlet-dd">
 	var searchApplication = A.one('#<portlet:namespace />searchApplication');
 
 	var addApplication = new Liferay.Dockbar.AddApplication(

@@ -90,7 +90,7 @@ int delta = ParamUtil.getInteger(request, "delta", deltaDefault);
 	</div>
 </aui:form>
 
-<aui:script use="liferay-dockbar-portlet-dd,liferay-dockbar-add-content">
+<aui:script use="liferay-dockbar-add-content,liferay-dockbar-portlet-dd">
 	var searchContent = A.one('#<portlet:namespace />searchContent');
 
 	var addContent = new Liferay.Dockbar.AddContent(

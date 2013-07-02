@@ -55,7 +55,7 @@
 	<%@ include file="/html/portlet/sites_admin/toolbar.jspf" %>
 
 	<c:if test="<%= !results.isEmpty() %>">
-		<aui:button onClick='<%= renderResponse.getNamespace() + "deleteSites();" %>' value="delete" />
+		<aui:button disabled="<%= true %>" name="delete" onClick='<%= renderResponse.getNamespace() + "deleteSites();" %>' value="delete" />
 	</c:if>
 
 	<liferay-ui:search-container-row

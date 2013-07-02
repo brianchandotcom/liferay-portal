@@ -48,9 +48,9 @@ if (tabs2.equals("current")) {
 	emptyResultsMessage ="no-user-was-found-that-is-a-direct-member-of-this-site";
 }
 
-UserSearch userSearch = new UserSearch(renderRequest, viewUsersURL);
+SearchContainer searchContainer = new UserSearch(renderRequest, viewUsersURL);
 
-userSearch.setEmptyResultsMessage(emptyResultsMessage);
+searchContainer.setEmptyResultsMessage(emptyResultsMessage);
 %>
 
 <aui:input name="tabs1" type="hidden" value="users" />
@@ -61,7 +61,8 @@ userSearch.setEmptyResultsMessage(emptyResultsMessage);
 
 <liferay-ui:search-container
 	rowChecker="<%= userGroupChecker %>"
-	searchContainer="<%= userSearch %>"
+	searchContainer="<%= searchContainer %>"
+	var="userSearch"
 >
 	<c:if test='<%= !tabs1.equals("summary") %>'>
 		<liferay-ui:search-form
@@ -72,7 +73,7 @@ userSearch.setEmptyResultsMessage(emptyResultsMessage);
 	</c:if>
 
 	<%
-	UserSearchTerms searchTerms = (UserSearchTerms)searchContainer.getSearchTerms();
+	UserSearchTerms searchTerms = (UserSearchTerms)userSearch.getSearchTerms();
 
 	LinkedHashMap<String, Object> userParams = new LinkedHashMap<String, Object>();
 
@@ -90,7 +91,7 @@ userSearch.setEmptyResultsMessage(emptyResultsMessage);
 			<c:otherwise>
 
 				<%
-				results = UserLocalServiceUtil.getGroupUsers(group.getParentGroupId(), searchContainer.getStart(), searchContainer.getEnd());
+				results = UserLocalServiceUtil.getGroupUsers(group.getParentGroupId(), userSearch.getStart(), userSearch.getEnd());
 				total = UserLocalServiceUtil.getGroupUsersCount(group.getParentGroupId());
 
 				pageContext.setAttribute("results", results);
@@ -251,7 +252,7 @@ userSearch.setEmptyResultsMessage(emptyResultsMessage);
 
 				<liferay-ui:search-iterator paginate="<%= false %>" />
 
-				<c:if test="<%= total > userSearch.getDelta() %>">
+				<c:if test="<%= total > searchContainer.getDelta() %>">
 					<a href="<%= viewUsersURL %>"><liferay-ui:message key="view-more" /> &raquo;</a>
 				</c:if>
 			</liferay-ui:panel>
@@ -259,7 +260,7 @@ userSearch.setEmptyResultsMessage(emptyResultsMessage);
 			<div class="separator"><!-- --></div>
 		</c:when>
 		<c:when test='<%= !tabs1.equals("summary") %>'>
-			<c:if test="<%= total > userSearch.getDelta() %>">
+			<c:if test="<%= total > searchContainer.getDelta() %>">
 				<%= formButton %>
 			</c:if>
 

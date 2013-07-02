@@ -28,6 +28,7 @@ if (parentOrganizationId > 0) {
 
 <liferay-ui:search-container
 	searchContainer="<%= new OrganizationSearch(renderRequest, portletURL) %>"
+	var="organizationSearch"
 >
 	<aui:input disabled="<%= true %>" name="organizationsRedirect" type="hidden" value="<%= portletURL.toString() %>" />
 
@@ -36,7 +37,7 @@ if (parentOrganizationId > 0) {
 	/>
 
 	<%
-	OrganizationSearchTerms searchTerms = (OrganizationSearchTerms)searchContainer.getSearchTerms();
+	OrganizationSearchTerms searchTerms = (OrganizationSearchTerms)organizationSearch.getSearchTerms();
 
 	LinkedHashMap<String, Object> organizationParams = new LinkedHashMap<String, Object>();
 
@@ -98,7 +99,7 @@ if (parentOrganizationId > 0) {
 		<portlet:renderURL var="rowURL">
 			<portlet:param name="struts_action" value="/directory/view_organization" />
 			<portlet:param name="tabs1" value="<%= HtmlUtil.escape(tabs1) %>" />
-			<portlet:param name="redirect" value="<%= searchContainer.getIteratorURL().toString() %>" />
+			<portlet:param name="redirect" value="<%= organizationSearch.getIteratorURL().toString() %>" />
 			<portlet:param name="organizationId" value="<%= String.valueOf(organization.getOrganizationId()) %>" />
 		</portlet:renderURL>
 

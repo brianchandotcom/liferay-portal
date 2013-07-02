@@ -32,11 +32,12 @@ if (Validator.isNotNull(viewUsersRedirect)) {
 
 <liferay-ui:search-container
 	searchContainer="<%= new UserSearch(renderRequest, portletURL) %>"
+	var="userSearch"
 >
 	<aui:input disabled="<%= true %>" name="usersRedirect" type="hidden" value="<%= portletURL.toString() %>" />
 
 	<%
-	UserSearchTerms searchTerms = (UserSearchTerms)searchContainer.getSearchTerms();
+	UserSearchTerms searchTerms = (UserSearchTerms)userSearch.getSearchTerms();
 
 	long organizationId = searchTerms.getOrganizationId();
 	long userGroupId = searchTerms.getUserGroupId();
@@ -132,7 +133,7 @@ if (Validator.isNotNull(viewUsersRedirect)) {
 		<liferay-portlet:renderURL varImpl="rowURL">
 			<portlet:param name="struts_action" value="/directory/view_user" />
 			<portlet:param name="tabs1" value="<%= HtmlUtil.escape(tabs1) %>" />
-			<portlet:param name="redirect" value="<%= searchContainer.getIteratorURL().toString() %>" />
+			<portlet:param name="redirect" value="<%= userSearch.getIteratorURL().toString() %>" />
 			<portlet:param name="p_u_i_d" value="<%= String.valueOf(user2.getUserId()) %>" />
 		</liferay-portlet:renderURL>
 

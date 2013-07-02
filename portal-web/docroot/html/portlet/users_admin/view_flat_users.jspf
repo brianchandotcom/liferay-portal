@@ -19,9 +19,9 @@
 </c:if>
 
 <%
-SearchContainer userSearch = new UserSearch(renderRequest, "cur2", currentURLObj);
+SearchContainer searchContainer = new UserSearch(renderRequest, "cur2", currentURLObj);
 
-userSearch.setRowChecker(new RowChecker(renderResponse));
+searchContainer.setRowChecker(new RowChecker(renderResponse));
 
 if (!ParamUtil.getBoolean(renderRequest, "advancedSearch")) {
 	currentURLObj.setParameter("status", String.valueOf(status));
@@ -29,13 +29,14 @@ if (!ParamUtil.getBoolean(renderRequest, "advancedSearch")) {
 %>
 
 <liferay-ui:search-container
-	searchContainer="<%= userSearch %>"
+	searchContainer="<%= searchContainer %>"
+	var="userSearch"
 >
 	<aui:input disabled="<%= true %>" name="usersRedirect" type="hidden" value="<%= currentURLObj.toString() %>" />
 	<aui:input name="deleteUserIds" type="hidden" />
 
 	<%
-	UserSearchTerms searchTerms = (UserSearchTerms)searchContainer.getSearchTerms();
+	UserSearchTerms searchTerms = (UserSearchTerms)userSearch.getSearchTerms();
 
 	if ((searchTerms.getOrganizationId() > 0) && !OrganizationPermissionUtil.contains(permissionChecker, searchTerms.getOrganizationId(), ActionKeys.MANAGE_USERS)) {
 		inactiveUsersCount = 0;
@@ -43,7 +44,7 @@ if (!ParamUtil.getBoolean(renderRequest, "advancedSearch")) {
 		status = WorkflowConstants.STATUS_APPROVED;
 	}
 
-	UserDisplayTerms displayTerms = (UserDisplayTerms)searchContainer.getDisplayTerms();
+	UserDisplayTerms displayTerms = (UserDisplayTerms)userSearch.getDisplayTerms();
 
 	if (!searchTerms.isAdvancedSearch()) {
 		if (status == WorkflowConstants.STATUS_APPROVED) {
@@ -66,7 +67,7 @@ if (!ParamUtil.getBoolean(renderRequest, "advancedSearch")) {
 		try {
 			userOrganization = OrganizationLocalServiceUtil.getOrganization(userOrganizationId);
 
-			searchContainer.setEmptyResultsMessage("this-organization-does-not-have-any-users");
+			userSearch.setEmptyResultsMessage("this-organization-does-not-have-any-users");
 		}
 		catch (NoSuchOrganizationException nsoe) {
 		}
@@ -211,7 +212,7 @@ if (!ParamUtil.getBoolean(renderRequest, "advancedSearch")) {
 	>
 		<liferay-portlet:renderURL varImpl="rowURL">
 			<portlet:param name="struts_action" value="/users_admin/edit_user" />
-			<portlet:param name="redirect" value="<%= searchContainer.getIteratorURL().toString() %>" />
+			<portlet:param name="redirect" value="<%= userSearch.getIteratorURL().toString() %>" />
 			<portlet:param name="p_u_i_d" value="<%= String.valueOf(user2.getUserId()) %>" />
 		</liferay-portlet:renderURL>
 
@@ -246,7 +247,7 @@ if (!ParamUtil.getBoolean(renderRequest, "advancedSearch")) {
 				String taglibOnClick = renderResponse.getNamespace() + "deleteUsers('" + (searchTerms.isActive() ? Constants.DEACTIVATE : Constants.DELETE) + "');";
 				%>
 
-				<aui:button onClick="<%= taglibOnClick %>" value="<%= searchTerms.isActive() ? Constants.DEACTIVATE : Constants.DELETE %>" />
+				<aui:button disabled="<%= true %>" name="deactivate" onClick="<%= taglibOnClick %>" value="<%= searchTerms.isActive() ? Constants.DEACTIVATE : Constants.DELETE %>" />
 			</c:if>
 
 			<c:if test="<%= showRestoreButton %>">
@@ -255,7 +256,7 @@ if (!ParamUtil.getBoolean(renderRequest, "advancedSearch")) {
 				String taglibOnClick = renderResponse.getNamespace() + "deleteUsers('" + Constants.RESTORE + "');";
 				%>
 
-				<aui:button onClick="<%= taglibOnClick %>" value="restore" />
+				<aui:button disabled="<%= true %>" name="restore" onClick="<%= taglibOnClick %>" value="restore" />
 			</c:if>
 
 			<c:if test="<%= (inactiveUsersCount > 0) && (usersCount > 0) %>">
@@ -271,9 +272,14 @@ if (!ParamUtil.getBoolean(renderRequest, "advancedSearch")) {
 
 	<%
 	if (!showDeleteButton && !showRestoreButton) {
-		searchContainer.setRowChecker(null);
+		userSearch.setRowChecker(null);
 	}
 	%>
 
 	<liferay-ui:search-iterator />
 </liferay-ui:search-container>
+
+<aui:script>
+	Liferay.Util.toggleSearchContainerButton('#<portlet:namespace />deactivate', '#<portlet:namespace /><%= searchContainerReference.getId("userSearch") %>SearchContainer', document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
+	Liferay.Util.toggleSearchContainerButton('#<portlet:namespace />restore', '#<portlet:namespace /><%= searchContainerReference.getId("userSearch") %>SearchContainer', document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
+</aui:script>

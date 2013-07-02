@@ -385,9 +385,9 @@ public class EditGroupAction extends PortletAction {
 
 		GroupServiceUtil.updateGroup(
 			groupId, group.getParentGroupId(), group.getName(),
-			group.getDescription(), group.getType(), group.getFriendlyURL(),
-			active, group.isManualMembership(),
-			group.getMembershipRestriction(), serviceContext);
+			group.getDescription(), group.getType(), group.isManualMembership(),
+			group.getMembershipRestriction(), group.getFriendlyURL(), active,
+			serviceContext);
 	}
 
 	protected String updateCloseRedirect(
@@ -496,8 +496,8 @@ public class EditGroupAction extends PortletAction {
 
 			liveGroup = GroupServiceUtil.addGroup(
 				parentGroupId, GroupConstants.DEFAULT_LIVE_GROUP_ID, name,
-				description, type, friendlyURL, true, active, manualMembership,
-				membershipRestriction, serviceContext);
+				description, type, manualMembership, membershipRestriction,
+				friendlyURL, true, active, serviceContext);
 
 			LiveUsers.joinGroup(
 				themeDisplay.getCompanyId(), liveGroup.getGroupId(), userId);
@@ -526,7 +526,7 @@ public class EditGroupAction extends PortletAction {
 
 			liveGroup = GroupServiceUtil.updateGroup(
 				liveGroupId, parentGroupId, name, description, type,
-				friendlyURL, active, manualMembership, membershipRestriction,
+				manualMembership, membershipRestriction, friendlyURL, active,
 				serviceContext);
 
 			if (type == GroupConstants.TYPE_SITE_OPEN) {

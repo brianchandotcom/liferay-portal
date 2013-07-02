@@ -53,8 +53,9 @@ public class GroupTestUtil {
 		return GroupLocalServiceUtil.addGroup(
 			userId, parentGroupId, Layout.class.getName(), layout.getPlid(),
 			GroupConstants.DEFAULT_LIVE_GROUP_ID,
-			String.valueOf(layout.getPlid()), null, 0, null, false, true, true,
-			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, null);
+			String.valueOf(layout.getPlid()), null, 0, true,
+			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, null, false, true,
+			null);
 	}
 
 	public static Group addGroup(long parentGroupId, String name)
@@ -80,7 +81,7 @@ public class GroupTestUtil {
 		return GroupLocalServiceUtil.addGroup(
 			TestPropsValues.getUserId(), parentGroupId, null, 0,
 			GroupConstants.DEFAULT_LIVE_GROUP_ID, name, description, type,
-			friendlyURL, site, active, manualMembership, membershipRestriction,
+			manualMembership, membershipRestriction, friendlyURL, site, active,
 			ServiceTestUtil.getServiceContext());
 	}
 

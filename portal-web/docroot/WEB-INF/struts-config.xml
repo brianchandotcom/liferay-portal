@@ -451,6 +451,8 @@
 			<forward name="portlet.layouts_admin.error" path="portlet.dockbar.add_page" />
 		</action>
 
+		<action path="/dockbar/preview_panel" forward="portlet.dockbar.preview_panel" />
+
 		<action path="/dockbar/view" type="com.liferay.portlet.dockbar.action.ViewAction">
 			<forward name="portlet.dockbar.view" path="portlet.dockbar.view" />
 		</action>

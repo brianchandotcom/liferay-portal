@@ -22,7 +22,7 @@
 	@include box-shadow(2px 4px 7px rgba(0, 0, 0, 0.5));
 }
 
-.lfr-add-panel {
+.lfr-add-panel, .lfr-device-preview-panel {
 	@include box-shadow(0 0 5px rgba(0, 0, 0, 0.5));
 }
 
@@ -36,6 +36,40 @@
 
 .lfr-preview-file-image-current-column {
 	@include box-shadow(inset 0 0 5px rgba(0, 0, 0, 0.8));
+}
+
+.lfr-device-preview {
+	.lfr-device-size-status-content {
+		@include border-radius(3px);
+		@include box-shadow(0 0 1px #FFF);
+		@include opacity(0.9);
+	}
+
+	.lfr-device {
+		&:after, &:before {
+			@include box-shadow(#111 0 1px 0);
+		}
+
+		&:after {
+			@include border-radius(15px);
+		}
+
+		&.rotated {
+			&:after, &:before {
+				@include box-shadow(#111 -1px 1px 0);
+			}
+		}
+
+		&.smartphone, &.tablet {
+			@include border-radius(25px);
+		}
+
+		&.tablet {
+			&:before {
+				@include border-radius(5px);
+			}
+		}
+	}
 }
 
 .dockbar .menu-button-active .menu-button {

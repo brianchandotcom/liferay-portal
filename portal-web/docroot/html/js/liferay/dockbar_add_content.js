@@ -119,7 +119,7 @@ AUI.add(
 
 						instance._numItems.on('change', instance._onChangeNumItems, instance);
 
-						instance._closePanel.on(STR_CLICK, Dockbar.loadPanel, Dockbar);
+						instance._closePanel.on(STR_CLICK, Dockbar.toggleAddPanel, Dockbar);
 
 						instance._styleButtonsList.delegate(STR_CLICK, instance._onChangeDisplayStyle, SELECTOR_BUTTON, instance);
 

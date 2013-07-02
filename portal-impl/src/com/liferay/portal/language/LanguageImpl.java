@@ -14,6 +14,7 @@
 
 package com.liferay.portal.language;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageWrapper;
@@ -22,6 +23,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.CookieKeys;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -451,6 +453,14 @@ public class LanguageImpl implements Language {
 			return getAvailableLocales();
 		}
 
+		try {
+			if (isLocaleInherited(groupId)) {
+				return getAvailableLocales();
+			}
+		}
+		catch (Exception e) {
+		}
+
 		if (_groupLocalesMap.get(groupId) == null) {
 			_initGroupLocales(groupId);
 		}
@@ -614,6 +624,14 @@ public class LanguageImpl implements Language {
 			return isAvailableLocale(locale);
 		}
 
+		try {
+			if (isLocaleInherited(groupId)) {
+				return isAvailableLocale(locale);
+			}
+		}
+		catch (Exception e) {
+		}
+
 		Set<Locale> localesSet = _groupLocalesSetMap.get(groupId);
 
 		if (localesSet == null) {
@@ -659,6 +677,30 @@ public class LanguageImpl implements Language {
 	@Override
 	public boolean isDuplicateLanguageCode(String languageCode) {
 		return _getInstance()._duplicateLanguageCodes.contains(languageCode);
+	}
+
+	@Override
+	public boolean isLocaleInherited(long groupId)
+		throws PortalException, SystemException {
+
+		Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+		Group liveGroup = group;
+
+		if (group.isStagingGroup()) {
+			liveGroup = group.getLiveGroup();
+		}
+
+		UnicodeProperties groupTypeSettings =
+			liveGroup.getTypeSettingsProperties();
+
+		return GetterUtil.getBoolean(
+			groupTypeSettings.getProperty("inheritLocales"), true);
+	}
+
+	@Override
+	public void resetAvailableGroupLocales(long groupId) {
+		_resetAvailableGroupLocales(groupId);
 	}
 
 	@Override
@@ -920,6 +962,11 @@ public class LanguageImpl implements Language {
 
 		_groupLocalesMap.put(groupId, groupLocales);
 		_groupLocalesSetMap.put(groupId, groupLocalesSet);
+	}
+
+	private void _resetAvailableGroupLocales(long groupId) {
+		_groupLocalesMap.remove(groupId);
+		_groupLocalesSetMap.remove(groupId);
 	}
 
 	private void _resetAvailableLocales(long companyId) {

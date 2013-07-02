@@ -462,7 +462,6 @@ public class EditGroupAction extends PortletAction {
 		String friendlyURL = null;
 		boolean active = false;
 		boolean manualMembership = true;
-
 		int membershipRestriction =
 			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION;
 

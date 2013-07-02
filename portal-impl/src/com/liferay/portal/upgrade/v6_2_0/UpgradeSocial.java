@@ -17,6 +17,8 @@ package com.liferay.portal.upgrade.v6_2_0;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.util.PortalUtil;
@@ -27,6 +29,7 @@ import com.liferay.portlet.wiki.social.WikiActivityKeys;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 
 /**
@@ -71,6 +74,9 @@ public class UpgradeSocial extends UpgradeProcess {
 			ps.setLong(11, receiverUserId);
 
 			ps.executeUpdate();
+		}
+		catch (SQLException sqle) {
+			_log.warn("Error adding activity: " + sqle.getMessage());
 		}
 		finally {
 			DataAccess.cleanUp(con, ps, rs);
@@ -150,5 +156,7 @@ public class UpgradeSocial extends UpgradeProcess {
 			DataAccess.cleanUp(con, ps, rs);
 		}
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(UpgradeSocial.class);
 
 }

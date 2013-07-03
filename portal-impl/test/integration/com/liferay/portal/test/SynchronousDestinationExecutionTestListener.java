@@ -70,7 +70,8 @@ public class SynchronousDestinationExecutionTestListener
 		_methodSyncHandler.enableSync();
 	}
 
-	private Destination _asyncServiceDestination;
+	private List<Destination> _asyncServiceDestinations =
+		new ArrayList<Destination>();
 	private SyncHandler _classSyncHandler = new SyncHandler();
 	private SyncHandler _methodSyncHandler = new SyncHandler();
 
@@ -93,7 +94,7 @@ public class SynchronousDestinationExecutionTestListener
 				destinationName);
 
 			if (destination instanceof BaseAsyncDestination) {
-				_asyncServiceDestination = destination;
+				_asyncServiceDestinations.add(destination);
 
 				SynchronousDestination synchronousDestination =
 					new SynchronousDestination();
@@ -111,12 +112,14 @@ public class SynchronousDestinationExecutionTestListener
 
 			ProxyModeThreadLocal.setForceSync(_forceSync);
 
-			if (_asyncServiceDestination != null) {
+			if (!_asyncServiceDestinations.isEmpty()) {
 				MessageBus messageBus = MessageBusUtil.getMessageBus();
 
-				messageBus.replace(_asyncServiceDestination);
+				for (Destination destination: _asyncServiceDestinations) {
+					messageBus.replace(destination);
+				}
 
-				_asyncServiceDestination = null;
+				_asyncServiceDestinations.clear();
 			}
 		}
 

@@ -139,6 +139,40 @@ iteratorURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
 						</c:choose>
 					</c:when>
 
+					<c:when test="<%= (socialActivity.getType() == SocialActivityConstants.TYPE_ADD_COMMENT) %>">
+
+						<%
+						long messageId = extraDataJSONObject.getLong("messageId");
+
+						MBMessage mbMessage = MBMessageLocalServiceUtil.getMBMessage(messageId);
+
+						WikiPage socialActivityWikiPage = WikiPageLocalServiceUtil.getPage(node.getNodeId(), wikiPage.getTitle());
+
+						String comment = mbMessage.getBody();
+
+						int pos = Math.min(comment.length(), 50);
+
+						if (pos == 50) {
+							comment = comment.substring(0, pos) + "...";
+						}
+						%>
+
+						<portlet:renderURL var="viewPageURL">
+							<portlet:param name="struts_action" value="/wiki/view" />
+							<portlet:param name="nodeName" value="<%= node.getName() %>" />
+							<portlet:param name="title" value="<%= socialActivityWikiPage.getTitle() %>" />
+						</portlet:renderURL>
+
+						<liferay-util:buffer var="commentLink">
+							<aui:a href="<%= viewPageURL.toString() %>"><%= comment %></aui:a>
+						</liferay-util:buffer>
+
+						<liferay-ui:icon
+							label="<%= true %>"
+							message='<%= LanguageUtil.format(pageContext, "x-added-the-comment-x", new Object[] {socialActivityUser.getFullName(), commentLink}) %>'
+						/>
+					</c:when>
+
 					<c:when test="<%= (socialActivity.getType() == SocialActivityConstants.TYPE_MOVE_TO_TRASH) || (socialActivity.getType() == SocialActivityConstants.TYPE_RESTORE_FROM_TRASH) || (socialActivity.getType() == WikiActivityKeys.ADD_PAGE) || (socialActivity.getType() == WikiActivityKeys.UPDATE_PAGE) %>">
 
 						<%

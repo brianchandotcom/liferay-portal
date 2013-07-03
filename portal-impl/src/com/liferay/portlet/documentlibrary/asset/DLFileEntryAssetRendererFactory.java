@@ -81,7 +81,12 @@ public class DLFileEntryAssetRendererFactory extends BaseAssetRendererFactory {
 			fileVersion = fileEntry.getFileVersion();
 		}
 
-		return new DLFileEntryAssetRenderer(fileEntry, fileVersion, type);
+		DLFileEntryAssetRenderer dlFileEntryAssetRenderer =
+			new DLFileEntryAssetRenderer(fileEntry, fileVersion);
+
+		dlFileEntryAssetRenderer.setAssetRendererType(type);
+
+		return dlFileEntryAssetRenderer;
 	}
 
 	@Override

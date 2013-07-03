@@ -623,73 +623,67 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return copyright;
 	}
 
-	protected Properties getPluginExclusionsProperties(String fileName)
+	protected Properties getExclusionsProperties(String fileName)
 		throws IOException {
 
-		FileInputStream fileInputStream = null;
+		InputStream inputStream = null;
 
 		int level = 0;
 
-		try {
-			fileInputStream = new FileInputStream(fileName);
-		}
-		catch (FileNotFoundException fnfe) {
-		}
+		if (portalSource) {
+			ClassLoader classLoader =
+				BaseSourceProcessor.class.getClassLoader();
 
-		if (fileInputStream == null) {
-			try {
-				fileInputStream = new FileInputStream("../" + fileName);
+			String sourceFormatterExclusions = System.getProperty(
+				"source-formatter-exclusions",
+				"com/liferay/portal/tools/dependencies/" + fileName);
 
-				level = 1;
-			}
-			catch (FileNotFoundException fnfe) {
-			}
-		}
+			URL url = classLoader.getResource(sourceFormatterExclusions);
 
-		if (fileInputStream == null) {
-			try {
-				fileInputStream = new FileInputStream("../../" + fileName);
-
-				level = 2;
-			}
-			catch (FileNotFoundException fnfe) {
+			if (url == null) {
 				return null;
 			}
+
+			inputStream = url.openStream();
+		}
+		else {
+			try {
+				inputStream = new FileInputStream(fileName);
+			}
+			catch (FileNotFoundException fnfe) {
+			}
+
+			if (inputStream == null) {
+				try {
+					inputStream = new FileInputStream("../" + fileName);
+
+					level = 1;
+				}
+				catch (FileNotFoundException fnfe) {
+				}
+			}
+
+			if (inputStream == null) {
+				try {
+					inputStream = new FileInputStream("../../" + fileName);
+
+					level = 2;
+				}
+				catch (FileNotFoundException fnfe) {
+					return null;
+				}
+			}
 		}
 
 		Properties properties = new Properties();
-
-		properties.load(fileInputStream);
-
-		if (level > 0) {
-			properties = stripTopLevelDirectories(properties, level);
-		}
-
-		return properties;
-	}
-
-	protected Properties getPortalExclusionsProperties(String fileName)
-		throws IOException {
-
-		Properties properties = new Properties();
-
-		ClassLoader classLoader = BaseSourceProcessor.class.getClassLoader();
-
-		String sourceFormatterExclusions = System.getProperty(
-			"source-formatter-exclusions",
-			"com/liferay/portal/tools/dependencies/" + fileName);
-
-		URL url = classLoader.getResource(sourceFormatterExclusions);
-
-		if (url == null) {
-			return null;
-		}
-
-		InputStream inputStream = url.openStream();
 
 		properties.load(inputStream);
 
 		inputStream.close();
+
+		if (level > 0) {
+			properties = stripTopLevelDirectories(properties, level);
+		}
 
 		return properties;
 	}

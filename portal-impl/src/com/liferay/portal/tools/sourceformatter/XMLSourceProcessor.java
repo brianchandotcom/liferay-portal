@@ -61,18 +61,9 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			String newContent = content;
 
 			if (!fileName.contains("/build")) {
-				Properties leadingSpacesExclusions = null;
-
-				if (portalSource) {
-					leadingSpacesExclusions = getPortalExclusionsProperties(
-						"source_formatter_xml_leading_spaces_exclusions." +
-							"properties");
-				}
-				else {
-					leadingSpacesExclusions = getPluginExclusionsProperties(
-						"source_formatter_xml_leading_spaces_exclusions." +
-							"properties");
-				}
+				Properties leadingSpacesExclusions = getExclusionsProperties(
+					"source_formatter_xml_leading_spaces_exclusions." +
+						"properties");
 
 				String excluded = null;
 
@@ -286,18 +277,8 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 	protected String formatFriendlyURLRoutesXML(String fileName, String content)
 		throws DocumentException, IOException {
 
-		Properties friendlyUrlRoutesSortExclusions = null;
-
-		if (portalSource) {
-			friendlyUrlRoutesSortExclusions = getPortalExclusionsProperties(
-				"source_formatter_friendly_url_routes_sort_exclusions." +
-					"properties");
-		}
-		else {
-			friendlyUrlRoutesSortExclusions = getPluginExclusionsProperties(
-				"source_formatter_friendly_url_routes_sort_exclusions." +
-					"properties");
-		}
+		Properties friendlyUrlRoutesSortExclusions = getExclusionsProperties(
+			"source_formatter_friendly_url_routes_sort_exclusions.properties");
 
 		String excluded = null;
 

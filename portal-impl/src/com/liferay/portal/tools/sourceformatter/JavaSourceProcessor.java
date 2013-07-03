@@ -535,36 +535,27 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		Collection<String> fileNames = null;
 
-		Properties staticLogVariableExclusions = null;
-		Properties upgradeServiceUtilExclusions = null;
-
 		if (portalSource) {
 			fileNames = getPortalJavaFiles();
 
 			_checkUnprocessedExceptions = GetterUtil.getBoolean(
 				System.getProperty(
 					"source.formatter.check.unprocessed.exceptions"));
-			_javaTermSortExclusions = getPortalExclusionsProperties(
-				"source_formatter_javaterm_sort_exclusions.properties");
-			_lineLengthExclusions = getPortalExclusionsProperties(
-				"source_formatter_line_length_exclusions.properties");
-			staticLogVariableExclusions = getPortalExclusionsProperties(
-				"source_formatter_static_log_exclusions.properties");
-			upgradeServiceUtilExclusions = getPortalExclusionsProperties(
-				"source_formatter_upgrade_service_util_exclusions.properties");
 		}
 		else {
 			portalJavaFiles = false;
 
 			fileNames = getPluginJavaFiles();
-
-			_javaTermSortExclusions = getPluginExclusionsProperties(
-				"source_formatter_javaterm_sort_exclusions.properties");
-			_lineLengthExclusions = getPluginExclusionsProperties(
-				"source_formatter_line_length_exclusions.properties");
-			staticLogVariableExclusions = getPluginExclusionsProperties(
-				"source_formatter_static_log_exclusions.properties");
 		}
+
+		_javaTermSortExclusions = getExclusionsProperties(
+			"source_formatter_javaterm_sort_exclusions.properties");
+		_lineLengthExclusions = getExclusionsProperties(
+			"source_formatter_line_length_exclusions.properties");
+		Properties staticLogVariableExclusions = getExclusionsProperties(
+			"source_formatter_static_log_exclusions.properties");
+		Properties upgradeServiceUtilExclusions = getExclusionsProperties(
+			"source_formatter_upgrade_service_util_exclusions.properties");
 
 		for (String fileName : fileNames) {
 			if (fileName.endsWith("SourceProcessor.java")) {

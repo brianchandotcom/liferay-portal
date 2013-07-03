@@ -104,6 +104,8 @@ public class ${entity.name}ServiceSoap {
 					${soapModelName}[]
 				<#elseif entity.hasColumns() && (extendedModelName == serviceBuilder.getListActualTypeArguments(method.getReturns()))>
 					${soapModelName}[]
+				<#elseif !entity.hasColumns()>
+					${serviceBuilder.getListActualTypeArguments(method.getReturns())}[]
 				<#else>
 					${serviceBuilder.getListActualTypeArguments(method.getReturns())}Soap[]
 				</#if>
@@ -229,6 +231,8 @@ public class ${entity.name}ServiceSoap {
 								return ${extendedModelName}Soap.toSoapModels(returnValue);
 							<#elseif entity.hasColumns() && (extendedModelName == serviceBuilder.getListActualTypeArguments(method.getReturns()))>
 								return ${soapModelName}.toSoapModels(returnValue);
+							<#elseif !entity.hasColumns()>
+								return returnValue.toArray(new ${serviceBuilder.getListActualTypeArguments(method.getReturns())}[returnValue.size()]);
 							<#else>
 								return ${serviceBuilder.getListActualTypeArguments(method.getReturns())}Soap.toSoapModels(returnValue);
 							</#if>

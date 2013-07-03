@@ -147,7 +147,9 @@ public class SearchContainer<R> {
 			(SearchContainerReference)portletRequest.getAttribute(
 				WebKeys.SEARCH_CONTAINER_REFERENCE);
 
-		searchContainerReference.register(this);
+		if (searchContainerReference != null) {
+			searchContainerReference.register(this);
+		}
 	}
 
 	public SearchContainer(

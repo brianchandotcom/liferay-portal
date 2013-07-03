@@ -85,7 +85,7 @@ String[] tempFileEntryNames = LayoutServiceUtil.getTempFileEntryNames(scopeGroup
 
 				<liferay-ui:search-container-column-text
 					name="status"
-					value="<%= LanguageUtil.get(pageContext, backgroundTask.getStatusLabel() %>"
+					value="<%= LanguageUtil.get(pageContext, backgroundTask.getStatusLabel()) %>"
 				/>
 
 				<liferay-ui:search-container-column-text

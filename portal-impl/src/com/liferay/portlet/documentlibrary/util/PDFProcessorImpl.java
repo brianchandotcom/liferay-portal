@@ -546,7 +546,7 @@ public class PDFProcessorImpl
 		finally {
 			FileUtil.delete(file);
 		}
-	}	
+	}
 
 	private void _generateImagesPB(FileVersion fileVersion, File file)
 		throws Exception {
@@ -595,7 +595,7 @@ public class PDFProcessorImpl
 			Future<String> future = ProcessExecutor.execute(
 				ClassPathUtil.getPortalClassPath(), processCallable);
 
-			String processIdentity = Long.toString(
+			String processIdentity = String.valueOf(
 				fileVersion.getFileVersionId());
 
 			futures.put(processIdentity, future);
@@ -604,16 +604,13 @@ public class PDFProcessorImpl
 		}
 		else {
 			LiferayPDFBoxConverter liferayConverter =
-							new LiferayPDFBoxConverter(
-								file, thumbnailFile, previewFiles,
-								getPreviewType(fileVersion),
-								getThumbnailType(fileVersion),
-								PropsValues.
-									DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_HEIGHT,
-								PropsValues.
-									DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_WIDTH,
-								PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_DPI,
-								generatePreview, generateThumbnail);
+				new LiferayPDFBoxConverter(
+					file, thumbnailFile, previewFiles,
+					getPreviewType(fileVersion), getThumbnailType(fileVersion),
+					PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_HEIGHT,
+					PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_MAX_WIDTH,
+					PropsValues.DL_FILE_ENTRY_PREVIEW_DOCUMENT_DPI,
+					generatePreview, generateThumbnail);
 
 			liferayConverter.generateImagesPB();
 		}
@@ -798,11 +795,10 @@ public class PDFProcessorImpl
 
 			try {
 				LiferayPDFBoxConverter liferayConverter =
-								new LiferayPDFBoxConverter(
-									_inputFile, _thumbnailFile, _previewFiles,
-									_extension, _thumbnailExtension, _height,
-									_width, _dpi, _generatePreview,
-									_generateThumbnail);
+					new LiferayPDFBoxConverter(
+						_inputFile, _thumbnailFile, _previewFiles, _extension,
+						_thumbnailExtension, _height, _width, _dpi,
+						_generatePreview, _generateThumbnail);
 
 				liferayConverter.generateImagesPB();
 			}
@@ -812,6 +808,8 @@ public class PDFProcessorImpl
 
 			return StringPool.BLANK;
 		}
+
+		private static final long serialVersionUID = 1L;
 
 		private Map<String, String> _customLogSettings;
 		private int _dpi;

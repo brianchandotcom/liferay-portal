@@ -90,8 +90,8 @@ public class LiferayPDFBoxConverter {
 	}
 
 	private void _generateImagesPB(
-				PDPage pdPage, int index, File outputFile, String extension)
-			throws Exception {
+			PDPage pdPage, int index, File outputFile, String extension)
+		throws Exception {
 
 		RenderedImage renderedImage = pdPage.convertToImage(
 			BufferedImage.TYPE_INT_RGB, _dpi);
@@ -114,11 +114,11 @@ public class LiferayPDFBoxConverter {
 	private String _extension;
 	private boolean _generatePreview;
 	private boolean _generateThumbnail;
-	private int _height = 240;
+	private int _height;
 	private File _inputFile;
 	private File[] _previewFiles;
 	private String _thumbnailExtension;
 	private File _thumbnailFile;
-	private int _width = 320;
+	private int _width;
 
 }

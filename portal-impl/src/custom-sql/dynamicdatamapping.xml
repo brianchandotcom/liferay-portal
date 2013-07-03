@@ -85,7 +85,7 @@
 				(
 					(classPK = 0) OR
 					(classPK IN (
-						SELECT 
+						SELECT
 							DDMStructure.structureId
 						FROM
 							DDMStructure
@@ -127,7 +127,7 @@
 				(
 					(classPK = 0) OR
 					(classPK IN (
-						SELECT 
+						SELECT
 							DDMStructure.structureId
 						FROM
 							DDMStructure

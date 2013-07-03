@@ -67,7 +67,7 @@
 			ORDER BY
 				createDate ASC
 		]]>
-	</sql>	
+	</sql>
 	<sql id="com.liferay.portlet.shopping.service.persistence.ShoppingOrderFinder.findByG_C_U_N_PPPS">
 		<![CDATA[
 			SELECT

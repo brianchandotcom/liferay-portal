@@ -64,7 +64,7 @@
 		</property>
 	</bean>
 	<bean id="shardSessionFactoryTargetSource" class="com.liferay.portal.dao.shard.ShardSessionFactoryTargetSource">
- 		<property name="shardDataSourceTargetSource" ref="shardDataSourceTargetSource" />
+		<property name="shardDataSourceTargetSource" ref="shardDataSourceTargetSource" />
 	</bean>
 	<bean id="com.liferay.portal.kernel.dao.jdbc.MappingSqlQueryFactoryUtil" class="com.liferay.portal.kernel.dao.jdbc.MappingSqlQueryFactoryUtil">
 		<property name="mappingSqlQueryFactory">

@@ -14,6 +14,11 @@
 	<td>PGBlogs</td>
 </tr>
 <tr>
+	<td>EXTEND_ACTION_PATH</td>
+	<td>BasePortlet</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -21,6 +26,11 @@
 <tr>
 	<td>PORTLET_TITLE</td>
 	<td>//h1[@class='portlet-title']/span[@class='portlet-title-text']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OPTIONS</td>
+	<td>//a[@title='Options']</td>
 	<td></td>
 </tr>
 <tr>
@@ -51,6 +61,27 @@
 <tr>
 	<td>SUCCESS_MESSAGE_RECYCLE_BIN</td>
 	<td>//form[@id='_33_undoForm']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--OPTIONS_MENULIST-->
+<tr>
+	<td>OPTIONS_MENULIST_LOOKANDFEEL</td>
+	<td>//div/ul/li[1]/a[contains(/.,'Look and Feel')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OPTIONS_MENULIST_CONFIGURATION</td>
+	<td>//div/ul/li[2]/a[contains(/.,'Configuration')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OPTIONS_MENULIST_EXPORT_IMPORT</td>
+	<td>//div/ul/li[3]/a[contains(/.,' Export / Import ')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -107,6 +138,26 @@
 <tr>
 	<td>ENTRY_EDIT_3</td>
 	<td>xpath=(//div[contains(@class,'edit-actions')]//span/a/span[.='Edit'])[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_EDIT_1</td>
+	<td>xpath=(//div[contains(@class,'edit-actions')]//span/a/span[.='Edit'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_PERMISSIONS_1</td>
+	<td>xpath=(//div[contains(@class,'edit-actions')]//span/a/span[.='Permissions'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_PERMISSIONS_2</td>
+	<td>xpath=(//div[contains(@class,'edit-actions')]//span/a/span[.='Permissions'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_PERMISSIONS_3</td>
+	<td>xpath=(//div[contains(@class,'edit-actions')]//span/a/span[.='Permissions'])[3]</td>
 	<td></td>
 </tr>
 <tr>

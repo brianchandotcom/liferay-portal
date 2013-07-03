@@ -1,17 +1,17 @@
 <html>
 <head>
-<title>PGApplicationsdisplaytemplates</title>
+<title>ApplicationdisplaytemplatesPG</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">PGApplicationsdisplaytemplates</td></tr>
+<tr><td rowspan="1" colspan="3">ApplicationdisplaytemplatesPG</td></tr>
 </thead>
 <tbody>
 <tr>
 	<td>PAGE_NAME</td>
 	<td></td>
-	<td>PGApplicationdisplaytemplates</td>
+	<td>ApplicationdisplaytemplatesPG</td>
 </tr>
 <tr>
 	<td></td>
@@ -21,6 +21,11 @@
 <tr>
 	<td>ADT_IFRAME</td>
 	<td>//iframe[contains(@src,'Application%20Display%20Templates')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADT_IFRAME_TOP</td>
+	<td></td>
 	<td></td>
 </tr>
 <tr>
@@ -49,14 +54,29 @@
 	<td></td>
 </tr>
 <tr>
+	<td>INFO_MESSAGE</td>
+	<td>//div[@class='alert alert-info']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DELETE_BUTTON</td>
+	<td>//div[@class='button-holder ']/button[contains(.,'Delete')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIRMATION</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
 </tr>
 <!--ADD_MENULIST-->
 <tr>
-	<td>ADD_MENULIST_DM_TEMPLATE</td>
-	<td>//div[@class='container']/ul/li[2]/ul/li/a</td>
+	<td>ADD_MENULIST_ADT_TEMPLATE</td>
+	<td>//div[@class='container']/ul/li[2]/ul/li/a[contains(.,'${key_adtTitle}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -65,6 +85,11 @@
 	<td></td>
 </tr>
 <!--ADT_TABLE-->
+<tr>
+	<td>ADT_TABLE_ALL_CHECKBOX</td>
+	<td>//input[@name='_166_allRowIds']</td>
+	<td></td>
+</tr>
 <tr>
 	<td>ADT_TABLE_CHECKBOX_1</td>
 	<td>//div[@id='_166_ddmTemplatesSearchContainer']//tr/td[1]/input</td>

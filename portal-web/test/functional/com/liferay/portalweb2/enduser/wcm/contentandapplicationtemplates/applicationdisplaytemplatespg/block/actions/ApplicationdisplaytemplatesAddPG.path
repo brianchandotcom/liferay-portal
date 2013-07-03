@@ -1,17 +1,17 @@
 <html>
 <head>
-<title>PGApplicationsdisplaytemplatesAdd</title>
+<title>ApplicationdisplaytemplatesAddPG</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">PGApplicationsdisplaytemplatesAdd</td></tr>
+<tr><td rowspan="1" colspan="3">ApplicationdisplaytemplatesAddPG</td></tr>
 </thead>
 <tbody>
 <tr>
 	<td>PAGE_NAME</td>
 	<td></td>
-	<td>PGApplicationdisplaytemplatesAdd</td>
+	<td>ApplicationdisplaytemplatesAddPG</td>
 </tr>
 <tr>
 	<td></td>

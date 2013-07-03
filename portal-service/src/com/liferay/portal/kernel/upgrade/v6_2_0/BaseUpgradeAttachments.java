@@ -107,8 +107,7 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 			return fileEntryId;
 		}
 		catch (SQLException sqle) {
-			_log.warn(
-				"Error adding file entry " + name + ": " + sqle.getMessage());
+			_log.warn("Error adding file entry " + name, sqle);
 
 			return -1;
 		}
@@ -172,9 +171,7 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 			ps.executeUpdate();
 		}
 		catch (SQLException sqle) {
-			_log.warn(
-				"Error adding file version for " + title + ": " +
-				sqle.getMessage());
+			_log.warn("Error adding file version for " + title, sqle);
 		}
 		finally {
 			DataAccess.cleanUp(con, ps);
@@ -236,8 +233,7 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 			return folderId;
 		}
 		catch (SQLException sqle) {
-			_log.warn(
-				"Error adding folder for " + name + ": " + sqle.getMessage());
+			_log.warn("Error adding folder for " + name, sqle);
 
 			return -1;
 		}
@@ -298,9 +294,7 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 			return repositoryId;
 		}
 		catch (SQLException sqle) {
-			_log.warn(
-				"Error adding repository for " + portletId + ": " +
-				sqle.getMessage());
+			_log.warn("Error adding repository for " + portletId, sqle);
 
 			return -1;
 		}
@@ -356,7 +350,7 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 			String name, boolean hidden)
 		throws Exception {
 
-		if (repositoryId < 0 || parentFolderId < 0) {
+		if ((repositoryId < 0) || (parentFolderId < 0)) {
 			return -1;
 		}
 

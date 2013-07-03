@@ -1,0 +1,5 @@
+<definition>
+	<command name="makeVisible">
+		<execute selenium="makeVisible" />
+	</command>
+</definition>

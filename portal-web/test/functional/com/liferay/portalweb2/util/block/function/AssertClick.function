@@ -55,6 +55,14 @@
 		<execute function="AssertClick#assertTextClickAt" />
 	</command>
 
+	<command name="assertTextClickAtClickSidebar">
+		<execute selenium="clickAt" argument1="//ul[@class='nav nav-add-controls']" />
+
+		<execute selenium="waitForElementPresent" argument1="//script[contains(@src,'/aui/aui-editable-deprecated/aui-editable-deprecated-min.js')]" />
+
+		<execute function="AssertClick#assertTextClickAt" />
+	</command>
+
 	<command name="assertValueClickAt">
 		<execute function="AssertTextEquals#assertValue" />
 

@@ -85,6 +85,7 @@ public class SynchronousDestinationExecutionTestListener
 			ProxyModeThreadLocal.setForceSync(true);
 
 			replaceDestination(DestinationNames.ASYNC_SERVICE);
+			replaceDestination(DestinationNames.BACKGROUND_TASK);
 		}
 
 		protected void replaceDestination(String destinationName) {

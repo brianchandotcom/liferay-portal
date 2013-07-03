@@ -110,7 +110,7 @@ public class RestrictionsFactoryImpl implements RestrictionsFactory {
 	}
 
 	@Override
-	public Criterion in(String propertyName, Collection<Object> values) {
+	public Criterion in(String propertyName, Collection<?> values) {
 		return new CriterionImpl(
 			org.hibernate.criterion.Restrictions.in(propertyName, values));
 	}

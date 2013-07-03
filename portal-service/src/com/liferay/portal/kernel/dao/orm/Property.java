@@ -71,7 +71,7 @@ public interface Property extends Projection {
 
 	public Criterion in(char[] values);
 
-	public Criterion in(Collection<Object> values);
+	public Criterion in(Collection<?> values);
 
 	public Criterion in(double[] values);
 

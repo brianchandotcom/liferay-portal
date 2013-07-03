@@ -92,7 +92,7 @@ public class RestrictionsFactoryImpl implements RestrictionsFactory {
 	}
 
 	@Override
-	public Criterion in(String propertyName, Collection<Object> values) {
+	public Criterion in(String propertyName, Collection<?> values) {
 		throw new UnsupportedOperationException();
 	}
 

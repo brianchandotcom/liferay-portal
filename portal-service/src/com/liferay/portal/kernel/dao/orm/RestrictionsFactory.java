@@ -46,7 +46,7 @@ public interface RestrictionsFactory {
 
 	public Criterion ilike(String propertyName, Object value);
 
-	public Criterion in(String propertyName, Collection<Object> values);
+	public Criterion in(String propertyName, Collection<?> values);
 
 	public Criterion in(String propertyName, Object[] values);
 

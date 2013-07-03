@@ -88,7 +88,7 @@ public class RestrictionsFactoryUtil {
 		return getRestrictionsFactory().ilike(propertyName, value);
 	}
 
-	public static Criterion in(String propertyName, Collection<Object> values) {
+	public static Criterion in(String propertyName, Collection<?> values) {
 		return getRestrictionsFactory().in(propertyName, values);
 	}
 

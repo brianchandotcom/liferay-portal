@@ -26,6 +26,8 @@ import com.liferay.portal.kernel.test.AbstractExecutionTestListener;
 import com.liferay.portal.kernel.test.TestContext;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Miguel Pastor
@@ -81,10 +83,14 @@ public class SynchronousDestinationExecutionTestListener
 
 			ProxyModeThreadLocal.setForceSync(true);
 
+			replaceDestination(DestinationNames.ASYNC_SERVICE);
+		}
+
+		protected void replaceDestination(String destinationName) {
 			MessageBus messageBus = MessageBusUtil.getMessageBus();
 
 			Destination destination = messageBus.getDestination(
-				DestinationNames.ASYNC_SERVICE);
+				destinationName);
 
 			if (destination instanceof BaseAsyncDestination) {
 				_asyncServiceDestination = destination;
@@ -92,7 +98,7 @@ public class SynchronousDestinationExecutionTestListener
 				SynchronousDestination synchronousDestination =
 					new SynchronousDestination();
 
-				synchronousDestination.setName(DestinationNames.ASYNC_SERVICE);
+				synchronousDestination.setName(destinationName);
 
 				messageBus.replace(synchronousDestination);
 			}

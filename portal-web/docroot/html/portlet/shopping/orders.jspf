@@ -28,8 +28,6 @@ portletURL.setParameter("tabs1", tabs1);
 	<%
 	OrderSearch searchContainer = new OrderSearch(renderRequest, portletURL);
 
-	searchContainerReference.register(searchContainer);
-
 	List headerNames = searchContainer.getHeaderNames();
 
 	headerNames.add(StringPool.BLANK);

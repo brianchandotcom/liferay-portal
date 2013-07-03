@@ -456,7 +456,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	public long exportLayoutsAsFileInBackground(
 			String taskName, long groupId, boolean privateLayout,
 			long[] layoutIds, Map<String, String[]> parameterMap,
-			Date startDate, Date endDate)
+			Date startDate, Date endDate, String fileName)
 		throws PortalException, SystemException {
 
 		GroupPermissionUtil.check(
@@ -464,7 +464,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 
 		return layoutLocalService.exportLayoutsAsFileInBackground(
 			getUserId(), taskName, groupId, privateLayout, layoutIds,
-			parameterMap, startDate, endDate);
+			parameterMap, startDate, endDate, fileName);
 	}
 
 	/**
@@ -574,7 +574,8 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	@Override
 	public long exportPortletInfoAsFileInBackground(
 			long userId, String taskName, String portletId,
-			Map<String, String[]> parameterMap, Date startDate, Date endDate)
+			Map<String, String[]> parameterMap, Date startDate, Date endDate,
+			String fileName)
 		throws PortalException, SystemException {
 
 		User user = userPersistence.findByPrimaryKey(userId);
@@ -587,13 +588,15 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			ActionKeys.EXPORT_IMPORT_PORTLET_INFO);
 
 		return layoutLocalService.exportPortletInfoAsFileInBackground(
-			userId, taskName, portletId, parameterMap, startDate, endDate);
+			userId, taskName, portletId, parameterMap, startDate, endDate,
+			fileName);
 	}
 
 	@Override
 	public long exportPortletInfoAsFileInBackground(
 			String taskName, long plid, long groupId, String portletId,
-			Map<String, String[]> parameterMap, Date startDate, Date endDate)
+			Map<String, String[]> parameterMap, Date startDate, Date endDate,
+			String fileName)
 		throws PortalException, SystemException {
 
 		Layout layout = layoutLocalService.getLayout(plid);
@@ -604,7 +607,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 
 		return layoutLocalService.exportPortletInfoAsFileInBackground(
 			getUserId(), taskName, plid, groupId, portletId, parameterMap,
-			startDate, endDate);
+			startDate, endDate, fileName);
 	}
 
 	/**

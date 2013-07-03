@@ -123,6 +123,15 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 </portlet:actionURL>
 
 <aui:form action="<%= importPagesURL %>" cssClass="lfr-export-dialog" method="post" name="fm1">
+	<portlet:renderURL var="portletURL">
+		<portlet:param name="struts_action" value="/layouts_admin/import_layouts" />
+		<portlet:param name="tabs2" value="all-import-processes" />
+		<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+		<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
+	</portlet:renderURL>
+
+	<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
+
 	<div class="export-dialog-tree">
 		<div id="<portlet:namespace />importConfiguration">
 			<aui:fieldset cssClass="options-group" label="file">

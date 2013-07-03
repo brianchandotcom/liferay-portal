@@ -21,26 +21,18 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.DateRange;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutServiceUtil;
-import com.liferay.portal.struts.ActionConstants;
 import com.liferay.portal.struts.PortletAction;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.sites.action.ActionUtil;
-
-import java.io.File;
-import java.io.FileInputStream;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -51,9 +43,6 @@ import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -74,8 +63,6 @@ public class ExportLayoutsAction extends PortletAction {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
-		File file = null;
-
 		try {
 			long groupId = ParamUtil.getLong(actionRequest, "groupId");
 			boolean privateLayout = ParamUtil.getBoolean(
@@ -93,20 +80,15 @@ public class ExportLayoutsAction extends PortletAction {
 			Date endDate = dateRange.getEndDate();
 
 			if (Validator.isNotNull(cmd)) {
-				file = LayoutServiceUtil.exportLayoutsAsFile(
-					groupId, privateLayout, layoutIds,
-					actionRequest.getParameterMap(), startDate, endDate);
+				LayoutServiceUtil.exportLayoutsAsFileInBackground(
+					fileName, groupId, privateLayout, layoutIds,
+					actionRequest.getParameterMap(), startDate, endDate,
+					fileName);
 
-				HttpServletRequest request = PortalUtil.getHttpServletRequest(
-					actionRequest);
-				HttpServletResponse response =
-					PortalUtil.getHttpServletResponse(actionResponse);
+				String redirect = ParamUtil.getString(
+					actionRequest, "redirect");
 
-				ServletResponseUtil.sendFile(
-					request, response, fileName, new FileInputStream(file),
-					ContentTypes.APPLICATION_ZIP);
-
-				setForward(actionRequest, ActionConstants.COMMON_NULL);
+				sendRedirect(actionRequest, actionResponse, redirect);
 			}
 			else {
 				if (startDate != null) {
@@ -129,9 +111,6 @@ public class ExportLayoutsAction extends PortletAction {
 				actionRequest, "pagesRedirect");
 
 			sendRedirect(actionRequest, actionResponse, pagesRedirect);
-		}
-		finally {
-			FileUtil.delete(file);
 		}
 	}
 

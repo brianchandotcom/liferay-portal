@@ -152,6 +152,16 @@ public class BackgroundTaskLocalServiceImpl
 	}
 
 	@Override
+	public BackgroundTask deleteBackgroundTask(long backgroundTaskId)
+		throws PortalException, SystemException {
+
+		BackgroundTask backgroundTask =
+			backgroundTaskPersistence.findByPrimaryKey(backgroundTaskId);
+
+		return deleteBackgroundTask(backgroundTask);
+	}
+
+	@Override
 	public BackgroundTask fetchBackgroundTask(long backgroundTaskId)
 		throws SystemException {
 

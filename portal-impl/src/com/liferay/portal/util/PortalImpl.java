@@ -3097,7 +3097,7 @@ public class PortalImpl implements Portal {
 		PortletRequestImpl portletRequestImpl =
 			PortletRequestImpl.getPortletRequestImpl(portletRequest);
 
-		return DoPrivilegedUtil.wrap(portletRequestImpl);
+		return DoPrivilegedUtil.wrapWhenActive(portletRequestImpl);
 	}
 
 	@Override

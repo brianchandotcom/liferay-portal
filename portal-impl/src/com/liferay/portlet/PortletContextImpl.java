@@ -146,7 +146,7 @@ public class PortletContextImpl implements LiferayPortletContext {
 		}
 
 		if (requestDispatcher != null) {
-			return DoPrivilegedUtil.wrap(
+			return DoPrivilegedUtil.wrapWhenActive(
 				new PortletRequestDispatcherImpl(
 					requestDispatcher, false, this, path));
 		}

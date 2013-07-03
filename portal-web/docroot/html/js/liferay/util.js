@@ -1755,7 +1755,7 @@
 	Liferay.provide(
 		Util,
 		'toggleBoxes',
-		function(checkBoxId, toggleBoxId, displayWhenUnchecked) {
+		function(checkBoxId, toggleBoxId, displayWhenUnchecked, toggleChildCheckboxes) {
 			var checkBox = A.one('#' + checkBoxId);
 			var toggleBox = A.one('#' + toggleBoxId);
 
@@ -1773,10 +1773,26 @@
 					toggleBox.toggle();
 				}
 
+				var childCheckboxes;
+
 				checkBox.on(
 					EVENT_CLICK,
 					function() {
 						toggleBox.toggle();
+
+						if (toggleChildCheckboxes) {
+							if (!childCheckboxes) {
+								childCheckboxes = toggleBox.all('input[type=checkbox]');
+							}
+
+							var checked = checkBox.get('checked');
+
+							childCheckboxes.each(
+								function(item, index, collection) {
+									item.set('checked', checked);
+								}
+							);
+						}
 					}
 				);
 			}

@@ -67,7 +67,7 @@ for (int i = 0; i < controls.length; i++) {
 					</ul>
 
 					<aui:script>
-						Liferay.Util.toggleBoxes('<portlet:namespace /><%= control.getNamespacedControlName() %>Checkbox','<portlet:namespace /><%= control.getNamespacedControlName() %>Controls');
+						Liferay.Util.toggleBoxes('<portlet:namespace /><%= control.getNamespacedControlName() %>Checkbox','<portlet:namespace /><%= control.getNamespacedControlName() %>Controls', false, true);
 					</aui:script>
 				</c:if>
 			</c:when>

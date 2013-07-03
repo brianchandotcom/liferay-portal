@@ -33,6 +33,11 @@ public class DB2Dialect extends org.hibernate.dialect.DB2Dialect {
 	}
 
 	@Override
+	public String getForUpdateString() {
+		return " for read only with rs use and keep exclusive locks";
+	}
+
+	@Override
 	public String getLimitString(String sql, int offset, int limit) {
 		boolean hasOffset = false;
 

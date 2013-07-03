@@ -189,6 +189,14 @@ selectURL.setParameter("layoutSetBranchId", String.valueOf(layoutSetBranchId));
 selectURL.setParameter("selectPages", String.valueOf(!selectPages));
 selectURL.setWindowState(LiferayWindowState.POP_UP);
 
+PortletURL renderURL = renderResponse.createRenderURL();
+
+renderURL.setParameter("struts_action", "/layouts_admin/publish_layouts");
+renderURL.setParameter("tabs2", "all-publication-processes");
+renderURL.setParameter("closeRedirect", closeRedirect);
+renderURL.setParameter("groupId", String.valueOf(stagingGroupId));
+renderURL.setParameter("privateLayout", String.valueOf(privateLayout));
+
 request.setAttribute("edit_pages.jsp-groupId", new Long(stagingGroupId));
 request.setAttribute("edit_pages.jsp-selPlid", new Long(selPlid));
 request.setAttribute("edit_pages.jsp-privateLayout", new Boolean(privateLayout));
@@ -424,13 +432,6 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 		}
 
 		OrderByComparator orderByComparator = BackgroundTaskUtil.getBackgroundTaskOrderByComparator(orderByCol, orderByType);
-
-		PortletURL portletURL = renderResponse.createRenderURL();
-
-		portletURL.setParameter("struts_action", "/layouts_admin/import_layouts");
-		portletURL.setParameter("tabs2", "all-import-processes");
-		portletURL.setParameter("groupId", String.valueOf(groupId));
-		portletURL.setParameter("privateLayout", String.valueOf(privateLayout));
 		%>
 
 		<liferay-ui:search-container

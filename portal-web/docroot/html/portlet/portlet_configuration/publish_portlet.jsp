@@ -21,6 +21,10 @@ String tabs2 = ParamUtil.getString(request, "tabs2", "export");
 
 Layout exportableLayout = ExportImportHelperUtil.getExportableLayout(themeDisplay);
 
+PortletURL portletURL = currentURLObj;
+
+portletURL.setParameter("tabs3", "all-publication-processes");
+
 String errorMessageKey = StringPool.BLANK;
 
 Group stagingGroup = themeDisplay.getScopeGroup();
@@ -454,10 +458,6 @@ else if (stagingGroup.isLayout()) {
 				}
 
 				OrderByComparator orderByComparator = BackgroundTaskUtil.getBackgroundTaskOrderByComparator(orderByCol, orderByType);
-
-				PortletURL portletURL = currentURLObj;
-
-				portletURL.setParameter("tabs3", "all-import-processes");
 				%>
 
 				<liferay-ui:search-container

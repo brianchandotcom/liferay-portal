@@ -21,6 +21,7 @@ if (!useNamespace) {
 
 String baseType = GetterUtil.getString((String)request.getAttribute("aui:input:baseType"));
 String forLabel = namespace + GetterUtil.getString((String)request.getAttribute("aui:input:forLabel"));
+boolean wrappedField = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:input:wrappedField")));
 
 if (Validator.isNull(label) && changesContext) {
 	StringBundler sb = new StringBundler(5);

@@ -71,8 +71,8 @@ else {
 
 	<liferay-ui:error exception="<%= ActionTypeException.class %>" message="please-select-a-valid-action-type" />
 	<liferay-ui:error exception="<%= NoSuchActionException.class %>" message="action-does-not-exist" />
-	<liferay-ui:error exception="<%= NoSuchRuleGroupException.class %>" message="rule-group-does-not-exist" />
-	<liferay-ui:error exception="<%= NoSuchRuleGroupInstanceException.class %>" message="rule-group-instance-does-not-exist" />
+	<liferay-ui:error exception="<%= NoSuchRuleGroupException.class %>" message="device-family-does-not-exist" />
+	<liferay-ui:error exception="<%= NoSuchRuleGroupInstanceException.class %>" message="device-rule-does-not-exist" />
 
 	<aui:model-context bean="<%= action %>" model="<%= MDRAction.class %>" />
 

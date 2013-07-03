@@ -30,7 +30,7 @@ portletURL.setParameter("chooseCallback", chooseCallback);
 
 <c:if test="<%= Validator.isNotNull(chooseCallback) %>">
 	<liferay-ui:header
-		title="rule-groups"
+		title="device-families"
 	/>
 </c:if>
 
@@ -57,7 +57,7 @@ portletURL.setParameter("chooseCallback", chooseCallback);
 
 			<aui:nav-bar>
 				<aui:nav>
-					<aui:nav-item href="<%= addRuleGroupURL %>" iconClass="icon-plus" label="add-rule-group" />
+					<aui:nav-item href="<%= addRuleGroupURL %>" iconClass="icon-plus" label="add-device-family" />
 				</aui:nav>
 
 				<aui:nav-bar-search cssClass="pull-right" file="/html/portlet/mobile_device_rules/rule_group_search.jsp" searchContainer="<%= ruleGroupSearch %>" />

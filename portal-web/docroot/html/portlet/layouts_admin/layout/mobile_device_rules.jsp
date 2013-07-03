@@ -34,13 +34,13 @@ PortletURL redirectURL = (PortletURL)request.getAttribute("edit_pages.jsp-redire
 int mdrRuleGroupInstancesCount = MDRRuleGroupInstanceServiceUtil.getRuleGroupInstancesCount(className, classPK);
 %>
 
-<aui:input checked="<%= mdrRuleGroupInstancesCount == 0 %>" disabled="<%= mdrRuleGroupInstancesCount > 0 %>" id="inheritRuleGroupInstances" label='<%= LanguageUtil.format(pageContext, "use-the-same-mobile-device-rule-groups-of-the-x-x", new String[] {HtmlUtil.escape(rootNodeName), redirectURL.toString() + "#tab=mobileDeviceRules"}) %>' name="inheritRuleGroupInstances" type="radio" value="<%= true %>" />
+<aui:input checked="<%= mdrRuleGroupInstancesCount == 0 %>" disabled="<%= mdrRuleGroupInstancesCount > 0 %>" id="inheritRuleGroupInstances" label='<%= LanguageUtil.format(pageContext, "use-the-same-mobile-device-rules-of-the-x-x", new String[] {HtmlUtil.escape(rootNodeName), redirectURL.toString() + "#tab=mobileDeviceRules"}) %>' name="inheritRuleGroupInstances" type="radio" value="<%= true %>" />
 
-<aui:input checked="<%= mdrRuleGroupInstancesCount > 0 %>" id="uniqueRuleGroupInstances" label="define-specific-mobile-rule-groups-for-this-page" name="inheritRuleGroupInstances" type="radio" value="<%= false %>" />
+<aui:input checked="<%= mdrRuleGroupInstancesCount > 0 %>" id="uniqueRuleGroupInstances" label="define-specific-mobile-device-rules-for-this-page" name="inheritRuleGroupInstances" type="radio" value="<%= false %>" />
 
 <div class="<%= (mdrRuleGroupInstancesCount == 0) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />inheritRuleGroupInstancesContainer">
 	<div class="alert alert-info">
-		<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(rootNodeName), redirectURL.toString()} %>" key="mobile-device-rule-groups-will-be-inhertited-from-x-x" />
+		<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(rootNodeName), redirectURL.toString()} %>" key="mobile-device-rules-will-be-inhertited-from-x-x" />
 	</div>
 </div>
 

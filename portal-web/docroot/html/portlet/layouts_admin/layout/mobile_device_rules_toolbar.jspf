@@ -17,10 +17,10 @@
 <aui:nav-bar>
 	<aui:nav>
 		<c:if test="<%= MDRPermissionUtil.contains(permissionChecker, groupId, ActionKeys.ADD_RULE_GROUP_INSTANCE) %>">
-			<aui:nav-item anchorId="saveInstance" label="select-rule-group" />
+			<aui:nav-item anchorId="saveInstance" label="select-device-family" />
 
 			<c:if test="<%= MDRRuleGroupInstanceServiceUtil.getRuleGroupInstancesCount(className, classPK) > 1 %>">
-				<aui:nav-item anchorId="managePriorities" label="manage-rule-group-priorities" />
+				<aui:nav-item anchorId="managePriorities" label="manage-rule-priorities" />
 			</c:if>
 		</c:if>
 	</aui:nav>
@@ -106,7 +106,7 @@
 		saveInstance.on(
 			'click',
 			function(event) {
-				config.dialog.title = '<%= UnicodeLanguageUtil.get(pageContext, "rule-groups") %>';
+				config.dialog.title = '<%= UnicodeLanguageUtil.get(pageContext, "device-families") %>';
 
 				config.id = '<portlet:namespace />ruleGroups';
 				config.uri = '<%= selectRuleGroupURL %>';
@@ -122,7 +122,7 @@
 		managePriorities.on(
 			'click',
 			function(event) {
-				config.dialog.title = '<%= UnicodeLanguageUtil.get(pageContext, "rule-group-priorities") %>';
+				config.dialog.title = '<%= UnicodeLanguageUtil.get(pageContext, "rule-priorities") %>';
 
 				config.id = '<portlet:namespace />ruleGroupsPriorities';
 				config.uri = '<%= managePrioritiesURL %>';

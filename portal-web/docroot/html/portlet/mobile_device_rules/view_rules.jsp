@@ -45,7 +45,7 @@ portletURL.setParameter("redirect", redirect);
 <liferay-ui:header
 	backURL="<%= backURL %>"
 	localizeTitle="<%= false %>"
-	title='<%= LanguageUtil.format(pageContext, "rules-for-x", ruleGroup.getName(locale), false) %>'
+	title='<%= LanguageUtil.format(pageContext, "classification-rules-for-x", ruleGroup.getName(locale), false) %>'
 />
 
 <aui:nav-bar>
@@ -56,7 +56,7 @@ portletURL.setParameter("redirect", redirect);
 			<portlet:param name="ruleGroupId" value="<%= String.valueOf(ruleGroupId) %>" />
 		</liferay-portlet:renderURL>
 
-		<aui:nav-item href="<%= addURL %>" iconClass="icon-plus" label="add-rule" />
+		<aui:nav-item href="<%= addURL %>" iconClass="icon-plus" label="add-classification-rule" />
 	</aui:nav>
 </aui:nav-bar>
 
@@ -65,7 +65,7 @@ portletURL.setParameter("redirect", redirect);
 <liferay-ui:search-container
 	delta="<%= 5 %>"
 	deltaConfigurable="<%= false %>"
-	emptyResultsMessage="no-rules-are-configured-for-this-rule-group"
+	emptyResultsMessage="no-classification-rules-are-configured-for-this-device-family"
 	headerNames="name,type"
 	iteratorURL="<%= portletURL %>"
 >

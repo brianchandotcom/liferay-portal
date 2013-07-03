@@ -57,7 +57,7 @@ portletURL.setParameter("ruleGroupInstanceId", String.valueOf(ruleGroupInstanceI
 <liferay-ui:search-container
 	delta="<%= 5 %>"
 	deltaConfigurable="<%= false %>"
-	emptyResultsMessage="no-actions-are-configured-for-this-rule-group-instance"
+	emptyResultsMessage="no-actions-are-configured-for-this-device-family"
 	headerNames="name,description,type"
 	iteratorURL="<%= portletURL %>"
 >

@@ -16,7 +16,7 @@
 
 <liferay-ui:search-container
 	deltaConfigurable="<%= false %>"
-	emptyResultsMessage="no-rule-group-instances-are-configured"
+	emptyResultsMessage="no-device-rules-are-configured"
 	headerNames="name,description,priority"
 	iteratorURL="<%= portletURL %>"
 >

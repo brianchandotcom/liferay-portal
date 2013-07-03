@@ -56,7 +56,7 @@ MDRRuleGroup ruleGroup = (MDRRuleGroup)row.getObject();
 			<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 		</portlet:renderURL>
 
-		<liferay-ui:icon image="manage_nodes" message="manage-rules" url="<%= editRulesURL.toString() %>" />
+		<liferay-ui:icon image="manage_nodes" message="manage-classification-rules" url="<%= editRulesURL.toString() %>" />
 
 		<portlet:actionURL var="copyURL">
 			<portlet:param name="struts_action" value="/mobile_device_rules/edit_rule_group" />

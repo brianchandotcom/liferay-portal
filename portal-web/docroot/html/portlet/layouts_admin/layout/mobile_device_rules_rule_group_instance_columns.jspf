@@ -21,14 +21,39 @@ MDRRuleGroup mdrRuleGroup = MDRRuleGroupLocalServiceUtil.fetchRuleGroup(mdrRuleG
 <liferay-ui:search-container-column-text
 	href="<%= rowURL %>"
 	name="name"
-	value="<%= mdrRuleGroup.getName(locale) %>"
-/>
+>
+
+	<%= mdrRuleGroup.getName(locale) %>
+
+	<c:if test="<%= Validator.isNotNull(mdrRuleGroup.getDescription(locale)) %>">
+		<liferay-ui:icon-help message="<%= mdrRuleGroup.getDescription(locale) %>" />
+	</c:if>
+</liferay-ui:search-container-column-text>
 
 <liferay-ui:search-container-column-text
 	href="<%= rowURL %>"
-	name="description"
-	value="<%= mdrRuleGroup.getDescription(locale) %>"
-/>
+	name="actions"
+>
+
+	<%
+	List<MDRAction> mdrActions = MDRActionLocalServiceUtil.getActions(mdrRuleGroupInstance.getRuleGroupInstanceId(), 0, 10);
+
+	StringBundler sb = new StringBundler(mdrActions.size() * 2);
+
+	for (int i = 0; i < mdrActions.size(); i++) {
+		MDRAction mdrAction = mdrActions.get(i);
+
+		sb.append(mdrAction.getName(locale));
+
+		if (i < (mdrActions.size() -1)) {
+			sb.append(", ");
+		}
+	}
+	%>
+
+	<%= sb.toString() %>
+
+</liferay-ui:search-container-column-text>
 
 <liferay-ui:search-container-column-text
 	href="<%= rowURL %>"

@@ -160,8 +160,7 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 				}
 				catch (Exception e) {
 					_log.warn(
-						"File entry " + dlFileEntry.getName() + "not found: " +
-						e.getMessage());
+						"File entry " + dlFileEntry.getName() + "not found", e);
 
 					return;
 				}
@@ -214,10 +213,12 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 						dlFileVersion.getVersion(), false);
 				}
 				catch (Exception e) {
+					DLFileEntry fileEntry = dlFileVersion.getFileEntry();
+
 					_log.warn(
 						"File version " + dlFileVersion.getVersion() + " of " +
-						"file entry " + dlFileVersion.getFileEntry().getName() +
-						" not found: " + e.getMessage());
+							"file entry " + fileEntry.getName() + " not found",
+						e);
 
 					return;
 				}

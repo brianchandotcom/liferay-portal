@@ -60,8 +60,6 @@ JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_AR
 			<%
 			ArticleSearch searchContainer = new ArticleSearch(renderRequest, portletURL);
 
-			searchContainerReference.register(searchContainer);
-
 			List headerNames = searchContainer.getHeaderNames();
 
 			headerNames.add(2, "version");

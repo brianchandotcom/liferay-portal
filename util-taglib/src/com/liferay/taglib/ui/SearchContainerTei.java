@@ -31,7 +31,7 @@ public class SearchContainerTei extends TagExtraInfo {
 		String var = tagData.getAttributeString("var");
 
 		if (Validator.isNull(var)) {
-			var = SearchContainerTag.DEFAULT_VAR;
+			var = SearchContainer.DEFAULT_VAR;
 		}
 
 		return new VariableInfo[] {

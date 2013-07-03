@@ -31,10 +31,12 @@ public class SearchContainerReference {
 
 		_request = request;
 		_namespace = namespace;
+
+		request.setAttribute(WebKeys.SEARCH_CONTAINER_REFERENCE, this);
 	}
 
 	public String getId() {
-		return getId(_DEFAULT_VAR);
+		return getId(SearchContainer.DEFAULT_VAR);
 	}
 
 	public String getId(String var) {
@@ -48,14 +50,12 @@ public class SearchContainerReference {
 	}
 
 	public void register(SearchContainer<?> searchContainer) {
-		register(_DEFAULT_VAR, searchContainer);
+		register(SearchContainer.DEFAULT_VAR, searchContainer);
 	}
 
 	public void register(String var, SearchContainer<?> searchContainer) {
 		_searchContainers.put(var, searchContainer);
 	}
-
-	private static final String _DEFAULT_VAR = "searchContainer";
 
 	private String _namespace;
 	private HttpServletRequest _request;

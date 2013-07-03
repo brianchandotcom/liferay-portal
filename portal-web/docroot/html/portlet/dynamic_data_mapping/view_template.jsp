@@ -117,6 +117,7 @@ String title = ddmDisplay.getViewTemplatesTitle(structure, controlPanel, locale)
 			rowURL.setParameter("classNameId", String.valueOf(classNameId));
 			rowURL.setParameter("classPK", String.valueOf(template.getClassPK()));
 			rowURL.setParameter("type", template.getType());
+			rowURL.setParameter("structureAvailableFields", renderResponse.getNamespace() + "getAvailableFields");
 
 			String rowHREF = rowURL.toString();
 			%>

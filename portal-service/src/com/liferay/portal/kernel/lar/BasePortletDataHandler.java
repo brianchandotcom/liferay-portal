@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.lar;
 
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -22,11 +23,15 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
+import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.model.Portlet;
+import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
+import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateUtil;
 
 import java.io.IOException;
 
@@ -293,18 +298,7 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 
 		try {
 			if (Validator.isXml(data)) {
-				Document document = SAXReaderUtil.read(data);
-
-				Element rootElement = document.getRootElement();
-
-				portletDataContext.setImportDataRootElement(rootElement);
-
-				long portletSourceGroupId = GetterUtil.getLong(
-					rootElement.attributeValue("group-id"));
-
-				if (portletSourceGroupId != 0) {
-					portletDataContext.setSourceGroupId(portletSourceGroupId);
-				}
+				addImportDataRootElement(portletDataContext, data);
 			}
 
 			return doImportData(
@@ -367,6 +361,20 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 			PortletPreferences portletPreferences, Element rootElement)
 		throws PortletDataException {
 
+		String displayStyle = getDisplayTemplate(
+			portletDataContext, portletId, portletPreferences);
+
+		if (Validator.isNotNull(displayStyle)) {
+			DDMTemplate ddmTemplate =
+				PortletDisplayTemplateUtil.fetchDDMTemplate(
+					portletDataContext.getGroupId(), displayStyle);
+
+			if (ddmTemplate != null) {
+				StagedModelDataHandlerUtil.exportStagedModel(
+					portletDataContext, ddmTemplate);
+			}
+		}
+
 		try {
 			return doProcessExportPortletPreferences(
 				portletDataContext, portletId, portletPreferences, rootElement);
@@ -381,6 +389,42 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 			PortletDataContext portletDataContext, String portletId,
 			PortletPreferences portletPreferences)
 		throws PortletDataException {
+
+		String displayStyle = getDisplayTemplate(
+			portletDataContext, portletId, portletPreferences);
+
+		if (Validator.isNotNull(displayStyle)) {
+			DDMTemplate ddmTemplate =
+				PortletDisplayTemplateUtil.fetchDDMTemplate(
+					portletDataContext.getGroupId(), displayStyle);
+
+			if (ddmTemplate == null) {
+				ddmTemplate = PortletDisplayTemplateUtil.fetchDDMTemplate(
+					portletDataContext.getCompanyGroupId(), displayStyle);
+			}
+
+			if (ddmTemplate == null) {
+				String ddmTemplateUuid =
+					PortletDisplayTemplateUtil.getDDMTemplateUuid(displayStyle);
+
+				Element ddmTemplateElement =
+					portletDataContext.getImportDataElement(
+						DDMTemplate.class.getSimpleName(), "uuid",
+						ddmTemplateUuid);
+
+				String ddmTemplatePath = ddmTemplateElement.attributeValue(
+					"path");
+
+				ddmTemplate =
+					(DDMTemplate)portletDataContext.getZipEntryAsObject(
+						ddmTemplatePath);
+
+				if (ddmTemplate != null) {
+					StagedModelDataHandlerUtil.importStagedModel(
+						portletDataContext, ddmTemplate);
+				}
+			}
+		}
 
 		try {
 			return doProcessImportPortletPreferences(
@@ -406,6 +450,26 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 		Element rootElement = document.addElement(clazz.getSimpleName());
 
 		portletDataContext.setExportDataRootElement(rootElement);
+
+		return rootElement;
+	}
+
+	protected Element addImportDataRootElement(
+			PortletDataContext portletDataContext, String data)
+		throws DocumentException {
+
+		Document document = SAXReaderUtil.read(data);
+
+		Element rootElement = document.getRootElement();
+
+		portletDataContext.setImportDataRootElement(rootElement);
+
+		long portletSourceGroupId = GetterUtil.getLong(
+			rootElement.attributeValue("group-id"));
+
+		if (portletSourceGroupId != 0) {
+			portletDataContext.setSourceGroupId(portletSourceGroupId);
+		}
 
 		return rootElement;
 	}
@@ -497,6 +561,29 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 		throws Exception {
 
 		return portletPreferences;
+	}
+
+	protected String getDisplayTemplate(
+		PortletDataContext portletDataContext, String portletId,
+		PortletPreferences portletPreferences) {
+
+		try {
+			Portlet portlet = PortletLocalServiceUtil.getPortletById(
+				portletDataContext.getCompanyId(), portletId);
+
+			if (Validator.isNotNull(portlet.getTemplateHandlerClass())) {
+				return portletPreferences.getValue(
+					getDisplayTemplatePreferenceName(), null);
+			}
+		}
+		catch (SystemException se) {
+		}
+
+		return null;
+	}
+
+	protected String getDisplayTemplatePreferenceName() {
+		return "displayStyle";
 	}
 
 	protected String getExportDataRootElementString(Element rootElement) {

@@ -79,11 +79,7 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 			Group companyGroup = GroupLocalServiceUtil.getCompanyGroup(
 				group.getCompanyId());
 
-			if (!displayStyle.startsWith("ddmTemplate_")) {
-				return null;
-			}
-
-			String uuid = displayStyle.substring(12);
+			String uuid = getDDMTemplateUuid(displayStyle);
 
 			if (Validator.isNull(uuid)) {
 				return null;
@@ -115,16 +111,16 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 	}
 
 	@Override
-	public long getDDMTemplateGroupId(ThemeDisplay themeDisplay) {
+	public long getDDMTemplateGroupId(long groupId) {
 		try {
-			Group scopeGroup = themeDisplay.getScopeGroup();
+			Group group = GroupLocalServiceUtil.getGroup(groupId);
 
-			if (scopeGroup.isLayout()) {
-				scopeGroup = scopeGroup.getParentGroup();
+			if (group.isLayout()) {
+				group = group.getParentGroup();
 			}
 
-			if (scopeGroup.isStagingGroup()) {
-				Group liveGroup = scopeGroup.getLiveGroup();
+			if (group.isStagingGroup()) {
+				Group liveGroup = group.getLiveGroup();
 
 				if (!liveGroup.isStagedPortlet(
 						PortletKeys.PORTLET_DISPLAY_TEMPLATES)) {
@@ -133,7 +129,7 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 				}
 			}
 
-			return scopeGroup.getGroupId();
+			return group.getGroupId();
 		}
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {
@@ -141,19 +137,27 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 			}
 		}
 
-		return themeDisplay.getScopeGroupId();
+		return groupId;
+	}
+
+	@Override
+	public String getDDMTemplateUuid(String displayStyle) {
+		if (!displayStyle.startsWith(DISPLAY_STYLE_PREFIX)) {
+			return null;
+		}
+
+		return displayStyle.substring(DISPLAY_STYLE_PREFIX.length());
 	}
 
 	@Override
 	public long getPortletDisplayTemplateDDMTemplateId(
-		ThemeDisplay themeDisplay, String displayStyle) {
+		long groupId, String displayStyle) {
 
 		long portletDisplayDDMTemplateId = 0;
 
-		long portletDisplayDDMTemplateGroupId = getDDMTemplateGroupId(
-			themeDisplay);
+		long portletDisplayDDMTemplateGroupId = getDDMTemplateGroupId(groupId);
 
-		if (displayStyle.startsWith("ddmTemplate_")) {
+		if (displayStyle.startsWith(DISPLAY_STYLE_PREFIX)) {
 			DDMTemplate portletDisplayDDMTemplate = fetchDDMTemplate(
 				portletDisplayDDMTemplateGroupId, displayStyle);
 

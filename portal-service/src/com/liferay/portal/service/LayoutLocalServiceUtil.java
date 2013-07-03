@@ -1407,32 +1407,6 @@ public class LayoutLocalServiceUtil {
 			groupId, portletId, parameterMap, is);
 	}
 
-	public static long publishLayoutsInBackground(long userId,
-		java.lang.String taskName, long sourceGroupId, long targetGroupId,
-		boolean privateLayout, long[] layoutIds,
-		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
-		java.util.Date startDate, java.util.Date endDate)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService()
-				   .publishLayoutsInBackground(userId, taskName, sourceGroupId,
-			targetGroupId, privateLayout, layoutIds, parameterMap, startDate,
-			endDate);
-	}
-
-	public static long publishPortletInBackground(long userId,
-		java.lang.String taskName, long sourcePlid, long targetPlid,
-		long sourceGroupId, long targetGroupId, java.lang.String portletId,
-		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
-		java.util.Date startDate, java.util.Date endDate)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService()
-				   .publishPortletInBackground(userId, taskName, sourcePlid,
-			targetPlid, sourceGroupId, targetGroupId, portletId, parameterMap,
-			startDate, endDate);
-	}
-
 	/**
 	* Sets the layouts for the group, replacing and prioritizing all layouts of
 	* the parent layout.

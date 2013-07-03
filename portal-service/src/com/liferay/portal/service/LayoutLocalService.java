@@ -1227,22 +1227,6 @@ public interface LayoutLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
-	public long publishLayoutsInBackground(long userId,
-		java.lang.String taskName, long sourceGroupId, long targetGroupId,
-		boolean privateLayout, long[] layoutIds,
-		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
-		java.util.Date startDate, java.util.Date endDate)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	public long publishPortletInBackground(long userId,
-		java.lang.String taskName, long sourcePlid, long targetPlid,
-		long sourceGroupId, long targetGroupId, java.lang.String portletId,
-		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
-		java.util.Date startDate, java.util.Date endDate)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
-
 	/**
 	* Sets the layouts for the group, replacing and prioritizing all layouts of
 	* the parent layout.

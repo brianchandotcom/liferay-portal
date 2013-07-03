@@ -110,9 +110,9 @@ public class PortletContextImpl implements LiferayPortletContext {
 		}
 
 		if (requestDispatcher != null) {
-			return DoPrivilegedUtil.wrap(
+			return DoPrivilegedUtil.wrapWhenActive(
 				new PortletRequestDispatcherImpl(
-					requestDispatcher, true, this), true);
+					requestDispatcher, true, this));
 		}
 		else {
 			return null;
@@ -148,7 +148,7 @@ public class PortletContextImpl implements LiferayPortletContext {
 		if (requestDispatcher != null) {
 			return DoPrivilegedUtil.wrap(
 				new PortletRequestDispatcherImpl(
-					requestDispatcher, false, this, path), true);
+					requestDispatcher, false, this, path));
 		}
 		else {
 			return null;

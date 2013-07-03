@@ -166,7 +166,7 @@ public class PortletSessionFactoryImpl extends SessionFactoryImpl {
 
 	@Override
 	protected Session wrapSession(org.hibernate.Session session) {
-		return DoPrivilegedUtil.wrap(super.wrapSession(session), true);
+		return DoPrivilegedUtil.wrapWhenActive(super.wrapSession(session));
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

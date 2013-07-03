@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
 import com.liferay.portal.kernel.backgroundtask.BaseBackgroundTaskExecutor;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.model.BackgroundTask;
-import com.liferay.portal.service.LayoutServiceUtil;
+import com.liferay.portal.service.LayoutLocalServiceUtil;
 
 import java.io.File;
 import java.io.Serializable;
@@ -53,13 +53,16 @@ public class PortletStagingBackgroundTaskExecutor
 		Date startDate = (Date)taskContextMap.get("startDate");
 		Date endDate = (Date)taskContextMap.get("endDate");
 
-		File larFile = LayoutServiceUtil.exportPortletInfoAsFile(
+		File larFile = LayoutLocalServiceUtil.exportPortletInfoAsFile(
 			sourcePlid, sourceGroupId, portletId, parameterMap, startDate,
 			endDate);
 
+		long userId = MapUtil.getLong(taskContextMap, "userId");
+
 		try {
-			LayoutServiceUtil.importPortletInfo(
-				targetPlid, targetGroupId, portletId, parameterMap, larFile);
+			LayoutLocalServiceUtil.importPortletInfo(
+				userId, targetPlid, targetGroupId, portletId, parameterMap,
+				larFile);
 		}
 		finally {
 			larFile.delete();

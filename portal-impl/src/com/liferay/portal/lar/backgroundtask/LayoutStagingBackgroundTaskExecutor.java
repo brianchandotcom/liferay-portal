@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.model.BackgroundTask;
-import com.liferay.portal.service.LayoutServiceUtil;
+import com.liferay.portal.service.LayoutLocalServiceUtil;
 
 import java.io.File;
 import java.io.Serializable;
@@ -60,13 +60,13 @@ public class LayoutStagingBackgroundTaskExecutor
 
 		StagingUtil.lockGroup(userId, targetGroupId);
 
-		File larFile = LayoutServiceUtil.exportLayoutsAsFile(
+		File larFile = LayoutLocalServiceUtil.exportLayoutsAsFile(
 			sourceGroupId, privateLayout, layoutIds, parameterMap, startDate,
 			endDate);
 
 		try {
-			LayoutServiceUtil.importLayouts(
-				targetGroupId, privateLayout, parameterMap, larFile);
+			LayoutLocalServiceUtil.importLayouts(
+				userId, targetGroupId, privateLayout, parameterMap, larFile);
 		}
 		finally {
 			larFile.delete();

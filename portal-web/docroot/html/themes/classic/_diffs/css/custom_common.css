@@ -1,17 +1,17 @@
 @import "compass";
 
 .aui {
+	body {
+		color: #555;
+		font-weight: lighter;
+	}
+
 	a {
-		color: #009AE5;
+		font-weight: lighter;
 
 		[class^="icon-"], [class*=" icon-"] {
 			display: inline-block;
 		}
-	}
-
-	body {
-		color: #555;
-		font-weight: lighter;
 	}
 
 	form .accordion-heading .accordion-toggle {
@@ -20,6 +20,9 @@
 
 	input[type="color"], input[type="date"], input[type="datetime"], input[type="datetime-local"], input[type="email"], input[type="month"], input[type="number"], input[type="password"], input[type="search"], input[type="tel"], input[type="text"], input[type="time"], input[type="url"], input[type="week"], select, textarea, .uneditable-input {
 		border: 1px solid #DDD;
+		color: #8D8D8D;
+		font-weight: lighter;
+		margin-bottom: 7px;
 		margin-left: 6px;
 		margin-top: 6px;
 
@@ -38,6 +41,9 @@
 	}
 
 	label {
+		color: #555;
+		font-size: 15px;
+		font-weight: lighter;
 		margin-left: 6px;
 	}
 
@@ -49,6 +55,14 @@
 
 	ul {
 		margin: 0 0 11px 0;
+	}
+
+	li {
+		line-height: 27px;
+	}
+
+	.form-search .control-group-inline {
+		margin: 0;
 	}
 
 	.btn-link {
@@ -117,23 +131,17 @@
 		}
 	}
 
-	/* Help Icon */
+	/* ---------- Help Icon ---------- */
 
 	.taglib-icon-help {
-		background: url(../../control_panel/images/custom/taglib-icon-help.png) no-repeat 0 -15px;
-		display: inline-block;
-		height: 13px;
-		vertical-align: top;
-
-		&:hover {
-			background-position: 0 -1px;
-			cursor: pointer;
-		}
-
 		img {
-			margin-top: -2px;
-			opacity: 0;
+			@include opacity(0.5);
+
 			vertical-align: top;
+
+			&:hover {
+				@include opacity(1);
+			}
 		}
 	}
 
@@ -208,7 +216,9 @@
 						font-weight: lighter;
 
 						&:hover {
-							background: transparent;
+							background: #FFF;
+							background-color: rgba(255, 255, 255, 0.9);
+							color: #333;
 						}
 
 						[class^="icon-"], [class*=" icon-"] {
@@ -248,17 +258,9 @@
 		.nav-account-controls {
 			float: right;
 
-			li ul {
-				li a {
-					&:hover {
-						text-decoration: underline;
-
-						i {
-							background-image: none;
-							text-decoration: none;
-						}
-					}
-				}
+			li ul li a:hover i {
+				background-image: none;
+				text-decoration: none;
 			}
 		}
 

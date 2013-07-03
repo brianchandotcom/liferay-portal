@@ -127,11 +127,11 @@ treeKey = treeKey + privateLayout + layoutSetBranchId;
 
 selectedLayoutIds = GetterUtil.getLongValues(StringUtil.split(SessionTreeJSClicks.getOpenNodes(request, treeKey + "SelectedNode"), ','));
 
-List results = new ArrayList();
+List<Layout> selectedLayouts = new ArrayList<Layout>();
 
 for (int i = 0; i < selectedLayoutIds.length; i++) {
 	try {
-		results.add(LayoutLocalServiceUtil.getLayout(selGroupId, privateLayout, selectedLayoutIds[i]));
+		selectedLayouts.add(LayoutLocalServiceUtil.getLayout(selGroupId, privateLayout, selectedLayoutIds[i]));
 	}
 	catch (NoSuchLayoutException nsle) {
 	}
@@ -358,8 +358,8 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 							if (selLayout != null) {
 								exportLayouts.add(selLayout);
 							}
-							else if (!results.isEmpty()) {
-								exportLayouts = results;
+							else if (!selectedLayouts.isEmpty()) {
+								exportLayouts = selectedLayouts;
 							}
 							else {
 								exportLayouts = LayoutLocalServiceUtil.getLayouts(selGroup.getGroupId(), privateLayout);

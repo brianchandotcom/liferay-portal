@@ -56,6 +56,9 @@ import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManagerUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.lar.LayoutExporter;
+import com.liferay.portal.lar.backgroundtask.BackgroundTaskContextMapFactory;
+import com.liferay.portal.lar.backgroundtask.LayoutStagingBackgroundTaskExecutor;
+import com.liferay.portal.lar.backgroundtask.PortletStagingBackgroundTaskExecutor;
 import com.liferay.portal.messaging.LayoutsLocalPublisherRequest;
 import com.liferay.portal.messaging.LayoutsRemotePublisherRequest;
 import com.liferay.portal.model.Group;
@@ -74,6 +77,7 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
+import com.liferay.portal.service.BackgroundTaskLocalServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutBranchLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
@@ -94,6 +98,8 @@ import com.liferay.portal.util.SessionClicks;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortalPreferences;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
+
+import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -206,10 +212,22 @@ public class StagingImpl implements Staging {
 		DateRange dateRange = ExportImportHelperUtil.getDateRange(
 			portletRequest, sourceGroupId, false, sourcePlid, portletId);
 
-		LayoutLocalServiceUtil.publishPortletInBackground(
-			userId, portletId, sourcePlid, targetPlid, sourceGroupId,
-			targetGroupId, portletId, parameterMap, dateRange.getStartDate(),
-			dateRange.getEndDate());
+		Map<String, Serializable> taskContextMap =
+			BackgroundTaskContextMapFactory.buildTaskContextMap(
+				userId, sourceGroupId, false, null, parameterMap,
+				dateRange.getStartDate(), dateRange.getEndDate(),
+				StringPool.BLANK);
+
+		taskContextMap.put("sourcePlid", sourcePlid);
+		taskContextMap.put("targetPlid", targetPlid);
+		taskContextMap.put("sourceGroupId", sourceGroupId);
+		taskContextMap.put("targetGroupId", targetGroupId);
+		taskContextMap.put("portletId", portletId);
+
+		BackgroundTaskLocalServiceUtil.addBackgroundTask(
+			userId, sourceGroupId, portletId, null,
+			PortletStagingBackgroundTaskExecutor.class, taskContextMap,
+			new ServiceContext());
 	}
 
 	@Override
@@ -1068,9 +1086,18 @@ public class StagingImpl implements Staging {
 			PortletDataHandlerKeys.PERFORM_DIRECT_BINARY_IMPORT,
 			new String[] {Boolean.TRUE.toString()});
 
-		LayoutLocalServiceUtil.publishLayoutsInBackground(
-			userId, StringPool.BLANK, sourceGroupId, targetGroupId,
-			privateLayout, layoutIds, parameterMap, startDate, endDate);
+		Map<String, Serializable> taskContextMap =
+			BackgroundTaskContextMapFactory.buildTaskContextMap(
+				userId, sourceGroupId, privateLayout, layoutIds, parameterMap,
+				startDate, endDate, StringPool.BLANK);
+
+		taskContextMap.put("sourceGroupId", sourceGroupId);
+		taskContextMap.put("targetGroupId", targetGroupId);
+
+		BackgroundTaskLocalServiceUtil.addBackgroundTask(
+			userId, sourceGroupId, StringPool.BLANK, null,
+			LayoutStagingBackgroundTaskExecutor.class, taskContextMap,
+			new ServiceContext());
 	}
 
 	@Override

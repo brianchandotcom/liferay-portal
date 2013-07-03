@@ -1227,15 +1227,35 @@ public class PortletExporter {
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(
 			portletDataContext.getCompanyId(), portletId);
 
+		Element portletPreferencesElement = parentElement.addElement(
+			"portlet-preferences");
+
 		if (portlet != null) {
 			PortletDataHandler portletDataHandler =
 				portlet.getPortletDataHandlerInstance();
 
 			if (portletDataHandler != null) {
-				jxPortletPreferences =
-					portletDataHandler.processExportPortletPreferences(
-						portletDataContext, portletId, jxPortletPreferences,
-						parentElement);
+				Element exportDataRootElement =
+					portletDataContext.getExportDataRootElement();
+
+				try {
+					portletDataContext.clearScopedPrimaryKeys();
+
+					Element preferenceDataElement =
+						portletPreferencesElement.addElement("preference-data");
+
+					portletDataContext.setExportDataRootElement(
+						preferenceDataElement);
+
+					jxPortletPreferences =
+						portletDataHandler.processExportPortletPreferences(
+							portletDataContext, portletId, jxPortletPreferences,
+							parentElement);
+				}
+				finally {
+					portletDataContext.setExportDataRootElement(
+						exportDataRootElement);
+				}
 			}
 		}
 
@@ -1278,9 +1298,6 @@ public class PortletExporter {
 
 		String path = getPortletPreferencesPath(
 			portletDataContext, portletId, ownerId, ownerType, plid);
-
-		Element portletPreferencesElement = parentElement.addElement(
-			"portlet-preferences");
 
 		portletPreferencesElement.addAttribute("path", path);
 

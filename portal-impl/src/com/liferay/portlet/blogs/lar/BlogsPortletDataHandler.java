@@ -142,4 +142,9 @@ public class BlogsPortletDataHandler extends BasePortletDataHandler {
 		actionableDynamicQuery.performCount();
 	}
 
+	@Override
+	protected String getDisplayTemplatePreferenceName() {
+		return "pageDisplayStyle";
+	}
+
 }

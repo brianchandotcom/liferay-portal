@@ -1235,10 +1235,29 @@ public class PortletImporter {
 						portlet.getPortletDataHandlerInstance();
 
 					if (portletDataHandler != null) {
-						jxPortletPreferences =
-							portletDataHandler.processImportPortletPreferences(
-								portletDataContext, portletId,
-								jxPortletPreferences);
+						Element importDataRootElement =
+							portletDataContext.getImportDataRootElement();
+
+						try {
+							Element preferenceDataElement =
+								portletPreferencesElement.element(
+									"preference-data");
+
+							if (preferenceDataElement != null) {
+								portletDataContext.setImportDataRootElement(
+									preferenceDataElement);
+							}
+
+							jxPortletPreferences =
+								portletDataHandler.
+									processImportPortletPreferences(
+										portletDataContext, portletId,
+										jxPortletPreferences);
+						}
+						finally {
+							portletDataContext.setImportDataRootElement(
+								importDataRootElement);
+						}
 					}
 				}
 

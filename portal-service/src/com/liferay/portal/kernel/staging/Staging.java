@@ -153,6 +153,8 @@ public interface Staging {
 
 	public boolean isIncomplete(Layout layout, long layoutSetBranchId);
 
+	public void lockGroup(long userId, long groupId) throws Exception;
+
 	public void publishLayout(
 			long userId, long plid, long liveGroupId, boolean includeChildren)
 		throws Exception;
@@ -215,6 +217,8 @@ public interface Staging {
 	public void setRecentLayoutSetBranchId(
 			User user, long layoutSetId, long layoutSetBranchId)
 		throws SystemException;
+
+	public void unlockGroup(long groupId) throws SystemException;
 
 	public void unscheduleCopyFromLive(PortletRequest PortletRequest)
 		throws Exception;

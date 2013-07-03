@@ -33,12 +33,12 @@ headerNames.add(StringPool.BLANK);
 searchContainer.setHeaderNames(headerNames);
 searchContainer.setEmptyResultsMessage("there-are-no-scheduled-events");
 
-List<SchedulerResponse> results = SchedulerEngineHelperUtil.getScheduledJobs(StagingUtil.getSchedulerGroupName(destinationName, groupId), StorageType.PERSISTED);
+List<SchedulerResponse> scheduledJobs = SchedulerEngineHelperUtil.getScheduledJobs(StagingUtil.getSchedulerGroupName(destinationName, groupId), StorageType.PERSISTED);
 
 List resultRows = searchContainer.getResultRows();
 
-for (int i = 0; i < results.size(); i++) {
-	SchedulerResponse schedulerResponse = results.get(i);
+for (int i = 0; i < scheduledJobs.size(); i++) {
+	SchedulerResponse schedulerResponse = scheduledJobs.get(i);
 
 	ResultRow row = new ResultRow(schedulerResponse, schedulerResponse.getJobName(), i);
 

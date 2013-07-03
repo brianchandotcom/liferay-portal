@@ -265,6 +265,10 @@ public class StagingUtil {
 		return getStaging().isIncomplete(layout, layoutSetBranchId);
 	}
 
+	public static void lockGroup(long userId, long groupId) throws Exception {
+		getStaging().lockGroup(userId, groupId);
+	}
+
 	public static void publishLayout(
 			long userId, long plid, long liveGroupId, boolean includeChildren)
 		throws Exception {
@@ -389,6 +393,10 @@ public class StagingUtil {
 
 		getStaging().setRecentLayoutSetBranchId(
 			user, layoutSetId, layoutSetBranchId);
+	}
+
+	public static void unlockGroup(long groupId) throws SystemException {
+		getStaging().unlockGroup(groupId);
 	}
 
 	public static void unscheduleCopyFromLive(PortletRequest PortletRequest)

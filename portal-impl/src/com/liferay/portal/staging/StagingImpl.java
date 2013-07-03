@@ -95,8 +95,6 @@ import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortalPreferences;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 
-import java.io.File;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -205,17 +203,13 @@ public class StagingImpl implements Staging {
 		Map<String, String[]> parameterMap = getStagingParameters(
 			portletRequest);
 
-		File file = LayoutLocalServiceUtil.exportPortletInfoAsFile(
-			sourcePlid, sourceGroupId, portletId, parameterMap, null, null);
+		DateRange dateRange = ExportImportHelperUtil.getDateRange(
+			portletRequest, sourceGroupId, false, sourcePlid, portletId);
 
-		try {
-			LayoutLocalServiceUtil.importPortletInfo(
-				userId, targetPlid, targetGroupId, portletId, parameterMap,
-				file);
-		}
-		finally {
-			file.delete();
-		}
+		LayoutLocalServiceUtil.publishPortletInBackground(
+			userId, portletId, sourcePlid, targetPlid, sourceGroupId,
+			targetGroupId, portletId, parameterMap, dateRange.getStartDate(),
+			dateRange.getEndDate());
 	}
 
 	@Override
@@ -1014,6 +1008,24 @@ public class StagingImpl implements Staging {
 		return false;
 	}
 
+	public void lockGroup(long userId, long groupId) throws Exception {
+		if (!PropsValues.STAGING_LOCK_ENABLED) {
+			return;
+		}
+
+		if (LockLocalServiceUtil.isLocked(Staging.class.getName(), groupId)) {
+			Lock lock = LockLocalServiceUtil.getLock(
+				Staging.class.getName(), groupId);
+
+			throw new DuplicateLockException(lock);
+		}
+
+		LockLocalServiceUtil.lock(
+			userId, Staging.class.getName(), String.valueOf(groupId),
+			StagingImpl.class.getName(), false,
+			StagingConstants.LOCK_EXPIRATION_TIME);
+	}
+
 	@Override
 	public void publishLayout(
 			long userId, long plid, long liveGroupId, boolean includeChildren)
@@ -1051,25 +1063,13 @@ public class StagingImpl implements Staging {
 			Map<String, String[]> parameterMap, Date startDate, Date endDate)
 		throws Exception {
 
-		lockGroup(userId, targetGroupId);
-
 		parameterMap.put(
 			PortletDataHandlerKeys.PERFORM_DIRECT_BINARY_IMPORT,
 			new String[] {Boolean.TRUE.toString()});
 
-		File file = LayoutLocalServiceUtil.exportLayoutsAsFile(
-			sourceGroupId, privateLayout, layoutIds, parameterMap, startDate,
-			endDate);
-
-		try {
-			LayoutLocalServiceUtil.importLayouts(
-				userId, targetGroupId, privateLayout, parameterMap, file);
-		}
-		finally {
-			file.delete();
-
-			unlockGroup(targetGroupId);
-		}
+		LayoutLocalServiceUtil.publishLayoutsInBackground(
+			userId, StringPool.BLANK, sourceGroupId, targetGroupId,
+			privateLayout, layoutIds, parameterMap, startDate, endDate);
 	}
 
 	@Override
@@ -1308,6 +1308,14 @@ public class StagingImpl implements Staging {
 		portalPreferences.setValue(
 			Staging.class.getName(), getRecentLayoutSetBranchIdKey(layoutSetId),
 			String.valueOf(layoutSetBranchId));
+	}
+
+	public void unlockGroup(long groupId) throws SystemException {
+		if (!PropsValues.STAGING_LOCK_ENABLED) {
+			return;
+		}
+
+		LockLocalServiceUtil.unlock(Staging.class.getName(), groupId);
 	}
 
 	@Override
@@ -1882,24 +1890,6 @@ public class StagingImpl implements Staging {
 			GetterUtil.getString(group.getTypeSettingsProperty(param)));
 	}
 
-	protected void lockGroup(long userId, long groupId) throws Exception {
-		if (!PropsValues.STAGING_LOCK_ENABLED) {
-			return;
-		}
-
-		if (LockLocalServiceUtil.isLocked(Staging.class.getName(), groupId)) {
-			Lock lock = LockLocalServiceUtil.getLock(
-				Staging.class.getName(), groupId);
-
-			throw new DuplicateLockException(lock);
-		}
-
-		LockLocalServiceUtil.lock(
-			userId, Staging.class.getName(), String.valueOf(groupId),
-			StagingImpl.class.getName(), false,
-			StagingConstants.LOCK_EXPIRATION_TIME);
-	}
-
 	protected void publishLayouts(
 			PortletRequest portletRequest, long sourceGroupId,
 			long targetGroupId, Map<String, String[]> parameterMap,
@@ -2273,14 +2263,6 @@ public class StagingImpl implements Staging {
 		}
 
 		return remoteAddress;
-	}
-
-	protected void unlockGroup(long groupId) throws SystemException {
-		if (!PropsValues.STAGING_LOCK_ENABLED) {
-			return;
-		}
-
-		LockLocalServiceUtil.unlock(Staging.class.getName(), groupId);
 	}
 
 	protected void updateGroupTypeSettingsProperties(

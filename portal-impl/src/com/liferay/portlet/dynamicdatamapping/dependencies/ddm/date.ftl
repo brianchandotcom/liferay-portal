@@ -11,22 +11,20 @@
 </#if>
 
 <@aui["field-wrapper"] data=data helpMessage=escape(fieldStructure.tip) label=escape(label) required=required>
-	<div class="clearfix">
-		<@liferay_ui["input-date"]
-			cssClass=cssClass
-			dayParam="${namespacedFieldName}Day"
-			dayValue=fieldDateValue?string("dd")?number
-			disabled=false
-			imageInputId="${namespacedFieldName}ImageInput"
-			monthParam="${namespacedFieldName}Month"
-			monthValue=fieldDateValue?string("MM")?number - 1
-			name="${namespacedFieldName}"
-			yearParam="${namespacedFieldName}Year"
-			yearRangeEnd=fieldDateValue?string("yyyy")?number + 100
-			yearRangeStart=fieldDateValue?string("yyyy")?number - 100
-			yearValue=fieldDateValue?string("yyyy")?number
-		/>
-	</div>
+	<@liferay_ui["input-date"]
+		cssClass=cssClass
+		dayParam="${namespacedFieldName}Day"
+		dayValue=fieldDateValue?string("dd")?number
+		disabled=false
+		imageInputId="${namespacedFieldName}ImageInput"
+		monthParam="${namespacedFieldName}Month"
+		monthValue=fieldDateValue?string("MM")?number - 1
+		name="${namespacedFieldName}"
+		yearParam="${namespacedFieldName}Year"
+		yearRangeEnd=fieldDateValue?string("yyyy")?number + 100
+		yearRangeStart=fieldDateValue?string("yyyy")?number - 100
+		yearValue=fieldDateValue?string("yyyy")?number
+	/>
 
 	${fieldStructure.children}
 </@>

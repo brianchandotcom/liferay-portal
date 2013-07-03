@@ -213,193 +213,204 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 	</c:if>
 </c:if>
 
-<aui:form action='<%= portletURL.toString() + "&etag=0&strip=0" %>' cssClass="lfr-export-dialog" method="post" name="exportPagesFm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "publishPages();" %>' >
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= cmd %>" />
-	<aui:input name="originalCmd" type="hidden" value="<%= cmd %>" />
-	<aui:input name="tabs1" type="hidden" value="<%= tabs1 %>" />
-	<aui:input name="stagingGroupId" type="hidden" value="<%= stagingGroupId %>" />
-	<aui:input name="layoutSetBranchName" type="hidden" value="<%= layoutSetBranchName %>" />
-	<aui:input name="lastImportUserName" type="hidden" value="<%= user.getFullName() %>" />
-	<aui:input name="lastImportUserUuid" type="hidden" value="<%= String.valueOf(user.getUserUuid()) %>" />
+<liferay-ui:tabs
+	names="new-publication-process,all-publication-processes"
+	param="tabs2"
+	refresh="<%= false %>"
+>
+	<liferay-ui:section>
+		<aui:form action='<%= portletURL.toString() + "&etag=0&strip=0" %>' cssClass="lfr-export-dialog" method="post" name="exportPagesFm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "publishPages();" %>' >
+			<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= cmd %>" />
+			<aui:input name="originalCmd" type="hidden" value="<%= cmd %>" />
+			<aui:input name="tabs1" type="hidden" value="<%= tabs1 %>" />
+			<aui:input name="stagingGroupId" type="hidden" value="<%= stagingGroupId %>" />
+			<aui:input name="layoutSetBranchName" type="hidden" value="<%= layoutSetBranchName %>" />
+			<aui:input name="lastImportUserName" type="hidden" value="<%= user.getFullName() %>" />
+			<aui:input name="lastImportUserUuid" type="hidden" value="<%= String.valueOf(user.getUserUuid()) %>" />
 
-	<liferay-ui:error exception="<%= DuplicateLockException.class %>" message="another-publishing-process-is-in-progress,-please-try-again-later" />
+			<liferay-ui:error exception="<%= DuplicateLockException.class %>" message="another-publishing-process-is-in-progress,-please-try-again-later" />
 
-	<liferay-ui:error exception="<%= LayoutPrototypeException.class %>">
-
-		<%
-		LayoutPrototypeException lpe = (LayoutPrototypeException)errorException;
-		%>
-
-		<liferay-ui:message key="the-pages-could-not-be-published-because-one-or-more-required-page-templates-could-not-be-found-on-the-remote-system.-please-import-the-following-templates-manually" />
-
-		<ul>
-
-			<%
-			List<Tuple> missingLayoutPrototypes = lpe.getMissingLayoutPrototypes();
-
-			for (Tuple missingLayoutPrototype : missingLayoutPrototypes) {
-				String layoutPrototypeClassName = (String)missingLayoutPrototype.getObject(0);
-				String layoutPrototypeUuid = (String)missingLayoutPrototype.getObject(1);
-				String layoutPrototypeName = (String)missingLayoutPrototype.getObject(2);
-			%>
-
-			<li>
-				<%= ResourceActionsUtil.getModelResource(locale, layoutPrototypeClassName) %>: <strong><%= HtmlUtil.escape(layoutPrototypeName) %></strong> (<%= layoutPrototypeUuid %>)
-			</li>
-
-			<%
-			}
-			%>
-
-		</ul>
-	</liferay-ui:error>
-
-	<liferay-ui:error exception="<%= RemoteExportException.class %>">
-
-		<%
-		RemoteExportException ree = (RemoteExportException)errorException;
-		%>
-
-		<c:if test="<%= ree.getType() == RemoteExportException.BAD_CONNECTION %>">
-			<liferay-ui:message arguments="<%= ree.getURL() %>" key="there-was-a-bad-connection-with-the-remote-server-at-x" />
-		</c:if>
-
-		<c:if test="<%= ree.getType() == RemoteExportException.NO_GROUP %>">
-			<liferay-ui:message arguments="<%= ree.getGroupId() %>" key="no-site-exists-on-the-remote-server-with-site-id-x" />
-		</c:if>
-
-		<c:if test="<%= ree.getType() == RemoteExportException.NO_LAYOUTS %>">
-			<liferay-ui:message key="there-are-no-layouts-in-the-exported-data" />
-		</c:if>
-
-		<c:if test="<%= ree.getType() == RemoteExportException.NO_PERMISSIONS %>">
-			<liferay-ui:message arguments="<%= ree.getGroupId() %>" key="you-do-not-have-permissions-to-edit-the-site-with-id-x-on-the-remote-server" />
-		</c:if>
-	</liferay-ui:error>
-
-	<liferay-ui:error exception="<%= RemoteOptionsException.class %>">
-
-		<%
-		RemoteOptionsException roe = (RemoteOptionsException)errorException;
-		%>
-
-		<c:if test="<%= roe.getType() == RemoteOptionsException.REMOTE_ADDRESS %>">
-			<liferay-ui:message arguments="<%= roe.getRemoteAddress() %>" key="the-remote-address-x-is-not-valid" />
-		</c:if>
-
-		<c:if test="<%= roe.getType() == RemoteOptionsException.REMOTE_GROUP_ID %>">
-			<liferay-ui:message arguments="<%= roe.getRemoteGroupId() %>" key="the-remote-site-id-x-is-not-valid" />
-		</c:if>
-
-		<c:if test="<%= roe.getType() == RemoteOptionsException.REMOTE_PATH_CONTEXT %>">
-			<liferay-ui:message arguments="<%= roe.getRemotePathContext() %>" key="the-remote-path-context-x-is-not-valid" />
-		</c:if>
-
-		<c:if test="<%= roe.getType() == RemoteOptionsException.REMOTE_PORT %>">
-			<liferay-ui:message arguments="<%= roe.getRemotePort() %>" key="the-remote-port-x-is-not-valid" />
-		</c:if>
-	</liferay-ui:error>
-
-	<liferay-ui:error exception="<%= SystemException.class %>">
-
-		<%
-		SystemException se = (SystemException)errorException;
-		%>
-
-		<liferay-ui:message key="<%= se.getMessage() %>" />
-	</liferay-ui:error>
-
-	<c:choose>
-		<c:when test="<%= selectPages %>">
-			<div class="alert alert-info">
-				<liferay-ui:message key="note-that-selecting-no-pages-from-tree-reverts-to-implicit-selection-of-all-pages" />
-			</div>
-
-			<div class="selected-pages" id="<portlet:namespace />pane">
-				<liferay-util:include page="/html/portlet/layouts_admin/tree_js.jsp">
-					<liferay-util:param name="selectableTree" value="1" />
-					<liferay-util:param name="treeId" value="<%= treeKey %>" />
-					<liferay-util:param name="incomplete" value="<%= String.valueOf(false) %>" />
-					<liferay-util:param name="tabs1" value='<%= (privateLayout) ? "private-pages" : "public-pages" %>' />
-				</liferay-util:include>
-			</div>
-
-			<aui:button-row>
+			<liferay-ui:error exception="<%= LayoutPrototypeException.class %>">
 
 				<%
-				String selectPagesURL = HttpUtil.setParameter(currentURL, "selectPages", false);
+				LayoutPrototypeException lpe = (LayoutPrototypeException)errorException;
 				%>
 
-				<aui:button href="<%= selectPagesURL %>" value="select" />
-			</aui:button-row>
-		</c:when>
-		<c:otherwise>
-			<div id="<portlet:namespace />publishOptions">
-				<div class="export-dialog-tree">
-					<aui:fieldset cssClass="options-group" label="date">
-						<%@ include file="/html/portlet/layouts_admin/publish_layouts_scheduler.jspf" %>
-					</aui:fieldset>
+				<liferay-ui:message key="the-pages-could-not-be-published-because-one-or-more-required-page-templates-could-not-be-found-on-the-remote-system.-please-import-the-following-templates-manually" />
 
-					<c:if test="<%= !selGroup.isCompany() %>">
-						<aui:fieldset cssClass="options-group" label="pages">
-							<%@ include file="/html/portlet/layouts_admin/publish_layouts_select_pages.jspf" %>
-						</aui:fieldset>
-					</c:if>
+				<ul>
 
 					<%
-					List<Layout> exportLayouts = new ArrayList<Layout>();
+					List<Tuple> missingLayoutPrototypes = lpe.getMissingLayoutPrototypes();
 
-					if (selLayout != null) {
-						exportLayouts.add(selLayout);
-					}
-					else if (!results.isEmpty()) {
-						exportLayouts = results;
-					}
-					else {
-						exportLayouts = LayoutLocalServiceUtil.getLayouts(selGroup.getGroupId(), privateLayout);
-					}
-
-					List<Portlet> portletDataHandlerPortlets = LayoutExporter.getPortletDataHandlerPortlets(exportLayouts);
+					for (Tuple missingLayoutPrototype : missingLayoutPrototypes) {
+						String layoutPrototypeClassName = (String)missingLayoutPrototype.getObject(0);
+						String layoutPrototypeUuid = (String)missingLayoutPrototype.getObject(1);
+						String layoutPrototypeName = (String)missingLayoutPrototype.getObject(2);
 					%>
 
-					<c:if test="<%= !portletDataHandlerPortlets.isEmpty() %>">
-						<aui:fieldset cssClass="options-group" label="application-configuration">
-							<%@ include file="/html/portlet/layouts_admin/publish_layouts_portlets_setup.jspf" %>
-						</aui:fieldset>
-					</c:if>
+					<li>
+						<%= ResourceActionsUtil.getModelResource(locale, layoutPrototypeClassName) %>: <strong><%= HtmlUtil.escape(layoutPrototypeName) %></strong> (<%= layoutPrototypeUuid %>)
+					</li>
 
 					<%
-					List<Portlet> dataSiteLevelPortlets = LayoutExporter.getDataSiteLevelPortlets(company.getCompanyId());
+					}
 					%>
 
-					<c:if test="<%= !dataSiteLevelPortlets.isEmpty() %>">
-						<aui:fieldset cssClass="options-group" label="content">
-							<%@ include file="/html/portlet/layouts_admin/publish_layouts_portlets_data.jspf" %>
-						</aui:fieldset>
-					</c:if>
+				</ul>
+			</liferay-ui:error>
 
-					<c:if test="<%= !selGroup.isCompany() %>">
-						<aui:fieldset cssClass="options-group" label="permissions">
-							<%@ include file="/html/portlet/layouts_admin/publish_layouts_permissions.jspf" %>
-						</aui:fieldset>
-					</c:if>
+			<liferay-ui:error exception="<%= RemoteExportException.class %>">
 
-					<c:if test="<%= !localPublishing %>">
-						<aui:fieldset cssClass="options-group" label="remote-live-connection-settings">
-							<%@ include file="/html/portlet/layouts_admin/publish_layouts_remote_options.jspf" %>
-						</aui:fieldset>
-					</c:if>
-				</div>
+				<%
+				RemoteExportException ree = (RemoteExportException)errorException;
+				%>
 
-				<aui:button-row>
-					<aui:button id="addButton" name="addButton" onClick='<%= renderResponse.getNamespace() + "schedulePublishEvent();" %>' value="add-event" />
+				<c:if test="<%= ree.getType() == RemoteExportException.BAD_CONNECTION %>">
+					<liferay-ui:message arguments="<%= ree.getURL() %>" key="there-was-a-bad-connection-with-the-remote-server-at-x" />
+				</c:if>
 
-					<aui:button id="publishButton" name="publishButton" type="submit" value="<%= publishActionKey %>" />
-				</aui:button-row>
-			</div>
-		</c:otherwise>
-	</c:choose>
-</aui:form>
+				<c:if test="<%= ree.getType() == RemoteExportException.NO_GROUP %>">
+					<liferay-ui:message arguments="<%= ree.getGroupId() %>" key="no-site-exists-on-the-remote-server-with-site-id-x" />
+				</c:if>
+
+				<c:if test="<%= ree.getType() == RemoteExportException.NO_LAYOUTS %>">
+					<liferay-ui:message key="there-are-no-layouts-in-the-exported-data" />
+				</c:if>
+
+				<c:if test="<%= ree.getType() == RemoteExportException.NO_PERMISSIONS %>">
+					<liferay-ui:message arguments="<%= ree.getGroupId() %>" key="you-do-not-have-permissions-to-edit-the-site-with-id-x-on-the-remote-server" />
+				</c:if>
+			</liferay-ui:error>
+
+			<liferay-ui:error exception="<%= RemoteOptionsException.class %>">
+
+				<%
+				RemoteOptionsException roe = (RemoteOptionsException)errorException;
+				%>
+
+				<c:if test="<%= roe.getType() == RemoteOptionsException.REMOTE_ADDRESS %>">
+					<liferay-ui:message arguments="<%= roe.getRemoteAddress() %>" key="the-remote-address-x-is-not-valid" />
+				</c:if>
+
+				<c:if test="<%= roe.getType() == RemoteOptionsException.REMOTE_GROUP_ID %>">
+					<liferay-ui:message arguments="<%= roe.getRemoteGroupId() %>" key="the-remote-site-id-x-is-not-valid" />
+				</c:if>
+
+				<c:if test="<%= roe.getType() == RemoteOptionsException.REMOTE_PATH_CONTEXT %>">
+					<liferay-ui:message arguments="<%= roe.getRemotePathContext() %>" key="the-remote-path-context-x-is-not-valid" />
+				</c:if>
+
+				<c:if test="<%= roe.getType() == RemoteOptionsException.REMOTE_PORT %>">
+					<liferay-ui:message arguments="<%= roe.getRemotePort() %>" key="the-remote-port-x-is-not-valid" />
+				</c:if>
+			</liferay-ui:error>
+
+			<liferay-ui:error exception="<%= SystemException.class %>">
+
+				<%
+				SystemException se = (SystemException)errorException;
+				%>
+
+				<liferay-ui:message key="<%= se.getMessage() %>" />
+			</liferay-ui:error>
+
+			<c:choose>
+				<c:when test="<%= selectPages %>">
+					<div class="alert alert-info">
+						<liferay-ui:message key="note-that-selecting-no-pages-from-tree-reverts-to-implicit-selection-of-all-pages" />
+					</div>
+
+					<div class="selected-pages" id="<portlet:namespace />pane">
+						<liferay-util:include page="/html/portlet/layouts_admin/tree_js.jsp">
+							<liferay-util:param name="selectableTree" value="1" />
+							<liferay-util:param name="treeId" value="<%= treeKey %>" />
+							<liferay-util:param name="incomplete" value="<%= String.valueOf(false) %>" />
+							<liferay-util:param name="tabs1" value='<%= (privateLayout) ? "private-pages" : "public-pages" %>' />
+						</liferay-util:include>
+					</div>
+
+					<aui:button-row>
+
+						<%
+						String selectPagesURL = HttpUtil.setParameter(currentURL, "selectPages", false);
+						%>
+
+						<aui:button href="<%= selectPagesURL %>" value="select" />
+					</aui:button-row>
+				</c:when>
+				<c:otherwise>
+					<div id="<portlet:namespace />publishOptions">
+						<div class="export-dialog-tree">
+							<aui:fieldset cssClass="options-group" label="date">
+								<%@ include file="/html/portlet/layouts_admin/publish_layouts_scheduler.jspf" %>
+							</aui:fieldset>
+
+							<c:if test="<%= !selGroup.isCompany() %>">
+								<aui:fieldset cssClass="options-group" label="pages">
+									<%@ include file="/html/portlet/layouts_admin/publish_layouts_select_pages.jspf" %>
+								</aui:fieldset>
+							</c:if>
+
+							<%
+							List<Layout> exportLayouts = new ArrayList<Layout>();
+
+							if (selLayout != null) {
+								exportLayouts.add(selLayout);
+							}
+							else if (!results.isEmpty()) {
+								exportLayouts = results;
+							}
+							else {
+								exportLayouts = LayoutLocalServiceUtil.getLayouts(selGroup.getGroupId(), privateLayout);
+							}
+
+							List<Portlet> portletDataHandlerPortlets = LayoutExporter.getPortletDataHandlerPortlets(exportLayouts);
+							%>
+
+							<c:if test="<%= !portletDataHandlerPortlets.isEmpty() %>">
+								<aui:fieldset cssClass="options-group" label="application-configuration">
+									<%@ include file="/html/portlet/layouts_admin/publish_layouts_portlets_setup.jspf" %>
+								</aui:fieldset>
+							</c:if>
+
+							<%
+							List<Portlet> dataSiteLevelPortlets = LayoutExporter.getDataSiteLevelPortlets(company.getCompanyId());
+							%>
+
+							<c:if test="<%= !dataSiteLevelPortlets.isEmpty() %>">
+								<aui:fieldset cssClass="options-group" label="content">
+									<%@ include file="/html/portlet/layouts_admin/publish_layouts_portlets_data.jspf" %>
+								</aui:fieldset>
+							</c:if>
+
+							<c:if test="<%= !selGroup.isCompany() %>">
+								<aui:fieldset cssClass="options-group" label="permissions">
+									<%@ include file="/html/portlet/layouts_admin/publish_layouts_permissions.jspf" %>
+								</aui:fieldset>
+							</c:if>
+
+							<c:if test="<%= !localPublishing %>">
+								<aui:fieldset cssClass="options-group" label="remote-live-connection-settings">
+									<%@ include file="/html/portlet/layouts_admin/publish_layouts_remote_options.jspf" %>
+								</aui:fieldset>
+							</c:if>
+						</div>
+
+						<aui:button-row>
+							<aui:button id="addButton" name="addButton" onClick='<%= renderResponse.getNamespace() + "schedulePublishEvent();" %>' value="add-event" />
+
+							<aui:button id="publishButton" name="publishButton" type="submit" value="<%= publishActionKey %>" />
+						</aui:button-row>
+					</div>
+				</c:otherwise>
+			</c:choose>
+		</aui:form>
+	</liferay-ui:section>
+
+	<liferay-ui:section>
+	</liferay-ui:section>
+</liferay-ui:tabs>
 
 <aui:script>
 	Liferay.provide(

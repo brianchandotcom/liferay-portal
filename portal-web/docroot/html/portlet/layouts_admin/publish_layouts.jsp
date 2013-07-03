@@ -222,7 +222,7 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 </c:if>
 
 <liferay-ui:tabs
-	names="new-publication-process,all-publication-processes"
+	names="new-publication-process,all-publication-processes,scheduled-events"
 	param="tabs2"
 	refresh="<%= false %>"
 >
@@ -351,6 +351,25 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 				<c:otherwise>
 					<div id="<portlet:namespace />publishOptions">
 						<div class="export-dialog-tree">
+
+							<%
+							String scheduleCMD = StringPool.BLANK;
+							String unscheduleCMD = StringPool.BLANK;
+
+							if (cmd.equals("copy_from_live")) {
+								scheduleCMD = "schedule_copy_from_live";
+								unscheduleCMD = "unschedule_copy_from_live";
+							}
+							else if (cmd.equals("publish_to_live")) {
+								scheduleCMD = "schedule_publish_to_live";
+								unscheduleCMD = "unschedule_publish_to_live";
+							}
+							else if (cmd.equals("publish_to_remote")) {
+								scheduleCMD = "schedule_publish_to_remote";
+								unscheduleCMD = "unschedule_publish_to_remote";
+							}
+							%>
+
 							<aui:fieldset cssClass="options-group" label="date">
 								<%@ include file="/html/portlet/layouts_admin/publish_layouts_scheduler.jspf" %>
 							</aui:fieldset>
@@ -491,6 +510,22 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 
 			<liferay-ui:search-iterator />
 		</liferay-ui:search-container>
+	</liferay-ui:section>
+	<liferay-ui:section>
+
+		<%
+		long targetGroupId = liveGroupId;
+
+		if (cmd.equals("copy_from_live")) {
+			targetGroupId = stagingGroupId;
+		}
+		%>
+
+		<liferay-util:include page="/html/portlet/layouts_admin/scheduled_publishing_events.jsp">
+			<liferay-util:param name="groupId" value="<%= String.valueOf(targetGroupId) %>" />
+			<liferay-util:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
+			<liferay-util:param name="destinationName" value="<%= localPublishing ? DestinationNames.LAYOUTS_LOCAL_PUBLISHER : DestinationNames.LAYOUTS_REMOTE_PUBLISHER %>" />
+		</liferay-util:include>
 	</liferay-ui:section>
 </liferay-ui:tabs>
 

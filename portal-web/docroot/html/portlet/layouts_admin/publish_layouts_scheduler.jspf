@@ -14,30 +14,6 @@
  */
 --%>
 
-<%
-String scheduleCMD = StringPool.BLANK;
-String unscheduleCMD = StringPool.BLANK;
-
-if (cmd.equals("copy_from_live")) {
-	scheduleCMD = "schedule_copy_from_live";
-	unscheduleCMD = "unschedule_copy_from_live";
-}
-else if (cmd.equals("publish_to_live")) {
-	scheduleCMD = "schedule_publish_to_live";
-	unscheduleCMD = "unschedule_publish_to_live";
-}
-else if (cmd.equals("publish_to_remote")) {
-	scheduleCMD = "schedule_publish_to_remote";
-	unscheduleCMD = "unschedule_publish_to_remote";
-}
-
-long targetGroupId = liveGroupId;
-
-if (scheduleCMD.equals("schedule_copy_from_live")) {
-	targetGroupId = stagingGroupId;
-}
-%>
-
 <ul class="lfr-tree unstyled">
 	<li class="tree-item">
 		<aui:input checked="<%= true %>" id="publishingEventNow" label="now" name="schedule" type="radio" value="<%= false %>" />
@@ -48,16 +24,6 @@ if (scheduleCMD.equals("schedule_copy_from_live")) {
 			<li>
 				<aui:input name="jobName" type="hidden" />
 
-				<aui:a cssClass="modify-link" href="javascript:;" id="scheduledPublishingEventsLink" label="see-all-scheduled-publishing-events" method="get" />
-
-				<div class="hide" id="<portlet:namespace />scheduledPublishingEvents">
-					<liferay-util:include page="/html/portlet/layouts_admin/scheduled_publishing_events.jsp">
-						<liferay-util:param name="groupId" value="<%= String.valueOf(targetGroupId) %>" />
-						<liferay-util:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
-						<liferay-util:param name="destinationName" value="<%= localPublishing ? DestinationNames.LAYOUTS_LOCAL_PUBLISHER : DestinationNames.LAYOUTS_REMOTE_PUBLISHER %>" />
-					</liferay-util:include>
-				</div>
-
 				<aui:input label="title" name="description" type="text" />
 
 				<liferay-ui:input-scheduler />
@@ -67,11 +33,20 @@ if (scheduleCMD.equals("schedule_copy_from_live")) {
 </ul>
 
 <aui:script>
+	<portlet:renderURL var="scheduledEventsURL">
+		<portlet:param name="struts_action" value="/layouts_admin/publish_layouts" />
+		<portlet:param name="tabs2" value="scheduled-events" />
+		<portlet:param name="closeRedirect" value="<%= closeRedirect %>" />
+		<portlet:param name="groupId" value="<%= String.valueOf(stagingGroupId) %>" />
+		<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
+	</portlet:renderURL>
+
 	Liferay.provide(
 		window,
 		'<portlet:namespace />schedulePublishEvent',
 		function() {
 			document.<portlet:namespace />exportPagesFm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= scheduleCMD %>';
+			document.<portlet:namespace />exportPagesFm.<portlet:namespace />redirect.value = '<%= scheduledEventsURL %>';
 
 			submitForm(document.<portlet:namespace />exportPagesFm);
 		}
@@ -83,6 +58,7 @@ if (scheduleCMD.equals("schedule_copy_from_live")) {
 		function(jobName) {
 			if (confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-delete-the-scheduled-event") %>')) {
 				document.<portlet:namespace />exportPagesFm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= unscheduleCMD %>';
+				document.<portlet:namespace />exportPagesFm.<portlet:namespace />redirect.value = '<%= scheduledEventsURL %>';
 				document.<portlet:namespace />exportPagesFm.<portlet:namespace />jobName.value = jobName;
 
 				submitForm(document.<portlet:namespace />exportPagesFm);

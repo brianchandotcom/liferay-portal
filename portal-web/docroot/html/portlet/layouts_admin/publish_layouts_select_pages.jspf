@@ -15,18 +15,16 @@
 --%>
 
 <%
-int total = results.size();
-
 List<String> headerNames = new ArrayList<String>();
 
 headerNames.add("pages");
 headerNames.add("options");
 headerNames.add("type");
 
-SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, total, portletURL, headerNames, "there-are-no-selected-pages-all-pages-will-therefore-be-exported");
+SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, selectedLayouts.size(), portletURL, headerNames, "there-are-no-selected-pages-all-pages-will-therefore-be-exported");
 
-searchContainer.setTotal(total);
-searchContainer.setResults(results);
+searchContainer.setTotal(selectedLayouts.size());
+searchContainer.setResults(selectedLayouts);
 
 RowChecker rowChecker = new AlwaysTrueRowChecker(renderResponse);
 
@@ -47,8 +45,8 @@ searchContainer.setRowChecker(rowChecker);
 		<%
 		List resultRows = searchContainer.getResultRows();
 
-		for (int i = 0; i < results.size(); i++) {
-			Layout curLayout = (Layout)results.get(i);
+		for (int i = 0; i < selectedLayouts.size(); i++) {
+			Layout curLayout = selectedLayouts.get(i);
 
 			ResultRow row = new ResultRow(curLayout, curLayout.getPrimaryKey(), i);
 
@@ -119,7 +117,7 @@ searchContainer.setRowChecker(rowChecker);
 		%>
 
 		<c:choose>
-			<c:when test="<%= !results.isEmpty() %>">
+			<c:when test="<%= !selectedLayouts.isEmpty() %>">
 				<div class="selected-pages" id="<portlet:namespace />pane">
 					<liferay-ui:search-iterator paginate="<%= false %>" searchContainer="<%= searchContainer %>" />
 				</div>
@@ -131,10 +129,10 @@ searchContainer.setRowChecker(rowChecker);
 			</c:otherwise>
 		</c:choose>
 
-		<aui:input name="scope" type="hidden" value='<%= (results.isEmpty() ? "all-pages" : "selected-pages") %>' />
+		<aui:input name="scope" type="hidden" value='<%= (selectedLayouts.isEmpty() ? "all-pages" : "selected-pages") %>' />
 
 		<aui:button-row>
-			<aui:button href="<%= selectURL.toString() %>" value='<%= results.isEmpty() ? "select-pages" : "change-selection" %>' />
+			<aui:button href="<%= selectURL.toString() %>" value='<%= selectedLayouts.isEmpty() ? "select-pages" : "change-selection" %>' />
 		</aui:button-row>
 
 		<c:choose>

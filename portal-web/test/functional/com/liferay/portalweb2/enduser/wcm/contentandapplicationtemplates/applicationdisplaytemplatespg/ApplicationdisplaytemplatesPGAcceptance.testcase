@@ -1,0 +1,46 @@
+<definition>
+	<var name="pageName" value="Blogs ADT Test Page" />
+	<var name="portletName" value="Blogs" />
+
+	<set-up>
+		<execute macro="User#pgFirstLogin" />
+	</set-up>
+
+	<command name="addPG">
+		<var name="adtFile" value="portlet_display_template_basic.ftl" />
+		<var name="adtTitle" value="Blogs" />
+		<var name="key_adtTitle" value="Blogs" />
+		<var name="entryContent" value="Blogs Entry Content" />
+		<var name="entryTitle" value="Blogs Entry Title" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="portletName" value="${portletName}" />
+		</execute>
+
+		<execute macro="BlogsEntry#addPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryContent" value="${entryContent}" />
+		</execute>
+
+		<execute macro="ApplicationDisplayTemplates#addPG">
+			<var name="adtFile" value="${adtFile}" />
+			<var name="adtTitle" value="${adtTitle}" />
+		</execute>
+	</command>
+
+	<tear-down>
+		<execute macro="BlogsEntry#tearDownCP" />
+
+		<execute macro="ApplicationDisplayTemplates#tearDownPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Page#tearDownPG" />
+	</tear-down>
+</definition>

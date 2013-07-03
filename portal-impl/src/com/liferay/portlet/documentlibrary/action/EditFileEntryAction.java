@@ -151,7 +151,8 @@ public class EditFileEntryAction extends PortletAction {
 					portletConfig, actionRequest, actionResponse);
 			}
 			else if (cmd.equals(Constants.ADD_MULTIPLE)) {
-				addMultipleFileEntries(actionRequest, actionResponse);
+				addMultipleFileEntries(
+					portletConfig, actionRequest, actionResponse);
 			}
 			else if (cmd.equals(Constants.ADD_TEMP)) {
 				addTempFileEntry(actionRequest);
@@ -296,7 +297,8 @@ public class EditFileEntryAction extends PortletAction {
 	}
 
 	protected void addMultipleFileEntries(
-			ActionRequest actionRequest, ActionResponse actionResponse)
+			PortletConfig portletConfig, ActionRequest actionRequest,
+			ActionResponse actionResponse)
 		throws Exception {
 
 		List<String> validFileNames = new ArrayList<String>();
@@ -307,8 +309,8 @@ public class EditFileEntryAction extends PortletAction {
 
 		for (String selectedFileName : selectedFileNames) {
 			addMultipleFileEntries(
-				actionRequest, actionResponse, selectedFileName, validFileNames,
-				invalidFileNameKVPs);
+				portletConfig, actionRequest, actionResponse, selectedFileName,
+				validFileNames, invalidFileNameKVPs);
 		}
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
@@ -339,9 +341,9 @@ public class EditFileEntryAction extends PortletAction {
 	}
 
 	protected void addMultipleFileEntries(
-			ActionRequest actionRequest, ActionResponse actionResponse,
-			String selectedFileName, List<String> validFileNames,
-			List<KeyValuePair> invalidFileNameKVPs)
+			PortletConfig portletConfig, ActionRequest actionRequest,
+			ActionResponse actionResponse, String selectedFileName,
+			List<String> validFileNames, List<KeyValuePair> invalidFileNameKVPs)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -384,7 +386,7 @@ public class EditFileEntryAction extends PortletAction {
 		}
 		catch (Exception e) {
 			String errorMessage = getAddMultipleFileEntriesErrorMessage(
-				themeDisplay, e);
+				portletConfig, actionRequest, actionResponse, e);
 
 			invalidFileNameKVPs.add(
 				new KeyValuePair(selectedFileName, errorMessage));
@@ -582,10 +584,14 @@ public class EditFileEntryAction extends PortletAction {
 	}
 
 	protected String getAddMultipleFileEntriesErrorMessage(
-			ThemeDisplay themeDisplay, Exception e)
+			PortletConfig portletConfig, ActionRequest actionRequest,
+			ActionResponse actionResponse, Exception e)
 		throws Exception {
 
 		String errorMessage = null;
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		if (e instanceof AssetCategoryException) {
 			AssetCategoryException ace = (AssetCategoryException)e;
@@ -620,9 +626,9 @@ public class EditFileEntryAction extends PortletAction {
 		else if (e instanceof FileExtensionException) {
 			errorMessage = themeDisplay.translate(
 				"please-enter-a-file-with-a-valid-extension-x",
-				StringUtil.merge(
-					PrefsPropsUtil.getStringArray(
-						PropsKeys.DL_FILE_EXTENSIONS, StringPool.COMMA)));
+					StringUtil.merge(
+						getAllowedFileExtensions(
+							portletConfig, actionRequest, actionResponse)));
 		}
 		else if (e instanceof FileNameException) {
 			errorMessage = themeDisplay.translate(
@@ -652,19 +658,25 @@ public class EditFileEntryAction extends PortletAction {
 			PortletResponse portletResponse)
 		throws PortalException, SystemException {
 
-		PortletPreferences portletPreferences = portletRequest.getPreferences();
-
-		String portletResource = ParamUtil.getString(
-			portletRequest, "portletResource");
-
-		if (Validator.isNotNull(portletResource)) {
-			portletPreferences = PortletPreferencesFactoryUtil.getPortletSetup(
-				portletRequest, portletResource);
-		}
-
 		String portletName = portletConfig.getPortletName();
 
-		if (portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY)) {
+		if (!portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY)) {
+			return PrefsPropsUtil.getStringArray(
+				PropsKeys.DL_FILE_EXTENSIONS, StringPool.COMMA);
+		}
+		else {
+			PortletPreferences portletPreferences =
+				portletRequest.getPreferences();
+
+			String portletResource = ParamUtil.getString(
+				portletRequest, "portletResource");
+
+			if (Validator.isNotNull(portletResource)) {
+				portletPreferences =
+					PortletPreferencesFactoryUtil.getPortletSetup(
+						portletRequest, portletResource);
+			}
+
 			Set<String> extensions = new HashSet<String>();
 
 			String[] mimeTypes = DLUtil.getMediaGalleryMimeTypes(
@@ -676,9 +688,6 @@ public class EditFileEntryAction extends PortletAction {
 
 			return extensions.toArray(new String[extensions.size()]);
 		}
-
-		return PrefsPropsUtil.getStringArray(
-			PropsKeys.DL_FILE_EXTENSIONS, StringPool.COMMA);
 	}
 
 	protected String getSaveAndContinueRedirect(
@@ -770,8 +779,7 @@ public class EditFileEntryAction extends PortletAction {
 				}
 				else if (e instanceof FileExtensionException) {
 					errorMessage = themeDisplay.translate(
-						"document-names-must-end-with-one-of-the-following-" +
-							"extensions",
+						"please-enter-a-file-with-a-valid-extension-x",
 						StringUtil.merge(
 							getAllowedFileExtensions(
 								portletConfig, actionRequest, actionResponse)));

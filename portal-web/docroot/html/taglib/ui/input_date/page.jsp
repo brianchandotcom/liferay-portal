@@ -153,7 +153,7 @@ else if (yearNullable) {
 			</c:choose>
 		</div>
 		<div class="datepicker-button-wrapper">
-			<button class="buttonitem buttonitem-content buttonitem-icon-only component yui3-widget" title="<liferay-ui:message key="display-a-datepicker" />" type="button">
+			<button class="buttonitem buttonitem-content buttonitem-icon-only component state-default yui3-widget" title="<liferay-ui:message key="display-a-datepicker" />" type="button">
 				<span class="buttonitem-icon icon icon-calendar"></span>
 			</button>
 		</div>

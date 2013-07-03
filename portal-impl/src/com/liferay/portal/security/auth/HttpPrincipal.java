@@ -73,6 +73,10 @@ public class HttpPrincipal implements Serializable {
 		_companyId = companyId;
 	}
 
+	public void setPassword(String password) {
+		_password = password;
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(HttpPrincipal.class);
 
 	private long _companyId;

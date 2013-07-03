@@ -2371,6 +2371,8 @@ public interface PropsKeys {
 
 	public static final String TRASH_SEARCH_LIMIT = "trash.search.limit";
 
+	public static final String TUNNELING_SERVLET_PRESHARED_SECRET = "tunneling.servlet.preshared.secret";
+
 	public static final String UPGRADE_DATABASE_TRANSACTIONS_DISABLED = "upgrade.database.transactions.disabled";
 
 	public static final String UPGRADE_PROCESSES = "upgrade.processes";

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.service.http;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -25,6 +27,8 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.HttpPrincipal;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.util.PropsValues;
+import com.liferay.util.Encryptor;
 
 import java.io.EOFException;
 import java.io.IOException;
@@ -33,6 +37,11 @@ import java.io.ObjectOutputStream;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
+
+import java.security.InvalidKeyException;
+import java.security.Key;
+
+import javax.crypto.spec.SecretKeySpec;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
@@ -45,9 +54,34 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class TunnelUtil {
 
+	public static Key getPresharedKey() throws InvalidKeyException {
+		String presharedKey = PropsValues.TUNNELING_SERVLET_PRESHARED_SECRET;
+
+		if (Validator.isNull(presharedKey)) {
+			throw new InvalidKeyException(
+				"The tunneling servlet preshared key is not set");
+		}
+
+		if ((presharedKey.length() != 16) && (presharedKey.length() != 32) &&
+			(presharedKey.length() != 64)) {
+
+			throw new InvalidKeyException(
+				"The configured preshared key must be either 16, 32 or 64 " +
+					"characters in length.");
+		}
+
+		return new SecretKeySpec(
+			presharedKey.getBytes(), _TUNNEL_ENCRYPTION_ALGORITHM);
+	}
+
 	public static Object invoke(
 			HttpPrincipal httpPrincipal, MethodHandler methodHandler)
 		throws Exception {
+
+		String password = Encryptor.encrypt(
+			getPresharedKey(), httpPrincipal.getLogin());
+
+		httpPrincipal.setPassword(password);
 
 		HttpURLConnection urlc = _getConnection(httpPrincipal);
 
@@ -71,6 +105,9 @@ public class TunnelUtil {
 			ois.close();
 		}
 		catch (EOFException eofe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Error while reading object", eofe);
+			}
 		}
 		catch (IOException ioe) {
 			String ioeMessage = ioe.getMessage();
@@ -148,7 +185,11 @@ public class TunnelUtil {
 		return httpURLConnection;
 	}
 
+	private static final String _TUNNEL_ENCRYPTION_ALGORITHM = "AES";
+
 	private static final boolean _VERIFY_SSL_HOSTNAME = GetterUtil.getBoolean(
 		PropsUtil.get(TunnelUtil.class.getName() + ".verify.ssl.hostname"));
+
+	private static Log _log = LogFactoryUtil.getLog(TunnelUtil.class);
 
 }

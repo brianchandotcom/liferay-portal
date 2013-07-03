@@ -129,7 +129,7 @@ boolean showEditFormTemplateIcon = (formDDMTemplateId != 0) && DDMTemplatePermis
 					<portlet:param name="portletResourceNamespace" value="<%= renderResponse.getNamespace() %>" />
 					<portlet:param name="refererPortletName" value="<%= PortletKeys.DYNAMIC_DATA_LISTS %>" />
 					<portlet:param name="templateId" value="<%= String.valueOf(formDDMTemplateId) %>" />
-					<portlet:param name="structureAvailableFields" value='<%= renderResponse.getNamespace() + "structureAvailableFields" %>' />
+					<portlet:param name="structureAvailableFields" value='<%= renderResponse.getNamespace() + "getAvailableFields" %>' />
 				</liferay-portlet:renderURL>
 
 				<liferay-ui:icon

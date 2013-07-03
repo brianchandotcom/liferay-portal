@@ -45,7 +45,6 @@ import com.liferay.portal.kernel.lock.LockListenerRegistryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.plugin.PluginPackage;
-import com.liferay.portal.kernel.portlet.PortletSecurityUtil;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.search.Indexer;
@@ -99,6 +98,7 @@ import com.liferay.portal.security.auth.AuthFailure;
 import com.liferay.portal.security.auth.AuthPipeline;
 import com.liferay.portal.security.auth.AuthToken;
 import com.liferay.portal.security.auth.AuthTokenUtil;
+import com.liferay.portal.security.auth.AuthTokenWhitelistUtil;
 import com.liferay.portal.security.auth.AuthTokenWrapper;
 import com.liferay.portal.security.auth.AuthVerifier;
 import com.liferay.portal.security.auth.AuthVerifierConfiguration;
@@ -203,6 +203,7 @@ public class HookHotDeployListener
 		"auth.forward.by.last.path", "auth.public.paths",
 		"auth.verifier.pipeline", "auto.deploy.listeners",
 		"application.startup.events", "auth.failure", "auth.max.failures",
+		"auth.token.ignore.actions", "auth.token.ignore.portlets",
 		"auth.token.impl", "auth.pipeline.post", "auth.pipeline.pre",
 		"auto.login.hooks", "captcha.check.portal.create_account",
 		"captcha.engine.impl", "company.default.locale",
@@ -2455,18 +2456,26 @@ public class HookHotDeployListener
 			LanguageUtil.init();
 		}
 
+		if (containsKey(portalProperties, AUTH_TOKEN_IGNORE_ACTIONS)) {
+			AuthTokenWhitelistUtil.resetPortletCSRFWhitelistActions();
+		}
+
+		if (containsKey(portalProperties, AUTH_TOKEN_IGNORE_PORTLETS)) {
+			AuthTokenWhitelistUtil.resetPortletCSRFWhitelist();
+		}
+
 		if (containsKey(
 				portalProperties,
 				PORTLET_ADD_DEFAULT_RESOURCE_CHECK_WHITELIST)) {
 
-			PortletSecurityUtil.resetWhitelist();
+			AuthTokenWhitelistUtil.resetPortletInvocationWhitelist();
 		}
 
 		if (containsKey(
 				portalProperties,
 				PORTLET_ADD_DEFAULT_RESOURCE_CHECK_WHITELIST_ACTIONS)) {
 
-			PortletSecurityUtil.resetWhitelistActions();
+			AuthTokenWhitelistUtil.resetPortletInvocationWhitelistActions();
 		}
 
 		CacheUtil.clearCache();
@@ -2649,6 +2658,7 @@ public class HookHotDeployListener
 	};
 
 	private static final String[] _PROPS_VALUES_MERGE_STRING_ARRAY = {
+		"auth.token.ignore.actions", "auth.token.ignore.portlets",
 		"admin.default.group.names", "admin.default.role.names",
 		"admin.default.user.group.names", "asset.publisher.display.styles",
 		"company.settings.form.authentication",

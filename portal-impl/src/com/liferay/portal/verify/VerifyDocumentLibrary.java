@@ -151,10 +151,19 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 
 				DLFileEntry dlFileEntry = (DLFileEntry)object;
 
-				InputStream inputStream =
-					DLFileEntryLocalServiceUtil.getFileAsStream(
+				InputStream inputStream = null;
+
+				try {
+					inputStream = DLFileEntryLocalServiceUtil.getFileAsStream(
 						dlFileEntry.getUserId(), dlFileEntry.getFileEntryId(),
 						dlFileEntry.getVersion(), false);
+				}
+				catch (Exception e) {
+					_log.warn(
+						"File entry " + dlFileEntry.getName() + "not found", e);
+
+					return;
+				}
 
 				String title = DLUtil.getTitleWithExtension(
 					dlFileEntry.getTitle(), dlFileEntry.getExtension());
@@ -195,11 +204,24 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 
 				DLFileVersion dlFileVersion = (DLFileVersion)object;
 
-				InputStream inputStream =
-					DLFileEntryLocalServiceUtil.getFileAsStream(
+				InputStream inputStream = null;
+
+				try {
+					inputStream = DLFileEntryLocalServiceUtil.getFileAsStream(
 						dlFileVersion.getUserId(),
 						dlFileVersion.getFileEntryId(),
 						dlFileVersion.getVersion(), false);
+				}
+				catch (Exception e) {
+					DLFileEntry fileEntry = dlFileVersion.getFileEntry();
+
+					_log.warn(
+						"File version " + dlFileVersion.getVersion() + " of " +
+							"file entry " + fileEntry.getName() + " not found",
+						e);
+
+					return;
+				}
 
 				String title = DLUtil.getTitleWithExtension(
 					dlFileVersion.getTitle(), dlFileVersion.getExtension());

@@ -235,6 +235,7 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 			<aui:input name="layoutSetBranchName" type="hidden" value="<%= layoutSetBranchName %>" />
 			<aui:input name="lastImportUserName" type="hidden" value="<%= user.getFullName() %>" />
 			<aui:input name="lastImportUserUuid" type="hidden" value="<%= String.valueOf(user.getUserUuid()) %>" />
+			<aui:input name="redirect" type="hidden" value="<%= renderURL.toString() %>" />
 
 			<liferay-ui:error exception="<%= DuplicateLockException.class %>" message="another-publishing-process-is-in-progress,-please-try-again-later" />
 
@@ -435,15 +436,15 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 		%>
 
 		<liferay-ui:search-container
-			emptyResultsMessage="no-import-processes-were-found"
-			iteratorURL="<%= portletURL %>"
+			emptyResultsMessage="no-publication-processes-were-found"
+			iteratorURL="<%= renderURL %>"
 			orderByCol="<%= orderByCol %>"
 			orderByComparator="<%= orderByComparator %>"
 			orderByType="<%= orderByType %>"
-			total="<%= BackgroundTaskLocalServiceUtil.getBackgroundTasksCount(groupId, LayoutImportBackgroundTaskExecutor.class.getName()) %>"
+			total="<%= BackgroundTaskLocalServiceUtil.getBackgroundTasksCount(stagingGroupId, LayoutStagingBackgroundTaskExecutor.class.getName()) %>"
 		>
 			<liferay-ui:search-container-results
-				results="<%= BackgroundTaskLocalServiceUtil.getBackgroundTasks(groupId, LayoutImportBackgroundTaskExecutor.class.getName(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>"
+				results="<%= BackgroundTaskLocalServiceUtil.getBackgroundTasks(stagingGroupId, LayoutStagingBackgroundTaskExecutor.class.getName(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>"
 			/>
 
 			<liferay-ui:search-container-row
@@ -477,7 +478,7 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 				<liferay-ui:search-container-column-text>
 					<portlet:actionURL var="deleteBackgroundTaskURL">
 						<portlet:param name="struts_action" value="/group_pages/delete_background_task" />
-						<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
+						<portlet:param name="redirect" value="<%= renderURL.toString() %>" />
 						<portlet:param name="backgroundTaskId" value="<%= String.valueOf(backgroundTask.getBackgroundTaskId()) %>" />
 					</portlet:actionURL>
 

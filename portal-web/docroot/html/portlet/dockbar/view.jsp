@@ -136,6 +136,14 @@ String toggleControlsState = GetterUtil.getString(SessionClicks.get(request, "li
 			<aui:nav-item anchorId="addPanel" data-addURL="<%= addURL %>" href="javascript:;" iconClass="icon-plus" label="add" />
 		</c:if>
 
+		<c:if test="<%= !group.isControlPanel() && (LayoutPermissionUtil.contains(themeDisplay.getPermissionChecker(), layout, ActionKeys.UPDATE) || GroupPermissionUtil.contains(permissionChecker, group.getGroupId(), ActionKeys.PREVIEW_IN_DEVICE)) %>">
+			<portlet:renderURL var="previewContentURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
+				<portlet:param name="struts_action" value="/dockbar/preview_panel" />
+			</portlet:renderURL>
+
+			<aui:nav-item anchorId="previewPanel" href="<%= previewContentURL %>" iconClass="icon-facetime-video" label="preview" />
+		</c:if>
+
 		<c:if test="<%= !group.isControlPanel() && (themeDisplay.isShowLayoutTemplatesIcon() || themeDisplay.isShowPageSettingsIcon()) %>">
 			<aui:nav-item anchorCssClass="manage-content-link" dropdown="<%= true %>" iconClass="icon-desktop" id="manageContent" label="">
 

@@ -38,6 +38,7 @@ import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutReference;
 import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.Plugin;
+import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
@@ -502,6 +503,22 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			plid, groupId, portletId, parameterMap, startDate, endDate);
 	}
 
+	@Override
+	public byte[] exportPortletInfo(
+			long companyId, String portletId,
+			Map<String, String[]> parameterMap, Date startDate, Date endDate)
+		throws PortalException, SystemException {
+
+		Group companyGroup = groupLocalService.getCompanyGroup(companyId);
+
+		GroupPermissionUtil.check(
+				getPermissionChecker(), companyGroup.getGroupId(),
+				ActionKeys.EXPORT_IMPORT_PORTLET_INFO);
+
+		return layoutLocalService.exportPortletInfo(
+			companyId, portletId, parameterMap, startDate, endDate);
+	}
+
 	/**
 	 * Exports the portlet information (categories, permissions, ... etc.) as a
 	 * file.
@@ -536,6 +553,42 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 
 		return layoutLocalService.exportPortletInfoAsFile(
 			plid, groupId, portletId, parameterMap, startDate, endDate);
+	}
+
+	@Override
+	public File exportPortletInfoAsFile(
+			long companyId, String portletId,
+			Map<String, String[]> parameterMap, Date startDate, Date endDate)
+		throws PortalException, SystemException {
+
+		Group companyGroup = groupLocalService.getCompanyGroup(companyId);
+
+		GroupPermissionUtil.check(
+				getPermissionChecker(), companyGroup.getGroupId(),
+				ActionKeys.EXPORT_IMPORT_PORTLET_INFO);
+
+		return layoutLocalService.exportPortletInfoAsFile(
+			companyId, portletId, parameterMap, startDate, endDate);
+	}
+
+	@Override
+	public long exportPortletInfoAsFileInBackground(
+			long userId, String taskName, String portletId,
+			Map<String, String[]> parameterMap, Date startDate, Date endDate)
+		throws PortalException, SystemException {
+
+		User user = userLocalService.getUser(userId);
+
+		long companyId = user.getCompanyId();
+
+		Group companyGroup = groupLocalService.getCompanyGroup(companyId);
+
+		GroupPermissionUtil.check(
+			getPermissionChecker(), companyGroup.getGroupId(),
+			ActionKeys.EXPORT_IMPORT_PORTLET_INFO);
+
+		return layoutLocalService.exportPortletInfoAsFileInBackground(
+			userId, taskName, portletId, parameterMap, startDate, endDate);
 	}
 
 	@Override

@@ -203,9 +203,13 @@ public class StagingImpl implements Staging {
 		Map<String, String[]> parameterMap = getStagingParameters(
 			portletRequest);
 
+		DateRange dateRange = ExportImportHelperUtil.getDateRange(
+			portletRequest, sourceGroupId, false, sourcePlid, portletId);
+
 		LayoutLocalServiceUtil.publishPortletInBackground(
 			userId, portletId, sourcePlid, targetPlid, sourceGroupId,
-			targetGroupId, portletId, parameterMap, null, null);
+			targetGroupId, portletId, parameterMap, dateRange.getStartDate(),
+			dateRange.getEndDate());
 	}
 
 	@Override

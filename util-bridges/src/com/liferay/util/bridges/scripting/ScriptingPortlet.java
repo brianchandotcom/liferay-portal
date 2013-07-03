@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.scripting.ScriptingException;
+import com.liferay.portal.kernel.scripting.ScriptingHelperUtil;
 import com.liferay.portal.kernel.scripting.ScriptingUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -168,8 +169,9 @@ public class ScriptingPortlet extends GenericPortlet {
 		PortletConfig portletConfig = getPortletConfig();
 		PortletContext portletContext = getPortletContext();
 
-		Map<String, Object> portletObjects = ScriptingUtil.getPortletObjects(
-			portletConfig, portletContext, portletRequest, portletResponse);
+		Map<String, Object> portletObjects =
+			ScriptingHelperUtil.getPortletObjects(
+				portletConfig, portletContext, portletRequest, portletResponse);
 
 		ScriptingUtil.exec(null, portletObjects, language, script);
 	}

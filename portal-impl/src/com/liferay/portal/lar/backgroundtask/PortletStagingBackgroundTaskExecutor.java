@@ -16,23 +16,23 @@ package com.liferay.portal.lar.backgroundtask;
 
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
 import com.liferay.portal.kernel.backgroundtask.BaseBackgroundTaskExecutor;
-import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.model.BackgroundTask;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 
+import java.io.File;
 import java.io.Serializable;
 
-import java.util.List;
+import java.util.Date;
 import java.util.Map;
 
 /**
- * @author Daniel Kocsis
+ * @author Julio Camarero
  */
-public class PortletImportBackgroundTaskExecutor
+public class PortletStagingBackgroundTaskExecutor
 	extends BaseBackgroundTaskExecutor {
 
-	public PortletImportBackgroundTaskExecutor() {
+	public PortletStagingBackgroundTaskExecutor() {
 		setSerial(true);
 	}
 
@@ -43,20 +43,29 @@ public class PortletImportBackgroundTaskExecutor
 		Map<String, Serializable> taskContextMap =
 			backgroundTask.getTaskContextMap();
 
-		long plid = MapUtil.getLong(taskContextMap, "plid");
-		long groupId = MapUtil.getLong(taskContextMap, "groupId");
+		long sourcePlid = MapUtil.getLong(taskContextMap, "sourcePlid");
+		long targetPlid = MapUtil.getLong(taskContextMap, "targetPlid");
+		long sourceGroupId = MapUtil.getLong(taskContextMap, "sourceGroupId");
+		long targetGroupId = MapUtil.getLong(taskContextMap, "targetGroupId");
 		String portletId = MapUtil.getString(taskContextMap, "portletId");
 		Map<String, String[]> parameterMap =
 			(Map<String, String[]>)taskContextMap.get("parameterMap");
+		Date startDate = (Date)taskContextMap.get("startDate");
+		Date endDate = (Date)taskContextMap.get("endDate");
+
+		File larFile = LayoutLocalServiceUtil.exportPortletInfoAsFile(
+			sourcePlid, sourceGroupId, portletId, parameterMap, startDate,
+			endDate);
+
 		long userId = MapUtil.getLong(taskContextMap, "userId");
 
-		List<FileEntry> attachmentsFileEntries =
-			backgroundTask.getAttachmentsFileEntries();
-
-		for (FileEntry attachmentsFileEntry : attachmentsFileEntries) {
+		try {
 			LayoutLocalServiceUtil.importPortletInfo(
-				userId, plid, groupId, portletId, parameterMap,
-				attachmentsFileEntry.getContentStream());
+				userId, targetPlid, targetGroupId, portletId, parameterMap,
+				larFile);
+		}
+		finally {
+			larFile.delete();
 		}
 
 		return BackgroundTaskResult.SUCCESS;

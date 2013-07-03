@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.backgroundtask.BaseBackgroundTaskExecutor;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.model.BackgroundTask;
-import com.liferay.portal.service.LayoutServiceUtil;
+import com.liferay.portal.service.LayoutLocalServiceUtil;
 
 import java.io.Serializable;
 
@@ -48,13 +48,14 @@ public class LayoutImportBackgroundTaskExecutor
 			taskContextMap, "privateLayout");
 		Map<String, String[]> parameterMap =
 			(Map<String, String[]>)taskContextMap.get("parameterMap");
+		long userId = MapUtil.getLong(taskContextMap, "userId");
 
 		List<FileEntry> attachmentsFileEntries =
 			backgroundTask.getAttachmentsFileEntries();
 
 		for (FileEntry attachmentsFileEntry : attachmentsFileEntries) {
-			LayoutServiceUtil.importLayouts(
-				groupId, privateLayout, parameterMap,
+			LayoutLocalServiceUtil.importLayouts(
+				userId, groupId, privateLayout, parameterMap,
 				attachmentsFileEntry.getContentStream());
 		}
 

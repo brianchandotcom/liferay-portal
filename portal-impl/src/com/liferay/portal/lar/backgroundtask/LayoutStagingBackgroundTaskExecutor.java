@@ -16,23 +16,25 @@ package com.liferay.portal.lar.backgroundtask;
 
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
 import com.liferay.portal.kernel.backgroundtask.BaseBackgroundTaskExecutor;
-import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.staging.StagingUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.model.BackgroundTask;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 
+import java.io.File;
 import java.io.Serializable;
 
-import java.util.List;
+import java.util.Date;
 import java.util.Map;
 
 /**
- * @author Daniel Kocsis
+ * @author Julio Camarero
  */
-public class PortletImportBackgroundTaskExecutor
+public class LayoutStagingBackgroundTaskExecutor
 	extends BaseBackgroundTaskExecutor {
 
-	public PortletImportBackgroundTaskExecutor() {
+	public LayoutStagingBackgroundTaskExecutor() {
 		setSerial(true);
 	}
 
@@ -43,20 +45,33 @@ public class PortletImportBackgroundTaskExecutor
 		Map<String, Serializable> taskContextMap =
 			backgroundTask.getTaskContextMap();
 
-		long plid = MapUtil.getLong(taskContextMap, "plid");
-		long groupId = MapUtil.getLong(taskContextMap, "groupId");
-		String portletId = MapUtil.getString(taskContextMap, "portletId");
+		long sourceGroupId = MapUtil.getLong(taskContextMap, "sourceGroupId");
+		long targetGroupId = MapUtil.getLong(taskContextMap, "targetGroupId");
+		boolean privateLayout = MapUtil.getBoolean(
+			taskContextMap, "privateLayout");
+		long[] layoutIds = GetterUtil.getLongValues(
+			taskContextMap.get("layoutIds"));
 		Map<String, String[]> parameterMap =
 			(Map<String, String[]>)taskContextMap.get("parameterMap");
+		Date startDate = (Date)taskContextMap.get("startDate");
+		Date endDate = (Date)taskContextMap.get("endDate");
+
 		long userId = MapUtil.getLong(taskContextMap, "userId");
 
-		List<FileEntry> attachmentsFileEntries =
-			backgroundTask.getAttachmentsFileEntries();
+		StagingUtil.lockGroup(userId, targetGroupId);
 
-		for (FileEntry attachmentsFileEntry : attachmentsFileEntries) {
-			LayoutLocalServiceUtil.importPortletInfo(
-				userId, plid, groupId, portletId, parameterMap,
-				attachmentsFileEntry.getContentStream());
+		File larFile = LayoutLocalServiceUtil.exportLayoutsAsFile(
+			sourceGroupId, privateLayout, layoutIds, parameterMap, startDate,
+			endDate);
+
+		try {
+			LayoutLocalServiceUtil.importLayouts(
+				userId, targetGroupId, privateLayout, parameterMap, larFile);
+		}
+		finally {
+			larFile.delete();
+
+			StagingUtil.unlockGroup(targetGroupId);
 		}
 
 		return BackgroundTaskResult.SUCCESS;

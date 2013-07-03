@@ -22,10 +22,10 @@
 	<bean id="com.liferay.counter.service.CounterLocalService" class="com.liferay.counter.service.impl.CounterLocalServiceImpl" />
 	<bean id="com.liferay.counter.service.persistence.CounterPersistence" class="com.liferay.counter.service.persistence.CounterPersistenceImpl">
 		<property name="dataSource" ref="counterDataSource" />
-        <property name="sessionFactory" ref="counterSessionFactory" />
+		<property name="sessionFactory" ref="counterSessionFactory" />
 	</bean>
-    <bean id="com.liferay.counter.service.persistence.CounterFinder" class="com.liferay.counter.service.persistence.CounterFinderImpl">
+	<bean id="com.liferay.counter.service.persistence.CounterFinder" class="com.liferay.counter.service.persistence.CounterFinderImpl">
 		<property name="dataSource" ref="counterDataSource" />
-        <property name="sessionFactory" ref="counterSessionFactory" />
-    </bean>
+		<property name="sessionFactory" ref="counterSessionFactory" />
+	</bean>
 </beans>

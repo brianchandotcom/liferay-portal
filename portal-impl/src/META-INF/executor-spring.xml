@@ -184,7 +184,7 @@
 
 	<bean id ="com.liferay.portal.kernel.process.ProcessExecutor" class="com.liferay.portal.kernel.process.ProcessExecutor" />
 
-    <!-- Process util -->
+	<!-- Process util -->
 
-    <bean id ="com.liferay.portal.kernel.process.ProcessUtil" class="com.liferay.portal.kernel.process.ProcessUtil" />
+	<bean id ="com.liferay.portal.kernel.process.ProcessUtil" class="com.liferay.portal.kernel.process.ProcessUtil" />
 </beans>

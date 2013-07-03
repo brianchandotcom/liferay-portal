@@ -38,7 +38,7 @@
 				<action-key>ADD_QUESTION</action-key>
 			</guest-unsupported>
 		</permissions>
-	</model-resource>	
+	</model-resource>
 	<model-resource>
 		<model-name>com.liferay.portlet.polls.model.PollsQuestion</model-name>
 		<portlet-ref>

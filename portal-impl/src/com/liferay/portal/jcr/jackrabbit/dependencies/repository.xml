@@ -102,7 +102,7 @@
 	credentials, and schema settings.
 	-->
 
-    <!--<Cluster id="node_1" syncDelay="5">
+	<!--<Cluster id="node_1" syncDelay="5">
 		<Journal class="org.apache.jackrabbit.core.journal.DatabaseJournal">
 			<param name="revision" value="${rep.home}/revision"/>
 			<param name="driver" value="com.mysql.jdbc.Driver"/>
@@ -112,5 +112,5 @@
 			<param name="schema" value="mysql"/>
 			<param name="schemaObjectPrefix" value="J_C_"/>
 		</Journal>
-    </Cluster>-->
+	</Cluster>-->
 </Repository>

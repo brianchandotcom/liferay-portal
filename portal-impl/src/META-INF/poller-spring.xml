@@ -37,7 +37,7 @@
 	<bean id="messageListener.poller" class="com.liferay.portal.poller.messaging.PollerRequestMessageListener" />
 	<bean id="messageListener.PollerCometDelayedJob" class="com.liferay.portal.poller.comet.PollerCometDelayedJobImpl" />
 	<bean id="messageListener.pollerNotificationsBridge" class="com.liferay.portal.poller.messaging.PollerNotificationsBridgeMessageListener" />
-	<bean id="messageListener.pollerRequestHandler" class="com.liferay.portal.poller.PollerRequestHandlerImpl" />																					
+	<bean id="messageListener.pollerRequestHandler" class="com.liferay.portal.poller.PollerRequestHandlerImpl" />
 	<bean id="messagingConfigurator.poller" class="com.liferay.portal.kernel.messaging.config.DefaultMessagingConfigurator">
 		<property name="destinations">
 			<list>

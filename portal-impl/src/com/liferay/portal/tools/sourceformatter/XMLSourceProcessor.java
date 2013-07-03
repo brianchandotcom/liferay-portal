@@ -45,14 +45,61 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected void doFormat() throws Exception {
-		formatAntXML();
-		formatDDLStructuresXML();
-		formatFriendlyURLRoutesXML();
-		formatPortletXML();
-		formatServiceXML();
-		formatStrutsConfigXML();
-		formatTilesDefsXML();
-		formatWebXML();
+		String[] excludes = new String[] {"**\\classes\\**", "**\\bin\\**"};
+		String[] includes = new String[] {"**\\*.xml"};
+
+		List<String> fileNames = getFileNames(excludes, includes);
+
+		for (String fileName : fileNames) {
+			File file = new File(BASEDIR + fileName);
+
+			fileName = StringUtil.replace(
+				fileName, StringPool.BACK_SLASH, StringPool.SLASH);
+
+			String content = fileUtil.read(file);
+
+			String newContent = content;
+
+			if (!fileName.contains("/build")) {
+				newContent = trimContent(newContent, false);
+			}
+
+			if (fileName.contains("/build") && !fileName.contains("/tools/")) {
+				newContent = formatAntXML(fileName, newContent);
+			}
+			else if (fileName.endsWith("structures.xml")) {
+				newContent = formatDDLStructuresXML(newContent);
+			}
+			else if (fileName.endsWith("routes.xml")) {
+				newContent = formatFriendlyURLRoutesXML(newContent);
+			}
+			else if ((portalSource &&
+					  fileName.endsWith("/portlet-custom.xml")) ||
+					 (!portalSource && fileName.endsWith("/portlet.xml"))) {
+
+				newContent = formatPortletXML(newContent);
+			}
+			else if (portalSource && fileName.endsWith("/service.xml")) {
+				formatServiceXML(fileName, newContent);
+			}
+			else if (portalSource && fileName.endsWith("/struts-config.xml")) {
+				formatStrutsConfigXML(fileName, content);
+			}
+			else if (portalSource && fileName.endsWith("/tiles-defs.xml")) {
+				formatTilesDefsXML(fileName, content);
+			}
+			else if (portalSource && fileName.endsWith("WEB-INF/web.xml") ||
+					 !portalSource && fileName.endsWith("/web.xml")) {
+
+				newContent = formatWebXML(fileName, content);
+			}
+
+			if ((newContent != null) && !content.equals(newContent)) {
+				fileUtil.write(file, newContent);
+
+				sourceFormatterHelper.printError(fileName, file);
+			}
+		}
 	}
 
 	protected String fixAntXMLProjectName(String fileName, String content) {
@@ -146,90 +193,40 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		return content;
 	}
 
-	protected void formatAntXML() throws DocumentException, IOException {
-		String[] excludes = new String[] {"**\\tools\\**"};
-		String[] includes = new String[] {"**\\b*.xml"};
-
-		List<String> fileNames = getFileNames(excludes, includes);
-
-		for (String fileName : fileNames) {
-			File file = new File(BASEDIR + fileName);
-
-			fileName = StringUtil.replace(
-				fileName, StringPool.BACK_SLASH, StringPool.SLASH);
-
-			String content = fileUtil.read(file);
-
-			String newContent = trimContent(content, true);
-
-			newContent = fixAntXMLProjectName(fileName, newContent);
-
-			Document document = saxReaderUtil.read(newContent);
-
-			Element rootElement = document.getRootElement();
-
-			String previousName = StringPool.BLANK;
-
-			List<Element> targetElements = rootElement.elements("target");
-
-			for (Element targetElement : targetElements) {
-				String name = targetElement.attributeValue("name");
-
-				if (name.equals("Test")) {
-					name = name.toLowerCase();
-				}
-
-				if (name.compareTo(previousName) < -1) {
-					processErrorMessage(
-						fileName,
-						fileName + " has an unordered target " + name);
-
-					break;
-				}
-
-				previousName = name;
-			}
-
-			if ((newContent != null) && !content.equals(newContent)) {
-				fileUtil.write(file, newContent);
-
-				sourceFormatterHelper.printError(fileName, file);
-			}
-		}
-	}
-
-	protected void formatDDLStructuresXML()
+	protected String formatAntXML(String fileName, String content)
 		throws DocumentException, IOException {
 
-		String basedir =
-			"./portal-impl/src/com/liferay/portal/events/dependencies/";
+		String newContent = trimContent(content, true);
 
-		if (!fileUtil.exists(basedir)) {
-			return;
-		}
+		newContent = fixAntXMLProjectName(fileName, newContent);
 
-		String[] includes = new String [] {"**\\*structures.xml"};
+		Document document = saxReaderUtil.read(newContent);
 
-		List<String> fileNames = getFileNames(basedir, new String[0], includes);
+		Element rootElement = document.getRootElement();
 
-		for (String fileName : fileNames) {
-			File file = new File(basedir + fileName);
+		String previousName = StringPool.BLANK;
 
-			String content = fileUtil.read(file);
+		List<Element> targetElements = rootElement.elements("target");
 
-			String newContent = trimContent(content, false);
+		for (Element targetElement : targetElements) {
+			String name = targetElement.attributeValue("name");
 
-			newContent = formatDDLStructuresXML(content);
-
-			if ((newContent != null) && !content.equals(newContent)) {
-				fileUtil.write(file, newContent);
-
-				fileName = StringUtil.replace(
-					fileName, StringPool.BACK_SLASH, StringPool.SLASH);
-
-				sourceFormatterHelper.printError(fileName, file);
+			if (name.equals("Test")) {
+				name = name.toLowerCase();
 			}
+
+			if (name.compareTo(previousName) < -1) {
+				processErrorMessage(
+					fileName,
+					fileName + " has an unordered target " + name);
+
+				break;
+			}
+
+			previousName = name;
 		}
+
+		return newContent;
 	}
 
 	protected String formatDDLStructuresXML(String content)
@@ -265,40 +262,12 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		return document.formattedString();
 	}
 
-	protected void formatFriendlyURLRoutesXML()
-		throws DocumentException, IOException {
-
-		String[] excludes = new String[] {"**\\classes\\**", "**\\bin\\**"};
-		String[] includes = new String[] {"**\\*routes.xml"};
-
-		List<String> fileNames = getFileNames(excludes, includes);
-
-		for (String fileName : fileNames) {
-			File file = new File(BASEDIR + fileName);
-
-			String content = fileUtil.read(file);
-
-			if (content.contains("<!-- SourceFormatter.Ignore -->")) {
-				continue;
-			}
-
-			String newContent = trimContent(content, false);
-
-			newContent = formatFriendlyURLRoutesXML(content);
-
-			if ((newContent != null) && !content.equals(newContent)) {
-				fileUtil.write(file, newContent);
-
-				fileName = StringUtil.replace(
-					fileName, StringPool.BACK_SLASH, StringPool.SLASH);
-
-				sourceFormatterHelper.printError(fileName, file);
-			}
-		}
-	}
-
 	protected String formatFriendlyURLRoutesXML(String content)
 		throws DocumentException {
+
+		if (content.contains("<!-- SourceFormatter.Ignore -->")) {
+			return content;
+		}
 
 		Document document = saxReaderUtil.read(content);
 
@@ -427,47 +396,6 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		return sb.toString();
 	}
 
-	protected void formatPortletXML() throws DocumentException, IOException {
-		if (portalSource) {
-			File file = new File(
-				BASEDIR + "portal-web/docroot/WEB-INF/portlet-custom.xml");
-
-			String content = fileUtil.read(file);
-
-			String newContent = formatPortletXML(content);
-
-			if ((newContent != null) && !content.equals(newContent)) {
-				fileUtil.write(file, newContent);
-
-				sourceFormatterHelper.printError(file.toString(), file);
-			}
-		}
-		else {
-			String[] includes = new String[] {"**\\portlet.xml"};
-
-			List<String> fileNames = getFileNames(new String[0], includes);
-
-			for (String fileName : fileNames) {
-				File file = new File(BASEDIR + fileName);
-
-				String content = fileUtil.read(file);
-
-				String newContent = trimContent(content, false);
-
-				newContent = formatPortletXML(content);
-
-				if ((newContent != null) && !content.equals(newContent)) {
-					fileUtil.write(file, newContent);
-
-					fileName = StringUtil.replace(
-						fileName, StringPool.BACK_SLASH, StringPool.SLASH);
-
-					sourceFormatterHelper.printError(fileName, file);
-				}
-			}
-		}
-	}
-
 	protected String formatPortletXML(String content)
 		throws DocumentException, IOException {
 
@@ -492,31 +420,6 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		}
 
 		return document.formattedString();
-	}
-
-	protected void formatServiceXML() throws DocumentException, IOException {
-		String[] includes = new String[] {"**\\service.xml"};
-
-		List<String> fileNames = getFileNames(new String[0], includes);
-
-		for (String fileName : fileNames) {
-			File file = new File(BASEDIR + fileName);
-
-			fileName = StringUtil.replace(
-				fileName, StringPool.BACK_SLASH, StringPool.SLASH);
-
-			String content = fileUtil.read(file);
-
-			String newContent = trimContent(content, false);
-
-			formatServiceXML(fileName, content);
-
-			if ((newContent != null) && !content.equals(newContent)) {
-				fileUtil.write(file, newContent);
-
-				sourceFormatterHelper.printError(fileName, file);
-			}
-		}
 	}
 
 	protected void formatServiceXML(String fileName, String content)
@@ -598,22 +501,10 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
-	protected void formatStrutsConfigXML()
+	protected void formatStrutsConfigXML(String fileName, String content)
 		throws DocumentException, IOException {
 
-		if (!portalSource) {
-			return;
-		}
-
-		String fileName = "portal-web/docroot/WEB-INF/struts-config.xml";
-
-		File file = new File(BASEDIR + fileName);
-
-		String content = fileUtil.read(file);
-
-		String newContent = trimContent(content, false);
-
-		Document document = saxReaderUtil.read(newContent);
+		Document document = saxReaderUtil.read(content);
 
 		Element rootElement = document.getRootElement();
 
@@ -636,28 +527,12 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 			previousPath = path;
 		}
-
-		if ((newContent != null) && !content.equals(newContent)) {
-			fileUtil.write(file, newContent);
-
-			sourceFormatterHelper.printError(fileName, file);
-		}
 	}
 
-	protected void formatTilesDefsXML() throws DocumentException, IOException {
-		if (!portalSource) {
-			return;
-		}
+	protected void formatTilesDefsXML(String fileName, String content)
+		throws DocumentException, IOException {
 
-		String fileName = "portal-web/docroot/WEB-INF/tiles-defs.xml";
-
-		File file = new File(BASEDIR + fileName);
-
-		String content = fileUtil.read(file);
-
-		String newContent = trimContent(content, false);
-
-		Document document = saxReaderUtil.read(newContent);
+		Document document = saxReaderUtil.read(content);
 
 		Element rootElement = document.getRootElement();
 
@@ -678,123 +553,91 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 			previousName = name;
 		}
-
-		if ((newContent != null) && !content.equals(newContent)) {
-			fileUtil.write(file, newContent);
-
-			sourceFormatterHelper.printError(fileName, file);
-		}
 	}
 
-	protected void formatWebXML() throws IOException {
-		if (portalSource) {
-			Properties properties = new Properties();
+	protected String formatWebXML(String fileName, String content)
+		throws IOException {
 
-			String propertiesContent = fileUtil.read(
-				BASEDIR + "portal-impl/src/portal.properties");
-
-			PropertiesUtil.load(properties, propertiesContent);
-
-			String[] locales = StringUtil.split(
-				properties.getProperty(PropsKeys.LOCALES));
-
-			Arrays.sort(locales);
-
-			Set<String> urlPatterns = new TreeSet<String>();
-
-			for (String locale : locales) {
-				int pos = locale.indexOf(StringPool.UNDERLINE);
-
-				String languageCode = locale.substring(0, pos);
-
-				urlPatterns.add(languageCode);
-				urlPatterns.add(locale);
-			}
-
-			StringBundler sb = new StringBundler();
-
-			for (String urlPattern : urlPatterns) {
-				sb.append("\t<servlet-mapping>\n");
-				sb.append("\t\t<servlet-name>I18n Servlet</servlet-name>\n");
-				sb.append(
-					"\t\t<url-pattern>/" + urlPattern +"/*</url-pattern>\n");
-				sb.append("\t</servlet-mapping>\n");
-			}
-
-			File file = new File(
-				BASEDIR + "portal-web/docroot/WEB-INF/web.xml");
-
-			String content = fileUtil.read(file);
-
-			String newContent = trimContent(content, false);
-
-			int x = newContent.indexOf("<servlet-mapping>");
-
-			x = newContent.indexOf(
-				"<servlet-name>I18n Servlet</servlet-name>", x);
-
-			x = newContent.lastIndexOf("<servlet-mapping>", x) - 1;
-
-			int y = newContent.lastIndexOf(
-				"<servlet-name>I18n Servlet</servlet-name>");
-
-			y = newContent.indexOf("</servlet-mapping>", y) + 19;
-
-			newContent =
-				newContent.substring(0, x) + sb.toString() +
-					newContent.substring(y);
-
-			x = newContent.indexOf("<security-constraint>");
-
-			x = newContent.indexOf(
-				"<web-resource-name>/c/portal/protected</web-resource-name>",
-				x);
-
-			x = newContent.indexOf("<url-pattern>", x) - 3;
-
-			y = newContent.indexOf("<http-method>", x);
-
-			y = newContent.lastIndexOf("</url-pattern>", y) + 15;
-
-			sb = new StringBundler();
-
-			sb.append("\t\t\t<url-pattern>/c/portal/protected</url-pattern>\n");
-
-			for (String urlPattern : urlPatterns) {
-				sb.append(
-					"\t\t\t<url-pattern>/" + urlPattern +
-						"/c/portal/protected</url-pattern>\n");
-			}
-
-			newContent =
-				newContent.substring(0, x) + sb.toString() +
-					newContent.substring(y);
-
-			if ((newContent != null) && !content.equals(newContent)) {
-				fileUtil.write(file, newContent);
-
-				System.out.println(file);
-			}
-		}
-		else {
+		if (!portalSource) {
 			String webXML = ContentUtil.get(
 				"com/liferay/portal/deploy/dependencies/web.xml");
 
-			String[] includes = new String[] {"**\\web.xml"};
-
-			List<String> fileNames = getFileNames(new String[0], includes);
-
-			for (String fileName : fileNames) {
-				String content = fileUtil.read(BASEDIR + fileName);
-
-				if (content.equals(webXML)) {
-					fileName = StringUtil.replace(
-						fileName, StringPool.BACK_SLASH, StringPool.SLASH);
-
-					processErrorMessage(fileName, fileName);
-				}
+			if (content.equals(webXML)) {
+				processErrorMessage(fileName, fileName);
 			}
+
+			return content;
 		}
+
+		Properties properties = new Properties();
+
+		String propertiesContent = fileUtil.read(
+			BASEDIR + "portal-impl/src/portal.properties");
+
+		PropertiesUtil.load(properties, propertiesContent);
+
+		String[] locales = StringUtil.split(
+			properties.getProperty(PropsKeys.LOCALES));
+
+		Arrays.sort(locales);
+
+		Set<String> urlPatterns = new TreeSet<String>();
+
+		for (String locale : locales) {
+			int pos = locale.indexOf(StringPool.UNDERLINE);
+
+			String languageCode = locale.substring(0, pos);
+
+			urlPatterns.add(languageCode);
+			urlPatterns.add(locale);
+		}
+
+		StringBundler sb = new StringBundler();
+
+		for (String urlPattern : urlPatterns) {
+			sb.append("\t<servlet-mapping>\n");
+			sb.append("\t\t<servlet-name>I18n Servlet</servlet-name>\n");
+			sb.append("\t\t<url-pattern>/" + urlPattern +"/*</url-pattern>\n");
+			sb.append("\t</servlet-mapping>\n");
+		}
+
+		int x = content.indexOf("<servlet-mapping>");
+
+		x = content.indexOf("<servlet-name>I18n Servlet</servlet-name>", x);
+
+		x = content.lastIndexOf("<servlet-mapping>", x) - 1;
+
+		int y = content.lastIndexOf(
+			"<servlet-name>I18n Servlet</servlet-name>");
+
+		y = content.indexOf("</servlet-mapping>", y) + 19;
+
+		String newContent =
+			content.substring(0, x) + sb.toString() + content.substring(y);
+
+		x = newContent.indexOf("<security-constraint>");
+
+		x = newContent.indexOf(
+			"<web-resource-name>/c/portal/protected</web-resource-name>", x);
+
+		x = newContent.indexOf("<url-pattern>", x) - 3;
+
+		y = newContent.indexOf("<http-method>", x);
+
+		y = newContent.lastIndexOf("</url-pattern>", y) + 15;
+
+		sb = new StringBundler();
+
+		sb.append("\t\t\t<url-pattern>/c/portal/protected</url-pattern>\n");
+
+		for (String urlPattern : urlPatterns) {
+			sb.append(
+				"\t\t\t<url-pattern>/" + urlPattern +
+					"/c/portal/protected</url-pattern>\n");
+		}
+
+		return newContent.substring(0, x) + sb.toString() +
+			newContent.substring(y);
 	}
 
 }

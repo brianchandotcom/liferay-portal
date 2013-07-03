@@ -61,7 +61,28 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			String newContent = content;
 
 			if (!fileName.contains("/build")) {
-				newContent = trimContent(newContent, false);
+				Properties leadingSpacesExclusions = null;
+
+				if (portalSource) {
+					leadingSpacesExclusions = getPortalExclusionsProperties(
+						"source_formatter_xml_leading_spaces_exclusions." +
+							"properties");
+				}
+				else {
+					leadingSpacesExclusions = getPluginExclusionsProperties(
+						"source_formatter_xml_leading_spaces_exclusions." +
+							"properties");
+				}
+
+				String excluded = null;
+
+				if (leadingSpacesExclusions != null) {
+					excluded = leadingSpacesExclusions.getProperty(fileName);
+				}
+
+				if (excluded == null) {
+					newContent = trimContent(newContent, false);
+				}
 			}
 
 			if (fileName.contains("/build") && !fileName.contains("/tools/")) {
@@ -71,7 +92,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 				newContent = formatDDLStructuresXML(newContent);
 			}
 			else if (fileName.endsWith("routes.xml")) {
-				newContent = formatFriendlyURLRoutesXML(newContent);
+				newContent = formatFriendlyURLRoutesXML(fileName, newContent);
 			}
 			else if ((portalSource &&
 					  fileName.endsWith("/portlet-custom.xml")) ||
@@ -262,10 +283,29 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		return document.formattedString();
 	}
 
-	protected String formatFriendlyURLRoutesXML(String content)
-		throws DocumentException {
+	protected String formatFriendlyURLRoutesXML(String fileName, String content)
+		throws DocumentException, IOException {
 
-		if (content.contains("<!-- SourceFormatter.Ignore -->")) {
+		Properties friendlyUrlRoutesSortExclusions = null;
+
+		if (portalSource) {
+			friendlyUrlRoutesSortExclusions = getPortalExclusionsProperties(
+				"source_formatter_friendly_url_routes_sort_exclusions." +
+					"properties");
+		}
+		else {
+			friendlyUrlRoutesSortExclusions = getPluginExclusionsProperties(
+				"source_formatter_friendly_url_routes_sort_exclusions." +
+					"properties");
+		}
+
+		String excluded = null;
+
+		if (friendlyUrlRoutesSortExclusions != null) {
+			excluded = friendlyUrlRoutesSortExclusions.getProperty(fileName);
+		}
+
+		if (excluded != null) {
 			return content;
 		}
 

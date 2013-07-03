@@ -61,7 +61,7 @@ public class PortletExportBackgroundTaskExecutor
 
 		BackgroundTaskLocalServiceUtil.addBackgroundTaskAttachment(
 			userId, backgroundTask.getBackgroundTaskId(), fileName, larFile);
-		
+
 		return BackgroundTaskResult.SUCCESS;
 	}
 

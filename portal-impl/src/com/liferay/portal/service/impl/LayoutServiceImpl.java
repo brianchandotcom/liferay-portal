@@ -574,7 +574,8 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	@Override
 	public long exportPortletInfoAsFileInBackground(
 			long userId, String taskName, String portletId,
-			Map<String, String[]> parameterMap, Date startDate, Date endDate)
+			Map<String, String[]> parameterMap, Date startDate, Date endDate,
+			String fileName)
 		throws PortalException, SystemException {
 
 		User user = userPersistence.findByPrimaryKey(userId);
@@ -587,7 +588,8 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			ActionKeys.EXPORT_IMPORT_PORTLET_INFO);
 
 		return layoutLocalService.exportPortletInfoAsFileInBackground(
-			userId, taskName, portletId, parameterMap, startDate, endDate);
+			userId, taskName, portletId, parameterMap, startDate, endDate,
+			fileName);
 	}
 
 	@Override

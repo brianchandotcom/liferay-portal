@@ -185,7 +185,7 @@
 	}
 
 	.permission-scopes {
-		display: block;
+		margin-right: 10px;
 
 		&.empty {
 			display: none;
@@ -198,6 +198,10 @@
 
 	.lfr-permission-navigation-container {
 		width: 275px;
+
+		.search {
+			margin: 20px 0px;
+		}
 
 		.lfr-permission-navigation {
 			overflow: auto;
@@ -238,6 +242,10 @@
 				overflow: hidden;
 				text-overflow: ellipsis;
 				white-space: nowrap;
+			}
+
+ 			.permission-navigation-item-summary {
+				margin: 0.5em 0em 1.5em .5em;
 			}
 
             .permission-navigation-section .permission-navigation-section {

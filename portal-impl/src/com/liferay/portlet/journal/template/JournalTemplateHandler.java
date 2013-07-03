@@ -54,7 +54,7 @@ public class JournalTemplateHandler extends BaseDDMTemplateHandler {
 
 	@Override
 	public String getResourceName() {
-		return "com.liferay.portlet.journal";
+		return "com.liferay.portlet.journal.template";
 	}
 
 	@Override

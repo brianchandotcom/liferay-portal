@@ -53,7 +53,7 @@ public class AssetTagsNavigationPortletDisplayTemplateHandler
 
 	@Override
 	public String getResourceName() {
-		return "com.liferay.portlet.assettagsnavigation";
+		return "com.liferay.portlet.assettagsnavigation.template";
 	}
 
 	@Override

@@ -60,7 +60,7 @@ public class AssetPublisherPortletDisplayTemplateHandler
 
 	@Override
 	public String getResourceName() {
-		return "com.liferay.portlet.assetpublisher";
+		return "com.liferay.portlet.assetpublisher.template";
 	}
 
 	@Override

@@ -141,6 +141,10 @@ public class ResourceActionsUtil {
 		return getResourceActions().getModelResourceOwnerDefaultActions(name);
 	}
 
+	public static Double getModelResourceWeight(String name) {
+		return getResourceActions().getModelResourceWeight(name);
+	}
+
 	public static String[] getOrganizationModelResources() {
 		return getResourceActions().getOrganizationModelResources();
 	}

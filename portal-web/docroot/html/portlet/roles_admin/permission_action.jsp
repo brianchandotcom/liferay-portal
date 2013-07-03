@@ -38,6 +38,8 @@ Role role = (Role)objArray[1];
 	</portlet:actionURL>
 
 	<liferay-ui:icon-delete
+		message="remove"
+		confirmation="are-your-sure-you-want-to-remove-this-permission"
 		url="<%= deletePermissionURL %>"
 	/>
 </liferay-ui:icon-menu>

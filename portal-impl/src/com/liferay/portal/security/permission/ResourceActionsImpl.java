@@ -109,6 +109,7 @@ public class ResourceActionsImpl implements ResourceActions {
 		_modelResourceGuestUnsupportedActions =
 			new HashMap<String, List<String>>();
 		_modelResourceOwnerDefaultActions = new HashMap<String, List<String>>();
+		_modelResourceWeight = new HashMap<String, Double>();
 
 		try {
 			ClassLoader classLoader = getClass().getClassLoader();
@@ -292,6 +293,11 @@ public class ResourceActionsImpl implements ResourceActions {
 	@Override
 	public List<String> getModelResourceOwnerDefaultActions(String name) {
 		return getActions(_modelResourceOwnerDefaultActions, name);
+	}
+
+	@Override
+	public Double getModelResourceWeight(String name) {
+		return _modelResourceWeight.get(name);
 	}
 
 	@Override
@@ -1013,6 +1019,11 @@ public class ResourceActionsImpl implements ResourceActions {
 			portletResources.add(portletName);
 		}
 
+		Double weight = GetterUtil.getDouble(
+			modelResourceElement.elementTextTrim("weight"), 100);
+
+		_modelResourceWeight.put(name, weight);
+
 		List<String> supportsActions = readSupportsActions(
 			modelResourceElement, _modelResourceActions, name);
 
@@ -1157,6 +1168,7 @@ public class ResourceActionsImpl implements ResourceActions {
 	private Map<String, List<String>> _modelResourceGuestDefaultActions;
 	private Map<String, List<String>> _modelResourceGuestUnsupportedActions;
 	private Map<String, List<String>> _modelResourceOwnerDefaultActions;
+	private Map<String, Double> _modelResourceWeight;
 	private Set<String> _organizationModelResources;
 	private Set<String> _portalModelResources;
 	private Map<String, Set<String>> _portletModelResources;

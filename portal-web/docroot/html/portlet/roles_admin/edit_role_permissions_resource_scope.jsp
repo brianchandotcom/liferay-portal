@@ -55,11 +55,52 @@ List groupNames = (List)objArray[8];
 		else if (role.getType() == RoleConstants.TYPE_REGULAR) {
 		%>
 
-			<%= LanguageUtil.get(pageContext, "portal") %>
+			<%= LanguageUtil.get(pageContext, "all-sites") %>
 
 		<%
 		}
 		%>
 
 	</span>
+
+	<%
+	String targetId = target.replace(".", "");
+	%>
+
+	<c:if test="<%= supportsFilterByGroup %>">
+		<portlet:renderURL var="selectCommunityURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+			<portlet:param name="struts_action" value="/roles_admin/select_site" />
+			<portlet:param name="includeCompany" value="<%= Boolean.TRUE.toString() %>" />
+			<portlet:param name="includeUserPersonalSite" value="<%= Boolean.TRUE.toString() %>" />
+			<portlet:param name="target" value="<%= target %>" />
+		</portlet:renderURL>
+
+		<liferay-ui:icon
+			id="<%= targetId %>"
+			image="edit"
+			label="<%= true %>"
+			message="change"
+			url="javascript:;"
+		/>
+
+		<aui:script use="aui-base">
+			A.one('#<portlet:namespace /><%= targetId %>').on(
+				'click',
+				function(event) {
+					Liferay.Util.selectEntity(
+						{
+							dialog: {
+								constrain: true,
+								modal: true,
+								width: 600
+							},
+							id: '<portlet:namespace />selectGroup<%= targetId %>',
+							title: '<%= UnicodeLanguageUtil.format(pageContext, "select-x", "site") %>',
+							uri: '<%= selectCommunityURL.toString() %>'
+						}
+					);
+				}
+			);
+		</aui:script>
+	</c:if>
 </div>

@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<!DOCTYPE resource-action-mapping PUBLIC "-//Liferay//DTD Resource Action Mapping 6.1.0//EN" "http://www.liferay.com/dtd/liferay-resource-action-mapping_6_1_0.dtd">
+<!DOCTYPE resource-action-mapping PUBLIC "-//Liferay//DTD Resource Action Mapping 6.2.0//EN" "http://www.liferay.com/dtd/liferay-resource-action-mapping_6_2_0.dtd">
 
 <resource-action-mapping>
 	<portlet-resource>
@@ -70,6 +70,7 @@
 		<portlet-ref>
 			<portlet-name>99</portlet-name>
 		</portlet-ref>
+		<weight>1</weight>
 		<permissions>
 			<supports>
 				<action-key>ADD_TAG</action-key>
@@ -86,6 +87,7 @@
 		<portlet-ref>
 			<portlet-name>147</portlet-name>
 		</portlet-ref>
+		<weight>1</weight>
 		<permissions>
 			<supports>
 				<action-key>ADD_CATEGORY</action-key>
@@ -104,6 +106,7 @@
 		<portlet-ref>
 			<portlet-name>147</portlet-name>
 		</portlet-ref>
+		<weight>3</weight>
 		<permissions>
 			<supports>
 				<action-key>ADD_CATEGORY</action-key>
@@ -130,6 +133,7 @@
 		<portlet-ref>
 			<portlet-name>99</portlet-name>
 		</portlet-ref>
+		<weight>2</weight>
 		<permissions>
 			<supports>
 				<action-key>DELETE</action-key>
@@ -153,6 +157,7 @@
 		<portlet-ref>
 			<portlet-name>147</portlet-name>
 		</portlet-ref>
+		<weight>2</weight>
 		<permissions>
 			<supports>
 				<action-key>DELETE</action-key>
@@ -172,10 +177,12 @@
 		</permissions>
 	</model-resource>
 	<model-resource>
-        <model-name>com.liferay.portlet.assetcategoriesnavigation</model-name>
+        <model-name>com.liferay.portlet.assetcategoriesnavigation.template</model-name>
         <portlet-ref>
             <portlet-name>122</portlet-name>
+            <portlet-name>183</portlet-name>
         </portlet-ref>
+		<weight>1</weight>
         <permissions>
             <supports>
                 <action-key>ADD_PORTLET_DISPLAY_TEMPLATE</action-key>
@@ -188,10 +195,12 @@
         </permissions>
     </model-resource>
 	<model-resource>
-		<model-name>com.liferay.portlet.assettagsnavigation</model-name>
+		<model-name>com.liferay.portlet.assettagsnavigation.template</model-name>
 		<portlet-ref>
 			<portlet-name>141</portlet-name>
+            <portlet-name>183</portlet-name>
 		</portlet-ref>
+		<weight>1</weight>
 		<permissions>
 			<supports>
 				<action-key>ADD_PORTLET_DISPLAY_TEMPLATE</action-key>
@@ -204,10 +213,12 @@
 		</permissions>
 	</model-resource>
 	<model-resource>
-		<model-name>com.liferay.portlet.assetpublisher</model-name>
+		<model-name>com.liferay.portlet.assetpublisher.template</model-name>
 		<portlet-ref>
 			<portlet-name>101</portlet-name>
+            <portlet-name>183</portlet-name>
 		</portlet-ref>
+		<weight>1</weight>
 		<permissions>
 			<supports>
 				<action-key>ADD_PORTLET_DISPLAY_TEMPLATE</action-key>

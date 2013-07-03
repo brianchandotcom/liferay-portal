@@ -16,7 +16,7 @@
 
 <%@ include file="/html/portlet/roles_admin/init.jsp" %>
 
-<h3><liferay-ui:message key="all" /></h3>
+<h3><liferay-ui:message key="summary" /></h3>
 
 <%
 Role role = (Role)request.getAttribute("edit_role_permissions.jsp-role");
@@ -35,12 +35,12 @@ headerNames.add("resource");
 headerNames.add("action");
 
 if (role.getType() == RoleConstants.TYPE_REGULAR) {
-	headerNames.add("scope");
+	headerNames.add("sites");
 }
 
 headerNames.add(StringPool.BLANK);
 
-SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, permissionsAllURL, headerNames, "this-role-does-not-have-any-permissions");
+SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, 50, permissionsAllURL, headerNames, "this-role-does-not-have-any-permissions");
 
 List<Permission> permissions = PermissionConverterUtil.convertPermissions(role);
 
@@ -176,7 +176,7 @@ for (int i = 0; i < results.size(); i++) {
 	row.addText(actionLabel);
 
 	if (scope == ResourceConstants.SCOPE_COMPANY) {
-		row.addText(LanguageUtil.get(pageContext, "portal"));
+		row.addText(LanguageUtil.get(pageContext, "all-sites"));
 	}
 	else if (scope == ResourceConstants.SCOPE_GROUP_TEMPLATE) {
 	}

@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<!DOCTYPE resource-action-mapping PUBLIC "-//Liferay//DTD Resource Action Mapping 6.1.0//EN" "http://www.liferay.com/dtd/liferay-resource-action-mapping_6_1_0.dtd">
+<!DOCTYPE resource-action-mapping PUBLIC "-//Liferay//DTD Resource Action Mapping 6.2.0//EN" "http://www.liferay.com/dtd/liferay-resource-action-mapping_6_2_0.dtd">
 
 <resource-action-mapping>
 	<portlet-resource>
@@ -29,6 +29,7 @@
 			<portlet-name>166</portlet-name>
 			<portlet-name>169</portlet-name>
 		</portlet-ref>
+		<weight>1</weight>
 		<permissions>
 			<supports>
 				<action-key>DELETE</action-key>
@@ -53,6 +54,7 @@
 			<portlet-name>166</portlet-name>
 			<portlet-name>169</portlet-name>
 		</portlet-ref>
+		<weight>2</weight>
 		<permissions>
 			<supports>
 				<action-key>DELETE</action-key>

@@ -51,7 +51,7 @@ public class SiteMapPortletDisplayTemplateHandler
 
 	@Override
 	public String getResourceName() {
-		return "com.liferay.portlet.sitemap";
+		return "com.liferay.portlet.sitemap.template";
 	}
 
 	@Override

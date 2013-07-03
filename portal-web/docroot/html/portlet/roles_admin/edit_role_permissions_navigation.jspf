@@ -16,7 +16,7 @@
 
 <div class="lfr-permission-navigation-container pull-left" id="<portlet:namespace />permissionNavigationContainer">
 	<div class="search" id="<portlet:namespace />permissionNavigationSearchContainer">
-		<input class="field search-query span12" id="<portlet:namespace />permissionNavigationSearch" placeholder='<%= LanguageUtil.get(pageContext, "search") %>' type="text">
+		<input class="field search-query span10" id="<portlet:namespace />permissionNavigationSearch" placeholder='<%= LanguageUtil.get(pageContext, "search") %>' type="text">
 	</div>
 
 	<div class="lfr-permission-navigation" id="<portlet:namespace />permissionNavigationDataContainer">
@@ -31,9 +31,9 @@
 			viewPermissionsURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 			%>
 
-			<div class='permission-navigation-item-all <%= Validator.isNull(portletResource)? "selected" : "" %>'>
+			<div class='permission-navigation-item-summary <%= Validator.isNull(portletResource)? "selected" : "" %>'>
 				<aui:a href="<%= viewPermissionsURL.toString() %>">
-					<liferay-ui:message key="all" />
+					<liferay-ui:message key="summary" />
 				</aui:a>
 			</div>
 
@@ -58,22 +58,79 @@
 					editPermissionsURL.setParameter("portletResource", PortletKeys.PORTAL);
 					%>
 
-					<div class='permission-navigation-item-portal <%= portletResource.equals(PortletKeys.PORTAL)? "selected" : "" %>'>
-						<aui:a href="<%= editPermissionsURL.toString() %>">
-							<liferay-ui:message key="portal" />
-						</aui:a>
+					<div class="permission-navigation-section">
+						<div class="permission-navigation-item-header toggler-header toggler-header-expanded">
+							<span class="permission-navigation-item-header-icon"></span>
+
+							<span><liferay-ui:message key="control-panel" /></span>
+						</div>
+						<div class="permission-navigation-item-content toggler-content toggler-content-expanded">
+
+							<div class="permission-navigation-section">
+								<ul class="permission-navigation-item-content">
+									<li class="permission-navigation-item-container">
+										<span class='permission-navigation-item <%= portletResource.equals(PortletKeys.PORTAL)? "selected" : "" %>'>
+											<aui:a href="<%= editPermissionsURL.toString() %>">
+												<liferay-ui:message key="general-permissions" />
+											</aui:a>
+										</span>
+									</li>
+								</ul>
+							</div>
+
+							<%
+							for (String category : PortletCategoryKeys.ALL) {
+								Set<Portlet> categoryPortlets = PortalUtil.getControlPanelPortlets(company.getCompanyId(), category);
+							%>
+
+								<c:if test="<%= !categoryPortlets.isEmpty() %>">
+									<div class="permission-navigation-section">
+										<div class='permission-navigation-item-header toggler-header toggler-header-<%= category.equals(PortletCategoryKeys.ALL[0])? "expanded" : "collapsed" %>'>
+											<span class="permission-navigation-item-header-icon"></span>
+
+											<span><liferay-ui:message key='<%= "category." + category %>' /></span>
+										</div>
+
+										<ul class='permission-navigation-item-content toggler-content toggler-content-<%= category.equals(PortletCategoryKeys.ALL[0])? "expanded" : "collapsed" %>'>
+
+											<%
+											for (Portlet categoryPortlet : categoryPortlets) {
+												editPermissionsURL.setParameter("portletResource", categoryPortlet.getPortletId());
+											%>
+
+												<li class="permission-navigation-item-container">
+													<span class='permission-navigation-item <%= portletResource.equals(categoryPortlet.getPortletId())? "selected" : "" %>'>
+														<aui:a href="<%= editPermissionsURL.toString() %>">
+															<%= PortalUtil.getPortletLongTitle(categoryPortlet, application, locale) %>
+														</aui:a>
+													</span>
+												</li>
+
+											<%
+											}
+											%>
+
+										</ul>
+									</div>
+								</c:if>
+
+							<%
+							}
+							%>
+
+						</div>
 					</div>
 				</c:when>
 			</c:choose>
 
 			<div class="permission-navigation-section">
-				<div class="permission-navigation-item-header toggler-header-expanded">
+				<div class="permission-navigation-item-header toggler-header toggler-header-collapsed">
 					<span class="permission-navigation-item-header-icon"></span>
 
 					<span><liferay-ui:message key="site-administration" /></span>
 				</div>
 
-				<div class="permission-navigation-item-content">
+				<div class="permission-navigation-item-content toggler-content toggler-content-collapsed">
 
 					<%
 					for (String category : PortletCategoryKeys.SITE_ADMINISTRATION_ALL) {
@@ -82,13 +139,13 @@
 
 						<c:if test="<%= !categoryPortlets.isEmpty() %>">
 							<div class="permission-navigation-section">
-								<div class="permission-navigation-item-header toggler-header-expanded">
+								<div class="permission-navigation-item-header toggler-header toggler-header-collapsed">
 									<span class="permission-navigation-item-header-icon"></span>
 
 									<span><liferay-ui:message key='<%= "category." + category %>' /></span>
 								</div>
 
-								<ul class="permission-navigation-item-content">
+								<ul class="permission-navigation-item-content toggler-content toggler-content-collapsed">
 
 									<%
 									for (Portlet categoryPortlet : categoryPortlets) {
@@ -126,13 +183,13 @@
 					%>
 
 					<div class="permission-navigation-section">
-						<div class="permission-navigation-item-header toggler-header-expanded">
+						<div class="permission-navigation-item-header toggler-header toggler-header-collapsed">
 							<span class="permission-navigation-item-header-icon"></span>
 
 							<span><liferay-ui:message key="applications" /></span>
 						</div>
 
-						<ul class="permission-navigation-item-content">
+						<ul class="permission-navigation-item-content toggler-content toggler-content-collapsed">
 
 							<%
 							boolean includeSystemPortlets = false;
@@ -152,8 +209,7 @@
 								<li class="permission-navigation-item-container">
 									<span class='permission-navigation-item <%= portletResource.equals(curPortlet.getPortletId())? "selected" : "" %>'>
 										<aui:a href="<%= editPermissionsURL.toString() %>">
-											<%= PortalUtil.getPortletLongTitle(
-												curPortlet, application, locale) %>
+											<%= PortalUtil.getPortletLongTitle(curPortlet, application, locale) %>
 										</aui:a>
 									</span>
 								</li>
@@ -169,13 +225,13 @@
 
 			<c:if test="<%= role.getType() == RoleConstants.TYPE_REGULAR %>">
 				<div class="permission-navigation-section">
-					<div class="permission-navigation-item-header toggler-header-expanded">
+					<div class="permission-navigation-item-header toggler-header toggler-header-collapsed">
 						<span class="permission-navigation-item-header-icon"></span>
 
 						<span><liferay-ui:message key="my-account" /></span>
 					</div>
 
-					<ul class="permission-navigation-item-content">
+					<ul class="permission-navigation-item-content toggler-content toggler-content-collapsed">
 
 						<%
 						Set<Portlet> myAccountPortlets = PortalUtil.getControlPanelPortlets(company.getCompanyId(), PortletCategoryKeys.MY);
@@ -197,57 +253,6 @@
 						%>
 
 					</ul>
-				</div>
-
-				<div class="permission-navigation-section">
-					<div class="permission-navigation-item-header toggler-header-expanded">
-						<span class="permission-navigation-item-header-icon"></span>
-
-						<span><liferay-ui:message key="control-panel" /></span>
-					</div>
-					<div class="permission-navigation-item-content">
-
-						<%
-						for (String category : PortletCategoryKeys.ALL) {
-							Set<Portlet> categoryPortlets = PortalUtil.getControlPanelPortlets(company.getCompanyId(), category);
-						%>
-
-							<c:if test="<%= !categoryPortlets.isEmpty() %>">
-								<div class="permission-navigation-section">
-									<div class="permission-navigation-item-header toggler-header-expanded">
-										<span class="permission-navigation-item-header-icon"></span>
-
-										<span><liferay-ui:message key='<%= "category." + category %>' /></span>
-									</div>
-
-									<ul class="permission-navigation-item-content">
-
-										<%
-										for (Portlet categoryPortlet : categoryPortlets) {
-											editPermissionsURL.setParameter("portletResource", categoryPortlet.getPortletId());
-										%>
-
-											<li class="permission-navigation-item-container">
-												<span class='permission-navigation-item <%= portletResource.equals(categoryPortlet.getPortletId())? "selected" : "" %>'>
-													<aui:a href="<%= editPermissionsURL.toString() %>">
-														<%= PortalUtil.getPortletLongTitle(categoryPortlet, application, locale) %>
-													</aui:a>
-												</span>
-											</li>
-
-										<%
-										}
-										%>
-
-									</ul>
-								</div>
-							</c:if>
-
-						<%
-						}
-						%>
-
-					</div>
 				</div>
 			</c:if>
 		</div>

@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<!DOCTYPE resource-action-mapping PUBLIC "-//Liferay//DTD Resource Action Mapping 6.1.0//EN" "http://www.liferay.com/dtd/liferay-resource-action-mapping_6_1_0.dtd">
+<!DOCTYPE resource-action-mapping PUBLIC "-//Liferay//DTD Resource Action Mapping 6.2.0//EN" "http://www.liferay.com/dtd/liferay-resource-action-mapping_6_2_0.dtd">
 
 <resource-action-mapping>
 	<portlet-resource>
@@ -47,10 +47,10 @@
 			<portlet-name>33</portlet-name>
 			<portlet-name>161</portlet-name>
 		</portlet-ref>
+		<weight>1</weight>
 		<permissions>
 			<supports>
 				<action-key>ADD_ENTRY</action-key>
-				<action-key>ADD_PORTLET_DISPLAY_TEMPLATE</action-key>
 				<action-key>PERMISSIONS</action-key>
 				<action-key>SUBSCRIBE</action-key>
 			</supports>
@@ -58,9 +58,26 @@
 			<guest-defaults />
 			<guest-unsupported>
 				<action-key>ADD_ENTRY</action-key>
-				<action-key>ADD_PORTLET_DISPLAY_TEMPLATE</action-key>
 				<action-key>PERMISSIONS</action-key>
 				<action-key>SUBSCRIBE</action-key>
+			</guest-unsupported>
+		</permissions>
+	</model-resource>
+	<model-resource>
+		<model-name>com.liferay.portlet.blogs.template</model-name>
+		<portlet-ref>
+			<portlet-name>33</portlet-name>
+            <portlet-name>183</portlet-name>
+		</portlet-ref>
+		<weight>1.5</weight>
+		<permissions>
+			<supports>
+				<action-key>ADD_PORTLET_DISPLAY_TEMPLATE</action-key>
+			</supports>
+			<site-member-defaults />
+			<guest-defaults />
+			<guest-unsupported>
+				<action-key>ADD_PORTLET_DISPLAY_TEMPLATE</action-key>
 			</guest-unsupported>
 		</permissions>
 	</model-resource>
@@ -70,6 +87,7 @@
 			<portlet-name>33</portlet-name>
 			<portlet-name>161</portlet-name>
 		</portlet-ref>
+		<weight>2</weight>
 		<permissions>
 			<supports>
 				<action-key>ADD_DISCUSSION</action-key>

@@ -54,7 +54,7 @@ public class DocumentLibraryPortletDisplayTemplateHandler
 
 	@Override
 	public String getResourceName() {
-		return "com.liferay.portlet.documentlibrary";
+		return "com.liferay.portlet.documentlibrary.template";
 	}
 
 	@Override

@@ -35,7 +35,12 @@ String portletResourceLabel = null;
 if (Validator.isNotNull(portletResource)) {
 	portlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), portletResource);
 
-	portletResourceLabel = PortalUtil.getPortletLongTitle(portlet, application, locale);
+	if (portlet.getPortletId().equals(PortletKeys.PORTAL)) {
+		portletResourceLabel = LanguageUtil.get(pageContext, "general-permissions");
+	}
+	else {
+		portletResourceLabel = PortalUtil.getPortletLongTitle(portlet, application, locale);
+	}
 }
 
 List modelResources = null;
@@ -140,17 +145,19 @@ editPermissionsURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 						}
 						%>
 
-						<h4><liferay-ui:message key="<%= applicationPermissionsLabel %>" /></h4>
+						<c:if test="<%= Validator.isNotNull(applicationPermissionsLabel) %>">
+							<h4><liferay-ui:message key="<%= applicationPermissionsLabel %>" /> <liferay-ui:icon-help message='<%= applicationPermissionsLabel + "-help" %>' /></h4>
+						</c:if>
 
 						<liferay-util:include page="/html/portlet/roles_admin/edit_role_permissions_resource.jsp" />
 
 						<c:if test="<%= (modelResources != null) && !modelResources.isEmpty() %>">
-							<h4><liferay-ui:message key="resource-permissions" /></h4>
+							<h4><liferay-ui:message key="resource-permissions" /> <liferay-ui:icon-help message="resource-permissions-help" /></h4>
 
 							<div class="permission-group">
 
 								<%
-								modelResources = ListUtil.sort(modelResources, new ModelResourceComparator(locale));
+								modelResources = ListUtil.sort(modelResources, new ModelResourceWeightComparator());
 
 								for (int i = 0; i < modelResources.size(); i++) {
 									String curModelResource = (String)modelResources.get(i);
@@ -161,8 +168,6 @@ editPermissionsURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 									<h5><%= curModelResourceName %></h5>
 
 									<%
-									request.removeAttribute("edit_role_permissions.jsp-curPortletResource");
-
 									request.setAttribute("edit_role_permissions.jsp-curModelResource", curModelResource);
 									request.setAttribute("edit_role_permissions.jsp-curModelResourceName", curModelResourceName);
 									%>
@@ -188,10 +193,51 @@ editPermissionsURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 	</aui:row>
 </aui:container>
 
+<aui:script>
+	function <portlet:namespace />removeGroup(pos, target) {
+		var selectedGroupIds = document.<portlet:namespace />fm['<portlet:namespace />groupIds' + target].value.split(",");
+		var selectedGroupNames = document.<portlet:namespace />fm['<portlet:namespace />groupNames' + target].value.split("@@");
+
+		selectedGroupIds.splice(pos, 1);
+		selectedGroupNames.splice(pos, 1);
+
+		<portlet:namespace />updateGroups(selectedGroupIds, selectedGroupNames, target);
+	}
+
+	function <portlet:namespace />selectOrganization(organizationId, groupId, name, type, target) {
+		<portlet:namespace />selectGroup(groupId, name, target);
+	}
+
+	function <portlet:namespace />updateGroups(selectedGroupIds, selectedGroupNames, target) {
+		document.<portlet:namespace />fm['<portlet:namespace />groupIds' + target].value = selectedGroupIds.join(',');
+		document.<portlet:namespace />fm['<portlet:namespace />groupNames' + target].value = selectedGroupNames.join('@@');
+
+		var nameEl = document.getElementById("<portlet:namespace />groupHTML" + target);
+
+		var groupsHTML = '';
+
+		for (var i = 0; i < selectedGroupIds.length; i++) {
+			var id = selectedGroupIds[i];
+			var name = selectedGroupNames[i];
+
+			groupsHTML += '<span class="lfr-token"><span class="lfr-token-text">' + name + '</span><a class="icon icon-remove lfr-token-close" href="javascript:<portlet:namespace />removeGroup(' + i + ', \'' + target + '\' );"></a></span>';
+		}
+
+		if (groupsHTML == '') {
+			groupsHTML = '<%= UnicodeLanguageUtil.get(pageContext, "all-sites") %>';
+		}
+
+		nameEl.innerHTML = groupsHTML;
+	}
+
+</aui:script>
+
 <aui:script use="aui-toggler,autocomplete-base,autocomplete-filters">
 	var AArray = A.Array;
 
 	var permissionNavigationDataContainer = A.one('#<portlet:namespace />permissionNavigationDataContainer');
+
+	var togglerDelegate;
 
 	function createLiveSearch() {
 		var instance = this;
@@ -221,11 +267,11 @@ editPermissionsURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 			var results = [];
 
 			permissionNavigationItems.each(
-				function(node) {
+				function(item, index, collection) {
 					results.push(
 						{
-							node: node.ancestor(),
-							data: trim(node.text())
+							node: item.ancestor(),
+							data: trim(item.text())
 						}
 					);
 				}
@@ -256,6 +302,18 @@ editPermissionsURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 				resultFilters: 'phraseMatch',
 				resultTextLocator: 'data',
 				source: getItems()
+			}
+		);
+
+		permissionNavigationSearch.on(
+			'query',
+			function(event) {
+				if (event.query) {
+					togglerDelegate.expandAll();
+				}
+				else {
+					togglerDelegate.collapseAll();
+				}
 			}
 		);
 
@@ -305,16 +363,6 @@ editPermissionsURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 		);
 	}
 
-	function <portlet:namespace />removeGroup(pos, target) {
-		var selectedGroupIds = document.<portlet:namespace />fm['<portlet:namespace />groupIds' + target].value.split(",");
-		var selectedGroupNames = document.<portlet:namespace />fm['<portlet:namespace />groupNames' + target].value.split("@@");
-
-		selectedGroupIds.splice(pos, 1);
-		selectedGroupNames.splice(pos, 1);
-
-		<portlet:namespace />updateGroups(selectedGroupIds, selectedGroupNames, target);
-	}
-
 	Liferay.on(
 		'<portlet:namespace />selectGroup',
 		function(event) {
@@ -342,36 +390,10 @@ editPermissionsURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 		}
 	);
 
-	function <portlet:namespace />selectOrganization(organizationId, groupId, name, type, target) {
-		<portlet:namespace />selectGroup(groupId, name, target);
-	}
-
-	function <portlet:namespace />updateGroups(selectedGroupIds, selectedGroupNames, target) {
-		document.<portlet:namespace />fm['<portlet:namespace />groupIds' + target].value = selectedGroupIds.join(',');
-		document.<portlet:namespace />fm['<portlet:namespace />groupNames' + target].value = selectedGroupNames.join('@@');
-
-		var nameEl = document.getElementById("<portlet:namespace />groupHTML" + target);
-
-		var groupsHTML = '';
-
-		for (var i = 0; i < selectedGroupIds.length; i++) {
-			var id = selectedGroupIds[i];
-			var name = selectedGroupNames[i];
-
-			groupsHTML += '<span class="lfr-token"><span class="lfr-token-text">' + name + '</span><a class="icon icon-remove lfr-token-close" href="javascript:<portlet:namespace />removeGroup(' + i + ', \'' + target + '\' );"></a></span>';
-		}
-
-		if (groupsHTML == '') {
-			groupsHTML = '<%= UnicodeLanguageUtil.get(pageContext, "portal") %>';
-		}
-
-		nameEl.innerHTML = groupsHTML;
-	}
-
 	A.on(
 		'domready',
 		function(event) {
-			var togglerDelegate = new A.TogglerDelegate(
+			togglerDelegate = new A.TogglerDelegate(
 				{
 					animated: true,
 					container: <portlet:namespace />permissionNavigationDataContainer,

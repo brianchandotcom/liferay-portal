@@ -101,6 +101,8 @@ public interface ResourceActions {
 
 	public List<String> getModelResourceOwnerDefaultActions(String name);
 
+	public Double getModelResourceWeight(String name);
+
 	public String[] getOrganizationModelResources();
 
 	public String[] getPortalModelResources();

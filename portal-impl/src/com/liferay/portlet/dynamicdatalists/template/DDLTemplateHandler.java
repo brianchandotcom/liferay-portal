@@ -62,7 +62,7 @@ public class DDLTemplateHandler extends BaseDDMTemplateHandler {
 
 	@Override
 	public String getResourceName() {
-		return "com.liferay.portlet.dynamicdatalists";
+		return "com.liferay.portlet.dynamicdatalists.template";
 	}
 
 	@Override

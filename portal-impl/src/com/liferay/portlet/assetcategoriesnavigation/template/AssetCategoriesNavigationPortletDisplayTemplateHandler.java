@@ -55,7 +55,7 @@ public class AssetCategoriesNavigationPortletDisplayTemplateHandler
 
 	@Override
 	public String getResourceName() {
-		return "com.liferay.portlet.assetcategoriesnavigation";
+		return "com.liferay.portlet.assetcategoriesnavigation.template";
 	}
 
 	@Override

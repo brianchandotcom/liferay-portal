@@ -19,19 +19,15 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.servlet.ServletResponseConstants;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StreamUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TempFileUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -40,11 +36,7 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.struts.ActionConstants;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.documentlibrary.DuplicateFileException;
-import com.liferay.portlet.documentlibrary.FileExtensionException;
-import com.liferay.portlet.documentlibrary.FileNameException;
 import com.liferay.portlet.documentlibrary.FileSizeException;
 import com.liferay.portlet.documentlibrary.action.EditFileEntryAction;
 import com.liferay.portlet.wiki.NoSuchNodeException;
@@ -65,8 +57,6 @@ import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -149,16 +139,9 @@ public class EditPageAttachmentsAction extends EditFileEntryAction {
 
 				setForward(actionRequest, "portlet.wiki.error");
 			}
-			else if (e instanceof DuplicateFileException ||
-					 e instanceof FileExtensionException ||
-					 e instanceof FileNameException ||
-					 e instanceof FileSizeException) {
-
+			else {
 				handleUploadException(
 					portletConfig, actionRequest, actionResponse, cmd, e);
-			}
-			else {
-				throw e;
 			}
 		}
 	}
@@ -392,77 +375,6 @@ public class EditPageAttachmentsAction extends EditFileEntryAction {
 		String title = ParamUtil.getString(actionRequest, "title");
 
 		WikiPageServiceUtil.deleteTrashPageAttachments(nodeId, title);
-	}
-
-	protected void handleUploadException(
-			PortletConfig portletConfig, ActionRequest actionRequest,
-			ActionResponse actionResponse, String cmd, Exception e)
-		throws Exception {
-
-		if (!cmd.equals(Constants.ADD_MULTIPLE) &&
-			!cmd.equals(Constants.ADD_TEMP)) {
-
-			SessionErrors.add(actionRequest, e.getClass());
-
-			return;
-		}
-
-		HttpServletResponse response = PortalUtil.getHttpServletResponse(
-			actionResponse);
-
-		response.setContentType(ContentTypes.TEXT_HTML);
-		response.setStatus(HttpServletResponse.SC_OK);
-
-		String errorMessage = StringPool.BLANK;
-		int errorType = 0;
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		if (e instanceof DuplicateFileException) {
-			errorMessage = themeDisplay.translate(
-				"please-enter-a-unique-document-name");
-			errorType = ServletResponseConstants.SC_DUPLICATE_FILE_EXCEPTION;
-		}
-		else if (e instanceof FileExtensionException) {
-			errorMessage = themeDisplay.translate(
-				"document-names-must-end-with-one-of-the-following-extensions",
-				StringUtil.merge(
-					getAllowedFileExtensions(
-						portletConfig, actionRequest, actionResponse)));
-			errorType = ServletResponseConstants.SC_FILE_EXTENSION_EXCEPTION;
-		}
-		else if (e instanceof FileNameException) {
-			errorMessage = themeDisplay.translate(
-				"please-enter-a-file-with-a-valid-file-name");
-			errorType = ServletResponseConstants.SC_FILE_NAME_EXCEPTION;
-		}
-		else if (e instanceof FileSizeException) {
-			long fileMaxSize = PrefsPropsUtil.getLong(
-				PropsKeys.DL_FILE_MAX_SIZE);
-
-			if (fileMaxSize == 0) {
-				fileMaxSize = PrefsPropsUtil.getLong(
-					PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE);
-			}
-
-			fileMaxSize /= 1024;
-
-			errorMessage = themeDisplay.translate(
-				"please-enter-a-file-with-a-valid-file-size-no-larger-than-x",
-				fileMaxSize);
-
-			errorType = ServletResponseConstants.SC_FILE_SIZE_EXCEPTION;
-		}
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		jsonObject.put("message", errorMessage);
-		jsonObject.put("status", errorType);
-
-		writeJSON(actionRequest, actionResponse, jsonObject);
-
-		SessionErrors.add(actionRequest, e.getClass());
 	}
 
 	protected void restoreAttachment(ActionRequest actionRequest)

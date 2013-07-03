@@ -27,9 +27,13 @@ import javax.servlet.jsp.PageContext;
  */
 public interface PortletDisplayTemplate {
 
+	public static final String DISPLAY_STYLE_PREFIX = "ddmTemplate_";
+
 	public DDMTemplate fetchDDMTemplate(long groupId, String displayStyle);
 
 	public long getDDMTemplateGroupId(long groupId);
+
+	public String getDDMTemplateUuid(String displayStyle);
 
 	public long getPortletDisplayTemplateDDMTemplateId(
 		long groupId, String displayStyle);

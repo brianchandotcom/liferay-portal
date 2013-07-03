@@ -79,11 +79,7 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 			Group companyGroup = GroupLocalServiceUtil.getCompanyGroup(
 				group.getCompanyId());
 
-			if (!displayStyle.startsWith("ddmTemplate_")) {
-				return null;
-			}
-
-			String uuid = displayStyle.substring(12);
+			String uuid = getDDMTemplateUuid(displayStyle);
 
 			if (Validator.isNull(uuid)) {
 				return null;
@@ -145,6 +141,15 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 	}
 
 	@Override
+	public String getDDMTemplateUuid(String displayStyle) {
+		if (!displayStyle.startsWith(DISPLAY_STYLE_PREFIX)) {
+			return null;
+		}
+
+		return displayStyle.substring(DISPLAY_STYLE_PREFIX.length());
+	}
+
+	@Override
 	public long getPortletDisplayTemplateDDMTemplateId(
 		long groupId, String displayStyle) {
 
@@ -152,7 +157,7 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 
 		long portletDisplayDDMTemplateGroupId = getDDMTemplateGroupId(groupId);
 
-		if (displayStyle.startsWith("ddmTemplate_")) {
+		if (displayStyle.startsWith(DISPLAY_STYLE_PREFIX)) {
 			DDMTemplate portletDisplayDDMTemplate = fetchDDMTemplate(
 				portletDisplayDDMTemplateGroupId, displayStyle);
 

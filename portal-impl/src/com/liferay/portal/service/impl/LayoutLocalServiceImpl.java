@@ -47,6 +47,7 @@ import com.liferay.portal.lar.backgroundtask.PortletExportBackgroundTaskExecutor
 import com.liferay.portal.lar.backgroundtask.PortletImportBackgroundTaskExecutor;
 import com.liferay.portal.model.BackgroundTask;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutFriendlyURL;
@@ -915,6 +916,26 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		}
 	}
 
+	@Override
+	public byte[] exportPortletInfo(
+			long companyId, String portletId,
+			Map<String, String[]> parameterMap, Date startDate, Date endDate)
+		throws PortalException, SystemException {
+
+		File file = exportPortletInfoAsFile(
+			companyId, portletId, parameterMap, startDate, endDate);
+
+		try {
+			return FileUtil.getBytes(file);
+		}
+		catch (IOException ioe) {
+			throw new SystemException(ioe);
+		}
+		finally {
+			file.delete();
+		}
+	}
+
 	/**
 	 * Exports the portlet information (categories, permissions, ... etc.) as a
 	 * file.
@@ -957,6 +978,25 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	}
 
 	@Override
+	public File exportPortletInfoAsFile(
+			long companyId, String portletId,
+			Map<String, String[]> parameterMap, Date startDate, Date endDate)
+		throws PortalException, SystemException {
+
+		Group companyGroup = groupLocalService.getCompanyGroup(companyId);
+		Group controlPanelGroup = groupPersistence.findByC_F(
+			companyId, GroupConstants.CONTROL_PANEL_FRIENDLY_URL);
+
+		Layout controlPanelLayout = layoutPersistence.findByG_P_T_First(
+			controlPanelGroup.getGroupId(), true,
+			LayoutConstants.TYPE_CONTROL_PANEL, null);
+
+		return exportPortletInfoAsFile(
+			controlPanelLayout.getPlid(), companyGroup.getGroupId(), portletId,
+			parameterMap, startDate, endDate);
+	}
+
+	@Override
 	public long exportPortletInfoAsFileInBackground(
 			long userId, String taskName, long plid, long groupId,
 			String portletId, Map<String, String[]> parameterMap,
@@ -973,6 +1013,30 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 				new ServiceContext());
 
 		return backgroundTask.getBackgroundTaskId();
+	}
+
+	@Override
+	public long exportPortletInfoAsFileInBackground(
+			long userId, String taskName, String portletId,
+			Map<String, String[]> parameterMap, Date startDate, Date endDate)
+		throws PortalException, SystemException {
+
+		User user = userLocalService.getUser(userId);
+
+		long companyId = user.getCompanyId();
+
+		Group companyGroup = groupLocalService.getCompanyGroup(companyId);
+		Group controlPanelGroup = groupPersistence.findByC_F(
+			companyId, GroupConstants.CONTROL_PANEL_FRIENDLY_URL);
+
+		Layout controlPanelLayout = layoutPersistence.findByG_P_T_First(
+			controlPanelGroup.getGroupId(), true,
+			LayoutConstants.TYPE_CONTROL_PANEL, null);
+
+		return exportPortletInfoAsFileInBackground(
+			userId, taskName, controlPanelLayout.getPlid(),
+			companyGroup.getGroupId(), portletId, parameterMap, startDate,
+			endDate);
 	}
 
 	@Override

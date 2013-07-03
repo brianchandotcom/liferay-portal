@@ -424,6 +424,17 @@ public class LayoutServiceUtil {
 			startDate, endDate);
 	}
 
+	public static byte[] exportPortletInfo(long companyId,
+		java.lang.String portletId,
+		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
+		java.util.Date startDate, java.util.Date endDate)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .exportPortletInfo(companyId, portletId, parameterMap,
+			startDate, endDate);
+	}
+
 	/**
 	* Exports the portlet information (categories, permissions, ... etc.) as a
 	* file.
@@ -453,6 +464,28 @@ public class LayoutServiceUtil {
 		return getService()
 				   .exportPortletInfoAsFile(plid, groupId, portletId,
 			parameterMap, startDate, endDate);
+	}
+
+	public static java.io.File exportPortletInfoAsFile(long companyId,
+		java.lang.String portletId,
+		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
+		java.util.Date startDate, java.util.Date endDate)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .exportPortletInfoAsFile(companyId, portletId, parameterMap,
+			startDate, endDate);
+	}
+
+	public static long exportPortletInfoAsFileInBackground(long userId,
+		java.lang.String taskName, java.lang.String portletId,
+		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
+		java.util.Date startDate, java.util.Date endDate)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .exportPortletInfoAsFileInBackground(userId, taskName,
+			portletId, parameterMap, startDate, endDate);
 	}
 
 	public static long exportPortletInfoAsFileInBackground(

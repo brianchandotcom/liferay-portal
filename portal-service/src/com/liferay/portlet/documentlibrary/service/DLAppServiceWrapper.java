@@ -746,6 +746,14 @@ public class DLAppServiceWrapper implements DLAppService,
 			fileEntryTypeId, start, end, obc);
 	}
 
+	@Override
+	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getFileEntries(
+		long repositoryId, long folderId, java.lang.String[] mimeTypes)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dlAppService.getFileEntries(repositoryId, folderId, mimeTypes);
+	}
+
 	/**
 	* Returns a range of all the file entries and shortcuts in the folder.
 	*

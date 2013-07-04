@@ -14,11 +14,18 @@
 
 package com.liferay.portal.kernel.backgroundtask;
 
+import com.liferay.portal.model.BackgroundTask;
+
 /**
  * @author Michael C. Han
  */
 public abstract class BaseBackgroundTaskExecutor
 	implements BackgroundTaskExecutor {
+
+	@Override
+	public String handleException(BackgroundTask backgroundTask, Exception e) {
+		return "Unable to executed background task: " + e.getMessage();
+	}
 
 	@Override
 	public boolean isSerial() {

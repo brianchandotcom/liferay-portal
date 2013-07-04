@@ -53,6 +53,11 @@ public class ClassLoaderAwareBackgroundTaskExecutor
 	}
 
 	@Override
+	public String handleException(BackgroundTask backgroundTask, Exception e) {
+		return _backgroundTaskExecutor.handleException(backgroundTask, e);
+	}
+
+	@Override
 	public boolean isSerial() {
 		return _backgroundTaskExecutor.isSerial();
 	}

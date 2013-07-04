@@ -54,6 +54,8 @@ public class BackgroundTaskMessageListener extends BaseMessageListener {
 		BackgroundTask backgroundTask =
 			BackgroundTaskLocalServiceUtil.getBackgroundTask(backgroundTaskId);
 
+		BackgroundTaskExecutor backgroundTaskExecutor = null;
+
 		int status = backgroundTask.getStatus();
 		String statusMessage = null;
 
@@ -68,7 +70,7 @@ public class BackgroundTaskMessageListener extends BaseMessageListener {
 					StringUtil.split(servletContextNames), false);
 			}
 
-			BackgroundTaskExecutor backgroundTaskExecutor =
+			backgroundTaskExecutor =
 				(BackgroundTaskExecutor)InstanceFactory.newInstance(
 					classLoader, backgroundTask.getTaskExecutorClassName());
 
@@ -89,8 +91,8 @@ public class BackgroundTaskMessageListener extends BaseMessageListener {
 		}
 		catch (Exception e) {
 			status = BackgroundTaskConstants.STATUS_FAILED;
-			statusMessage =
-				"Unable to executed background task: " + e.getMessage();
+			statusMessage = backgroundTaskExecutor.handleException(
+				backgroundTask, e);
 
 			if (_log.isInfoEnabled()) {
 				statusMessage.concat(StackTraceUtil.getStackTrace(e));

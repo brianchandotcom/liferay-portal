@@ -25,6 +25,11 @@
 			<bean class="com.liferay.portal.audit.AuditMessageFactoryImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portal.kernel.backgroundtask.status.BackgroundTaskStatusRegistryUtil" class="com.liferay.portal.kernel.backgroundtask.status.BackgroundTaskStatusRegistryUtil">
+		<property name="backgroundTaskStatusRegistry">
+			<bean class="com.liferay.portal.backgroundtask.status.BackgroundTaskStatusRegistryImpl" />
+		</property>
+	</bean>
 	<bean id="com.liferay.portal.kernel.bean.BeanPropertiesUtil" class="com.liferay.portal.kernel.bean.BeanPropertiesUtil">
 		<property name="beanProperties">
 			<bean class="com.liferay.portal.bean.BeanPropertiesImpl" />

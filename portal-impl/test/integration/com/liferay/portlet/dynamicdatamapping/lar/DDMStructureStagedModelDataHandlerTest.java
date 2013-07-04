@@ -26,9 +26,11 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMStructureTestUtil;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.Assert;
 import org.junit.runner.RunWith;
 
 /**
@@ -44,13 +46,37 @@ public class DDMStructureStagedModelDataHandlerTest
 	extends BaseStagedModelDataHandlerTestCase {
 
 	@Override
+	protected Map<String, List<StagedModel>> addDependentStagedModelsMap(
+			Group group)
+		throws Exception {
+
+		Map<String, List<StagedModel>> dependentStagedModelsMap =
+			new HashMap<String, List<StagedModel>>();
+
+		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
+			group.getGroupId(), DDLRecordSet.class.getName());
+
+		addDependentStagedModel(
+			dependentStagedModelsMap, DDMStructure.class, ddmStructure);
+
+		return dependentStagedModelsMap;
+	}
+
+	@Override
 	protected StagedModel addStagedModel(
 			Group group,
 			Map<String, List<StagedModel>> dependentStagedModelsMap)
 		throws Exception {
 
+		List<StagedModel> dependentStagedModels = dependentStagedModelsMap.get(
+			DDMStructure.class.getSimpleName());
+
+		DDMStructure parentStructure = (DDMStructure)dependentStagedModels.get(
+			0);
+
 		return DDMStructureTestUtil.addStructure(
-			group.getGroupId(), DDLRecordSet.class.getName());
+			group.getGroupId(), DDLRecordSet.class.getName(),
+			parentStructure.getStructureId());
 	}
 
 	@Override
@@ -67,6 +93,24 @@ public class DDMStructureStagedModelDataHandlerTest
 	@Override
 	protected Class<? extends StagedModel> getStagedModelClass() {
 		return DDMStructure.class;
+	}
+
+	@Override
+	protected void validateImport(
+			Map<String, List<StagedModel>> dependentStagedModelsMap,
+			Group group)
+		throws Exception {
+
+		List<StagedModel> ddmStructureDependentStagedModels =
+			dependentStagedModelsMap.get(DDMStructure.class.getSimpleName());
+
+		Assert.assertEquals(1, ddmStructureDependentStagedModels.size());
+
+		DDMStructure ddmStructure =
+			(DDMStructure)ddmStructureDependentStagedModels.get(0);
+
+		DDMStructureLocalServiceUtil.getDDMStructureByUuidAndGroupId(
+			ddmStructure.getUuid(), group.getGroupId());
 	}
 
 }

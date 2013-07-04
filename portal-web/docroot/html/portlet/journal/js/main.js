@@ -431,11 +431,9 @@ AUI.add(
 
 				var structureIdInput = instance.getByName(form, 'structureId');
 				var templateIdInput = instance.getByName(form, 'templateId');
-				var contentInput = instance.getByName(form, 'content');
 
 				structureIdInput.val('');
 				templateIdInput.val('');
-				contentInput.val('');
 
 				submitForm(form, null, false, false);
 			},

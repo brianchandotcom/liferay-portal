@@ -1,21 +1,21 @@
-<#assign layout = dataFactory.newLayout(dataFactory.guestGroup.groupId, "welcome", "58,", "47,")>
+<#assign layoutModel = dataFactory.newLayoutModel(dataFactory.guestGroupModel.groupId, "welcome", "58,", "47,")>
 
 <@insertLayout
-	_layout = layout
+	_layoutModel = layoutModel
 />
 
 <@insertGroup
-	_group = dataFactory.globalGroup
+	_groupModel = dataFactory.globalGroupModel
 	_publicPageCount = 1
 />
 
 <@insertGroup
-	_group = dataFactory.guestGroup
+	_groupModel = dataFactory.guestGroupModel
 	_publicPageCount = 1
 />
 
-<#list dataFactory.groups as group>
-	<#assign groupId = group.groupId>
+<#list dataFactory.groupModels as groupModel>
+	<#assign groupId = groupModel.groupId>
 
 	<#include "asset_publisher.ftl">
 
@@ -38,20 +38,20 @@
 		_parentDLFolderId = 0
 	/>
 
-	<#assign publicLayouts = dataFactory.newPublicLayouts(groupId)>
+	<#assign publicLayoutModels = dataFactory.newPublicLayoutModels(groupId)>
 
-	<#list publicLayouts as publicLayout >
+	<#list publicLayoutModels as publicLayoutModel >
 		<@insertLayout
-			_layout = publicLayout
+			_layoutModel = publicLayoutModel
 		/>
 	</#list>
 
-	<#assign publicPageCount = publicLayouts?size + maxDDLRecordSetCount + maxJournalArticleCount>
+	<#assign publicPageCount = publicLayoutModels?size + maxDDLRecordSetCount + maxJournalArticleCount>
 
 	<@insertGroup
-		_group = group
+		_groupModel = groupModel
 		_publicPageCount = publicPageCount
 	/>
 
-	${writerRepositoryCSV.write(groupId + ", " + group.name + "\n")}
+	${writerRepositoryCSV.write(groupId + ", " + groupModel.name + "\n")}
 </#list>

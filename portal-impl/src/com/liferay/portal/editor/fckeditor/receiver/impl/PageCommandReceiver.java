@@ -17,12 +17,15 @@ package com.liferay.portal.editor.fckeditor.receiver.impl;
 import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.editor.fckeditor.command.CommandArgument;
 import com.liferay.portal.editor.fckeditor.exception.FCKException;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutServiceUtil;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 
 import java.io.InputStream;
@@ -77,6 +80,16 @@ public class PageCommandReceiver extends BaseCommandReceiver {
 		}
 	}
 
+	private String _getCanonicalURL(Layout layout, ThemeDisplay themeDisplay)
+		throws PortalException, SystemException {
+
+		String layoutFullURL = PortalUtil.getLayoutFullURL(
+			layout, themeDisplay, false);
+
+		return PortalUtil.getCanonicalURL(
+			layoutFullURL, themeDisplay, layout, true);
+	}
+
 	private void _getFiles(
 			CommandArgument commandArgument, Document document, Node rootNode)
 		throws Exception {
@@ -116,8 +129,8 @@ public class PageCommandReceiver extends BaseCommandReceiver {
 				fileElement.setAttribute("size", StringPool.BLANK);
 				fileElement.setAttribute(
 					"url",
-					PortalUtil.getLayoutURL(
-						layout, commandArgument.getThemeDisplay(), false));
+					_getCanonicalURL(
+						layout, commandArgument.getThemeDisplay()));
 			}
 		}
 		else {
@@ -144,8 +157,8 @@ public class PageCommandReceiver extends BaseCommandReceiver {
 				fileElement.setAttribute("size", getSize());
 				fileElement.setAttribute(
 					"url",
-					PortalUtil.getLayoutURL(
-						layout, commandArgument.getThemeDisplay(), false));
+					_getCanonicalURL(
+						layout, commandArgument.getThemeDisplay()));
 			}
 		}
 	}

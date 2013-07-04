@@ -663,6 +663,12 @@ public interface DLAppService extends BaseService {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getFileEntries(
+		long repositoryId, long folderId, java.lang.String[] mimeTypes)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	/**
 	* Returns a range of all the file entries and shortcuts in the folder.
 	*

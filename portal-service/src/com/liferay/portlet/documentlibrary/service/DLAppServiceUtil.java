@@ -738,6 +738,13 @@ public class DLAppServiceUtil {
 			start, end, obc);
 	}
 
+	public static java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getFileEntries(
+		long repositoryId, long folderId, java.lang.String[] mimeTypes)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getFileEntries(repositoryId, folderId, mimeTypes);
+	}
+
 	/**
 	* Returns a range of all the file entries and shortcuts in the folder.
 	*

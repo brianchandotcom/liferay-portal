@@ -85,6 +85,10 @@ $dockbarOpenGradientStart: #00A0FF;
 				color: #009AE5;
 				text-decoration: underline;
 			}
+
+			.control-panel-home-link .taglib-icon .taglib-text {
+				text-decoration: none;
+			}
 		}
 
 		ul {

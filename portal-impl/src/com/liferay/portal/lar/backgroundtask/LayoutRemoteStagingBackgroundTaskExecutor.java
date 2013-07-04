@@ -21,10 +21,7 @@ import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatus;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusRegistryUtil;
 import com.liferay.portal.kernel.backgroundtask.BaseBackgroundTaskExecutor;
-import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.lar.MissingReference;
-import com.liferay.portal.kernel.lar.MissingReferences;
 import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -41,13 +38,14 @@ import com.liferay.portal.util.PropsValues;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 /**
- * @author Julio Camarero
+ * @author Mate Thurzo
  */
 public class LayoutRemoteStagingBackgroundTaskExecutor
 	extends BaseBackgroundTaskExecutor {
@@ -66,20 +64,18 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 		Map<String, Serializable> taskContextMap =
 			backgroundTask.getTaskContextMap();
 
-		long userId = MapUtil.getLong(taskContextMap, "userId");
-		long targetGroupId = MapUtil.getLong(taskContextMap, "targetGroupId");
-
-		StagingUtil.lockGroup(userId, targetGroupId);
-
-		long sourceGroupId = MapUtil.getLong(taskContextMap, "sourceGroupId");
+		long sourceGroupId = MapUtil.getLong(taskContextMap, "groupId");
 		boolean privateLayout = MapUtil.getBoolean(
 			taskContextMap, "privateLayout");
-		long[] layoutIds = GetterUtil.getLongValues(
-			taskContextMap.get("layoutIds"));
+		Map<Long, Boolean> layoutIdMap = (Map<Long, Boolean>)taskContextMap.get(
+			"layoutIdMap");
 		Map<String, String[]> parameterMap =
 			(Map<String, String[]>)taskContextMap.get("parameterMap");
+		long remoteGroupId = MapUtil.getLong(taskContextMap, "remoteGroupId");
 		Date startDate = (Date)taskContextMap.get("startDate");
 		Date endDate = (Date)taskContextMap.get("endDate");
+		HttpPrincipal httpPrincipal = (HttpPrincipal)taskContextMap.get(
+			"httpPrincipal");
 
 		BackgroundTaskStatus backgroundTaskStatus =
 			BackgroundTaskStatusRegistryUtil.getBackgroundTaskStatus(
@@ -88,13 +84,9 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 		backgroundTaskStatus.clearAttributes();
 
 		File file = null;
-		MissingReferences missingReferences = null;
+		FileInputStream fileInputStream = null;
 
 		long stagingRequestId = 0;
-
-		File file = null;
-
-		FileInputStream fileInputStream = null;
 
 		try {
 			file = exportLayoutsAsFile(
@@ -148,19 +140,6 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 
 		BackgroundTaskResult backgroundTaskResult = new BackgroundTaskResult(
 			BackgroundTaskConstants.STATUS_SUCCESSFUL);
-
-		Map<String, MissingReference> weakMissingReferences =
-			missingReferences.getWeakMissingReferences();
-
-		if ((weakMissingReferences != null) &&
-			!weakMissingReferences.isEmpty()) {
-
-			JSONArray jsonArray = StagingUtil.getWarningMessagesJSONArray(
-				getLocale(backgroundTask), weakMissingReferences,
-				backgroundTask.getTaskContextMap());
-
-			backgroundTaskResult.setStatusMessage(jsonArray.toString());
-		}
 
 		return backgroundTaskResult;
 	}
@@ -242,7 +221,8 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 	}
 
 	/**
-	 * @see #getMissingParentLayouts(Layout, long)
+	 * @see com.liferay.portal.staging.StagingImpl#getMissingParentLayouts(
+	 *      Layout, long)
 	 */
 	protected List<Layout> getMissingRemoteParentLayouts(
 			HttpPrincipal httpPrincipal, Layout layout, long remoteGroupId)

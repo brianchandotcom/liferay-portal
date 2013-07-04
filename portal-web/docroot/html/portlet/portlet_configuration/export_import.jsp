@@ -54,7 +54,7 @@ portletURL.setParameter("portletResource", portletResource);
 			backURL="<%= redirect %>"
 			names="<%= tabs2Names %>"
 			param="tabs2"
-			url="<%= portletURL.toString() %>"
+			portletURL="<%= portletURL %>"
 		/>
 
 		<liferay-ui:error exception="<%= LARFileException.class %>" message="please-specify-a-lar-file-to-import" />

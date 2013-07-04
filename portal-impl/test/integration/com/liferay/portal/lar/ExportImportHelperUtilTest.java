@@ -44,7 +44,9 @@ import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
 import com.liferay.portal.util.GroupTestUtil;
 import com.liferay.portal.util.LayoutTestUtil;
+import com.liferay.portal.util.PortalImpl;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
@@ -54,6 +56,9 @@ import com.liferay.portlet.journal.util.JournalTestUtil;
 
 import java.io.File;
 import java.io.InputStream;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -70,6 +75,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import org.powermock.api.mockito.PowerMockito;
+
 /**
  * @author Zsolt Berentey
  */
@@ -80,7 +87,7 @@ import org.junit.runner.RunWith;
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Transactional
-public class ExportImportHelperUtilTest {
+public class ExportImportHelperUtilTest extends PowerMockito {
 
 	@Before
 	public void setUp() throws Exception {
@@ -175,7 +182,26 @@ public class ExportImportHelperUtilTest {
 	}
 
 	@Test
-	public void testExportLayoutReferences() throws Exception {
+	public void testExportLayoutReferencesWithContext() throws Exception {
+		_OLD_LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING =
+			PropsValues.LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING;
+
+		setFinalStaticField(
+			PropsValues.class.getField(
+				"LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING"), "/en");
+
+		PortalImpl portalImpl = spy(new PortalImpl());
+
+		when(
+			portalImpl.getPathContext()
+		).thenReturn("/de");
+
+		new PortalUtil().setPortal(portalImpl);
+
+		setFinalStaticField(
+			ExportImportHelperImpl.class.getDeclaredField(
+				"_PRIVATE_USER_SERVLET_MAPPING"), "/en/");
+
 		Element rootElement =
 			_portletDataContextExport.getExportDataRootElement();
 
@@ -187,12 +213,71 @@ public class ExportImportHelperUtilTest {
 			rootElement.element("entry"), content, true);
 
 		Assert.assertFalse(
-			content.contains(PortalUtil.getPathFriendlyURLPrivateGroup()));
+			content.contains(
+				PropsValues.LAYOUT_FRIENDLY_URL_PRIVATE_GROUP_SERVLET_MAPPING));
 		Assert.assertFalse(
-			content.contains(PortalUtil.getPathFriendlyURLPrivateUser()));
-		Assert.assertFalse(
-			content.contains(PortalUtil.getPathFriendlyURLPublic()));
+			content.contains(
+				PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING));
 		Assert.assertFalse(content.contains(_stagingGroup.getFriendlyURL()));
+		Assert.assertFalse(content.contains(PortalUtil.getPathContext()));
+		Assert.assertFalse(content.contains("/en/en"));
+
+		setFinalStaticField(
+			PropsValues.class.getDeclaredField(
+				"LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING"),
+			_OLD_LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING);
+
+		setFinalStaticField(
+			ExportImportHelperImpl.class.getDeclaredField(
+				"_PRIVATE_USER_SERVLET_MAPPING"),
+			PropsValues.LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING +
+				StringPool.SLASH);
+
+		new PortalUtil().setPortal(new PortalImpl());
+	}
+
+	@Test
+	public void testExportLayoutReferencesWithoutContext() throws Exception {
+		_OLD_LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING =
+			PropsValues.LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING;
+
+		setFinalStaticField(
+			PropsValues.class.getField(
+				"LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING"), "/en");
+
+		setFinalStaticField(
+			ExportImportHelperImpl.class.getDeclaredField(
+				"_PRIVATE_USER_SERVLET_MAPPING"), "/en/");
+
+		Element rootElement =
+			_portletDataContextExport.getExportDataRootElement();
+
+		String content = replaceParameters(
+			getContent("layout_references.txt"), _fileEntry);
+
+		content = ExportImportHelperUtil.replaceExportContentReferences(
+			_portletDataContextExport, _referrerStagedModel,
+			rootElement.element("entry"), content, true);
+
+		Assert.assertFalse(
+			content.contains(
+				PropsValues.LAYOUT_FRIENDLY_URL_PRIVATE_GROUP_SERVLET_MAPPING));
+		Assert.assertFalse(
+			content.contains(
+				PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING));
+		Assert.assertFalse(content.contains(_stagingGroup.getFriendlyURL()));
+		Assert.assertFalse(content.contains("/en/en"));
+
+		setFinalStaticField(
+			PropsValues.class.getDeclaredField(
+				"LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING"),
+			_OLD_LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING);
+
+		setFinalStaticField(
+			ExportImportHelperImpl.class.getDeclaredField(
+				"_PRIVATE_USER_SERVLET_MAPPING"),
+			PropsValues.LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING +
+				StringPool.SLASH);
 	}
 
 	@Test
@@ -276,6 +361,7 @@ public class ExportImportHelperUtilTest {
 			content.contains("@data_handler_public_servlet_mapping@"));
 		Assert.assertFalse(
 			content.contains("@data_handler_group_friendly_url@"));
+		Assert.assertFalse(content.contains("@data_handler_path_context@"));
 	}
 
 	@Test
@@ -365,21 +451,36 @@ public class ExportImportHelperUtilTest {
 		return StringUtil.replace(
 			content,
 			new String[] {
-				"[$GROUP_FRIENDLY_URL$]", "[$GROUP_ID$]", "[$IMAGE_ID$]",
-				"[$PATH_FRIENDLY_URL_PRIVATE_GROUP$]",
+				"[$CTX$]", "[$GROUP_FRIENDLY_URL$]", "[$GROUP_ID$]",
+				"[$IMAGE_ID$]", "[$PATH_FRIENDLY_URL_PRIVATE_GROUP$]",
 				"[$PATH_FRIENDLY_URL_PRIVATE_USER$]",
 				"[$PATH_FRIENDLY_URL_PUBLIC$]", "[$TITLE$]", "[$UUID$]"
 			},
 			new String[] {
-				_stagingGroup.getFriendlyURL(),
+				PortalUtil.getPathContext(), _stagingGroup.getFriendlyURL(),
 				String.valueOf(fileEntry.getGroupId()),
 				String.valueOf(fileEntry.getFileEntryId()),
-				PortalUtil.getPathFriendlyURLPrivateGroup(),
-				PortalUtil.getPathFriendlyURLPrivateUser(),
-				PortalUtil.getPathFriendlyURLPublic(), fileEntry.getTitle(),
-				fileEntry.getUuid()
+				PropsValues.LAYOUT_FRIENDLY_URL_PRIVATE_GROUP_SERVLET_MAPPING,
+				PropsValues.LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING,
+				PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING,
+				fileEntry.getTitle(), fileEntry.getUuid()
 			});
 	}
+
+	protected void setFinalStaticField(Field field, Object newValue)
+		throws Exception {
+
+		field.setAccessible(true);
+
+		Field modifiersField = Field.class.getDeclaredField("modifiers");
+
+		modifiersField.setAccessible(true);
+		modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL);
+
+		field.set(null, newValue);
+	}
+
+	private static String _OLD_LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING;
 
 	private FileEntry _fileEntry;
 	private Group _liveGroup;

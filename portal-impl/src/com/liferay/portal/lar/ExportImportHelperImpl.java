@@ -78,6 +78,7 @@ import com.liferay.portal.service.persistence.OrganizationUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.asset.model.AssetCategory;
@@ -520,6 +521,10 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		int offset = 0;
 
 		while (true) {
+			if (beginPos > -1) {
+				endPos = beginPos - 1;
+			}
+
 			beginPos = StringUtil.lastIndexOfAny(content, patterns, endPos);
 
 			if (beginPos == -1) {
@@ -544,64 +549,95 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 				endPos);
 
 			if (endPos == -1) {
-				endPos = beginPos - 1;
-
 				continue;
 			}
 
 			String url = content.substring(beginPos + offset, endPos);
 
-			String servletMapping = null;
-			String servletMappingParam = null;
+			if (!url.startsWith(StringPool.SLASH)) {
+				continue;
+			}
 
-			if (url.startsWith(PortalUtil.getPathFriendlyURLPrivateGroup())) {
-				servletMapping = PortalUtil.getPathFriendlyURLPrivateGroup();
-				servletMappingParam =
-					"@data_handler_private_group_servlet_mapping@";
-			}
-			else if (url.startsWith(
-						PortalUtil.getPathFriendlyURLPrivateUser())) {
+			StringBundler newUrl = new StringBundler(5);
 
-				servletMapping = PortalUtil.getPathFriendlyURLPrivateUser();
-				servletMappingParam =
-					"@data_handler_private_user_servlet_mapping@";
+			String pathContext = PortalUtil.getPathContext();
+
+			if (pathContext.length() > 1) {
+				if (!url.startsWith(pathContext)) {
+					continue;
+				}
+
+				newUrl.append("@data_handler_path_context@");
+
+				url = url.substring(pathContext.length());
 			}
-			else if (url.startsWith(PortalUtil.getPathFriendlyURLPublic())) {
-				servletMapping = PortalUtil.getPathFriendlyURLPublic();
-				servletMappingParam = "@data_handler_public_servlet_mapping@";
-			}
-			else {
-				endPos = beginPos - 1;
+
+			int pos = url.indexOf(StringPool.SLASH, 1);
+
+			if (!url.startsWith(StringPool.SLASH) || (pos == -1)) {
+				if (newUrl.length() > 0) {
+					newUrl.append(url);
+
+					sb.replace(beginPos + offset, endPos, newUrl.toString());
+				}
 
 				continue;
 			}
 
-			int beginGroupPos = beginPos + offset + servletMapping.length();
+			String localePath = url.substring(0, pos);
 
-			if (content.charAt(beginGroupPos) == CharPool.SLASH) {
-				int endGroupPos = url.indexOf(
-					CharPool.SLASH, servletMapping.length() + 1);
+			Locale locale = LocaleUtil.fromLanguageId(
+				localePath.substring(1), true, false);
 
-				if (endGroupPos == -1) {
-					endGroupPos = endPos;
-				}
-				else {
-					endGroupPos = endGroupPos + beginPos + offset;
-				}
+			if (locale != null) {
+				String urlWithoutLocale = url.substring(localePath.length());
 
-				String groupFriendlyURL = content.substring(
-					beginGroupPos, endGroupPos);
+				if (urlWithoutLocale.startsWith(
+						_PRIVATE_GROUP_SERVLET_MAPPING) ||
+					urlWithoutLocale.startsWith(
+						_PRIVATE_USER_SERVLET_MAPPING) ||
+					urlWithoutLocale.startsWith(
+						_PUBLIC_GROUP_SERVLET_MAPPING)) {
 
-				if (groupFriendlyURL.equals(group.getFriendlyURL())) {
-					sb.replace(
-						beginGroupPos, endGroupPos,
-						"@data_handler_group_friendly_url@");
+					newUrl.append(localePath);
+
+					url = urlWithoutLocale;
 				}
 			}
 
-			sb.replace(beginPos + offset, beginGroupPos, servletMappingParam);
+			if (url.startsWith(_PRIVATE_GROUP_SERVLET_MAPPING)) {
+				newUrl.append("@data_handler_private_group_servlet_mapping@");
 
-			endPos = beginPos - 1;
+				url = url.substring(
+					_PRIVATE_GROUP_SERVLET_MAPPING.length() - 1);
+			}
+			else if (url.startsWith(_PRIVATE_USER_SERVLET_MAPPING)) {
+				newUrl.append("@data_handler_private_user_servlet_mapping@");
+
+				url = url.substring(_PRIVATE_USER_SERVLET_MAPPING.length() - 1);
+			}
+			else if (url.startsWith(_PUBLIC_GROUP_SERVLET_MAPPING)) {
+				newUrl.append("@data_handler_public_servlet_mapping@");
+
+				url = url.substring(_PUBLIC_GROUP_SERVLET_MAPPING.length() - 1);
+			}
+			else {
+				continue;
+			}
+
+			String groupFriendlyURL = group.getFriendlyURL();
+
+			if (url.equals(groupFriendlyURL) ||
+				url.startsWith(groupFriendlyURL + StringPool.SLASH)) {
+
+				newUrl.append("@data_handler_group_friendly_url@");
+
+				url = url.substring(groupFriendlyURL.length());
+			}
+
+			newUrl.append(url);
+
+			sb.replace(beginPos + offset, endPos, newUrl.toString());
 		}
 
 		return sb.toString();
@@ -763,14 +799,17 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		throws Exception {
 
 		content = StringUtil.replace(
+			content, "@data_handler_path_context@",
+			PortalUtil.getPathContext());
+		content = StringUtil.replace(
 			content, "@data_handler_private_group_servlet_mapping@",
-			PortalUtil.getPathFriendlyURLPrivateGroup());
+			PropsValues.LAYOUT_FRIENDLY_URL_PRIVATE_GROUP_SERVLET_MAPPING);
 		content = StringUtil.replace(
 			content, "@data_handler_private_user_servlet_mapping@",
-			PortalUtil.getPathFriendlyURLPrivateUser());
+			PropsValues.LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING);
 		content = StringUtil.replace(
 			content, "@data_handler_public_servlet_mapping@",
-			PortalUtil.getPathFriendlyURLPublic());
+			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING);
 
 		Group group = GroupLocalServiceUtil.getGroup(
 			portletDataContext.getScopeGroupId());
@@ -1404,6 +1443,18 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		CharPool.CLOSE_PARENTHESIS, CharPool.GREATER_THAN, CharPool.LESS_THAN,
 		CharPool.PIPE, CharPool.QUESTION, CharPool.QUOTE, CharPool.SPACE
 	};
+
+	private static final String _PRIVATE_GROUP_SERVLET_MAPPING =
+		PropsValues.LAYOUT_FRIENDLY_URL_PRIVATE_GROUP_SERVLET_MAPPING +
+			StringPool.SLASH;
+
+	private static final String _PRIVATE_USER_SERVLET_MAPPING =
+		PropsValues.LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING +
+			StringPool.SLASH;
+
+	private static final String _PUBLIC_GROUP_SERVLET_MAPPING =
+		PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING +
+			StringPool.SLASH;
 
 	private static Log _log = LogFactoryUtil.getLog(
 		ExportImportHelperImpl.class);

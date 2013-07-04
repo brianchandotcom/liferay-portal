@@ -44,6 +44,12 @@ public class LocaleUtil {
 		return getInstance()._fromLanguageId(languageId, validate);
 	}
 
+	public static Locale fromLanguageId(
+		String languageId, boolean validate, boolean useDefault) {
+
+		return getInstance()._fromLanguageId(languageId, validate, useDefault);
+	}
+
 	public static Locale[] fromLanguageIds(List<String> languageIds) {
 		return getInstance()._fromLanguageIds(languageIds);
 	}
@@ -124,8 +130,19 @@ public class LocaleUtil {
 	}
 
 	private Locale _fromLanguageId(String languageId, boolean validate) {
+		return _fromLanguageId(languageId, validate, true);
+	}
+
+	private Locale _fromLanguageId(
+		String languageId, boolean validate, boolean useDefault) {
+
 		if (languageId == null) {
-			return _locale;
+			if (useDefault) {
+				return _locale;
+			}
+			else {
+				return null;
+			}
 		}
 
 		Locale locale = _locales.get(languageId);
@@ -175,7 +192,7 @@ public class LocaleUtil {
 			}
 		}
 
-		if (locale == null) {
+		if ((locale == null) && useDefault) {
 			locale = _locale;
 		}
 

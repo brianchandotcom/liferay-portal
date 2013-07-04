@@ -180,7 +180,7 @@ Map<String, ThemeSetting> configurableSettings = selTheme.getConfigurableSetting
 
 									<c:if test="<%= Validator.isNotNull(themeSetting.getScript()) %>">
 										<aui:script position="inline">
-											<%= StringUtil.replace(themeSetting.getScript(), "[@NAMESPACE@]", renderResponse.getNamespace()) %>
+											<%= StringUtil.replace(themeSetting.getScript(), "[@NAMESPACE@]", portletDisplay.getNamespace()) %>
 										</aui:script>
 									</c:if>
 

@@ -381,6 +381,11 @@ public class BackgroundTaskLocalServiceUtil {
 				   .getBackgroundTasksCount(groupId, name, taskExecutorClassName);
 	}
 
+	public static java.lang.String fetchBackgroundTaskStatus(
+		long backgroundTaskId) {
+		return getService().fetchBackgroundTaskStatus(backgroundTaskId);
+	}
+
 	public static void resumeBackgroundTask(long backgroundTaskId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		getService().resumeBackgroundTask(backgroundTaskId);

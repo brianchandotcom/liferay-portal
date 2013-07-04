@@ -8,6 +8,7 @@
 	<bean id="com.liferay.portal.service.AddressService" class="com.liferay.portal.service.impl.AddressServiceImpl" />
 	<bean id="com.liferay.portal.service.persistence.AddressPersistence" class="com.liferay.portal.service.persistence.AddressPersistenceImpl2" parent="basePersistence" />
 	<bean id="com.liferay.portal.service.BackgroundTaskLocalService" class="com.liferay.portal.service.impl.BackgroundTaskLocalServiceImpl" />
+	<bean id="com.liferay.portal.service.BackgroundTaskService" class="com.liferay.portal.service.impl.BackgroundTaskServiceImpl" />
 	<bean id="com.liferay.portal.service.persistence.BackgroundTaskPersistence" class="com.liferay.portal.service.persistence.BackgroundTaskPersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.portal.service.BrowserTrackerLocalService" class="com.liferay.portal.service.impl.BrowserTrackerLocalServiceImpl" />
 	<bean id="com.liferay.portal.service.persistence.BrowserTrackerPersistence" class="com.liferay.portal.service.persistence.BrowserTrackerPersistenceImpl" parent="basePersistence" />

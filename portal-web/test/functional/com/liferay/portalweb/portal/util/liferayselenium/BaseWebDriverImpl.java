@@ -47,7 +47,7 @@ public abstract class BaseWebDriverImpl
 
 		WebDriver.Window window = options.window();
 
-		window.setSize(new Dimension(1000, 1025));
+		window.setSize(new Dimension(1000, 1250));
 
 		webDriver.get(browserURL);
 	}

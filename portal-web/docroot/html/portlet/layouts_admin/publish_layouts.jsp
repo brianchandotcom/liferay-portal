@@ -281,10 +281,6 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 					<liferay-ui:message arguments="<%= ree.getGroupId() %>" key="no-site-exists-on-the-remote-server-with-site-id-x" />
 				</c:if>
 
-				<c:if test="<%= ree.getType() == RemoteExportException.NO_LAYOUTS %>">
-					<liferay-ui:message key="there-are-no-layouts-in-the-exported-data" />
-				</c:if>
-
 				<c:if test="<%= ree.getType() == RemoteExportException.NO_PERMISSIONS %>">
 					<liferay-ui:message arguments="<%= ree.getGroupId() %>" key="you-do-not-have-permissions-to-edit-the-site-with-id-x-on-the-remote-server" />
 				</c:if>

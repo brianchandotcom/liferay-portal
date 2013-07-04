@@ -1,21 +1,21 @@
 $gray: #555;
 $white: #FFF;
 
-$linkColor: #009EC3;
+$linkColor: #0AF;
 $linkColorHover: darken($linkColor, 15%);
 
 $baseBorderRadius: 2px;
 $borderRadiusLarge: 3px;
 $borderRadiusSmall: 2px;
 
-$btnBackgroundHighlight: #F3F3F3;
+$btnBackgroundHighlight: #FCFCFC;
 $btnBorder: #CFCFCF;
 $btnDangerBackground: #F53924;
 $btnDangerBackgroundHighlight: #ED2C17;
 $btnInfoBackground: #00CFFF;
 $btnInfoBackgroundHighlight: darken($btnInfoBackground, 4%);
-$btnPrimaryBackground: #4A9FD9;
-$btnPrimaryBackgroundHighlight: darken($btnPrimaryBackground, 5%);
+$btnPrimaryBackground: #00AEFF;
+$btnPrimaryBackgroundHighlight: #009EC3;
 $btnSuccessBackground: #CBDF2E;
 $btnSuccessBackgroundHighlight: #C4D72C;
 $btnWarningBackground: #FFA658;

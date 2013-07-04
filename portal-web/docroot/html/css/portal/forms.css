@@ -17,12 +17,7 @@
 	.datepicker-display {
 		float: none;
 
-		.datepicker-button-wrapper {
-			display: inline;
-			float: none;
-		}
-
-		.datepicker-select-wrapper {
+		.datepicker-button-wrapper, .datepicker-select-wrapper {
 			display: inline;
 			float: none;
 		}

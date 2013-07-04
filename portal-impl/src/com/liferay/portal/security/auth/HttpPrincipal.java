@@ -26,6 +26,9 @@ import java.io.Serializable;
  */
 public class HttpPrincipal implements Serializable {
 
+	public HttpPrincipal() {
+	}
+
 	public HttpPrincipal(String url) {
 		_url = url;
 	}

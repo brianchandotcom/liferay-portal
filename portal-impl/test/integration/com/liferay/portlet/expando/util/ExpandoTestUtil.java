@@ -15,9 +15,11 @@
 package com.liferay.portlet.expando.util;
 
 import com.liferay.counter.service.CounterLocalServiceUtil;
+import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.expando.model.ExpandoColumn;
+import com.liferay.portlet.expando.model.ExpandoColumnConstants;
 import com.liferay.portlet.expando.model.ExpandoTable;
 import com.liferay.portlet.expando.model.ExpandoValue;
 import com.liferay.portlet.expando.service.ExpandoColumnLocalServiceUtil;
@@ -84,6 +86,19 @@ public class ExpandoTestUtil {
 
 		return addValue(
 			table, column, CounterLocalServiceUtil.increment(), data);
+	}
+
+	public static ExpandoValue addValue(
+			long classNameId, long classPK, Object data)
+		throws Exception {
+
+		ExpandoTable table = addTable(
+			classNameId, ServiceTestUtil.randomString());
+		ExpandoColumn column = addColumn(
+			table, ServiceTestUtil.randomString(),
+			ExpandoColumnConstants.STRING);
+
+		return addValue(table, column, classPK, data);
 	}
 
 }

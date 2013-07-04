@@ -14,16 +14,20 @@
 
 package com.liferay.portal.kernel.util;
 
+import java.nio.ByteBuffer;
+
+import java.security.SecureRandom;
+
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Random;
 import java.util.Set;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Raymond Augé
  */
-public class Randomizer extends Random {
+public class Randomizer extends SecureRandom {
 
 	public static Randomizer getInstance() {
 		return _instance;
@@ -34,7 +38,7 @@ public class Randomizer extends Random {
 	}
 
 	public Randomizer(long seed) {
-		super(seed);
+		super(ByteBuffer.allocate(8).putLong(seed).array());
 	}
 
 	public int[] nextInt(int n, int size) {

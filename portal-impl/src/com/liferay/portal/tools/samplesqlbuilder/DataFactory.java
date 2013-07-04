@@ -2325,6 +2325,9 @@ public class DataFactory {
 		groupModel.setTreePath(
 			StringPool.SLASH + groupModel.getGroupId() + StringPool.SLASH);
 		groupModel.setName(name);
+		groupModel.setManualMembership(true);
+		groupModel.setMembershipRestriction(
+			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION);
 		groupModel.setFriendlyURL(
 			StringPool.FORWARD_SLASH +
 				FriendlyURLNormalizerUtil.normalize(name));

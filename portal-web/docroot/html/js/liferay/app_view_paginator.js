@@ -250,7 +250,7 @@ AUI.add(
 
 						var startEndParams = instance._getResultsStartEnd(instance._folderPagination, folderRowsPerPage);
 
-						var requestParams = instance._lastDataRequest || {};
+						var requestParams = instance._lastDataRequest || instance._getDefaultParams();
 
 						var customParams = {};
 

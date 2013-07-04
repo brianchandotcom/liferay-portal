@@ -234,6 +234,20 @@ AUI.add(
 						);
 					},
 
+					_displayNotice: function(message, type, timeout, useAnimation) {
+							new Liferay.Notice(
+							{
+								closeText: false,
+								content: message + '<button type="button" class="close">&times;</button>',
+								noticeClass: 'hide',
+								timeout: timeout ? timeout : 10000,
+								toggleText: false,
+								type: type ? type : 'warning',
+								useAnimation: Lang.isValue(useAnimation) ? useAnimation : true
+							}
+						).show();
+					},
+
 					_handleKeyDown: function(event) {
 						var instance = this;
 
@@ -635,14 +649,6 @@ AUI.add(
 							var dragNode = event.target.get('node');
 
 							instance._saveSortables(dragNode);
-
-							Liferay.fire(
-								'navigation',
-								{
-									item: dragNode.getDOM(),
-									type: 'sort'
-								}
-							);
 						}
 					);
 
@@ -674,17 +680,7 @@ AUI.add(
 
 				if (confirm(Liferay.Language.get('are-you-sure-you-want-to-delete-this-page'))) {
 					var processRemovePageFailure = function(result) {
-						new Liferay.Notice(
-							{
-								closeText: false,
-								content: result.message + '<button type="button" class="close">&times;</button>',
-								noticeClass: 'hide',
-								timeout: 10000,
-								toggleText: false,
-								type: 'warning',
-								useAnimation: true
-							}
-						).show();
+						instance._displayNotice(result.message);
 					};
 
 					var processRemovePageSuccess = function(result) {
@@ -855,10 +851,46 @@ AUI.add(
 					privateLayout: themeDisplay.isPrivateLayout()
 				};
 
+				var processMovePageFailure = function(result) {
+					instance._displayNotice(result.message);
+				};
+
+				var processMovePageSuccess = function(result) {
+					Liferay.fire(
+						'navigation',
+						{
+							item: node.getDOM(),
+							type: 'sort'
+						}
+					);
+				};
+
 				A.io.request(
 					instance._updateURL,
 					{
-						data: data
+						data: data,
+						dataType: 'json',
+						on: {
+							failure: function() {
+								processMovePageFailure(
+									{
+										message: Liferay.Language.get('your-request-failed-to-complete'),
+										status: STATUS_CODE.BAD_REQUEST
+									}
+								);
+							},
+							success: function(event, id, obj) {
+								var result = this.get('responseData');
+
+								var movePageFn = processMovePageFailure;
+
+								if (result.status === STATUS_CODE.OK) {
+									movePageFn = processMovePageSuccess;
+								}
+
+								movePageFn(result);
+							}
+						}
 					}
 				);
 			},

@@ -95,7 +95,7 @@
 			<finder-column name="primary" />
 		</finder>
 	</entity>
-	<entity name="BackgroundTask" local-service="true" remote-service="false">
+	<entity name="BackgroundTask" local-service="true" remote-service="true">
 
 		<!-- PK fields -->
 

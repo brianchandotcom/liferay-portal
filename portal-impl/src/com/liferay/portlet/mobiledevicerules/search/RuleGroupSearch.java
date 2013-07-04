@@ -36,7 +36,7 @@ public class RuleGroupSearch extends SearchContainer<MDRRuleGroup> {
 	}
 
 	public static final String EMPTY_RESULTS_MESSAGE =
-		"no-rule-groups-are-configured";
+		"no-device-families-are-configured";
 
 	public RuleGroupSearch(
 		PortletRequest portletRequest, PortletURL iteratorURL) {

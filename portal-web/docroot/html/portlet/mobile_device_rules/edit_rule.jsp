@@ -136,8 +136,8 @@ Collection<String> ruleHandlerTypes = RuleGroupProcessorUtil.getRuleHandlerTypes
 			'<%= editorURL.toString() %>',
 			{
 				data: {
-					ruleId: <%= ruleId %>,
-					type: typeNode.val()
+					<portlet:namespace />ruleId: <%= ruleId %>,
+					<portlet:namespace />type: typeNode.val(),
 				},
 				on: {
 					success: function(event, id, obj) {

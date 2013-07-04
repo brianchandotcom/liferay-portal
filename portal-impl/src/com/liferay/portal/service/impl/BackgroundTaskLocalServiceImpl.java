@@ -15,6 +15,9 @@
 package com.liferay.portal.service.impl;
 
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
+import com.liferay.portal.kernel.backgroundtask.status.BackgroundTaskStatus;
+import com.liferay.portal.kernel.backgroundtask.status.BackgroundTaskStatusRegistry;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -24,6 +27,7 @@ import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackRegistryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.BackgroundTask;
@@ -168,6 +172,17 @@ public class BackgroundTaskLocalServiceImpl
 		return backgroundTaskPersistence.fetchByPrimaryKey(backgroundTaskId);
 	}
 
+	public String fetchBackgroundTaskStatus(long backgroundTaskId) {
+		BackgroundTaskStatus backgroundTaskStatus =
+			_backgroundTaskStatusRegistry.fetch(backgroundTaskId);
+
+		if (backgroundTaskStatus != null) {
+			return backgroundTaskStatus.getJSONString();
+		}
+
+		return StringPool.BLANK;
+	}
+
 	@Override
 	public BackgroundTask fetchFirstBackgroundTask(
 			String taskExecutorClassName, int status)
@@ -256,7 +271,7 @@ public class BackgroundTaskLocalServiceImpl
 		throws SystemException {
 
 		return backgroundTaskPersistence.countByG_T(
-				groupId, taskExecutorClassName);
+			groupId, taskExecutorClassName);
 	}
 
 	@Override
@@ -335,5 +350,8 @@ public class BackgroundTaskLocalServiceImpl
 
 		return backgroundTask;
 	}
+
+	@BeanReference(type = BackgroundTaskStatusRegistry.class)
+	private BackgroundTaskStatusRegistry _backgroundTaskStatusRegistry;
 
 }

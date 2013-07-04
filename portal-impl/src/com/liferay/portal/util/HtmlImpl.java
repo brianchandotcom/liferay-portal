@@ -178,7 +178,7 @@ public class HtmlImpl implements Html {
 		for (int i = 0; i < text.length(); i++) {
 			char c = text.charAt(i);
 
-			if (Character.isLetterOrDigit(c) ||
+			if ((c > 255) || Character.isLetterOrDigit(c) ||
 				(c == CharPool.DASH) || (c == CharPool.UNDERLINE)) {
 
 				sb.append(c);

@@ -4,21 +4,21 @@
 	_entry
 	_categoryAndTag = false
 >
-	<#local assetEntry = dataFactory.newAssetEntry(_entry)>
+	<#local assetEntryModel = dataFactory.newAssetEntryModel(_entry)>
 
-	insert into AssetEntry values (${assetEntry.entryId}, ${assetEntry.groupId}, ${assetEntry.companyId}, ${assetEntry.userId}, '${assetEntry.userName}', '${dataFactory.getDateString(assetEntry.createDate)}', '${dataFactory.getDateString(assetEntry.modifiedDate)}', ${assetEntry.classNameId}, ${assetEntry.classPK}, '${assetEntry.classUuid}', ${assetEntry.classTypeId}, ${assetEntry.visible?string}, '${dataFactory.getDateString(assetEntry.startDate)}', '${dataFactory.getDateString(assetEntry.endDate)}', '${dataFactory.getDateString(assetEntry.publishDate)}', '${dataFactory.getDateString(assetEntry.expirationDate)}', '${assetEntry.mimeType}', '${assetEntry.title}', '${assetEntry.description}', '${assetEntry.summary}', '${assetEntry.url}', '${assetEntry.layoutUuid}', ${assetEntry.height}, ${assetEntry.width}, ${assetEntry.priority}, ${assetEntry.viewCount});
+	insert into AssetEntry values (${assetEntryModel.entryId}, ${assetEntryModel.groupId}, ${assetEntryModel.companyId}, ${assetEntryModel.userId}, '${assetEntryModel.userName}', '${dataFactory.getDateString(assetEntryModel.createDate)}', '${dataFactory.getDateString(assetEntryModel.modifiedDate)}', ${assetEntryModel.classNameId}, ${assetEntryModel.classPK}, '${assetEntryModel.classUuid}', ${assetEntryModel.classTypeId}, ${assetEntryModel.visible?string}, '${dataFactory.getDateString(assetEntryModel.startDate)}', '${dataFactory.getDateString(assetEntryModel.endDate)}', '${dataFactory.getDateString(assetEntryModel.publishDate)}', '${dataFactory.getDateString(assetEntryModel.expirationDate)}', '${assetEntryModel.mimeType}', '${assetEntryModel.title}', '${assetEntryModel.description}', '${assetEntryModel.summary}', '${assetEntryModel.url}', '${assetEntryModel.layoutUuid}', ${assetEntryModel.height}, ${assetEntryModel.width}, ${assetEntryModel.priority}, ${assetEntryModel.viewCount});
 
 	<#if _categoryAndTag>
-		<#local assetCategoryIds = dataFactory.getAssetCategoryIds(assetEntry.groupId)>
+		<#local assetCategoryIds = dataFactory.getAssetCategoryIds(assetEntryModel.groupId)>
 
 		<#list assetCategoryIds as assetCategoryId>
-			insert into AssetEntries_AssetCategories values (${assetCategoryId}, ${assetEntry.entryId});
+			insert into AssetEntries_AssetCategories values (${assetCategoryId}, ${assetEntryModel.entryId});
 		</#list>
 
-		<#local assetTagIds = dataFactory.getAssetTagIds(assetEntry.groupId)>
+		<#local assetTagIds = dataFactory.getAssetTagIds(assetEntryModel.groupId)>
 
 		<#list assetTagIds as assetTagId>
-			insert into AssetEntries_AssetTags values (${assetEntry.entryId}, ${assetTagId});
+			insert into AssetEntries_AssetTags values (${assetEntryModel.entryId}, ${assetTagId});
 		</#list>
 	</#if>
 </#macro>
@@ -30,24 +30,24 @@
 	_currentIndex = -1
 >
 	<#if (_currentIndex = -1)>
-		<#local ddmContent = dataFactory.newDDMContent(_entry)>
+		<#local ddmContentModel = dataFactory.newDDMContentModel(_entry)>
 	<#else>
-		<#local ddmContent = dataFactory.newDDMContent(_entry, _currentIndex)>
+		<#local ddmContentModel = dataFactory.newDDMContentModel(_entry, _currentIndex)>
 	</#if>
 
-	insert into DDMContent values ('${ddmContent.uuid}', ${ddmContent.contentId}, ${ddmContent.groupId}, ${ddmContent.companyId}, ${ddmContent.userId}, '${ddmContent.userName}', '${dataFactory.getDateString(ddmContent.createDate)}', '${dataFactory.getDateString(ddmContent.modifiedDate)}', '${ddmContent.name}', '${ddmContent.description}', '${ddmContent.xml}');
+	insert into DDMContent values ('${ddmContentModel.uuid}', ${ddmContentModel.contentId}, ${ddmContentModel.groupId}, ${ddmContentModel.companyId}, ${ddmContentModel.userId}, '${ddmContentModel.userName}', '${dataFactory.getDateString(ddmContentModel.createDate)}', '${dataFactory.getDateString(ddmContentModel.modifiedDate)}', '${ddmContentModel.name}', '${ddmContentModel.description}', '${ddmContentModel.xml}');
 
-	<#local ddmStorageLink = dataFactory.newDDMStorageLink(_ddmStorageLinkId, ddmContent, _ddmStructureId)>
+	<#local ddmStorageLinkModel = dataFactory.newDDMStorageLinkModel(_ddmStorageLinkId, ddmContentModel, _ddmStructureId)>
 
-	insert into DDMStorageLink values ('${ddmStorageLink.uuid}', ${ddmStorageLink.storageLinkId}, ${ddmStorageLink.classNameId}, ${ddmStorageLink.classPK}, ${ddmStorageLink.structureId});
+	insert into DDMStorageLink values ('${ddmStorageLinkModel.uuid}', ${ddmStorageLinkModel.storageLinkId}, ${ddmStorageLinkModel.classNameId}, ${ddmStorageLinkModel.classPK}, ${ddmStorageLinkModel.structureId});
 </#macro>
 
 <#macro insertDDMStructureLink
 	_entry
 >
-	<#local ddmStructureLink = dataFactory.newDDMStructureLink(_entry)>
+	<#local ddmStructureLinkModel = dataFactory.newDDMStructureLinkModel(_entry)>
 
-	insert into DDMStructureLink values (${ddmStructureLink.structureLinkId},${ ddmStructureLink.classNameId}, ${ddmStructureLink.classPK}, ${ddmStructureLink.structureId});
+	insert into DDMStructureLink values (${ddmStructureLinkModel.structureLinkId},${ ddmStructureLinkModel.classNameId}, ${ddmStructureLinkModel.classPK}, ${ddmStructureLinkModel.structureId});
 </#macro>
 
 <#macro insertDLFolder
@@ -58,34 +58,34 @@
 >
 	<#if (_dlFolderDepth <= maxDLFolderDepth)>
 		<#list 1..maxDLFolderCount as dlFolderCount>
-			<#local dlFolder = dataFactory.newDLFolder(_groupId, _parentDLFolderId, dlFolderCount)>
+			<#local dlFolderModel = dataFactory.newDLFolderModel(_groupId, _parentDLFolderId, dlFolderCount)>
 
-			insert into DLFolder values ('${dlFolder.uuid}', ${dlFolder.folderId}, ${dlFolder.groupId}, ${dlFolder.companyId}, ${dlFolder.userId}, '${dlFolder.userName}', '${dataFactory.getDateString(dlFolder.createDate)}', '${dataFactory.getDateString(dlFolder.modifiedDate)}', ${dlFolder.repositoryId}, ${dlFolder.mountPoint?string}, ${dlFolder.parentFolderId}, '${dlFolder.name}', '${dlFolder.description}', '${dataFactory.getDateString(dlFolder.lastPostDate)}', ${dlFolder.defaultFileEntryTypeId}, ${dlFolder.hidden?string}, ${dlFolder.overrideFileEntryTypes?string}, ${dlFolder.status}, ${dlFolder.statusByUserId}, '${dlFolder.statusByUserName}', '${dataFactory.getDateString(dlFolder.statusDate)}');
+			insert into DLFolder values ('${dlFolderModel.uuid}', ${dlFolderModel.folderId}, ${dlFolderModel.groupId}, ${dlFolderModel.companyId}, ${dlFolderModel.userId}, '${dlFolderModel.userName}', '${dataFactory.getDateString(dlFolderModel.createDate)}', '${dataFactory.getDateString(dlFolderModel.modifiedDate)}', ${dlFolderModel.repositoryId}, ${dlFolderModel.mountPoint?string}, ${dlFolderModel.parentFolderId}, '${dlFolderModel.name}', '${dlFolderModel.description}', '${dataFactory.getDateString(dlFolderModel.lastPostDate)}', ${dlFolderModel.defaultFileEntryTypeId}, ${dlFolderModel.hidden?string}, ${dlFolderModel.overrideFileEntryTypes?string}, ${dlFolderModel.status}, ${dlFolderModel.statusByUserId}, '${dlFolderModel.statusByUserName}', '${dataFactory.getDateString(dlFolderModel.statusDate)}');
 
 			<@insertResourcePermissions
-				_entry = dlFolder
+				_entry = dlFolderModel
 			/>
 
 			<@insertAssetEntry
-				_entry = dlFolder
+				_entry = dlFolderModel
 			/>
 
 			<#if (maxDLFileEntryCount > 0)>
 				<#list 1..maxDLFileEntryCount as dlFileEntryCount>
-					<#local dlFileEntry = dataFactory.newDlFileEntry(dlFolder, dlFileEntryCount)>
+					<#local dlFileEntryModel = dataFactory.newDlFileEntryModel(dlFolderModel, dlFileEntryCount)>
 
-					insert into DLFileEntry values ('${dlFileEntry.uuid}', ${dlFileEntry.fileEntryId}, ${dlFileEntry.groupId}, ${dlFileEntry.companyId}, ${dlFileEntry.userId}, '${dlFileEntry.userName}', ${dlFileEntry.versionUserId}, '${dlFileEntry.versionUserName}', '${dataFactory.getDateString(dlFileEntry.createDate)}', '${dataFactory.getDateString(dlFileEntry.modifiedDate)}', ${dlFileEntry.classNameId}, ${dlFileEntry.classPK}, ${dlFileEntry.repositoryId}, ${dlFileEntry.folderId}, '${dlFileEntry.name}', '${dlFileEntry.extension}', '${dlFileEntry.mimeType}', '${dlFileEntry.title}','${dlFileEntry.description}', '${dlFileEntry.extraSettings}', ${dlFileEntry.fileEntryTypeId}, '${dlFileEntry.version}', ${dlFileEntry.size}, ${dlFileEntry.readCount}, ${dlFileEntry.smallImageId}, ${dlFileEntry.largeImageId}, ${dlFileEntry.custom1ImageId}, ${dlFileEntry.custom2ImageId}, ${dlFileEntry.manualCheckInRequired?string});
+					insert into DLFileEntry values ('${dlFileEntryModel.uuid}', ${dlFileEntryModel.fileEntryId}, ${dlFileEntryModel.groupId}, ${dlFileEntryModel.companyId}, ${dlFileEntryModel.userId}, '${dlFileEntryModel.userName}', ${dlFileEntryModel.versionUserId}, '${dlFileEntryModel.versionUserName}', '${dataFactory.getDateString(dlFileEntryModel.createDate)}', '${dataFactory.getDateString(dlFileEntryModel.modifiedDate)}', ${dlFileEntryModel.classNameId}, ${dlFileEntryModel.classPK}, ${dlFileEntryModel.repositoryId}, ${dlFileEntryModel.folderId}, '${dlFileEntryModel.name}', '${dlFileEntryModel.extension}', '${dlFileEntryModel.mimeType}', '${dlFileEntryModel.title}','${dlFileEntryModel.description}', '${dlFileEntryModel.extraSettings}', ${dlFileEntryModel.fileEntryTypeId}, '${dlFileEntryModel.version}', ${dlFileEntryModel.size}, ${dlFileEntryModel.readCount}, ${dlFileEntryModel.smallImageId}, ${dlFileEntryModel.largeImageId}, ${dlFileEntryModel.custom1ImageId}, ${dlFileEntryModel.custom2ImageId}, ${dlFileEntryModel.manualCheckInRequired?string});
 
-					<#local dlFileVersion = dataFactory.newDLFileVersion(dlFileEntry)>
+					<#local dlFileVersionModel = dataFactory.newDLFileVersionModel(dlFileEntryModel)>
 
-					insert into DLFileVersion values ('${dlFileVersion.uuid}', ${dlFileVersion.fileVersionId}, ${dlFileVersion.groupId}, ${dlFileVersion.companyId}, ${dlFileVersion.userId}, '${dlFileVersion.userName}', '${dataFactory.getDateString(dlFileVersion.createDate)}', '${dataFactory.getDateString(dlFileVersion.modifiedDate)}', ${dlFileVersion.repositoryId}, ${dlFileVersion.folderId}, ${dlFileVersion.fileEntryId}, '${dlFileVersion.extension}', '${dlFileVersion.mimeType}', '${dlFileVersion.title}','${dlFileVersion.description}', '${dlFileVersion.changeLog}', '${dlFileVersion.extraSettings}', ${dlFileVersion.fileEntryTypeId}, '${dlFileVersion.version}', ${dlFileVersion.size}, '${dlFileVersion.checksum}', ${dlFileVersion.status}, ${dlFileVersion.statusByUserId}, '${dlFileVersion.statusByUserName}', ${dlFileVersion.statusDate!'null'});
+					insert into DLFileVersion values ('${dlFileVersionModel.uuid}', ${dlFileVersionModel.fileVersionId}, ${dlFileVersionModel.groupId}, ${dlFileVersionModel.companyId}, ${dlFileVersionModel.userId}, '${dlFileVersionModel.userName}', '${dataFactory.getDateString(dlFileVersionModel.createDate)}', '${dataFactory.getDateString(dlFileVersionModel.modifiedDate)}', ${dlFileVersionModel.repositoryId}, ${dlFileVersionModel.folderId}, ${dlFileVersionModel.fileEntryId}, '${dlFileVersionModel.extension}', '${dlFileVersionModel.mimeType}', '${dlFileVersionModel.title}','${dlFileVersionModel.description}', '${dlFileVersionModel.changeLog}', '${dlFileVersionModel.extraSettings}', ${dlFileVersionModel.fileEntryTypeId}, '${dlFileVersionModel.version}', ${dlFileVersionModel.size}, '${dlFileVersionModel.checksum}', ${dlFileVersionModel.status}, ${dlFileVersionModel.statusByUserId}, '${dlFileVersionModel.statusByUserName}', ${dlFileVersionModel.statusDate!'null'});
 
 					<@insertResourcePermissions
-						_entry = dlFileEntry
+						_entry = dlFileEntryModel
 					/>
 
 					<@insertAssetEntry
-						_entry = dlFileEntry
+						_entry = dlFileEntryModel
 					/>
 
 					<#local ddmStorageLinkId = counter.get()>
@@ -93,31 +93,31 @@
 					<@insertDDMContent
 						_ddmStorageLinkId = ddmStorageLinkId
 						_ddmStructureId = _ddmStructureId
-						_entry = dlFileEntry
+						_entry = dlFileEntryModel
 					/>
 
 					<@insertMBDiscussion
 						_classNameId = dataFactory.DLFileEntryClassNameId
-						_classPK = dlFileEntry.fileEntryId
-						_groupId = dlFileEntry.groupId
+						_classPK = dlFileEntryModel.fileEntryId
+						_groupId = dlFileEntryModel.groupId
 						_maxCommentCount = 0
 						_mbRootMessageId = counter.get()
 						_mbThreadId = counter.get()
 					/>
 
 					<@insertSocialActivity
-						_entry = dlFileEntry
+						_entry = dlFileEntryModel
 					/>
 
-					<#local dlFileEntryMetadata = dataFactory.newDLFileEntryMetadata(ddmStorageLinkId, _ddmStructureId, dlFileVersion)>
+					<#local dlFileEntryMetadataModel = dataFactory.newDLFileEntryMetadataModel(ddmStorageLinkId, _ddmStructureId, dlFileVersionModel)>
 
-					insert into DLFileEntryMetadata values ('${dlFileEntryMetadata.uuid}', ${dlFileEntryMetadata.fileEntryMetadataId}, ${dlFileEntryMetadata.DDMStorageId}, ${dlFileEntryMetadata.DDMStructureId}, ${dlFileEntryMetadata.fileEntryTypeId}, ${dlFileEntryMetadata.fileEntryId}, ${dlFileEntryMetadata.fileVersionId});
+					insert into DLFileEntryMetadata values ('${dlFileEntryMetadataModel.uuid}', ${dlFileEntryMetadataModel.fileEntryMetadataId}, ${dlFileEntryMetadataModel.DDMStorageId}, ${dlFileEntryMetadataModel.DDMStructureId}, ${dlFileEntryMetadataModel.fileEntryTypeId}, ${dlFileEntryMetadataModel.fileEntryId}, ${dlFileEntryMetadataModel.fileVersionId});
 
 					<@insertDDMStructureLink
-						_entry = dlFileEntryMetadata
+						_entry = dlFileEntryMetadataModel
 					/>
 
-					${writerDocumentLibraryCSV.write(dlFolder.folderId + "," + dlFileEntry.name + "," + dlFileEntry.fileEntryId + "," + dataFactory.getDateLong(dlFileEntry.createDate) + "," + dataFactory.getDateLong(dlFolder.createDate) + "\n")}
+					${writerDocumentLibraryCSV.write(dlFolderModel.folderId + "," + dlFileEntryModel.name + "," + dlFileEntryModel.fileEntryId + "," + dataFactory.getDateLong(dlFileEntryModel.createDate) + "," + dataFactory.getDateLong(dlFolderModel.createDate) + "\n")}
 				</#list>
 			</#if>
 
@@ -125,37 +125,37 @@
 				_ddmStructureId = _ddmStructureId
 				_dlFolderDepth = _dlFolderDepth + 1
 				_groupId = groupId
-				_parentDLFolderId = dlFolder.folderId
+				_parentDLFolderId = dlFolderModel.folderId
 			/>
 		</#list>
 	</#if>
 </#macro>
 
 <#macro insertGroup
-	_group
+	_groupModel
 	_publicPageCount
 >
-	insert into Group_ values ('${_group.uuid}', ${_group.groupId}, ${_group.companyId}, ${_group.creatorUserId}, ${_group.classNameId}, ${_group.classPK}, ${_group.parentGroupId}, ${_group.liveGroupId}, '${_group.treePath}', '${_group.name}', '${_group.description}', ${_group.type}, '${_group.typeSettings}', '${_group.friendlyURL}', ${_group.site?string}, ${_group.active?string});
+	insert into Group_ values ('${_groupModel.uuid}', ${_groupModel.groupId}, ${_groupModel.companyId}, ${_groupModel.creatorUserId}, ${_groupModel.classNameId}, ${_groupModel.classPK}, ${_groupModel.parentGroupId}, ${_groupModel.liveGroupId}, '${_groupModel.treePath}', '${_groupModel.name}', '${_groupModel.description}', ${_groupModel.type}, '${_groupModel.typeSettings}', '${_groupModel.friendlyURL}', ${_groupModel.site?string}, ${_groupModel.active?string});
 
-	<#local layoutSets = dataFactory.newLayoutSets(_group.groupId, _publicPageCount)>
+	<#local layoutSetModels = dataFactory.newLayoutSetModels(_groupModel.groupId, _publicPageCount)>
 
-	<#list layoutSets as layoutSet>
-		insert into LayoutSet values (${layoutSet.layoutSetId}, ${layoutSet.groupId}, ${layoutSet.companyId}, '${dataFactory.getDateString(layoutSet.createDate)}', '${dataFactory.getDateString(layoutSet.modifiedDate)}', ${layoutSet.privateLayout?string}, ${layoutSet.logo?string}, ${layoutSet.logoId}, '${layoutSet.themeId}', '${layoutSet.colorSchemeId}', '${layoutSet.wapThemeId}', '${layoutSet.wapColorSchemeId}', '${layoutSet.css}', ${layoutSet.pageCount}, '${layoutSet.settings}', '${layoutSet.layoutSetPrototypeUuid}', ${layoutSet.layoutSetPrototypeLinkEnabled?string});
+	<#list layoutSetModels as layoutSetModel>
+		insert into LayoutSet values (${layoutSetModel.layoutSetId}, ${layoutSetModel.groupId}, ${layoutSetModel.companyId}, '${dataFactory.getDateString(layoutSetModel.createDate)}', '${dataFactory.getDateString(layoutSetModel.modifiedDate)}', ${layoutSetModel.privateLayout?string}, ${layoutSetModel.logo?string}, ${layoutSetModel.logoId}, '${layoutSetModel.themeId}', '${layoutSetModel.colorSchemeId}', '${layoutSetModel.wapThemeId}', '${layoutSetModel.wapColorSchemeId}', '${layoutSetModel.css}', ${layoutSetModel.pageCount}, '${layoutSetModel.settings}', '${layoutSetModel.layoutSetPrototypeUuid}', ${layoutSetModel.layoutSetPrototypeLinkEnabled?string});
 	</#list>
 </#macro>
 
 <#macro insertLayout
-	_layout
+	_layoutModel
 >
-	insert into Layout values ('${_layout.uuid}', ${_layout.plid}, ${_layout.groupId}, ${_layout.companyId}, ${_layout.userId}, '${_layout.userName}', '${dataFactory.getDateString(_layout.createDate)}', '${dataFactory.getDateString(_layout.modifiedDate)}', ${_layout.privateLayout?string}, ${_layout.layoutId}, ${_layout.parentLayoutId}, '${_layout.name}', '${_layout.title}', '${_layout.description}', '${_layout.keywords}', '${_layout.robots}', '${_layout.type}', '${_layout.typeSettings}', ${_layout.hidden?string}, '${_layout.friendlyURL}', ${_layout.iconImage?string}, ${_layout.iconImageId}, '${_layout.themeId}', '${_layout.colorSchemeId}', '${_layout.wapThemeId}', '${_layout.wapColorSchemeId}', '${_layout.css}', ${_layout.priority}, '${_layout.layoutPrototypeUuid}', ${_layout.layoutPrototypeLinkEnabled?string}, '${_layout.sourcePrototypeLayoutUuid}');
+	insert into Layout values ('${_layoutModel.uuid}', ${_layoutModel.plid}, ${_layoutModel.groupId}, ${_layoutModel.companyId}, ${_layoutModel.userId}, '${_layoutModel.userName}', '${dataFactory.getDateString(_layoutModel.createDate)}', '${dataFactory.getDateString(_layoutModel.modifiedDate)}', ${_layoutModel.privateLayout?string}, ${_layoutModel.layoutId}, ${_layoutModel.parentLayoutId}, '${_layoutModel.name}', '${_layoutModel.title}', '${_layoutModel.description}', '${_layoutModel.keywords}', '${_layoutModel.robots}', '${_layoutModel.type}', '${_layoutModel.typeSettings}', ${_layoutModel.hidden?string}, '${_layoutModel.friendlyURL}', ${_layoutModel.iconImage?string}, ${_layoutModel.iconImageId}, '${_layoutModel.themeId}', '${_layoutModel.colorSchemeId}', '${_layoutModel.wapThemeId}', '${_layoutModel.wapColorSchemeId}', '${_layoutModel.css}', ${_layoutModel.priority}, '${_layoutModel.layoutPrototypeUuid}', ${_layoutModel.layoutPrototypeLinkEnabled?string}, '${_layoutModel.sourcePrototypeLayoutUuid}');
 
 	<@insertResourcePermissions
-		_entry = _layout
+		_entry = _layoutModel
 	/>
 
-	<#local layoutFriendlyURL = dataFactory.newLayoutFriendlyURL(_layout)>
+	<#local layoutFriendlyURLModel = dataFactory.newLayoutFriendlyURLModel(_layoutModel)>
 
-	insert into LayoutFriendlyURL values ('${layoutFriendlyURL.uuid}', ${layoutFriendlyURL.layoutFriendlyURLId}, ${layoutFriendlyURL.groupId}, ${layoutFriendlyURL.companyId}, ${layoutFriendlyURL.userId}, '${layoutFriendlyURL.userName}', '${dataFactory.getDateString(layoutFriendlyURL.createDate)}', '${dataFactory.getDateString(layoutFriendlyURL.modifiedDate)}', ${layoutFriendlyURL.plid}, ${layoutFriendlyURL.privateLayout?string}, '${layoutFriendlyURL.friendlyURL}', '${layoutFriendlyURL.languageId}');
+	insert into LayoutFriendlyURL values ('${layoutFriendlyURLModel.uuid}', ${layoutFriendlyURLModel.layoutFriendlyURLId}, ${layoutFriendlyURLModel.groupId}, ${layoutFriendlyURLModel.companyId}, ${layoutFriendlyURLModel.userId}, '${layoutFriendlyURLModel.userName}', '${dataFactory.getDateString(layoutFriendlyURLModel.createDate)}', '${dataFactory.getDateString(layoutFriendlyURLModel.modifiedDate)}', ${layoutFriendlyURLModel.plid}, ${layoutFriendlyURLModel.privateLayout?string}, '${layoutFriendlyURLModel.friendlyURL}', '${layoutFriendlyURLModel.languageId}');
 </#macro>
 
 <#macro insertMBDiscussion
@@ -166,97 +166,97 @@
 	_mbRootMessageId
 	_mbThreadId
 >
-	<#local mbThread = dataFactory.newMBThread(_mbThreadId, _groupId, _mbRootMessageId, _maxCommentCount)>
+	<#local mbThreadModel = dataFactory.newMBThreadModel(_mbThreadId, _groupId, _mbRootMessageId, _maxCommentCount)>
 
-	insert into MBThread values ('${mbThread.uuid}', ${mbThread.threadId}, ${mbThread.groupId}, ${mbThread.companyId}, ${mbThread.userId}, '${mbThread.userName}', '${dataFactory.getDateString(mbThread.createDate)}', '${dataFactory.getDateString(mbThread.modifiedDate)}', ${mbThread.categoryId}, ${mbThread.rootMessageId}, ${mbThread.rootMessageUserId}, ${mbThread.messageCount}, ${mbThread.viewCount}, ${mbThread.lastPostByUserId}, '${dataFactory.getDateString(mbThread.lastPostDate)}', ${mbThread.priority}, ${mbThread.question?string}, ${mbThread.status}, ${mbThread.statusByUserId}, '${mbThread.statusByUserName}', '${dataFactory.getDateString(mbThread.statusDate)}');
+	insert into MBThread values ('${mbThreadModel.uuid}', ${mbThreadModel.threadId}, ${mbThreadModel.groupId}, ${mbThreadModel.companyId}, ${mbThreadModel.userId}, '${mbThreadModel.userName}', '${dataFactory.getDateString(mbThreadModel.createDate)}', '${dataFactory.getDateString(mbThreadModel.modifiedDate)}', ${mbThreadModel.categoryId}, ${mbThreadModel.rootMessageId}, ${mbThreadModel.rootMessageUserId}, ${mbThreadModel.messageCount}, ${mbThreadModel.viewCount}, ${mbThreadModel.lastPostByUserId}, '${dataFactory.getDateString(mbThreadModel.lastPostDate)}', ${mbThreadModel.priority}, ${mbThreadModel.question?string}, ${mbThreadModel.status}, ${mbThreadModel.statusByUserId}, '${mbThreadModel.statusByUserName}', '${dataFactory.getDateString(mbThreadModel.statusDate)}');
 
-	<#local mbRootMessage = dataFactory.newMBMessage(mbThread, _classNameId, _classPK, 0)>
+	<#local mbRootMessageModel = dataFactory.newMBMessageModel(mbThreadModel, _classNameId, _classPK, 0)>
 
 	<@insertMBMessage
-		_mbMessage = mbRootMessage
+		_mbMessageModel = mbRootMessageModel
 	/>
 
 	<#if (_maxCommentCount > 0)>
 		<#list 1.._maxCommentCount as commentCount>
-			<#local mbMessage = dataFactory.newMBMessage(mbThread, _classNameId, _classPK, commentCount)>
+			<#local mbMessageModel = dataFactory.newMBMessageModel(mbThreadModel, _classNameId, _classPK, commentCount)>
 
 			<@insertMBMessage
-				_mbMessage = mbMessage
+				_mbMessageModel = mbMessageModel
 			/>
 
 			<@insertSocialActivity
-				_entry = mbMessage
+				_entry = mbMessageModel
 			/>
 		</#list>
 	</#if>
 
-	<#local mbDiscussion = dataFactory.newMBDiscussion(_groupId, _classNameId, _classPK, _mbThreadId)>
+	<#local mbDiscussionModel = dataFactory.newMBDiscussionModel(_groupId, _classNameId, _classPK, _mbThreadId)>
 
-	insert into MBDiscussion values ('${mbDiscussion.uuid}', ${mbDiscussion.discussionId}, ${mbDiscussion.groupId}, ${mbDiscussion.companyId}, ${mbDiscussion.userId}, '${mbDiscussion.userName}', '${dataFactory.getDateString(mbDiscussion.createDate)}', '${dataFactory.getDateString(mbDiscussion.modifiedDate)}', ${mbDiscussion.classNameId}, ${mbDiscussion.classPK}, ${mbDiscussion.threadId});
+	insert into MBDiscussion values ('${mbDiscussionModel.uuid}', ${mbDiscussionModel.discussionId}, ${mbDiscussionModel.groupId}, ${mbDiscussionModel.companyId}, ${mbDiscussionModel.userId}, '${mbDiscussionModel.userName}', '${dataFactory.getDateString(mbDiscussionModel.createDate)}', '${dataFactory.getDateString(mbDiscussionModel.modifiedDate)}', ${mbDiscussionModel.classNameId}, ${mbDiscussionModel.classPK}, ${mbDiscussionModel.threadId});
 </#macro>
 
 <#macro insertMBMessage
-	_mbMessage
+	_mbMessageModel
 >
-	insert into MBMessage values ('${_mbMessage.uuid}', ${_mbMessage.messageId}, ${_mbMessage.groupId}, ${_mbMessage.companyId}, ${_mbMessage.userId}, '${_mbMessage.userName}', '${dataFactory.getDateString(_mbMessage.createDate)}', '${dataFactory.getDateString(_mbMessage.modifiedDate)}', ${_mbMessage.classNameId}, ${_mbMessage.classPK}, ${_mbMessage.categoryId}, ${_mbMessage.threadId}, ${_mbMessage.rootMessageId}, ${_mbMessage.parentMessageId}, '${_mbMessage.subject}', '${_mbMessage.body}', '${_mbMessage.format}', ${_mbMessage.anonymous?string}, ${_mbMessage.priority}, ${_mbMessage.allowPingbacks?string}, ${_mbMessage.answer?string}, ${_mbMessage.status}, ${_mbMessage.statusByUserId}, '${_mbMessage.statusByUserName}', '${dataFactory.getDateString(_mbMessage.statusDate)}');
+	insert into MBMessage values ('${_mbMessageModel.uuid}', ${_mbMessageModel.messageId}, ${_mbMessageModel.groupId}, ${_mbMessageModel.companyId}, ${_mbMessageModel.userId}, '${_mbMessageModel.userName}', '${dataFactory.getDateString(_mbMessageModel.createDate)}', '${dataFactory.getDateString(_mbMessageModel.modifiedDate)}', ${_mbMessageModel.classNameId}, ${_mbMessageModel.classPK}, ${_mbMessageModel.categoryId}, ${_mbMessageModel.threadId}, ${_mbMessageModel.rootMessageId}, ${_mbMessageModel.parentMessageId}, '${_mbMessageModel.subject}', '${_mbMessageModel.body}', '${_mbMessageModel.format}', ${_mbMessageModel.anonymous?string}, ${_mbMessageModel.priority}, ${_mbMessageModel.allowPingbacks?string}, ${_mbMessageModel.answer?string}, ${_mbMessageModel.status}, ${_mbMessageModel.statusByUserId}, '${_mbMessageModel.statusByUserName}', '${dataFactory.getDateString(_mbMessageModel.statusDate)}');
 
 	<@insertAssetEntry
-		_entry = _mbMessage
+		_entry = _mbMessageModel
 	/>
 </#macro>
 
 <#macro insertPortletPreferences
-	_portletPreferences
+	_portletPreferencesModel
 >
-	insert into PortletPreferences values (${_portletPreferences.portletPreferencesId}, ${_portletPreferences.ownerId}, ${_portletPreferences.ownerType}, ${_portletPreferences.plid}, '${_portletPreferences.portletId}', '${_portletPreferences.preferences}');
+	insert into PortletPreferences values (${_portletPreferencesModel.portletPreferencesId}, ${_portletPreferencesModel.ownerId}, ${_portletPreferencesModel.ownerType}, ${_portletPreferencesModel.plid}, '${_portletPreferencesModel.portletId}', '${_portletPreferencesModel.preferences}');
 
 	<@insertResourcePermissions
-		_entry = _portletPreferences
+		_entry = _portletPreferencesModel
 	/>
 </#macro>
 
 <#macro insertResourcePermissions
 	_entry
 >
-	<#local resourcePermissions = dataFactory.newResourcePermissions(_entry)>
+	<#local resourcePermissionModels = dataFactory.newResourcePermissionModels(_entry)>
 
-	<#list resourcePermissions as resourcePermission>
-		insert into ResourcePermission values (${resourcePermission.resourcePermissionId}, ${resourcePermission.companyId}, '${resourcePermission.name}', ${resourcePermission.scope}, '${resourcePermission.primKey}', ${resourcePermission.roleId}, ${resourcePermission.ownerId}, ${resourcePermission.actionIds});
+	<#list resourcePermissionModels as resourcePermissionModel>
+		insert into ResourcePermission values (${resourcePermissionModel.resourcePermissionId}, ${resourcePermissionModel.companyId}, '${resourcePermissionModel.name}', ${resourcePermissionModel.scope}, '${resourcePermissionModel.primKey}', ${resourcePermissionModel.roleId}, ${resourcePermissionModel.ownerId}, ${resourcePermissionModel.actionIds});
 	</#list>
 </#macro>
 
 <#macro insertSocialActivity
 	_entry
 >
-	<#local socialActivity = dataFactory.newSocialActivity(_entry)>
+	<#local socialActivityModel = dataFactory.newSocialActivityModel(_entry)>
 
-	insert into SocialActivity values (${socialActivity.activityId}, ${socialActivity.groupId}, ${socialActivity.companyId}, ${socialActivity.userId}, ${socialActivity.createDate}, ${socialActivity.activitySetId}, ${socialActivity.mirrorActivityId}, ${socialActivity.classNameId}, ${socialActivity.classPK}, ${socialActivity.parentClassNameId}, ${socialActivity.parentClassPK}, ${socialActivity.type}, '${socialActivity.extraData}', ${socialActivity.receiverUserId});
+	insert into SocialActivity values (${socialActivityModel.activityId}, ${socialActivityModel.groupId}, ${socialActivityModel.companyId}, ${socialActivityModel.userId}, ${socialActivityModel.createDate}, ${socialActivityModel.activitySetId}, ${socialActivityModel.mirrorActivityId}, ${socialActivityModel.classNameId}, ${socialActivityModel.classPK}, ${socialActivityModel.parentClassNameId}, ${socialActivityModel.parentClassPK}, ${socialActivityModel.type}, '${socialActivityModel.extraData}', ${socialActivityModel.receiverUserId});
 </#macro>
 
 <#macro insertSubscription
 	_entry
 >
-	<#local subscription = dataFactory.newSubscription(_entry)>
+	<#local subscriptionModel = dataFactory.newSubscriptionModel(_entry)>
 
-	insert into Subscription values (${subscription.subscriptionId}, ${subscription.companyId}, ${subscription.userId}, '${subscription.userName}', '${dataFactory.getDateString(subscription.createDate)}', '${dataFactory.getDateString(subscription.modifiedDate)}', '${subscription.classNameId}', ${subscription.classPK}, '${subscription.frequency}');
+	insert into Subscription values (${subscriptionModel.subscriptionId}, ${subscriptionModel.companyId}, ${subscriptionModel.userId}, '${subscriptionModel.userName}', '${dataFactory.getDateString(subscriptionModel.createDate)}', '${dataFactory.getDateString(subscriptionModel.modifiedDate)}', '${subscriptionModel.classNameId}', ${subscriptionModel.classPK}, '${subscriptionModel.frequency}');
 </#macro>
 
 <#macro insertUser
-	_user
+	_userModel
 	_groupIds = []
 	_roleIds = []
 >
-	insert into User_ values ('${_user.uuid}', ${_user.userId}, ${_user.companyId}, '${dataFactory.getDateString(_user.createDate)}', '${dataFactory.getDateString(_user.modifiedDate)}', ${_user.defaultUser?string}, ${_user.contactId}, '${_user.password}', ${_user.passwordEncrypted?string}, ${_user.passwordReset?string}, '${dataFactory.getDateString(_user.passwordModifiedDate)}', '${_user.digest}', '${_user.reminderQueryQuestion}', '${_user.reminderQueryAnswer}', ${_user.graceLoginCount}, '${_user.screenName}', '${_user.emailAddress}', ${_user.facebookId}, ${_user.ldapServerId}, '${_user.openId}', ${_user.portraitId}, '${_user.languageId}', '${_user.timeZoneId}', '${_user.greeting}', '${_user.comments}', '${_user.firstName}', '${_user.middleName}', '${_user.lastName}', '${_user.jobTitle}', '${dataFactory.getDateString(_user.loginDate)}', '${_user.loginIP}', '${dataFactory.getDateString(_user.lastLoginDate)}', '${_user.lastLoginIP}', '${dataFactory.getDateString(_user.lastFailedLoginDate)}', ${_user.failedLoginAttempts}, ${_user.lockout?string}, '${dataFactory.getDateString(_user.lockoutDate)}', ${_user.agreedToTermsOfUse?string}, ${_user.emailAddressVerified?string}, '${_user.status}');
+	insert into User_ values ('${_userModel.uuid}', ${_userModel.userId}, ${_userModel.companyId}, '${dataFactory.getDateString(_userModel.createDate)}', '${dataFactory.getDateString(_userModel.modifiedDate)}', ${_userModel.defaultUser?string}, ${_userModel.contactId}, '${_userModel.password}', ${_userModel.passwordEncrypted?string}, ${_userModel.passwordReset?string}, '${dataFactory.getDateString(_userModel.passwordModifiedDate)}', '${_userModel.digest}', '${_userModel.reminderQueryQuestion}', '${_userModel.reminderQueryAnswer}', ${_userModel.graceLoginCount}, '${_userModel.screenName}', '${_userModel.emailAddress}', ${_userModel.facebookId}, ${_userModel.ldapServerId}, '${_userModel.openId}', ${_userModel.portraitId}, '${_userModel.languageId}', '${_userModel.timeZoneId}', '${_userModel.greeting}', '${_userModel.comments}', '${_userModel.firstName}', '${_userModel.middleName}', '${_userModel.lastName}', '${_userModel.jobTitle}', '${dataFactory.getDateString(_userModel.loginDate)}', '${_userModel.loginIP}', '${dataFactory.getDateString(_userModel.lastLoginDate)}', '${_userModel.lastLoginIP}', '${dataFactory.getDateString(_userModel.lastFailedLoginDate)}', ${_userModel.failedLoginAttempts}, ${_userModel.lockout?string}, '${dataFactory.getDateString(_userModel.lockoutDate)}', ${_userModel.agreedToTermsOfUse?string}, ${_userModel.emailAddressVerified?string}, '${_userModel.status}');
 
-	<#local contact = dataFactory.newContact(_user)>
+	<#local contactModel = dataFactory.newContactModel(_userModel)>
 
-	insert into Contact_ values (${contact.contactId}, ${contact.companyId}, ${contact.userId}, '${contact.userName}', '${dataFactory.getDateString(contact.createDate)}', '${dataFactory.getDateString(contact.modifiedDate)}', ${contact.classNameId}, ${contact.classPK}, ${contact.accountId}, ${contact.parentContactId}, '${contact.emailAddress}', '${contact.firstName}', '${contact.middleName}', '${contact.lastName}', ${contact.prefixId}, ${contact.suffixId}, ${contact.male?string}, '${dataFactory.getDateString(contact.birthday)}', '${contact.smsSn}', '${contact.aimSn}', '${contact.facebookSn}', '${contact.icqSn}', '${contact.jabberSn}', '${contact.msnSn}', '${contact.mySpaceSn}', '${contact.skypeSn}', '${contact.twitterSn}', '${contact.ymSn}', '${contact.employeeStatusId}', '${contact.employeeNumber}', '${contact.jobTitle}', '${contact.jobClass}', '${contact.hoursOfOperation}');
+	insert into Contact_ values (${contactModel.contactId}, ${contactModel.companyId}, ${contactModel.userId}, '${contactModel.userName}', '${dataFactory.getDateString(contactModel.createDate)}', '${dataFactory.getDateString(contactModel.modifiedDate)}', ${contactModel.classNameId}, ${contactModel.classPK}, ${contactModel.accountId}, ${contactModel.parentContactId}, '${contactModel.emailAddress}', '${contactModel.firstName}', '${contactModel.middleName}', '${contactModel.lastName}', ${contactModel.prefixId}, ${contactModel.suffixId}, ${contactModel.male?string}, '${dataFactory.getDateString(contactModel.birthday)}', '${contactModel.smsSn}', '${contactModel.aimSn}', '${contactModel.facebookSn}', '${contactModel.icqSn}', '${contactModel.jabberSn}', '${contactModel.msnSn}', '${contactModel.mySpaceSn}', '${contactModel.skypeSn}', '${contactModel.twitterSn}', '${contactModel.ymSn}', '${contactModel.employeeStatusId}', '${contactModel.employeeNumber}', '${contactModel.jobTitle}', '${contactModel.jobClass}', '${contactModel.hoursOfOperation}');
 
 	<#list _roleIds as roleId>
-		insert into Users_Roles values (${roleId}, ${_user.userId});
+		insert into Users_Roles values (${roleId}, ${_userModel.userId});
 	</#list>
 
 	<#list _groupIds as groupId>
-		insert into Users_Groups values (${groupId}, ${_user.userId});
+		insert into Users_Groups values (${groupId}, ${_userModel.userId});
 	</#list>
 </#macro>

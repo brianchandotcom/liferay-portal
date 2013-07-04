@@ -1,61 +1,61 @@
 <#-- Default user -->
 
 <@insertUser
-	_user = dataFactory.defaultUser
+	_userModel = dataFactory.defaultUserModel
 />
 
 <#-- Guest user -->
 
-<#assign user = dataFactory.guestUser>
+<#assign userModel = dataFactory.guestUserModel>
 
 <@insertGroup
-	_group = dataFactory.newGroup(user)
+	_groupModel = dataFactory.newGroupModel(userModel)
 	_publicPageCount = 0
 />
 
-<#assign groupIds = [dataFactory.guestGroup.groupId]>
-<#assign roleIds = [dataFactory.administratorRole.roleId]>
+<#assign groupIds = [dataFactory.guestGroupModel.groupId]>
+<#assign roleIds = [dataFactory.administratorRoleModel.roleId]>
 
 <@insertUser
 	_groupIds = groupIds
 	_roleIds = roleIds
-	_user = user
+	_userModel = userModel
 />
 
 <#-- Sample user -->
 
-<#assign user = dataFactory.sampleUser>
+<#assign userModel = dataFactory.sampleUserModel>
 
-<#assign sampleUserId = user.userId>
+<#assign sampleUserId = userModel.userId>
 
-<#assign userGroup = dataFactory.newGroup(user)>
+<#assign userGroupModel = dataFactory.newGroupModel(userModel)>
 
-<#assign layout = dataFactory.newLayout(userGroup.groupId, "home", "", "33,")>
+<#assign layoutModel = dataFactory.newLayoutModel(userGroupModel.groupId, "home", "", "33,")>
 
 <@insertLayout
-	_layout = layout
+	_layoutModel = layoutModel
 />
 
 <@insertGroup
-	_group = userGroup
+	_groupModel = userGroupModel
 	_publicPageCount = 1
 />
 
 <#assign groupIds = 1..maxGroupCount>
-<#assign roleIds = [dataFactory.administratorRole.roleId, dataFactory.powerUserRole.roleId, dataFactory.userRole.roleId]>
+<#assign roleIds = [dataFactory.administratorRoleModel.roleId, dataFactory.powerUserRoleModel.roleId, dataFactory.userRoleModel.roleId]>
 
 <@insertUser
 	_groupIds = groupIds
 	_roleIds = roleIds
-	_user = user
+	_userModel = userModel
 />
 
 <#list groupIds as groupId>
-	<#assign blogsStatsUser = dataFactory.newBlogsStatsUser(groupId)>
+	<#assign blogsStatsUserModel = dataFactory.newBlogsStatsUserModel(groupId)>
 
-	insert into BlogsStatsUser values (${blogsStatsUser.statsUserId}, ${blogsStatsUser.groupId}, ${blogsStatsUser.companyId}, ${blogsStatsUser.userId}, ${blogsStatsUser.entryCount}, '${dataFactory.getDateString(blogsStatsUser.lastPostDate)}', ${blogsStatsUser.ratingsTotalEntries}, ${blogsStatsUser.ratingsTotalScore}, ${blogsStatsUser.ratingsAverageScore});
+	insert into BlogsStatsUser values (${blogsStatsUserModel.statsUserId}, ${blogsStatsUserModel.groupId}, ${blogsStatsUserModel.companyId}, ${blogsStatsUserModel.userId}, ${blogsStatsUserModel.entryCount}, '${dataFactory.getDateString(blogsStatsUserModel.lastPostDate)}', ${blogsStatsUserModel.ratingsTotalEntries}, ${blogsStatsUserModel.ratingsTotalScore}, ${blogsStatsUserModel.ratingsAverageScore});
 
-	<#assign mbStatsUser = dataFactory.newMBStatsUser(groupId)>
+	<#assign mbStatsUserModel = dataFactory.newMBStatsUserModel(groupId)>
 
-	insert into MBStatsUser values (${mbStatsUser.statsUserId}, ${mbStatsUser.groupId}, ${mbStatsUser.userId}, ${mbStatsUser.messageCount}, '${dataFactory.getDateString(mbStatsUser.lastPostDate)}');
+	insert into MBStatsUser values (${mbStatsUserModel.statsUserId}, ${mbStatsUserModel.groupId}, ${mbStatsUserModel.userId}, ${mbStatsUserModel.messageCount}, '${dataFactory.getDateString(mbStatsUserModel.lastPostDate)}');
 </#list>

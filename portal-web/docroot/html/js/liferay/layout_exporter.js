@@ -110,8 +110,7 @@
 				{
 					dialog: {
 						constrain: true,
-						modal: true,
-						width: 600
+						modal: true
 					},
 					title: options.title,
 					uri: options.url

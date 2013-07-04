@@ -209,7 +209,7 @@ Map<String, TemplateVariableGroup> templateVariableGroups = TemplateContextHelpe
 								foundVisibleSection = true;
 							}
 
-							item.toggleClass('hide', visibleItem);
+							item.toggleClass('hide', !visibleItem);
 						}
 					);
 

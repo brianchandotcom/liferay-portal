@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -701,6 +702,17 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 			public void setParentContainerModelId(long parentContainerModelId) {
 			}
 		</#if>
+	</#if>
+
+	<#if entity.isStagedModel()>
+		@Override
+		public StagedModelType getStagedModelType() {
+			<#if entity.isTypedModel()>
+				return new StagedModelType(PortalUtil.getClassNameId(${entity.name}.class.getName()), getClassNameId());
+			<#else>
+				return new StagedModelType(PortalUtil.getClassNameId(${entity.name}.class.getName()));
+			</#if>
+		}
 	</#if>
 
 	<#if entity.isWorkflowEnabled()>

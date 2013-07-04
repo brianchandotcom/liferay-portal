@@ -66,6 +66,11 @@ public interface ExportImportHelper {
 			FileEntry fileEntry)
 		throws Exception;
 
+	public long getModelDeletionCount(
+			final PortletDataContext portletDataContext,
+			final StagedModelType stagedModelType)
+		throws PortalException, SystemException;
+
 	public FileEntry getTempFileEntry(
 			long groupId, long userId, String folderName)
 		throws PortalException, SystemException;

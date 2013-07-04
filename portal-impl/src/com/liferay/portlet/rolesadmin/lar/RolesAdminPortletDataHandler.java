@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.lar.DataLevel;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.Team;
@@ -47,9 +48,8 @@ public class RolesAdminPortletDataHandler extends BasePortletDataHandler {
 	public static final String NAMESPACE = "roles_admin";
 
 	public RolesAdminPortletDataHandler() {
-		super();
-
 		setDataLevel(DataLevel.PORTAL);
+		setDeletionSystemEventModelTypes(new StagedModelType(Role.class));
 		setExportControls(
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "system-roles", true, false));

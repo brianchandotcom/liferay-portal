@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.lar.DataLevel;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.OrganizationConstants;
@@ -40,10 +41,9 @@ public class UsersAdminPortletDataHandler extends BasePortletDataHandler {
 	public static final String NAMESPACE = "users_admin";
 
 	public UsersAdminPortletDataHandler() {
-		super();
-
 		setDataLevel(DataLevel.PORTAL);
-
+		setDeletionSystemEventModelTypes(
+			new StagedModelType(Organization.class));
 		setExportControls(
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "organizations", true, true));

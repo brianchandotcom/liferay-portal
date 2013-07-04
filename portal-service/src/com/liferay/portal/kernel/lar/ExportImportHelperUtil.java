@@ -95,6 +95,15 @@ public class ExportImportHelperUtil {
 			userId, groupId, parameterMap, fileEntry);
 	}
 
+	public static long getModelDeletionCount(
+			final PortletDataContext portletDataContext,
+			final StagedModelType stagedModelType)
+		throws PortalException, SystemException {
+
+		return getExportImportHelper().getModelDeletionCount(
+			portletDataContext, stagedModelType);
+	}
+
 	public static FileEntry getTempFileEntry(
 			long groupId, long userId, String folderName)
 		throws PortalException, SystemException {

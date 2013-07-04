@@ -1673,16 +1673,6 @@ AUI.add(
 						return instance.fieldContainer;
 					},
 
-					getFieldElementContainer: function() {
-						var instance = this;
-
-						if (!instance.fieldElementContainer) {
-							instance.fieldElementContainer = instance.getFieldContainer().one('div.journal-article-component-container');
-						}
-
-						return instance.fieldElementContainer;
-					},
-
 					getFieldInstance: function() {
 						var instance = this;
 

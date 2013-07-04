@@ -37,7 +37,6 @@ String structureId = BeanParamUtil.getString(article, request, "structureId");
 long ddmStructureGroupId = groupId;
 String ddmStructureName = LanguageUtil.get(pageContext, "default");
 String ddmStructureDescription = StringPool.BLANK;
-String ddmStructureXSD = StringPool.BLANK;
 
 DDMStructure ddmStructure = (DDMStructure)request.getAttribute("edit_article.jsp-structure");
 
@@ -47,7 +46,6 @@ if (ddmStructure != null) {
 	ddmStructureGroupId = ddmStructure.getGroupId();
 	ddmStructureName = ddmStructure.getName(locale);
 	ddmStructureDescription = ddmStructure.getDescription(locale);
-	ddmStructureXSD = ddmStructure.getXsd();
 }
 
 List<DDMTemplate> ddmTemplates = new ArrayList<DDMTemplate>();
@@ -711,6 +709,47 @@ if (Validator.isNotNull(content)) {
 </aui:script>
 
 <aui:script use="aui-base,aui-dialog-iframe-deprecated,liferay-portlet-journal">
+	var changeLink = A.one('#<portlet:namespace />changeLanguageId');
+	var languageSelector = A.one('#<portlet:namespace />defaultLocale');
+	var textLanguageId = A.one('#<portlet:namespace />textLanguageId');
+
+	if (changeLink) {
+		changeLink.on(
+			'click',
+			function(event) {
+				if (confirm('<%= UnicodeLanguageUtil.get(pageContext, "changing-the-default-language-will-delete-all-unsaved-content") %>')) {
+					languageSelector.show();
+					languageSelector.focus();
+
+					changeLink.hide();
+					textLanguageId.hide();
+				}
+			}
+		);
+	}
+
+	Liferay.Portlet.Journal.PROXY = {};
+	Liferay.Portlet.Journal.PROXY.instanceIdKey = '<%= instanceIdKey %>';
+	Liferay.Portlet.Journal.PROXY.pathThemeCss = '<%= HttpUtil.encodeURL(themeDisplay.getPathThemeCss()) %>';
+	Liferay.Portlet.Journal.PROXY.portletNamespace = '<portlet:namespace />';
+
+	window.<portlet:namespace />journalPortlet = new Liferay.Portlet.Journal(Liferay.Portlet.Journal.PROXY.portletNamespace, '<%= (article != null) ? HtmlUtil.escape(articleId) : StringPool.BLANK %>');
+
+	var defaultLocaleSelector = A.one('#<portlet:namespace/>defaultLocale');
+
+	if (defaultLocaleSelector) {
+		defaultLocaleSelector.on(
+			'change',
+			function(event) {
+				var defaultLanguageId = defaultLocaleSelector.get('value');
+
+				var url = '<%= updateDefaultLanguageURL %>' + '&<portlet:namespace />defaultLanguageId=' + defaultLanguageId;
+
+				window.location.href = url;
+			}
+		);
+	}
+
 	var editDDMTemplate = A.one('#<portlet:namespace />editDDMTemplate');
 
 	if (editDDMTemplate) {
@@ -788,66 +827,6 @@ if (Validator.isNotNull(content)) {
 				}
 			);
 		}
-	}
-
-	<%
-	String doAsUserId = themeDisplay.getDoAsUserId();
-
-	if (Validator.isNull(doAsUserId)) {
-		doAsUserId = Encryptor.encrypt(company.getKeyObj(), String.valueOf(themeDisplay.getUserId()));
-	}
-	%>
-
-	<portlet:resourceURL var="editorURL">
-		<portlet:param name="editorImpl" value="<%= EDITOR_WYSIWYG_IMPL_KEY %>" />
-		<portlet:param name="name" value="LIFERAY_NAME" />
-		<portlet:param name="skipEditorLoading" value="LIFERAY_SKIP_EDITOR" />
-		<portlet:param name="struts_action" value="/journal/edit_article" />
-		<portlet:param name="toolbarSet" value="liferay-article" />
-	</portlet:resourceURL>
-
-	Liferay.Portlet.Journal.PROXY = {};
-	Liferay.Portlet.Journal.PROXY.doAsUserId = '<%= HttpUtil.encodeURL(doAsUserId) %>';
-	Liferay.Portlet.Journal.PROXY.editorImpl = '<%= EditorUtil.getEditorValue(request, EDITOR_WYSIWYG_IMPL_KEY) %>';
-	Liferay.Portlet.Journal.PROXY.editorURL = '<%= HtmlUtil.escapeJS(editorURL) %>';
-	Liferay.Portlet.Journal.PROXY.instanceIdKey = '<%= instanceIdKey %>';
-	Liferay.Portlet.Journal.PROXY.pathThemeCss = '<%= HttpUtil.encodeURL(themeDisplay.getPathThemeCss()) %>';
-	Liferay.Portlet.Journal.PROXY.portletNamespace = '<portlet:namespace />';
-
-	window.<portlet:namespace />journalPortlet = new Liferay.Portlet.Journal(Liferay.Portlet.Journal.PROXY.portletNamespace, '<%= (article != null) ? HtmlUtil.escape(articleId) : StringPool.BLANK %>');
-
-	var defaultLocaleSelector = A.one('#<portlet:namespace/>defaultLocale');
-
-	if (defaultLocaleSelector) {
-		defaultLocaleSelector.on(
-			'change',
-			function(event) {
-				var defaultLanguageId = defaultLocaleSelector.get('value');
-
-				var url = '<%= updateDefaultLanguageURL %>' + '&<portlet:namespace />defaultLanguageId=' + defaultLanguageId;
-
-				window.location.href = url;
-			}
-		);
-	}
-
-	var changeLink = A.one('#<portlet:namespace />changeLanguageId');
-	var languageSelector = A.one('#<portlet:namespace />defaultLocale');
-	var textLanguageId = A.one('#<portlet:namespace />textLanguageId');
-
-	if (changeLink) {
-		changeLink.on(
-			'click',
-			function(event) {
-				if (confirm('<%= UnicodeLanguageUtil.get(pageContext, "changing-the-default-language-will-delete-all-unsaved-content") %>')) {
-					languageSelector.show();
-					languageSelector.focus();
-
-					changeLink.hide();
-					textLanguageId.hide();
-				}
-			}
-		);
 	}
 </aui:script>
 

@@ -16,6 +16,9 @@ package com.liferay.portal.kernel.staging;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.lar.MissingReference;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
@@ -29,6 +32,7 @@ import com.liferay.portal.service.ServiceContext;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.portlet.PortletRequest;
@@ -174,6 +178,19 @@ public class StagingUtil {
 			remoteGroupId, serviceContext);
 	}
 
+	public static JSONArray getErrorMessagesJSONArray(
+		Locale locale, Map<String, MissingReference> missingReferences) {
+
+		return getStaging().getErrorMessagesJSONArray(
+			locale, missingReferences);
+	}
+
+	public static JSONObject getExceptionMessagesJSONArray(
+		Locale locale, Exception e) {
+
+		return getStaging().getExceptionMessagesJSONArray(locale, e);
+	}
+
 	public static Group getLiveGroup(long groupId)
 		throws PortalException, SystemException {
 
@@ -245,6 +262,13 @@ public class StagingUtil {
 		PortletRequest PortletRequest) {
 
 		return getStaging().getStagingParameters(PortletRequest);
+	}
+
+	public static JSONArray getWarningMessagesJSONArray(
+		Locale locale, Map<String, MissingReference> missingReferences) {
+
+		return getStaging().getWarningMessagesJSONArray(
+			locale, missingReferences);
 	}
 
 	public static WorkflowTask getWorkflowTask(

@@ -59,7 +59,6 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -110,6 +109,7 @@ import com.liferay.portal.service.http.LayoutServiceHttp;
 import com.liferay.portal.service.permission.GroupPermissionUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.SessionClicks;
 import com.liferay.portal.util.WebKeys;
@@ -672,7 +672,7 @@ public class StagingImpl implements Staging {
 
 	@Override
 	public JSONArray getErrorMessagesJSONArray(
-		ThemeDisplay themeDisplay, Map<String, MissingReference> missingReferences) {
+		Locale locale, Map<String, MissingReference> missingReferences) {
 
 		JSONArray errorMessagesJSONArray = JSONFactoryUtil.createJSONArray();
 
@@ -699,43 +699,42 @@ public class StagingImpl implements Staging {
 
 				if (referrerClasName.equals(Portlet.class.getName())) {
 					referrerDisplayName = PortalUtil.getPortletTitle(
-						referrerDisplayName, themeDisplay.getLocale());
+						referrerDisplayName, locale);
 				}
 
 				errorMessageJSONObject.put(
 					"info",
-					themeDisplay.translate(
-						"referenced-by-a-x-x",
+					LanguageUtil.format(
+						locale, "referenced-by-a-x-x",
 						new String[] {
 							ResourceActionsUtil.getModelResource(
-								themeDisplay.getLocale(),
-								referrerClasName), referrerDisplayName
+								locale, referrerClasName),
+							referrerDisplayName
 						}
 					));
 			}
 			else {
 				errorMessageJSONObject.put(
 					"info",
-					themeDisplay.translate(
-						"referenced-by-x-elements", referrers.size()));
+					LanguageUtil.format(
+						locale, "referenced-by-x-elements", referrers.size()));
 			}
 
 			errorMessageJSONObject.put("name", missingReferenceDisplayName);
 			errorMessageJSONObject.put(
 				"type",
 				ResourceActionsUtil.getModelResource(
-					themeDisplay.getLocale(), missingReference.getClassName()));
+					locale, missingReference.getClassName()));
 
 			errorMessagesJSONArray.put(errorMessageJSONObject);
 		}
 
 		return errorMessagesJSONArray;
-
 	}
 
 	@Override
 	public JSONObject getExceptionMessagesJSONArray(
-		ThemeDisplay themeDisplay, Exception e) {
+		Locale locale, Exception e) {
 
 		String errorMessage = StringPool.BLANK;
 		JSONArray errorMessagesJSONArray = null;
@@ -755,13 +754,14 @@ public class StagingImpl implements Staging {
 			e instanceof PortletIdException) {
 
 			if (e instanceof DuplicateFileException) {
-				errorMessage = themeDisplay.translate(
-					"please-enter-a-unique-document-name");
+				errorMessage = LanguageUtil.get(
+					locale, "please-enter-a-unique-document-name");
 				errorType =
 					ServletResponseConstants.SC_DUPLICATE_FILE_EXCEPTION;
 			}
 			else if (e instanceof FileExtensionException) {
-				errorMessage = themeDisplay.translate(
+				errorMessage = LanguageUtil.format(
+					locale,
 					"document-names-must-end-with-one-of-the-following-" +
 						"extensions",
 					".lar");
@@ -769,41 +769,47 @@ public class StagingImpl implements Staging {
 					ServletResponseConstants.SC_FILE_EXTENSION_EXCEPTION;
 			}
 			else if (e instanceof FileNameException) {
-				errorMessage = themeDisplay.translate(
-					"please-enter-a-file-with-a-valid-file-name");
+				errorMessage = LanguageUtil.get(
+					locale, "please-enter-a-file-with-a-valid-file-name");
 				errorType = ServletResponseConstants.SC_FILE_NAME_EXCEPTION;
 			}
 			else if (e instanceof FileSizeException ||
 					 e instanceof LARFileSizeException) {
 
-				long fileMaxSize = PrefsPropsUtil.getLong(
-					PropsKeys.DL_FILE_MAX_SIZE);
+				long fileMaxSize = PropsValues.DL_FILE_MAX_SIZE;
 
-				if (fileMaxSize == 0) {
+				try {
 					fileMaxSize = PrefsPropsUtil.getLong(
-						PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE);
+						PropsKeys.DL_FILE_MAX_SIZE);
+
+					if (fileMaxSize == 0) {
+						fileMaxSize = PrefsPropsUtil.getLong(
+							PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE);
+					}
+				}
+				catch (Exception ex) {
 				}
 
-				fileMaxSize /= 1024;
-
-				errorMessage = themeDisplay.translate(
+				errorMessage = LanguageUtil.format(
+					locale,
 					"please-enter-a-file-with-a-valid-file-size-no-larger-" +
 						"than-x",
-					fileMaxSize);
+					fileMaxSize/1024);
 				errorType = ServletResponseConstants.SC_FILE_SIZE_EXCEPTION;
 			}
 			else if (e instanceof LARTypeException) {
 				LARTypeException lte = (LARTypeException)e;
 
-				errorMessage = themeDisplay.translate(
+				errorMessage = LanguageUtil.format(
+					locale,
 					"please-import-a-lar-file-of-the-correct-type-x-is-not-" +
 						"valid",
 					lte.getMessage());
 				errorType = ServletResponseConstants.SC_FILE_CUSTOM_EXCEPTION;
 			}
 			else if (e instanceof LARFileException) {
-				errorMessage = themeDisplay.translate(
-					"please-specify-a-lar-file-to-import");
+				errorMessage = LanguageUtil.get(
+					locale, "please-specify-a-lar-file-to-import");
 				errorType = ServletResponseConstants.SC_FILE_CUSTOM_EXCEPTION;
 			}
 			else if (e instanceof LayoutPrototypeException) {
@@ -816,7 +822,7 @@ public class StagingImpl implements Staging {
 				sb.append("could-not-be-found.-please-import-the-following-");
 				sb.append("templates-manually");
 
-				errorMessage = themeDisplay.translate(sb.toString());
+				errorMessage = LanguageUtil.get(locale, sb.toString());
 
 				errorMessagesJSONArray = JSONFactoryUtil.createJSONArray();
 
@@ -843,8 +849,7 @@ public class StagingImpl implements Staging {
 					errorMessageJSONObject.put(
 						"type",
 						ResourceActionsUtil.getModelResource(
-							themeDisplay.getLocale(),
-							layoutPrototypeClassName));
+							locale, layoutPrototypeClassName));
 
 					errorMessagesJSONArray.put(errorMessageJSONObject);
 				}
@@ -854,7 +859,8 @@ public class StagingImpl implements Staging {
 			else if (e instanceof LocaleException) {
 				LocaleException le = (LocaleException)e;
 
-				errorMessage = themeDisplay.translate(
+				errorMessage = LanguageUtil.format(
+					locale,
 					"the-available-languages-in-the-lar-file-x-do-not-match-" +
 						"the-portal's-available-languages-x",
 					new String[] {
@@ -870,24 +876,24 @@ public class StagingImpl implements Staging {
 			else if (e instanceof MissingReferenceException) {
 				MissingReferenceException mre = (MissingReferenceException)e;
 
-				errorMessage = themeDisplay.translate(
+				errorMessage = LanguageUtil.get(
+					locale,
 					"there-are-missing-references-that-could-not-be-found-" +
 						"in-the-current-site.-please-import-another-lar-file-" +
-							"containing-the-following-elements");
+						"containing-the-following-elements");
 
 				MissingReferences missingReferences =
 					mre.getMissingReferences();
 
 				errorMessagesJSONArray = getErrorMessagesJSONArray(
-					themeDisplay,
-					missingReferences.getDependencyMissingReferences());
+					locale, missingReferences.getDependencyMissingReferences());
 				errorType = ServletResponseConstants.SC_FILE_CUSTOM_EXCEPTION;
 				warningMessagesJSONArray = getWarningMessagesJSONArray(
-					themeDisplay, missingReferences.getWeakMissingReferences());
+					locale, missingReferences.getWeakMissingReferences());
 			}
 			else if (e instanceof PortletIdException) {
-				errorMessage = themeDisplay.translate(
-					"please-import-a-lar-file-for-the-current-portlet");
+				errorMessage = LanguageUtil.get(
+					locale, "please-import-a-lar-file-for-the-current-portlet");
 				errorType = ServletResponseConstants.SC_FILE_CUSTOM_EXCEPTION;
 			}
 		}
@@ -1221,8 +1227,7 @@ public class StagingImpl implements Staging {
 
 	@Override
 	public JSONArray getWarningMessagesJSONArray(
-		ThemeDisplay themeDisplay,
-		Map<String, MissingReference> missingReferences) {
+		Locale locale, Map<String, MissingReference> missingReferences) {
 
 		JSONArray warningMessagesJSONArray = JSONFactoryUtil.createJSONArray();
 
@@ -1240,20 +1245,19 @@ public class StagingImpl implements Staging {
 			if (Validator.isNotNull(missingReference.getClassName())) {
 				errorMessageJSONObject.put(
 					"info",
-					themeDisplay.translate(
+					LanguageUtil.format(
+						locale,
 						"the-original-x-does-not-exist-in-the-current" +
 							"-environment",
 						ResourceActionsUtil.getModelResource(
-							themeDisplay.getLocale(),
-							missingReference.getClassName())));
+							locale, missingReference.getClassName())));
 			}
 
 			errorMessageJSONObject.put("size", referrers.size());
 			errorMessageJSONObject.put(
 				"type",
 				ResourceActionsUtil.getModelResource(
-					themeDisplay.getLocale(),
-					missingReferenceReferrerClassName));
+					locale, missingReferenceReferrerClassName));
 
 			warningMessagesJSONArray.put(errorMessageJSONObject);
 		}

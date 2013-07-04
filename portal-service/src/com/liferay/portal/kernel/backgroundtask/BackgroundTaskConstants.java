@@ -42,7 +42,26 @@ public class BackgroundTaskConstants {
 
 	public static final int STATUS_SUCCESSFUL = 3;
 
-	public static String getStatusLabel(int status) {
+	public static String getStatusCssClass(int status) {
+		if (status == STATUS_FAILED) {
+			return "label-important";
+		}
+		else if (status == STATUS_IN_PROGRESS) {
+			return "label-warning";
+		}
+		else if ((status == BackgroundTaskConstants.STATUS_NEW) ||
+				 (status == BackgroundTaskConstants.STATUS_QUEUED)) {
+
+			return "label-info";
+		}
+		else if (status == STATUS_SUCCESSFUL) {
+			return "label-success";
+		}
+
+		return StringPool.BLANK;
+	}
+
+	public static String toLabel(int status) {
 		if (status == STATUS_FAILED) {
 			return LABEL_FAILED;
 		}

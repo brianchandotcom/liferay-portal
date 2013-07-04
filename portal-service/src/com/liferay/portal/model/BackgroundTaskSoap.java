@@ -21,9 +21,10 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * This class is used by SOAP remote services.
+ * This class is used by SOAP remote services, specifically {@link com.liferay.portal.service.http.BackgroundTaskServiceSoap}.
  *
  * @author Brian Wing Shun Chan
+ * @see com.liferay.portal.service.http.BackgroundTaskServiceSoap
  * @generated
  */
 public class BackgroundTaskSoap implements Serializable {

@@ -399,6 +399,11 @@ public class BackgroundTaskLocalServiceWrapper
 	}
 
 	@Override
+	public java.lang.String fetchBackgroundTaskStatus(long backgroundTaskId) {
+		return _backgroundTaskLocalService.fetchBackgroundTaskStatus(backgroundTaskId);
+	}
+
+	@Override
 	public void resumeBackgroundTask(long backgroundTaskId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_backgroundTaskLocalService.resumeBackgroundTask(backgroundTaskId);

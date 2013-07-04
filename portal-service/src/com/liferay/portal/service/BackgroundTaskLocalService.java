@@ -318,6 +318,9 @@ public interface BackgroundTaskLocalService extends BaseLocalService,
 		java.lang.String taskExecutorClassName)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.lang.String fetchBackgroundTaskStatus(long backgroundTaskId);
+
 	public void resumeBackgroundTask(long backgroundTaskId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 

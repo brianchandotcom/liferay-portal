@@ -18,6 +18,7 @@ import com.liferay.portal.editor.fckeditor.command.CommandArgument;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.servlet.ServletResponseConstants;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.xuggler.XugglerUtil;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -45,7 +46,8 @@ public class VideoCommandReceiver extends DocumentCommandReceiver {
 		InputStream inputStream, String contentType, long size) {
 
 		if (!XugglerUtil.isEnabled()) {
-			return "210";
+			return String.valueOf(
+				ServletResponseConstants.SC_VIDEO_PREVIEW_DISABLED_EXCEPTION);
 		}
 
 		return super.fileUpload(
@@ -62,10 +64,11 @@ public class VideoCommandReceiver extends DocumentCommandReceiver {
 
 		if (!VideoProcessorUtil.hasVideo(fileEntry.getFileVersion())) {
 			fileElement.setAttribute(
-					"errorMessage",
-					LanguageUtil.get(
-						themeDisplay.getLocale(),
-						"video-still-generating-try-later"));
+				"errorMessage",
+				LanguageUtil.get(
+					themeDisplay.getLocale(),
+					"video-preview-has-not-been-generated-yet-please-retry-" +
+						"later"));
 		}
 
 		return fileElement;

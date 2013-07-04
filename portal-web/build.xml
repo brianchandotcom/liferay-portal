@@ -778,8 +778,9 @@
 								alert( 'An internal server error occured.' );
 								break ;
 							case 210:
-								alert( 'You cannot upload a video file whithout enabling video preview generation.' );
+								alert( 'You cannot upload a video file if video preview generation is not enabled.' );
 								break ;
+
 							default :
 						]]>
 					</replacevalue>

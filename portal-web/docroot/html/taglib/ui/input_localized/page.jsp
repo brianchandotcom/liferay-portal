@@ -73,42 +73,21 @@ List<String> languageIds = new ArrayList<String>();
 %>
 
 <span class="input-localized input-localized-<%= type %>" id="<portlet:namespace /><%= id %>BoundingBox">
-
 	<c:choose>
-		<c:when test='<%= type.equals("input") %>'>
-			<input class="language-value <%= cssClass %>" dir="<%= mainLanguageDir %>" <%= disabled ? "disabled=\"disabled\"" : "" %> id="<portlet:namespace /><%= HtmlUtil.escapeAttribute(id + fieldSuffix) %>" name="<portlet:namespace /><%= HtmlUtil.escapeAttribute(name + fieldSuffix) %>" type="text" value="<%= HtmlUtil.escapeAttribute(mainLanguageValue) %>" <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %> />
-		</c:when>
-		<c:when test='<%= type.equals("textarea") %>'>
-			<textarea class="language-value <%= cssClass %>" dir="<%= mainLanguageDir %>" <%= disabled ? "disabled=\"disabled\"" : "" %> id="<portlet:namespace /><%= HtmlUtil.escapeAttribute(id + fieldSuffix) %>" name="<portlet:namespace /><%= HtmlUtil.escapeAttribute(name + fieldSuffix) %>" <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>><%= HtmlUtil.escape(mainLanguageValue) %></textarea>
-
-			<c:if test="<%= autoSize %>">
-				<aui:script use="aui-autosize-deprecated">
-					A.one('#<portlet:namespace /><%= HtmlUtil.escapeJS(id + fieldSuffix) %>').plug(A.Plugin.Autosize);
-				</aui:script>
-			</c:if>
-		</c:when>
 		<c:when test='<%= type.equals("editor") %>'>
+
 			<%
 			String fieldName = HtmlUtil.escapeAttribute(name + fieldSuffix);
-			String fieldId = HtmlUtil.escapeAttribute(id + fieldSuffix);
 			%>
 
 			<aui:script>
-				function <portlet:namespace /><%= fieldName  %>InitEditor() {
+				function <portlet:namespace /><%= fieldName %>InitEditor() {
 					return "<%= UnicodeFormatter.toString(HtmlUtil.escape(mainLanguageValue)) %>";
 				}
 
 				Liferay.provide(
 					window,
-					'<portlet:namespace /><%= fieldName  %>OnFocus',
-					function() {
-						Liferay.component('<portlet:namespace /><%= fieldName %>').focus();
-					}
-				);
-
-				Liferay.provide(
-					window,
-					'<portlet:namespace /><%= fieldName  %>OnBlur',
+					'<portlet:namespace /><%= fieldName %>OnBlurEditor',
 					function() {
 						Liferay.component('<portlet:namespace /><%= fieldName %>').blur();
 					}
@@ -116,12 +95,20 @@ List<String> languageIds = new ArrayList<String>();
 
 				Liferay.provide(
 					window,
-					'<portlet:namespace /><%= fieldName  %>ChangeEditor',
+					'<portlet:namespace /><%= fieldName %>OnChangeEditor',
 					function() {
 						var inputLocalized = Liferay.component('<portlet:namespace /><%= fieldName %>');
 						var editor = window.<portlet:namespace /><%= fieldName %>;
 
 						inputLocalized.updateInputLanguage(editor.getHTML());
+					}
+				);
+
+				Liferay.provide(
+					window,
+					'<portlet:namespace /><%= fieldName %>OnFocusEditor',
+					function() {
+						Liferay.component('<portlet:namespace /><%= fieldName %>').focus();
 					}
 				);
 			</aui:script>
@@ -135,8 +122,19 @@ List<String> languageIds = new ArrayList<String>();
 				)
 			</aui:script>
 
-			<liferay-ui:input-editor name="<%= fieldName %>" editorImpl="ckeditor" initMethod="<%= fieldName + \"InitEditor\" %>" onFocusMethod="<%= fieldName + \"OnFocus\" %>"  onBlurMethod="<%= fieldName + \"OnBlur\" %>"  onChangeMethod="<%= fieldName + \"ChangeEditor\" %>" cssClass="<%= \"language-value \" + cssClass %>" />
+			<liferay-ui:input-editor cssClass='<%= \"language-value \" + cssClass %>' editorImpl="ckeditor" initMethod='<%= fieldName + \"InitEditor\" %>' name="<%= fieldName %>" onBlurMethod='<%= fieldName + \"OnBlurEditor\" %>' onChangeMethod='<%= fieldName + \"OnChangeEditor\" %>' onFocusMethod='<%= fieldName + \"OnFocusEditor\" %>' />
+		</c:when>
+		<c:when test='<%= type.equals("input") %>'>
+			<input class="language-value <%= cssClass %>" dir="<%= mainLanguageDir %>" <%= disabled ? "disabled=\"disabled\"" : "" %> id="<portlet:namespace /><%= HtmlUtil.escapeAttribute(id + fieldSuffix) %>" name="<portlet:namespace /><%= HtmlUtil.escapeAttribute(name + fieldSuffix) %>" type="text" value="<%= HtmlUtil.escapeAttribute(mainLanguageValue) %>" <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %> />
+		</c:when>
+		<c:when test='<%= type.equals("textarea") %>'>
+			<textarea class="language-value <%= cssClass %>" dir="<%= mainLanguageDir %>" <%= disabled ? "disabled=\"disabled\"" : "" %> id="<portlet:namespace /><%= HtmlUtil.escapeAttribute(id + fieldSuffix) %>" name="<portlet:namespace /><%= HtmlUtil.escapeAttribute(name + fieldSuffix) %>" <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>><%= HtmlUtil.escape(mainLanguageValue) %></textarea>
 
+			<c:if test="<%= autoSize %>">
+				<aui:script use="aui-autosize-deprecated">
+					A.one('#<portlet:namespace /><%= HtmlUtil.escapeJS(id + fieldSuffix) %>').plug(A.Plugin.Autosize);
+				</aui:script>
+			</c:if>
 		</c:when>
 	</c:choose>
 
@@ -263,7 +261,7 @@ List<String> languageIds = new ArrayList<String>();
 				columns: 20,
 				contentBox: '#<portlet:namespace /><%= id %>ContentBox',
 				<c:if test='<%= type.equals("editor") %>'>
-					editor: '<portlet:namespace /><%= name + fieldSuffix %>',
+					editor: window.<portlet:namespace /><%= name + fieldSuffix %>,
 				</c:if>
 				inputNamespace: '<portlet:namespace /><%= id + StringPool.UNDERLINE %>',
 				inputPlaceholder: '#<portlet:namespace /><%= HtmlUtil.escapeJS(id + fieldSuffix) %>',

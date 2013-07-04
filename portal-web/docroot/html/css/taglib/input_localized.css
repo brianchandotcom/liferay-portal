@@ -13,10 +13,8 @@
 		margin-top: -8px;
 	}
 
-	&.input-localized-editor {
-		.input-localized-content {
-			margin-top: 0;
-		}
+	&.input-localized-editor .input-localized-content {
+		margin-top: 0;
 	}
 
 	.lfr-input-localized-default a {

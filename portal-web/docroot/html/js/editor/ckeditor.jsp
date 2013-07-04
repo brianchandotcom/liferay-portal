@@ -58,16 +58,16 @@ String initMethod = (String)request.getAttribute("liferay-ui:input-editor:initMe
 boolean inlineEdit = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-editor:inlineEdit"));
 String inlineEditSaveURL = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:inlineEditSaveURL"));
 
-String onChangeMethod = (String)request.getAttribute("liferay-ui:input-editor:onChangeMethod");
 String onBlurMethod = (String)request.getAttribute("liferay-ui:input-editor:onBlurMethod");
+String onChangeMethod = (String)request.getAttribute("liferay-ui:input-editor:onChangeMethod");
 String onFocusMethod = (String)request.getAttribute("liferay-ui:input-editor:onFocusMethod");
-
-if (Validator.isNotNull(onChangeMethod)) {
-	onChangeMethod = namespace + onChangeMethod;
-}
 
 if (Validator.isNotNull(onBlurMethod)) {
 	onBlurMethod = namespace + onBlurMethod;
+}
+
+if (Validator.isNotNull(onChangeMethod)) {
+	onChangeMethod = namespace + onChangeMethod;
 }
 
 if (Validator.isNotNull(onFocusMethod)) {
@@ -121,19 +121,6 @@ if (!inlineEdit) {
 	</liferay-util:html-top>
 </c:if>
 
-
-<%
-String textareaName = name;
-
-String modules = StringPool.BLANK;
-
-if (inlineEdit && (inlineEditSaveURL != null)) {
-	textareaName = name + "_original";
-
-	modules = "inline-editor-ckeditor";
-}
-%>
-
 <aui:script>
 	window['<%= name %>'] = {
 		destroy: function() {
@@ -165,6 +152,18 @@ if (inlineEdit && (inlineEditSaveURL != null)) {
 		},
 
 		<%
+		if (Validator.isNotNull(onBlurMethod)) {
+		%>
+
+			onBlurCallback: function() {
+				<%= HtmlUtil.escapeJS(onBlurMethod) %>(CKEDITOR.instances['<%= name %>']);
+			},
+
+		<%
+		}
+		%>
+
+		<%
 		if (Validator.isNotNull(onChangeMethod)) {
 		%>
 
@@ -177,18 +176,6 @@ if (inlineEdit && (inlineEditSaveURL != null)) {
 
 					ckEditor.resetDirty();
 				}
-			},
-
-		<%
-		}
-		%>
-
-		<%
-		if (Validator.isNotNull(onBlurMethod)) {
-		%>
-
-			onBlurCallback: function() {
-				<%= HtmlUtil.escapeJS(onBlurMethod) %>(CKEDITOR.instances['<%= name %>']);
 			},
 
 		<%
@@ -212,6 +199,18 @@ if (inlineEdit && (inlineEditSaveURL != null)) {
 		}
 	};
 </aui:script>
+
+<%
+String textareaName = name;
+
+String modules = StringPool.BLANK;
+
+if (inlineEdit && (inlineEditSaveURL != null)) {
+	textareaName = name + "_original";
+
+	modules = "inline-editor-ckeditor";
+}
+%>
 
 <div class="<%= cssClass %>">
 	<textarea id="<%= textareaName %>" name="<%= textareaName %>" style="display: none;"></textarea>
@@ -308,21 +307,31 @@ if (inlineEdit && (inlineEditSaveURL != null)) {
 			'instanceReady',
 			function() {
 
-			<c:choose>
-				<c:when test="<%= useCustomDataProcessor %>">
-					instanceReady = true;
+				<c:choose>
+					<c:when test="<%= useCustomDataProcessor %>">
+						instanceReady = true;
 
-					if (customDataProcessorLoaded) {
+						if (customDataProcessorLoaded) {
+							initData();
+						}
+					</c:when>
+					<c:otherwise>
 						initData();
-					}
-				</c:when>
-				<c:otherwise>
-					initData();
-				</c:otherwise>
-			</c:choose>
+					</c:otherwise>
+				</c:choose>
 
-			<%
-			if (Validator.isNotNull(onChangeMethod)) {
+				<%
+				if (Validator.isNotNull(onBlurMethod)) {
+				%>
+
+					CKEDITOR.instances['<%= name %>'].on('blur', window['<%= name %>'].onBlurCallback);
+
+				<%
+				}
+				%>
+
+				<%
+				if (Validator.isNotNull(onChangeMethod)) {
 				%>
 
 					setInterval(
@@ -341,17 +350,11 @@ if (inlineEdit && (inlineEditSaveURL != null)) {
 				%>
 
 				<%
-				if (Validator.isNotNull(onBlurMethod)) {
-				%>
-					CKEDITOR.instances['<%= name %>'].on('blur', window['<%= name %>'].onBlurCallback);
-				<%
-				}
-				%>
-
-				<%
 				if (Validator.isNotNull(onFocusMethod)) {
 				%>
+
 					CKEDITOR.instances['<%= name %>'].on('focus', window['<%= name %>'].onFocusCallback);
+
 				<%
 				}
 				%>

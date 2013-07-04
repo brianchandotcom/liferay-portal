@@ -14,8 +14,13 @@
 
 package com.liferay.portal.lar.backgroundtask;
 
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
 import com.liferay.portal.kernel.backgroundtask.BaseBackgroundTaskExecutor;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.lar.MissingReference;
+import com.liferay.portal.kernel.lar.MissingReferences;
 import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -64,6 +69,10 @@ public class LayoutStagingBackgroundTaskExecutor
 			sourceGroupId, privateLayout, layoutIds, parameterMap, startDate,
 			endDate);
 
+		MissingReferences missingReferences =
+			LayoutLocalServiceUtil.validateImportLayoutsFile(
+				userId, targetGroupId, privateLayout, parameterMap, larFile);
+
 		try {
 			LayoutLocalServiceUtil.importLayouts(
 				userId, targetGroupId, privateLayout, parameterMap, larFile);
@@ -74,7 +83,28 @@ public class LayoutStagingBackgroundTaskExecutor
 			StagingUtil.unlockGroup(targetGroupId);
 		}
 
-		return BackgroundTaskResult.SUCCESS;
+		BackgroundTaskResult result = new BackgroundTaskResult(
+			BackgroundTaskConstants.STATUS_SUCCESSFUL);
+
+		Map<String, MissingReference> weakMissingReferences =
+			missingReferences.getWeakMissingReferences();
+
+		if (weakMissingReferences != null) {
+			JSONArray jsonArray = StagingUtil.getWarningMessagesJSONArray(
+				getLocale(backgroundTask), weakMissingReferences);
+
+			result.setStatusMessage(jsonArray.toString());
+		}
+
+		return result;
+	}
+
+	@Override
+	public String handleException(BackgroundTask backgroundTask, Exception e) {
+		JSONObject jsonObject = StagingUtil.getExceptionMessagesJSONArray(
+			getLocale(backgroundTask), e);
+
+		return jsonObject.toString();
 	}
 
 }

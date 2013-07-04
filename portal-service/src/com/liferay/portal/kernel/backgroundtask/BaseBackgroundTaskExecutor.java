@@ -14,7 +14,15 @@
 
 package com.liferay.portal.kernel.backgroundtask;
 
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.model.BackgroundTask;
+import com.liferay.portal.model.User;
+import com.liferay.portal.service.UserLocalServiceUtil;
+
+import java.io.Serializable;
+
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * @author Michael C. Han
@@ -30,6 +38,25 @@ public abstract class BaseBackgroundTaskExecutor
 	@Override
 	public boolean isSerial() {
 		return _serial;
+	}
+
+	protected Locale getLocale(BackgroundTask backgroundTask) {
+		Map<String, Serializable> taskContextMap =
+			backgroundTask.getTaskContextMap();
+
+		long userId = MapUtil.getLong(taskContextMap, "userId");
+
+		if (userId <= 0) {
+			try {
+				User user = UserLocalServiceUtil.getUser(userId);
+
+				return user.getLocale();
+			}
+			catch (Exception e) {
+			}
+		}
+
+		return Locale.getDefault();
 	}
 
 	protected void setSerial(boolean serial) {

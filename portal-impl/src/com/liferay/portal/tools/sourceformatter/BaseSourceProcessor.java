@@ -275,6 +275,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		if (portalSource ||
 			!mainReleaseVersion.equals(MAIN_RELEASE_VERSION_6_1_0) ||
+			fileName.contains("/ext-") ||
 			fileName.contains("/portal-compat-shared/")) {
 
 			return content;

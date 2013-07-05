@@ -40,7 +40,7 @@
 		<execute action="PGMessageboards#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" />
 		<execute action="PGMessageboards#assertTextNotPresent" value1="${threadSubject}" />
 
-		<execute macro="RecycleBin#emptyRecycleBinCP" />
+		<execute macro="RecycleBin#emptyCP" />
 	</command>
 
 	<command name="editPG">
@@ -127,7 +127,7 @@
 			</then>
 		</if>
 
-		<execute macro="RecycleBin#emptyRecycleBinCP" />
+		<execute macro="RecycleBin#emptyCP" />
 	</command>
 
 	<command name="viewCP">
@@ -153,7 +153,7 @@
 		<execute action="CPMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_BODY_1" value1="${threadBody}" />
 	</command>
 
-	<command name="viewNoCP">
+	<command name="viewDefaultCP">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Message Boards" />
 		</execute>

@@ -36,7 +36,7 @@
 		<execute action="PGMessageboards#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" />
 		<execute action="PGMessageboards#assertTextNotPresent" value1="${categoryName}" />
 
-		<execute macro="RecycleBin#emptyRecycleBinCP" />
+		<execute macro="RecycleBin#emptyCP" />
 
 	</command>
 
@@ -70,7 +70,7 @@
 			</then>
 		</while>
 
-		<execute macro="RecycleBin#emptyRecycleBinCP" />
+		<execute macro="RecycleBin#emptyCP" />
 	</command>
 
 	<command name="viewCP">

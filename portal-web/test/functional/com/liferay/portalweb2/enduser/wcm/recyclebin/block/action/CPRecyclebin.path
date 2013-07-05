@@ -50,28 +50,28 @@
 </tr>
 <!--RECYCLE_BIN_TABLE-->
 <tr>
-	<td>RECYCLE_BIN_TABLE_NAME_1</td>
-	<td>xpath=(//div[@id='_182_trashEntriesSearchContainerSearchContainer']//tr/td[1]/span/a)[1]</td>
+	<td>RECYCLE_BIN_TABLE_NAME</td>
+	<td>//div[@id='_182_trashEntriesSearchContainerSearchContainer']//tr[contains(.,'${key_assetName}')]/td[1]/span/a</td>
 	<td></td>
 </tr>
 <tr>
-	<td>RECYCLE_BIN_TABLE_TYPE_1</td>
-	<td>xpath=(//div[@id='_182_trashEntriesSearchContainerSearchContainer']//tr/td[2])[1]</td>
+	<td>RECYCLE_BIN_TABLE_TYPE</td>
+	<td>//div[@id='_182_trashEntriesSearchContainerSearchContainer']//tr[contains(.,'${key_assetName}')]/td[2]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>RECYCLE_BIN_TABLE_REMOVED_DATE_1</td>
-	<td>xpath=(//div[@id='_182_trashEntriesSearchContainerSearchContainer']//tr/td[3])[1]</td>
+	<td>RECYCLE_BIN_TABLE_REMOVED_DATE</td>
+	<td>//div[@id='_182_trashEntriesSearchContainerSearchContainer']//tr[contains(.,'${key_assetName}')]/td[3]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>RECYCLE_BIN_TABLE_REMOVED_BY_1</td>
-	<td>xpath=(//div[@id='_182_trashEntriesSearchContainerSearchContainer']//tr/td[4])[1]</td>
+	<td>RECYCLE_BIN_TABLE_REMOVED_BY</td>
+	<td>//div[@id='_182_trashEntriesSearchContainerSearchContainer']//tr[contains(.,'${key_assetName}')]/td[4]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>RECYCLE_BIN_TABLE_ACTIONS_1</td>
-	<td>xpath=(//div[@id='_182_trashEntriesSearchContainerSearchContainer']//tr/td[5]/div/a[@title='Actions'])[1]</td>
+	<td>RECYCLE_BIN_TABLE_ACTIONS</td>
+	<td>//div[@id='_182_trashEntriesSearchContainerSearchContainer']//tr[contains(.,'${key_assetName}')]/td[5]/div/a[@title='Actions']</td>
 	<td></td>
 </tr>
 <tr>

@@ -85,7 +85,7 @@
 		<execute action="PGWikiAllpages#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" />
 		<execute action="PGWikiAllpages#assertElementNotPresent" locator-key1="WIKI_PAGE_TABLE_PAGE_1" value1="FrontPage" />
 
-		<execute macro="RecycleBin#emptyRecycleBinCP" />
+		<execute macro="RecycleBin#emptyCP" />
 	</command>
 
 	<command name="tearDownCP">
@@ -104,6 +104,6 @@
 			</then>
 		</while>
 
-		<execute macro="RecycleBin#emptyRecycleBinCP" />
+		<execute macro="RecycleBin#emptyCP" />
 	</command>
 </definition>

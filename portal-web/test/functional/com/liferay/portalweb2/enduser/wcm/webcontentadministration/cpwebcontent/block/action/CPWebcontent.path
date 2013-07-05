@@ -218,23 +218,28 @@
 </tr>
 <!--ENTRY_TABLE-->
 <tr>
-	<td>ENTRY_TABLE_ENTRY_1</td>
-	<td>//div[@class='entry-thumbnail']/img</td>
+	<td>ENTRY_TABLE_THUMBNAIL</td>
+	<td>//div[@data-title='${key_webContentTitle}']/a/div[@class='entry-thumbnail']/img</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ENTRY_TABLE_MENULIST_ARROW_1</td>
-	<td>//div[@id='_15_entries']/div/span[contains(@class,'entry-action')]/div/a/i[@class='caret']</td>
+	<td>ENTRY_TABLE_MENULIST_ARROW</td>
+	<td>//div[@data-title='${key_webContentTitle}']/span[contains(@class,'entry-action')]/div/a/i[@class='caret']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ENTRY_TABLE_CHECKBOX_1</td>
-	<td>//input[@id='_15_rowIdsJournalArticleCheckbox']</td>
+	<td>ENTRY_TABLE_CHECKBOX</td>
+	<td>//div[@data-title='${key_webContentTitle}']/input[@id='_15_rowIdsJournalArticleCheckbox']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ENTRY_TABLE_TITLE_1</td>
-	<td>//span[@class='entry-title']/span</td>
+	<td>ENTRY_TABLE_TITLE</td>
+	<td>//div[@data-title='${key_webContentTitle}']/a/div/span[@class='entry-title']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_TABLE_DESCRIPTION</td>
+	<td>//div[@data-title='${key_webContentTitle}']/a/div/span[@class='entry-description']</td>
 	<td></td>
 </tr>
 <tr>
@@ -280,7 +285,7 @@
 </tr>
 <tr>
 	<td>ENTRY_MENULIST_MOVE_TO_THE_RECYCLE_BIN</td>
-	<td>//ul[contains(@class,'dropdown-menu lfr-menu-list')]/li/a[contains(.,'Move to the Recycle Bin')]</td>
+	<td>//ul[@class='dropdown-menu lfr-menu-list direction-down']/li/a[contains(.,'Move to the Recycle Bin')]</td>
 	<td></td>
 </tr>
 <tr>

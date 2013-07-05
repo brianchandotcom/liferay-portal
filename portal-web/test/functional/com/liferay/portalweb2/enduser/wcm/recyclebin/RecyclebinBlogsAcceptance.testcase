@@ -1,0 +1,71 @@
+<definition>
+	<set-up>
+		<execute macro="User#pgFirstLogin" />
+	</set-up>
+
+	<command name="DeleteBlogsEntry">
+		<var name="assetName" value="${entryTitle}" />
+		<var name="assetType" value="Blogs Entry" />
+		<var name="entryContent" value="Blogs Entry Content" />
+		<var name="entryTitle" value="Blogs Entry Title" />
+
+		<execute macro="BlogsEntry#addCP">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="BlogsEntry#moveToRecycleBinCP">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="RecycleBin#deleteCP">
+			<var name="assetName" value="${entryTitle}" />
+			<var name="assetType" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="RecycleBin#viewDefaultCP">
+			<var name="assetName" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewDefaultCP">
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+	</command>
+
+	<command name="RestoreBlogsEntry">
+		<var name="assetName" value="${entryTitle}" />
+		<var name="assetRestoreLocation" value="Blogs" />
+		<var name="assetType" value="Blogs Entry" />
+		<var name="entryContent" value="Blogs Entry Content" />
+		<var name="entryTitle" value="Blogs Entry Title" />
+
+		<execute macro="BlogsEntry#addCP">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="BlogsEntry#moveToRecycleBinCP">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="RecycleBin#restoreCP">
+			<var name="assetName" value="${entryTitle}" />
+			<var name="assetRestoreLocation" value="${assetRestoreLocation}" />
+			<var name="assetRestoreType" value="${assetRestoreType}" />
+		</execute>
+
+		<execute macro="RecycleBin#viewDefaultCP">
+			<var name="assetName" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewCP">
+			<var name="assetName" value="${entryTitle}" />
+		</execute>
+	</command>
+
+	<tear-down>
+		<execute macro="BlogsEntry#tearDownCP" />
+	</tear-down>
+</definition>

@@ -416,7 +416,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 				Property groupIdProperty = PropertyFactoryUtil.forName(
 					"groupId");
 
-				disjunction.add(groupIdProperty.eq(0));
+				disjunction.add(groupIdProperty.eq(0L));
 				disjunction.add(
 					groupIdProperty.eq(portletDataContext.getScopeGroupId()));
 

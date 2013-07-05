@@ -110,7 +110,7 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 				_log.warn("Unable to add file entry " + name, e);
 			}
 
-			return 0;
+			return -1;
 		}
 		finally {
 			DataAccess.cleanUp(con, ps);
@@ -242,7 +242,7 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 				_log.warn("Unable to add folder " + name, e);
 			}
 
-			return 0;
+			return -1;
 		}
 		finally {
 			DataAccess.cleanUp(con, ps);
@@ -261,8 +261,8 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 			repositoryId, true, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			portletId, true);
 
-		if (folderId <= 0) {
-			return 0;
+		if (folderId < 0) {
+			return -1;
 		}
 
 		Connection con = null;
@@ -306,7 +306,7 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 					"Unable to add repository for portlet " + portletId, e);
 			}
 
-			return 0;
+			return -1;
 		}
 		finally {
 			DataAccess.cleanUp(con, ps);
@@ -360,8 +360,8 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 			String name, boolean hidden)
 		throws Exception {
 
-		if ((repositoryId <= 0) || (parentFolderId <= 0)) {
-			return 0;
+		if ((repositoryId < 0) || (parentFolderId < 0)) {
+			return -1;
 		}
 
 		Connection con = null;
@@ -456,7 +456,7 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 			PortalUtil.getClassNameId(_LIFERAY_REPOSITORY_CLASS_NAME),
 			getPortletId());
 
-		if (repositoryId <= 0) {
+		if (repositoryId < 0) {
 			return;
 		}
 
@@ -464,7 +464,7 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 			groupId, companyId, resourcePrimKey, containerModelId, userId,
 			userName, createDate);
 
-		if (containerModelFolderId <= 0) {
+		if (containerModelFolderId < 0) {
 			return;
 		}
 
@@ -486,7 +486,7 @@ public abstract class BaseUpgradeAttachments extends UpgradeProcess {
 				userName, createDate, repositoryId, containerModelFolderId,
 				name, extension, mimeType, title, size);
 
-			if (fileEntryId <= 0) {
+			if (fileEntryId < 0) {
 				continue;
 			}
 

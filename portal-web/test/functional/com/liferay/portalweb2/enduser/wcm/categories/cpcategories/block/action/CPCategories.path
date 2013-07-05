@@ -208,7 +208,7 @@
 </tr>
 <tr>
 	<td>ADD_VOCABULARY_ASSOCIATED_ASSET_TYPES</td>
-	<td>//div[@class='accordion-toggle']</td>
+	<td>//div[@id='vocabularyExtraFieldsPanelContainer']//div[@class='accordion-toggle']</td>
 	<td></td>
 </tr>
 <tr>
@@ -244,18 +244,13 @@
 </tr>
 <!--VOCABULARY_ENTRY-->
 <tr>
-	<td>VOCABULARY_ENTRY_1</td>
+	<td>VOCABULARY_ENTRY</td>
+	<td>//li[contains(.,'${key_vocabularyName}')]/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VOCABULARY_ENTRY_GENERIC</td>
 	<td>//div[3]/ul/li[1]/a/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td>VOCABULARY_ENTRY_2</td>
-	<td>//div[3]/ul/li[2]/a/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td>VOCABULARY_ENTRY_3</td>
-	<td>//div[3]/ul/li[3]/a/span</td>
 	<td></td>
 </tr>
 <tr>
@@ -265,18 +260,8 @@
 </tr>
 <!--VOCABULARY_CATEGORY-->
 <tr>
-	<td>VOCABULARY_CATEGORY_1</td>
-	<td>//li[1]/div</td>
-	<td></td>
-</tr>
-<tr>
-	<td>VOCABULARY_CATEGORY_2</td>
-	<td>//li[2]/div</td>
-	<td></td>
-</tr>
-<tr>
-	<td>VOCABULARY_CATEGORY_3</td>
-	<td>//li[3]/div</td>
+	<td>VOCABULARY_CATEGORY</td>
+	<td>//li[contains(.,'${key_categoryName}')]/div</td>
 	<td></td>
 </tr>
 </tbody>

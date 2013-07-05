@@ -1,0 +1,183 @@
+<definition>
+	<set-up>
+		<execute macro="User#pgFirstLogin" />
+	</set-up>
+
+	<command name="AddCategory">
+		<var name="vocabularyName" value="Vocabulary Name" />
+		<var name="categoryName" value="Category Name" />
+
+		<execute macro="Vocabulary#addCP">
+			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
+
+		<execute macro="Category#addCP">
+			<var name="categoryName" value="${categoryName}" />
+			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
+	</command>
+
+	<command name="AddSubcategory">
+		<var name="vocabularyName" value="Vocabulary Name" />
+		<var name="categoryName" value="Category Name" />
+		<var name="subcategoryName" value="Subcategory Name" />
+
+		<execute macro="Vocabulary#addCP">
+			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
+
+		<execute macro="Category#addCP">
+			<var name="categoryName" value="${categoryName}" />
+			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
+
+		<execute macro="Subcategory#addCP">
+			<var name="categoryName" value="${categoryName}" />
+			<var name="subcategoryName" value="${subcategoryName}" />
+			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
+	</command>
+
+	<command name="AddVocabulary">
+		<var name="vocabularyName" value="Vocabulary Name" />
+
+		<execute macro="Vocabulary#addCP">
+			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
+	</command>
+
+	<command name="AddVocabularyAssetTypeWikiPage">
+		<var name="vocabularyName" value="Vocabulary Name" />
+
+		<execute macro="Vocabulary#addCPWithAssociatedAssetType">
+			<var name="vocabularyAssociatedAssetType" value="Wiki Page" />
+			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
+	</command>
+
+	<command name="DeleteCategory">
+		<var name="vocabularyName" value="Vocabulary Name" />
+		<var name="categoryName" value="Category Name" />
+
+		<execute macro="Vocabulary#addCP">
+			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
+
+		<execute macro="Category#addCP">
+			<var name="categoryName" value="${categoryName}" />
+			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
+
+		<execute macro="Category#deleteCPByActions">
+			<var name="categoryName" value="${categoryName}" />
+			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
+	</command>
+
+	<command name="DeleteSubcategory">
+		<var name="vocabularyName" value="Vocabulary Name" />
+		<var name="categoryName" value="Category Name" />
+		<var name="subcategoryName" value="Subcategory Name" />
+
+		<execute macro="Vocabulary#addCP">
+			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
+
+		<execute macro="Category#addCP">
+			<var name="categoryName" value="${categoryName}" />
+			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
+
+		<execute macro="Subcategory#addCP">
+			<var name="categoryName" value="${categoryName}" />
+			<var name="subcategoryName" value="${subcategoryName}" />
+			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
+
+		<execute macro="Subcategory#deleteCPByActions">
+			<var name="categoryName" value="${categoryName}" />
+			<var name="subcategoryName" value="${subcategoryName}" />
+			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
+	</command>
+
+	<command name="DeleteVocabulary">
+		<var name="vocabularyName" value="Vocabulary Name" />
+
+		<execute macro="Vocabulary#addCP">
+			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
+
+		<execute macro="Vocabulary#deleteCPByActions">
+			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
+	</command>
+
+	<command name="EditCategory">
+		<var name="vocabularyName" value="Vocabulary Name" />
+		<var name="categoryName" value="Category Name" />
+		<var name="categoryNameEdit" value="Category Name Edit" />
+
+		<execute macro="Vocabulary#addCP">
+			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
+
+		<execute macro="Category#addCP">
+			<var name="categoryName" value="${categoryName}" />
+			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
+
+		<execute macro="Category#editCP">
+			<var name="categoryName" value="${categoryName}" />
+			<var name="categoryNameEdit" value="${categoryNameEdit}" />
+			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
+	</command>
+
+	<command name="EditSubcategory">
+		<var name="vocabularyName" value="Vocabulary Name" />
+		<var name="categoryName" value="Category Name" />
+		<var name="subcategoryName" value="Subcategory Name" />
+		<var name="subcategoryNameEdit" value="Subcategory Name Edit" />
+
+		<execute macro="Vocabulary#addCP">
+			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
+
+		<execute macro="Category#addCP">
+			<var name="categoryName" value="${categoryName}" />
+			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
+
+		<execute macro="Subcategory#addCP">
+			<var name="categoryName" value="${categoryName}" />
+			<var name="subcategoryName" value="${subcategoryName}" />
+			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
+
+		<execute macro="Subcategory#editCP">
+			<var name="categoryName" value="${categoryName}" />
+			<var name="subcategoryName" value="${subcategoryName}" />
+			<var name="subcategoryNameEdit" value="${subcategoryNameEdit}" />
+			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
+	</command>
+
+	<command name="EditVocabulary">
+		<var name="vocabularyName" value="Vocabulary Name" />
+		<var name="vocabularyNameEdit" value="Vocabulary Name Edit" />
+
+		<execute macro="Vocabulary#addCP">
+			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
+
+		<execute macro="Vocabulary#editCP">
+			<var name="vocabularyName" value="${vocabularyName}" />
+			<var name="vocabularyNameEdit" value="${vocabularyNameEdit}" />
+		</execute>
+	</command>
+
+	<tear-down>
+		<execute macro="Vocabulary#tearDownCP" />
+	</tear-down>
+</definition>

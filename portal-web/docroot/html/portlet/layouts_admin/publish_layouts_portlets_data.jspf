@@ -214,7 +214,7 @@ if (endDateTime > 0) {
 					%>
 
 						<c:if test="<%= GetterUtil.getBoolean(liveGroupTypeSettings.getProperty(StagingUtil.getStagedPortletId(portlet.getRootPortletId())), portletDataHandler.isPublishToLiveByDefault()) && (exportModelCount != 0) %>">
-							<li>
+							<li class="tree-item">
 								<liferay-util:buffer var="badgeHTML">
 									<span class="badge badge-info"><%= exportModelCount > 0 ? exportModelCount : StringPool.BLANK %></span>
 								</liferay-util:buffer>

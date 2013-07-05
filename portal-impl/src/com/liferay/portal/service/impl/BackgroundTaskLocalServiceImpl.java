@@ -232,7 +232,8 @@ public class BackgroundTaskLocalServiceImpl
 		throws SystemException {
 
 		return backgroundTaskPersistence.findByG_N_T(
-			groupId, name, taskExecutorClassName);
+			groupId, name, taskExecutorClassName, start, end,
+			orderByComparator);
 	}
 
 	@Override

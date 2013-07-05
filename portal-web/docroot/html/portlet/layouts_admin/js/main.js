@@ -7,7 +7,7 @@ AUI.add(
 
 		var REGEX_LAYOUT_ID = /layoutId_(\d+)/;
 
-		var RENDER_INTERVAL = 5000;
+		var RENDER_INTERVAL = 3000;
 
 		var STR_CHECKED = 'checked';
 
@@ -68,7 +68,7 @@ AUI.add(
 
 						instance._processesResourceURL = config.processesResourceURL;
 
-						instance._renderProcesses();
+						A.later(RENDER_INTERVAL, instance, instance._renderProcesses);
 					},
 
 					destructor: function() {

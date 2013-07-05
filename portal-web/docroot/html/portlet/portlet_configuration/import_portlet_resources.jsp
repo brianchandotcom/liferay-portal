@@ -17,6 +17,8 @@
 <%@ include file="/html/portlet/portlet_configuration/init.jsp" %>
 
 <%
+String redirect = ParamUtil.getString(request, "redirect");
+
 Layout exportableLayout = ExportImportHelperUtil.getExportableLayout(themeDisplay);
 
 FileEntry fileEntry = ExportImportHelperUtil.getTempFileEntry(themeDisplay.getScopeGroupId(), themeDisplay.getUserId(), ExportImportHelper.TEMP_FOLDER_NAME + selPortlet.getPortletId());
@@ -32,6 +34,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 	<portlet:param name="struts_action" value="/portlet_configuration/export_import" />
 	<portlet:param name="tabs2" value="import" />
 	<portlet:param name="tabs3" value="all-import-processes" />
+	<portlet:param name="redirect" value="<%= redirect %>" />
 	<portlet:param name="portletResource" value="<%= portletResource %>" />
 </portlet:renderURL>
 

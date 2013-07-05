@@ -443,88 +443,26 @@ portletURL.setParameter("tabs3", "all-publication-processes");
 			</liferay-ui:section>
 
 			<liferay-ui:section>
-
-				<%
-				String orderByCol = ParamUtil.getString(request, "orderByCol");
-				String orderByType = ParamUtil.getString(request, "orderByType");
-
-				if (Validator.isNotNull(orderByCol) && Validator.isNotNull(orderByType)) {
-					portalPreferences.setValue(PortletKeys.BACKGROUND_TASK, "entries-order-by-col", orderByCol);
-					portalPreferences.setValue(PortletKeys.BACKGROUND_TASK, "entries-order-by-type", orderByType);
-				}
-				else {
-					orderByCol = portalPreferences.getValue(PortletKeys.BACKGROUND_TASK, "entries-order-by-col", "create-date");
-					orderByType = portalPreferences.getValue(PortletKeys.BACKGROUND_TASK, "entries-order-by-type", "desc");
-				}
-
-				OrderByComparator orderByComparator = BackgroundTaskUtil.getBackgroundTaskOrderByComparator(orderByCol, orderByType);
-				%>
-
-				<liferay-ui:search-container
-					emptyResultsMessage="no-publication-processes-were-found"
-					iteratorURL="<%= portletURL %>"
-					orderByCol="<%= orderByCol %>"
-					orderByComparator="<%= orderByComparator %>"
-					orderByType="<%= orderByType %>"
-					total="<%= BackgroundTaskLocalServiceUtil.getBackgroundTasksCount(themeDisplay.getScopeGroupId(), selPortlet.getPortletId(), PortletStagingBackgroundTaskExecutor.class.getName()) %>"
-				>
-					<liferay-ui:search-container-results
-						results="<%= BackgroundTaskLocalServiceUtil.getBackgroundTasks(themeDisplay.getScopeGroupId(), selPortlet.getPortletId(), PortletStagingBackgroundTaskExecutor.class.getName(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>"
-					/>
-
-					<liferay-ui:search-container-row
-						className="com.liferay.portal.model.BackgroundTask"
-						modelVar="backgroundTask"
-					>
-						<liferay-ui:search-container-column-text
-							name="user-name"
-							value="<%= backgroundTask.getUserName() %>"
-						/>
-
-						<liferay-ui:search-container-column-text
-							name="status"
-							value="<%= LanguageUtil.get(pageContext, backgroundTask.getStatusLabel()) %>"
-						/>
-
-						<liferay-ui:search-container-column-text
-							name="create-date"
-							orderable="<%= true %>"
-							orderableProperty="createDate"
-							value="<%= dateFormatDateTime.format(backgroundTask.getCreateDate()) %>"
-						/>
-
-						<liferay-ui:search-container-column-text
-							name="completion-date"
-							orderable="<%= true %>"
-							orderableProperty="completionDate"
-							value="<%= backgroundTask.getCompletionDate() != null ? dateFormatDateTime.format(backgroundTask.getCompletionDate()) : StringPool.BLANK %>"
-						/>
-
-						<liferay-ui:search-container-column-text>
-							<portlet:actionURL var="deleteBackgroundTaskURL">
-								<portlet:param name="struts_action" value="/group_pages/delete_background_task" />
-								<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
-								<portlet:param name="backgroundTaskId" value="<%= String.valueOf(backgroundTask.getBackgroundTaskId()) %>" />
-							</portlet:actionURL>
-
-							<liferay-ui:icon-delete
-								label="true"
-								url="<%= deleteBackgroundTaskURL %>"
-							/>
-						</liferay-ui:search-container-column-text>
-					</liferay-ui:search-container-row>
-
-					<liferay-ui:search-iterator />
-				</liferay-ui:search-container>
+				<div id="<portlet:namespace />publishProcesses">
+					<liferay-util:include page="/html/portlet/layouts_admin/publish_portlet_processes.jsp" />
+				</div>
 			</liferay-ui:section>
 		</liferay-ui:tabs>
 
 		<aui:script use="liferay-export-import">
+			<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="publishProcessesURL">
+				<portlet:param name="struts_action" value="/portlet_configuration/export_import" />
+				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.PUBLISH %>" />
+				<portlet:param name="portletResource" value="<%= portletResource %>" />
+			</liferay-portlet:resourceURL>
+
 			new Liferay.ExportImport(
 				{
 					commentsNode: '#<%= PortletDataHandlerKeys.COMMENTS %>Checkbox',
 					form: document.<portlet:namespace />fm1,
 					namespace: '<portlet:namespace />',
+					processesNode: '#publishProcesses',
+					processesResourceURL: '<%= publishProcessesURL.toString() %>',
 					rangeAllNode: '#rangeAll',
 					rangeDateRangeNode: '#rangeDateRange',
 					rangeLastPublishNode: '#rangeLastPublish',

@@ -67,7 +67,7 @@ else {
 <h3><liferay-ui:message key="look-and-feel" /></h3>
 
 <aui:fieldset>
-	<aui:input name="devices" type="hidden" value="regular,wap" />
+	<aui:input name="devices" type="hidden" value='<%= PropsValues.MOBILE_STYLING_WAP_ENABLED? "regular,wap" : "wap" %>' />
 
 	<%
 	String taglibLabel = null;
@@ -80,80 +80,25 @@ else {
 	}
 	%>
 
-	<liferay-ui:tabs
-		names="regular-browsers,mobile-devices"
-		refresh="<%= false %>"
-	>
-		<liferay-ui:section>
-			<aui:input checked="<%= selLayout.isInheritLookAndFeel() %>" id="regularInheritLookAndFeel" label="<%= taglibLabel %>" name="regularInheritLookAndFeel" type="radio" value="<%= true %>" />
+	<c:choose>
+		<c:when test="<%= PropsValues.MOBILE_STYLING_WAP_ENABLED %>">
+			<liferay-ui:tabs
+				names="regular-browsers,mobile-devices"
+				refresh="<%= false %>"
+			>
+				<liferay-ui:section>
+					<%@ include file="/html/portlet/layouts_admin/layout/look_and_feel_regular_browser.jspf" %>
+				</liferay-ui:section>
 
-			<aui:input checked="<%= !selLayout.isInheritLookAndFeel() %>" id="regularUniqueLookAndFeel" label="define-a-specific-look-and-feel-for-this-page" name="regularInheritLookAndFeel" type="radio" value="<%= false %>" />
-
-			<%
-			List<Theme> themes = ThemeLocalServiceUtil.getThemes(company.getCompanyId(), liveGroupId, user.getUserId(), false);
-			List<ColorScheme> colorSchemes = selTheme.getColorSchemes();
-
-			request.setAttribute("edit_pages.jsp-themes", themes);
-			request.setAttribute("edit_pages.jsp-colorSchemes", colorSchemes);
-			request.setAttribute("edit_pages.jsp-selTheme", selTheme);
-			request.setAttribute("edit_pages.jsp-selColorScheme", selColorScheme);
-			request.setAttribute("edit_pages.jsp-device", "regular");
-			request.setAttribute("edit_pages.jsp-editable", false);
-			%>
-
-			<div id="<portlet:namespace />inheritThemeOptions">
-				<c:if test="<%= !group.isLayoutPrototype() %>">
-					<liferay-util:include page="/html/portlet/layouts_admin/look_and_feel_themes.jsp" />
-				</c:if>
-			</div>
-
-			<div id="<portlet:namespace />themeOptions">
-
-				<%
-				request.setAttribute("edit_pages.jsp-editable", true);
-				%>
-
-				<liferay-util:include page="/html/portlet/layouts_admin/look_and_feel_themes.jsp" />
-
-				<legend><liferay-ui:message key="css" /></legend>
-
-				<aui:input cssClass="lfr-textarea-container" label="insert-custom-css-that-will-be-loaded-after-the-theme" name="regularCss" type="textarea" value="<%= cssText %>" />
-			</div>
-		</liferay-ui:section>
-
-		<liferay-ui:section>
-			<aui:input checked="<%= selLayout.isInheritWapLookAndFeel() %>" id="wapInheritLookAndFeel" label="<%= taglibLabel %>" name="wapInheritLookAndFeel" type="radio" value="<%= true %>" />
-
-			<aui:input checked="<%= !selLayout.isInheritWapLookAndFeel() %>" id="wapUniqueLookAndFeel" label="define-a-specific-look-and-feel-for-this-page" name="wapInheritLookAndFeel" type="radio" value="<%= false %>" />
-
-			<%
-			List<Theme> themes = ThemeLocalServiceUtil.getThemes(company.getCompanyId(), liveGroupId, user.getUserId(), true);
-			List<ColorScheme> colorSchemes = selWapTheme.getColorSchemes();
-
-			request.setAttribute("edit_pages.jsp-themes", themes);
-			request.setAttribute("edit_pages.jsp-colorSchemes", colorSchemes);
-			request.setAttribute("edit_pages.jsp-selTheme", selWapTheme);
-			request.setAttribute("edit_pages.jsp-selColorScheme", selWapColorScheme);
-			request.setAttribute("edit_pages.jsp-device", "wap");
-			request.setAttribute("edit_pages.jsp-editable", false);
-			%>
-
-			<div id="<portlet:namespace />inheritWapThemeOptions">
-				<c:if test="<%= !group.isLayoutPrototype() %>">
-					<liferay-util:include page="/html/portlet/layouts_admin/look_and_feel_themes.jsp" />
-				</c:if>
-			</div>
-
-			<div id="<portlet:namespace />wapThemeOptions">
-
-				<%
-				request.setAttribute("edit_pages.jsp-editable", true);
-				%>
-
-				<liferay-util:include page="/html/portlet/layouts_admin/look_and_feel_themes.jsp" />
-			</div>
-		</liferay-ui:section>
-	</liferay-ui:tabs>
+				<liferay-ui:section>
+					<%@ include file="/html/portlet/layouts_admin/layout/look_and_feel_wap_browser.jspf" %>
+				</liferay-ui:section>
+			</liferay-ui:tabs>
+		</c:when>
+		<c:otherwise>
+			<%@ include file="/html/portlet/layouts_admin/layout/look_and_feel_regular_browser.jspf" %>
+		</c:otherwise>
+	</c:choose>
 </aui:fieldset>
 
 <aui:script>

@@ -125,7 +125,7 @@ boolean deployed = false;
 %>
 
 <aui:fieldset>
-	<aui:select label="default-regular-theme" name='<%= "settings--" + PropsKeys.DEFAULT_REGULAR_THEME_ID + "--" %>'>
+	<aui:select label='<%= PropsValues.MOBILE_STYLING_WAP_ENABLED? "default-regular-theme" : "default-theme" %>' name='<%= "settings--" + PropsKeys.DEFAULT_REGULAR_THEME_ID + "--" %>'>
 
 		<%
 		themes = ThemeLocalServiceUtil.getThemes(company.getCompanyId(), 0, user.getUserId(), false);
@@ -148,28 +148,30 @@ boolean deployed = false;
 		</c:if>
 	</aui:select>
 
-	<aui:select helpMessage="default-mobile-theme-help" label="default-mobile-theme" name='<%= "settings--" + PropsKeys.DEFAULT_WAP_THEME_ID + "--" %>'>
+	<c:if test="<%= PropsValues.MOBILE_STYLING_WAP_ENABLED %>">
+		<aui:select helpMessage="default-mobile-theme-help" label="default-mobile-theme" name='<%= "settings--" + PropsKeys.DEFAULT_WAP_THEME_ID + "--" %>'>
 
-		<%
-		themes = ThemeLocalServiceUtil.getThemes(company.getCompanyId(), 0, user.getUserId(), true);
-		deployed = false;
+			<%
+			themes = ThemeLocalServiceUtil.getThemes(company.getCompanyId(), 0, user.getUserId(), true);
+			deployed = false;
 
-		for (Theme curTheme: themes) {
-			if (Validator.equals(defaultWapThemeId, curTheme.getThemeId())) {
-				deployed = true;
+			for (Theme curTheme: themes) {
+				if (Validator.equals(defaultWapThemeId, curTheme.getThemeId())) {
+					deployed = true;
+				}
+			%>
+
+				<aui:option label="<%= curTheme.getName() %>" selected="<%= Validator.equals(defaultWapThemeId, curTheme.getThemeId()) %>" value="<%= curTheme.getThemeId() %>" />
+
+			<%
 			}
-		%>
+			%>
 
-			<aui:option label="<%= curTheme.getName() %>" selected="<%= Validator.equals(defaultWapThemeId, curTheme.getThemeId()) %>" value="<%= curTheme.getThemeId() %>" />
-
-		<%
-		}
-		%>
-
-		<c:if test="<%= !deployed %>">
-			<aui:option label='<%= defaultWapThemeId + "(" + LanguageUtil.get(pageContext, "undeployed") + ")" %>' selected="<%= true %>" value="<%= defaultWapThemeId %>" />
-		</c:if>
-	</aui:select>
+			<c:if test="<%= !deployed %>">
+				<aui:option label='<%= defaultWapThemeId + "(" + LanguageUtil.get(pageContext, "undeployed") + ")" %>' selected="<%= true %>" value="<%= defaultWapThemeId %>" />
+			</c:if>
+		</aui:select>
+	</c:if>
 
 	<aui:select label="default-control-panel-theme" name='<%= "settings--" + PropsKeys.CONTROL_PANEL_LAYOUT_REGULAR_THEME_ID + "--" %>'>
 

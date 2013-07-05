@@ -93,12 +93,12 @@ public class UpdateLayoutAction extends JSONAction {
 				updatePriority(request);
 			}
 
-			jsonObject.put("status", HttpServletResponse.SC_OK);
+			jsonObject.putStatus(HttpServletResponse.SC_OK);
 		}
 		catch (LayoutTypeException lte) {
-			jsonObject.put(
-				"message", getLayoutTypeExceptionMessage(themeDisplay, lte));
-			jsonObject.put("status", HttpServletResponse.SC_BAD_REQUEST);
+			jsonObject.putErrorMessage(
+				HttpServletResponse.SC_BAD_REQUEST,
+				getLayoutTypeExceptionMessage(themeDisplay, lte));
 		}
 
 		return jsonObject.toString();

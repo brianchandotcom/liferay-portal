@@ -74,7 +74,11 @@ public interface JSONObject {
 
 	public JSONObject put(String key, String value);
 
+	public JSONObject putErrorMessage(int statusCode, String errorMessage);
+
 	public JSONObject putException(Exception exception);
+
+	public JSONObject putStatus(int statusCode);
 
 	public Object remove(String key);
 

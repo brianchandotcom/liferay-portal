@@ -237,6 +237,11 @@ public class ExportImportAction extends ImportLayoutsAction {
 				"/html/portlet/portlet_configuration/" +
 					"import_portlet_processes.jsp");
 		}
+		else if (cmd.equals(Constants.PUBLISH)) {
+			portletRequestDispatcher = portletContext.getRequestDispatcher(
+				"/html/portlet/portlet_configuration/" +
+					"publish_portlet_processes.jsp");
+		}
 		else {
 			portletRequestDispatcher = portletContext.getRequestDispatcher(
 				"/html/portlet/portlet_configuration/" +

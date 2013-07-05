@@ -36,5 +36,4 @@
 
 		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
-
 </definition>

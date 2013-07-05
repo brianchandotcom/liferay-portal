@@ -59,7 +59,7 @@
 				<execute action="PGDocumentsandmedia#assertClick" locator-key1="ACTIONS_MENULIST_MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
 				<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="moved to the Recycle Bin. Undo" />
 
-				<execute macro="RecycleBin#emptyRecycleBinCP"/>
+				<execute macro="RecycleBin#emptyCP"/>
 			</then>
 		</if>
 	</command>

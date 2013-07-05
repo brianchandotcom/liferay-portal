@@ -676,6 +676,10 @@ public class HttpImpl implements Http {
 			if (parameter.length() > 0) {
 				String[] kvp = StringUtil.split(parameter, CharPool.EQUAL);
 
+				if (kvp.length == 0) {
+					continue;
+				}
+
 				String key = kvp[0];
 
 				String value = StringPool.BLANK;

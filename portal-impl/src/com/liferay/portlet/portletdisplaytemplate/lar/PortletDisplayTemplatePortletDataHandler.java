@@ -99,7 +99,8 @@ public class PortletDisplayTemplatePortletDataHandler
 			getDDMTemplateActionableDynamicQuery(
 				portletDataContext, ArrayUtil.toArray(classNameIds),
 				new StagedModelType(
-					PortalUtil.getClassNameId(DDMTemplate.class)));
+					PortalUtil.getClassNameId(DDMTemplate.class),
+					StagedModelType.ALL_REFERRERS));
 
 		actionableDynamicQuery.performActions();
 

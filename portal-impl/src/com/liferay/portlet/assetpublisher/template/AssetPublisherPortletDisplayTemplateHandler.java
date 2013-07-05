@@ -89,10 +89,10 @@ public class AssetPublisherPortletDisplayTemplateHandler
 		fieldsTemplateVariableGroup.addCollectionVariable(
 			"asset-entries", List.class,
 			PortletDisplayTemplateConstants.ENTRIES, "asset-entry",
-			AssetEntry.class, "curEntry");
+			AssetEntry.class, "curEntry", "getTitle(locale)");
 		fieldsTemplateVariableGroup.addVariable(
 			"asset-entry", AssetEntry.class,
-			PortletDisplayTemplateConstants.ENTRY);
+			PortletDisplayTemplateConstants.ENTRY, "getTitle(locale)");
 
 		TemplateVariableGroup assetServicesTemplateVariableGroup =
 			new TemplateVariableGroup("asset-services");

@@ -70,7 +70,7 @@ public class BlogsPortletDisplayTemplateHandler
 
 		templateVariableGroup.addCollectionVariable(
 			"blog-entries", List.class, PortletDisplayTemplateConstants.ENTRIES,
-			"blog-entry", BlogsEntry.class, "curBlogEntry");
+			"blog-entry", BlogsEntry.class, "curBlogEntry", "title");
 
 		TemplateVariableGroup blogServicesTemplateVariableGroup =
 			new TemplateVariableGroup("blog-services");

@@ -451,6 +451,29 @@ Map<String, TemplateVariableGroup> templateVariableGroups = TemplateContextHelpe
 </aui:script>
 
 <%!
+private String _getAccessor(String accessor, String language) {
+	if (language.equalsIgnoreCase("vm")) {
+		if (accessor.indexOf(StringPool.OPEN_PARENTHESIS) == -1) {
+			return accessor;
+		}
+		StringTokenizer st = new StringTokenizer(accessor, "(,");
+
+		StringBundler sb = new StringBundler(st.countTokens() * 2);
+
+		sb.append(st.nextToken());
+		sb.append(StringPool.OPEN_PARENTHESIS);
+
+		while (st.hasMoreTokens()) {
+			sb.append(StringPool.DOLLAR);
+			sb.append(st.nextToken());
+		}
+
+		accessor = sb.toString();
+	}
+
+	return accessor;
+}
+
 private String[] _getDataContentArray(TemplateVariableDefinition templateVariableDefinition, String language) {
 	String[] dataContentArray = new String[] {StringPool.BLANK, StringPool.BLANK, StringPool.BLANK};
 
@@ -462,18 +485,18 @@ private String[] _getDataContentArray(TemplateVariableDefinition templateVariabl
 		String variableName = templateVariableDefinitionClass.getSimpleName();
 
 		dataContentArray[0] = _getVariableAssignmentCode(variableName, "serviceLocator.findService(\"" + templateVariableDefinition.getName() + "\"", language);
-		dataContentArray[1] = _getVariableReferenceCode(variableName, language);
+		dataContentArray[1] = _getVariableReferenceCode(variableName, null, language);
 	}
 	else if (templateVariableDefinition.isCollection()) {
 		TemplateVariableDefinition itemTemplateVariableDefinition = templateVariableDefinition.getItemTemplateVariableDefinition();
 
-		String[] listCodeArray = _getListCodeArray(templateVariableDefinition.getName(), itemTemplateVariableDefinition.getName(), language);
+		String[] listCodeArray = _getListCodeArray(templateVariableDefinition.getName(), itemTemplateVariableDefinition.getName(), itemTemplateVariableDefinition.getAccessor(), language);
 
 		dataContentArray[0] = listCodeArray[0];
 		dataContentArray[1] = listCodeArray[1];
 	}
 	else if (Validator.isNull(dataType)) {
-		dataContentArray[0] = _getVariableReferenceCode(templateVariableDefinition.getName(), language);
+		dataContentArray[0] = _getVariableReferenceCode(templateVariableDefinition.getName(), templateVariableDefinition.getAccessor(), language);
 	}
 	else {
 		try {
@@ -487,15 +510,16 @@ private String[] _getDataContentArray(TemplateVariableDefinition templateVariabl
 	return dataContentArray;
 }
 
-private String[] _getListCodeArray(String variableName, String itemName, String language) {
+private String[] _getListCodeArray(
+	String variableName, String itemName, String accessor, String language) {
 	String[] listCodeArray = new String[2];
 
 	if (language.equalsIgnoreCase("ftl")) {
-		listCodeArray[0] = "<#if " + variableName + "?has_content>\n\t<#list " + variableName + " as " + itemName + ">";
-		listCodeArray[1] = "</#list>\n</#if>";
+		listCodeArray[0] = "<#if " + variableName + "?has_content>\n\t<#list " + variableName + " as " + itemName + ">\n\t\t" + _getVariableReferenceCode(itemName, accessor, language);
+		listCodeArray[1] = "\n\t</#list>\n</#if>";
 	}
 	else if (language.equalsIgnoreCase("vm")) {
-		listCodeArray[0] = "#if (!$"+ variableName + ".isEmpty())\n\t#foreach ($" + itemName + " in $" + variableName + ")";
+		listCodeArray[0] = "#if (!$"+ variableName + ".isEmpty())\n\t#foreach ($" + itemName + " in $" + variableName + ")\n\t\t" + _getVariableReferenceCode(itemName, accessor, language);
 		listCodeArray[1] = "#end\n#end";
 	}
 
@@ -589,12 +613,18 @@ private String _getVariableAssignmentCode(String variableName, String variableVa
 	return variableName;
 }
 
-private String _getVariableReferenceCode(String variableName, String language) {
+private String _getVariableReferenceCode(String variableName, String accessor, String language) {
+	String methodInvocation = StringPool.BLANK;
+
+	if (Validator.isNotNull(accessor)) {
+		methodInvocation = StringPool.PERIOD + _getAccessor(accessor, language);
+	}
+
 	if (language.equalsIgnoreCase("ftl")) {
-		return "${" + variableName + "}";
+		return "${" + variableName + methodInvocation + "}";
 	}
 	else if (language.equalsIgnoreCase("vm")) {
-		return "$" + variableName;
+		return "$" + variableName + methodInvocation;
 	}
 
 	return variableName;

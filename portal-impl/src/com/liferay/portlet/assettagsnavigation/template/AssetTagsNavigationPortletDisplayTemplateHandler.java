@@ -71,7 +71,7 @@ public class AssetTagsNavigationPortletDisplayTemplateHandler
 
 		templateVariableGroup.addCollectionVariable(
 			"tags", List.class, PortletDisplayTemplateConstants.ENTRIES, "tag",
-			AssetTag.class, "curTag");
+			AssetTag.class, "curTag", "name");
 
 		TemplateVariableGroup assetServicesTemplateVariableGroup =
 			new TemplateVariableGroup("tag-services");

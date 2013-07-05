@@ -198,7 +198,8 @@ public class DDMTemplateHelperImpl implements DDMTemplateHelper {
 			}
 
 			TemplateVariableDefinition variableDefinition =
-				new TemplateVariableDefinition(key, value.getClass(), key);
+				new TemplateVariableDefinition(
+					key, value.getClass(), key, (String)null);
 
 			templateVariableDefinitions.add(variableDefinition);
 		}

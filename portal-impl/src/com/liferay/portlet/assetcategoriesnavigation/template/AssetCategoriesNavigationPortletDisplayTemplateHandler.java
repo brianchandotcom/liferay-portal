@@ -73,7 +73,7 @@ public class AssetCategoriesNavigationPortletDisplayTemplateHandler
 
 		templateVariableGroup.addCollectionVariable(
 			"vocabularies", List.class, PortletDisplayTemplateConstants.ENTRIES,
-			"vocabulary", AssetVocabulary.class, "curVocabulary");
+			"vocabulary", AssetVocabulary.class, "curVocabulary", "name");
 
 		TemplateVariableGroup categoriesServicesTemplateVariableGroup =
 			new TemplateVariableGroup("category-services");

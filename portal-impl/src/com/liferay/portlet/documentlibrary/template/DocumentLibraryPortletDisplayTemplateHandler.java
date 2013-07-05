@@ -72,7 +72,7 @@ public class DocumentLibraryPortletDisplayTemplateHandler
 
 		templateVariableGroup.addCollectionVariable(
 			"documents", List.class, PortletDisplayTemplateConstants.ENTRIES,
-			"document", FileEntry.class, "curFileEntry");
+			"document", FileEntry.class, "curFileEntry", "title");
 
 		TemplateVariableGroup documentServicesTemplateVariableGroup =
 			new TemplateVariableGroup("document-services");

@@ -69,7 +69,7 @@ public class SiteMapPortletDisplayTemplateHandler
 
 		templateVariableGroup.addCollectionVariable(
 			"pages", List.class, PortletDisplayTemplateConstants.ENTRIES,
-			"page", Layout.class, "curPage");
+			"page", Layout.class, "curPage", "getName(locale)");
 
 		return templateVariableGroups;
 	}

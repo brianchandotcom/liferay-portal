@@ -182,7 +182,7 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 
 		fieldsTemplateVariableGroup.addCollectionVariable(
 			"entries", List.class, PortletDisplayTemplateConstants.ENTRIES,
-			"entries-item", null, "curEntry");
+			"entries-item", null, "curEntry", null);
 		fieldsTemplateVariableGroup.addVariable(
 			"entry", null, PortletDisplayTemplateConstants.ENTRY);
 

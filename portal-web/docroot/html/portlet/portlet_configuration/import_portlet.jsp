@@ -41,6 +41,25 @@ String[] tempFileEntryNames = LayoutServiceUtil.getTempFileEntryNames(scopeGroup
 	</liferay-ui:section>
 
 	<liferay-ui:section>
-		<liferay-util:include page="/html/portlet/portlet_configuration/import_portlet_processes.jsp" />
+		<div id="<portlet:namespace />importProcesses">
+			<liferay-util:include page="/html/portlet/portlet_configuration/import_portlet_processes.jsp" />
+		</div>
 	</liferay-ui:section>
 </liferay-ui:tabs>
+
+<aui:script use="liferay-export-import">
+	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="importProcessesURL">
+		<portlet:param name="struts_action" value="/portlet_configuration/export_import" />
+		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.IMPORT %>" />
+		<portlet:param name="portletResource" value="<%= portletResource %>" />
+	</liferay-portlet:resourceURL>
+
+	new Liferay.ExportImport(
+		{
+			form: document.<portlet:namespace />fm1,
+			namespace: '<portlet:namespace />',
+			processesNode: '#importProcesses',
+			processesResourceURL: '<%= importProcessesURL.toString() %>'
+		}
+	);
+</aui:script>

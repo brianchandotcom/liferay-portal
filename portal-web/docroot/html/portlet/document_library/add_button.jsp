@@ -33,15 +33,15 @@ boolean fileEntryTypesIsEmpty = fileEntryTypes.isEmpty();
 
 long repositoryId = GetterUtil.getLong((String)request.getAttribute("view.jsp-repositoryId"));
 
-boolean showAddDocument = DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_DOCUMENT) && (fileEntryTypesIsEmpty || showAddFileEntryTypes);
-
 boolean showAddFolder = DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_FOLDER);
 
-boolean showAddMultipleDocuments = ((folder == null) || folder.isSupportsMultipleUpload()) && DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_DOCUMENT);
+boolean showAddShortcut = ((folder == null) || folder.isSupportsShortcuts()) && DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_SHORTCUT);
 
 boolean showAddRepository = (folderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) && (DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_REPOSITORY));
 
-boolean showAddShortcut = ((folder == null) || folder.isSupportsShortcuts()) && DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_SHORTCUT);
+boolean showAddMultipleDocuments = ((folder == null) || folder.isSupportsMultipleUpload()) && DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_DOCUMENT);
+
+boolean showAddDocument = DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_DOCUMENT) && (fileEntryTypesIsEmpty || showAddFileEntryTypes);
 %>
 
 <c:if test="<%= (showAddFolder || showAddShortcut || showAddRepository || showAddMultipleDocuments || showAddDocument) %>">
@@ -104,9 +104,11 @@ boolean showAddShortcut = ((folder == null) || folder.isSupportsShortcuts()) && 
 					<aui:nav-item href="<%= editFileEntryURL %>" iconClass="icon-file" label="basic-document" />
 				</c:when>
 				<c:when test="<%= showAddFileEntryTypes %>">
+
 					<%
 					for (DLFileEntryType fileEntryType : fileEntryTypes) {
 					%>
+
 						<portlet:renderURL var="addFileEntryTypeURL">
 							<portlet:param name="struts_action" value="/document_library/edit_file_entry" />
 							<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD %>" />
@@ -117,9 +119,11 @@ boolean showAddShortcut = ((folder == null) || folder.isSupportsShortcuts()) && 
 						</portlet:renderURL>
 
 						<aui:nav-item href="<%= addFileEntryTypeURL %>" iconClass="icon-file" label="<%= HtmlUtil.escape(fileEntryType.getName(locale)) %>" />
+
 					<%
 					}
 					%>
+
 				</c:when>
 			</c:choose>
 		</c:if>

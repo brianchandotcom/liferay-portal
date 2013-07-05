@@ -43,18 +43,14 @@
 						%>
 
 							<li>
-								<a href="<%= urlCategoryPortlet %>" id='<%= renderResponse.getNamespace() + "controlPanelPortletLink_" + categoryPortletId %>'>
-									<c:choose>
-										<c:when test="<%= Validator.isNull(categoryPortlet.getIcon()) %>">
-											<liferay-ui:icon src='<%= themeDisplay.getPathContext() + "/html/icons/default.png" %>' />
-										</c:when>
-										<c:otherwise>
-											<liferay-portlet:icon-portlet portlet="<%= categoryPortlet %>" />
-										</c:otherwise>
-									</c:choose>
-
-									<%= PortalUtil.getPortletTitle(categoryPortlet, application, locale) %>
-								</a>
+								<liferay-ui:icon
+									cssClass="control-panel-home-link"
+									id='<%= "controlPanelPortletLink_" + categoryPortletId %>'
+									label="<%= true %>"
+									message="<%= PortalUtil.getPortletTitle(categoryPortlet, application, locale) %>"
+									src='<%= Validator.isNull(categoryPortlet.getIcon())? themeDisplay.getPathContext() + "/html/icons/default.png" : categoryPortlet.getStaticResourcePath().concat(categoryPortlet.getIcon()) %>'
+									url="<%= urlCategoryPortlet %>"
+								/>
 
 								<c:if test='<%= Validator.isNotNull(portletDescription) && !portletDescription.startsWith("javax.portlet.description") %>'>
 									<liferay-ui:icon-help message="<%= portletDescription %>" />

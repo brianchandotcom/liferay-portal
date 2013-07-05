@@ -1,17 +1,17 @@
 <html>
 <head>
-<title>Staging</title>
+<title>StagingPG</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">Staging</td></tr>
+<tr><td rowspan="1" colspan="3">StagingPG</td></tr>
 </thead>
 <tbody>
 <tr>
 	<td>PAGE_NAME</td>
 	<td></td>
-	<td>Staging</td>
+	<td>StagingPG</td>
 </tr>
 <tr>
 	<td></td>
@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>LIVE_BUTTON</td>
-	<td>//div[@class='staging-bar']/ul/li/span[contains(.,'Live')]</td>
+	<td>//div[@class='staging-bar']/ul/li/a[contains(.,'Live')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -35,7 +35,7 @@
 </tr>
 <tr>
 	<td>STAGING_DROP_DOWN_BUTTON</td>
-	<td>//li[@class='dropdown']/a/b</td>
+	<td>//li[@class=' dropdown']/a[contains(.,'Staging')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -82,12 +82,12 @@
 </tr>
 <tr>
 	<td>STAGING_MENU_HISTORY_BUTTON</td>
-	<td>//button[contains(.,'History')]/i</td>
+	<td>//button[contains(.,'History')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>STAGING_MENU_MARK_AS_READY_FOR_PUBLICATION_BUTTON</td>
-	<td>//button[contains(.,'Mark as Ready for Publication')]/i</td>
+	<td>//button[contains(.,'Mark as Ready for Publication')]</td>
 	<td></td>
 </tr>
 <tr>

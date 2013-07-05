@@ -198,11 +198,20 @@ public class ImportLayoutsAction extends PortletAction {
 			ResourceResponse resourceResponse)
 		throws Exception {
 
+		String cmd = ParamUtil.getString(resourceRequest, Constants.CMD);
+
 		PortletContext portletContext = portletConfig.getPortletContext();
 
-		PortletRequestDispatcher portletRequestDispatcher =
-			portletContext.getRequestDispatcher(
+		PortletRequestDispatcher portletRequestDispatcher = null;
+
+		if (cmd.equals(Constants.IMPORT)) {
+			portletRequestDispatcher = portletContext.getRequestDispatcher(
+				"/html/portlet/layouts_admin/import_layouts_processes.jsp");
+		}
+		else {
+			portletRequestDispatcher = portletContext.getRequestDispatcher(
 				"/html/portlet/layouts_admin/import_layouts_resources.jsp");
+		}
 
 		portletRequestDispatcher.include(resourceRequest, resourceResponse);
 	}

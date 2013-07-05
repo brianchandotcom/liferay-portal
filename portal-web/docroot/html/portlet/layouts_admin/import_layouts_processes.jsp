@@ -20,7 +20,7 @@
 long groupId = ParamUtil.getLong(request, "groupId");
 boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 
-PortletURL portletURL = renderResponse.createRenderURL();
+PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/layouts_admin/import_layouts");
 portletURL.setParameter("tabs2", "all-import-processes");

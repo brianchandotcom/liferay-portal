@@ -18,7 +18,6 @@
 
 <%
 long groupId = ParamUtil.getLong(request, "groupId");
-boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 boolean validate = ParamUtil.getBoolean(request, "validate", true);
 
 String[] tempFileEntryNames = LayoutServiceUtil.getTempFileEntryNames(groupId, ExportImportHelper.TEMP_FOLDER_NAME);
@@ -43,6 +42,24 @@ String[] tempFileEntryNames = LayoutServiceUtil.getTempFileEntryNames(groupId, E
 	</liferay-ui:section>
 
 	<liferay-ui:section>
-		<liferay-util:include page="/html/portlet/layouts_admin/import_layouts_processes.jsp" />
+		<div id="<portlet:namespace />importProcesses">
+			<liferay-util:include page="/html/portlet/layouts_admin/import_layouts_processes.jsp" />
+		</div>
 	</liferay-ui:section>
 </liferay-ui:tabs>
+
+<aui:script use="liferay-export-import">
+	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="importProcessesURL">
+		<portlet:param name="struts_action" value="/layouts_admin/import_layouts" />
+		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.IMPORT %>" />
+	</liferay-portlet:resourceURL>
+
+	new Liferay.ExportImport(
+		{
+			form: document.<portlet:namespace />fm1,
+			namespace: '<portlet:namespace />',
+			processesNode: '#importProcesses',
+			processesResourceURL: '<%= importProcessesURL.toString() %>'
+		}
+	);
+</aui:script>

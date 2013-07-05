@@ -1,0 +1,34 @@
+<definition>
+	<command name="assertClick">
+		<case comparator="startsWith" locator-key1="ACTIONS_MENULIST_">
+			<execute function="AssertClick#assertTextClickAtAndWait" />
+		</case>
+		<case comparator="startsWith" locator-key1="ADD_MENULIST_">
+			<execute function="AssertClick#assertTextClickAtAndWait" />
+		</case>
+		<case comparator="startsWith" locator-key1="DOCUMENT_MENULIST_">
+			<execute function="AssertClick#assertTextClickAtAndWait" />
+		</case>
+		<case comparator="startsWith" locator-key1="FOLDER_MENULIST_">
+			<execute function="AssertClick#assertTextClickAtAndWait" />
+		</case>
+		<case comparator="startsWith" locator-key1="MANAGE_MENULIST_">
+			<execute function="AssertClick#assertTextClickAtAndWait" />
+		</case>
+		<case comparator="startsWith" locator-key1="SORT_BY_MENULIST_">
+			<execute function="AssertClick#assertTextClickAtAndWait" />
+		</case>
+	</command>
+
+	<command name="assertTextEquals">
+		<case locator-key1="SUCCESS_MESSAGE">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+	</command>
+
+	<command name="isElementPresent">
+		<case locator-key1="ENTRIES_DOCUMENT">
+			<execute function="IsElementPresent#isVisible" />
+		</case>
+	</command>
+</definition>

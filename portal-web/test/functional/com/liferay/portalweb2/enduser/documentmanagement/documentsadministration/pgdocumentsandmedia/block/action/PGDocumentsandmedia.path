@@ -88,7 +88,7 @@
 <!--TOOLBAR-->
 <tr>
 	<td>TOOLBAR_SELECT_ALL_CHECKBOX</td>
-	<td>//div[@class='lfr-header-row-content']/div/input</td>
+	<td>//input[@id='_20_allRowIdsCheckbox']</td>
 	<td>Select All</td>
 </tr>
 <tr>
@@ -223,29 +223,29 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--SORTY_BY_MENULIST-->
+<!--SORT_BY_MENULIST-->
 <tr>
-	<td>SORTY_BY_MENULIST_TITLE</td>
+	<td>SORT_BY_MENULIST_TITLE</td>
 	<td>//li[@id='_20_sortButtonContainer']/ul/li[1]/a[contains(.,'Title')]</td>
 	<td>Title</td>
 </tr>
 <tr>
-	<td>SORTY_BY_MENULIST_CREATE_DATE</td>
+	<td>SORT_BY_MENULIST_CREATE_DATE</td>
 	<td>//li[@id='_20_sortButtonContainer']/ul/li[2]/a[contains(.,'Create Date')]</td>
 	<td>Create Date</td>
 </tr>
 <tr>
-	<td>SORTY_BY_MENULIST_MODIFIED_DATE</td>
+	<td>SORT_BY_MENULIST_MODIFIED_DATE</td>
 	<td>//li[@id='_20_sortButtonContainer']/ul/li[3]/a[contains(.,'Modified Date')]</td>
 	<td>Modified Date</td>
 </tr>
 <tr>
-	<td>SORTY_BY_MENULIST_DOWNLOADS</td>
+	<td>SORT_BY_MENULIST_DOWNLOADS</td>
 	<td>//li[@id='_20_sortButtonContainer']/ul/li[4]/a[contains(.,'Downloads')]</td>
 	<td>Downloads</td>
 </tr>
 <tr>
-	<td>SORTY_BY_MENULIST_SIZE</td>
+	<td>SORT_BY_MENULIST_SIZE</td>
 	<td>//li[@id='_20_sortButtonContainer']/ul/li[5]/a[contains(.,'Size')]</td>
 	<td>Size</td>
 </tr>
@@ -295,43 +295,53 @@
 <!--ENTRIES-->
 <tr>
 	<td>ENTRIES_SUBSCRIBE</td>
-	<td>//div[@id='_20_entriesContainer']/div[1]/span/a/span</td>
+	<td>//div[@class='subscribe-action']/span/a/span</td>
 	<td>Subscribe</td>
 </tr>
 <tr>
 	<td>ENTRIES_DOCUMENT</td>
-	<td>//div[@id='_20_entriesContainer']/div[2]/a[@data-folder='false']/div</td>
+	<td>//a[@data-folder='false']/div[@class='entry-thumbnail']</td>
 	<td>Document Entry</td>
 </tr>
 <tr>
 	<td>ENTRIES_DOCUMENT_TITLE</td>
-	<td>//div[@id='_20_entriesContainer']/div[2]/a[@data-folder='false']/span</td>
+	<td>//a[@data-folder='false']/span[@class='entry-title']/span</td>
 	<td>Document Title</td>
 </tr>
 <tr>
 	<td>ENTRIES_DOCUMENT_SELECT</td>
-	<td>//div[@id='_20_entriesContainer']/div[2]/input</td>
+	<td>//input[@id='_20_rowIdsFileEntryCheckbox']</td>
 	<td>Select Document Entry</td>
 </tr>
 <tr>
 	<td>ENTRIES_DOCUMENT_ACTIONS</td>
-	<td>//div[@id='_20_entriesContainer']/div[2]/span/div/a</td>
+	<td>//div/span[@class='entry-action overlay']/div/a/i</td>
 	<td>Document Entry Actions</td>
 </tr>
 <tr>
 	<td>ENTRIES_FOLDER</td>
-	<td>//div[@id='_20_entriesContainer']/div[3]/a[@data-folder='true']/div</td>
+	<td>//a[@data-folder='true']/div[@class='entry-thumbnail']</td>
 	<td>Folder Entry</td>
 </tr>
 <tr>
+	<td>ENTRIES_FOLDER_TITLE</td>
+	<td>//a[@data-folder='true']/span[@class='entry-title']/span</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ENTRIES_FOLDER_SELECT</td>
-	<td>//div[@id='_20_entriesContainer']/div[3]/input</td>
+	<td>//input[@id='_20_rowIdsFolderCheckbox']</td>
 	<td>Select Folder Entry</td>
 </tr>
 <tr>
 	<td>ENTRIES_FOLDER_ACTIONS</td>
-	<td>//div[@id='_20_entriesContainer']/div[3]/span/div/a</td>
+	<td>//div/span[@class='entry-action overlay']/div/a/i</td>
 	<td>File Entry Actions</td>
+</tr>
+<tr>
+	<td>ENTRIES_SEARCH_DOCUMENT_TITLE</td>
+	<td>//span[@class='entry-title']</td>
+	<td></td>
 </tr>
 <tr>
 	<td></td>

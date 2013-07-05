@@ -1,0 +1,16 @@
+<definition>
+	<command name="assertClick">
+		<case locator-key1="TOOLBAR_EDIT_BUTTON">
+			<execute function="AssertClick#assertTextClickAtAndWait" />
+		</case>
+		<case locator-key1="TOOLBAR_MOVE_TO_RECYCLE_BIN_BUTTON">
+			<execute function="AssertClick#assertTextClickAtAndWait" />
+		</case>
+	</command>
+
+	<command name="assertTextEquals">
+		<case locator-key1="SUCCESS_MESSAGE">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+	</command>
+</definition>

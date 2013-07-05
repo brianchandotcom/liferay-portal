@@ -1,0 +1,221 @@
+<definition>
+	<var name="pageName" value="Documents and Media Page" />
+	<var name="portletName" value="Documents and Media" />
+
+	<set-up>
+		<execute macro="User#pgFirstLogin" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="portletName" value="${portletName}" />
+		</execute>
+	</set-up>
+
+	<command name="AddDocument">
+		<var name="dmDocumentDescription" value="DM Document Description" />
+		<var name="dmDocumentFile" value="Document_1.doc" />
+		<var name="dmDocumentTitle" value="DM Document Title" />
+
+		<execute macro="DMDocument#addPG">
+			<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
+			<var name="dmDocumentFile" value="${dmDocumentFile}" />
+			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DMDocument#viewPG">
+			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
+			<var name="pageName" value="${pageName}" />
+		</execute>
+	</command>
+
+	<command name="AddDocuments">
+		<var name="dmDocumentDescription1" value="DM Document1 Description" />
+		<var name="dmDocumentDescription2" value="DM Document2 Description" />
+		<var name="dmDocumentDescription3" value="DM Document3 Description" />
+
+		<var name="dmDocumentFile1" value="Document_1.doc" />
+		<var name="dmDocumentFile2" value="Document_2.doc" />
+		<var name="dmDocumentFile3" value="Document_3.doc" />
+
+		<var name="dmDocumentTitle1" value="DM Document1 Title" />
+		<var name="dmDocumentTitle2" value="DM Document2 Title" />
+		<var name="dmDocumentTitle3" value="DM Document3 Title" />
+
+		<execute macro="DMDocument#addPG">
+			<var name="dmDocumentDescription" value="${dmDocumentDescription1}" />
+			<var name="dmDocumentFile" value="${dmDocumentFile1}" />
+			<var name="dmDocumentTitle" value="${dmDocumentTitle1}" />
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DMDocument#viewPG">
+			<var name="dmDocumentTitle" value="${dmDocumentTitle1}" />
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DMDocument#addPG">
+			<var name="dmDocumentDescription" value="${dmDocumentDescription2}" />
+			<var name="dmDocumentFile" value="${dmDocumentFile2}" />
+			<var name="dmDocumentTitle" value="${dmDocumentTitle2}" />
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DMDocument#viewPG">
+			<var name="dmDocumentTitle" value="${dmDocumentTitle2}" />
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DMDocument#addPG">
+			<var name="dmDocumentDescription" value="${dmDocumentDescription3}" />
+			<var name="dmDocumentFile" value="${dmDocumentFile3}" />
+			<var name="dmDocumentTitle" value="${dmDocumentTitle3}" />
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DMDocument#viewPG">
+			<var name="dmDocumentTitle" value="${dmDocumentTitle3}" />
+			<var name="pageName" value="${pageName}" />
+		</execute>
+	</command>
+
+	<command name="AddFolder">
+		<var name="dmFolderDescription" value="DM Folder Description" />
+		<var name="dmFolderName" value="DM Folder Name" />
+
+		<execute macro="DMFolder#addPG">
+			<var name="dmFolderDescription" value="${dmFolderDescription}" />
+			<var name="dmFolderName" value="${dmFolderName}" />
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DMFolder#viewPG">
+			<var name="dmFolderName" value="${dmFolderName}" />
+			<var name="pageName" value="${pageName}" />
+		</execute>
+	</command>
+
+	<command name="DeleteDocument">
+		<var name="dmDocumentDescription" value="DM Document Description" />
+		<var name="dmDocumentFile" value="Document_1.doc" />
+		<var name="dmDocumentTitle" value="DM Document Title" />
+
+		<execute macro="DMDocument#addPG">
+			<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
+			<var name="dmDocumentFile" value="${dmDocumentFile}" />
+			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DMDocument#deletePG">
+			<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
+			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
+			<var name="pageName" value="${pageName}" />
+		</execute>
+	</command>
+
+	<command name="DeleteFolder">
+		<var name="dmFolderDescription" value="DM Folder Description" />
+		<var name="dmFolderName" value="DM Folder Name" />
+
+		<execute macro="DMFolder#addPG">
+			<var name="dmFolderDescription" value="${dmFolderDescription}" />
+			<var name="dmFolderName" value="${dmFolderName}" />
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DMFolder#deletePG">
+			<var name="dmFolderName" value="${dmFolderName}" />
+			<var name="pageName" value="${pageName}" />
+		</execute>
+	</command>
+
+	<command name="EditDocument">
+		<var name="dmDocumentDescription" value="DM Document Description" />
+		<var name="dmDocumentFile" value="Document_1.doc" />
+		<var name="dmDocumentTitle" value="DM Document Title" />
+
+		<execute macro="DMDocument#addPG">
+			<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
+			<var name="dmDocumentFile" value="${dmDocumentFile}" />
+			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DMDocument#editPG">
+			<var name="dmDocumentDescriptionEdit" value="${dmDocumentDescription} Edit" />
+			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
+			<var name="dmDocumentTitleEdit" value="${dmDocumentTitle} Edit" />
+			<var name="pageName" value="${pageName}" />
+		</execute>
+	</command>
+
+	<command name="EditFolder">
+		<var name="dmFolderDescription" value="DM Folder Description" />
+		<var name="dmFolderName" value="DM Folder Name" />
+
+		<execute macro="DMFolder#addPG">
+			<var name="dmFolderDescription" value="${dmFolderDescription}" />
+			<var name="dmFolderName" value="${dmFolderName}" />
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DMFolder#editPG">
+			<var name="dmFolderDescriptionEdit" value="${dmFolderDescription} Edit" />
+			<var name="dmFolderName" value="${dmFolderName}" />
+			<var name="dmFolderNameEdit" value="${dmFolderName} Edit" />
+			<var name="pageName" value="${pageName}" />
+		</execute>
+	</command>
+
+	<command name="MoveFolderDocumentToFolder">
+		<var name="dmDocumentDescription" value="DM Document Description" />
+		<var name="dmDocumentFile" value="Document_1.doc" />
+		<var name="dmDocumentTitle" value="DM Document Title" />
+
+		<var name="dmFolderDescription1" value="DM Folder1 Description" />
+		<var name="dmFolderDescription2" value="DM Folder2 Description" />
+
+		<var name="dmFolderName1" value="DM Folder1 Name" />
+		<var name="dmFolderName2" value="DM Folder2 Name" />
+
+		<execute macro="DMFolder#addPG">
+			<var name="dmFolderDescription" value="${dmFolderDescription}" />
+			<var name="dmFolderName" value="${dmFolderName}" />
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DMFolder#addPG">
+			<var name="dmFolderDescription" value="${dmFolderDescription2}" />
+			<var name="dmFolderName" value="${dmFolderName2}" />
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DMDocument#addPG">
+			<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
+			<var name="dmDocumentFile" value="${dmDocumentFile}" />
+			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DMFolderDocument#moveToFolderPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+	</command>
+
+	<tear-down>
+		<execute macro="DMDocument#tearDownPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DMFolder#tearDownPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Page#tearDownPG" />
+	</tear-down>
+</definition>

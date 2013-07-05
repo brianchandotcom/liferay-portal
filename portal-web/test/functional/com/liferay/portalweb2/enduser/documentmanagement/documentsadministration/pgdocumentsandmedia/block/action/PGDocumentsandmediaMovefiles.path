@@ -9,17 +9,17 @@
 </thead>
 <tbody>
 <tr>
-	<td>SELECT</td>
+	<td>SELECT_BUTTON</td>
 	<td>//button[contains(.,'Select')]</td>
 	<td>Select</td>
 </tr>
 <tr>
-	<td>MOVE</td>
+	<td>MOVE_BUTTON</td>
 	<td>//button[contains(.,'Move')]</td>
 	<td>Move</td>
 </tr>
 <tr>
-	<td>CANCEL</td>
+	<td>CANCEL_BUTTON</td>
 	<td>//button[contains(.,'Cancel')]</td>
 	<td>Cancel</td>
 </tr>
@@ -35,9 +35,9 @@
 </tr>
 <!--SELECT_POP_UP-->
 <tr>
-	<td>SELECT_POP_UP</td>
-	<td>title=Documents and Media</td>
-	<td>Select Pop Up</td>
+	<td>SELECT_POP_UP_IFRAME</td>
+	<td>//iframe[@id='_20_selectFolder_iframe_']</td>
+	<td></td>
 </tr>
 <tr>
 	<td>SELECT_POP_UP_ADD_FOLDER</td>

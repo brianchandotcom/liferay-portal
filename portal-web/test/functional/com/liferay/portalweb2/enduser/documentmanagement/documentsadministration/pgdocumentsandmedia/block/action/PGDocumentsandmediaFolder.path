@@ -41,7 +41,7 @@
 </tr>
 <tr>
 	<td>TOOLBAR_SELECT_ALL</td>
-	<td>//div[@class='lfr-header-row-content']/div/input[2]</td>
+	<td>//input[@id='_20_allRowIdsCheckbox']</td>
 	<td>Select All</td>
 </tr>
 <tr>
@@ -161,29 +161,29 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--SORTY_BY_MENULIST-->
+<!--SORT_BY_MENULIST-->
 <tr>
-	<td>SORTY_BY_MENULIST_TITLE</td>
+	<td>SORT_BY_MENULIST_TITLE</td>
 	<td>//li[@id='_20_sortButtonContainer']/ul/li[1]/a[contains(.,'Title')]</td>
 	<td>Title</td>
 </tr>
 <tr>
-	<td>SORTY_BY_MENULIST_CREATE_DATE</td>
+	<td>SORT_BY_MENULIST_CREATE_DATE</td>
 	<td>//li[@id='_20_sortButtonContainer']/ul/li[2]/a[contains(.,'Create Date')]</td>
 	<td>Create Date</td>
 </tr>
 <tr>
-	<td>SORTY_BY_MENULIST_MODIFIED_DATE</td>
+	<td>SORT_BY_MENULIST_MODIFIED_DATE</td>
 	<td>//li[@id='_20_sortButtonContainer']/ul/li[3]/a[contains(.,'Modified Date')]</td>
 	<td>Modified Date</td>
 </tr>
 <tr>
-	<td>SORTY_BY_MENULIST_DOWNLOADS</td>
+	<td>SORT_BY_MENULIST_DOWNLOADS</td>
 	<td>//li[@id='_20_sortButtonContainer']/ul/li[4]/a[contains(.,'Downloads')]</td>
 	<td>Downloads</td>
 </tr>
 <tr>
-	<td>SORTY_BY_MENULIST_SIZE</td>
+	<td>SORT_BY_MENULIST_SIZE</td>
 	<td>//li[@id='_20_sortButtonContainer']/ul/li[5]/a[contains(.,'Size')]</td>
 	<td>Size</td>
 </tr>
@@ -229,6 +229,17 @@
 	<td>LIFERAY_SYNC_LINK</td>
 	<td>link=Access these files offline using Liferay Sync.</td>
 	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--FOLDER_ENTRIES-->
+<tr>
+	<td>FOLDER_ENTRIES_DOCUMENT_CHECKBOX</td>
+	<td>//input[@id='_20_rowIdsFileEntryCheckbox']</td>
+	<td>Select Document</td>
 </tr>
 <tr>
 	<td></td>

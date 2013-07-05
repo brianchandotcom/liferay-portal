@@ -14,6 +14,10 @@
 
 package com.liferay.portal.kernel.resiliency.mpi;
 
+import com.liferay.portal.kernel.messaging.MessageBus;
+import com.liferay.portal.kernel.messaging.config.AbstractMessagingConfigurator;
+import com.liferay.portal.kernel.messaging.config.MessagingConfigurator;
+import com.liferay.portal.kernel.messaging.config.MessagingConfiguratorRegistry;
 import com.liferay.portal.kernel.nio.intraband.Intraband;
 import com.liferay.portal.kernel.nio.intraband.blocking.ExecutorIntraband;
 import com.liferay.portal.kernel.nio.intraband.nonblocking.SelectorIntraband;
@@ -76,7 +80,17 @@ public class MPIHelperUtilTest {
 
 		SPIRegistryUtil spiRegistryUtil = new SPIRegistryUtil();
 
-		spiRegistryUtil.setSPIRegistry(new SPIRegistryImpl());
+		spiRegistryUtil.setSPIRegistry(new SPIRegistryImpl() {
+
+			@Override
+			public void registerSPI(SPI spi) {
+			}
+
+			@Override
+			public void unregisterSPI(SPI spi) {
+			}
+
+		});
 	}
 
 	@After
@@ -567,11 +581,14 @@ public class MPIHelperUtilTest {
 
 		Assert.assertTrue(MPIHelperUtil.registerSPIProvider(mockSPIProvider));
 
+		String servletContextName1 = "servletContextName1";
+
 		mockSPI1 = new MockSPI();
 
 		mockSPI1.mpi = MPIHelperUtil.getMPI();
 		mockSPI1.spiConfiguration = new SPIConfiguration(
-			"testId1", "", 8081, "", new String[0], new String[0]);
+			"testId1", "", 8081, "", new String[0],
+			new String[]{servletContextName1});
 		mockSPI1.spiProviderName = name;
 
 		logRecords = JDKLoggerTestUtil.configureJDKLogger(
@@ -590,11 +607,39 @@ public class MPIHelperUtilTest {
 		logRecords = JDKLoggerTestUtil.configureJDKLogger(
 			MPIHelperUtil.class.getName(), Level.OFF);
 
+		String servletContextName2 = "servletContextName2";
+
+		MessagingConfigurator messagingConfigurator =
+			new AbstractMessagingConfigurator() {
+
+			@Override
+			public void connect() {
+			}
+
+			@Override
+			public void disconnect() {
+			}
+
+			@Override
+			protected MessageBus getMessageBus() {
+				return null;
+			}
+
+			@Override
+			protected ClassLoader getOperatingClassloader() {
+				return null;
+			}
+		};
+
+		MessagingConfiguratorRegistry.register(
+			servletContextName2, messagingConfigurator);
+
 		MockSPI mockSPI2 = new MockSPI();
 
 		mockSPI2.mpi = MPIHelperUtil.getMPI();
 		mockSPI2.spiConfiguration = new SPIConfiguration(
-			"testId2", "", 8082, "", new String[0], new String[0]);
+			"testId2", "", 8082, "", new String[0],
+			new String[]{servletContextName2});
 		mockSPI2.spiProviderName = name;
 
 		Assert.assertTrue(MPIHelperUtil.registerSPI(mockSPI2));

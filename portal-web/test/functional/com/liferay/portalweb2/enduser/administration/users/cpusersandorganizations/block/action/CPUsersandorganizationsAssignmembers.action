@@ -1,28 +1,19 @@
 <definition>
-	<command name="assertTextEquals">
-		<case locator-key1="INFO_MESSAGE">
-			<execute function="AssertTextEquals#assertText" value1="No users were found." />
-		</case>
-		<case locator-key1="SUCCESS_MESSAGE">
-			<execute function="AssertTextEquals#assertText" value1="Your request completed successfully." />
-		</case>
-	</command>
-
-	<command name="click">
+	<command name="assertClick">
 		<case locator-key1="AVAILABLE">
-			<execute function="Click#textClickAtAndWait" value1="Available" />
+			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
 		<case locator-key1="BACK">
-			<execute function="Click#partialTextClickAtAndWait" value1="Back" />
+			<execute function="AssertClick#assertPartialTextClickAtAndWait" />
 		</case>
 		<case locator-key1="BASIC_SEARCH_BUTTON">
-			<execute function="Click#textClickAtAndWait" value1="Search" />
+			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
 		<case locator-key1="CURRENT">
-			<execute function="Click#textClickAtAndWait" value1="Current" />
+			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
 		<case locator-key1="UPDATE_ASSOCIATIONS_BUTTON">
-			<execute function="Click#textClickAtAndWait" value1="Update Associations" />
+			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
 	</command>
 

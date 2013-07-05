@@ -5,16 +5,16 @@
 		</execute>
 
 		<execute action="CPUsersandorganizations#type" locator-key1="SEARCH_FIELD" value1="${orgName}" />
-		<execute action="CPUsersandorganizations#click" locator-key1="SEARCH_BUTTON" />
+		<execute action="CPUsersandorganizations#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
 		<execute action="CPUsersandorganizations#assertTextEquals" locator-key1="ORGANIZATION_TABLE_NAME_1" value1="${orgName}" />
-		<execute action="CPUsersandorganizations#click" locator-key1="ORGANIZATION_TABLE_ACTIONS_1" />
-		<execute action="CPUsersandorganizations#click" locator-key1="ORGANIZATION_MENULIST_ADD_REGULAR_ORGANIZATION" />
+		<execute action="CPUsersandorganizations#assertClick" locator-key1="ORGANIZATION_TABLE_ACTIONS_1" value1="Actions" />
+		<execute action="CPUsersandorganizations#assertClick" locator-key1="ORGANIZATION_MENULIST_ADD_REGULAR_ORGANIZATION" value1="Add Regular Organization" />
 
 		<execute action="CPUsersandorganizationsAddorganization#type" locator-key1="DETAILS_NAME_FIELD" value1="${suborgName}" />
 		<execute action="CPUsersandorganizationsAddorganization#select" locator-key1="DETAILS_TYPE_SELECT" value1="${suborgType}" />
-		<execute action="CPUsersandorganizationsAddorganization#click" locator-key1="SAVE_BUTTON" />
+		<execute action="CPUsersandorganizationsAddorganization#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 
-		<execute action="CPUsersandorganizationsOrganizationEdit#assertTextEquals" locator-key1="SUCCESS_MESSAGE" />
+		<execute action="CPUsersandorganizationsOrganizationEdit#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute action="CPUsersandorganizationsOrganizationEdit#assertTextEquals" locator-key1="DETAILS_NAME_FIELD" value1="${suborgName}" />
 		<execute action="CPUsersandorganizationsOrganizationEdit#assertTextEquals" locator-key1="DETAILS_TYPE" value1="Type ${suborgType}" />
 

@@ -143,23 +143,12 @@ String newTitle = ParamUtil.get(request, "newTitle", StringPool.BLANK);
 				<%
 				}
 
-				WikiPage nextPage = null;
-
 				boolean pending = false;
 
-				double nextVersion = MathUtil.format(wikiPage.getVersion() + 0.1, 1, 1);
+				if (WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, WikiPage.class.getName())) {
+					WikiPage lastWikiPage = WikiPageServiceUtil.getPage(wikiPage.getNodeId(), wikiPage.getTitle(), null);
 
-				try {
-					nextPage = WikiPageServiceUtil.getPage(wikiPage.getNodeId(), wikiPage.getTitle(), nextVersion);
-				}
-				catch (Exception e) {
-				}
-
-				if (nextPage != null) {
-					pending = nextPage.isPending();
-				}
-				else {
-					pending = wikiPage.isPending();
+					pending = lastWikiPage.isPending();
 				}
 				%>
 

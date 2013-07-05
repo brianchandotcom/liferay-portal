@@ -15,10 +15,12 @@
 package com.liferay.portal.editor.fckeditor.receiver.impl;
 
 import com.liferay.portal.editor.fckeditor.command.CommandArgument;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.xuggler.XugglerUtil;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.util.VideoProcessorUtil;
 
@@ -27,6 +29,9 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 /**
  * @author Juan Gonzalez
@@ -48,7 +53,29 @@ public class VideoCommandReceiver extends DocumentCommandReceiver {
 	}
 
 	@Override
-	protected List<FileEntry> getFileEntries(Folder folder) throws Exception {
+	protected Element getFileElement(
+			Element fileElement, ThemeDisplay themeDisplay, FileEntry fileEntry)
+		throws Exception {
+
+		fileElement = super.getFileElement(
+			fileElement, themeDisplay, fileEntry);
+
+		if (!VideoProcessorUtil.hasVideo(fileEntry.getFileVersion())) {
+			fileElement.setAttribute(
+					"errorMessage",
+					LanguageUtil.get(
+						themeDisplay.getLocale(),
+						"video-still-generating-try-later"));
+		}
+
+		return fileElement;
+	}
+
+	@Override
+	protected List<Element> getFileElements(
+			Document document, ThemeDisplay themeDisplay, Folder folder)
+		throws Exception {
+
 		List<FileEntry> fileEntries = null;
 
 		String[] videoMimeTypes = getVideoMimeTypes();
@@ -62,13 +89,17 @@ public class VideoCommandReceiver extends DocumentCommandReceiver {
 				folder.getRepositoryId(), folder.getFolderId());
 		}
 
-		List<FileEntry> generatedVideoEntries = new ArrayList<FileEntry>();
+		List<Element> fileElements = new ArrayList<Element>();
 
 		for (FileEntry fileEntry : fileEntries) {
-			generatedVideoEntries.add(fileEntry);
+			Element fileElement = document.createElement("File");
+
+			fileElement = getFileElement(fileElement, themeDisplay, fileEntry);
+
+			fileElements.add(fileElement);
 		}
 
-		return generatedVideoEntries;
+		return fileElements;
 	}
 
 	private String[] getVideoMimeTypes() {

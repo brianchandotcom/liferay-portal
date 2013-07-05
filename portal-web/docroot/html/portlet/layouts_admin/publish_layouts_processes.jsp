@@ -20,7 +20,7 @@
 String closeRedirect = ParamUtil.getString(request, "closeRedirect");
 long groupId = ParamUtil.getLong(request, "groupId");
 
-PortletURL renderURL = renderResponse.createRenderURL();
+PortletURL renderURL = liferayPortletResponse.createRenderURL();
 
 renderURL.setParameter("struts_action", "/layouts_admin/publish_layouts");
 renderURL.setParameter("tabs2", "all-publication-processes");

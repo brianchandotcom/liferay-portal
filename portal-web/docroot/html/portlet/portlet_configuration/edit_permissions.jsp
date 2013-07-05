@@ -412,6 +412,7 @@ definePermissionsURL.setRefererPlid(plid);
 						buffer.append("\" ");
 
 						buffer.append("name=\"");
+						buffer.append(renderResponse.getNamespace());
 						buffer.append(role.getRoleId());
 
 						if (Validator.isNotNull(preselectedMsg)) {

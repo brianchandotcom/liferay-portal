@@ -352,7 +352,7 @@ int sortColumnIndex = -1;
 </c:if>
 
 <c:if test="<%= Validator.isNotNull(id) %>">
-	<input id="<%= namespace + id %>PrimaryKeys" name="<%= id %>PrimaryKeys" type="hidden" value="<%= StringUtil.merge(primaryKeys) %>" />
+	<input id="<%= namespace + id %>PrimaryKeys" name="<%= namespace + id %>PrimaryKeys" type="hidden" value="<%= StringUtil.merge(primaryKeys) %>" />
 
 	<aui:script use="liferay-search-container">
 		new Liferay.SearchContainer(

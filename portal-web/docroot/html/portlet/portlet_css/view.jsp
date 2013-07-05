@@ -21,7 +21,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 String tabs1Names = "portlet-configuration,text-styles,background-styles,border-styles,margin-and-padding,advanced-styling";
 
-if (PropsValues.MOBILE_STYLING_WAP_ENABLED) {
+if (PropsValues.MOBILE_DEVICE_STYLING_WAP_ENABLED) {
 	tabs1Names = tabs1Names + ",wap-styling";
 }
 %>

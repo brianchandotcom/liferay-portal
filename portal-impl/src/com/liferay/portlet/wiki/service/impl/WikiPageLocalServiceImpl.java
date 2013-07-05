@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
+import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.ResourceConstants;
@@ -425,9 +426,11 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			nodeId, title, false);
 
 		for (WikiPage oldPage : oldPages) {
-			oldPage.setParentTitle(originalParentTitle);
+			if (!WorkflowThreadLocal.isEnabled()) {
+				oldPage.setParentTitle(originalParentTitle);
 
-			wikiPagePersistence.update(oldPage);
+				wikiPagePersistence.update(oldPage);
+			}
 		}
 	}
 

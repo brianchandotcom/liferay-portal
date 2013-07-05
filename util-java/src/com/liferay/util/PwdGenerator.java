@@ -38,7 +38,7 @@ public class PwdGenerator {
 	}
 
 	public static String getPassword(int length) {
-		return _getPassword(false, KEY1 + KEY2 + KEY3, length, true);
+		return _getPassword(KEY1 + KEY2 + KEY3, length, true);
 	}
 
 	public static String getPassword(String key, int length) {
@@ -48,11 +48,11 @@ public class PwdGenerator {
 	public static String getPassword(
 		String key, int length, boolean useAllKeys) {
 
-		return _getPassword(false, key, length, useAllKeys);
+		return _getPassword(key, length, useAllKeys);
 	}
 
 	public static String getPinNumber() {
-		return _getPassword(false, KEY1, 4, true);
+		return _getPassword(KEY1, 4, true);
 	}
 
 	public static String getSecurePassword() {
@@ -60,7 +60,7 @@ public class PwdGenerator {
 	}
 
 	public static String getSecurePassword(int length) {
-		return _getPassword(true, KEY1 + KEY2 + KEY3, length, true);
+		return _getPassword(KEY1 + KEY2 + KEY3, length, true);
 	}
 
 	public static String getSecurePassword(String key, int length) {
@@ -70,11 +70,11 @@ public class PwdGenerator {
 	public static String getSecurePassword(
 		String key, int length, boolean useAllKeys) {
 
-		return _getPassword(true, key, length, useAllKeys);
+		return _getPassword(key, length, useAllKeys);
 	}
 
 	private static String _getPassword(
-		boolean secure, String key, int length, boolean useAllKeys) {
+		String key, int length, boolean useAllKeys) {
 
 		int keysCount = 0;
 
@@ -100,8 +100,10 @@ public class PwdGenerator {
 
 		StringBuilder sb = new StringBuilder(length);
 
+		SecureRandom random = new SecureRandom();
+
 		for (int i = 0; i < length; i++) {
-			sb.append(key.charAt((int)(_random(secure) * key.length())));
+			sb.append(key.charAt((int)(random.nextDouble() * key.length())));
 		}
 
 		String password = sb.toString();
@@ -131,31 +133,12 @@ public class PwdGenerator {
 		}
 
 		if (invalidPassword) {
-			return _getPassword(secure, key, length, useAllKeys);
+			return _getPassword(key, length, useAllKeys);
 		}
 
 		return password;
 	}
 
-	private static double _random(boolean secure) {
-		try {
-			if (secure) {
-				if (_secureRandom == null) {
-					_secureRandom = new SecureRandom();
-				}
-
-				return _secureRandom.nextDouble();
-			}
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-
-		return Math.random();
-	}
-
 	private static Log _log = LogFactoryUtil.getLog(PwdGenerator.class);
-
-	private static SecureRandom _secureRandom;
 
 }

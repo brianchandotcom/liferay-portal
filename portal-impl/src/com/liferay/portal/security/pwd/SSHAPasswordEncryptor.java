@@ -26,8 +26,6 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
-import java.util.Random;
-
 /**
  * @author Michael C. Han
  * @author Tomas Polesovsky
@@ -74,7 +72,7 @@ public class SSHAPasswordEncryptor
 		byte[] saltBytes = new byte[8];
 
 		if (Validator.isNull(encryptedPassword)) {
-			Random random = new SecureRandom();
+			SecureRandom random = new SecureRandom();
 
 			random.nextBytes(saltBytes);
 		}

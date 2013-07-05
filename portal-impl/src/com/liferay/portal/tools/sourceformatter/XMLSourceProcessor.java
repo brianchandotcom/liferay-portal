@@ -118,65 +118,35 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		int x = 0;
 
 		if (fileName.endsWith("-ext/build.xml")) {
-			x = fileName.indexOf("ext/");
-
-			if (x == -1) {
-				x = 0;
-			}
-			else {
-				x = x + 4;
+			if (fileName.startsWith("ext/")) {
+				x = 4;
 			}
 		}
 		else if (fileName.endsWith("-hook/build.xml")) {
-			x = fileName.indexOf("hooks/");
-
-			if (x == -1) {
-				x = 0;
-			}
-			else {
-				x = x + 6;
+			if (fileName.startsWith("hooks/")) {
+				x = 6;
 			}
 		}
 		else if (fileName.endsWith("-layouttpl/build.xml")) {
-			x = fileName.indexOf("layouttpl/");
-
-			if (x == -1) {
-				x = 0;
-			}
-			else {
-				x = x + 10;
+			if (fileName.startsWith("layouttpl/")) {
+				x = 10;
 			}
 		}
 		else if (fileName.endsWith("-portlet/build.xml")) {
-			x = fileName.indexOf("portlets/");
-
-			if (x == -1) {
-				x = 0;
-			}
-			else {
-				x = x + 9;
+			if (fileName.startsWith("portlets/")) {
+				x = 9;
 			}
 		}
 		else if (fileName.endsWith("-theme/build.xml")) {
-			x = fileName.indexOf("themes/");
-
-			if (x == -1) {
-				x = 0;
-			}
-			else {
-				x = x + 7;
+			if (fileName.startsWith("themes/")) {
+				x = 7;
 			}
 		}
 		else if (fileName.endsWith("-web/build.xml") &&
 				 !fileName.endsWith("/ext-web/build.xml")) {
 
-			x = fileName.indexOf("webs/");
-
-			if (x == -1) {
-				x = 0;
-			}
-			else {
-				x = x + 5;
+			if (fileName.startsWith("webs/")) {
+				x = 5;
 			}
 		}
 		else {

@@ -2342,8 +2342,10 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 
 		// Update web.xml
 
-		newContent = secureWebXml(
-			newContent, hasCustomServletListener, securityManagerEnabled);
+		if (securityManagerEnabled) {
+			newContent = secureWebXml(
+				newContent, hasCustomServletListener, securityManagerEnabled);
+		}
 
 		newContent = WebXMLBuilder.organizeWebXML(newContent);
 

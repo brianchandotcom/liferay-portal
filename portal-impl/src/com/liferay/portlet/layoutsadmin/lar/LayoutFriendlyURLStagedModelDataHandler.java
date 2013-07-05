@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.layoutsadmin.lar;
 
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
@@ -78,10 +79,8 @@ public class LayoutFriendlyURLStagedModelDataHandler
 
 		if (portletDataContext.isDataStrategyMirror()) {
 			LayoutFriendlyURL existingLayoutFriendlyURL =
-				LayoutFriendlyURLLocalServiceUtil.
-					fetchLayoutFriendlyURLByUuidAndGroupId(
-						layoutFriendlyURL.getUuid(),
-						portletDataContext.getScopeGroupId());
+				getExistingLayoutFriendlyURL(
+					portletDataContext, layoutFriendlyURL, plid);
 
 			if (existingLayoutFriendlyURL == null) {
 				serviceContext.setUuid(layoutFriendlyURL.getUuid());
@@ -117,6 +116,26 @@ public class LayoutFriendlyURLStagedModelDataHandler
 		portletDataContext.importClassedModel(
 			layoutFriendlyURL, importedLayoutFriendlyURL,
 			LayoutPortletDataHandler.NAMESPACE);
+	}
+
+	protected LayoutFriendlyURL getExistingLayoutFriendlyURL(
+			PortletDataContext portletDataContext,
+			LayoutFriendlyURL layoutFriendlyURL, long plid)
+		throws SystemException {
+
+		LayoutFriendlyURL existingLayoutFriendlyURL =
+			LayoutFriendlyURLLocalServiceUtil.
+				fetchLayoutFriendlyURLByUuidAndGroupId(
+					layoutFriendlyURL.getUuid(),
+					portletDataContext.getScopeGroupId());
+
+		if (existingLayoutFriendlyURL == null) {
+			existingLayoutFriendlyURL =
+				LayoutFriendlyURLLocalServiceUtil.fetchLayoutFriendlyURL(
+					plid, layoutFriendlyURL.getLanguageId(), false);
+		}
+
+		return existingLayoutFriendlyURL;
 	}
 
 }

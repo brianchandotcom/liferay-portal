@@ -1,65 +1,65 @@
 <#list 1..maxJournalArticlePageCount as journalArticlePageCount>
 	<#assign portletIdPrefix = "56_INSTANCE_TEST_" + journalArticlePageCount + "_">
 
-	<#assign layout = dataFactory.newLayout(groupId, groupId + "_journal_article_" + journalArticlePageCount, "", dataFactory.getJournalArticleLayoutColumn(portletIdPrefix))>
+	<#assign layoutModel = dataFactory.newLayoutModel(groupId, groupId + "_journal_article_" + journalArticlePageCount, "", dataFactory.getJournalArticleLayoutColumn(portletIdPrefix))>
 
-	${writerLayoutCSV.write(layout.friendlyURL + "\n")}
+	${writerLayoutCSV.write(layoutModel.friendlyURL + "\n")}
 
 	<@insertLayout
-		_layout = layout
+		_layoutModel = layoutModel
 	/>
 
-	<#assign portletPreferencesList = dataFactory.newPortletPreferences(layout.plid)>
+	<#assign portletPreferencesModels = dataFactory.newPortletPreferencesModels(layoutModel.plid)>
 
-	<#list portletPreferencesList as portletPreferences>
+	<#list portletPreferencesModels as portletPreferencesModel>
 		<@insertPortletPreferences
-			_portletPreferences = portletPreferences
+			_portletPreferencesModel = portletPreferencesModel
 		/>
 	</#list>
 
 	<#list 1..maxJournalArticleCount as journalArticleCount>
-		<#assign journalArticleResource = dataFactory.newJournalArticleResource(groupId)>
+		<#assign journalArticleResourceModel = dataFactory.newJournalArticleResourceModel(groupId)>
 
-		insert into JournalArticleResource values ('${journalArticleResource.uuid}', ${journalArticleResource.resourcePrimKey}, ${journalArticleResource.groupId}, '${journalArticleResource.articleId}');
+		insert into JournalArticleResource values ('${journalArticleResourceModel.uuid}', ${journalArticleResourceModel.resourcePrimKey}, ${journalArticleResourceModel.groupId}, '${journalArticleResourceModel.articleId}');
 
 		<#list 1..maxJournalArticleVersionCount as versionCount>
-			<#assign journalArticle = dataFactory.newJournalArticle(journalArticleResource, journalArticleCount, versionCount)>
+			<#assign journalArticleModel = dataFactory.newJournalArticleModel(journalArticleResourceModel, journalArticleCount, versionCount)>
 
-			insert into JournalArticle values ('${journalArticle.uuid}', ${journalArticle.id}, ${journalArticle.resourcePrimKey}, ${journalArticle.groupId}, ${journalArticle.companyId}, ${journalArticle.userId}, '${journalArticle.userName}', '${dataFactory.getDateString(journalArticle.createDate)}', '${dataFactory.getDateString(journalArticle.modifiedDate)}', ${journalArticle.folderId}, ${journalArticle.classNameId}, ${journalArticle.classPK}, '${journalArticle.articleId}', ${journalArticle.version}, '${journalArticle.title}', '${journalArticle.urlTitle}', '${journalArticle.description}', '${journalArticle.content}', '${journalArticle.type}', '${journalArticle.structureId}', '${journalArticle.templateId}', '${journalArticle.layoutUuid}', '${dataFactory.getDateString(journalArticle.displayDate)}', '${dataFactory.getDateString(journalArticle.expirationDate)}', '${dataFactory.getDateString(journalArticle.reviewDate)}', ${journalArticle.indexable?string}, ${journalArticle.smallImage?string}, ${journalArticle.smallImageId}, '${journalArticle.smallImageURL}', ${journalArticle.status}, ${journalArticle.statusByUserId}, '${journalArticle.statusByUserName}', '${dataFactory.getDateString(journalArticle.statusDate)}');
+			insert into JournalArticle values ('${journalArticleModel.uuid}', ${journalArticleModel.id}, ${journalArticleModel.resourcePrimKey}, ${journalArticleModel.groupId}, ${journalArticleModel.companyId}, ${journalArticleModel.userId}, '${journalArticleModel.userName}', '${dataFactory.getDateString(journalArticleModel.createDate)}', '${dataFactory.getDateString(journalArticleModel.modifiedDate)}', ${journalArticleModel.folderId}, ${journalArticleModel.classNameId}, ${journalArticleModel.classPK}, '${journalArticleModel.articleId}', ${journalArticleModel.version}, '${journalArticleModel.title}', '${journalArticleModel.urlTitle}', '${journalArticleModel.description}', '${journalArticleModel.content}', '${journalArticleModel.type}', '${journalArticleModel.structureId}', '${journalArticleModel.templateId}', '${journalArticleModel.layoutUuid}', '${dataFactory.getDateString(journalArticleModel.displayDate)}', '${dataFactory.getDateString(journalArticleModel.expirationDate)}', '${dataFactory.getDateString(journalArticleModel.reviewDate)}', ${journalArticleModel.indexable?string}, ${journalArticleModel.smallImage?string}, ${journalArticleModel.smallImageId}, '${journalArticleModel.smallImageURL}', ${journalArticleModel.status}, ${journalArticleModel.statusByUserId}, '${journalArticleModel.statusByUserName}', '${dataFactory.getDateString(journalArticleModel.statusDate)}');
 
 			<@insertSocialActivity
-				_entry = journalArticle
+				_entry = journalArticleModel
 			/>
 
 			<#if (versionCount = maxJournalArticleVersionCount) >
 				<@insertAssetEntry
-					_entry = journalArticle
+					_entry = journalArticleModel
 					_categoryAndTag = true
 				/>
 			</#if>
 		</#list>
 
 		<@insertResourcePermissions
-			_entry = journalArticleResource
+			_entry = journalArticleResourceModel
 		/>
 
 		<@insertMBDiscussion
 			_classNameId = dataFactory.journalArticleClassNameId
-			_classPK = journalArticleResource.resourcePrimKey
+			_classPK = journalArticleResourceModel.resourcePrimKey
 			_groupId = groupId
 			_maxCommentCount = 0
 			_mbRootMessageId = counter.get()
 			_mbThreadId = counter.get()
 		/>
 
-		<#assign portletPreferences = dataFactory.newPortletPreferences(layout.plid, portletIdPrefix + journalArticleCount, journalArticleResource)>
+		<#assign portletPreferencesModel = dataFactory.newPortletPreferencesModel(layoutModel.plid, portletIdPrefix + journalArticleCount, journalArticleResourceModel)>
 
 		<@insertPortletPreferences
-			_portletPreferences = portletPreferences
+			_portletPreferencesModel = portletPreferencesModel
 		/>
 
-		<#assign journalContentSearch = dataFactory.newJournalContentSearch(journalArticle, layout.plid)>
+		<#assign journalContentSearchModel = dataFactory.newJournalContentSearchModel(journalArticleModel, layoutModel.plid)>
 
-		insert into JournalContentSearch values (${journalContentSearch.contentSearchId}, ${journalContentSearch.groupId}, ${journalContentSearch.companyId}, ${journalContentSearch.privateLayout?string}, ${journalContentSearch.layoutId}, '${journalContentSearch.portletId}', '${journalContentSearch.articleId}');
+		insert into JournalContentSearch values (${journalContentSearchModel.contentSearchId}, ${journalContentSearchModel.groupId}, ${journalContentSearchModel.companyId}, ${journalContentSearchModel.privateLayout?string}, ${journalContentSearchModel.layoutId}, '${journalContentSearchModel.portletId}', '${journalContentSearchModel.articleId}');
 	</#list>
 </#list>

@@ -1,27 +1,27 @@
-<#list dataFactory.assetVocabularies as assetVocabulary>
-	insert into AssetVocabulary values ('${assetVocabulary.uuid}', ${assetVocabulary.vocabularyId}, ${assetVocabulary.groupId}, ${assetVocabulary.companyId}, ${assetVocabulary.userId}, '${assetVocabulary.userName}', '${dataFactory.getDateString(assetVocabulary.createDate)}', '${dataFactory.getDateString(assetVocabulary.modifiedDate)}', '${assetVocabulary.name}', '${assetVocabulary.title}', '${assetVocabulary.description}', '${assetVocabulary.settings}');
+<#list dataFactory.assetVocabularyModels as assetVocabularyModel>
+	insert into AssetVocabulary values ('${assetVocabularyModel.uuid}', ${assetVocabularyModel.vocabularyId}, ${assetVocabularyModel.groupId}, ${assetVocabularyModel.companyId}, ${assetVocabularyModel.userId}, '${assetVocabularyModel.userName}', '${dataFactory.getDateString(assetVocabularyModel.createDate)}', '${dataFactory.getDateString(assetVocabularyModel.modifiedDate)}', '${assetVocabularyModel.name}', '${assetVocabularyModel.title}', '${assetVocabularyModel.description}', '${assetVocabularyModel.settings}');
 
 	<@insertResourcePermissions
-		_entry = assetVocabulary
+		_entry = assetVocabularyModel
 	/>
 </#list>
 
-<#list dataFactory.assetCategories as assetCategory>
-	insert into AssetCategory values ('${assetCategory.uuid}', ${assetCategory.categoryId}, ${assetCategory.groupId}, ${assetCategory.companyId}, ${assetCategory.userId}, '${assetCategory.userName}', '${dataFactory.getDateString(assetCategory.createDate)}', '${dataFactory.getDateString(assetCategory.modifiedDate)}', ${assetCategory.parentCategoryId}, ${assetCategory.leftCategoryId}, ${assetCategory.rightCategoryId}, '${assetCategory.name}', '${assetCategory.title}', '${assetCategory.description}', ${assetCategory.vocabularyId});
+<#list dataFactory.assetCategoryModels as assetCategoryModel>
+	insert into AssetCategory values ('${assetCategoryModel.uuid}', ${assetCategoryModel.categoryId}, ${assetCategoryModel.groupId}, ${assetCategoryModel.companyId}, ${assetCategoryModel.userId}, '${assetCategoryModel.userName}', '${dataFactory.getDateString(assetCategoryModel.createDate)}', '${dataFactory.getDateString(assetCategoryModel.modifiedDate)}', ${assetCategoryModel.parentCategoryId}, ${assetCategoryModel.leftCategoryId}, ${assetCategoryModel.rightCategoryId}, '${assetCategoryModel.name}', '${assetCategoryModel.title}', '${assetCategoryModel.description}', ${assetCategoryModel.vocabularyId});
 
 	<@insertResourcePermissions
-		_entry = assetCategory
+		_entry = assetCategoryModel
 	/>
 </#list>
 
-<#list dataFactory.assetTags as assetTag>
-	insert into AssetTag values (${assetTag.tagId}, ${assetTag.groupId}, ${assetTag.companyId}, ${assetTag.userId}, '${assetTag.userName}', '${dataFactory.getDateString(assetTag.createDate)}', '${dataFactory.getDateString(assetTag.modifiedDate)}', '${assetTag.name}', ${assetTag.assetCount});
+<#list dataFactory.assetTagModels as assetTagModel>
+	insert into AssetTag values (${assetTagModel.tagId}, ${assetTagModel.groupId}, ${assetTagModel.companyId}, ${assetTagModel.userId}, '${assetTagModel.userName}', '${dataFactory.getDateString(assetTagModel.createDate)}', '${dataFactory.getDateString(assetTagModel.modifiedDate)}', '${assetTagModel.name}', ${assetTagModel.assetCount});
 
 	<@insertResourcePermissions
-		_entry = assetTag
+		_entry = assetTagModel
 	/>
 </#list>
 
-<#list dataFactory.assetTagStatsList as assetTagStats>
-	insert into AssetTagStats values (${assetTagStats.tagStatsId}, ${assetTagStats.tagId}, ${assetTagStats.classNameId}, ${assetTagStats.assetCount});
+<#list dataFactory.assetTagStatsModels as assetTagStatsModel>
+	insert into AssetTagStats values (${assetTagStatsModel.tagStatsId}, ${assetTagStatsModel.tagId}, ${assetTagStatsModel.classNameId}, ${assetTagStatsModel.assetCount});
 </#list>

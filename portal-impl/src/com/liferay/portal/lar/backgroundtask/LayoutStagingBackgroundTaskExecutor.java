@@ -89,7 +89,9 @@ public class LayoutStagingBackgroundTaskExecutor
 		Map<String, MissingReference> weakMissingReferences =
 			missingReferences.getWeakMissingReferences();
 
-		if (weakMissingReferences != null) {
+		if ((weakMissingReferences != null) &&
+			!weakMissingReferences.isEmpty()) {
+
 			JSONArray jsonArray = StagingUtil.getWarningMessagesJSONArray(
 				getLocale(backgroundTask), weakMissingReferences);
 

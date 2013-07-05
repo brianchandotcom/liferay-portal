@@ -42,63 +42,73 @@
 			}
 		}
 	}
+
+	String[] messages = new String[addPortletURLs.size()];
+	String[] taglibEditURLs = new String[addPortletURLs.size()];
+
+	int i = 0;
+
+	for (Map.Entry<String, PortletURL> entry : addPortletURLs.entrySet()) {
+		String className = entry.getKey();
+
+		messages[i] = null;
+
+		int pos = className.indexOf(AssetUtil.CLASSNAME_SEPARATOR);
+
+		if (pos != -1) {
+			messages[i] = className.substring(pos + AssetUtil.CLASSNAME_SEPARATOR.length());
+
+			className = className.substring(0, pos);
+		}
+
+		AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(className);
+
+		if (pos == -1) {
+			messages[i] = assetRendererFactory.getTypeName(locale, AssetUtil.hasSubtype(className, addPortletURLs));
+		}
+
+		PortletURL addPortletURL = entry.getValue();
+
+		addPortletURL.setParameter("groupId", String.valueOf(groupId));
+		addPortletURL.setParameter("showHeader", Boolean.FALSE.toString());
+
+		String addPortletURLString = addPortletURL.toString();
+
+		addPortletURLString = HttpUtil.addParameter(addPortletURLString, "doAsGroupId", groupId);
+		addPortletURLString = HttpUtil.addParameter(addPortletURLString, "refererPlid", plid);
+
+		if (defaultAssetPublisher) {
+			addPortletURLString = HttpUtil.addParameter(addPortletURLString, "layoutUuid", layout.getUuid());
+		}
+
+		taglibEditURLs[i] = "javascript:Liferay.Util.openWindow({dialog: {destroyOnHide: true}, id: '" + liferayPortletResponse.getNamespace() + "editAsset', title: '" + HtmlUtil.escapeJS(LanguageUtil.format(pageContext, "new-x", HtmlUtil.escape(messages[i]))) + "', uri: '" + HtmlUtil.escapeJS(addPortletURLString) + "'});";
+
+		i++;
+	}
 	%>
 
 	<aui:nav-bar>
 		<aui:nav>
-			<aui:nav-item dropdown="<%= true %>" iconClass="icon-plus" label='<%= LanguageUtil.format(pageContext, (groupIds.length == 1) ? "add-new" : "add-new-in-x", new Object[] {HtmlUtil.escape((GroupLocalServiceUtil.getGroup(groupId)).getDescriptiveName(locale))}) %>'>
+			<c:choose>
+				<c:when test="<%= addPortletURLs.size() == 1 %>">
+					<aui:nav-item href="<%= taglibEditURLs[0] %>" iconClass="icon-file" label='<%= LanguageUtil.format(pageContext, "add-x", HtmlUtil.escape(messages[0])) %>' />
+				</c:when>
+				<c:otherwise>
+					<aui:nav-item dropdown="<%= true %>" iconClass="icon-plus" label='<%= LanguageUtil.format(pageContext, (groupIds.length == 1) ? "add-new" : "add-new-in-x", new Object[] {HtmlUtil.escape((GroupLocalServiceUtil.getGroup(groupId)).getDescriptiveName(locale))}) %>'>
 
-				<%
-				for (Map.Entry<String, PortletURL> entry : addPortletURLs.entrySet()) {
-					String className = entry.getKey();
+						<%
+						for (i = 0; i < addPortletURLs.size(); i++) {
+						%>
 
-					String message = null;
+							<aui:nav-item href="<%= taglibEditURLs[i] %>" iconClass="icon-file" label="<%= HtmlUtil.escape(messages[i]) %>" />
 
-					int pos = className.indexOf(AssetUtil.CLASSNAME_SEPARATOR);
+						<%
+						}
+						%>
 
-					if (pos != -1) {
-						message = className.substring(pos + AssetUtil.CLASSNAME_SEPARATOR.length());
-
-						className = className.substring(0, pos);
-					}
-
-					AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(className);
-
-					if (pos == -1) {
-						message = assetRendererFactory.getTypeName(locale, AssetUtil.hasSubtype(className, addPortletURLs));
-					}
-
-					PortletURL addPortletURL = entry.getValue();
-
-					addPortletURL.setParameter("groupId", String.valueOf(groupId));
-					addPortletURL.setParameter("showHeader", Boolean.FALSE.toString());
-
-					String addPortletURLString = addPortletURL.toString();
-
-					addPortletURLString = HttpUtil.addParameter(addPortletURLString, "doAsGroupId", groupId);
-					addPortletURLString = HttpUtil.addParameter(addPortletURLString, "refererPlid", plid);
-
-					if (defaultAssetPublisher) {
-						addPortletURLString = HttpUtil.addParameter(addPortletURLString, "layoutUuid", layout.getUuid());
-					}
-
-					String taglibEditURL = "javascript:Liferay.Util.openWindow({dialog: {destroyOnHide: true}, id: '" + liferayPortletResponse.getNamespace() + "editAsset', title: '" + HtmlUtil.escapeJS(LanguageUtil.format(pageContext, "new-x", HtmlUtil.escape(message))) + "', uri: '" + HtmlUtil.escapeJS(addPortletURLString) + "'});";
-				%>
-
-					<c:choose>
-						<c:when test="<%= addPortletURLs.size() == 1 %>">
-							<aui:nav-item href="<%= taglibEditURL %>" iconClass="icon-file" label='<%= LanguageUtil.format(pageContext, "add-x", HtmlUtil.escape(message)) %>' />
-						</c:when>
-						<c:otherwise>
-							<aui:nav-item href="<%= taglibEditURL %>" iconClass="icon-file" label="<%= HtmlUtil.escape(message) %>" />
-						</c:otherwise>
-					</c:choose>
-
-				<%
-				}
-				%>
-
-			</aui:nav-item>
+					</aui:nav-item>
+				</c:otherwise>
+			</c:choose>
 		</aui:nav>
 	</aui:nav-bar>
 </c:if>

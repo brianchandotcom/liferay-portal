@@ -605,15 +605,13 @@ public class ImportLayoutsAction extends PortletAction {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		jsonObject.put("message", errorMessage);
-
 		if ((errorMessagesJSONArray != null) &&
 			(errorMessagesJSONArray.length() > 0)) {
 
 			jsonObject.put("messageListItems", errorMessagesJSONArray);
 		}
 
-		jsonObject.put("status", errorType);
+		jsonObject.putErrorMessage(errorType, errorMessage);
 
 		if ((warningMessagesJSONArray != null) &&
 			(warningMessagesJSONArray.length() > 0)) {

@@ -17,6 +17,8 @@ package com.liferay.portal.util;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 
+import java.util.Map;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -98,6 +100,37 @@ public class HttpImplTest extends PowerMockito {
 	public void testEncodeSingleCharacterEncodedPath() {
 		Assert.assertEquals(
 			"http%3A//foo%23anchor", _httpImpl.encodePath("http://foo#anchor"));
+	}
+
+	@Test
+	public void testGetParameterMapWithCorrectQuery() {
+		Map<String, String[]> parameterMap = _httpImpl.getParameterMap(
+			"a=1&b=2");
+
+		Assert.assertNotNull(parameterMap);
+
+		Assert.assertEquals("1", parameterMap.get("a")[0]);
+		Assert.assertEquals("2", parameterMap.get("b")[0]);
+	}
+
+	@Test
+	public void testGetParameterMapWithMultipleBadParameter() {
+		Map<String, String[]> parameterMap = _httpImpl.getParameterMap(
+			"null&a=1&null");
+
+		Assert.assertNotNull(parameterMap);
+
+		Assert.assertEquals("1", parameterMap.get("a")[0]);
+	}
+
+	@Test
+	public void testGetParameterMapWithSingleBadParameter() {
+		Map<String, String[]> parameterMap = _httpImpl.getParameterMap(
+			"null&a=1");
+
+		Assert.assertNotNull(parameterMap);
+
+		Assert.assertEquals("1", parameterMap.get("a")[0]);
 	}
 
 	private void _addParameter(

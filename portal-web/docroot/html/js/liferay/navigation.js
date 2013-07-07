@@ -235,7 +235,7 @@ AUI.add(
 					},
 
 					_displayNotice: function(message, type, timeout, useAnimation) {
-							new Liferay.Notice(
+						new Liferay.Notice(
 							{
 								closeText: false,
 								content: message + '<button type="button" class="close">&times;</button>',
@@ -655,9 +655,13 @@ AUI.add(
 					sortable.delegate.on(
 						'drag:start',
 						function(event) {
-							var dragNode = event.target.get('dragNode');
+							var target = event.target;
+
+							var dragNode = target.get('dragNode');
 
 							dragNode.addClass('lfr-navigation-proxy');
+
+							instance._nextPageNode = target.get('node').next();
 						}
 					);
 
@@ -853,6 +857,8 @@ AUI.add(
 
 				var processMovePageFailure = function(result) {
 					instance._displayNotice(result.message);
+
+					node.ancestor().insertBefore(node, instance._nextPageNode);
 				};
 
 				var processMovePageSuccess = function(result) {

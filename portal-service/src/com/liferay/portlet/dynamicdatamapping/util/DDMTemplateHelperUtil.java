@@ -43,6 +43,10 @@ public class DDMTemplateHelperUtil {
 		return _ddmTemplateHelper;
 	}
 
+	public static boolean isAutocompleteEnabled(String language) {
+		return getDDMTemplateHelper().isAutocompleteEnabled(language);
+	}
+
 	public void setDDMTemplateHelper(DDMTemplateHelper ddmTemplateHelper) {
 		PortalRuntimePermission.checkSetBeanProperty(getClass());
 

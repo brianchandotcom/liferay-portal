@@ -1,33 +1,33 @@
 <#if (maxWikiNodeCount > 0)>
 	<#list 1..maxWikiNodeCount as wikiNodeCount>
-		<#assign wikiNode = dataFactory.newWikiNode(groupId, wikiNodeCount)>
+		<#assign wikiNodeModel = dataFactory.newWikiNodeModel(groupId, wikiNodeCount)>
 
-		insert into WikiNode values ('${wikiNode.uuid}', ${wikiNode.nodeId}, ${wikiNode.groupId}, ${wikiNode.companyId}, ${wikiNode.userId}, '${wikiNode.userName}', '${dataFactory.getDateString(wikiNode.createDate)}', '${dataFactory.getDateString(wikiNode.modifiedDate)}', '${wikiNode.name}', '${wikiNode.description}', '${dataFactory.getDateString(wikiNode.lastPostDate)}', ${wikiNode.status}, ${wikiNode.statusByUserId}, '${wikiNode.statusByUserName}', '${dataFactory.getDateString(wikiNode.statusDate)}');
+		insert into WikiNode values ('${wikiNodeModel.uuid}', ${wikiNodeModel.nodeId}, ${wikiNodeModel.groupId}, ${wikiNodeModel.companyId}, ${wikiNodeModel.userId}, '${wikiNodeModel.userName}', '${dataFactory.getDateString(wikiNodeModel.createDate)}', '${dataFactory.getDateString(wikiNodeModel.modifiedDate)}', '${wikiNodeModel.name}', '${wikiNodeModel.description}', '${dataFactory.getDateString(wikiNodeModel.lastPostDate)}', ${wikiNodeModel.status}, ${wikiNodeModel.statusByUserId}, '${wikiNodeModel.statusByUserName}', '${dataFactory.getDateString(wikiNodeModel.statusDate)}');
 
 		<@insertResourcePermissions
-			_entry = wikiNode
+			_entry = wikiNodeModel
 		/>
 
 		<#if (maxWikiPageCount > 0)>
 			<#list 1..maxWikiPageCount as wikiPageCount>
-				<#assign wikiPage = dataFactory.newWikiPage(wikiNode, wikiPageCount)>
+				<#assign wikiPageModel = dataFactory.newWikiPageModel(wikiNodeModel, wikiPageCount)>
 
-				insert into WikiPage values ('${wikiPage.uuid}', ${wikiPage.pageId}, ${wikiPage.resourcePrimKey}, ${wikiPage.groupId}, ${wikiPage.companyId}, ${wikiPage.userId}, '${wikiPage.userName}', '${dataFactory.getDateString(wikiPage.createDate)}', '${dataFactory.getDateString(wikiPage.modifiedDate)}', ${wikiPage.nodeId}, '${wikiPage.title}', ${wikiPage.version}, ${wikiPage.minorEdit?string}, '${wikiPage.content}', '${wikiPage.summary}', '${wikiPage.format}', ${wikiPage.head?string}, '${wikiPage.parentTitle}', '${wikiPage.redirectTitle}', ${wikiPage.status}, ${wikiPage.statusByUserId}, '${wikiPage.statusByUserName}', ${wikiPage.statusDate!'null'});
+				insert into WikiPage values ('${wikiPageModel.uuid}', ${wikiPageModel.pageId}, ${wikiPageModel.resourcePrimKey}, ${wikiPageModel.groupId}, ${wikiPageModel.companyId}, ${wikiPageModel.userId}, '${wikiPageModel.userName}', '${dataFactory.getDateString(wikiPageModel.createDate)}', '${dataFactory.getDateString(wikiPageModel.modifiedDate)}', ${wikiPageModel.nodeId}, '${wikiPageModel.title}', ${wikiPageModel.version}, ${wikiPageModel.minorEdit?string}, '${wikiPageModel.content}', '${wikiPageModel.summary}', '${wikiPageModel.format}', ${wikiPageModel.head?string}, '${wikiPageModel.parentTitle}', '${wikiPageModel.redirectTitle}', ${wikiPageModel.status}, ${wikiPageModel.statusByUserId}, '${wikiPageModel.statusByUserName}', ${wikiPageModel.statusDate!'null'});
 
 				<@insertResourcePermissions
-					_entry = wikiPage
+					_entry = wikiPageModel
 				/>
 
 				<@insertSubscription
-					_entry = wikiPage
+					_entry = wikiPageModel
 				/>
 
-				<#assign wikiPageResource = dataFactory.newWikiPageResource(wikiPage)>
+				<#assign wikiPageResourceModel = dataFactory.newWikiPageResourceModel(wikiPageModel)>
 
-				insert into WikiPageResource values ('${wikiPageResource.uuid}', ${wikiPageResource.resourcePrimKey}, ${wikiPageResource.nodeId}, '${wikiPageResource.title}');
+				insert into WikiPageResource values ('${wikiPageResourceModel.uuid}', ${wikiPageResourceModel.resourcePrimKey}, ${wikiPageResourceModel.nodeId}, '${wikiPageResourceModel.title}');
 
 				<@insertAssetEntry
-					_entry = wikiPage
+					_entry = wikiPageModel
 					_categoryAndTag = true
 				/>
 
@@ -36,14 +36,14 @@
 
 				<@insertMBDiscussion
 					_classNameId = dataFactory.wikiPageClassNameId
-					_classPK = wikiPage.resourcePrimKey
+					_classPK = wikiPageModel.resourcePrimKey
 					_groupId = groupId
 					_maxCommentCount = maxWikiPageCommentCount
 					_mbRootMessageId = mbRootMessageId
 					_mbThreadId = mbThreadId
 				/>
 
-				${writerWikiCSV.write(wikiNode.nodeId + "," + wikiNode.name + "," + wikiPage.resourcePrimKey + "," + wikiPage.title + "," + mbThreadId + "," + mbRootMessageId + "\n")}
+				${writerWikiCSV.write(wikiNodeModel.nodeId + "," + wikiNodeModel.name + "," + wikiPageModel.resourcePrimKey + "," + wikiPageModel.title + "," + mbThreadId + "," + mbRootMessageId + "\n")}
 			</#list>
 		</#if>
 	</#list>

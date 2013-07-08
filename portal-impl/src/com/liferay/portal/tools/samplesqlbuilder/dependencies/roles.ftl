@@ -1,3 +1,3 @@
-<#list dataFactory.roles as role>
-	insert into Role_ values ('${role.uuid}', ${role.roleId}, ${role.companyId}, ${role.userId}, '${role.userName}', '${dataFactory.getDateString(role.createDate)}', '${dataFactory.getDateString(role.modifiedDate)}', ${role.classNameId}, ${role.classPK}, '${role.name}', '${role.title}', '${role.description}', ${role.type}, '${role.subtype}');
+<#list dataFactory.roleModels as roleModel>
+	insert into Role_ values ('${roleModel.uuid}', ${roleModel.roleId}, ${roleModel.companyId}, ${roleModel.userId}, '${roleModel.userName}', '${dataFactory.getDateString(roleModel.createDate)}', '${dataFactory.getDateString(roleModel.modifiedDate)}', ${roleModel.classNameId}, ${roleModel.classPK}, '${roleModel.name}', '${roleModel.title}', '${roleModel.description}', ${roleModel.type}, '${roleModel.subtype}');
 </#list>

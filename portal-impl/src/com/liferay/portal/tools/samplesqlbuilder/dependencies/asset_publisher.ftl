@@ -1,25 +1,25 @@
 <#list 1..maxAssetPublisherPageCount as pageCount>
 	<#assign portletId = "101_INSTANCE_TEST_" + pageCount>
 
-	<#assign layout = dataFactory.newLayout(groupId, groupId + "_asset_publisher_" + pageCount, "", portletId)>
+	<#assign layoutModel = dataFactory.newLayoutModel(groupId, groupId + "_asset_publisher_" + pageCount, "", portletId)>
 
-	${writerAssetPublisherCSV.write(layout.friendlyURL + "\n")}
+	${writerAssetPublisherCSV.write(layoutModel.friendlyURL + "\n")}
 
 	<@insertLayout
-		_layout = layout
+		_layoutModel = layoutModel
 	/>
 
-	<#assign portletPreferencesList = dataFactory.newAssetPublisherPortletPreferences(layout.plid)>
+	<#assign portletPreferencesModels = dataFactory.newAssetPublisherPortletPreferencesModels(layoutModel.plid)>
 
-	<#list portletPreferencesList as portletPreferences>
+	<#list portletPreferencesModels as portletPreferencesModel>
 		<@insertPortletPreferences
-			_portletPreferences = portletPreferences
+			_portletPreferencesModel = portletPreferencesModel
 		/>
 	</#list>
 
-	<#assign portletPreferences = dataFactory.newPortletPreferences(layout.plid, groupId, portletId, pageCount)>
+	<#assign portletPreferencesModel = dataFactory.newPortletPreferencesModel(layoutModel.plid, groupId, portletId, pageCount)>
 
 	<@insertPortletPreferences
-		_portletPreferences = portletPreferences
+		_portletPreferencesModel = portletPreferencesModel
 	/>
 </#list>

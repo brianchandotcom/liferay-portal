@@ -1,52 +1,52 @@
 <#if (maxMBCategoryCount > 0)>
 	<#list 1..maxMBCategoryCount as mbCategoryCount>
-		<#assign mbCategory = dataFactory.newMBCategory(groupId, mbCategoryCount)>
+		<#assign mbCategoryModel = dataFactory.newMBCategoryModel(groupId, mbCategoryCount)>
 
-		insert into MBCategory values ('${mbCategory.uuid}', ${mbCategory.categoryId}, ${mbCategory.groupId}, ${mbCategory.companyId}, ${mbCategory.userId}, '${mbCategory.userName}', '${dataFactory.getDateString(mbCategory.createDate)}', '${dataFactory.getDateString(mbCategory.modifiedDate)}', ${mbCategory.parentCategoryId}, '${mbCategory.name}', '${mbCategory.description}', '${mbCategory.displayStyle}', ${mbCategory.threadCount}, ${mbCategory.messageCount}, '${dataFactory.getDateString(mbCategory.lastPostDate)}', ${mbCategory.status}, ${mbCategory.statusByUserId}, '${mbCategory.statusByUserName}', '${dataFactory.getDateString(mbCategory.statusDate)}');
+		insert into MBCategory values ('${mbCategoryModel.uuid}', ${mbCategoryModel.categoryId}, ${mbCategoryModel.groupId}, ${mbCategoryModel.companyId}, ${mbCategoryModel.userId}, '${mbCategoryModel.userName}', '${dataFactory.getDateString(mbCategoryModel.createDate)}', '${dataFactory.getDateString(mbCategoryModel.modifiedDate)}', ${mbCategoryModel.parentCategoryId}, '${mbCategoryModel.name}', '${mbCategoryModel.description}', '${mbCategoryModel.displayStyle}', ${mbCategoryModel.threadCount}, ${mbCategoryModel.messageCount}, '${dataFactory.getDateString(mbCategoryModel.lastPostDate)}', ${mbCategoryModel.status}, ${mbCategoryModel.statusByUserId}, '${mbCategoryModel.statusByUserName}', '${dataFactory.getDateString(mbCategoryModel.statusDate)}');
 
 		<@insertResourcePermissions
-			_entry = mbCategory
+			_entry = mbCategoryModel
 		/>
 
-		<#assign mbMailingList = dataFactory.newMBMailingList(mbCategory)>
+		<#assign mbMailingListModel = dataFactory.newMBMailingListModel(mbCategoryModel)>
 
-		insert into MBMailingList values ('${mbMailingList.uuid}', ${mbMailingList.mailingListId}, ${mbMailingList.groupId}, ${mbMailingList.companyId}, ${mbMailingList.userId}, '${mbMailingList.userName}', '${dataFactory.getDateString(mbMailingList.createDate)}', '${dataFactory.getDateString(mbMailingList.modifiedDate)}', ${mbMailingList.categoryId}, '${mbMailingList.emailAddress}', '${mbMailingList.inProtocol}', '${mbMailingList.inServerName}', ${mbMailingList.inServerPort}, ${mbMailingList.inUseSSL?string}, '${mbMailingList.inUserName}', '${mbMailingList.inPassword}', ${mbMailingList.inReadInterval}, '${mbMailingList.outEmailAddress}', ${mbMailingList.outCustom?string}, '${mbMailingList.outServerName}', ${mbMailingList.outServerPort}, ${mbMailingList.outUseSSL?string}, '${mbMailingList.outUserName}', '${mbMailingList.outPassword}', ${mbMailingList.allowAnonymous?string}, ${mbMailingList.active?string});
+		insert into MBMailingList values ('${mbMailingListModel.uuid}', ${mbMailingListModel.mailingListId}, ${mbMailingListModel.groupId}, ${mbMailingListModel.companyId}, ${mbMailingListModel.userId}, '${mbMailingListModel.userName}', '${dataFactory.getDateString(mbMailingListModel.createDate)}', '${dataFactory.getDateString(mbMailingListModel.modifiedDate)}', ${mbMailingListModel.categoryId}, '${mbMailingListModel.emailAddress}', '${mbMailingListModel.inProtocol}', '${mbMailingListModel.inServerName}', ${mbMailingListModel.inServerPort}, ${mbMailingListModel.inUseSSL?string}, '${mbMailingListModel.inUserName}', '${mbMailingListModel.inPassword}', ${mbMailingListModel.inReadInterval}, '${mbMailingListModel.outEmailAddress}', ${mbMailingListModel.outCustom?string}, '${mbMailingListModel.outServerName}', ${mbMailingListModel.outServerPort}, ${mbMailingListModel.outUseSSL?string}, '${mbMailingListModel.outUserName}', '${mbMailingListModel.outPassword}', ${mbMailingListModel.allowAnonymous?string}, ${mbMailingListModel.active?string});
 
 		<#if (maxMBThreadCount > 0) && (maxMBMessageCount > 0)>
 			<#list 1..maxMBThreadCount as mbThreadCount>
-				<#assign mbThread = dataFactory.newMBThread(mbCategory)>
+				<#assign mbThreadModel = dataFactory.newMBThreadModel(mbCategoryModel)>
 
-				insert into MBThread values ('${mbThread.uuid}', ${mbThread.threadId}, ${mbThread.groupId}, ${mbThread.companyId}, ${mbThread.userId}, '${mbThread.userName}', '${dataFactory.getDateString(mbThread.createDate)}', '${dataFactory.getDateString(mbThread.modifiedDate)}', ${mbThread.categoryId}, ${mbThread.rootMessageId}, ${mbThread.rootMessageUserId}, ${mbThread.messageCount}, ${mbThread.viewCount}, ${mbThread.lastPostByUserId}, '${dataFactory.getDateString(mbThread.lastPostDate)}', ${mbThread.priority}, ${mbThread.question?string}, ${mbThread.status}, ${mbThread.statusByUserId}, '${mbThread.statusByUserName}', '${dataFactory.getDateString(mbThread.statusDate)}');
+				insert into MBThread values ('${mbThreadModel.uuid}', ${mbThreadModel.threadId}, ${mbThreadModel.groupId}, ${mbThreadModel.companyId}, ${mbThreadModel.userId}, '${mbThreadModel.userName}', '${dataFactory.getDateString(mbThreadModel.createDate)}', '${dataFactory.getDateString(mbThreadModel.modifiedDate)}', ${mbThreadModel.categoryId}, ${mbThreadModel.rootMessageId}, ${mbThreadModel.rootMessageUserId}, ${mbThreadModel.messageCount}, ${mbThreadModel.viewCount}, ${mbThreadModel.lastPostByUserId}, '${dataFactory.getDateString(mbThreadModel.lastPostDate)}', ${mbThreadModel.priority}, ${mbThreadModel.question?string}, ${mbThreadModel.status}, ${mbThreadModel.statusByUserId}, '${mbThreadModel.statusByUserName}', '${dataFactory.getDateString(mbThreadModel.statusDate)}');
 
 				<@insertSubscription
-					_entry = mbThread
+					_entry = mbThreadModel
 				/>
 
 				<@insertAssetEntry
-					_entry = mbThread
+					_entry = mbThreadModel
 				/>
 
-				<#assign mbThreadFlag = dataFactory.newMBThreadFlag(mbThread)>
+				<#assign mbThreadFlagModel = dataFactory.newMBThreadFlagModel(mbThreadModel)>
 
-				insert into MBThreadFlag values ('${mbThreadFlag.uuid}', ${mbThreadFlag.threadFlagId}, ${mbThreadFlag.groupId}, ${mbThreadFlag.companyId}, ${mbThreadFlag.userId}, '${mbThreadFlag.userName}', '${dataFactory.getDateString(mbThreadFlag.createDate)}', '${dataFactory.getDateString(mbThreadFlag.modifiedDate)}', ${mbThreadFlag.threadId});
+				insert into MBThreadFlag values ('${mbThreadFlagModel.uuid}', ${mbThreadFlagModel.threadFlagId}, ${mbThreadFlagModel.groupId}, ${mbThreadFlagModel.companyId}, ${mbThreadFlagModel.userId}, '${mbThreadFlagModel.userName}', '${dataFactory.getDateString(mbThreadFlagModel.createDate)}', '${dataFactory.getDateString(mbThreadFlagModel.modifiedDate)}', ${mbThreadFlagModel.threadId});
 
 				<#list 1..maxMBMessageCount as mbMessageCount>
-					<#assign mbMessage = dataFactory.newMBMessage(mbThread, mbMessageCount)>
+					<#assign mbMessageModel = dataFactory.newMBMessageModel(mbThreadModel, mbMessageCount)>
 
 					<@insertMBMessage
-						_mbMessage = mbMessage
+						_mbMessageModel = mbMessageModel
 					/>
 
 					<@insertResourcePermissions
-						_entry = mbMessage
+						_entry = mbMessageModel
 					/>
 
 					<@insertSocialActivity
-						_entry = mbMessage
+						_entry = mbMessageModel
 					/>
 				</#list>
 
-				${writerMessageBoardsCSV.write(mbCategory.categoryId + "," + mbThread.threadId + "," + mbThread.rootMessageId + "\n")}
+				${writerMessageBoardsCSV.write(mbCategoryModel.categoryId + "," + mbThreadModel.threadId + "," + mbThreadModel.rootMessageId + "\n")}
 			</#list>
 		</#if>
 	</#list>

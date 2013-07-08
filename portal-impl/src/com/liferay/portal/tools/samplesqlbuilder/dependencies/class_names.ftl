@@ -1,3 +1,3 @@
-<#list dataFactory.classNames as className>
-	insert into ClassName_ values (${className.classNameId}, '${className.value}');
+<#list dataFactory.classNameModels as classNameModel>
+	insert into ClassName_ values (${classNameModel.classNameId}, '${classNameModel.value}');
 </#list>

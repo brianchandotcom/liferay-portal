@@ -124,10 +124,10 @@ String onClick = GetterUtil.getString((String)request.getAttribute("liferay-ui:t
 					}
 					else {
 						if (values[i].equals("&raquo;")) {
-							curURL = url + separator + param + "=" + values[0] + anchor;
+							curURL = url + separator + namespace + param + "=" + values[0] + anchor;
 						}
 						else {
-							curURL = url + separator + param + "=" + values[i] + anchor;
+							curURL = url + separator + namespace + param + "=" + values[i] + anchor;
 						}
 					}
 				}

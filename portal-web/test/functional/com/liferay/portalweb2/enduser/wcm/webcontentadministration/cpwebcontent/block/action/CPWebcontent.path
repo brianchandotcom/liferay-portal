@@ -77,6 +77,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TOOLBAR_ICON_VIEW_BUTTON</td>
+	<td>//button[@data-displaystyle='icon']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TOOLBAR_DESCRIPTIVE_VIEW_BUTTON</td>
+	<td>//button[@data-displaystyle='descriptive']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TOOLBAR_LIST_VIEW_BUTTON</td>
+	<td>//button[@data-displaystyle='list']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TOOLBAR_SEARCH_FIELD</td>
 	<td>//input[@id='_15_keywords']</td>
 	<td></td>
@@ -136,6 +151,11 @@
 <tr>
 	<td>ADD_MENULIST_BASIC_WEB_CONTENT</td>
 	<td>//li[@id='_15_addButtonContainer']/ul/li/a[contains(.,'Basic Web Content')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_MENULIST_STRUCTURE_NAME</td>
+	<td>//li[@id='_15_addButtonContainer']/ul/li/a[contains(.,'${key_structureName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -216,37 +236,84 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--ENTRY_TABLE-->
+<!--ENTRY_ICON-->
 <tr>
-	<td>ENTRY_TABLE_THUMBNAIL</td>
-	<td>//div[@data-title='${key_webContentTitle}']/a/div[@class='entry-thumbnail']/img</td>
+	<td>ENTRY_ICON_THUMBNAIL</td>
+	<td>//div[@data-title='${key_webContentTitle}']//div[@class='entry-thumbnail']/img</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ENTRY_TABLE_MENULIST_ARROW</td>
-	<td>//div[@data-title='${key_webContentTitle}']/span[contains(@class,'entry-action')]/div/a/i[@class='caret']</td>
+	<td>ENTRY_ICON_THUMBNAIL_GENERIC</td>
+	<td>//div[@class='entry-thumbnail']/img</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ENTRY_TABLE_CHECKBOX</td>
-	<td>//div[@data-title='${key_webContentTitle}']/input[@id='_15_rowIdsJournalArticleCheckbox']</td>
+	<td>ENTRY_ICON_MENULIST_ARROW</td>
+	<td>//div[@data-title='${key_webContentTitle}']//span[@class='entry-action overlay']/div/a/i[@class='caret']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ENTRY_TABLE_TITLE</td>
-	<td>//div[@data-title='${key_webContentTitle}']/a/div/span[@class='entry-title']</td>
+	<td>ENTRY_ICON_CHECKBOX</td>
+	<td>//div[@data-title='${key_webContentTitle}']//input[@id='_15_rowIdsJournalArticleCheckbox']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ENTRY_TABLE_DESCRIPTION</td>
-	<td>//div[@data-title='${key_webContentTitle}']/a/div/span[@class='entry-description']</td>
+	<td>ENTRY_ICON_TITLE</td>
+	<td>//div[@data-title='${key_webContentTitle}']//span[@class='entry-title']/span</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ENTRY_TABLE_WORKFLOW_STATUS_1</td>
-	<td>//span[@class='workflow-status-pending']</td>
+	<td>ENTRY_ICON_WORKFLOW_STATUS</td>
+	<td>//div[@data-title='${key_webContentTitle}']//span[@class='workflow-status']/strong</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ENTRY_DESCRIPTIVE-->
+<tr>
+	<td>ENTRY_DESCRIPTIVE_THUMBNAIL</td>
+	<td>//div[@data-title='${key_webContentTitle}']//div[@class='entry-thumbnail']/img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_DESCRIPTIVE_THUMBNAIL_GENERIC</td>
+	<td>//div[@class='entry-thumbnail']/img</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_DESCRIPTIVE_MENULIST_ARROW</td>
+	<td>//div[@data-title='${key_webContentTitle}']//span[@class='entry-action overlay']/div/a/i[@class='caret']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_DESCRIPTIVE_CHECKBOX</td>
+	<td>//div[@data-title='${key_webContentTitle}']//input[@id='_15_rowIdsJournalArticleCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_DESCRIPTIVE_TITLE</td>
+	<td>//div[@data-title='${key_webContentTitle}']//span[@class='entry-title']/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_DESCRIPTIVE_VERSION</td>
+	<td>//div[@data-title='${key_webContentTitle}']//div[@class='entry-metadata']/small/dl/dd</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_DESCRIPTIVE_WORKFLOW_STATUS</td>
+	<td>//div[@data-title='${key_webContentTitle}']//span[@class='workflow-status']/strong</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ENTRY_LIST-->
 <tr>
 	<td></td>
 	<td></td>

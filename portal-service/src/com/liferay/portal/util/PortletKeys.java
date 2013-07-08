@@ -242,8 +242,6 @@ public class PortletKeys {
 
 	public static final String UNIT_CONVERTER = "27";
 
-	public static final String UPDATE_MANAGER = "104";
-
 	public static final String USER_GROUPS_ADMIN = "127";
 
 	public static final String USER_STATISTICS = "180";

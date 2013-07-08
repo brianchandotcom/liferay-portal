@@ -1967,14 +1967,6 @@
 
 		<action path="/trash/view_content" forward="portlet.trash.view_content" />
 
-		<!-- Update Manager -->
-
-		<action path="/update_manager/install_plugin" type="com.liferay.portlet.plugininstaller.action.InstallPluginAction">
-			<forward name="portlet.plugin_installer.error" path="portlet.plugin_installer.error" />
-		</action>
-
-		<action path="/update_manager/view" forward="portlet.update_manager.view" />
-
 		<!-- User Groups Admin -->
 
 		<action path="/user_groups_admin/edit_layout_set" type="com.liferay.portlet.layoutsadmin.action.EditLayoutSetAction">

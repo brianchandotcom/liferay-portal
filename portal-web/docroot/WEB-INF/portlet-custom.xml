@@ -1569,27 +1569,6 @@
 		<supported-public-render-parameter>tags</supported-public-render-parameter>
 	</portlet>
 	<portlet>
-		<portlet-name>104</portlet-name>
-		<display-name>Update Manager</display-name>
-		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
-		<init-param>
-			<name>template-path</name>
-			<value>/html/portlet/update_manager/</value>
-		</init-param>
-		<init-param>
-			<name>view-action</name>
-			<value>/update_manager/view</value>
-		</init-param>
-		<expiration-cache>0</expiration-cache>
-		<supports>
-			<mime-type>text/html</mime-type>
-		</supports>
-		<resource-bundle>com.liferay.portlet.StrutsResourceBundle</resource-bundle>
-		<security-role-ref>
-			<role-name>administrator</role-name>
-		</security-role-ref>
-	</portlet>
-	<portlet>
 		<portlet-name>107</portlet-name>
 		<display-name>Page Comments</display-name>
 		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>

@@ -1631,14 +1631,6 @@
 		<put name="portlet_content" value="/portlet/trash/view_content.jsp" />
 	</definition>
 
-	<!-- Update Manager -->
-
-	<definition name="portlet.update_manager" extends="portlet" />
-
-	<definition name="portlet.update_manager.view" extends="portlet.update_manager">
-		<put name="portlet_content" value="/portlet/update_manager/view.jsp" />
-	</definition>
-
 	<!-- User Groups Admin -->
 
 	<definition name="portlet.user_groups_admin" extends="portlet" />

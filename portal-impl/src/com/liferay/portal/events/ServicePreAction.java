@@ -901,6 +901,8 @@ public class ServicePreAction extends Action {
 
 		themeDisplay.setURLSiteAdministration(siteAdministrationURL);
 
+		long controlPanelPlid = PortalUtil.getControlPanelPlid(companyId);
+
 		if (layout != null) {
 			if (layout.isTypePortlet()) {
 				boolean freeformLayout =
@@ -936,8 +938,6 @@ public class ServicePreAction extends Action {
 						"Liferay.Dockbar.loadAddPanel();");
 				}
 			}
-
-			long controlPanelPlid = PortalUtil.getControlPanelPlid(companyId);;
 
 			if (hasUpdateLayoutPermission) {
 				themeDisplay.setShowPageSettingsIcon(true);
@@ -1259,12 +1259,8 @@ public class ServicePreAction extends Action {
 		themeDisplay.setURLSignOut(mainPath.concat(_PATH_PORTAL_LOGOUT));
 
 		PortletURL updateManagerURL = new PortletURLImpl(
-			request, PortletKeys.UPDATE_MANAGER, plid,
+			request, PortletKeys.MARKETPLACE_STORE, controlPanelPlid,
 			PortletRequest.RENDER_PHASE);
-
-		updateManagerURL.setParameter("struts_action", "/update_manager/view");
-		updateManagerURL.setPortletMode(PortletMode.VIEW);
-		updateManagerURL.setWindowState(WindowState.MAXIMIZED);
 
 		themeDisplay.setURLUpdateManager(updateManagerURL);
 

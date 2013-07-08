@@ -2,8 +2,10 @@ AUI.add(
 	'liferay-portlet-base',
 	function(A) {
 		var Lang = A.Lang;
+		var LString = Lang.String;
 
-		var prefix = Lang.String.prefix;
+		var prefix = LString.prefix;
+		var startsWith = LString.startsWith;
 
 		var PortletBase = function(config) {
 			var instance = this;
@@ -63,6 +65,27 @@ AUI.add(
 				root = root || instance.rootNode || A;
 
 				return root.oneNS(instance.NS, selector);
+			},
+
+			nsKeys: function(obj) {
+				var instance = this;
+
+				var namespace = instance.NS;
+
+				var newObj = {};
+
+				A.Object.each(
+					obj,
+					function(item, index, collection) {
+						if (!startsWith(index, namespace)) {
+							index = prefix(namespace, index);
+						}
+
+						newObj[index] = item;
+					}
+				);
+
+				return newObj;
 			},
 
 			_getNS: function(value) {

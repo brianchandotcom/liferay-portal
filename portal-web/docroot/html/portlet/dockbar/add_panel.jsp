@@ -82,5 +82,5 @@
 </c:choose>
 
 <aui:script use="liferay-dockbar">
-	A.one('#closePanel').on('click', Liferay.Dockbar.loadPanel, Liferay.Dockbar);
+	A.one('#closePanel').on('click', Liferay.Dockbar.toggleAddPanel, Liferay.Dockbar);
 </aui:script>

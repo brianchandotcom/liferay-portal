@@ -15,60 +15,34 @@
 --%>
 
 <%
-int total = assetEntryXmls.length;
+Object[] assetEntryObject = AssetPublisherUtil.getAssetEntryObject(permissionChecker, groupIds, assetEntryXmls, false, enablePermissions);
 
-searchContainer.setTotal(total);
+List<AssetEntry> assetEntries = (List<AssetEntry>)assetEntryObject[0];
 
-List results = ListUtil.fromArray(assetEntryXmls);
+searchContainer.setTotal(assetEntries.size());
 
-int end = (assetEntryXmls.length < searchContainer.getEnd()) ? assetEntryXmls.length : searchContainer.getEnd();
+int end = (assetEntries.size() < searchContainer.getEnd()) ? assetEntries.size() : searchContainer.getEnd();
 
-results = results.subList(searchContainer.getStart(), end);
+assetEntries = assetEntries.subList(searchContainer.getStart(), end);
 
-searchContainer.setResults(results);
+searchContainer.setResults(assetEntries);
 
-request.setAttribute("view.jsp-results", results);
+request.setAttribute("view.jsp-results", assetEntries);
 %>
 
 <c:choose>
 	<c:when test="<%= portletDisplayDDMTemplateId > 0 %>">
-		<%= PortletDisplayTemplateUtil.renderDDMTemplate(pageContext, portletDisplayDDMTemplateId, results, contextObjects) %>
+		<%= PortletDisplayTemplateUtil.renderDDMTemplate(pageContext, portletDisplayDDMTemplateId, assetEntries, contextObjects) %>
 	</c:when>
 	<c:otherwise>
 
 		<%
-		for (int assetEntryIndex = 0; assetEntryIndex < results.size(); assetEntryIndex++) {
-			String assetEntryXml = (String)results.get(assetEntryIndex);
-
-			Document document = SAXReaderUtil.read(assetEntryXml);
-
-			Element rootElement = document.getRootElement();
-
-			String assetEntryUuid = rootElement.elementText("asset-entry-uuid");
-
-			AssetEntry assetEntry = null;
-
-			for (long groupId : groupIds) {
-				try {
-					assetEntry = AssetEntryLocalServiceUtil.getEntry(groupId, assetEntryUuid);
-
-					break;
-				}
-				catch (NoSuchEntryException nsee) {
-				}
-			}
-
-			if ((assetEntry == null) || !assetEntry.isVisible()) {
-				continue;
-			}
+		for (int assetEntryIndex = 0; assetEntryIndex < assetEntries.size(); assetEntryIndex++) {
+			AssetEntry assetEntry = assetEntries.get(assetEntryIndex);
 
 			AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(assetEntry.getClassName());
 
 			AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(assetEntry.getClassPK());
-
-			if (!assetRenderer.isDisplayable() || (enablePermissions && !assetRenderer.hasViewPermission(permissionChecker))) {
-				continue;
-			}
 
 			String title = assetRenderer.getTitle(locale);
 

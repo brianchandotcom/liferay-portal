@@ -65,6 +65,10 @@
 		margin: 0;
 	}
 
+	.field-wrapper .btn {
+		margin-top: 0;
+	}
+
 	.btn-link {
 		color: #555;
 		text-decoration: none;

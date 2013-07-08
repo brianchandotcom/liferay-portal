@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.nio.intraband.messaging;
 
-import com.liferay.portal.kernel.io.Deserializer;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.nio.intraband.Datagram;
 import com.liferay.portal.kernel.nio.intraband.MockIntraband;
@@ -24,6 +23,8 @@ import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 
 import java.lang.reflect.Field;
+
+import java.nio.ByteBuffer;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -60,6 +61,9 @@ public class IntrabandBridgeMessageListenerTest {
 
 		Message message = new Message();
 
+		message.setDestinationName(
+			IntrabandBridgeMessageListenerTest.class.getName());
+
 		String payload = "payload";
 
 		message.setPayload(payload);
@@ -68,12 +72,15 @@ public class IntrabandBridgeMessageListenerTest {
 
 		Datagram datagram = _mockIntraband.getDatagram();
 
-		Deserializer deserializer = new Deserializer(
-			datagram.getDataByteBuffer());
+		ByteBuffer byteBuffer = datagram.getDataByteBuffer();
 
-		Message receivedMessage = deserializer.readObject();
+		MessageRoutingBag receivedMessageRoutingBag =
+			MessageRoutingBag.fromByteArray(byteBuffer.array());
 
-		Assert.assertNotNull(receivedMessage);
+		Assert.assertNotNull(receivedMessageRoutingBag);
+
+		Message receivedMessage = receivedMessageRoutingBag.getMessage();
+
 		Assert.assertEquals(payload, receivedMessage.getPayload());
 	}
 

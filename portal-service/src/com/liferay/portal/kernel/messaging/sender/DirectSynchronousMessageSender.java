@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.messaging.MessageBusException;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.messaging.MessageListenerException;
 import com.liferay.portal.kernel.messaging.SynchronousDestination;
+import com.liferay.portal.kernel.nio.intraband.messaging.IntrabandBridgeDestination;
 
 import java.util.Set;
 
@@ -47,17 +48,9 @@ public class DirectSynchronousMessageSender
 			return null;
 		}
 
-		if (destination.getMessageListenerCount() == 0) {
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					"Destination " + destinationName +
-						" does not have any message listeners");
-			}
+		if ((destination instanceof SynchronousDestination) ||
+			(destination instanceof IntrabandBridgeDestination)) {
 
-			return null;
-		}
-
-		if (destination instanceof SynchronousDestination) {
 			destination.send(message);
 		}
 		else {

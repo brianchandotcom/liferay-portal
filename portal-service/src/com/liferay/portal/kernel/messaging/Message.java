@@ -14,12 +14,16 @@
 
 package com.liferay.portal.kernel.messaging;
 
+import com.liferay.portal.kernel.io.Deserializer;
+import com.liferay.portal.kernel.io.Serializer;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.TransientValue;
 
 import java.io.Serializable;
+
+import java.nio.ByteBuffer;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -29,6 +33,15 @@ import java.util.Map;
  * @author Michael C. Han
  */
 public class Message implements Cloneable, Serializable {
+
+	public static Message fromByteArray(byte[] messageData)
+		throws ClassNotFoundException {
+
+		Deserializer deserializer = new Deserializer(
+			ByteBuffer.wrap(messageData));
+
+		return deserializer.readObject();
+	}
 
 	@Override
 	public Message clone() {
@@ -53,6 +66,30 @@ public class Message implements Cloneable, Serializable {
 		}
 		else {
 			return _values.containsKey(key);
+		}
+	}
+
+	public void copyFrom(Message message) {
+		_destinationName = message._destinationName;
+		_payload = message._payload;
+		_response = message._response;
+		_responseDestinationName = message._responseDestinationName;
+		_responseId = message._responseId;
+
+		if (message._values != null) {
+			_values = new HashMap<String, Object>(message._values);
+		}
+	}
+
+	public void copyTo(Message message) {
+		message._destinationName = _destinationName;
+		message._payload = _payload;
+		message._response = _response;
+		message._responseDestinationName = _responseDestinationName;
+		message._responseId = _responseId;
+
+		if (_values != null) {
+			message._values = new HashMap<String, Object>(_values);
 		}
 	}
 
@@ -211,6 +248,16 @@ public class Message implements Cloneable, Serializable {
 		_values = values;
 	}
 
+	public byte[] toByteArray() {
+		Serializer serializer = new Serializer();
+
+		serializer.writeObject(this);
+
+		ByteBuffer byteBuffer = serializer.toByteBuffer();
+
+		return byteBuffer.array();
+	}
+
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(11);
@@ -234,7 +281,7 @@ public class Message implements Cloneable, Serializable {
 
 	private String _destinationName;
 	private Object _payload;
-	private transient Object _response;
+	private Object _response;
 	private String _responseDestinationName;
 	private String _responseId;
 	private Map<String, Object> _values;

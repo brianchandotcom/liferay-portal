@@ -240,9 +240,9 @@ AUI.add(
 								closeText: false,
 								content: message + '<button type="button" class="close">&times;</button>',
 								noticeClass: 'hide',
-								timeout: timeout ? timeout : 10000,
+								timeout: timeout || 10000,
 								toggleText: false,
-								type: type ? type : 'warning',
+								type: type || 'warning',
 								useAnimation: Lang.isValue(useAnimation) ? useAnimation : true
 							}
 						).show();

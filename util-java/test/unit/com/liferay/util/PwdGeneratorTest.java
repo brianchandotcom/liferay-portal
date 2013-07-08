@@ -41,7 +41,7 @@ public class PwdGeneratorTest {
 			_log.info("Generated 100 thousand passwords in " + delta + " ms");
 		}
 
-		Assert.assertTrue(delta < _MAX_DELTA);
+		Assert.assertTrue(delta < 1000);
 	}
 
 	@Test
@@ -61,17 +61,8 @@ public class PwdGeneratorTest {
 				"Generated 100 thousand secure passwords in " + delta + " ms");
 		}
 
-		Assert.assertTrue(delta < _MAX_SECURE_DELTA);
+		Assert.assertTrue(delta < 2000);
 	}
-
-	/*
-	* See http://issues.liferay.com/browse/LPS-37502 to see how these values
-	* have been calculated
-	*/
-
-	private static final long _MAX_DELTA = 1600;
-
-	private static final long _MAX_SECURE_DELTA = 2100;
 
 	private static Log _log = LogFactoryUtil.getLog(PwdGeneratorTest.class);
 

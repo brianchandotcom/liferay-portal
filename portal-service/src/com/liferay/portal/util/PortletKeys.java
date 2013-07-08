@@ -116,6 +116,9 @@ public class PortletKeys {
 
 	public static final String MAIL = "1_WAR_mailportlet";
 
+	public static final String MARKETPLACE_APP_MANAGER =
+		"3_WAR_marketplaceportlet";
+
 	public static final String MARKETPLACE_STORE = "1_WAR_marketplaceportlet";
 
 	public static final String MEDIA_GALLERY_DISPLAY = "31";

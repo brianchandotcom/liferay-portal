@@ -136,6 +136,8 @@ AUI.add(
 
 				instance._preventHide();
 
+				var notice = instance._notice;
+
 				if (instance._useAnimation) {
 					var animationConfig = instance._animationConfig;
 
@@ -143,7 +145,7 @@ AUI.add(
 					var top = animationConfig.top;
 
 					if (!left) {
-						var noticeRegion = ADOM.region(ANode.getDOMNode(instance._notice));
+						var noticeRegion = ADOM.region(ANode.getDOMNode(notice));
 
 						left = (ADOM.winWidth() / 2) - (noticeRegion.width / 2);
 
@@ -152,17 +154,17 @@ AUI.add(
 						animationConfig.left = left + STR_PX;
 					}
 
-					instance._notice.setXY([left, top]);
+					notice.setXY([left, top]);
 
-					instance._notice.transition(
+					notice.transition(
 						instance._animationConfig,
 						function() {
-							instance._hideHandle = A.later(instance._timeout, instance._notice, STR_HIDE);
+							instance._hideHandle = A.later(instance._timeout, notice, STR_HIDE);
 						}
 					);
 				}
 				else {
-					instance._hideHandle = A.later(instance._timeout, instance._notice, STR_HIDE);
+					instance._hideHandle = A.later(instance._timeout, notice, STR_HIDE);
 				}
 			},
 
@@ -257,7 +259,6 @@ AUI.add(
 
 					var toggleButton = ANode.create('<a class="toggle-button" href="javascript:;"><span>' + instance._hideText + '</span></a>');
 					var toggleSpan = toggleButton.one('span');
-					var height = 0;
 
 					var visible = 0;
 
@@ -269,7 +270,7 @@ AUI.add(
 						function(event) {
 							var text = showText;
 
-							if (visible == 0) {
+							if (visible === 0) {
 								text = hideText;
 
 								visible = 1;

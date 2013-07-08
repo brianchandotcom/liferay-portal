@@ -20,6 +20,11 @@ import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationEventListener;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageListener;
+import com.liferay.portal.kernel.nio.intraband.RegistrationReference;
+import com.liferay.portal.kernel.nio.intraband.messaging.DestinationConfigurationProcessCallable;
+import com.liferay.portal.kernel.nio.intraband.messaging.IntrabandBridgeDestination;
+import com.liferay.portal.kernel.nio.intraband.rpc.IntrabandRPCUtil;
+import com.liferay.portal.kernel.resiliency.spi.SPI;
 import com.liferay.portal.kernel.resiliency.spi.SPIUtil;
 import com.liferay.portal.kernel.security.pacl.permission.PortalMessageBusPermission;
 import com.liferay.portal.kernel.util.ClassLoaderPool;
@@ -57,6 +62,10 @@ public abstract class AbstractMessagingConfigurator
 		}
 
 		for (Destination destination : _destinations) {
+			if (SPIUtil.isSPI()) {
+				destination = new IntrabandBridgeDestination(destination);
+			}
+
 			messageBus.addDestination(destination);
 		}
 
@@ -108,6 +117,26 @@ public abstract class AbstractMessagingConfigurator
 					_messageListeners.entrySet()) {
 
 				String destinationName = messageListeners.getKey();
+
+				if (SPIUtil.isSPI()) {
+					SPI spi = SPIUtil.getSPI();
+
+					try {
+						RegistrationReference registrationReference =
+							spi.getRegistrationReference();
+
+						IntrabandRPCUtil.execute(
+							registrationReference,
+							new DestinationConfigurationProcessCallable(
+								destinationName));
+					}
+					catch (Exception e) {
+						_log.error(
+							"Unable to install " +
+								"DestinationConfigurationProcessCallable " +
+									"on MPI for " + destinationName, e);
+					}
+				}
 
 				for (MessageListener messageListener :
 						messageListeners.getValue()) {

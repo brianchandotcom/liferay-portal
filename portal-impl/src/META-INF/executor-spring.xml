@@ -90,7 +90,7 @@
 					</key>
 					<bean class="com.liferay.portal.kernel.concurrent.ThreadPoolExecutor">
 						<constructor-arg name="corePoolSize" value="0" />
-						<constructor-arg name="maxPoolSize" value="1" />
+						<constructor-arg name="maxPoolSize" value="10" />
 						<constructor-arg name="keepAliveTime" value="60" />
 						<constructor-arg name="timeUnit">
 							<util:constant static-field="java.util.concurrent.TimeUnit.SECONDS" />

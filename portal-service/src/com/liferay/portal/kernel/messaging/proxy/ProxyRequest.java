@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.messaging.proxy;
 
 import com.liferay.portal.kernel.util.MethodHandler;
+import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.Serializable;
 
@@ -78,6 +79,21 @@ public class ProxyRequest implements Serializable {
 
 	public boolean isSynchronous() {
 		return _synchronous;
+	}
+
+	@Override
+	public String toString() {
+		StringBundler sb = new StringBundler(7);
+
+		sb.append("{hasReturnValue=");
+		sb.append(_hasReturnValue);
+		sb.append(", methodHandler=");
+		sb.append(_methodHandler);
+		sb.append(", synchronous");
+		sb.append(_synchronous);
+		sb.append("}");
+
+		return sb.toString();
 	}
 
 	private boolean _hasReturnValue;

@@ -90,9 +90,13 @@ public class StartupAction extends SimpleAction {
 		intraband.registerDatagramReceiveHandler(
 			SystemDataType.MAILBOX.getValue(),
 			new MailboxDatagramReceiveHandler());
+
+		MessageBus messageBus = (MessageBus)PortalBeanLocatorUtil.locate(
+			MessageBus.class.getName());
+
 		intraband.registerDatagramReceiveHandler(
 			SystemDataType.MESSAGE.getValue(),
-			new MessageDatagramReceiveHandler());
+			new MessageDatagramReceiveHandler(messageBus));
 		intraband.registerDatagramReceiveHandler(
 			SystemDataType.PORTAL_CACHE.getValue(),
 			new PortalCacheDatagramReceiveHandler());
@@ -152,8 +156,6 @@ public class StartupAction extends SimpleAction {
 			_log.debug("Initialize message bus");
 		}
 
-		MessageBus messageBus = (MessageBus)PortalBeanLocatorUtil.locate(
-			MessageBus.class.getName());
 		MessageSender messageSender =
 			(MessageSender)PortalBeanLocatorUtil.locate(
 				MessageSender.class.getName());

@@ -14,12 +14,19 @@
 
 package com.liferay.portal.kernel.nio.intraband.messaging;
 
-import com.liferay.portal.kernel.io.Deserializer;
-import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.messaging.MessageBusUtil;
+import com.liferay.portal.kernel.messaging.Destination;
+import com.liferay.portal.kernel.messaging.MessageBus;
+import com.liferay.portal.kernel.messaging.MessageBusException;
+import com.liferay.portal.kernel.messaging.MessageListener;
+import com.liferay.portal.kernel.messaging.MessageListenerException;
 import com.liferay.portal.kernel.nio.intraband.BaseAsyncDatagramReceiveHandler;
 import com.liferay.portal.kernel.nio.intraband.Datagram;
+import com.liferay.portal.kernel.nio.intraband.Intraband;
 import com.liferay.portal.kernel.nio.intraband.RegistrationReference;
+
+import java.nio.ByteBuffer;
+
+import java.util.Set;
 
 /**
  * @author Shuyang Zhou
@@ -27,17 +34,64 @@ import com.liferay.portal.kernel.nio.intraband.RegistrationReference;
 public class MessageDatagramReceiveHandler
 	extends BaseAsyncDatagramReceiveHandler {
 
+	public MessageDatagramReceiveHandler(MessageBus messageBus) {
+		_messageBus = messageBus;
+	}
+
 	@Override
 	protected void doReceive(
 			RegistrationReference registrationReference, Datagram datagram)
 		throws Exception {
 
-		Deserializer deserializer = new Deserializer(
-			datagram.getDataByteBuffer());
+		ByteBuffer byteBuffer = datagram.getDataByteBuffer();
 
-		Message message = deserializer.readObject();
+		MessageRoutingBag messageRoutingBag = MessageRoutingBag.fromByteArray(
+			byteBuffer.array());
 
-		MessageBusUtil.sendMessage(message.getDestinationName(), message);
+		Destination destination = _messageBus.getDestination(
+			messageRoutingBag.getDestinationName());
+
+		if (destination != null) {
+			Set<MessageListener> messageListeners =
+				destination.getMessageListeners();
+
+			if (destination instanceof IntrabandBridgeDestination) {
+				if (messageListeners.isEmpty()) {
+					IntrabandBridgeDestination intrabandBridgeDestination =
+						(IntrabandBridgeDestination)destination;
+
+					intrabandBridgeDestination.sendMessageBag(
+						messageRoutingBag);
+				}
+				else {
+					destination.send(messageRoutingBag.getMessage());
+				}
+			}
+			else {
+				if (!messageListeners.isEmpty()) {
+					for (MessageListener messageListener : messageListeners) {
+						try {
+							messageListener.receive(
+								messageRoutingBag.getMessage());
+						}
+						catch (MessageListenerException mle) {
+							throw new MessageBusException(mle);
+						}
+					}
+				}
+			}
+		}
+
+		if (messageRoutingBag.isSynchronizedBridge()) {
+			Intraband intraband = registrationReference.getIntraband();
+
+			intraband.sendDatagram(
+				registrationReference,
+				Datagram.createResponseDatagram(
+					datagram, messageRoutingBag.toByteArray()));
+		}
 	}
+
+	private MessageBus _messageBus;
 
 }

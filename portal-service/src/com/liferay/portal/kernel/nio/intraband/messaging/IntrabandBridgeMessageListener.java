@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.nio.intraband.messaging;
 
-import com.liferay.portal.kernel.io.Serializer;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.nio.intraband.Datagram;
@@ -41,14 +40,13 @@ public class IntrabandBridgeMessageListener implements MessageListener {
 
 	@Override
 	public void receive(Message message) {
-		Serializer serializer = new Serializer();
-
-		serializer.writeObject(message);
+		MessageRoutingBag messageRoutingBag = new MessageRoutingBag(
+			message, false);
 
 		_intraband.sendDatagram(
 			_registrationReference,
 			Datagram.createRequestDatagram(
-				_messageType, serializer.toByteBuffer()));
+				_messageType, messageRoutingBag.toByteArray()));
 	}
 
 	private final Intraband _intraband;

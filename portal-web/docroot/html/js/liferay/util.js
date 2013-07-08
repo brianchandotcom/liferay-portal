@@ -52,6 +52,8 @@
 		src: 'hideLink'
 	};
 
+	var STR_CHECKED = 'checked';
+
 	var Window = {
 		_map: {}
 	};
@@ -919,7 +921,7 @@
 			var checkbox = A.one(form[name]);
 
 			if (checkbox) {
-				checkbox.set('checked', checked);
+				checkbox.set(STR_CHECKED, checked);
 			}
 		},
 		['aui-base']
@@ -940,10 +942,10 @@
 
 			form = A.one(form);
 
-			form.all(selector).set('checked', A.one(allBox).get('checked'));
+			form.all(selector).set(STR_CHECKED, A.one(allBox).get(STR_CHECKED));
 
 			if (selectClassName) {
-				form.all(selectClassName).toggleClass('info', A.one(allBox).get('checked'));
+				form.all(selectClassName).toggleClass('info', A.one(allBox).get(STR_CHECKED));
 			}
 		},
 		['aui-base']
@@ -968,14 +970,14 @@
 					if (!item.compareTo(allBox) && (arrayIndexOf(name, item.attr('name')) > -1)) {
 						totalBoxes++;
 
-						if (item.get('checked')) {
+						if (item.get(STR_CHECKED)) {
 							totalOn++;
 						}
 					}
 				}
 			);
 
-			allBox.set('checked', (totalBoxes == totalOn));
+			allBox.set(STR_CHECKED, (totalBoxes == totalOn));
 		},
 		['aui-base']
 	);
@@ -1144,7 +1146,7 @@
 			var toggleBox = A.one('#' + toggleBoxId);
 
 			if (checkBox && toggleBox) {
-				if (checkBox.get('checked') && checkDisabled) {
+				if (checkBox.get(STR_CHECKED) && checkDisabled) {
 					toggleBox.set('disabled', true);
 				}
 				else {
@@ -1755,12 +1757,12 @@
 	Liferay.provide(
 		Util,
 		'toggleBoxes',
-		function(checkBoxId, toggleBoxId, displayWhenUnchecked) {
+		function(checkBoxId, toggleBoxId, displayWhenUnchecked, toggleChildCheckboxes) {
 			var checkBox = A.one('#' + checkBoxId);
 			var toggleBox = A.one('#' + toggleBoxId);
 
 			if (checkBox && toggleBox) {
-				var checked = checkBox.get('checked');
+				var checked = checkBox.get(STR_CHECKED);
 
 				if (checked) {
 					toggleBox.show();
@@ -1777,6 +1779,12 @@
 					EVENT_CLICK,
 					function() {
 						toggleBox.toggle();
+
+						if (toggleChildCheckboxes) {
+							var childCheckboxes = toggleBox.all('input[type=checkbox]');
+
+							childCheckboxes.set(STR_CHECKED, checkBox.get(STR_CHECKED));
+						}
 					}
 				);
 			}
@@ -1860,7 +1868,7 @@
 			var radioButton = A.one('#' + radioId);
 
 			if (radioButton) {
-				var checked = radioButton.get('checked');
+				var checked = radioButton.get(STR_CHECKED);
 
 				var showBoxes;
 
@@ -1951,7 +1959,7 @@
 			checkbox = A.one(checkbox);
 
 			if (checkbox) {
-				var checked = checkbox.attr('checked');
+				var checked = checkbox.attr(STR_CHECKED);
 
 				var value = 'false';
 

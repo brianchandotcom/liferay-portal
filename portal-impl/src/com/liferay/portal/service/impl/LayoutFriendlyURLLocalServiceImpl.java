@@ -14,6 +14,7 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.portal.NoSuchLayoutFriendlyURLException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -150,6 +151,35 @@ public class LayoutFriendlyURLLocalServiceImpl
 	}
 
 	@Override
+	public LayoutFriendlyURL fetchLayoutFriendlyURL(
+			long plid, String languageId)
+		throws SystemException {
+
+		return fetchLayoutFriendlyURL(plid, languageId, true);
+	}
+
+	@Override
+	public LayoutFriendlyURL fetchLayoutFriendlyURL(
+			long plid, String languageId, boolean useDefault)
+		throws SystemException {
+
+		LayoutFriendlyURL layoutFriendlyURL =
+			layoutFriendlyURLPersistence.fetchByP_L(plid, languageId);
+
+		if ((layoutFriendlyURL == null) && useDefault) {
+			layoutFriendlyURL = layoutFriendlyURLPersistence.fetchByP_L(
+				plid, LocaleUtil.toLanguageId(LocaleUtil.getDefault()));
+
+			if (layoutFriendlyURL == null) {
+				layoutFriendlyURL =
+					layoutFriendlyURLPersistence.fetchByPlid_First(plid, null);
+			}
+		}
+
+		return layoutFriendlyURL;
+	}
+
+	@Override
 	public LayoutFriendlyURL getLayoutFriendlyURL(long plid, String languageId)
 		throws PortalException, SystemException {
 
@@ -163,6 +193,10 @@ public class LayoutFriendlyURLLocalServiceImpl
 
 		LayoutFriendlyURL layoutFriendlyURL =
 			layoutFriendlyURLPersistence.fetchByP_L(plid, languageId);
+
+		if ((layoutFriendlyURL == null) && !useDefault) {
+			throw new NoSuchLayoutFriendlyURLException();
+		}
 
 		if (layoutFriendlyURL == null) {
 			layoutFriendlyURL = layoutFriendlyURLPersistence.fetchByP_L(

@@ -15,9 +15,13 @@
 package com.liferay.portal.kernel.lar;
 
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.xml.Attribute;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.ClassedModel;
 import com.liferay.portal.model.StagedModel;
+import com.liferay.portal.model.TypedModel;
+import com.liferay.portal.util.PortalUtil;
 
 /**
  * @author Brian Wing Shun Chan
@@ -54,6 +58,20 @@ public class StagedModelDataHandlerUtil {
 
 		StagedModel stagedModel =
 			(StagedModel)portletDataContext.getZipEntryAsObject(element, path);
+
+		Attribute classNameAttribute = element.attribute("class-name");
+
+		if ((classNameAttribute != null) &&
+			(stagedModel instanceof TypedModel)) {
+
+			String className = classNameAttribute.getValue();
+
+			if (Validator.isNotNull(className)) {
+				long classNameId = PortalUtil.getClassNameId(className);
+
+				((TypedModel)stagedModel).setClassNameId(classNameId);
+			}
+		}
 
 		importStagedModel(portletDataContext, stagedModel);
 	}

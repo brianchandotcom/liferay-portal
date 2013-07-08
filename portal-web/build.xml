@@ -272,6 +272,16 @@
 					<arg line="${arg.line}" />
 				</java>
 
+				<replace file="docroot/html/js/editor/ckeditor/dev/builder/release/ckeditor/skins/kama/editor.css">
+					<replacetoken><![CDATA[overflow:hidden}.cke_resizer{]]></replacetoken>
+					<replacevalue><![CDATA[overflow:hidden}.cke_top{white-space:normal}.cke_resizer{]]></replacevalue>
+				</replace>
+
+				<replace file="docroot/html/js/editor/ckeditor/dev/builder/release/ckeditor/skins/moono/editor.css">
+					<replacetoken><![CDATA[.cke_top{border-bottom:1px solid #b6b6b6;padding:6px 8px 2px;-moz-box-shadow:0 1px 0 #fff inset;]]></replacetoken>
+					<replacevalue><![CDATA[.cke_top{border-bottom:1px solid #b6b6b6;padding:6px 8px 2px;white-space:normal;-moz-box-shadow:0 1px 0 #fff inset;]]></replacevalue>
+				</replace>
+
 				<move
 					file="docroot/html/js/editor/ckeditor/dev/builder/release/ckeditor"
 					preservelastmodified="true"

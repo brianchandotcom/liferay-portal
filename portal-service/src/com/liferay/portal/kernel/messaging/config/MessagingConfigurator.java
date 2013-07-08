@@ -26,9 +26,11 @@ import java.util.Map;
  */
 public interface MessagingConfigurator {
 
+	public void connect();
+
 	public void destroy();
 
-	public void init();
+	public void disconnect();
 
 	public void setDestinations(List<Destination> destinations);
 

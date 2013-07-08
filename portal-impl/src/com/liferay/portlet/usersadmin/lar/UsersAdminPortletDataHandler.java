@@ -114,7 +114,8 @@ public class UsersAdminPortletDataHandler extends BasePortletDataHandler {
 
 	@Override
 	protected void doPrepareManifestSummary(
-			PortletDataContext portletDataContext)
+			PortletDataContext portletDataContext,
+			PortletPreferences portletPreferences)
 		throws Exception {
 
 		ActionableDynamicQuery actionableDynamicQuery =

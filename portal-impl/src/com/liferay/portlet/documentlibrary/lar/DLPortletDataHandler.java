@@ -208,7 +208,8 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 
 	@Override
 	protected void doPrepareManifestSummary(
-			final PortletDataContext portletDataContext)
+			final PortletDataContext portletDataContext,
+			PortletPreferences portletPreferences)
 		throws Exception {
 
 		ActionableDynamicQuery dlFileShortcutActionableDynamicQuery =

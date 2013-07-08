@@ -181,7 +181,7 @@ portletURL.setParameter("tabs3", "all-publication-processes");
 
 							PortletDataContext portletDataContext = PortletDataContextFactoryUtil.createPreparePortletDataContext(themeDisplay, startDate, endDate);
 
-							portletDataHandler.prepareManifestSummary(portletDataContext);
+							portletDataHandler.prepareManifestSummary(portletDataContext, portletPreferences);
 
 							ManifestSummary manifestSummary = portletDataContext.getManifestSummary();
 

@@ -186,6 +186,11 @@ public interface PortletDataHandler {
 	public void prepareManifestSummary(PortletDataContext portletDataContext)
 		throws PortletDataException;
 
+	public void prepareManifestSummary(
+			PortletDataContext portletDataContext,
+			PortletPreferences portletPreferences)
+		throws PortletDataException;
+
 	public PortletPreferences processExportPortletPreferences(
 			PortletDataContext portletDataContext, String portletId,
 			PortletPreferences portletPreferences, Element rootElement)

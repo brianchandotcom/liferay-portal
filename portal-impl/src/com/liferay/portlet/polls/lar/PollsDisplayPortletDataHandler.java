@@ -15,10 +15,12 @@
 package com.liferay.portlet.polls.lar;
 
 import com.liferay.portal.kernel.lar.DataLevel;
+import com.liferay.portal.kernel.lar.ManifestSummary;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.portal.kernel.lar.PortletDataHandlerControl;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -193,6 +195,29 @@ public class PollsDisplayPortletDataHandler extends PollsPortletDataHandler {
 		}
 
 		return portletPreferences;
+	}
+
+	@Override
+	protected void doPrepareManifestSummary(
+			PortletDataContext portletDataContext,
+			PortletPreferences portletPreferences) throws Exception {
+
+		ManifestSummary manifestSummary =
+			portletDataContext.getManifestSummary();
+
+		if ((portletPreferences == null) ||
+			(manifestSummary.getModelAdditionCount(PollsQuestion.class) > -1)) {
+
+			return;
+		}
+
+		long questionId = GetterUtil.getLong(
+			portletPreferences.getValue("questionId", StringPool.BLANK));
+
+		if (questionId > 0) {
+			manifestSummary.addModelAdditionCount(
+				new StagedModelType(PollsQuestion.class), 1);
+		}
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

@@ -346,8 +346,17 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 	public void prepareManifestSummary(PortletDataContext portletDataContext)
 		throws PortletDataException {
 
+		prepareManifestSummary(portletDataContext, null);
+	}
+
+	@Override
+	public void prepareManifestSummary(
+			PortletDataContext portletDataContext,
+			PortletPreferences portletPreferences)
+		throws PortletDataException {
+
 		try {
-			doPrepareManifestSummary(portletDataContext);
+			doPrepareManifestSummary(portletDataContext, portletPreferences);
 		}
 		catch (Exception e) {
 			throw new PortletDataException(e);
@@ -542,7 +551,8 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 	}
 
 	protected void doPrepareManifestSummary(
-			PortletDataContext portletDataContext)
+			PortletDataContext portletDataContext,
+			PortletPreferences portletPreferences)
 		throws Exception {
 	}
 

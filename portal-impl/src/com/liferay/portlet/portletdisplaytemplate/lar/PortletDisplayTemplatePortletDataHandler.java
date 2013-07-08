@@ -128,7 +128,8 @@ public class PortletDisplayTemplatePortletDataHandler
 
 	@Override
 	protected void doPrepareManifestSummary(
-			PortletDataContext portletDataContext)
+			PortletDataContext portletDataContext,
+			PortletPreferences portletPreferences)
 		throws Exception {
 
 		for (StagedModelType modeType : stagedModelTypes) {

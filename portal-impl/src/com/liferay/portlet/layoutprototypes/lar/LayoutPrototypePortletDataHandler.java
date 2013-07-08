@@ -109,7 +109,8 @@ public class LayoutPrototypePortletDataHandler extends BasePortletDataHandler {
 
 	@Override
 	protected void doPrepareManifestSummary(
-			PortletDataContext portletDataContext)
+			PortletDataContext portletDataContext,
+			PortletPreferences portletPreferences)
 		throws Exception {
 
 		ActionableDynamicQuery layoutPrototypeExportActionableDynamicQuery =

@@ -214,7 +214,7 @@ public class StreamUtil {
 			long length)
 		throws IOException {
 
-		if (length < 0) {
+		if (length <= 0) {
 			length = inputFileChannel.size() - inputFileChannel.position();
 		}
 

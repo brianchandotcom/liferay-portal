@@ -14,7 +14,9 @@
 
 package com.liferay.portal.model.impl;
 
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.model.Repository;
 
 /**
  * @author Alexander Chow
@@ -22,6 +24,11 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 public class RepositoryImpl extends RepositoryBaseImpl {
 
 	public RepositoryImpl() {
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return new StagedModelType(Repository.class);
 	}
 
 	@Override

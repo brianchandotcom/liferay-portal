@@ -16,8 +16,8 @@
 
 <%@ include file="/html/portlet/trash/init.jsp" %>
 
-<span class="form-search">
+<aui:field-wrapper cssClass="form-search">
 	<aui:input inlineField="<%= true %>" label="" name="keywords" size="30" title="search-entries" type="text" />
 
 	<aui:button type="submit" value="search" />
-</span>
+</aui:field-wrapper>

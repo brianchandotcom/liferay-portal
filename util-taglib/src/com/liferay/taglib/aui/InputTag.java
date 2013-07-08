@@ -236,6 +236,15 @@ public class InputTag extends BaseInputTag {
 			baseType = "text";
 		}
 
+		boolean wrappedField = false;
+
+		FieldWrapperTag fieldWrapper = (FieldWrapperTag)findAncestorWithClass(
+			this, FieldWrapperTag.class);
+
+		if (fieldWrapper != null) {
+			wrappedField = true;
+		}
+
 		setNamespacedAttribute(request, "baseType", baseType);
 		setNamespacedAttribute(request, "bean", bean);
 		setNamespacedAttribute(request, "defaultLanguageId", defaultLanguageId);
@@ -245,6 +254,7 @@ public class InputTag extends BaseInputTag {
 		setNamespacedAttribute(request, "id", id);
 		setNamespacedAttribute(request, "label", label);
 		setNamespacedAttribute(request, "model", model);
+		setNamespacedAttribute(request, "wrappedField", wrappedField);
 
 		request.setAttribute(getAttributeNamespace() + "value", getValue());
 

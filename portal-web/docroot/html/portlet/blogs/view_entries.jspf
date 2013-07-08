@@ -23,7 +23,7 @@ showSearch = showSearch && !results.isEmpty();
 
 <c:if test="<%= showAddEntryButton || showPermissionsButton || showSearch %>">
 	<div class="portlet-toolbar search-form">
-		<div class="form-search">
+		<aui:field-wrapper cssClass="form-search">
 			<c:if test="<%= showSearch %>">
 				<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" inlineField="<%= true %>" label="" name="keywords" size="30" title="search-entries" type="text" />
 
@@ -50,7 +50,7 @@ showSearch = showSearch && !results.isEmpty();
 
 				<aui:button href="<%= permissionsURL %>" value="permissions" />
 			</c:if>
-		</div>
+		</aui:field-wrapper>
 	</div>
 </c:if>
 

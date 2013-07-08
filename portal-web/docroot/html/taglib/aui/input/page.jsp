@@ -32,7 +32,7 @@
 	</c:if>
 </liferay-util:buffer>
 
-<c:if test='<%= !choiceField && !type.equals("hidden") %>'>
+<c:if test='<%= !choiceField && !type.equals("hidden") && !wrappedField %>'>
 	<div class="<%= controlGroupCss %>">
 </c:if>
 
@@ -246,7 +246,7 @@
 	</label>
 </c:if>
 
-<c:if test='<%= !choiceField && !type.equals("hidden") %>'>
+<c:if test='<%= !choiceField && !type.equals("hidden") && !wrappedField %>'>
 	</div>
 </c:if>
 

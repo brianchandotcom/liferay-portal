@@ -58,51 +58,55 @@ public class SystemEventAdvice
 			return;
 		}
 
-		ClassedModel argument =
+		ClassedModel classedModel =
 			(ClassedModel)methodInvocation.getArguments()[0];
 
-		String className = getClassName(argument);
+		String className = getClassName(classedModel);
 
 		String referrerClassName = null;
 
-		if (argument instanceof TypedModel) {
-			referrerClassName = ((TypedModel)argument).getClassName();
+		if (classedModel instanceof TypedModel) {
+			referrerClassName = ((TypedModel)classedModel).getClassName();
 		}
 
-		long classPK = getClassPK(argument);
-		long groupId = getGroupId(argument);
+		long classPK = getClassPK(classedModel);
+		long groupId = getGroupId(classedModel);
 
-		SystemEventHierarchyEntry hierarchyEntry =
+		SystemEventHierarchyEntry systemEventHierarchyEntry =
 			SystemEventHierarchyEntryThreadLocal.peek();
 
-		if ((hierarchyEntry != null) &&
-			hierarchyEntry.isCurrentAsset(className, classPK)) {
+		if ((systemEventHierarchyEntry != null) &&
+			systemEventHierarchyEntry.isCurrentAsset(className, classPK)) {
 
 			if (groupId > 0) {
 				SystemEventLocalServiceUtil.addSystemEvent(
-					0, getGroupId(argument), hierarchyEntry.getClassName(),
-					getClassPK(argument), hierarchyEntry.getUuid(),
-					referrerClassName, systemEvent.type(),
-					hierarchyEntry.getExtraData());
+					0, getGroupId(classedModel),
+					systemEventHierarchyEntry.getClassName(),
+					getClassPK(classedModel),
+					systemEventHierarchyEntry.getUuid(), referrerClassName,
+					systemEvent.type(),
+					systemEventHierarchyEntry.getExtraDataJSON());
 			}
 			else {
 				SystemEventLocalServiceUtil.addSystemEvent(
-					getCompanyId(argument), hierarchyEntry.getClassName(),
-					getClassPK(argument), hierarchyEntry.getUuid(),
-					referrerClassName, systemEvent.type(),
-					hierarchyEntry.getExtraData());
+					getCompanyId(classedModel),
+					systemEventHierarchyEntry.getClassName(),
+					getClassPK(classedModel),
+					systemEventHierarchyEntry.getUuid(), referrerClassName,
+					systemEvent.type(),
+					systemEventHierarchyEntry.getExtraDataJSON());
 			}
 		}
 		else if (groupId > 0) {
 			SystemEventLocalServiceUtil.addSystemEvent(
-				0, getGroupId(argument), className, getClassPK(argument),
-				getUuid(argument), referrerClassName, systemEvent.type(),
-				StringPool.BLANK);
+				0, getGroupId(classedModel), className,
+				getClassPK(classedModel), getUuid(classedModel),
+				referrerClassName, systemEvent.type(), StringPool.BLANK);
 		}
 		else {
 			SystemEventLocalServiceUtil.addSystemEvent(
-				getCompanyId(argument), className, getClassPK(argument),
-				getUuid(argument), referrerClassName, systemEvent.type(),
+				getCompanyId(classedModel), className, getClassPK(classedModel),
+				getUuid(classedModel), referrerClassName, systemEvent.type(),
 				StringPool.BLANK);
 		}
 	}
@@ -163,15 +167,15 @@ public class SystemEventAdvice
 				SystemEventHierarchyEntryThreadLocal.peek();
 
 			if (hierarchyEntry != null) {
-				Object argument = methodInvocation.getArguments()[0];
+				Object object = methodInvocation.getArguments()[0];
 
-				long classPK = getClassPK(argument);
+				long classPK = getClassPK(object);
 
 				if (classPK == 0) {
 					return;
 				}
 
-				String className = getClassName((ClassedModel)argument);
+				String className = getClassName((ClassedModel)object);
 
 				if (hierarchyEntry.isCurrentAsset(className, classPK)) {
 					SystemEventHierarchyEntryThreadLocal.pop();
@@ -185,12 +189,12 @@ public class SystemEventAdvice
 		return _nullSystemEvent;
 	}
 
-	protected String getClassName(ClassedModel argument) {
-		String className = argument.getModelClassName();
+	protected String getClassName(ClassedModel classedModel) {
+		String className = classedModel.getModelClassName();
 
-		if (argument instanceof StagedModel) {
+		if (classedModel instanceof StagedModel) {
 			StagedModelType stagedModelType =
-				((StagedModel)argument).getStagedModelType();
+				((StagedModel)classedModel).getStagedModelType();
 
 			className = stagedModelType.getClassName();
 		}
@@ -198,13 +202,12 @@ public class SystemEventAdvice
 		return className;
 	}
 
-	protected long getClassPK(Object argument) {
-		if (!(argument instanceof ClassedModel)) {
+	protected long getClassPK(Object object) {
+		if (!(object instanceof ClassedModel)) {
 			return 0;
 		}
 
-		Serializable primaryKeyObj =
-			((ClassedModel)argument).getPrimaryKeyObj();
+		Serializable primaryKeyObj = ((ClassedModel)object).getPrimaryKeyObj();
 
 		if (!(primaryKeyObj instanceof Long)) {
 			return 0;
@@ -213,43 +216,43 @@ public class SystemEventAdvice
 		return (Long)primaryKeyObj;
 	}
 
-	protected long getCompanyId(Object argument) {
-		if (argument instanceof GroupedModel) {
-			return ((GroupedModel)argument).getCompanyId();
+	protected long getCompanyId(Object object) {
+		if (object instanceof GroupedModel) {
+			return ((GroupedModel)object).getCompanyId();
 		}
 
-		if (argument instanceof AuditedModel) {
-			return ((AuditedModel)argument).getCompanyId();
+		if (object instanceof AuditedModel) {
+			return ((AuditedModel)object).getCompanyId();
 		}
 
-		if (argument instanceof StagedModel) {
-			return ((StagedModel)argument).getCompanyId();
+		if (object instanceof StagedModel) {
+			return ((StagedModel)object).getCompanyId();
 		}
 
 		return 0;
 	}
 
-	protected long getGroupId(Object argument) {
-		if (!(argument instanceof GroupedModel)) {
+	protected long getGroupId(Object object) {
+		if (!(object instanceof GroupedModel)) {
 			return 0;
 		}
 
-		return ((GroupedModel)argument).getGroupId();
+		return ((GroupedModel)object).getGroupId();
 	}
 
-	protected String getUuid(ClassedModel argument) throws Exception {
+	protected String getUuid(ClassedModel object) throws Exception {
 		String uuid;
 
-		if (argument instanceof StagedModel) {
-			uuid = ((StagedModel)argument).getUuid();
+		if (object instanceof StagedModel) {
+			uuid = ((StagedModel)object).getUuid();
 		}
 		else {
-			Class<?> modelClass = argument.getClass();
+			Class<?> modelClass = object.getClass();
 
 			Method uuidMethod = modelClass.getMethod("getUuid", new Class[0]);
 
 			if (uuidMethod != null) {
-				uuid = (String)uuidMethod.invoke(argument, new Object[0]);
+				uuid = (String)uuidMethod.invoke(object, new Object[0]);
 			}
 			else {
 				uuid = StringPool.BLANK;
@@ -260,15 +263,15 @@ public class SystemEventAdvice
 	}
 
 	protected boolean isValid(
-		MethodInvocation methodInvocation, boolean beforeCall) {
+		MethodInvocation methodInvocation, boolean beforeMethodCall) {
 
 		Method method = methodInvocation.getMethod();
 
 		Class<?>[] parameterTypes = method.getParameterTypes();
 
 		if (parameterTypes.length == 0) {
-			if (_log.isWarnEnabled() && beforeCall) {
-				_log.warn(
+			if (_log.isDebugEnabled() && beforeMethodCall) {
+				_log.debug(
 					"The method " + methodInvocation +
 						" must have at least one parameter");
 			}
@@ -279,8 +282,8 @@ public class SystemEventAdvice
 		Class<?> parameter = parameterTypes[0];
 
 		if (!ClassedModel.class.isAssignableFrom(parameter)) {
-			if (_log.isWarnEnabled() && beforeCall) {
-				_log.warn(
+			if (_log.isWarnEnabled() && beforeMethodCall) {
+				_log.debug(
 					"The first parameter of " + methodInvocation +
 						" must implement ClassedModel");
 			}
@@ -288,12 +291,12 @@ public class SystemEventAdvice
 			return false;
 		}
 
-		ClassedModel argument =
+		ClassedModel classedModel =
 			(ClassedModel)methodInvocation.getArguments()[0];
 
-		if (!(argument.getPrimaryKeyObj() instanceof Long)) {
-			if (_log.isWarnEnabled() && beforeCall) {
-				_log.warn(
+		if (!(classedModel.getPrimaryKeyObj() instanceof Long)) {
+			if (_log.isDebugEnabled() && beforeMethodCall) {
+				_log.debug(
 					"The first parameter of " + methodInvocation +
 						" must have a long primary key");
 			}
@@ -301,7 +304,7 @@ public class SystemEventAdvice
 			return false;
 		}
 
-		if (beforeCall) {
+		if (beforeMethodCall) {
 			return true;
 		}
 
@@ -309,7 +312,7 @@ public class SystemEventAdvice
 			!AuditedModel.class.isAssignableFrom(parameter) &&
 			!StagedModel.class.isAssignableFrom(parameter)) {
 
-			if (_log.isWarnEnabled()) {
+			if (_log.isDebugEnabled()) {
 				StringBundler sb = new StringBundler(4);
 
 				sb.append("The first parameter of ");
@@ -317,7 +320,7 @@ public class SystemEventAdvice
 				sb.append(" must implement one of GroupedMode, AuditedModel");
 				sb.append(" or StagedModel");
 
-				_log.warn(sb.toString());
+				_log.debug(sb.toString());
 			}
 
 			return false;

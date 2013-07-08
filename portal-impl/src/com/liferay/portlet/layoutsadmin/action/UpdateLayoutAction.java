@@ -98,7 +98,7 @@ public class UpdateLayoutAction extends JSONAction {
 		catch (LayoutTypeException lte) {
 			jsonObject.putErrorMessage(
 				HttpServletResponse.SC_BAD_REQUEST,
-				getLayoutTypeExceptionMessage(themeDisplay, lte));
+				getLayoutTypeExceptionMessage(themeDisplay, lte, cmd));
 		}
 
 		return jsonObject.toString();
@@ -186,7 +186,27 @@ public class UpdateLayoutAction extends JSONAction {
 	}
 
 	protected String getLayoutTypeExceptionMessage(
-		ThemeDisplay themeDisplay, LayoutTypeException lte) {
+		ThemeDisplay themeDisplay, LayoutTypeException lte, String cmd) {
+
+		if (Validator.isNotNull(cmd)) {
+			if (cmd.equals("delete") &&
+				(lte.getType() == LayoutTypeException.FIRST_LAYOUT)) {
+
+				return themeDisplay.translate(
+					"you-cannot-delete-this-page-because-the-next-page-is-of-" +
+						"type-x-and-it-cannot-be-placed-on-the-first-place",
+					"layout.types." + lte.getLayoutType());
+			}
+
+			if ((cmd.equals("display_order") || cmd.equals("priority")) &&
+				(lte.getType() == LayoutTypeException.FIRST_LAYOUT)) {
+
+				return themeDisplay.translate(
+					"you-cannot-move-this-page-because-the-resulting-order-" +
+						"would-place-a-page-of-type-x-on-the-first-place",
+					"layout.types." + lte.getLayoutType());
+			}
+		}
 
 		if (lte.getType() == LayoutTypeException.FIRST_LAYOUT ) {
 			return themeDisplay.translate(

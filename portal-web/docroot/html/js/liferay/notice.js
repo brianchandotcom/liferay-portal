@@ -134,32 +134,37 @@ AUI.add(
 			_afterNoticeShow: function(event) {
 				var instance = this;
 
+				instance._preventHide();
+
+				var notice = instance._notice;
+
 				if (instance._useAnimation) {
-					var noticeLeft;
+					var animationConfig = instance._animationConfig;
 
-					var noticeRegion;
+					var left = animationConfig.left;
+					var top = animationConfig.top;
 
-					if (!instance._animationConfig.left) {
-						var viewportWidth = ADOM.winWidth();
+					if (!left) {
+						var noticeRegion = ADOM.region(ANode.getDOMNode(notice));
 
-						noticeRegion = ADOM.region(ANode.getDOMNode(instance._notice));
+						left = (ADOM.winWidth() / 2) - (noticeRegion.width / 2);
 
-						noticeLeft = (viewportWidth / 2) - (noticeRegion.width / 2);
+						top = -noticeRegion.height;
 
-						instance._animationConfig.left = noticeLeft + STR_PX;
+						animationConfig.left = left + STR_PX;
 					}
 
-					instance._notice.setXY([noticeLeft, -noticeRegion.height]);
+					notice.setXY([left, top]);
 
-					instance._notice.transition(
+					notice.transition(
 						instance._animationConfig,
 						function() {
-							A.later(instance._timeout, instance._notice, STR_HIDE);
+							instance._hideHandle = A.later(instance._timeout, notice, STR_HIDE);
 						}
 					);
 				}
 				else {
-					A.later(instance._timeout, instance._notice, STR_HIDE);
+					instance._hideHandle = A.later(instance._timeout, notice, STR_HIDE);
 				}
 			},
 
@@ -254,7 +259,6 @@ AUI.add(
 
 					var toggleButton = ANode.create('<a class="toggle-button" href="javascript:;"><span>' + instance._hideText + '</span></a>');
 					var toggleSpan = toggleButton.one('span');
-					var height = 0;
 
 					var visible = 0;
 
@@ -266,7 +270,7 @@ AUI.add(
 						function(event) {
 							var text = showText;
 
-							if (visible == 0) {
+							if (visible === 0) {
 								text = hideText;
 
 								visible = 1;
@@ -281,6 +285,16 @@ AUI.add(
 					);
 
 					notice.append(toggleButton);
+				}
+			},
+
+			_preventHide: function() {
+				var instance = this;
+
+				if (instance._hideHandle) {
+					instance._hideHandle.cancel();
+
+					instance._hideHandle = null;
 				}
 			}
 		};

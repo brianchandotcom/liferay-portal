@@ -15,17 +15,29 @@
 package com.liferay.portal.staging;
 
 import com.liferay.portal.DuplicateLockException;
+import com.liferay.portal.LARFileException;
+import com.liferay.portal.LARFileSizeException;
+import com.liferay.portal.LARTypeException;
+import com.liferay.portal.LayoutPrototypeException;
 import com.liferay.portal.LayoutSetBranchNameException;
+import com.liferay.portal.LocaleException;
+import com.liferay.portal.MissingReferenceException;
 import com.liferay.portal.NoSuchGroupException;
 import com.liferay.portal.NoSuchLayoutBranchException;
 import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.NoSuchLayoutRevisionException;
+import com.liferay.portal.PortletIdException;
 import com.liferay.portal.RemoteExportException;
 import com.liferay.portal.RemoteOptionsException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
+import com.liferay.portal.kernel.lar.MissingReference;
+import com.liferay.portal.kernel.lar.MissingReferences;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.kernel.lar.UserIdStrategy;
@@ -36,6 +48,7 @@ import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.messaging.MessageStatus;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
+import com.liferay.portal.kernel.servlet.ServletResponseConstants;
 import com.liferay.portal.kernel.staging.LayoutStagingUtil;
 import com.liferay.portal.kernel.staging.Staging;
 import com.liferay.portal.kernel.staging.StagingConstants;
@@ -46,9 +59,12 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -77,6 +93,7 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
+import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.BackgroundTaskLocalServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutBranchLocalServiceUtil;
@@ -98,6 +115,10 @@ import com.liferay.portal.util.SessionClicks;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortalPreferences;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portlet.documentlibrary.DuplicateFileException;
+import com.liferay.portlet.documentlibrary.FileExtensionException;
+import com.liferay.portlet.documentlibrary.FileNameException;
+import com.liferay.portlet.documentlibrary.FileSizeException;
 
 import java.io.Serializable;
 
@@ -105,6 +126,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -649,6 +671,252 @@ public class StagingImpl implements Staging {
 	}
 
 	@Override
+	public JSONArray getErrorMessagesJSONArray(
+		ThemeDisplay themeDisplay, Map<String, MissingReference> missingReferences) {
+
+		JSONArray errorMessagesJSONArray = JSONFactoryUtil.createJSONArray();
+
+		for (String missingReferenceDisplayName : missingReferences.keySet()) {
+			MissingReference missingReference = missingReferences.get(
+				missingReferenceDisplayName);
+
+			JSONObject errorMessageJSONObject =
+				JSONFactoryUtil.createJSONObject();
+
+			Map<String, String> referrers = missingReference.getReferrers();
+
+			if (referrers.size() == 1) {
+				Set<Map.Entry<String, String>> referrerDisplayNames =
+					referrers.entrySet();
+
+				Iterator<Map.Entry<String, String>> iterator =
+					referrerDisplayNames.iterator();
+
+				Map.Entry<String, String> entry = iterator.next();
+
+				String referrerDisplayName = entry.getKey();
+				String referrerClasName = entry.getValue();
+
+				if (referrerClasName.equals(Portlet.class.getName())) {
+					referrerDisplayName = PortalUtil.getPortletTitle(
+						referrerDisplayName, themeDisplay.getLocale());
+				}
+
+				errorMessageJSONObject.put(
+					"info",
+					themeDisplay.translate(
+						"referenced-by-a-x-x",
+						new String[] {
+							ResourceActionsUtil.getModelResource(
+								themeDisplay.getLocale(),
+								referrerClasName), referrerDisplayName
+						}
+					));
+			}
+			else {
+				errorMessageJSONObject.put(
+					"info",
+					themeDisplay.translate(
+						"referenced-by-x-elements", referrers.size()));
+			}
+
+			errorMessageJSONObject.put("name", missingReferenceDisplayName);
+			errorMessageJSONObject.put(
+				"type",
+				ResourceActionsUtil.getModelResource(
+					themeDisplay.getLocale(), missingReference.getClassName()));
+
+			errorMessagesJSONArray.put(errorMessageJSONObject);
+		}
+
+		return errorMessagesJSONArray;
+
+	}
+
+	@Override
+	public JSONObject getExceptionMessagesJSONArray(
+		ThemeDisplay themeDisplay, Exception e) {
+
+		String errorMessage = StringPool.BLANK;
+		JSONArray errorMessagesJSONArray = null;
+		int errorType = 0;
+		JSONArray warningMessagesJSONArray = null;
+
+		if (e instanceof DuplicateFileException ||
+			e instanceof FileExtensionException ||
+			e instanceof FileNameException ||
+			e instanceof FileSizeException ||
+			e instanceof LARFileException ||
+			e instanceof LARFileSizeException ||
+			e instanceof LARTypeException ||
+			e instanceof LayoutPrototypeException ||
+			e instanceof LocaleException ||
+			e instanceof MissingReferenceException ||
+			e instanceof PortletIdException) {
+
+			if (e instanceof DuplicateFileException) {
+				errorMessage = themeDisplay.translate(
+					"please-enter-a-unique-document-name");
+				errorType =
+					ServletResponseConstants.SC_DUPLICATE_FILE_EXCEPTION;
+			}
+			else if (e instanceof FileExtensionException) {
+				errorMessage = themeDisplay.translate(
+					"document-names-must-end-with-one-of-the-following-" +
+						"extensions",
+					".lar");
+				errorType =
+					ServletResponseConstants.SC_FILE_EXTENSION_EXCEPTION;
+			}
+			else if (e instanceof FileNameException) {
+				errorMessage = themeDisplay.translate(
+					"please-enter-a-file-with-a-valid-file-name");
+				errorType = ServletResponseConstants.SC_FILE_NAME_EXCEPTION;
+			}
+			else if (e instanceof FileSizeException ||
+					 e instanceof LARFileSizeException) {
+
+				long fileMaxSize = PrefsPropsUtil.getLong(
+					PropsKeys.DL_FILE_MAX_SIZE);
+
+				if (fileMaxSize == 0) {
+					fileMaxSize = PrefsPropsUtil.getLong(
+						PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_MAX_SIZE);
+				}
+
+				fileMaxSize /= 1024;
+
+				errorMessage = themeDisplay.translate(
+					"please-enter-a-file-with-a-valid-file-size-no-larger-" +
+						"than-x",
+					fileMaxSize);
+				errorType = ServletResponseConstants.SC_FILE_SIZE_EXCEPTION;
+			}
+			else if (e instanceof LARTypeException) {
+				LARTypeException lte = (LARTypeException)e;
+
+				errorMessage = themeDisplay.translate(
+					"please-import-a-lar-file-of-the-correct-type-x-is-not-" +
+						"valid",
+					lte.getMessage());
+				errorType = ServletResponseConstants.SC_FILE_CUSTOM_EXCEPTION;
+			}
+			else if (e instanceof LARFileException) {
+				errorMessage = themeDisplay.translate(
+					"please-specify-a-lar-file-to-import");
+				errorType = ServletResponseConstants.SC_FILE_CUSTOM_EXCEPTION;
+			}
+			else if (e instanceof LayoutPrototypeException) {
+				LayoutPrototypeException lpe = (LayoutPrototypeException)e;
+
+				StringBundler sb = new StringBundler(4);
+
+				sb.append("the-lar-file-could-not-be-imported-because-it-");
+				sb.append("requires-page-templates-or-site-templates-that-");
+				sb.append("could-not-be-found.-please-import-the-following-");
+				sb.append("templates-manually");
+
+				errorMessage = themeDisplay.translate(sb.toString());
+
+				errorMessagesJSONArray = JSONFactoryUtil.createJSONArray();
+
+				List<Tuple> missingLayoutPrototypes =
+					lpe.getMissingLayoutPrototypes();
+
+				for (Tuple missingLayoutPrototype : missingLayoutPrototypes) {
+					JSONObject errorMessageJSONObject =
+						JSONFactoryUtil.createJSONObject();
+
+					String layoutPrototypeUuid =
+						(String)missingLayoutPrototype.getObject(1);
+
+					errorMessageJSONObject.put("info", layoutPrototypeUuid);
+
+					String layoutPrototypeName =
+						(String)missingLayoutPrototype.getObject(2);
+
+					errorMessageJSONObject.put("name", layoutPrototypeName);
+
+					String layoutPrototypeClassName =
+						(String)missingLayoutPrototype.getObject(0);
+
+					errorMessageJSONObject.put(
+						"type",
+						ResourceActionsUtil.getModelResource(
+							themeDisplay.getLocale(),
+							layoutPrototypeClassName));
+
+					errorMessagesJSONArray.put(errorMessageJSONObject);
+				}
+
+				errorType = ServletResponseConstants.SC_FILE_CUSTOM_EXCEPTION;
+			}
+			else if (e instanceof LocaleException) {
+				LocaleException le = (LocaleException)e;
+
+				errorMessage = themeDisplay.translate(
+					"the-available-languages-in-the-lar-file-x-do-not-match-" +
+						"the-portal's-available-languages-x",
+					new String[] {
+						StringUtil.merge(
+							le.getSourceAvailableLocales(),
+							StringPool.COMMA_AND_SPACE),
+						StringUtil.merge(
+							le.getTargetAvailableLocales(),
+							StringPool.COMMA_AND_SPACE)
+					});
+				errorType = ServletResponseConstants.SC_FILE_CUSTOM_EXCEPTION;
+			}
+			else if (e instanceof MissingReferenceException) {
+				MissingReferenceException mre = (MissingReferenceException)e;
+
+				errorMessage = themeDisplay.translate(
+					"there-are-missing-references-that-could-not-be-found-" +
+						"in-the-current-site.-please-import-another-lar-file-" +
+							"containing-the-following-elements");
+
+				MissingReferences missingReferences =
+					mre.getMissingReferences();
+
+				errorMessagesJSONArray = getErrorMessagesJSONArray(
+					themeDisplay,
+					missingReferences.getDependencyMissingReferences());
+				errorType = ServletResponseConstants.SC_FILE_CUSTOM_EXCEPTION;
+				warningMessagesJSONArray = getWarningMessagesJSONArray(
+					themeDisplay, missingReferences.getWeakMissingReferences());
+			}
+			else if (e instanceof PortletIdException) {
+				errorMessage = themeDisplay.translate(
+					"please-import-a-lar-file-for-the-current-portlet");
+				errorType = ServletResponseConstants.SC_FILE_CUSTOM_EXCEPTION;
+			}
+		}
+		else {
+			errorType = ServletResponseConstants.SC_FILE_CUSTOM_EXCEPTION;
+		}
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		jsonObject.put("message", errorMessage);
+
+		if ((errorMessagesJSONArray != null) &&
+			(errorMessagesJSONArray.length() > 0)) {
+
+			jsonObject.put("messageListItems", errorMessagesJSONArray);
+		}
+
+		jsonObject.put("status", errorType);
+
+		if ((warningMessagesJSONArray != null) &&
+			(warningMessagesJSONArray.length() > 0)) {
+
+			jsonObject.put("warningMessages", warningMessagesJSONArray);
+		}
+
+		return jsonObject;
+	}
+
+	@Override
 	public Group getLiveGroup(long groupId)
 		throws PortalException, SystemException {
 
@@ -949,6 +1217,48 @@ public class StagingImpl implements Staging {
 		}
 
 		return parameterMap;
+	}
+
+	@Override
+	public JSONArray getWarningMessagesJSONArray(
+		ThemeDisplay themeDisplay,
+		Map<String, MissingReference> missingReferences) {
+
+		JSONArray warningMessagesJSONArray = JSONFactoryUtil.createJSONArray();
+
+		for (String missingReferenceReferrerClassName :
+				missingReferences.keySet()) {
+
+			MissingReference missingReference = missingReferences.get(
+				missingReferenceReferrerClassName);
+
+			Map<String, String> referrers = missingReference.getReferrers();
+
+			JSONObject errorMessageJSONObject =
+				JSONFactoryUtil.createJSONObject();
+
+			if (Validator.isNotNull(missingReference.getClassName())) {
+				errorMessageJSONObject.put(
+					"info",
+					themeDisplay.translate(
+						"the-original-x-does-not-exist-in-the-current" +
+							"-environment",
+						ResourceActionsUtil.getModelResource(
+							themeDisplay.getLocale(),
+							missingReference.getClassName())));
+			}
+
+			errorMessageJSONObject.put("size", referrers.size());
+			errorMessageJSONObject.put(
+				"type",
+				ResourceActionsUtil.getModelResource(
+					themeDisplay.getLocale(),
+					missingReferenceReferrerClassName));
+
+			warningMessagesJSONArray.put(errorMessageJSONObject);
+		}
+
+		return warningMessagesJSONArray;
 	}
 
 	@Override

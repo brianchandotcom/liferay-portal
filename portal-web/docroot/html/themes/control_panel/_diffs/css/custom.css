@@ -102,7 +102,7 @@ $dockbarOpenGradientStart: #00A0FF;
 					font-weight: normal;
 				}
 
-				span img {
+				.control-panel-home-link img {
 					display: none;
 				}
 			}

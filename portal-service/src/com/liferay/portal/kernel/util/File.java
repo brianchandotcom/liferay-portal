@@ -145,7 +145,15 @@ public interface File {
 
 	public void write(java.io.File file, byte[] bytes) throws IOException;
 
+	public void write(java.io.File file, byte[] bytes, boolean append)
+		throws IOException;
+
 	public void write(java.io.File file, byte[] bytes, int offset, int length)
+		throws IOException;
+
+	public void write(
+			java.io.File file, byte[] bytes, int offset, int length,
+			boolean append)
 		throws IOException;
 
 	public void write(java.io.File file, InputStream is) throws IOException;

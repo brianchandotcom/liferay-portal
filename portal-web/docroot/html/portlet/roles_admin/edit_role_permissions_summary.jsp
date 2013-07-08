@@ -21,7 +21,7 @@
 <%
 Role role = (Role)request.getAttribute("edit_role_permissions.jsp-role");
 
-PortletURL permissionsAllURL = renderResponse.createRenderURL();
+PortletURL permissionsAllURL = liferayPortletResponse.createRenderURL();
 
 permissionsAllURL.setParameter("struts_action", "/roles_admin/edit_role_permissions");
 permissionsAllURL.setParameter(Constants.CMD, Constants.VIEW);
@@ -30,9 +30,7 @@ permissionsAllURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 
 List<String> headerNames = new ArrayList<String>();
 
-headerNames.add("resource-set");
-headerNames.add("resource");
-headerNames.add("action");
+headerNames.add("permissions");
 
 if (role.getType() == RoleConstants.TYPE_REGULAR) {
 	headerNames.add("sites");
@@ -40,7 +38,7 @@ if (role.getType() == RoleConstants.TYPE_REGULAR) {
 
 headerNames.add(StringPool.BLANK);
 
-SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, 50, permissionsAllURL, headerNames, "this-role-does-not-have-any-permissions");
+SearchContainer searchContainer = new SearchContainer(liferayPortletRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, 50, permissionsAllURL, headerNames, "this-role-does-not-have-any-permissions");
 
 List<Permission> permissions = PermissionConverterUtil.convertPermissions(role);
 
@@ -162,7 +160,7 @@ for (int i = 0; i < results.size(); i++) {
 		continue;
 	}
 
-	PortletURL editPermissionsURL = renderResponse.createRenderURL();
+	ResourceURL editPermissionsURL = liferayPortletResponse.createResourceURL();
 
 	editPermissionsURL.setParameter("struts_action", "/roles_admin/edit_role_permissions");
 	editPermissionsURL.setParameter(Constants.CMD, Constants.EDIT);
@@ -171,12 +169,33 @@ for (int i = 0; i < results.size(); i++) {
 	editPermissionsURL.setParameter("redirect", permissionsAllURL.toString());
 	editPermissionsURL.setParameter("portletResource", curPortletName);
 
-	row.addText(curPortletLabel, editPermissionsURL);
-	row.addText(curModelLabel);
-	row.addText(actionLabel);
+	StringBundler permissionsSb = new StringBundler();
+
+	permissionsSb.append("<a class=\"permission-navigation-link\" href=\"");
+	permissionsSb.append(editPermissionsURL);
+	permissionsSb.append(StringPool.POUND);
+	permissionsSb.append(_getResourceHtmlId(curResource));
+	permissionsSb.append("\">");
+	permissionsSb.append(curPortletLabel);
+
+	if (Validator.isNotNull(curModelLabel)) {
+		permissionsSb.append(StringPool.SPACE);
+		permissionsSb.append(StringPool.GREATER_THAN);
+		permissionsSb.append(StringPool.SPACE);
+		permissionsSb.append(curModelLabel);
+	}
+
+	permissionsSb.append("</a>");
+
+	permissionsSb.append(": ");
+	permissionsSb.append("<strong>");
+	permissionsSb.append(actionLabel);
+	permissionsSb.append("</strong>");
+
+	row.addText(permissionsSb.toString());
 
 	if (scope == ResourceConstants.SCOPE_COMPANY) {
-		row.addText(LanguageUtil.get(pageContext, "all-sites"));
+		row.addText(LanguageUtil.get(pageContext, _isShowScope(role, curResource, curPortletName)? "all-sites" : StringPool.BLANK));
 	}
 	else if (scope == ResourceConstants.SCOPE_GROUP_TEMPLATE) {
 	}

@@ -144,13 +144,13 @@ int sortColumnIndex = -1;
 
 						<%--
 
-						// Maximize the width of the second column if and only if the first
-						// column is a row checker and there is only one second column.
+						// Minimize the width of the first column if and only if
+						// it is a row checker.
 
 						--%>
 
-						<c:if test="<%= (rowChecker != null) && (headerNames.size() == 2) && (i == 1) %>">
-							width="95%"
+						<c:if test="<%= (rowChecker != null) && (i == 0) %>">
+							width="1%"
 						</c:if>
 					>
 

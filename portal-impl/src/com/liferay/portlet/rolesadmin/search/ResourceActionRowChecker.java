@@ -20,7 +20,7 @@ import com.liferay.portal.service.ResourceBlockLocalServiceUtil;
 import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.service.ResourceTypePermissionLocalServiceUtil;
 
-import javax.portlet.RenderResponse;
+import javax.portlet.PortletResponse;
 
 /**
  * @author Jorge Ferrer
@@ -28,8 +28,8 @@ import javax.portlet.RenderResponse;
  */
 public class ResourceActionRowChecker extends RowChecker {
 
-	public ResourceActionRowChecker(RenderResponse renderResponse) {
-		super(renderResponse);
+	public ResourceActionRowChecker(PortletResponse portletResponse) {
+		super(portletResponse);
 	}
 
 	@Override

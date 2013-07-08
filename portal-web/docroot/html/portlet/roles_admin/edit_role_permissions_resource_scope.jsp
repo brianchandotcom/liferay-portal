@@ -40,7 +40,7 @@ List groupNames = (List)objArray[8];
 			for (int i = 0; i < groups.size(); i++) {
 				Group group = (Group)groups.get(i);
 
-				String taglibHREF = "javascript:" + renderResponse.getNamespace() + "removeGroup(" + i + ", '" + target + "');";
+				String taglibHREF = "javascript:" + liferayPortletResponse.getNamespace() + "removeGroup(" + i + ", '" + target + "');";
 		%>
 
 				<span class="lfr-token">

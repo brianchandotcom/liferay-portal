@@ -132,8 +132,7 @@ List<Organization> organizations = (List<Organization>)request.getAttribute("use
 					{
 						dialog: {
 							constrain: true,
-							modal: true,
-							width: 600
+							modal: true
 						},
 						id: '<portlet:namespace />selectOrganization',
 						title: '<%= UnicodeLanguageUtil.format(pageContext, "select-x", "organization") %>',

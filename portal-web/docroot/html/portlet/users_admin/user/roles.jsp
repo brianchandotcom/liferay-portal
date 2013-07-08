@@ -268,8 +268,7 @@ userGroupRoles.addAll(siteRoles);
 				Liferay.Util.selectEntity(
 					{
 						dialog: {
-							modal: true,
-							width: 600
+							modal: true
 						},
 						id: '<portlet:namespace />selectOrganizationRole',
 						title: '<%= UnicodeLanguageUtil.format(pageContext, "select-x", "organization-role") %>',

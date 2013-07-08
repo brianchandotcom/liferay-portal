@@ -15,6 +15,7 @@
 package com.liferay.portal.upgrade;
 
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -23,6 +24,7 @@ import java.io.InputStream;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Test;
 
 /**
  * @author Manuel de la Peña
@@ -48,11 +50,20 @@ public abstract class BaseUpgradeProcessTestCase {
 			UpgradeProcessTestUtil.tearDownOriginDatabase();
 		}
 		finally {
-			UpgradeProcessTestUtil.reloadCurrentSpringDatasources();
+			UpgradeProcessTestUtil.reloadDatasources();
 		}
 	}
 
+	@Test
+	public void testUpgrade() throws Exception {
+		Class<? extends UpgradeProcess> upgradeClass = getUpgradeClass();
+
+		UpgradeProcessTestUtil.doUpgrade(upgradeClass);
+	}
+
 	protected abstract String getOriginVersion();
+
+	protected abstract Class<? extends UpgradeProcess> getUpgradeClass();
 
 	protected void postConditions() {
 	}
@@ -78,7 +89,7 @@ public abstract class BaseUpgradeProcessTestCase {
 		String sql = StringUtil.read(inputStream);
 
 		return StringUtil.replace(
-			sql, "lportal", UpgradeProcessTestUtil.DATABASE_NAME);
+			sql, "lportal", UpgradeProcessTestUtil.getDatabaseName());
 	}
 
 }

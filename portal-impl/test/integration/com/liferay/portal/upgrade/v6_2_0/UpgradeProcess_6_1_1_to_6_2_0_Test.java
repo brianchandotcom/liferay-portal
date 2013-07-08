@@ -14,12 +14,11 @@
 
 package com.liferay.portal.upgrade.v6_2_0;
 
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.upgrade.BaseUpgradeProcessTestCase;
-import com.liferay.portal.upgrade.UpgradeProcessTestUtil;
 import com.liferay.portal.upgrade.UpgradeProcess_6_2_0;
 
-import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -29,13 +28,14 @@ import org.junit.runner.RunWith;
 public class UpgradeProcess_6_1_1_to_6_2_0_Test
 	extends BaseUpgradeProcessTestCase {
 
-	@Test
-	public void testDoUpgrade() throws Exception {
-		UpgradeProcessTestUtil.doUpgrade(UpgradeProcess_6_2_0.class);
-	}
-
+	@Override
 	protected String getOriginVersion() {
 		return "6.1.1";
+	}
+
+	@Override
+	protected Class<? extends UpgradeProcess> getUpgradeClass() {
+		return UpgradeProcess_6_2_0.class;
 	}
 
 }

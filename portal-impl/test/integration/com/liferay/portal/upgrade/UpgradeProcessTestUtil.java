@@ -39,7 +39,14 @@ import java.util.Properties;
  */
 public class UpgradeProcessTestUtil {
 
-	public static String DATABASE_NAME;
+	public UpgradeProcessTestUtil()  {
+		try {
+			_databaseName = "lportal_" + ServiceTestUtil.randomString();
+		}
+		catch (Exception e) {
+			_databaseName = "lportal_origin";
+		}
+	}
 
 	public static void doUpgrade(Class<? extends UpgradeProcess> clazz)
 		throws Exception {
@@ -49,7 +56,11 @@ public class UpgradeProcessTestUtil {
 		upgradeProcess.upgrade();
 	}
 
-	public static void reloadCurrentSpringDatasources() throws Exception {
+	public static String getDatabaseName() {
+		return _databaseName;
+	}
+
+	public static void reloadDatasources() throws Exception {
 		Properties jdbcProperties = getDefaultDatabaseProperties();
 
 		InitUtil.reloadSpringDatasources(jdbcProperties);
@@ -68,7 +79,7 @@ public class UpgradeProcessTestUtil {
 
 		String currentDatabaseName = DBFactoryUtil.getDatabaseName();
 
-		url = url.replace(currentDatabaseName, DATABASE_NAME);
+		url = url.replace(currentDatabaseName, _databaseName);
 
 		jdbcProperties.put(PropsKeys.JDBC_DEFAULT_URL, url);
 
@@ -81,7 +92,7 @@ public class UpgradeProcessTestUtil {
 		StringBundler sb = new StringBundler(3);
 
 		sb.append("DROP database ");
-		sb.append(DATABASE_NAME);
+		sb.append(_databaseName);
 		sb.append(StringPool.SEMICOLON);
 
 		runSQL(sb.toString());
@@ -122,13 +133,6 @@ public class UpgradeProcessTestUtil {
 		}
 	}
 
-	static {
-		try {
-			DATABASE_NAME = "lportal_" + ServiceTestUtil.randomString();
-		}
-		catch (Exception e) {
-			DATABASE_NAME = "lportal_origin";
-		}
-	}
+	private static String _databaseName;
 
 }

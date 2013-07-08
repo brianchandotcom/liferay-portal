@@ -232,6 +232,12 @@ public class FileUtil {
 		return _file;
 	}
 
+	public static String getMD5Checksum(java.io.File file)
+			throws IOException {
+
+		return getFile().getMD5Checksum(file);
+	}
+
 	public static String getPath(String fullFileName) {
 		return getFile().getPath(fullFileName);
 	}

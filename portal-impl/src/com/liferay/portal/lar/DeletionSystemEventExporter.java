@@ -85,14 +85,15 @@ public class DeletionSystemEventExporter {
 
 				dynamicQuery.add(disjunction);
 
-				if (!deletionSystemEventModelTypes.isEmpty()) {
+				if (!deletionSystemEventStagedModelTypes.isEmpty()) {
 					Property classNameIdProperty = PropertyFactoryUtil.forName(
 						"classNameId");
 
 					Property referrerClassNameIdProperty =
 						PropertyFactoryUtil.forName("referrerClassNameId");
 
-					disjunction = RestrictionsFactoryUtil.disjunction();
+					Disjunction referrerClassNameIdDisjunction =
+						RestrictionsFactoryUtil.disjunction();
 
 					for (StagedModelType stagedModelType :
 							deletionSystemEventStagedModelTypes) {
@@ -108,10 +109,10 @@ public class DeletionSystemEventExporter {
 							referrerClassNameIdProperty.eq(
 								stagedModelType.getReferrerClassNameId()));
 
-						disjunction.add(conjunction);
+						referrerClassNameIdDisjunction.add(conjunction);
 					}
 
-					dynamicQuery.add(disjunction);
+					dynamicQuery.add(referrerClassNameIdDisjunction);
 				}
 
 				Property typeProperty = PropertyFactoryUtil.forName("type");

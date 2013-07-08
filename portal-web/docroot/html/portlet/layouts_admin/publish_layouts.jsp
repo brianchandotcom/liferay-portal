@@ -533,21 +533,21 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 				'toggler:expandedChange': function(event) {
 					var header = event.target.get('header');
 
-					var persistId = header.getData('persist-id')
+					var persistId = 0;
 
-					if (header.hasClass('toggler-header-collapsed')) {
-						persistId = 0;
+					if (!header.hasClass('toggler-header-collapsed')) {
+						persistId = header.getData('persist-id');
 					}
 
-					var data = {
-						'publish-layout-task' : persistId
-					};
-
-					Liferay.Store(data);
+					Liferay.Store(
+						{
+							'publish-layout-task' : persistId
+						}
+					);
 				}
 			},
 			transition: {
-			  duration: .3
+				duration: 0.3
 			}
 		}
 	);

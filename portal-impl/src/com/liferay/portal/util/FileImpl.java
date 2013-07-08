@@ -27,6 +27,8 @@ import com.liferay.portal.kernel.process.ProcessExecutor;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.Digester;
+import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.FileComparator;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -494,6 +496,19 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 		}
 		else {
 			return StringPool.BLANK;
+		}
+	}
+
+	public String getMD5Checksum(File file) throws IOException {
+		FileInputStream fileInputStream = null;
+
+		try {
+			fileInputStream = new FileInputStream(file);
+
+			return DigesterUtil.digestHex(Digester.MD5, fileInputStream);
+		}
+		finally {
+			StreamUtil.cleanUp(fileInputStream);
 		}
 	}
 

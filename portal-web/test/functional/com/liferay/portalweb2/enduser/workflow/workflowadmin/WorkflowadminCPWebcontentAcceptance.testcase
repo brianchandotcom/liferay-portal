@@ -1,0 +1,89 @@
+<definition>
+	<var name="workflowAssetType" value="Web Content" />
+
+	<set-up>
+		<execute macro="User#pgFirstLogin" />
+
+		<execute macro="Workflow#configureSiteWorkflow">
+			<var name="workflowDefinition" value="Single Approver (Version 1)" />
+			<var name="workflowResourceKey" value="RESOURCE_TABLE_WEB_CONTENT_SELECT" />
+		</execute>
+	</set-up>
+
+	<command name="ApproveWebContentCP">
+		<var name="webContentContent" value="WC WebContent Content" />
+		<var name="webContentTitle" value="WC WebContent Title" />
+
+		<execute macro="WebContent#addCPWithWorkflow">
+			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute macro="WebContent#viewCPWithWorkflow">
+			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute macro="Workflow#assignToMeTaskByActions">
+			<var name="workflowAssetTitle" value="${webContentTitle}" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowTask" value="Review" />
+		</execute>
+
+		<execute macro="WebContent#viewCPWithWorkflow">
+			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute macro="Workflow#approveTaskByActions">
+			<var name="workflowAssetTitle" value="${webContentTitle}" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowTask" value="Review" />
+		</execute>
+
+		<execute macro="WebContent#viewCP">
+			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+	</command>
+
+<command name="RejectWebContentCP">
+		<var name="webContentContent" value="WC WebContent Content" />
+		<var name="webContentTitle" value="WC WebContent Title" />
+
+		<execute macro="WebContent#addCPWithWorkflow">
+			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute macro="Workflow#assignToMeTaskByActions">
+			<var name="workflowAssetTitle" value="${webContentTitle}" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowTask" value="Review" />
+		</execute>
+
+		<execute macro="Workflow#rejectTaskByActions">
+			<var name="workflowAssetTitle" value="${webContentTitle}" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowTask" value="Review" />
+		</execute>
+
+		<execute macro="Workflow#viewRejectTask">
+			<var name="workflowAssetTitle" value="${webContentTitle}" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+		</execute>
+
+		<execute macro="WebContent#viewCPWithWorkflow">
+			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+	</command>
+
+	<tear-down>
+		<execute macro="WebContent#tearDownCP" />
+
+		<execute macro="Workflow#tearDownPortalWorkflow" />
+
+		<execute macro="Workflow#tearDownSiteWorkflow" />
+	</tear-down>
+</definition>

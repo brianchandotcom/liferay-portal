@@ -56,6 +56,7 @@
 	<import class="com.liferay.portal.model.Role" />
 	<import class="com.liferay.portal.model.ServiceComponent" />
 	<import class="com.liferay.portal.model.Shard" />
+	<import class="com.liferay.portal.model.Staging" />
 	<import class="com.liferay.portal.model.Subscription" />
 	<import class="com.liferay.portal.model.SystemEvent" />
 	<import class="com.liferay.portal.model.Team" />

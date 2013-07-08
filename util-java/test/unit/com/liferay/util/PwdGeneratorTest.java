@@ -21,10 +21,6 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * <p>
- * See http://issues.liferay.com/browse/LPS-37502.
- * </p>
- *
  * @author Brian Wing Shun Chan
  */
 public class PwdGeneratorTest {
@@ -67,6 +63,11 @@ public class PwdGeneratorTest {
 
 		Assert.assertTrue(delta < _MAX_SECURE_DELTA);
 	}
+
+	/*
+	* See http://issues.liferay.com/browse/LPS-37502 to see how these values
+	* have been calculated
+	*/
 
 	private static final long _MAX_DELTA = 1600;
 

@@ -1126,18 +1126,6 @@
 		<put name="portlet_content" value="/portlet/password_policies_admin/view.jsp" />
 	</definition>
 
-	<!-- Plugin Installer -->
-
-	<definition name="portlet.plugin_installer" extends="portlet" />
-
-	<definition name="portlet.plugin_installer.error" extends="portlet.plugin_installer">
-		<put name="portlet_content" value="/portlet/plugin_installer/error.jsp" />
-	</definition>
-
-	<definition name="portlet.plugin_installer.view" extends="portlet.plugin_installer">
-		<put name="portlet_content" value="/portlet/plugin_installer/view.jsp" />
-	</definition>
-
 	<!-- Plugins Admin -->
 
 	<definition name="portlet.plugins_admin" extends="portlet" />

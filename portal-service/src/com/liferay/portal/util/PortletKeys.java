@@ -151,8 +151,6 @@ public class PortletKeys {
 
 	public static final String PASSWORD_POLICIES_ADMIN = "129";
 
-	public static final String PLUGIN_INSTALLER = "111";
-
 	public static final String PLUGINS_ADMIN = "132";
 
 	public static final String POLLS = "25";

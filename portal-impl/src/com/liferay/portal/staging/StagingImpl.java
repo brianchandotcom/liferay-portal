@@ -877,11 +877,27 @@ public class StagingImpl implements Staging {
 			else if (e instanceof MissingReferenceException) {
 				MissingReferenceException mre = (MissingReferenceException)e;
 
-				errorMessage = LanguageUtil.get(
-					locale,
-					"there-are-missing-references-that-could-not-be-found-" +
-						"in-the-current-site.-please-import-another-lar-file-" +
-						"containing-the-following-elements");
+				String cmd = null;
+
+				if (contextMap != null) {
+					cmd = (String)contextMap.get(Constants.CMD);
+				}
+
+				if (Validator.equals(cmd, ActionKeys.PUBLISH_STAGING)) {
+					errorMessage = LanguageUtil.get(
+						locale,
+						"there-are-missing-references-that-could-not-be-" +
+							"found-in-the-live-environment.-please-publish-" +
+							"again-to-live-ensuring-the-following-elements-" +
+							"are-published");
+				}
+				else {
+					errorMessage = LanguageUtil.get(
+						locale,
+						"there-are-missing-references-that-could-not-be-" +
+							"found-in-the-current-site.-please-import-another" +
+							"-lar-file-containing-the-following-elements");
+				}
 
 				MissingReferences missingReferences =
 					mre.getMissingReferences();

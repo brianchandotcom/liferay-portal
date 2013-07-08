@@ -29,7 +29,7 @@ public class TLDSourceProcessor extends BaseSourceProcessor {
 	@Override
 	protected void doFormat() throws Exception {
 		String[] excludes = new String[] {
-			"**\\classes\\**", "**\\bin\\**", "**\\WEB-INF\\tld\\**"
+			"**\\bin\\**", "**\\classes\\**", "**\\WEB-INF\\tld\\**"
 		};
 		String[] includes = new String[] {"**\\*.tld"};
 

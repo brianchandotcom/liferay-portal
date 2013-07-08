@@ -96,7 +96,7 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 		String[] includes = null;
 
 		if (portalSource) {
-			excludes = new String[] {"**\\classes\\**", "**\\bin\\**"};
+			excludes = new String[] {"**\\bin\\**", "**\\classes\\**"};
 			includes = new String[] {
 				"**\\portal-ext.properties", "**\\portal-legacy-*.properties"
 			};

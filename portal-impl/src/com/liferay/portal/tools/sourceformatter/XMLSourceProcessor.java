@@ -45,7 +45,9 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected void doFormat() throws Exception {
-		String[] excludes = new String[] {"**\\classes\\**", "**\\bin\\**"};
+		String[] excludes = new String[] {
+			"**\\.idea\\**", "**\\bin\\**", "**\\classes\\**"
+		};
 		String[] includes = new String[] {"**\\*.xml"};
 
 		List<String> fileNames = getFileNames(excludes, includes);

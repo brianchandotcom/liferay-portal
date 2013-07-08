@@ -145,13 +145,39 @@ public class PortalLDAPUtil {
 			Properties groupMappings = LDAPSettingsUtil.getGroupMappings(
 				ldapServerId, companyId);
 
-			StringBundler filter = new StringBundler(5);
+			String filter = null;
 
-			filter.append(StringPool.OPEN_PARENTHESIS);
-			filter.append(groupMappings.getProperty("groupName"));
-			filter.append(StringPool.EQUAL);
-			filter.append(groupName);
-			filter.append(StringPool.CLOSE_PARENTHESIS);
+			String groupFilter = PrefsPropsUtil.getString(
+				companyId, PropsKeys.LDAP_IMPORT_GROUP_SEARCH_FILTER + postfix);
+
+			if (Validator.isNotNull(groupFilter)) {
+				StringBundler sb = new StringBundler(11);
+
+				sb.append(StringPool.OPEN_PARENTHESIS);
+				sb.append(StringPool.AMPERSAND);
+				sb.append(StringPool.OPEN_PARENTHESIS);
+				sb.append(groupMappings.getProperty("groupName"));
+				sb.append(StringPool.EQUAL);
+				sb.append(groupName);
+				sb.append(StringPool.CLOSE_PARENTHESIS);
+				sb.append(StringPool.OPEN_PARENTHESIS);
+				sb.append(groupFilter);
+				sb.append(StringPool.CLOSE_PARENTHESIS);
+				sb.append(StringPool.CLOSE_PARENTHESIS);
+
+				filter = sb.toString();
+			}
+			else {
+				StringBundler sb = new StringBundler(5);
+
+				sb.append(StringPool.OPEN_PARENTHESIS);
+				sb.append(groupMappings.getProperty("groupName"));
+				sb.append(StringPool.EQUAL);
+				sb.append(groupName);
+				sb.append(StringPool.CLOSE_PARENTHESIS);
+
+				filter = sb.toString();
+			}
 
 			SearchControls searchControls = new SearchControls(
 				SearchControls.SUBTREE_SCOPE, 1, 0, null, false, false);

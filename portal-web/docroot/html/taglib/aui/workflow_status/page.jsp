@@ -59,7 +59,7 @@
 			<liferay-ui:message key="status" />:
 		</c:if>
 
-		<strong class="<%= _getStatusCssClass(status) %>">
+		<strong class="label workflow-status-<%= WorkflowConstants.toLabel(status) %> <%= WorkflowConstants.getStatusCssClass(status) %>">
 			<liferay-ui:message key="<%= statusMessage %>" /><%= additionalText %>
 		</strong>
 	</span>
@@ -68,24 +68,3 @@
 		<liferay-ui:icon-help message="<%= helpMessage %>" />
 	</c:if>
 </div>
-
-<%!
-private String _getStatusCssClass(int status) {
-	String statusCssClass = "label workflow-status-" + WorkflowConstants.toLabel(status);
-
-	if (status == WorkflowConstants.STATUS_APPROVED) {
-		statusCssClass += " label-success";
-	}
-	else if (status == WorkflowConstants.STATUS_DRAFT) {
-		statusCssClass += " label-info";
-	}
-	else if (status == WorkflowConstants.STATUS_EXPIRED) {
-		statusCssClass += " label-important";
-	}
-	else if (status == WorkflowConstants.STATUS_PENDING) {
-		statusCssClass += " label-warning";
-	}
-
-	return statusCssClass;
-}
-%>

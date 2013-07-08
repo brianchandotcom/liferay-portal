@@ -14,6 +14,7 @@
 
 package com.liferay.portal.lar.backgroundtask;
 
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
@@ -29,11 +30,15 @@ public class BackgroundTaskContextMapFactory {
 
 	public static Map<String, Serializable> buildTaskContextMap(
 		long userId, long groupId, boolean privateLayout, long[] layoutIds,
-		Map<String, String[]> parameterMap, Date startDate, Date endDate,
-		String fileName) {
+		Map<String, String[]> parameterMap, String cmd, Date startDate,
+		Date endDate, String fileName) {
 
 		Map<String, Serializable> taskContextMap =
 			new HashMap<String, Serializable>();
+
+		if (cmd != null) {
+			taskContextMap.put(Constants.CMD, cmd);
+		}
 
 		if (endDate != null) {
 			taskContextMap.put("endDate", endDate);
@@ -66,11 +71,15 @@ public class BackgroundTaskContextMapFactory {
 
 	public static Map<String, Serializable> buildTaskContextMap(
 		long userId, long plid, long groupId, String portletId,
-		Map<String, String[]> parameterMap, Date startDate, Date endDate,
-		String fileName) {
+		Map<String, String[]> parameterMap, String cmd, Date startDate,
+		Date endDate, String fileName) {
 
 		Map<String, Serializable> taskContextMap =
 			new HashMap<String, Serializable>();
+
+		if (cmd != null) {
+			taskContextMap.put(Constants.CMD, cmd);
+		}
 
 		if (endDate != null) {
 			taskContextMap.put("endDate", endDate);

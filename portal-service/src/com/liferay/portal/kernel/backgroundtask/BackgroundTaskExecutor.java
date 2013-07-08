@@ -24,6 +24,8 @@ public interface BackgroundTaskExecutor {
 	public BackgroundTaskResult execute(BackgroundTask backgroundTask)
 		throws Exception;
 
+	public String handleException(BackgroundTask backgroundTask, Exception e);
+
 	public boolean isSerial();
 
 }

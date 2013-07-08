@@ -63,6 +63,7 @@ import com.liferay.portal.model.ResourcePermission;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.model.impl.VirtualLayout;
+import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.LayoutLocalServiceBaseImpl;
 import com.liferay.portal.util.PortalUtil;
@@ -869,7 +870,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		Map<String, Serializable> taskContextMap =
 			BackgroundTaskContextMapFactory.buildTaskContextMap(
 				userId, groupId, privateLayout, layoutIds, parameterMap,
-				startDate, endDate, fileName);
+				ActionKeys.EXPORT_IMPORT_LAYOUTS, startDate, endDate, fileName);
 
 		BackgroundTask backgroundTask =
 			backgroundTaskLocalService.addBackgroundTask(
@@ -1007,8 +1008,9 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		Map<String, Serializable> taskContextMap =
 			BackgroundTaskContextMapFactory.buildTaskContextMap(
-				userId, plid, groupId, portletId, parameterMap, startDate,
-				endDate, fileName);
+				userId, plid, groupId, portletId, parameterMap,
+				ActionKeys.EXPORT_IMPORT_PORTLET_INFO, startDate, endDate,
+				fileName);
 
 		BackgroundTask backgroundTask =
 			backgroundTaskLocalService.addBackgroundTask(
@@ -1797,8 +1799,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		Map<String, Serializable> taskContextMap =
 			BackgroundTaskContextMapFactory.buildTaskContextMap(
-				userId, groupId, privateLayout, null, parameterMap, null, null,
-				file.getName());
+				userId, groupId, privateLayout, null, parameterMap,
+				ActionKeys.EXPORT_IMPORT_LAYOUTS, null, null, file.getName());
 
 		BackgroundTask backgroundTask =
 			backgroundTaskLocalService.addBackgroundTask(
@@ -1949,7 +1951,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		Map<String, Serializable> taskContextMap =
 			BackgroundTaskContextMapFactory.buildTaskContextMap(
-				userId, plid, groupId, portletId, parameterMap, null, null,
+				userId, plid, groupId, portletId, parameterMap,
+				ActionKeys.EXPORT_IMPORT_PORTLET_INFO, null, null,
 				file.getName());
 
 		BackgroundTask backgroundTask =

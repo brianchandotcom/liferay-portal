@@ -278,6 +278,24 @@
 		background-image: url(@theme_image_path@/common/organization_icon.png);
 		border-color: #BBB;
 	}
+
+	.process-list {
+		.background-task-status-column {
+			width: 700px;
+
+			.background-task-status-message {
+				margin-top: 1em;
+
+				.error-list-items li {
+					list-style: disc inside;
+				}
+			}
+
+			.publish-error {
+				margin-bottom: 0;
+			}
+		}
+	}
 }
 
 .tree-node-content {

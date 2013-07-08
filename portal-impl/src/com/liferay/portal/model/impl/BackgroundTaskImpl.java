@@ -146,7 +146,7 @@ public class BackgroundTaskImpl extends BackgroundTaskBaseImpl {
 
 	@Override
 	public String getStatusLabel() {
-		return BackgroundTaskConstants.getStatusLabel(getStatus());
+		return BackgroundTaskConstants.toLabel(getStatus());
 	}
 
 	@Override

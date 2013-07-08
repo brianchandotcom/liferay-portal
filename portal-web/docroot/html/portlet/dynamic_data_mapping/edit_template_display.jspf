@@ -209,7 +209,7 @@ if (Validator.isNotNull(scriptContent)) {
 								foundVisibleSection = true;
 							}
 
-							item.toggleClass('hide', visibleItem);
+							item.toggleClass('hide', !visibleItem);
 						}
 					);
 

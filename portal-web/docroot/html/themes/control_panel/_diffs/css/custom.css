@@ -540,6 +540,11 @@ $dockbarOpenGradientStart: #00A0FF;
 		}
 	}
 
+	.textboxlistentry-holder {
+		margin-left: 0;
+	}
+
+
 	/* ---------- My Account Popup ---------- */
 
 	button {

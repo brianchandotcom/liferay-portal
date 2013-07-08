@@ -264,6 +264,10 @@ public class Creole10Parser]]></replacevalue>
 		<ant dir="${tstamp.value}" target="core" inheritAll="false" />
 		<ant dir="${tstamp.value}" target="jar" inheritAll="false" />-->
 
+		<exec dir="${tstamp.value}" executable="/bin/sh" os="${os.unix}">
+			<arg line="-c 'ant core jar'" />
+		</exec>
+
 		<exec dir="${tstamp.value}" executable="cmd.exe" os="${os.windows}">
 			<arg line="/c ant core jar" />
 		</exec>

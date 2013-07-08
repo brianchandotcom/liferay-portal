@@ -32,7 +32,7 @@ Map<String, TemplateVariableGroup> templateVariableGroups = TemplateContextHelpe
 	<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="templateScriptSectionPanel" persistState="<%= true %>" title="script">
 		<div class="control-group lfr-template-editor-container">
 			<c:if test="<%= !templateVariableGroups.isEmpty() %>">
-				<div class="lfr-template-palette-container pull-left<%= (language.equalsIgnoreCase("ftl") || language.equalsIgnoreCase("vm")) ? "" : " hide" %>" id="<portlet:namespace />templatePaletteContainer">
+				<div class="lfr-template-palette-container pull-left<%= (language.equals(TemplateConstants.LANG_TYPE_FTL) || language.equals(TemplateConstants.LANG_TYPE_VM)) ? "" : " hide" %>" id="<portlet:namespace />templatePaletteContainer">
 					<div class="search" id="<portlet:namespace />paletteSearchContainer">
 						<input class="field search-query span12" id="<portlet:namespace />paletteSearch" placeholder='<%= LanguageUtil.get(pageContext, "search") %>' type="text">
 					</div>
@@ -308,7 +308,9 @@ Map<String, TemplateVariableGroup> templateVariableGroups = TemplateContextHelpe
 		if (AutoComplete) {
 			var processor = new AutoComplete(
 				{
-					variables: <%= DDMTemplateHelperUtil.getAutocompleteJSON(request, language) %>
+					<c:if test="<%= (language.equals(TemplateConstants.LANG_TYPE_FTL) || language.equals(TemplateConstants.LANG_TYPE_VM)) %>">
+						variables: <%= DDMTemplateHelperUtil.getAutocompleteJSON(request, language) %>
+					</c:if>
 				}
 			);
 

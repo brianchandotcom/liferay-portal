@@ -29,7 +29,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 	<aui:fieldset>
 		<ul class="lfr-tree unstyled">
 			<li class="tree-item">
-				<aui:input label="show-tags-with-zero-assets" name="preferences--showZeroAssetCount--" type="checkbox" value="<%= showZeroAssetCount %>" />
+				<aui:input label="show-unused-tags" name="preferences--showZeroAssetCount--" type="checkbox" value="<%= showZeroAssetCount %>" />
 			</li>
 
 			<li class="tree-item">

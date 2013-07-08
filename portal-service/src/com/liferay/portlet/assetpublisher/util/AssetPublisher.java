@@ -78,6 +78,12 @@ public interface AssetPublisher {
 			int max, boolean checkPermission)
 		throws PortalException, SystemException;
 
+	public Object[] getAssetEntryObject(
+			PermissionChecker permissionChecker, long[] groupIds,
+			String[] assetEntryXmls, boolean isConfiguration,
+			boolean checkPermission)
+		throws Exception;
+
 	public AssetEntryQuery getAssetEntryQuery(
 			PortletPreferences portletPreferences, long[] scopeGroupIds)
 		throws PortalException, SystemException;

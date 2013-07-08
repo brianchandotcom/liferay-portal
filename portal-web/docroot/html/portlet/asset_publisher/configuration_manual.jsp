@@ -43,8 +43,6 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 		<aui:fieldset label="model.resource.com.liferay.portlet.asset">
 
 			<%
-			List<String> deletedAssets = new ArrayList<String>();
-
 			List<String> headerNames = new ArrayList<String>();
 
 			headerNames.add("title");
@@ -54,32 +52,36 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 
 			SearchContainer searchContainer = new SearchContainer(renderRequest, new DisplayTerms(renderRequest), new DisplayTerms(renderRequest), SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, configurationRenderURL, headerNames, LanguageUtil.get(pageContext, "no-assets-selected"));
 
-			int total = assetEntryXmls.length;
+			Object[] assetEntryObject = AssetPublisherUtil.getAssetEntryObject(permissionChecker, groupIds, assetEntryXmls, true, enablePermissions);
+
+			List<AssetEntry> assetEntries = (List<AssetEntry>)assetEntryObject[0];
+			List<String> deletedAssets = (List<String>)assetEntryObject[1];
+
+			int total = assetEntries.size();
 
 			searchContainer.setTotal(total);
 
-			List results = ListUtil.fromArray(assetEntryXmls);
+			int start = searchContainer.getStart();
+			int end = (assetEntries.size() < searchContainer.getEnd()) ? assetEntries.size() : searchContainer.getEnd();
 
-			int end = (assetEntryXmls.length < searchContainer.getEnd()) ? assetEntryXmls.length : searchContainer.getEnd();
+			assetEntries = assetEntries.subList(start, end);
 
-			results = results.subList(searchContainer.getStart(), end);
-
-			searchContainer.setResults(results);
+			searchContainer.setResults(assetEntries);
 
 			List resultRows = searchContainer.getResultRows();
 
-			for (int i = 0; i < results.size(); i++) {
-				String assetEntryXml = (String)results.get(i);
+			for (int i = 0; i < assetEntries.size(); i++) {
+				String assetEntryXml = assetEntryXmls[start + i];
 
 				Document doc = SAXReaderUtil.read(assetEntryXml);
 
 				Element root = doc.getRootElement();
 
-				int assetEntryOrder = searchContainer.getStart() + i;
+				int assetEntryOrder = start + i;
 
 				DocUtil.add(root, "asset-order", assetEntryOrder);
 
-				if (assetEntryOrder == (total - 1)) {
+				if (assetEntryOrder == (assetEntryXmls.length - 1)) {
 					DocUtil.add(root, "last", true);
 				}
 				else {
@@ -89,33 +91,13 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 				String assetEntryClassName = root.element("asset-entry-type").getText();
 				String assetEntryUuid = root.element("asset-entry-uuid").getText();
 
-				AssetEntry assetEntry = null;
-
-				boolean deleteAssetEntry = true;
-
-				for (long groupId : groupIds) {
-					try {
-						assetEntry = AssetEntryLocalServiceUtil.getEntry(groupId, assetEntryUuid);
-
-						assetEntry = assetEntry.toEscapedModel();
-
-						deleteAssetEntry = false;
-					}
-					catch (NoSuchEntryException nsee) {
-					}
-				}
-
-				AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(assetEntry.getClassName());
-
-				if (!assetRendererFactory.isActive(company.getCompanyId())) {
-					deleteAssetEntry = true;
-				}
-
-				if (deleteAssetEntry) {
-					deletedAssets.add(assetEntryUuid);
-
+				if (deletedAssets.contains(assetEntryUuid)) {
 					continue;
 				}
+
+				AssetEntry assetEntry = assetEntries.get(i);
+
+				AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(assetEntry.getClassName());
 
 				ResultRow row = new ResultRow(doc, null, assetEntryOrder);
 
@@ -189,7 +171,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 
 								assetBrowserURL.setParameter("typeSelection", curRendererFactory.getClassName());
 
-								String taglibURL = "javascript:Liferay.Util.openWindow({id: '" + liferayPortletResponse.getNamespace() + "selectAsset', title: '" + LanguageUtil.format(pageContext, "select-x", curRendererFactory.getTypeName(locale, false)) + "', uri:'" + HtmlUtil.escapeURL(assetBrowserURL.toString()) + "'});";
+								String taglibURL = "javascript:Liferay.Util.openWindow({dialog: {zIndex: Liferay.zIndex.WINDOW + 2}, id: '" + liferayPortletResponse.getNamespace() + "selectAsset', title: '" + LanguageUtil.format(pageContext, "select-x", curRendererFactory.getTypeName(locale, false)) + "', uri:'" + HtmlUtil.escapeURL(assetBrowserURL.toString()) + "'});";
 							%>
 
 								<liferay-ui:icon message="<%= curRendererFactory.getTypeName(locale, false) %>" src="<%= curRendererFactory.getIconPath(renderRequest) %>" url="<%= taglibURL %>" />

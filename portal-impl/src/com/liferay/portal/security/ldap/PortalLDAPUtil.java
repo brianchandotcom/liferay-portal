@@ -142,52 +142,40 @@ public class PortalLDAPUtil {
 			String baseDN = PrefsPropsUtil.getString(
 				companyId, PropsKeys.LDAP_BASE_DN + postfix);
 
-			Properties groupMappings = LDAPSettingsUtil.getGroupMappings(
-				ldapServerId, companyId);
-
-			String filter = null;
-
 			String groupFilter = PrefsPropsUtil.getString(
 				companyId, PropsKeys.LDAP_IMPORT_GROUP_SEARCH_FILTER + postfix);
 
-			if (Validator.isNotNull(groupFilter)) {
-				StringBundler sb = new StringBundler(11);
+			Properties groupMappings = LDAPSettingsUtil.getGroupMappings(
+				ldapServerId, companyId);
 
+			StringBundler sb = new StringBundler(
+				Validator.isNotNull(groupFilter) ? 11 : 5);
+
+			if (Validator.isNotNull(groupFilter)) {
 				sb.append(StringPool.OPEN_PARENTHESIS);
 				sb.append(StringPool.AMPERSAND);
-				sb.append(StringPool.OPEN_PARENTHESIS);
-				sb.append(groupMappings.getProperty("groupName"));
-				sb.append(StringPool.EQUAL);
-				sb.append(groupName);
-				sb.append(StringPool.CLOSE_PARENTHESIS);
+			}
+
+			sb.append(StringPool.OPEN_PARENTHESIS);
+			sb.append(groupMappings.getProperty("groupName"));
+			sb.append(StringPool.EQUAL);
+			sb.append(groupName);
+			sb.append(StringPool.CLOSE_PARENTHESIS);
+
+			if (Validator.isNotNull(groupFilter)) {
 				sb.append(StringPool.OPEN_PARENTHESIS);
 				sb.append(groupFilter);
 				sb.append(StringPool.CLOSE_PARENTHESIS);
 				sb.append(StringPool.CLOSE_PARENTHESIS);
-
-				filter = sb.toString();
-			}
-			else {
-				StringBundler sb = new StringBundler(5);
-
-				sb.append(StringPool.OPEN_PARENTHESIS);
-				sb.append(groupMappings.getProperty("groupName"));
-				sb.append(StringPool.EQUAL);
-				sb.append(groupName);
-				sb.append(StringPool.CLOSE_PARENTHESIS);
-
-				filter = sb.toString();
 			}
 
 			SearchControls searchControls = new SearchControls(
 				SearchControls.SUBTREE_SCOPE, 1, 0, null, false, false);
 
-			enu = ldapContext.search(baseDN, filter.toString(), searchControls);
+			enu = ldapContext.search(baseDN, sb.toString(), searchControls);
 
 			if (enu.hasMoreElements()) {
-				Binding binding = enu.nextElement();
-
-				return binding;
+				return enu.nextElement();
 			}
 
 			return null;
@@ -434,7 +422,7 @@ public class PortalLDAPUtil {
 		}
 
 		if (Validator.isNull(baseDN)) {
-			return name.toString();
+			return name;
 		}
 		else {
 			return name.concat(StringPool.COMMA).concat(baseDN);
@@ -460,16 +448,14 @@ public class PortalLDAPUtil {
 			String baseDN = PrefsPropsUtil.getString(
 				companyId, PropsKeys.LDAP_BASE_DN + postfix);
 
-			String filter = null;
-
 			String userFilter = PrefsPropsUtil.getString(
 				companyId, PropsKeys.LDAP_IMPORT_USER_SEARCH_FILTER + postfix);
 
+			String loginMapping = null;
+			String login = null;
+
 			Properties userMappings = LDAPSettingsUtil.getUserMappings(
 				ldapServerId, companyId);
-
-			String login = null;
-			String loginMapping = null;
 
 			String authType = PrefsPropsUtil.getString(
 				companyId, PropsKeys.COMPANY_SECURITY_AUTH_TYPE,
@@ -480,52 +466,42 @@ public class PortalLDAPUtil {
 					companyId,
 					PropsKeys.USERS_SCREEN_NAME_ALWAYS_AUTOGENERATE)) {
 
-				login = screenName;
 				loginMapping = userMappings.getProperty("screenName");
+				login = screenName;
 			}
 			else {
-				login = emailAddress;
 				loginMapping = userMappings.getProperty("emailAddress");
+				login = emailAddress;
 			}
 
-			if (Validator.isNotNull(userFilter)) {
-				StringBundler sb = new StringBundler(11);
+			StringBundler sb = new StringBundler(
+				Validator.isNotNull(userFilter) ? 11 : 5);
 
+			if (Validator.isNotNull(userFilter)) {
 				sb.append(StringPool.OPEN_PARENTHESIS);
 				sb.append(StringPool.AMPERSAND);
-				sb.append(StringPool.OPEN_PARENTHESIS);
-				sb.append(loginMapping);
-				sb.append(StringPool.EQUAL);
-				sb.append(login);
-				sb.append(StringPool.CLOSE_PARENTHESIS);
+			}
+
+			sb.append(StringPool.OPEN_PARENTHESIS);
+			sb.append(loginMapping);
+			sb.append(StringPool.EQUAL);
+			sb.append(login);
+			sb.append(StringPool.CLOSE_PARENTHESIS);
+
+			if (Validator.isNotNull(userFilter)) {
 				sb.append(StringPool.OPEN_PARENTHESIS);
 				sb.append(userFilter);
 				sb.append(StringPool.CLOSE_PARENTHESIS);
 				sb.append(StringPool.CLOSE_PARENTHESIS);
-
-				filter = sb.toString();
-			}
-			else {
-				StringBundler sb = new StringBundler(5);
-
-				sb.append(StringPool.OPEN_PARENTHESIS);
-				sb.append(loginMapping);
-				sb.append(StringPool.EQUAL);
-				sb.append(login);
-				sb.append(StringPool.CLOSE_PARENTHESIS);
-
-				filter = sb.toString();
 			}
 
 			SearchControls searchControls = new SearchControls(
 				SearchControls.SUBTREE_SCOPE, 1, 0, null, false, false);
 
-			enu = ldapContext.search(baseDN, filter, searchControls);
+			enu = ldapContext.search(baseDN, sb.toString(), searchControls);
 
 			if (enu.hasMoreElements()) {
-				Binding binding = enu.nextElement();
-
-				return binding;
+				return enu.nextElement();
 			}
 
 			return null;

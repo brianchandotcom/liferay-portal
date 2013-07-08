@@ -52,7 +52,7 @@ public class SystemEventHierarchyEntry {
 		return _eventSetId;
 	}
 
-	public String getExtraData() {
+	public String getExtraDataJSON() {
 		if (_extraDataJSONObject == null) {
 			return StringPool.BLANK;
 		}
@@ -86,20 +86,20 @@ public class SystemEventHierarchyEntry {
 		return isCurrentAsset(classNameId, classPK);
 	}
 
+	public void putAttribute(String key, String value) {
+		if (_extraDataJSONObject == null) {
+			_extraDataJSONObject = JSONFactoryUtil.createJSONObject();
+		}
+
+		_extraDataJSONObject.put(key, value);
+	}
+
 	public void setClassName(String className) {
 		_classNameId = PortalUtil.getClassNameId(className);
 	}
 
 	public void setClassNameId(long classNameId) {
 		_classNameId = classNameId;
-	}
-
-	public void setExtraDataValue(String key, String value) {
-		if (_extraDataJSONObject == null) {
-			_extraDataJSONObject = JSONFactoryUtil.createJSONObject();
-		}
-
-		_extraDataJSONObject.put(key, value);
 	}
 
 	public void setUuid(String uuid) {

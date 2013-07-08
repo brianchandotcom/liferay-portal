@@ -120,7 +120,7 @@ public class SystemEventLocalServiceImpl
 		SystemEventHierarchyEntry systemEventHierarchyEntry =
 			SystemEventHierarchyEntryThreadLocal.peek();
 
-		long action = SystemEventConstants.ACTION_NONE;
+		int action = SystemEventConstants.ACTION_NONE;
 
 		if (systemEventHierarchyEntry != null) {
 			action = systemEventHierarchyEntry.getAction();
@@ -168,31 +168,39 @@ public class SystemEventLocalServiceImpl
 		systemEvent.setClassName(className);
 		systemEvent.setClassPK(classPK);
 		systemEvent.setClassUuid(classUuid);
-		systemEvent.setReferrerClassName(referrerClassName);
-		systemEvent.setType(type);
+
+		long eventSetId = 0;
 
 		if ((action == SystemEventConstants.ACTION_GROUP) ||
 			(action == SystemEventConstants.ACTION_HIERARCHY)) {
 
-			systemEvent.setEventSetId(
-				systemEventHierarchyEntry.getEventSetId());
+			eventSetId = systemEventHierarchyEntry.getEventSetId();
 		}
 		else {
-			systemEvent.setEventSetId(counterLocalService.increment());
+			eventSetId = counterLocalService.increment();
 		}
 
-		if (action == SystemEventConstants.ACTION_HIERARCHY) {
-			if (systemEventHierarchyEntry.isCurrentAsset(className, classPK)) {
-				systemEvent.setParentSystemEventId(
-					systemEventHierarchyEntry.getParentSystemEventId());
-			}
-			else {
-				systemEvent.setParentSystemEventId(
-					systemEventHierarchyEntry.getSystemEventId());
-			}
-		}
+		systemEvent.setEventSetId(eventSetId);
 
 		systemEvent.setExtraData(extraData);
+
+		if (action == SystemEventConstants.ACTION_HIERARCHY) {
+			long parentSystemEventId = 0;
+
+			if (systemEventHierarchyEntry.isCurrentAsset(className, classPK)) {
+				parentSystemEventId =
+					systemEventHierarchyEntry.getParentSystemEventId();
+			}
+			else {
+				parentSystemEventId =
+					systemEventHierarchyEntry.getSystemEventId();
+			}
+
+			systemEvent.setParentSystemEventId(parentSystemEventId);
+		}
+
+		systemEvent.setReferrerClassName(referrerClassName);
+		systemEvent.setType(type);
 
 		return systemEventPersistence.update(systemEvent);
 	}

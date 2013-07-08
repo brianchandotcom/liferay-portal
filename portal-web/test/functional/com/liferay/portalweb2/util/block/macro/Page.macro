@@ -27,7 +27,7 @@
 		<execute action="Dockbar#click" locator-key1="ADMIN" />
 		<execute action="Dockbar#click" locator-key1="ADMIN_CONTROL_PANEL" />
 
-		<execute action="Home#click" locator1="//ul[@class='unstyled']/li/a[contains(.,'${portletName}')]" />
+		<execute action="Home#click" locator1="//ul[@class='unstyled']/li/span/a[contains(.,'${portletName}')]" />
 	</command>
 
 	<command name="gotoMyAccount">

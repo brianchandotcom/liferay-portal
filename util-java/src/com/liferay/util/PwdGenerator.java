@@ -21,8 +21,6 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.security.SecureRandom;
 
-import java.util.Random;
-
 /**
  * @author Brian Wing Shun Chan
  * @author Amos Fong
@@ -102,7 +100,7 @@ public class PwdGenerator {
 
 		StringBuilder sb = new StringBuilder(length);
 
-		Random random = new SecureRandom();
+		SecureRandom random = new SecureRandom();
 
 		for (int i = 0; i < length; i++) {
 			sb.append(key.charAt((int)(random.nextDouble() * key.length())));

@@ -45,29 +45,15 @@ List<String> headerNames = new ArrayList<String>();
 
 headerNames.add("action");
 
-boolean showScope = true;
-
-if (curPortletId.equals(PortletKeys.PORTAL)) {
-	showScope = false;
-}
-else if (role.getType() != RoleConstants.TYPE_REGULAR) {
-	showScope = false;
-}
-else if (Validator.isNotNull(curPortletControlPanelEntryCategory) && !curPortletControlPanelEntryCategory.startsWith(PortletCategoryKeys.SITE_ADMINISTRATION)) {
-	showScope = false;
-}
-
-if (Validator.isNotNull(curModelResource) && curModelResource.equals(Group.class.getName())) {
-	showScope = true;
-}
+boolean showScope = _isShowScope(role, curModelResource, curPortletId);
 
 if (showScope) {
 	headerNames.add("sites");
 }
 
-SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, renderResponse.createRenderURL(), headerNames, "there-are-no-actions");
+SearchContainer searchContainer = new SearchContainer(liferayPortletRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, liferayPortletResponse.createRenderURL(), headerNames, "there-are-no-actions");
 
-searchContainer.setRowChecker(new ResourceActionRowChecker(renderResponse));
+searchContainer.setRowChecker(new ResourceActionRowChecker(liferayPortletResponse));
 
 int total = curActions.size();
 

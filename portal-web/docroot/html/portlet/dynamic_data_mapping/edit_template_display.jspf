@@ -20,10 +20,6 @@ String scriptContent = ParamUtil.getString(request, "scriptContent");
 if (Validator.isNotNull(scriptContent)) {
 	script = scriptContent;
 }
-
-long templateHandlerClassNameId = ddmDisplay.getTemplateHandlerClassNameId(template, classNameId);
-
-Map<String, TemplateVariableGroup> templateVariableGroups = TemplateContextHelper.getTemplateVariableGroups(templateHandlerClassNameId, classPK, language, locale);
 %>
 
 <aui:input name="scriptContent" type="hidden" value="<%= script %>" />
@@ -31,8 +27,8 @@ Map<String, TemplateVariableGroup> templateVariableGroups = TemplateContextHelpe
 <liferay-ui:panel-container extended="<%= false %>" id="templateScriptContainer" persistState="<%= true %>">
 	<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="templateScriptSectionPanel" persistState="<%= true %>" title="script">
 		<div class="control-group lfr-template-editor-container">
-			<c:if test="<%= !templateVariableGroups.isEmpty() %>">
-				<div class="lfr-template-palette-container pull-left<%= (language.equalsIgnoreCase("ftl") || language.equalsIgnoreCase("vm")) ? "" : " hide" %>" id="<portlet:namespace />templatePaletteContainer">
+			<c:if test="<%= DDMTemplateHelperUtil.isAutocompleteEnabled(language) %>">
+				<div class="lfr-template-palette-container pull-left" id="<portlet:namespace />templatePaletteContainer">
 					<div class="search" id="<portlet:namespace />paletteSearchContainer">
 						<input class="field search-query span12" id="<portlet:namespace />paletteSearch" placeholder='<%= LanguageUtil.get(pageContext, "search") %>' type="text">
 					</div>
@@ -41,6 +37,10 @@ Map<String, TemplateVariableGroup> templateVariableGroups = TemplateContextHelpe
 						<div id="<portlet:namespace />paletteData">
 
 							<%
+							long templateHandlerClassNameId = ddmDisplay.getTemplateHandlerClassNameId(template, classNameId);
+
+							Map<String, TemplateVariableGroup> templateVariableGroups = TemplateContextHelper.getTemplateVariableGroups(templateHandlerClassNameId, classPK, language, locale);
+
 							for (TemplateVariableGroup templateVariableGroup : templateVariableGroups.values()) {
 							%>
 
@@ -83,7 +83,7 @@ Map<String, TemplateVariableGroup> templateVariableGroups = TemplateContextHelpe
 			<%
 			String editorContainerClass = "lfr-editor-container";
 
-			if (!language.equalsIgnoreCase("ftl") && !language.equalsIgnoreCase("vm")) {
+			if (!DDMTemplateHelperUtil.isAutocompleteEnabled(language)) {
 				editorContainerClass += " lfr-editor-container-full";
 			}
 			%>
@@ -116,7 +116,7 @@ Map<String, TemplateVariableGroup> templateVariableGroups = TemplateContextHelpe
 	var prevEditorContent;
 	var richEditor;
 
-	<c:if test="<%= !templateVariableGroups.isEmpty() %>">
+	<c:if test="<%= DDMTemplateHelperUtil.isAutocompleteEnabled(language) %>">
 		var paletteContainer = panelScriptContainer.one('#<portlet:namespace />templatePaletteContainer');
 		var paletteDataContainer = panelScriptContainer.one('#<portlet:namespace />paletteDataContainer');
 
@@ -381,7 +381,7 @@ Map<String, TemplateVariableGroup> templateVariableGroups = TemplateContextHelpe
 
 			setEditorPlugins();
 
-			<c:if test="<%= !templateVariableGroups.isEmpty() %>">
+			<c:if test="<%= DDMTemplateHelperUtil.isAutocompleteEnabled(language) %>">
 				paletteContainer.delegate('click', onPaletteItemChosen, '.palette-item');
 
 				var togglerDelegate = new A.TogglerDelegate(

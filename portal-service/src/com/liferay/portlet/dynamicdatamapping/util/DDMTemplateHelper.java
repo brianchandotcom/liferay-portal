@@ -30,4 +30,6 @@ public interface DDMTemplateHelper {
 			HttpServletRequest request, String language)
 		throws Exception;
 
+	public boolean isAutocompleteEnabled(String language);
+
 }

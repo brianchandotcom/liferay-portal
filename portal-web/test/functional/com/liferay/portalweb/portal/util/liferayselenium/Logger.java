@@ -25,6 +25,8 @@ import java.lang.reflect.Method;
 
 import java.util.List;
 import java.util.Stack;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringEscapeUtils;
 
@@ -81,7 +83,7 @@ public class Logger {
 		log(sb.toString());
 	}
 
-	public void logError(Method method, Object[] arguments) {
+	public void logError(Method method, Object[] arguments, String message) {
 		send("", "fail");
 
 		StringBundler sb = new StringBundler();
@@ -106,6 +108,29 @@ public class Logger {
 			}
 		}
 
+		sb.append("- ");
+
+		Pattern pattern = Pattern.compile("Pattern (.*) does not match (.*) at (//.*)");
+
+		Matcher matcher = pattern.matcher(message);
+
+		if (matcher.find()) {
+			System.out.println(matcher.group(1));
+			System.out.println(matcher.group(2));
+			System.out.println(matcher.group(3));
+
+			sb.append("Expected string '<b>");
+			sb.append(matcher.group(1));
+			sb.append("</b>' did not match actual string '<b>");
+			sb.append(matcher.group(2));
+			sb.append("</b>' at xpath '<b>");
+			sb.append(matcher.group(3));
+			sb.append("</b>'.");
+		}
+		else {
+			sb.append(message);
+		}
+
 		log(sb.toString());
 
 		sb = new StringBundler();
@@ -126,6 +151,8 @@ public class Logger {
 				sb.append(" ");
 			}
 		}
+
+		sb.append("- " + message);
 
 		BaseTestCase.fail(sb.toString());
 	}

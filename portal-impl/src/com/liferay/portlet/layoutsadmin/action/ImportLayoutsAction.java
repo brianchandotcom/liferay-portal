@@ -326,7 +326,7 @@ public class ImportLayoutsAction extends PortletAction {
 		deleteTempFileEntry(themeDisplay.getScopeGroupId(), folderName);
 
 		JSONObject jsonObject = StagingUtil.getExceptionMessagesJSONArray(
-			themeDisplay.getLocale(), e);
+			themeDisplay.getLocale(), e, null);
 
 		writeJSON(actionRequest, actionResponse, jsonObject);
 
@@ -464,7 +464,7 @@ public class ImportLayoutsAction extends PortletAction {
 				jsonObject.put(
 					"warningMessages",
 					StagingUtil.getWarningMessagesJSONArray(
-						themeDisplay.getLocale(), weakMissingReferences));
+						themeDisplay.getLocale(), weakMissingReferences, null));
 			}
 
 			writeJSON(actionRequest, actionResponse, jsonObject);

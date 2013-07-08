@@ -237,8 +237,8 @@ public class StagingImpl implements Staging {
 		Map<String, Serializable> taskContextMap =
 			BackgroundTaskContextMapFactory.buildTaskContextMap(
 				userId, sourceGroupId, false, null, parameterMap,
-				dateRange.getStartDate(), dateRange.getEndDate(),
-				StringPool.BLANK);
+				ActionKeys.PUBLISH_STAGING, dateRange.getStartDate(),
+				dateRange.getEndDate(), StringPool.BLANK);
 
 		taskContextMap.put("sourceGroupId", sourceGroupId);
 		taskContextMap.put("sourcePlid", sourcePlid);
@@ -672,7 +672,8 @@ public class StagingImpl implements Staging {
 
 	@Override
 	public JSONArray getErrorMessagesJSONArray(
-		Locale locale, Map<String, MissingReference> missingReferences) {
+		Locale locale, Map<String, MissingReference> missingReferences,
+		Map<String, Serializable> contextMap) {
 
 		JSONArray errorMessagesJSONArray = JSONFactoryUtil.createJSONArray();
 
@@ -734,7 +735,7 @@ public class StagingImpl implements Staging {
 
 	@Override
 	public JSONObject getExceptionMessagesJSONArray(
-		Locale locale, Exception e) {
+		Locale locale, Exception e, Map<String, Serializable> contextMap) {
 
 		String errorMessage = StringPool.BLANK;
 		JSONArray errorMessagesJSONArray = null;
@@ -886,10 +887,12 @@ public class StagingImpl implements Staging {
 					mre.getMissingReferences();
 
 				errorMessagesJSONArray = getErrorMessagesJSONArray(
-					locale, missingReferences.getDependencyMissingReferences());
+					locale, missingReferences.getDependencyMissingReferences(),
+					contextMap);
 				errorType = ServletResponseConstants.SC_FILE_CUSTOM_EXCEPTION;
 				warningMessagesJSONArray = getWarningMessagesJSONArray(
-					locale, missingReferences.getWeakMissingReferences());
+					locale, missingReferences.getWeakMissingReferences(),
+					contextMap);
 			}
 			else if (e instanceof PortletIdException) {
 				errorMessage = LanguageUtil.get(
@@ -1227,7 +1230,8 @@ public class StagingImpl implements Staging {
 
 	@Override
 	public JSONArray getWarningMessagesJSONArray(
-		Locale locale, Map<String, MissingReference> missingReferences) {
+		Locale locale, Map<String, MissingReference> missingReferences,
+		Map<String, Serializable> contextMap) {
 
 		JSONArray warningMessagesJSONArray = JSONFactoryUtil.createJSONArray();
 
@@ -1403,7 +1407,8 @@ public class StagingImpl implements Staging {
 		Map<String, Serializable> taskContextMap =
 			BackgroundTaskContextMapFactory.buildTaskContextMap(
 				userId, sourceGroupId, privateLayout, layoutIds, parameterMap,
-				startDate, endDate, StringPool.BLANK);
+				ActionKeys.PUBLISH_STAGING, startDate, endDate,
+				StringPool.BLANK);
 
 		taskContextMap.put("sourceGroupId", sourceGroupId);
 		taskContextMap.put("targetGroupId", targetGroupId);

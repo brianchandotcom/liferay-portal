@@ -30,6 +30,8 @@ import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 
+import java.io.Serializable;
+
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -179,16 +181,18 @@ public class StagingUtil {
 	}
 
 	public static JSONArray getErrorMessagesJSONArray(
-		Locale locale, Map<String, MissingReference> missingReferences) {
+		Locale locale, Map<String, MissingReference> missingReferences,
+		Map<String, Serializable> contextMap) {
 
 		return getStaging().getErrorMessagesJSONArray(
-			locale, missingReferences);
+			locale, missingReferences, contextMap);
 	}
 
 	public static JSONObject getExceptionMessagesJSONArray(
-		Locale locale, Exception e) {
+		Locale locale, Exception e, Map<String, Serializable> contextMap) {
 
-		return getStaging().getExceptionMessagesJSONArray(locale, e);
+		return getStaging().getExceptionMessagesJSONArray(
+			locale, e, contextMap);
 	}
 
 	public static Group getLiveGroup(long groupId)
@@ -265,10 +269,11 @@ public class StagingUtil {
 	}
 
 	public static JSONArray getWarningMessagesJSONArray(
-		Locale locale, Map<String, MissingReference> missingReferences) {
+		Locale locale, Map<String, MissingReference> missingReferences,
+		Map<String, Serializable> contextMap) {
 
 		return getStaging().getWarningMessagesJSONArray(
-			locale, missingReferences);
+			locale, missingReferences, contextMap);
 	}
 
 	public static WorkflowTask getWorkflowTask(

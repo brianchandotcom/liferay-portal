@@ -93,7 +93,8 @@ public class LayoutStagingBackgroundTaskExecutor
 			!weakMissingReferences.isEmpty()) {
 
 			JSONArray jsonArray = StagingUtil.getWarningMessagesJSONArray(
-				getLocale(backgroundTask), weakMissingReferences);
+				getLocale(backgroundTask), weakMissingReferences,
+				backgroundTask.getTaskContextMap());
 
 			result.setStatusMessage(jsonArray.toString());
 		}
@@ -104,7 +105,7 @@ public class LayoutStagingBackgroundTaskExecutor
 	@Override
 	public String handleException(BackgroundTask backgroundTask, Exception e) {
 		JSONObject jsonObject = StagingUtil.getExceptionMessagesJSONArray(
-			getLocale(backgroundTask), e);
+			getLocale(backgroundTask), e, backgroundTask.getTaskContextMap());
 
 		return jsonObject.toString();
 	}

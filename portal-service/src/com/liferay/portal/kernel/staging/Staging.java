@@ -29,6 +29,8 @@ import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 
+import java.io.Serializable;
+
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -117,9 +119,11 @@ public interface Staging {
 		throws Exception;
 
 	public JSONArray getErrorMessagesJSONArray(
-		Locale locale, Map<String, MissingReference> missingReferences);
+		Locale locale, Map<String, MissingReference> missingReferences,
+		Map<String, Serializable> contextMap);
 
-	public JSONObject getExceptionMessagesJSONArray(Locale locale, Exception e);
+	public JSONObject getExceptionMessagesJSONArray(
+		Locale locale, Exception e, Map<String, Serializable> contextMap);
 
 	public Group getLiveGroup(long groupId)
 		throws PortalException, SystemException;
@@ -154,7 +158,8 @@ public interface Staging {
 		PortletRequest PortletRequest);
 
 	public JSONArray getWarningMessagesJSONArray(
-		Locale locale, Map<String, MissingReference> missingReferences);
+		Locale locale, Map<String, MissingReference> missingReferences,
+		Map<String, Serializable> contextMap);
 
 	public WorkflowTask getWorkflowTask(
 			long userId, LayoutRevision layoutRevision)

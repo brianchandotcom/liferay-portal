@@ -1979,46 +1979,40 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 	}
 
 	public String secureWebXml(
-			String content, boolean hasCustomServletListener,
-			boolean securityManagerEnabled)
+			String content, boolean hasCustomServletListener)
 		throws Exception {
-
-		if (!hasCustomServletListener && !securityManagerEnabled) {
-			return content;
-		}
 
 		Document document = SAXReaderUtil.read(content);
 
 		Element rootElement = document.getRootElement();
 
-		List<String> listenerClasses = new ArrayList<String>();
+		if (hasCustomServletListener) {
+	
+			List<String> listenerClasses = new ArrayList<String>();
 
-		List<Element> listenerElements = rootElement.elements("listener");
+			List<Element> listenerElements = rootElement.elements("listener");
 
-		for (Element listenerElement : listenerElements) {
-			String listenerClass = GetterUtil.getString(
-				listenerElement.elementText("listener-class"));
+			for (Element listenerElement : listenerElements) {
+				String listenerClass = GetterUtil.getString(
+					listenerElement.elementText("listener-class"));
 
-			if (listenerClass.equals(
-					SecurePluginContextListener.class.getName())) {
+				if (listenerClass.equals(
+						SecurePluginContextListener.class.getName())) {
 
-				continue;
+					continue;
+				}
+
+				listenerClasses.add(listenerClass);
+
+				listenerElement.detach();
 			}
 
-			listenerClasses.add(listenerClass);
+			Element contextParamElement = rootElement.addElement("context-param");
 
-			listenerElement.detach();
-		}
-
-		Element contextParamElement = rootElement.addElement("context-param");
-
-		DocUtil.add(contextParamElement, "param-name", "portalListenerClasses");
-		DocUtil.add(
-			contextParamElement, "param-value",
-			StringUtil.merge(listenerClasses));
-
-		if (!securityManagerEnabled) {
-			return document.compactString();
+			DocUtil.add(contextParamElement, "param-name", "portalListenerClasses");
+			DocUtil.add(
+				contextParamElement, "param-value",
+				StringUtil.merge(listenerClasses));
 		}
 
 		List<Element> servletElements = rootElement.elements("servlet");
@@ -2342,8 +2336,9 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 
 		// Update web.xml
 
-		newContent = secureWebXml(
-			newContent, hasCustomServletListener, securityManagerEnabled);
+		if (securityManagerEnabled) {
+			newContent = secureWebXml(newContent, hasCustomServletListener);
+		}
 
 		newContent = WebXMLBuilder.organizeWebXML(newContent);
 

@@ -443,13 +443,13 @@ portletURL.setParameter("tabs3", "all-publication-processes");
 			</liferay-ui:section>
 
 			<liferay-ui:section>
-				<div id="<portlet:namespace />publishProcesses">
+				<div class="process-list" id="<portlet:namespace />publishProcesses">
 					<liferay-util:include page="/html/portlet/portlet_configuration/publish_portlet_processes.jsp" />
 				</div>
 			</liferay-ui:section>
 		</liferay-ui:tabs>
 
-		<aui:script use="liferay-export-import">
+		<aui:script use="aui-toggler,liferay-export-import,liferay-store">
 			<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="publishProcessesURL">
 				<portlet:param name="struts_action" value="/portlet_configuration/export_import" />
 				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.PUBLISH %>" />
@@ -467,6 +467,37 @@ portletURL.setParameter("tabs3", "all-publication-processes");
 					rangeDateRangeNode: '#rangeDateRange',
 					rangeLastPublishNode: '#rangeLastPublish',
 					ratingsNode: '#<%= PortletDataHandlerKeys.RATINGS %>Checkbox'
+				}
+			);
+
+			new A.TogglerDelegate(
+				{
+					animated: true,
+					closeAllOnExpand: true,
+					container: '#<portlet:namespace />publishProcesses',
+					content: '.background-task-status-message',
+					expanded: false,
+					header: '.details-link',
+					on: {
+						'toggler:expandedChange': function(event) {
+							var header = event.target.get('header');
+
+							var persistId = 0;
+
+							if (!header.hasClass('toggler-header-collapsed')) {
+								persistId = header.getData('persist-id');
+							}
+
+							Liferay.Store(
+								{
+									'publish-layout-task' : persistId
+								}
+							);
+						}
+					},
+					transition: {
+						duration: 0.3
+					}
 				}
 			);
 		</aui:script>

@@ -14,8 +14,10 @@
 
 package com.liferay.portal.dao.orm.hibernate.region;
 
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+
 import java.util.Properties;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import org.hibernate.cache.CacheDataDescription;
 import org.hibernate.cache.CacheException;
@@ -29,6 +31,7 @@ import org.hibernate.cfg.Settings;
 
 /**
  * @author Edward Han
+ * @author Shuyang Zhou
  */
 public class SingletonLiferayEhcacheRegionFactory implements RegionFactory {
 
@@ -38,6 +41,16 @@ public class SingletonLiferayEhcacheRegionFactory implements RegionFactory {
 
 	public SingletonLiferayEhcacheRegionFactory(Properties properties) {
 		synchronized (this) {
+			boolean useQueryCache = GetterUtil.getBoolean(
+				properties.get(PropsKeys.HIBERNATE_CACHE_USE_QUERY_CACHE));
+			boolean useSecondLevelCache = GetterUtil.getBoolean(
+				properties.get(
+					PropsKeys.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE));
+
+			if (useQueryCache || useSecondLevelCache) {
+				_enabled = true;
+			}
+
 			if (_liferayEhcacheRegionFactory == null) {
 				_liferayEhcacheRegionFactory = new LiferayEhcacheRegionFactory(
 					properties);
@@ -102,19 +115,20 @@ public class SingletonLiferayEhcacheRegionFactory implements RegionFactory {
 	public synchronized void start(Settings settings, Properties properties)
 		throws CacheException {
 
-		if (_instanceCounter.getAndIncrement() == 0) {
+		if (_enabled && (_instanceCounter++ == 0)) {
 			_liferayEhcacheRegionFactory.start(settings, properties);
 		}
 	}
 
 	@Override
 	public synchronized void stop() {
-		if (_instanceCounter.decrementAndGet() == 0) {
+		if (_enabled && (--_instanceCounter == 0)) {
 			_liferayEhcacheRegionFactory.stop();
 		}
 	}
 
-	private static AtomicInteger _instanceCounter = new AtomicInteger(0);
+	private static boolean _enabled;
+	private static int _instanceCounter;
 	private static LiferayEhcacheRegionFactory _liferayEhcacheRegionFactory;
 
 }

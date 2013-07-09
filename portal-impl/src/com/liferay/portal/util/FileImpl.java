@@ -499,6 +499,7 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 		}
 	}
 
+	@Override
 	public String getMD5Checksum(File file) throws IOException {
 		FileInputStream fileInputStream = null;
 

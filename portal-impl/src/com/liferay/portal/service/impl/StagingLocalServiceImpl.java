@@ -47,6 +47,7 @@ import java.util.Map;
  */
 public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 
+	@Override
 	public void cleanup(long stagingRequestId)
 		throws PortalException, SystemException {
 
@@ -62,6 +63,7 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 		}
 	}
 
+	@Override
 	public long prepare(long userId, long groupId, String checksum)
 		throws PortalException, SystemException {
 
@@ -78,6 +80,7 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 		return folder.getFolderId();
 	}
 
+	@Override
 	public void publish(
 			long userId, long stagingRequestId, boolean privateLayout,
 			Map<String, String[]> parameterMap)
@@ -133,6 +136,7 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 		}
 	}
 
+	@Override
 	public void stage(
 			long userId, long stagingRequestId, String fileName,
 			byte[] byteBuffer)

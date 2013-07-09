@@ -213,6 +213,7 @@ AUI.add(
 						var instance = this;
 
 						var dropNode = event.drop.get(NODE);
+
 						var target = event.target;
 
 						var proxyNode = target.get(DRAG_NODE);
@@ -331,9 +332,7 @@ AUI.add(
 					_checkStagedTags: function() {
 						var instance = this;
 
-						var selectedTags = instance._getStagedTags();
-
-						selectedTags.each(
+						instance._getStagedTags().each(
 							function(item, index, collection) {
 								instance._checkTag(item, true);
 							}
@@ -930,7 +929,7 @@ AUI.add(
 							if (!currentPage) {
 								var paginationMap = instance._getTagsPaginationMap();
 
-								currentPage = paginationMap['page'].defaultValue;
+								currentPage = paginationMap.page.defaultValue;
 							}
 
 							currentPage -= 1;

@@ -78,11 +78,7 @@ img.icon {
 	display: inline-block;
 	line-height: 1;
 	padding: 0.3em 0.5em 0.3em;
-	margin: 0 0.2em;
-
-	img {
-		margin-right: 0.3em;
-	}
+	margin: 0.1em 0.2em;
 }
 
 .lfr-token-primary {
@@ -96,6 +92,10 @@ img.icon {
 .lfr-token-close, .lfr-token-text {
 	display: inline-block;
 	vertical-align: middle;
+}
+
+.lfr-token-close {
+	margin-left: 0.3em;
 }
 
 .ie6 {
@@ -136,4 +136,8 @@ img.icon {
 	&, &:hover {
 		background-color: #B3DAEF;
 	}
+}
+
+.lfr-token-close:hover {
+	text-decoration: none;
 }

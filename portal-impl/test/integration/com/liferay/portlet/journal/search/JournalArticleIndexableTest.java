@@ -89,7 +89,9 @@ public class JournalArticleIndexableTest {
 	}
 
 	@Test
-	public void testJournalArticleIsUnindexableByDefault() throws Exception {
+	public void testJournalArticleWithClassNameDDMStructureIsUnindexable()
+			throws Exception {
+
 		Group group = GroupTestUtil.addGroup();
 
 		AssetEntryQuery assetEntryQuery =

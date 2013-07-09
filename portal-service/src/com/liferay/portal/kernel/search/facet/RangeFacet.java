@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.kernel.search.facet.util.RangeParserUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 /**
@@ -63,8 +64,10 @@ public class RangeFacet extends BaseFacet {
 
 		String fieldName = getFieldName();
 
+		String fieldId = StringUtil.replace(fieldName, "/", "_");
+
 		String rangeParam = GetterUtil.getString(
-			searchContext.getAttribute(fieldName));
+			searchContext.getAttribute(fieldId));
 
 		if (!isStatic() && Validator.isNotNull(rangeParam)) {
 			String[] range = RangeParserUtil.parserRange(rangeParam);

@@ -71,12 +71,15 @@ $dockbarOpenGradientStart: #00A0FF;
 	/* ---------- Dockbar ---------- */
 
 	.dockbar {
+		height: 0;
 		position: absolute;
 
 		.navbar-inner {
 			background-color: transparent;
 			border-width: 0;
 			color: #FFF;
+			padding: 0;
+			width: 0;
 
 			.nav {
 				background-color: $dockbarGradientEnd;
@@ -303,6 +306,16 @@ $dockbarOpenGradientStart: #00A0FF;
 		font-size: 11px;
 	}
 
+	/* ---------- Staging ---------- */
+
+	.staging-tabview-list {
+		padding: 0 1em;
+	}
+
+	.staging-tabview-content {
+		margin: 0 5em
+	}
+
 
 	/* ---------- Footer ---------- */
 
@@ -439,6 +452,10 @@ $dockbarOpenGradientStart: #00A0FF;
 		.lfr-configurator-visibility & {
 			background-image: linear-gradient(#BABABA, #7E7E7E);
 		}
+	}
+
+	.staging-bar {
+		@include box-shadow(none);
 	}
 
 	.dockbar {

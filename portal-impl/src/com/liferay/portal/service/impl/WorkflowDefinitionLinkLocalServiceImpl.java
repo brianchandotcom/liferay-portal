@@ -55,6 +55,8 @@ public class WorkflowDefinitionLinkLocalServiceImpl
 		long classNameId = PortalUtil.getClassNameId(className);
 		Date now = new Date();
 
+		groupId = StagingUtil.getLiveGroupId(groupId);
+
 		long workflowDefinitionLinkId = counterLocalService.increment();
 
 		WorkflowDefinitionLink workflowDefinitionLink =
@@ -134,9 +136,7 @@ public class WorkflowDefinitionLinkLocalServiceImpl
 
 		WorkflowDefinitionLink workflowDefinitionLink = null;
 
-		if (groupId > 0) {
-			groupId = StagingUtil.getLiveGroupId(groupId);
-		}
+		groupId = StagingUtil.getLiveGroupId(groupId);
 
 		workflowDefinitionLink =
 			workflowDefinitionLinkPersistence.fetchByG_C_C_C_T(
@@ -290,6 +290,8 @@ public class WorkflowDefinitionLinkLocalServiceImpl
 		User user = userPersistence.findByPrimaryKey(userId);
 		long classNameId = PortalUtil.getClassNameId(className);
 		Date now = new Date();
+
+		groupId = StagingUtil.getLiveGroupId(groupId);
 
 		WorkflowDefinitionLink workflowDefinitionLink =
 			workflowDefinitionLinkPersistence.fetchByG_C_C_C_T(

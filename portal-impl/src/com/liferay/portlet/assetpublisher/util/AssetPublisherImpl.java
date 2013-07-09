@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
@@ -366,21 +367,17 @@ public class AssetPublisherImpl implements AssetPublisher {
 		}
 	}
 
-	public Object[] getAssetEntryObject(
+	public Tuple getAssetEntries(
 			PermissionChecker permissionChecker, long[] groupIds,
 			String[] assetEntryXmls, boolean isConfiguration,
 			boolean checkPermission)
 		throws Exception {
 
-		List<AssetEntry> viewableResults = new ArrayList<AssetEntry>();
-
 		List<String> deletedAssets = new ArrayList<String>();
 
-		List results = ListUtil.fromArray(assetEntryXmls);
+		List<AssetEntry> viewableResults = new ArrayList<AssetEntry>();
 
-		for (int i = 0; i < results.size(); i++) {
-			String assetEntryXml = (String)results.get(i);
-
+		for (String assetEntryXml : assetEntryXmls) {
 			Document document = SAXReaderUtil.read(assetEntryXml);
 
 			Element rootElement = document.getRootElement();
@@ -429,7 +426,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 			viewableResults.add(assetEntry);
 		}
 
-		return new Object[] {viewableResults, deletedAssets};
+		return new Tuple(viewableResults, deletedAssets);
 	}
 
 	@Override

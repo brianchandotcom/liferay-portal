@@ -322,6 +322,14 @@ public class LayoutSetBranchLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.model.LayoutSetBranch fetchLayoutSetBranch(
+		long groupId, boolean privateLayout, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _layoutSetBranchLocalService.fetchLayoutSetBranch(groupId,
+			privateLayout, name);
+	}
+
+	@Override
 	public com.liferay.portal.model.LayoutSetBranch getLayoutSetBranch(
 		long groupId, boolean privateLayout, java.lang.String name)
 		throws com.liferay.portal.kernel.exception.PortalException,

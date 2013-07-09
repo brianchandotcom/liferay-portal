@@ -305,6 +305,12 @@ public class LayoutSetBranchLocalServiceUtil {
 			.deleteLayoutSetBranches(groupId, privateLayout, includeMaster);
 	}
 
+	public static com.liferay.portal.model.LayoutSetBranch fetchLayoutSetBranch(
+		long groupId, boolean privateLayout, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().fetchLayoutSetBranch(groupId, privateLayout, name);
+	}
+
 	public static com.liferay.portal.model.LayoutSetBranch getLayoutSetBranch(
 		long groupId, boolean privateLayout, java.lang.String name)
 		throws com.liferay.portal.kernel.exception.PortalException,

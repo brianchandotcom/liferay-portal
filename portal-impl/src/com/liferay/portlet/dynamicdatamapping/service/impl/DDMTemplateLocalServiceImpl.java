@@ -1198,6 +1198,7 @@ public class DDMTemplateLocalServiceImpl
 	 * Updates the template matching the ID.
 	 *
 	 * @param  templateId the primary key of the template
+	 * @param  classPK the primary key of the template's related entity
 	 * @param  nameMap the template's new locales and localized names
 	 * @param  descriptionMap the template's new locales and localized
 	 *         description
@@ -1223,7 +1224,7 @@ public class DDMTemplateLocalServiceImpl
 	 */
 	@Override
 	public DDMTemplate updateTemplate(
-			long templateId, Map<Locale, String> nameMap,
+			long templateId, long classPK, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, String type, String mode,
 			String language, String script, boolean cacheable,
 			boolean smallImage, String smallImageURL, File smallImageFile,
@@ -1248,6 +1249,17 @@ public class DDMTemplateLocalServiceImpl
 			templateId);
 
 		template.setModifiedDate(serviceContext.getModifiedDate(null));
+
+		if ((template.getClassPK() == 0) && (classPK > 0)) {
+
+			// Allow users to set the structure if and only if it currently does
+			// not have one. Otherwise, you can have bad data because there may
+			// be an existing content that has chosen to use a structure and
+			// template combination that no longer exists.
+
+			template.setClassPK(classPK);
+		}
+
 		template.setNameMap(nameMap);
 		template.setDescriptionMap(descriptionMap);
 		template.setType(type);

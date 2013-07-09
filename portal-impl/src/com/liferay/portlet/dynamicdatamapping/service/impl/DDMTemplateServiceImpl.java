@@ -860,6 +860,7 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	 * Updates the template matching the ID.
 	 *
 	 * @param  templateId the primary key of the template
+	 * @param  classPK the primary key of the template's related entity
 	 * @param  nameMap the template's new locales and localized names
 	 * @param  descriptionMap the template's new locales and localized
 	 *         description
@@ -886,7 +887,7 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 	 */
 	@Override
 	public DDMTemplate updateTemplate(
-			long templateId, Map<Locale, String> nameMap,
+			long templateId, long classPK, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, String type, String mode,
 			String language, String script, boolean cacheable,
 			boolean smallImage, String smallImageURL, File smallImageFile,
@@ -897,8 +898,8 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 			getPermissionChecker(), templateId, ActionKeys.UPDATE);
 
 		return ddmTemplateLocalService.updateTemplate(
-			templateId, nameMap, descriptionMap, type, mode, language, script,
-			cacheable, smallImage, smallImageURL, smallImageFile,
+			templateId, classPK, nameMap, descriptionMap, type, mode, language,
+			script, cacheable, smallImage, smallImageURL, smallImageFile,
 			serviceContext);
 	}
 

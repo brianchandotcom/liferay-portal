@@ -167,7 +167,7 @@ portletURL.setParameter("rootNodeName", rootNodeName);
 											%>
 
 													<li class="tree-item">
-														<aui:input label="<%= portletTitle %>" name="<%= PortletDataHandlerKeys.PORTLET_CONFIGURATION + StringPool.UNDERLINE + portlet.getRootPortletId() %>" type="checkbox" value="<%= portletDataHandler.isPublishToLiveByDefault() %>" />
+														<aui:input label="<%= portletTitle %>" name="<%= PortletDataHandlerKeys.PORTLET_CONFIGURATION + StringPool.UNDERLINE + portlet.getRootPortletId() %>" type="checkbox" value="<%= true %>" />
 
 														<div class="hide" id="<portlet:namespace />configuration_<%= portlet.getRootPortletId() %>">
 															<aui:fieldset cssClass="portlet-type-data-section" label="<%= portletTitle %>">

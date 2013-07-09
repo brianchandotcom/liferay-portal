@@ -50,13 +50,13 @@ import com.liferay.portal.service.BackgroundTaskServiceUtil;
  * @generated
  */
 public class BackgroundTaskServiceHttp {
-	public static java.lang.String fetchBackgroundTaskStatus(
+	public static java.lang.String getBackgroundTaskStatusJSON(
 		HttpPrincipal httpPrincipal, long backgroundTaskId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(BackgroundTaskServiceUtil.class,
-					"fetchBackgroundTaskStatus",
-					_fetchBackgroundTaskStatusParameterTypes0);
+					"getBackgroundTaskStatusJSON",
+					_getBackgroundTaskStatusJSONParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					backgroundTaskId);
@@ -80,7 +80,7 @@ public class BackgroundTaskServiceHttp {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(BackgroundTaskServiceHttp.class);
-	private static final Class<?>[] _fetchBackgroundTaskStatusParameterTypes0 = new Class[] {
+	private static final Class<?>[] _getBackgroundTaskStatusJSONParameterTypes0 = new Class[] {
 			long.class
 		};
 }

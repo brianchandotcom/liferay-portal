@@ -61,10 +61,10 @@ import java.rmi.RemoteException;
  * @generated
  */
 public class BackgroundTaskServiceSoap {
-	public static java.lang.String fetchBackgroundTaskStatus(
+	public static java.lang.String getBackgroundTaskStatusJSON(
 		long backgroundTaskId) throws RemoteException {
 		try {
-			java.lang.String returnValue = BackgroundTaskServiceUtil.fetchBackgroundTaskStatus(backgroundTaskId);
+			java.lang.String returnValue = BackgroundTaskServiceUtil.getBackgroundTaskStatusJSON(backgroundTaskId);
 
 			return returnValue;
 		}

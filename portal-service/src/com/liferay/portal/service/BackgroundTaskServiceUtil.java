@@ -56,7 +56,7 @@ public class BackgroundTaskServiceUtil {
 		getService().setBeanIdentifier(beanIdentifier);
 	}
 
-	public static java.lang.String fetchBackgroundTaskStatus(
+	public static java.lang.String getBackgroundTaskStatusJSON(
 		long backgroundTaskId) {
 		return getService().getBackgroundTaskStatusJSON(backgroundTaskId);
 	}

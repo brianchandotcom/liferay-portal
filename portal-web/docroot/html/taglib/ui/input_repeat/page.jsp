@@ -394,7 +394,7 @@ boolean weeklyPosSa = _getWeeklyDayPos(request, Calendar.SATURDAY, event, recurr
 				}
 			);
 		},
-		'.field-input-choice'
+		'.field'
 	);
 </aui:script>
 

@@ -381,7 +381,7 @@ public class BackgroundTaskLocalServiceUtil {
 				   .getBackgroundTasksCount(groupId, name, taskExecutorClassName);
 	}
 
-	public static java.lang.String fetchBackgroundTaskStatus(
+	public static java.lang.String getBackgroundTaskStatusJSON(
 		long backgroundTaskId) {
 		return getService().getBackgroundTaskStatusJSON(backgroundTaskId);
 	}

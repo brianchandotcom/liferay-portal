@@ -14,7 +14,6 @@
 
 package com.liferay.portal.model;
 
-import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Date;
@@ -596,6 +595,11 @@ public class RepositoryWrapper implements Repository, ModelWrapper<Repository> {
 	}
 
 	@Override
+	public com.liferay.portal.kernel.lar.StagedModelType getStagedModelType() {
+		return _repository.getStagedModelType();
+	}
+
+	@Override
 	public com.liferay.portal.kernel.util.UnicodeProperties getTypeSettingsProperties() {
 		return _repository.getTypeSettingsProperties();
 	}
@@ -623,11 +627,6 @@ public class RepositoryWrapper implements Repository, ModelWrapper<Repository> {
 		}
 
 		return false;
-	}
-
-	@Override
-	public StagedModelType getStagedModelType() {
-		return _repository.getStagedModelType();
 	}
 
 	/**

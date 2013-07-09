@@ -123,9 +123,7 @@ AUI.add(
 							{
 								after: {
 									close: function(event) {
-										var item = event.item;
-
-										instance._checkTag(item, false);
+										instance._checkTag(event.item, false);
 
 										instance._toggleStagedTagsWrapper();
 									}
@@ -216,6 +214,7 @@ AUI.add(
 
 						var dropNode = event.drop.get(NODE);
 						var target = event.target;
+
 						var proxyNode = target.get(DRAG_NODE);
 						var node = target.get(NODE);
 
@@ -1545,7 +1544,7 @@ AUI.add(
 
 						var boundingBox = event.currentTarget.get('boundingBox');
 
-						var propertiesTrigger = boundingBox.one('fieldset#' + instance._prefixedPortletId + 'tagProperties');
+						var propertiesTrigger = boundingBox.one('#' + instance._prefixedPortletId + 'tagProperties');
 
 						var autoFieldsInstance = propertiesTrigger.getData('autoFieldsInstance');
 
@@ -1711,9 +1710,7 @@ AUI.add(
 					_toggleStagedTagItem: function(tagItem) {
 						var instance = this;
 
-						var checked = tagItem.attr('checked');
-
-						if (checked) {
+						if (tagItem.attr('checked')) {
 							instance._stageTagItem(tagItem);
 						}
 						else {

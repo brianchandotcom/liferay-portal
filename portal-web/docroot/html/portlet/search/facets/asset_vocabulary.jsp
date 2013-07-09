@@ -38,8 +38,8 @@ if (assetVocabularies.isEmpty()) {
 }
 %>
 
-<div class="asset-vocabulary <%= cssClass %>" data-facetFieldName="<%= facet.getFieldName() %>" id="<%= randomNamespace %>facet">
-	<aui:input name="<%= facet.getFieldName() %>" type="hidden" value="<%= StringUtil.merge(assetCategoryIdsOrNames) %>" />
+<div class="asset-vocabulary <%= cssClass %>" data-facetFieldName="<%= fieldId %>" id="<%= randomNamespace %>facet">
+	<aui:input name="<%= fieldId %>" type="hidden" value="<%= StringUtil.merge(assetCategoryIdsOrNames) %>" />
 
 	<%
 	for (AssetVocabulary assetVocabulary : assetVocabularies) {
@@ -56,7 +56,7 @@ if (assetVocabularies.isEmpty()) {
 				<%
 				StringBundler sb = new StringBundler();
 
-				String clearFields = renderResponse.getNamespace() + facet.getFieldName();
+				String clearFields = renderResponse.getNamespace() + fieldId;
 
 				_buildCategoriesNavigation(assetCategoryIdsOrNames, matchByName, facetCollector, assetCategories, clearFields, pageContext, sb);
 				%>

@@ -32,8 +32,8 @@ if (dataJSONObject.has("values")) {
 }
 %>
 
-<div class="<%= cssClass %>" data-facetFieldName="<%= facet.getFieldName() %>" id="<%= randomNamespace %>facet">
-	<aui:input name="<%= facet.getFieldName() %>" type="hidden" value="<%= fieldParam %>" />
+<div class="<%= cssClass %>" data-facetFieldName="<%= fieldId %>" id="<%= randomNamespace %>facet">
+	<aui:input name="<%= fieldId %>" type="hidden" value="<%= fieldParam %>" />
 
 	<ul class="asset-type unstyled">
 		<li class="facet-value default <%= Validator.isNull(fieldParam) ? "current-term" : StringPool.BLANK %>">
@@ -63,7 +63,7 @@ if (dataJSONObject.has("values")) {
 				<aui:script use="liferay-token-list">
 					Liferay.Search.tokenList.add(
 						{
-							clearFields: '<%= renderResponse.getNamespace() + facet.getFieldName() %>',
+							clearFields: '<%= renderResponse.getNamespace() + fieldId %>',
 							text: '<%= HtmlUtil.escapeJS(ResourceActionsUtil.getModelResource(locale, assetType)) %>'
 						}
 					);

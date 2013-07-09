@@ -55,12 +55,12 @@ public class WorkflowDefinitionLinkLocalServiceImpl
 		long classNameId = PortalUtil.getClassNameId(className);
 		Date now = new Date();
 
+		groupId = StagingUtil.getLiveGroupId(groupId);
+
 		long workflowDefinitionLinkId = counterLocalService.increment();
 
 		WorkflowDefinitionLink workflowDefinitionLink =
 			workflowDefinitionLinkPersistence.create(workflowDefinitionLinkId);
-
-		groupId = StagingUtil.getLiveGroupId(groupId);
 
 		workflowDefinitionLink.setCreateDate(now);
 		workflowDefinitionLink.setModifiedDate(now);

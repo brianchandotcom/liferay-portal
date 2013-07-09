@@ -85,32 +85,21 @@ List<String> languageIds = new ArrayList<String>();
 					return "<%= UnicodeFormatter.toString(HtmlUtil.escape(mainLanguageValue)) %>";
 				}
 
-				Liferay.provide(
-					window,
-					'<portlet:namespace /><%= fieldName %>OnBlurEditor',
-					function() {
-						Liferay.component('<portlet:namespace /><%= fieldName %>').blur();
-					}
-				);
+				function <portlet:namespace /><%= fieldName %>OnBlurEditor() {
+					Liferay.component('<portlet:namespace /><%= fieldName %>').blur();
+				}
 
-				Liferay.provide(
-					window,
-					'<portlet:namespace /><%= fieldName %>OnChangeEditor',
-					function() {
-						var inputLocalized = Liferay.component('<portlet:namespace /><%= fieldName %>');
-						var editor = window.<portlet:namespace /><%= fieldName %>;
+				function <portlet:namespace /><%= fieldName %>OnChangeEditor() {
+					var inputLocalized = Liferay.component('<portlet:namespace /><%= fieldName %>');
 
-						inputLocalized.updateInputLanguage(editor.getHTML());
-					}
-				);
+					var editor = window.<portlet:namespace /><%= fieldName %>;
 
-				Liferay.provide(
-					window,
-					'<portlet:namespace /><%= fieldName %>OnFocusEditor',
-					function() {
-						Liferay.component('<portlet:namespace /><%= fieldName %>').focus();
-					}
-				);
+					inputLocalized.updateInputLanguage(editor.getHTML());
+				}
+
+				function <portlet:namespace /><%= fieldName %>OnFocusEditor() {
+					Liferay.component('<portlet:namespace /><%= fieldName %>').focus();
+				}
 			</aui:script>
 
 			<aui:script use="aui-base">
@@ -119,7 +108,7 @@ List<String> languageIds = new ArrayList<String>();
 					function() {
 						window.<portlet:namespace /><%= fieldName %>.focus();
 					}
-				)
+				);
 			</aui:script>
 
 			<liferay-ui:input-editor cssClass='<%= \"language-value \" + cssClass %>' editorImpl="ckeditor" initMethod='<%= fieldName + \"InitEditor\" %>' name="<%= fieldName %>" onBlurMethod='<%= fieldName + \"OnBlurEditor\" %>' onChangeMethod='<%= fieldName + \"OnChangeEditor\" %>' onFocusMethod='<%= fieldName + \"OnFocusEditor\" %>' />
@@ -260,9 +249,11 @@ List<String> languageIds = new ArrayList<String>();
 				boundingBox: '#<portlet:namespace /><%= id %>BoundingBox',
 				columns: 20,
 				contentBox: '#<portlet:namespace /><%= id %>ContentBox',
+
 				<c:if test='<%= type.equals("editor") %>'>
 					editor: window.<portlet:namespace /><%= name + fieldSuffix %>,
 				</c:if>
+
 				inputNamespace: '<portlet:namespace /><%= id + StringPool.UNDERLINE %>',
 				inputPlaceholder: '#<portlet:namespace /><%= HtmlUtil.escapeJS(id + fieldSuffix) %>',
 				lazy: <%= !type.equals("editor") %>,

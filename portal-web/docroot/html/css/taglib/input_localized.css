@@ -58,9 +58,9 @@
 	}
 
 	.palette-item-inner {
-	    display: block;
-	    height: 16px;
-	    width: 16px;
+		display: block;
+		height: 16px;
+		width: 16px;
 	}
 }
 

@@ -34,7 +34,7 @@
 
 		<execute action="CPWebcontentAddfolder#type" locator-key1="NAME_FIELD" value1="${subfolderName}" />
 		<execute action="CPWebcontentAddfolder#type" locator-key1="DESCRIPTION_FIELD" value1="${subfolderDescription}" />
-		<execute action="CPWebcontentAddfolder#click" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPWebcontentAddfolder#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 
 		<var name='key_webContentTitle' value="${subfolderName}" />
 

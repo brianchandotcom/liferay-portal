@@ -23,18 +23,6 @@ AUI.add(
 			instance.ID = namespace.replace(/^_(.*)_$/, '$1');
 
 			instance.rootNode = A.one('#p_p_id' + namespace);
-
-			instance.ns = A.cached(
-				function(str) {
-					var value = instance.NS;
-
-					if (!Lang.isUndefined(str)) {
-						value = prefix(value, str);
-					}
-
-					return value;
-				}
-			);
 		};
 
 		PortletBase.ATTRS = {
@@ -67,25 +55,10 @@ AUI.add(
 				return root.oneNS(instance.NS, selector);
 			},
 
-			nsKeys: function(obj) {
+			ns: function(str) {
 				var instance = this;
 
-				var namespace = instance.NS;
-
-				var newObj = {};
-
-				A.Object.each(
-					obj,
-					function(item, index, collection) {
-						if (!startsWith(index, namespace)) {
-							index = prefix(namespace, index);
-						}
-
-						newObj[index] = item;
-					}
-				);
-
-				return newObj;
+				return Liferay.Util.ns(instance.NS, str);
 			},
 
 			_getNS: function(value) {

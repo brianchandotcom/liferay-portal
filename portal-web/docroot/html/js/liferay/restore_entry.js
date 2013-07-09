@@ -75,7 +75,7 @@ AUI.add(
 							submitForm(instance._hrefFm, uri);
 						}
 						else {
-							var data = instance.nsKeys(
+							var data = instance.ns(
 								{
 									duplicateEntryId: responseData.duplicateEntryId,
 									oldName: responseData.oldName,
@@ -124,7 +124,7 @@ AUI.add(
 									success: A.rbind('_afterCheckEntrySuccess', instance)
 								},
 								arguments: uri,
-								data: instance.nsKeys(
+								data: instance.ns(
 									{
 										trashEntryId: event.trashEntryId
 									}
@@ -174,7 +174,9 @@ AUI.add(
 
 						var closeButton = restoreTrashEntryFm.one('.btn-cancel');
 
-						closeButton.on('click', instance._popup.hide, instance._popup);
+						if (closeButton) {
+							closeButton.on('click', instance._popup.hide, instance._popup);
+						}
 
 						var rename = instance.byId('rename');
 						var newName = instance.byId('newName');
@@ -208,7 +210,7 @@ AUI.add(
 										success: A.rbind('_afterPopupCheckEntrySuccess', instance)
 									},
 									arguments: form,
-									data: instance.nsKeys(
+									data: instance.ns(
 										{
 											trashEntryId: trashEntryId.val(),
 											newName: newName.val()

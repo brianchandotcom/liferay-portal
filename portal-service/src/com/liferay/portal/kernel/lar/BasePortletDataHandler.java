@@ -30,6 +30,7 @@ import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
+import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplate;
 import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateUtil;
 
 import java.io.IOException;
@@ -401,7 +402,10 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 		String displayStyle = getDisplayTemplate(
 			portletDataContext, portletId, portletPreferences);
 
-		if (Validator.isNotNull(displayStyle)) {
+		if (Validator.isNotNull(displayStyle) &&
+			displayStyle.startsWith(
+				PortletDisplayTemplate.DISPLAY_STYLE_PREFIX)) {
+
 			DDMTemplate ddmTemplate =
 				PortletDisplayTemplateUtil.fetchDDMTemplate(
 					portletDataContext.getGroupId(), displayStyle);

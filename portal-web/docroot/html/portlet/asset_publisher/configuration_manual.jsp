@@ -52,10 +52,10 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 
 			SearchContainer searchContainer = new SearchContainer(renderRequest, new DisplayTerms(renderRequest), new DisplayTerms(renderRequest), SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, configurationRenderURL, headerNames, LanguageUtil.get(pageContext, "no-assets-selected"));
 
-			Object[] assetEntryObject = AssetPublisherUtil.getAssetEntryObject(permissionChecker, groupIds, assetEntryXmls, true, enablePermissions);
+			Tuple tuple = AssetPublisherUtil.getAssetEntries(permissionChecker, groupIds, assetEntryXmls, true, enablePermissions);
 
-			List<AssetEntry> assetEntries = (List<AssetEntry>)assetEntryObject[0];
-			List<String> deletedAssets = (List<String>)assetEntryObject[1];
+			List<AssetEntry> assetEntries = (List<AssetEntry>)tuple.getObject(0);
+			List<String> deletedAssets = (List<String>)tuple.getObject(1);
 
 			int total = assetEntries.size();
 

@@ -372,11 +372,11 @@ public class AssetPublisherImpl implements AssetPublisher {
 			boolean checkPermission)
 		throws Exception {
 
-		List results = ListUtil.fromArray(assetEntryXmls);
-
 		List<AssetEntry> viewableResults = new ArrayList<AssetEntry>();
 
 		List<String> deletedAssets = new ArrayList<String>();
+
+		List results = ListUtil.fromArray(assetEntryXmls);
 
 		for (int i = 0; i < results.size(); i++) {
 			String assetEntryXml = (String)results.get(i);
@@ -419,7 +419,8 @@ public class AssetPublisherImpl implements AssetPublisher {
 					continue;
 				}
 			}
-			else if (!assetRenderer.isDisplayable() || (checkPermission &&
+			else if (!assetRenderer.isDisplayable() ||
+					 (checkPermission &&
 					  !assetRenderer.hasViewPermission(permissionChecker))) {
 
 				continue;

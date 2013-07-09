@@ -444,7 +444,7 @@ portletURL.setParameter("tabs3", "all-publication-processes");
 
 			<liferay-ui:section>
 				<div id="<portlet:namespace />publishProcesses">
-					<liferay-util:include page="/html/portlet/layouts_admin/publish_portlet_processes.jsp" />
+					<liferay-util:include page="/html/portlet/portlet_configuration/publish_portlet_processes.jsp" />
 				</div>
 			</liferay-ui:section>
 		</liferay-ui:tabs>

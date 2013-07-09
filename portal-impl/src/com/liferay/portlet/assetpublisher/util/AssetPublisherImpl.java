@@ -367,6 +367,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 		}
 	}
 
+	@Override
 	public Tuple getAssetEntries(
 			PermissionChecker permissionChecker, long[] groupIds,
 			String[] assetEntryXmls, boolean isConfiguration,

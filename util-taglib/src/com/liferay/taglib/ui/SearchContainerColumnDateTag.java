@@ -19,23 +19,32 @@ import com.liferay.portal.kernel.dao.search.ResultRow;
 import com.liferay.portal.kernel.dao.search.SearchEntry;
 import com.liferay.portal.kernel.dao.search.TextSearchEntry;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.theme.ThemeDisplay;
+
+import java.text.Format;
+
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.TimeZone;
 
 import javax.portlet.PortletURL;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspTagException;
-import javax.servlet.jsp.tagext.BodyContent;
-import javax.servlet.jsp.tagext.BodyTag;
-import java.util.List;
-import java.util.Map;
+import javax.servlet.jsp.PageContext;
 
 /**
  * @author Raymond Augé
  */
-public class SearchContainerColumnDateTag<R>
-	extends SearchContainerColumnTag implements BodyTag {
+public class SearchContainerColumnDateTag<R> extends SearchContainerColumnTag {
 
 	@Override
 	public int doEndTag() {
@@ -47,29 +56,8 @@ public class SearchContainerColumnDateTag<R>
 			ResultRow resultRow = searchContainerRowTag.getRow();
 
 			if (Validator.isNotNull(_property)) {
-				_value = String.valueOf(
-					BeanPropertiesUtil.getObject(
-						resultRow.getObject(), _property));
-			}
-			else if (Validator.isNotNull(_buffer)) {
-				_value = _sb.toString();
-			}
-			else if (_value == null) {
-				BodyContent bodyContent = getBodyContent();
-
-				if (bodyContent != null) {
-					_value = bodyContent.getString();
-				}
-				else {
-					Object object = BeanPropertiesUtil.getObject(
-						resultRow.getObject(), getName());
-
-					_value = String.valueOf(object);
-				}
-			}
-
-			if (_translate) {
-				_value = LanguageUtil.get(pageContext, _value);
+				_value = (Date)BeanPropertiesUtil.getObject(
+					resultRow.getObject(), _property);
 			}
 
 			if (index <= -1) {
@@ -88,9 +76,36 @@ public class SearchContainerColumnDateTag<R>
 			textSearchEntry.setColspan(getColspan());
 			textSearchEntry.setCssClass(getCssClass());
 			textSearchEntry.setHref((String)getHref());
-			textSearchEntry.setName(getValue());
-			textSearchEntry.setTarget(getTarget());
-			textSearchEntry.setTitle(getTitle());
+
+			if (Validator.isNotNull(_value)) {
+				Object[] localeAndTimeZone = getLocaleAndTimeZone(pageContext);
+
+				Format dateFormatDateTime =
+					FastDateFormatFactoryUtil.getDateTime(
+						(Locale)localeAndTimeZone[0],
+						(TimeZone)localeAndTimeZone[1]);
+
+				StringBundler sb = new StringBundler(5);
+
+				sb.append(
+					"<span onmouseover=\"Liferay.Portal.ToolTip.show(this, '");
+				sb.append(dateFormatDateTime.format(_value));
+				sb.append("')\">");
+				sb.append(
+					LanguageUtil.format(
+						pageContext, "x-ago",
+						LanguageUtil.getTimeDescription(
+							pageContext,
+							System.currentTimeMillis() - _value.getTime(),
+							true)));
+				sb.append("</span>");
+
+				textSearchEntry.setName(sb.toString());
+			}
+			else {
+				textSearchEntry.setName(StringPool.BLANK);
+			}
+
 			textSearchEntry.setValign(getValign());
 
 			resultRow.addSearchEntry(index, textSearchEntry);
@@ -103,7 +118,6 @@ public class SearchContainerColumnDateTag<R>
 
 			if (!ServerDetector.isResin()) {
 				align = SearchEntry.DEFAULT_ALIGN;
-				_buffer = null;
 				colspan = SearchEntry.DEFAULT_COLSPAN;
 				cssClass = SearchEntry.DEFAULT_CSS_CLASS;
 				_href = null;
@@ -111,10 +125,7 @@ public class SearchContainerColumnDateTag<R>
 				_orderable = false;
 				_orderableProperty = null;
 				_property = null;
-				_sb = null;
-				_target = null;
-				_title = null;
-				_translate = false;
+				_timeZone = null;
 				valign = SearchEntry.DEFAULT_VALIGN;
 			}
 		}
@@ -162,26 +173,7 @@ public class SearchContainerColumnDateTag<R>
 			}
 		}
 
-		if (Validator.isNotNull(_property)) {
-			return SKIP_BODY;
-		}
-		else if (Validator.isNotNull(_buffer)) {
-			_sb = new StringBundler();
-
-			pageContext.setAttribute(_buffer, _sb);
-
-			return EVAL_BODY_INCLUDE;
-		}
-		else if (Validator.isNull(_value)) {
-			return EVAL_BODY_BUFFERED;
-		}
-		else {
-			return SKIP_BODY;
-		}
-	}
-
-	public String getBuffer() {
-		return _buffer;
+		return EVAL_BODY_INCLUDE;
 	}
 
 	public Object getHref() {
@@ -200,24 +192,12 @@ public class SearchContainerColumnDateTag<R>
 		return _property;
 	}
 
-	public String getTarget() {
-		return _target;
-	}
-
-	public String getTitle() {
-		return _title;
-	}
-
-	public String getValue() {
+	public Date getValue() {
 		return _value;
 	}
 
 	public boolean isOrderable() {
 		return _orderable;
-	}
-
-	public void setBuffer(String buffer) {
-		_buffer = buffer;
 	}
 
 	public void setHref(Object href) {
@@ -236,31 +216,33 @@ public class SearchContainerColumnDateTag<R>
 		_property = property;
 	}
 
-	public void setTarget(String target) {
-		_target = target;
-	}
-
-	public void setTitle(String title) {
-		_title = title;
-	}
-
-	public void setTranslate(boolean translate) {
-		_translate = translate;
-	}
-
-	public void setValue(String value) {
+	public void setValue(Date value) {
 		_value = value;
 	}
 
-	private String _buffer;
+	protected Object[] getLocaleAndTimeZone(PageContext pageContext) {
+		if ((_locale != null) && (_timeZone != null)) {
+			return new Object[] {_locale, _timeZone};
+		}
+
+		HttpServletRequest request =
+			(HttpServletRequest)pageContext.getRequest();
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		_locale = themeDisplay.getLocale();
+		_timeZone = themeDisplay.getTimeZone();
+
+		return new Object[] {_locale, _timeZone};
+	}
+
 	private Object _href;
+	private Locale _locale;
 	private boolean _orderable;
 	private String _orderableProperty;
 	private String _property;
-	private StringBundler _sb;
-	private String _target;
-	private String _title;
-	private boolean _translate;
-	private String _value;
+	private TimeZone _timeZone;
+	private Date _value;
 
 }

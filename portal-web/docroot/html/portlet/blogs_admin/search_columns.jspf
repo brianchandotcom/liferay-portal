@@ -28,7 +28,7 @@
 	property="userName"
 />
 
-<liferay-ui:search-container-column-text
+<liferay-ui:search-container-column-date
 	href="<%= rowURL %>"
 	name="create-date"
 	orderable="<%= false %>"

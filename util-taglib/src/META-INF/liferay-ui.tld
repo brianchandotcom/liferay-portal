@@ -2919,16 +2919,10 @@
 	</tag>
 	<tag>
 		<name>search-container-column-date</name>
-		<tag-class>com.liferay.taglib.ui.SearchContainerColumnTextTag</tag-class>
-		<tei-class>com.liferay.taglib.ui.SearchContainerColumnTextTei</tei-class>
+		<tag-class>com.liferay.taglib.ui.SearchContainerColumnDateTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
 			<name>align</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>buffer</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
@@ -2969,21 +2963,6 @@
 		</attribute>
 		<attribute>
 			<name>property</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>target</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>title</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>translate</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

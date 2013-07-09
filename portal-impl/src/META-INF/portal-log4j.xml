@@ -427,7 +427,7 @@
 	</category>
 
 	<category name="com.liferay.portal.search.lucene">
-		<priority value="INFO" />
+		<priority value="ERROR" />
 	</category>
 
 	<category name="com.liferay.portal.search.lucene.LuceneFileExtractor">

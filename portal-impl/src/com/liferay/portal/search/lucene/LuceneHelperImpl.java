@@ -218,11 +218,9 @@ public class LuceneHelperImpl implements LuceneHelper {
 			QueryParser queryParser = new QueryParser(
 				getVersion(), field, analyzer);
 
-			Query query = null;
+			Query query = queryParser.parse(value);
 
 			try {
-				query = queryParser.parse(value);
-
 				if (like && (query instanceof TermQuery)) {
 
 					// LUCENE-89
@@ -256,7 +254,9 @@ public class LuceneHelperImpl implements LuceneHelper {
 			_includeIfUnique(booleanQuery, query, occur, like);
 		}
 		catch (Exception e) {
-			_log.error(e, e);
+			if (_log.isWarnEnabled()) {
+				_log.warn(e, e);
+			}
 		}
 	}
 

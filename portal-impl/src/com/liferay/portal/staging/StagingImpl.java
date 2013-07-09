@@ -537,6 +537,9 @@ public class StagingImpl implements Staging {
 		setCommonStagingOptions(
 			liveGroup, typeSettingsProperties, serviceContext);
 
+		GroupLocalServiceUtil.updateGroup(
+			liveGroup.getGroupId(), typeSettingsProperties.toString());
+
 		if (!liveGroup.hasStagingGroup()) {
 			serviceContext.setAttribute("staging", String.valueOf(true));
 
@@ -549,9 +552,6 @@ public class StagingImpl implements Staging {
 				liveGroup.getMembershipRestriction(),
 				liveGroup.getFriendlyURL(), false, liveGroup.isActive(),
 				serviceContext);
-
-			GroupLocalServiceUtil.updateGroup(
-				liveGroup.getGroupId(), typeSettingsProperties.toString());
 
 			if (liveGroup.hasPrivateLayouts()) {
 				Map<String, String[]> parameterMap = getStagingParameters();
@@ -568,29 +568,11 @@ public class StagingImpl implements Staging {
 					userId, liveGroup.getGroupId(), stagingGroup.getGroupId(),
 					false, parameterMap, null, null);
 			}
-
-			checkDefaultLayoutSetBranches(
-				userId, liveGroup, branchingPublic, branchingPrivate, false,
-				serviceContext);
 		}
-		else {
-			GroupLocalServiceUtil.updateGroup(
-				liveGroup.getGroupId(), typeSettingsProperties.toString());
 
-			checkDefaultLayoutSetBranches(
-				userId, liveGroup, branchingPublic, branchingPrivate, false,
-				serviceContext);
-
-			if (!branchingPublic) {
-				LayoutSetBranchLocalServiceUtil.deleteLayoutSetBranches(
-					liveGroup.getStagingGroup().getGroupId(), false, true);
-			}
-
-			if (!branchingPrivate) {
-				LayoutSetBranchLocalServiceUtil.deleteLayoutSetBranches(
-					liveGroup.getStagingGroup().getGroupId(), true, true);
-			}
-		}
+		checkDefaultLayoutSetBranches(
+			userId, liveGroup, branchingPublic, branchingPrivate, false,
+			serviceContext);
 	}
 
 	@Override
@@ -1928,6 +1910,10 @@ public class StagingImpl implements Staging {
 					false, serviceContext);
 			}
 		}
+		else {
+			LayoutSetBranchLocalServiceUtil.deleteLayoutSetBranches(
+				targetGroupId, false, true);
+		}
 
 		if (branchingPrivate) {
 			LayoutSetBranch layoutSetBranch =
@@ -1940,6 +1926,10 @@ public class StagingImpl implements Staging {
 					userId, targetGroupId, liveGroup.getDescriptiveName(), true,
 					serviceContext);
 			}
+		}
+		else {
+			LayoutSetBranchLocalServiceUtil.deleteLayoutSetBranches(
+				targetGroupId, true, true);
 		}
 	}
 

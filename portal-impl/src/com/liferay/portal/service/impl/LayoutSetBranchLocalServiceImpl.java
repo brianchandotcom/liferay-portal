@@ -323,6 +323,15 @@ public class LayoutSetBranchLocalServiceImpl
 	}
 
 	@Override
+	public LayoutSetBranch fetchLayoutSetBranch(
+			long groupId, boolean privateLayout, String name)
+		throws SystemException {
+
+		return layoutSetBranchPersistence.fetchByG_P_N(
+			groupId, privateLayout, name);
+	}
+
+	@Override
 	public LayoutSetBranch getLayoutSetBranch(
 			long groupId, boolean privateLayout, String name)
 		throws PortalException, SystemException {

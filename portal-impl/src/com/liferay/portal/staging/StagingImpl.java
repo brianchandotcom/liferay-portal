@@ -19,7 +19,6 @@ import com.liferay.portal.LARFileException;
 import com.liferay.portal.LARFileSizeException;
 import com.liferay.portal.LARTypeException;
 import com.liferay.portal.LayoutPrototypeException;
-import com.liferay.portal.LayoutSetBranchNameException;
 import com.liferay.portal.LocaleException;
 import com.liferay.portal.MissingReferenceException;
 import com.liferay.portal.NoSuchGroupException;
@@ -1845,7 +1844,7 @@ public class StagingImpl implements Staging {
 	protected void addDefaultLayoutSetBranch(
 			long userId, long groupId, String groupName, boolean privateLayout,
 			ServiceContext serviceContext)
-		throws SystemException, PortalException {
+		throws SystemException {
 
 		String description = LanguageUtil.format(
 			LocaleUtil.getDefault(), privateLayout ?
@@ -1871,12 +1870,12 @@ public class StagingImpl implements Staging {
 					WorkflowConstants.STATUS_APPROVED, serviceContext);
 			}
 		}
-		catch (LayoutSetBranchNameException lsbne) {
+		catch (PortalException pe) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
 					"Unable to create master branch for " +
 						(privateLayout ? "private" : "public") + " layouts",
-					lsbne);
+					pe);
 			}
 		}
 	}
@@ -1918,15 +1917,29 @@ public class StagingImpl implements Staging {
 		}
 
 		if (branchingPublic) {
-			addDefaultLayoutSetBranch(
-				userId, targetGroupId, liveGroup.getDescriptiveName(), false,
-				serviceContext);
+			LayoutSetBranch layoutSetBranch =
+				LayoutSetBranchLocalServiceUtil.fetchLayoutSetBranch(
+					targetGroupId, false,
+					LayoutSetBranchConstants.MASTER_BRANCH_NAME);
+
+			if (layoutSetBranch == null) {
+				addDefaultLayoutSetBranch(
+					userId, targetGroupId, liveGroup.getDescriptiveName(),
+					false, serviceContext);
+			}
 		}
 
 		if (branchingPrivate) {
-			addDefaultLayoutSetBranch(
-				userId, targetGroupId, liveGroup.getDescriptiveName(), true,
-				serviceContext);
+			LayoutSetBranch layoutSetBranch =
+				LayoutSetBranchLocalServiceUtil.fetchLayoutSetBranch(
+					targetGroupId, true,
+					LayoutSetBranchConstants.MASTER_BRANCH_NAME);
+
+			if (layoutSetBranch == null) {
+				addDefaultLayoutSetBranch(
+					userId, targetGroupId, liveGroup.getDescriptiveName(), true,
+					serviceContext);
+			}
 		}
 	}
 

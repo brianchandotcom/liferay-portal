@@ -35,6 +35,27 @@
 	<td>//button[contains(.,'Save')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--PARENT_SITE-->
+<tr>
+	<td>PARENT_SITE_SELECT</td>
+	<td>//a[@id='_134_selectParentSiteLink']/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>PARENT_SITE_NAME</td>
+	<td>//tbody[@class='table-data']/tr/td</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

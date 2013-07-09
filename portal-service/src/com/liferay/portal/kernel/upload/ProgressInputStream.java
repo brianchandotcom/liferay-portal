@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.upload;
+package com.liferay.portal.kernel.upload;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -125,7 +125,7 @@ public class ProgressInputStream extends InputStream {
 	}
 
 	private String _getPercentAttributeName() {
-		return LiferayFileUpload.PERCENT + _progressId;
+		return ProgressTracker.PERCENT + _progressId;
 	}
 
 	private void _updateProgress(long bytesRead) {

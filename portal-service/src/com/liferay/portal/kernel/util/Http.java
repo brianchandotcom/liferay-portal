@@ -335,6 +335,10 @@ public interface Http {
 			_parts.put(name, value);
 		}
 
+		public ActionRequest getActionRequest() {
+			return _actionRequest;
+		}
+
 		public Auth getAuth() {
 			return _auth;
 		}
@@ -365,6 +369,10 @@ public interface Http {
 
 		public Map<String, String> getParts() {
 			return _parts;
+		}
+
+		public String getProgressId() {
+			return _progressId;
 		}
 
 		public Response getResponse() {
@@ -418,6 +426,10 @@ public interface Http {
 			else {
 				return false;
 			}
+		}
+
+		public void setActionRequest(ActionRequest actionRequest) {
+			_actionRequest = actionRequest;
 		}
 
 		public void setAuth(Http.Auth auth) {
@@ -500,6 +512,10 @@ public interface Http {
 			}
 		}
 
+		public void setProgressId(String progressId) {
+			_progressId = progressId;
+		}
+
 		public void setPut(boolean put) {
 			if (put) {
 				_method = Method.PUT;
@@ -513,6 +529,7 @@ public interface Http {
 			_response = response;
 		}
 
+		private ActionRequest _actionRequest;
 		private Auth _auth;
 		private Body _body;
 		private Cookie[] _cookies;
@@ -522,6 +539,7 @@ public interface Http {
 		private String _location;
 		private Method _method = Method.GET;
 		private Map<String, String> _parts;
+		private String _progressId;
 		private Response _response = new Response();
 
 	}
@@ -561,6 +579,10 @@ public interface Http {
 			return _redirect;
 		}
 
+		public int getResponseCode() {
+			return _responseCode;
+		}
+
 		public void setContentLength(int contentLength) {
 			_contentLength = contentLength;
 		}
@@ -577,10 +599,15 @@ public interface Http {
 			_redirect = redirect;
 		}
 
+		public void setResponseCode(int responseCode) {
+			_responseCode = responseCode;
+		}
+
 		private int _contentLength = -1;
 		private String _contentType;
 		private Map<String, String> _headers;
 		private String _redirect;
+		private int _responseCode = -1;
 
 	}
 

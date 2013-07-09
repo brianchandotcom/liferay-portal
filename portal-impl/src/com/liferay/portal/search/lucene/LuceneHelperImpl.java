@@ -254,7 +254,9 @@ public class LuceneHelperImpl implements LuceneHelper {
 			_includeIfUnique(booleanQuery, query, occur, like);
 		}
 		catch (Exception e) {
-			_log.error(e, e);
+			if (_log.isWarnEnabled()) {
+				_log.warn(e, e);
+			}
 		}
 	}
 

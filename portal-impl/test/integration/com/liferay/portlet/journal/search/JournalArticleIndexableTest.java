@@ -115,10 +115,6 @@ public class JournalArticleIndexableTest {
 			ServiceTestUtil.randomString(), LocaleUtil.getDefault(), false,
 			true, ServiceTestUtil.getServiceContext(group.getGroupId()));
 
-		Assert.assertFalse(
-			"Unindexable articles should not be indexable",
-			article.isIndexable());
-
 		hits = AssetUtil.search(
 			searchContext, assetEntryQuery, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS);

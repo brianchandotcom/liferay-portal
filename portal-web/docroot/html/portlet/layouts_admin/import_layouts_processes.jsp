@@ -63,10 +63,7 @@ OrderByComparator orderByComparator = BackgroundTaskUtil.getBackgroundTaskOrderB
 			value="<%= backgroundTask.getUserName() %>"
 		/>
 
-		<liferay-ui:search-container-column-text
-			name="status"
-			value="<%= LanguageUtil.get(pageContext, backgroundTask.getStatusLabel()) %>"
-		/>
+		<liferay-ui:search-container-column-jsp cssClass="background-task-status-column" name="status" path="/html/portlet/layouts_admin/publish_process_message.jsp" />
 
 		<liferay-ui:search-container-column-text
 			name="create-date"

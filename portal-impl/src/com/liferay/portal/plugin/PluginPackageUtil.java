@@ -50,8 +50,6 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.model.Plugin;
-import com.liferay.portal.security.lang.DoPrivilegedBean;
-import com.liferay.portal.util.HttpImpl;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 
@@ -80,9 +78,6 @@ import java.util.jar.Manifest;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.httpclient.HostConfiguration;
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.lang.time.StopWatch;
 
 /**
@@ -640,71 +635,49 @@ public class PluginPackageUtil {
 		String pluginsXmlURL = sb.toString();
 
 		try {
-			HttpImpl httpImpl = null;
+			Http.Options options = new Http.Options();
 
-			Object httpObject = HttpUtil.getHttp();
+			options.setLocation(pluginsXmlURL);
+			options.setPost(false);
 
-			if (httpObject instanceof DoPrivilegedBean) {
-				DoPrivilegedBean doPrivilegedBean =
-					(DoPrivilegedBean)httpObject;
+			byte[] bytes = HttpUtil.URLtoByteArray(options);
 
-				httpImpl = (HttpImpl)doPrivilegedBean.getActualBean();
-			}
-			else {
-				httpImpl = (HttpImpl)httpObject;
-			}
+			Http.Response response = options.getResponse();
 
-			HostConfiguration hostConfiguration = httpImpl.getHostConfiguration(
-				pluginsXmlURL);
+			int responseCode = response.getResponseCode();
 
-			HttpClient httpClient = httpImpl.getClient(hostConfiguration);
-
-			httpImpl.proxifyState(httpClient.getState(), hostConfiguration);
-
-			GetMethod getFileMethod = new GetMethod(pluginsXmlURL);
-
-			byte[] bytes = null;
-
-			try {
-				int responseCode = httpClient.executeMethod(
-					hostConfiguration, getFileMethod);
-
-				if (responseCode != HttpServletResponse.SC_OK) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(
-							"A repository for version " +
-								ReleaseInfo.getVersion() + " was not found. " +
-									"Checking general repository");
-					}
-
-					sb.setIndex(0);
-
-					sb.append(repositoryURL);
-					sb.append(StringPool.SLASH);
-					sb.append(PluginPackage.REPOSITORY_XML_FILENAME_PREFIX);
-					sb.append(StringPool.PERIOD);
-					sb.append(PluginPackage.REPOSITORY_XML_FILENAME_EXTENSION);
-
-					pluginsXmlURL = sb.toString();
-
-					getFileMethod.releaseConnection();
-
-					getFileMethod = new GetMethod(pluginsXmlURL);
-
-					responseCode = httpClient.executeMethod(
-						hostConfiguration, getFileMethod);
-
-					if (responseCode != HttpServletResponse.SC_OK) {
-						throw new PluginPackageException(
-							"Unable to download file " + pluginsXmlURL +
-								" because of response code " + responseCode);
-					}
+			if (responseCode != HttpServletResponse.SC_OK) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"A repository for version " +
+							ReleaseInfo.getVersion() + " was not found. " +
+								"Checking general repository");
 				}
 
-				bytes = getFileMethod.getResponseBody();
-			}
-			finally {
-				getFileMethod.releaseConnection();
+				sb.setIndex(0);
+
+				sb.append(repositoryURL);
+				sb.append(StringPool.SLASH);
+				sb.append(PluginPackage.REPOSITORY_XML_FILENAME_PREFIX);
+				sb.append(StringPool.PERIOD);
+				sb.append(PluginPackage.REPOSITORY_XML_FILENAME_EXTENSION);
+
+				pluginsXmlURL = sb.toString();
+
+				options = new Http.Options();
+
+				options.setLocation(pluginsXmlURL);
+				options.setPost(false);
+
+				bytes = HttpUtil.URLtoByteArray(options);
+
+				response = options.getResponse();
+
+				if (responseCode != HttpServletResponse.SC_OK) {
+					throw new PluginPackageException(
+						"Unable to download file " + pluginsXmlURL +
+							" because of response code " + responseCode);
+				}
 			}
 
 			if ((bytes != null) && (bytes.length > 0)) {

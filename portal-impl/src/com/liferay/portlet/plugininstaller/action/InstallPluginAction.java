@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -41,13 +42,10 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.plugin.PluginPackageUtil;
 import com.liferay.portal.plugin.RepositoryReport;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.security.lang.DoPrivilegedBean;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.tools.deploy.BaseDeployer;
-import com.liferay.portal.upload.ProgressInputStream;
-import com.liferay.portal.util.HttpImpl;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsUtil;
@@ -55,7 +53,6 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 
 import java.net.MalformedURLException;
@@ -70,9 +67,6 @@ import javax.portlet.PortletPreferences;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.httpclient.HostConfiguration;
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionMapping;
 
@@ -343,33 +337,10 @@ public class InstallPluginAction extends PortletAction {
 
 		int responseCode = HttpServletResponse.SC_OK;
 
-		GetMethod getMethod = null;
-
 		String deploymentContext = ParamUtil.getString(
 			actionRequest, "deploymentContext");
 
 		try {
-			HttpImpl httpImpl = null;
-
-			Object httpObject = HttpUtil.getHttp();
-
-			if (httpObject instanceof DoPrivilegedBean) {
-				DoPrivilegedBean doPrivilegedBean =
-					(DoPrivilegedBean)httpObject;
-
-				httpImpl = (HttpImpl)doPrivilegedBean.getActualBean();
-			}
-			else {
-				httpImpl = (HttpImpl)httpObject;
-			}
-
-			HostConfiguration hostConfiguration = httpImpl.getHostConfiguration(
-				url);
-
-			HttpClient httpClient = httpImpl.getClient(hostConfiguration);
-
-			getMethod = new GetMethod(url);
-
 			String fileName = null;
 
 			if (Validator.isNotNull(deploymentContext)) {
@@ -389,70 +360,35 @@ public class InstallPluginAction extends PortletAction {
 			PluginPackageUtil.registerPluginPackageInstallation(
 				deploymentContext);
 
-			responseCode = httpClient.executeMethod(
-				hostConfiguration, getMethod);
-
-			if (responseCode != HttpServletResponse.SC_OK) {
-				if (failOnError) {
-					SessionErrors.add(
-						actionRequest, "errorConnectingToUrl",
-						new Object[] {String.valueOf(responseCode)});
-				}
-
-				return responseCode;
-			}
-
-			long contentLength = getMethod.getResponseContentLength();
-
 			String progressId = ParamUtil.getString(
 				actionRequest, Constants.PROGRESS_ID);
 
-			ProgressInputStream pis = new ProgressInputStream(
-				actionRequest, getMethod.getResponseBodyAsStream(),
-				contentLength, progressId);
+			Http.Options options = new Http.Options();
 
-			String deployDir = PrefsPropsUtil.getString(
-				PropsKeys.AUTO_DEPLOY_DEPLOY_DIR,
-				PropsValues.AUTO_DEPLOY_DEPLOY_DIR);
+			options.setActionRequest(actionRequest);
+			options.setFollowRedirects(false);
+			options.setLocation(url);
+			options.setPost(false);
+			options.setProgressId(progressId);
 
-			String tmpFilePath =
-				deployDir + StringPool.SLASH + _DOWNLOAD_DIR +
-					StringPool.SLASH + fileName;
+			byte[] bytes = HttpUtil.URLtoByteArray(options);
 
-			File tmpFile = new File(tmpFilePath);
+			Http.Response response = options.getResponse();
 
-			if (!tmpFile.getParentFile().exists()) {
-				tmpFile.getParentFile().mkdirs();
-			}
+			responseCode = response.getResponseCode();
 
-			FileOutputStream fos = new FileOutputStream(tmpFile);
+			if ((responseCode == HttpServletResponse.SC_OK) &&
+				(bytes.length > 0)) {
 
-			try {
-				pis.readAll(fos);
+				String deployDir = PrefsPropsUtil.getString(
+					PropsKeys.AUTO_DEPLOY_DEPLOY_DIR,
+					PropsValues.AUTO_DEPLOY_DEPLOY_DIR);
 
-				if (_log.isInfoEnabled()) {
-					_log.info(
-						"Downloaded plugin from " + urlObj + " has " +
-							pis.getTotalRead() + " bytes");
-				}
-			}
-			finally {
-				pis.clearProgress();
-			}
-
-			getMethod.releaseConnection();
-
-			if (pis.getTotalRead() > 0) {
 				String destination = deployDir + StringPool.SLASH + fileName;
 
 				File destinationFile = new File(destination);
 
-				boolean moved = FileUtil.move(tmpFile, destinationFile);
-
-				if (!moved) {
-					FileUtil.copyFile(tmpFile, destinationFile);
-					FileUtil.delete(tmpFile);
-				}
+				FileUtil.write(destinationFile, bytes);
 
 				SessionMessages.add(actionRequest, "pluginDownloaded");
 			}
@@ -472,10 +408,6 @@ public class InstallPluginAction extends PortletAction {
 			SessionErrors.add(actionRequest, "errorConnectingToUrl", ioe);
 		}
 		finally {
-			if (getMethod != null) {
-				getMethod.releaseConnection();
-			}
-
 			PluginPackageUtil.endPluginPackageInstallation(deploymentContext);
 		}
 

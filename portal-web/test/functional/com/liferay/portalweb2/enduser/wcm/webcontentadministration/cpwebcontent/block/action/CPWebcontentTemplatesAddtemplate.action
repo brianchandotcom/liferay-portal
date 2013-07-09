@@ -1,17 +1,16 @@
 <definition>
+	<command name="assertClick">
+		<case locator-key1="SAVE_BUTTON">
+			<execute function="AssertClick#assertTextClickAtAndWait" />
+		</case>
+		<case locator-key1="SELECT_STRUCTURE">
+			<execute function="AssertClick#assertTextClickAtAndWait" />
+		</case>
+	</command>
 
 	<command name="assertTextEquals">
 		<case locator-key1="STRUCTURE">
 			<execute function="AssertTextEquals#assertPartialText" />
-		</case>
-	</command>
-
-	<command name="click">
-		<case locator-key1="SAVE_BUTTON">
-			<execute function="Click#textClickAtAndWait" value1="Save" />
-		</case>
-		<case locator-key1="SELECT_STRUCTURE">
-			<execute function="Click#textClickAtAndWait" value1="Select" />
 		</case>
 	</command>
 

@@ -67,42 +67,47 @@
 	<td></td>
 </tr>
 <tr>
-	<td>TEMPLATE_TABLE_CHECKBOX_1</td>
-	<td>//div[@id='_166_ddmTemplatesSearchContainerSearchContainer']/table/tbody/tr[1]/td[1]/input</td>
+	<td>TEMPLATE_TABLE_CHECKBOX</td>
+	<td>//tr[contains(.,'${key_templateName}')]/td[1]/input</td>
 	<td></td>
 </tr>
 <tr>
-	<td>TEMPLATE_TABLE_ID_1</td>
-	<td>//div[@id='_166_ddmTemplatesSearchContainerSearchContainer']/table/tbody/tr[1]/td[2]/a</td>
+	<td>TEMPLATE_TABLE_ID</td>
+	<td>//tr[contains(.,'${key_templateName}')]/td[2]/a</td>
 	<td></td>
 </tr>
 <tr>
-	<td>TEMPLATE_TABLE_NAME_1</td>
-	<td>//div[@id='_166_ddmTemplatesSearchContainerSearchContainer']/table/tbody/tr[1]/td[3]/a</td>
+	<td>TEMPLATE_TABLE_NAME</td>
+	<td>//tr[contains(.,'${key_templateName}')]/td[3]/a</td>
 	<td></td>
 </tr>
 <tr>
-	<td>TEMPLATE_TABLE_DESCRIPTION_1</td>
-	<td>//div[@id='_166_ddmTemplatesSearchContainerSearchContainer']/table/tbody/tr[1]/td[4]/a</td>
+	<td>TEMPLATE_TABLE_DESCRIPTION</td>
+	<td>//tr[contains(.,'${key_templateName}')]/td[4]/a</td>
 	<td></td>
 </tr>
 <tr>
-	<td>TEMPLATE_TABLE_STRUCTURE_1</td>
-	<td>//div[@id='_166_ddmTemplatesSearchContainerSearchContainer']/table/tbody/tr[1]/td[5]/a</td>
+	<td>TEMPLATE_TABLE_STRUCTURE</td>
+	<td>//tr[contains(.,'${key_templateName}')]/td[5]/a</td>
 	<td></td>
 </tr>
 <tr>
-	<td>TEMPLATE_TABLE_LANGUAGE_1</td>
-	<td>//div[@id='_166_ddmTemplatesSearchContainerSearchContainer']/table/tbody/tr[1]/td[6]/a</td>
+	<td>TEMPLATE_TABLE_LANGUAGE</td>
+	<td>//tr[contains(.,'${key_templateName}')]/td[6]/a</td>
 	<td></td>
 </tr>
 <tr>
-	<td>TEMPLATE_TABLE_MODIFIED_DATE_1</td>
-	<td>//div[@id='_166_ddmTemplatesSearchContainerSearchContainer']/table/tbody/tr[1]/td[7]/a</td>
+	<td>TEMPLATE_TABLE_MODIFIED_DATE</td>
+	<td>//tr[contains(.,'${key_templateName}')]/td[7]/a</td>
 	<td></td>
 </tr>
 <tr>
-	<td>TEMPLATE_TABLE_ACTIONS_1</td>
+	<td>TEMPLATE_TABLE_ACTIONS</td>
+	<td>//tr[contains(.,'${key_templateName}')]//a[@id='_166_ddmTemplatesSearchContainer_1_menu']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TEMPLATE_TABLE_ACTIONS_GENERIC</td>
 	<td>//a[@id='_166_ddmTemplatesSearchContainer_1_menu']</td>
 	<td></td>
 </tr>

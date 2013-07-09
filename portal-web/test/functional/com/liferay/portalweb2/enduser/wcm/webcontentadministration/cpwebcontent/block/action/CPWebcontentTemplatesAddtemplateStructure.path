@@ -66,28 +66,28 @@
 </tr>
 <!--STRUCTURE_TABLE-->
 <tr>
-	<td>STRUCTURE_TABLE_ID_1</td>
-	<td>//div[@id='_166_ddmStructuresSearchContainerSearchContainer']/table/tbody/tr[1]/td[2]/a</td>
+	<td>STRUCTURE_TABLE_ID</td>
+	<td>//tr[contains(.,'${key_structureName}')]/td[1]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>STRUCTURE_TABLE_NAME_1</td>
-	<td>//div[@id='_166_ddmStructuresSearchContainerSearchContainer']/table/tbody/tr[1]/td[2]</td>
+	<td>STRUCTURE_TABLE_NAME</td>
+	<td>//tr[contains(.,'${key_structureName}')]/td[2]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>STRUCTURE_TABLE_DESCRIPTION_1</td>
-	<td>//div[@id='_166_ddmStructuresSearchContainerSearchContainer']/table/tbody/tr[1]/td[3]</td>
+	<td>STRUCTURE_TABLE_DESCRIPTION</td>
+	<td>//tr[contains(.,'${key_structureName}')]/td[3]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>STRUCTURE_TABLE_MODIFIED_DATE_1</td>
-	<td>//div[@id='_166_ddmStructuresSearchContainerSearchContainer']/table/tbody/tr[1]/td[4]</td>
+	<td>STRUCTURE_TABLE_MODIFIED_DATE</td>
+	<td>//tr[contains(.,'${key_structureName}')]/td[4]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>STRUCTURE_TABLE_CHOOSE_BUTTON_1</td>
-	<td>//button[contains(.,'Choose')]</td>
+	<td>STRUCTURE_TABLE_CHOOSE_BUTTON</td>
+	<td>//tr[contains(.,'${key_structureName}')]//button[contains(.,'Choose')]</td>
 	<td></td>
 </tr>
 </tbody>

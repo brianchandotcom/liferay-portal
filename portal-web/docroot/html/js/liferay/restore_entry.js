@@ -114,6 +114,10 @@ AUI.add(
 
 						var uri = event.uri;
 
+						var data = {};
+
+						data[instance.NS + 'trashEntryId'] = event.trashEntryId;
+
 						A.io.request(
 							instance.get(STR_RESTORE_ENTRY_URL),
 							{
@@ -122,9 +126,7 @@ AUI.add(
 									success: A.rbind('_afterCheckEntrySuccess', instance)
 								},
 								arguments: uri,
-								data: {
-									trashEntryId: event.trashEntryId
-								},
+								data: data,
 								dataType: 'json'
 							}
 						);
@@ -196,6 +198,11 @@ AUI.add(
 							submitForm(form);
 						}
 						else {
+							var data = {};
+
+							data[instance.NS + 'trashEntryId'] = trashEntryId.val();
+							data[instance.NS + 'newName'] = newName.val();
+
 							A.io.request(
 								instance.get(STR_RESTORE_ENTRY_URL),
 								{
@@ -204,10 +211,7 @@ AUI.add(
 										success: A.rbind('_afterPopupCheckEntrySuccess', instance)
 									},
 									arguments: form,
-									data: {
-										trashEntryId: trashEntryId.val(),
-										newName: newName.val()
-									},
+									data: data,
 									dataType: 'json'
 								}
 							);

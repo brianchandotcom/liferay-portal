@@ -342,10 +342,10 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 					<aui:button-row>
 
 						<%
-						String selectPagesURL = HttpUtil.setParameter(currentURL, "selectPages", false);
+						currentURLObj.setParameter("selectPages", Boolean.FALSE.toString());
 						%>
 
-						<aui:button href="<%= selectPagesURL %>" value="select" />
+						<aui:button href="<%= currentURLObj.toString() %>" value="select" />
 					</aui:button-row>
 				</c:when>
 				<c:otherwise>

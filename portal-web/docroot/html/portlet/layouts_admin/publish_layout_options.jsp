@@ -44,7 +44,7 @@ Layout curLayout = (Layout)row.getObject();
 
 	<div id="<portlet:namespace />publishChangesOptions_<%= curLayout.getPlid() %>" style="margin-left: 2em;">
 		<c:if test="<%= !curLayout.getAncestors().isEmpty() %>">
-			<aui:input checked="<%= true %>" disabled="<%= true %>" label="include-ancestor-pages-if-necessary" name='<%= "includeAncestors_" + curLayout.getPlid() %>' type="checkbox" value="1" />
+			<aui:input checked="<%= true %>" disabled="<%= true %>" label="include-ancestor-pages-if-necessary" name='<%= "includeAncestors_" + curLayout.getPlid() %>' type="checkbox" value="<%= true %>" />
 		</c:if>
 
 		<c:if test="<%= !curLayout.getChildren().isEmpty() %>">

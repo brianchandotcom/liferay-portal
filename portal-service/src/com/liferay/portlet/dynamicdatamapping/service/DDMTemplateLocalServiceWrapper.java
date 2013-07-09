@@ -1267,6 +1267,7 @@ public class DDMTemplateLocalServiceWrapper implements DDMTemplateLocalService,
 	* Updates the template matching the ID.
 	*
 	* @param templateId the primary key of the template
+	* @param classPK the primary key of the template's related entity
 	* @param nameMap the template's new locales and localized names
 	* @param descriptionMap the template's new locales and localized
 	description
@@ -1292,7 +1293,7 @@ public class DDMTemplateLocalServiceWrapper implements DDMTemplateLocalService,
 	*/
 	@Override
 	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate updateTemplate(
-		long templateId,
+		long templateId, long classPK,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String type, java.lang.String mode,
@@ -1302,8 +1303,8 @@ public class DDMTemplateLocalServiceWrapper implements DDMTemplateLocalService,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _ddmTemplateLocalService.updateTemplate(templateId, nameMap,
-			descriptionMap, type, mode, language, script, cacheable,
+		return _ddmTemplateLocalService.updateTemplate(templateId, classPK,
+			nameMap, descriptionMap, type, mode, language, script, cacheable,
 			smallImage, smallImageURL, smallImageFile, serviceContext);
 	}
 

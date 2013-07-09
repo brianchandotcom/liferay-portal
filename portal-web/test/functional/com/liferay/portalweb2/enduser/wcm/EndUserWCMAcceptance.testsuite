@@ -24,6 +24,8 @@
 	<execute test-case="RecyclebinMessageboardsAcceptance" />
 
 	<execute test-case="RecyclebinWebcontentAcceptance" />
-	
+
+	<execute test-case="SitetemplatesCPAcceptance" />
+
 	<execute test-case="DockbarAcceptance" />
 </definition>

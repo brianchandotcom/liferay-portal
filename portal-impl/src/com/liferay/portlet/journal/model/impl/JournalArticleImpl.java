@@ -29,9 +29,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Image;
 import com.liferay.portal.service.ImageLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.webserver.WebServerServletTokenUtil;
-import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalArticleResource;
 import com.liferay.portlet.journal.model.JournalFolder;
@@ -228,10 +226,6 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 
 	@Override
 	public boolean isIndexable() {
-		if (getClassNameId() == PortalUtil.getClassNameId(DDMStructure.class)) {
-			return false;
-		}
-
 		return super.isIndexable();
 	}
 

@@ -474,7 +474,8 @@ public class JournalArticleIndexer extends BaseIndexer {
 		if (!article.isIndexable() ||
 			(!article.isApproved() && !article.isInTrash() &&
 			 (article.getVersion() !=
-				  JournalArticleConstants.VERSION_DEFAULT))) {
+				  JournalArticleConstants.VERSION_DEFAULT)) ||
+			(article.getClassNameId() == _DDMSTRUCTURE_CLASSNAME_ID)) {
 
 			SearchEngineUtil.deleteDocument(
 				getSearchEngineId(), article.getCompanyId(),
@@ -646,5 +647,8 @@ public class JournalArticleIndexer extends BaseIndexer {
 		SearchEngineUtil.updateDocuments(
 			getSearchEngineId(), companyId, documents);
 	}
+
+	private static final long _DDMSTRUCTURE_CLASSNAME_ID =
+			PortalUtil.getClassNameId(DDMStructure.class);
 
 }

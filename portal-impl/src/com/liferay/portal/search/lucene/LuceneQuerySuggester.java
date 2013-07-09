@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.TokenizerUtil;
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.util.lucene.KeywordsUtil;
 
 import java.io.IOException;
 
@@ -40,6 +41,7 @@ import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Fieldable;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.Term;
+import org.apache.lucene.queryParser.ParseException;
 import org.apache.lucene.queryParser.QueryParser;
 import org.apache.lucene.search.BooleanClause;
 import org.apache.lucene.search.BooleanQuery;
@@ -135,7 +137,15 @@ public class LuceneQuerySuggester implements QuerySuggester {
 				LuceneHelperUtil.getVersion(), localizedKeywordFieldName,
 				LuceneHelperUtil.getAnalyzer());
 
-			Query query = queryParser.parse(searchContext.getKeywords());
+			Query query = null;
+
+			try {
+				query = queryParser.parse(searchContext.getKeywords());
+			}
+			catch (ParseException e) {
+				query = queryParser.parse(KeywordsUtil.escape(
+					searchContext.getKeywords()));
+			}
 
 			BooleanClause keywordTermQuery = new BooleanClause(
 				query, BooleanClause.Occur.MUST);

@@ -218,9 +218,11 @@ public class LuceneHelperImpl implements LuceneHelper {
 			QueryParser queryParser = new QueryParser(
 				getVersion(), field, analyzer);
 
-			Query query = queryParser.parse(value);
+			Query query = null;
 
 			try {
+				query = queryParser.parse(value);
+
 				if (like && (query instanceof TermQuery)) {
 
 					// LUCENE-89

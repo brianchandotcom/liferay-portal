@@ -15,9 +15,9 @@
 --%>
 
 <%
-Object[] assetEntryObject = AssetPublisherUtil.getAssetEntryObject(permissionChecker, groupIds, assetEntryXmls, false, enablePermissions);
+Tuple tuple = AssetPublisherUtil.getAssetEntries(permissionChecker, groupIds, assetEntryXmls, false, enablePermissions);
 
-List<AssetEntry> assetEntries = (List<AssetEntry>)assetEntryObject[0];
+List<AssetEntry> assetEntries = (List<AssetEntry>)tuple.getObject(0);
 
 searchContainer.setTotal(assetEntries.size());
 

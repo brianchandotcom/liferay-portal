@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.resiliency.spi.SPI;
 import com.liferay.portal.kernel.resiliency.spi.SPIUtil;
 import com.liferay.portal.kernel.security.pacl.permission.PortalMessageBusPermission;
 import com.liferay.portal.kernel.util.ClassLoaderPool;
+import com.liferay.portal.kernel.util.StringBundler;
 
 import java.lang.reflect.Method;
 

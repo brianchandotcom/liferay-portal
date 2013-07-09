@@ -93,58 +93,37 @@
 		<execute action="CPUsersandorganizationsUser#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 		<execute action="CPUsersandorganizationsUser#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
-		<execute macro="User#pgLogout" />
+		<execute macro="User#logoutPG" />
 
-		<execute macro="User#pgLogin">
+		<execute macro="User#loginPG">
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="password" value="password" />
 		</execute>
 
-		<execute macro="User#pgLogout" />
+		<execute macro="User#logoutPG" />
 
-		<execute macro="User#pgLogin">
+		<execute macro="User#loginPG">
 			<var name="userEmailAddress" value="test@liferay.com" />
 			<var name="password" value="test" />
 		</execute>
 	</command>
 
-	<command name="viewCP">
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Users and Organizations" />
-		</execute>
-
-		<execute action="CPUsersandorganizations#assertClick" locator-key1="SEARCH_ALL_USERS" value1="Search All Users" />
-
-		<execute action="CPUsersandorganizationsViewusers#type" locator-key1="BASIC_SEARCH_FIELD" value1="${userScreenName}" />
-		<execute action="CPUsersandorganizationsViewusers#assertClick" locator-key1="BASIC_SEARCH_BUTTON" value1="Search" />
-		<execute action="CPUsersandorganizationsViewusers#assertTextEquals" locator-key1="USER_TABLE_FIRST_NAME_1" value1="${userFirstName}" />
-		<execute action="CPUsersandorganizationsViewusers#assertTextEquals" locator-key1="USER_TABLE_LAST_NAME_1" value1="${userLastName}" />
-		<execute action="CPUsersandorganizationsViewusers#assertTextEquals" locator-key1="USER_TABLE_SCREEN_NAME_1" value1="${userScreenName}" />
-		<execute action="CPUsersandorganizationsViewusers#assertClick" locator-key1="USER_TABLE_FIRST_NAME_1" value1="${userFirstName}" />
-
-		<execute action="CPUsersandorganizationsUser#assertTextEquals" locator-key1="DETAILS_SCREEN_NAME_FIELD" value1="${userScreenName}" />
-		<execute action="CPUsersandorganizationsUser#assertTextEquals" locator-key1="DETAILS_EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
-		<execute action="CPUsersandorganizationsUser#assertTextEquals" locator-key1="DETAILS_FIRST_NAME_FIELD" value1="${userFirstName}" />
-		<execute action="CPUsersandorganizationsUser#assertTextEquals" locator-key1="DETAILS_LAST_NAME_FIELD" value1="${userLastName}" />
-		<execute action="CPUsersandorganizationsUser#assertTextEquals" locator-key1="USER_NAME" value1="${userFirstName} ${userLastName}" />
-	</command>
-
-	<command name="pgFirstLogin">
+	<command name="firstLoginPG">
 		<execute macro="Page#openURL" />
 
 		<if>
 			<condition action="Dockbar#isElementPresent" locator-key1="USER_NAME" />
 			<then>
-				<execute macro="User#pgLogout" />
-				<execute macro="User#pgLogin" />
+				<execute macro="User#logoutPG" />
+				<execute macro="User#loginPG" />
 			</then>
 			<else>
-				<execute macro="User#pgLogin" />
+				<execute macro="User#loginPG" />
 			</else>
 		</if>
 	</command>
 
-	<command name="pgLogin">
+	<command name="loginPG">
 		<execute macro="Page#openURL" />
 
 		<execute action="PGLogin#type" locator-key1="EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
@@ -176,7 +155,7 @@
 		</if>
 	</command>
 
-	<command name="pgLogout">
+	<command name="logoutPG">
 		<execute macro="Page#openURL" />
 
 		<if>
@@ -186,6 +165,27 @@
 				<execute action="Dockbar#click" locator-key1="USER_SIGN_OUT" />
 			</then>
 		</if>
+	</command>
+
+	<command name="viewCP">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute action="CPUsersandorganizations#assertClick" locator-key1="SEARCH_ALL_USERS" value1="Search All Users" />
+
+		<execute action="CPUsersandorganizationsViewusers#type" locator-key1="BASIC_SEARCH_FIELD" value1="${userScreenName}" />
+		<execute action="CPUsersandorganizationsViewusers#assertClick" locator-key1="BASIC_SEARCH_BUTTON" value1="Search" />
+		<execute action="CPUsersandorganizationsViewusers#assertTextEquals" locator-key1="USER_TABLE_FIRST_NAME_1" value1="${userFirstName}" />
+		<execute action="CPUsersandorganizationsViewusers#assertTextEquals" locator-key1="USER_TABLE_LAST_NAME_1" value1="${userLastName}" />
+		<execute action="CPUsersandorganizationsViewusers#assertTextEquals" locator-key1="USER_TABLE_SCREEN_NAME_1" value1="${userScreenName}" />
+		<execute action="CPUsersandorganizationsViewusers#assertClick" locator-key1="USER_TABLE_FIRST_NAME_1" value1="${userFirstName}" />
+
+		<execute action="CPUsersandorganizationsUser#assertTextEquals" locator-key1="DETAILS_SCREEN_NAME_FIELD" value1="${userScreenName}" />
+		<execute action="CPUsersandorganizationsUser#assertTextEquals" locator-key1="DETAILS_EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
+		<execute action="CPUsersandorganizationsUser#assertTextEquals" locator-key1="DETAILS_FIRST_NAME_FIELD" value1="${userFirstName}" />
+		<execute action="CPUsersandorganizationsUser#assertTextEquals" locator-key1="DETAILS_LAST_NAME_FIELD" value1="${userLastName}" />
+		<execute action="CPUsersandorganizationsUser#assertTextEquals" locator-key1="USER_NAME" value1="${userFirstName} ${userLastName}" />
 	</command>
 
 	<command name="tearDownCP">

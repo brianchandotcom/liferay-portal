@@ -3,7 +3,7 @@
 	<var name="portletName" value="Blogs" />
 
 	<set-up>
-		<execute macro="User#pgFirstLogin" />
+		<execute macro="User#firstLoginPG" />
 
 		<execute macro="Page#addPG">
 			<var name="pageName" value="${pageName}" />
@@ -20,7 +20,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="User#pgLogout" />
+		<execute macro="User#logoutPG" />
 
 		<execute macro="BlogsEntry#viewPortletAsGuestPG">
 			<var name="pageName" value="${pageName}" />
@@ -28,7 +28,7 @@
 	</command>
 
 	<tear-down>
-		<execute macro="User#pgFirstLogin" />
+		<execute macro="User#firstLoginPG" />
 
 		<execute macro="Page#tearDownPG" />
 	</tear-down>

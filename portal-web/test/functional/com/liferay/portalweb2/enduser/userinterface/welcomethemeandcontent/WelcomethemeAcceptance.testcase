@@ -48,6 +48,6 @@
 	</command>
 
 	<tear-down>
-		<execute macro="User#pgLogout" />
+		<execute macro="User#logoutPG" />
 	</tear-down>
 </definition>

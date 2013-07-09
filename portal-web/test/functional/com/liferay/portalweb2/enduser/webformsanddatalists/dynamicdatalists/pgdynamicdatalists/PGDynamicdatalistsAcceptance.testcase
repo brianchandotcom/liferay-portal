@@ -3,7 +3,7 @@
 	<var name="portletName" value="Dynamic Data List Display" />
 
 	<set-up>
-		<execute macro="User#pgFirstLogin" />
+		<execute macro="User#firstLoginPG" />
 
 		<execute macro="Page#addPG">
 			<var name="pageName" value="${pageName}" />

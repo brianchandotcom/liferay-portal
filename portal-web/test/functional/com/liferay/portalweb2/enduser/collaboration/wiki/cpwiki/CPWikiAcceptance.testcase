@@ -1,6 +1,6 @@
 <definition>
 	<set-up>
-		<execute macro="User#pgFirstLogin" />
+		<execute macro="User#firstLoginPG" />
 	</set-up>
 
 	<command name="AddWikiNode">

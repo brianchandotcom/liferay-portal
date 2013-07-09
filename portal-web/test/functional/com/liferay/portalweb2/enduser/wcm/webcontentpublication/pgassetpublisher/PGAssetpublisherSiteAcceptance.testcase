@@ -4,7 +4,7 @@
 	<var name="siteName" value="Site Name" />
 
 	<set-up>
-		<execute macro="User#pgFirstLogin" />
+		<execute macro="User#firstLoginPG" />
 	</set-up>
 
 	<command name="AddAPPortletToSite">

@@ -61,8 +61,8 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 
 			searchContainer.setTotal(total);
 
-			int start = searchContainer.getStart();
 			int end = (assetEntries.size() < searchContainer.getEnd()) ? assetEntries.size() : searchContainer.getEnd();
+			int start = searchContainer.getStart();
 
 			assetEntries = assetEntries.subList(start, end);
 

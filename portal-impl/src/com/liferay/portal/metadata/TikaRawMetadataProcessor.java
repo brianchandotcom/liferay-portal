@@ -25,6 +25,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import org.apache.commons.compress.archivers.zip.UnsupportedZipFeatureException;
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.apache.pdfbox.exceptions.CryptographyException;
 import org.apache.poi.EncryptedDocumentException;
@@ -68,7 +69,8 @@ public class TikaRawMetadataProcessor extends XugglerRawMetadataProcessor {
 			Throwable throwable = ExceptionUtils.getRootCause(e);
 
 			if ((throwable instanceof CryptographyException) ||
-				(throwable instanceof EncryptedDocumentException)) {
+				(throwable instanceof EncryptedDocumentException) ||
+				(throwable instanceof UnsupportedZipFeatureException)) {
 
 				if (_log.isWarnEnabled()) {
 					_log.warn(

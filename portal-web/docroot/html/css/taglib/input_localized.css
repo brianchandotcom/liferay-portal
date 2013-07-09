@@ -13,6 +13,10 @@
 		margin-top: -8px;
 	}
 
+	&.input-localized-editor .input-localized-content {
+		margin-top: 0;
+	}
+
 	.lfr-input-localized-default a {
 		margin-right: 14px;
 	}
@@ -54,9 +58,9 @@
 	}
 
 	.palette-item-inner {
-	    display: block;
-	    height: 16px;
-	    width: 16px;
+		display: block;
+		height: 16px;
+		width: 16px;
 	}
 }
 

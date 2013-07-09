@@ -287,6 +287,69 @@ public class AssetPublisherImpl implements AssetPublisher {
 	}
 
 	@Override
+	public Tuple getAssetEntries(
+			PermissionChecker permissionChecker, long[] groupIds,
+			String[] assetEntryXmls, boolean isConfiguration,
+			boolean checkPermission)
+		throws Exception {
+
+		List<String> deletedAssets = new ArrayList<String>();
+
+		List<AssetEntry> viewableResults = new ArrayList<AssetEntry>();
+
+		for (String assetEntryXml : assetEntryXmls) {
+			Document document = SAXReaderUtil.read(assetEntryXml);
+
+			Element rootElement = document.getRootElement();
+
+			String assetEntryUuid = rootElement.elementText("asset-entry-uuid");
+
+			AssetEntry assetEntry = null;
+
+			for (long groupId : groupIds) {
+				assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+					groupId, assetEntryUuid);
+
+				if (assetEntry != null) {
+					break;
+				}
+			}
+
+			if ((assetEntry == null) || !assetEntry.isVisible()) {
+				continue;
+			}
+
+			AssetRendererFactory assetRendererFactory =
+				AssetRendererFactoryRegistryUtil.
+					getAssetRendererFactoryByClassName(
+						assetEntry.getClassName());
+
+			AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(
+				assetEntry.getClassPK());
+
+			if (isConfiguration) {
+				if (!assetRendererFactory.isActive(
+						permissionChecker.getCompanyId())) {
+
+					deletedAssets.add(assetEntryUuid);
+
+					continue;
+				}
+			}
+			else if (!assetRenderer.isDisplayable() ||
+					 (checkPermission &&
+					  !assetRenderer.hasViewPermission(permissionChecker))) {
+
+				continue;
+			}
+
+			viewableResults.add(assetEntry);
+		}
+
+		return new Tuple(viewableResults, deletedAssets);
+	}
+
+	@Override
 	public List<AssetEntry> getAssetEntries(
 			PortletPreferences preferences, Layout layout, long scopeGroupId,
 			int max, boolean checkPermission)
@@ -365,69 +428,6 @@ public class AssetPublisherImpl implements AssetPublisher {
 		else {
 			return AssetEntryLocalServiceUtil.getEntries(assetEntryQuery);
 		}
-	}
-
-	@Override
-	public Tuple getAssetEntries(
-			PermissionChecker permissionChecker, long[] groupIds,
-			String[] assetEntryXmls, boolean isConfiguration,
-			boolean checkPermission)
-		throws Exception {
-
-		List<String> deletedAssets = new ArrayList<String>();
-
-		List<AssetEntry> viewableResults = new ArrayList<AssetEntry>();
-
-		for (String assetEntryXml : assetEntryXmls) {
-			Document document = SAXReaderUtil.read(assetEntryXml);
-
-			Element rootElement = document.getRootElement();
-
-			String assetEntryUuid = rootElement.elementText("asset-entry-uuid");
-
-			AssetEntry assetEntry = null;
-
-			for (long groupId : groupIds) {
-				assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
-					groupId, assetEntryUuid);
-
-				if (assetEntry != null) {
-					break;
-				}
-			}
-
-			if ((assetEntry == null) || !assetEntry.isVisible()) {
-				continue;
-			}
-
-			AssetRendererFactory assetRendererFactory =
-				AssetRendererFactoryRegistryUtil.
-					getAssetRendererFactoryByClassName(
-						assetEntry.getClassName());
-
-			AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(
-				assetEntry.getClassPK());
-
-			if (isConfiguration) {
-				if (!assetRendererFactory.isActive(
-						permissionChecker.getCompanyId())) {
-
-					deletedAssets.add(assetEntryUuid);
-
-					continue;
-				}
-			}
-			else if (!assetRenderer.isDisplayable() ||
-					 (checkPermission &&
-					  !assetRenderer.hasViewPermission(permissionChecker))) {
-
-				continue;
-			}
-
-			viewableResults.add(assetEntry);
-		}
-
-		return new Tuple(viewableResults, deletedAssets);
 	}
 
 	@Override

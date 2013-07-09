@@ -125,7 +125,7 @@ public class ProgressInputStream extends InputStream {
 	}
 
 	private String _getPercentAttributeName() {
-		return LiferayFileUpload.PERCENT + _progressId;
+		return ProgressTracker.PERCENT + _progressId;
 	}
 
 	private void _updateProgress(long bytesRead) {

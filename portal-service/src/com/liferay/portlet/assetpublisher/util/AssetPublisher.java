@@ -74,16 +74,16 @@ public interface AssetPublisher {
 
 	public void checkAssetEntries() throws Exception;
 
-	public List<AssetEntry> getAssetEntries(
-			PortletPreferences preferences, Layout layout, long scopeGroupId,
-			int max, boolean checkPermission)
-		throws PortalException, SystemException;
-
 	public Tuple getAssetEntries(
 			PermissionChecker permissionChecker, long[] groupIds,
 			String[] assetEntryXmls, boolean isConfiguration,
 			boolean checkPermission)
 		throws Exception;
+
+	public List<AssetEntry> getAssetEntries(
+			PortletPreferences preferences, Layout layout, long scopeGroupId,
+			int max, boolean checkPermission)
+		throws PortalException, SystemException;
 
 	public AssetEntryQuery getAssetEntryQuery(
 			PortletPreferences portletPreferences, long[] scopeGroupIds)

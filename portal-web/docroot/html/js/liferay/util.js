@@ -10,6 +10,8 @@
 
 	var isArray = Lang.isArray;
 	var arrayIndexOf = AArray.indexOf;
+	var prefix = AString.prefix;
+	var startsWith = AString.startsWith;
 
 	var EVENT_CLICK = 'click';
 
@@ -504,6 +506,32 @@
 			return Liferay.EDITORS && Liferay.EDITORS[editorImpl];
 		},
 
+		ns: function(namespace, obj) {
+			var instance = this;
+
+			var value;
+
+			var ns = instance._ns;
+
+			if (!Lang.isObject(obj)) {
+				value = ns(namespace, obj);
+			}
+			else {
+				value = {};
+
+				A.Object.each(
+					obj,
+					function(item, index, collection) {
+						index = ns(namespace, index);
+
+						value[index] = item;
+					}
+				);
+			}
+
+			return value;
+		},
+
 		openWindow: function(config, callback) {
 			config.openingWindow = window;
 
@@ -830,6 +858,18 @@
 
 			return editable;
 		},
+
+		_ns: A.cached(
+			function(namespace, str) {
+				var value = str;
+
+				if (!Lang.isUndefined(str) && !startsWith(str, namespace)) {
+					value = prefix(namespace, str);
+				}
+
+				return value;
+			}
+		),
 
 		_unescapeHTML: function(entities, match) {
 			return entities[match];

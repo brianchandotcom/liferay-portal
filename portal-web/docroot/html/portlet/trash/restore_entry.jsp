@@ -70,7 +70,7 @@ String renameMessage = ParamUtil.getString(request, "renameMessage");
 	</aui:fieldset>
 
 	<aui:button-row>
-		<aui:button type="cancel" />
+		<aui:button cssClass="btn-cancel" type="cancel" />
 
 		<aui:button type="submit" />
 	</aui:button-row>

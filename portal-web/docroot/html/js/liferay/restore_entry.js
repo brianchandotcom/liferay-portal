@@ -75,13 +75,15 @@ AUI.add(
 							submitForm(instance._hrefFm, uri);
 						}
 						else {
-							var data = {
-								duplicateEntryId: responseData.duplicateEntryId,
-								oldName: responseData.oldName,
-								overrideMessage: instance.get('overrideMessage'),
-								renameMessage: instance.get('renameMessage'),
-								trashEntryId: responseData.trashEntryId
-							};
+							var data = instance.ns(
+								{
+									duplicateEntryId: responseData.duplicateEntryId,
+									oldName: responseData.oldName,
+									overrideMessage: instance.get('overrideMessage'),
+									renameMessage: instance.get('renameMessage'),
+									trashEntryId: responseData.trashEntryId
+								}
+							);
 
 							instance._showPopup(data, instance.get('duplicateEntryURL'));
 						}
@@ -114,10 +116,6 @@ AUI.add(
 
 						var uri = event.uri;
 
-						var data = {};
-
-						data[instance.NS + 'trashEntryId'] = event.trashEntryId;
-
 						A.io.request(
 							instance.get(STR_RESTORE_ENTRY_URL),
 							{
@@ -126,7 +124,11 @@ AUI.add(
 									success: A.rbind('_afterCheckEntrySuccess', instance)
 								},
 								arguments: uri,
-								data: data,
+								data: instance.ns(
+									{
+										trashEntryId: event.trashEntryId
+									}
+								),
 								dataType: 'json'
 							}
 						);
@@ -172,7 +174,9 @@ AUI.add(
 
 						var closeButton = restoreTrashEntryFm.one('.btn-cancel');
 
-						closeButton.on('click', instance._popup.hide, instance._popup);
+						if (closeButton) {
+							closeButton.on('click', instance._popup.hide, instance._popup);
+						}
 
 						var rename = instance.byId('rename');
 						var newName = instance.byId('newName');
@@ -198,11 +202,6 @@ AUI.add(
 							submitForm(form);
 						}
 						else {
-							var data = {};
-
-							data[instance.NS + 'trashEntryId'] = trashEntryId.val();
-							data[instance.NS + 'newName'] = newName.val();
-
 							A.io.request(
 								instance.get(STR_RESTORE_ENTRY_URL),
 								{
@@ -211,7 +210,12 @@ AUI.add(
 										success: A.rbind('_afterPopupCheckEntrySuccess', instance)
 									},
 									arguments: form,
-									data: data,
+									data: instance.ns(
+										{
+											trashEntryId: trashEntryId.val(),
+											newName: newName.val()
+										}
+									),
 									dataType: 'json'
 								}
 							);

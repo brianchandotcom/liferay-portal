@@ -17,9 +17,9 @@
 <%@ include file="/html/portlet/search/facets/init.jsp" %>
 
 <%
-String fieldParamSelection = ParamUtil.getString(request, facet.getFieldName() + "selection", "0");
-String fieldParamFrom = ParamUtil.getString(request, facet.getFieldName() + "from");
-String fieldParamTo = ParamUtil.getString(request, facet.getFieldName() + "to");
+String fieldParamSelection = ParamUtil.getString(request, fieldId + "selection", "0");
+String fieldParamFrom = ParamUtil.getString(request, fieldId + "from");
+String fieldParamTo = ParamUtil.getString(request, fieldId + "to");
 
 JSONArray rangesJSONArray = dataJSONObject.getJSONArray("ranges");
 
@@ -32,14 +32,14 @@ if (fieldParamSelection.equals("0")) {
 }
 %>
 
-<div class="<%= cssClass %>" data-facetFieldName="<%= facet.getFieldName() %>" id="<%= randomNamespace %>facet">
-	<aui:input name="<%= facet.getFieldName() %>" type="hidden" value="<%= fieldParam %>" />
-	<aui:input name='<%= facet.getFieldName() + "selection" %>' type="hidden" value="<%= fieldParamSelection %>" />
+<div class="<%= cssClass %>" data-facetFieldName="<%= fieldId %>" id="<%= randomNamespace %>facet">
+	<aui:input name="<%= fieldId %>" type="hidden" value="<%= fieldParam %>" />
+	<aui:input name='<%= fieldId + "selection" %>' type="hidden" value="<%= fieldParamSelection %>" />
 
-	<aui:field-wrapper cssClass='<%= randomNamespace + "calendar calendar_" %>' label="" name="<%= facet.getFieldName() %>">
+	<aui:field-wrapper cssClass='<%= randomNamespace + "calendar calendar_" %>' label="" name="<%= fieldId %>">
 		<ul class="modified unstyled">
 			<li class="facet-value default<%= (fieldParamSelection.equals("0") ? " current-term" : StringPool.BLANK) %>">
-				<aui:a href="javascript:;" onClick='<%= renderResponse.getNamespace() + facet.getFieldName() + "clearFacet(0);" %>'>
+				<aui:a href="javascript:;" onClick='<%= renderResponse.getNamespace() + fieldId + "clearFacet(0);" %>'>
 					<img alt="" src='<%= themeDisplay.getPathThemeImages() + "/common/time.png" %>' /><liferay-ui:message key="any-time" />
 				</aui:a>
 			</li>
@@ -61,7 +61,7 @@ if (fieldParamSelection.equals("0")) {
 				<li class="facet-value<%= fieldParamSelection.equals(String.valueOf(index)) ? " current-term" : StringPool.BLANK %>">
 
 					<%
-					String taglibSetRange = renderResponse.getNamespace() + facet.getFieldName() + "setRange(" + index + ", '" + range + "');";
+					String taglibSetRange = renderResponse.getNamespace() + fieldId + "setRange(" + index + ", '" + range + "');";
 					%>
 
 					<aui:a href="javascript:;" onClick="<%= taglibSetRange %>">
@@ -104,14 +104,14 @@ if (fieldParamSelection.equals("0")) {
 
 			<div class="<%= !fieldParamSelection.equals(String.valueOf(index + 1)) ? "hide" : StringPool.BLANK %> modified-custom-range" id="<%= randomNamespace %>custom-range">
 				<div id="<%= randomNamespace %>custom-range-from">
-					<aui:input label="from" name='<%= facet.getFieldName() + "from" %>' size="14" />
+					<aui:input label="from" name='<%= fieldId + "from" %>' size="14" />
 				</div>
 
 				<div id="<%= randomNamespace %>custom-range-to">
-					<aui:input label="to" name='<%= facet.getFieldName() + "to" %>' size="14" />
+					<aui:input label="to" name='<%= fieldId + "to" %>' size="14" />
 				</div>
 
-				<aui:button disabled="<%= Validator.isNull(fieldParamFrom) || Validator.isNull(fieldParamTo) %>" name="searchCustomRangeButton" onClick='<%= renderResponse.getNamespace() + facet.getFieldName() + "searchCustomRange(" + (index + 1) + ");" %>' value="search" />
+				<aui:button disabled="<%= Validator.isNull(fieldParamFrom) || Validator.isNull(fieldParamTo) %>" name="searchCustomRangeButton" onClick='<%= renderResponse.getNamespace() + fieldId + "searchCustomRange(" + (index + 1) + ");" %>' value="search" />
 			</div>
 		</ul>
 	</aui:field-wrapper>
@@ -120,7 +120,7 @@ if (fieldParamSelection.equals("0")) {
 <c:if test='<%= !fieldParamSelection.equals("0") %>'>
 
 	<%
-	String fieldName = renderResponse.getNamespace() + facet.getFieldName();
+	String fieldName = renderResponse.getNamespace() + fieldId;
 	%>
 
 	<aui:script use="liferay-token-list">
@@ -149,10 +149,10 @@ if (fieldParamSelection.equals("0")) {
 <aui:script>
 	Liferay.provide(
 		window,
-		'<portlet:namespace /><%= facet.getFieldName() %>clearFacet',
+		'<portlet:namespace /><%= fieldId %>clearFacet',
 		function(selection) {
-			document.<portlet:namespace />fm['<portlet:namespace /><%= facet.getFieldName() %>'].value = '';
-			document.<portlet:namespace />fm['<portlet:namespace /><%= facet.getFieldName() %>selection'].value = selection;
+			document.<portlet:namespace />fm['<portlet:namespace /><%= fieldId %>'].value = '';
+			document.<portlet:namespace />fm['<portlet:namespace /><%= fieldId %>selection'].value = selection;
 
 			submitForm(document.<portlet:namespace />fm);
 		},
@@ -161,24 +161,24 @@ if (fieldParamSelection.equals("0")) {
 
 	Liferay.provide(
 		window,
-		'<portlet:namespace /><%= facet.getFieldName() %>searchCustomRange',
+		'<portlet:namespace /><%= fieldId %>searchCustomRange',
 		function(selection) {
-			var fromDate = document.<portlet:namespace />fm['<portlet:namespace /><%= facet.getFieldName() %>from'].value;
-			var toDate = document.<portlet:namespace />fm['<portlet:namespace /><%= facet.getFieldName() %>to'].value;
+			var fromDate = document.<portlet:namespace />fm['<portlet:namespace /><%= fieldId %>from'].value;
+			var toDate = document.<portlet:namespace />fm['<portlet:namespace /><%= fieldId %>to'].value;
 
 			if (fromDate && toDate) {
 				if (fromDate > toDate) {
-					fromDate = document.<portlet:namespace />fm['<portlet:namespace /><%= facet.getFieldName() %>to'].value;
-					toDate = document.<portlet:namespace />fm['<portlet:namespace /><%= facet.getFieldName() %>from'].value;
+					fromDate = document.<portlet:namespace />fm['<portlet:namespace /><%= fieldId %>to'].value;
+					toDate = document.<portlet:namespace />fm['<portlet:namespace /><%= fieldId %>from'].value;
 
-					document.<portlet:namespace />fm['<portlet:namespace /><%= facet.getFieldName() %>to'].value = toDate;
-					document.<portlet:namespace />fm['<portlet:namespace /><%= facet.getFieldName() %>from'].value = fromDate;
+					document.<portlet:namespace />fm['<portlet:namespace /><%= fieldId %>to'].value = toDate;
+					document.<portlet:namespace />fm['<portlet:namespace /><%= fieldId %>from'].value = fromDate;
 				}
 
 				var range = '[' + fromDate.replace(/-/g, '') + '000000 TO ' + toDate.replace(/-/g, '') + '235959]';
 
-				document.<portlet:namespace />fm['<portlet:namespace /><%= facet.getFieldName() %>'].value = range;
-				document.<portlet:namespace />fm['<portlet:namespace /><%= facet.getFieldName() %>selection'].value = selection;
+				document.<portlet:namespace />fm['<portlet:namespace /><%= fieldId %>'].value = range;
+				document.<portlet:namespace />fm['<portlet:namespace /><%= fieldId %>selection'].value = selection;
 
 				submitForm(document.<portlet:namespace />fm);
 			}
@@ -188,10 +188,10 @@ if (fieldParamSelection.equals("0")) {
 
 	Liferay.provide(
 		window,
-		'<portlet:namespace /><%= facet.getFieldName() %>setRange',
+		'<portlet:namespace /><%= fieldId %>setRange',
 		function(selection, range) {
-			document.<portlet:namespace />fm['<portlet:namespace /><%= facet.getFieldName() %>'].value = range;
-			document.<portlet:namespace />fm['<portlet:namespace /><%= facet.getFieldName() %>selection'].value = selection;
+			document.<portlet:namespace />fm['<portlet:namespace /><%= fieldId %>'].value = range;
+			document.<portlet:namespace />fm['<portlet:namespace /><%= fieldId %>selection'].value = selection;
 
 			submitForm(document.<portlet:namespace />fm);
 		},
@@ -206,8 +206,8 @@ if (fieldParamSelection.equals("0")) {
 
 	var REGEX_DATE = /^\d{4}(-)(0[1-9]|1[012])\1(0[1-9]|[12][0-9]|3[01])$/;
 
-	var customRangeFrom = A.one('#<portlet:namespace /><%= facet.getFieldName() %>from');
-	var customRangeTo = A.one('#<portlet:namespace /><%= facet.getFieldName() %>to');
+	var customRangeFrom = A.one('#<portlet:namespace /><%= fieldId %>from');
+	var customRangeTo = A.one('#<portlet:namespace /><%= fieldId %>to');
 
 	var dateFrom = null;
 	var dateTo = null;
@@ -274,10 +274,10 @@ if (fieldParamSelection.equals("0")) {
 				}
 			},
 			rules: {
-				<portlet:namespace /><%= facet.getFieldName() %>from: {
+				<portlet:namespace /><%= fieldId %>from: {
 					<portlet:namespace />dateFormat: true
 				},
-				<portlet:namespace /><%= facet.getFieldName() %>to: {
+				<portlet:namespace /><%= fieldId %>to: {
 					<portlet:namespace />dateFormat: true,
 					<portlet:namespace />dateRange: true
 				}
@@ -315,7 +315,7 @@ if (fieldParamSelection.equals("0")) {
 					today: '<liferay-ui:message key="today" />'
 				}
 			},
-			trigger: '#<portlet:namespace /><%= facet.getFieldName() %>from'
+			trigger: '#<portlet:namespace /><%= fieldId %>from'
 		}
 	).render('#<%= randomNamespace %>custom-range-from');
 
@@ -349,7 +349,7 @@ if (fieldParamSelection.equals("0")) {
 					today: '<liferay-ui:message key="today" />'
 				}
 			},
-			trigger: '#<portlet:namespace /><%= facet.getFieldName() %>to'
+			trigger: '#<portlet:namespace /><%= fieldId %>to'
 		}
 	).render('#<%= randomNamespace %>custom-range-to');
 

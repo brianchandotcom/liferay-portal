@@ -150,8 +150,10 @@ public class MultiValueFacet extends BaseFacet {
 			}
 		}
 
+		String fieldId = StringUtil.replace(getFieldName(), "/", "_");
+
 		String[] valuesParam = StringUtil.split(
-			GetterUtil.getString(searchContext.getAttribute(getFieldName())));
+			GetterUtil.getString(searchContext.getAttribute(fieldId)));
 
 		if (!isStatic() && (valuesParam != null) && (valuesParam.length > 0)) {
 			values = valuesParam;

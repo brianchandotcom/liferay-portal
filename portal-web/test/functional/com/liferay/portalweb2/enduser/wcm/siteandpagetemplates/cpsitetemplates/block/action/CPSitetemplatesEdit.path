@@ -1,17 +1,17 @@
 <html>
 <head>
-<title>SitetemplatesAddCP</title>
+<title>CPSitetemplatesEdit</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">SitetemplatesAddCP</td></tr>
+<tr><td rowspan="1" colspan="3">CPSitetemplatesEdit</td></tr>
 </thead>
 <tbody>
 <tr>
 	<td>PAGE_NAME</td>
 	<td></td>
-	<td>SitetemplatesAddCP</td>
+	<td>CPSitetemplatesEdit</td>
 </tr>
 <tr>
 	<td></td>
@@ -36,6 +36,11 @@
 <tr>
 	<td>ALLOW_SITE_ADMIN_MODIFY_CHECKBOX</td>
 	<td>//input[@id='_149_layoutsUpdateableCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OPEN_SITE_TEMPLATE</td>
+	<td>//div[@class='control-group field-wrapper']/span/a/span</td>
 	<td></td>
 </tr>
 <tr>

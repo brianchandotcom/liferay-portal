@@ -3,32 +3,36 @@
 <var name="siteTemplateName" value="Site Template Name" />
 
 	<set-up>
-		<execute macro="User#pgFirstLogin" />
+		<execute macro="User#firstLoginPG" />
 	</set-up>
 
 	<command name="AddSiteTemplate">
 		<var name="siteTemplateActive" value="Yes" />
 
-		<execute macro="SiteTemplates#addCP">
+		<execute macro="Page#gotoCP">
 			<var name="portletName" value="${portletName}" />
+		</execute>
+
+		<execute macro="SiteTemplates#addCP">
 			<var name="siteTemplateActive" value="${siteTemplateActive}" />
 			<var name="siteTemplateName" value="${siteTemplateName}" />
 		</execute>
 	</command>
 
 	<command name="EditSiteTemplate">
-		<var name="portletName" value="${portletName}" />
 		<var name="siteTemplateActive" value="Yes" />
 		<var name="siteTemplateActiveNew" value="No" />
 
-		<execute macro="SiteTemplates#addCP">
+		<execute macro="Page#gotoCP">
 			<var name="portletName" value="${portletName}" />
+		</execute>
+
+		<execute macro="SiteTemplates#addCP">
 			<var name="siteTemplateActive" value="${siteTemplateActive}" />
 			<var name="siteTemplateName" value="${siteTemplateName}" />
 		</execute>
 
 		<execute macro="SiteTemplates#editCP">
-			<var name="portletName" value="${portletName}" />
 			<var name="siteTemplateActiveNew" value="${siteTemplateActiveNew}" />
 			<var name="siteTemplateName" value="${siteTemplateName}" />
 		</execute>

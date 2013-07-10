@@ -58,12 +58,16 @@ public class BaseTestCase extends LiferaySeleneseTestCase {
 
 	@Override
 	public void tearDown() throws Exception {
-		selenium = SeleniumUtil.getSelenium();
-
 		String primaryTestSuiteName = selenium.getPrimaryTestSuiteName();
 
-		if ((testCases < 1) && !primaryTestSuiteName.contains("TestSuite")) {
-			selenium.stopLogger();
+		if (!primaryTestSuiteName.endsWith("TestSuite")) {
+			testCaseCount--;
+		}
+
+		if (!primaryTestSuiteName.contains("TestSuite") &&
+			(testCaseCount < 1)) {
+
+			SeleniumUtil.stopSelenium();
 		}
 	}
 
@@ -119,7 +123,7 @@ public class BaseTestCase extends LiferaySeleneseTestCase {
 
 	}
 
-	protected static int testCases;
+	protected static int testCaseCount;
 
 	protected Map<String, String> commandScopeVariables;
 	protected Map<String, String> definitionScopeVariables =

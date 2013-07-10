@@ -24,10 +24,10 @@ import java.util.Map;
 
 public class ${seleniumBuilderContext.getTestCaseSimpleClassName(testCaseName)} extends BaseTestCase {
 
-	public ${seleniumBuilderContext.getTestCaseSimpleClassName(testCaseName)}() {
-		super();
+	<#if rootElement.element("var")??>
+		public ${seleniumBuilderContext.getTestCaseSimpleClassName(testCaseName)}() {
+			super();
 
-		<#if rootElement.element("var")??>
 			<#assign varElements = rootElement.elements("var")>
 
 			<#list varElements as varElement>
@@ -41,8 +41,8 @@ public class ${seleniumBuilderContext.getTestCaseSimpleClassName(testCaseName)} 
 
 				definitionScopeVariables.put("${varName}", "${varValue}");
 			</#list>
-		</#if>
 		}
+	</#if>
 
 	@Override
 	public void setUp() throws Exception {
@@ -157,12 +157,6 @@ public class ${seleniumBuilderContext.getTestCaseSimpleClassName(testCaseName)} 
 				else {
 					selenium.sendLogger("${testCaseName?uncap_first}TestCase${commandName}", "fail");
 				}
-
-				String primaryTestSuiteName = selenium.getPrimaryTestSuiteName();
-
-				if (!primaryTestSuiteName.endsWith("TestSuite")) {
-					testCases--;
-				}
 			}
 		}
 	</#list>
@@ -170,7 +164,6 @@ public class ${seleniumBuilderContext.getTestCaseSimpleClassName(testCaseName)} 
 	static {
 		<#assign commandElements = rootElement.elements("command")>
 
-		testCases = ${commandElements?size};
+		testCaseCount = ${commandElements?size};
 	}
-
 }

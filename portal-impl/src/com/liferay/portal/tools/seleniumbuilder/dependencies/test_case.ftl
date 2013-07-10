@@ -160,4 +160,10 @@ public class ${seleniumBuilderContext.getTestCaseSimpleClassName(testCaseName)} 
 			}
 		}
 	</#list>
+
+	static {
+		<#assign commandElements = rootElement.elements("command")>
+
+		testCaseCount = ${commandElements?size};
+	}
 }

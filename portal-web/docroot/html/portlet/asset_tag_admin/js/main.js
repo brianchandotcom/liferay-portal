@@ -14,11 +14,19 @@ AUI.add(
 
 		var ACTION_VIEW = 2;
 
+		var ADD_PANEL = 'addPanel';
+
 		var CSS_ACTIVE_AREA = 'active-area';
+
+		var CSS_MESSAGE_ERROR = 'alert-error';
+
+		var CSS_MESSAGE_SUCCESS = 'alert-success';
 
 		var CSS_TAG_DIALOG = 'portlet-asset-tag-admin-dialog';
 
 		var DRAG_NODE = 'dragNode';
+
+		var EDIT_PANEL = 'editPanel';
 
 		var EVENT_CLICK = 'click';
 
@@ -38,7 +46,9 @@ AUI.add(
 
 		var NODE = 'node';
 
-		var TPL_PORTLET_MESSAGES = '<div class="hide lfr-message-response" id="portletMessages" />';
+		var TAG_MESSAGES = 'TagMessages';
+
+		var TPL_PORTLET_MESSAGES = '<div class="alert hide lfr-message-response" id="portletMessages" />';
 
 		var TPL_TAG_LIST_CONTAINER = '<ul class="nav nav-pills nav-stacked">';
 
@@ -94,6 +104,8 @@ AUI.add(
 
 		var TPL_TAG_MERGE_ITEM = '<option value="{value}" title="{name}" active>{name}</option>';
 
+		var TPL_TAG_PANEL_MESSAGES = '<div class="alert hide lfr-message-response" id="{namespace}{panel}TagMessages" />';
+
 		var TPL_TAGS_MESSAGES = '<div class="alert alert-info hide lfr-message-response" id="tagsMessages" />';
 
 		var AssetTagsAdmin = A.Component.create(
@@ -145,7 +157,7 @@ AUI.add(
 							points: ['tc', 'tl']
 						};
 
-						instance._hideMessageTask = A.debounce('hide', 7000, instance._portletMessageContainer);
+						instance._hideMessageTask = A.debounce(instance._hideMessage, 7000);
 
 						instance._tagsList.on(EVENT_CLICK, instance._onTagsListClick, instance);
 						instance._tagsList.on('key', instance._onTagsListClick, 'up:13', instance);
@@ -406,6 +418,20 @@ AUI.add(
 						);
 
 						return instance._tagPanelEdit;
+					},
+
+					_createTagPanelMessage: function(panel) {
+						var instance = this;
+
+						var tplValues = {
+							namespace: instance._prefixedPortletId,
+							panel: panel
+						};
+
+						var tagPanelMessageTpl = Lang.sub(TPL_TAG_PANEL_MESSAGES, tplValues);
+						var tagPanelMessage = Node.create(tagPanelMessageTpl);
+
+						return tagPanelMessage;
 					},
 
 					_createTagPanelPermissions: function() {
@@ -972,6 +998,10 @@ AUI.add(
 
 						var tagFormAdd = tagPanelAdd.get('contentBox').one('form.update-tag-form');
 
+						var tagPanelMessage = instance._createTagPanelMessage(ADD_PANEL);
+
+						tagFormAdd.prepend(tagPanelMessage);
+
 						tagFormAdd.detach(EVENT_SUBMIT);
 
 						tagFormAdd.on(EVENT_SUBMIT, instance._onTagFormSubmit, instance, tagFormAdd);
@@ -1014,6 +1044,10 @@ AUI.add(
 
 						var tagFormEdit = tagPanelEdit.get('contentBox').one('form.update-tag-form');
 
+						var tagPanelMessage = instance._createTagPanelMessage(EDIT_PANEL);
+
+						tagFormEdit.prepend(tagPanelMessage);
+
 						tagFormEdit.detach(EVENT_SUBMIT);
 
 						tagFormEdit.on(EVENT_SUBMIT, instance._onTagFormSubmit, instance, tagFormEdit);
@@ -1048,6 +1082,14 @@ AUI.add(
 						var instance = this;
 
 						instance._container.all('.lfr-message-response').hide();
+					},
+
+					_hideMessage: function(container) {
+						var instance = this;
+
+						container = container || instance._portletMessageContainer;
+
+						container.hide();
 					},
 
 					_hidePanels: function() {
@@ -1355,7 +1397,9 @@ AUI.add(
 					_onTagUpdateFailure: function(response) {
 						var instance = this;
 
-						instance._sendMessage(MESSAGE_TYPE_ERROR, Liferay.Language.get('your-request-failed-to-complete'));
+						var containerSelector = '#' + instance._prefixedPortletId + instance._currentPanel + TAG_MESSAGES;
+
+						instance._sendMessage(MESSAGE_TYPE_ERROR, Liferay.Language.get('your-request-failed-to-complete'), true, containerSelector);
 					},
 
 					_onTagUpdateSuccess: function(response) {
@@ -1400,7 +1444,9 @@ AUI.add(
 								errorText = Liferay.Language.get('your-request-failed-to-complete');
 							}
 
-							instance._sendMessage(MESSAGE_TYPE_ERROR, errorText, autoHide);
+							var containerSelector = '#' + instance._prefixedPortletId + instance._currentPanel + TAG_MESSAGES;
+
+							instance._sendMessage(MESSAGE_TYPE_ERROR, errorText, autoHide, containerSelector);
 						}
 					},
 
@@ -1579,19 +1625,20 @@ AUI.add(
 						return tag;
 					},
 
-					_sendMessage: function(type, message, autoHide) {
+					_sendMessage: function(type, message, autoHide, container) {
 						var instance = this;
 
-						var output = instance._portletMessageContainer;
+						var output = A.one(container || instance._portletMessageContainer);
+						var typeClass = 'alert-' + type;
 
-						output.removeClass('alert-error').removeClass('alert-success');
-						output.addClass('alert alert-' + type);
+						output.removeClass(CSS_MESSAGE_ERROR).removeClass(CSS_MESSAGE_SUCCESS);
+						output.addClass(typeClass);
 						output.html(message);
 
 						output.show();
 
 						if (autoHide !== false) {
-							instance._hideMessageTask();
+							instance._hideMessageTask(output);
 						}
 					},
 
@@ -1648,6 +1695,8 @@ AUI.add(
 
 							instance._focusTagPanelAdd();
 						}
+
+						instance._currentPanel = ADD_PANEL;
 					},
 
 					_showTagPanelEdit: function() {
@@ -1683,6 +1732,8 @@ AUI.add(
 						if (forceStart) {
 							tagPanelEdit.io.start();
 						}
+
+						instance._currentPanel = EDIT_PANEL;
 					},
 
 					_stageTagItem: function(tagItem) {

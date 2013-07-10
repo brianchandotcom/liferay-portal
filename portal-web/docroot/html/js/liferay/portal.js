@@ -116,6 +116,8 @@
 			if (!cached) {
 				cached = new A.Tooltip(
 					{
+						cssClass: 'tooltip-help',
+						opacity: 1,
 						zIndex: Liferay.zIndex.TOOLTIP,
 						visible: false
 					}

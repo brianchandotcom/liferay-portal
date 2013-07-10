@@ -7,10 +7,46 @@
 	}
 
 	a {
+		color: #009AE5;
 		font-weight: lighter;
+
+		&:hover {
+			color: #009AE5;
+		}
 
 		[class^="icon-"], [class*=" icon-"] {
 			display: inline-block;
+		}
+	}
+
+	.table {
+		font-size: 15px;
+		overflow: hidden;
+
+		td {
+			background-color: #F9F9F9;
+		}
+		thead th {
+			background-color: #F0EFEF;
+			font-size: 15px;
+		}
+
+		.table-sort-liner a {
+			color: #555;
+			font-weight: bold;
+			text-decoration: underline;
+		}
+	}
+
+	.table-striped tbody > tr:nth-child(odd) {
+		> td, > th {
+			background-color: #FFF;
+		}
+	}
+
+	.table-hover tbody tr:hover {
+		> td, > th {
+			background-color: #EDF8FD;
 		}
 	}
 
@@ -65,6 +101,10 @@
 		margin-top: 0;
 	}
 
+	.badge {
+		background: #009AE5;
+	}
+
 	.btn-link {
 		color: #555;
 		text-decoration: none;
@@ -89,10 +129,23 @@
 		padding-right: 12px;
 	}
 
+	.tree-node-content .tree-hitarea {
+		margin-right: 2px;
+	}
+
+	.tree-node-selected .tree-label {
+		background: #E4F5FC;
+	}
+
 	/* ---------- Main ---------- */
 
 	#wrapper {
 		padding: 1em 3em 0;
+	}
+
+	.logo, .logo:hover {
+		color: #333;
+		line-height: 20px;
 	}
 
 	.portlet, .portlet-borderless-container {
@@ -171,11 +224,7 @@
 					color: #FFF;
 
 					&, &:hover, &:focus {
-						background: #005BA7;
-					}
-
-					&:focus, &:hover {
-						color: #3EA9DB;
+						background: #0066B3;
 					}
 				}
 			}
@@ -204,7 +253,7 @@
 				}
 
 				.dropdown-menu {
-					background: #00ACFF;
+					background: #009AE5;
 					border-width: 0;
 					left: 0;
 					margin: 0;
@@ -216,9 +265,7 @@
 						font-weight: lighter;
 
 						&:hover {
-							background: #FFF;
-							background-color: rgba(255, 255, 255, 0.9);
-							color: #333;
+							background: #2FA4F5;
 						}
 
 						[class^="icon-"], [class*=" icon-"] {
@@ -231,7 +278,7 @@
 					}
 
 					li.active > a {
-						background: transparent;
+						background: #3B6DCC;
 					}
 				}
 
@@ -286,6 +333,12 @@
 			background-color: #FFF;
 			color: #555;
 			text-decoration: none;
+		}
+	}
+
+	.lfr-has-add-content {
+		.nav-add-controls {
+			left: 349px;
 		}
 	}
 
@@ -489,6 +542,10 @@
 				@include box-shadow(none);
 			}
 		}
+	}
+
+	.table {
+		@include border-radius(5px);
 	}
 
 	input[type="color"], input[type="date"], input[type="datetime"], input[type="datetime-local"], input[type="month"], input[type="number"], input[type="password"], input[type="text"], input[type="time"], input[type="week"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], textarea, .uneditable-input {

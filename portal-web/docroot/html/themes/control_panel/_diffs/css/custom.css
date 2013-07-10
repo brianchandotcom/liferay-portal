@@ -2,14 +2,33 @@
 
 @import url(../../classic/css/custom_common.css);
 
-$dockbarGradientEnd: #0A6BCA;
-$dockbarGradientStart: #0A85E4;
+$dockbarGradientEnd: #1273C7;
+$dockbarGradientStart: #118ADE;
 
-$dockbarOpenGradientEnd: #048BDF;
-$dockbarOpenGradientStart: #00A0FF;
+$dockbarOpenGradientEnd: #0993DD;
+$dockbarOpenGradientStart: #0EA6F9;
 
 .aui {
+
 	/* ---------- Main ---------- */
+
+	h2 {
+		color: #555;
+		font-size: 24px;
+		font-weight: normal;
+	}
+
+	h3 {
+		color: #8D8D8D;
+		font-size: 20px;
+		font-weight: normal;
+	}
+
+	legend {
+		color: #8D8D8D;
+		font-size: 18px;
+		font-weight: lighter;
+	}
 
 	#banner {
 		display: none;
@@ -49,22 +68,23 @@ $dockbarOpenGradientStart: #00A0FF;
 			margin-right: 20px;
 
 			a {
+				font-size: 15px;
+				font-weight: normal;
 				margin: 0;
 				padding: 10px 10px 11px;
 
 				&:hover {
 					background: #E5F5FC;
-					color: #009AE5;
 				}
 			}
 		}
 
 		> .active > a {
-			background: #00ACFF;
+			background: #009AE5;
+			color: #FFF;
 
 			&:hover {
-				color: #FFF;
-				background: #00ACFF;
+				background: #009AE5;
 			}
 		}
 	}
@@ -75,7 +95,9 @@ $dockbarOpenGradientStart: #00A0FF;
 		margin-top: 40px;
 
 		a {
-			color: #00ACFF;
+			color: #009AE5;
+			font-size: 16px;
+			text-decoration: none;
 
 			&:active {
 				color: #009AE5;
@@ -86,7 +108,7 @@ $dockbarOpenGradientStart: #00A0FF;
 				text-decoration: underline;
 			}
 
-			.control-panel-home-link .taglib-icon .taglib-text {
+			&.taglib-icon .taglib-text {
 				text-decoration: none;
 			}
 		}
@@ -132,7 +154,7 @@ $dockbarOpenGradientStart: #00A0FF;
 		.control-panel-home-category-header {
 			background: none no-repeat 0 50%;
 			border-bottom: 1px solid #D4D4D4;
-			color: #00ACFF;
+			color: #009AE5;
 			font-size: 24px;
 			font-weight: 200;
 			margin-bottom: 30px;
@@ -178,6 +200,8 @@ $dockbarOpenGradientStart: #00A0FF;
 		.navbar-inner {
 			background-color: $dockbarGradientEnd;
 			color: #FFF;
+			padding-left: 0;
+			padding-right: 0;
 
 			.nav-account-controls {
 				float: right;
@@ -195,13 +219,13 @@ $dockbarOpenGradientStart: #00A0FF;
 						border-radius: 4px;
 
 						&:hover {
-							background: #005BA7;
+							background: #0066B3;
 							color: #FFF;
 						}
 					}
 
 					a:hover {
-						background: #008BE4;
+						background: #0993DD;
 					}
 				}
 
@@ -302,9 +326,12 @@ $dockbarOpenGradientStart: #00A0FF;
 	}
 
 	.portlet-title {
-		color: #8D8D8D;
 		font-size: 25px;
 		font-weight: lighter;
+
+		.taglib-icon-help {
+			margin-left: -7px;
+		}
 	}
 
 	/* ---------- Panel Page Menu (Site Pages Side Navigation) ---------- */
@@ -380,16 +407,17 @@ $dockbarOpenGradientStart: #00A0FF;
 						padding: 6px 10px;
 					}
 
-					.accordion-toggle {
-						.toggler-header-collapsed &, .toggler-header-expanded & {
-							background: none no-repeat 100% 50%;
+					.toggler-header-collapsed {
+						.accordion-toggle {
+							background: url(../images/custom/arrow_option_closed.png) no-repeat right #F2F2F2;
+							background-size: 20px 20px;
 						}
-						.toggler-header-collapsed & {
-							background-image: url(../images/custom/arrow_option_closed.png);
-						}
+					}
 
-						.toggler-header-expanded & {
-							background-image: url(../images/custom/arrow_option_open.png);
+					.toggler-header-expanded {
+						.accordion-toggle {
+							background: url(../images/custom/arrow_option_open.png) no-repeat right #F2F2F2;
+							background-size: 20px 20px;
 						}
 					}
 				}
@@ -429,14 +457,19 @@ $dockbarOpenGradientStart: #00A0FF;
 				}
 
 				.search-panel-icon {
+					background: url(../images/custom/iconinfield.png) no-repeat left center;
+					background-size: 100%;
 					color: #D4D4D4;
-					margin-left: 10px;
-					margin-top: 8px;
+					font-size: 0;
+					height: 18px;
+					margin-left: 8px;
+					margin-top: 6px;
 					position: absolute;
+					width: 27px;
 				}
 
 				input {
-					padding-left: 33px;
+					padding-left: 40px;
 				}
 			}
 		}
@@ -465,7 +498,7 @@ $dockbarOpenGradientStart: #00A0FF;
 				float: left;
 				font-size: 20px;
 				height: auto;
-				line-height: 44px;
+				line-height: 20px;
 				margin-right: 5px;
 				text-decoration: none;
 				vertical-align: middle;
@@ -477,14 +510,36 @@ $dockbarOpenGradientStart: #00A0FF;
 			}
 
 			.site-title {
-				color: #555;
 				display: inline-block;
 				font-size: 25px;
 				font-weight: 300;
-				margin: 0 0 5px;
-				padding: 0 28px 0 12px;
+				line-height: 20px;
+				margin: 0;
+				padding: 0 28px 0 5px;
 				text-transform: capitalize;
 				vertical-align: middle;
+
+				.control-panel-site-selector {
+					.dropdown-toggle {
+						i.caret {
+							background: url(../images/custom/arrow_option_down.png) no-repeat left top;
+							width: 20px;
+							height: 20px;
+							background-size: 20px;
+							border-width: 0;
+							margin: 0;
+						}
+					}
+
+					&.open {
+						.dropdown-toggle {
+							i.caret {
+								background: url(../images/custom/arrow_option_down_active.png) no-repeat left top;
+								background-size: 20px;
+							}
+						}
+					}
+				}
 			}
 
 			.visit-links {
@@ -492,7 +547,7 @@ $dockbarOpenGradientStart: #00A0FF;
 				font-size: 12px;
 				list-style: none;
 				margin: 0;
-				padding: 0 0 0 36px;
+				padding: 0 0 0 25px;
 
 				li {
 					display: inline-block;
@@ -657,7 +712,7 @@ $dockbarOpenGradientStart: #00A0FF;
 			}
 
 			ul.nav-add-controls {
-				> li a &:hover {
+				> li a:hover {
 					@include border-radius(4px);
 				}
 			}

@@ -15,7 +15,7 @@
 --%>
 
 <%
-Tuple tuple = AssetPublisherUtil.getAssetEntries(permissionChecker, groupIds, assetEntryXmls, false, enablePermissions);
+Tuple tuple = AssetPublisherUtil.getAssetEntries(renderRequest, portletPreferences, permissionChecker, groupIds, assetEntryXmls, false, enablePermissions);
 
 List<AssetEntry> assetEntries = (List<AssetEntry>)tuple.getObject(0);
 

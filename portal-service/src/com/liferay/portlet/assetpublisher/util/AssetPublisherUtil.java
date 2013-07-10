@@ -89,13 +89,14 @@ public class AssetPublisherUtil {
 	}
 
 	public static Tuple getAssetEntries(
+			PortletPreferences portletPreferences,
 			PermissionChecker permissionChecker, long[] groupIds,
 			String[] assetEntryXmls, boolean deleteNotDisplayableAssets,
 			boolean checkPermission)
 		throws Exception {
 
 		return getAssetPublisher().getAssetEntries(
-				permissionChecker, groupIds, assetEntryXmls,
+				portletPreferences, permissionChecker, groupIds, assetEntryXmls,
 				deleteNotDisplayableAssets, checkPermission);
 	}
 

@@ -21,12 +21,8 @@ page import="com.liferay.portal.kernel.search.Hits" %><%@
 page import="com.liferay.portal.kernel.template.TemplateHandler" %><%@
 page import="com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil" %><%@
 page import="com.liferay.portal.kernel.util.DateFormatFactoryUtil" %><%@
-page import="com.liferay.portal.kernel.xml.Document" %><%@
-page import="com.liferay.portal.kernel.xml.Element" %><%@
-page import="com.liferay.portal.kernel.xml.SAXReaderUtil" %><%@
 page import="com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil" %><%@
 page import="com.liferay.portlet.asset.DuplicateQueryRuleException" %><%@
-page import="com.liferay.portlet.asset.NoSuchEntryException" %><%@
 page import="com.liferay.portlet.asset.NoSuchTagException" %><%@
 page import="com.liferay.portlet.asset.NoSuchTagPropertyException" %><%@
 page import="com.liferay.portlet.asset.model.AssetCategory" %><%@
@@ -56,8 +52,7 @@ page import="com.liferay.portlet.messageboards.model.MBDiscussion" %><%@
 page import="com.liferay.portlet.messageboards.model.MBMessage" %><%@
 page import="com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateConstants" %><%@
 page import="com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateUtil" %><%@
-page import="com.liferay.util.RSSUtil" %><%@
-page import="com.liferay.util.xml.DocUtil" %>
+page import="com.liferay.util.RSSUtil" %>
 
 <%
 String portletResource = ParamUtil.getString(request, "portletResource");

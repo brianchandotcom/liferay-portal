@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -65,6 +66,7 @@ import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetEntry;
+import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
@@ -363,6 +365,91 @@ public class AssetPublisherImpl implements AssetPublisher {
 		else {
 			return AssetEntryLocalServiceUtil.getEntries(assetEntryQuery);
 		}
+	}
+
+	@Override
+	public List<AssetEntry> getAssetEntries(
+			PortletRequest portletRequest,
+			PortletPreferences portletPreferences,
+			PermissionChecker permissionChecker, long[] groupIds,
+			String[] assetEntryXmls, boolean deleteNotDisplayableAssets,
+			boolean checkPermission)
+		throws Exception {
+
+		List<String> deletedAssets = new ArrayList<String>();
+
+		List<AssetEntry> viewableResults = new ArrayList<AssetEntry>();
+
+		for (String assetEntryXml : assetEntryXmls) {
+			Document document = SAXReaderUtil.read(assetEntryXml);
+
+			Element rootElement = document.getRootElement();
+
+			String assetEntryUuid = rootElement.elementText("asset-entry-uuid");
+
+			AssetEntry assetEntry = null;
+
+			for (long groupId : groupIds) {
+				assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+					groupId, assetEntryUuid);
+
+				if (assetEntry != null) {
+					break;
+				}
+			}
+
+			if (!assetEntry.isVisible()) {
+				continue;
+			}
+
+			if (assetEntry == null) {
+				if (deleteNotDisplayableAssets) {
+					deletedAssets.add(assetEntryUuid);
+				}
+				else {
+					continue;
+				}
+			}
+
+			AssetRendererFactory assetRendererFactory =
+				AssetRendererFactoryRegistryUtil.
+					getAssetRendererFactoryByClassName(
+						assetEntry.getClassName());
+
+			AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(
+				assetEntry.getClassPK());
+
+			if (!assetRendererFactory.isActive(
+					permissionChecker.getCompanyId())) {
+
+				if (deleteNotDisplayableAssets) {
+					deletedAssets.add(assetEntryUuid);
+				}
+
+				continue;
+			}
+
+			if (checkPermission &&
+				(!assetRenderer.isDisplayable() ||
+				 !assetRenderer.hasViewPermission(permissionChecker))) {
+
+				continue;
+			}
+
+			viewableResults.add(assetEntry);
+		}
+
+		if (deleteNotDisplayableAssets) {
+			AssetPublisherUtil.removeAndStoreSelection(
+				deletedAssets, portletPreferences);
+
+			if (!deletedAssets.isEmpty()) {
+				SessionMessages.add(
+					portletRequest, "removedSelectedAssets", deletedAssets);
+			}
+		}
+
+		return viewableResults;
 	}
 
 	@Override

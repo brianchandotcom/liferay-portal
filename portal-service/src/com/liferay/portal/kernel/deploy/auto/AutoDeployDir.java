@@ -228,6 +228,10 @@ public class AutoDeployDir {
 	protected void scanDirectory() {
 		File[] files = _deployDir.listFiles();
 
+		if (files == null) {
+			return;
+		}
+
 		Set<String> blacklistedFileNames = _blacklistFileTimestamps.keySet();
 
 		Iterator<String> iterator = blacklistedFileNames.iterator();

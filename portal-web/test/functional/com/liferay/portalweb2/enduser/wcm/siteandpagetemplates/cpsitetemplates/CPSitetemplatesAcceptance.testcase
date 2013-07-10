@@ -1,0 +1,46 @@
+<definition>
+<var name="portletName" value="Site Templates" />
+<var name="siteTemplateName" value="Site Template Name" />
+
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<command name="AddSiteTemplate">
+		<var name="siteTemplateActive" value="Yes" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="${portletName}" />
+		</execute>
+
+		<execute macro="SiteTemplates#addCP">
+			<var name="siteTemplateActive" value="${siteTemplateActive}" />
+			<var name="siteTemplateName" value="${siteTemplateName}" />
+		</execute>
+	</command>
+
+	<command name="EditSiteTemplate">
+		<var name="siteTemplateActive" value="Yes" />
+		<var name="siteTemplateActiveNew" value="No" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="${portletName}" />
+		</execute>
+
+		<execute macro="SiteTemplates#addCP">
+			<var name="siteTemplateActive" value="${siteTemplateActive}" />
+			<var name="siteTemplateName" value="${siteTemplateName}" />
+		</execute>
+
+		<execute macro="SiteTemplates#editCP">
+			<var name="siteTemplateActiveNew" value="${siteTemplateActiveNew}" />
+			<var name="siteTemplateName" value="${siteTemplateName}" />
+		</execute>
+	</command>
+
+	<tear-down>
+		<execute macro="SiteTemplates#tearDownCP">
+			<var name="portletName" value="${portletName}" />
+		</execute>
+	</tear-down>
+</definition>

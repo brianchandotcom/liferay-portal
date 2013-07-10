@@ -18,12 +18,14 @@
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="pageName" value="${pageName}" />
 			<var name="portletName" value="${portletName}" />
 		</execute>
 
-		<execute macro="BlogsEntry#addPG">
+		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BlogsEntry#addPG">
 			<var name="entryTitle" value="${entryTitle}" />
 			<var name="entryContent" value="${entryContent}" />
 		</execute>

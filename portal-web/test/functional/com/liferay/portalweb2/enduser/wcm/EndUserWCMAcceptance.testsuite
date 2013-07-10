@@ -9,7 +9,11 @@
 
 	<execute test-case="CPSitesAcceptance" />
 
+	<execute test-case="CPSitetemplatesAcceptance" />
+
 	<execute test-case="CPWebcontentAcceptance" />
+
+	<execute test-case="PGApplicationdisplaytemplatesAcceptance" />
 
 	<execute test-case="PGAssetpublisherSiteAcceptance" />
 
@@ -24,6 +28,6 @@
 	<execute test-case="RecyclebinMessageboardsAcceptance" />
 
 	<execute test-case="RecyclebinWebcontentAcceptance" />
-	
+
 	<execute test-case="DockbarAcceptance" />
 </definition>

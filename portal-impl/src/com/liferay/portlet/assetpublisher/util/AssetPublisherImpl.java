@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
@@ -288,7 +287,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 	}
 
 	@Override
-	public Tuple getAssetEntries(
+	public List<AssetEntry> getAssetEntries(
 			PortletRequest portletRequest,
 			PortletPreferences portletPreferences,
 			PermissionChecker permissionChecker, long[] groupIds,
@@ -369,7 +368,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 			}
 		}
 
-		return new Tuple(viewableResults, deletedAssets);
+		return viewableResults;
 	}
 
 	@Override

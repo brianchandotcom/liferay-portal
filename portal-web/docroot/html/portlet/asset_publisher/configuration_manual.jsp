@@ -52,9 +52,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 
 			SearchContainer searchContainer = new SearchContainer(renderRequest, new DisplayTerms(renderRequest), new DisplayTerms(renderRequest), SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, configurationRenderURL, headerNames, LanguageUtil.get(pageContext, "no-assets-selected"));
 
-			Tuple tuple = AssetPublisherUtil.getAssetEntries(renderRequest, portletPreferences, permissionChecker, groupIds, assetEntryXmls, true, false);
-
-			List<AssetEntry> assetEntries = (List<AssetEntry>)tuple.getObject(0);
+			List<AssetEntry> assetEntries = AssetPublisherUtil.getAssetEntries(renderRequest, portletPreferences, permissionChecker, groupIds, assetEntryXmls, true, false);;
 
 			int total = assetEntries.size();
 

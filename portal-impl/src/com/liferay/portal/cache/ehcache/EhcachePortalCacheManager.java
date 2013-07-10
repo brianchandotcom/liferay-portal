@@ -74,7 +74,7 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 		Configuration configuration = EhcacheConfigurationUtil.getConfiguration(
 			configurationPath, _clusterAware, _usingDefault);
 
-		_cacheManager = new CacheManager(configuration);
+		_cacheManager = CacheManagerUtil.createCacheManager(configuration);
 
 		FailSafeTimer failSafeTimer = _cacheManager.getTimer();
 

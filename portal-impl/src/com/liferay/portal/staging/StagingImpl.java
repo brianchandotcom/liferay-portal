@@ -1250,8 +1250,8 @@ public class StagingImpl implements Staging {
 					"info",
 					LanguageUtil.format(
 						locale,
-						"the-original-x-does-not-exist-in-the-current" +
-							"-environment",
+						"the-original-x-does-not-exist-in-the-current-" +
+							"environment",
 						ResourceActionsUtil.getModelResource(
 							locale, missingReference.getClassName())));
 			}

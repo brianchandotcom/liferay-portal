@@ -66,10 +66,6 @@ if (ppid.equals(PortletKeys.PORTLET_CONFIGURATION)) {
 	}
 }
 
-if (ppid.equals(PortletKeys.PLUGIN_INSTALLER)) {
-	ppid = PortletKeys.ADMIN_PLUGINS;
-}
-
 String category = PortalUtil.getControlPanelCategory(ppid, themeDisplay);
 
 Portlet portlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), ppid);

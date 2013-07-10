@@ -116,6 +116,9 @@ public class PortletKeys {
 
 	public static final String MAIL = "1_WAR_mailportlet";
 
+	public static final String MARKETPLACE_APP_MANAGER =
+		"3_WAR_marketplaceportlet";
+
 	public static final String MARKETPLACE_STORE = "1_WAR_marketplaceportlet";
 
 	public static final String MEDIA_GALLERY_DISPLAY = "31";
@@ -147,8 +150,6 @@ public class PortletKeys {
 	public static final String PAGE_RATINGS = "108";
 
 	public static final String PASSWORD_POLICIES_ADMIN = "129";
-
-	public static final String PLUGIN_INSTALLER = "111";
 
 	public static final String PLUGINS_ADMIN = "132";
 
@@ -241,8 +242,6 @@ public class PortletKeys {
 	public static final String TRASH = "182";
 
 	public static final String UNIT_CONVERTER = "27";
-
-	public static final String UPDATE_MANAGER = "104";
 
 	public static final String USER_GROUPS_ADMIN = "127";
 

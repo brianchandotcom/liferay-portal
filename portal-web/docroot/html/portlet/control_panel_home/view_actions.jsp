@@ -28,30 +28,41 @@
 			<div class="control-panel-home-actions-category">
 				<c:choose>
 					<c:when test="<%= category.equals(PortletCategoryKeys.APPS) %>">
-						<c:if test="<%= true %>">
-							<liferay-portlet:renderURL portletName="<%= PortletKeys.UPDATE_MANAGER %>" var="manageAppsURL">
-								<portlet:param name="redirect" value="<%= PortalUtil.getCurrentURL(request) %>" />
-							</liferay-portlet:renderURL>
+						<c:choose>
+							<c:when test="<%= PortletLocalServiceUtil.hasPortlet(themeDisplay.getCompanyId(), PortletKeys.MARKETPLACE_APP_MANAGER) %>">
+								<liferay-portlet:renderURL portletName="<%= PortletKeys.MARKETPLACE_APP_MANAGER %>" var="appManagerURL">
+									<portlet:param name="redirect" value="<%= PortalUtil.getCurrentURL(request) %>" />
+								</liferay-portlet:renderURL>
 
-							<p>
-								<liferay-ui:message key="do-you-want-to-manage-the-installed-apps" />
-							</p>
+								<p>
+									<liferay-ui:message key="do-you-want-to-manage-the-installed-apps" />
+								</p>
 
-							<aui:button cssClass="btn-primary" href="<%= manageAppsURL %>" id="controlPanelHomeActionManageApps" value="manage-apps" />
-						</c:if>
+								<aui:button cssClass="btn-primary" href="<%= appManagerURL %>" id="controlPanelHomeActionManageApps" value="manage-apps" />
+							</c:when>
+							<c:otherwise>
+								<liferay-portlet:renderURL portletName="<%= PortletKeys.PLUGINS_ADMIN %>" var="pluginsAdminURL">
+									<portlet:param name="redirect" value="<%= PortalUtil.getCurrentURL(request) %>" />
+								</liferay-portlet:renderURL>
+
+								<p>
+									<liferay-ui:message key="do-you-want-to-manage-the-installed-apps" />
+								</p>
+
+								<aui:button cssClass="btn-primary" href="<%= pluginsAdminURL %>" id="controlPanelHomeActionManageApps" value="manage-apps" />
+							</c:otherwise>
+						</c:choose>
 					</c:when>
 					<c:when test="<%= category.equals(PortletCategoryKeys.CONFIGURATION) %>">
-						<c:if test="<%= true %>">
-							<liferay-portlet:renderURL portletName="<%= PortletKeys.PORTAL_SETTINGS %>" var="editPortalSettingsURL">
-								<portlet:param name="redirect" value="<%= PortalUtil.getCurrentURL(request) %>" />
-							</liferay-portlet:renderURL>
+						<liferay-portlet:renderURL portletName="<%= PortletKeys.PORTAL_SETTINGS %>" var="editPortalSettingsURL">
+							<portlet:param name="redirect" value="<%= PortalUtil.getCurrentURL(request) %>" />
+						</liferay-portlet:renderURL>
 
-							<p>
-								<liferay-ui:message key="do-you-want-to-modify-any-settings-of-your-portal" />
-							</p>
+						<p>
+							<liferay-ui:message key="do-you-want-to-modify-any-settings-of-your-portal" />
+						</p>
 
-							<aui:button cssClass="btn-primary" href="<%= editPortalSettingsURL %>" id="controlPanelHomeActionPortalSettings" value="edit-portal-settings" />
-						</c:if>
+						<aui:button cssClass="btn-primary" href="<%= editPortalSettingsURL %>" id="controlPanelHomeActionPortalSettings" value="edit-portal-settings" />
 					</c:when>
 					<c:when test="<%= category.equals(PortletCategoryKeys.SITES) %>">
 

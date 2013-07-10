@@ -1479,14 +1479,6 @@
 
 		<action path="/password_policies_admin/view" forward="portlet.password_policies_admin.view" />
 
-		<!-- Plugin Installer -->
-
-		<action path="/plugin_installer/install_plugin" type="com.liferay.portlet.plugininstaller.action.InstallPluginAction">
-			<forward name="portlet.plugin_installer.error" path="portlet.plugin_installer.error" />
-		</action>
-
-		<action path="/plugin_installer/view" forward="portlet.plugin_installer.view" />
-
 		<!-- Plugins Admin -->
 
 		<action path="/plugins_admin/edit_plugin" type="com.liferay.portlet.pluginsadmin.action.EditPluginAction">
@@ -1966,14 +1958,6 @@
 		</action>
 
 		<action path="/trash/view_content" forward="portlet.trash.view_content" />
-
-		<!-- Update Manager -->
-
-		<action path="/update_manager/install_plugin" type="com.liferay.portlet.plugininstaller.action.InstallPluginAction">
-			<forward name="portlet.plugin_installer.error" path="portlet.plugin_installer.error" />
-		</action>
-
-		<action path="/update_manager/view" forward="portlet.update_manager.view" />
 
 		<!-- User Groups Admin -->
 

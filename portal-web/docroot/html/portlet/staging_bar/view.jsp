@@ -248,7 +248,7 @@ if (layout != null) {
 		%>
 
 		<c:if test="<%= !group.isStagedRemotely() || branchingEnabled %>">
-			<div class="tab-pane staging-tabview-content">
+			<div class="alert alert-block staging-tabview-content tab-pane">
 				<c:choose>
 					<c:when test="<%= (group.isStagingGroup() || group.isStagedRemotely()) && branchingEnabled %>">
 						<div class="layout-set-branch-info">

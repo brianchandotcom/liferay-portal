@@ -76,7 +76,7 @@ public interface AssetPublisher {
 
 	public Tuple getAssetEntries(
 			PermissionChecker permissionChecker, long[] groupIds,
-			String[] assetEntryXmls, boolean isConfiguration,
+			String[] assetEntryXmls, boolean deleteNotDisplayableAssets,
 			boolean checkPermission)
 		throws Exception;
 

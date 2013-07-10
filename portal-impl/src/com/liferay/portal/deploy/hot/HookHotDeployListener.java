@@ -1197,16 +1197,16 @@ public class HookHotDeployListener
 			Element rootElement)
 		throws Exception {
 
+		String customJspDir = rootElement.elementText("custom-jsp-dir");
+
+		if (Validator.isNull(customJspDir)) {
+			return;
+		}
+
 		if (!checkPermission(
 				PACLConstants.PORTAL_HOOK_PERMISSION_CUSTOM_JSP_DIR,
 				portletClassLoader, null, "Rejecting custom JSP directory")) {
 
-			return;
-		}
-
-		String customJspDir = rootElement.elementText("custom-jsp-dir");
-
-		if (Validator.isNull(customJspDir)) {
 			return;
 		}
 

@@ -16,7 +16,6 @@ package com.liferay.portlet.assetpublisher.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.User;
@@ -74,7 +73,7 @@ public interface AssetPublisher {
 
 	public void checkAssetEntries() throws Exception;
 
-	public Tuple getAssetEntries(
+	public List<AssetEntry> getAssetEntries(
 			PortletRequest portletRequest,
 			PortletPreferences portletPreferences,
 			PermissionChecker permissionChecker, long[] groupIds,

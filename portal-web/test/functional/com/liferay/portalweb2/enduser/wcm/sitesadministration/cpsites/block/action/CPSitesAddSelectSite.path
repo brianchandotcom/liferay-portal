@@ -1,0 +1,41 @@
+<html>
+<head>
+<title>CPSitesAddSelectSite</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPSitesAddSelectSite</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>CPSitesAddSelectSite</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SELECT_SITE-->
+<tr>
+	<td>SELECT_SITE_IFRAME</td>
+	<td>//iframe[contains(@class,'dialog-iframe-node')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--CHOOSE_BUTTON-->
+<tr>
+	<td>CHOOSE_BUTTON</td>
+	<td>//tr[contains(.,'Liferay')]/td/button</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

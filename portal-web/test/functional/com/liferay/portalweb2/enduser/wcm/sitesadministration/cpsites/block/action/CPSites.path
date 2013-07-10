@@ -143,6 +143,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SITE_TABLE_SUBSITE</td>
+	<td>//div[@class='subsites-count']</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

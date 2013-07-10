@@ -18,6 +18,11 @@
 
 <%
 if (termCollectors.isEmpty()) {
+%>
+
+	<aui:input name="<%= facet.getFieldName() %>" type="hidden" value="0" />
+
+<%
 	return;
 }
 

@@ -398,17 +398,16 @@ public class AssetPublisherImpl implements AssetPublisher {
 				}
 			}
 
-			if (!assetEntry.isVisible()) {
-				continue;
-			}
-
 			if (assetEntry == null) {
 				if (deleteNotDisplayableAssetEntries) {
 					deletedAssetEntrieUuids.add(assetEntryUuid);
 				}
-				else {
-					continue;
-				}
+
+				continue;
+			}
+
+			if (!assetEntry.isVisible()) {
+				continue;
 			}
 
 			AssetRendererFactory assetRendererFactory =

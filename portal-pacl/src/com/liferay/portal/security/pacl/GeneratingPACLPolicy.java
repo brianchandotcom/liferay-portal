@@ -58,6 +58,10 @@ public class GeneratingPACLPolicy extends ActivePACLPolicy {
 			AuthorizationProperty authorizationProperty =
 				jndiChecker.generateAuthorizationProperty(name);
 
+			if (authorizationProperty == null) {
+				return false;
+			}
+
 			mergeAuthorizationProperty(authorizationProperty);
 		}
 
@@ -71,6 +75,10 @@ public class GeneratingPACLPolicy extends ActivePACLPolicy {
 		if (!sqlChecker.hasSQL(sql)) {
 			AuthorizationProperty authorizationProperty =
 				sqlChecker.generateAuthorizationProperty(sql);
+
+			if (authorizationProperty == null) {
+				return false;
+			}
 
 			mergeAuthorizationProperty(authorizationProperty);
 		}
@@ -90,6 +98,10 @@ public class GeneratingPACLPolicy extends ActivePACLPolicy {
 			AuthorizationProperty authorizationProperty =
 				checker.generateAuthorizationProperty(permission);
 
+			if (authorizationProperty == null) {
+				return false;
+			}
+
 			mergeAuthorizationProperty(authorizationProperty);
 		}
 		catch (Exception e) {
@@ -101,10 +113,6 @@ public class GeneratingPACLPolicy extends ActivePACLPolicy {
 
 	protected void mergeAuthorizationProperty(
 		AuthorizationProperty authorizationProperty) {
-
-		if (authorizationProperty == null) {
-			return;
-		}
 
 		AccessController.doPrivileged(
 			new AuthorizationPropertyPrivilegedAction(authorizationProperty));

@@ -7,7 +7,7 @@ CKEDITOR.dialog.add(
 								'		new A.Video(' +
 								'			{';
 
-		var TPL_SCRIPT = 		'				ogvUrl: \'{ogvUrl}\',' +
+		var TPL_SCRIPT =		'				ogvUrl: \'{ogvUrl}\',' +
 								'				url: \'{url}\',' +
 								'				poster: \'{poster}\',' +
 								'				boundingBox: \'#{videoBoxId}\',' +

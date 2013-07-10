@@ -780,7 +780,6 @@
 							case 210:
 								alert( 'You cannot upload a video file if video preview generation is not enabled.' );
 								break ;
-
 							default :
 						]]>
 					</replacevalue>
@@ -838,10 +837,10 @@
 								var funcNum = (match && match.length) ? match[1] : '';
 
 								window.top.opener.CKEDITOR.tools.callFunction(funcNum, fileUrl);
-						    }
-						    else {
-						 		alert(errorMessage);
-						    }
+							}
+							else {
+								alert(errorMessage);
+							}
 						]]>
 					</replacevalue>
 				</replace>

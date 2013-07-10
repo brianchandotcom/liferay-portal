@@ -253,4 +253,77 @@
 		<execute action="CPMyworkflowtasks#assertElementPresent" locator-key1="ASSIGNED_TO_ME_TABLE_LAST_ACTIVITY_DATE" />
 		<execute action="CPMyworkflowtasks#assertElementPresent" locator-key1="ASSIGNED_TO_ME_TABLE_DUE_DATE" />
 	</command>
+
+	<command name="withdrawTaskByActions">
+		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
+
+		<execute action="CPMysubmissions#assertTextEquals" locator-key1="PENDING_TABLE_DEFINITION" value1="${workflowDefinition}" />
+		<execute action="CPMysubmissions#assertTextEquals" locator-key1="PENDING_TABLE_ASSET_TITLE" value1="${workflowAssetTitle}" />
+		<execute action="CPMysubmissions#assertTextEquals" locator-key1="PENDING_TABLE_ASSET_TYPE" value1="${workflowAssetType}" />
+		<execute action="CPMysubmissions#assertTextEquals" locator-key1="PENDING_TABLE_STATUS" value1="${workflowTask}" />
+		<execute action="CPMysubmissions#assertElementPresent" locator-key1="PENDING_TABLE_LAST_ACTIVITY_DATE" />
+		<execute action="CPMysubmissions#assertElementPresent" locator-key1="PENDING_TABLE_END_DATE" />
+		<execute action="CPMysubmissions#assertClick" locator-key1="PENDING_TABLE_WITHDRAW_SUBMISSION" value1="Withdraw Submission" />
+
+		<execute action="CPMysubmissions#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
+	<command name="withdrawTaskByDetails">
+		<var name="key_workflowAssetContent" value="${workflowAssetContent}" />
+		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
+
+		<execute action="CPMysubmissions#assertTextEquals" locator-key1="PENDING_TABLE_DEFINITION" value1="${workflowDefinition}" />
+		<execute action="CPMysubmissions#assertTextEquals" locator-key1="PENDING_TABLE_ASSET_TITLE" value1="${workflowAssetTitle}" />
+		<execute action="CPMysubmissions#assertTextEquals" locator-key1="PENDING_TABLE_ASSET_TYPE" value1="${workflowAssetType}" />
+		<execute action="CPMysubmissions#assertTextEquals" locator-key1="PENDING_TABLE_STATUS" value1="${workflowTask}" />
+		<execute action="CPMysubmissions#assertElementPresent" locator-key1="PENDING_TABLE_LAST_ACTIVITY_DATE" />
+		<execute action="CPMysubmissions#assertElementPresent" locator-key1="PENDING_TABLE_END_DATE" />
+		<execute action="CPMysubmissions#assertTextEquals" locator-key1="PENDING_TABLE_WITHDRAW_SUBMISSION" value1="Withdraw Submission" />
+		<execute action="CPMysubmissions#assertClick" locator-key1="PENDING_TABLE_ASSET_TITLE" value1="${workflowAssetTitle}"/>
+
+		<execute action="CPMysubmissionsTask#assertTextEquals" locator-key1="PREVIEW" value1="PREVIEW OF ${workflowAssetTypeCAPS}" />
+		<execute action="CPMysubmissionsTask#assertTextEquals" locator-key1="PREVIEW_TITLE" value1="${workflowAssetTitle}" />
+		<execute action="CPMysubmissionsTask#assertTextEquals" locator-key1="PREVIEW_CONTENT" value1="${workflowAssetContent}" />
+		<execute action="CPMysubmissionsTask#assertTextEquals" locator-key1="MENU_WORKFLOW_NAME" value1="${workflowDefinition}" />
+		<execute action="CPMysubmissionsTask#assertClick" locator-key1="MENU_WITHDRAW_SUBMISSION" value1="Withdraw Submission" />
+
+		<execute action="CPMysubmissions#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
+	<command name="withdrawTaskCompletedNoByActions">
+		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
+
+		<execute action="CPMysubmissions#assertClick"  locator-key1="NAVIGATION_COMPLETED" value1="Completed" />
+
+		<execute action="CPMysubmissionsCompleted#assertTextEquals" locator-key1="COMPLETED_TABLE_DEFINITION" value1="${workflowDefinition}" />
+		<execute action="CPMysubmissionsCompleted#assertTextEquals" locator-key1="COMPLETED_TABLE_ASSET_TITLE" value1="${workflowAssetTitle}" />
+		<execute action="CPMysubmissionsCompleted#assertTextEquals" locator-key1="COMPLETED_TABLE_ASSET_TYPE" value1="${workflowAssetType}" />
+		<execute action="CPMysubmissionsCompleted#assertTextEquals" locator-key1="COMPLETED_TABLE_STATUS" value1="${workflowTask}" />
+		<execute action="CPMysubmissionsCompleted#assertElementPresent" locator-key1="COMPLETED_TABLE_LAST_ACTIVITY_DATE" />
+		<execute action="CPMysubmissionsCompleted#assertElementPresent" locator-key1="COMPLETED_TABLE_END_DATE" />
+		<execute action="CPMysubmissionsCompleted#assertElementNotPresent" locator1="//div[@id='_158_workflowInstancesSearchContainer']//tr[contains(.,'${key_workflowAssetTitle}')]/td[7]/span/a[contains(@id,'menu_withdraw-submission')]/span" />
+		<execute action="CPMysubmissionsCompleted#assertTextNotPresent" value1="Withdraw Submission" />
+	</command>
+
+	<command name="withdrawTaskCompletedNoByDetails">
+		<var name="key_workflowAssetContent" value="${workflowAssetContent}" />
+		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
+
+		<execute action="CPMysubmissions#assertClick"  locator-key1="NAVIGATION_COMPLETED" value1="Completed" />
+
+		<execute action="CPMysubmissionsCompleted#assertTextEquals" locator-key1="COMPLETED_TABLE_DEFINITION" value1="${workflowDefinition}" />
+		<execute action="CPMysubmissionsCompleted#assertTextEquals" locator-key1="COMPLETED_TABLE_ASSET_TITLE" value1="${workflowAssetTitle}" />
+		<execute action="CPMysubmissionsCompleted#assertTextEquals" locator-key1="COMPLETED_TABLE_ASSET_TYPE" value1="${workflowAssetType}" />
+		<execute action="CPMysubmissionsCompleted#assertTextEquals" locator-key1="COMPLETED_TABLE_STATUS" value1="${workflowTask}" />
+		<execute action="CPMysubmissionsCompleted#assertElementPresent" locator-key1="COMPLETED_TABLE_LAST_ACTIVITY_DATE" />
+		<execute action="CPMysubmissionsCompleted#assertElementPresent" locator-key1="COMPLETED_TABLE_END_DATE" />
+		<execute action="CPMysubmissionsCompleted#assertClick" locator-key1="COMPLETED_TABLE_ASSET_TITLE" value1="${workflowAssetTitle}"/>
+
+		<execute action="CPMysubmissionsTask#assertTextEquals" locator-key1="PREVIEW" value1="PREVIEW OF ${workflowAssetTypeCAPS}" />
+		<execute action="CPMysubmissionsTask#assertTextEquals" locator-key1="PREVIEW_TITLE" value1="${workflowAssetTitle}" />
+		<execute action="CPMysubmissionsTask#assertTextEquals" locator-key1="PREVIEW_CONTENT" value1="${workflowAssetContent}" />
+		<execute action="CPMysubmissionsTask#assertTextEquals" locator-key1="MENU_WORKFLOW_NAME" value1="${workflowDefinition}" />
+		<execute action="CPMysubmissionsTask#assertElementNotPresent" locator-key1="MENU_WITHDRAW_SUBMISSION" value1="Withdraw Submission" />
+		<execute action="CPMysubmissionsTask#assertTextNotPresent" value1="Withdraw Submission" />
+	</command>
 </definition>

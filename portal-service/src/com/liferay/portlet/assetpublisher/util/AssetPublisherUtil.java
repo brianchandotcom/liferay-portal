@@ -90,13 +90,13 @@ public class AssetPublisherUtil {
 
 	public static Tuple getAssetEntries(
 			PermissionChecker permissionChecker, long[] groupIds,
-			String[] assetEntryXmls, boolean isConfiguration,
+			String[] assetEntryXmls, boolean deleteNotDisplayableAssets,
 			boolean checkPermission)
 		throws Exception {
 
 		return getAssetPublisher().getAssetEntries(
-				permissionChecker, groupIds, assetEntryXmls, isConfiguration,
-				checkPermission);
+				permissionChecker, groupIds, assetEntryXmls,
+				deleteNotDisplayableAssets, checkPermission);
 	}
 
 	public static List<AssetEntry> getAssetEntries(

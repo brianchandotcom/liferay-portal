@@ -289,7 +289,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 	@Override
 	public Tuple getAssetEntries(
 			PermissionChecker permissionChecker, long[] groupIds,
-			String[] assetEntryXmls, boolean isConfiguration,
+			String[] assetEntryXmls, boolean deleteNotDisplayableAssets,
 			boolean checkPermission)
 		throws Exception {
 
@@ -327,7 +327,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 			AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(
 				assetEntry.getClassPK());
 
-			if (isConfiguration) {
+			if (deleteNotDisplayableAssets) {
 				if (!assetRendererFactory.isActive(
 						permissionChecker.getCompanyId())) {
 

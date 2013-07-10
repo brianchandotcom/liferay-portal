@@ -15,9 +15,7 @@
 --%>
 
 <%
-Tuple tuple = AssetPublisherUtil.getAssetEntries(renderRequest, portletPreferences, permissionChecker, groupIds, assetEntryXmls, false, enablePermissions);
-
-List<AssetEntry> assetEntries = (List<AssetEntry>)tuple.getObject(0);
+List<AssetEntry> assetEntries = AssetPublisherUtil.getAssetEntries(renderRequest, portletPreferences, permissionChecker, groupIds, assetEntryXmls, false, enablePermissions);
 
 searchContainer.setTotal(assetEntries.size());
 

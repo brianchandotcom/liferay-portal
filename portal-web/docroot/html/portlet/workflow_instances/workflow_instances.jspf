@@ -135,7 +135,7 @@
 
 		</liferay-ui:search-container-column-text>
 
-		<c:if test="<%= !allInstances %>">
+		<c:if test='<%= !allInstances && !tabs2.equals("completed") %>'>
 			<liferay-ui:search-container-column-jsp
 				align="right"
 				path="/html/portlet/workflow_instances/workflow_instance_action.jsp"

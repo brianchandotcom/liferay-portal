@@ -903,7 +903,7 @@ public class StagingImpl implements Staging {
 			errorType = ServletResponseConstants.SC_FILE_CUSTOM_EXCEPTION;
 		}
 
-		exceptionMessagesJSONArray.put("message", errorMessage);
+		exceptionMessagesJSONArray.putErrorMessage(errorType, errorMessage);
 
 		if ((errorMessagesJSONArray != null) &&
 			(errorMessagesJSONArray.length() > 0)) {
@@ -911,8 +911,6 @@ public class StagingImpl implements Staging {
 			exceptionMessagesJSONArray.put(
 				"messageListItems", errorMessagesJSONArray);
 		}
-
-		exceptionMessagesJSONArray.put("status", errorType);
 
 		if ((warningMessagesJSONArray != null) &&
 			(warningMessagesJSONArray.length() > 0)) {

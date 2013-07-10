@@ -809,8 +809,7 @@ public class EditFileEntryAction extends PortletAction {
 
 				JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-				jsonObject.put("message", errorMessage);
-				jsonObject.put("status", errorType);
+				jsonObject.putErrorMessage(errorType, errorMessage);
 
 				writeJSON(actionRequest, actionResponse, jsonObject);
 			}

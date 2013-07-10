@@ -141,7 +141,7 @@ for (int i = 0; i < locales.length; i++) {
 							<span class="<%= cssClassName %>" lang="<%= LocaleUtil.toW3cLanguageId(locales[i]) %>"><%= localeDisplayName %></span>
 						</c:when>
 						<c:otherwise>
-							<aui:a cssClass="<%= cssClassName %>" href="<%= HttpUtil.addParameter(formAction, name, LocaleUtil.toLanguageId(locales[i])) %>" lang="<%= LocaleUtil.toW3cLanguageId(locales[i]) %>"><%= localeDisplayName %></aui:a>
+							<aui:a cssClass="<%= cssClassName %>" href="<%= HttpUtil.addParameter(formAction, namespace + name, LocaleUtil.toLanguageId(locales[i])) %>" lang="<%= LocaleUtil.toW3cLanguageId(locales[i]) %>"><%= localeDisplayName %></aui:a>
 						</c:otherwise>
 					</c:choose>
 				</c:when>
@@ -150,7 +150,7 @@ for (int i = 0; i < locales.length; i++) {
 						image='<%= "../language/" + LocaleUtil.toLanguageId(locales[i]) %>'
 						lang="<%= LocaleUtil.toW3cLanguageId(locales[i]) %>"
 						message="<%= LocaleUtil.getLongDisplayName(locales[i], duplicateLanguages) %>"
-						url='<%= currentLanguageId.equals(languageId) ? null : formAction + "&" + name + "=" + LocaleUtil.toLanguageId(locales[i]) %>'
+						url="<%= currentLanguageId.equals(languageId) ? null : HttpUtil.addParameter(formAction, namespace + name, LocaleUtil.toLanguageId(locales[i])) %>"
 					/>
 				</c:otherwise>
 			</c:choose>

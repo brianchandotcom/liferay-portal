@@ -37,6 +37,7 @@ public class RuntimeChecker extends BaseChecker {
 	@Override
 	public void afterPropertiesSet() {
 		initCreateClassLoader();
+		initGetProtectionDomain();
 		initEnvironmentVariables();
 	}
 
@@ -59,6 +60,11 @@ public class RuntimeChecker extends BaseChecker {
 
 		if (name.startsWith(RUNTIME_PERMISSION_CREATE_CLASS_LOADER)) {
 			key = "security-manager-create-class-loader";
+
+			value = "true";
+		}
+		else if (name.startsWith(RUNTIME_PERMISSION_GET_PROTECTION_DOMAIN)) {
+			key = "security-manager-get-protection-domain";
 
 			value = "true";
 		}
@@ -278,6 +284,10 @@ public class RuntimeChecker extends BaseChecker {
 	}
 
 	protected boolean hasGetProtectionDomain(Permission permission) {
+		if (_getProtectionDomain) {
+			return true;
+		}
+
 		int stackIndex = getStackIndex(11, 10);
 
 		Class<?> callerClass = Reflection.getCallerClass(stackIndex);
@@ -375,9 +385,15 @@ public class RuntimeChecker extends BaseChecker {
 		}
 	}
 
+	protected void initGetProtectionDomain() {
+		_getProtectionDomain = getPropertyBoolean(
+			"security-manager-get-protection-domain");
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(RuntimeChecker.class);
 
 	private boolean _createClassLoader;
 	private List<Pattern> _environmentVariablePatterns;
+	private boolean _getProtectionDomain;
 
 }

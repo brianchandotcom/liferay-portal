@@ -14,6 +14,9 @@
 
 package com.liferay.portal.kernel.deploy.auto;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
 /**
  * @author Ivica Cardic
  * @author Brian Wing Shun Chan
@@ -51,9 +54,19 @@ public class AutoDeployScanner extends Thread {
 			catch (InterruptedException ie) {
 			}
 
-			_autoDeployDir.scanDirectory();
+			try {
+				_autoDeployDir.scanDirectory();
+			}
+			catch (Exception e) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Unable to finish scanning auto deploy directory", e);
+				}
+			}
 		}
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(AutoDeployScanner.class);
 
 	private AutoDeployDir _autoDeployDir;
 	private boolean _started = true;

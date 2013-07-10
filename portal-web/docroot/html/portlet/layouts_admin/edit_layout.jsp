@@ -110,7 +110,7 @@ String[][] categorySections = {mainSections};
 
 <aui:nav-bar>
 	<aui:nav id="layoutsNav">
-		<c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, selPlid, ActionKeys.ADD_LAYOUT) && PortalUtil.isLayoutParentable(selLayout.getType()) %>">
+		<c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, selPlid, ActionKeys.ADD_LAYOUT) && PortalUtil.isLayoutParentable(selLayout.getType()) && SitesUtil.isLayoutSortable(selLayout) %>">
 			<aui:nav-item data-value="add-child-page" iconClass="icon-plus" label="add-child-page" />
 		</c:if>
 		<c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, selPlid, ActionKeys.PERMISSIONS) %>">
@@ -214,7 +214,7 @@ String[][] categorySections = {mainSections};
 					</c:when>
 					<c:when test="<%= !SitesUtil.isLayoutDeleteable(selLayout) %>">
 						<div class="alert alert-block">
-							<liferay-ui:message key="this-page-cannot-be-deleted-because-it-is-associated-to-a-site-template" />
+							<liferay-ui:message key="this-page-cannot-have-children-or-be-deleted-because-it-is-associated-to-a-site-template" />
 						</div>
 					</c:when>
 				</c:choose>

@@ -84,6 +84,32 @@ public class PACLUtil {
 		return null;
 	}
 
+	public static boolean hasSameOrigin(Class<?> callerClass) {
+		PACLPolicy paclPolicy = getPACLPolicy();
+
+		if (paclPolicy == null) {
+			return true;
+		}
+
+		ProtectionDomain protectionDomain = AccessController.doPrivileged(
+			new ProtectionDomainPrivilegedAction(callerClass));
+
+		if (protectionDomain.getClassLoader() == null) {
+			return true;
+		}
+
+		PortalSecurityManager portalSecurityManager =
+			SecurityManagerUtil.getPortalSecurityManager();
+
+		Policy portalPolicy = portalSecurityManager.getPolicy();
+
+		PermissionCollection permissionCollection = portalPolicy.getPermissions(
+			protectionDomain);
+
+		return _hasSameOrigin(
+			protectionDomain, permissionCollection, paclPolicy);
+	}
+
 	public static String getServiceInterfaceName(String serviceClassName) {
 		int pos = serviceClassName.indexOf(".impl.");
 

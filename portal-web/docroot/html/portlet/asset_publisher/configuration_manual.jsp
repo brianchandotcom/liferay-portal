@@ -43,79 +43,66 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 		<aui:fieldset label="model.resource.com.liferay.portlet.asset">
 
 			<%
-			List<String> headerNames = new ArrayList<String>();
-
-			headerNames.add("title");
-			headerNames.add("type");
-			headerNames.add("modified-date");
-			headerNames.add(StringPool.BLANK);
-
-			SearchContainer searchContainer = new SearchContainer(renderRequest, new DisplayTerms(renderRequest), new DisplayTerms(renderRequest), SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, configurationRenderURL, headerNames, LanguageUtil.get(pageContext, "no-assets-selected"));
-
-			List<AssetEntry> assetEntries = AssetPublisherUtil.getAssetEntries(renderRequest, portletPreferences, permissionChecker, groupIds, assetEntryXmls, true, false);;
-
-			int total = assetEntries.size();
-
-			searchContainer.setTotal(total);
-
-			int end = (assetEntries.size() < searchContainer.getEnd()) ? assetEntries.size() : searchContainer.getEnd();
-			int start = searchContainer.getStart();
-
-			assetEntries = assetEntries.subList(start, end);
-
-			searchContainer.setResults(assetEntries);
-
-			List resultRows = searchContainer.getResultRows();
-
-			for (int i = 0; i < assetEntries.size(); i++) {
-				String assetEntryXml = assetEntryXmls[start + i];
-
-				Document doc = SAXReaderUtil.read(assetEntryXml);
-
-				AssetEntry assetEntry = assetEntries.get(i);
-
-				AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(assetEntry.getClassName());
-
-				ResultRow row = new ResultRow(doc, null, assetEntryOrder);
-
-				// Title
-
-				AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(assetEntry.getClassPK());
-
-				StringBundler sb = new StringBundler(4);
-
-				sb.append("<img alt=\"\" src=\"");
-				sb.append(assetRenderer.getIconPath(renderRequest));
-				sb.append("\" />");
-				sb.append(HtmlUtil.escape(assetRenderer.getTitle(locale)));
-
-				row.addText(sb.toString());
-
-				// Type
-
-				row.addText(assetRendererFactory.getTypeName(locale, false));
-
-				// Modified Date
-
-				row.addDate(assetEntry.getModifiedDate());
-
-				// Action
-
-				row.addJSP("right", SearchEntry.DEFAULT_VALIGN, "/html/portlet/asset_publisher/asset_selection_action.jsp");
-
-				// Add result row
-
-				resultRows.add(row);
-			}
+			List<AssetEntry> assetEntries = AssetPublisherUtil.getAssetEntries(renderRequest, portletPreferences, permissionChecker, groupIds, assetEntryXmls, true, enablePermissions);
 			%>
+
+			<liferay-ui:search-container
+				emptyResultsMessage="no-assets-selected"
+				iteratorURL="<%= configurationRenderURL %>"
+				total="<%= assetEntries.size() %>"
+			>
+				<liferay-ui:search-container-results>
+
+					<%
+					int end = (assetEntries.size() < searchContainer.getEnd()) ? assetEntries.size() : searchContainer.getEnd();
+					int start = searchContainer.getStart();
+
+					pageContext.setAttribute("results", assetEntries.subList(start, end));
+					%>
+
+				</liferay-ui:search-container-results>
+
+				<liferay-ui:search-container-row
+					className="com.liferay.portlet.asset.model.AssetEntry"
+					escapedModel="<%= true %>"
+					keyProperty="assetEntryId"
+					modelVar="assetEntry"
+				>
+
+					<%
+					AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(assetEntry.getClassName());
+
+					AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(assetEntry.getClassPK());
+					%>
+
+					<liferay-ui:search-container-column-text name="title">
+						<img alt="" src="<%= assetRenderer.getIconPath(renderRequest) %>" /><%= assetRenderer.getTitle(locale) %>
+					</liferay-ui:search-container-column-text>
+
+					<liferay-ui:search-container-column-text
+						name="type"
+						value="<%= assetRendererFactory.getTypeName(locale, false) %>"
+					/>
+
+					<liferay-ui:search-container-column-date
+						name="modified-date"
+						value="<%= assetEntry.getModifiedDate() %>"
+					/>
+
+					<liferay-ui:search-container-column-jsp
+						align="right"
+						path="/html/portlet/asset_publisher/asset_selection_action.jsp"
+					/>
+				</liferay-ui:search-container-row>
+
+				<liferay-ui:search-iterator paginate="<%= total > SearchContainer.DEFAULT_DELTA %>" />
+			</liferay-ui:search-container>
 
 			<c:if test='<%= SessionMessages.contains(renderRequest, "removedSelectedAssets") %>'>
 				<div class="alert alert-info">
 					<liferay-ui:message key="the-selected-assets-have-been-removed-from-the-list-because-they-do-not-belong-in-the-scope-of-this-portlet" />
 				</div>
 			</c:if>
-
-			<liferay-ui:search-iterator paginate="<%= total > SearchContainer.DEFAULT_DELTA %>" searchContainer="<%= searchContainer %>" />
 
 			<%
 			classNameIds = availableClassNameIds;

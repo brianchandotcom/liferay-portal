@@ -88,6 +88,15 @@ public class AssetPublisherUtil {
 	}
 
 	public static List<AssetEntry> getAssetEntries(
+			PortletPreferences preferences, Layout layout, long scopeGroupId,
+			int max, boolean checkPermission)
+		throws PortalException, SystemException {
+
+		return getAssetPublisher().getAssetEntries(
+			preferences, layout, scopeGroupId, max, checkPermission);
+	}
+
+	public static List<AssetEntry> getAssetEntries(
 			PortletRequest portletRequest,
 			PortletPreferences portletPreferences,
 			PermissionChecker permissionChecker, long[] groupIds,
@@ -98,15 +107,6 @@ public class AssetPublisherUtil {
 		return getAssetPublisher().getAssetEntries(
 				portletRequest, portletPreferences, permissionChecker, groupIds,
 				assetEntryXmls, deleteNotDisplayableAssets, checkPermission);
-	}
-
-	public static List<AssetEntry> getAssetEntries(
-			PortletPreferences preferences, Layout layout, long scopeGroupId,
-			int max, boolean checkPermission)
-		throws PortalException, SystemException {
-
-		return getAssetPublisher().getAssetEntries(
-			preferences, layout, scopeGroupId, max, checkPermission);
 	}
 
 	public static AssetEntryQuery getAssetEntryQuery(

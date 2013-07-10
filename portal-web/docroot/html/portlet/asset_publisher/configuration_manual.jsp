@@ -52,7 +52,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 
 			SearchContainer searchContainer = new SearchContainer(renderRequest, new DisplayTerms(renderRequest), new DisplayTerms(renderRequest), SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, configurationRenderURL, headerNames, LanguageUtil.get(pageContext, "no-assets-selected"));
 
-			Tuple tuple = AssetPublisherUtil.getAssetEntries(permissionChecker, groupIds, assetEntryXmls, true, enablePermissions);
+			Tuple tuple = AssetPublisherUtil.getAssetEntries(renderRequest, portletPreferences, permissionChecker, groupIds, assetEntryXmls, true, enablePermissions);
 
 			List<AssetEntry> assetEntries = (List<AssetEntry>)tuple.getObject(0);
 			List<String> deletedAssets = (List<String>)tuple.getObject(1);
@@ -131,7 +131,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 			}
 			%>
 
-			<c:if test="<%= !deletedAssets.isEmpty() %>">
+			<c:if test='<%= SessionMessages.contains(renderRequest, "removedSelectedAssets") %>'>
 				<div class="alert alert-info">
 					<liferay-ui:message key="the-selected-assets-have-been-removed-from-the-list-because-they-do-not-belong-in-the-scope-of-this-portlet" />
 				</div>

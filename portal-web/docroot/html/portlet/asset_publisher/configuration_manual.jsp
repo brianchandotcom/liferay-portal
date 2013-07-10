@@ -55,9 +55,8 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 
 					<%
 					int end = (assetEntries.size() < searchContainer.getEnd()) ? assetEntries.size() : searchContainer.getEnd();
-					int start = searchContainer.getStart();
 
-					pageContext.setAttribute("results", assetEntries.subList(start, end));
+					pageContext.setAttribute("results", assetEntries.subList(searchContainer.getStart(), end));
 					%>
 
 				</liferay-ui:search-container-results>

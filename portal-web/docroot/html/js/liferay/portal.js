@@ -118,8 +118,8 @@
 					{
 						cssClass: 'tooltip-help',
 						opacity: 1,
-						zIndex: Liferay.zIndex.TOOLTIP,
-						visible: false
+						visible: false,
+						zIndex: Liferay.zIndex.TOOLTIP
 					}
 				).render();
 

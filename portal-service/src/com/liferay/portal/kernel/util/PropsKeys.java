@@ -2253,6 +2253,8 @@ public interface PropsKeys {
 
 	public static final String SOCIAL_ACTIVITY_SETS_ENABLED = "social.activity.sets.enabled";
 
+	public static final String SOCIAL_ACTIVITY_SETS_GROUPING_ENABLED = "social.activity.sets.grouping.enabled";
+
 	public static final String SOCIAL_ACTIVITY_SETS_SELECTOR = "social.activity.sets.selector";
 
 	public static final String SOCIAL_BOOKMARK_JSP = "social.bookmark.jsp";

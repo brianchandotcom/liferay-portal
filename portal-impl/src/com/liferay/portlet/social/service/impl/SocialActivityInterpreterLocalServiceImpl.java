@@ -267,6 +267,12 @@ public class SocialActivityInterpreterLocalServiceImpl
 	public void updateActivitySet(long activityId)
 		throws PortalException, SystemException {
 
+		if (!PropsValues.SOCIAL_ACTIVITY_SETS_GROUPING_ENABLED) {
+			socialActivitySetLocalService.addActivitySet(activityId);
+
+			return;
+		}
+
 		List<SocialActivityInterpreter> activityInterpreters =
 			_activityInterpreters.get(
 				PropsValues.SOCIAL_ACTIVITY_SETS_SELECTOR);

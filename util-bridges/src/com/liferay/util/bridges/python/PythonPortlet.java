@@ -16,6 +16,7 @@ package com.liferay.util.bridges.python;
 
 import com.liferay.util.bridges.scripting.ScriptingPortlet;
 
+import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 
 /**
@@ -26,7 +27,7 @@ import javax.portlet.RenderRequest;
 public class PythonPortlet extends ScriptingPortlet {
 
 	@Override
-	public void init() {
+	public void init() throws PortletException {
 		super.init();
 
 		language = _LANGUAGE;

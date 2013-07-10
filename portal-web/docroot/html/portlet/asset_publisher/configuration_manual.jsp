@@ -52,10 +52,9 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 
 			SearchContainer searchContainer = new SearchContainer(renderRequest, new DisplayTerms(renderRequest), new DisplayTerms(renderRequest), SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, configurationRenderURL, headerNames, LanguageUtil.get(pageContext, "no-assets-selected"));
 
-			Tuple tuple = AssetPublisherUtil.getAssetEntries(renderRequest, portletPreferences, permissionChecker, groupIds, assetEntryXmls, true, enablePermissions);
+			Tuple tuple = AssetPublisherUtil.getAssetEntries(renderRequest, portletPreferences, permissionChecker, groupIds, assetEntryXmls, true, false);
 
 			List<AssetEntry> assetEntries = (List<AssetEntry>)tuple.getObject(0);
-			List<String> deletedAssets = (List<String>)tuple.getObject(1);
 
 			int total = assetEntries.size();
 
@@ -86,12 +85,6 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 				}
 				else {
 					DocUtil.add(root, "last", false);
-				}
-
-				String assetEntryUuid = root.element("asset-entry-uuid").getText();
-
-				if (deletedAssets.contains(assetEntryUuid)) {
-					continue;
 				}
 
 				AssetEntry assetEntry = assetEntries.get(i);

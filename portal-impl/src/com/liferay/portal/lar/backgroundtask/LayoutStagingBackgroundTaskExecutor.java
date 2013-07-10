@@ -69,11 +69,14 @@ public class LayoutStagingBackgroundTaskExecutor
 			sourceGroupId, privateLayout, layoutIds, parameterMap, startDate,
 			endDate);
 
-		MissingReferences missingReferences =
-			LayoutLocalServiceUtil.validateImportLayoutsFile(
-				userId, targetGroupId, privateLayout, parameterMap, larFile);
+		MissingReferences missingReferences = null;
 
 		try {
+			missingReferences =
+				LayoutLocalServiceUtil.validateImportLayoutsFile(
+					userId, targetGroupId, privateLayout, parameterMap,
+					larFile);
+
 			LayoutLocalServiceUtil.importLayouts(
 				userId, targetGroupId, privateLayout, parameterMap, larFile);
 		}

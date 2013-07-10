@@ -63,10 +63,7 @@ OrderByComparator orderByComparator = BackgroundTaskUtil.getBackgroundTaskOrderB
 			value="<%= backgroundTask.getUserName() %>"
 		/>
 
-		<liferay-ui:search-container-column-text
-			name="status"
-			value="<%= LanguageUtil.get(pageContext, backgroundTask.getStatusLabel()) %>"
-		/>
+		<liferay-ui:search-container-column-jsp cssClass="background-task-status-column" name="status" path="/html/portlet/layouts_admin/publish_process_message.jsp" />
 
 		<liferay-ui:search-container-column-text
 			name="create-date"
@@ -83,16 +80,23 @@ OrderByComparator orderByComparator = BackgroundTaskUtil.getBackgroundTaskOrderB
 		/>
 
 		<liferay-ui:search-container-column-text>
-			<portlet:actionURL var="deleteBackgroundTaskURL">
-				<portlet:param name="struts_action" value="/group_pages/delete_background_task" />
-				<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
-				<portlet:param name="backgroundTaskId" value="<%= String.valueOf(backgroundTask.getBackgroundTaskId()) %>" />
-			</portlet:actionURL>
+			<c:if test="<%= !backgroundTask.isInProgress() %>">
+				<portlet:actionURL var="deleteBackgroundTaskURL">
+					<portlet:param name="struts_action" value="/group_pages/delete_background_task" />
+					<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
+					<portlet:param name="backgroundTaskId" value="<%= String.valueOf(backgroundTask.getBackgroundTaskId()) %>" />
+				</portlet:actionURL>
 
-			<liferay-ui:icon-delete
-				label="true"
-				url="<%= deleteBackgroundTaskURL %>"
-			/>
+				<%
+				Date completionDate = backgroundTask.getCompletionDate();
+				%>
+
+				<liferay-ui:icon-delete
+					label="true"
+					message='<%= ((completionDate != null) && completionDate.before(new Date())) ? "clear" : "cancel" %>'
+					url="<%= deleteBackgroundTaskURL %>"
+				/>
+			</c:if>
 		</liferay-ui:search-container-column-text>
 	</liferay-ui:search-container-row>
 

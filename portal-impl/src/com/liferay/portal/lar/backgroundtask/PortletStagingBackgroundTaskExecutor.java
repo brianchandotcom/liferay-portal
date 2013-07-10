@@ -14,8 +14,14 @@
 
 package com.liferay.portal.lar.backgroundtask;
 
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
 import com.liferay.portal.kernel.backgroundtask.BaseBackgroundTaskExecutor;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.lar.MissingReference;
+import com.liferay.portal.kernel.lar.MissingReferences;
+import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.model.BackgroundTask;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
@@ -59,7 +65,14 @@ public class PortletStagingBackgroundTaskExecutor
 			sourcePlid, sourceGroupId, portletId, parameterMap, startDate,
 			endDate);
 
+		MissingReferences missingReferences = null;
+
 		try {
+			missingReferences =
+				LayoutLocalServiceUtil.validateImportPortletInfo(
+					userId, targetGroupId, targetPlid, portletId, parameterMap,
+					larFile);
+
 			LayoutLocalServiceUtil.importPortletInfo(
 				userId, targetPlid, targetGroupId, portletId, parameterMap,
 				larFile);
@@ -68,7 +81,31 @@ public class PortletStagingBackgroundTaskExecutor
 			larFile.delete();
 		}
 
-		return BackgroundTaskResult.SUCCESS;
+		BackgroundTaskResult backgroundTaskResult = new BackgroundTaskResult(
+			BackgroundTaskConstants.STATUS_SUCCESSFUL);
+
+		Map<String, MissingReference> weakMissingReferences =
+			missingReferences.getWeakMissingReferences();
+
+		if ((weakMissingReferences != null) &&
+			!weakMissingReferences.isEmpty()) {
+
+			JSONArray jsonArray = StagingUtil.getWarningMessagesJSONArray(
+				getLocale(backgroundTask), weakMissingReferences,
+				backgroundTask.getTaskContextMap());
+
+			backgroundTaskResult.setStatusMessage(jsonArray.toString());
+		}
+
+		return backgroundTaskResult;
+	}
+
+	@Override
+	public String handleException(BackgroundTask backgroundTask, Exception e) {
+		JSONObject jsonObject = StagingUtil.getExceptionMessagesJSONArray(
+			getLocale(backgroundTask), e, backgroundTask.getTaskContextMap());
+
+		return jsonObject.toString();
 	}
 
 }

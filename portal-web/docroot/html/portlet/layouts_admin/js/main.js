@@ -787,6 +787,39 @@ AUI.add(
 
 						var processesNode = instance.get('processesNode');
 
+						if (processesNode) {
+							new A.TogglerDelegate(
+								{
+									animated: true,
+									closeAllOnExpand: true,
+									container: processesNode,
+									content: '.background-task-status-message',
+									expanded: false,
+									header: '.details-link',
+									on: {
+										'toggler:expandedChange': function(event) {
+											var header = event.target.get('header');
+
+											var persistId = 0;
+
+											if (!header.hasClass('toggler-header-collapsed')) {
+												persistId = header.getData('persist-id');
+											}
+
+											Liferay.Store(
+												{
+													'background-task-ids' : persistId
+												}
+											);
+										}
+									},
+									transition: {
+										duration: 0.3
+									}
+								}
+							);
+						}
+
 						if (processesNode && instance._processesResourceURL) {
 							A.io.request(
 								instance._processesResourceURL,
@@ -1097,6 +1130,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-dialog-iframe-deprecated', 'aui-io-request', 'aui-modal', 'aui-parse-content', 'aui-tree-view', 'liferay-notice', 'liferay-portlet-base', 'liferay-util-window']
+		requires: ['aui-dialog-iframe-deprecated', 'aui-io-request', 'aui-modal', 'aui-parse-content', 'aui-toggler', 'aui-tree-view', 'liferay-notice', 'liferay-portlet-base', 'liferay-store', 'liferay-util-window']
 	}
 );

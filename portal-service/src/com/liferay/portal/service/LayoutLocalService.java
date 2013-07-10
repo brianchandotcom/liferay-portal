@@ -1612,7 +1612,7 @@ public interface LayoutLocalService extends BaseLocalService,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portal.kernel.lar.MissingReferences validateImportPortletInfo(
-		long userId, long groupId, long plid, java.lang.String portletId,
+		long userId, long plid, long groupId, java.lang.String portletId,
 		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
 		java.io.File file)
 		throws com.liferay.portal.kernel.exception.PortalException,

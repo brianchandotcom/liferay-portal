@@ -131,6 +131,10 @@ public class IconTag extends IncludeTag {
 		_url = null;
 	}
 
+	protected String getImage() {
+		return _image;
+	}
+
 	protected String getMessage() {
 		return _message;
 	}

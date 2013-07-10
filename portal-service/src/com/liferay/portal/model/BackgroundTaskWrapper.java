@@ -662,6 +662,11 @@ public class BackgroundTaskWrapper implements BackgroundTask,
 	}
 
 	@Override
+	public boolean isInProgress() {
+		return _backgroundTask.isInProgress();
+	}
+
+	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
 			return true;

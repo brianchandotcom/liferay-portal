@@ -263,16 +263,23 @@
 	<sql id="com.liferay.portlet.journal.service.persistence.JournalFolderFinder.findA_ByG_F">
 		<![CDATA[
 			SELECT
-				DISTINCT JournalArticle.folderId AS modelFolderId, JournalArticle.articleId as articleId, MAX(JournalArticle.version) AS version, 0 AS modelFolder
+				DISTINCT JournalArticle.folderId AS modelFolderId, JournalArticle.articleId as articleId, JournalArticle.version AS version, 0 AS modelFolder, JournalArticle.displayDate as displayDate, JournalArticle.modifiedDate as modifiedDate
 			FROM
-				JournalArticle
-			WHERE
-				(JournalArticle.groupId = ?) AND
-				(JournalArticle.classNameId = 0) AND
-				([$STATUS$])
-				[$ARTICLE_FOLDER_ID$]
-			GROUP BY
-				JournalArticle.folderId, JournalArticle.articleId
+				(
+					SELECT
+						MAX(JournalArticle.id_) AS id_
+					FROM
+						JournalArticle
+					WHERE
+						(JournalArticle.groupId = ?) AND
+						(JournalArticle.classNameId = 0) AND
+						([$STATUS$])
+						[$ARTICLE_FOLDER_ID$]
+					GROUP BY
+						JournalArticle.folderId, JournalArticle.articleId
+				) TEMP_TABLE
+				INNER JOIN
+					JournalArticle ON (TEMP_TABLE.id_ = JournalArticle.id_)
 		]]>
 	</sql>
 	<sql id="com.liferay.portlet.journal.service.persistence.JournalFolderFinder.findByF_ByNoAssets">
@@ -295,7 +302,7 @@
 	<sql id="com.liferay.portlet.journal.service.persistence.JournalFolderFinder.findF_ByG_F">
 		<![CDATA[
 			SELECT
-				DISTINCT folderId AS modelFolderId, '' AS articleId, 0 AS version, 1 AS modelFolder
+				DISTINCT folderId AS modelFolderId, '' AS articleId, 0 AS version, 1 AS modelFolder, JournalFolder.createDate as displayDate, JournalFolder.modifiedDate as modifiedDate
 			FROM
 				JournalFolder
 			WHERE

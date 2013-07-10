@@ -137,6 +137,18 @@ if (fileEntryTypeId >= 0) {
 
 	searchContext.setAttribute("paginationType", "none");
 	searchContext.setEnd(entryEnd);
+
+	if (orderByCol.equals("creationDate")) {
+		orderByCol = "createDate";
+	}
+	else if (orderByCol.equals("modifiedDate")) {
+		orderByCol = "modified";
+	}
+
+	Sort sort = new Sort(orderByCol, !orderByType.equalsIgnoreCase("asc"));
+
+	searchContext.setSorts(new Sort[]{sort});
+
 	searchContext.setStart(entryStart);
 
 	Hits hits = indexer.search(searchContext);

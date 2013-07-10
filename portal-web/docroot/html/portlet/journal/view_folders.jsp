@@ -71,7 +71,7 @@ if ((folderId != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) && (parentFold
 
 	parentTitle = grandParentFolder.getName();
 }
-else {
+else if (((folderId != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) && (parentFolderId == 0)) || ((folderId == JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) && (parentFolderId == 0) && expandFolder)) {
 	parentTitle = LanguageUtil.get(pageContext, "home");
 }
 %>

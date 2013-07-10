@@ -45,6 +45,8 @@ String strutsAction = ParamUtil.getString(request, "struts_action");
 
 		<liferay-util:include page="/html/portlet/journal/add_button.jsp" />
 
+		<liferay-util:include page="/html/portlet/journal/sort_button.jsp" />
+
 		<c:if test="<%= !user.isDefaultUser() %>">
 			<aui:nav-item dropdown="<%= true %>" label="manage">
 

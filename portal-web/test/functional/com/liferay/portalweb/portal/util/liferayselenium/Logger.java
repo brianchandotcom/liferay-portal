@@ -81,7 +81,7 @@ public class Logger {
 		log(sb.toString());
 	}
 
-	public void logError(Method method, Object[] arguments) {
+	public void logError(Method method, Object[] arguments, String message) {
 		send("", "fail");
 
 		StringBundler sb = new StringBundler();
@@ -106,12 +106,16 @@ public class Logger {
 			}
 		}
 
+		sb.append(" - ");
+		sb.append(message);
+
 		log(sb.toString());
 
 		sb = new StringBundler();
 
-		sb.append("Command failure ");
+		sb.append("Command failure \"");
 		sb.append(method.getName());
+		sb.append("\"");
 
 		if (arguments != null) {
 			if (arguments.length == 1) {
@@ -122,10 +126,14 @@ public class Logger {
 			}
 
 			for (Object argument : arguments) {
+				sb.append("\"");
 				sb.append(String.valueOf(argument));
-				sb.append(" ");
+				sb.append("\" ");
 			}
 		}
+
+		sb.append(" - ");
+		sb.append(message);
 
 		BaseTestCase.fail(sb.toString());
 	}

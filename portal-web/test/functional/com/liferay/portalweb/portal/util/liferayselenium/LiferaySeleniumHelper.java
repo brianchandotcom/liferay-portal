@@ -39,7 +39,8 @@ public class LiferaySeleniumHelper {
 		liferaySelenium.assertElementPresent(locator);
 
 		if (liferaySelenium.isNotChecked(locator)) {
-			throw new Exception("Element is not checked at " + locator);
+			throw new Exception(
+				"Element is not checked at \"" + locator + "\"");
 		}
 	}
 
@@ -51,7 +52,8 @@ public class LiferaySeleniumHelper {
 
 		if (!pattern.equals(confirmation)) {
 			throw new Exception(
-				"Pattern " + pattern + " does not match " + confirmation);
+				"Pattern \"" + pattern + "\" does not match \"" + confirmation +
+					"\"");
 		}
 	}
 
@@ -60,7 +62,7 @@ public class LiferaySeleniumHelper {
 		throws Exception {
 
 		if (liferaySelenium.isElementPresent(locator)) {
-			throw new Exception("Element is present at " + locator);
+			throw new Exception("Element is present at \"" + locator + "\"");
 		}
 	}
 
@@ -69,7 +71,8 @@ public class LiferaySeleniumHelper {
 		throws Exception {
 
 		if (liferaySelenium.isElementNotPresent(locator)) {
-			throw new Exception("Element is not present at " + locator);
+			throw new Exception(
+				"Element is not present at \"" + locator + "\"");
 		}
 	}
 
@@ -92,7 +95,7 @@ public class LiferaySeleniumHelper {
 		liferaySelenium.assertElementPresent(locator);
 
 		if (liferaySelenium.isChecked(locator)) {
-			throw new Exception("Element is checked at " + locator);
+			throw new Exception("Element is checked at \"" + locator + "\"");
 		}
 	}
 
@@ -112,7 +115,8 @@ public class LiferaySeleniumHelper {
 			String text = liferaySelenium.getText(locator);
 
 			throw new Exception(
-				text + " contains " + pattern + " at " + locator);
+				"\"" + text + "\" contains \"" + pattern + "\" at \"" +
+					locator + "\"");
 		}
 	}
 
@@ -127,8 +131,8 @@ public class LiferaySeleniumHelper {
 			String text = liferaySelenium.getSelectedLabel(selectLocator);
 
 			throw new Exception(
-				"Pattern " + pattern + " matches " + text + " at " +
-					selectLocator);
+				"Pattern \"" + pattern + "\" matches \"" + text + "\" at \"" +
+					selectLocator + "\"");
 		}
 	}
 
@@ -142,7 +146,8 @@ public class LiferaySeleniumHelper {
 			String text = liferaySelenium.getText(locator);
 
 			throw new Exception(
-				"Pattern " + pattern + " matches " + text + " at " + locator);
+				"Pattern \"" + pattern + "\" matches \"" + text + "\" at \"" +
+					locator + "\"");
 		}
 	}
 
@@ -156,7 +161,8 @@ public class LiferaySeleniumHelper {
 			String value = liferaySelenium.getValue(locator);
 
 			throw new Exception(
-				"Pattern " + pattern + " matches " + value + " at " + locator);
+				"Pattern \"" + pattern + "\" matches \"" + value + "\" at \"" +
+					locator + "\"");
 		}
 	}
 
@@ -167,7 +173,7 @@ public class LiferaySeleniumHelper {
 		liferaySelenium.assertElementPresent(locator);
 
 		if (liferaySelenium.isVisible(locator)) {
-			throw new Exception("Element is visible at " + locator);
+			throw new Exception("Element is visible at \"" + locator + "\"");
 		}
 	}
 
@@ -181,7 +187,8 @@ public class LiferaySeleniumHelper {
 			String text = liferaySelenium.getText(locator);
 
 			throw new Exception(
-				text + " does not contain " + pattern + " at " + locator);
+				"\"" + text + "\" does not contain \"" + pattern + "\" at \"" +
+					locator + "\"");
 		}
 	}
 
@@ -196,8 +203,8 @@ public class LiferaySeleniumHelper {
 			String text = liferaySelenium.getSelectedLabel(selectLocator);
 
 			throw new Exception(
-				"Pattern " + pattern + " does not match " + text + " at " +
-					selectLocator);
+				"Pattern \"" + pattern + "\" does not match \"" + text +
+					"\" at \"" + selectLocator + "\"");
 		}
 	}
 
@@ -211,8 +218,8 @@ public class LiferaySeleniumHelper {
 			String text = liferaySelenium.getText(locator);
 
 			throw new Exception(
-				"Pattern " + pattern + " does not match " + text + " at " +
-					locator);
+				"Pattern \"" + pattern + "\" does not match \"" + text +
+					"\" at \"" + locator + "\"");
 		}
 	}
 
@@ -221,7 +228,7 @@ public class LiferaySeleniumHelper {
 		throws Exception {
 
 		if (liferaySelenium.isTextPresent(pattern)) {
-			throw new Exception(pattern + " is present");
+			throw new Exception("\"" + pattern + "\" is present");
 		}
 	}
 
@@ -230,7 +237,7 @@ public class LiferaySeleniumHelper {
 		throws Exception {
 
 		if (liferaySelenium.isTextNotPresent(pattern)) {
-			throw new Exception(pattern + " is not present");
+			throw new Exception("\"" + pattern + "\" is not present");
 		}
 	}
 
@@ -244,8 +251,8 @@ public class LiferaySeleniumHelper {
 			String value = liferaySelenium.getValue(locator);
 
 			throw new Exception(
-				"Pattern " + pattern + " does not match " + value + " at " +
-					locator);
+				"Pattern \"" + pattern + "\" does not match \"" + value +
+					"\" at \"" + locator + "\"");
 		}
 	}
 
@@ -256,7 +263,8 @@ public class LiferaySeleniumHelper {
 		liferaySelenium.assertElementPresent(locator);
 
 		if (liferaySelenium.isNotVisible(locator)) {
-			throw new Exception("Element is not visible at " + locator);
+			throw new Exception(
+				"Element is not visible at \"" + locator + "\"");
 		}
 	}
 

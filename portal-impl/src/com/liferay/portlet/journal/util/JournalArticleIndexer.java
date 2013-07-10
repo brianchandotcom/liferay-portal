@@ -474,7 +474,9 @@ public class JournalArticleIndexer extends BaseIndexer {
 		if (!article.isIndexable() ||
 			(!article.isApproved() && !article.isInTrash() &&
 			 (article.getVersion() !=
-				  JournalArticleConstants.VERSION_DEFAULT))) {
+				  JournalArticleConstants.VERSION_DEFAULT)) ||
+			(PortalUtil.getClassNameId(DDMStructure.class) ==
+				article.getClassNameId())) {
 
 			SearchEngineUtil.deleteDocument(
 				getSearchEngineId(), article.getCompanyId(),

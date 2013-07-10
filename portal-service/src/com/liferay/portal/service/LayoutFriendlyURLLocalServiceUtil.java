@@ -374,6 +374,15 @@ public class LayoutFriendlyURLLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.model.LayoutFriendlyURL fetchLayoutFriendlyURL(
+		long groupId, boolean privateLayout, java.lang.String friendlyURL,
+		java.lang.String languageId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .fetchLayoutFriendlyURL(groupId, privateLayout, friendlyURL,
+			languageId);
+	}
+
+	public static com.liferay.portal.model.LayoutFriendlyURL fetchLayoutFriendlyURL(
 		long plid, java.lang.String languageId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().fetchLayoutFriendlyURL(plid, languageId);

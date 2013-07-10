@@ -1,4 +1,5 @@
 @import "compass";
+@import "mixins";
 
 @import url(custom_common.css);
 @import url(color_schemes/common.css);
@@ -25,6 +26,16 @@ $dockbarOpenGradientStart: #00A0FF;
 		margin: 0 auto;
 		padding: 2em 5em 0;
 		position: relative;
+
+		@include respond-to(phone) {
+			padding-left: 0.5em;
+			padding-right: 0.5em;
+		}
+
+		@include respond-to(tablet) {
+			padding-left: 1em;
+			padding-right: 1em;
+		}
 	}
 
 	.site-title {

@@ -1586,21 +1586,13 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 					return;
 				}
 
+				_manifestSummary.addConfigurationPortlet(
+					portlet,
+					StringUtil.split(
+						element.attributeValue("portlet-configuration")));
+
 				PortletDataHandler portletDataHandler =
 					portlet.getPortletDataHandlerInstance();
-
-				if (portletDataHandler == null) {
-					return;
-				}
-
-				if (Validator.isNotNull(
-						portlet.getConfigurationActionClass())) {
-
-					_manifestSummary.addConfigurationPortlet(
-						portlet,
-						StringUtil.split(
-							element.attributeValue("portlet-configuration")));
-				}
 
 				if (!(portletDataHandler instanceof
 						DefaultConfigurationPortletDataHandler) &&

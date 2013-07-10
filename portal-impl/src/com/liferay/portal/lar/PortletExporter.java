@@ -1231,31 +1231,29 @@ public class PortletExporter {
 			"portlet-preferences");
 
 		if (portlet != null) {
-			PortletDataHandler portletDataHandler =
-				portlet.getPortletDataHandlerInstance();
+			Element exportDataRootElement =
+				portletDataContext.getExportDataRootElement();
 
-			if (portletDataHandler != null) {
-				Element exportDataRootElement =
-					portletDataContext.getExportDataRootElement();
+			try {
+				portletDataContext.clearScopedPrimaryKeys();
 
-				try {
-					portletDataContext.clearScopedPrimaryKeys();
+				Element preferenceDataElement =
+					portletPreferencesElement.addElement("preference-data");
 
-					Element preferenceDataElement =
-						portletPreferencesElement.addElement("preference-data");
+				portletDataContext.setExportDataRootElement(
+					preferenceDataElement);
 
-					portletDataContext.setExportDataRootElement(
-						preferenceDataElement);
+				PortletDataHandler portletDataHandler =
+					portlet.getPortletDataHandlerInstance();
 
-					jxPortletPreferences =
-						portletDataHandler.processExportPortletPreferences(
-							portletDataContext, portletId, jxPortletPreferences,
-							parentElement);
-				}
-				finally {
-					portletDataContext.setExportDataRootElement(
-						exportDataRootElement);
-				}
+				jxPortletPreferences =
+					portletDataHandler.processExportPortletPreferences(
+						portletDataContext, portletId, jxPortletPreferences,
+						parentElement);
+			}
+			finally {
+				portletDataContext.setExportDataRootElement(
+					exportDataRootElement);
 			}
 		}
 

@@ -88,11 +88,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 			<%
 			PortletDataHandler portletDataHandler = selPortlet.getPortletDataHandlerInstance();
 
-			PortletDataHandlerControl[] configurationControls = null;
-
-			if (portletDataHandler != null) {
-				configurationControls = portletDataHandler.getImportConfigurationControls(selPortlet, manifestSummary);
-			}
+			PortletDataHandlerControl[] configurationControls = portletDataHandler.getImportConfigurationControls(selPortlet, manifestSummary);
 			%>
 
 			<c:if test="<%= (configurationControls != null) && (configurationControls.length > 0) %>">

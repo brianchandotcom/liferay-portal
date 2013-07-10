@@ -155,14 +155,7 @@ public class LayoutExporter {
 				Portlet portlet = PortletLocalServiceUtil.getPortletById(
 					curLayout.getCompanyId(), portletId);
 
-				if (portlet == null) {
-					continue;
-				}
-
-				PortletDataHandler portletDataHandler =
-					portlet.getPortletDataHandlerInstance();
-
-				if ((portletDataHandler == null) ||
+				if ((portlet == null) ||
 					rootPortletIds.contains(portlet.getRootPortletId())) {
 
 					continue;

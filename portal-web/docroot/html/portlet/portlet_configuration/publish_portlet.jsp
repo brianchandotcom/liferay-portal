@@ -104,11 +104,7 @@ portletURL.setParameter("tabs3", "all-publication-processes");
 						<%
 						PortletDataHandler portletDataHandler = selPortlet.getPortletDataHandlerInstance();
 
-						PortletDataHandlerControl[] configurationControls = null;
-
-						if (portletDataHandler != null) {
-							configurationControls = portletDataHandler.getExportConfigurationControls(company.getCompanyId(), themeDisplay.getScopeGroupId(), selPortlet, exportableLayout.getPlid(), false);
-						}
+						PortletDataHandlerControl[] configurationControls = portletDataHandler.getExportConfigurationControls(company.getCompanyId(), themeDisplay.getScopeGroupId(), selPortlet, exportableLayout.getPlid(), false);
 						%>
 
 						<c:if test="<%= (configurationControls != null) && (configurationControls.length > 0) %>">

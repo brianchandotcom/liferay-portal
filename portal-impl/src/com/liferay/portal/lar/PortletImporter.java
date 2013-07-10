@@ -1231,33 +1231,30 @@ public class PortletImporter {
 					companyId, portletId);
 
 				if (portlet != null) {
-					PortletDataHandler portletDataHandler =
-						portlet.getPortletDataHandlerInstance();
+					Element importDataRootElement =
+						portletDataContext.getImportDataRootElement();
 
-					if (portletDataHandler != null) {
-						Element importDataRootElement =
-							portletDataContext.getImportDataRootElement();
+					try {
+						Element preferenceDataElement =
+							portletPreferencesElement.element(
+								"preference-data");
 
-						try {
-							Element preferenceDataElement =
-								portletPreferencesElement.element(
-									"preference-data");
-
-							if (preferenceDataElement != null) {
-								portletDataContext.setImportDataRootElement(
-									preferenceDataElement);
-							}
-
-							jxPortletPreferences =
-								portletDataHandler.
-									processImportPortletPreferences(
-										portletDataContext, portletId,
-										jxPortletPreferences);
-						}
-						finally {
+						if (preferenceDataElement != null) {
 							portletDataContext.setImportDataRootElement(
-								importDataRootElement);
+								preferenceDataElement);
 						}
+
+						PortletDataHandler portletDataHandler =
+							portlet.getPortletDataHandlerInstance();
+
+						jxPortletPreferences =
+							portletDataHandler.processImportPortletPreferences(
+								portletDataContext, portletId,
+								jxPortletPreferences);
+					}
+					finally {
+						portletDataContext.setImportDataRootElement(
+							importDataRootElement);
 					}
 				}
 
@@ -1963,9 +1960,7 @@ public class PortletImporter {
 		PortletDataHandler portletDataHandler =
 			portlet.getPortletDataHandlerInstance();
 
-		if ((portletDataHandler != null) &&
-			portletDataHandler.isDataLocalized()) {
-
+		if (portletDataHandler.isDataLocalized()) {
 			Locale[] sourceAvailableLocales = LocaleUtil.fromLanguageIds(
 				StringUtil.split(
 					_headerElement.attributeValue("available-locales")));

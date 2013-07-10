@@ -339,18 +339,19 @@ public class AssetPublisherImpl implements AssetPublisher {
 			AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(
 				assetEntry.getClassPK());
 
-			if (deleteNotDisplayableAssets) {
-				if (!assetRendererFactory.isActive(
-						permissionChecker.getCompanyId())) {
+			if (!assetRendererFactory.isActive(
+					permissionChecker.getCompanyId())) {
 
+				if (deleteNotDisplayableAssets) {
 					deletedAssets.add(assetEntryUuid);
-
-					continue;
 				}
+
+				continue;
 			}
-			else if (!assetRenderer.isDisplayable() ||
-					 (checkPermission &&
-					  !assetRenderer.hasViewPermission(permissionChecker))) {
+
+			if (checkPermission &&
+				(!assetRenderer.isDisplayable() ||
+				 !assetRenderer.hasViewPermission(permissionChecker))) {
 
 				continue;
 			}

@@ -15,26 +15,36 @@
 package com.liferay.portlet.documentlibrary.lar;
 
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
+import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
+import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.lar.BaseStagedModelDataHandlerTestCase;
+import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.StagedModel;
+import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.util.DLAppTestUtil;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.util.DDMStructureTestUtil;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -48,6 +58,32 @@ import org.junit.runner.RunWith;
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class FileEntryStagedModelDataHandlerTest
 	extends BaseStagedModelDataHandlerTestCase {
+
+	@Test
+	@Transactional
+	public void testWithGlobalScopeDependencies() throws Exception {
+		initExport();
+
+		Map<String, List<StagedModel>> dependentStagedModelsMap =
+			addGlobalDependencies();
+
+		StagedModel stagedModel = addStagedModel(
+			stagingGroup, dependentStagedModelsMap);
+
+		StagedModelDataHandlerUtil.exportStagedModel(
+			portletDataContext, stagedModel);
+
+		initImport();
+
+		StagedModel exportedStagedModel = readExportedStagedModel(stagedModel);
+
+		Assert.assertNotNull(exportedStagedModel);
+
+		StagedModelDataHandlerUtil.importStagedModel(
+			portletDataContext, exportedStagedModel);
+
+		validateGlobalDependenciesImport(dependentStagedModelsMap, liveGroup);
+	}
 
 	@Override
 	protected Map<String, List<StagedModel>> addDependentStagedModelsMap(
@@ -63,6 +99,51 @@ public class FileEntryStagedModelDataHandlerTest
 
 		addDependentStagedModel(dependentStagedModelsMap, Folder.class, folder);
 
+		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
+			group.getGroupId(), DLFileEntryType.class.getName());
+
+		addDependentStagedModel(
+			dependentStagedModelsMap, DDMStructure.class, ddmStructure);
+
+		DLFileEntryType dlFileEntryType = DLAppTestUtil.addDLFileEntryType(
+			group.getGroupId(), ddmStructure.getStructureId());
+
+		addDependentStagedModel(
+			dependentStagedModelsMap, DLFileEntryType.class, dlFileEntryType);
+
+		return dependentStagedModelsMap;
+	}
+
+	protected Map<String, List<StagedModel>> addGlobalDependencies()
+		throws Exception {
+
+		Company company = CompanyLocalServiceUtil.fetchCompany(
+			stagingGroup.getCompanyId());
+
+		Group companyGroup = company.getGroup();
+
+		Map<String, List<StagedModel>> dependentStagedModelsMap =
+			new HashMap<String, List<StagedModel>>();
+
+		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
+			companyGroup.getGroupId(), DLFileEntryType.class.getName());
+
+		addDependentStagedModel(
+			dependentStagedModelsMap, DDMStructure.class, ddmStructure);
+
+		DLFileEntryType dlFileEntryType = DLAppTestUtil.addDLFileEntryType(
+			companyGroup.getGroupId(), ddmStructure.getStructureId());
+
+		addDependentStagedModel(
+			dependentStagedModelsMap, DLFileEntryType.class, dlFileEntryType);
+
+		Folder folder = DLAppTestUtil.addFolder(
+			stagingGroup.getGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			ServiceTestUtil.randomString());
+
+		addDependentStagedModel(dependentStagedModelsMap, Folder.class, folder);
+
 		return dependentStagedModelsMap;
 	}
 
@@ -72,14 +153,21 @@ public class FileEntryStagedModelDataHandlerTest
 			Map<String, List<StagedModel>> dependentStagedModelsMap)
 		throws Exception {
 
-		List<StagedModel> dependentStagedModels = dependentStagedModelsMap.get(
-			Folder.class.getSimpleName());
+		List<StagedModel> folderDependentStagedModels =
+			dependentStagedModelsMap.get(Folder.class.getSimpleName());
 
-		Folder folder = (Folder)dependentStagedModels.get(0);
+		Folder folder = (Folder)folderDependentStagedModels.get(0);
+
+		List<StagedModel> fileEntryTypeDependentStagedModels =
+			dependentStagedModelsMap.get(DLFileEntryType.class.getSimpleName());
+
+		DLFileEntryType dlFileEntryType =
+			(DLFileEntryType)fileEntryTypeDependentStagedModels.get(0);
 
 		return DLAppTestUtil.addFileEntry(
 			group.getGroupId(), folder.getFolderId(),
-			ServiceTestUtil.randomString());
+			ServiceTestUtil.randomString(),
+			dlFileEntryType.getFileEntryTypeId());
 	}
 
 	@Override
@@ -116,21 +204,76 @@ public class FileEntryStagedModelDataHandlerTest
 		return super.getStagedModelPath(groupId, stagedModel);
 	}
 
+	protected void validateGlobalDependenciesImport(
+			Map<String, List<StagedModel>> dependentStagedModelsMap,
+			Group group)
+		throws Exception {
+
+		List<StagedModel> ddmStructureDependentStagedModels =
+			dependentStagedModelsMap.get(DDMStructure.class.getSimpleName());
+
+		Assert.assertEquals(1, ddmStructureDependentStagedModels.size());
+
+		DDMStructure structure =
+			(DDMStructure)ddmStructureDependentStagedModels.get(0);
+
+		Assert.assertNull(
+			"Global dependency should not be imported",
+			DDMStructureLocalServiceUtil.fetchDDMStructureByUuidAndGroupId(
+				structure.getUuid(), group.getGroupId()));
+
+		List<StagedModel> dlFileEntryTypesDependentStagedModels =
+			dependentStagedModelsMap.get(DLFileEntryType.class.getSimpleName());
+
+		Assert.assertEquals(1, dlFileEntryTypesDependentStagedModels.size());
+
+		DLFileEntryType dlFileEntryType =
+			(DLFileEntryType)dlFileEntryTypesDependentStagedModels.get(0);
+
+		Assert.assertNull(
+			"Global dependency should not be imported",
+			DLFileEntryTypeLocalServiceUtil.
+				fetchDLFileEntryTypeByUuidAndGroupId(
+					dlFileEntryType.getUuid(), group.getGroupId()));
+	}
+
 	@Override
 	protected void validateImport(
 			Map<String, List<StagedModel>> dependentStagedModelsMap,
 			Group group)
 		throws Exception {
 
-		List<StagedModel> dependentStagedModels = dependentStagedModelsMap.get(
-			Folder.class.getSimpleName());
+		List<StagedModel> foldersDependentStagedModels =
+			dependentStagedModelsMap.get(Folder.class.getSimpleName());
 
-		Assert.assertEquals(1, dependentStagedModels.size());
+		Assert.assertEquals(1, foldersDependentStagedModels.size());
 
-		Folder folder = (Folder)dependentStagedModels.get(0);
+		Folder folder = (Folder)foldersDependentStagedModels.get(0);
 
 		DLFolderLocalServiceUtil.getDLFolderByUuidAndGroupId(
 			folder.getUuid(), group.getGroupId());
+
+		List<StagedModel> ddmStructureDependentStagedModels =
+			dependentStagedModelsMap.get(DDMStructure.class.getSimpleName());
+
+		Assert.assertEquals(1, ddmStructureDependentStagedModels.size());
+
+		DDMStructure structure =
+			(DDMStructure)ddmStructureDependentStagedModels.get(0);
+
+		DDMStructureLocalServiceUtil.getDDMStructureByUuidAndGroupId(
+			structure.getUuid(), group.getGroupId());
+
+		List<StagedModel> dlFileEntryTypesDependentStagedModels =
+			dependentStagedModelsMap.get(DLFileEntryType.class.getSimpleName());
+
+		Assert.assertEquals(1, dlFileEntryTypesDependentStagedModels.size());
+
+		DLFileEntryType dlFileEntryType =
+			(DLFileEntryType)dlFileEntryTypesDependentStagedModels.get(0);
+
+		DLFileEntryTypeLocalServiceUtil.getDLFileEntryTypeByUuidAndGroupId(
+			dlFileEntryType.getUuid(), group.getGroupId());
 	}
 
 }

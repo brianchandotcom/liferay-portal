@@ -14,16 +14,12 @@
 
 package com.liferay.portlet.documentlibrary.lar;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.model.Group;
-import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
@@ -119,13 +115,11 @@ public class DLFileEntryTypeStagedModelDataHandler
 						portletDataContext.getScopeGroupId());
 
 			if (existingDLFileEntryType == null) {
-				Group companyGroup = GroupLocalServiceUtil.getCompanyGroup(
-					portletDataContext.getCompanyId());
-
 				existingDLFileEntryType =
 					DLFileEntryTypeLocalServiceUtil.
 						fetchDLFileEntryTypeByUuidAndGroupId(
-							fileEntryType.getUuid(), companyGroup.getGroupId());
+							fileEntryType.getUuid(),
+							portletDataContext.getCompanyGroupId());
 			}
 
 			if (existingDLFileEntryType == null) {
@@ -140,18 +134,17 @@ public class DLFileEntryTypeStagedModelDataHandler
 						serviceContext);
 			}
 			else {
-				if (!isFileEntryTypeGlobal(
-						portletDataContext.getCompanyId(),
+				if (portletDataContext.isStagedGroupedModelGlobal(
 						existingDLFileEntryType)) {
 
-					DLFileEntryTypeLocalServiceUtil.updateFileEntryType(
-						userId, existingDLFileEntryType.getFileEntryTypeId(),
-						fileEntryType.getNameMap(),
-						fileEntryType.getDescriptionMap(), ddmStructureIdsArray,
-						serviceContext);
+					return;
 				}
 
-				importedDLFileEntryType = existingDLFileEntryType;
+				DLFileEntryTypeLocalServiceUtil.updateFileEntryType(
+					userId, existingDLFileEntryType.getFileEntryTypeId(),
+					fileEntryType.getNameMap(),
+					fileEntryType.getDescriptionMap(), ddmStructureIdsArray,
+					serviceContext);
 			}
 		}
 		else {
@@ -162,12 +155,6 @@ public class DLFileEntryTypeStagedModelDataHandler
 					fileEntryType.getNameMap(),
 					fileEntryType.getDescriptionMap(), ddmStructureIdsArray,
 					serviceContext);
-		}
-
-		if (isFileEntryTypeGlobal(
-				portletDataContext.getCompanyId(), importedDLFileEntryType)) {
-
-			return;
 		}
 
 		portletDataContext.importClassedModel(
@@ -199,19 +186,6 @@ public class DLFileEntryTypeStagedModelDataHandler
 			DDMStructureLocalServiceUtil.updateDDMStructure(
 				importedDDMStructure);
 		}
-	}
-
-	protected boolean isFileEntryTypeGlobal(
-			long companyId, DLFileEntryType dlFileEntryType)
-		throws PortalException, SystemException {
-
-		Group group = GroupLocalServiceUtil.getCompanyGroup(companyId);
-
-		if (dlFileEntryType.getGroupId() == group.getGroupId()) {
-			return true;
-		}
-
-		return false;
 	}
 
 }

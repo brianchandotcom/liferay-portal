@@ -1678,6 +1678,18 @@ public class PortletDataContextImpl implements PortletDataContext {
 		return _privateLayout;
 	}
 
+	public boolean isStagedGroupedModelGlobal(
+		StagedGroupedModel stagedGroupedModel) {
+
+		if ((stagedGroupedModel.getGroupId() == getCompanyGroupId()) &&
+			(getGroupId() != getCompanyGroupId())) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	/**
 	 * @see #addDateRangeCriteria(DynamicQuery, String)
 	 */

@@ -25,12 +25,10 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Repository;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.repository.liferayrepository.LiferayRepository;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
-import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -233,7 +231,10 @@ public class FolderStagedModelDataHandler
 
 		List<DLFileEntryType> dlFileEntryTypes =
 			DLFileEntryTypeLocalServiceUtil.getFolderFileEntryTypes(
-				new long[]{portletDataContext.getScopeGroupId()},
+				new long[] {
+					portletDataContext.getScopeGroupId(),
+					portletDataContext.getCompanyGroupId()
+				},
 				folder.getFolderId(), false);
 
 		long defaultFileEntryTypeId =
@@ -303,7 +304,7 @@ public class FolderStagedModelDataHandler
 			Folder folder, ServiceContext serviceContext)
 		throws Exception {
 
-		List<Long> fileEntryTypeIds = new ArrayList<Long>();
+		List<Long> currentFolderFileEntryTypeIds = new ArrayList<Long>();
 
 		String defaultFileEntryTypeUuid = GetterUtil.getString(
 			folderElement.attributeValue("defaultFileEntryTypeUuid"));
@@ -314,6 +315,10 @@ public class FolderStagedModelDataHandler
 			portletDataContext.getReferenceDataElements(
 				folderElement, DLFileEntryType.class);
 
+		Map<Long, Long> fileEntryTypeIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				DLFileEntryType.class);
+
 		for (Element referenceDataElement : referenceDataElements) {
 			String referencePath = referenceDataElement.attributeValue("path");
 
@@ -323,43 +328,55 @@ public class FolderStagedModelDataHandler
 
 			String fileEntryTypeUuid = referenceDLFileEntryType.getUuid();
 
-			DLFileEntryType dlFileEntryType =
+			DLFileEntryType existingDLFileEntryType =
 				DLFileEntryTypeLocalServiceUtil.
 					fetchDLFileEntryTypeByUuidAndGroupId(
 						fileEntryTypeUuid,
 						portletDataContext.getScopeGroupId());
 
-			if (dlFileEntryType == null) {
-				Group companyGroup = GroupLocalServiceUtil.getCompanyGroup(
-					portletDataContext.getCompanyId());
-
-				dlFileEntryType =
+			if (existingDLFileEntryType == null) {
+				existingDLFileEntryType =
 					DLFileEntryTypeLocalServiceUtil.
 						fetchDLFileEntryTypeByUuidAndGroupId(
-							fileEntryTypeUuid, companyGroup.getGroupId());
+							fileEntryTypeUuid,
+							portletDataContext.getCompanyGroupId());
 			}
 
-			if (dlFileEntryType == null) {
+			if (existingDLFileEntryType == null) {
+				StagedModelDataHandlerUtil.importStagedModel(
+					portletDataContext, referenceDLFileEntryType);
+
+				long dlFileEntryTypeId = MapUtil.getLong(
+					fileEntryTypeIds,
+					referenceDLFileEntryType.getFileEntryTypeId(),
+					referenceDLFileEntryType.getFileEntryTypeId());
+
+				existingDLFileEntryType =
+					DLFileEntryTypeLocalServiceUtil.fetchDLFileEntryType(
+						dlFileEntryTypeId);
+			}
+
+			if (existingDLFileEntryType == null) {
 				continue;
 			}
 
-			fileEntryTypeIds.add(dlFileEntryType.getFileEntryTypeId());
+			currentFolderFileEntryTypeIds.add(
+				existingDLFileEntryType.getFileEntryTypeId());
 
-			if (defaultFileEntryTypeUuid.equals(dlFileEntryType.getUuid())) {
-				defaultFileEntryTypeId = dlFileEntryType.getFileEntryTypeId();
+			if (defaultFileEntryTypeUuid.equals(fileEntryTypeUuid)) {
+				defaultFileEntryTypeId =
+					existingDLFileEntryType.getFileEntryTypeId();
 			}
 		}
 
 		if (GetterUtil.getBoolean(
 				folderElement.attributeValue("basic-document"))) {
 
-			DLFileEntryType dlFileEntryType =
-				DLFileEntryTypeLocalServiceUtil.fetchDLFileEntryType(0);
-
-			fileEntryTypeIds.add(dlFileEntryType.getFileEntryTypeId());
+			currentFolderFileEntryTypeIds.add(
+				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT);
 		}
 
-		if (!fileEntryTypeIds.isEmpty()) {
+		if (!currentFolderFileEntryTypeIds.isEmpty()) {
 			DLFolder dlFolder = (DLFolder)folder.getModel();
 
 			dlFolder.setDefaultFileEntryTypeId(defaultFileEntryTypeId);
@@ -368,7 +385,7 @@ public class FolderStagedModelDataHandler
 			DLFolderLocalServiceUtil.updateDLFolder(dlFolder);
 
 			DLFileEntryTypeLocalServiceUtil.updateFolderFileEntryTypes(
-				dlFolder, fileEntryTypeIds, defaultFileEntryTypeId,
+				dlFolder, currentFolderFileEntryTypeIds, defaultFileEntryTypeId,
 				serviceContext);
 		}
 	}

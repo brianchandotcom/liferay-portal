@@ -33,10 +33,8 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Image;
 import com.liferay.portal.model.User;
-import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ImageLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
@@ -371,9 +369,6 @@ public class JournalArticleStagedModelDataHandler
 			}
 		}
 
-		Group companyGroup = GroupLocalServiceUtil.getCompanyGroup(
-			portletDataContext.getCompanyId());
-
 		String parentDDMStructureKey = StringPool.BLANK;
 
 		long ddmStructureId = 0;
@@ -400,7 +395,8 @@ public class JournalArticleStagedModelDataHandler
 				existingDDMStructure =
 					DDMStructureLocalServiceUtil.
 						fetchDDMStructureByUuidAndGroupId(
-							ddmStructure.getUuid(), companyGroup.getGroupId());
+							ddmStructure.getUuid(),
+							portletDataContext.getCompanyGroupId());
 			}
 
 			if (existingDDMStructure == null) {
@@ -463,7 +459,8 @@ public class JournalArticleStagedModelDataHandler
 				existingDDMTemplate =
 					DDMTemplateLocalServiceUtil.
 						fetchDDMTemplateByUuidAndGroupId(
-							ddmTemplate.getUuid(), companyGroup.getGroupId());
+							ddmTemplate.getUuid(),
+							portletDataContext.getCompanyGroupId());
 			}
 
 			if (existingDDMTemplate == null) {
@@ -576,7 +573,8 @@ public class JournalArticleStagedModelDataHandler
 				articleResource =
 					JournalArticleResourceLocalServiceUtil.
 						fetchJournalArticleResourceByUuidAndGroupId(
-							articleResourceUuid, companyGroup.getGroupId());
+							articleResourceUuid,
+							portletDataContext.getCompanyGroupId());
 			}
 
 			serviceContext.setUuid(articleResourceUuid);
@@ -619,6 +617,12 @@ public class JournalArticleStagedModelDataHandler
 					smallFile, images, articleURL, serviceContext);
 			}
 			else {
+				if (portletDataContext.isStagedGroupedModelGlobal(
+						existingArticle)) {
+
+					return;
+				}
+
 				importedArticle = JournalArticleLocalServiceUtil.updateArticle(
 					userId, existingArticle.getGroupId(), folderId,
 					existingArticle.getArticleId(), article.getVersion(),

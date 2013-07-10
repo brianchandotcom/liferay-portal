@@ -114,9 +114,17 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 			String uuid = referenceElement.attributeValue("uuid");
 
 			try {
-				return validateMissingReference(
+				boolean referenceExist = validateMissingReference(
 					uuid, portletDataContext.getCompanyId(),
 					portletDataContext.getScopeGroupId());
+
+				if (!referenceExist) {
+					referenceExist = validateMissingReference(
+						uuid, portletDataContext.getCompanyId(),
+						portletDataContext.getCompanyGroupId());
+				}
+
+				return referenceExist;
 			}
 			catch (Exception e) {
 				return false;

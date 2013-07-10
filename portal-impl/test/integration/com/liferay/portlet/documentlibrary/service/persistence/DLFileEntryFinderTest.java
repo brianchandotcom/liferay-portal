@@ -38,6 +38,7 @@ import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portal.util.UserTestUtil;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
@@ -95,7 +96,8 @@ public class DLFileEntryFinderTest {
 		FileEntry fileEntry = DLAppTestUtil.addFileEntry(
 			user.getUserId(), _group.getGroupId(), _folder.getFolderId(),
 			"FE1.txt", ContentTypes.TEXT_PLAIN, "FE1.txt", null,
-			WorkflowConstants.ACTION_PUBLISH);
+			WorkflowConstants.ACTION_PUBLISH,
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT);
 
 		LiferayFileEntry liferayFileEntry = (LiferayFileEntry)fileEntry;
 

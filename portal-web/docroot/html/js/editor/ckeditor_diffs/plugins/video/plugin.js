@@ -22,48 +22,49 @@ CKEDITOR.plugins.add(
 	{
 		afterInit: function(editor) {
 			var dataProcessor = editor.dataProcessor;
-			var htmlFilter = dataProcessor && dataProcessor.htmlFilter;
 			var	dataFilter = dataProcessor && dataProcessor.dataFilter;
 
-			dataFilter.addRules(
-				{
-					elements: {
-						'div': function(realElement) {
-							var attributes = realElement.attributes;
+			if (dataFilter) {
+				dataFilter.addRules(
+					{
+						elements: {
+							'div': function(realElement) {
+								var attributeClass = realElement.attributes['class'];
 
-							if (attributes['class'] && attributes['class'].indexOf('liferayckevideo') >= 0) {
-								var fakeElement = editor.createFakeParserElement(realElement, 'liferay_cke_video', 'video', false);
+								if (attributeClass && attributeClass.indexOf('liferayckevideo') >= 0) {
+									var fakeElement = editor.createFakeParserElement(realElement, 'liferay_cke_video', 'video', false);
 
-								var fakeStyle = fakeElement.attributes.style || '';
+									var fakeStyle = fakeElement.attributes.style || '';
 
-								var height = attributes['data-height'];
-								var poster = attributes['data-poster'];
-								var width = attributes['data-width'];
+									var height = attributes['data-height'];
+									var poster = attributes['data-poster'];
+									var width = attributes['data-width'];
 
-								if (typeof width != 'undefined') {
-									fakeElement.attributes.style = fakeStyle + 'width:' + CKEDITOR.tools.cssLength(width) + ';';
+									if (poster) {
+										fakeElement.attributes.style = fakeStyle + 'background-image:url(' + poster + ');';
 
-									fakeStyle = fakeElement.attributes.style;
+										fakeStyle = fakeElement.attributes.style;
+									}
+
+									if (typeof height != 'undefined') {
+										fakeElement.attributes.style = fakeStyle + 'height:' + CKEDITOR.tools.cssLength(height) + ';';
+
+										fakeStyle = fakeElement.attributes.style;
+									}
+
+									if (typeof width != 'undefined') {
+										fakeElement.attributes.style = fakeStyle + 'width:' + CKEDITOR.tools.cssLength(width) + ';';
+
+										fakeStyle = fakeElement.attributes.style;
+									}
+
+									return fakeElement;
 								}
-
-								if (typeof height != 'undefined') {
-									fakeElement.attributes.style = fakeStyle + 'height:' + CKEDITOR.tools.cssLength(height) + ';';
-
-									fakeStyle = fakeElement.attributes.style;
-								}
-
-								if (poster) {
-									fakeElement.attributes.style = fakeStyle + 'background-image:url(' + poster + ');';
-
-									fakeStyle = fakeElement.attributes.style;
-								}
-
-								return fakeElement;
 							}
 						}
 					}
-				}
-			);
+				);
+			}
 		},
 
 		getPlaceholderCss: function() {
@@ -90,7 +91,8 @@ CKEDITOR.plugins.add(
 
 			editor.addCommand('Video', new CKEDITOR.dialogCommand('video'));
 
-			editor.ui.addButton('Video',
+			editor.ui.addButton(
+				'Video',
 				{
 					command: 'Video',
 					icon: instance.path + 'icons/icon.png',
@@ -111,26 +113,27 @@ CKEDITOR.plugins.add(
 			}
 
 			editor.on(
-					'doubleclick',
-					function(event) {
-						var element = event.data.element;
+				'doubleclick',
+				function(event) {
+					var element = event.data.element;
 
-						if (element.is('img') && element.data('cke-real-element-type') === 'video') {
-							event.data.dialog = 'video';
-						}
+					if (realVideoElement(element)) {
+						event.data.dialog = 'video';
 					}
+				}
 			);
 
 			if (editor.contextMenu) {
 				editor.contextMenu.addListener(
-						function(element, selection) {
-							if (element && element.is('img') && !element.isReadOnly() && (element.data('cke-real-element-type') === 'video')) {
+					function(element, selection) {
+						var value = {};
 
-								return {
-									video: CKEDITOR.TRISTATE_OFF
-								};
-							}
+						if (realVideoElement(element) && !element.isReadOnly()) {
+							value.video = CKEDITOR.TRISTATE_OFF;
 						}
+
+						return value;
+					}
 				);
 			}
 
@@ -145,6 +148,12 @@ CKEDITOR.plugins.add(
 			if (CKEDITOR.addCss) {
 				CKEDITOR.addCss(instance.getPlaceholderCss());
 			}
+		},
+
+		realVideoElement: function(el) {
+			var instance = this;
+
+			return (el && el.is('img') && el.data('cke-real-element-type') === 'video');
 		}
 	}
 );

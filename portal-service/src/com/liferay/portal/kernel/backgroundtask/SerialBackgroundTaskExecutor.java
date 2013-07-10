@@ -22,12 +22,13 @@ import com.liferay.portal.service.LockLocalServiceUtil;
 /**
  * @author Michael C. Han
  */
-public class SerialBackgroundTaskExecutor implements BackgroundTaskExecutor {
+public class SerialBackgroundTaskExecutor
+	extends DelegatingBackgroundTaskExecutor {
 
 	public SerialBackgroundTaskExecutor(
 		BackgroundTaskExecutor backgroundTaskExecutor) {
 
-		_backgroundTaskExecutor = backgroundTaskExecutor;
+		super(backgroundTaskExecutor);
 	}
 
 	@Override
@@ -48,7 +49,7 @@ public class SerialBackgroundTaskExecutor implements BackgroundTaskExecutor {
 					backgroundTask.getTaskExecutorClassName(), owner, false, 0);
 			}
 
-			return _backgroundTaskExecutor.execute(backgroundTask);
+			return getBackgroundTaskExecutor().execute(backgroundTask);
 		}
 		finally {
 			if (lock != null) {
@@ -58,17 +59,5 @@ public class SerialBackgroundTaskExecutor implements BackgroundTaskExecutor {
 			}
 		}
 	}
-
-	@Override
-	public String handleException(BackgroundTask backgroundTask, Exception e) {
-		return _backgroundTaskExecutor.handleException(backgroundTask, e);
-	}
-
-	@Override
-	public boolean isSerial() {
-		return _backgroundTaskExecutor.isSerial();
-	}
-
-	private BackgroundTaskExecutor _backgroundTaskExecutor;
 
 }

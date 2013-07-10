@@ -4,15 +4,17 @@
 			<var name="portletName" value="Wiki" />
 		</execute>
 
-		<execute action="CPWiki#click" locator-key1="ADD_WIKI_BUTTON" />
+		<execute action="CPWiki#assertClick" locator-key1="ADD_WIKI_BUTTON" value1="Add Wiki" />
 
 		<execute action="CPWikiAddwiki#type" locator-key1="NAME_FIELD" value1="${wikiNodeName}" />
 		<execute action="CPWikiAddwiki#type" locator-key1="DESCRIPTION_FIELD" value1="${wikiNodeDescription}" />
-		<execute action="CPWikiAddwiki#click" locator-key1="SAVE_BUTTON" />
+		<execute action="CPWikiAddwiki#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 
-		<execute action="CPWiki#assertTextEquals" locator-key1="SUCCESS_MESSAGE" />
-		<execute action="CPWiki#assertTextEquals" locator-key1="WIKI_NODE_TABLE_WIKI_2" value1="${wikiNodeName}" />
-		<execute action="CPWiki#assertTextEquals" locator-key1="WIKI_NODE_TABLE_NUMBER_OF_PAGES_2" value1="0" />
+		<var name="key_wikiNodeName" value="${wikiNodeName}" />
+
+		<execute action="CPWiki#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="CPWiki#assertTextEquals" locator-key1="WIKI_NODE_TABLE_WIKI" value1="${wikiNodeName}" />
+		<execute action="CPWiki#assertTextEquals" locator-key1="WIKI_NODE_TABLE_NUMBER_OF_PAGES" value1="0" />
 	</command>
 
 	<command name="deleteCP">
@@ -20,10 +22,12 @@
 			<var name="portletName" value="Wiki" />
 		</execute>
 
-		<execute action="CPWiki#assertTextEquals" locator-key1="WIKI_NODE_TABLE_WIKI_2" value1="${wikiNodeName}" />
-		<execute action="CPWiki#click" locator-key1="WIKI_NODE_TABLE_ACTIONS_2" />
-		<execute action="CPWiki#click" locator-key1="WIKI_NODE_MENULIST_RECYCLE_BIN" />
-		<execute action="CPWiki#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" />
+		<var name="key_wikiNodeName" value="${wikiNodeName}" />
+
+		<execute action="CPWiki#assertTextEquals" locator-key1="WIKI_NODE_TABLE_WIKI" value1="${wikiNodeName}" />
+		<execute action="CPWiki#assertClick" locator-key1="WIKI_NODE_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPWiki#assertClick" locator-key1="WIKI_NODE_MENULIST_RECYCLE_BIN" value1="Move to the Recycle Bin" />
+		<execute action="CPWiki#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="The selected item was moved to the Recycle Bin. Undo" />
 		<execute action="CPWiki#assertTextNotPresent" value1="${wikiNodeName}" />
 
 		<execute macro="RecycleBin#emptyCP" />
@@ -34,17 +38,21 @@
 			<var name="portletName" value="Wiki" />
 		</execute>
 
-		<execute action="CPWiki#assertTextEquals" locator-key1="WIKI_NODE_TABLE_WIKI_2" value1="${wikiNodeName}" />
-		<execute action="CPWiki#click" locator-key1="WIKI_NODE_TABLE_ACTIONS_2" />
-		<execute action="CPWiki#click" locator-key1="WIKI_NODE_MENULIST_EDIT" />
+		<var name="key_wikiNodeName" value="${wikiNodeName}" />
+
+		<execute action="CPWiki#assertTextEquals" locator-key1="WIKI_NODE_TABLE_WIKI" value1="${wikiNodeName}" />
+		<execute action="CPWiki#assertClick" locator-key1="WIKI_NODE_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPWiki#assertClick" locator-key1="WIKI_NODE_MENULIST_EDIT" value1="Edit" />
 
 		<execute action="CPWikiAddwiki#type" locator-key1="NAME_FIELD" value1="${wikiNodeNameEdit}" />
 		<execute action="CPWikiAddwiki#type" locator-key1="DESCRIPTION_FIELD" value1="${wikiNodeDescriptionEdit}" />
-		<execute action="CPWikiAddwiki#click" locator-key1="SAVE_BUTTON" />
+		<execute action="CPWikiAddwiki#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 
-		<execute action="CPWiki#assertTextEquals" locator-key1="SUCCESS_MESSAGE" />
-		<execute action="CPWiki#assertTextEquals" locator-key1="WIKI_NODE_TABLE_WIKI_2" value1="${wikiNodeNameEdit}" />
-		<execute action="CPWiki#assertTextNotEquals" locator-key1="WIKI_NODE_TABLE_WIKI_2" value1="${wikiNodeName}" />
+		<var name="key_wikiNodeName" value="${wikiNodeNameEdit}" />
+
+		<execute action="CPWiki#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="CPWiki#assertTextEquals" locator-key1="WIKI_NODE_TABLE_WIKI" value1="${wikiNodeNameEdit}" />
+		<execute action="CPWiki#assertTextNotEquals" locator-key1="WIKI_NODE_TABLE_WIKI" value1="${wikiNodeName}" />
 	</command>
 
 	<command name="tearDownCP">
@@ -53,11 +61,11 @@
 		</execute>
 
 		<while>
-			<condition action="CPWiki#isElementPresent" locator-key1="WIKI_NODE_TABLE_ACTIONS_2" />
+			<condition action="CPWiki#isElementPresent" locator1="xpath=(//a[@title='Actions'])[2]" />
 			<then>
-				<execute action="CPWiki#click" locator-key1="WIKI_NODE_TABLE_ACTIONS_2" />
-				<execute action="CPWiki#click" locator-key1="WIKI_NODE_MENULIST_RECYCLE_BIN" />
-				<execute action="CPWiki#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" />
+				<execute action="CPWiki#assertClick" locator1="xpath=(//a[@title='Actions'])[2]" value1="Actions" />
+				<execute action="CPWiki#assertClick" locator-key1="WIKI_NODE_MENULIST_RECYCLE_BIN" value1="Move to the Recycle Bin" />
+				<execute action="CPWiki#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="The selected item was moved to the Recycle Bin. Undo" />
 			</then>
 		</while>
 

@@ -1,34 +1,22 @@
 <definition>
-	<command name="assertTextEquals">
-		<case locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN">
-			<execute function="AssertTextEquals#assertPartialText" value1="The selected item was moved to the Recycle Bin. Undo" />
-		</case>
-		<case locator-key1="SUCCESS_MESSAGE">
-			<execute function="AssertTextEquals#assertText" value1="Your request completed successfully." />
-		</case>
-	</command>
-
-	<command name="click">
+	<command name="assertClick">
 		<case locator-key1="ADD_WIKI_BUTTON">
-			<execute function="Click#textClickAtAndWait" value1="Add Wiki" />
-		</case>
-		<case comparator="startsWith" locator-key1="WIKI_NODE_TABLE_ACTIONS_">
-			<execute function="Click#pauseTextClickAt" value1="Actions" />
+			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
 		<case locator-key1="WIKI_NODE_MENULIST_EDIT">
-			<execute function="Click#textClickAtAndWait" value1="Edit" />
+			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
 		<case locator-key1="WIKI_NODE_MENULIST_RECYCLE_BIN">
-			<execute function="Click#textClickAtAndWait" value1="Move to the Recycle Bin" />
+			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
-		<case comparator="startsWith" locator-key1="WIKI_NODE_TABLE_WIKI_">
-			<execute function="Click#clickAtAndWait" />
+		<case locator-key1="WIKI_NODE_TABLE_WIKI">
+			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
 	</command>
 
-	<command name="isElementPresent">
-		<case comparator="startsWith" locator-key1="WIKI_NODE_TABLE_ACTIONS_">
-			<execute function="IsElementPresent#pauseIsElementPresent" />
+	<command name="assertTextEquals">
+		<case locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN">
+			<execute function="AssertTextEquals#assertPartialText" />
 		</case>
 	</command>
 </definition>

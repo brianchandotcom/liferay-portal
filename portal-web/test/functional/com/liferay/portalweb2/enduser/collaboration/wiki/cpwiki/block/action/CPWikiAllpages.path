@@ -19,9 +19,55 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[@class='alert alert-success']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SUCCESS_MESSAGE_RECYCLE_BIN</td>
 	<td>//form[@id='_154_undoForm']</td>
-	<td>The selected item was moved to the Recycle Bin. Undo</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INFO_MESSAGE</td>
+	<td>//div[@class='alert alert-info']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_PAGE_BUTTON</td>
+	<td>//button[@id='_154_addPageButton']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--NAVIGATION-->
+<tr>
+	<td>NAVIGATION_FRONTPAGE</td>
+	<td>//div[@class='navbar-inner']/div/ul/li/a[contains(.,'FrontPage')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_RECENT_CHANGES</td>
+	<td>//div[@class='navbar-inner']/div/ul/li/a[contains(.,'Recent Changes')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_ALL_PAGES</td>
+	<td>//div[@class='navbar-inner']/div/ul/li/a[contains(.,'All Pages')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_ORPHAN_PAGES</td>
+	<td>//div[@class='navbar-inner']/div/ul/li/a[contains(.,'Orphan Pages')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_DRAFT_PAGES</td>
+	<td>//div[@class='navbar-inner']/div/ul/li/a[contains(.,'Draft Pages')]</td>
+	<td></td>
 </tr>
 <tr>
 	<td></td>
@@ -30,14 +76,34 @@
 </tr>
 <!--WIKI_PAGE_TABLE-->
 <tr>
-	<td>WIKI_PAGE_TABLE_PAGE_1</td>
-	<td>//tr[1]/td/a</td>
-	<td>FrontPage</td>
+	<td>WIKI_PAGE_TABLE_PAGE</td>
+	<td>//tr[contains(.,'${key_wikiPageTitle}')]/td[1]/a</td>
+	<td></td>
 </tr>
 <tr>
-	<td>WIKI_PAGE_TABLE_ACTIONS_1</td>
-	<td>//tr[1]/td/div/a[@title='Actions']</td>
-	<td>FrontPage</td>
+	<td>WIKI_PAGE_TABLE_STATUS</td>
+	<td>//tr[contains(.,'${key_wikiPageTitle}')]/td[2]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WIKI_PAGE_TABLE_REVISION</td>
+	<td>//tr[contains(.,'${key_wikiPageTitle}')]/td[3]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WIKI_PAGE_TABLE_USER</td>
+	<td>//tr[contains(.,'${key_wikiPageTitle}')]/td[4]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WIKI_PAGE_TABLE_DATE</td>
+	<td>//tr[contains(.,'${key_wikiPageTitle}')]/td[5]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WIKI_PAGE_TABLE_ACTIONS</td>
+	<td>//tr[contains(.,'${key_wikiPageTitle}')]/td[6]/div/a[@title='Actions']</td>
+	<td></td>
 </tr>
 <tr>
 	<td></td>

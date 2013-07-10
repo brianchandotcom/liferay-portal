@@ -36,6 +36,8 @@ public class RuntimeChecker extends BaseChecker {
 
 	@Override
 	public void afterPropertiesSet() {
+		initCreateClassLoader();
+		initGetProtectionDomain();
 		initEnvironmentVariables();
 	}
 
@@ -56,7 +58,17 @@ public class RuntimeChecker extends BaseChecker {
 		String key = null;
 		String value = null;
 
-		if (name.startsWith(RUNTIME_PERMISSION_GET_ENV)) {
+		if (name.startsWith(RUNTIME_PERMISSION_CREATE_CLASS_LOADER)) {
+			key = "security-manager-create-class-loader";
+
+			value = "true";
+		}
+		else if (name.startsWith(RUNTIME_PERMISSION_GET_PROTECTION_DOMAIN)) {
+			key = "security-manager-get-protection-domain";
+
+			value = "true";
+		}
+		else if (name.startsWith(RUNTIME_PERMISSION_GET_ENV)) {
 			key = "security-manager-environment-variables";
 
 			value = name.substring(RUNTIME_PERMISSION_GET_ENV.length() + 1);
@@ -210,6 +222,10 @@ public class RuntimeChecker extends BaseChecker {
 	}
 
 	protected boolean hasCreateClassLoader(Permission permission) {
+		if (_createClassLoader) {
+			return true;
+		}
+
 		int stackIndex = getStackIndex(15, 11);
 
 		Class<?> callerClass = Reflection.getCallerClass(stackIndex);
@@ -268,6 +284,10 @@ public class RuntimeChecker extends BaseChecker {
 	}
 
 	protected boolean hasGetProtectionDomain(Permission permission) {
+		if (_getProtectionDomain) {
+			return true;
+		}
+
 		int stackIndex = getStackIndex(11, 10);
 
 		Class<?> callerClass = Reflection.getCallerClass(stackIndex);
@@ -339,6 +359,11 @@ public class RuntimeChecker extends BaseChecker {
 		return false;
 	}
 
+	protected void initCreateClassLoader() {
+		_createClassLoader = getPropertyBoolean(
+			"security-manager-create-class-loader");
+	}
+
 	protected void initEnvironmentVariables() {
 		Set<String> environmentVariables = getPropertySet(
 			"security-manager-environment-variables");
@@ -360,8 +385,15 @@ public class RuntimeChecker extends BaseChecker {
 		}
 	}
 
+	protected void initGetProtectionDomain() {
+		_getProtectionDomain = getPropertyBoolean(
+			"security-manager-get-protection-domain");
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(RuntimeChecker.class);
 
+	private boolean _createClassLoader;
 	private List<Pattern> _environmentVariablePatterns;
+	private boolean _getProtectionDomain;
 
 }

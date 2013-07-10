@@ -193,7 +193,7 @@ public class PortalSecurityManagerImpl extends SecurityManager
 
 		ClassLoader clazzClassLoader = ClassLoaderUtil.getClassLoader(clazz);
 
-		if (accessibility == Member.PUBLIC) {
+		if ((accessibility == Member.PUBLIC) || PACLUtil.hasSameOrigin(clazz)) {
 			_checkMemberAccessClassLoader.set(clazzClassLoader);
 
 			return;

@@ -25,8 +25,6 @@ import java.lang.reflect.Method;
 
 import java.util.List;
 import java.util.Stack;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringEscapeUtils;
 
@@ -108,35 +106,16 @@ public class Logger {
 			}
 		}
 
-		sb.append("- ");
-
-		Pattern pattern = Pattern.compile("Pattern (.*) does not match (.*) at (//.*)");
-
-		Matcher matcher = pattern.matcher(message);
-
-		if (matcher.find()) {
-			System.out.println(matcher.group(1));
-			System.out.println(matcher.group(2));
-			System.out.println(matcher.group(3));
-
-			sb.append("Expected string '<b>");
-			sb.append(matcher.group(1));
-			sb.append("</b>' did not match actual string '<b>");
-			sb.append(matcher.group(2));
-			sb.append("</b>' at xpath '<b>");
-			sb.append(matcher.group(3));
-			sb.append("</b>'.");
-		}
-		else {
-			sb.append(message);
-		}
+		sb.append(" - ");
+		sb.append(message);
 
 		log(sb.toString());
 
 		sb = new StringBundler();
 
-		sb.append("Command failure ");
+		sb.append("Command failure \"");
 		sb.append(method.getName());
+		sb.append("\"");
 
 		if (arguments != null) {
 			if (arguments.length == 1) {
@@ -147,12 +126,14 @@ public class Logger {
 			}
 
 			for (Object argument : arguments) {
+				sb.append("\"");
 				sb.append(String.valueOf(argument));
-				sb.append(" ");
+				sb.append("\" ");
 			}
 		}
 
-		sb.append("- " + message);
+		sb.append(" - ");
+		sb.append(message);
 
 		BaseTestCase.fail(sb.toString());
 	}

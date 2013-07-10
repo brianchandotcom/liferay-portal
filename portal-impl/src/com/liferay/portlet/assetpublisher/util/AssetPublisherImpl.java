@@ -288,6 +288,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 
 	@Override
 	public Tuple getAssetEntries(
+			PortletPreferences portletPreferences,
 			PermissionChecker permissionChecker, long[] groupIds,
 			String[] assetEntryXmls, boolean deleteNotDisplayableAssets,
 			boolean checkPermission)
@@ -353,6 +354,11 @@ public class AssetPublisherImpl implements AssetPublisher {
 			}
 
 			viewableResults.add(assetEntry);
+		}
+
+		if (deleteNotDisplayableAssets) {
+			AssetPublisherUtil.removeAndStoreSelection(
+				deletedAssets, portletPreferences);
 		}
 
 		return new Tuple(viewableResults, deletedAssets);

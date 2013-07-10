@@ -88,7 +88,6 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 					DocUtil.add(root, "last", false);
 				}
 
-				String assetEntryClassName = root.element("asset-entry-type").getText();
 				String assetEntryUuid = root.element("asset-entry-uuid").getText();
 
 				if (deletedAssets.contains(assetEntryUuid)) {
@@ -130,8 +129,6 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 
 				resultRows.add(row);
 			}
-
-			AssetPublisherUtil.removeAndStoreSelection(deletedAssets, portletPreferences);
 			%>
 
 			<c:if test="<%= !deletedAssets.isEmpty() %>">

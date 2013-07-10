@@ -47,6 +47,8 @@ public class BackgroundTaskMessageListener extends BaseMessageListener {
 	protected void doReceive(Message message) throws Exception {
 		long backgroundTaskId = (Long)message.get("backgroundTaskId");
 
+		BackgroundTaskThreadLocal.setBackgroundTaskId(backgroundTaskId);
+
 		ServiceContext serviceContext = new ServiceContext();
 
 		BackgroundTaskLocalServiceUtil.updateBackgroundTask(

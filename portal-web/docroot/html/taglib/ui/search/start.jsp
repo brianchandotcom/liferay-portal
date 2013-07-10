@@ -61,7 +61,7 @@ pageContext.setAttribute("portletURL", portletURL);
 		keywords = keywords.replace(/^\s+|\s+$/, '');
 
 		if (keywords != '') {
-			document.<%= randomNamespace %><%= namespace %>fm.submit();
+			submitForm(document.<%= randomNamespace %><%= namespace %>fm);
 		}
 	}
 </aui:script>

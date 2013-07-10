@@ -366,7 +366,7 @@ AUI.add(
 
 				Liferay.fire('dockbarLoaded');
 			},
-			['aui-io-request', 'aui-overlay-context-deprecated', 'liferay-store', 'node-focusmanager']
+			['aui-io-request', 'liferay-store', 'node-focusmanager']
 		);
 
 		Liferay.provide(
@@ -502,6 +502,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-node', 'aui-overlay-context-deprecated', 'aui-overlay-manager-deprecated', 'event-touch']
+		requires: ['aui-node', 'aui-overlay-mask-deprecated', 'event-touch']
 	}
 );

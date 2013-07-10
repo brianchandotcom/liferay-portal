@@ -75,6 +75,7 @@ public interface AssetPublisher {
 	public void checkAssetEntries() throws Exception;
 
 	public Tuple getAssetEntries(
+			PortletRequest portletRequest,
 			PortletPreferences portletPreferences,
 			PermissionChecker permissionChecker, long[] groupIds,
 			String[] assetEntryXmls, boolean deleteNotDisplayableAssets,

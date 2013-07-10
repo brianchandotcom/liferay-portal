@@ -89,6 +89,7 @@ public class AssetPublisherUtil {
 	}
 
 	public static Tuple getAssetEntries(
+			PortletRequest portletRequest,
 			PortletPreferences portletPreferences,
 			PermissionChecker permissionChecker, long[] groupIds,
 			String[] assetEntryXmls, boolean deleteNotDisplayableAssets,
@@ -96,8 +97,8 @@ public class AssetPublisherUtil {
 		throws Exception {
 
 		return getAssetPublisher().getAssetEntries(
-				portletPreferences, permissionChecker, groupIds, assetEntryXmls,
-				deleteNotDisplayableAssets, checkPermission);
+				portletRequest, portletPreferences, permissionChecker, groupIds,
+				assetEntryXmls, deleteNotDisplayableAssets, checkPermission);
 	}
 
 	public static List<AssetEntry> getAssetEntries(

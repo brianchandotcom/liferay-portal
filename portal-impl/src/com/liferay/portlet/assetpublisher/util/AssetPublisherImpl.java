@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -288,6 +289,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 
 	@Override
 	public Tuple getAssetEntries(
+			PortletRequest portletRequest,
 			PortletPreferences portletPreferences,
 			PermissionChecker permissionChecker, long[] groupIds,
 			String[] assetEntryXmls, boolean deleteNotDisplayableAssets,
@@ -359,6 +361,11 @@ public class AssetPublisherImpl implements AssetPublisher {
 		if (deleteNotDisplayableAssets) {
 			AssetPublisherUtil.removeAndStoreSelection(
 				deletedAssets, portletPreferences);
+
+			if (!deletedAssets.isEmpty()) {
+				SessionMessages.add(
+					portletRequest, "removedSelectedAssets", deletedAssets);
+			}
 		}
 
 		return new Tuple(viewableResults, deletedAssets);

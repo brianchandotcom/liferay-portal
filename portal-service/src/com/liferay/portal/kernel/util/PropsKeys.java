@@ -875,6 +875,8 @@ public interface PropsKeys {
 
 	public static final String GZIP_COMPRESSION_LEVEL = "gzip.compression.level";
 
+	public static final String HIBERNATE_CACHE_USE_QUERY_CACHE = "hibernate.cache.use_query_cache";
+
 	public static final String HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = "hibernate.cache.use_second_level_cache";
 
 	public static final String HIBERNATE_CONFIGS = "hibernate.configs";

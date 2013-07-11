@@ -6,4 +6,8 @@
 	<execute test-case="WorkflowadminMysubmissionsAcceptance" />
 
 	<execute test-case="WorkflowadminMyworkflowtasksAcceptance" />
+
+	<execute test-case="WorkflowadminPGAssetpublisherAcceptance" />
+
+	<execute test-case="WorkflowadminPGWebcontentdisplayAcceptance" />
 </definition>

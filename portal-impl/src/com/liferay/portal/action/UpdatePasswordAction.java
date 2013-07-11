@@ -232,6 +232,8 @@ public class UpdatePasswordAction extends Action {
 			}
 
 			LoginUtil.login(request, response, login, password1, false, null);
+
+			UserLocalServiceUtil.updatePasswordReset(userId, false);
 		}
 		else if (PropsValues.SESSION_STORE_PASSWORD) {
 			HttpSession session = request.getSession();

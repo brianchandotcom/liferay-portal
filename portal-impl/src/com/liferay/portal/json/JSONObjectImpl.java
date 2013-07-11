@@ -289,12 +289,41 @@ public class JSONObjectImpl implements JSONObject {
 	}
 
 	@Override
+	public JSONObject putErrorMessage(int statusCode, String errorMessage) {
+		try {
+			putStatus(statusCode);
+			put(_MESSAGE, errorMessage);
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(e, e);
+			}
+		}
+
+		return this;
+	}
+
+	@Override
 	public JSONObject putException(Exception exception) {
 		try {
 			_jsonObject.put(
 				"exception",
 				exception.getClass() + StringPool.COLON +
 					exception.getMessage());
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(e, e);
+			}
+		}
+
+		return this;
+	}
+
+	@Override
+	public JSONObject putStatus(int statusCode) {
+		try {
+			_jsonObject.put(_STATUS, statusCode);
 		}
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {
@@ -334,6 +363,10 @@ public class JSONObjectImpl implements JSONObject {
 			throw new JSONException(e);
 		}
 	}
+
+	private static final String _MESSAGE = "message";
+
+	private static final String _STATUS = "status";
 
 	private static Log _log = LogFactoryUtil.getLog(JSONObjectImpl.class);
 

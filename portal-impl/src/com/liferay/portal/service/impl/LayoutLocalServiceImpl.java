@@ -2633,11 +2633,12 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	 * @param  layout the layout to be updated
 	 * @param  priority the layout's new priority
 	 * @return the updated layout
+	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Layout updatePriority(Layout layout, int priority)
-		throws SystemException {
+		throws PortalException, SystemException {
 
 		if (layout.getPriority() == priority) {
 			return layout;
@@ -2673,6 +2674,10 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			layouts, new LayoutPriorityComparator(layout, lessThan));
 
 		int newPriority = LayoutConstants.FIRST_PRIORITY;
+
+		Layout firstLayout = layouts.get(LayoutConstants.FIRST_PRIORITY);
+
+		layoutLocalServiceHelper.validateFirstLayout(firstLayout.getType());
 
 		for (Layout curLayout : layouts) {
 			int curNextPriority = layoutLocalServiceHelper.getNextPriority(

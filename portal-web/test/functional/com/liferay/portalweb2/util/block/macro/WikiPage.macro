@@ -22,7 +22,7 @@
 	</command>
 
 	<command name="addFrontPageCP">
-		<execute macro="Page#cpGotoContent">
+		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Wiki" />
 		</execute>
 
@@ -108,7 +108,7 @@
 	</command>
 
 	<command name="moveToRecycleBinCP">
-		<execute macro="Page#cpGotoContent">
+		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Wiki" />
 		</execute>
 
@@ -144,7 +144,7 @@
 	</command>
 
 	<command name="viewFrontPageCP">
-		<execute macro="Page#cpGotoContent">
+		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Wiki" />
 		</execute>
 
@@ -163,7 +163,7 @@
 	</command>
 
 	<command name="viewFrontPageNoCP">
-		<execute macro="Page#cpGotoContent">
+		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Wiki" />
 		</execute>
 

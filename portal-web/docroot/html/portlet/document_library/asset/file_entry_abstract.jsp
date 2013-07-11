@@ -24,10 +24,6 @@ FileEntry fileEntry = (FileEntry)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_F
 
 FileVersion fileVersion = (FileVersion)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FILE_VERSION);
 
-if (fileVersion == null) {
-	fileVersion = fileEntry.getFileVersion();
-}
-
 boolean showThumbnail = false;
 
 if (fileEntry.getVersion().equals(fileVersion.getVersion())) {

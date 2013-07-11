@@ -318,6 +318,11 @@ public class DLFileEntryAssetRenderer
 				renderRequest.setAttribute(
 					WebKeys.DOCUMENT_LIBRARY_FILE_VERSION, _fileVersion);
 			}
+			else {
+				renderRequest.setAttribute(
+					WebKeys.DOCUMENT_LIBRARY_FILE_VERSION,
+					_fileEntry.getFileVersion());
+			}
 
 			return "/html/portlet/document_library/asset/file_entry_" +
 				template + ".jsp";

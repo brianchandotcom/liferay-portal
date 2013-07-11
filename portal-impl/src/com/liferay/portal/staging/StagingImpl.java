@@ -1858,24 +1858,23 @@ public class StagingImpl implements Staging {
 	}
 
 	protected void addDefaultLayoutSetBranch(
-			long userId, long groupId, String groupName,
+			long userId, long groupId, String groupName, boolean privateLayout,
 			ServiceContext serviceContext)
 		throws SystemException, PortalException {
 
-		Locale locale = LocaleUtil.getDefault();
-
 		String description = LanguageUtil.format(
-			locale,
-			LayoutSetBranchConstants.MASTER_BRANCH_DESCRIPTION_PUBLIC,
+			LocaleUtil.getDefault(), privateLayout ?
+				LayoutSetBranchConstants.MASTER_BRANCH_DESCRIPTION_PRIVATE :
+				LayoutSetBranchConstants.MASTER_BRANCH_DESCRIPTION_PUBLIC,
 			groupName);
 
 		try {
 			LayoutSetBranch layoutSetBranch =
 				LayoutSetBranchLocalServiceUtil.addLayoutSetBranch(
-					userId, groupId, false,
-					LayoutSetBranchConstants.MASTER_BRANCH_NAME,
-					description, true,
-					LayoutSetBranchConstants.ALL_BRANCHES, serviceContext);
+					userId, groupId, privateLayout,
+					LayoutSetBranchConstants.MASTER_BRANCH_NAME, description,
+					true, LayoutSetBranchConstants.ALL_BRANCHES,
+					serviceContext);
 
 			List<LayoutRevision> layoutRevisions =
 				LayoutRevisionLocalServiceUtil.getLayoutRevisions(
@@ -1890,7 +1889,8 @@ public class StagingImpl implements Staging {
 		catch (LayoutSetBranchNameException lsbne) {
 			if (_log.isWarnEnabled()) {
 				_log.warn(
-					"Unable to create master branch for public layouts",
+					"Unable to create master branch for " +
+						(privateLayout ? "private" : "public") + " layouts",
 					lsbne);
 			}
 		}
@@ -1919,43 +1919,14 @@ public class StagingImpl implements Staging {
 
 		if (branchingPublic) {
 			addDefaultLayoutSetBranch(
-				userId, targetGroupId, liveGroup.getDescriptiveName(),
+				userId, targetGroupId, liveGroup.getDescriptiveName(), false,
 				serviceContext);
 		}
 
 		if (branchingPrivate) {
-			Locale locale = LocaleUtil.getDefault();
-
-			String description = LanguageUtil.format(
-				locale,
-				LayoutSetBranchConstants.MASTER_BRANCH_DESCRIPTION_PRIVATE,
-				liveGroup.getDescriptiveName());
-
-			try {
-				LayoutSetBranch layoutSetBranch =
-					LayoutSetBranchLocalServiceUtil.addLayoutSetBranch(
-						userId, targetGroupId, true,
-						LayoutSetBranchConstants.MASTER_BRANCH_NAME,
-						description, true,
-						LayoutSetBranchConstants.ALL_BRANCHES, serviceContext);
-
-				List<LayoutRevision> layoutRevisions =
-					LayoutRevisionLocalServiceUtil.getLayoutRevisions(
-						layoutSetBranch.getLayoutSetBranchId(), false);
-
-				for (LayoutRevision layoutRevision : layoutRevisions) {
-					LayoutRevisionLocalServiceUtil.updateStatus(
-						userId, layoutRevision.getLayoutRevisionId(),
-						WorkflowConstants.STATUS_APPROVED, serviceContext);
-				}
-			}
-			catch (LayoutSetBranchNameException lsbne) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Unable to create master branch for private layouts",
-						lsbne);
-				}
-			}
+			addDefaultLayoutSetBranch(
+				userId, targetGroupId, liveGroup.getDescriptiveName(), true,
+				serviceContext);
 		}
 	}
 

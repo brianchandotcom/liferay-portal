@@ -234,6 +234,10 @@ serverURL.setParameter("tabs3", tabs3);
 				headerNames.add("property");
 				headerNames.add("value");
 
+				if (tabs3.equals("portal-properties")) {
+					headerNames.add("source");
+				}
+
 				String emptyResultsMessage = null;
 
 				if (tabs3.equals("portal-properties")) {
@@ -251,16 +255,6 @@ serverURL.setParameter("tabs3", tabs3);
 
 				if (tabs3.equals("portal-properties")) {
 					properties = PropsUtil.getProperties();
-
-					PortletPreferences serverPreferences = PrefsPropsUtil.getPreferences();
-
-					request.setAttribute("server.jspf-serverPreferences", serverPreferences);
-					request.setAttribute("server.jspf-serverPreferencesMap", serverPreferences.getMap());
-
-					PortletPreferences companyPreferences = PrefsPropsUtil.getPreferences(company.getCompanyId());
-
-					request.setAttribute("server.jspf-companyPreferences", companyPreferences);
-					request.setAttribute("server.jspf-companyPreferencesMap", companyPreferences.getMap());
 				}
 				else {
 					properties = System.getProperties();
@@ -285,11 +279,35 @@ serverURL.setParameter("tabs3", tabs3);
 
 				List resultRows = searchContainer.getResultRows();
 
+				PortletPreferences serverPreferences = PrefsPropsUtil.getPreferences();
+
+				Map<String, String[]> serverPreferencesMap = serverPreferences.getMap();
+
+				PortletPreferences companyPreferences = PrefsPropsUtil.getPreferences(company.getCompanyId());
+
+				Map<String, String[]> companyPreferencesMap = companyPreferences.getMap();
+
 				for (int i = 0; i < results.size(); i++) {
 					Map.Entry entry = (Map.Entry)results.get(i);
 
 					String property = (String)entry.getKey();
 					String value = (String)entry.getValue();
+
+					boolean overriddenPropertyValue = false;
+
+					if (tabs3.equals("portal-properties")) {
+						if (serverPreferencesMap.containsKey(property)) {
+							value = serverPreferences.getValue(property, StringPool.BLANK);
+
+							overriddenPropertyValue = true;
+						}
+
+						if (companyPreferencesMap.containsKey(property)) {
+							value = companyPreferences.getValue(property, StringPool.BLANK);
+
+							overriddenPropertyValue = true;
+						}
+					}
 
 					ResultRow row = new ResultRow(entry, property, i);
 
@@ -299,11 +317,43 @@ serverURL.setParameter("tabs3", tabs3);
 
 					// Value
 
+					row.addText(HtmlUtil.escape(StringUtil.shorten(value, 80)));
+
+					// Source
+
 					if (tabs3.equals("portal-properties")) {
-						row.addJSP("/html/portlet/admin/server_portal_property.jsp");
-					}
-					else {
-						row.addText(HtmlUtil.escape(StringUtil.shorten(value, 80)));
+						sb = new StringBundler(5);
+						sb.append("<span onmouseover=\"Liferay.Portal.ToolTip.show(this, '");
+
+						if (overriddenPropertyValue) {
+							sb.append(LanguageUtil.get(pageContext, "the-value-of-this-property-was-overridden-using-the-control-panel-and-is-stored-in-the-database"));
+						}
+						else {
+							sb.append(LanguageUtil.get(pageContext, "the-value-of-this-property-is-read-from-the-portal-ext-.properties"));
+						}
+
+						sb.append("')\"><img alt=\"");
+
+						if (overriddenPropertyValue) {
+							sb.append(LanguageUtil.get(pageContext, "the-value-of-this-property-was-overridden-using-the-control-panel-and-is-stored-in-the-database"));
+						}
+						else {
+							sb.append(LanguageUtil.get(pageContext, "the-value-of-this-property-is-read-from-the-portal-ext-.properties"));
+						}
+
+						sb.append("\" src=\"");
+						sb.append(themeDisplay.getPathThemeImages());
+
+						if (overriddenPropertyValue) {
+							sb.append("/common/database_save.png");
+						}
+						else {
+							sb.append("/common/page.png");
+						}
+
+						sb.append("\" /></span>");
+
+						row.addText(sb.toString());
 					}
 
 					// Add result row
@@ -312,19 +362,6 @@ serverURL.setParameter("tabs3", tabs3);
 				}
 				%>
 
-				<c:if test='<%= tabs3.equals("portal-properties") %>'>
-					<liferay-util:buffer var="storedInDatabaseTaglib">
-						<liferay-ui:icon image="drive" alt="database" />
-					</liferay-util:buffer>
-					<liferay-util:buffer var="storedInFileTaglib">
-						<liferay-ui:icon image="page" alt="file" />
-					</liferay-util:buffer>
-
-					<p class="alert alert-info">
-						<liferay-ui:message key="properties-with-icon-x-were-overridden-using-control-panel-and-stored-in-database-properties-with-icon-y-are-read-from-portal-ext-properties"
-						                    arguments="<%= new Object[]{storedInDatabaseTaglib, storedInFileTaglib} %>" />
-					</p>
-				</c:if>
 				<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" />
 			</c:when>
 			<c:when test='<%= tabs2.equals("captcha") %>'>

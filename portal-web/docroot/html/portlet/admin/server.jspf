@@ -317,7 +317,22 @@ serverURL.setParameter("tabs3", tabs3);
 
 					// Value
 
-					row.addText(HtmlUtil.escape(StringUtil.shorten(value, 80)));
+					StringBundler sb = new StringBundler(5);
+
+					if (Validator.isNotNull(value)) {
+						if (value.length() > 80) {
+							sb.append("<span onmouseover=\"Liferay.Portal.ToolTip.show(this, '");
+							sb.append(HtmlUtil.escape(value));
+							sb.append("')\">");
+							sb.append(HtmlUtil.escape(StringUtil.shorten(value, 80)));
+							sb.append("</span>");
+						}
+						else {
+							sb.append(HtmlUtil.escape(StringUtil.shorten(value, 80)));
+						}
+					}
+
+					row.addText(sb.toString());
 
 					// Source
 

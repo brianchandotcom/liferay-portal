@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>HEADER</td>
-	<td>//h2[@id='cpPortletTitle']/span</td>
+	<td>//h1[@class='site-title']</td>
 	<td></td>
 </tr>
 <tr>
@@ -86,8 +86,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>STAGING_ACTIVITIES_CHECKBOX</td>
-	<td>//label[contains(.,'Activities')]/input[2]</td>
+	<td>STAGING_ACCOUNT_SETTINGS_CHECKBOX</td>
+	<td>//label[contains(.,'Account Settings')]/input[2]</td>
 	<td></td>
 </tr>
 <tr>

@@ -43,7 +43,7 @@ String portletResource = ParamUtil.getString(request, "portletResource");
 long groupId = ParamUtil.getLong(renderRequest, "groupId");
 
 if (groupId <= 0) {
-	groupId = GetterUtil.getLong(portletPreferences.getValue("groupId", scopeGroupId.toString()));
+	groupId = GetterUtil.getLong(portletPreferences.getValue("groupId", String.valueOf(scopeGroupId)));
 }
 
 String articleId = ParamUtil.getString(renderRequest, "articleId");

@@ -175,10 +175,13 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 						<liferay-ui:icon-menu cssClass="select-existing-selector" direction="right" icon='<%= themeDisplay.getPathThemeImages() + "/common/add.png" %>' message='<%= LanguageUtil.format(pageContext, (groupIds.length == 1) ? "select" : "select-in-x", new Object[] {HtmlUtil.escape((GroupLocalServiceUtil.getGroup(groupId)).getDescriptiveName(locale))}) %>' showWhenSingleIcon="<%= true %>">
 
 							<%
+							long[] selectedGroupIds = new long[] {groupId};
+
 							PortletURL assetBrowserURL = PortletURLFactoryUtil.create(request, PortletKeys.ASSET_BROWSER, PortalUtil.getControlPanelPlid(company.getCompanyId()), PortletRequest.RENDER_PHASE);
 
 							assetBrowserURL.setParameter("struts_action", "/asset_browser/view");
 							assetBrowserURL.setParameter("groupId", String.valueOf(groupId));
+							assetBrowserURL.setParameter("selectedGroupIds", StringUtil.merge(selectedGroupIds));
 							assetBrowserURL.setParameter("callback", liferayPortletResponse.getNamespace() + "selectAsset");
 							assetBrowserURL.setPortletMode(PortletMode.VIEW);
 							assetBrowserURL.setWindowState(LiferayWindowState.POP_UP);

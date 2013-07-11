@@ -1,0 +1,60 @@
+--- a/src/com/ibm/icu/impl/duration/impl/Utils.java
++++ b/src/com/ibm/icu/impl/duration/impl/Utils.java
+@@ -171,19 +171,19 @@ public class Utils {
+       }
+     }
+     return new String(buf, x, w-x);
+   }
+ 
+-  public static void main(String[] args) {
+-    for (int i = 0; i < args.length; ++i) {
+-      String arg = args[i];
+-      System.out.print(arg);
+-      System.out.print(" > ");
+-      long n = Long.parseLong(arg);
+-      System.out.println(chineseNumber(n, ChineseDigits.DEBUG));
+-    }
+-  }
++//  public static void main(String[] args) {
++//    for (int i = 0; i < args.length; ++i) {
++//      String arg = args[i];
++//      System.out.print(arg);
++//      System.out.print(" > ");
++//      long n = Long.parseLong(arg);
++//      System.out.println(chineseNumber(n, ChineseDigits.DEBUG));
++//    }
++//  }
+ 
+   public static class ChineseDigits {
+     final char[] digits;
+     final char[] units;
+     final char[] levels;
+--- a/src/com/ibm/icu/text/BreakDictionary.java
++++ b/src/com/ibm/icu/text/BreakDictionary.java
+@@ -37,21 +37,19 @@ public class BreakDictionary {
+     //=================================================================================
+     /** 
+      * @internal 
+      * @deprecated This API is ICU internal only.
+      */
+-    public static void main(String args[])
++    static void writeToFile(String inFile, String outFile)
+             throws FileNotFoundException, UnsupportedEncodingException, IOException {
+-        String filename = args[0];
+-
+-        BreakDictionary dictionary = new BreakDictionary(new FileInputStream(filename));
++        BreakDictionary dictionary = new BreakDictionary(new FileInputStream(inFile));
+ 
+         PrintWriter out = null;
+ 
+-        if(args.length >= 2) {
+-            out = new PrintWriter(new OutputStreamWriter(new FileOutputStream(args[1]), "UnicodeLittle"));
+-        }
++        if(outFile != null) {
++            out = new PrintWriter(new OutputStreamWriter(new FileOutputStream(outFile), "UnicodeLittle"));
++	 }
+ 
+         dictionary.printWordList("", 0, out);
+ 
+         if (out != null) {
+             out.close();

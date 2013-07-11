@@ -2322,7 +2322,7 @@
 			</license>
 		</licenses>
 		<comments>
-			See LPS-1907.
+			See LPS-1907 and LPS-36663.
 		</comments>
 	</library>
 	<library>

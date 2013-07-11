@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>WORKFLOW_STATUS</td>
+	<td>//span[@class='workflow-status workflow-status-icon']/strong</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SELECT_STRUCTURE</td>
 	<td>//fieldset[@class='fieldset article-structure-toolbar']/div/div/span/a/span</td>
 	<td></td>
@@ -31,6 +36,11 @@
 <tr>
 	<td>CONTENT_FIELD</td>
 	<td>//iframe[contains(@title,'Rich Text Editor')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BODY_FIELD</td>
+	<td>//body</td>
 	<td></td>
 </tr>
 <tr>

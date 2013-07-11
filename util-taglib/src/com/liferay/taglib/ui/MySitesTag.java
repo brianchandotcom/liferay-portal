@@ -23,8 +23,16 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class MySitesTag extends IncludeTag {
 
+	public void setClassNames(String[] classNames) {
+		_classNames = classNames;
+	}
+
 	public void setCssClass(String cssClass) {
 		_cssClass = cssClass;
+	}
+
+	public void setIncludeControlPanel(boolean includeControlPanel) {
+		_includeControlPanel = includeControlPanel;
 	}
 
 	public void setMax(int max) {
@@ -33,7 +41,9 @@ public class MySitesTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		_classNames= null;
 		_cssClass = null;
+		_includeControlPanel = false;
 		_max = 0;
 	}
 
@@ -44,14 +54,20 @@ public class MySitesTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
+		request.setAttribute("liferay-ui:my_sites:classNames", _classNames);
 		request.setAttribute(
 			"liferay-ui:my_sites:cssClass", String.valueOf(_cssClass));
+		request.setAttribute(
+			"liferay-ui:my_sites:includeControlPanel",
+			String.valueOf(_includeControlPanel));
 		request.setAttribute("liferay-ui:my_sites:max", String.valueOf(_max));
 	}
 
 	private static final String _PAGE = "/html/taglib/ui/my_sites/page.jsp";
 
+	private String[] _classNames;
 	private String _cssClass;
+	private boolean _includeControlPanel;
 	private int _max;
 
 }

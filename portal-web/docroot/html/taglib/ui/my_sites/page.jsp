@@ -17,14 +17,16 @@
 <%@ include file="/html/taglib/init.jsp" %>
 
 <%
+String[] classNames = (String[])request.getAttribute("liferay-ui:my_sites:classNames");
 String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:my_sites:cssClass"));
+boolean includeControlPanel = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:my_sites:includeControlPanel"));
 int max = GetterUtil.getInteger((String)request.getAttribute("liferay-ui:my_sites:max"));
 
 if (max <= 0) {
 	max = PropsValues.MY_SITES_MAX_ELEMENTS;
 }
 
-List<Group> mySiteGroups = user.getMySiteGroups(false, max);
+List<Group> mySiteGroups = user.getMySiteGroups(classNames, includeControlPanel, max);
 %>
 
 <c:if test="<%= !mySiteGroups.isEmpty() %>">
@@ -129,7 +131,7 @@ List<Group> mySiteGroups = user.getMySiteGroups(false, max);
 									String siteName = StringPool.BLANK;
 
 									if (mySiteGroup.isUser()) {
-										siteName = LanguageUtil.get(pageContext, "my-public-pages");
+										siteName = LanguageUtil.get(pageContext, "my-profile");
 									}
 									else if (escapedSiteName.equals(GroupConstants.GUEST)) {
 										siteName = themeDisplay.getAccount().getName();
@@ -190,7 +192,7 @@ List<Group> mySiteGroups = user.getMySiteGroups(false, max);
 									String siteName = StringPool.BLANK;
 
 									if (mySiteGroup.isUser()) {
-										siteName = LanguageUtil.get(pageContext, "my-private-pages");
+										siteName = LanguageUtil.get(pageContext, "my-dashboard");
 									}
 									else if (escapedSiteName.equals(GroupConstants.GUEST)) {
 										siteName = themeDisplay.getAccount().getName();

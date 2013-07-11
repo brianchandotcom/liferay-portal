@@ -16,7 +16,7 @@
 
 <c:if test="<%= user.hasMySites() %>">
 	<aui:nav-item cssClass="my-sites" dropdown="<%= true %>" id="mySites" label="my-sites" wrapDropDownMenu="<%= false %>">
-		<liferay-ui:my-sites cssClass="dropdown-menu my-sites-menu" />
+		<liferay-ui:my-sites classNames="<%= new String[] {Group.class.getName(), Organization.class.getName()} %>" cssClass="dropdown-menu my-sites-menu" />
 	</aui:nav-item>
 </c:if>
 

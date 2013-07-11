@@ -68,7 +68,7 @@ if (stagingGroup != null) {
 long selPlid = ParamUtil.getLong(request, "selPlid", LayoutConstants.DEFAULT_PLID);
 long refererPlid = ParamUtil.getLong(request, "refererPlid", LayoutConstants.DEFAULT_PLID);
 
-boolean privateLayout = tabs1.equals("private-pages");
+boolean privateLayout = tabs1.equals("my-dashboard") || tabs1.equals("private-pages");
 long layoutId = LayoutConstants.DEFAULT_PARENT_LAYOUT_ID;
 
 UnicodeProperties groupTypeSettings = null;
@@ -128,17 +128,17 @@ if (liveGroup.isUser()) {
 	boolean publicLayoutsModifiable = (!PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_POWER_USER_REQUIRED || hasPowerUserRole) && PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_ENABLED;
 
 	if (privateLayoutsModifiable && publicLayoutsModifiable) {
-		tabs1Names = "public-pages,private-pages";
+		tabs1Names = "my-profile,my-dashboard";
 	}
 	else if (privateLayoutsModifiable) {
-		tabs1Names = "private-pages";
+		tabs1Names = "my-dashboard";
 	}
 	else if (publicLayoutsModifiable) {
-		tabs1Names = "public-pages";
+		tabs1Names = "my-profile";
 	}
 
 	if (!publicLayoutsModifiable && privateLayoutsModifiable && !privateLayout) {
-		tabs1 = "private-pages";
+		tabs1 = "my-dashboard";
 
 		privateLayout = true;
 	}
@@ -158,10 +158,20 @@ if (liveGroup.isLayoutPrototype() || liveGroup.isLayoutSetPrototype() || liveGro
 	pagesName = "pages";
 }
 else if (privateLayout) {
-	pagesName = "private-pages";
+	if (liveGroup.isUser()) {
+		pagesName = "my-dashboard";
+	}
+	else {
+		pagesName = "private-pages";
+	}
 }
 else {
-	pagesName = "public-pages";
+	if (liveGroup.isUser()) {
+		pagesName = "my-profile";
+	}
+	else {
+		pagesName = "public-pages";
+	}
 }
 
 String rootNodeName = LanguageUtil.get(pageContext, pagesName);

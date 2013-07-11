@@ -57,10 +57,10 @@ String toggleControlsState = GetterUtil.getString(SessionClicks.get(request, "li
 
 					if (refererGroup.isUser() && (refererGroup.getClassPK() == user.getUserId())) {
 						if (refererLayout.isPublicLayout()) {
-							refererGroupDescriptiveName = LanguageUtil.get(pageContext, "my-public-pages");
+							refererGroupDescriptiveName = LanguageUtil.get(pageContext, "my-profile");
 						}
 						else {
-							refererGroupDescriptiveName = LanguageUtil.get(pageContext, "my-private-pages");
+							refererGroupDescriptiveName = LanguageUtil.get(pageContext, "my-dashboard");
 						}
 					}
 

@@ -207,17 +207,19 @@ public class PortletPreferencesLocalServiceImpl
 
 	@Override
 	public long getPortletPreferencesCount(
-			long ownerId, int ownerType, String portletId)
+			long ownerId, int ownerType, String portletId,
+			boolean excludeDefaultPreferences)
 		throws SystemException {
 
-		return portletPreferencesPersistence.countByO_O_PI(
-			ownerId, ownerType, portletId);
+		return portletPreferencesFinder.countByO_O_P(
+			ownerId, ownerType, portletId, excludeDefaultPreferences);
 	}
 
 	@Override
 	public long getPortletPreferencesCount(
 			long companyId, long groupId, long ownerId, int ownerType,
-			long plid, Portlet portlet, boolean privateLayout)
+			long plid, Portlet portlet, boolean privateLayout,
+			boolean excludeDefaultPreferences)
 		throws SystemException {
 
 		String portletId = StringPool.BLANK;
@@ -231,7 +233,7 @@ public class PortletPreferencesLocalServiceImpl
 
 		return portletPreferencesFinder.countByC_G_O_O_P_P_P(
 			companyId, groupId, ownerId, ownerType, plid, portletId,
-			privateLayout);
+			privateLayout, excludeDefaultPreferences);
 	}
 
 	@Override

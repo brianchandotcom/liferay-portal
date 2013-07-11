@@ -809,7 +809,24 @@
 					(PortletPreferences.portletId LIKE ?)
 				) AND
 				(Layout.plid = ?) AND
-				(Layout.privateLayout = ?)
+				(Layout.privateLayout = ?) AND
+				(PortletPreferences.preferences != '[$PORTLET_DEFAULT_PREFERENCES$]')
+		]]>
+	</sql>
+	<sql id="com.liferay.portal.service.persistence.PortletPreferencesFinder.countByO_O_P">
+		<![CDATA[
+			SELECT
+				COUNT(*) AS COUNT_VALUE
+			FROM
+				PortletPreferences
+			WHERE
+				(PortletPreferences.ownerId = ?) AND
+				(PortletPreferences.ownerType = ?) AND
+				(
+					(PortletPreferences.portletId = ?) OR
+					(PortletPreferences.portletId LIKE ?)
+				) AND
+				(PortletPreferences.preferences != '[$PORTLET_DEFAULT_PREFERENCES$]')
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.service.persistence.PortletPreferencesFinder.findByPortletId">

@@ -124,6 +124,14 @@ body.portlet {
 			margin-left: 5px;
 			vertical-align: top;
 
+			&:hover {
+				text-decoration: none;
+
+				span {
+					text-decoration: underline;
+				}
+			}
+
 			.icon {
 				visibility: hidden;
 			}

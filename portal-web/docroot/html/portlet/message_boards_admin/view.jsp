@@ -348,6 +348,13 @@ if ((category != null) && layout.isTypeControlPanel()) {
 
 							</liferay-ui:search-container-column-text>
 
+							<liferay-ui:search-container-column-text
+								href="<%= rowURL %>"
+								name="status"
+							>
+								<aui:workflow-status showIcon="<%= false %>" showLabel="<%= false %>" status="<%= thread.getStatus() %>" />
+							</liferay-ui:search-container-column-text>
+
 							<liferay-ui:search-container-column-jsp
 								align="right"
 								path="/html/portlet/message_boards/message_action.jsp"

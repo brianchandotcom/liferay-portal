@@ -30,8 +30,8 @@
 		</execute>
 
 		<execute macro="WebContent#addPGWithWorkflowViaAP">
-			<var name="webContentTitle" value="${webContentTitle}" />
 			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -81,8 +81,8 @@
 		</execute>
 
 		<execute macro="WebContent#addPGWithWorkflowViaAP">
-			<var name="webContentTitle" value="${webContentTitle}" />
 			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">

@@ -18,6 +18,7 @@
 
 <%
 long groupId = ParamUtil.getLong(request, "groupId");
+long[] selectedGroupIds = StringUtil.split(ParamUtil.getString(request, "selectedGroupIds"), 0L);
 
 long refererAssetEntryId = ParamUtil.getLong(request, "refererAssetEntryId");
 String typeSelection = ParamUtil.getString(request, "typeSelection");
@@ -27,6 +28,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/asset_browser/view");
 portletURL.setParameter("groupId", String.valueOf(groupId));
+portletURL.setParameter("selectedGroupIds", StringUtil.merge(selectedGroupIds));
 portletURL.setParameter("refererAssetEntryId", String.valueOf(refererAssetEntryId));
 portletURL.setParameter("typeSelection", typeSelection);
 portletURL.setParameter("callback", callback);
@@ -60,7 +62,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 		<%
 		AssetSearchTerms searchTerms = (AssetSearchTerms)searchContainer.getSearchTerms();
 
-		long[] groupIds = new long[] {groupId};
+		long[] groupIds = selectedGroupIds;
 		%>
 
 		<%@ include file="/html/portlet/asset_publisher/asset_search_results.jspf" %>

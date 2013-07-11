@@ -134,19 +134,17 @@ if (Validator.isNotNull(structureAvailableFields)) {
 			<liferay-ui:panel collapsible="<%= true %>" defaultState="closed" extended="<%= false %>" id="templateDetailsSectionPanel" persistState="<%= true %>" title="details">
 				<c:if test="<%= ddmDisplay.isShowStructureSelector() %>">
 					<aui:field-wrapper helpMessage="structure-help" label="structure">
-						<c:choose>
-							<c:when test="<%= classPK == 0 %>">
-								<liferay-ui:icon
-									image="add"
-									label="<%= true %>"
-									message="select"
-									url='<%= "javascript:" + renderResponse.getNamespace() + "openDDMStructureSelector();" %>'
-								/>
-							</c:when>
-							<c:otherwise>
-								<%= (structure == null) ? "" : structure.getName(locale) %>
-							</c:otherwise>
-						</c:choose>
+						<c:if test="<%= structure != null %>">
+							<%= structure.getName(locale) %>
+						</c:if>
+						<c:if test="<%= ((template == null) || (template.getClassPK() == 0)) %>">
+							<liferay-ui:icon
+								image="add"
+								label="<%= true %>"
+								message="select"
+								url='<%= "javascript:" + renderResponse.getNamespace() + "openDDMStructureSelector();" %>'
+							/>
+						</c:if>
 					</aui:field-wrapper>
 				</c:if>
 
@@ -377,7 +375,7 @@ if (Validator.isNotNull(structureAvailableFields)) {
 	</c:otherwise>
 </c:choose>
 
-<c:if test="<%= ddmDisplay.isShowStructureSelector() && (classPK == 0) %>">
+<c:if test="<%= ddmDisplay.isShowStructureSelector() && ((template == null) || (template.getClassPK() == 0)) %>">
 	<aui:script>
 		function <portlet:namespace />openDDMStructureSelector() {
 			Liferay.Util.openDDMPortlet(

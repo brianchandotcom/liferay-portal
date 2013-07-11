@@ -492,28 +492,21 @@ public class JournalTemplateLocalServiceImpl
 
 		JournalTemplate template = doGetTemplate(groupId, templateId);
 
-		DDMTemplate ddmTemplate = ddmTemplateLocalService.updateTemplate(
-			template.getPrimaryKey(), nameMap, descriptionMap,
-			DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY,
-			DDMTemplateConstants.TEMPLATE_MODE_CREATE, langType, xsl, cacheable,
-			smallImage, smallImageURL, smallImageFile, serviceContext);
+		long classPK = 0;
 
-		if (Validator.isNull(template.getTemplateId()) &&
-			Validator.isNotNull(structureId)) {
-
-			// Allow users to set the structure if and only if it currently does
-			// not have one. Otherwise, you can have bad data because there may
-			// be an existing article that has chosen to use a structure and
-			// template combination that no longer exists.
-
+		if (Validator.isNotNull(structureId)) {
 			JournalStructure structure =
 				journalStructureLocalService.getStructure(
 					groupId, structureId, true);
 
-			ddmTemplate.setClassPK(structure.getPrimaryKey());
-
-			ddmTemplatePersistence.update(ddmTemplate);
+			classPK = structure.getPrimaryKey();
 		}
+
+		DDMTemplate ddmTemplate = ddmTemplateLocalService.updateTemplate(
+			template.getPrimaryKey(), classPK, nameMap, descriptionMap,
+			DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY,
+			DDMTemplateConstants.TEMPLATE_MODE_CREATE, langType, xsl, cacheable,
+			smallImage, smallImageURL, smallImageFile, serviceContext);
 
 		return new JournalTemplateAdapter(ddmTemplate);
 	}

@@ -966,7 +966,7 @@ public class DDMTemplateServiceHttp {
 	}
 
 	public static com.liferay.portlet.dynamicdatamapping.model.DDMTemplate updateTemplate(
-		HttpPrincipal httpPrincipal, long templateId,
+		HttpPrincipal httpPrincipal, long templateId, long classPK,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String type, java.lang.String mode,
@@ -981,8 +981,8 @@ public class DDMTemplateServiceHttp {
 					"updateTemplate", _updateTemplateParameterTypes25);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					templateId, nameMap, descriptionMap, type, mode, language,
-					script, cacheable, smallImage, smallImageURL,
+					templateId, classPK, nameMap, descriptionMap, type, mode,
+					language, script, cacheable, smallImage, smallImageURL,
 					smallImageFile, serviceContext);
 
 			Object returnObj = null;
@@ -1124,7 +1124,7 @@ public class DDMTemplateServiceHttp {
 			java.lang.String.class, boolean.class
 		};
 	private static final Class<?>[] _updateTemplateParameterTypes25 = new Class[] {
-			long.class, java.util.Map.class, java.util.Map.class,
+			long.class, long.class, java.util.Map.class, java.util.Map.class,
 			java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, java.lang.String.class, boolean.class,
 			boolean.class, java.lang.String.class, java.io.File.class,

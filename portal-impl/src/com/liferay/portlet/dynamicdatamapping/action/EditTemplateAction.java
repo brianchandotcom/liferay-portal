@@ -293,9 +293,9 @@ public class EditTemplateAction extends PortletAction {
 		}
 		else {
 			template = DDMTemplateServiceUtil.updateTemplate(
-				templateId, nameMap, descriptionMap, type, mode, language,
-				script, cacheable, smallImage, smallImageURL, smallImageFile,
-				serviceContext);
+				templateId, classPK, nameMap, descriptionMap, type, mode,
+				language, script, cacheable, smallImage, smallImageURL,
+				smallImageFile, serviceContext);
 		}
 
 		String portletResource = ParamUtil.getString(

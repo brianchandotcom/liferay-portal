@@ -3,5 +3,7 @@
 
 	<execute test-case="WorkflowadminCPWebcontentAcceptance" />
 
+	<execute test-case="WorkflowadminMysubmissionsAcceptance" />
+
 	<execute test-case="WorkflowadminMyworkflowtasksAcceptance" />
 </definition>

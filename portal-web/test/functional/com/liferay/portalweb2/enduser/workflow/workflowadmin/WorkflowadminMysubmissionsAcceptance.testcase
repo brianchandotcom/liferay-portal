@@ -1,0 +1,274 @@
+<definition>
+	<var name="workflowAssetType" value="Web Content Article" />
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="Workflow#configureSiteWorkflow">
+			<var name="workflowDefinition" value="Single Approver (Version 1)" />
+			<var name="workflowResourceKey" value="RESOURCE_TABLE_WEB_CONTENT_SELECT" />
+		</execute>
+	</set-up>
+
+	<command name="WithdrawTaskAssignedToMeByActions">
+		<var name="webContentContent" value="WC WebContent Content" />
+		<var name="webContentTitle" value="WC WebContent Title" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#addCPWithWorkflow">
+			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
+		</execute>
+
+		<execute macro="Workflow#assignToMeTaskByActions">
+			<var name="workflowAssetTitle" value="${webContentTitle}" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowTask" value="Review" />
+		</execute>
+
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Submissions" />
+		</execute>
+
+		<execute macro="Workflow#withdrawTaskByActions">
+			<var name="workflowAssetTitle" value="${webContentTitle}" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowDefinition" value="Single Approver" />
+			<var name="workflowTask" value="Review" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#viewCPStatus">
+			<var name="webContentTitle" value="${webContentTitle}" />
+			<var name="webContentStatus" value="Draft" />
+		</execute>
+	</command>
+
+	<command name="WithdrawTaskAssignedToMeByDetails">
+		<var name="webContentContent" value="WC WebContent Content" />
+		<var name="webContentTitle" value="WC WebContent Title" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#addCPWithWorkflow">
+			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
+		</execute>
+
+		<execute macro="Workflow#assignToMeTaskByDetails">
+			<var name="workflowAssetContent" value="${webContentContent}" />
+			<var name="workflowAssetTitle" value="${webContentTitle}" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowTask" value="Review" />
+		</execute>
+
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Submissions" />
+		</execute>
+
+		<execute macro="Workflow#withdrawTaskByDetails">
+			<var name="workflowAssetContent" value="${webContentContent}" />
+			<var name="workflowAssetTitle" value="${webContentTitle}" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowAssetTypeCAPS" value="WEB CONTENT ARTICLE" />
+			<var name="workflowDefinition" value="Single Approver" />
+			<var name="workflowTask" value="Review" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#viewCPStatus">
+			<var name="webContentTitle" value="${webContentTitle}" />
+			<var name="webContentStatus" value="Draft" />
+		</execute>
+	</command>
+
+	<command name="WithdrawTaskAssignedToMyRolesByActions">
+		<var name="webContentContent" value="WC WebContent Content" />
+		<var name="webContentTitle" value="WC WebContent Title" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#addCPWithWorkflow">
+			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Submissions" />
+		</execute>
+
+		<execute macro="Workflow#withdrawTaskByActions">
+			<var name="workflowAssetTitle" value="${webContentTitle}" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowDefinition" value="Single Approver" />
+			<var name="workflowTask" value="Review" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#viewCPStatus">
+			<var name="webContentTitle" value="${webContentTitle}" />
+			<var name="webContentStatus" value="Draft" />
+		</execute>
+	</command>
+
+	<command name="WithdrawTaskAssignedToMyRolesByDetails">
+		<var name="webContentContent" value="WC WebContent Content" />
+		<var name="webContentTitle" value="WC WebContent Title" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#addCPWithWorkflow">
+			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Submissions" />
+		</execute>
+
+		<execute macro="Workflow#withdrawTaskByDetails">
+			<var name="workflowAssetContent" value="${webContentContent}" />
+			<var name="workflowAssetTitle" value="${webContentTitle}" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowAssetTypeCAPS" value="WEB CONTENT ARTICLE" />
+			<var name="workflowDefinition" value="Single Approver" />
+			<var name="workflowTask" value="Review" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#viewCPStatus">
+			<var name="webContentTitle" value="${webContentTitle}" />
+			<var name="webContentStatus" value="Draft" />
+		</execute>
+	</command>
+
+	<command name="WithdrawTaskCompletedNoByActions">
+		<var name="webContentContent" value="WC WebContent Content" />
+		<var name="webContentTitle" value="WC WebContent Title" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#addCPWithWorkflow">
+			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
+		</execute>
+
+		<execute macro="Workflow#assignToMeTaskByActions">
+			<var name="workflowAssetTitle" value="${webContentTitle}" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowTask" value="Review" />
+		</execute>
+
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
+		</execute>
+
+		<execute macro="Workflow#approveTaskByActions">
+			<var name="workflowAssetTitle" value="${webContentTitle}" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowTask" value="Review" />
+		</execute>
+
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Submissions" />
+		</execute>
+
+		<execute macro="Workflow#withdrawTaskCompletedNoByActions">
+			<var name="workflowAssetTitle" value="${webContentTitle}" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowDefinition" value="Single Approver" />
+			<var name="workflowTask" value="Approved" />
+		</execute>
+	</command>
+
+	<command name="WithdrawTaskCompletedNoByDetails">
+		<var name="webContentContent" value="WC WebContent Content" />
+		<var name="webContentTitle" value="WC WebContent Title" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#addCPWithWorkflow">
+			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
+		</execute>
+
+		<execute macro="Workflow#assignToMeTaskByDetails">
+			<var name="workflowAssetContent" value="${webContentContent}" />
+			<var name="workflowAssetTitle" value="${webContentTitle}" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowTask" value="Review" />
+		</execute>
+
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
+		</execute>
+
+		<execute macro="Workflow#approveTaskByDetails">
+			<var name="workflowAssetContent" value="${webContentContent}" />
+			<var name="workflowAssetTitle" value="${webContentTitle}" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowTask" value="Review" />
+		</execute>
+
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Submissions" />
+		</execute>
+
+		<execute macro="Workflow#withdrawTaskCompletedNoByDetails">
+			<var name="workflowAssetContent" value="${webContentContent}" />
+			<var name="workflowAssetTitle" value="${webContentTitle}" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowAssetTypeCAPS" value="WEB CONTENT ARTICLE" />
+			<var name="workflowDefinition" value="Single Approver" />
+			<var name="workflowTask" value="Approved" />
+		</execute>
+	</command>
+
+	<tear-down>
+		<execute macro="WebContent#tearDownCP" />
+
+		<execute macro="Workflow#tearDownPortalWorkflow" />
+
+		<execute macro="Workflow#tearDownSiteWorkflow" />
+	</tear-down>
+</definition>

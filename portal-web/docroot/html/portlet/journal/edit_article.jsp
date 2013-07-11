@@ -367,7 +367,7 @@ request.setAttribute("edit_article.jsp-toLanguageId", toLanguageId);
 	}
 
 	function <portlet:namespace />saveArticle() {
-		document.<portlet:namespace />fm1.<portlet:namespace /><%= Constants.CMD %>.value = "<%= (article != null) ? Constants.UPDATE : Constants.ADD %>";
+		document.<portlet:namespace />fm1.<portlet:namespace /><%= Constants.CMD %>.value = "<%= ((article == null) || Validator.isNull(article.getArticleId())) ? Constants.ADD : Constants.UPDATE %>";
 	}
 
 	function <portlet:namespace />selectDocumentLibrary(url) {

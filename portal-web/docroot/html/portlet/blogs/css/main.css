@@ -134,6 +134,14 @@
 		margin-bottom: 1.5em;
 	}
 
+	.table-cell .taglib-workflow-status {
+		margin: 0;
+
+		.workflow-status {
+			padding-left: 0;
+		}
+	}
+
 	.taglib-flags {
 		border-left: 1px solid #999;
 		color: #999;

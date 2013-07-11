@@ -14,6 +14,7 @@
 
 package com.liferay.util.mail;
 
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -22,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.mail.Address;
+import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 
 import org.apache.commons.validator.EmailValidator;
@@ -46,6 +48,7 @@ public class InternetAddressUtil {
 	}
 
 	public static boolean isValid(String emailAddress) {
+
 		return EmailValidator.getInstance().isValid(emailAddress);
 	}
 
@@ -70,6 +73,7 @@ public class InternetAddressUtil {
 	}
 
 	public static String toString(Address address) {
+
 		InternetAddress internetAddress = (InternetAddress)address;
 
 		if (internetAddress != null) {
@@ -96,6 +100,7 @@ public class InternetAddressUtil {
 	}
 
 	public static String toString(Address[] addresses) {
+
 		if ((addresses == null) || (addresses.length == 0)) {
 			return StringPool.BLANK;
 		}
@@ -110,6 +115,40 @@ public class InternetAddressUtil {
 		sb.append(toString(addresses[addresses.length - 1]));
 
 		return sb.toString();
+	}
+
+	public static void validateAddress(InternetAddress internetAddress)
+		throws AddressException {
+
+		if (internetAddress == null) {
+			throw new AddressException("Email address is null");
+		}
+
+		String addressString = internetAddress.toString();
+
+		for (char c : addressString.toCharArray()) {
+			if ((c == CharPool.NEW_LINE) || (c == CharPool.RETURN)) {
+				StringBundler sb = new StringBundler(3);
+
+				sb.append("Email address ");
+				sb.append(addressString);
+				sb.append(" is invalid because it contains line breaks");
+
+				throw new AddressException(sb.toString());
+			}
+		}
+	}
+
+	public static void validateAddresses(InternetAddress[] internetAddresses)
+		throws AddressException {
+
+		if (internetAddresses == null) {
+			throw new AddressException();
+		}
+
+		for (InternetAddress internetAddress : internetAddresses) {
+			validateAddress(internetAddress);
+		}
 	}
 
 }

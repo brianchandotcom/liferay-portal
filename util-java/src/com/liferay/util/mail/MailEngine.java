@@ -214,6 +214,26 @@ public class MailEngine {
 		}
 
 		try {
+			InternetAddressUtil.validateAddress(from);
+
+			InternetAddressUtil.validateAddresses(to);
+
+			if (cc != null) {
+				InternetAddressUtil.validateAddresses(cc);
+			}
+
+			if (bcc != null) {
+				InternetAddressUtil.validateAddresses(bcc);
+			}
+
+			if (replyTo != null) {
+				InternetAddressUtil.validateAddresses(replyTo);
+			}
+
+			if (bulkAddresses != null) {
+				InternetAddressUtil.validateAddresses(bulkAddresses);
+			}
+
 			Session session = null;
 
 			if (smtpAccount == null) {

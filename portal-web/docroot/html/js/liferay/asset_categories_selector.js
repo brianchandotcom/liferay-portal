@@ -287,7 +287,7 @@ AUI.add(
 										vocabularyIds: vocabularyIds,
 
 										'$categoriesCount = /assetcategory/get-vocabulary-categories-count': {
-											'groupId': themeDisplay.getScopeGroupId(),
+											'@groupId': '$vocabularies.groupId',
 											'@vocabularyId': '$vocabularies.vocabularyId'
 										}
 									}

@@ -267,6 +267,11 @@ public interface LayoutSetBranchLocalService extends BaseLocalService,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.LayoutSetBranch fetchLayoutSetBranch(
+		long groupId, boolean privateLayout, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.LayoutSetBranch getLayoutSetBranch(
 		long groupId, boolean privateLayout, java.lang.String name)
 		throws com.liferay.portal.kernel.exception.PortalException,

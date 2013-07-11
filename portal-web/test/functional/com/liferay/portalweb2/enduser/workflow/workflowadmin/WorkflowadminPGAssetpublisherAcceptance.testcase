@@ -1,4 +1,6 @@
 <definition>
+	<var name="pageName" value="Asset Publisher Page" />
+	<var name="portletName" value="Asset Publisher" />
 	<var name="workflowAssetType" value="Web Content Article" />
 
 	<set-up>
@@ -8,20 +10,32 @@
 			<var name="workflowDefinition" value="Single Approver (Version 1)" />
 			<var name="workflowResourceKey" value="RESOURCE_TABLE_WEB_CONTENT_SELECT" />
 		</execute>
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="portletName" value="${portletName}" />
+		</execute>
 	</set-up>
 
-	<command name="ApproveWebContentCP">
+	<command name="ApproveWebContentViaAssetPublisherPG">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
 
-		<execute macro="WebContent#addCPWithWorkflow">
-			<var name="webContentContent" value="${webContentContent}" />
-			<var name="webContentTitle" value="${webContentTitle}" />
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="WebContent#viewCPWithWorkflow">
-			<var name="webContentContent" value="${webContentContent}" />
+		<execute macro="WebContent#addPGWithWorkflowViaAP">
 			<var name="webContentTitle" value="${webContentTitle}" />
+			<var name="webContentContent" value="${webContentContent}" />
+		</execute>
+
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
 		<execute macro="Workflow#assignToMeTaskByActions">
@@ -30,9 +44,16 @@
 			<var name="workflowTask" value="Review" />
 		</execute>
 
-		<execute macro="WebContent#viewCPWithWorkflow">
-			<var name="webContentContent" value="${webContentContent}" />
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="WebContent#viewPGWithWorkflowViaAP">
 			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
 		<execute macro="Workflow#approveTaskByActions">
@@ -41,19 +62,31 @@
 			<var name="workflowTask" value="Review" />
 		</execute>
 
-		<execute macro="WebContent#viewCP">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="WebContent#viewPGViaAP">
 			<var name="webContentContent" value="${webContentContent}" />
 			<var name="webContentTitle" value="${webContentTitle}" />
 		</execute>
 	</command>
 
-<command name="RejectWebContentCP">
+	<command name="RejectWebContentCP">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
 
-		<execute macro="WebContent#addCPWithWorkflow">
-			<var name="webContentContent" value="${webContentContent}" />
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="WebContent#addPGWithWorkflowViaAP">
 			<var name="webContentTitle" value="${webContentTitle}" />
+			<var name="webContentContent" value="${webContentContent}" />
+		</execute>
+
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
 		<execute macro="Workflow#assignToMeTaskByActions">
@@ -62,10 +95,26 @@
 			<var name="workflowTask" value="Review" />
 		</execute>
 
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="WebContent#viewPGWithWorkflowViaAP">
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
+		</execute>
+
 		<execute macro="Workflow#rejectTaskByActions">
 			<var name="workflowAssetTitle" value="${webContentTitle}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
+		</execute>
+
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
 		<execute macro="Workflow#viewRejectTask">
@@ -73,14 +122,19 @@
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 		</execute>
 
-		<execute macro="WebContent#viewCPWithWorkflow">
-			<var name="webContentContent" value="${webContentContent}" />
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="WebContent#viewPGWithWorkflowViaAP">
 			<var name="webContentTitle" value="${webContentTitle}" />
 		</execute>
 	</command>
 
 	<tear-down>
 		<execute macro="WebContent#tearDownCP" />
+
+		<execute macro="Page#tearDownPG" />
 
 		<execute macro="Workflow#tearDownPortalWorkflow" />
 

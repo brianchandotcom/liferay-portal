@@ -333,7 +333,7 @@ public class TrashEntryServiceImpl extends TrashEntryServiceBaseImpl {
 				permissionChecker, 0, classPK, TrashActionKeys.RESTORE)) {
 
 			throw new TrashPermissionException(
-					TrashPermissionException.RESTORE);
+				TrashPermissionException.RESTORE);
 		}
 
 		if (trashHandler.isInTrash(classPK)) {

@@ -191,7 +191,7 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 
 	@Override
 	public boolean isInTrashContainer(long classPK)
-			throws PortalException, SystemException {
+		throws PortalException, SystemException {
 
 		MBThread thread = MBThreadLocalServiceUtil.getThread(classPK);
 

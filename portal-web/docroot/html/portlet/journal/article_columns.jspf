@@ -30,7 +30,11 @@ row.addSearchEntry(articleTitleTextSearchEntry);
 
 // Status
 
-row.addText(LanguageUtil.get(pageContext, WorkflowConstants.getStatusLabel(curArticle.getStatus())));
+TextSearchEntry articleStatusTextSearchEntry = new TextSearchEntry();
+
+articleStatusTextSearchEntry.setName(articleStatus);
+
+row.addSearchEntry(articleStatusTextSearchEntry);
 
 // Modified date
 

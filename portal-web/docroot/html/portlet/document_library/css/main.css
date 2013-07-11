@@ -391,6 +391,20 @@
 	}
 
 	.app-view-entry-taglib.entry-display-style.display-icon {
+
+		.entry-thumbnail .taglib-workflow-status {
+			left: 6px;
+			margin: 0;
+			padding: 0;
+			position: absolute;
+			top: 4px;
+
+			.workflow-status {
+				margin: 0;
+				padding: 0;
+			}
+		}
+
 		.entry-title {
 			position: relative;
 		}
@@ -415,6 +429,22 @@
 
 		&.upload-warning .entry-title-text {
 			background-image: url(@theme_image_path@/messages/alert.png);
+		}
+	}
+
+	.app-view-entry-taglib.entry-display-style.display-descriptive {
+
+		.entry-thumbnail .taglib-workflow-status {
+			left: 5px;
+			margin: 0;
+			padding: 0;
+			position: absolute;
+			top: 4px;
+
+			.workflow-status {
+				margin: 0;
+				padding: 0;
+			}
 		}
 	}
 }
@@ -493,6 +523,14 @@
 			.lfr-asset-ratings {
 				margin: 0 0 1em;
 			}
+		}
+	}
+
+	.table-cell .taglib-workflow-status {
+		margin: 0;
+
+		.workflow-status {
+			padding-left: 0;
 		}
 	}
 

@@ -46,17 +46,27 @@
 		}
 	}
 
+	.entry-title {
+		float: left;
+	}
+
 	.taglib-webdav {
 		margin-top: 3em;
 	}
 
 	.taglib-workflow-status {
 		margin-bottom: 5px;
-	}
+		position: relative;
 
-	.workflow-status-pending {
-		&, a {
-			color: orange;
+		.workflow-status {
+			display: block;
+			position: absolute;
+
+			.label {
+				position: absolute;
+				top: 1px;
+				left: 1px;
+			}
 		}
 	}
 }

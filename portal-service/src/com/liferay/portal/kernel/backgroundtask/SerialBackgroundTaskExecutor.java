@@ -14,6 +14,10 @@
 
 package com.liferay.portal.kernel.backgroundtask;
 
+import com.liferay.portal.DuplicateLockException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.BackgroundTask;
 import com.liferay.portal.model.Lock;
@@ -37,16 +41,13 @@ public class SerialBackgroundTaskExecutor
 
 		Lock lock = null;
 
+		String owner =
+			backgroundTask.getName() + StringPool.POUND +
+				backgroundTask.getBackgroundTaskId();
+
 		try {
 			if (isSerial()) {
-				String owner =
-					backgroundTask.getName() + StringPool.POUND +
-						backgroundTask.getBackgroundTaskId();
-
-				lock = LockLocalServiceUtil.lock(
-					backgroundTask.getUserId(),
-					BackgroundTaskExecutor.class.getName(),
-					backgroundTask.getTaskExecutorClassName(), owner, false, 0);
+				lock = acquireLock(backgroundTask, owner);
 			}
 
 			return getBackgroundTaskExecutor().execute(backgroundTask);
@@ -54,10 +55,46 @@ public class SerialBackgroundTaskExecutor
 		finally {
 			if (lock != null) {
 				LockLocalServiceUtil.unlock(
-					BaseBackgroundTaskExecutor.class.getName(),
-					backgroundTask.getTaskExecutorClassName());
+					BackgroundTaskExecutor.class.getName(),
+					backgroundTask.getTaskExecutorClassName(), owner, false);
 			}
 		}
 	}
+
+	protected Lock acquireLock(BackgroundTask backgroundTask, String owner)
+		throws DuplicateLockException {
+
+		Lock lock = null;
+
+		while (true) {
+			try {
+				lock = LockLocalServiceUtil.lock(
+					BackgroundTaskExecutor.class.getName(),
+					backgroundTask.getTaskExecutorClassName(), owner, false);
+
+				break;
+			}
+			catch (SystemException e) {
+				if (_log.isDebugEnabled()) {
+					_log.debug("Non-fatal error acquiring lock:", e);
+				}
+
+				try {
+					Thread.currentThread().sleep(50);
+				}
+				catch (InterruptedException e1) {
+				}
+			}
+		}
+
+		if (!lock.isNew()) {
+			throw new DuplicateLockException(lock);
+		}
+
+		return lock;
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		SerialBackgroundTaskExecutor.class);
 
 }

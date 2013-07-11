@@ -11902,7 +11902,10 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 		if (force || (countOrphanTreeNodes(groupId) > 0)) {
 			rebuildTree(groupId, 0, 1);
 
-			CacheRegistryUtil.clear(AssetCategoryImpl.class.getName());
+			if (_HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
+				CacheRegistryUtil.clear(AssetCategoryImpl.class.getName());
+			}
+
 			EntityCacheUtil.clearCache(AssetCategoryImpl.class.getName());
 			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
@@ -12008,7 +12011,10 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 				expandTreeRightCategoryId.expand(groupId, lastRightCategoryId);
 			}
 
-			CacheRegistryUtil.clear(AssetCategoryImpl.class.getName());
+			if (_HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
+				CacheRegistryUtil.clear(AssetCategoryImpl.class.getName());
+			}
+
 			EntityCacheUtil.clearCache(AssetCategoryImpl.class.getName());
 			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
@@ -12151,7 +12157,10 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 		shrinkTreeLeftCategoryId.shrink(groupId, rightCategoryId, delta);
 		shrinkTreeRightCategoryId.shrink(groupId, rightCategoryId, delta);
 
-		CacheRegistryUtil.clear(AssetCategoryImpl.class.getName());
+		if (_HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
+			CacheRegistryUtil.clear(AssetCategoryImpl.class.getName());
+		}
+
 		EntityCacheUtil.clearCache(AssetCategoryImpl.class.getName());
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);

@@ -1519,7 +1519,10 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			if (force || (countOrphanTreeNodes(${scopeColumn.name}) > 0)) {
 				rebuildTree(${scopeColumn.name}, 0, 1);
 
-				CacheRegistryUtil.clear(${entity.name}Impl.class.getName());
+				if (_HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
+					CacheRegistryUtil.clear(${entity.name}Impl.class.getName());
+				}
+
 				EntityCacheUtil.clearCache(${entity.name}Impl.class.getName());
 				FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 				FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
@@ -1603,7 +1606,10 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 					expandTreeRight${pkColumn.methodName}.expand(${scopeColumn.name}, lastRight${pkColumn.methodName});
 				}
 
-				CacheRegistryUtil.clear(${entity.name}Impl.class.getName());
+				if (_HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
+					CacheRegistryUtil.clear(${entity.name}Impl.class.getName());
+				}
+
 				EntityCacheUtil.clearCache(${entity.name}Impl.class.getName());
 				FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 				FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
@@ -1737,7 +1743,10 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			shrinkTreeLeft${pkColumn.methodName}.shrink(${scopeColumn.name}, right${pkColumn.methodName}, delta);
 			shrinkTreeRight${pkColumn.methodName}.shrink(${scopeColumn.name}, right${pkColumn.methodName}, delta);
 
-			CacheRegistryUtil.clear(${entity.name}Impl.class.getName());
+			if (_HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
+				CacheRegistryUtil.clear(${entity.name}Impl.class.getName());
+			}
+
 			EntityCacheUtil.clearCache(${entity.name}Impl.class.getName());
 			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
 			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);

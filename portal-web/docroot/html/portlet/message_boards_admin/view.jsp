@@ -194,6 +194,12 @@ if ((category != null) && layout.isTypeControlPanel()) {
 
 					<%
 					portletURL.setParameter("topLink", ParamUtil.getString(request, "topLink"));
+
+					int status = WorkflowConstants.STATUS_APPROVED;
+
+					if (permissionChecker.isCompanyAdmin() || permissionChecker.isGroupAdmin(scopeGroupId)) {
+						status = WorkflowConstants.STATUS_ANY;
+					}
 					%>
 
 					<aui:input name="<%= Constants.CMD %>" type="hidden" />
@@ -206,11 +212,11 @@ if ((category != null) && layout.isTypeControlPanel()) {
 						headerNames="thread,flag,started-by,posts,views,last-post"
 						iteratorURL="<%= portletURL %>"
 						rowChecker="<%= new RowChecker(renderResponse) %>"
-						total="<%= MBThreadServiceUtil.getThreadsCount(scopeGroupId, categoryId, WorkflowConstants.STATUS_APPROVED) %>"
+						total="<%= MBThreadServiceUtil.getThreadsCount(scopeGroupId, categoryId, status) %>"
 						var="threadSearchContainer"
 					>
 						<liferay-ui:search-container-results
-							results="<%= MBThreadServiceUtil.getThreads(scopeGroupId, categoryId, WorkflowConstants.STATUS_APPROVED, threadSearchContainer.getStart(), threadSearchContainer.getEnd()) %>"
+							results="<%= MBThreadServiceUtil.getThreads(scopeGroupId, categoryId, status, threadSearchContainer.getStart(), threadSearchContainer.getEnd()) %>"
 						/>
 
 						<liferay-ui:search-container-row
@@ -340,6 +346,13 @@ if ((category != null) && layout.isTypeControlPanel()) {
 								}
 								%>
 
+							</liferay-ui:search-container-column-text>
+
+							<liferay-ui:search-container-column-text
+								href="<%= rowURL %>"
+								name="status"
+							>
+								<aui:workflow-status showIcon="<%= false %>" showLabel="<%= false %>" status="<%= thread.getStatus() %>" />
 							</liferay-ui:search-container-column-text>
 
 							<liferay-ui:search-container-column-jsp

@@ -743,6 +743,14 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			return thread;
 		}
 
+		int oldStatus = thread.getStatus();
+
+		if (oldStatus == WorkflowConstants.STATUS_PENDING) {
+			thread.setStatus(WorkflowConstants.STATUS_DRAFT);
+
+			mbThreadPersistence.update(thread);
+		}
+
 		return updateStatus(
 			userId, thread.getThreadId(), WorkflowConstants.STATUS_IN_TRASH,
 			WorkflowConstants.STATUS_ANY);
@@ -915,15 +923,6 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			Date now = new Date();
 
 			int oldStatus = thread.getStatus();
-
-			if (oldStatus == WorkflowConstants.STATUS_PENDING) {
-				MBMessage rootMessage = mbMessageLocalService.getMBMessage(
-					thread.getRootMessageId());
-
-				rootMessage.setStatus(WorkflowConstants.STATUS_DRAFT);
-
-				mbMessagePersistence.update(rootMessage);
-			}
 
 			thread.setModifiedDate(now);
 			thread.setStatus(status);

@@ -17,7 +17,6 @@ package com.liferay.portlet.messageboards.service.impl;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Lock;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
@@ -259,17 +258,11 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 			long groupId, long categoryId, int status, int start, int end)
 		throws SystemException {
 
-		if (status == WorkflowConstants.STATUS_ANY) {
-			return mbThreadFinder.filterFindByG_C(
-				groupId, categoryId, start, end);
-		}
-		else {
-			QueryDefinition queryDefinition = new QueryDefinition(
-				status, start, end, null);
+		QueryDefinition queryDefinition = new QueryDefinition(
+			status, start, end, null);
 
-			return mbThreadFinder.filterFindByG_C(
-				groupId, new long[] {categoryId}, queryDefinition);
-		}
+		return mbThreadFinder.filterFindByG_C(
+			groupId, new long[] {categoryId}, queryDefinition);
 	}
 
 	@Override

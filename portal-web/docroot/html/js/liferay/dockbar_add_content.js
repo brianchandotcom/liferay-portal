@@ -119,13 +119,15 @@ AUI.add(
 								after: {
 									success: A.bind('_afterSuccess', instance)
 								},
-								data: {
-									delta: instance._numItems.val(),
-									displayStyle: displayStyle,
-									keywords: instance.get('inputNode').val(),
-									viewEntries: true,
-									viewPreview: false
-								}
+								data: instance.ns(
+									{
+										delta: instance._numItems.val(),
+										displayStyle: displayStyle,
+										keywords: instance.get('inputNode').val(),
+										viewEntries: true,
+										viewPreview: false
+									}
+								)
 							}
 						);
 					}

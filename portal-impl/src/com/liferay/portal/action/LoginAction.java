@@ -156,6 +156,8 @@ public class LoginAction extends Action {
 
 		String loginRedirect = ParamUtil.getString(request, "redirect");
 
+		loginRedirect = PortalUtil.escapeRedirect(loginRedirect);
+
 		if (Validator.isNotNull(loginRedirect)) {
 			if (PrefsPropsUtil.getBoolean(
 					themeDisplay.getCompanyId(), PropsKeys.CAS_AUTH_ENABLED,

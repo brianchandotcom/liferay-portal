@@ -141,6 +141,9 @@ if (fileEntryTypeId >= 0) {
 	if (orderByCol.equals("creationDate")) {
 		orderByCol = "createDate";
 	}
+	else if (orderByCol.equals("readCount")) {
+		orderByCol = "downloads";
+	}
 	else if (orderByCol.equals("modifiedDate")) {
 		orderByCol = "modified";
 	}

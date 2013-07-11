@@ -1842,21 +1842,6 @@ public class StagingImpl implements Staging {
 		}
 	}
 
-	protected String buildRemoteURL(UnicodeProperties typeSettingsProperties) {
-		String remoteAddress = typeSettingsProperties.getProperty(
-			"remoteAddress");
-		int remotePort = GetterUtil.getInteger(
-			typeSettingsProperties.getProperty("remotePort"));
-		String remotePathContext = typeSettingsProperties.getProperty(
-			"remotePathContext");
-		boolean secureConnection = GetterUtil.getBoolean(
-			typeSettingsProperties.getProperty("secureConnection"));
-
-		return buildRemoteURL(
-			remoteAddress, remotePort, remotePathContext, secureConnection,
-			GroupConstants.DEFAULT_LIVE_GROUP_ID, false);
-	}
-
 	protected void addDefaultLayoutSetBranch(
 			long userId, long groupId, String groupName, boolean privateLayout,
 			ServiceContext serviceContext)
@@ -1894,6 +1879,21 @@ public class StagingImpl implements Staging {
 					lsbne);
 			}
 		}
+	}
+
+	protected String buildRemoteURL(UnicodeProperties typeSettingsProperties) {
+		String remoteAddress = typeSettingsProperties.getProperty(
+			"remoteAddress");
+		int remotePort = GetterUtil.getInteger(
+			typeSettingsProperties.getProperty("remotePort"));
+		String remotePathContext = typeSettingsProperties.getProperty(
+			"remotePathContext");
+		boolean secureConnection = GetterUtil.getBoolean(
+			typeSettingsProperties.getProperty("secureConnection"));
+
+		return buildRemoteURL(
+			remoteAddress, remotePort, remotePathContext, secureConnection,
+			GroupConstants.DEFAULT_LIVE_GROUP_ID, false);
 	}
 
 	protected void checkDefaultLayoutSetBranches(

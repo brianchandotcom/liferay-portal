@@ -333,12 +333,12 @@ public class ScriptingPortlet extends GenericPortlet {
 
 	protected String actionFile;
 	protected String editFile;
+	protected String filePath;
 	protected String[] globalFiles;
 	protected String globalScript;
 	protected String helpFile;
 	protected String language;
 	protected String resourceFile;
-	protected String filePath;
 	protected String viewFile;
 
 	private static final String _ERROR = ScriptingPortlet.class + ".ERROR";

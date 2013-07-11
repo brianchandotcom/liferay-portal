@@ -70,14 +70,12 @@ OrderByComparator orderByComparator = BackgroundTaskUtil.getBackgroundTaskOrderB
 		<liferay-ui:search-container-column-text
 			name="create-date"
 			orderable="<%= true %>"
-			orderableProperty="createDate"
 			value="<%= dateFormatDateTime.format(backgroundTask.getCreateDate()) %>"
 		/>
 
 		<liferay-ui:search-container-column-text
 			name="completion-date"
 			orderable="<%= true %>"
-			orderableProperty="completionDate"
 			value="<%= backgroundTask.getCompletionDate() != null ? dateFormatDateTime.format(backgroundTask.getCompletionDate()) : StringPool.BLANK %>"
 		/>
 

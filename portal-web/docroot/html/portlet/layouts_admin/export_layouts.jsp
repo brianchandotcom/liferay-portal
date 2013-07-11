@@ -537,6 +537,8 @@ portletURL.setParameter("rootNodeName", rootNodeName);
 	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="exportProcessesURL">
 		<portlet:param name="struts_action" value="/layouts_admin/export_layouts" />
 		<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+		<portlet:param name="<%= SearchContainer.DEFAULT_CUR_PARAM %>" value="<%= ParamUtil.getString(request, SearchContainer.DEFAULT_CUR_PARAM) %>" />
+		<portlet:param name="<%= SearchContainer.DEFAULT_DELTA_PARAM %>" value="<%= ParamUtil.getString(request, SearchContainer.DEFAULT_DELTA_PARAM) %>" />
 	</liferay-portlet:resourceURL>
 
 	new Liferay.ExportImport(

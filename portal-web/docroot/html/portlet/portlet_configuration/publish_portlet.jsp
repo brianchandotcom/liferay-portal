@@ -450,6 +450,8 @@ portletURL.setParameter("tabs3", "all-publication-processes");
 				<portlet:param name="struts_action" value="/portlet_configuration/export_import" />
 				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.PUBLISH %>" />
 				<portlet:param name="portletResource" value="<%= portletResource %>" />
+				<portlet:param name="<%= SearchContainer.DEFAULT_CUR_PARAM %>" value="<%= ParamUtil.getString(request, SearchContainer.DEFAULT_CUR_PARAM) %>" />
+				<portlet:param name="<%= SearchContainer.DEFAULT_DELTA_PARAM %>" value="<%= ParamUtil.getString(request, SearchContainer.DEFAULT_DELTA_PARAM) %>" />
 			</liferay-portlet:resourceURL>
 
 			new Liferay.ExportImport(

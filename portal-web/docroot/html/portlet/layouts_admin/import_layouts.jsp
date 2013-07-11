@@ -53,6 +53,8 @@ String[] tempFileEntryNames = LayoutServiceUtil.getTempFileEntryNames(groupId, E
 		<portlet:param name="struts_action" value="/layouts_admin/import_layouts" />
 		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.IMPORT %>" />
 		<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+		<portlet:param name="<%= SearchContainer.DEFAULT_CUR_PARAM %>" value="<%= ParamUtil.getString(request, SearchContainer.DEFAULT_CUR_PARAM) %>" />
+		<portlet:param name="<%= SearchContainer.DEFAULT_DELTA_PARAM %>" value="<%= ParamUtil.getString(request, SearchContainer.DEFAULT_DELTA_PARAM) %>" />
 	</liferay-portlet:resourceURL>
 
 	new Liferay.ExportImport(

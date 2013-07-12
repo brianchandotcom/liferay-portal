@@ -20,13 +20,13 @@ import com.liferay.portal.model.BackgroundTask;
  * @author Michael C. Han
  */
 public class ClassLoaderAwareBackgroundTaskExecutor
-	implements BackgroundTaskExecutor {
+	extends DelegatingBackgroundTaskExecutor {
 
 	public ClassLoaderAwareBackgroundTaskExecutor(
 		BackgroundTaskExecutor backgroundTaskExecutor,
 		ClassLoader classLoader) {
 
-		_backgroundTaskExecutor = backgroundTaskExecutor;
+		super(backgroundTaskExecutor);
 		_classLoader = classLoader;
 	}
 
@@ -43,7 +43,7 @@ public class ClassLoaderAwareBackgroundTaskExecutor
 		}
 
 		try {
-			return _backgroundTaskExecutor.execute(backgroundTask);
+			return getBackgroundTaskExecutor().execute(backgroundTask);
 		}
 		finally {
 			if (_classLoader != contextClassLoader) {
@@ -52,17 +52,6 @@ public class ClassLoaderAwareBackgroundTaskExecutor
 		}
 	}
 
-	@Override
-	public String handleException(BackgroundTask backgroundTask, Exception e) {
-		return _backgroundTaskExecutor.handleException(backgroundTask, e);
-	}
-
-	@Override
-	public boolean isSerial() {
-		return _backgroundTaskExecutor.isSerial();
-	}
-
-	private BackgroundTaskExecutor _backgroundTaskExecutor;
 	private ClassLoader _classLoader;
 
 }

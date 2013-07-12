@@ -14,21 +14,14 @@
 
 package com.liferay.portal.kernel.backgroundtask;
 
-import com.liferay.portal.model.BackgroundTask;
+import com.liferay.portal.kernel.messaging.Message;
 
 /**
  * @author Michael C. Han
  */
-public interface BackgroundTaskExecutor {
+public interface BackgroundTaskStatusMessageTranslator {
 
-	public BackgroundTaskResult execute(BackgroundTask backgroundTask)
-		throws Exception;
-
-	public BackgroundTaskStatusMessageTranslator
-		getBackgroundTaskStatusMessageTranslator();
-
-	public String handleException(BackgroundTask backgroundTask, Exception e);
-
-	public boolean isSerial();
+	public void translate(
+		BackgroundTaskStatus backgroundTaskStatus, Message message);
 
 }

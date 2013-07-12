@@ -27,6 +27,13 @@ import java.util.Map;
  */
 public class PortletDataContextFactoryUtil {
 
+	public static PortletDataContext clonePortletDataContext(
+		PortletDataContext portletDataContext) {
+
+		return getPortletDataContextFactory().clonePortletDataContext(
+			portletDataContext);
+	}
+
 	public static PortletDataContext createExportPortletDataContext(
 			long companyId, long groupId, Map<String, String[]> parameterMap,
 			Date startDate, Date endDate, ZipWriter zipWriter)

@@ -12,23 +12,19 @@
  * details.
  */
 
-package com.liferay.portal.kernel.backgroundtask;
+package com.liferay.portal.kernel.lar;
 
-import com.liferay.portal.model.BackgroundTask;
+import com.liferay.portal.model.StagedModel;
 
 /**
  * @author Michael C. Han
  */
-public interface BackgroundTaskExecutor {
+public interface DataHandlerStatusMessageSender {
 
-	public BackgroundTaskResult execute(BackgroundTask backgroundTask)
-		throws Exception;
+	public void sendStatusMessage(
+		String messageType, String portletId, ManifestSummary manifestSummary);
 
-	public BackgroundTaskStatusMessageTranslator
-		getBackgroundTaskStatusMessageTranslator();
-
-	public String handleException(BackgroundTask backgroundTask, Exception e);
-
-	public boolean isSerial();
+	public <T extends StagedModel> void sendStatusMessage(
+		String messageType, T stagedModel, ManifestSummary manifestSummary);
 
 }

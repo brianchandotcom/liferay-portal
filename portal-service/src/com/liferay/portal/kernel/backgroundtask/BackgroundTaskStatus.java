@@ -27,6 +27,10 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class BackgroundTaskStatus implements Serializable {
 
+	public void clearAttributes() {
+		_attributes.clear();
+	}
+
 	public Serializable getAttribute(String key) {
 		return _attributes.get(key);
 	}

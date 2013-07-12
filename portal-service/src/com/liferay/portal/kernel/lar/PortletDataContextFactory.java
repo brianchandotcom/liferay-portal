@@ -26,6 +26,9 @@ import java.util.Map;
  */
 public interface PortletDataContextFactory {
 
+	public PortletDataContext clonePortletDataContext(
+		PortletDataContext portletDataContext);
+
 	public PortletDataContext createExportPortletDataContext(
 			long companyId, long groupId, Map<String, String[]> parameterMap,
 			Date startDate, Date endDate, ZipWriter zipWriter)

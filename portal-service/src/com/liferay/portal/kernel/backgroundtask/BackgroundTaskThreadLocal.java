@@ -14,21 +14,35 @@
 
 package com.liferay.portal.kernel.backgroundtask;
 
-import com.liferay.portal.model.BackgroundTask;
+import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 
 /**
  * @author Michael C. Han
  */
-public interface BackgroundTaskExecutor {
+public class BackgroundTaskThreadLocal {
 
-	public BackgroundTaskResult execute(BackgroundTask backgroundTask)
-		throws Exception;
+	public static long getBackgroundTaskId() {
+		return _backgroundTaskId.get();
+	}
 
-	public BackgroundTaskStatusMessageTranslator
-		getBackgroundTaskStatusMessageTranslator();
+	public static boolean isBackgroundExecution() {
+		long backgroundTaskId = getBackgroundTaskId();
 
-	public String handleException(BackgroundTask backgroundTask, Exception e);
+		if (backgroundTaskId > 0) {
+			return true;
+		}
 
-	public boolean isSerial();
+		return false;
+	}
+
+	public static void setBackgroundTaskId(long backgroundTaskId) {
+		if (backgroundTaskId > 0) {
+			_backgroundTaskId.set(backgroundTaskId);
+		}
+	}
+
+	private static ThreadLocal<Long> _backgroundTaskId =
+		new AutoResetThreadLocal<Long>(
+			BackgroundTaskThreadLocal.class + "._backgroundTaskId", 0L);
 
 }

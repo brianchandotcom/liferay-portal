@@ -351,9 +351,10 @@ public class VerifyJournal extends VerifyProcess {
 			StringBundler sb = new StringBundler();
 
 			sb.append("select distinct urlTitle from JournalArticle where ");
-			sb.append("urlTitle like '%\u00a3%' or urlTitle like '%\u2018%' ");
-			sb.append("or urlTitle like '%\u2019%' or urlTitle like ");
-			sb.append("'%\u201c%' or urlTitle like '%\u201d%'");
+			sb.append("urlTitle like '%\u00a3%' or urlTitle like '%\u2013%' ");
+			sb.append("or urlTitle like '%\u2014%' or urlTitle like ");
+			sb.append("'%\u2018%' or urlTitle like '%\u2019%' or urlTitle ");
+			sb.append("like '%\u201c%' or urlTitle like '%\u201d%'");
 
 			ps = con.prepareStatement(sb.toString());
 

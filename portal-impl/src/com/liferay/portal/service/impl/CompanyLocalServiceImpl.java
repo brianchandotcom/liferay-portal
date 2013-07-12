@@ -22,6 +22,7 @@ import com.liferay.portal.LocaleException;
 import com.liferay.portal.NoSuchShardException;
 import com.liferay.portal.NoSuchVirtualHostException;
 import com.liferay.portal.RequiredCompanyException;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -51,11 +52,14 @@ import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.model.Contact;
 import com.liferay.portal.model.ContactConstants;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.LayoutSetPrototype;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.VirtualHost;
 import com.liferay.portal.security.auth.CompanyThreadLocal;
+import com.liferay.portal.service.LayoutSetLocalServiceUtil;
+import com.liferay.portal.service.LayoutSetPrototypeLocalServiceUtil;
 import com.liferay.portal.service.base.CompanyLocalServiceBaseImpl;
 import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalInstances;
@@ -1049,6 +1053,19 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 					validateLocales(newLocales);
 
 					LanguageUtil.resetAvailableLocales(companyId);
+
+					Date now = new Date();
+
+					for(LayoutSetPrototype layoutSetPrototype:
+						LayoutSetPrototypeLocalServiceUtil
+							.getLayoutSetPrototypes(
+									QueryUtil.ALL_POS, QueryUtil.ALL_POS)){
+
+						layoutSetPrototype.setModifiedDate(now);
+
+						LayoutSetPrototypeLocalServiceUtil
+							.updateLayoutSetPrototype(layoutSetPrototype);
+					}
 				}
 			}
 

@@ -51,8 +51,8 @@ try {
 					renderRequest.setAttribute(WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
 					%>
 
-					<div class="portlet-msg-info">
-						<liferay-ui:message key="you-do-not-have-the-roles-required-to-access-this-dynamic-data-list-entry" />
+					<div class="alert alert-error">
+						<liferay-ui:message key="you-do-not-have-the-roles-required-to-access-this-dynamic-data-list-record-set" />
 					</div>
 				</c:otherwise>
 			</c:choose>

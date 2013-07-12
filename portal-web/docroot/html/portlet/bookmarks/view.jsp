@@ -25,7 +25,11 @@ long defaultFolderId = GetterUtil.getLong(portletPreferences.getValue("rootFolde
 
 long folderId = BeanParamUtil.getLong(folder, request, "folderId", defaultFolderId);
 
-boolean viewDefaultFolder = (folder == null) && (defaultFolderId != BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+boolean viewDefaultFolder = false;
+
+if ((folder == null) && (defaultFolderId != BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
+	viewDefaultFolder = true;
+}
 
 if (viewDefaultFolder) {
 	try {

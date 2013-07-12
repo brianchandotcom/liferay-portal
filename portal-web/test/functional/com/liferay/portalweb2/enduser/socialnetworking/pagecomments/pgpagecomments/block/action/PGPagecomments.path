@@ -76,108 +76,43 @@
 </tr>
 <!--COMMENT-->
 <tr>
-	<td>COMMENT_WORKFLOW_STATUS_1</td>
-	<td>xpath=(//span[@class='workflow-status']/strong)[1]</td>
+	<td>COMMENT_WORKFLOW_STATUS</td>
+	<td>//div[contains(@class,'lfr-discussion') and contains(.,'${key_commentBody}')]//span[@class='workflow-status workflow-status-icon']/strong</td>
 	<td></td>
 </tr>
 <tr>
-	<td>COMMENT_WORKFLOW_STATUS_2</td>
-	<td>xpath=(//span[@class='workflow-status']/strong)[2]</td>
+	<td>COMMENT_BODY</td>
+	<td>//div[contains(@class,'lfr-discussion') and contains(.,'${key_commentBody}')]//div[@class='lfr-discussion-message']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>COMMENT_WORKFLOW_STATUS_3</td>
-	<td>xpath=(//span[@class='workflow-status']/strong)[3]</td>
+	<td>COMMENT_USERNAME</td>
+	<td>//div[contains(@class,'lfr-discussion') and contains(.,'${key_commentBody}')]//span[@class='user-name']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>COMMENT_BODY_1</td>
-	<td>xpath=(//div[@class='lfr-discussion-message'])[1]</td>
+	<td>COMMENT_RATING</td>
+	<td>//div[contains(@class,'lfr-discussion') and contains(.,'${key_commentBody}')]//div[contains(@id,'ratingThumbContent')]/div</td>
 	<td></td>
 </tr>
 <tr>
-	<td>COMMENT_BODY_2</td>
-	<td>xpath=(//div[@class='lfr-discussion-message'])[2]</td>
+	<td>COMMENT_POST_REPLY</td>
+	<td>//div[contains(@class,'lfr-discussion') and contains(.,'${key_commentBody}')]//ul[@class='lfr-discussion-actions']/li/span/a[contains(.,'Post Reply')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>COMMENT_BODY_3</td>
-	<td>xpath=(//div[@class='lfr-discussion-message'])[3]</td>
+	<td>COMMENT_EDIT</td>
+	<td>//div[contains(@class,'lfr-discussion') and contains(.,'${key_commentBody}')]//ul[@class='lfr-discussion-actions']/li/span/a[contains(.,'Edit')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>COMMENT_USERNAME_1</td>
-	<td>xpath=(//span[@class='user-name'])[1]</td>
+	<td>COMMENT_DELETE</td>
+	<td>//div[contains(@class,'lfr-discussion') and contains(.,'${key_commentBody}')]//ul[@class='lfr-discussion-actions']/li/span/a[contains(.,'Delete')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>COMMENT_USERNAME_2</td>
-	<td>xpath=(//span[@class='user-name'])[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>COMMENT_USERNAME_3</td>
-	<td>xpath=(//span[@class='user-name'])[3]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>COMMENT_RATING_1</td>
-	<td>xpath=(//div[contains(@id,'ratingThumbContent')]/div)[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>COMMENT_RATING_2</td>
-	<td>xpath=(//div[contains(@id,'ratingThumbContent')]/div)[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>COMMENT_RATING_3</td>
-	<td>xpath=(//div[contains(@id,'ratingThumbContent')]/div)[3]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>COMMENT_POST_REPLY_1</td>
-	<td>xpath=(//ul[@class='lfr-discussion-actions']/li/span/a[contains(.,'Post Reply')])[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>COMMENT_POST_REPLY_2</td>
-	<td>xpath=(//ul[@class='lfr-discussion-actions']/li/span/a[contains(.,'Post Reply')])[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>COMMENT_POST_REPLY_3</td>
-	<td>xpath=(//ul[@class='lfr-discussion-actions']/li/span/a[contains(.,'Post Reply')])[3]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>COMMENT_EDIT_1</td>
-	<td>xpath=(//ul[@class='lfr-discussion-actions']/li/span/a[contains(.,'Edit')])[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>COMMENT_EDIT_2</td>
-	<td>xpath=(//ul[@class='lfr-discussion-actions']/li/span/a[contains(.,'Edit')])[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>COMMENT_EDIT_3</td>
-	<td>xpath=(//ul[@class='lfr-discussion-actions']/li/span/a[contains(.,'Edit')])[3]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>COMMENT_DELETE_1</td>
-	<td>xpath=(//ul[@class='lfr-discussion-actions']/li/span/a[contains(.,'Delete')])[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>COMMENT_DELETE_2</td>
-	<td>xpath=(//ul[@class='lfr-discussion-actions']/li/span/a[contains(.,'Delete')])[2]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>COMMENT_DELETE_3</td>
-	<td>xpath=(//ul[@class='lfr-discussion-actions']/li/span/a[contains(.,'Delete')])[3]</td>
+	<td>COMMENT_DELETE_GENERIC</td>
+	<td>//ul[@class='lfr-discussion-actions']/li/span/a[contains(.,'Delete')]</td>
 	<td></td>
 </tr>
 </tbody>

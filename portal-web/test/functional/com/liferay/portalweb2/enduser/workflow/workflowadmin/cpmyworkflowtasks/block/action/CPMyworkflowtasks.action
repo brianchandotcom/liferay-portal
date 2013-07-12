@@ -8,8 +8,11 @@
 		</case>
 	</command>
 	<command name="assertTextEquals">
-		<case locator-key1="SUCCESS_MESSAGE">
-			<execute function="AssertTextEquals#assertText" />
+		<case locator-key1="ASSIGNED_TO_ME_TABLE_ASSET_TITLE">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+		<case locator-key1="ASSIGNED_TO_MY_ROLES_TABLE_ASSET_TITLE">
+			<execute function="AssertTextEquals#assertPartialText" />
 		</case>
 	</command>
 </definition>

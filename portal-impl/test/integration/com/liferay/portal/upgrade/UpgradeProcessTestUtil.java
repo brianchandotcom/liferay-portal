@@ -31,6 +31,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
 
+import java.text.MessageFormat;
+
 import java.util.Properties;
 
 /**
@@ -81,8 +83,10 @@ public class UpgradeProcessTestUtil {
 
 		StringBundler sb = new StringBundler(3);
 
-		sb.append("DROP database ");
-		sb.append(databaseName);
+		String dropSentence = MessageFormat.format(
+			PropsUtil.get("upgrade.process.drop.database"), databaseName);
+
+		sb.append(dropSentence);
 		sb.append(StringPool.SEMICOLON);
 
 		runSQL(sb.toString());

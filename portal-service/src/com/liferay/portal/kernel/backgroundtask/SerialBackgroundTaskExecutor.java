@@ -14,6 +14,10 @@
 
 package com.liferay.portal.kernel.backgroundtask;
 
+import com.liferay.portal.DuplicateLockException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.BackgroundTask;
 import com.liferay.portal.model.Lock;
@@ -22,12 +26,13 @@ import com.liferay.portal.service.LockLocalServiceUtil;
 /**
  * @author Michael C. Han
  */
-public class SerialBackgroundTaskExecutor implements BackgroundTaskExecutor {
+public class SerialBackgroundTaskExecutor
+	extends DelegatingBackgroundTaskExecutor {
 
 	public SerialBackgroundTaskExecutor(
 		BackgroundTaskExecutor backgroundTaskExecutor) {
 
-		_backgroundTaskExecutor = backgroundTaskExecutor;
+		super(backgroundTaskExecutor);
 	}
 
 	@Override
@@ -36,39 +41,60 @@ public class SerialBackgroundTaskExecutor implements BackgroundTaskExecutor {
 
 		Lock lock = null;
 
+		String owner =
+			backgroundTask.getName() + StringPool.POUND +
+				backgroundTask.getBackgroundTaskId();
+
 		try {
 			if (isSerial()) {
-				String owner =
-					backgroundTask.getName() + StringPool.POUND +
-						backgroundTask.getBackgroundTaskId();
-
-				lock = LockLocalServiceUtil.lock(
-					backgroundTask.getUserId(),
-					BackgroundTaskExecutor.class.getName(),
-					backgroundTask.getTaskExecutorClassName(), owner, false, 0);
+				lock = acquireLock(backgroundTask, owner);
 			}
 
-			return _backgroundTaskExecutor.execute(backgroundTask);
+			return getBackgroundTaskExecutor().execute(backgroundTask);
 		}
 		finally {
 			if (lock != null) {
 				LockLocalServiceUtil.unlock(
-					BaseBackgroundTaskExecutor.class.getName(),
-					backgroundTask.getTaskExecutorClassName());
+					BackgroundTaskExecutor.class.getName(),
+					backgroundTask.getTaskExecutorClassName(), owner, false);
 			}
 		}
 	}
 
-	@Override
-	public String handleException(BackgroundTask backgroundTask, Exception e) {
-		return _backgroundTaskExecutor.handleException(backgroundTask, e);
+	protected Lock acquireLock(BackgroundTask backgroundTask, String owner)
+		throws DuplicateLockException {
+
+		Lock lock = null;
+
+		while (true) {
+			try {
+				lock = LockLocalServiceUtil.lock(
+					BackgroundTaskExecutor.class.getName(),
+					backgroundTask.getTaskExecutorClassName(), owner, false);
+
+				break;
+			}
+			catch (SystemException e) {
+				if (_log.isDebugEnabled()) {
+					_log.debug("Non-fatal error acquiring lock:", e);
+				}
+
+				try {
+					Thread.currentThread().sleep(50);
+				}
+				catch (InterruptedException e1) {
+				}
+			}
+		}
+
+		if (!lock.isNew()) {
+			throw new DuplicateLockException(lock);
+		}
+
+		return lock;
 	}
 
-	@Override
-	public boolean isSerial() {
-		return _backgroundTaskExecutor.isSerial();
-	}
-
-	private BackgroundTaskExecutor _backgroundTaskExecutor;
+	private static Log _log = LogFactoryUtil.getLog(
+		SerialBackgroundTaskExecutor.class);
 
 }

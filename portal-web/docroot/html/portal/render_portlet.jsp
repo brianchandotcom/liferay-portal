@@ -501,7 +501,7 @@ portletDisplay.setURLEditGuest(urlEditGuest.toString());
 
 PortletURLImpl urlExportImport = new PortletURLImpl(request, PortletKeys.PORTLET_CONFIGURATION, plid, PortletRequest.RENDER_PHASE);
 
-urlExportImport.setWindowState(WindowState.MAXIMIZED);
+urlExportImport.setWindowState(LiferayWindowState.POP_UP);
 
 urlExportImport.setParameter("struts_action", "/portlet_configuration/export_import");
 urlExportImport.setParameter("redirect", currentURL);

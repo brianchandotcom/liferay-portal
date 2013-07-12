@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.dao.search;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -98,6 +99,37 @@ public class ResultRow {
 		addButton(
 			_searchEntries.size(), align, valign, SearchEntry.DEFAULT_COLSPAN,
 			name, href);
+	}
+
+	public void addDate(Date date) {
+		addDate(_searchEntries.size(), date, null);
+	}
+
+	public void addDate(Date date, PortletURL portletURL) {
+		if (portletURL != null) {
+			addDate(_searchEntries.size(), date, portletURL.toString());
+
+		}
+		else {
+			addDate(_searchEntries.size(), date, null);
+		}
+	}
+
+	public void addDate(Date date, String href) {
+		addDate(_searchEntries.size(), date, null);
+	}
+
+	public void addDate(int index, Date date, String href) {
+
+		DateSearchEntry dateSearchEntry = new DateSearchEntry();
+
+		dateSearchEntry.setAlign(SearchEntry.DEFAULT_ALIGN);
+		dateSearchEntry.setColspan(SearchEntry.DEFAULT_COLSPAN);
+		dateSearchEntry.setDate(date);
+		dateSearchEntry.setHref(href);
+		dateSearchEntry.setValign(SearchEntry.DEFAULT_VALIGN);
+
+		_searchEntries.add(index, dateSearchEntry);
 	}
 
 	public void addJSP(int index, String path) {

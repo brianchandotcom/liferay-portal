@@ -15,32 +15,20 @@
 package com.liferay.taglib.ui;
 
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
+import com.liferay.portal.kernel.dao.search.DateSearchEntry;
 import com.liferay.portal.kernel.dao.search.ResultRow;
 import com.liferay.portal.kernel.dao.search.SearchEntry;
-import com.liferay.portal.kernel.dao.search.TextSearchEntry;
-import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.theme.ThemeDisplay;
-
-import java.text.Format;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
-import java.util.TimeZone;
 
 import javax.portlet.PortletURL;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspTagException;
-import javax.servlet.jsp.PageContext;
 
 /**
  * @author Raymond Augé
@@ -71,45 +59,16 @@ public class SearchContainerColumnDateTag<R> extends SearchContainerColumnTag {
 				_href = null;
 			}
 
-			TextSearchEntry textSearchEntry = new TextSearchEntry();
+			DateSearchEntry dateSearchEntry = new DateSearchEntry();
 
-			textSearchEntry.setAlign(getAlign());
-			textSearchEntry.setColspan(getColspan());
-			textSearchEntry.setCssClass(getCssClass());
-			textSearchEntry.setHref((String)getHref());
+			dateSearchEntry.setAlign(getAlign());
+			dateSearchEntry.setColspan(getColspan());
+			dateSearchEntry.setCssClass(getCssClass());
+			dateSearchEntry.setDate(_value);
+			dateSearchEntry.setHref((String)getHref());
+			dateSearchEntry.setValign(getValign());
 
-			if (Validator.isNotNull(_value)) {
-				Object[] localeAndTimeZone = getLocaleAndTimeZone(pageContext);
-
-				Format dateFormatDateTime =
-					FastDateFormatFactoryUtil.getDateTime(
-						(Locale)localeAndTimeZone[0],
-						(TimeZone)localeAndTimeZone[1]);
-
-				StringBundler sb = new StringBundler(5);
-
-				sb.append(
-					"<span onmouseover=\"Liferay.Portal.ToolTip.show(this, '");
-				sb.append(dateFormatDateTime.format(_value));
-				sb.append("')\">");
-				sb.append(
-					LanguageUtil.format(
-						pageContext, "x-ago",
-						LanguageUtil.getTimeDescription(
-							pageContext,
-							System.currentTimeMillis() - _value.getTime(),
-							true)));
-				sb.append("</span>");
-
-				textSearchEntry.setName(sb.toString());
-			}
-			else {
-				textSearchEntry.setName(StringPool.BLANK);
-			}
-
-			textSearchEntry.setValign(getValign());
-
-			resultRow.addSearchEntry(index, textSearchEntry);
+			resultRow.addSearchEntry(index, dateSearchEntry);
 
 			return EVAL_PAGE;
 		}
@@ -126,7 +85,6 @@ public class SearchContainerColumnDateTag<R> extends SearchContainerColumnTag {
 				_orderable = false;
 				_orderableProperty = null;
 				_property = null;
-				_timeZone = null;
 				valign = SearchEntry.DEFAULT_VALIGN;
 			}
 		}
@@ -221,29 +179,10 @@ public class SearchContainerColumnDateTag<R> extends SearchContainerColumnTag {
 		_value = value;
 	}
 
-	protected Object[] getLocaleAndTimeZone(PageContext pageContext) {
-		if ((_locale != null) && (_timeZone != null)) {
-			return new Object[] {_locale, _timeZone};
-		}
-
-		HttpServletRequest request =
-			(HttpServletRequest)pageContext.getRequest();
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		_locale = themeDisplay.getLocale();
-		_timeZone = themeDisplay.getTimeZone();
-
-		return new Object[] {_locale, _timeZone};
-	}
-
 	private Object _href;
-	private Locale _locale;
 	private boolean _orderable;
 	private String _orderableProperty;
 	private String _property;
-	private TimeZone _timeZone;
 	private Date _value;
 
 }

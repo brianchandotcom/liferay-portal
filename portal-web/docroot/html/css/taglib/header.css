@@ -7,7 +7,7 @@
 	}
 
 	.header-back-to a {
-		float: right;
+		float: left;
 		padding: 1em 0.2em;
 	}
 }

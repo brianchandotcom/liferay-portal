@@ -1910,6 +1910,8 @@ public class StringUtil {
 					sb.append(s);
 					sb.append(StringPool.NEW_LINE);
 				}
+
+				is.close();
 			}
 
 			return sb.toString().trim();
@@ -1923,6 +1925,8 @@ public class StringUtil {
 			}
 
 			String s = read(is);
+
+			is.close();
 
 			return s;
 		}

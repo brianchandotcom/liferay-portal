@@ -216,7 +216,9 @@ public class MailEngine {
 		try {
 			InternetAddressUtil.validateAddress(from);
 
-			InternetAddressUtil.validateAddresses(to);
+			if (to != null) {
+				InternetAddressUtil.validateAddresses(to);
+			}
 
 			if (cc != null) {
 				InternetAddressUtil.validateAddresses(cc);
@@ -249,7 +251,10 @@ public class MailEngine {
 				"X-Auto-Response-Suppress", "AutoReply, DR, NDR, NRN, OOF, RN");
 
 			message.setFrom(from);
-			message.setRecipients(Message.RecipientType.TO, to);
+
+			if (to != null) {
+				message.setRecipients(Message.RecipientType.TO, to);
+			}
 
 			if (cc != null) {
 				message.setRecipients(Message.RecipientType.CC, cc);

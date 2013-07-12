@@ -77,7 +77,7 @@ List groupNames = (List)objArray[8];
 
 		<liferay-ui:icon
 			id="<%= targetId %>"
-			image="edit"
+			image="configuration"
 			label="<%= true %>"
 			message="change"
 			url="javascript:;"

@@ -59,7 +59,7 @@ for (int i = 0; i < permissions.size(); i++) {
 	String curModelName = null;
 	String curModelLabel = null;
 	String actionId = permission.getActionId();
-	String actionLabel = ResourceActionsUtil.getAction(pageContext, actionId);
+	String actionLabel = _getActionLabel(pageContext, themeDisplay, resource.getName(), actionId);
 
 	if (PortletLocalServiceUtil.hasPortlet(company.getCompanyId(), resource.getName())) {
 		curPortletName = resource.getName();

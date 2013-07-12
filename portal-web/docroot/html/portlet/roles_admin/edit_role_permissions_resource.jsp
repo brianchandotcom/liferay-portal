@@ -145,22 +145,7 @@ for (int i = 0; i < results.size(); i++) {
 
 	ResultRow row = new ResultRow(new Object[] {role, actionId, curResource, target, scope, supportsFilterByGroup, groups, groupIdsArray, groupNames}, target, i);
 
-	String actionMessage = null;
-
-	if (actionId.equals(ActionKeys.ACCESS_IN_CONTROL_PANEL)) {
-		if (PortalUtil.isControlPanelPortlet(curResource, PortletCategoryKeys.SITE_ADMINISTRATION, themeDisplay)) {
-			actionMessage = LanguageUtil.get(pageContext, "access-in-site-administration");
-		}
-		else if (PortalUtil.isControlPanelPortlet(curResource, PortletCategoryKeys.MY, themeDisplay)) {
-			actionMessage = LanguageUtil.get(pageContext, "access-in-my-account");
-		}
-	}
-
-	if (actionMessage == null) {
-		actionMessage = ResourceActionsUtil.getAction(pageContext, actionId);
-	}
-
-	row.addText(actionMessage);
+	row.addText(_getActionLabel(pageContext, themeDisplay, curResource, actionId));
 
 	if (showScope) {
 		row.addJSP("/html/portlet/roles_admin/edit_role_permissions_resource_scope.jsp");

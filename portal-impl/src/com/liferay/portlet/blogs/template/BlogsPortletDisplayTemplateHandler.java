@@ -52,7 +52,7 @@ public class BlogsPortletDisplayTemplateHandler
 
 	@Override
 	public String getResourceName() {
-		return "com.liferay.portlet.blogs.template";
+		return PortletKeys.BLOGS;
 	}
 
 	@Override

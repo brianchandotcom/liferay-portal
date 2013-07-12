@@ -45,7 +45,7 @@ public class AssetTagsNavigationPortletDisplayTemplateHandler
 	@Override
 	public String getName(Locale locale) {
 		String portletTitle = PortalUtil.getPortletTitle(
-			PortletKeys.TAGS_ENTRIES_NAVIGATION, locale);
+			PortletKeys.ASSET_TAGS_NAVIGATION, locale);
 
 		return portletTitle.concat(StringPool.SPACE).concat(
 			LanguageUtil.get(locale, "template"));
@@ -53,7 +53,7 @@ public class AssetTagsNavigationPortletDisplayTemplateHandler
 
 	@Override
 	public String getResourceName() {
-		return "com.liferay.portlet.assettagsnavigation.template";
+		return PortletKeys.ASSET_TAGS_NAVIGATION;
 	}
 
 	@Override

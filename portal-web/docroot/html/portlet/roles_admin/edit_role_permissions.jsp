@@ -32,6 +32,7 @@ String portletResource = ParamUtil.getString(request, "portletResource");
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/roles_admin/edit_role_permissions");
+portletURL.setParameter(Constants.CMD, Constants.VIEW);
 portletURL.setParameter("tabs1", tabs1);
 portletURL.setParameter("tabs2", tabs2);
 portletURL.setParameter("backURL", backURL);

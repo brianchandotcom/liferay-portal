@@ -288,7 +288,7 @@ public class AddDefaultLayoutSetPrototypesAction extends SimpleAction {
 
 		addPortletId(layout, PortletKeys.WIKI, "column-1");
 		addPortletId(
-			layout, PortletKeys.TAGS_CATEGORIES_NAVIGATION, "column-2");
+			layout, PortletKeys.ASSET_CATEGORIES_NAVIGATION, "column-2");
 		addPortletId(layout, PortletKeys.TAGS_CLOUD, "column-2");
 	}
 

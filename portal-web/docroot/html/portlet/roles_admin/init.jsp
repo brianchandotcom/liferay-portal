@@ -52,6 +52,25 @@ if (permissionChecker.isCompanyAdmin()) {
 <%@ include file="/html/portlet/roles_admin/init-ext.jsp" %>
 
 <%!
+private String _getActionLabel(PageContext pageContext, ThemeDisplay themeDisplay, String resourceName, String actionId) throws SystemException {
+	String actionLabel = null;
+
+	if (actionId.equals(ActionKeys.ACCESS_IN_CONTROL_PANEL)) {
+		if (PortalUtil.isControlPanelPortlet(resourceName, PortletCategoryKeys.SITE_ADMINISTRATION, themeDisplay)) {
+			actionLabel = LanguageUtil.get(pageContext, "access-in-site-administration");
+		}
+		else if (PortalUtil.isControlPanelPortlet(resourceName, PortletCategoryKeys.MY, themeDisplay)) {
+			actionLabel = LanguageUtil.get(pageContext, "access-in-my-account");
+		}
+	}
+
+	if (actionLabel == null) {
+		actionLabel = ResourceActionsUtil.getAction(pageContext, actionId);
+	}
+
+	return actionLabel;
+}
+
 private StringBundler _getResourceHtmlId(String resource) {
 	StringBundler sb = new StringBundler(2);
 

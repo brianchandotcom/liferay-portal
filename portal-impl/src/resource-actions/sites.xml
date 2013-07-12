@@ -21,6 +21,26 @@
 			</guest-unsupported>
 		</permissions>
 	</portlet-resource>
+	<portlet-resource>
+		<portlet-name>85</portlet-name>
+		<permissions>
+			<supports>
+				<action-key>ADD_PORTLET_DISPLAY_TEMPLATE</action-key>
+				<action-key>CONFIGURATION</action-key>
+				<action-key>VIEW</action-key>
+			</supports>
+			<site-member-defaults>
+				<action-key>VIEW</action-key>
+			</site-member-defaults>
+			<guest-defaults>
+				<action-key>VIEW</action-key>
+			</guest-defaults>
+			<guest-unsupported>
+				<action-key>ADD_PORTLET_DISPLAY_TEMPLATE</action-key>
+				<action-key>CONFIGURATION</action-key>
+			</guest-unsupported>
+		</permissions>
+	</portlet-resource>
 	<model-resource>
 		<model-name>com.liferay.portal.model.Layout</model-name>
 		<portlet-ref>
@@ -83,24 +103,6 @@
 				<action-key>PERMISSIONS</action-key>
 				<action-key>UPDATE</action-key>
 				<action-key>VIEW</action-key>
-			</guest-unsupported>
-		</permissions>
-	</model-resource>
-	<model-resource>
-		<model-name>com.liferay.portlet.sitemap.template</model-name>
-		<portlet-ref>
-			<portlet-name>85</portlet-name>
-			<portlet-name>183</portlet-name>
-		</portlet-ref>
-		<weight>1</weight>
-		<permissions>
-			<supports>
-				<action-key>ADD_PORTLET_DISPLAY_TEMPLATE</action-key>
-			</supports>
-			<site-member-defaults />
-			<guest-defaults />
-			<guest-unsupported>
-				<action-key>ADD_PORTLET_DISPLAY_TEMPLATE</action-key>
 			</guest-unsupported>
 		</permissions>
 	</model-resource>

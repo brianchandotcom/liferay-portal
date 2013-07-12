@@ -142,6 +142,21 @@ public class BookmarksEntryServiceSoap {
 		}
 	}
 
+	public static int getEntriesCount(long groupId, long folderId, int status)
+		throws RemoteException {
+		try {
+			int returnValue = BookmarksEntryServiceUtil.getEntriesCount(groupId,
+					folderId, status);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.portlet.bookmarks.model.BookmarksEntrySoap getEntry(
 		long entryId) throws RemoteException {
 		try {

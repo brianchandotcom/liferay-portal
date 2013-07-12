@@ -690,6 +690,10 @@ public interface JournalArticleService extends BaseService {
 	public int getArticlesCount(long groupId, long folderId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getArticlesCount(long groupId, long folderId, int status)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	/**
 	* Returns the number of web content articles matching the group and article
 	* ID.

@@ -759,6 +759,12 @@ public class JournalArticleServiceWrapper implements JournalArticleService,
 		return _journalArticleService.getArticlesCount(groupId, folderId);
 	}
 
+	@Override
+	public int getArticlesCount(long groupId, long folderId, int status)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _journalArticleService.getArticlesCount(groupId, folderId, status);
+	}
+
 	/**
 	* Returns the number of web content articles matching the group and article
 	* ID.

@@ -203,8 +203,8 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 		throws SystemException {
 
 		if (status == WorkflowConstants.STATUS_ANY) {
-			return bookmarksFolderPersistence.filterCountByG_P(
-				groupId, parentFolderId);
+			return bookmarksFolderPersistence.filterCountByG_P_NotS(
+				groupId, parentFolderId, WorkflowConstants.STATUS_IN_TRASH);
 		}
 		else {
 			return bookmarksFolderPersistence.filterCountByG_P_S(

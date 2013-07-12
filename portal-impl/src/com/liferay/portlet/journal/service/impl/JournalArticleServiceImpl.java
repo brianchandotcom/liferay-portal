@@ -836,8 +836,15 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	public int getArticlesCount(long groupId, long folderId)
 		throws SystemException {
 
-		QueryDefinition queryDefinition = new QueryDefinition(
-			WorkflowConstants.STATUS_ANY);
+		return getArticlesCount(
+			groupId, folderId, WorkflowConstants.STATUS_ANY);
+	}
+
+	@Override
+	public int getArticlesCount(long groupId, long folderId, int status)
+		throws SystemException {
+
+		QueryDefinition queryDefinition = new QueryDefinition(status);
 
 		List<Long> folderIds = new ArrayList<Long>();
 

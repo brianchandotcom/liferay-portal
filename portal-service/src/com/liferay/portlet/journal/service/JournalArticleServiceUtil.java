@@ -752,6 +752,11 @@ public class JournalArticleServiceUtil {
 		return getService().getArticlesCount(groupId, folderId);
 	}
 
+	public static int getArticlesCount(long groupId, long folderId, int status)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getArticlesCount(groupId, folderId, status);
+	}
+
 	/**
 	* Returns the number of web content articles matching the group and article
 	* ID.

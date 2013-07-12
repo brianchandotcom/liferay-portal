@@ -86,7 +86,7 @@ portletURL.setParameter("tabs1", tabs1);
 
 		// Date
 
-		row.addText(dateFormatDateTime.format(order.getCreateDate()), rowURL);
+		row.addDate(order.getCreateDate(), rowURL);
 
 		// Status
 

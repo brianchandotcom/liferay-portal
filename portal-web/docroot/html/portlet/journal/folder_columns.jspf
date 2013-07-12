@@ -34,7 +34,7 @@ row.addText("--");
 
 // Modified date
 
-row.addText(dateFormatDateTime.format(curFolder.getModifiedDate()));
+row.addDate(curFolder.getModifiedDate());
 
 // Display date
 

@@ -48,16 +48,14 @@ for (int i = 0; i < scheduledJobs.size(); i++) {
 
 	// Start date
 
-	Date startDate = SchedulerEngineHelperUtil.getStartTime(schedulerResponse);
-
-	row.addText(dateFormatDateTime.format(startDate));
+	row.addDate(SchedulerEngineHelperUtil.getStartTime(schedulerResponse));
 
 	// End date
 
 	Date endDate = SchedulerEngineHelperUtil.getEndTime(schedulerResponse);
 
 	if (endDate != null) {
-		row.addText(dateFormatDateTime.format(endDate));
+		row.addDate(endDate);
 	}
 	else {
 		row.addText(LanguageUtil.get(pageContext, "no-end-date"));

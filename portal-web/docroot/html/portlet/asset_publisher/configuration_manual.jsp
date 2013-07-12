@@ -138,9 +138,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 
 				// Modified Date
 
-				Date modifiedDate = assetEntry.getModifiedDate();
-
-				row.addText(LanguageUtil.format(pageContext, "x-ago", LanguageUtil.getTimeDescription(pageContext, System.currentTimeMillis() - modifiedDate.getTime(), true)));
+				row.addDate(assetEntry.getModifiedDate());
 
 				// Action
 

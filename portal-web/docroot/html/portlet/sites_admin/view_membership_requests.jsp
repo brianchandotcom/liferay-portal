@@ -101,7 +101,7 @@ for (int i = 0; i < results.size(); i++) {
 
 	// Date
 
-	row.addText(dateFormatDate.format(membershipRequest.getCreateDate()));
+	row.addDate(membershipRequest.getCreateDate());
 
 	// User
 

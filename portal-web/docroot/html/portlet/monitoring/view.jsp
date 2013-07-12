@@ -91,10 +91,10 @@ portletURL.setParameter("struts_action", "/monitoring/view");
 					value='<%= ((user2 != null) ? user2.getScreenName() : LanguageUtil.get(pageContext, "not-available")) %>'
 				/>
 
-				<liferay-ui:search-container-column-text
+				<liferay-ui:search-container-column-date
 					href="<%= rowURL %>"
 					name="last-request"
-					value="<%= dateFormatDateTime.format(userTracker.getModifiedDate()) %>"
+					value="<%= userTracker.getModifiedDate() %>"
 				/>
 
 				<liferay-ui:search-container-column-text

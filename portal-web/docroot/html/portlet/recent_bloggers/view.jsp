@@ -92,7 +92,7 @@ else {
 
 						// Last post date
 
-						row.addText(dateFormatDate.format(entry.getModifiedDate()), rowHREF);
+						row.addDate(entry.getModifiedDate(), rowHREF);
 					}
 					else {
 

@@ -36,8 +36,6 @@ page import="com.liferay.portlet.announcements.util.AnnouncementsUtil" %>
 
 <%
 int pageDelta = GetterUtil.getInteger(portletPreferences.getValue("pageDelta", String.valueOf(SearchContainer.DEFAULT_DELTA)));
-
-Format dateFormatDate = FastDateFormatFactoryUtil.getDate(locale, timeZone);
 %>
 
 <%@ include file="/html/portlet/announcements/init-ext.jsp" %>

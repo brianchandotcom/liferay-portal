@@ -36,10 +36,10 @@ for (int j = 0; j < entryColumns.length; j++) {
 			/>
 		</c:when>
 		<c:when test='<%= bookmarksEntryColumn.equals("modified-date") %>'>
-			<liferay-ui:search-container-column-text
+			<liferay-ui:search-container-column-date
 				href="<%= rowHREF %>"
 				name="<%= bookmarksEntryColumn %>"
-				value="<%= dateFormatDate.format(entry.getModifiedDate()) %>"
+				value="<%= entry.getModifiedDate() %>"
 			/>
 		</c:when>
 		<c:when test='<%= bookmarksEntryColumn.equals("name") %>'>

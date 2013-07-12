@@ -106,15 +106,15 @@ if ((classNameId == 0) && (classPK == 0) && !permissionChecker.isOmniadmin()) {
 
 			// Modified date
 
-			row.addText(dateFormatDate.format(entry.getModifiedDate()), rowURL);
+			row.addDate(entry.getModifiedDate(), rowURL);
 
 			// Display date
 
-			row.addText(dateFormatDate.format(entry.getDisplayDate()), rowURL);
+			row.addDate(entry.getDisplayDate(), rowURL);
 
 			// Expiration date
 
-			row.addText(dateFormatDate.format(entry.getExpirationDate()), rowURL);
+			row.addDate(entry.getExpirationDate(), rowURL);
 
 			// Action
 

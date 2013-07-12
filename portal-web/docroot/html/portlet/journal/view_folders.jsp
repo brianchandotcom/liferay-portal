@@ -213,7 +213,7 @@ else if (((folderId != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) && (pare
 							dataView="<%= dataView %>"
 							entryTitle='<%= LanguageUtil.get(pageContext, "basic-web-content") %>'
 							iconImage="copy"
-							selected='<%= (structureId == "0") %>'
+							selected='<%= structureId.equals("0") %>'
 							viewURL="<%= viewBasicDDMStructureArticlesURL.toString() %>"
 						/>
 					</c:if>

@@ -61,7 +61,7 @@ FileVersion fileVersion = (FileVersion)objArray[1];
 		<portlet:param name="fileEntryId" value="<%= String.valueOf(fileEntry.getFileEntryId()) %>" />
 	</portlet:renderURL>
 
-	<c:if test="<%= (fileVersion.getStatus() != WorkflowConstants.STATUS_IN_TRASH) && DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE) && (fileVersion.getStatus() == WorkflowConstants.STATUS_APPROVED) && (fileEntry.getLatestFileVersion().getVersion() != fileVersion.getVersion()) %>">
+	<c:if test="<%= (fileVersion.getStatus() != WorkflowConstants.STATUS_IN_TRASH) && DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE) && (fileVersion.getStatus() == WorkflowConstants.STATUS_APPROVED) && !fileEntry.getLatestFileVersion().getVersion().equals(fileVersion.getVersion()) %>">
 		<portlet:actionURL var="revertURL">
 			<portlet:param name="struts_action" value="/document_library/edit_file_entry" />
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.REVERT %>" />

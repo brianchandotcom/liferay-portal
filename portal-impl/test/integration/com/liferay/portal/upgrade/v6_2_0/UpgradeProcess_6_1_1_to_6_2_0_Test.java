@@ -14,7 +14,9 @@
 
 package com.liferay.portal.upgrade.v6_2_0;
 
+import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.upgrade.BaseUpgradeProcessTestCase;
 import com.liferay.portal.upgrade.UpgradeProcess_6_2_0;
@@ -24,6 +26,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Manuel de la Peña
  */
+@ExecutionTestListeners(listeners = {EnvironmentExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class UpgradeProcess_6_1_1_to_6_2_0_Test
 	extends BaseUpgradeProcessTestCase {

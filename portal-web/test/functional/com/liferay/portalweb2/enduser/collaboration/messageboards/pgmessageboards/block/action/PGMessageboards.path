@@ -19,8 +19,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SUCCESS_MESSAGE</td>
-	<td>//div[@class='alert alert-success']</td>
+	<td>EXTEND_ACTION_PATH</td>
+	<td>BasePortlet</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
 	<td></td>
 </tr>
 <tr>
@@ -41,6 +46,42 @@
 <tr>
 	<td>POST_NEW_THREAD_BUTTON</td>
 	<td>//button[contains(.,'Post New Thread')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--NAVIGATION-->
+<tr>
+	<td>NAVIGATION_MESSAGE_BOARDS_HOME</td>
+	<td>//section[@id='portlet_19']//ul/li/a[contains(.,'Message Boards Home')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_RECENT_POSTS</td>
+	<td>//section[@id='portlet_19']//ul/li/a[contains(.,'Recent Posts')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_MY_POSTS</td>
+	<td>//section[@id='portlet_19']//ul/li/a[contains(.,'My Posts')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_MY_SUBSCRIPTIONS</td>
+	<td>//section[@id='portlet_19']//ul/li/a[contains(.,'My Subscriptions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_STATISTICS</td>
+	<td>//section[@id='portlet_19']//ul/li/a[contains(.,'Statistics')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_BANNED_USERS</td>
+	<td>//section[@id='portlet_19']//ul/li/a[contains(.,'Banned Users')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -122,28 +163,33 @@
 </tr>
 <!--THREAD_TABLE-->
 <tr>
-	<td>THREAD_TABLE_THREAD_1</td>
-	<td>xpath=(//div[contains(@id,'mbThreadsSearchContainer')]//tr/td[1]/a)[1]</td>
+	<td>THREAD_TABLE_THREAD</td>
+	<td>//div[contains(@id,'mbThreadsSearchContainer')]//tr[contains(.,'${threadSubject}')]/td[1]/a</td>
 	<td></td>
 </tr>
 <tr>
-	<td>THREAD_TABLE_STARTED_BY_1</td>
-	<td>xpath=(//div[contains(@id,'mbThreadsSearchContainer')]//tr/td[3]/a)[1]</td>
+	<td>THREAD_TABLE_STARTED_BY</td>
+	<td>//div[contains(@id,'mbThreadsSearchContainer')]//tr[contains(.,'${threadSubject}')]/td[3]/a</td>
 	<td></td>
 </tr>
 <tr>
-	<td>THREAD_TABLE_POSTS_1</td>
-	<td>xpath=(//div[contains(@id,'mbThreadsSearchContainer')]//tr/td[4]/a)[1]</td>
+	<td>THREAD_TABLE_POSTS</td>
+	<td>//div[contains(@id,'mbThreadsSearchContainer')]//tr[contains(.,'${threadSubject}')]/td[4]/a</td>
 	<td></td>
 </tr>
 <tr>
-	<td>THREAD_TABLE_LAST_POST_1</td>
-	<td>xpath=(//div[contains(@id,'mbThreadsSearchContainer')]//tr/td[6]/a)[1]</td>
+	<td>THREAD_TABLE_LAST_POST</td>
+	<td>//div[contains(@id,'mbThreadsSearchContainer')]//tr[contains(.,'${threadSubject}')]/td[6]/a</td>
 	<td></td>
 </tr>
 <tr>
-	<td>THREAD_TABLE_ACTIONS_1</td>
-	<td>xpath=(//div[contains(@id,'mbThreadsSearchContainer')]//tr/td/div/a[@title='Actions'])[1]</td>
+	<td>THREAD_TABLE_ACTIONS</td>
+	<td>//div[contains(@id,'mbThreadsSearchContainer')]//tr[contains(.,'${threadSubject}')]//a[@title='Actions']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>THREAD_TABLE_ACTIONS_GENERIC</td>
+	<td>//div[contains(@id,'mbThreadsSearchContainer')]//tr[1]//a[@title='Actions']</td>
 	<td></td>
 </tr>
 <tr>

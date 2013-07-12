@@ -2072,6 +2072,8 @@
 		<column name="classUuid" type="String" />
 		<column name="referrerClassNameId" type="long" />
 		<column name="type" type="int" />
+		<column name="eventSetId" type="long" />
+		<column name="parentSystemEventId" type="long" />
 		<column name="extraData" type="String" />
 
 		<!-- Order -->

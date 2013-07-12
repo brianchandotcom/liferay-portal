@@ -12,21 +12,28 @@
  * details.
  */
 
-package com.liferay.portal.model;
+package com.liferay.portal.kernel.systemevents;
+
+import com.liferay.portal.model.SystemEventConstants;
+
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
  * @author Zsolt Berentey
  */
-public class SystemEventConstants {
+@Documented
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.METHOD)
+public @interface SystemEvent {
 
-	public static final int ACTION_GROUP = 2;
+	public int childAction() default SystemEventConstants.ACTION_NONE;
 
-	public static final int ACTION_HIERARCHY = 3;
+	public boolean sendEvent() default true;
 
-	public static final int ACTION_NONE = 0;
-
-	public static final int ACTION_SKIP = 1;
-
-	public static final int TYPE_DELETE = 1;
+	public int type() default 0;
 
 }

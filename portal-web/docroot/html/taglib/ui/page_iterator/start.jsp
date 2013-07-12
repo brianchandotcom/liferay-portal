@@ -247,16 +247,14 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 
 			<li class="<%= (cur != pages) ? "" : "disabled" %>">
 				<a href="<%= (cur != pages) ? _getHREF(formName, namespace + curParam, cur + 1, jsCall, url, urlAnchor) : "javascript:;" %>" target="<%= target %>">
-					<c:if test='<%= (type.equals("approximate") || type.equals("more") || type.equals("regular")) %>'>
-						<c:choose>
-							<c:when test='<%= type.equals("approximate") || type.equals("more") %>'>
-								<liferay-ui:message key="more" />
-							</c:when>
-							<c:otherwise>
-								<liferay-ui:message key="next" />
-							</c:otherwise>
-						</c:choose>
-					</c:if>
+					<c:choose>
+						<c:when test='<%= type.equals("approximate") || type.equals("more") %>'>
+							<liferay-ui:message key="more" />
+						</c:when>
+						<c:otherwise>
+							<liferay-ui:message key="next" />
+						</c:otherwise>
+					</c:choose>
 				</a>
 			</li>
 

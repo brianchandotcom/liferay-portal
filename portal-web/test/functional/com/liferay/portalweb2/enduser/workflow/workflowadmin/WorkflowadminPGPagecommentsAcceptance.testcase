@@ -1,0 +1,159 @@
+<definition>
+	<var name="pageName" value="Page Comments Page" />
+	<var name="portletName" value="Page Comments" />
+	<var name="workflowAssetType" value="Comments" />
+
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="Workflow#configureSiteWorkflow">
+			<var name="workflowDefinition" value="Single Approver (Version 1)" />
+			<var name="workflowResourceKey" value="RESOURCE_TABLE_COMMENTS_SELECT" />
+		</execute>
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="portletName" value="${portletName}" />
+		</execute>
+	</set-up>
+
+	<command name="ApprovePageCommentPG">
+		<var name="commentBody" value="Page Comment Comment" />
+		<var name="commentUsername" value="Test Test" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="PageComment#addPGWithWorkflow">
+			<var name="commentBody" value="${commentBody}" />
+			<var name="commentUsername" value="${commentUsername}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="PageComment#viewPGWithWorkflow">
+			<var name="commentBody" value="${commentBody}" />
+			<var name="commentStatus" value="Pending (Review)" />
+			<var name="commentUsername" value="${commentUsername}" />
+		</execute>
+
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
+		</execute>
+
+		<execute macro="Workflow#assignToMeTaskByActions">
+			<var name="workflowAssetTitle" value="${commentBody}" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowTask" value="Review" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="PageComment#viewPGWithWorkflow">
+			<var name="commentBody" value="${commentBody}" />
+			<var name="commentStatus" value="Pending (Review)" />
+			<var name="commentUsername" value="${commentUsername}" />
+		</execute>
+
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
+		</execute>
+
+		<execute macro="Workflow#approveTaskByActions">
+			<var name="workflowAssetTitle" value="${commentBody}" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowTask" value="Review" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="PageComment#viewPG">
+			<var name="commentBody" value="${commentBody}" />
+			<var name="commentUsername" value="${commentUsername}" />
+		</execute>
+	</command>
+
+	<command name="RejectBlogsEntryCP">
+		<var name="commentBody" value="Page Comment Comment" />
+		<var name="commentUsername" value="Test Test" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="PageComment#addPGWithWorkflow">
+			<var name="commentBody" value="${commentBody}" />
+			<var name="commentUsername" value="${commentUsername}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="PageComment#viewPGWithWorkflow">
+			<var name="commentBody" value="${commentBody}" />
+			<var name="commentStatus" value="Pending (Review)" />
+			<var name="commentUsername" value="${commentUsername}" />
+		</execute>
+
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
+		</execute>
+
+		<execute macro="Workflow#assignToMeTaskByActions">
+		<var name="workflowAssetTitle" value="${commentBody}" />
+			<var name="workflowAssetType" value="Comments" />
+			<var name="workflowTask" value="Review" />
+		</execute>
+
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
+		</execute>
+
+		<execute macro="Workflow#rejectTaskByActions">
+			<var name="workflowAssetTitle" value="${commentBody}" />
+			<var name="workflowAssetType" value="Comments" />
+			<var name="workflowTask" value="Review" />
+		</execute>
+
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
+		</execute>
+
+		<execute macro="Workflow#viewRejectTask">
+			<var name="workflowAssetTitle" value="${commentBody}" />
+			<var name="workflowAssetType" value="Comments" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="PageComment#viewPGWithWorkflow">
+			<var name="commentBody" value="${commentBody}" />
+			<var name="commentStatus" value="Pending (Update)" />
+			<var name="commentUsername" value="${commentUsername}" />
+		</execute>
+	</command>
+
+	<tear-down>
+		<execute macro="PageComment#tearDownPG" />
+
+		<execute macro="Page#tearDownPG" />
+
+		<execute macro="Workflow#tearDownPortalWorkflow" />
+
+		<execute macro="Workflow#tearDownSiteWorkflow" />
+	</tear-down>
+</definition>

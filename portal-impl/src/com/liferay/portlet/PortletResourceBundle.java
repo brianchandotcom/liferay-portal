@@ -69,7 +69,7 @@ public class PortletResourceBundle extends ResourceBundle {
 			}
 		}
 
-		if ((value == null) || (value == ResourceBundleUtil.NULL_VALUE)) {
+		if ((value == null) || value.equals(ResourceBundleUtil.NULL_VALUE)) {
 			value = _getJavaxPortletString(key);
 		}
 

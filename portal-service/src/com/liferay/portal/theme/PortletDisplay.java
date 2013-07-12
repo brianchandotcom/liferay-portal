@@ -249,7 +249,7 @@ public class PortletDisplay implements Serializable {
 	public String getURLConfigurationJS() {
 		StringBundler sb = new StringBundler(9);
 
-		sb.append("Liferay.Portlet.openConfiguration(\'#p_p_id_");
+		sb.append("Liferay.Portlet.openWindow(\'#p_p_id_");
 		sb.append(_id);
 		sb.append("_\', \'");
 		sb.append(_id);

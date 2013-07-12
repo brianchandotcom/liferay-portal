@@ -653,13 +653,13 @@
 
 	Liferay.provide(
 		Portlet,
-		'openConfiguration',
-		function(portlet, portletId, configurationURL, namespacedId) {
+		'openWindow',
+		function(portlet, portletId, url, namespacedId, windowTitle) {
 			var instance = this;
 
 			portlet = A.one(portlet);
 
-			if (portlet && configurationURL) {
+			if (portlet && url) {
 				var title = portlet.one('.portlet-title') || portlet.one('.portlet-title-default');
 
 				var titleHtml = title.html();
@@ -673,11 +673,11 @@
 						cache: false,
 						dialogIframe: {
 							id: namespacedId + 'configurationIframe',
-							uri: configurationURL
+							uri: url
 						},
 						id: namespacedId + 'configurationIframeDialog',
-						title: titleHtml + ' - ' + Liferay.Language.get('configuration'),
-						uri: configurationURL
+						title: titleHtml + ' - ' + windowTitle,
+						uri: url
 					}
 				);
 			}

@@ -85,7 +85,7 @@ public abstract class BaseUpgradeProcessTestCase {
 		sb.append(getOriginVersion());
 		sb.append(".sql");
 
-		Class<?> clazz = this.getClass();
+		Class<?> clazz = getClass();
 
 		InputStream inputStream = clazz.getResourceAsStream(sb.toString());
 

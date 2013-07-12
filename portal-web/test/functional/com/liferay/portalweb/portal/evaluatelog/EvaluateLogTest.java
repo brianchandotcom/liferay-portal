@@ -92,6 +92,10 @@ public class EvaluateLogTest extends BaseTestCase {
 				if (line.matches(".*\\[Thread-[0-9]+\\].*")) {
 					continue;
 				}
+
+				if (line.matches(".*[TrueZIP InputStream Reader].*")) {
+					continue;
+				}
 			}
 
 			// LPS-17639

@@ -58,7 +58,6 @@ import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.VirtualHost;
 import com.liferay.portal.security.auth.CompanyThreadLocal;
-import com.liferay.portal.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetPrototypeLocalServiceUtil;
 import com.liferay.portal.service.base.CompanyLocalServiceBaseImpl;
 import com.liferay.portal.util.Portal;
@@ -1054,17 +1053,20 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 					LanguageUtil.resetAvailableLocales(companyId);
 
+					// Invalidate cache of all Layout Set Prototypes. See
+					// LPS-36403
+
 					Date now = new Date();
 
-					for(LayoutSetPrototype layoutSetPrototype:
-						LayoutSetPrototypeLocalServiceUtil
-							.getLayoutSetPrototypes(
-									QueryUtil.ALL_POS, QueryUtil.ALL_POS)){
+					for (LayoutSetPrototype layoutSetPrototype :
+							LayoutSetPrototypeLocalServiceUtil.
+								getLayoutSetPrototypes(
+									QueryUtil.ALL_POS, QueryUtil.ALL_POS)) {
 
 						layoutSetPrototype.setModifiedDate(now);
 
-						LayoutSetPrototypeLocalServiceUtil
-							.updateLayoutSetPrototype(layoutSetPrototype);
+						LayoutSetPrototypeLocalServiceUtil.
+							updateLayoutSetPrototype(layoutSetPrototype);
 					}
 				}
 			}

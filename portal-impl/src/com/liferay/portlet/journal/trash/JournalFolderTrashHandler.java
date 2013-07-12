@@ -225,6 +225,14 @@ public class JournalFolderTrashHandler extends JournalBaseTrashHandler {
 	}
 
 	@Override
+	protected long getGroupId(long classPK)
+		throws PortalException, SystemException {
+
+		JournalFolder folder = JournalFolderLocalServiceUtil.getFolder(classPK);
+
+		return folder.getGroupId();
+	}
+
 	protected JournalFolder getJournalFolder(long classPK)
 		throws PortalException, SystemException {
 

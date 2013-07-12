@@ -21,7 +21,6 @@ import com.liferay.portal.model.ContainerModel;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
-import com.liferay.portlet.bookmarks.model.BookmarksFolder;
 import com.liferay.portlet.bookmarks.service.BookmarksEntryLocalServiceUtil;
 import com.liferay.portlet.bookmarks.service.permission.BookmarksEntryPermission;
 import com.liferay.portlet.bookmarks.util.BookmarksUtil;
@@ -159,13 +158,12 @@ public class BookmarksEntryTrashHandler extends BookmarksBaseTrashHandler {
 		BookmarksEntryLocalServiceUtil.restoreEntryFromTrash(userId, classPK);
 	}
 
-	@Override
-	protected BookmarksFolder getBookmarksFolder(long classPK)
+	protected long getGroupId(long classPK)
 		throws PortalException, SystemException {
 
 		BookmarksEntry entry = BookmarksEntryLocalServiceUtil.getEntry(classPK);
 
-		return entry.getFolder();
+		return entry.getGroupId();
 	}
 
 	@Override

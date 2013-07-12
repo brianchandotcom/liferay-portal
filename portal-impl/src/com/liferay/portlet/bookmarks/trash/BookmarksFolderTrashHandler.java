@@ -163,11 +163,19 @@ public class BookmarksFolderTrashHandler extends BookmarksBaseTrashHandler {
 		BookmarksFolderLocalServiceUtil.restoreFolderFromTrash(userId, classPK);
 	}
 
-	@Override
 	protected BookmarksFolder getBookmarksFolder(long classPK)
 		throws PortalException, SystemException {
 
 		return BookmarksFolderLocalServiceUtil.getFolder(classPK);
+	}
+
+	@Override
+	protected long getGroupId(long classPK)
+		throws PortalException, SystemException {
+
+		BookmarksFolder folder = getBookmarksFolder(classPK);
+
+		return folder.getGroupId();
 	}
 
 	@Override

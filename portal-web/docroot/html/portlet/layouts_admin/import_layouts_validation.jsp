@@ -63,7 +63,7 @@ boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 						tempFileURL: {
 							method: Liferay.Service.bind('/layout/get-temp-file-entry-names'),
 							params: {
-								groupId: <%= scopeGroupId %>,
+								groupId: <%= groupId %>,
 								tempFolderName: '<%= ExportImportHelper.TEMP_FOLDER_NAME %>'
 							}
 						},

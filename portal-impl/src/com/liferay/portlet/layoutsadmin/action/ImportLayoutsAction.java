@@ -209,10 +209,9 @@ public class ImportLayoutsAction extends PortletAction {
 
 		checkExceededSizeLimit(uploadPortletRequest);
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		long groupId = ParamUtil.getLong(actionRequest, "groupId");
 
-		deleteTempFileEntry(themeDisplay.getScopeGroupId(), folderName);
+		deleteTempFileEntry(groupId, folderName);
 
 		InputStream inputStream = null;
 
@@ -224,8 +223,7 @@ public class ImportLayoutsAction extends PortletAction {
 			String contentType = uploadPortletRequest.getContentType("file");
 
 			LayoutServiceUtil.addTempFileEntry(
-				themeDisplay.getScopeGroupId(), sourceFileName, folderName,
-				inputStream, contentType);
+				groupId, sourceFileName, folderName, inputStream, contentType);
 		}
 		catch (Exception e) {
 			UploadException uploadException =

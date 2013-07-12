@@ -3687,9 +3687,9 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			name = StringUtil.replace(
 				name, StringPool.PERCENT, StringPool.BLANK);
 
-			if (companyName.contains(name)) {
+			if (companyName.toLowerCase().contains(name)) {
 				realName =
-					StringPool.PERCENT + GroupConstants.GUEST +
+					StringPool.PERCENT + GroupConstants.GUEST.toLowerCase() +
 						StringPool.PERCENT;
 			}
 		}

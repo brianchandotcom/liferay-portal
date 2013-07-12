@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.util.InitUtil;
 import com.liferay.portal.util.PropsUtil;
@@ -39,25 +38,12 @@ import java.util.Properties;
  */
 public class UpgradeProcessTestUtil {
 
-	public UpgradeProcessTestUtil()  {
-		try {
-			_databaseName = "lportal_" + ServiceTestUtil.randomString();
-		}
-		catch (Exception e) {
-			_databaseName = "lportal_origin";
-		}
-	}
-
 	public static void doUpgrade(Class<? extends UpgradeProcess> clazz)
 		throws Exception {
 
 		UpgradeProcess upgradeProcess = clazz.newInstance();
 
 		upgradeProcess.upgrade();
-	}
-
-	public static String getDatabaseName() {
-		return _databaseName;
 	}
 
 	public static void reloadDatasources() throws Exception {
@@ -68,7 +54,9 @@ public class UpgradeProcessTestUtil {
 		CustomSQLUtil.reloadCustomSQL();
 	}
 
-	public static void setUpOriginDatabase(String sql) throws Exception {
+	public static void setUpOriginDatabase(String sql, String databaseName)
+		throws Exception {
+
 		DBFactoryUtil.setDBFactory(new DBFactoryImpl());
 
 		runSQL(sql);
@@ -79,7 +67,7 @@ public class UpgradeProcessTestUtil {
 
 		String currentDatabaseName = DBFactoryUtil.getDatabaseName();
 
-		url = url.replace(currentDatabaseName, _databaseName);
+		url = url.replace(currentDatabaseName, databaseName);
 
 		jdbcProperties.put(PropsKeys.JDBC_DEFAULT_URL, url);
 
@@ -88,11 +76,13 @@ public class UpgradeProcessTestUtil {
 		CustomSQLUtil.reloadCustomSQL();
 	}
 
-	public static void tearDownOriginDatabase() throws Exception {
+	public static void tearDownOriginDatabase(String databaseName)
+		throws Exception {
+
 		StringBundler sb = new StringBundler(3);
 
 		sb.append("DROP database ");
-		sb.append(_databaseName);
+		sb.append(databaseName);
 		sb.append(StringPool.SEMICOLON);
 
 		runSQL(sb.toString());
@@ -132,7 +122,5 @@ public class UpgradeProcessTestUtil {
 			DataAccess.cleanUp(con);
 		}
 	}
-
-	private static String _databaseName;
 
 }

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.service.ServiceTestUtil;
 
 import java.io.InputStream;
 
@@ -33,9 +34,11 @@ public abstract class BaseUpgradeProcessTestCase {
 
 	@Before
 	public void setUp() throws Exception {
+		databaseName = "lportal_" + ServiceTestUtil.randomString();
+
 		String createSql = readOriginDatabaseFile();
 
-		UpgradeProcessTestUtil.setUpOriginDatabase(createSql);
+		UpgradeProcessTestUtil.setUpOriginDatabase(createSql, databaseName);
 
 		preConditions();
 	}
@@ -47,7 +50,7 @@ public abstract class BaseUpgradeProcessTestCase {
 
 			postConditions();
 
-			UpgradeProcessTestUtil.tearDownOriginDatabase();
+			UpgradeProcessTestUtil.tearDownOriginDatabase(databaseName);
 		}
 		finally {
 			UpgradeProcessTestUtil.reloadDatasources();
@@ -88,8 +91,9 @@ public abstract class BaseUpgradeProcessTestCase {
 
 		String sql = StringUtil.read(inputStream);
 
-		return StringUtil.replace(
-			sql, "lportal", UpgradeProcessTestUtil.getDatabaseName());
+		return StringUtil.replace(sql, "lportal", databaseName);
 	}
+
+	protected String databaseName;
 
 }

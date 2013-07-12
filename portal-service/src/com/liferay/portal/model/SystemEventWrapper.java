@@ -60,6 +60,8 @@ public class SystemEventWrapper implements SystemEvent,
 		attributes.put("classUuid", getClassUuid());
 		attributes.put("referrerClassNameId", getReferrerClassNameId());
 		attributes.put("type", getType());
+		attributes.put("eventSetId", getEventSetId());
+		attributes.put("parentSystemEventId", getParentSystemEventId());
 		attributes.put("extraData", getExtraData());
 
 		return attributes;
@@ -131,6 +133,18 @@ public class SystemEventWrapper implements SystemEvent,
 
 		if (type != null) {
 			setType(type);
+		}
+
+		Long eventSetId = (Long)attributes.get("eventSetId");
+
+		if (eventSetId != null) {
+			setEventSetId(eventSetId);
+		}
+
+		Long parentSystemEventId = (Long)attributes.get("parentSystemEventId");
+
+		if (parentSystemEventId != null) {
+			setParentSystemEventId(parentSystemEventId);
 		}
 
 		String extraData = (String)attributes.get("extraData");
@@ -415,6 +429,46 @@ public class SystemEventWrapper implements SystemEvent,
 	@Override
 	public void setType(int type) {
 		_systemEvent.setType(type);
+	}
+
+	/**
+	* Returns the event set ID of this system event.
+	*
+	* @return the event set ID of this system event
+	*/
+	@Override
+	public long getEventSetId() {
+		return _systemEvent.getEventSetId();
+	}
+
+	/**
+	* Sets the event set ID of this system event.
+	*
+	* @param eventSetId the event set ID of this system event
+	*/
+	@Override
+	public void setEventSetId(long eventSetId) {
+		_systemEvent.setEventSetId(eventSetId);
+	}
+
+	/**
+	* Returns the parent system event ID of this system event.
+	*
+	* @return the parent system event ID of this system event
+	*/
+	@Override
+	public long getParentSystemEventId() {
+		return _systemEvent.getParentSystemEventId();
+	}
+
+	/**
+	* Sets the parent system event ID of this system event.
+	*
+	* @param parentSystemEventId the parent system event ID of this system event
+	*/
+	@Override
+	public void setParentSystemEventId(long parentSystemEventId) {
+		_systemEvent.setParentSystemEventId(parentSystemEventId);
 	}
 
 	/**

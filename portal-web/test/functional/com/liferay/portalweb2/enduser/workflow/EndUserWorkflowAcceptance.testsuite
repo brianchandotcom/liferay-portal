@@ -9,5 +9,7 @@
 
 	<execute test-case="WorkflowadminPGAssetpublisherAcceptance" />
 
+	<execute test-case="WorkflowadminPGMessageboardsAcceptance" />
+
 	<execute test-case="WorkflowadminPGWebcontentdisplayAcceptance" />
 </definition>

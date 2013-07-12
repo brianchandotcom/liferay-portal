@@ -38,7 +38,23 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--NAVIGATION-->
+<tr>
+	<td>NAVIGATION_DRAFT_PAGES</td>
+	<td>//div[@class='navbar ']//li/a[contains(.,'Draft Pages')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--WIKI_PAGE_TABLE-->
+<tr>
+	<td>WIKI_PAGE_TABLE_PAGE</td>
+	<td>//div[@id='_36_ocerSearchContainer']//tr[contains(.,'${key_wikiPageTitle}')]/td[1]/a</td>
+	<td></td>
+</tr>
 <tr>
 	<td>WIKI_PAGE_TABLE_PAGE_1</td>
 	<td>xpath=(//tr/td[1]/a)[1]</td>
@@ -47,6 +63,31 @@
 <tr>
 	<td>WIKI_PAGE_TABLE_PAGE_2</td>
 	<td>xpath=(//tr/td[1]/a)[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WIKI_PAGE_TABLE_STATUS</td>
+	<td>//div[@id='_36_ocerSearchContainerSearchContainer']//tr[contains(.,'${key_wikiPageTitle}')]/td[2]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WIKI_PAGE_TABLE_REVISION</td>
+	<td>//div[@id='_36_ocerSearchContainerSearchContainer']//tr[contains(.,'${key_wikiPageTitle}')]/td[3]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WIKI_PAGE_TABLE_USER</td>
+	<td>//div[@id='_36_ocerSearchContainerSearchContainer']//tr[contains(.,'${key_wikiPageTitle}')]/td[4]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WIKI_PAGE_TABLE_DATE</td>
+	<td>//div[@id='_36_ocerSearchContainerSearchContainer']//tr[contains(.,'${key_wikiPageTitle}')]/td[5]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WIKI_PAGE_TABLE_ACTIONS</td>
+	<td>//div[@id='_36_ocerSearchContainer']//tr[contains(.,'${key_wikiPageTitle}')]/td[6]/div/a[@title='Actions']</td>
 	<td></td>
 </tr>
 <tr>

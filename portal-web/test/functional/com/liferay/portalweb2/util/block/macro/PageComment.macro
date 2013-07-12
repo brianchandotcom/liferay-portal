@@ -1,0 +1,58 @@
+<definition>
+	<command name="addPG">
+		<execute action="PGPagecomments#assertClick" locator-key1="BE_THE_FIRST_LINK" value1="Be the first." />
+		<execute action="PGPagecomments#type" locator-key1="COMMENT_FIELD" value1="${commentBody}" />
+		<execute action="PGPagecomments#assertClick" locator-key1="REPLY_BUTTON" value1="Reply" />
+
+		<var name="key_commentBody" value="${commentBody}" />
+
+		<execute action="PGPagecomments#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request processed successfully." />
+		<execute action="PGPagecomments#assertTextEquals" locator-key1="COMMENT_BODY" value1="${commentBody}" />
+		<execute action="PGPagecomments#assertTextEquals" locator-key1="COMMENT_USERNAME" value1="${commentUsername}" />
+	</command>
+
+	<command name="addPGWithWorkflow">
+		<execute action="PGPagecomments#assertClick" locator-key1="BE_THE_FIRST_LINK" value1="Be the first." />
+		<execute action="PGPagecomments#type" locator-key1="COMMENT_FIELD" value1="${commentBody}" />
+		<execute action="PGPagecomments#assertClick" locator-key1="SUBMIT_FOR_PUBLICATION_BUTTON" value1="Submit for Publication" />
+
+		<var name="key_commentBody" value="${commentBody}" />
+
+		<execute action="PGPagecomments#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request processed successfully." />
+		<execute action="PGPagecomments#assertTextEquals" locator-key1="COMMENT_WORKFLOW_STATUS" value1="Pending (Review)" />
+		<execute action="PGPagecomments#assertTextEquals" locator-key1="COMMENT_BODY" value1="${commentBody}" />
+		<execute action="PGPagecomments#assertTextEquals" locator-key1="COMMENT_USERNAME" value1="${commentUsername}" />
+	</command>
+
+	<command name="tearDownPG">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<while>
+			<condition action="PGPagecomments#isElementPresent" locator-key1="COMMENT_DELETE_GENERIC" />
+			<then>
+				<execute action="PGPagecomments#click" locator-key1="COMMENT_DELETE_GENERIC" />
+				<execute action="PGPagecomments#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately."/>
+				<execute action="PGPagecomments#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request processed successfully." />
+				<execute action="PGPagecomments#assertTextEquals" locator-key1="BE_THE_FIRST_LINK" value1="Be the first." />
+			</then>
+		</while>
+	</command>
+
+	<command name="viewPG">
+		<var name="key_commentBody" value="${commentBody}" />
+
+		<execute action="PGPagecomments#assertElementNotPresent" locator-key1="COMMENT_WORKFLOW_STATUS" />
+		<execute action="PGPagecomments#assertTextEquals" locator-key1="COMMENT_BODY" value1="${commentBody}" />
+		<execute action="PGPagecomments#assertTextEquals" locator-key1="COMMENT_USERNAME" value1="${commentUsername}" />
+	</command>
+
+	<command name="viewPGWithWorkflow">
+		<var name="key_commentBody" value="${commentBody}" />
+
+		<execute action="PGPagecomments#assertTextEquals" locator-key1="COMMENT_WORKFLOW_STATUS" value1="${commentStatus}" />
+		<execute action="PGPagecomments#assertTextEquals" locator-key1="COMMENT_BODY" value1="${commentBody}" />
+		<execute action="PGPagecomments#assertTextEquals" locator-key1="COMMENT_USERNAME" value1="${commentUsername}" />
+	</command>
+</definition>

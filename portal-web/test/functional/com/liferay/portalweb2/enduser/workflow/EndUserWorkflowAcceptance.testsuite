@@ -11,5 +11,9 @@
 
 	<execute test-case="WorkflowadminPGMessageboardsAcceptance" />
 
+	<execute test-case="WorkflowadminPGPagecommentsAcceptance" />
+
 	<execute test-case="WorkflowadminPGWebcontentdisplayAcceptance" />
+
+	<execute test-case="WorkflowadminPGWikiAcceptance" />
 </definition>

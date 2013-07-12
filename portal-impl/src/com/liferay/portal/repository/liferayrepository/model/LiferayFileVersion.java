@@ -256,7 +256,16 @@ public class LiferayFileVersion extends LiferayModel implements FileVersion {
 	}
 
 	public DLFolder getTrashContainer() {
-		return _dlFileVersion.getTrashContainer();
+		DLFolder dlFolder = null;
+
+		try {
+			dlFolder = _dlFileVersion.getTrashContainer();
+		}
+		catch (Exception e) {
+			return null;
+		}
+
+		return dlFolder;
 	}
 
 	@Override
@@ -321,7 +330,16 @@ public class LiferayFileVersion extends LiferayModel implements FileVersion {
 
 	@Override
 	public boolean isInTrashContainer() {
-		return _dlFileVersion.isInTrashContainer();
+		boolean isInTrashContainer = false;
+
+		try {
+			isInTrashContainer = _dlFileVersion.isInTrashContainer();
+		}
+		catch (Exception e) {
+			return false;
+		}
+
+		return isInTrashContainer;
 	}
 
 	@Override

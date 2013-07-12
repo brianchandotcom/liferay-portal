@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.documentlibrary.model.impl;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -35,29 +37,12 @@ public class DLFileShortcutImpl extends DLFileShortcutBaseImpl {
 	}
 
 	@Override
-	public Folder getFolder() {
-		Folder folder = new LiferayFolder(new DLFolderImpl());
-
-		if (getFolderId() > 0) {
-			try {
-				folder = DLAppLocalServiceUtil.getFolder(getFolderId());
-			}
-			catch (NoSuchFolderException nsfe) {
-				try {
-					if (!isInTrash()) {
-						_log.error(nsfe, nsfe);
-					}
-				}
-				catch (Exception e) {
-					_log.error(e, e);
-				}
-			}
-			catch (Exception e) {
-				_log.error(e, e);
-			}
+	public Folder getFolder() throws PortalException, SystemException {
+		if (getFolderId() <= 0) {
+			return new LiferayFolder(new DLFolderImpl());
 		}
 
-		return folder;
+		return DLAppLocalServiceUtil.getFolder(getFolderId());
 	}
 
 	@Override
@@ -78,8 +63,17 @@ public class DLFileShortcutImpl extends DLFileShortcutBaseImpl {
 	}
 
 	@Override
-	public DLFolder getTrashContainer() {
-		Folder folder = getFolder();
+	public DLFolder getTrashContainer()
+		throws PortalException, SystemException {
+
+		Folder folder = null;
+
+		try {
+			folder = getFolder();
+		}
+		catch (NoSuchFolderException nsfe) {
+			return null;
+		}
 
 		DLFolder dlFolder = (DLFolder)folder.getModel();
 
@@ -111,7 +105,9 @@ public class DLFileShortcutImpl extends DLFileShortcutBaseImpl {
 	}
 
 	@Override
-	public boolean isInTrashContainer() {
+	public boolean isInTrashContainer()
+		throws PortalException, SystemException {
+
 		if (getTrashContainer() != null) {
 			return true;
 		}

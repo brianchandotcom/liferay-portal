@@ -189,33 +189,12 @@ public class DLFileEntryImpl extends DLFileEntryBaseImpl {
 	}
 
 	@Override
-	public DLFolder getFolder() {
-		DLFolder dlFolder = new DLFolderImpl();
-
+	public DLFolder getFolder() throws PortalException, SystemException {
 		if (getFolderId() <= 0) {
-			return dlFolder;
+			return new DLFolderImpl();
 		}
 
-		try {
-			dlFolder = DLFolderLocalServiceUtil.getFolder(getFolderId());
-		}
-		catch (NoSuchFolderException nsfe) {
-			try {
-				DLFileVersion dlFileVersion = getLatestFileVersion(true);
-
-				if (!dlFileVersion.isInTrash()) {
-					_log.error(nsfe, nsfe);
-				}
-			}
-			catch (Exception e) {
-				_log.error(e, e);
-			}
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-
-		return dlFolder;
+		return DLFolderLocalServiceUtil.getFolder(getFolderId());
 	}
 
 	@Override
@@ -276,8 +255,17 @@ public class DLFileEntryImpl extends DLFileEntryBaseImpl {
 	}
 
 	@Override
-	public DLFolder getTrashContainer() {
-		DLFolder dlFolder = getFolder();
+	public DLFolder getTrashContainer()
+		throws PortalException, SystemException {
+
+		DLFolder dlFolder = null;
+
+		try {
+			dlFolder = getFolder();
+		}
+		catch (NoSuchFolderException nsfe) {
+			return null;
+		}
 
 		if (dlFolder.isInTrash()) {
 			return dlFolder;
@@ -330,7 +318,9 @@ public class DLFileEntryImpl extends DLFileEntryBaseImpl {
 	}
 
 	@Override
-	public boolean isInTrashContainer() {
+	public boolean isInTrashContainer()
+		throws PortalException, SystemException {
+
 		if (getTrashContainer() != null) {
 			return true;
 		}

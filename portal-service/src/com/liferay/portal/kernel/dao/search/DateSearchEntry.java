@@ -56,13 +56,25 @@ public class DateSearchEntry extends TextSearchEntry {
 				"<span onmouseover=\"Liferay.Portal.ToolTip.show(this, '");
 			sb.append(dateFormatDateTime.format(_date));
 			sb.append("')\">");
-			sb.append(
-				LanguageUtil.format(
-					pageContext, "x-ago",
-					LanguageUtil.getTimeDescription(
-						pageContext,
-						System.currentTimeMillis() - _date.getTime(),
-						true)));
+
+			if (_date.before(new Date())) {
+				sb.append(
+					LanguageUtil.format(
+						pageContext, "x-ago",
+						LanguageUtil.getTimeDescription(
+							pageContext,
+							System.currentTimeMillis() - _date.getTime(),
+							true)));
+			}
+			else {
+				sb.append(
+					LanguageUtil.format(
+						pageContext, "within-x",
+						LanguageUtil.getTimeDescription(
+							pageContext,
+							_date.getTime() - System.currentTimeMillis(),
+							true)));
+			}
 
 			sb.append("</span>");
 

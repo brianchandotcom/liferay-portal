@@ -48,7 +48,6 @@ public class InternetAddressUtil {
 	}
 
 	public static boolean isValid(String emailAddress) {
-
 		return EmailValidator.getInstance().isValid(emailAddress);
 	}
 
@@ -73,7 +72,6 @@ public class InternetAddressUtil {
 	}
 
 	public static String toString(Address address) {
-
 		InternetAddress internetAddress = (InternetAddress)address;
 
 		if (internetAddress != null) {
@@ -100,7 +98,6 @@ public class InternetAddressUtil {
 	}
 
 	public static String toString(Address[] addresses) {
-
 		if ((addresses == null) || (addresses.length == 0)) {
 			return StringPool.BLANK;
 		}

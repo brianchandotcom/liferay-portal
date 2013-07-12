@@ -25,7 +25,9 @@ import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
 import com.liferay.portal.kernel.lar.MissingReferences;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.DateRange;
@@ -122,6 +124,15 @@ public class ExportImportAction extends ImportLayoutsAction {
 						actionRequest, actionResponse,
 						ExportImportHelper.TEMP_FOLDER_NAME +
 							portlet.getPortletId());
+
+					LiferayPortletConfig liferayPortletConfig =
+						(LiferayPortletConfig)portletConfig;
+
+					SessionMessages.add(
+						actionRequest,
+						liferayPortletConfig.getPortletId() +
+							SessionMessages.KEY_SUFFIX_REFRESH_PORTLET,
+						portlet.getPortletId());
 
 					sendRedirect(actionRequest, actionResponse, redirect);
 				}

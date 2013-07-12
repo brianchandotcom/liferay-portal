@@ -118,6 +118,7 @@ import com.liferay.portal.security.auth.ScreenNameGenerator;
 import com.liferay.portal.security.auth.ScreenNameGeneratorFactory;
 import com.liferay.portal.security.auth.ScreenNameValidator;
 import com.liferay.portal.security.auth.ScreenNameValidatorFactory;
+import com.liferay.portal.security.lang.DoPrivilegedBean;
 import com.liferay.portal.security.ldap.AttributesTransformer;
 import com.liferay.portal.security.ldap.AttributesTransformerFactory;
 import com.liferay.portal.security.membershippolicy.OrganizationMembershipPolicy;
@@ -413,7 +414,18 @@ public class HookHotDeployListener
 		}
 
 		if (portalProperties.containsKey(PropsKeys.CAPTCHA_ENGINE_IMPL)) {
-			CaptchaImpl captchaImpl = (CaptchaImpl)CaptchaUtil.getCaptcha();
+			Captcha captcha = CaptchaUtil.getCaptcha();
+
+			CaptchaImpl captchaImpl;
+
+			if (captcha instanceof DoPrivilegedBean) {
+				DoPrivilegedBean doPrivilegedBean = (DoPrivilegedBean)captcha;
+
+				captchaImpl = (CaptchaImpl)doPrivilegedBean.getActualBean();
+			}
+			else {
+				captchaImpl = (CaptchaImpl)captcha;
+			}
 
 			captchaImpl.setCaptcha(null);
 		}
@@ -1705,7 +1717,19 @@ public class HookHotDeployListener
 			Captcha captcha = (Captcha)newInstance(
 				portletClassLoader, Captcha.class, captchaClassName);
 
-			CaptchaImpl captchaImpl = (CaptchaImpl)CaptchaUtil.getCaptcha();
+			Captcha currentCaptcha = CaptchaUtil.getCaptcha();
+
+			CaptchaImpl captchaImpl;
+
+			if (currentCaptcha instanceof DoPrivilegedBean) {
+				DoPrivilegedBean doPrivilegedBean =
+					(DoPrivilegedBean)currentCaptcha;
+
+				captchaImpl = (CaptchaImpl)doPrivilegedBean.getActualBean();
+			}
+			else {
+				captchaImpl = (CaptchaImpl)currentCaptcha;
+			}
 
 			captchaImpl.setCaptcha(captcha);
 		}

@@ -349,9 +349,14 @@ public class SessionErrors {
 		}
 	}
 
-	public static int size(HttpServletRequest request) {
-		return size(request.getSession());
-	}
+    public static int size(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session == null) {
+            return 0;
+        } else {
+            return size(session);
+        }
+    }
 
 	public static int size(HttpSession session) {
 		Map<String, Object> map = _getMap(session, false);

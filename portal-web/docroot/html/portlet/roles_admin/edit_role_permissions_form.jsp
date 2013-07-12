@@ -114,6 +114,80 @@ if (Validator.isNotNull(portletResource)) {
 		</div>
 	</c:if>
 
+	<c:if test="<%= portletResource.equals(PortletKeys.PORTLET_DISPLAY_TEMPLATES) %>">
+		<h4><liferay-ui:message key="related-application-permissions" /></h4>
+
+		<div>
+
+			<%
+			List<String> headerNames = new ArrayList<String>();
+
+			headerNames.add("permissions");
+			headerNames.add("sites");
+
+			SearchContainer searchContainer = new SearchContainer(liferayPortletRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, liferayPortletResponse.createRenderURL(), headerNames, "there-are-no-applications-that-support-application-display-templates");
+
+			searchContainer.setRowChecker(new ResourceActionRowChecker(liferayPortletResponse));
+
+			List<TemplateHandler> templateHandlers = TemplateHandlerRegistryUtil.getTemplateHandlers();
+
+			searchContainer.setTotal(templateHandlers.size());
+
+			String actionId = ActionKeys.ADD_PORTLET_DISPLAY_TEMPLATE;
+			int scope = ResourceConstants.SCOPE_COMPANY;
+			boolean supportsFilterByGroup = true;
+
+			List resultRows = searchContainer.getResultRows();
+
+			Set<String> relatedPortletResources = new HashSet<String>();
+
+			for (int i = 0; i < templateHandlers.size(); i++) {
+				TemplateHandler templateHandler = templateHandlers.get(i);
+
+				if (!(templateHandler instanceof BasePortletDisplayTemplateHandler)) {
+					continue;
+				}
+
+				String resource = templateHandler.getResourceName();
+				String target = resource + actionId;
+				List<Group> groups = Collections.emptyList();
+				String groupIds = ParamUtil.getString(request, "groupIds" + target, null);
+				long[] groupIdsArray = StringUtil.split(groupIds, 0L);
+				List<String> groupNames = new ArrayList<String>();
+
+				ResultRow row = new ResultRow(new Object[] {role, actionId, resource, target, scope,supportsFilterByGroup, groups, groupIdsArray, groupNames}, target, i);
+
+				StringBundler sb = new StringBundler(3);
+
+				Portlet curPortlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), resource);
+
+				if (portlet.isSystem()) {
+					continue;
+				}
+
+				relatedPortletResources.add(curPortlet.getPortletId());
+
+				String curPortletLabel = PortalUtil.getPortletLongTitle(curPortlet, application, locale);
+
+				sb.append(curPortletLabel);
+				sb.append(": ");
+				sb.append(_getActionLabel(pageContext, themeDisplay, resource, actionId));
+
+				row.addText(sb.toString());
+
+				row.addJSP("/html/portlet/roles_admin/edit_role_permissions_resource_scope.jsp");
+
+				resultRows.add(row);
+			}
+			%>
+
+			<aui:input name="relatedPortletResources" type="hidden" value="<%= StringUtil.merge(relatedPortletResources) %>" />
+
+			<liferay-ui:search-iterator paginate="<%= false %>" searchContainer="<%= searchContainer %>" />
+
+		</div>
+	</c:if>
+
 	<aui:button-row>
 		<aui:button onClick='<%= liferayPortletResponse.getNamespace() + "updateActions();" %>' value="save" />
 	</aui:button-row>

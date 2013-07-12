@@ -198,19 +198,13 @@ String title = ddmDisplay.getViewTemplatesTitle(structure, controlPanel, locale)
 			</c:if>
 
 			<c:if test='<%= !excludedColumnNames.contains("modified-date") %>'>
-				<liferay-ui:search-container-column-text
-					buffer="buffer"
+				<liferay-ui:search-container-column-date
 					href="<%= rowHREF %>"
 					name="modified-date"
 					orderable="<%= true %>"
 					orderableProperty="modified-date"
-				>
-
-					<%
-					buffer.append(dateFormatDateTime.format(template.getModifiedDate()));
-					%>
-
-				</liferay-ui:search-container-column-text>
+					value="<%= template.getModifiedDate() %>"
+				/>
 			</c:if>
 
 			<liferay-ui:search-container-column-jsp

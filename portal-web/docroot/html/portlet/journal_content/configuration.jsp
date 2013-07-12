@@ -215,11 +215,11 @@ catch (NoSuchArticleException nsae) {
 
 		// Modified date
 
-		row.addText(dateFormatDate.format(curArticle.getModifiedDate()), rowHREF);
+		row.addDate(curArticle.getModifiedDate(), rowHREF);
 
 		// Display date
 
-		row.addText(dateFormatDate.format(curArticle.getDisplayDate()), rowHREF);
+		row.addDate(curArticle.getDisplayDate(), rowHREF);
 
 		// Author
 

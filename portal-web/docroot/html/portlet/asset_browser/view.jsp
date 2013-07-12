@@ -127,7 +127,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 			Date modifiedDate = assetEntry.getModifiedDate();
 
-			row.addText(LanguageUtil.format(pageContext, "x-ago", LanguageUtil.getTimeDescription(pageContext, System.currentTimeMillis() - modifiedDate.getTime(), true)), rowHREF);
+			row.addDate(modifiedDate, rowHREF);
 
 			// Scope
 

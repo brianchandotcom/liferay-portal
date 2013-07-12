@@ -47,8 +47,6 @@ boolean editable = DDLUtil.isEditable(portletPreferences, portletDisplay.getId()
 boolean spreadsheet = GetterUtil.getBoolean(portletPreferences.getValue("spreadsheet", Boolean.FALSE.toString()));
 
 DDMDisplay ddmDisplay = DDMDisplayRegistryUtil.getDDMDisplay(PortletKeys.DYNAMIC_DATA_LISTS);
-
-Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>
 
 <%@ include file="/html/portlet/dynamic_data_list_display/init-ext.jsp" %>

@@ -50,6 +50,10 @@ public class TextSearchEntry extends SearchEntry {
 		return _name;
 	}
 
+	public String getName(PageContext pageContext) {
+		return getName();
+	}
+
 	public String getTarget() {
 		return _target;
 	}
@@ -61,7 +65,7 @@ public class TextSearchEntry extends SearchEntry {
 	@Override
 	public void print(PageContext pageContext) throws Exception {
 		if (_href == null) {
-			pageContext.getOut().print(_name);
+			pageContext.getOut().print(getName(pageContext));
 		}
 		else {
 			StringBundler sb = new StringBundler();
@@ -105,7 +109,7 @@ public class TextSearchEntry extends SearchEntry {
 			}
 
 			sb.append(">");
-			sb.append(_name);
+			sb.append(getName(pageContext));
 			sb.append("</a>");
 
 			JspWriter jspWriter = pageContext.getOut();

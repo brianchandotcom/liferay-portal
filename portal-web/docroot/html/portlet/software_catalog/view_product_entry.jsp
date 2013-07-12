@@ -312,7 +312,7 @@ List productScreenshots = SCProductScreenshotLocalServiceUtil.getProductScreensh
 			row.addText(sb.toString());
 
 			row.addText(_getFrameworkVersions(curProductVersion.getFrameworkVersions()));
-			row.addText(dateFormatDateTime.format(curProductVersion.getModifiedDate()));
+			row.addDate(curProductVersion.getModifiedDate());
 
 			// Action
 

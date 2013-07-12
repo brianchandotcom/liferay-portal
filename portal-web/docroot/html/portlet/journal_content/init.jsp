@@ -67,8 +67,6 @@ String[] conversions = DocumentConversionUtil.getConversions("html");
 
 boolean openOfficeServerEnabled = PrefsPropsUtil.getBoolean(PropsKeys.OPENOFFICE_SERVER_ENABLED, PropsValues.OPENOFFICE_SERVER_ENABLED);
 boolean enableConversions = openOfficeServerEnabled && (extensions != null) && (extensions.length > 0);
-
-Format dateFormatDate = FastDateFormatFactoryUtil.getDate(locale, timeZone);
 %>
 
 <%@ include file="/html/portlet/journal_content/init-ext.jsp" %>

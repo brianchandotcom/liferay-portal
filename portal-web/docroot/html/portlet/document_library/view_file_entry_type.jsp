@@ -61,16 +61,10 @@ portletURL.setParameter("struts_action", "/document_library/view_file_entry_type
 			value="<%= LanguageUtil.get(pageContext, group.getScopeLabel(themeDisplay)) %>"
 		/>
 
-		<liferay-ui:search-container-column-text
-			buffer="buffer"
+		<liferay-ui:search-container-column-date
 			name="modified-date"
-		>
-
-			<%
-			buffer.append(dateFormatDateTime.format(fileEntryType.getModifiedDate()));
-			%>
-
-		</liferay-ui:search-container-column-text>
+			value="<%= fileEntryType.getModifiedDate() %>"
+		/>
 
 		<liferay-ui:search-container-column-jsp
 			align="right"

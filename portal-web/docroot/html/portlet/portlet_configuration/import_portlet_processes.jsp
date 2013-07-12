@@ -63,16 +63,16 @@ OrderByComparator orderByComparator = BackgroundTaskUtil.getBackgroundTaskOrderB
 			path="/html/portlet/layouts_admin/publish_process_message.jsp"
 		/>
 
-		<liferay-ui:search-container-column-text
+		<liferay-ui:search-container-column-date
 			name="create-date"
 			orderable="<%= true %>"
-			value="<%= dateFormatDateTime.format(backgroundTask.getCreateDate()) %>"
+			value="<%= backgroundTask.getCreateDate() %>"
 		/>
 
-		<liferay-ui:search-container-column-text
+		<liferay-ui:search-container-column-date
 			name="completion-date"
 			orderable="<%= true %>"
-			value="<%= backgroundTask.getCompletionDate() != null ? dateFormatDateTime.format(backgroundTask.getCompletionDate()) : StringPool.BLANK %>"
+			value="<%= backgroundTask.getCompletionDate() %>"
 		/>
 
 		<liferay-ui:search-container-column-text>

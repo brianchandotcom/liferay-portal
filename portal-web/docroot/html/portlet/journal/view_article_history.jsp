@@ -132,11 +132,11 @@ JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_AR
 
 				// Modified date
 
-				row.addText(dateFormatDateTime.format(articleVersion.getModifiedDate()), rowURL);
+				row.addDate(articleVersion.getModifiedDate(), rowURL);
 
 				// Display date
 
-				row.addText(dateFormatDateTime.format(articleVersion.getDisplayDate()), rowURL);
+				row.addDate(articleVersion.getDisplayDate(), rowURL);
 
 				// Author
 

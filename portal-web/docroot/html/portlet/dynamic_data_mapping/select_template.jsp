@@ -89,9 +89,9 @@ String title = ddmDisplay.getViewTemplatesTitle(structure, locale);
 				value="<%= HtmlUtil.escape(template.getDescription(locale)) %>"
 			/>
 
-			<liferay-ui:search-container-column-text
+			<liferay-ui:search-container-column-date
 				name="modified-date"
-				value="<%= dateFormatDateTime.format(template.getModifiedDate()) %>"
+				value="<%= template.getModifiedDate() %>"
 			/>
 
 			<liferay-ui:search-container-column-text>

@@ -226,7 +226,7 @@ portletURL.setParameter("tabs1", tabs1);
 
 			// Modified date
 
-			row.addText(dateFormatDateTime.format(productEntry.getModifiedDate()), rowURL);
+			row.addDate(productEntry.getModifiedDate(), rowURL);
 
 			// Action
 
@@ -429,7 +429,7 @@ portletURL.setParameter("tabs1", tabs1);
 
 			// Modified date
 
-			row.addText(dateFormatDateTime.format(productEntry.getModifiedDate()), rowURL);
+			row.addDate(productEntry.getModifiedDate(), rowURL);
 
 			// Action
 

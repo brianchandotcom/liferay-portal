@@ -214,11 +214,10 @@ iteratorURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
 				</c:choose>
 			</liferay-ui:search-container-column-text>
 
-			<liferay-ui:search-container-column-text
+			<liferay-ui:search-container-column-date
 				name="date"
-			>
-				<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(pageContext, System.currentTimeMillis() - socialActivity.getCreateDate(), true) %>" key="x-ago" />
-			</liferay-ui:search-container-column-text>
+				value="<%= new Date(socialActivity.getCreateDate()) %>"
+			/>
 
 			<c:choose>
 				<c:when test="<%= ((socialActivity.getType() == SocialActivityConstants.TYPE_ADD_ATTACHMENT) || (socialActivity.getType() == SocialActivityConstants.TYPE_MOVE_ATTACHMENT_TO_TRASH) || (socialActivity.getType() == SocialActivityConstants.TYPE_RESTORE_ATTACHMENT_FROM_TRASH)) && (fileEntry != null) %>">

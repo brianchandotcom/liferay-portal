@@ -39,9 +39,9 @@ double sourceVersion = ParamUtil.getDouble(request, "sourceVersion");
 			value="<%= String.valueOf(curWikiPage.getVersion()) %>"
 		/>
 
-		<liferay-ui:search-container-column-text
+		<liferay-ui:search-container-column-date
 			name="date"
-			value='<%= LanguageUtil.format(pageContext, "x-ago", LanguageUtil.getTimeDescription(pageContext, System.currentTimeMillis() - curWikiPage.getModifiedDate().getTime(), true)) %>'
+			value="<%= curWikiPage.getModifiedDate() %>"
 		/>
 
 		<liferay-ui:search-container-column-text

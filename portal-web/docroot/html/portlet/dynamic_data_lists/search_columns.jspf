@@ -43,15 +43,9 @@
 
 </liferay-ui:search-container-column-text>
 
-<liferay-ui:search-container-column-text
-	buffer="buffer"
+<liferay-ui:search-container-column-date
 	href="<%= rowURL %>"
 	name="modified-date"
 	orderable="<%= false %>"
->
-
-	<%
-	buffer.append(dateFormatDateTime.format(recordSet.getModifiedDate()));
-	%>
-
-</liferay-ui:search-container-column-text>
+	value="<%= recordSet.getModifiedDate() %>"
+/>

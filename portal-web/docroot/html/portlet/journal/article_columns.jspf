@@ -34,11 +34,11 @@ row.addText(LanguageUtil.get(pageContext, WorkflowConstants.getStatusLabel(curAr
 
 // Modified date
 
-row.addText(dateFormatDateTime.format(curArticle.getModifiedDate()));
+row.addDate(curArticle.getModifiedDate());
 
 // Display date
 
-row.addText(dateFormatDateTime.format(curArticle.getDisplayDate()));
+row.addDate(curArticle.getDisplayDate());
 
 // Author
 

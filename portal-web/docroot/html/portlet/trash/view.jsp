@@ -228,19 +228,11 @@ portletURL.setParameter("tabs1", tabs1);
 			value="<%= ResourceActionsUtil.getModelResource(locale, entry.getClassName()) %>"
 		/>
 
-		<liferay-ui:search-container-column-text
+		<liferay-ui:search-container-column-date
 			name="removed-date"
 			orderable="<%= true %>"
-		>
-			<span title="<liferay-ui:message arguments="<%= dateFormatDateTime.format(entry.getCreateDate()) %>" key="deleted-x" />">
-
-				<%
-				Date createDate = entry.getCreateDate();
-				%>
-
-				<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(pageContext, System.currentTimeMillis() - createDate.getTime(), true) %>" key="x-ago" />
-			</span>
-		</liferay-ui:search-container-column-text>
+			value="<%= entry.getCreateDate() %>"
+		/>
 
 		<liferay-ui:search-container-column-text
 			name="removed-by"

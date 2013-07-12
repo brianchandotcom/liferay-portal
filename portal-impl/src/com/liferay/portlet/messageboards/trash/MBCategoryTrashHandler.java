@@ -299,7 +299,7 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 
 		if (trashActionId.equals(TrashActionKeys.MOVE)) {
 			return MBCategoryPermission.contains(
-				permissionChecker, groupId, classPK, ActionKeys.ADD_FOLDER);
+				permissionChecker, groupId, classPK, ActionKeys.ADD_CATEGORY);
 		}
 
 		return super.hasTrashPermission(

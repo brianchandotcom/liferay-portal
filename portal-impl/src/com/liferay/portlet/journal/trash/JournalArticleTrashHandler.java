@@ -16,9 +16,11 @@ package com.liferay.portlet.journal.trash;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.trash.TrashActionKeys;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ContainerModel;
+import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.journal.asset.JournalArticleAssetRenderer;
@@ -27,6 +29,7 @@ import com.liferay.portlet.journal.model.JournalArticleResource;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalArticleResourceLocalServiceUtil;
 import com.liferay.portlet.journal.service.permission.JournalArticlePermission;
+import com.liferay.portlet.journal.service.permission.JournalFolderPermission;
 import com.liferay.portlet.journal.util.JournalUtil;
 import com.liferay.portlet.trash.DuplicateEntryException;
 import com.liferay.portlet.trash.model.TrashEntry;
@@ -148,6 +151,21 @@ public class JournalArticleTrashHandler extends JournalBaseTrashHandler {
 			JournalArticleLocalServiceUtil.getLatestArticle(classPK);
 
 		return new JournalArticleAssetRenderer(article);
+	}
+
+	@Override
+	public boolean hasTrashPermission(
+			PermissionChecker permissionChecker, long groupId, long classPK,
+			String trashActionId)
+		throws PortalException, SystemException {
+
+		if (trashActionId.equals(TrashActionKeys.MOVE)) {
+			return JournalFolderPermission.contains(
+				permissionChecker, groupId, classPK, ActionKeys.ADD_ARTICLE);
+		}
+
+		return super.hasTrashPermission(
+			permissionChecker, groupId, classPK, trashActionId);
 	}
 
 	@Override

@@ -60,7 +60,7 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 					stagedModel.getStagedModelType());
 
 				PortletDataHandlerStatusMessageSenderUtil.sendStatusMessage(
-					"stagedModelExport", stagedModel, manifestSummary);
+					"stagedModel", stagedModel, manifestSummary);
 			}
 		}
 		catch (Exception e) {
@@ -100,6 +100,10 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 
 			manifestSummary.incrementModelAdditionCount(
 				stagedModel.getStagedModelType());
+
+			PortletDataHandlerStatusMessageSenderUtil.sendStatusMessage(
+				"stagedModel", stagedModel, manifestSummary);
+
 		}
 		catch (Exception e) {
 			throw new PortletDataException(e);

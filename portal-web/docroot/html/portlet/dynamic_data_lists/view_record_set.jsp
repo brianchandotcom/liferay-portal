@@ -49,8 +49,10 @@ boolean spreadsheet = ParamUtil.getBoolean(request, "spreadsheet");
 </c:choose>
 
 <%
-PortalUtil.setPageSubtitle(recordSet.getName(locale), request);
-PortalUtil.setPageDescription(recordSet.getDescription(locale), request);
+if (portletName.equals(PortletKeys.DYNAMIC_DATA_LISTS)) {
+	PortalUtil.setPageSubtitle(recordSet.getName(locale), request);
+	PortalUtil.setPageDescription(recordSet.getDescription(locale), request);
+}
 
 PortalUtil.addPortletBreadcrumbEntry(request, recordSet.getName(locale), currentURL);
 %>

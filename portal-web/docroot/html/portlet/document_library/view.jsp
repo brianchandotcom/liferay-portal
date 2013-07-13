@@ -23,7 +23,13 @@ Folder folder = (com.liferay.portal.kernel.repository.model.Folder)request.getAt
 
 long folderId = BeanParamUtil.getLong(folder, request, "folderId", rootFolderId);
 
+boolean defaultFolderView = false;
+
 if ((folder == null) && (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
+	defaultFolderView = true;
+}
+
+if (defaultFolderView) {
 	try {
 		folder = DLAppLocalServiceUtil.getFolder(folderId);
 	}
@@ -162,11 +168,9 @@ entryStart = GetterUtil.getInteger(request.getAttribute("view_entries.jsp-entryS
 folderEnd = GetterUtil.getInteger(request.getAttribute("view_folders.jsp-folderEnd"), folderEnd);
 folderStart = GetterUtil.getInteger(request.getAttribute("view_folders.jsp-folderStart"), folderStart);
 
-if (folder != null) {
-	if (portletName.equals(PortletKeys.DOCUMENT_LIBRARY)) {
-		PortalUtil.setPageSubtitle(folder.getName(), request);
-		PortalUtil.setPageDescription(folder.getDescription(), request);
-	}
+if (!defaultFolderView && (folder != null) && portletName.equals(PortletKeys.DOCUMENT_LIBRARY)) {
+	PortalUtil.setPageSubtitle(folder.getName(), request);
+	PortalUtil.setPageDescription(folder.getDescription(), request);
 }
 %>
 

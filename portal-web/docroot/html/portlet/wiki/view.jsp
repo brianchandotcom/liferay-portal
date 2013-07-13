@@ -399,18 +399,21 @@ long portletDisplayDDMTemplateId = PortletDisplayTemplateUtil.getPortletDisplayT
 
 <%
 if ((wikiPage != null) && !wikiPage.getTitle().equals(WikiPageConstants.FRONT_PAGE)) {
-	PortalUtil.setPageSubtitle(wikiPage.getTitle(), request);
 
-	String description = wikiPage.getContent();
+	if (!portletName.equals(PortletKeys.WIKI_DISPLAY)) {
+		PortalUtil.setPageSubtitle(wikiPage.getTitle(), request);
 
-	if (wikiPage.getFormat().equals("html")) {
-		description = HtmlUtil.stripHtml(description);
+		String description = wikiPage.getContent();
+
+		if (wikiPage.getFormat().equals("html")) {
+			description = HtmlUtil.stripHtml(description);
+		}
+
+		description = StringUtil.shorten(description, 200);
+
+		PortalUtil.setPageDescription(description, request);
+		PortalUtil.setPageKeywords(AssetUtil.getAssetKeywords(WikiPage.class.getName(), wikiPage.getResourcePrimKey()), request);
 	}
-
-	description = StringUtil.shorten(description, 200);
-
-	PortalUtil.setPageDescription(description, request);
-	PortalUtil.setPageKeywords(AssetUtil.getAssetKeywords(WikiPage.class.getName(), wikiPage.getResourcePrimKey()), request);
 
 	List<WikiPage> parentPages = wikiPage.getViewableParentPages();
 

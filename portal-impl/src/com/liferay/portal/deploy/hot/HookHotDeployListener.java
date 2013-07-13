@@ -414,9 +414,9 @@ public class HookHotDeployListener
 		}
 
 		if (portalProperties.containsKey(PropsKeys.CAPTCHA_ENGINE_IMPL)) {
-			Captcha captcha = CaptchaUtil.getCaptcha();
+			CaptchaImpl captchaImpl = null;
 
-			CaptchaImpl captchaImpl;
+			Captcha captcha = CaptchaUtil.getCaptcha();
 
 			if (captcha instanceof DoPrivilegedBean) {
 				DoPrivilegedBean doPrivilegedBean = (DoPrivilegedBean)captcha;
@@ -1717,9 +1717,9 @@ public class HookHotDeployListener
 			Captcha captcha = (Captcha)newInstance(
 				portletClassLoader, Captcha.class, captchaClassName);
 
-			Captcha currentCaptcha = CaptchaUtil.getCaptcha();
+			CaptchaImpl captchaImpl = null;
 
-			CaptchaImpl captchaImpl;
+			Captcha currentCaptcha = CaptchaUtil.getCaptcha();
 
 			if (currentCaptcha instanceof DoPrivilegedBean) {
 				DoPrivilegedBean doPrivilegedBean =

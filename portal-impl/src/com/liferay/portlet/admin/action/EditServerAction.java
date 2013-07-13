@@ -650,9 +650,9 @@ public class EditServerAction extends PortletAction {
 
 			portletPreferences.store();
 
-			Captcha currentCaptcha = CaptchaUtil.getCaptcha();
+			CaptchaImpl captchaImpl = null;
 
-			CaptchaImpl captchaImpl;
+			Captcha currentCaptcha = CaptchaUtil.getCaptcha();
 
 			if (currentCaptcha instanceof DoPrivilegedBean) {
 				DoPrivilegedBean doPrivilegedBean =

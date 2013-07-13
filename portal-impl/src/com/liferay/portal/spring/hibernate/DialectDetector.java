@@ -17,6 +17,7 @@ package com.liferay.portal.spring.hibernate;
 import com.liferay.portal.dao.orm.hibernate.DB2Dialect;
 import com.liferay.portal.dao.orm.hibernate.SQLServer2005Dialect;
 import com.liferay.portal.dao.orm.hibernate.SQLServer2008Dialect;
+import com.liferay.portal.dao.orm.hibernate.SybaseASE157Dialect;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -36,7 +37,6 @@ import javax.sql.DataSource;
 import org.hibernate.dialect.DB2400Dialect;
 import org.hibernate.dialect.Dialect;
 import org.hibernate.dialect.Oracle10gDialect;
-import org.hibernate.dialect.SybaseASE15Dialect;
 import org.hibernate.dialect.resolver.DialectFactory;
 
 /**
@@ -88,7 +88,7 @@ public class DialectDetector {
 			}
 
 			if (dbName.equals("ASE") && (dbMajorVersion == 15)) {
-				dialect = new SybaseASE15Dialect();
+				dialect = new SybaseASE157Dialect();
 			}
 			else if (dbName.startsWith("DB2") && (dbMajorVersion >= 9)) {
 				dialect = new DB2Dialect();

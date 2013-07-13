@@ -14,6 +14,7 @@
 
 package com.liferay.counter.service;
 
+import com.liferay.counter.model.Counter;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.process.ClassPathUtil;
 import com.liferay.portal.kernel.process.ProcessCallable;
@@ -35,7 +36,7 @@ import java.util.List;
 import java.util.concurrent.Future;
 
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -46,11 +47,13 @@ import org.junit.runner.RunWith;
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class CounterLocalServiceTest {
 
-	@Before
-	public void setUp() throws Exception {
+	@BeforeClass
+	public static void setUpClass() throws Exception {
 		CounterLocalServiceUtil.reset(_COUNTER_NAME);
 
-		CounterLocalServiceUtil.createCounter(_COUNTER_NAME);
+		Counter counter = CounterLocalServiceUtil.createCounter(_COUNTER_NAME);
+
+		CounterLocalServiceUtil.updateCounter(counter);
 	}
 
 	@Test

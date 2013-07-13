@@ -1,0 +1,33 @@
+<definition>
+	<command name="sendPG">
+		<var name="key_formTextTitle" value="${formTextTitle}" />
+		<var name="key_formDropdownTitle" value="${formDropdownTitle}" />
+		<var name="key_formTextboxTitle" value="${formTextboxTitle}" />
+
+		<execute action="PGWebform#assertTextEquals" locator-key1="FORM_INFORMATION_TITLE" value1="${formInformationTitle}" />
+		<execute action="PGWebform#assertTextEquals" locator-key1="FORM_INFORMATION_DESCRIPTION" value1="${formInformationDescription}" />
+		<execute action="PGWebform#assertTextEquals" locator-key1="FORM_FIELDS_TEXT_HEADER" value1="${formTextTitle}" />
+		<execute action="PGWebform#type" locator-key1="FORM_FIELDS_TEXT_FIELD" value1="${formTextValue}" />
+		<execute action="PGWebform#assertTextEquals" locator-key1="FORM_FIELDS_DROPDOWN_HEADER" value1="${formDropdownTitle}" />
+		<execute action="PGWebform#select" locator-key1="FORM_FIELDS_DROPDOWN_SELECT" value1="${formDropdownValue}" />
+		<execute action="PGWebform#assertTextEquals" locator-key1="FORM_FIELDS_TEXTBOX_HEADER" value1="${formTextboxTitle}" />
+		<execute action="PGWebform#type" locator-key1="FORM_FIELDS_TEXTBOX_FIELD" value1="${formTextboxValue}" />
+		<execute action="PGWebform#assertClick" locator-key1="SEND_BUTTON" value1="Send" />
+		<execute action="PGWebform#assertTextEquals" locator-key1="SUCCESS_MESSAGE_FORM" value1="The form information was sent successfully." />
+	</command>
+
+	<command name="viewPG">
+		<var name="key_formTextTitle" value="${formTextTitle}" />
+		<var name="key_formDropdownTitle" value="${formDropdownTitle}" />
+		<var name="key_formTextboxTitle" value="${formTextboxTitle}" />
+
+		<execute action="PGWebform#assertTextEquals" locator-key1="FORM_INFORMATION_TITLE" value1="${formInformationTitle}" />
+		<execute action="PGWebform#assertTextEquals" locator-key1="FORM_INFORMATION_DESCRIPTION" value1="${formInformationDescription}" />
+		<execute action="PGWebform#assertTextEquals" locator-key1="FORM_FIELDS_TEXT_HEADER" value1="${formTextTitle}" />
+		<execute action="PGWebform#assertElementPresent" locator-key1="FORM_FIELDS_TEXT_FIELD" />
+		<execute action="PGWebform#assertTextEquals" locator-key1="FORM_FIELDS_DROPDOWN_HEADER" value1="${formDropdownTitle}" />
+		<execute action="PGWebform#assertElementPresent" locator-key1="FORM_FIELDS_DROPDOWN_SELECT" />
+		<execute action="PGWebform#assertTextEquals" locator-key1="FORM_FIELDS_TEXTBOX_HEADER" value1="${formTextboxTitle}" />
+		<execute action="PGWebform#assertElementPresent" locator-key1="FORM_FIELDS_TEXTBOX_FIELD" />
+	</command>
+</definition>

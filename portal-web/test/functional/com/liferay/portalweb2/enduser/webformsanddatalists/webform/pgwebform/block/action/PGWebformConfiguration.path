@@ -45,12 +45,12 @@
 </tr>
 <!--SETUP_FORM_INFORMATION-->
 <tr>
-	<td>SETUP_FORM_INFORMATION_TITLE</td>
+	<td>SETUP_FORM_INFORMATION_TITLE_FIELD</td>
 	<td>//input[@id='_86_title']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>SETUP_FORM_INFORMATION_DESCRIPTION</td>
+	<td>SETUP_FORM_INFORMATION_DESCRIPTION_FIELD</td>
 	<td>//textarea[@name='_86_description']</td>
 	<td></td>
 </tr>
@@ -61,17 +61,22 @@
 </tr>
 <!--SETUP_FORM_FIELDS-->
 <tr>
-	<td>SETUP_FORM_FIELDS_NAME</td>
+	<td>SETUP_FORM_FIELDS_INFO_MESSAGE</td>
+	<td>//div[@class='portlet-msg-alert']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETUP_FORM_FIELDS_TEXT_NAME_FIELD</td>
 	<td>//input[@id='_86_fieldLabel1']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>SETUP_FORM_FIELDS_RATING</td>
+	<td>SETUP_FORM_FIELDS_DROPDOWN_NAME_FIELD</td>
 	<td>//input[@id='_86_fieldLabel2']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>SETUP_FORM_FIELDS_COMMENTS</td>
+	<td>SETUP_FORM_FIELDS_TEXTBOX_NAME_FIELD</td>
 	<td>//input[@id='_86_fieldLabel3']</td>
 	<td></td>
 </tr>

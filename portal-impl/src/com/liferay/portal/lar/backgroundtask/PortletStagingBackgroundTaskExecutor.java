@@ -39,6 +39,9 @@ public class PortletStagingBackgroundTaskExecutor
 	extends BaseBackgroundTaskExecutor {
 
 	public PortletStagingBackgroundTaskExecutor() {
+		setBackgroundTaskStatusMessageTranslator(
+			new BaseExportImportBackgroundTaskStatusMessageTranslator());
+
 		setSerial(true);
 	}
 

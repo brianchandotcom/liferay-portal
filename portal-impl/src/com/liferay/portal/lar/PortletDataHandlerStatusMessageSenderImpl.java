@@ -31,7 +31,8 @@ public class PortletDataHandlerStatusMessageSenderImpl
 	implements PortletDataHandlerStatusMessageSender {
 
 	@Override
-	public void sendStatusMessage(String messageType, ManifestSummary manifestSummary) {
+	public void sendStatusMessage(
+		String messageType, ManifestSummary manifestSummary) {
 
 		if (!BackgroundTaskThreadLocal.hasBackgroundTask()) {
 			return;
@@ -69,6 +70,7 @@ public class PortletDataHandlerStatusMessageSenderImpl
 
 		message.put(
 			"stagedModelType", stagedModel.getStagedModelType().toString());
+
 		message.put("uuid", stagedModel.getUuid());
 
 		_singleDestinationMessageSender.send(message);

@@ -76,7 +76,7 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 
 			addPortletFileEntry(
 				groupId, userId, className, classPK, portletId, folderId,
-				inputStream, fileName, StringPool.BLANK);
+				inputStream, fileName, StringPool.BLANK, true);
 		}
 	}
 
@@ -85,6 +85,18 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 			long groupId, long userId, String className, long classPK,
 			String portletId, long folderId, File file, String fileName,
 			String mimeType)
+		throws PortalException, SystemException {
+
+		return addPortletFileEntry(
+			groupId, userId, className, classPK, portletId, folderId, file,
+			fileName, mimeType, true);
+	}
+
+	@Override
+	public FileEntry addPortletFileEntry(
+			long groupId, long userId, String className, long classPK,
+			String portletId, long folderId, File file, String fileName,
+			String mimeType, boolean indexEnabled)
 		throws PortalException, SystemException {
 
 		if (Validator.isNull(fileName)) {
@@ -101,6 +113,7 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 
 		serviceContext.setAttribute("className", className);
 		serviceContext.setAttribute("classPK", String.valueOf(classPK));
+		serviceContext.setIndexingEnabled(indexEnabled);
 
 		if (Validator.isNull(mimeType) ||
 			mimeType.equals(ContentTypes.APPLICATION_OCTET_STREAM)) {
@@ -130,6 +143,18 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 			String fileName, String mimeType)
 		throws PortalException, SystemException {
 
+		return addPortletFileEntry(
+			groupId, userId, className, classPK, portletId, folderId,
+			inputStream, fileName, mimeType, true);
+	}
+
+	@Override
+	public FileEntry addPortletFileEntry(
+			long groupId, long userId, String className, long classPK,
+			String portletId, long folderId, InputStream inputStream,
+			String fileName, String mimeType, boolean indexEnabled)
+		throws PortalException, SystemException {
+
 		if (inputStream == null) {
 			return null;
 		}
@@ -141,7 +166,7 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 
 			return addPortletFileEntry(
 				groupId, userId, className, classPK, portletId, folderId, file,
-				fileName, mimeType);
+				fileName, mimeType, indexEnabled);
 		}
 		catch (IOException ioe) {
 			throw new SystemException("Unable to write temporary file", ioe);

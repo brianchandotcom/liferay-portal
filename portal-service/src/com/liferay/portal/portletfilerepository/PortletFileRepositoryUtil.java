@@ -59,6 +59,17 @@ public class PortletFileRepositoryUtil {
 
 	public static FileEntry addPortletFileEntry(
 			long groupId, long userId, String className, long classPK,
+			String portletId, long folderId, File file, String fileName,
+			String mimeType, boolean indexEnabled)
+		throws PortalException, SystemException {
+
+		return getPortletFileRepository().addPortletFileEntry(
+			groupId, userId, className, classPK, portletId, folderId, file,
+			fileName, mimeType, indexEnabled);
+	}
+
+	public static FileEntry addPortletFileEntry(
+			long groupId, long userId, String className, long classPK,
 			String portletId, long folderId, InputStream inputStream,
 			String fileName, String mimeType)
 		throws PortalException, SystemException {
@@ -66,6 +77,17 @@ public class PortletFileRepositoryUtil {
 		return getPortletFileRepository().addPortletFileEntry(
 			groupId, userId, className, classPK, portletId, folderId,
 			inputStream, fileName, mimeType);
+	}
+
+	public static FileEntry addPortletFileEntry(
+			long groupId, long userId, String className, long classPK,
+			String portletId, long folderId, InputStream inputStream,
+			String fileName, String mimeType, boolean indexEnabled)
+		throws PortalException, SystemException {
+
+		return getPortletFileRepository().addPortletFileEntry(
+			groupId, userId, className, classPK, portletId, folderId,
+			inputStream, fileName, mimeType, indexEnabled);
 	}
 
 	public static Folder addPortletFolder(

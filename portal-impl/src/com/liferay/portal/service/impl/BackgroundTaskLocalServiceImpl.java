@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackRegistryUtil;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -123,7 +124,8 @@ public class BackgroundTaskLocalServiceImpl
 		PortletFileRepositoryUtil.addPortletFileEntry(
 			backgroundTask.getGroupId(), userId, BackgroundTask.class.getName(),
 			backgroundTask.getPrimaryKey(), PortletKeys.BACKGROUND_TASK,
-			folder.getFolderId(), file, fileName, null);
+			folder.getFolderId(), file, fileName, ContentTypes.APPLICATION_ZIP,
+			false);
 	}
 
 	@Override
@@ -139,7 +141,8 @@ public class BackgroundTaskLocalServiceImpl
 		PortletFileRepositoryUtil.addPortletFileEntry(
 			backgroundTask.getGroupId(), userId, BackgroundTask.class.getName(),
 			backgroundTask.getPrimaryKey(), PortletKeys.BACKGROUND_TASK,
-			folder.getFolderId(), inputStream, fileName, null);
+			folder.getFolderId(), inputStream, fileName,
+			ContentTypes.APPLICATION_ZIP, false);
 	}
 
 	@Override

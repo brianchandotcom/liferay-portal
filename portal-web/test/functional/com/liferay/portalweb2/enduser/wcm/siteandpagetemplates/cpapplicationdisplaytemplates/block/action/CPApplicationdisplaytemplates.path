@@ -97,6 +97,11 @@
 </tr>
 <!--ADT_TABLE-->
 <tr>
+	<td>ADT_TABLE_ALL_CHECKBOX</td>
+	<td>//input[@name='_183_allRowIds']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADT_TABLE_CHECKBOX_1</td>
 	<td>//div[@id='_183_ddmTemplatesSearchContainer']//tr/td[1]/input</td>
 	<td></td>

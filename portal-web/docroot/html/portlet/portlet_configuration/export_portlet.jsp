@@ -30,7 +30,7 @@ portletURL.setParameter("tabs3", "all-export-processes");
 	refresh="<%= false %>"
 >
 	<liferay-ui:section>
-		<portlet:actionURL var="exportPortletURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
+		<portlet:actionURL var="exportPortletURL">
 			<portlet:param name="struts_action" value="/portlet_configuration/export_import" />
 		</portlet:actionURL>
 

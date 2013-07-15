@@ -158,19 +158,21 @@ public class EditPermissionsAction extends PortletAction {
 		while (enu.hasMoreElements()) {
 			String name = enu.nextElement();
 
-			if (name.startsWith(roleId + "_ACTION_")) {
-				int pos = name.indexOf("_ACTION_");
+			if (name.startsWith(roleId + ActionUtil.ACTION)) {
+				int pos = name.indexOf(ActionUtil.ACTION);
 
-				String actionId = name.substring(pos + 8);
+				String actionId = name.substring(
+					pos + ActionUtil.ACTION.length());
 
 				actionIds.add(actionId);
 			}
 			else if (includePreselected &&
-					 name.startsWith(roleId + "_PRESELECTED_")) {
+					 name.startsWith(roleId + ActionUtil.PRESELECTED)) {
 
-				int pos = name.indexOf("_PRESELECTED_");
+				int pos = name.indexOf(ActionUtil.PRESELECTED);
 
-				String actionId = name.substring(pos + 13);
+				String actionId = name.substring(
+					pos + ActionUtil.PRESELECTED.length());
 
 				actionIds.add(actionId);
 			}

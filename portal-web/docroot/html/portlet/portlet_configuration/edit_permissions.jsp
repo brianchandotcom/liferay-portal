@@ -402,10 +402,10 @@ definePermissionsURL.setRefererPlid(plid);
 						buffer.append(FriendlyURLNormalizerUtil.normalize(role.getName()));
 
 						if (Validator.isNotNull(preselectedMsg)) {
-							buffer.append("_PRESELECTED_");
+							buffer.append(ActionUtil.PRESELECTED);
 						}
 						else {
-							buffer.append("_ACTION_");
+							buffer.append(ActionUtil.ACTION);
 						}
 
 						buffer.append(action);
@@ -416,10 +416,10 @@ definePermissionsURL.setRefererPlid(plid);
 						buffer.append(role.getRoleId());
 
 						if (Validator.isNotNull(preselectedMsg)) {
-							buffer.append("_PRESELECTED_");
+							buffer.append(ActionUtil.PRESELECTED);
 						}
 						else {
-							buffer.append("_ACTION_");
+							buffer.append(ActionUtil.ACTION);
 						}
 
 						buffer.append(action);

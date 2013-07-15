@@ -290,7 +290,7 @@ portletURL.setParameter("tabs3", "all-publication-processes");
 															<span class="badge badge-info"><%= exportModelCount > 0 ? exportModelCount : StringPool.BLANK %></span>
 														</liferay-util:buffer>
 
-														<aui:input label='<%= LanguageUtil.get(pageContext, "content") + badgeHTML %>' name="<%= PortletDataHandlerKeys.PORTLET_DATA %>" type="checkbox" value="<%= portletDataHandler.isPublishToLiveByDefault() %>" />
+														<aui:input label='<%= LanguageUtil.get(pageContext, "content") + badgeHTML %>' name='<%= PortletDataHandlerKeys.PORTLET_DATA + "_" + selPortlet.getRootPortletId() %>' type="checkbox" value="<%= true %>" />
 
 														<%
 														PortletDataHandlerControl[] exportControls = portletDataHandler.getExportControls();

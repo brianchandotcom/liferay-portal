@@ -156,7 +156,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 										<span class="badge badge-info"><%= importModelCount > 0 ? importModelCount : StringPool.BLANK %></span>
 									</liferay-util:buffer>
 
-									<aui:input label='<%= LanguageUtil.get(pageContext, "content") + badgeHTML %>' name='<%= PortletDataHandlerKeys.PORTLET_DATA + "_" + selPortlet.getRootPortletId() %>' type="checkbox" value="<%= portletDataHandler.isPublishToLiveByDefault() %>" />
+									<aui:input label='<%= LanguageUtil.get(pageContext, "content") + badgeHTML %>' name='<%= PortletDataHandlerKeys.PORTLET_DATA + "_" + selPortlet.getRootPortletId() %>' type="checkbox" value="<%= true %>" />
 
 									<%
 									PortletDataHandlerControl[] importControls = portletDataHandler.getImportControls();

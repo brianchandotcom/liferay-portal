@@ -468,7 +468,6 @@ public class AudioProcessorImpl
 
 		sendGenerationMessage(
 			DestinationNames.DOCUMENT_LIBRARY_AUDIO_PROCESSOR,
-			PropsValues.DL_FILE_ENTRY_PROCESSORS_TRIGGER_SYNCHRONOUSLY,
 			sourceFileVersion, destinationFileVersion);
 	}
 

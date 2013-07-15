@@ -49,6 +49,11 @@ public class TestPropsValues {
 
 	public static final String COMPANY_WEB_ID;
 
+	public static final boolean DL_FILE_ENTRY_PROCESSORS_TRIGGER_SYNCHRONOUSLY =
+		GetterUtil.getBoolean(
+			TestPropsUtil.get(
+				"dl.file.entry.processors.trigger.synchronously"));
+
 	public static final int JUNIT_DELAY_FACTOR = GetterUtil.getInteger(
 		TestPropsUtil.get("junit.delay.factor"));
 

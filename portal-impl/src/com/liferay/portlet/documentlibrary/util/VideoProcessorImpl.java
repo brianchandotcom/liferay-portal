@@ -615,7 +615,6 @@ public class VideoProcessorImpl
 
 		sendGenerationMessage(
 			DestinationNames.DOCUMENT_LIBRARY_VIDEO_PROCESSOR,
-			PropsValues.DL_FILE_ENTRY_PROCESSORS_TRIGGER_SYNCHRONOUSLY,
 			sourceFileVersion, destinationFileVersion);
 	}
 

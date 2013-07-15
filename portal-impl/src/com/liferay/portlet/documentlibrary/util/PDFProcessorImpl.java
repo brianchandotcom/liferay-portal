@@ -743,7 +743,6 @@ public class PDFProcessorImpl
 
 			sendGenerationMessage(
 				DestinationNames.DOCUMENT_LIBRARY_PDF_PROCESSOR,
-				PropsValues.DL_FILE_ENTRY_PROCESSORS_TRIGGER_SYNCHRONOUSLY,
 				sourceFileVersion, destinationFileVersion);
 		}
 	}

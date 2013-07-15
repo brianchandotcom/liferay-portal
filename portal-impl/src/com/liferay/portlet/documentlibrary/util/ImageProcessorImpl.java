@@ -390,7 +390,6 @@ public class ImageProcessorImpl
 
 		sendGenerationMessage(
 			DestinationNames.DOCUMENT_LIBRARY_IMAGE_PROCESSOR,
-			PropsValues.DL_FILE_ENTRY_PROCESSORS_TRIGGER_SYNCHRONOUSLY,
 			sourceFileVersion, destinationFileVersion);
 	}
 

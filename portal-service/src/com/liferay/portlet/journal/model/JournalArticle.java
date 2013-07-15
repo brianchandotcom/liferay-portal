@@ -56,7 +56,9 @@ public interface JournalArticle extends JournalArticleModel, PersistedModel {
 
 	public java.lang.String getDefaultLocale();
 
-	public com.liferay.portlet.journal.model.JournalFolder getFolder();
+	public com.liferay.portlet.journal.model.JournalFolder getFolder()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
 
 	public java.lang.String getSmallImageType()
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -64,9 +66,13 @@ public interface JournalArticle extends JournalArticleModel, PersistedModel {
 
 	public com.liferay.portal.kernel.lar.StagedModelType getStagedModelType();
 
-	public com.liferay.portlet.journal.model.JournalFolder getTrashContainer();
+	public com.liferay.portlet.journal.model.JournalFolder getTrashContainer()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
 
-	public boolean isInTrashContainer();
+	public boolean isInTrashContainer()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
 
 	public boolean isTemplateDriven();
 

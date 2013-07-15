@@ -1540,7 +1540,9 @@ public class JournalArticleWrapper implements JournalArticle,
 	}
 
 	@Override
-	public com.liferay.portlet.journal.model.JournalFolder getFolder() {
+	public com.liferay.portlet.journal.model.JournalFolder getFolder()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		return _journalArticle.getFolder();
 	}
 
@@ -1557,12 +1559,16 @@ public class JournalArticleWrapper implements JournalArticle,
 	}
 
 	@Override
-	public com.liferay.portlet.journal.model.JournalFolder getTrashContainer() {
+	public com.liferay.portlet.journal.model.JournalFolder getTrashContainer()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		return _journalArticle.getTrashContainer();
 	}
 
 	@Override
-	public boolean isInTrashContainer() {
+	public boolean isInTrashContainer()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		return _journalArticle.isInTrashContainer();
 	}
 

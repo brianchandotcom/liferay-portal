@@ -839,17 +839,23 @@ public class BookmarksEntryWrapper implements BookmarksEntry,
 	}
 
 	@Override
-	public com.liferay.portlet.bookmarks.model.BookmarksFolder getFolder() {
+	public com.liferay.portlet.bookmarks.model.BookmarksFolder getFolder()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		return _bookmarksEntry.getFolder();
 	}
 
 	@Override
-	public com.liferay.portlet.bookmarks.model.BookmarksFolder getTrashContainer() {
+	public com.liferay.portlet.bookmarks.model.BookmarksFolder getTrashContainer()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		return _bookmarksEntry.getTrashContainer();
 	}
 
 	@Override
-	public boolean isInTrashContainer() {
+	public boolean isInTrashContainer()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		return _bookmarksEntry.isInTrashContainer();
 	}
 

@@ -1,10 +1,6 @@
 <definition>
 	<command name="addChildPagePG">
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute action="PGWiki#assertClick" locator-key1="NAVIGATION_ALL_PAGES" value1="All Pages" />
+		<execute action="PGWiki#click" locator-key1="NAVIGATION_ALL_PAGES" />
 
 		<execute action="PGWikiAllpages#click" locator1="link=${wikiPageTitle}" />
 
@@ -42,11 +38,7 @@
 	</command>
 
 	<command name="addFrontPagePG">
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute action="PGWiki#assertClick" locator-key1="ADD_FRONTPAGE" value1="This page is empty. Edit it to add some text." />
+		<execute action="PGWiki#click" locator-key1="ADD_FRONTPAGE" />
 
 		<execute action="PGWikiAddpage#type" locator-key1="BODY_FIELD" value1="${wikiPageContent}" />
 		<execute action="PGWikiAddpage#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
@@ -56,11 +48,7 @@
 	</command>
 
 	<command name="addFrontPagePGHTMLSource" >
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute action="PGWiki#assertClick" locator-key1="ADD_FRONTPAGE" value1="This page is empty. Edit it to add some text." />
+		<execute action="PGWiki#click" locator-key1="ADD_FRONTPAGE" />
 
 		<execute action="PGWikiAddpage#select" locator-key1="FORMAT_DROPDOWN" value1="HTML" />
 		<execute action="PGWikiAddpage#confirm" locator-key1="CONFIRMATION" value1="You may lose some formatting when switching from Creole to HTML. Do you want to continue?" />
@@ -73,12 +61,8 @@
 	</command>
 
 	<command name="addPagePG">
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute action="PGWiki#assertClick" locator-key1="NAVIGATION_ALL_PAGES" value1="All Pages" />
-		<execute action="PGWikiAllpages#assertClick" locator-key1="ADD_PAGE_BUTTON" value1="Add Page" />
+		<execute action="PGWiki#click" locator-key1="NAVIGATION_ALL_PAGES" />
+		<execute action="PGWikiAllpages#click" locator-key1="ADD_PAGE_BUTTON" />
 
 		<execute action="PGWikiAddpage#type" locator-key1="TITLE_FIELD" value1="${wikiPageTitle}" />
 		<execute action="PGWikiAddpage#type" locator-key1="BODY_FIELD" value1="${wikiPageContent}" />
@@ -115,11 +99,7 @@
 	</command>
 
 	<command name="deleteFrontPagePG">
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute action="PGWiki#assertClick" locator-key1="NAVIGATION_ALL_PAGES" value1="All Pages" />
+		<execute action="PGWiki#click" locator-key1="NAVIGATION_ALL_PAGES" />
 
 		<execute action="PGWikiAllpages#assertClick" locator-key1="WIKI_PAGE_TABLE_ACTIONS_1" value1="Actions" />
 		<execute action="PGWikiAllpages#assertClick" locator-key1="WIKI_PAGE_MENULIST_RECYCLE_BIN" value1="Move to the Recycle Bin" />

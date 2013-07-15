@@ -20,16 +20,18 @@
 		<var name="dmDocumentFile" value="Document_1.doc" />
 		<var name="dmDocumentTitle" value="DM Document Title" />
 
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
 		<execute macro="DMDocument#addPG">
 			<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
 			<var name="dmDocumentFile" value="${dmDocumentFile}" />
 			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
-			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="DMDocument#viewPG">
 			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
-			<var name="pageName" value="${pageName}" />
 		</execute>
 	</command>
 
@@ -46,40 +48,38 @@
 		<var name="dmDocumentTitle2" value="DM Document2 Title" />
 		<var name="dmDocumentTitle3" value="DM Document3 Title" />
 
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
 		<execute macro="DMDocument#addPG">
 			<var name="dmDocumentDescription" value="${dmDocumentDescription1}" />
 			<var name="dmDocumentFile" value="${dmDocumentFile1}" />
 			<var name="dmDocumentTitle" value="${dmDocumentTitle1}" />
-			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="DMDocument#viewPG">
 			<var name="dmDocumentTitle" value="${dmDocumentTitle1}" />
-			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="DMDocument#addPG">
 			<var name="dmDocumentDescription" value="${dmDocumentDescription2}" />
 			<var name="dmDocumentFile" value="${dmDocumentFile2}" />
 			<var name="dmDocumentTitle" value="${dmDocumentTitle2}" />
-			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="DMDocument#viewPG">
 			<var name="dmDocumentTitle" value="${dmDocumentTitle2}" />
-			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="DMDocument#addPG">
 			<var name="dmDocumentDescription" value="${dmDocumentDescription3}" />
 			<var name="dmDocumentFile" value="${dmDocumentFile3}" />
 			<var name="dmDocumentTitle" value="${dmDocumentTitle3}" />
-			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="DMDocument#viewPG">
 			<var name="dmDocumentTitle" value="${dmDocumentTitle3}" />
-			<var name="pageName" value="${pageName}" />
 		</execute>
 	</command>
 
@@ -87,15 +87,17 @@
 		<var name="dmFolderDescription" value="DM Folder Description" />
 		<var name="dmFolderName" value="DM Folder Name" />
 
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
 		<execute macro="DMFolder#addPG">
 			<var name="dmFolderDescription" value="${dmFolderDescription}" />
 			<var name="dmFolderName" value="${dmFolderName}" />
-			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="DMFolder#viewPG">
 			<var name="dmFolderName" value="${dmFolderName}" />
-			<var name="pageName" value="${pageName}" />
 		</execute>
 	</command>
 
@@ -103,6 +105,10 @@
 		<var name="dmDocumentDescription" value="DM Document Description" />
 		<var name="dmDocumentFile" value="Document_1.doc" />
 		<var name="dmDocumentTitle" value="DM Document Title" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
 
 		<execute macro="DMDocument#addPG">
 			<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
@@ -122,15 +128,17 @@
 		<var name="dmFolderDescription" value="DM Folder Description" />
 		<var name="dmFolderName" value="DM Folder Name" />
 
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
 		<execute macro="DMFolder#addPG">
 			<var name="dmFolderDescription" value="${dmFolderDescription}" />
 			<var name="dmFolderName" value="${dmFolderName}" />
-			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="DMFolder#deletePG">
 			<var name="dmFolderName" value="${dmFolderName}" />
-			<var name="pageName" value="${pageName}" />
 		</execute>
 	</command>
 
@@ -138,6 +146,10 @@
 		<var name="dmDocumentDescription" value="DM Document Description" />
 		<var name="dmDocumentFile" value="Document_1.doc" />
 		<var name="dmDocumentTitle" value="DM Document Title" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
 
 		<execute macro="DMDocument#addPG">
 			<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
@@ -158,17 +170,19 @@
 		<var name="dmFolderDescription" value="DM Folder Description" />
 		<var name="dmFolderName" value="DM Folder Name" />
 
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
 		<execute macro="DMFolder#addPG">
 			<var name="dmFolderDescription" value="${dmFolderDescription}" />
 			<var name="dmFolderName" value="${dmFolderName}" />
-			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="DMFolder#editPG">
 			<var name="dmFolderDescriptionEdit" value="${dmFolderDescription} Edit" />
 			<var name="dmFolderName" value="${dmFolderName}" />
 			<var name="dmFolderNameEdit" value="${dmFolderName} Edit" />
-			<var name="pageName" value="${pageName}" />
 		</execute>
 	</command>
 
@@ -183,23 +197,28 @@
 		<var name="dmFolderName1" value="DM Folder1 Name" />
 		<var name="dmFolderName2" value="DM Folder2 Name" />
 
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
 		<execute macro="DMFolder#addPG">
 			<var name="dmFolderDescription" value="${dmFolderDescription}" />
 			<var name="dmFolderName" value="${dmFolderName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="DMFolder#addPG">
 			<var name="dmFolderDescription" value="${dmFolderDescription2}" />
 			<var name="dmFolderName" value="${dmFolderName2}" />
-			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="DMDocument#addPG">
 			<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
 			<var name="dmDocumentFile" value="${dmDocumentFile}" />
 			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
-			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="DMFolderDocument#moveToFolderPG">

@@ -1,9 +1,5 @@
 <definition>
 	<command name="addPG">
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
 		<execute action="PGCalendar#click" locator-key1="VIEW_DAY_BUTTON" />
 		<execute action="PGCalendar#click" locator-key1="VIEW_TODAY_BUTTON" />
 		<execute action="PGCalendar#click" locator-key1="CALENDAR_DAY" />
@@ -14,10 +10,6 @@
 	</command>
 
 	<command name="deletePG">
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
 		<execute action="PGCalendar#click" locator-key1="VIEW_DAY_BUTTON" />
 		<execute action="PGCalendar#click" locator-key1="VIEW_TODAY_BUTTON" />
 		<execute action="PGCalendar#assertElementPresent" locator-key1="EVENT_TITLE" />
@@ -28,10 +20,6 @@
 	</command>
 
 	<command name="editPG">
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
 		<execute action="PGCalendar#click" locator-key1="VIEW_DAY_BUTTON" />
 		<execute action="PGCalendar#click" locator-key1="VIEW_TODAY_BUTTON" />
 		<execute action="PGCalendar#assertElementPresent" locator-key1="EVENT_TITLE" />
@@ -52,10 +40,6 @@
 	</command>
 
 	<command name="tearDownPG">
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
 		<execute action="PGCalendar#click" locator-key1="VIEW_DAY_BUTTON" />
 		<execute action="PGCalendar#click" locator-key1="VIEW_TODAY_BUTTON" />
 		<execute action="PGCalendar#click" locator-key1="VIEW_AGENDA_BUTTON" />

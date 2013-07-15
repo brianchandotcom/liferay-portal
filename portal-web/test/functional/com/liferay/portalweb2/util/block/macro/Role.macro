@@ -1,9 +1,5 @@
 <definition>
 	<command name="addCP">
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Roles" />
-		</execute>
-
 		<execute action="CPRoles#assertClick" locator-key1="ADD" value1="Add" />
 
 		<if>
@@ -26,10 +22,6 @@
 		<execute action="CPRolesAddrole#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 
 		<execute action="CPRoles#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Roles" />
-		</execute>
 
 		<if>
 			<equals arg1="${roleType}" arg2="Organization" />
@@ -60,10 +52,6 @@
 	</command>
 
 	<command name="assignRegRoleCP">
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Roles" />
-		</execute>
-
 		<execute action="CPRoles#type" locator-key1="SEARCH_FIELD" value1="Regrole" />
 		<execute action="CPRoles#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
 		<execute action="CPRoles#assertClick" locator-key1="ROLE_TABLE_ACTIONS_1" value1="Actions" />
@@ -80,10 +68,6 @@
 	</command>
 
 	<command name="definePermissionBlogsEntryCP">
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Roles" />
-		</execute>
-
 		<if>
 			<equals arg1="${roleType}" arg2="Organization" />
 			<then>
@@ -143,10 +127,6 @@
 	</command>
 
 	<command name="removePermissionBlogsEntryCP">
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Roles" />
-		</execute>
-
 		<if>
 			<equals arg1="${rolePermission}" arg2="Add Entry" />
 			<then>

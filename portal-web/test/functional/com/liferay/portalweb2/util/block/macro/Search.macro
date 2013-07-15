@@ -1,9 +1,5 @@
 <definition>
 	<command name="blogsEntryPG">
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
 		<execute action="PGSearch#type" locator-key1="SEARCH_FIELD" value1="${entryTitle}" />
 		<execute action="PGSearch#click" locator-key1="SEARCH_ICON" />
 
@@ -14,10 +10,6 @@
 	</command>
 
 	<command name="messageboardsThreadPG">
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
 		<execute action="PGSearch#type" locator-key1="SEARCH_FIELD" value1="${threadSubject}" />
 		<execute action="PGSearch#click" locator-key1="SEARCH_ICON" />
 
@@ -28,10 +20,6 @@
 	</command>
 
 	<command name="userPG">
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
 		<execute action="PGSearch#type" locator-key1="SEARCH_FIELD" value1="users*" />
 		<execute action="PGSearch#click" locator-key1="SEARCH_ICON" />
 
@@ -47,10 +35,6 @@
 	</command>
 
 	<command name="wikiPagePG">
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
 		<execute action="PGSearch#type" locator-key1="SEARCH_FIELD" value1="${wikiPageTitle}" />
 		<execute action="PGSearch#click" locator-key1="SEARCH_ICON" />
 

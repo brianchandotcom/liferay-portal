@@ -19,6 +19,10 @@
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC Webcontent Title" />
 
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
 		<execute macro="WebContent#addPGviaAP">
 			<var name="pageName" value="${pageName}" />
 			<var name="webContentTitle" value="${webContentTitle}" />

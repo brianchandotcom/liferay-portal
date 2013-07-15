@@ -1,9 +1,5 @@
 <definition>
 	<command name="addCP">
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Categories" />
-		</execute>
-
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 		<var name="key_categoryName" value="${categoryName}" />
 
@@ -16,10 +12,6 @@
 	</command>
 
 	<command name="deleteCPByActions">
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Categories" />
-		</execute>
-
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 		<var name="key_categoryName" value="${categoryName}" />
 
@@ -35,10 +27,6 @@
 	</command>
 
 	<command name="editCP">
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Categories" />
-		</execute>
-
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 		<var name="key_categoryName" value="${categoryName}" />
 

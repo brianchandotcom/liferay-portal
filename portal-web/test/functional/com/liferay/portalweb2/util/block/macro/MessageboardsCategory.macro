@@ -1,9 +1,5 @@
 <definition>
 	<command name="addCP">
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Message Boards" />
-		</execute>
-
 		<execute action="CPMessageboards#click" locator-key1="ADD_CATEGORY_BUTTON" />
 
 		<execute action="CPMessageboardsAddcategory#type" locator-key1="NAME_FIELD" value1="${categoryName}" />
@@ -13,10 +9,6 @@
 	</command>
 
 	<command name="addPG">
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
 		<execute action="PGMessageboards#click" locator-key1="ADD_CATEGORY_BUTTON" />
 
 		<execute action="PGMessageboardsAddcategory#type" locator-key1="NAME_FIELD" value1="${categoryName}" />
@@ -26,10 +18,6 @@
 	</command>
 
 	<command name="deletePG">
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
 		<execute action="PGMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_CATEGORY_1" value1="${categoryName}" />
 		<execute action="PGMessageboards#click" locator-key1="CATEGORY_TABLE_ACTIONS_1" />
 		<execute action="PGMessageboards#click" locator-key1="CATEGORY_MENULIST_RECYCLE_BIN" />
@@ -41,10 +29,6 @@
 	</command>
 
 	<command name="editPG">
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
 		<execute action="PGMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_CATEGORY_1" value1="${categoryName}" />
 		<execute action="PGMessageboards#click" locator-key1="CATEGORY_TABLE_ACTIONS_1" />
 		<execute action="PGMessageboards#click" locator-key1="CATEGORY_MENULIST_EDIT" />
@@ -57,10 +41,6 @@
 	</command>
 
 	<command name="tearDownCP">
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Message Boards" />
-		</execute>
-
 		<while>
 			<condition action="CPMessageboards#isElementPresent" locator-key1="CATEGORY_TABLE_ALL_CHECKBOX" />
 			<then>
@@ -74,10 +54,6 @@
 	</command>
 
 	<command name="viewCP">
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Message Boards" />
-		</execute>
-
 		<var name="key_categoryName" value="${categoryName}" />
 
 		<execute action="CPMessageboards#assertElementPresent" locator-key1="CATEGORY_TABLE_CHECKBOX" />
@@ -92,10 +68,6 @@
 	</command>
 
 	<command name="viewNoCP">
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Message Boards" />
-		</execute>
-
 		<var name="key_categoryName" value="${categoryName}" />
 
 		<execute action="CPMessageboards#assertTextNotPresent" value1="${categoryName}" />
@@ -108,10 +80,6 @@
 	</command>
 
 	<command name="viewNoPG">
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
 		<execute action="PGMessageboards#assertTextNotPresent" value1="${categoryName}" />
 		<execute action="PGMessageboards#assertElementNotPresent" locator-key1="CATEGORY_TABLE_CATEGORY_1" />
 		<execute action="PGMessageboards#assertElementNotPresent" locator-key1="CATEGORY_TABLE_CATEGORIES_1" />
@@ -120,10 +88,6 @@
 	</command>
 
 	<command name="viewPG">
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
 		<execute action="PGMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_CATEGORY_1" value1="${categoryName}" />
 		<execute action="PGMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_CATEGORIES_1" value1="0" />
 		<execute action="PGMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_THREADS_1" value1="0" />

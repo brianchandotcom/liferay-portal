@@ -1,9 +1,5 @@
 <definition>
 	<command name="addPG">
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
 		<execute action="CPDocumentsandmedia#assertClick" locator-key1="ADD" value1="Add" />
 		<execute action="CPDocumentsandmedia#assertClick" locator-key1="ADD_MENULIST_FOLDER" value1="Folder" />
 
@@ -15,10 +11,6 @@
 	</command>
 
 	<command name="deletePG">
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
 		<execute action="PGDocumentsandmedia#assertElementPresent" locator-key1="ENTRIES_FOLDER" />
 		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ENTRIES_FOLDER_TITLE" value1="${dmFolderName}" />
 		<execute action="PGDocumentsandmedia#check" locator-key1="ENTRIES_FOLDER_SELECT" />
@@ -29,10 +21,6 @@
 	</command>
 
 	<command name="editPG">
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
 		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ENTRIES_FOLDER_TITLE" value1="${dmFolderName}" />
 		<execute action="PGDocumentsandmedia#click" locator-key1="ENTRIES_FOLDER_ACTIONS" />
 		<execute action="PGDocumentsandmedia#assertClick" locator-key1="FOLDER_MENULIST_EDIT" value1="Edit" />
@@ -65,10 +53,6 @@
 	</command>
 
 	<command name="viewPG">
-		<execute macro="Page#gotoPG">
-			<var name="folderName" value="${folderName}" />
-		</execute>
-
 		<execute action="PGDocumentsandmedia#click" locator-key1="ENTRIES_FOLDER" />
 
 		<execute action="PGDocumentsandmediaFolder#assertTextEquals" locator-key1="BREADCRUMB_FOLDER" value1="${dmFolderName}" />

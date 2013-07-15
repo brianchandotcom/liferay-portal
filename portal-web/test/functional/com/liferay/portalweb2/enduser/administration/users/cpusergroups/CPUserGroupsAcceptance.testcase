@@ -6,6 +6,10 @@
 	<command name="AddUserGroup">
 		<var name="userGroupName" value="UG UserGroup Name" />
 
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="User Groups" />
+		</execute>
+
 		<execute macro="UserGroup#addCP">
 			<var name="userGroupName" value="${userGroupName}" />
 		</execute>
@@ -14,15 +18,24 @@
 	<command name="DeleteUserGroup">
 		<var name="userGroupName" value="UG UserGroup Name" />
 
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="User Groups" />
+		</execute>
+
 		<execute macro="UserGroup#addCP">
 			<var name="userGroupName" value="${userGroupName}" />
 		</execute>
+
 		<execute macro="UserGroup#deleteCP" />
 	</command>
 
 	<command name="EditUserGroup">
 		<var name="userGroupName" value="UG UserGroup Name" />
 		<var name="userGroupNameEdit" value="UG UserGroup Name Edit" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="User Groups" />
+		</execute>
 
 		<execute macro="UserGroup#addCP">
 			<var name="userGroupName" value="${userGroupName}" />

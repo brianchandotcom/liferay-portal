@@ -12,10 +12,6 @@
 	</command>
 
 	<command name="addCP">
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Users and Organizations" />
-		</execute>
-
 		<execute action="CPUsersandorganizations#assertClick" locator-key1="ADD" value1="Add" />
 		<execute action="CPUsersandorganizations#assertClick" locator-key1="ADD_REGULAR_ORGANIZATION" value1="Regular Organization" />
 
@@ -29,10 +25,6 @@
 	</command>
 
 	<command name="addMemberCP">
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Users and Organizations" />
-		</execute>
-
 		<execute action="CPUsersandorganizations#type" locator-key1="SEARCH_FIELD" value1="${orgName}" />
 		<execute action="CPUsersandorganizations#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
 		<execute action="CPUsersandorganizations#assertTextEquals" locator-key1="ORGANIZATION_TABLE_NAME_1" value1="${orgName}" />
@@ -54,10 +46,6 @@
 	</command>
 
 	<command name="addSiteCP">
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Users and Organizations" />
-		</execute>
-
 		<execute action="CPUsersandorganizations#type" locator-key1="SEARCH_FIELD" value1="${orgName}" />
 		<execute action="CPUsersandorganizations#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
 		<execute action="CPUsersandorganizations#assertTextEquals" locator-key1="ORGANIZATION_TABLE_NAME_1" value1="${orgName}" />
@@ -72,10 +60,6 @@
 	</command>
 
 	<command name="assignOrgRoleCP">
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Users and Organizations" />
-		</execute>
-
 		<execute action="CPUsersandorganizations#type" locator-key1="SEARCH_FIELD" value1="${orgName}" />
 		<execute action="CPUsersandorganizations#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
 		<execute action="CPUsersandorganizations#assertTextEquals" locator-key1="ORGANIZATION_TABLE_NAME_1" value1="${orgName}" />
@@ -100,10 +84,6 @@
 	</command>
 
 	<command name="deleteCP">
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Users and Organizations" />
-		</execute>
-
 		<execute action="CPUsersandorganizations#type" locator-key1="SEARCH_FIELD" value1="${orgName}" />
 		<execute action="CPUsersandorganizations#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
 		<execute action="CPUsersandorganizations#assertClick" locator-key1="ORGANIZATION_TABLE_ACTIONS_1" value1="Actions" />
@@ -114,10 +94,6 @@
 	</command>
 
 	<command name="removeMemberCP">
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Users and Organizations" />
-		</execute>
-
 		<execute action="CPUsersandorganizations#type" locator-key1="SEARCH_FIELD" value1="${orgName}" />
 		<execute action="CPUsersandorganizations#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
 		<execute action="CPUsersandorganizations#assertTextEquals" locator-key1="ORGANIZATION_TABLE_NAME_1" value1="${orgName}" />
@@ -132,16 +108,6 @@
 		<execute action="CPUsersandorganizationsAssignmembers#assertClick" locator-key1="UPDATE_ASSOCIATIONS_BUTTON" value1="Update Associations" />
 		<execute action="CPUsersandorganizationsAssignmembers#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute action="CPUsersandorganizationsAssignmembers#assertNotChecked" locator-key1="USER_TABLE_CHECKBOX_1" />
-
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Users and Organizations" />
-		</execute>
-
-		<execute action="CPUsersandorganizations#type" locator-key1="SEARCH_FIELD" value1="${orgName}" />
-		<execute action="CPUsersandorganizations#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
-		<execute action="CPUsersandorganizations#assertTextEquals" locator-key1="ORGANIZATION_TABLE_NAME_1" value1="${orgName}" />
-		<execute action="CPUsersandorganizations#assertClick" locator-key1="ORGANIZATION_TABLE_NAME_1" value1="${orgName}" />
-		<execute action="CPUsersandorganizationsOrganization#assertTextNotPresent" value1="${userFirstName}" />
 	</command>
 
 	<command name="tearDownCP">
@@ -172,10 +138,6 @@
 	</command>
 
 	<command name="viewAssignMemberCP">
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Users and Organizations" />
-		</execute>
-
 		<execute action="CPUsersandorganizations#type" locator-key1="SEARCH_FIELD" value1="${searchToken}" />
 		<execute action="CPUsersandorganizations#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
 		<execute action="CPUsersandorganizations#assertTextEquals" locator-key1="ORGANIZATION_TABLE_NAME_1" value1="${orgName}" />
@@ -187,10 +149,6 @@
 	</command>
 
 	<command name="viewCP">
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Users and Organizations" />
-		</execute>
-
 		<execute action="CPUsersandorganizations#type" locator-key1="SEARCH_FIELD" value1="${searchToken}" />
 		<execute action="CPUsersandorganizations#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
 		<execute action="CPUsersandorganizations#assertTextEquals" locator-key1="ORGANIZATION_TABLE_NAME_1" value1="${orgName}" />
@@ -202,5 +160,13 @@
 		<execute action="CPUsersandorganizationsOrganizationEdit#assertTextEquals" locator-key1="DETAILS_NAME_FIELD" value1="${orgName}" />
 		<execute action="CPUsersandorganizationsOrganizationEdit#assertTextEquals" locator-key1="DETAILS_TYPE" value1="Type ${orgType}" />
 		<execute action="CPUsersandorganizationsOrganizationEdit#assertTextEquals" locator-key1="ORGANIZATION_NAME" value1="${orgName}" />
+	</command>
+
+	<command name="viewRemoveMemberCP">
+		<execute action="CPUsersandorganizations#type" locator-key1="SEARCH_FIELD" value1="${orgName}" />
+		<execute action="CPUsersandorganizations#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
+		<execute action="CPUsersandorganizations#assertTextEquals" locator-key1="ORGANIZATION_TABLE_NAME_1" value1="${orgName}" />
+		<execute action="CPUsersandorganizations#assertClick" locator-key1="ORGANIZATION_TABLE_NAME_1" value1="${orgName}" />
+		<execute action="CPUsersandorganizationsOrganization#assertTextNotPresent" value1="${userFirstName}" />
 	</command>
 </definition>

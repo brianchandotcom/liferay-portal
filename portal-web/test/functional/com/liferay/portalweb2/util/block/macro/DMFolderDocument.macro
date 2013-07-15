@@ -1,9 +1,5 @@
 <definition>
 	<command name="addPG">
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
 		<execute action="PGDocumentsandmedia#click" locator-key1="ENTRIES_FOLDER" />
 
 		<execute action="PGDocumentsandmediaFolder#assertClick" locator-key1="TOOLBAR_ADD" value1="Add" />
@@ -18,10 +14,6 @@
 	</command>
 
 	<command name="moveToFolderPG">
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
 		<execute action="PGDocumentsandmedia#click" locator-key1="ENTRIES_FOLDER" />
 
 		<execute action="PGDocumentsandmediaFolder#check" locator-key1="FOLDER_ENTRIES_DOCUMENT_CHECKBOX" />

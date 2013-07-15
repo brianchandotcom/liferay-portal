@@ -6,8 +6,16 @@
 	<command name="AddSite">
 		<var name="siteName" value="Site Name" />
 
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
 		<execute macro="Site#addBlankCP">
 			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
 		</execute>
 
 		<execute macro="Site#viewCP">
@@ -18,8 +26,16 @@
 	<command name="DeleteSite">
 		<var name="siteName" value="Site Name" />
 
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
 		<execute macro="Site#addBlankCP">
 			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
 		</execute>
 
 		<execute macro="Site#deleteCP">

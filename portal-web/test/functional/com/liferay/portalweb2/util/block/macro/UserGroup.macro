@@ -1,9 +1,5 @@
 <definition>
 	<command name="addCP">
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="User Groups" />
-		</execute>
-
 		<execute action="CPUsergroups#click" locator-key1="ADD" />
 
 		<execute action="CPUsergroupsAddusergroup#type" locator-key1="NAME_FIELD" value1="${userGroupName}" />
@@ -14,10 +10,6 @@
 	</command>
 
 	<command name="deleteCP">
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="User Groups" />
-		</execute>
-
 		<execute action="CPUsergroups#click" locator-key1="USER_GROUP_TABLE_ACTIONS_1" />
 		<execute action="CPUsergroups#click" locator-key1="USER_GROUP_MENULIST_DELETE" />
 		<execute action="CPUsergroups#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
@@ -26,10 +18,6 @@
 	</command>
 
 	<command name="editCP">
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="User Groups" />
-		</execute>
-
 		<execute action="CPUsergroups#click" locator-key1="USER_GROUP_TABLE_ACTIONS_1" />
 		<execute action="CPUsergroups#click" locator-key1="USER_GROUP_MENULIST_EDIT" />
 

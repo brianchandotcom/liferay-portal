@@ -7,6 +7,10 @@
 		<var name="pageTemplateActive" value="Yes" />
 		<var name="pageTemplateName" value="Page Template Name" />
 
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Page Templates" />
+		</execute>
+
 		<execute macro="PageTemplate#addCP">
 			<var name="pageTemplateActive" value="${pageTemplateActive}" />
 			<var name="pageTemplateName" value="${pageTemplateName}" />
@@ -18,6 +22,10 @@
 		<var name="pageTemplateActiveNew" value="No" />
 		<var name="pageTemplateName" value="Page Template Name" />
 		<var name="pageTemplateNameNew" value="Page Template Name Edit" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Page Templates" />
+		</execute>
 
 		<execute macro="PageTemplate#addCP">
 			<var name="pageTemplateActive" value="${pageTemplateActive}" />

@@ -3,10 +3,6 @@
 	<var name="password" value="test" />
 
 	<command name="addCP">
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Users and Organizations" />
-		</execute>
-
 		<execute action="CPUsersandorganizations#assertClick" locator-key1="ADD" value1="Add" />
 		<execute action="CPUsersandorganizations#assertClick" locator-key1="ADD_USER" value1="User" />
 
@@ -24,10 +20,6 @@
 	</command>
 
 	<command name="deactivateCP">
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Users and Organizations" />
-		</execute>
-
 		<execute action="CPUsersandorganizations#assertClick" locator-key1="SEARCH_ALL_USERS" value1="Search All Users" />
 
 		<execute action="CPUsersandorganizationsViewusers#click" locator-key1="BASIC_SEARCH_ADVANCED" />
@@ -50,10 +42,6 @@
 	</command>
 
 	<command name="deleteCP">
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Users and Organizations" />
-		</execute>
-
 		<execute action="CPUsersandorganizations#assertClick" locator-key1="SEARCH_ALL_USERS" value1="Search All Users" />
 
 		<execute action="CPUsersandorganizationsViewusers#click" locator-key1="BASIC_SEARCH_ADVANCED" />
@@ -76,10 +64,6 @@
 	</command>
 
 	<command name="editPasswordCP">
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Users and Organizations" />
-		</execute>
-
 		<execute action="CPUsersandorganizations#assertClick" locator-key1="SEARCH_ALL_USERS" value1="Search All Users" />
 
 		<execute action="CPUsersandorganizationsViewusers#type" locator-key1="BASIC_SEARCH_FIELD" value1="${userScreenName}" />

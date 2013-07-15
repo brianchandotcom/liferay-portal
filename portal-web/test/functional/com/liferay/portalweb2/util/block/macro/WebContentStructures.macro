@@ -1,9 +1,5 @@
 <definition>
 	<command name="addCP">
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Web Content" />
-		</execute>
-
 		<execute action="CPWebcontent#assertClick" locator-key1="TOOLBAR_MANAGE" value1="Manage" />
 		<execute action="CPWebcontent#assertClick" locator-key1="MANAGE_MENULIST_STRUCTURES" value1="Structures" />
 

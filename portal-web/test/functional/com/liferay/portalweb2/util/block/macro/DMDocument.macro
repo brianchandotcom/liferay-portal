@@ -1,9 +1,5 @@
 <definition>
 	<command name="addPG">
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
 		<execute action="PGDocumentsandmedia#assertClick" locator-key1="TOOLBAR_ADD" value1="Add" />
 		<execute action="PGDocumentsandmedia#assertClick" locator-key1="ADD_MENULIST_BASIC_DOCUMENT" value1="Basic Document" />
 
@@ -22,10 +18,6 @@
 	</command>
 
 	<command name="deletePG">
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
 		<execute action="PGDocumentsandmedia#click" locator-key1="ENTRIES_DOCUMENT" />
 
 		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_INFO_TITLE" value1="${dmDocumentTitle}" />
@@ -37,10 +29,6 @@
 	</command>
 
 	<command name="editPG">
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
 		<execute action="PGDocumentsandmedia#click" locator-key1="ENTRIES_DOCUMENT" />
 
 		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_INFO_TITLE" value1="${dmDocumentTitle}"/>
@@ -74,10 +62,6 @@
 	</command>
 
 	<command name="viewPG">
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
 		<execute action="PGDocumentsandmedia#type" locator-key1="TOOLBAR_SEARCH_FIELD" value1="${dmDocumentTitle}" />
 		<execute action="PGDocumentsandmedia#assertClick" locator-key1="TOOLBAR_SEARCH_BUTTON" value1="Search" />
 		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ENTRIES_SEARCH_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />

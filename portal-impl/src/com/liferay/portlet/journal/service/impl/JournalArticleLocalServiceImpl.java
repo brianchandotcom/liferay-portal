@@ -6179,12 +6179,12 @@ public class JournalArticleLocalServiceImpl
 		Locale articleDefaultLocale = LocaleUtil.fromLanguageId(
 			LocalizationUtil.getDefaultLocale(content));
 
-		Locale[] availableLocales = LanguageUtil.getAvailableLocales();
+		Locale[] availableLocales = LanguageUtil.getAvailableLocales(groupId);
 
 		if (!ArrayUtil.contains(availableLocales, articleDefaultLocale)) {
 			LocaleException le = new LocaleException(
 				"The locale " + articleDefaultLocale +
-					" is not available in company " + companyId);
+					" is not available in site with groupId" + groupId);
 
 			Locale[] sourceAvailableLocales = {articleDefaultLocale};
 

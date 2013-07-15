@@ -120,8 +120,6 @@ public class LoginAction extends PortletAction {
 
 					SessionErrors.add(actionRequest, e.getClass());
 				}
-
-				postProcessAuthFailure(actionRequest, actionResponse);
 			}
 			else if (e instanceof CompanyMaxUsersException ||
 					 e instanceof CookieNotSupportedException ||
@@ -134,14 +132,16 @@ public class LoginAction extends PortletAction {
 					 e instanceof UserScreenNameException) {
 
 				SessionErrors.add(actionRequest, e.getClass());
-
-				postProcessAuthFailure(actionRequest, actionResponse);
 			}
 			else {
 				_log.error(e, e);
 
 				PortalUtil.sendError(e, actionRequest, actionResponse);
+
+				return;
 			}
+
+			postProcessAuthFailure(actionRequest, actionResponse);
 		}
 	}
 

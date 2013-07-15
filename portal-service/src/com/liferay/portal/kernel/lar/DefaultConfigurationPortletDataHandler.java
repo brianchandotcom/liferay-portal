@@ -22,6 +22,10 @@ import javax.portlet.PortletPreferences;
 public class DefaultConfigurationPortletDataHandler
 	extends BasePortletDataHandler {
 
+	public DefaultConfigurationPortletDataHandler() {
+		setDataLevel(DataLevel.PORTLET_INSTANCE);
+	}
+
 	@Override
 	public PortletPreferences deleteData(
 		PortletDataContext portletDataContext, String portletId,

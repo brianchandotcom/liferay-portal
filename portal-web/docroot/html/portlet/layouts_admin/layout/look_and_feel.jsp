@@ -67,7 +67,7 @@ else {
 <h3><liferay-ui:message key="look-and-feel" /></h3>
 
 <aui:fieldset>
-	<aui:input name="devices" type="hidden" value='<%= PropsValues.MOBILE_DEVICE_STYLING_WAP_ENABLED? "regular,wap" : "wap" %>' />
+	<aui:input name="devices" type="hidden" value='<%= PropsValues.MOBILE_DEVICE_STYLING_WAP_ENABLED ? "regular,wap" : "regular" %>' />
 
 	<%
 	String taglibLabel = null;

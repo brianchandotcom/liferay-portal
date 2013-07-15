@@ -177,6 +177,13 @@ public class LayoutRevisionLocalServiceImpl
 			}
 		}
 
+		User user = userPersistence.findByPrimaryKey(
+			layoutRevision.getUserId());
+
+		StagingUtil.deleteRecentLayoutRevisionId(
+			user, layoutRevision.getLayoutSetBranchId(),
+			layoutRevision.getPlid());
+
 		return layoutRevisionPersistence.remove(layoutRevision);
 	}
 

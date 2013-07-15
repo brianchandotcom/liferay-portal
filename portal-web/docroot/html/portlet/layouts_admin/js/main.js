@@ -539,7 +539,7 @@ AUI.add(
 														click: function(event) {
 															event.domEvent.preventDefault();
 
-															instance._setPageLabels();
+															instance._reloadForm();
 
 															pagesDialog.hide();
 														}

@@ -56,6 +56,26 @@ if (endDateTime > 0) {
 	endDate = new Date(endDateTime);
 }
 
+long[] selectedLayoutIds = new long[0];
+
+String treeKey = "layoutsExportTree";
+
+selectedLayoutIds = GetterUtil.getLongValues(StringUtil.split(SessionTreeJSClicks.getOpenNodes(request, treeKey + "SelectedNode"), ','));
+
+List<Layout> exportLayouts = new ArrayList<Layout>();
+
+for (int i = 0; i < selectedLayoutIds.length; i++) {
+	try {
+		exportLayouts.add(LayoutLocalServiceUtil.getLayout(groupId, privateLayout, selectedLayoutIds[i]));
+	}
+	catch (NoSuchLayoutException nsle) {
+	}
+}
+
+if (exportLayouts.isEmpty()) {
+	exportLayouts = LayoutLocalServiceUtil.getLayouts(groupId, privateLayout);
+}
+
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/layouts_admin/export_layouts");
@@ -99,10 +119,10 @@ portletURL.setParameter("rootNodeName", rootNodeName);
 								<aui:fieldset cssClass="portlet-data-section" label="pages-to-export">
 									<liferay-util:include page="/html/portlet/layouts_admin/tree_js.jsp">
 										<liferay-util:param name="tabs1" value='<%= privateLayout ? "private-pages" : "public-pages" %>' />
-										<liferay-util:param name="treeId" value="layoutsExportTree" />
+										<liferay-util:param name="treeId" value="<%= treeKey %>" />
 										<liferay-util:param name="defaultStateChecked" value="1" />
 										<liferay-util:param name="expandFirstNode" value="1" />
-										<liferay-util:param name="saveState" value="0" />
+										<liferay-util:param name="saveState" value="1" />
 										<liferay-util:param name="selectableTree" value="1" />
 									</liferay-util:include>
 
@@ -121,7 +141,7 @@ portletURL.setParameter("rootNodeName", rootNodeName);
 					</c:if>
 
 					<%
-					List<Portlet> portletDataHandlerPortlets = LayoutExporter.getPortletDataHandlerPortlets(liveGroupId, privateLayout);
+					List<Portlet> portletDataHandlerPortlets = LayoutExporter.getPortletDataHandlerPortlets(exportLayouts);
 					%>
 
 					<c:if test="<%= !portletDataHandlerPortlets.isEmpty() %>">

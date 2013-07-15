@@ -430,6 +430,10 @@
 		<put name="portlet_content" value="/portlet/dockbar/preview_panel.jsp" />
 	</definition>
 
+	<definition name="portlet.dockbar.edit_layout_panel" extends="portlet.dockbar">
+		<put name="portlet_content" value="/portlet/dockbar/edit_layout_panel.jsp" />
+	</definition>
+
 	<definition name="portlet.dockbar.view" path="/portlet/dockbar/view.jsp" />
 
 	<!-- Document Library -->

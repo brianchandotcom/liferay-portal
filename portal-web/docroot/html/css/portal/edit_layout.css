@@ -1,0 +1,88 @@
+.lfr-edit-layout-panel {
+	bottom: 0;
+	left: 0;
+	overflow: auto;
+	padding: 10px;
+	position: fixed;
+	top: 0;
+	width: 440px;
+	z-index: 450;
+
+	.button-holder {
+		background-color: #FFFFFF;
+		bottom: 0;
+		margin-left: -10px;
+		padding: 10px;
+		position: fixed;
+		width: 440px;
+	}
+
+	.taglib-form-navigator .accordion {
+		background: #FFF;
+		margin: 30px -10px 50px;
+
+		.accordion-group.lfr-panel-extended {
+			background: #FFF;
+			border: solid #D1D1D1;
+			border-width: 1px 0 0;
+			margin-bottom: 0;
+
+			&:last-child {
+				.toggler-header-collapsed {
+					border-bottom: 1px solid #D1D1D1;
+				}
+			}
+
+			.accordion-heading {
+				cursor: pointer;
+
+				.accordion-toggle {
+					font-size: 16px;
+					font-weight: 300;
+					padding: 6px 10px;
+					text-transform: capitalize;
+				}
+			}
+
+			.accordion-inner {
+				background: #FCFCFC;
+				border: solid #D1D1D1;
+				border-width: 1px 0 0;
+				padding: 6px 10px 15px;
+			}
+		}
+	}
+
+	.lfr-theme-options, .lfr-inherit-theme-options {
+		padding: 10px 20px;
+
+		.lfr-current-theme {
+			background: inherit;
+			border: none;
+		}
+	}
+
+	.input-prepend .add-on {
+		margin: 6px 0 7px 6px;
+	}
+
+	.input-localized {
+		display: inline-block;
+
+		.input-localized-content {
+			margin-left: 6px;
+			margin-top: 0;
+		}
+	}
+}
+
+/*Skin*/
+
+.lfr-edit-layout-panel {
+	background-color: #FFF;
+
+	h1 {
+		font-size: 22px;
+		line-height: 22px;
+	}
+}

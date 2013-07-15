@@ -13,6 +13,8 @@ AUI.add(
 
 		var CSS_ADD_CONTENT = 'lfr-has-add-content';
 
+		var CSS_EDIT_LAYOUT_CONTENT = 'lfr-has-edit-layout';
+
 		var CSS_PREVIEW_CONTENT = 'lfr-has-device-preview';
 
 		var BODY_CONTENT = 'bodyContent';
@@ -25,11 +27,15 @@ AUI.add(
 
 		var STR_ADD_PANEL = 'addPanel';
 
+		var STR_EDIT_LAYOUT_PANEL = 'editLayoutPanel';
+
 		var STR_PREVIEW_PANEL = 'previewPanel';
 
 		var TPL_ADD_CONTENT = '<div class="lfr-add-panel" id="{0}" />';
 
-		var TPL_PREVIEW_PANEL = '<div class="lfr-device-preview-panel loading-animation" id="{0}" />';
+		var TPL_EDIT_LAYOUT_PANEL = '<div class="lfr-edit-layout-panel id="{0}" />';
+
+		var TPL_PREVIEW_PANEL = '<div class="lfr-device-preview-panel id="{0}" />';
 
 		var TPL_LOADING = '<div class="loading-animation" />';
 
@@ -72,7 +78,7 @@ AUI.add(
 					if (!panelNode) {
 						var namespace = instance._namespace;
 
-						var panelSidebarId = namespace + panel + 'Sidebar';
+						var panelSidebarId = namespace + panelId + 'Sidebar';
 
 						panelNode = A.one('#' + panelSidebarId);
 
@@ -103,6 +109,12 @@ AUI.add(
 				var instance = this;
 
 				Dockbar._togglePanel(STR_ADD_PANEL);
+			},
+
+			toggleEditLayoutPanel: function() {
+				var instance = this;
+
+				Dockbar._togglePanel(STR_EDIT_LAYOUT_PANEL);
 			},
 
 			_createCustomizationMask: function(column) {
@@ -170,10 +182,10 @@ AUI.add(
 				Util.openWindow(config);
 			},
 
-			_setLoadingAnimation: function() {
+			_setLoadingAnimation: function(panel) {
 				var instance = this;
 
-				instance.getPanelNode(STR_ADD_PANEL).html(TPL_LOADING);
+				instance.getPanelNode(panel).html(TPL_LOADING);
 			},
 
 			_toggleAppShortcut: function(item, force) {
@@ -267,24 +279,16 @@ AUI.add(
 					);
 				}
 
-				var manageContent = A.one('#' + namespace + 'manageContent');
+				var editLayoutPanel = A.one('#' + namespace + 'editLayoutPanel');
 
-				if (manageContent) {
-					manageContent.delegate(
+				if (editLayoutPanel) {
+					editLayoutPanel.on(
 						EVENT_CLICK,
 						function(event) {
-							event.preventDefault();
+							event.halt();
 
-							manageContent.removeClass('open');
-
-							instance._openWindow(
-								{
-									id: '#' + namespace + 'manageContentDialog'
-								},
-								event.currentTarget
-							);
-						},
-						'.use-dialog a'
+							instance._togglePanel(STR_EDIT_LAYOUT_PANEL);
+						}
 					);
 				}
 
@@ -311,8 +315,6 @@ AUI.add(
 
 									customizationsHandle = null;
 								}
-
-								manageContent.removeClass('open');
 
 								columns.each(
 									function(item, index, collection) {
@@ -375,7 +377,7 @@ AUI.add(
 			function() {
 				var instance = this;
 
-				instance._setLoadingAnimation();
+				instance._setLoadingAnimation(STR_ADD_PANEL);
 
 				var addPanel = A.one('#' + instance._namespace + 'addPanel');
 
@@ -409,6 +411,8 @@ AUI.add(
 			function() {
 				var instance = this;
 
+				instance._setLoadingAnimation(STR_PREVIEW_PANEL);
+
 				var previewPanel = A.one('#' + instance._namespace + 'previewPanel');
 
 				if (previewPanel) {
@@ -423,8 +427,6 @@ AUI.add(
 
 									var panelNode = instance.getPanelNode(STR_PREVIEW_PANEL);
 
-									panelNode.removeClass('loading-animation');
-
 									panelNode.plug(A.Plugin.ParseContent);
 
 									panelNode.setContent(response);
@@ -435,6 +437,40 @@ AUI.add(
 				}
 			},
 			['aui-io-request', 'aui-parse-content', 'event-outside']
+		);
+
+		Liferay.provide(
+			Dockbar,
+			'_editLayoutPanel',
+			function() {
+				var instance = this;
+
+				instance._setLoadingAnimation(STR_EDIT_LAYOUT_PANEL);
+
+				var editLayoutPanel = A.one('#' + instance._namespace + 'editLayoutPanel');
+
+				if (editLayoutPanel) {
+					var uri = editLayoutPanel.attr('href');
+
+					A.io.request(
+						uri,
+						{
+							after: {
+								success: function(event, id, obj) {
+									var response = this.get('responseData');
+
+									var panelNode = instance.getPanelNode(STR_EDIT_LAYOUT_PANEL);
+
+									panelNode.plug(A.Plugin.ParseContent);
+
+									panelNode.setContent(response);
+								}
+							}
+						}
+					);
+				}
+			},
+			['aui-io-request', 'aui-parse-content']
 		);
 
 		Liferay.provide(
@@ -491,6 +527,13 @@ AUI.add(
 				node: null,
 				showFn: Dockbar._previewPanel,
 				tpl: TPL_PREVIEW_PANEL
+			},
+			'editLayoutPanel': {
+				css: CSS_EDIT_LAYOUT_CONTENT,
+				id: STR_EDIT_LAYOUT_PANEL,
+				node: null,
+				showFn: Dockbar._editLayoutPanel,
+				tpl: TPL_EDIT_LAYOUT_PANEL
 			}
 		};
 

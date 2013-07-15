@@ -14,87 +14,75 @@
  */
 --%>
 
-<%@ include file="/html/portlet/dockbar/init.jsp" %>
+<%@ include file="/html/portlet/layouts_admin/init.jsp" %>
 
-<div id="<portlet:namespace />devicePreviewContainer">
+<%@ include file="/html/portlet/layouts_admin/init_attributes.jspf" %>
+
+<liferay-portlet:renderURL varImpl="redirectURL">
+	<portlet:param name="struts_action" value="/layouts_admin/update_layout" />
+
+	<portlet:param name="groupId" value="<%= String.valueOf(liveGroupId) %>" />
+</liferay-portlet:renderURL>
+
+<div id="<portlet:namespace />editLayoutPanel">
 	<button class="close pull-right" id="closePanel" type="button">&times;</button>
 
-	<h1><%= LanguageUtil.get(pageContext, "preview") %></h1>
+	<h1><%= LanguageUtil.get(pageContext, "edit-page") %></h1>
 
-	<aui:nav cssClass="nav-list">
-		<aui:nav-item cssClass="autosize lfr-device-item" data-device="autosize">
-			<div class="device-info">
-				<span class="device-name"><%= LanguageUtil.get(pageContext, "autosize") %></span>
-				<span class="device-dimensions">100%</span>
-			</div>
-		</aui:nav-item>
-
-		<aui:nav-item cssClass="lfr-device-item selected smartphone" data-device="smartphone">
-			<div class="device-info">
-				<span class="device-name"><%= LanguageUtil.get(pageContext, "smartphone") %></span>
-				<span class="device-dimensions">768px</span>
-			</div>
-		</aui:nav-item>
-
-		<aui:nav-item cssClass="lfr-device-item tablet" data-device="tablet">
-			<div class="device-info">
-				<span class="device-name"><%= LanguageUtil.get(pageContext, "tablet") %></span>
-				<span class="device-dimensions">1024px</span>
-			</div>
-		</aui:nav-item>
-
-		<aui:nav-item cssClass="desktop lfr-device-item" data-device="desktop">
-			<div class="device-info">
-				<span class="device-name"><%= LanguageUtil.get(pageContext, "desktop") %></span>
-				<span class="device-dimensions">1280px</span>
-			</div>
-		</aui:nav-item>
-
-		<aui:nav-item cssClass="lfr-device-item" data-device="custom">
-			<p><%= LanguageUtil.get(pageContext, "custom") %> (px)</p>
-
-			<aui:input cssClass="input-mini" inlineField="<%= true %>" label="" name="width" value="400" /><span> &times; </span><aui:input cssClass="input-mini" inlineField="<%= true %>" label="" name="height" value="400" />
-		</aui:nav-item>
-	</aui:nav>
-
-	<div class="alert">
-		<small><%= LanguageUtil.get(pageContext, "preview-may-not-be-accurate") %></small>
-	</div>
+	<liferay-util:include page="/html/portlet/layouts_admin/edit_layout.jsp">
+		<liferay-util:param name="displayStyle" value="panel" />
+		<liferay-util:param name="showToolbar" value="<%= Boolean.FALSE.toString() %>" />
+	</liferay-util:include>
 </div>
 
-<aui:script use="liferay-dockbar-device-preview">
-	new Liferay.Dockbar.DevicePreview(
-		{
-			devices: {
-				autosize: {},
-				custom: {
-					height: '#<portlet:namespace />height',
-					resizable: true,
-					width: '#<portlet:namespace />width'
-				},
-				desktop: {
-					height: 1050,
-					width: 1300
-				},
-				smartphone: {
-					height: 640,
-					preventTransition: true,
-					rotation: true,
-					selected: true,
-					skin: 'smartphone',
-					width: 400
-				},
-				tablet: {
-					height: 900,
-					preventTransition: true,
-					rotation: true,
-					skin: 'tablet',
-					width: 760
+<c:if test='<%= SessionMessages.contains(renderRequest, "requestProcessed") %>'>
+	<aui:script>
+		window.location.href = themeDisplay.getLayoutURL();
+	</aui:script>
+</c:if>
+
+<aui:script use="aui-io-request,aui-loading-mask-deprecated,liferay-dockbar">
+	A.one('#closePanel').on('click', Liferay.Dockbar.toggleEditLayoutPanel, Liferay.Dockbar);
+
+	var BODY = A.getBody();
+	BODY.plug(A.LoadingMask);
+
+	Liferay.once(
+		'submitForm',
+		function(event) {
+			event.preventDefault();
+
+			document.<portlet:namespace />fm.<portlet:namespace />redirect.value = '<%= HttpUtil.addParameter(redirectURL.toString(), liferayPortletResponse.getNamespace() + "selPlid", selPlid) %>';
+
+			BODY.loadingmask.show();
+
+			A.io.request(
+				event.form.get('action'),
+				{
+					dataType: 'json',
+					form: {
+						id: event.form.get('id')
+					},
+					after: {
+						success: function(event, id, obj) {
+							var response = this.get('responseData');
+
+							var panel = A.one('#<portlet:namespace />editLayoutPanel');
+
+							panel.empty();
+
+							panel.plug(A.Plugin.ParseContent);
+
+							panel.setContent(response);
+
+							BODY.loadingmask.hide();
+						},
+						failure: function(event) {
+							BODY.loadingMask.hide();
+						}
+					}
 				}
-			},
-			inputHeight: '#<portlet:namespace />height',
-			inputWidth: '#<portlet:namespace />width',
-			namespace: '<portlet:namespace />'
+			);
 		}
 	);
 </aui:script>

@@ -2136,6 +2136,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			parentGroupIdComparator = StringPool.NOT_EQUAL;
 		}
 
+		keywords = getRealName(companyId, keywords);
+
 		if (obc == null) {
 			obc = new GroupNameComparator(true);
 		}
@@ -2350,6 +2352,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			parentGroupIdComparator = StringPool.NOT_EQUAL;
 		}
 
+		keywords = getRealName(companyId, keywords);
+
 		if (obc == null) {
 			obc = new GroupNameComparator(true);
 		}
@@ -2560,6 +2564,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			OrderByComparator obc)
 		throws SystemException {
 
+		keywords = getRealName(companyId, keywords);
+
 		if (obc == null) {
 			obc = new GroupNameComparator(true);
 		}
@@ -2752,6 +2758,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			OrderByComparator obc)
 		throws SystemException {
 
+		keywords = getRealName(companyId, keywords);
+
 		if (obc == null) {
 			obc = new GroupNameComparator(true);
 		}
@@ -2891,6 +2899,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			parentGroupIdComparator = StringPool.NOT_EQUAL;
 		}
 
+		keywords = getRealName(companyId, keywords);
+
 		return groupFinder.countByKeywords(
 			companyId, parentGroupId, parentGroupIdComparator, keywords,
 			params);
@@ -2972,6 +2982,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			parentGroupIdComparator = StringPool.NOT_EQUAL;
 		}
 
+		keywords = getRealName(companyId, keywords);
+
 		return groupFinder.countByKeywords(
 			companyId, classNameIds, parentGroupId, parentGroupIdComparator,
 			keywords, params);
@@ -3048,6 +3060,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			LinkedHashMap<String, Object> params)
 		throws SystemException {
 
+		keywords = getRealName(companyId, keywords);
+
 		return groupFinder.countByKeywords(
 			companyId, classNameIds, keywords, params);
 	}
@@ -3112,6 +3126,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			long companyId, String keywords,
 			LinkedHashMap<String, Object> params)
 		throws SystemException {
+
+		keywords = getRealName(companyId, keywords);
 
 		return groupFinder.countByKeywords(companyId, keywords, params);
 	}

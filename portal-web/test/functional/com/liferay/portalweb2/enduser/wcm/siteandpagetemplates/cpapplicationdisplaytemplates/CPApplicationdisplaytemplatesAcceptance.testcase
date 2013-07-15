@@ -5,13 +5,20 @@
 		<execute macro="User#firstLoginPG" />
 	</set-up>
 
-	<command name="addPG">
-		<var name="adtFile" value="portlet_display_template_basic.ftl" />
+	<command name="addCP">
 		<var name="adtType" value="Blogs" />
+		<var name="adtFile" value="portlet_display_template_basic.ftl" />
+		<var name="key_adtTitle" value="Blogs" />
 		<var name="portletName" value="Blogs" />
-		<var name="key_adtTitle" value="${adtType}" />
-		<var name="entryContent" value="Blogs Entry Content" />
-		<var name="entryTitle" value="Blogs Entry Title" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Application Display Templates" />
+		</execute>
+
+		<execute macro="ApplicationDisplayTemplates#addCP">
+			<var name="adtFile" value="${adtFile}" />
+			<var name="adtType" value="${adtType}" />
+		</execute>
 
 		<execute macro="Page#addPG">
 			<var name="pageName" value="${pageName}" />
@@ -23,20 +30,6 @@
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="ApplicationDisplayTemplates#addPG">
-			<var name="adtFile" value="${adtFile}" />
-			<var name="adtTitle" value="${adtTitle}" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="ApplicationDisplayTemplates#addADTviaPortletPG">
-			<var name="adtTitle" value="${adtTitle}" />
-			<var name="adtType" value="${adtType}" />
 		</execute>
 
 		<execute macro="ApplicationDisplayTemplates#viewADTviaPortletPG">
@@ -44,24 +37,28 @@
 		</execute>
 	</command>
 
-	<command name="addPGviaBlogs">
+	<command name="addCPviaBlogs">
 		<var name="adtFile" value="portlet_display_template_basic.ftl" />
 		<var name="adtType" value="Blogs" />
-		<var name="portletName" value="Blogs" />
-		<var name="key_adtTitle" value="${adtType}" />
-		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
+		<var name="entryContent" value="Blogs Entry Content" />
+		<var name="key_adtTitle" value="Blogs" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Application Display Templates" />
+		</execute>
+
+		<execute macro="ApplicationDisplayTemplates#addCP">
+			<var name="adtFile" value="${adtFile}" />
+			<var name="adtType" value="${adtType}" />
+		</execute>
 
 		<execute macro="Page#addPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="${portletName}" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="portletName" value="Blogs" />
 		</execute>
 
 		<execute macro="BlogsEntry#addPG">
@@ -73,17 +70,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="ApplicationDisplayTemplates#addPG">
-			<var name="adtFile" value="${adtFile}" />
-			<var name="adtTitle" value="${adtTitle}" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
 		<execute macro="ApplicationDisplayTemplates#addADTviaPortletPG">
-			<var name="adtTitle" value="${adtTitle}" />
 			<var name="adtType" value="${adtType}" />
 		</execute>
 
@@ -101,13 +88,11 @@
 
 		<execute macro="BlogsEntry#tearDownCP" />
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Application Display Templates" />
 		</execute>
 
-		<execute macro="ApplicationDisplayTemplates#tearDownPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
+		<execute macro="ApplicationDisplayTemplates#tearDownCP" />
 
 		<execute macro="ApplicationDisplayTemplates#tearDownADTviaPortletPG">
 			<var name="defaultADT" value="${defaultADT}" />

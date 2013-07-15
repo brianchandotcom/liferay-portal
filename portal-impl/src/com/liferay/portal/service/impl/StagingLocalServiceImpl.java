@@ -32,7 +32,6 @@ import com.liferay.portal.service.base.StagingLocalServiceBaseImpl;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
-import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -153,7 +152,7 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 			folder.getGroupId(), userId, Group.class.getName(),
 			folder.getGroupId(), PortletKeys.SITES_ADMIN, folder.getFolderId(),
 			new UnsyncByteArrayInputStream(byteBuffer),
-			fileName + fileEntriesCount, ContentTypes.APPLICATION_ZIP);
+			fileName + fileEntriesCount, ContentTypes.APPLICATION_ZIP, false);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

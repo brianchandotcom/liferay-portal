@@ -614,6 +614,8 @@ public class PropsValues {
 
 	public static final long DL_FILE_MAX_SIZE = GetterUtil.getLong(PropsUtil.get(PropsKeys.DL_FILE_MAX_SIZE));
 
+	public static final boolean DL_FILE_METADATA_EXTRACT_TIKA_FORK = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.DL_FILE_METADATA_EXTRACT_TIKA_FORK));
+
 	public static final boolean DL_FILE_RANK_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.DL_FILE_RANK_ENABLED));
 
 	public static final int DL_FILE_RANK_MAX_SIZE = GetterUtil.getInteger(PropsUtil.get(PropsKeys.DL_FILE_RANK_MAX_SIZE));

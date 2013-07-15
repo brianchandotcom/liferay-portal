@@ -711,6 +711,8 @@ public interface PropsKeys {
 
 	public static final String DL_FILE_MAX_SIZE = "dl.file.max.size";
 
+	public static final String DL_FILE_METADATA_EXTRACT_TIKA_FORK = "dl.file.metadata.extract.tika.fork";
+
 	public static final String DL_FILE_RANK_ENABLED = "dl.file.rank.enabled";
 
 	public static final String DL_FILE_RANK_MAX_SIZE = "dl.file.rank.max.size";

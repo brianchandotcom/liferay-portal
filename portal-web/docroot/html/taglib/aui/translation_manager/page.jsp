@@ -29,7 +29,7 @@
 		<select class="hide lfr-translation-manager-default-locale">
 
 			<%
-			Locale[] locales = LanguageUtil.getAvailableLocales();
+			Locale[] locales = LanguageUtil.getAvailableLocales(themeDisplay.getSiteGroupId());
 
 			for (int i = 0; i < locales.length; i++) {
 			%>

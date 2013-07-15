@@ -408,15 +408,13 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 					.toggler-header-collapsed {
 						.accordion-toggle {
-							background: #F2F2F2 url(../images/custom/arrow_option_closed.png) no-repeat right;
-							background-size: 20px 20px;
+							background: #F2F2F2 url(../images/custom/arrow_option.png) no-repeat right 0;
 						}
 					}
 
 					.toggler-header-expanded {
 						.accordion-toggle {
-							background: #F2F2F2 url(../images/custom/arrow_option_open.png) no-repeat right;
-							background-size: 20px 20px;
+							background: #F2F2F2 url(../images/custom/arrow_option.png) no-repeat right -20px;
 						}
 					}
 				}
@@ -521,20 +519,18 @@ $dockbarOpenGradientStart: #0EA6F9;
 				.control-panel-site-selector {
 					.dropdown-toggle {
 						i.caret {
-							background: url(../images/custom/arrow_option_down.png) no-repeat left top;
-							width: 20px;
-							height: 20px;
-							background-size: 20px;
+							background: url(../images/custom/arrow_option_down.png) no-repeat 0 0;
 							border-width: 0;
+							height: 20px;
 							margin: 0;
+							width: 20px;
 						}
 					}
 
 					&.open {
 						.dropdown-toggle {
 							i.caret {
-								background: url(../images/custom/arrow_option_down_active.png) no-repeat left top;
-								background-size: 20px;
+								background: url(../images/custom/arrow_option_down.png) no-repeat 0 -20px;
 							}
 						}
 					}

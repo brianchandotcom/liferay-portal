@@ -222,7 +222,7 @@ public class DocumentConversionUtil {
 
 		FileUtil.write(
 			file, unsyncByteArrayOutputStream.unsafeGetByteArray(), 0,
-			unsyncByteArrayOutputStream.size());
+			unsyncByteArrayOutputStream.size(), false);
 
 		return file;
 	}

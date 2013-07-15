@@ -26,8 +26,11 @@ String velocityTemplateId = null;
 
 String velocityTemplateContent = null;
 
+Group group = null;
+
 if (selLayout != null) {
-	Group group = selLayout.getGroup();
+	group = selLayout.getGroup();
+
 	Theme curTheme = selLayout.getTheme();
 
 	String themeId = curTheme.getThemeId();
@@ -86,10 +89,36 @@ if (selLayout != null) {
 
 <div class="customization-settings">
 
-	<%
-	if (Validator.isNotNull(velocityTemplateId) && Validator.isNotNull(velocityTemplateContent)) {
-		RuntimePageUtil.processCustomizationSettings(pageContext, new StringTemplateResource(velocityTemplateId, velocityTemplateContent));
-	}
-	%>
+	<c:choose>
+		<c:when test="<%= themeDisplay.isStateExclusive() %>">
+			<aui:button name="manageCustomization" value="show-page-customizations" />
+			<div class="hide layout-customizable-controls" id="<portlet:namespace />layout-customizable-controls">
+				<span title='<liferay-ui:message key="customizable-help" />'>
+					<aui:input cssClass="layout-customizable-checkbox" helpMessage='<%= group.isLayoutPrototype() ? "modifiable-help" : "customizable-help" %>' id="TypeSettingsProperties--[COLUMN_ID]-customizable--" label='<%= (group.isLayoutSetPrototype() || group.isLayoutPrototype()) ? "modifiable" : "customizable" %>' name="TypeSettingsProperties--[COLUMN_ID]-customizable--" type="checkbox" useNamespace="<%= false %>" />
+				</span>
+			</div>
+		</c:when>
+		<c:otherwise>
+			<%
+			if (Validator.isNotNull(velocityTemplateId) && Validator.isNotNull(velocityTemplateContent)) {
+				RuntimePageUtil.processCustomizationSettings(pageContext, new StringTemplateResource(velocityTemplateId, velocityTemplateContent));
+			}
+			%>
+		</c:otherwise>
+	</c:choose>
 
 </div>
+
+<c:if test="<%= themeDisplay.isStateExclusive() %>">
+	<aui:script use="liferay-layout-customization-settings">
+		new Liferay.LayoutCustomizationSettings(
+			{
+				namespace: '<portlet:namespace />',
+				strings: {
+					HIDE: '<%= LanguageUtil.get(pageContext, "hide-page-customizations")%>',
+					SHOW: '<%= LanguageUtil.get(pageContext, "show-page-customizations")%>'
+				}
+			}
+		);
+	</aui:script>
+</c:if>

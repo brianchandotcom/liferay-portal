@@ -185,18 +185,6 @@ String toggleControlsState = GetterUtil.getString(SessionClicks.get(request, "li
 			<aui:nav-item anchorId="editLayoutPanel" href="<%= editLayoutURL %>" iconClass="icon-edit" label="preview" />
 		</c:if>
 
-		<c:if test="<%= themeDisplay.isShowPageCustomizationIcon() %>">
-			<c:if test="<%= !themeDisplay.isStateMaximized() %>">
-				<aui:nav-item anchorCssClass='<%= themeDisplay.isFreeformLayout() ? "disabled" : StringPool.BLANK %>' anchorId="manageCustomization" cssClass="manage-page-customization" href='<%= themeDisplay.isFreeformLayout() ? null : "javascript:;" %>' iconClass="icon-user" label='<%= group.isLayoutPrototype() ? "page-modifications" : "page-customizations" %>' title='<%= themeDisplay.isFreeformLayout() ? "it-is-not-possible-to-specify-customization-settings-for-freeform-layouts" : null %>' />
-			</c:if>
-
-			<div class="hide layout-customizable-controls" id="<portlet:namespace />layout-customizable-controls">
-				<span title='<liferay-ui:message key="customizable-help" />'>
-					<aui:input cssClass="layout-customizable-checkbox" helpMessage='<%= group.isLayoutPrototype() ? "modifiable-help" : "customizable-help" %>' id="TypeSettingsProperties--[COLUMN_ID]-customizable--" label='<%= (group.isLayoutSetPrototype() || group.isLayoutPrototype()) ? "modifiable" : "customizable" %>' name="TypeSettingsProperties--[COLUMN_ID]-customizable--" type="checkbox" useNamespace="<%= false %>" />
-				</span>
-			</div>
-		</c:if>
-
 		<c:if test="<%= !group.isControlPanel() && (!group.hasStagingGroup() || group.isStagingGroup()) && (hasLayoutUpdatePermission || (layoutTypePortlet.isCustomizable() && layoutTypePortlet.isCustomizedView() && hasLayoutCustomizePermission) || PortletPermissionUtil.hasConfigurationPermission(permissionChecker, themeDisplay.getSiteGroupId(), layout, ActionKeys.CONFIGURATION)) %>">
 			<liferay-util:buffer var="editControlsLabel">
 				<i class="controls-state-icon <%= toggleControlsState.equals("visible") ? "icon-ok" : "icon-remove" %>"></i>

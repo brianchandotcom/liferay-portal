@@ -25,13 +25,7 @@ String strutsAction = ParamUtil.getString(request, "struts_action");
 		<aui:nav-item cssClass="hide" dropdown="<%= true %>" id="actionsButtonContainer" label="actions">
 
 			<%
-			String taglibURL = "javascript:" + renderResponse.getNamespace() + "deleteEntries();";
-			%>
-
-			<aui:nav-item href="<%= taglibURL %>" iconClass='<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "icon-trash" : "icon-remove" %>' label='<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "move-to-the-recycle-bin" : "delete" %>' />
-
-			<%
-			taglibURL = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.EXPIRE + "'});";
+			String taglibURL = "javascript:Liferay.fire('" + renderResponse.getNamespace() + "editEntry', {action: '" + Constants.EXPIRE + "'});";
 			%>
 
 			<aui:nav-item href="<%= taglibURL %>" label="expire" />
@@ -41,6 +35,12 @@ String strutsAction = ParamUtil.getString(request, "struts_action");
 			%>
 
 			<aui:nav-item href="<%= taglibURL %>" label="move" />
+
+			<%
+			taglibURL = "javascript:" + renderResponse.getNamespace() + "deleteEntries();";
+			%>
+
+			<aui:nav-item href="<%= taglibURL %>" iconClass='<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "icon-trash" : "icon-remove" %>' label='<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "move-to-the-recycle-bin" : "delete" %>' />
 		</aui:nav-item>
 
 		<liferay-util:include page="/html/portlet/journal/add_button.jsp" />

@@ -16,6 +16,8 @@ package com.liferay.portal.lar.backgroundtask;
 
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatus;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusRegistryUtil;
 import com.liferay.portal.kernel.backgroundtask.BaseBackgroundTaskExecutor;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -40,6 +42,9 @@ public class LayoutStagingBackgroundTaskExecutor
 	extends BaseBackgroundTaskExecutor {
 
 	public LayoutStagingBackgroundTaskExecutor() {
+		setBackgroundTaskStatusMessageTranslator(
+			new BaseExportImportBackgroundTaskStatusMessageTranslator());
+
 		setSerial(true);
 	}
 
@@ -68,6 +73,12 @@ public class LayoutStagingBackgroundTaskExecutor
 		File larFile = LayoutLocalServiceUtil.exportLayoutsAsFile(
 			sourceGroupId, privateLayout, layoutIds, parameterMap, startDate,
 			endDate);
+
+		BackgroundTaskStatus backgroundTaskStatus =
+			BackgroundTaskStatusRegistryUtil.getBackgroundTaskStatus(
+				backgroundTask.getBackgroundTaskId());
+
+		backgroundTaskStatus.clearAttributes();
 
 		MissingReferences missingReferences = null;
 

@@ -22,6 +22,9 @@ import com.liferay.portal.model.StagedModel;
 public interface PortletDataHandlerStatusMessageSender {
 
 	public void sendStatusMessage(
+		String messageType, ManifestSummary manifestSummary);
+
+	public void sendStatusMessage(
 		String messageType, String portletId, ManifestSummary manifestSummary);
 
 	public <T extends StagedModel> void sendStatusMessage(

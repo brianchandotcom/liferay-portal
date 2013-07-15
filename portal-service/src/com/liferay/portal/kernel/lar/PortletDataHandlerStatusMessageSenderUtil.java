@@ -32,6 +32,13 @@ public class PortletDataHandlerStatusMessageSenderUtil {
 	}
 
 	public static void sendStatusMessage(
+		String messageType, ManifestSummary manifestSummary) {
+
+		getPortletDataHandlerStatusMessageSender().sendStatusMessage(
+			messageType, manifestSummary);
+	}
+
+	public static void sendStatusMessage(
 		String messageType, String portletId, ManifestSummary manifestSummary) {
 
 		getPortletDataHandlerStatusMessageSender().sendStatusMessage(

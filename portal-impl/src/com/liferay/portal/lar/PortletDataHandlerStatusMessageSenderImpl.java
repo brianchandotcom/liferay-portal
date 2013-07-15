@@ -32,29 +32,28 @@ public class PortletDataHandlerStatusMessageSenderImpl
 
 	@Override
 	public void sendStatusMessage(
+		String messageType, ManifestSummary manifestSummary) {
+
+		if (!BackgroundTaskThreadLocal.hasBackgroundTask()) {
+			return;
+		}
+
+		Message message = createMessage(messageType, manifestSummary);
+
+		_singleDestinationMessageSender.send(message);
+	}
+
+	@Override
+	public void sendStatusMessage(
 		String messageType, String portletId, ManifestSummary manifestSummary) {
 
 		if (!BackgroundTaskThreadLocal.hasBackgroundTask()) {
 			return;
 		}
 
-		Message message = new Message();
+		Message message = createMessage(messageType, manifestSummary);
 
-		message.put(
-			"backgroundTaskId",
-			BackgroundTaskThreadLocal.getBackgroundTaskId());
-		message.put("messageType", messageType);
 		message.put("portletId", portletId);
-
-		Map<String, LongWrapper> modelAdditionCounters =
-			manifestSummary.getModelAdditionCounters();
-
-		message.put("modelAdditionCounters", modelAdditionCounters);
-
-		Map<String, LongWrapper> modelDeletionCounters =
-			manifestSummary.getModelDeletionCounters();
-
-		message.put("modelDeletionCounters", modelDeletionCounters);
 
 		_singleDestinationMessageSender.send(message);
 	}
@@ -67,11 +66,31 @@ public class PortletDataHandlerStatusMessageSenderImpl
 			return;
 		}
 
+		Message message = createMessage(messageType, manifestSummary);
+
+		message.put(
+			"stagedModelType", stagedModel.getStagedModelType().toString());
+
+		message.put("uuid", stagedModel.getUuid());
+
+		_singleDestinationMessageSender.send(message);
+	}
+
+	public void setSingleDestinationMessageSender(
+		SingleDestinationMessageSender singleDestinationMessageSender) {
+
+		_singleDestinationMessageSender = singleDestinationMessageSender;
+	}
+
+	protected Message createMessage(
+		String messageType, ManifestSummary manifestSummary) {
+
 		Message message = new Message();
 
 		message.put(
 			"backgroundTaskId",
 			BackgroundTaskThreadLocal.getBackgroundTaskId());
+
 		message.put("messageType", messageType);
 
 		Map<String, LongWrapper> modelAdditionCounters =
@@ -84,20 +103,9 @@ public class PortletDataHandlerStatusMessageSenderImpl
 
 		message.put("modelDeletionCounters", modelDeletionCounters);
 
-		message.put(
-			"stagedModelType", stagedModel.getStagedModelType().toString());
-		message.put("uuid", stagedModel.getUuid());
-
-		_singleDestinationMessageSender.send(message);
+		return message;
 	}
 
-	public void setSingleDestinationMessageSender(
-		SingleDestinationMessageSender singleDestinationMessageSender) {
-
-		_singleDestinationMessageSender = singleDestinationMessageSender;
-	}
-
-	private SingleDestinationMessageSender
-		_singleDestinationMessageSender;
+	private SingleDestinationMessageSender _singleDestinationMessageSender;
 
 }

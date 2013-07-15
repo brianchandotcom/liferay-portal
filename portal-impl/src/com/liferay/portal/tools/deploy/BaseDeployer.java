@@ -1667,15 +1667,7 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 		String pluginServletContextName = deployDir.substring(
 			0, deployDir.length() - 4);
 
-		String adminAppListOptions = "";
-
-		if (Validator.isNotNull(
-				PropsValues.AUTO_DEPLOY_WEBSPHERE_WSADMIN_APP_MANAGER_LIST_OPTIONS)) {
-
-			adminAppListOptions = StringPool.APOSTROPHE +
-				PropsValues.AUTO_DEPLOY_WEBSPHERE_WSADMIN_APP_MANAGER_LIST_OPTIONS +
-				StringPool.APOSTROPHE;
-		}
+		String adminAppListOptions = _getAdminListOptions();
 
 		wsadminContent = StringUtil.replace(
 			wsadminContent,
@@ -1709,8 +1701,7 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 				"${plugin.servlet.context.name}"
 			},
 			new String[] {
-				destDir,
-				pluginApplicationName, pluginServletContextName
+				destDir, pluginApplicationName, pluginServletContextName
 			});
 
 		String wsadminFileName = FileUtil.createTempFileName("py");
@@ -2370,6 +2361,20 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 	protected boolean unpackWar;
 	protected String utilTaglibDTD;
 	protected List<String> wars;
+
+	private String _getAdminListOptions() {
+		String adminAppListOptions =
+			PropsValues.AUTO_DEPLOY_WEBSPHERE_WSADMIN_APP_MANAGER_LIST_OPTIONS;
+
+		if (Validator.isNull(adminAppListOptions)) {
+			return StringPool.BLANK;
+		}
+
+		adminAppListOptions =
+			StringPool.APOSTROPHE + adminAppListOptions + StringPool.APOSTROPHE;
+
+		return adminAppListOptions;
+	}
 
 	private static final String _PORTAL_CLASS_LOADER =
 		"com.liferay.support.tomcat.loader.PortalClassLoader";

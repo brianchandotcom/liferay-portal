@@ -131,7 +131,7 @@ public class ExportImportAction extends ImportLayoutsAction {
 					SessionMessages.add(
 						actionRequest,
 						liferayPortletConfig.getPortletId() +
-							SessionMessages.KEY_SUFFIX_REFRESH_PORTLET,
+							SessionMessages.KEY_SUFFIX_CLOSE_REFRESH_PORTLET,
 						portlet.getPortletId());
 
 					sendRedirect(actionRequest, actionResponse, redirect);

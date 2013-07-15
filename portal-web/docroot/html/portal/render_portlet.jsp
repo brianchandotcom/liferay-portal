@@ -1061,6 +1061,58 @@ if (themeDisplay.isStatePopUp()) {
 
 <%
 	}
+
+	String closeRefreshPortletId = null;
+
+	if ((closeRefreshPortletId = (String)SessionMessages.get(renderRequestImpl, portletId + SessionMessages.KEY_SUFFIX_CLOSE_REFRESH_PORTLET)) != null) {
+		Map<String, String> refreshPortletData = (Map<String, String>)SessionMessages.get(renderRequestImpl, portletId + SessionMessages.KEY_SUFFIX_REFRESH_PORTLET_DATA);
+%>
+
+		<aui:script use="aui-base">
+			var dialog = Liferay.Util.getWindow();
+
+			var hideDialogSignature = '<portlet:namespace />hideRefreshDialog|*';
+
+			dialog.detach(hideDialogSignature);
+
+			dialog.on(
+				'<portlet:namespace />hideRefreshDialog|visibleChange',
+				function(event) {
+					if (!event.newVal && event.src !== 'hideLink') {
+						var refreshWindow = dialog._refreshWindow || Liferay.Util.getTop();
+
+						if (window.parent) {
+							var data = {
+								portletAjaxable: <%= !((portletResourcePortlet != null && !portletResourcePortlet.isAjaxable()) || SessionMessages.contains(renderRequestImpl, portletId + SessionMessages.KEY_SUFFIX_PORTLET_NOT_AJAXABLE)) %>
+
+								<c:if test="<%= (refreshPortletData != null) && !refreshPortletData.isEmpty() %>">
+
+									<%
+									for (Map.Entry<String, String> entry : refreshPortletData.entrySet()) {
+									%>
+
+										, '<%= entry.getKey() %>': <%= entry.getValue() %>
+
+									<%
+									}
+									%>
+
+								</c:if>
+
+							};
+
+							refreshWindow.Liferay.Portlet.refresh('#p_p_id_<%= closeRefreshPortletId %>_', data);
+						}
+					}
+					else {
+						dialog.detach(hideDialogSignature);
+					}
+				}
+			);
+		</aui:script>
+
+<%
+	}
 }
 
 themeDisplay.setScopeGroupId(previousScopeGroupId);

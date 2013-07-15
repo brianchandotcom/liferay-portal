@@ -32,15 +32,26 @@
 	visibility: hidden;
 }
 
+#banner .configuration-title {
+	background-color: #676767;
+	color: #FFF;
+	float: right;
+	font-size: 0.5em;
+	line-height: 51px;
+	padding: 0 20px;
+}
+
 #banner .logo {
+	float: left;
 	margin-right: 20px;
 }
 
 #banner .site-name {
-	background-image: url(<%= themeDisplay.getPathThemeImages() %>/common/configuration.png);
-	font-size: 0.5em;
+	color: #333;
+	font-size: 1em;
 	line-height: 1;
 	margin-left: 0;
+	vertical-align: middle;
 }
 
 #footer {
@@ -103,8 +114,19 @@
 		margin-top: 11px;
 	}
 
+	#banner .configuration-title {
+		padding: 0;
+		text-align: center;
+		width: 100%;
+	}
+
+	#banner .logo {
+		margin-bottom: 20px;
+	}
+
 	#banner .site-title {
 		margin-bottom: 15px;
+		overflow: hidden;
 	}
 
 	#banner .site-name, .logo {
@@ -112,7 +134,7 @@
 	}
 
 	#banner .site-name {
-		font-size: 0.5em;
+		font-size: 1em;
 		margin-top: 0;
 	}
 }

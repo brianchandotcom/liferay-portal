@@ -33,9 +33,14 @@
 					%>
 
 					<img alt="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>" height="<%= themeDisplay.getCompanyLogoHeight() %>" src="<%= HtmlUtil.escape(themeDisplay.getCompanyLogo()) %>" width="<%= themeDisplay.getCompanyLogoWidth() %>" />
+
+					<span class="site-name">
+						<%= PropsValues.COMPANY_DEFAULT_NAME %>
+					</span>
 				</span>
 
-				<span class="site-name" title="<liferay-ui:message key="basic-configuration" />">
+				<span class="configuration-title" title="<liferay-ui:message key="basic-configuration" />">
+					<i class="icon-cog"></i>
 					<liferay-ui:message key="basic-configuration" />
 				</span>
 			</h1>

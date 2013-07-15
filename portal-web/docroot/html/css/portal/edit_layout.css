@@ -8,70 +8,73 @@
 	width: 440px;
 	z-index: 450;
 
-	.button-holder {
-		background-color: #FFFFFF;
-		bottom: 0;
-		margin-left: -10px;
-		padding: 10px;
-		position: fixed;
-		width: 440px;
-	}
+	.taglib-form-navigator {
 
-	.taglib-form-navigator .accordion {
-		background: #FFF;
-		margin: 30px -10px 50px;
+		.button-holder {
+			background-color: #FFFFFF;
+			bottom: 0;
+			margin-left: -10px;
+			padding: 10px;
+			position: fixed;
+			width: 440px;
+		}
 
-		.accordion-group.lfr-panel-extended {
+		.accordion {
 			background: #FFF;
-			border: solid #D1D1D1;
-			border-width: 1px 0 0;
-			margin-bottom: 0;
+			margin: 30px -10px 50px;
 
-			&:last-child {
-				.toggler-header-collapsed {
-					border-bottom: 1px solid #D1D1D1;
-				}
-			}
-
-			.accordion-heading {
-				cursor: pointer;
-
-				.accordion-toggle {
-					font-size: 16px;
-					font-weight: 300;
-					padding: 6px 10px;
-					text-transform: capitalize;
-				}
-			}
-
-			.accordion-inner {
-				background: #FCFCFC;
+			.accordion-group.lfr-panel-extended {
+				background: #FFF;
 				border: solid #D1D1D1;
 				border-width: 1px 0 0;
-				padding: 6px 10px 15px;
+				margin-bottom: 0;
+
+				&:last-child {
+					.toggler-header-collapsed {
+						border-bottom: 1px solid #D1D1D1;
+					}
+				}
+
+				.accordion-heading {
+					cursor: pointer;
+
+					.accordion-toggle {
+						font-size: 16px;
+						font-weight: 300;
+						padding: 6px 10px;
+						text-transform: capitalize;
+					}
+				}
+
+				.accordion-inner {
+					background: #FCFCFC;
+					border: solid #D1D1D1;
+					border-width: 1px 0 0;
+					padding: 6px 10px 15px;
+				}
 			}
 		}
-	}
 
-	.lfr-theme-options, .lfr-inherit-theme-options {
-		padding: 10px 20px;
+		.lfr-theme-options, .lfr-inherit-theme-options {
+			padding: 10px 20px;
 
-		.lfr-current-theme {
-			background: inherit;
-			border: none;
+			.lfr-current-theme {
+				background: inherit;
+				border: none;
+			}
 		}
-	}
 
-	.input-prepend .add-on {
-		margin: 6px 0 7px 6px;
-	}
+		.input-prepend .add-on {
+			margin: 6px 0 7px 6px;
+		}
 
-	.input-localized {
-		display: inline-block;
+		.input-localized {
+			display: inline-block;
 
-		.input-localized-content {
-			margin-left: 6px;
-			margin-top: 0;
+			.input-localized-content {
+				margin-left: 6px;
+				margin-top: 0;
+			}
 		}
 	}
 }

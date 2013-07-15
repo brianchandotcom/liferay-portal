@@ -104,13 +104,16 @@ if (!group.isUser() && selLayout.isTypePortlet()) {
 }
 
 String[][] categorySections = {mainSections};
+
+String displayStyle = ParamUtil.getString(request, "displayStyle");
+Boolean showAddAction = ParamUtil.getBoolean(request, "showAddAction", true);
 %>
 
 <liferay-util:include page="/html/portlet/layouts_admin/add_layout.jsp" />
 
 <aui:nav-bar>
 	<aui:nav id="layoutsNav">
-		<c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, selPlid, ActionKeys.ADD_LAYOUT) && PortalUtil.isLayoutParentable(selLayout.getType()) %>">
+		<c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, selPlid, ActionKeys.ADD_LAYOUT) && PortalUtil.isLayoutParentable(selLayout.getType()) && showAddAction %>">
 			<aui:nav-item data-value="add-child-page" iconClass="icon-plus" label="add-child-page" />
 		</c:if>
 		<c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, selPlid, ActionKeys.PERMISSIONS) %>">
@@ -235,7 +238,8 @@ String[][] categorySections = {mainSections};
 					var popup;
 
 					var clickHandler = function(event) {
-						var dataValue = event.target.ancestor().attr('data-value');
+
+						var dataValue = event.target.ancestor().attr('data-value') || event.target.attr('data-value');
 
 						if (dataValue === 'add-child-page') {
 							content = A.one('#<portlet:namespace />addLayout');
@@ -320,6 +324,7 @@ String[][] categorySections = {mainSections};
 			<liferay-ui:form-navigator
 				categoryNames="<%= _CATEGORY_NAMES %>"
 				categorySections="<%= categorySections %>"
+				displayStyle="<%= displayStyle %>"
 				jspPath="/html/portlet/layouts_admin/layout/"
 				showButtons="<%= (selLayout.getGroupId() == groupId) && SitesUtil.isLayoutUpdateable(selLayout) && LayoutPermissionUtil.contains(permissionChecker, selPlid, ActionKeys.UPDATE) %>"
 			/>

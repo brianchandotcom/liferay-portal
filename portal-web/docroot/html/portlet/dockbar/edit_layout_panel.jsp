@@ -20,7 +20,6 @@
 
 <liferay-portlet:renderURL varImpl="redirectURL">
 	<portlet:param name="struts_action" value="/layouts_admin/update_layout" />
-
 	<portlet:param name="groupId" value="<%= String.valueOf(liveGroupId) %>" />
 </liferay-portlet:renderURL>
 
@@ -31,7 +30,7 @@
 
 	<liferay-util:include page="/html/portlet/layouts_admin/edit_layout.jsp">
 		<liferay-util:param name="displayStyle" value="panel" />
-		<liferay-util:param name="showToolbar" value="<%= Boolean.FALSE.toString() %>" />
+		<liferay-util:param name="showAddAction" value="<%= Boolean.FALSE.toString() %>" />
 	</liferay-util:include>
 </div>
 

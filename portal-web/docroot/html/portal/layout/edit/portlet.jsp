@@ -75,7 +75,7 @@ String portletId = portletDisplay.getId();
 
 	</aui:select>
 
-	<c:if test="<%= !portletId.equals(PortletKeys.DOCKBAR) %>">
+	<c:if test="<%= !portletId.equals(PortletKeys.DOCKBAR) || selLayout != null %>">
 		<aui:button-row>
 			<aui:button name="copySubmitButton" value="copy" />
 		</aui:button-row>

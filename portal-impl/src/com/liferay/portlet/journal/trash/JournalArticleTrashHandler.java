@@ -23,6 +23,7 @@ import com.liferay.portal.model.ContainerModel;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portlet.journal.NoSuchFolderException;
 import com.liferay.portlet.journal.asset.JournalArticleAssetRenderer;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalArticleResource;
@@ -195,7 +196,20 @@ public class JournalArticleTrashHandler extends JournalBaseTrashHandler {
 		JournalArticle article =
 			JournalArticleLocalServiceUtil.getLatestArticle(classPK);
 
-		return !article.isInTrashContainer();
+		boolean isContainerExist = true;
+
+		try {
+			article.getFolder();
+		}
+		catch (NoSuchFolderException nsfe) {
+			isContainerExist = false;
+		}
+
+		if (!isContainerExist || article.isInTrashContainer()) {
+			return false;
+		}
+
+		return true;
 	}
 
 	@Override
@@ -208,7 +222,7 @@ public class JournalArticleTrashHandler extends JournalBaseTrashHandler {
 			JournalArticleLocalServiceUtil.getLatestArticle(classPK);
 
 		JournalArticleLocalServiceUtil.moveArticle(
-			article.getGroupId(), article.getArticleId(), containerModelId);
+				article.getGroupId(), article.getArticleId(), containerModelId);
 	}
 
 	@Override

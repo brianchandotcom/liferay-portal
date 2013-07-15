@@ -28,6 +28,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.PortletURLFactoryUtil;
+import com.liferay.portlet.messageboards.NoSuchCategoryException;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
@@ -199,6 +200,28 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 
 	@Override
 	public boolean isMovable() {
+		return true;
+	}
+
+	@Override
+	public boolean isRestorable(long classPK)
+		throws PortalException, SystemException {
+
+		MBThread thread = MBThreadLocalServiceUtil.getThread(classPK);
+
+		boolean isContainerExist = true;
+
+		try {
+			thread.getCategory();
+		}
+		catch (NoSuchCategoryException nsce) {
+			isContainerExist = false;
+		}
+
+		if (!isContainerExist || thread.isInTrashContainer()) {
+			return false;
+		}
+
 		return true;
 	}
 

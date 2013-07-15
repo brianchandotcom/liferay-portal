@@ -21,6 +21,7 @@ import com.liferay.portal.model.ContainerModel;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portlet.bookmarks.NoSuchFolderException;
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
 import com.liferay.portlet.bookmarks.service.BookmarksEntryLocalServiceUtil;
 import com.liferay.portlet.bookmarks.service.permission.BookmarksEntryPermission;
@@ -132,7 +133,20 @@ public class BookmarksEntryTrashHandler extends BookmarksBaseTrashHandler {
 
 		BookmarksEntry entry = BookmarksEntryLocalServiceUtil.getEntry(classPK);
 
-		return !entry.isInTrashContainer();
+		boolean isContainerExist = true;
+
+		try {
+			entry.getFolder();
+		}
+		catch (NoSuchFolderException nsfe) {
+			isContainerExist = false;
+		}
+
+		if (!isContainerExist || entry.isInTrashContainer()) {
+			return false;
+		}
+
+		return true;
 	}
 
 	@Override

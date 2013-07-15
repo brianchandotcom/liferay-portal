@@ -30,6 +30,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.PortletURLFactoryUtil;
+import com.liferay.portlet.messageboards.NoSuchCategoryException;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
@@ -340,7 +341,20 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 
 		MBCategory category = MBCategoryLocalServiceUtil.getCategory(classPK);
 
-		return !category.isInTrashContainer();
+		boolean isContainerExist = true;
+
+		try {
+			category.getParentCategory();
+		}
+		catch (NoSuchCategoryException nsce) {
+			isContainerExist = false;
+		}
+
+		if (!isContainerExist || category.isInTrashContainer()) {
+			return false;
+		}
+
+		return true;
 	}
 
 	@Override

@@ -23,6 +23,7 @@ import com.liferay.portal.model.ContainerModel;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portlet.journal.NoSuchFolderException;
 import com.liferay.portlet.journal.asset.JournalFolderAssetRenderer;
 import com.liferay.portlet.journal.model.JournalFolder;
 import com.liferay.portlet.journal.service.JournalFolderLocalServiceUtil;
@@ -183,7 +184,20 @@ public class JournalFolderTrashHandler extends JournalBaseTrashHandler {
 
 		JournalFolder folder = getJournalFolder(classPK);
 
-		return !folder.isInTrashContainer();
+		boolean isContainerExist = true;
+
+		try {
+			folder.getParentFolder();
+		}
+		catch (NoSuchFolderException nsfe) {
+			isContainerExist = false;
+		}
+
+		if (!isContainerExist || folder.isInTrashContainer()) {
+			return false;
+		}
+
+		return true;
 	}
 
 	@Override

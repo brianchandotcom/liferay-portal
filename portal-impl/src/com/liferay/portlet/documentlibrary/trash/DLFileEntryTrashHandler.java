@@ -29,6 +29,7 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.RepositoryServiceUtil;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
@@ -200,7 +201,20 @@ public class DLFileEntryTrashHandler extends DLBaseTrashHandler {
 		try {
 			DLFileEntry dlFileEntry = getDLFileEntry(classPK);
 
-			return !dlFileEntry.isInTrashContainer();
+			boolean isContainerExist = true;
+
+			try {
+				dlFileEntry.getFolder();
+			}
+			catch (NoSuchFolderException nsfe) {
+				isContainerExist = false;
+			}
+
+			if (!isContainerExist || dlFileEntry.isInTrashContainer()) {
+				return false;
+			}
+
+			return true;
 		}
 		catch (InvalidRepositoryException ire) {
 			return false;

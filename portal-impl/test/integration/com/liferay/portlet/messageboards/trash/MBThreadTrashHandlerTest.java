@@ -28,6 +28,7 @@ import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.Sync;
 import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
 import com.liferay.portlet.messageboards.model.MBCategory;
+import com.liferay.portlet.messageboards.model.MBCategoryConstants;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
@@ -137,6 +138,28 @@ public class MBThreadTrashHandlerTest extends BaseTrashHandlerTestCase {
 			serviceContext);
 
 		return message.getThread();
+	}
+
+	@Override
+	protected BaseModel<?> addBaseModelWithWorkflow(
+			boolean approved, ServiceContext serviceContext)
+		throws Exception {
+
+		MBMessage message = MBTestUtil.addMessage(
+			serviceContext.getScopeGroupId(), getSearchKeywords(), approved,
+			serviceContext);
+
+		return message.getThread();
+	}
+
+	@Override
+	protected void deleteParentBaseModel(
+			BaseModel<?> parentBaseModel, boolean includeTrashedEntries)
+		throws Exception {
+
+		MBCategory parentCategory = (MBCategory)parentBaseModel;
+
+		MBCategoryLocalServiceUtil.deleteCategory(parentCategory, false);
 	}
 
 	@Override

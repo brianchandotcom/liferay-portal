@@ -89,13 +89,42 @@ public class BookmarksEntryTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 		BookmarksFolder folder = (BookmarksFolder)parentBaseModel;
 
+		return addBaseModelWithWorkflow(
+			folder.getUserId(), folder.getGroupId(), folder.getFolderId(),
+			serviceContext);
+	}
+
+	@Override
+	protected BaseModel<?> addBaseModelWithWorkflow(
+			boolean approved, ServiceContext serviceContext)
+		throws Exception {
+
+		return addBaseModelWithWorkflow(
+			TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
+			BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID, serviceContext);
+	}
+
+	protected BaseModel<?> addBaseModelWithWorkflow(
+			long userId, long groupId, long folderId,
+			ServiceContext serviceContext)
+		throws Exception {
+
 		String name = getSearchKeywords();
 		String url = "http://www.liferay.com";
 		String description = "Content: Enterprise. Open Source.";
 
 		return BookmarksEntryLocalServiceUtil.addEntry(
-			folder.getUserId(), folder.getGroupId(), folder.getFolderId(), name,
-			url, description, serviceContext);
+			userId, groupId, folderId, name, url, description, serviceContext);
+	}
+
+	@Override
+	protected void deleteParentBaseModel(
+			BaseModel<?> parentBaseModel, boolean includeTrashedEntries)
+		throws Exception {
+
+		BookmarksFolder folder = (BookmarksFolder)parentBaseModel;
+
+		BookmarksFolderServiceUtil.deleteFolder(folder.getFolderId(), false);
 	}
 
 	@Override

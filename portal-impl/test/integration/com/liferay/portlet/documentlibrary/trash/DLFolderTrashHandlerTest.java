@@ -94,15 +94,41 @@ public class DLFolderTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 		DLFolder parentDLFolder = (DLFolder)parentBaseModel;
 
+		return addBaseModelWithWorkflow(
+			parentDLFolder.getGroupId(), parentDLFolder.getFolderId());
+	}
+
+	@Override
+	protected BaseModel<?> addBaseModelWithWorkflow(
+			boolean approved, ServiceContext serviceContext)
+		throws Exception {
+
+		return addBaseModelWithWorkflow(
+			serviceContext.getScopeGroupId(),
+			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+	}
+
+	protected BaseModel<?> addBaseModelWithWorkflow(long groupId, long folderId)
+		throws Exception {
+
 		String name = getSearchKeywords();
 
 		name += ServiceTestUtil.randomString(
 			_FOLDER_NAME_MAX_LENGTH - name.length());
 
-		Folder folder = DLAppTestUtil.addFolder(
-			parentDLFolder.getGroupId(), parentDLFolder.getFolderId(), name);
+		Folder folder = DLAppTestUtil.addFolder(groupId, folderId, name);
 
 		return (DLFolder)folder.getModel();
+	}
+
+	@Override
+	protected void deleteParentBaseModel(
+			BaseModel<?> parentBaseModel, boolean includeTrashedEntries)
+		throws Exception {
+
+		DLFolder dlFolder = (DLFolder)parentBaseModel;
+
+		DLFolderLocalServiceUtil.deleteFolder(dlFolder.getFolderId(), false);
 	}
 
 	@Override

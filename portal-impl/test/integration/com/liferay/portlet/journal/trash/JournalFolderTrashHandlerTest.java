@@ -100,6 +100,31 @@ public class JournalFolderTrashHandlerTest extends BaseTrashHandlerTestCase {
 	}
 
 	@Override
+	protected BaseModel<?> addBaseModelWithWorkflow(
+			boolean approved, ServiceContext serviceContext)
+		throws Exception {
+
+		String name = getSearchKeywords();
+
+		name += ServiceTestUtil.randomString(
+			_FOLDER_NAME_MAX_LENGTH - name.length());
+
+		return JournalTestUtil.addFolder(
+			serviceContext.getScopeGroupId(),
+			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, name);
+	}
+
+	@Override
+	protected void deleteParentBaseModel(
+			BaseModel<?> parentBaseModel, boolean includeTrashedEntries)
+		throws Exception {
+
+		JournalFolder folder = (JournalFolder)parentBaseModel;
+
+		JournalFolderServiceUtil.deleteFolder(folder.getFolderId(), false);
+	}
+
+	@Override
 	protected BaseModel<?> getBaseModel(long primaryKey) throws Exception {
 		return JournalFolderLocalServiceUtil.getFolder(primaryKey);
 	}

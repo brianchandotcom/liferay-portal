@@ -100,6 +100,27 @@ public class MBCategoryTrashHandlerTest extends BaseTrashHandlerTestCase {
 	}
 
 	@Override
+	protected BaseModel<?> addBaseModelWithWorkflow(
+			boolean approved, ServiceContext serviceContext)
+		throws Exception {
+
+		return MBCategoryLocalServiceUtil.addCategory(
+			TestPropsValues.getUserId(),
+			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, getSearchKeywords(),
+			StringPool.BLANK, serviceContext);
+	}
+
+	@Override
+	protected void deleteParentBaseModel(
+			BaseModel<?> parentBaseModel, boolean includeTrashedEntries)
+		throws Exception {
+
+		MBCategory parentCategory = (MBCategory)parentBaseModel;
+
+		MBCategoryLocalServiceUtil.deleteCategory(parentCategory, false);
+	}
+
+	@Override
 	protected BaseModel<?> getBaseModel(long primaryKey) throws Exception {
 		return MBCategoryLocalServiceUtil.getCategory(primaryKey);
 	}

@@ -214,6 +214,28 @@ public class MailEngine {
 		}
 
 		try {
+			InternetAddressUtil.validateAddress(from);
+
+			if (to != null) {
+				InternetAddressUtil.validateAddresses(to);
+			}
+
+			if (cc != null) {
+				InternetAddressUtil.validateAddresses(cc);
+			}
+
+			if (bcc != null) {
+				InternetAddressUtil.validateAddresses(bcc);
+			}
+
+			if (replyTo != null) {
+				InternetAddressUtil.validateAddresses(replyTo);
+			}
+
+			if (bulkAddresses != null) {
+				InternetAddressUtil.validateAddresses(bulkAddresses);
+			}
+
 			Session session = null;
 
 			if (smtpAccount == null) {
@@ -229,7 +251,10 @@ public class MailEngine {
 				"X-Auto-Response-Suppress", "AutoReply, DR, NDR, NRN, OOF, RN");
 
 			message.setFrom(from);
-			message.setRecipients(Message.RecipientType.TO, to);
+
+			if (to != null) {
+				message.setRecipients(Message.RecipientType.TO, to);
+			}
 
 			if (cc != null) {
 				message.setRecipients(Message.RecipientType.CC, cc);

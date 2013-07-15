@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.messaging.MessageBusException;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
@@ -1178,24 +1177,12 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 	}
 
 	protected void sendGenerationMessage(
-		String destinationName, boolean synchronous,
-		FileVersion sourceFileVersion, FileVersion destinationFileVersion) {
+		String destinationName, FileVersion sourceFileVersion,
+		FileVersion destinationFileVersion) {
 
 		Object[] payload = {sourceFileVersion, destinationFileVersion};
 
-		if (synchronous) {
-			try {
-				MessageBusUtil.sendSynchronousMessage(destinationName, payload);
-			}
-			catch (MessageBusException mbe) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(mbe, mbe);
-				}
-			}
-		}
-		else {
-			MessageBusUtil.sendMessage(destinationName, payload);
-		}
+		MessageBusUtil.sendMessage(destinationName, payload);
 	}
 
 	protected void storeThumbnailImages(FileVersion fileVersion, File file)

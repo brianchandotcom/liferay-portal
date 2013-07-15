@@ -2459,7 +2459,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * parameters.
 	 *
 	 * @return <code>true</code> if the portlet will only process namespaced
-	 * parameters
+	 *         parameters
 	 */
 	@Override
 	public boolean isRequiresNamespacedParameters() {
@@ -3409,7 +3409,7 @@ public class PortletImpl extends PortletBaseImpl {
 	 * parameters.
 	 *
 	 * @param requiresNamespacedParameters boolean value for whether the portlet
-	 * will only process namespaced parameters
+	 *        will only process namespaced parameters
 	 */
 	@Override
 	public void setRequiresNamespacedParameters(
@@ -3713,8 +3713,8 @@ public class PortletImpl extends PortletBaseImpl {
 	}
 
 	/**
-	 * Sets the names of the classes that represent user notification
-	 * handlers associated with the portlet.
+	 * Sets the names of the classes that represent user notification handlers
+	 * associated with the portlet.
 	 *
 	 * @param userNotificationHandlerClasses the names of the classes that
 	 *        represent user notification handlers associated with the portlet

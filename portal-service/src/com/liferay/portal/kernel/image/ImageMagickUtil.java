@@ -32,6 +32,7 @@ public class ImageMagickUtil {
 	 *
 	 * @param  arguments the command arguments being passed to <code>convert
 	 *         </code>
+	 * @return the converted command arguments
 	 * @throws Exception if an unexpected error occurred while executing command
 	 * @see    <a href="http://www.imagemagick.org/script/convert.php">Convert
 	 *         documentation</a>

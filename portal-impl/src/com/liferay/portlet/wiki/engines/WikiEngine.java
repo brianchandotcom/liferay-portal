@@ -76,8 +76,10 @@ public interface WikiEngine {
 	 * Returns <code>true</code> if the content of a wiki page for this engine
 	 * is valid.
 	 *
-	 * @param nodeId the ID of the wiki page node
-	 * @param content the page content
+	 * @param  nodeId the ID of the wiki page node
+	 * @param  content the page content
+	 * @return <code>true</code> if the content of a wiki page for this engine
+	 *         is valid; <code>false</code> otherwise
 	 */
 	public boolean validate(long nodeId, String content);
 

@@ -737,6 +737,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 *
 	 * @param  userId the primary key of the user
 	 * @param  fileEntryId the primary key of the file entry
+	 * @return the file entry
 	 * @throws PortalException if the file entry could not be found
 	 * @throws SystemException if a system exception occurred
 	 */

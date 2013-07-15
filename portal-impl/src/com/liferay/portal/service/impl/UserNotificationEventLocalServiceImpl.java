@@ -173,7 +173,8 @@ public class UserNotificationEventLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated As of 6.2.0 {@link #getArchivedUserNotificationEvents(long, boolean)}
+	 * @deprecated As of 6.2.0 {@link #getArchivedUserNotificationEvents(long,
+	 *             boolean)}
 	 */
 	@Override
 	public List<UserNotificationEvent> getUserNotificationEvents(
@@ -184,8 +185,8 @@ public class UserNotificationEventLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated As of 6.2.0 {@link #getArchivedUserNotificationEvents(long, boolean, int,
-	 *             int)}
+	 * @deprecated As of 6.2.0 {@link #getArchivedUserNotificationEvents(long,
+	 *             boolean, int, int)}
 	 */
 	@Override
 	public List<UserNotificationEvent> getUserNotificationEvents(
@@ -212,8 +213,8 @@ public class UserNotificationEventLocalServiceImpl
 	}
 
 	/**
-	 * @deprecated As of 6.2.0 {@link #getArchivedUserNotificationEventsCount(long,
-	 *             boolean)}
+	 * @deprecated As of 6.2.0 {@link
+	 *             #getArchivedUserNotificationEventsCount(long, boolean)}
 	 */
 	@Override
 	public int getUserNotificationEventsCount(long userId, boolean archived)

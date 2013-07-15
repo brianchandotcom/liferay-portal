@@ -2035,8 +2035,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 *
 	 * @param  companyId the primary key of the user's company
 	 * @param  openId the user's OpenID
-	 * @return the user with the OpenID, or <code>null</code> if a user
-	 *         with the OpenID could not be found
+	 * @return the user with the OpenID, or <code>null</code> if a user with the
+	 *         OpenID could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override

@@ -61,6 +61,13 @@ public class GroupTestUtil {
 	public static Group addGroup(long parentGroupId, String name)
 		throws Exception {
 
+		return addGroup(parentGroupId, name, "This is a test group.");
+	}
+
+	public static Group addGroup(
+			long parentGroupId, String name, String description)
+		throws Exception {
+
 		Group group = GroupLocalServiceUtil.fetchGroup(
 			TestPropsValues.getCompanyId(), name);
 
@@ -68,7 +75,6 @@ public class GroupTestUtil {
 			return group;
 		}
 
-		String description = "This is a test group.";
 		int type = GroupConstants.TYPE_SITE_OPEN;
 		String friendlyURL =
 			StringPool.SLASH + FriendlyURLNormalizerUtil.normalize(name);

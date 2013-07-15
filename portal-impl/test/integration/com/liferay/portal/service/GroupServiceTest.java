@@ -163,6 +163,132 @@ public class GroupServiceTest {
 	}
 
 	@Test
+	public void testDontFindNonExistingGroup() throws Exception {
+		LinkedHashMap<String, Object> groupParams =
+			new LinkedHashMap<String, Object>();
+
+		groupParams.put("manualMembership", Boolean.TRUE);
+		groupParams.put("site", Boolean.TRUE);
+
+		Assert.assertEquals(
+			0,
+			GroupLocalServiceUtil.searchCount(
+				TestPropsValues.getCompanyId(), null, "cabina14", groupParams));
+	}
+
+	@Test
+	public void testFindGroupByDescription() throws Exception {
+		String description = ServiceTestUtil.randomString();
+
+		GroupTestUtil.addGroup(
+			GroupConstants.DEFAULT_PARENT_GROUP_ID,
+			ServiceTestUtil.randomString(), description);
+
+		LinkedHashMap<String, Object> groupParams =
+			new LinkedHashMap<String, Object>();
+
+		groupParams.put("manualMembership", Boolean.TRUE);
+		groupParams.put("site", Boolean.TRUE);
+
+		Assert.assertEquals(
+			1,
+			GroupLocalServiceUtil.searchCount(
+				TestPropsValues.getCompanyId(), null, description,
+				groupParams));
+	}
+
+	@Test
+	public void testFindGroupByDescriptionWithBlanks() throws Exception {
+		String description =
+			ServiceTestUtil.randomString() + StringPool.SPACE +
+				ServiceTestUtil.randomString();
+
+		GroupTestUtil.addGroup(
+			GroupConstants.DEFAULT_PARENT_GROUP_ID,
+			ServiceTestUtil.randomString(), description);
+
+		LinkedHashMap<String, Object> groupParams =
+			new LinkedHashMap<String, Object>();
+
+		groupParams.put("manualMembership", Boolean.TRUE);
+		groupParams.put("site", Boolean.TRUE);
+
+		Assert.assertEquals(
+			1,
+			GroupLocalServiceUtil.searchCount(
+				TestPropsValues.getCompanyId(), null, description,
+				groupParams));
+	}
+
+	@Test
+	public void testFindGroupByName() throws Exception {
+		String name = ServiceTestUtil.randomString();
+
+		GroupTestUtil.addGroup(GroupConstants.DEFAULT_PARENT_GROUP_ID, name);
+
+		LinkedHashMap<String, Object> groupParams =
+			new LinkedHashMap<String, Object>();
+
+		groupParams.put("manualMembership", Boolean.TRUE);
+		groupParams.put("site", Boolean.TRUE);
+
+		Assert.assertEquals(
+			1,
+			GroupLocalServiceUtil.searchCount(
+				TestPropsValues.getCompanyId(), null, name, groupParams));
+	}
+
+	@Test
+	public void testFindGroupByNameWithBlanks() throws Exception {
+		String name =
+			ServiceTestUtil.randomString() + StringPool.SPACE +
+				ServiceTestUtil.randomString();
+
+		GroupTestUtil.addGroup(GroupConstants.DEFAULT_PARENT_GROUP_ID, name);
+
+		LinkedHashMap<String, Object> groupParams =
+			new LinkedHashMap<String, Object>();
+
+		groupParams.put("manualMembership", Boolean.TRUE);
+		groupParams.put("site", Boolean.TRUE);
+
+		Assert.assertEquals(
+			1,
+			GroupLocalServiceUtil.searchCount(
+				TestPropsValues.getCompanyId(), null, name, groupParams));
+	}
+
+	@Test
+	public void testFindGuestGroupUsingCompanyName() throws Exception {
+		LinkedHashMap<String, Object> groupParams =
+			new LinkedHashMap<String, Object>();
+
+		groupParams.put("manualMembership", Boolean.TRUE);
+		groupParams.put("site", Boolean.TRUE);
+
+		Assert.assertEquals(
+			1,
+			GroupLocalServiceUtil.searchCount(
+				TestPropsValues.getCompanyId(), null, "liferay", groupParams));
+	}
+
+	@Test
+	public void testFindGuestGroupUsingCompanyNameCapitalized()
+		throws Exception {
+
+		LinkedHashMap<String, Object> groupParams =
+			new LinkedHashMap<String, Object>();
+
+		groupParams.put("manualMembership", Boolean.TRUE);
+		groupParams.put("site", Boolean.TRUE);
+
+		Assert.assertEquals(
+			1,
+			GroupLocalServiceUtil.searchCount(
+				TestPropsValues.getCompanyId(), null, "Liferay", groupParams));
+	}
+
+	@Test
 	public void testGroupHasCurrentPageScopeDescriptiveName() throws Exception {
 		ThemeDisplay themeDisplay = new ThemeDisplay();
 

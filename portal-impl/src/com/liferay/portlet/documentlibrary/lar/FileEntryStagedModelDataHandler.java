@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Repository;
-import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.repository.liferayrepository.LiferayRepository;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.service.RepositoryLocalServiceUtil;
@@ -223,19 +222,14 @@ public class FileEntryStagedModelDataHandler
 			portletDataContext.getImportDataElement(
 				FileEntry.class.getSimpleName(), "path", path);
 
-		List<Element> referenceDataElements =
-			portletDataContext.getReferenceDataElements(
-				fileEntryElement, Repository.class);
+		Element referenceDataElement =
+			portletDataContext.getReferenceDataElement(
+				fileEntryElement, Repository.class,
+				fileEntry.getRepositoryId());
 
-		for (Element referenceDataElement : referenceDataElements) {
-			String referencePath = referenceDataElement.attributeValue("path");
-
-			StagedModel referenceStagedModel =
-				(StagedModel)portletDataContext.getZipEntryAsObject(
-					referencePath);
-
+		if (referenceDataElement != null) {
 			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, referenceStagedModel);
+				portletDataContext, referenceDataElement);
 		}
 
 		if (fileEntry.getFolderId() !=
@@ -298,7 +292,8 @@ public class FileEntryStagedModelDataHandler
 			return;
 		}
 
-		importMetaData(portletDataContext, fileEntryElement, serviceContext);
+		importMetaData(
+			portletDataContext, fileEntry, fileEntryElement, serviceContext);
 
 		FileEntry importedFileEntry = null;
 
@@ -542,19 +537,22 @@ public class FileEntryStagedModelDataHandler
 	}
 
 	protected void importMetaData(
-			PortletDataContext portletDataContext, Element fileEntryElement,
-			ServiceContext serviceContext)
+			PortletDataContext portletDataContext, FileEntry fileEntry,
+			Element fileEntryElement, ServiceContext serviceContext)
 		throws Exception {
 
-		List<Element> referenceDataElements =
-			portletDataContext.getReferenceDataElements(
-				fileEntryElement, DLFileEntryType.class);
+		LiferayFileEntry liferayFileEntry = (LiferayFileEntry)fileEntry;
 
-		if (referenceDataElements.isEmpty()) {
+		DLFileEntry dlFileEntry = liferayFileEntry.getDLFileEntry();
+
+		Element fileEntryTypeElement =
+			portletDataContext.getReferenceDataElement(
+				fileEntryElement, DLFileEntryType.class,
+				dlFileEntry.getFileEntryTypeId());
+
+		if (fileEntryTypeElement == null) {
 			return;
 		}
-
-		Element fileEntryTypeElement = referenceDataElements.get(0);
 
 		String fileEntryTypePath = fileEntryTypeElement.attributeValue("path");
 

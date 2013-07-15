@@ -281,14 +281,13 @@ public interface PortletDataContext extends Serializable {
 	public Map<String, List<RatingsEntry>> getRatingsEntries();
 
 	public Element getReferenceDataElement(
-		Element parentElement, Class<?> clazz, long groupId, long classPk);
+		Element parentElement, Class<?> clazz, long classPk);
 
 	public Element getReferenceDataElement(
 		Element parentElement, Class<?> clazz, long groupId, String uuid);
 
 	public Element getReferenceDataElement(
-		StagedModel parentStagedModel, Class<?> clazz, long groupId,
-		long classPk);
+		StagedModel parentStagedModel, Class<?> clazz, long classPk);
 
 	public Element getReferenceDataElement(
 		StagedModel parentStagedModel, Class<?> clazz, long groupId,

@@ -98,7 +98,7 @@ Locale currentLocale = LocaleUtil.fromLanguageId(currentLanguageId);
 Locale defaultLocale = LocaleUtil.getDefault();
 String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
 
-Locale[] locales = LanguageUtil.getAvailableLocales();
+Locale[] locales = LanguageUtil.getAvailableLocales(themeDisplay.getSiteGroupId());
 
 String[] priorities = LocalizationUtil.getPreferencesValues(portletPreferences, "priorities", currentLanguageId);
 

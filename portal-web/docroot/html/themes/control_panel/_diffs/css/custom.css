@@ -9,7 +9,6 @@ $dockbarOpenGradientEnd: #0993DD;
 $dockbarOpenGradientStart: #0EA6F9;
 
 .aui {
-
 	/* ---------- Main ---------- */
 
 	h2 {
@@ -409,14 +408,14 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 					.toggler-header-collapsed {
 						.accordion-toggle {
-							background: url(../images/custom/arrow_option_closed.png) no-repeat right #F2F2F2;
+							background: #F2F2F2 url(../images/custom/arrow_option_closed.png) no-repeat right;
 							background-size: 20px 20px;
 						}
 					}
 
 					.toggler-header-expanded {
 						.accordion-toggle {
-							background: url(../images/custom/arrow_option_open.png) no-repeat right #F2F2F2;
+							background: #F2F2F2 url(../images/custom/arrow_option_open.png) no-repeat right;
 							background-size: 20px 20px;
 						}
 					}

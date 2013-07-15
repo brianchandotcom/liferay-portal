@@ -106,7 +106,7 @@ public class LayoutLocalServiceHelper implements IdentifiableBean {
 
 		Map<Locale, String> newFriendlyURLMap = new HashMap<Locale, String>();
 
-		Locale[] locales = LanguageUtil.getAvailableLocales();
+		Locale[] locales = LanguageUtil.getAvailableLocales(groupId);
 
 		for (Locale locale : locales) {
 			String friendlyURL = friendlyURLMap.get(locale);

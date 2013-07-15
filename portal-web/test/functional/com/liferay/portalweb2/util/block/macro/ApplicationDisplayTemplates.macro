@@ -1,65 +1,93 @@
 <definition>
+	<command name="addADTviaPortletPG">
+		<execute action="BasePortlet#click" locator-key1="OPTIONS_ICON" />
+		<execute action="BasePortlet#assertClick" locator-key1="OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
+
+		<execute action="PGADTConfiguration#selectFrame" locator-key1="ADT_CONFIGURATION_IFRAME" />
+
+		<if>
+			<condition action="PGADTConfiguration#isElementPresent" locator-key1="DISPLAY_SETTINGS" />
+			<then>
+				<execute action="PGADTConfiguration#assertClick" locator-key1="DISPLAY_SETTINGS" value1="Display Settings" />
+			</then>
+		</if>
+
+		<execute action="PGADTConfiguration#select" locator-key1="DISPLAY_TEMPLATE_SELECT" value1="${adtType} Test ADT" />
+		<execute action="PGADTConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="PGADTConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+		<execute action="PGADTConfiguration#selectFrameTop" locator-key1="ADT_CONFIGURATION_IFRAME_TOP" value1="relative=top" />
+	</command>
+
+	<command name="addCP">
+		<execute action="CPApplicationdisplaytemplates#assertTextEquals" locator-key1="INFO_MESSAGE" value1="There are no templates." />
+		<execute action="CPApplicationdisplaytemplates#assertClick" locator-key1="ADD" value1="Add" />
+		<execute action="CPApplicationdisplaytemplates#assertClick" locator-key1="ADD_MENULIST" value1="${adtType} Template" />
+
+		<execute action="CPApplicationdisplaytemplatesAdd#assertTextEquals" locator-key1="HEADER" value1="New ${adtType} Template" />
+		<execute action="CPApplicationdisplaytemplatesAdd#type" locator-key1="NAME_FIELD" value1="${adtType} Test ADT" />
+		<execute action="CPApplicationdisplaytemplatesAdd#uploadCommonFile" locator-key1="SCRIPT_FIELD" value1="${adtFile}" />
+		<execute action="CPApplicationdisplaytemplatesAdd#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+
+		<execute action="CPApplicationdisplaytemplates#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="CPApplicationdisplaytemplates#assertTextEquals" locator-key1="ADT_TABLE_NAME_1" value1="${adtType} Test ADT" />
+	</command>
+
 	<command name="addPG">
 		<execute action="BasePortlet#click" locator-key1="OPTIONS_ICON" />
 		<execute action="BasePortlet#assertClick" locator-key1="OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
 
-		<execute action="BlogsConfigurationPG#selectFrame" locator-key1="BLOGS_CONFIGURATION_IFRAME" />
-		<execute action="BlogsConfigurationPG#assertClick" locator-key1="DISPLAY_SETTINGS" value1="Display Settings" />
-		<execute action="BlogsConfigurationPG#assertClick" locator-key1="DISPLAY_SETTINGS_MANAGE_ADT_LINK" value1="Manage Display Templates for Liferay" />
+		<execute action="PGADTConfiguration#selectFrame" locator-key1="ADT_CONFIGURATION_IFRAME" />
 
-		<var name="key_adtTitle" value="${adtTitle}" />
+		<if>
+			<condition action="PGADTConfiguration#isElementPresent" locator-key1="DISPLAY_SETTINGS" />
+			<then>
+				<execute action="PGADTConfiguration#assertClick" locator-key1="DISPLAY_SETTINGS" value1="Display Settings" />
+			</then>
+		</if>
+
+		<execute action="PGADTConfiguration#assertClick" locator-key1="MANAGE_DISPLAY_TEMPLATES_LINK" value1="Manage Display Templates for Liferay" />
 
 		<execute action="PGApplicationdisplaytemplates#selectFrameTop" locator-key1="ADT_IFRAME_TOP" value1="relative=top" />
 		<execute action="PGApplicationdisplaytemplates#selectFrame" locator-key1="ADT_IFRAME" />
 		<execute action="PGApplicationdisplaytemplates#assertClick" locator-key1="ADD" value1="Add" />
-		<execute action="PGApplicationdisplaytemplates#assertClick" locator-key1="ADD_MENULIST_ADT_TEMPLATE" value1="${adtTitle} Template" />
+		<execute action="PGApplicationdisplaytemplates#assertClick" locator-key1="ADD_MENULIST_ADT_TEMPLATE" value1="${adtType} Template" />
 
-		<execute action="PGApplicationdisplaytemplatesAdd#type" locator-key1="NAME_FIELD" value1="${adtTitle} Test ADT"/>
+		<execute action="PGApplicationdisplaytemplatesAdd#type" locator-key1="NAME_FIELD" value1="${adtType} Test ADT"/>
 		<execute action="PGApplicationdisplaytemplatesAdd#uploadCommonFile" locator-key1="SCRIPT_FIELD" value1="${adtFile}" />
 		<execute action="PGApplicationdisplaytemplatesAdd#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 
 		<execute action="PGApplicationdisplaytemplates#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute action="PGApplicationdisplaytemplates#assertTextEquals" locator-key1="ADT_TABLE_NAME_1" value1="${adtTitle} Test ADT" />
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute action="BasePortlet#click" locator-key1="OPTIONS_ICON" />
-		<execute action="BasePortlet#assertClick" locator-key1="OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
-
-		<execute action="BlogsConfigurationPG#selectFrame" locator-key1="BLOGS_CONFIGURATION_IFRAME" />
-
-		<execute action="BlogsConfigurationPG#select" locator-key1="DISPLAY_TEMPLATE_SELECT" value1="${adtTitle} Test ADT" />
-		<execute action="BlogsConfigurationPG#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-		<execute action="BlogsConfigurationPG#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
-
+		<execute action="PGApplicationdisplaytemplates#assertTextEquals" locator-key1="ADT_TABLE_NAME_1" value1="${adtType} Test ADT" />
 		<execute action="PGApplicationdisplaytemplates#selectFrameTop" locator-key1="ADT_IFRAME_TOP" value1="relative=top" />
+	</command>
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute action="PGBlogs#assertElementNotPresent" locator-key1="ENTRY_EDIT_1" value1="Edit" />
-		<execute action="PGBlogs#assertElementNotPresent" locator-key1="ENTRY_PERMISSIONS_1" value1="Permissions" />
-		<execute action="PGBlogs#assertElementNotPresent" locator-key1="ENTRY_RECYCLE_BIN_1" value1="Move to the Recycle Bin" />
+	<command name="tearDownCP">
+		<if>
+			<condition action="CPApplicationdisplaytemplates#isElementPresent" locator-key1="ADT_TABLE_ALL_CHECKBOX" />
+			<then>
+				<execute action="CPApplicationdisplaytemplates#check" locator-key1="ADT_TABLE_ALL_CHECKBOX" />
+				<execute action="CPApplicationdisplaytemplates#assertClick" locator-key1="DELETE_BUTTON" value1="Delete" />
+				<execute action="CPApplicationdisplaytemplates#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+				<execute action="CPApplicationdisplaytemplates#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+			</then>
+		</if>
+		<execute action="CPApplicationdisplaytemplates#assertTextEquals" locator-key1="INFO_MESSAGE" value1="There are no templates." />
 	</command>
 
 	<command name="tearDownPG">
-		<execute macro="Page#gotoConfigurationCP">
-			<var name="portletName" value="Application Display Templates" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
 		<execute action="BasePortlet#click" locator-key1="OPTIONS_ICON" />
 		<execute action="BasePortlet#assertClick" locator-key1="OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
 
-		<execute action="BlogsConfigurationPG#selectFrame" locator-key1="BLOGS_CONFIGURATION_IFRAME" />
-		<execute action="BlogsConfigurationPG#assertClick" locator-key1="DISPLAY_SETTINGS" value1="Display Settings" />
-		<execute action="BlogsConfigurationPG#assertClick" locator-key1="DISPLAY_SETTINGS_MANAGE_ADT_LINK" value1="Manage Display Templates for Liferay" />
+		<execute action="PGADTConfiguration#selectFrame" locator-key1="ADT_CONFIGURATION_IFRAME" />
+
+		<if>
+			<condition action="PGADTConfiguration#isElementPresent" locator-key1="DISPLAY_SETTINGS" />
+			<then>
+				<execute action="PGADTConfiguration#assertClick" locator-key1="DISPLAY_SETTINGS" value1="Display Settings" />
+			</then>
+		</if>
+
+		<execute action="PGADTConfiguration#assertClick" locator-key1="MANAGE_DISPLAY_TEMPLATES_LINK" value1="Manage Display Templates for Liferay" />
 
 		<execute action="PGApplicationdisplaytemplates#selectFrameTop" locator-key1="ADT_IFRAME_TOP" value1="relative=top" />
 		<execute action="PGApplicationdisplaytemplates#selectFrame" locator-key1="ADT_IFRAME" />
@@ -75,5 +103,55 @@
 		</if>
 
 		<execute action="PGApplicationdisplaytemplates#assertTextEquals" locator-key1="INFO_MESSAGE" value1="There are no templates." />
+	</command>
+
+	<command name="tearDownADTviaPortletPG">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+		<if> 
+			<condition action="BasePortlet#isElementPresent" locator-key1="OPTIONS_ICON" />
+			<then>
+				<execute action="BasePortlet#click" locator-key1="OPTIONS_ICON" />
+				<execute action="BasePortlet#assertClick" locator-key1="OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
+
+				<execute action="PGADTConfiguration#selectFrame" locator-key1="ADT_CONFIGURATION_IFRAME" />
+
+				<if>
+					<condition action="PGADTConfiguration#isElementPresent" locator-key1="DISPLAY_SETTINGS" />
+					<then>
+						<execute action="PGADTConfiguration#assertClick" locator-key1="DISPLAY_SETTINGS" value1="Display Settings" />
+					</then>
+				</if>
+
+				<execute action="PGADTConfiguration#select" locator-key1="DISPLAY_TEMPLATE_SELECT" value1="${defaultADT}" />
+				<execute action="PGADTConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+				<execute action="PGADTConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+				<execute action="PGADTConfiguration#selectFrameTop" locator-key1="ADT_CONFIGURATION_IFRAME_TOP" value1="relative=top" />
+			</then>
+		</if>
+	</command>
+
+	<command name="viewADTviaPortletPG">
+		<if> 
+			<condition action="BasePortlet#isElementPresent" locator-key1="OPTIONS_ICON" />
+			<then>
+				<execute action="BasePortlet#click" locator-key1="OPTIONS_ICON" />
+				<execute action="BasePortlet#assertClick" locator-key1="OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
+
+				<execute action="PGADTConfiguration#selectFrame" locator-key1="ADT_CONFIGURATION_IFRAME" />
+
+				<if>
+					<condition action="PGADTConfiguration#isElementPresent" locator-key1="DISPLAY_SETTINGS" />
+					<then>
+						<execute action="PGADTConfiguration#assertClick" locator-key1="DISPLAY_SETTINGS" value1="Display Settings" />
+					</then>
+				</if>
+
+				<execute action="PGADTConfiguration#select" locator-key1="DISPLAY_TEMPLATE_SELECT" value1="${adtType} Test ADT" />
+				<execute action="PGADTConfiguration#assertSelectedLabel" locator-key1="DISPLAY_TEMPLATE_SELECT" value1="${adtType} Test ADT" />
+				<execute action="PGADTConfiguration#selectFrameTop" locator-key1="ADT_CONFIGURATION_IFRAME_TOP" value1="relative=top" />
+			</then>
+		</if>
 	</command>
 </definition>

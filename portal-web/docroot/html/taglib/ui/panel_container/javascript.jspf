@@ -24,6 +24,7 @@
 				togglerDelegate = new A.TogglerDelegate(
 					{
 						animated: true,
+						closeAllOnExpand: <%= accordion %>,
 						container: '#<%= id %>',
 						content: '.toggler-content',
 						header: '.toggler-header',

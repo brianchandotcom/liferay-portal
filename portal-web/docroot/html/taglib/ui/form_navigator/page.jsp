@@ -65,7 +65,7 @@ if (Validator.isNotNull(historyKey)) {
 
 	<c:choose>
 		<c:when test='<%= displayStyle.equals("panel") %>'>
-			<liferay-ui:panel-container extended="<%= true %>" id="tabs" persistState="<%= true %>">
+			<liferay-ui:panel-container accordion="<%= true %>" extended="<%= true %>" id="tabs" persistState="<%= true %>">
 				<%@ include file="/html/taglib/ui/form_navigator/sections.jspf" %>
 			</liferay-ui:panel-container>
 

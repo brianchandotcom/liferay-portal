@@ -22,9 +22,18 @@ for (String section : allSections) {
 
 	<!-- Begin fragment <%= sectionId %> -->
 
-	<div class="form-section <%= (curSection.equals(section) || curSection.equals(sectionId)) ? "active" : StringPool.BLANK %>" id="<%= sectionId %>">
-		<liferay-util:include page="<%= sectionJsp %>" portletId="<%= portletDisplay.getRootPortletId() %>" />
-	</div>
+	<c:choose>
+		<c:when test='<%= displayStyle.equals("panel") %>'>
+			<liferay-ui:panel cssClass="panel-page-category unstyled" extended="<%= true %>" id="<%= sectionId %>" title="<%= section %>">
+				<liferay-util:include page="<%= sectionJsp %>" portletId="<%= portletDisplay.getRootPortletId() %>" />
+			</liferay-ui:panel>
+		</c:when>
+		<c:otherwise>
+			<div class="form-section <%= (curSection.equals(section) || curSection.equals(sectionId)) ? "active" : StringPool.BLANK %>" id="<%= sectionId %>">
+				<liferay-util:include page="<%= sectionJsp %>" portletId="<%= portletDisplay.getRootPortletId() %>" />
+			</div>
+		</c:otherwise>
+	</c:choose>
 
 	<!-- End fragment <%= sectionId %> -->
 

@@ -59,6 +59,8 @@ public class SearchContainer<R> {
 
 	public static final String DEFAULT_DELTA_PARAM = "delta";
 
+	public static final String DEFAULT_DEPRECATED_TOTAL_VAR = "deprecatedTotal";
+
 	/**
 	 * @deprecated As of 6.2.0, see LPS-6312
 	 */
@@ -67,6 +69,10 @@ public class SearchContainer<R> {
 	public static final String DEFAULT_ORDER_BY_COL_PARAM = "orderByCol";
 
 	public static final String DEFAULT_ORDER_BY_TYPE_PARAM = "orderByType";
+
+	public static final String DEFAULT_RESULTS_VAR = "results";
+
+	public static final String DEFAULT_TOTAL_VAR = "total";
 
 	public static final String DEFAULT_VAR = "searchContainer";
 
@@ -335,6 +341,10 @@ public class SearchContainer<R> {
 		return _total;
 	}
 
+	public String getTotalVar() {
+		return _totalVar;
+	}
+
 	public boolean isDeltaConfigurable() {
 		return _deltaConfigurable;
 	}
@@ -457,6 +467,10 @@ public class SearchContainer<R> {
 		_calculateStartAndEnd();
 	}
 
+	public void setTotalVar(String totalVar) {
+		_totalVar = totalVar;
+	}
+
 	private void _buildNormalizedHeaderNames(List<String> headerNames) {
 		if (headerNames == null) {
 			return;
@@ -533,6 +547,7 @@ public class SearchContainer<R> {
 	private DisplayTerms _searchTerms;
 	private int _start;
 	private int _total;
+	private String _totalVar;
 	private boolean _uniqueId;
 
 }

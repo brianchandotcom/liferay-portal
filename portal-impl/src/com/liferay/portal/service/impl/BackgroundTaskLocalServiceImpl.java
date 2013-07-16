@@ -148,6 +148,57 @@ public class BackgroundTaskLocalServiceImpl
 	}
 
 	@Override
+	public BackgroundTask amendBackgroundTask(
+			long backgroundTaskId, Map<String, Serializable> taskContextMap,
+			int status, ServiceContext serviceContext)
+		throws SystemException {
+
+		return amendBackgroundTask(
+			backgroundTaskId, taskContextMap, status, null, serviceContext);
+	}
+
+	@Override
+	public BackgroundTask amendBackgroundTask(
+			long backgroundTaskId, Map<String, Serializable> taskContextMap,
+			int status, String statusMessage, ServiceContext serviceContext)
+		throws SystemException {
+
+		Date now = new Date();
+
+		BackgroundTask backgroundTask =
+			backgroundTaskPersistence.fetchByPrimaryKey(backgroundTaskId);
+
+		if (backgroundTask == null) {
+			return null;
+		}
+
+		backgroundTask.setModifiedDate(serviceContext.getModifiedDate(now));
+
+		if (taskContextMap != null) {
+			String taskContext = JSONFactoryUtil.serialize(taskContextMap);
+
+			backgroundTask.setTaskContext(taskContext);
+		}
+
+		if ((status == BackgroundTaskConstants.STATUS_FAILED) ||
+			(status == BackgroundTaskConstants.STATUS_SUCCESSFUL)) {
+
+			backgroundTask.setCompleted(true);
+			backgroundTask.setCompletionDate(now);
+		}
+
+		backgroundTask.setStatus(status);
+
+		if (Validator.isNotNull(statusMessage)) {
+			backgroundTask.setStatusMessage(statusMessage);
+		}
+
+		backgroundTaskPersistence.update(backgroundTask);
+
+		return backgroundTask;
+	}
+
+	@Override
 	public void cleanUpBackgroundTasks() throws SystemException {
 		List<BackgroundTask> backgroundTasks =
 			backgroundTaskPersistence.findByStatus(
@@ -362,53 +413,6 @@ public class BackgroundTaskLocalServiceImpl
 		message.put("backgroundTaskId", backgroundTaskId);
 
 		MessageBusUtil.sendMessage(DestinationNames.BACKGROUND_TASK, message);
-	}
-
-	@Override
-	public BackgroundTask updateBackgroundTask(
-			long backgroundTaskId, Map<String, Serializable> taskContextMap,
-			int status, ServiceContext serviceContext)
-		throws PortalException, SystemException {
-
-		return updateBackgroundTask(
-			backgroundTaskId, taskContextMap, status, null, serviceContext);
-	}
-
-	@Override
-	public BackgroundTask updateBackgroundTask(
-			long backgroundTaskId, Map<String, Serializable> taskContextMap,
-			int status, String statusMessage, ServiceContext serviceContext)
-		throws PortalException, SystemException {
-
-		Date now = new Date();
-
-		BackgroundTask backgroundTask =
-			backgroundTaskPersistence.findByPrimaryKey(backgroundTaskId);
-
-		backgroundTask.setModifiedDate(serviceContext.getModifiedDate(now));
-
-		if (taskContextMap != null) {
-			String taskContext = JSONFactoryUtil.serialize(taskContextMap);
-
-			backgroundTask.setTaskContext(taskContext);
-		}
-
-		if ((status == BackgroundTaskConstants.STATUS_FAILED) ||
-			(status == BackgroundTaskConstants.STATUS_SUCCESSFUL)) {
-
-			backgroundTask.setCompleted(true);
-			backgroundTask.setCompletionDate(now);
-		}
-
-		backgroundTask.setStatus(status);
-
-		if (Validator.isNotNull(statusMessage)) {
-			backgroundTask.setStatusMessage(statusMessage);
-		}
-
-		backgroundTaskPersistence.update(backgroundTask);
-
-		return backgroundTask;
 	}
 
 	protected void cleanUpBackgroundTask(

@@ -42,6 +42,7 @@ import com.liferay.portal.kernel.servlet.JspFactorySwapper;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.plugin.PluginPackageIndexer;
+import com.liferay.portal.service.BackgroundTaskLocalServiceUtil;
 import com.liferay.portal.service.LockLocalServiceUtil;
 import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.util.WebKeys;
@@ -198,6 +199,10 @@ public class StartupAction extends SimpleAction {
 		// Jericho
 
 		CachedLoggerProvider.install();
+
+		// Background Tasks
+
+		BackgroundTaskLocalServiceUtil.terminateZombieBackgroundTasks();
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(StartupAction.class);

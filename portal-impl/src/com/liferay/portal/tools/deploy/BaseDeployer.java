@@ -1814,8 +1814,8 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 	}
 
 	/**
-	 * @see {@link PluginPackageUtil#_readPluginPackageServletContext(
-	 *      javax.servlet.ServletContext)}
+	 * @see PluginPackageUtil#_readPluginPackageServletContext(
+	 *      javax.servlet.ServletContext)
 	 */
 	@Override
 	public PluginPackage readPluginPackage(File file) {

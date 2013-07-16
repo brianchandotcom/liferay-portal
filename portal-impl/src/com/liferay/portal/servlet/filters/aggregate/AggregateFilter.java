@@ -64,7 +64,7 @@ import javax.servlet.http.HttpServletResponse;
 public class AggregateFilter extends IgnoreModuleRequestFilter {
 
 	/**
-	 * @see DynamicCSSUtil#_propagateQueryString(String, String)
+	 * @see DynamicCSSUtil#propagateQueryString(String, String)
 	 */
 	public static String aggregateCss(
 			AggregateContext aggregateContext, String content)

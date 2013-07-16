@@ -72,7 +72,8 @@ public abstract class VerifyProcess extends BaseDBProcess {
 	/**
 	 * @return the portal build number before {@link
 	 *         com.liferay.portal.tools.DBUpgrader} has a chance to update it to
-	 *         the value in {@link ReleaseInfo#getBuildNumber}
+	 *         the value in {@link
+	 *         com.liferay.portal.kernel.util.ReleaseInfo#getBuildNumber}
 	 */
 	protected int getBuildNumber() throws Exception {
 		Connection con = null;

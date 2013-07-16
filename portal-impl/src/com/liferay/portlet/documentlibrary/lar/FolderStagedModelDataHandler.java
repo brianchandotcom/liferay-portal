@@ -268,7 +268,7 @@ public class FolderStagedModelDataHandler
 
 	/**
 	 * @see com.liferay.portal.lar.PortletImporter#getAssetCategoryName(String,
-	 *      long, long, String, int)
+	 *      long, long, String, long, int)
 	 * @see com.liferay.portal.lar.PortletImporter#getAssetVocabularyName(
 	 *      String, long, String, int)
 	 */

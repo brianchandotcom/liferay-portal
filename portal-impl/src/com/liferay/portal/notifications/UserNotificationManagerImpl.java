@@ -58,8 +58,7 @@ public class UserNotificationManagerImpl implements UserNotificationManager {
 	}
 
 	/**
-	 * Adds the use notification handler to the list of available
-	 * handlers.
+	 * Adds the use notification handler to the list of available handlers.
 	 *
 	 * @param userNotificationHandler the user notification handler
 	 */
@@ -140,9 +139,9 @@ public class UserNotificationManagerImpl implements UserNotificationManager {
 	 * notification using an available compatible user notification handler.
 	 *
 	 * <p>
-	 * This method finds the appropriate handler for the user notification
-	 * by going through the available handler and asking them if they can
-	 * handle the user notidication based on the portlet.
+	 * This method finds the appropriate handler for the user notification by
+	 * going through the available handler and asking them if they can handle
+	 * the user notidication based on the portlet.
 	 * </p>
 	 *
 	 * @param  userNotificationEvent the user notification event to be

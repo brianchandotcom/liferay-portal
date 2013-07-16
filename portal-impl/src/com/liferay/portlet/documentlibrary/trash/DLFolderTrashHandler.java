@@ -51,34 +51,24 @@ import javax.portlet.PortletRequest;
 public class DLFolderTrashHandler extends DLBaseTrashHandler {
 
 	@Override
+	public void checkDuplicateEntry(
+			long classPK, long containerModelId, String newName)
+		throws PortalException, SystemException {
+
+		DLFolder dlFolder = getDLFolder(classPK);
+
+		checkDuplicate(
+			classPK, 0, containerModelId, dlFolder.getName(), newName);
+	}
+
+	@Override
 	public void checkDuplicateTrashEntry(
 			TrashEntry trashEntry, long containerModelId, String newName)
 		throws PortalException, SystemException {
 
-		DLFolder dlFolder = getDLFolder(trashEntry.getClassPK());
-
-		if (containerModelId == TrashEntryConstants.DEFAULT_CONTAINER_ID) {
-			containerModelId = dlFolder.getParentFolderId();
-		}
-
-		String originalTitle = trashEntry.getTypeSettingsProperty("title");
-
-		if (Validator.isNotNull(newName)) {
-			originalTitle = newName;
-		}
-
-		DLFolder duplicateDLFolder = DLFolderLocalServiceUtil.fetchFolder(
-			dlFolder.getGroupId(), dlFolder.getParentFolderId(), originalTitle);
-
-		if (duplicateDLFolder != null) {
-			DuplicateEntryException dee = new DuplicateEntryException();
-
-			dee.setDuplicateEntryId(duplicateDLFolder.getFolderId());
-			dee.setOldName(duplicateDLFolder.getName());
-			dee.setTrashEntryId(trashEntry.getEntryId());
-
-			throw dee;
-		}
+		checkDuplicate(
+			trashEntry.getClassPK(), trashEntry.getEntryId(), containerModelId,
+			trashEntry.getTypeSettingsProperty("title"), newName);
 	}
 
 	@Override
@@ -267,6 +257,35 @@ public class DLFolderTrashHandler extends DLBaseTrashHandler {
 		dlFolder.setName(name);
 
 		DLFolderLocalServiceUtil.updateDLFolder(dlFolder);
+	}
+
+	protected void checkDuplicate(
+			long classPK, long trashEntryId, long containerModelId,
+			String originalTitle, String newName)
+		throws PortalException, SystemException {
+
+		DLFolder dlFolder = getDLFolder(classPK);
+
+		if (containerModelId == TrashEntryConstants.DEFAULT_CONTAINER_ID) {
+			containerModelId = dlFolder.getParentFolderId();
+		}
+
+		if (Validator.isNotNull(newName)) {
+			originalTitle = newName;
+		}
+
+		DLFolder duplicateDLFolder = DLFolderLocalServiceUtil.fetchFolder(
+			dlFolder.getGroupId(), containerModelId, originalTitle);
+
+		if (duplicateDLFolder != null) {
+			DuplicateEntryException dee = new DuplicateEntryException();
+
+			dee.setDuplicateEntryId(duplicateDLFolder.getFolderId());
+			dee.setOldName(duplicateDLFolder.getName());
+			dee.setTrashEntryId(trashEntryId);
+
+			throw dee;
+		}
 	}
 
 	@Override

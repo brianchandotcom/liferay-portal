@@ -47,37 +47,25 @@ import javax.portlet.PortletRequest;
 public class JournalArticleTrashHandler extends JournalBaseTrashHandler {
 
 	@Override
+	public void checkDuplicateEntry(
+			long classPK, long containerModelId, String newName)
+		throws PortalException, SystemException {
+
+		JournalArticle article =
+			JournalArticleLocalServiceUtil.getLatestArticle(classPK);
+
+		checkDuplicate(
+			classPK, 0, containerModelId, article.getArticleId(), newName);
+	}
+
+	@Override
 	public void checkDuplicateTrashEntry(
 			TrashEntry trashEntry, long containerModelId, String newName)
 		throws PortalException, SystemException {
 
-		JournalArticle article =
-			JournalArticleLocalServiceUtil.getLatestArticle(
-				trashEntry.getClassPK());
-
-		String originalTitle = trashEntry.getTypeSettingsProperty("title");
-
-		if (Validator.isNotNull(newName)) {
-			originalTitle = newName;
-		}
-
-		JournalArticleResource articleResource =
-			JournalArticleResourceLocalServiceUtil.fetchArticleResource(
-				article.getGroupId(), originalTitle);
-
-		if (articleResource != null) {
-			DuplicateEntryException dee = new DuplicateEntryException();
-
-			JournalArticle duplicateArticle =
-				JournalArticleLocalServiceUtil.getArticle(
-					articleResource.getGroupId(), originalTitle);
-
-			dee.setDuplicateEntryId(duplicateArticle.getResourcePrimKey());
-			dee.setOldName(duplicateArticle.getArticleId());
-			dee.setTrashEntryId(trashEntry.getEntryId());
-
-			throw dee;
-		}
+		checkDuplicate(
+			trashEntry.getClassPK(), trashEntry.getEntryId(), containerModelId,
+			trashEntry.getTypeSettingsProperty("title"), newName);
 	}
 
 	@Override
@@ -261,6 +249,37 @@ public class JournalArticleTrashHandler extends JournalBaseTrashHandler {
 
 		JournalArticleResourceLocalServiceUtil.updateJournalArticleResource(
 			articleResource);
+	}
+
+	protected void checkDuplicate(
+			long classPK, long trashEntryId, long containerModelId,
+			String originalTitle, String newName)
+		throws PortalException, SystemException {
+
+		JournalArticle article =
+			JournalArticleLocalServiceUtil.getLatestArticle(classPK);
+
+		if (Validator.isNotNull(newName)) {
+			originalTitle = newName;
+		}
+
+		JournalArticleResource articleResource =
+			JournalArticleResourceLocalServiceUtil.fetchArticleResource(
+				article.getGroupId(), originalTitle);
+
+		if (articleResource != null) {
+			DuplicateEntryException dee = new DuplicateEntryException();
+
+			JournalArticle duplicateArticle =
+				JournalArticleLocalServiceUtil.getArticle(
+					articleResource.getGroupId(), originalTitle);
+
+			dee.setDuplicateEntryId(duplicateArticle.getResourcePrimKey());
+			dee.setOldName(duplicateArticle.getArticleId());
+			dee.setTrashEntryId(trashEntryId);
+
+			throw dee;
+		}
 	}
 
 	protected long getGroupId(long classPK)

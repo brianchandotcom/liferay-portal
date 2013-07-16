@@ -47,6 +47,7 @@
 
 #banner .site-name {
 	color: #333;
+	font-weight: lighter;
 	line-height: 1;
 	margin-left: 0;
 	vertical-align: middle;

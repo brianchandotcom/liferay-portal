@@ -740,6 +740,10 @@
 		<put name="portlet_content" value="/portlet/journal/move_folder.jsp" />
 	</definition>
 
+	<definition name="portlet.journal.preview_article_content" extends="portlet.journal">
+		<put name="portlet_content" value="/portlet/journal/preview_article_content.jsp" />
+	</definition>
+
 	<definition name="portlet.journal.raw_article_content" extends="portlet.journal">
 		<put name="portlet_content" value="/portlet/journal/raw_article_content.jsp" />
 	</definition>

@@ -179,14 +179,8 @@ public class PreviewArticleContentAction extends PortletAction {
 		try {
 			ActionUtil.getArticle(renderRequest);
 		}
-		catch (NoSuchArticleException nsae) {
-
-			// Let this slide because the user can manually input a article id
-			// for a new article that does not yet exist.
-
-		}
 		catch (Exception e) {
-			if (//e instanceof NoSuchArticleException ||
+			if (e instanceof NoSuchArticleException ||
 				e instanceof PrincipalException) {
 
 				SessionErrors.add(renderRequest, e.getClass());
@@ -199,7 +193,8 @@ public class PreviewArticleContentAction extends PortletAction {
 		}
 
 		return actionMapping.findForward(
-			getForward(renderRequest, "portlet.journal.edit_article"));
+			getForward(
+				renderRequest, "portlet.journal.preview_article_content"));
 	}
 
 }

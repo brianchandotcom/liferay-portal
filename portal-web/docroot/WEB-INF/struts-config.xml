@@ -878,8 +878,8 @@
 		</action>
 
 		<action path="/journal/preview_article_content" type="com.liferay.portlet.journal.action.PreviewArticleContentAction">
+			<forward name="portlet.journal.preview_article_content" path="portlet.journal.preview_article_content" />
 			<forward name="portlet.journal.raw_article_content" path="/portlet/journal/raw_article_content.jsp" />
-			<forward name="portlet.journal.view_article_content" path="/portlet/journal/view_article_content.jsp" />
 		</action>
 
 		<action path="/journal/rss" type="com.liferay.portlet.journal.action.RSSAction" />
@@ -906,8 +906,8 @@
 		</action>
 
 		<action path="/journal/view_article_content" type="com.liferay.portlet.journal.action.ViewArticleContentAction">
+			<forward name="portlet.journal.preview_article_content" path="portlet.journal.preview_article_content" />
 			<forward name="portlet.journal.raw_article_content" path="/portlet/journal/raw_article_content.jsp" />
-			<forward name="portlet.journal.view_article_content" path="/portlet/journal/view_article_content.jsp" />
 		</action>
 
 		<action path="/journal/view_article_history" type="com.liferay.portlet.journal.action.EditArticleAction">
@@ -926,7 +926,7 @@
 		</action>
 
 		<action path="/journal_articles/view_article_content" type="com.liferay.portlet.journal.action.ViewArticleContentAction">
-			<forward name="portlet.journal.view_article_content" path="/portlet/journal/view_article_content.jsp" />
+			<forward name="portlet.journal.preview_article_content" path="portlet.journal.preview_article_content" />
 		</action>
 
 		<!-- Journal Content -->

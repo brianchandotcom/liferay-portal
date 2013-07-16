@@ -16,6 +16,14 @@
 
 <%@ include file="/html/portlet/journal/init.jsp" %>
 
+<%
+long groupId = ParamUtil.getLong(renderRequest, "groupId");
+String articleId = ParamUtil.getString(renderRequest, "articleId");
+double version = ParamUtil.getDouble(renderRequest, "version", JournalArticleConstants.VERSION_DEFAULT);
+
+JournalArticle article = JournalArticleServiceUtil.getArticle(groupId, articleId, version);
+%>
+
 <html>
 
 <head>
@@ -24,7 +32,7 @@
 
 <body>
 
-<%= request.getAttribute(WebKeys.JOURNAL_ARTICLE_CONTENT) %>
+<%= JournalArticleLocalServiceUtil.getArticleContent(article, article.getTemplateId(), null, themeDisplay.getLanguageId(), themeDisplay) %>
 
 <liferay-util:include page="/html/common/themes/bottom.jsp" />
 

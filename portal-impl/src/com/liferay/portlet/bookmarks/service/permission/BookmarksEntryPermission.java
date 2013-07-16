@@ -56,32 +56,28 @@ public class BookmarksEntryPermission {
 			String actionId)
 		throws PortalException, SystemException {
 
-		if (entry.getFolderId() !=
-				BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+		if (actionId.equals(ActionKeys.VIEW) &&
+			PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE) {
 
-			try {
-				BookmarksFolder folder =
-					BookmarksFolderLocalServiceUtil.getFolder(
-						entry.getFolderId());
+			long folderId = entry.getFolderId();
 
-				if (PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE &&
-					!BookmarksFolderPermission.contains(
-						permissionChecker, folder, ActionKeys.ACCESS) &&
-					!BookmarksFolderPermission.contains(
-						permissionChecker, folder, ActionKeys.VIEW)) {
+			if (folderId != BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+				try {
+					BookmarksFolder folder =
+						BookmarksFolderLocalServiceUtil.getFolder(folderId);
 
-					return false;
+					if (!BookmarksFolderPermission.contains(
+							permissionChecker, folder, ActionKeys.ACCESS) &&
+						!BookmarksFolderPermission.contains(
+							permissionChecker, folder, ActionKeys.VIEW)) {
+
+						return false;
+					}
 				}
-
-				if (BookmarksFolderPermission.contains(
-						permissionChecker, folder, actionId)) {
-
-					return true;
-				}
-			}
-			catch (NoSuchFolderException nsfe) {
-				if (!entry.isInTrash()) {
-					throw nsfe;
+				catch (NoSuchFolderException nsfe) {
+					if (!entry.isInTrash()) {
+						throw nsfe;
+					}
 				}
 			}
 		}

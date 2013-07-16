@@ -266,7 +266,8 @@
 				portletBound.plug(A.Plugin.ParseContent);
 
 				portletBound.setContent(html);
-				portletBound = portletBound.get('firstChild');
+
+				portletBound = portletBound.one('> *');
 
 				var id = portletBound.attr('id');
 

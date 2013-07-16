@@ -397,6 +397,18 @@
 		<property name="service" ref="com.liferay.portal.service.RoleService" />
 		<property name="serviceInterface" value="com.liferay.portal.service.RoleService" />
 	</bean>
+	<bean name="/com_liferay_portal_service_spring_StagingService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
+		<property name="service" ref="com.liferay.portal.service.StagingService" />
+		<property name="serviceInterface" value="com.liferay.portal.service.StagingService" />
+	</bean>
+	<bean name="/com_liferay_portal_service_spring_StagingService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
+		<property name="service" ref="com.liferay.portal.service.StagingService" />
+		<property name="serviceInterface" value="com.liferay.portal.service.StagingService" />
+	</bean>
+	<bean name="/com_liferay_portal_service_spring_StagingService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service" ref="com.liferay.portal.service.StagingService" />
+		<property name="serviceInterface" value="com.liferay.portal.service.StagingService" />
+	</bean>
 	<bean name="/com_liferay_portal_service_spring_TeamService-burlap" class="org.springframework.remoting.caucho.BurlapServiceExporter">
 		<property name="service" ref="com.liferay.portal.service.TeamService" />
 		<property name="serviceInterface" value="com.liferay.portal.service.TeamService" />

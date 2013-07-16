@@ -27,6 +27,8 @@ import com.liferay.portal.kernel.process.ProcessExecutor;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.Digester;
+import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.FileComparator;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -183,7 +185,7 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 	public File createTempFile(byte[] bytes) throws IOException {
 		File file = createTempFile(StringPool.BLANK);
 
-		write(file, bytes);
+		write(file, bytes, false);
 
 		return file;
 	}
@@ -498,6 +500,20 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 		}
 		else {
 			return StringPool.BLANK;
+		}
+	}
+
+	@Override
+	public String getMD5Checksum(File file) throws IOException {
+		FileInputStream fileInputStream = null;
+
+		try {
+			fileInputStream = new FileInputStream(file);
+
+			return DigesterUtil.digestHex(Digester.MD5, fileInputStream);
+		}
+		finally {
+			StreamUtil.cleanUp(fileInputStream);
 		}
 	}
 
@@ -841,16 +857,31 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 
 	@Override
 	public void write(File file, byte[] bytes) throws IOException {
-		write(file, bytes, 0, bytes.length);
+		write(file, bytes, 0, bytes.length, false);
+	}
+
+	@Override
+	public void write(File file, byte[] bytes, boolean append)
+		throws IOException {
+
+		write(file, bytes, 0, bytes.length, append);
 	}
 
 	@Override
 	public void write(File file, byte[] bytes, int offset, int length)
 		throws IOException {
 
+		write(file, bytes, offset, bytes.length, false);
+	}
+
+	@Override
+	public void write(
+			File file, byte[] bytes, int offset, int length, boolean append)
+		throws IOException {
+
 		mkdirsParentFile(file);
 
-		FileOutputStream fileOutputStream = new FileOutputStream(file);
+		FileOutputStream fileOutputStream = new FileOutputStream(file, append);
 
 		fileOutputStream.write(bytes, offset, length);
 

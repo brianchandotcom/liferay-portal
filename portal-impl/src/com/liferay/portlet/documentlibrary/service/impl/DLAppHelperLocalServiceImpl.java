@@ -1286,8 +1286,9 @@ public class DLAppHelperLocalServiceImpl
 		if (fileVersion.isInTrash()) {
 			restoreFileEntryFromTrash(userId, fileEntry);
 
-			fileEntry = dlAppService.moveFileEntry(
-				fileEntry.getFileEntryId(), newFolderId, serviceContext);
+			fileEntry = dlAppLocalService.moveFileEntry(
+				userId, fileEntry.getFileEntryId(), newFolderId,
+				serviceContext);
 
 			if (DLAppHelperThreadLocal.isEnabled()) {
 				dlFileRankLocalService.enableFileRanks(
@@ -1444,8 +1445,8 @@ public class DLAppHelperLocalServiceImpl
 				StringPool.BLANK, 0);
 		}
 
-		return dlAppService.moveFolder(
-			folder.getFolderId(), parentFolderId, serviceContext);
+		return dlAppLocalService.moveFolder(
+			userId, folder.getFolderId(), parentFolderId, serviceContext);
 	}
 
 	protected Folder doMoveFolderToTrash(long userId, Folder folder)

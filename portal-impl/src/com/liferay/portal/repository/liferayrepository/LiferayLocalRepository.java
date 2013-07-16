@@ -270,6 +270,18 @@ public class LiferayLocalRepository
 	}
 
 	@Override
+	public Folder moveFolder(
+			long userId, long folderId, long parentFolderId,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		DLFolder dlFolder = dlFolderLocalService.moveFolder(
+			userId, folderId, parentFolderId, serviceContext);
+
+		return new LiferayFolder(dlFolder);
+	}
+
+	@Override
 	public void updateAsset(
 			long userId, FileEntry fileEntry, FileVersion fileVersion,
 			long[] assetCategoryIds, String[] assetTagNames,

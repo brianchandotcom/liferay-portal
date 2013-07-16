@@ -244,6 +244,19 @@ public class ModelHintsImpl implements ModelHints {
 	}
 
 	@Override
+	public boolean hasField(String model, String field) {
+		Map<String, Object> fields = (Map<String, Object>)_modelFields.get(
+			model);
+
+		if (fields == null) {
+			return false;
+		}
+		else {
+			return fields.containsKey(field + _ELEMENTS_SUFFIX);
+		}
+	}
+
+	@Override
 	public boolean isCustomValidator(String validatorName) {
 		if (validatorName.equals("custom")) {
 			return true;

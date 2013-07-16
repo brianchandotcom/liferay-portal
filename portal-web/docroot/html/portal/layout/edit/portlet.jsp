@@ -19,8 +19,6 @@
 <%
 String portletId = portletDisplay.getId();
 
-Layout selLayout = (Layout)request.getAttribute("edit_pages.jsp-selLayout");
-
 LayoutTypePortlet selLayoutTypePortlet = null;
 
 Theme selTheme = null;
@@ -40,7 +38,7 @@ if (selLayoutTypePortlet != null) {
 List<LayoutTemplate> layoutTemplates = LayoutTemplateLocalServiceUtil.getLayoutTemplates(selTheme.getThemeId());
 %>
 
-<div class='<%= portletId.equals(PortletKeys.DOCKBAR) ? StringPool.BLANK : "hide" %>' id="<portlet:namespace />copyPortletsFromPage">
+<div class="hide" id="<portlet:namespace />copyPortletsFromPage">
 	<p>
 		<c:if test="<%= selLayout != null %>">
 			<liferay-ui:message arguments="<%= HtmlUtil.escape(selLayout.getName(locale)) %>" key="the-applications-in-page-x-will-be-replaced-with-the-ones-in-the-page-you-select-below" />
@@ -95,13 +93,11 @@ List<LayoutTemplate> layoutTemplates = LayoutTemplateLocalServiceUtil.getLayoutT
 
 	</aui:select>
 
-	<c:if test="<%= !portletId.equals(PortletKeys.DOCKBAR) || selLayout != null %>">
-		<aui:button-row>
-			<aui:button name="copySubmitButton" value="copy" />
-		</aui:button-row>
-	</c:if>
+	<aui:button-row>
+		<aui:button name="copySubmitButton" value="copy" />
+	</aui:button-row>
 </div>
 
-<div>
+<div id="<portlet:namespace />layoutTemplates">
 	<%@ include file="/html/portlet/layouts_admin/layout/layout_templates_list.jspf" %>
 </div>

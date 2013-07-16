@@ -3018,6 +3018,44 @@ public abstract class LayoutLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
+	 * Returns the staging local service.
+	 *
+	 * @return the staging local service
+	 */
+	public com.liferay.portal.service.StagingLocalService getStagingLocalService() {
+		return stagingLocalService;
+	}
+
+	/**
+	 * Sets the staging local service.
+	 *
+	 * @param stagingLocalService the staging local service
+	 */
+	public void setStagingLocalService(
+		com.liferay.portal.service.StagingLocalService stagingLocalService) {
+		this.stagingLocalService = stagingLocalService;
+	}
+
+	/**
+	 * Returns the staging remote service.
+	 *
+	 * @return the staging remote service
+	 */
+	public com.liferay.portal.service.StagingService getStagingService() {
+		return stagingService;
+	}
+
+	/**
+	 * Sets the staging remote service.
+	 *
+	 * @param stagingService the staging remote service
+	 */
+	public void setStagingService(
+		com.liferay.portal.service.StagingService stagingService) {
+		this.stagingService = stagingService;
+	}
+
+	/**
 	 * Returns the subscription local service.
 	 *
 	 * @return the subscription local service
@@ -4613,6 +4651,10 @@ public abstract class LayoutLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected com.liferay.portal.service.ShardLocalService shardLocalService;
 	@BeanReference(type = ShardPersistence.class)
 	protected ShardPersistence shardPersistence;
+	@BeanReference(type = com.liferay.portal.service.StagingLocalService.class)
+	protected com.liferay.portal.service.StagingLocalService stagingLocalService;
+	@BeanReference(type = com.liferay.portal.service.StagingService.class)
+	protected com.liferay.portal.service.StagingService stagingService;
 	@BeanReference(type = com.liferay.portal.service.SubscriptionLocalService.class)
 	protected com.liferay.portal.service.SubscriptionLocalService subscriptionLocalService;
 	@BeanReference(type = SubscriptionPersistence.class)

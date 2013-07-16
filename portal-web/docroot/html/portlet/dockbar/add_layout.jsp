@@ -142,7 +142,10 @@
 								</div>
 
 								<div class="lfr-page-template-options toggler-content toggler-content-collapsed">
-									<liferay-util:include page="/html/portal/layout/edit/portlet.jsp" />
+									<liferay-util:include page="/html/portal/layout/edit/portlet.jsp">
+										<liferay-util:param name="showCopyPortlets" value="true" />
+										<liferay-util:param name="showLayoutTemplates" value="false" />
+									</liferay-util:include>
 								</div>
 							</aui:nav-item>
 						</c:if>

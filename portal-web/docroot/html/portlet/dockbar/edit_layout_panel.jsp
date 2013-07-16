@@ -69,39 +69,43 @@
 	Liferay.once(
 		'submitForm',
 		function(event) {
-			event.preventDefault();
+			var form = event.form;
 
-			document.<portlet:namespace />fm.<portlet:namespace />redirect.value = '<%= HttpUtil.addParameter(redirectURL.toString(), liferayPortletResponse.getNamespace() + "selPlid", selPlid) %>';
+			if (form.hasClass('edit-layout-form')) {
+				event.preventDefault();
 
-			BODY.loadingmask.show();
+				form.get('<portlet:namespace />redirect').set('value', '<%= HttpUtil.addParameter(redirectURL.toString(), liferayPortletResponse.getNamespace() + "selPlid", selPlid) %>');
 
-			A.io.request(
-				event.form.get('action'),
-				{
-					dataType: 'json',
-					form: {
-						id: event.form.get('id')
-					},
-					after: {
-						success: function(event, id, obj) {
-							var response = this.get('responseData');
+				BODY.loadingmask.show();
 
-							var panel = A.one('#<portlet:namespace />editLayoutContainer');
-
-							panel.empty();
-
-							panel.plug(A.Plugin.ParseContent);
-
-							panel.setContent(response);
-
-							BODY.loadingmask.hide();
+				A.io.request(
+					form.get('action'),
+					{
+						dataType: 'json',
+						form: {
+							id: form.get('id')
 						},
-						failure: function(event) {
-							BODY.loadingMask.hide();
+						after: {
+							success: function(event, id, obj) {
+								var response = this.get('responseData');
+
+								var panel = A.one('#<portlet:namespace />editLayoutContainer');
+
+								panel.empty();
+
+								panel.plug(A.Plugin.ParseContent);
+
+								panel.setContent(response);
+
+								BODY.loadingmask.hide();
+							},
+							failure: function(event) {
+								BODY.loadingMask.hide();
+							}
 						}
 					}
-				}
-			);
+				);
+			}
 		}
 	);
 </aui:script>

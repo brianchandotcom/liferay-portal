@@ -12,6 +12,11 @@
 		display: none;
 	}
 
+	.navbar {
+		margin-bottom: 0;
+		margin-top: 20px;
+	}
+
 	.site-admin-link {
 		bottom: 0;
 		padding: 10px;
@@ -19,7 +24,6 @@
 	}
 
 	.taglib-form-navigator {
-
 		.button-holder {
 			background-color: #FFFFFF;
 			bottom: 0;
@@ -31,7 +35,7 @@
 
 		.accordion {
 			background: #FFF;
-			margin: 30px -10px 50px;
+			margin: 20px -10px 50px;
 
 			.accordion-group.lfr-panel-extended {
 				background: #FFF;
@@ -60,7 +64,7 @@
 					background: #FCFCFC;
 					border: solid #D1D1D1;
 					border-width: 1px 0 0;
-					padding: 6px 10px 15px;
+					padding: 15px;
 				}
 			}
 		}
@@ -71,19 +75,6 @@
 			.lfr-current-theme {
 				background: inherit;
 				border: none;
-			}
-		}
-
-		.input-prepend .add-on {
-			margin: 6px 0 7px 6px;
-		}
-
-		.input-localized {
-			display: inline-block;
-
-			.input-localized-content {
-				margin-left: 6px;
-				margin-top: 0;
 			}
 		}
 	}

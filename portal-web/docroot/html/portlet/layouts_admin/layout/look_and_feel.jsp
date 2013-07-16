@@ -72,7 +72,7 @@ else {
 			<%= HtmlUtil.escape(rootNodeName) %>
 		</c:when>
 		<c:otherwise>
-			<aui:a href='<%= redirectURL.toString() %>'>
+			<aui:a href="<%= redirectURL.toString() %>">
 				<%= HtmlUtil.escape(rootNodeName) %>
 			</aui:a>
 		</c:otherwise>

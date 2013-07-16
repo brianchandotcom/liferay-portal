@@ -110,7 +110,7 @@ StringBuilder friendlyURLBase = new StringBuilder();
 					<aui:field-wrapper cssClass="input-prepend input-append" helpMessage='<%= LanguageUtil.format(pageContext, "for-example-x", "<em>/news</em>") %>' label="friendly-url" name="friendlyURL">
 						<span class="add-on"><liferay-ui:message key="<%= friendlyURLBase.toString() %>" /></span>
 
-						<liferay-ui:input-localized name="friendlyURL" xml="<%= selLayout.getFriendlyURLsXML() %>" />
+						<liferay-ui:input-localized availableLocales="<%= LanguageUtil.getAvailableLocales(themeDisplay.getSiteGroupId()) %>" name="friendlyURL" xml="<%= selLayout.getFriendlyURLsXML() %>" />
 					</aui:field-wrapper>
 				</c:when>
 				<c:otherwise>

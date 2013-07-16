@@ -61,6 +61,8 @@ searchContainer.setResults(results);
 	for (int i = 0; i < results.size(); i++) {
 		WikiNode node = (WikiNode)results.get(i);
 
+		node = node.toEscapedModel();
+
 		ResultRow row = new ResultRow(node, node.getNodeId(), i);
 
 		PortletURL rowURL = renderResponse.createRenderURL();

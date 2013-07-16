@@ -88,8 +88,8 @@ public class MBMessagePermission {
 			return false;
 		}
 
-		if (PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE &&
-			actionId.equals(ActionKeys.VIEW)) {
+		if (actionId.equals(ActionKeys.VIEW) &&
+			PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE) {
 
 			long categoryId = message.getCategoryId();
 

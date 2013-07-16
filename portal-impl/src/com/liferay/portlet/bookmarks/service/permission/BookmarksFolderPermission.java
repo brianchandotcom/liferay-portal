@@ -60,8 +60,8 @@ public class BookmarksFolderPermission {
 			actionId = ActionKeys.ADD_SUBFOLDER;
 		}
 
-		if (PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE &&
-			actionId.equals(ActionKeys.VIEW)) {
+		if (actionId.equals(ActionKeys.VIEW) &&
+			PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE) {
 
 			try {
 				long folderId = folder.getFolderId();
@@ -114,14 +114,15 @@ public class BookmarksFolderPermission {
 
 		if (permissionChecker.hasOwnerPermission(
 				folder.getCompanyId(), BookmarksFolder.class.getName(),
-				folder.getFolderId(), folder.getUserId(), actionId)) {
+				folder.getFolderId(), folder.getUserId(), actionId) ||
+			permissionChecker.hasPermission(
+				folder.getGroupId(), BookmarksFolder.class.getName(),
+				folder.getFolderId(), actionId)) {
 
 			return true;
 		}
 
-		return permissionChecker.hasPermission(
-			folder.getGroupId(), BookmarksFolder.class.getName(),
-			folder.getFolderId(), actionId);
+		return false;
 	}
 
 }

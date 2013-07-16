@@ -106,8 +106,8 @@ public class MBCategoryPermission {
 			return false;
 		}
 
-		if (PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE &&
-			actionId.equals(ActionKeys.VIEW)) {
+		if (actionId.equals(ActionKeys.VIEW) &&
+			PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE) {
 
 			try {
 				long categoryId = category.getCategoryId();
@@ -145,14 +145,15 @@ public class MBCategoryPermission {
 
 		if (permissionChecker.hasOwnerPermission(
 				category.getCompanyId(), MBCategory.class.getName(),
-				category.getCategoryId(), category.getUserId(), actionId)) {
+				category.getCategoryId(), category.getUserId(), actionId) ||
+			permissionChecker.hasPermission(
+				category.getGroupId(), MBCategory.class.getName(),
+				category.getCategoryId(), actionId)) {
 
 			return true;
 		}
 
-		return permissionChecker.hasPermission(
-			category.getGroupId(), MBCategory.class.getName(),
-			category.getCategoryId(), actionId);
+		return false;
 	}
 
 }

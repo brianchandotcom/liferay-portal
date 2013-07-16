@@ -176,14 +176,15 @@ public class WikiPagePermission {
 
 		if (permissionChecker.hasOwnerPermission(
 				page.getCompanyId(), WikiPage.class.getName(),
-				page.getResourcePrimKey(), page.getUserId(), actionId)) {
+				page.getResourcePrimKey(), page.getUserId(), actionId) ||
+			permissionChecker.hasPermission(
+				page.getGroupId(), WikiPage.class.getName(),
+				page.getResourcePrimKey(), actionId)) {
 
 			return true;
 		}
 
-		return permissionChecker.hasPermission(
-			page.getGroupId(), WikiPage.class.getName(),
-			page.getResourcePrimKey(), actionId);
+		return false;
 	}
 
 }

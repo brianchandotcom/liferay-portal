@@ -80,8 +80,8 @@ public class DLFolderPermission {
 			return hasPermission.booleanValue();
 		}
 
-		if (PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE &&
-			actionId.equals(ActionKeys.VIEW)) {
+		if (actionId.equals(ActionKeys.VIEW) &&
+			PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE) {
 
 			try {
 				long folderId = dlFolder.getFolderId();
@@ -149,14 +149,15 @@ public class DLFolderPermission {
 
 		if (permissionChecker.hasOwnerPermission(
 				dlFolder.getCompanyId(), DLFolder.class.getName(),
-				dlFolder.getFolderId(), dlFolder.getUserId(), actionId)) {
+				dlFolder.getFolderId(), dlFolder.getUserId(), actionId) ||
+			permissionChecker.hasPermission(
+				dlFolder.getGroupId(), DLFolder.class.getName(),
+				dlFolder.getFolderId(), actionId)) {
 
 			return true;
 		}
 
-		return permissionChecker.hasPermission(
-			dlFolder.getGroupId(), DLFolder.class.getName(),
-			dlFolder.getFolderId(), actionId);
+		return false;
 	}
 
 }

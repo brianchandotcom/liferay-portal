@@ -56,8 +56,8 @@ public class BookmarksEntryPermission {
 			String actionId)
 		throws PortalException, SystemException {
 
-		if (PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE &&
-			actionId.equals(ActionKeys.VIEW)) {
+		if (actionId.equals(ActionKeys.VIEW) &&
+			PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE) {
 
 			long folderId = entry.getFolderId();
 

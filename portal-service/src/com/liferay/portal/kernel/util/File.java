@@ -93,6 +93,9 @@ public interface File {
 
 	public String getExtension(String fileName);
 
+	public String getMD5Checksum(java.io.File file)
+		throws IOException;
+
 	public String getPath(String fullFileName);
 
 	public String getShortFileName(String fullFileName);

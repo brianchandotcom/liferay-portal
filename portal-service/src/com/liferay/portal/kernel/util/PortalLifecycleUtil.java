@@ -14,9 +14,13 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.portal.kernel.servlet.PluginContextListener;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import javax.servlet.ServletContextListener;
 
 /**
  * @author Brian Wing Shun Chan
@@ -59,6 +63,24 @@ public class PortalLifecycleUtil {
 	public static void register(PortalLifecycle portalLifecycle, int method) {
 		if ((method == PortalLifecycle.METHOD_ALL) ||
 			(method == PortalLifecycle.METHOD_INIT)) {
+
+			if (portalLifecycle instanceof PluginContextListener) {
+				portalLifecycle.portalInit();
+
+				flushInits();
+
+				return;
+			}
+			else if (portalLifecycle instanceof ServletContextListener) {
+				if (_portalLifecyclesInit == null) {
+					_portalLifecyclesInit = Collections.synchronizedList(
+						new ArrayList<PortalLifecycle>());
+				}
+
+				_portalLifecyclesInit.add(portalLifecycle);
+
+				return;
+			}
 
 			if (_portalLifecyclesInit == null) {
 				portalLifecycle.portalInit();

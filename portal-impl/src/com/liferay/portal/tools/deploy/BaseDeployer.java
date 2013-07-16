@@ -1185,12 +1185,6 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 			sb.append("</context-param>");
 		}
 
-		sb.append("<listener>");
-		sb.append("<listener-class>");
-		sb.append(SerializableSessionAttributeListener.class.getName());
-		sb.append("</listener-class>");
-		sb.append("</listener>");
-
 		sb.append(getDynamicResourceServletContent());
 
 		File serverConfigWsdd = new File(
@@ -2289,8 +2283,13 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 
 		// Plugin context listener
 
-		StringBundler sb = new StringBundler(5);
+		StringBundler sb = new StringBundler(10);
 
+		sb.append("<listener>");
+		sb.append("<listener-class>");
+		sb.append(SerializableSessionAttributeListener.class.getName());
+		sb.append("</listener-class>");
+		sb.append("</listener>");
 		sb.append("<listener>");
 		sb.append("<listener-class>");
 
@@ -2330,8 +2329,8 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 		}
 
 		String newContent =
-			content.substring(0, pos) + pluginContextListenerContent +
-				extraContent + content.substring(pos);
+			content.substring(0, pos) + extraContent +
+				pluginContextListenerContent + content.substring(pos);
 
 		// Update liferay-web.xml
 

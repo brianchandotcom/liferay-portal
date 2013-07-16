@@ -35,20 +35,6 @@ import org.dom4j.io.XMLWriter;
  */
 public class XMLMergerRunner {
 
-	public static void main(String[] args)
-		throws ClassNotFoundException, DocumentException,
-			   IllegalAccessException, InstantiationException, IOException {
-
-		if ((args != null) && (args.length == 4)) {
-			XMLMergerRunner runner = new XMLMergerRunner(args[3]);
-
-			runner.mergeAndSave(args[0], args[1], args[2]);
-		}
-		else {
-			throw new IllegalArgumentException();
-		}
-	}
-
 	public XMLMergerRunner(String descriptorClassName) {
 		if (Validator.isNotNull(descriptorClassName)) {
 			_descriptorClassName = descriptorClassName;

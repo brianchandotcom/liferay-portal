@@ -39,26 +39,57 @@ if ((article != null) && article.isDraft()) {
 
 	var toolbarButtonGroup = [];
 
-	<c:if test="<%= (article != null) && (classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT) %>">
-		toolbarButtonGroup.push(
-			{
-				icon: 'icon-search',
-				label: '<%= UnicodeLanguageUtil.get(pageContext, "preview") %>',
-				on: {
-					click: function(event) {
-						event.domEvent.preventDefault();
+	<c:if test="<%= (article != null) %>">
+		<portlet:renderURL var="previewArticleContentURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
+			<portlet:param name="struts_action" value="/journal/preview_article_content" />
+			<portlet:param name="groupId" value="<%= String.valueOf(article.getGroupId()) %>" />
+			<portlet:param name="articleId" value="<%= article.getArticleId() %>" />
+			<portlet:param name="version" value="<%= String.valueOf(article.getVersion()) %>" />
+		</portlet:renderURL>
 
-						if (!confirm('<%= UnicodeLanguageUtil.get(pageContext, "this-article-has-changes-and-to-preview-the-content-you-have-to-save-the-article-as-draft") %>')) {
-								return false;
-						}
+		var previewArticleContentURL = '<%= previewArticleContentURL %>';
 
-						form.one('#<portlet:namespace /><%= Constants.CMD %>').val('<%= Constants.PREVIEW %>');
+		var form = A.one('#<portlet:namespace />fm1');
 
-						submitForm(form);
-					}
-				}
+		form.on(
+			'change',
+			function(event) {
+				previewArticleContentURL = null;
 			}
 		);
+
+		<c:if test="<%= classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT %>">
+			toolbarButtonGroup.push(
+				{
+					icon: 'icon-search',
+					label: '<%= UnicodeLanguageUtil.get(pageContext, "preview") %>',
+					on: {
+						click: function(event) {
+							event.domEvent.preventDefault();
+
+							if (previewArticleContentURL && !(typeof CKEDITOR === 'undefined') && !CKEDITOR.instances.<portlet:namespace />articleContent.checkDirty()) {
+								Liferay.fire(
+									'previewArticle',
+									{
+										title: '<%= article.getTitle(locale) %>',
+										uri: '<%= previewArticleContentURL.toString() %>'
+									}
+								);
+							}
+							else {
+								if (!confirm('<%= UnicodeLanguageUtil.get(pageContext, "this-article-has-changes-and-to-preview-the-content-you-have-to-save-the-article-as-draft") %>')) {
+									return false;
+								}
+
+								form.one('#<portlet:namespace /><%= Constants.CMD %>').val('<%= Constants.PREVIEW %>');
+
+								submitForm(form);
+							}
+						}
+					}
+				}
+			);
+		</c:if>
 	</c:if>
 
 	<c:if test="<%= (article != null) && JournalArticlePermission.contains(permissionChecker, article, ActionKeys.PERMISSIONS) %>">

@@ -183,7 +183,7 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 	public File createTempFile(byte[] bytes) throws IOException {
 		File file = createTempFile(StringPool.BLANK);
 
-		write(file, bytes);
+		write(file, bytes, false);
 
 		return file;
 	}
@@ -841,16 +841,31 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 
 	@Override
 	public void write(File file, byte[] bytes) throws IOException {
-		write(file, bytes, 0, bytes.length);
+		write(file, bytes, 0, bytes.length, false);
+	}
+
+	@Override
+	public void write(File file, byte[] bytes, boolean append)
+		throws IOException {
+
+		write(file, bytes, 0, bytes.length, append);
 	}
 
 	@Override
 	public void write(File file, byte[] bytes, int offset, int length)
 		throws IOException {
 
+		write(file, bytes, offset, bytes.length, false);
+	}
+
+	@Override
+	public void write(
+			File file, byte[] bytes, int offset, int length, boolean append)
+		throws IOException {
+
 		mkdirsParentFile(file);
 
-		FileOutputStream fileOutputStream = new FileOutputStream(file);
+		FileOutputStream fileOutputStream = new FileOutputStream(file, append);
 
 		fileOutputStream.write(bytes, offset, length);
 

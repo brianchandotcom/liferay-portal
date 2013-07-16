@@ -369,17 +369,30 @@ public class FileUtil {
 	}
 
 	public static void write(File file, byte[] bytes) throws IOException {
+		write(file, bytes, false);
+	}
+
+	public static void write(File file, byte[] bytes, boolean append)
+		throws IOException {
+
 		PortalFilePermission.checkWrite(_getPath(file));
 
-		getFile().write(file, bytes);
+		getFile().write(file, bytes, append);
 	}
 
 	public static void write(File file, byte[] bytes, int offset, int length)
 		throws IOException {
 
+		write(file, bytes, offset, length, false);
+	}
+
+	public static void write(
+			File file, byte[] bytes, int offset, int length, boolean append)
+		throws IOException {
+
 		PortalFilePermission.checkWrite(_getPath(file));
 
-		getFile().write(file, bytes, offset, length);
+		getFile().write(file, bytes, offset, length, append);
 	}
 
 	public static void write(File file, InputStream is) throws IOException {

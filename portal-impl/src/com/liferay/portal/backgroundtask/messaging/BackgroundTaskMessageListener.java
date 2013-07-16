@@ -51,16 +51,18 @@ public class BackgroundTaskMessageListener extends BaseMessageListener {
 
 		ServiceContext serviceContext = new ServiceContext();
 
-		BackgroundTaskLocalServiceUtil.updateBackgroundTask(
-			backgroundTaskId, null, BackgroundTaskConstants.STATUS_IN_PROGRESS,
-			serviceContext);
+		BackgroundTask backgroundTask =
+			BackgroundTaskLocalServiceUtil.amendBackgroundTask(
+				backgroundTaskId, null,
+				BackgroundTaskConstants.STATUS_IN_PROGRESS, serviceContext);
+
+		if (backgroundTask == null) {
+			return;
+		}
 
 		BackgroundTaskExecutor backgroundTaskExecutor = null;
 		BackgroundTaskStatusMessageListener
 			backgroundTaskStatusMessageListener = null;
-
-		BackgroundTask backgroundTask =
-			BackgroundTaskLocalServiceUtil.getBackgroundTask(backgroundTaskId);
 
 		int status = backgroundTask.getStatus();
 		String statusMessage = null;
@@ -133,7 +135,7 @@ public class BackgroundTaskMessageListener extends BaseMessageListener {
 			}
 		}
 		finally {
-			BackgroundTaskLocalServiceUtil.updateBackgroundTask(
+			BackgroundTaskLocalServiceUtil.amendBackgroundTask(
 				backgroundTaskId, null, status, statusMessage, serviceContext);
 
 			BackgroundTaskStatusRegistryUtil.unregisterBackgroundTaskStatus(

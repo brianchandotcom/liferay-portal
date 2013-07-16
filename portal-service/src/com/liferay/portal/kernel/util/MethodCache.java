@@ -30,7 +30,7 @@ public class MethodCache {
 	}
 
 	/**
-	 * @see {@link MethodKey}
+	 * @see MethodKey
 	 */
 	protected static Method get(MethodKey methodKey)
 		throws NoSuchMethodException {

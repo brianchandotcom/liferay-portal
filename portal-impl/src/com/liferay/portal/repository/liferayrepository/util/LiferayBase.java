@@ -34,8 +34,7 @@ import java.util.List;
 public abstract class LiferayBase {
 
 	/**
-	 * @see {@link
-	 *      com.liferay.portal.portletfilerepository.PortletFileRepositoryImpl#toFileEntries}
+	 * @see com.liferay.portal.portletfilerepository.PortletFileRepositoryImpl#toFileEntries
 	 */
 	public List<FileEntry> toFileEntries(List<DLFileEntry> dlFileEntries) {
 		List<FileEntry> fileEntries = new ArrayList<FileEntry>(

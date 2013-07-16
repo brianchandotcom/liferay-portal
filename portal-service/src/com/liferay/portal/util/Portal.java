@@ -262,7 +262,7 @@ public interface Portal {
 	 * @throws     PortalException if a portal exception occurred
 	 * @throws     SystemException if a system exception occurred
 	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             com.liferay.portal.kernel.language.LanguageUtil.getAvailableLocales(
+	 *             com.liferay.portal.kernel.language.LanguageUtil#getAvailableLocales(
 	 *             )}
 	 */
 	public Locale[] getAlternateLocales(HttpServletRequest request)

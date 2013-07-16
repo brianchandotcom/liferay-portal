@@ -38,7 +38,7 @@ import javax.portlet.PortletRequest;
  *
  * @author Alexander Chow
  * @author Zsolt Berentey
- * @see    {@link TrashHandler}
+ * @see    TrashHandler
  */
 public abstract class BaseTrashHandler implements TrashHandler {
 

@@ -41,9 +41,8 @@ public class SocialActivityConstants {
 	public static final int TYPE_UNSUBSCRIBE = 10003;
 
 	/**
-	 * @see {@link
-	 *      com.liferay.portlet.social.service.impl.SocialActivityLocalServiceImpl#isLogActivity(
-	 *      SocialActivity)}
+	 * @see com.liferay.portlet.social.service.impl.SocialActivityLocalServiceImpl#isLogActivity(
+	 *      SocialActivity)
 	 */
 	public static final int TYPE_VIEW = 10001;
 

@@ -30,7 +30,7 @@ import java.util.Map;
  *
  * @author Miguel Pastor
  * @author Raymond Augé
- * @see    {@link ModuleFrameworkClassloader}
+ * @see    ModuleFrameworkClassLoader
  */
 public class ModuleFrameworkUtilAdapter {
 

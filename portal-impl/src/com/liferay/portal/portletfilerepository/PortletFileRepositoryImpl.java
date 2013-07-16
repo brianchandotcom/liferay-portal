@@ -443,8 +443,7 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 	}
 
 	/**
-	 * @see {@link
-	 *      com.liferay.portal.repository.liferayrepository.util.LiferayBase#toFileEntries}
+	 * @see com.liferay.portal.repository.liferayrepository.util.LiferayBase#toFileEntries
 	 */
 	protected List<FileEntry> toFileEntries(List<DLFileEntry> dlFileEntries) {
 		List<FileEntry> fileEntries = new ArrayList<FileEntry>(

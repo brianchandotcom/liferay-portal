@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Miguel Pastor
  * @author Raymond Augé
- * @see    {@link ModuleFrameworkClassloader}
+ * @see    ModuleFrameworkClassLoader
  */
 public class ModuleFrameworkServletAdapter extends HttpServlet {
 

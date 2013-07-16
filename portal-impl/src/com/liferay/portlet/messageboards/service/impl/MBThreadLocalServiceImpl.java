@@ -643,13 +643,13 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		MBCategory oldCategory = null;
 
 		if (oldCategoryId != MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
-			oldCategory = mbCategoryPersistence.findByPrimaryKey(oldCategoryId);
+			oldCategory = mbCategoryPersistence.fetchByPrimaryKey(oldCategoryId);
 		}
 
 		MBCategory category = null;
 
 		if (categoryId != MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
-			category = mbCategoryPersistence.findByPrimaryKey(categoryId);
+			category = mbCategoryPersistence.fetchByPrimaryKey(categoryId);
 		}
 
 		// Thread
@@ -942,11 +942,13 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 				// Category
 
-				MBCategory category = mbCategoryPersistence.findByPrimaryKey(
+				MBCategory category = mbCategoryPersistence.fetchByPrimaryKey(
 					thread.getCategoryId());
 
-				MBUtil.updateCategoryStatistics(
-					category.getCompanyId(), category.getCategoryId());
+				if (category != null) {
+					MBUtil.updateCategoryStatistics(
+						category.getCompanyId(), category.getCategoryId());
+				}
 			}
 
 			if (status == WorkflowConstants.STATUS_IN_TRASH) {

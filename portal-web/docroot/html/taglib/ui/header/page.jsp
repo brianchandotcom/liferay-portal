@@ -17,6 +17,10 @@
 <%@ include file="/html/taglib/ui/header/init.jsp" %>
 
 <%
+if (Validator.isNull(backLabel)) {
+	backLabel = LanguageUtil.get(pageContext, "back");
+}
+
 if (Validator.isNotNull(backURL) && !backURL.equals("javascript:history.go(-1);")) {
 	backURL = HtmlUtil.escapeHREF(PortalUtil.escapeRedirect(backURL));
 }
@@ -27,7 +31,7 @@ String headerTitle = (localizeTitle) ? LanguageUtil.get(pageContext, title) : ti
 <div class="taglib-header <%= cssClass %>">
 	<c:if test="<%= showBackURL && Validator.isNotNull(backURL) %>">
 		<span class="header-back-to">
-			<a class="icon-chevron-left" href="<%= backURL %>" id="<%= namespace %>TabsBack" title="<%= backLabel %>">&nbsp;</a>
+			<a class="icon-chevron-left" href="<%= backURL %>" id="<%= namespace %>TabsBack" title="<%= backLabel %>"><span class="helper-hidden-accessible"><%= backLabel %></span></a>
 		</span>
 	</c:if>
 

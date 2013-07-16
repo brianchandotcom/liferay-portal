@@ -153,6 +153,23 @@ $dockbarOpenGradientStart: #00A0FF;
 					}
 				}
 			}
+
+			.site-administration-menu li {
+				list-style: none;
+
+				a {
+					display: block;
+					padding: 3px 5px 3px 40px;
+
+					&:hover {
+						text-decoration: none;
+					}
+
+					i {
+						font-size: 0.8em;
+					}
+				}
+			}
 		}
 	}
 

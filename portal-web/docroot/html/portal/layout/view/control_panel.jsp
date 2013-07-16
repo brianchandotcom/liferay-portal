@@ -23,12 +23,10 @@ String controlPanelCategory = themeDisplay.getControlPanelCategory();
 
 boolean showControlPanelMenu = true;
 
-if (controlPanelCategory.equals(PortletCategoryKeys.CURRENT_SITE)) {
+if (controlPanelCategory.startsWith(PortletCategoryKeys.CURRENT_SITE)) {
 	showControlPanelMenu = false;
-}
 
-if (controlPanelCategory.equals(PortletCategoryKeys.CURRENT_SITE)) {
-	controlPanelCategory = PortletCategoryKeys.SITE_ADMINISTRATION;
+	controlPanelCategory = StringUtil.replace(controlPanelCategory, PortletCategoryKeys.CURRENT_SITE + StringPool.PERIOD, PortletCategoryKeys.SITE_ADMINISTRATION);
 }
 
 List<Portlet> portlets = PortalUtil.getControlPanelPortlets(controlPanelCategory, themeDisplay);
@@ -174,7 +172,7 @@ request.setAttribute("control_panel.jsp-ppid", ppid);
 										<h1 class="site-title">
 											<%= group.getDescriptiveName(themeDisplay.getLocale()) %>
 
-											<c:if test="<%= showControlPanelMenu && !Validator.equals(controlPanelCategory, PortletCategoryKeys.CURRENT_SITE) %>">
+											<c:if test="<%= showControlPanelMenu && !Validator.isNotNull(controlPanelCategory) && !controlPanelCategory.startsWith(PortletCategoryKeys.CURRENT_SITE) %>">
 												<%@ include file="/html/portal/layout/view/control_panel_site_selector.jspf" %>
 											</c:if>
 										</h1>

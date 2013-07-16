@@ -393,7 +393,7 @@ public class ServicePreAction extends Action {
 				String portletControlPanelEntryCategory =
 					portlet.getControlPanelEntryCategory();
 
-				if (!controlPanelCategory.equals(
+				if (!controlPanelCategory.startsWith(
 						PortletCategoryKeys.CURRENT_SITE) &&
 					portletControlPanelEntryCategory.startsWith(
 						PortletCategoryKeys.SITE_ADMINISTRATION)) {
@@ -402,7 +402,7 @@ public class ServicePreAction extends Action {
 						PortletCategoryKeys.SITES;
 				}
 
-				if (!controlPanelCategory.equals(
+				if (!controlPanelCategory.startsWith(
 						PortletCategoryKeys.CURRENT_SITE) &&
 					Validator.isNotNull(portletControlPanelEntryCategory)) {
 
@@ -1747,7 +1747,9 @@ public class ServicePreAction extends Action {
 				return false;
 			}
 
-			if (controlPanelCategory.equals(PortletCategoryKeys.CURRENT_SITE)) {
+			if (controlPanelCategory.startsWith(
+					PortletCategoryKeys.CURRENT_SITE)) {
+
 				if (doAsGroupId <= 0) {
 					return false;
 				}

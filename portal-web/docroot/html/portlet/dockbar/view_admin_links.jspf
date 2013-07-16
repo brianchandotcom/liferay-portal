@@ -14,10 +14,41 @@
  */
 --%>
 
-<c:if test="<%= (themeDisplay.isShowControlPanelIcon() || themeDisplay.isShowSiteAdministrationIcon()) && (!layout.getGroup().isControlPanel() || Validator.equals(themeDisplay.getControlPanelCategory(), PortletCategoryKeys.CURRENT_SITE)) %>">
+<%
+String controlPanelCategory = themeDisplay.getControlPanelCategory();
+%>
+
+<c:if test="<%= (themeDisplay.isShowControlPanelIcon() || themeDisplay.isShowSiteAdministrationIcon()) && (!layout.getGroup().isControlPanel() || (Validator.isNotNull(controlPanelCategory) && controlPanelCategory.startsWith(PortletCategoryKeys.CURRENT_SITE))) %>">
 	<aui:nav-item cssClass="admin-links" dropdown="<%= true %>" id="adminLinks" label="admin">
 		<c:if test="<%= themeDisplay.isShowSiteAdministrationIcon() %>">
-			<aui:nav-item anchorId="siteAdministrationLink" href="<%= themeDisplay.getURLSiteAdministration() %>" iconClass="icon-cog" label="site-administration" />
+			<aui:nav-item anchorId="siteAdministrationLink" href="<%= themeDisplay.getURLSiteAdministration() %>" iconClass="icon-cog" label="site-administration">
+
+				<%
+				Map<String, List<Portlet>> categoriesMap = PortalUtil.getSiteAdministrationCategoriesMap(request);
+
+				if (!categoriesMap.isEmpty()) {
+				%>
+
+					<ul class="unstyled site-administration-menu">
+
+						<%
+						for (String curCategory : categoriesMap.keySet()) {
+							String url = HttpUtil.setParameter(themeDisplay.getURLSiteAdministration(), "controlPanelCategory", StringUtil.replace(curCategory, PortletCategoryKeys.SITE_ADMINISTRATION, PortletCategoryKeys.CURRENT_SITE + StringPool.PERIOD));
+						%>
+
+							<aui:nav-item anchorId="siteAdministrationLink" href="<%= url %>" iconClass="icon-chevron-right" label='<%= "category." + curCategory %>'/>
+
+						<%
+						}
+						%>
+
+					</ul>
+
+				<%
+				}
+				%>
+
+			</aui:nav-item>
 		</c:if>
 
 		<c:if test="<%= themeDisplay.isShowControlPanelIcon() %>">

@@ -250,7 +250,6 @@
 
 				.user-avatar-link > img {
 					border-width: 0;
-					box-shadow: 0 0 0 2px #5594E0;
 					width: 27px;
 				}
 			}
@@ -513,6 +512,7 @@
 				&.user-avatar {
 					.user-avatar-link > img {
 						@include border-radius(50%);
+						@include box-shadow(0 0 0 2px #5594E0);
 					}
 				}
 

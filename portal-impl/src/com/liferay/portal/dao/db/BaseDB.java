@@ -183,6 +183,15 @@ public abstract class BaseDB implements DB {
 	}
 
 	@Override
+	public void dropDatabase(String databaseName)
+		throws IOException, SQLException {
+
+		runSQL(
+			DataAccess.getUpgradeOptimizedConnection(),
+			buildSQLDropDatabase(databaseName));
+	}
+
+	@Override
 	@SuppressWarnings("unused")
 	public List<Index> getIndexes(Connection con) throws SQLException {
 		return Collections.emptyList();
@@ -569,6 +578,15 @@ public abstract class BaseDB implements DB {
 	protected abstract String buildCreateFileContent(
 			String sqlDir, String databaseName, int population)
 		throws IOException;
+
+	protected String buildSQLDropDatabase(String databaseName) {
+		StringBundler sb = new StringBundler(2);
+
+		sb.append("drop database ");
+		sb.append(databaseName);
+
+		return sb.toString();
+	}
 
 	protected String[] buildTableNameTokens(String line) {
 		String[] words = StringUtil.split(line, StringPool.SPACE);

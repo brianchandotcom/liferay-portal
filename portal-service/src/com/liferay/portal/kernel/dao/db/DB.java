@@ -88,6 +88,9 @@ public interface DB {
 	public void buildSQLFile(String sqlDir, String fileName)
 		throws IOException;
 
+	public void dropDatabase(String databaseName)
+		throws IOException, SQLException;
+
 	public List<Index> getIndexes(Connection con) throws SQLException;
 
 	public String getTemplateFalse();

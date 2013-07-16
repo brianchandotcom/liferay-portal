@@ -15,11 +15,11 @@
 package com.liferay.portal.upgrade;
 
 import com.liferay.portal.dao.db.DBFactoryImpl;
+import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.util.InitUtil;
@@ -79,13 +79,9 @@ public class UpgradeProcessTestUtil {
 	public static void tearDownOriginDatabase(String databaseName)
 		throws Exception {
 
-		StringBundler sb = new StringBundler(3);
+		DB db = DBFactoryUtil.getDB();
 
-		sb.append("DROP database ");
-		sb.append(databaseName);
-		sb.append(StringPool.SEMICOLON);
-
-		runSQL(sb.toString());
+		db.dropDatabase(databaseName);
 	}
 
 	public static void verifyUpgradedDatabase() throws Exception {

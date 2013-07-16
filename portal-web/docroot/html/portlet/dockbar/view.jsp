@@ -130,6 +130,7 @@ String toggleControlsState = GetterUtil.getString(SessionClicks.get(request, "li
 
 			<portlet:renderURL var="addURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
 				<portlet:param name="struts_action" value="/dockbar/add_panel" />
+				<portlet:param name="isStateMaximized" value="<%= String.valueOf(themeDisplay.isStateMaximized()) %>" />
 				<portlet:param name="viewEntries" value="<%= Boolean.TRUE.toString() %>" />
 			</portlet:renderURL>
 

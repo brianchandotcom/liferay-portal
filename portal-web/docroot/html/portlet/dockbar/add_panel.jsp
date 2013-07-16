@@ -20,6 +20,8 @@
 	<c:when test="<%= themeDisplay.isSignedIn() %>">
 
 		<%
+		boolean isStateMaximized = ParamUtil.getBoolean(request, "isStateMaximized", false);
+
 		Group group = null;
 
 		if (layout != null) {
@@ -30,26 +32,36 @@
 		boolean hasLayoutUpdatePermission = LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.UPDATE);
 		%>
 
-		<c:if test="<%= !themeDisplay.isStateMaximized() && (layout != null) && (layout.isTypePortlet() || layout.isTypePanel()) && !layout.isLayoutPrototypeLinkActive() && !group.isControlPanel() && (!group.hasStagingGroup() || group.isStagingGroup()) && (GroupPermissionUtil.contains(permissionChecker, group.getGroupId(), ActionKeys.ADD_LAYOUT) || hasLayoutUpdatePermission || (layoutTypePortlet.isCustomizable() && layoutTypePortlet.isCustomizedView() && hasLayoutCustomizePermission)) %>">
+		<c:if test="<%= (layout != null) && (layout.isTypePortlet() || layout.isTypePanel()) && !layout.isLayoutPrototypeLinkActive() && !group.isControlPanel() && (!group.hasStagingGroup() || group.isStagingGroup()) && (GroupPermissionUtil.contains(permissionChecker, group.getGroupId(), ActionKeys.ADD_LAYOUT) || hasLayoutUpdatePermission || (layoutTypePortlet.isCustomizable() && layoutTypePortlet.isCustomizedView() && hasLayoutCustomizePermission)) %>">
 			<div class="add-content-menu" id="<portlet:namespace />addPanelContainer">
 				<button class="close pull-right" id="closePanel" type="button">&#x00D7;</button>
 
 				<%
 				String[] tabs1Names = new String[0];
 
-				boolean hasAddContentPermission = (GroupPermissionUtil.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_LAYOUT) && !group.isLayoutPrototype());
+				boolean hasAddContentPermission = !isStateMaximized && (GroupPermissionUtil.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_LAYOUT) && !group.isLayoutPrototype() && !layout.isTypePanel());
 
 				if (hasAddContentPermission) {
 					tabs1Names = ArrayUtil.append(tabs1Names, "content");
 				}
 
-				boolean hasAddApplicationsAndPagePermission = (!themeDisplay.isStateMaximized() && layout.isTypePortlet() && !layout.isLayoutPrototypeLinkActive());
+				boolean hasAddApplicationsPermission = !isStateMaximized && layout.isTypePortlet() && !layout.isLayoutPrototypeLinkActive();
 
-				if (hasAddApplicationsAndPagePermission) {
-					tabs1Names = ArrayUtil.append(tabs1Names, "applications,page");
+				if (hasAddApplicationsPermission) {
+					tabs1Names = ArrayUtil.append(tabs1Names, "applications");
+				}
+
+				boolean hasAddPagePermission = !layout.isLayoutPrototypeLinkActive();
+
+				if (hasAddPagePermission) {
+					tabs1Names = ArrayUtil.append(tabs1Names, "page");
 				}
 
 				String selectedTab = GetterUtil.getString(SessionClicks.get(request, "liferay_addpanel_tab", "content"));
+
+				if (isStateMaximized) {
+					selectedTab = "page";
+				}
 				%>
 
 				<liferay-ui:tabs
@@ -63,11 +75,13 @@
 						</liferay-ui:section>
 					</c:if>
 
-					<c:if test="<%= hasAddApplicationsAndPagePermission %>">
+					<c:if test="<%= hasAddApplicationsPermission %>">
 						<liferay-ui:section>
 							<liferay-util:include page="/html/portlet/dockbar/add_application.jsp" />
 						</liferay-ui:section>
+					</c:if>
 
+					<c:if test="<%= hasAddPagePermission %>">
 						<liferay-ui:section>
 							<liferay-util:include page="/html/portlet/dockbar/add_page.jsp" />
 						</liferay-ui:section>

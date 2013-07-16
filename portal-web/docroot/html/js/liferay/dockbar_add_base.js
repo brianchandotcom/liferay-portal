@@ -412,6 +412,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['liferay-dockbar']
+		requires: ['liferay-dockbar', 'liferay-layout']
 	}
 );

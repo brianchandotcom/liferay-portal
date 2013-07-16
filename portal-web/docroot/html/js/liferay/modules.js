@@ -136,7 +136,8 @@ window.YUI_config = {
 					path: 'dockbar_add_base.js',
 					requires: [
 						'aui-base',
-						'liferay-dockbar'
+						'liferay-dockbar',
+						'liferay-layout'
 					]
 				},
 				'liferay-dockbar-add-content': {
@@ -186,6 +187,7 @@ window.YUI_config = {
 						'liferay-dockbar',
 						'liferay-dockbar-add-base',
 						'liferay-dockbar-add-page-search',
+						'liferay-portlet-base',
 						'liferay-toggler-key-filter'
 					]
 				},

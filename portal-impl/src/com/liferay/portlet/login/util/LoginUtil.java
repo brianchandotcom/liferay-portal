@@ -91,33 +91,7 @@ public class LoginUtil {
 		String contextPath = PortalUtil.getPathContext();
 
 		if (requestURI.startsWith(contextPath.concat("/api/liferay"))) {
-
-			// Tunnel requests are serialized objects and cannot manipulate the
-			// request input stream in any way. Do not use the auth pipeline to
-			// authenticate tunnel requests.
-
-			long companyId = company.getCompanyId();
-
-			userId = UserLocalServiceUtil.authenticateForBasic(
-				companyId, CompanyConstants.AUTH_TYPE_EA, login, password);
-
-			if (userId > 0) {
-				return userId;
-			}
-
-			userId = UserLocalServiceUtil.authenticateForBasic(
-				companyId, CompanyConstants.AUTH_TYPE_SN, login, password);
-
-			if (userId > 0) {
-				return userId;
-			}
-
-			userId = UserLocalServiceUtil.authenticateForBasic(
-				companyId, CompanyConstants.AUTH_TYPE_ID, login, password);
-
-			if (userId <= 0) {
-				throw new AuthException();
-			}
+			throw new AuthException();
 		}
 		else {
 			Map<String, String[]> headerMap = new HashMap<String, String[]>();

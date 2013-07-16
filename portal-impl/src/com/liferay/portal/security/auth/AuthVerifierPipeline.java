@@ -168,6 +168,15 @@ public class AuthVerifierPipeline {
 
 		Properties properties = authVerifierConfiguration.getProperties();
 
+		String[] urlsRejected = StringUtil.split(
+			properties.getProperty("urls.rejected"));
+
+		if ((urlsRejected.length > 0) &&
+			(Wildcard.matchOne(requestURI, urlsRejected) > -1)) {
+
+			return false;
+		}
+
 		String[] urls = StringUtil.split(properties.getProperty("urls"));
 
 		if (urls.length == 0) {

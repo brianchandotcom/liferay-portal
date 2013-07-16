@@ -81,6 +81,7 @@ create index IX_C4E6FD10 on AssetVocabulary (uuid_, companyId);
 create unique index IX_1B2B8792 on AssetVocabulary (uuid_, groupId);
 
 create index IX_98CC0AAB on BackgroundTask (groupId, name, taskExecutorClassName);
+create index IX_C71C3B7 on BackgroundTask (groupId, status);
 create index IX_A73B688A on BackgroundTask (groupId, taskExecutorClassName);
 create index IX_7E757D70 on BackgroundTask (groupId, taskExecutorClassName, status);
 create index IX_C07CC7F8 on BackgroundTask (name);

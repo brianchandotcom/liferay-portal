@@ -141,11 +141,11 @@ if (PropsValues.DOCKBAR_ADMINISTRATIVE_LINKS_SHOW_IN_POP_UP) {
 						myAccountURL = HttpUtil.setParameter(myAccountURL, "controlPanelCategory", PortletCategoryKeys.MY);
 						%>
 
-						<aui:nav-item anchorCssClass='<%= themeDisplay.isImpersonated() ? "" : useDialog %>' href="<%= myAccountURL %>" label="my-account" title="my-account" />
+						<aui:nav-item anchorCssClass='<%= themeDisplay.isImpersonated() ? "" : useDialog %>' href="<%= myAccountURL %>" iconClass="icon-user" label="my-account" title="my-account" />
 					</c:if>
 
 					<c:if test="<%= themeDisplay.isShowSignOutIcon() %>">
-						<aui:nav-item cssClass="sign-out" href="<%= themeDisplay.getURLSignOut() %>" label="sign-out" />
+						<aui:nav-item cssClass="sign-out" href="<%= themeDisplay.getURLSignOut() %>" iconClass="icon-off" label="sign-out" />
 					</c:if>
 				</c:otherwise>
 			</c:choose>

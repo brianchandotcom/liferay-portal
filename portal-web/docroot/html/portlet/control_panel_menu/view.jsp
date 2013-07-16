@@ -20,7 +20,7 @@
 	<div class="control-panel-tools">
 		<div class="search-panels">
 			<div class="search-panels-bar">
-				<i class="icon-align-left search-panel-icon"></i>
+				<i class="icon-reorder search-panel-icon"></i>
 
 				<aui:input cssClass="search-panels-input search-query span12" label="" name="searchPanel" />
 			</div>

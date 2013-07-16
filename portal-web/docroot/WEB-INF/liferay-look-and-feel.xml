@@ -23,20 +23,14 @@
 		<roles>
 			<role-name>User</role-name>
 		</roles>
-		<color-scheme id="01" name="Blue">
-			<css-class>blue</css-class>
+		<color-scheme id="01" name="Default">
+			<css-class>default</css-class>
 			<color-scheme-images-path>${images-path}/color_schemes/${css-class}</color-scheme-images-path>
 		</color-scheme>
-		<color-scheme id="02" name="Green">
-			<css-class>green</css-class>
-		</color-scheme>
-		<color-scheme id="03" name="Orange">
-			<css-class>orange</css-class>
-		</color-scheme>
-		<color-scheme id="04" name="Dark">
+		<color-scheme id="02" name="Dark">
 			<css-class>dark</css-class>
 		</color-scheme>
-		<color-scheme id="05" name="Light">
+		<color-scheme id="03" name="Light">
 			<css-class>light</css-class>
 		</color-scheme>
 	</theme>

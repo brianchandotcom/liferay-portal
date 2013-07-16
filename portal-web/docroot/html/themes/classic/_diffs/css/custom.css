@@ -6,11 +6,11 @@
 @import url(color_schemes/dark.css);
 @import url(color_schemes/light.css);
 
-$dockbarGradientEnd: #0A6BCA;
-$dockbarGradientStart: #0A85E4;
+$dockbarGradientEnd: #1273C7;
+$dockbarGradientStart: #118ADE;
 
-$dockbarOpenGradientEnd: #048BDF;
-$dockbarOpenGradientStart: #00A0FF;
+$dockbarOpenGradientEnd: #0993DD;
+$dockbarOpenGradientStart: #0EA6F9;
 
 /* ---------- Base styles ---------- */
 
@@ -95,7 +95,7 @@ $dockbarOpenGradientStart: #00A0FF;
 			.nav {
 				background-color: $dockbarGradientEnd;
 				border-bottom-width: 0;
-				border-top: 2px solid #00AEFF;
+				border-top: 1px solid #00AEFF;
 				color: #FFF;
 			}
 
@@ -261,7 +261,7 @@ $dockbarOpenGradientStart: #00A0FF;
 	}
 
 	.portlet-topper {
-		background: #0A85E4;
+		background: #D3D3D3;
 		color: #FFF;
 		padding: 0;
 
@@ -390,15 +390,6 @@ $dockbarOpenGradientStart: #00A0FF;
 	#navigation {
 		.nav {
 			li {
-				&.dropdown {
-					&.open {
-						> .dropdown-toggle {
-							@include background-image(linear-gradient($dockbarOpenGradientStart, $dockbarOpenGradientEnd));
-							@include filter-gradient($dockbarOpenGradientStart, $dockbarOpenGradientEnd, vertical);
-						}
-					}
-				}
-
 				&.open {
 					> a {
 						@include background-image(linear-gradient($dockbarGradientStart 0%, $dockbarGradientStart 47%, $dockbarGradientEnd 100%));

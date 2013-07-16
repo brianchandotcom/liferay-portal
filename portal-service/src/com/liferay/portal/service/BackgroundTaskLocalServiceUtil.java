@@ -414,26 +414,24 @@ public class BackgroundTaskLocalServiceUtil {
 		getService().resumeBackgroundTask(backgroundTaskId);
 	}
 
-	public static com.liferay.portal.model.BackgroundTask updateBackgroundTask(
+	public static com.liferay.portal.model.BackgroundTask amendBackgroundTask(
 		long backgroundTaskId,
 		java.util.Map<java.lang.String, java.io.Serializable> taskContextMap,
 		int status, com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .updateBackgroundTask(backgroundTaskId, taskContextMap,
+				   .amendBackgroundTask(backgroundTaskId, taskContextMap,
 			status, serviceContext);
 	}
 
-	public static com.liferay.portal.model.BackgroundTask updateBackgroundTask(
+	public static com.liferay.portal.model.BackgroundTask amendBackgroundTask(
 		long backgroundTaskId,
 		java.util.Map<java.lang.String, java.io.Serializable> taskContextMap,
 		int status, java.lang.String statusMessage,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .updateBackgroundTask(backgroundTaskId, taskContextMap,
+				   .amendBackgroundTask(backgroundTaskId, taskContextMap,
 			status, statusMessage, serviceContext);
 	}
 

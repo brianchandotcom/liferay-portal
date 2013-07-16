@@ -21,7 +21,9 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.ModelHintsUtil;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.taglib.aui.base.BaseInputTag;
 import com.liferay.util.PwdGenerator;
 
@@ -153,9 +155,18 @@ public class InputTag extends BaseInputTag {
 		}
 
 		if (Validator.isNull(defaultLanguageId)) {
-			Locale defaultLocale = LocaleUtil.getDefault();
+			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
-			defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
+			try {
+				defaultLanguageId = LocaleUtil.toLanguageId(
+					themeDisplay.getSiteDefaultLocale());
+			}
+			catch (Exception e) {
+				Locale defaultLocale = LocaleUtil.getDefault();
+
+				defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
+			}
 		}
 
 		String name = getName();

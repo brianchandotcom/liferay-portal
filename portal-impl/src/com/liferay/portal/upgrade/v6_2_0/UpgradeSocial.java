@@ -84,10 +84,122 @@ public class UpgradeSocial extends UpgradeProcess {
 		}
 	}
 
+	protected void addActivitySet(
+			long activitySetId, long groupId, long companyId, long userId,
+			long createDate, long classNameId, long classPK, int type_)
+		throws Exception {
+
+		Connection con = null;
+		PreparedStatement ps = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			StringBundler sb = new StringBundler(4);
+
+			sb.append("insert into SocialActivitySet (activitySetId, ");
+			sb.append("groupId, companyId, userId, createDate, modifiedDate, ");
+			sb.append("classNameId, classPK, type_, activityCount) values ");
+			sb.append("(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+
+			ps = con.prepareStatement(sb.toString());
+
+			ps.setLong(1, activitySetId);
+			ps.setLong(2, groupId);
+			ps.setLong(3, companyId);
+			ps.setLong(4, userId);
+			ps.setLong(5, createDate);
+			ps.setLong(6, createDate);
+			ps.setLong(7, classNameId);
+			ps.setLong(8, classPK);
+			ps.setInt(9, type_);
+			ps.setInt(10, 1);
+
+			ps.executeUpdate();
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to add activity set " + activitySetId, e);
+			}
+		}
+		finally {
+			DataAccess.cleanUp(con, ps);
+		}
+	}
+
 	@Override
 	protected void doUpgrade() throws Exception {
 		updateJournalActivities();
+		updateSOSocialActivities();
 		updateWikiPageActivities();
+
+		migrateActivities();
+	}
+
+	protected boolean hasActivitySets() throws Exception {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			ps = con.prepareStatement("select count(*) from SocialActivitySet");
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				int count = rs.getInt(1);
+
+				if (count > 0) {
+					return true;
+				}
+			}
+
+			return false;
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
+	}
+
+	protected void migrateActivities() throws Exception {
+		if (hasActivitySets()) {
+			return;
+		}
+
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			ps = con.prepareStatement(
+				"select groupId, companyId, userId, createDate, classNameId, " +
+					"classPK, type_ from SocialActivity");
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				long groupId = rs.getLong("groupId");
+				long companyId = rs.getLong("companyId");
+				long userId = rs.getLong("userId");
+				long createDate = rs.getLong("createDate");
+				long classNameId = rs.getLong("classNameId");
+				long classPK = rs.getLong("classPK");
+				int type_ = rs.getInt("type_");
+
+				long activitySetId = increment();
+
+				addActivitySet(
+					activitySetId, groupId, companyId, userId, createDate,
+					classNameId, classPK, type_);
+			}
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
 	}
 
 	protected void updateJournalActivities() throws Exception {
@@ -108,6 +220,44 @@ public class UpgradeSocial extends UpgradeProcess {
 
 			runSQL(sb.toString());
 		}
+	}
+
+	protected void updateSOSocialActivities() throws Exception {
+		if (!hasTable("SO_SocialActivity")) {
+			return;
+		}
+
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			ps = con.prepareStatement(
+				"select activityId, activitySetId from SO_SocialActivity");
+
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+				long activityId = rs.getLong("activityId");
+				long activitySetId = rs.getLong("activitySetId");
+
+				StringBundler sb = new StringBundler(4);
+
+				sb.append("update SocialActivity set activitySetId = ");
+				sb.append(activitySetId);
+				sb.append(" where activityId = ");
+				sb.append(activityId);
+
+				runSQL(sb.toString());
+			}
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
+
+		runSQL("drop table SO_SocialActivity");
 	}
 
 	protected void updateWikiPageActivities() throws Exception {

@@ -130,7 +130,7 @@ portletURL.setParameter("tabs3", "all-export-processes");
 					long exportModelCount = portletDataHandler.getExportModelCount(manifestSummary);
 					%>
 
-					<c:if test="<%= (exportModelCount > 0) || (startDate != null) || (endDate != null) %>">
+					<c:if test="<%= (exportModelCount != 0) || (startDate != null) || (endDate != null) %>">
 						<aui:fieldset cssClass="options-group" label="content">
 							<ul class="lfr-tree select-options unstyled">
 								<li class="tree-item">

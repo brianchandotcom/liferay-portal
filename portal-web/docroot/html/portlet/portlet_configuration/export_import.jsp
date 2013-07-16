@@ -46,7 +46,6 @@ else if (scopeGroup.isLayout()) {
 %>
 
 <liferay-ui:tabs
-	backURL="<%= redirect %>"
 	names="<%= tabs2Names %>"
 	param="tabs2"
 	portletURL="<%= portletURL %>"

@@ -35,6 +35,9 @@ public class SessionMessages {
 
 	public static final String KEY_SUFFIX_CLOSE_REDIRECT = ".closeRedirect";
 
+	public static final String KEY_SUFFIX_CLOSE_REFRESH_PORTLET =
+		".closeRefreshPortlet";
+
 	public static final String KEY_SUFFIX_DELETE_SUCCESS_DATA =
 		".deleteSuccessData";
 

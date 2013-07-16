@@ -14,6 +14,7 @@
 
 package com.liferay.taglib.portletext;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.taglib.FileAvailabilityUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.theme.PortletDisplay;
@@ -45,7 +46,7 @@ public class IconConfigurationTag extends IconTag {
 
 		StringBundler sb = new StringBundler(9);
 
-		sb.append("Liferay.Portlet.openConfiguration('#p_p_id_");
+		sb.append("Liferay.Portlet.openWindow('#p_p_id_");
 		sb.append(portletDisplay.getId());
 		sb.append("_', '");
 		sb.append(portletDisplay.getId());
@@ -53,6 +54,8 @@ public class IconConfigurationTag extends IconTag {
 		sb.append(portletDisplay.getURLConfiguration());
 		sb.append("', '");
 		sb.append(portletDisplay.getNamespace());
+		sb.append("', '");
+		sb.append(LanguageUtil.get(pageContext, "configuration"));
 		sb.append("'); return false;");
 
 		setOnClick(sb.toString());

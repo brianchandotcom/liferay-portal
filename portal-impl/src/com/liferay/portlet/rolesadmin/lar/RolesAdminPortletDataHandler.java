@@ -114,16 +114,13 @@ public class RolesAdminPortletDataHandler extends BasePortletDataHandler {
 
 					Role role = (Role)object;
 
-					if (!portletDataContext.getBooleanParameter(
-							NAMESPACE, "system-roles")) {
-
-						return;
-					}
-
 					long defaultUserId = UserLocalServiceUtil.getDefaultUserId(
 						portletDataContext.getCompanyId());
 
-					if (role.getUserId() == defaultUserId) {
+					if (!portletDataContext.getBooleanParameter(
+							NAMESPACE, "system-roles") &&
+						(role.getUserId() == defaultUserId)) {
+
 						return;
 					}
 

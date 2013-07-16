@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceTestUtil;
@@ -214,7 +213,7 @@ public class I18nFilterTest {
 		}
 
 		return _i18nFilter.prependI18nLanguageId(
-			_request, StringPool.BLANK, localePrependFriendlyURLStyle);
+			_request, localePrependFriendlyURLStyle);
 	}
 
 	private static Locale _enLocale = new Locale("en", "US");

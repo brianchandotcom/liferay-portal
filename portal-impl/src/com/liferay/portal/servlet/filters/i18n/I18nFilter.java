@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.HttpMethods;
-import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -104,21 +103,8 @@ public class I18nFilter extends BasePortalFilter {
 		requestURI = StringUtil.replace(
 			requestURI, StringPool.DOUBLE_SLASH, StringPool.SLASH);
 
-		String i18nLanguageId = requestURI.substring(1);
-
-		int pos = requestURI.indexOf(CharPool.SLASH, 1);
-
-		if (pos != -1) {
-			i18nLanguageId = i18nLanguageId.substring(0, pos - 1);
-		}
-
-		if (_languageIds.contains(i18nLanguageId)) {
-			return null;
-		}
-
-		i18nLanguageId = prependI18nLanguageId(
-			request, i18nLanguageId,
-			PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE);
+		String i18nLanguageId = prependI18nLanguageId(
+			request, PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE);
 
 		if (i18nLanguageId == null) {
 			return null;
@@ -192,8 +178,7 @@ public class I18nFilter extends BasePortalFilter {
 	}
 
 	protected String prependI18nLanguageId(
-		HttpServletRequest request, String i18nLanguageId,
-		int prependFriendlyUrlStyle) {
+		HttpServletRequest request, int prependFriendlyUrlStyle) {
 
 		String userLanguageId = null;
 
@@ -222,15 +207,14 @@ public class I18nFilter extends BasePortalFilter {
 			 Validator.isNull(userLanguageId))) {
 
 			if (!defaultLanguageId.equals(guestLanguageId)) {
-				i18nLanguageId = guestLanguageId;
+				return guestLanguageId;
 			}
 			else {
 				return null;
 			}
 		}
 		else if (prependFriendlyUrlStyle == 2) {
-			i18nLanguageId = LocaleUtil.toLanguageId(
-				PortalUtil.getLocale(request));
+			return LocaleUtil.toLanguageId(PortalUtil.getLocale(request));
 		}
 		else if (prependFriendlyUrlStyle == 3) {
 			if (Validator.isNotNull(userLanguageId)) {
@@ -240,9 +224,9 @@ public class I18nFilter extends BasePortalFilter {
 					Globals.LOCALE_KEY);
 
 				if (!userLanguageId.equals(LocaleUtil.toLanguageId(locale))) {
-					i18nLanguageId = LocaleUtil.toLanguageId(locale);
-
 					PortalUtil.addUserLocaleOptionsMessage(request);
+
+					return LocaleUtil.toLanguageId(locale);
 				}
 				else {
 					return null;
@@ -250,7 +234,7 @@ public class I18nFilter extends BasePortalFilter {
 			}
 		}
 
-		return i18nLanguageId;
+		return null;
 	}
 
 	@Override

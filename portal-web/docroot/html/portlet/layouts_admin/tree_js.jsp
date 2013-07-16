@@ -181,13 +181,14 @@ if (!selectableTree) {
 								<c:if test="<%= selectableTree %>">
 									checkedChange: function(event) {
 										if (this === event.originalTarget) {
+											var newVal = event.newVal;
 											var target = event.target;
 
 											var plid = TreeUtil.extractPlid(target);
 
-											TreeUtil.updateSessionTreeCheckedState('<%= HtmlUtil.escape(treeId) %>SelectedNode', plid, event.newVal);
+											TreeUtil.updateSessionTreeCheckedState('<%= HtmlUtil.escape(treeId) %>SelectedNode', plid, newVal);
 
-											TreeUtil.updateCheckedNodes(target, event.newVal);
+											TreeUtil.updateCheckedNodes(target, newVal);
 										}
 									},
 								</c:if>
@@ -544,9 +545,11 @@ if (!selectableTree) {
 				after: {
 					<c:if test="<%= selectableTree %>">
 						checkedChange: function(event) {
-							TreeUtil.updateSessionTreeCheckedState('<%= HtmlUtil.escape(treeId) %>SelectedNode', <%= LayoutConstants.DEFAULT_PLID %>, event.newVal);
+							var newVal = event.newVal;
 
-							TreeUtil.updateCheckedNodes(event.target, event.newVal);
+							TreeUtil.updateSessionTreeCheckedState('<%= HtmlUtil.escape(treeId) %>SelectedNode', <%= LayoutConstants.DEFAULT_PLID %>, newVal);
+
+							TreeUtil.updateCheckedNodes(event.target, newVal);
 						},
 					</c:if>
 

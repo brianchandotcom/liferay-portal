@@ -40,7 +40,7 @@ if (fileShortcut != null) {
 
 <liferay-ui:app-view-entry
 	actionJsp="/html/portlet/document_library/file_entry_action.jsp"
-	description="<%= fileEntry.getDescription() %>"
+	description="<%= latestFileVersion.getDescription() %>"
 	displayStyle="icon"
 	locked="<%= fileEntry.isCheckedOut() %>"
 	rowCheckerId="<%= String.valueOf(rowCheckerId) %>"
@@ -49,8 +49,8 @@ if (fileShortcut != null) {
 	showCheckbox="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.DELETE) || DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE) %>"
 	status="<%= latestFileVersion.getStatus() %>"
 	thumbnailDivStyle="<%= DLUtil.getThumbnailStyle(false, 4) %>"
-	thumbnailSrc="<%= DLUtil.getThumbnailSrc(fileEntry, fileShortcut, themeDisplay) %>"
+	thumbnailSrc="<%= DLUtil.getThumbnailSrc(fileEntry, latestFileVersion, fileShortcut, themeDisplay) %>"
 	thumbnailStyle="<%= DLUtil.getThumbnailStyle() %>"
-	title="<%= fileEntry.getTitle() %>"
+	title="<%= latestFileVersion.getTitle() %>"
 	url="<%= tempRowURL.toString() %>"
 />

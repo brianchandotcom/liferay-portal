@@ -399,6 +399,15 @@ for (int i = 0; i < results.size(); i++) {
 				</c:when>
 
 				<c:otherwise>
+
+					<%
+					FileVersion latestFileVersion = fileEntry.getFileVersion();
+
+					if ((user.getUserId() == fileEntry.getUserId()) || permissionChecker.isCompanyAdmin() || permissionChecker.isGroupAdmin(scopeGroupId) || DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE)) {
+						latestFileVersion = fileEntry.getLatestFileVersion();
+					}
+					%>
+
 					<liferay-util:buffer var="fileEntryTitle">
 
 						<%
@@ -407,23 +416,20 @@ for (int i = 0; i < results.size(); i++) {
 						rowURL.setParameter("struts_action", "/document_library/view_file_entry");
 						rowURL.setParameter("redirect", HttpUtil.removeParameter(currentURL, liferayPortletResponse.getNamespace() + "ajax"));
 						rowURL.setParameter("fileEntryId", String.valueOf(fileEntry.getFileEntryId()));
-
-						FileVersion latestFileVersion = fileEntry.getFileVersion();
-
-						if ((user.getUserId() == fileEntry.getUserId()) || permissionChecker.isCompanyAdmin() || permissionChecker.isGroupAdmin(scopeGroupId) || DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE)) {
-							latestFileVersion = fileEntry.getLatestFileVersion();
-						}
 						%>
 
 						<liferay-ui:app-view-entry
 							displayStyle="list"
 							locked="<%= fileEntry.isCheckedOut() %>"
 							showCheckbox="<%= true %>"
-							status="<%= latestFileVersion.getStatus() %>"
 							thumbnailSrc='<%= themeDisplay.getPathThemeImages() + "/file_system/small/" + DLUtil.getFileIcon(fileEntry.getExtension()) + ".png" %>'
-							title="<%= fileEntry.getTitle() %>"
+							title="<%= latestFileVersion.getTitle() %>"
 							url="<%= rowURL.toString() %>"
 						/>
+					</liferay-util:buffer>
+
+					<liferay-util:buffer var="fileEntryStatus">
+						<aui:workflow-status showIcon="<%= false %>" showLabel="<%= false %>" status="<%= latestFileVersion.getStatus() %>" />
 					</liferay-util:buffer>
 
 					<%
@@ -461,7 +467,7 @@ for (int i = 0; i < results.size(); i++) {
 						}
 
 						if (columnName.equals("modified-date")) {
-							row.addDate(fileEntry.getModifiedDate());
+							row.addDate(latestFileVersion.getModifiedDate());
 						}
 
 						if (columnName.equals("name")) {
@@ -473,7 +479,15 @@ for (int i = 0; i < results.size(); i++) {
 						}
 
 						if (columnName.equals("size")) {
-							row.addText(TextFormatter.formatStorageSize(fileEntry.getSize(), locale));
+							row.addText(TextFormatter.formatStorageSize(latestFileVersion.getSize(), locale));
+						}
+
+						if (columnName.equals("status")) {
+							TextSearchEntry fileEntryStatusSearchEntry = new TextSearchEntry();
+
+							fileEntryStatusSearchEntry.setName(fileEntryStatus);
+
+							row.addSearchEntry(fileEntryStatusSearchEntry);
 						}
 					}
 

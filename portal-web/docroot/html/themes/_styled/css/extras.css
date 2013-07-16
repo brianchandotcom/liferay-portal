@@ -337,6 +337,12 @@ body:first-of-type {
 	@include transition(transform 0.3s ease);
 }
 
+.portlet-document-library .entry-thumbnail .label, .portlet-document-library-display .workflow-status .label, .portlet-journal .entry-thumbnail .label {
+	@include border-bottom-left-radius(0);
+	@include border-top-left-radius(0);
+	@include border-top-right-radius(0);
+}
+
 @include keyframes(lfr-drop-active) {
 	0% {
 		background-color: #EBEBEB;

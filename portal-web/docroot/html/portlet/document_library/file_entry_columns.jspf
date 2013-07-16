@@ -17,6 +17,14 @@
 <%
 for (int j = 0; j < fileEntryColumns.length; j++) {
 	String fileEntryColumn = fileEntryColumns[j];
+
+	FileVersion latestFileVersion = fileEntry.getFileVersion();
+
+	if ((user.getUserId() == fileEntry.getUserId()) || permissionChecker.isCompanyAdmin() || permissionChecker.isGroupAdmin(scopeGroupId) || DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE)) {
+		latestFileVersion = fileEntry.getLatestFileVersion();
+	}
+
+	int latestFileVersionStatus = latestFileVersion.getStatus();
 %>
 
 	<c:choose>
@@ -61,7 +69,7 @@ for (int j = 0; j < fileEntryColumns.length; j++) {
 			>
 
 				<%
-				String thumbnailSrc = DLUtil.getThumbnailSrc(fileEntry, fileShortcut, themeDisplay);
+				String thumbnailSrc = DLUtil.getThumbnailSrc(fileEntry, latestFileVersion, fileShortcut, themeDisplay);
 				%>
 
 				<span class="entry-thumbnail">
@@ -74,19 +82,17 @@ for (int j = 0; j < fileEntryColumns.length; j++) {
 					<c:if test="<%= fileEntry.isCheckedOut() %>">
 						<img alt="<liferay-ui:message key="locked" />" class="locked-icon" src="<%= themeDisplay.getPathThemeImages() %>/file_system/large/overlay_lock.png" />
 					</c:if>
+
+					<c:if test="<%= ((latestFileVersionStatus != WorkflowConstants.STATUS_ANY) && (latestFileVersionStatus != WorkflowConstants.STATUS_APPROVED)) %>">
+						<aui:workflow-status showIcon="<%= false %>" showLabel="<%= false %>" status="<%= latestFileVersionStatus %>" />
+					</c:if>
 				</span>
 
-				<span class="entry-title"><%= fileEntry.getTitle() %></span>
+				<span class="entry-title"><%= HtmlUtil.escape(latestFileVersion.getTitle()) %></span>
 
-				<c:if test="<%= fileEntry.getFileVersion().isPending() %>">
-					<div class="workflow-status-pending">
-						(<liferay-ui:message key="pending" />)
-					</div>
-				</c:if>
-
-				<c:if test="<%= Validator.isNotNull(fileEntry.getDescription()) %>">
+				<c:if test="<%= Validator.isNotNull(latestFileVersion.getDescription()) %>">
 					<div class="file-entry-list-description">
-						<%= fileEntry.getDescription() %>
+						<%= HtmlUtil.escape(latestFileVersion.getDescription()) %>
 					</div>
 				</c:if>
 			</liferay-ui:search-container-column-text>
@@ -96,13 +102,22 @@ for (int j = 0; j < fileEntryColumns.length; j++) {
 				href="<%= rowHREF %>"
 				index="<%= j %>"
 				name="<%= fileEntryColumn %>"
-				value="<%= TextFormatter.formatStorageSize(fileEntry.getSize(), locale) %>"
+				value="<%= TextFormatter.formatStorageSize(latestFileVersion.getSize(), locale) %>"
 			/>
 		</c:when>
 		<c:when test='<%= fileEntryColumn.equals("tags") %>'>
 
 			<%
-			List<AssetTag> assetTags = AssetTagLocalServiceUtil.getTags(DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId());
+			long assetClassPK = 0;
+
+			if (!latestFileVersion.getVersion().equals(DLFileEntryConstants.VERSION_DEFAULT) && (latestFileVersion.getStatus() != WorkflowConstants.STATUS_APPROVED)) {
+				assetClassPK = latestFileVersion.getFileVersionId();
+			}
+			else {
+				assetClassPK = fileEntry.getFileEntryId();
+			}
+
+			List<AssetTag> assetTags = AssetTagLocalServiceUtil.getTags(DLFileEntryConstants.getClassName(), assetClassPK);
 
 			AssetUtil.addLayoutTags(request, assetTags);
 			%>

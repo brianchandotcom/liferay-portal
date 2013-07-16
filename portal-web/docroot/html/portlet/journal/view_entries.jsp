@@ -318,17 +318,10 @@ for (int i = 0; i < results.size(); i++) {
 							method="get"
 							url="<%= rowURL.toString() %>"
 						/>
+					</liferay-util:buffer>
 
-						<c:if test="<%= curArticle.isDraft() || curArticle.isPending() %>">
-
-							<%
-							String statusLabel = WorkflowConstants.getStatusLabel(curArticle.getStatus());
-							%>
-
-							<span class="workflow-status-<%= statusLabel %>">
-								(<liferay-ui:message key="<%= statusLabel %>" />)
-							</span>
-						</c:if>
+					<liferay-util:buffer var="articleStatus">
+						<aui:workflow-status showIcon="<%= false %>" showLabel="<%= false %>" status="<%= curArticle.getStatus() %>" />
 					</liferay-util:buffer>
 
 					<%

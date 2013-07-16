@@ -14,8 +14,11 @@
 
 package com.liferay.portal.kernel.search;
 
+import com.liferay.portal.kernel.util.ArrayUtil;
+
 /**
  * @author Michael C. Han
+ * @author Josef Sustacek
  */
 public class QuerySuggestionHitsProcessor implements HitsProcessor {
 
@@ -29,18 +32,24 @@ public class QuerySuggestionHitsProcessor implements HitsProcessor {
 			return true;
 		}
 
+		int querySuggestionScoresThreshold =
+			queryConfig.getQuerySuggestionScoresThreshold();
+
+		if (hits.getLength() >= querySuggestionScoresThreshold) {
+			return true;
+		}
+
+		int maxSuggestions = queryConfig.getQuerySuggestionMax();
+
 		String[] querySuggestions = SearchEngineUtil.suggestKeywordQueries(
-			searchContext, _maxSuggestions);
+			searchContext, maxSuggestions);
+
+		querySuggestions = ArrayUtil.remove(
+			querySuggestions, searchContext.getKeywords());
 
 		hits.setQuerySuggestions(querySuggestions);
 
 		return true;
 	}
-
-	public void setMaxSuggestions(int maxSuggestions) {
-		_maxSuggestions = maxSuggestions;
-	}
-
-	private int _maxSuggestions = 5;
 
 }

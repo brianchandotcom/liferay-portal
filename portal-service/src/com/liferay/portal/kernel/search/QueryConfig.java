@@ -40,6 +40,14 @@ public class QueryConfig implements Serializable {
 		return _attributes;
 	}
 
+	public int getCollatedSpellCheckResultScoresThreshold() {
+		return GetterUtil.getInteger(
+			_attributes.get(
+				PropsKeys.
+					INDEX_SEARCH_COLLATED_SPELL_CHECK_RESULT_SCORING_THRESHOLD),
+				_INDEX_SEARCH_COLLATED_SPELL_CHECK_RESULT_SCORING_THRESHOLD);
+	}
+
 	public int getHighlightFragmentSize() {
 		return GetterUtil.getInteger(
 			_attributes.get(PropsKeys.INDEX_SEARCH_HIGHLIGHT_FRAGMENT_SIZE),
@@ -62,11 +70,32 @@ public class QueryConfig implements Serializable {
 		return locale;
 	}
 
-	public float getQuerySuggestionScoresThreshold() {
-		return GetterUtil.getFloat(
+	public int getQueryIndexingThreshold() {
+		return GetterUtil.getInteger(
+			_attributes.get(
+				PropsKeys.INDEX_SEARCH_QUERY_INDEXING_THRESHOLD),
+				_INDEX_SEARCH_QUERY_INDEXING_THRESHOLD);
+	}
+
+	public int getQuerySuggestionMax() {
+		return GetterUtil.getInteger(
+			_attributes.get(
+				PropsKeys.INDEX_SEARCH_QUERY_SUGGESTION_MAX),
+				_INDEX_SEARCH_QUERY_SUGGESTION_MAX);
+	}
+
+	public int getQuerySuggestionScoresThreshold() {
+		return GetterUtil.getInteger(
 			_attributes.get(
 				PropsKeys.INDEX_SEARCH_QUERY_SUGGESTION_SCORING_THRESHOLD),
 			_INDEX_SEARCH_QUERY_SUGGESTION_SCORING_THRESHOLD);
+	}
+
+	public boolean isCollatedSpellCheckResultEnabled() {
+		return GetterUtil.getBoolean(
+			_attributes.get(
+				PropsKeys.INDEX_SEARCH_COLLATED_SPELL_CHECK_RESULT_ENABLED),
+				_INDEX_SEARCH_COLLATED_SPELL_CHECK_RESULT_ENABLED);
 	}
 
 	public boolean isHighlightEnabled() {
@@ -77,6 +106,13 @@ public class QueryConfig implements Serializable {
 	public boolean isHitsProcessingEnabled() {
 		return GetterUtil.getBoolean(
 			_attributes.get(_HITS_PROCESSING_ENABLED), true);
+	}
+
+	public boolean isQueryIndexingEnabled() {
+		return GetterUtil.getBoolean(
+			_attributes.get(
+				PropsKeys.INDEX_SEARCH_QUERY_INDEXING_ENABLED),
+				_INDEX_SEARCH_QUERY_INDEXING_ENABLED);
 	}
 
 	public boolean isQuerySuggestionEnabled() {
@@ -97,6 +133,21 @@ public class QueryConfig implements Serializable {
 
 	public void setAttribute(String name, Serializable value) {
 		_attributes.put(name, value);
+	}
+
+	public void setCollatedSpellCheckResultEnabled(
+		boolean collatedSpellCheckResultEnabled) {
+			_attributes.put(
+				PropsKeys.INDEX_SEARCH_COLLATED_SPELL_CHECK_RESULT_ENABLED,
+				collatedSpellCheckResultEnabled);
+	}
+
+	public void setCollatedSpellCheckResultScoresThreshold(
+		int collatedSpellCheckResultDisplayThreshold) {
+			_attributes.put(
+				PropsKeys.
+					INDEX_SEARCH_COLLATED_SPELL_CHECK_RESULT_SCORING_THRESHOLD,
+				collatedSpellCheckResultDisplayThreshold);
 	}
 
 	public void setHighlightEnabled(boolean highlightEnabled) {
@@ -129,12 +180,54 @@ public class QueryConfig implements Serializable {
 		_attributes.put(LOCALE, locale);
 	}
 
+	public void setQueryIndexingEnabled(boolean enabled) {
+		_attributes.put(PropsKeys.INDEX_SEARCH_QUERY_INDEXING_ENABLED, enabled);
+	}
+
+	public void setQueryIndexingThreshold(int queryIndexingThreshold) {
+		_attributes.put(
+			PropsKeys.INDEX_SEARCH_QUERY_INDEXING_THRESHOLD,
+			queryIndexingThreshold);
+	}
+
+	public void setQuerySuggestionScoresThreshold(
+		int querySuggestionScoresThreshold) {
+			_attributes.put(
+				PropsKeys.INDEX_SEARCH_QUERY_SUGGESTION_SCORING_THRESHOLD,
+				querySuggestionScoresThreshold);
+	}
+
+	public void setQuerySuggestionsEnabled(boolean querySuggestionsEnabled) {
+		_attributes.put(
+			PropsKeys.INDEX_SEARCH_QUERY_SUGGESTION_ENABLED,
+			querySuggestionsEnabled);
+	}
+
+	public void setQuerySuggestionsMax(int max) {
+		_attributes.put(PropsKeys.INDEX_SEARCH_QUERY_SUGGESTION_MAX, max);
+	}
+
 	public void setScoreEnabled(boolean scoreEnabled) {
 		_attributes.put(PropsKeys.INDEX_SEARCH_SCORING_ENABLED, scoreEnabled);
 	}
 
 	private static final String _HITS_PROCESSING_ENABLED =
 		"hitsProcessingEnabled";
+
+	private static final boolean
+		_INDEX_SEARCH_COLLATED_SPELL_CHECK_RESULT_ENABLED =
+		GetterUtil.getBoolean(
+			PropsUtil.get(
+				PropsKeys.INDEX_SEARCH_COLLATED_SPELL_CHECK_RESULT_ENABLED),
+			true);
+
+	private static final int
+		_INDEX_SEARCH_COLLATED_SPELL_CHECK_RESULT_SCORING_THRESHOLD =
+		GetterUtil.getInteger(
+			PropsUtil.get(
+				PropsKeys.
+					INDEX_SEARCH_COLLATED_SPELL_CHECK_RESULT_SCORING_THRESHOLD),
+				50);
 
 	private static final boolean _INDEX_SEARCH_HIGHLIGHT_ENABLED =
 		GetterUtil.getBoolean(
@@ -148,15 +241,31 @@ public class QueryConfig implements Serializable {
 		GetterUtil.getInteger(
 			PropsUtil.get(PropsKeys.INDEX_SEARCH_HIGHLIGHT_SNIPPET_SIZE));
 
+	private static final boolean _INDEX_SEARCH_QUERY_INDEXING_ENABLED =
+		GetterUtil.getBoolean(
+			PropsUtil.get(PropsKeys.INDEX_SEARCH_QUERY_INDEXING_ENABLED), true);
+
+	private static final int _INDEX_SEARCH_QUERY_INDEXING_THRESHOLD =
+		GetterUtil.getInteger(
+			PropsUtil.get(
+				PropsKeys.INDEX_SEARCH_QUERY_INDEXING_THRESHOLD),
+			50);
+
 	private static final boolean _INDEX_SEARCH_QUERY_SUGGESTION_ENABLED =
 		GetterUtil.getBoolean(
-			PropsUtil.get(PropsKeys.INDEX_SEARCH_QUERY_SUGGESTION_ENABLED));
+			PropsUtil.get(PropsKeys.INDEX_SEARCH_QUERY_SUGGESTION_ENABLED),
+			true);
 
-	private static final float
+	private static final int _INDEX_SEARCH_QUERY_SUGGESTION_MAX =
+		GetterUtil.getInteger(
+			PropsUtil.get(PropsKeys.INDEX_SEARCH_QUERY_SUGGESTION_MAX), 5);
+
+	private static final int
 		_INDEX_SEARCH_QUERY_SUGGESTION_SCORING_THRESHOLD =
-			GetterUtil.getFloat(
+			GetterUtil.getInteger(
 				PropsUtil.get(
-					PropsKeys.INDEX_SEARCH_QUERY_SUGGESTION_SCORING_THRESHOLD));
+					PropsKeys.INDEX_SEARCH_QUERY_SUGGESTION_SCORING_THRESHOLD),
+				50);
 
 	private static final boolean _INDEX_SEARCH_SCORING_ENABLED =
 		GetterUtil.getBoolean(

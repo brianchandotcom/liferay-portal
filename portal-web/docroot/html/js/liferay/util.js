@@ -859,6 +859,23 @@
 			return editable;
 		},
 
+		_onPreviewArticle: function(event) {
+			var instance = this;
+
+			event.preventDefault();
+
+			var dialogTitle = event.title;
+			var dialogUri = event.uri;
+
+			Liferay.Util.openWindow(
+				{
+					cache: false,
+					title: dialogTitle,
+					uri: dialogUri
+				}
+			);
+		},
+
 		_ns: A.cached(
 			function(namespace, str) {
 				var value = str;
@@ -2036,6 +2053,13 @@
 		'submitForm',
 		{
 			defaultFn: Util._defaultSubmitFormFn
+		}
+	);
+
+	Liferay.publish(
+		'previewArticle',
+		{
+			defaultFn: Util._onPreviewArticle
 		}
 	);
 

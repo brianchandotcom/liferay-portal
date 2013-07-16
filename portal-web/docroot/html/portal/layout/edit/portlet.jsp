@@ -18,6 +18,26 @@
 
 <%
 String portletId = portletDisplay.getId();
+
+Layout selLayout = (Layout)request.getAttribute("edit_pages.jsp-selLayout");
+
+LayoutTypePortlet selLayoutTypePortlet = null;
+
+Theme selTheme = null;
+
+if (selLayout != null) {
+	selLayoutTypePortlet = (LayoutTypePortlet)selLayout.getLayoutType();
+
+	selTheme = selLayout.getTheme();
+}
+
+String layoutTemplateId = StringPool.BLANK;
+
+if (selLayoutTypePortlet != null) {
+	layoutTemplateId = selLayoutTypePortlet.getLayoutTemplateId();
+}
+
+List<LayoutTemplate> layoutTemplates = LayoutTemplateLocalServiceUtil.getLayoutTemplates(selTheme.getThemeId());
 %>
 
 <div class='<%= portletId.equals(PortletKeys.DOCKBAR) ? StringPool.BLANK : "hide" %>' id="<portlet:namespace />copyPortletsFromPage">
@@ -80,4 +100,8 @@ String portletId = portletDisplay.getId();
 			<aui:button name="copySubmitButton" value="copy" />
 		</aui:button-row>
 	</c:if>
+</div>
+
+<div>
+	<%@ include file="/html/portlet/layouts_admin/layout/layout_templates_list.jspf" %>
 </div>

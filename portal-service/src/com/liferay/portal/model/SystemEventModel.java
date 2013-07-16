@@ -244,6 +244,34 @@ public interface SystemEventModel extends AttachedModel, BaseModel<SystemEvent> 
 	public void setType(int type);
 
 	/**
+	 * Returns the parent system event ID of this system event.
+	 *
+	 * @return the parent system event ID of this system event
+	 */
+	public long getParentSystemEventId();
+
+	/**
+	 * Sets the parent system event ID of this system event.
+	 *
+	 * @param parentSystemEventId the parent system event ID of this system event
+	 */
+	public void setParentSystemEventId(long parentSystemEventId);
+
+	/**
+	 * Returns the system event set key of this system event.
+	 *
+	 * @return the system event set key of this system event
+	 */
+	public long getSystemEventSetKey();
+
+	/**
+	 * Sets the system event set key of this system event.
+	 *
+	 * @param systemEventSetKey the system event set key of this system event
+	 */
+	public void setSystemEventSetKey(long systemEventSetKey);
+
+	/**
 	 * Returns the extra data of this system event.
 	 *
 	 * @return the extra data of this system event

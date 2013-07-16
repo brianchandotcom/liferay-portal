@@ -74,6 +74,17 @@ public class DeletionSystemEventExporter {
 
 			@Override
 			protected void addCriteria(DynamicQuery dynamicQuery) {
+				Disjunction disjunction = RestrictionsFactoryUtil.disjunction();
+
+				Property groupIdProperty = PropertyFactoryUtil.forName(
+					"groupId");
+
+				disjunction.add(groupIdProperty.eq(0L));
+				disjunction.add(
+					groupIdProperty.eq(portletDataContext.getScopeGroupId()));
+
+				dynamicQuery.add(disjunction);
+
 				if (!deletionSystemEventStagedModelTypes.isEmpty()) {
 					Property classNameIdProperty = PropertyFactoryUtil.forName(
 						"classNameId");
@@ -81,7 +92,7 @@ public class DeletionSystemEventExporter {
 					Property referrerClassNameIdProperty =
 						PropertyFactoryUtil.forName("referrerClassNameId");
 
-					Disjunction disjunction =
+					Disjunction referrerClassNameIdDisjunction =
 						RestrictionsFactoryUtil.disjunction();
 
 					for (StagedModelType stagedModelType :
@@ -98,10 +109,10 @@ public class DeletionSystemEventExporter {
 							referrerClassNameIdProperty.eq(
 								stagedModelType.getReferrerClassNameId()));
 
-						disjunction.add(conjunction);
+						referrerClassNameIdDisjunction.add(conjunction);
 					}
 
-					dynamicQuery.add(disjunction);
+					dynamicQuery.add(referrerClassNameIdDisjunction);
 				}
 
 				Property typeProperty = PropertyFactoryUtil.forName("type");
@@ -138,7 +149,7 @@ public class DeletionSystemEventExporter {
 			}
 		};
 
-		actionableDynamicQuery.setGroupId(portletDataContext.getScopeGroupId());
+		actionableDynamicQuery.setCompanyId(portletDataContext.getCompanyId());
 
 		actionableDynamicQuery.performActions();
 	}

@@ -104,7 +104,7 @@ if ((article == null) && (Validator.isNull(defaultLanguageId) || !LanguageUtil.i
 		defaultLanguageId = languageId;
 	}
 	else {
-		defaultLanguageId = LocaleUtil.toLanguageId(LocaleUtil.getDefault());
+		defaultLanguageId = LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale());
 	}
 }
 else {

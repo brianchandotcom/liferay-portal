@@ -21,7 +21,9 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.ModelHintsUtil;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.taglib.aui.base.BaseInputTag;
 import com.liferay.util.PwdGenerator;
 
@@ -150,6 +152,22 @@ public class InputTag extends BaseInputTag {
 		if (Validator.isNull(defaultLanguageId)) {
 			defaultLanguageId = (String)pageContext.getAttribute(
 				"aui:model-context:defaultLanguageId");
+		}
+
+		if (Validator.isNull(defaultLanguageId)) {
+			if (model != null) {
+				boolean hasGroupId = ModelHintsUtil.hasField(
+					model.getName(), "groupId");
+
+				if (hasGroupId) {
+					ThemeDisplay themeDisplay =
+						(ThemeDisplay)request.getAttribute(
+							WebKeys.THEME_DISPLAY);
+
+					defaultLanguageId = LocaleUtil.toLanguageId(
+						themeDisplay.getSiteDefaultLocale());
+				}
+			}
 		}
 
 		if (Validator.isNull(defaultLanguageId)) {

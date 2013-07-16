@@ -196,20 +196,14 @@ public class JournalArticleTrashHandler extends JournalBaseTrashHandler {
 		JournalArticle article =
 			JournalArticleLocalServiceUtil.getLatestArticle(classPK);
 
-		boolean isContainerExist = true;
-
 		try {
 			article.getFolder();
 		}
 		catch (NoSuchFolderException nsfe) {
-			isContainerExist = false;
-		}
-
-		if (!isContainerExist || article.isInTrashContainer()) {
 			return false;
 		}
 
-		return true;
+		return !article.isInTrashContainer();
 	}
 
 	@Override
@@ -222,7 +216,7 @@ public class JournalArticleTrashHandler extends JournalBaseTrashHandler {
 			JournalArticleLocalServiceUtil.getLatestArticle(classPK);
 
 		JournalArticleLocalServiceUtil.moveArticle(
-				article.getGroupId(), article.getArticleId(), containerModelId);
+			article.getGroupId(), article.getArticleId(), containerModelId);
 	}
 
 	@Override

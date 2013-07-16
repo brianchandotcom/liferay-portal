@@ -184,20 +184,14 @@ public class JournalFolderTrashHandler extends JournalBaseTrashHandler {
 
 		JournalFolder folder = getJournalFolder(classPK);
 
-		boolean isContainerExist = true;
-
 		try {
 			folder.getParentFolder();
 		}
 		catch (NoSuchFolderException nsfe) {
-			isContainerExist = false;
-		}
-
-		if (!isContainerExist || folder.isInTrashContainer()) {
 			return false;
 		}
 
-		return true;
+		return !folder.isInTrashContainer();
 	}
 
 	@Override

@@ -341,20 +341,14 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 
 		MBCategory category = MBCategoryLocalServiceUtil.getCategory(classPK);
 
-		boolean isContainerExist = true;
-
 		try {
 			category.getParentCategory();
 		}
 		catch (NoSuchCategoryException nsce) {
-			isContainerExist = false;
-		}
-
-		if (!isContainerExist || category.isInTrashContainer()) {
 			return false;
 		}
 
-		return true;
+		return !category.isInTrashContainer();
 	}
 
 	@Override

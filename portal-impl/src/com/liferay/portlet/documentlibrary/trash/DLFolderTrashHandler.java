@@ -211,20 +211,14 @@ public class DLFolderTrashHandler extends DLBaseTrashHandler {
 		try {
 			DLFolder dlFolder = getDLFolder(classPK);
 
-			boolean isContainerExist = true;
-
 			try {
 				dlFolder.getParentFolder();
 			}
 			catch (NoSuchFolderException nsfe) {
-				isContainerExist = false;
-			}
-
-			if (!isContainerExist || dlFolder.isInTrashContainer()) {
 				return false;
 			}
 
-			return true;
+			return !dlFolder.isInTrashContainer();
 		}
 		catch (InvalidRepositoryException ire) {
 			return false;

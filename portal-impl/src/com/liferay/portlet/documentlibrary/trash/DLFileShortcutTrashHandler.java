@@ -149,20 +149,14 @@ public class DLFileShortcutTrashHandler extends DLBaseTrashHandler {
 
 		DLFileShortcut dlFileShortcut = getDLFileShortcut(classPK);
 
-		boolean isContainerExist = true;
-
 		try {
 			dlFileShortcut.getFolder();
 		}
 		catch (NoSuchFolderException nsfe) {
-			isContainerExist = false;
-		}
-
-		if (!isContainerExist || dlFileShortcut.isInTrashContainer()) {
 			return false;
 		}
 
-		return true;
+		return !dlFileShortcut.isInTrashContainer();
 	}
 
 	@Override

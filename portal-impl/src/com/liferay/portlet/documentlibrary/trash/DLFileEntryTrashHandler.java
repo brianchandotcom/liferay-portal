@@ -201,20 +201,14 @@ public class DLFileEntryTrashHandler extends DLBaseTrashHandler {
 		try {
 			DLFileEntry dlFileEntry = getDLFileEntry(classPK);
 
-			boolean isContainerExist = true;
-
 			try {
 				dlFileEntry.getFolder();
 			}
 			catch (NoSuchFolderException nsfe) {
-				isContainerExist = false;
-			}
-
-			if (!isContainerExist || dlFileEntry.isInTrashContainer()) {
 				return false;
 			}
 
-			return true;
+			return !dlFileEntry.isInTrashContainer();
 		}
 		catch (InvalidRepositoryException ire) {
 			return false;

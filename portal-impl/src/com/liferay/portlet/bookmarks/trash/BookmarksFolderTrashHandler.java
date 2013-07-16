@@ -152,20 +152,14 @@ public class BookmarksFolderTrashHandler extends BookmarksBaseTrashHandler {
 
 		BookmarksFolder folder = getBookmarksFolder(classPK);
 
-		boolean isContainerExist = true;
-
 		try {
 			folder.getParentFolder();
 		}
 		catch (NoSuchFolderException nsfe) {
-			isContainerExist = false;
-		}
-
-		if (!isContainerExist || folder.isInTrashContainer()) {
 			return false;
 		}
 
-		return true;
+		return !folder.isInTrashContainer();
 	}
 
 	@Override
@@ -184,7 +178,7 @@ public class BookmarksFolderTrashHandler extends BookmarksBaseTrashHandler {
 		throws PortalException, SystemException {
 
 		BookmarksFolderLocalServiceUtil.moveFolderFromTrash(
-				userId, classPK, containerId);
+			userId, classPK, containerId);
 	}
 
 	@Override

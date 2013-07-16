@@ -133,20 +133,14 @@ public class BookmarksEntryTrashHandler extends BookmarksBaseTrashHandler {
 
 		BookmarksEntry entry = BookmarksEntryLocalServiceUtil.getEntry(classPK);
 
-		boolean isContainerExist = true;
-
 		try {
 			entry.getFolder();
 		}
 		catch (NoSuchFolderException nsfe) {
-			isContainerExist = false;
-		}
-
-		if (!isContainerExist || entry.isInTrashContainer()) {
 			return false;
 		}
 
-		return true;
+		return !entry.isInTrashContainer();
 	}
 
 	@Override

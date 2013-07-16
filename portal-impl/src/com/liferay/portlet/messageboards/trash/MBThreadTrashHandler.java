@@ -209,20 +209,14 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 
 		MBThread thread = MBThreadLocalServiceUtil.getThread(classPK);
 
-		boolean isContainerExist = true;
-
 		try {
 			thread.getCategory();
 		}
 		catch (NoSuchCategoryException nsce) {
-			isContainerExist = false;
-		}
-
-		if (!isContainerExist || thread.isInTrashContainer()) {
 			return false;
 		}
 
-		return true;
+		return !thread.isInTrashContainer();
 	}
 
 	@Override

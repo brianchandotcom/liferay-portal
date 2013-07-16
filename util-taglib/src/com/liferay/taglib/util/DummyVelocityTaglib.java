@@ -429,7 +429,7 @@ public class DummyVelocityTaglib implements VelocityTaglib {
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #permissionsURL(String,
-	 *             String, String, long, String, String, int[])}
+	 *             String, String, Object, String, String, int[])}
 	 */
 	@Override
 	public void permissionsURL(

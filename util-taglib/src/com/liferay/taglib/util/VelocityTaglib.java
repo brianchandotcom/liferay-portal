@@ -275,7 +275,7 @@ public interface VelocityTaglib {
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #permissionsURL(String,
-	 *             String, String, long, String, String, int[])}
+	 *             String, String, Object, String, String, int[])}
 	 */
 	public void permissionsURL(
 			String redirect, String modelResource,

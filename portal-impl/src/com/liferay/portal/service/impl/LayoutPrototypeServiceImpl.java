@@ -38,8 +38,8 @@ import java.util.Map;
 public class LayoutPrototypeServiceImpl extends LayoutPrototypeServiceBaseImpl {
 
 	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #addLayoutPrototype(long,
-	 *             Map, String, boolean, ServiceContext)}
+	 * @deprecated As of 6.2.0, replaced by {@link #addLayoutPrototype(Map,
+	 *             String, boolean, ServiceContext)}
 	 */
 	@Override
 	public LayoutPrototype addLayoutPrototype(

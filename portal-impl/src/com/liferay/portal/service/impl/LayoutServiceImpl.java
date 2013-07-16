@@ -112,7 +112,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	 *             portal exception occurred
 	 * @throws     SystemException if a system exception occurred
 	 * @deprecated As of 6.2.0, replaced by {@link #addLayout(long, boolean,
-	 *             long, Map, Map, Map, Map, Map, String, boolean, Map,
+	 *             long, Map, Map, Map, Map, Map, String, String, boolean, Map,
 	 *             ServiceContext)}
 	 */
 	@Override

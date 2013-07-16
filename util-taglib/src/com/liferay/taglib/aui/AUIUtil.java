@@ -145,7 +145,7 @@ public class AUIUtil {
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #buildLabel(String, boolean,
-	 *             String)}
+	 *             boolean, String)}
 	 */
 	public static String buildLabel(
 		String inlineLabel, boolean showForLabel, String forLabel,

@@ -187,7 +187,7 @@ public class AssetEntryServiceImpl extends AssetEntryServiceBaseImpl {
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #updateEntry(long, Date,
-	 *             Date. String, long, String, long, long[], String[], boolean,
+	 *             Date, String, long, String, long, long[], String[], boolean,
 	 *             Date, Date, Date, String, String, String, String, String,
 	 *             String, int, int, Integer, boolean)}
 	 */

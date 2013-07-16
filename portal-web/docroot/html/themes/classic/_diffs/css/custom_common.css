@@ -353,24 +353,18 @@
 
 		li {
 			span.divider {
-				background: url(../images/common/breadcrumbs.png) no-repeat;
-				background-size: 25px;
-				display: inline-block;
-				height: 25px;
-				position: relative;
-				text-indent: -9000px;
-				top: -4px;
-				width: 16px;
-			}
-		}
-
-		li.last {
-			a {
-				color: #676767;
+				color: #999;
+				font-weight: bold;
 			}
 
-			span.divider {
-				display: none;
+			&.last {
+				a {
+					color: #676767;
+				}
+
+				span.divider {
+					display: none;
+				}
 			}
 		}
 

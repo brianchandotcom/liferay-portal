@@ -404,17 +404,15 @@ $dockbarOpenGradientStart: #0EA6F9;
 					.toggler-header {
 						background: #F2F2F2;
 						padding: 6px 10px;
+
+						.accordion-toggle {
+							background: #F2F2F2 url(../images/custom/arrow_option.png) no-repeat 100% -20px;
+						}
 					}
 
 					.toggler-header-collapsed {
 						.accordion-toggle {
-							background: #F2F2F2 url(../images/custom/arrow_option.png) no-repeat right 0;
-						}
-					}
-
-					.toggler-header-expanded {
-						.accordion-toggle {
-							background: #F2F2F2 url(../images/custom/arrow_option.png) no-repeat right -20px;
+							background-position: 100% 0;
 						}
 					}
 				}
@@ -454,8 +452,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 				}
 
 				.search-panel-icon {
-					background: url(../images/custom/iconinfield.png) no-repeat left center;
-					background-size: 100%;
+					background: url(../images/custom/search_panel_icon.png) no-repeat 0 50%;
 					color: #D4D4D4;
 					font-size: 0;
 					height: 18px;
@@ -492,14 +489,11 @@ $dockbarOpenGradientStart: #0EA6F9;
 			.control-panel-back-link {
 				color: #30C8EE;
 				display: inline-block;
-				float: left;
 				font-size: 20px;
-				height: auto;
 				line-height: 20px;
 				margin-right: 5px;
 				text-decoration: none;
 				vertical-align: middle;
-				width: auto;
 
 				.control-panel-back-text {
 					display: none;
@@ -530,7 +524,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 					&.open {
 						.dropdown-toggle {
 							i.caret {
-								background: url(../images/custom/arrow_option_down.png) no-repeat 0 -20px;
+								background-position: 0 -20px;
 							}
 						}
 					}

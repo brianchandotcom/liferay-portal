@@ -249,7 +249,8 @@
 				}
 
 				.user-avatar-link > img {
-					border: 2px solid #5594E0;
+					border-width: 0;
+					box-shadow: 0 0 0 2px #5594E0;
 					width: 27px;
 				}
 			}

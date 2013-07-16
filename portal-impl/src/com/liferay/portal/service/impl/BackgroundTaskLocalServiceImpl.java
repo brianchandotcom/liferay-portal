@@ -183,6 +183,40 @@ public class BackgroundTaskLocalServiceImpl
 	}
 
 	@Override
+	public void deleteBackgroundTasksByCompanyId(long companyId)
+		throws PortalException, SystemException {
+
+		DynamicQuery dynamicQuery = dynamicQuery();
+
+		Property property = PropertyFactoryUtil.forName("companyId");
+
+		dynamicQuery.add(property.eq(companyId));
+
+		List<BackgroundTask> backgroundTasks = dynamicQuery(dynamicQuery);
+
+		for (BackgroundTask backgroundTask : backgroundTasks) {
+			deleteBackgroundTask(backgroundTask);
+		}
+	}
+
+	@Override
+	public void deleteBackgroundTasksByGroupId(long groupId)
+		throws PortalException, SystemException {
+
+		DynamicQuery dynamicQuery = dynamicQuery();
+
+		Property property = PropertyFactoryUtil.forName("groupId");
+
+		dynamicQuery.add(property.eq(groupId));
+
+		List<BackgroundTask> backgroundTasks = dynamicQuery(dynamicQuery);
+
+		for (BackgroundTask backgroundTask : backgroundTasks) {
+			deleteBackgroundTask(backgroundTask);
+		}
+	}
+
+	@Override
 	public BackgroundTask fetchBackgroundTask(long backgroundTaskId)
 		throws SystemException {
 
@@ -212,6 +246,13 @@ public class BackgroundTaskLocalServiceImpl
 		throws PortalException, SystemException {
 
 		return backgroundTaskPersistence.findByPrimaryKey(backgroundTaskId);
+	}
+
+	@Override
+	public List<BackgroundTask> getBackgroundTasks(long groupId, int status)
+		throws SystemException {
+
+		return backgroundTaskPersistence.findByG_S(groupId, status);
 	}
 
 	@Override

@@ -20,7 +20,9 @@ import com.liferay.portal.GroupNameException;
 import com.liferay.portal.GroupParentException;
 import com.liferay.portal.NoSuchGroupException;
 import com.liferay.portal.NoSuchLayoutSetException;
+import com.liferay.portal.PendingBackgroundTaskException;
 import com.liferay.portal.RequiredGroupException;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
 import com.liferay.portal.kernel.cache.ThreadLocalCachable;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -54,6 +56,7 @@ import com.liferay.portal.kernel.util.UniqueList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.model.Account;
+import com.liferay.portal.model.BackgroundTask;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
@@ -712,6 +715,21 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 					String.valueOf(group.getGroupId()),
 					RequiredGroupException.PARENT_GROUP);
 			}
+
+			List<BackgroundTask> backgroundTasks =
+				backgroundTaskLocalService.getBackgroundTasks(
+					group.getGroupId(),
+					BackgroundTaskConstants.STATUS_IN_PROGRESS);
+
+			if (!backgroundTasks.isEmpty()) {
+				throw new PendingBackgroundTaskException(
+					"Cannot delete group with pending background tasks");
+			}
+
+			// Background tasks
+
+			backgroundTaskLocalService.deleteBackgroundTasksByGroupId(
+				group.getGroupId());
 
 			// Layout set branches
 

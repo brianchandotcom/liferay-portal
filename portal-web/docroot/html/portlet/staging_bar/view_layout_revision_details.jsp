@@ -89,37 +89,39 @@ else {
 
 			stagingBar.layoutRevisionToolbar.add(
 				{
-					handler: function(event) {
+					on: {
+						click: function(event) {
 
-						<%
-						long controlPanelPlid = PortalUtil.getControlPanelPlid(company.getCompanyId());
+							<%
+							long controlPanelPlid = PortalUtil.getControlPanelPlid(company.getCompanyId());
 
-						PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(controlPanelPlid, PortletKeys.MY_WORKFLOW_TASKS, PortletRequest.RENDER_PHASE);
+							PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(controlPanelPlid, PortletKeys.MY_WORKFLOW_TASKS, PortletRequest.RENDER_PHASE);
 
-						portletURL.setParameter("struts_action", "/my_workflow_tasks/edit_workflow_task");
+							portletURL.setParameter("struts_action", "/my_workflow_tasks/edit_workflow_task");
 
-						WorkflowTask workflowTask = StagingUtil.getWorkflowTask(user.getUserId(), layoutRevision);
+							WorkflowTask workflowTask = StagingUtil.getWorkflowTask(user.getUserId(), layoutRevision);
 
-						portletURL.setParameter("workflowTaskId", String.valueOf(workflowTask.getWorkflowTaskId()));
+							portletURL.setParameter("workflowTaskId", String.valueOf(workflowTask.getWorkflowTaskId()));
 
-						portletURL.setPortletMode(PortletMode.VIEW);
-						portletURL.setWindowState(LiferayWindowState.POP_UP);
+							portletURL.setPortletMode(PortletMode.VIEW);
+							portletURL.setWindowState(LiferayWindowState.POP_UP);
 
-						String layoutURL = PortalUtil.getLayoutFriendlyURL(layout, themeDisplay);
+							String layoutURL = PortalUtil.getLayoutFriendlyURL(layout, themeDisplay);
 
-						layoutURL = HttpUtil.addParameter(layoutURL, "layoutSetBranchId", layoutRevision.getLayoutSetBranchId());
-						layoutURL = HttpUtil.addParameter(layoutURL, "layoutRevisionId", layoutRevision.getLayoutRevisionId());
+							layoutURL = HttpUtil.addParameter(layoutURL, "layoutSetBranchId", layoutRevision.getLayoutSetBranchId());
+							layoutURL = HttpUtil.addParameter(layoutURL, "layoutRevisionId", layoutRevision.getLayoutRevisionId());
 
-						portletURL.setParameter("closeRedirect", layoutURL);
-						%>
+							portletURL.setParameter("closeRedirect", layoutURL);
+							%>
 
-						Liferay.Util.openWindow(
-							{
-								id: '<portlet:namespace />workflowTasks',
-								title: '<%= UnicodeLanguageUtil.get(pageContext, "workflow") %>',
-								uri: '<%= portletURL.toString() %>'
-							}
-						);
+							Liferay.Util.openWindow(
+								{
+									id: '<portlet:namespace />workflowTasks',
+									title: '<%= UnicodeLanguageUtil.get(pageContext, "workflow") %>',
+									uri: '<%= portletURL.toString() %>'
+								}
+							);
+						}
 					},
 					icon: 'shuffle',
 					label: '<%= UnicodeLanguageUtil.get(pageContext, "workflow") %>'
@@ -193,24 +195,26 @@ else {
 									<portlet:param name="workflowAction" value="<%= String.valueOf((layoutRevision.getStatus() == WorkflowConstants.STATUS_INCOMPLETE) ? WorkflowConstants.ACTION_SAVE_DRAFT : WorkflowConstants.ACTION_PUBLISH) %>" />
 								</portlet:actionURL>
 
-								handler: function(event) {
-									A.io.request(
-										'<%= publishURL %>',
-										{
-											after: {
-												success: function() {
-													<c:choose>
-														<c:when test="<%= layoutRevision.getStatus() == WorkflowConstants.STATUS_INCOMPLETE %>">
-															location.href = '<%= currentURL %>';
-														</c:when>
-														<c:otherwise>
-															Liferay.fire('updatedLayout');
-														</c:otherwise>
-													</c:choose>
+								on: {
+									click: function(event) {
+										A.io.request(
+											'<%= publishURL %>',
+											{
+												after: {
+													success: function() {
+														<c:choose>
+															<c:when test="<%= layoutRevision.getStatus() == WorkflowConstants.STATUS_INCOMPLETE %>">
+																location.href = '<%= currentURL %>';
+															</c:when>
+															<c:otherwise>
+																Liferay.fire('updatedLayout');
+															</c:otherwise>
+														</c:choose>
+													}
 												}
 											}
-										}
-									);
+										);
+									}
 								},
 							</c:when>
 							<c:when test="<%= workflowEnabled %>">

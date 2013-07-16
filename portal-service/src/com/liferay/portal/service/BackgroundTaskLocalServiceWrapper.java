@@ -313,6 +313,20 @@ public class BackgroundTaskLocalServiceWrapper
 	}
 
 	@Override
+	public void deleteBackgroundTasksByCompanyId(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_backgroundTaskLocalService.deleteBackgroundTasksByCompanyId(companyId);
+	}
+
+	@Override
+	public void deleteBackgroundTasksByGroupId(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_backgroundTaskLocalService.deleteBackgroundTasksByGroupId(groupId);
+	}
+
+	@Override
 	public com.liferay.portal.model.BackgroundTask fetchFirstBackgroundTask(
 		java.lang.String taskExecutorClassName, int status)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -327,6 +341,13 @@ public class BackgroundTaskLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _backgroundTaskLocalService.fetchFirstBackgroundTask(taskExecutorClassName,
 			status, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.model.BackgroundTask> getBackgroundTasks(
+		long groupId, int status)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _backgroundTaskLocalService.getBackgroundTasks(groupId, status);
 	}
 
 	@Override
@@ -407,6 +428,13 @@ public class BackgroundTaskLocalServiceWrapper
 	public void resumeBackgroundTask(long backgroundTaskId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_backgroundTaskLocalService.resumeBackgroundTask(backgroundTaskId);
+	}
+
+	@Override
+	public void terminateZombieBackgroundTasks()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_backgroundTaskLocalService.terminateZombieBackgroundTasks();
 	}
 
 	@Override

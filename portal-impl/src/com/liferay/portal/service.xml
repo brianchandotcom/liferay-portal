@@ -132,6 +132,10 @@
 
 		<!-- Finder methods -->
 
+		<finder name="G_S" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="status" />
+		</finder>
 		<finder name="G_T" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="taskExecutorClassName" />
@@ -2813,6 +2817,7 @@
 		<exception>OrganizationType</exception>
 		<exception>PasswordExpired</exception>
 		<exception>PasswordPolicyName</exception>
+		<exception>PendingBackgroundTask</exception>
 		<exception>PhoneNumber</exception>
 		<exception>PortletActive</exception>
 		<exception>PortletDefaultPreferences</exception>

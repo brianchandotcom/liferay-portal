@@ -14,10 +14,16 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.portal.ExpiredLockException;
+import com.liferay.portal.NoSuchLockException;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatus;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusRegistry;
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -32,6 +38,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.BackgroundTask;
+import com.liferay.portal.model.Lock;
 import com.liferay.portal.model.User;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.service.ServiceContext;
@@ -155,6 +162,13 @@ public class BackgroundTaskLocalServiceImpl
 			PortletFileRepositoryUtil.deleteFolder(folderId);
 		}
 
+		if (backgroundTask.getStatus() ==
+				BackgroundTaskConstants.STATUS_IN_PROGRESS) {
+
+			terminateBackgroundTask(
+				backgroundTask, BackgroundTaskConstants.STATUS_CANCELLED);
+		}
+
 		return backgroundTaskPersistence.remove(backgroundTask);
 	}
 
@@ -166,6 +180,40 @@ public class BackgroundTaskLocalServiceImpl
 			backgroundTaskPersistence.findByPrimaryKey(backgroundTaskId);
 
 		return deleteBackgroundTask(backgroundTask);
+	}
+
+	@Override
+	public void deleteBackgroundTasksByCompanyId(long companyId)
+		throws PortalException, SystemException {
+
+		DynamicQuery dynamicQuery = dynamicQuery();
+
+		Property property = PropertyFactoryUtil.forName("companyId");
+
+		dynamicQuery.add(property.eq(companyId));
+
+		List<BackgroundTask> backgroundTasks = dynamicQuery(dynamicQuery);
+
+		for (BackgroundTask backgroundTask : backgroundTasks) {
+			deleteBackgroundTask(backgroundTask);
+		}
+	}
+
+	@Override
+	public void deleteBackgroundTasksByGroupId(long groupId)
+		throws PortalException, SystemException {
+
+		DynamicQuery dynamicQuery = dynamicQuery();
+
+		Property property = PropertyFactoryUtil.forName("groupId");
+
+		dynamicQuery.add(property.eq(groupId));
+
+		List<BackgroundTask> backgroundTasks = dynamicQuery(dynamicQuery);
+
+		for (BackgroundTask backgroundTask : backgroundTasks) {
+			deleteBackgroundTask(backgroundTask);
+		}
 	}
 
 	@Override
@@ -198,6 +246,13 @@ public class BackgroundTaskLocalServiceImpl
 		throws PortalException, SystemException {
 
 		return backgroundTaskPersistence.findByPrimaryKey(backgroundTaskId);
+	}
+
+	@Override
+	public List<BackgroundTask> getBackgroundTasks(long groupId, int status)
+		throws SystemException {
+
+		return backgroundTaskPersistence.findByG_S(groupId, status);
 	}
 
 	@Override
@@ -311,6 +366,27 @@ public class BackgroundTaskLocalServiceImpl
 	}
 
 	@Override
+	public void terminateZombieBackgroundTasks()
+		throws PortalException, SystemException {
+
+		DynamicQuery dynamicQuery = dynamicQuery();
+
+		Property property = PropertyFactoryUtil.forName("status");
+
+		dynamicQuery.add(
+			property.eq(BackgroundTaskConstants.STATUS_IN_PROGRESS));
+
+		final List<BackgroundTask> backgroundTasks = dynamicQuery(dynamicQuery);
+
+		for (BackgroundTask backgroundTask : backgroundTasks) {
+			backgroundTask.setStatus(BackgroundTaskConstants.STATUS_FAILED);
+
+			terminateBackgroundTask(
+				backgroundTask, BackgroundTaskConstants.STATUS_FAILED);
+		}
+	}
+
+	@Override
 	public BackgroundTask updateBackgroundTask(
 			long backgroundTaskId, Map<String, Serializable> taskContextMap,
 			int status, ServiceContext serviceContext)
@@ -329,7 +405,11 @@ public class BackgroundTaskLocalServiceImpl
 		Date now = new Date();
 
 		BackgroundTask backgroundTask =
-			backgroundTaskPersistence.findByPrimaryKey(backgroundTaskId);
+			backgroundTaskPersistence.fetchByPrimaryKey(backgroundTaskId);
+
+		if (backgroundTask == null) {
+			return null;
+		}
 
 		backgroundTask.setModifiedDate(serviceContext.getModifiedDate(now));
 
@@ -355,6 +435,54 @@ public class BackgroundTaskLocalServiceImpl
 		backgroundTaskPersistence.update(backgroundTask);
 
 		return backgroundTask;
+	}
+
+	protected void terminateBackgroundTask(
+			final BackgroundTask backgroundTask, final int status)
+		throws PortalException, SystemException {
+
+		String owner =
+			backgroundTask.getName() + StringPool.POUND +
+				backgroundTask.getBackgroundTaskId();
+
+		try {
+			Lock lock = lockLocalService.getLock(
+				BackgroundTaskExecutor.class.getName(),
+				backgroundTask.getTaskExecutorClassName());
+
+			if (owner.equals(lock.getOwner())) {
+				lockLocalService.unlock(
+					BackgroundTaskExecutor.class.getName(),
+					backgroundTask.getTaskExecutorClassName());
+			}
+		}
+		catch (NoSuchLockException e) {
+		}
+		catch (ExpiredLockException e) {
+		}
+
+		TransactionCommitCallbackRegistryUtil.registerCallback(
+			new Callable<Void>() {
+
+			@Override
+			public Void call() throws Exception {
+				Message responseMessage = new Message();
+
+				responseMessage.put(
+					"backgroundTaskId", backgroundTask.getBackgroundTaskId());
+				responseMessage.put("name", backgroundTask.getName());
+				responseMessage.put("status", status);
+				responseMessage.put(
+					"taskExecutorClassName",
+					backgroundTask.getTaskExecutorClassName());
+
+				MessageBusUtil.sendMessage(
+					DestinationNames.BACKGROUND_TASK_STATUS, responseMessage);
+
+				return null;
+			}
+
+		});
 	}
 
 	@BeanReference(type = BackgroundTaskStatusRegistry.class)

@@ -101,6 +101,8 @@ if ((liveGroup != null) && (liveGroup.getMembershipRestriction() == GroupConstan
 	</c:if>
 </liferay-ui:error>
 
+<liferay-ui:error exception="<%= PendingBackgroundTaskException.class %>" message="the-site-cannot-be-deleted-because-it-has-background-tasks-in-progress" />
+
 <liferay-ui:error exception="<%= RequiredGroupException.class %>">
 
 	<%

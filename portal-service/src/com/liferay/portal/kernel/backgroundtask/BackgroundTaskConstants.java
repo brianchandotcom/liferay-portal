@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.util.StringPool;
  */
 public class BackgroundTaskConstants {
 
+	public static final String LABEL_CANCELLED = "cancelled";
+
 	public static final String LABEL_FAILED = "failed";
 
 	public static final String LABEL_IN_PROGRESS = "in-progress";
@@ -31,6 +33,8 @@ public class BackgroundTaskConstants {
 	public static final String LABEL_QUEUED = "queued";
 
 	public static final String LABEL_SUCCESSFUL = "successful";
+
+	public static final int STATUS_CANCELLED = 5;
 
 	public static final int STATUS_FAILED = 2;
 
@@ -43,7 +47,10 @@ public class BackgroundTaskConstants {
 	public static final int STATUS_SUCCESSFUL = 3;
 
 	public static String getStatusCssClass(int status) {
-		if (status == STATUS_FAILED) {
+		if (status == STATUS_CANCELLED) {
+			return "label-info";
+		}
+		else if (status == STATUS_FAILED) {
 			return "label-important";
 		}
 		else if (status == STATUS_IN_PROGRESS) {
@@ -62,7 +69,10 @@ public class BackgroundTaskConstants {
 	}
 
 	public static String getStatusLabel(int status) {
-		if (status == STATUS_FAILED) {
+		if (status == STATUS_CANCELLED) {
+			return LABEL_CANCELLED;
+		}
+		else if (status == STATUS_FAILED) {
 			return LABEL_FAILED;
 		}
 		else if (status == STATUS_IN_PROGRESS) {

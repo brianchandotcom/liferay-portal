@@ -19,6 +19,7 @@
 <%
 boolean autoFocus = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-localized:autoFocus"));
 boolean autoSize = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-localized:autoSize"));
+Locale[] availableLocales = (Locale[])request.getAttribute("liferay-ui:input-localized:availableLocales");
 String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-localized:cssClass"));
 String defaultLanguageId = (String)request.getAttribute("liferay-ui:input-localized:defaultLanguageId");
 boolean disabled = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-localized:disabled"));
@@ -40,8 +41,6 @@ else {
 	defaultLocale = LocaleUtil.getDefault();
 	defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
 }
-
-Locale[] locales = LanguageUtil.getAvailableLocales();
 
 String mainLanguageId = defaultLanguageId;
 
@@ -65,7 +64,7 @@ if (Validator.isNull(mainLanguageValue)) {
 
 String fieldSuffix = StringPool.BLANK;
 
-if ((locales.length > 1) && !Validator.isNull(languageId)) {
+if ((availableLocales.length > 1) && !Validator.isNull(languageId)) {
 	fieldSuffix = StringPool.UNDERLINE + mainLanguageId;
 }
 
@@ -133,14 +132,14 @@ List<String> languageIds = new ArrayList<String>();
 		</aui:script>
 	</c:if>
 
-	<c:if test="<%= (locales.length > 1) && Validator.isNull(languageId) %>">
+	<c:if test="<%= (availableLocales.length > 1) && Validator.isNull(languageId) %>">
 
 		<%
 		languageIds.add(defaultLanguageId);
 
 		if (Validator.isNotNull(xml)) {
-			for (int i = 0; i < locales.length; i++) {
-				String curLanguageId = LocaleUtil.toLanguageId(locales[i]);
+			for (int i = 0; i < availableLocales.length; i++) {
+				String curLanguageId = LocaleUtil.toLanguageId(availableLocales[i]);
 
 				if (curLanguageId.equals(defaultLanguageId)) {
 					continue;
@@ -190,8 +189,8 @@ List<String> languageIds = new ArrayList<String>();
 				uniqueLanguageIds.add(defaultLanguageId);
 				uniqueLanguageIds.add(themeDisplay.getLanguageId());
 
-				for (int i = 0; i < locales.length; i++) {
-					String curLanguageId = LocaleUtil.toLanguageId(locales[i]);
+				for (int i = 0; i < availableLocales.length; i++) {
+					String curLanguageId = LocaleUtil.toLanguageId(availableLocales[i]);
 
 					uniqueLanguageIds.add(curLanguageId);
 				}
@@ -241,7 +240,7 @@ List<String> languageIds = new ArrayList<String>();
 	</aui:script>
 </c:if>
 
-<c:if test="<%= (locales.length > 1) && Validator.isNull(languageId) %>">
+<c:if test="<%= (availableLocales.length > 1) && Validator.isNull(languageId) %>">
 	<aui:script use="liferay-input-localized">
 		Liferay.InputLocalized.register(
 			'<portlet:namespace /><%= HtmlUtil.escapeJS(id + fieldSuffix) %>',

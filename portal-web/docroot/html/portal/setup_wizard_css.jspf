@@ -42,13 +42,11 @@
 }
 
 #banner .logo {
-	float: left;
 	margin-right: 20px;
 }
 
 #banner .site-name {
 	color: #333;
-	font-size: 1em;
 	line-height: 1;
 	margin-left: 0;
 	vertical-align: middle;
@@ -134,7 +132,6 @@
 	}
 
 	#banner .site-name {
-		font-size: 1em;
 		margin-top: 0;
 	}
 }

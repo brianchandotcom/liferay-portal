@@ -41,6 +41,7 @@
 
 				<span class="configuration-title" title="<liferay-ui:message key="basic-configuration" />">
 					<i class="icon-cog"></i>
+
 					<liferay-ui:message key="basic-configuration" />
 				</span>
 			</h1>

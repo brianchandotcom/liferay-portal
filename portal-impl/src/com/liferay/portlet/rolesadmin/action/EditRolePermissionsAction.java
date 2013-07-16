@@ -280,6 +280,8 @@ public class EditRolePermissionsAction extends PortletAction {
 			actionRequest, "portletResource");
 		String[] modelResources = StringUtil.split(
 			ParamUtil.getString(actionRequest, "modelResources"));
+		String[] relatedPortletResources = StringUtil.split(
+			ParamUtil.getString(actionRequest, "relatedPortletResources"));
 
 		Map<String, List<String>> resourceActionsMap =
 			new HashMap<String, List<String>>();
@@ -294,6 +296,13 @@ public class EditRolePermissionsAction extends PortletAction {
 			resourceActionsMap.put(
 				portletResource,
 				ResourceActionsUtil.getResourceActions(portletResource, null));
+		}
+
+		for (String extraPortletResource : relatedPortletResources) {
+			resourceActionsMap.put(
+				extraPortletResource,
+				ResourceActionsUtil.getResourceActions(
+					extraPortletResource, null));
 		}
 
 		String[] selectedTargets = StringUtil.split(

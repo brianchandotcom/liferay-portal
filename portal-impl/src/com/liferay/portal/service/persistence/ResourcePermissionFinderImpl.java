@@ -246,9 +246,6 @@ public class ResourcePermissionFinderImpl
 		}
 	}
 
-	/**
-	 * @see PermissionFinderImpl#getScopes(int[])
-	 */
 	protected String getScopes(int[] scopes) {
 		if (scopes.length == 0) {
 			return StringPool.BLANK;

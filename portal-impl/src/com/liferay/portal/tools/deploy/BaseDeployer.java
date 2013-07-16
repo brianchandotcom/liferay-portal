@@ -2001,7 +2001,15 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 		}
 	}
 
-	public String secureWebXml(String content) throws Exception {
+	public String secureWebXml(
+			String content, boolean hasCustomServletListener,
+			boolean securityManagerEnabled)
+		throws Exception {
+
+		if (!hasCustomServletListener && !securityManagerEnabled) {
+			return content;
+		}
+
 		Document document = SAXReaderUtil.read(content);
 
 		Element rootElement = document.getRootElement();
@@ -2025,15 +2033,15 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 			listenerElement.detach();
 		}
 
-		if (!listenerClasses.isEmpty()) {
-			Element contextParamElement = rootElement.addElement(
-				"context-param");
+		Element contextParamElement = rootElement.addElement("context-param");
 
-			DocUtil.add(
-				contextParamElement, "param-name", "portalListenerClasses");
-			DocUtil.add(
-				contextParamElement, "param-value",
-				StringUtil.merge(listenerClasses));
+		DocUtil.add(contextParamElement, "param-name", "portalListenerClasses");
+		DocUtil.add(
+			contextParamElement, "param-value",
+			StringUtil.merge(listenerClasses));
+
+		if (!securityManagerEnabled) {
+			return document.compactString();
 		}
 
 		List<Element> servletElements = rootElement.elements("servlet");
@@ -2294,19 +2302,37 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 		sb.append("<listener>");
 		sb.append("<listener-class>");
 
-		String securityManagerEnabled = "false";
+		boolean hasCustomServletListener = false;
+
+		List<Element> listenerElements = rootElement.elements("listener");
+
+		for (Element listenerElement : listenerElements) {
+			String listenerClass = GetterUtil.getString(
+				listenerElement.elementText("listener-class"));
+
+			if (listenerClass.equals(
+					SerializableSessionAttributeListener.class.getName()) ||
+				listenerClass.equals(
+					SecurePluginContextListener.class.getName())) {
+
+				continue;
+			}
+
+			hasCustomServletListener = true;
+
+			break;
+		}
+
+		boolean securityManagerEnabled = false;
 
 		Properties properties = getPluginPackageProperties(srcFile);
 
 		if (properties != null) {
-			securityManagerEnabled = GetterUtil.getString(
-				properties.getProperty("security-manager-enabled"),
-				securityManagerEnabled);
+			securityManagerEnabled = GetterUtil.getBoolean(
+				properties.getProperty("security-manager-enabled"));
 		}
 
-		if (securityManagerEnabled.equals("generate") ||
-			securityManagerEnabled.equals("true")) {
-
+		if (hasCustomServletListener || securityManagerEnabled) {
 			sb.append(SecurePluginContextListener.class.getName());
 		}
 		else {
@@ -2323,7 +2349,7 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 		String extraContent = getExtraContent(
 			webXmlVersion, srcFile, displayName);
 
-		int pos = content.indexOf("<servlet>");
+		int pos = content.indexOf("<listener>");
 
 		if (pos == -1) {
 			pos = content.indexOf("</web-app>");
@@ -2339,11 +2365,8 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 
 		// Update web.xml
 
-		if (securityManagerEnabled.equals("generate") ||
-			securityManagerEnabled.equals("true")) {
-
-			newContent = secureWebXml(newContent);
-		}
+		newContent = secureWebXml(
+			newContent, hasCustomServletListener, securityManagerEnabled);
 
 		newContent = WebXMLBuilder.organizeWebXML(newContent);
 

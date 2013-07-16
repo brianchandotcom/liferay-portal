@@ -109,10 +109,12 @@ AUI.add(
 								success: A.bind('_afterPreviewSuccess', instance)
 							},
 							autoLoad: false,
-							data: {
-								viewEntries: false,
-								viewPreview: true
-							}
+							data: instance.ns(
+								{
+									viewEntries: false,
+									viewPreview: true
+								}
+							)
 						}
 					);
 
@@ -161,8 +163,8 @@ AUI.add(
 
 				ioPreview.stop();
 
-				ioPreview.set('data.classPK', classPK);
-				ioPreview.set('data.className', className);
+				ioPreview.set('data.' + instance.ns('classPK'), classPK);
+				ioPreview.set('data.' + instance.ns('className'), className);
 
 				ioPreview.start();
 			},

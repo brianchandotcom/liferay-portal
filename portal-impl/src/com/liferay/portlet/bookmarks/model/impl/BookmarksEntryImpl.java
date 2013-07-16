@@ -14,8 +14,11 @@
 
 package com.liferay.portlet.bookmarks.model.impl;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portlet.bookmarks.NoSuchFolderException;
 import com.liferay.portlet.bookmarks.model.BookmarksFolder;
 import com.liferay.portlet.bookmarks.service.BookmarksFolderLocalServiceUtil;
 
@@ -28,30 +31,26 @@ public class BookmarksEntryImpl extends BookmarksEntryBaseImpl {
 	}
 
 	@Override
-	public BookmarksFolder getFolder() {
-		BookmarksFolder folder = null;
-
-		if (getFolderId() > 0) {
-			try {
-				folder = BookmarksFolderLocalServiceUtil.getFolder(
-					getFolderId());
-			}
-			catch (Exception e) {
-				folder = new BookmarksFolderImpl();
-
-				_log.error(e);
-			}
-		}
-		else {
-			folder = new BookmarksFolderImpl();
+	public BookmarksFolder getFolder() throws PortalException, SystemException {
+		if (getFolderId() <= 0) {
+			return new BookmarksFolderImpl();
 		}
 
-		return folder;
+		return BookmarksFolderLocalServiceUtil.getFolder(getFolderId());
 	}
 
 	@Override
-	public BookmarksFolder getTrashContainer() {
-		BookmarksFolder folder = getFolder();
+	public BookmarksFolder getTrashContainer()
+		throws PortalException, SystemException {
+
+		BookmarksFolder folder = null;
+
+		try {
+			folder = getFolder();
+		}
+		catch (NoSuchFolderException nsfe) {
+			return null;
+		}
 
 		if (folder.isInTrash()) {
 			return folder;
@@ -61,7 +60,9 @@ public class BookmarksEntryImpl extends BookmarksEntryBaseImpl {
 	}
 
 	@Override
-	public boolean isInTrashContainer() {
+	public boolean isInTrashContainer()
+		throws PortalException, SystemException {
+
 		if (getTrashContainer() != null) {
 			return true;
 		}

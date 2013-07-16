@@ -18,12 +18,14 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.trash.TrashActionKeys;
 import com.liferay.portal.model.ContainerModel;
+import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portlet.bookmarks.NoSuchFolderException;
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
-import com.liferay.portlet.bookmarks.model.BookmarksFolder;
 import com.liferay.portlet.bookmarks.service.BookmarksEntryLocalServiceUtil;
 import com.liferay.portlet.bookmarks.service.permission.BookmarksEntryPermission;
+import com.liferay.portlet.bookmarks.service.permission.BookmarksFolderPermission;
 import com.liferay.portlet.bookmarks.util.BookmarksUtil;
 
 import javax.portlet.PortletRequest;
@@ -99,7 +101,8 @@ public class BookmarksEntryTrashHandler extends BookmarksBaseTrashHandler {
 		throws PortalException, SystemException {
 
 		if (trashActionId.equals(TrashActionKeys.MOVE)) {
-			return true;
+			return BookmarksFolderPermission.contains(
+				permissionChecker, groupId, classPK, ActionKeys.ADD_ENTRY);
 		}
 
 		return super.hasTrashPermission(
@@ -130,6 +133,13 @@ public class BookmarksEntryTrashHandler extends BookmarksBaseTrashHandler {
 
 		BookmarksEntry entry = BookmarksEntryLocalServiceUtil.getEntry(classPK);
 
+		try {
+			entry.getFolder();
+		}
+		catch (NoSuchFolderException nsfe) {
+			return false;
+		}
+
 		return !entry.isInTrashContainer();
 	}
 
@@ -159,13 +169,12 @@ public class BookmarksEntryTrashHandler extends BookmarksBaseTrashHandler {
 		BookmarksEntryLocalServiceUtil.restoreEntryFromTrash(userId, classPK);
 	}
 
-	@Override
-	protected BookmarksFolder getBookmarksFolder(long classPK)
+	protected long getGroupId(long classPK)
 		throws PortalException, SystemException {
 
 		BookmarksEntry entry = BookmarksEntryLocalServiceUtil.getEntry(classPK);
 
-		return entry.getFolder();
+		return entry.getGroupId();
 	}
 
 	@Override

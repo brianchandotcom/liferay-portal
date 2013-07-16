@@ -39,6 +39,10 @@ portletURL.setParameter("tabs1", tabs1);
 
 <liferay-util:include page="/html/portlet/trash/restore_path.jsp" />
 
+<liferay-ui:error exception="<%= DuplicateEntryException.class %>">
+	<liferay-ui:message key="unable-to-move-this-item-to-the-selected-destination" />
+</liferay-ui:error>
+
 <liferay-ui:error exception="<%= TrashPermissionException.class %>">
 
 	<%

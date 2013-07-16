@@ -25,6 +25,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.messageboards.model.MBCategory;
+import com.liferay.portlet.messageboards.model.MBCategoryConstants;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
@@ -104,6 +105,20 @@ public class MBThreadImpl extends MBThreadBaseImpl {
 		}
 
 		return _attachmentsFolderId;
+	}
+
+	@Override
+	public MBCategory getCategory() throws PortalException, SystemException {
+		long parentCategoryId = getCategoryId();
+
+		if ((parentCategoryId ==
+				MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) ||
+			(parentCategoryId == MBCategoryConstants.DISCUSSION_CATEGORY_ID)) {
+
+			return null;
+		}
+
+		return MBCategoryLocalServiceUtil.getCategory(getCategoryId());
 	}
 
 	@Override

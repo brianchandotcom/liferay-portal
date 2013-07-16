@@ -15,6 +15,7 @@
 package com.liferay.portlet.documentlibrary.service.impl;
 
 import com.liferay.portal.NoSuchGroupException;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
@@ -751,6 +752,44 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 		return dlAppHelperLocalService.moveFileEntryToTrash(userId, fileEntry);
 	}
 
+	@Override
+	public Folder moveFolder(
+			long userId, long folderId, long parentFolderId,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		LocalRepository fromLocalRepository = getFolderLocalRepository(
+			folderId);
+		LocalRepository toLocalRepository = getFolderLocalRepository(
+			parentFolderId, serviceContext.getScopeGroupId());
+
+		if (parentFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			Folder toFolder = toLocalRepository.getFolder(parentFolderId);
+
+			if (toFolder.isMountPoint()) {
+				toLocalRepository = getLocalRepository(
+					toFolder.getRepositoryId());
+			}
+		}
+
+		if (fromLocalRepository.getRepositoryId() ==
+				toLocalRepository.getRepositoryId()) {
+
+			// Move file entries within repository
+
+			Folder folder = fromLocalRepository.moveFolder(
+				userId, folderId, parentFolderId, serviceContext);
+
+			return folder;
+		}
+
+		// Move file entries between repositories
+
+		return moveFolders(
+			userId, folderId, parentFolderId, fromLocalRepository,
+			toLocalRepository, serviceContext);
+	}
+
 	/**
 	 * Restores the file entry with the primary key from the trash portlet.
 	 *
@@ -1403,6 +1442,79 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 			fromLocalRepository, toLocalRepository);
 
 		return destinationFileEntry;
+	}
+
+	protected Folder moveFolders(
+			long userId, long folderId, long parentFolderId,
+			LocalRepository fromLocalRepository,
+			LocalRepository toLocalRepository, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		Folder folder = fromLocalRepository.getFolder(folderId);
+
+		Folder newFolder = toLocalRepository.addFolder(
+			userId, parentFolderId, folder.getName(), folder.getDescription(),
+			serviceContext);
+
+		List<Object> foldersAndFileEntriesAndFileShortcuts =
+			dlAppService.getFoldersAndFileEntriesAndFileShortcuts(
+				fromLocalRepository.getRepositoryId(), folderId,
+				WorkflowConstants.STATUS_ANY, true, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
+
+		try {
+			for (Object folderAndFileEntryAndFileShortcut :
+					foldersAndFileEntriesAndFileShortcuts) {
+
+				if (folderAndFileEntryAndFileShortcut instanceof FileEntry) {
+					FileEntry fileEntry =
+						(FileEntry)folderAndFileEntryAndFileShortcut;
+
+					copyFileEntry(
+						userId, toLocalRepository, fileEntry,
+						newFolder.getFolderId(), serviceContext);
+				}
+				else if (folderAndFileEntryAndFileShortcut instanceof Folder) {
+					Folder currentFolder =
+						(Folder)folderAndFileEntryAndFileShortcut;
+
+					moveFolders(
+						userId, currentFolder.getFolderId(),
+						newFolder.getFolderId(), fromLocalRepository,
+						toLocalRepository, serviceContext);
+
+				}
+				else if (folderAndFileEntryAndFileShortcut
+							instanceof DLFileShortcut) {
+
+					if (newFolder.isSupportsShortcuts()) {
+						DLFileShortcut dlFileShorcut =
+							(DLFileShortcut)folderAndFileEntryAndFileShortcut;
+
+						dlFileShortcutLocalService.addFileShortcut(
+							userId, dlFileShorcut.getGroupId(),
+							newFolder.getFolderId(),
+							dlFileShorcut.getToFileEntryId(), serviceContext);
+					}
+				}
+			}
+		}
+		catch (PortalException pe) {
+			toLocalRepository.deleteFolder(newFolder.getFolderId());
+
+			throw pe;
+		}
+
+		try {
+			fromLocalRepository.deleteFolder(folderId);
+		}
+		catch (PortalException pe) {
+			toLocalRepository.deleteFolder(newFolder.getFolderId());
+
+			throw pe;
+		}
+
+		return newFolder;
 	}
 
 }

@@ -318,13 +318,11 @@ public class TrashEntryServiceImpl extends TrashEntryServiceBaseImpl {
 
 		PermissionChecker permissionChecker = getPermissionChecker();
 
-		TrashEntry entry = trashEntryLocalService.getEntry(className, classPK);
-
 		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
 			className);
 
 		if (!trashHandler.hasTrashPermission(
-				permissionChecker, entry.getGroupId(),
+				permissionChecker, serviceContext.getScopeGroupId(),
 				destinationContainerModelId, TrashActionKeys.MOVE)) {
 
 			throw new TrashPermissionException(TrashPermissionException.MOVE);
@@ -335,18 +333,24 @@ public class TrashEntryServiceImpl extends TrashEntryServiceBaseImpl {
 				permissionChecker, 0, classPK, TrashActionKeys.RESTORE)) {
 
 			throw new TrashPermissionException(
-					TrashPermissionException.RESTORE);
+				TrashPermissionException.RESTORE);
 		}
 
-		trashHandler.checkDuplicateTrashEntry(
-			entry, destinationContainerModelId, StringPool.BLANK);
-
 		if (trashHandler.isInTrash(classPK)) {
+			TrashEntry entry = trashEntryLocalService.getEntry(
+				className, classPK);
+
+			trashHandler.checkDuplicateTrashEntry(
+				entry, destinationContainerModelId, StringPool.BLANK);
+
 			trashHandler.moveTrashEntry(
 				getUserId(), classPK, destinationContainerModelId,
 				serviceContext);
 		}
 		else {
+			trashHandler.checkDuplicateEntry(
+				classPK, destinationContainerModelId, StringPool.BLANK);
+
 			trashHandler.moveEntry(
 				getUserId(), classPK, destinationContainerModelId,
 				serviceContext);

@@ -30,6 +30,7 @@ import com.liferay.portal.model.Image;
 import com.liferay.portal.service.ImageLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.webserver.WebServerServletTokenUtil;
+import com.liferay.portlet.journal.NoSuchFolderException;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalArticleResource;
 import com.liferay.portlet.journal.model.JournalFolder;
@@ -159,24 +160,12 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 	}
 
 	@Override
-	public JournalFolder getFolder() {
-		JournalFolder folder = null;
-
-		if (getFolderId() > 0) {
-			try {
-				folder = JournalFolderLocalServiceUtil.getFolder(getFolderId());
-			}
-			catch (Exception e) {
-				folder = new JournalFolderImpl();
-
-				_log.error(e);
-			}
-		}
-		else {
-			folder = new JournalFolderImpl();
+	public JournalFolder getFolder() throws PortalException, SystemException {
+		if (getFolderId() <= 0) {
+			return new JournalFolderImpl();
 		}
 
-		return folder;
+		return JournalFolderLocalServiceUtil.getFolder(getFolderId());
 	}
 
 	@Override
@@ -214,8 +203,17 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 	}
 
 	@Override
-	public JournalFolder getTrashContainer() {
-		JournalFolder folder = getFolder();
+	public JournalFolder getTrashContainer()
+		throws PortalException, SystemException {
+
+		JournalFolder folder = null;
+
+		try {
+			folder = getFolder();
+		}
+		catch (NoSuchFolderException nsfe) {
+			return null;
+		}
 
 		if (folder.isInTrash()) {
 			return folder;
@@ -225,7 +223,9 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 	}
 
 	@Override
-	public boolean isInTrashContainer() {
+	public boolean isInTrashContainer()
+		throws PortalException, SystemException {
+
 		if (getTrashContainer() != null) {
 			return true;
 		}

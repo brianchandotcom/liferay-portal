@@ -56,11 +56,9 @@ public abstract class JournalBaseTrashHandler extends BaseTrashHandler {
 			long classPK, long parentContainerModelId, int start, int end)
 		throws PortalException, SystemException {
 
-		JournalFolder folder = getJournalFolder(classPK);
-
 		List<JournalFolder> folders =
 			JournalFolderLocalServiceUtil.getFolders(
-				folder.getGroupId(), parentContainerModelId, start, end);
+				getGroupId(classPK), parentContainerModelId, start, end);
 
 		List<ContainerModel> containerModels = new ArrayList<ContainerModel>(
 			folders.size());
@@ -77,10 +75,8 @@ public abstract class JournalBaseTrashHandler extends BaseTrashHandler {
 			long classPK, long parentContainerModelId)
 		throws PortalException, SystemException {
 
-		JournalFolder folder = getJournalFolder(classPK);
-
 		return JournalFolderLocalServiceUtil.getFoldersCount(
-			folder.getGroupId(), parentContainerModelId);
+			getGroupId(classPK), parentContainerModelId);
 	}
 
 	@Override
@@ -205,7 +201,7 @@ public abstract class JournalBaseTrashHandler extends BaseTrashHandler {
 		return true;
 	}
 
-	protected abstract JournalFolder getJournalFolder(long classPK)
+	protected abstract long getGroupId(long classPK)
 		throws PortalException, SystemException;
 
 }

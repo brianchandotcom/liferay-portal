@@ -79,6 +79,11 @@ public interface LocalRepository {
 			ServiceContext serviceContext)
 		throws PortalException, SystemException;
 
+	public Folder moveFolder(
+			long userId, long folderId, long parentFolderId,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException;
+
 	public void updateAsset(
 			long userId, FileEntry fileEntry, FileVersion fileVersion,
 			long[] assetCategoryIds, String[] assetTagNames,

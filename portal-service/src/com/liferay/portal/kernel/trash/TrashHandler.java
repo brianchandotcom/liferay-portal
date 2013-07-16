@@ -85,6 +85,10 @@ import javax.portlet.PortletRequest;
  */
 public interface TrashHandler {
 
+	public void checkDuplicateEntry(
+			long classPK, long containerModelId, String newName)
+		throws PortalException, SystemException;
+
 	/**
 	 * Checks if a duplicate trash entry already exists in the destination
 	 * container.

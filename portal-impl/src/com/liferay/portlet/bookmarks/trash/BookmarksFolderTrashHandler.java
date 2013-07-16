@@ -16,10 +16,13 @@ package com.liferay.portlet.bookmarks.trash;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.trash.TrashActionKeys;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.model.ContainerModel;
+import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portlet.bookmarks.NoSuchFolderException;
 import com.liferay.portlet.bookmarks.asset.BookmarksFolderAssetRenderer;
 import com.liferay.portlet.bookmarks.model.BookmarksFolder;
 import com.liferay.portlet.bookmarks.service.BookmarksFolderLocalServiceUtil;
@@ -106,6 +109,21 @@ public class BookmarksFolderTrashHandler extends BookmarksBaseTrashHandler {
 	}
 
 	@Override
+	public boolean hasTrashPermission(
+			PermissionChecker permissionChecker, long groupId, long classPK,
+			String trashActionId)
+		throws PortalException, SystemException {
+
+		if (trashActionId.equals(TrashActionKeys.MOVE)) {
+			return BookmarksFolderPermission.contains(
+				permissionChecker, groupId, classPK, ActionKeys.ADD_FOLDER);
+		}
+
+		return super.hasTrashPermission(
+			permissionChecker, groupId, classPK, trashActionId);
+	}
+
+	@Override
 	public boolean isContainerModel() {
 		return true;
 	}
@@ -133,6 +151,13 @@ public class BookmarksFolderTrashHandler extends BookmarksBaseTrashHandler {
 		throws PortalException, SystemException {
 
 		BookmarksFolder folder = getBookmarksFolder(classPK);
+
+		try {
+			folder.getParentFolder();
+		}
+		catch (NoSuchFolderException nsfe) {
+			return false;
+		}
 
 		return !folder.isInTrashContainer();
 	}
@@ -163,11 +188,19 @@ public class BookmarksFolderTrashHandler extends BookmarksBaseTrashHandler {
 		BookmarksFolderLocalServiceUtil.restoreFolderFromTrash(userId, classPK);
 	}
 
-	@Override
 	protected BookmarksFolder getBookmarksFolder(long classPK)
 		throws PortalException, SystemException {
 
 		return BookmarksFolderLocalServiceUtil.getFolder(classPK);
+	}
+
+	@Override
+	protected long getGroupId(long classPK)
+		throws PortalException, SystemException {
+
+		BookmarksFolder folder = getBookmarksFolder(classPK);
+
+		return folder.getGroupId();
 	}
 
 	@Override

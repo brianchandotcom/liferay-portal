@@ -201,7 +201,16 @@ public class LiferayFileEntry extends LiferayModel implements FileEntry {
 
 	@Override
 	public Folder getFolder() {
-		return new LiferayFolder(_dlFileEntry.getFolder());
+		Folder folder = null;
+
+		try {
+			folder = new LiferayFolder(_dlFileEntry.getFolder());
+		}
+		catch (Exception e) {
+			return null;
+		}
+
+		return folder;
 	}
 
 	@Override

@@ -169,6 +169,18 @@ public class LocalRepositoryProxyBean
 	}
 
 	@Override
+	public Folder moveFolder(
+			long userId, long folderId, long parentFolderId,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		Folder folder = _localRepository.moveFolder(
+			userId, folderId, parentFolderId, serviceContext);
+
+		return newFolderProxyBean(folder);
+	}
+
+	@Override
 	public void updateAsset(
 			long userId, FileEntry fileEntry, FileVersion fileVersion,
 			long[] assetCategoryIds, String[] assetTagNames,

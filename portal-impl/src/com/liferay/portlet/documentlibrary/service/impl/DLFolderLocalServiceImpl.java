@@ -259,9 +259,11 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		// Directory
 
 		try {
-			DLStoreUtil.deleteDirectory(
-				dlFolder.getCompanyId(), dlFolder.getFolderId(),
-				StringPool.BLANK);
+			if (includeTrashedEntries) {
+				DLStoreUtil.deleteDirectory(
+					dlFolder.getCompanyId(), dlFolder.getFolderId(),
+					StringPool.BLANK);
+			}
 		}
 		catch (NoSuchDirectoryException nsde) {
 			if (_log.isDebugEnabled()) {

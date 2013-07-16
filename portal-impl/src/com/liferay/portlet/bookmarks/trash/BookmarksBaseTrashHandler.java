@@ -58,11 +58,9 @@ public abstract class BookmarksBaseTrashHandler extends BaseTrashHandler {
 			long classPK, long parentContainerModelId, int start, int end)
 		throws PortalException, SystemException {
 
-		BookmarksFolder folder = getBookmarksFolder(classPK);
-
 		List<BookmarksFolder> folders =
 			BookmarksFolderLocalServiceUtil.getFolders(
-				folder.getGroupId(), parentContainerModelId, start, end);
+				getGroupId(classPK), parentContainerModelId, start, end);
 
 		List<ContainerModel> containerModels = new ArrayList<ContainerModel>(
 			folders.size());
@@ -79,10 +77,8 @@ public abstract class BookmarksBaseTrashHandler extends BaseTrashHandler {
 			long classPK, long parentContainerModelId)
 		throws PortalException, SystemException {
 
-		BookmarksFolder folder = getBookmarksFolder(classPK);
-
 		return BookmarksFolderLocalServiceUtil.getFoldersCount(
-			folder.getGroupId(), parentContainerModelId);
+			getGroupId(classPK), parentContainerModelId);
 	}
 
 	@Override
@@ -211,7 +207,7 @@ public abstract class BookmarksBaseTrashHandler extends BaseTrashHandler {
 		return true;
 	}
 
-	protected abstract BookmarksFolder getBookmarksFolder(long classPK)
+	protected abstract long getGroupId(long classPK)
 		throws PortalException, SystemException;
 
 }

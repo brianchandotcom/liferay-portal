@@ -22,7 +22,9 @@ String title = StringPool.BLANK;
 %>
 
 <c:if test="<%= Validator.isNotNull(headerArticleId) %>">
-	<liferay-ui:journal-article articleId="<%= headerArticleId %>" groupId="<%= headerArticleGroupId %>" />
+	<p>
+		<liferay-ui:journal-article articleId="<%= headerArticleId %>" groupId="<%= headerArticleGroupId %>" />
+	</p>
 </c:if>
 
 <%
@@ -50,7 +52,9 @@ for (int i = 0; i < urls.length; i++) {
 %>
 
 <c:if test="<%= Validator.isNotNull(footerArticleId) %>">
-	<liferay-ui:journal-article articleId="<%= footerArticleId %>" groupId="<%= footerArticleGroupId %>" />
+	<p>
+		<liferay-ui:journal-article articleId="<%= footerArticleId %>" groupId="<%= footerArticleGroupId %>" />
+	</p>
 </c:if>
 
 <aui:script use="aui-base">

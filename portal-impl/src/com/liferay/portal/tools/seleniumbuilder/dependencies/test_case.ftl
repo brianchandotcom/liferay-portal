@@ -75,6 +75,8 @@ public class ${seleniumBuilderContext.getTestCaseSimpleClassName(testCaseName)} 
 			boolean testPassed = false;
 
 			try {
+				definitionScopeVariables.put("testCaseName", "${testCaseName}TestCase${commandName}");
+
 				<#if rootElement.element("set-up")??>
 					commandScopeVariables = new HashMap<String, String>();
 

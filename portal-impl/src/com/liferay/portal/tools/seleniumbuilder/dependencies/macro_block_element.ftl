@@ -1,6 +1,10 @@
 <#assign elements = blockElement.elements()>
 
+<#assign void = macroElementsStack.push(elements)>
+
 <#list elements as element>
+	<#assign elements = macroElementsStack.peek()>
+
 	<#assign name = element.getName()>
 
 	<#assign lineNumber = element.attributeValue("line-number")>
@@ -30,6 +34,12 @@
 			</#if>
 
 			<#assign actionElement = element>
+
+			<#if element_has_next>
+				<#assign actionNextElement = elements[element_index + 1]>
+			<#else>
+				<#assign actionNextElement = element>
+			</#if>
 
 			<#include "action_element.ftl">
 
@@ -130,3 +140,5 @@
 		liferaySelenium.sendLogger("${macroName?uncap_first}Macro${lineNumber}", "pass");
 	</#if>
 </#list>
+
+<#assign void = macroElementsStack.pop()>

@@ -151,7 +151,8 @@ public class RolesAdminPortletDataHandler extends BasePortletDataHandler {
 
 			@Override
 			protected void addCriteria(DynamicQuery dynamicQuery) {
-				super.addCriteria(dynamicQuery);
+				portletDataContext.addDateRangeCriteria(
+					dynamicQuery, "modifiedDate");
 
 				long classNameId = PortalUtil.getClassNameId(Team.class);
 

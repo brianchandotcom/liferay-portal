@@ -40,6 +40,7 @@ public class RuntimeChecker extends BaseChecker {
 		initEnvironmentVariables();
 		initGetProtectionDomain();
 		initModifyThread();
+		initSetContextClassLoader();
 	}
 
 	@Override
@@ -83,6 +84,11 @@ public class RuntimeChecker extends BaseChecker {
 		}
 		else if (name.equals(RUNTIME_PERMISSION_MODIFY_THREAD)) {
 			key = "security-manager-modify-thread";
+
+			value = "true";
+		}
+		else if (name.equals(RUNTIME_PERMISSION_SET_CONTEXT_CLASS_LOADER)) {
+			key = "security-manager-set-context-class-loader";
 
 			value = "true";
 		}
@@ -365,6 +371,10 @@ public class RuntimeChecker extends BaseChecker {
 	}
 
 	protected boolean hasSetContextClassLoader(Permission permission) {
+		if (_setContextClassLoader) {
+			return true;
+		}
+
 		int stackIndex = getStackIndex(11, 10);
 
 		Class<?> callerClass = Reflection.getCallerClass(stackIndex);
@@ -423,11 +433,17 @@ public class RuntimeChecker extends BaseChecker {
 		_modifyThread = getPropertyBoolean("security-manager-modify-thread");
 	}
 
+	protected void initSetContextClassLoader() {
+		_setContextClassLoader = getPropertyBoolean(
+			"security-manager-set-context-class-loader");
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(RuntimeChecker.class);
 
 	private boolean _createClassLoader;
 	private List<Pattern> _environmentVariablePatterns;
 	private boolean _getProtectionDomain;
 	private boolean _modifyThread;
+	private boolean _setContextClassLoader;
 
 }

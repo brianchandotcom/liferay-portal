@@ -277,11 +277,11 @@ public class DLSyncEventLocalServiceUtil {
 				   .addOrUpdateDLSyncEvent(typeId, type, event, modifiedDate);
 	}
 
-	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLSyncEvent> getDLSyncEventsSinceModifiedDate(
+	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLSyncEvent> getDLSyncEvents(
 		long modifiedDate)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getDLSyncEventsSinceModifiedDate(modifiedDate);
+		return getService().getDLSyncEvents(modifiedDate);
 	}
 
 	public static void removeAll()

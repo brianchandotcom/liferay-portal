@@ -290,11 +290,11 @@ public class DLSyncEventLocalServiceWrapper implements DLSyncEventLocalService,
 	}
 
 	@Override
-	public java.util.List<com.liferay.portlet.documentlibrary.model.DLSyncEvent> getDLSyncEventsSinceModifiedDate(
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLSyncEvent> getDLSyncEvents(
 		long modifiedDate)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _dlSyncEventLocalService.getDLSyncEventsSinceModifiedDate(modifiedDate);
+		return _dlSyncEventLocalService.getDLSyncEvents(modifiedDate);
 	}
 
 	@Override

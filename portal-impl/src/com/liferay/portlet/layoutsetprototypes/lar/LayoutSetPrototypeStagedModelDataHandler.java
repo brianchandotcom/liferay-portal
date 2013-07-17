@@ -177,7 +177,7 @@ public class LayoutSetPrototypeStagedModelDataHandler
 
 		boolean exportLayoutPrototypes = portletDataContext.getBooleanParameter(
 			LayoutSetPrototypePortletDataHandler.NAMESPACE,
-			"layout-prototypes");
+			"page-templates");
 
 		for (Layout layout : layouts) {
 			String layoutPrototypeUuid = layout.getLayoutPrototypeUuid();

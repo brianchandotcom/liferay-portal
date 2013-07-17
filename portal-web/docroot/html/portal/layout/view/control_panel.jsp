@@ -24,7 +24,12 @@ String controlPanelCategory = themeDisplay.getControlPanelCategory();
 boolean showControlPanelMenu = true;
 
 if (controlPanelCategory.startsWith(PortletCategoryKeys.CURRENT_SITE)) {
-	controlPanelCategory = StringUtil.replace(controlPanelCategory, PortletCategoryKeys.CURRENT_SITE + StringPool.PERIOD, PortletCategoryKeys.SITE_ADMINISTRATION);
+	if (controlPanelCategory.indexOf(StringPool.PERIOD) == -1) {
+		controlPanelCategory = StringUtil.replace(controlPanelCategory, PortletCategoryKeys.CURRENT_SITE, PortletCategoryKeys.SITE_ADMINISTRATION);
+	}
+	else {
+		controlPanelCategory = StringUtil.replace(controlPanelCategory, PortletCategoryKeys.CURRENT_SITE + StringPool.PERIOD, PortletCategoryKeys.SITE_ADMINISTRATION);
+	}
 
 	showControlPanelMenu = false;
 }

@@ -145,8 +145,7 @@ public class MBThreadTrashHandlerTest extends BaseTrashHandlerTestCase {
 		throws Exception {
 
 		MBMessage message = MBTestUtil.addMessage(
-			serviceContext.getScopeGroupId(), getSearchKeywords(), approved,
-			serviceContext);
+			serviceContext.getScopeGroupId());
 
 		return message.getThread();
 	}

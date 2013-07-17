@@ -17,6 +17,7 @@ package com.liferay.portlet.myplaces.action;
 import com.liferay.portal.NoSuchLayoutSetException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
@@ -176,15 +177,30 @@ public class ViewAction extends PortletAction {
 				LayoutPermissionUtil.contains(
 					permissionChecker, layout, ActionKeys.VIEW)) {
 
-				return PortalUtil.getCanonicalURL(
+				String canonicalURL = PortalUtil.getCanonicalURL(
 					null, themeDisplay, layout, true);
+
+				if (Validator.isNotNull(themeDisplay.getDoAsUserId())) {
+					canonicalURL = HttpUtil.setParameter(
+						canonicalURL, "doAsUserId",
+						themeDisplay.getDoAsUserId());
+				}
+
+				return canonicalURL;
 			}
 		}
 
 		Group group = GroupLocalServiceUtil.getGroup(groupId);
 
-		return PortalUtil.getGroupFriendlyURL(
+		String groupFriendlyURL = PortalUtil.getGroupFriendlyURL(
 			group, GetterUtil.getBoolean(privateLayoutParam), themeDisplay);
+
+		if (Validator.isNotNull(themeDisplay.getDoAsUserId())) {
+			groupFriendlyURL = HttpUtil.setParameter(
+				groupFriendlyURL, "doAsUserId", themeDisplay.getDoAsUserId());
+		}
+
+		return groupFriendlyURL;
 	}
 
 	@Override

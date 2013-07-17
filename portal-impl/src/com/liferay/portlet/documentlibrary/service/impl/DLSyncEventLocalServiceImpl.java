@@ -42,7 +42,7 @@ public class DLSyncEventLocalServiceImpl
 			dlSyncEvent.setTypeId(typeId);
 			dlSyncEvent.setType(type);
 		}
-		
+
 		dlSyncEvent.setModifiedDate(modifiedDate);
 		dlSyncEvent.setEvent(event);
 
@@ -50,7 +50,7 @@ public class DLSyncEventLocalServiceImpl
 	}
 
 	@Override
-	public List<DLSyncEvent> getDLSyncEventsSinceModifiedDate(long modifiedDate)
+	public List<DLSyncEvent> getDLSyncEvents(long modifiedDate)
 		throws PortalException, SystemException {
 
 		return dlSyncEventPersistence.findByModifiedDate(modifiedDate);

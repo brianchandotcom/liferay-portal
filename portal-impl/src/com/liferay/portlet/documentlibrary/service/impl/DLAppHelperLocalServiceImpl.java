@@ -683,7 +683,7 @@ public class DLAppHelperLocalServiceImpl
 		// Sync
 
 		registerDLSyncCallback(
-			DLSyncConstants.EVENT_UPDATE, DLSyncConstants.TYPE_FILE,
+			DLSyncConstants.EVENT_RESTORE, DLSyncConstants.TYPE_FILE,
 			fileEntry.getFileEntryId());
 	}
 
@@ -751,7 +751,7 @@ public class DLAppHelperLocalServiceImpl
 		// Sync
 
 		registerDLSyncCallback(
-			DLSyncConstants.EVENT_UPDATE, DLSyncConstants.TYPE_FOLDER,
+			DLSyncConstants.EVENT_RESTORE, DLSyncConstants.TYPE_FOLDER,
 			folder.getFolderId());
 	}
 
@@ -1357,7 +1357,7 @@ public class DLAppHelperLocalServiceImpl
 			// Sync
 
 			registerDLSyncCallback(
-				DLSyncConstants.EVENT_UPDATE, DLSyncConstants.TYPE_FILE,
+				DLSyncConstants.EVENT_RESTORE, DLSyncConstants.TYPE_FILE,
 				fileEntry.getFileEntryId());
 
 			return fileEntry;
@@ -1481,7 +1481,7 @@ public class DLAppHelperLocalServiceImpl
 			// Sync
 
 			registerDLSyncCallback(
-				DLSyncConstants.EVENT_UPDATE, DLSyncConstants.TYPE_FOLDER,
+				DLSyncConstants.EVENT_RESTORE, DLSyncConstants.TYPE_FOLDER,
 				folder.getFolderId());
 		}
 

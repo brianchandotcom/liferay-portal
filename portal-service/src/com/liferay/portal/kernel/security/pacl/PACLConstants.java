@@ -132,6 +132,9 @@ public interface PACLConstants {
 	public static final String RUNTIME_PERMISSION_SET_SECURITY_MANAGER =
 		"setSecurityManager";
 
+	public static final String RUNTIME_PERMISSION_SUPPRESS_ACCESS_CHECKS =
+		"suppressAccessChecks";
+
 	public static final String RUNTIME_PERMISSION_WRITE_FILE_DESCRIPTOR =
 		"writeFileDescriptor";
 

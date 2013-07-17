@@ -267,10 +267,10 @@ public class Serializer {
 			}
 		}
 
-		BigEndianCodec.putBoolean(buffer, index++, asciiCode);
-
 		if (asciiCode) {
-			byte[] buffer = getBuffer(length + 4);
+			byte[] buffer = getBuffer(length + 5);
+
+			BigEndianCodec.putBoolean(buffer, index++, asciiCode);
 
 			BigEndianCodec.putInt(buffer, index, length);
 
@@ -283,7 +283,9 @@ public class Serializer {
 			}
 		}
 		else {
-			byte[] buffer = getBuffer(length * 2 + 4);
+			byte[] buffer = getBuffer(length * 2 + 5);
+
+			BigEndianCodec.putBoolean(buffer, index++, asciiCode);
 
 			BigEndianCodec.putInt(buffer, index, length);
 

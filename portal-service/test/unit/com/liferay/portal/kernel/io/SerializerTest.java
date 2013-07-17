@@ -832,6 +832,8 @@ public class SerializerTest {
 
 		Serializer serializer = new Serializer();
 
+		serializer.buffer = new byte[0];
+
 		serializer.writeString(asciiString);
 
 		Assert.assertEquals(serializer.index, 5 + asciiString.length());

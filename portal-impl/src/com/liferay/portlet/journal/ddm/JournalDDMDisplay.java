@@ -135,7 +135,7 @@ public class JournalDDMDisplay extends BaseDDMDisplay {
 			LiferayPortletResponse liferayPortletResponse, long classPK)
 		throws Exception {
 
-		if (classPK < 0) {
+		if (classPK <= 0) {
 			return StringPool.BLANK;
 		}
 

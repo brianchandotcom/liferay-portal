@@ -432,7 +432,7 @@ if (Validator.isNull(redirect)) {
 
 					<c:if test="<%= !newPage && WikiPagePermission.contains(permissionChecker, wikiPage, ActionKeys.DELETE) %>">
 						<c:choose>
-							<c:when test="<%= TrashUtil.isTrashEnabled(scopeGroupId) %>">
+							<c:when test="<%= !wikiPage.isDraft() && TrashUtil.isTrashEnabled(scopeGroupId) %>">
 								<aui:button name="moveToTrashButton" onClick='<%= renderResponse.getNamespace() + "moveToTrashPage();" %>' value="move-to-the-recycle-bin" />
 							</c:when>
 							<c:when test="<%= wikiPage.isDraft() %>">

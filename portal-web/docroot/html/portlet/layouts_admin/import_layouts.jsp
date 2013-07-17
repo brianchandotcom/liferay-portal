@@ -42,7 +42,7 @@ String[] tempFileEntryNames = LayoutServiceUtil.getTempFileEntryNames(groupId, E
 	</liferay-ui:section>
 
 	<liferay-ui:section>
-		<div id="<portlet:namespace />importProcesses">
+		<div class="process-list" id="<portlet:namespace />importProcesses">
 			<liferay-util:include page="/html/portlet/layouts_admin/import_layouts_processes.jsp" />
 		</div>
 	</liferay-ui:section>

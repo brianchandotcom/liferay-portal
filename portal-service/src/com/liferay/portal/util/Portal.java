@@ -275,8 +275,7 @@ public interface Portal {
 	 * @param  canonicalURL the canonical URL previously obtained
 	 * @param  themeDisplay the theme display
 	 * @param  locale the locale of the translated page
-	 * @param  layout the layout. If it is <code>null</code>, then it is
-	 *         generated for the current layout.
+	 * @param  layout the layout
 	 * @return the alternate URL
 	 */
 	public String getAlternateURL(

@@ -2259,6 +2259,20 @@
 			<transient name="userUuid" />
 		</attributes>
 	</mapped-superclass>
+	<mapped-superclass class="com.liferay.portlet.documentlibrary.model.impl.DLSyncEventModelImpl">
+		<attributes>
+			<id name="syncEventId" />
+			<basic name="modifiedDate" />
+			<basic name="typeId" />
+			<basic name="type">
+				<column name="TYPE_" />
+			</basic>
+			<basic name="event" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
 	<mapped-superclass class="com.liferay.portlet.dynamicdatalists.model.impl.DDLRecordModelImpl">
 		<attributes>
 			<id name="recordId" />
@@ -4382,6 +4396,10 @@
 	</entity>
 	<entity class="com.liferay.portlet.documentlibrary.model.impl.DLFolderImpl" name="DLFolder">
 		<table name="DLFolder" />
+		<attributes />
+	</entity>
+	<entity class="com.liferay.portlet.documentlibrary.model.impl.DLSyncEventImpl" name="DLSyncEvent">
+		<table name="DLSyncEvent" />
 		<attributes />
 	</entity>
 	<entity class="com.liferay.portlet.dynamicdatalists.model.impl.DDLRecordImpl" name="DDLRecord">

@@ -1587,6 +1587,13 @@
 		<field name="statusByUserName" type="String" />
 		<field name="statusDate" type="Date" />
 	</model>
+	<model name="com.liferay.portlet.documentlibrary.model.DLSyncEvent">
+		<field name="syncEventId" type="long" />
+		<field name="modifiedDate" type="long" />
+		<field name="typeId" type="long" />
+		<field name="type" type="String" />
+		<field name="event" type="String" />
+	</model>
 	<model name="com.liferay.portlet.dynamicdatalists.model.DDLRecord">
 		<field name="uuid" type="String" />
 		<field name="recordId" type="long" />

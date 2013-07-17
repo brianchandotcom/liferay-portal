@@ -57,6 +57,7 @@ import com.liferay.portlet.documentlibrary.service.persistence.DLFileShortcutPer
 import com.liferay.portlet.documentlibrary.service.persistence.DLFileVersionPersistence;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFolderFinder;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFolderPersistence;
+import com.liferay.portlet.documentlibrary.service.persistence.DLSyncEventPersistence;
 import com.liferay.portlet.expando.service.persistence.ExpandoValuePersistence;
 import com.liferay.portlet.messageboards.service.persistence.MBDiscussionPersistence;
 import com.liferay.portlet.messageboards.service.persistence.MBMessageFinder;
@@ -620,6 +621,44 @@ public abstract class DLAppHelperLocalServiceBaseImpl
 	 */
 	public void setDLFolderFinder(DLFolderFinder dlFolderFinder) {
 		this.dlFolderFinder = dlFolderFinder;
+	}
+
+	/**
+	 * Returns the d l sync event local service.
+	 *
+	 * @return the d l sync event local service
+	 */
+	public com.liferay.portlet.documentlibrary.service.DLSyncEventLocalService getDLSyncEventLocalService() {
+		return dlSyncEventLocalService;
+	}
+
+	/**
+	 * Sets the d l sync event local service.
+	 *
+	 * @param dlSyncEventLocalService the d l sync event local service
+	 */
+	public void setDLSyncEventLocalService(
+		com.liferay.portlet.documentlibrary.service.DLSyncEventLocalService dlSyncEventLocalService) {
+		this.dlSyncEventLocalService = dlSyncEventLocalService;
+	}
+
+	/**
+	 * Returns the d l sync event persistence.
+	 *
+	 * @return the d l sync event persistence
+	 */
+	public DLSyncEventPersistence getDLSyncEventPersistence() {
+		return dlSyncEventPersistence;
+	}
+
+	/**
+	 * Sets the d l sync event persistence.
+	 *
+	 * @param dlSyncEventPersistence the d l sync event persistence
+	 */
+	public void setDLSyncEventPersistence(
+		DLSyncEventPersistence dlSyncEventPersistence) {
+		this.dlSyncEventPersistence = dlSyncEventPersistence;
 	}
 
 	/**
@@ -2036,6 +2075,10 @@ public abstract class DLAppHelperLocalServiceBaseImpl
 	protected DLFolderPersistence dlFolderPersistence;
 	@BeanReference(type = DLFolderFinder.class)
 	protected DLFolderFinder dlFolderFinder;
+	@BeanReference(type = com.liferay.portlet.documentlibrary.service.DLSyncEventLocalService.class)
+	protected com.liferay.portlet.documentlibrary.service.DLSyncEventLocalService dlSyncEventLocalService;
+	@BeanReference(type = DLSyncEventPersistence.class)
+	protected DLSyncEventPersistence dlSyncEventPersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)
 	protected com.liferay.counter.service.CounterLocalService counterLocalService;
 	@BeanReference(type = com.liferay.portal.service.GroupLocalService.class)

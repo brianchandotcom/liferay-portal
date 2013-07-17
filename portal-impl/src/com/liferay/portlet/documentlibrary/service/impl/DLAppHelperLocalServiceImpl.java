@@ -434,7 +434,7 @@ public class DLAppHelperLocalServiceImpl
 
 		if (isUpdateSync(fileEntry)) {
 			registerDLSyncCallback(
-				DLSyncConstants.EVENT_UPDATE, DLSyncConstants.TYPE_FILE,
+				DLSyncConstants.EVENT_MOVE, DLSyncConstants.TYPE_FILE,
 				fileEntry.getFileEntryId());
 		}
 	}
@@ -551,10 +551,12 @@ public class DLAppHelperLocalServiceImpl
 	}
 
 	@Override
-	public void moveFolder(Folder folder) {
+	public void moveFolder(Folder folder)
+		throws PortalException, SystemException {
+
 		if (!isStagingGroup(folder.getGroupId())) {
 			registerDLSyncCallback(
-				DLSyncConstants.EVENT_UPDATE, DLSyncConstants.TYPE_FOLDER,
+				DLSyncConstants.EVENT_MOVE, DLSyncConstants.TYPE_FOLDER,
 				folder.getFolderId());
 		}
 	}
@@ -677,6 +679,12 @@ public class DLAppHelperLocalServiceImpl
 			fileEntry.getFileEntryId(),
 			SocialActivityConstants.TYPE_RESTORE_FROM_TRASH, StringPool.BLANK,
 			0);
+
+		// Sync
+
+		registerDLSyncCallback(
+			DLSyncConstants.EVENT_UPDATE, DLSyncConstants.TYPE_FILE,
+			fileEntry.getFileEntryId());
 	}
 
 	@Override
@@ -739,6 +747,12 @@ public class DLAppHelperLocalServiceImpl
 			folder.getFolderId(),
 			SocialActivityConstants.TYPE_RESTORE_FROM_TRASH, StringPool.BLANK,
 			0);
+
+		// Sync
+
+		registerDLSyncCallback(
+			DLSyncConstants.EVENT_UPDATE, DLSyncConstants.TYPE_FOLDER,
+			folder.getFolderId());
 	}
 
 	@Override
@@ -1093,6 +1107,10 @@ public class DLAppHelperLocalServiceImpl
 		}
 
 		registerDLProcessorCallback(fileEntry, sourceFileVersion);
+
+		registerDLSyncCallback(
+			DLSyncConstants.EVENT_UPDATE, DLSyncConstants.TYPE_FILE,
+			fileEntry.getFileEntryId());
 	}
 
 	@Override
@@ -1112,6 +1130,10 @@ public class DLAppHelperLocalServiceImpl
 			serviceContext.getAssetLinkEntryIds());
 
 		registerDLProcessorCallback(fileEntry, sourceFileVersion);
+
+		registerDLSyncCallback(
+			DLSyncConstants.EVENT_UPDATE, DLSyncConstants.TYPE_FILE,
+			fileEntry.getFileEntryId());
 	}
 
 	@Override
@@ -1332,6 +1354,12 @@ public class DLAppHelperLocalServiceImpl
 				SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
 				StringPool.BLANK, 0);
 
+			// Sync
+
+			registerDLSyncCallback(
+				DLSyncConstants.EVENT_UPDATE, DLSyncConstants.TYPE_FILE,
+				fileEntry.getFileEntryId());
+
 			return fileEntry;
 		}
 	}
@@ -1398,6 +1426,12 @@ public class DLAppHelperLocalServiceImpl
 			fileEntry.getFileEntryId(),
 			SocialActivityConstants.TYPE_MOVE_TO_TRASH, StringPool.BLANK, 0);
 
+		// Sync
+
+		registerDLSyncCallback(
+			DLSyncConstants.EVENT_DELETE, DLSyncConstants.TYPE_FILE,
+			fileEntry.getFileEntryId());
+
 		// Workflow
 
 		if (oldStatus == WorkflowConstants.STATUS_PENDING) {
@@ -1443,6 +1477,12 @@ public class DLAppHelperLocalServiceImpl
 				folder.getFolderId(),
 				SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
 				StringPool.BLANK, 0);
+
+			// Sync
+
+			registerDLSyncCallback(
+				DLSyncConstants.EVENT_UPDATE, DLSyncConstants.TYPE_FOLDER,
+				folder.getFolderId());
 		}
 
 		return dlAppLocalService.moveFolder(
@@ -1480,6 +1520,12 @@ public class DLAppHelperLocalServiceImpl
 			userId, folder.getGroupId(), DLFolderConstants.getClassName(),
 			folder.getFolderId(), SocialActivityConstants.TYPE_MOVE_TO_TRASH,
 			StringPool.BLANK, 0);
+
+		// Sync
+
+		registerDLSyncCallback(
+			DLSyncConstants.EVENT_DELETE, DLSyncConstants.TYPE_FOLDER,
+			folder.getFolderId());
 
 		return new LiferayFolder(dlFolder);
 	}
@@ -1670,7 +1716,13 @@ public class DLAppHelperLocalServiceImpl
 	}
 
 	protected void registerDLSyncCallback(
-		final String event, final String type, final long typeId) {
+			final String event, final String type, final long typeId)
+		throws PortalException, SystemException {
+
+		final long modifiedDate = System.currentTimeMillis();
+
+		dlSyncEventLocalService.addOrUpdateDLSyncEvent(
+			typeId, type, event, modifiedDate);
 
 		TransactionCommitCallbackRegistryUtil.registerCallback(
 			new Callable<Void>() {
@@ -1679,9 +1731,10 @@ public class DLAppHelperLocalServiceImpl
 				public Void call() throws Exception {
 					Message message = new Message();
 
-					Map<String, Object> values = new HashMap<String, Object>(3);
+					Map<String, Object> values = new HashMap<String, Object>(4);
 
 					values.put("event", event);
+					values.put("modifiedDate", modifiedDate);
 					values.put("type", type);
 					values.put("typeId", typeId);
 

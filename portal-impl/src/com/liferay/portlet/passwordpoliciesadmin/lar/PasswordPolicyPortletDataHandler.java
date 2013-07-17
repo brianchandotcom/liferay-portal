@@ -17,6 +17,7 @@ package com.liferay.portlet.passwordpoliciesadmin.lar;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.BasePortletDataHandler;
 import com.liferay.portal.kernel.lar.DataLevel;
 import com.liferay.portal.kernel.lar.PortletDataContext;
@@ -82,23 +83,7 @@ public class PasswordPolicyPortletDataHandler extends BasePortletDataHandler {
 			"group-id", String.valueOf(portletDataContext.getScopeGroupId()));
 
 		ActionableDynamicQuery actionableDynamicQuery =
-			new PasswordPolicyExportActionableDynamicQuery(portletDataContext) {
-
-			@Override
-			protected void addCriteria(DynamicQuery dynamicQuery) {
-				portletDataContext.addDateRangeCriteria(
-					dynamicQuery, "modifiedDate");
-			}
-
-			@Override
-			protected void performAction(Object object) throws PortalException {
-				PasswordPolicy passwordPolicy = (PasswordPolicy)object;
-
-				StagedModelDataHandlerUtil.exportStagedModel(
-					portletDataContext, passwordPolicy);
-			}
-
-		};
+			getPasswordPolicyActionableDynamicQuery(portletDataContext);
 
 		actionableDynamicQuery.performActions();
 
@@ -127,6 +112,30 @@ public class PasswordPolicyPortletDataHandler extends BasePortletDataHandler {
 		}
 
 		return null;
+	}
+
+	protected ActionableDynamicQuery getPasswordPolicyActionableDynamicQuery(
+			final PortletDataContext portletDataContext)
+		throws SystemException {
+
+		return new PasswordPolicyExportActionableDynamicQuery(
+			portletDataContext) {
+
+			@Override
+			protected void addCriteria(DynamicQuery dynamicQuery) {
+				portletDataContext.addDateRangeCriteria(
+					dynamicQuery, "modifiedDate");
+			}
+
+			@Override
+			protected void performAction(Object object) throws PortalException {
+				PasswordPolicy passwordPolicy = (PasswordPolicy)object;
+
+				StagedModelDataHandlerUtil.exportStagedModel(
+					portletDataContext, passwordPolicy);
+			}
+
+		};
 	}
 
 	protected static final String RESOURCE_NAME =

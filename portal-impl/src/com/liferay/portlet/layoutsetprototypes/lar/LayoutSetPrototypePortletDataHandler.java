@@ -50,7 +50,8 @@ public class LayoutSetPrototypePortletDataHandler
 				new PortletDataHandlerControl[] {
 					new PortletDataHandlerBoolean(
 						NAMESPACE, "page-templates", true, false)
-				}
+				},
+				LayoutSetPrototype.class.getName()
 			));
 	}
 

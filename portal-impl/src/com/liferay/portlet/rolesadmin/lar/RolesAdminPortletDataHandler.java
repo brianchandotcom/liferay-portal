@@ -57,7 +57,8 @@ public class RolesAdminPortletDataHandler extends BasePortletDataHandler {
 				new PortletDataHandlerControl[] {
 					new PortletDataHandlerBoolean(
 						NAMESPACE, "system-roles", true, false)
-				}
+				},
+				Role.class.getName()
 			));
 	}
 

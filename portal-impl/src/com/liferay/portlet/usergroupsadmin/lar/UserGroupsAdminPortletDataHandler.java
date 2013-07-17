@@ -42,7 +42,8 @@ public class UserGroupsAdminPortletDataHandler extends BasePortletDataHandler {
 		setDataLevel(DataLevel.PORTAL);
 		setExportControls(
 			new PortletDataHandlerBoolean(
-				NAMESPACE, "user-groups", true, true));
+				NAMESPACE, "user-groups", true, true, null,
+				UserGroup.class.getName()));
 	}
 
 	@Override

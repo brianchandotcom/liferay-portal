@@ -44,7 +44,8 @@ public class LayoutPrototypePortletDataHandler extends BasePortletDataHandler {
 			new StagedModelType(LayoutPrototype.class));
 		setExportControls(
 			new PortletDataHandlerBoolean(
-				NAMESPACE, "page-templates", true, true));
+				NAMESPACE, "page-templates", true, true, null,
+				LayoutPrototype.class.getName()));
 	}
 
 	@Override

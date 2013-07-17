@@ -45,7 +45,8 @@ public class PasswordPolicyPortletDataHandler extends BasePortletDataHandler {
 			new StagedModelType(PasswordPolicy.class));
 		setExportControls(
 			new PortletDataHandlerBoolean(
-				NAMESPACE, "password-policies", true, true));
+				NAMESPACE, "password-policies", true, true, null,
+				PasswordPolicy.class.getName()));
 	}
 
 	@Override

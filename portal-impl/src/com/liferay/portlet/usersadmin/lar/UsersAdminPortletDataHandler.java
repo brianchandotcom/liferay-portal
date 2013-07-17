@@ -46,7 +46,8 @@ public class UsersAdminPortletDataHandler extends BasePortletDataHandler {
 			new StagedModelType(Organization.class));
 		setExportControls(
 			new PortletDataHandlerBoolean(
-				NAMESPACE, "organizations", true, true));
+				NAMESPACE, "organizations", true, true, null,
+				Organization.class.getName()));
 	}
 
 	@Override

@@ -16,6 +16,7 @@ package com.liferay.portal.lar;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.model.Layout;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
@@ -24,6 +25,8 @@ import com.liferay.portal.test.TransactionalCallbackAwareExecutionTestListener;
 import com.liferay.portal.util.LayoutTestUtil;
 import com.liferay.portal.util.TestPropsValues;
 
+import org.junit.Assert;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -36,32 +39,49 @@ import org.junit.runner.RunWith;
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Transactional
-public class LayoutPrototypePropagationTest
-	extends BasePrototypePropagationTestCase {
+public class LayoutExportImportTest extends BaseExportImportTestCase {
 
-	@Override
-	protected void doSetUp() throws Exception {
-		prototypeLayout = layoutPrototypeLayout;
+	@Test
+	public void testExportImportLayouts() throws Exception {
+		LayoutTestUtil.addLayout(
+			group.getGroupId(), ServiceTestUtil.randomString());
 
-		journalArticle = globalJournalArticle;
+		long[] layoutIds = new long[0];
 
-		journalContentPortletId =
-			addJournalContentPortletToLayout(
-				TestPropsValues.getUserId(), layoutPrototypeLayout,
-				journalArticle, "column-1");
+		doExportImportLayout(layoutIds);
 
-		layout = LayoutTestUtil.addLayout(
-			group.getGroupId(), ServiceTestUtil.randomString(), true,
-			layoutPrototype, true);
-
-		layout = propagateChanges(layout);
+		Assert.assertEquals(
+			LayoutLocalServiceUtil.getLayoutsCount(group, false),
+			LayoutLocalServiceUtil.getLayoutsCount(importedGroup, false));
 	}
 
-	@Override
-	protected void setLinkEnabled(boolean linkEnabled) throws Exception {
-		layout.setLayoutPrototypeLinkEnabled(linkEnabled);
+	@Test
+	public void testExportImportSelectedLayouts() throws Exception {
+		Layout layout2 = LayoutTestUtil.addLayout(
+			group.getGroupId(), ServiceTestUtil.randomString());
 
-		LayoutLocalServiceUtil.updateLayout(layout);
+		long[] layoutIds = new long[] {layout2.getLayoutId()};
+
+		doExportImportLayout(layoutIds);
+
+		Assert.assertEquals(
+			layoutIds.length,
+			LayoutLocalServiceUtil.getLayoutsCount(importedGroup, false));
+
+		importedLayout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+			layout2.getUuid(), importedGroup.getGroupId(), false);
+
+		Assert.assertNotNull(importedLayout);
+	}
+
+	protected void doExportImportLayout(long[] layoutIds) throws Exception {
+		larFile = LayoutLocalServiceUtil.exportLayoutsAsFile(
+			group.getGroupId(), false, layoutIds, getExportParameterMap(), null,
+			null);
+
+		LayoutLocalServiceUtil.importLayouts(
+			TestPropsValues.getUserId(), importedGroup.getGroupId(), false,
+			getImportParameterMap(), larFile);
 	}
 
 }

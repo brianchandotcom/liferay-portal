@@ -36,6 +36,7 @@ public class RuntimeChecker extends BaseChecker {
 
 	@Override
 	public void afterPropertiesSet() {
+		initAccessDeclaredMembers();
 		initCreateClassLoader();
 		initEnvironmentVariables();
 		initGetProtectionDomain();
@@ -60,7 +61,12 @@ public class RuntimeChecker extends BaseChecker {
 		String key = null;
 		String value = null;
 
-		if (name.startsWith(RUNTIME_PERMISSION_CREATE_CLASS_LOADER)) {
+		if (name.startsWith(RUNTIME_PERMISSION_ACCESS_DECLARED_MEMBERS)) {
+			key = "security-manager-access-declared-members";
+
+			value = "true";
+		}
+		else if (name.startsWith(RUNTIME_PERMISSION_CREATE_CLASS_LOADER)) {
 			key = "security-manager-create-class-loader";
 
 			value = "true";
@@ -122,7 +128,7 @@ public class RuntimeChecker extends BaseChecker {
 			}
 		}
 		else if (name.equals(RUNTIME_PERMISSION_ACCESS_DECLARED_MEMBERS)) {
-			if (!hasReflect(permission)) {
+			if (!hasAccessDeclaredMembers(permission)) {
 				logSecurityException(
 					_log, "Attempted to access declared members");
 
@@ -358,7 +364,11 @@ public class RuntimeChecker extends BaseChecker {
 		return false;
 	}
 
-	protected boolean hasReflect(Permission permission) {
+	protected boolean hasAccessDeclaredMembers(Permission permission) {
+		if (_accessDeclaredMembers) {
+			return true;
+		}
+
 		int stackIndex = getStackIndex(13, 12);
 
 		Class<?> callerClass = Reflection.getCallerClass(stackIndex);
@@ -396,6 +406,11 @@ public class RuntimeChecker extends BaseChecker {
 		}
 
 		return false;
+	}
+
+	protected void initAccessDeclaredMembers() {
+		_accessDeclaredMembers = getPropertyBoolean(
+			"security-manager-access-declared-members");
 	}
 
 	protected void initCreateClassLoader() {
@@ -440,6 +455,7 @@ public class RuntimeChecker extends BaseChecker {
 
 	private static Log _log = LogFactoryUtil.getLog(RuntimeChecker.class);
 
+	private boolean _accessDeclaredMembers;
 	private boolean _createClassLoader;
 	private List<Pattern> _environmentVariablePatterns;
 	private boolean _getProtectionDomain;

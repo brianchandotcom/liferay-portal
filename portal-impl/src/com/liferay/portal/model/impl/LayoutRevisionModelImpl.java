@@ -767,7 +767,7 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 
 	@Override
 	public void setName(String name, Locale locale) {
-		setName(name, locale, LocaleUtil.getDefault());
+		setName(name, locale, LocaleUtil.getSiteDefault());
 	}
 
 	@Override
@@ -792,7 +792,7 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 
 	@Override
 	public void setNameMap(Map<Locale, String> nameMap) {
-		setNameMap(nameMap, LocaleUtil.getDefault());
+		setNameMap(nameMap, LocaleUtil.getSiteDefault());
 	}
 
 	@Override
@@ -866,7 +866,7 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 
 	@Override
 	public void setTitle(String title, Locale locale) {
-		setTitle(title, locale, LocaleUtil.getDefault());
+		setTitle(title, locale, LocaleUtil.getSiteDefault());
 	}
 
 	@Override
@@ -891,7 +891,7 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 
 	@Override
 	public void setTitleMap(Map<Locale, String> titleMap) {
-		setTitleMap(titleMap, LocaleUtil.getDefault());
+		setTitleMap(titleMap, LocaleUtil.getSiteDefault());
 	}
 
 	@Override
@@ -965,7 +965,7 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 
 	@Override
 	public void setDescription(String description, Locale locale) {
-		setDescription(description, locale, LocaleUtil.getDefault());
+		setDescription(description, locale, LocaleUtil.getSiteDefault());
 	}
 
 	@Override
@@ -992,7 +992,7 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 
 	@Override
 	public void setDescriptionMap(Map<Locale, String> descriptionMap) {
-		setDescriptionMap(descriptionMap, LocaleUtil.getDefault());
+		setDescriptionMap(descriptionMap, LocaleUtil.getSiteDefault());
 	}
 
 	@Override
@@ -1068,7 +1068,7 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 
 	@Override
 	public void setKeywords(String keywords, Locale locale) {
-		setKeywords(keywords, locale, LocaleUtil.getDefault());
+		setKeywords(keywords, locale, LocaleUtil.getSiteDefault());
 	}
 
 	@Override
@@ -1093,7 +1093,7 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 
 	@Override
 	public void setKeywordsMap(Map<Locale, String> keywordsMap) {
-		setKeywordsMap(keywordsMap, LocaleUtil.getDefault());
+		setKeywordsMap(keywordsMap, LocaleUtil.getSiteDefault());
 	}
 
 	@Override
@@ -1169,7 +1169,7 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 
 	@Override
 	public void setRobots(String robots, Locale locale) {
-		setRobots(robots, locale, LocaleUtil.getDefault());
+		setRobots(robots, locale, LocaleUtil.getSiteDefault());
 	}
 
 	@Override
@@ -1194,7 +1194,7 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 
 	@Override
 	public void setRobotsMap(Map<Locale, String> robotsMap) {
-		setRobotsMap(robotsMap, LocaleUtil.getDefault());
+		setRobotsMap(robotsMap, LocaleUtil.getSiteDefault());
 	}
 
 	@Override

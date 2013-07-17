@@ -120,6 +120,9 @@ public interface PACLConstants {
 
 	public static final String RUNTIME_PERMISSION_LOAD_LIBRARY = "loadLibrary";
 
+	public static final String RUNTIME_PERMISSION_MODIFY_THREAD =
+		"modifyThread";
+
 	public static final String RUNTIME_PERMISSION_READ_FILE_DESCRIPTOR =
 		"readFileDescriptor";
 

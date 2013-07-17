@@ -39,6 +39,7 @@ public class RuntimeChecker extends BaseChecker {
 		initCreateClassLoader();
 		initEnvironmentVariables();
 		initGetProtectionDomain();
+		initModifyThread();
 	}
 
 	@Override
@@ -77,6 +78,11 @@ public class RuntimeChecker extends BaseChecker {
 		}
 		else if (name.startsWith(RUNTIME_PERMISSION_GET_PROTECTION_DOMAIN)) {
 			key = "security-manager-get-protection-domain";
+
+			value = "true";
+		}
+		else if (name.equals(RUNTIME_PERMISSION_MODIFY_THREAD)) {
+			key = "security-manager-modify-thread";
 
 			value = "true";
 		}
@@ -163,6 +169,13 @@ public class RuntimeChecker extends BaseChecker {
 		else if (name.startsWith(RUNTIME_PERMISSION_LOAD_LIBRARY)) {
 			if (!hasLoadLibrary(permission)) {
 				logSecurityException(_log, "Attempted to load library");
+
+				return false;
+			}
+		}
+		else if (name.equals(RUNTIME_PERMISSION_MODIFY_THREAD)) {
+			if (!hasModifyThread(permission)) {
+				logSecurityException(_log, "Attempted to modify a thread");
 
 				return false;
 			}
@@ -311,6 +324,22 @@ public class RuntimeChecker extends BaseChecker {
 		return false;
 	}
 
+	protected boolean hasModifyThread(Permission permission) {
+		if (_modifyThread) {
+			return true;
+		}
+
+		int stackIndex = getStackIndex(13, 12);
+
+		Class<?> callerClass = Reflection.getCallerClass(stackIndex);
+
+		if (isTrustedCaller(callerClass, permission)) {
+			return true;
+		}
+
+		return false;
+	}
+
 	protected boolean hasReadFileDescriptor(Permission permission) {
 		int stackIndex = getStackIndex(12, 11);
 
@@ -390,10 +419,15 @@ public class RuntimeChecker extends BaseChecker {
 			"security-manager-get-protection-domain");
 	}
 
+	protected void initModifyThread() {
+		_modifyThread = getPropertyBoolean("security-manager-modify-thread");
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(RuntimeChecker.class);
 
 	private boolean _createClassLoader;
 	private List<Pattern> _environmentVariablePatterns;
 	private boolean _getProtectionDomain;
+	private boolean _modifyThread;
 
 }

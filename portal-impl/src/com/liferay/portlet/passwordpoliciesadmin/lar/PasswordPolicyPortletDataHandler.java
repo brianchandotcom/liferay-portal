@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.PasswordPolicy;
 import com.liferay.portal.service.PasswordPolicyLocalServiceUtil;
-import com.liferay.portal.service.persistence.PasswordPolicyActionableDynamicQuery;
+import com.liferay.portal.service.persistence.PasswordPolicyExportActionableDynamicQuery;
 
 import java.util.List;
 
@@ -82,7 +82,7 @@ public class PasswordPolicyPortletDataHandler extends BasePortletDataHandler {
 			"group-id", String.valueOf(portletDataContext.getScopeGroupId()));
 
 		ActionableDynamicQuery actionableDynamicQuery =
-			new PasswordPolicyActionableDynamicQuery() {
+			new PasswordPolicyExportActionableDynamicQuery(portletDataContext) {
 
 			@Override
 			protected void addCriteria(DynamicQuery dynamicQuery) {

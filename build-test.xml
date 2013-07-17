@@ -1800,6 +1800,17 @@ svn --username ${svn.username} --password ${svn.password} update -r ${svn.info.r
 				/>
 			</then>
 		</if>
+
+		<if>
+			<equals arg1="${test.save.screenshot}" arg2="true" />
+			<then>
+				<replace
+					file="portal-web/test/test-portal-web.properties"
+					token="save.screenshot=false"
+					value="save.screenshot=true"
+				/>
+			</then>
+		</if>
 	</target>
 
 	<target name="prepare-test-properties" depends="generate-test-properties">

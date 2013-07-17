@@ -139,6 +139,8 @@ public interface LiferaySelenium extends Selenium {
 
 	public void refreshAndWait();
 
+	public void saveScreenShot(String fileName) throws Exception;
+
 	public void saveScreenShotAndSource() throws Exception;
 
 	public void selectAndWait(String selectLocator, String optionLocator);

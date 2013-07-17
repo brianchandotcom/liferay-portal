@@ -368,6 +368,33 @@ public abstract class BaseSeleniumImpl
 	}
 
 	@Override
+	public void saveScreenShot(String fileName) throws Exception {
+		if (!TestPropsValues.SAVE_SCREENSHOT) {
+			return;
+		}
+
+		if (_screenShotFileName.equals(fileName)) {
+			_screenShotCount++;
+		}
+		else {
+			_screenShotCount = 0;
+
+			_screenShotFileName = fileName;
+		}
+
+		String screenShotDir = TestPropsValues.OUTPUT_DIR + _screenShotFileName;
+
+		if (!FileUtil.exists(screenShotDir)) {
+			FileUtil.mkdirs(screenShotDir);
+		}
+
+		captureEntirePageScreenshot(
+			screenShotDir + "/" + _screenShotFileName + _screenShotCount +
+				".jpg",
+			"");
+	}
+
+	@Override
 	public void saveScreenShotAndSource() throws Exception {
 		String screenShotName = null;
 
@@ -639,6 +666,8 @@ public abstract class BaseSeleniumImpl
 	private CommandProcessor _commandProcessor;
 	private String _primaryTestSuiteName;
 	private String _projectDir;
+	private int _screenShotCount = 0;
+	private String _screenShotFileName = "";
 	private String _timeout = "90000";
 
 }

@@ -14,42 +14,30 @@
 
 package com.liferay.portlet.journal.lar;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
-import com.liferay.portal.kernel.lar.UserIdStrategy;
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.QueryConfig;
+import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
-import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.lar.BasePortletExportImportTestCase;
-import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.TransactionalCallbackAwareExecutionTestListener;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
-import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
-import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
-import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
-import com.liferay.portlet.dynamicdatamapping.util.DDMStructureTestUtil;
-import com.liferay.portlet.dynamicdatamapping.util.DDMTemplateTestUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
-import com.liferay.portlet.journal.model.JournalArticleResource;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
-import com.liferay.portlet.journal.service.JournalArticleResourceLocalServiceUtil;
-import com.liferay.portlet.journal.service.persistence.JournalArticleResourceUtil;
+import com.liferay.portlet.journal.service.JournalArticleServiceUtil;
 import com.liferay.portlet.journal.util.JournalTestUtil;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
- * @author Juan Fernández
+ * @author Julio Camarero
  */
 @ExecutionTestListeners(
 	listeners = {
@@ -67,36 +55,87 @@ public class JournalExpiredVersionExportImportTest
 	}
 
 	@Test
-	public void testExportImportBasicJournalArticle() throws Exception {
-		exportImportJournalArticle();
-	}
-
-	@Test
 	public void testExportImportStructuredJournalArticle() throws Exception {
 		Assert.assertTrue("This test does not apply", true);
 	}
 
-	protected void exportImportJournalArticle()
-		throws Exception {
+	@Override
+	@Test
+	public void testExportImportBasicJournalArticle() throws Exception {
+		int initialArticlesCount =
+			JournalArticleLocalServiceUtil.getArticlesCount(
+				group.getGroupId());
+
+		int initialSearchArticlesCount =  getResultsCount(
+			group.getCompanyId(), group.getGroupId());
 
 		JournalArticle article = JournalTestUtil.addArticle(
 			group.getGroupId(), ServiceTestUtil.randomString(),
 			ServiceTestUtil.randomString());
 
-		String exportedResourceUuid = article.getArticleResourceUuid();
+		Assert.assertEquals(1.0, article.getVersion(), 0);
+
+		article = JournalTestUtil.updateArticle(
+			article, ServiceTestUtil.randomString(),
+			ServiceTestUtil.randomString());
+
+		Assert.assertEquals(1.1, article.getVersion(), 0);
+
+		Assert.assertEquals(
+			initialArticlesCount + 2,
+			JournalArticleLocalServiceUtil.getArticlesCount(
+				group.getGroupId()));
+
+		Assert.assertEquals(
+			initialSearchArticlesCount + 1,
+			getResultsCount(group.getCompanyId(), group.getGroupId()));
 
 		doExportImportPortlet(PortletKeys.JOURNAL);
 
-		int articlesCount = JournalArticleLocalServiceUtil.getArticlesCount(
-			importedGroup.getGroupId());
+		Assert.assertEquals(
+			initialArticlesCount + 2,
+			JournalArticleLocalServiceUtil.getArticlesCount(
+				importedGroup.getGroupId()));
 
-		Assert.assertEquals(1, articlesCount);
+		Assert.assertEquals(
+			initialSearchArticlesCount + 1,
+			getResultsCount(
+				importedGroup.getCompanyId(), importedGroup.getGroupId()));
 
-		JournalArticleResource importedJournalArticleResource =
-			JournalArticleResourceLocalServiceUtil.fetchArticleResource(
-				exportedResourceUuid, importedGroup.getGroupId());
+		JournalArticleServiceUtil.expireArticle(
+			group.getGroupId(), article.getArticleId(), null,
+			ServiceTestUtil.getServiceContext(group.getGroupId()));
 
-		Assert.assertNotNull(importedJournalArticleResource);
+		Assert.assertEquals(
+			initialSearchArticlesCount,
+			getResultsCount(group.getCompanyId(), group.getGroupId()));
+
+		doExportImportPortlet(PortletKeys.JOURNAL);
+
+		Assert.assertEquals(
+			initialSearchArticlesCount,
+			getResultsCount(
+				importedGroup.getCompanyId(), importedGroup.getGroupId()));
+	}
+
+	protected int getResultsCount(long companyId, long groupId)
+		throws Exception {
+
+		Indexer indexer = IndexerRegistryUtil.getIndexer(JournalArticle.class);
+
+		SearchContext searchContext = new SearchContext();
+
+		searchContext.setCompanyId(companyId);
+		searchContext.setGroupIds(new long[]{groupId});
+		searchContext.setKeywords(StringPool.BLANK);
+
+		QueryConfig queryConfig = new QueryConfig();
+
+		searchContext.setQueryConfig(queryConfig);
+
+		Hits results = indexer.search(searchContext);
+
+		return results.getLength();
 	}
 
 }

@@ -171,4 +171,20 @@ public class LayoutPrototypeStagedModelDataHandler
 		}
 	}
 
+	@Override
+	protected boolean validateMissingReference(
+			String uuid, long companyId, long groupId)
+		throws Exception {
+
+		LayoutPrototype layoutPrototype =
+			LayoutPrototypeLocalServiceUtil.
+				fetchLayoutPrototypeByUuidAndCompanyId(uuid, companyId);
+
+		if (layoutPrototype == null) {
+			return false;
+		}
+
+		return true;
+	}
+
 }

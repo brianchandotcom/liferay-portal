@@ -17,6 +17,8 @@ package com.liferay.portal.lar;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
 import com.liferay.portal.kernel.lar.ManifestSummary;
 import com.liferay.portal.kernel.lar.PortletDataHandlerStatusMessageSender;
+import com.liferay.portal.kernel.lar.StagedModelDataHandler;
+import com.liferay.portal.kernel.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.sender.SingleDestinationMessageSender;
 import com.liferay.portal.kernel.util.LongWrapper;
@@ -68,6 +70,13 @@ public class PortletDataHandlerStatusMessageSenderImpl
 
 		Message message = createMessage(messageType, manifestSummary);
 
+		StagedModelDataHandler stagedModelDataHandler =
+			StagedModelDataHandlerRegistryUtil.getStagedModelDataHandler(
+				stagedModel.getModelClassName());
+
+		message.put(
+			"stagedModelName",
+			stagedModelDataHandler.getDisplayName(stagedModel));
 		message.put(
 			"stagedModelType",
 			String.valueOf(stagedModel.getStagedModelType()));

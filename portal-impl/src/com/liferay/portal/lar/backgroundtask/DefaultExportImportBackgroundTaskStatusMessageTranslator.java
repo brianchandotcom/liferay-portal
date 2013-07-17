@@ -112,6 +112,10 @@ public class DefaultExportImportBackgroundTaskStatusMessageTranslator
 			"currentModelDeletionCounters",
 			new HashMap<String, LongWrapper>(modelDeletionCounters));
 
+		String stagedModelName = message.getString("stagedModelName");
+
+		backgroundTaskStatus.setAttribute("stagedModelName", stagedModelName);
+
 		String stagedModelType = message.getString("stagedModelType");
 
 		backgroundTaskStatus.setAttribute("stagedModelType", stagedModelType);

@@ -28,6 +28,7 @@ import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.util.InitUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.util.PwdGenerator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -35,6 +36,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.Future;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -49,11 +51,18 @@ public class CounterLocalServiceTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
+		_COUNTER_NAME = PwdGenerator.getPassword();
+
 		CounterLocalServiceUtil.reset(_COUNTER_NAME);
 
 		Counter counter = CounterLocalServiceUtil.createCounter(_COUNTER_NAME);
 
 		CounterLocalServiceUtil.updateCounter(counter);
+	}
+
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+		CounterLocalServiceUtil.reset(_COUNTER_NAME);
 	}
 
 	@Test
@@ -99,7 +108,7 @@ public class CounterLocalServiceTest {
 
 	private static final int _PROCESS_COUNT = 4;
 
-	private static String _COUNTER_NAME = "COUNTER_NAME";
+	private static String _COUNTER_NAME;
 
 	private static class IncrementProcessCallable
 		implements ProcessCallable<Long[]> {

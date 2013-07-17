@@ -83,7 +83,7 @@ public class PasswordPolicyPortletDataHandler extends BasePortletDataHandler {
 			"group-id", String.valueOf(portletDataContext.getScopeGroupId()));
 
 		ActionableDynamicQuery actionableDynamicQuery =
-			getPasswordPolicyActionableDynamicQuery(portletDataContext);
+			getPasswordPolicyActionableDynamicQuery(portletDataContext, true);
 
 		actionableDynamicQuery.performActions();
 
@@ -114,8 +114,20 @@ public class PasswordPolicyPortletDataHandler extends BasePortletDataHandler {
 		return null;
 	}
 
+	@Override
+	protected void doPrepareManifestSummary(
+			PortletDataContext portletDataContext,
+			PortletPreferences portletPreferences)
+		throws Exception {
+
+		ActionableDynamicQuery actionableDynamicQuery =
+			getPasswordPolicyActionableDynamicQuery(portletDataContext, false);
+
+		actionableDynamicQuery.performCount();
+	}
+
 	protected ActionableDynamicQuery getPasswordPolicyActionableDynamicQuery(
-			final PortletDataContext portletDataContext)
+			final PortletDataContext portletDataContext, final boolean export)
 		throws SystemException {
 
 		return new PasswordPolicyExportActionableDynamicQuery(
@@ -129,6 +141,10 @@ public class PasswordPolicyPortletDataHandler extends BasePortletDataHandler {
 
 			@Override
 			protected void performAction(Object object) throws PortalException {
+				if (!export) {
+					return;
+				}
+
 				PasswordPolicy passwordPolicy = (PasswordPolicy)object;
 
 				StagedModelDataHandlerUtil.exportStagedModel(

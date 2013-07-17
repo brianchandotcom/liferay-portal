@@ -101,7 +101,7 @@ public class RolesAdminPortletDataHandler extends BasePortletDataHandler {
 			"group-id", String.valueOf(portletDataContext.getScopeGroupId()));
 
 		ActionableDynamicQuery actionableDynamicQuery =
-			getRoleActionableDynamicQuery(portletDataContext);
+			getRoleActionableDynamicQuery(portletDataContext, true);
 
 		actionableDynamicQuery.performActions();
 
@@ -131,8 +131,20 @@ public class RolesAdminPortletDataHandler extends BasePortletDataHandler {
 		return null;
 	}
 
+	@Override
+	protected void doPrepareManifestSummary(
+			PortletDataContext portletDataContext,
+			PortletPreferences portletPreferences)
+		throws Exception {
+
+		ActionableDynamicQuery actionableDynamicQuery =
+			getRoleActionableDynamicQuery(portletDataContext, false);
+
+		actionableDynamicQuery.performCount();
+	}
+
 	protected ActionableDynamicQuery getRoleActionableDynamicQuery(
-			final PortletDataContext portletDataContext)
+			final PortletDataContext portletDataContext, final boolean export)
 		throws SystemException {
 
 		return new RoleExportActionableDynamicQuery(portletDataContext) {
@@ -152,6 +164,10 @@ public class RolesAdminPortletDataHandler extends BasePortletDataHandler {
 			@Override
 			protected void performAction(Object object)
 				throws PortalException, SystemException {
+
+				if (!export) {
+					return;
+				}
 
 				Role role = (Role)object;
 

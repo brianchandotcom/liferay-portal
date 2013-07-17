@@ -176,15 +176,21 @@ public class ViewAction extends PortletAction {
 				LayoutPermissionUtil.contains(
 					permissionChecker, layout, ActionKeys.VIEW)) {
 
-				return PortalUtil.getCanonicalURL(
+				String canonicalURL = PortalUtil.getCanonicalURL(
 					null, themeDisplay, layout, true);
+
+				return PortalUtil.addPreservedParameters(
+					themeDisplay, layout, canonicalURL, true);
 			}
 		}
 
 		Group group = GroupLocalServiceUtil.getGroup(groupId);
 
-		return PortalUtil.getGroupFriendlyURL(
+		String groupFriendlyURL = PortalUtil.getGroupFriendlyURL(
 			group, GetterUtil.getBoolean(privateLayoutParam), themeDisplay);
+
+		return PortalUtil.addPreservedParameters(
+			themeDisplay, groupFriendlyURL);
 	}
 
 	@Override

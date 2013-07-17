@@ -92,6 +92,11 @@ public class LayoutStagedModelDataHandler
 		return CLASS_NAMES;
 	}
 
+	@Override
+	public String getDisplayName(Layout layout) {
+		return layout.getNameCurrentValue();
+	}
+
 	protected String[] appendPortletIds(
 		String[] portletIds, String[] newPortletIds, String portletsMergeMode) {
 

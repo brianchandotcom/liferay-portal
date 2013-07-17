@@ -44,6 +44,11 @@ public class LayoutPrototypeStagedModelDataHandler
 	}
 
 	@Override
+	public String getDisplayName(LayoutPrototype layoutPrototype) {
+		return layoutPrototype.getNameCurrentValue();
+	}
+
+	@Override
 	protected void doExportStagedModel(
 			PortletDataContext portletDataContext,
 			LayoutPrototype layoutPrototype)

@@ -80,26 +80,24 @@ public class DLFolderPermission {
 			return hasPermission.booleanValue();
 		}
 
-		long folderId = dlFolder.getFolderId();
-
-		if (PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE) {
-			long originalFolderId = folderId;
+		if (actionId.equals(ActionKeys.VIEW) &&
+			PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE) {
 
 			try {
-				while (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-					dlFolder = DLFolderLocalServiceUtil.getFolder(folderId);
+				long dlFolderId = dlFolder.getFolderId();
 
-					if (!permissionChecker.hasOwnerPermission(
-							dlFolder.getCompanyId(), DLFolder.class.getName(),
-							folderId, dlFolder.getUserId(), ActionKeys.VIEW) &&
-						!permissionChecker.hasPermission(
-							dlFolder.getGroupId(), DLFolder.class.getName(),
-							folderId, ActionKeys.VIEW)) {
+				while (dlFolderId !=
+							DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+
+					dlFolder = DLFolderLocalServiceUtil.getFolder(dlFolderId);
+
+					if (!_hasPermission(
+							permissionChecker, dlFolder, actionId)) {
 
 						return false;
 					}
 
-					folderId = dlFolder.getParentFolderId();
+					dlFolderId = dlFolder.getParentFolderId();
 				}
 			}
 			catch (NoSuchFolderException nsfe) {
@@ -108,37 +106,10 @@ public class DLFolderPermission {
 				}
 			}
 
-			if (actionId.equals(ActionKeys.VIEW)) {
-				return true;
-			}
-
-			folderId = originalFolderId;
+			return true;
 		}
 
-		try {
-			while (folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-				dlFolder = DLFolderLocalServiceUtil.getFolder(folderId);
-
-				if (permissionChecker.hasOwnerPermission(
-						dlFolder.getCompanyId(), DLFolder.class.getName(),
-						folderId, dlFolder.getUserId(), actionId) ||
-					permissionChecker.hasPermission(
-						dlFolder.getGroupId(), DLFolder.class.getName(),
-						folderId, actionId)) {
-
-					return true;
-				}
-
-				folderId = dlFolder.getParentFolderId();
-			}
-		}
-		catch (NoSuchFolderException nsfe) {
-			if (!dlFolder.isInTrash()) {
-				throw nsfe;
-			}
-		}
-
-		return false;
+		return _hasPermission(permissionChecker, dlFolder, actionId);
 	}
 
 	public static boolean contains(
@@ -172,6 +143,23 @@ public class DLFolderPermission {
 
 			return folder.containsPermission(permissionChecker, actionId);
 		}
+	}
+
+	private static boolean _hasPermission(
+		PermissionChecker permissionChecker, DLFolder dlFolder,
+		String actionId) {
+
+		if (permissionChecker.hasOwnerPermission(
+				dlFolder.getCompanyId(), DLFolder.class.getName(),
+				dlFolder.getFolderId(), dlFolder.getUserId(), actionId) ||
+			permissionChecker.hasPermission(
+				dlFolder.getGroupId(), DLFolder.class.getName(),
+				dlFolder.getFolderId(), actionId)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 }

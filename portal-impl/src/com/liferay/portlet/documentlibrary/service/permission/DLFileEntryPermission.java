@@ -96,32 +96,28 @@ public class DLFileEntryPermission {
 			}
 		}
 
-		if (dlFileEntry.getFolderId() !=
-				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+		if (actionId.equals(ActionKeys.VIEW) &&
+			PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE) {
 
-			try {
-				DLFolder dlFolder = DLFolderLocalServiceUtil.getFolder(
-					dlFileEntry.getFolderId());
+			long dlFolderId = dlFileEntry.getFolderId();
 
-				if (PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE &&
-					!DLFolderPermission.contains(
-						permissionChecker, dlFolder, ActionKeys.ACCESS) &&
-					!DLFolderPermission.contains(
-						permissionChecker, dlFolder, ActionKeys.VIEW)) {
+			if (dlFolderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+				try {
+					DLFolder dlFolder = DLFolderLocalServiceUtil.getFolder(
+						dlFolderId);
 
-					return false;
+					if (!DLFolderPermission.contains(
+							permissionChecker, dlFolder, ActionKeys.ACCESS) &&
+						!DLFolderPermission.contains(
+							permissionChecker, dlFolder, ActionKeys.VIEW)) {
+
+						return false;
+					}
 				}
-
-				if (!actionId.equals(ActionKeys.OVERRIDE_CHECKOUT) &&
-					DLFolderPermission.contains(
-						permissionChecker, dlFolder, actionId)) {
-
-					return true;
-				}
-			}
-			catch (NoSuchFolderException nsfe) {
-				if (!latestDLFileVersion.isInTrash()) {
-					throw nsfe;
+				catch (NoSuchFolderException nsfe) {
+					if (!latestDLFileVersion.isInTrash()) {
+						throw nsfe;
+					}
 				}
 			}
 		}

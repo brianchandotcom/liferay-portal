@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.lar.BasePortletDataHandler;
 import com.liferay.portal.kernel.lar.DataLevel;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
+import com.liferay.portal.kernel.lar.PortletDataHandlerControl;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.xml.Element;
@@ -52,7 +53,12 @@ public class RolesAdminPortletDataHandler extends BasePortletDataHandler {
 		setDeletionSystemEventStagedModelTypes(new StagedModelType(Role.class));
 		setExportControls(
 			new PortletDataHandlerBoolean(
-				NAMESPACE, "system-roles", true, false));
+				NAMESPACE, "roles", true, true,
+				new PortletDataHandlerControl[] {
+					new PortletDataHandlerBoolean(
+						NAMESPACE, "system-roles", true, false)
+				}
+			));
 	}
 
 	@Override
@@ -68,7 +74,7 @@ public class RolesAdminPortletDataHandler extends BasePortletDataHandler {
 		}
 
 		List<Role> roles = RoleLocalServiceUtil.getRoles(
-			portletDataContext.getCompanyId());
+				portletDataContext.getCompanyId());
 
 		for (Role role : roles) {
 			if (!PortalUtil.isSystemRole(role.getName())) {

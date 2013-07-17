@@ -74,7 +74,7 @@ public class LayoutRevisionAssetRendererFactory
 
 		StringBundler sb = new StringBundler();
 
-		sb.append(layoutRevision.getHTMLTitle(LocaleUtil.getDefault()));
+		sb.append(layoutRevision.getHTMLTitle(LocaleUtil.getSiteDefault()));
 		sb.append(" [");
 		sb.append(layoutSetBranch.getName());
 		sb.append("]");

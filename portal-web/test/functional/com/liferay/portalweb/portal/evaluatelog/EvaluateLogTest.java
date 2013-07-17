@@ -134,6 +134,12 @@ public class EvaluateLogTest extends BaseTestCase {
 				continue;
 			}
 
+			// LPS-37574
+
+			if (line.contains("java.util.zip.ZipException: ZipFile closed")) {
+				continue;
+			}
+
 			System.out.println("\nException Line:\n\n" + line + "\n");
 
 			return false;

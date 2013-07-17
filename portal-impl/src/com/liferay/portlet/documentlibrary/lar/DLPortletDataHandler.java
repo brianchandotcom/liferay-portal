@@ -344,6 +344,18 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 		return new DLFileEntryExportActionableDynamicQuery(portletDataContext) {
 
 			@Override
+			protected void addCriteria(DynamicQuery dynamicQuery) {
+				super.addCriteria(dynamicQuery);
+
+				Property repositoryIdProperty = PropertyFactoryUtil.forName(
+					"repositoryId");
+
+				dynamicQuery.add(
+					repositoryIdProperty.eq(
+						portletDataContext.getScopeGroupId()));
+			}
+
+			@Override
 			protected StagedModelType getStagedModelType() {
 				return new StagedModelType(FileEntry.class);
 			}
@@ -369,6 +381,18 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 		throws Exception {
 
 		return new DLFolderExportActionableDynamicQuery(portletDataContext) {
+
+			@Override
+			protected void addCriteria(DynamicQuery dynamicQuery) {
+				super.addCriteria(dynamicQuery);
+
+				Property repositoryIdProperty = PropertyFactoryUtil.forName(
+					"repositoryId");
+
+				dynamicQuery.add(
+					repositoryIdProperty.eq(
+						portletDataContext.getScopeGroupId()));
+			}
 
 			@Override
 			protected StagedModelType getStagedModelType() {

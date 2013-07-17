@@ -128,6 +128,20 @@ public abstract class DLAppTestUtil {
 	}
 
 	public static FileEntry addFileEntry(
+			long groupId, long repositoryId, long folderId,
+			String sourceFileName)
+		throws Exception {
+
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			groupId);
+
+		return addFileEntry(
+			TestPropsValues.getUserId(), repositoryId, folderId, sourceFileName,
+			ContentTypes.TEXT_PLAIN, sourceFileName, null,
+			WorkflowConstants.ACTION_PUBLISH, serviceContext);
+	}
+
+	public static FileEntry addFileEntry(
 			long userId, long groupId, long folderId, String sourceFileName,
 			String mimeType, String title, byte[] bytes, int workflowAction,
 			ServiceContext serviceContext)
@@ -232,7 +246,6 @@ public abstract class DLAppTestUtil {
 		return addFileEntry(
 			groupId, folderId, sourceFileName, mimeType, title, null,
 			WorkflowConstants.ACTION_PUBLISH);
-
 	}
 
 	public static FileEntry addFileEntry(
@@ -279,6 +292,17 @@ public abstract class DLAppTestUtil {
 	}
 
 	public static Folder addFolder(
+			long groupId, long repositoryId, long parentFolderId, String name)
+		throws Exception {
+
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			groupId);
+
+		return addFolder(
+			repositoryId, parentFolderId, name, false, serviceContext);
+	}
+
+	public static Folder addFolder(
 			long groupId, long parentFolderId, String name)
 		throws Exception {
 
@@ -297,8 +321,8 @@ public abstract class DLAppTestUtil {
 	}
 
 	public static Folder addFolder(
-			long parentFolderId, String name, boolean deleteExisting,
-			ServiceContext serviceContext)
+			long repositoryId, long parentFolderId, String name,
+			boolean deleteExisting, ServiceContext serviceContext)
 		throws Exception {
 
 		String description = StringPool.BLANK;
@@ -313,8 +337,17 @@ public abstract class DLAppTestUtil {
 		}
 
 		return DLAppServiceUtil.addFolder(
-			serviceContext.getScopeGroupId(), parentFolderId, name, description,
-			serviceContext);
+			repositoryId, parentFolderId, name, description, serviceContext);
+	}
+
+	public static Folder addFolder(
+			long parentFolderId, String name, boolean deleteExisting,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		return addFolder(
+			serviceContext.getScopeGroupId(), parentFolderId, name,
+			deleteExisting, serviceContext);
 	}
 
 	public static Folder addFolder(

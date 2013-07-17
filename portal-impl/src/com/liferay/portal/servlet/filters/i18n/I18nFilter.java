@@ -116,58 +116,7 @@ public class I18nFilter extends BasePortalFilter {
 			return null;
 		}
 
-		String userLanguageId = null;
-
-		User user = (User)request.getAttribute(WebKeys.USER);
-
-		if (user != null) {
-			userLanguageId = user.getLanguageId();
-		}
-
-		String guestLanguageId = userLanguageId;
-
-		if (Validator.isNull(guestLanguageId)) {
-			guestLanguageId = CookieKeys.getCookie(
-				request, CookieKeys.GUEST_LANGUAGE_ID, false);
-		}
-
-		String defaultLanguageId = LocaleUtil.toLanguageId(
-			LocaleUtil.getDefault());
-
-		if (Validator.isNull(guestLanguageId)) {
-			guestLanguageId = defaultLanguageId;
-		}
-
-		if ((PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 1) ||
-			((PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 3) &&
-			 Validator.isNull(userLanguageId))) {
-
-			if (!defaultLanguageId.equals(guestLanguageId)) {
-				i18nLanguageId = guestLanguageId;
-			}
-			else {
-				return null;
-			}
-		}
-		else if (PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 2) {
-			i18nLanguageId = LocaleUtil.toLanguageId(
-				PortalUtil.getLocale(request));
-		}
-		else if (PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 3) {
-			if (Validator.isNotNull(userLanguageId)) {
-				HttpSession session = request.getSession();
-
-				Locale locale = (Locale)session.getAttribute(
-					Globals.LOCALE_KEY);
-
-				if (!userLanguageId.equals(LocaleUtil.toLanguageId(locale))) {
-					i18nLanguageId = LocaleUtil.toLanguageId(locale);
-				}
-				else {
-					return null;
-				}
-			}
-		}
+		i18nLanguageId = prependI18nLanguage(request, i18nLanguageId);
 
 		if (i18nLanguageId == null) {
 			return null;
@@ -238,6 +187,65 @@ public class I18nFilter extends BasePortalFilter {
 		else {
 			return false;
 		}
+	}
+
+	protected String prependI18nLanguage(
+		HttpServletRequest request, String i18nLanguageId) {
+
+		String userLanguageId = null;
+
+		User user = (User)request.getAttribute(WebKeys.USER);
+
+		if (user != null) {
+			userLanguageId = user.getLanguageId();
+		}
+
+		String guestLanguageId = userLanguageId;
+
+		if (Validator.isNull(guestLanguageId)) {
+			guestLanguageId = CookieKeys.getCookie(
+				request, CookieKeys.GUEST_LANGUAGE_ID, false);
+		}
+
+		String defaultLanguageId = LocaleUtil.toLanguageId(
+			LocaleUtil.getDefault());
+
+		if (Validator.isNull(guestLanguageId)) {
+			guestLanguageId = defaultLanguageId;
+		}
+
+		if ((PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 1) ||
+			((PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 3) &&
+			 Validator.isNull(userLanguageId))) {
+
+			if (!defaultLanguageId.equals(guestLanguageId)) {
+				i18nLanguageId = guestLanguageId;
+			}
+			else {
+				return null;
+			}
+		}
+		else if (PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 2) {
+			i18nLanguageId = LocaleUtil.toLanguageId(
+				PortalUtil.getLocale(request));
+		}
+		else if (PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 3) {
+			if (Validator.isNotNull(userLanguageId)) {
+				HttpSession session = request.getSession();
+
+				Locale locale = (Locale)session.getAttribute(
+					Globals.LOCALE_KEY);
+
+				if (!userLanguageId.equals(LocaleUtil.toLanguageId(locale))) {
+					i18nLanguageId = LocaleUtil.toLanguageId(locale);
+				}
+				else {
+					return null;
+				}
+			}
+		}
+
+		return i18nLanguageId;
 	}
 
 	@Override

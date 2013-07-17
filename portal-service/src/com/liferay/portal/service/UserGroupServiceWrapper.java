@@ -96,7 +96,7 @@ public class UserGroupServiceWrapper implements UserGroupService,
 	or if the user did not have permission to add the user group
 	* @throws SystemException if a system exception occurred
 	* @deprecated As of 6.2.0, replaced by {@link #addUserGroup(String, String,
-	serviceContext)}
+	ServiceContext)}
 	*/
 	@Override
 	public com.liferay.portal.model.UserGroup addUserGroup(
@@ -244,7 +244,7 @@ public class UserGroupServiceWrapper implements UserGroupService,
 	not have permission to update the user group information
 	* @throws SystemException if a system exception occurred
 	* @deprecated As of 6.2.0, replaced by {@link #updateUserGroup(long,
-	String, String, serviceContext)}
+	String, String, ServiceContext)}
 	*/
 	@Override
 	public com.liferay.portal.model.UserGroup updateUserGroup(

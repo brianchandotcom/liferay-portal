@@ -1750,8 +1750,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	* @return the temporary file entry names
 	* @throws PortalException if the folder was invalid
 	* @throws SystemException if a system exception occurred
-	* @see com.liferay.portlet.documentlibrary.service.impl.DLAppServiceImpl#addTempFileEntry(
-	long, long, String, String, File)
+	* @see #addTempFileEntry(long, long, String, String, File, String)
 	* @see com.liferay.portal.kernel.util.TempFileUtil
 	*/
 	@Override
@@ -1874,6 +1873,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	* Moves the file entry with the primary key to the trash portlet.
 	*
 	* @param fileEntryId the primary key of the file entry
+	* @return the file entry
 	* @throws PortalException if the file entry could not be found
 	* @throws SystemException if a system exception occurred
 	*/
@@ -1966,6 +1966,7 @@ public class DLAppServiceWrapper implements DLAppService,
 	* Moves the folder with the primary key to the trash portlet.
 	*
 	* @param folderId the primary key of the folder
+	* @return the file entry
 	* @throws PortalException if the folder could not be found
 	* @throws SystemException if a system exception occurred
 	*/

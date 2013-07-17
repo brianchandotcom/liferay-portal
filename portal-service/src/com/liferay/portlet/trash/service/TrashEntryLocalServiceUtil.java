@@ -306,6 +306,7 @@ public class TrashEntryLocalServiceUtil {
 	* Deletes the trash entry with the primary key.
 	*
 	* @param entryId the primary key of the trash entry
+	* @return the trash entry with the primary key
 	* @throws PortalException if a trash entry with the primary key could not
 	be found
 	* @throws SystemException if a system exception occurred
@@ -322,6 +323,7 @@ public class TrashEntryLocalServiceUtil {
 	*
 	* @param className the class name of entity
 	* @param classPK the primary key of the entry
+	* @return the trash entry with the entity class name and primary key
 	* @throws PortalException if a trash entry with the primary key could not
 	be found
 	* @throws SystemException if a system exception occurred

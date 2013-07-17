@@ -303,6 +303,27 @@ public class BackgroundTaskLocalServiceUtil {
 			inputStream);
 	}
 
+	public static com.liferay.portal.model.BackgroundTask amendBackgroundTask(
+		long backgroundTaskId,
+		java.util.Map<java.lang.String, java.io.Serializable> taskContextMap,
+		int status, com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .amendBackgroundTask(backgroundTaskId, taskContextMap,
+			status, serviceContext);
+	}
+
+	public static com.liferay.portal.model.BackgroundTask amendBackgroundTask(
+		long backgroundTaskId,
+		java.util.Map<java.lang.String, java.io.Serializable> taskContextMap,
+		int status, java.lang.String statusMessage,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .amendBackgroundTask(backgroundTaskId, taskContextMap,
+			status, statusMessage, serviceContext);
+	}
+
 	public static void cleanUpBackgroundTasks()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		getService().cleanUpBackgroundTasks();
@@ -412,27 +433,6 @@ public class BackgroundTaskLocalServiceUtil {
 	public static void resumeBackgroundTask(long backgroundTaskId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		getService().resumeBackgroundTask(backgroundTaskId);
-	}
-
-	public static com.liferay.portal.model.BackgroundTask amendBackgroundTask(
-		long backgroundTaskId,
-		java.util.Map<java.lang.String, java.io.Serializable> taskContextMap,
-		int status, com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService()
-				   .amendBackgroundTask(backgroundTaskId, taskContextMap,
-			status, serviceContext);
-	}
-
-	public static com.liferay.portal.model.BackgroundTask amendBackgroundTask(
-		long backgroundTaskId,
-		java.util.Map<java.lang.String, java.io.Serializable> taskContextMap,
-		int status, java.lang.String statusMessage,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService()
-				   .amendBackgroundTask(backgroundTaskId, taskContextMap,
-			status, statusMessage, serviceContext);
 	}
 
 	public static BackgroundTaskLocalService getService() {

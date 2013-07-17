@@ -262,6 +262,19 @@ public interface BackgroundTaskLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	public com.liferay.portal.model.BackgroundTask amendBackgroundTask(
+		long backgroundTaskId,
+		java.util.Map<java.lang.String, java.io.Serializable> taskContextMap,
+		int status, com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public com.liferay.portal.model.BackgroundTask amendBackgroundTask(
+		long backgroundTaskId,
+		java.util.Map<java.lang.String, java.io.Serializable> taskContextMap,
+		int status, java.lang.String statusMessage,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	public void cleanUpBackgroundTasks()
 		throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -338,18 +351,5 @@ public interface BackgroundTaskLocalService extends BaseLocalService,
 	public java.lang.String getBackgroundTaskStatusJSON(long backgroundTaskId);
 
 	public void resumeBackgroundTask(long backgroundTaskId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public com.liferay.portal.model.BackgroundTask amendBackgroundTask(
-		long backgroundTaskId,
-		java.util.Map<java.lang.String, java.io.Serializable> taskContextMap,
-		int status, com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public com.liferay.portal.model.BackgroundTask amendBackgroundTask(
-		long backgroundTaskId,
-		java.util.Map<java.lang.String, java.io.Serializable> taskContextMap,
-		int status, java.lang.String statusMessage,
-		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.SystemException;
 }

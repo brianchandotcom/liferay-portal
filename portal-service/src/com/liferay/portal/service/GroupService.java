@@ -242,6 +242,8 @@ public interface GroupService extends BaseService {
 	* @param site whether the group is to be associated with a main site
 	* @return the matching groups, or <code>null</code> if no matches were
 	found
+	* @throws PortalException if the user did not have permission to view the
+	group or if a portal exception occurred
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

@@ -233,8 +233,8 @@ public class AssetCategoryServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 6.2.0, replaced by {@link #
-	getVocabularyRootCategories(long, long, int, int,
+	* @deprecated As of 6.2.0, replaced by {@link
+	#getVocabularyRootCategories(long, long, int, int,
 	OrderByComparator)}
 	*/
 	public static java.util.List<com.liferay.portlet.asset.model.AssetCategory> getVocabularyRootCategories(

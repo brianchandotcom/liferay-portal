@@ -313,6 +313,27 @@ public class BackgroundTaskLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.model.BackgroundTask amendBackgroundTask(
+		long backgroundTaskId,
+		java.util.Map<java.lang.String, java.io.Serializable> taskContextMap,
+		int status, com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _backgroundTaskLocalService.amendBackgroundTask(backgroundTaskId,
+			taskContextMap, status, serviceContext);
+	}
+
+	@Override
+	public com.liferay.portal.model.BackgroundTask amendBackgroundTask(
+		long backgroundTaskId,
+		java.util.Map<java.lang.String, java.io.Serializable> taskContextMap,
+		int status, java.lang.String statusMessage,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _backgroundTaskLocalService.amendBackgroundTask(backgroundTaskId,
+			taskContextMap, status, statusMessage, serviceContext);
+	}
+
+	@Override
 	public void cleanUpBackgroundTasks()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_backgroundTaskLocalService.cleanUpBackgroundTasks();
@@ -434,27 +455,6 @@ public class BackgroundTaskLocalServiceWrapper
 	public void resumeBackgroundTask(long backgroundTaskId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_backgroundTaskLocalService.resumeBackgroundTask(backgroundTaskId);
-	}
-
-	@Override
-	public com.liferay.portal.model.BackgroundTask amendBackgroundTask(
-		long backgroundTaskId,
-		java.util.Map<java.lang.String, java.io.Serializable> taskContextMap,
-		int status, com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _backgroundTaskLocalService.amendBackgroundTask(backgroundTaskId,
-			taskContextMap, status, serviceContext);
-	}
-
-	@Override
-	public com.liferay.portal.model.BackgroundTask amendBackgroundTask(
-		long backgroundTaskId,
-		java.util.Map<java.lang.String, java.io.Serializable> taskContextMap,
-		int status, java.lang.String statusMessage,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _backgroundTaskLocalService.amendBackgroundTask(backgroundTaskId,
-			taskContextMap, status, statusMessage, serviceContext);
 	}
 
 	/**

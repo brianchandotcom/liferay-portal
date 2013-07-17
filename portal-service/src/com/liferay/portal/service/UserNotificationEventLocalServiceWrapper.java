@@ -416,7 +416,8 @@ public class UserNotificationEventLocalServiceWrapper
 	}
 
 	/**
-	* @deprecated As of 6.2.0 {@link #getArchivedUserNotificationEvents(long, boolean)}
+	* @deprecated As of 6.2.0 {@link #getArchivedUserNotificationEvents(long,
+	boolean)}
 	*/
 	@Override
 	public java.util.List<com.liferay.portal.model.UserNotificationEvent> getUserNotificationEvents(
@@ -427,8 +428,8 @@ public class UserNotificationEventLocalServiceWrapper
 	}
 
 	/**
-	* @deprecated As of 6.2.0 {@link #getArchivedUserNotificationEvents(long, boolean, int,
-	int)}
+	* @deprecated As of 6.2.0 {@link #getArchivedUserNotificationEvents(long,
+	boolean, int, int)}
 	*/
 	@Override
 	public java.util.List<com.liferay.portal.model.UserNotificationEvent> getUserNotificationEvents(
@@ -453,8 +454,8 @@ public class UserNotificationEventLocalServiceWrapper
 	}
 
 	/**
-	* @deprecated As of 6.2.0 {@link #getArchivedUserNotificationEventsCount(long,
-	boolean)}
+	* @deprecated As of 6.2.0 {@link
+	#getArchivedUserNotificationEventsCount(long, boolean)}
 	*/
 	@Override
 	public int getUserNotificationEventsCount(long userId, boolean archived)

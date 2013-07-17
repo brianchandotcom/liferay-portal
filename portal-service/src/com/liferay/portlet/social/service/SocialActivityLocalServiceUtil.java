@@ -433,6 +433,8 @@ public class SocialActivityLocalServiceUtil {
 	*
 	* @param className the target asset's class name
 	* @param classPK the primary key of the target asset
+	* @throws PortalException if the user's activity counters could not be
+	deleted
 	* @throws SystemException if a system exception occurred
 	*/
 	public static void deleteActivities(java.lang.String className, long classPK)
@@ -458,6 +460,8 @@ public class SocialActivityLocalServiceUtil {
 	* Removes the stored activity and its mirror activity from the database.
 	*
 	* @param activity the activity to be removed
+	* @throws PortalException if the user's activity counters could not be
+	deleted or if a portal exception occurred
 	* @throws SystemException if a system exception occurred
 	*/
 	public static void deleteActivity(

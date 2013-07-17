@@ -3290,8 +3290,8 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	}
 
 	/**
-	* Sets the names of the classes that represent user notification
-	* handlers associated with the portlet.
+	* Sets the names of the classes that represent user notification handlers
+	* associated with the portlet.
 	*
 	* @param userNotificationHandlerClasses the names of the classes that
 	represent user notification handlers associated with the portlet

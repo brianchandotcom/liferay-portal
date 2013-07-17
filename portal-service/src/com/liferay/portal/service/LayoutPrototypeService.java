@@ -59,8 +59,8 @@ public interface LayoutPrototypeService extends BaseService {
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	/**
-	* @deprecated As of 6.2.0, replaced by {@link #addLayoutPrototype(long,
-	Map, String, boolean, ServiceContext)}
+	* @deprecated As of 6.2.0, replaced by {@link #addLayoutPrototype(Map,
+	String, boolean, ServiceContext)}
 	*/
 	public com.liferay.portal.model.LayoutPrototype addLayoutPrototype(
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,

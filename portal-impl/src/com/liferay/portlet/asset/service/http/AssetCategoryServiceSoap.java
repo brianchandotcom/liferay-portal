@@ -401,8 +401,8 @@ public class AssetCategoryServiceSoap {
 	}
 
 	/**
-	* @deprecated As of 6.2.0, replaced by {@link #
-	getVocabularyRootCategories(long, long, int, int,
+	* @deprecated As of 6.2.0, replaced by {@link
+	#getVocabularyRootCategories(long, long, int, int,
 	OrderByComparator)}
 	*/
 	public static com.liferay.portlet.asset.model.AssetCategorySoap[] getVocabularyRootCategories(

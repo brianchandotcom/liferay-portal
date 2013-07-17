@@ -196,8 +196,8 @@ public interface AssetCategoryService extends BaseService {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* @deprecated As of 6.2.0, replaced by {@link #
-	getVocabularyRootCategories(long, long, int, int,
+	* @deprecated As of 6.2.0, replaced by {@link
+	#getVocabularyRootCategories(long, long, int, int,
 	OrderByComparator)}
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

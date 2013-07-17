@@ -66,8 +66,8 @@ import java.util.Map;
  */
 public class LayoutPrototypeServiceSoap {
 	/**
-	* @deprecated As of 6.2.0, replaced by {@link #addLayoutPrototype(long,
-	Map, String, boolean, ServiceContext)}
+	* @deprecated As of 6.2.0, replaced by {@link #addLayoutPrototype(Map,
+	String, boolean, ServiceContext)}
 	*/
 	public static com.liferay.portal.model.LayoutPrototypeSoap addLayoutPrototype(
 		java.lang.String[] nameMapLanguageIds,

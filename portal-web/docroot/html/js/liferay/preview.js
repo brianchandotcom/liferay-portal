@@ -286,7 +286,7 @@ AUI.add(
 									centered: true,
 									cssClass: 'lfr-preview-file-image-overlay',
 									height: '90%',
-									plugins: [Liferay.WidgetStack],
+									plugins: [Liferay.WidgetZIndex],
 									width: '85%'
 								}
 							).render();
@@ -457,6 +457,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-base', 'aui-modal', 'aui-overlay-mask-deprecated', 'aui-toolbar']
+		requires: ['aui-base', 'aui-modal', 'aui-overlay-mask-deprecated', 'aui-toolbar', 'liferay-widget-zindex']
 	}
 );

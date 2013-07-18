@@ -505,6 +505,22 @@ public class LayoutStagedModelDataHandler
 
 		importedLayout.setHidden(layout.isHidden());
 		importedLayout.setFriendlyURL(friendlyURL);
+
+		for (int i = 1;; i++) {
+			Layout duplicateFriendlyURLLayout =
+				LayoutLocalServiceUtil.fetchLayoutByFriendlyURL(
+					groupId, privateLayout, importedLayout.getFriendlyURL());
+
+			if ((duplicateFriendlyURLLayout == null) ||
+				(duplicateFriendlyURLLayout.getPlid() ==
+					importedLayout.getPlid())) {
+
+				break;
+			}
+
+			importedLayout.setFriendlyURL(friendlyURL + i);
+		}
+
 		importedLayout.setIconImage(false);
 
 		if (layout.isIconImage()) {

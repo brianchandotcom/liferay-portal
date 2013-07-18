@@ -80,9 +80,11 @@ List<String> languageIds = new ArrayList<String>();
 			String fieldName = HtmlUtil.escapeAttribute(name + fieldSuffix);
 			%>
 
+			<liferay-ui:input-editor cssClass='<%= \"language-value \" + cssClass %>' editorImpl="ckeditor" initMethod='<%= fieldName + \"InitEditor\" %>' name="<%= fieldName %>" onBlurMethod='<%= fieldName + \"OnBlurEditor\" %>' onChangeMethod='<%= fieldName + \"OnChangeEditor\" %>' onFocusMethod='<%= fieldName + \"OnFocusEditor\" %>' toolbarSet="simple" />
+
 			<aui:script>
 				function <portlet:namespace /><%= fieldName %>InitEditor() {
-					return "<%= UnicodeFormatter.toString(HtmlUtil.escape(mainLanguageValue)) %>";
+					return "<%= UnicodeFormatter.toString(mainLanguageValue) %>";
 				}
 
 				function <portlet:namespace /><%= fieldName %>OnBlurEditor() {
@@ -110,8 +112,6 @@ List<String> languageIds = new ArrayList<String>();
 					}
 				);
 			</aui:script>
-
-			<liferay-ui:input-editor cssClass='<%= \"language-value \" + cssClass %>' editorImpl="ckeditor" initMethod='<%= fieldName + \"InitEditor\" %>' name="<%= fieldName %>" onBlurMethod='<%= fieldName + \"OnBlurEditor\" %>' onChangeMethod='<%= fieldName + \"OnChangeEditor\" %>' onFocusMethod='<%= fieldName + \"OnFocusEditor\" %>' />
 		</c:when>
 		<c:when test='<%= type.equals("input") %>'>
 			<input class="language-value <%= cssClass %>" dir="<%= mainLanguageDir %>" <%= disabled ? "disabled=\"disabled\"" : "" %> id="<portlet:namespace /><%= HtmlUtil.escapeAttribute(id + fieldSuffix) %>" name="<portlet:namespace /><%= HtmlUtil.escapeAttribute(name + fieldSuffix) %>" type="text" value="<%= HtmlUtil.escapeAttribute(mainLanguageValue) %>" <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %> />

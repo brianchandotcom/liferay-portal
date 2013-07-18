@@ -4,6 +4,10 @@
 	<hint-collection name="CLOB">
 		<hint name="max-length">2000000</hint>
 	</hint-collection>
+	<hint-collection name="EDITOR">
+		<hint name="max-length">2000000</hint>
+		<hint name="editor">true</hint>
+	</hint-collection>
 	<hint-collection name="URL">
 		<hint name="max-length">4000</hint>
 	</hint-collection>

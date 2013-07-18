@@ -424,15 +424,17 @@ if (hints != null) {
 			String displayHeight = ModelHintsConstants.TEXT_DISPLAY_HEIGHT;
 			String displayWidth = ModelHintsConstants.TEXT_DISPLAY_WIDTH;
 			String maxLength = ModelHintsConstants.TEXT_MAX_LENGTH;
+			boolean checkTab = false;
+			boolean editor = false;
 			boolean secret = false;
 			boolean upperCase = false;
-			boolean checkTab = false;
 
 			if (hints != null) {
 				autoSize = GetterUtil.getBoolean(hints.get("autoSize"), autoSize);
 				checkTab = GetterUtil.getBoolean(hints.get("check-tab"), checkTab);
 				displayHeight = GetterUtil.getString(hints.get("display-height"), displayHeight);
 				displayWidth = GetterUtil.getString(hints.get("display-width"), displayWidth);
+				editor = GetterUtil.getBoolean(hints.get("editor"), editor);
 				maxLength = GetterUtil.getString(hints.get("max-length"), maxLength);
 				secret = GetterUtil.getBoolean(hints.get("secret"), secret);
 				upperCase = GetterUtil.getBoolean(hints.get("upper-case"), upperCase);
@@ -459,6 +461,22 @@ if (hints != null) {
 			%>
 
 			<c:choose>
+				<c:when test="<%= editor %>">
+					<c:choose>
+						<c:when test="<%= localized %>">
+							<liferay-ui:input-localized autoFocus="<%= autoFocus %>" cssClass='<%= cssClass + " lfr-input-text" %>' defaultLanguageId="<%= defaultLanguageId %>" disabled="<%= disabled %>" displayWidth="<%= displayWidth %>" formName="<%= formName %>" id="<%= id %>" ignoreRequestValue="<%= ignoreRequestValue %>" languageId="<%= languageId %>" maxLength="<%= maxLength %>" name="<%= fieldParam %>" style='<%= "max-width: " + displayWidth + (Validator.isDigit(displayWidth) ? "px" : "") + "; " + (upperCase ? "text-transform: uppercase;" : "" ) %>' type="editor" xml="<%= xml %>" />
+						</c:when>
+						<c:otherwise>
+							<liferay-ui:input-editor cssClass='<%= cssClass + \" lfr-input-text\" %>' editorImpl="ckeditor" initMethod='<%= fieldParam + \"InitEditor\" %>' name="<%= fieldParam %>" toolbarSet="simple" />
+
+							<aui:script>
+								function <portlet:namespace /><%= fieldParam %>InitEditor() {
+									return "<%= UnicodeFormatter.toString(value) %>";
+								}
+							</aui:script>
+						</c:otherwise>
+					</c:choose>
+				</c:when>
 				<c:when test="<%= displayHeight.equals(ModelHintsConstants.TEXT_DISPLAY_HEIGHT) %>">
 
 					<%

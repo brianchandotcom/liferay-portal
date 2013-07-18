@@ -157,6 +157,12 @@ CKEDITOR.config.toolbar_liferayArticle = [
 	['Image', 'Flash', 'Table', '-', 'Smiley', 'SpecialChar', 'LiferayPageBreak']
 ];
 
+CKEDITOR.config.toolbar_simple = [
+	['Bold', 'Italic', 'Underline', 'Strike'],
+	['NumberedList', 'BulletedList'],
+	['Image', 'Link', 'Unlink', 'Table']
+];
+
 CKEDITOR.on(
 	'dialogDefinition',
 	function(event) {

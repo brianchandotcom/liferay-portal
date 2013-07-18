@@ -55,10 +55,12 @@ MDRRuleGroup mdrRuleGroup = MDRRuleGroupLocalServiceUtil.fetchRuleGroup(mdrRuleG
 
 </liferay-ui:search-container-column-text>
 
-<liferay-ui:search-container-column-text
-	href="<%= rowURL %>"
-	property="priority"
-/>
+<c:if test="<%= MDRRuleGroupInstanceServiceUtil.getRuleGroupInstancesCount(className, classPK) > 1 %>">
+	<liferay-ui:search-container-column-text
+		href="<%= rowURL %>"
+		property="priority"
+	/>
+</c:if>
 
 <liferay-ui:search-container-column-jsp
 	align="right"

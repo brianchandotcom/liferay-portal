@@ -468,7 +468,7 @@ AUI.add(
 									if (value !== STR_EMPTY) {
 										var date = new Date(Lang.toInt(value));
 
-										date = DateMath.add(value, DateMath.MINUTES, value.getTimezoneOffset());
+										date = DateMath.add(date, DateMath.MINUTES, date.getTimezoneOffset());
 
 										value = A.DataType.Date.format(date);
 									}

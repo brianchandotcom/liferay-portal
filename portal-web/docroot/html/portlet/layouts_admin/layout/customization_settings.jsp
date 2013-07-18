@@ -89,7 +89,7 @@ if (selLayout != null) {
 <div class="customization-settings">
 	<c:choose>
 		<c:when test="<%= themeDisplay.isStateExclusive() %>">
-			<aui:button name="manageCustomization" value="show-page-customizations" />
+			<aui:button name="manageCustomization" value="show-customizable-sections" />
 
 			<div class="hide layout-customizable-controls" id="<portlet:namespace />layout-customizable-controls">
 				<span title='<liferay-ui:message key="customizable-help" />'>
@@ -115,8 +115,8 @@ if (selLayout != null) {
 			{
 				namespace: '<portlet:namespace />',
 				strings: {
-					HIDE: '<%= LanguageUtil.get(pageContext, "hide-page-customizations") %>',
-					SHOW: '<%= LanguageUtil.get(pageContext, "show-page-customizations") %>'
+					HIDE: '<%= LanguageUtil.get(pageContext, "hide-customizable-sections") %>',
+					SHOW: '<%= LanguageUtil.get(pageContext, "show-customizable-sections") %>'
 				}
 			}
 		);

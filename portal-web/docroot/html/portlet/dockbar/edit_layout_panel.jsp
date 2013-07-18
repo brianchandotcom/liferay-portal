@@ -33,22 +33,25 @@
 		<liferay-util:param name="showAddAction" value="<%= Boolean.FALSE.toString() %>" />
 	</liferay-util:include>
 
-	<liferay-portlet:renderURL plid="<%= PortalUtil.getControlPanelPlid(company.getCompanyId()) %>" portletName="<%= PortletKeys.GROUP_PAGES %>" varImpl="siteAdminURL" windowState="<%= WindowState.NORMAL.toString() %>">
-		<portlet:param name="groupId" value="<%= String.valueOf(liveGroupId) %>" />
-		<portlet:param name="selPlid" value="<%= String.valueOf(selPlid) %>" />
-		<portlet:param name="struts_action" value="/group_pages/edit_layouts" />
-		<portlet:param name="tabs1" value="public-pages" />
-		<portlet:param name="treeId" value="layoutsTree" />
-		<portlet:param name="viewLayout" value="true" />
-	</liferay-portlet:renderURL>
+	<c:if test="<%= themeDisplay.isShowSiteAdministrationIcon() %>">
+		<liferay-portlet:renderURL plid="<%= PortalUtil.getControlPanelPlid(company.getCompanyId()) %>" portletName="<%= PortletKeys.GROUP_PAGES %>" varImpl="siteAdministrationURL" windowState="<%= WindowState.NORMAL.toString() %>">
+			<portlet:param name="groupId" value="<%= String.valueOf(liveGroupId) %>" />
+			<portlet:param name="selPlid" value="<%= String.valueOf(selPlid) %>" />
+			<portlet:param name="struts_action" value="/group_pages/edit_layouts" />
+			<portlet:param name="tabs1" value="public-pages" />
+			<portlet:param name="treeId" value="layoutsTree" />
+			<portlet:param name="viewLayout" value="true" />
+		</liferay-portlet:renderURL>
 
-	<%
-	String adminURL = HttpUtil.setParameter(siteAdminURL.toString(), "controlPanelCategory", "current_site");
-	adminURL = HttpUtil.setParameter(adminURL, "doAsGroupId", String.valueOf(liveGroupId));
-	adminURL = HttpUtil.setParameter(adminURL, "refererPlid", String.valueOf(selPlid));
-	%>
+		<%
+		String siteAdministrationURLString = HttpUtil.setParameter(siteAdministrationURL.toString(), "controlPanelCategory", "current_site");
 
-	<aui:a cssClass="site-admin-link" href="<%= adminURL %>" label="action.VIEW_SITE_ADMINISTRATION" />
+		siteAdministrationURLString = HttpUtil.setParameter(siteAdministrationURLString, "doAsGroupId", String.valueOf(liveGroupId));
+		siteAdministrationURLString = HttpUtil.setParameter(siteAdministrationURLString, "refererPlid", String.valueOf(selPlid));
+		%>
+
+		<aui:a cssClass="site-admin-link" href="<%= siteAdministrationURLString %>" label="site-administration" />
+	</c:if>
 </div>
 
 <c:if test='<%= SessionMessages.contains(renderRequest, "requestProcessed") %>'>

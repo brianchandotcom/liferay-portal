@@ -196,7 +196,7 @@ public class CalendarPortletDataHandler extends BasePortletDataHandler {
 				timeZone = user.getTimeZone();
 			}
 			else {
-				locale = LocaleUtil.getDefault();
+				locale = LocaleUtil.getSiteDefault();
 				timeZone = TimeZoneUtil.getTimeZone(StringPool.UTC);
 			}
 

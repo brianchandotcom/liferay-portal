@@ -45,27 +45,16 @@ public class PortletDisplayTemplatePortletDataHandler
 
 	public static final String NAMESPACE = "portlet_display_templates";
 
-	public PortletDisplayTemplatePortletDataHandler() {
-		long ddmTemplateClassNameId = PortalUtil.getClassNameId(
-			DDMTemplate.class);
-
-		for (long classNameId : TemplateHandlerRegistryUtil.getClassNameIds()) {
-			stagedModelTypes.add(
-				new StagedModelType(ddmTemplateClassNameId, classNameId));
-		}
-	}
-
 	@Override
 	public StagedModelType[] getDeletionSystemEventStagedModelTypes() {
-		return stagedModelTypes.toArray(
-			new StagedModelType[stagedModelTypes.size()]);
+		return getStagedModelTypes();
 	}
 
 	@Override
 	public long getExportModelCount(ManifestSummary manifestSummary) {
 		long totalModelCount = -1;
 
-		for (StagedModelType stagedModelType : stagedModelTypes) {
+		for (StagedModelType stagedModelType : getStagedModelTypes()) {
 			long modelCount = manifestSummary.getModelAdditionCount(
 				stagedModelType.getClassName(),
 				stagedModelType.getReferrerClassName());
@@ -132,7 +121,7 @@ public class PortletDisplayTemplatePortletDataHandler
 			PortletPreferences portletPreferences)
 		throws Exception {
 
-		for (StagedModelType modeType : stagedModelTypes) {
+		for (StagedModelType modeType : getStagedModelTypes()) {
 			ActionableDynamicQuery actionableDynamicQuery =
 				getDDMTemplateActionableDynamicQuery(
 					portletDataContext,
@@ -178,7 +167,28 @@ public class PortletDisplayTemplatePortletDataHandler
 		};
 	}
 
-	protected List<StagedModelType> stagedModelTypes =
-		new ArrayList<StagedModelType>();
+	protected StagedModelType[] getStagedModelTypes() {
+		if (stagedModelTypes != null) {
+			return stagedModelTypes;
+		}
+
+		long ddmTemplateClassNameId = PortalUtil.getClassNameId(
+			DDMTemplate.class);
+
+		List<StagedModelType> stagedModelTypeList =
+			new ArrayList<StagedModelType>();
+
+		for (long classNameId : TemplateHandlerRegistryUtil.getClassNameIds()) {
+			stagedModelTypeList.add(
+				new StagedModelType(ddmTemplateClassNameId, classNameId));
+		}
+
+		stagedModelTypes = stagedModelTypeList.toArray(
+			new StagedModelType[stagedModelTypeList.size()]);
+
+		return stagedModelTypes;
+	}
+
+	protected StagedModelType[] stagedModelTypes;
 
 }

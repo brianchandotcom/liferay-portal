@@ -6,6 +6,7 @@ AUI.add(
 		var STR_INPUT_PLACEHOLDER = 'inputPlaceholder';
 
 		var STR_INPUT_VALUE_CHANGE = '_onInputValueChange';
+		var STR_SUBMIT = '_onSubmit';
 
 		var defaultLanguageId = themeDisplay.getDefaultLanguageId();
 		var userLanguageId = themeDisplay.getLanguageId();
@@ -83,7 +84,7 @@ AUI.add(
 						'</a>' +
 					'</td>',
 
-					initializer: function() {
+					bindUI: function() {
 						var instance = this;
 
 						var inputPlaceholder = instance.get(STR_INPUT_PLACEHOLDER);
@@ -97,7 +98,7 @@ AUI.add(
 								}
 							),
 							inputPlaceholder.on('input', A.debounce(STR_INPUT_VALUE_CHANGE, 100, instance)),
-							Liferay.on('submitForm', A.rbind(STR_INPUT_VALUE_CHANGE, instance, inputPlaceholder))
+							inputPlaceholder.ancestor('form').on('submit', A.rbind(STR_SUBMIT, instance, inputPlaceholder))
 						];
 
 						instance._eventHandles = eventHandles;
@@ -324,6 +325,14 @@ AUI.add(
 						}
 					},
 
+					_onSubmit: function(event, input) {
+						var instance = this;
+
+						instance._onInputValueChange.apply(instance, arguments);
+
+						InputLocalized.unregister(input.attr('id'));
+					},
+
 					_syncTranslatedLanguagesUI: function() {
 						var instance = this;
 
@@ -375,6 +384,12 @@ AUI.add(
 					else {
 						Liferay.component(id).render();
 					}
+				},
+
+				unregister: function(id) {
+					var instance = this;
+
+					InputLocalized._instances[id] = null;
 				},
 
 				_onInputUserInteraction: function(event) {

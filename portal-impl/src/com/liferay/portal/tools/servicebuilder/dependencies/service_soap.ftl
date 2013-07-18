@@ -102,6 +102,8 @@ public class ${entity.name}ServiceSoap {
 					java.lang.String[]
 				<#elseif returnTypeGenericsName == "java.util.List<" + extendedModelName + ">">
 					${soapModelName}[]
+				<#elseif stringUtil.startsWith(returnTypeGenericsName, "java.util.List<com.liferay.portal.kernel.repository.model.")>
+					${serviceBuilder.getListActualTypeArguments(method.getReturns())}Soap[]
 				<#elseif entity.hasColumns() && (extendedModelName == serviceBuilder.getListActualTypeArguments(method.getReturns()))>
 					${soapModelName}[]
 				<#elseif !entity.hasColumns()>
@@ -229,6 +231,8 @@ public class ${entity.name}ServiceSoap {
 								return returnValue.toArray(new java.lang.String[returnValue.size()]);
 							<#elseif returnTypeGenericsName == "java.util.List<" + extendedModelName + ">">
 								return ${extendedModelName}Soap.toSoapModels(returnValue);
+							<#elseif stringUtil.startsWith(returnTypeGenericsName, "java.util.List<com.liferay.portal.kernel.repository.model.")>
+                            	return ${serviceBuilder.getListActualTypeArguments(method.getReturns())}Soap.toSoapModels(returnValue);
 							<#elseif entity.hasColumns() && (extendedModelName == serviceBuilder.getListActualTypeArguments(method.getReturns()))>
 								return ${soapModelName}.toSoapModels(returnValue);
 							<#elseif !entity.hasColumns()>

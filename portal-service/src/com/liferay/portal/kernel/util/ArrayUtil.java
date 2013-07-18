@@ -23,6 +23,7 @@ import java.lang.reflect.Array;
 import java.text.DateFormat;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Date;
@@ -707,6 +708,199 @@ public class ArrayUtil {
 		}
 
 		return set.toArray(new String[set.size()]);
+	}
+
+	public static boolean[] filter(
+		boolean[] input, Predicate<Boolean> predicate) {
+
+		if (input == null) {
+			return null;
+		}
+
+		if (input.length == 0) {
+			return input;
+		}
+
+		List<Boolean> survivors = new ArrayList<Boolean>();
+
+		for (int i = 0; i < input.length; i++) {
+			if (predicate.keep(input[i])) {
+				survivors.add(input[i]);
+			}
+		}
+
+		return toArray(survivors.toArray(new Boolean[survivors.size()]));
+	}
+
+	public static byte[] filter(byte[] input, Predicate<Byte> predicate) {
+
+		if (input == null) {
+			return null;
+		}
+
+		if (input.length == 0) {
+			return input;
+		}
+
+		List<Byte> survivors = new ArrayList<Byte>();
+
+		for (int i = 0; i < input.length; i++) {
+			if (predicate.keep(input[i])) {
+				survivors.add(input[i]);
+			}
+		}
+
+		return toArray(survivors.toArray(new Byte[survivors.size()]));
+	}
+
+	public static char[] filter(char[] input, Predicate<Character> predicate) {
+
+		if (input == null) {
+			return null;
+		}
+
+		if (input.length == 0) {
+			return input;
+		}
+
+		List<Character> survivors = new ArrayList<Character>();
+
+		for (int i = 0; i < input.length; i++) {
+			if (predicate.keep(input[i])) {
+				survivors.add(input[i]);
+			}
+		}
+
+		return toArray(survivors.toArray(new Character[survivors.size()]));
+	}
+
+	public static double[] filter(double[] input, Predicate<Double> predicate) {
+
+		if (input == null) {
+			return null;
+		}
+
+		if (input.length == 0) {
+			return input;
+		}
+
+		List<Double> survivors = new ArrayList<Double>();
+
+		for (int i = 0; i < input.length; i++) {
+			if (predicate.keep(input[i])) {
+				survivors.add(input[i]);
+			}
+		}
+
+		return toArray(survivors.toArray(new Double[survivors.size()]));
+	}
+
+	public static float[] filter(float[] input, Predicate<Float> predicate) {
+
+		if (input == null) {
+			return null;
+		}
+
+		if (input.length == 0) {
+			return input;
+		}
+
+		List<Float> survivors = new ArrayList<Float>();
+
+		for (int i = 0; i < input.length; i++) {
+			if (predicate.keep(input[i])) {
+				survivors.add(input[i]);
+			}
+		}
+
+		return toArray(survivors.toArray(new Float[survivors.size()]));
+	}
+
+	public static int[] filter(int[] input, Predicate<Integer> predicate) {
+
+		if (input == null) {
+			return null;
+		}
+
+		if (input.length == 0) {
+			return input;
+		}
+
+		List<Integer> survivors = new ArrayList<Integer>();
+
+		for (int i = 0; i < input.length; i++) {
+			if (predicate.keep(input[i])) {
+				survivors.add(input[i]);
+			}
+		}
+
+		return toArray(survivors.toArray(new Integer[survivors.size()]));
+	}
+
+	public static long[] filter(long[] input, Predicate<Long> predicate) {
+
+		if (input == null) {
+			return null;
+		}
+
+		if (input.length == 0) {
+			return input;
+		}
+
+		List<Long> survivors = new ArrayList<Long>();
+
+		for (int i = 0; i < input.length; i++) {
+			if (predicate.keep(input[i])) {
+				survivors.add(input[i]);
+			}
+		}
+
+		return toArray(survivors.toArray(new Long[survivors.size()]));
+	}
+
+	public static short[] filter(short[] input, Predicate<Short> predicate) {
+
+		if (input == null) {
+			return null;
+		}
+
+		if (input.length == 0) {
+			return input;
+		}
+
+		List<Short> survivors = new ArrayList<Short>();
+
+		for (int i = 0; i < input.length; i++) {
+			if (predicate.keep(input[i])) {
+				survivors.add(input[i]);
+			}
+		}
+
+		return toArray(survivors.toArray(new Short[survivors.size()]));
+	}
+
+	@SuppressWarnings("unchecked")
+	public static <T> T[] filter(T[] input, Predicate<T> predicate) {
+
+		if (input == null) {
+			return null;
+		}
+
+		if (input.length == 0) {
+			return input;
+		}
+
+		List<T> origin = (List<T>)Arrays.asList(input);
+		ArrayList<T> survivors = new ArrayList<T>();
+
+		for (T item : origin) {
+			if (predicate.keep(item)) {
+				survivors.add(item);
+			}
+		}
+
+		Object[] result = survivors.toArray();
+		return (T[])Arrays.copyOf(result, result.length, input.getClass());
 	}
 
 	public static int getLength(Object[] array) {

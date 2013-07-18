@@ -14,6 +14,8 @@
  */
 --%>
 
+<%@ page import="com.liferay.portal.kernel.util.Predicate" %>
+
 <%@ include file="/html/portlet/init.jsp" %>
 
 <%@ page import="com.liferay.portal.NoSuchModelException" %><%@
@@ -63,13 +65,14 @@ long[] groupIds = AssetPublisherUtil.getGroupIds(portletPreferences, scopeGroupI
 
 long[] availableClassNameIds = AssetRendererFactoryRegistryUtil.getClassNameIds(company.getCompanyId());
 
-for (long classNameId : availableClassNameIds) {
-	AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(PortalUtil.getClassName(classNameId));
+availableClassNameIds = ArrayUtil.filter(availableClassNameIds, new Predicate<Long>() {
 
-	if (!assetRendererFactory.isSelectable()) {
-		availableClassNameIds = ArrayUtil.remove(availableClassNameIds, classNameId);
+	public boolean keep(Long classNameId) {
+		AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(PortalUtil.getClassName(classNameId));
+		return assetRendererFactory.isSelectable();
 	}
-}
+
+});
 
 boolean anyAssetType = GetterUtil.getBoolean(portletPreferences.getValue("anyAssetType", null), true);
 

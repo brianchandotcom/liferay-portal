@@ -15,9 +15,6 @@
 package com.liferay.portal.model.impl;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
-import com.liferay.portal.kernel.cache.Lifecycle;
-import com.liferay.portal.kernel.cache.ThreadLocalCache;
-import com.liferay.portal.kernel.cache.ThreadLocalCacheManager;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.shard.ShardUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -352,32 +349,8 @@ public class UserImpl extends UserBaseImpl {
 			String[] classNames, boolean includeControlPanel, int max)
 		throws PortalException, SystemException {
 
-		ThreadLocalCache<List<Group>> threadLocalCache =
-			ThreadLocalCacheManager.getThreadLocalCache(
-				Lifecycle.REQUEST, UserImpl.class.getName());
-
-		String key = StringUtil.toHexString(max);
-
-		if ((classNames != null) && (classNames.length > 0)) {
-			key = StringUtil.merge(classNames).concat(StringPool.POUND).concat(
-				key);
-		}
-
-		key = key.concat(StringPool.POUND).concat(
-			String.valueOf(includeControlPanel));
-
-		List<Group> myPlaces = threadLocalCache.get(key);
-
-		if (myPlaces != null) {
-			return myPlaces;
-		}
-
-		myPlaces = GroupServiceUtil.getUserPlacesGroups(
+		return GroupServiceUtil.getUserPlacesGroups(
 			getUserId(), classNames, includeControlPanel, max);
-
-		threadLocalCache.put(key, myPlaces);
-
-		return myPlaces;
 	}
 
 	@Override

@@ -2729,6 +2729,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
+	@ThreadLocalCachable
 	public List<Group> search(
 			long companyId, String keywords,
 			LinkedHashMap<String, Object> params, int start, int end)

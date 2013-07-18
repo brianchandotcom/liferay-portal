@@ -63,6 +63,10 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class ActionUtil {
 
+	public static final String ACTION = "_ACTION_";
+
+	public static final String PRESELECTED = "_PRESELECTED_";
+
 	public static PortletPreferences getLayoutPortletSetup(
 			PortletRequest portletRequest, Portlet portlet)
 		throws SystemException {

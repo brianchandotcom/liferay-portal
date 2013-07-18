@@ -27,20 +27,20 @@ public class FreeMarkerStack {
 		return _stack.empty();
 	}
 
-	public String peek() {
+	public Object peek() {
 		return _stack.peek();
 	}
 
-	public String pop() {
+	public Object pop() {
 		return _stack.pop();
 	}
 
-	public String push(String string) {
-		_stack.push(string);
+	public Object push(Object o) {
+		_stack.push(o);
 
 		return StringPool.BLANK;
 	}
 
-	private Stack<String> _stack = new Stack<String>();
+	private Stack<Object> _stack = new Stack<Object>();
 
 }

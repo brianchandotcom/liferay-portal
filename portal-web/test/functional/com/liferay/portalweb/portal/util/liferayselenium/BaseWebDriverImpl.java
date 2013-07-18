@@ -14,6 +14,7 @@
 
 package com.liferay.portalweb.portal.util.liferayselenium;
 
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OSDetector;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -22,10 +23,14 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portalweb.portal.util.TestPropsValues;
 
+import java.io.File;
+
 import java.util.Calendar;
 
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.internal.WrapsDriver;
@@ -424,7 +429,40 @@ public abstract class BaseWebDriverImpl
 	}
 
 	@Override
-	public void saveScreenShotAndSource() throws Exception {
+	public void saveScreenshot(String fileName) throws Exception {
+		if (!TestPropsValues.SAVE_SCREENSHOT) {
+			return;
+		}
+
+		if (_screenshotFileName.equals(fileName)) {
+			_screenshotCount++;
+		}
+		else {
+			_screenshotCount = 0;
+
+			_screenshotFileName = fileName;
+		}
+
+		WebElement bodyElement = getWebElement("//body");
+
+		WrapsDriver wrapsDriver = (WrapsDriver)bodyElement;
+
+		WebDriver webDriver = wrapsDriver.getWrappedDriver();
+
+		TakesScreenshot takesScreenshot = (TakesScreenshot)webDriver;
+
+		File file = takesScreenshot.getScreenshotAs(OutputType.FILE);
+
+		FileUtil.copyFile(
+			file,
+			new File(
+				getProjectDir() + "portal-web\\test-results\\functional\\" +
+					_screenshotFileName + "/" + _screenshotFileName +
+					_screenshotCount + ".jpg"));
+	}
+
+	@Override
+	public void saveScreenshotAndSource() throws Exception {
 	}
 
 	@Override
@@ -601,5 +639,7 @@ public abstract class BaseWebDriverImpl
 	private String _clipBoard = "";
 	private String _primaryTestSuiteName;
 	private String _projectDir;
+	private int _screenshotCount = 0;
+	private String _screenshotFileName = "";
 
 }

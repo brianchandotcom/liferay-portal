@@ -66,4 +66,23 @@ ${seleniumBuilderFileUtil.getVariableName(action?substring(0, x))}Action.${actio
 
 <#if actionElement.getName() == "execute">
 	;
+
+	<#if
+		(actionNextElement??) &&
+		(actionElement != actionNextElement) &&
+		(actionElement.getName() == "execute") &&
+		(actionNextElement.attributeValue("action")??)
+	>
+		<#assign actionNext = actionNextElement.attributeValue("action")>
+
+		<#if !actionNext?ends_with("#confirm")>
+			<#if testCaseName??>
+				selenium
+			<#else>
+				liferaySelenium
+			</#if>
+
+			.saveScreenshot(commandScopeVariables.get("testCaseName"));
+		</#if>
+	</#if>
 </#if>

@@ -34,61 +34,79 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 		</copy>
 	</target>
 
-	<target name="build-axis-jar">
+	<target name="prepare-axis-sources">
+
+		<property name="axis.source.dir" value="src-axis" />
+
+		<delete dir="${axis.source.dir}" />
+
 		<get
 			dest="axis-1.4-sources.zip"
 			src="http://search.maven.org/remotecontent?filepath=axis/axis/1.4/axis-1.4-sources.jar"
 		/>
 
-		<tstamp>
-			<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
-		</tstamp>
-
 		<unzip
-			dest="${tstamp.value}"
+			dest="${axis.source.dir}"
 			src="axis-1.4-sources.zip"
-		>
-			<patternset>
-				<include name="**/AxisEngine.java" />
-				<include name="**/EngineConfiguration.java" />
-				<include name="**/JavaServiceDesc.java" />
-				<include name="**/MapDeserializer.java" />
-				<include name="**/Session.java" />
-				<include name="**/Types.java" />
-			</patternset>
-		</unzip>
+		/>
 
 		<delete file="axis-1.4-sources.zip" />
 
 		<patch
-			dir="${tstamp.value}"
+			dir="${axis.source.dir}"
 			patchfile="${project.dir}/lib/portal/axis/AXIS-2585.patch"
 			strip="1"
 		/>
 
 		<patch
-			dir="${tstamp.value}"
+			dir="${axis.source.dir}"
 			patchfile="${project.dir}/lib/portal/axis/LPS-28561.patch"
 			strip="1"
 		/>
 
 		<patch
-			dir="${tstamp.value}"
+			dir="${axis.source.dir}"
 			patchfile="${project.dir}/lib/portal/axis/LPS-34308.patch"
 			strip="1"
 		/>
 
 		<patch
-			dir="${tstamp.value}"
+			dir="${axis.source.dir}"
 			patchfile="${project.dir}/lib/portal/axis/LPS-35125.patch"
 			strip="1"
 		/>
 
 		<patch
-			dir="${tstamp.value}"
+			dir="${axis.source.dir}"
 			patchfile="${project.dir}/lib/portal/axis/LPS-36160.patch"
 			strip="1"
 		/>
+
+	</target>
+
+	<target name="build-axis-jar">
+
+		<antcall target="prepare-axis-sources"/>
+
+		<property name="axis.source.dir" value="src-axis" />
+
+		<tstamp>
+			<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
+		</tstamp>
+
+		<copy todir="${tstamp.value}">
+			<fileset dir="${axis.source.dir}">
+				<patternset>
+					<include name="**/MapItem.java" />
+					<include name="**/AxisEngine.java" />
+					<include name="**/EngineConfiguration.java" />
+					<include name="**/JavaServiceDesc.java" />
+					<include name="**/MapDeserializer.java" />
+					<include name="**/Session.java" />
+					<include name="**/Types.java" />
+				</patternset>
+			</fileset>
+		</copy>
 
 		<antcall target="compile-java">
 			<param name="javac.classpathref" value="project.classpath" />
@@ -106,6 +124,7 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 		</jar>
 
 		<delete dir="${tstamp.value}" />
+		<delete dir="${axis.source.dir}" />
 	</target>
 
 	<!--<target name="build-copy-interface">

@@ -17,7 +17,7 @@
 <%@ include file="/html/portal/layout/edit/init.jsp" %>
 
 <%
-Boolean showCopyPortlets = ParamUtil.getBoolean(request, "showCopyPortlets", false);
+Boolean showCopyPortlets = ParamUtil.getBoolean(request, "showCopyPortlets");
 Boolean showLayoutTemplates = ParamUtil.getBoolean(request, "showLayoutTemplates", true);
 %>
 
@@ -86,7 +86,7 @@ Boolean showLayoutTemplates = ParamUtil.getBoolean(request, "showLayoutTemplates
 	<%
 	LayoutTypePortlet selLayoutTypePortlet = null;
 
-	Theme selTheme = null;
+	Theme selTheme = layout.getTheme();
 
 	if (selLayout != null) {
 		selLayoutTypePortlet = (LayoutTypePortlet)selLayout.getLayoutType();

@@ -80,6 +80,7 @@ UnicodeProperties layoutTypeSettings = selLayout.getTypeSettingsProperties();
 		var changeLogo = (event.type == 'change');
 
 		iconImageInput.val(changeLogo);
+
 		if (layoutIconContainer) {
 			layoutIconContainer.hide();
 		}

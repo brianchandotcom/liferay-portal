@@ -157,7 +157,7 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 			timeZone = user.getTimeZone();
 		}
 		else {
-			locale = LocaleUtil.getDefault();
+			locale = LocaleUtil.getSiteDefault();
 			timeZone = TimeZoneUtil.getTimeZone(StringPool.UTC);
 		}
 
@@ -807,7 +807,7 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 			timeZone = user.getTimeZone();
 		}
 		else {
-			locale = LocaleUtil.getDefault();
+			locale = LocaleUtil.getSiteDefault();
 			timeZone = TimeZoneUtil.getTimeZone(StringPool.UTC);
 		}
 

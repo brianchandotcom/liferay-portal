@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.GroupLocalServiceUtil;
@@ -70,7 +69,7 @@ public class AddDefaultDDMTemplatesAction extends SimpleAction {
 
 		Map<Locale, String> nameMap = new HashMap<Locale, String>();
 
-		Locale locale = LocaleUtil.getDefault();
+		Locale locale = PortalUtil.getSiteDefaultLocale(groupId);
 
 		nameMap.put(locale, LanguageUtil.get(locale, name));
 

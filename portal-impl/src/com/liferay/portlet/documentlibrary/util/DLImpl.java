@@ -439,7 +439,7 @@ public class DLImpl implements DL {
 		Map<Locale, String> map = LocalizationUtil.getLocalizationMap(
 			preferences, "emailFileEntryAddedBody");
 
-		Locale defaultLocale = LocaleUtil.getDefault();
+		Locale defaultLocale = LocaleUtil.getSiteDefault();
 
 		String defaultValue = map.get(defaultLocale);
 
@@ -477,7 +477,7 @@ public class DLImpl implements DL {
 		Map<Locale, String> map = LocalizationUtil.getLocalizationMap(
 			preferences, "emailFileEntryAddedSubject");
 
-		Locale defaultLocale = LocaleUtil.getDefault();
+		Locale defaultLocale = LocaleUtil.getSiteDefault();
 
 		String defaultValue = map.get(defaultLocale);
 
@@ -500,7 +500,7 @@ public class DLImpl implements DL {
 		Map<Locale, String> map = LocalizationUtil.getLocalizationMap(
 			preferences, "emailFileEntryUpdatedBody");
 
-		Locale defaultLocale = LocaleUtil.getDefault();
+		Locale defaultLocale = LocaleUtil.getSiteDefault();
 
 		String defaultValue = map.get(defaultLocale);
 
@@ -538,7 +538,7 @@ public class DLImpl implements DL {
 		Map<Locale, String> map = LocalizationUtil.getLocalizationMap(
 			preferences, "emailFileEntryUpdatedSubject");
 
-		Locale defaultLocale = LocaleUtil.getDefault();
+		Locale defaultLocale = LocaleUtil.getSiteDefault();
 
 		String defaultValue = map.get(defaultLocale);
 

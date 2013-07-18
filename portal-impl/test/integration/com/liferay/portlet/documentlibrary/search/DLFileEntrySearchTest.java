@@ -145,7 +145,8 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 	@Override
 	protected String getDDMStructureFieldName() {
 		return DDMIndexerUtil.encodeName(
-			_ddmStructure.getStructureId(), "name", LocaleUtil.getDefault());
+			_ddmStructure.getStructureId(), "name",
+			LocaleUtil.getSiteDefault());
 	}
 
 	@Override

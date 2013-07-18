@@ -565,7 +565,11 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 		<#if column.localized>
 			@Override
 			public void set${column.methodName}(String ${column.name}, Locale locale) {
-				set${column.methodName}(${column.name}, locale, LocaleUtil.getDefault());
+				<#if entity.isGroupedModel()>
+					set${column.methodName}(${column.name}, locale, LocaleUtil.getSiteDefault());
+				<#else>
+					set${column.methodName}(${column.name}, locale, LocaleUtil.getDefault());
+				</#if>
 			}
 
 			@Override
@@ -588,7 +592,11 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 
 			@Override
 			public void set${column.methodName}Map(Map<Locale, String> ${column.name}Map) {
-				set${column.methodName}Map(${column.name}Map, LocaleUtil.getDefault());
+				<#if entity.isGroupedModel()>
+					set${column.methodName}Map(${column.name}Map, LocaleUtil.getSiteDefault());
+				<#else>
+					set${column.methodName}Map(${column.name}Map, LocaleUtil.getDefault());
+				</#if>
 			}
 
 			@Override

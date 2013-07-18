@@ -55,7 +55,7 @@ public class DDMTemplateImpl extends DDMTemplateBaseImpl {
 		catch (Exception e) {
 		}
 
-		Locale locale = LocaleUtil.getDefault();
+		Locale locale = LocaleUtil.getSiteDefault();
 
 		return locale.toString();
 	}

@@ -371,7 +371,7 @@ if (Validator.isNotNull(content)) {
 								<aui:select cssClass="hide" id="defaultLocale" inlineField="<%= true %>" label="" name="defaultLanguageId">
 
 									<%
-									Locale[] locales = LanguageUtil.getAvailableLocales();
+									Locale[] locales = LanguageUtil.getAvailableLocales(themeDisplay.getSiteGroupId());
 
 									for (int i = 0; i < locales.length; i++) {
 									%>
@@ -399,7 +399,7 @@ if (Validator.isNotNull(content)) {
 									>
 
 										<%
-										Locale[] locales = LanguageUtil.getAvailableLocales();
+										Locale[] locales = LanguageUtil.getAvailableLocales(themeDisplay.getSiteGroupId());
 
 										for (int i = 0; i < locales.length; i++) {
 											if (ArrayUtil.contains(article.getAvailableLocales(), LocaleUtil.toLanguageId(locales[i]))) {

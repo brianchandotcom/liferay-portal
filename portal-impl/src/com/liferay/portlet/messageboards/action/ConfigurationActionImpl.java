@@ -25,6 +25,8 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.WebKeys;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,7 +84,11 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 	protected void updateThreadPriorities(ActionRequest actionRequest)
 		throws Exception {
 
-		Locale[] locales = LanguageUtil.getAvailableLocales();
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Locale[] locales = LanguageUtil.getAvailableLocales(
+			themeDisplay.getSiteGroupId());
 
 		for (int i = 0; i < locales.length; i++) {
 			String languageId = LocaleUtil.toLanguageId(locales[i]);
@@ -118,7 +124,11 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 	protected void updateUserRanks(ActionRequest actionRequest)
 		throws Exception {
 
-		Locale[] locales = LanguageUtil.getAvailableLocales();
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Locale[] locales = LanguageUtil.getAvailableLocales(
+			themeDisplay.getSiteGroupId());
 
 		for (Locale locale : locales) {
 			String languageId = LocaleUtil.toLanguageId(locale);

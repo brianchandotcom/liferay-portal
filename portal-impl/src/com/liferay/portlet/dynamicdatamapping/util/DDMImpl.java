@@ -383,9 +383,9 @@ public class DDMImpl implements DDM {
 		Locale defaultLocale = LocaleUtil.fromLanguageId(defaultLanguageId);
 
 		if (ddmStructure.isFieldPrivate(fieldName)) {
-			locale = LocaleUtil.getDefault();
+			locale = LocaleUtil.getSiteDefault();
 
-			defaultLocale = LocaleUtil.getDefault();
+			defaultLocale = LocaleUtil.getSiteDefault();
 		}
 
 		field.setDefaultLocale(defaultLocale);

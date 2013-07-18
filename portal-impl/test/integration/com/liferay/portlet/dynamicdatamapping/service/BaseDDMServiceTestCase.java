@@ -140,7 +140,7 @@ public class BaseDDMServiceTestCase {
 	protected Map<Locale, String> getDefaultLocaleMap(String defaultValue) {
 		Map<Locale, String> map = new HashMap<Locale, String>();
 
-		map.put(LocaleUtil.getDefault(), defaultValue);
+		map.put(LocaleUtil.getSiteDefault(), defaultValue);
 
 		return map;
 	}

@@ -48,6 +48,8 @@ public interface ModelHints {
 	public String getValue(
 		String model, String field, String name, String defaultValue);
 
+	public boolean hasField(String model, String field);
+
 	public boolean isCustomValidator(String validatorName);
 
 	public boolean isLocalized(String model, String field);

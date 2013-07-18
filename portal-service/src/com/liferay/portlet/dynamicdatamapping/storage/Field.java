@@ -264,7 +264,7 @@ public class Field implements Serializable {
 	}
 
 	public void setValue(Serializable value) {
-		setValue(LocaleUtil.getDefault(), value);
+		setValue(LocaleUtil.getSiteDefault(), value);
 	}
 
 	public void setValues(Locale locale, List<Serializable> values) {
@@ -297,7 +297,7 @@ public class Field implements Serializable {
 		}
 
 		if (locale == null) {
-			locale = LocaleUtil.getDefault();
+			locale = LocaleUtil.getSiteDefault();
 		}
 
 		List<Serializable> values = _valuesMap.get(locale);

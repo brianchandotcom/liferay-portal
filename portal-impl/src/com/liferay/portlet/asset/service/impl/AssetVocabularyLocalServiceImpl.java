@@ -65,7 +65,7 @@ public class AssetVocabularyLocalServiceImpl
 		Map<Locale, String> titleMap = new HashMap<Locale, String>();
 
 		titleMap.put(
-			LocaleUtil.getDefault(), PropsValues.ASSET_VOCABULARY_DEFAULT);
+			LocaleUtil.getSiteDefault(), PropsValues.ASSET_VOCABULARY_DEFAULT);
 
 		ServiceContext serviceContext = new ServiceContext();
 
@@ -102,7 +102,7 @@ public class AssetVocabularyLocalServiceImpl
 
 		User user = userPersistence.findByPrimaryKey(userId);
 		long groupId = serviceContext.getScopeGroupId();
-		String name = titleMap.get(LocaleUtil.getDefault());
+		String name = titleMap.get(LocaleUtil.getSiteDefault());
 
 		Date now = new Date();
 
@@ -159,7 +159,7 @@ public class AssetVocabularyLocalServiceImpl
 
 		Map<Locale, String> titleMap = new HashMap<Locale, String>();
 
-		Locale locale = LocaleUtil.getDefault();
+		Locale locale = LocaleUtil.getSiteDefault();
 
 		titleMap.put(locale, title);
 
@@ -380,7 +380,7 @@ public class AssetVocabularyLocalServiceImpl
 		throws PortalException, SystemException {
 
 		long groupId = serviceContext.getScopeGroupId();
-		String name = titleMap.get(LocaleUtil.getDefault());
+		String name = titleMap.get(LocaleUtil.getSiteDefault());
 
 		AssetVocabulary vocabulary =
 			assetVocabularyPersistence.findByPrimaryKey(vocabularyId);

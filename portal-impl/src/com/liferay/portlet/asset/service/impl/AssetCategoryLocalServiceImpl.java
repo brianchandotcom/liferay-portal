@@ -73,7 +73,7 @@ public class AssetCategoryLocalServiceImpl
 		User user = userPersistence.findByPrimaryKey(userId);
 		long groupId = serviceContext.getScopeGroupId();
 
-		String name = titleMap.get(LocaleUtil.getDefault());
+		String name = titleMap.get(LocaleUtil.getSiteDefault());
 
 		name = ModelHintsUtil.trimString(
 			AssetCategory.class.getName(), "name", name);
@@ -157,7 +157,7 @@ public class AssetCategoryLocalServiceImpl
 
 		Map<Locale, String> titleMap = new HashMap<Locale, String>();
 
-		Locale locale = LocaleUtil.getDefault();
+		Locale locale = LocaleUtil.getSiteDefault();
 
 		titleMap.put(locale, title);
 
@@ -471,7 +471,7 @@ public class AssetCategoryLocalServiceImpl
 
 		// Category
 
-		String name = titleMap.get(LocaleUtil.getDefault());
+		String name = titleMap.get(LocaleUtil.getSiteDefault());
 
 		name = ModelHintsUtil.trimString(
 			AssetCategory.class.getName(), "name", name);

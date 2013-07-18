@@ -668,7 +668,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 		Map<Locale, String> map = LocalizationUtil.getLocalizationMap(
 			preferences, "emailAssetEntryAddedBody");
 
-		Locale defaultLocale = LocaleUtil.getDefault();
+		Locale defaultLocale = LocaleUtil.getSiteDefault();
 
 		String defaultValue = map.get(defaultLocale);
 
@@ -707,7 +707,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 		Map<Locale, String> map = LocalizationUtil.getLocalizationMap(
 			preferences, "emailAssetEntryAddedSubject");
 
-		Locale defaultLocale = LocaleUtil.getDefault();
+		Locale defaultLocale = LocaleUtil.getSiteDefault();
 
 		String defaultValue = map.get(defaultLocale);
 
@@ -1209,7 +1209,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 
 			@Override
 			public String get(AssetEntry assetEntry) {
-				return assetEntry.getTitle(LocaleUtil.getDefault());
+				return assetEntry.getTitle(LocaleUtil.getSiteDefault());
 			}
 
 		};

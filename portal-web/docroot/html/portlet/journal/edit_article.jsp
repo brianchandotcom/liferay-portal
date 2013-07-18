@@ -99,16 +99,16 @@ if (Validator.isNotNull(toLanguageId)) {
 	languageId = toLanguageId;
 }
 
-if ((article == null) && (Validator.isNull(defaultLanguageId) || !LanguageUtil.isAvailableLocale(defaultLanguageId))) {
-	if (LanguageUtil.isAvailableLocale(languageId)) {
+if ((article == null) && (Validator.isNull(defaultLanguageId) || !LanguageUtil.isAvailableLocale(themeDisplay.getSiteGroupId(), defaultLanguageId))) {
+	if (LanguageUtil.isAvailableLocale(themeDisplay.getSiteGroupId(), languageId)) {
 		defaultLanguageId = languageId;
 	}
 	else {
-		defaultLanguageId = LocaleUtil.toLanguageId(LocaleUtil.getDefault());
+		defaultLanguageId = LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale());
 	}
 }
 else {
-	if (Validator.isNull(defaultLanguageId) || !LanguageUtil.isAvailableLocale(defaultLanguageId)) {
+	if (Validator.isNull(defaultLanguageId) || !LanguageUtil.isAvailableLocale(themeDisplay.getSiteGroupId(), defaultLanguageId)) {
 		defaultLanguageId = article.getDefaultLocale();
 	}
 }

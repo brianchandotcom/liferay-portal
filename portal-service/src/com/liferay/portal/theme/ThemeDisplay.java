@@ -445,6 +445,10 @@ public class ThemeDisplay
 		return _sessionId;
 	}
 
+	public Locale getSiteDefaultLocale() {
+		return _siteDefaultLocale;
+	}
+
 	public Group getSiteGroup() {
 		return _siteGroup;
 	}
@@ -1297,6 +1301,12 @@ public class ThemeDisplay
 		_signedIn = signedIn;
 	}
 
+	public void setSiteDefaultLocale(Locale siteDefaultLocale) {
+		_siteDefaultLocale = siteDefaultLocale;
+
+		LocaleThreadLocal.setSiteDefaultLocale(siteDefaultLocale);
+	}
+
 	public void setSiteGroupId(long siteGroupId) {
 		_siteGroupId = siteGroupId;
 
@@ -1550,6 +1560,7 @@ public class ThemeDisplay
 	private boolean _showSiteSettingsIcon;
 	private boolean _showStagingIcon;
 	private boolean _signedIn;
+	private Locale _siteDefaultLocale;
 	private Group _siteGroup;
 	private long _siteGroupId;
 	private boolean _stateExclusive;

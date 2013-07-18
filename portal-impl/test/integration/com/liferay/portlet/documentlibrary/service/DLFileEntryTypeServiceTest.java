@@ -85,7 +85,7 @@ public class DLFileEntryTypeServiceTest {
 			PortalUtil.getSiteAndCompanyGroupIds(_group.getGroupId()));
 
 		for (DLFileEntryType dlFileEntryType : _dlFileEntryTypes) {
-			String name = dlFileEntryType.getName(LocaleUtil.getDefault());
+			String name = dlFileEntryType.getName(LocaleUtil.getSiteDefault());
 
 			if (name.equals(DLFileEntryTypeConstants.NAME_CONTRACT)) {
 				_contractDLFileEntryType = dlFileEntryType;
@@ -134,7 +134,7 @@ public class DLFileEntryTypeServiceTest {
 			ddmStructure.getAvailableLanguageIds());
 
 		boolean hasDefaultLocale = ArrayUtil.contains(
-			availableLocales, LocaleUtil.getDefault());
+			availableLocales, LocaleUtil.getSiteDefault());
 
 		Assert.assertTrue(hasDefaultLocale);
 

@@ -106,7 +106,7 @@ public class LayoutLocalServiceHelper implements IdentifiableBean {
 
 		Map<Locale, String> newFriendlyURLMap = new HashMap<Locale, String>();
 
-		Locale[] locales = LanguageUtil.getAvailableLocales();
+		Locale[] locales = LanguageUtil.getAvailableLocales(groupId);
 
 		for (Locale locale : locales) {
 			String friendlyURL = friendlyURLMap.get(locale);
@@ -123,7 +123,7 @@ public class LayoutLocalServiceHelper implements IdentifiableBean {
 			String friendlyURL = getFriendlyURL(
 				groupId, privateLayout, layoutId, name, StringPool.BLANK);
 
-			newFriendlyURLMap.put(LocaleUtil.getDefault(), friendlyURL);
+			newFriendlyURLMap.put(LocaleUtil.getSiteDefault(), friendlyURL);
 		}
 
 		return newFriendlyURLMap;
@@ -338,7 +338,7 @@ public class LayoutLocalServiceHelper implements IdentifiableBean {
 		throws PortalException {
 
 		String defaultLanguageId = LocaleUtil.toLanguageId(
-			LocaleUtil.getDefault());
+			LocaleUtil.getSiteDefault());
 
 		if (defaultLanguageId.equals(languageId)) {
 			validateName(name);

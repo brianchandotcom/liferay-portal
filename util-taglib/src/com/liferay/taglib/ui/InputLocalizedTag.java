@@ -14,9 +14,12 @@
 
 package com.liferay.taglib.ui;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelHintsConstants;
 import com.liferay.taglib.util.IncludeTag;
+
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -25,12 +28,20 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class InputLocalizedTag extends IncludeTag {
 
+	public Locale[] getAvailableLocales() {
+		return _availableLocales;
+	}
+
 	public void setAutoFocus(boolean autoFocus) {
 		_autoFocus = autoFocus;
 	}
 
 	public void setAutoSize(boolean autoSize) {
 		_autoSize = autoSize;
+	}
+
+	public void setAvailableLocales(Locale[] availableLocales) {
+		_availableLocales = availableLocales;
 	}
 
 	public void setCssClass(String cssClass) {
@@ -105,6 +116,12 @@ public class InputLocalizedTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
+		Locale[] availableLocales = _availableLocales;
+
+		if (availableLocales == null) {
+			availableLocales = LanguageUtil.getAvailableLocales();
+		}
+
 		String formName = _formName;
 
 		if (Validator.isNull(formName)) {
@@ -121,6 +138,8 @@ public class InputLocalizedTag extends IncludeTag {
 			"liferay-ui:input-localized:autoFocus", String.valueOf(_autoFocus));
 		request.setAttribute(
 			"liferay-ui:input-localized:autoSize", String.valueOf(_autoSize));
+		request.setAttribute(
+			"liferay-ui:input-localized:availableLocales", availableLocales);
 		request.setAttribute("liferay-ui:input-localized:cssClass", _cssClass);
 		request.setAttribute(
 			"liferay-ui:input-localized:defaultLanguageId", _defaultLanguageId);
@@ -150,6 +169,7 @@ public class InputLocalizedTag extends IncludeTag {
 
 	private boolean _autoFocus;
 	private boolean _autoSize;
+	private Locale[] _availableLocales;
 	private String _cssClass;
 	private String _defaultLanguageId;
 	private boolean _disabled;

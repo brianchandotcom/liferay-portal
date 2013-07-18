@@ -16,7 +16,16 @@
 	</set-up>
 
 	<command name="AddWikiFrontPageContentJavascript">
-		<var name="wikiPageContent" value="&lt;p id=\&quot;demo\&quot;&gt;PASS&lt;/p&gt;&lt;script type=\&quot;text/javascript\&quot;&gt;document.getElementById(&apos;demo&apos;).innerHTML=\&quot;FAIL\&quot;;&lt;/script&gt;" />
+		<var name="wikiPageContent">
+			<![CDATA[
+				<p id='demo'>PASS</p>
+
+				<script type='text/javascript'>
+					document.getElementById('demo').innerHTML='FAIL';
+				</script>
+			]]>
+		</var>
+
 		<var name="wikiPageText" value="PASS" />
 
 		<execute macro="WikiPage#addFrontPagePGHTMLSource">

@@ -120,6 +120,9 @@ public interface PACLConstants {
 
 	public static final String RUNTIME_PERMISSION_LOAD_LIBRARY = "loadLibrary";
 
+	public static final String RUNTIME_PERMISSION_MODIFY_THREAD =
+		"modifyThread";
+
 	public static final String RUNTIME_PERMISSION_READ_FILE_DESCRIPTOR =
 		"readFileDescriptor";
 
@@ -128,6 +131,9 @@ public interface PACLConstants {
 
 	public static final String RUNTIME_PERMISSION_SET_SECURITY_MANAGER =
 		"setSecurityManager";
+
+	public static final String RUNTIME_PERMISSION_SUPPRESS_ACCESS_CHECKS =
+		"suppressAccessChecks";
 
 	public static final String RUNTIME_PERMISSION_WRITE_FILE_DESCRIPTOR =
 		"writeFileDescriptor";

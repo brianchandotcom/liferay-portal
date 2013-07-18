@@ -28,10 +28,57 @@ public class ReflectChecker extends BaseChecker {
 
 	@Override
 	public void afterPropertiesSet() {
+		initSuppressAccessChecks();
+	}
+
+	@Override
+	public AuthorizationProperty generateAuthorizationProperty(
+		Object... arguments) {
+
+		if ((arguments == null) || (arguments.length != 1) ||
+			!(arguments[0] instanceof Permission)) {
+
+			return null;
+		}
+
+		Permission permission = (Permission)arguments[0];
+
+		String name = permission.getName();
+
+		String key = null;
+		String value = null;
+
+		if (name.startsWith(RUNTIME_PERMISSION_SUPPRESS_ACCESS_CHECKS)) {
+			key = "security-manager-suppress-access-checks";
+
+			value = "true";
+		}
+		else {
+			return null;
+		}
+
+		AuthorizationProperty authorizationProperty =
+			new AuthorizationProperty();
+
+		authorizationProperty.setKey(key);
+		authorizationProperty.setValue(value);
+
+		return authorizationProperty;
 	}
 
 	@Override
 	public boolean implies(Permission permission) {
+		String name = permission.getName();
+
+		if (name.startsWith(RUNTIME_PERMISSION_SUPPRESS_ACCESS_CHECKS)) {
+			if (!hasSuppressAccessChecks(permission)) {
+				logSecurityException(
+					_log, "Attempted to suppess access checks");
+
+				return false;
+			}
+		}
+
 		int stackIndex = getStackIndex(10, 9);
 
 		Class<?> callerClass = Reflection.getCallerClass(stackIndex);
@@ -45,6 +92,21 @@ public class ReflectChecker extends BaseChecker {
 		return false;
 	}
 
+	protected boolean hasSuppressAccessChecks(Permission permission) {
+		if (_suppressAccessChecks) {
+			return true;
+		}
+
+		return false;
+	}
+
+	protected void initSuppressAccessChecks() {
+		_suppressAccessChecks = getPropertyBoolean(
+			"security-manager-suppress-access-checks");
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(ReflectChecker.class);
+
+	private boolean _suppressAccessChecks;
 
 }

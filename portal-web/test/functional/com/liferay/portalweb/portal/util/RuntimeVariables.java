@@ -76,17 +76,26 @@ public class RuntimeVariables {
 
 				String replaceRegex = "\\$\\{([^}]*?)\\}";
 
-				if (method.startsWith("replace")) {
-					String result = operandValue.replace(
-						argumentsList.get(0), argumentsList.get(1));
+				String result = "";
 
-					varValue = varValue.replaceFirst(replaceRegex, result);
+				if (method.startsWith("replace")) {
+					result = operandValue.replace(
+						argumentsList.get(0), argumentsList.get(1));
 				}
 				else if (method.startsWith("lowercase")) {
-					String result = operandValue.toLowerCase();
+					result = operandValue.toLowerCase();
 
-					varValue = varValue.replaceFirst(replaceRegex, result);
 				}
+				else if (method.startsWith("length")) {
+					result = Integer.toString(operandValue.length());
+				}
+				else if (method.startsWith("increment")) {
+					int i = Integer.parseInt(operandValue) + 1;
+
+					result = Integer.toString(i);
+				}
+
+				varValue = varValue.replaceFirst(replaceRegex, result);
 			}
 			else {
 				String varName = statement;

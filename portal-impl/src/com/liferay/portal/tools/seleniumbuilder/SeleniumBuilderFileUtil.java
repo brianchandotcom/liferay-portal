@@ -1216,9 +1216,7 @@ public class SeleniumBuilderFileUtil {
 								1006, fileName, element, attributeName);
 						}
 
-						if (!method.equals("lowercase") ||
-							!method.equals("replace")) {
-
+						if (!_methodNames.contains(method)) {
 							throwValidationException(
 								1013, fileName, element, method);
 						}
@@ -1237,6 +1235,9 @@ public class SeleniumBuilderFileUtil {
 			}
 
 			if (!attributeName.equals("line-number") &&
+				!attributeName.equals("path") &&
+				!attributeName.equals("locator-key") &&
+				!attributeName.equals("type") &&
 				!hasNeededAttributes.containsKey(attributeName)) {
 
 				throwValidationException(
@@ -1251,7 +1252,27 @@ public class SeleniumBuilderFileUtil {
 						1004, fileName, element, neededAttributes);
 				}
 				else {
-					if (Validator.isNull(element.getText())) {
+					boolean containsPath = false;
+
+					boolean containsKey = false;
+
+					for (Attribute attribute : attributes) {
+						String attributeName = attribute.getName();
+
+						if (attributeName.equals("path")) {
+							containsPath = true;
+						}
+
+						if (attributeName.equals("locator-key")) {
+							containsKey = true;
+						}
+					}
+
+					String varText = element.getText();
+
+					if (Validator.isNull(varText) &&
+						!(containsPath && containsKey)) {
+
 						throwValidationException(
 							1004, fileName, element, neededAttributes);
 					}
@@ -1406,6 +1427,8 @@ public class SeleniumBuilderFileUtil {
 	private static final String _TPL_ROOT =
 		"com/liferay/portal/tools/seleniumbuilder/dependencies/";
 
+	private static List<String> _methodNames = ListUtil.fromArray(
+		new String[] {"increment", "length", "lowercase", "replace"});
 	private static List<String> _reservedTags = ListUtil.fromArray(
 		new String[] {
 			"case", "command", "condition", "contains", "default", "definition",

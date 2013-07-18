@@ -425,6 +425,22 @@ public class SeleniumBuilderContextTest {
 	}
 
 	@Test
+	public void testMacroVarElement1010_1() throws Exception {
+		test(
+			"MacroVarElement1010_1.macro",
+			"Error 1010: Invalid locator-key name at " + _DIR_NAME +
+				"/MacroVarElement1010_1.macro:2");
+	}
+
+	@Test
+	public void testMacroVarElement1010_2() throws Exception {
+		test(
+			"MacroVarElement1010_2.macro",
+			"Error 1010: Invalid locator-key name at " + _DIR_NAME +
+				"/MacroVarElement1010_2.macro:2");
+	}
+
+	@Test
 	public void testTestCase() throws Exception {
 		test("TestCase.testcase");
 	}

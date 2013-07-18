@@ -1274,30 +1274,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		return entry;
 	}
 
-	protected String getEntryLayoutFullURL(ServiceContext serviceContext) {
-
-		HttpServletRequest request = serviceContext.getRequest();
-
-		if (request == null) {
-			return StringPool.BLANK;
-		}
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		try {
-			String entryLayouFullURL = PortalUtil.getLayoutFullURL(
-				themeDisplay);
-
-			return entryLayouFullURL;
-		}
-		catch (Exception e) {
-			return StringPool.BLANK;
-		}
-	}
-
 	protected String getEntryLayoutURL(
-		Layout layout, ServiceContext serviceContext) {
+		Layout layout, ServiceContext serviceContext, boolean absoluteURL) {
 
 		HttpServletRequest request = serviceContext.getRequest();
 
@@ -1308,15 +1286,20 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		try {
-			String entryLayoutURL = PortalUtil.getLayoutURL(
-				layout, themeDisplay);
+		String entryLayoutURL = StringPool.BLANK;
 
-			return entryLayoutURL;
+		try {
+			if (absoluteURL) {
+				entryLayoutURL = PortalUtil.getLayoutFullURL(themeDisplay);
+			}
+			else if (layout != null) {
+				entryLayoutURL = PortalUtil.getLayoutURL(layout, themeDisplay);
+			}
 		}
 		catch (Exception e) {
-			return StringPool.BLANK;
 		}
+
+		return entryLayoutURL;
 	}
 
 	protected String getUniqueUrlTitle(long entryId, long groupId, String title)
@@ -1438,7 +1421,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 				if (blogsPlid != LayoutConstants.DEFAULT_PLID) {
 					Layout layout = layoutLocalService.getLayout(blogsPlid);
 
-					layoutFullURL = getEntryLayoutURL(layout, serviceContext);
+					layoutFullURL = getEntryLayoutURL(
+						layout, serviceContext, false);
 				}
 			}
 
@@ -1572,7 +1556,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			return;
 		}
 
-		String layoutFullURL = getEntryLayoutFullURL(serviceContext);
+		String layoutFullURL = getEntryLayoutURL(null, serviceContext, true);
 
 		if (Validator.isNull(layoutFullURL)) {
 			return;
@@ -1611,7 +1595,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			return;
 		}
 
-		String layoutFullURL = getEntryLayoutFullURL(serviceContext);
+		String layoutFullURL = getEntryLayoutURL(null, serviceContext, true);
 
 		if (Validator.isNull(layoutFullURL)) {
 			return;

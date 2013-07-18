@@ -761,6 +761,8 @@ public class ServicePreAction extends Action {
 		themeDisplay.setSiteGroupId(siteGroupId);
 		themeDisplay.setSignedIn(signedIn);
 		themeDisplay.setPermissionChecker(permissionChecker);
+		themeDisplay.setSiteDefaultLocale(
+			PortalUtil.getSiteDefaultLocale(siteGroupId));
 		themeDisplay.setLocale(locale);
 		themeDisplay.setLanguageId(LocaleUtil.toLanguageId(locale));
 		themeDisplay.setI18nLanguageId(i18nLanguageId);

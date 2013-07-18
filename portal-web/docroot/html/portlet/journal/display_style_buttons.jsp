@@ -37,7 +37,7 @@ requestParams.put("struts_action", Validator.isNull(keywords) ? "/journal/view" 
 requestParams.put("navigation", HtmlUtil.escapeJS(navigation));
 requestParams.put("folderId", String.valueOf(folderId));
 requestParams.put("searchType", String.valueOf(JournalSearchConstants.FRAGMENT));
-requestParams.put("viewEntriesPage", Boolean.TRUE.toString());
+requestParams.put("viewEntriesPage", Boolean.FALSE.toString());
 requestParams.put("viewFolders", Boolean.FALSE.toString());
 
 if (Validator.isNull(keywords)) {

@@ -86,6 +86,9 @@
 							userId: themeDisplay.getUserId()
 						}
 					)
+				},
+				function(response, xhr) {
+					window.location.reload();
 				}
 			);
 		},

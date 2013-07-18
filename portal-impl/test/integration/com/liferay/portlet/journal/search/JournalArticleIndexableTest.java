@@ -114,7 +114,7 @@ public class JournalArticleIndexableTest {
 			group.getGroupId(), JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			PortalUtil.getClassNameId(DDMStructure.class),
 			ServiceTestUtil.randomString(), ServiceTestUtil.randomString(),
-			ServiceTestUtil.randomString(), LocaleUtil.getDefault(), false,
+			ServiceTestUtil.randomString(), LocaleUtil.getSiteDefault(), false,
 			true, ServiceTestUtil.getServiceContext(group.getGroupId()));
 
 		hits = AssetUtil.search(

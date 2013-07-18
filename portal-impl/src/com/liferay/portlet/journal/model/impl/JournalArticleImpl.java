@@ -151,7 +151,7 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 
 		if (isTemplateDriven() && Validator.isNull(defaultLanguageId)) {
 			defaultLanguageId = LocaleUtil.toLanguageId(
-				LocaleUtil.getDefault());
+				LocaleUtil.getSiteDefault());
 		}
 
 		return defaultLanguageId;

@@ -312,5 +312,6 @@ if (Validator.isNotNull(historyKey)) {
 			return TextFormatter.format(name, TextFormatter.N);
 		}
 		%>
+
 	</c:otherwise>
 </c:choose>

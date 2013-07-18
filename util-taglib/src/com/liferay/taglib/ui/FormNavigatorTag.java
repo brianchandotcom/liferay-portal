@@ -89,7 +89,8 @@ public class FormNavigatorTag extends IncludeTag {
 			"liferay-ui:form-navigator:categoryNames", _categoryNames);
 		request.setAttribute(
 			"liferay-ui:form-navigator:categorySections", _categorySections);
-		request.setAttribute("liferay-ui:form-navigator:displayStyle", _displayStyle);
+		request.setAttribute(
+			"liferay-ui:form-navigator:displayStyle", _displayStyle);
 		request.setAttribute("liferay-ui:form-navigator:formName", _formName);
 		request.setAttribute(
 			"liferay-ui:form-navigator:htmlBottom", _htmlBottom);

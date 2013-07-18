@@ -64,25 +64,7 @@ if (Validator.isNotNull(historyKey)) {
 
 	<div class="taglib-form-navigator row-fluid" id="<portlet:namespace />tabs">
 		<div class="span8">
-
-			<%
-			for (String section : allSections) {
-				String sectionId = namespace + _getSectionId(section);
-				String sectionJsp = jspPath + _getSectionJsp(section) + ".jsp";
-			%>
-
-				<!-- Begin fragment <%= sectionId %> -->
-
-				<div class="form-section <%= (curSection.equals(section) || curSection.equals(sectionId)) ? "active" : StringPool.BLANK %>" id="<%= sectionId %>">
-					<liferay-util:include page="<%= sectionJsp %>" portletId="<%= portletDisplay.getRootPortletId() %>" />
-				</div>
-
-				<!-- End fragment <%= sectionId %> -->
-
-			<%
-			}
-			%>
-
+			<%@ include file="/html/taglib/ui/form_navigator/sections.jspf" %>
 		</div>
 
 		<ul class="nav nav-list span4 well form-navigator">

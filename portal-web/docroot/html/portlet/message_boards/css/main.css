@@ -298,14 +298,6 @@
 		text-decoration: underline;
 	}
 
-	.table-cell .taglib-workflow-status {
-		margin: 0;
-
-		.workflow-status {
-			padding-left: 0;
-		}
-	}
-
 	.taglib-flags {
 		float: left;
 		margin-left: 20px;

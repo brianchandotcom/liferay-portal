@@ -23,6 +23,8 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="name" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="description" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="type" type="tns:int"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="manualMembership" type="tns:boolean"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="membershipRestriction" type="tns:int"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="friendlyURL" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="site" type="tns:boolean"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="active" type="tns:boolean"></parameter>
@@ -55,6 +57,12 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 		</operation>
 		<operation xmlns:operNS="urn:http.service.portal.liferay.com" name="deleteGroup" qname="operNS:deleteGroup" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
+		</operation>
+		<operation xmlns:operNS="urn:http.service.portal.liferay.com" name="disableStaging" qname="operNS:disableStaging" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
+		</operation>
+		<operation xmlns:operNS="urn:http.service.portal.liferay.com" name="enableStaging" qname="operNS:enableStaging" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 		</operation>
 		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="http://model.portal.liferay.com" name="getCompanyGroup" qname="operNS:getCompanyGroup" returnQName="getCompanyGroupReturn" returnType="rtns:GroupSoap" soapAction="">
@@ -183,6 +191,8 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="name" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="description" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="type" type="tns:int"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="manualMembership" type="tns:boolean"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="membershipRestriction" type="tns:int"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="friendlyURL" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="active" type="tns:boolean"></parameter>
 			<parameter xmlns:tns="http://service.portal.liferay.com" qname="serviceContext" type="tns:ServiceContext"></parameter>
@@ -191,7 +201,11 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="typeSettings" type="tns:string"></parameter>
 		</operation>
-		<parameter name="allowedMethods" value="addGroup addRoleGroups checkRemoteStagingGroup deleteGroup getCompanyGroup getGroup getGroups getManageableSiteGroups getManageableSites getOrganizationsGroups getUserGroup getUserGroupsGroups getUserOrganizationsGroups getUserPlaces getUserPlacesCount getUserPlacesGroups getUserPlacesGroupsCount getUserSites hasUserGroup search searchCount setRoleGroups unsetRoleGroups updateFriendlyURL updateGroup" />
+		<operation xmlns:operNS="urn:http.service.portal.liferay.com" name="updateStagedPortlets" qname="operNS:updateStagedPortlets" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="stagedPortletIds" type="tns:string"></parameter>
+		</operation>
+		<parameter name="allowedMethods" value="addGroup addRoleGroups checkRemoteStagingGroup deleteGroup disableStaging enableStaging getCompanyGroup getGroup getGroups getManageableSiteGroups getManageableSites getOrganizationsGroups getUserGroup getUserGroupsGroups getUserOrganizationsGroups getUserPlaces getUserPlacesCount getUserPlacesGroups getUserPlacesGroupsCount getUserSites hasUserGroup search searchCount setRoleGroups unsetRoleGroups updateFriendlyURL updateGroup updateStagedPortlets" />
 		<parameter name="className" value="com.liferay.portal.service.http.GroupServiceSoap" />
 		<parameter name="schemaUnqualified" value="http://model.portal.liferay.com,http://service.portal.liferay.com,http://theme.portal.liferay.com,http://util.kernel.portal.liferay.com,http://xml.apache.org/xml-soap,urn:http.service.portal.liferay.com" />
 		<parameter name="typeMappingVersion" value="1.2" />

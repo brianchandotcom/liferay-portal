@@ -13,6 +13,9 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="maxUsers" type="tns:int"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="active" type="tns:boolean"></parameter>
 		</operation>
+		<operation xmlns:operNS="urn:http.service.portal.liferay.com" xmlns:rtns="http://model.portal.liferay.com" name="deleteCompany" qname="operNS:deleteCompany" returnQName="deleteCompanyReturn" returnType="rtns:CompanySoap" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="companyId" type="tns:long"></parameter>
+		</operation>
 		<operation xmlns:operNS="urn:http.service.portal.liferay.com" name="deleteLogo" qname="operNS:deleteLogo" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="companyId" type="tns:long"></parameter>
 		</operation>
@@ -76,7 +79,7 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="strangersVerify" type="tns:boolean"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="siteLogo" type="tns:boolean"></parameter>
 		</operation>
-		<parameter name="allowedMethods" value="addCompany deleteLogo getCompanyById getCompanyByLogoId getCompanyByMx getCompanyByVirtualHost getCompanyByWebId removePreferences updateCompany updateDisplay updateLogo updateSecurity" />
+		<parameter name="allowedMethods" value="addCompany deleteCompany deleteLogo getCompanyById getCompanyByLogoId getCompanyByMx getCompanyByVirtualHost getCompanyByWebId removePreferences updateCompany updateDisplay updateLogo updateSecurity" />
 		<parameter name="className" value="com.liferay.portal.service.http.CompanyServiceSoap" />
 		<parameter name="schemaUnqualified" value="http://model.portal.liferay.com,urn:http.service.portal.liferay.com" />
 		<parameter name="typeMappingVersion" value="1.2" />

@@ -16,28 +16,6 @@
 
 <%@ include file="/html/portal/layout/edit/init.jsp" %>
 
-<%
-String portletId = portletDisplay.getId();
-
-LayoutTypePortlet selLayoutTypePortlet = null;
-
-Theme selTheme = null;
-
-if (selLayout != null) {
-	selLayoutTypePortlet = (LayoutTypePortlet)selLayout.getLayoutType();
-
-	selTheme = selLayout.getTheme();
-}
-
-String layoutTemplateId = StringPool.BLANK;
-
-if (selLayoutTypePortlet != null) {
-	layoutTemplateId = selLayoutTypePortlet.getLayoutTemplateId();
-}
-
-List<LayoutTemplate> layoutTemplates = LayoutTemplateLocalServiceUtil.getLayoutTemplates(selTheme.getThemeId());
-%>
-
 <div class="hide" id="<portlet:namespace />copyPortletsFromPage">
 	<p>
 		<c:if test="<%= selLayout != null %>">
@@ -99,5 +77,26 @@ List<LayoutTemplate> layoutTemplates = LayoutTemplateLocalServiceUtil.getLayoutT
 </div>
 
 <div id="<portlet:namespace />layoutTemplates">
+
+	<%
+	LayoutTypePortlet selLayoutTypePortlet = null;
+
+	Theme selTheme = null;
+
+	if (selLayout != null) {
+		selLayoutTypePortlet = (LayoutTypePortlet)selLayout.getLayoutType();
+
+		selTheme = selLayout.getTheme();
+	}
+
+	String layoutTemplateId = StringPool.BLANK;
+
+	if (selLayoutTypePortlet != null) {
+		layoutTemplateId = selLayoutTypePortlet.getLayoutTemplateId();
+	}
+
+	List<LayoutTemplate> layoutTemplates = LayoutTemplateLocalServiceUtil.getLayoutTemplates(selTheme.getThemeId());
+	%>
+
 	<%@ include file="/html/portlet/layouts_admin/layout/layout_templates_list.jspf" %>
 </div>

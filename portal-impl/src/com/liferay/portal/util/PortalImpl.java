@@ -4656,6 +4656,39 @@ public class PortalImpl implements Portal {
 	}
 
 	@Override
+	public Locale getSiteDefaultLocale(long groupId)
+		throws PortalException, SystemException {
+
+		if (groupId <= 0) {
+			return LocaleUtil.getDefault();
+		}
+
+		Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+		Group liveGroup = group;
+
+		if (group.isStagingGroup()) {
+			liveGroup = group.getLiveGroup();
+		}
+
+		if (LanguageUtil.isLocaleInherited(liveGroup.getGroupId())) {
+			return LocaleUtil.getDefault();
+		}
+
+		UnicodeProperties groupTypeSettings =
+			liveGroup.getTypeSettingsProperties();
+
+		User defaultUser = UserLocalServiceUtil.getDefaultUser(
+			group.getCompanyId());
+
+		String languageId = GetterUtil.getString(
+			groupTypeSettings.getProperty("languageId"),
+			defaultUser.getLanguageId());
+
+		return LocaleUtil.fromLanguageId(languageId);
+	}
+
+	@Override
 	public long getSiteGroupId(long groupId)
 		throws PortalException, SystemException {
 

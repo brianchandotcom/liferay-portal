@@ -88,6 +88,10 @@ public class LocaleUtil {
 		return getInstance()._getShortDisplayName(locale, duplicateLanguages);
 	}
 
+	public static Locale getSiteDefault() {
+		return getInstance()._getSiteDefault();
+	}
+
 	public static void setDefault(
 		String userLanguage, String userCountry, String userVariant) {
 
@@ -297,6 +301,16 @@ public class LocaleUtil {
 
 		return _getDisplayName(
 			language, country.toUpperCase(), locale, duplicateLanguages);
+	}
+
+	private Locale _getSiteDefault() {
+		Locale locale = LocaleThreadLocal.getSiteDefaultLocale();
+
+		if (locale != null) {
+			return locale;
+		}
+
+		return _getDefault();
 	}
 
 	private void _setDefault(

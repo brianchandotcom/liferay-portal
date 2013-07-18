@@ -81,7 +81,6 @@ portletURL.setParameter("chooseCallback", chooseCallback);
 
 			<%
 			String rowHREF = null;
-			String chooseOnClick = null;
 
 			if (Validator.isNull(chooseCallback)) {
 			%>
@@ -101,7 +100,7 @@ portletURL.setParameter("chooseCallback", chooseCallback);
 				if (ruleGroupInstance == null) {
 					StringBundler sb = new StringBundler(7);
 
-					sb.append("javascript:Liferay.Util.getOpener()['");
+					sb.append("Liferay.Util.getOpener()['");
 					sb.append(HtmlUtil.escapeJS(chooseCallback));
 					sb.append("'](");
 					sb.append(ruleGroup.getRuleGroupId());
@@ -110,10 +109,6 @@ portletURL.setParameter("chooseCallback", chooseCallback);
 					sb.append("', Liferay.Util.getWindow());");
 
 					rowHREF = sb.toString();
-
-					sb.setStringAt("Liferay.Util.getOpener()['", 0);
-
-					chooseOnClick = sb.toString();
 				}
 			}
 			%>

@@ -15,13 +15,13 @@
 --%>
 
 <liferay-ui:search-container-column-text
-	href="<%= rowHREF %>"
+	href='<%= "javascript:" + rowHREF %>'
 	name="name"
 	value="<%= ruleGroup.getName(locale) %>"
 />
 
 <liferay-ui:search-container-column-text
-	href="<%= rowHREF %>"
+	href='<%= "javascript:" + rowHREF %>'
 	name="description"
 	value="<%= ruleGroup.getDescription(locale) %>"
 />
@@ -35,7 +35,7 @@
 	</c:when>
 	<c:otherwise>
 		<liferay-ui:search-container-column-text>
-			<aui:button disabled="<%= Validator.isNull(chooseOnClick) %>" onClick="<%= chooseOnClick %>" value="choose" />
+			<aui:button disabled="<%= Validator.isNull(rowHREF) %>" onClick="<%= rowHREF %>" value="choose" />
 		</liferay-ui:search-container-column-text>
 	</c:otherwise>
 </c:choose>

@@ -76,6 +76,8 @@
 			<aui:script use="aui-io-request,aui-loading-mask-deprecated,liferay-dockbar">
 				A.one('#closePanel').on('click', Liferay.Dockbar.toggleEditLayoutPanel, Liferay.Dockbar);
 
+				A.one('#<portlet:namespace />name').focus();
+
 				var BODY = A.getBody();
 				BODY.plug(A.LoadingMask);
 

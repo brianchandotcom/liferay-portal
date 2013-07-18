@@ -109,7 +109,9 @@ String displayStyle = ParamUtil.getString(request, "displayStyle");
 Boolean showAddAction = ParamUtil.getBoolean(request, "showAddAction", true);
 %>
 
-<liferay-util:include page="/html/portlet/layouts_admin/add_layout.jsp" />
+<c:if test="<%= !portletName.equals(PortletKeys.DOCKBAR) %>">
+	<liferay-util:include page="/html/portlet/layouts_admin/add_layout.jsp" />
+</c:if>
 
 <aui:nav-bar>
 	<aui:nav id="layoutsNav">

@@ -208,10 +208,17 @@ public class EditLayoutsAction extends PortletAction {
 				if (plid == refererPlid) {
 					redirect = HttpUtil.setParameter(
 						redirect, "refererPlid", newRefererPlid);
+
+					redirect = HttpUtil.setParameter(
+						redirect, actionResponse.getNamespace() + "selPlid", 0);
 				}
 
 				closeRedirect = updateCloseRedirect(
 					themeDisplay, closeRedirect, group, null, oldFriendlyURL);
+
+				redirect = HttpUtil.addParameter(
+					redirect, actionResponse.getNamespace() + "closeRedirect",
+					closeRedirect);
 			}
 			else if (cmd.equals("display_order")) {
 				updateDisplayOrder(actionRequest);

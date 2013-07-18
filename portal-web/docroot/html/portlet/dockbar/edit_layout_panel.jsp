@@ -18,94 +18,115 @@
 
 <%@ include file="/html/portlet/layouts_admin/init_attributes.jspf" %>
 
-<liferay-portlet:renderURL varImpl="redirectURL">
-	<portlet:param name="struts_action" value="/layouts_admin/update_layout" />
-	<portlet:param name="groupId" value="<%= String.valueOf(liveGroupId) %>" />
-</liferay-portlet:renderURL>
-
 <div id="<portlet:namespace />editLayoutContainer">
-	<button class="close pull-right" id="closePanel" type="button">&times;</button>
+	<c:choose>
+		<c:when test='<%= SessionMessages.contains(renderRequest, "requestProcessed") || ((selPlid == 0) && Validator.isNotNull(closeRedirect)) %>'>
 
-	<h1><%= LanguageUtil.get(pageContext, "edit-page") %></h1>
+			<%
+			String refreshURL =null;
 
-	<liferay-util:include page="/html/portlet/layouts_admin/edit_layout.jsp">
-		<liferay-util:param name="displayStyle" value="panel" />
-		<liferay-util:param name="showAddAction" value="<%= Boolean.FALSE.toString() %>" />
-	</liferay-util:include>
+			if ((selPlid == 0) && Validator.isNotNull(closeRedirect)) {
+				refreshURL = closeRedirect;
+			}
+			else {
+				refreshURL = (String)SessionMessages.get(renderRequest, portletDisplay.getId() + SessionMessages.KEY_SUFFIX_CLOSE_REDIRECT);
+			}
 
-	<c:if test="<%= themeDisplay.isShowSiteAdministrationIcon() %>">
-		<liferay-portlet:renderURL plid="<%= PortalUtil.getControlPanelPlid(company.getCompanyId()) %>" portletName="<%= PortletKeys.GROUP_PAGES %>" varImpl="siteAdministrationURL" windowState="<%= WindowState.NORMAL.toString() %>">
-			<portlet:param name="groupId" value="<%= String.valueOf(liveGroupId) %>" />
-			<portlet:param name="selPlid" value="<%= String.valueOf(selPlid) %>" />
-			<portlet:param name="struts_action" value="/group_pages/edit_layouts" />
-			<portlet:param name="tabs1" value="public-pages" />
-			<portlet:param name="treeId" value="layoutsTree" />
-			<portlet:param name="viewLayout" value="true" />
-		</liferay-portlet:renderURL>
+			if (Validator.isNull(refreshURL)) {
+				refreshURL = PortalUtil.getLayoutURL(layout, themeDisplay);
+			}
+			%>
 
-		<%
-		String siteAdministrationURLString = HttpUtil.setParameter(siteAdministrationURL.toString(), "controlPanelCategory", "current_site");
+			<aui:script>
+				window.location.href = '<%= refreshURL %>';
+			</aui:script>
+		</c:when>
+		<c:otherwise>
+			<button class="close pull-right" id="closePanel" type="button">&times;</button>
 
-		siteAdministrationURLString = HttpUtil.setParameter(siteAdministrationURLString, "doAsGroupId", String.valueOf(liveGroupId));
-		siteAdministrationURLString = HttpUtil.setParameter(siteAdministrationURLString, "refererPlid", String.valueOf(selPlid));
-		%>
+			<h1><%= LanguageUtil.get(pageContext, "edit-page") %></h1>
 
-		<aui:a cssClass="site-admin-link" href="<%= siteAdministrationURLString %>" label="site-administration" />
-	</c:if>
-</div>
+			<c:if test="<%= selPlid > 0 %>">
+				<liferay-util:include page="/html/portlet/layouts_admin/edit_layout.jsp">
+					<liferay-util:param name="displayStyle" value="panel" />
+					<liferay-util:param name="showAddAction" value="<%= Boolean.FALSE.toString() %>" />
+				</liferay-util:include>
 
-<c:if test='<%= SessionMessages.contains(renderRequest, "requestProcessed") %>'>
-	<aui:script>
-		window.location.href = themeDisplay.getLayoutURL();
-	</aui:script>
-</c:if>
+				<c:if test="<%= themeDisplay.isShowSiteAdministrationIcon() %>">
+					<liferay-portlet:renderURL plid="<%= PortalUtil.getControlPanelPlid(company.getCompanyId()) %>" portletName="<%= PortletKeys.GROUP_PAGES %>" varImpl="siteAdministrationURL" windowState="<%= WindowState.NORMAL.toString() %>">
+						<portlet:param name="groupId" value="<%= String.valueOf(liveGroupId) %>" />
+						<portlet:param name="selPlid" value="<%= String.valueOf(selPlid) %>" />
+						<portlet:param name="struts_action" value="/group_pages/edit_layouts" />
+						<portlet:param name="tabs1" value="public-pages" />
+						<portlet:param name="treeId" value="layoutsTree" />
+						<portlet:param name="viewLayout" value="true" />
+					</liferay-portlet:renderURL>
 
-<aui:script use="aui-io-request,aui-loading-mask-deprecated,liferay-dockbar">
-	A.one('#closePanel').on('click', Liferay.Dockbar.toggleEditLayoutPanel, Liferay.Dockbar);
+					<%
+					String siteAdministrationURLString = HttpUtil.setParameter(siteAdministrationURL.toString(), "controlPanelCategory", "current_site");
 
-	var BODY = A.getBody();
-	BODY.plug(A.LoadingMask);
+					siteAdministrationURLString = HttpUtil.setParameter(siteAdministrationURLString, "doAsGroupId", String.valueOf(liveGroupId));
+					siteAdministrationURLString = HttpUtil.setParameter(siteAdministrationURLString, "refererPlid", String.valueOf(selPlid));
+					%>
 
-	Liferay.once(
-		'submitForm',
-		function(event) {
-			var form = event.form;
+					<aui:a cssClass="site-admin-link" href="<%= siteAdministrationURLString %>" label="site-administration" />
+				</c:if>
+			</c:if>
 
-			if (form.hasClass('edit-layout-form')) {
-				event.preventDefault();
+			<aui:script use="aui-io-request,aui-loading-mask-deprecated,liferay-dockbar">
+				A.one('#closePanel').on('click', Liferay.Dockbar.toggleEditLayoutPanel, Liferay.Dockbar);
 
-				form.get('<portlet:namespace />redirect').set('value', '<%= HttpUtil.addParameter(redirectURL.toString(), liferayPortletResponse.getNamespace() + "selPlid", selPlid) %>');
+				var BODY = A.getBody();
+				BODY.plug(A.LoadingMask);
 
-				BODY.loadingmask.show();
+				Liferay.once(
+					'submitForm',
+					function(event) {
+						var form = event.form;
 
-				A.io.request(
-					form.get('action'),
-					{
-						dataType: 'json',
-						form: {
-							id: form.get('id')
-						},
-						after: {
-							success: function(event, id, obj) {
-								var response = this.get('responseData');
+						if (form.hasClass('edit-layout-form')) {
+							event.preventDefault();
 
-								var panel = A.one('#<portlet:namespace />editLayoutContainer');
+							<liferay-portlet:renderURL varImpl="redirectURL">
+								<portlet:param name="struts_action" value="/layouts_admin/update_layout" />
+								<portlet:param name="groupId" value="<%= String.valueOf(liveGroupId) %>" />
+							</liferay-portlet:renderURL>
 
-								panel.empty();
+							form.get('<portlet:namespace />redirect').set('value', '<%= HttpUtil.addParameter(redirectURL.toString(), liferayPortletResponse.getNamespace() + "selPlid", selPlid) %>');
 
-								panel.plug(A.Plugin.ParseContent);
+							BODY.loadingmask.show();
 
-								panel.setContent(response);
+							A.io.request(
+								form.get('action'),
+								{
+									dataType: 'json',
+									form: {
+										id: form.get('id')
+									},
+									after: {
+										success: function(event, id, obj) {
+											var response = this.get('responseData');
 
-								BODY.loadingmask.hide();
-							},
-							failure: function(event) {
-								BODY.loadingMask.hide();
-							}
+											var panel = A.one('#<portlet:namespace />editLayoutContainer');
+
+											panel.empty();
+
+											panel.plug(A.Plugin.ParseContent);
+
+											panel.setContent(response);
+
+											BODY.loadingmask.hide();
+										},
+										failure: function(event) {
+											BODY.loadingMask.hide();
+										}
+									}
+								}
+							);
 						}
 					}
 				);
-			}
-		}
-	);
-</aui:script>
+			</aui:script>
+		</c:otherwise>
+	</c:choose>
+</div>

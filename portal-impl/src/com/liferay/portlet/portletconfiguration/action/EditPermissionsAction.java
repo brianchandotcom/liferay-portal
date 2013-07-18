@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.portletconfiguration.action;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -24,23 +22,18 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletConstants;
-import com.liferay.portal.model.Role;
-import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionPropagator;
-import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.PermissionServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.ResourceBlockLocalServiceUtil;
 import com.liferay.portal.service.ResourceBlockServiceUtil;
 import com.liferay.portal.service.ResourcePermissionServiceUtil;
-import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.servlet.filters.cache.CacheUtil;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 
@@ -48,10 +41,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -150,20 +141,16 @@ public class EditPermissionsAction extends PortletAction {
 	}
 
 	protected String[] getActionIds(
-			ActionRequest actionRequest, long roleId,
-			Set<String> guestUnsupportedActions, boolean includePreselected)
-		throws Exception {
+		ActionRequest actionRequest, long roleId, boolean includePreselected) {
 
 		List<String> actionIds = getActionIdsList(
-			actionRequest, roleId, guestUnsupportedActions, includePreselected);
+			actionRequest, roleId, includePreselected);
 
 		return actionIds.toArray(new String[actionIds.size()]);
 	}
 
 	protected List<String> getActionIdsList(
-			ActionRequest actionRequest, long roleId,
-			Set<String> guestUnsupportedActions, boolean includePreselected)
-		throws Exception {
+		ActionRequest actionRequest, long roleId, boolean includePreselected) {
 
 		List<String> actionIds = new ArrayList<String>();
 
@@ -177,13 +164,6 @@ public class EditPermissionsAction extends PortletAction {
 
 				String actionId = name.substring(
 					pos + ActionUtil.ACTION.length());
-
-				if (actionId.equals(ActionKeys.ACCESS_IN_CONTROL_PANEL) ||
-					(isGuestRoleId(actionRequest, roleId) &&
-					 guestUnsupportedActions.contains(actionId))) {
-
-					throw new PrincipalException();
-				}
 
 				actionIds.add(actionId);
 			}
@@ -200,21 +180,6 @@ public class EditPermissionsAction extends PortletAction {
 		}
 
 		return actionIds;
-	}
-
-	protected boolean isGuestRoleId(ActionRequest actionRequest, long roleId)
-		throws PortalException, SystemException {
-
-		long companyId = PortalUtil.getCompanyId(actionRequest);
-
-		Role guestRole = RoleLocalServiceUtil.getRole(
-			companyId, RoleConstants.GUEST);
-
-		if (roleId == guestRole.getRoleId()) {
-			return true;
-		}
-
-		return false;
 	}
 
 	protected void updateRolePermissions(ActionRequest actionRequest)
@@ -244,16 +209,10 @@ public class EditPermissionsAction extends PortletAction {
 
 		Map<Long, String[]> roleIdsToActionIds = new HashMap<Long, String[]>();
 
-		Set<String> guestUnsupportedActions = new HashSet<String>();
-
-		guestUnsupportedActions.addAll(
-			ResourceActionsUtil.getResourceGuestUnsupportedActions(
-				portletResource, modelResource));
-
 		if (ResourceBlockLocalServiceUtil.isSupported(selResource)) {
 			for (long roleId : roleIds) {
 				List<String> actionIds = getActionIdsList(
-					actionRequest, roleId, guestUnsupportedActions, true);
+					actionRequest, roleId, true);
 
 				roleIdsToActionIds.put(
 					roleId, actionIds.toArray(new String[actionIds.size()]));
@@ -265,8 +224,7 @@ public class EditPermissionsAction extends PortletAction {
 		}
 		else {
 			for (long roleId : roleIds) {
-				String[] actionIds = getActionIds(
-					actionRequest, roleId, guestUnsupportedActions, false);
+				String[] actionIds = getActionIds(actionRequest, roleId, false);
 
 				roleIdsToActionIds.put(roleId, actionIds);
 			}

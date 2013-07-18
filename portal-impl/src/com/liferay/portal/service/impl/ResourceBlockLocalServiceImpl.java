@@ -40,9 +40,13 @@ import com.liferay.portal.model.ResourceBlock;
 import com.liferay.portal.model.ResourceBlockConstants;
 import com.liferay.portal.model.ResourceBlockPermissionsContainer;
 import com.liferay.portal.model.ResourceTypePermission;
+import com.liferay.portal.model.Role;
+import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.impl.ResourceBlockImpl;
+import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
+import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.security.permission.ResourceBlockIdsBag;
 import com.liferay.portal.service.PersistedModelLocalService;
 import com.liferay.portal.service.PersistedModelLocalServiceRegistryUtil;
@@ -616,6 +620,8 @@ public class ResourceBlockLocalServiceImpl
 			long companyId, String name, long roleId, List<String> actionIds)
 		throws PortalException, SystemException {
 
+		checkGuestSupportedPermission(companyId, name, roleId, actionIds);
+
 		updateCompanyScopePermissions(
 			companyId, name, roleId, getActionIds(name, actionIds),
 			ResourceBlockConstants.OPERATOR_SET);
@@ -636,6 +642,8 @@ public class ResourceBlockLocalServiceImpl
 			long companyId, long groupId, String name, long roleId,
 			List<String> actionIds)
 		throws PortalException, SystemException {
+
+		checkGuestSupportedPermission(companyId, name, roleId, actionIds);
 
 		updateGroupScopePermissions(
 			companyId, groupId, name, roleId, getActionIds(name, actionIds),
@@ -661,6 +669,8 @@ public class ResourceBlockLocalServiceImpl
 
 		PermissionedModel permissionedModel = getPermissionedModel(
 			name, primKey);
+
+		checkGuestSupportedPermission(companyId, name, roleId, actionIds);
 
 		updateIndividualScopePermissions(
 			companyId, groupId, name, permissionedModel, roleId,
@@ -699,11 +709,14 @@ public class ResourceBlockLocalServiceImpl
 					roleIdsToActionIds.entrySet()) {
 
 				long roleId = entry.getKey();
-				String[] actionIds = entry.getValue();
+				List<String> actionIds = ListUtil.fromArray(entry.getValue());
+
+				checkGuestSupportedPermission(
+					companyId, name, roleId, actionIds);
 
 				updateIndividualScopePermissions(
 					companyId, groupId, name, permissionedModel, roleId,
-					getActionIds(name, ListUtil.fromArray(actionIds)),
+					getActionIds(name, actionIds),
 					ResourceBlockConstants.OPERATOR_SET);
 			}
 		}
@@ -720,6 +733,8 @@ public class ResourceBlockLocalServiceImpl
 			PermissionedModel permissionedModel, long roleId,
 			List<String> actionIds)
 		throws PortalException, SystemException {
+
+		checkGuestSupportedPermission(companyId, name, roleId, actionIds);
 
 		updateIndividualScopePermissions(
 			companyId, groupId, name, permissionedModel, roleId,
@@ -998,6 +1013,38 @@ public class ResourceBlockLocalServiceImpl
 
 		resourceLocalService.addResources(
 			companyId, groupId, ownerId, name, primKey, false, true, true);
+	}
+
+	protected void checkGuestSupportedPermission(
+			long companyId, String name, long roleId, List<String> actionIds)
+		throws PortalException, SystemException {
+
+		if (!isGuestRoleId(companyId, roleId)) {
+			return;
+		}
+
+		List<String> unsupportedActions =
+			ResourceActionsUtil.getResourceGuestUnsupportedActions(name, name);
+
+		for (String actionId : actionIds) {
+			if (unsupportedActions.contains(actionId)) {
+				throw new PrincipalException(
+					actionId + "is not supported by role " + roleId);
+			}
+		}
+	}
+
+	protected boolean isGuestRoleId(long companyId, long roleId)
+		throws PortalException, SystemException {
+
+		Role guestRole = roleLocalService.getRole(
+			companyId, RoleConstants.GUEST);
+
+		if (roleId == guestRole.getRoleId()) {
+			return true;
+		}
+
+		return false;
 	}
 
 	protected void updatePermissions(

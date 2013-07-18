@@ -37,6 +37,7 @@ import com.liferay.portal.model.ResourcePermission;
 import com.liferay.portal.model.ResourcePermissionConstants;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
+import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
@@ -1159,6 +1160,17 @@ public class ResourcePermissionLocalServiceImpl
 			resourcePermission.setOwnerId(ownerId);
 		}
 
+		List<String> unsupportedActions = Collections.emptyList();
+
+		if (((operator == ResourcePermissionConstants.OPERATOR_ADD) ||
+			 (operator == ResourcePermissionConstants.OPERATOR_SET)) &&
+			 isGuestRoleId(companyId, roleId)) {
+
+			unsupportedActions =
+				ResourceActionsUtil.getResourceGuestUnsupportedActions(
+					name, name);
+		}
+
 		long actionIdsLong = resourcePermission.getActionIds();
 
 		if (operator == ResourcePermissionConstants.OPERATOR_SET) {
@@ -1168,6 +1180,11 @@ public class ResourcePermissionLocalServiceImpl
 		for (String actionId : actionIds) {
 			if (actionId == null) {
 				break;
+			}
+
+			if (unsupportedActions.contains(actionId)) {
+				throw new PrincipalException(
+					actionId + "is not supported by role " + roleId);
 			}
 
 			ResourceAction resourceAction =
@@ -1240,6 +1257,19 @@ public class ResourcePermissionLocalServiceImpl
 
 			SearchEngineUtil.updatePermissionFields(name, primKey);
 		}
+	}
+
+	protected boolean isGuestRoleId(long companyId, long roleId)
+		throws PortalException, SystemException {
+
+		Role guestRole = roleLocalService.getRole(
+			companyId, RoleConstants.GUEST);
+
+		if (roleId == guestRole.getRoleId()) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**

@@ -374,7 +374,7 @@ public class DDLRecordSetLocalServiceImpl
 	protected void validateName(Map<Locale, String> nameMap)
 		throws PortalException {
 
-		String name = nameMap.get(LocaleUtil.getDefault());
+		String name = nameMap.get(LocaleUtil.getSiteDefault());
 
 		if (Validator.isNull(name)) {
 			throw new RecordSetNameException();

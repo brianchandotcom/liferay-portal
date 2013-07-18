@@ -35,7 +35,7 @@ public class DDLTestUtil {
 		throws Exception {
 
 		String name = ServiceTestUtil.randomString();
-		Locale defaultLocale = LocaleUtil.getDefault();
+		Locale defaultLocale = LocaleUtil.getSiteDefault();
 
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
 			groupId);

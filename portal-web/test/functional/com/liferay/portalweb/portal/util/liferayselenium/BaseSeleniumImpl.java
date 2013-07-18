@@ -368,50 +368,50 @@ public abstract class BaseSeleniumImpl
 	}
 
 	@Override
-	public void saveScreenShot(String fileName) throws Exception {
+	public void saveScreenshot(String fileName) throws Exception {
 		if (!TestPropsValues.SAVE_SCREENSHOT) {
 			return;
 		}
 
-		if (_screenShotFileName.equals(fileName)) {
-			_screenShotCount++;
+		if (_screenshotFileName.equals(fileName)) {
+			_screenshotCount++;
 		}
 		else {
-			_screenShotCount = 0;
+			_screenshotCount = 0;
 
-			_screenShotFileName = fileName;
+			_screenshotFileName = fileName;
 		}
 
-		String screenShotDir = TestPropsValues.OUTPUT_DIR + _screenShotFileName;
+		String screenshotDir = TestPropsValues.OUTPUT_DIR + _screenshotFileName;
 
-		if (!FileUtil.exists(screenShotDir)) {
-			FileUtil.mkdirs(screenShotDir);
+		if (!FileUtil.exists(screenshotDir)) {
+			FileUtil.mkdirs(screenshotDir);
 		}
 
 		captureEntirePageScreenshot(
-			screenShotDir + "/" + _screenShotFileName + _screenShotCount +
+			screenshotDir + "/" + _screenshotFileName + _screenshotCount +
 				".jpg",
 			"");
 	}
 
 	@Override
-	public void saveScreenShotAndSource() throws Exception {
-		String screenShotName = null;
+	public void saveScreenshotAndSource() throws Exception {
+		String screenshotName = null;
 
 		if (TestPropsValues.SAVE_SCREENSHOT) {
-			screenShotName = getScreenshotFileName();
+			screenshotName = getScreenshotFileName();
 
 			captureEntirePageScreenshot(
-				_OUTPUT_SCREENSHOTS_DIR + screenShotName + ".jpg", "");
+				_OUTPUT_SCREENSHOTS_DIR + screenshotName + ".jpg", "");
 		}
 
 		if (TestPropsValues.SAVE_SOURCE) {
 			String content = getHtmlSource();
 
-			screenShotName = getScreenshotFileName();
+			screenshotName = getScreenshotFileName();
 
 			FileUtil.write(
-				_OUTPUT_SCREENSHOTS_DIR + screenShotName + ".html", content);
+				_OUTPUT_SCREENSHOTS_DIR + screenshotName + ".html", content);
 		}
 	}
 
@@ -666,8 +666,8 @@ public abstract class BaseSeleniumImpl
 	private CommandProcessor _commandProcessor;
 	private String _primaryTestSuiteName;
 	private String _projectDir;
-	private int _screenShotCount = 0;
-	private String _screenShotFileName = "";
+	private int _screenshotCount = 0;
+	private String _screenshotFileName = "";
 	private String _timeout = "90000";
 
 }

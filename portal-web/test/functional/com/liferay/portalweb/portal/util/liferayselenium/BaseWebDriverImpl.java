@@ -429,18 +429,18 @@ public abstract class BaseWebDriverImpl
 	}
 
 	@Override
-	public void saveScreenShot(String fileName) throws Exception {
+	public void saveScreenshot(String fileName) throws Exception {
 		if (!TestPropsValues.SAVE_SCREENSHOT) {
 			return;
 		}
 
-		if (_screenShotFileName.equals(fileName)) {
-			_screenShotCount++;
+		if (_screenshotFileName.equals(fileName)) {
+			_screenshotCount++;
 		}
 		else {
-			_screenShotCount = 0;
+			_screenshotCount = 0;
 
-			_screenShotFileName = fileName;
+			_screenshotFileName = fileName;
 		}
 
 		WebElement bodyElement = getWebElement("//body");
@@ -457,12 +457,12 @@ public abstract class BaseWebDriverImpl
 			file,
 			new File(
 				getProjectDir() + "portal-web\\test-results\\functional\\" +
-					_screenShotFileName + "/" + _screenShotFileName +
-					_screenShotCount + ".jpg"));
+					_screenshotFileName + "/" + _screenshotFileName +
+					_screenshotCount + ".jpg"));
 	}
 
 	@Override
-	public void saveScreenShotAndSource() throws Exception {
+	public void saveScreenshotAndSource() throws Exception {
 	}
 
 	@Override
@@ -639,7 +639,7 @@ public abstract class BaseWebDriverImpl
 	private String _clipBoard = "";
 	private String _primaryTestSuiteName;
 	private String _projectDir;
-	private int _screenShotCount = 0;
-	private String _screenShotFileName = "";
+	private int _screenshotCount = 0;
+	private String _screenshotFileName = "";
 
 }

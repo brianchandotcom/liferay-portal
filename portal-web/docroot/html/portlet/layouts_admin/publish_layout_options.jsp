@@ -32,7 +32,7 @@ Layout curLayout = (Layout)row.getObject();
 
 	<em class="hide" id="<portlet:namespace /><%= curLayout.getPlid() %>deleteLivePage"><liferay-ui:message key="delete-live-page" /></em>
 
-	<em class='<%= curLayout.getChildren().isEmpty() ? "hide" : StringPool.BLANK %>' id="<portlet:namespace /><%= curLayout.getPlid() %>includeChildren"><liferay-ui:message key="include-all-descendent-pages" /></em>
+	<em class="hide" id="<portlet:namespace /><%= curLayout.getPlid() %>includeChildren"><liferay-ui:message key="include-all-descendent-pages" /></em>
 
 	<liferay-ui:icon cssClass="nobr" id='<%= "_detail_" + curLayout.getPlid() + "_toggle" %>' image="../arrows/01_plus" label="<%= true %>" message="change" target="_self" toolTip="options" url="<%= taglibHref %>" />
 </div>
@@ -44,11 +44,11 @@ Layout curLayout = (Layout)row.getObject();
 
 	<div id="<portlet:namespace />publishChangesOptions_<%= curLayout.getPlid() %>" style="margin-left: 2em;">
 		<c:if test="<%= !curLayout.getAncestors().isEmpty() %>">
-			<aui:input checked="<%= true %>" disabled="<%= true %>" label="include-ancestor-pages-if-necessary" name='<%= "includeAncestors_" + curLayout.getPlid() %>' type="checkbox" value="1" />
+			<aui:input checked="<%= true %>" disabled="<%= true %>" label="include-ancestor-pages-if-necessary" name='<%= "includeAncestors_" + curLayout.getPlid() %>' type="checkbox" value="<%= true %>" />
 		</c:if>
 
 		<c:if test="<%= !curLayout.getChildren().isEmpty() %>">
-			<aui:input checked="<%= true %>" label="include-all-descendent-pages" name='<%= "includeChildren_" + curLayout.getPlid() %>' type="checkbox" value="1" />
+			<aui:input checked="<%= false %>" label="include-all-descendent-pages" name='<%= "includeChildren_" + curLayout.getPlid() %>' type="checkbox" value="<%= false %>" />
 		</c:if>
 	</div>
 </div>

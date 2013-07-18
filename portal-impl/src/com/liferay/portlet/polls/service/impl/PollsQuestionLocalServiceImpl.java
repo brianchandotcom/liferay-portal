@@ -317,7 +317,7 @@ public class PollsQuestionLocalServiceImpl
 			List<PollsChoice> choices)
 		throws PortalException {
 
-		Locale locale = LocaleUtil.getDefault();
+		Locale locale = LocaleUtil.getSiteDefault();
 
 		String title = titleMap.get(locale);
 

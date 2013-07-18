@@ -24,7 +24,7 @@
 	<portlet:param name="groupId" value="<%= String.valueOf(liveGroupId) %>" />
 </liferay-portlet:renderURL>
 
-<div id="<portlet:namespace />editLayoutPanel">
+<div id="<portlet:namespace />editLayoutContainer">
 	<button class="close pull-right" id="closePanel" type="button">&times;</button>
 
 	<h1><%= LanguageUtil.get(pageContext, "edit-page") %></h1>
@@ -67,7 +67,7 @@
 						success: function(event, id, obj) {
 							var response = this.get('responseData');
 
-							var panel = A.one('#<portlet:namespace />editLayoutPanel');
+							var panel = A.one('#<portlet:namespace />editLayoutContainer');
 
 							panel.empty();
 

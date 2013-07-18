@@ -30,7 +30,6 @@ Group group = null;
 
 if (selLayout != null) {
 	group = selLayout.getGroup();
-
 	Theme curTheme = selLayout.getTheme();
 
 	String themeId = curTheme.getThemeId();
@@ -88,10 +87,10 @@ if (selLayout != null) {
 </c:choose>
 
 <div class="customization-settings">
-
 	<c:choose>
 		<c:when test="<%= themeDisplay.isStateExclusive() %>">
 			<aui:button name="manageCustomization" value="show-page-customizations" />
+
 			<div class="hide layout-customizable-controls" id="<portlet:namespace />layout-customizable-controls">
 				<span title='<liferay-ui:message key="customizable-help" />'>
 					<aui:input cssClass="layout-customizable-checkbox" helpMessage='<%= group.isLayoutPrototype() ? "modifiable-help" : "customizable-help" %>' id="TypeSettingsProperties--[COLUMN_ID]-customizable--" label='<%= (group.isLayoutSetPrototype() || group.isLayoutPrototype()) ? "modifiable" : "customizable" %>' name="TypeSettingsProperties--[COLUMN_ID]-customizable--" type="checkbox" useNamespace="<%= false %>" />
@@ -106,7 +105,6 @@ if (selLayout != null) {
 			%>
 		</c:otherwise>
 	</c:choose>
-
 </div>
 
 <c:if test="<%= themeDisplay.isStateExclusive() %>">

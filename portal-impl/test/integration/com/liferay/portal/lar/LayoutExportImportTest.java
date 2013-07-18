@@ -16,6 +16,7 @@ package com.liferay.portal.lar;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.ServiceTestUtil;
@@ -72,6 +73,49 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 			layout2.getUuid(), importedGroup.getGroupId(), false);
 
 		Assert.assertNotNull(importedLayout);
+	}
+
+	@Test
+	public void testFriendlyURLCollision() throws Exception {
+		String defaultLanguageId = LocaleUtil.toLanguageId(
+			LocaleUtil.getDefault());
+
+		Layout layoutA = LayoutTestUtil.addLayout(
+			group.getGroupId(), "layoutA");
+
+		layoutA = LayoutLocalServiceUtil.updateFriendlyURL(
+			layoutA.getPlid(), "/layoutA-de", "de");
+
+		Layout layoutB = LayoutTestUtil.addLayout(
+			group.getGroupId(), "layoutB");
+
+		layoutB = LayoutLocalServiceUtil.updateFriendlyURL(
+			layoutB.getPlid(), "/layoutB-de", "de");
+
+		long[] layoutIds = new long[] {
+			layoutA.getLayoutId(), layoutB.getLayoutId()};
+
+		exportImportLayouts(layoutIds);
+
+		layoutA = LayoutLocalServiceUtil.updateFriendlyURL(
+			layoutA.getPlid(), "/temp", defaultLanguageId);
+
+		layoutA = LayoutLocalServiceUtil.updateFriendlyURL(
+			layoutA.getPlid(), "/temp-de", "de");
+
+		layoutB = LayoutLocalServiceUtil.updateFriendlyURL(
+			layoutB.getPlid(), "/layoutA", defaultLanguageId);
+
+		layoutB = LayoutLocalServiceUtil.updateFriendlyURL(
+			layoutB.getPlid(), "/layoutA-de", "de");
+
+		layoutA = LayoutLocalServiceUtil.updateFriendlyURL(
+			layoutA.getPlid(), "/layoutB", defaultLanguageId);
+
+		layoutA = LayoutLocalServiceUtil.updateFriendlyURL(
+			layoutA.getPlid(), "/layoutB-de", "de");
+
+		exportImportLayouts(layoutIds);
 	}
 
 	protected void exportImportLayouts(long[] layoutIds) throws Exception {

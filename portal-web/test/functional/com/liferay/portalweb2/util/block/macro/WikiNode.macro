@@ -1,6 +1,6 @@
 <definition>
 	<command name="addCP">
-		<execute action="CPWiki#click" locator-key1="ADD_WIKI_BUTTON" />
+		<execute action="CPWiki#assertClick" locator-key1="ADD_WIKI_BUTTON" value1="Add Wiki" />
 
 		<execute action="CPWikiAddwiki#type" locator-key1="NAME_FIELD" value1="${wikiNodeName}" />
 		<execute action="CPWikiAddwiki#type" locator-key1="DESCRIPTION_FIELD" value1="${wikiNodeDescription}" />
@@ -15,9 +15,9 @@
 
 	<command name="deleteCP">
 		<execute action="CPWiki#assertTextEquals" locator-key1="WIKI_NODE_TABLE_WIKI" value1="${wikiNodeName}" />
-		<execute action="CPWiki#click" locator-key1="WIKI_NODE_TABLE_ACTIONS" />
-		<execute action="CPWiki#click" locator-key1="WIKI_NODE_MENULIST_RECYCLE_BIN" />
-		<execute action="CPWiki#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" />
+		<execute action="CPWiki#assertClick" locator-key1="WIKI_NODE_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPWiki#assertClick" locator-key1="WIKI_NODE_MENULIST_RECYCLE_BIN" value1="Move to the Recycle Bin" />
+		<execute action="CPWiki#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="The selected item was moved to the Recycle Bin. Undo" />
 		<execute action="CPWiki#assertTextNotPresent" value1="${wikiNodeName}" />
 
 		<execute macro="RecycleBin#emptyCP" />
@@ -25,8 +25,8 @@
 
 	<command name="editCP">
 		<execute action="CPWiki#assertTextEquals" locator-key1="WIKI_NODE_TABLE_WIKI" value1="${wikiNodeName}" />
-		<execute action="CPWiki#click" locator-key1="WIKI_NODE_TABLE_ACTIONS" />
-		<execute action="CPWiki#click" locator-key1="WIKI_NODE_MENULIST_EDIT" />
+		<execute action="CPWiki#assertClick" locator-key1="WIKI_NODE_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPWiki#assertClick" locator-key1="WIKI_NODE_MENULIST_EDIT" value1="Edit" />
 
 		<execute action="CPWikiAddwiki#type" locator-key1="NAME_FIELD" value1="${wikiNodeNameEdit}" />
 		<execute action="CPWikiAddwiki#type" locator-key1="DESCRIPTION_FIELD" value1="${wikiNodeDescriptionEdit}" />

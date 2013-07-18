@@ -80,7 +80,7 @@ public class Fields implements Iterable<Field>, Serializable {
 	}
 
 	public Locale getDefaultLocale() {
-		Locale defaultLocale = LocaleUtil.getDefault();
+		Locale defaultLocale = LocaleUtil.getSiteDefault();
 
 		Iterator<Field> itr = iterator();
 

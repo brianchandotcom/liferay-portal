@@ -53,7 +53,7 @@ List<LayoutPrototype> layoutPrototypes = LayoutPrototypeServiceUtil.search(compa
 		<aui:input id="addLayoutExplicitCreation" name="explicitCreation" type="hidden" value="<%= true %>" />
 
 		<aui:fieldset>
-			<aui:input id="addLayoutName" name="name" />
+			<aui:input name="name" />
 
 			<c:if test="<%= !layoutPrototypes.isEmpty() %>">
 				<aui:select label="template" name="layoutPrototypeId" showEmptyOption="<%= true %>">

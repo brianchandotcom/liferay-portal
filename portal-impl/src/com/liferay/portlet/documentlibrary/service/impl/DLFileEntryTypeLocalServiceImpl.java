@@ -138,11 +138,11 @@ public class DLFileEntryTypeLocalServiceImpl
 
 		Map<Locale, String> nameMap = new HashMap<Locale, String>();
 
-		nameMap.put(LocaleUtil.getDefault(), name);
+		nameMap.put(LocaleUtil.getSiteDefault(), name);
 
 		Map<Locale, String> descriptionMap = new HashMap<Locale, String>();
 
-		descriptionMap.put(LocaleUtil.getDefault(), description);
+		descriptionMap.put(LocaleUtil.getSiteDefault(), description);
 
 		return addFileEntryType(
 			userId, groupId, null, nameMap, descriptionMap, ddmStructureIds,
@@ -412,11 +412,11 @@ public class DLFileEntryTypeLocalServiceImpl
 
 		Map<Locale, String> nameMap = new HashMap<Locale, String>();
 
-		nameMap.put(LocaleUtil.getDefault(), name);
+		nameMap.put(LocaleUtil.getSiteDefault(), name);
 
 		Map<Locale, String> descriptionMap = new HashMap<Locale, String>();
 
-		descriptionMap.put(LocaleUtil.getDefault(), description);
+		descriptionMap.put(LocaleUtil.getSiteDefault(), description);
 
 		updateFileEntryType(
 			userId, fileEntryTypeId, nameMap, descriptionMap, ddmStructureIds,

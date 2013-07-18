@@ -18,9 +18,16 @@
 	<command name="AddMBCategory">
 		<var name="categoryName" value="MB Category Name" />
 
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
 		<execute macro="MessageboardsCategory#addPG">
 			<var name="categoryName" value="${categoryName}" />
-			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="MessageboardsCategory#viewPG">
+			<var name="categoryName" value="${categoryName}" />
 		</execute>
 	</command>
 
@@ -28,8 +35,16 @@
 		<var name="threadBody" value="MB Thread Message Body" />
 		<var name="threadSubject" value="MB Thread Message Subject" />
 
-		<execute macro="MessageboardsThread#addPG">
+		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="MessageboardsThread#addPG">
+			<var name="threadBody" value="${threadBody}" />
+			<var name="threadSubject" value="${threadSubject}" />
+		</execute>
+
+		<execute macro="MessageboardsThread#viewPG">
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadSubject" value="${threadSubject}" />
 		</execute>
@@ -38,14 +53,16 @@
 	<command name="DeleteMBCategory">
 		<var name="categoryName" value="MB Category Name" />
 
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
 		<execute macro="MessageboardsCategory#addPG">
 			<var name="categoryName" value="${categoryName}" />
-			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="MessageboardsCategory#deletePG">
 			<var name="categoryName" value="${categoryName}" />
-			<var name="pageName" value="${pageName}" />
 		</execute>
 	</command>
 
@@ -53,14 +70,16 @@
 		<var name="threadBody" value="MB Thread Message Body" />
 		<var name="threadSubject" value="MB Thread Message Subject" />
 
-		<execute macro="MessageboardsThread#addPG">
+		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="MessageboardsThread#addPG">
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadSubject" value="${threadSubject}" />
 		</execute>
 
 		<execute macro="MessageboardsThread#deletePG">
-			<var name="pageName" value="${pageName}" />
 			<var name="threadSubject" value="${threadSubject}" />
 		</execute>
 	</command>
@@ -69,15 +88,17 @@
 		<var name="categoryName" value="MB Category Name" />
 		<var name="categoryNameEdit" value="MB Category Name Edit" />
 
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
 		<execute macro="MessageboardsCategory#addPG">
 			<var name="categoryName" value="${categoryName}" />
-			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="MessageboardsCategory#editPG">
 			<var name="categoryName" value="${categoryName}" />
 			<var name="categoryNameEdit" value="${categoryNameEdit}" />
-			<var name="pageName" value="${pageName}" />
 		</execute>
 	</command>
 
@@ -86,14 +107,16 @@
 		<var name="threadBodyEdit" value="MB Thread Message Body Edit" />
 		<var name="threadSubject" value="MB Thread Message Subject" />
 
-		<execute macro="MessageboardsThread#addPG">
+		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="MessageboardsThread#addPG">
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadSubject" value="${threadSubject}" />
 		</execute>
 
 		<execute macro="MessageboardsThread#editPG">
-			<var name="pageName" value="${pageName}" />
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadBodyEdit" value="${threadBodyEdit}" />
 			<var name="threadSubject" value="${threadSubject}" />
@@ -105,14 +128,22 @@
 		<var name="threadReplyBody" value="MB Thread Reply Body" />
 		<var name="threadSubject" value="MB Thread Message Subject" />
 
-		<execute macro="MessageboardsThread#addPG">
+		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="MessageboardsThread#addPG">
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadSubject" value="${threadSubject}" />
 		</execute>
 
 		<execute macro="MessageboardsThread#replyPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="threadBody" value="${threadBody}" />
+			<var name="threadReplyBody" value="${threadReplyBody}" />
+			<var name="threadSubject" value="${threadSubject}" />
+		</execute>
+
+		<execute macro="MessageboardsThread#viewReplyPG">
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadReplyBody" value="${threadReplyBody}" />
 			<var name="threadSubject" value="${threadSubject}" />

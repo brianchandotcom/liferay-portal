@@ -7,6 +7,10 @@
 		<var name="vocabularyName" value="Vocabulary Name" />
 		<var name="categoryName" value="Category Name" />
 
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Categories" />
+		</execute>
+
 		<execute macro="Vocabulary#addCP">
 			<var name="vocabularyName" value="${vocabularyName}" />
 		</execute>
@@ -21,6 +25,10 @@
 		<var name="vocabularyName" value="Vocabulary Name" />
 		<var name="categoryName" value="Category Name" />
 		<var name="subcategoryName" value="Subcategory Name" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Categories" />
+		</execute>
 
 		<execute macro="Vocabulary#addCP">
 			<var name="vocabularyName" value="${vocabularyName}" />
@@ -41,6 +49,10 @@
 	<command name="AddVocabulary">
 		<var name="vocabularyName" value="Vocabulary Name" />
 
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Categories" />
+		</execute>
+
 		<execute macro="Vocabulary#addCP">
 			<var name="vocabularyName" value="${vocabularyName}" />
 		</execute>
@@ -48,6 +60,10 @@
 
 	<command name="AddVocabularyAssetTypeWikiPage">
 		<var name="vocabularyName" value="Vocabulary Name" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Categories" />
+		</execute>
 
 		<execute macro="Vocabulary#addCPWithAssociatedAssetType">
 			<var name="vocabularyAssociatedAssetType" value="Wiki Page" />
@@ -58,6 +74,10 @@
 	<command name="DeleteCategory">
 		<var name="vocabularyName" value="Vocabulary Name" />
 		<var name="categoryName" value="Category Name" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Categories" />
+		</execute>
 
 		<execute macro="Vocabulary#addCP">
 			<var name="vocabularyName" value="${vocabularyName}" />
@@ -78,6 +98,10 @@
 		<var name="vocabularyName" value="Vocabulary Name" />
 		<var name="categoryName" value="Category Name" />
 		<var name="subcategoryName" value="Subcategory Name" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Categories" />
+		</execute>
 
 		<execute macro="Vocabulary#addCP">
 			<var name="vocabularyName" value="${vocabularyName}" />
@@ -104,6 +128,10 @@
 	<command name="DeleteVocabulary">
 		<var name="vocabularyName" value="Vocabulary Name" />
 
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Categories" />
+		</execute>
+
 		<execute macro="Vocabulary#addCP">
 			<var name="vocabularyName" value="${vocabularyName}" />
 		</execute>
@@ -117,6 +145,10 @@
 		<var name="vocabularyName" value="Vocabulary Name" />
 		<var name="categoryName" value="Category Name" />
 		<var name="categoryNameEdit" value="Category Name Edit" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Categories" />
+		</execute>
 
 		<execute macro="Vocabulary#addCP">
 			<var name="vocabularyName" value="${vocabularyName}" />
@@ -139,6 +171,10 @@
 		<var name="categoryName" value="Category Name" />
 		<var name="subcategoryName" value="Subcategory Name" />
 		<var name="subcategoryNameEdit" value="Subcategory Name Edit" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Categories" />
+		</execute>
 
 		<execute macro="Vocabulary#addCP">
 			<var name="vocabularyName" value="${vocabularyName}" />
@@ -166,6 +202,10 @@
 	<command name="EditVocabulary">
 		<var name="vocabularyName" value="Vocabulary Name" />
 		<var name="vocabularyNameEdit" value="Vocabulary Name Edit" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Categories" />
+		</execute>
 
 		<execute macro="Vocabulary#addCP">
 			<var name="vocabularyName" value="${vocabularyName}" />

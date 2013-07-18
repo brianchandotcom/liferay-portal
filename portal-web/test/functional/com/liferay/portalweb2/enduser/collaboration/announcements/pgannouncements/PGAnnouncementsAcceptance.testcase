@@ -10,7 +10,6 @@
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="pageName" value="${pageName}" />
 			<var name="portletName" value="${portletName}" />
 		</execute>
 	</set-up>
@@ -21,12 +20,26 @@
 		<var name="entryTitle" value="Announcements Entry Title" />
 		<var name="entryURL" value="http://www.liferay.com" />
 
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
 		<execute macro="AnnouncementsEntry#addPG">
 			<var name="distributionScope" value="${distributionScope}" />
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
 			<var name="entryURL" value="${entryURL}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="AnnouncementsEntry#viewPG">
+			<var name="distributionScope" value="${distributionScope}" />
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryURL" value="${entryURL}" />
 		</execute>
 	</command>
 
@@ -36,11 +49,18 @@
 		<var name="entryTitle" value="Announcements Entry Title" />
 		<var name="entryURL" value="http://www.liferay.com" />
 
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
 		<execute macro="AnnouncementsEntry#addPG">
 			<var name="distributionScope" value="${distributionScope}" />
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
 			<var name="entryURL" value="${entryURL}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
@@ -48,7 +68,11 @@
 			<var name="distributionScope" value="${distributionScope}" />
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
-			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="AnnouncementsEntry#viewDeletePG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 	</command>
 
@@ -61,11 +85,18 @@
 		<var name="entryURL" value="http://www.liferay.com" />
 		<var name="entryURLEdit" value="http://www.alloyui.com" />
 
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
 		<execute macro="AnnouncementsEntry#addPG">
 			<var name="distributionScope" value="${distributionScope}" />
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
 			<var name="entryURL" value="${entryURL}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
@@ -76,7 +107,16 @@
 			<var name="entryTitle" value="${entryTitle}" />
 			<var name="entryTitleEdit" value="${entryTitleEdit}" />
 			<var name="entryURLEdit" value="${entryURLEdit}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="AnnouncementsEntry#viewEditPG">
+			<var name="distributionScope" value="${distributionScope}" />
+			<var name="entryContentEdit" value="${entryContentEdit}" />
+			<var name="entryTitleEdit" value="${entryTitleEdit}" />
 		</execute>
 	</command>
 

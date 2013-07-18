@@ -2,10 +2,6 @@
 	<var name="pageTemplateActive" value="Yes" />
 
 	<command name="addCP">
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Page Templates" />
-		</execute>
-
 		<execute action="CPPagetemplates#click" locator-key1="ADD" />
 
 		<execute action="CPPagetemplatesAdd#type" locator-key1="NAME_FIELD" value1="${pageTemplateName}" />
@@ -27,10 +23,6 @@
 	</command>
 
 	<command name="editCP">
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Page Templates" />
-		</execute>
-
 		<execute action="CPPagetemplates#assertTextEquals" locator-key1="PAGE_TEMPLATE_TABLE_NAME_4" value1="${pageTemplateName}" />
 		<execute action="CPPagetemplates#click" locator-key1="PAGE_TEMPLATE_TABLE_ACTIONS_4" />
 		<execute action="CPPagetemplates#click" locator-key1="PAGE_TEMPLATE_MENULIST_EDIT" />

@@ -1,9 +1,5 @@
 <definition>
 	<command name="addCP">
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Dynamic Data Lists" />
-		</execute>
-
 		<execute action="CPDynamicdatalists#click" locator-key1="TOOLBAR_MANAGE_DATA_DEFINITIONS" />
 
 		<execute action="CPDynamicdatalistsDatadefinitions#selectFrame" locator-key1="DATA_DEFINITIONS_IFRAME" />
@@ -170,10 +166,6 @@
 	</command>
 
 	<command name="deleteCP">
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Dynamic Data Lists" />
-		</execute>
-
 		<execute action="CPDynamicdatalists#click" locator-key1="TOOLBAR_MANAGE_DATA_DEFINITIONS" />
 
 		<execute action="CPDynamicdatalistsDatadefinitions#selectFrame" locator-key1="DATA_DEFINITIONS_IFRAME" />
@@ -199,10 +191,6 @@
 	</command>
 
 	<command name="editCP">
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Dynamic Data Lists" />
-		</execute>
-
 		<execute action="CPDynamicdatalists#click" locator-key1="TOOLBAR_MANAGE_DATA_DEFINITIONS" />
 
 		<execute action="CPDynamicdatalistsDatadefinitions#selectFrame" locator-key1="DATA_DEFINITIONS_IFRAME" />
@@ -243,10 +231,6 @@
 	</command>
 
 	<command name="viewCP">
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Dynamic Data Lists" />
-		</execute>
-
 		<execute action="CPDynamicdatalists#click" locator-key1="TOOLBAR_MANAGE_DATA_DEFINITIONS" />
 
 		<execute action="CPDynamicdatalistsDatadefinitions#selectFrame" locator-key1="DATA_DEFINITIONS_IFRAME" />

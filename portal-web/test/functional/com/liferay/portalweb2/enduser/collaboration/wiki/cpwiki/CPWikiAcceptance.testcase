@@ -23,6 +23,10 @@
 		<var name="wikiNodeDescription" value="Wiki Node Description" />
 		<var name="wikiNodeName" value="Wiki Node Name" />
 
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Wiki" />
+		</execute>
+
 		<execute macro="WikiNode#addCP">
 			<var name="wikiNodeDescription" value="${wikiNodeDescription}" />
 			<var name="wikiNodeName" value="${wikiNodeName}" />
@@ -32,6 +36,10 @@
 	<command name="DeleteWikiNode">
 		<var name="wikiNodeDescription" value="Wiki Node Description" />
 		<var name="wikiNodeName" value="Wiki Node Name" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Wiki" />
+		</execute>
 
 		<execute macro="WikiNode#addCP">
 			<var name="wikiNodeDescription" value="${wikiNodeDescription}" />
@@ -48,6 +56,10 @@
 		<var name="wikiNodeDescriptionEdit" value="Wiki Node Description Edit" />
 		<var name="wikiNodeName" value="Wiki Node Name" />
 		<var name="wikiNodeNameEdit" value="Wiki Node Name Edit" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Wiki" />
+		</execute>
 
 		<execute macro="WikiNode#addCP">
 			<var name="wikiNodeDescription" value="${wikiNodeDescription}" />

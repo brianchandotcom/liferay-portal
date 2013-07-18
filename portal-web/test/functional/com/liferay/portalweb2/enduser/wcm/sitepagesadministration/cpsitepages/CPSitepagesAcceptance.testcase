@@ -10,6 +10,10 @@
 		<var name="sitePageType" value="Private" />
 		<var name="sitePageURL" value="http://localhost:8080/group/site-name/site-child-page" />
 
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
 		<execute macro="Site#addBlankCP">
 			<var name="siteName" value="${siteName}" />
 		</execute>
@@ -44,6 +48,10 @@
 		<var name="sitePageType" value="Private" />
 		<var name="sitePageURL" value="http://localhost:8080/group/site-name/site-page" />
 
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
 		<execute macro="Site#addBlankCP">
 			<var name="siteName" value="${siteName}" />
 		</execute>
@@ -70,6 +78,10 @@
 		<var name="siteName" value="Site Name" />
 		<var name="sitePageName" value="Site Page" />
 		<var name="sitePageType" value="Private" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
 
 		<execute macro="Site#addBlankCP">
 			<var name="siteName" value="${siteName}" />
@@ -102,6 +114,10 @@
 		<var name="sitePageName" value="Site Page" />
 		<var name="sitePageType" value="Public" />
 		<var name="sitePageURL" value="http://localhost:8080/web/site-name/site-child-page" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
 
 		<execute macro="Site#addBlankCP">
 			<var name="siteName" value="${siteName}" />
@@ -136,6 +152,10 @@
 		<var name="sitePageType" value="Public" />
 		<var name="sitePageURL" value="http://localhost:8080/web/site-name/site-page" />
 
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
 		<execute macro="Site#addBlankCP">
 			<var name="siteName" value="${siteName}" />
 		</execute>
@@ -161,6 +181,10 @@
 		<var name="siteName" value="Site Name" />
 		<var name="sitePageName" value="Site Page" />
 		<var name="sitePageType" value="Public" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
 
 		<execute macro="Site#addBlankCP">
 			<var name="siteName" value="${siteName}" />

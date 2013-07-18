@@ -18,6 +18,10 @@
 	<command name="AddWikiFrontPage">
 		<var name="wikiPageContent" value="Wiki FrontPage Content" />
 
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
 		<execute macro="WikiPage#addFrontPagePG">
 			<var name="pageName" value="${pageName}" />
 			<var name="wikiPageContent" value="${wikiPageContent}" />
@@ -26,6 +30,10 @@
 
 	<command name="DeleteWikiFrontPage">
 		<var name="wikiPageContent" value="Wiki FrontPage Content" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
 
 		<execute macro="WikiPage#addFrontPagePG">
 			<var name="pageName" value="${pageName}" />
@@ -42,6 +50,10 @@
 		<var name="wikiChildPageTitle" value="Wiki Front Page Child Page Title" />
 		<var name="wikiPageContent" value="Wiki Front Page Content" />
 		<var name="wikiPageTitle" value="FrontPage" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
 
 		<execute macro="WikiPage#addFrontPagePG">
 			<var name="pageName" value="${pageName}" />

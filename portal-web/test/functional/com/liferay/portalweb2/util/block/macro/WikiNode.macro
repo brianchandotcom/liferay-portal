@@ -1,9 +1,5 @@
 <definition>
 	<command name="addCP">
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Wiki" />
-		</execute>
-
 		<execute action="CPWiki#assertClick" locator-key1="ADD_WIKI_BUTTON" value1="Add Wiki" />
 
 		<execute action="CPWikiAddwiki#type" locator-key1="NAME_FIELD" value1="${wikiNodeName}" />
@@ -18,12 +14,6 @@
 	</command>
 
 	<command name="deleteCP">
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Wiki" />
-		</execute>
-
-		<var name="key_wikiNodeName" value="${wikiNodeName}" />
-
 		<execute action="CPWiki#assertTextEquals" locator-key1="WIKI_NODE_TABLE_WIKI" value1="${wikiNodeName}" />
 		<execute action="CPWiki#assertClick" locator-key1="WIKI_NODE_TABLE_ACTIONS" value1="Actions" />
 		<execute action="CPWiki#assertClick" locator-key1="WIKI_NODE_MENULIST_RECYCLE_BIN" value1="Move to the Recycle Bin" />
@@ -34,12 +24,6 @@
 	</command>
 
 	<command name="editCP">
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Wiki" />
-		</execute>
-
-		<var name="key_wikiNodeName" value="${wikiNodeName}" />
-
 		<execute action="CPWiki#assertTextEquals" locator-key1="WIKI_NODE_TABLE_WIKI" value1="${wikiNodeName}" />
 		<execute action="CPWiki#assertClick" locator-key1="WIKI_NODE_TABLE_ACTIONS" value1="Actions" />
 		<execute action="CPWiki#assertClick" locator-key1="WIKI_NODE_MENULIST_EDIT" value1="Edit" />

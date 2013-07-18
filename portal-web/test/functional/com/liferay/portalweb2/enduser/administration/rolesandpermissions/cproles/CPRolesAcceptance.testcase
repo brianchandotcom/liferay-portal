@@ -21,6 +21,10 @@
 		<var name="userLastName" value="userln" />
 		<var name="userScreenName" value="usersn" />
 
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
 		<execute macro="User#addCP">
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="userFirstName" value="${userFirstName}" />
@@ -28,9 +32,17 @@
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
 		<execute macro="User#editPasswordCP">
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
 		</execute>
 
 		<execute macro="Organization#addCP">
@@ -38,8 +50,16 @@
 			<var name="orgType" value="${orgType}" />
 		</execute>
 
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
 		<execute macro="Organization#addSiteCP">
 			<var name="orgName" value="${orgName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
 		</execute>
 
 		<execute macro="Organization#addMemberCP">
@@ -47,6 +67,10 @@
 			<var name="userFirstName" value="${userFirstName}" />
 			<var name="userLastName" value="${userLastName}" />
 			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
 		</execute>
 
 		<execute macro="SitePage#addCP">
@@ -61,9 +85,17 @@
 			<var name="potletName" value="${portletName}" />
 		</execute>
 
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
 		<execute macro="Role#addCP">
 			<var name="roleName" value="${roleName}" />
 			<var name="roleType" value="${roleType}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
 		</execute>
 
 		<execute macro="Organization#assignOrgRoleCP">
@@ -79,6 +111,10 @@
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 		</execute>
 
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
 		<execute macro="BlogsEntry#addNoPermissionPG">
 			<var name="pageName" value="${pageName}" />
 			<var name="pageType" value="Organization" />
@@ -87,6 +123,10 @@
 		<execute macro="User#logoutPG" />
 		<execute macro="User#loginPG">
 			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
 		</execute>
 
 		<execute macro="Role#definePermissionBlogsEntryCP">
@@ -98,6 +138,10 @@
 		<execute macro="User#logoutPG" />
 		<execute macro="User#loginPG">
 			<var name="userEmailAddress" value="${userEmailAddress}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="BlogsEntry#addPG">
@@ -112,6 +156,10 @@
 			<var name="userEmailAddress" value="test@liferay.com" />
 		</execute>
 
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
 		<execute macro="Role#removePermissionBlogsEntryCP">
 			<var name="roleName" value="${roleName}" />
 			<var name="roleType" value="${roleType}" />
@@ -121,6 +169,10 @@
 		<execute macro="User#logoutPG" />
 		<execute macro="User#loginPG">
 			<var name="userEmailAddress" value="${userEmailAddress}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="BlogsEntry#addNoPermissionPG">
@@ -155,6 +207,10 @@
 			<var name="potletName" value="${portletName}" />
 		</execute>
 
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
 		<execute macro="User#addCP">
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="userFirstName" value="${userFirstName}" />
@@ -162,13 +218,25 @@
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
 		<execute macro="User#editPasswordCP">
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
 		<execute macro="Role#addCP">
 			<var name="roleName" value="${roleName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
 		</execute>
 
 		<execute macro="Role#assignRegRoleCP">
@@ -181,6 +249,10 @@
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 		</execute>
 
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
 		<execute macro="BlogsEntry#addNoPermissionPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -188,6 +260,10 @@
 		<execute macro="User#logoutPG" />
 		<execute macro="User#loginPG">
 			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
 		</execute>
 
 		<execute macro="Role#definePermissionBlogsEntryCP">
@@ -198,6 +274,10 @@
 		<execute macro="User#logoutPG" />
 		<execute macro="User#loginPG">
 			<var name="userEmailAddress" value="${userEmailAddress}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="BlogsEntry#addPG">
@@ -211,6 +291,10 @@
 			<var name="userEmailAddress" value="test@liferay.com" />
 		</execute>
 
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
 		<execute macro="Role#removePermissionBlogsEntryCP">
 			<var name="roleName" value="${roleName}" />
 			<var name="rolePermission" value="${rolePermission}" />
@@ -219,6 +303,10 @@
 		<execute macro="User#logoutPG" />
 		<execute macro="User#loginPG">
 			<var name="userEmailAddress" value="${userEmailAddress}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="BlogsEntry#addNoPermissionPG">
@@ -247,6 +335,10 @@
 		<var name="userLastName" value="userln" />
 		<var name="userScreenName" value="usersn" />
 
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
 		<execute macro="User#addCP">
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="userFirstName" value="${userFirstName}" />
@@ -254,13 +346,25 @@
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
 		<execute macro="User#editPasswordCP">
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
 		<execute macro="Site#addBlankCP">
 			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
 		</execute>
 
 		<execute macro="Site#addMemberCP">
@@ -268,6 +372,10 @@
 			<var name="userFirstName" value="${userFirstName}" />
 			<var name="userLastName" value="${userLastName}" />
 			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
 		</execute>
 
 		<execute macro="SitePage#addCP">
@@ -282,9 +390,17 @@
 			<var name="potletName" value="${portletName}" />
 		</execute>
 
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
 		<execute macro="Role#addCP">
 			<var name="roleName" value="${roleName}" />
 			<var name="roleType" value="${roleType}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
 		</execute>
 
 		<execute macro="Site#assignRoleCP">
@@ -300,6 +416,10 @@
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 		</execute>
 
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
 		<execute macro="BlogsEntry#addNoPermissionPG">
 			<var name="pageName" value="${pageName}" />
 			<var name="pageType" value="Site" />
@@ -308,6 +428,10 @@
 		<execute macro="User#logoutPG" />
 		<execute macro="User#loginPG">
 			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
 		</execute>
 
 		<execute macro="Role#definePermissionBlogsEntryCP">
@@ -319,6 +443,10 @@
 		<execute macro="User#logoutPG" />
 		<execute macro="User#loginPG">
 			<var name="userEmailAddress" value="${userEmailAddress}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="BlogsEntry#addPG">
@@ -333,6 +461,10 @@
 			<var name="userEmailAddress" value="test@liferay.com" />
 		</execute>
 
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
 		<execute macro="Role#removePermissionBlogsEntryCP">
 			<var name="roleName" value="${roleName}" />
 			<var name="roleType" value="${roleType}" />
@@ -342,6 +474,10 @@
 		<execute macro="User#logoutPG" />
 		<execute macro="User#loginPG">
 			<var name="userEmailAddress" value="${userEmailAddress}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="BlogsEntry#addNoPermissionPG">
@@ -359,6 +495,10 @@
 		<var name="roleName" value="Roles Orgrole Name" />
 		<var name="roleType" value="Organization" />
 
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
 		<execute macro="Role#addCP">
 			<var name="roleName" value="${roleName}" />
 			<var name="roleType" value="${roleType}" />
@@ -368,6 +508,10 @@
 	<command name="AddRegularRole">
 		<var name="roleName" value="Roles Regrole Name" />
 
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
 		<execute macro="Role#addCP">
 			<var name="roleName" value="${roleName}" />
 		</execute>
@@ -376,6 +520,10 @@
 	<command name="AddSiteRole">
 		<var name="roleName" value="Roles Siterole Name" />
 		<var name="roleType" value="Site" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
 
 		<execute macro="Role#addCP">
 			<var name="roleName" value="${roleName}" />
@@ -401,6 +549,10 @@
 		<var name="userLastName" value="userln" />
 		<var name="userScreenName" value="usersn" />
 
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
 		<execute macro="User#addCP">
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="userFirstName" value="${userFirstName}" />
@@ -408,9 +560,17 @@
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
 		<execute macro="User#editPasswordCP">
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
 		</execute>
 
 		<execute macro="Organization#addCP">
@@ -418,8 +578,16 @@
 			<var name="orgType" value="${orgType}" />
 		</execute>
 
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
 		<execute macro="Organization#addSiteCP">
 			<var name="orgName" value="${orgName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
 		</execute>
 
 		<execute macro="Organization#addMemberCP">
@@ -427,6 +595,10 @@
 			<var name="userFirstName" value="${userFirstName}" />
 			<var name="userLastName" value="${userLastName}" />
 			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
 		</execute>
 
 		<execute macro="SitePage#addCP">
@@ -441,9 +613,17 @@
 			<var name="potletName" value="${portletName}" />
 		</execute>
 
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
 		<execute macro="Role#addCP">
 			<var name="roleName" value="${roleName}" />
 			<var name="roleType" value="${roleType}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
 		</execute>
 
 		<execute macro="Organization#assignOrgRoleCP">
@@ -452,6 +632,10 @@
 			<var name="userFirstName" value="${userFirstName}" />
 			<var name="userLastName" value="${userLastName}" />
 			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="BlogsEntry#addPG">
@@ -466,6 +650,10 @@
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 		</execute>
 
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
 		<execute macro="BlogsEntry#moveToRecycleBinNoPermissionPG">
 			<var name="pageName" value="${pageName}" />
 			<var name="pageType" value="Organization" />
@@ -474,6 +662,10 @@
 		<execute macro="User#logoutPG" />
 		<execute macro="User#loginPG">
 			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
 		</execute>
 
 		<execute macro="Role#definePermissionBlogsEntryCP">
@@ -485,6 +677,10 @@
 		<execute macro="User#logoutPG" />
 		<execute macro="User#loginPG">
 			<var name="userEmailAddress" value="${userEmailAddress}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="BlogsEntry#moveToRecycleBinPG">
@@ -499,10 +695,18 @@
 			<var name="userEmailAddress" value="test@liferay.com" />
 		</execute>
 
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
 		<execute macro="Role#removePermissionBlogsEntryCP">
 			<var name="roleName" value="${roleName}" />
 			<var name="roleType" value="${roleType}" />
 			<var name="rolePermission" value="${rolePermission}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="BlogsEntry#addPG">
@@ -515,6 +719,10 @@
 		<execute macro="User#logoutPG" />
 		<execute macro="User#loginPG">
 			<var name="userEmailAddress" value="${userEmailAddress}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="BlogsEntry#moveToRecycleBinNoPermissionPG">
@@ -549,6 +757,10 @@
 			<var name="potletName" value="${portletName}" />
 		</execute>
 
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
 		<execute macro="User#addCP">
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="userFirstName" value="${userFirstName}" />
@@ -556,18 +768,34 @@
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
 		<execute macro="User#editPasswordCP">
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
 		</execute>
 
 		<execute macro="Role#addCP">
 			<var name="roleName" value="${roleName}" />
 		</execute>
 
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
 		<execute macro="Role#assignRegRoleCP">
 			<var name="roleName" value="${roleName}" />
 			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="BlogsEntry#addPG">
@@ -581,6 +809,10 @@
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 		</execute>
 
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
 		<execute macro="BlogsEntry#moveToRecycleBinNoPermissionPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -588,6 +820,10 @@
 		<execute macro="User#logoutPG" />
 		<execute macro="User#loginPG">
 			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
 		</execute>
 
 		<execute macro="Role#definePermissionBlogsEntryCP">
@@ -598,6 +834,10 @@
 		<execute macro="User#logoutPG" />
 		<execute macro="User#loginPG">
 			<var name="userEmailAddress" value="${userEmailAddress}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="BlogsEntry#moveToRecycleBinPG">
@@ -611,9 +851,17 @@
 			<var name="userEmailAddress" value="test@liferay.com" />
 		</execute>
 
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
 		<execute macro="Role#removePermissionBlogsEntryCP">
 			<var name="roleName" value="${roleName}" />
 			<var name="rolePermission" value="${rolePermission}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="BlogsEntry#addPG">
@@ -625,6 +873,10 @@
 		<execute macro="User#logoutPG" />
 		<execute macro="User#loginPG">
 			<var name="userEmailAddress" value="${userEmailAddress}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="BlogsEntry#moveToRecycleBinNoPermissionPG">
@@ -653,6 +905,10 @@
 		<var name="userLastName" value="userln" />
 		<var name="userScreenName" value="usersn" />
 
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
 		<execute macro="User#addCP">
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="userFirstName" value="${userFirstName}" />
@@ -660,13 +916,25 @@
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
 		<execute macro="User#editPasswordCP">
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
 		<execute macro="Site#addBlankCP">
 			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
 		</execute>
 
 		<execute macro="Site#addMemberCP">
@@ -674,6 +942,10 @@
 			<var name="userFirstName" value="${userFirstName}" />
 			<var name="userLastName" value="${userLastName}" />
 			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
 		</execute>
 
 		<execute macro="SitePage#addCP">
@@ -688,9 +960,17 @@
 			<var name="potletName" value="${portletName}" />
 		</execute>
 
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
 		<execute macro="Role#addCP">
 			<var name="roleName" value="${roleName}" />
 			<var name="roleType" value="${roleType}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
 		</execute>
 
 		<execute macro="Site#assignRoleCP">
@@ -699,6 +979,10 @@
 			<var name="userFirstName" value="${userFirstName}" />
 			<var name="userLastName" value="${userLastName}" />
 			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="BlogsEntry#addPG">
@@ -713,6 +997,10 @@
 			<var name="userEmailAddress" value="${userEmailAddress}" />
 		</execute>
 
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
 		<execute macro="BlogsEntry#moveToRecycleBinNoPermissionPG">
 			<var name="pageName" value="${pageName}" />
 			<var name="pageType" value="Site" />
@@ -721,6 +1009,10 @@
 		<execute macro="User#logoutPG" />
 		<execute macro="User#loginPG">
 			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
 		</execute>
 
 		<execute macro="Role#definePermissionBlogsEntryCP">
@@ -732,6 +1024,10 @@
 		<execute macro="User#logoutPG" />
 		<execute macro="User#loginPG">
 			<var name="userEmailAddress" value="${userEmailAddress}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="BlogsEntry#moveToRecycleBinPG">
@@ -746,10 +1042,18 @@
 			<var name="userEmailAddress" value="test@liferay.com" />
 		</execute>
 
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
 		<execute macro="Role#removePermissionBlogsEntryCP">
 			<var name="roleName" value="${roleName}" />
 			<var name="roleType" value="${roleType}" />
 			<var name="rolePermission" value="${rolePermission}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="BlogsEntry#addPG">
@@ -762,6 +1066,10 @@
 		<execute macro="User#logoutPG" />
 		<execute macro="User#loginPG">
 			<var name="userEmailAddress" value="${userEmailAddress}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="BlogsEntry#moveToRecycleBinNoPermissionPG">

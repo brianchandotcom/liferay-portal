@@ -15,10 +15,6 @@
 	</command>
 
 	<command name="addCP">
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Sites" />
-		</execute>
-
 		<execute action="CPSites#click" locator-key1="ADD" />
 
 		<if>
@@ -57,10 +53,6 @@
 	</command>
 
 	<command name="addMemberCP">
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Sites" />
-		</execute>
-
 		<execute action="CPSites#type" locator-key1="BASIC_SEARCH_FIELD" value1="${siteName}" />
 		<execute action="CPSites#click" locator-key1="BASIC_SEARCH_BUTTON" />
 		<execute action="CPSites#assertTextEquals" locator-key1="SITE_TABLE_NAME" value1="${siteName}" />
@@ -80,10 +72,6 @@
 	</command>
 
 	<command name="assignRoleCP">
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Sites" />
-		</execute>
-
 		<execute action="CPSites#type" locator-key1="BASIC_SEARCH_FIELD" value1="${siteName}" />
 		<execute action="CPSites#click" locator-key1="BASIC_SEARCH_BUTTON" />
 		<execute action="CPSites#assertTextEquals" locator-key1="SITE_TABLE_NAME" value1="${siteName}" />
@@ -113,10 +101,6 @@
 	</command>
 
 	<command name="deleteCP">
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Sites" />
-		</execute>
-
 		<execute action="CPSites#type" locator-key1="BASIC_SEARCH_FIELD" value1="Name" />
 		<execute action="CPSites#click" locator-key1="BASIC_SEARCH_BUTTON" />
 		<execute action="CPSites#assertTextEquals" locator-key1="SITE_TABLE_NAME" value1="${siteName}" />
@@ -146,10 +130,6 @@
 	</command>
 
 	<command name="viewCP">
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Sites" />
-		</execute>
-
 		<execute action="CPSites#type" locator-key1="BASIC_SEARCH_FIELD" value1="${siteName}" />
 		<execute action="CPSites#click" locator-key1="BASIC_SEARCH_BUTTON" />
 		<execute action="CPSites#assertElementPresent" locator-key1="SITE_TABLE_CHECKBOX" />

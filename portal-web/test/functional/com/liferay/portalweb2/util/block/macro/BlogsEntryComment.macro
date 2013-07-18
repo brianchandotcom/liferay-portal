@@ -1,9 +1,5 @@
 <definition>
 	<command name="addPG">
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
 		<execute action="PGBlogs#assertClick" locator-key1="ENTRY_TITLE_1" value1="${entryTitle}" />
 
 		<execute action="PGBlogsEntry#assertClick" locator-key1="COMMENTS_ADD" value1="Be the first." />

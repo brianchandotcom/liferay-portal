@@ -1,9 +1,5 @@
 <definition>
 	<command name="addCP">
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Dynamic Data Lists" />
-		</execute>
-
 		<execute action="CPDynamicdatalists#click" locator-key1="TOOLBAR_ADD" />
 
 		<execute action="CPDynamicdatalistsAddlist#type" locator-key1="NAME_FIELD" value1="${listName}" />
@@ -25,10 +21,6 @@
 	</command>
 
 	<command name="addPG">
-		<execute macro="Page#gotoPG">
-			<var name="portletName" value="${pageName}" />
-		</execute>
-
 		<execute action="PGDynamicdatalists#click" locator-key1="TOOLBAR_ADD_LIST" value1="Add List" />
 
 		<execute action="PGDynamicdatalistsAddlist#type" locator-key1="NAME_FIELD" value1="${listName}" />
@@ -46,10 +38,6 @@
 	</command>
 
 	<command name="deleteCP">
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Dynamic Data Lists" />
-		</execute>
-
 		<execute action="CPDynamicdatalists#type" locator-key1="TOOLBAR_SEARCH_FIELD" value1="${listName}" />
 		<execute action="CPDynamicdatalists#click" locator-key1="TOOLBAR_SEARCH_BUTTON" />
 		<execute action="CPDynamicdatalists#assertTextEquals" locator-key1="LIST_TABLE_NAME_1" value1="${listName}" />
@@ -61,10 +49,6 @@
 	</command>
 
 	<command name="deletePG">
-		<execute macro="Page#gotoPG">
-			<var name="portletName" value="${pageName}" />
-		</execute>
-
 		<execute action="PGDynamicdatalists#click" locator-key1="TOOLBAR_SELECT_LIST" value1="Select List" />
 
 		<execute action="PGDynamicdatalistsConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
@@ -80,10 +64,6 @@
 	</command>
 
 	<command name="editCP">
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Dynamic Data Lists" />
-		</execute>
-
 		<execute action="CPDynamicdatalists#type" locator-key1="TOOLBAR_SEARCH_FIELD" value1="${listName}" />
 		<execute action="CPDynamicdatalists#click" locator-key1="TOOLBAR_SEARCH_BUTTON" />
 		<execute action="CPDynamicdatalists#assertTextEquals" locator-key1="LIST_TABLE_NAME_1" value1="${listName}" />
@@ -98,10 +78,6 @@
 	</command>
 
 	<command name="editPG">
-		<execute macro="Page#gotoPG">
-			<var name="portletName" value="${pageName}" />
-		</execute>
-
 		<execute action="PGDynamicdatalists#click" locator-key1="TOOLBAR_SELECT_LIST" value1="Select List" />
 
 		<execute action="PGDynamicdatalistsConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
@@ -123,10 +99,6 @@
 	</command>
 
 	<command name="selectPG">
-		<execute macro="Page#gotoPG">
-			<var name="portletName" value="${pageName}" />
-		</execute>
-
 		<execute action="PGDynamicdatalists#click" locator-key1="TOOLBAR_SELECT_LIST" value1="Select List" />
 
 		<execute action="PGDynamicdatalistsConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
@@ -157,10 +129,6 @@
 	</command>
 
 	<command name="viewCP">
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Dynamic Data Lists" />
-		</execute>
-
 		<execute action="CPDynamicdatalists#type" locator-key1="TOOLBAR_SEARCH_FIELD" value1="${listName}" />
 		<execute action="CPDynamicdatalists#click" locator-key1="TOOLBAR_SEARCH_BUTTON" />
 		<execute action="CPDynamicdatalists#assertTextEquals" locator-key1="LIST_TABLE_NAME_1" value1="${listName}" />
@@ -170,11 +138,8 @@
 		<execute action="CPDynamicdatalistsList#assertTextEquals" locator-key1="HEADER_TITLE" value1="${listName}" />
 		<execute action="CPDynamicdatalistsList#assertElementPresent" locator-key1="ADD_RECORD_BUTTON" />
 	</command>
-	<command name="viewPG">
-		<execute macro="Page#gotoPG">
-			<var name="portletName" value="${pageName}" />
-		</execute>
 
+	<command name="viewPG">
 		<execute action="PGDynamicdatalists#assertTextEquals" locator-key1="HEADER_TITLE" value1="${listName}" />
 	</command>
 </definition>

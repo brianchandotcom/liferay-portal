@@ -32,6 +32,10 @@
 		<var name="webContentTitle" value="WC WebContent Title" />
 		<var name="webContentTitleEdit" value="WC WebContent Title Edit" />
 
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
 		<execute macro="WebContent#addPGviaWCD">
 			<var name="pageName" value="${pageName}" />
 			<var name="webContentContent" value="${webContentContent}" />

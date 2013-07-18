@@ -7,6 +7,10 @@
 		<var name="folderDescription" value="WC Folder Description" />
 		<var name="folderName" value="WC Folder Name" />
 
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
 		<execute macro="WebContentFolder#addCP">
 			<var name="folderDescription" value="${folderDescription}" />
 			<var name="folderName" value="${folderName}" />
@@ -17,6 +21,10 @@
 		<var name="structureDescription" value="WC Structure Description" />
 		<var name="structureName" value="WC Structure Name" />
 
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
 		<execute macro="WebContentStructures#addCP">
 			<var name="structureDescription" value="${structureDescription}" />
 			<var name="structureName" value="${structureName}" />
@@ -26,6 +34,10 @@
 	<command name="AddTemplate">
 		<var name="templateDescription" value="WC Template Description" />
 		<var name="templateName" value="WC Template Name" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
 
 		<execute macro="WebContentTemplates#addCP">
 			<var name="templateDescription" value="${templateDescription}" />
@@ -55,6 +67,10 @@
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
 
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
 		<execute macro="WebContent#addCP">
 			<var name="webContentContent" value="${webContentContent}" />
 			<var name="webContentTitle" value="${webContentTitle}" />
@@ -69,15 +85,27 @@
 		<var name="webContentText" value="WC WebContent Text" />
 		<var name="webContentTitle" value="WC WebContent Title" />
 
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
 		<execute macro="WebContentStructures#addCP">
 			<var name="structureDescription" value="${structureDescription}" />
 			<var name="structureName" value="${structureName}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
 		</execute>
 
 		<execute macro="WebContentTemplates#addCP">
 			<var name="structureName" value="${structureName}" />
 			<var name="templateDescription" value="${templateDescription}" />
 			<var name="templateName" value="${templateName}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
 		</execute>
 
 		<execute macro="WebContent#addCPwithStructure">

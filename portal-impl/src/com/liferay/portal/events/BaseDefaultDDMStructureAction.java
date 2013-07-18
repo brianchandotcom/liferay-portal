@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.upgrade.UpgradeProcessUtil;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants;
@@ -47,7 +48,9 @@ public abstract class BaseDefaultDDMStructureAction extends SimpleAction {
 			ServiceContext serviceContext)
 		throws Exception {
 
-		List<Element> structureElements = getDDMStructures(fileName);
+		Locale locale = PortalUtil.getSiteDefaultLocale(groupId);
+
+		List<Element> structureElements = getDDMStructures(fileName, locale);
 
 		for (Element structureElement : structureElements) {
 			boolean dynamicStructure = GetterUtil.getBoolean(
@@ -78,11 +81,11 @@ public abstract class BaseDefaultDDMStructureAction extends SimpleAction {
 
 			Map<Locale, String> nameMap = new HashMap<Locale, String>();
 
-			nameMap.put(LocaleUtil.getDefault(), name);
+			nameMap.put(locale, name);
 
 			Map<Locale, String> descriptionMap = new HashMap<Locale, String>();
 
-			descriptionMap.put(LocaleUtil.getDefault(), description);
+			descriptionMap.put(locale, description);
 
 			Attribute defaultLocaleAttribute =
 				structureElementRootElement.attribute("default-locale");
@@ -91,7 +94,7 @@ public abstract class BaseDefaultDDMStructureAction extends SimpleAction {
 				defaultLocaleAttribute.getValue());
 
 			xsd = DDMXMLUtil.updateXMLDefaultLocale(
-				xsd, ddmStructureDefaultLocale, LocaleUtil.getDefault());
+				xsd, ddmStructureDefaultLocale, locale);
 
 			if (name.equals(DLFileEntryTypeConstants.NAME_IG_IMAGE) &&
 				!UpgradeProcessUtil.isCreateIGImageDocumentType()) {
@@ -107,15 +110,15 @@ public abstract class BaseDefaultDDMStructureAction extends SimpleAction {
 		}
 	}
 
-	protected List<Element> getDDMStructures(String fileName)
+	protected List<Element> getDDMStructures(
+			String fileName, Locale defaultLocale)
 		throws DocumentException {
 
 		String xml = ContentUtil.get(
 			"com/liferay/portal/events/dependencies/" + fileName);
 
-		Locale locale = LocaleUtil.getDefault();
-
-		xml = StringUtil.replace(xml, "[$LOCALE_DEFAULT$]", locale.toString());
+		xml = StringUtil.replace(
+			xml, "[$LOCALE_DEFAULT$]", defaultLocale.toString());
 
 		Document document = SAXReaderUtil.read(xml);
 
@@ -125,10 +128,12 @@ public abstract class BaseDefaultDDMStructureAction extends SimpleAction {
 	}
 
 	protected String getDynamicDDMStructureXSD(
-			String fileName, String dynamicDDMStructureName)
+			String fileName, String dynamicDDMStructureName,
+			Locale defaultLocale)
 		throws DocumentException {
 
-		List<Element> structureElements = getDDMStructures(fileName);
+		List<Element> structureElements = getDDMStructures(
+			fileName, defaultLocale);
 
 		for (Element structureElement : structureElements) {
 			boolean dynamicStructure = GetterUtil.getBoolean(

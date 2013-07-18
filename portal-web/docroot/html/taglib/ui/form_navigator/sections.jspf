@@ -15,7 +15,9 @@
 --%>
 
 <%
-for (String section : allSections) {
+for (int i = 0; i < allSections.length; i++) {
+	String section = allSections[i];
+
 	String sectionId = namespace + _getSectionId(section);
 	String sectionJsp = jspPath + _getSectionJsp(section) + ".jsp";
 %>
@@ -24,7 +26,7 @@ for (String section : allSections) {
 
 	<c:choose>
 		<c:when test='<%= displayStyle.equals("panel") %>'>
-			<liferay-ui:panel cssClass="panel-page-category unstyled" extended="<%= true %>" id="<%= sectionId %>" title="<%= section %>">
+			<liferay-ui:panel cssClass="panel-page-category unstyled" defaultState='<%= i == 0 ? "open" : "closed" %>' extended="<%= true %>" id="<%= sectionId %>" title="<%= section %>">
 				<liferay-util:include page="<%= sectionJsp %>" portletId="<%= portletDisplay.getRootPortletId() %>" />
 			</liferay-ui:panel>
 		</c:when>

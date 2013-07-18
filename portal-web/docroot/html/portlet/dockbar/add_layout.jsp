@@ -56,7 +56,7 @@
 									<aui:input checked="<%= true %>" id="blank" label="empty-layout" name="selectedPageTemplate" type="radio" />
 
 									<div class="lfr-page-template-description">
-										<small><%= LanguageUtil.get(pageContext, "empty-layout-description" ) %></small>
+										<small><liferay-ui:message key="empty-layout-description" /></small>
 									</div>
 								</div>
 
@@ -118,7 +118,7 @@
 									<aui:input label='<%= "layout.types." + PropsValues.LAYOUT_TYPES[i] %>' name="selectedPageTemplate" type="radio" />
 
 									<div class="lfr-page-template-description">
-										<small><%= LanguageUtil.get(pageContext, "layout.types." + PropsValues.LAYOUT_TYPES[i] + ".description" ) %></small>
+										<small><liferay-ui:message key='<%= "layout.types." + PropsValues.LAYOUT_TYPES[i] + ".description" %>' /></small>
 									</div>
 								</div>
 
@@ -137,7 +137,7 @@
 									<aui:input label="copy-of-a-page" name="selectedPageTemplate" type="radio" />
 
 									<div class="lfr-page-template-description">
-										<small><%= LanguageUtil.get(pageContext, "copy-of-a-page-description" ) %></small>
+										<small><liferay-ui:message key="copy-of-a-page-description" /></small>
 									</div>
 								</div>
 
@@ -191,7 +191,7 @@ Layout addedLayout = (Layout)SessionMessages.get(renderRequest, portletDisplay.g
 <aui:script use="liferay-dockbar-add-page">
 	new Liferay.Dockbar.AddPage(
 		{
-			createPageMessage: '<%= LanguageUtil.get(pageContext, "loading") %>',
+			createPageMessage: '<liferay-ui:message key="loading" />',
 			focusItem: A.one('#<portlet:namespace />name'),
 			inputNode: A.one('#<portlet:namespace />searchTemplates'),
 			namespace: '<portlet:namespace />',

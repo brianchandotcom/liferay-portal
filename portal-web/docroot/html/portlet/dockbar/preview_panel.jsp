@@ -19,46 +19,46 @@
 <div id="<portlet:namespace />devicePreviewContainer">
 	<button class="close pull-right" id="closePanel" type="button">&times;</button>
 
-	<h1><%= LanguageUtil.get(pageContext, "preview") %></h1>
+	<h1><liferay-ui:message key="preview" /></h1>
 
 	<aui:nav cssClass="nav-list">
 		<aui:nav-item cssClass="autosize lfr-device-item" data-device="autosize">
 			<div class="device-info">
-				<span class="device-name"><%= LanguageUtil.get(pageContext, "autosize") %></span>
+				<span class="device-name"><liferay-ui:message key="autosize" /></span>
 				<span class="device-dimensions">100%</span>
 			</div>
 		</aui:nav-item>
 
 		<aui:nav-item cssClass="lfr-device-item selected smartphone" data-device="smartphone">
 			<div class="device-info">
-				<span class="device-name"><%= LanguageUtil.get(pageContext, "smartphone") %></span>
+				<span class="device-name"><liferay-ui:message key="smartphone" /></span>
 				<span class="device-dimensions">768px</span>
 			</div>
 		</aui:nav-item>
 
 		<aui:nav-item cssClass="lfr-device-item tablet" data-device="tablet">
 			<div class="device-info">
-				<span class="device-name"><%= LanguageUtil.get(pageContext, "tablet") %></span>
+				<span class="device-name"><liferay-ui:message key="tablet" /></span>
 				<span class="device-dimensions">1024px</span>
 			</div>
 		</aui:nav-item>
 
 		<aui:nav-item cssClass="desktop lfr-device-item" data-device="desktop">
 			<div class="device-info">
-				<span class="device-name"><%= LanguageUtil.get(pageContext, "desktop") %></span>
+				<span class="device-name"><liferay-ui:message key="desktop" /></span>
 				<span class="device-dimensions">1280px</span>
 			</div>
 		</aui:nav-item>
 
 		<aui:nav-item cssClass="lfr-device-item" data-device="custom">
-			<p><%= LanguageUtil.get(pageContext, "custom") %> (px)</p>
+			<p><liferay-ui:message key="custom" /> (px)</p>
 
 			<aui:input cssClass="input-mini" inlineField="<%= true %>" label="" name="width" value="400" /><span> &times; </span><aui:input cssClass="input-mini" inlineField="<%= true %>" label="" name="height" value="400" />
 		</aui:nav-item>
 	</aui:nav>
 
 	<div class="alert">
-		<small><%= LanguageUtil.get(pageContext, "preview-may-not-be-accurate") %></small>
+		<small><liferay-ui:message key="preview-may-not-be-accurate" /></small>
 	</div>
 </div>
 

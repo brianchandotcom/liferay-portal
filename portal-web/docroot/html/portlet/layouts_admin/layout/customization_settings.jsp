@@ -115,8 +115,8 @@ if (selLayout != null) {
 			{
 				namespace: '<portlet:namespace />',
 				strings: {
-					HIDE: '<%= LanguageUtil.get(pageContext, "hide-customizable-sections") %>',
-					SHOW: '<%= LanguageUtil.get(pageContext, "show-customizable-sections") %>'
+					HIDE: '<liferay-ui:message key="hide-customizable-sections" />',
+					SHOW: '<liferay-ui:message key="show-customizable-sections" />'
 				}
 			}
 		);

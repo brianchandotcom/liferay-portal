@@ -44,7 +44,7 @@
 		<c:otherwise>
 			<button class="close pull-right" id="closePanel" type="button">&times;</button>
 
-			<h1><%= LanguageUtil.get(pageContext, "edit-page") %></h1>
+			<h1><liferay-ui:message key="edit-page" /></h1>
 
 			<c:if test="<%= selPlid > 0 %>">
 				<liferay-util:include page="/html/portlet/layouts_admin/edit_layout.jsp">

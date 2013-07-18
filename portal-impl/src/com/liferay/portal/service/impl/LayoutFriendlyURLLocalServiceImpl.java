@@ -182,7 +182,7 @@ public class LayoutFriendlyURLLocalServiceImpl
 
 		if (layoutFriendlyURL == null) {
 			layoutFriendlyURL = layoutFriendlyURLPersistence.fetchByP_L(
-				plid, LocaleUtil.toLanguageId(LocaleUtil.getDefault()));
+				plid, LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()));
 		}
 
 		if (layoutFriendlyURL == null) {
@@ -214,7 +214,7 @@ public class LayoutFriendlyURLLocalServiceImpl
 
 		if (layoutFriendlyURL == null) {
 			layoutFriendlyURL = layoutFriendlyURLPersistence.fetchByP_L(
-				plid, LocaleUtil.toLanguageId(LocaleUtil.getDefault()));
+				plid, LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()));
 		}
 
 		if (layoutFriendlyURL == null) {

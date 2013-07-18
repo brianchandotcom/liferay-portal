@@ -235,7 +235,7 @@ public class LayoutStagingHandler implements InvocationHandler, Serializable {
 				WorkflowConstants.ACTION_SAVE_DRAFT);
 		}
 
-		return LayoutRevisionLocalServiceUtil.addLayoutRevision(
+		layoutRevision = LayoutRevisionLocalServiceUtil.addLayoutRevision(
 			serviceContext.getUserId(), layoutSetBranchId,
 			layoutBranch.getLayoutBranchId(),
 			LayoutRevisionConstants.DEFAULT_PARENT_LAYOUT_REVISION_ID, false,
@@ -246,6 +246,18 @@ public class LayoutStagingHandler implements InvocationHandler, Serializable {
 			layout.getIconImageId(), layout.getThemeId(),
 			layout.getColorSchemeId(), layout.getWapThemeId(),
 			layout.getWapColorSchemeId(), layout.getCss(), serviceContext);
+
+		boolean explicitCreation = ParamUtil.getBoolean(
+			serviceContext, "explicitCreation");
+
+		if (!explicitCreation) {
+			LayoutRevisionLocalServiceUtil.updateStatus(
+				serviceContext.getUserId(),
+				layoutRevision.getLayoutRevisionId(),
+				WorkflowConstants.STATUS_INCOMPLETE, serviceContext);
+		}
+
+		return layoutRevision;
 	}
 
 	private LayoutType _getLayoutType() {

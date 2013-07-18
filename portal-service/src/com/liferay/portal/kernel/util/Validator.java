@@ -982,6 +982,78 @@ public class Validator {
 	}
 
 	/**
+	 * Returns <code>true</code> if the array is not <code>null</code>, meaning
+	 * it is neither a <code>null</code> reference or empty.
+	 *
+	 * @param  array the array to check
+	 * @return <code>true</code> if the array is not <code>null</code>;
+	 *         <code>false</code> otherwise
+	 */
+	public static boolean isNotNull(boolean[] array) {
+		return !isNull(array);
+	}
+
+	/**
+	 * Returns <code>true</code> if the array is not <code>null</code>, meaning
+	 * it is neither a <code>null</code> reference or empty.
+	 *
+	 * @param  array the array to check
+	 * @return <code>true</code> if the array is not <code>null</code>;
+	 *         <code>false</code> otherwise
+	 */
+	public static boolean isNotNull(byte[] array) {
+		return !isNull(array);
+	}
+
+	/**
+	 * Returns <code>true</code> if the array is not <code>null</code>, meaning
+	 * it is neither a <code>null</code> reference or empty.
+	 *
+	 * @param  array the array to check
+	 * @return <code>true</code> if the array is not <code>null</code>;
+	 *         <code>false</code> otherwise
+	 */
+	public static boolean isNotNull(char[] array) {
+		return !isNull(array);
+	}
+
+	/**
+	 * Returns <code>true</code> if the array is not <code>null</code>, meaning
+	 * it is neither a <code>null</code> reference or empty.
+	 *
+	 * @param  array the array to check
+	 * @return <code>true</code> if the array is not <code>null</code>;
+	 *         <code>false</code> otherwise
+	 */
+	public static boolean isNotNull(double[] array) {
+		return !isNull(array);
+	}
+
+	/**
+	 * Returns <code>true</code> if the array is not <code>null</code>, meaning
+	 * it is neither a <code>null</code> reference or empty.
+	 *
+	 * @param  array the array to check
+	 * @return <code>true</code> if the array is not <code>null</code>;
+	 *         <code>false</code> otherwise
+	 */
+	public static boolean isNotNull(float[] array) {
+		return !isNull(array);
+	}
+
+	/**
+	 * Returns <code>true</code> if the array is not <code>null</code>, meaning
+	 * it is neither a <code>null</code> reference or empty.
+	 *
+	 * @param  array the array to check
+	 * @return <code>true</code> if the array is not <code>null</code>;
+	 *         <code>false</code> otherwise
+	 */
+	public static boolean isNotNull(int[] array) {
+		return !isNull(array);
+	}
+
+	/**
 	 * Returns <code>true</code> if the long number object is not
 	 * <code>null</code>, meaning it is neither a <code>null</code> reference or
 	 * zero.
@@ -992,6 +1064,18 @@ public class Validator {
 	 */
 	public static boolean isNotNull(Long l) {
 		return !isNull(l);
+	}
+
+	/**
+	 * Returns <code>true</code> if the array is not <code>null</code>, meaning
+	 * it is neither a <code>null</code> reference or empty.
+	 *
+	 * @param  array the array to check
+	 * @return <code>true</code> if the array is not <code>null</code>;
+	 *         <code>false</code> otherwise
+	 */
+	public static boolean isNotNull(long[] array) {
+		return !isNull(array);
 	}
 
 	/**
@@ -1020,6 +1104,18 @@ public class Validator {
 	}
 
 	/**
+	 * Returns <code>true</code> if the array is not <code>null</code>, meaning
+	 * it is neither a <code>null</code> reference or empty.
+	 *
+	 * @param  array the array to check
+	 * @return <code>true</code> if the array is not <code>null</code>;
+	 *         <code>false</code> otherwise
+	 */
+	public static boolean isNotNull(short[] array) {
+		return !isNull(array);
+	}
+
+	/**
 	 * Returns <code>true</code> if the string is not <code>null</code>, meaning
 	 * it is not a <code>null</code> reference, nothing but spaces, or the
 	 * string "<code>null</code>".
@@ -1033,6 +1129,108 @@ public class Validator {
 	}
 
 	/**
+	 * Returns <code>true</code> if the array is <code>null</code>, meaning it
+	 * is either a <code>null</code> reference or empty.
+	 *
+	 * @param  array the array to check
+	 * @return <code>true</code> if the array is <code>null</code>;
+	 *         <code>false</code> otherwise
+	 */
+	public static boolean isNull(boolean[] array) {
+		if ((array == null) || (array.length == 0)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	/**
+	 * Returns <code>true</code> if the array is <code>null</code>, meaning it
+	 * is either a <code>null</code> reference or empty.
+	 *
+	 * @param  array the array to check
+	 * @return <code>true</code> if the array is <code>null</code>;
+	 *         <code>false</code> otherwise
+	 */
+	public static boolean isNull(byte[] array) {
+		if ((array == null) || (array.length == 0)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	/**
+	 * Returns <code>true</code> if the array is <code>null</code>, meaning it
+	 * is either a <code>null</code> reference or empty.
+	 *
+	 * @param  array the array to check
+	 * @return <code>true</code> if the array is <code>null</code>;
+	 *         <code>false</code> otherwise
+	 */
+	public static boolean isNull(char[] array) {
+		if ((array == null) || (array.length == 0)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	/**
+	 * Returns <code>true</code> if the array is <code>null</code>, meaning it
+	 * is either a <code>null</code> reference or empty.
+	 *
+	 * @param  array the array to check
+	 * @return <code>true</code> if the array is <code>null</code>;
+	 *         <code>false</code> otherwise
+	 */
+	public static boolean isNull(double[] array) {
+		if ((array == null) || (array.length == 0)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	/**
+	 * Returns <code>true</code> if the array is <code>null</code>, meaning it
+	 * is either a <code>null</code> reference or empty.
+	 *
+	 * @param  array the array to check
+	 * @return <code>true</code> if the array is <code>null</code>;
+	 *         <code>false</code> otherwise
+	 */
+	public static boolean isNull(float[] array) {
+		if ((array == null) || (array.length == 0)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	/**
+	 * Returns <code>true</code> if the array is <code>null</code>, meaning it
+	 * is either a <code>null</code> reference or empty.
+	 *
+	 * @param  array the array to check
+	 * @return <code>true</code> if the array is <code>null</code>;
+	 *         <code>false</code> otherwise
+	 */
+	public static boolean isNull(int[] array) {
+		if ((array == null) || (array.length == 0)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	/**
 	 * Returns <code>true</code> if the long number object is <code>null</code>,
 	 * meaning it is either a <code>null</code> reference or zero.
 	 *
@@ -1042,6 +1240,23 @@ public class Validator {
 	 */
 	public static boolean isNull(Long l) {
 		if ((l == null) || (l.longValue() == 0)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	/**
+	 * Returns <code>true</code> if the array is <code>null</code>, meaning it
+	 * is either a <code>null</code> reference or empty.
+	 *
+	 * @param  array the array to check
+	 * @return <code>true</code> if the array is <code>null</code>;
+	 *         <code>false</code> otherwise
+	 */
+	public static boolean isNull(long[] array) {
+		if ((array == null) || (array.length == 0)) {
 			return true;
 		}
 		else {
@@ -1082,6 +1297,23 @@ public class Validator {
 	 *         <code>false</code> otherwise
 	 */
 	public static boolean isNull(Object[] array) {
+		if ((array == null) || (array.length == 0)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	/**
+	 * Returns <code>true</code> if the array is <code>null</code>, meaning it
+	 * is either a <code>null</code> reference or empty.
+	 *
+	 * @param  array the array to check
+	 * @return <code>true</code> if the array is <code>null</code>;
+	 *         <code>false</code> otherwise
+	 */
+	public static boolean isNull(short[] array) {
 		if ((array == null) || (array.length == 0)) {
 			return true;
 		}

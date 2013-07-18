@@ -362,6 +362,38 @@ public class ValidatorTest extends PowerMockito {
 	}
 
 	@Test
+	public void testIsNullObjectArray() {
+		Assert.assertTrue(
+			"Empty Object[] should be considered null by Validator",
+			Validator.isNull(new Object[]{}));
+	}
+
+	@Test
+	public void testIsNullPrimitiveArray() {
+		Assert.assertTrue(
+			"Empty boolean[] should be considered null by Validator",
+			Validator.isNull(new boolean[]{}));
+		Assert.assertTrue(
+			"Empty byte[] should be considered null by Validator",
+			Validator.isNull(new byte[]{}));
+		Assert.assertTrue(
+			"Empty char[] should be considered null by Validator",
+			Validator.isNull(new char[]{}));
+		Assert.assertTrue(
+			"Empty double[] should be considered null by Validator",
+			Validator.isNull(new double[]{}));
+		Assert.assertTrue(
+			"Empty float[] should be considered null by Validator",
+			Validator.isNull(new float[]{}));
+		Assert.assertTrue(
+			"Empty long[] should be considered null by Validator",
+			Validator.isNull(new long[]{}));
+		Assert.assertTrue(
+			"Empty short[] should be considered null by Validator",
+			Validator.isNull(new short[]{}));
+	}
+
+	@Test
 	public void testIsValidEmailAddress() throws Exception {
 		String[] validEmailAddresses = {
 			"test@liferay.com", "test123@liferay.com", "test.user@liferay.com",

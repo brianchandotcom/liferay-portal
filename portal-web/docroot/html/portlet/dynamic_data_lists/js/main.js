@@ -25,7 +25,7 @@ AUI.add(
 					initializer: function() {
 						var instance = this;
 
-						window[Liferay.Util.getPortletNamespace('15') + 'selectDocumentLibrary'] = A.bind('_selectFileEntry', instance);
+						window[Liferay.Util.getPortletNamespace('166') + 'selectDocumentLibrary'] = A.bind('_selectFileEntry', instance);
 					},
 
 					getElementsValue: function() {
@@ -41,31 +41,32 @@ AUI.add(
 
 						instance.toolbar.add(
 							{
-								handler: A.bind('_handleChooseEvent', instance),
+								on: {
+									click: A.bind('_onClickChoose', instance)
+								},
 								label: Liferay.Language.get('choose')
 							},
 							1
 						);
 					},
 
-					_handleChooseEvent: function() {
+					_onClickChoose: function() {
 						var instance = this;
 
-						var uri = Liferay.Util.addParams(
-							{
-								groupId: themeDisplay.getScopeGroupId(),
-								p_p_id: '166',
-								p_p_state: 'pop_up',
-								struts_action: '/dynamic_data_mapping/select_document_library'
-							},
-							themeDisplay.getURLControlPanel()
-						);
+						var portletURL = Liferay.PortletURL.createURL(themeDisplay.getURLControlPanel());
+
+						portletURL.setParameter('groupId', themeDisplay.getScopeGroupId());
+						portletURL.setParameter('struts_action', '/dynamic_data_mapping/select_document_library');
+
+						portletURL.setPortletId('166');
+
+						portletURL.setWindowState('pop_up');
 
 						Liferay.Util.openWindow(
 							{
 								id: 'selectDocumentLibrary',
 								title: Liferay.Language.get('javax.portlet.title.20'),
-								uri: uri
+								uri: portletURL.toString()
 							}
 						);
 					},
@@ -158,7 +159,7 @@ AUI.add(
 					}
 				},
 
-				CSS_PREFIX: '',
+				CSS_PREFIX: 'table',
 
 				DATATYPE_VALIDATOR: {
 					'date': 'date',

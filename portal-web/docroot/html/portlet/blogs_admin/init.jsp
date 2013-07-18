@@ -31,3 +31,7 @@ page import="com.liferay.portlet.blogsadmin.search.EntrySearchTerms" %><%@
 page import="com.liferay.portlet.trash.util.TrashUtil" %>
 
 <%@ include file="/html/portlet/blogs_admin/init-ext.jsp" %>
+
+<%
+boolean showBlogEntriesSearch = PrefsParamUtil.getBoolean(portletPreferences, request, "showBlogEntriesSearch", true);
+%>

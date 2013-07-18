@@ -52,10 +52,6 @@ portletURL.setParameter("struts_action", "/blogs_admin/view");
 		EntrySearchTerms searchTerms = (EntrySearchTerms)searchContainer.getSearchTerms();
 		%>
 
-		<liferay-ui:search-form
-			page="/html/portlet/blogs_admin/entry_search.jsp"
-		/>
-
 		<liferay-ui:search-container-results>
 			<%@ include file="/html/portlet/blogs_admin/entry_search_results.jspf" %>
 		</liferay-ui:search-container-results>

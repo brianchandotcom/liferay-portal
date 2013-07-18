@@ -145,6 +145,10 @@
 		margin-top: 0.5em;
 	}
 
+	.form-search {
+		height: 30px;
+	}
+
 	#blogsCommentsPanelContainer {
 		border-width: 0;
 	}

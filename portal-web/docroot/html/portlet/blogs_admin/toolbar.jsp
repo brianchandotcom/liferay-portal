@@ -38,4 +38,16 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all");
 			<aui:nav-item href="<%= addEntryURL %>" iconClass="icon-plus" label="add" selected='<%= toolbarItem.equals("add") %>' />
 		</c:if>
 	</aui:nav>
+
+	<c:if test="<%= showBlogEntriesSearch %>">
+		<div class="navbar-search pull-right">
+			<div class="form-search">
+				<div class="input-append">
+					<input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" class="search-query span9" id="<portlet:namespace/>keywords1" name="<portlet:namespace/>keywords" placeholder="<liferay-ui:message key="keywords" />" type="text" />
+
+					<aui:button primary="<%= false %>" type="submit" value="search" />
+				</div>
+			</div>
+		</div>
+	</c:if>
 </aui:nav-bar>

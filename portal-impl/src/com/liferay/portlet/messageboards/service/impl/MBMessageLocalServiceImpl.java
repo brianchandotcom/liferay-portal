@@ -1988,20 +1988,21 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			long controlPanelPlid = PortalUtil.getControlPanelPlid(
 				serviceContext.getCompanyId());
 
-			long messagePlid = serviceContext.getPlid();
+			long messageBoardsPlid = serviceContext.getPlid();
 
-			if (messagePlid == controlPanelPlid) {
-				messagePlid = PortalUtil.getPlidFromPortletId(
+			if (messageBoardsPlid == controlPanelPlid) {
+				messageBoardsPlid = PortalUtil.getPlidFromPortletId(
 					message.getGroupId(), PortletKeys.MESSAGE_BOARDS);
 
-				if (messagePlid != LayoutConstants.DEFAULT_PLID) {
-					Layout layout = layoutLocalService.getLayout(messagePlid);
+				if (messageBoardsPlid != LayoutConstants.DEFAULT_PLID) {
+					Layout layout = layoutLocalService.getLayout(
+						messageBoardsPlid);
 
 					layoutFullURL = getMessageLayoutURL(layout, serviceContext);
 				}
 			}
 
-			if (messagePlid != LayoutConstants.DEFAULT_PLID) {
+			if (messageBoardsPlid != LayoutConstants.DEFAULT_PLID) {
 				messageURL =
 					layoutFullURL + Portal.FRIENDLY_URL_SEPARATOR +
 						"message_boards/view_message/" + message.getMessageId();

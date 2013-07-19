@@ -196,6 +196,10 @@ public class PortalUtil {
 		return getPortal().generateRandomKey(request, input);
 	}
 
+	public static String getAbsoluteURL(HttpServletRequest request, String url) {
+		return getPortal().getAbsoluteURL(request, url);
+	}
+
 	public static LayoutQueryStringComposite
 		getActualLayoutQueryStringComposite(
 			long groupId, boolean privateLayout, String friendlyURL,

@@ -834,6 +834,26 @@ public class PortalImpl implements Portal {
 	}
 
 	@Override
+	public String getAbsoluteURL(HttpServletRequest request, String url) {
+		String portalURL = PortalUtil.getPortalURL(request);
+
+		if (url.charAt(0) == CharPool.SLASH) {
+			if (Validator.isNotNull(portalURL)) {
+				url = portalURL.concat(url);
+			}
+		}
+
+		if (!CookieKeys.hasSessionId(request) &&
+			url.startsWith(portalURL)) {
+
+			url = PortalUtil.getURLWithSessionId(
+				url, request.getSession().getId());
+		}
+
+		return url;
+	}
+
+	@Override
 	public LayoutQueryStringComposite getActualLayoutQueryStringComposite(
 			long groupId, boolean privateLayout, String friendlyURL,
 			Map<String, String[]> params, Map<String, Object> requestContext)

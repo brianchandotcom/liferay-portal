@@ -40,9 +40,6 @@ if (Validator.isNull(redirect)) {
 	redirect = portletURL.toString();
 }
 
-String extension = fileEntry.getExtension();
-String title = TrashUtil.getOriginalTitle(fileEntry.getTitle());
-
 Folder folder = fileEntry.getFolder();
 FileVersion fileVersion = (FileVersion)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FILE_VERSION);
 
@@ -73,15 +70,13 @@ Lock lock = fileEntry.getLock();
 String[] conversions = new String[0];
 
 if (PropsValues.DL_FILE_ENTRY_CONVERSIONS_ENABLED && PrefsPropsUtil.getBoolean(PropsKeys.OPENOFFICE_SERVER_ENABLED, PropsValues.OPENOFFICE_SERVER_ENABLED)) {
-	conversions = (String[])DocumentConversionUtil.getConversions(extension);
+	conversions = (String[])DocumentConversionUtil.getConversions(fileVersion.getExtension());
 }
 
 long assetClassPK = 0;
 
 if (!fileVersion.isApproved() && !fileVersion.getVersion().equals(DLFileEntryConstants.VERSION_DEFAULT) && !fileVersion.isInTrash()) {
 	assetClassPK = fileVersion.getFileVersionId();
-	title = fileVersion.getTitle();
-	extension = fileVersion.getExtension();
 }
 else {
 	assetClassPK = fileEntry.getFileEntryId();
@@ -116,22 +111,10 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 </aui:form>
 
 <c:if test="<%= showHeader && (folder != null) %>">
-
-	<%
-	String versionText = null;
-
-	if (Validator.isNotNull(fileVersion.getVersion())) {
-		versionText = LanguageUtil.format(pageContext, "version-x", fileVersion.getVersion());
-	}
-	else {
-		versionText = LanguageUtil.get(pageContext, "not-approved");
-	}
-	%>
-
 	<liferay-ui:header
 		backURL="<%= redirect %>"
 		localizeTitle="<%= false %>"
-		title="<%= TrashUtil.getOriginalTitle(fileEntry.getTitle()) %>"
+		title="<%= fileVersion.getTitle() %>"
 	/>
 </c:if>
 
@@ -180,16 +163,11 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 			</c:if>
 
 			<liferay-util:buffer var="documentTitle">
-				<c:choose>
-					<c:when test="<%= versionSpecific %>">
-						<%= fileVersion.getTitle() %>
+				<%= fileVersion.getTitle() %>
 
-						(<liferay-ui:message key="version" /> <%= HtmlUtil.escape(fileVersion.getVersion()) %>)
-					</c:when>
-					<c:otherwise>
-						<%= title %>
-					</c:otherwise>
-				</c:choose>
+				<c:if test="<%= versionSpecific %>">
+					(<liferay-ui:message key="version" /> <%= HtmlUtil.escape(fileVersion.getVersion()) %>)
+				</c:if>
 			</liferay-util:buffer>
 
 			<div class="body-row">
@@ -441,7 +419,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 							formName="fm2"
 							ratingsEnabled="<%= enableCommentRatings %>"
 							redirect="<%= currentURL %>"
-							subject="<%= title %>"
+							subject="<%= TrashUtil.getOriginalTitle(fileEntry.getTitle()) %>"
 							userId="<%= fileEntry.getUserId() %>"
 						/>
 					</liferay-ui:panel>
@@ -656,7 +634,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 							<liferay-ui:panel collapsible="<%= true %>" cssClass="version-history" id="documentLibraryVersionHistoryPanel" persistState="<%= true %>" title="version-history">
 
 								<%
-								boolean comparableFileEntry = DocumentConversionUtil.isComparableVersion(extension);
+								boolean comparableFileEntry = DocumentConversionUtil.isComparableVersion(fileVersion.getExtension());
 								boolean showNonApprovedDocuments = false;
 
 								if ((user.getUserId() == fileEntry.getUserId()) || permissionChecker.isCompanyAdmin() || permissionChecker.isGroupAdmin(scopeGroupId)) {
@@ -837,7 +815,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 	);
 </aui:script>
 
-<c:if test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.VIEW) && DLUtil.isOfficeExtension(extension) && portletDisplay.isWebDAVEnabled() && BrowserSnifferUtil.isIeOnWin32(request) %>">
+<c:if test="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.VIEW) && DLUtil.isOfficeExtension(fileVersion.getExtension()) && portletDisplay.isWebDAVEnabled() && BrowserSnifferUtil.isIeOnWin32(request) %>">
 	<%@ include file="/html/portlet/document_library/action/open_document_js.jspf" %>
 </c:if>
 
@@ -886,7 +864,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 			);
 
 			<%
-			if (DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.VIEW) && DLUtil.isOfficeExtension(extension) && portletDisplay.isWebDAVEnabled() && BrowserSnifferUtil.isIeOnWin32(request)) {
+			if (DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.VIEW) && DLUtil.isOfficeExtension(fileVersion.getExtension()) && portletDisplay.isWebDAVEnabled() && BrowserSnifferUtil.isIeOnWin32(request)) {
 			%>
 
 				fileEntryButtonGroup.push(

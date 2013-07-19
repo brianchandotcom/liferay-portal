@@ -50,6 +50,7 @@ public class WikiRSSRenderer extends DefaultRSSRenderer {
 		boolean diff) {
 
 		super(request);
+
 		_pages = pagesToExport;
 		_diff = diff;
 		_themeDisplay = (ThemeDisplay)request.getAttribute(
@@ -60,11 +61,8 @@ public class WikiRSSRenderer extends DefaultRSSRenderer {
 
 	@Override
 	public String getFeedURL() throws PortalException, SystemException {
-
-		String layoutFullURL;
-		layoutFullURL =
-			PortalUtil.getLayoutFullURL(
-				_themeDisplay.getScopeGroupId(), PortletKeys.WIKI);
+		String layoutFullURL =PortalUtil.getLayoutFullURL(
+			_themeDisplay.getScopeGroupId(), PortletKeys.WIKI);
 
 		StringBundler sb = new StringBundler(4);
 

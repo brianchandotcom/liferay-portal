@@ -30,6 +30,7 @@ public class BlogsCompanyRSSRenderer extends BlogsBaseRSSRenderer {
 		HttpServletRequest request) {
 
 		super(blogsEntries, request);
+
 		_company = company;
 	}
 
@@ -40,7 +41,6 @@ public class BlogsCompanyRSSRenderer extends BlogsBaseRSSRenderer {
 
 	@Override
 	public String getRSSName() {
-
 		try {
 			return _company.getName();
 		}

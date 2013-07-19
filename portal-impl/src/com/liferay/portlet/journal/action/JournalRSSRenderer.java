@@ -69,6 +69,7 @@ public class JournalRSSRenderer extends DefaultRSSRenderer {
 		ResourceRequest request, ResourceResponse response) {
 
 		super(PortalUtil.getHttpServletRequest(request));
+
 		_request = request;
 		_response = response;
 		themeDisplay = (ThemeDisplay)request.getAttribute(
@@ -92,14 +93,16 @@ public class JournalRSSRenderer extends DefaultRSSRenderer {
 
 	@Override
 	public String getRSSFeedType() throws PortalException, SystemException {
-
 		JournalFeed feed = getJournalFeed();
+
 		return feed.getFeedFormat() + "_" + feed.getFeedVersion();
 	}
 
 	@Override
 	public String getRSSName() throws PortalException, SystemException {
-		return getJournalFeed().getName();
+		JournalFeed feed = getJournalFeed();
+
+		return feed.getName();
 	}
 
 	@Override
@@ -235,6 +238,7 @@ public class JournalRSSRenderer extends DefaultRSSRenderer {
 		}
 
 		_request.setAttribute("rssJournalFeed", feed);
+
 		return feed;
 	}
 

@@ -31,7 +31,6 @@ import javax.servlet.http.HttpServletRequest;
 public abstract class DefaultRSSRenderer implements RSSRenderer {
 
 	public DefaultRSSRenderer(HttpServletRequest request) {
-
 		_request = request;
 		_themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -47,7 +46,6 @@ public abstract class DefaultRSSRenderer implements RSSRenderer {
 
 	@Override
 	public Date getPublicationDate() throws PortalException, SystemException {
-
 		return new Date();
 	}
 
@@ -58,7 +56,6 @@ public abstract class DefaultRSSRenderer implements RSSRenderer {
 
 	@Override
 	public String getRSSFeedType() throws PortalException, SystemException {
-
 		return RSSUtil.getFeedType(getRSSFormat(), getRSSVersion());
 	}
 
@@ -75,7 +72,6 @@ public abstract class DefaultRSSRenderer implements RSSRenderer {
 	}
 
 	protected double getRSSVersion() throws PortalException, SystemException {
-
 		return ParamUtil.getDouble(
 			_request, "version", RSSUtil.VERSION_DEFAULT);
 	}

@@ -53,6 +53,7 @@ public class ActivitiesRSSRenderer extends DefaultRSSRenderer {
 		PortletRequest request, PortletResponse response) {
 
 		super(PortalUtil.getHttpServletRequest(request));
+
 		_portletRequest = request;
 		_themeDisplay = (ThemeDisplay)_portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -79,13 +80,10 @@ public class ActivitiesRSSRenderer extends DefaultRSSRenderer {
 		int max = ParamUtil.getInteger(
 			_portletRequest, "max", SearchContainer.DEFAULT_DELTA);
 
-		List<SocialActivity> activities;
-		ServiceContext serviceContext;
-		activities = getActivities(_portletRequest, max);
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			_portletRequest);
 
-		serviceContext = ServiceContextFactory.getInstance(_portletRequest);
-
-		for (SocialActivity activity : activities) {
+		for (SocialActivity activity : getActivities(max)) {
 			SocialActivityFeedEntry activityFeedEntry =
 				SocialActivityInterpreterLocalServiceUtil.interpret(
 					StringPool.BLANK, activity, serviceContext);
@@ -127,26 +125,23 @@ public class ActivitiesRSSRenderer extends DefaultRSSRenderer {
 
 	}
 
-	protected List<SocialActivity> getActivities(
-			PortletRequest portletRequest, int max)
+	protected List<SocialActivity> getActivities(int max)
 		throws PortalException, SystemException {
 
 		Group group = GroupLocalServiceUtil.getGroup(
 			_themeDisplay.getScopeGroupId());
 
-		int start = 0;
-
 		if (group.isOrganization()) {
 			return SocialActivityLocalServiceUtil.getOrganizationActivities(
-				group.getOrganizationId(), start, max);
+				group.getOrganizationId(), 0, max);
 		}
 		else if (group.isRegularSite()) {
 			return SocialActivityLocalServiceUtil.getGroupActivities(
-				group.getGroupId(), start, max);
+				group.getGroupId(), 0, max);
 		}
 		else if (group.isUser()) {
 			return SocialActivityLocalServiceUtil.getUserActivities(
-				group.getClassPK(), start, max);
+				group.getClassPK(), 0, max);
 		}
 
 		return Collections.emptyList();

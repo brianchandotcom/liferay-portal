@@ -39,6 +39,7 @@ public class BlogsGroupRSSRenderer extends BlogsBaseRSSRenderer {
 		boolean isScopeGroup) {
 
 		super(blogsEntries, request);
+
 		_group = group;
 		_isScopeGroup = isScopeGroup;
 		_plid = ParamUtil.getLong(getRequest(), "p_l_id");

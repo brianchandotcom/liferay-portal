@@ -27,6 +27,7 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.blogs.model.BlogsEntry;
+import com.liferay.portlet.rss.RSSRenderer;
 import com.liferay.util.RSSUtil;
 
 import com.sun.syndication.feed.synd.SyndContent;
@@ -38,8 +39,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-public abstract class BlogsBaseRSSRenderer
-	implements com.liferay.portlet.rss.RSSRenderer {
+public abstract class BlogsBaseRSSRenderer implements RSSRenderer {
 
 	public BlogsBaseRSSRenderer(
 		List<BlogsEntry> blogsEntries, HttpServletRequest request) {
@@ -69,7 +69,7 @@ public abstract class BlogsBaseRSSRenderer
 	@Override
 	public String getFeedURL() throws PortalException, SystemException {
 		return _themeDisplay.getPortalURL() + _themeDisplay.getPathMain() +
-		"/blogs/find_entry?";
+			"/blogs/find_entry?";
 	}
 
 	@Override
@@ -78,7 +78,6 @@ public abstract class BlogsBaseRSSRenderer
 	}
 
 	public HttpServletRequest getRequest() {
-
 		return _request;
 	}
 
@@ -89,9 +88,9 @@ public abstract class BlogsBaseRSSRenderer
 
 	@Override
 	public String getRSSFeedType() throws PortalException, SystemException {
-
 		String type = ParamUtil.getString(
 			getRequest(), "type", RSSUtil.FORMAT_DEFAULT);
+
 		return RSSUtil.getFeedType(type, getRSSVersion());
 	}
 
@@ -101,7 +100,6 @@ public abstract class BlogsBaseRSSRenderer
 	}
 
 	public ThemeDisplay getThemeDisplay() {
-
 		return _themeDisplay;
 	}
 

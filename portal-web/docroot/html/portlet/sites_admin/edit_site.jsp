@@ -113,6 +113,8 @@ if ((group != null) && group.isCompany()) {
 	advancedSections = ArrayUtil.remove(advancedSections, "default-user-associations");
 	advancedSections = ArrayUtil.remove(advancedSections, "analytics");
 	advancedSections = ArrayUtil.remove(advancedSections, "content-sharing");
+
+	miscellaneousSections = new String[0];
 }
 
 String[][] categorySections = {mainSections, seoSections, advancedSections, miscellaneousSections};

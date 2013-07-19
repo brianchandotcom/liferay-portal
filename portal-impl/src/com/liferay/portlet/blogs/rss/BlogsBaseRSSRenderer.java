@@ -42,6 +42,17 @@ public abstract class BlogsBaseRSSRenderer
 	implements com.liferay.portlet.rss.RSSRenderer {
 
 	@Override
+	public String getAlternateURL() throws PortalException, SystemException {
+		String feedURL = getFeedURL();
+
+		if (feedURL.endsWith("/-/blogs/rss")) {
+			return feedURL.substring(0, feedURL.length() - 12);
+		}
+
+		return PortalUtil.getLayoutFullURL(_themeDisplay);
+	}
+
+	@Override
 	public String getFeedURL() throws PortalException, SystemException {
 		return _themeDisplay.getPortalURL() + _themeDisplay.getPathMain() +
 		"/blogs/find_entry?";
@@ -126,5 +137,5 @@ public abstract class BlogsBaseRSSRenderer
 		}
 
 	}
-
+	
 }

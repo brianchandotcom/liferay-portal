@@ -40,6 +40,8 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
@@ -51,6 +53,7 @@ import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.SubscriptionSender;
+import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetLinkConstants;
 import com.liferay.portlet.blogs.EntryContentException;
@@ -79,6 +82,8 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.portlet.PortletPreferences;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -1269,6 +1274,34 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		return entry;
 	}
 
+	protected String getEntryLayoutURL(
+		Layout layout, ServiceContext serviceContext, boolean absoluteURL) {
+
+		HttpServletRequest request = serviceContext.getRequest();
+
+		if (request == null) {
+			return StringPool.BLANK;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String entryLayoutURL = StringPool.BLANK;
+
+		try {
+			if (absoluteURL) {
+				entryLayoutURL = PortalUtil.getLayoutFullURL(themeDisplay);
+			}
+			else if (layout != null) {
+				entryLayoutURL = PortalUtil.getLayoutURL(layout, themeDisplay);
+			}
+		}
+		catch (Exception e) {
+		}
+
+		return entryLayoutURL;
+	}
+
 	protected String getUniqueUrlTitle(long entryId, long groupId, String title)
 		throws SystemException {
 
@@ -1334,7 +1367,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 	protected void notifySubscribers(
 			BlogsEntry entry, ServiceContext serviceContext)
-		throws SystemException {
+		throws PortalException, SystemException {
 
 		if (!entry.isApproved()) {
 			return;
@@ -1371,9 +1404,46 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			return;
 		}
 
-		String entryURL =
-			layoutFullURL + Portal.FRIENDLY_URL_SEPARATOR + "blogs" +
-				StringPool.SLASH + entry.getEntryId();
+		String entryURL = StringPool.BLANK;
+
+		HttpServletRequest request = serviceContext.getRequest();
+
+		if (Validator.isNotNull(layoutFullURL) && (request != null)) {
+			long controlPanelPlid = PortalUtil.getControlPanelPlid(
+				serviceContext.getCompanyId());
+
+			long blogsPlid = serviceContext.getPlid();
+
+			if (blogsPlid == controlPanelPlid) {
+				blogsPlid = PortalUtil.getPlidFromPortletId(
+					entry.getGroupId(), PortletKeys.BLOGS);
+
+				if (blogsPlid != LayoutConstants.DEFAULT_PLID) {
+					Layout layout = layoutLocalService.getLayout(blogsPlid);
+
+					layoutFullURL = getEntryLayoutURL(
+						layout, serviceContext, false);
+				}
+			}
+
+			if (blogsPlid != LayoutConstants.DEFAULT_PLID) {
+				entryURL =
+					layoutFullURL + Portal.FRIENDLY_URL_SEPARATOR + "blogs" +
+						StringPool.SLASH + entry.getEntryId();
+			}
+			else {
+				PortletURL portletURL = PortletURLFactoryUtil.create(
+					request, PortletKeys.BLOGS_ADMIN, controlPanelPlid,
+					PortletRequest.RENDER_PHASE);
+
+				portletURL.setParameter(
+					"struts_action", "/blogs_admin/view_entry");
+				portletURL.setParameter(
+					"entryId", String.valueOf(entry.getEntryId()));
+
+				entryURL = portletURL.toString();
+			}
+		}
 
 		String fromName = BlogsUtil.getEmailFromName(
 			preferences, entry.getCompanyId());
@@ -1486,16 +1556,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			return;
 		}
 
-		HttpServletRequest request = serviceContext.getRequest();
-
-		if (request == null) {
-			return;
-		}
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		String layoutFullURL = PortalUtil.getLayoutFullURL(themeDisplay);
+		String layoutFullURL = getEntryLayoutURL(null, serviceContext, true);
 
 		if (Validator.isNull(layoutFullURL)) {
 			return;
@@ -1534,16 +1595,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			return;
 		}
 
-		HttpServletRequest request = serviceContext.getRequest();
-
-		if (request == null) {
-			return;
-		}
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		String layoutFullURL = PortalUtil.getLayoutFullURL(themeDisplay);
+		String layoutFullURL = getEntryLayoutURL(null, serviceContext, true);
 
 		if (Validator.isNull(layoutFullURL)) {
 			return;

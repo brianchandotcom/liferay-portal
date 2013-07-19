@@ -264,6 +264,15 @@ portletURL.setParameter("tabs3", "all-publication-processes");
 															</aui:fieldset>
 														</li>
 													</ul>
+
+													<aui:input id="rangeLast" inlineField="<%= true %>" label="last" name="range" type="radio" value="last" />
+
+													<aui:select inlineField="<%= true %>" label="" name="last">
+														<aui:option label='<%= LanguageUtil.format(pageContext, "x-hours", "12") %>' value="12" />
+														<aui:option label='<%= LanguageUtil.format(pageContext, "x-hours", "24") %>' value="24" />
+														<aui:option label='<%= LanguageUtil.format(pageContext, "x-hours", "48") %>' value="48" />
+														<aui:option label='<%= LanguageUtil.format(pageContext, "x-days", "7") %>' value="168" />
+													</aui:select>
 												</aui:fieldset>
 											</div>
 
@@ -463,6 +472,7 @@ portletURL.setParameter("tabs3", "all-publication-processes");
 					processesResourceURL: '<%= publishProcessesURL.toString() %>',
 					rangeAllNode: '#rangeAll',
 					rangeDateRangeNode: '#rangeDateRange',
+					rangeLastNode: '#rangeLast',
 					rangeLastPublishNode: '#rangeLastPublish',
 					ratingsNode: '#<%= PortletDataHandlerKeys.RATINGS %>Checkbox'
 				}

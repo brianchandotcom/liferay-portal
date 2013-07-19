@@ -138,8 +138,6 @@ portletURL.setParameter("tabs3", "all-export-processes");
 										<aui:fieldset cssClass="portlet-data-section" label="date-range">
 											<aui:input data-name='<%= LanguageUtil.get(pageContext, "all") %>' id="rangeAll" label="all" name="range" type="radio" value="all" />
 
-											<aui:input checked="<%= true %>" data-name='<%= LanguageUtil.get(pageContext, "from-last-publish-date") %>' id="rangeLastPublish" label="from-last-publish-date" name="range" type="radio" value="fromLastPublishDate" />
-
 											<aui:input data-name='<%= LanguageUtil.get(pageContext, "date-range") %>' helpMessage="export-date-range-help" id="rangeDateRange" label="date-range" name="range" type="radio" value="dateRange" />
 
 											<%
@@ -210,6 +208,15 @@ portletURL.setParameter("tabs3", "all-export-processes");
 													</aui:fieldset>
 												</li>
 											</ul>
+
+											<aui:input id="rangeLast" inlineField="<%= true %>" label="last" name="range" type="radio" value="last" />
+
+											<aui:select inlineField="<%= true %>" label="" name="last">
+												<aui:option label='<%= LanguageUtil.format(pageContext, "x-hours", "12") %>' value="12" />
+												<aui:option label='<%= LanguageUtil.format(pageContext, "x-hours", "24") %>' value="24" />
+												<aui:option label='<%= LanguageUtil.format(pageContext, "x-hours", "48") %>' value="48" />
+												<aui:option label='<%= LanguageUtil.format(pageContext, "x-days", "7") %>' value="168" />
+											</aui:select>
 										</aui:fieldset>
 									</div>
 
@@ -392,7 +399,6 @@ portletURL.setParameter("tabs3", "all-export-processes");
 			rangeAllNode: '#rangeAll',
 			rangeDateRangeNode: '#rangeDateRange',
 			rangeLastNode: '#rangeLast',
-			rangeLastPublishNode: '#rangeLastPublish',
 			ratingsNode: '#<%= PortletDataHandlerKeys.RATINGS %>Checkbox'
 		}
 	);
@@ -414,6 +420,5 @@ portletURL.setParameter("tabs3", "all-export-processes");
 
 	Liferay.Util.toggleRadio('<portlet:namespace />rangeDateRange', '<portlet:namespace />startEndDate');
 	Liferay.Util.toggleRadio('<portlet:namespace />rangeAll', '', ['<portlet:namespace />startEndDate']);
-	Liferay.Util.toggleRadio('<portlet:namespace />rangeLastPublish', '', ['<portlet:namespace />startEndDate']);
 	Liferay.Util.toggleRadio('<portlet:namespace />rangeLast', '', ['<portlet:namespace />startEndDate']);
 </aui:script>

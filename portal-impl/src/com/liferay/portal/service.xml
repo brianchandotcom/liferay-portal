@@ -2014,6 +2014,7 @@
 			<finder-column name="classPK" />
 		</finder>
 	</entity>
+	<entity name="Staging" local-service="true" remote-service="true" />
 	<entity name="Subscription" local-service="true" remote-service="false">
 
 		<!-- PK fields -->

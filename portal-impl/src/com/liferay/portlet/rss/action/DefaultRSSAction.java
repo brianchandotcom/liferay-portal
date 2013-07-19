@@ -89,11 +89,11 @@ public abstract class DefaultRSSAction extends RSSAction {
 
 		syndFeed.setLinks(syndLinks);
 
-		String feedURL = rssRenderer.getFeedURL();
-
 		SyndLink selfSyndLink = new SyndLinkImpl();
 
 		syndLinks.add(selfSyndLink);
+
+		String feedURL = rssRenderer.getFeedURL();
 
 		selfSyndLink.setHref(feedURL);
 
@@ -103,7 +103,9 @@ public abstract class DefaultRSSAction extends RSSAction {
 
 		if (alternateURL != null) {
 			SyndLink alternateSyndLink = new SyndLinkImpl();
+
 			syndLinks.add(alternateSyndLink);
+
 			alternateSyndLink.setHref(alternateURL);
 			alternateSyndLink.setRel("alternate");
 		}
@@ -113,8 +115,7 @@ public abstract class DefaultRSSAction extends RSSAction {
 		syndFeed.setUri(feedURL);
 
 		try {
-			String export = RSSUtil.export(syndFeed);
-			return export;
+			return RSSUtil.export(syndFeed);
 		}
 		catch (FeedException fe) {
 			throw new SystemException(fe);

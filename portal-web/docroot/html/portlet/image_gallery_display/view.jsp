@@ -50,7 +50,7 @@ if (permissionChecker.isCompanyAdmin() || permissionChecker.isGroupAdmin(scopeGr
 	status = WorkflowConstants.STATUS_ANY;
 }
 
-long portletDisplayDDMTemplateId = PortletDisplayTemplateUtil.getPortletDisplayTemplateDDMTemplateId(themeDisplay.getScopeGroupId(), displayStyle);
+long portletDisplayDDMTemplateId = PortletDisplayTemplateUtil.getPortletDisplayTemplateDDMTemplateId(displayStyleGroupId, displayStyle);
 %>
 
 <c:choose>

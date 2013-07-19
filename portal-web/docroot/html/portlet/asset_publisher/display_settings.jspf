@@ -26,6 +26,7 @@
 		<liferay-ui:ddm-template-selector
 			classNameId="<%= PortalUtil.getClassNameId(templateHandler.getClassName()) %>"
 			displayStyle="<%= displayStyle %>"
+			displayStyleGroupId="<%= displayStyleGroupId %>"
 			displayStyles="<%= Arrays.asList(PropsValues.ASSET_PUBLISHER_DISPLAY_STYLES) %>"
 			label="display-template"
 			refreshURL="<%= configurationRenderURL.toString() %>"

@@ -66,7 +66,7 @@ showSearch = showSearch && !results.isEmpty();
 />
 
 <%
-long portletDisplayDDMTemplateId = PortletDisplayTemplateUtil.getPortletDisplayTemplateDDMTemplateId(themeDisplay.getScopeGroupId(), displayStyle);
+long portletDisplayDDMTemplateId = PortletDisplayTemplateUtil.getPortletDisplayTemplateDDMTemplateId(displayStyleGroupId, displayStyle);
 
 if (portletDisplayDDMTemplateId > 0) {
 %>

@@ -85,6 +85,7 @@ boolean enableRatings = GetterUtil.getBoolean(portletPreferences.getValue("enabl
 boolean enableCommentRatings = GetterUtil.getBoolean(portletPreferences.getValue("enableCommentRatings", null), true);
 
 String displayStyle = portletPreferences.getValue("displayStyle", StringPool.BLANK);
+long displayStyleGroupId = GetterUtil.getLong(portletPreferences.getValue("displayStyleGroupId", null), themeDisplay.getScopeGroupId());
 
 Format dateFormatDate = FastDateFormatFactoryUtil.getDate(locale, timeZone);
 %>

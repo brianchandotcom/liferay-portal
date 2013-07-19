@@ -26,6 +26,7 @@ page import="com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTempl
 String rootLayoutUuid = GetterUtil.getString(portletPreferences.getValue("rootLayoutUuid", StringPool.BLANK));
 int displayDepth = GetterUtil.getInteger(portletPreferences.getValue("displayDepth", StringPool.BLANK));
 String displayStyle = GetterUtil.getString(portletPreferences.getValue("displayStyle", StringPool.BLANK));
+long displayStyleGroupId = GetterUtil.getLong(portletPreferences.getValue("displayStyleGroupId", null), themeDisplay.getScopeGroupId());
 boolean includeRootInTree = GetterUtil.getBoolean(portletPreferences.getValue("includeRootInTree", StringPool.BLANK));
 boolean showCurrentPage = GetterUtil.getBoolean(portletPreferences.getValue("showCurrentPage", StringPool.BLANK));
 boolean useHtmlTitle = GetterUtil.getBoolean(portletPreferences.getValue("useHtmlTitle", StringPool.BLANK));

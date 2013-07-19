@@ -38,6 +38,12 @@ if (defaultFolderView) {
 	}
 }
 
+int status = WorkflowConstants.STATUS_APPROVED;
+
+if (permissionChecker.isCompanyAdmin() || permissionChecker.isGroupAdmin(scopeGroupId)) {
+	status = WorkflowConstants.STATUS_ANY;
+}
+
 int foldersCount = BookmarksFolderServiceUtil.getFoldersCount(scopeGroupId, folderId);
 int entriesCount = BookmarksEntryServiceUtil.getEntriesCount(scopeGroupId, folderId);
 
@@ -226,18 +232,46 @@ if (folder != null) {
 				iteratorURL="<%= portletURL %>"
 			>
 
-				<%
-				long groupEntriesUserId = 0;
+				<liferay-ui:search-container-results>
 
-				if (topLink.equals("mine") && themeDisplay.isSignedIn()) {
-					groupEntriesUserId = user.getUserId();
-				}
-				%>
+					<%
+					long creatorUserId = 0;
 
-				<liferay-ui:search-container-results
-					results="<%= BookmarksEntryServiceUtil.getGroupEntries(scopeGroupId, groupEntriesUserId, searchContainer.getStart(), searchContainer.getEnd()) %>"
-					total="<%= BookmarksEntryServiceUtil.getGroupEntriesCount(scopeGroupId, groupEntriesUserId) %>"
-				/>
+					if (topLink.equals("mine") && themeDisplay.isSignedIn()) {
+						creatorUserId = user.getUserId();
+					}
+
+					Hits hits = BookmarksEntryServiceUtil.search(scopeGroupId, creatorUserId, status, searchContainer.getStart(), searchContainer.getEnd());
+
+					total = hits.getLength();
+
+					searchContainer.setTotal(total);
+
+					Document[] docs = hits.getDocs();
+
+					results = new ArrayList(docs.length);
+
+					for (Document doc : docs) {
+						long entryId = GetterUtil.getLong(doc.get(Field.ENTRY_CLASS_PK));
+
+						BookmarksEntry bookmarksEntry = null;
+
+						try {
+							bookmarksEntry = BookmarksEntryLocalServiceUtil.getEntry(entryId);
+						}
+						catch (Exception e) {
+							if (_log.isWarnEnabled()) {
+								_log.warn("Bookmarks entry search index is stale and contains bookmarks entry {" + entryId + "}");
+							}
+
+							continue;
+						}
+
+						results.add(bookmarksEntry);
+					}
+					%>
+
+				</liferay-ui:search-container-results>
 
 				<liferay-ui:search-container-row
 					className="com.liferay.portlet.bookmarks.model.BookmarksEntry"
@@ -277,3 +311,6 @@ if (folder != null) {
 
 	</c:when>
 </c:choose>
+<%!
+private static Log _log = LogFactoryUtil.getLog("portal-web.docroot.html.portlet.bookmarks.view__jsp");
+%>

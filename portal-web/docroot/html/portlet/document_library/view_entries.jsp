@@ -222,22 +222,40 @@ else {
 		}
 	}
 	else if (navigation.equals("mine") || navigation.equals("recent")) {
-		long groupFileEntriesUserId = 0;
+		long creatorUserId = 0;
 
 		if (navigation.equals("mine") && themeDisplay.isSignedIn()) {
-			groupFileEntriesUserId = user.getUserId();
+			creatorUserId = user.getUserId();
 		}
 
-		total = DLAppServiceUtil.getGroupFileEntriesCount(repositoryId, groupFileEntriesUserId, folderId, null, status);
+		Hits hits = DLAppServiceUtil.search(repositoryId, creatorUserId, status, entryStart, entryEnd);
+
+		total = hits.getLength();
 
 		searchContainer.setTotal(total);
 
-		if (total <= entryStart) {
-			entryStart = (searchContainer.getCur() - 1) * searchContainer.getDelta();
-			entryEnd = entryStart + searchContainer.getDelta();
-		}
+		Document[] docs = hits.getDocs();
 
-		results = DLAppServiceUtil.getGroupFileEntries(repositoryId, groupFileEntriesUserId, folderId, null, status, entryStart, entryEnd, searchContainer.getOrderByComparator());
+		results = new ArrayList(docs.length);
+
+		for (Document doc : docs) {
+			long fileEntryId = GetterUtil.getLong(doc.get(Field.ENTRY_CLASS_PK));
+
+			FileEntry fileEntry = null;
+
+			try {
+				fileEntry = DLAppLocalServiceUtil.getFileEntry(fileEntryId);
+			}
+			catch (Exception e) {
+				if (_log.isWarnEnabled()) {
+					_log.warn("Documents and Media search index is stale and contains file entry {" + fileEntryId + "}");
+				}
+
+				continue;
+			}
+
+			results.add(fileEntry);
+		}
 	}
 }
 

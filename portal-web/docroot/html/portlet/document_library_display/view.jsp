@@ -226,25 +226,53 @@ request.setAttribute("view.jsp-useAssetEntryQuery", String.valueOf(useAssetEntry
 				title="<%= topLink %>"
 			/>
 
-			<%
-			long groupFileEntriesUserId = 0;
-
-			if (topLink.equals("mine") && themeDisplay.isSignedIn()) {
-				groupFileEntriesUserId = user.getUserId();
-			}
-			%>
-
 			<liferay-ui:search-container
 				delta="<%= fileEntriesPerPage %>"
 				deltaConfigurable="<%= false %>"
 				emptyResultsMessage="there-are-no-documents"
 				iteratorURL="<%= portletURL %>"
-				total="<%= DLAppServiceUtil.getGroupFileEntriesCount(repositoryId, groupFileEntriesUserId, defaultFolderId, null, status) %>"
 			>
 
-				<liferay-ui:search-container-results
-					results="<%= DLAppServiceUtil.getGroupFileEntries(repositoryId, groupFileEntriesUserId, defaultFolderId, null, status, searchContainer.getStart(), searchContainer.getEnd(), null) %>"
-				/>
+				<liferay-ui:search-container-results>
+
+					<%
+					long creatorUserId = 0;
+
+					if (topLink.equals("mine") && themeDisplay.isSignedIn()) {
+						creatorUserId = user.getUserId();
+					}
+
+					Hits hits = DLAppServiceUtil.search(repositoryId, creatorUserId, status, searchContainer.getStart(), searchContainer.getEnd());
+
+					total = hits.getLength();
+
+					searchContainer.setTotal(total);
+
+					Document[] docs = hits.getDocs();
+
+					results = new ArrayList(docs.length);
+
+					for (Document doc : docs) {
+						long fileEntryId = GetterUtil.getLong(doc.get(Field.ENTRY_CLASS_PK));
+
+						FileEntry curFileEntry = null;
+
+						try {
+							curFileEntry = DLAppLocalServiceUtil.getFileEntry(fileEntryId);
+						}
+						catch (Exception e) {
+							if (_log.isWarnEnabled()) {
+								_log.warn("Documents and Media search index is stale and contains file entry {" + fileEntryId + "}");
+							}
+
+							continue;
+						}
+
+						results.add(curFileEntry);
+					}
+					%>
+
+				</liferay-ui:search-container-results>
 
 				<liferay-ui:search-container-row
 					className="com.liferay.portal.kernel.repository.model.FileEntry"

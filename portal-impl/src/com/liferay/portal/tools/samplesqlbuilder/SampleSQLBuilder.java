@@ -73,8 +73,6 @@ public class SampleSQLBuilder {
 	}
 
 	public SampleSQLBuilder(Map<String, String> arguments) throws Exception {
-		String baseDir = arguments.get("sample.sql.base.dir");
-
 		_dbType = arguments.get("sample.sql.db.type");
 		_maxAssetCategoryCount = GetterUtil.getInteger(
 			arguments.get("sample.sql.max.asset.category.count"));
@@ -142,7 +140,7 @@ public class SampleSQLBuilder {
 			arguments.get("sample.sql.output.merge"));
 
 		_dataFactory = new DataFactory(
-			baseDir, _maxAssetCategoryCount, _maxAssetEntryToAssetCategoryCount,
+			_maxAssetCategoryCount, _maxAssetEntryToAssetCategoryCount,
 			_maxAssetEntryToAssetTagCount, _maxAssetPublisherFilterRuleCount,
 			_maxAssetPublisherPageCount, _maxAssetTagCount,
 			_maxAssetVocabularyCount, _maxBlogsEntryCount,

@@ -111,9 +111,7 @@ portletURL.setParameter("chooseCallback", chooseCallback);
 
 					rowHREF = sb.toString();
 
-					sb.setStringAt("Liferay.Util.getOpener()['", 0);
-
-					chooseOnClick = sb.toString();
+					chooseOnClick = StringUtil.replaceFirst(sb.toString(), "javascript:", StringPool.BLANK);
 				}
 			}
 			%>

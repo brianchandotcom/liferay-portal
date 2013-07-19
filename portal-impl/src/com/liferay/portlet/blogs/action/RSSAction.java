@@ -56,10 +56,6 @@ public class RSSAction extends com.liferay.portal.struts.RSSAction {
 		String displayStyle = ParamUtil.getString(
 			request, "displayStyle", RSSUtil.DISPLAY_STYLE_DEFAULT);
 
-		String feedURL =
-			themeDisplay.getPortalURL() + themeDisplay.getPathMain() +
-				"/blogs/find_entry?";
-
 		String entryURL = feedURL;
 
 		String rss = StringPool.BLANK;

@@ -318,6 +318,10 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 			nodeId, max, type, version, displayStyle, feedURL, entryURL, null);
 	}
 
+	/**
+	 * @deprecated As of 6.2.0, replaced by {
+	 *             @link com.liferay.portlet.wiki.action.WikiRSSRenderer}
+	 */
 	@Override
 	public String getNodePagesRSS(
 			long nodeId, int max, String type, double version,
@@ -494,6 +498,10 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 			entryURL, null, locale);
 	}
 
+	/**
+	 * @deprecated As of 6.2.0, replaced by {
+	 *             @link com.liferay.portlet.wiki.action.WikiRSSRenderer}
+	 */
 	@Override
 	public String getPagesRSS(
 			long companyId, long nodeId, String title, int max, String type,
@@ -677,6 +685,10 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 			format, parentTitle, redirectTitle, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of 6.2.0, replaced by {
+	 *             @link com.liferay.portlet.wiki.action.WikiRSSRenderer}
+	 */
 	protected String exportToRSS(
 			long companyId, String name, String description, String type,
 			double version, String displayStyle, String feedURL,

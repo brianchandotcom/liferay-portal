@@ -88,51 +88,6 @@ public class RSSAction extends com.liferay.portal.struts.RSSAction {
 
 		List<JournalArticle> articles = JournalRSSUtil.getArticles(feed);
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("Syndicating " + articles.size() + " articles");
-		}
-
-		for (JournalArticle article : articles) {
-			SyndEntry syndEntry = new SyndEntryImpl();
-
-			String author = PortalUtil.getUserName(article);
-
-			syndEntry.setAuthor(author);
-
-			SyndContent syndContent = new SyndContentImpl();
-
-			syndContent.setType(RSSUtil.ENTRY_TYPE_DEFAULT);
-
-			String value = article.getDescription(languageId);
-
-			try {
-				value = processContent(
-					feed, article, languageId, themeDisplay, syndEntry,
-					syndContent);
-			}
-			catch (Exception e) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(e, e);
-				}
-			}
-
-			syndContent.setValue(value);
-
-			syndEntry.setDescription(syndContent);
-
-			String link = getEntryURL(
-				resourceRequest, feed, article, layout, themeDisplay);
-
-			syndEntry.setLink(link);
-
-			syndEntry.setPublishedDate(article.getDisplayDate());
-			syndEntry.setTitle(article.getTitle(languageId));
-			syndEntry.setUpdatedDate(article.getModifiedDate());
-			syndEntry.setUri(link);
-
-			syndEntries.add(syndEntry);
-		}
-
 		syndFeed.setFeedType(
 			feed.getFeedFormat() + "_" + feed.getFeedVersion());
 

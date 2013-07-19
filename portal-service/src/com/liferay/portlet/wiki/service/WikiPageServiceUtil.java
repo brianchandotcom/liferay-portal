@@ -206,6 +206,10 @@ public class WikiPageServiceUtil {
 			feedURL, entryURL);
 	}
 
+	/**
+	* @deprecated As of 6.2.0, replaced by {
+	* @link com.liferay.portlet.wiki.action.WikiRSSRenderer}
+	*/
 	public static java.lang.String getNodePagesRSS(long nodeId, int max,
 		java.lang.String type, double version, java.lang.String displayStyle,
 		java.lang.String feedURL, java.lang.String entryURL,
@@ -268,6 +272,16 @@ public class WikiPageServiceUtil {
 		return getService().getPages(groupId, userId, nodeId, status, start, end);
 	}
 
+	public static java.util.List<com.liferay.portlet.wiki.model.WikiPage> getPages(
+		long nodeId, java.lang.String title, int start, int max,
+		com.liferay.portlet.wiki.util.comparator.PageCreateDateComparator pageCreateDateComparator)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portal.security.auth.PrincipalException {
+		return getService()
+				   .getPages(nodeId, title, start, max, pageCreateDateComparator);
+	}
+
 	public static int getPagesCount(long groupId, long nodeId, boolean head)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -297,6 +311,10 @@ public class WikiPageServiceUtil {
 			displayStyle, feedURL, entryURL, locale);
 	}
 
+	/**
+	* @deprecated As of 6.2.0, replaced by {
+	* @link com.liferay.portlet.wiki.action.WikiRSSRenderer}
+	*/
 	public static java.lang.String getPagesRSS(long companyId, long nodeId,
 		java.lang.String title, int max, java.lang.String type, double version,
 		java.lang.String displayStyle, java.lang.String feedURL,

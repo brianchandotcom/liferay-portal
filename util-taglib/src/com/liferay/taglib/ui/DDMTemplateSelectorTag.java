@@ -33,6 +33,10 @@ public class DDMTemplateSelectorTag extends IncludeTag {
 		_displayStyle = displayStyle;
 	}
 
+	public void setDisplayStyleGroupId(long displayStyleGroupId) {
+		_displayStyleGroupId = displayStyleGroupId;
+	}
+
 	public void setDisplayStyles(List<String> displayStyles) {
 		_displayStyles = displayStyles;
 	}
@@ -57,6 +61,7 @@ public class DDMTemplateSelectorTag extends IncludeTag {
 	protected void cleanUp() {
 		_classNameId = 0;
 		_displayStyle = null;
+		_displayStyleGroupId = 0;
 		_displayStyles = null;
 		_icon = null;
 		_label = "display-template";
@@ -77,6 +82,9 @@ public class DDMTemplateSelectorTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-ui:ddm-template-select:displayStyle", _displayStyle);
 		request.setAttribute(
+			"liferay-ui:ddm-template-select:displayStyleGroupId",
+			String.valueOf(_displayStyleGroupId));
+		request.setAttribute(
 			"liferay-ui:ddm-template-select:displayStyles", _displayStyles);
 		request.setAttribute("liferay-ui:ddm-template-select:icon", _icon);
 		request.setAttribute("liferay-ui:ddm-template-select:label", _label);
@@ -92,6 +100,7 @@ public class DDMTemplateSelectorTag extends IncludeTag {
 
 	private long _classNameId;
 	private String _displayStyle;
+	private long _displayStyleGroupId;
 	private List<String> _displayStyles;
 	private String _icon;
 	private String _label = "display-template";

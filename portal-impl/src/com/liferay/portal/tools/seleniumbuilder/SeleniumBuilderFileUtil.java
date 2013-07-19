@@ -463,6 +463,10 @@ public class SeleniumBuilderFileUtil {
 			throw new IllegalArgumentException(
 				prefix + "Invalid method " + string1 + " at " + suffix);
 		}
+		else if (errorCode == 1014) {
+			throw new IllegalArgumentException(
+				prefix + "Invalid path " + string1 + " at " + suffix);
+		}
 		else if (errorCode == 2000) {
 			throw new IllegalArgumentException(
 				prefix + "Too many child elements in the " + string1 +

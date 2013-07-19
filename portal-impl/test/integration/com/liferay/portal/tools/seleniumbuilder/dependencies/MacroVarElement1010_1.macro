@@ -1,4 +1,0 @@
-<definition>
-	<var name="name" path="Fail" locator-key="fail" />
-	<var name="name2" value="value" />
-</definition>

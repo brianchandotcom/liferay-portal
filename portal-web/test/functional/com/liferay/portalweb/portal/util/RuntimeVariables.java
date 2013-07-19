@@ -14,6 +14,7 @@
 
 package com.liferay.portalweb.portal.util;
 
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -78,21 +79,20 @@ public class RuntimeVariables {
 
 				String result = "";
 
-				if (method.startsWith("replace")) {
-					result = operandValue.replace(
-						argumentsList.get(0), argumentsList.get(1));
+				if (method.startsWith("increment")) {
+					int i = GetterUtil.getInteger(operandValue) + 1;
+
+					result = String.valueOf(i);
+				}
+				else if (method.startsWith("length")) {
+					result = String.valueOf(operandValue.length());
 				}
 				else if (method.startsWith("lowercase")) {
 					result = operandValue.toLowerCase();
-
 				}
-				else if (method.startsWith("length")) {
-					result = Integer.toString(operandValue.length());
-				}
-				else if (method.startsWith("increment")) {
-					int i = Integer.parseInt(operandValue) + 1;
-
-					result = Integer.toString(i);
+				else if (method.startsWith("replace")) {
+					result = operandValue.replace(
+						argumentsList.get(0), argumentsList.get(1));
 				}
 
 				varValue = varValue.replaceFirst(replaceRegex, result);

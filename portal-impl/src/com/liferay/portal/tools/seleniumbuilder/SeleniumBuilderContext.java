@@ -539,10 +539,6 @@ public class SeleniumBuilderContext {
 		return _testSuiteSimpleClassNames.get(testCaseName);
 	}
 
-	public boolean pathElementExists(String pathName) {
-		return _pathRootElements.containsKey(pathName);
-	}
-
 	public void validateActionElements(String actionName) {
 		String actionFileName = getActionFileName(actionName);
 
@@ -687,9 +683,14 @@ public class SeleniumBuilderContext {
 			if (!Validator.isNull(varPath) &&
 				!Validator.isNull(varLocatorKey)) {
 
+				if (!_pathRootElements.containsKey(varPath)) {
+					_seleniumBuilderFileUtil.throwValidationException(
+						1014, macroFileName, varElement, varPath);
+				}
+
 				if (!_isValidLocatorKey(varPath, null, varLocatorKey)) {
 					_seleniumBuilderFileUtil.throwValidationException(
-						1010, macroFileName, varElement, varName);
+						1010, macroFileName, varElement, varLocatorKey);
 				}
 			}
 		}
@@ -954,10 +955,6 @@ public class SeleniumBuilderContext {
 
 	private boolean _isValidLocatorKey(
 		String actionName, String caseComparator, String locatorKey) {
-
-		if (!pathElementExists(actionName)) {
-			return false;
-		}
 
 		Element pathRootElement = getPathRootElement(actionName);
 

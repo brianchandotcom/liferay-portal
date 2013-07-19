@@ -14,19 +14,19 @@
 
 		<#assign locatorValue = seleniumBuilderContext.getPath(pathRootElement, locatorKey)>
 
-		<#assign seleniumMethod = "getText" />
-
-		<#if varElement.attributeValue("type")??>
-			<#assign typeAttribute = varElement.attributeValue("type")>
-
-			<#if typeAttribute == "value">
-				<#assign seleniumMethod = "getValue" />
-			<#elseif typeAttribute == "text">
-				<#assign seleniumMethod = "getText" />
-			</#if>
+		<#if macroName??>
+			<#assign selenium="liferaySelenium" />
+		<#else>
+			<#assign selenium="selenium" />
 		</#if>
 
-		${context}.put("${varName}", BaseTestCase.evaluateVariable(${selenium}.${seleniumMethod}("${locatorValue}"), ${context}));
+		<#if locatorValue?contains("/input")>
+			<#assign seleniumMethod = "getValue" />
+		<#else>
+			<#assign seleniumMethod = "getText" />
+		</#if>
+
+		${context}.put("${varName}", RuntimeVariables.evaluateVariable(${selenium}.${seleniumMethod}("${locatorValue}"), ${context}));
 
 	</#if>
 <#else>

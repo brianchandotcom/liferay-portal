@@ -380,7 +380,19 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 		String displayStyle = getDisplayTemplate(
 			portletDataContext, portletId, portletPreferences);
 
-		if (Validator.isNotNull(displayStyle)) {
+		if (Validator.isNotNull(displayStyle) &&
+			displayStyle.startsWith(
+				PortletDisplayTemplate.DISPLAY_STYLE_PREFIX)) {
+
+			long displayStyleGroupId = getDisplayTemplateGroupId(
+				portletDataContext, portletId, portletPreferences);
+
+			long previousScopeGroupId = portletDataContext.getScopeGroupId();
+
+			if (displayStyleGroupId != portletDataContext.getScopeGroupId()) {
+				portletDataContext.setScopeGroupId(displayStyleGroupId);
+			}
+
 			DDMTemplate ddmTemplate =
 				PortletDisplayTemplateUtil.fetchDDMTemplate(
 					portletDataContext.getGroupId(), displayStyle);
@@ -389,6 +401,8 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 				StagedModelDataHandlerUtil.exportStagedModel(
 					portletDataContext, ddmTemplate);
 			}
+
+			portletDataContext.setScopeGroupId(previousScopeGroupId);
 		}
 
 		try {
@@ -404,7 +418,7 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 	public PortletPreferences processImportPortletPreferences(
 			PortletDataContext portletDataContext, String portletId,
 			PortletPreferences portletPreferences)
-		throws PortletDataException {
+		throws Exception {
 
 		String displayStyle = getDisplayTemplate(
 			portletDataContext, portletId, portletPreferences);
@@ -413,14 +427,22 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 			displayStyle.startsWith(
 				PortletDisplayTemplate.DISPLAY_STYLE_PREFIX)) {
 
-			DDMTemplate ddmTemplate =
-				PortletDisplayTemplateUtil.fetchDDMTemplate(
-					portletDataContext.getGroupId(), displayStyle);
+			DDMTemplate ddmTemplate = null;
 
-			if (ddmTemplate == null) {
+			long displayStyleGroupId = getDisplayTemplateGroupId(
+				portletDataContext, portletId, portletPreferences);
+
+			if (displayStyleGroupId == portletDataContext.getCompanyGroupId()) {
 				ddmTemplate = PortletDisplayTemplateUtil.fetchDDMTemplate(
 					portletDataContext.getCompanyGroupId(), displayStyle);
 			}
+			else {
+				ddmTemplate = PortletDisplayTemplateUtil.fetchDDMTemplate(
+					portletDataContext.getScopeGroupId(), displayStyle);
+			}
+
+			long importedDisplayStyleGroupId =
+				portletDataContext.getScopeGroupId();
 
 			if (ddmTemplate == null) {
 				String ddmTemplateUuid =
@@ -443,6 +465,18 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 						portletDataContext, ddmTemplate);
 				}
 			}
+			else {
+				importedDisplayStyleGroupId = ddmTemplate.getGroupId();
+			}
+
+			portletPreferences.setValue(
+				"displayStyleGroupId",
+				String.valueOf(importedDisplayStyleGroupId));
+		}
+		else {
+			portletPreferences.setValue("displayStyle", StringPool.BLANK);
+			portletPreferences.setValue(
+				"displayStyleGroupId", StringPool.BLANK);
 		}
 
 		try {
@@ -599,6 +633,25 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 		}
 
 		return null;
+	}
+
+	protected long getDisplayTemplateGroupId(
+		PortletDataContext portletDataContext, String portletId,
+		PortletPreferences portletPreferences) {
+
+		try {
+			Portlet portlet = PortletLocalServiceUtil.getPortletById(
+				portletDataContext.getCompanyId(), portletId);
+
+			if (Validator.isNotNull(portlet.getTemplateHandlerClass())) {
+				return GetterUtil.getLong(
+					portletPreferences.getValue("displayStyleGroupId", null));
+			}
+		}
+		catch (Exception e) {
+		}
+
+		return 0;
 	}
 
 	protected String getExportDataRootElementString(Element rootElement) {

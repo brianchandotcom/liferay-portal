@@ -64,6 +64,34 @@ import javax.portlet.ResourceResponse;
 import javax.portlet.ResourceURL;
 public class JournalRSSRenderer extends DefaultRSSRenderer {
 
+
+	@Override
+	public String getFeedURL() throws PortalException, SystemException {
+
+		ResourceURL feedURL = _response.createResourceURL();
+
+		JournalFeed feed = getJournalFeed();
+
+		feedURL.setCacheability(ResourceURL.FULL);
+		feedURL.setParameter("struts_action", "/journal/rss");
+		feedURL.setParameter("groupId", String.valueOf(feed.getGroupId()));
+		feedURL.setParameter("feedId", String.valueOf(feed.getFeedId()));
+
+		return feedURL.toString();
+	}
+
+	@Override
+	public String getRSSFeedType() throws PortalException, SystemException {
+
+		JournalFeed feed = getJournalFeed();
+		return feed.getFeedFormat() + "_" + feed.getFeedVersion();
+	}
+
+	@Override
+	public String getRSSName() throws PortalException, SystemException {
+		return getJournalFeed().getName();
+	}
+
 	@Override
 	public void populateFeedEntries(List<? super SyndEntry> syndEntries)
 		throws PortalException, SystemException {

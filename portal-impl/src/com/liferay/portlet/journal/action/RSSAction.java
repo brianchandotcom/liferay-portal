@@ -72,58 +72,6 @@ import javax.portlet.ResourceURL;
  */
 public class RSSAction extends com.liferay.portal.struts.RSSAction {
 
-	protected String exportToRSS(
-			ResourceRequest resourceRequest, ResourceResponse resourceResponse,
-			JournalFeed feed, String languageId, Layout layout,
-			ThemeDisplay themeDisplay)
-		throws Exception {
-
-		SyndFeed syndFeed = new SyndFeedImpl();
-
-		syndFeed.setDescription(feed.getDescription());
-
-		List<SyndEntry> syndEntries = new ArrayList<SyndEntry>();
-
-		syndFeed.setEntries(syndEntries);
-
-		List<JournalArticle> articles = JournalRSSUtil.getArticles(feed);
-
-		syndFeed.setFeedType(
-			feed.getFeedFormat() + "_" + feed.getFeedVersion());
-
-		List<SyndLink> syndLinks = new ArrayList<SyndLink>();
-
-		syndFeed.setLinks(syndLinks);
-
-		SyndLink selfSyndLink = new SyndLinkImpl();
-
-		syndLinks.add(selfSyndLink);
-
-		ResourceURL feedURL = resourceResponse.createResourceURL();
-
-		feedURL.setCacheability(ResourceURL.FULL);
-		feedURL.setParameter("struts_action", "/journal/rss");
-		feedURL.setParameter("groupId", String.valueOf(feed.getGroupId()));
-		feedURL.setParameter("feedId", String.valueOf(feed.getFeedId()));
-
-		String link = feedURL.toString();
-
-		selfSyndLink.setHref(link);
-
-		selfSyndLink.setRel("self");
-
-		syndFeed.setTitle(feed.getName());
-		syndFeed.setPublishedDate(new Date());
-		syndFeed.setUri(feedURL.toString());
-
-		try {
-			return RSSUtil.export(syndFeed);
-		}
-		catch (FeedException fe) {
-			throw new SystemException(fe);
-		}
-	}
-
 	@Override
 	protected byte[] getRSS(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)

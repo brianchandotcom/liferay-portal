@@ -33,7 +33,7 @@
 	>
 		<liferay-portlet:renderURL portletName="<%= PortletKeys.MOBILE_DEVICE_SITE_ADMIN %>" varImpl="rowURL">
 			<portlet:param name="struts_action" value="/mobile_device_rules/view_actions" />
-			<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
+			<portlet:param name="redirect" value='<%= portletURL.toString() + "#tab=mobileDeviceRules" %>' />
 			<portlet:param name="ruleGroupInstanceId" value="<%= String.valueOf(mdrRuleGroupInstance.getRuleGroupInstanceId()) %>" />
 		</liferay-portlet:renderURL>
 

@@ -14,9 +14,6 @@
 
 package com.liferay.portlet.wiki.action;
 
-import java.util.List;
-import java.util.Locale;
-
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -26,23 +23,69 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.rss.DefaultRSSRenderer;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.util.WikiUtil;
 import com.liferay.util.RSSUtil;
+
 import com.sun.syndication.feed.synd.SyndContent;
 import com.sun.syndication.feed.synd.SyndContentImpl;
 import com.sun.syndication.feed.synd.SyndEntry;
 import com.sun.syndication.feed.synd.SyndEntryImpl;
 
+import java.util.List;
+import java.util.Locale;
+
+import javax.servlet.http.HttpServletRequest;
 public class WikiRSSRenderer extends DefaultRSSRenderer {
+
+	@Override
+	public String getFeedURL() throws PortalException, SystemException {
+
+		String layoutFullURL;
+		layoutFullURL =
+			PortalUtil.getLayoutFullURL(
+				_themeDisplay.getScopeGroupId(), PortletKeys.WIKI);
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(layoutFullURL);
+		sb.append(Portal.FRIENDLY_URL_SEPARATOR);
+		sb.append("wiki/");
+		sb.append(_nodeId);
+
+		return sb.toString();
+	}
+
+	@Override
+	public String getRSSName() {
+		return ParamUtil.getString(_request, "title");
+	}
 
 	@Override
 	public void populateFeedEntries(List<? super SyndEntry> syndEntries)
 		throws PortalException, SystemException {
+
+		WikiPage latestPage = null;
+
+		StringBundler sb = new StringBundler(6);
+
+		String entryURL = getFeedURL() + StringPool.SLASH + getRSSName();
+
+		Locale locale = _themeDisplay.getLocale();
+
+		String attachmentURLPrefix = WikiUtil.getAttachmentURLPrefix(
+			_themeDisplay.getPathMain(), _themeDisplay.getPlid(), _nodeId,
+			getRSSName());
+
+		String displayStyle = ParamUtil.getString(
+			_request, "displayStyle", RSSUtil.DISPLAY_STYLE_DEFAULT);
 
 		for (WikiPage page : _pages) {
 			SyndEntry syndEntry = new SyndEntryImpl();

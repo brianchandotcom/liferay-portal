@@ -35,6 +35,7 @@ import com.liferay.portlet.social.model.SocialActivityFeedEntry;
 import com.liferay.portlet.social.service.SocialActivityInterpreterLocalServiceUtil;
 import com.liferay.portlet.social.service.SocialActivityLocalServiceUtil;
 import com.liferay.util.RSSUtil;
+
 import com.sun.syndication.feed.synd.SyndContent;
 import com.sun.syndication.feed.synd.SyndContentImpl;
 import com.sun.syndication.feed.synd.SyndEntry;
@@ -47,7 +48,16 @@ import java.util.List;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 public class ActivitiesRSSRenderer extends DefaultRSSRenderer {
-	
+
+	public ActivitiesRSSRenderer(
+		PortletRequest request, PortletResponse response) {
+
+		super(PortalUtil.getHttpServletRequest(request));
+		_portletRequest = request;
+		_themeDisplay = (ThemeDisplay)_portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+	}
+
 	@Override
 	public String getFeedURL() throws PortalException, SystemException {
 		return PortalUtil.getLayoutFullURL(_themeDisplay) +
@@ -58,10 +68,22 @@ public class ActivitiesRSSRenderer extends DefaultRSSRenderer {
 	public String getRSSName() {
 		return ParamUtil.getString(_portletRequest, "feedTitle");
 	}
-	
+
 	@Override
 	public void populateFeedEntries(List<? super SyndEntry> syndEntries)
 		throws PortalException, SystemException {
+
+		String displayStyle = ParamUtil.getString(
+			_portletRequest, "displayStyle", RSSUtil.DISPLAY_STYLE_DEFAULT);
+
+		int max = ParamUtil.getInteger(
+			_portletRequest, "max", SearchContainer.DEFAULT_DELTA);
+
+		List<SocialActivity> activities;
+		ServiceContext serviceContext;
+		activities = getActivities(_portletRequest, max);
+
+		serviceContext = ServiceContextFactory.getInstance(_portletRequest);
 
 		for (SocialActivity activity : activities) {
 			SocialActivityFeedEntry activityFeedEntry =
@@ -104,16 +126,13 @@ public class ActivitiesRSSRenderer extends DefaultRSSRenderer {
 		}
 
 	}
-	
+
 	protected List<SocialActivity> getActivities(
-		PortletRequest portletRequest, int max)
-		throws Exception {
+			PortletRequest portletRequest, int max)
+		throws PortalException, SystemException {
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay) portletRequest.getAttribute(WebKeys.THEME_DISPLAY);
-
-		Group group =
-			GroupLocalServiceUtil.getGroup(themeDisplay.getScopeGroupId());
+		Group group = GroupLocalServiceUtil.getGroup(
+			_themeDisplay.getScopeGroupId());
 
 		int start = 0;
 
@@ -131,6 +150,9 @@ public class ActivitiesRSSRenderer extends DefaultRSSRenderer {
 		}
 
 		return Collections.emptyList();
-	}
-	
+}
+
+	private PortletRequest _portletRequest;
+	private ThemeDisplay _themeDisplay;
+
 }

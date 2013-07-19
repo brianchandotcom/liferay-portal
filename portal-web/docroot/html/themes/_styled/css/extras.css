@@ -130,7 +130,7 @@ body > .lfr-menu-list ul, .active-area-proxy, .entry-display-style .entry-thumbn
 	@include border-radius(6px);
 }
 
-.portlet-journal .display-page-item-container .display-page-item, .portlet-journal .display-page-item-container .display-page-item .display-page-item-remove {
+.portlet-journal .display-page-item-container .display-page-item, .portlet-journal .display-page-item-container .display-page-item .display-page-item-remove, .taglib-categorization-filter .asset-entry {
 	@include border-radius(14px);
 }
 

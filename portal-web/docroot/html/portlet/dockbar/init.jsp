@@ -21,6 +21,7 @@ page import="com.liferay.portal.plugin.PluginUtil" %><%@
 page import="com.liferay.portal.theme.NavItem" %><%@
 page import="com.liferay.portal.util.LayoutLister" %><%@
 page import="com.liferay.portal.util.LayoutView" %><%@
+page import="com.liferay.portal.util.PortletCategoryUtil" %><%@
 page import="com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil" %><%@
 page import="com.liferay.portlet.asset.model.AssetEntry" %><%@
 page import="com.liferay.portlet.asset.model.AssetRenderer" %><%@

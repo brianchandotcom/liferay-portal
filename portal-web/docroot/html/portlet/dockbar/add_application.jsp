@@ -123,13 +123,9 @@ refererURL.setParameter("updateLayout", "true");
 			</c:if>
 
 			<%
-			UnicodeProperties typeSettingsProperties = layout.getTypeSettingsProperties();
-
-			Set panelSelectedPortlets = SetUtil.fromArray(StringUtil.split(typeSettingsProperties.getProperty("panelSelectedPortlets")));
-
 			PortletCategory portletCategory = (PortletCategory)WebAppPool.get(company.getCompanyId(), WebKeys.PORTLET_CATEGORY);
 
-			portletCategory = _getRelevantPortletCategory(permissionChecker, portletCategory, panelSelectedPortlets, layoutTypePortlet, layout, user);
+			portletCategory = PortletCategoryUtil.getRelevantPortletCategory(permissionChecker, user.getCompanyId(), layout, portletCategory, layoutTypePortlet);
 
 			List<PortletCategory> categories = ListUtil.fromCollection(portletCategory.getCategories());
 
@@ -175,54 +171,6 @@ refererURL.setParameter("updateLayout", "true");
 		</c:if>
 	</div>
 </aui:form>
-
-<%!
-private static PortletCategory _getRelevantPortletCategory(PermissionChecker permissionChecker, PortletCategory portletCategory, Set panelSelectedPortlets, LayoutTypePortlet layoutTypePortlet, Layout layout, User user) throws Exception {
-	PortletCategory relevantPortletCategory = new PortletCategory(portletCategory.getName(), portletCategory.getPortletIds());
-
-	for (PortletCategory curPortletCategory : portletCategory.getCategories()) {
-		Set<String> portletIds = new HashSet<String>();
-
-		if (curPortletCategory.isHidden()) {
-			continue;
-		}
-
-		for (String portletId : curPortletCategory.getPortletIds()) {
-			Portlet portlet = PortletLocalServiceUtil.getPortletById(user.getCompanyId(), portletId);
-
-			if (portlet != null) {
-				if (portlet.isSystem()) {
-				}
-				else if (!portlet.isActive() || portlet.isUndeployedPortlet()) {
-				}
-				else if (layout.isTypePanel() && panelSelectedPortlets.contains(portlet.getRootPortletId())) {
-					portletIds.add(portlet.getPortletId());
-				}
-				else if (layout.isTypePanel() && !panelSelectedPortlets.contains(portlet.getRootPortletId())) {
-				}
-				else if (!PortletPermissionUtil.contains(permissionChecker, layout, portlet, ActionKeys.ADD_TO_PAGE)) {
-				}
-				else if (!portlet.isInstanceable() && layoutTypePortlet.hasPortletId(portlet.getPortletId())) {
-					portletIds.add(portlet.getPortletId());
-				}
-				else {
-					portletIds.add(portlet.getPortletId());
-				}
-			}
-		}
-
-		PortletCategory curRelevantPortletCategory = _getRelevantPortletCategory(permissionChecker, curPortletCategory, panelSelectedPortlets, layoutTypePortlet, layout, user);
-
-		curRelevantPortletCategory.setPortletIds(portletIds);
-
-		if (!curRelevantPortletCategory.getCategories().isEmpty() || !portletIds.isEmpty()) {
-			relevantPortletCategory.addCategory(curRelevantPortletCategory);
-		}
-	}
-
-	return relevantPortletCategory;
-}
-%>
 
 <aui:script use="liferay-dockbar-add-application,liferay-dockbar-portlet-dd">
 	var searchApplication = A.one('#<portlet:namespace />searchApplication');

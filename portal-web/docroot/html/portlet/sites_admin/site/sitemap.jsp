@@ -49,8 +49,6 @@ if (!host.equals(privateLayoutSet.getVirtualHostname())) {
 
 <liferay-ui:message key="the-sitemap-protocol-notifies-search-engines-of-the-structure-of-the-website" /> <liferay-ui:message arguments="<%= linkContent %>" key="see-x-for-more-information" />
 
-<br /><br />
-
 <aui:fieldset label="public-pages">
 	<%= LanguageUtil.format(pageContext, "send-sitemap-information-to-preview", new Object[] {"<a target=\"_blank\" href=\"" + publicSitemapUrl + "\">", "</a>"}) %>
 

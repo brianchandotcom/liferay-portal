@@ -181,8 +181,6 @@ userGroupSearch.setEmptyResultsMessage(emptyResultsMessage);
 					<liferay-ui:input-search name='<%= DisplayTerms.KEYWORDS + "_user_groups" %>' />
 				</span>
 
-				<br /><br />
-
 				<liferay-ui:search-iterator paginate="<%= false %>" />
 
 				<c:if test="<%= total > userGroupSearch.getDelta() %>">

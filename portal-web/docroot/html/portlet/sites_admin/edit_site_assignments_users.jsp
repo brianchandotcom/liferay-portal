@@ -249,8 +249,6 @@ searchContainer.setEmptyResultsMessage(emptyResultsMessage);
 					<liferay-ui:input-search name='<%= DisplayTerms.KEYWORDS + "_users" %>' />
 				</span>
 
-				<br /><br />
-
 				<liferay-ui:search-iterator paginate="<%= false %>" />
 
 				<c:if test="<%= total > searchContainer.getDelta() %>">

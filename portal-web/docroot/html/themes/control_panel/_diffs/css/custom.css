@@ -868,7 +868,11 @@ $dockbarOpenGradientStart: #0EA6F9;
 		@include border-radius(4px);
 	}
 
-	/* ---------- Extras dockbar ---------- */
+	.alert {
+		margin: 20px 0;
+	}
+
+	/* ---------- Extras Dockbar ---------- */
 
 	.dockbar {
 		.navbar-inner {
@@ -912,7 +916,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 		}
 	}
 
-	/* ---------- Media queries ---------- */
+	/* ---------- Media Queries ---------- */
 
 	@include respond-to(phone, tablet) {
 		ul.form-navigator.well {

@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -435,6 +436,19 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 		}
 	}
 
+	public List<WikiPage> getPages(
+			long nodeId, String title, int start, int max,
+			PageCreateDateComparator pageCreateDateComparator)
+		throws PortalException, PrincipalException, SystemException {
+
+		WikiPagePermission.check(
+			getPermissionChecker(), nodeId, title, ActionKeys.VIEW);
+
+		return wikiPageLocalService.getPages(
+			nodeId, title, start, max, pageCreateDateComparator);
+
+	}
+
 	@Override
 	public int getPagesCount(long groupId, long nodeId, boolean head)
 		throws PortalException, SystemException {
@@ -487,15 +501,13 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 			String entryURL, String attachmentURLPrefix, Locale locale)
 		throws PortalException, SystemException {
 
-		WikiPagePermission.check(
-			getPermissionChecker(), nodeId, title, ActionKeys.VIEW);
-
-		List<WikiPage> pages = wikiPageLocalService.getPages(
+		List<WikiPage> pages = getPages(
 			nodeId, title, 0, max, new PageCreateDateComparator(true));
 
 		return exportToRSS(
 			companyId, title, title, type, version, displayStyle, feedURL,
 			entryURL, attachmentURLPrefix, pages, true, locale);
+
 	}
 
 	@Override

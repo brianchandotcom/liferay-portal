@@ -86,16 +86,32 @@ String toggleControlsState = GetterUtil.getString(SessionClicks.get(request, "li
 			}
 			%>
 
-			<c:if test="<%= controlPanelCategory.startsWith(PortletCategoryKeys.CURRENT_SITE) || !controlPanelCategory.equals(PortletCategoryKeys.MY) %>">
-				<aui:nav-item anchorCssClass="back-link" href="<%= backURL %>" iconClass="icon-arrow-left" id="backLink" label="<%= StringPool.NBSP %>" title='<%= LanguageUtil.format(pageContext, "back-to-x", HtmlUtil.escape(refererGroupDescriptiveName), false) %>' />
 
-				<c:if test="<%= controlPanelCategory.startsWith(PortletCategoryKeys.CURRENT_SITE) %>">
-					<aui:nav-item href="" iconClass="" id="siteAdministrationTitle" label="site-administration" />
-				</c:if>
+			<c:if test="<%= controlPanelCategory.startsWith(PortletCategoryKeys.CURRENT_SITE) || !controlPanelCategory.equals(PortletCategoryKeys.MY) %>">
+					<span class="control-panel-header">
+						<a class="control-panel-back-link" href="<%= backURL %>" title="<liferay-ui:message key="back" />">
+							<i class="control-panel-back-icon icon-chevron-left"></i>
+
+							<span class="control-panel-back-text helper-hidden-accessible">
+								<liferay-ui:message key="back" />
+							</span>
+						</a>
+
+						<c:choose>
+							<c:when test="<%= controlPanelCategory.startsWith(PortletCategoryKeys.CURRENT_SITE) %>">
+								<h1><liferay-ui:message key="site-administration" /></h1>
+							</c:when>
+							<c:otherwise>
+								<a href="<%= themeDisplay.getURLControlPanel() %>">
+									<h1><liferay-ui:message key="control-panel" /></h1>
+								</a>
+							</c:otherwise>
+						</c:choose>
+					</span>
+					<%--<aui:nav-item anchorCssClass="back-link" href="<%= backURL %>" iconClass="icon-chevron-left" id="backLink" label="<%= StringPool.NBSP %>" title='<%= LanguageUtil.format(pageContext, "back-to-x", HtmlUtil.escape(refererGroupDescriptiveName), false) %>' />--%>
 			</c:if>
 
 			<c:if test="<%= !controlPanelCategory.equals(PortletCategoryKeys.MY) && !controlPanelCategory.startsWith(PortletCategoryKeys.CURRENT_SITE) %>">
-				<aui:nav-item anchorId="controlPanelNavHomeLink" href="<%= themeDisplay.getURLControlPanel() %>" iconClass="icon-list" selected="<%= Validator.isNull(controlPanelCategory) %>" />
 
 				<%
 				String[] categories = PortletCategoryKeys.ALL;

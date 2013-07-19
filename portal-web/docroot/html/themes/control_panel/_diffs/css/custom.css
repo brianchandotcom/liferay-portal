@@ -278,6 +278,27 @@ $dockbarOpenGradientStart: #0EA6F9;
 				}
 			}
 
+			.control-panel-header {
+				a {
+					color: white;
+					text-decoration: none;
+				}
+
+				h1 {
+					float: left;
+					font-size: 25px;
+					font-weight: normal;
+					line-height: 20px;
+					padding-right: 40px;
+				}
+
+				.control-panel-back-link {
+					float: left;
+					padding: 10px 10px 0px 10px;
+					font-size: 15px;
+				}
+			}
+
 			.site-administration-menu li {
 				list-style: none;
 

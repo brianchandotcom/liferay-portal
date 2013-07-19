@@ -73,13 +73,11 @@ public class RSSAction extends com.liferay.portal.struts.RSSAction {
 				request);
 		}
 		else if (groupId > 0) {
-			feedURL += "p_l_id=" + plid;
+			blogsEntries = BlogsEntryServiceUtil.getGroupEntries(
+				groupId, new Date(), status, max);
 
-			entryURL = feedURL;
-
-			rss = BlogsEntryServiceUtil.getGroupEntriesRSS(
-				groupId, new Date(), status, max, type, version, displayStyle,
-				feedURL, entryURL, themeDisplay);
+			return new BlogsGroupRSSRenderer(
+				GroupLocalServiceUtil.getGroup(groupId), blogsEntries, request)
 		}
 		else if (organizationId > 0) {
 			blogsEntries = BlogsEntryServiceUtil.getOrganizationEntries(
@@ -91,15 +89,11 @@ public class RSSAction extends com.liferay.portal.struts.RSSAction {
 		else if (layout != null) {
 			groupId = themeDisplay.getScopeGroupId();
 
-			feedURL =
-				PortalUtil.getLayoutFullURL(themeDisplay) +
-					Portal.FRIENDLY_URL_SEPARATOR + "blogs/rss";
-
-			entryURL = feedURL;
-
-			rss = BlogsEntryServiceUtil.getGroupEntriesRSS(
-				groupId, new Date(), status, max, type, version, displayStyle,
-				feedURL, entryURL, themeDisplay);
+			blogsEntries = BlogsEntryServiceUtil.getGroupEntries(
+				groupId, new Date(), status, max);
+			return new BlogsGroupRSSRenderer(
+				GroupLocalServiceUtil.getGroup(groupId), blogsEntries, request,
+				true);
 		}
 
 		return rss.getBytes(StringPool.UTF8);

@@ -54,17 +54,11 @@ public class JournalExpiredVersionExportImportTest
 		Assert.assertTrue("This test does not apply", true);
 	}
 
-	@Test
-	public void testExportImportStructuredJournalArticle() throws Exception {
-		Assert.assertTrue("This test does not apply", true);
-	}
-
 	@Override
 	@Test
 	public void testExportImportBasicJournalArticle() throws Exception {
 		int initialArticlesCount =
-			JournalArticleLocalServiceUtil.getArticlesCount(
-				group.getGroupId());
+			JournalArticleLocalServiceUtil.getArticlesCount(group.getGroupId());
 
 		int initialSearchArticlesCount =  getResultsCount(
 			group.getCompanyId(), group.getGroupId());
@@ -116,6 +110,11 @@ public class JournalExpiredVersionExportImportTest
 			initialSearchArticlesCount,
 			getResultsCount(
 				importedGroup.getCompanyId(), importedGroup.getGroupId()));
+	}
+
+	@Test
+	public void testExportImportStructuredJournalArticle() throws Exception {
+		Assert.assertTrue("This test does not apply", true);
 	}
 
 	protected int getResultsCount(long companyId, long groupId)

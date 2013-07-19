@@ -5,8 +5,6 @@ AUI.add(
 
 		var AObject = A.Object;
 
-		var WidgetStdMod = A.WidgetStdMod;
-
 		var BOUNDING_BOX = 'boundingBox';
 
 		var CSS_TAGS_LIST = 'lfr-categories-selector-list';
@@ -574,7 +572,7 @@ AUI.add(
 
 						var popup = instance._popup;
 
-						popup.setStdModContent(WidgetStdMod.HEADER, '<h3>' + Liferay.Language.get('categories') + '</h3>');
+						popup.set('headerContent', '<h3>' + Liferay.Language.get('categories') + '</h3>');
 
 						popup.entriesNode.addClass(CSS_TAGS_LIST);
 

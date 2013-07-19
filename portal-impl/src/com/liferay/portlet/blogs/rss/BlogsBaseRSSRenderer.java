@@ -41,6 +41,7 @@ import javax.servlet.http.HttpServletRequest;
 public abstract class BlogsBaseRSSRenderer
 	implements com.liferay.portlet.rss.RSSRenderer {
 
+
 	@Override
 	public String getAlternateURL() throws PortalException, SystemException {
 		String feedURL = getFeedURL();
@@ -52,11 +53,50 @@ public abstract class BlogsBaseRSSRenderer
 		return PortalUtil.getLayoutFullURL(_themeDisplay);
 	}
 
+	abstract protected String getEntryURL()
+		throws PortalException, SystemException;
+
 	@Override
 	public String getFeedURL() throws PortalException, SystemException {
 		return _themeDisplay.getPortalURL() + _themeDisplay.getPathMain() +
 		"/blogs/find_entry?";
 	}
+
+	@Override
+	public Date getPublicationDate() throws PortalException, SystemException {
+		return new Date();
+	}
+
+	public HttpServletRequest getRequest() {
+
+		return _request;
+	}
+
+	@Override
+	public String getRSSDescription() throws PortalException, SystemException {
+		return getRSSName();
+	}
+
+	@Override
+	public String getRSSFeedType() throws PortalException, SystemException {
+
+		String type = ParamUtil.getString(
+			getRequest(), "type", RSSUtil.FORMAT_DEFAULT);
+		return RSSUtil.getFeedType(type, getRSSVersion());
+	}
+
+	public double getRSSVersion() throws PortalException, SystemException {
+		return ParamUtil.getDouble(
+			_request, "version", RSSUtil.VERSION_DEFAULT);
+	}
+
+	public ThemeDisplay getThemeDisplay() {
+
+		return _themeDisplay;
+	}
+
+	@Override
+	abstract public String getRSSName() throws PortalException, SystemException;
 
 	@Override
 	public void populateFeedEntries(List<? super SyndEntry> syndEntries)
@@ -137,5 +177,5 @@ public abstract class BlogsBaseRSSRenderer
 		}
 
 	}
-	
+
 }

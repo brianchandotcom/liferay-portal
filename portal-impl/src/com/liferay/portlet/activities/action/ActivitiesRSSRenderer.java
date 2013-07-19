@@ -47,7 +47,18 @@ import java.util.List;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 public class ActivitiesRSSRenderer extends DefaultRSSRenderer {
+	
+	@Override
+	public String getFeedURL() throws PortalException, SystemException {
+		return PortalUtil.getLayoutFullURL(_themeDisplay) +
+			Portal.FRIENDLY_URL_SEPARATOR + "activities/rss";
+	}
 
+	@Override
+	public String getRSSName() {
+		return ParamUtil.getString(_portletRequest, "feedTitle");
+	}
+	
 	@Override
 	public void populateFeedEntries(List<? super SyndEntry> syndEntries)
 		throws PortalException, SystemException {

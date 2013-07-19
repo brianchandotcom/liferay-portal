@@ -16,63 +16,45 @@ package com.liferay.portlet.wiki.action;
 
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.Portal;
-import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
-import com.liferay.portal.util.WebKeys;
+import com.liferay.portlet.rss.RSSRenderer;
+import com.liferay.portlet.rss.action.DefaultRSSAction;
+import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.service.WikiPageServiceUtil;
-import com.liferay.portlet.wiki.util.WikiUtil;
-import com.liferay.util.RSSUtil;
+import com.liferay.portlet.wiki.util.comparator.PageCreateDateComparator;
 
-import java.util.Locale;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Jorge Ferrer
  */
-public class RSSAction extends com.liferay.portal.struts.RSSAction {
+public class RSSAction extends DefaultRSSAction {
 
 	@Override
-	protected byte[] getRSS(HttpServletRequest request) throws Exception {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+	protected RSSRenderer createRSSRenderer(HttpServletRequest request)
+		throws Exception {
 
-		long companyId = ParamUtil.getLong(request, "companyId");
 		long nodeId = ParamUtil.getLong(request, "nodeId");
 		String title = ParamUtil.getString(request, "title");
 		int max = ParamUtil.getInteger(
 			request, "max", SearchContainer.DEFAULT_DELTA);
-		String type = ParamUtil.getString(
-			request, "type", RSSUtil.FORMAT_DEFAULT);
-		double version = ParamUtil.getDouble(
-			request, "version", RSSUtil.VERSION_DEFAULT);
-		String displayStyle = ParamUtil.getString(
-			request, "displayStyle", RSSUtil.DISPLAY_STYLE_DEFAULT);
-
 
 		if (nodeId > 0) {
-			String attachmentURLPrefix = WikiUtil.getAttachmentURLPrefix(
-				themeDisplay.getPathMain(), themeDisplay.getPlid(), nodeId,
-				title);
-
 			if (Validator.isNotNull(title)) {
-				rss = WikiPageServiceUtil.getPagesRSS(
-					companyId, nodeId, title, max, type, version, displayStyle,
-					feedURL, entryURL, attachmentURLPrefix, locale);
+				List<WikiPage> pages = WikiPageServiceUtil. getPages(
+					nodeId, title, 0, max, new PageCreateDateComparator(true));
+				return new WikiRSSRenderer(request, pages, true);
 			}
 			else {
-				rss = WikiPageServiceUtil.getNodePagesRSS(
-					nodeId, max, type, version, displayStyle, feedURL, entryURL,
-					attachmentURLPrefix);
+				List<WikiPage> pages = WikiPageServiceUtil.getNodePages(
+					nodeId, max);
+				return new WikiRSSRenderer(request, pages, false);
 			}
 		}
 
-		return rss.getBytes(StringPool.UTF8);
+		throw new UnsupportedOperationException();
 	}
 
 }

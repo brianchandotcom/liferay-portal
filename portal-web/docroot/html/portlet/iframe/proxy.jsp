@@ -32,7 +32,7 @@ hiddenVariablesList.addAll(iframeVariables);
 
 <body onLoad="setTimeout('document.fm.submit()', 100);">
 
-<form action="<%= HtmlUtil.escapeAttribute(src) %>" method="<%= formMethod %>" name="fm">
+<form action="<%= HtmlUtil.escapeAttribute(src) %>" method="<%= HtmlUtil.escapeAttribute(formMethod) %>" name="fm">
 
 <%
 for (String hiddenVariable : hiddenVariablesList) {

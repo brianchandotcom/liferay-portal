@@ -114,6 +114,183 @@ public class JournalRSSRenderer extends DefaultRSSRenderer {
 
 	}
 
+	protected String getEntryURL(
+			JournalFeed feed, JournalArticle article, Layout layout,
+			ThemeDisplay themeDisplay) throws PortalException, SystemException {
+
+		List<Long> hitLayoutIds =
+			JournalContentSearchLocalServiceUtil.getLayoutIds(
+				layout.getGroupId(), layout.isPrivateLayout(),
+				article.getArticleId());
+
+		if (hitLayoutIds.size() > 0) {
+			Long hitLayoutId = hitLayoutIds.get(0);
+
+			Layout hitLayout = LayoutLocalServiceUtil.getLayout(
+				layout.getGroupId(), layout.isPrivateLayout(),
+				hitLayoutId.longValue());
+
+			return PortalUtil.getLayoutFriendlyURL(hitLayout, themeDisplay);
+		}
+		else {
+			long plid = PortalUtil.getPlidFromFriendlyURL(
+				feed.getCompanyId(), feed.getTargetLayoutFriendlyUrl());
+
+			String portletId = PortletKeys.JOURNAL_CONTENT;
+
+			if (Validator.isNotNull(feed.getTargetPortletId())) {
+				portletId = feed.getTargetPortletId();
+			}
+
+			PortletURL entryURL = new PortletURLImpl(
+				_request, portletId, plid, PortletRequest.RENDER_PHASE);
+
+			entryURL.setParameter("struts_action", "/journal_content/view");
+			entryURL.setParameter(
+				"groupId", String.valueOf(article.getGroupId()));
+			entryURL.setParameter("articleId", article.getArticleId());
+
+			return entryURL.toString();
+		}
+	}
+
+	protected JournalFeed getJournalFeed()
+		throws PortalException, SystemException {
+
+		JournalFeed feed = (JournalFeed) _request.getAttribute(
+			"rssJournalFeed");
+
+		if (feed != null) {
+			return feed;
+		}
+
+		long id = ParamUtil.getLong(_request, "id");
+
+		long groupId = ParamUtil.getLong(_request, "groupId");
+		String feedId = ParamUtil.getString(_request, "feedId");
+
+		if (id > 0) {
+			feed = JournalFeedLocalServiceUtil.getFeed(id);
+		}
+		else {
+			feed = JournalFeedLocalServiceUtil.getFeed(groupId, feedId);
+		}
+
+		_request.setAttribute("rssJournalFeed", feed);
+		return feed;
+	}
+
+	protected String processContent(
+			JournalFeed feed, JournalArticle article, String languageId,
+			ThemeDisplay themeDisplay, SyndEntry syndEntry,
+			SyndContent syndContent) throws DocumentException {
+
+		String content = article.getDescription(languageId);
+
+		String contentField = feed.getContentField();
+
+		if (contentField.equals(JournalFeedConstants.RENDERED_WEB_CONTENT)) {
+			String rendererTemplateId = article.getTemplateId();
+
+			if (Validator.isNotNull(feed.getRendererTemplateId())) {
+				rendererTemplateId = feed.getRendererTemplateId();
+			}
+
+			JournalArticleDisplay articleDisplay =
+				JournalContentUtil.getDisplay(
+					feed.getGroupId(), article.getArticleId(),
+					rendererTemplateId, null, languageId, themeDisplay, 1,
+					_XML_REQUEST);
+
+			if (articleDisplay != null) {
+				content = articleDisplay.getContent();
+			}
+		}
+		else if (!contentField.equals(
+					JournalFeedConstants.WEB_CONTENT_DESCRIPTION)) {
+
+			Document document = SAXReaderUtil.read(
+				article.getContentByLocale(languageId));
+
+			contentField = HtmlUtil.escapeXPathAttribute(contentField);
+
+			XPath xPathSelector = SAXReaderUtil.createXPath(
+				"//dynamic-element[@name=" + contentField + "]");
+
+			List<Node> results = xPathSelector.selectNodes(document);
+
+			if (results.size() == 0) {
+				return content;
+			}
+
+			Element element = (Element)results.get(0);
+
+			String elType = element.attributeValue("type");
+
+			if (elType.equals("document_library")) {
+				String url = element.elementText("dynamic-content");
+
+				url = processURL(feed, url, themeDisplay, syndEntry);
+			}
+			else if (elType.equals("image") || elType.equals("image_gallery")) {
+				String url = element.elementText("dynamic-content");
+
+				url = processURL(feed, url, themeDisplay, syndEntry);
+
+				content =
+					content + "<br /><br /><img alt='' src='" +
+						themeDisplay.getURLPortal() + url + "' />";
+			}
+			else if (elType.equals("text_box")) {
+				syndContent.setType("text");
+
+				content = element.elementText("dynamic-content");
+			}
+			else {
+				content = element.elementText("dynamic-content");
+			}
+		}
+
+		return content;
+	}
+
+	protected String processURL(
+		JournalFeed feed, String url, ThemeDisplay themeDisplay,
+		SyndEntry syndEntry) {
+
+		url = StringUtil.replace(
+			url,
+			new String[] {
+				"@group_id@", "@image_path@", "@main_path@"
+			},
+			new String[] {
+				String.valueOf(feed.getGroupId()), themeDisplay.getPathImage(),
+				themeDisplay.getPathMain()
+			}
+		);
+
+		List<SyndEnclosure> syndEnclosures = JournalRSSUtil.getDLEnclosures(
+			themeDisplay.getURLPortal(), url);
+
+		syndEnclosures.addAll(
+			JournalRSSUtil.getIGEnclosures(themeDisplay.getURLPortal(), url));
+
+		syndEntry.setEnclosures(syndEnclosures);
+
+		List<SyndLink> syndLinks = JournalRSSUtil.getDLLinks(
+			themeDisplay.getURLPortal(), url);
+
+		syndLinks.addAll(
+			JournalRSSUtil.getIGLinks(themeDisplay.getURLPortal(), url));
+
+		syndEntry.setLinks(syndLinks);
+
+		return url;
+	}
+
+	private static final String _XML_REQUEST =
+		"<request><parameters><parameter><name>rss</name><value>true</value>" +
+			"</parameter></parameters></request>";
 
 	private static Log _log = LogFactoryUtil.getLog(JournalRSSRenderer.class);
 

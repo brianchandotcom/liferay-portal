@@ -1596,7 +1596,7 @@
 		<icon>/html/icons/group_pages.png</icon>
 		<struts-path>group_pages</struts-path>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
-		<control-panel-entry-category>site_administration.main</control-panel-entry-category>
+		<control-panel-entry-category>site_administration.pages</control-panel-entry-category>
 		<control-panel-entry-weight>2.0</control-panel-entry-weight>
 		<control-panel-entry-class>com.liferay.portlet.grouppages.GroupPagesControlPanelEntry</control-panel-entry-class>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
@@ -1838,7 +1838,7 @@
 		<struts-path>site_memberships_admin</struts-path>
 		<parent-struts-path>sites_admin</parent-struts-path>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
-		<control-panel-entry-category>site_administration.main</control-panel-entry-category>
+		<control-panel-entry-category>site_administration.users</control-panel-entry-category>
 		<control-panel-entry-weight>3.0</control-panel-entry-weight>
 		<control-panel-entry-class>com.liferay.portlet.sitesadmin.SiteMembershipsControlPanelEntry</control-panel-entry-class>
 		<preferences-owned-by-group>true</preferences-owned-by-group>

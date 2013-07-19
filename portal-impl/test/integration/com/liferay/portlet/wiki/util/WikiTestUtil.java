@@ -126,6 +126,42 @@ public class WikiTestUtil {
 		return file;
 	}
 
+	public static WikiPage copyPage(
+			WikiPage page, boolean approved, ServiceContext serviceContext)
+		throws Exception {
+
+		boolean workflowEnabled = WorkflowThreadLocal.isEnabled();
+
+		try {
+			WorkflowThreadLocal.setEnabled(true);
+
+			serviceContext = (ServiceContext)serviceContext.clone();
+
+			serviceContext.setWorkflowAction(
+				WorkflowConstants.ACTION_SAVE_DRAFT);
+
+			WikiPage copy = WikiPageLocalServiceUtil.addPage(
+				page.getUserId(), page.getNodeId(),
+				ServiceTestUtil.randomString(), page.getContent(), "Summary",
+				true, serviceContext);
+
+			if (approved) {
+				copy = WikiPageLocalServiceUtil.updateStatus(
+					page.getUserId(), copy.getResourcePrimKey(),
+					WorkflowConstants.STATUS_APPROVED, serviceContext);
+			}
+
+			WikiPageLocalServiceUtil.copyPageAttachments(
+				page.getUserId(), page.getNodeId(), page.getTitle(),
+				copy.getTitle());
+
+			return copy;
+		}
+		finally {
+			WorkflowThreadLocal.setEnabled(workflowEnabled);
+		}
+	}
+
 	public static WikiPage updatePage(
 			WikiPage page, long userId, String content,
 			ServiceContext serviceContext)

@@ -15,6 +15,7 @@
 package com.liferay.portlet.wiki.service;
 
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.test.AssertUtils;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -88,6 +89,35 @@ public class WikiPageServiceTest {
 	@Test
 	public void testChangeParentWithExpando() throws Exception {
 		testChangeParent(true);
+	}
+
+	@Test
+	public void testCopyWikiPageAttachments() throws Exception {
+		WikiPage page = WikiTestUtil.addPage(
+			TestPropsValues.getUserId(), _group.getGroupId(), _node.getNodeId(),
+			ServiceTestUtil.randomString(), true);
+
+		WikiTestUtil.addWikiAttachment(
+			page.getUserId(), page.getNodeId(), page.getTitle(), getClass());
+
+		List<FileEntry> fileEntries = page.getAttachmentsFileEntries();
+
+		WikiPage copy =  WikiTestUtil.copyPage(
+			page, true, ServiceTestUtil.getServiceContext(_group.getGroupId()));
+
+		List<FileEntry> copiedFileEntries = copy.getAttachmentsFileEntries();
+
+		Assert.assertEquals(fileEntries.size(), copiedFileEntries.size());
+
+		FileEntry fileEntry = fileEntries.get(0);
+		FileEntry copiedFileEntry = copiedFileEntries.get(0);
+
+		Assert.assertEquals(fileEntry.getTitle(), copiedFileEntry.getTitle());
+		Assert.assertEquals(
+			fileEntry.getExtension(), copiedFileEntry.getExtension());
+		Assert.assertEquals(
+			fileEntry.getMimeType(), copiedFileEntry.getMimeType());
+		Assert.assertEquals(fileEntry.getSize(), copiedFileEntry.getSize());
 	}
 
 	@Test

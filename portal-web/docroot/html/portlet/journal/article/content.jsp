@@ -316,6 +316,8 @@ if (Validator.isNotNull(content)) {
 
 													<liferay-portlet:renderURL portletName="<%= PortletKeys.DYNAMIC_DATA_MAPPING %>" var="editTemplateURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 														<portlet:param name="struts_action" value="/dynamic_data_mapping/edit_template" />
+														<portlet:param name="portletResource" value="<%= portletDisplay.getId() %>" />
+														<portlet:param name="refererPortletName" value="<%= PortletKeys.JOURNAL %>" />
 														<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
 														<portlet:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
 														<portlet:param name="templateId" value="<%= String.valueOf(curDDMTemplate.getTemplateId()) %>" />

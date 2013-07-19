@@ -163,49 +163,48 @@
 
 		<mkdir dir="${tstamp.value}" />
 
-		<java
-			classname="com.liferay.portal.tools.samplesqlbuilder.TestSampleSQLBuilder"
-			classpathref="project.classpath"
-			failonerror="true"
-		>
-			<arg value="-Dexternal-properties=com/liferay/portal/tools/dependencies/portal-tools.properties" />
-			<arg value="sql.dir=${basedir}" />
-			<arg value="sample.sql.base.dir=${basedir}/../benchmarks" />
-			<arg value="sample.sql.db.type=hypersonic" />
-			<arg value="sample.sql.max.asset.category.count=1" />
-			<arg value="sample.sql.max.asset.entry.to.asset.category.count=1" />
-			<arg value="sample.sql.max.asset.entry.to.asset.tag.count=1" />
-			<arg value="sample.sql.max.asset.publisher.filter.rule.count=1" />
-			<arg value="sample.sql.max.asset.publisher.page.count=2" />
-			<arg value="sample.sql.max.asset.tag.count=1" />
-			<arg value="sample.sql.max.asset.vocabulary.count=1" />
-			<arg value="sample.sql.max.blogs.entry.comment.count=1" />
-			<arg value="sample.sql.max.blogs.entry.count=1" />
-			<arg value="sample.sql.max.ddl.custom.field.count=1" />
-			<arg value="sample.sql.max.ddl.record.count=1" />
-			<arg value="sample.sql.max.ddl.record.set.count=1" />
-			<arg value="sample.sql.max.dl.file.entry.count=1" />
-			<arg value="sample.sql.max.dl.file.entry.size=1" />
-			<arg value="sample.sql.max.dl.folder.count=1" />
-			<arg value="sample.sql.max.dl.folder.depth=1" />
-			<arg value="sample.sql.max.group.count=1" />
-			<arg value="sample.sql.max.journal.article.count=1" />
-			<arg value="sample.sql.max.journal.article.page.count=1" />
-			<arg value="sample.sql.max.journal.article.size=1" />
-			<arg value="sample.sql.max.journal.article.version.count=1" />
-			<arg value="sample.sql.max.mb.category.count=1" />
-			<arg value="sample.sql.max.mb.message.count=1" />
-			<arg value="sample.sql.max.mb.thread.count=1" />
-			<arg value="sample.sql.max.user.count=1" />
-			<arg value="sample.sql.max.user.to.group.count=1" />
-			<arg value="sample.sql.max.wiki.node.count=1" />
-			<arg value="sample.sql.max.wiki.page.comment.count=1" />
-			<arg value="sample.sql.max.wiki.page.count=1" />
-			<arg value="sample.sql.optimize.buffer.size=8192" />
-			<arg value="sample.sql.output.dir=${tstamp.value}" />
-			<arg value="sample.sql.output.merge=true" />
-		</java>
+		<propertyfile file="test-sample-sql.properties">
+			<entry key="sql.dir" value="${basedir}" />
+			<entry key="sample.sql.db.type" value="hypersonic"/>
+			<entry key="sample.sql.max.asset.category.count" value="1"/>
+			<entry key="sample.sql.max.asset.entry.to.asset.category.count" value="1"/>
+			<entry key="sample.sql.max.asset.entry.to.asset.tag.count" value="1"/>
+			<entry key="sample.sql.max.asset.publisher.filter.rule.count" value="1"/>
+			<entry key="sample.sql.max.asset.publisher.page.count" value="2"/>
+			<entry key="sample.sql.max.asset.tag.count" value="1"/>
+			<entry key="sample.sql.max.asset.vocabulary.count" value="1"/>
+			<entry key="sample.sql.max.blogs.entry.comment.count" value="1"/>
+			<entry key="sample.sql.max.blogs.entry.count" value="1"/>
+			<entry key="sample.sql.max.ddl.custom.field.count" value="1"/>
+			<entry key="sample.sql.max.ddl.record.count" value="1"/>
+			<entry key="sample.sql.max.ddl.record.set.count" value="1"/>
+			<entry key="sample.sql.max.dl.file.entry.count" value="1"/>
+			<entry key="sample.sql.max.dl.file.entry.size" value="1"/>
+			<entry key="sample.sql.max.dl.folder.count" value="1"/>
+			<entry key="sample.sql.max.dl.folder.depth" value="1"/>
+			<entry key="sample.sql.max.group.count" value="1"/>
+			<entry key="sample.sql.max.journal.article.count" value="1"/>
+			<entry key="sample.sql.max.journal.article.page.count" value="1"/>
+			<entry key="sample.sql.max.journal.article.size" value="1"/>
+			<entry key="sample.sql.max.journal.article.version.count" value="1"/>
+			<entry key="sample.sql.max.mb.category.count" value="1"/>
+			<entry key="sample.sql.max.mb.message.count" value="1"/>
+			<entry key="sample.sql.max.mb.thread.count" value="1"/>
+			<entry key="sample.sql.max.user.count" value="1"/>
+			<entry key="sample.sql.max.user.to.group.count" value="1"/>
+			<entry key="sample.sql.max.wiki.node.count" value="1"/>
+			<entry key="sample.sql.max.wiki.page.comment.count" value="1"/>
+			<entry key="sample.sql.max.wiki.page.count" value="1"/>
+			<entry key="sample.sql.optimize.buffer.size" value="8192"/>
+			<entry key="sample.sql.output.dir" value="${tstamp.value}"/>
+			<entry key="sample.sql.output.merge" value="true"/>
+		</propertyfile>
 
+		<ant antfile="${basedir}/../benchmarks/build.xml" inheritall="false" target="build-sample-sql">
+			<property name="properties.file" value="test-sample-sql.properties"/>
+		</ant>
+
+		<delete file="test-sample-sql.properties" />
 		<delete dir="${tstamp.value}" />
 	</target>
 </project>

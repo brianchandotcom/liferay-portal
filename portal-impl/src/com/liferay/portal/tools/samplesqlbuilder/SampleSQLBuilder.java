@@ -25,16 +25,15 @@ import com.liferay.portal.kernel.io.unsync.UnsyncBufferedWriter;
 import com.liferay.portal.kernel.io.unsync.UnsyncTeeWriter;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.tools.ArgumentsUtil;
 import com.liferay.portal.util.InitUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
@@ -47,6 +46,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -57,88 +57,109 @@ import java.util.concurrent.ConcurrentHashMap;
 public class SampleSQLBuilder {
 
 	public static void main(String[] args) {
-		Map<String, String> arguments = ArgumentsUtil.parseArguments(args);
-
 		List<String> extraConfigLocations = new ArrayList<String>();
 
 		extraConfigLocations.add("META-INF/portlet-container-spring.xml");
 
 		InitUtil.initWithSpring(false, extraConfigLocations);
 
+		Properties properties = new Properties();
+		Reader reader = null;
+
 		try {
-			new SampleSQLBuilder(arguments);
+			reader = new FileReader(args[0]);
+
+			properties.load(reader);
+
+			new SampleSQLBuilder(properties);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
 		}
+		finally {
+			if (reader != null) {
+				try {
+					reader.close();
+				}
+				catch (IOException ioe) {
+					ioe.printStackTrace();
+				}
+			}
+		}
 	}
 
-	public SampleSQLBuilder(Map<String, String> arguments) throws Exception {
-		_dbType = arguments.get("sample.sql.db.type");
+	public SampleSQLBuilder(Properties properties) throws Exception {
+		_dbType = properties.getProperty("sample.sql.db.type");
+
 		_maxAssetCategoryCount = GetterUtil.getInteger(
-			arguments.get("sample.sql.max.asset.category.count"));
+			properties.getProperty("sample.sql.max.asset.category.count"));
 		_maxAssetEntryToAssetCategoryCount = GetterUtil.getInteger(
-			arguments.get(
+			properties.getProperty(
 				"sample.sql.max.asset.entry.to.asset.category.count"));
 		_maxAssetEntryToAssetTagCount = GetterUtil.getInteger(
-			arguments.get("sample.sql.max.asset.entry.to.asset.tag.count"));
+			properties.getProperty(
+				"sample.sql.max.asset.entry.to.asset.tag.count"));
 		_maxAssetPublisherFilterRuleCount = GetterUtil.getInteger(
-			arguments.get("sample.sql.max.asset.publisher.filter.rule.count"));
+			properties.getProperty(
+				"sample.sql.max.asset.publisher.filter.rule.count"));
 		_maxAssetPublisherPageCount = GetterUtil.getInteger(
-			arguments.get("sample.sql.max.asset.publisher.page.count"));
+			properties.getProperty(
+				"sample.sql.max.asset.publisher.page.count"));
 		_maxAssetTagCount = GetterUtil.getInteger(
-			arguments.get("sample.sql.max.asset.tag.count"));
+			properties.getProperty("sample.sql.max.asset.tag.count"));
 		_maxAssetVocabularyCount = GetterUtil.getInteger(
-			arguments.get("sample.sql.max.asset.vocabulary.count"));
+			properties.getProperty("sample.sql.max.asset.vocabulary.count"));
 		_maxBlogsEntryCommentCount = GetterUtil.getInteger(
-			arguments.get("sample.sql.max.blogs.entry.comment.count"));
+			properties.getProperty("sample.sql.max.blogs.entry.comment.count"));
 		_maxBlogsEntryCount = GetterUtil.getInteger(
-			arguments.get("sample.sql.max.blogs.entry.count"));
+			properties.getProperty("sample.sql.max.blogs.entry.count"));
 		_maxDDLCustomFieldCount = GetterUtil.getInteger(
-			arguments.get("sample.sql.max.ddl.custom.field.count"));
+			properties.getProperty("sample.sql.max.ddl.custom.field.count"));
 		_maxDDLRecordCount = GetterUtil.getInteger(
-			arguments.get("sample.sql.max.ddl.record.count"));
+			properties.getProperty("sample.sql.max.ddl.record.count"));
 		_maxDDLRecordSetCount = GetterUtil.getInteger(
-			arguments.get("sample.sql.max.ddl.record.set.count"));
+			properties.getProperty("sample.sql.max.ddl.record.set.count"));
 		_maxDLFileEntryCount = GetterUtil.getInteger(
-			arguments.get("sample.sql.max.dl.file.entry.count"));
+			properties.getProperty("sample.sql.max.dl.file.entry.count"));
 		_maxDLFileEntrySize = GetterUtil.getInteger(
-			arguments.get("sample.sql.max.dl.file.entry.size"));
+			properties.getProperty("sample.sql.max.dl.file.entry.size"));
 		_maxDLFolderCount = GetterUtil.getInteger(
-			arguments.get("sample.sql.max.dl.folder.count"));
+			properties.getProperty("sample.sql.max.dl.folder.count"));
 		_maxDLFolderDepth = GetterUtil.getInteger(
-			arguments.get("sample.sql.max.dl.folder.depth"));
+			properties.getProperty("sample.sql.max.dl.folder.depth"));
 		_maxGroupCount = GetterUtil.getInteger(
-			arguments.get("sample.sql.max.group.count"));
+			properties.getProperty("sample.sql.max.group.count"));
 		_maxJournalArticleCount = GetterUtil.getInteger(
-			arguments.get("sample.sql.max.journal.article.count"));
+			properties.getProperty("sample.sql.max.journal.article.count"));
 		_maxJournalArticlePageCount = GetterUtil.getInteger(
-			arguments.get("sample.sql.max.journal.article.page.count"));
+			properties.getProperty(
+				"sample.sql.max.journal.article.page.count"));
 		_maxJournalArticleSize = GetterUtil.getInteger(
-			arguments.get("sample.sql.max.journal.article.size"));
+			properties.getProperty("sample.sql.max.journal.article.size"));
 		_maxJournalArticleVersionCount = GetterUtil.getInteger(
-			arguments.get("sample.sql.max.journal.article.version.count"));
+			properties.getProperty(
+				"sample.sql.max.journal.article.version.count"));
 		_maxMBCategoryCount = GetterUtil.getInteger(
-			arguments.get("sample.sql.max.mb.category.count"));
+			properties.getProperty("sample.sql.max.mb.category.count"));
 		_maxMBMessageCount = GetterUtil.getInteger(
-			arguments.get("sample.sql.max.mb.message.count"));
+			properties.getProperty("sample.sql.max.mb.message.count"));
 		_maxMBThreadCount = GetterUtil.getInteger(
-			arguments.get("sample.sql.max.mb.thread.count"));
+			properties.getProperty("sample.sql.max.mb.thread.count"));
 		_maxUserCount = GetterUtil.getInteger(
-			arguments.get("sample.sql.max.user.count"));
+			properties.getProperty("sample.sql.max.user.count"));
 		_maxUserToGroupCount = GetterUtil.getInteger(
-			arguments.get("sample.sql.max.user.to.group.count"));
+			properties.getProperty("sample.sql.max.user.to.group.count"));
 		_maxWikiNodeCount = GetterUtil.getInteger(
-			arguments.get("sample.sql.max.wiki.node.count"));
+			properties.getProperty("sample.sql.max.wiki.node.count"));
 		_maxWikiPageCommentCount = GetterUtil.getInteger(
-			arguments.get("sample.sql.max.wiki.page.comment.count"));
+			properties.getProperty("sample.sql.max.wiki.page.comment.count"));
 		_maxWikiPageCount = GetterUtil.getInteger(
-			arguments.get("sample.sql.max.wiki.page.count"));
+			properties.getProperty("sample.sql.max.wiki.page.count"));
 		_optimizeBufferSize = GetterUtil.getInteger(
-			arguments.get("sample.sql.optimize.buffer.size"));
-		_outputDir = arguments.get("sample.sql.output.dir");
+			properties.getProperty("sample.sql.optimize.buffer.size"));
+		_outputDir = properties.getProperty("sample.sql.output.dir");
 		_outputMerge = GetterUtil.getBoolean(
-			arguments.get("sample.sql.output.merge"));
+			properties.getProperty("sample.sql.output.merge"));
 
 		_dataFactory = new DataFactory(
 			_maxAssetCategoryCount, _maxAssetEntryToAssetCategoryCount,
@@ -186,7 +207,9 @@ public class SampleSQLBuilder {
 
 		StringBundler sb = new StringBundler();
 
-		List<String> keys = ListUtil.fromMapKeys(arguments);
+		Set<String> propertyNames = properties.stringPropertyNames();
+
+		List<String> keys = new ArrayList<String>(propertyNames);
 
 		Collections.sort(keys);
 
@@ -195,7 +218,7 @@ public class SampleSQLBuilder {
 				continue;
 			}
 
-			String value = arguments.get(key);
+			String value = properties.getProperty(key);
 
 			sb.append(key);
 			sb.append(StringPool.EQUAL);

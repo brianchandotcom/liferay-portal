@@ -46,6 +46,13 @@ String parentTitle = BeanParamUtil.getString(wikiPage, request, "parentTitle");
 
 boolean preview = ParamUtil.getBoolean(request, "preview");
 
+String cmd = ParamUtil.getString(request, Constants.CMD, StringPool.BLANK);
+boolean copy = false;
+
+if (cmd.equals(Constants.COPY)) {
+	copy = true;
+}
+
 boolean newPage = ParamUtil.getBoolean(request, "newPage");
 
 if (wikiPage == null) {
@@ -194,6 +201,10 @@ if (Validator.isNull(redirect)) {
 
 	<c:if test="<%= wikiPage != null %>">
 		<aui:input name="version" type="hidden" value="<%= wikiPage.getVersion() %>" />
+	</c:if>
+
+	<c:if test="<%= copy %>">
+		<aui:input name="templateTitle" type="hidden" value="<%= templateTitle %>" />
 	</c:if>
 
 	<aui:input name="workflowAction" type="hidden" value="<%= WorkflowConstants.ACTION_SAVE_DRAFT %>" />
@@ -529,7 +540,19 @@ if (Validator.isNull(redirect)) {
 	}
 
 	function <portlet:namespace />savePage() {
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= newPage ? Constants.ADD : Constants.UPDATE %>";
+
+	<%
+		String action = Constants.UPDATE;
+
+		if (copy) {
+			action = Constants.COPY;
+		}
+		else if (newPage) {
+			action = Constants.ADD;
+		}
+	%>
+
+		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= action %>";
 
 		if (window.<portlet:namespace />editor) {
 			document.<portlet:namespace />fm.<portlet:namespace />content.value = window.<portlet:namespace />editor.getHTML();

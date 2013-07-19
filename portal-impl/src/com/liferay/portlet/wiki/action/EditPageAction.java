@@ -80,7 +80,9 @@ public class EditPageAction extends PortletAction {
 		WikiPage page = null;
 
 		try {
-			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
+			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.COPY) ||
+				cmd.equals(Constants.UPDATE)) {
+
 				page = updatePage(actionRequest);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
@@ -401,15 +403,23 @@ public class EditPageAction extends PortletAction {
 
 		WikiPage page = null;
 
-		if (cmd.equals(Constants.ADD)) {
-			page = WikiPageServiceUtil.addPage(
-				nodeId, title, content, summary, minorEdit, format, parentTitle,
-				redirectTitle, serviceContext);
-		}
-		else {
+		if (cmd.equals(Constants.UPDATE)) {
 			page = WikiPageServiceUtil.updatePage(
 				nodeId, title, version, content, summary, minorEdit, format,
 				parentTitle, redirectTitle, serviceContext);
+		}
+		else {
+			page = WikiPageServiceUtil.addPage(
+				nodeId, title, content, summary, minorEdit, format, parentTitle,
+				redirectTitle, serviceContext);
+
+			if (cmd.equals(Constants.COPY)) {
+				String templateTitle = ParamUtil.getString(
+					actionRequest, "templateTitle");
+
+				WikiPageLocalServiceUtil.copyPageAttachments(
+					page.getUserId(), nodeId, templateTitle, page.getTitle());
+			}
 		}
 
 		return page;

@@ -213,6 +213,10 @@ public class WikiPageServiceWrapper implements WikiPageService,
 			displayStyle, feedURL, entryURL);
 	}
 
+	/**
+	* @deprecated As of 6.2.0, replaced by {
+	* @link com.liferay.portlet.wiki.action.WikiRSSRenderer}
+	*/
 	@Override
 	public java.lang.String getNodePagesRSS(long nodeId, int max,
 		java.lang.String type, double version, java.lang.String displayStyle,
@@ -284,6 +288,17 @@ public class WikiPageServiceWrapper implements WikiPageService,
 	}
 
 	@Override
+	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> getPages(
+		long nodeId, java.lang.String title, int start, int max,
+		com.liferay.portlet.wiki.util.comparator.PageCreateDateComparator pageCreateDateComparator)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portal.security.auth.PrincipalException {
+		return _wikiPageService.getPages(nodeId, title, start, max,
+			pageCreateDateComparator);
+	}
+
+	@Override
 	public int getPagesCount(long groupId, long nodeId, boolean head)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -313,6 +328,10 @@ public class WikiPageServiceWrapper implements WikiPageService,
 			type, version, displayStyle, feedURL, entryURL, locale);
 	}
 
+	/**
+	* @deprecated As of 6.2.0, replaced by {
+	* @link com.liferay.portlet.wiki.action.WikiRSSRenderer}
+	*/
 	@Override
 	public java.lang.String getPagesRSS(long companyId, long nodeId,
 		java.lang.String title, int max, java.lang.String type, double version,

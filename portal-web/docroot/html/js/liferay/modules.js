@@ -479,7 +479,8 @@ window.YUI_config = {
 					requires: [
 						'aui-base',
 						'aui-overlay-mask-deprecated',
-						'aui-toolbar'
+						'aui-toolbar',
+						'liferay-widget-zindex'
 					]
 				},
 				'liferay-progress': {

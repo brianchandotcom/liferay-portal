@@ -386,14 +386,6 @@
 		position: relative;
 	}
 
-	.table-cell .taglib-workflow-status {
-		margin: 0;
-
-		.workflow-status {
-			padding-left: 0;
-		}
-	}
-
 	.taglib-search-iterator-page-iterator-top, .taglib-search-iterator-page-iterator-bottom, .paginator-container {
 		background: #D9D9D9 url(@theme_image_path@/application/subheader_bg.png) 0 0 repeat-x;
 		clear: both;

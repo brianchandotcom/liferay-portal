@@ -523,14 +523,6 @@
 		}
 	}
 
-	.table-cell .taglib-workflow-status {
-		margin: 0;
-
-		.workflow-status {
-			padding-left: 0;
-		}
-	}
-
 	.taglib-discussion {
 		width: 90%;
 		margin: 0 auto;

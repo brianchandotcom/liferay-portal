@@ -82,11 +82,11 @@ public class RSSAction extends com.liferay.portal.struts.RSSAction {
 				feedURL, entryURL, themeDisplay);
 		}
 		else if (organizationId > 0) {
-			feedURL = StringPool.BLANK;
-
-			rss = BlogsEntryServiceUtil.getOrganizationEntriesRSS(
-				organizationId, new Date(), status, max, type, version,
-				displayStyle, feedURL, entryURL, themeDisplay);
+			blogsEntries = BlogsEntryServiceUtil.getOrganizationEntries(
+				organizationId, new Date(), status, max);
+			return new BlogsOrganizationRSSRenderer(
+				OrganizationLocalServiceUtil.getOrganization(organizationId),
+				blogsEntries, request);
 		}
 		else if (layout != null) {
 			groupId = themeDisplay.getScopeGroupId();

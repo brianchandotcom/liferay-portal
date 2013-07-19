@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.Layout;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.Portal;
@@ -54,6 +53,7 @@ public class AssetRSSRenderer extends DefaultRSSRenderer {
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
 		super(PortalUtil.getHttpServletRequest(portletRequest));
+
 		_portletRequest = portletRequest;
 		_portletResponse = portletResponse;
 		_portletPreferences = portletRequest.getPreferences();
@@ -63,20 +63,17 @@ public class AssetRSSRenderer extends DefaultRSSRenderer {
 	}
 
 	public String getFeedURL() throws PortalException, SystemException {
-
 		String feedURL = getAssetPublisherURL();
 		return feedURL.concat("rss");
 	}
 
 	public String getRRSFeedType() {
-
 		return _portletRequest.getPreferences().getValue(
 			"rssFeedType", RSSUtil.FEED_TYPE_DEFAULT);
 	}
 
 	@Override
 	public String getRSSName() {
-
 		return RSSUtil.getFeedTypeFormat(getRRSFeedType());
 	}
 
@@ -89,10 +86,7 @@ public class AssetRSSRenderer extends DefaultRSSRenderer {
 		String rssDisplayStyle = _portletPreferences.getValue(
 			"rssDisplayStyle", RSSUtil.DISPLAY_STYLE_ABSTRACT);
 
-		List<AssetEntry> assetEntries;
-		assetEntries = getAssetEntries();
-
-		for (AssetEntry assetEntry : assetEntries) {
+		for (AssetEntry assetEntry : getAssetEntries()) {
 			SyndEntry syndEntry = new SyndEntryImpl();
 
 			String author = PortalUtil.getUserName(assetEntry);
@@ -146,14 +140,13 @@ public class AssetRSSRenderer extends DefaultRSSRenderer {
 	protected String getAssetPublisherURL()
 		throws PortalException, SystemException {
 
-		Layout layout = _themeDisplay.getLayout();
-
 		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
 
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(6);
 
 		String layoutFriendlyURL = GetterUtil.getString(
-			PortalUtil.getLayoutFriendlyURL(layout, _themeDisplay));
+			PortalUtil.getLayoutFriendlyURL(
+				_themeDisplay.getLayout(), _themeDisplay));
 
 		if (!layoutFriendlyURL.startsWith(Http.HTTP_WITH_SLASH) &&
 			!layoutFriendlyURL.startsWith(Http.HTTPS_WITH_SLASH)) {
@@ -197,7 +190,8 @@ public class AssetRSSRenderer extends DefaultRSSRenderer {
 		AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(
 			assetEntry.getClassPK());
 
-		String viewInContextURL;
+		String viewInContextURL = null;
+
 		try {
 			viewInContextURL = assetRenderer.getURLViewInContext(
 				(LiferayPortletRequest)_portletRequest,

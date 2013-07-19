@@ -30,12 +30,12 @@ public class BlogsOrganizationRSSRenderer extends BlogsBaseRSSRenderer {
 		HttpServletRequest request) {
 
 		super(blogsEntries, request);
+
 		_organization = organization;
 	}
 
 	@Override
 	public String getFeedURL() {
-
 		return StringPool.BLANK;
 	}
 

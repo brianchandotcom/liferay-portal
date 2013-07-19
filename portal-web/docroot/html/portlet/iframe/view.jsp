@@ -57,8 +57,8 @@ if (windowState.equals(WindowState.MAXIMIZED)) {
 	</c:when>
 	<c:otherwise>
 		<div>
-			<iframe alt="<%= alt %>" border="<%= border %>" bordercolor="<%= bordercolor %>" frameborder="<%= frameborder %>" height="<%= iframeHeight %>" hspace="<%= hspace %>" id="<portlet:namespace />iframe" longdesc="<%= longdesc%>" name="<portlet:namespace />iframe" onload="<portlet:namespace />monitorIframe();" scrolling="<%= scrolling %>" src="<%= iframeSrc %>" title="<%= title %>" vspace="<%= vspace %>" width="<%= width %>">
-				<%= LanguageUtil.format(pageContext, "your-browser-does-not-support-inline-frames-or-is-currently-configured-not-to-display-inline-frames.-content-can-be-viewed-at-actual-source-page-x", iframeSrc) %>
+			<iframe alt="<%= HtmlUtil.escapeAttribute(alt) %>" border="<%= HtmlUtil.escapeAttribute(border) %>" bordercolor="<%= HtmlUtil.escapeAttribute(bordercolor) %>" frameborder="<%= HtmlUtil.escapeAttribute(frameborder) %>" height="<%= HtmlUtil.escapeAttribute(iframeHeight) %>" hspace="<%= HtmlUtil.escapeAttribute(hspace) %>" id="<portlet:namespace />iframe" longdesc="<%= HtmlUtil.escapeAttribute(longdesc) %>" name="<portlet:namespace />iframe" onload="<portlet:namespace />monitorIframe();" scrolling="<%= HtmlUtil.escapeAttribute(scrolling) %>" src="<%= HtmlUtil.escapeHREF(iframeSrc) %>" title="<%= HtmlUtil.escapeAttribute(title) %>" vspace="<%= HtmlUtil.escapeAttribute(vspace) %>" width="<%= HtmlUtil.escapeAttribute(width) %>">
+				<%= LanguageUtil.format(pageContext, "your-browser-does-not-support-inline-frames-or-is-currently-configured-not-to-display-inline-frames.-content-can-be-viewed-at-actual-source-page-x", HtmlUtil.escape(iframeSrc)) %>
 			</iframe>
 		</div>
 	</c:otherwise>
@@ -77,8 +77,8 @@ if (windowState.equals(WindowState.MAXIMIZED)) {
 			return true;
 		}
 
-		var baseSrc = '<%= baseSrc %>';
-		var iframeSrc = '<%= iframeSrc %>';
+		var baseSrc = '<%= HtmlUtil.escapeJS(baseSrc) %>';
+		var iframeSrc = '<%= HtmlUtil.escapeJS(iframeSrc) %>';
 
 		if ((url == iframeSrc) || (url == (iframeSrc + '/'))) {
 		}
@@ -110,7 +110,7 @@ if (windowState.equals(WindowState.MAXIMIZED)) {
 				var src = '';
 
 				if (!(/^https?\:\/\//.test(hash))) {
-					src = '<%= baseSrc %>';
+					src = '<%= HtmlUtil.escapeJS(baseSrc) %>';
 				}
 
 				src += hash;
@@ -184,10 +184,10 @@ if (windowState.equals(WindowState.MAXIMIZED)) {
 				var height = A.Plugin.AutosizeIframe.getContentHeight(iframe);
 
 				if (height == null) {
-					height = '<%= heightNormal %>';
+					height = '<%= HtmlUtil.escapeJS(heightNormal) %>';
 
 					if (themeDisplay.isStateMaximized()) {
-						height = '<%= heightMaximized %>';
+						height = '<%= HtmlUtil.escapeJS(heightMaximized) %>';
 					}
 
 					iframe.setStyle('height', height);

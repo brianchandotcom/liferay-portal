@@ -58,8 +58,9 @@ public class PortletCategoryKeys {
 	public static final String SITE_ADMINISTRATION = "site_administration.";
 
 	public static final String[] SITE_ADMINISTRATION_ALL = {
-		PortletCategoryKeys.SITE_ADMINISTRATION_MAIN,
+		PortletCategoryKeys.SITE_ADMINISTRATION_PAGES,
 		PortletCategoryKeys.SITE_ADMINISTRATION_CONTENT,
+		PortletCategoryKeys.SITE_ADMINISTRATION_USERS,
 		PortletCategoryKeys.SITE_ADMINISTRATION_CONFIGURATION
 	};
 
@@ -69,8 +70,11 @@ public class PortletCategoryKeys {
 	public static final String SITE_ADMINISTRATION_CONTENT =
 		"site_administration.content";
 
-	public static final String SITE_ADMINISTRATION_MAIN =
-		"site_administration.main";
+	public static final String SITE_ADMINISTRATION_PAGES =
+		"site_administration.pages";
+
+	public static final String SITE_ADMINISTRATION_USERS =
+		"site_administration.users";
 
 	public static final String SITES = "sites";
 

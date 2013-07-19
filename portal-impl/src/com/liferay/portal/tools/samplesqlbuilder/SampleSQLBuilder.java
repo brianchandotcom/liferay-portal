@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ArgumentsUtil;
 import com.liferay.portal.util.InitUtil;
 
@@ -302,7 +303,17 @@ public class SampleSQLBuilder {
 					_writerSampleSQL = new UnsyncTeeWriter(
 						writer, createFileWriter(_outputDir + "/sample.sql"));
 
-					createSample();
+					Map<String, Object> context = getContext();
+
+					processTemplate(_tplSample, context);
+
+					for (Object value : context.values()) {
+						if (value instanceof Writer) {
+							Writer writer = (Writer)value;
+
+							writer.close();
+						}
+					}
 
 					_writerSampleSQL.close();
 
@@ -313,43 +324,12 @@ public class SampleSQLBuilder {
 				}
 			}
 
-			protected void createSample() throws Exception {
-				_writerAssetPublisherCSV = getWriter("asset_publisher.csv");
-				_writerBlogsCSV = getWriter("blogs.csv");
-				_writerCompanyCSV = getWriter("company.csv");
-				_writerDocumentLibraryCSV = getWriter("document_library.csv");
-				_writerDynamicDataListsCSV = getWriter(
-					"dynamic_data_lists.csv");
-				_writerLayoutCSV = getWriter("layout.csv");
-				_writerMessageBoardsCSV = getWriter("message_boards.csv");
-				_writerRepositoryCSV = getWriter("repository.csv");
-				_writerWikiCSV = getWriter("wiki.csv");
-
-				Map<String, Object> context = getContext();
-
-				processTemplate(_tplSample, context);
-
-				_writerAssetPublisherCSV.close();
-				_writerBlogsCSV.close();
-				_writerCompanyCSV.close();
-				_writerDocumentLibraryCSV.close();
-				_writerDynamicDataListsCSV.close();
-				_writerLayoutCSV.close();
-				_writerMessageBoardsCSV.close();
-				_writerRepositoryCSV.close();
-				_writerWikiCSV.close();
-			}
-
-			protected Writer getWriter(String fileName) throws Exception {
-				return createFileWriter(new File(_outputDir + "/" + fileName));
-			}
-
 		};
 
 		thread.start();
 	}
 
-	protected Map<String, Object> getContext() {
+	protected Map<String, Object> getContext() throws Exception {
 		Map<String, Object> context = new HashMap<String, Object>();
 
 		put(context, "counter", _dataFactory.getCounter());
@@ -377,15 +357,15 @@ public class SampleSQLBuilder {
 		put(context, "maxWikiNodeCount", _maxWikiNodeCount);
 		put(context, "maxWikiPageCommentCount", _maxWikiPageCommentCount);
 		put(context, "maxWikiPageCount", _maxWikiPageCount);
-		put(context, "writerAssetPublisherCSV", _writerAssetPublisherCSV);
-		put(context, "writerBlogsCSV", _writerBlogsCSV);
-		put(context, "writerCompanyCSV", _writerCompanyCSV);
-		put(context, "writerDocumentLibraryCSV", _writerDocumentLibraryCSV);
-		put(context, "writerDynamicDataListsCSV", _writerDynamicDataListsCSV);
-		put(context, "writerLayoutCSV", _writerLayoutCSV);
-		put(context, "writerMessageBoardsCSV", _writerMessageBoardsCSV);
-		put(context, "writerRepositoryCSV", _writerRepositoryCSV);
-		put(context, "writerWikiCSV", _writerWikiCSV);
+
+		String[] csvFiles = StringUtil.split(_CSV_FILES);
+
+		for (String fileName : csvFiles) {
+			Writer writer = createFileWriter(
+				new File(_outputDir, fileName + ".csv"));
+
+			put(context, fileName + "CSVWriter", writer);
+		}
 
 		return context;
 	}
@@ -494,6 +474,10 @@ public class SampleSQLBuilder {
 		writer.write(sql);
 	}
 
+	private static final String _CSV_FILES =
+		"assetPublisher,blog,company,documentLibrary,dynamicDataList,layout," +
+		"messageBoard,repository,wiki";
+
 	private static final int _PIPE_BUFFER_SIZE = 16 * 1024 * 1024;
 
 	private static final String _TPL_ROOT =
@@ -543,15 +527,6 @@ public class SampleSQLBuilder {
 	private boolean _outputMerge;
 	private File _tempDir;
 	private String _tplSample = _TPL_ROOT + "sample.ftl";
-	private Writer _writerAssetPublisherCSV;
-	private Writer _writerBlogsCSV;
-	private Writer _writerCompanyCSV;
-	private Writer _writerDocumentLibraryCSV;
-	private Writer _writerDynamicDataListsCSV;
-	private Writer _writerLayoutCSV;
-	private Writer _writerMessageBoardsCSV;
-	private Writer _writerRepositoryCSV;
 	private Writer _writerSampleSQL;
-	private Writer _writerWikiCSV;
 
 }

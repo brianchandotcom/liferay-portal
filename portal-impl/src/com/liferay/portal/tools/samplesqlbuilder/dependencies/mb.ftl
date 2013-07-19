@@ -46,7 +46,7 @@
 					/>
 				</#list>
 
-				${writerMessageBoardsCSV.write(mbCategoryModel.categoryId + "," + mbThreadModel.threadId + "," + mbThreadModel.rootMessageId + "\n")}
+				${messageBoardCSVWriter.write(mbCategoryModel.categoryId + "," + mbThreadModel.threadId + "," + mbThreadModel.rootMessageId + "\n")}
 			</#list>
 		</#if>
 	</#list>

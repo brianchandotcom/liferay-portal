@@ -43,7 +43,7 @@
 					_mbThreadId = mbThreadId
 				/>
 
-				${writerWikiCSV.write(wikiNodeModel.nodeId + "," + wikiNodeModel.name + "," + wikiPageModel.resourcePrimKey + "," + wikiPageModel.title + "," + mbThreadId + "," + mbRootMessageId + "\n")}
+				${wikiCSVWriter.write(wikiNodeModel.nodeId + "," + wikiNodeModel.name + "," + wikiPageModel.resourcePrimKey + "," + wikiPageModel.title + "," + mbThreadId + "," + mbRootMessageId + "\n")}
 			</#list>
 		</#if>
 	</#list>

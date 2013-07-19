@@ -117,7 +117,7 @@
 						_entry = dlFileEntryMetadataModel
 					/>
 
-					${writerDocumentLibraryCSV.write(dlFolderModel.folderId + "," + dlFileEntryModel.name + "," + dlFileEntryModel.fileEntryId + "," + dataFactory.getDateLong(dlFileEntryModel.createDate) + "," + dataFactory.getDateLong(dlFolderModel.createDate) + "\n")}
+					${documentLibraryCSVWriter.write(dlFolderModel.folderId + "," + dlFileEntryModel.name + "," + dlFileEntryModel.fileEntryId + "," + dataFactory.getDateLong(dlFileEntryModel.createDate) + "," + dataFactory.getDateLong(dlFolderModel.createDate) + "\n")}
 				</#list>
 			</#if>
 

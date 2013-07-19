@@ -3,7 +3,7 @@
 
 	<#assign layoutModel = dataFactory.newLayoutModel(groupId, groupId + "_asset_publisher_" + pageCount, "", portletId)>
 
-	${writerAssetPublisherCSV.write(layoutModel.friendlyURL + "\n")}
+	${assetPublisherCSVWriter.write(layoutModel.friendlyURL + "\n")}
 
 	<@insertLayout
 		_layoutModel = layoutModel

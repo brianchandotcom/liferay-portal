@@ -21,6 +21,7 @@ import com.sun.syndication.feed.synd.SyndEntry;
 
 import java.util.Date;
 import java.util.List;
+
 public interface RSSRenderer {
 
 	public String getAlternateURL() throws PortalException, SystemException;

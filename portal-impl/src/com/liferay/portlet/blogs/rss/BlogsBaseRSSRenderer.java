@@ -44,11 +44,11 @@ public abstract class BlogsBaseRSSRenderer
 	public BlogsBaseRSSRenderer(
 		List<BlogsEntry> blogsEntries, HttpServletRequest request) {
 
-		this._blogsEntries = blogsEntries;
-		this._request = request;
-		this._themeDisplay = (ThemeDisplay)request.getAttribute(
+		_blogsEntries = blogsEntries;
+		_request = request;
+		_themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
-		this._displayStyle = ParamUtil.getString(
+		_displayStyle = ParamUtil.getString(
 			request, "displayStyle", RSSUtil.DISPLAY_STYLE_DEFAULT);;
 	}
 

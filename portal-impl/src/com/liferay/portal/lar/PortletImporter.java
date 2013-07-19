@@ -787,17 +787,16 @@ public class PortletImporter {
 						assetCategory.getDescriptionMap(), assetVocabularyId,
 						properties, serviceContext);
 			}
+			else if (portletDataContext.isCompanyStagedGroupedModel(
+						existingAssetCategory)) {
+
+				return;
+			}
 			else {
 				String name = getAssetCategoryName(
 					assetCategory.getUuid(), assetCategory.getGroupId(),
 					parentAssetCategoryId, assetCategory.getName(),
 					assetCategory.getVocabularyId(), 2);
-
-				if (portletDataContext.isCompanyStagedGroupedModel(
-						existingAssetCategory)) {
-
-					return;
-				}
 
 				importedAssetCategory =
 					AssetCategoryLocalServiceUtil.updateCategory(
@@ -943,16 +942,15 @@ public class PortletImporter {
 					assetVocabulary.getDescriptionMap(),
 					assetVocabulary.getSettings(), serviceContext);
 		}
+		else if (portletDataContext.isCompanyStagedGroupedModel(
+					existingAssetVocabulary)) {
+
+			return;
+		}
 		else {
 			String name = getAssetVocabularyName(
 				assetVocabulary.getUuid(), groupId, assetVocabulary.getName(),
 				2);
-
-			if (portletDataContext.isCompanyStagedGroupedModel(
-					existingAssetVocabulary)) {
-
-				return;
-			}
 
 			importedAssetVocabulary =
 				AssetVocabularyLocalServiceUtil.updateVocabulary(

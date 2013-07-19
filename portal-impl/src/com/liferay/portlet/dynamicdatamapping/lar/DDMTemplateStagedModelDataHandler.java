@@ -105,16 +105,20 @@ public class DDMTemplateStagedModelDataHandler
 			PortletDataContext portletDataContext, DDMTemplate template)
 		throws Exception {
 
+		Element templateElement = portletDataContext.getExportDataElement(
+			template);
+
 		DDMStructure structure = DDMStructureLocalServiceUtil.fetchStructure(
 			template.getClassPK());
 
 		if (structure != null) {
 			StagedModelDataHandlerUtil.exportStagedModel(
 				portletDataContext, structure);
-		}
 
-		Element templateElement = portletDataContext.getExportDataElement(
-			template);
+			portletDataContext.addReferenceElement(
+				template, templateElement, structure,
+				PortletDataContext.REFERENCE_TYPE_STRONG, false);
+		}
 
 		if (template.isSmallImage()) {
 			Image smallImage = ImageLocalServiceUtil.fetchImage(
@@ -168,21 +172,15 @@ public class DDMTemplateStagedModelDataHandler
 
 		long userId = portletDataContext.getUserId(template.getUserUuid());
 
+		Element structureElement = portletDataContext.getReferenceDataElement(
+			template, DDMStructure.class, template.getClassPK());
+
+		StagedModelDataHandlerUtil.importStagedModel(
+			portletDataContext, structureElement);
+
 		Map<Long, Long> structureIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				DDMStructure.class);
-
-		String structurePath = ExportImportPathUtil.getModelPath(
-			portletDataContext, DDMStructure.class.getName(),
-			template.getClassPK());
-
-		DDMStructure structure =
-			(DDMStructure)portletDataContext.getZipEntryAsObject(structurePath);
-
-		if (structure != null) {
-			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, structure);
-		}
 
 		long classPK = MapUtil.getLong(
 			structureIds, template.getClassPK(), template.getClassPK());
@@ -233,11 +231,24 @@ public class DDMTemplateStagedModelDataHandler
 							portletDataContext.getScopeGroupId());
 
 				if (existingTemplate == null) {
+					existingTemplate =
+						DDMTemplateLocalServiceUtil.
+							fetchDDMTemplateByUuidAndGroupId(
+								template.getUuid(),
+								portletDataContext.getCompanyGroupId());
+				}
+
+				if (existingTemplate == null) {
 					serviceContext.setUuid(template.getUuid());
 
 					importedTemplate = addTemplate(
 						userId, portletDataContext.getScopeGroupId(), template,
 						classPK, smallFile, serviceContext);
+				}
+				else if (portletDataContext.isCompanyStagedGroupedModel(
+							existingTemplate)) {
+
+					return;
 				}
 				else {
 					importedTemplate =

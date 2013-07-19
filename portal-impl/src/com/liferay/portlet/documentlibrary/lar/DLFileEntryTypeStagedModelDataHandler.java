@@ -133,13 +133,12 @@ public class DLFileEntryTypeStagedModelDataHandler
 						fileEntryType.getDescriptionMap(), ddmStructureIdsArray,
 						serviceContext);
 			}
-			else {
-				if (portletDataContext.isCompanyStagedGroupedModel(
+			else if (portletDataContext.isCompanyStagedGroupedModel(
 						existingDLFileEntryType)) {
 
-					return;
-				}
-
+				return;
+			}
+			else {
 				DLFileEntryTypeLocalServiceUtil.updateFileEntryType(
 					userId, existingDLFileEntryType.getFileEntryTypeId(),
 					fileEntryType.getNameMap(),

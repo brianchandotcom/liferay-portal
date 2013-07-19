@@ -120,6 +120,10 @@ public class JournalArticleStagedModelDataHandler
 
 			StagedModelDataHandlerUtil.exportStagedModel(
 				portletDataContext, article.getFolder());
+
+			portletDataContext.addReferenceElement(
+				article, articleElement, article.getFolder(),
+				PortletDataContext.REFERENCE_TYPE_STRONG, false);
 		}
 
 		if (Validator.isNotNull(article.getStructureId())) {
@@ -231,16 +235,12 @@ public class JournalArticleStagedModelDataHandler
 		if (article.getFolderId() !=
 				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
-			String folderPath = ExportImportPathUtil.getModelPath(
-				portletDataContext, JournalFolder.class.getName(),
-				article.getFolderId());
-
-			JournalFolder folder =
-				(JournalFolder)portletDataContext.getZipEntryAsObject(
-					folderPath);
+			Element folderElement =
+				portletDataContext.getReferenceDataElement(
+					article, JournalFolder.class, article.getFolderId());
 
 			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, folder);
+				portletDataContext, folderElement);
 		}
 
 		long folderId = MapUtil.getLong(
@@ -624,13 +624,12 @@ public class JournalArticleStagedModelDataHandler
 							article.isSmallImage(), article.getSmallImageURL(),
 							smallFile, images, articleURL, serviceContext);
 				}
-				else {
-					if (portletDataContext.isCompanyStagedGroupedModel(
+				else if (portletDataContext.isCompanyStagedGroupedModel(
 							existingArticle)) {
 
-						return;
-					}
-
+					return;
+				}
+				else {
 					importedArticle =
 						JournalArticleLocalServiceUtil.updateArticle(
 							userId, existingArticle.getGroupId(), folderId,

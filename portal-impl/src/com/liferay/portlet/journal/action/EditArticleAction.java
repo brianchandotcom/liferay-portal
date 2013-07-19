@@ -760,11 +760,26 @@ public class EditArticleAction extends PortletAction {
 			}
 			else {
 				if (curArticle.isTemplateDriven()) {
-					DDMStructure ddmStructure =
-						DDMStructureLocalServiceUtil.getStructure(
-							groupId,
-							PortalUtil.getClassNameId(JournalArticle.class),
-							structureId);
+					DDMStructure ddmStructure = null;
+
+					try {
+						ddmStructure =
+							DDMStructureLocalServiceUtil.getStructure(
+								groupId,
+								PortalUtil.getClassNameId(JournalArticle.class),
+								structureId);
+					}
+					catch (NoSuchStructureException nsse) {
+						ThemeDisplay themeDisplay =
+							(ThemeDisplay)actionRequest.getAttribute(
+								WebKeys.THEME_DISPLAY);
+
+						ddmStructure =
+							DDMStructureLocalServiceUtil.getStructure(
+								themeDisplay.getCompanyGroupId(),
+								PortalUtil.getClassNameId(JournalArticle.class),
+								structureId);
+					}
 
 					Fields newFields = DDMUtil.getFields(
 						ddmStructure.getStructureId(), serviceContext);

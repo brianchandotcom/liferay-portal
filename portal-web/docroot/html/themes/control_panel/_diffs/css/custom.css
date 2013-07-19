@@ -662,7 +662,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 		}
 
 		.accordion .accordion-group {
-			@inclucd border-radius(0);
+			@include border-radius(0);
 			@include box-shadow(-3px 0px 2px -2px #F5F5F5);
 
 			.accordion-heading {

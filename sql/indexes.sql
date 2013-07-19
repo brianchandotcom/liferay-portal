@@ -297,6 +297,9 @@ create index IX_CBC408D8 on DLFolder (uuid_);
 create index IX_DA448450 on DLFolder (uuid_, companyId);
 create unique index IX_3CC1DED2 on DLFolder (uuid_, groupId);
 
+create index IX_21D2FEA8 on DLSyncEvent (modifiedDate);
+create unique index IX_57D55A46 on DLSyncEvent (typeId);
+
 create index IX_1BB072CA on EmailAddress (companyId);
 create index IX_49D2DEC4 on EmailAddress (companyId, classNameId);
 create index IX_551A519F on EmailAddress (companyId, classNameId, classPK);

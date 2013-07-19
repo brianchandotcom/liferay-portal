@@ -182,7 +182,9 @@ public interface DLAppHelperLocalService extends BaseLocalService {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public void moveFolder(
-		com.liferay.portal.kernel.repository.model.Folder folder);
+		com.liferay.portal.kernel.repository.model.Folder folder)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portal.kernel.repository.model.Folder moveFolderFromTrash(
 		long userId, com.liferay.portal.kernel.repository.model.Folder folder,

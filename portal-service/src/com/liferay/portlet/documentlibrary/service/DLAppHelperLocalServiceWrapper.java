@@ -233,7 +233,9 @@ public class DLAppHelperLocalServiceWrapper implements DLAppHelperLocalService,
 
 	@Override
 	public void moveFolder(
-		com.liferay.portal.kernel.repository.model.Folder folder) {
+		com.liferay.portal.kernel.repository.model.Folder folder)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		_dlAppHelperLocalService.moveFolder(folder);
 	}
 

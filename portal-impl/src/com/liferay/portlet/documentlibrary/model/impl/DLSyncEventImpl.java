@@ -12,27 +12,14 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.model;
+package com.liferay.portlet.documentlibrary.model.impl;
 
 /**
- * @author Michael Young
+ * @author Brian Wing Shun Chan
  */
-public class DLSyncConstants {
+public class DLSyncEventImpl extends DLSyncEventBaseImpl {
 
-	public static final String EVENT_ADD = "add";
-
-	public static final String EVENT_DELETE = "delete";
-
-	public static final String EVENT_GET = "get";
-
-	public static final String EVENT_MOVE = "move";
-
-	public static final String EVENT_RESTORE = "restore";
-
-	public static final String EVENT_UPDATE = "update";
-
-	public static final String TYPE_FILE = "file";
-
-	public static final String TYPE_FOLDER = "folder";
+	public DLSyncEventImpl() {
+	}
 
 }

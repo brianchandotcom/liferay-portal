@@ -102,6 +102,7 @@
 	<import class="com.liferay.portlet.documentlibrary.model.DLFileShortcut" />
 	<import class="com.liferay.portlet.documentlibrary.model.DLFileVersion" />
 	<import class="com.liferay.portlet.documentlibrary.model.DLFolder" />
+	<import class="com.liferay.portlet.documentlibrary.model.DLSyncEvent" />
 	<import class="com.liferay.portlet.dynamicdatalists.model.DDLRecord" />
 	<import class="com.liferay.portlet.dynamicdatalists.model.DDLRecordSet" />
 	<import class="com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion" />
@@ -1667,6 +1668,16 @@
 		<property name="statusByUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="statusByUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="statusDate" type="org.hibernate.type.TimestampType" />
+	</class>
+	<class name="com.liferay.portlet.documentlibrary.model.impl.DLSyncEventImpl" table="DLSyncEvent">
+		<cache usage="read-write" />
+		<id name="syncEventId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="modifiedDate" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="typeId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="type" type="com.liferay.portal.dao.orm.hibernate.StringType" column="type_" />
+		<property name="event" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="com.liferay.portlet.dynamicdatalists.model.impl.DDLRecordImpl" table="DDLRecord">
 		<cache usage="read-write" />

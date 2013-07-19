@@ -12,27 +12,29 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.model;
+package com.liferay.portlet.documentlibrary;
+
+import com.liferay.portal.NoSuchModelException;
 
 /**
- * @author Michael Young
+ * @author Brian Wing Shun Chan
  */
-public class DLSyncConstants {
+public class NoSuchSyncEventException extends NoSuchModelException {
 
-	public static final String EVENT_ADD = "add";
+	public NoSuchSyncEventException() {
+		super();
+	}
 
-	public static final String EVENT_DELETE = "delete";
+	public NoSuchSyncEventException(String msg) {
+		super(msg);
+	}
 
-	public static final String EVENT_GET = "get";
+	public NoSuchSyncEventException(String msg, Throwable cause) {
+		super(msg, cause);
+	}
 
-	public static final String EVENT_MOVE = "move";
-
-	public static final String EVENT_RESTORE = "restore";
-
-	public static final String EVENT_UPDATE = "update";
-
-	public static final String TYPE_FILE = "file";
-
-	public static final String TYPE_FOLDER = "folder";
+	public NoSuchSyncEventException(Throwable cause) {
+		super(cause);
+	}
 
 }

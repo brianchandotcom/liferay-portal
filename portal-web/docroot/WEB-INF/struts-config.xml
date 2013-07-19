@@ -1039,6 +1039,8 @@
 			<forward name="portlet.layouts_admin.export_layouts" path="portlet.layouts_admin.export_layouts" />
 		</action>
 
+		<action path="/layouts_admin/get_background_task_attachment" type="com.liferay.portlet.backgroundtask.action.GetBackgroundTaskAttachmentAction" />
+
 		<action path="/layouts_admin/get_layouts" type="com.liferay.portlet.layoutsadmin.action.GetLayoutsAction" />
 
 		<action path="/layouts_admin/import_layouts" type="com.liferay.portlet.layoutsadmin.action.ImportLayoutsAction">

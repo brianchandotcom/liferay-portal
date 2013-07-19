@@ -41,20 +41,7 @@ public class AbsoluteRedirectsResponse extends HttpServletResponseWrapper {
 
 	@Override
 	public void sendRedirect(String redirect) throws IOException {
-		String portalURL = PortalUtil.getPortalURL(_request);
-
-		if (redirect.charAt(0) == CharPool.SLASH) {
-			if (Validator.isNotNull(portalURL)) {
-				redirect = portalURL.concat(redirect);
-			}
-		}
-
-		if (!CookieKeys.hasSessionId(_request) &&
-			redirect.startsWith(portalURL)) {
-
-			redirect = PortalUtil.getURLWithSessionId(
-				redirect, _request.getSession().getId());
-		}
+		redirect = PortalUtil.getAbsoluteURL(_request, redirect);
 
 		_request.setAttribute(
 			AbsoluteRedirectsResponse.class.getName(), redirect);

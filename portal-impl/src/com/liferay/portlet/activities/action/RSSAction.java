@@ -100,34 +100,6 @@ public class RSSAction extends com.liferay.portal.struts.RSSAction {
 		return RSSUtil.export(syndFeed);
 	}
 
-	protected List<SocialActivity> getActivities(
-			PortletRequest portletRequest, int max)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		Group group = GroupLocalServiceUtil.getGroup(
-			themeDisplay.getScopeGroupId());
-
-		int start = 0;
-
-		if (group.isOrganization()) {
-			return SocialActivityLocalServiceUtil.getOrganizationActivities(
-				group.getOrganizationId(), start, max);
-		}
-		else if (group.isRegularSite()) {
-			return SocialActivityLocalServiceUtil.getGroupActivities(
-				group.getGroupId(), start, max);
-		}
-		else if (group.isUser()) {
-			return SocialActivityLocalServiceUtil.getUserActivities(
-				group.getClassPK(), start, max);
-		}
-
-		return Collections.emptyList();
-	}
-
 	@Override
 	protected byte[] getRSS(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)

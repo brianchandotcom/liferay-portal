@@ -35,7 +35,6 @@ import com.liferay.portlet.social.model.SocialActivityFeedEntry;
 import com.liferay.portlet.social.service.SocialActivityInterpreterLocalServiceUtil;
 import com.liferay.portlet.social.service.SocialActivityLocalServiceUtil;
 import com.liferay.util.RSSUtil;
-
 import com.sun.syndication.feed.synd.SyndContent;
 import com.sun.syndication.feed.synd.SyndContentImpl;
 import com.sun.syndication.feed.synd.SyndEntry;
@@ -94,5 +93,33 @@ public class ActivitiesRSSRenderer extends DefaultRSSRenderer {
 		}
 
 	}
+	
+	protected List<SocialActivity> getActivities(
+		PortletRequest portletRequest, int max)
+		throws Exception {
 
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay) portletRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
+		Group group =
+			GroupLocalServiceUtil.getGroup(themeDisplay.getScopeGroupId());
+
+		int start = 0;
+
+		if (group.isOrganization()) {
+			return SocialActivityLocalServiceUtil.getOrganizationActivities(
+				group.getOrganizationId(), start, max);
+		}
+		else if (group.isRegularSite()) {
+			return SocialActivityLocalServiceUtil.getGroupActivities(
+				group.getGroupId(), start, max);
+		}
+		else if (group.isUser()) {
+			return SocialActivityLocalServiceUtil.getUserActivities(
+				group.getClassPK(), start, max);
+		}
+
+		return Collections.emptyList();
+	}
+	
 }

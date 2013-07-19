@@ -45,6 +45,19 @@ import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 public class WikiRSSRenderer extends DefaultRSSRenderer {
 
+	public WikiRSSRenderer(
+		HttpServletRequest request, List<WikiPage> pagesToExport,
+		boolean diff) {
+
+		super(request);
+		this._pages = pagesToExport;
+		this._diff = diff;
+		_themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+		this._request = request;
+		_nodeId = ParamUtil.getLong(request, "nodeId");
+	}
+
 	@Override
 	public String getFeedURL() throws PortalException, SystemException {
 
@@ -183,5 +196,11 @@ public class WikiRSSRenderer extends DefaultRSSRenderer {
 			latestPage = page;
 		}
 	}
+
+	private boolean _diff;
+	private long _nodeId;
+	private List<WikiPage> _pages;
+	private HttpServletRequest _request;
+	private ThemeDisplay _themeDisplay;
 
 }

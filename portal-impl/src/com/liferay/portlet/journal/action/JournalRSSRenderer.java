@@ -64,6 +64,16 @@ import javax.portlet.ResourceResponse;
 import javax.portlet.ResourceURL;
 public class JournalRSSRenderer extends DefaultRSSRenderer {
 
+	ThemeDisplay themeDisplay;
+	public JournalRSSRenderer(
+		ResourceRequest request, ResourceResponse response) {
+
+		super(PortalUtil.getHttpServletRequest(request));
+		this._request = request;
+		this._response = response;
+		themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+	}
 
 	@Override
 	public String getFeedURL() throws PortalException, SystemException {
@@ -95,6 +105,26 @@ public class JournalRSSRenderer extends DefaultRSSRenderer {
 	@Override
 	public void populateFeedEntries(List<? super SyndEntry> syndEntries)
 		throws PortalException, SystemException {
+
+		JournalFeed feed = getJournalFeed();
+
+		String languageId = LanguageUtil.getLanguageId(_request);
+
+		long plid = PortalUtil.getPlidFromFriendlyURL(
+			themeDisplay.getCompanyId(), feed.getTargetLayoutFriendlyUrl());
+
+		Layout layout = themeDisplay.getLayout();
+
+		if (plid > 0) {
+			try {
+				layout = LayoutLocalServiceUtil.getLayout(plid);
+			}
+			catch (NoSuchLayoutException nsle) {
+			}
+		}
+
+		List<JournalArticle> articles;
+		articles = JournalRSSUtil.getArticles(feed);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Syndicating " + articles.size() + " articles");
@@ -321,5 +351,8 @@ public class JournalRSSRenderer extends DefaultRSSRenderer {
 			"</parameter></parameters></request>";
 
 	private static Log _log = LogFactoryUtil.getLog(JournalRSSRenderer.class);
+
+	private ResourceRequest _request;
+	private ResourceResponse _response;
 
 }

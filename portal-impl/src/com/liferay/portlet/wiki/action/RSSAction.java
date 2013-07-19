@@ -54,23 +54,6 @@ public class RSSAction extends com.liferay.portal.struts.RSSAction {
 		String displayStyle = ParamUtil.getString(
 			request, "displayStyle", RSSUtil.DISPLAY_STYLE_DEFAULT);
 
-		String layoutFullURL = PortalUtil.getLayoutFullURL(
-			themeDisplay.getScopeGroupId(), PortletKeys.WIKI);
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(layoutFullURL);
-		sb.append(Portal.FRIENDLY_URL_SEPARATOR);
-		sb.append("wiki/");
-		sb.append(nodeId);
-
-		String feedURL = sb.toString();
-
-		String entryURL = feedURL + StringPool.SLASH + title;
-
-		Locale locale = themeDisplay.getLocale();
-
-		String rss = StringPool.BLANK;
 
 		if (nodeId > 0) {
 			String attachmentURLPrefix = WikiUtil.getAttachmentURLPrefix(

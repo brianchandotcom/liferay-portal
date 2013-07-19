@@ -73,7 +73,84 @@ public abstract class DefaultRSSAction extends RSSAction {
 	}
 
 	private String exportToRSS(RSSRenderer rssRenderer) throws Exception {
-		
+		SyndFeed syndFeed = new SyndFeedImpl();
+
+		syndFeed.setDescription(GetterUtil.getString(description, title));
+
+		List<SyndEntry> syndEntries = new ArrayList<SyndEntry>();
+
+		syndFeed.setEntries(syndEntries);
+
+		for (SocialActivity activity : activities) {
+			SocialActivityFeedEntry activityFeedEntry =
+				SocialActivityInterpreterLocalServiceUtil.interpret(
+					StringPool.BLANK, activity, serviceContext);
+
+			if (activityFeedEntry == null) {
+				continue;
+			}
+
+			SyndEntry syndEntry = new SyndEntryImpl();
+
+			SyndContent syndContent = new SyndContentImpl();
+
+			syndContent.setType(RSSUtil.ENTRY_TYPE_DEFAULT);
+
+			String value = null;
+
+			if (displayStyle.equals(RSSUtil.DISPLAY_STYLE_TITLE)) {
+				value = StringPool.BLANK;
+			}
+			else {
+				value = activityFeedEntry.getBody();
+			}
+
+			syndContent.setValue(value);
+
+			syndEntry.setDescription(syndContent);
+
+			if (Validator.isNotNull(activityFeedEntry.getLink())) {
+				syndEntry.setLink(activityFeedEntry.getLink());
+			}
+
+			syndEntry.setPublishedDate(new Date(activity.getCreateDate()));
+			syndEntry.setTitle(
+				HtmlUtil.extractText(activityFeedEntry.getTitle()));
+			syndEntry.setUri(syndEntry.getLink());
+
+			syndEntries.add(syndEntry);
+		}
+
+		syndFeed.setFeedType(RSSUtil.getFeedType(format, version));
+
+		List<SyndLink> syndLinks = new ArrayList<SyndLink>();
+
+		syndFeed.setLinks(syndLinks);
+
+		SyndLink selfSyndLink = new SyndLinkImpl();
+
+		syndLinks.add(selfSyndLink);
+
+		String link =
+			PortalUtil.getLayoutFullURL(themeDisplay) +
+				Portal.FRIENDLY_URL_SEPARATOR + "activities/rss";
+
+		selfSyndLink.setHref(link);
+
+		selfSyndLink.setRel("self");
+
+		SyndLink alternateSyndLink = new SyndLinkImpl();
+
+		syndLinks.add(alternateSyndLink);
+
+		alternateSyndLink.setHref(PortalUtil.getLayoutFullURL(themeDisplay));
+		alternateSyndLink.setRel("alternate");
+
+		syndFeed.setPublishedDate(new Date());
+		syndFeed.setTitle(title);
+		syndFeed.setUri(link);
+
+		return RSSUtil.export(syndFeed);
 	}
 
 }

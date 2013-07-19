@@ -54,10 +54,10 @@ public class AssetRSSRenderer extends DefaultRSSRenderer {
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
 		super(PortalUtil.getHttpServletRequest(portletRequest));
-		this._portletRequest = portletRequest;
-		this._portletResponse = portletResponse;
-		this._portletPreferences = portletRequest.getPreferences();
-		this._themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+		_portletRequest = portletRequest;
+		_portletResponse = portletResponse;
+		_portletPreferences = portletRequest.getPreferences();
+		_themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 	}

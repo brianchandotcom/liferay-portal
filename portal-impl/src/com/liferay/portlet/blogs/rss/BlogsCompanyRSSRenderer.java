@@ -30,7 +30,7 @@ public class BlogsCompanyRSSRenderer extends BlogsBaseRSSRenderer {
 		HttpServletRequest request) {
 
 		super(blogsEntries, request);
-		this._company = company;
+		_company = company;
 	}
 
 	@Override

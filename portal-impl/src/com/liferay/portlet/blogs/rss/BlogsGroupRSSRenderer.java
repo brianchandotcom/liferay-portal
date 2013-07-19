@@ -39,9 +39,9 @@ public class BlogsGroupRSSRenderer extends BlogsBaseRSSRenderer {
 		boolean isScopeGroup) {
 
 		super(blogsEntries, request);
-		this._group = group;
-		this._isScopeGroup = isScopeGroup;
-		this._plid = ParamUtil.getLong(getRequest(), "p_l_id");
+		_group = group;
+		_isScopeGroup = isScopeGroup;
+		_plid = ParamUtil.getLong(getRequest(), "p_l_id");
 	}
 
 	@Override

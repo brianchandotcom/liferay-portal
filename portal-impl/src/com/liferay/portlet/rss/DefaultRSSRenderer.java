@@ -32,8 +32,8 @@ public abstract class DefaultRSSRenderer implements RSSRenderer {
 
 	public DefaultRSSRenderer(HttpServletRequest request) {
 
-		this._request = request;
-		this._themeDisplay = (ThemeDisplay)request.getAttribute(
+		_request = request;
+		_themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
 

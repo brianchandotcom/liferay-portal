@@ -69,8 +69,8 @@ public class JournalRSSRenderer extends DefaultRSSRenderer {
 		ResourceRequest request, ResourceResponse response) {
 
 		super(PortalUtil.getHttpServletRequest(request));
-		this._request = request;
-		this._response = response;
+		_request = request;
+		_response = response;
 		themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}

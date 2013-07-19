@@ -51,55 +51,6 @@ import com.sun.syndication.feed.synd.SyndLinkImpl;
  */
 public class RSSAction extends com.liferay.portal.struts.RSSAction {
 
-	protected String exportToRSS(
-			PortletRequest portletRequest, String title, String description,
-			String format, double version, String displayStyle,
-			List<SocialActivity> activities, ServiceContext serviceContext)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		SyndFeed syndFeed = new SyndFeedImpl();
-
-		syndFeed.setDescription(GetterUtil.getString(description, title));
-
-		List<SyndEntry> syndEntries = new ArrayList<SyndEntry>();
-
-		syndFeed.setEntries(syndEntries);
-
-		syndFeed.setFeedType(RSSUtil.getFeedType(format, version));
-
-		List<SyndLink> syndLinks = new ArrayList<SyndLink>();
-
-		syndFeed.setLinks(syndLinks);
-
-		SyndLink selfSyndLink = new SyndLinkImpl();
-
-		syndLinks.add(selfSyndLink);
-
-		String link =
-			PortalUtil.getLayoutFullURL(themeDisplay) +
-				Portal.FRIENDLY_URL_SEPARATOR + "activities/rss";
-
-		selfSyndLink.setHref(link);
-
-		selfSyndLink.setRel("self");
-
-		SyndLink alternateSyndLink = new SyndLinkImpl();
-
-		syndLinks.add(alternateSyndLink);
-
-		alternateSyndLink.setHref(PortalUtil.getLayoutFullURL(themeDisplay));
-		alternateSyndLink.setRel("alternate");
-
-		syndFeed.setPublishedDate(new Date());
-		syndFeed.setTitle(title);
-		syndFeed.setUri(link);
-
-		return RSSUtil.export(syndFeed);
-	}
-
 	@Override
 	protected byte[] getRSS(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)

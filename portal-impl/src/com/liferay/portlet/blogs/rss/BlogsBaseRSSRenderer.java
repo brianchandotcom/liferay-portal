@@ -41,6 +41,16 @@ import javax.servlet.http.HttpServletRequest;
 public abstract class BlogsBaseRSSRenderer
 	implements com.liferay.portlet.rss.RSSRenderer {
 
+	public BlogsBaseRSSRenderer(
+		List<BlogsEntry> blogsEntries, HttpServletRequest request) {
+
+		this._blogsEntries = blogsEntries;
+		this._request = request;
+		this._themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+		this._displayStyle = ParamUtil.getString(
+			request, "displayStyle", RSSUtil.DISPLAY_STYLE_DEFAULT);;
+	}
 
 	@Override
 	public String getAlternateURL() throws PortalException, SystemException {
@@ -177,5 +187,10 @@ public abstract class BlogsBaseRSSRenderer
 		}
 
 	}
+
+	private List<BlogsEntry> _blogsEntries;
+	private String _displayStyle;
+	private HttpServletRequest _request;
+	private ThemeDisplay _themeDisplay;
 
 }

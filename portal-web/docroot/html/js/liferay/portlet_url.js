@@ -251,12 +251,13 @@ AUI.add(
 					resultURL.setProtocol('https');
 				}
 
+				var value = resultURL.toString();
+
 				if (options.escapeXML) {
-					return Util.escapeHTML(resultURL.toString());
+					value = Util.escapeHTML(value);
 				}
-				else {
-					return resultURL.toString();
-				}
+
+				return value;
 			},
 
 			_isReservedParam: function(paramName) {

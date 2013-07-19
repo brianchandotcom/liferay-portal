@@ -15,10 +15,6 @@
 --%>
 
 <aui:script use="liferay-portlet-dynamic-data-lists">
-	var SpreadSheet = Liferay.SpreadSheet;
-
-	var STR_EMPTY = '';
-
 	var DEFAULTS_FORM_VALIDATOR = A.config.FormValidator;
 
 	DEFAULTS_FORM_VALIDATOR.RULES.requiredFields = function(value) {

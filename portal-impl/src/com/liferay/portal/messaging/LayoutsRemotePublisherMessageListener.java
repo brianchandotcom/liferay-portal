@@ -105,6 +105,10 @@ public class LayoutsRemotePublisherMessageListener
 				Date scheduledFireTime =
 					publisherRequest.getScheduledFireTime();
 
+				if (scheduledFireTime == null) {
+					scheduledFireTime = new Date();
+				}
+
 				startDate = new Date(
 					scheduledFireTime.getTime() - (last * Time.HOUR));
 

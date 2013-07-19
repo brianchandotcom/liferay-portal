@@ -7,7 +7,9 @@ AUI.add(
 
 		var REGEX_LAYOUT_ID = /layoutId_(\d+)/;
 
-		var RENDER_INTERVAL = 3000;
+		var RENDER_INTERVAL_IDLE = 60000;
+
+		var RENDER_INTERVAL_IN_PROGRESS = 2000;
 
 		var STR_CHECKED = 'checked';
 
@@ -63,7 +65,7 @@ AUI.add(
 
 						instance._processesResourceURL = config.processesResourceURL;
 
-						A.later(RENDER_INTERVAL, instance, instance._renderProcesses);
+						A.later(RENDER_INTERVAL_IN_PROGRESS, instance, instance._renderProcesses);
 					},
 
 					destructor: function() {
@@ -845,7 +847,13 @@ AUI.add(
 
 											processesNode.setContent(this.get('responseData'));
 
-											A.later(RENDER_INTERVAL, instance, instance._renderProcesses);
+											var renderInterval = RENDER_INTERVAL_IDLE;
+
+											if (processesNode.one(".background-task-status-in-progress")) {
+												renderInterval = RENDER_INTERVAL_IN_PROGRESS;
+											}
+
+											A.later(renderInterval, instance, instance._renderProcesses);
 										}
 									}
 								}

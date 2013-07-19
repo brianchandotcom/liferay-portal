@@ -50,6 +50,7 @@ OrderByComparator orderByComparator = BackgroundTaskUtil.getBackgroundTaskOrderB
 
 	<liferay-ui:search-container-row
 		className="com.liferay.portal.model.BackgroundTask"
+		keyProperty="backgroundTaskId"
 		modelVar="backgroundTask"
 	>
 		<liferay-ui:search-container-column-text

@@ -14,12 +14,12 @@
 
 package com.liferay.portlet.assetpublisher.action;
 
+import com.liferay.portlet.rss.RSSRenderer;
+import com.liferay.portlet.rss.action.DefaultRSSAction;
+
 import javax.portlet.PortletPreferences;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
-
-import com.liferay.portlet.rss.RSSRenderer;
-import com.liferay.portlet.rss.action.DefaultRSSAction;
 
 /**
  * @author Brian Wing Shun Chan
@@ -27,30 +27,29 @@ import com.liferay.portlet.rss.action.DefaultRSSAction;
  */
 public class RSSAction extends DefaultRSSAction {
 
+	@Override
+	protected RSSRenderer createRSSRenderer(
+			ResourceRequest portletRequest, ResourceResponse portletResponse)
+		throws Exception {
+
+		return new AssetRSSRenderer(portletRequest, portletResponse);
+	}
 
 	@Override
 	protected byte[] getRSS(
-		ResourceRequest portletRequest, ResourceResponse portletResponse)
+			ResourceRequest portletRequest, ResourceResponse portletResponse)
 		throws Exception {
-		
+
 		PortletPreferences portletPreferences = portletRequest.getPreferences();
-		
+
 		String selectionStyle = portletPreferences.getValue(
 			"selectionStyle", "dynamic");
-	
+
 		if (!selectionStyle.equals("dynamic")) {
 			return new byte[0];
 		}
-		
+
 		return super.getRSS(portletRequest, portletResponse);
-	}
-	
-	@Override
-	protected RSSRenderer createRSSRenderer(
-		ResourceRequest portletRequest, ResourceResponse portletResponse)
-		throws Exception {
-		
-		return new AssetRSSRenderer(portletRequest, portletResponse);
 	}
 
 }

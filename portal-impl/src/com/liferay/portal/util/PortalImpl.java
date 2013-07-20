@@ -4725,7 +4725,7 @@ public class PortalImpl implements Portal {
 			liveGroup = group.getLiveGroup();
 		}
 
-		if (LanguageUtil.isLocaleInherited(liveGroup.getGroupId())) {
+		if (LanguageUtil.hasInheritedLocales(liveGroup.getGroupId())) {
 			return LocaleUtil.getDefault();
 		}
 

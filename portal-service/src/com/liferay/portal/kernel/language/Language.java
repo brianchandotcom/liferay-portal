@@ -152,7 +152,7 @@ public interface Language {
 
 	public boolean isDuplicateLanguageCode(String languageCode);
 
-	public boolean isLocaleInherited(long groupId)
+	public boolean hasInheritedLocales(long groupId)
 		throws PortalException, SystemException;
 
 	public void resetAvailableGroupLocales(long groupId);

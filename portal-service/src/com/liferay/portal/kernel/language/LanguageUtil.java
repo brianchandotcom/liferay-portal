@@ -294,10 +294,10 @@ public class LanguageUtil {
 		return getLanguage().isDuplicateLanguageCode(languageCode);
 	}
 
-	public static boolean isLocaleInherited(long groupId)
+	public static boolean hasInheritedLocales(long groupId)
 		throws PortalException, SystemException {
 
-		return getLanguage().isLocaleInherited(groupId);
+		return getLanguage().hasInheritedLocales(groupId);
 	}
 
 	public static boolean isValidLanguageKey(Locale locale, String key) {

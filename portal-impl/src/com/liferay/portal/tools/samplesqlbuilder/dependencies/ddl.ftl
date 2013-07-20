@@ -46,7 +46,7 @@
 					_entry = ddlRecordModel
 				/>
 
-				${writerDynamicDataListsCSV.write(ddlRecordModel.groupId + "," + layoutName + "," + portletId + "," + ddlRecordSetModel.recordSetId + "," + ddlRecordModel.recordId + "\n")}
+				${dynamicDataListCSVWriter.write(ddlRecordModel.groupId + "," + layoutName + "," + portletId + "," + ddlRecordSetModel.recordSetId + "," + ddlRecordModel.recordId + "\n")}
 			</#list>
 		</#if>
 

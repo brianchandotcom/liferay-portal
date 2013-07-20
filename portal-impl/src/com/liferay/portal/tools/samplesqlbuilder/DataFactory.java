@@ -183,9 +183,8 @@ import com.liferay.portlet.wiki.social.WikiActivityKeys;
 import com.liferay.util.PwdGenerator;
 import com.liferay.util.SimpleCounter;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 import java.text.Format;
 
@@ -202,8 +201,7 @@ import java.util.Map;
 public class DataFactory {
 
 	public DataFactory(
-			String baseDir, int maxAssetCategoryCount,
-			int maxAssetEntryToAssetCategoryCount,
+			int maxAssetCategoryCount, int maxAssetEntryToAssetCategoryCount,
 			int maxAssetEntryToAssetTagCount,
 			int maxAssetPublisherFilterRuleCount,
 			int maxAssetPublisherPageCount, int maxAssetTagCount,
@@ -214,7 +212,6 @@ public class DataFactory {
 			int maxUserToGroupCount)
 		throws Exception {
 
-		_baseDir = baseDir;
 		_maxAssetCategoryCount = maxAssetCategoryCount;
 		_maxAssetEntryToAssetCategoryCount = maxAssetEntryToAssetCategoryCount;
 		_maxAssetEntryToAssetTagCount = maxAssetEntryToAssetTagCount;
@@ -264,10 +261,7 @@ public class DataFactory {
 		_sampleUserId = _counter.get();
 
 		_dlDDMStructureContent = StringUtil.read(
-			new FileInputStream(
-				new File(
-					_baseDir,
-					_DEPENDENCIES_DIR + "ddm_structure_basic_document.xml")));
+			_getResourceInputStream("ddm_structure_basic_document.xml"));
 
 		initAssetCategoryModels();
 		initAssetTagModels();
@@ -825,10 +819,10 @@ public class DataFactory {
 	}
 
 	public void initUserNames() throws IOException {
-		_firstNames = ListUtil.fromFile(
-			new File(_baseDir, _DEPENDENCIES_DIR + "first_names.txt"));
-		_lastNames = ListUtil.fromFile(
-			new File(_baseDir, _DEPENDENCIES_DIR + "last_names.txt"));
+		_firstNames = ListUtil.fromString(
+			StringUtil.read(_getResourceInputStream("first_names.txt")));
+		_lastNames = ListUtil.fromString(
+			StringUtil.read(_getResourceInputStream("last_names.txt")));
 	}
 
 	public void initVirtualHostModel() {
@@ -2572,11 +2566,21 @@ public class DataFactory {
 			_FUTURE_TIME + (_futureDateCounter.get() * Time.SECOND));
 	}
 
+	private InputStream _getResourceInputStream(String resourceName)
+		throws IOException {
+
+		Class<?> clazz = getClass();
+
+		ClassLoader classLoader = clazz.getClassLoader();
+
+		return classLoader.getResourceAsStream(
+			_DEPENDENCIES_DIR + resourceName);
+	}
+
 	private static final long _CURRENT_TIME = System.currentTimeMillis();
 
 	private static final String _DEPENDENCIES_DIR=
-		"../portal-impl/src/com/liferay/portal/tools/samplesqlbuilder/" +
-			"dependencies/";
+		"com/liferay/portal/tools/samplesqlbuilder/dependencies/";
 
 	private static final long _FUTURE_TIME =
 		System.currentTimeMillis() + Time.YEAR;
@@ -2596,7 +2600,6 @@ public class DataFactory {
 	private List<AssetTagModel>[] _assetTagModelsArray;
 	private List<AssetTagStatsModel>[] _assetTagStatsModelsArray;
 	private List<AssetVocabularyModel>[] _assetVocabularyModelsArray;
-	private String _baseDir;
 	private List<ClassNameModel> _classNameModels;
 	private Map<String, Long> _classNameModelsMap = new HashMap<String, Long>();
 	private long _companyId;

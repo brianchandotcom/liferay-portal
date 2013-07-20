@@ -33,6 +33,6 @@
 			_entry = blogsEntryModel
 		/>
 
-		${writerBlogsCSV.write(blogsEntryModel.entryId + "," + blogsEntryModel.urlTitle + "," + mbThreadId + "," + mbRootMessageId + "\n")}
+		${blogCSVWriter.write(blogsEntryModel.entryId + "," + blogsEntryModel.urlTitle + "," + mbThreadId + "," + mbRootMessageId + "\n")}
 	</#list>
 </#if>

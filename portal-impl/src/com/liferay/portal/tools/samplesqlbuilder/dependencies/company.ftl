@@ -10,4 +10,4 @@ insert into Account_ values (${accountModel.accountId}, ${accountModel.companyId
 
 insert into VirtualHost values (${virtualHostModel.virtualHostId}, ${virtualHostModel.companyId}, ${virtualHostModel.layoutSetId}, '${virtualHostModel.hostname}');
 
-${writerCompanyCSV.write(companyModel.companyId + "\n")}
+${companyCSVWriter.write(companyModel.companyId + "\n")}

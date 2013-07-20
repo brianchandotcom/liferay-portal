@@ -96,12 +96,6 @@ public class LocaleUtil {
 		return getInstance()._getSiteDefault();
 	}
 
-	public static boolean inheritLocales(long groupId)
-		throws PortalException, SystemException {
-
-		return getInstance()._inheritLocales(groupId);
-	}
-
 	public static void setDefault(
 		String userLanguage, String userCountry, String userVariant) {
 
@@ -321,24 +315,6 @@ public class LocaleUtil {
 		}
 
 		return _getDefault();
-	}
-
-	private boolean _inheritLocales(long groupId)
-		throws PortalException, SystemException {
-
-		Group group = GroupLocalServiceUtil.getGroup(groupId);
-
-		Group liveGroup = group;
-
-		if (group.isStagingGroup()) {
-			liveGroup = group.getLiveGroup();
-		}
-
-		UnicodeProperties groupTypeSettings =
-			liveGroup.getTypeSettingsProperties();
-
-		return GetterUtil.getBoolean(
-			groupTypeSettings.getProperty("inheritLocales"), true);
 	}
 
 	private void _setDefault(

@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.InitUtil;
 
 import java.io.File;
@@ -330,12 +329,11 @@ public class SampleSQLBuilder {
 
 					processTemplate(_tplSample, context);
 
-					for (Object value : context.values()) {
-						if (value instanceof Writer) {
-							Writer writer = (Writer)value;
+					for (String fileName : _CSV_FILES) {
+						Writer writer = (Writer)context.get(
+							fileName + "CSVWriter");
 
-							writer.close();
-						}
+						writer.close();
 					}
 
 					_writerSampleSQL.close();
@@ -381,9 +379,7 @@ public class SampleSQLBuilder {
 		put(context, "maxWikiPageCommentCount", _maxWikiPageCommentCount);
 		put(context, "maxWikiPageCount", _maxWikiPageCount);
 
-		String[] csvFiles = StringUtil.split(_CSV_FILES);
-
-		for (String fileName : csvFiles) {
+		for (String fileName : _CSV_FILES) {
 			Writer writer = createFileWriter(
 				new File(_outputDir, fileName + ".csv"));
 
@@ -497,9 +493,9 @@ public class SampleSQLBuilder {
 		writer.write(sql);
 	}
 
-	private static final String _CSV_FILES =
-		"assetPublisher,blog,company,documentLibrary,dynamicDataList,layout," +
-		"messageBoard,repository,wiki";
+	private static final String[] _CSV_FILES =
+		{"assetPublisher", "blog", "company", "documentLibrary",
+			"dynamicDataList", "layout", "messageBoard", "repository", "wiki"};
 
 	private static final int _PIPE_BUFFER_SIZE = 16 * 1024 * 1024;
 

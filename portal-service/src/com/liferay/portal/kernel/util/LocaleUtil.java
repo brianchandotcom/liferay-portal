@@ -14,10 +14,14 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -86,6 +90,16 @@ public class LocaleUtil {
 		Locale locale, Set<String> duplicateLanguages) {
 
 		return getInstance()._getShortDisplayName(locale, duplicateLanguages);
+	}
+
+	public static Locale getSiteDefault() {
+		return getInstance()._getSiteDefault();
+	}
+
+	public static boolean inheritLocales(long groupId)
+		throws PortalException, SystemException {
+
+		return getInstance()._inheritLocales(groupId);
 	}
 
 	public static void setDefault(
@@ -297,6 +311,34 @@ public class LocaleUtil {
 
 		return _getDisplayName(
 			language, country.toUpperCase(), locale, duplicateLanguages);
+	}
+
+	private Locale _getSiteDefault() {
+		Locale locale = LocaleThreadLocal.getSiteDefaultLocale();
+
+		if (locale != null) {
+			return locale;
+		}
+
+		return _getDefault();
+	}
+
+	private boolean _inheritLocales(long groupId)
+		throws PortalException, SystemException {
+
+		Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+		Group liveGroup = group;
+
+		if (group.isStagingGroup()) {
+			liveGroup = group.getLiveGroup();
+		}
+
+		UnicodeProperties groupTypeSettings =
+			liveGroup.getTypeSettingsProperties();
+
+		return GetterUtil.getBoolean(
+			groupTypeSettings.getProperty("inheritLocales"), true);
 	}
 
 	private void _setDefault(

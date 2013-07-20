@@ -1366,6 +1366,12 @@ public class PortalUtil {
 		return getPortal().getSiteAndCompanyGroupIds(themeDisplay);
 	}
 
+	public static Locale getSiteDefaultLocale(long groupId)
+		throws PortalException, SystemException {
+
+		return getPortal().getSiteDefaultLocale(groupId);
+	}
+
 	public static long getSiteGroupId(long scopeGroupId)
 		throws PortalException, SystemException {
 

@@ -258,6 +258,12 @@ public class LanguageUtil {
 		return getLanguage().getTimeDescription(pageContext, milliseconds);
 	}
 
+	public static boolean hasInheritedLocales(long groupId)
+		throws PortalException, SystemException {
+
+		return getLanguage().hasInheritedLocales(groupId);
+	}
+
 	public static void init() {
 		getLanguage().init();
 	}
@@ -292,12 +298,6 @@ public class LanguageUtil {
 
 	public static boolean isDuplicateLanguageCode(String languageCode) {
 		return getLanguage().isDuplicateLanguageCode(languageCode);
-	}
-
-	public static boolean hasInheritedLocales(long groupId)
-		throws PortalException, SystemException {
-
-		return getLanguage().hasInheritedLocales(groupId);
 	}
 
 	public static boolean isValidLanguageKey(Locale locale, String key) {

@@ -136,6 +136,9 @@ public interface Language {
 	public String getTimeDescription(
 		PageContext pageContext, Long milliseconds);
 
+	public boolean hasInheritedLocales(long groupId)
+		throws PortalException, SystemException;
+
 	public void init();
 
 	public boolean isAvailableLanguageCode(String languageCode);
@@ -151,9 +154,6 @@ public interface Language {
 	public boolean isBetaLocale(Locale locale);
 
 	public boolean isDuplicateLanguageCode(String languageCode);
-
-	public boolean hasInheritedLocales(long groupId)
-		throws PortalException, SystemException;
 
 	public void resetAvailableGroupLocales(long groupId);
 

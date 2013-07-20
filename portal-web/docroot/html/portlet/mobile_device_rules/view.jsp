@@ -81,6 +81,7 @@ portletURL.setParameter("chooseCallback", chooseCallback);
 
 			<%
 			String rowHREF = null;
+			String chooseOnClick = null;
 
 			if (Validator.isNull(chooseCallback)) {
 			%>
@@ -109,6 +110,8 @@ portletURL.setParameter("chooseCallback", chooseCallback);
 					sb.append("', Liferay.Util.getWindow());");
 
 					rowHREF = sb.toString();
+
+					chooseOnClick = StringUtil.replaceFirst(sb.toString(), "javascript:", StringPool.BLANK);
 				}
 			}
 			%>

@@ -1268,8 +1268,6 @@ public class DataFactory {
 		dlFileEntryModel.setCompanyId(_companyId);
 		dlFileEntryModel.setUserId(_sampleUserId);
 		dlFileEntryModel.setUserName(_SAMPLE_USER_NAME);
-		dlFileEntryModel.setVersionUserId(_sampleUserId);
-		dlFileEntryModel.setVersionUserName(_SAMPLE_USER_NAME);
 		dlFileEntryModel.setCreateDate(nextFutureDate());
 		dlFileEntryModel.setModifiedDate(nextFutureDate());
 		dlFileEntryModel.setRepositoryId(dlFolerModel.getRepositoryId());

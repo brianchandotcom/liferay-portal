@@ -564,8 +564,6 @@ create table DLFileEntry (
 	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
-	versionUserId LONG,
-	versionUserName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
 	classNameId LONG,

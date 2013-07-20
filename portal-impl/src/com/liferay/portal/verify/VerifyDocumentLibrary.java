@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
@@ -80,18 +79,13 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 		dlFileVersion.setGroupId(dlFileEntry.getGroupId());
 		dlFileVersion.setCompanyId(dlFileEntry.getCompanyId());
 
-		long versionUserId = dlFileEntry.getVersionUserId();
+		long userId = dlFileEntry.getUserId();
 
-		if (versionUserId <= 0) {
-			versionUserId = dlFileEntry.getUserId();
-		}
+		dlFileVersion.setUserId(userId);
 
-		dlFileVersion.setUserId(versionUserId);
+		String userName = dlFileEntry.getUserName();
 
-		String versionUserName = GetterUtil.getString(
-			dlFileEntry.getVersionUserName(), dlFileEntry.getUserName());
-
-		dlFileVersion.setUserName(versionUserName);
+		dlFileVersion.setUserName(userName);
 
 		dlFileVersion.setCreateDate(dlFileEntry.getModifiedDate());
 		dlFileVersion.setModifiedDate(dlFileEntry.getModifiedDate());
@@ -107,8 +101,8 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 		dlFileVersion.setVersion(dlFileEntry.getVersion());
 		dlFileVersion.setSize(dlFileEntry.getSize());
 		dlFileVersion.setStatus(WorkflowConstants.STATUS_APPROVED);
-		dlFileVersion.setStatusByUserId(versionUserId);
-		dlFileVersion.setStatusByUserName(versionUserName);
+		dlFileVersion.setStatusByUserId(userId);
+		dlFileVersion.setStatusByUserName(userName);
 		dlFileVersion.setStatusDate(new Date());
 
 		DLFileVersionLocalServiceUtil.updateDLFileVersion(dlFileVersion);

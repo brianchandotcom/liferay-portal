@@ -125,10 +125,6 @@ public class DLFileEntryPersistenceTest {
 
 		newDLFileEntry.setUserName(ServiceTestUtil.randomString());
 
-		newDLFileEntry.setVersionUserId(ServiceTestUtil.nextLong());
-
-		newDLFileEntry.setVersionUserName(ServiceTestUtil.randomString());
-
 		newDLFileEntry.setCreateDate(ServiceTestUtil.nextDate());
 
 		newDLFileEntry.setModifiedDate(ServiceTestUtil.nextDate());
@@ -187,10 +183,6 @@ public class DLFileEntryPersistenceTest {
 			newDLFileEntry.getUserId());
 		Assert.assertEquals(existingDLFileEntry.getUserName(),
 			newDLFileEntry.getUserName());
-		Assert.assertEquals(existingDLFileEntry.getVersionUserId(),
-			newDLFileEntry.getVersionUserId());
-		Assert.assertEquals(existingDLFileEntry.getVersionUserName(),
-			newDLFileEntry.getVersionUserName());
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingDLFileEntry.getCreateDate()),
 			Time.getShortTimestamp(newDLFileEntry.getCreateDate()));
@@ -284,14 +276,14 @@ public class DLFileEntryPersistenceTest {
 	protected OrderByComparator getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("DLFileEntry", "uuid", true,
 			"fileEntryId", true, "groupId", true, "companyId", true, "userId",
-			true, "userName", true, "versionUserId", true, "versionUserName",
-			true, "createDate", true, "modifiedDate", true, "classNameId",
-			true, "classPK", true, "repositoryId", true, "folderId", true,
-			"name", true, "extension", true, "mimeType", true, "title", true,
-			"description", true, "extraSettings", true, "fileEntryTypeId",
-			true, "version", true, "size", true, "readCount", true,
-			"smallImageId", true, "largeImageId", true, "custom1ImageId", true,
-			"custom2ImageId", true, "manualCheckInRequired", true);
+			true, "userName", true, "createDate", true, "modifiedDate", true,
+			"classNameId", true, "classPK", true, "repositoryId", true,
+			"folderId", true, "name", true, "extension", true, "mimeType",
+			true, "title", true, "description", true, "extraSettings", true,
+			"fileEntryTypeId", true, "version", true, "size", true,
+			"readCount", true, "smallImageId", true, "largeImageId", true,
+			"custom1ImageId", true, "custom2ImageId", true,
+			"manualCheckInRequired", true);
 	}
 
 	@Test
@@ -453,10 +445,6 @@ public class DLFileEntryPersistenceTest {
 		dlFileEntry.setUserId(ServiceTestUtil.nextLong());
 
 		dlFileEntry.setUserName(ServiceTestUtil.randomString());
-
-		dlFileEntry.setVersionUserId(ServiceTestUtil.nextLong());
-
-		dlFileEntry.setVersionUserName(ServiceTestUtil.randomString());
 
 		dlFileEntry.setCreateDate(ServiceTestUtil.nextDate());
 

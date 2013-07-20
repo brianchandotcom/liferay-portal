@@ -184,8 +184,6 @@ public class DLFileEntryLocalServiceImpl
 		dlFileEntry.setCompanyId(user.getCompanyId());
 		dlFileEntry.setUserId(user.getUserId());
 		dlFileEntry.setUserName(user.getFullName());
-		dlFileEntry.setVersionUserId(user.getUserId());
-		dlFileEntry.setVersionUserName(user.getFullName());
 		dlFileEntry.setCreateDate(serviceContext.getCreateDate(now));
 		dlFileEntry.setModifiedDate(serviceContext.getModifiedDate(now));
 
@@ -848,10 +846,6 @@ public class DLFileEntryLocalServiceImpl
 						dlFileVersionLocalService.getLatestFileVersion(
 							dlFileEntry.getFileEntryId(), true);
 
-					dlFileEntry.setVersionUserId(
-						dlLatestFileVersion.getUserId());
-					dlFileEntry.setVersionUserName(
-						dlLatestFileVersion.getUserName());
 					dlFileEntry.setModifiedDate(
 						dlLatestFileVersion.getCreateDate());
 					dlFileEntry.setExtension(
@@ -1497,8 +1491,6 @@ public class DLFileEntryLocalServiceImpl
 				dlFileEntry.setFileEntryTypeId(
 					dlFileVersion.getFileEntryTypeId());
 				dlFileEntry.setVersion(dlFileVersion.getVersion());
-				dlFileEntry.setVersionUserId(dlFileVersion.getUserId());
-				dlFileEntry.setVersionUserName(dlFileVersion.getUserName());
 				dlFileEntry.setModifiedDate(dlFileVersion.getCreateDate());
 				dlFileEntry.setSize(dlFileVersion.getSize());
 
@@ -1677,20 +1669,8 @@ public class DLFileEntryLocalServiceImpl
 
 		dlFileVersion.setGroupId(dlFileEntry.getGroupId());
 		dlFileVersion.setCompanyId(dlFileEntry.getCompanyId());
-
-		long versionUserId = dlFileEntry.getVersionUserId();
-
-		if (versionUserId <= 0) {
-			versionUserId = dlFileEntry.getUserId();
-		}
-
-		dlFileVersion.setUserId(versionUserId);
-
-		String versionUserName = GetterUtil.getString(
-			dlFileEntry.getVersionUserName(), dlFileEntry.getUserName());
-
-		dlFileVersion.setUserName(versionUserName);
-
+		dlFileVersion.setUserId(user.getUserId());
+		dlFileVersion.setUserName(user.getFullName());
 		dlFileVersion.setCreateDate(modifiedDate);
 		dlFileVersion.setModifiedDate(modifiedDate);
 		dlFileVersion.setRepositoryId(dlFileEntry.getRepositoryId());
@@ -2413,6 +2393,8 @@ public class DLFileEntryLocalServiceImpl
 			dlFileVersion.setMimeType(mimeType);
 		}
 
+		dlFileVersion.setUserId(user.getUserId());
+		dlFileVersion.setUserName(user.getFullName());
 		dlFileVersion.setTitle(title);
 		dlFileVersion.setDescription(description);
 		dlFileVersion.setChangeLog(changeLog);

@@ -82,6 +82,22 @@ public interface DLFileEntry extends DLFileEntryModel, PersistedModel {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	/**
+	* @deprecated As of 6.2.0, replaced by {@link DLFileVersion#getUserId()}
+	*/
+	public long getVersionUserId();
+
+	/**
+	* @deprecated As of 6.2.0, replaced by {@link DLFileVersion#getUserName()}
+	*/
+	public java.lang.String getVersionUserName();
+
+	/**
+	* @deprecated As of 6.2.0, replaced by {@link DLFileVersion#getUserUuid()}
+	*/
+	public java.lang.String getVersionUserUuid()
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	public boolean hasLock();
 
 	public boolean isCheckedOut();

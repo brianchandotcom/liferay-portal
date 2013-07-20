@@ -2035,8 +2035,6 @@
 			<basic name="companyId" />
 			<basic name="userId" />
 			<basic name="userName" />
-			<basic name="versionUserId" />
-			<basic name="versionUserName" />
 			<basic name="createDate">
 				<temporal>TIMESTAMP</temporal>
 			</basic>
@@ -2069,7 +2067,6 @@
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
 			<transient name="userUuid" />
-			<transient name="versionUserUuid" />
 		</attributes>
 	</mapped-superclass>
 	<mapped-superclass class="com.liferay.portlet.documentlibrary.model.impl.DLFileEntryMetadataModelImpl">

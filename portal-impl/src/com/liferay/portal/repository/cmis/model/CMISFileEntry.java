@@ -464,19 +464,63 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 		return GetterUtil.getString(_document.getVersionLabel(), null);
 	}
 
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link CMISFileVersion#getUserId()}
+	 */
 	@Override
 	public long getVersionUserId() {
-		return 0;
+		long versionUserId = 0;
+
+		try {
+			FileVersion fileVersion = getFileVersion();
+
+			versionUserId = fileVersion.getUserId();
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
+		return versionUserId;
 	}
 
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link
+	 *             CMISFileVersion#getUserName()}
+	 */
 	@Override
 	public String getVersionUserName() {
-		return _document.getLastModifiedBy();
+		String versionUserName = StringPool.BLANK;
+
+		try {
+			FileVersion fileVersion = getFileVersion();
+
+			versionUserName = fileVersion.getUserName();
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
+		return versionUserName;
 	}
 
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link
+	 *             CMISFileVersion#getUserUuid()}
+	 */
 	@Override
 	public String getVersionUserUuid() {
-		return StringPool.BLANK;
+		String versionUserUuid = StringPool.BLANK;
+
+		try {
+			FileVersion fileVersion = getFileVersion();
+
+			versionUserUuid = fileVersion.getUserUuid();
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
+		return versionUserUuid;
 	}
 
 	@Override

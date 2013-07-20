@@ -177,50 +177,6 @@ public interface DLFileEntryModel extends AttachedModel, BaseModel<DLFileEntry>,
 	public void setUserName(String userName);
 
 	/**
-	 * Returns the version user ID of this document library file entry.
-	 *
-	 * @return the version user ID of this document library file entry
-	 */
-	public long getVersionUserId();
-
-	/**
-	 * Sets the version user ID of this document library file entry.
-	 *
-	 * @param versionUserId the version user ID of this document library file entry
-	 */
-	public void setVersionUserId(long versionUserId);
-
-	/**
-	 * Returns the version user uuid of this document library file entry.
-	 *
-	 * @return the version user uuid of this document library file entry
-	 * @throws SystemException if a system exception occurred
-	 */
-	public String getVersionUserUuid() throws SystemException;
-
-	/**
-	 * Sets the version user uuid of this document library file entry.
-	 *
-	 * @param versionUserUuid the version user uuid of this document library file entry
-	 */
-	public void setVersionUserUuid(String versionUserUuid);
-
-	/**
-	 * Returns the version user name of this document library file entry.
-	 *
-	 * @return the version user name of this document library file entry
-	 */
-	@AutoEscape
-	public String getVersionUserName();
-
-	/**
-	 * Sets the version user name of this document library file entry.
-	 *
-	 * @param versionUserName the version user name of this document library file entry
-	 */
-	public void setVersionUserName(String versionUserName);
-
-	/**
 	 * Returns the create date of this document library file entry.
 	 *
 	 * @return the create date of this document library file entry

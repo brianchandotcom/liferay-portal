@@ -38,7 +38,7 @@ public class DLFileEntryCacheModel implements CacheModel<DLFileEntry>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(59);
+		StringBundler sb = new StringBundler(55);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -52,10 +52,6 @@ public class DLFileEntryCacheModel implements CacheModel<DLFileEntry>,
 		sb.append(userId);
 		sb.append(", userName=");
 		sb.append(userName);
-		sb.append(", versionUserId=");
-		sb.append(versionUserId);
-		sb.append(", versionUserName=");
-		sb.append(versionUserName);
 		sb.append(", createDate=");
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
@@ -124,15 +120,6 @@ public class DLFileEntryCacheModel implements CacheModel<DLFileEntry>,
 		}
 		else {
 			dlFileEntryImpl.setUserName(userName);
-		}
-
-		dlFileEntryImpl.setVersionUserId(versionUserId);
-
-		if (versionUserName == null) {
-			dlFileEntryImpl.setVersionUserName(StringPool.BLANK);
-		}
-		else {
-			dlFileEntryImpl.setVersionUserName(versionUserName);
 		}
 
 		if (createDate == Long.MIN_VALUE) {
@@ -226,8 +213,6 @@ public class DLFileEntryCacheModel implements CacheModel<DLFileEntry>,
 		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
-		versionUserId = objectInput.readLong();
-		versionUserName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 		classNameId = objectInput.readLong();
@@ -271,15 +256,6 @@ public class DLFileEntryCacheModel implements CacheModel<DLFileEntry>,
 		}
 		else {
 			objectOutput.writeUTF(userName);
-		}
-
-		objectOutput.writeLong(versionUserId);
-
-		if (versionUserName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(versionUserName);
 		}
 
 		objectOutput.writeLong(createDate);
@@ -355,8 +331,6 @@ public class DLFileEntryCacheModel implements CacheModel<DLFileEntry>,
 	public long companyId;
 	public long userId;
 	public String userName;
-	public long versionUserId;
-	public String versionUserName;
 	public long createDate;
 	public long modifiedDate;
 	public long classNameId;

@@ -17,10 +17,13 @@ package com.liferay.portal.repository.liferayrepository.model;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.StagedModelType;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Lock;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -322,7 +325,7 @@ public class LiferayFileEntry extends LiferayModel implements FileEntry {
 
 	@Override
 	public String getUserName() {
-		return _dlFileEntry.getVersionUserName();
+		return _dlFileEntry.getUserName();
 	}
 
 	@Override
@@ -340,19 +343,61 @@ public class LiferayFileEntry extends LiferayModel implements FileEntry {
 		return _dlFileEntry.getVersion();
 	}
 
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link DLFileVersion#getUserId()}
+	 */
 	@Override
 	public long getVersionUserId() {
-		return _dlFileEntry.getVersionUserId();
+		long versionUserId = 0;
+
+		try {
+			DLFileVersion dlFileVersion = _dlFileEntry.getFileVersion();
+
+			versionUserId = dlFileVersion.getUserId();
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
+		return versionUserId;
 	}
 
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link DLFileVersion#getUserName()}
+	 */
 	@Override
 	public String getVersionUserName() {
-		return _dlFileEntry.getVersionUserName();
+		String versionUserName = StringPool.BLANK;
+
+		try {
+			DLFileVersion dlFileVersion = _dlFileEntry.getFileVersion();
+
+			versionUserName = dlFileVersion.getUserName();
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
+		return versionUserName;
 	}
 
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link DLFileVersion#getUserUuid()}
+	 */
 	@Override
 	public String getVersionUserUuid() throws SystemException {
-		return _dlFileEntry.getVersionUserUuid();
+		String versionUserUuid = StringPool.BLANK;
+
+		try {
+			DLFileVersion dlFileVersion = _dlFileEntry.getFileVersion();
+
+			versionUserUuid = dlFileVersion.getUserUuid();
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
+		return versionUserUuid;
 	}
 
 	@Override
@@ -482,6 +527,8 @@ public class LiferayFileEntry extends LiferayModel implements FileEntry {
 			return this;
 		}
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(LiferayFileEntry.class);
 
 	private DLFileEntry _dlFileEntry;
 	private DLFileVersion _dlFileVersion;

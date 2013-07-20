@@ -316,6 +316,8 @@ update DDMTemplate set type_ = 'form' where type_ = 'detail';
 alter table DLFileEntry add classNameId LONG;
 alter table DLFileEntry add classPK LONG;
 alter table DLFileEntry add manualCheckInRequired BOOLEAN;
+alter table DLFileEntry drop column versionUserId;
+alter table DLFileEntry drop column versionUserName;
 
 alter table DLFileRank add active_ BOOLEAN;
 

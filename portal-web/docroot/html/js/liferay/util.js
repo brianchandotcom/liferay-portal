@@ -864,14 +864,11 @@
 
 			event.preventDefault();
 
-			var dialogTitle = event.title;
-			var dialogUri = event.uri;
-
 			Liferay.Util.openWindow(
 				{
 					cache: false,
-					title: dialogTitle,
-					uri: dialogUri
+					title: event.title,
+					uri: event.uri
 				}
 			);
 		},

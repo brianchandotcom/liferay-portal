@@ -733,6 +733,24 @@ public class DLFileEntryLocalServiceUtil {
 			.revertFileEntry(userId, fileEntryId, version, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.search.Hits search(long groupId,
+		long userId, long creatorUserId, int status, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .search(groupId, userId, creatorUserId, status, start, end);
+	}
+
+	public static com.liferay.portal.kernel.search.Hits search(long groupId,
+		long userId, long creatorUserId, long folderId,
+		java.lang.String[] mimeTypes, int status, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .search(groupId, userId, creatorUserId, folderId, mimeTypes,
+			status, start, end);
+	}
+
 	public static void unlockFileEntry(long fileEntryId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		getService().unlockFileEntry(fileEntryId);

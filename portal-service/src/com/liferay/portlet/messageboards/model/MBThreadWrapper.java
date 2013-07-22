@@ -1021,6 +1021,12 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	}
 
 	@Override
+	public long[] getParticipantsIds()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _mbThread.getParticipantsIds();
+	}
+
+	@Override
 	public com.liferay.portlet.messageboards.model.MBCategory getTrashContainer() {
 		return _mbThread.getTrashContainer();
 	}

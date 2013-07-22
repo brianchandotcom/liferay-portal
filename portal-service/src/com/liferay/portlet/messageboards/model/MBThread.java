@@ -44,6 +44,9 @@ public interface MBThread extends MBThreadModel, PersistedModel {
 
 	public com.liferay.portal.model.Lock getLock();
 
+	public long[] getParticipantsIds()
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	public com.liferay.portlet.messageboards.model.MBCategory getTrashContainer();
 
 	public boolean hasLock(long userId);

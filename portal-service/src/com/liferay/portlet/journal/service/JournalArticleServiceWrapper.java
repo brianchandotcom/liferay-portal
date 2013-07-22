@@ -1176,6 +1176,15 @@ public class JournalArticleServiceWrapper implements JournalArticleService,
 		_journalArticleService.restoreArticleFromTrash(groupId, articleId);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.search.Hits search(long groupId,
+		long creatorUserId, int status, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _journalArticleService.search(groupId, creatorUserId, status,
+			start, end);
+	}
+
 	/**
 	* Returns an ordered range of all the web content articles matching the
 	* parameters, including a keywords parameter for matching with the

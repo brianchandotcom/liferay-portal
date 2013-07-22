@@ -461,10 +461,22 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			"**\\portal-compat-shared\\src\\com\\liferay\\compat\\**\\*.java"
 		};
 
-		List<String> fileNames = getFileNames(new String[0], includes);
+		String basedir = BASEDIR;
+
+		List<String> fileNames = new ArrayList<String>();
+
+		for (int i = 0; i < 3; i++) {
+			fileNames = getFileNames(basedir, new String[0], includes);
+
+			if (!fileNames.isEmpty()) {
+				break;
+			}
+
+			basedir = "../" + basedir;
+		}
 
 		for (String fileName : fileNames) {
-			File file = new File(fileName);
+			File file = new File(basedir + fileName);
 
 			String content = fileUtil.read(file);
 

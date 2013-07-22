@@ -76,7 +76,7 @@ if ((article != null) && article.isDraft()) {
 							);
 						}
 						else {
-							if (!confirm('<%= UnicodeLanguageUtil.get(pageContext, "this-article-has-changes-and-to-preview-the-content-you-have-to-save-the-article-as-draft") %>')) {
+							if (!confirm('<liferay-ui:message key="in-order-to-preview-your-changes,-the-web-content-will-be-saved-as-a-draft" />')) {
 								return false;
 							}
 

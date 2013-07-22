@@ -59,7 +59,7 @@ public class ClassLoaderUtil {
 	private static final ClassLoaderUtilProvider _classLoaderUtilProvider;
 
 	static {
-		if (SecurityManagerUtil.isNone()) {
+		if (SecurityManagerUtil.isPACLDisabled()) {
 			_classLoaderUtilProvider = new ClassLoaderUtilProvider();
 		}
 		else {

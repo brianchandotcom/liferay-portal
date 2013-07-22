@@ -723,6 +723,25 @@ public class LiferayRepository
 	}
 
 	@Override
+	public Hits search(long creatorUserId, int status, int start, int end)
+		throws PortalException, SystemException {
+
+		return dlFileEntryService.search(
+			getGroupId(), creatorUserId, status, start, end);
+	}
+
+	@Override
+	public Hits search(
+			long creatorUserId, long folderId, String[] mimeTypes, int status,
+			int start, int end)
+		throws PortalException, SystemException {
+
+		return dlFileEntryService.search(
+			getGroupId(), creatorUserId, folderId, mimeTypes, status, start,
+			end);
+	}
+
+	@Override
 	public Hits search(SearchContext searchContext) throws SearchException {
 		Indexer indexer = DLSearcher.getInstance();
 

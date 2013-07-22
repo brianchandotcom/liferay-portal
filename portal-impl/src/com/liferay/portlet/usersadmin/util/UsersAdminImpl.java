@@ -1100,22 +1100,41 @@ public class UsersAdminImpl implements UsersAdmin {
 			return true;
 		}
 
-		String[] usersEditable = ArrayUtil.append(
-			PropsValues.FIELDS_EDITABLE_DOMAINS,
-			PropsValues.FIELDS_EDITABLE_ROLES,
-			PropsValues.FIELDS_EDITABLE_USER_TYPES);
+		for (String userType : PropsValues.FIELDS_EDITABLE_USER_TYPES) {
+			if (userType.equals("user-with-mx") && user.hasCompanyMx()) {
+				return true;
+			}
 
-		for (String userEditable : usersEditable) {
-			if (hasUpdatePermission(user, userEditable)) {
+			if (userType.equals("user-without-mx") && !user.hasCompanyMx()) {
 				return true;
 			}
 		}
 
-		String[] domainNamesEditable = PropsUtil.getArray(
+		for (String roleName : PropsValues.FIELDS_EDITABLE_ROLES) {
+			Role role = RoleLocalServiceUtil.fetchRole(
+				user.getCompanyId(), roleName);
+
+			if ((role != null) &&
+				RoleLocalServiceUtil.hasUserRole(
+					user.getUserId(), role.getRoleId())) {
+
+				return true;
+			}
+		}
+
+		String emailAddress = user.getEmailAddress();
+
+		for (String domainName : PropsValues.FIELDS_EDITABLE_DOMAINS) {
+			if (emailAddress.endsWith(domainName)) {
+				return true;
+			}
+		}
+
+		String[] fieldEditableDomainNames = PropsUtil.getArray(
 			PropsKeys.FIELD_EDITABLE_DOMAINS, new Filter(field));
 
-		for (String domainName : domainNamesEditable) {
-			if (hasUpdatePermission(user, domainName)) {
+		for (String domainName : fieldEditableDomainNames) {
+			if (emailAddress.endsWith(domainName)) {
 				return true;
 			}
 		}
@@ -1368,38 +1387,6 @@ public class UsersAdminImpl implements UsersAdmin {
 				WebsiteServiceUtil.deleteWebsite(website.getWebsiteId());
 			}
 		}
-	}
-
-	protected boolean hasUpdatePermission(User user, String userType)
-		throws PortalException, SystemException {
-
-		if (Validator.equals(userType, "user-with-mx") && user.hasCompanyMx()) {
-			return true;
-		}
-
-		if (Validator.equals(userType, "user-without-mx") &&
-			!user.hasCompanyMx()) {
-
-			return true;
-		}
-
-		String emailAddress = user.getEmailAddress();
-
-		if (emailAddress.endsWith(userType)) {
-			return true;
-		}
-
-		Role role = RoleLocalServiceUtil.fetchRole(
-			user.getCompanyId(), userType);
-
-		if ((role != null) &&
-			RoleLocalServiceUtil.hasUserRole(
-				user.getUserId(), role.getRoleId())) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 }

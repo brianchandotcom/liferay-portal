@@ -62,7 +62,7 @@ public class ServiceBeanMethodInvocation
 		ServiceBeanMethodInvocation serviceBeanMethodInvocation =
 			(ServiceBeanMethodInvocation)obj;
 
-		if ((_method == serviceBeanMethodInvocation._method) &&
+		if ((_method == serviceBeanMethodInvocation._method) ||
 			Validator.equals(_method, serviceBeanMethodInvocation._method)) {
 
 			return true;

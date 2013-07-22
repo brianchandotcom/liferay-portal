@@ -124,13 +124,7 @@ public class JournalArticleIndexer extends BaseIndexer {
 			contextQuery.addRequiredTerm("classNameId", classNameId.toString());
 		}
 
-		int status = GetterUtil.getInteger(
-			searchContext.getAttribute(Field.STATUS),
-			WorkflowConstants.STATUS_APPROVED);
-
-		if (status != WorkflowConstants.STATUS_ANY) {
-			contextQuery.addRequiredTerm(Field.STATUS, status);
-		}
+		addStatus(contextQuery, searchContext);
 
 		addSearchClassTypeIds(contextQuery, searchContext);
 

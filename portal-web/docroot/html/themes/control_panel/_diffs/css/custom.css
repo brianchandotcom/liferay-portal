@@ -197,6 +197,22 @@ $dockbarOpenGradientStart: #0EA6F9;
 			padding-left: 0;
 			padding-right: 0;
 
+			.brand {
+				&, > a {
+					color: #FFF;
+					font-weight: lighter;
+					text-shadow: none;
+				}
+
+				.control-panel-back-link {
+					margin: 0 15px;
+
+					&:hover, &:focus {
+						text-decoration: none;
+					}
+				}
+			}
+
 			.nav-account-controls {
 				float: right;
 
@@ -206,7 +222,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 					background-color: $dockbarOpenGradientEnd;
 				}
 			}
-
 			.nav-add-controls {
 				> li {
 					&.active a {
@@ -229,11 +244,11 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 					/* ---------- Menu Icons ---------- */
 
-					[class^="icon-"], [class*=" icon-"] {
-						vertical-align: top;
-
-						&:before {
-							content: '';
+					&.control-panel-apps, &.control-panel-configuration, &.control-panel-sites, &.control-panel-users {
+						[class^="icon-"], [class*=" icon-"] {
+							&:before {
+								content: '';
+							}
 						}
 					}
 
@@ -241,6 +256,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 						background: none no-repeat 50%;
 						height: 21px;
 						width: 24px;
+						vertical-align: top;
 					}
 
 					.icon-cog, .icon-globe, .icon-th, .icon-user {
@@ -275,27 +291,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 						background-image: url(../images/custom/dockbar_users.png);
 						width: 40px;
 					}
-				}
-			}
-
-			.control-panel-header {
-				a {
-					color: white;
-					text-decoration: none;
-				}
-
-				h1 {
-					float: left;
-					font-size: 25px;
-					font-weight: normal;
-					line-height: 20px;
-					padding-right: 40px;
-				}
-
-				.control-panel-back-link {
-					float: left;
-					padding: 10px 10px 0px 10px;
-					font-size: 15px;
 				}
 			}
 

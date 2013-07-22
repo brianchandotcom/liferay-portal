@@ -32,84 +32,88 @@ String toggleControlsState = GetterUtil.getString(SessionClicks.get(request, "li
 %>
 
 <aui:nav-bar cssClass="navbar-static-top dockbar" data-namespace="<%= renderResponse.getNamespace() %>" id="dockbar">
+	<c:if test="<%= group.isControlPanel() %>">
+		<%
+		String controlPanelCategory = themeDisplay.getControlPanelCategory();
+
+		String refererGroupDescriptiveName = null;
+		String backURL = null;
+
+		if (themeDisplay.getRefererPlid() > 0) {
+			Layout refererLayout = LayoutLocalServiceUtil.fetchLayout(themeDisplay.getRefererPlid());
+
+			if (refererLayout != null) {
+				Group refererGroup = refererLayout.getGroup();
+
+				if (refererGroup.isUserGroup() && (themeDisplay.getRefererGroupId() > 0)) {
+					refererGroup = GroupLocalServiceUtil.getGroup(themeDisplay.getRefererGroupId());
+
+					refererLayout = new VirtualLayout(refererLayout, refererGroup);
+				}
+
+				refererGroupDescriptiveName = refererGroup.getDescriptiveName(locale);
+
+				if (refererGroup.isUser() && (refererGroup.getClassPK() == user.getUserId())) {
+					if (refererLayout.isPublicLayout()) {
+						refererGroupDescriptiveName = LanguageUtil.get(pageContext, "my-profile");
+					}
+					else {
+						refererGroupDescriptiveName = LanguageUtil.get(pageContext, "my-dashboard");
+					}
+				}
+
+				backURL = PortalUtil.getLayoutURL(refererLayout, themeDisplay);
+
+				if (!CookieKeys.hasSessionId(request)) {
+					backURL = PortalUtil.getURLWithSessionId(backURL, session.getId());
+				}
+			}
+		}
+
+		if (Validator.isNull(refererGroupDescriptiveName) || Validator.isNull(backURL)) {
+			refererGroupDescriptiveName = themeDisplay.getAccount().getName();
+			backURL = themeDisplay.getURLHome();
+		}
+
+		if (Validator.isNotNull(themeDisplay.getDoAsUserId())) {
+			backURL = HttpUtil.addParameter(backURL, "doAsUserId", themeDisplay.getDoAsUserId());
+		}
+
+		if (Validator.isNotNull(themeDisplay.getDoAsUserLanguageId())) {
+			backURL = HttpUtil.addParameter(backURL, "doAsUserLanguageId", themeDisplay.getDoAsUserLanguageId());
+		}
+		%>
+
+		<c:if test="<%= controlPanelCategory.startsWith(PortletCategoryKeys.CURRENT_SITE) || !controlPanelCategory.equals(PortletCategoryKeys.MY) %>">
+			<span class="brand">
+				<a class="control-panel-back-link" href="<%= backURL %>" title="<liferay-ui:message key="back" />">
+					<i class="control-panel-back-icon icon-chevron-left"></i>
+
+					<span class="control-panel-back-text helper-hidden-accessible">
+						<liferay-ui:message key="back" />
+					</span>
+				</a>
+
+				<c:choose>
+					<c:when test="<%= controlPanelCategory.startsWith(PortletCategoryKeys.CURRENT_SITE) %>">
+							<liferay-ui:message key="site-administration" />
+					</c:when>
+					<c:otherwise>
+						<a href="<%= themeDisplay.getURLControlPanel() %>">
+							<liferay-ui:message key="control-panel" />
+						</a>
+					</c:otherwise>
+				</c:choose>
+			</span>
+		</c:if>
+	</c:if>
+
 	<aui:nav cssClass="nav-add-controls">
 		<c:if test="<%= group.isControlPanel() %>">
 
 			<%
 			String controlPanelCategory = themeDisplay.getControlPanelCategory();
-
-			String refererGroupDescriptiveName = null;
-			String backURL = null;
-
-			if (themeDisplay.getRefererPlid() > 0) {
-				Layout refererLayout = LayoutLocalServiceUtil.fetchLayout(themeDisplay.getRefererPlid());
-
-				if (refererLayout != null) {
-					Group refererGroup = refererLayout.getGroup();
-
-					if (refererGroup.isUserGroup() && (themeDisplay.getRefererGroupId() > 0)) {
-						refererGroup = GroupLocalServiceUtil.getGroup(themeDisplay.getRefererGroupId());
-
-						refererLayout = new VirtualLayout(refererLayout, refererGroup);
-					}
-
-					refererGroupDescriptiveName = refererGroup.getDescriptiveName(locale);
-
-					if (refererGroup.isUser() && (refererGroup.getClassPK() == user.getUserId())) {
-						if (refererLayout.isPublicLayout()) {
-							refererGroupDescriptiveName = LanguageUtil.get(pageContext, "my-profile");
-						}
-						else {
-							refererGroupDescriptiveName = LanguageUtil.get(pageContext, "my-dashboard");
-						}
-					}
-
-					backURL = PortalUtil.getLayoutURL(refererLayout, themeDisplay);
-
-					if (!CookieKeys.hasSessionId(request)) {
-						backURL = PortalUtil.getURLWithSessionId(backURL, session.getId());
-					}
-				}
-			}
-
-			if (Validator.isNull(refererGroupDescriptiveName) || Validator.isNull(backURL)) {
-				refererGroupDescriptiveName = themeDisplay.getAccount().getName();
-				backURL = themeDisplay.getURLHome();
-			}
-
-			if (Validator.isNotNull(themeDisplay.getDoAsUserId())) {
-				backURL = HttpUtil.addParameter(backURL, "doAsUserId", themeDisplay.getDoAsUserId());
-			}
-
-			if (Validator.isNotNull(themeDisplay.getDoAsUserLanguageId())) {
-				backURL = HttpUtil.addParameter(backURL, "doAsUserLanguageId", themeDisplay.getDoAsUserLanguageId());
-			}
 			%>
-
-
-			<c:if test="<%= controlPanelCategory.startsWith(PortletCategoryKeys.CURRENT_SITE) || !controlPanelCategory.equals(PortletCategoryKeys.MY) %>">
-					<span class="control-panel-header">
-						<a class="control-panel-back-link" href="<%= backURL %>" title="<liferay-ui:message key="back" />">
-							<i class="control-panel-back-icon icon-chevron-left"></i>
-
-							<span class="control-panel-back-text helper-hidden-accessible">
-								<liferay-ui:message key="back" />
-							</span>
-						</a>
-
-						<c:choose>
-							<c:when test="<%= controlPanelCategory.startsWith(PortletCategoryKeys.CURRENT_SITE) %>">
-								<h1><liferay-ui:message key="site-administration" /></h1>
-							</c:when>
-							<c:otherwise>
-								<a href="<%= themeDisplay.getURLControlPanel() %>">
-									<h1><liferay-ui:message key="control-panel" /></h1>
-								</a>
-							</c:otherwise>
-						</c:choose>
-					</span>
-					<%--<aui:nav-item anchorCssClass="back-link" href="<%= backURL %>" iconClass="icon-chevron-left" id="backLink" label="<%= StringPool.NBSP %>" title='<%= LanguageUtil.format(pageContext, "back-to-x", HtmlUtil.escape(refererGroupDescriptiveName), false) %>' />--%>
-			</c:if>
 
 			<c:if test="<%= !controlPanelCategory.equals(PortletCategoryKeys.MY) && !controlPanelCategory.startsWith(PortletCategoryKeys.CURRENT_SITE) %>">
 
@@ -119,24 +123,29 @@ String toggleControlsState = GetterUtil.getString(SessionClicks.get(request, "li
 				for (String curCategory : categories) {
 					String urlControlPanelCategory = HttpUtil.setParameter(themeDisplay.getURLControlPanel(), "controlPanelCategory", curCategory);
 
+					String cssClass = StringPool.BLANK;
 					String iconClass = StringPool.BLANK;
 
 					if (curCategory.equals(PortletCategoryKeys.APPS)) {
+						cssClass = "control-panel-apps";
 						iconClass = "icon-th";
 					}
 					else if (curCategory.equals(PortletCategoryKeys.CONFIGURATION)) {
+						cssClass = "control-panel-configuration";
 						iconClass = "icon-cog";
 					}
 					else if (curCategory.equals(PortletCategoryKeys.SITES)) {
+						cssClass = "control-panel-sites";
 						iconClass = "icon-globe";
 					}
 					else if (curCategory.equals(PortletCategoryKeys.USERS)) {
+						cssClass = "control-panel-users";
 						iconClass = "icon-user";
 					}
 				%>
 
 					<c:if test="<%= _hasPortlets(curCategory, themeDisplay) %>">
-						<aui:nav-item anchorId='<%= "controlPanelNav" + curCategory + "Link" %>' href="<%= urlControlPanelCategory %>" iconClass="<%= iconClass %>" label='<%= "category." + curCategory %>' selected="<%= controlPanelCategory.equals(curCategory) %>" />
+						<aui:nav-item anchorId='<%= "controlPanelNav" + curCategory + "Link" %>' cssClass="<%= cssClass %>" href="<%= urlControlPanelCategory %>" iconClass="<%= iconClass %>" label='<%= "category." + curCategory %>' selected="<%= controlPanelCategory.equals(curCategory) %>" />
 					</c:if>
 
 				<%

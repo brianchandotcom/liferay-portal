@@ -40,6 +40,9 @@ import java.util.Set;
 import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.apache.struts.Globals;
 
 /**
  * @author Brian Wing Shun Chan
@@ -149,7 +152,17 @@ public class I18nFilter extends BasePortalFilter {
 		}
 		else if (PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 3) {
 			if (Validator.isNotNull(userLanguageId)) {
-				return null;
+				HttpSession session = request.getSession();
+
+				Locale locale = (Locale)session.getAttribute(
+					Globals.LOCALE_KEY);
+
+				if (!userLanguageId.equals(LocaleUtil.toLanguageId(locale))) {
+					i18nLanguageId = LocaleUtil.toLanguageId(locale);
+				}
+				else {
+					return null;
+				}
 			}
 		}
 

@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.layoutsadmin.action;
 
-import com.liferay.portal.LayoutSetVirtualHostException;
-import com.liferay.portal.NoSuchLayoutSetException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
@@ -26,8 +24,10 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.LayoutSet;
+import com.liferay.portal.model.VirtualHost;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetLocalServiceUtil;
+import com.liferay.portal.service.VirtualHostLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.RobotsUtil;
@@ -56,10 +56,13 @@ public class RobotsAction extends Action {
 
 			LayoutSet layoutSet = null;
 
-			try {
-				layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(host);
+			VirtualHost virtualHost =
+				VirtualHostLocalServiceUtil.fetchVirtualHost(host);
+
+			if ((virtualHost != null) && (virtualHost.getLayoutSetId() > 0)) {
+				layoutSet = LayoutSetLocalServiceUtil.fetchLayoutSet(host);
 			}
-			catch (LayoutSetVirtualHostException lsvhe) {
+			else {
 				Company company = PortalUtil.getCompany(request);
 
 				if (host.equals(company.getVirtualHostname()) &&
@@ -72,8 +75,6 @@ public class RobotsAction extends Action {
 
 					layoutSet = defaultGroup.getPublicLayoutSet();
 				}
-			}
-			catch (NoSuchLayoutSetException nslse) {
 			}
 
 			String robots = RobotsUtil.getRobots(layoutSet);

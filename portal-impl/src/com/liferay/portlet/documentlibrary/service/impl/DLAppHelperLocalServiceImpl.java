@@ -45,7 +45,6 @@ import com.liferay.portal.service.ServiceContextUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.SubscriptionSender;
-import com.liferay.portlet.asset.NoSuchEntryException;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetLink;
 import com.liferay.portlet.asset.model.AssetLinkConstants;
@@ -183,16 +182,12 @@ public class DLAppHelperLocalServiceImpl
 			return;
 		}
 
-		AssetEntry draftAssetEntry = null;
+		AssetEntry draftAssetEntry = assetEntryLocalService.fetchEntry(
+			DLFileEntryConstants.getClassName(),
+			draftFileVersion.getPrimaryKey());
 
-		try {
-			draftAssetEntry = assetEntryLocalService.getEntry(
-				DLFileEntryConstants.getClassName(),
-				draftFileVersion.getPrimaryKey());
-
-			assetEntryLocalService.deleteEntry(draftAssetEntry.getEntryId());
-		}
-		catch (NoSuchEntryException nsee) {
+		if (draftAssetEntry != null) {
+			assetEntryLocalService.deleteEntry(draftAssetEntry);
 		}
 	}
 
@@ -1174,14 +1169,13 @@ public class DLAppHelperLocalServiceImpl
 				if (!latestFileVersionVersion.equals(
 						DLFileEntryConstants.VERSION_DEFAULT)) {
 
-					AssetEntry draftAssetEntry = null;
-
-					try {
-						long fileEntryTypeId = getFileEntryTypeId(fileEntry);
-
-						draftAssetEntry = assetEntryLocalService.getEntry(
+					AssetEntry draftAssetEntry =
+						assetEntryLocalService.fetchEntry(
 							DLFileEntryConstants.getClassName(),
 							latestFileVersion.getPrimaryKey());
+
+					if (draftAssetEntry != null) {
+						long fileEntryTypeId = getFileEntryTypeId(fileEntry);
 
 						long[] assetCategoryIds =
 							draftAssetEntry.getCategoryIds();
@@ -1214,10 +1208,7 @@ public class DLAppHelperLocalServiceImpl
 							userId, assetEntry.getEntryId(), assetLinkEntryIds,
 							AssetLinkConstants.TYPE_RELATED);
 
-						assetEntryLocalService.deleteEntry(
-							draftAssetEntry.getEntryId());
-					}
-					catch (NoSuchEntryException nsee) {
+						assetEntryLocalService.deleteEntry(draftAssetEntry);
 					}
 				}
 

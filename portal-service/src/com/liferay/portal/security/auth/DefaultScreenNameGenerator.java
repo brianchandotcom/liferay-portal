@@ -14,7 +14,6 @@
 
 package com.liferay.portal.security.auth;
 
-import com.liferay.portal.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.CharPool;
@@ -86,11 +85,9 @@ public class DefaultScreenNameGenerator implements ScreenNameGenerator {
 			return getUnusedScreenName(companyId, screenName);
 		}
 
-		try {
-			GroupLocalServiceUtil.getFriendlyURLGroup(
-				companyId, StringPool.SLASH + screenName);
-		}
-		catch (NoSuchGroupException nsge) {
+		if (GroupLocalServiceUtil.fetchFriendlyURLGroup(
+				companyId, StringPool.SLASH + screenName) == null) {
+
 			return screenName;
 		}
 
@@ -109,18 +106,12 @@ public class DefaultScreenNameGenerator implements ScreenNameGenerator {
 				continue;
 			}
 
-			try {
-				GroupLocalServiceUtil.getFriendlyURLGroup(
-					companyId, StringPool.SLASH + tempScreenName);
-			}
-			catch (NoSuchGroupException nsge) {
-				screenName = tempScreenName;
+			if (GroupLocalServiceUtil.fetchFriendlyURLGroup(
+					companyId, StringPool.SLASH + tempScreenName) == null) {
 
-				break;
+				return tempScreenName;
 			}
 		}
-
-		return screenName;
 	}
 
 	private static final String[] _ADMIN_RESERVED_SCREEN_NAMES =

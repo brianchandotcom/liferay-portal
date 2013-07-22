@@ -17,7 +17,6 @@ package com.liferay.portlet.journal.service.impl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portlet.journal.DuplicateArticleImageIdException;
-import com.liferay.portlet.journal.NoSuchArticleImageException;
 import com.liferay.portlet.journal.model.JournalArticleImage;
 import com.liferay.portlet.journal.service.base.JournalArticleImageLocalServiceBaseImpl;
 
@@ -79,13 +78,11 @@ public class JournalArticleImageLocalServiceImpl
 
 	@Override
 	public void deleteArticleImage(long articleImageId) throws SystemException {
-		try {
-			JournalArticleImage articleImage =
-				journalArticleImagePersistence.findByPrimaryKey(articleImageId);
+		JournalArticleImage articleImage =
+			journalArticleImagePersistence.fetchByPrimaryKey(articleImageId);
 
+		if (articleImage != null) {
 			deleteArticleImage(articleImage);
-		}
-		catch (NoSuchArticleImageException nsaie) {
 		}
 	}
 
@@ -95,15 +92,12 @@ public class JournalArticleImageLocalServiceImpl
 			String elName, String languageId)
 		throws SystemException {
 
-		try {
-			JournalArticleImage articleImage =
-				journalArticleImagePersistence.findByG_A_V_E_E_L(
-					groupId, articleId, version, elInstanceId, elName,
-					languageId);
+		JournalArticleImage articleImage =
+			journalArticleImagePersistence.fetchByG_A_V_E_E_L(
+				groupId, articleId, version, elInstanceId, elName, languageId);
 
+		if (articleImage != null) {
 			deleteArticleImage(articleImage);
-		}
-		catch (NoSuchArticleImageException nsaie) {
 		}
 	}
 

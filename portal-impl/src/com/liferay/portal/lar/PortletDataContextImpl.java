@@ -75,7 +75,6 @@ import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.TeamLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.asset.NoSuchEntryException;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetLink;
@@ -180,13 +179,10 @@ public class PortletDataContextImpl implements PortletDataContext {
 	public void addAssetLinks(Class<?> clazz, long classPK)
 		throws PortalException, SystemException {
 
-		AssetEntry assetEntry = null;
+		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+			clazz.getName(), classPK);
 
-		try {
-			assetEntry = AssetEntryLocalServiceUtil.getEntry(
-				clazz.getName(), classPK);
-		}
-		catch (NoSuchEntryException nsee) {
+		if (assetEntry == null) {
 			return;
 		}
 

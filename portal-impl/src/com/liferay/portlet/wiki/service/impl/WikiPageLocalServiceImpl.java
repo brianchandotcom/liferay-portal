@@ -54,7 +54,6 @@ import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.SubscriptionSender;
 import com.liferay.portlet.PortletURLFactoryUtil;
-import com.liferay.portlet.asset.NoSuchEntryException;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetLink;
 import com.liferay.portlet.asset.model.AssetLinkConstants;
@@ -1771,11 +1770,10 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			if ((oldStatus != WorkflowConstants.STATUS_APPROVED) &&
 				(page.getVersion() != WikiPageConstants.VERSION_DEFAULT)) {
 
-				try {
-					AssetEntry draftAssetEntry =
-						assetEntryLocalService.getEntry(
-							WikiPage.class.getName(), page.getPrimaryKey());
+				AssetEntry draftAssetEntry = assetEntryLocalService.fetchEntry(
+					WikiPage.class.getName(), page.getPrimaryKey());
 
+				if (draftAssetEntry != null) {
 					long[] assetCategoryIds = draftAssetEntry.getCategoryIds();
 					String[] assetTagNames = draftAssetEntry.getTagNames();
 
@@ -1804,8 +1802,6 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 					assetEntryLocalService.deleteEntry(
 						draftAssetEntry.getEntryId());
-				}
-				catch (NoSuchEntryException nsee) {
 				}
 			}
 

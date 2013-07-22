@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.service.ResourceLocalServiceUtil;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.portlet.asset.NoSuchEntryException;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
@@ -253,22 +252,11 @@ public class VerifyJournal extends VerifyProcess {
 					JournalArticle.class.getName(),
 					article.getResourcePrimKey(), false, false, false);
 
-				try {
-					AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
-						JournalArticle.class.getName(),
-						article.getResourcePrimKey());
+				AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+					JournalArticle.class.getName(),
+					article.getResourcePrimKey());
 
-					if ((article.getStatus() ==
-							WorkflowConstants.STATUS_DRAFT) &&
-						(article.getVersion() ==
-							JournalArticleConstants.VERSION_DEFAULT)) {
-
-						AssetEntryLocalServiceUtil.updateEntry(
-							assetEntry.getClassName(), assetEntry.getClassPK(),
-							null, assetEntry.isVisible());
-					}
-				}
-				catch (NoSuchEntryException nsee) {
+				if (assetEntry == null) {
 					try {
 						JournalArticleLocalServiceUtil.updateAsset(
 							article.getUserId(), article, null, null, null);
@@ -280,6 +268,15 @@ public class VerifyJournal extends VerifyProcess {
 									article.getId() + ": " + e.getMessage());
 						}
 					}
+				}
+				else if ((article.getStatus() ==
+							WorkflowConstants.STATUS_DRAFT) &&
+						 (article.getVersion() ==
+							JournalArticleConstants.VERSION_DEFAULT)) {
+
+					AssetEntryLocalServiceUtil.updateEntry(
+						assetEntry.getClassName(), assetEntry.getClassPK(),
+						null, assetEntry.isVisible());
 				}
 
 				String content = GetterUtil.getString(article.getContent());

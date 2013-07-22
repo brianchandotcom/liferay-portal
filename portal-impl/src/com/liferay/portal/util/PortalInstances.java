@@ -14,7 +14,6 @@
 
 package com.liferay.portal.util;
 
-import com.liferay.portal.NoSuchCompanyException;
 import com.liferay.portal.events.EventsProcessorUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.shard.ShardUtil;
@@ -172,19 +171,21 @@ public class PortalInstances {
 
 			if (cookieCompanyId > 0) {
 				try {
-					CompanyLocalServiceUtil.getCompanyById(cookieCompanyId);
+					if (CompanyLocalServiceUtil.fetchCompanyById(
+							cookieCompanyId) == null) {
 
-					companyId = cookieCompanyId;
-
-					if (_log.isDebugEnabled()) {
-						_log.debug("Company id from cookie " + companyId);
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"Company id from cookie " + cookieCompanyId +
+										" does not exist");
+						}
 					}
-				}
-				catch (NoSuchCompanyException nsce) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							"Company id from cookie " + cookieCompanyId +
-								" does not exist");
+					else {
+						companyId = cookieCompanyId;
+
+						if (_log.isDebugEnabled()) {
+							_log.debug("Company id from cookie " + companyId);
+						}
 					}
 				}
 				catch (Exception e) {

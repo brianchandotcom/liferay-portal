@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.social.NoSuchActivitySettingException;
 import com.liferay.portlet.social.model.SocialActivityCounterDefinition;
 import com.liferay.portlet.social.model.SocialActivityDefinition;
 import com.liferay.portlet.social.model.SocialActivitySetting;
@@ -53,11 +52,12 @@ public class SocialActivitySettingLocalServiceImpl
 		long classNameId = PortalUtil.getClassNameId(className);
 		String name = _PREFIX_CLASS_PK.concat(String.valueOf(classPK));
 
-		try {
-			socialActivitySettingPersistence.removeByG_C_A_N(
+		SocialActivitySetting activitySetting =
+			socialActivitySettingPersistence.fetchByG_C_A_N(
 				groupId, classNameId, 0, name);
-		}
-		catch (NoSuchActivitySettingException nsase) {
+
+		if (activitySetting != null) {
+			socialActivitySettingPersistence.remove(activitySetting);
 		}
 	}
 

@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service.impl;
 
-import com.liferay.portal.NoSuchBrowserTrackerException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -29,10 +28,11 @@ public class BrowserTrackerLocalServiceImpl
 
 	@Override
 	public void deleteUserBrowserTracker(long userId) throws SystemException {
-		try {
-			browserTrackerPersistence.removeByUserId(userId);
-		}
-		catch (NoSuchBrowserTrackerException nsbte) {
+		BrowserTracker browserTracker = browserTrackerPersistence.fetchByUserId(
+			userId);
+
+		if (browserTracker != null) {
+			browserTrackerPersistence.remove(browserTracker);
 		}
 	}
 

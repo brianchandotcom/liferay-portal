@@ -1435,6 +1435,83 @@ public class DLFileEntryServiceHttp {
 		}
 	}
 
+	public static com.liferay.portal.kernel.search.Hits search(
+		HttpPrincipal httpPrincipal, long groupId, long creatorUserId,
+		int status, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		try {
+			MethodKey methodKey = new MethodKey(DLFileEntryServiceUtil.class,
+					"search", _searchParameterTypes38);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
+					creatorUserId, status, start, end);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
+					throw (com.liferay.portal.kernel.exception.SystemException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.portal.kernel.search.Hits)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static com.liferay.portal.kernel.search.Hits search(
+		HttpPrincipal httpPrincipal, long groupId, long creatorUserId,
+		long folderId, java.lang.String[] mimeTypes, int status, int start,
+		int end)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		try {
+			MethodKey methodKey = new MethodKey(DLFileEntryServiceUtil.class,
+					"search", _searchParameterTypes39);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
+					creatorUserId, folderId, mimeTypes, status, start, end);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
+					throw (com.liferay.portal.kernel.exception.SystemException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.portal.kernel.search.Hits)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntry updateFileEntry(
 		HttpPrincipal httpPrincipal, long fileEntryId,
 		java.lang.String sourceFileName, java.lang.String mimeType,
@@ -1447,7 +1524,7 @@ public class DLFileEntryServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(DLFileEntryServiceUtil.class,
-					"updateFileEntry", _updateFileEntryParameterTypes38);
+					"updateFileEntry", _updateFileEntryParameterTypes40);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					fileEntryId, sourceFileName, mimeType, title, description,
@@ -1487,7 +1564,7 @@ public class DLFileEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(DLFileEntryServiceUtil.class,
 					"verifyFileEntryCheckOut",
-					_verifyFileEntryCheckOutParameterTypes39);
+					_verifyFileEntryCheckOutParameterTypes41);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					fileEntryId, lockUuid);
@@ -1524,7 +1601,7 @@ public class DLFileEntryServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(DLFileEntryServiceUtil.class,
-					"verifyFileEntryLock", _verifyFileEntryLockParameterTypes40);
+					"verifyFileEntryLock", _verifyFileEntryLockParameterTypes42);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					fileEntryId, lockUuid);
@@ -1687,17 +1764,24 @@ public class DLFileEntryServiceHttp {
 			long.class, java.lang.String.class,
 			com.liferay.portal.service.ServiceContext.class
 		};
-	private static final Class<?>[] _updateFileEntryParameterTypes38 = new Class[] {
+	private static final Class<?>[] _searchParameterTypes38 = new Class[] {
+			long.class, long.class, int.class, int.class, int.class
+		};
+	private static final Class<?>[] _searchParameterTypes39 = new Class[] {
+			long.class, long.class, long.class, java.lang.String[].class,
+			int.class, int.class, int.class
+		};
+	private static final Class<?>[] _updateFileEntryParameterTypes40 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, boolean.class, long.class,
 			java.util.Map.class, java.io.File.class, java.io.InputStream.class,
 			long.class, com.liferay.portal.service.ServiceContext.class
 		};
-	private static final Class<?>[] _verifyFileEntryCheckOutParameterTypes39 = new Class[] {
+	private static final Class<?>[] _verifyFileEntryCheckOutParameterTypes41 = new Class[] {
 			long.class, java.lang.String.class
 		};
-	private static final Class<?>[] _verifyFileEntryLockParameterTypes40 = new Class[] {
+	private static final Class<?>[] _verifyFileEntryLockParameterTypes42 = new Class[] {
 			long.class, java.lang.String.class
 		};
 }

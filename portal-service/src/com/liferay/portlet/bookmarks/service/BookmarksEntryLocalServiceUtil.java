@@ -474,6 +474,14 @@ public class BookmarksEntryLocalServiceUtil {
 		return getService().restoreEntryFromTrash(userId, entryId);
 	}
 
+	public static com.liferay.portal.kernel.search.Hits search(long groupId,
+		long userId, long creatorUserId, int status, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .search(groupId, userId, creatorUserId, status, start, end);
+	}
+
 	public static void subscribeEntry(long userId, long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

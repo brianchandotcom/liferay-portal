@@ -760,12 +760,50 @@ public class BookmarksEntryServiceHttp {
 		}
 	}
 
+	public static com.liferay.portal.kernel.search.Hits search(
+		HttpPrincipal httpPrincipal, long groupId, long creatorUserId,
+		int status, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		try {
+			MethodKey methodKey = new MethodKey(BookmarksEntryServiceUtil.class,
+					"search", _searchParameterTypes20);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
+					creatorUserId, status, start, end);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
+					throw (com.liferay.portal.kernel.exception.SystemException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.portal.kernel.search.Hits)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static void subscribeEntry(HttpPrincipal httpPrincipal, long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(BookmarksEntryServiceUtil.class,
-					"subscribeEntry", _subscribeEntryParameterTypes20);
+					"subscribeEntry", _subscribeEntryParameterTypes21);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, entryId);
 
@@ -797,7 +835,7 @@ public class BookmarksEntryServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(BookmarksEntryServiceUtil.class,
-					"unsubscribeEntry", _unsubscribeEntryParameterTypes21);
+					"unsubscribeEntry", _unsubscribeEntryParameterTypes22);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, entryId);
 
@@ -832,7 +870,7 @@ public class BookmarksEntryServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(BookmarksEntryServiceUtil.class,
-					"updateEntry", _updateEntryParameterTypes22);
+					"updateEntry", _updateEntryParameterTypes23);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, entryId,
 					groupId, folderId, name, url, description, serviceContext);
@@ -927,13 +965,16 @@ public class BookmarksEntryServiceHttp {
 	private static final Class<?>[] _restoreEntryFromTrashParameterTypes19 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _subscribeEntryParameterTypes20 = new Class[] {
+	private static final Class<?>[] _searchParameterTypes20 = new Class[] {
+			long.class, long.class, int.class, int.class, int.class
+		};
+	private static final Class<?>[] _subscribeEntryParameterTypes21 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _unsubscribeEntryParameterTypes21 = new Class[] {
+	private static final Class<?>[] _unsubscribeEntryParameterTypes22 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _updateEntryParameterTypes22 = new Class[] {
+	private static final Class<?>[] _updateEntryParameterTypes23 = new Class[] {
 			long.class, long.class, long.class, java.lang.String.class,
 			java.lang.String.class, java.lang.String.class,
 			com.liferay.portal.service.ServiceContext.class

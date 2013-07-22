@@ -608,6 +608,82 @@ public class MBThreadServiceHttp {
 		}
 	}
 
+	public static com.liferay.portal.kernel.search.Hits search(
+		HttpPrincipal httpPrincipal, long groupId, long creatorUserId,
+		int status, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		try {
+			MethodKey methodKey = new MethodKey(MBThreadServiceUtil.class,
+					"search", _searchParameterTypes16);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
+					creatorUserId, status, start, end);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
+					throw (com.liferay.portal.kernel.exception.SystemException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.portal.kernel.search.Hits)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static com.liferay.portal.kernel.search.Hits search(
+		HttpPrincipal httpPrincipal, long groupId, long creatorUserId,
+		long startDate, long endDate, int status, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		try {
+			MethodKey methodKey = new MethodKey(MBThreadServiceUtil.class,
+					"search", _searchParameterTypes17);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
+					creatorUserId, startDate, endDate, status, start, end);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
+					throw (com.liferay.portal.kernel.exception.SystemException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.portal.kernel.search.Hits)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static com.liferay.portlet.messageboards.model.MBThread splitThread(
 		HttpPrincipal httpPrincipal, long messageId, java.lang.String subject,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -615,7 +691,7 @@ public class MBThreadServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(MBThreadServiceUtil.class,
-					"splitThread", _splitThreadParameterTypes16);
+					"splitThread", _splitThreadParameterTypes18);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					messageId, subject, serviceContext);
@@ -651,7 +727,7 @@ public class MBThreadServiceHttp {
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(MBThreadServiceUtil.class,
-					"unlockThread", _unlockThreadParameterTypes17);
+					"unlockThread", _unlockThreadParameterTypes19);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, threadId);
 
@@ -729,11 +805,18 @@ public class MBThreadServiceHttp {
 	private static final Class<?>[] _restoreThreadFromTrashParameterTypes15 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _splitThreadParameterTypes16 = new Class[] {
+	private static final Class<?>[] _searchParameterTypes16 = new Class[] {
+			long.class, long.class, int.class, int.class, int.class
+		};
+	private static final Class<?>[] _searchParameterTypes17 = new Class[] {
+			long.class, long.class, long.class, long.class, int.class, int.class,
+			int.class
+		};
+	private static final Class<?>[] _splitThreadParameterTypes18 = new Class[] {
 			long.class, java.lang.String.class,
 			com.liferay.portal.service.ServiceContext.class
 		};
-	private static final Class<?>[] _unlockThreadParameterTypes17 = new Class[] {
+	private static final Class<?>[] _unlockThreadParameterTypes19 = new Class[] {
 			long.class
 		};
 }

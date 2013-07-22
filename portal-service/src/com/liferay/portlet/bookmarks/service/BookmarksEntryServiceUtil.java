@@ -191,6 +191,13 @@ public class BookmarksEntryServiceUtil {
 		getService().restoreEntryFromTrash(entryId);
 	}
 
+	public static com.liferay.portal.kernel.search.Hits search(long groupId,
+		long creatorUserId, int status, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().search(groupId, creatorUserId, status, start, end);
+	}
+
 	public static void subscribeEntry(long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

@@ -32,7 +32,7 @@
 
 		<c:if test="<%= (layout != null) && (layout.isTypePortlet() || layout.isTypePanel()) && !layout.isLayoutPrototypeLinkActive() && !group.isControlPanel() && (!group.hasStagingGroup() || group.isStagingGroup()) && (GroupPermissionUtil.contains(permissionChecker, group.getGroupId(), ActionKeys.ADD_LAYOUT) || hasLayoutUpdatePermission || (layoutTypePortlet.isCustomizable() && layoutTypePortlet.isCustomizedView() && hasLayoutCustomizePermission)) %>">
 			<div class="add-content-menu" id="<portlet:namespace />addPanelContainer">
-				<button class="close pull-right" id="closePanel" type="button">&#x00D7;</button>
+				<aui:button cssClass="close pull-right" name="closePanelAdd" value="&times;" />
 
 				<%
 				String[] tabs1Names = new String[0];
@@ -96,5 +96,5 @@
 </c:choose>
 
 <aui:script use="liferay-dockbar">
-	A.one('#closePanel').on('click', Liferay.Dockbar.toggleAddPanel, Liferay.Dockbar);
+	A.one('#<portlet:namespace />closePanelAdd').on('click', Liferay.Dockbar.toggleAddPanel, Liferay.Dockbar);
 </aui:script>

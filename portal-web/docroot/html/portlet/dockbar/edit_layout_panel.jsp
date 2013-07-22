@@ -42,7 +42,7 @@
 			</aui:script>
 		</c:when>
 		<c:otherwise>
-			<button class="close pull-right" id="closePanel" type="button">&times;</button>
+			<aui:button cssClass="close pull-right" name="closePanelEdit" value="&times;" />
 
 			<h1><liferay-ui:message key="edit-page" /></h1>
 
@@ -74,13 +74,11 @@
 			</c:if>
 
 			<aui:script use="aui-io-request,aui-loading-mask-deprecated,liferay-dockbar">
-				A.one('#closePanel').on('click', Liferay.Dockbar.toggleEditLayoutPanel, Liferay.Dockbar);
+				A.one('#<portlet:namespace />closePanelEdit').on('click', Liferay.Dockbar.toggleEditLayoutPanel, Liferay.Dockbar);
 
 				A.one('#<portlet:namespace />name').focus();
 
-				var BODY = A.getBody();
-
-				BODY.plug(A.LoadingMask);
+				var loadingMask = A.getBody().plug(A.LoadingMask).loadingmask;
 
 				Liferay.once(
 					'submitForm',
@@ -95,16 +93,16 @@
 								<portlet:param name="groupId" value="<%= String.valueOf(liveGroupId) %>" />
 							</liferay-portlet:renderURL>
 
-							form.get('<portlet:namespace />redirect').set('value', '<%= HttpUtil.addParameter(redirectURL.toString(), liferayPortletResponse.getNamespace() + "selPlid", selPlid) %>');
+							form.get('<portlet:namespace />redirect').val('<%= HttpUtil.addParameter(redirectURL.toString(), liferayPortletResponse.getNamespace() + "selPlid", selPlid) %>');
 
-							BODY.loadingmask.show();
+							loadingMask.show();
 
 							A.io.request(
-								form.get('action'),
+								form.attr('action'),
 								{
 									dataType: 'json',
 									form: {
-										id: form.get('id')
+										id: form.attr('id')
 									},
 									after: {
 										success: function(event, id, obj) {
@@ -118,10 +116,10 @@
 
 											panel.setContent(response);
 
-											BODY.loadingmask.hide();
+											loadingMask.hide();
 										},
 										failure: function(event) {
-											BODY.loadingMask.hide();
+											loadingMask.hide();
 										}
 									}
 								}

@@ -91,8 +91,8 @@ if (selLayout != null) {
 		<c:when test="<%= themeDisplay.isStateExclusive() %>">
 			<aui:button name="manageCustomization" value="show-customizable-sections" />
 
-			<div class="hide layout-customizable-controls" id="<portlet:namespace />layout-customizable-controls">
-				<span title='<liferay-ui:message key="customizable-help" />'>
+			<div class="hide layout-customizable-controls" id="<portlet:namespace />layoutCustomizableControls">
+				<span title="<liferay-ui:message key="customizable-help" />">
 					<aui:input cssClass="layout-customizable-checkbox" helpMessage='<%= group.isLayoutPrototype() ? "modifiable-help" : "customizable-help" %>' id="TypeSettingsProperties--[COLUMN_ID]-customizable--" label='<%= (group.isLayoutSetPrototype() || group.isLayoutPrototype()) ? "modifiable" : "customizable" %>' name="TypeSettingsProperties--[COLUMN_ID]-customizable--" type="checkbox" useNamespace="<%= false %>" />
 				</span>
 			</div>
@@ -113,11 +113,7 @@ if (selLayout != null) {
 	<aui:script use="liferay-layout-customization-settings">
 		new Liferay.LayoutCustomizationSettings(
 			{
-				namespace: '<portlet:namespace />',
-				strings: {
-					HIDE: '<liferay-ui:message key="hide-customizable-sections" />',
-					SHOW: '<liferay-ui:message key="show-customizable-sections" />'
-				}
+				namespace: '<portlet:namespace />'
 			}
 		);
 	</aui:script>

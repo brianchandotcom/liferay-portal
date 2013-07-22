@@ -5,8 +5,6 @@ AUI.add(
 
 		var Lang = A.Lang;
 
-		var Portlet = Liferay.Portlet;
-
 		var Util = Liferay.Util;
 
 		var BODY = A.getBody();
@@ -16,12 +14,6 @@ AUI.add(
 		var CSS_EDIT_LAYOUT_CONTENT = 'lfr-has-edit-layout';
 
 		var CSS_PREVIEW_CONTENT = 'lfr-has-device-preview';
-
-		var BODY_CONTENT = 'bodyContent';
-
-		var BOUNDING_BOX = 'boundingBox';
-
-		var CONTENT_BOX = 'contentBox';
 
 		var EVENT_CLICK = 'click';
 
@@ -132,6 +124,32 @@ AUI.add(
 				Util.openWindow(config);
 			},
 
+			_registerPanels: function() {
+				var instance = this;
+
+				var namespace = instance._namespace;
+
+				AObject.each(
+					DOCKBAR_PANELS,
+					function(item, index, collection) {
+						var panelId = item.id;
+
+						var panelTrigger = A.one('#' + namespace + panelId);
+
+						if (panelTrigger) {
+							panelTrigger.on(
+								EVENT_CLICK,
+								function(event) {
+									event.halt();
+
+									instance._togglePanel(panelId);
+								}
+							);
+						}
+					}
+				);
+			},
+
 			_setLoadingAnimation: function(panel) {
 				var instance = this;
 
@@ -174,7 +192,7 @@ AUI.add(
 					BODY.toggleClass(panel.css);
 
 					if (panelNode && BODY.hasClass(panel.css)) {
-						panel.showFn();
+						panel.showFn(panelId);
 
 						panelNode.show();
 					}
@@ -201,46 +219,9 @@ AUI.add(
 				Liferay.fire('initLayout');
 				Liferay.fire('initNavigation');
 
-				var addPanel = A.one('#' + namespace + 'addPanel');
+				instance._registerPanels();
 
-				if (addPanel) {
-					addPanel.on(
-						EVENT_CLICK,
-						function(event) {
-							event.halt();
-
-							instance._togglePanel(STR_ADD_PANEL);
-						}
-					);
-				}
-
-				var previewPanel = A.one('#' + namespace + 'previewPanel');
-
-				if (previewPanel) {
-					previewPanel.on(
-						EVENT_CLICK,
-						function(event) {
-							event.halt();
-
-							instance._togglePanel(STR_PREVIEW_PANEL);
-						}
-					);
-				}
-
-				var editLayoutPanel = A.one('#' + namespace + 'editLayoutPanel');
-
-				if (editLayoutPanel) {
-					editLayoutPanel.on(
-						EVENT_CLICK,
-						function(event) {
-							event.halt();
-
-							instance._togglePanel(STR_EDIT_LAYOUT_PANEL);
-						}
-					);
-				}
-
-				var userAvatar = A.one('#' + namespace + 'userAvatar');
+				var userAvatar = A.oneNS(namespace, '#userAvatar');
 
 				if (userAvatar) {
 					userAvatar.delegate(
@@ -248,10 +229,7 @@ AUI.add(
 						function(event) {
 							event.preventDefault();
 
-							instance._openWindow(
-								{},
-								event.currentTarget
-							);
+							instance._openWindow({}, event.currentTarget);
 						},
 						'a.use-dialog'
 					);
@@ -259,21 +237,21 @@ AUI.add(
 
 				Liferay.fire('dockbarLoaded');
 			},
-			['aui-io-request', 'liferay-store', 'node-focusmanager']
+			['aui-io-request', 'liferay-node', 'liferay-store', 'node-focusmanager']
 		);
 
 		Liferay.provide(
 			Dockbar,
-			'_addPanel',
-			function() {
+			'_showPanel',
+			function(panelId) {
 				var instance = this;
 
-				instance._setLoadingAnimation(STR_ADD_PANEL);
+				instance._setLoadingAnimation(panelId);
 
-				var addPanel = A.one('#' + instance._namespace + 'addPanel');
+				var panel = A.one('#' + instance._namespace + panelId);
 
-				if (addPanel) {
-					var uri = addPanel.ancestor().attr('data-addURL');
+				if (panel) {
+					var uri = panel.ancestor().attr('data-panelURL');
 
 					A.io.request(
 						uri,
@@ -282,7 +260,7 @@ AUI.add(
 								success: function(event, id, obj) {
 									var response = this.get('responseData');
 
-									var panelNode = instance.getPanelNode(STR_ADD_PANEL);
+									var panelNode = instance.getPanelNode(panelId);
 
 									panelNode.plug(A.Plugin.ParseContent);
 
@@ -296,94 +274,28 @@ AUI.add(
 			['aui-io-request', 'aui-parse-content', 'event-outside']
 		);
 
-		Liferay.provide(
-			Dockbar,
-			'_previewPanel',
-			function() {
-				var instance = this;
-
-				instance._setLoadingAnimation(STR_PREVIEW_PANEL);
-
-				var previewPanel = A.one('#' + instance._namespace + 'previewPanel');
-
-				if (previewPanel) {
-					var uri = previewPanel.attr('href');
-
-					A.io.request(
-						uri,
-						{
-							after: {
-								success: function(event, id, obj) {
-									var response = this.get('responseData');
-
-									var panelNode = instance.getPanelNode(STR_PREVIEW_PANEL);
-
-									panelNode.plug(A.Plugin.ParseContent);
-
-									panelNode.setContent(response);
-								}
-							}
-						}
-					);
-				}
-			},
-			['aui-io-request', 'aui-parse-content', 'event-outside']
-		);
-
-		Liferay.provide(
-			Dockbar,
-			'_editLayoutPanel',
-			function() {
-				var instance = this;
-
-				instance._setLoadingAnimation(STR_EDIT_LAYOUT_PANEL);
-
-				var editLayoutPanel = A.one('#' + instance._namespace + 'editLayoutPanel');
-
-				if (editLayoutPanel) {
-					var uri = editLayoutPanel.attr('href');
-
-					A.io.request(
-						uri,
-						{
-							after: {
-								success: function(event, id, obj) {
-									var response = this.get('responseData');
-
-									var panelNode = instance.getPanelNode(STR_EDIT_LAYOUT_PANEL);
-
-									panelNode.plug(A.Plugin.ParseContent);
-
-									panelNode.setContent(response);
-								}
-							}
-						}
-					);
-				}
-			},
-			['aui-io-request', 'aui-parse-content']
-		);
+		var showPanelFn = A.bind('_showPanel', Dockbar);
 
 		var DOCKBAR_PANELS = {
 			'addPanel': {
 				css: CSS_ADD_CONTENT,
 				id: STR_ADD_PANEL,
 				node: null,
-				showFn: Dockbar._addPanel,
+				showFn: showPanelFn,
 				tpl: TPL_ADD_CONTENT
 			},
 			'previewPanel': {
 				css: CSS_PREVIEW_CONTENT,
 				id: STR_PREVIEW_PANEL,
 				node: null,
-				showFn: Dockbar._previewPanel,
+				showFn: showPanelFn,
 				tpl: TPL_PREVIEW_PANEL
 			},
 			'editLayoutPanel': {
 				css: CSS_EDIT_LAYOUT_CONTENT,
 				id: STR_EDIT_LAYOUT_PANEL,
 				node: null,
-				showFn: Dockbar._editLayoutPanel,
+				showFn: showPanelFn,
 				tpl: TPL_EDIT_LAYOUT_PANEL
 			}
 		};

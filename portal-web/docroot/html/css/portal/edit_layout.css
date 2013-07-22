@@ -19,7 +19,7 @@
 
 	.site-admin-link {
 		bottom: 0;
-		padding: 10px;
+		padding: 14px;
 		position: fixed;
 	}
 
@@ -36,13 +36,13 @@
 			margin: 20px -10px 50px;
 
 			.accordion-group.lfr-panel-extended {
-				border: solid;
-				border-width: 1px 0 0;
+				border: 0 solid transparent;
+				border-top-width: 1px;
 				margin-bottom: 0;
 
 				&:last-child {
 					.toggler-header-collapsed {
-						border-bottom: 1px solid;
+						border-bottom: 1px solid transparent;
 					}
 				}
 
@@ -55,8 +55,8 @@
 				}
 
 				.accordion-inner {
-					border: solid;
-					border-width: 1px 0 0;
+					border: 0 solid transparent;
+					border-top-width: 1px;
 					padding: 15px;
 				}
 			}
@@ -67,7 +67,7 @@
 
 			.lfr-current-theme {
 				background: inherit;
-				border: none;
+				border-width: 0;
 			}
 		}
 	}
@@ -85,7 +85,7 @@
 
 	.taglib-form-navigator {
 		.button-holder {
-			background-color: #FFFFFF;
+			background-color: #FFF;
 		}
 
 		.accordion {

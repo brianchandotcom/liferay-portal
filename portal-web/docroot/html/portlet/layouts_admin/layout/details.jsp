@@ -262,9 +262,7 @@ StringBuilder friendlyURLBase = new StringBuilder();
 		A.one('#<portlet:namespace />urlBase').on(
 			'mouseenter',
 			function(event) {
-				var el = A.Node.getDOMNode(event.currentTarget);
-
-				Liferay.Portal.ToolTip.show(el, '<%= friendlyURLBase.toString() %>');
+				Liferay.Portal.ToolTip.show(event.currentTarget, '<%= friendlyURLBase.toString() %>');
 			}
 		);
 	}

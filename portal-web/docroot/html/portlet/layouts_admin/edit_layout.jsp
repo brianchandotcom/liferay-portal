@@ -240,7 +240,9 @@ Boolean showAddAction = ParamUtil.getBoolean(request, "showAddAction", true);
 					var popup;
 
 					var clickHandler = function(event) {
-						var dataValue = event.target.ancestor().attr('data-value') || event.target.attr('data-value');
+						var target = event.target;
+
+						var dataValue = target.ancestor().attr('data-value') || target.attr('data-value');
 
 						if (dataValue === 'add-child-page') {
 							content = A.one('#<portlet:namespace />addLayout');

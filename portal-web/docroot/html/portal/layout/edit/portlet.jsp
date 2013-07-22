@@ -21,7 +21,7 @@ Boolean showCopyPortlets = ParamUtil.getBoolean(request, "showCopyPortlets");
 Boolean showLayoutTemplates = ParamUtil.getBoolean(request, "showLayoutTemplates", true);
 %>
 
-<div class='<%= showCopyPortlets ? StringPool.BLANK : "hide" %>' id="<portlet:namespace />copyPortletsFromPage">
+<div class="<%= showCopyPortlets ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />copyPortletsFromPage">
 	<p>
 		<c:if test="<%= selLayout != null %>">
 			<liferay-ui:message arguments="<%= HtmlUtil.escape(selLayout.getName(locale)) %>" key="the-applications-in-page-x-will-be-replaced-with-the-ones-in-the-page-you-select-below" />
@@ -81,7 +81,7 @@ Boolean showLayoutTemplates = ParamUtil.getBoolean(request, "showLayoutTemplates
 	</aui:button-row>
 </div>
 
-<div class='<%= showLayoutTemplates ? StringPool.BLANK : "hide" %>' id="<portlet:namespace />layoutTemplates">
+<div class="<%= showLayoutTemplates ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />layoutTemplates">
 
 	<%
 	LayoutTypePortlet selLayoutTypePortlet = null;

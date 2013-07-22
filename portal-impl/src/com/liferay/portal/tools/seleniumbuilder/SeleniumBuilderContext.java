@@ -672,28 +672,7 @@ public class SeleniumBuilderContext {
 
 		String macroFileName = getMacroFileName(macroName);
 
-		List<Element> varElements =
-			_seleniumBuilderFileUtil.getAllChildElements(rootElement, "var");
-
-		for (Element varElement : varElements) {
-			String varName = varElement.attributeValue("name");
-			String varPath = varElement.attributeValue("path");
-			String varLocatorKey = varElement.attributeValue("locator-key");
-
-			if (!Validator.isNull(varPath) &&
-				!Validator.isNull(varLocatorKey)) {
-
-				if (!_pathRootElements.containsKey(varPath)) {
-					_seleniumBuilderFileUtil.throwValidationException(
-						1014, macroFileName, varElement, varPath);
-				}
-
-				if (!_isValidLocatorKey(varPath, null, varLocatorKey)) {
-					_seleniumBuilderFileUtil.throwValidationException(
-						1010, macroFileName, varElement, varLocatorKey);
-				}
-			}
-		}
+		validateVarElements(rootElement, macroFileName);
 
 		List<Element> commandElements =
 			_seleniumBuilderFileUtil.getAllChildElements(
@@ -744,6 +723,8 @@ public class SeleniumBuilderContext {
 		}
 
 		String testCaseFileName = getTestCaseFileName(testCaseName);
+
+		validateVarElements(rootElement, testCaseFileName);
 
 		List<Element> commandElements =
 			_seleniumBuilderFileUtil.getAllChildElements(
@@ -798,6 +779,31 @@ public class SeleniumBuilderContext {
 			}
 			else if (testSuite != null) {
 				_validateTestSuiteElement(testSuiteFileName, executeElement);
+			}
+		}
+	}
+
+	public void validateVarElements(Element rootElement, String fileName) {
+		List<Element> varElements =
+			_seleniumBuilderFileUtil.getAllChildElements(rootElement, "var");
+
+		for (Element varElement : varElements) {
+			//String varName = varElement.attributeValue("name");
+			String varPath = varElement.attributeValue("path");
+			String varLocatorKey = varElement.attributeValue("locator-key");
+
+			if (!Validator.isNull(varPath) &&
+				!Validator.isNull(varLocatorKey)) {
+
+				if (!_pathRootElements.containsKey(varPath)) {
+					_seleniumBuilderFileUtil.throwValidationException(
+						1014, fileName, varElement, varPath);
+				}
+
+				if (!_isValidLocatorKey(varPath, null, varLocatorKey)) {
+					_seleniumBuilderFileUtil.throwValidationException(
+						1010, fileName, varElement, varLocatorKey);
+				}
 			}
 		}
 	}
@@ -1007,6 +1013,10 @@ public class SeleniumBuilderContext {
 		}
 
 		return false;
+	}
+
+	private boolean _isValidPath(String pathName) {
+		return _pathRootElements.containsKey(pathName);
 	}
 
 	private String _normalizeFileName(String fileName) {

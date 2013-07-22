@@ -214,7 +214,7 @@ String[][] categorySections = {mainSections};
 					</c:when>
 					<c:when test="<%= !SitesUtil.isLayoutDeleteable(selLayout) %>">
 						<div class="alert alert-block">
-							<liferay-ui:message key="this-page-cannot-have-children-or-be-deleted-because-it-is-associated-to-a-site-template" />
+							<liferay-ui:message key="this-page-can-neither-have-child-pages-nor-be-deleted-because-it-is-associated-to-a-site-template" />
 						</div>
 					</c:when>
 				</c:choose>

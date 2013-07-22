@@ -14,6 +14,17 @@
 
 package com.liferay.portal.service;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.LayoutConstants;
+import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
+
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -23,6 +34,50 @@ public abstract class BaseLocalServiceImpl implements BaseLocalService {
 		Class<?> clazz = getClass();
 
 		return clazz.getClassLoader();
+	}
+
+	protected String getEntryLayoutURL(
+		Layout layout, ServiceContext serviceContext) {
+
+		HttpServletRequest request = serviceContext.getRequest();
+
+		if (request == null) {
+			return StringPool.BLANK;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		try {
+			return PortalUtil.getLayoutURL(layout, themeDisplay);
+		}
+		catch (Exception e) {
+			return StringPool.BLANK;
+		}
+	}
+
+	protected String getPortletLayoutURL(
+			long groupId, String portletId, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		String portletLayoutURL = StringPool.BLANK;
+
+		long controlPanelPlid = PortalUtil.getControlPanelPlid(
+			serviceContext.getCompanyId());
+
+		long portletPlid = serviceContext.getPlid();
+
+		if (portletPlid == controlPanelPlid) {
+			portletPlid = PortalUtil.getPlidFromPortletId(groupId, portletId);
+
+			if (portletPlid != LayoutConstants.DEFAULT_PLID) {
+				Layout layout = LayoutLocalServiceUtil.getLayout(portletPlid);
+
+				portletLayoutURL = getEntryLayoutURL(layout, serviceContext);
+			}
+		}
+
+		return portletLayoutURL;
 	}
 
 }

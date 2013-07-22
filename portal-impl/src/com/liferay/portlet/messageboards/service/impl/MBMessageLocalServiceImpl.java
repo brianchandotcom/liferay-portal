@@ -59,6 +59,7 @@ import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.SubscriptionSender;
+import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetLinkConstants;
 import com.liferay.portlet.blogs.model.BlogsEntry;
@@ -100,6 +101,8 @@ import java.util.Date;
 import java.util.List;
 
 import javax.portlet.PortletPreferences;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -1802,6 +1805,40 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		return body;
 	}
 
+	protected String getMessageURL(
+			MBMessage message, HttpServletRequest request,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		long controlPanelPlid = PortalUtil.getControlPanelPlid(
+			serviceContext.getCompanyId());
+
+		String layoutFullURL = getPortletLayoutURL(
+			message.getGroupId(), PortletKeys.MESSAGE_BOARDS, serviceContext);
+
+		String messageURL = StringPool.BLANK;
+
+		if (Validator.isNotNull(layoutFullURL)) {
+			messageURL =
+				layoutFullURL + Portal.FRIENDLY_URL_SEPARATOR +
+					"message_boards/view_message/" + message.getMessageId();
+		}
+		else {
+			PortletURL portletURL = PortletURLFactoryUtil.create(
+				request, PortletKeys.MESSAGE_BOARDS_ADMIN, controlPanelPlid,
+				PortletRequest.RENDER_PHASE);
+
+			portletURL.setParameter(
+				"struts_action", "/message_boards_admin/view_message");
+			portletURL.setParameter(
+				"messageId", String.valueOf(message.getMessageId()));
+
+			messageURL = portletURL.toString();
+		}
+
+		return messageURL;
+	}
+
 	protected String getSubject(String subject, String body) {
 		if (Validator.isNull(subject)) {
 			return StringUtil.shorten(body);
@@ -1952,9 +1989,13 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			categoryIds.addAll(category.getAncestorCategoryIds());
 		}
 
-		String messageURL =
-			layoutFullURL + Portal.FRIENDLY_URL_SEPARATOR +
-				"message_boards/view_message/" + message.getMessageId();
+		String messageURL = StringPool.BLANK;
+
+		HttpServletRequest request = serviceContext.getRequest();
+
+		if (Validator.isNotNull(layoutFullURL) && (request != null)) {
+			messageURL = getMessageURL(message, request, serviceContext);
+		}
 
 		String fromName = MBUtil.getEmailFromName(
 			preferences, message.getCompanyId());
@@ -2004,8 +2045,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		if (htmlFormat && message.isFormatBBCode()) {
 			try {
 				messageBody = BBCodeTranslatorUtil.getHTML(messageBody);
-
-				HttpServletRequest request = serviceContext.getRequest();
 
 				if (request != null) {
 					ThemeDisplay themeDisplay =

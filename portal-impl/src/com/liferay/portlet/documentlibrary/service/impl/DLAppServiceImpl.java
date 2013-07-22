@@ -2575,6 +2575,29 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	}
 
 	@Override
+	public Hits search(
+			long repositoryId, long creatorUserId, int status, int start,
+			int end)
+		throws PortalException, SystemException {
+
+		Repository repository = getRepository(repositoryId);
+
+		return repository.search(creatorUserId, status, start, end);
+	}
+
+	@Override
+	public Hits search(
+			long repositoryId, long creatorUserId, long folderId,
+			String[] mimeTypes, int status, int start, int end)
+		throws PortalException, SystemException {
+
+		Repository repository = getRepository(repositoryId);
+
+		return repository.search(
+			creatorUserId, folderId, mimeTypes, status, start, end);
+	}
+
+	@Override
 	public Hits search(long repositoryId, SearchContext searchContext)
 		throws SearchException {
 

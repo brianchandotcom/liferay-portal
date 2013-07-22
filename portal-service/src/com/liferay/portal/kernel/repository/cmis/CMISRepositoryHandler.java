@@ -477,6 +477,23 @@ public abstract class CMISRepositoryHandler extends BaseRepositoryImpl {
 	}
 
 	@Override
+	public Hits search(long creatorUserId, int status, int start, int end)
+		throws PortalException, SystemException {
+
+		return _baseCmisRepository.search(creatorUserId, status, start, end);
+	}
+
+	@Override
+	public Hits search(
+			long creatorUserId, long folderId, String[] mimeTypes, int status,
+			int start, int end)
+		throws PortalException, SystemException {
+
+		return _baseCmisRepository.search(
+			creatorUserId, folderId, mimeTypes, status, start, end);
+	}
+
+	@Override
 	public Hits search(SearchContext searchContext) throws SearchException {
 		return _baseCmisRepository.search(searchContext);
 	}

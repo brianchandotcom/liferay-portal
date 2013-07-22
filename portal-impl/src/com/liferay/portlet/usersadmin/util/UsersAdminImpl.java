@@ -16,6 +16,7 @@ package com.liferay.portlet.usersadmin.util;
 
 import com.liferay.portal.NoSuchOrganizationException;
 import com.liferay.portal.NoSuchUserGroupException;
+import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.Document;
@@ -29,6 +30,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.UniqueList;
@@ -73,6 +75,7 @@ import com.liferay.portal.service.permission.UserGroupPermissionUtil;
 import com.liferay.portal.service.permission.UserGroupRolePermissionUtil;
 import com.liferay.portal.service.persistence.UserGroupRolePK;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.comparator.GroupNameComparator;
 import com.liferay.portal.util.comparator.GroupTypeComparator;
@@ -1078,70 +1081,76 @@ public class UsersAdminImpl implements UsersAdmin {
 		return websites;
 	}
 
+	/**
+	 * @deprecated As of 6.2.0
+	 */
 	@Override
 	public boolean hasUpdateEmailAddress(
 			PermissionChecker permissionChecker, User user)
 		throws PortalException, SystemException {
 
-		String[] fieldEditiableUserEmailAddress =
-			PropsValues.
-				FIELD_EDITABLE_COM_LIFERAY_PORTAL_MODEL_USER_EMAILADDRESS;
+		return hasUpdateFieldPermission(user, "emailAddress");
+	}
 
-		if (ArrayUtil.contains(
-				fieldEditiableUserEmailAddress, "administrator") &&
-			permissionChecker.isCompanyAdmin()) {
+	@Override
+	public boolean hasUpdateFieldPermission(User user, String field)
+		throws PortalException, SystemException {
 
+		if (Validator.isNull(user)) {
 			return true;
 		}
 
-		if (ArrayUtil.contains(
-				fieldEditiableUserEmailAddress, "user-with-mx") &&
-			user.hasCompanyMx()) {
+		for (String userType : PropsValues.FIELDS_EDITABLE_USER_TYPES) {
+			if (userType.equals("user-with-mx") && user.hasCompanyMx()) {
+				return true;
+			}
 
-			return true;
+			if (userType.equals("user-without-mx") && !user.hasCompanyMx()) {
+				return true;
+			}
 		}
 
-		if (ArrayUtil.contains(
-				fieldEditiableUserEmailAddress, "user-without-mx") &&
-			!user.hasCompanyMx()) {
+		for (String roleName : PropsValues.FIELDS_EDITABLE_ROLES) {
+			Role role = RoleLocalServiceUtil.fetchRole(
+				user.getCompanyId(), roleName);
 
-			return true;
+			if ((role != null) &&
+				RoleLocalServiceUtil.hasUserRole(
+					user.getUserId(), role.getRoleId())) {
+
+				return true;
+			}
+		}
+
+		String emailAddress = user.getEmailAddress();
+
+		for (String domainName : PropsValues.FIELDS_EDITABLE_DOMAINS) {
+			if (emailAddress.endsWith(domainName)) {
+				return true;
+			}
+		}
+
+		String[] fieldEditableDomainNames = PropsUtil.getArray(
+			PropsKeys.FIELD_EDITABLE_DOMAINS, new Filter(field));
+
+		for (String domainName : fieldEditableDomainNames) {
+			if (emailAddress.endsWith(domainName)) {
+				return true;
+			}
 		}
 
 		return false;
 	}
 
+	/**
+	 * @deprecated As of 6.2.0
+	 */
 	@Override
 	public boolean hasUpdateScreenName(
 			PermissionChecker permissionChecker, User user)
 		throws PortalException, SystemException {
 
-		String[] fieldEditiableUserScreenName =
-			PropsValues.
-				FIELD_EDITABLE_COM_LIFERAY_PORTAL_MODEL_USER_SCREENNAME;
-
-		if (ArrayUtil.contains(
-				fieldEditiableUserScreenName, "administrator") &&
-			permissionChecker.isCompanyAdmin()) {
-
-			return true;
-		}
-
-		if (ArrayUtil.contains(
-				fieldEditiableUserScreenName, "user-with-mx") &&
-			user.hasCompanyMx()) {
-
-			return true;
-		}
-
-		if (ArrayUtil.contains(
-				fieldEditiableUserScreenName, "user-without-mx") &&
-			!user.hasCompanyMx()) {
-
-			return true;
-		}
-
-		return false;
+		return hasUpdateFieldPermission(user, "screenName");
 	}
 
 	@Override

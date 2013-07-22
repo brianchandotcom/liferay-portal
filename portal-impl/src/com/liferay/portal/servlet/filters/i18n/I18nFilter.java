@@ -144,7 +144,7 @@ public class I18nFilter extends BasePortalFilter {
 				PortalUtil.getLocale(request));
 		}
 		else if (PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 3) {
-			if (!Validator.isBlank(userLanguageId)) {
+			if (Validator.isNotNull(userLanguageId)) {
 				return null;
 			}
 		}

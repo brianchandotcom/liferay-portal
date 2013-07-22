@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -217,6 +218,22 @@ public class DLFileEntryIndexer extends BaseIndexer {
 			}
 
 			contextQuery.add(folderIdsQuery, BooleanClauseOccur.MUST);
+		}
+
+		String[] mimeTypes = (String[])searchContext.getAttribute("mimeTypes");
+
+		if ((mimeTypes != null) && (mimeTypes.length > 0)) {
+			BooleanQuery mimeTypesQuery = BooleanQueryFactoryUtil.create(
+				searchContext);
+
+			for (String mimeType : mimeTypes) {
+				String tmp = StringUtil.replace(
+					mimeType, CharPool.FORWARD_SLASH, CharPool.UNDERLINE);
+
+				mimeTypesQuery.addTerm("mimeType", tmp);
+			}
+
+			contextQuery.add(mimeTypesQuery, BooleanClauseOccur.MUST);
 		}
 	}
 
@@ -405,6 +422,12 @@ public class DLFileEntryIndexer extends BaseIndexer {
 			document.addKeyword("extension", dlFileEntry.getExtension());
 			document.addKeyword(
 				"fileEntryTypeId", dlFileEntry.getFileEntryTypeId());
+
+			String tmp = StringUtil.replace(
+				dlFileEntry.getMimeType(), CharPool.FORWARD_SLASH,
+				CharPool.UNDERLINE);
+
+			document.addKeyword("mimeType", tmp);
 			document.addKeyword("path", dlFileEntry.getTitle());
 			document.addKeyword("readCount", dlFileEntry.getReadCount());
 			document.addKeyword("size", dlFileEntry.getSize());

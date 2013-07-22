@@ -34,6 +34,8 @@ import java.util.Properties;
 public class TestSampleSQLBuilder {
 
 	public static void main(String[] args) throws Exception {
+		SampleSQLBuilder.main(args);
+
 		Reader reader = null;
 
 		try {
@@ -42,6 +44,8 @@ public class TestSampleSQLBuilder {
 			Properties properties = new SortedProperties();
 
 			properties.load(reader);
+
+			new TestSampleSQLBuilder(properties);
 		}
 		catch (Exception e) {
 			e.printStackTrace();

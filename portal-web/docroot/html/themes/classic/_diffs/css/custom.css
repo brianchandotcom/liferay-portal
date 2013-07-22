@@ -128,6 +128,16 @@ $dockbarOpenGradientStart: #0EA6F9;
 						visibility: hidden;
 					}
 
+					#_145_previewPanel {
+						@include respond-to(phone) {
+							display: none;
+						}
+
+						@include respond-to(tablet) {
+							display: none;
+						}
+					}
+
 					> a {
 						background: #45CBF5;
 						color: #FFF;

@@ -242,10 +242,10 @@ List<LayoutPrototype> layoutPrototypes = LayoutPrototypeServiceUtil.search(compa
 			<portlet:param name="struts_action" value="/layouts_admin/edit_layouts" />
 		</liferay-portlet:actionURL>
 
-		<aui:form action="<%= resetPrototypeURL %>" cssClass="reset-prototype" name="resetFm">
-			<input name="<%= Constants.CMD %>" type="hidden" value="reset_prototype" />
-			<input name="redirect" type="hidden" value="<%= PortalUtil.getLayoutURL(themeDisplay) %>" />
-			<input name="groupId" type="hidden" value="<%= String.valueOf(themeDisplay.getSiteGroupId()) %>" />
+		<aui:form action="<%= resetPrototypeURL %>" cssClass="reset-prototype" name="resetFm" portletNamespace="<%= PortalUtil.getPortletNamespace(PortletKeys.LAYOUTS_ADMIN) %>">
+			<aui:input name="<%= Constants.CMD %>" type="hidden" value="reset_prototype" />
+			<aui:input name="redirect" type="hidden" value="<%= PortalUtil.getLayoutURL(themeDisplay) %>" />
+			<aui:input name="groupId" type="hidden" value="<%= String.valueOf(themeDisplay.getSiteGroupId()) %>" />
 
 			<aui:button name="submit" type="submit" value="reset" />
 		</aui:form>

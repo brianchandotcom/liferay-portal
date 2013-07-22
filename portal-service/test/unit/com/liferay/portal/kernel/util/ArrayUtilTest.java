@@ -59,6 +59,37 @@ public class ArrayUtilTest {
 	}
 
 	@Test
+	public void testFilterIntegerArray() {
+		int[] array = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+
+		int[] result = ArrayUtil.filter(array, _integerFilterPredicate);
+
+		Assert.assertEquals(5, result.length);
+
+		Assert.assertArrayEquals(new int[] { 5, 6, 7, 8, 9 }, result);
+	}
+
+	@Test
+	public void testFilterIntegerEmptyArray() {
+		int[] array = {};
+
+		int[] result = ArrayUtil.filter(array, _integerFilterPredicate);
+
+		Assert.assertEquals(0, result.length);
+
+		Assert.assertArrayEquals(new int[] {}, result);
+	}
+
+	@Test
+	public void testFilterIntegerNullArray() {
+		int[] array = null;
+
+		int[] result = ArrayUtil.filter(array, _integerFilterPredicate);
+
+		Assert.assertNull(result);
+	}
+
+	@Test
 	public void testToDoubleArray() throws Exception {
 		List<Double> list = new ArrayList<Double>();
 
@@ -135,6 +166,13 @@ public class ArrayUtilTest {
 			@Override
 			public boolean filter(Double item) {
 				return item < 1.1;
+			}
+		};
+	private FilterPredicate<Integer> _integerFilterPredicate =
+		new FilterPredicate<Integer>() {
+			@Override
+			public boolean filter(Integer item) {
+				return item < 5;
 			}
 		};
 

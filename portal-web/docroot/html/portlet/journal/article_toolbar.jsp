@@ -75,11 +75,7 @@ if ((article != null) && article.isDraft()) {
 								}
 							);
 						}
-						else {
-							if (!confirm('<liferay-ui:message key="in-order-to-preview-your-changes,-the-web-content-will-be-saved-as-a-draft" />')) {
-								return false;
-							}
-
+						else if (confirm('<liferay-ui:message key="in-order-to-preview-your-changes,-the-web-content-will-be-saved-as-a-draft" />')) {
 							var hasStructure = window.<portlet:namespace />journalPortlet.hasStructure();
 							var hasTemplate = window.<portlet:namespace />journalPortlet.hasTemplate();
 							var updateStructureDefaultValues = window.<portlet:namespace />journalPortlet.updateStructureDefaultValues();

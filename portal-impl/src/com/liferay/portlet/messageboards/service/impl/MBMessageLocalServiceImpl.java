@@ -45,7 +45,6 @@ import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.ModelHintsUtil;
 import com.liferay.portal.model.ResourceConstants;
@@ -1807,29 +1806,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		return body;
 	}
 
-	protected String getMessageLayoutURL(
-		Layout layout, ServiceContext serviceContext) {
-
-		HttpServletRequest request = serviceContext.getRequest();
-
-		if (request == null) {
-			return StringPool.BLANK;
-		}
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		try {
-			String messageLayoutURL = PortalUtil.getLayoutURL(
-				layout, themeDisplay);
-
-			return messageLayoutURL;
-		}
-		catch (Exception e) {
-			return StringPool.BLANK;
-		}
-	}
-
 	protected String getSubject(String subject, String body) {
 		if (Validator.isNull(subject)) {
 			return StringUtil.shorten(body);
@@ -1990,17 +1966,9 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 			long messageBoardsPlid = serviceContext.getPlid();
 
-			if (messageBoardsPlid == controlPanelPlid) {
-				messageBoardsPlid = PortalUtil.getPlidFromPortletId(
-					message.getGroupId(), PortletKeys.MESSAGE_BOARDS);
-
-				if (messageBoardsPlid != LayoutConstants.DEFAULT_PLID) {
-					Layout layout = layoutLocalService.getLayout(
-						messageBoardsPlid);
-
-					layoutFullURL = getMessageLayoutURL(layout, serviceContext);
-				}
-			}
+			layoutFullURL = getPortletLayoutURL(
+				message.getGroupId(), PortletKeys.MESSAGE_BOARDS,
+				serviceContext);
 
 			if (messageBoardsPlid != LayoutConstants.DEFAULT_PLID) {
 				messageURL =

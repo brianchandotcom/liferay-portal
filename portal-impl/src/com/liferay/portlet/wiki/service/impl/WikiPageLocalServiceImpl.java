@@ -39,18 +39,15 @@ import com.liferay.portal.kernel.util.TempFileUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UniqueList;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
-import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextUtil;
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
@@ -1969,29 +1966,6 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		PortletFileRepositoryUtil.deletePortletFileEntry(fileEntryId);
 	}
 
-	protected String getPageLayoutURL(
-		Layout layout, ServiceContext serviceContext) {
-
-		HttpServletRequest request = serviceContext.getRequest();
-
-		if (request == null) {
-			return StringPool.BLANK;
-		}
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		try {
-			String pageLayoutURL = PortalUtil.getLayoutURL(
-				layout, themeDisplay);
-
-			return pageLayoutURL;
-		}
-		catch (Exception e) {
-			return StringPool.BLANK;
-		}
-	}
-
 	protected String getParentPageTitle(WikiPage page) {
 
 		// LPS-4586
@@ -2118,16 +2092,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 			long wikiPlid = serviceContext.getPlid();
 
-			if (wikiPlid == controlPanelPlid) {
-				wikiPlid = PortalUtil.getPlidFromPortletId(
-					node.getGroupId(), PortletKeys.WIKI);
-
-				if (wikiPlid != LayoutConstants.DEFAULT_PLID) {
-					Layout layout = layoutLocalService.getLayout(wikiPlid);
-
-					layoutFullURL = getPageLayoutURL(layout, serviceContext);
-				}
-			}
+			layoutFullURL = getPortletLayoutURL(
+				node.getGroupId(), PortletKeys.WIKI, serviceContext);
 
 			if (wikiPlid != LayoutConstants.DEFAULT_PLID) {
 				pageURL =

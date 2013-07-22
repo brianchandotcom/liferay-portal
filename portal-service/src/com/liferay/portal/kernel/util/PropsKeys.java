@@ -831,8 +831,6 @@ public interface PropsKeys {
 
 	public static final String FIELD_EDITABLE_DOMAINS_EXCEPTIONS = "field.editable.domains.exceptions";
 
-	public static final String FIELD_EDITABLE_EXCEPTIONS = "field.editable.exceptions";
-
 	public static final String FIELD_EDITABLE_ROLES = "field.editable.roles";
 
 	public static final String FIELD_EDITABLE_USER_TYPES = "field.editable.user.types";

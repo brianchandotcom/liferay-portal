@@ -1109,21 +1109,12 @@ public class UsersAdminImpl implements UsersAdmin {
 			}
 		}
 
-		String[] domainNamesEditable = null;
+		String[] domainNamesEditable = PropsUtil.getArray(
+			PropsKeys.FIELD_EDITABLE_DOMAINS_EXCEPTIONS, new Filter(field));
 
-		String[] fieldEditableExceptions =
-			PropsValues.FIELD_EDITABLE_EXCEPTIONS;
-
-		if (ArrayUtil.contains(fieldEditableExceptions, field)) {
-			domainNamesEditable = PropsUtil.getArray(
-				PropsKeys.FIELD_EDITABLE_DOMAINS_EXCEPTIONS, new Filter(field));
-		}
-
-		if (domainNamesEditable != null) {
-			for (String domainName : domainNamesEditable) {
-				if (hasUpdatePermission(user, domainName)) {
-					return true;
-				}
+		for (String domainName : domainNamesEditable) {
+			if (hasUpdatePermission(user, domainName)) {
+				return true;
 			}
 		}
 

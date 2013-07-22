@@ -712,8 +712,6 @@ public class PropsValues {
 
 	public static final String[] FIELD_EDITABLE_DOMAINS_EXCEPTIONS = PropsUtil.getArray(PropsKeys.FIELD_EDITABLE_DOMAINS_EXCEPTIONS);
 
-	public static final String[] FIELD_EDITABLE_EXCEPTIONS = PropsUtil.getArray(PropsKeys.FIELD_EDITABLE_EXCEPTIONS);
-
 	public static final String[] FIELD_EDITABLE_ROLES = PropsUtil.getArray(PropsKeys.FIELD_EDITABLE_ROLES);
 
 	public static final String[] FIELD_EDITABLE_USER_TYPES = PropsUtil.getArray(PropsKeys.FIELD_EDITABLE_USER_TYPES);

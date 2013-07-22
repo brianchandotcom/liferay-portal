@@ -76,11 +76,7 @@ if ((article != null) && article.isDraft()) {
 									}
 								);
 							}
-							else {
-								if (!confirm('<liferay-ui:message key="in-order-to-preview-your-changes,-the-web-content-will-be-saved-as-a-draft" />')) {
-									return false;
-								}
-
+							else if (confirm('<liferay-ui:message key="in-order-to-preview-your-changes,-the-web-content-will-be-saved-as-a-draft" />')) {
 								form.one('#<portlet:namespace /><%= Constants.CMD %>').val('<%= Constants.UPDATE %>');
 								form.one('#<portlet:namespace />isPreview').val('<%= StringPool.TRUE %>');
 

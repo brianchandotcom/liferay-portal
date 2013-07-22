@@ -1084,6 +1084,7 @@ public class UsersAdminImpl implements UsersAdmin {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Override
 	public boolean hasUpdateEmailAddress(
 			PermissionChecker permissionChecker, User user)
 		throws PortalException, SystemException {
@@ -1091,6 +1092,7 @@ public class UsersAdminImpl implements UsersAdmin {
 		return hasUpdateFieldPermission(user, "emailAddress");
 	}
 
+	@Override
 	public boolean hasUpdateFieldPermission(User user, String field)
 		throws PortalException, SystemException {
 
@@ -1124,6 +1126,7 @@ public class UsersAdminImpl implements UsersAdmin {
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Override
 	public boolean hasUpdateScreenName(
 			PermissionChecker permissionChecker, User user)
 		throws PortalException, SystemException {

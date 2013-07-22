@@ -28,6 +28,37 @@ import org.junit.Test;
 public class ArrayUtilTest {
 
 	@Test
+	public void testFilterDoubleArray() {
+		double[] array = { 0.1, 0.2, 1.2, 1.3 };
+
+		double[] result = ArrayUtil.filter(array, _doubleFilterPredicate);
+
+		Assert.assertEquals(2, result.length);
+
+		AssertUtils.assertEquals(new double[] { 1.2, 1.3 }, result);
+	}
+
+	@Test
+	public void testFilterDoubleEmptyArray() {
+		double[] array = {};
+
+		double[] result = ArrayUtil.filter(array, _doubleFilterPredicate);
+
+		Assert.assertEquals(0, result.length);
+
+		AssertUtils.assertEquals(new double[] {}, result);
+	}
+
+	@Test
+	public void testFilterDoubleNullArray() {
+		double[] array = null;
+
+		double[] result = ArrayUtil.filter(array, _doubleFilterPredicate);
+
+		Assert.assertNull(result);
+	}
+
+	@Test
 	public void testToDoubleArray() throws Exception {
 		List<Double> list = new ArrayList<Double>();
 
@@ -98,5 +129,13 @@ public class ArrayUtilTest {
 			Assert.assertEquals(value.longValue(), array[i]);
 		}
 	}
+
+	private FilterPredicate<Double> _doubleFilterPredicate =
+		new FilterPredicate<Double>() {
+			@Override
+			public boolean filter(Double item) {
+				return item < 1.1;
+			}
+		};
 
 }

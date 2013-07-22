@@ -15,13 +15,10 @@
 package com.liferay.portal.kernel.util;
 
 /**
- *
  * @author Carlos Sierra Andrés
- *
- * @param <T> the type of the items to keep
  */
-public interface Predicate<T> {
+public interface FilterPredicate<T> {
 
-	public boolean keep(T item);
+	public boolean filter(T item);
 
 }

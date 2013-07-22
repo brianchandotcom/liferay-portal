@@ -1805,6 +1805,40 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		return body;
 	}
 
+	protected String getMessageURL(
+			MBMessage message, HttpServletRequest request,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		long controlPanelPlid = PortalUtil.getControlPanelPlid(
+			serviceContext.getCompanyId());
+
+		String layoutFullURL = getPortletLayoutURL(
+			message.getGroupId(), PortletKeys.MESSAGE_BOARDS, serviceContext);
+
+		String messageURL = StringPool.BLANK;
+
+		if (Validator.isNotNull(layoutFullURL)) {
+			messageURL =
+				layoutFullURL + Portal.FRIENDLY_URL_SEPARATOR +
+					"message_boards/view_message/" + message.getMessageId();
+		}
+		else {
+			PortletURL portletURL = PortletURLFactoryUtil.create(
+				request, PortletKeys.MESSAGE_BOARDS_ADMIN, controlPanelPlid,
+				PortletRequest.RENDER_PHASE);
+
+			portletURL.setParameter(
+				"struts_action", "/message_boards_admin/view_message");
+			portletURL.setParameter(
+				"messageId", String.valueOf(message.getMessageId()));
+
+			messageURL = portletURL.toString();
+		}
+
+		return messageURL;
+	}
+
 	protected String getSubject(String subject, String body) {
 		if (Validator.isNull(subject)) {
 			return StringUtil.shorten(body);
@@ -1960,30 +1994,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		HttpServletRequest request = serviceContext.getRequest();
 
 		if (Validator.isNotNull(layoutFullURL) && (request != null)) {
-			long controlPanelPlid = PortalUtil.getControlPanelPlid(
-				serviceContext.getCompanyId());
-
-			layoutFullURL = getPortletLayoutURL(
-				message.getGroupId(), PortletKeys.MESSAGE_BOARDS,
-				serviceContext);
-
-			if (Validator.isNotNull(layoutFullURL)) {
-				messageURL =
-					layoutFullURL + Portal.FRIENDLY_URL_SEPARATOR +
-						"message_boards/view_message/" + message.getMessageId();
-			}
-			else {
-				PortletURL portletURL = PortletURLFactoryUtil.create(
-					request, PortletKeys.MESSAGE_BOARDS_ADMIN, controlPanelPlid,
-					PortletRequest.RENDER_PHASE);
-
-				portletURL.setParameter(
-					"struts_action", "/message_boards_admin/view_message");
-				portletURL.setParameter(
-					"messageId", String.valueOf(message.getMessageId()));
-
-				messageURL = portletURL.toString();
-			}
+			messageURL = getMessageURL(message, request, serviceContext);
 		}
 
 		String fromName = MBUtil.getEmailFromName(

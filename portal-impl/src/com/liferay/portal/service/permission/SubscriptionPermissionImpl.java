@@ -16,6 +16,7 @@ package com.liferay.portal.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
@@ -40,22 +41,25 @@ import com.liferay.portlet.wiki.service.permission.WikiPagePermission;
 
 /**
  * @author Mate Thurzo
+ * @author Raymond Augé
  */
 public class SubscriptionPermissionImpl implements SubscriptionPermission {
 
 	@Override
 	public void check(
-			PermissionChecker permissionChecker, String className, long classPK)
+			PermissionChecker permissionChecker, String className, long classPK,
+			ObjectValuePair<String, Long> entryOPV)
 		throws PortalException, SystemException {
 
-		if (!contains(permissionChecker, className, classPK)) {
+		if (!contains(permissionChecker, className, classPK, entryOPV)) {
 			throw new PrincipalException();
 		}
 	}
 
 	@Override
 	public boolean contains(
-			PermissionChecker permissionChecker, String className, long classPK)
+			PermissionChecker permissionChecker, String className, long classPK,
+			ObjectValuePair<String, Long> entryOPV)
 		throws PortalException, SystemException {
 
 		if (className == null) {
@@ -68,6 +72,58 @@ public class SubscriptionPermissionImpl implements SubscriptionPermission {
 			return true;
 		}
 		catch (NoSuchDiscussionException nsde) {
+		}
+
+		if (entryOPV != null) {
+			String entryClassName = entryOPV.getKey();
+			Long entryClassPK = entryOPV.getValue();
+			boolean hasViewPermission = false;
+
+			if (entryClassName.equals(BlogsEntry.class.getName())) {
+				hasViewPermission = BlogsPermission.contains(
+					permissionChecker, entryClassPK, ActionKeys.VIEW);
+			}
+			else if (entryClassName.equals(JournalArticle.class.getName())) {
+				hasViewPermission = JournalPermission.contains(
+					permissionChecker, entryClassPK, ActionKeys.VIEW);
+			}
+			else if (entryClassName.equals(MBCategory.class.getName())) {
+				Group group = GroupLocalServiceUtil.fetchGroup(classPK);
+
+				if (group == null) {
+					hasViewPermission = MBCategoryPermission.contains(
+						permissionChecker, entryClassPK, ActionKeys.VIEW);
+				}
+				else {
+					hasViewPermission = MBPermission.contains(
+						permissionChecker, entryClassPK, ActionKeys.VIEW);
+				}
+			}
+			else if (entryClassName.equals(MBThread.class.getName())) {
+				MBThread mbThread = MBThreadLocalServiceUtil.fetchThread(
+					entryClassPK);
+
+				if (mbThread == null) {
+					hasViewPermission = false;
+				}
+				else {
+					hasViewPermission = MBMessagePermission.contains(
+						permissionChecker, mbThread.getRootMessageId(),
+						ActionKeys.VIEW);
+				}
+			}
+			else if (entryClassName.equals(WikiNode.class.getName())) {
+				hasViewPermission = WikiNodePermission.contains(
+					permissionChecker, entryClassPK, ActionKeys.VIEW);
+			}
+			else if (entryClassName.equals(WikiPage.class.getName())) {
+				hasViewPermission = WikiPagePermission.contains(
+					permissionChecker, entryClassPK, ActionKeys.VIEW);
+			}
+
+			if (!hasViewPermission) {
+				return false;
+			}
 		}
 
 		if (className.equals(BlogsEntry.class.getName())) {

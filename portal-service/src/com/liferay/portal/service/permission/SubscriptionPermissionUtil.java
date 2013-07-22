@@ -17,27 +17,31 @@ package com.liferay.portal.service.permission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.security.permission.PermissionChecker;
 
 /**
  * @author Mate Thurzo
+ * @author Raymond Augé
  */
 public class SubscriptionPermissionUtil {
 
 	public static void check(
-			PermissionChecker permissionChecker, String className, long classPK)
+			PermissionChecker permissionChecker, String className, long classPK,
+			ObjectValuePair<String, Long> entryOPV)
 		throws PortalException, SystemException {
 
 		getSubscriptionPermission().check(
-			permissionChecker, className, classPK);
+			permissionChecker, className, classPK, entryOPV);
 	}
 
 	public static boolean contains(
-			PermissionChecker permissionChecker, String className, long classPK)
+			PermissionChecker permissionChecker, String className, long classPK,
+			ObjectValuePair<String, Long> entryOPV)
 		throws PortalException, SystemException {
 
 		return getSubscriptionPermission().contains(
-			permissionChecker, className, classPK);
+			permissionChecker, className, classPK, entryOPV);
 	}
 
 	public static SubscriptionPermission getSubscriptionPermission() {

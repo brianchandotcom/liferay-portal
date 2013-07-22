@@ -16,19 +16,23 @@ package com.liferay.portal.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.security.permission.PermissionChecker;
 
 /**
  * @author Mate Thurzo
+ * @author Raymond Augé
  */
 public interface SubscriptionPermission {
 
 	public void check(
-			PermissionChecker permissionChecker, String className, long classPK)
+			PermissionChecker permissionChecker, String className, long classPK,
+			ObjectValuePair<String, Long> entryOPV)
 		throws PortalException, SystemException;
 
 	public boolean contains(
-			PermissionChecker permissionChecker, String className, long classPK)
+			PermissionChecker permissionChecker, String className, long classPK,
+			ObjectValuePair<String, Long> entryOPV)
 		throws PortalException, SystemException;
 
 }

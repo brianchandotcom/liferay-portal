@@ -81,7 +81,6 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.PortletPreferencesImpl;
-import com.liferay.portlet.asset.NoSuchCategoryException;
 import com.liferay.portlet.asset.NoSuchTagException;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetCategoryConstants;
@@ -591,17 +590,13 @@ public class PortletImporter {
 			long vocabularyId, int count)
 		throws Exception {
 
-		AssetCategory assetCategory = null;
+		AssetCategory assetCategory = AssetCategoryUtil.fetchByG_P_N_V_First(
+			groupId, parentCategoryId, name, vocabularyId, null);
 
-		try {
-			assetCategory = AssetCategoryUtil.findByG_P_N_V_First(
-				groupId, parentCategoryId, name, vocabularyId, null);
-		}
-		catch (NoSuchCategoryException nsce) {
-			return name;
-		}
+		if ((assetCategory == null) ||
+			(Validator.isNotNull(uuid) &&
+			 uuid.equals(assetCategory.getUuid()))) {
 
-		if (Validator.isNotNull(uuid) && uuid.equals(assetCategory.getUuid())) {
 			return name;
 		}
 
@@ -741,88 +736,85 @@ public class PortletImporter {
 
 		AssetCategory importedAssetCategory = null;
 
-		try {
-			if (parentAssetCategoryId !=
-					AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
+		if ((parentAssetCategoryId !=
+				AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) &&
+			(AssetCategoryUtil.fetchByPrimaryKey(parentAssetCategoryId) ==
+				null)) {
 
-				AssetCategoryUtil.findByPrimaryKey(parentAssetCategoryId);
-			}
-
-			List<Element> propertyElements = assetCategoryElement.elements(
-				"property");
-
-			String[] properties = new String[propertyElements.size()];
-
-			for (int i = 0; i < propertyElements.size(); i++) {
-				Element propertyElement = propertyElements.get(i);
-
-				String key = propertyElement.attributeValue("key");
-				String value = propertyElement.attributeValue("value");
-
-				properties[i] = key.concat(StringPool.COLON).concat(value);
-			}
-
-			AssetCategory existingAssetCategory =
-				AssetCategoryUtil.fetchByUUID_G(
-					assetCategory.getUuid(), groupId);
-
-			if (existingAssetCategory == null) {
-				existingAssetCategory = AssetCategoryUtil.fetchByUUID_G(
-					assetCategory.getUuid(),
-					portletDataContext.getCompanyGroupId());
-			}
-
-			if (existingAssetCategory == null) {
-				String name = getAssetCategoryName(
-					null, portletDataContext.getGroupId(),
-					parentAssetCategoryId, assetCategory.getName(),
-					assetCategory.getVocabularyId(), 2);
-
-				serviceContext.setUuid(assetCategory.getUuid());
-
-				importedAssetCategory =
-					AssetCategoryLocalServiceUtil.addCategory(
-						userId, parentAssetCategoryId,
-						getAssetCategoryTitleMap(assetCategory, name),
-						assetCategory.getDescriptionMap(), assetVocabularyId,
-						properties, serviceContext);
-			}
-			else if (portletDataContext.isCompanyStagedGroupedModel(
-						existingAssetCategory)) {
-
-				return;
-			}
-			else {
-				String name = getAssetCategoryName(
-					assetCategory.getUuid(), assetCategory.getGroupId(),
-					parentAssetCategoryId, assetCategory.getName(),
-					assetCategory.getVocabularyId(), 2);
-
-				importedAssetCategory =
-					AssetCategoryLocalServiceUtil.updateCategory(
-						userId, existingAssetCategory.getCategoryId(),
-						parentAssetCategoryId,
-						getAssetCategoryTitleMap(assetCategory, name),
-						assetCategory.getDescriptionMap(), assetVocabularyId,
-						properties, serviceContext);
-			}
-
-			assetCategoryPKs.put(
-				assetCategory.getCategoryId(),
-				importedAssetCategory.getCategoryId());
-
-			assetCategoryUuids.put(
-				assetCategory.getUuid(), importedAssetCategory.getUuid());
-
-			portletDataContext.importPermissions(
-				AssetCategory.class, assetCategory.getCategoryId(),
-				importedAssetCategory.getCategoryId());
-		}
-		catch (NoSuchCategoryException nsce) {
 			_log.error(
 				"Could not find the parent category for category " +
 					assetCategory.getCategoryId());
+
+			return;
 		}
+
+		List<Element> propertyElements = assetCategoryElement.elements(
+			"property");
+
+		String[] properties = new String[propertyElements.size()];
+
+		for (int i = 0; i < propertyElements.size(); i++) {
+			Element propertyElement = propertyElements.get(i);
+
+			String key = propertyElement.attributeValue("key");
+			String value = propertyElement.attributeValue("value");
+
+			properties[i] = key.concat(StringPool.COLON).concat(value);
+		}
+
+		AssetCategory existingAssetCategory = AssetCategoryUtil.fetchByUUID_G(
+			assetCategory.getUuid(), groupId);
+
+		if (existingAssetCategory == null) {
+			existingAssetCategory = AssetCategoryUtil.fetchByUUID_G(
+				assetCategory.getUuid(),
+				portletDataContext.getCompanyGroupId());
+		}
+
+		if (existingAssetCategory == null) {
+			String name = getAssetCategoryName(
+				null, portletDataContext.getGroupId(), parentAssetCategoryId,
+				assetCategory.getName(), assetCategory.getVocabularyId(), 2);
+
+			serviceContext.setUuid(assetCategory.getUuid());
+
+			importedAssetCategory =
+				AssetCategoryLocalServiceUtil.addCategory(
+					userId, parentAssetCategoryId,
+					getAssetCategoryTitleMap(assetCategory, name),
+					assetCategory.getDescriptionMap(), assetVocabularyId,
+					properties, serviceContext);
+		}
+		else if (portletDataContext.isCompanyStagedGroupedModel(
+					existingAssetCategory)) {
+
+			return;
+		}
+		else {
+			String name = getAssetCategoryName(
+				assetCategory.getUuid(), assetCategory.getGroupId(),
+				parentAssetCategoryId, assetCategory.getName(),
+				assetCategory.getVocabularyId(), 2);
+
+			importedAssetCategory =
+				AssetCategoryLocalServiceUtil.updateCategory(
+					userId, existingAssetCategory.getCategoryId(),
+					parentAssetCategoryId,
+					getAssetCategoryTitleMap(assetCategory, name),
+					assetCategory.getDescriptionMap(), assetVocabularyId,
+					properties, serviceContext);
+		}
+
+		assetCategoryPKs.put(
+			assetCategory.getCategoryId(),
+			importedAssetCategory.getCategoryId());
+
+		assetCategoryUuids.put(
+			assetCategory.getUuid(), importedAssetCategory.getUuid());
+
+		portletDataContext.importPermissions(
+			AssetCategory.class, assetCategory.getCategoryId(),
+			importedAssetCategory.getCategoryId());
 	}
 
 	protected void importAssetTag(

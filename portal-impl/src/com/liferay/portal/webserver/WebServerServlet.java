@@ -14,7 +14,6 @@
 
 package com.liferay.portal.webserver;
 
-import com.liferay.portal.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.image.ImageBag;
@@ -1201,18 +1200,16 @@ public class WebServerServlet extends HttpServlet {
 	private static long _getGroupId(long companyId, String name)
 		throws Exception {
 
-		try {
-			Group group = GroupLocalServiceUtil.getFriendlyURLGroup(
-				companyId, StringPool.SLASH + name);
+		Group group = GroupLocalServiceUtil.fetchFriendlyURLGroup(
+			companyId, StringPool.SLASH + name);
 
+		if (group != null) {
 			return group.getGroupId();
-		}
-		catch (NoSuchGroupException nsge) {
 		}
 
 		User user = UserLocalServiceUtil.getUserByScreenName(companyId, name);
 
-		Group group = user.getGroup();
+		group = user.getGroup();
 
 		return group.getGroupId();
 	}

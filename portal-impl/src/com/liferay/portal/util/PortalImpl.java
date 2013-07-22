@@ -14,7 +14,6 @@
 
 package com.liferay.portal.util;
 
-import com.liferay.portal.NoSuchCompanyException;
 import com.liferay.portal.NoSuchImageException;
 import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.NoSuchUserException;
@@ -1400,10 +1399,9 @@ public class PortalImpl implements Portal {
 
 			// LEP-5994
 
-			try {
-				company = CompanyLocalServiceUtil.getCompanyById(companyId);
-			}
-			catch (NoSuchCompanyException nsce) {
+			company = CompanyLocalServiceUtil.fetchCompanyById(companyId);
+
+			if (company == null) {
 				company = CompanyLocalServiceUtil.getCompanyById(
 					PortalInstances.getDefaultCompanyId());
 			}

@@ -35,7 +35,6 @@ import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.messageboards.NoSuchCategoryException;
 import com.liferay.portlet.messageboards.NoSuchMessageException;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
@@ -145,10 +144,14 @@ public class MessageListenerImpl implements MessageListener {
 			long groupId = 0;
 			long categoryId = getCategoryId(messageIdString);
 
-			try {
-				MBCategory category = MBCategoryLocalServiceUtil.getCategory(
-					categoryId);
+			MBCategory category = MBCategoryLocalServiceUtil.fetchMBCategory(
+				categoryId);
 
+			if (category == null) {
+				groupId = categoryId;
+				categoryId = MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID;
+			}
+			else {
 				groupId = category.getGroupId();
 
 				if (category.isRoot()) {
@@ -161,10 +164,6 @@ public class MessageListenerImpl implements MessageListener {
 						groupId = threadMessage.getGroupId();
 					}
 				}
-			}
-			catch (NoSuchCategoryException nsce) {
-				groupId = categoryId;
-				categoryId = MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID;
 			}
 
 			if (_log.isDebugEnabled()) {

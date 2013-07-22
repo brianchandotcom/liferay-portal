@@ -25,7 +25,6 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.model.AssetEntry;
-import com.liferay.portlet.social.NoSuchActivityException;
 import com.liferay.portlet.social.model.SocialActivity;
 import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.social.model.SocialActivityDefinition;
@@ -446,11 +445,12 @@ public class SocialActivityLocalServiceImpl
 
 		socialActivityPersistence.remove(activity);
 
-		try {
-			socialActivityPersistence.removeByMirrorActivityId(
+		SocialActivity mirrorActivity =
+			socialActivityPersistence.fetchByMirrorActivityId(
 				activity.getActivityId());
-		}
-		catch (NoSuchActivityException nsae) {
+
+		if (mirrorActivity != null) {
+			socialActivityPersistence.remove(mirrorActivity);
 		}
 	}
 

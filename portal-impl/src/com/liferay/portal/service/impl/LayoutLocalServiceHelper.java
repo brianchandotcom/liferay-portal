@@ -405,10 +405,9 @@ public class LayoutLocalServiceHelper implements IdentifiableBean {
 			if (firstLayoutId == layoutId) {
 				Layout secondLayout = layouts.get(1);
 
-				try {
-					validateFirstLayout(secondLayout.getType());
-				}
-				catch (LayoutTypeException lte) {
+				if (Validator.isNull(secondLayout.getType()) ||
+					!PortalUtil.isLayoutFirstPageable(secondLayout.getType())) {
+
 					throw new LayoutParentLayoutIdException(
 						LayoutParentLayoutIdException.FIRST_LAYOUT_TYPE);
 				}

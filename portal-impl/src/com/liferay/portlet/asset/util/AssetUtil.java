@@ -47,7 +47,6 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
-import com.liferay.portlet.asset.NoSuchCategoryException;
 import com.liferay.portlet.asset.NoSuchTagException;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetCategoryProperty;
@@ -527,12 +526,7 @@ public class AssetUtil {
 		AssetCategory category = null;
 
 		if (categoryId > 0) {
-			try {
-				category = AssetCategoryLocalServiceUtil.getCategory(
-					categoryId);
-			}
-			catch (NoSuchCategoryException nsce) {
-			}
+			category = AssetCategoryLocalServiceUtil.fetchCategory(categoryId);
 		}
 
 		if (category != null) {

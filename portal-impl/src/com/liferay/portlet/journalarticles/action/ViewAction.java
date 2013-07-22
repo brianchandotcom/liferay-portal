@@ -14,8 +14,8 @@
 
 package com.liferay.portlet.journalarticles.action;
 
-import com.liferay.portal.NoSuchGroupException;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portlet.journalcontent.action.WebContentAction;
 
@@ -41,20 +41,18 @@ public class ViewAction extends WebContentAction {
 			RenderResponse renderResponse)
 		throws Exception {
 
-		try {
-			PortletPreferences portletPreferences =
-				renderRequest.getPreferences();
+		PortletPreferences portletPreferences = renderRequest.getPreferences();
 
-			long groupId = GetterUtil.getLong(
-				portletPreferences.getValue("groupId", null));
+		long groupId = GetterUtil.getLong(
+			portletPreferences.getValue("groupId", null));
 
-			GroupLocalServiceUtil.getGroup(groupId);
+		Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 
-			return actionMapping.findForward("portlet.journal_articles.view");
-		}
-		catch (NoSuchGroupException nsge) {
+		if (group == null) {
 			return actionMapping.findForward("/portal/portlet_not_setup");
 		}
+
+		return actionMapping.findForward("portlet.journal_articles.view");
 	}
 
 }

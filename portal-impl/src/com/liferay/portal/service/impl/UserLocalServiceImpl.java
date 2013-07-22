@@ -24,8 +24,6 @@ import com.liferay.portal.DuplicateUserEmailAddressException;
 import com.liferay.portal.DuplicateUserScreenNameException;
 import com.liferay.portal.GroupFriendlyURLException;
 import com.liferay.portal.ModelListenerException;
-import com.liferay.portal.NoSuchContactException;
-import com.liferay.portal.NoSuchGroupException;
 import com.liferay.portal.NoSuchImageException;
 import com.liferay.portal.NoSuchOrganizationException;
 import com.liferay.portal.NoSuchRoleException;
@@ -286,17 +284,14 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				defaultGroupName = GroupConstants.GUEST;
 			}
 
-			try {
-				Group group = groupPersistence.findByC_N(
-					user.getCompanyId(), defaultGroupName);
+			Group group = groupPersistence.fetchByC_N(
+				user.getCompanyId(), defaultGroupName);
 
-				if (!userPersistence.containsGroup(
-						userId, group.getGroupId())) {
+			if ((group != null) &&
+				!userPersistence.containsGroup(
+					userId, group.getGroupId())) {
 
-					groupIdsSet.add(group.getGroupId());
-				}
-			}
-			catch (NoSuchGroupException nsge) {
+				groupIdsSet.add(group.getGroupId());
 			}
 		}
 
@@ -312,17 +307,14 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			defaultOrganizationGroupName +=
 				GroupLocalServiceImpl.ORGANIZATION_NAME_SUFFIX;
 
-			try {
-				Group group = groupPersistence.findByC_N(
-					user.getCompanyId(), defaultOrganizationGroupName);
+			Group group = groupPersistence.fetchByC_N(
+				user.getCompanyId(), defaultOrganizationGroupName);
 
-				if (!userPersistence.containsGroup(
-						userId, group.getGroupId())) {
+			if ((group != null) &&
+				!userPersistence.containsGroup(
+					userId, group.getGroupId())) {
 
-					groupIdsSet.add(group.getGroupId());
-				}
-			}
-			catch (NoSuchGroupException nsge) {
+				groupIdsSet.add(group.getGroupId());
 			}
 		}
 
@@ -1900,10 +1892,10 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		// Contact
 
-		try {
-			contactLocalService.deleteContact(user.getContactId());
-		}
-		catch (NoSuchContactException nsce) {
+		Contact contact = contactLocalService.fetchContact(user.getContactId());
+
+		if (contact != null) {
+			contactLocalService.deleteContact(contact);
 		}
 
 		// Resources

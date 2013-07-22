@@ -25,7 +25,6 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.messageboards.BannedUserException;
-import com.liferay.portlet.messageboards.NoSuchBanException;
 import com.liferay.portlet.messageboards.model.MBBan;
 import com.liferay.portlet.messageboards.service.base.MBBanLocalServiceBaseImpl;
 import com.liferay.portlet.messageboards.util.MBUtil;
@@ -93,12 +92,10 @@ public class MBBanLocalServiceImpl extends MBBanLocalServiceBaseImpl {
 
 		long groupId = serviceContext.getScopeGroupId();
 
-		try {
-			MBBan ban = mbBanPersistence.findByG_B(groupId, banUserId);
+		MBBan ban = mbBanPersistence.fetchByG_B(groupId, banUserId);
 
+		if (ban != null) {
 			deleteBan(ban);
-		}
-		catch (NoSuchBanException nsbe) {
 		}
 	}
 

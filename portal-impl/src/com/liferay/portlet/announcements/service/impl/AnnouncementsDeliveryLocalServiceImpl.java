@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.model.User;
-import com.liferay.portlet.announcements.NoSuchDeliveryException;
 import com.liferay.portlet.announcements.model.AnnouncementsDelivery;
 import com.liferay.portlet.announcements.model.AnnouncementsEntryConstants;
 import com.liferay.portlet.announcements.service.base.AnnouncementsDeliveryLocalServiceBaseImpl;
@@ -103,13 +102,11 @@ public class AnnouncementsDeliveryLocalServiceImpl
 	public void deleteDelivery(long userId, String type)
 		throws SystemException {
 
-		try {
-			AnnouncementsDelivery delivery =
-				announcementsDeliveryPersistence.findByU_T(userId, type);
+		AnnouncementsDelivery delivery =
+			announcementsDeliveryPersistence.fetchByU_T(userId, type);
 
+		if (delivery != null) {
 			deleteDelivery(delivery);
-		}
-		catch (NoSuchDeliveryException nsde) {
 		}
 	}
 

@@ -53,6 +53,7 @@ String[] tempFileEntryNames = LayoutServiceUtil.getTempFileEntryNames(scopeGroup
 		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.IMPORT %>" />
 		<portlet:param name="<%= SearchContainer.DEFAULT_CUR_PARAM %>" value="<%= ParamUtil.getString(request, SearchContainer.DEFAULT_CUR_PARAM) %>" />
 		<portlet:param name="<%= SearchContainer.DEFAULT_DELTA_PARAM %>" value="<%= ParamUtil.getString(request, SearchContainer.DEFAULT_DELTA_PARAM) %>" />
+		<portlet:param name="groupId" value="<%= String.valueOf(themeDisplay.getScopeGroupId()) %>" />
 		<portlet:param name="portletResource" value="<%= portletResource %>" />
 	</liferay-portlet:resourceURL>
 

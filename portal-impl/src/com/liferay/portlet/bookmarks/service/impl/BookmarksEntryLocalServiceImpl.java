@@ -20,14 +20,21 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
@@ -383,6 +390,41 @@ public class BookmarksEntryLocalServiceImpl
 			BookmarksEntry.class.getName(), entryId);
 
 		return updateStatus(userId, entry, trashEntry.getStatus());
+	}
+
+	@Override
+	public Hits search(
+			long groupId, long userId, long creatorUserId, int status,
+			int start, int end)
+		throws PortalException, SystemException {
+
+		Indexer indexer = IndexerRegistryUtil.getIndexer(
+			BookmarksEntry.class.getName());
+
+		SearchContext searchContext = new SearchContext();
+
+		searchContext.setAttribute("paginationType", "none");
+		searchContext.setAttribute(Field.STATUS, status);
+
+		if (creatorUserId > 0) {
+			searchContext.setAttribute(
+				Field.USER_ID, String.valueOf(creatorUserId));
+		}
+
+		Group group = groupLocalService.getGroup(groupId);
+
+		searchContext.setCompanyId(group.getCompanyId());
+		searchContext.setEnd(end);
+
+		searchContext.setGroupIds(new long[]{groupId});
+
+		Sort sort = new Sort("modified", true);
+
+		searchContext.setSorts(new Sort[] {sort});
+		searchContext.setStart(start);
+		searchContext.setUserId(userId);
+
+		return indexer.search(searchContext);
 	}
 
 	@Override

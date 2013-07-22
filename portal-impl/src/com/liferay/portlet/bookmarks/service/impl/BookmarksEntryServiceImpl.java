@@ -16,6 +16,7 @@ package com.liferay.portlet.bookmarks.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -265,6 +266,15 @@ public class BookmarksEntryServiceImpl extends BookmarksEntryServiceBaseImpl {
 			getPermissionChecker(), entryId, ActionKeys.UPDATE);
 
 		bookmarksEntryLocalService.restoreEntryFromTrash(getUserId(), entryId);
+	}
+
+	@Override
+	public Hits search(
+			long groupId, long creatorUserId, int status, int start, int end)
+		throws PortalException, SystemException {
+
+		return bookmarksEntryLocalService.search(
+			groupId, getUserId(), creatorUserId, status, start, end);
 	}
 
 	@Override

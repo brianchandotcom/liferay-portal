@@ -79,6 +79,7 @@
 
 		<!-- References -->
 
+		<reference package-path="com.liferay.portal" entity="Group" />
 		<reference package-path="com.liferay.portal" entity="PortletPreferences" />
 		<reference package-path="com.liferay.portal" entity="Subscription" />
 		<reference package-path="com.liferay.portlet.asset" entity="AssetEntry" />

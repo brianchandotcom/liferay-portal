@@ -80,19 +80,22 @@ else {
 			/>
 		</c:if>
 
-		<c:if test="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.VIEW) %>">
-			<portlet:actionURL var="previewURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
-				<portlet:param name="struts_action" value="/journal/preview_article_content" />
-				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.VIEW %>" />
-				<portlet:param name="groupId" value="<%= String.valueOf(article.getGroupId()) %>" />
-				<portlet:param name="articleId" value="<%= article.getArticleId() %>" />
-				<portlet:param name="version" value="<%= String.valueOf(article.getVersion()) %>" />
-			</portlet:actionURL>
+		<liferay-portlet:renderURL plid="<%= JournalUtil.getPreviewPlid(article, themeDisplay) %>" var="previewArticleContentURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+			<portlet:param name="struts_action" value="/journal/preview_article_content" />
+			<portlet:param name="groupId" value="<%= String.valueOf(article.getGroupId()) %>" />
+			<portlet:param name="articleId" value="<%= article.getArticleId() %>" />
+			<portlet:param name="version" value="<%= String.valueOf(article.getVersion()) %>" />
+		</liferay-portlet:renderURL>
 
+		<%
+		String previewOnClick = "Liferay.fire('previewArticle', {title: '" + article.getTitle(locale) + "', uri: '" + previewArticleContentURL.toString() + "'});";
+		%>
+
+		<c:if test="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.VIEW) %>">
 			<liferay-ui:icon
-				image="view"
-				target="_blank"
-				url="<%= previewURL.toString() %>"
+				image="preview"
+				onClick="<%= previewOnClick %>"
+				url="javascript:;"
 			/>
 
 			<c:if test="<%= JournalPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_ARTICLE) %>">

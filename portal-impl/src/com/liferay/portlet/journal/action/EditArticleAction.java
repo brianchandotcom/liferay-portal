@@ -420,6 +420,8 @@ public class EditArticleAction extends PortletAction {
 
 		String languageId = ParamUtil.getString(actionRequest, "languageId");
 
+		boolean isPreview = ParamUtil.getBoolean(actionRequest, "isPreview");
+
 		PortletURLImpl portletURL = new PortletURLImpl(
 			actionRequest, portletConfig.getPortletName(),
 			themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
@@ -435,6 +437,7 @@ public class EditArticleAction extends PortletAction {
 		portletURL.setParameter(
 			"version", String.valueOf(article.getVersion()), false);
 		portletURL.setParameter("languageId", languageId, false);
+		portletURL.setParameter("isPreview", String.valueOf(isPreview), false);
 		portletURL.setWindowState(actionRequest.getWindowState());
 
 		return portletURL.toString();

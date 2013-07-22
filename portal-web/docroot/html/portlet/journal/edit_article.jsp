@@ -42,6 +42,8 @@ String portletResource = ParamUtil.getString(request, "portletResource");
 
 String referringPortletResource = ParamUtil.getString(request, "referringPortletResource");
 
+boolean isPreview = ParamUtil.getBoolean(request, "isPreview");
+
 JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_ARTICLE);
 
 long groupId = BeanParamUtil.getLong(article, request, "groupId", scopeGroupId);
@@ -179,6 +181,7 @@ request.setAttribute("edit_article.jsp-toLanguageId", toLanguageId);
 	<aui:input name="ddmStructureId" type="hidden" />
 	<aui:input name="ddmTemplateId" type="hidden" />
 	<aui:input name="workflowAction" type="hidden" value="<%= String.valueOf(WorkflowConstants.ACTION_SAVE_DRAFT) %>" />
+	<aui:input name="isPreview" type="hidden" value="<%= StringPool.FALSE %>" />
 
 	<liferay-ui:error exception="<%= ArticleContentSizeException.class %>" message="you-have-exceeded-the-maximum-article-content-size-allowed" />
 
@@ -325,6 +328,25 @@ request.setAttribute("edit_article.jsp-toLanguageId", toLanguageId);
 	</tr>
 	</table>
 </aui:form>
+
+<c:if test="<%= article != null && isPreview %>">
+	<aui:script use="liferay-journal-preview">
+		<liferay-portlet:renderURL plid="<%= JournalUtil.getPreviewPlid(article, themeDisplay) %>" var="previewArticleContentURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+			<portlet:param name="struts_action" value="/journal/preview_article_content" />
+			<portlet:param name="groupId" value="<%= String.valueOf(article.getGroupId()) %>" />
+			<portlet:param name="articleId" value="<%= article.getArticleId() %>" />
+			<portlet:param name="version" value="<%= String.valueOf(article.getVersion()) %>" />
+		</liferay-portlet:renderURL>
+
+		Liferay.fire(
+			'previewArticle',
+			{
+				title: '<%= article.getTitle(locale) %>',
+				uri: '<%= previewArticleContentURL.toString() %>'
+			}
+		);
+	</aui:script>
+</c:if>
 
 <aui:script>
 	var <portlet:namespace />documentLibraryInput = null;

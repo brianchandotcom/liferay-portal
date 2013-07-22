@@ -39,32 +39,54 @@ if ((article != null) && article.isDraft()) {
 
 	var toolbarButtonGroup = [];
 
-	<c:if test="<%= (article != null) && (classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT) %>">
-		toolbarButtonGroup.push(
-			{
-				icon: 'icon-search',
-				label: '<%= UnicodeLanguageUtil.get(pageContext, "preview") %>',
-				on: {
-					click: function(event) {
-						var form = A.one('#<portlet:namespace />fm1');
+	<c:if test="<%= (article != null) %>">
+		<liferay-portlet:renderURL plid="<%= JournalUtil.getPreviewPlid(article, themeDisplay) %>" var="previewArticleContentURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+			<portlet:param name="struts_action" value="/journal/preview_article_content" />
+			<portlet:param name="groupId" value="<%= String.valueOf(article.getGroupId()) %>" />
+			<portlet:param name="articleId" value="<%= article.getArticleId() %>" />
+			<portlet:param name="version" value="<%= String.valueOf(article.getVersion()) %>" />
+		</liferay-portlet:renderURL>
 
-						var orginalFormAction = form.attr('action');
+		var previewArticleContentURL = '<%= previewArticleContentURL %>';
 
-						form.attr('target', '_blank');
+		var form = A.one('#<portlet:namespace />fm1');
 
-						form.one('#<portlet:namespace /><%= Constants.CMD %>').val('<%= Constants.PREVIEW %>');
-
-						<portlet:actionURL var="previewURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
-							<portlet:param name="struts_action" value="/journal/preview_article_content" />
-						</portlet:actionURL>
-
-						submitForm(form, '<%= previewURL.toString() %>', false);
-
-						form.attr('action', orginalFormAction);
-					}
-				}
+		form.on(
+			'change',
+			function(event) {
+				previewArticleContentURL = null;
 			}
 		);
+
+		<c:if test="<%= classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT %>">
+			toolbarButtonGroup.push(
+				{
+					icon: 'icon-search',
+					label: '<%= UnicodeLanguageUtil.get(pageContext, "preview") %>',
+					on: {
+						click: function(event) {
+							event.domEvent.preventDefault();
+
+							if (previewArticleContentURL && !CKEDITOR.instances.<portlet:namespace />articleContent.checkDirty()) {
+								Liferay.fire(
+									'previewArticle',
+									{
+										title: '<%= article.getTitle(locale) %>',
+										uri: '<%= previewArticleContentURL.toString() %>'
+									}
+								);
+							}
+							else if (confirm('<liferay-ui:message key="in-order-to-preview-your-changes,-the-web-content-will-be-saved-as-a-draft" />')) {
+								form.one('#<portlet:namespace /><%= Constants.CMD %>').val('<%= Constants.UPDATE %>');
+								form.one('#<portlet:namespace />isPreview').val('<%= StringPool.TRUE %>');
+
+								submitForm(form);
+							}
+						}
+					}
+				}
+			);
+		</c:if>
 	</c:if>
 
 	<c:if test="<%= (article != null) && JournalArticlePermission.contains(permissionChecker, article, ActionKeys.PERMISSIONS) %>">

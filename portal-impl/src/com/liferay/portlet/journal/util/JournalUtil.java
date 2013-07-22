@@ -52,6 +52,7 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.XPath;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.ModelHintsUtil;
 import com.liferay.portal.model.User;
@@ -884,6 +885,36 @@ public class JournalUtil {
 		portletURL.setParameter("folderId", String.valueOf(folderId));
 
 		return portletURL.toString();
+	}
+
+	public static long getPreviewPlid(
+			JournalArticle article, ThemeDisplay themeDisplay)
+		throws Exception {
+
+		if ((article != null) && Validator.isNotNull(article.getLayoutUuid())) {
+			Layout layout =
+				LayoutLocalServiceUtil.getLayoutByUuidAndCompanyId(
+					article.getLayoutUuid(), themeDisplay.getCompanyId());
+
+			return layout.getPlid();
+		}
+		else {
+			Layout layout = LayoutLocalServiceUtil.fetchFirstLayout(
+				themeDisplay.getScopeGroupId(), false,
+				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+
+			if (layout == null) {
+				layout = LayoutLocalServiceUtil.fetchFirstLayout(
+					themeDisplay.getScopeGroupId(), true,
+					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+			}
+
+			if (layout != null) {
+				return layout.getPlid();
+			}
+
+			return themeDisplay.getPlid();
+		}
 	}
 
 	public static Stack<JournalArticle> getRecentArticles(

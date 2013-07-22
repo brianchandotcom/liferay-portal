@@ -200,7 +200,23 @@ public class WebDriverToSeleniumBridge
 		else {
 			WebElement webElement = getWebElement(locator);
 
-			webElement.click();
+			try {
+				webElement.click();
+			}
+			catch (Exception e) {
+				WrapsDriver wrapsDriver = (WrapsDriver)webElement;
+
+				WebDriver webDriver = wrapsDriver.getWrappedDriver();
+
+				JavascriptExecutor javascriptExecutor =
+					(JavascriptExecutor)webDriver;
+
+				String script = "arguments[0].scrollIntoView();";
+
+				javascriptExecutor.executeScript(script, webElement);
+
+				webElement.click();
+			}
 		}
 	}
 
@@ -234,7 +250,23 @@ public class WebDriverToSeleniumBridge
 				action.perform();
 			}
 			else {
-				webElement.click();
+				try {
+					webElement.click();
+				}
+				catch (Exception e) {
+					WrapsDriver wrapsDriver = (WrapsDriver)webElement;
+
+					WebDriver webDriver = wrapsDriver.getWrappedDriver();
+
+					JavascriptExecutor javascriptExecutor =
+						(JavascriptExecutor)webDriver;
+
+					String script = "arguments[0].scrollIntoView();";
+
+					javascriptExecutor.executeScript(script, webElement);
+
+					webElement.click();
+				}
 			}
 		}
 	}

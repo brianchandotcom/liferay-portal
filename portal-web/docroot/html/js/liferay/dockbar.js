@@ -214,8 +214,6 @@ AUI.add(
 					);
 				}
 
-				var previewContent = A.one('#' + namespace + 'previewContent');
-
 				var previewPanel = A.one('#' + namespace + 'previewPanel');
 
 				if (previewPanel) {

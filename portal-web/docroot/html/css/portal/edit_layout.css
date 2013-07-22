@@ -25,7 +25,6 @@
 
 	.taglib-form-navigator {
 		.button-holder {
-			background-color: #FFFFFF;
 			bottom: 0;
 			margin-left: -10px;
 			padding: 10px;
@@ -34,18 +33,16 @@
 		}
 
 		.accordion {
-			background: #FFF;
 			margin: 20px -10px 50px;
 
 			.accordion-group.lfr-panel-extended {
-				background: #FFF;
-				border: solid #D1D1D1;
+				border: solid;
 				border-width: 1px 0 0;
 				margin-bottom: 0;
 
 				&:last-child {
 					.toggler-header-collapsed {
-						border-bottom: 1px solid #D1D1D1;
+						border-bottom: 1px solid;
 					}
 				}
 
@@ -53,16 +50,12 @@
 					cursor: pointer;
 
 					.accordion-toggle {
-						font-size: 16px;
-						font-weight: 300;
 						padding: 6px 10px;
-						text-transform: capitalize;
 					}
 				}
 
 				.accordion-inner {
-					background: #FCFCFC;
-					border: solid #D1D1D1;
+					border: solid;
 					border-width: 1px 0 0;
 					padding: 15px;
 				}
@@ -80,7 +73,7 @@
 	}
 }
 
-/*Skin*/
+/* Skin */
 
 .lfr-edit-layout-panel {
 	background-color: #FFF;
@@ -88,5 +81,37 @@
 	h1 {
 		font-size: 22px;
 		line-height: 22px;
+	}
+
+	.taglib-form-navigator {
+		.button-holder {
+			background-color: #FFFFFF;
+		}
+
+		.accordion {
+			background: #FFF;
+
+			.accordion-group.lfr-panel-extended {
+				background: #FFF;
+				border-color: #D1D1D1;
+
+				&:last-child {
+					.toggler-header-collapsed {
+						border-bottom-color: #D1D1D1;
+					}
+				}
+
+				.accordion-heading .accordion-toggle {
+					font-size: 16px;
+					font-weight: 300;
+					text-transform: capitalize;
+				}
+
+				.accordion-inner {
+					background: #FCFCFC;
+					border-color: #D1D1D1;
+				}
+			}
+		}
 	}
 }

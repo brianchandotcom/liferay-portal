@@ -79,6 +79,7 @@
 				A.one('#<portlet:namespace />name').focus();
 
 				var BODY = A.getBody();
+
 				BODY.plug(A.LoadingMask);
 
 				Liferay.once(

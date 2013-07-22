@@ -167,151 +167,150 @@ if (Validator.isNotNull(historyKey)) {
 					<%= Validator.isNotNull(htmlBottom) ? htmlBottom : StringPool.BLANK %>
 				</ul>
 			</div>
-		</div>
 
-		<aui:script use="aui-event-input,aui-tabview,aui-url,history,io-form">
-			var formNode = A.one('#<portlet:namespace /><%= formName %>');
+			<aui:script use="aui-event-input,aui-tabview,aui-url,history,io-form">
+				var formNode = A.one('#<portlet:namespace /><%= formName %>');
 
-			var tabview = new A.TabView(
-				{
-					boundingBox: '#<portlet:namespace />tabsBoundingBox',
-					srcNode: '#<portlet:namespace />tabs',
-					type: 'list'
+				var tabview = new A.TabView(
+					{
+						boundingBox: '#<portlet:namespace />tabsBoundingBox',
+						srcNode: '#<portlet:namespace />tabs',
+						type: 'list'
+					}
+				).render();
+
+				var history = new A.HistoryHash();
+
+				function selectTabBySectionId(sectionId) {
+					var instance = this;
+
+					var tab = A.Widget.getByNode('#' + sectionId + 'Tab');
+
+					var tabIndex = tabview.indexOf(tab);
+
+					if (tab && (tabIndex > -1)) {
+						tabview.selectChild(tabIndex);
+					}
+
+					updateRedirectForSectionId(sectionId);
+
+					Liferay.fire('formNavigator:reveal' + sectionId);
+				};
+
+				function updateSectionStatus() {
+					var tabNode = tabview.get('selection').get('boundingBox');
+
+					var sectionId = tabNode.getData('sectionId');
+
+					var modifiedSectionsNode = A.one('#<portlet:namespace/>modifiedSections');
+
+					var modifiedSections = modifiedSectionsNode.val().split(',');
+
+					modifiedSections.push(sectionId);
+					modifiedSections = A.Array.dedupe(modifiedSections);
+					modifiedSectionsNode.val(modifiedSections.join());
+
+					tabNode.addClass('section-modified');
+
+					tabNode.toggleClass(
+						'section-error',
+						A.one('#' + sectionId).one('.error-field')
+					);
 				}
-			).render();
 
-			var history = new A.HistoryHash();
+				function updateRedirectForSectionId(sectionId) {
+					var redirect = A.one('#<portlet:namespace />redirect');
 
-			function selectTabBySectionId(sectionId) {
-				var instance = this;
+					if (redirect) {
+						var url = new A.Url(redirect.val() || location.href);
 
-				var tab = A.Widget.getByNode('#' + sectionId + 'Tab');
+						url.setAnchor(null);
+						url.setParameter('<portlet:namespace />historyKey', sectionId);
 
-				var tabIndex = tabview.indexOf(tab);
-
-				if (tab && (tabIndex > -1)) {
-					tabview.selectChild(tabIndex);
-				}
-
-				updateRedirectForSectionId(sectionId);
-
-				Liferay.fire('formNavigator:reveal' + sectionId);
-			};
-
-			function updateSectionStatus() {
-				var tabNode = tabview.get('selection').get('boundingBox');
-
-				var sectionId = tabNode.getData('sectionId');
-
-				var modifiedSectionsNode = A.one('#<portlet:namespace/>modifiedSections');
-
-				var modifiedSections = modifiedSectionsNode.val().split(',');
-
-				modifiedSections.push(sectionId);
-				modifiedSections = A.Array.dedupe(modifiedSections);
-				modifiedSectionsNode.val(modifiedSections.join());
-
-				tabNode.addClass('section-modified');
-
-				tabNode.toggleClass(
-					'section-error',
-					A.one('#' + sectionId).one('.error-field')
-				);
-			}
-
-			function updateRedirectForSectionId(sectionId) {
-				var redirect = A.one('#<portlet:namespace />redirect');
-
-				if (redirect) {
-					var url = new A.Url(redirect.val() || location.href);
-
-					url.setAnchor(null);
-					url.setParameter('<portlet:namespace />historyKey', sectionId);
-
-					redirect.val(url.toString());
-				}
-			}
-
-			tabview.after(
-				'selectionChange',
-				function(event) {
-					var tab = event.newVal
-
-					var boundingBox = tab.get('boundingBox');
-
-					var sectionId = boundingBox.getData('sectionId');
-
-					history.addValue('<portlet:namespace />tab', sectionId);
-				}
-			);
-
-			A.on(
-				'history:change',
-				function(event) {
-					var state = event.newVal;
-
-					var changed = event.changed.<portlet:namespace />tab;
-
-					var removed = event.removed.<portlet:namespace />tab;
-
-					if (event.src === A.HistoryHash.SRC_HASH || event.src === A.HistoryBase.SRC_ADD) {
-						if (changed) {
-							selectTabBySectionId(changed.newVal);
-						}
-						else if (removed) {
-							tabview.selectChild(0);
-						}
-						else if (state) {
-							var sectionId = state.<portlet:namespace />tab;
-
-							if (!sectionId) {
-								sectionId = '<portlet:namespace />' + state.tab;
-							}
-
-							selectTabBySectionId(sectionId);
-						}
+						redirect.val(url.toString());
 					}
 				}
-			);
 
-			if (formNode) {
-				formNode.all('.modify-link').on('click', updateSectionStatus);
+				tabview.after(
+					'selectionChange',
+					function(event) {
+						var tab = event.newVal
 
-				formNode.delegate('change', updateSectionStatus, 'input, select, textarea');
-			}
+						var boundingBox = tab.get('boundingBox');
 
-			var currentUrl = new A.Url(location.href);
+						var sectionId = boundingBox.getData('sectionId');
 
-			var currentAnchor = currentUrl.getAnchor();
+						history.addValue('<portlet:namespace />tab', sectionId);
+					}
+				);
 
-			if (!currentAnchor) {
-				currentAnchor = currentUrl.getParameter('<portlet:namespace />historyKey');
-			}
+				A.on(
+					'history:change',
+					function(event) {
+						var state = event.newVal;
 
-			if (currentAnchor) {
-				var locationSectionId = currentAnchor.substring(currentAnchor.indexOf('=') + 1);
+						var changed = event.changed.<portlet:namespace />tab;
 
-				if (locationSectionId.indexOf('<portlet:namespace />') === -1) {
-					locationSectionId = '<portlet:namespace />' + locationSectionId;
+						var removed = event.removed.<portlet:namespace />tab;
+
+						if (event.src === A.HistoryHash.SRC_HASH || event.src === A.HistoryBase.SRC_ADD) {
+							if (changed) {
+								selectTabBySectionId(changed.newVal);
+							}
+							else if (removed) {
+								tabview.selectChild(0);
+							}
+							else if (state) {
+								var sectionId = state.<portlet:namespace />tab;
+
+								if (!sectionId) {
+									sectionId = '<portlet:namespace />' + state.tab;
+								}
+
+								selectTabBySectionId(sectionId);
+							}
+						}
+					}
+				);
+
+				if (formNode) {
+					formNode.all('.modify-link').on('click', updateSectionStatus);
+
+					formNode.delegate('change', updateSectionStatus, 'input, select, textarea');
 				}
 
-				selectTabBySectionId(locationSectionId);
-			}
+				var currentUrl = new A.Url(location.href);
 
-			if (<%= error %>) {
-				Liferay.fire('formNavigator:reveal<portlet:namespace /><%= errorSection %>');
-			}
-		</aui:script>
+				var currentAnchor = currentUrl.getAnchor();
 
-		<%!
-		private String _getSectionId(String name) {
-			return TextFormatter.format(name, TextFormatter.M);
-		}
+				if (!currentAnchor) {
+					currentAnchor = currentUrl.getParameter('<portlet:namespace />historyKey');
+				}
 
-		private String _getSectionJsp(String name) {
-			return TextFormatter.format(name, TextFormatter.N);
-		}
-		%>
+				if (currentAnchor) {
+					var locationSectionId = currentAnchor.substring(currentAnchor.indexOf('=') + 1);
 
-	</c:otherwise>
-</c:choose>
+					if (locationSectionId.indexOf('<portlet:namespace />') === -1) {
+						locationSectionId = '<portlet:namespace />' + locationSectionId;
+					}
+
+					selectTabBySectionId(locationSectionId);
+				}
+
+				if (<%= error %>) {
+					Liferay.fire('formNavigator:reveal<portlet:namespace /><%= errorSection %>');
+				}
+			</aui:script>
+		</c:otherwise>
+	</c:choose>
+</div>
+
+<%!
+private String _getSectionId(String name) {
+	return TextFormatter.format(name, TextFormatter.M);
+}
+
+private String _getSectionJsp(String name) {
+	return TextFormatter.format(name, TextFormatter.N);
+}
+%>

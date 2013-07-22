@@ -14,6 +14,9 @@
 
 package com.liferay.portal.kernel.language;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+
 import java.util.List;
 import java.util.Locale;
 
@@ -103,6 +106,8 @@ public interface Language {
 
 	public Locale[] getAvailableLocales();
 
+	public Locale[] getAvailableLocales(long groupId);
+
 	public String getCharset(Locale locale);
 
 	public String getLanguageId(HttpServletRequest request);
@@ -131,17 +136,26 @@ public interface Language {
 	public String getTimeDescription(
 		PageContext pageContext, Long milliseconds);
 
+	public boolean hasInheritedLocales(long groupId)
+		throws PortalException, SystemException;
+
 	public void init();
 
 	public boolean isAvailableLanguageCode(String languageCode);
 
 	public boolean isAvailableLocale(Locale locale);
 
+	public boolean isAvailableLocale(long groupId, Locale locale);
+
+	public boolean isAvailableLocale(long groupId, String languageId);
+
 	public boolean isAvailableLocale(String languageId);
 
 	public boolean isBetaLocale(Locale locale);
 
 	public boolean isDuplicateLanguageCode(String languageCode);
+
+	public void resetAvailableGroupLocales(long groupId);
 
 	public void resetAvailableLocales(long companyId);
 

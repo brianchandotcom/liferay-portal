@@ -25,12 +25,20 @@ public class LocaleThreadLocal {
 		return _defaultLocale.get();
 	}
 
+	public static Locale getSiteDefaultLocale() {
+		return _siteDefaultLocale.get();
+	}
+
 	public static Locale getThemeDisplayLocale() {
 		return _themeDisplayLocale.get();
 	}
 
 	public static void setDefaultLocale(Locale locale) {
 		_defaultLocale.set(locale);
+	}
+
+	public static void setSiteDefaultLocale(Locale locale) {
+		_siteDefaultLocale.set(locale);
 	}
 
 	public static void setThemeDisplayLocale(Locale locale) {
@@ -40,6 +48,9 @@ public class LocaleThreadLocal {
 	private static ThreadLocal<Locale> _defaultLocale =
 		new AutoResetThreadLocal<Locale>(
 			LocaleThreadLocal.class + "._defaultLocale");
+	private static ThreadLocal<Locale> _siteDefaultLocale =
+		new AutoResetThreadLocal<Locale>(
+			LocaleThreadLocal.class + "._siteDefaultLocale");
 	private static ThreadLocal<Locale> _themeDisplayLocale =
 		new AutoResetThreadLocal<Locale>(
 			LocaleThreadLocal.class + "._themeDisplayLocale");

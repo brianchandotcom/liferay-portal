@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.language;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -188,6 +190,10 @@ public class LanguageUtil {
 		return getLanguage().getAvailableLocales();
 	}
 
+	public static Locale[] getAvailableLocales(long groupId) {
+		return getLanguage().getAvailableLocales(groupId);
+	}
+
 	public static String getCharset(Locale locale) {
 		return getLanguage().getCharset(locale);
 	}
@@ -252,6 +258,12 @@ public class LanguageUtil {
 		return getLanguage().getTimeDescription(pageContext, milliseconds);
 	}
 
+	public static boolean hasInheritedLocales(long groupId)
+		throws PortalException, SystemException {
+
+		return getLanguage().hasInheritedLocales(groupId);
+	}
+
 	public static void init() {
 		getLanguage().init();
 	}
@@ -264,6 +276,18 @@ public class LanguageUtil {
 		return getLanguage().isAvailableLocale(locale);
 	}
 
+	public static boolean isAvailableLocale(long groupId, Locale locale) {
+		return getLanguage().isAvailableLocale(groupId, locale);
+	}
+
+	public static boolean isAvailableLocale(long groupId, String languageId) {
+		return getLanguage().isAvailableLocale(groupId, languageId);
+	}
+
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link #isAvailableLocale(long,
+	 *  String)}
+	 */
 	public static boolean isAvailableLocale(String languageId) {
 		return getLanguage().isAvailableLocale(languageId);
 	}
@@ -280,6 +304,10 @@ public class LanguageUtil {
 		String value = getLanguage().get(locale, key, StringPool.BLANK);
 
 		return Validator.isNotNull(value);
+	}
+
+	public static void resetAvailableGroupLocales(long groupId) {
+		getLanguage().resetAvailableGroupLocales(groupId);
 	}
 
 	public static void resetAvailableLocales(long companyId) {

@@ -461,9 +461,13 @@ public class LanguageImpl implements Language {
 		catch (Exception e) {
 		}
 
-		if (_groupLocalesMap.get(groupId) == null) {
-			_initGroupLocales(groupId);
+		Locale[] locales = _groupLocalesMap.get(groupId);
+
+		if (locales != null) {
+			return locales;
 		}
+
+		_initGroupLocales(groupId);
 
 		return _groupLocalesMap.get(groupId);
 	}
@@ -651,13 +655,15 @@ public class LanguageImpl implements Language {
 		catch (Exception e) {
 		}
 
-		Set<Locale> localesSet = _groupLocalesSetMap.get(groupId);
+		Set<Locale> localesSet = _groupLocalesSet.get(groupId);
 
-		if (localesSet == null) {
-			_initGroupLocales(groupId);
+		if (localesSet != null) {
+			return localesSet.contains(locale);
 		}
 
-		localesSet = _groupLocalesSetMap.get(groupId);
+		_initGroupLocales(groupId);
+
+		localesSet = _groupLocalesSet.get(groupId);
 
 		return localesSet.contains(locale);
 	}
@@ -917,7 +923,7 @@ public class LanguageImpl implements Language {
 	}
 
 	private void _initGroupLocales(long groupId) {
-		String[] groupLocalesArray = null;
+		String[] languageIds = null;
 
 		try {
 			Group group = GroupLocalServiceUtil.getGroup(groupId);
@@ -925,21 +931,20 @@ public class LanguageImpl implements Language {
 			UnicodeProperties typeSettingsProperties =
 				group.getTypeSettingsProperties();
 
-			groupLocalesArray = StringUtil.split(
-				typeSettingsProperties.getProperty("locales"));
+			languageIds = StringUtil.split(
+				typeSettingsProperties.getProperty(PropsKeys.LOCALES));
 		}
 		catch (Exception e) {
-			groupLocalesArray = PropsValues.LOCALES_ENABLED;
+			languageIds = PropsValues.LOCALES_ENABLED;
 		}
 
-		Locale[] groupLocales = new Locale[groupLocalesArray.length];
-		Map<String, Locale> groupLocalesMap = new HashMap<String, Locale>(
-			groupLocalesArray.length);
-		Set<Locale> groupLocalesSet = new HashSet<Locale>(
-			groupLocalesArray.length);
+		Locale[] locales = new Locale[languageIds.length];
+		Map<String, Locale> localesMap = new HashMap<String, Locale>(
+			languageIds.length);
+		Set<Locale> localesSet = new HashSet<Locale>(languageIds.length);
 
-		for (int i = 0; i < groupLocalesArray.length; i++) {
-			String languageId = groupLocalesArray[i];
+		for (int i = 0; i < languageIds.length; i++) {
+			String languageId = languageIds[i];
 
 			Locale locale = LocaleUtil.fromLanguageId(languageId, false);
 
@@ -951,22 +956,22 @@ public class LanguageImpl implements Language {
 				language = languageId.substring(0, pos);
 			}
 
-			groupLocales[i] = locale;
+			locales[i] = locale;
 
-			if (!groupLocalesMap.containsKey(language)) {
-				groupLocalesMap.put(language, locale);
+			if (!localesMap.containsKey(language)) {
+				localesMap.put(language, locale);
 			}
 
-			groupLocalesSet.add(locale);
+			localesSet.add(locale);
 		}
 
-		_groupLocalesMap.put(groupId, groupLocales);
-		_groupLocalesSetMap.put(groupId, groupLocalesSet);
+		_groupLocalesMap.put(groupId, locales);
+		_groupLocalesSet.put(groupId, localesSet);
 	}
 
 	private void _resetAvailableGroupLocales(long groupId) {
 		_groupLocalesMap.remove(groupId);
-		_groupLocalesSetMap.remove(groupId);
+		_groupLocalesSet.remove(groupId);
 	}
 
 	private void _resetAvailableLocales(long companyId) {
@@ -982,7 +987,7 @@ public class LanguageImpl implements Language {
 	private Set<String> _duplicateLanguageCodes;
 	private Map<Long, Locale[]> _groupLocalesMap =
 		new HashMap<Long, Locale[]>();
-	private Map<Long, Set<Locale>> _groupLocalesSetMap =
+	private Map<Long, Set<Locale>> _groupLocalesSet =
 		new HashMap<Long, Set<Locale>>();
 	private Locale[] _locales;
 	private Set<Locale> _localesBetaSet;

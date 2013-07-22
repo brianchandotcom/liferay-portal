@@ -4729,14 +4729,14 @@ public class PortalImpl implements Portal {
 			return LocaleUtil.getDefault();
 		}
 
-		UnicodeProperties groupTypeSettings =
+		UnicodeProperties typeSettingsProperties =
 			liveGroup.getTypeSettingsProperties();
 
 		User defaultUser = UserLocalServiceUtil.getDefaultUser(
 			group.getCompanyId());
 
 		String languageId = GetterUtil.getString(
-			groupTypeSettings.getProperty("languageId"),
+			typeSettingsProperties.getProperty("languageId"),
 			defaultUser.getLanguageId());
 
 		return LocaleUtil.fromLanguageId(languageId);

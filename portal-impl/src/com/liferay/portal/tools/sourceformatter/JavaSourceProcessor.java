@@ -562,7 +562,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				continue;
 			}
 
-			File file = new File(fileName);
+			File file = new File(BASEDIR + fileName);
 
 			fileName = StringUtil.replace(
 				fileName, StringPool.BACK_SLASH, StringPool.SLASH);

@@ -108,7 +108,7 @@ public class LangBuilder {
 			new File(_langDir + "/" + _langFile + ".properties"));
 
 		// Locales that are not invoked by _createProperties should still be
-		// rewritten to use the rignt line separator
+		// rewritten to use the right line separator
 
 		_orderProperties(
 			new File(_langDir + "/" + _langFile + "_en_AU.properties"));

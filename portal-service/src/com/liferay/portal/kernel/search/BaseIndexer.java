@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Address;
 import com.liferay.portal.model.AttachedModel;
 import com.liferay.portal.model.AuditedModel;
@@ -1055,6 +1056,28 @@ public abstract class BaseIndexer implements Indexer {
 		}
 
 		document.addKeyword(Field.STAGING_GROUP, stagingGroup);
+	}
+
+	protected void addStatus(
+			BooleanQuery contextQuery, SearchContext searchContext)
+		throws Exception {
+
+		int status = GetterUtil.getInteger(
+			searchContext.getAttribute(Field.STATUS),
+			WorkflowConstants.STATUS_APPROVED);
+
+		if (status != WorkflowConstants.STATUS_ANY) {
+			contextQuery.addRequiredTerm(Field.STATUS, status);
+		}
+		else {
+			BooleanQuery statusQuery = BooleanQueryFactoryUtil.create(
+				searchContext);
+
+			statusQuery.addTerm(
+				Field.STATUS, WorkflowConstants.STATUS_IN_TRASH);
+
+			contextQuery.add(statusQuery, BooleanClauseOccur.MUST_NOT);
+		}
 	}
 
 	protected void addTrashFields(

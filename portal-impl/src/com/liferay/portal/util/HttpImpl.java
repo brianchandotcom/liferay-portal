@@ -702,6 +702,16 @@ public class HttpImpl implements Http {
 	}
 
 	@Override
+	public boolean isSecure(String url) {
+		if (getProtocol(url).equalsIgnoreCase(HTTPS)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
 	public Map<String, String[]> parameterMapFromString(String queryString) {
 		Map<String, String[]> parameterMap =
 			new LinkedHashMap<String, String[]>();

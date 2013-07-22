@@ -184,6 +184,10 @@ public class HttpUtil {
 		return getHttp().isProxyHost(host);
 	}
 
+	public static boolean isSecure(String url) {
+		return getHttp().isSecure(url);
+	}
+
 	public static Map<String, String[]> parameterMapFromString(
 		String queryString) {
 

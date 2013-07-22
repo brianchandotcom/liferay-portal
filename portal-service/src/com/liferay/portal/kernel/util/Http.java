@@ -120,6 +120,8 @@ public interface Http {
 
 	public boolean isProxyHost(String host);
 
+	public boolean isSecure(String url);
+
 	public Map<String, String[]> parameterMapFromString(String queryString);
 
 	public String parameterMapToString(Map<String, String[]> parameterMap);

@@ -241,6 +241,8 @@ public class I18nFilter extends BasePortalFilter {
 
 				if (!userLanguageId.equals(LocaleUtil.toLanguageId(locale))) {
 					i18nLanguageId = LocaleUtil.toLanguageId(locale);
+
+					PortalUtil.addUserLocaleOptionsMessage(request);
 				}
 				else {
 					return null;

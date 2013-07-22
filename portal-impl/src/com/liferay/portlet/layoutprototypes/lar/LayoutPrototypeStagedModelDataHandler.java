@@ -44,6 +44,11 @@ public class LayoutPrototypeStagedModelDataHandler
 	}
 
 	@Override
+	public String getDisplayName(LayoutPrototype layoutPrototype) {
+		return layoutPrototype.getNameCurrentValue();
+	}
+
+	@Override
 	protected void doExportStagedModel(
 			PortletDataContext portletDataContext,
 			LayoutPrototype layoutPrototype)
@@ -169,6 +174,22 @@ public class LayoutPrototypeStagedModelDataHandler
 			portletDataContext.setPrivateLayout(privateLayout);
 			portletDataContext.setScopeGroupId(scopeGroupId);
 		}
+	}
+
+	@Override
+	protected boolean validateMissingReference(
+			String uuid, long companyId, long groupId)
+		throws Exception {
+
+		LayoutPrototype layoutPrototype =
+			LayoutPrototypeLocalServiceUtil.
+				fetchLayoutPrototypeByUuidAndCompanyId(uuid, companyId);
+
+		if (layoutPrototype == null) {
+			return false;
+		}
+
+		return true;
 	}
 
 }

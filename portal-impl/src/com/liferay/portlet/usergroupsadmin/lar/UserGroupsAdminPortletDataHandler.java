@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.lar.BasePortletDataHandler;
 import com.liferay.portal.kernel.lar.DataLevel;
 import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.UserGroup;
@@ -38,9 +39,11 @@ public class UserGroupsAdminPortletDataHandler extends BasePortletDataHandler {
 	public static final String NAMESPACE = "user_groups_admin";
 
 	public UserGroupsAdminPortletDataHandler() {
-		super();
-
 		setDataLevel(DataLevel.PORTAL);
+		setExportControls(
+			new PortletDataHandlerBoolean(
+				NAMESPACE, "user-groups", true, true, null,
+				UserGroup.class.getName()));
 	}
 
 	@Override

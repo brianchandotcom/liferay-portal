@@ -176,8 +176,7 @@ public class LayoutSetPrototypeStagedModelDataHandler
 			dynamicQuery);
 
 		boolean exportLayoutPrototypes = portletDataContext.getBooleanParameter(
-			LayoutSetPrototypePortletDataHandler.NAMESPACE,
-			"layout-prototypes");
+			LayoutSetPrototypePortletDataHandler.NAMESPACE, "page-templates");
 
 		for (Layout layout : layouts) {
 			String layoutPrototypeUuid = layout.getLayoutPrototypeUuid();
@@ -289,6 +288,22 @@ public class LayoutSetPrototypeStagedModelDataHandler
 		finally {
 			StreamUtil.cleanUp(inputStream);
 		}
+	}
+
+	@Override
+	protected boolean validateMissingReference(
+			String uuid, long companyId, long groupId)
+		throws Exception {
+
+		LayoutSetPrototype layoutSetPrototype =
+			LayoutSetPrototypeLocalServiceUtil.
+				fetchLayoutSetPrototypeByUuidAndCompanyId(uuid, companyId);
+
+		if (layoutSetPrototype == null) {
+			return false;
+		}
+
+		return true;
 	}
 
 }

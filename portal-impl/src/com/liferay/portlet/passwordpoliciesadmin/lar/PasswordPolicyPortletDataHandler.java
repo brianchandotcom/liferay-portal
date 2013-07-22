@@ -17,15 +17,17 @@ package com.liferay.portlet.passwordpoliciesadmin.lar;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.BasePortletDataHandler;
 import com.liferay.portal.kernel.lar.DataLevel;
 import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.PasswordPolicy;
 import com.liferay.portal.service.PasswordPolicyLocalServiceUtil;
-import com.liferay.portal.service.persistence.PasswordPolicyActionableDynamicQuery;
+import com.liferay.portal.service.persistence.PasswordPolicyExportActionableDynamicQuery;
 
 import java.util.List;
 
@@ -42,6 +44,10 @@ public class PasswordPolicyPortletDataHandler extends BasePortletDataHandler {
 		setDataLevel(DataLevel.PORTAL);
 		setDeletionSystemEventStagedModelTypes(
 			new StagedModelType(PasswordPolicy.class));
+		setExportControls(
+			new PortletDataHandlerBoolean(
+				NAMESPACE, "password-policies", true, true, null,
+				PasswordPolicy.class.getName()));
 	}
 
 	@Override
@@ -77,23 +83,7 @@ public class PasswordPolicyPortletDataHandler extends BasePortletDataHandler {
 			"group-id", String.valueOf(portletDataContext.getScopeGroupId()));
 
 		ActionableDynamicQuery actionableDynamicQuery =
-			new PasswordPolicyActionableDynamicQuery() {
-
-			@Override
-			protected void addCriteria(DynamicQuery dynamicQuery) {
-				portletDataContext.addDateRangeCriteria(
-					dynamicQuery, "modifiedDate");
-			}
-
-			@Override
-			protected void performAction(Object object) throws PortalException {
-				PasswordPolicy passwordPolicy = (PasswordPolicy)object;
-
-				StagedModelDataHandlerUtil.exportStagedModel(
-					portletDataContext, passwordPolicy);
-			}
-
-		};
+			getPasswordPolicyActionableDynamicQuery(portletDataContext, true);
 
 		actionableDynamicQuery.performActions();
 
@@ -122,6 +112,46 @@ public class PasswordPolicyPortletDataHandler extends BasePortletDataHandler {
 		}
 
 		return null;
+	}
+
+	@Override
+	protected void doPrepareManifestSummary(
+			PortletDataContext portletDataContext,
+			PortletPreferences portletPreferences)
+		throws Exception {
+
+		ActionableDynamicQuery actionableDynamicQuery =
+			getPasswordPolicyActionableDynamicQuery(portletDataContext, false);
+
+		actionableDynamicQuery.performCount();
+	}
+
+	protected ActionableDynamicQuery getPasswordPolicyActionableDynamicQuery(
+			final PortletDataContext portletDataContext, final boolean export)
+		throws SystemException {
+
+		return new PasswordPolicyExportActionableDynamicQuery(
+			portletDataContext) {
+
+			@Override
+			protected void addCriteria(DynamicQuery dynamicQuery) {
+				portletDataContext.addDateRangeCriteria(
+					dynamicQuery, "modifiedDate");
+			}
+
+			@Override
+			protected void performAction(Object object) throws PortalException {
+				if (!export) {
+					return;
+				}
+
+				PasswordPolicy passwordPolicy = (PasswordPolicy)object;
+
+				StagedModelDataHandlerUtil.exportStagedModel(
+					portletDataContext, passwordPolicy);
+			}
+
+		};
 	}
 
 	protected static final String RESOURCE_NAME =

@@ -439,6 +439,7 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 			<liferay-util:include page="/html/portlet/layouts_admin/publish_layouts_processes.jsp">
 				<liferay-util:param name="groupId" value="<%= String.valueOf(stagingGroupId) %>" />
 				<liferay-util:param name="closeRedirect" value="<%= closeRedirect %>" />
+				<liferay-util:param name="localPublishing" value="<%= String.valueOf(localPublishing) %>" />
 			</liferay-util:include>
 		</div>
 	</liferay-ui:section>

@@ -45,7 +45,6 @@ import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.ModelHintsUtil;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
@@ -1964,13 +1963,11 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			long controlPanelPlid = PortalUtil.getControlPanelPlid(
 				serviceContext.getCompanyId());
 
-			long messageBoardsPlid = serviceContext.getPlid();
-
 			layoutFullURL = getPortletLayoutURL(
 				message.getGroupId(), PortletKeys.MESSAGE_BOARDS,
 				serviceContext);
 
-			if (messageBoardsPlid != LayoutConstants.DEFAULT_PLID) {
+			if (Validator.isNotNull(layoutFullURL)) {
 				messageURL =
 					layoutFullURL + Portal.FRIENDLY_URL_SEPARATOR +
 						"message_boards/view_message/" + message.getMessageId();

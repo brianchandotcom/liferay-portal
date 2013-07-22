@@ -138,7 +138,10 @@ public class I18nFilter extends BasePortalFilter {
 			guestLanguageId = defaultLanguageId;
 		}
 
-		if (PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 1) {
+		if ((PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 1) ||
+			((PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 3) &&
+			 Validator.isNull(userLanguageId))) {
+
 			if (!defaultLanguageId.equals(guestLanguageId)) {
 				i18nLanguageId = guestLanguageId;
 			}

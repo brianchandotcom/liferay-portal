@@ -14,8 +14,6 @@
  */
 --%>
 
-<%@ page import="com.liferay.portal.kernel.util.Predicate" %>
-
 <%@ include file="/html/portlet/init.jsp" %>
 
 <%@ page import="com.liferay.portal.NoSuchModelException" %><%@
@@ -23,6 +21,7 @@ page import="com.liferay.portal.kernel.search.Hits" %><%@
 page import="com.liferay.portal.kernel.template.TemplateHandler" %><%@
 page import="com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil" %><%@
 page import="com.liferay.portal.kernel.util.DateFormatFactoryUtil" %><%@
+page import="com.liferay.portal.kernel.util.FilterPredicate" %><%@
 page import="com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil" %><%@
 page import="com.liferay.portlet.asset.DuplicateQueryRuleException" %><%@
 page import="com.liferay.portlet.asset.NoSuchTagException" %><%@
@@ -65,11 +64,11 @@ long[] groupIds = AssetPublisherUtil.getGroupIds(portletPreferences, scopeGroupI
 
 long[] availableClassNameIds = AssetRendererFactoryRegistryUtil.getClassNameIds(company.getCompanyId());
 
-availableClassNameIds = ArrayUtil.filter(availableClassNameIds, new Predicate<Long>() {
+availableClassNameIds = ArrayUtil.filter(availableClassNameIds, new FilterPredicate<Long>() {
 
-	public boolean keep(Long classNameId) {
+	public boolean filter(Long classNameId) {
 		AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(PortalUtil.getClassName(classNameId));
-		return assetRendererFactory.isSelectable();
+		return !assetRendererFactory.isSelectable();
 	}
 
 });

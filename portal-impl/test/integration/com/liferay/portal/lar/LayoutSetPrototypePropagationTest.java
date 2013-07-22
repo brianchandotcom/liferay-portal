@@ -14,6 +14,7 @@
 
 package com.liferay.portal.lar;
 
+import com.liferay.portal.LayoutParentLayoutIdException;
 import com.liferay.portal.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -53,6 +54,16 @@ import org.junit.runner.RunWith;
 @Transactional
 public class LayoutSetPrototypePropagationTest
 	extends BasePrototypePropagationTestCase {
+
+	@Test
+	public void testAddChildLayoutWithLinkDisabled() throws Exception {
+		doTestAddChildLayout(false);
+	}
+
+	@Test
+	public void testAddChildLayoutWithLinkEnabled() throws Exception {
+		doTestAddChildLayout(true);
+	}
 
 	@Test
 	public void testAddGroup() throws Exception {
@@ -212,6 +223,31 @@ public class LayoutSetPrototypePropagationTest
 			JournalArticleLocalServiceUtil.getArticleByUrlTitle(
 				group.getGroupId(),
 				_layoutSetPrototypeJournalArticle.getUrlTitle());
+	}
+
+	protected void doTestAddChildLayout(boolean layoutSetPrototypeLinkEnabled)
+		throws Exception {
+
+		setLinkEnabled(layoutSetPrototypeLinkEnabled);
+
+		try {
+			LayoutTestUtil.addLayout(
+				group.getGroupId(), ServiceTestUtil.randomString(),
+				layout.getPlid());
+
+			if (layoutSetPrototypeLinkEnabled) {
+				Assert.fail(
+					"Should not be able to add a child page to a page" +
+						" associated to a site template with link enabled");
+			}
+		}
+		catch (LayoutParentLayoutIdException lplie) {
+			if (!layoutSetPrototypeLinkEnabled) {
+				Assert.fail(
+					"Should be able to add a child page to a page associated" +
+						" to a site template with link disabled");
+			}
+		}
 	}
 
 	protected void doTestIsLayoutUpdateable() throws Exception {

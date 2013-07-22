@@ -209,7 +209,7 @@ public class LayoutImporter {
 			if (!existingLayoutUuids.contains(layout.getUuid())) {
 				try {
 					LayoutLocalServiceUtil.deleteLayout(
-						layout, privateLayout, serviceContext);
+						layout, false, serviceContext);
 				}
 				catch (NoSuchLayoutException nsle) {
 				}

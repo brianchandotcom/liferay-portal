@@ -1223,12 +1223,6 @@ public class SeleniumBuilderFileUtil {
 								1013, fileName, element, method);
 						}
 					}
-					else {
-						if (!statement.matches("[\\w]*")) {
-							throwValidationException(
-								1006, fileName, element, attributeName);
-						}
-					}
 				}
 			}
 			else {

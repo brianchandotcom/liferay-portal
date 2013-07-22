@@ -28,6 +28,8 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang3.StringEscapeUtils;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -97,11 +99,19 @@ public class RuntimeVariables {
 
 				String result = context.get(varName);
 
+				result = Matcher.quoteReplacement(result);
+
 				varValue = varValue.replaceFirst(replaceRegex, result);
 			}
 		}
 
-		return varValue;
+		varValue = varValue.replace("\\$", "$");
+
+		varValue = varValue.replace("\\{", "{");
+
+		varValue = varValue.replace("\\}", "}");
+
+		return StringEscapeUtils.escapeJava(varValue);
 	}
 
 	public static String getValue(String key) {

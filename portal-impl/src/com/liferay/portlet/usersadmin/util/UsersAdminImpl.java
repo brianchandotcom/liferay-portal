@@ -1099,9 +1099,9 @@ public class UsersAdminImpl implements UsersAdmin {
 		}
 
 		String[] usersEditable = ArrayUtil.append(
-			PropsValues.FIELD_EDITABLE_DOMAINS,
-			PropsValues.FIELD_EDITABLE_ROLES,
-			PropsValues.FIELD_EDITABLE_USER_TYPES);
+			PropsValues.FIELDS_EDITABLE_DOMAINS,
+			PropsValues.FIELDS_EDITABLE_ROLES,
+			PropsValues.FIELDS_EDITABLE_USER_TYPES);
 
 		for (String userEditable : usersEditable) {
 			if (hasUpdatePermission(user, userEditable)) {
@@ -1110,7 +1110,7 @@ public class UsersAdminImpl implements UsersAdmin {
 		}
 
 		String[] domainNamesEditable = PropsUtil.getArray(
-			PropsKeys.FIELD_EDITABLE_DOMAINS_EXCEPTIONS, new Filter(field));
+			PropsKeys.FIELD_EDITABLE_DOMAINS, new Filter(field));
 
 		for (String domainName : domainNamesEditable) {
 			if (hasUpdatePermission(user, domainName)) {

@@ -829,17 +829,17 @@ public interface PropsKeys {
 
 	public static final String FIELD_EDITABLE_DOMAINS = "field.editable.domains";
 
-	public static final String FIELD_EDITABLE_DOMAINS_EXCEPTIONS = "field.editable.domains.exceptions";
-
-	public static final String FIELD_EDITABLE_ROLES = "field.editable.roles";
-
-	public static final String FIELD_EDITABLE_USER_TYPES = "field.editable.user.types";
-
 	public static final String FIELD_ENABLE_COM_LIFERAY_PORTAL_MODEL_CONTACT_BIRTHDAY = "field.enable.com.liferay.portal.model.Contact.birthday";
 
 	public static final String FIELD_ENABLE_COM_LIFERAY_PORTAL_MODEL_CONTACT_MALE = "field.enable.com.liferay.portal.model.Contact.male";
 
 	public static final String FIELD_ENABLE_COM_LIFERAY_PORTAL_MODEL_ORGANIZATION_STATUS = "field.enable.com.liferay.portal.model.Organization.status";
+
+	public static final String FIELDS_EDITABLE_DOMAINS = "fields.editable.domains";
+
+	public static final String FIELDS_EDITABLE_ROLES = "fields.editable.roles";
+
+	public static final String FIELDS_EDITABLE_USER_TYPES = "fields.editable.user.types";
 
 	public static final String FINALIZE_MANAGER_THREAD_ENABLED = "finalize.manager.thread.enabled";
 

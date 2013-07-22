@@ -5125,6 +5125,17 @@ public class JournalArticleLocalServiceImpl
 			notifySubscribers(article, serviceContext);
 		}
 
+		if (status == WorkflowConstants.STATUS_EXPIRED) {
+			List<JournalArticle> approvedArticles =
+				journalArticlePersistence.findByG_A_ST(
+					article.getGroupId(), article.getArticleId(),
+					WorkflowConstants.STATUS_APPROVED, 0, 1);
+
+			if (approvedArticles.isEmpty()) {
+				reindex(article);
+			}
+		}
+
 		return article;
 	}
 

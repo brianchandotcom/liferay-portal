@@ -473,6 +473,7 @@ public class JournalArticleIndexer extends BaseIndexer {
 
 		if (!article.isIndexable() ||
 			(!article.isApproved() && !article.isInTrash() &&
+			 !article.isExpired() &&
 			 (article.getVersion() !=
 				  JournalArticleConstants.VERSION_DEFAULT)) ||
 			(PortalUtil.getClassNameId(DDMStructure.class) ==

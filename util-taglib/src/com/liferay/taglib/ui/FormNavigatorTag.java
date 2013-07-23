@@ -40,6 +40,10 @@ public class FormNavigatorTag extends IncludeTag {
 		_categorySections = categorySections;
 	}
 
+	public void setDisplayStyle(String displayStyle) {
+		_displayStyle = displayStyle;
+	}
+
 	public void setFormName(String formName) {
 		_formName = formName;
 	}
@@ -65,6 +69,7 @@ public class FormNavigatorTag extends IncludeTag {
 		_backURL = null;
 		_categoryNames = null;
 		_categorySections = null;
+		_displayStyle = "form";
 		_formName = "fm";
 		_htmlBottom = null;
 		_htmlTop = null;
@@ -84,6 +89,8 @@ public class FormNavigatorTag extends IncludeTag {
 			"liferay-ui:form-navigator:categoryNames", _categoryNames);
 		request.setAttribute(
 			"liferay-ui:form-navigator:categorySections", _categorySections);
+		request.setAttribute(
+			"liferay-ui:form-navigator:displayStyle", _displayStyle);
 		request.setAttribute("liferay-ui:form-navigator:formName", _formName);
 		request.setAttribute(
 			"liferay-ui:form-navigator:htmlBottom", _htmlBottom);
@@ -100,6 +107,7 @@ public class FormNavigatorTag extends IncludeTag {
 	private String _backURL;
 	private String[] _categoryNames;
 	private String[][] _categorySections;
+	private String _displayStyle = "form";
 	private String _formName = "fm";
 	private String _htmlBottom;
 	private String _htmlTop;

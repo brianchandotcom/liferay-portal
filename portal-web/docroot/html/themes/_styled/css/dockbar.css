@@ -131,11 +131,15 @@
 /* ---------- Add Content ---------- */
 
 .lfr-has-add-content {
-	padding-left: 340px;
+	padding-left: 350px;
 }
 
 .lfr-has-device-preview {
 	padding-left: 220px;
+}
+
+.lfr-has-edit-layout {
+	padding-left: 460px;
 }
 
 /* ---------- Menus ---------- */

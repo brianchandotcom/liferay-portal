@@ -64,7 +64,6 @@ page import="com.liferay.portal.lar.backgroundtask.LayoutExportBackgroundTaskExe
 page import="com.liferay.portal.lar.backgroundtask.LayoutImportBackgroundTaskExecutor" %><%@
 page import="com.liferay.portal.lar.backgroundtask.LayoutStagingBackgroundTaskExecutor" %><%@
 page import="com.liferay.portal.layoutconfiguration.util.RuntimePageUtil" %><%@
-page import="com.liferay.portal.plugin.PluginUtil" %><%@
 page import="com.liferay.portal.util.LayoutLister" %><%@
 page import="com.liferay.portal.util.LayoutView" %><%@
 page import="com.liferay.portlet.backgroundtask.util.BackgroundTaskUtil" %><%@

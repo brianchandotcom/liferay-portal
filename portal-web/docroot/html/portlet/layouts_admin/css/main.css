@@ -17,59 +17,6 @@
 		}
 	}
 
-	.lfr-page-layouts {
-		.lfr-layout-template {
-			height: 150px;
-			margin: 0 0 1em;
-			text-align: center;
-
-			label {
-				width: 65px;
-			}
-
-			img {
-				margin: 4px;
-
-				&.layout-selected {
-					background-color: #9F3;
-					border: 4px solid #9F3;
-					margin: 0px;
-				}
-			}
-
-			.field-choice {
-				display: block;
-				margin: 0 auto;
-				width: 100px;
-			}
-
-			.field-content {
-				margin-top: 0;
-			}
-
-			.field-element {
-				float: left;
-			}
-
-			.layout-template-entry {
-				cursor: pointer;
-				width: 100px;
-			}
-		}
-
-		.lfr-layout-template-column:before {
-			border-right-width: 0;
-		}
-
-		.lfr-layout-template-column-content {
-			padding: 0 2em 0 0;
-		}
-
-		.lfr-page-layouts-content {
-			padding-left: 1em;
-		}
-	}
-
 	.theme-entry {
 		cursor: pointer;
 		float: left;

@@ -30,13 +30,13 @@ request.setAttribute("edit_pages.jsp-device", "regular");
 request.setAttribute("edit_pages.jsp-editable", Boolean.FALSE);
 %>
 
-<div id="<portlet:namespace />inheritThemeOptions">
+<div class="lfr-inherit-theme-options" id="<portlet:namespace />inheritThemeOptions">
 	<c:if test="<%= !group.isLayoutPrototype() %>">
 		<liferay-util:include page="/html/portlet/layouts_admin/look_and_feel_themes.jsp" />
 	</c:if>
 </div>
 
-<div id="<portlet:namespace />themeOptions">
+<div class="lfr-theme-options" id="<portlet:namespace />themeOptions">
 
 	<%
 	request.setAttribute("edit_pages.jsp-editable", Boolean.TRUE);

@@ -1420,6 +1420,7 @@
 		<portlet-name>145</portlet-name>
 		<icon>/html/icons/default.png</icon>
 		<struts-path>dockbar</struts-path>
+		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
 		<use-default-template>false</use-default-template>
 		<show-portlet-access-denied>false</show-portlet-access-denied>
 		<show-portlet-inactive>false</show-portlet-inactive>
@@ -1900,6 +1901,7 @@
 		<render-weight>50</render-weight>
 		<header-portlet-css>/html/portlet/mobile_device_rules/css/main.css</header-portlet-css>
 		<css-class-wrapper>mobile-device-rules</css-class-wrapper>
+		<add-default-resource>true</add-default-resource>
 	</portlet>
 	<portlet>
 		<portlet-name>179</portlet-name>

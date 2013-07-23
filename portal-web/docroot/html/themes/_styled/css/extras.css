@@ -22,7 +22,7 @@
 	@include box-shadow(2px 4px 7px rgba(0, 0, 0, 0.5));
 }
 
-.lfr-add-panel, .lfr-device-preview-panel {
+.lfr-add-panel, .lfr-device-preview-panel, .lfr-edit-layout-panel {
 	@include box-shadow(0 0 5px rgba(0, 0, 0, 0.5));
 }
 

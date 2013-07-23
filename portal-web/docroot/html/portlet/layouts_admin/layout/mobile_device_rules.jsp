@@ -34,13 +34,26 @@ PortletURL redirectURL = (PortletURL)request.getAttribute("edit_pages.jsp-redire
 int mdrRuleGroupInstancesCount = MDRRuleGroupInstanceServiceUtil.getRuleGroupInstancesCount(className, classPK);
 %>
 
-<aui:input checked="<%= mdrRuleGroupInstancesCount == 0 %>" disabled="<%= mdrRuleGroupInstancesCount > 0 %>" id="inheritRuleGroupInstances" label='<%= LanguageUtil.format(pageContext, "use-the-same-mobile-device-rules-of-the-x-x", new String[] {HtmlUtil.escape(rootNodeName), redirectURL.toString() + "#tab=mobileDeviceRules"}) %>' name="inheritRuleGroupInstances" type="radio" value="<%= true %>" />
+<liferay-util:buffer var="inheritRuleGroupInstancesLink">
+	<c:choose>
+		<c:when test="<%= themeDisplay.isStateExclusive() %>">
+			<%= HtmlUtil.escape(rootNodeName) %>
+		</c:when>
+		<c:otherwise>
+			<aui:a href='<%= redirectURL.toString() + "#tab=mobileDeviceRules" %>'>
+				<%= HtmlUtil.escape(rootNodeName) %>
+			</aui:a>
+		</c:otherwise>
+	</c:choose>
+</liferay-util:buffer>
+
+<aui:input checked="<%= mdrRuleGroupInstancesCount == 0 %>" disabled="<%= mdrRuleGroupInstancesCount > 0 %>" id="inheritRuleGroupInstances" label='<%= LanguageUtil.format(pageContext, "use-the-same-mobile-device-rules-of-the-x", inheritRuleGroupInstancesLink) %>' name="inheritRuleGroupInstances" type="radio" value="<%= true %>" />
 
 <aui:input checked="<%= mdrRuleGroupInstancesCount > 0 %>" id="uniqueRuleGroupInstances" label="define-specific-mobile-device-rules-for-this-page" name="inheritRuleGroupInstances" type="radio" value="<%= false %>" />
 
 <div class="<%= (mdrRuleGroupInstancesCount == 0) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />inheritRuleGroupInstancesContainer">
 	<div class="alert alert-info">
-		<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(rootNodeName), redirectURL.toString()} %>" key="mobile-device-rules-will-be-inhertited-from-x-x" />
+		<liferay-ui:message arguments="<%= inheritRuleGroupInstancesLink %>" key="mobile-device-rules-will-be-inhertited-from-x" />
 	</div>
 </div>
 

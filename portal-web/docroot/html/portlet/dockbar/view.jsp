@@ -164,7 +164,7 @@ String toggleControlsState = GetterUtil.getString(SessionClicks.get(request, "li
 				<portlet:param name="viewEntries" value="<%= Boolean.TRUE.toString() %>" />
 			</portlet:renderURL>
 
-			<aui:nav-item anchorId="addPanel" data-addURL="<%= addURL %>" href="javascript:;" iconClass="icon-plus" label="add" />
+			<aui:nav-item anchorId="addPanel" data-panelURL="<%= addURL %>" href="javascript:;" iconClass="icon-plus" label="add" />
 		</c:if>
 
 		<c:if test="<%= !group.isControlPanel() && (LayoutPermissionUtil.contains(themeDisplay.getPermissionChecker(), layout, ActionKeys.UPDATE) || GroupPermissionUtil.contains(permissionChecker, group.getGroupId(), ActionKeys.PREVIEW_IN_DEVICE)) %>">
@@ -172,42 +172,18 @@ String toggleControlsState = GetterUtil.getString(SessionClicks.get(request, "li
 				<portlet:param name="struts_action" value="/dockbar/preview_panel" />
 			</portlet:renderURL>
 
-			<aui:nav-item anchorId="previewPanel" href="<%= previewContentURL %>" iconClass="icon-facetime-video" label="preview" />
+			<aui:nav-item anchorId="previewPanel" data-panelURL="<%= previewContentURL %>" href="javascript:;" iconClass="icon-desktop" label="preview" />
 		</c:if>
 
 		<c:if test="<%= !group.isControlPanel() && (themeDisplay.isShowLayoutTemplatesIcon() || themeDisplay.isShowPageSettingsIcon()) %>">
-			<aui:nav-item anchorCssClass="manage-content-link" dropdown="<%= true %>" iconClass="icon-desktop" id="manageContent" label="">
+			<portlet:renderURL var="editLayoutURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
+				<portlet:param name="struts_action" value="/dockbar/edit_layout_panel" />
+				<portlet:param name="closeRedirect" value="<%= PortalUtil.getLayoutURL(layout, themeDisplay) %>" />
+				<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
+				<portlet:param name="selPlid" value="<%= String.valueOf(plid) %>" />
+			</portlet:renderURL>
 
-				<%
-				String useDialogFullDialog = StringPool.BLANK;
-
-				if (PropsValues.DOCKBAR_ADMINISTRATIVE_LINKS_SHOW_IN_POP_UP) {
-					useDialogFullDialog = " use-dialog full-dialog";
-				}
-				%>
-
-				<c:if test="<%= themeDisplay.isShowPageSettingsIcon() %>">
-					<aui:nav-item cssClass='<%= "first manage-page" + useDialogFullDialog %>' href='<%= themeDisplay.getURLPageSettings().toString() + "#tab=details" %>' label="page" title="manage-page" />
-				</c:if>
-
-				<c:if test="<%= themeDisplay.isShowLayoutTemplatesIcon() %>">
-					<aui:nav-item cssClass='<%= "page-layout" + useDialogFullDialog %>' href='<%= themeDisplay.getURLPageSettings().toString() + "#tab=layout" %>' label="page-layout" title="manage-page" />
-				</c:if>
-
-				<c:if test="<%= themeDisplay.isShowPageCustomizationIcon() && !themeDisplay.isStateMaximized() %>">
-					<aui:nav-item anchorCssClass='<%= themeDisplay.isFreeformLayout() ? "disabled" : StringPool.BLANK %>' anchorId="manageCustomization" cssClass="manage-page-customization" href='<%= themeDisplay.isFreeformLayout() ? null : "javascript:;" %>' label='<%= group.isLayoutPrototype() ? "page-modifications" : "page-customizations" %>' title='<%= themeDisplay.isFreeformLayout() ? "it-is-not-possible-to-specify-customization-settings-for-freeform-layouts" : null %>' />
-				</c:if>
-			</aui:nav-item>
-
-			<c:if test="<%= themeDisplay.isShowPageCustomizationIcon() %>">
-				<div class="hide layout-customizable-controls" id="<portlet:namespace />layout-customizable-controls">
-					<span title='<liferay-ui:message key="customizable-help" />'>
-						<aui:input cssClass="layout-customizable-checkbox" helpMessage='<%= group.isLayoutPrototype() ? "modifiable-help" : "customizable-help" %>' id="TypeSettingsProperties--[COLUMN_ID]-customizable--" label='<%= (group.isLayoutSetPrototype() || group.isLayoutPrototype()) ? "modifiable" : "customizable" %>' name="TypeSettingsProperties--[COLUMN_ID]-customizable--" type="checkbox" useNamespace="<%= false %>" />
-					</span>
-				</div>
-			</c:if>
-
-			<aui:nav-item cssClass="divider-vertical"></aui:nav-item>
+			<aui:nav-item anchorId="editLayoutPanel" data-panelURL="<%= editLayoutURL %>" href="javascript:;" iconClass="icon-edit" label="preview" />
 		</c:if>
 
 		<c:if test="<%= !group.isControlPanel() && (!group.hasStagingGroup() || group.isStagingGroup()) && (hasLayoutUpdatePermission || (layoutTypePortlet.isCustomizable() && layoutTypePortlet.isCustomizedView() && hasLayoutCustomizePermission) || PortletPermissionUtil.hasConfigurationPermission(permissionChecker, themeDisplay.getSiteGroupId(), layout, ActionKeys.CONFIGURATION)) %>">

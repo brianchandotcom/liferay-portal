@@ -592,18 +592,13 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 				portletDataContext.getCompanyId(), portletId);
 
 			if (Validator.isNotNull(portlet.getTemplateHandlerClass())) {
-				return portletPreferences.getValue(
-					getDisplayTemplatePreferenceName(), null);
+				return portletPreferences.getValue("displayStyle", null);
 			}
 		}
 		catch (Exception e) {
 		}
 
 		return null;
-	}
-
-	protected String getDisplayTemplatePreferenceName() {
-		return "displayStyle";
 	}
 
 	protected String getExportDataRootElementString(Element rootElement) {

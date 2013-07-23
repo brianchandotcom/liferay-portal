@@ -47,6 +47,12 @@ import java.util.List;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
+
+/**
+ * @author Carlos Sierra Andrés
+ * @author Julio Camarero
+ * @author Brian Wing Shun Chan
+ */
 public class AssetRSSRenderer extends DefaultRSSRenderer {
 
 	public AssetRSSRenderer(

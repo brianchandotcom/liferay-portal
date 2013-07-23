@@ -55,6 +55,19 @@
 			.toggler-header-expanded:after {
 				content: " «";
 			}
+
+			.background-task-status-in-progress {
+				float: left;
+				margin-right: 1em;
+			}
+
+			.progress {
+				margin-bottom: 0.3em;
+			}
+
+			.progress-current-element {
+				font-size: 0.7em;
+			}
 		}
 	}
 }

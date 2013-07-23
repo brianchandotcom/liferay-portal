@@ -25,14 +25,13 @@ import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 public class ClassLoaderUtil {
 
 	public static ClassLoader getAggregatePluginsClassLoader(
-		final String[] servletContextNames,
-		final boolean addContextClassLoader) {
+		String[] servletContextNames, boolean addContextClassLoader) {
 
 		return _pacl.getAggregatePluginsClassLoader(
 			servletContextNames, addContextClassLoader);
 	}
 
-	public static ClassLoader getClassLoader(final Class<?> clazz) {
+	public static ClassLoader getClassLoader(Class<?> clazz) {
 		return _pacl.getClassLoader(clazz);
 	}
 
@@ -40,9 +39,7 @@ public class ClassLoaderUtil {
 		return _pacl.getContextClassLoader();
 	}
 
-	public static ClassLoader getPluginClassLoader(
-		final String servletContextName) {
-
+	public static ClassLoader getPluginClassLoader(String servletContextName) {
 		return _pacl.getPluginClassLoader(servletContextName);
 	}
 
@@ -50,7 +47,7 @@ public class ClassLoaderUtil {
 		return _pacl.getPortalClassLoader();
 	}
 
-	public static void setContextClassLoader(final ClassLoader classLoader) {
+	public static void setContextClassLoader(ClassLoader classLoader) {
 		_pacl.setContextClassLoader(classLoader);
 	}
 

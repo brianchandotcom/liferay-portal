@@ -30,42 +30,47 @@ BackgroundTask backgroundTask = (BackgroundTask)row.getObject();
 
 	<%
 	BackgroundTaskStatus backgroundTaskStatus = BackgroundTaskStatusRegistryUtil.getBackgroundTaskStatus(backgroundTask.getBackgroundTaskId());
-
-	long allModelAdditionCount = (Long)backgroundTaskStatus.getAttribute("allModelAdditionCount");
-	long currentModelAdditionCount = (Long)backgroundTaskStatus.getAttribute("currentModelAdditionCount");
 	%>
 
-	<div class="progress progress-striped active">
-		<div class="bar" style="width: <%= Math.round(Double.valueOf(currentModelAdditionCount)/Double.valueOf(allModelAdditionCount) * 100) %>%;">
-			<%= currentModelAdditionCount %><%= StringPool.FORWARD_SLASH %><%= allModelAdditionCount %>
-	  </div>
-	</div>
-
-	<%
-	String stagedModelName = (String)backgroundTaskStatus.getAttribute("stagedModelName");
-	String stagedModelType = (String)backgroundTaskStatus.getAttribute("stagedModelType");
-	%>
-
-	<c:if test="<%= Validator.isNotNull(stagedModelName) && Validator.isNotNull(stagedModelType) %>">
+	<c:if test="<%= backgroundTaskStatus != null %>">
 
 		<%
-		Map<String, Serializable> taskContextMap = backgroundTask.getTaskContextMap();
-
-		String cmd = (String)taskContextMap.get(Constants.CMD);
-
-		String cmdKey = "exporting";
-
-		if (Validator.equals(cmd, Constants.IMPORT)) {
-			cmdKey = "importing";
-		}
-		else if (Validator.equals(cmd, Constants.PUBLISH)) {
-			cmdKey = "publishing";
-		}
+		long allModelAdditionCount = (Long)backgroundTaskStatus.getAttribute("allModelAdditionCount");
+		long currentModelAdditionCount = (Long)backgroundTaskStatus.getAttribute("currentModelAdditionCount");
 		%>
 
-		<div class="progress-current-element">
-			<strong><liferay-ui:message key="<%= cmdKey %>" /><%= StringPool.TRIPLE_PERIOD %></strong> <%= ResourceActionsUtil.getModelResource(locale, stagedModelType) %> <em><%= stagedModelName %></em>
+		<div class="progress progress-striped active">
+			<div class="bar" style="width: <%= Math.round(Double.valueOf(currentModelAdditionCount)/Double.valueOf(allModelAdditionCount) * 100) %>%;">
+				<%= currentModelAdditionCount %><%= StringPool.FORWARD_SLASH %><%= allModelAdditionCount %>
+		  </div>
 		</div>
+
+		<%
+		String stagedModelName = (String)backgroundTaskStatus.getAttribute("stagedModelName");
+		String stagedModelType = (String)backgroundTaskStatus.getAttribute("stagedModelType");
+		%>
+
+		<c:if test="<%= Validator.isNotNull(stagedModelName) && Validator.isNotNull(stagedModelType) %>">
+
+			<%
+			Map<String, Serializable> taskContextMap = backgroundTask.getTaskContextMap();
+
+			String cmd = (String)taskContextMap.get(Constants.CMD);
+
+			String cmdKey = "exporting";
+
+			if (Validator.equals(cmd, Constants.IMPORT)) {
+				cmdKey = "importing";
+			}
+			else if (Validator.equals(cmd, Constants.PUBLISH)) {
+				cmdKey = "publishing";
+			}
+			%>
+
+			<div class="progress-current-element">
+				<strong><liferay-ui:message key="<%= cmdKey %>" /><%= StringPool.TRIPLE_PERIOD %></strong> <%= ResourceActionsUtil.getModelResource(locale, stagedModelType) %> <em><%= stagedModelName %></em>
+			</div>
+		</c:if>
 	</c:if>
 </c:if>
 

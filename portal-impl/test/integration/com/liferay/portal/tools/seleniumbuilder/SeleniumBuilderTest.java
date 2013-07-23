@@ -1341,7 +1341,7 @@ public class SeleniumBuilderTest {
 	public void testMacroVarElement1004_1() throws Exception {
 		test(
 			"MacroVarElement1004_1.macro",
-			"Error 1004: Missing (name|value) attribute in " + _DIR_NAME +
+			"Error 1004: Missing (name) attribute in " + _DIR_NAME +
 				"/MacroVarElement1004_1.macro:2");
 	}
 
@@ -1349,7 +1349,7 @@ public class SeleniumBuilderTest {
 	public void testMacroVarElement1004_2() throws Exception {
 		test(
 			"MacroVarElement1004_2.macro",
-			"Error 1004: Missing (name|value) attribute in " + _DIR_NAME +
+			"Error 1004: Missing (value) attribute in " + _DIR_NAME +
 				"/MacroVarElement1004_2.macro:2");
 	}
 
@@ -1357,7 +1357,7 @@ public class SeleniumBuilderTest {
 	public void testMacroVarElement1004_3() throws Exception {
 		test(
 			"MacroVarElement1004_3.macro",
-			"Error 1004: Missing (name|value) attribute in " + _DIR_NAME +
+			"Error 1004: Missing (name) attribute in " + _DIR_NAME +
 				"/MacroVarElement1004_3.macro:2");
 	}
 
@@ -1815,7 +1815,7 @@ public class SeleniumBuilderTest {
 	public void testTestCaseVarElement1004_1() throws Exception {
 		test(
 			"TestCaseVarElement1004_1.testcase",
-			"Error 1004: Missing (name|value) attribute in " + _DIR_NAME +
+			"Error 1004: Missing (name) attribute in " + _DIR_NAME +
 				"/TestCaseVarElement1004_1.testcase:2");
 	}
 
@@ -1823,7 +1823,7 @@ public class SeleniumBuilderTest {
 	public void testTestCaseVarElement1004_2() throws Exception {
 		test(
 			"TestCaseVarElement1004_2.testcase",
-			"Error 1004: Missing (name|value) attribute in " + _DIR_NAME +
+			"Error 1004: Missing (value) attribute in " + _DIR_NAME +
 				"/TestCaseVarElement1004_2.testcase:2");
 	}
 
@@ -1831,7 +1831,7 @@ public class SeleniumBuilderTest {
 	public void testTestCaseVarElement1004_3() throws Exception {
 		test(
 			"TestCaseVarElement1004_3.testcase",
-			"Error 1004: Missing (name|value) attribute in " + _DIR_NAME +
+			"Error 1004: Missing (name) attribute in " + _DIR_NAME +
 				"/TestCaseVarElement1004_3.testcase:2");
 	}
 

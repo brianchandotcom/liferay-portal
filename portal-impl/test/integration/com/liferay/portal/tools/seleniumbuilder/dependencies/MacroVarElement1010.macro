@@ -1,0 +1,3 @@
+<definition>
+	<var name="name" path="Home" locator-key="FAIL" />
+</definition>

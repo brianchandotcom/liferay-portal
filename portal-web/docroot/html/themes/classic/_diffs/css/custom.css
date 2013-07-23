@@ -130,15 +130,12 @@ $dockbarOpenGradientStart: #0EA6F9;
 						padding: 6px 8px;
 						text-align: center;
 
-						> i {
-							color: #FFF;
-						}
-
 						&:hover {
 							background: #5BBAE8;
 						}
 
 						[class^="icon-"], [class^="icon-"], [class*=" icon-"] {
+							color: #FFF;
 							font-size: 25px;
 							position: relative;
 							vertical-align: middle;

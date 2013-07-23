@@ -23,7 +23,9 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * @author Carlos Sierra
+ * @author Carlos Sierra Andrés
+ * @author Julio Camarero
+ * @author Brian Wing Shun Chan
  */
 public interface RSSRenderer {
 

@@ -43,6 +43,12 @@ import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
+
+/**
+ * @author Carlos Sierra Andrés
+ * @author Julio Camarero
+ * @author Brian Wing Shun Chan
+ */
 public class WikiRSSRenderer extends DefaultRSSRenderer {
 
 	public WikiRSSRenderer(

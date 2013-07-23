@@ -47,6 +47,12 @@ import java.util.List;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
+
+/**
+ * @author Carlos Sierra Andrés
+ * @author Julio Camarero
+ * @author Brian Wing Shun Chan
+ */
 public class ActivitiesRSSRenderer extends DefaultRSSRenderer {
 
 	public ActivitiesRSSRenderer(

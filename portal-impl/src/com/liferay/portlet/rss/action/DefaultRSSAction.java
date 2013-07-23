@@ -37,9 +37,9 @@ import javax.portlet.ResourceResponse;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- *
  * @author Carlos Sierra Andrés
- *
+ * @author Julio Camarero
+ * @author Brian Wing Shun Chan
  */
 public abstract class DefaultRSSAction extends RSSAction {
 

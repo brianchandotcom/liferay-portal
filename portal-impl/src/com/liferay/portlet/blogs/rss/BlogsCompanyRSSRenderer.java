@@ -23,6 +23,12 @@ import com.liferay.portlet.blogs.model.BlogsEntry;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+
+/**
+ * @author Carlos Sierra Andrés
+ * @author Julio Camarero
+ * @author Brian Wing Shun Chan
+ */
 public class BlogsCompanyRSSRenderer extends BlogsBaseRSSRenderer {
 
 	public BlogsCompanyRSSRenderer(

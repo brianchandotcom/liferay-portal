@@ -241,7 +241,7 @@ public class StagingImpl implements Staging {
 		Map<String, Serializable> taskContextMap =
 			BackgroundTaskContextMapFactory.buildTaskContextMap(
 				userId, sourceGroupId, false, null, parameterMap,
-				ActionKeys.PUBLISH_STAGING, dateRange.getStartDate(),
+				Constants.PUBLISH, dateRange.getStartDate(),
 				dateRange.getEndDate(), StringPool.BLANK);
 
 		taskContextMap.put("sourceGroupId", sourceGroupId);
@@ -858,7 +858,7 @@ public class StagingImpl implements Staging {
 				cmd = (String)contextMap.get(Constants.CMD);
 			}
 
-			if (Validator.equals(cmd, ActionKeys.PUBLISH_STAGING)) {
+			if (Validator.equals(cmd, Constants.PUBLISH)) {
 				errorMessage = LanguageUtil.get(
 					locale,
 					"there-are-missing-references-that-could-not-be-found-in-" +
@@ -1395,8 +1395,7 @@ public class StagingImpl implements Staging {
 		Map<String, Serializable> taskContextMap =
 			BackgroundTaskContextMapFactory.buildTaskContextMap(
 				userId, sourceGroupId, privateLayout, layoutIds, parameterMap,
-				ActionKeys.PUBLISH_STAGING, startDate, endDate,
-				StringPool.BLANK);
+				Constants.PUBLISH, startDate, endDate, StringPool.BLANK);
 
 		taskContextMap.put("sourceGroupId", sourceGroupId);
 		taskContextMap.put("targetGroupId", targetGroupId);

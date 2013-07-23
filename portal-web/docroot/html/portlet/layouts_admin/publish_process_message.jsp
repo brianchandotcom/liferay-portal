@@ -35,8 +35,8 @@ BackgroundTask backgroundTask = (BackgroundTask)row.getObject();
 	<c:if test="<%= backgroundTaskStatus != null %>">
 
 		<%
-		long allModelAdditionCount = (Long)backgroundTaskStatus.getAttribute("allModelAdditionCount");
-		long currentModelAdditionCount = (Long)backgroundTaskStatus.getAttribute("currentModelAdditionCount");
+		long allModelAdditionCount = GetterUtil.getLong(backgroundTaskStatus.getAttribute("allModelAdditionCount"));
+		long currentModelAdditionCount = GetterUtil.getLong(backgroundTaskStatus.getAttribute("currentModelAdditionCount"));
 
 		double percentage = 100;
 

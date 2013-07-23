@@ -14,9 +14,6 @@
 
 package com.liferay.portal.security.pacl;
 
-import com.liferay.portal.deploy.hot.HookHotDeployListener;
-import com.liferay.portal.kernel.deploy.hot.HotDeployUtil;
-import com.liferay.portal.kernel.util.PortalLifecycleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
@@ -69,12 +66,6 @@ public class PACLIntegrationJUnitTestRunner
 
 		ServiceTestUtil.initServices();
 		ServiceTestUtil.initPermissions();
-
-		HotDeployUtil.registerListener(new HookHotDeployListener());
-
-		HotDeployUtil.setCapturePrematureEvents(false);
-
-		PortalLifecycleUtil.flushInits();
 
 		_initialized = true;
 	}

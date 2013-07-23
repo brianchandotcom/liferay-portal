@@ -145,8 +145,12 @@
 		margin-top: 0.5em;
 	}
 
-	.form-search {
-		height: 30px;
+	.form-search:after {
+		clear: both;
+		content: ".";
+		display: block;
+		height: 0;
+		visibility: hidden;
 	}
 
 	#blogsCommentsPanelContainer {

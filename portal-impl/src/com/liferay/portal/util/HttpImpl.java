@@ -939,14 +939,21 @@ public class HttpImpl implements Http {
 
 	@Override
 	public String sanitizeHeader(String header) {
-		return StringUtil.replace(
-			header,
-			new String[] {
-				StringPool.NEW_LINE, StringPool.RETURN
-			},
-			 new String[] {
-				StringPool.SPACE, StringPool.SPACE
-			});
+		if (header == null) {
+			return null;
+		}
+
+		char[] characters = header.toCharArray();
+
+		for (int i = 0; i < characters.length; i++) {
+			char c = characters[i];
+
+			if (((c <= 31) && (c != 9)) || (c == 127) || (c > 255)) {
+				characters[i] = CharPool.SPACE;
+			}
+		}
+
+		return new String(characters);
 	}
 
 	@Override
@@ -1454,10 +1461,6 @@ public class HttpImpl implements Http {
 		}
 	}
 
-	private static final String[] _CRLF = new String[] {
-		StringPool.NEW_LINE, StringPool.RETURN
-	};
-
 	private static final String _DEFAULT_USER_AGENT =
 		"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)";
 
@@ -1491,10 +1494,6 @@ public class HttpImpl implements Http {
 
 	private static final String _PROXY_USERNAME = GetterUtil.getString(
 		PropsUtil.get(HttpImpl.class.getName() + ".proxy.username"));
-
-	private static final String[] _SPACES = new String[] {
-		StringPool.SPACE, StringPool.SPACE
-	};
 
 	private static final String _TEMP_SLASH = "_LIFERAY_TEMP_SLASH_";
 

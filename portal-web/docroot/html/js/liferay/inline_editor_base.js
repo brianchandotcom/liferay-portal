@@ -78,6 +78,10 @@ AUI.add(
 				validator: isString
 			},
 
+			namespace: {
+				validator: isString
+			},
+
 			toolbarTopOffset: {
 				validator: isNumber,
 				value: 30
@@ -175,9 +179,12 @@ AUI.add(
 								}
 							}
 						},
-						data: {
-							content: instance.get(EDITOR).getData()
-						},
+						data: Liferay.Util.ns(
+							instance.get('namespace'),
+							{
+								content: instance.get(EDITOR).getData()
+							}
+						),
 						dataType: 'json'
 					}
 				);

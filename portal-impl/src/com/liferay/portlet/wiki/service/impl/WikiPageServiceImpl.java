@@ -440,6 +440,7 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 		}
 	}
 
+	@Override
 	public List<WikiPage> getPages(
 			long nodeId, String title, int start, int max,
 			PageCreateDateComparator pageCreateDateComparator)

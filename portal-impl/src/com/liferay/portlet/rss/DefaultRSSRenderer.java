@@ -44,6 +44,10 @@ public abstract class DefaultRSSRenderer implements RSSRenderer {
 	@Override
 	public abstract String getFeedURL() throws PortalException, SystemException;
 
+	/**
+	 * @throws PortalException
+	 * @throws SystemException
+	 */
 	@Override
 	public Date getPublicationDate() throws PortalException, SystemException {
 		return new Date();
@@ -67,10 +71,18 @@ public abstract class DefaultRSSRenderer implements RSSRenderer {
 			List<? super SyndEntry> syndEntries)
 		throws PortalException, SystemException;
 
+	/**
+	 * @throws PortalException
+	 * @throws SystemException
+	 */
 	protected String getRSSFormat() throws PortalException, SystemException {
 		return ParamUtil.getString(_request, "type", RSSUtil.FORMAT_DEFAULT);
 	}
 
+	/**
+	 * @throws PortalException
+	 * @throws SystemException
+	 */
 	protected double getRSSVersion() throws PortalException, SystemException {
 		return ParamUtil.getDouble(
 			_request, "version", RSSUtil.VERSION_DEFAULT);

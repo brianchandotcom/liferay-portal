@@ -490,6 +490,38 @@ public class PortalSecurityManagerImpl extends SecurityManager
 
 	}
 
+	private static class DoClassLoaderUtilPACL implements ClassLoaderUtil.PACL {
+
+		public ClassLoader getAggregatePluginsClassLoader(
+			final String[] servletContextNames,
+			final boolean addContextClassLoader) {
+
+			return null;
+		}
+
+		public ClassLoader getClassLoader(final Class<?> clazz) {
+			return null;
+		}
+
+		public ClassLoader getContextClassLoader() {
+			return null;
+		}
+
+		public ClassLoader getPluginClassLoader(
+			final String servletContextName) {
+
+			return null;
+		}
+
+		public ClassLoader getPortalClassLoader() {
+			return null;
+		}
+
+		public void setContextClassLoader(final ClassLoader classLoader) {
+		}
+
+	}
+
 	private static class DoDataSourceFactoryImplPACL
 		implements DataSourceFactoryImpl.PACL {
 

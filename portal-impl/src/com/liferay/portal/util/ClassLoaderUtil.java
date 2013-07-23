@@ -17,6 +17,7 @@ package com.liferay.portal.util;
 import com.liferay.portal.kernel.servlet.PluginContextListener;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.util.AggregateClassLoader;
+import com.liferay.portal.kernel.util.ClassLoaderPool;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 
 import java.security.AccessController;
@@ -29,6 +30,7 @@ import javax.servlet.ServletContext;
 
 /**
  * @author Raymond Augé
+ * @author Shuyang Zhou
  */
 public class ClassLoaderUtil {
 
@@ -166,26 +168,50 @@ public class ClassLoaderUtil {
 		public ClassLoader getAggregatePluginsClassLoader(
 			String[] servletContextNames, boolean addContextClassLoader) {
 
-			return  null;
+			ClassLoader[] classLoaders = null;
+
+			int offset = 0;
+
+			if (addContextClassLoader) {
+				classLoaders = new ClassLoader[servletContextNames.length + 1];
+
+				Thread currentThread = Thread.currentThread();
+
+				classLoaders[0] = currentThread.getContextClassLoader();
+
+				offset = 1;
+			}
+
+			for (int i = 0; i < servletContextNames.length; i++) {
+				classLoaders[offset + i] = ClassLoaderPool.getClassLoader(
+					servletContextNames[i]);
+			}
+
+			return AggregateClassLoader.getAggregateClassLoader(classLoaders);
 		}
 
 		public ClassLoader getClassLoader(Class<?> clazz) {
-			return  null;
+			return clazz.getClassLoader();
 		}
 
 		public ClassLoader getContextClassLoader() {
-			return  null;
+			Thread currentThread = Thread.currentThread();
+
+			return currentThread.getContextClassLoader();
 		}
 
 		public ClassLoader getPluginClassLoader(String servletContextName) {
-			return  null;
+			return ClassLoaderPool.getClassLoader(servletContextName);
 		}
 
 		public ClassLoader getPortalClassLoader() {
-			return  null;
+			return PortalClassLoaderUtil.getClassLoader();
 		}
 
 		public void setContextClassLoader(ClassLoader classLoader) {
+			Thread thread = Thread.currentThread();
+
+			thread.setContextClassLoader(classLoader);
 		}
 
 	}

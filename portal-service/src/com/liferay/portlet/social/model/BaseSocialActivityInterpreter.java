@@ -205,7 +205,7 @@ public abstract class BaseSocialActivityInterpreter
 			SocialActivity activity, ServiceContext serviceContext)
 		throws Exception {
 
-		return StringPool.BLANK;
+		return activity.getExtraDataValue("title", serviceContext.getLocale());
 	}
 
 	protected String getGroupName(long groupId, ServiceContext serviceContext) {

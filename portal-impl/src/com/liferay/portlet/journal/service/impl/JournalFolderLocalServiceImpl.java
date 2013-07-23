@@ -17,13 +17,14 @@ package com.liferay.portlet.journal.service.impl;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.ResourceConstants;
@@ -416,15 +417,15 @@ public class JournalFolderLocalServiceImpl
 		JournalFolder folder = journalFolderPersistence.findByPrimaryKey(
 			folderId);
 
+		String title = folder.getName();
+
 		folder = updateStatus(
 			userId, folder, WorkflowConstants.STATUS_IN_TRASH);
 
 		TrashEntry trashEntry = trashEntryLocalService.getEntry(
 			JournalFolder.class.getName(), folder.getFolderId());
 
-		String trashTitle = TrashUtil.getTrashTitle(trashEntry.getEntryId());
-
-		folder.setName(trashTitle);
+		folder.setName(TrashUtil.getTrashTitle(trashEntry.getEntryId()));
 
 		journalFolderPersistence.update(folder);
 
@@ -433,10 +434,14 @@ public class JournalFolderLocalServiceImpl
 		socialActivityCounterLocalService.disableActivityCounters(
 			JournalFolder.class.getName(), folder.getFolderId());
 
+		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
+
+		extraDataJSONObject.put("title", title);
+
 		socialActivityLocalService.addActivity(
 			userId, folder.getGroupId(), JournalFolder.class.getName(),
 			folder.getFolderId(), SocialActivityConstants.TYPE_MOVE_TO_TRASH,
-			StringPool.BLANK, 0);
+			extraDataJSONObject.toString(), 0);
 	}
 
 	@Override
@@ -460,11 +465,15 @@ public class JournalFolderLocalServiceImpl
 		socialActivityCounterLocalService.enableActivityCounters(
 			JournalFolder.class.getName(), folder.getFolderId());
 
+		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
+
+		extraDataJSONObject.put("title", folder.getName());
+
 		socialActivityLocalService.addActivity(
 			userId, folder.getGroupId(), JournalFolder.class.getName(),
 			folder.getFolderId(),
-			SocialActivityConstants.TYPE_RESTORE_FROM_TRASH, StringPool.BLANK,
-			0);
+			SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
+			extraDataJSONObject.toString(), 0);
 	}
 
 	@Override

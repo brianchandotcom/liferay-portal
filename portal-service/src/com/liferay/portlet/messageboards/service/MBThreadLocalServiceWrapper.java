@@ -648,10 +648,10 @@ public class MBThreadLocalServiceWrapper implements MBThreadLocalService,
 
 	@Override
 	public com.liferay.portlet.messageboards.model.MBThread moveThreadToTrash(
-		long userId, long entryId)
+		long userId, long threadId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _mbThreadLocalService.moveThreadToTrash(userId, entryId);
+		return _mbThreadLocalService.moveThreadToTrash(userId, threadId);
 	}
 
 	@Override

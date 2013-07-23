@@ -14,20 +14,14 @@
 
 package com.liferay.portlet.documentlibrary.social;
 
-import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
-import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
 import com.liferay.portlet.social.model.BaseSocialActivityInterpreter;
 import com.liferay.portlet.social.model.SocialActivity;
 import com.liferay.portlet.social.model.SocialActivityConstants;
-import com.liferay.portlet.trash.util.TrashUtil;
 
 /**
  * @author Zsolt Berentey
@@ -37,39 +31,6 @@ public class DLFolderActivityInterpreter extends BaseSocialActivityInterpreter {
 	@Override
 	public String[] getClassNames() {
 		return _CLASS_NAMES;
-	}
-
-	@Override
-	protected String getEntryTitle(
-			SocialActivity activity, ServiceContext serviceContext)
-		throws Exception {
-
-		Folder folder = DLAppLocalServiceUtil.getFolder(activity.getClassPK());
-
-		if (folder.getModel() instanceof DLFolder) {
-			DLFolder dlFolder = (DLFolder)folder.getModel();
-
-			if (dlFolder.isInTrash()) {
-				return TrashUtil.getOriginalTitle(folder.getName());
-			}
-		}
-
-		return folder.getName();
-	}
-
-	protected String getFolderLink(
-		FileEntry fileEntry, ThemeDisplay themeDisplay) {
-
-		StringBundler sb = new StringBundler(6);
-
-		sb.append(themeDisplay.getPortalURL());
-		sb.append(themeDisplay.getPathMain());
-		sb.append("/document_library/find_folder?groupId=");
-		sb.append(fileEntry.getRepositoryId());
-		sb.append("&folderId=");
-		sb.append(fileEntry.getFolderId());
-
-		return sb.toString();
 	}
 
 	@Override

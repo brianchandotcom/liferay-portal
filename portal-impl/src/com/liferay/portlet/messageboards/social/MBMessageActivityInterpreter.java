@@ -63,17 +63,6 @@ public class MBMessageActivityInterpreter
 	}
 
 	@Override
-	protected String getEntryTitle(
-			SocialActivity activity, ServiceContext serviceContext)
-		throws Exception {
-
-		MBMessage message = MBMessageLocalServiceUtil.getMessage(
-			activity.getClassPK());
-
-		return message.getSubject();
-	}
-
-	@Override
 	protected String getPath(
 		SocialActivity activity, ServiceContext serviceContext) {
 

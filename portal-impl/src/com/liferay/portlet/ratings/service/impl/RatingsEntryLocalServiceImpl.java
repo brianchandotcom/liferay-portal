@@ -17,10 +17,11 @@ package com.liferay.portlet.ratings.service.impl;
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -251,9 +252,14 @@ public class RatingsEntryLocalServiceImpl
 			className, classPK);
 
 		if (assetEntry != null) {
+			JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
+
+			extraDataJSONObject.put("title", assetEntry.getTitle());
+
 			socialActivityLocalService.addActivity(
 				userId, assetEntry.getGroupId(), className, classPK,
-				SocialActivityConstants.TYPE_ADD_VOTE, StringPool.BLANK, 0);
+				SocialActivityConstants.TYPE_ADD_VOTE,
+				extraDataJSONObject.toString(), 0);
 		}
 
 		return entry;

@@ -4615,6 +4615,7 @@
 		<table name="SocialActivity" />
 		<attributes>
 			<transient name="assetEntry" />
+			<transient name="extraDataValue" />
 		</attributes>
 	</entity>
 	<entity class="com.liferay.portlet.social.model.impl.SocialActivityAchievementImpl" name="SocialActivityAchievement">

@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
-import com.liferay.portlet.bookmarks.service.BookmarksEntryLocalServiceUtil;
 import com.liferay.portlet.bookmarks.service.permission.BookmarksEntryPermission;
 import com.liferay.portlet.social.model.BaseSocialActivityInterpreter;
 import com.liferay.portlet.social.model.SocialActivity;
@@ -34,17 +33,6 @@ public class BookmarksEntryActivityInterpreter
 	@Override
 	public String[] getClassNames() {
 		return _CLASS_NAMES;
-	}
-
-	@Override
-	protected String getEntryTitle(
-			SocialActivity activity, ServiceContext serviceContext)
-		throws Exception {
-
-		BookmarksEntry entry = BookmarksEntryLocalServiceUtil.getEntry(
-			activity.getClassPK());
-
-		return entry.getName();
 	}
 
 	@Override
@@ -78,20 +66,20 @@ public class BookmarksEntryActivityInterpreter
 		}
 		else if (activityType == SocialActivityConstants.TYPE_MOVE_TO_TRASH) {
 			if (Validator.isNull(groupName)) {
-				return "activity-bookmarks-entry-entry-move-to-trash";
+				return "activity-bookmarks-entry-move-to-trash";
 			}
 			else {
-				return "activity-bookmarks-entry-entry-move-to-trash-in";
+				return "activity-bookmarks-entry-move-to-trash-in";
 			}
 		}
 		else if (activityType ==
 					SocialActivityConstants.TYPE_RESTORE_FROM_TRASH) {
 
 			if (Validator.isNull(groupName)) {
-				return "activity-bookmarks-entry-entry-restore-from-trash";
+				return "activity-bookmarks-entry-restore-from-trash";
 			}
 			else {
-				return "activity-bookmarks-entry-entry-restore-from-trash-in";
+				return "activity-bookmarks-entry-restore-from-trash-in";
 			}
 		}
 

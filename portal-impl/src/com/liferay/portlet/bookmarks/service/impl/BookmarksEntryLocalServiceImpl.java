@@ -493,6 +493,10 @@ public class BookmarksEntryLocalServiceImpl
 
 		bookmarksEntryPersistence.update(entry);
 
+		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
+
+		extraDataJSONObject.put("title", entry.getName());
+
 		if (status == WorkflowConstants.STATUS_APPROVED) {
 
 			// Asset
@@ -509,7 +513,7 @@ public class BookmarksEntryLocalServiceImpl
 				userId, entry.getGroupId(), BookmarksEntry.class.getName(),
 				entry.getEntryId(),
 				SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
-				StringPool.BLANK, 0);
+				extraDataJSONObject.toString(), 0);
 		}
 		else if (status == WorkflowConstants.STATUS_IN_TRASH) {
 
@@ -526,7 +530,7 @@ public class BookmarksEntryLocalServiceImpl
 			socialActivityLocalService.addActivity(
 				userId, entry.getGroupId(), BookmarksEntry.class.getName(),
 				entry.getEntryId(), SocialActivityConstants.TYPE_MOVE_TO_TRASH,
-				StringPool.BLANK, 0);
+				extraDataJSONObject.toString(), 0);
 		}
 
 		// Trash

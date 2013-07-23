@@ -17,12 +17,13 @@ package com.liferay.portlet.bookmarks.service.impl;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.ResourceConstants;
@@ -377,10 +378,14 @@ public class BookmarksFolderLocalServiceImpl
 		socialActivityCounterLocalService.enableActivityCounters(
 			BookmarksFolder.class.getName(), folder.getFolderId());
 
+		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
+
+		extraDataJSONObject.put("title", folder.getName());
+
 		socialActivityLocalService.addActivity(
 			userId, folder.getGroupId(), BookmarksFolder.class.getName(),
 			folder.getFolderId(), SocialActivityConstants.TYPE_MOVE_TO_TRASH,
-			StringPool.BLANK, 0);
+			extraDataJSONObject.toString(), 0);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -403,11 +408,15 @@ public class BookmarksFolderLocalServiceImpl
 		socialActivityCounterLocalService.enableActivityCounters(
 			BookmarksFolder.class.getName(), folder.getFolderId());
 
+		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
+
+		extraDataJSONObject.put("title", folder.getName());
+
 		socialActivityLocalService.addActivity(
 			userId, folder.getGroupId(), BookmarksFolder.class.getName(),
 			folder.getFolderId(),
-			SocialActivityConstants.TYPE_RESTORE_FROM_TRASH, StringPool.BLANK,
-			0);
+			SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
+			extraDataJSONObject.toString(), 0);
 	}
 
 	@Override

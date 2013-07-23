@@ -24,7 +24,6 @@ import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
-import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
 import com.liferay.portlet.social.model.BaseSocialActivityInterpreter;
@@ -79,27 +78,6 @@ public class DLFileEntryActivityInterpreter
 		sb.append(wrapLink(folderLink, "go-to-folder", serviceContext));
 
 		return sb.toString();
-	}
-
-	@Override
-	protected String getEntryTitle(
-			SocialActivity activity, ServiceContext serviceContext)
-		throws Exception {
-
-		FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
-			activity.getClassPK());
-
-		if (fileEntry.getModel() instanceof DLFileEntry) {
-			DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
-
-			DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
-
-			if (dlFileVersion.isInTrash()) {
-				return TrashUtil.getOriginalTitle(fileEntry.getTitle());
-			}
-		}
-
-		return fileEntry.getTitle();
 	}
 
 	protected String getFolderLink(

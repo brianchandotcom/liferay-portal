@@ -593,10 +593,10 @@ public class MBThreadLocalServiceUtil {
 	}
 
 	public static com.liferay.portlet.messageboards.model.MBThread moveThreadToTrash(
-		long userId, long entryId)
+		long userId, long threadId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getService().moveThreadToTrash(userId, entryId);
+		return getService().moveThreadToTrash(userId, threadId);
 	}
 
 	public static com.liferay.portlet.messageboards.model.MBThread moveThreadToTrash(

@@ -41,18 +41,6 @@ public class JournalArticleActivityInterpreter
 	}
 
 	@Override
-	protected String getEntryTitle(
-			SocialActivity activity, ServiceContext serviceContext)
-		throws Exception {
-
-		JournalArticle article =
-			JournalArticleLocalServiceUtil.getLatestArticle(
-				activity.getClassPK());
-
-		return article.getTitle(serviceContext.getLocale());
-	}
-
-	@Override
 	protected String getPath(
 			SocialActivity activity, ServiceContext serviceContext)
 		throws Exception {

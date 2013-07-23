@@ -18,12 +18,10 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.journal.model.JournalFolder;
-import com.liferay.portlet.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.portlet.journal.service.permission.JournalFolderPermission;
 import com.liferay.portlet.social.model.BaseSocialActivityInterpreter;
 import com.liferay.portlet.social.model.SocialActivity;
 import com.liferay.portlet.social.model.SocialActivityConstants;
-import com.liferay.portlet.trash.util.TrashUtil;
 
 /**
  * @author Zsolt Berentey
@@ -34,21 +32,6 @@ public class JournalFolderActivityInterpreter
 	@Override
 	public String[] getClassNames() {
 		return _CLASS_NAMES;
-	}
-
-	@Override
-	protected String getEntryTitle(
-			SocialActivity activity, ServiceContext serviceContext)
-		throws Exception {
-
-		JournalFolder folder = JournalFolderLocalServiceUtil.getFolder(
-			activity.getClassPK());
-
-		if (folder.isInTrash()) {
-			return TrashUtil.getOriginalTitle(folder.getName());
-		}
-
-		return folder.getName();
 	}
 
 	@Override

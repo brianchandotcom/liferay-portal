@@ -29,7 +29,6 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.social.model.BaseSocialActivityInterpreter;
 import com.liferay.portlet.social.model.SocialActivity;
 import com.liferay.portlet.social.model.SocialActivityConstants;
-import com.liferay.portlet.trash.util.TrashUtil;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.model.WikiPageResource;
 import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
@@ -81,7 +80,8 @@ public class WikiActivityInterpreter extends BaseSocialActivityInterpreter {
 				fileVersion = fileEntry.getFileVersion();
 			}
 
-			String fileEntryTitle = activity.getExtraDataValue("title");
+			String fileEntryTitle = activity.getExtraDataValue(
+				"fileEntryTitle");
 
 			if ((fileVersion != null) && !fileVersion.isInTrash()) {
 				StringBundler sb = new StringBundler(9);
@@ -106,25 +106,6 @@ public class WikiActivityInterpreter extends BaseSocialActivityInterpreter {
 	}
 
 	@Override
-	protected String getEntryTitle(
-			SocialActivity activity, ServiceContext serviceContext)
-		throws Exception {
-
-		WikiPageResource pageResource =
-			WikiPageResourceLocalServiceUtil.getPageResource(
-				activity.getClassPK());
-
-		WikiPage page = WikiPageLocalServiceUtil.getPage(
-			pageResource.getNodeId(), pageResource.getTitle());
-
-		if (!page.isInTrash()) {
-			return TrashUtil.getOriginalTitle(page.getTitle());
-		}
-
-		return page.getTitle();
-	}
-
-	@Override
 	protected String getPath(
 		SocialActivity activity, ServiceContext serviceContext) {
 
@@ -138,8 +119,12 @@ public class WikiActivityInterpreter extends BaseSocialActivityInterpreter {
 		throws Exception {
 
 		WikiPageResource pageResource =
-			WikiPageResourceLocalServiceUtil.getPageResource(
+			WikiPageResourceLocalServiceUtil.fetchWikiPageResource(
 				activity.getClassPK());
+
+		if (pageResource == null) {
+			return null;
+		}
 
 		String creatorUserName = getUserName(
 			activity.getUserId(), serviceContext);

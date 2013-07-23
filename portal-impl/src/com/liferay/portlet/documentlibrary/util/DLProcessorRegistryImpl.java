@@ -135,8 +135,6 @@ public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 
 	@Override
 	public boolean isPreviewableSize(FileVersion fileVersion) {
-		boolean previewable = true;
-
 		long fileEntryPreviewableProcessorMaxSize =
 			PropsValues.DL_FILE_ENTRY_PREVIEWABLE_PROCESSOR_MAX_SIZE;
 
@@ -149,15 +147,16 @@ public class DLProcessorRegistryImpl implements DLProcessorRegistry {
 		}
 
 		if (fileEntryPreviewableProcessorMaxSize == 0) {
-			previewable = false;
-		}
-		else if ((fileEntryPreviewableProcessorMaxSize > 0) &&
-				(fileVersion.getSize() > fileEntryPreviewableProcessorMaxSize))
-		{
-			previewable = false;
+			return false;
 		}
 
-		return previewable;
+		if ((fileEntryPreviewableProcessorMaxSize > 0) &&
+			(fileVersion.getSize() > fileEntryPreviewableProcessorMaxSize)) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	@Override

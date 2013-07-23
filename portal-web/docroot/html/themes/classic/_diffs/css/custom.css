@@ -127,6 +127,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 						background: #45CBF5;
 						color: transparent;
 						font-size: 0;
+						line-height: 0;
 						padding: 6px 8px;
 						text-align: center;
 
@@ -143,14 +144,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 						.icon-caret-down {
 							display: none;
-						}
-
-						.icon-desktop {
-							top: 2px;
-						}
-
-						.icon-plus {
-							top: 2px;
 						}
 					}
 				}

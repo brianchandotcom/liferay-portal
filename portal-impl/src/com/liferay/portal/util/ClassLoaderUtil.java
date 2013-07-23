@@ -159,4 +159,21 @@ public class ClassLoaderUtil {
 			PluginContextListener.PLUGIN_CLASS_LOADER);
 	}
 
+	public static interface PACL {
+
+		public ClassLoader getAggregatePluginsClassLoader(
+			String[] servletContextNames, boolean addContextClassLoader);
+
+		public ClassLoader getClassLoader(Class<?> clazz);
+
+		public ClassLoader getContextClassLoader();
+
+		public ClassLoader getPluginClassLoader(String servletContextName);
+
+		public ClassLoader getPortalClassLoader();
+
+		public void setContextClassLoader(ClassLoader classLoader);
+
+	}
+
 }

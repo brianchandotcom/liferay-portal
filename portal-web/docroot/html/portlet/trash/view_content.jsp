@@ -249,7 +249,6 @@
 						formAction="<%= discussionURL %>"
 						formName='<%= "fm" + classPK %>'
 						redirect="<%= currentURL %>"
-						subject="<%= trashRenderer.getTitle(locale) %>"
 						userId="<%= assetEntry.getUserId() %>"
 					/>
 				</div>

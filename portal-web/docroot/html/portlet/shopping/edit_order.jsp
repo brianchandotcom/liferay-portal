@@ -586,7 +586,6 @@ long orderId = BeanParamUtil.getLong(order, request, "orderId");
 				formAction="<%= discussionURL %>"
 				formName="fm2"
 				redirect="<%= currentURL %>"
-				subject="<%= order.getNumber() %>"
 				userId="<%= order.getUserId() %>"
 			/>
 		</liferay-ui:panel>

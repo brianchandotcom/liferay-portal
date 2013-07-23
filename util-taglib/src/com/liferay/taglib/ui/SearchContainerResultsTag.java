@@ -166,7 +166,7 @@ public class SearchContainerResultsTag<R> extends TagSupport {
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             #SearchContainerTag.setTotal(int)}.
+	 *             SearchContainerTag#setTotal(int)}.
 	 */
 	public void setTotal(int deprecatedTotal) {
 		_deprecatedTotal = deprecatedTotal;

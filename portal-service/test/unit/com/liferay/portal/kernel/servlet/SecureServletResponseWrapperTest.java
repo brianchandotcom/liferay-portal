@@ -66,31 +66,39 @@ public class SecureServletResponseWrapperTest extends PowerMockito {
 	@Test
 	public void testForEncoded() throws IOException {
 		doTest(
-			new String[] {_VALUE_SANITIZED, _VALUE_SANITIZED, _VALUE_ENCODED},
-			new String[] {_VALUE_SANITIZED, _VALUE_SANITIZED, _VALUE_ENCODED});
+			new String[] {
+				_VALUE_SANITIZED, _VALUE_SANITIZED, _VALUE_ENCODED,
+				_VALUE_SANITIZED, _VALUE_SANITIZED},
+			new String[] {
+				_VALUE_SANITIZED, _VALUE_SANITIZED, _VALUE_ENCODED,
+				_VALUE_SANITIZED, _VALUE_SANITIZED});
 	}
 
 	@Test
 	public void testForPath() throws IOException {
 		doTest(
-			new String[] {null, null, _VALUE_PATH},
-			new String[] {null, null, _VALUE_PATH});
+			new String[] {null, null, _VALUE_PATH, null, null},
+			new String[] {null, null, _VALUE_PATH, null, null});
 	}
 
 	@Test
 	public void testForUnencoded() throws IOException {
 		doTest(
-			new String[] {_VALUE_INPUT, _VALUE_INPUT, _VALUE_INPUT},
 			new String[] {
-				_VALUE_SANITIZED, _VALUE_SANITIZED, _VALUE_SANITIZED
+				_VALUE_INPUT, _VALUE_INPUT, _VALUE_INPUT, _VALUE_INPUT,
+				_VALUE_INPUT
+			},
+			new String[] {
+				_VALUE_SANITIZED, _VALUE_SANITIZED, _VALUE_SANITIZED,
+				_VALUE_SANITIZED, _VALUE_SANITIZED
 			});
 	}
 
 	@Test
 	public void testForURL() throws IOException {
 		doTest(
-			new String[] {null, null, _VALUE_URL},
-			new String[] {null, null, _VALUE_URL});
+			new String[] {null, null, _VALUE_URL, null, null},
+			new String[] {null, null, _VALUE_URL, null, null});
 	}
 
 	protected void doTest(String[] inputs, String[] expecteds)
@@ -99,10 +107,13 @@ public class SecureServletResponseWrapperTest extends PowerMockito {
 		_responseWrapper.addHeader("Header-1", inputs[0]);
 		_responseWrapper.setHeader("Header-2", inputs[1]);
 		_responseWrapper.sendRedirect(inputs[2]);
+		_responseWrapper.setCharacterEncoding(inputs[3]);
+		_responseWrapper.setContentType(inputs[4]);
 
 		String[] actuals = new String[] {
 			_valueReference1.get(), _valueReference2.get(),
-			_locationReference.get()
+			_locationReference.get(), _characterEncodingReference.get(),
+			_contentTypeReference.get(),
 		};
 
 		Assert.assertArrayEquals(expecteds, actuals);
@@ -119,6 +130,10 @@ public class SecureServletResponseWrapperTest extends PowerMockito {
 	private static final String _VALUE_URL =
 		"http://localhost:9080/web/guest/home";
 
+	private final AtomicReference<String> _characterEncodingReference =
+		new AtomicReference<String>();
+	private final AtomicReference<String> _contentTypeReference =
+		new AtomicReference<String>();
 	private final AtomicReference<String> _locationReference =
 		new AtomicReference<String>();
 
@@ -138,6 +153,16 @@ public class SecureServletResponseWrapperTest extends PowerMockito {
 		@Override
 		public void setHeader(String name, String value) {
 			_valueReference2.set(value);
+		}
+
+		@Override
+		public void setContentType(String contentType) {
+			_contentTypeReference.set(contentType);
+		}
+
+		@Override
+		public void setCharacterEncoding(String characterEncoding) {
+			_characterEncodingReference.set(characterEncoding);
 		}
 	};
 

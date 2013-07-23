@@ -41,6 +41,16 @@ public class SecureServletResponseWrapper extends HttpServletResponseWrapper {
 	}
 
 	@Override
+	public void setCharacterEncoding(String charset) {
+		super.setCharacterEncoding(HttpUtil.sanitizeHeader(charset));
+	}
+
+	@Override
+	public void setContentType(String type) {
+		super.setContentType(HttpUtil.sanitizeHeader(type));
+	}
+
+	@Override
 	public void setHeader(String name, String value) {
 		super.setHeader(name, HttpUtil.sanitizeHeader(value));
 	}

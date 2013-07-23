@@ -29,10 +29,10 @@ public class RSSAction extends DefaultRSSAction {
 
 	@Override
 	protected RSSRenderer getRSSRenderer(
-			ResourceRequest request, ResourceResponse response)
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		return new ActivitiesRSSRenderer(request, response);
+		return new ActivitiesRSSRenderer(resourceRequest, resourceResponse);
 	}
 
 }

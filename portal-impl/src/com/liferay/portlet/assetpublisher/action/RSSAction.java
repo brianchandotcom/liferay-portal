@@ -29,10 +29,11 @@ public class RSSAction extends DefaultRSSAction {
 
 	@Override
 	protected byte[] getRSS(
-			ResourceRequest portletRequest, ResourceResponse portletResponse)
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		PortletPreferences portletPreferences = portletRequest.getPreferences();
+		PortletPreferences portletPreferences =
+			resourceRequest.getPreferences();
 
 		String selectionStyle = portletPreferences.getValue(
 			"selectionStyle", "dynamic");
@@ -41,15 +42,15 @@ public class RSSAction extends DefaultRSSAction {
 			return new byte[0];
 		}
 
-		return super.getRSS(portletRequest, portletResponse);
+		return super.getRSS(resourceRequest, resourceResponse);
 	}
 
 	@Override
 	protected RSSRenderer getRSSRenderer(
-			ResourceRequest portletRequest, ResourceResponse portletResponse)
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		return new AssetRSSRenderer(portletRequest, portletResponse);
+		return new AssetRSSRenderer(resourceRequest, resourceResponse);
 	}
 
 }

@@ -49,18 +49,18 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 /**
- * @author Carlos Sierra Andrés
+ * @author Carlos Sierra Andrï¿½s
  * @author Julio Camarero
  * @author Brian Wing Shun Chan
  */
 public class ActivitiesRSSRenderer extends DefaultRSSRenderer {
 
 	public ActivitiesRSSRenderer(
-		PortletRequest request, PortletResponse response) {
+		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		super(PortalUtil.getHttpServletRequest(request));
+		super(PortalUtil.getHttpServletRequest(portletRequest));
 
-		_portletRequest = request;
+		_portletRequest = portletRequest;
 		_themeDisplay = (ThemeDisplay)_portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}

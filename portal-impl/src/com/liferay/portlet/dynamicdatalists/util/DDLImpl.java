@@ -202,40 +202,44 @@ public class DDLImpl implements DDL {
 			ddmStructure.getFieldsMap();
 
 		for (Map<String, String> fields : fieldsMap.values()) {
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-			String dataType = fields.get(FieldConstants.DATA_TYPE);
-
-			jsonObject.put("dataType", dataType);
-
-			boolean editable = GetterUtil.getBoolean(
-				fields.get(FieldConstants.EDITABLE), true);
-
-			jsonObject.put("editable", editable);
-
-			String label = fields.get(FieldConstants.LABEL);
-
-			jsonObject.put("label", label);
-
 			String name = fields.get(FieldConstants.NAME);
 
-			jsonObject.put("name", name);
+			if (ddmStructure.hasField(name) &&
+				!ddmStructure.isFieldPrivate(name)) {
 
-			boolean required = GetterUtil.getBoolean(
-				fields.get(FieldConstants.REQUIRED));
+				JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-			jsonObject.put("required", required);
+				String dataType = fields.get(FieldConstants.DATA_TYPE);
 
-			boolean sortable = GetterUtil.getBoolean(
-				fields.get(FieldConstants.SORTABLE), true);
+				jsonObject.put("dataType", dataType);
 
-			jsonObject.put("sortable", sortable);
+				boolean editable = GetterUtil.getBoolean(
+					fields.get(FieldConstants.EDITABLE), true);
 
-			String type = fields.get(FieldConstants.TYPE);
+				jsonObject.put("editable", editable);
 
-			jsonObject.put("type", type);
+				String label = fields.get(FieldConstants.LABEL);
 
-			jsonArray.put(jsonObject);
+				jsonObject.put("label", label);
+
+				jsonObject.put("name", name);
+
+				boolean required = GetterUtil.getBoolean(
+					fields.get(FieldConstants.REQUIRED));
+
+				jsonObject.put("required", required);
+
+				boolean sortable = GetterUtil.getBoolean(
+					fields.get(FieldConstants.SORTABLE), true);
+
+				jsonObject.put("sortable", sortable);
+
+				String type = fields.get(FieldConstants.TYPE);
+
+				jsonObject.put("type", type);
+
+				jsonArray.put(jsonObject);
+			}
 		}
 
 		return jsonArray;

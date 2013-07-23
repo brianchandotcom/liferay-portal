@@ -166,7 +166,7 @@ request.setAttribute("control_panel.jsp-ppid", ppid);
 											%>
 
 											<a class="control-panel-back-link" href="<%= backURL %>" title="<liferay-ui:message key="back" />">
-												<i class="control-panel-back-icon icon-chevron-left"></i>
+												<i class="control-panel-back-icon icon-chevron-sign-left"></i>
 
 												<span class="control-panel-back-text">
 													<liferay-ui:message key="back" />

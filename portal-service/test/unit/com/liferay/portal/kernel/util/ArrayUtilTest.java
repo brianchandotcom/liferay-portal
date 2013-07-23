@@ -28,6 +28,36 @@ import org.junit.Test;
 public class ArrayUtilTest {
 
 	@Test
+	public void testFilterComplexTypeArray() {
+		User[] array = ArrayUtil.filter(
+			new User[] {new User("james", 17), new User("john", 26)},
+			_complexTypePredicateFilter);
+
+		Assert.assertEquals(1, array.length);
+
+		Assert.assertEquals("john", array[0].getName());
+		Assert.assertEquals(26, array[0].getAge());
+	}
+
+	@Test
+	public void testFilterComplexTypeEmptyArray() {
+		User[] array = ArrayUtil.filter(
+			new User[0], _complexTypePredicateFilter);
+
+		Assert.assertEquals(0, array.length);
+	}
+
+	@Test
+	public void testFilterComplexTypeNullArray() {
+		User[] array = null;
+
+		User[] filteredArray = ArrayUtil.filter(
+			array, _complexTypePredicateFilter);
+
+		Assert.assertNull(filteredArray);
+	}
+
+	@Test
 	public void testFilterDoubleArray() {
 		double[] array = ArrayUtil.filter(
 			new double[] {0.1, 0.2, 1.2, 1.3}, _doublePredicateFilter);
@@ -47,9 +77,12 @@ public class ArrayUtilTest {
 
 	@Test
 	public void testFilterDoubleNullArray() {
-		double[] array = ArrayUtil.filter(null, _doublePredicateFilter);
+		double[] array = null;
 
-		Assert.assertNull(array);
+		double[] filteredArray = ArrayUtil.filter(
+			array, _doublePredicateFilter);
+
+		Assert.assertNull(filteredArray);
 	}
 
 	@Test
@@ -71,9 +104,11 @@ public class ArrayUtilTest {
 
 	@Test
 	public void testFilterIntegerNullArray() {
-		int[] array = ArrayUtil.filter(null, _integerPredicateFilter);
+		int[] array = null;
 
-		Assert.assertNull(array);
+		int[] filteredArray = ArrayUtil.filter(array, _integerPredicateFilter);
+
+		Assert.assertNull(filteredArray);
 	}
 
 	@Test
@@ -148,6 +183,16 @@ public class ArrayUtilTest {
 		}
 	}
 
+	private static PredicateFilter<User> _complexTypePredicateFilter =
+		new PredicateFilter<User>() {
+
+			@Override
+			public boolean filter(User u) {
+				return u.getAge() > 18;
+			}
+
+		};
+
 	private static PredicateFilter<Double> _doublePredicateFilter =
 		new PredicateFilter<Double>() {
 
@@ -167,5 +212,24 @@ public class ArrayUtilTest {
 			}
 
 		};
+
+	private static class User {
+		public User(String name, int age) {
+			_name = name;
+			_age = age;
+		}
+
+		public int getAge() {
+			return _age;
+		}
+
+		public String getName() {
+			return _name;
+		}
+
+		private int _age;
+		private String _name;
+
+	}
 
 }

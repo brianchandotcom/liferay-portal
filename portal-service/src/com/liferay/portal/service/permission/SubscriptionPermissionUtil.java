@@ -20,11 +20,18 @@ import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermissio
 import com.liferay.portal.security.permission.PermissionChecker;
 
 /**
+ * Utility used for checking permissions with respect to subscriptions.
+ *
  * @author Mate Thurzo
  * @author Raymond Augé
+ * @see    {@link SubscriptionPermission}
  */
 public class SubscriptionPermissionUtil {
 
+	/**
+	 * @see {@link SubscriptionPermission#check(PermissionChecker, String, long,
+	 *      String, long)}
+	 */
 	public static void check(
 			PermissionChecker permissionChecker, String subscriptionClassName,
 			long subscriptionClassPK, String inferredClassName,
@@ -36,6 +43,10 @@ public class SubscriptionPermissionUtil {
 			inferredClassName, inferredClassPK);
 	}
 
+	/**
+	 * @see {@link SubscriptionPermission#contains(PermissionChecker, String,
+	 *      long, String, long)}
+	 */
 	public static boolean contains(
 			PermissionChecker permissionChecker, String subscriptionClassName,
 			long subscriptionClassPK, String inferredClassName,

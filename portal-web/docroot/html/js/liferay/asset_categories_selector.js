@@ -572,6 +572,8 @@ AUI.add(
 
 						var popup = instance._popup;
 
+						popup.titleNode.html(Liferay.Language.get('categories'));
+
 						popup.entriesNode.addClass(CSS_TAGS_LIST);
 
 						var className = instance.get('className');

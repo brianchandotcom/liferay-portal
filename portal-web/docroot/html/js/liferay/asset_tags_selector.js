@@ -211,8 +211,7 @@ AUI.add(
 									dialog: {
 										cssClass: CSS_POPUP,
 										hideClass: 'hide-accessible'
-									},
-									title: Liferay.Language.get('category')
+									}
 								}
 							);
 

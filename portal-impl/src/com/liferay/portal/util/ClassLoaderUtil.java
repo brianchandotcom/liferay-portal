@@ -159,6 +159,35 @@ public class ClassLoaderUtil {
 			PluginContextListener.PLUGIN_CLASS_LOADER);
 	}
 
+	public static class NoPACL implements PACL {
+
+		public ClassLoader getAggregatePluginsClassLoader(
+			String[] servletContextNames, boolean addContextClassLoader) {
+
+			return  null;
+		}
+
+		public ClassLoader getClassLoader(Class<?> clazz) {
+			return  null;
+		}
+
+		public ClassLoader getContextClassLoader() {
+			return  null;
+		}
+
+		public ClassLoader getPluginClassLoader(String servletContextName) {
+			return  null;
+		}
+
+		public ClassLoader getPortalClassLoader() {
+			return  null;
+		}
+
+		public void setContextClassLoader(ClassLoader classLoader) {
+		}
+
+	}
+
 	public static interface PACL {
 
 		public ClassLoader getAggregatePluginsClassLoader(

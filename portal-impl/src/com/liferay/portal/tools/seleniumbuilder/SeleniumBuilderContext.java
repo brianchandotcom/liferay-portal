@@ -16,6 +16,7 @@ package com.liferay.portal.tools.seleniumbuilder;
 
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Attribute;
 import com.liferay.portal.kernel.xml.Element;
 
@@ -361,6 +362,43 @@ public class SeleniumBuilderContext {
 		return _macroSimpleClassNames.get(macroName);
 	}
 
+	public String getPath(Element rootElement, String locatorKey) {
+		Element bodyElement = rootElement.element("body");
+
+		Element tableElement = bodyElement.element("table");
+
+		Element tbodyElement = tableElement.element("tbody");
+
+		List<Element> trElements = tbodyElement.elements();
+
+		String pathName = "";
+
+		for (Element trElement : trElements) {
+			List<Element> tdElements = trElement.elements("td");
+
+			Element pathLocatorElement = tdElements.get(1);
+			Element pathLocatorKeyElement = tdElements.get(0);
+
+			String pathLocatorKey = pathLocatorKeyElement.getText();
+
+			if (pathLocatorKey.equals(locatorKey)) {
+				return pathLocatorElement.getText();
+			}
+
+			if (pathLocatorKey.equals("EXTEND_ACTION_PATH")) {
+				pathName = pathLocatorElement.getText();
+			}
+		}
+
+		if (Validator.isNotNull(pathName)) {
+			Element pathRootElement = getPathRootElement(pathName);
+
+			return getPath(pathRootElement, locatorKey);
+		}
+
+		return locatorKey;
+	}
+
 	public String getPathClassName(String pathName) {
 		return _pathClassNames.get(pathName);
 	}
@@ -387,19 +425,18 @@ public class SeleniumBuilderContext {
 		for (Element trElement : trElements) {
 			List<Element> tdElements = trElement.elements("td");
 
-			Element pathLocatorElement = tdElements.get(0);
+			Element pathLocatorKeyElement = tdElements.get(0);
 
-			String pathLocatorKey = pathLocatorElement.getText();
+			String pathLocatorKey = pathLocatorKeyElement.getText();
 
 			if (pathLocatorKey.equals("EXTEND_ACTION_PATH")) {
-				Element pathNameElement = tdElements.get(1);
+				Element pathLocatorElement = tdElements.get(1);
 
-				String extendedPathName = pathNameElement.getText();
+				String pathName = pathLocatorElement.getText();
 
-				Element extendedPathElement = getPathRootElement(
-					extendedPathName);
+				Element pathRootElement = getPathRootElement(pathName);
 
-				pathLocatorKeys.addAll(getPathLocatorKeys(extendedPathElement));
+				pathLocatorKeys.addAll(getPathLocatorKeys(pathRootElement));
 			}
 			else {
 				pathLocatorKeys.add(pathLocatorKey);
@@ -626,6 +663,8 @@ public class SeleniumBuilderContext {
 
 		String macroFileName = getMacroFileName(macroName);
 
+		validateVarElements(rootElement, macroFileName);
+
 		List<Element> commandElements =
 			_seleniumBuilderFileUtil.getAllChildElements(
 				rootElement, "command");
@@ -675,6 +714,8 @@ public class SeleniumBuilderContext {
 		}
 
 		String testCaseFileName = getTestCaseFileName(testCaseName);
+
+		validateVarElements(rootElement, testCaseFileName);
 
 		List<Element> commandElements =
 			_seleniumBuilderFileUtil.getAllChildElements(
@@ -729,6 +770,30 @@ public class SeleniumBuilderContext {
 			}
 			else if (testSuite != null) {
 				_validateTestSuiteElement(testSuiteFileName, executeElement);
+			}
+		}
+	}
+
+	public void validateVarElements(Element rootElement, String fileName) {
+		List<Element> varElements =
+			_seleniumBuilderFileUtil.getAllChildElements(rootElement, "var");
+
+		for (Element varElement : varElements) {
+			String varLocatorKey = varElement.attributeValue("locator-key");
+			String varPath = varElement.attributeValue("path");
+
+			if (Validator.isNotNull(varLocatorKey) &&
+				Validator.isNotNull(varPath)) {
+
+				if (!_pathRootElements.containsKey(varPath)) {
+					_seleniumBuilderFileUtil.throwValidationException(
+						1014, fileName, varElement, varPath);
+				}
+
+				if (!_isValidLocatorKey(varPath, null, varLocatorKey)) {
+					_seleniumBuilderFileUtil.throwValidationException(
+						1010, fileName, varElement, varLocatorKey);
+				}
 			}
 		}
 	}

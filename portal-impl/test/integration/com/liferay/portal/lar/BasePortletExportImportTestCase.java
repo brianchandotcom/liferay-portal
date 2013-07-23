@@ -20,6 +20,7 @@ import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.util.LayoutTestUtil;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetLink;
@@ -29,6 +30,8 @@ import com.liferay.portlet.asset.service.AssetLinkLocalServiceUtil;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
+import javax.portlet.PortletPreferences;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -103,6 +106,23 @@ public class BasePortletExportImportTestCase extends BaseExportImportTestCase {
 			TestPropsValues.getUserId(), importedLayout.getPlid(),
 			importedGroup.getGroupId(), portletId, getImportParameterMap(),
 			larFile);
+	}
+
+	protected PortletPreferences getImportedPortletPreferences(
+			Map<String, String[]> preferenceMap)
+		throws Exception {
+
+		// Export site LAR
+
+		String assetPublisherPortletId = LayoutTestUtil.addPortletToLayout(
+			TestPropsValues.getUserId(), this.layout,
+			PortletKeys.ASSET_PUBLISHER, "column-1", preferenceMap);
+
+		doExportImportPortlet(assetPublisherPortletId);
+
+		return LayoutTestUtil.getPortletPreferences(
+			importedLayout.getCompanyId(), importedLayout.getPlid(),
+			assetPublisherPortletId);
 	}
 
 	protected void validateImportedLinks(String uuid)

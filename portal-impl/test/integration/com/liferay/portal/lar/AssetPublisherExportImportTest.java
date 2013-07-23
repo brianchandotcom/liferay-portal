@@ -615,23 +615,6 @@ public class AssetPublisherExportImportTest
 		return parameterMap;
 	}
 
-	protected PortletPreferences getImportedPortletPreferences(
-			Map<String, String[]> preferenceMap)
-		throws Exception {
-
-		// Export site LAR
-
-		String assetPublisherPortletId = LayoutTestUtil.addPortletToLayout(
-			TestPropsValues.getUserId(), this.layout,
-			PortletKeys.ASSET_PUBLISHER, "column-1", preferenceMap);
-
-		doExportImportPortlet(assetPublisherPortletId);
-
-		return LayoutTestUtil.getPortletPreferences(
-			importedLayout.getCompanyId(), importedLayout.getPlid(),
-			assetPublisherPortletId);
-	}
-
 	@Override
 	protected Map<String, String[]> getImportParameterMap() throws Exception {
 		return getExportParameterMap();

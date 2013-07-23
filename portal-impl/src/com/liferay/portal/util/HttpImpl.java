@@ -345,9 +345,8 @@ public class HttpImpl implements Http {
 		if (isProxyHost(hostConfiguration.getHost())) {
 			return _proxyHttpClient;
 		}
-		else {
-			return _httpClient;
-		}
+
+		return _httpClient;
 	}
 
 	@Override
@@ -404,7 +403,7 @@ public class HttpImpl implements Http {
 		if (Validator.isNull(url)) {
 			return url;
 		}
-		
+
 		url = removeProtocol(url);
 
 		int pos = url.indexOf(CharPool.SLASH);
@@ -412,9 +411,8 @@ public class HttpImpl implements Http {
 		if (pos != -1) {
 			return url.substring(0, pos);
 		}
-		else {
-			return url;
-		}
+
+		return url;
 	}
 
 	/**
@@ -551,9 +549,8 @@ public class HttpImpl implements Http {
 		if (pos == -1) {
 			return url;
 		}
-		else {
-			return url.substring(0, pos);
-		}
+
+		return url.substring(0, pos);
 	}
 
 	@Override
@@ -566,9 +563,8 @@ public class HttpImpl implements Http {
 		if (!secure) {
 			return Http.HTTP;
 		}
-		else {
-			return Http.HTTPS;
-		}
+
+		return Http.HTTPS;
 	}
 
 	@Override
@@ -588,9 +584,8 @@ public class HttpImpl implements Http {
 		if (pos != -1) {
 			return url.substring(0, pos);
 		}
-		else {
-			return Http.HTTP;
-		}
+
+		return Http.HTTP;
 	}
 
 	@Override
@@ -604,9 +599,8 @@ public class HttpImpl implements Http {
 		if (pos == -1) {
 			return StringPool.BLANK;
 		}
-		else {
-			return url.substring(pos + 1);
-		}
+
+		return url.substring(pos + 1);
 	}
 
 	@Override
@@ -619,6 +613,7 @@ public class HttpImpl implements Http {
 		if (Validator.isNull(url)) {
 			return false;
 		}
+
 		return Validator.isNotNull(getDomain(url));
 	}
 
@@ -629,9 +624,8 @@ public class HttpImpl implements Http {
 		if (pos != -1) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	@Override
@@ -639,9 +633,8 @@ public class HttpImpl implements Http {
 		if (Validator.isNotNull(_PROXY_HOST) && (_PROXY_PORT > 0)) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	@Override
@@ -662,9 +655,8 @@ public class HttpImpl implements Http {
 		if (hasProxyConfig() && !isNonProxyHost(host)) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	@Override
@@ -815,9 +807,8 @@ public class HttpImpl implements Http {
 		if (pos > 0) {
 			return url.substring(pos);
 		}
-		else {
-			return url;
-		}
+
+		return url;
 	}
 
 	@Override
@@ -882,6 +873,7 @@ public class HttpImpl implements Http {
 		if (Validator.isNull(url)) {
 			return url;
 		}
+
 		if (url.startsWith(Http.HTTP_WITH_SLASH)) {
 			return url.substring(Http.HTTP_WITH_SLASH.length());
 		}
@@ -1034,9 +1026,8 @@ public class HttpImpl implements Http {
 		if (headers.length == 0) {
 			return false;
 		}
-		else {
-			return true;
-		}
+
+		return true;
 	}
 
 	protected void processPostMethod(

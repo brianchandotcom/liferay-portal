@@ -200,9 +200,14 @@
 			<entry key="sample.sql.output.merge" value="true"/>
 		</propertyfile>
 
-		<ant antfile="${basedir}/../benchmarks/build.xml" inheritall="false" target="build-sample-sql">
-			<property name="sample.sql.properties.file" value="test-sample-sql.properties"/>
-		</ant>
+		<java
+			classname="com.liferay.portal.tools.samplesqlbuilder.TestSampleSQLBuilder"
+			classpathref="project.classpath"
+			failonerror="true"
+		>
+			<sysproperty key="external-properties" value="com/liferay/portal/tools/dependencies/portal-tools.properties" />
+			<arg value="test-sample-sql.properties"/>
+		</java>
 
 		<delete file="test-sample-sql.properties" />
 

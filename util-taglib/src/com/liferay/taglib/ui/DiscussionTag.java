@@ -64,8 +64,10 @@ public class DiscussionTag extends IncludeTag {
 		_redirect = redirect;
 	}
 
+	/**
+	 * @deprecated As of 6.2.0
+	 */
 	public void setSubject(String subject) {
-		_subject = subject;
 	}
 
 	public void setUserId(long userId) {
@@ -84,7 +86,6 @@ public class DiscussionTag extends IncludeTag {
 		_permissionClassPK = 0;
 		_ratingsEnabled = true;
 		_redirect = null;
-		_subject = null;
 		_userId = 0;
 	}
 
@@ -127,7 +128,6 @@ public class DiscussionTag extends IncludeTag {
 			"liferay-ui:discussion:ratingsEnabled",
 			String.valueOf(_ratingsEnabled));
 		request.setAttribute("liferay-ui:discussion:redirect", _redirect);
-		request.setAttribute("liferay-ui:discussion:subject", _subject);
 		request.setAttribute(
 			"liferay-ui:discussion:userId", String.valueOf(_userId));
 	}
@@ -144,7 +144,6 @@ public class DiscussionTag extends IncludeTag {
 	private long _permissionClassPK;
 	private boolean _ratingsEnabled = true;
 	private String _redirect;
-	private String _subject;
 	private long _userId;
 
 }

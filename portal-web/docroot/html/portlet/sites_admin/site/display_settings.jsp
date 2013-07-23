@@ -72,7 +72,7 @@ boolean inheritLocales = GetterUtil.getBoolean(typeSettingsProperties.getPropert
 	<liferay-ui:error exception="<%= LocaleException.class %>" message="please-enter-a-valid-locale" />
 
 	<%
-	Locale[] siteAavailableLocales = LanguageUtil.getAvailableLocales(liveGroup.getGroupId());
+	Locale[] siteAvailableLocales = LanguageUtil.getAvailableLocales(liveGroup.getGroupId());
 	%>
 
 	<aui:fieldset cssClass="default-language" label="default-language">
@@ -81,7 +81,7 @@ boolean inheritLocales = GetterUtil.getBoolean(typeSettingsProperties.getPropert
 			<%
 			Locale siteDefaultLocale = PortalUtil.getSiteDefaultLocale(liveGroup.getGroupId());
 
-			for (Locale siteAvailableLocale : siteAavailableLocales) {
+			for (Locale siteAvailableLocale : siteAvailableLocales) {
 			%>
 
 				<aui:option label="<%= siteAvailableLocale.getDisplayName(locale) %>" lang="<%= LocaleUtil.toW3cLanguageId(siteAvailableLocale) %>" selected="<%= (siteDefaultLocale.getLanguage().equals(siteAvailableLocale.getLanguage()) && siteDefaultLocale.getCountry().equals(siteAvailableLocale.getCountry())) %>" value="<%= LocaleUtil.toLanguageId(siteAvailableLocale) %>" />
@@ -94,7 +94,7 @@ boolean inheritLocales = GetterUtil.getBoolean(typeSettingsProperties.getPropert
 	</aui:fieldset>
 
 	<aui:fieldset cssClass="available-languages" label="available-languages">
-		<aui:input name='<%= "TypeSettingsProperties--" + PropsKeys.LOCALES + "--" %>' type="hidden" value="<%= StringUtil.merge(LocaleUtil.toLanguageIds(siteAavailableLocales)) %>" />
+		<aui:input name='<%= "TypeSettingsProperties--" + PropsKeys.LOCALES + "--" %>' type="hidden" value="<%= StringUtil.merge(LocaleUtil.toLanguageIds(siteAvailableLocales)) %>" />
 
 		<%
 
@@ -102,7 +102,7 @@ boolean inheritLocales = GetterUtil.getBoolean(typeSettingsProperties.getPropert
 
 		List leftList = new ArrayList();
 
-		for (Locale siteAvailableLocale : siteAavailableLocales) {
+		for (Locale siteAvailableLocale : siteAvailableLocales) {
 			leftList.add(new KeyValuePair(LocaleUtil.toLanguageId(siteAvailableLocale), siteAvailableLocale.getDisplayName(locale)));
 		}
 
@@ -111,7 +111,7 @@ boolean inheritLocales = GetterUtil.getBoolean(typeSettingsProperties.getPropert
 		List rightList = new ArrayList();
 
 		for (Locale availableLocale : LanguageUtil.getAvailableLocales()) {
-			if (!ArrayUtil.contains(siteAavailableLocales, availableLocale)) {
+			if (!ArrayUtil.contains(siteAvailableLocales, availableLocale)) {
 				rightList.add(new KeyValuePair(LocaleUtil.toLanguageId(availableLocale), availableLocale.getDisplayName(locale)));
 			}
 		}

@@ -19,7 +19,7 @@
 <%@ page import="com.liferay.taglib.ui.LanguageTag" %>
 
 <%
-Locale[] availableLocales = LanguageUtil.getAvailableLocales();
+Locale[] availableLocales = LanguageUtil.getAvailableLocales(themeDisplay.getSiteGroupId());
 String[] availableLanguageIds = LocaleUtil.toLanguageIds(availableLocales);
 
 String[] languageIds = StringUtil.split(portletPreferences.getValue("languageIds", StringUtil.merge(availableLanguageIds)));

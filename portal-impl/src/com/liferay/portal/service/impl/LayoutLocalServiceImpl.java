@@ -198,7 +198,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		Map<Locale, String> friendlyURLMap = new HashMap<Locale, String>();
 
-		friendlyURLMap.put(LocaleUtil.getDefault(), friendlyURL);
+		friendlyURLMap.put(LocaleUtil.getSiteDefault(), friendlyURL);
 
 		return addLayout(
 			userId, groupId, privateLayout, parentLayoutId, nameMap, titleMap,
@@ -274,11 +274,11 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		long layoutId = getNextLayoutId(groupId, privateLayout);
 		parentLayoutId = layoutLocalServiceHelper.getParentLayoutId(
 			groupId, privateLayout, parentLayoutId);
-		String name = nameMap.get(LocaleUtil.getDefault());
+		String name = nameMap.get(LocaleUtil.getSiteDefault());
 		friendlyURLMap = layoutLocalServiceHelper.getFriendlyURLMap(
 			groupId, privateLayout, layoutId, name, friendlyURLMap);
 
-		String friendlyURL = friendlyURLMap.get(LocaleUtil.getDefault());
+		String friendlyURL = friendlyURLMap.get(LocaleUtil.getSiteDefault());
 
 		int priority = layoutLocalServiceHelper.getNextPriority(
 			groupId, privateLayout, parentLayoutId, null, -1);
@@ -493,7 +493,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		Locale locale = LocaleUtil.getDefault();
+		Locale locale = LocaleUtil.getSiteDefault();
 
 		Map<Locale, String> nameMap = new HashMap<Locale, String>();
 
@@ -509,7 +509,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		Map<Locale, String> friendlyURLMap = new HashMap<Locale, String>();
 
-		friendlyURLMap.put(LocaleUtil.getDefault(), friendlyURL);
+		friendlyURLMap.put(LocaleUtil.getSiteDefault(), friendlyURL);
 
 		return addLayout(
 			userId, groupId, privateLayout, parentLayoutId, nameMap, titleMap,
@@ -2102,7 +2102,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		layout.setModifiedDate(now);
 
 		String defaultLanguageId = LocaleUtil.toLanguageId(
-			LocaleUtil.getDefault());
+			LocaleUtil.getSiteDefault());
 
 		if (languageId.equals(defaultLanguageId)) {
 			layout.setFriendlyURL(friendlyURL);
@@ -2169,11 +2169,11 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		parentLayoutId = layoutLocalServiceHelper.getParentLayoutId(
 			groupId, privateLayout, parentLayoutId);
-		String name = nameMap.get(LocaleUtil.getDefault());
+		String name = nameMap.get(LocaleUtil.getSiteDefault());
 		friendlyURLMap = layoutLocalServiceHelper.getFriendlyURLMap(
 			groupId, privateLayout, layoutId, name, friendlyURLMap);
 
-		String friendlyURL = friendlyURLMap.get(LocaleUtil.getDefault());
+		String friendlyURL = friendlyURLMap.get(LocaleUtil.getSiteDefault());
 
 		layoutLocalServiceHelper.validate(
 			groupId, privateLayout, layoutId, parentLayoutId, name, type,
@@ -2333,7 +2333,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		Map<Locale, String> friendlyURLMap = new HashMap<Locale, String>();
 
-		friendlyURLMap.put(LocaleUtil.getDefault(), friendlyURL);
+		friendlyURLMap.put(LocaleUtil.getSiteDefault(), friendlyURL);
 
 		return updateLayout(
 			groupId, privateLayout, layoutId, parentLayoutId, nameMap, titleMap,

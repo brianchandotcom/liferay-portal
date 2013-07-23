@@ -60,7 +60,7 @@ public class DDMTemplateTestUtil {
 	public static DDMTemplate addTemplate(long structureId) throws Exception {
 		return addTemplate(
 			structureId, TemplateConstants.LANG_TYPE_VM, getSampleTemplateXSL(),
-			LocaleUtil.getDefault());
+			LocaleUtil.getSiteDefault());
 	}
 
 	public static DDMTemplate addTemplate(
@@ -77,7 +77,7 @@ public class DDMTemplateTestUtil {
 
 		return addTemplate(
 			groupId, structureId, TemplateConstants.LANG_TYPE_VM,
-			getSampleTemplateXSL(), LocaleUtil.getDefault());
+			getSampleTemplateXSL(), LocaleUtil.getSiteDefault());
 	}
 
 	public static DDMTemplate addTemplate(
@@ -95,7 +95,7 @@ public class DDMTemplateTestUtil {
 
 		return addTemplate(
 			groupId, classNameId, classPK, TemplateConstants.LANG_TYPE_VM,
-			getSampleTemplateXSL(), LocaleUtil.getDefault());
+			getSampleTemplateXSL(), LocaleUtil.getSiteDefault());
 	}
 
 	public static DDMTemplate addTemplate(
@@ -134,7 +134,7 @@ public class DDMTemplateTestUtil {
 
 		return addTemplate(
 			TestPropsValues.getGroupId(), structureId, language, script,
-			LocaleUtil.getDefault());
+			LocaleUtil.getSiteDefault());
 	}
 
 	public static DDMTemplate addTemplate(

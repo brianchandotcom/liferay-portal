@@ -100,7 +100,8 @@ public class UpdateLookAndFeelAction extends JSONAction {
 
 		JSONObject titles = portletData.getJSONObject("titles");
 
-		Locale[] locales = LanguageUtil.getAvailableLocales();
+		Locale[] locales = LanguageUtil.getAvailableLocales(
+			themeDisplay.getSiteGroupId());
 
 		for (int i = 0; i < locales.length; i++) {
 			String languageId = LocaleUtil.toLanguageId(locales[i]);

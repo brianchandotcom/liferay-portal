@@ -45,7 +45,7 @@ if (PropsValues.MOBILE_DEVICE_STYLING_WAP_ENABLED) {
 						<aui:select inlineField="<%= true %>" label="portlet-title" name="lfr-portlet-language">
 
 							<%
-							Locale[] locales = LanguageUtil.getAvailableLocales();
+							Locale[] locales = LanguageUtil.getAvailableLocales(themeDisplay.getSiteGroupId());
 
 							for (int i = 0; i < locales.length; i++) {
 							%>

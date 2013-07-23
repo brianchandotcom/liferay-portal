@@ -177,7 +177,7 @@ public class JournalConverterImpl implements JournalConverter {
 
 		Element rootElement = document.getRootElement();
 
-		Locale defaultLocale = LocaleUtil.getDefault();
+		Locale defaultLocale = LocaleUtil.getSiteDefault();
 
 		rootElement.addAttribute("available-locales", defaultLocale.toString());
 		rootElement.addAttribute("default-locale", defaultLocale.toString());
@@ -741,7 +741,7 @@ public class JournalConverterImpl implements JournalConverter {
 	}
 
 	protected void updateJournalXSDDynamicElement(Element element) {
-		Locale defaultLocale = LocaleUtil.getDefault();
+		Locale defaultLocale = LocaleUtil.getSiteDefault();
 
 		String name = element.attributeValue("name");
 		String type = element.attributeValue("type");

@@ -173,7 +173,7 @@ public class LayoutLocalServiceStagingAdvice implements MethodInterceptor {
 				friendlyURLMap = new HashMap<Locale, String>();
 
 				friendlyURLMap.put(
-					LocaleUtil.getDefault(), (String)arguments[11]);
+					LocaleUtil.getSiteDefault(), (String)arguments[11]);
 			}
 			else {
 				friendlyURLMap = (Map<Locale, String>)arguments[11];
@@ -234,10 +234,10 @@ public class LayoutLocalServiceStagingAdvice implements MethodInterceptor {
 
 		parentLayoutId = layoutLocalServiceHelper.getParentLayoutId(
 			groupId, privateLayout, parentLayoutId);
-		String name = nameMap.get(LocaleUtil.getDefault());
+		String name = nameMap.get(LocaleUtil.getSiteDefault());
 		friendlyURLMap = layoutLocalServiceHelper.getFriendlyURLMap(
 			groupId, privateLayout, layoutId, StringPool.BLANK, friendlyURLMap);
-		String friendlyURL = friendlyURLMap.get(LocaleUtil.getDefault());
+		String friendlyURL = friendlyURLMap.get(LocaleUtil.getSiteDefault());
 
 		layoutLocalServiceHelper.validate(
 			groupId, privateLayout, layoutId, parentLayoutId, name, type,

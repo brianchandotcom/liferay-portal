@@ -88,7 +88,7 @@ public class LocaleTransformerListener extends BaseTransformerListener {
 			Element rootElement = document.getRootElement();
 
 			String defaultLanguageId = LocaleUtil.toLanguageId(
-				LocaleUtil.getDefault());
+				LocaleUtil.getSiteDefault());
 
 			String[] availableLocales = StringUtil.split(
 				rootElement.attributeValue(

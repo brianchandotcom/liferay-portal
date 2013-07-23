@@ -713,7 +713,7 @@ public class MBUtil {
 
 		if (priorityPair == null) {
 			String defaultLanguageId = LocaleUtil.toLanguageId(
-				LocaleUtil.getDefault());
+				LocaleUtil.getSiteDefault());
 
 			priorities = LocalizationUtil.getPreferencesValues(
 				preferences, "priorities", defaultLanguageId);

@@ -329,7 +329,7 @@ public class JournalArticleLocalServiceImpl
 
 		JournalArticle article = journalArticlePersistence.create(id);
 
-		Locale locale = LocaleUtil.getDefault();
+		Locale locale = LocaleUtil.getSiteDefault();
 
 		String defaultLanguageId = ParamUtil.getString(
 			serviceContext, "defaultLanguageId");
@@ -4425,7 +4425,7 @@ public class JournalArticleLocalServiceImpl
 			article.setSmallImageId(latestArticle.getSmallImageId());
 		}
 
-		Locale locale = LocaleUtil.getDefault();
+		Locale locale = LocaleUtil.getSiteDefault();
 
 		String defaultLanguageId = ParamUtil.getString(
 			serviceContext, "defaultLanguageId");
@@ -5534,7 +5534,9 @@ public class JournalArticleLocalServiceImpl
 
 				if (Validator.isNull(elLanguage)) {
 					defaultElLanguage =
-						"_" + LocaleUtil.toLanguageId(LocaleUtil.getDefault());
+						"_" +
+							LocaleUtil.toLanguageId(
+								LocaleUtil.getSiteDefault());
 				}
 
 				long defaultImageId =
@@ -5635,7 +5637,7 @@ public class JournalArticleLocalServiceImpl
 
 			if (Validator.isNull(elLanguage)) {
 				defaultElLanguage =
-					"_" + LocaleUtil.toLanguageId(LocaleUtil.getDefault());
+					"_" + LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault());
 			}
 
 			long defaultImageId =
@@ -6188,12 +6190,12 @@ public class JournalArticleLocalServiceImpl
 		Locale articleDefaultLocale = LocaleUtil.fromLanguageId(
 			LocalizationUtil.getDefaultLocale(content));
 
-		Locale[] availableLocales = LanguageUtil.getAvailableLocales();
+		Locale[] availableLocales = LanguageUtil.getAvailableLocales(groupId);
 
 		if (!ArrayUtil.contains(availableLocales, articleDefaultLocale)) {
 			LocaleException le = new LocaleException(
 				"The locale " + articleDefaultLocale +
-					" is not available in company " + companyId);
+					" is not available in site with groupId" + groupId);
 
 			Locale[] sourceAvailableLocales = {articleDefaultLocale};
 

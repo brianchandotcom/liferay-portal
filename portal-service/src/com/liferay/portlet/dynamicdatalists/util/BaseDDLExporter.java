@@ -59,7 +59,7 @@ public abstract class BaseDDLExporter implements DDLExporter {
 	@Override
 	public Locale getLocale() {
 		if (_locale == null) {
-			_locale = LocaleUtil.getDefault();
+			_locale = LocaleUtil.getSiteDefault();
 		}
 
 		return _locale;

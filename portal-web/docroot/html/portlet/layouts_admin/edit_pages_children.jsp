@@ -66,8 +66,7 @@ if (!StringUtil.contains(tabs4Names, tabs4)) {
 		String type = ParamUtil.getString(request, "type");
 		boolean hidden = ParamUtil.getBoolean(request, "hidden");
 
-		Locale defaultLocale = LocaleUtil.getDefault();
-		String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
+		String defaultLanguageId = LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale());
 		%>
 
 		<liferay-ui:message key="add-child-pages" />

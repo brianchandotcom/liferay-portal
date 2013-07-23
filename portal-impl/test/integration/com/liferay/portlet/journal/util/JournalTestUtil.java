@@ -101,7 +101,7 @@ public class JournalTestUtil {
 		throws Exception {
 
 		return addArticle(
-			groupId, folderId, title, title, content, LocaleUtil.getDefault(),
+			groupId, folderId, title, title, content, LocaleUtil.getSiteDefault(),
 			false, false);
 	}
 
@@ -135,7 +135,7 @@ public class JournalTestUtil {
 
 		return addArticle(
 			groupId, JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, title,
-			title, content, LocaleUtil.getDefault(), false, false);
+			title, content, LocaleUtil.getSiteDefault(), false, false);
 	}
 
 	public static JournalArticle addArticle(
@@ -155,7 +155,7 @@ public class JournalTestUtil {
 		return addArticle(
 			groupId, JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			JournalArticleConstants.CLASSNAME_ID_DEFAULT, title, title, content,
-			LocaleUtil.getDefault(), false, false, serviceContext);
+			LocaleUtil.getSiteDefault(), false, false, serviceContext);
 	}
 
 	public static JournalArticle addArticleWithWorkflow(boolean approved)
@@ -170,7 +170,7 @@ public class JournalTestUtil {
 
 		return addArticle(
 			groupId, JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, "title",
-			"content", LocaleUtil.getDefault(), true, approved);
+			"content", LocaleUtil.getSiteDefault(), true, approved);
 	}
 
 	public static JournalArticle addArticleWithWorkflow(
@@ -179,7 +179,7 @@ public class JournalTestUtil {
 		throws Exception {
 
 		return addArticle(
-			groupId, folderId, title, content, LocaleUtil.getDefault(), true,
+			groupId, folderId, title, content, LocaleUtil.getSiteDefault(), true,
 			approved);
 	}
 
@@ -189,7 +189,7 @@ public class JournalTestUtil {
 
 		return addArticle(
 			groupId, JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, title,
-			"description", "content", LocaleUtil.getDefault(), true, approved);
+			"description", "content", LocaleUtil.getSiteDefault(), true, approved);
 	}
 
 	public static JournalArticle addArticleWithWorkflow(
@@ -200,7 +200,7 @@ public class JournalTestUtil {
 		return addArticle(
 			serviceContext.getScopeGroupId(), parentFolderId,
 			JournalArticleConstants.CLASSNAME_ID_DEFAULT, title, "description",
-			"content", LocaleUtil.getDefault(), true, approved, serviceContext);
+			"content", LocaleUtil.getSiteDefault(), true, approved, serviceContext);
 	}
 
 	public static JournalArticle addArticleWithWorkflow(
@@ -209,7 +209,7 @@ public class JournalTestUtil {
 
 		return addArticle(
 			groupId, JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, title,
-			title, content, LocaleUtil.getDefault(), true, approved);
+			title, content, LocaleUtil.getSiteDefault(), true, approved);
 	}
 
 	public static JournalArticle addArticleWithWorkflow(
@@ -235,7 +235,7 @@ public class JournalTestUtil {
 		return addArticle(
 			TestPropsValues.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, title, title,
-			content, LocaleUtil.getDefault(), true, approved);
+			content, LocaleUtil.getSiteDefault(), true, approved);
 	}
 
 	public static JournalArticle addArticleWithXMLContent(
@@ -245,7 +245,7 @@ public class JournalTestUtil {
 
 		return addArticleWithXMLContent(
 			groupId, folderId, classNameId, xml, ddmStructureKey,
-			ddmTemplateKey, LocaleUtil.getDefault());
+			ddmTemplateKey, LocaleUtil.getSiteDefault());
 	}
 
 	public static JournalArticle addArticleWithXMLContent(
@@ -287,7 +287,7 @@ public class JournalTestUtil {
 		return addArticleWithXMLContent(
 			groupId, JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			JournalArticleConstants.CLASSNAME_ID_DEFAULT, xml, ddmStructureKey,
-			ddmTemplateKey, LocaleUtil.getDefault());
+			ddmTemplateKey, LocaleUtil.getSiteDefault());
 	}
 
 	public static JournalArticle addArticleWithXMLContent(
@@ -298,7 +298,7 @@ public class JournalTestUtil {
 		return addArticleWithXMLContent(
 			serviceContext.getScopeGroupId(), parentFolderId,
 			JournalArticleConstants.CLASSNAME_ID_DEFAULT, xml, ddmStructureKey,
-			ddmTemplateKey, LocaleUtil.getDefault());
+			ddmTemplateKey, LocaleUtil.getSiteDefault());
 	}
 
 	public static JournalArticle addArticleWithXMLContent(
@@ -309,7 +309,7 @@ public class JournalTestUtil {
 			TestPropsValues.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			JournalArticleConstants.CLASSNAME_ID_DEFAULT, xml, ddmStructureKey,
-			ddmTemplateKey, LocaleUtil.getDefault());
+			ddmTemplateKey, LocaleUtil.getSiteDefault());
 	}
 
 	public static JournalArticle addArticleWithXMLContent(
@@ -525,7 +525,7 @@ public class JournalTestUtil {
 			article.getUserId(), article.getGroupId(), article.getFolderId(),
 			article.getArticleId(), article.getVersion(), titleMap,
 			article.getDescriptionMap(),
-			createLocalizedContent(content, LocaleUtil.getDefault()),
+			createLocalizedContent(content, LocaleUtil.getSiteDefault()),
 			article.getLayoutUuid(), serviceContext);
 	}
 

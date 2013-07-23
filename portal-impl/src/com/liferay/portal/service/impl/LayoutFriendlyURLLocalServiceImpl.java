@@ -92,7 +92,7 @@ public class LayoutFriendlyURLLocalServiceImpl
 		List<LayoutFriendlyURL> layoutFriendlyURLs =
 			new ArrayList<LayoutFriendlyURL>();
 
-		Locale[] locales = LanguageUtil.getAvailableLocales();
+		Locale[] locales = LanguageUtil.getAvailableLocales(groupId);
 
 		for (Locale locale : locales) {
 			String friendlyURL = friendlyURLMap.get(locale);
@@ -182,7 +182,7 @@ public class LayoutFriendlyURLLocalServiceImpl
 
 		if (layoutFriendlyURL == null) {
 			layoutFriendlyURL = layoutFriendlyURLPersistence.fetchByP_L(
-				plid, LocaleUtil.toLanguageId(LocaleUtil.getDefault()));
+				plid, LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()));
 		}
 
 		if (layoutFriendlyURL == null) {
@@ -214,7 +214,7 @@ public class LayoutFriendlyURLLocalServiceImpl
 
 		if (layoutFriendlyURL == null) {
 			layoutFriendlyURL = layoutFriendlyURLPersistence.fetchByP_L(
-				plid, LocaleUtil.toLanguageId(LocaleUtil.getDefault()));
+				plid, LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault()));
 		}
 
 		if (layoutFriendlyURL == null) {
@@ -272,7 +272,7 @@ public class LayoutFriendlyURLLocalServiceImpl
 		List<LayoutFriendlyURL> layoutFriendlyURLs =
 			new ArrayList<LayoutFriendlyURL>();
 
-		Locale[] locales = LanguageUtil.getAvailableLocales();
+		Locale[] locales = LanguageUtil.getAvailableLocales(groupId);
 
 		for (Locale locale : locales) {
 			String friendlyURL = friendlyURLMap.get(locale);

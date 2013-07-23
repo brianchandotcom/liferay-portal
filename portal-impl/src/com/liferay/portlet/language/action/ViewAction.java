@@ -75,7 +75,7 @@ public class ViewAction extends PortletAction {
 		Locale locale = LocaleUtil.fromLanguageId(languageId);
 
 		List<Locale> availableLocales = ListUtil.fromArray(
-			LanguageUtil.getAvailableLocales());
+			LanguageUtil.getAvailableLocales(themeDisplay.getSiteGroupId()));
 
 		if (availableLocales.contains(locale)) {
 			if (themeDisplay.isSignedIn()) {

@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
@@ -73,12 +72,9 @@ public class JournalRSSRenderer extends DefaultRSSRenderer {
 	public JournalRSSRenderer(
 		ResourceRequest resourceRequest, ResourceResponse resourceResponse) {
 
-		super(PortalUtil.getHttpServletRequest(resourceRequest));
+		super(resourceRequest);
 
-		_resourceRequest = resourceRequest;
 		_resourceResponse = resourceResponse;
-		_themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
 	}
 
 	@Override
@@ -115,12 +111,12 @@ public class JournalRSSRenderer extends DefaultRSSRenderer {
 
 		JournalFeed feed = getJournalFeed();
 
-		String languageId = LanguageUtil.getLanguageId(_resourceRequest);
+		String languageId = LanguageUtil.getLanguageId(request);
 
 		long plid = PortalUtil.getPlidFromFriendlyURL(
-			_themeDisplay.getCompanyId(), feed.getTargetLayoutFriendlyUrl());
+			themeDisplay.getCompanyId(), feed.getTargetLayoutFriendlyUrl());
 
-		Layout layout = _themeDisplay.getLayout();
+		Layout layout = themeDisplay.getLayout();
 
 		if (plid > 0) {
 			try {
@@ -153,7 +149,7 @@ public class JournalRSSRenderer extends DefaultRSSRenderer {
 			try {
 				value =
 					processContent(
-						feed, article, languageId, _themeDisplay, syndEntry,
+						feed, article, languageId, themeDisplay, syndEntry,
 						syndContent);
 			}
 			catch (DocumentException e) {
@@ -165,7 +161,7 @@ public class JournalRSSRenderer extends DefaultRSSRenderer {
 			syndEntry.setDescription(syndContent);
 
 			String link;
-			link = getEntryURL(feed, article, layout, _themeDisplay);
+			link = getEntryURL(feed, article, layout, themeDisplay);
 
 			syndEntry.setLink(link);
 
@@ -208,7 +204,7 @@ public class JournalRSSRenderer extends DefaultRSSRenderer {
 			}
 
 			PortletURL entryURL = new PortletURLImpl(
-				_resourceRequest, portletId, plid, PortletRequest.RENDER_PHASE);
+				request, portletId, plid, PortletRequest.RENDER_PHASE);
 
 			entryURL.setParameter("struts_action", "/journal_content/view");
 			entryURL.setParameter(
@@ -222,17 +218,17 @@ public class JournalRSSRenderer extends DefaultRSSRenderer {
 	protected JournalFeed getJournalFeed()
 		throws PortalException, SystemException {
 
-		JournalFeed feed = (JournalFeed) _resourceRequest.getAttribute(
+		JournalFeed feed = (JournalFeed) request.getAttribute(
 			"rssJournalFeed");
 
 		if (feed != null) {
 			return feed;
 		}
 
-		long id = ParamUtil.getLong(_resourceRequest, "id");
+		long id = ParamUtil.getLong(request, "id");
 
-		long groupId = ParamUtil.getLong(_resourceRequest, "groupId");
-		String feedId = ParamUtil.getString(_resourceRequest, "feedId");
+		long groupId = ParamUtil.getLong(request, "groupId");
+		String feedId = ParamUtil.getString(request, "feedId");
 
 		if (id > 0) {
 			feed = JournalFeedLocalServiceUtil.getFeed(id);
@@ -241,7 +237,7 @@ public class JournalRSSRenderer extends DefaultRSSRenderer {
 			feed = JournalFeedLocalServiceUtil.getFeed(groupId, feedId);
 		}
 
-		_resourceRequest.setAttribute("rssJournalFeed", feed);
+		request.setAttribute("rssJournalFeed", feed);
 
 		return feed;
 	}
@@ -360,8 +356,6 @@ public class JournalRSSRenderer extends DefaultRSSRenderer {
 
 	private static Log _log = LogFactoryUtil.getLog(JournalRSSRenderer.class);
 
-	private ResourceRequest _resourceRequest;
 	private ResourceResponse _resourceResponse;
-	private ThemeDisplay _themeDisplay;
 
 }

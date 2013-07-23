@@ -25,10 +25,8 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.rss.DefaultRSSRenderer;
 import com.liferay.portlet.social.model.SocialActivity;
 import com.liferay.portlet.social.model.SocialActivityFeedEntry;
@@ -45,7 +43,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import javax.portlet.PortletRequest;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
@@ -59,22 +56,18 @@ public class ActivitiesRSSRenderer extends DefaultRSSRenderer {
 	public ActivitiesRSSRenderer(
 		ResourceRequest resourceRequest, ResourceResponse resourceResponse) {
 
-		super(PortalUtil.getHttpServletRequest(resourceRequest));
-
-		_resourceRequest = resourceRequest;
-		_themeDisplay = (ThemeDisplay)_resourceRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		super(resourceRequest);
 	}
 
 	@Override
 	public String getFeedURL() throws PortalException, SystemException {
-		return PortalUtil.getLayoutFullURL(_themeDisplay) +
+		return PortalUtil.getLayoutFullURL(themeDisplay) +
 			Portal.FRIENDLY_URL_SEPARATOR + "activities/rss";
 	}
 
 	@Override
 	public String getRSSName() {
-		return ParamUtil.getString(_resourceRequest, "feedTitle");
+		return ParamUtil.getString(request, "feedTitle");
 	}
 
 	@Override
@@ -82,13 +75,12 @@ public class ActivitiesRSSRenderer extends DefaultRSSRenderer {
 		throws PortalException, SystemException {
 
 		String displayStyle = ParamUtil.getString(
-			_resourceRequest, "displayStyle", RSSUtil.DISPLAY_STYLE_DEFAULT);
-
+			request, "displayStyle", RSSUtil.DISPLAY_STYLE_DEFAULT);
 		int max = ParamUtil.getInteger(
-			_resourceRequest, "max", SearchContainer.DEFAULT_DELTA);
+			request, "max", SearchContainer.DEFAULT_DELTA);
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			_resourceRequest);
+			request);
 
 		for (SocialActivity activity : getActivities(max)) {
 			SocialActivityFeedEntry activityFeedEntry =
@@ -136,7 +128,7 @@ public class ActivitiesRSSRenderer extends DefaultRSSRenderer {
 		throws PortalException, SystemException {
 
 		Group group = GroupLocalServiceUtil.getGroup(
-			_themeDisplay.getScopeGroupId());
+			themeDisplay.getScopeGroupId());
 
 		if (group.isOrganization()) {
 			return SocialActivityLocalServiceUtil.getOrganizationActivities(
@@ -152,9 +144,6 @@ public class ActivitiesRSSRenderer extends DefaultRSSRenderer {
 		}
 
 		return Collections.emptyList();
-}
-
-	private PortletRequest _resourceRequest;
-	private ThemeDisplay _themeDisplay;
+	}
 
 }

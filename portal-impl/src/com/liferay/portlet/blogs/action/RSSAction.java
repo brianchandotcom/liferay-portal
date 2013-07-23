@@ -61,13 +61,12 @@ public class RSSAction extends DefaultRSSAction {
 		List<BlogsEntry> blogsEntries = Collections.emptyList();
 
 		if (companyId > 0) {
-			blogsEntries =
-				BlogsEntryServiceUtil.getCompanyEntries(
-					companyId, new Date(), status, max);
+			blogsEntries = BlogsEntryServiceUtil.getCompanyEntries(
+				companyId, new Date(), status, max);
+
 			return new BlogsCompanyRSSRenderer(
 				CompanyLocalServiceUtil.getCompany(companyId), blogsEntries,
 				request);
-
 		}
 		else if (groupId > 0) {
 			blogsEntries = BlogsEntryServiceUtil.getGroupEntries(

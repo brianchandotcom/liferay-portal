@@ -259,6 +259,7 @@ if (inlineEdit && (inlineEditSaveURL != null)) {
 				{
 					editor: ckEditor,
 					editorName: '<%= name %>',
+					namespace: '<portlet:namespace />',
 					saveURL: '<%= inlineEditSaveURL %>'
 				}
 			);

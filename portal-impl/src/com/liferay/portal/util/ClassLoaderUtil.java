@@ -159,6 +159,8 @@ public class ClassLoaderUtil {
 			PluginContextListener.PLUGIN_CLASS_LOADER);
 	}
 
+	private static PACL _pacl = new NoPACL();
+
 	public static class NoPACL implements PACL {
 
 		public ClassLoader getAggregatePluginsClassLoader(

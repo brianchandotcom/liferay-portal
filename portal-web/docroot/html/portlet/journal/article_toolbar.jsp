@@ -80,9 +80,33 @@ if ((article != null) && article.isDraft()) {
 								return false;
 							}
 
-							form.one('#<portlet:namespace /><%= Constants.CMD %>').val('<%= Constants.PREVIEW %>');
+							var hasStructure = window.<portlet:namespace />journalPortlet.hasStructure();
+							var hasTemplate = window.<portlet:namespace />journalPortlet.hasTemplate();
+							var updateStructureDefaultValues = window.<portlet:namespace />journalPortlet.updateStructureDefaultValues();
 
-							submitForm(form);
+							if (hasStructure && !hasTemplate && !updateStructureDefaultValues) {
+								var templateMessage = Liferay.Language.get('please-add-a-template-to-render-this-structure');
+
+								alert(templateMessage);
+
+								window.<portlet:namespace />journalPortlet.showMessage(
+									'#selectTemplateMessage',
+									'info',
+									templateMessage,
+									30000
+								);
+
+								var selectTemplateButton = A.one('#selectTemplateButton');
+
+								if (selectTemplateButton) {
+									selectTemplateButton.focus();
+								}
+							}
+							else {
+								form.one('#<portlet:namespace /><%= Constants.CMD %>').val('<%= Constants.PREVIEW %>');
+
+								submitForm(form);
+							}
 						}
 					}
 				}

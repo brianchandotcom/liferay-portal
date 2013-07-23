@@ -371,32 +371,29 @@ public class SeleniumBuilderContext {
 
 		List<Element> trElements = tbodyElement.elements();
 
-		String extendedPathName = "";
+		String pathName = "";
 
 		for (Element trElement : trElements) {
 			List<Element> tdElements = trElement.elements("td");
 
-			Element pathLocatorElement = tdElements.get(0);
+			Element pathLocatorElement = tdElements.get(1);
+			Element pathLocatorKeyElement = tdElements.get(0);
 
-			String pathLocatorKey = pathLocatorElement.getText();
+			String pathLocatorKey = pathLocatorKeyElement.getText();
 
 			if (pathLocatorKey.equals(locatorKey)) {
-				Element pathValueElement = tdElements.get(1);
-
-				return pathValueElement.getText();
+				return pathLocatorElement.getText();
 			}
 
 			if (pathLocatorKey.equals("EXTEND_ACTION_PATH")) {
-				Element pathNameElement = tdElements.get(1);
-
-				extendedPathName = pathNameElement.getText();
+				pathName = pathLocatorElement.getText();
 			}
 		}
 
-		if (Validator.isNotNull(extendedPathName)) {
-			Element extendedPathElement = getPathRootElement(extendedPathName);
+		if (Validator.isNotNull(pathName)) {
+			Element pathRootElement = getPathRootElement(pathName);
 
-			return getPath(extendedPathElement, locatorKey);
+			return getPath(pathRootElement, locatorKey);
 		}
 
 		return locatorKey;
@@ -428,19 +425,18 @@ public class SeleniumBuilderContext {
 		for (Element trElement : trElements) {
 			List<Element> tdElements = trElement.elements("td");
 
-			Element pathLocatorElement = tdElements.get(0);
+			Element pathLocatorKeyElement = tdElements.get(0);
 
-			String pathLocatorKey = pathLocatorElement.getText();
+			String pathLocatorKey = pathLocatorKeyElement.getText();
 
 			if (pathLocatorKey.equals("EXTEND_ACTION_PATH")) {
-				Element pathNameElement = tdElements.get(1);
+				Element pathLocatorElement = tdElements.get(1);
 
-				String extendedPathName = pathNameElement.getText();
+				String pathName = pathLocatorElement.getText();
 
-				Element extendedPathElement = getPathRootElement(
-					extendedPathName);
+				Element pathRootElement = getPathRootElement(pathName);
 
-				pathLocatorKeys.addAll(getPathLocatorKeys(extendedPathElement));
+				pathLocatorKeys.addAll(getPathLocatorKeys(pathRootElement));
 			}
 			else {
 				pathLocatorKeys.add(pathLocatorKey);
@@ -783,8 +779,8 @@ public class SeleniumBuilderContext {
 			_seleniumBuilderFileUtil.getAllChildElements(rootElement, "var");
 
 		for (Element varElement : varElements) {
-			String varPath = varElement.attributeValue("path");
 			String varLocatorKey = varElement.attributeValue("locator-key");
+			String varPath = varElement.attributeValue("path");
 
 			if (Validator.isNotNull(varLocatorKey) &&
 				Validator.isNotNull(varPath)) {

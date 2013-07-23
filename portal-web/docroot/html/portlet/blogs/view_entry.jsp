@@ -45,7 +45,7 @@ BlogsEntry entry = (BlogsEntry)request.getAttribute(WebKeys.BLOGS_ENTRY);
 
 long entryId = BeanParamUtil.getLong(entry, request, "entryId");
 
-pageDisplayStyle = BlogsUtil.DISPLAY_STYLE_FULL_CONTENT;
+displayStyle = BlogsUtil.DISPLAY_STYLE_FULL_CONTENT;
 
 AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(BlogsEntry.class.getName(), entry.getEntryId());
 

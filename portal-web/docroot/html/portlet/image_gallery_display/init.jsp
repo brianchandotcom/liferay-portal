@@ -84,7 +84,7 @@ boolean showTabs = PrefsParamUtil.getBoolean(portletPreferences, request, "showT
 boolean enableRatings = GetterUtil.getBoolean(portletPreferences.getValue("enableRatings", null), true);
 boolean enableCommentRatings = GetterUtil.getBoolean(portletPreferences.getValue("enableCommentRatings", null), true);
 
-String displayTemplate = portletPreferences.getValue("displayTemplate", StringPool.BLANK);
+String displayStyle = portletPreferences.getValue("displayStyle", StringPool.BLANK);
 
 Format dateFormatDate = FastDateFormatFactoryUtil.getDate(locale, timeZone);
 %>

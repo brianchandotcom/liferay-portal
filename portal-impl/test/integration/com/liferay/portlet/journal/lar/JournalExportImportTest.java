@@ -280,4 +280,11 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 		return article.getArticleResourceUuid();
 	}
 
+	@Override
+	protected void testExportImportDisplayStyle(long groupId, String scopeType)
+		throws Exception {
+
+		Assert.assertTrue("This test does not apply", true);
+	}
+
 }

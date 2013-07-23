@@ -77,24 +77,23 @@ public class LayoutStagingBackgroundTaskExecutor
 
 		backgroundTaskStatus.clearAttributes();
 
-		File larFile = null;
+		File file = null;
 		MissingReferences missingReferences = null;
 
 		try {
-			larFile = LayoutLocalServiceUtil.exportLayoutsAsFile(
+			file = LayoutLocalServiceUtil.exportLayoutsAsFile(
 				sourceGroupId, privateLayout, layoutIds, parameterMap,
 				startDate, endDate);
 
 			missingReferences =
 				LayoutLocalServiceUtil.validateImportLayoutsFile(
-					userId, targetGroupId, privateLayout, parameterMap,
-					larFile);
+					userId, targetGroupId, privateLayout, parameterMap, file);
 
 			LayoutLocalServiceUtil.importLayouts(
-				userId, targetGroupId, privateLayout, parameterMap, larFile);
+				userId, targetGroupId, privateLayout, parameterMap, file);
 		}
 		finally {
-			FileUtil.delete(larFile);
+			FileUtil.delete(file);
 
 			StagingUtil.unlockGroup(targetGroupId);
 		}

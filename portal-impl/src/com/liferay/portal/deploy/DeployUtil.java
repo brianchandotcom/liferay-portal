@@ -123,7 +123,7 @@ public class DeployUtil {
 	}
 
 	public static void redeployJetty(String context) throws Exception {
-		String contextsDirName = System.getProperty("jetty.home") + "/contexts";
+		String contextsDirName = System.getProperty("jetty.home") + "/webapps";
 
 		if (_isPortalContext(context)) {
 			throw new UnsupportedOperationException(
@@ -216,7 +216,7 @@ public class DeployUtil {
 
 		if (appServerType.equals(ServerDetector.JETTY_ID)) {
 			FileUtil.delete(
-				System.getProperty("jetty.home") + "/contexts/" +
+				System.getProperty("jetty.home") + "/webapps/" +
 					deployDir.getName() + ".xml");
 		}
 

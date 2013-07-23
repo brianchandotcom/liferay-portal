@@ -87,6 +87,7 @@
 		<reference package-path="com.liferay.portal" entity="Group" />
 		<reference package-path="com.liferay.portal" entity="Organization" />
 		<reference package-path="com.liferay.portal" entity="Role" />
+		<reference package-path="com.liferay.portal" entity="Team" />
 		<reference package-path="com.liferay.portal" entity="UserGroup" />
 	</entity>
 	<entity name="AnnouncementsFlag" local-service="true" remote-service="true">

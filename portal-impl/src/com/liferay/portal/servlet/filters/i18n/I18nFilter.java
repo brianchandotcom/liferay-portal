@@ -116,7 +116,7 @@ public class I18nFilter extends BasePortalFilter {
 			return null;
 		}
 
-		i18nLanguageId = prependI18nLanguage(request, i18nLanguageId);
+		i18nLanguageId = prependI18nLanguageId(request, i18nLanguageId);
 
 		if (i18nLanguageId == null) {
 			return null;
@@ -189,7 +189,7 @@ public class I18nFilter extends BasePortalFilter {
 		}
 	}
 
-	protected String prependI18nLanguage(
+	protected String prependI18nLanguageId(
 		HttpServletRequest request, String i18nLanguageId) {
 
 		String userLanguageId = null;

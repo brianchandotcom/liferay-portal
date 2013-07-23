@@ -58,6 +58,6 @@ MDRRuleGroup mdrRuleGroup = MDRRuleGroupLocalServiceUtil.getMDRRuleGroup(mdrRule
 			<portlet:param name="ruleGroupInstanceId" value="<%= String.valueOf(mdrRuleGroupInstance.getRuleGroupInstanceId()) %>" />
 		</liferay-portlet:actionURL>
 
-		<liferay-ui:icon-deactivate url="<%= deleteURL %>" />
+		<liferay-ui:icon-delete url="<%= deleteURL %>" />
 	</c:if>
 </liferay-ui:icon-menu>

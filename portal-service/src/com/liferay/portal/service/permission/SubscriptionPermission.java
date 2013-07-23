@@ -20,15 +20,20 @@ import com.liferay.portal.security.permission.PermissionChecker;
 
 /**
  * @author Mate Thurzo
+ * @author Raymond Augé
  */
 public interface SubscriptionPermission {
 
 	public void check(
-			PermissionChecker permissionChecker, String className, long classPK)
+			PermissionChecker permissionChecker, String subscriptionClassName,
+			long subscriptionClassPK, String inferredClassName,
+			long inferredClassPK)
 		throws PortalException, SystemException;
 
 	public boolean contains(
-			PermissionChecker permissionChecker, String className, long classPK)
+			PermissionChecker permissionChecker, String subscriptionClassName,
+			long subscriptionClassPK, String inferredClassName,
+			long inferredClassPK)
 		throws PortalException, SystemException;
 
 }

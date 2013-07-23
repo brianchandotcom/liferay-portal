@@ -21,23 +21,30 @@ import com.liferay.portal.security.permission.PermissionChecker;
 
 /**
  * @author Mate Thurzo
+ * @author Raymond Augé
  */
 public class SubscriptionPermissionUtil {
 
 	public static void check(
-			PermissionChecker permissionChecker, String className, long classPK)
+			PermissionChecker permissionChecker, String subscriptionClassName,
+			long subscriptionClassPK, String inferredClassName,
+			long inferredClassPK)
 		throws PortalException, SystemException {
 
 		getSubscriptionPermission().check(
-			permissionChecker, className, classPK);
+			permissionChecker, subscriptionClassName, subscriptionClassPK,
+			inferredClassName, inferredClassPK);
 	}
 
 	public static boolean contains(
-			PermissionChecker permissionChecker, String className, long classPK)
+			PermissionChecker permissionChecker, String subscriptionClassName,
+			long subscriptionClassPK, String inferredClassName,
+			long inferredClassPK)
 		throws PortalException, SystemException {
 
 		return getSubscriptionPermission().contains(
-			permissionChecker, className, classPK);
+			permissionChecker, subscriptionClassName, subscriptionClassPK,
+			inferredClassName, inferredClassPK);
 	}
 
 	public static SubscriptionPermission getSubscriptionPermission() {

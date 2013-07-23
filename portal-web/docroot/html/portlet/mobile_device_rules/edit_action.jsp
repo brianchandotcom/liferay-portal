@@ -124,8 +124,8 @@ else {
 				'<%= siteURLLayoutsURL.toString() %>',
 				{
 					data: {
-						actionGroupId: document.<portlet:namespace />fm.<portlet:namespace />groupId.value,
-						actionPlid: document.<portlet:namespace />fm.<portlet:namespace />actionPlid.value
+						<portlet:namespace />actionGroupId: document.<portlet:namespace />fm.<portlet:namespace />groupId.value,
+						<portlet:namespace />actionPlid: document.<portlet:namespace />fm.<portlet:namespace />actionPlid.value
 					},
 					on: {
 						success: function(id, obj) {
@@ -156,8 +156,8 @@ else {
 				'<%= editorURL.toString() %>',
 				{
 					data: {
-						type: document.<portlet:namespace />fm.<portlet:namespace />type.value,
-						<%= "actionId" %>: <%= actionId %>
+						<portlet:namespace />type: document.<portlet:namespace />fm.<portlet:namespace />type.value,
+						<portlet:namespace /><%= "actionId" %>: <%= actionId %>
 					},
 					on: {
 						success: function(id, obj) {

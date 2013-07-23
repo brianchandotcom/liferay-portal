@@ -335,11 +335,17 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 	}
 
 	@Override
-	public boolean isRestorable(long classPK) throws SystemException {
-		MBCategory category = MBCategoryLocalServiceUtil.fetchMBCategory(
-			classPK);
+	public boolean isRestorable(long classPK)
+		throws PortalException, SystemException {
 
-		if (category == null) {
+		MBCategory category = MBCategoryLocalServiceUtil.getCategory(classPK);
+
+		long parentCategoryId = category.getParentCategoryId();
+
+		if ((parentCategoryId > 0) &&
+			(MBCategoryLocalServiceUtil.fetchMBCategory(parentCategoryId) ==
+				null)) {
+
 			return false;
 		}
 

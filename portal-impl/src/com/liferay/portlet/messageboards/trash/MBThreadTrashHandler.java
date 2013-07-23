@@ -203,10 +203,16 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 	}
 
 	@Override
-	public boolean isRestorable(long classPK) throws SystemException {
-		MBThread thread = MBThreadLocalServiceUtil.fetchThread(classPK);
+	public boolean isRestorable(long classPK)
+		throws PortalException, SystemException {
 
-		if (thread == null) {
+		MBThread thread = MBThreadLocalServiceUtil.getThread(classPK);
+
+		long categoryId = thread.getCategoryId();
+
+		if ((categoryId > 0) &&
+			(MBCategoryLocalServiceUtil.fetchMBCategory(categoryId) == null)) {
+
 			return false;
 		}
 

@@ -497,29 +497,89 @@ public class PortalSecurityManagerImpl extends SecurityManager
 			final String[] servletContextNames,
 			final boolean addContextClassLoader) {
 
-			return null;
+			return AccessController.doPrivileged(
+				new PrivilegedAction<ClassLoader> () {
+
+					@Override
+					public ClassLoader run() {
+						return _noPacl.getAggregatePluginsClassLoader(
+							servletContextNames, addContextClassLoader);
+					}
+
+				}
+			);
 		}
 
 		public ClassLoader getClassLoader(final Class<?> clazz) {
-			return null;
+			return AccessController.doPrivileged(
+				new PrivilegedAction<ClassLoader>() {
+
+					@Override
+					public ClassLoader run() {
+						return _noPacl.getClassLoader(clazz);
+					}
+
+				}
+			);
 		}
 
 		public ClassLoader getContextClassLoader() {
-			return null;
+			return AccessController.doPrivileged(
+				new PrivilegedAction<ClassLoader>() {
+
+					@Override
+					public ClassLoader run() {
+						return _noPacl.getContextClassLoader();
+					}
+
+				}
+			);
 		}
 
 		public ClassLoader getPluginClassLoader(
 			final String servletContextName) {
 
-			return null;
+			return AccessController.doPrivileged(
+				new PrivilegedAction<ClassLoader> () {
+
+					@Override
+					public ClassLoader run() {
+						return _noPacl.getPluginClassLoader(servletContextName);
+					}
+
+				}
+			);
 		}
 
 		public ClassLoader getPortalClassLoader() {
-			return null;
+			return AccessController.doPrivileged(
+				new PrivilegedAction<ClassLoader>() {
+
+					@Override
+					public ClassLoader run() {
+						return _noPacl.getPortalClassLoader();
+					}
+
+				}
+			);
 		}
 
 		public void setContextClassLoader(final ClassLoader classLoader) {
+			AccessController.doPrivileged(
+				new PrivilegedAction<Void>() {
+
+					@Override
+					public Void run() {
+						_noPacl.setContextClassLoader(classLoader);
+
+						return null;
+					}
+
+				}
+			);
 		}
+
+		private ClassLoaderUtil.PACL _noPacl = new ClassLoaderUtil.NoPACL();
 
 	}
 

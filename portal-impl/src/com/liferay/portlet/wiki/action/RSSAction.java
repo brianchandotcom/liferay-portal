@@ -33,7 +33,7 @@ import javax.servlet.http.HttpServletRequest;
 public class RSSAction extends DefaultRSSAction {
 
 	@Override
-	protected RSSRenderer createRSSRenderer(HttpServletRequest request)
+	protected RSSRenderer getRSSRenderer(HttpServletRequest request)
 		throws Exception {
 
 		long nodeId = ParamUtil.getLong(request, "nodeId");

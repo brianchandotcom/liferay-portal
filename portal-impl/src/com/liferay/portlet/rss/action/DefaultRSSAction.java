@@ -43,23 +43,23 @@ import javax.servlet.http.HttpServletRequest;
  */
 public abstract class DefaultRSSAction extends RSSAction {
 
-	protected RSSRenderer createRSSRenderer(HttpServletRequest request)
+	protected RSSRenderer getRSSRenderer(HttpServletRequest request)
 		throws Exception {
 			throw new UnsupportedOperationException();
 	}
 
-	protected RSSRenderer createRSSRenderer(
+	protected RSSRenderer getRSSRenderer(
 			ResourceRequest portletRequest, ResourceResponse portletResponse)
 		throws Exception {
 
-		return createRSSRenderer(
+		return getRSSRenderer(
 			PortalUtil.getHttpServletRequest(portletRequest));
 	}
 
 	@Override
 	protected byte[] getRSS(HttpServletRequest request) throws Exception {
 		return exportToRSS(
-			createRSSRenderer(request)).getBytes(StringPool.UTF8);
+			getRSSRenderer(request)).getBytes(StringPool.UTF8);
 	}
 
 	@Override
@@ -68,7 +68,7 @@ public abstract class DefaultRSSAction extends RSSAction {
 		throws Exception {
 
 		return exportToRSS(
-			createRSSRenderer(
+			getRSSRenderer(
 				resourceRequest, resourceResponse)).getBytes(StringPool.UTF8);
 	}
 

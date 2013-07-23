@@ -143,7 +143,6 @@ request.setAttribute("view_entry_content.jsp-assetEntry", assetEntry);
 				formName="fm2"
 				ratingsEnabled="<%= enableCommentRatings %>"
 				redirect="<%= currentURL %>"
-				subject="<%= entry.getTitle() %>"
 				userId="<%= entry.getUserId() %>"
 			/>
 		</liferay-ui:panel>

@@ -288,7 +288,6 @@ request.setAttribute(WebKeys.WORKFLOW_ASSET_PREVIEW, Boolean.TRUE);
 					formName="fm1"
 					ratingsEnabled="<%= false %>"
 					redirect="<%= currentURL %>"
-					subject="<%= LanguageUtil.get(pageContext, workflowTask.getName()) %>"
 					userId="<%= user.getUserId() %>"
 				/>
 			</liferay-ui:panel>

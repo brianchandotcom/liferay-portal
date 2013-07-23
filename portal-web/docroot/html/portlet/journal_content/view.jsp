@@ -418,7 +418,6 @@ boolean showIconsActions = themeDisplay.isSignedIn() && !layout.isLayoutPrototyp
 			hideControls="<%= print %>"
 			ratingsEnabled="<%= enableCommentRatings && !print %>"
 			redirect="<%= currentURL %>"
-			subject="<%= articleDisplay.getTitle() %>"
 			userId="<%= articleDisplay.getUserId() %>"
 		/>
 	</c:if>

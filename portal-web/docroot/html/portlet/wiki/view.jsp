@@ -371,7 +371,6 @@ long portletDisplayDDMTemplateId = PortletDisplayTemplateUtil.getPortletDisplayT
 							formName="fm2"
 							ratingsEnabled="<%= enableCommentRatings %>"
 							redirect="<%= currentURL %>"
-							subject="<%= wikiPage.getTitle() %>"
 							userId="<%= wikiPage.getUserId() %>"
 						/>
 					</liferay-ui:panel>

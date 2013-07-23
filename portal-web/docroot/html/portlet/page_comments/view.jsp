@@ -27,7 +27,6 @@
 		formAction="<%= discussionURL %>"
 		formName="fm"
 		redirect="<%= currentURL %>"
-		subject="<%= layout.getName(locale) %>"
 		userId="<%= user.getUserId() %>"
 	/>
 </c:if>

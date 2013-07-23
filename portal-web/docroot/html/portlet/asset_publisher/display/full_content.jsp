@@ -234,7 +234,6 @@ request.setAttribute("view.jsp-showIconLabel", true);
 				formName='<%= "fm" + assetEntry.getClassPK() %>'
 				ratingsEnabled="<%= enableCommentRatings %>"
 				redirect="<%= currentURL %>"
-				subject="<%= assetRenderer.getTitle(locale) %>"
 				userId="<%= assetRenderer.getUserId() %>"
 			/>
 		</c:if>

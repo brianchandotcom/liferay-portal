@@ -27,24 +27,30 @@ import com.sun.syndication.feed.synd.SyndEntry;
 import java.util.Date;
 import java.util.List;
 
+import javax.portlet.ResourceRequest;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * @author Carlos Sierra Andrés
+ * @author Carlos Sierra Andrï¿½s
  * @author Julio Camarero
  * @author Brian Wing Shun Chan
  */
 public abstract class DefaultRSSRenderer implements RSSRenderer {
 
 	public DefaultRSSRenderer(HttpServletRequest request) {
-		_request = request;
-		_themeDisplay = (ThemeDisplay)request.getAttribute(
+		this.request = request;
+
+		themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
+	}
+
+	public DefaultRSSRenderer(ResourceRequest resourceRequest) {
+		this(PortalUtil.getHttpServletRequest(resourceRequest));
 	}
 
 	@Override
 	public String getAlternateURL() throws PortalException, SystemException {
-		return PortalUtil.getLayoutFullURL(_themeDisplay);
+		return PortalUtil.getLayoutFullURL(themeDisplay);
 	}
 
 	@Override
@@ -82,7 +88,7 @@ public abstract class DefaultRSSRenderer implements RSSRenderer {
 	 * @throws SystemException
 	 */
 	protected String getRSSFormat() throws PortalException, SystemException {
-		return ParamUtil.getString(_request, "type", RSSUtil.FORMAT_DEFAULT);
+		return ParamUtil.getString(request, "type", RSSUtil.FORMAT_DEFAULT);
 	}
 
 	/**
@@ -91,10 +97,10 @@ public abstract class DefaultRSSRenderer implements RSSRenderer {
 	 */
 	protected double getRSSVersion() throws PortalException, SystemException {
 		return ParamUtil.getDouble(
-			_request, "version", RSSUtil.VERSION_DEFAULT);
+			request, "version", RSSUtil.VERSION_DEFAULT);
 	}
 
-	private HttpServletRequest _request;
-	private ThemeDisplay _themeDisplay;
+	protected HttpServletRequest request;
+	protected ThemeDisplay themeDisplay;
 
 }

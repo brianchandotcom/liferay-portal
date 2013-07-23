@@ -47,35 +47,36 @@ import java.util.List;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 
 /**
- * @author Carlos Sierra Andrés
+ * @author Carlos Sierra Andrï¿½s
  * @author Julio Camarero
  * @author Brian Wing Shun Chan
  */
 public class AssetRSSRenderer extends DefaultRSSRenderer {
 
 	public AssetRSSRenderer(
-		PortletRequest portletRequest, PortletResponse portletResponse) {
+		ResourceRequest resourceRequest, ResourceResponse resourceResponse) {
 
-		super(PortalUtil.getHttpServletRequest(portletRequest));
+		super(resourceRequest);
 
-		_portletRequest = portletRequest;
-		_portletResponse = portletResponse;
-		_portletPreferences = portletRequest.getPreferences();
-		_themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		_resourceRequest = resourceRequest;
+		_resourceResponse = resourceResponse;
 
+		_portletPreferences = resourceRequest.getPreferences();
 	}
 
 	@Override
 	public String getFeedURL() throws PortalException, SystemException {
 		String feedURL = getAssetPublisherURL();
+
 		return feedURL.concat("rss");
 	}
 
 	public String getRRSFeedType() {
-		return _portletRequest.getPreferences().getValue(
+		return _portletPreferences.getValue(
 			"rssFeedType", RSSUtil.FEED_TYPE_DEFAULT);
 	}
 
@@ -106,7 +107,7 @@ public class AssetRSSRenderer extends DefaultRSSRenderer {
 
 			String value = null;
 
-			String languageId = LanguageUtil.getLanguageId(_portletRequest);
+			String languageId = LanguageUtil.getLanguageId(request);
 
 			if (rssDisplayStyle.equals(RSSUtil.DISPLAY_STYLE_TITLE)) {
 				value = StringPool.BLANK;
@@ -140,31 +141,33 @@ public class AssetRSSRenderer extends DefaultRSSRenderer {
 			_portletPreferences.getValue("rssDelta", "20"));
 
 		return AssetPublisherUtil.getAssetEntries(
-			_portletPreferences, _themeDisplay.getLayout(),
-			_themeDisplay.getScopeGroupId(), rssDelta, true);
+			_portletPreferences, themeDisplay.getLayout(),
+			themeDisplay.getScopeGroupId(), rssDelta, true);
 	}
 
 	protected String getAssetPublisherURL()
 		throws PortalException, SystemException {
 
-		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
-
 		StringBundler sb = new StringBundler(6);
 
 		String layoutFriendlyURL = GetterUtil.getString(
 			PortalUtil.getLayoutFriendlyURL(
-				_themeDisplay.getLayout(), _themeDisplay));
+				themeDisplay.getLayout(), themeDisplay));
 
 		if (!layoutFriendlyURL.startsWith(Http.HTTP_WITH_SLASH) &&
 			!layoutFriendlyURL.startsWith(Http.HTTPS_WITH_SLASH)) {
 
-			sb.append(_themeDisplay.getPortalURL());
+			sb.append(themeDisplay.getPortalURL());
 		}
 
 		sb.append(layoutFriendlyURL);
 		sb.append(Portal.FRIENDLY_URL_SEPARATOR);
 		sb.append("asset_publisher/");
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
 		sb.append(portletDisplay.getInstanceId());
+
 		sb.append(StringPool.SLASH);
 
 		return sb.toString();
@@ -201,8 +204,8 @@ public class AssetRSSRenderer extends DefaultRSSRenderer {
 
 		try {
 			viewInContextURL = assetRenderer.getURLViewInContext(
-				(LiferayPortletRequest)_portletRequest,
-				(LiferayPortletResponse)_portletResponse, null);
+				(LiferayPortletRequest)_resourceRequest,
+				(LiferayPortletResponse)_resourceResponse, null);
 		}
 		catch (Exception e) {
 			throw new PortalException(e);
@@ -212,7 +215,7 @@ public class AssetRSSRenderer extends DefaultRSSRenderer {
 			!viewInContextURL.startsWith(Http.HTTP_WITH_SLASH) &&
 			!viewInContextURL.startsWith(Http.HTTPS_WITH_SLASH)) {
 
-			viewInContextURL = _themeDisplay.getPortalURL() + viewInContextURL;
+			viewInContextURL = themeDisplay.getPortalURL() + viewInContextURL;
 		}
 
 		return viewInContextURL;
@@ -224,19 +227,17 @@ public class AssetRSSRenderer extends DefaultRSSRenderer {
 		if (linkBehavior.equals("viewInPortlet")) {
 			return getEntryURLViewInContext(assetEntry);
 		}
-		else {
-			try {
-				return getEntryURLAssetPublisher(assetEntry);
-			}
-			catch (Exception e) {
-				throw new PortalException(e);
-			}
+
+		try {
+			return getEntryURLAssetPublisher(assetEntry);
+		}
+		catch (Exception e) {
+			throw new PortalException(e);
 		}
 	}
 
 	private PortletPreferences _portletPreferences;
-	private PortletRequest _portletRequest;
-	private PortletResponse _portletResponse;
-	private ThemeDisplay _themeDisplay;
+	private ResourceRequest _resourceRequest;
+	private ResourceResponse _resourceResponse;
 
 }

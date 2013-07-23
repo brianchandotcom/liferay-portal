@@ -45,6 +45,7 @@ public class RSSAction extends DefaultRSSAction {
 			if (Validator.isNotNull(title)) {
 				List<WikiPage> pages = WikiPageServiceUtil. getPages(
 					nodeId, title, 0, max, new PageCreateDateComparator(true));
+
 				return new WikiRSSRenderer(request, pages, true);
 			}
 			else {

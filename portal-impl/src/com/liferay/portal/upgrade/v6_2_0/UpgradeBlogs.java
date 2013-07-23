@@ -58,6 +58,19 @@ public class UpgradeBlogs extends BaseUpgradePortletPreferences {
 		}
 	}
 
+	protected void upgradeDisplayStyle(PortletPreferences portletPreferences)
+		throws Exception {
+
+		String pageDisplayStyle = GetterUtil.getString(
+			portletPreferences.getValue("pageDisplayStyle", null));
+
+		if (Validator.isNotNull(pageDisplayStyle)) {
+			portletPreferences.setValue("displayStyle", pageDisplayStyle);
+		}
+
+		portletPreferences.reset("pageDisplayStyle");
+	}
+
 	@Override
 	protected String upgradePreferences(
 			long companyId, long ownerId, int ownerType, long plid,
@@ -68,6 +81,7 @@ public class UpgradeBlogs extends BaseUpgradePortletPreferences {
 			PortletPreferencesFactoryUtil.fromXML(
 				companyId, ownerId, ownerType, plid, portletId, xml);
 
+		upgradeDisplayStyle(portletPreferences);
 		upgradeRss(portletPreferences);
 
 		return PortletPreferencesFactoryUtil.toXML(portletPreferences);

@@ -37,11 +37,20 @@ BackgroundTask backgroundTask = (BackgroundTask)row.getObject();
 		<%
 		long allModelAdditionCount = (Long)backgroundTaskStatus.getAttribute("allModelAdditionCount");
 		long currentModelAdditionCount = (Long)backgroundTaskStatus.getAttribute("currentModelAdditionCount");
+
+		double percentage = 100;
+
+		if (allModelAdditionCount > 0) {
+			percentage = Math.round(Double.valueOf(currentModelAdditionCount)/Double.valueOf(allModelAdditionCount) * 100);
+		}
 		%>
 
 		<div class="progress progress-striped active">
-			<div class="bar" style="width: <%= Math.round(Double.valueOf(currentModelAdditionCount)/Double.valueOf(allModelAdditionCount) * 100) %>%;">
-				<%= currentModelAdditionCount %><%= StringPool.FORWARD_SLASH %><%= allModelAdditionCount %>
+			<div class="bar" style="width: <%= percentage %>%;">
+
+			  <c:if test="<%= allModelAdditionCount > 0 %>">
+				  <%= currentModelAdditionCount %><%= StringPool.FORWARD_SLASH %><%= allModelAdditionCount %>
+			  </c:if>
 		  </div>
 		</div>
 

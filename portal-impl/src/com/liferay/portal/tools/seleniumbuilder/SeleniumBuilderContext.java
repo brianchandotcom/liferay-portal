@@ -371,6 +371,8 @@ public class SeleniumBuilderContext {
 
 		List<Element> trElements = tbodyElement.elements();
 
+		String extendedPathName = "";
+
 		for (Element trElement : trElements) {
 			List<Element> tdElements = trElement.elements("td");
 
@@ -383,25 +385,18 @@ public class SeleniumBuilderContext {
 
 				return pathValueElement.getText();
 			}
-		}
-
-		for (Element trElement : trElements) {
-			List<Element> tdElements = trElement.elements("td");
-
-			Element pathLocatorElement = tdElements.get(0);
-
-			String pathLocatorKey = pathLocatorElement.getText();
 
 			if (pathLocatorKey.equals("EXTEND_ACTION_PATH")) {
 				Element pathNameElement = tdElements.get(1);
 
-				String extendedPathName = pathNameElement.getText();
-
-				Element extendedPathElement = getPathRootElement(
-					extendedPathName);
-
-				return getPath(extendedPathElement, locatorKey);
+				extendedPathName = pathNameElement.getText();
 			}
+		}
+
+		if (Validator.isNotNull(extendedPathName)) {
+			Element extendedPathElement = getPathRootElement(extendedPathName);
+
+			return getPath(extendedPathElement, locatorKey);
 		}
 
 		return locatorKey;
@@ -788,12 +783,11 @@ public class SeleniumBuilderContext {
 			_seleniumBuilderFileUtil.getAllChildElements(rootElement, "var");
 
 		for (Element varElement : varElements) {
-			//String varName = varElement.attributeValue("name");
 			String varPath = varElement.attributeValue("path");
 			String varLocatorKey = varElement.attributeValue("locator-key");
 
-			if (!Validator.isNull(varPath) &&
-				!Validator.isNull(varLocatorKey)) {
+			if (Validator.isNotNull(varLocatorKey) &&
+				Validator.isNotNull(varPath)) {
 
 				if (!_pathRootElements.containsKey(varPath)) {
 					_seleniumBuilderFileUtil.throwValidationException(
@@ -1013,10 +1007,6 @@ public class SeleniumBuilderContext {
 		}
 
 		return false;
-	}
-
-	private boolean _isValidPath(String pathName) {
-		return _pathRootElements.containsKey(pathName);
 	}
 
 	private String _normalizeFileName(String fileName) {

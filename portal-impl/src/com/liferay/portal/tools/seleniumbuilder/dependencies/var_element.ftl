@@ -6,29 +6,26 @@
 	<#assign varValue = varElement.getText()>
 </#if>
 
-<#if varElement.attributeValue("path")??>
-	<#if varElement.attributeValue("locator-key")??>
-		<#assign pathRootElement = seleniumBuilderContext.getPathRootElement(varElement.attributeValue("path"))>
+<#if varElement.attributeValue("path")?? && varElement.attributeValue("locator-key")??>
+	<#assign pathRootElement = seleniumBuilderContext.getPathRootElement(varElement.attributeValue("path"))>
 
-		<#assign locatorKey = varElement.attributeValue("locator-key")>
+	<#assign locatorKey = varElement.attributeValue("locator-key")>
 
-		<#assign locatorValue = seleniumBuilderContext.getPath(pathRootElement, locatorKey)>
+	<#assign locatorValue = seleniumBuilderContext.getPath(pathRootElement, locatorKey)>
 
-		<#if macroName??>
-			<#assign selenium="liferaySelenium" />
-		<#else>
-			<#assign selenium="selenium" />
-		</#if>
-
-		<#if locatorValue?contains("/input")>
-			<#assign seleniumMethod = "getValue" />
-		<#else>
-			<#assign seleniumMethod = "getText" />
-		</#if>
-
-		${context}.put("${varName}", RuntimeVariables.evaluateVariable(${selenium}.${seleniumMethod}("${locatorValue}"), ${context}));
-
+	<#if macroName??>
+		<#assign selenium="liferaySelenium" />
+	<#else>
+		<#assign selenium="selenium" />
 	</#if>
+
+	<#if locatorValue?contains("/input")>
+		<#assign seleniumMethod = "getValue" />
+	<#else>
+		<#assign seleniumMethod = "getText" />
+	</#if>
+
+	${context}.put("${varName}", RuntimeVariables.evaluateVariable(${selenium}.${seleniumMethod}("${locatorValue}"), ${context}));
 <#else>
 	${context}.put("${varName}", RuntimeVariables.evaluateVariable("${varValue}", ${context}));
 </#if>

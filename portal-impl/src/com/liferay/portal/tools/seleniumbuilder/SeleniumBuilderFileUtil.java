@@ -1314,7 +1314,6 @@ public class SeleniumBuilderFileUtil {
 	}
 
 	protected void validateVarElement(String fileName, Element element) {
-
 		List<Attribute> attributes = element.attributes();
 
 		Map<String, String> attributeMap = new HashMap<String, String>();
@@ -1345,43 +1344,36 @@ public class SeleniumBuilderFileUtil {
 		else {
 			String nameValue = attributeMap.get("name");
 
-			if (nameValue.equals("")) {
+			if (Validator.isNull(nameValue)) {
 				throwValidationException(1006, fileName, element, "name");
 			}
 		}
 
+		String varText = element.getText();
+
+		if (Validator.isNull(varText) &&
+			!attributeMap.containsKey("locator-key") &&
+			!attributeMap.containsKey("path") &&
+			!attributeMap.containsKey("value")) {
+
+			throwValidationException(
+				1004, fileName, element, new String [] {"value"});
+		}
+
 		if (!attributeMap.containsKey("value")) {
-			String varText = element.getText();
+			String locatorKeyValue = attributeMap.get("locator-key");
+			String pathValue = attributeMap.get("path");
 
-			boolean containsValidPath = false;
+			if (Validator.isNull(locatorKeyValue) &&
+				Validator.isNotNull(pathValue)) {
 
-			if (attributeMap.containsKey("path")) {
-				String pathValue = attributeMap.get("path");
-
-				containsValidPath = !(pathValue == "");
-			}
-
-			boolean containsValidKey = false;
-
-			if (attributeMap.containsKey("locator-key")) {
-				String locatorKeyValue = attributeMap.get("locator-key");
-
-				containsValidKey = !(locatorKeyValue == "");
-			}
-
-			if (Validator.isNull(varText) &&
-				!containsValidPath && !containsValidKey) {
-
-				throwValidationException(
-					1004, fileName, element, new String [] {"value"});
-			}
-
-			if (containsValidPath && !containsValidKey) {
 				throwValidationException(
 					1004, fileName, element, new String [] {"locator-key"});
 			}
 
-			if (!containsValidPath && containsValidKey) {
+			if (Validator.isNotNull(locatorKeyValue) &&
+				Validator.isNull(pathValue)) {
+
 				throwValidationException(
 					1004, fileName, element, new String [] {"path"});
 			}
@@ -1389,7 +1381,7 @@ public class SeleniumBuilderFileUtil {
 		else {
 			String varValue = attributeMap.get("value");
 
-			Pattern pattern = Pattern.compile("\\$\\{([^}]*?)\\}");
+			Pattern pattern = Pattern.compile("\\$\\{([^\\}]*?)\\}");
 
 			Matcher matcher = pattern.matcher(varValue);
 

@@ -24,9 +24,10 @@ import javax.servlet.http.HttpServletResponseWrapper;
 /**
  * @author László Csontos
  */
-public class SecureServletResponseWrapper extends HttpServletResponseWrapper {
+public class SecureHttpServletResponseWrapper
+	extends HttpServletResponseWrapper {
 
-	public SecureServletResponseWrapper(HttpServletResponse response) {
+	public SecureHttpServletResponseWrapper(HttpServletResponse response) {
 		super(response);
 	}
 

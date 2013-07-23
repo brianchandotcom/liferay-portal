@@ -41,7 +41,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
  */
 @PrepareForTest({ConfigurationSerializer.class, PropsUtil.class})
 @RunWith(PowerMockRunner.class)
-public class SecureServletResponseWrapperTest extends PowerMockito {
+public class SecureHttpServletResponseWrapperTest extends PowerMockito {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
@@ -166,8 +166,8 @@ public class SecureServletResponseWrapperTest extends PowerMockito {
 		}
 	};
 
-	private SecureServletResponseWrapper _responseWrapper =
-		new SecureServletResponseWrapper(_response);
+	private SecureHttpServletResponseWrapper _responseWrapper =
+		new SecureHttpServletResponseWrapper(_response);
 	private final AtomicReference<String> _valueReference1 =
 		new AtomicReference<String>();
 	private final AtomicReference<String> _valueReference2 =

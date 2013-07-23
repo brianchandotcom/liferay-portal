@@ -27,7 +27,6 @@ long classNameId = GetterUtil.getLong((String)request.getAttribute("liferay-ui:d
 List<String> displayStyles = (List<String>)request.getAttribute("liferay-ui:ddm-template-select:displayStyles");
 String icon = GetterUtil.getString((String)request.getAttribute("liferay-ui:ddm-template-select:icon"), "configuration");
 String label = (String)request.getAttribute("liferay-ui:ddm-template-select:label");
-String preferenceName = (String)request.getAttribute("liferay-ui:ddm-template-select:preferenceName");
 String preferenceValue = (String)request.getAttribute("liferay-ui:ddm-template-select:preferenceValue");
 String refreshURL = (String)request.getAttribute("liferay-ui:ddm-template-select:refreshURL");
 boolean showEmptyOption = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:ddm-template-select:showEmptyOption"));
@@ -37,7 +36,7 @@ long ddmTemplateGroupId = PortletDisplayTemplateUtil.getDDMTemplateGroupId(theme
 Group ddmTemplateGroup = GroupLocalServiceUtil.getGroup(ddmTemplateGroupId);
 %>
 
-<aui:select id="displayStyle" inlineField="<%= true %>" label="<%= label %>" name='<%= "preferences--" + preferenceName + "--" %>'>
+<aui:select id="displayStyle" inlineField="<%= true %>" label="<%= label %>" name="preferences--displayStyle--">
 	<c:if test="<%= showEmptyOption %>">
 		<aui:option label="default" selected="<%= Validator.isNull(preferenceValue) %>" />
 	</c:if>

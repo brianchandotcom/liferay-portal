@@ -809,11 +809,6 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>preferenceName</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
 			<name>preferenceValue</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>

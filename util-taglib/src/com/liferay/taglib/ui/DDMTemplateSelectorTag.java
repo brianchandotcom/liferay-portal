@@ -41,10 +41,6 @@ public class DDMTemplateSelectorTag extends IncludeTag {
 		_label = label;
 	}
 
-	public void setPreferenceName(String preferenceName) {
-		_preferenceName = preferenceName;
-	}
-
 	public void setPreferenceValue(String preferenceValue) {
 		_preferenceValue = preferenceValue;
 	}
@@ -63,7 +59,6 @@ public class DDMTemplateSelectorTag extends IncludeTag {
 		_displayStyles = null;
 		_icon = null;
 		_label = "display-template";
-		_preferenceName = "displayStyle";
 		_preferenceValue = null;
 		_refreshURL = null;
 		_showEmptyOption = false;
@@ -84,8 +79,6 @@ public class DDMTemplateSelectorTag extends IncludeTag {
 		request.setAttribute("liferay-ui:ddm-template-select:icon", _icon);
 		request.setAttribute("liferay-ui:ddm-template-select:label", _label);
 		request.setAttribute(
-			"liferay-ui:ddm-template-select:preferenceName", _preferenceName);
-		request.setAttribute(
 			"liferay-ui:ddm-template-select:preferenceValue", _preferenceValue);
 		request.setAttribute(
 			"liferay-ui:ddm-template-select:refreshURL", _refreshURL);
@@ -101,7 +94,6 @@ public class DDMTemplateSelectorTag extends IncludeTag {
 	private List<String> _displayStyles;
 	private String _icon;
 	private String _label = "display-template";
-	private String _preferenceName = "displayStyle";
 	private String _preferenceValue;
 	private String _refreshURL;
 	private boolean _showEmptyOption;

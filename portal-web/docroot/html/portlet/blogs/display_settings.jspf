@@ -48,7 +48,6 @@
 		<liferay-ui:ddm-template-selector
 			classNameId="<%= PortalUtil.getClassNameId(templateHandler.getClassName()) %>"
 			displayStyles="<%= displayStyles %>"
-			preferenceName="displayStyle"
 			preferenceValue="<%= displayStyle %>"
 			refreshURL="<%= portletURL.toString() %>"
 		/>

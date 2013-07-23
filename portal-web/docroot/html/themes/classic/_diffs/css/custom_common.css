@@ -19,6 +19,10 @@
 		}
 	}
 
+	.alert {
+		word-wrap: break-word;
+	}
+
 	.table {
 		font-size: 15px;
 		overflow: hidden;

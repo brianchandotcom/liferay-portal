@@ -172,18 +172,21 @@ public class DDMTemplateStagedModelDataHandler
 
 		long userId = portletDataContext.getUserId(template.getUserUuid());
 
+		long classPK = template.getClassPK();
+
 		Element structureElement = portletDataContext.getReferenceDataElement(
-			template, DDMStructure.class, template.getClassPK());
+			template, DDMStructure.class, classPK);
 
-		StagedModelDataHandlerUtil.importStagedModel(
-			portletDataContext, structureElement);
+		if (structureElement != null) {
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, structureElement);
 
-		Map<Long, Long> structureIds =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				DDMStructure.class);
+			Map<Long, Long> structureIds =
+				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+					DDMStructure.class);
 
-		long classPK = MapUtil.getLong(
-			structureIds, template.getClassPK(), template.getClassPK());
+			classPK = MapUtil.getLong(structureIds, classPK, classPK);
+		}
 
 		File smallFile = null;
 

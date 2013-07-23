@@ -20,7 +20,6 @@ import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.util.LayoutTestUtil;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetLink;
@@ -114,15 +113,14 @@ public class BasePortletExportImportTestCase extends BaseExportImportTestCase {
 
 		// Export site LAR
 
-		String assetPublisherPortletId = LayoutTestUtil.addPortletToLayout(
-			TestPropsValues.getUserId(), this.layout,
-			PortletKeys.ASSET_PUBLISHER, "column-1", preferenceMap);
+		String portletId = LayoutTestUtil.addPortletToLayout(
+			TestPropsValues.getUserId(), this.layout, getPortletId(),
+			"column-1", preferenceMap);
 
-		doExportImportPortlet(assetPublisherPortletId);
+		doExportImportPortlet(portletId);
 
 		return LayoutTestUtil.getPortletPreferences(
-			importedLayout.getCompanyId(), importedLayout.getPlid(),
-			assetPublisherPortletId);
+			importedLayout.getCompanyId(), importedLayout.getPlid(), portletId);
 	}
 
 	protected void validateImportedLinks(String uuid)

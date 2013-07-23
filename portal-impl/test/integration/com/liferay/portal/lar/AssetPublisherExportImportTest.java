@@ -70,6 +70,11 @@ import org.junit.runner.RunWith;
 public class AssetPublisherExportImportTest
 	extends BasePortletExportImportTestCase {
 
+	@Override
+	public String getPortletId() {
+		return PortletKeys.ASSET_PUBLISHER;
+	}
+
 	@Test
 	public void testAnyDLFileEntryType() throws Exception {
 		Map<String, String[]> preferenceMap = new HashMap<String, String[]>();

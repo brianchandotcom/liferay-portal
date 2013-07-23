@@ -325,11 +325,18 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 
 						<c:choose>
 							<c:when test="<%= previewFileCount == 0 %>">
-								<c:if test="<%= AudioProcessorUtil.isAudioSupported(fileVersion) || ImageProcessorUtil.isImageSupported(fileVersion) || PDFProcessorUtil.isDocumentSupported(fileVersion) || VideoProcessorUtil.isVideoSupported(fileVersion) %>">
-									<div class="alert alert-info">
-										<liferay-ui:message key="generating-preview-will-take-a-few-minutes" />
-									</div>
-								</c:if>
+								<c:choose>
+									<c:when test="<%= !DLProcessorRegistryUtil.isPreviewableSize(fileVersion) && (AudioProcessorUtil.isAudioSupported(fileVersion.getMimeType()) || ImageProcessorUtil.isImageSupported(fileVersion.getMimeType()) || PDFProcessorUtil.isDocumentSupported(fileVersion.getMimeType()) || VideoProcessorUtil.isVideoSupported(fileVersion.getMimeType())) %>">
+										<div class="alert alert-info">
+											<liferay-ui:message key="file-is-too-large-for-preview-or-thumbnail-generation" />
+										</div>
+									</c:when>
+									<c:when test="<%= AudioProcessorUtil.isAudioSupported(fileVersion) || ImageProcessorUtil.isImageSupported(fileVersion) || PDFProcessorUtil.isDocumentSupported(fileVersion) || VideoProcessorUtil.isVideoSupported(fileVersion) %>">
+										<div class="alert alert-info">
+											<liferay-ui:message key="generating-preview-will-take-a-few-minutes" />
+										</div>
+									</c:when>
+								</c:choose>
 							</c:when>
 							<c:otherwise>
 								<c:choose>

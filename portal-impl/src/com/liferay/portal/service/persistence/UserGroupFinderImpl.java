@@ -78,7 +78,7 @@ public class UserGroupFinderImpl
 
 		if (Validator.isNotNull(keywords)) {
 			names = CustomSQLUtil.keywords(keywords);
-			descriptions = CustomSQLUtil.keywords(keywords);
+			descriptions = names;
 		}
 		else {
 			andOperator = true;
@@ -171,7 +171,7 @@ public class UserGroupFinderImpl
 
 		if (Validator.isNotNull(keywords)) {
 			names = CustomSQLUtil.keywords(keywords);
-			descriptions = CustomSQLUtil.keywords(keywords);
+			descriptions = names;
 		}
 		else {
 			andOperator = true;

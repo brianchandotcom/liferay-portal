@@ -175,10 +175,10 @@ public class UserFinderImpl
 
 		if (Validator.isNotNull(keywords)) {
 			firstNames = CustomSQLUtil.keywords(keywords);
-			middleNames = CustomSQLUtil.keywords(keywords);
-			lastNames = CustomSQLUtil.keywords(keywords);
-			screenNames = CustomSQLUtil.keywords(keywords);
-			emailAddresses = CustomSQLUtil.keywords(keywords);
+			middleNames = firstNames;
+			lastNames = firstNames;
+			screenNames = firstNames;
+			emailAddresses = firstNames;
 		}
 		else {
 			andOperator = true;
@@ -379,10 +379,10 @@ public class UserFinderImpl
 
 		if (Validator.isNotNull(keywords)) {
 			firstNames = CustomSQLUtil.keywords(keywords);
-			middleNames = CustomSQLUtil.keywords(keywords);
-			lastNames = CustomSQLUtil.keywords(keywords);
-			screenNames = CustomSQLUtil.keywords(keywords);
-			emailAddresses = CustomSQLUtil.keywords(keywords);
+			middleNames = firstNames;
+			lastNames = firstNames;
+			screenNames = firstNames;
+			emailAddresses = firstNames;
 		}
 		else {
 			andOperator = true;

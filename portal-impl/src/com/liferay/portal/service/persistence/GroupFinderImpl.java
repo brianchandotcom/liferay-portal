@@ -154,8 +154,8 @@ public class GroupFinderImpl
 
 		if (Validator.isNotNull(keywords)) {
 			names = CustomSQLUtil.keywords(keywords);
-			realNames = CustomSQLUtil.keywords(keywords);
-			descriptions = CustomSQLUtil.keywords(keywords);
+			realNames = names;
+			descriptions = names;
 		}
 		else {
 			andOperator = true;
@@ -181,8 +181,8 @@ public class GroupFinderImpl
 
 		if (Validator.isNotNull(keywords)) {
 			names = CustomSQLUtil.keywords(keywords);
-			realNames = CustomSQLUtil.keywords(keywords);
-			descriptions = CustomSQLUtil.keywords(keywords);
+			realNames = names;
+			descriptions = names;
 		}
 		else {
 			andOperator = true;
@@ -206,8 +206,8 @@ public class GroupFinderImpl
 
 		if (Validator.isNotNull(keywords)) {
 			names = CustomSQLUtil.keywords(keywords);
-			realNames = CustomSQLUtil.keywords(keywords);
-			descriptions = CustomSQLUtil.keywords(keywords);
+			realNames = names;
+			descriptions = names;
 		}
 		else {
 			andOperator = true;
@@ -232,8 +232,8 @@ public class GroupFinderImpl
 
 		if (Validator.isNotNull(keywords)) {
 			names = CustomSQLUtil.keywords(keywords);
-			realNames = CustomSQLUtil.keywords(keywords);
-			descriptions = CustomSQLUtil.keywords(keywords);
+			realNames = names;
+			descriptions = names;
 		}
 		else {
 			andOperator = true;
@@ -534,8 +534,8 @@ public class GroupFinderImpl
 
 		if (Validator.isNotNull(keywords)) {
 			names = CustomSQLUtil.keywords(keywords);
-			realNames = CustomSQLUtil.keywords(keywords);
-			descriptions = CustomSQLUtil.keywords(keywords);
+			realNames = names;
+			descriptions = names;
 		}
 		else {
 			andOperator = true;
@@ -562,8 +562,8 @@ public class GroupFinderImpl
 
 		if (Validator.isNotNull(keywords)) {
 			names = CustomSQLUtil.keywords(keywords);
-			realNames = CustomSQLUtil.keywords(keywords);
-			descriptions = CustomSQLUtil.keywords(keywords);
+			realNames = names;
+			descriptions = names;
 		}
 		else {
 			andOperator = true;
@@ -589,8 +589,8 @@ public class GroupFinderImpl
 
 		if (Validator.isNotNull(keywords)) {
 			names = CustomSQLUtil.keywords(keywords);
-			realNames = CustomSQLUtil.keywords(keywords);
-			descriptions = CustomSQLUtil.keywords(keywords);
+			realNames = names;
+			descriptions = names;
 		}
 		else {
 			andOperator = true;
@@ -616,8 +616,8 @@ public class GroupFinderImpl
 
 		if (Validator.isNotNull(keywords)) {
 			names = CustomSQLUtil.keywords(keywords);
-			realNames = CustomSQLUtil.keywords(keywords);
-			descriptions = CustomSQLUtil.keywords(keywords);
+			realNames = names;
+			descriptions = names;
 		}
 		else {
 			andOperator = true;

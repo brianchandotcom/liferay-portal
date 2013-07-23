@@ -101,9 +101,9 @@ public class OrganizationFinderImpl
 
 		if (Validator.isNotNull(keywords)) {
 			names = CustomSQLUtil.keywords(keywords);
-			streets = CustomSQLUtil.keywords(keywords);
-			cities = CustomSQLUtil.keywords(keywords);
-			zips = CustomSQLUtil.keywords(keywords);
+			streets = names;
+			cities = names;
+			zips = names;
 		}
 		else {
 			andOperator = true;
@@ -377,9 +377,9 @@ public class OrganizationFinderImpl
 
 		if (Validator.isNotNull(keywords)) {
 			names = CustomSQLUtil.keywords(keywords);
-			streets = CustomSQLUtil.keywords(keywords);
-			cities = CustomSQLUtil.keywords(keywords);
-			zips = CustomSQLUtil.keywords(keywords);
+			streets = names;
+			cities = names;
+			zips = names;
 		}
 		else {
 			andOperator = true;

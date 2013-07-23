@@ -57,7 +57,7 @@ public class JournalFeedFinderImpl
 		if (Validator.isNotNull(keywords)) {
 			feedIds = CustomSQLUtil.keywords(keywords, false);
 			names = CustomSQLUtil.keywords(keywords);
-			descriptions = CustomSQLUtil.keywords(keywords);
+			descriptions = names;
 		}
 		else {
 			andOperator = true;
@@ -162,7 +162,7 @@ public class JournalFeedFinderImpl
 		if (Validator.isNotNull(keywords)) {
 			feedIds = CustomSQLUtil.keywords(keywords, false);
 			names = CustomSQLUtil.keywords(keywords);
-			descriptions = CustomSQLUtil.keywords(keywords);
+			descriptions = names;
 		}
 		else {
 			andOperator = true;

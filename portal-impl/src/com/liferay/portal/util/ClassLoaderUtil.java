@@ -14,19 +14,9 @@
 
 package com.liferay.portal.util;
 
-import com.liferay.portal.kernel.servlet.PluginContextListener;
-import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.util.AggregateClassLoader;
 import com.liferay.portal.kernel.util.ClassLoaderPool;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
-
-import java.security.AccessController;
-import java.security.PrivilegedAction;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.servlet.ServletContext;
 
 /**
  * @author Raymond Augé
@@ -38,127 +28,30 @@ public class ClassLoaderUtil {
 		final String[] servletContextNames,
 		final boolean addContextClassLoader) {
 
-		return AccessController.doPrivileged(
-			new PrivilegedAction<ClassLoader> () {
-
-				@Override
-				public ClassLoader run() {
-					List<ClassLoader> classLoaders = new ArrayList<ClassLoader>(
-						servletContextNames.length + 2);
-
-					if (addContextClassLoader) {
-						ClassLoader contextClassLoader =
-							_getContextClassLoader();
-
-						classLoaders.add(contextClassLoader);
-					}
-
-					for (String servletContextName : servletContextNames) {
-						ClassLoader pluginClassLoader = _getPluginClassLoader(
-							servletContextName);
-
-						classLoaders.add(pluginClassLoader);
-					}
-
-					ClassLoader[] classloaders = classLoaders.toArray(
-						new ClassLoader[classLoaders.size()]);
-
-					return AggregateClassLoader.getAggregateClassLoader(
-						classloaders);
-				}
-
-			}
-		);
+		return _pacl.getAggregatePluginsClassLoader(
+			servletContextNames, addContextClassLoader);
 	}
 
 	public static ClassLoader getClassLoader(final Class<?> clazz) {
-		return AccessController.doPrivileged(
-			new PrivilegedAction<ClassLoader>() {
-
-				@Override
-				public ClassLoader run() {
-					return clazz.getClassLoader();
-				}
-
-			}
-		);
+		return _pacl.getClassLoader(clazz);
 	}
 
 	public static ClassLoader getContextClassLoader() {
-		return AccessController.doPrivileged(
-			new PrivilegedAction<ClassLoader>() {
-
-				@Override
-				public ClassLoader run() {
-					return _getContextClassLoader();
-				}
-
-			}
-		);
+		return _pacl.getContextClassLoader();
 	}
 
 	public static ClassLoader getPluginClassLoader(
 		final String servletContextName) {
 
-		return AccessController.doPrivileged(
-			new PrivilegedAction<ClassLoader> () {
-
-				@Override
-				public ClassLoader run() {
-					ClassLoader pluginClassLoader = _getPluginClassLoader(
-						servletContextName);
-
-					return pluginClassLoader;
-				}
-
-			}
-		);
+		return _pacl.getPluginClassLoader(servletContextName);
 	}
 
 	public static ClassLoader getPortalClassLoader() {
-		return AccessController.doPrivileged(
-			new PrivilegedAction<ClassLoader>() {
-
-				@Override
-				public ClassLoader run() {
-					return PortalClassLoaderUtil.getClassLoader();
-				}
-
-			}
-		);
+		return _pacl.getPortalClassLoader();
 	}
 
 	public static void setContextClassLoader(final ClassLoader classLoader) {
-		AccessController.doPrivileged(
-			new PrivilegedAction<Void>() {
-
-				@Override
-				public Void run() {
-					Thread thread = Thread.currentThread();
-
-					thread.setContextClassLoader(classLoader);
-
-					return null;
-				}
-
-			}
-		);
-	}
-
-	private static ClassLoader _getContextClassLoader() {
-		Thread currentThread = Thread.currentThread();
-
-		return currentThread.getContextClassLoader();
-	}
-
-	private static ClassLoader _getPluginClassLoader(
-		String servletContextName) {
-
-		ServletContext servletContext = ServletContextPool.get(
-			servletContextName);
-
-		return (ClassLoader)servletContext.getAttribute(
-			PluginContextListener.PLUGIN_CLASS_LOADER);
+		_pacl.setContextClassLoader(classLoader);
 	}
 
 	private static PACL _pacl = new NoPACL();

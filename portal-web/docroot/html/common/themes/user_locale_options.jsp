@@ -43,7 +43,7 @@ Locale userLocale = user.getLocale();
 
 	<liferay-util:buffer var="displayPreferredLanguage">
 		<aui:a href="<%= displayPreferredLanguageURLString %>">
-			<liferay-ui:message arguments="<%= userLocale.getDisplayName(userLocale) %>" key="display-the-page-in-x" />
+			<%= LanguageUtil.format(userLocale, "display-the-page-in-x", userLocale.getDisplayName(userLocale)) %>
 		</aui:a>
 	</liferay-util:buffer>
 
@@ -65,9 +65,9 @@ Locale userLocale = user.getLocale();
 
 	<liferay-util:buffer var="changePreferredLanguage">
 		<aui:a href="<%= changePreferredLanguageURLString %>">
-			<liferay-ui:message arguments="<%= currentLanguageDisplayName %>" key="set-x-as-your-preferred-language" />
+			<%= LanguageUtil.format(userLocale, "set-x-as-your-preferred-language", currentLanguageDisplayName) %>
 		</aui:a>
 	</liferay-util:buffer>
 
-	<liferay-ui:message arguments="<%= new Object[] {currentLanguageDisplayName, displayPreferredLanguage, changePreferredLanguage} %>" key="this-page-is-being-displayed-in-x" />
+	<%= LanguageUtil.format(userLocale, "this-page-is-being-displayed-in-x", new Object[] {currentLanguageDisplayName, displayPreferredLanguage, changePreferredLanguage}) %>
 </c:if>

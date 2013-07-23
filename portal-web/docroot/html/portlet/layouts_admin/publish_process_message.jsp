@@ -76,7 +76,7 @@ BackgroundTask backgroundTask = (BackgroundTask)row.getObject();
 			}
 			%>
 
-			<div class="progress-current-element">
+			<div class="progress-current-item">
 				<strong><liferay-ui:message key="<%= cmdKey %>" /><%= StringPool.TRIPLE_PERIOD %></strong> <%= ResourceActionsUtil.getModelResource(locale, stagedModelType) %> <em><%= stagedModelName %></em>
 			</div>
 		</c:if>

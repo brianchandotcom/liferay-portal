@@ -65,6 +65,7 @@ import javax.mail.internet.InternetAddress;
 /**
  * @author Brian Wing Shun Chan
  * @author Mate Thurzo
+ * @author Raymond Augé
  */
 public class SubscriptionSender implements Serializable {
 
@@ -114,6 +115,18 @@ public class SubscriptionSender implements Serializable {
 				currentThread.setContextClassLoader(_classLoader);
 			}
 
+			String inferredClassName = null;
+			long inferredClassPK = 0;
+
+			if (!_persistestedSubscribersOVPs.isEmpty()) {
+				ObjectValuePair<String, Long> objectValuePair =
+					_persistestedSubscribersOVPs.get(
+						_persistestedSubscribersOVPs.size() - 1);
+
+				inferredClassName = objectValuePair.getKey();
+				inferredClassPK = objectValuePair.getValue();
+			}
+
 			for (ObjectValuePair<String, Long> ovp :
 					_persistestedSubscribersOVPs) {
 
@@ -126,7 +139,8 @@ public class SubscriptionSender implements Serializable {
 
 				for (Subscription subscription : subscriptions) {
 					try {
-						notifySubscriber(subscription);
+						notifySubscriber(
+							subscription, inferredClassName, inferredClassPK);
 					}
 					catch (PortalException pe) {
 						_log.error(
@@ -361,7 +375,9 @@ public class SubscriptionSender implements Serializable {
 			subscription.getSubscriptionId());
 	}
 
-	protected boolean hasPermission(Subscription subscription, User user)
+	protected boolean hasPermission(
+			Subscription subscription, String inferredClassName,
+			long inferredClassPK, User user)
 		throws Exception {
 
 		PermissionChecker permissionChecker =
@@ -369,10 +385,12 @@ public class SubscriptionSender implements Serializable {
 
 		return SubscriptionPermissionUtil.contains(
 			permissionChecker, subscription.getClassName(),
-			subscription.getClassPK());
+			subscription.getClassPK(), inferredClassName, inferredClassPK);
 	}
 
-	protected void notifySubscriber(Subscription subscription)
+	protected void notifySubscriber(
+			Subscription subscription, String inferredClassName,
+			long inferredClassPK)
 		throws Exception {
 
 		User user = UserLocalServiceUtil.fetchUserById(
@@ -418,7 +436,9 @@ public class SubscriptionSender implements Serializable {
 		}
 
 		try {
-			if (!hasPermission(subscription, user)) {
+			if (!hasPermission(
+					subscription, inferredClassName, inferredClassPK, user)) {
+
 				if (_log.isDebugEnabled()) {
 					_log.debug("Skip unauthorized user " + user.getUserId());
 				}

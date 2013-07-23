@@ -14,6 +14,8 @@
 
 package com.liferay.portal.lar.backgroundtask;
 
+import com.liferay.portal.NoSuchLayoutException;
+import com.liferay.portal.RemoteExportException;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatus;
@@ -28,12 +30,16 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.model.BackgroundTask;
+import com.liferay.portal.model.Layout;
+import com.liferay.portal.security.auth.HttpPrincipal;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
+import com.liferay.portal.service.http.LayoutServiceHttp;
 
 import java.io.File;
 import java.io.Serializable;
-
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -124,6 +130,96 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 			getLocale(backgroundTask), e, backgroundTask.getTaskContextMap());
 
 		return jsonObject.toString();
+	}
+
+	protected File exportLayoutsAsFile(
+			long sourceGroupId, boolean privateLayout,
+			Map<Long, Boolean> layoutIdMap, Map<String, String[]> parameterMap,
+			long remoteGroupId, Date startDate, Date endDate,
+			HttpPrincipal httpPrincipal)
+		throws Exception {
+
+		if ((layoutIdMap == null) || layoutIdMap.isEmpty()) {
+			return LayoutLocalServiceUtil.exportLayoutsAsFile(
+				sourceGroupId, privateLayout, null, parameterMap, startDate,
+				endDate);
+		}
+		else {
+			List<Layout> layouts = new ArrayList<Layout>();
+
+			for (Map.Entry<Long, Boolean> entry : layoutIdMap.entrySet()) {
+				long plid = GetterUtil.getLong(String.valueOf(entry.getKey()));
+				boolean includeChildren = entry.getValue();
+
+				Layout layout = LayoutLocalServiceUtil.getLayout(plid);
+
+				if (!layouts.contains(layout)) {
+					layouts.add(layout);
+				}
+
+				List<Layout> parentLayouts = getMissingRemoteParentLayouts(
+					httpPrincipal, layout, remoteGroupId);
+
+				for (Layout parentLayout : parentLayouts) {
+					if (!layouts.contains(parentLayout)) {
+						layouts.add(parentLayout);
+					}
+				}
+
+				if (includeChildren) {
+					for (Layout childLayout : layout.getAllChildren()) {
+						if (!layouts.contains(childLayout)) {
+							layouts.add(childLayout);
+						}
+					}
+				}
+			}
+
+			long[] layoutIds = getLayoutIds(layouts);
+
+			if (layoutIds.length <= 0) {
+				throw new RemoteExportException(
+					RemoteExportException.NO_LAYOUTS);
+			}
+
+			return LayoutLocalServiceUtil.exportLayoutsAsFile(
+				sourceGroupId, privateLayout, layoutIds, parameterMap,
+				startDate, endDate);
+		}
+	}
+
+	/**
+	 * @see #getMissingParentLayouts(Layout, long)
+	 */
+	protected List<Layout> getMissingRemoteParentLayouts(
+			HttpPrincipal httpPrincipal, Layout layout, long remoteGroupId)
+		throws Exception {
+
+		List<Layout> missingRemoteParentLayouts = new ArrayList<Layout>();
+
+		long parentLayoutId = layout.getParentLayoutId();
+
+		while (parentLayoutId > 0) {
+			Layout parentLayout = LayoutLocalServiceUtil.getLayout(
+				layout.getGroupId(), layout.isPrivateLayout(), parentLayoutId);
+
+			try {
+				LayoutServiceHttp.getLayoutByUuidAndGroupId(
+					httpPrincipal, parentLayout.getUuid(), remoteGroupId,
+					parentLayout.getPrivateLayout());
+
+				// If one parent is found all others are assumed to exist
+
+				break;
+			}
+			catch (NoSuchLayoutException nsle) {
+				missingRemoteParentLayouts.add(parentLayout);
+
+				parentLayoutId = parentLayout.getParentLayoutId();
+			}
+		}
+
+		return missingRemoteParentLayouts;
 	}
 
 }

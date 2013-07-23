@@ -2037,62 +2037,6 @@ public class StagingImpl implements Staging {
 		}
 	}
 
-	protected File exportLayoutsAsFile(
-			long sourceGroupId, boolean privateLayout,
-			Map<Long, Boolean> layoutIdMap, Map<String, String[]> parameterMap,
-			long remoteGroupId, Date startDate, Date endDate,
-			HttpPrincipal httpPrincipal)
-		throws Exception {
-
-		if ((layoutIdMap == null) || layoutIdMap.isEmpty()) {
-			return LayoutLocalServiceUtil.exportLayoutsAsFile(
-				sourceGroupId, privateLayout, null, parameterMap, startDate,
-				endDate);
-		}
-		else {
-			List<Layout> layouts = new ArrayList<Layout>();
-
-			for (Map.Entry<Long, Boolean> entry : layoutIdMap.entrySet()) {
-				long plid = GetterUtil.getLong(String.valueOf(entry.getKey()));
-				boolean includeChildren = entry.getValue();
-
-				Layout layout = LayoutLocalServiceUtil.getLayout(plid);
-
-				if (!layouts.contains(layout)) {
-					layouts.add(layout);
-				}
-
-				List<Layout> parentLayouts = getMissingRemoteParentLayouts(
-					httpPrincipal, layout, remoteGroupId);
-
-				for (Layout parentLayout : parentLayouts) {
-					if (!layouts.contains(parentLayout)) {
-						layouts.add(parentLayout);
-					}
-				}
-
-				if (includeChildren) {
-					for (Layout childLayout : layout.getAllChildren()) {
-						if (!layouts.contains(childLayout)) {
-							layouts.add(childLayout);
-						}
-					}
-				}
-			}
-
-			long[] layoutIds = getLayoutIds(layouts);
-
-			if (layoutIds.length <= 0) {
-				throw new RemoteExportException(
-					RemoteExportException.NO_LAYOUTS);
-			}
-
-			return LayoutLocalServiceUtil.exportLayoutsAsFile(
-				sourceGroupId, privateLayout, layoutIds, parameterMap,
-				startDate, endDate);
-		}
-	}
-
 	protected boolean getBoolean(
 		PortletRequest portletRequest, Group group, String param) {
 
@@ -2127,40 +2071,6 @@ public class StagingImpl implements Staging {
 		return ParamUtil.getLong(
 			portletRequest, param,
 			GetterUtil.getLong(group.getTypeSettingsProperty(param)));
-	}
-
-	/**
-	 * @see #getMissingParentLayouts(Layout, long)
-	 */
-	protected List<Layout> getMissingRemoteParentLayouts(
-			HttpPrincipal httpPrincipal, Layout layout, long remoteGroupId)
-		throws Exception {
-
-		List<Layout> missingRemoteParentLayouts = new ArrayList<Layout>();
-
-		long parentLayoutId = layout.getParentLayoutId();
-
-		while (parentLayoutId > 0) {
-			Layout parentLayout = LayoutLocalServiceUtil.getLayout(
-				layout.getGroupId(), layout.isPrivateLayout(), parentLayoutId);
-
-			try {
-				LayoutServiceHttp.getLayoutByUuidAndGroupId(
-					httpPrincipal, parentLayout.getUuid(), remoteGroupId,
-					parentLayout.getPrivateLayout());
-
-				// If one parent is found all others are assumed to exist
-
-				break;
-			}
-			catch (NoSuchLayoutException nsle) {
-				missingRemoteParentLayouts.add(parentLayout);
-
-				parentLayoutId = parentLayout.getParentLayoutId();
-			}
-		}
-
-		return missingRemoteParentLayouts;
 	}
 
 	protected PortalPreferences getPortalPreferences(User user)

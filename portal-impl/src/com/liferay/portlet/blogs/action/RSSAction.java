@@ -43,7 +43,7 @@ import javax.servlet.http.HttpServletRequest;
 public class RSSAction extends DefaultRSSAction {
 
 	@Override
-	public RSSRenderer createRSSRenderer(HttpServletRequest request)
+	public RSSRenderer getRSSRenderer(HttpServletRequest request)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(

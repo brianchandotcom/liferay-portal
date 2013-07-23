@@ -28,7 +28,7 @@ import javax.portlet.ResourceResponse;
 public class RSSAction extends DefaultRSSAction {
 
 	@Override
-	protected RSSRenderer createRSSRenderer(
+	protected RSSRenderer getRSSRenderer(
 			ResourceRequest portletRequest, ResourceResponse portletResponse)
 		throws Exception {
 

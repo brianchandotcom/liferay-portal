@@ -71,20 +71,19 @@ import javax.portlet.ResourceURL;
 public class JournalRSSRenderer extends DefaultRSSRenderer {
 
 	public JournalRSSRenderer(
-		ResourceRequest request, ResourceResponse response) {
+		ResourceRequest resourceRequest, ResourceResponse resourceResponse) {
 
-		super(PortalUtil.getHttpServletRequest(request));
+		super(PortalUtil.getHttpServletRequest(resourceRequest));
 
-		_request = request;
-		_response = response;
-		_themeDisplay = (ThemeDisplay)request.getAttribute(
+		_resourceRequest = resourceRequest;
+		_resourceResponse = resourceResponse;
+		_themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
 
 	@Override
 	public String getFeedURL() throws PortalException, SystemException {
-
-		ResourceURL feedURL = _response.createResourceURL();
+		ResourceURL feedURL = _resourceResponse.createResourceURL();
 
 		JournalFeed feed = getJournalFeed();
 
@@ -116,7 +115,7 @@ public class JournalRSSRenderer extends DefaultRSSRenderer {
 
 		JournalFeed feed = getJournalFeed();
 
-		String languageId = LanguageUtil.getLanguageId(_request);
+		String languageId = LanguageUtil.getLanguageId(_resourceRequest);
 
 		long plid = PortalUtil.getPlidFromFriendlyURL(
 			_themeDisplay.getCompanyId(), feed.getTargetLayoutFriendlyUrl());
@@ -209,7 +208,7 @@ public class JournalRSSRenderer extends DefaultRSSRenderer {
 			}
 
 			PortletURL entryURL = new PortletURLImpl(
-				_request, portletId, plid, PortletRequest.RENDER_PHASE);
+				_resourceRequest, portletId, plid, PortletRequest.RENDER_PHASE);
 
 			entryURL.setParameter("struts_action", "/journal_content/view");
 			entryURL.setParameter(
@@ -223,17 +222,17 @@ public class JournalRSSRenderer extends DefaultRSSRenderer {
 	protected JournalFeed getJournalFeed()
 		throws PortalException, SystemException {
 
-		JournalFeed feed = (JournalFeed) _request.getAttribute(
+		JournalFeed feed = (JournalFeed) _resourceRequest.getAttribute(
 			"rssJournalFeed");
 
 		if (feed != null) {
 			return feed;
 		}
 
-		long id = ParamUtil.getLong(_request, "id");
+		long id = ParamUtil.getLong(_resourceRequest, "id");
 
-		long groupId = ParamUtil.getLong(_request, "groupId");
-		String feedId = ParamUtil.getString(_request, "feedId");
+		long groupId = ParamUtil.getLong(_resourceRequest, "groupId");
+		String feedId = ParamUtil.getString(_resourceRequest, "feedId");
 
 		if (id > 0) {
 			feed = JournalFeedLocalServiceUtil.getFeed(id);
@@ -242,7 +241,7 @@ public class JournalRSSRenderer extends DefaultRSSRenderer {
 			feed = JournalFeedLocalServiceUtil.getFeed(groupId, feedId);
 		}
 
-		_request.setAttribute("rssJournalFeed", feed);
+		_resourceRequest.setAttribute("rssJournalFeed", feed);
 
 		return feed;
 	}
@@ -361,8 +360,8 @@ public class JournalRSSRenderer extends DefaultRSSRenderer {
 
 	private static Log _log = LogFactoryUtil.getLog(JournalRSSRenderer.class);
 
-	private ResourceRequest _request;
-	private ResourceResponse _response;
+	private ResourceRequest _resourceRequest;
+	private ResourceResponse _resourceResponse;
 	private ThemeDisplay _themeDisplay;
 
 }

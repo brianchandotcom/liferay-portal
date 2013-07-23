@@ -267,7 +267,7 @@ public class RoleFinderImpl
 
 		if (Validator.isNotNull(keywords)) {
 			names = CustomSQLUtil.keywords(keywords);
-			descriptions = CustomSQLUtil.keywords(keywords);
+			descriptions = names;
 		}
 		else {
 			andOperator = true;
@@ -692,7 +692,7 @@ public class RoleFinderImpl
 
 		if (Validator.isNotNull(keywords)) {
 			names = CustomSQLUtil.keywords(keywords);
-			descriptions = CustomSQLUtil.keywords(keywords);
+			descriptions = names;
 		}
 		else {
 			andOperator = true;

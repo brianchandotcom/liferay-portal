@@ -313,62 +313,6 @@ public class StagingImpl implements Staging {
 
 			throw ree;
 		}
-
-		long stagingRequestId = 0;
-
-		File file = null;
-
-		FileInputStream fileInputStream = null;
-
-		try {
-			file = exportLayoutsAsFile(
-				sourceGroupId, privateLayout, layoutIdMap, parameterMap,
-				remoteGroupId, startDate, endDate, httpPrincipal);
-
-			String checksum = FileUtil.getMD5Checksum(file);
-
-			fileInputStream = new FileInputStream(file);
-
-			stagingRequestId = StagingServiceHttp.createStagingRequest(
-				httpPrincipal, remoteGroupId, checksum);
-
-			byte[] bytes =
-				new byte[PropsValues.STAGING_REMOTE_TRANSFER_BUFFER_SIZE];
-
-			int i = 0;
-
-			while ((i = fileInputStream.read(bytes)) >= 0) {
-				if (i < PropsValues.STAGING_REMOTE_TRANSFER_BUFFER_SIZE) {
-					byte[] tempBytes = new byte[i];
-
-					System.arraycopy(bytes, 0, tempBytes, 0, i);
-
-					StagingServiceHttp.updateStagingRequest(
-						httpPrincipal, stagingRequestId, file.getName(),
-						tempBytes);
-				}
-				else {
-					StagingServiceHttp.updateStagingRequest(
-						httpPrincipal, stagingRequestId, file.getName(), bytes);
-				}
-
-				bytes =
-					new byte[PropsValues.STAGING_REMOTE_TRANSFER_BUFFER_SIZE];
-			}
-
-			StagingServiceHttp.publishStagingRequest(
-				httpPrincipal, stagingRequestId, privateLayout, parameterMap);
-		}
-		finally {
-			StreamUtil.cleanUp(fileInputStream);
-
-			FileUtil.delete(file);
-
-			if (stagingRequestId > 0) {
-				StagingServiceHttp.cleanUpStagingRequest(
-					httpPrincipal, stagingRequestId);
-			}
-		}
 	}
 
 	@Override

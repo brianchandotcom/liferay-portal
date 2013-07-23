@@ -29,13 +29,17 @@ import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.model.BackgroundTask;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.security.auth.HttpPrincipal;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.http.LayoutServiceHttp;
+import com.liferay.portal.service.http.StagingServiceHttp;
+import com.liferay.portal.util.PropsValues;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -86,23 +90,60 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 		File file = null;
 		MissingReferences missingReferences = null;
 
+		long stagingRequestId = 0;
+
+		File file = null;
+
+		FileInputStream fileInputStream = null;
+
 		try {
-			file = LayoutLocalServiceUtil.exportLayoutsAsFile(
-				sourceGroupId, privateLayout, layoutIds, parameterMap,
-				startDate, endDate);
+			file = exportLayoutsAsFile(
+				sourceGroupId, privateLayout, layoutIdMap, parameterMap,
+				remoteGroupId, startDate, endDate, httpPrincipal);
 
-			missingReferences =
-				LayoutLocalServiceUtil.validateImportLayoutsFile(
-					userId, targetGroupId, privateLayout, parameterMap,
-					file);
+			String checksum = FileUtil.getMD5Checksum(file);
 
-			LayoutLocalServiceUtil.importLayouts(
-				userId, targetGroupId, privateLayout, parameterMap, file);
+			fileInputStream = new FileInputStream(file);
+
+			stagingRequestId = StagingServiceHttp.createStagingRequest(
+				httpPrincipal, remoteGroupId, checksum);
+
+			byte[] bytes =
+				new byte[PropsValues.STAGING_REMOTE_TRANSFER_BUFFER_SIZE];
+
+			int i = 0;
+
+			while ((i = fileInputStream.read(bytes)) >= 0) {
+				if (i < PropsValues.STAGING_REMOTE_TRANSFER_BUFFER_SIZE) {
+					byte[] tempBytes = new byte[i];
+
+					System.arraycopy(bytes, 0, tempBytes, 0, i);
+
+					StagingServiceHttp.updateStagingRequest(
+						httpPrincipal, stagingRequestId, file.getName(),
+						tempBytes);
+				}
+				else {
+					StagingServiceHttp.updateStagingRequest(
+						httpPrincipal, stagingRequestId, file.getName(), bytes);
+				}
+
+				bytes =
+					new byte[PropsValues.STAGING_REMOTE_TRANSFER_BUFFER_SIZE];
+			}
+
+			StagingServiceHttp.publishStagingRequest(
+				httpPrincipal, stagingRequestId, privateLayout, parameterMap);
 		}
 		finally {
+			StreamUtil.cleanUp(fileInputStream);
+
 			FileUtil.delete(file);
 
-			StagingUtil.unlockGroup(targetGroupId);
+			if (stagingRequestId > 0) {
+				StagingServiceHttp.cleanUpStagingRequest(
+					httpPrincipal, stagingRequestId);
+			}
 		}
 
 		BackgroundTaskResult backgroundTaskResult = new BackgroundTaskResult(

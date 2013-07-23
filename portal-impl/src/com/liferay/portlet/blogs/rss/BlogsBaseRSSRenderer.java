@@ -66,12 +66,20 @@ public abstract class BlogsBaseRSSRenderer implements RSSRenderer {
 	abstract protected String getEntryURL()
 		throws PortalException, SystemException;
 
+	/**
+	 * @throws PortalException
+	 * @throws SystemException
+	 */
 	@Override
 	public String getFeedURL() throws PortalException, SystemException {
 		return _themeDisplay.getPortalURL() + _themeDisplay.getPathMain() +
 			"/blogs/find_entry?";
 	}
 
+	/**
+	 * @throws PortalException
+	 * @throws SystemException
+	 */
 	@Override
 	public Date getPublicationDate() throws PortalException, SystemException {
 		return new Date();
@@ -94,6 +102,10 @@ public abstract class BlogsBaseRSSRenderer implements RSSRenderer {
 		return RSSUtil.getFeedType(type, getRSSVersion());
 	}
 
+	/**
+	 * @throws PortalException
+	 * @throws SystemException
+	 */
 	public double getRSSVersion() throws PortalException, SystemException {
 		return ParamUtil.getDouble(
 			_request, "version", RSSUtil.VERSION_DEFAULT);

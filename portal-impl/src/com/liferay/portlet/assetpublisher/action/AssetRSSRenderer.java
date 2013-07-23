@@ -62,6 +62,7 @@ public class AssetRSSRenderer extends DefaultRSSRenderer {
 
 	}
 
+	@Override
 	public String getFeedURL() throws PortalException, SystemException {
 		String feedURL = getAssetPublisherURL();
 		return feedURL.concat("rss");

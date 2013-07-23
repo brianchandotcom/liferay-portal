@@ -46,7 +46,8 @@ import java.util.Date;
 import java.util.List;
 
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 
 /**
  * @author Carlos Sierra Andr�s
@@ -56,12 +57,12 @@ import javax.portlet.PortletResponse;
 public class ActivitiesRSSRenderer extends DefaultRSSRenderer {
 
 	public ActivitiesRSSRenderer(
-		PortletRequest portletRequest, PortletResponse portletResponse) {
+		ResourceRequest resourceRequest, ResourceResponse resourceResponse) {
 
-		super(PortalUtil.getHttpServletRequest(portletRequest));
+		super(PortalUtil.getHttpServletRequest(resourceRequest));
 
-		_portletRequest = portletRequest;
-		_themeDisplay = (ThemeDisplay)_portletRequest.getAttribute(
+		_resourceRequest = resourceRequest;
+		_themeDisplay = (ThemeDisplay)_resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 	}
 
@@ -73,7 +74,7 @@ public class ActivitiesRSSRenderer extends DefaultRSSRenderer {
 
 	@Override
 	public String getRSSName() {
-		return ParamUtil.getString(_portletRequest, "feedTitle");
+		return ParamUtil.getString(_resourceRequest, "feedTitle");
 	}
 
 	@Override
@@ -81,13 +82,13 @@ public class ActivitiesRSSRenderer extends DefaultRSSRenderer {
 		throws PortalException, SystemException {
 
 		String displayStyle = ParamUtil.getString(
-			_portletRequest, "displayStyle", RSSUtil.DISPLAY_STYLE_DEFAULT);
+			_resourceRequest, "displayStyle", RSSUtil.DISPLAY_STYLE_DEFAULT);
 
 		int max = ParamUtil.getInteger(
-			_portletRequest, "max", SearchContainer.DEFAULT_DELTA);
+			_resourceRequest, "max", SearchContainer.DEFAULT_DELTA);
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			_portletRequest);
+			_resourceRequest);
 
 		for (SocialActivity activity : getActivities(max)) {
 			SocialActivityFeedEntry activityFeedEntry =
@@ -153,7 +154,7 @@ public class ActivitiesRSSRenderer extends DefaultRSSRenderer {
 		return Collections.emptyList();
 }
 
-	private PortletRequest _portletRequest;
+	private PortletRequest _resourceRequest;
 	private ThemeDisplay _themeDisplay;
 
 }

@@ -45,7 +45,11 @@ public abstract class DefaultRSSAction extends RSSAction {
 
 	@Override
 	protected byte[] getRSS(HttpServletRequest request) throws Exception {
-		return exportToRSS(getRSSRenderer(request)).getBytes(StringPool.UTF8);
+		RSSRenderer rssRenderer = getRSSRenderer(request);
+
+		String rss = exportToRSS(rssRenderer);
+
+		return rss.getBytes(StringPool.UTF8);
 	}
 
 	@Override
@@ -53,9 +57,12 @@ public abstract class DefaultRSSAction extends RSSAction {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		return exportToRSS(
-			getRSSRenderer(
-				resourceRequest, resourceResponse)).getBytes(StringPool.UTF8);
+		RSSRenderer rssRenderer = getRSSRenderer(
+			resourceRequest, resourceResponse);
+
+		String rss = exportToRSS(rssRenderer);
+
+		return rss.getBytes(StringPool.UTF8);
 	}
 
 	protected RSSRenderer getRSSRenderer(HttpServletRequest request)

@@ -200,6 +200,17 @@ public class OracleDB extends BaseDB {
 	}
 
 	@Override
+	protected String buildSQLDropDatabase(String databaseName) {
+		StringBundler sb = new StringBundler(3);
+
+		sb.append("drop user ");
+		sb.append(databaseName);
+		sb.append("cascade");
+
+		return sb.toString();
+	}
+
+	@Override
 	protected String getServerName() {
 		return "oracle";
 	}

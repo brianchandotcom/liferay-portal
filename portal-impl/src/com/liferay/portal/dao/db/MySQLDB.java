@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PropsValues;
 
@@ -128,6 +129,17 @@ public class MySQLDB extends BaseDB {
 		sb.append(readFile(sqlDir + "/indexes/indexes-mysql.sql"));
 		sb.append("\n\n");
 		sb.append(readFile(sqlDir + "/sequences/sequences-mysql.sql"));
+
+		return sb.toString();
+	}
+
+	@Override
+	protected String buildSQLDropDatabase(String databaseName) {
+		StringBundler sb = new StringBundler(3);
+
+		sb.append("drop database if exists ");
+		sb.append(databaseName);
+		sb.append(StringPool.SEMICOLON);
 
 		return sb.toString();
 	}

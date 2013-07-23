@@ -56,6 +56,16 @@ public class HypersonicDB extends BaseDB {
 	}
 
 	@Override
+	protected String buildSQLDropDatabase(String databaseName) {
+		StringBundler sb = new StringBundler(2);
+
+		sb.append("drop schema ");
+		sb.append(databaseName);
+
+		return sb.toString();
+	}
+
+	@Override
 	protected String getServerName() {
 		return "hypersonic";
 	}

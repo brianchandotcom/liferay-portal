@@ -21,6 +21,7 @@ page import="com.liferay.portal.kernel.search.Hits" %><%@
 page import="com.liferay.portal.kernel.template.TemplateHandler" %><%@
 page import="com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil" %><%@
 page import="com.liferay.portal.kernel.util.DateFormatFactoryUtil" %><%@
+page import="com.liferay.portal.kernel.util.FilterPredicate" %><%@
 page import="com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil" %><%@
 page import="com.liferay.portlet.asset.DuplicateQueryRuleException" %><%@
 page import="com.liferay.portlet.asset.NoSuchTagException" %><%@
@@ -63,13 +64,14 @@ long[] groupIds = AssetPublisherUtil.getGroupIds(portletPreferences, scopeGroupI
 
 long[] availableClassNameIds = AssetRendererFactoryRegistryUtil.getClassNameIds(company.getCompanyId());
 
-for (long classNameId : availableClassNameIds) {
-	AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(PortalUtil.getClassName(classNameId));
+availableClassNameIds = ArrayUtil.filter(availableClassNameIds, new FilterPredicate<Long>() {
 
-	if (!assetRendererFactory.isSelectable()) {
-		availableClassNameIds = ArrayUtil.remove(availableClassNameIds, classNameId);
+	public boolean filter(Long classNameId) {
+		AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(PortalUtil.getClassName(classNameId));
+		return !assetRendererFactory.isSelectable();
 	}
-}
+
+});
 
 boolean anyAssetType = GetterUtil.getBoolean(portletPreferences.getValue("anyAssetType", null), true);
 

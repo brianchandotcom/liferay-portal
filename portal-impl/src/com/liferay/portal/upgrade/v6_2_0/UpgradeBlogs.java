@@ -68,6 +68,14 @@ public class UpgradeBlogs extends BaseUpgradePortletPreferences {
 			PortletPreferencesFactoryUtil.fromXML(
 				companyId, ownerId, ownerType, plid, portletId, xml);
 
+		upgradeRss(portletPreferences);
+
+		return PortletPreferencesFactoryUtil.toXML(portletPreferences);
+	}
+
+	protected void upgradeRss(PortletPreferences portletPreferences)
+		throws Exception {
+
 		String rssFormat = GetterUtil.getString(
 			portletPreferences.getValue("rssFormat", null));
 
@@ -82,8 +90,6 @@ public class UpgradeBlogs extends BaseUpgradePortletPreferences {
 		}
 
 		portletPreferences.reset("rssFormat");
-
-		return PortletPreferencesFactoryUtil.toXML(portletPreferences);
 	}
 
 }

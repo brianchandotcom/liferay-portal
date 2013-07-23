@@ -22,14 +22,8 @@ showSearch = showSearch && !results.isEmpty();
 %>
 
 <c:if test="<%= showAddEntryButton || showPermissionsButton || showSearch %>">
-	<div class="portlet-toolbar search-form">
-		<aui:field-wrapper cssClass="form-search">
-			<c:if test="<%= showSearch %>">
-				<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" inlineField="<%= true %>" label="" name="keywords" size="30" title="search-entries" type="text" />
-
-				<aui:button type="submit" value="search" />
-			</c:if>
-
+	<aui:nav-bar>
+		<aui:nav>
 			<c:if test="<%= showAddEntryButton %>">
 				<portlet:renderURL var="editEntryURL">
 					<portlet:param name="struts_action" value="/blogs/edit_entry" />
@@ -37,7 +31,7 @@ showSearch = showSearch && !results.isEmpty();
 					<portlet:param name="backURL" value="<%= currentURL %>" />
 				</portlet:renderURL>
 
-				<aui:button href="<%= editEntryURL %>" name="addEntryButton" value="add-blog-entry" />
+				<aui:nav-item href="<%= editEntryURL %>" name="addEntryButton" label="add-blog-entry" />
 			</c:if>
 
 			<c:if test="<%= showPermissionsButton %>">
@@ -48,10 +42,22 @@ showSearch = showSearch && !results.isEmpty();
 					var="permissionsURL"
 				/>
 
-				<aui:button href="<%= permissionsURL %>" value="permissions" />
+				<aui:nav-item href="<%= permissionsURL %>" label="permissions" />
 			</c:if>
-		</aui:field-wrapper>
-	</div>
+		</aui:nav>
+
+		<c:if test="<%= showSearch %>">
+			<div class="navbar-search pull-right">
+				<div class="form-search">
+					<div class="input-append">
+						<input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" class="search-query span9" id="<portlet:namespace/>keywords1" name="<portlet:namespace/>keywords" placeholder="<liferay-ui:message key="keywords" />" type="text" />
+
+						<aui:button primary="<%= false %>" type="submit" value="search" />
+					</div>
+				</div>
+			</div>
+		</c:if>
+	</aui:nav-bar>
 </c:if>
 
 <liferay-ui:categorization-filter

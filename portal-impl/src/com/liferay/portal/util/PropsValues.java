@@ -1150,8 +1150,6 @@ public class PropsValues {
 
 	public static final String MEMBERSHIP_POLICY_USER_GROUPS = PropsUtil.get(PropsKeys.MEMBERSHIP_POLICY_USER_GROUPS);
 
-	public static final boolean MEMORY_CLUSTER_SCHEDULER_LOCK_CACHE_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.MEMORY_CLUSTER_SCHEDULER_LOCK_CACHE_ENABLED));
-
 	public static final boolean MESSAGE_BOARDS_ANONYMOUS_POSTING_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.MESSAGE_BOARDS_ANONYMOUS_POSTING_ENABLED));
 
 	public static final boolean MESSAGE_BOARDS_EMAIL_BULK = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.MESSAGE_BOARDS_EMAIL_BULK));

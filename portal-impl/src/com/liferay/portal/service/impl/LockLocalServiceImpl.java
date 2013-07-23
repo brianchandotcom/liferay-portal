@@ -182,19 +182,31 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	public Lock lock(String className, String key, String owner)
+		throws SystemException {
+
+		return lock(className, key, null, owner);
+	}
+
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link #lock(String, String,
+	 *             String)}
+	 */
+	@Override
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public Lock lock(
 			String className, String key, String owner,
 			boolean retrieveFromCache)
 		throws SystemException {
 
-		return lock(className, key, null, owner, retrieveFromCache);
+		return lock(className, key, null, owner);
 	}
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public Lock lock(
 			String className, String key, String expectedOwner,
-			String updatedOwner, boolean retrieveFromCache)
+			String updatedOwner)
 		throws SystemException {
 
 		Lock lock = lockFinder.fetchByC_K(className, key, LockMode.UPGRADE);
@@ -229,6 +241,20 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 		}
 
 		return lock;
+	}
+
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link #lock(String, String, String,
+	 *             String)}
+	 */
+	@Override
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	public Lock lock(
+			String className, String key, String expectedOwner,
+			String updatedOwner, boolean retrieveFromCache)
+		throws SystemException {
+
+		return lock(className, key, expectedOwner, updatedOwner);
 	}
 
 	@Override
@@ -292,9 +318,7 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	public void unlock(
-			String className, String key, String owner,
-			boolean retrieveFromCache)
+	public void unlock(String className, String key, String owner)
 		throws SystemException {
 
 		Lock lock = lockFinder.fetchByC_K(className, key, LockMode.UPGRADE);
@@ -307,6 +331,20 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 			lockPersistence.remove(lock);
 			lockPersistence.flush();
 		}
+	}
+
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link #unlock(String, String,
+	 *             String)}
+	 */
+	@Override
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	public void unlock(
+			String className, String key, String owner,
+			boolean retrieveFromCache)
+		throws SystemException {
+
+		unlock(className, key, owner);
 	}
 
 	protected void expireLock(Lock lock) throws SystemException {

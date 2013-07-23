@@ -399,8 +399,7 @@ public class ClusterSchedulerEngine
 				_clusterEventListener);
 
 			LockLocalServiceUtil.unlock(
-				_LOCK_CLASS_NAME, _LOCK_CLASS_NAME, _localClusterNodeAddress,
-				PropsValues.MEMORY_CLUSTER_SCHEDULER_LOCK_CACHE_ENABLED);
+				_LOCK_CLASS_NAME, _LOCK_CLASS_NAME, _localClusterNodeAddress);
 		}
 		catch (Exception e) {
 			throw new SchedulerException("Unable to shutdown scheduler", e);
@@ -615,16 +614,12 @@ public class ClusterSchedulerEngine
 				if (owner == null) {
 					lock = LockLocalServiceUtil.lock(
 						_LOCK_CLASS_NAME, _LOCK_CLASS_NAME,
-						_localClusterNodeAddress,
-						PropsValues.
-							MEMORY_CLUSTER_SCHEDULER_LOCK_CACHE_ENABLED);
+						_localClusterNodeAddress);
 				}
 				else {
 					lock = LockLocalServiceUtil.lock(
 						_LOCK_CLASS_NAME, _LOCK_CLASS_NAME, owner,
-						_localClusterNodeAddress,
-						PropsValues.
-							MEMORY_CLUSTER_SCHEDULER_LOCK_CACHE_ENABLED);
+						_localClusterNodeAddress);
 				}
 
 				Address address = (Address)getDeserializedObject(

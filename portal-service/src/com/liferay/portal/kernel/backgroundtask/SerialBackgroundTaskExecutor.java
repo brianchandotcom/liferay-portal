@@ -59,7 +59,7 @@ public class SerialBackgroundTaskExecutor
 			if (lock != null) {
 				LockLocalServiceUtil.unlock(
 					BackgroundTaskExecutor.class.getName(),
-					backgroundTask.getTaskExecutorClassName(), owner, false);
+					backgroundTask.getTaskExecutorClassName(), owner);
 			}
 		}
 	}
@@ -73,7 +73,7 @@ public class SerialBackgroundTaskExecutor
 			try {
 				lock = LockLocalServiceUtil.lock(
 					BackgroundTaskExecutor.class.getName(),
-					backgroundTask.getTaskExecutorClassName(), owner, false);
+					backgroundTask.getTaskExecutorClassName(), owner);
 
 				break;
 			}

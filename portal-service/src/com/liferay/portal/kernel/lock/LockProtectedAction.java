@@ -47,7 +47,7 @@ public class LockProtectedAction<T> {
 		while (true) {
 			try {
 				lock = LockLocalServiceUtil.lock(
-					_className, _lockKey, _lockKey, false);
+					_className, _lockKey, _lockKey);
 			}
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {
@@ -62,8 +62,7 @@ public class LockProtectedAction<T> {
 					_returnValue = performProtectedAction();
 				}
 				finally {
-					LockLocalServiceUtil.unlock(
-						_className, _lockKey, _lockKey, false);
+					LockLocalServiceUtil.unlock(_className, _lockKey, _lockKey);
 				}
 
 				break;
@@ -75,7 +74,7 @@ public class LockProtectedAction<T> {
 					_timeout) {
 
 				LockLocalServiceUtil.unlock(
-					_className, _lockKey, lock.getOwner(), false);
+					_className, _lockKey, lock.getOwner());
 
 				if (_log.isWarnEnabled()) {
 					_log.warn("Removed lock " + lock + " due to timeout");

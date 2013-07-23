@@ -1211,7 +1211,7 @@ public class SitesImpl implements Sites {
 		try {
 			Lock lock = LockLocalServiceUtil.lock(
 				LayoutLocalServiceVirtualLayoutsAdvice.class.getName(),
-				String.valueOf(layoutSet.getLayoutSetId()), owner, false);
+				String.valueOf(layoutSet.getLayoutSetId()), owner);
 
 			// Double deep check
 
@@ -1226,7 +1226,7 @@ public class SitesImpl implements Sites {
 					lock = LockLocalServiceUtil.lock(
 						LayoutLocalServiceVirtualLayoutsAdvice.class.getName(),
 						String.valueOf(layoutSet.getLayoutSetId()),
-						lock.getOwner(), owner, false);
+						lock.getOwner(), owner);
 
 					// Check if acquiring the lock succeeded or if another
 					// process has the lock
@@ -1276,7 +1276,7 @@ public class SitesImpl implements Sites {
 		finally {
 			LockLocalServiceUtil.unlock(
 				LayoutLocalServiceVirtualLayoutsAdvice.class.getName(),
-				String.valueOf(layoutSet.getLayoutSetId()), owner, false);
+				String.valueOf(layoutSet.getLayoutSetId()), owner);
 		}
 	}
 
@@ -1571,7 +1571,7 @@ public class SitesImpl implements Sites {
 		try {
 			Lock lock = LockLocalServiceUtil.lock(
 				LayoutLocalServiceVirtualLayoutsAdvice.class.getName(),
-				String.valueOf(layout.getPlid()), owner, false);
+				String.valueOf(layout.getPlid()), owner);
 
 			if (!owner.equals(lock.getOwner())) {
 				Date createDate = lock.getCreateDate();
@@ -1584,7 +1584,7 @@ public class SitesImpl implements Sites {
 					lock = LockLocalServiceUtil.lock(
 						LayoutLocalServiceVirtualLayoutsAdvice.class.getName(),
 						String.valueOf(layout.getPlid()), lock.getOwner(),
-						owner, false);
+						owner);
 
 					// Check if acquiring the lock succeeded or if another
 					// process has the lock
@@ -1618,7 +1618,7 @@ public class SitesImpl implements Sites {
 		finally {
 			LockLocalServiceUtil.unlock(
 				LayoutLocalServiceVirtualLayoutsAdvice.class.getName(),
-				String.valueOf(layout.getPlid()), owner, false);
+				String.valueOf(layout.getPlid()), owner);
 		}
 	}
 

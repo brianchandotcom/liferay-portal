@@ -28,14 +28,6 @@ import javax.portlet.ResourceResponse;
 public class RSSAction extends DefaultRSSAction {
 
 	@Override
-	protected RSSRenderer getRSSRenderer(
-			ResourceRequest portletRequest, ResourceResponse portletResponse)
-		throws Exception {
-
-		return new AssetRSSRenderer(portletRequest, portletResponse);
-	}
-
-	@Override
 	protected byte[] getRSS(
 			ResourceRequest portletRequest, ResourceResponse portletResponse)
 		throws Exception {
@@ -50,6 +42,14 @@ public class RSSAction extends DefaultRSSAction {
 		}
 
 		return super.getRSS(portletRequest, portletResponse);
+	}
+
+	@Override
+	protected RSSRenderer getRSSRenderer(
+			ResourceRequest portletRequest, ResourceResponse portletResponse)
+		throws Exception {
+
+		return new AssetRSSRenderer(portletRequest, portletResponse);
 	}
 
 }

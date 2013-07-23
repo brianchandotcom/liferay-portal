@@ -62,6 +62,10 @@ public class DLProcessorRegistryUtil {
 			portletDataContext, fileEntry, importedFileEntry, fileEntryElement);
 	}
 
+	public static boolean isPreviewableSize(FileVersion fileVersion) {
+		return getDLProcessorRegistry().isPreviewableSize(fileVersion);
+	}
+
 	public static void register(DLProcessor dlProcessor) {
 		getDLProcessorRegistry().register(dlProcessor);
 	}

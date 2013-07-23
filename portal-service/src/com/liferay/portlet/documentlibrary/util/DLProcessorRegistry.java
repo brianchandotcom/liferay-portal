@@ -40,6 +40,8 @@ public interface DLProcessorRegistry {
 			FileEntry importedFileEntry, Element fileEntryElement)
 		throws Exception;
 
+	public boolean isPreviewableSize(FileVersion fileVersion);
+
 	public void register(DLProcessor dlProcessor);
 
 	public void trigger(FileEntry fileEntry, FileVersion fileVersion);

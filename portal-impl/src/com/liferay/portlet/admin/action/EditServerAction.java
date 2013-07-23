@@ -719,6 +719,8 @@ public class EditServerAction extends PortletAction {
 			ActionRequest actionRequest, PortletPreferences portletPreferences)
 		throws Exception {
 
+		long dlFileEntryPreviewableProcessorMaxSize = ParamUtil.getLong(
+			actionRequest, "dlFileEntryPreviewableProcessorMaxSize");
 		long dlFileEntryThumbnailMaxHeight = ParamUtil.getLong(
 			actionRequest, "dlFileEntryThumbnailMaxHeight");
 		long dlFileEntryThumbnailMaxWidth = ParamUtil.getLong(
@@ -751,6 +753,9 @@ public class EditServerAction extends PortletAction {
 		long usersImageMaxSize = ParamUtil.getLong(
 			actionRequest, "usersImageMaxSize");
 
+		portletPreferences.setValue(
+			PropsKeys.DL_FILE_ENTRY_PREVIEWABLE_PROCESSOR_MAX_SIZE,
+			String.valueOf(dlFileEntryPreviewableProcessorMaxSize));
 		portletPreferences.setValue(
 			PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_HEIGHT,
 			String.valueOf(dlFileEntryThumbnailMaxHeight));

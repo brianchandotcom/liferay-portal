@@ -15,6 +15,7 @@
 package com.liferay.portal.lar;
 
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
+import com.liferay.portal.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
@@ -197,6 +198,8 @@ public abstract class BasePrototypePropagationTestCase extends PowerMockito {
 			LayoutTestUtil.getPortletPreferences(
 				prototypeLayout, journalContentPortletId);
 
+		MergeLayoutPrototypesThreadLocal.clearMergeComplete();
+
 		layoutSetPrototypePortletPreferences.setValue(
 			"articleId", StringPool.BLANK);
 
@@ -246,6 +249,8 @@ public abstract class BasePrototypePropagationTestCase extends PowerMockito {
 	}
 
 	protected Layout propagateChanges(Layout layout) throws Exception {
+		MergeLayoutPrototypesThreadLocal.clearMergeComplete();
+
 		return LayoutLocalServiceUtil.getLayout(layout.getPlid());
 	}
 

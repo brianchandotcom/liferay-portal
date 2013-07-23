@@ -25,6 +25,10 @@ import java.util.Set;
  */
 public class MergeLayoutPrototypesThreadLocal {
 
+	public static void clearMergeComplete() {
+		_mergeComplete.remove();
+	}
+
 	public static boolean isInProgress() {
 		return _inProgress.get();
 	}

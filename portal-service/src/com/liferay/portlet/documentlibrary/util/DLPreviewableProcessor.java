@@ -162,6 +162,10 @@ public abstract class DLPreviewableProcessor implements DLProcessor {
 			return false;
 		}
 
+		if (!DLProcessorRegistryUtil.isPreviewableSize(fileVersion)) {
+			return false;
+		}
+
 		return isSupported(fileVersion.getMimeType());
 	}
 

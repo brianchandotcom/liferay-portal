@@ -14,6 +14,7 @@
 
 package com.liferay.portal.lar;
 
+import com.liferay.portal.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -278,6 +279,8 @@ public class LayoutSetPrototypePropagationTest
 			boolean layoutSetLayoutLinkEnabled)
 		throws Exception {
 
+		MergeLayoutPrototypesThreadLocal.clearMergeComplete();
+
 		Layout layoutSetPrototypeLayout = LayoutTestUtil.addLayout(
 			_layoutSetPrototypeGroup.getGroupId(),
 			ServiceTestUtil.randomString(), true, layoutPrototype,
@@ -347,6 +350,8 @@ public class LayoutSetPrototypePropagationTest
 	}
 
 	protected void propagateChanges(Group group) throws Exception {
+		MergeLayoutPrototypesThreadLocal.clearMergeComplete();
+
 		LayoutLocalServiceUtil.getLayouts(
 			group.getGroupId(), false,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);

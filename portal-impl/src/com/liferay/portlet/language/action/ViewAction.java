@@ -78,7 +78,10 @@ public class ViewAction extends PortletAction {
 			LanguageUtil.getAvailableLocales(themeDisplay.getSiteGroupId()));
 
 		if (availableLocales.contains(locale)) {
-			if (themeDisplay.isSignedIn()) {
+			boolean persistState = ParamUtil.getBoolean(
+				request, "persistState", true);
+
+			if (themeDisplay.isSignedIn() && (persistState)) {
 				User user = themeDisplay.getUser();
 
 				Contact contact = user.getContact();

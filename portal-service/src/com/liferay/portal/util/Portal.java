@@ -205,6 +205,8 @@ public interface Portal {
 	 */
 	public String addPreservedParameters(ThemeDisplay themeDisplay, String url);
 
+	public void addUserLocaleOptionsMessage(HttpServletRequest request);
+
 	/**
 	 * Clears the render parameters in the request if the portlet is in the
 	 * action phase.

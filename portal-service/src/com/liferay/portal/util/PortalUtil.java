@@ -176,6 +176,10 @@ public class PortalUtil {
 		return getPortal().addPreservedParameters(themeDisplay, url);
 	}
 
+	public static void addUserLocaleOptionsMessage(HttpServletRequest request) {
+		getPortal().addUserLocaleOptionsMessage(request);
+	}
+
 	public static void clearRequestParameters(RenderRequest renderRequest) {
 		getPortal().clearRequestParameters(renderRequest);
 	}

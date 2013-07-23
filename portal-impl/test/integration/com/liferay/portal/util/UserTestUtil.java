@@ -103,17 +103,8 @@ public class UserTestUtil {
 	}
 
 	public static User addUser(
-			String screenName, boolean autoScreenName, long[] groupIds)
-		throws Exception {
-
-		return addUser(
-			screenName, autoScreenName, "ServiceTestSuite", "ServiceTestSuite",
-			groupIds);
-	}
-
-	public static User addUser(
-			String screenName, boolean autoScreenName, String firstName,
-			String lastName, long[] groupIds)
+			String screenName, boolean autoScreenName, Locale locale,
+			String firstName, String lastName, long[] groupIds)
 		throws Exception {
 
 		User user = UserLocalServiceUtil.fetchUserByScreenName(
@@ -130,7 +121,6 @@ public class UserTestUtil {
 			"ServiceTestSuite." + ServiceTestUtil.nextLong() + "@liferay.com";
 		long facebookId = 0;
 		String openId = StringPool.BLANK;
-		Locale locale = LocaleUtil.getDefault();
 		String middleName = StringPool.BLANK;
 		int prefixId = 0;
 		int suffixId = 0;
@@ -151,6 +141,25 @@ public class UserTestUtil {
 			lastName, prefixId, suffixId, male, birthdayMonth, birthdayDay,
 			birthdayYear, jobTitle, groupIds, organizationIds, roleIds,
 			userGroupIds, sendMail, ServiceTestUtil.getServiceContext());
+	}
+
+	public static User addUser(
+			String screenName, boolean autoScreenName, long[] groupIds)
+		throws Exception {
+
+		return addUser(
+			screenName, autoScreenName, "ServiceTestSuite", "ServiceTestSuite",
+			groupIds);
+	}
+
+	public static User addUser(
+			String screenName, boolean autoScreenName, String firstName,
+			String lastName, long[] groupIds)
+		throws Exception {
+
+		return addUser(
+			screenName, autoScreenName, LocaleUtil.getDefault(), firstName,
+			lastName, groupIds);
 	}
 
 	public static User addUser(String screenName, long groupId)

@@ -46,6 +46,7 @@ import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.servlet.NonSerializableObjectRequestWrapper;
 import com.liferay.portal.kernel.servlet.PersistentHttpServletRequestWrapper;
+import com.liferay.portal.kernel.servlet.PortalMessages;
 import com.liferay.portal.kernel.servlet.PortalSessionThreadLocal;
 import com.liferay.portal.kernel.servlet.ServletContextUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -667,6 +668,22 @@ public class PortalImpl implements Portal {
 
 		return addPreservedParameters(
 			themeDisplay, themeDisplay.getLayout(), url, true);
+	}
+
+	@Override
+	public void addUserLocaleOptionsMessage(HttpServletRequest request) {
+		boolean showUserLocaleAlternateMessage = ParamUtil.getBoolean(
+			request, "showUserLocaleOptionsMessage", true);
+
+		if (!showUserLocaleAlternateMessage) {
+			return;
+		}
+
+		PortalMessages.add(request, PortalMessages.KEY_ANIMATION, false);
+		PortalMessages.add(
+			request, PortalMessages.KEY_JSP_PATH,
+			"/html/common/themes/user_locale_options.jsp");
+		PortalMessages.add(request, PortalMessages.KEY_TIMEOUT, 0);
 	}
 
 	@Override

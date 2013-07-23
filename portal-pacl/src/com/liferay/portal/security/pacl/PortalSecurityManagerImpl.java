@@ -393,6 +393,7 @@ public class PortalSecurityManagerImpl extends SecurityManager
 
 	protected void initPACLImpls() throws Exception {
 		initPACLImpl(BeanLocatorImpl.class, new DoBeanLocatorImplPACL());
+		initPACLImpl(ClassLoaderUtil.class, new DoClassLoaderUtilPACL());
 		initPACLImpl(
 			DataSourceFactoryImpl.class, new DoDataSourceFactoryImplPACL());
 		initPACLImpl(

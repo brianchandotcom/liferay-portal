@@ -24,10 +24,10 @@
 
 <%
 long classNameId = GetterUtil.getLong((String)request.getAttribute("liferay-ui:ddm-template-select:classNameId"));
+String displayStyle = (String)request.getAttribute("liferay-ui:ddm-template-select:displayStyle");
 List<String> displayStyles = (List<String>)request.getAttribute("liferay-ui:ddm-template-select:displayStyles");
 String icon = GetterUtil.getString((String)request.getAttribute("liferay-ui:ddm-template-select:icon"), "configuration");
 String label = (String)request.getAttribute("liferay-ui:ddm-template-select:label");
-String preferenceValue = (String)request.getAttribute("liferay-ui:ddm-template-select:preferenceValue");
 String refreshURL = (String)request.getAttribute("liferay-ui:ddm-template-select:refreshURL");
 boolean showEmptyOption = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:ddm-template-select:showEmptyOption"));
 
@@ -38,17 +38,17 @@ Group ddmTemplateGroup = GroupLocalServiceUtil.getGroup(ddmTemplateGroupId);
 
 <aui:select id="displayStyle" inlineField="<%= true %>" label="<%= label %>" name="preferences--displayStyle--">
 	<c:if test="<%= showEmptyOption %>">
-		<aui:option label="default" selected="<%= Validator.isNull(preferenceValue) %>" />
+		<aui:option label="default" selected="<%= Validator.isNull(displayStyle) %>" />
 	</c:if>
 
 	<c:if test="<%= (displayStyles != null) && !displayStyles.isEmpty() %>">
 		<optgroup label="<liferay-ui:message key="default" />">
 
 			<%
-			for (String displayStyle : displayStyles) {
+			for (String curDisplayStyle : displayStyles) {
 			%>
 
-				<aui:option label="<%= HtmlUtil.escape(displayStyle) %>" selected="<%= preferenceValue.equals(displayStyle) %>" />
+				<aui:option label="<%= HtmlUtil.escape(curDisplayStyle) %>" selected="<%= displayStyle.equals(curDisplayStyle) %>" />
 
 			<%
 			}
@@ -60,8 +60,8 @@ Group ddmTemplateGroup = GroupLocalServiceUtil.getGroup(ddmTemplateGroupId);
 	<%
 	DDMTemplate ddmTemplate = null;
 
-	if (preferenceValue.startsWith(PortletDisplayTemplate.DISPLAY_STYLE_PREFIX)) {
-		ddmTemplate = PortletDisplayTemplateUtil.fetchDDMTemplate(ddmTemplateGroupId, preferenceValue);
+	if (displayStyle.startsWith(PortletDisplayTemplate.DISPLAY_STYLE_PREFIX)) {
+		ddmTemplate = PortletDisplayTemplateUtil.fetchDDMTemplate(ddmTemplateGroupId, displayStyle);
 	}
 
 	List<DDMTemplate> companyPortletDDMTemplates = DDMTemplateLocalServiceUtil.getTemplates(themeDisplay.getCompanyGroupId(), classNameId, 0);

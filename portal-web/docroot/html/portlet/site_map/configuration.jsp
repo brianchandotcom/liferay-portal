@@ -110,7 +110,7 @@ List layoutList = layoutView.getList();
 
 			<liferay-ui:ddm-template-selector
 				classNameId="<%= PortalUtil.getClassNameId(templateHandler.getClassName()) %>"
-				preferenceValue="<%= displayStyle %>"
+				displayStyle="<%= displayStyle %>"
 				refreshURL="<%= currentURL %>"
 				showEmptyOption="<%= true %>"
 			/>

@@ -29,6 +29,10 @@ public class DDMTemplateSelectorTag extends IncludeTag {
 		_classNameId = classNameId;
 	}
 
+	public void setDisplayStyle(String displayStyle) {
+		_displayStyle = displayStyle;
+	}
+
 	public void setDisplayStyles(List<String> displayStyles) {
 		_displayStyles = displayStyles;
 	}
@@ -39,10 +43,6 @@ public class DDMTemplateSelectorTag extends IncludeTag {
 
 	public void setLabel(String label) {
 		_label = label;
-	}
-
-	public void setPreferenceValue(String preferenceValue) {
-		_preferenceValue = preferenceValue;
 	}
 
 	public void setRefreshURL(String refreshURL) {
@@ -56,10 +56,10 @@ public class DDMTemplateSelectorTag extends IncludeTag {
 	@Override
 	protected void cleanUp() {
 		_classNameId = 0;
+		_displayStyle = null;
 		_displayStyles = null;
 		_icon = null;
 		_label = "display-template";
-		_preferenceValue = null;
 		_refreshURL = null;
 		_showEmptyOption = false;
 	}
@@ -75,11 +75,11 @@ public class DDMTemplateSelectorTag extends IncludeTag {
 			"liferay-ui:ddm-template-select:classNameId",
 			String.valueOf(_classNameId));
 		request.setAttribute(
+			"liferay-ui:ddm-template-select:displayStyle", _displayStyle);
+		request.setAttribute(
 			"liferay-ui:ddm-template-select:displayStyles", _displayStyles);
 		request.setAttribute("liferay-ui:ddm-template-select:icon", _icon);
 		request.setAttribute("liferay-ui:ddm-template-select:label", _label);
-		request.setAttribute(
-			"liferay-ui:ddm-template-select:preferenceValue", _preferenceValue);
 		request.setAttribute(
 			"liferay-ui:ddm-template-select:refreshURL", _refreshURL);
 		request.setAttribute(
@@ -91,10 +91,10 @@ public class DDMTemplateSelectorTag extends IncludeTag {
 		"/html/taglib/ui/ddm_template_selector/page.jsp";
 
 	private long _classNameId;
+	private String _displayStyle;
 	private List<String> _displayStyles;
 	private String _icon;
 	private String _label = "display-template";
-	private String _preferenceValue;
 	private String _refreshURL;
 	private boolean _showEmptyOption;
 

@@ -92,7 +92,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 			<liferay-ui:ddm-template-selector
 				classNameId="<%= PortalUtil.getClassNameId(templateHandler.getClassName()) %>"
-				preferenceValue="<%= displayTemplate %>"
+				displayStyle="<%= displayTemplate %>"
 				refreshURL="<%= currentURL %>"
 				showEmptyOption="<%= true %>"
 			/>

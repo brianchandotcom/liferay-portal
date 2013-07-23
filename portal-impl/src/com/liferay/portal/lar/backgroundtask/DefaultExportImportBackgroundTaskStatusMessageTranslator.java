@@ -46,6 +46,20 @@ public class DefaultExportImportBackgroundTaskStatusMessageTranslator
 		}
 	}
 
+	protected long getTotal(Map<String, LongWrapper> modelCounters) {
+		if (modelCounters == null) {
+			return 0;
+		}
+
+		long total = 0;
+
+		for (Map.Entry<String, LongWrapper> entry : modelCounters.entrySet()) {
+			total += (entry.getValue()).getValue();
+		}
+
+		return total;
+	}
+
 	protected synchronized void translateLayoutMessage(
 		BackgroundTaskStatus backgroundTaskStatus, Message message) {
 
@@ -56,12 +70,18 @@ public class DefaultExportImportBackgroundTaskStatusMessageTranslator
 			"allModelAdditionCounters",
 			new HashMap<String, LongWrapper>(modelAdditionCounters));
 
+		backgroundTaskStatus.setAttribute(
+			"allModelAdditionCount", getTotal(modelAdditionCounters));
+
 		Map<String, LongWrapper> modelDeletionCounters =
 			(Map<String, LongWrapper>)message.get("modelDeletionCounters");
 
 		backgroundTaskStatus.setAttribute(
 			"allModelDeletionCounters",
 			new HashMap<String, LongWrapper>(modelDeletionCounters));
+
+		backgroundTaskStatus.setAttribute(
+			"allModelDeletionCount", getTotal(modelDeletionCounters));
 	}
 
 	protected synchronized void translatePortletMessage(
@@ -76,12 +96,18 @@ public class DefaultExportImportBackgroundTaskStatusMessageTranslator
 			"allModelAdditionCounters",
 			new HashMap<String, LongWrapper>(modelAdditionCounters));
 
+		backgroundTaskStatus.setAttribute(
+			"allModelAdditionCount", getTotal(modelAdditionCounters));
+
 		Map<String, LongWrapper> modelDeletionCounters =
 			(Map<String, LongWrapper>)message.get("modelDeletionCounters");
 
 		backgroundTaskStatus.setAttribute(
 			"allModelDeletionCounters",
 			new HashMap<String, LongWrapper>(modelDeletionCounters));
+
+		backgroundTaskStatus.setAttribute(
+			"allModelDeletionCount", getTotal(modelDeletionCounters));
 
 		String portletId = message.getString("portletId");
 
@@ -105,12 +131,18 @@ public class DefaultExportImportBackgroundTaskStatusMessageTranslator
 			"currentModelAdditionCounters",
 			new HashMap<String, LongWrapper>(modelAdditionCounters));
 
+		backgroundTaskStatus.setAttribute(
+			"currentModelAdditionCount", getTotal(modelAdditionCounters));
+
 		Map<String, LongWrapper> modelDeletionCounters =
 			(Map<String, LongWrapper>)message.get("modelDeletionCounters");
 
 		backgroundTaskStatus.setAttribute(
 			"currentModelDeletionCounters",
 			new HashMap<String, LongWrapper>(modelDeletionCounters));
+
+		backgroundTaskStatus.setAttribute(
+			"currentModelDeletionCount", getTotal(modelDeletionCounters));
 
 		String stagedModelName = message.getString("stagedModelName");
 

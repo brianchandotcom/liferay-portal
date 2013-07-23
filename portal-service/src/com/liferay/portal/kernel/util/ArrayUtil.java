@@ -23,6 +23,7 @@ import java.lang.reflect.Array;
 import java.text.DateFormat;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Date;
@@ -854,6 +855,27 @@ public class ArrayUtil {
 		}
 
 		return toArray(filteredArray.toArray(new Short[filteredArray.size()]));
+	}
+
+	@SuppressWarnings({"unchecked"})
+	public static <T> T[] filter(
+		T[] array, PredicateFilter<T> filterPredicate) {
+
+		if ((array == null) || (array.length == 0)) {
+			return array;
+		}
+
+		List<T> filteredArray = new ArrayList<T>();
+
+		for (T item : array) {
+			if (filterPredicate.filter(item)) {
+				filteredArray.add(item);
+			}
+		}
+
+		Object[] result = filteredArray.toArray();
+
+		return (T[])Arrays.copyOf(result, result.length, array.getClass());
 	}
 
 	public static int getLength(Object[] array) {

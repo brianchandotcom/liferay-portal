@@ -374,7 +374,7 @@ portletURL.setParameter("tabs3", "all-export-processes");
 	</liferay-ui:section>
 
 	<liferay-ui:section>
-		<div id="<portlet:namespace />exportProcesses">
+		<div class="process-list" id="<portlet:namespace />exportProcesses">
 			<liferay-util:include page="/html/portlet/portlet_configuration/export_portlet_processes.jsp" />
 		</div>
 	</liferay-ui:section>

@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.lar.MissingReferences;
 import com.liferay.portal.kernel.lar.PortletDataException;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -63,7 +64,6 @@ import com.liferay.portal.model.ResourcePermission;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.model.impl.VirtualLayout;
-import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.LayoutLocalServiceBaseImpl;
 import com.liferay.portal.util.PortalUtil;
@@ -870,7 +870,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		Map<String, Serializable> taskContextMap =
 			BackgroundTaskContextMapFactory.buildTaskContextMap(
 				userId, groupId, privateLayout, layoutIds, parameterMap,
-				ActionKeys.EXPORT_IMPORT_LAYOUTS, startDate, endDate, fileName);
+				Constants.EXPORT, startDate, endDate, fileName);
 
 		BackgroundTask backgroundTask =
 			backgroundTaskLocalService.addBackgroundTask(
@@ -1009,8 +1009,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		Map<String, Serializable> taskContextMap =
 			BackgroundTaskContextMapFactory.buildTaskContextMap(
 				userId, plid, groupId, portletId, parameterMap,
-				ActionKeys.EXPORT_IMPORT_PORTLET_INFO, startDate, endDate,
-				fileName);
+				Constants.EXPORT, startDate, endDate, fileName);
 
 		BackgroundTask backgroundTask =
 			backgroundTaskLocalService.addBackgroundTask(
@@ -1800,7 +1799,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		Map<String, Serializable> taskContextMap =
 			BackgroundTaskContextMapFactory.buildTaskContextMap(
 				userId, groupId, privateLayout, null, parameterMap,
-				ActionKeys.EXPORT_IMPORT_LAYOUTS, null, null, file.getName());
+				Constants.IMPORT, null, null, file.getName());
 
 		BackgroundTask backgroundTask =
 			backgroundTaskLocalService.addBackgroundTask(
@@ -1952,8 +1951,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		Map<String, Serializable> taskContextMap =
 			BackgroundTaskContextMapFactory.buildTaskContextMap(
 				userId, plid, groupId, portletId, parameterMap,
-				ActionKeys.EXPORT_IMPORT_PORTLET_INFO, null, null,
-				file.getName());
+				Constants.EXPORT, null, null, file.getName());
 
 		BackgroundTask backgroundTask =
 			backgroundTaskLocalService.addBackgroundTask(

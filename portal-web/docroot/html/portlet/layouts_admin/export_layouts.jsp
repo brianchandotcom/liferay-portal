@@ -543,7 +543,7 @@ portletURL.setParameter("rootNodeName", rootNodeName);
 	</liferay-ui:section>
 
 	<liferay-ui:section>
-		<div id="<portlet:namespace />exportProcesses">
+		<div class="process-list" id="<portlet:namespace />exportProcesses">
 			<liferay-util:include page="/html/portlet/layouts_admin/export_layouts_processes.jsp" />
 		</div>
 	</liferay-ui:section>

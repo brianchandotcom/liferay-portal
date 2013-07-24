@@ -50,17 +50,17 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 		}
 
 		try {
+			ManifestSummary manifestSummary =
+				portletDataContext.getManifestSummary();
+
+			PortletDataHandlerStatusMessageSenderUtil.sendStatusMessage(
+				"stagedModel", stagedModel, manifestSummary);
+
 			doExportStagedModel(portletDataContext, (T)stagedModel.clone());
 
 			if (countStagedModel(portletDataContext, stagedModel)) {
-				ManifestSummary manifestSummary =
-					portletDataContext.getManifestSummary();
-
 				manifestSummary.incrementModelAdditionCount(
 					stagedModel.getStagedModelType());
-
-				PortletDataHandlerStatusMessageSenderUtil.sendStatusMessage(
-					"stagedModel", stagedModel, manifestSummary);
 			}
 		}
 		catch (Exception e) {
@@ -93,16 +93,16 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 		}
 
 		try {
-			doImportStagedModel(portletDataContext, stagedModel);
-
 			ManifestSummary manifestSummary =
 				portletDataContext.getManifestSummary();
 
-			manifestSummary.incrementModelAdditionCount(
-				stagedModel.getStagedModelType());
-
 			PortletDataHandlerStatusMessageSenderUtil.sendStatusMessage(
 				"stagedModel", stagedModel, manifestSummary);
+
+			doImportStagedModel(portletDataContext, stagedModel);
+
+			manifestSummary.incrementModelAdditionCount(
+				stagedModel.getStagedModelType());
 		}
 		catch (Exception e) {
 			throw new PortletDataException(e);

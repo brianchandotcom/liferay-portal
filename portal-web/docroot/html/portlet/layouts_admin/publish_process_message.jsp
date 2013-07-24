@@ -26,6 +26,63 @@ BackgroundTask backgroundTask = (BackgroundTask)row.getObject();
 	<liferay-ui:message key="<%= backgroundTask.getStatusLabel() %>" />
 </strong>
 
+<c:if test="<%= backgroundTask.isInProgress() %>">
+
+	<%
+	BackgroundTaskStatus backgroundTaskStatus = BackgroundTaskStatusRegistryUtil.getBackgroundTaskStatus(backgroundTask.getBackgroundTaskId());
+	%>
+
+	<c:if test="<%= backgroundTaskStatus != null %>">
+
+		<%
+		long allModelAdditionCount = GetterUtil.getLong(backgroundTaskStatus.getAttribute("allModelAdditionCount"));
+		long currentModelAdditionCount = GetterUtil.getLong(backgroundTaskStatus.getAttribute("currentModelAdditionCount"));
+
+		double percentage = 100;
+
+		if (allModelAdditionCount > 0) {
+			percentage = Math.round(Double.valueOf(currentModelAdditionCount)/Double.valueOf(allModelAdditionCount) * 100);
+		}
+		%>
+
+		<div class="progress progress-striped active">
+			<div class="bar" style="width: <%= percentage %>%;">
+
+			  <c:if test="<%= allModelAdditionCount > 0 %>">
+				  <%= currentModelAdditionCount %><%= StringPool.FORWARD_SLASH %><%= allModelAdditionCount %>
+			  </c:if>
+		  </div>
+		</div>
+
+		<%
+		String stagedModelName = (String)backgroundTaskStatus.getAttribute("stagedModelName");
+		String stagedModelType = (String)backgroundTaskStatus.getAttribute("stagedModelType");
+		%>
+
+		<c:if test="<%= Validator.isNotNull(stagedModelName) && Validator.isNotNull(stagedModelType) %>">
+
+			<%
+			Map<String, Serializable> taskContextMap = backgroundTask.getTaskContextMap();
+
+			String cmd = (String)taskContextMap.get(Constants.CMD);
+
+			String cmdKey = "exporting";
+
+			if (Validator.equals(cmd, Constants.IMPORT)) {
+				cmdKey = "importing";
+			}
+			else if (Validator.equals(cmd, Constants.PUBLISH)) {
+				cmdKey = "publishing";
+			}
+			%>
+
+			<div class="progress-current-item">
+				<strong><liferay-ui:message key="<%= cmdKey %>" /><%= StringPool.TRIPLE_PERIOD %></strong> <%= ResourceActionsUtil.getModelResource(locale, stagedModelType) %> <em><%= stagedModelName %></em>
+			</div>
+		</c:if>
+	</c:if>
+</c:if>
+
 <c:if test="<%= Validator.isNotNull(backgroundTask.getStatusMessage()) %>">
 
 	<%

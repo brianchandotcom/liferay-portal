@@ -110,7 +110,7 @@ boolean showAddAction = ParamUtil.getBoolean(request, "showAddAction", true);
 %>
 
 <c:if test="<%= !portletName.equals(PortletKeys.DOCKBAR) %>">
-	<div id="<portlet:namespace />addLayout" class="hide">
+	<div id="<portlet:namespace />addLayout" class="add-content-menu hide">
 		<liferay-util:include page="/html/portlet/layouts_admin/add_layout.jsp" />
 	</div>
 </c:if>
@@ -249,7 +249,9 @@ boolean showAddAction = ParamUtil.getBoolean(request, "showAddAction", true);
 								popup = Liferay.Util.Window.getWindow(
 									{
 										dialog: {
-											bodyContent: content.show()
+											bodyContent: content.show(),
+											cssClass: 'lfr-add-dialog',
+											width: 600
 										},
 										title: '<%= UnicodeLanguageUtil.get(pageContext, "add-child-page") %>'
 									}

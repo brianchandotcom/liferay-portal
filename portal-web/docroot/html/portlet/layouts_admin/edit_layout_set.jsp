@@ -71,7 +71,7 @@ boolean hasAddPageLayoutsPermission = !group.isLayoutPrototype() && GroupPermiss
 boolean hasViewPagesPermission = (pagesCount > 0) && (liveGroup.isStaged() || selGroup.isLayoutSetPrototype() || selGroup.isStagingGroup() || portletName.equals(PortletKeys.MY_SITES) || portletName.equals(PortletKeys.GROUP_PAGES) || portletName.equals(PortletKeys.SITES_ADMIN) || portletName.equals(PortletKeys.USERS_ADMIN));
 %>
 
-<div class="hide" id="<portlet:namespace />addLayout">
+<div class="add-content-menu hide" id="<portlet:namespace />addLayout">
 	<liferay-util:include page="/html/portlet/layouts_admin/add_layout.jsp" />
 </div>
 
@@ -238,7 +238,9 @@ boolean hasViewPagesPermission = (pagesCount > 0) && (liveGroup.isStaged() || se
 				popup = Liferay.Util.Window.getWindow(
 					{
 						dialog: {
-							bodyContent: content.show()
+							bodyContent: content.show(),
+							cssClass: 'lfr-add-dialog',
+							width: 600
 						},
 						title: '<%= UnicodeLanguageUtil.get(pageContext, "add-page") %>'
 					}

@@ -25,15 +25,12 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.theme.PortletDisplay;
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
-import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
 import com.liferay.portlet.rss.DefaultRSSRenderer;
 import com.liferay.util.RSSUtil;
 
@@ -45,23 +42,23 @@ import com.sun.syndication.feed.synd.SyndEntryImpl;
 import java.util.List;
 
 import javax.portlet.PortletPreferences;
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
 /**
- * @author Carlos Sierra Andr�s
+ * @author Carlos Sierra Andrés
  * @author Julio Camarero
  * @author Brian Wing Shun Chan
  */
 public class AssetRSSRenderer extends DefaultRSSRenderer {
 
 	public AssetRSSRenderer(
-		ResourceRequest resourceRequest, ResourceResponse resourceResponse) {
+		List<AssetEntry> entries, ResourceRequest resourceRequest,
+		ResourceResponse resourceResponse) {
 
 		super(resourceRequest);
 
+		_entries = entries;
 		_resourceRequest = resourceRequest;
 		_resourceResponse = resourceResponse;
 
@@ -94,7 +91,7 @@ public class AssetRSSRenderer extends DefaultRSSRenderer {
 		String rssDisplayStyle = _portletPreferences.getValue(
 			"rssDisplayStyle", RSSUtil.DISPLAY_STYLE_ABSTRACT);
 
-		for (AssetEntry assetEntry : getAssetEntries()) {
+		for (AssetEntry assetEntry : _entries) {
 			SyndEntry syndEntry = new SyndEntryImpl();
 
 			String author = PortalUtil.getUserName(assetEntry);
@@ -120,29 +117,16 @@ public class AssetRSSRenderer extends DefaultRSSRenderer {
 
 			syndEntry.setDescription(syndContent);
 
-			String link;
-			link = getEntryURL(assetLinkBehavior, assetEntry);
+			String link = getEntryURL(assetLinkBehavior, assetEntry);
 
 			syndEntry.setLink(link);
-
 			syndEntry.setPublishedDate(assetEntry.getPublishDate());
 			syndEntry.setTitle(assetEntry.getTitle(languageId, true));
 			syndEntry.setUpdatedDate(assetEntry.getModifiedDate());
-			syndEntry.setUri(syndEntry.getLink());
+			syndEntry.setUri(link);
 
 			syndEntries.add(syndEntry);
 		}
-	}
-
-	protected List<AssetEntry> getAssetEntries()
-		throws PortalException, SystemException {
-
-		int rssDelta = GetterUtil.getInteger(
-			_portletPreferences.getValue("rssDelta", "20"));
-
-		return AssetPublisherUtil.getAssetEntries(
-			_portletPreferences, themeDisplay.getLayout(),
-			themeDisplay.getScopeGroupId(), rssDelta, true);
 	}
 
 	protected String getAssetPublisherURL()
@@ -167,10 +151,24 @@ public class AssetRSSRenderer extends DefaultRSSRenderer {
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		sb.append(portletDisplay.getInstanceId());
-
 		sb.append(StringPool.SLASH);
 
 		return sb.toString();
+	}
+
+	protected String getEntryURL(String linkBehavior, AssetEntry assetEntry)
+		throws PortalException, SystemException {
+
+		if (linkBehavior.equals("viewInPortlet")) {
+			return getEntryURLViewInContext(assetEntry);
+		}
+
+		try {
+			return getEntryURLAssetPublisher(assetEntry);
+		}
+		catch (Exception e) {
+			throw new PortalException(e);
+		}
 	}
 
 	protected String getEntryURLAssetPublisher(AssetEntry assetEntry)
@@ -221,21 +219,7 @@ public class AssetRSSRenderer extends DefaultRSSRenderer {
 		return viewInContextURL;
 	}
 
-	private String getEntryURL(String linkBehavior, AssetEntry assetEntry)
-		throws PortalException, SystemException {
-
-		if (linkBehavior.equals("viewInPortlet")) {
-			return getEntryURLViewInContext(assetEntry);
-		}
-
-		try {
-			return getEntryURLAssetPublisher(assetEntry);
-		}
-		catch (Exception e) {
-			throw new PortalException(e);
-		}
-	}
-
+	private List<AssetEntry> _entries;
 	private PortletPreferences _portletPreferences;
 	private ResourceRequest _resourceRequest;
 	private ResourceResponse _resourceResponse;

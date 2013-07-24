@@ -27,28 +27,28 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * @author Carlos Sierra Andrés
+ * @author Carlos Sierra AndrÃ©s
  * @author Julio Camarero
  * @author Brian Wing Shun Chan
  */
 public class BlogsGroupRSSRenderer extends BlogsBaseRSSRenderer {
 
 	public BlogsGroupRSSRenderer(
-		Group group, List<BlogsEntry> blogsEntries,
-		HttpServletRequest request) {
+		Group group, List<BlogsEntry> entries, HttpServletRequest request) {
 
-		this(group, blogsEntries, request, false);
+		this(group, entries, request, false);
 	}
 
 	public BlogsGroupRSSRenderer(
-		Group group, List<BlogsEntry> blogsEntries, HttpServletRequest request,
+		Group group, List<BlogsEntry> entries, HttpServletRequest request,
 		boolean isScopeGroup) {
 
-		super(blogsEntries, request);
+		super(entries, request);
 
 		_group = group;
 		_isScopeGroup = isScopeGroup;
-		_plid = ParamUtil.getLong(getRequest(), "p_l_id");
+
+		_plid = ParamUtil.getLong(request, "p_l_id");
 	}
 
 	@Override
@@ -57,7 +57,7 @@ public class BlogsGroupRSSRenderer extends BlogsBaseRSSRenderer {
 			return super.getFeedURL() + "p_l_id=" + _plid;
 		}
 
-		return PortalUtil.getLayoutFullURL(getThemeDisplay()) +
+		return PortalUtil.getLayoutFullURL(themeDisplay) +
 			Portal.FRIENDLY_URL_SEPARATOR + "blogs/rss";
 	}
 

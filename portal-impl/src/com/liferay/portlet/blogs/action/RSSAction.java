@@ -17,7 +17,6 @@ package com.liferay.portlet.blogs.action;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.model.Layout;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.OrganizationLocalServiceUtil;
@@ -31,7 +30,6 @@ import com.liferay.portlet.blogs.service.BlogsEntryServiceUtil;
 import com.liferay.portlet.rss.RSSRenderer;
 import com.liferay.portlet.rss.action.DefaultRSSAction;
 
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -49,48 +47,47 @@ public class RSSAction extends DefaultRSSAction {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Layout layout = themeDisplay.getLayout();
-
 		long companyId = ParamUtil.getLong(request, "companyId");
 		long groupId = ParamUtil.getLong(request, "groupId");
-		long organizationId = ParamUtil.getLong(request, "organizationId");
-		int status = WorkflowConstants.STATUS_APPROVED;
 		int max = ParamUtil.getInteger(
 			request, "max", SearchContainer.DEFAULT_DELTA);
+		long organizationId = ParamUtil.getLong(request, "organizationId");
 
-		List<BlogsEntry> blogsEntries = Collections.emptyList();
+		List<BlogsEntry> entries = null;
 
 		if (companyId > 0) {
-			blogsEntries = BlogsEntryServiceUtil.getCompanyEntries(
-				companyId, new Date(), status, max);
+			entries = BlogsEntryServiceUtil.getCompanyEntries(
+				companyId, new Date(), WorkflowConstants.STATUS_APPROVED, max);
 
 			return new BlogsCompanyRSSRenderer(
-				CompanyLocalServiceUtil.getCompany(companyId), blogsEntries,
+				CompanyLocalServiceUtil.getCompany(companyId), entries,
 				request);
 		}
 		else if (groupId > 0) {
-			blogsEntries = BlogsEntryServiceUtil.getGroupEntries(
-				groupId, new Date(), status, max);
+			entries = BlogsEntryServiceUtil.getGroupEntries(
+				groupId, new Date(), WorkflowConstants.STATUS_APPROVED, max);
 
 			return new BlogsGroupRSSRenderer(
 				GroupLocalServiceUtil.getGroup(
-					groupId), blogsEntries, request, true);
+					groupId), entries, request, true);
 		}
-
 		else if (organizationId > 0) {
-			blogsEntries = BlogsEntryServiceUtil.getOrganizationEntries(
-				organizationId, new Date(), status, max);
+			entries = BlogsEntryServiceUtil.getOrganizationEntries(
+				organizationId, new Date(), WorkflowConstants.STATUS_APPROVED,
+				max);
+
 			return new BlogsOrganizationRSSRenderer(
 				OrganizationLocalServiceUtil.getOrganization(organizationId),
-				blogsEntries, request);
+				entries, request);
 		}
-		else if (layout != null) {
+		else if (themeDisplay.getLayout() != null) {
 			groupId = themeDisplay.getScopeGroupId();
 
-			blogsEntries = BlogsEntryServiceUtil.getGroupEntries(
-				groupId, new Date(), status, max);
+			entries = BlogsEntryServiceUtil.getGroupEntries(
+				groupId, new Date(), WorkflowConstants.STATUS_APPROVED, max);
+
 			return new BlogsGroupRSSRenderer(
-				GroupLocalServiceUtil.getGroup(groupId), blogsEntries, request,
+				GroupLocalServiceUtil.getGroup(groupId), entries, request,
 				false);
 		}
 

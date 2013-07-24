@@ -36,22 +36,23 @@ public class RSSAction extends DefaultRSSAction {
 	protected RSSRenderer getRSSRenderer(HttpServletRequest request)
 		throws Exception {
 
-		long nodeId = ParamUtil.getLong(request, "nodeId");
-		String title = ParamUtil.getString(request, "title");
 		int max = ParamUtil.getInteger(
 			request, "max", SearchContainer.DEFAULT_DELTA);
+		long nodeId = ParamUtil.getLong(request, "nodeId");
+		String title = ParamUtil.getString(request, "title");
 
 		if (nodeId > 0) {
 			if (Validator.isNotNull(title)) {
 				List<WikiPage> pages = WikiPageServiceUtil. getPages(
 					nodeId, title, 0, max, new PageCreateDateComparator(true));
 
-				return new WikiRSSRenderer(request, pages, true);
+				return new WikiRSSRenderer(pages, true, request);
 			}
 			else {
 				List<WikiPage> pages = WikiPageServiceUtil.getNodePages(
 					nodeId, max);
-				return new WikiRSSRenderer(request, pages, false);
+
+				return new WikiRSSRenderer(pages, false, request);
 			}
 		}
 

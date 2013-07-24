@@ -23,12 +23,10 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.rss.DefaultRSSRenderer;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.util.WikiUtil;
@@ -45,30 +43,27 @@ import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * @author Carlos Sierra Andrés
+ * @author Carlos Sierra AndrÃ©s
  * @author Julio Camarero
  * @author Brian Wing Shun Chan
  */
 public class WikiRSSRenderer extends DefaultRSSRenderer {
 
 	public WikiRSSRenderer(
-		HttpServletRequest request, List<WikiPage> pagesToExport,
-		boolean diff) {
+		List<WikiPage> pages, boolean diff, HttpServletRequest request) {
 
 		super(request);
 
-		_pages = pagesToExport;
+		_pages = pages;
 		_diff = diff;
-		_themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-		_request = request;
+
 		_nodeId = ParamUtil.getLong(request, "nodeId");
 	}
 
 	@Override
 	public String getFeedURL() throws PortalException, SystemException {
-		String layoutFullURL =PortalUtil.getLayoutFullURL(
-			_themeDisplay.getScopeGroupId(), PortletKeys.WIKI);
+		String layoutFullURL = PortalUtil.getLayoutFullURL(
+			themeDisplay.getScopeGroupId(), PortletKeys.WIKI);
 
 		StringBundler sb = new StringBundler(4);
 
@@ -82,7 +77,7 @@ public class WikiRSSRenderer extends DefaultRSSRenderer {
 
 	@Override
 	public String getRSSName() {
-		return ParamUtil.getString(_request, "title");
+		return ParamUtil.getString(request, "title");
 	}
 
 	@Override
@@ -95,14 +90,14 @@ public class WikiRSSRenderer extends DefaultRSSRenderer {
 
 		String entryURL = getFeedURL() + StringPool.SLASH + getRSSName();
 
-		Locale locale = _themeDisplay.getLocale();
+		Locale locale = themeDisplay.getLocale();
 
 		String attachmentURLPrefix = WikiUtil.getAttachmentURLPrefix(
-			_themeDisplay.getPathMain(), _themeDisplay.getPlid(), _nodeId,
+			themeDisplay.getPathMain(), themeDisplay.getPlid(), _nodeId,
 			getRSSName());
 
 		String displayStyle = ParamUtil.getString(
-			_request, "displayStyle", RSSUtil.DISPLAY_STYLE_DEFAULT);
+			request, "displayStyle", RSSUtil.DISPLAY_STYLE_DEFAULT);
 
 		for (WikiPage page : _pages) {
 			SyndEntry syndEntry = new SyndEntryImpl();
@@ -193,7 +188,6 @@ public class WikiRSSRenderer extends DefaultRSSRenderer {
 			}
 
 			syndEntry.setTitle(title);
-
 			syndEntry.setUpdatedDate(page.getModifiedDate());
 			syndEntry.setUri(sb.toString());
 
@@ -204,7 +198,5 @@ public class WikiRSSRenderer extends DefaultRSSRenderer {
 	private boolean _diff;
 	private long _nodeId;
 	private List<WikiPage> _pages;
-	private HttpServletRequest _request;
-	private ThemeDisplay _themeDisplay;
 
 }

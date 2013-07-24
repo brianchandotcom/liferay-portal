@@ -52,7 +52,7 @@ Locale userLocale = user.getLocale();
 	changePreferredLanguageURLString = HttpUtil.addParameter(changePreferredLanguageURLString, "showUserLocaleOptionsMessage", false);
 	%>
 
-	<%= LanguageUtil.format(userLocale, "this-page-is-displayed-in-x", locale.getDisplayName(userLocale))) %>
+	<%= LanguageUtil.format(userLocale, "this-page-is-displayed-in-x", locale.getDisplayName(userLocale)) %>
 
 	<aui:a href="<%= displayPreferredLanguageURLString %>"><%= LanguageUtil.format(userLocale, "display-the-page-in-x", userLocale.getDisplayName(userLocale)) %></aui:a>
 

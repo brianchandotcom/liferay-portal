@@ -14,8 +14,15 @@
 
 package com.liferay.portlet.assetpublisher.action;
 
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portlet.asset.model.AssetEntry;
+import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
 import com.liferay.portlet.rss.RSSRenderer;
 import com.liferay.portlet.rss.action.DefaultRSSAction;
+
+import java.util.List;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.ResourceRequest;
@@ -50,7 +57,20 @@ public class RSSAction extends DefaultRSSAction {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		return new AssetRSSRenderer(resourceRequest, resourceResponse);
+		PortletPreferences portletPreferences =
+			resourceRequest.getPreferences();
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		int rssDelta = GetterUtil.getInteger(
+			portletPreferences.getValue("rssDelta", "20"));
+
+		List<AssetEntry> entries = AssetPublisherUtil.getAssetEntries(
+			portletPreferences, themeDisplay.getLayout(),
+			themeDisplay.getScopeGroupId(), rssDelta, true);
+
+		return new AssetRSSRenderer(entries, resourceRequest, resourceResponse);
 	}
 
 }

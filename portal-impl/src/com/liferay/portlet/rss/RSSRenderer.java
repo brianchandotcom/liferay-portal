@@ -23,7 +23,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * @author Carlos Sierra Andrés
+ * @author Carlos Sierra AndrÃ©s
  * @author Julio Camarero
  * @author Brian Wing Shun Chan
  */

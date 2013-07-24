@@ -25,17 +25,17 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * @author Carlos Sierra Andrés
+ * @author Carlos Sierra AndrÃ©s
  * @author Julio Camarero
  * @author Brian Wing Shun Chan
  */
 public class BlogsOrganizationRSSRenderer extends BlogsBaseRSSRenderer {
 
 	public BlogsOrganizationRSSRenderer(
-		Organization organization, List<BlogsEntry> blogsEntries,
+		Organization organization, List<BlogsEntry> entries,
 		HttpServletRequest request) {
 
-		super(blogsEntries, request);
+		super(entries, request);
 
 		_organization = organization;
 	}

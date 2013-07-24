@@ -14,6 +14,9 @@
 
 package com.liferay.portlet.journal.action;
 
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portlet.journal.model.JournalFeed;
+import com.liferay.portlet.journal.service.JournalFeedLocalServiceUtil;
 import com.liferay.portlet.rss.RSSRenderer;
 import com.liferay.portlet.rss.action.DefaultRSSAction;
 
@@ -30,7 +33,20 @@ public class RSSAction extends DefaultRSSAction {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		return new JournalRSSRenderer(resourceRequest, resourceResponse);
+		String feedId = ParamUtil.getString(resourceRequest, "feedId");
+		long groupId = ParamUtil.getLong(resourceRequest, "groupId");
+		long id = ParamUtil.getLong(resourceRequest, "id");
+
+		JournalFeed feed = null;
+
+		if (id > 0) {
+			feed = JournalFeedLocalServiceUtil.getFeed(id);
+		}
+		else {
+			feed = JournalFeedLocalServiceUtil.getFeed(groupId, feedId);
+		}
+
+		return new JournalRSSRenderer(feed, resourceRequest, resourceResponse);
 	}
 
 }

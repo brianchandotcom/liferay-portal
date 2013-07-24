@@ -25,17 +25,16 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * @author Carlos Sierra Andrés
+ * @author Carlos Sierra AndrÃ©s
  * @author Julio Camarero
  * @author Brian Wing Shun Chan
  */
 public class BlogsCompanyRSSRenderer extends BlogsBaseRSSRenderer {
 
 	public BlogsCompanyRSSRenderer(
-		Company company, List<BlogsEntry> blogsEntries,
-		HttpServletRequest request) {
+		Company company, List<BlogsEntry> entries, HttpServletRequest request) {
 
-		super(blogsEntries, request);
+		super(entries, request);
 
 		_company = company;
 	}
@@ -46,13 +45,8 @@ public class BlogsCompanyRSSRenderer extends BlogsBaseRSSRenderer {
 	}
 
 	@Override
-	public String getRSSName() {
-		try {
-			return _company.getName();
-		}
-		catch (Exception e) {
-			return StringPool.BLANK;
-		}
+	public String getRSSName() throws PortalException, SystemException {
+		return _company.getName();
 	}
 
 	@Override

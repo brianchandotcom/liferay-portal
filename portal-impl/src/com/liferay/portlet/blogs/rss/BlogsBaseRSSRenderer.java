@@ -41,21 +41,23 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * @author Carlos Sierra Andrés
+ * @author Carlos Sierra AndrÃ©s
  * @author Julio Camarero
  * @author Brian Wing Shun Chan
  */
 public abstract class BlogsBaseRSSRenderer implements RSSRenderer {
 
 	public BlogsBaseRSSRenderer(
-		List<BlogsEntry> blogsEntries, HttpServletRequest request) {
+		List<BlogsEntry> entries, HttpServletRequest request) {
 
-		_blogsEntries = blogsEntries;
-		_request = request;
-		_themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		_entries = entries;
+		this.request = request;
+
 		_displayStyle = ParamUtil.getString(
-			request, "displayStyle", RSSUtil.DISPLAY_STYLE_DEFAULT);;
+			request, "displayStyle", RSSUtil.DISPLAY_STYLE_DEFAULT);
+
+		themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
 	}
 
 	@Override
@@ -66,11 +68,8 @@ public abstract class BlogsBaseRSSRenderer implements RSSRenderer {
 			return feedURL.substring(0, feedURL.length() - 12);
 		}
 
-		return PortalUtil.getLayoutFullURL(_themeDisplay);
+		return PortalUtil.getLayoutFullURL(themeDisplay);
 	}
-
-	abstract protected String getEntryURL()
-		throws PortalException, SystemException;
 
 	/**
 	 * @throws PortalException
@@ -78,7 +77,7 @@ public abstract class BlogsBaseRSSRenderer implements RSSRenderer {
 	 */
 	@Override
 	public String getFeedURL() throws PortalException, SystemException {
-		return _themeDisplay.getPortalURL() + _themeDisplay.getPathMain() +
+		return themeDisplay.getPortalURL() + themeDisplay.getPathMain() +
 			"/blogs/find_entry?";
 	}
 
@@ -91,10 +90,6 @@ public abstract class BlogsBaseRSSRenderer implements RSSRenderer {
 		return new Date();
 	}
 
-	public HttpServletRequest getRequest() {
-		return _request;
-	}
-
 	@Override
 	public String getRSSDescription() throws PortalException, SystemException {
 		return getRSSName();
@@ -103,7 +98,7 @@ public abstract class BlogsBaseRSSRenderer implements RSSRenderer {
 	@Override
 	public String getRSSFeedType() throws PortalException, SystemException {
 		String type = ParamUtil.getString(
-			getRequest(), "type", RSSUtil.FORMAT_DEFAULT);
+			request, "type", RSSUtil.FORMAT_DEFAULT);
 
 		return RSSUtil.getFeedType(type, getRSSVersion());
 	}
@@ -113,12 +108,7 @@ public abstract class BlogsBaseRSSRenderer implements RSSRenderer {
 	 * @throws SystemException
 	 */
 	public double getRSSVersion() throws PortalException, SystemException {
-		return ParamUtil.getDouble(
-			_request, "version", RSSUtil.VERSION_DEFAULT);
-	}
-
-	public ThemeDisplay getThemeDisplay() {
-		return _themeDisplay;
+		return ParamUtil.getDouble(request, "version", RSSUtil.VERSION_DEFAULT);
 	}
 
 	@Override
@@ -128,7 +118,7 @@ public abstract class BlogsBaseRSSRenderer implements RSSRenderer {
 	public void populateFeedEntries(List<? super SyndEntry> syndEntries)
 		throws PortalException, SystemException {
 
-		for (BlogsEntry entry : _blogsEntries) {
+		for (BlogsEntry entry : _entries) {
 			SyndEntry syndEntry = new SyndEntryImpl();
 
 			String author = PortalUtil.getUserName(entry);
@@ -162,8 +152,8 @@ public abstract class BlogsBaseRSSRenderer implements RSSRenderer {
 						"href=\"/", "src=\"/"
 					},
 					new String[] {
-						"href=\"" + _themeDisplay.getURLPortal() + "/",
-						"src=\"" + _themeDisplay.getURLPortal() + "/"
+						"href=\"" + themeDisplay.getURLPortal() + "/",
+						"src=\"" + themeDisplay.getURLPortal() + "/"
 					});
 			}
 
@@ -193,7 +183,6 @@ public abstract class BlogsBaseRSSRenderer implements RSSRenderer {
 			String link = sb.toString();
 
 			syndEntry.setLink(link);
-
 			syndEntry.setPublishedDate(entry.getDisplayDate());
 			syndEntry.setTitle(entry.getTitle());
 			syndEntry.setUpdatedDate(entry.getModifiedDate());
@@ -201,12 +190,15 @@ public abstract class BlogsBaseRSSRenderer implements RSSRenderer {
 
 			syndEntries.add(syndEntry);
 		}
-
 	}
 
-	private List<BlogsEntry> _blogsEntries;
+	abstract protected String getEntryURL()
+		throws PortalException, SystemException;
+
+	protected HttpServletRequest request;
+	protected ThemeDisplay themeDisplay;
+
 	private String _displayStyle;
-	private HttpServletRequest _request;
-	private ThemeDisplay _themeDisplay;
+	private List<BlogsEntry> _entries;
 
 }

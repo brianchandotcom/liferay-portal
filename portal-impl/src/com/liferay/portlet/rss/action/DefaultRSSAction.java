@@ -101,7 +101,6 @@ public abstract class DefaultRSSAction extends RSSAction {
 		String feedURL = rssRenderer.getFeedURL();
 
 		selfSyndLink.setHref(feedURL);
-
 		selfSyndLink.setRel("self");
 
 		String alternateURL = rssRenderer.getAlternateURL();

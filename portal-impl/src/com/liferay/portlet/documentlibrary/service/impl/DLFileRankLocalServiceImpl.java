@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.model.DLFileRank;
@@ -100,6 +102,9 @@ public class DLFileRankLocalServiceImpl extends DLFileRankLocalServiceBaseImpl {
 	}
 
 	@Override
+	@SystemEvent(
+		action = SystemEventConstants.ACTION_SKIP, send = false,
+		type = SystemEventConstants.TYPE_DELETE)
 	public void deleteFileRank(DLFileRank dlFileRank) throws SystemException {
 		dlFileRankPersistence.remove(dlFileRank);
 	}

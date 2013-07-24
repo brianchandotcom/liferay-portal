@@ -17,8 +17,12 @@ package com.liferay.portal.service.impl;
 import com.liferay.portal.WebsiteURLException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ListTypeConstants;
+import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.Website;
 import com.liferay.portal.service.ServiceContext;
@@ -94,6 +98,18 @@ public class WebsiteLocalServiceImpl extends WebsiteLocalServiceBaseImpl {
 
 		for (Website website : websites) {
 			deleteWebsite(website);
+
+			try {
+				systemEventLocalService.addSystemEvent(
+					companyId, Website.class.getName(), website.getWebsiteId(),
+					website.getUuid(), null, SystemEventConstants.TYPE_DELETE,
+					StringPool.BLANK);
+			}
+			catch (PortalException pe) {
+				if (_log.isWarnEnabled()) {
+					_log.warn("Unable to create system event");
+				}
+			}
 		}
 	}
 
@@ -175,5 +191,8 @@ public class WebsiteLocalServiceImpl extends WebsiteLocalServiceBaseImpl {
 
 		validate(websiteId, companyId, classNameId, classPK, primary);
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		WebsiteLocalServiceImpl.class);
 
 }

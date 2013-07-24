@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.ResourceConstants;
@@ -197,7 +198,7 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 			groupId, MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
 
 		for (MBCategory category : categories) {
-			deleteCategory(category);
+			mbCategoryLocalService.deleteCategory(category);
 		}
 	}
 
@@ -208,10 +209,13 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 		MBCategory category = mbCategoryPersistence.findByPrimaryKey(
 			categoryId);
 
-		deleteCategory(category);
+		mbCategoryLocalService.deleteCategory(category);
 	}
 
 	@Override
+	@SystemEvent(
+		action = SystemEventConstants.ACTION_SKIP,
+		type = SystemEventConstants.TYPE_DELETE)
 	public void deleteCategory(MBCategory category)
 		throws PortalException, SystemException {
 
@@ -219,6 +223,9 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 	}
 
 	@Override
+	@SystemEvent(
+		action = SystemEventConstants.ACTION_SKIP,
+		type = SystemEventConstants.TYPE_DELETE)
 	public void deleteCategory(
 			MBCategory category, boolean includeTrashedEntries)
 		throws PortalException, SystemException {
@@ -271,13 +278,6 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 		resourceLocalService.deleteResource(
 			category.getCompanyId(), MBCategory.class.getName(),
 			ResourceConstants.SCOPE_INDIVIDUAL, category.getCategoryId());
-
-		// System event
-
-		systemEventLocalService.addSystemEvent(
-			0, category.getGroupId(), MBCategory.class.getName(),
-			category.getCategoryId(), category.getUuid(), null,
-			SystemEventConstants.TYPE_DELETE, null);
 
 		// Trash
 

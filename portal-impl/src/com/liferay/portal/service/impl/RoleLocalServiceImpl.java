@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.spring.aop.Skip;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.CharPool;
@@ -49,6 +50,7 @@ import com.liferay.portal.model.ResourceTypePermission;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.Shard;
+import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.Team;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.CompanyThreadLocal;
@@ -416,7 +418,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 
 		Role role = rolePersistence.findByPrimaryKey(roleId);
 
-		return deleteRole(role);
+		return roleLocalService.deleteRole(role);
 	}
 
 	/**
@@ -429,6 +431,9 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
+	@SystemEvent(
+		action = SystemEventConstants.ACTION_SKIP,
+		type = SystemEventConstants.TYPE_DELETE)
 	public Role deleteRole(Role role) throws PortalException, SystemException {
 		if (PortalUtil.isSystemRole(role.getName()) &&
 			!CompanyThreadLocal.isDeleteInProcess()) {

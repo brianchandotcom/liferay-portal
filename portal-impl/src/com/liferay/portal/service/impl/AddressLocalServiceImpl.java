@@ -19,6 +19,9 @@ import com.liferay.portal.AddressStreetException;
 import com.liferay.portal.AddressZipException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Account;
 import com.liferay.portal.model.Address;
@@ -26,6 +29,7 @@ import com.liferay.portal.model.Contact;
 import com.liferay.portal.model.Country;
 import com.liferay.portal.model.ListTypeConstants;
 import com.liferay.portal.model.Organization;
+import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.AddressLocalServiceBaseImpl;
@@ -114,6 +118,18 @@ public class AddressLocalServiceImpl extends AddressLocalServiceBaseImpl {
 
 		for (Address address : addresses) {
 			deleteAddress(address);
+
+			try {
+				systemEventLocalService.addSystemEvent(
+					companyId, Address.class.getName(), address.getAddressId(),
+					address.getUuid(), null, SystemEventConstants.TYPE_DELETE,
+					StringPool.BLANK);
+			}
+			catch (PortalException pe) {
+				if (_log.isWarnEnabled()) {
+					_log.warn("Unable to create system event");
+				}
+			}
 		}
 	}
 
@@ -238,5 +254,8 @@ public class AddressLocalServiceImpl extends AddressLocalServiceBaseImpl {
 
 		validate(addressId, companyId, classNameId, classPK, mailing, primary);
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		AddressLocalServiceImpl.class);
 
 }

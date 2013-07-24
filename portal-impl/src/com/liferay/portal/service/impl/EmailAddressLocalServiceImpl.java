@@ -17,9 +17,13 @@ package com.liferay.portal.service.impl;
 import com.liferay.portal.EmailAddressException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.EmailAddress;
 import com.liferay.portal.model.ListTypeConstants;
+import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.EmailAddressLocalServiceBaseImpl;
@@ -98,6 +102,18 @@ public class EmailAddressLocalServiceImpl
 
 		for (EmailAddress emailAddress : emailAddresses) {
 			deleteEmailAddress(emailAddress);
+
+			try {
+				systemEventLocalService.addSystemEvent(
+					companyId, EmailAddress.class.getName(),
+					emailAddress.getEmailAddressId(), emailAddress.getUuid(),
+					null, SystemEventConstants.TYPE_DELETE, StringPool.BLANK);
+			}
+			catch (PortalException pe) {
+				if (_log.isWarnEnabled()) {
+					_log.warn("Unable to create system event");
+				}
+			}
 		}
 	}
 
@@ -186,5 +202,8 @@ public class EmailAddressLocalServiceImpl
 
 		validate(emailAddressId, companyId, classNameId, classPK, primary);
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		EmailAddressLocalServiceImpl.class);
 
 }

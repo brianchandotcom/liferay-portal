@@ -368,11 +368,11 @@ Set the control-panel-entry-category value to "my" to make this portlet
 available within the My Account administration of the user. Set the value to
 "apps", "configuration", "sites", or "users" to make it available in the Control
 Panel under that category. Set the value to "site_administration.configuration",
-"site_administration.content", or "site_administration.main" to make it
-available in the Site Administration under that category. Legacy values from
-previous versions of Liferay will be automatically mapped to the new values:
-"content" to "site_administration.content", "portal" to "users", and "server" to
-"apps".
+"site_administration.content", "site_administration.pages" or
+"site_administration.users" to make it available in the Site Administration
+under that category. Legacy values from previous versions of Liferay will be
+automatically mapped to the new values: "content" to
+"site_administration.content", "portal" to "users", and "server" to "apps".
 -->
 <!ELEMENT control-panel-entry-category (#PCDATA)>
 

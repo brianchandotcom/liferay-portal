@@ -101,6 +101,8 @@ Boolean showLayoutTemplates = ParamUtil.getBoolean(request, "showLayoutTemplates
 	}
 
 	List<LayoutTemplate> layoutTemplates = LayoutTemplateLocalServiceUtil.getLayoutTemplates(selTheme.getThemeId());
+
+	String prefix = "editPortlet";
 	%>
 
 	<%@ include file="/html/portlet/layouts_admin/layout/layout_templates_list.jspf" %>

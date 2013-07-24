@@ -781,6 +781,13 @@ public class JournalFolderWrapper implements JournalFolder,
 	}
 
 	@Override
+	public java.util.List<java.lang.Long> getAncestorFolderIds()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _journalFolder.getAncestorFolderIds();
+	}
+
+	@Override
 	public java.util.List<com.liferay.portlet.journal.model.JournalFolder> getAncestors()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

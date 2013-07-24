@@ -48,6 +48,7 @@ import com.liferay.portlet.bookmarks.util.comparator.EntryModifiedDateComparator
 import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.trash.model.TrashEntry;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -660,20 +661,21 @@ public class BookmarksEntryLocalServiceImpl
 
 		BookmarksFolder folder = entry.getFolder();
 
-		if (folder.getFolderId() !=
-				BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+		List<Long> folderIds = new ArrayList<Long>();
 
+		if (folder != null) {
+			folderIds.add(folder.getFolderId());
+
+			folderIds.addAll(folder.getAncestorFolderIds());
+		}
+
+		for (long curFolderId : folderIds) {
 			subscriptionSender.addPersistedSubscribers(
-				BookmarksFolder.class.getName(), folder.getFolderId());
-
-			for (BookmarksFolder ancestor : folder.getAncestors()) {
-				subscriptionSender.addPersistedSubscribers(
-					BookmarksFolder.class.getName(), ancestor.getFolderId());
-			}
+				BookmarksFolder.class.getName(), curFolderId);
 		}
 
 		subscriptionSender.addPersistedSubscribers(
-			BookmarksFolder.class.getName(), folder.getGroupId());
+			BookmarksFolder.class.getName(), entry.getGroupId());
 
 		subscriptionSender.flushNotificationsAsync();
 	}

@@ -5950,7 +5950,25 @@ public class JournalArticleLocalServiceImpl
 		subscriptionSender.setUserId(article.getUserId());
 
 		subscriptionSender.addPersistedSubscribers(
-			JournalArticle.class.getName(), article.getGroupId());
+			JournalArticle.class.getName(), article.getResourcePrimKey());
+
+		JournalFolder folder = article.getFolder();
+
+		List<Long> folderIds = new ArrayList<Long>();
+
+		if (folder != null) {
+			folderIds.add(folder.getFolderId());
+
+			folderIds.addAll(folder.getAncestorFolderIds());
+		}
+
+		for (long curFolderId : folderIds) {
+			subscriptionSender.addPersistedSubscribers(
+				JournalFolder.class.getName(), curFolderId);
+		}
+
+		subscriptionSender.addPersistedSubscribers(
+			JournalFolder.class.getName(), article.getGroupId());
 
 		subscriptionSender.flushNotificationsAsync();
 	}

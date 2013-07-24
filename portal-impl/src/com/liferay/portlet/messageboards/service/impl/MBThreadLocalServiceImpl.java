@@ -145,10 +145,10 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 		// Indexer
 
-		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+		Indexer messageIndexer = IndexerRegistryUtil.nullSafeGetIndexer(
 			MBMessage.class);
 
-		indexer.delete(thread);
+		messageIndexer.delete(thread);
 
 		// Attachments
 
@@ -250,6 +250,13 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 		trashEntryLocalService.deleteEntry(
 			MBThread.class.getName(), thread.getThreadId());
+
+		// Indexer
+
+		Indexer threadIndexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			MBThread.class);
+
+		threadIndexer.delete(thread);
 
 		// Thread
 
@@ -708,6 +715,13 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 				category.getCompanyId(), category.getCategoryId());
 		}
 
+		// Indexer
+
+		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			MBThread.class);
+
+		indexer.reindex(thread);
+
 		return thread;
 	}
 
@@ -899,6 +913,14 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 				category.getCompanyId(), category.getCategoryId());
 		}
 
+		//Indexer
+
+		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			MBThread.class);
+
+		indexer.reindex(oldThread);
+		indexer.reindex(message.getThread());
+
 		return thread;
 	}
 
@@ -1010,6 +1032,13 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		else {
 			updateDependentStatus(thread.getGroupId(), threadId, status);
 		}
+
+		// Index
+
+		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			MBThread.class);
+
+		indexer.reindex(thread);
 
 		return thread;
 	}

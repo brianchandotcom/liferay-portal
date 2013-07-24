@@ -89,6 +89,7 @@ public class PortalWrapper implements Portal {
 	@Override
 	public void addPageDescription(
 		String description, HttpServletRequest request) {
+
 		_portal.addPageDescription(description, request);
 	}
 
@@ -135,6 +136,7 @@ public class PortalWrapper implements Portal {
 	@Override
 	public void addPortalPortEventListener(
 		PortalPortEventListener portalPortEventListener) {
+
 		_portal.addPortalPortEventListener(portalPortEventListener);
 	}
 
@@ -148,6 +150,7 @@ public class PortalWrapper implements Portal {
 	@Override
 	public void addPortletBreadcrumbEntry(
 		HttpServletRequest request, String title, String url) {
+
 		_portal.addPortletBreadcrumbEntry(request, title, url);
 	}
 
@@ -163,6 +166,7 @@ public class PortalWrapper implements Portal {
 	public void addPortletBreadcrumbEntry(
 		HttpServletRequest request, String title, String url,
 		Map<String, Object> data) {
+
 		_portal.addPortletBreadcrumbEntry(request, title, url, data);
 	}
 
@@ -178,12 +182,15 @@ public class PortalWrapper implements Portal {
 	public void addPortletDefaultResource(
 			HttpServletRequest request, Portlet portlet)
 		throws PortalException, SystemException {
+
 		_portal.addPortletDefaultResource(request, portlet);
 	}
 
-	@Override public void addPortletDefaultResource(
+	@Override
+	public void addPortletDefaultResource(
 			long companyId, Layout layout, Portlet portlet)
 		throws PortalException, SystemException {
+
 		_portal.addPortletDefaultResource(companyId, layout, portlet);
 	}
 
@@ -206,7 +213,9 @@ public class PortalWrapper implements Portal {
 	 */
 	@Override
 	public String addPreservedParameters(
-		ThemeDisplay themeDisplay, Layout layout, String url, boolean doAsUser) {
+		ThemeDisplay themeDisplay, Layout layout, String url,
+		boolean doAsUser) {
+
 		return _portal.addPreservedParameters(
 			themeDisplay, layout, url, doAsUser);
 	}
@@ -220,7 +229,9 @@ public class PortalWrapper implements Portal {
 	 * @return the URL with the preserved parameters added
 	 */
 	@Override
-	public String addPreservedParameters(ThemeDisplay themeDisplay, String url) {
+	public String addPreservedParameters(
+		ThemeDisplay themeDisplay, String url) {
+
 		return _portal.addPreservedParameters(themeDisplay, url);
 	}
 
@@ -250,6 +261,7 @@ public class PortalWrapper implements Portal {
 	@Override
 	public void copyRequestParameters(
 		ActionRequest actionRequest, ActionResponse actionResponse) {
+
 		_portal.copyRequestParameters(actionRequest, actionResponse);
 	}
 
@@ -293,6 +305,7 @@ public class PortalWrapper implements Portal {
 			long groupId, boolean privateLayout, String friendlyURL,
 			Map<String, String[]> params, Map<String, Object> requestContext)
 		throws PortalException, SystemException {
+
 		return _portal.getActualLayoutQueryStringComposite(
 			groupId, privateLayout, friendlyURL, params, requestContext);
 	}
@@ -302,6 +315,7 @@ public class PortalWrapper implements Portal {
 			String friendlyURL, Map<String, String[]> params,
 			Map<String, Object> requestContext)
 		throws PortalException, SystemException {
+
 		return _portal.getActualURL(
 			groupId, privateLayout, mainPath, friendlyURL, params,
 			requestContext);
@@ -322,6 +336,7 @@ public class PortalWrapper implements Portal {
 	@Override
 	public Locale[] getAlternateLocales(HttpServletRequest request)
 		throws PortalException, SystemException {
+
 		return _portal.getAlternateLocales(request);
 	}
 
@@ -339,6 +354,7 @@ public class PortalWrapper implements Portal {
 	public String getAlternateURL(
 		String canonicalURL, ThemeDisplay themeDisplay, Locale locale,
 		Layout layout) {
+
 		return _portal.getAlternateURL(
 			canonicalURL, themeDisplay, locale, layout);
 	}
@@ -387,6 +403,7 @@ public class PortalWrapper implements Portal {
 	@Override
 	public BaseModel<?> getBaseModel(ResourcePermission resourcePermission)
 		throws PortalException, SystemException {
+
 		return _portal.getBaseModel(resourcePermission);
 	}
 
@@ -404,6 +421,7 @@ public class PortalWrapper implements Portal {
 	@Override
 	public BaseModel<?> getBaseModel(String modelName, String primKey)
 		throws PortalException, SystemException {
+
 		return _portal.getBaseModel(modelName, primKey);
 	}
 
@@ -421,6 +439,7 @@ public class PortalWrapper implements Portal {
 	@Override
 	public long getBasicAuthUserId(HttpServletRequest request)
 		throws PortalException, SystemException {
+
 		return _portal.getBasicAuthUserId(request);
 	}
 
@@ -439,6 +458,7 @@ public class PortalWrapper implements Portal {
 	@Override
 	public long getBasicAuthUserId(HttpServletRequest request, long companyId)
 		throws PortalException, SystemException {
+
 		return _portal.getBasicAuthUserId(request, companyId);
 	}
 
@@ -459,6 +479,7 @@ public class PortalWrapper implements Portal {
 	public String getCanonicalURL(
 			String completeURL, ThemeDisplay themeDisplay, Layout layout)
 		throws PortalException, SystemException {
+
 		return _portal.getCanonicalURL(completeURL, themeDisplay, layout);
 	}
 
@@ -482,6 +503,7 @@ public class PortalWrapper implements Portal {
 			String completeURL, ThemeDisplay themeDisplay, Layout layout,
 			boolean forceLayoutFriendlyURL)
 		throws PortalException, SystemException {
+
 		return _portal.getCanonicalURL(
 			completeURL, themeDisplay, layout, forceLayoutFriendlyURL);
 	}
@@ -509,6 +531,7 @@ public class PortalWrapper implements Portal {
 
 	@Override public String getCDNHost(HttpServletRequest request)
 		throws PortalException, SystemException {
+
 		return _portal.getCDNHost(request);
 	}
 
@@ -587,12 +610,14 @@ public class PortalWrapper implements Portal {
 	@Override
 	public Company getCompany(HttpServletRequest request)
 		throws PortalException, SystemException {
+
 		return _portal.getCompany(request);
 	}
 
 	@Override
 	public Company getCompany(PortletRequest portletRequest)
 		throws PortalException, SystemException {
+
 		return _portal.getCompany(portletRequest);
 	}
 
@@ -625,6 +650,7 @@ public class PortalWrapper implements Portal {
 	public Map<String, List<Portlet>> getControlPanelCategoriesMap(
 			HttpServletRequest request)
 		throws SystemException {
+
 		return _portal.getControlPanelCategoriesMap(request);
 	}
 
@@ -632,6 +658,7 @@ public class PortalWrapper implements Portal {
 	public String getControlPanelCategory(
 			String portletId, ThemeDisplay themeDisplay)
 		throws SystemException {
+
 		return _portal.getControlPanelCategory(portletId, themeDisplay);
 	}
 
@@ -639,24 +666,28 @@ public class PortalWrapper implements Portal {
 	public String getControlPanelFullURL(
 			long scopeGroupId, String ppid, Map<String, String[]> params)
 		throws PortalException, SystemException {
+
 		return _portal.getControlPanelFullURL(scopeGroupId, ppid, params);
 	}
 
 	@Override
 	public long getControlPanelPlid(long companyId)
 		throws PortalException, SystemException {
+
 		return _portal.getControlPanelPlid(companyId);
 	}
 
 	@Override
 	public long getControlPanelPlid(PortletRequest portletRequest)
 		throws PortalException, SystemException {
+
 		return _portal.getControlPanelPlid(portletRequest);
 	}
 
 	@Override
 	public Set<Portlet> getControlPanelPortlets(long companyId, String category)
 		throws SystemException {
+
 		return _portal.getControlPanelPortlets(companyId, category);
 	}
 
@@ -664,6 +695,7 @@ public class PortalWrapper implements Portal {
 	public List<Portlet> getControlPanelPortlets(
 			String category, ThemeDisplay themeDisplay)
 		throws SystemException {
+
 		return _portal.getControlPanelPortlets(category, themeDisplay);
 	}
 
@@ -671,6 +703,7 @@ public class PortalWrapper implements Portal {
 	public PortletURL getControlPanelPortletURL(
 		HttpServletRequest request, String portletId, long referrerPlid,
 		String lifecycle) {
+
 		return _portal.getControlPanelPortletURL(
 			request, portletId, referrerPlid, lifecycle);
 	}
@@ -679,6 +712,7 @@ public class PortalWrapper implements Portal {
 	public PortletURL getControlPanelPortletURL(
 		PortletRequest portletRequest, String portletId, long referrerPlid,
 		String lifecycle) {
+
 		return _portal.getControlPanelPortletURL(
 			portletRequest, portletId, referrerPlid, lifecycle);
 	}
@@ -687,6 +721,7 @@ public class PortalWrapper implements Portal {
 	public String getCreateAccountURL(
 			HttpServletRequest request, ThemeDisplay themeDisplay)
 		throws Exception {
+
 		return _portal.getCreateAccountURL(request, themeDisplay);
 	}
 
@@ -748,6 +783,7 @@ public class PortalWrapper implements Portal {
 			int month, int day, int year,
 			Class<? extends PortalException> clazz)
 		throws PortalException {
+
 		return _portal.getDate(month, day, year, clazz);
 	}
 
@@ -773,6 +809,7 @@ public class PortalWrapper implements Portal {
 			int month, int day, int year, int hour, int min,
 			Class<? extends PortalException> clazz)
 		throws PortalException {
+
 		return _portal.getDate(month, day, year, hour, min, clazz);
 	}
 
@@ -799,6 +836,7 @@ public class PortalWrapper implements Portal {
 			int month, int day, int year, int hour, int min, TimeZone timeZone,
 			Class<? extends PortalException> clazz)
 		throws PortalException {
+
 		return _portal.getDate(month, day, year, hour, min, timeZone, clazz);
 	}
 
@@ -823,6 +861,7 @@ public class PortalWrapper implements Portal {
 			int month, int day, int year, TimeZone timeZone,
 			Class<? extends PortalException> clazz)
 		throws PortalException {
+
 		return _portal.getDate(month, day, year, timeZone, clazz);
 	}
 
@@ -834,6 +873,7 @@ public class PortalWrapper implements Portal {
 	@Override
 	public long getDigestAuthUserId(HttpServletRequest request)
 		throws PortalException, SystemException {
+
 		return _portal.getDigestAuthUserId(request);
 	}
 
@@ -841,6 +881,7 @@ public class PortalWrapper implements Portal {
 	public String getEmailFromAddress(
 			PortletPreferences preferences, long companyId, String defaultValue)
 		throws SystemException {
+
 		return _portal.getEmailFromAddress(
 			preferences, companyId, defaultValue);
 	}
@@ -849,6 +890,7 @@ public class PortalWrapper implements Portal {
 	public String getEmailFromName(
 			PortletPreferences preferences, long companyId, String defaultValue)
 		throws SystemException {
+
 		return _portal.getEmailFromName(preferences, companyId, defaultValue);
 	}
 
@@ -856,6 +898,7 @@ public class PortalWrapper implements Portal {
 	public Map<String, Serializable> getExpandoBridgeAttributes(
 			ExpandoBridge expandoBridge, PortletRequest portletRequest)
 		throws PortalException, SystemException {
+
 		return _portal.getExpandoBridgeAttributes(
 			expandoBridge, portletRequest);
 	}
@@ -865,6 +908,7 @@ public class PortalWrapper implements Portal {
 			ExpandoBridge expandoBridge,
 			UploadPortletRequest uploadPortletRequest)
 		throws PortalException, SystemException {
+
 		return _portal.getExpandoBridgeAttributes(
 			expandoBridge, uploadPortletRequest);
 	}
@@ -874,6 +918,7 @@ public class PortalWrapper implements Portal {
 			PortletRequest portletRequest, String name, int type,
 			String displayType)
 		throws PortalException, SystemException {
+
 		return _portal.getExpandoValue(portletRequest, name, type, displayType);
 	}
 
@@ -882,6 +927,7 @@ public class PortalWrapper implements Portal {
 			UploadPortletRequest uploadPortletRequest, String name, int type,
 			String displayType)
 		throws PortalException, SystemException {
+
 		return _portal.getExpandoValue(
 			uploadPortletRequest, name, type, displayType);
 	}
@@ -891,6 +937,7 @@ public class PortalWrapper implements Portal {
 			Portlet portlet, String facebookCanvasPageURL,
 			ThemeDisplay themeDisplay)
 		throws PortalException, SystemException {
+
 		return _portal.getFacebookURL(
 			portlet, facebookCanvasPageURL, themeDisplay);
 	}
@@ -898,6 +945,7 @@ public class PortalWrapper implements Portal {
 	@Override
 	public Portlet getFirstMyAccountPortlet(ThemeDisplay themeDisplay)
 		throws SystemException {
+
 		return _portal.getFirstMyAccountPortlet(themeDisplay);
 	}
 
@@ -909,12 +957,14 @@ public class PortalWrapper implements Portal {
 	@Override
 	public Portlet getFirstSiteAdministrationPortlet(ThemeDisplay themeDisplay)
 		throws SystemException {
+
 		return _portal.getFirstSiteAdministrationPortlet(themeDisplay);
 	}
 
 	@Override
 	public String getFullName(
 		String firstName, String middleName, String lastName) {
+
 		return _portal.getFullName(firstName, middleName, lastName);
 	}
 
@@ -926,6 +976,7 @@ public class PortalWrapper implements Portal {
 	@Override
 	public String getGoogleGadgetURL(Portlet portlet, ThemeDisplay themeDisplay)
 		throws PortalException, SystemException {
+
 		return _portal.getGoogleGadgetURL(portlet, themeDisplay);
 	}
 
@@ -933,6 +984,7 @@ public class PortalWrapper implements Portal {
 	public String getGroupFriendlyURL(
 			Group group, boolean privateLayoutSet, ThemeDisplay themeDisplay)
 		throws PortalException, SystemException {
+
 		return _portal.getGroupFriendlyURL(
 			group, privateLayoutSet, themeDisplay);
 	}
@@ -942,6 +994,7 @@ public class PortalWrapper implements Portal {
 			Group group, boolean privateLayoutSet, ThemeDisplay themeDisplay,
 			Locale locale)
 		throws PortalException, SystemException {
+
 		return _portal.getGroupFriendlyURL(
 			group, privateLayoutSet, themeDisplay, locale);
 	}
@@ -959,6 +1012,7 @@ public class PortalWrapper implements Portal {
 	@Override
 	public String[] getGroupPermissions(
 		HttpServletRequest request, String className) {
+
 		return _portal.getGroupPermissions(request, className);
 	}
 
@@ -970,6 +1024,7 @@ public class PortalWrapper implements Portal {
 	@Override
 	public String[] getGroupPermissions(
 		PortletRequest portletRequest, String className) {
+
 		return _portal.getGroupPermissions(portletRequest, className);
 	}
 
@@ -981,6 +1036,7 @@ public class PortalWrapper implements Portal {
 	@Override
 	public String[] getGuestPermissions(
 		HttpServletRequest request, String className) {
+
 		return _portal.getGuestPermissions(request, className);
 	}
 
@@ -992,12 +1048,14 @@ public class PortalWrapper implements Portal {
 	@Override
 	public String[] getGuestPermissions(
 		PortletRequest portletRequest, String className) {
+
 		return _portal.getGuestPermissions(portletRequest, className);
 	}
 
 	@Override
 	public String getHomeURL(HttpServletRequest request)
 		throws PortalException, SystemException {
+
 		return _portal.getHomeURL(request);
 	}
 
@@ -1014,18 +1072,21 @@ public class PortalWrapper implements Portal {
 	@Override
 	public HttpServletRequest getHttpServletRequest(
 		PortletRequest portletRequest) {
+
 		return _portal.getHttpServletRequest(portletRequest);
 	}
 
 	@Override
 	public HttpServletResponse getHttpServletResponse(
 		PortletResponse portletResponse) {
+
 		return _portal.getHttpServletResponse(portletResponse);
 	}
 
 	@Override
 	public String getI18nPathLanguageId(
 		Locale locale, String defaultI18nPathLanguageId) {
+
 		return _portal.getI18nPathLanguageId(locale, defaultI18nPathLanguageId);
 	}
 
@@ -1035,6 +1096,7 @@ public class PortalWrapper implements Portal {
 			String friendlyURL, Map<String, String[]> params,
 			Map<String, Object> requestContext)
 		throws PortalException, SystemException {
+
 		return _portal.getJournalArticleActualURL(
 			groupId, privateLayout, mainPath, friendlyURL, params,
 			requestContext);
@@ -1044,6 +1106,7 @@ public class PortalWrapper implements Portal {
 	public Layout getJournalArticleLayout(
 			long groupId, boolean privateLayout, String friendlyURL)
 		throws PortalException, SystemException {
+
 		return _portal.getJournalArticleLayout(
 			groupId, privateLayout, friendlyURL);
 	}
@@ -1068,6 +1131,7 @@ public class PortalWrapper implements Portal {
 			long groupId, boolean privateLayout, String mainPath,
 			String friendlyURL)
 		throws PortalException, SystemException {
+
 		return _portal.getLayoutActualURL(
 			groupId, privateLayout, mainPath, friendlyURL);
 	}
@@ -1078,6 +1142,7 @@ public class PortalWrapper implements Portal {
 			String friendlyURL, Map<String, String[]> params,
 			Map<String, Object> requestContext)
 		throws PortalException, SystemException {
+
 		return _portal.getLayoutActualURL(
 			groupId, privateLayout, mainPath, friendlyURL, params,
 			requestContext);
@@ -1096,6 +1161,7 @@ public class PortalWrapper implements Portal {
 	@Override
 	public String getLayoutFriendlyURL(Layout layout, ThemeDisplay themeDisplay)
 		throws PortalException, SystemException {
+
 		return _portal.getLayoutFriendlyURL(layout, themeDisplay);
 	}
 
@@ -1103,6 +1169,7 @@ public class PortalWrapper implements Portal {
 	public String getLayoutFriendlyURL(
 			Layout layout, ThemeDisplay themeDisplay, Locale locale)
 		throws PortalException, SystemException {
+
 		return _portal.getLayoutFriendlyURL(layout, themeDisplay, locale);
 	}
 
@@ -1111,6 +1178,7 @@ public class PortalWrapper implements Portal {
 			long groupId, boolean privateLayout, String friendlyURL,
 			Map<String, String[]> params, Map<String, Object> requestContext)
 		throws PortalException, SystemException {
+
 		return _portal.getLayoutFriendlyURLComposite(
 			groupId, privateLayout, friendlyURL, params, requestContext);
 	}
@@ -1118,6 +1186,7 @@ public class PortalWrapper implements Portal {
 	@Override
 	public String getLayoutFullURL(Layout layout, ThemeDisplay themeDisplay)
 		throws PortalException, SystemException {
+
 		return _portal.getLayoutFullURL(layout, themeDisplay);
 	}
 
@@ -1125,12 +1194,14 @@ public class PortalWrapper implements Portal {
 	public String getLayoutFullURL(
 			Layout layout, ThemeDisplay themeDisplay, boolean doAsUser)
 		throws PortalException, SystemException {
+
 		return _portal.getLayoutFullURL(layout, themeDisplay, doAsUser);
 	}
 
 	@Override
 	public String getLayoutFullURL(long groupId, String portletId)
 		throws PortalException, SystemException {
+
 		return _portal.getLayoutFullURL(groupId, portletId);
 	}
 
@@ -1138,12 +1209,14 @@ public class PortalWrapper implements Portal {
 	public String getLayoutFullURL(
 			long groupId, String portletId, boolean secure)
 		throws PortalException, SystemException {
+
 		return _portal.getLayoutFullURL(groupId, portletId, secure);
 	}
 
 	@Override
 	public String getLayoutFullURL(ThemeDisplay themeDisplay)
 		throws PortalException, SystemException {
+
 		return _portal.getLayoutFullURL(themeDisplay);
 	}
 
@@ -1151,6 +1224,7 @@ public class PortalWrapper implements Portal {
 	public String getLayoutSetFriendlyURL(
 			LayoutSet layoutSet, ThemeDisplay themeDisplay)
 		throws PortalException, SystemException {
+
 		return _portal.getLayoutSetFriendlyURL(layoutSet, themeDisplay);
 	}
 
@@ -1162,6 +1236,7 @@ public class PortalWrapper implements Portal {
 	@Override
 	public String getLayoutURL(Layout layout, ThemeDisplay themeDisplay)
 		throws PortalException, SystemException {
+
 		return _portal.getLayoutURL(layout, themeDisplay);
 	}
 
@@ -1169,12 +1244,14 @@ public class PortalWrapper implements Portal {
 	public String getLayoutURL(
 			Layout layout, ThemeDisplay themeDisplay, boolean doAsUser)
 		throws PortalException, SystemException {
+
 		return _portal.getLayoutURL(layout, themeDisplay, doAsUser);
 	}
 
 	@Override
 	public String getLayoutURL(ThemeDisplay themeDisplay)
 		throws PortalException, SystemException {
+
 		return _portal.getLayoutURL(themeDisplay);
 	}
 
@@ -1191,12 +1268,14 @@ public class PortalWrapper implements Portal {
 	@Override
 	public LiferayPortletRequest getLiferayPortletRequest(
 		PortletRequest portletRequest) {
+
 		return _portal.getLiferayPortletRequest(portletRequest);
 	}
 
 	@Override
 	public LiferayPortletResponse getLiferayPortletResponse(
 		PortletResponse portletResponse) {
+
 		return _portal.getLiferayPortletResponse(portletResponse);
 	}
 
@@ -1209,6 +1288,7 @@ public class PortalWrapper implements Portal {
 	public Locale getLocale(
 		HttpServletRequest request, HttpServletResponse response,
 		boolean initialize) {
+
 		return _portal.getLocale(request, response, initialize);
 	}
 
@@ -1221,6 +1301,7 @@ public class PortalWrapper implements Portal {
 	public String getLocalizedFriendlyURL(
 			HttpServletRequest request, Layout layout, Locale locale)
 		throws Exception {
+
 		return _portal.getLocalizedFriendlyURL(request, layout, locale);
 	}
 
@@ -1232,12 +1313,14 @@ public class PortalWrapper implements Portal {
 	@Override
 	public String getNetvibesURL(Portlet portlet, ThemeDisplay themeDisplay)
 		throws PortalException, SystemException {
+
 		return _portal.getNetvibesURL(portlet, themeDisplay);
 	}
 
 	@Override
 	public String getNewPortletTitle(
 		String portletTitle, String oldScopeName, String newScopeName) {
+
 		return _portal.getNewPortletTitle(
 			portletTitle, oldScopeName, newScopeName);
 	}
@@ -1245,6 +1328,7 @@ public class PortalWrapper implements Portal {
 	@Override
 	public HttpServletRequest getOriginalServletRequest(
 		HttpServletRequest request) {
+
 		return _portal.getOriginalServletRequest(request);
 	}
 
@@ -1254,6 +1338,7 @@ public class PortalWrapper implements Portal {
 	@Override
 	public long getParentGroupId(long scopeGroupId)
 		throws PortalException, SystemException {
+
 		return _portal.getParentGroupId(scopeGroupId);
 	}
 
@@ -1306,12 +1391,14 @@ public class PortalWrapper implements Portal {
 	public long getPlidFromPortletId(
 			long groupId, boolean privateLayout, String portletId)
 		throws PortalException, SystemException {
+
 		return _portal.getPlidFromPortletId(groupId, privateLayout, portletId);
 	}
 
 	@Override
 	public long getPlidFromPortletId(long groupId, String portletId)
 		throws PortalException, SystemException {
+
 		return _portal.getPlidFromPortletId(groupId, portletId);
 	}
 
@@ -1352,6 +1439,7 @@ public class PortalWrapper implements Portal {
 	@Override
 	public String getPortalURL(Layout layout, ThemeDisplay themeDisplay)
 		throws PortalException, SystemException {
+
 		return _portal.getPortalURL(layout, themeDisplay);
 	}
 
@@ -1368,12 +1456,14 @@ public class PortalWrapper implements Portal {
 	@Override
 	public String getPortalURL(
 		String serverName, int serverPort, boolean secure) {
+
 		return _portal.getPortalURL(serverName, serverPort, secure);
 	}
 
 	@Override
 	public String getPortalURL(ThemeDisplay themeDisplay)
 		throws PortalException, SystemException {
+
 		return _portal.getPortalURL(themeDisplay);
 	}
 
@@ -1409,12 +1499,14 @@ public class PortalWrapper implements Portal {
 	@Override
 	public List<BreadcrumbEntry> getPortletBreadcrumbList(
 		HttpServletRequest request) {
+
 		return _portal.getPortletBreadcrumbList(request);
 	}
 
 	@Override
 	public List<BreadcrumbEntry> getPortletBreadcrumbs(
 		HttpServletRequest request) {
+
 		return _portal.getPortletBreadcrumbs(request);
 	}
 
@@ -1422,12 +1514,14 @@ public class PortalWrapper implements Portal {
 	public PortletConfig getPortletConfig(
 			long companyId, String portletId, ServletContext servletContext)
 		throws PortletException, SystemException {
+
 		return getPortletConfig(companyId, portletId, servletContext);
 	}
 
 	@Override
 	public String getPortletDescription(
 		Portlet portlet, ServletContext servletContext, Locale locale) {
+
 		return _portal.getPortletDescription(portlet, servletContext, locale);
 	}
 
@@ -1469,6 +1563,7 @@ public class PortalWrapper implements Portal {
 	@Override
 	public String getPortletLongTitle(
 		Portlet portlet, ServletContext servletContext, Locale locale) {
+
 		return _portal.getPortletLongTitle(portlet, servletContext, locale);
 	}
 
@@ -1510,6 +1605,7 @@ public class PortalWrapper implements Portal {
 	@Override
 	public String getPortletTitle(
 		Portlet portlet, ServletContext servletContext, Locale locale) {
+
 		return _portal.getPortletTitle(portlet, servletContext, locale);
 	}
 
@@ -1566,18 +1662,21 @@ public class PortalWrapper implements Portal {
 	@Override
 	public String getRelativeHomeURL(HttpServletRequest request)
 		throws PortalException, SystemException {
+
 		return _portal.getRelativeHomeURL(request);
 	}
 
 	@Override
 	public long getScopeGroupId(HttpServletRequest request)
 		throws PortalException, SystemException {
+
 		return _portal.getScopeGroupId(request);
 	}
 
 	@Override
 	public long getScopeGroupId(HttpServletRequest request, String portletId)
 		throws PortalException, SystemException {
+
 		return _portal.getScopeGroupId(request, portletId);
 	}
 
@@ -1586,6 +1685,7 @@ public class PortalWrapper implements Portal {
 			HttpServletRequest request, String portletId,
 			boolean checkStagingGroup)
 		throws PortalException, SystemException {
+
 		return _portal.getScopeGroupId(request, portletId, checkStagingGroup);
 	}
 
@@ -1607,12 +1707,14 @@ public class PortalWrapper implements Portal {
 	@Override
 	public long getScopeGroupId(PortletRequest portletRequest)
 		throws PortalException, SystemException {
+
 		return _portal.getScopeGroupId(portletRequest);
 	}
 
 	@Override
 	public User getSelectedUser(HttpServletRequest request)
 		throws PortalException, SystemException {
+
 		return _portal.getSelectedUser(request);
 	}
 
@@ -1620,12 +1722,14 @@ public class PortalWrapper implements Portal {
 	public User getSelectedUser(
 			HttpServletRequest request, boolean checkPermission)
 		throws PortalException, SystemException {
+
 		return _portal.getSelectedUser(request, checkPermission);
 	}
 
 	@Override
 	public User getSelectedUser(PortletRequest portletRequest)
 		throws PortalException, SystemException {
+
 		return _portal.getSelectedUser(portletRequest);
 	}
 
@@ -1633,6 +1737,7 @@ public class PortalWrapper implements Portal {
 	public User getSelectedUser(
 			PortletRequest portletRequest, boolean checkPermission)
 		throws PortalException, SystemException {
+
 		return _portal.getSelectedUser(portletRequest, checkPermission);
 	}
 
@@ -1640,6 +1745,7 @@ public class PortalWrapper implements Portal {
 	public Map<String, List<Portlet>> getSiteAdministrationCategoriesMap(
 			HttpServletRequest request)
 		throws SystemException {
+
 		return _portal.getSiteAdministrationCategoriesMap(request);
 	}
 
@@ -1647,6 +1753,7 @@ public class PortalWrapper implements Portal {
 	public PortletURL getSiteAdministrationURL(
 			HttpServletRequest request, ThemeDisplay themeDisplay)
 		throws SystemException {
+
 		return _portal.getSiteAdministrationURL(request, themeDisplay);
 	}
 
@@ -1654,6 +1761,7 @@ public class PortalWrapper implements Portal {
 	public PortletURL getSiteAdministrationURL(
 		HttpServletRequest request, ThemeDisplay themeDisplay,
 		String portletName) {
+
 		return _portal.getSiteAdministrationURL(
 			request, themeDisplay, portletName);
 	}
@@ -1662,6 +1770,7 @@ public class PortalWrapper implements Portal {
 	public PortletURL getSiteAdministrationURL(
 			PortletResponse portletResponse, ThemeDisplay themeDisplay)
 		throws SystemException {
+
 		return _portal.getSiteAdministrationURL(portletResponse, themeDisplay);
 	}
 
@@ -1669,6 +1778,7 @@ public class PortalWrapper implements Portal {
 	public PortletURL getSiteAdministrationURL(
 		PortletResponse portletResponse, ThemeDisplay themeDisplay,
 		String portletName) {
+
 		return _portal.getSiteAdministrationURL(
 			portletResponse, themeDisplay, portletName);
 	}
@@ -1676,24 +1786,28 @@ public class PortalWrapper implements Portal {
 	@Override
 	public long[] getSiteAndCompanyGroupIds(long groupId)
 		throws PortalException, SystemException {
+
 		return _portal.getSiteAndCompanyGroupIds(groupId);
 	}
 
 	@Override
 	public long[] getSiteAndCompanyGroupIds(ThemeDisplay themeDisplay)
 		throws PortalException, SystemException {
+
 		return _portal.getSiteAndCompanyGroupIds(themeDisplay);
 	}
 
 	@Override
 	public Locale getSiteDefaultLocale(long groupId)
 		throws PortalException, SystemException {
+
 		return _portal.getSiteDefaultLocale(groupId);
 	}
 
 	@Override
 	public long getSiteGroupId(long groupId)
 		throws PortalException, SystemException {
+
 		return _portal.getSiteGroupId(groupId);
 	}
 
@@ -1710,6 +1824,7 @@ public class PortalWrapper implements Portal {
 	@Override
 	public String getSiteLoginURL(ThemeDisplay themeDisplay)
 		throws PortalException, SystemException {
+
 		return _portal.getSiteLoginURL(themeDisplay);
 	}
 
@@ -1721,12 +1836,14 @@ public class PortalWrapper implements Portal {
 	@Override
 	public String getStaticResourceURL(
 		HttpServletRequest request, String uri, long timestamp) {
+
 		return _portal.getStaticResourceURL(request, uri, timestamp);
 	}
 
 	@Override
 	public String getStaticResourceURL(
 		HttpServletRequest request, String uri, String queryString) {
+
 		return _portal.getStaticResourceURL(request, uri, queryString);
 	}
 
@@ -1734,6 +1851,7 @@ public class PortalWrapper implements Portal {
 	public String getStaticResourceURL(
 		HttpServletRequest request, String uri, String queryString,
 		long timestamp) {
+
 		return _portal.getStaticResourceURL(
 			request, uri, queryString, timestamp);
 	}
@@ -1766,24 +1884,28 @@ public class PortalWrapper implements Portal {
 	@Override
 	public String getUniqueElementId(
 		HttpServletRequest request, String namespace, String id) {
+
 		return _portal.getUniqueElementId(request, namespace, id);
 	}
 
 	@Override
 	public String getUniqueElementId(
 		PortletRequest request, String namespace, String id) {
+
 		return _portal.getUniqueElementId(request, namespace, id);
 	}
 
 	@Override
 	public UploadPortletRequest getUploadPortletRequest(
 		PortletRequest portletRequest) {
+
 		return _portal.getUploadPortletRequest(portletRequest);
 	}
 
 	@Override
 	public UploadServletRequest getUploadServletRequest(
 		HttpServletRequest request) {
+
 		return _portal.getUploadServletRequest(request);
 	}
 
@@ -1800,12 +1922,14 @@ public class PortalWrapper implements Portal {
 	@Override
 	public User getUser(HttpServletRequest request)
 		throws PortalException, SystemException {
+
 		return _portal.getUser(request);
 	}
 
 	@Override
 	public User getUser(PortletRequest portletRequest)
 		throws PortalException, SystemException {
+
 		return _portal.getUser(portletRequest);
 	}
 
@@ -1837,12 +1961,14 @@ public class PortalWrapper implements Portal {
 	@Override
 	public String getUserName(
 		long userId, String defaultUserName, HttpServletRequest request) {
+
 		return _portal.getUserName(userId, defaultUserName, request);
 	}
 
 	@Override
 	public String getUserName(
 		long userId, String defaultUserName, String userAttribute) {
+
 		return _portal.getUserName(userId, defaultUserName, userAttribute);
 	}
 
@@ -1850,6 +1976,7 @@ public class PortalWrapper implements Portal {
 	public String getUserName(
 		long userId, String defaultUserName, String userAttribute,
 		HttpServletRequest request) {
+
 		return _portal.getUserName(
 			userId, defaultUserName, userAttribute, request);
 	}
@@ -1872,12 +1999,14 @@ public class PortalWrapper implements Portal {
 	@Override
 	public String getUserValue(long userId, String param, String defaultValue)
 		throws SystemException {
+
 		return _portal.getUserValue(userId, param, defaultValue);
 	}
 
 	@Override
 	public long getValidUserId(long companyId, long userId)
 		throws PortalException, SystemException {
+
 		return _portal.getValidUserId(companyId, userId);
 	}
 
@@ -1887,6 +2016,7 @@ public class PortalWrapper implements Portal {
 			String friendlyURL, Map<String, String[]> params,
 			Map<String, Object> requestContext)
 		throws PortalException, SystemException {
+
 		return _portal.getVirtualLayoutActualURL(
 			groupId, privateLayout, mainPath, friendlyURL, params,
 			requestContext);
@@ -1897,6 +2027,7 @@ public class PortalWrapper implements Portal {
 			boolean privateLayout, String friendlyURL,
 			Map<String, String[]> params, Map<String, Object> requestContext)
 		throws PortalException, SystemException {
+
 		return _portal.getVirtualLayoutFriendlyURLComposite(
 			privateLayout, friendlyURL, params, requestContext);
 	}
@@ -1904,10 +2035,11 @@ public class PortalWrapper implements Portal {
 	@Override
 	public String getWidgetURL(Portlet portlet, ThemeDisplay themeDisplay)
 		throws PortalException, SystemException {
+
 		return _portal.getWidgetURL(portlet, themeDisplay);
 	}
 
-	public Portal getWrapped() {
+	public Portal getWrappedPortal() {
 		return _portal;
 	}
 
@@ -1931,6 +2063,7 @@ public class PortalWrapper implements Portal {
 			PortletConfig portletConfig, ActionRequest actionRequest,
 			ActionResponse actionResponse)
 		throws Exception {
+
 		_portal.invokeTaglibDiscussion(
 			portletConfig, actionRequest, actionResponse);
 	}
@@ -1942,12 +2075,14 @@ public class PortalWrapper implements Portal {
 	public boolean isAllowAddPortletDefaultResource(
 			HttpServletRequest request, Portlet portlet)
 		throws PortalException, SystemException {
+
 		return _portal.isAllowAddPortletDefaultResource(request, portlet);
 	}
 
 	@Override
 	public boolean isCDNDynamicResourcesEnabled(HttpServletRequest request)
 		throws PortalException, SystemException {
+
 		return _portal.isCDNDynamicResourcesEnabled(request);
 	}
 
@@ -1981,6 +2116,7 @@ public class PortalWrapper implements Portal {
 	public boolean isCompanyControlPanelPortlet(
 			String portletId, String category, ThemeDisplay themeDisplay)
 		throws PortalException, SystemException {
+
 		return _portal.isCompanyControlPanelPortlet(
 			portletId, category, themeDisplay);
 	}
@@ -1989,12 +2125,14 @@ public class PortalWrapper implements Portal {
 	public boolean isCompanyControlPanelPortlet(
 			String portletId, ThemeDisplay themeDisplay)
 		throws PortalException, SystemException {
+
 		return _portal.isCompanyControlPanelPortlet(portletId, themeDisplay);
 	}
 
 	@Override
 	public boolean isCompanyControlPanelVisible(ThemeDisplay themeDisplay)
 		throws PortalException, SystemException {
+
 		return _portal.isCompanyControlPanelVisible(themeDisplay);
 	}
 
@@ -2002,6 +2140,7 @@ public class PortalWrapper implements Portal {
 	public boolean isControlPanelPortlet(
 			String portletId, String category, ThemeDisplay themeDisplay)
 		throws SystemException {
+
 		return _portal.isControlPanelPortlet(portletId, category, themeDisplay);
 	}
 
@@ -2009,6 +2148,7 @@ public class PortalWrapper implements Portal {
 	public boolean isControlPanelPortlet(
 			String portletId, ThemeDisplay themeDisplay)
 		throws SystemException {
+
 		return _portal.isControlPanelPortlet(portletId, themeDisplay);
 	}
 
@@ -2020,6 +2160,7 @@ public class PortalWrapper implements Portal {
 	@Override
 	public boolean isGroupFriendlyURL(
 		String fullURL, String groupFriendlyURL, String layoutFriendlyURL) {
+
 		return _portal.isGroupFriendlyURL(
 			fullURL, groupFriendlyURL, layoutFriendlyURL);
 	}
@@ -2032,6 +2173,7 @@ public class PortalWrapper implements Portal {
 	@Override
 	public boolean isLayoutDescendant(Layout layout, long layoutId)
 		throws PortalException, SystemException {
+
 		return _portal.isLayoutDescendant(layout, layoutId);
 	}
 
@@ -2128,6 +2270,7 @@ public class PortalWrapper implements Portal {
 	@Override
 	public void removePortalPortEventListener(
 		PortalPortEventListener portalPortEventListener) {
+
 		_portal.removePortalPortEventListener(portalPortEventListener);
 	}
 
@@ -2161,6 +2304,7 @@ public class PortalWrapper implements Portal {
 			Exception e, ActionRequest actionRequest,
 			ActionResponse actionResponse)
 		throws IOException {
+
 		_portal.sendError(e, actionRequest, actionResponse);
 	}
 
@@ -2169,6 +2313,7 @@ public class PortalWrapper implements Portal {
 			Exception e, HttpServletRequest request,
 			HttpServletResponse response)
 		throws IOException, ServletException {
+
 		_portal.sendError(e, request, response);
 	}
 
@@ -2177,6 +2322,7 @@ public class PortalWrapper implements Portal {
 			int status, Exception e, ActionRequest actionRequest,
 			ActionResponse actionResponse)
 		throws IOException {
+
 		_portal.sendError(status, e, actionRequest, actionResponse);
 	}
 
@@ -2185,6 +2331,7 @@ public class PortalWrapper implements Portal {
 			int status, Exception e, HttpServletRequest request,
 			HttpServletResponse response)
 		throws IOException, ServletException {
+
 		_portal.sendError(status, e, request, response);
 	}
 
@@ -2192,6 +2339,7 @@ public class PortalWrapper implements Portal {
 	public void sendRSSFeedsDisabledError(
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException, ServletException {
+
 		_portal.sendRSSFeedsDisabledError(request, response);
 	}
 
@@ -2199,6 +2347,7 @@ public class PortalWrapper implements Portal {
 	public void sendRSSFeedsDisabledError(
 			PortletRequest portletRequest, PortletResponse portletResponse)
 		throws IOException, ServletException {
+
 		_portal.sendRSSFeedsDisabledError(portletRequest, portletResponse);
 	}
 
@@ -2209,6 +2358,7 @@ public class PortalWrapper implements Portal {
 	@Override
 	public void setPageDescription(
 		String description, HttpServletRequest request) {
+
 		_portal.setPageDescription(description, request);
 	}
 
@@ -2248,6 +2398,7 @@ public class PortalWrapper implements Portal {
 	@Override
 	public void storePreferences(PortletPreferences portletPreferences)
 		throws IOException, ValidatorException {
+
 		_portal.storePreferences(portletPreferences);
 	}
 
@@ -2270,6 +2421,7 @@ public class PortalWrapper implements Portal {
 	public PortletMode updatePortletMode(
 		String portletId, User user, Layout layout, PortletMode portletMode,
 		HttpServletRequest request) {
+
 		return _portal.updatePortletMode(
 			portletId, user, layout, portletMode, request);
 	}
@@ -2277,6 +2429,7 @@ public class PortalWrapper implements Portal {
 	@Override
 	public String updateRedirect(
 		String redirect, String oldPath, String newPath) {
+
 		return _portal.updateRedirect(redirect, oldPath, newPath);
 	}
 
@@ -2284,9 +2437,11 @@ public class PortalWrapper implements Portal {
 	public WindowState updateWindowState(
 		String portletId, User user, Layout layout, WindowState windowState,
 		HttpServletRequest request) {
+
 		return _portal.updateWindowState(
 			portletId, user, layout, windowState, request);
 	}
 
 	private Portal _portal;
+
 }

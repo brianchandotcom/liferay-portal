@@ -56,9 +56,7 @@ if (group != null) {
 	}
 	%>
 
-	<liferay-util:include page="/html/portlet/sites_admin/toolbar.jsp">
-		<liferay-util:param name="toolbarItem" value='<%= (group == null) ? "add" : "browse" %>' />
-	</liferay-util:include>
+	<liferay-util:include page="/html/portlet/sites_admin/toolbar.jsp" />
 
 	<portlet:renderURL var="headerBackURL">
 		<portlet:param name="struts_action" value="/sites_admin/view" />

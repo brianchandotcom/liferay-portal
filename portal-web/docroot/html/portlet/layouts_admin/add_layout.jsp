@@ -19,20 +19,40 @@
 <aui:model-context model="<%= Layout.class %>" />
 
 <portlet:actionURL var="editLayoutActionURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
-	<portlet:param name="struts_action" value="/dockbar/edit_layouts" />
+	<portlet:param name="struts_action" value="/layouts_admin/edit_layouts" />
 </portlet:actionURL>
 
 <portlet:renderURL var="editLayoutRenderURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
-	<portlet:param name="struts_action" value="/dockbar/edit_layouts" />
+	<portlet:param name="struts_action" value="/layouts_admin/edit_layouts" />
 </portlet:renderURL>
+
+<%
+Layout selLayout = null;
+
+long selPlid = ParamUtil.getLong(request, "selPlid");
+
+if (selPlid != 0) {
+	selLayout = LayoutLocalServiceUtil.getLayout(selPlid);
+}
+
+boolean privateLayout = layout.isPrivateLayout();
+
+if (layout.isTypeControlPanel()) {
+	String tab = ParamUtil.getString(request, "tabs1", "public-pages");
+
+	if (tab.startsWith("public")) {
+		privateLayout = false;
+	}
+}
+%>
 
 <aui:form action="<%= editLayoutActionURL %>" enctype="multipart/form-data" method="post" name="addPageFm" onSubmit="event.preventDefault()">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD %>" />
-	<aui:input name="redirect" type="hidden" value="<%= editLayoutRenderURL.toString() %>" />
+	<aui:input name="redirect" type="hidden" value="<%= layout.isTypeControlPanel() ? currentURL : editLayoutRenderURL.toString() %>" />
 	<aui:input name="groupId" type="hidden" value="<%= scopeGroupId %>" />
-	<aui:input name="privateLayout" type="hidden" value="<%= layout.isPrivateLayout() %>" />
-	<aui:input name="parentPlid" type="hidden" value="<%= layout.getParentPlid() %>" />
-	<aui:input name="parentLayoutId" type="hidden" value="<%= layout.getParentLayoutId() %>" />
+	<aui:input name="privateLayout" type="hidden" value="<%= privateLayout %>" />
+	<aui:input name="parentPlid" type="hidden" value="<%= selLayout != null ? selLayout.getPlid() : layout.getParentPlid() %>" />
+	<aui:input name="parentLayoutId" type="hidden" value="<%= selLayout != null ? selLayout.getLayoutId() : layout.getParentLayoutId() %>" />
 	<aui:input name="type" type="hidden" value="portlet" />
 	<aui:input name="layoutPrototypeId" type="hidden" value="" />
 	<aui:input name="explicitCreation" type="hidden" value="<%= true %>" />
@@ -162,7 +182,7 @@
 </aui:form>
 
 <%
-Layout addedLayout = (Layout)SessionMessages.get(renderRequest, portletDisplay.getId() + "pageAdded");
+Layout addedLayout = (Layout)SessionMessages.get(request, portletDisplay.getId() + "pageAdded");
 %>
 
 <c:if test="<%= addedLayout != null && !addedLayout.isHidden() %>">
@@ -194,8 +214,10 @@ Layout addedLayout = (Layout)SessionMessages.get(renderRequest, portletDisplay.g
 			namespace: '<portlet:namespace />',
 			nodeList: A.one('#<portlet:namespace />templateList'),
 			nodeSelector: '.lfr-page-template',
-			parentLayoutId: <%= layout.getParentLayoutId() %>,
-			selected: !A.one('#<portlet:namespace />addPageFm').ancestor().hasClass('hide')
+			parentLayoutId: <%= selLayout != null ? selLayout.getLayoutId() : layout.getParentLayoutId() %>,
+			refresh: <%= layout.isTypeControlPanel() %>,
+			selected: !A.one('#<portlet:namespace />addPageFm').ancestor().hasClass('hide'),
+			toggleOnCancel: <%= portletName.equals(PortletKeys.DOCKBAR) %>
 		}
 	);
 </aui:script>

@@ -82,12 +82,6 @@
 				<entry key="com.liferay.portal.kernel.servlet.filters.invoker.InvokerFilter">
 					<bean class="com.liferay.portal.cache.key.SecureHashCodeCacheKeyGenerator" />
 				</entry>
-				<entry key="com.liferay.portal.language.LanguageResources">
-					<bean class="com.liferay.portal.cache.key.HashCodeCacheKeyGenerator" />
-				</entry>
-				<entry key="com.liferay.portal.servlet.ComboServlet">
-					<bean class="com.liferay.portal.cache.key.HashCodeCacheKeyGenerator" />
-				</entry>
 				<entry key="com.liferay.portal.servlet.filters.aggregate.AggregateFilter">
 					<bean class="com.liferay.portal.cache.key.SecureHashCodeCacheKeyGenerator" />
 				</entry>

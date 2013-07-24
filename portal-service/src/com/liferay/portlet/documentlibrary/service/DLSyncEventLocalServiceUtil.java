@@ -285,6 +285,12 @@ public class DLSyncEventLocalServiceUtil {
 		return getService().getDLSyncEvents(modifiedDate);
 	}
 
+	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLSyncEvent> getLastDLSyncEvents()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getLastDLSyncEvents();
+	}
+
 	public static DLSyncEventLocalService getService() {
 		if (_service == null) {
 			_service = (DLSyncEventLocalService)PortalBeanLocatorUtil.locate(DLSyncEventLocalService.class.getName());

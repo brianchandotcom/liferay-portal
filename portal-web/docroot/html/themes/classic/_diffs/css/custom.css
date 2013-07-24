@@ -329,6 +329,23 @@ $dockbarOpenGradientStart: #0EA6F9;
 		font-size: 11px;
 	}
 
+	/* ---------- Set Password Reminder Portlet ---------- */
+
+	.update-reminder-query {
+		.control-group {
+			max-width: 350px;
+		}
+
+		.reminder-query-answer {
+			height: 30px;
+			width: 100%;
+		}
+
+		.reminder-query-question {
+			width: 100%;
+		}
+	}
+
 	/* ---------- Staging ---------- */
 
 	.staging-tabview-list {
@@ -413,6 +430,10 @@ $dockbarOpenGradientStart: #0EA6F9;
 				@include text-shadow(none);
 			}
 		}
+	}
+
+	.update-reminder-query .reminder-query-answer {
+		@include box-sizing(border-box);
 	}
 
 	.modify-pages .delete-tab {

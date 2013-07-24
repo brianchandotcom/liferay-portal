@@ -1,5 +1,5 @@
-<#if (maxWikiNodeCount > 0)>
-	<#list 1..maxWikiNodeCount as wikiNodeCount>
+<#if (dataFactory.maxWikiNodeCount > 0)>
+	<#list 1..dataFactory.maxWikiNodeCount as wikiNodeCount>
 		<#assign wikiNodeModel = dataFactory.newWikiNodeModel(groupId, wikiNodeCount)>
 
 		insert into WikiNode values ('${wikiNodeModel.uuid}', ${wikiNodeModel.nodeId}, ${wikiNodeModel.groupId}, ${wikiNodeModel.companyId}, ${wikiNodeModel.userId}, '${wikiNodeModel.userName}', '${dataFactory.getDateString(wikiNodeModel.createDate)}', '${dataFactory.getDateString(wikiNodeModel.modifiedDate)}', '${wikiNodeModel.name}', '${wikiNodeModel.description}', '${dataFactory.getDateString(wikiNodeModel.lastPostDate)}', ${wikiNodeModel.status}, ${wikiNodeModel.statusByUserId}, '${wikiNodeModel.statusByUserName}', '${dataFactory.getDateString(wikiNodeModel.statusDate)}');
@@ -8,8 +8,8 @@
 			_entry = wikiNodeModel
 		/>
 
-		<#if (maxWikiPageCount > 0)>
-			<#list 1..maxWikiPageCount as wikiPageCount>
+		<#if (dataFactory.maxWikiPageCount > 0)>
+			<#list 1..dataFactory.maxWikiPageCount as wikiPageCount>
 				<#assign wikiPageModel = dataFactory.newWikiPageModel(wikiNodeModel, wikiPageCount)>
 
 				insert into WikiPage values ('${wikiPageModel.uuid}', ${wikiPageModel.pageId}, ${wikiPageModel.resourcePrimKey}, ${wikiPageModel.groupId}, ${wikiPageModel.companyId}, ${wikiPageModel.userId}, '${wikiPageModel.userName}', '${dataFactory.getDateString(wikiPageModel.createDate)}', '${dataFactory.getDateString(wikiPageModel.modifiedDate)}', ${wikiPageModel.nodeId}, '${wikiPageModel.title}', ${wikiPageModel.version}, ${wikiPageModel.minorEdit?string}, '${wikiPageModel.content}', '${wikiPageModel.summary}', '${wikiPageModel.format}', ${wikiPageModel.head?string}, '${wikiPageModel.parentTitle}', '${wikiPageModel.redirectTitle}', ${wikiPageModel.status}, ${wikiPageModel.statusByUserId}, '${wikiPageModel.statusByUserName}', ${wikiPageModel.statusDate!'null'});
@@ -31,14 +31,14 @@
 					_categoryAndTag = true
 				/>
 
-				<#assign mbRootMessageId = counter.get()>
-				<#assign mbThreadId = counter.get()>
+				<#assign mbRootMessageId = dataFactory.counter.get()>
+				<#assign mbThreadId = dataFactory.counter.get()>
 
 				<@insertMBDiscussion
 					_classNameId = dataFactory.wikiPageClassNameId
 					_classPK = wikiPageModel.resourcePrimKey
 					_groupId = groupId
-					_maxCommentCount = maxWikiPageCommentCount
+					_maxCommentCount = dataFactory.maxWikiPageCommentCount
 					_mbRootMessageId = mbRootMessageId
 					_mbThreadId = mbThreadId
 				/>

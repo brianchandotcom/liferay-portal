@@ -1,8 +1,8 @@
 <#assign groupIds = dataFactory.getNewUserGroupIds(groupModel.groupId)>
 <#assign roleIds = [dataFactory.administratorRoleModel.roleId, dataFactory.powerUserRoleModel.roleId, dataFactory.userRoleModel.roleId]>
 
-<#if (maxUserCount > 0)>
-	<#list 1..maxUserCount as userCount>
+<#if (dataFactory.maxUserCount > 0)>
+	<#list 1..dataFactory.maxUserCount as userCount>
 		<#assign userModel = dataFactory.newUserModel(userCount)>
 
 		<#assign userGroupModel = dataFactory.newGroupModel(userModel)>

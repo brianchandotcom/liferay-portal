@@ -1,5 +1,5 @@
-<#if (maxBlogsEntryCount > 0)>
-	<#list 1..maxBlogsEntryCount as blogsEntryCount>
+<#if (dataFactory.maxBlogsEntryCount > 0)>
+	<#list 1..dataFactory.maxBlogsEntryCount as blogsEntryCount>
 		<#assign blogsEntryModel = dataFactory.newBlogsEntryModel(groupId, blogsEntryCount)>
 
 		insert into BlogsEntry values ('${blogsEntryModel.uuid}', ${blogsEntryModel.entryId}, ${blogsEntryModel.groupId}, ${blogsEntryModel.companyId}, ${blogsEntryModel.userId}, '${blogsEntryModel.userName}', '${dataFactory.getDateString(blogsEntryModel.createDate)}', '${dataFactory.getDateString(blogsEntryModel.modifiedDate)}', '${blogsEntryModel.title}', '${blogsEntryModel.urlTitle}', '${blogsEntryModel.description}', '${blogsEntryModel.content}', '${dataFactory.getDateString(blogsEntryModel.displayDate)}', ${blogsEntryModel.allowPingbacks?string}, ${blogsEntryModel.allowTrackbacks?string}, '${blogsEntryModel.trackbacks}', ${blogsEntryModel.smallImage?string}, ${blogsEntryModel.smallImageId}, '${blogsEntryModel.smallImageURL}', ${blogsEntryModel.status}, ${blogsEntryModel.statusByUserId}, '${blogsEntryModel.statusByUserName}', '${dataFactory.getDateString(blogsEntryModel.statusDate)}');
@@ -13,14 +13,14 @@
 			_categoryAndTag = true
 		/>
 
-		<#assign mbThreadId = counter.get()>
-		<#assign mbRootMessageId = counter.get()>
+		<#assign mbThreadId = dataFactory.counter.get()>
+		<#assign mbRootMessageId = dataFactory.counter.get()>
 
 		<@insertMBDiscussion
 			_classNameId = dataFactory.blogsEntryClassNameId
 			_classPK = blogsEntryModel.entryId
 			_groupId = groupId
-			_maxCommentCount = maxBlogsEntryCommentCount
+			_maxCommentCount = dataFactory.maxBlogsEntryCommentCount
 			_mbRootMessageId = mbRootMessageId
 			_mbThreadId = mbThreadId
 		/>

@@ -56,8 +56,8 @@
 	_groupId
 	_parentDLFolderId
 >
-	<#if (_dlFolderDepth <= maxDLFolderDepth)>
-		<#list 1..maxDLFolderCount as dlFolderCount>
+	<#if (_dlFolderDepth <= dataFactory.maxDLFolderDepth)>
+		<#list 1..dataFactory.maxDLFolderCount as dlFolderCount>
 			<#local dlFolderModel = dataFactory.newDLFolderModel(_groupId, _parentDLFolderId, dlFolderCount)>
 
 			insert into DLFolder values ('${dlFolderModel.uuid}', ${dlFolderModel.folderId}, ${dlFolderModel.groupId}, ${dlFolderModel.companyId}, ${dlFolderModel.userId}, '${dlFolderModel.userName}', '${dataFactory.getDateString(dlFolderModel.createDate)}', '${dataFactory.getDateString(dlFolderModel.modifiedDate)}', ${dlFolderModel.repositoryId}, ${dlFolderModel.mountPoint?string}, ${dlFolderModel.parentFolderId}, '${dlFolderModel.name}', '${dlFolderModel.description}', '${dataFactory.getDateString(dlFolderModel.lastPostDate)}', ${dlFolderModel.defaultFileEntryTypeId}, ${dlFolderModel.hidden?string}, ${dlFolderModel.overrideFileEntryTypes?string}, ${dlFolderModel.status}, ${dlFolderModel.statusByUserId}, '${dlFolderModel.statusByUserName}', '${dataFactory.getDateString(dlFolderModel.statusDate)}');
@@ -70,8 +70,8 @@
 				_entry = dlFolderModel
 			/>
 
-			<#if (maxDLFileEntryCount > 0)>
-				<#list 1..maxDLFileEntryCount as dlFileEntryCount>
+			<#if (dataFactory.maxDLFileEntryCount > 0)>
+				<#list 1..dataFactory.maxDLFileEntryCount as dlFileEntryCount>
 					<#local dlFileEntryModel = dataFactory.newDlFileEntryModel(dlFolderModel, dlFileEntryCount)>
 
 					insert into DLFileEntry values ('${dlFileEntryModel.uuid}', ${dlFileEntryModel.fileEntryId}, ${dlFileEntryModel.groupId}, ${dlFileEntryModel.companyId}, ${dlFileEntryModel.userId}, '${dlFileEntryModel.userName}', '${dataFactory.getDateString(dlFileEntryModel.createDate)}', '${dataFactory.getDateString(dlFileEntryModel.modifiedDate)}', ${dlFileEntryModel.classNameId}, ${dlFileEntryModel.classPK}, ${dlFileEntryModel.repositoryId}, ${dlFileEntryModel.folderId}, '${dlFileEntryModel.name}', '${dlFileEntryModel.extension}', '${dlFileEntryModel.mimeType}', '${dlFileEntryModel.title}','${dlFileEntryModel.description}', '${dlFileEntryModel.extraSettings}', ${dlFileEntryModel.fileEntryTypeId}, '${dlFileEntryModel.version}', ${dlFileEntryModel.size}, ${dlFileEntryModel.readCount}, ${dlFileEntryModel.smallImageId}, ${dlFileEntryModel.largeImageId}, ${dlFileEntryModel.custom1ImageId}, ${dlFileEntryModel.custom2ImageId}, ${dlFileEntryModel.manualCheckInRequired?string});
@@ -88,7 +88,7 @@
 						_entry = dlFileEntryModel
 					/>
 
-					<#local ddmStorageLinkId = counter.get()>
+					<#local ddmStorageLinkId = dataFactory.counter.get()>
 
 					<@insertDDMContent
 						_ddmStorageLinkId = ddmStorageLinkId
@@ -101,8 +101,8 @@
 						_classPK = dlFileEntryModel.fileEntryId
 						_groupId = dlFileEntryModel.groupId
 						_maxCommentCount = 0
-						_mbRootMessageId = counter.get()
-						_mbThreadId = counter.get()
+						_mbRootMessageId = dataFactory.counter.get()
+						_mbThreadId = dataFactory.counter.get()
 					/>
 
 					<@insertSocialActivity

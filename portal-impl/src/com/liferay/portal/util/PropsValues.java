@@ -1722,11 +1722,11 @@ public class PropsValues {
 
 	public static final int[] SOCIAL_ACTIVITY_PARTICIPATION_LIMIT_VALUES = GetterUtil.getIntegerValues(PropsUtil.getArray(PropsKeys.SOCIAL_ACTIVITY_PARTICIPATION_LIMIT_VALUES));
 
-	public static final boolean SOCIAL_ACTIVITY_SETS_BUNDLING_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.SOCIAL_ACTIVITY_SETS_BUNDLING_ENABLED));
+	public static boolean SOCIAL_ACTIVITY_SETS_BUNDLING_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.SOCIAL_ACTIVITY_SETS_BUNDLING_ENABLED));
 
-	public static final boolean SOCIAL_ACTIVITY_SETS_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.SOCIAL_ACTIVITY_SETS_ENABLED));
+	public static boolean SOCIAL_ACTIVITY_SETS_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.SOCIAL_ACTIVITY_SETS_ENABLED));
 
-	public static final String SOCIAL_ACTIVITY_SETS_SELECTOR = GetterUtil.getString(PropsUtil.get(PropsKeys.SOCIAL_ACTIVITY_SETS_SELECTOR));
+	public static String SOCIAL_ACTIVITY_SETS_SELECTOR = GetterUtil.getString(PropsUtil.get(PropsKeys.SOCIAL_ACTIVITY_SETS_SELECTOR));
 
 	public static final String[] SPRING_CONFIGS = PropsUtil.getArray(PropsKeys.SPRING_CONFIGS);
 

@@ -257,12 +257,13 @@ public class HookHotDeployListener
 		"session.phishing.protected.attributes", "session.store.password",
 		"sites.form.add.advanced", "sites.form.add.main", "sites.form.add.seo",
 		"sites.form.update.advanced", "sites.form.update.main",
-		"sites.form.update.seo", "social.bookmark.*", "terms.of.use.required",
-		"theme.css.fast.load", "theme.images.fast.load",
-		"theme.jsp.override.enabled", "theme.loader.new.theme.id.on.import",
-		"theme.portlet.decorate.default", "theme.portlet.sharing.default",
-		"theme.shortcut.icon", "time.zones", "upgrade.processes",
-		"user.notification.event.confirmation.enabled",
+		"sites.form.update.seo", "social.activity.sets.bundling.enabled",
+		"social.activity.sets.enabled", "social.activity.sets.selector",
+		"social.bookmark.*", "terms.of.use.required", "theme.css.fast.load",
+		"theme.images.fast.load", "theme.jsp.override.enabled",
+		"theme.loader.new.theme.id.on.import", "theme.portlet.decorate.default",
+		"theme.portlet.sharing.default", "theme.shortcut.icon", "time.zones",
+		"upgrade.processes", "user.notification.event.confirmation.enabled",
 		"users.email.address.generator", "users.email.address.validator",
 		"users.email.address.required", "users.form.add.identification",
 		"users.form.add.main", "users.form.add.miscellaneous",
@@ -2666,7 +2667,8 @@ public class HookHotDeployListener
 		"my.sites.show.user.private.sites.with.no.layouts",
 		"my.sites.show.user.public.sites.with.no.layouts",
 		"portlet.add.default.resource.check.enabled", "rss.feeds.enabled",
-		"session.store.password", "terms.of.use.required",
+		"session.store.password", "social.activity.sets.bundling.enabled",
+		"social.activity.sets.enabled", "terms.of.use.required",
 		"theme.css.fast.load", "theme.images.fast.load",
 		"theme.jsp.override.enabled", "theme.loader.new.theme.id.on.import",
 		"theme.portlet.decorate.default", "theme.portlet.sharing.default",
@@ -2726,7 +2728,8 @@ public class HookHotDeployListener
 		"default.wap.theme.id", "passwords.passwordpolicytoolkit.generator",
 		"passwords.passwordpolicytoolkit.static",
 		"phone.number.format.international.regexp",
-		"phone.number.format.usa.regexp", "theme.shortcut.icon"
+		"phone.number.format.usa.regexp", "social.activity.sets.selector",
+		"theme.shortcut.icon"
 	};
 
 	private static Log _log = LogFactoryUtil.getLog(

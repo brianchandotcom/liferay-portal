@@ -193,6 +193,11 @@ public class JournalFolderLocalServiceImpl
 	}
 
 	@Override
+	public JournalFolder fetchFolder(long folderId) throws SystemException {
+		return journalFolderPersistence.fetchByPrimaryKey(folderId);
+	}
+
+	@Override
 	public JournalFolder fetchFolder(
 			long groupId, long parentFolderId, String name)
 		throws SystemException {

@@ -227,6 +227,21 @@ public abstract class DLBaseTrashHandler extends BaseTrashHandler {
 		return true;
 	}
 
+	protected DLFolder fetchDLFolder(long classPK)
+		throws PortalException, SystemException {
+
+		Repository repository = RepositoryServiceUtil.getRepositoryImpl(
+			classPK, 0, 0);
+
+		if (!(repository instanceof LiferayRepository)) {
+			return null;
+		}
+
+		Folder folder = repository.getFolder(classPK);
+
+		return (DLFolder)folder.getModel();
+	}
+
 	protected DLFolder getDLFolder(long classPK)
 		throws PortalException, SystemException {
 

@@ -326,6 +326,11 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	}
 
 	@Override
+	public DLFolder fetchFolder(long folderId) throws SystemException {
+		return dlFolderPersistence.fetchByPrimaryKey(folderId);
+	}
+
+	@Override
 	public DLFolder fetchFolder(long groupId, long parentFolderId, String name)
 		throws SystemException {
 

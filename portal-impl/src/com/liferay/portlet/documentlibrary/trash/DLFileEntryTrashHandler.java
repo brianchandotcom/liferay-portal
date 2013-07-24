@@ -29,7 +29,6 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.RepositoryServiceUtil;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
@@ -37,6 +36,7 @@ import com.liferay.portlet.documentlibrary.service.DLAppHelperLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
 import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
@@ -187,21 +187,17 @@ public class DLFileEntryTrashHandler extends DLBaseTrashHandler {
 	public boolean isRestorable(long classPK)
 		throws PortalException, SystemException {
 
-		try {
-			DLFileEntry dlFileEntry = getDLFileEntry(classPK);
+		DLFileEntry dlFileEntry = fetchDLFileEntry(classPK);
 
-			try {
-				dlFileEntry.getFolder();
-			}
-			catch (NoSuchFolderException nsfe) {
-				return false;
-			}
+		if ((dlFileEntry == null) ||
+			((dlFileEntry.getFolderId() > 0) &&
+			 (DLFolderLocalServiceUtil.fetchFolder(
+				dlFileEntry.getFolderId()) == null))) {
 
-			return !dlFileEntry.isInTrashContainer();
-		}
-		catch (InvalidRepositoryException ire) {
 			return false;
 		}
+
+		return !dlFileEntry.isInTrashContainer();
 	}
 
 	@Override
@@ -293,6 +289,21 @@ public class DLFileEntryTrashHandler extends DLBaseTrashHandler {
 
 			throw dee;
 		}
+	}
+
+	protected DLFileEntry fetchDLFileEntry(long classPK)
+		throws PortalException, SystemException {
+
+		Repository repository = RepositoryServiceUtil.getRepositoryImpl(
+			0, classPK, 0);
+
+		if (!(repository instanceof LiferayRepository)) {
+			return null;
+		}
+
+		FileEntry fileEntry = repository.getFileEntry(classPK);
+
+		return (DLFileEntry)fileEntry.getModel();
 	}
 
 	protected DLFileEntry getDLFileEntry(long classPK)

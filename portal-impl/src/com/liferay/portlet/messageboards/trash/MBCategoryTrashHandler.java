@@ -340,11 +340,9 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 
 		MBCategory category = MBCategoryLocalServiceUtil.getCategory(classPK);
 
-		long parentCategoryId = category.getParentCategoryId();
-
-		if ((parentCategoryId > 0) &&
-			(MBCategoryLocalServiceUtil.fetchMBCategory(parentCategoryId) ==
-				null)) {
+		if ((category.getParentCategoryId() > 0) &&
+			(MBCategoryLocalServiceUtil.fetchMBCategory(
+				category.getParentCategoryId()) == null)) {
 
 			return false;
 		}

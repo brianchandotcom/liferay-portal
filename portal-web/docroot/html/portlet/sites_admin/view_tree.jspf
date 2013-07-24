@@ -40,7 +40,7 @@ if (group != null) {
 }
 %>
 
-<c:if test="<%= (group != null) && (group.getGroupId() != GroupConstants.DEFAULT_PARENT_GROUP_ID) %>">
+<c:if test="<%= (group != null) %>">
 
 	<%
 	long parentGroupId = GroupConstants.DEFAULT_PARENT_GROUP_ID;

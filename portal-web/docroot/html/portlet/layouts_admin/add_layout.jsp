@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/dockbar/init.jsp" %>
+<%@ include file="/html/portlet/layouts_admin/init.jsp" %>
 
 <aui:model-context model="<%= Layout.class %>" />
 
@@ -29,7 +29,7 @@
 <%
 Layout selLayout = null;
 
-long selPlid = ParamUtil.getLong(request, "selPlid");
+long selPlid = ParamUtil.getLong(liferayPortletRequest, "selPlid");
 
 if (selPlid != 0) {
 	selLayout = LayoutLocalServiceUtil.getLayout(selPlid);
@@ -38,7 +38,7 @@ if (selPlid != 0) {
 boolean privateLayout = layout.isPrivateLayout();
 
 if (layout.isTypeControlPanel()) {
-	String tab = ParamUtil.getString(request, "tabs1", "public-pages");
+	String tab = ParamUtil.getString(liferayPortletRequest, "tabs1", "public-pages");
 
 	if (tab.startsWith("public")) {
 		privateLayout = false;
@@ -125,7 +125,7 @@ if (layout.isTypeControlPanel()) {
 
 						LayoutView layoutView = layoutLister.getLayoutView(scopeGroupId, layout.isPrivateLayout(), StringPool.BLANK, locale);
 
-						request.setAttribute(WebKeys.LAYOUT_LISTER_LIST, layoutView.getList());
+						liferayPortletRequest.setAttribute(WebKeys.LAYOUT_LISTER_LIST, layoutView.getList());
 
 						for (int i = 0; i < PropsValues.LAYOUT_TYPES.length; i++) {
 							if (PropsValues.LAYOUT_TYPES[i].equals("portlet")) {
@@ -181,28 +181,30 @@ if (layout.isTypeControlPanel()) {
 	</aui:button-row>
 </aui:form>
 
-<%
-Layout addedLayout = (Layout)SessionMessages.get(request, portletDisplay.getId() + "pageAdded");
-%>
-
-<c:if test="<%= addedLayout != null && !addedLayout.isHidden() %>">
-
+<c:if test="<%= portletName.equals(PortletKeys.DOCKBAR) %>">
 	<%
-	NavItem navItem = new NavItem(request, addedLayout, null);
+	Layout addedLayout = (Layout)SessionMessages.get(liferayPortletRequest, portletDisplay.getId() + "pageAdded");
 	%>
 
-	<aui:script use="aui-base">
-		Liferay.fire('dockbaraddpage:addPage',
-			{
-				data: {
-					layoutId: <%= addedLayout.getLayoutId() %>,
-					parentLayoutId: <%= addedLayout.getParentLayoutId() %>,
-					title: A.Lang.String.escapeHTML('<%= navItem.getName() %>'),
-					url: '<%= navItem.getURL() %>'
+	<c:if test="<%= addedLayout != null && !addedLayout.isHidden() %>">
+
+		<%
+		NavItem navItem = new NavItem(request, addedLayout, null);
+		%>
+
+		<aui:script use="aui-base">
+			Liferay.fire('dockbaraddpage:addPage',
+				{
+					data: {
+						layoutId: <%= addedLayout.getLayoutId() %>,
+						parentLayoutId: <%= addedLayout.getParentLayoutId() %>,
+						title: A.Lang.String.escapeHTML('<%= navItem.getName() %>'),
+						url: '<%= navItem.getURL() %>'
+					}
 				}
-			}
-		);
-	</aui:script>
+			);
+		</aui:script>
+	</c:if>
 </c:if>
 
 <aui:script use="liferay-dockbar-add-page">

@@ -419,7 +419,7 @@
 	</definition>
 
 	<definition name="portlet.dockbar.add_layout" extends="portlet.dockbar">
-		<put name="portlet_content" value="/portlet/dockbar/add_layout.jsp" />
+		<put name="portlet_content" value="/portlet/layouts_admin/add_layout.jsp" />
 	</definition>
 
 	<definition name="portlet.dockbar.add_panel" extends="portlet.dockbar">

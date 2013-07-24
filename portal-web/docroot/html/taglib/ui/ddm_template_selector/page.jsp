@@ -76,7 +76,7 @@ Group ddmTemplateGroup = GroupLocalServiceUtil.getGroup(ddmTemplateGroupId);
 		<optgroup label="<liferay-ui:message key="global" />">
 
 			<%
-			data.put("displayStyleGroupId", themeDisplay.getCompanyGroupId());
+			data.put("displaystylegroupid", themeDisplay.getCompanyGroupId());
 
 			for (DDMTemplate companyPortletDDMTemplate : companyPortletDDMTemplates) {
 				if (!DDMTemplatePermission.contains(permissionChecker, companyPortletDDMTemplate, ActionKeys.VIEW)) {
@@ -99,7 +99,7 @@ Group ddmTemplateGroup = GroupLocalServiceUtil.getGroup(ddmTemplateGroupId);
 	if (ddmTemplateGroupId != themeDisplay.getCompanyGroupId()) {
 		groupPortletDDMTemplates = DDMTemplateLocalServiceUtil.getTemplates(ddmTemplateGroupId, classNameId, 0);
 
-		data.put("displayStyleGroupId", ddmTemplateGroupId);
+		data.put("displaystylegroupid", ddmTemplateGroupId);
 	}
 	%>
 
@@ -178,7 +178,7 @@ Group ddmTemplateGroup = GroupLocalServiceUtil.getGroup(ddmTemplateGroupId);
 			if (selectedIndex >= 0) {
 				var selectedOption = event.currentTarget.get('options').item(selectedIndex);
 
-				var displayStyleGroupId = selectedOption.attr('data-displayStyleGroupId');
+				var displayStyleGroupId = selectedOption.attr('data-displaystylegroupid');
 
 				if (displayStyleGroupId) {
 					displayStyleGroupIdInput.set('value', displayStyleGroupId);

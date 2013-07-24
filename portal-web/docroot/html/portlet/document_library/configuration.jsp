@@ -132,6 +132,8 @@ String emailBody = PrefsParamUtil.getString(portletPreferences, request, emailBo
 
 						</aui:select>
 
+						<aui:input name="preferences--enableRelatedAssets--" type="checkbox" value="<%= enableRelatedAssets %>" />
+
 						<aui:field-wrapper label="display-style-views">
 
 							<%
@@ -175,8 +177,6 @@ String emailBody = PrefsParamUtil.getString(portletPreferences, request, emailBo
 
 				<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="documentLibraryEntriesListingPanel" persistState="<%= true %>" title="entries-listing-for-list-display-style">
 					<aui:fieldset>
-						<aui:input name="preferences--enableRelatedAssets--" type="checkbox" value="<%= enableRelatedAssets %>" />
-
 						<aui:field-wrapper label="show-columns">
 
 							<%

@@ -237,6 +237,10 @@ public class HttpImpl implements Http {
 
 	@Override
 	public String decodePath(String path) {
+		if (Validator.isNull(path)) {
+			return path;
+		}
+
 		path = StringUtil.replace(path, StringPool.SLASH, _TEMP_SLASH);
 		path = decodeURL(path, true);
 		path = StringUtil.replace(path, _TEMP_SLASH, StringPool.SLASH);
@@ -251,6 +255,10 @@ public class HttpImpl implements Http {
 
 	@Override
 	public String decodeURL(String url, boolean unescapeSpaces) {
+		if (Validator.isNull(url)) {
+			return url;
+		}
+
 		return URLCodec.decodeURL(url, StringPool.UTF8, unescapeSpaces);
 	}
 
@@ -260,6 +268,10 @@ public class HttpImpl implements Http {
 
 	@Override
 	public String encodeParameters(String url) {
+		if (Validator.isNull(url)) {
+			return url;
+		}
+
 		String queryString = getQueryString(url);
 
 		if (Validator.isNull(queryString)) {
@@ -274,6 +286,10 @@ public class HttpImpl implements Http {
 
 	@Override
 	public String encodePath(String path) {
+		if (Validator.isNull(path)) {
+			return path;
+		}
+
 		path = StringUtil.replace(path, StringPool.SLASH, _TEMP_SLASH);
 		path = encodeURL(path, true);
 		path = StringUtil.replace(path, _TEMP_SLASH, StringPool.SLASH);
@@ -288,6 +304,10 @@ public class HttpImpl implements Http {
 
 	@Override
 	public String encodeURL(String url, boolean escapeSpaces) {
+		if (Validator.isNull(url)) {
+			return url;
+		}
+
 		return URLCodec.encodeURL(url, StringPool.UTF8, escapeSpaces);
 	}
 
@@ -345,9 +365,8 @@ public class HttpImpl implements Http {
 		if (isProxyHost(hostConfiguration.getHost())) {
 			return _proxyHttpClient;
 		}
-		else {
-			return _httpClient;
-		}
+
+		return _httpClient;
 	}
 
 	@Override
@@ -401,6 +420,10 @@ public class HttpImpl implements Http {
 
 	@Override
 	public String getDomain(String url) {
+		if (Validator.isNull(url)) {
+			return url;
+		}
+
 		url = removeProtocol(url);
 
 		int pos = url.indexOf(CharPool.SLASH);
@@ -408,9 +431,8 @@ public class HttpImpl implements Http {
 		if (pos != -1) {
 			return url.substring(0, pos);
 		}
-		else {
-			return url;
-		}
+
+		return url;
 	}
 
 	/**
@@ -477,6 +499,10 @@ public class HttpImpl implements Http {
 
 	@Override
 	public String getIpAddress(String url) {
+		if (Validator.isNull(url)) {
+			return url;
+		}
+
 		try {
 			URL urlObj = new URL(url);
 
@@ -547,9 +573,8 @@ public class HttpImpl implements Http {
 		if (pos == -1) {
 			return url;
 		}
-		else {
-			return url.substring(0, pos);
-		}
+
+		return url.substring(0, pos);
 	}
 
 	@Override
@@ -562,9 +587,8 @@ public class HttpImpl implements Http {
 		if (!secure) {
 			return Http.HTTP;
 		}
-		else {
-			return Http.HTTPS;
-		}
+
+		return Http.HTTPS;
 	}
 
 	@Override
@@ -579,14 +603,17 @@ public class HttpImpl implements Http {
 
 	@Override
 	public String getProtocol(String url) {
+		if (Validator.isNull(url)) {
+			return url;
+		}
+
 		int pos = url.indexOf(Http.PROTOCOL_DELIMITER);
 
 		if (pos != -1) {
 			return url.substring(0, pos);
 		}
-		else {
-			return Http.HTTP;
-		}
+
+		return Http.HTTP;
 	}
 
 	@Override
@@ -600,9 +627,8 @@ public class HttpImpl implements Http {
 		if (pos == -1) {
 			return StringPool.BLANK;
 		}
-		else {
-			return url.substring(pos + 1);
-		}
+
+		return url.substring(pos + 1);
 	}
 
 	@Override
@@ -612,19 +638,26 @@ public class HttpImpl implements Http {
 
 	@Override
 	public boolean hasDomain(String url) {
+		if (Validator.isNull(url)) {
+			return false;
+		}
+
 		return Validator.isNotNull(getDomain(url));
 	}
 
 	@Override
 	public boolean hasProtocol(String url) {
+		if (Validator.isNull(url)) {
+			return false;
+		}
+
 		int pos = url.indexOf(Http.PROTOCOL_DELIMITER);
 
 		if (pos != -1) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	@Override
@@ -632,13 +665,16 @@ public class HttpImpl implements Http {
 		if (Validator.isNotNull(_PROXY_HOST) && (_PROXY_PORT > 0)) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	@Override
 	public boolean isNonProxyHost(String host) {
+		if (Validator.isNull(host)) {
+			return false;
+		}
+
 		if (_nonProxyHostsPattern != null) {
 			Matcher matcher = _nonProxyHostsPattern.matcher(host);
 
@@ -652,12 +688,15 @@ public class HttpImpl implements Http {
 
 	@Override
 	public boolean isProxyHost(String host) {
+		if (Validator.isNull(host)) {
+			return false;
+		}
+
 		if (hasProxyConfig() && !isNonProxyHost(host)) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	@Override
@@ -759,6 +798,10 @@ public class HttpImpl implements Http {
 
 	@Override
 	public String protocolize(String url, boolean secure) {
+		if (Validator.isNull(url)) {
+			return url;
+		}
+
 		if (secure) {
 			if (url.startsWith(Http.HTTP_WITH_SLASH)) {
 				return StringUtil.replace(
@@ -801,6 +844,10 @@ public class HttpImpl implements Http {
 
 	@Override
 	public String removeDomain(String url) {
+		if (Validator.isNull(url)) {
+			return url;
+		}
+
 		url = removeProtocol(url);
 
 		int pos = url.indexOf(CharPool.SLASH);
@@ -808,13 +855,16 @@ public class HttpImpl implements Http {
 		if (pos > 0) {
 			return url.substring(pos);
 		}
-		else {
-			return url;
-		}
+
+		return url;
 	}
 
 	@Override
 	public String removeParameter(String url, String name) {
+		if (Validator.isNull(url) || Validator.isNull(name)) {
+			return url;
+		}
+
 		int pos = url.indexOf(CharPool.QUESTION);
 
 		if (pos == -1) {
@@ -872,6 +922,10 @@ public class HttpImpl implements Http {
 
 	@Override
 	public String removeProtocol(String url) {
+		if (Validator.isNull(url)) {
+			return url;
+		}
+
 		if (url.startsWith(Http.HTTP_WITH_SLASH)) {
 			return url.substring(Http.HTTP_WITH_SLASH.length());
 		}
@@ -910,8 +964,8 @@ public class HttpImpl implements Http {
 
 	@Override
 	public String setParameter(String url, String name, String value) {
-		if (url == null) {
-			return null;
+		if (Validator.isNull(url) || Validator.isNull(name)) {
+			return url;
 		}
 
 		url = removeParameter(url, name);
@@ -1024,9 +1078,8 @@ public class HttpImpl implements Http {
 		if (headers.length == 0) {
 			return false;
 		}
-		else {
-			return true;
-		}
+
+		return true;
 	}
 
 	protected void processPostMethod(

@@ -21,9 +21,9 @@ AUI.add(
 
 		var STR_CANCEL_ADD_OPERATION = 'cancelAddOperation';
 
-		var STR_HIDDEN_CHECKBOX = 'hiddenCheckbox';
+		var STR_HIDDEN_CHECKBOX = 'addLayoutHiddenCheckbox';
 
-		var STR_NAME = 'name';
+		var STR_NAME = 'addLayoutName';
 
 		var STR_NODE_LIST = 'nodeList';
 

@@ -17,6 +17,7 @@ package com.liferay.portlet.messageboards.service.impl;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.model.Lock;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
@@ -357,6 +358,26 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 		}
 
 		mbThreadLocalService.restoreThreadFromTrash(getUserId(), threadId);
+	}
+
+	@Override
+	public Hits search(
+			long groupId, long creatorUserId, int status, int start, int end)
+		throws PortalException, SystemException {
+
+		return mbThreadLocalService.search(
+			groupId, getUserId(), creatorUserId, status, start, end);
+	}
+
+	@Override
+	public Hits search(
+			long groupId, long creatorUserId, long startDate, long endDate,
+			int status, int start, int end)
+		throws PortalException, SystemException {
+
+		return mbThreadLocalService.search(
+			groupId, getUserId(), creatorUserId, startDate, endDate, status,
+			start, end);
 	}
 
 	@Override

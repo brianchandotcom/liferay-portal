@@ -17,7 +17,6 @@
 <%@ include file="/html/portlet/init.jsp" %>
 
 <%@ page import="com.liferay.portal.DuplicateLockException" %><%@
-page import="com.liferay.portal.plugin.PluginUtil" %><%@
 page import="com.liferay.portal.ImageTypeException" %><%@
 page import="com.liferay.portal.LARFileException" %><%@
 page import="com.liferay.portal.LARFileSizeException" %><%@
@@ -68,6 +67,7 @@ page import="com.liferay.portal.lar.backgroundtask.LayoutImportBackgroundTaskExe
 page import="com.liferay.portal.lar.backgroundtask.LayoutRemoteStagingBackgroundTaskExecutor" %><%@
 page import="com.liferay.portal.lar.backgroundtask.LayoutStagingBackgroundTaskExecutor" %><%@
 page import="com.liferay.portal.layoutconfiguration.util.RuntimePageUtil" %><%@
+page import="com.liferay.portal.plugin.PluginUtil" %><%@
 page import="com.liferay.portal.theme.NavItem" %><%@
 page import="com.liferay.portal.util.LayoutLister" %><%@
 page import="com.liferay.portal.util.LayoutView" %><%@

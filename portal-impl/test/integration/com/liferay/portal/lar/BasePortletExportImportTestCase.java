@@ -26,6 +26,7 @@ import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.util.GroupTestUtil;
 import com.liferay.portal.util.LayoutTestUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.TestPropsValues;
@@ -89,6 +90,15 @@ public class BasePortletExportImportTestCase extends BaseExportImportTestCase {
 		throws Exception {
 
 		testExportImportDisplayStyle(group.getGroupId(), StringPool.BLANK);
+	}
+
+	@Test
+	public void testExportImportDisplayStyleFromDifferentGroup()
+		throws Exception {
+
+		Group group2 = GroupTestUtil.addGroup();
+
+		testExportImportDisplayStyle(group2.getGroupId(), StringPool.BLANK);
 	}
 
 	@Test
@@ -219,6 +229,9 @@ public class BasePortletExportImportTestCase extends BaseExportImportTestCase {
 				importedGroup.getCompanyId());
 
 			expectedDisplayStyleGroupId = companyGroup.getGroupId();
+		}
+		else if (displayStyleGroupId != group.getGroupId()) {
+			expectedDisplayStyleGroupId = displayStyleGroupId;
 		}
 
 		Assert.assertEquals(

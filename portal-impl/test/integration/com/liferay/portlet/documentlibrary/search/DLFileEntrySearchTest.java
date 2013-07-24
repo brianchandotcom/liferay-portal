@@ -14,8 +14,10 @@
 
 package com.liferay.portlet.documentlibrary.search;
 
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -97,7 +99,7 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 			Fields.class.getName() + _ddmStructure.getStructureId(), fields);
 
 		FileEntry fileEntry = DLAppTestUtil.addFileEntry(
-			TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
+			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Text.txt",
 			ContentTypes.TEXT_PLAIN, "Title", content.getBytes(),
 			WorkflowConstants.ACTION_PUBLISH, serviceContext);
@@ -163,6 +165,11 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 	}
 
 	@Override
+	protected String getParentBaseModelClassName() {
+		return DLFolderConstants.getClassName();
+	}
+
+	@Override
 	protected String getSearchKeywords() {
 		return "Title";
 	}
@@ -170,6 +177,24 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 	@Override
 	protected boolean isExpirableAllVersions() {
 		return true;
+	}
+
+	@Override
+	protected void moveParentBaseModelToTrash(long primaryKey)
+		throws Exception {
+
+		DLAppServiceUtil.moveFolderToTrash(primaryKey);
+	}
+
+	@Override
+	protected long searchGroupEntriesCount(long groupId, long creatorUserId)
+		throws Exception {
+
+		Hits hits =  DLAppServiceUtil.search(
+			groupId, creatorUserId, WorkflowConstants.STATUS_APPROVED,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		return hits.getLength();
 	}
 
 	@Override

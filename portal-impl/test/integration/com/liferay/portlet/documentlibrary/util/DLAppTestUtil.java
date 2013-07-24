@@ -273,7 +273,7 @@ public abstract class DLAppTestUtil {
 		}
 
 		return addFileEntry(
-			TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
+			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
 			folderId, sourceFileName, ContentTypes.TEXT_PLAIN, title, null,
 			workflowAction, serviceContext);
 	}

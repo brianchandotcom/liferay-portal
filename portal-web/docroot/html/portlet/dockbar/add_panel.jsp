@@ -83,7 +83,7 @@
 
 					<c:if test="<%= hasAddPagePermission %>">
 						<liferay-ui:section>
-							<liferay-util:include page="/html/portlet/dockbar/add_layout.jsp" />
+							<liferay-util:include page="/html/portlet/layouts_admin/add_layout.jsp" />
 						</liferay-ui:section>
 					</c:if>
 				</liferay-ui:tabs>

@@ -23,18 +23,6 @@ if (groupId > 0) {
 	group = GroupServiceUtil.getGroup(groupId);
 }
 
-long parentGroupId = GroupConstants.DEFAULT_PARENT_GROUP_ID;
-
-String parentGroupName = LanguageUtil.get(pageContext, "sites-home");
-
-if ((group != null) && !group.isRoot()) {
-	Group parentGroup = group.getParentGroup();
-
-	parentGroupId = parentGroup.getGroupId();
-
-	parentGroupName = HtmlUtil.escape(parentGroup.getDescriptiveName());
-}
-
 List<Group> groups = new ArrayList<Group>();
 
 if (filterManageableGroups) {
@@ -46,12 +34,26 @@ if (groupId != GroupConstants.DEFAULT_PARENT_GROUP_ID) {
 
 	groups.add(GroupLocalServiceUtil.getGroup(groupId));
 }
+
+if (group != null) {
+	SitesUtil.addPortletBreadcrumbEntries(group, request, renderResponse);
+}
 %>
 
-<c:if test="<%= group != null %>">
+<c:if test="<%= (group != null) && (group.getGroupId() != GroupConstants.DEFAULT_PARENT_GROUP_ID) %>">
 
 	<%
-	SitesUtil.addPortletBreadcrumbEntries(group, request, renderResponse);
+	long parentGroupId = GroupConstants.DEFAULT_PARENT_GROUP_ID;
+	String parentGroupName = LanguageUtil.get(pageContext, "sites-home");
+
+	if (!group.isRoot()) {
+		Group parentGroup = group.getParentGroup();
+
+		if (GroupPermissionUtil.contains(permissionChecker, parentGroup, ActionKeys.VIEW)) {
+			parentGroupId = parentGroup.getGroupId();
+			parentGroupName = parentGroup.getDescriptiveName();
+		}
+	}
 	%>
 
 	<liferay-util:include page="/html/portlet/sites_admin/toolbar.jsp">
@@ -66,9 +68,8 @@ if (groupId != GroupConstants.DEFAULT_PARENT_GROUP_ID) {
 	<liferay-ui:header
 		backLabel="<%= parentGroupName %>"
 		backURL="<%= headerBackURL.toString() %>"
-		escapeXml="<%= false %>"
 		localizeTitle="<%= false %>"
-		title="<%= HtmlUtil.escape(group.getDescriptiveName()) %>"
+		title="<%= group.getDescriptiveName() %>"
 	/>
 </c:if>
 
@@ -108,6 +109,12 @@ if (groupId != GroupConstants.DEFAULT_PARENT_GROUP_ID) {
 			searchContainer.setRowChecker(new SiteChecker(renderResponse));
 
 			GroupSearchTerms searchTerms = (GroupSearchTerms)searchContainer.getSearchTerms();
+
+			long parentGroupId = _getParentGroupId(request, group, filterManageableGroups);
+
+			if (group != null) {
+				parentGroupId = group.getGroupId();
+			}
 
 			request.setAttribute("view_tree.jspf-searchTerms", searchTerms);
 			%>
@@ -233,3 +240,17 @@ if (groupId != GroupConstants.DEFAULT_PARENT_GROUP_ID) {
 		</aui:col>
 	</c:if>
 </aui:row>
+
+<%!
+private long _getParentGroupId(HttpServletRequest request, Group group, boolean filterManageableGroups) {
+	if (group != null) {
+		return group.getGroupId();
+	}
+
+	if (filterManageableGroups) {
+		return GroupConstants.ANY_PARENT_GROUP_ID;
+	}
+
+	return GroupConstants.DEFAULT_PARENT_GROUP_ID;
+}
+%>

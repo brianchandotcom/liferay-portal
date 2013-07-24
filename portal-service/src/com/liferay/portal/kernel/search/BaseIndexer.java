@@ -1033,6 +1033,13 @@ public abstract class BaseIndexer implements Indexer {
 		multiValueFacet.setFieldName(Field.USER_ID);
 		multiValueFacet.setStatic(true);
 
+		long userId = GetterUtil.getLong(
+			searchContext.getAttribute(Field.USER_ID));
+
+		if (userId > 0) {
+			multiValueFacet.setValues(new long[]{userId});
+		}
+
 		searchContext.addFacet(multiValueFacet);
 	}
 

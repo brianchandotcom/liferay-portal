@@ -855,6 +855,7 @@ public class ArrayUtil {
 		return toArray(filteredList.toArray(new Short[filteredList.size()]));
 	}
 
+	@SuppressWarnings("unchecked")
 	public static <T> T[] filter(
 		T[] array, PredicateFilter<T> filterPredicate) {
 
@@ -873,7 +874,7 @@ public class ArrayUtil {
 		Object[] filteredArray = filteredList.toArray();
 
 		return (T[])Arrays.copyOf(
-			filteredArray, filteredArray.length, filteredArray.getClass());
+			filteredArray, filteredArray.length, array.getClass());
 	}
 
 	public static int getLength(Object[] array) {

@@ -375,6 +375,12 @@ public class JournalFolderLocalServiceUtil {
 	}
 
 	public static com.liferay.portlet.journal.model.JournalFolder fetchFolder(
+		long folderId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().fetchFolder(folderId);
+	}
+
+	public static com.liferay.portlet.journal.model.JournalFolder fetchFolder(
 		long groupId, long parentFolderId, java.lang.String name)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().fetchFolder(groupId, parentFolderId, name);

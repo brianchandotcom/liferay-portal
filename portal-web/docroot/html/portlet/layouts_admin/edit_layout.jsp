@@ -110,7 +110,9 @@ boolean showAddAction = ParamUtil.getBoolean(request, "showAddAction", true);
 %>
 
 <c:if test="<%= !portletName.equals(PortletKeys.DOCKBAR) %>">
-	<liferay-util:include page="/html/portlet/layouts_admin/add_layout.jsp" />
+	<div id="<portlet:namespace />addLayout" class="hide">
+		<liferay-util:include page="/html/portlet/layouts_admin/add_layout.jsp" />
+	</div>
 </c:if>
 
 <aui:nav-bar>
@@ -255,6 +257,17 @@ boolean showAddAction = ParamUtil.getBoolean(request, "showAddAction", true);
 							}
 
 							popup.show();
+
+							var cancelButton = popup.get('contentBox').one('#<portlet:namespace />cancelAddOperation');
+
+							if (cancelButton) {
+								cancelButton.on(
+									'click',
+									function(event) {
+										popup.hide();
+									}
+								);
+							}
 
 							Liferay.Util.focusFormField(content.one('input:text'));
 						}

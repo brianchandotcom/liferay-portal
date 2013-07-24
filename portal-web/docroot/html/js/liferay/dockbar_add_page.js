@@ -50,6 +50,12 @@ AUI.add(
 					parentLayoutId: {
 						validator: Lang.isNumber
 					},
+					refresh: {
+						validator: Lang.isBoolean
+					},
+					toggleOnCancel: {
+						validator: Lang.isBoolean
+					},
 					transition: {
 						validator: Lang.isObject,
 						value: {
@@ -113,52 +119,62 @@ AUI.add(
 					_addPage: function(event) {
 						var instance = this;
 
-						event.preventDefault();
+						var addForm = instance._addForm;
 
-						var nodes = instance.get(STR_NODES);
+						if (instance.get('refresh')) {
+							submitForm(addForm)
+						} else {
+							event.preventDefault();
 
-						nodes.each(
-							function(item, index, collection) {
-								var header = item.one(SELECTOR_TOGGLER_HEADER);
+							var nodes = instance.get(STR_NODES);
 
-								var active = header.hasClass(CSS_ACTIVE);
+							nodes.each(
+								function(item, index, collection) {
+									var header = item.one(SELECTOR_TOGGLER_HEADER);
 
-								item.all('input, select, textarea').set('disabled', !active);
-							}
-						);
+									var active = header.hasClass(CSS_ACTIVE);
 
-						A.io.request(
-							instance._addForm.get('action'),
-							{
-								dataType: 'json',
-								form: {
-									id: instance._addForm.get('id')
-								},
-								after: {
-									success: function(event, id, obj) {
-										var response = this.get(STR_RESPONSE_DATA);
+									item.all('input, select, textarea').set('disabled', !active);
+								}
+							);
 
-										instance._loadingMask.hide();
+							A.io.request(
+								addForm.get('action'),
+								{
+									dataType: 'json',
+									form: {
+										id: addForm.get('id')
+									},
+									after: {
+										success: function(event, id, obj) {
+											var response = this.get(STR_RESPONSE_DATA);
 
-										var panel = instance._addForm.ancestor();
+											instance._loadingMask.hide();
 
-										panel.empty();
+											var panel = addForm.ancestor();
 
-										panel.plug(A.Plugin.ParseContent);
+											panel.empty();
 
-										panel.setContent(response);
+											panel.plug(A.Plugin.ParseContent);
+
+											panel.setContent(response);
+										}
 									}
 								}
-							}
-						);
+							);
 
-						instance._loadingMask.show();
+							instance._loadingMask.show();
+						}
 					},
 
 					_cancelAction: function(event) {
-						event.preventDefault();
+						var instance = this;
 
-						Dockbar.toggleAddPanel();
+						if (instance.get('toggleOnCancel')) {
+							event.preventDefault();
+
+							Dockbar.toggleAddPanel();
+						}
 					},
 
 					_updateActivePage: function(event) {

@@ -33,6 +33,8 @@
 	}
 
 	.article-toolbar {
+		margin-bottom: 1em;
+
 		.icon-delete {
 			background-image: url(@theme_image_path@/common/delete.png);
 		}
@@ -62,19 +64,19 @@
 		border-bottom: 1px solid #666;
 	}
 
-	.lfr-table .journal-metadata {
-		background: #EEE;
-		border: 1px solid #979798;
-		border-color: #979798 #FAFAFB #FAFAFB #BDBDBE;
+	.journal-metadata {
 		min-height: 1.8em;
 	}
 
-	.lfr-table .article-structure-template-toolbar {
+	.article-structure-template-toolbar, .article-translation-toolbar {
 		color: #34404F;
 		display: block;
 		margin: 0 auto;
 		padding: 0.5em;
+		padding-bottom: 0;
+	}
 
+	.article-structure-template-toolbar {
 		.article-structure-toolbar, .article-template-toolbar {
 			display: inline;
 			margin-left: 0.5em;
@@ -88,12 +90,7 @@
 		}
 	}
 
-	.lfr-table .article-translation-toolbar {
-		color: #34404F;
-		display: block;
-		margin: 0 auto;
-		padding: 0.5em;
-
+	.article-translation-toolbar {
 		.add-translations-menu {
 			display: inline;
 			float: none;
@@ -114,9 +111,11 @@
 		}
 	}
 
-	.lfr-table .journal-article-header-edit {
-		margin: 1em 0;
-		width: 95%;
+	.journal-article-header-edit {
+		background: #FCFCFC;
+		border: solid #DDD;
+		border-width: 1px 0;
+		margin: 0 0 1em;
 	}
 
 	.subscribe-link {
@@ -297,7 +296,7 @@
 		margin-top: 10px;
 	}
 
-	 .journal-article-header-edit .journal-article-localized-checkbox {
+	.journal-article-header-edit .journal-article-localized-checkbox {
 		margin-bottom: 10px;
 	}
 
@@ -704,7 +703,7 @@
 		display: none;
 	}
 
-	.lfr-table .journal-article-header-edit {
+	.journal-article-header-edit {
 		width: 100%;
 	}
 
@@ -712,7 +711,7 @@
 		width: 100%;
 	}
 
-	.taglib-form-navigator .form-navigator, .lfr-table .article-translation-toolbar, .journal-article-general-fields, .article-toolbar {
+	.taglib-form-navigator .form-navigator, .article-translation-toolbar, .journal-article-general-fields, .article-toolbar {
 		display: none;
 	}
 }

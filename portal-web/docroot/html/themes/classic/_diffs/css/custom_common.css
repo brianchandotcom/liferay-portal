@@ -97,8 +97,10 @@
 		line-height: 27px;
 	}
 
-	.form-search .control-group-inline {
-		margin: 0;
+	.form-search, .lfr-translation-manager-selector {
+		.control-group-inline {
+			margin: 0;
+		}
 	}
 
 	.field-wrapper .btn {

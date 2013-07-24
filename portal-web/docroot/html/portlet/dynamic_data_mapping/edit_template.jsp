@@ -135,7 +135,7 @@ if (Validator.isNotNull(structureAvailableFields)) {
 				<c:if test="<%= ddmDisplay.isShowStructureSelector() %>">
 					<aui:field-wrapper helpMessage="structure-help" label="structure">
 						<c:if test="<%= structure != null %>">
-							<%= structure.getName(locale) %>
+							<%= HtmlUtil.escape(structure.getName(locale)) %>
 						</c:if>
 						<c:if test="<%= ((template == null) || (template.getClassPK() == 0)) %>">
 							<liferay-ui:icon

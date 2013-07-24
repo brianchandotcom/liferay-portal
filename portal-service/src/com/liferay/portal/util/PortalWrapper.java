@@ -190,7 +190,7 @@ public class PortalWrapper implements Portal {
 	/**
 	 * Adds the preserved parameters doAsGroupId and refererPlid to the URL,
 	 * optionally adding doAsUserId and doAsUserLanguageId as well.
-	 * 
+	 *
 	 * <p>
 	 * Preserved parameters are parameters that should be sent with every
 	 * request as the user navigates the portal.
@@ -223,7 +223,7 @@ public class PortalWrapper implements Portal {
 	public String addPreservedParameters(ThemeDisplay themeDisplay, String url) {
 		return _portal.addPreservedParameters(themeDisplay, url);
 	}
-	
+
 	@Override
 	public void addUserLocaleOptionsMessage(HttpServletRequest request) {
 		_portal.addUserLocaleOptionsMessage(request);
@@ -251,6 +251,11 @@ public class PortalWrapper implements Portal {
 	public void copyRequestParameters(
 		ActionRequest actionRequest, ActionResponse actionResponse) {
 		_portal.copyRequestParameters(actionRequest, actionResponse);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		return _portal.equals(obj);
 	}
 
 	/**
@@ -293,9 +298,9 @@ public class PortalWrapper implements Portal {
 	}
 
 	@Override public String getActualURL(
-			long groupId, boolean privateLayout, String mainPath, 
+			long groupId, boolean privateLayout, String mainPath,
 			String friendlyURL, Map<String, String[]> params,
-			Map<String, Object> requestContext) 
+			Map<String, Object> requestContext)
 		throws PortalException, SystemException {
 		return _portal.getActualURL(
 			groupId, privateLayout, mainPath, friendlyURL, params,
@@ -452,7 +457,7 @@ public class PortalWrapper implements Portal {
 	 */
 	@Override
 	public String getCanonicalURL(
-			String completeURL, ThemeDisplay themeDisplay, Layout layout) 
+			String completeURL, ThemeDisplay themeDisplay, Layout layout)
 		throws PortalException, SystemException {
 		return _portal.getCanonicalURL(completeURL, themeDisplay, layout);
 	}
@@ -680,7 +685,7 @@ public class PortalWrapper implements Portal {
 
 	@Override
 	public String getCreateAccountURL(
-			HttpServletRequest request, ThemeDisplay themeDisplay) 
+			HttpServletRequest request, ThemeDisplay themeDisplay)
 		throws Exception {
 		return _portal.getCreateAccountURL(request, themeDisplay);
 	}
@@ -741,7 +746,7 @@ public class PortalWrapper implements Portal {
 	@Override
 	public Date getDate(
 			int month, int day, int year,
-			Class<? extends PortalException> clazz) 
+			Class<? extends PortalException> clazz)
 		throws PortalException {
 		return _portal.getDate(month, day, year, clazz);
 	}
@@ -875,7 +880,7 @@ public class PortalWrapper implements Portal {
 	@Override
 	public Serializable getExpandoValue(
 			UploadPortletRequest uploadPortletRequest, String name, int type,
-			String displayType) 
+			String displayType)
 		throws PortalException, SystemException {
 		return _portal.getExpandoValue(
 			uploadPortletRequest, name, type, displayType);
@@ -934,8 +939,8 @@ public class PortalWrapper implements Portal {
 
 	@Override
 	public String getGroupFriendlyURL(
-			Group group, boolean privateLayoutSet, ThemeDisplay themeDisplay, 
-			Locale locale) 
+			Group group, boolean privateLayoutSet, ThemeDisplay themeDisplay,
+			Locale locale)
 		throws PortalException, SystemException {
 		return _portal.getGroupFriendlyURL(
 			group, privateLayoutSet, themeDisplay, locale);
@@ -1026,7 +1031,7 @@ public class PortalWrapper implements Portal {
 
 	@Override
 	public String getJournalArticleActualURL(
-			long groupId, boolean privateLayout, String mainPath, 
+			long groupId, boolean privateLayout, String mainPath,
 			String friendlyURL, Map<String, String[]> params,
 			Map<String, Object> requestContext)
 		throws PortalException, SystemException {
@@ -1071,7 +1076,7 @@ public class PortalWrapper implements Portal {
 	public String getLayoutActualURL(
 			long groupId, boolean privateLayout, String mainPath,
 			String friendlyURL, Map<String, String[]> params,
-			Map<String, Object> requestContext) 
+			Map<String, Object> requestContext)
 		throws PortalException, SystemException {
 		return _portal.getLayoutActualURL(
 			groupId, privateLayout, mainPath, friendlyURL, params,
@@ -1805,8 +1810,7 @@ public class PortalWrapper implements Portal {
 	}
 
 	@Override
-	public String getUserEmailAddress(long userId) 
-		throws SystemException {
+	public String getUserEmailAddress(long userId) throws SystemException {
 		return _portal.getUserEmailAddress(userId);
 	}
 
@@ -1884,8 +1888,8 @@ public class PortalWrapper implements Portal {
 			Map<String, Object> requestContext)
 		throws PortalException, SystemException {
 		return _portal.getVirtualLayoutActualURL(
-			groupId, privateLayout, mainPath, friendlyURL,
-			params, requestContext);
+			groupId, privateLayout, mainPath, friendlyURL, params,
+			requestContext);
 	}
 
 	@Override
@@ -1901,6 +1905,15 @@ public class PortalWrapper implements Portal {
 	public String getWidgetURL(Portlet portlet, ThemeDisplay themeDisplay)
 		throws PortalException, SystemException {
 		return _portal.getWidgetURL(portlet, themeDisplay);
+	}
+
+	public Portal getWrapped() {
+		return _portal;
+	}
+
+	@Override
+	public int hashCode() {
+		return _portal.hashCode();
 	}
 
 	@Override
@@ -2000,7 +2013,7 @@ public class PortalWrapper implements Portal {
 	}
 
 	@Override
-	public boolean isGroupAdmin(User user,long groupId) throws Exception {
+	public boolean isGroupAdmin(User user, long groupId) throws Exception {
 		return _portal.isGroupAdmin(user, groupId);
 	}
 
@@ -2274,20 +2287,6 @@ public class PortalWrapper implements Portal {
 		return _portal.updateWindowState(
 			portletId, user, layout, windowState, request);
 	}
-	
-	@Override
-	public int hashCode() {
-		return _portal.hashCode();
-	}
 
-	@Override
-	public boolean equals(Object obj) {
-		return _portal.equals(obj);
-	}
-
-	public Portal getWrapped() {
-		return _portal;
-	}
-	
 	private Portal _portal;
 }

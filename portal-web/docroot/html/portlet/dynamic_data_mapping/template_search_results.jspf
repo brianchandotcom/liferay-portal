@@ -17,12 +17,7 @@
 <%
 TemplateSearchTerms searchTerms = (TemplateSearchTerms)searchContainer.getSearchTerms();
 
-long[] groupIds = new long[] {scopeGroupId};
-
-if (showGlobalScope) {
-	groupIds = PortalUtil.getSiteAndCompanyGroupIds(themeDisplay);
-}
-
+long[] groupIds = ddmDisplay.getTemplateGroupIds(themeDisplay, showGlobalScope);
 long[] classNameIds = ddmDisplay.getTemplateClassNameIds(classNameId);
 long[] classPKs = ddmDisplay.getTemplateClassPKs(company.getCompanyId(), classNameId, classPK);
 

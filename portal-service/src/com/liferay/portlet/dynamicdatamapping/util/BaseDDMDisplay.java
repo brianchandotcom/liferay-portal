@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
@@ -194,6 +195,18 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 		}
 
 		return ArrayUtil.toLongArray(classPKs);
+	}
+
+	@Override
+	public long[] getTemplateGroupIds(
+			ThemeDisplay themeDisplay, boolean showGlobalScope)
+		throws Exception {
+
+		if (showGlobalScope) {
+			return PortalUtil.getSiteAndCompanyGroupIds(themeDisplay);
+		}
+
+		return new long[] {themeDisplay.getScopeGroupId()};
 	}
 
 	@Override

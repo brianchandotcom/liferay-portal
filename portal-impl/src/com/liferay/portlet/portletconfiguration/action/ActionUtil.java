@@ -16,6 +16,7 @@ package com.liferay.portlet.portletconfiguration.action;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.portlet.ConfigurationUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
@@ -60,6 +61,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Jorge Ferrer
+ * @author Raymond Augé
  */
 public class ActionUtil {
 
@@ -232,9 +234,11 @@ public class ActionUtil {
 		String portletId = ParamUtil.getString(
 			portletRequest, "portletResource");
 
+		Layout layout = ConfigurationUtil.getLayout(themeDisplay);
+
 		if (!PortletPermissionUtil.contains(
-				permissionChecker, themeDisplay.getLayout(), portletId,
-				ActionKeys.CONFIGURATION)) {
+				permissionChecker, themeDisplay.getScopeGroupId(),
+				layout, portletId, ActionKeys.CONFIGURATION)) {
 
 			throw new PrincipalException();
 		}

@@ -203,8 +203,10 @@ if ((portletParallelRender != null) && (portletParallelRender.booleanValue() == 
 }
 
 if (!portletId.equals(PortletKeys.PORTLET_CONFIGURATION)) {
+	Layout curLayout = ConfigurationUtil.getLayout(themeDisplay);
+
 	if ((!group.hasStagingGroup() || group.isStagingGroup()) &&
-		(PortletPermissionUtil.contains(permissionChecker, layout, portlet, ActionKeys.CONFIGURATION))) {
+		(PortletPermissionUtil.contains(permissionChecker, themeDisplay.getScopeGroupId(), curLayout, portlet, ActionKeys.CONFIGURATION))) {
 
 		showConfigurationIcon = true;
 

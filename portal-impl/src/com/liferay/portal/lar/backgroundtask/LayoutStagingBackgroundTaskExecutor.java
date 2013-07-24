@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.lar.MissingReference;
 import com.liferay.portal.kernel.lar.MissingReferences;
 import com.liferay.portal.kernel.staging.StagingUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.model.BackgroundTask;
@@ -70,29 +71,29 @@ public class LayoutStagingBackgroundTaskExecutor
 		Date startDate = (Date)taskContextMap.get("startDate");
 		Date endDate = (Date)taskContextMap.get("endDate");
 
-		File larFile = LayoutLocalServiceUtil.exportLayoutsAsFile(
-			sourceGroupId, privateLayout, layoutIds, parameterMap, startDate,
-			endDate);
-
 		BackgroundTaskStatus backgroundTaskStatus =
 			BackgroundTaskStatusRegistryUtil.getBackgroundTaskStatus(
 				backgroundTask.getBackgroundTaskId());
 
 		backgroundTaskStatus.clearAttributes();
 
+		File file = null;
 		MissingReferences missingReferences = null;
 
 		try {
+			file = LayoutLocalServiceUtil.exportLayoutsAsFile(
+				sourceGroupId, privateLayout, layoutIds, parameterMap,
+				startDate, endDate);
+
 			missingReferences =
 				LayoutLocalServiceUtil.validateImportLayoutsFile(
-					userId, targetGroupId, privateLayout, parameterMap,
-					larFile);
+					userId, targetGroupId, privateLayout, parameterMap, file);
 
 			LayoutLocalServiceUtil.importLayouts(
-				userId, targetGroupId, privateLayout, parameterMap, larFile);
+				userId, targetGroupId, privateLayout, parameterMap, file);
 		}
 		finally {
-			larFile.delete();
+			FileUtil.delete(file);
 
 			StagingUtil.unlockGroup(targetGroupId);
 		}

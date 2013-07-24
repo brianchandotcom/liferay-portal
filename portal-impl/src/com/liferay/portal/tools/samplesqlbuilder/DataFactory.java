@@ -584,377 +584,6 @@ public class DataFactory {
 		return _classNameModelsMap.get(WikiPage.class.getName());
 	}
 
-	public void initAssetCategoryModels() {
-		_assetCategoryModelsArray =
-			(List<AssetCategoryModel>[])new List<?>[_maxGroupCount];
-		_assetVocabularyModelsArray =
-			(List<AssetVocabularyModel>[])new List<?>[_maxGroupCount];
-		_defaultAssetVocabularyModel = newAssetVocabularyModel(
-			_globalGroupId, _defaultUserId, null,
-			PropsValues.ASSET_VOCABULARY_DEFAULT);
-
-		StringBundler sb = new StringBundler(4);
-
-		for (int i = 1; i <= _maxGroupCount; i++) {
-			List<AssetVocabularyModel> assetVocabularyModels =
-				new ArrayList<AssetVocabularyModel>(_maxAssetVocabularyCount);
-			List<AssetCategoryModel> assetCategoryModels =
-				new ArrayList<AssetCategoryModel>(
-					_maxAssetVocabularyCount * _maxAssetCategoryCount);
-
-			long lastRightCategoryId = 2;
-
-			for (int j = 0; j < _maxAssetVocabularyCount; j++) {
-				sb.setIndex(0);
-
-				sb.append("TestVocabulary_");
-				sb.append(i);
-				sb.append(StringPool.UNDERLINE);
-				sb.append(j);
-
-				AssetVocabularyModel assetVocabularyModel =
-					newAssetVocabularyModel(
-						i, _sampleUserId, _SAMPLE_USER_NAME, sb.toString());
-
-				assetVocabularyModels.add(assetVocabularyModel);
-
-				for (int k = 0; k < _maxAssetCategoryCount; k++) {
-					sb.setIndex(0);
-
-					sb.append("TestCategory_");
-					sb.append(assetVocabularyModel.getVocabularyId());
-					sb.append(StringPool.UNDERLINE);
-					sb.append(k);
-
-					AssetCategoryModel assetCategoryModel =
-						newAssetCategoryModel(
-							i, lastRightCategoryId, sb.toString(),
-							assetVocabularyModel.getVocabularyId());
-
-					lastRightCategoryId += 2;
-
-					assetCategoryModels.add(assetCategoryModel);
-				}
-			}
-
-			_assetCategoryModelsArray[i - 1] = assetCategoryModels;
-			_assetVocabularyModelsArray[i - 1] = assetVocabularyModels;
-		}
-	}
-
-	public void initAssetTagModels() {
-		_assetTagModelsArray =
-			(List<AssetTagModel>[])new List<?>[_maxGroupCount];
-		_assetTagStatsModelsArray =
-			(List<AssetTagStatsModel>[])new List<?>[_maxGroupCount];
-
-		for (int i = 1; i <= _maxGroupCount; i++) {
-			List<AssetTagModel> assetTagModels = new ArrayList<AssetTagModel>(
-				_maxAssetTagCount);
-			List<AssetTagStatsModel> assetTagStatsModels =
-				new ArrayList<AssetTagStatsModel>(_maxAssetTagCount * 3);
-
-			for (int j = 0; j < _maxAssetTagCount; j++) {
-				AssetTagModel assetTagModel = new AssetTagModelImpl();
-
-				assetTagModel.setTagId(_counter.get());
-				assetTagModel.setGroupId(i);
-				assetTagModel.setCompanyId(_companyId);
-				assetTagModel.setUserId(_sampleUserId);
-				assetTagModel.setUserName(_SAMPLE_USER_NAME);
-				assetTagModel.setCreateDate(new Date());
-				assetTagModel.setModifiedDate(new Date());
-				assetTagModel.setName("TestTag_" + i + "_" + j);
-
-				assetTagModels.add(assetTagModel);
-
-				AssetTagStatsModel assetTagStatsModel = newAssetTagStatsModel(
-					assetTagModel.getTagId(),
-					_classNameModelsMap.get(BlogsEntry.class.getName()));
-
-				assetTagStatsModels.add(assetTagStatsModel);
-
-				assetTagStatsModel = newAssetTagStatsModel(
-					assetTagModel.getTagId(),
-					_classNameModelsMap.get(JournalArticle.class.getName()));
-
-				assetTagStatsModels.add(assetTagStatsModel);
-
-				assetTagStatsModel = newAssetTagStatsModel(
-					assetTagModel.getTagId(),
-					_classNameModelsMap.get(WikiPage.class.getName()));
-
-				assetTagStatsModels.add(assetTagStatsModel);
-			}
-
-			_assetTagModelsArray[i - 1] = assetTagModels;
-			_assetTagStatsModelsArray[i - 1] = assetTagStatsModels;
-		}
-	}
-
-	public void initCompanyModel() {
-		_companyModel = new CompanyModelImpl();
-
-		_companyModel.setCompanyId(_companyId);
-		_companyModel.setAccountId(_accountId);
-		_companyModel.setWebId("liferay.com");
-		_companyModel.setMx("liferay.com");
-		_companyModel.setActive(true);
-
-		_accountModel = new AccountModelImpl();
-
-		_accountModel.setAccountId(_accountId);
-		_accountModel.setCompanyId(_companyId);
-		_accountModel.setCreateDate(new Date());
-		_accountModel.setModifiedDate(new Date());
-		_accountModel.setName("Liferay");
-		_accountModel.setLegalName("Liferay, Inc.");
-	}
-
-	public void initContext(Properties properties) {
-		_maxAssetCategoryCount = GetterUtil.getInteger(
-			properties.getProperty("sample.sql.max.asset.category.count"));
-		_maxAssetEntryToAssetCategoryCount = GetterUtil.getInteger(
-			properties.getProperty(
-				"sample.sql.max.asset.entry.to.asset.category.count"));
-		_maxAssetEntryToAssetTagCount = GetterUtil.getInteger(
-			properties.getProperty(
-				"sample.sql.max.asset.entry.to.asset.tag.count"));
-		_maxAssetPublisherFilterRuleCount = GetterUtil.getInteger(
-			properties.getProperty(
-				"sample.sql.max.asset.publisher.filter.rule.count"));
-		_maxAssetPublisherPageCount = GetterUtil.getInteger(
-			properties.getProperty(
-				"sample.sql.max.asset.publisher.page.count"));
-		_maxAssetTagCount = GetterUtil.getInteger(
-			properties.getProperty("sample.sql.max.asset.tag.count"));
-		_maxAssetVocabularyCount = GetterUtil.getInteger(
-			properties.getProperty("sample.sql.max.asset.vocabulary.count"));
-		_maxBlogsEntryCommentCount = GetterUtil.getInteger(
-			properties.getProperty("sample.sql.max.blogs.entry.comment.count"));
-		_maxBlogsEntryCount = GetterUtil.getInteger(
-			properties.getProperty("sample.sql.max.blogs.entry.count"));
-		_maxDDLCustomFieldCount = GetterUtil.getInteger(
-			properties.getProperty("sample.sql.max.ddl.custom.field.count"));
-		_maxDDLRecordCount = GetterUtil.getInteger(
-			properties.getProperty("sample.sql.max.ddl.record.count"));
-		_maxDDLRecordSetCount = GetterUtil.getInteger(
-			properties.getProperty("sample.sql.max.ddl.record.set.count"));
-		_maxDLFileEntryCount = GetterUtil.getInteger(
-			properties.getProperty("sample.sql.max.dl.file.entry.count"));
-		_maxDLFileEntrySize = GetterUtil.getInteger(
-			properties.getProperty("sample.sql.max.dl.file.entry.size"));
-		_maxDLFolderCount = GetterUtil.getInteger(
-			properties.getProperty("sample.sql.max.dl.folder.count"));
-		_maxDLFolderDepth = GetterUtil.getInteger(
-			properties.getProperty("sample.sql.max.dl.folder.depth"));
-		_maxGroupCount = GetterUtil.getInteger(
-			properties.getProperty("sample.sql.max.group.count"));
-		_maxJournalArticleCount = GetterUtil.getInteger(
-			properties.getProperty("sample.sql.max.journal.article.count"));
-		_maxJournalArticlePageCount = GetterUtil.getInteger(
-			properties.getProperty(
-				"sample.sql.max.journal.article.page.count"));
-		_maxJournalArticleVersionCount = GetterUtil.getInteger(
-			properties.getProperty(
-				"sample.sql.max.journal.article.version.count"));
-		_maxMBCategoryCount = GetterUtil.getInteger(
-			properties.getProperty("sample.sql.max.mb.category.count"));
-		_maxMBMessageCount = GetterUtil.getInteger(
-			properties.getProperty("sample.sql.max.mb.message.count"));
-		_maxMBThreadCount = GetterUtil.getInteger(
-			properties.getProperty("sample.sql.max.mb.thread.count"));
-		_maxUserCount = GetterUtil.getInteger(
-			properties.getProperty("sample.sql.max.user.count"));
-		_maxUserToGroupCount = GetterUtil.getInteger(
-			properties.getProperty("sample.sql.max.user.to.group.count"));
-		_maxWikiNodeCount = GetterUtil.getInteger(
-			properties.getProperty("sample.sql.max.wiki.node.count"));
-		_maxWikiPageCommentCount = GetterUtil.getInteger(
-			properties.getProperty("sample.sql.max.wiki.page.comment.count"));
-		_maxWikiPageCount = GetterUtil.getInteger(
-			properties.getProperty("sample.sql.max.wiki.page.count"));
-	}
-
-	public void initDLFileEntryTypeModel() {
-		_defaultDLFileEntryTypeModel = new DLFileEntryTypeModelImpl();
-
-		_defaultDLFileEntryTypeModel.setUuid(SequentialUUID.generate());
-		_defaultDLFileEntryTypeModel.setFileEntryTypeId(
-			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT);
-		_defaultDLFileEntryTypeModel.setCreateDate(nextFutureDate());
-		_defaultDLFileEntryTypeModel.setModifiedDate(nextFutureDate());
-		_defaultDLFileEntryTypeModel.setFileEntryTypeKey(
-			DLFileEntryTypeConstants.NAME_BASIC_DOCUMENT.toUpperCase());
-
-		StringBundler sb = new StringBundler(5);
-
-		sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?><root ");
-		sb.append("available-locales=\"en_US\" default-locale=\"en_US\">");
-		sb.append("<name language-id=\"en_US\">");
-		sb.append(DLFileEntryTypeConstants.NAME_BASIC_DOCUMENT);
-		sb.append("</name></root>");
-
-		_defaultDLFileEntryTypeModel.setName(sb.toString());
-
-		_defaultDLDDMStructureModel = newDDMStructureModel(
-			_guestGroupId, getDLFileEntryClassNameId(), "TIKARAWMETADATA",
-			_dlDDMStructureContent);
-	}
-
-	public void initGroupModels() throws Exception {
-		long groupClassNameId = getGroupClassNameId();
-
-		_globalGroupModel = newGroupModel(
-			_globalGroupId, _classNameModelsMap.get(Company.class.getName()),
-			_companyId, GroupConstants.GLOBAL, false);
-
-		_guestGroupModel = newGroupModel(
-			_guestGroupId, groupClassNameId, _guestGroupId,
-			GroupConstants.GUEST, true);
-
-		_groupModels = new ArrayList<GroupModel>(_maxGroupCount);
-
-		for (int i = 1; i <= _maxGroupCount; i++) {
-			GroupModel groupModel = newGroupModel(
-				i, groupClassNameId, i, "Site " + i, true);
-
-			_groupModels.add(groupModel);
-		}
-	}
-
-	public void initJournalArticleContent(int maxJournalArticleSize) {
-		StringBundler sb = new StringBundler(5);
-
-		sb.append("<?xml version=\"1.0\"?><root available-locales=\"en_US\" ");
-		sb.append("default-locale=\"en_US\"><static-content language-id=");
-		sb.append("\"en_US\"><![CDATA[<p>");
-
-		if (maxJournalArticleSize <= 0) {
-			maxJournalArticleSize = 1;
-		}
-
-		char[] chars = new char[maxJournalArticleSize];
-
-		for (int i = 0; i < maxJournalArticleSize; i++) {
-			chars[i] = (char)(CharPool.LOWER_CASE_A + (i % 26));
-		}
-
-		sb.append(new String(chars));
-
-		sb.append("</p>]]></static-content></root>");
-
-		_journalArticleContent = sb.toString();
-	}
-
-	public void initRoleModels() {
-		_roleModels = new ArrayList<RoleModel>();
-
-		// Administrator
-
-		_administratorRoleModel = newRoleModel(
-			RoleConstants.ADMINISTRATOR, RoleConstants.TYPE_REGULAR);
-
-		_roleModels.add(_administratorRoleModel);
-
-		// Guest
-
-		_guestRoleModel = newRoleModel(
-			RoleConstants.GUEST, RoleConstants.TYPE_REGULAR);
-
-		_roleModels.add(_guestRoleModel);
-
-		// Organization Administrator
-
-		RoleModel organizationAdministratorRoleModel = newRoleModel(
-			RoleConstants.ORGANIZATION_ADMINISTRATOR,
-			RoleConstants.TYPE_ORGANIZATION);
-
-		_roleModels.add(organizationAdministratorRoleModel);
-
-		// Organization Owner
-
-		RoleModel organizationOwnerRoleModel = newRoleModel(
-			RoleConstants.ORGANIZATION_OWNER, RoleConstants.TYPE_ORGANIZATION);
-
-		_roleModels.add(organizationOwnerRoleModel);
-
-		// Organization User
-
-		RoleModel organizationUserRoleModel = newRoleModel(
-			RoleConstants.ORGANIZATION_USER, RoleConstants.TYPE_ORGANIZATION);
-
-		_roleModels.add(organizationUserRoleModel);
-
-		// Owner
-
-		_ownerRoleModel = newRoleModel(
-			RoleConstants.OWNER, RoleConstants.TYPE_REGULAR);
-
-		_roleModels.add(_ownerRoleModel);
-
-		// Power User
-
-		_powerUserRoleModel = newRoleModel(
-			RoleConstants.POWER_USER, RoleConstants.TYPE_REGULAR);
-
-		_roleModels.add(_powerUserRoleModel);
-
-		// Site Administrator
-
-		RoleModel siteAdministratorRoleModel = newRoleModel(
-			RoleConstants.SITE_ADMINISTRATOR, RoleConstants.TYPE_SITE);
-
-		_roleModels.add(siteAdministratorRoleModel);
-
-		// Site Member
-
-		_siteMemberRoleModel = newRoleModel(
-			RoleConstants.SITE_MEMBER, RoleConstants.TYPE_SITE);
-
-		_roleModels.add(_siteMemberRoleModel);
-
-		// Site Owner
-
-		RoleModel siteOwnerRoleModel = newRoleModel(
-			RoleConstants.SITE_OWNER, RoleConstants.TYPE_SITE);
-
-		_roleModels.add(siteOwnerRoleModel);
-
-		// User
-
-		_userRoleModel = newRoleModel(
-			RoleConstants.USER, RoleConstants.TYPE_REGULAR);
-
-		_roleModels.add(_userRoleModel);
-	}
-
-	public void initUserModels() {
-		_defaultUserModel = newUserModel(
-			_defaultUserId, StringPool.BLANK, StringPool.BLANK,
-			StringPool.BLANK, true);
-		_guestUserModel = newUserModel(
-			_counter.get(), "Test", "Test", "Test", false);
-		_sampleUserModel = newUserModel(
-			_sampleUserId, _SAMPLE_USER_NAME, _SAMPLE_USER_NAME,
-			_SAMPLE_USER_NAME, false);
-	}
-
-	public void initUserNames() throws IOException {
-		_firstNames = ListUtil.fromString(
-			StringUtil.read(getResourceInputStream("first_names.txt")));
-		_lastNames = ListUtil.fromString(
-			StringUtil.read(getResourceInputStream("last_names.txt")));
-	}
-
-	public void initVirtualHostModel() {
-		_virtualHostModel = new VirtualHostModelImpl();
-
-		_virtualHostModel.setVirtualHostId(_counter.get());
-		_virtualHostModel.setCompanyId(_companyId);
-		_virtualHostModel.setHostname("localhost");
-	}
-
 	public AssetEntryModel newAssetEntryModel(BlogsEntryModel blogsEntryModel) {
 		return newAssetEntryModel(
 			blogsEntryModel.getGroupId(), blogsEntryModel.getCreateDate(),
@@ -2255,6 +1884,377 @@ public class DataFactory {
 
 		return classLoader.getResourceAsStream(
 			_DEPENDENCIES_DIR + resourceName);
+	}
+
+	protected void initAssetCategoryModels() {
+		_assetCategoryModelsArray =
+			(List<AssetCategoryModel>[])new List<?>[_maxGroupCount];
+		_assetVocabularyModelsArray =
+			(List<AssetVocabularyModel>[])new List<?>[_maxGroupCount];
+		_defaultAssetVocabularyModel = newAssetVocabularyModel(
+			_globalGroupId, _defaultUserId, null,
+			PropsValues.ASSET_VOCABULARY_DEFAULT);
+
+		StringBundler sb = new StringBundler(4);
+
+		for (int i = 1; i <= _maxGroupCount; i++) {
+			List<AssetVocabularyModel> assetVocabularyModels =
+				new ArrayList<AssetVocabularyModel>(_maxAssetVocabularyCount);
+			List<AssetCategoryModel> assetCategoryModels =
+				new ArrayList<AssetCategoryModel>(
+					_maxAssetVocabularyCount * _maxAssetCategoryCount);
+
+			long lastRightCategoryId = 2;
+
+			for (int j = 0; j < _maxAssetVocabularyCount; j++) {
+				sb.setIndex(0);
+
+				sb.append("TestVocabulary_");
+				sb.append(i);
+				sb.append(StringPool.UNDERLINE);
+				sb.append(j);
+
+				AssetVocabularyModel assetVocabularyModel =
+					newAssetVocabularyModel(
+						i, _sampleUserId, _SAMPLE_USER_NAME, sb.toString());
+
+				assetVocabularyModels.add(assetVocabularyModel);
+
+				for (int k = 0; k < _maxAssetCategoryCount; k++) {
+					sb.setIndex(0);
+
+					sb.append("TestCategory_");
+					sb.append(assetVocabularyModel.getVocabularyId());
+					sb.append(StringPool.UNDERLINE);
+					sb.append(k);
+
+					AssetCategoryModel assetCategoryModel =
+						newAssetCategoryModel(
+							i, lastRightCategoryId, sb.toString(),
+							assetVocabularyModel.getVocabularyId());
+
+					lastRightCategoryId += 2;
+
+					assetCategoryModels.add(assetCategoryModel);
+				}
+			}
+
+			_assetCategoryModelsArray[i - 1] = assetCategoryModels;
+			_assetVocabularyModelsArray[i - 1] = assetVocabularyModels;
+		}
+	}
+
+	protected void initAssetTagModels() {
+		_assetTagModelsArray =
+			(List<AssetTagModel>[])new List<?>[_maxGroupCount];
+		_assetTagStatsModelsArray =
+			(List<AssetTagStatsModel>[])new List<?>[_maxGroupCount];
+
+		for (int i = 1; i <= _maxGroupCount; i++) {
+			List<AssetTagModel> assetTagModels = new ArrayList<AssetTagModel>(
+				_maxAssetTagCount);
+			List<AssetTagStatsModel> assetTagStatsModels =
+				new ArrayList<AssetTagStatsModel>(_maxAssetTagCount * 3);
+
+			for (int j = 0; j < _maxAssetTagCount; j++) {
+				AssetTagModel assetTagModel = new AssetTagModelImpl();
+
+				assetTagModel.setTagId(_counter.get());
+				assetTagModel.setGroupId(i);
+				assetTagModel.setCompanyId(_companyId);
+				assetTagModel.setUserId(_sampleUserId);
+				assetTagModel.setUserName(_SAMPLE_USER_NAME);
+				assetTagModel.setCreateDate(new Date());
+				assetTagModel.setModifiedDate(new Date());
+				assetTagModel.setName("TestTag_" + i + "_" + j);
+
+				assetTagModels.add(assetTagModel);
+
+				AssetTagStatsModel assetTagStatsModel = newAssetTagStatsModel(
+					assetTagModel.getTagId(),
+					_classNameModelsMap.get(BlogsEntry.class.getName()));
+
+				assetTagStatsModels.add(assetTagStatsModel);
+
+				assetTagStatsModel = newAssetTagStatsModel(
+					assetTagModel.getTagId(),
+					_classNameModelsMap.get(JournalArticle.class.getName()));
+
+				assetTagStatsModels.add(assetTagStatsModel);
+
+				assetTagStatsModel = newAssetTagStatsModel(
+					assetTagModel.getTagId(),
+					_classNameModelsMap.get(WikiPage.class.getName()));
+
+				assetTagStatsModels.add(assetTagStatsModel);
+			}
+
+			_assetTagModelsArray[i - 1] = assetTagModels;
+			_assetTagStatsModelsArray[i - 1] = assetTagStatsModels;
+		}
+	}
+
+	protected void initCompanyModel() {
+		_companyModel = new CompanyModelImpl();
+
+		_companyModel.setCompanyId(_companyId);
+		_companyModel.setAccountId(_accountId);
+		_companyModel.setWebId("liferay.com");
+		_companyModel.setMx("liferay.com");
+		_companyModel.setActive(true);
+
+		_accountModel = new AccountModelImpl();
+
+		_accountModel.setAccountId(_accountId);
+		_accountModel.setCompanyId(_companyId);
+		_accountModel.setCreateDate(new Date());
+		_accountModel.setModifiedDate(new Date());
+		_accountModel.setName("Liferay");
+		_accountModel.setLegalName("Liferay, Inc.");
+	}
+
+	protected void initContext(Properties properties) {
+		_maxAssetCategoryCount = GetterUtil.getInteger(
+			properties.getProperty("sample.sql.max.asset.category.count"));
+		_maxAssetEntryToAssetCategoryCount = GetterUtil.getInteger(
+			properties.getProperty(
+				"sample.sql.max.asset.entry.to.asset.category.count"));
+		_maxAssetEntryToAssetTagCount = GetterUtil.getInteger(
+			properties.getProperty(
+				"sample.sql.max.asset.entry.to.asset.tag.count"));
+		_maxAssetPublisherFilterRuleCount = GetterUtil.getInteger(
+			properties.getProperty(
+				"sample.sql.max.asset.publisher.filter.rule.count"));
+		_maxAssetPublisherPageCount = GetterUtil.getInteger(
+			properties.getProperty(
+				"sample.sql.max.asset.publisher.page.count"));
+		_maxAssetTagCount = GetterUtil.getInteger(
+			properties.getProperty("sample.sql.max.asset.tag.count"));
+		_maxAssetVocabularyCount = GetterUtil.getInteger(
+			properties.getProperty("sample.sql.max.asset.vocabulary.count"));
+		_maxBlogsEntryCommentCount = GetterUtil.getInteger(
+			properties.getProperty("sample.sql.max.blogs.entry.comment.count"));
+		_maxBlogsEntryCount = GetterUtil.getInteger(
+			properties.getProperty("sample.sql.max.blogs.entry.count"));
+		_maxDDLCustomFieldCount = GetterUtil.getInteger(
+			properties.getProperty("sample.sql.max.ddl.custom.field.count"));
+		_maxDDLRecordCount = GetterUtil.getInteger(
+			properties.getProperty("sample.sql.max.ddl.record.count"));
+		_maxDDLRecordSetCount = GetterUtil.getInteger(
+			properties.getProperty("sample.sql.max.ddl.record.set.count"));
+		_maxDLFileEntryCount = GetterUtil.getInteger(
+			properties.getProperty("sample.sql.max.dl.file.entry.count"));
+		_maxDLFileEntrySize = GetterUtil.getInteger(
+			properties.getProperty("sample.sql.max.dl.file.entry.size"));
+		_maxDLFolderCount = GetterUtil.getInteger(
+			properties.getProperty("sample.sql.max.dl.folder.count"));
+		_maxDLFolderDepth = GetterUtil.getInteger(
+			properties.getProperty("sample.sql.max.dl.folder.depth"));
+		_maxGroupCount = GetterUtil.getInteger(
+			properties.getProperty("sample.sql.max.group.count"));
+		_maxJournalArticleCount = GetterUtil.getInteger(
+			properties.getProperty("sample.sql.max.journal.article.count"));
+		_maxJournalArticlePageCount = GetterUtil.getInteger(
+			properties.getProperty(
+				"sample.sql.max.journal.article.page.count"));
+		_maxJournalArticleVersionCount = GetterUtil.getInteger(
+			properties.getProperty(
+				"sample.sql.max.journal.article.version.count"));
+		_maxMBCategoryCount = GetterUtil.getInteger(
+			properties.getProperty("sample.sql.max.mb.category.count"));
+		_maxMBMessageCount = GetterUtil.getInteger(
+			properties.getProperty("sample.sql.max.mb.message.count"));
+		_maxMBThreadCount = GetterUtil.getInteger(
+			properties.getProperty("sample.sql.max.mb.thread.count"));
+		_maxUserCount = GetterUtil.getInteger(
+			properties.getProperty("sample.sql.max.user.count"));
+		_maxUserToGroupCount = GetterUtil.getInteger(
+			properties.getProperty("sample.sql.max.user.to.group.count"));
+		_maxWikiNodeCount = GetterUtil.getInteger(
+			properties.getProperty("sample.sql.max.wiki.node.count"));
+		_maxWikiPageCommentCount = GetterUtil.getInteger(
+			properties.getProperty("sample.sql.max.wiki.page.comment.count"));
+		_maxWikiPageCount = GetterUtil.getInteger(
+			properties.getProperty("sample.sql.max.wiki.page.count"));
+	}
+
+	protected void initDLFileEntryTypeModel() {
+		_defaultDLFileEntryTypeModel = new DLFileEntryTypeModelImpl();
+
+		_defaultDLFileEntryTypeModel.setUuid(SequentialUUID.generate());
+		_defaultDLFileEntryTypeModel.setFileEntryTypeId(
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT);
+		_defaultDLFileEntryTypeModel.setCreateDate(nextFutureDate());
+		_defaultDLFileEntryTypeModel.setModifiedDate(nextFutureDate());
+		_defaultDLFileEntryTypeModel.setFileEntryTypeKey(
+			DLFileEntryTypeConstants.NAME_BASIC_DOCUMENT.toUpperCase());
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?><root ");
+		sb.append("available-locales=\"en_US\" default-locale=\"en_US\">");
+		sb.append("<name language-id=\"en_US\">");
+		sb.append(DLFileEntryTypeConstants.NAME_BASIC_DOCUMENT);
+		sb.append("</name></root>");
+
+		_defaultDLFileEntryTypeModel.setName(sb.toString());
+
+		_defaultDLDDMStructureModel = newDDMStructureModel(
+			_guestGroupId, getDLFileEntryClassNameId(), "TIKARAWMETADATA",
+			_dlDDMStructureContent);
+	}
+
+	protected void initGroupModels() throws Exception {
+		long groupClassNameId = getGroupClassNameId();
+
+		_globalGroupModel = newGroupModel(
+			_globalGroupId, _classNameModelsMap.get(Company.class.getName()),
+			_companyId, GroupConstants.GLOBAL, false);
+
+		_guestGroupModel = newGroupModel(
+			_guestGroupId, groupClassNameId, _guestGroupId,
+			GroupConstants.GUEST, true);
+
+		_groupModels = new ArrayList<GroupModel>(_maxGroupCount);
+
+		for (int i = 1; i <= _maxGroupCount; i++) {
+			GroupModel groupModel = newGroupModel(
+				i, groupClassNameId, i, "Site " + i, true);
+
+			_groupModels.add(groupModel);
+		}
+	}
+
+	protected void initJournalArticleContent(int maxJournalArticleSize) {
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("<?xml version=\"1.0\"?><root available-locales=\"en_US\" ");
+		sb.append("default-locale=\"en_US\"><static-content language-id=");
+		sb.append("\"en_US\"><![CDATA[<p>");
+
+		if (maxJournalArticleSize <= 0) {
+			maxJournalArticleSize = 1;
+		}
+
+		char[] chars = new char[maxJournalArticleSize];
+
+		for (int i = 0; i < maxJournalArticleSize; i++) {
+			chars[i] = (char)(CharPool.LOWER_CASE_A + (i % 26));
+		}
+
+		sb.append(new String(chars));
+
+		sb.append("</p>]]></static-content></root>");
+
+		_journalArticleContent = sb.toString();
+	}
+
+	protected void initRoleModels() {
+		_roleModels = new ArrayList<RoleModel>();
+
+		// Administrator
+
+		_administratorRoleModel = newRoleModel(
+			RoleConstants.ADMINISTRATOR, RoleConstants.TYPE_REGULAR);
+
+		_roleModels.add(_administratorRoleModel);
+
+		// Guest
+
+		_guestRoleModel = newRoleModel(
+			RoleConstants.GUEST, RoleConstants.TYPE_REGULAR);
+
+		_roleModels.add(_guestRoleModel);
+
+		// Organization Administrator
+
+		RoleModel organizationAdministratorRoleModel = newRoleModel(
+			RoleConstants.ORGANIZATION_ADMINISTRATOR,
+			RoleConstants.TYPE_ORGANIZATION);
+
+		_roleModels.add(organizationAdministratorRoleModel);
+
+		// Organization Owner
+
+		RoleModel organizationOwnerRoleModel = newRoleModel(
+			RoleConstants.ORGANIZATION_OWNER, RoleConstants.TYPE_ORGANIZATION);
+
+		_roleModels.add(organizationOwnerRoleModel);
+
+		// Organization User
+
+		RoleModel organizationUserRoleModel = newRoleModel(
+			RoleConstants.ORGANIZATION_USER, RoleConstants.TYPE_ORGANIZATION);
+
+		_roleModels.add(organizationUserRoleModel);
+
+		// Owner
+
+		_ownerRoleModel = newRoleModel(
+			RoleConstants.OWNER, RoleConstants.TYPE_REGULAR);
+
+		_roleModels.add(_ownerRoleModel);
+
+		// Power User
+
+		_powerUserRoleModel = newRoleModel(
+			RoleConstants.POWER_USER, RoleConstants.TYPE_REGULAR);
+
+		_roleModels.add(_powerUserRoleModel);
+
+		// Site Administrator
+
+		RoleModel siteAdministratorRoleModel = newRoleModel(
+			RoleConstants.SITE_ADMINISTRATOR, RoleConstants.TYPE_SITE);
+
+		_roleModels.add(siteAdministratorRoleModel);
+
+		// Site Member
+
+		_siteMemberRoleModel = newRoleModel(
+			RoleConstants.SITE_MEMBER, RoleConstants.TYPE_SITE);
+
+		_roleModels.add(_siteMemberRoleModel);
+
+		// Site Owner
+
+		RoleModel siteOwnerRoleModel = newRoleModel(
+			RoleConstants.SITE_OWNER, RoleConstants.TYPE_SITE);
+
+		_roleModels.add(siteOwnerRoleModel);
+
+		// User
+
+		_userRoleModel = newRoleModel(
+			RoleConstants.USER, RoleConstants.TYPE_REGULAR);
+
+		_roleModels.add(_userRoleModel);
+	}
+
+	protected void initUserModels() {
+		_defaultUserModel = newUserModel(
+			_defaultUserId, StringPool.BLANK, StringPool.BLANK,
+			StringPool.BLANK, true);
+		_guestUserModel = newUserModel(
+			_counter.get(), "Test", "Test", "Test", false);
+		_sampleUserModel = newUserModel(
+			_sampleUserId, _SAMPLE_USER_NAME, _SAMPLE_USER_NAME,
+			_SAMPLE_USER_NAME, false);
+	}
+
+	protected void initUserNames() throws IOException {
+		_firstNames = ListUtil.fromString(
+			StringUtil.read(getResourceInputStream("first_names.txt")));
+		_lastNames = ListUtil.fromString(
+			StringUtil.read(getResourceInputStream("last_names.txt")));
+	}
+
+	protected void initVirtualHostModel() {
+		_virtualHostModel = new VirtualHostModelImpl();
+
+		_virtualHostModel.setVirtualHostId(_counter.get());
+		_virtualHostModel.setCompanyId(_companyId);
+		_virtualHostModel.setHostname("localhost");
 	}
 
 	protected AssetCategoryModel newAssetCategoryModel(

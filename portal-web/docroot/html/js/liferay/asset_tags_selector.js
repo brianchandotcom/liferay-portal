@@ -370,6 +370,8 @@ AUI.add(
 					_onAddEntryClick: function(event) {
 						var instance = this;
 
+						event.domEvent.preventDefault();
+
 						var text = Liferay.Util.escapeHTML(instance.inputNode.val());
 
 						if (text) {
@@ -498,6 +500,8 @@ AUI.add(
 
 					_showPopup: function(event) {
 						var instance = this;
+
+						event.domEvent.preventDefault();
 
 						var popup = instance._getPopup();
 

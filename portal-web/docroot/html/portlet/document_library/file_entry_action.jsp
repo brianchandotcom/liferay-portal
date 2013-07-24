@@ -91,6 +91,8 @@ long folderId = 0;
 
 if (fileShortcut != null) {
 	folderId = fileShortcut.getFolderId();
+
+	fileEntry = DLAppLocalServiceUtil.getFileEntry(fileShortcut.getToFileEntryId());
 }
 else if (fileEntry != null) {
 	folderId = fileEntry.getFolderId();

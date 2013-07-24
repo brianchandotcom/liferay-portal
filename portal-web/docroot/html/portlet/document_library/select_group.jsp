@@ -32,7 +32,7 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 
 	List<Group> mySiteGroups = user.getMySiteGroups();
 
-	if (PortalUtil.isCompanyControlPanelPortlet(portletId, themeDisplay)) {
+	if (PortalUtil.isCompanyControlPanelPortlet(PortletKeys.DOCUMENT_LIBRARY, themeDisplay)) {
 		mySiteGroups = ListUtil.copy(mySiteGroups);
 
 		mySiteGroups.add(0, GroupLocalServiceUtil.getGroup(themeDisplay.getCompanyGroupId()));

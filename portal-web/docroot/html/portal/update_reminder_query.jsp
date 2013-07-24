@@ -26,7 +26,7 @@ if (referer.equals(themeDisplay.getPathMain() + "/portal/update_reminder_query")
 }
 %>
 
-<aui:form action='<%= themeDisplay.getPathMain() + "/portal/update_reminder_query" %>' method="post" name="fm">
+<aui:form cssClass="update-reminder-query" action='<%= themeDisplay.getPathMain() + "/portal/update_reminder_query" %>' method="post" name="fm">
 	<aui:input name="p_auth" type="hidden" value="<%= AuthTokenUtil.getToken(request) %>" />
 	<aui:input name="doAsUserId" type="hidden" value="<%= themeDisplay.getDoAsUserId() %>" />
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
@@ -47,11 +47,11 @@ if (referer.equals(themeDisplay.getPathMain() + "/portal/update_reminder_query")
 
 		<c:if test="<%= PropsValues.USERS_REMINDER_QUERIES_CUSTOM_QUESTION_ENABLED %>">
 			<div class="hide" id="customQuestionContainer">
-				<aui:input autoFocus="<%= true %>" bean="<%= user %>" fieldParam="reminderQueryCustomQuestion" label="" model="<%= User.class %>" name="reminderQueryQuestion" />
+				<aui:input autoFocus="<%= true %>" bean="<%= user %>" cssClass="reminder-query-custom" fieldParam="reminderQueryCustomQuestion" label="" model="<%= User.class %>" name="reminderQueryQuestion" />
 			</div>
 		</c:if>
 
-		<aui:input label="answer" name="reminderQueryAnswer" size="50" type="text" value="<%= user.getReminderQueryAnswer() %>" />
+		<aui:input cssClass="reminder-query-answer" label="answer" name="reminderQueryAnswer" size="50" type="text" value="<%= user.getReminderQueryAnswer() %>" />
 	</aui:fieldset>
 
 	<aui:button-row>

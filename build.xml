@@ -342,12 +342,12 @@ ${app.server.tomcat.dir}, then run "ant -buildfile build-dist.xml unzip-tomcat".
 			<then>
 				<if>
 					<not>
-						<available file="${app.server.dir}/webapps/root.xml" />
+						<available file="${app.server.dir}/contexts/root.xml" />
 					</not>
 					<then>
 						<copy
 							file="tools/servers/jetty/contexts/root.xml"
-							tofile="${app.server.dir}/webapps/root.xml"
+							tofile="${app.server.dir}/contexts/root.xml"
 						/>
 					</then>
 				</if>

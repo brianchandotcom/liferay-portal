@@ -1123,7 +1123,11 @@ release was successful.</echo>
 			<patternset
 				excludes="
 					jetty-distribution-${app.server.jetty.version}.v${app.server.jetty.version.date}/bin/**,
-					jetty-distribution-${app.server.jetty.version}.v${app.server.jetty.version.date}/webapps.demo/**"
+					jetty-distribution-${app.server.jetty.version}.v${app.server.jetty.version.date}/contexts/**,
+					jetty-distribution-${app.server.jetty.version}.v${app.server.jetty.version.date}/contexts-available/**,
+					jetty-distribution-${app.server.jetty.version}.v${app.server.jetty.version.date}/javadoc/**,
+					jetty-distribution-${app.server.jetty.version}.v${app.server.jetty.version.date}/overlays/**,
+					jetty-distribution-${app.server.jetty.version}.v${app.server.jetty.version.date}/webapps/**"
 			/>
 			<mapper
 				type="glob"
@@ -1133,7 +1137,9 @@ release was successful.</echo>
 		</unzip>
 
 		<mkdir dir="${app.server.parent.dir}/jetty-${app.server.jetty.version}/bin" />
+		<mkdir dir="${app.server.parent.dir}/jetty-${app.server.jetty.version}/contexts" />
 		<mkdir dir="${app.server.parent.dir}/jetty-${app.server.jetty.version}/temp" />
+		<mkdir dir="${app.server.parent.dir}/jetty-${app.server.jetty.version}/webapps" />
 
 		<copy
 			file="tools/servers/jetty/bin/run.bat"

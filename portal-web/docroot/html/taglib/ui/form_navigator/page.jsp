@@ -75,7 +75,7 @@ if (Validator.isNotNull(historyKey)) {
 		</c:when>
 		<c:otherwise>
 			<div class="taglib-form-navigator row-fluid" id="<portlet:namespace />tabs">
-				<div class="span8">
+				<div class="form-navigator-content span8">
 					<%@ include file="/html/taglib/ui/form_navigator/sections.jspf" %>
 				</div>
 

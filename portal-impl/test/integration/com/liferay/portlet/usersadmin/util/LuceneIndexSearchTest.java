@@ -123,27 +123,6 @@ public class LuceneIndexSearchTest {
 		Assert.assertTrue(hits.getLength() == 0);
 	}
 
-	@Test
-	public void testSearchWithResults() throws Exception {
-		Hits hits = getHits(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-		Assert.assertTrue(hits.getLength() == 5);
-	}
-
-	@Test
-	public void testSearchWithResultsWhenTotalEqualsStart() throws Exception {
-		Hits hits = getHits(5, 10);
-
-		Assert.assertTrue(hits.getLength() == 5);
-	}
-
-	@Test
-	public void testSearchWithResultsWhenTotalLessThanStart() throws Exception {
-		Hits hits = getHits(1000, 1005);
-
-		Assert.assertTrue(hits.getLength() == 5);
-	}
-
 	protected Hits getHits(int start, int end) throws Exception {
 		return getHits(StringPool.BLANK, start, end);
 	}

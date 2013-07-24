@@ -436,9 +436,15 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 				ddmTemplate = PortletDisplayTemplateUtil.fetchDDMTemplate(
 					portletDataContext.getCompanyGroupId(), displayStyle);
 			}
-			else {
+			else if (displayStyleGroupId ==
+						portletDataContext.getSourceGroupId()) {
+
 				ddmTemplate = PortletDisplayTemplateUtil.fetchDDMTemplate(
 					portletDataContext.getScopeGroupId(), displayStyle);
+			}
+			else {
+				ddmTemplate = PortletDisplayTemplateUtil.fetchDDMTemplate(
+					displayStyleGroupId, displayStyle);
 			}
 
 			long importedDisplayStyleGroupId =

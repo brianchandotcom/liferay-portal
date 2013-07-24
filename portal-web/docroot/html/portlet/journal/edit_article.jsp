@@ -184,9 +184,8 @@ request.setAttribute("edit_article.jsp-toLanguageId", toLanguageId);
 
 	<aui:model-context bean="<%= article %>" defaultLanguageId="<%= defaultLanguageId %>" model="<%= JournalArticle.class %>" />
 
-	<table class="lfr-table" id="<portlet:namespace />journalArticleWrapper" width="100%">
-	<tr>
-		<td class="lfr-top">
+	<div class="journal-article-wrapper" id="<portlet:namespace />journalArticleWrapper">
+		<div class="journal-article-wrapper-content">
 			<c:if test="<%= Validator.isNull(toLanguageId) %>">
 				<c:if test="<%= article != null %>">
 					<aui:workflow-status id="<%= String.valueOf(article.getArticleId()) %>" status="<%= article.getStatus() %>" version="<%= String.valueOf(article.getVersion()) %>" />
@@ -321,9 +320,8 @@ request.setAttribute("edit_article.jsp-toLanguageId", toLanguageId);
 
 				</c:otherwise>
 			</c:choose>
-		</td>
-	</tr>
-	</table>
+		</div>
+	</div>
 </aui:form>
 
 <aui:script>

@@ -1076,8 +1076,7 @@ public class DLFileEntryWrapper implements DLFileEntry,
 	* @deprecated As of 6.2.0, replaced by {@link DLFileVersion#getUserUuid()}
 	*/
 	@Override
-	public java.lang.String getVersionUserUuid()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public java.lang.String getVersionUserUuid() {
 		return _dlFileEntry.getVersionUserUuid();
 	}
 

@@ -66,7 +66,7 @@ if (layout.isTypeControlPanel()) {
 
 				<aui:fieldset cssClass="template-selector" label="templates">
 					<div class="search-panel btn-toolbar">
-						<aui:input id="addLayoutSearchTemplates" cssClass="search-query span12" label="" name="searchTemplates" placeholder="search" type="text"  />
+						<aui:input cssClass="search-query span12" id="addLayoutSearchTemplates" label="" name="searchTemplates" placeholder="search" type="text"  />
 					</div>
 
 					<aui:nav cssClass="nav-list" id="templateList">
@@ -184,6 +184,7 @@ if (layout.isTypeControlPanel()) {
 </aui:form>
 
 <c:if test="<%= portletName.equals(PortletKeys.DOCKBAR) %>">
+
 	<%
 	Layout addedLayout = (Layout)SessionMessages.get(liferayPortletRequest, portletDisplay.getId() + "pageAdded");
 	%>

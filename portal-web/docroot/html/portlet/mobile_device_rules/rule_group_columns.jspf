@@ -20,6 +20,22 @@
 	value="<%= ruleGroup.getName(locale) %>"
 />
 
+<%
+Group group = GroupLocalServiceUtil.getGroup(ruleGroup.getGroupId());
+%>
+
+<liferay-ui:search-container-column-text
+	href="<%= rowHREF %>"
+	name="scope"
+	value="<%= LanguageUtil.get(pageContext, group.getScopeLabel(themeDisplay)) %>"
+/>
+
+<liferay-ui:search-container-column-date
+	href="<%= rowHREF %>"
+	name="modified-date"
+	value="<%= ruleGroup.getModifiedDate() %>"
+/>
+
 <liferay-ui:search-container-column-text
 	href="<%= rowHREF %>"
 	name="description"

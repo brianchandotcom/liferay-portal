@@ -36,6 +36,26 @@ import com.liferay.portal.parsers.creole.ast.UnorderedListNode;
 import com.liferay.portal.parsers.creole.ast.WikiPageNode;
 import com.liferay.portal.parsers.creole.ast.extension.TableOfContentsNode;
 import com.liferay.portal.parsers.creole.ast.link.LinkNode;
+import com.liferay.portal.parsers.creole.ast.link.interwiki.C2InterwikiLinkNode;
+import com.liferay.portal.parsers.creole.ast.link.interwiki.DokuWikiInterwikiLinkNode;
+import com.liferay.portal.parsers.creole.ast.link.interwiki.FlickrInterwikiLinkNode;
+import com.liferay.portal.parsers.creole.ast.link.interwiki.GoogleInterwikiLinkNode;
+import com.liferay.portal.parsers.creole.ast.link.interwiki.JSPWikiInterwikiLinkNode;
+import com.liferay.portal.parsers.creole.ast.link.interwiki.MeatballInterwikiLinkNode;
+import com.liferay.portal.parsers.creole.ast.link.interwiki.MediaWikiInterwikiLinkNode;
+import com.liferay.portal.parsers.creole.ast.link.interwiki.MoinMoinInterwikiLinkNode;
+import com.liferay.portal.parsers.creole.ast.link.interwiki.OddmuseInterwikiLinkNode;
+import com.liferay.portal.parsers.creole.ast.link.interwiki.OhanaInterwikiLinkNode;
+import com.liferay.portal.parsers.creole.ast.link.interwiki.PmWikiInterwikiLinkNode;
+import com.liferay.portal.parsers.creole.ast.link.interwiki.PukiWikiInterwikiLinkNode;
+import com.liferay.portal.parsers.creole.ast.link.interwiki.PurpleWikiInterwikiLinkNode;
+import com.liferay.portal.parsers.creole.ast.link.interwiki.RadeoxInterwikiLinkNode;
+import com.liferay.portal.parsers.creole.ast.link.interwiki.SnipSnapInterwikiLinkNode;
+import com.liferay.portal.parsers.creole.ast.link.interwiki.TWikiInterwikiLinkNode;
+import com.liferay.portal.parsers.creole.ast.link.interwiki.TiddlyWikiInterwikiLinkNode;
+import com.liferay.portal.parsers.creole.ast.link.interwiki.UsemodInterwikiLinkNode;
+import com.liferay.portal.parsers.creole.ast.link.interwiki.WikipediaInterwikiLinkNode;
+import com.liferay.portal.parsers.creole.ast.link.interwiki.XWikiInterwikiLinkNode;
 import com.liferay.portal.parsers.creole.ast.table.TableDataNode;
 import com.liferay.portal.parsers.creole.ast.table.TableHeaderNode;
 import com.liferay.portal.parsers.creole.ast.table.TableNode;
@@ -56,10 +76,22 @@ public abstract class BaseASTVisitor implements ASTVisitor {
 	}
 
 	@Override
+	public void visit(C2InterwikiLinkNode c2InterwikiLinkNode) {
+	}
+
+	@Override
 	public void visit(CollectionNode collectionNode) {
 		for (ASTNode curNode : collectionNode.getASTNodes()) {
 			curNode.accept(this);
 		}
+	}
+
+	@Override
+	public void visit(DokuWikiInterwikiLinkNode dokuWikiInterwikiLinkNode) {
+	}
+
+	@Override
+	public void visit(FlickrInterwikiLinkNode flickrInterwikiLinkNode) {
 	}
 
 	@Override
@@ -71,6 +103,10 @@ public abstract class BaseASTVisitor implements ASTVisitor {
 		if (formattedTextNode.getChildASTNodesCount() > 0) {
 			traverse(formattedTextNode.getChildASTNodes());
 		}
+	}
+
+	@Override
+	public void visit(GoogleInterwikiLinkNode googleInterwikiLinkNode) {
 	}
 
 	@Override
@@ -97,6 +133,11 @@ public abstract class BaseASTVisitor implements ASTVisitor {
 	}
 
 	@Override
+	public void visit(JSPWikiInterwikiLinkNode jspWikiInterwikiLinkNode) {
+
+	}
+
+	@Override
 	public void visit(LineNode lineNode) {
 		traverse(lineNode.getChildASTNodes());
 	}
@@ -114,7 +155,28 @@ public abstract class BaseASTVisitor implements ASTVisitor {
 	}
 
 	@Override
+	public void visit(MeatballInterwikiLinkNode meatballInterwikiLinkNode) {
+	}
+
+	@Override
+	public void visit(MediaWikiInterwikiLinkNode mediaWikiInterwikiLinkNode) {
+	}
+
+	@Override
+	public void visit(MoinMoinInterwikiLinkNode moinMoinInterwikiLinkNode) {
+
+	}
+
+	@Override
 	public void visit(NoWikiSectionNode noWikiSectionNode) {
+	}
+
+	@Override
+	public void visit(OddmuseInterwikiLinkNode oddmuseInterwikiLinkNode) {
+	}
+
+	@Override
+	public void visit(OhanaInterwikiLinkNode ohanaInterwikiLinkNode) {
 	}
 
 	@Override
@@ -133,7 +195,27 @@ public abstract class BaseASTVisitor implements ASTVisitor {
 	}
 
 	@Override
+	public void visit(PmWikiInterwikiLinkNode pmWikiInterwikiLinkNode) {
+	}
+
+	@Override
+	public void visit(PukiWikiInterwikiLinkNode pukiWikiInterwikiLinkNode) {
+	}
+
+	@Override
+	public void visit(PurpleWikiInterwikiLinkNode purpleWikiInterwikiLinkNode) {
+	}
+
+	@Override
+	public void visit(RadeoxInterwikiLinkNode radeoxInterwikiLinkNode) {
+	}
+
+	@Override
 	public void visit(ScapedNode scapedNode) {
+	}
+
+	@Override
+	public void visit(SnipSnapInterwikiLinkNode snipSnapInterwikiLinkNode) {
 	}
 
 	@Override
@@ -156,6 +238,14 @@ public abstract class BaseASTVisitor implements ASTVisitor {
 	}
 
 	@Override
+	public void visit(TiddlyWikiInterwikiLinkNode tiddlyWikiInterwikiLinkNode) {
+	}
+
+	@Override
+	public void visit(TWikiInterwikiLinkNode tWikiInterwikiLinkNode) {
+	}
+
+	@Override
 	public void visit(UnformattedTextNode unformattedTextNode) {
 		if (unformattedTextNode.getChildASTNodesCount() > 0) {
 			traverse(unformattedTextNode.getChildASTNodes());
@@ -173,8 +263,20 @@ public abstract class BaseASTVisitor implements ASTVisitor {
 	}
 
 	@Override
+	public void visit(UsemodInterwikiLinkNode usemodInterwikiLinkNode) {
+	}
+
+	@Override
 	public void visit(WikiPageNode wikiPageNode) {
 		traverse(wikiPageNode.getChildASTNodes());
+	}
+
+	@Override
+	public void visit(WikipediaInterwikiLinkNode wikipediaInterwikiLinkNode) {
+	}
+
+	@Override
+	public void visit(XWikiInterwikiLinkNode xWikiInterwikiLinkNode) {
 	}
 
 	protected void traverse(List<ASTNode> astNodes) {

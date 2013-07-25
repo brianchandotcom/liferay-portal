@@ -395,6 +395,29 @@ public class ListUtil {
 		return sb.toString();
 	}
 
+	public static String toString(List<String> list) {
+
+		if ((list == null) || list.isEmpty()) {
+			return StringPool.BLANK;
+		}
+
+		StringBundler sb = new StringBundler(2 * list.size() - 1);
+
+		for (int i = 0; i < list.size(); i++) {
+			String value = list.get(i);
+
+			if (value != null) {
+				sb.append(value);
+			}
+
+			if ((i + 1) != list.size()) {
+				sb.append(StringPool.COMMA_AND_SPACE);
+			}
+		}
+
+		return sb.toString();
+	}
+
 	/**
 	 * @see ArrayUtil#toString(Object[], Accessor)
 	 */

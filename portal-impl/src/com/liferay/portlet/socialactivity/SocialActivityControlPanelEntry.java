@@ -12,35 +12,22 @@
  * details.
  */
 
-package com.liferay.portlet.sitesadmin;
+package com.liferay.portlet.socialactivity;
 
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Portlet;
-import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.service.permission.GroupPermissionUtil;
 import com.liferay.portlet.BaseControlPanelEntry;
 
 /**
- * @author Eric Min
- * @author Jorge Ferrer
+ * @author Sergio González
  */
-public class SiteSettingsControlPanelEntry extends BaseControlPanelEntry {
+public class SocialActivityControlPanelEntry extends BaseControlPanelEntry {
 
 	@Override
 	protected boolean hasAccessPermissionDenied(
 			PermissionChecker permissionChecker, Group group, Portlet portlet)
 		throws Exception {
-
-		if (group.isUser()) {
-			return true;
-		}
-
-		if (!GroupPermissionUtil.contains(
-				permissionChecker, group.getGroupId(), ActionKeys.UPDATE)) {
-
-			return true;
-		}
 
 		if (group.isLayoutSetPrototype()) {
 			return true;

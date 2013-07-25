@@ -34,6 +34,10 @@ public class WorkflowControlPanelEntry extends BaseControlPanelEntry {
 			return true;
 		}
 
+		if (group.isLayoutSetPrototype()) {
+			return true;
+		}
+
 		return false;
 	}
 

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.theme;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -247,7 +248,7 @@ public class PortletDisplay implements Serializable {
 	}
 
 	public String getURLConfigurationJS() {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(11);
 
 		sb.append("Liferay.Portlet.openWindow(\'#p_p_id_");
 		sb.append(_id);
@@ -257,6 +258,8 @@ public class PortletDisplay implements Serializable {
 		sb.append(_urlConfiguration);
 		sb.append(" \', \'");
 		sb.append(_namespace);
+		sb.append(" \', \'");
+		sb.append(LanguageUtil.get(_themeDisplay.getLocale(), "configuration"));
 		sb.append("\'); return false;");
 
 		return sb.toString();

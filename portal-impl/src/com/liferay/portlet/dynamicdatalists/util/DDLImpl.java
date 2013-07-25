@@ -202,6 +202,12 @@ public class DDLImpl implements DDL {
 			ddmStructure.getFieldsMap();
 
 		for (Map<String, String> fields : fieldsMap.values()) {
+			String name = fields.get(FieldConstants.NAME);
+
+			if (ddmStructure.isFieldPrivate(name)) {
+				continue;
+			}
+
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 			String dataType = fields.get(FieldConstants.DATA_TYPE);
@@ -216,8 +222,6 @@ public class DDLImpl implements DDL {
 			String label = fields.get(FieldConstants.LABEL);
 
 			jsonObject.put("label", label);
-
-			String name = fields.get(FieldConstants.NAME);
 
 			jsonObject.put("name", name);
 

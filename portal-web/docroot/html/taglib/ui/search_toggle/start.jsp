@@ -30,7 +30,7 @@
 		</button>
 	</div>
 	<div class="popover taglib-search-toggle-advanced" id="<%= id %>advanced">
-		<input id="<%= id + displayTerms.ADVANCED_SEARCH %>" name="<%= displayTerms.ADVANCED_SEARCH %>" type="hidden" value="false" />
+		<input id="<%= id + displayTerms.ADVANCED_SEARCH %>" name="<portlet:namespace /><%= displayTerms.ADVANCED_SEARCH %>" type="hidden" value="false" />
 
 		<div id="<%= id %>advancedContent">
 			<div id="<%= id %>advancedBodyNode">

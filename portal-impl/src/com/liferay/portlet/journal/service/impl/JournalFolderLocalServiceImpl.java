@@ -23,11 +23,13 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.ResourceConstants;
+import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PropsValues;
@@ -102,6 +104,9 @@ public class JournalFolderLocalServiceImpl
 
 	@Indexable(type = IndexableType.DELETE)
 	@Override
+	@SystemEvent(
+		action = SystemEventConstants.ACTION_SKIP, send = false,
+		type = SystemEventConstants.TYPE_DELETE)
 	public JournalFolder deleteFolder(JournalFolder folder)
 		throws PortalException, SystemException {
 
@@ -110,6 +115,9 @@ public class JournalFolderLocalServiceImpl
 
 	@Indexable(type = IndexableType.DELETE)
 	@Override
+	@SystemEvent(
+		action = SystemEventConstants.ACTION_SKIP, send = false,
+		type = SystemEventConstants.TYPE_DELETE)
 	public JournalFolder deleteFolder(
 			JournalFolder folder, boolean includeTrashedEntries)
 		throws PortalException, SystemException {
@@ -165,7 +173,7 @@ public class JournalFolderLocalServiceImpl
 		JournalFolder folder = journalFolderPersistence.findByPrimaryKey(
 			folderId);
 
-		return deleteFolder(folder, true);
+		return journalFolderLocalService.deleteFolder(folder, true);
 	}
 
 	@Indexable(type = IndexableType.DELETE)
@@ -177,7 +185,8 @@ public class JournalFolderLocalServiceImpl
 		JournalFolder folder = journalFolderPersistence.findByPrimaryKey(
 			folderId);
 
-		return deleteFolder(folder, includeTrashedEntries);
+		return journalFolderLocalService.deleteFolder(
+			folder, includeTrashedEntries);
 	}
 
 	@Override

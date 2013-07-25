@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -387,6 +388,7 @@ public class DDMStructureLocalServiceImpl
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public void deleteStructure(DDMStructure structure)
 		throws PortalException, SystemException {
 
@@ -425,14 +427,6 @@ public class DDMStructureLocalServiceImpl
 		resourceLocalService.deleteResource(
 			structure.getCompanyId(), DDMStructure.class.getName(),
 			ResourceConstants.SCOPE_INDIVIDUAL, structure.getStructureId());
-
-		// System event
-
-		systemEventLocalService.addSystemEvent(
-			0, structure.getGroupId(), DDMStructure.class.getName(),
-			structure.getStructureId(), structure.getUuid(), null,
-			SystemEventConstants.TYPE_DELETE, null);
-
 	}
 
 	/**
@@ -454,7 +448,7 @@ public class DDMStructureLocalServiceImpl
 		DDMStructure structure = ddmStructurePersistence.findByPrimaryKey(
 			structureId);
 
-		deleteStructure(structure);
+		ddmStructureLocalService.deleteStructure(structure);
 	}
 
 	/**
@@ -482,7 +476,7 @@ public class DDMStructureLocalServiceImpl
 		DDMStructure structure = ddmStructurePersistence.findByG_C_S(
 			groupId, classNameId, structureKey);
 
-		deleteStructure(structure);
+		ddmStructureLocalService.deleteStructure(structure);
 	}
 
 	/**
@@ -506,7 +500,7 @@ public class DDMStructureLocalServiceImpl
 			groupId);
 
 		for (DDMStructure structure : structures) {
-			deleteStructure(structure);
+			ddmStructureLocalService.deleteStructure(structure);
 		}
 	}
 

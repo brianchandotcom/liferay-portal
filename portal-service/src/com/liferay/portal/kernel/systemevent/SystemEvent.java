@@ -34,6 +34,6 @@ public @interface SystemEvent {
 
 	public boolean send() default true;
 
-	public int type() default SystemEventConstants.ACTION_NONE;
+	public int type() default SystemEventConstants.TYPE_DEFAULT;
 
 }

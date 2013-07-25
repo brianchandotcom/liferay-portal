@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.List;
 import java.util.Properties;
 
@@ -31,13 +30,9 @@ public class LogUtil {
 
 	public static final int STACK_TRACE_LENGTH = 20;
 
-	@SuppressWarnings("rawtypes")
 	public static void debug(Log log, Properties props) {
 		if (log.isDebugEnabled()) {
-			Enumeration enumeration = props.propertyNames();
-
-			while (enumeration.hasMoreElements()) {
-				String key = (String)enumeration.nextElement();
+			for (String key : props.stringPropertyNames()) {
 				String value = props.getProperty(key);
 
 				log.debug(key + StringPool.EQUAL + value);

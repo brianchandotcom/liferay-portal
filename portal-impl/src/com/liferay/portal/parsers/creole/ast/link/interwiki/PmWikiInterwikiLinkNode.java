@@ -14,47 +14,21 @@
 
 package com.liferay.portal.parsers.creole.ast.link.interwiki;
 
-import com.liferay.portal.parsers.creole.ast.link.LinkNode;
 import com.liferay.portal.parsers.creole.visitor.ASTVisitor;
 
 /**
  * @author Miguel Pastor
  */
-public abstract class InterwikiLinkNode extends LinkNode {
+public class PmWikiInterwikiLinkNode extends InterwikiLinkNode {
 
-	public InterwikiLinkNode() {
+	@Override
+	public void accept(ASTVisitor astVisitor) {
+		astVisitor.visit(this);
 	}
 
-	public InterwikiLinkNode(int token) {
-		super(token);
+	@Override
+	public String getBaseURL() {
+		return "http://www.pmwiki.com/wiki/PmWiki/";
 	}
-
-	abstract public void accept(ASTVisitor astVisitor);
-
-	public InterwikiLinkNode(int token, String title) {
-		this(token);
-
-		_title = title;
-	}
-
-	public InterwikiLinkNode(String title) {
-		_title = title;
-	}
-
-	public String getTitle() {
-		return _title;
-	}
-
-	public String getURL() {
-		return getBaseURL() + _title;
-	}
-
-	public void setTitle(String title) {
-		_title = title;
-	}
-
-	protected abstract String getBaseURL();
-
-	private String _title;
 
 }

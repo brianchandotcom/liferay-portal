@@ -1504,30 +1504,6 @@ public class DataFactory {
 		return mbCategoryModels;
 	}
 
-	protected MBCategoryModel newMBCategoryModel(long groupId, int index) {
-		MBCategoryModel mbCategoryModel = new MBCategoryModelImpl();
-
-		mbCategoryModel.setUuid(SequentialUUID.generate());
-		mbCategoryModel.setCategoryId(_counter.get());
-		mbCategoryModel.setGroupId(groupId);
-		mbCategoryModel.setCompanyId(_companyId);
-		mbCategoryModel.setUserId(_sampleUserId);
-		mbCategoryModel.setUserName(_SAMPLE_USER_NAME);
-		mbCategoryModel.setCreateDate(new Date());
-		mbCategoryModel.setModifiedDate(new Date());
-		mbCategoryModel.setParentCategoryId(
-			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
-		mbCategoryModel.setName("Test Category " + index);
-		mbCategoryModel.setDisplayStyle(
-			MBCategoryConstants.DEFAULT_DISPLAY_STYLE);
-		mbCategoryModel.setThreadCount(_maxMBThreadCount);
-		mbCategoryModel.setMessageCount(_maxMBThreadCount * _maxMBMessageCount);
-		mbCategoryModel.setLastPostDate(new Date());
-		mbCategoryModel.setStatusDate(new Date());
-
-		return mbCategoryModel;
-	}
-
 	public MBDiscussionModel newMBDiscussionModel(
 		long groupId, long classNameId, long classPK, long threadId) {
 
@@ -1572,33 +1548,6 @@ public class DataFactory {
 		return mbMailingListModel;
 	}
 
-	public List<MBMessageModel> newMBMessageModels(
-		MBThreadModel mbThreadModel) {
-
-		List<MBMessageModel> mbMessageModels = new ArrayList<MBMessageModel>(
-			_maxMBMessageCount);
-
-		mbMessageModels.add(
-			newMBMessageModel(
-				mbThreadModel.getGroupId(), 0, 0, mbThreadModel.getCategoryId(),
-				mbThreadModel.getThreadId(), mbThreadModel.getRootMessageId(),
-				mbThreadModel.getRootMessageId(),
-				MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID, "Test Message 1",
-				"This is test message 1."));
-
-		for (int i = 2; i <= _maxMBMessageCount; i++) {
-			mbMessageModels.add(
-				newMBMessageModel(
-					mbThreadModel.getGroupId(), 0, 0,
-					mbThreadModel.getCategoryId(), mbThreadModel.getThreadId(),
-					_counter.get(), mbThreadModel.getRootMessageId(),
-					mbThreadModel.getRootMessageId(), "Test Message " + i,
-					"This is test message " + i + "."));
-		}
-
-		return mbMessageModels;
-	}
-
 	public MBMessageModel newMBMessageModel(
 		MBThreadModel mbThreadModel, long classNameId, long classPK,
 		int index) {
@@ -1626,6 +1575,33 @@ public class DataFactory {
 			MBCategoryConstants.DISCUSSION_CATEGORY_ID,
 			mbThreadModel.getThreadId(), messageId,
 			mbThreadModel.getRootMessageId(), parentMessageId, subject, body);
+	}
+
+	public List<MBMessageModel> newMBMessageModels(
+		MBThreadModel mbThreadModel) {
+
+		List<MBMessageModel> mbMessageModels = new ArrayList<MBMessageModel>(
+			_maxMBMessageCount);
+
+		mbMessageModels.add(
+			newMBMessageModel(
+				mbThreadModel.getGroupId(), 0, 0, mbThreadModel.getCategoryId(),
+				mbThreadModel.getThreadId(), mbThreadModel.getRootMessageId(),
+				mbThreadModel.getRootMessageId(),
+				MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID, "Test Message 1",
+				"This is test message 1."));
+
+		for (int i = 2; i <= _maxMBMessageCount; i++) {
+			mbMessageModels.add(
+				newMBMessageModel(
+					mbThreadModel.getGroupId(), 0, 0,
+					mbThreadModel.getCategoryId(), mbThreadModel.getThreadId(),
+					_counter.get(), mbThreadModel.getRootMessageId(),
+					mbThreadModel.getRootMessageId(), "Test Message " + i,
+					"This is test message " + i + "."));
+		}
+
+		return mbMessageModels;
 	}
 
 	public List<MBMessageModel> newMBMessageModels(
@@ -2406,6 +2382,30 @@ public class DataFactory {
 		layoutSetModel.setPageCount(pageCount);
 
 		return layoutSetModel;
+	}
+
+	protected MBCategoryModel newMBCategoryModel(long groupId, int index) {
+		MBCategoryModel mbCategoryModel = new MBCategoryModelImpl();
+
+		mbCategoryModel.setUuid(SequentialUUID.generate());
+		mbCategoryModel.setCategoryId(_counter.get());
+		mbCategoryModel.setGroupId(groupId);
+		mbCategoryModel.setCompanyId(_companyId);
+		mbCategoryModel.setUserId(_sampleUserId);
+		mbCategoryModel.setUserName(_SAMPLE_USER_NAME);
+		mbCategoryModel.setCreateDate(new Date());
+		mbCategoryModel.setModifiedDate(new Date());
+		mbCategoryModel.setParentCategoryId(
+			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
+		mbCategoryModel.setName("Test Category " + index);
+		mbCategoryModel.setDisplayStyle(
+			MBCategoryConstants.DEFAULT_DISPLAY_STYLE);
+		mbCategoryModel.setThreadCount(_maxMBThreadCount);
+		mbCategoryModel.setMessageCount(_maxMBThreadCount * _maxMBMessageCount);
+		mbCategoryModel.setLastPostDate(new Date());
+		mbCategoryModel.setStatusDate(new Date());
+
+		return mbCategoryModel;
 	}
 
 	protected MBMessageModel newMBMessageModel(

@@ -86,7 +86,7 @@ String toggleControlsState = GetterUtil.getString(SessionClicks.get(request, "li
 		%>
 
 		<c:if test="<%= controlPanelCategory.startsWith(PortletCategoryKeys.CURRENT_SITE) || !controlPanelCategory.equals(PortletCategoryKeys.MY) %>">
-			<span class="brand">
+			<div class="brand">
 				<a class="control-panel-back-link" href="<%= backURL %>" title="<liferay-ui:message key="back" />">
 					<i class="control-panel-back-icon icon-chevron-sign-left"></i>
 
@@ -95,17 +95,19 @@ String toggleControlsState = GetterUtil.getString(SessionClicks.get(request, "li
 					</span>
 				</a>
 
-				<c:choose>
-					<c:when test="<%= controlPanelCategory.startsWith(PortletCategoryKeys.CURRENT_SITE) %>">
-						<liferay-ui:message key="site-administration" />
-					</c:when>
-					<c:otherwise>
-						<a href="<%= themeDisplay.getURLControlPanel() %>">
-							<liferay-ui:message key="control-panel" />
-						</a>
-					</c:otherwise>
-				</c:choose>
-			</span>
+				<h1>
+					<c:choose>
+						<c:when test="<%= controlPanelCategory.startsWith(PortletCategoryKeys.CURRENT_SITE) %>">
+							<liferay-ui:message key="site-administration" />
+						</c:when>
+						<c:otherwise>
+							<a href="<%= themeDisplay.getURLControlPanel() %>">
+								<liferay-ui:message key="control-panel" />
+							</a>
+						</c:otherwise>
+					</c:choose>
+				</h1>
+			</div>
 		</c:if>
 	</c:if>
 

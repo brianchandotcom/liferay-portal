@@ -201,9 +201,9 @@ AUI.add(
 
 								header.addClass(CSS_ACTIVE);
 
-								instance.byId('type').set(STR_VALUE, selectedType);
+								instance.byId('addLayoutType').set(STR_VALUE, selectedType);
 
-								instance.byId('layoutPrototypeId').set(STR_VALUE, selectedPrototypeId);
+								instance.byId('addLayoutPrototypeId').set(STR_VALUE, selectedPrototypeId);
 							}
 						}
 					},

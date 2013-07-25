@@ -55,7 +55,6 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.DateRange;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -1805,7 +1804,7 @@ public class StagingImpl implements Staging {
 	protected void addDefaultLayoutSetBranch(
 			long userId, long groupId, String groupName, boolean privateLayout,
 			ServiceContext serviceContext)
-		throws SystemException {
+		throws PortalException, SystemException {
 
 		String masterBranchDescription =
 			LayoutSetBranchConstants.MASTER_BRANCH_DESCRIPTION_PUBLIC;
@@ -1816,7 +1815,8 @@ public class StagingImpl implements Staging {
 		}
 
 		String description = LanguageUtil.format(
-			LocaleUtil.getDefault(), masterBranchDescription, groupName);
+			PortalUtil.getSiteDefaultLocale(groupId), masterBranchDescription,
+			groupName);
 
 		try {
 			LayoutSetBranch layoutSetBranch =

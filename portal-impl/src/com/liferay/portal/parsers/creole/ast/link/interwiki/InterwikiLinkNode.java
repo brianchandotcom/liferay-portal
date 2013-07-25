@@ -12,7 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.parsers.creole.ast.link;
+package com.liferay.portal.parsers.creole.ast.link.interwiki;
+
+import com.liferay.portal.parsers.creole.ast.link.LinkNode;
 
 /**
  * @author Miguel Pastor

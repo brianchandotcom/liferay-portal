@@ -16,6 +16,10 @@
 
 <%@ include file="/html/portal/init.jsp" %>
 
+<%
+request.setAttribute(WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
+%>
+
 <div class="alert alert-error">
 	<liferay-ui:message key="this-portlet-is-inactive" />
 </div>

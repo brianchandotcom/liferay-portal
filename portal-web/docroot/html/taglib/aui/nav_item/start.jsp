@@ -25,7 +25,9 @@
 					<i class="<%= iconClass %>"></i>
 				</c:if>
 
-				<liferay-ui:message key="<%= label %>" />
+				<span class="nav-item-label">
+					<liferay-ui:message key="<%= label %>" />
+				</span>
 
 				<c:if test="<%= dropdown %>">
 					<i class="icon-caret-down"></i>

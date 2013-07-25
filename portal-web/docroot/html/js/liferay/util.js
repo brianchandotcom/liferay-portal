@@ -1844,8 +1844,8 @@
 
 			if (trigger) {
 				var hiddenClass = 'controls-hidden';
-				var iconHiddenClass = 'icon-remove';
-				var iconVisibleClass = 'icon-ok';
+				var iconHiddenClass = 'icon-eye-close';
+				var iconVisibleClass = 'icon-eye-open';
 				var visibleClass = 'controls-visible';
 				var currentClass = visibleClass;
 				var currentIconClass = iconVisibleClass;

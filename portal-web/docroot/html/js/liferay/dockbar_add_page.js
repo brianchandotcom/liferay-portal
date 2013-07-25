@@ -122,8 +122,9 @@ AUI.add(
 						var addForm = instance._addForm;
 
 						if (instance.get('refresh')) {
-							submitForm(addForm)
-						} else {
+							submitForm(addForm);
+						}
+						else {
 							event.preventDefault();
 
 							var nodes = instance.get(STR_NODES);

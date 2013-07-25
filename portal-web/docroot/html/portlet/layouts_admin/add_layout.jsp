@@ -16,16 +16,6 @@
 
 <%@ include file="/html/portlet/layouts_admin/init.jsp" %>
 
-<aui:model-context model="<%= Layout.class %>" />
-
-<portlet:actionURL var="editLayoutActionURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
-	<portlet:param name="struts_action" value="/layouts_admin/edit_layouts" />
-</portlet:actionURL>
-
-<portlet:renderURL var="editLayoutRenderURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
-	<portlet:param name="struts_action" value="/layouts_admin/edit_layouts" />
-</portlet:renderURL>
-
 <%
 Layout selLayout = null;
 
@@ -51,6 +41,16 @@ else {
 	privateLayout = selLayout.isPrivateLayout();
 }
 %>
+
+<aui:model-context model="<%= Layout.class %>" />
+
+<portlet:actionURL var="editLayoutActionURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
+	<portlet:param name="struts_action" value="/layouts_admin/edit_layouts" />
+</portlet:actionURL>
+
+<portlet:renderURL var="editLayoutRenderURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
+	<portlet:param name="struts_action" value="/layouts_admin/edit_layouts" />
+</portlet:renderURL>
 
 <aui:form action="<%= editLayoutActionURL %>" enctype="multipart/form-data" method="post" name="addPageFm" onSubmit="event.preventDefault()">
 	<aui:input id="addLayoutCMD" name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD %>" />

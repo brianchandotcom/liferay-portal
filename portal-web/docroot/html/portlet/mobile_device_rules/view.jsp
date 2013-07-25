@@ -38,9 +38,14 @@ portletURL.setParameter("chooseCallback", chooseCallback);
 
 	<%
 	RuleGroupSearch ruleGroupSearch = new RuleGroupSearch(liferayPortletRequest, portletURL);
+	RowChecker rowChecker = null;
+	if (Validator.isNull(chooseCallback)) {
+		rowChecker = new RowChecker(renderResponse);
+	}
 	%>
 
 	<liferay-ui:search-container
+		rowChecker="<%= rowChecker %>"
 		searchContainer="<%= ruleGroupSearch %>"
 	>
 		<c:if test="<%= MDRPermissionUtil.contains(permissionChecker, groupId, ActionKeys.ADD_RULE_GROUP) %>">

@@ -936,7 +936,18 @@ public class DataFactory {
 		return portletPreferencesModels;
 	}
 
-	public BlogsEntryModel newBlogsEntryModel(long groupId, int index) {
+	public List<BlogsEntryModel> newBlogsEntryModels(long groupId) {
+		List<BlogsEntryModel> blogEntryModels = new ArrayList<BlogsEntryModel>(
+			_maxBlogsEntryCount);
+
+		for (int i = 1; i <= _maxBlogsEntryCount; i++) {
+			blogEntryModels.add(newBlogsEntryModel(groupId, i));
+		}
+
+		return blogEntryModels;
+	}
+
+	protected BlogsEntryModel newBlogsEntryModel(long groupId, int index) {
 		BlogsEntryModel blogsEntryModel = new BlogsEntryModelImpl();
 
 		blogsEntryModel.setUuid(SequentialUUID.generate());

@@ -41,8 +41,11 @@ import java.util.Map;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
+import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -177,7 +180,7 @@ public class PreviewArticleContentAction extends PortletAction {
 		throws Exception {
 
 		try {
-			ActionUtil.getArticle(renderRequest);
+			getArticle(renderRequest);
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchArticleException ||
@@ -195,6 +198,23 @@ public class PreviewArticleContentAction extends PortletAction {
 		return actionMapping.findForward(
 			getForward(
 				renderRequest, "portlet.journal.preview_article_content"));
+	}
+
+	protected void getArticle(PortletRequest portletRequest) throws Exception {
+		long groupId = ParamUtil.getLong(portletRequest, "groupId");
+		String articleId = ParamUtil.getString(portletRequest, "articleId");
+		double version = ParamUtil.getDouble(
+			portletRequest, "version", JournalArticleConstants.VERSION_DEFAULT);
+
+		JournalArticle article = JournalArticleServiceUtil.getArticle(
+			groupId, articleId, version);
+
+		HttpServletRequest request = PortalUtil.getHttpServletRequest(
+			portletRequest);
+
+		request.setAttribute(WebKeys.JOURNAL_ARTICLE, article);
+
+		JournalUtil.addRecentArticle(portletRequest, article);
 	}
 
 }

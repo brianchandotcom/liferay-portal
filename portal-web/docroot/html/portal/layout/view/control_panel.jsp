@@ -152,10 +152,10 @@ request.setAttribute("control_panel.jsp-ppid", ppid);
 											<h1 class="site-title">
 												<%= group.getDescriptiveName(themeDisplay.getLocale()) %>
 
-												<c:if test="<%= Validator.isNotNull(controlPanelCategory) && !controlPanelCategory.startsWith(PortletCategoryKeys.CURRENT_SITE) %>">
-													<%@ include file="/html/portal/layout/view/control_panel_site_selector.jspf" %>
-												</c:if>
-											</h1>
+											<c:if test="<%= showControlPanelMenu && Validator.isNotNull(controlPanelCategory) %>">
+												<%@ include file="/html/portal/layout/view/control_panel_site_selector.jspf" %>
+											</c:if>
+										</h1>
 
 											<c:if test="<%= group.hasPrivateLayouts() || group.hasPublicLayouts() %>">
 												<ul class="visit-links">

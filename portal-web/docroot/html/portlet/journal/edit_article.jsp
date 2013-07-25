@@ -326,7 +326,7 @@ request.setAttribute("edit_article.jsp-toLanguageId", toLanguageId);
 	</div>
 </aui:form>
 
-<c:if test="<%= article != null && Validator.isNotNull(cmd) && cmd.equals(Constants.PREVIEW) %>">
+<c:if test="<%= article != null && Validator.equals(cmd, Constants.PREVIEW) %>">
 	<aui:script use="liferay-journal-preview">
 		<portlet:renderURL var="previewArticleContentURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
 			<portlet:param name="struts_action" value="/journal/preview_article_content" />

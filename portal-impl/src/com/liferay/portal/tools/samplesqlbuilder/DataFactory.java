@@ -1493,7 +1493,18 @@ public class DataFactory {
 		return layoutSetModels;
 	}
 
-	public MBCategoryModel newMBCategoryModel(long groupId, int index) {
+	public List<MBCategoryModel> newMBCategoryModels(long groupId) {
+		List<MBCategoryModel> mbCategoryModels = new ArrayList<MBCategoryModel>(
+			_maxMBCategoryCount);
+
+		for (int i = 1; i <= _maxMBCategoryCount; i++) {
+			mbCategoryModels.add(newMBCategoryModel(groupId, i));
+		}
+
+		return mbCategoryModels;
+	}
+
+	protected MBCategoryModel newMBCategoryModel(long groupId, int index) {
 		MBCategoryModel mbCategoryModel = new MBCategoryModelImpl();
 
 		mbCategoryModel.setUuid(SequentialUUID.generate());
@@ -1561,26 +1572,31 @@ public class DataFactory {
 		return mbMailingListModel;
 	}
 
-	public MBMessageModel newMBMessageModel(
-		MBThreadModel mbThreadModel, int index) {
+	public List<MBMessageModel> newMBMessageModels(
+		MBThreadModel mbThreadModel) {
 
-		long messageId = 0;
-		long parentMessageId = 0;
+		List<MBMessageModel> mbMessageModels = new ArrayList<MBMessageModel>(
+			_maxMBMessageCount);
 
-		if (index == 1) {
-			messageId = mbThreadModel.getRootMessageId();
-			parentMessageId = MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID;
+		mbMessageModels.add(
+			newMBMessageModel(
+				mbThreadModel.getGroupId(), 0, 0, mbThreadModel.getCategoryId(),
+				mbThreadModel.getThreadId(), mbThreadModel.getRootMessageId(),
+				mbThreadModel.getRootMessageId(),
+				MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID, "Test Message 1",
+				"This is test message 1."));
+
+		for (int i = 2; i <= _maxMBMessageCount; i++) {
+			mbMessageModels.add(
+				newMBMessageModel(
+					mbThreadModel.getGroupId(), 0, 0,
+					mbThreadModel.getCategoryId(), mbThreadModel.getThreadId(),
+					_counter.get(), mbThreadModel.getRootMessageId(),
+					mbThreadModel.getRootMessageId(), "Test Message " + i,
+					"This is test message " + i + "."));
 		}
-		else {
-			messageId = _counter.get();
-			parentMessageId = mbThreadModel.getRootMessageId();
-		}
 
-		return newMBMessageModel(
-			mbThreadModel.getGroupId(), 0, 0, mbThreadModel.getCategoryId(),
-			mbThreadModel.getThreadId(), messageId,
-			mbThreadModel.getRootMessageId(), parentMessageId,
-			"Test Message " + index, "This is test message " + index + ".");
+		return mbMessageModels;
 	}
 
 	public MBMessageModel newMBMessageModel(
@@ -1610,6 +1626,21 @@ public class DataFactory {
 			MBCategoryConstants.DISCUSSION_CATEGORY_ID,
 			mbThreadModel.getThreadId(), messageId,
 			mbThreadModel.getRootMessageId(), parentMessageId, subject, body);
+	}
+
+	public List<MBMessageModel> newMBMessageModels(
+		MBThreadModel mbThreadModel, long classNameId, long classPK,
+		int maxMessageCount) {
+
+		List<MBMessageModel> mbMessageModels = new ArrayList<MBMessageModel>(
+			maxMessageCount);
+
+		for (int i = 1; i <= maxMessageCount; i++) {
+			mbMessageModels.add(
+				newMBMessageModel(mbThreadModel, classNameId, classPK, i));
+		}
+
+		return mbMessageModels;
 	}
 
 	public MBStatsUserModel newMBStatsUserModel(long groupId) {
@@ -1653,11 +1684,21 @@ public class DataFactory {
 			rootMessageId, messageCount);
 	}
 
-	public MBThreadModel newMBThreadModel(MBCategoryModel mbCategoryModel) {
-		return newMBThreadModel(
-			_counter.get(), mbCategoryModel.getGroupId(),
-			mbCategoryModel.getCategoryId(), _counter.get(),
-			_maxMBMessageCount);
+	public List<MBThreadModel> newMBThreadModels(
+		MBCategoryModel mbCategoryModel) {
+
+		List<MBThreadModel> mbThreadModels = new ArrayList<MBThreadModel>(
+			_maxMBThreadCount);
+
+		for (int i = 0; i < _maxMBThreadCount; i++) {
+			mbThreadModels.add(
+				newMBThreadModel(
+					_counter.get(), mbCategoryModel.getGroupId(),
+					mbCategoryModel.getCategoryId(), _counter.get(),
+					_maxMBMessageCount));
+		}
+
+		return mbThreadModels;
 	}
 
 	public PortletPreferencesModel newPortletPreferencesModel(

@@ -2088,24 +2088,6 @@ public class DataFactory {
 		return wikiNodeModels;
 	}
 
-	protected WikiNodeModel newWikiNodeModel(long groupId, int index) {
-		WikiNodeModel wikiNodeModel = new WikiNodeModelImpl();
-
-		wikiNodeModel.setUuid(SequentialUUID.generate());
-		wikiNodeModel.setNodeId(_counter.get());
-		wikiNodeModel.setGroupId(groupId);
-		wikiNodeModel.setCompanyId(_companyId);
-		wikiNodeModel.setUserId(_sampleUserId);
-		wikiNodeModel.setUserName(_SAMPLE_USER_NAME);
-		wikiNodeModel.setCreateDate(new Date());
-		wikiNodeModel.setModifiedDate(new Date());
-		wikiNodeModel.setName("Test Node " + index);
-		wikiNodeModel.setLastPostDate(new Date());
-		wikiNodeModel.setStatusDate(new Date());
-
-		return wikiNodeModel;
-	}
-
 	public List<WikiPageModel> newWikiPageModels(WikiNodeModel wikiNodeModel) {
 		List<WikiPageModel> wikiPageModels = new ArrayList<WikiPageModel>(
 			_maxWikiPageCount);
@@ -2115,30 +2097,6 @@ public class DataFactory {
 		}
 
 		return wikiPageModels;
-	}
-
-	protected WikiPageModel newWikiPageModel(
-		WikiNodeModel wikiNodeModel, int index) {
-
-		WikiPageModel wikiPageModel = new WikiPageModelImpl();
-
-		wikiPageModel.setUuid(SequentialUUID.generate());
-		wikiPageModel.setPageId(_counter.get());
-		wikiPageModel.setResourcePrimKey(_counter.get());
-		wikiPageModel.setGroupId(wikiNodeModel.getGroupId());
-		wikiPageModel.setCompanyId(_companyId);
-		wikiPageModel.setUserId(_sampleUserId);
-		wikiPageModel.setUserName(_SAMPLE_USER_NAME);
-		wikiPageModel.setCreateDate(new Date());
-		wikiPageModel.setModifiedDate(new Date());
-		wikiPageModel.setNodeId(wikiNodeModel.getNodeId());
-		wikiPageModel.setTitle("Test Page " + index);
-		wikiPageModel.setVersion(WikiPageConstants.VERSION_DEFAULT);
-		wikiPageModel.setContent("This is test page " + index + ".");
-		wikiPageModel.setFormat(WikiPageConstants.DEFAULT_FORMAT);
-		wikiPageModel.setHead(true);
-
-		return wikiPageModel;
 	}
 
 	public WikiPageResourceModel newWikiPageResourceModel(
@@ -2639,6 +2597,48 @@ public class DataFactory {
 		userModel.setEmailAddressVerified(true);
 
 		return userModel;
+	}
+
+	protected WikiNodeModel newWikiNodeModel(long groupId, int index) {
+		WikiNodeModel wikiNodeModel = new WikiNodeModelImpl();
+
+		wikiNodeModel.setUuid(SequentialUUID.generate());
+		wikiNodeModel.setNodeId(_counter.get());
+		wikiNodeModel.setGroupId(groupId);
+		wikiNodeModel.setCompanyId(_companyId);
+		wikiNodeModel.setUserId(_sampleUserId);
+		wikiNodeModel.setUserName(_SAMPLE_USER_NAME);
+		wikiNodeModel.setCreateDate(new Date());
+		wikiNodeModel.setModifiedDate(new Date());
+		wikiNodeModel.setName("Test Node " + index);
+		wikiNodeModel.setLastPostDate(new Date());
+		wikiNodeModel.setStatusDate(new Date());
+
+		return wikiNodeModel;
+	}
+
+	protected WikiPageModel newWikiPageModel(
+		WikiNodeModel wikiNodeModel, int index) {
+
+		WikiPageModel wikiPageModel = new WikiPageModelImpl();
+
+		wikiPageModel.setUuid(SequentialUUID.generate());
+		wikiPageModel.setPageId(_counter.get());
+		wikiPageModel.setResourcePrimKey(_counter.get());
+		wikiPageModel.setGroupId(wikiNodeModel.getGroupId());
+		wikiPageModel.setCompanyId(_companyId);
+		wikiPageModel.setUserId(_sampleUserId);
+		wikiPageModel.setUserName(_SAMPLE_USER_NAME);
+		wikiPageModel.setCreateDate(new Date());
+		wikiPageModel.setModifiedDate(new Date());
+		wikiPageModel.setNodeId(wikiNodeModel.getNodeId());
+		wikiPageModel.setTitle("Test Page " + index);
+		wikiPageModel.setVersion(WikiPageConstants.VERSION_DEFAULT);
+		wikiPageModel.setContent("This is test page " + index + ".");
+		wikiPageModel.setFormat(WikiPageConstants.DEFAULT_FORMAT);
+		wikiPageModel.setHead(true);
+
+		return wikiPageModel;
 	}
 
 	protected String nextDDLCustomFieldName(

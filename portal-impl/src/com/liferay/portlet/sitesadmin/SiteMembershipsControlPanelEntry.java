@@ -40,6 +40,10 @@ public class SiteMembershipsControlPanelEntry extends BaseControlPanelEntry {
 			return true;
 		}
 
+		if (group.isLayoutSetPrototype()) {
+			return true;
+		}
+
 		if (!group.isManualMembership()) {
 			return true;
 		}

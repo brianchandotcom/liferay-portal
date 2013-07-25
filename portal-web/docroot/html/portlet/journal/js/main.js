@@ -109,6 +109,27 @@ AUI.add(
 				return canDrop;
 			},
 
+			displayTemplateMessage: function() {
+				var instance = this;
+
+				var templateMessage = Liferay.Language.get('please-add-a-template-to-render-this-structure');
+
+				alert(templateMessage);
+
+				instance.showMessage(
+					'#selectTemplateMessage',
+					'info',
+					templateMessage,
+					30000
+				);
+
+				var selectTemplateButton = instance.getById('selectTemplateButton');
+
+				if (selectTemplateButton) {
+					selectTemplateButton.focus();
+				}
+			},
+
 			getById: function(id, namespace) {
 				var instance = this;
 
@@ -497,22 +518,7 @@ AUI.add(
 				var form = instance.getPrincipalForm();
 
 				if (instance.hasStructure() && !instance.hasTemplate() && !instance.updateStructureDefaultValues()) {
-					var templateMessage = Liferay.Language.get('please-add-a-template-to-render-this-structure');
-
-					alert(templateMessage);
-
-					instance.showMessage(
-						'#selectTemplateMessage',
-						'info',
-						templateMessage,
-						30000
-					);
-
-					var selectTemplateButton = instance.getById('selectTemplateButton');
-
-					if (selectTemplateButton) {
-						selectTemplateButton.focus();
-					}
+					instance.displayTemplateMessage();
 				}
 				else {
 					if (!cmd) {

@@ -81,22 +81,7 @@ if ((article != null) && article.isDraft()) {
 							var updateStructureDefaultValues = window.<portlet:namespace />journalPortlet.updateStructureDefaultValues();
 
 							if (hasStructure && !hasTemplate && !updateStructureDefaultValues) {
-								var templateMessage = Liferay.Language.get('please-add-a-template-to-render-this-structure');
-
-								alert(templateMessage);
-
-								window.<portlet:namespace />journalPortlet.showMessage(
-									'#selectTemplateMessage',
-									'info',
-									templateMessage,
-									30000
-								);
-
-								var selectTemplateButton = A.one('#selectTemplateButton');
-
-								if (selectTemplateButton) {
-									selectTemplateButton.focus();
-								}
+								window.<portlet:namespace />journalPortlet.displayTemplateMessage();
 							}
 							else {
 								form.one('#<portlet:namespace /><%= Constants.CMD %>').val('<%= Constants.PREVIEW %>');

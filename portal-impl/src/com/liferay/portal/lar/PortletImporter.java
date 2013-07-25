@@ -1862,7 +1862,9 @@ public class PortletImporter {
 					_headerElement.attributeValue("available-locales")));
 
 			Locale[] targetAvailableLocales =
-				LanguageUtil.getAvailableLocales();
+				LanguageUtil.getAvailableLocales(
+					PortalUtil.getSiteGroupId(
+						portletDataContext.getScopeGroupId()));
 
 			for (Locale sourceAvailableLocale : sourceAvailableLocales) {
 				if (!ArrayUtil.contains(

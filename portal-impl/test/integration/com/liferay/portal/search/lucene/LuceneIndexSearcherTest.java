@@ -63,7 +63,7 @@ public class LuceneIndexSearcherTest {
 
 		_initialUsersCount = hits.getLength();
 
-		for (int i = 0; i < 5; i ++ ) {
+		for (int i = 0; i < _NUMBER_OF_USERS; i ++) {
 			User user = UserTestUtil.addUser(
 				ServiceTestUtil.randomString(), false,
 				ServiceTestUtil.randomString(), ServiceTestUtil.randomString(),
@@ -90,7 +90,8 @@ public class LuceneIndexSearcherTest {
 
 	@Test
 	public void testSearchWithOneResultWhenTotalEqualsStart() throws Exception {
-		Hits hits = getSearchWithOneResult(5, 10);
+		Hits hits = getSearchWithOneResult(
+			_NUMBER_OF_USERS, 2 * _NUMBER_OF_USERS);
 
 		Assert.assertEquals(1, hits.getLength());
 	}
@@ -99,7 +100,7 @@ public class LuceneIndexSearcherTest {
 	public void testSearchWithOneResultWhenTotalLessThanStart()
 		throws Exception {
 
-		Hits hits = getSearchWithOneResult(1000, 1005);
+		Hits hits = getSearchWithOneResult(1000, 1000 + _NUMBER_OF_USERS);
 
 		Assert.assertEquals(1, hits.getLength());
 	}
@@ -116,7 +117,8 @@ public class LuceneIndexSearcherTest {
 	public void testSearchWithoutResultsWhenTotalEqualsStart()
 		throws Exception {
 
-		Hits hits = getSearchWithoutResults(5, 10);
+		Hits hits = getSearchWithoutResults(
+			_NUMBER_OF_USERS, 2 * _NUMBER_OF_USERS);
 
 		Assert.assertEquals(0, hits.getLength());
 	}
@@ -125,7 +127,7 @@ public class LuceneIndexSearcherTest {
 	public void testSearchWithoutResultsWhenTotalLessThanStart()
 		throws Exception {
 
-		Hits hits = getSearchWithoutResults(1000, 1005);
+		Hits hits = getSearchWithoutResults(1000, 1000 + _NUMBER_OF_USERS);
 
 		Assert.assertEquals(0, hits.getLength());
 	}
@@ -134,21 +136,24 @@ public class LuceneIndexSearcherTest {
 	public void testSearchWithResults() throws Exception {
 		Hits hits = getHits(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-		Assert.assertEquals(_initialUsersCount + 5, hits.getLength());
+		Assert.assertEquals(
+			_initialUsersCount + _NUMBER_OF_USERS, hits.getLength());
 	}
 
 	@Test
 	public void testSearchWithResultsWhenTotalEqualsStart() throws Exception {
-		Hits hits = getHits(5, 10);
+		Hits hits = getHits(_NUMBER_OF_USERS, 2 * _NUMBER_OF_USERS);
 
-		Assert.assertEquals(_initialUsersCount + 5, hits.getLength());
+		Assert.assertEquals(
+			_initialUsersCount + _NUMBER_OF_USERS, hits.getLength());
 	}
 
 	@Test
 	public void testSearchWithResultsWhenTotalLessThanStart() throws Exception {
-		Hits hits = getHits(1000, 1005);
+		Hits hits = getHits(1000, 1000 + _NUMBER_OF_USERS);
 
-		Assert.assertEquals(_initialUsersCount + 5, hits.getLength());
+		Assert.assertEquals(
+			_initialUsersCount + _NUMBER_OF_USERS, hits.getLength());
 	}
 
 	protected Hits getHits(int start, int end) throws Exception {
@@ -185,6 +190,8 @@ public class LuceneIndexSearcherTest {
 
 		return indexer.search(searchContext);
 	}
+
+	private static final int _NUMBER_OF_USERS = 5;
 
 	private int _initialUsersCount;
 	private List<User> _users = new ArrayList<User>();

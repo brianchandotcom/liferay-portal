@@ -198,7 +198,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 			padding-right: 0;
 
 			.brand {
-				&, > a {
+				&, h1, a {
 					color: #FFF;
 					font-weight: lighter;
 					text-shadow: none;

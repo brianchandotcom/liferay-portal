@@ -545,6 +545,12 @@ public class DLFolderLocalServiceUtil {
 	}
 
 	public static com.liferay.portlet.documentlibrary.model.DLFolder fetchFolder(
+		long folderId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().fetchFolder(folderId);
+	}
+
+	public static com.liferay.portlet.documentlibrary.model.DLFolder fetchFolder(
 		long groupId, long parentFolderId, java.lang.String name)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().fetchFolder(groupId, parentFolderId, name);

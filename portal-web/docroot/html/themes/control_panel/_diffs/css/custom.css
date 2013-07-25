@@ -332,6 +332,39 @@ $dockbarOpenGradientStart: #0EA6F9;
 		}
 	}
 
+	/* ---------- Form Navigator ---------- */
+
+	.portlet-journal {
+		form {
+			margin-bottom: 0;
+		}
+
+		.article-toolbar {
+			line-height: 0;
+			margin: 0;
+		}
+
+		.journal-article-header-edit {
+			border-top-width: 0;
+		}
+
+		.taglib-header {
+			margin-bottom: 0;
+		}
+	}
+
+	.taglib-form-navigator {
+		ul.form-navigator.well {
+			float: right;
+			margin-left: 2.12766%;
+		}
+
+		.form-navigator-content {
+			float: left;
+			margin-left: 0;
+		}
+	}
+
 	/* ---------- General Nav ---------- */
 
 	.nav-list {
@@ -717,7 +750,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 		@include border-radius(4px);
 	}
 
-	/* ---------- Dockbar ---------- */
+	/* ---------- Extras Dockbar ---------- */
 
 	.dockbar {
 		.navbar-inner {
@@ -758,6 +791,78 @@ $dockbarOpenGradientStart: #0EA6F9;
 		.form-navigator.well {
 			@include border-radius(0);
 			@include box-shadow(-3px 0px 2px -2px #F5F5F5);
+		}
+	}
+
+	/* ---------- Media Queries ---------- */
+
+	@media (min-width: 1200px) {
+
+		/* ---------- Form Navigator ---------- */
+
+		.taglib-form-navigator {
+			ul.form-navigator.well {
+				margin-left: 2.5641%;
+			}
+		}
+	}
+
+	@media (max-width: 979px) {
+
+		/* ---------- Form Navigator ---------- */
+
+		ul.form-navigator.well {
+			.button-holder {
+				bottom: 0;
+				margin-left: -7px;
+				position: absolute;
+			}
+		}
+
+		.portlet-journal {
+			.journal-article-header-edit {
+				border-top-width: 1px;
+			}
+		}
+
+		.nav-list .nav-header {
+			margin-left: 0;
+			margin-right: 0;
+		}
+
+		.tabbable-content.taglib-form-navigator {
+			padding-bottom: 35px;
+			position: relative;
+		}
+
+		.taglib-form-navigator .nav.form-navigator.well {
+			border-top-width: 0;
+			margin-top: 0;
+			padding: 0;
+		}
+	}
+
+	@media (max-width: 767px) {
+
+		/* ---------- Form Navigator ---------- */
+
+		.panel-page-menu .portlet-borderless-container {
+			border-left: 1px solid #D1D1D1;
+
+			&:after {
+				background-image: none;
+			}
+
+			.accordion .accordion-group {
+				@include box-shadow(none);
+			}
+		}
+
+		.span6 {
+			&.article-structure, &.article-template {
+				float: left;
+				width: 45%;
+			}
 		}
 	}
 }

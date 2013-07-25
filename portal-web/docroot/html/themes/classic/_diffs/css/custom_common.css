@@ -56,6 +56,10 @@
 		}
 	}
 
+	form fieldset.fieldset {
+		min-width: 100%;
+	}
+
 	form .accordion-heading .accordion-toggle {
 		padding-left: 0;
 	}
@@ -391,39 +395,6 @@
 		}
 	}
 
-	/* ---------- Form navigator ---------- */
-
-	@include respond-to(tablet) {
-		.taglib-form-navigator {
-			.form-navigator-content {
-				clear: both;
-				float: none;
-				width: 100%;
-			}
-
-			.form-navigator.nav.well {
-				border-width: 1px 0 0;
-
-				@include box-shadow(none);
-
-				clear: both;
-				float: none;
-				margin: 1em 0 0;
-				padding: 1em 0.5em;
-				width: 100%;
-
-				> li {
-					display: inline-block;
-
-					> a {
-						margin: 0;
-						padding: 0.1em 1em;
-					}
-				}
-			}
-		}
-	}
-
 	/* ---------- Hidden Accessible ---------- */
 
 	#banner h2, #banner h3, .site-breadcrumbs h1, #skip-to-content {
@@ -626,5 +597,44 @@
 
 	body.yui3-skin-sam .yui3-widget-mask {
 		@include opacity(0.8);
+	}
+
+	/* ---------- Media Queries ---------- */
+
+	/* ---------- Tablet and Below ---------- */
+
+	@media (max-width: 979px) {
+		.taglib-form-navigator {
+			.form-navigator-content {
+				clear: both;
+				float: none;
+				width: 100%;
+			}
+
+			.nav.form-navigator.well {
+				border-width: 1px 0 0;
+
+				@include box-shadow(none);
+
+				clear: both;
+				float: none;
+				margin: 1em 0 0;
+				padding: 1em 0.5em;
+				width: 100%;
+
+				> li {
+					display: inline-block;
+
+					> a {
+						margin: 0;
+						padding: 0.1em 1em;
+					}
+				}
+			}
+
+			.nobr {
+				white-space: normal;
+			}
+		}
 	}
 }

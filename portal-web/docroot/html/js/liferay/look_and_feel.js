@@ -993,6 +993,7 @@ AUI.add(
 					},
 
 					portletData: {
+						customTitle: EMPTY,
 						language: 'en_US',
 						portletLinksTarget: EMPTY,
 						title: EMPTY,
@@ -1465,7 +1466,8 @@ AUI.add(
 				var portletTitle = instance._portletTitles(portletData.language);
 
 				if (!portletTitle) {
-					portletTitle = instance._defaultPortletTitle;
+					instance._portletTitles(EMPTY);
+					portletData.title = EMPTY;
 				}
 
 				instance._setInput(instance._customTitleInput, portletTitle);

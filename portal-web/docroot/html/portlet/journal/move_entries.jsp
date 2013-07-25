@@ -76,7 +76,7 @@ for (JournalArticle curArticle : articles) {
 
 	<liferay-ui:header
 		backURL="<%= redirect %>"
-		title="move-articles"
+		title="move-web-content"
 	/>
 
 	<liferay-ui:error exception="<%= DuplicateFolderNameException.class %>" message="the-folder-you-selected-already-has-an-entry-with-this-name.-please-select-a-different-folder" />
@@ -142,7 +142,7 @@ for (JournalArticle curArticle : articles) {
 
 	<c:if test="<%= !validMoveArticles.isEmpty() %>">
 		<div class="move-list-info">
-			<h4><%= LanguageUtil.format(pageContext, "x-articles-are-ready-to-be-moved", validMoveArticles.size()) %></h4>
+			<h4><%= LanguageUtil.format(pageContext, "x-web-content-are-ready-to-be-moved", validMoveArticles.size()) %></h4>
 		</div>
 
 		<div class="move-list">
@@ -168,7 +168,7 @@ for (JournalArticle curArticle : articles) {
 
 	<c:if test="<%= !invalidMoveArticles.isEmpty() %>">
 		<div class="move-list-info">
-			<h4><%= LanguageUtil.format(pageContext, "x-articles-cannot-be-moved", invalidMoveArticles.size()) %></h4>
+			<h4><%= LanguageUtil.format(pageContext, "x-web-content-cannot-be-moved", invalidMoveArticles.size()) %></h4>
 		</div>
 
 		<div class="move-list">
@@ -276,5 +276,5 @@ for (JournalArticle curArticle : articles) {
 </aui:script>
 
 <%
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "move-articles"), currentURL);
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "move-web-content"), currentURL);
 %>

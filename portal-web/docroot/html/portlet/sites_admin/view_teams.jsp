@@ -70,7 +70,7 @@ pageContext.setAttribute("portletURL", portletURL);
 	/>
 
 	<%
-	TeamSearchTerms searchTerms = (TeamSearchTerms)searchContainer.getSearchTerms();
+	TeamDisplayTerms searchTerms = (TeamDisplayTerms)searchContainer.getSearchTerms();
 
 	int total = TeamLocalServiceUtil.searchCount(groupId, searchTerms.getName(), searchTerms.getDescription(), new LinkedHashMap<String, Object>());
 

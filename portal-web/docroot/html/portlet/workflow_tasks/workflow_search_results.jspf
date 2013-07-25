@@ -15,7 +15,7 @@
 --%>
 
 <%
-WorkflowTaskSearchTerms searchTerms = (WorkflowTaskSearchTerms)searchContainer.getSearchTerms();
+WorkflowTaskDisplayTerms searchTerms = (WorkflowTaskDisplayTerms)searchContainer.getSearchTerms();
 
 boolean allTasks = false;
 

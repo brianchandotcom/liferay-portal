@@ -46,7 +46,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_organization_assi
 	/>
 
 	<%
-	UserGroupSearchTerms searchTerms = (UserGroupSearchTerms)searchContainer.getSearchTerms();
+	UserGroupDisplayTerms searchTerms = (UserGroupDisplayTerms)searchContainer.getSearchTerms();
 
 	LinkedHashMap<String, Object> userGroupParams = new LinkedHashMap<String, Object>();
 

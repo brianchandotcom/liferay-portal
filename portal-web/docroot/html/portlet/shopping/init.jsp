@@ -82,7 +82,6 @@ page import="com.liferay.portlet.shopping.model.ShoppingOrderConstants" %><%@
 page import="com.liferay.portlet.shopping.model.ShoppingOrderItem" %><%@
 page import="com.liferay.portlet.shopping.search.CouponDisplayTerms" %><%@
 page import="com.liferay.portlet.shopping.search.CouponSearch" %><%@
-page import="com.liferay.portlet.shopping.search.CouponSearchTerms" %><%@
 page import="com.liferay.portlet.shopping.search.OrderDisplayTerms" %><%@
 page import="com.liferay.portlet.shopping.search.OrderSearch" %><%@
 page import="com.liferay.portlet.shopping.search.OrderSearchTerms" %><%@

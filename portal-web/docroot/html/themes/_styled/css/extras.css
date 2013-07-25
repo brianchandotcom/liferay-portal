@@ -305,7 +305,7 @@ body:first-of-type {
 		}
 	}
 
-	.portlet-dynamic-data-list-display, .portlet-journal-content, .portlet-polls-display {
+	.portlet-content {
 		&:hover {
 			.lfr-icon-actions {
 				@extend %portlet-action-bar-fx-hover;

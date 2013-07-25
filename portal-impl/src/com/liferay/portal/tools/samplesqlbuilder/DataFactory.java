@@ -206,7 +206,8 @@ public class DataFactory {
 			int maxAssetPublisherFilterRuleCount,
 			int maxAssetPublisherPageCount, int maxAssetTagCount,
 			int maxAssetVocabularyCount, int maxBlogsEntryCount,
-			int maxDDLCustomFieldCount, int maxGroupsCount,
+			int maxDDLCustomFieldCount, int maxDLFileEntryCount,
+			int maxDLFolderCount, int maxGroupsCount,
 			int maxJournalArticleCount, int maxJournalArticleSize,
 			int maxMBCategoryCount, int maxMBThreadCount, int maxMBMessageCount,
 			int maxUserCount, int maxUserToGroupCount, int maxWikiNodeCount,
@@ -222,6 +223,8 @@ public class DataFactory {
 		_maxAssetVocabularyCount = maxAssetVocabularyCount;
 		_maxBlogsEntryCount = maxBlogsEntryCount;
 		_maxDDLCustomFieldCount = maxDDLCustomFieldCount;
+		_maxDLFileEntryCount = maxDLFileEntryCount;
+		_maxDLFolderCount = maxDLFolderCount;
 		_maxGroupsCount = maxGroupsCount;
 		_maxJournalArticleCount = maxJournalArticleCount;
 		_maxMBCategoryCount = maxMBCategoryCount;
@@ -1246,7 +1249,20 @@ public class DataFactory {
 		return dlFileEntryMetadataModel;
 	}
 
-	public DLFileEntryModel newDlFileEntryModel(
+	public List<DLFileEntryModel> newDlFileEntryModels(
+		DLFolderModel dlFolerModel) {
+
+		List<DLFileEntryModel> dlFileEntryModels =
+			new ArrayList<DLFileEntryModel>(_maxDLFileEntryCount);
+
+		for (int i = 1; i <= _maxDLFileEntryCount; i++) {
+			dlFileEntryModels.add(newDlFileEntryModel(dlFolerModel, i));
+		}
+
+		return dlFileEntryModels;
+	}
+
+	protected DLFileEntryModel newDlFileEntryModel(
 		DLFolderModel dlFolerModel, int index) {
 
 		DLFileEntryModel dlFileEntryModel = new DLFileEntryModelImpl();
@@ -1300,7 +1316,20 @@ public class DataFactory {
 		return dlFileVersionModel;
 	}
 
-	public DLFolderModel newDLFolderModel(
+	public List<DLFolderModel> newDLFolderModels(
+		long groupId, long parentFolderId) {
+
+		List<DLFolderModel> dlFolderModels = new ArrayList<DLFolderModel>(
+			_maxDLFolderCount);
+
+		for (int i = 1; i <= _maxDLFolderCount; i++) {
+			dlFolderModels.add(newDLFolderModel(groupId, parentFolderId, i));
+		}
+
+		return dlFolderModels;
+	}
+
+	protected DLFolderModel newDLFolderModel(
 		long groupId, long parentFolderId, int index) {
 
 		DLFolderModel dlFolderModel = new DLFolderModelImpl();
@@ -2715,6 +2744,8 @@ public class DataFactory {
 	private int _maxAssetVocabularyCount;
 	private int _maxBlogsEntryCount;
 	private int _maxDDLCustomFieldCount;
+	private int _maxDLFileEntryCount;
+	private int _maxDLFolderCount;
 	private int _maxDLFileEntrySize;
 	private int _maxGroupsCount;
 	private int _maxJournalArticleCount;

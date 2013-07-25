@@ -166,10 +166,11 @@ public class SampleSQLBuilder {
 			_maxAssetEntryToAssetTagCount, _maxAssetPublisherFilterRuleCount,
 			_maxAssetPublisherPageCount, _maxAssetTagCount,
 			_maxAssetVocabularyCount, _maxBlogsEntryCount,
-			_maxDDLCustomFieldCount, _maxGroupCount, _maxJournalArticleCount,
-			_maxJournalArticleSize, _maxMBCategoryCount, _maxMBThreadCount,
-			_maxMBMessageCount, _maxUserCount, _maxUserToGroupCount,
-			_maxWikiNodeCount, _maxWikiPageCount);
+			_maxDDLCustomFieldCount, _maxDLFileEntryCount, _maxDLFolderCount,
+			_maxGroupCount, _maxJournalArticleCount, _maxJournalArticleSize,
+			_maxMBCategoryCount, _maxMBThreadCount, _maxMBMessageCount,
+			_maxUserCount, _maxUserToGroupCount, _maxWikiNodeCount,
+			_maxWikiPageCount);
 
 		_db = DBFactoryUtil.getDB(_dbType);
 

@@ -98,7 +98,8 @@ AUI.add(
 								}
 							),
 							inputPlaceholder.on('input', A.debounce(STR_INPUT_VALUE_CHANGE, 100, instance)),
-							inputPlaceholder.ancestor('form').on('submit', A.rbind(STR_SUBMIT, instance, inputPlaceholder))
+							Liferay.on('submitForm', A.rbind(STR_SUBMIT, instance, inputPlaceholder)),
+							inputPlaceholder.get('form').on('submit', A.rbind(STR_SUBMIT, instance, inputPlaceholder))
 						];
 
 						instance._eventHandles = eventHandles;

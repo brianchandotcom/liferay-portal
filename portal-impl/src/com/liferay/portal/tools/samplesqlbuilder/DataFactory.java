@@ -522,6 +522,16 @@ public class DataFactory {
 		return _sampleUserModel;
 	}
 
+	public List<Integer> getSequence(int maxCount) {
+		List<Integer> sequence = new ArrayList<Integer>(maxCount);
+
+		for (int i = 1; i <= maxCount; i++) {
+			sequence.add(i);
+		}
+
+		return sequence;
+	}
+
 	public RoleModel getUserRoleModel() {
 		return _userRoleModel;
 	}

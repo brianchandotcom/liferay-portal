@@ -620,7 +620,8 @@ public class PortletImporter {
 	}
 
 	protected Map<Locale, String> getAssetCategoryTitleMap(
-		AssetCategory assetCategory, String name) {
+			AssetCategory assetCategory, String name)
+		throws PortalException, SystemException {
 
 		Map<Locale, String> titleMap = assetCategory.getTitleMap();
 
@@ -628,9 +629,8 @@ public class PortletImporter {
 			titleMap = new HashMap<Locale, String>();
 		}
 
-		Locale locale = LocaleUtil.getDefault();
-
-		titleMap.put(locale, name);
+		titleMap.put(
+			PortalUtil.getSiteDefaultLocale(assetCategory.getGroupId()), name);
 
 		return titleMap;
 	}
@@ -658,7 +658,8 @@ public class PortletImporter {
 	}
 
 	protected Map<Locale, String> getAssetVocabularyTitleMap(
-		AssetVocabulary assetVocabulary, String name) {
+			AssetVocabulary assetVocabulary, String name)
+		throws PortalException, SystemException {
 
 		Map<Locale, String> titleMap = assetVocabulary.getTitleMap();
 
@@ -666,9 +667,9 @@ public class PortletImporter {
 			titleMap = new HashMap<Locale, String>();
 		}
 
-		Locale locale = LocaleUtil.getDefault();
-
-		titleMap.put(locale, name);
+		titleMap.put(
+			PortalUtil.getSiteDefaultLocale(assetVocabulary.getGroupId()),
+			name);
 
 		return titleMap;
 	}

@@ -59,8 +59,8 @@ public class TeamFinderImpl
 			LinkedHashMap<String, Object> params)
 		throws SystemException {
 
-		name = StringUtil.lowerCase(name);
-		description = StringUtil.lowerCase(description);
+		name = CustomSQLUtil.keywords(name)[0];
+		description = CustomSQLUtil.keywords(description)[0];
 
 		Session session = null;
 
@@ -113,8 +113,8 @@ public class TeamFinderImpl
 			OrderByComparator obc)
 		throws SystemException {
 
-		name = StringUtil.lowerCase(name);
-		description = StringUtil.lowerCase(description);
+		name = CustomSQLUtil.keywords(name)[0];
+		description = CustomSQLUtil.keywords(description)[0];
 
 		Session session = null;
 

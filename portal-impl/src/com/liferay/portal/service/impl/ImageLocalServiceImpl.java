@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.image.Hook;
 import com.liferay.portal.kernel.image.ImageToolUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Image;
 import com.liferay.portal.service.base.ImageLocalServiceBaseImpl;
 import com.liferay.portal.webserver.WebServerServletTokenUtil;
@@ -157,13 +158,13 @@ public class ImageLocalServiceImpl extends ImageLocalServiceBaseImpl {
 			int size)
 		throws PortalException, SystemException {
 
+		validate(type);
+
 		Image image = imagePersistence.fetchByPrimaryKey(imageId);
 
 		if (image == null) {
 			image = imagePersistence.create(imageId);
 		}
-
-		validate(type);
 
 		image.setModifiedDate(new Date());
 		image.setType(type);
@@ -239,18 +240,18 @@ public class ImageLocalServiceImpl extends ImageLocalServiceBaseImpl {
 
 	protected void validate(String type) throws PortalException {
 		if ((type == null) ||
-			(type.contains("\\")) ||
-			(type.contains("/")) ||
-			(type.contains(".")) ||
-			(type.contains(":")) ||
-			(type.contains("*")) ||
-			(type.contains("?")) ||
-			(type.contains("\"")) ||
-			(type.contains("<")) ||
-			(type.contains(">")) ||
-			(type.contains("|")) ||
-			(type.contains("[")) ||
-			(type.contains("]"))) {
+			type.contains(StringPool.BACK_SLASH) ||
+			type.contains(StringPool.COLON) ||
+			type.contains(StringPool.GREATER_THAN) ||
+			type.contains(StringPool.LESS_THAN) ||
+			type.contains(StringPool.PERCENT) ||
+			type.contains(StringPool.PERIOD) ||
+			type.contains(StringPool.PIPE) ||
+			type.contains(StringPool.QUESTION) ||
+			type.contains(StringPool.QUOTE) ||
+			type.contains(StringPool.SLASH) ||
+			type.contains(StringPool.SPACE) ||
+			type.contains(StringPool.STAR)) {
 
 			throw new ImageTypeException();
 		}

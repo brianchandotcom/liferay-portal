@@ -70,18 +70,18 @@ public class JournalArticleActivityInterpreter
 
 		if (activityType == JournalActivityKeys.ADD_ARTICLE) {
 			if (Validator.isNull(groupName)) {
-				return "activity-journal-article-add-article";
+				return "activity-journal-article-add-web-content";
 			}
 			else {
-				return "activity-journal-article-add-article-in";
+				return "activity-journal-article-add-web-content-in";
 			}
 		}
 		else if (activityType == JournalActivityKeys.UPDATE_ARTICLE) {
 			if (Validator.isNull(groupName)) {
-				return "activity-journal-article-update-article";
+				return "activity-journal-article-update-web-content";
 			}
 			else {
-				return "activity-journal-article-update-article-in";
+				return "activity-journal-article-update-web-content-in";
 			}
 		}
 		else if (activityType == SocialActivityConstants.TYPE_MOVE_TO_TRASH) {

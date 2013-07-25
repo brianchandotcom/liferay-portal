@@ -388,30 +388,18 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 
 		List<Group> groups = new UniqueList<Group>();
 
-		groups.addAll(
-			userPersistence.getGroups(permissionChecker.getUserId(), 0, max));
-		groups.addAll(
-			getUserOrganizationsGroups(permissionChecker.getUserId(), 0, max));
+		List<Group> userPlacesGroups = getUserPlacesGroups(null, max);
 
-		List<UserGroup> userGroups = userPersistence.getUserGroups(
-			permissionChecker.getUserId(), 0, max);
-
-		for (UserGroup userGroup : userGroups) {
-			groups.addAll(
-				userGroupPersistence.getGroups(
-					userGroup.getUserGroupId(), 0, max));
-		}
-
-		Iterator<Group> itr = groups.iterator();
+		Iterator<Group> itr = userPlacesGroups.iterator();
 
 		while (itr.hasNext()) {
 			Group group = itr.next();
 
-			if (!group.isSite() ||
-				!PortletPermissionUtil.hasControlPanelAccessPermission(
+			if (group.isSite() &&
+				PortletPermissionUtil.hasControlPanelAccessPermission(
 					permissionChecker, group.getGroupId(), portlets)) {
 
-				itr.remove();
+				groups.add(group);
 			}
 		}
 

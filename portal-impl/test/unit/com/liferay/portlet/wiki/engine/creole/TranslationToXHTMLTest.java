@@ -78,6 +78,155 @@ public class TranslationToXHTMLTest extends PowerMockito {
 	}
 
 	@Test
+	public void testInterwikiC2() {
+		Assert.assertEquals(
+			"<p><a href=\"http://c2.com/cgi/wiki?Liferay\">Liferay</a> </p>",
+			translate("interwikic2.creole"));
+	}
+
+	@Test
+	public void testInterwikiDokuWiki() {
+		Assert.assertEquals(
+			"<p><a href=\"http://wiki.splitbrain.org/wiki:Liferay\">" +
+				"Liferay</a> </p>",
+			translate("interwikidokuwiki.creole"));
+	}
+
+	@Test
+	public void testInterwikiFlickr() {
+		Assert.assertEquals(
+			"<p><a href=\"http://www.flickr.com/search/?w=all&m=text" +
+				"&q=Liferay\">Liferay</a> </p>",
+			translate("interwikiflickr.creole"));
+	}
+
+	@Test
+	public void testInterwikiGoogle() {
+		Assert.assertEquals(
+			"<p><a href=\"http://www.google.com/search?q=Liferay\">" +
+				"Liferay</a> </p>",
+			translate("interwikigoogle.creole"));
+	}
+
+	@Test
+	public void testInterwikiJspWiki() {
+		Assert.assertEquals(
+			"<p><a href=\"http://www.jspwiki.org/Wiki.jsp?page=Liferay\">" +
+				"Liferay</a> </p>",
+			translate("interwikijspwiki.creole"));
+	}
+
+	@Test
+	public void testInterwikiMeatBall() {
+		Assert.assertEquals(
+			"<p><a href=\"http://usemod.com/cgi-bin/mb.pl?Liferay\">" +
+				"Liferay</a> </p>",
+			translate("interwikimeatball.creole"));
+	}
+
+	@Test
+	public void testInterwikiMediaWiki() {
+		Assert.assertEquals(
+			"<p><a href=\"http://www.mediawiki.org/wiki/Liferay\">" +
+				"Liferay</a> </p>",
+			translate("interwikimediawiki.creole"));
+	}
+
+	@Test
+	public void testInterwikiMoinMoin() {
+		Assert.assertEquals(
+			"<p><a href=\"http://moinmoin.wikiwikiweb.de/Liferay\">" +
+				"Liferay</a> </p>",
+			translate("interwikimoinmoin.creole"));
+	}
+
+	@Test
+	public void testInterwikiOddMuse() {
+		Assert.assertEquals(
+			"<p><a href=\"http://www.oddmuse.org/cgi-bin/wiki/Liferay\">" +
+				"Liferay</a> </p>",
+			translate("interwikioddmuse.creole"));
+	}
+
+	@Test
+	public void testInterwikiOhana() {
+		Assert.assertEquals(
+			"<p><a href=\"http://wikiohana.net/cgi-bin/wiki.pl/Liferay\">" +
+				"Liferay</a> </p>",
+			translate("interwikiohana.creole"));
+	}
+
+	@Test
+	public void testInterwikiPmWiki() {
+		Assert.assertEquals(
+			"<p><a href=\"http://www.pmwiki.com/wiki/PmWiki/Liferay\">" +
+				"Liferay</a> </p>",
+			translate("interwikipmwiki.creole"));
+	}
+
+	@Test
+	public void testInterwikiPukiWiki() {
+		Assert.assertEquals(
+			"<p><a href=\"http://pukiwiki.sourceforge.jp/?Liferay\">" +
+				"Liferay</a> </p>",
+			translate("interwikipukiwiki.creole"));
+	}
+
+	@Test
+	public void testInterwikiPurpleWiki() {
+		Assert.assertEquals(
+			"<p><a href=\"http://purplewiki.blueoxen.net/cgi-bin/wiki.pl" +
+				"?Liferay\">Liferay</a> </p>",
+			translate("interwikipurplewiki.creole"));
+	}
+
+	@Test
+	public void testInterwikiRadeox() {
+		Assert.assertEquals(
+			"<p><a href=\"http://radeox.org/space/Liferay\">Liferay</a> </p>",
+			translate("interwikiradeox.creole"));
+	}
+
+	@Test
+	public void testInterwikiSnipSnap() {
+		Assert.assertEquals(
+			"<p><a href=\"http://www.snipsnap.org/space/Liferay\">" +
+				"Liferay</a> </p>",
+			translate("interwikisnipsnap.creole"));
+	}
+
+	@Test
+	public void testInterwikiTiddlyWiki() {
+		Assert.assertEquals(
+			"<p><a href=\"http://www.tiddlywiki.com/#Liferay\">" +
+				"Liferay</a> </p>",
+			translate("interwikitiddlywiki.creole"));
+	}
+
+	@Test
+	public void testInterwikiTWiki() {
+		Assert.assertEquals(
+			"<p><a href=\"http://twiki.org/cgi-bin/view/TWiki/Liferay\">" +
+				"Liferay</a> </p>",
+			translate("interwikitwiki.creole"));
+	}
+
+	@Test
+	public void testInterwikiUsemod() {
+		Assert.assertEquals(
+			"<p><a href=\"http://http://www.usemod.com/cgi-bin/wiki.pl" +
+				"?Liferay\">Liferay</a> </p>",
+			translate("interwikiusemod.creole"));
+	}
+
+	@Test
+	public void testInterwikiWikipedia() {
+		Assert.assertEquals(
+			"<p><a href=\"http://wikipedia.org/wiki/Liferay\">Liferay</a> </p>",
+			translate("interwikiwikipedia.creole"));
+	}
+
+	@Test
 	public void testParseCorrectlyBoldContentInListItems() {
 		Assert.assertEquals(
 			"<ul><li> <strong>abcdefg</strong></li></ul>",

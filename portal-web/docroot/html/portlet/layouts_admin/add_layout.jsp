@@ -51,8 +51,8 @@ if (layout.isTypeControlPanel()) {
 	<aui:input id="addLayoutRedirect" name="redirect" type="hidden" value="<%= layout.isTypeControlPanel() ? currentURL : editLayoutRenderURL.toString() %>" />
 	<aui:input id="addLayoutGroupId" name="groupId" type="hidden" value="<%= scopeGroupId %>" />
 	<aui:input id="addLayoutPrivateLayout" name="privateLayout" type="hidden" value="<%= privateLayout %>" />
-	<aui:input id="addLayoutParentPlid" name="parentPlid" type="hidden" value="<%= selLayout != null ? selLayout.getPlid() : layout.getParentPlid() %>" />
-	<aui:input id="addLayoutParentLayoutId" name="parentLayoutId" type="hidden" value="<%= selLayout != null ? selLayout.getLayoutId() : layout.getParentLayoutId() %>" />
+	<aui:input id="addLayoutParentPlid" name="parentPlid" type="hidden" value="<%= selLayout != null ? selLayout.getPlid() : LayoutConstants.DEFAULT_PLID %>" />
+	<aui:input id="addLayoutParentLayoutId" name="parentLayoutId" type="hidden" value="<%= selLayout != null ? selLayout.getLayoutId() : LayoutConstants.DEFAULT_PARENT_LAYOUT_ID %>" />
 	<aui:input id="addLayoutType" name="type" type="hidden" value="portlet" />
 	<aui:input id="addLayoutPrototypeId" name="layoutPrototypeId" type="hidden" value="" />
 	<aui:input id="addLayoutExplicitCreation" name="explicitCreation" type="hidden" value="<%= true %>" />
@@ -219,7 +219,7 @@ if (layout.isTypeControlPanel()) {
 			namespace: '<portlet:namespace />',
 			nodeList: A.one('#<portlet:namespace />templateList'),
 			nodeSelector: '.lfr-page-template',
-			parentLayoutId: <%= selLayout != null ? selLayout.getLayoutId() : layout.getParentLayoutId() %>,
+			parentLayoutId: <%= selLayout != null ? selLayout.getLayoutId() : LayoutConstants.DEFAULT_PARENT_LAYOUT_ID %>,
 			refresh: <%= layout.isTypeControlPanel() %>,
 			selected: !A.one('#<portlet:namespace />addPageFm').ancestor().hasClass('hide'),
 			toggleOnCancel: <%= portletName.equals(PortletKeys.DOCKBAR) %>

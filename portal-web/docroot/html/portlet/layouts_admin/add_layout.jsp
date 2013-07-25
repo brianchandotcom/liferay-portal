@@ -29,20 +29,26 @@
 <%
 Layout selLayout = null;
 
-long selPlid = ParamUtil.getLong(liferayPortletRequest, "selPlid");
-
-if (selPlid != 0) {
-	selLayout = LayoutLocalServiceUtil.getLayout(selPlid);
-}
-
-boolean privateLayout = layout.isPrivateLayout();
+boolean privateLayout = false;
 
 if (layout.isTypeControlPanel()) {
-	String tab = ParamUtil.getString(liferayPortletRequest, "tabs1", "public-pages");
+	long selPlid = ParamUtil.getLong(liferayPortletRequest, "selPlid");
 
-	if (tab.startsWith("public")) {
-		privateLayout = false;
+	if (selPlid != 0) {
+		selLayout = LayoutLocalServiceUtil.getLayout(selPlid);
+
+		privateLayout = selLayout.isPrivateLayout();
 	}
+	else {
+		String tabs1 = ParamUtil.getString(request, "tabs1", "public-pages");
+
+		privateLayout = tabs1.equals("my-dashboard") || tabs1.equals("private-pages");
+	}
+}
+else {
+	selLayout = layout;
+
+	privateLayout = selLayout.isPrivateLayout();
 }
 %>
 

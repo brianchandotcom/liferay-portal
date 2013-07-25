@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.concurrent.ConcurrentLFUCache;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.NonSerializableObjectRequestWrapper;
+import com.liferay.portal.kernel.servlet.SecureHttpServletResponseWrapper;
 import com.liferay.portal.kernel.util.BasePortalLifecycle;
 import com.liferay.portal.kernel.util.ContextPathUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -41,6 +42,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Mika Koivisto
@@ -65,6 +67,10 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 
 		request = handleNonSerializableRequest(request);
 
+		HttpServletResponse response = (HttpServletResponse)servletResponse;
+
+		response = secureResponseHeaders(response);
+
 		request.setAttribute(WebKeys.INVOKER_FILTER_URI, uri);
 
 		try {
@@ -78,7 +84,7 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 
 			invokerFilterChain.setContextClassLoader(contextClassLoader);
 
-			invokerFilterChain.doFilter(request, servletResponse);
+			invokerFilterChain.doFilter(request, response);
 		}
 		finally {
 			request.removeAttribute(WebKeys.INVOKER_FILTER_URI);
@@ -244,6 +250,12 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 		}
 
 		return request;
+	}
+
+	protected HttpServletResponse secureResponseHeaders(
+		HttpServletResponse response) {
+
+		return new SecureHttpServletResponseWrapper(response);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(InvokerFilter.class);

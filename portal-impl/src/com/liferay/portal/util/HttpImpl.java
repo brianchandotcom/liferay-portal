@@ -938,6 +938,25 @@ public class HttpImpl implements Http {
 	}
 
 	@Override
+	public String sanitizeHeader(String header) {
+		if (header == null) {
+			return null;
+		}
+
+		char[] characters = header.toCharArray();
+
+		for (int i = 0; i < characters.length; i++) {
+			char c = characters[i];
+
+			if (((c <= 31) && (c != 9)) || (c == 127) || (c > 255)) {
+				characters[i] = CharPool.SPACE;
+			}
+		}
+
+		return new String(characters);
+	}
+
+	@Override
 	public String setParameter(String url, String name, boolean value) {
 		return setParameter(url, name, String.valueOf(value));
 	}

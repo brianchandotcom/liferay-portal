@@ -185,17 +185,11 @@ String toggleControlsState = GetterUtil.getString(SessionClicks.get(request, "li
 				<portlet:param name="selPlid" value="<%= String.valueOf(plid) %>" />
 			</portlet:renderURL>
 
-			<aui:nav-item anchorId="editLayoutPanel" data-panelURL="<%= editLayoutURL %>" href="javascript:;" iconClass="icon-edit" label="preview" />
+			<aui:nav-item anchorId="editLayoutPanel" data-panelURL="<%= editLayoutURL %>" href="javascript:;" iconClass="icon-edit" label="edit" />
 		</c:if>
 
 		<c:if test="<%= !group.isControlPanel() && (!group.hasStagingGroup() || group.isStagingGroup()) && (hasLayoutUpdatePermission || (layoutTypePortlet.isCustomizable() && layoutTypePortlet.isCustomizedView() && hasLayoutCustomizePermission) || PortletPermissionUtil.hasConfigurationPermission(permissionChecker, themeDisplay.getSiteGroupId(), layout, ActionKeys.CONFIGURATION)) %>">
-			<liferay-util:buffer var="editControlsLabel">
-				<i class="controls-state-icon <%= toggleControlsState.equals("visible") ? "icon-eye-open" : "icon-eye-close" %>"></i>
-
-				<span class="controls-state-label"><liferay-ui:message key="edit-controls" /></span>
-			</liferay-util:buffer>
-
-			<aui:nav-item anchorCssClass="toggle-controls-link" cssClass="toggle-controls" id="toggleControls" label="<%= editControlsLabel %>" />
+			<aui:nav-item anchorCssClass="toggle-controls-link" cssClass="toggle-controls" iconClass='<%= "controls-state-icon " +  (toggleControlsState.equals("visible") ? "icon-eye-open" : "icon-eye-close") %>' id="toggleControls" label="edit-controls" />
 		</c:if>
 	</aui:nav>
 

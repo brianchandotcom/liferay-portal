@@ -122,29 +122,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 				> li {
 					float: none;
 					margin: 10px;
-
-					&.toggle-controls {
-						position: relative;
-
-						.controls-state-label {
-							background: #000;
-							color: #FFF;
-							display: none;
-							font-size: 14px;
-							left: 100%;
-							line-height: 27px;
-							margin-left: 0.5em;
-							margin-top: -1em;
-							padding: 0 20px;
-							position: absolute;
-							top: 50%;
-							white-space: nowrap;
-						}
-
-						&:hover .controls-state-label {
-							display: block;
-						}
-					}
+					position: relative;
 
 					&.toggle-controls {
 						visibility: hidden;
@@ -152,9 +130,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 					> a {
 						background: #45CBF5;
-						color: transparent;
-						font-size: 0;
-						line-height: 0;
+						color: #FFF;
 						padding: 6px 8px;
 						text-align: center;
 
@@ -163,7 +139,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 						}
 
 						[class^="icon-"], [class^="icon-"], [class*=" icon-"] {
-							color: #FFF;
 							font-size: 25px;
 							position: relative;
 							vertical-align: middle;
@@ -175,6 +150,22 @@ $dockbarOpenGradientStart: #0EA6F9;
 							[class^="icon-"], [class^="icon-"], [class*=" icon-"] {
 								color: #000;
 							}
+						}
+
+						.nav-item-label {
+							background: #333;
+							display: none;
+							left: 100%;
+							margin-left: 0.5em;
+							margin-top: -1em;
+							padding: 0 20px;
+							position: absolute;
+							top: 50%;
+							white-space: nowrap;
+						}
+
+						&:hover .nav-item-label {
+							display: block;
 						}
 
 						.icon-caret-down {
@@ -564,14 +555,14 @@ $dockbarOpenGradientStart: #0EA6F9;
 				> li {
 					a {
 						@include border-radius(4px);
+
+						.nav-item-label {
+							@include border-radius(30px);
+						}
 					}
 
 					&.open a {
 						@include border-radius(4px 4px 0 0);
-					}
-
-					&.toggle-controls .controls-state-label {
-						@include border-radius(30px);
 					}
 				}
 			}

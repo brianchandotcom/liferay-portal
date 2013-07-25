@@ -14,6 +14,7 @@
 
 package com.liferay.portal.service.impl;
 
+import com.liferay.portal.ImageTypeException;
 import com.liferay.portal.NoSuchImageException;
 import com.liferay.portal.image.HookFactory;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -162,6 +163,8 @@ public class ImageLocalServiceImpl extends ImageLocalServiceBaseImpl {
 			image = imagePersistence.create(imageId);
 		}
 
+		validate(type);
+
 		image.setModifiedDate(new Date());
 		image.setType(type);
 		image.setHeight(height);
@@ -232,6 +235,25 @@ public class ImageLocalServiceImpl extends ImageLocalServiceBaseImpl {
 		return updateImage(
 			imageId, image.getTextObj(), image.getType(), image.getHeight(),
 			image.getWidth(), image.getSize());
+	}
+
+	protected void validate(String type) throws PortalException {
+		if ((type == null) ||
+			(type.contains("\\")) ||
+			(type.contains("/")) ||
+			(type.contains(".")) ||
+			(type.contains(":")) ||
+			(type.contains("*")) ||
+			(type.contains("?")) ||
+			(type.contains("\"")) ||
+			(type.contains("<")) ||
+			(type.contains(">")) ||
+			(type.contains("|")) ||
+			(type.contains("[")) ||
+			(type.contains("]"))) {
+
+			throw new ImageTypeException();
+		}
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

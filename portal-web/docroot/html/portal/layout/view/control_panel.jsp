@@ -40,14 +40,20 @@ if (Validator.isNull(ppid)) {
 	if (controlPanelCategory.equals(PortletCategoryKeys.SITE_ADMINISTRATION)) {
 		Portlet firstPortlet = PortalUtil.getFirstSiteAdministrationPortlet(themeDisplay);
 
-		ppid = firstPortlet.getPortletId();
+		String currentURL = PortalUtil.getCurrentURL(request);
+
+		String redirect = HttpUtil.setParameter(currentURL, "p_p_id", firstPortlet.getPortletId());
+
+		response.sendRedirect(PortalUtil.getAbsoluteURL(request, redirect));
 	}
 	else {
 		for (Portlet portlet : portlets) {
 			if (PortletPermissionUtil.hasControlPanelAccessPermission(permissionChecker, scopeGroupId, portlet)) {
-				ppid = portlet.getPortletId();
+				String currentURL = PortalUtil.getCurrentURL(request);
 
-				break;
+				String redirect = HttpUtil.setParameter(currentURL, "p_p_id", portlet.getPortletId());
+
+				response.sendRedirect(PortalUtil.getAbsoluteURL(request, redirect));
 			}
 		}
 	}

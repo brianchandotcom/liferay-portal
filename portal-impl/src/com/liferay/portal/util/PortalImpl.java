@@ -3185,12 +3185,16 @@ public class PortalImpl implements Portal {
 
 		long groupId = 0;
 
-		try {
-			long scopeGroupId = getScopeGroupId(request);
+		Layout layout = (Layout)request.getAttribute(WebKeys.LAYOUT);
 
-			groupId = getSiteGroupId(scopeGroupId);
-		}
-		catch (Exception e) {
+		if ((layout != null) && !layout.isTypeControlPanel()) {
+			try {
+				long scopeGroupId = getScopeGroupId(request);
+
+				groupId = getSiteGroupId(scopeGroupId);
+			}
+			catch (Exception e) {
+			}
 		}
 
 		String i18nLanguageId = (String)request.getAttribute(

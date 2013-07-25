@@ -41,7 +41,7 @@
 	_publicPageCount = 1
 />
 
-<#assign groupIds = 1..maxGroupCount>
+<#assign groupIds = dataFactory.getSequence(maxGroupCount)>
 <#assign roleIds = [dataFactory.administratorRoleModel.roleId, dataFactory.powerUserRoleModel.roleId, dataFactory.userRoleModel.roleId]>
 
 <@insertUser

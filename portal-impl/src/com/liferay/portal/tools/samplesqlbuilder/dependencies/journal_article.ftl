@@ -1,4 +1,6 @@
-<#list 1..maxJournalArticlePageCount as journalArticlePageCount>
+<#assign journalArticlePageCounts = dataFactory.getSequence(maxJournalArticlePageCount)>
+
+<#list journalArticlePageCounts as journalArticlePageCount>
 	<#assign portletIdPrefix = "56_INSTANCE_TEST_" + journalArticlePageCount + "_">
 
 	<#assign layoutModel = dataFactory.newLayoutModel(groupId, groupId + "_journal_article_" + journalArticlePageCount, "", dataFactory.getJournalArticleLayoutColumn(portletIdPrefix))>
@@ -17,12 +19,16 @@
 		/>
 	</#list>
 
-	<#list 1..maxJournalArticleCount as journalArticleCount>
+	<#assign journalArticleCounts = dataFactory.getSequence(maxJournalArticleCount)>
+
+	<#list journalArticleCounts as journalArticleCount>
 		<#assign journalArticleResourceModel = dataFactory.newJournalArticleResourceModel(groupId)>
 
 		insert into JournalArticleResource values ('${journalArticleResourceModel.uuid}', ${journalArticleResourceModel.resourcePrimKey}, ${journalArticleResourceModel.groupId}, '${journalArticleResourceModel.articleId}');
 
-		<#list 1..maxJournalArticleVersionCount as versionCount>
+		<#assign versionCounts = dataFactory.getSequence(maxJournalArticleVersionCount)>
+
+		<#list versionCounts as versionCount>
 			<#assign journalArticleModel = dataFactory.newJournalArticleModel(journalArticleResourceModel, journalArticleCount, versionCount)>
 
 			insert into JournalArticle values ('${journalArticleModel.uuid}', ${journalArticleModel.id}, ${journalArticleModel.resourcePrimKey}, ${journalArticleModel.groupId}, ${journalArticleModel.companyId}, ${journalArticleModel.userId}, '${journalArticleModel.userName}', '${dataFactory.getDateString(journalArticleModel.createDate)}', '${dataFactory.getDateString(journalArticleModel.modifiedDate)}', ${journalArticleModel.folderId}, ${journalArticleModel.classNameId}, ${journalArticleModel.classPK}, '${journalArticleModel.articleId}', ${journalArticleModel.version}, '${journalArticleModel.title}', '${journalArticleModel.urlTitle}', '${journalArticleModel.description}', '${journalArticleModel.content}', '${journalArticleModel.type}', '${journalArticleModel.structureId}', '${journalArticleModel.templateId}', '${journalArticleModel.layoutUuid}', '${dataFactory.getDateString(journalArticleModel.displayDate)}', '${dataFactory.getDateString(journalArticleModel.expirationDate)}', '${dataFactory.getDateString(journalArticleModel.reviewDate)}', ${journalArticleModel.indexable?string}, ${journalArticleModel.smallImage?string}, ${journalArticleModel.smallImageId}, '${journalArticleModel.smallImageURL}', ${journalArticleModel.status}, ${journalArticleModel.statusByUserId}, '${journalArticleModel.statusByUserName}', '${dataFactory.getDateString(journalArticleModel.statusDate)}');

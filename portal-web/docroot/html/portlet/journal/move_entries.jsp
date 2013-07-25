@@ -142,7 +142,7 @@ for (JournalArticle curArticle : articles) {
 
 	<c:if test="<%= !validMoveArticles.isEmpty() %>">
 		<div class="move-list-info">
-			<h4><%= LanguageUtil.format(pageContext, "x-web-content-are-ready-to-be-moved", validMoveArticles.size()) %></h4>
+			<h4><%= LanguageUtil.format(pageContext, "x-web-content-instances-are-ready-to-be-moved", validMoveArticles.size()) %></h4>
 		</div>
 
 		<div class="move-list">
@@ -168,7 +168,7 @@ for (JournalArticle curArticle : articles) {
 
 	<c:if test="<%= !invalidMoveArticles.isEmpty() %>">
 		<div class="move-list-info">
-			<h4><%= LanguageUtil.format(pageContext, "x-web-content-cannot-be-moved", invalidMoveArticles.size()) %></h4>
+			<h4><%= LanguageUtil.format(pageContext, "x-web-content-instances-cannot-be-moved", invalidMoveArticles.size()) %></h4>
 		</div>
 
 		<div class="move-list">

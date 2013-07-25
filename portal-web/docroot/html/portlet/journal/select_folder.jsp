@@ -132,7 +132,7 @@ if (folder != null) {
 			/>
 
 			<liferay-ui:search-container-column-text
-				name="num-of-web-content"
+				name="num-of-web-content-instances"
 				value="<%= String.valueOf(articlesCount) %>"
 			/>
 

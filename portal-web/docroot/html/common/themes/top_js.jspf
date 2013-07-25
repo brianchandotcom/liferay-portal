@@ -148,7 +148,7 @@
 					return "<%= themeDisplay.getCompanyGroupId() %>";
 				},
 				getDefaultLanguageId: function() {
-					return "<%= LocaleUtil.toLanguageId(LocaleUtil.getDefault()) %>";
+					return "<%= LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale()) %>";
 				},
 				getDoAsUserIdEncoded: function() {
 					return "<%= UnicodeFormatter.toString(themeDisplay.getDoAsUserId()) %>";

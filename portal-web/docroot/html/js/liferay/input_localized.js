@@ -23,6 +23,10 @@ AUI.add(
 						value: 'highlight-animation'
 					},
 
+					defaultLanguageId: {
+						value: defaultLanguageId
+					},
+
 					editor: {},
 
 					inputNamespace: {},
@@ -37,7 +41,13 @@ AUI.add(
 
 					selected: {
 						valueFn: function() {
-							return AArray.indexOf(availableLanguageIds, defaultLanguageId);
+							var instance = this;
+
+							var items = instance.get('items');
+
+							defaultLanguageId = instance.get('defaultLanguageId');
+
+							return AArray.indexOf(items, defaultLanguageId);
 						}
 					},
 

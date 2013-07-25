@@ -30,6 +30,7 @@ page import="com.liferay.portal.UserLockoutException" %><%@
 page import="com.liferay.portal.UserPasswordException" %><%@
 page import="com.liferay.portal.UserReminderQueryException" %><%@
 page import="com.liferay.portal.kernel.templateparser.TransformException" %><%@
+page import="com.liferay.portal.kernel.portlet.ConfigurationUtil" %><%@
 page import="com.liferay.portal.kernel.util.ProgressTracker" %><%@
 page import="com.liferay.portal.layoutconfiguration.util.RuntimePageUtil" %><%@
 page import="com.liferay.portal.service.permission.OrganizationPermissionUtil" %><%@

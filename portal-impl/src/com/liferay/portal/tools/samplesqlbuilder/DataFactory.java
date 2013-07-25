@@ -947,26 +947,6 @@ public class DataFactory {
 		return blogEntryModels;
 	}
 
-	protected BlogsEntryModel newBlogsEntryModel(long groupId, int index) {
-		BlogsEntryModel blogsEntryModel = new BlogsEntryModelImpl();
-
-		blogsEntryModel.setUuid(SequentialUUID.generate());
-		blogsEntryModel.setEntryId(_counter.get());
-		blogsEntryModel.setGroupId(groupId);
-		blogsEntryModel.setCompanyId(_companyId);
-		blogsEntryModel.setUserId(_sampleUserId);
-		blogsEntryModel.setUserName(_SAMPLE_USER_NAME);
-		blogsEntryModel.setCreateDate(new Date());
-		blogsEntryModel.setModifiedDate(new Date());
-		blogsEntryModel.setTitle("Test Blog " + index);
-		blogsEntryModel.setUrlTitle("testblog" + index);
-		blogsEntryModel.setContent("This is test blog " + index + ".");
-		blogsEntryModel.setDisplayDate(new Date());
-		blogsEntryModel.setStatusDate(new Date());
-
-		return blogsEntryModel;
-	}
-
 	public BlogsStatsUserModel newBlogsStatsUserModel(long groupId) {
 		BlogsStatsUserModel blogsStatsUserModel = new BlogsStatsUserModelImpl();
 
@@ -2252,6 +2232,26 @@ public class DataFactory {
 			"multiValued=true\\nselectedClassNameIds=0");
 
 		return assetVocabularyModel;
+	}
+
+	protected BlogsEntryModel newBlogsEntryModel(long groupId, int index) {
+		BlogsEntryModel blogsEntryModel = new BlogsEntryModelImpl();
+
+		blogsEntryModel.setUuid(SequentialUUID.generate());
+		blogsEntryModel.setEntryId(_counter.get());
+		blogsEntryModel.setGroupId(groupId);
+		blogsEntryModel.setCompanyId(_companyId);
+		blogsEntryModel.setUserId(_sampleUserId);
+		blogsEntryModel.setUserName(_SAMPLE_USER_NAME);
+		blogsEntryModel.setCreateDate(new Date());
+		blogsEntryModel.setModifiedDate(new Date());
+		blogsEntryModel.setTitle("Test Blog " + index);
+		blogsEntryModel.setUrlTitle("testblog" + index);
+		blogsEntryModel.setContent("This is test blog " + index + ".");
+		blogsEntryModel.setDisplayDate(new Date());
+		blogsEntryModel.setStatusDate(new Date());
+
+		return blogsEntryModel;
 	}
 
 	protected DDMContentModel newDDMContentModel(

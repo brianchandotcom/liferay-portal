@@ -22,7 +22,6 @@ import com.liferay.portal.model.ContainerModel;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portlet.bookmarks.NoSuchFolderException;
 import com.liferay.portlet.bookmarks.asset.BookmarksFolderAssetRenderer;
 import com.liferay.portlet.bookmarks.model.BookmarksFolder;
 import com.liferay.portlet.bookmarks.service.BookmarksFolderLocalServiceUtil;
@@ -152,10 +151,10 @@ public class BookmarksFolderTrashHandler extends BookmarksBaseTrashHandler {
 
 		BookmarksFolder folder = getBookmarksFolder(classPK);
 
-		try {
-			folder.getParentFolder();
-		}
-		catch (NoSuchFolderException nsfe) {
+		if ((folder.getParentFolderId() > 0) &&
+			(BookmarksFolderLocalServiceUtil.fetchBookmarksFolder(
+				folder.getParentFolderId()) == null)) {
+
 			return false;
 		}
 

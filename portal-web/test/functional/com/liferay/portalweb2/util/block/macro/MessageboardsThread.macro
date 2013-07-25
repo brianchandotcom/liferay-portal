@@ -33,7 +33,7 @@
 
 	<command name="deletePG">
 		<var name="key_threadSubject" value="${threadSubject}" />
-		
+
 		<execute action="PGMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
 		<execute action="PGMessageboards#click" locator-key1="THREAD_TABLE_ACTIONS" />
 		<execute action="PGMessageboards#click" locator-key1="THREAD_MENULIST_RECYCLE_BIN" />
@@ -184,7 +184,14 @@
 		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="TITLE_HEADER" value1="${threadSubject}" />
 		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_USERNAME_1" value1="${userName}" />
 		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_SUBJECT_1" value1="${threadSubject}" />
-		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_WORKFLOW_STATUS_1" value1="Pending (${workflowTask})" />
+
+		<if>
+			<isset var="workflowTask" />
+			<then>
+				<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_WORKFLOW_STATUS_1" value1="Pending (${workflowTask})" />
+			</then>
+		</if>
+
 		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_BODY_1" value1="${threadBody}" />
 	</command>
 

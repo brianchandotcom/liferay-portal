@@ -190,7 +190,7 @@
 </tr>
 <tr>
 	<td>THREAD_TABLE_ACTIONS</td>
-	<td>//div[contains(@id,'mbThreadsSearchContainer')]//tr[contains(.,'${key_threadSubject}')]/td[8]/div/a[@title='Actions']</td>
+	<td>//div[contains(@id,'mbThreadsSearchContainer')]//tr[contains(.,'${key_threadSubject}')]/td/div/a[@title='Actions']</td>
 	<td></td>
 </tr>
 <tr>

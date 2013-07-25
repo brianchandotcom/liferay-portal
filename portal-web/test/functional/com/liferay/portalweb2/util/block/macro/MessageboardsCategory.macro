@@ -41,6 +41,10 @@
 	</command>
 
 	<command name="tearDownCP">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Message Boards" />
+		</execute>
+
 		<while>
 			<condition action="CPMessageboards#isElementPresent" locator-key1="CATEGORY_TABLE_ALL_CHECKBOX" />
 			<then>

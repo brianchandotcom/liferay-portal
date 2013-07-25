@@ -45,16 +45,19 @@
 
 						<aui:nav-item className='<%= selected ? "active" : StringPool.BLANK %>' href="<%= portletURL.toString() %>" label="<%= label %>" selected="<%= selected %>" />
 
-						<%
-						label = "recent";
-						selected = topLink.equals(label);
+						<c:if test="<%= repositoryId == scopeGroupId %>">
 
-						portletURL.setParameter("topLink", label);
-						%>
+							<%
+							label = "recent";
+							selected = topLink.equals(label);
 
-						<aui:nav-item className='<%= selected ? "active" : StringPool.BLANK %>' href="<%= portletURL.toString() %>" label="<%= label %>" selected="<%= selected %>" />
+							portletURL.setParameter("topLink", label);
+							%>
 
-						<c:if test="<%= themeDisplay.isSignedIn() %>">
+							<aui:nav-item className='<%= selected ? "active" : StringPool.BLANK %>' href="<%= portletURL.toString() %>" label="<%= label %>" selected="<%= selected %>" />
+						</c:if>
+
+						<c:if test="<%= themeDisplay.isSignedIn() && (repositoryId == scopeGroupId) %>">
 
 							<%
 							label = "mine";

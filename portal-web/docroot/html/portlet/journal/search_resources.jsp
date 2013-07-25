@@ -425,10 +425,10 @@ ArticleSearch searchContainer = new ArticleSearch(liferayPortletRequest, entryEn
 					<div class="alert alert-info">
 
 						<%
-						String message = LanguageUtil.get(pageContext, "no-web-content-were-found-that-matched-the-specified-filters");
+						String message = LanguageUtil.get(pageContext, "no-web-content-was-found-that-matched-the-specified-filters");
 
 						if (!advancedSearch) {
-							message = LanguageUtil.format(pageContext, "no-web-content-were-found-that-matched-the-keywords-x", "<strong>" + HtmlUtil.escape(keywords) + "</strong>");
+							message = LanguageUtil.format(pageContext, "no-web-content-was-found-that-matched-the-keywords-x", "<strong>" + HtmlUtil.escape(keywords) + "</strong>");
 						}
 						%>
 

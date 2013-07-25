@@ -1262,33 +1262,6 @@ public class DataFactory {
 		return dlFileEntryModels;
 	}
 
-	protected DLFileEntryModel newDlFileEntryModel(
-		DLFolderModel dlFolerModel, int index) {
-
-		DLFileEntryModel dlFileEntryModel = new DLFileEntryModelImpl();
-
-		dlFileEntryModel.setUuid(SequentialUUID.generate());
-		dlFileEntryModel.setFileEntryId(_counter.get());
-		dlFileEntryModel.setGroupId(dlFolerModel.getGroupId());
-		dlFileEntryModel.setCompanyId(_companyId);
-		dlFileEntryModel.setUserId(_sampleUserId);
-		dlFileEntryModel.setUserName(_SAMPLE_USER_NAME);
-		dlFileEntryModel.setCreateDate(nextFutureDate());
-		dlFileEntryModel.setModifiedDate(nextFutureDate());
-		dlFileEntryModel.setRepositoryId(dlFolerModel.getRepositoryId());
-		dlFileEntryModel.setFolderId(dlFolerModel.getFolderId());
-		dlFileEntryModel.setName("TestFile" + index);
-		dlFileEntryModel.setExtension("txt");
-		dlFileEntryModel.setMimeType(ContentTypes.TEXT_PLAIN);
-		dlFileEntryModel.setTitle("TestFile" + index + ".txt");
-		dlFileEntryModel.setFileEntryTypeId(
-			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT);
-		dlFileEntryModel.setVersion(DLFileEntryConstants.VERSION_DEFAULT);
-		dlFileEntryModel.setSize(_maxDLFileEntrySize);
-
-		return dlFileEntryModel;
-	}
-
 	public DLFileVersionModel newDLFileVersionModel(
 		DLFileEntryModel dlFileEntryModel) {
 
@@ -1327,30 +1300,6 @@ public class DataFactory {
 		}
 
 		return dlFolderModels;
-	}
-
-	protected DLFolderModel newDLFolderModel(
-		long groupId, long parentFolderId, int index) {
-
-		DLFolderModel dlFolderModel = new DLFolderModelImpl();
-
-		dlFolderModel.setUuid(SequentialUUID.generate());
-		dlFolderModel.setFolderId(_counter.get());
-		dlFolderModel.setGroupId(groupId);
-		dlFolderModel.setCompanyId(_companyId);
-		dlFolderModel.setUserId(_sampleUserId);
-		dlFolderModel.setUserName(_SAMPLE_USER_NAME);
-		dlFolderModel.setCreateDate(nextFutureDate());
-		dlFolderModel.setModifiedDate(nextFutureDate());
-		dlFolderModel.setRepositoryId(groupId);
-		dlFolderModel.setParentFolderId(parentFolderId);
-		dlFolderModel.setName("Test Folder " + index);
-		dlFolderModel.setLastPostDate(nextFutureDate());
-		dlFolderModel.setDefaultFileEntryTypeId(
-			_defaultDLFileEntryTypeModel.getFileEntryTypeId());
-		dlFolderModel.setStatusDate(nextFutureDate());
-
-		return dlFolderModel;
 	}
 
 	public GroupModel newGroupModel(UserModel userModel) throws Exception {
@@ -2355,6 +2304,57 @@ public class DataFactory {
 		return dDMStructureModel;
 	}
 
+	protected DLFileEntryModel newDlFileEntryModel(
+		DLFolderModel dlFolerModel, int index) {
+
+		DLFileEntryModel dlFileEntryModel = new DLFileEntryModelImpl();
+
+		dlFileEntryModel.setUuid(SequentialUUID.generate());
+		dlFileEntryModel.setFileEntryId(_counter.get());
+		dlFileEntryModel.setGroupId(dlFolerModel.getGroupId());
+		dlFileEntryModel.setCompanyId(_companyId);
+		dlFileEntryModel.setUserId(_sampleUserId);
+		dlFileEntryModel.setUserName(_SAMPLE_USER_NAME);
+		dlFileEntryModel.setCreateDate(nextFutureDate());
+		dlFileEntryModel.setModifiedDate(nextFutureDate());
+		dlFileEntryModel.setRepositoryId(dlFolerModel.getRepositoryId());
+		dlFileEntryModel.setFolderId(dlFolerModel.getFolderId());
+		dlFileEntryModel.setName("TestFile" + index);
+		dlFileEntryModel.setExtension("txt");
+		dlFileEntryModel.setMimeType(ContentTypes.TEXT_PLAIN);
+		dlFileEntryModel.setTitle("TestFile" + index + ".txt");
+		dlFileEntryModel.setFileEntryTypeId(
+			DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT);
+		dlFileEntryModel.setVersion(DLFileEntryConstants.VERSION_DEFAULT);
+		dlFileEntryModel.setSize(_maxDLFileEntrySize);
+
+		return dlFileEntryModel;
+	}
+
+	protected DLFolderModel newDLFolderModel(
+		long groupId, long parentFolderId, int index) {
+
+		DLFolderModel dlFolderModel = new DLFolderModelImpl();
+
+		dlFolderModel.setUuid(SequentialUUID.generate());
+		dlFolderModel.setFolderId(_counter.get());
+		dlFolderModel.setGroupId(groupId);
+		dlFolderModel.setCompanyId(_companyId);
+		dlFolderModel.setUserId(_sampleUserId);
+		dlFolderModel.setUserName(_SAMPLE_USER_NAME);
+		dlFolderModel.setCreateDate(nextFutureDate());
+		dlFolderModel.setModifiedDate(nextFutureDate());
+		dlFolderModel.setRepositoryId(groupId);
+		dlFolderModel.setParentFolderId(parentFolderId);
+		dlFolderModel.setName("Test Folder " + index);
+		dlFolderModel.setLastPostDate(nextFutureDate());
+		dlFolderModel.setDefaultFileEntryTypeId(
+			_defaultDLFileEntryTypeModel.getFileEntryTypeId());
+		dlFolderModel.setStatusDate(nextFutureDate());
+
+		return dlFolderModel;
+	}
+
 	protected GroupModel newGroupModel(
 			long groupId, long classNameId, long classPK, String name,
 			boolean site)
@@ -2745,8 +2745,8 @@ public class DataFactory {
 	private int _maxBlogsEntryCount;
 	private int _maxDDLCustomFieldCount;
 	private int _maxDLFileEntryCount;
-	private int _maxDLFolderCount;
 	private int _maxDLFileEntrySize;
+	private int _maxDLFolderCount;
 	private int _maxGroupsCount;
 	private int _maxJournalArticleCount;
 	private int _maxMBCategoryCount;

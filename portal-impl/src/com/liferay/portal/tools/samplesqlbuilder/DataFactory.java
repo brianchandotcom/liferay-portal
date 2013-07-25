@@ -209,7 +209,8 @@ public class DataFactory {
 			int maxDDLCustomFieldCount, int maxGroupsCount,
 			int maxJournalArticleCount, int maxJournalArticleSize,
 			int maxMBCategoryCount, int maxMBThreadCount, int maxMBMessageCount,
-			int maxUserCount, int maxUserToGroupCount)
+			int maxUserCount, int maxUserToGroupCount, int maxWikiNodeCount,
+			int maxWikiPageCount)
 		throws Exception {
 
 		_maxAssetCategoryCount = maxAssetCategoryCount;
@@ -228,6 +229,8 @@ public class DataFactory {
 		_maxMBMessageCount = maxMBMessageCount;
 		_maxUserCount = maxUserCount;
 		_maxUserToGroupCount = maxUserToGroupCount;
+		_maxWikiNodeCount = maxWikiNodeCount;
+		_maxWikiPageCount = maxWikiPageCount;
 
 		_counter = new SimpleCounter(_maxGroupsCount + 1);
 		_timeCounter = new SimpleCounter();
@@ -2074,7 +2077,18 @@ public class DataFactory {
 		return userModels;
 	}
 
-	public WikiNodeModel newWikiNodeModel(long groupId, int index) {
+	public List<WikiNodeModel> newWikiNodeModels(long groupId) {
+		List<WikiNodeModel> wikiNodeModels = new ArrayList<WikiNodeModel>(
+			_maxWikiNodeCount);
+
+		for (int i = 1; i <= _maxWikiNodeCount; i++) {
+			wikiNodeModels.add(newWikiNodeModel(groupId, i));
+		}
+
+		return wikiNodeModels;
+	}
+
+	protected WikiNodeModel newWikiNodeModel(long groupId, int index) {
 		WikiNodeModel wikiNodeModel = new WikiNodeModelImpl();
 
 		wikiNodeModel.setUuid(SequentialUUID.generate());
@@ -2092,7 +2106,18 @@ public class DataFactory {
 		return wikiNodeModel;
 	}
 
-	public WikiPageModel newWikiPageModel(
+	public List<WikiPageModel> newWikiPageModels(WikiNodeModel wikiNodeModel) {
+		List<WikiPageModel> wikiPageModels = new ArrayList<WikiPageModel>(
+			_maxWikiPageCount);
+
+		for (int i = 1; i <= _maxWikiPageCount; i++) {
+			wikiPageModels.add(newWikiPageModel(wikiNodeModel, i));
+		}
+
+		return wikiPageModels;
+	}
+
+	protected WikiPageModel newWikiPageModel(
 		WikiNodeModel wikiNodeModel, int index) {
 
 		WikiPageModel wikiPageModel = new WikiPageModelImpl();
@@ -2698,6 +2723,8 @@ public class DataFactory {
 	private int _maxMBThreadCount;
 	private int _maxUserCount;
 	private int _maxUserToGroupCount;
+	private int _maxWikiNodeCount;
+	private int _maxWikiPageCount;
 	private RoleModel _ownerRoleModel;
 	private RoleModel _powerUserRoleModel;
 	private SimpleCounter _resourcePermissionCounter;

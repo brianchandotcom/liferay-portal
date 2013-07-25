@@ -108,7 +108,7 @@
 <!--ADD_PAGE-->
 <tr>
 	<td>ADD_PAGE_NAME_FIELD</td>
-	<td>//input[@id='_156_addLayoutName']</td>
+	<td>//input[@id='_156_name']</td>
 	<td></td>
 </tr>
 <tr>

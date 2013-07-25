@@ -165,6 +165,10 @@
 			<var name="orgName" value="${orgName}" />
 		</execute>
 
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
 		<execute macro="Site#viewCP">
 			<var name="siteMember" value="${siteMember}" />
 			<var name="siteName" value="${siteName}" />
@@ -196,6 +200,10 @@
 			<var name="orgName" value="${orgName}" />
 			<var name="suborgName" value="${suborgName}" />
 			<var name="suborgType" value="${suborgType}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
 		</execute>
 
 		<execute macro="Suborganization#viewCP">

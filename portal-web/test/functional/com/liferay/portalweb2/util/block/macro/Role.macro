@@ -22,6 +22,7 @@
 		<execute action="CPRolesAddrole#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 
 		<execute action="CPRoles#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="CPRoles#assertClick" locator-key1="VIEW_ALL" value1="View All" />
 
 		<if>
 			<equals arg1="${roleType}" arg2="Organization" />

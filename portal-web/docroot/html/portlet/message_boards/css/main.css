@@ -19,13 +19,23 @@
 		font-family: monospace;
 		overflow-x: auto;
 		white-space: pre;
-	}
+		word-break: normal;
 
-	.code-lines {
-		border-right: 1px solid #CCC;
-		color: #000;
-		margin-right: 5px;
-		padding: 0px 5px 0px 5px;
+		.line-number {
+			color: #000;
+			display: block;
+			text-align: right;
+		}
+
+		tr td {
+			background: #FFF;
+			border-width: 0;
+
+			&.line-numbers {
+				border-right-width: 1px;
+				padding: 0 8px;
+			}
+		}
 	}
 
 	.quote {

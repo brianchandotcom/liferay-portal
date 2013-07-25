@@ -233,6 +233,10 @@ public class HtmlBBCodeTranslatorImpl implements BBCodeTranslator {
 		StringBundler sb, List<BBCodeItem> bbCodeItems, IntegerWrapper marker) {
 
 		sb.append("<div class=\"code\">");
+		sb.append("<table>");
+		sb.append("<tbody>");
+		sb.append("<tr>");
+		sb.append("<td class=\"line-numbers\">");
 
 		String code = extractData(
 			bbCodeItems, marker, "code", BBCodeParser.TYPE_DATA, true);
@@ -242,31 +246,36 @@ public class HtmlBBCodeTranslatorImpl implements BBCodeTranslator {
 
 		String[] lines = code.split("\r?\n");
 
-		String digits = String.valueOf(lines.length + 1);
-
 		for (int i = 0; i < lines.length; i++) {
 			String index = String.valueOf(i + 1);
 
-			sb.append("<span class=\"code-lines\">");
+			sb.append("<span class=\"line-number\">");
+			sb.append(index);
+			sb.append("</span>");
+		}
 
-			for (int j = 0; j < digits.length() - index.length(); j++) {
-				sb.append(StringPool.NBSP);
-			}
+		sb.append("</td>");
+		sb.append("<td>");
+
+		for (int i = 0; i < lines.length; i++) {
+			String index = String.valueOf(i + 1);
 
 			lines[i] = StringUtil.replace(
 				lines[i], StringPool.THREE_SPACES, "&nbsp; &nbsp;");
 			lines[i] = StringUtil.replace(
 				lines[i], StringPool.DOUBLE_SPACE, "&nbsp; ");
 
-			sb.append(index);
-			sb.append("</span>");
 			sb.append(lines[i]);
 
-			if (index.length() < lines.length) {
+			if (index.length() < lines.length - 1) {
 				sb.append("<br />");
 			}
 		}
 
+		sb.append("</td>");
+		sb.append("</tr>");
+		sb.append("</tbody>");
+		sb.append("</table>");
 		sb.append("</div>");
 	}
 

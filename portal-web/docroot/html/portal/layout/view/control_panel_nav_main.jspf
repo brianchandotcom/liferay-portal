@@ -17,6 +17,8 @@
 <div>
 
 	<%
+	List<Portlet> portlets = PortalUtil.getControlPanelPortlets(controlPanelCategory, themeDisplay);
+
 	if (portlets.size() > 1) {
 	%>
 

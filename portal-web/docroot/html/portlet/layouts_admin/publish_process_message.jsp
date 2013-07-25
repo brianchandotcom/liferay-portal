@@ -41,7 +41,7 @@ BackgroundTask backgroundTask = (BackgroundTask)row.getObject();
 		long currentModelAdditionCountersTotal = GetterUtil.getLong(backgroundTaskStatus.getAttribute("currentModelAdditionCountersTotal"));
 
 		if (allModelAdditionCountersTotal > 0) {
-			percentage = Math.round(currentModelAdditionCountersTotal / allModelAdditionCountersTotal * 100);
+			percentage = Math.round(Double.valueOf(currentModelAdditionCountersTotal)/Double.valueOf(allModelAdditionCountersTotal) * 100);
 		}
 		%>
 

@@ -241,6 +241,8 @@ public class DLFileEntryFinderTest {
 
 		DLFileVersionLocalServiceUtil.updateDLFileVersion(_dlFileVersion);
 
+		LastSessionRecorderUtil.syncLastSessionState();
+
 		List<DLFileEntry> dlFileEntries =
 			DLFileEntryFinderUtil.findByMisversioned();
 

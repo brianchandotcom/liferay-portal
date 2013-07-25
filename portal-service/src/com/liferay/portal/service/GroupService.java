@@ -367,7 +367,7 @@ public interface GroupService extends BaseService {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getUserPlacesGroups(long,
+	* @deprecated As of 6.2.0, replaced by {@link #getUserSitesGroups(long,
 	String[], boolean, int)}
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -405,12 +405,12 @@ public interface GroupService extends BaseService {
 	* @param userId the primary key of the user
 	* @param classNames the group entity class names (optionally
 	<code>null</code>). For more information see {@link
-	#getUserPlacesGroups(long, String[], int)}
+	#getUserSitesGroups(long, String[], int)}
 	* @param max the maximum number of groups to return
 	* @return the user's group &quot;places&quot;
 	* @throws PortalException if a portal exception occurred
 	* @throws SystemException if a system exception occurred
-	* @deprecated As of 6.2.0, replaced by {@link #getUserPlacesGroups(long,
+	* @deprecated As of 6.2.0, replaced by {@link #getUserSitesGroups(long,
 	String[], int)}
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -420,7 +420,7 @@ public interface GroupService extends BaseService {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* @deprecated As of 6.2.0, replaced by {@link #getUserPlacesGroups(long,
+	* @deprecated As of 6.2.0, replaced by {@link #getUserSitesGroups(long,
 	String[], String, boolean, boolean, int, int)}
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -457,12 +457,12 @@ public interface GroupService extends BaseService {
 	*
 	* @param classNames the group entity class names (optionally
 	<code>null</code>). For more information see {@link
-	#getUserPlacesGroups(String[], int)}
+	#getUserSitesGroups(String[], int)}
 	* @param max the maximum number of groups to return
 	* @return the user's group &quot;places&quot;
 	* @throws PortalException if a portal exception occurred
 	* @throws SystemException if a system exception occurred
-	* @deprecated As of 6.2.0, replaced by {@link #getUserPlacesGroups(
+	* @deprecated As of 6.2.0, replaced by {@link #getUserSitesGroups(
 	String[], int)}
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -480,7 +480,7 @@ public interface GroupService extends BaseService {
 	* @return the number of user's group &quot;places&quot;
 	* @throws PortalException if a portal exception occurred
 	* @throws SystemException if a system exception occurred
-	* @deprecated As of 6.2.0, replaced by {@link #getUserPlacesGroupsCount()}
+	* @deprecated As of 6.2.0, replaced by {@link #getUserSitesGroupsCount()}
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getUserPlacesCount()
@@ -488,12 +488,12 @@ public interface GroupService extends BaseService {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Group> getUserPlacesGroups()
+	public java.util.List<com.liferay.portal.model.Group> getUserSitesGroups()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Group> getUserPlacesGroups(
+	public java.util.List<com.liferay.portal.model.Group> getUserSitesGroups(
 		long userId, java.lang.String[] classNames,
 		boolean includeControlPanel, int max)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -527,20 +527,20 @@ public interface GroupService extends BaseService {
 	* @param userId the primary key of the user
 	* @param classNames the group entity class names (optionally
 	<code>null</code>). For more information see {@link
-	#getUserPlacesGroups(long, String[], boolean, int)}
+	#getUserSitesGroups(long, String[], boolean, int)}
 	* @param max the maximum number of groups to return
 	* @return the user's group &quot;places&quot;
 	* @throws PortalException if a portal exception occurred
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Group> getUserPlacesGroups(
+	public java.util.List<com.liferay.portal.model.Group> getUserSitesGroups(
 		long userId, java.lang.String[] classNames, int max)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Group> getUserPlacesGroups(
+	public java.util.List<com.liferay.portal.model.Group> getUserSitesGroups(
 		long userId, java.lang.String[] classNames, java.lang.String name,
 		boolean active, boolean includeControlPanel, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -573,14 +573,14 @@ public interface GroupService extends BaseService {
 	*
 	* @param classNames the group entity class names (optionally
 	<code>null</code>). For more information see {@link
-	#getUserPlacesGroups(long, String[], boolean, int)}
+	#getUserSitesGroups(long, String[], boolean, int)}
 	* @param max the maximum number of groups to return
 	* @return the user's group &quot;places&quot;
 	* @throws PortalException if a portal exception occurred
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Group> getUserPlacesGroups(
+	public java.util.List<com.liferay.portal.model.Group> getUserSitesGroups(
 		java.lang.String[] classNames, int max)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
@@ -596,7 +596,7 @@ public interface GroupService extends BaseService {
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getUserPlacesGroupsCount()
+	public int getUserSitesGroupsCount()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -608,7 +608,7 @@ public interface GroupService extends BaseService {
 	inherited organization groups, and site groups
 	* @throws PortalException if a portal exception occurred
 	* @throws SystemException if a system exception occurred
-	* @deprecated As of 6.2.0, replaced by {@link #getUserPlacesGroups()}
+	* @deprecated As of 6.2.0, replaced by {@link #getUserSitesGroups()}
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.model.Group> getUserSites()

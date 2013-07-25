@@ -280,6 +280,9 @@ public class AddDefaultDocumentLibraryStructuresAction
 	protected void doRun(long companyId) throws Exception {
 		ServiceContext serviceContext = new ServiceContext();
 
+		serviceContext.setAddGuestPermissions(true);
+		serviceContext.setAddGroupPermissions(true);
+
 		Group group = GroupLocalServiceUtil.getCompanyGroup(companyId);
 
 		serviceContext.setScopeGroupId(group.getGroupId());

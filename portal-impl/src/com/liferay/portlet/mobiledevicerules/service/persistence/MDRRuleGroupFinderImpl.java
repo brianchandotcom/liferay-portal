@@ -101,7 +101,7 @@ public class MDRRuleGroupFinderImpl extends BasePersistenceImpl<MDRRuleGroup>
 			sql = StringUtil.replace(sql, "[$GROUP_ID$]", getGroupIds(params));
 			sql = CustomSQLUtil.replaceKeywords(
 				sql, "lower(name)", StringPool.LIKE, true, names);
-			sql = CustomSQLUtil.replaceAndOperator(sql, false);
+			sql = CustomSQLUtil.replaceAndOperator(sql, true);
 
 			SQLQuery q = session.createSQLQuery(sql);
 

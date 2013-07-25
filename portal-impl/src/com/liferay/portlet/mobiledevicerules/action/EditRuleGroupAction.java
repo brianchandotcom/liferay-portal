@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
@@ -63,7 +64,7 @@ public class EditRuleGroupAction extends PortletAction {
 				ruleGroup = updateRuleGroup(actionRequest);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
-				deleteRuleGroup(actionRequest);
+				deleteRuleGroups(actionRequest);
 			}
 			else if (cmd.equals(Constants.COPY)) {
 				ruleGroup = copyRuleGroup(actionRequest);
@@ -127,12 +128,24 @@ public class EditRuleGroupAction extends PortletAction {
 			ruleGroupId, groupId, serviceContext);
 	}
 
-	protected void deleteRuleGroup(ActionRequest actionRequest)
+	protected void deleteRuleGroups(ActionRequest actionRequest)
 		throws Exception {
+
+		long[] deleteRuleGroupIds = null;
 
 		long ruleGroupId = ParamUtil.getLong(actionRequest, "ruleGroupId");
 
-		MDRRuleGroupServiceUtil.deleteRuleGroup(ruleGroupId);
+		if (ruleGroupId > 0) {
+			deleteRuleGroupIds = new long[] {ruleGroupId};
+		}
+		else {
+			deleteRuleGroupIds = StringUtil.split(
+				ParamUtil.getString(actionRequest, "deleteRuleIds"), 0L);
+		}
+
+		for (long deleteRuleGroupId : deleteRuleGroupIds) {
+			MDRRuleGroupServiceUtil.deleteRuleGroup(deleteRuleGroupId);
+		}
 	}
 
 	protected String getRedirect(

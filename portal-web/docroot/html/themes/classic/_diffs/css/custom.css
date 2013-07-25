@@ -123,6 +123,33 @@ $dockbarOpenGradientStart: #0EA6F9;
 					float: none;
 					margin: 10px;
 
+					&.toggle-controls {
+						position: relative;
+
+						.controls-state-label {
+							background: #000;
+							color: #FFF;
+							display: none;
+							font-size: 14px;
+							left: 100%;
+							line-height: 27px;
+							margin-left: 0.5em;
+							margin-top: -1em;
+							padding: 0 20px;
+							position: absolute;
+							top: 50%;
+							white-space: nowrap;
+						}
+
+						&:hover .controls-state-label {
+							display: block;
+						}
+					}
+
+					&.toggle-controls {
+						visibility: hidden;
+					}
+
 					> a {
 						background: #45CBF5;
 						color: transparent;
@@ -140,6 +167,14 @@ $dockbarOpenGradientStart: #0EA6F9;
 							font-size: 25px;
 							position: relative;
 							vertical-align: middle;
+						}
+
+						&.toggle-controls-link {
+							background: #92F545;
+
+							[class^="icon-"], [class^="icon-"], [class*=" icon-"] {
+								color: #000;
+							}
 						}
 
 						.icon-caret-down {
@@ -164,6 +199,20 @@ $dockbarOpenGradientStart: #0EA6F9;
 						font-size: 0.8em;
 					}
 				}
+			}
+		}
+
+		&:hover .navbar-inner .nav-add-controls > li.toggle-controls {
+			visibility: visible;
+		}
+	}
+
+	.controls-hidden .dockbar {
+		.navbar-inner .nav-add-controls > li.toggle-controls {
+			visibility: visible;
+
+			> a.toggle-controls-link {
+				background: #F5AF45;
 			}
 		}
 	}
@@ -519,6 +568,10 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 					&.open a {
 						@include border-radius(4px 4px 0 0);
+					}
+
+					&.toggle-controls .controls-state-label {
+						@include border-radius(30px);
 					}
 				}
 			}

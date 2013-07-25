@@ -27,10 +27,18 @@
 		</div>
 	</div>
 
-	<liferay-ui:panel-container extended="<%= true %>" id="controlPanelMenuAddContentPanelContainer" persistState="<%= true %>">
+	<liferay-ui:panel-container accordion="<%= true %>" extended="<%= true %>" id="controlPanelMenuAddContentPanelContainer" persistState="<%= true %>">
 
 		<%
 		String ppid = GetterUtil.getString((String)request.getAttribute("control_panel.jsp-ppid"), layoutTypePortlet.getStateMaxPortletId());
+
+		String curPortletCategory = null;
+
+		if (Validator.isNotNull(ppid)) {
+			Portlet curPortlet = PortletLocalServiceUtil.getPortletById(themeDisplay.getCompanyId(), ppid);
+
+			curPortletCategory = curPortlet.getControlPanelEntryCategory();
+		}
 
 		Map<String, List<Portlet>> categoriesMap = PortalUtil.getSiteAdministrationCategoriesMap(request);
 
@@ -40,7 +48,7 @@
 			List<Portlet> portlets = categoriesMap.get(curCategory);
 		%>
 
-			<liferay-ui:panel collapsible="<%= true %>" cssClass="panel-page-category unstyled" extended="<%= true %>" id='<%= "panel-manage-" + curCategory %>' persistState="<%= true %>" title="<%= title %>">
+			<liferay-ui:panel collapsible="<%= true %>" cssClass="panel-page-category unstyled" extended="<%= true %>" id='<%= "panel-manage-" + curCategory %>' persistState="<%= true %>" state='<%= curCategory.equals(curPortletCategory) ? "open" : "closed" %>' title="<%= title %>">
 				<c:if test="<%= curCategory.equals(PortletCategoryKeys.SITE_ADMINISTRATION_CONTENT) %>">
 
 					<%

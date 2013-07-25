@@ -239,8 +239,9 @@ public class PortalUtil {
 	}
 
 	public static String getAlternateURL(
-		String canonicalURL, ThemeDisplay themeDisplay, Locale locale,
-		Layout layout) {
+			String canonicalURL, ThemeDisplay themeDisplay, Locale locale,
+			Layout layout)
+		throws PortalException, SystemException {
 
 		return getPortal().getAlternateURL(
 			canonicalURL, themeDisplay, locale, layout);

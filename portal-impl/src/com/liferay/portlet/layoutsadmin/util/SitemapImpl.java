@@ -184,7 +184,8 @@ public class SitemapImpl implements Sitemap {
 	}
 
 	protected Map<Locale, String> getAlternateURLs(
-		String canonicalURL, ThemeDisplay themeDisplay, Layout layout) {
+			String canonicalURL, ThemeDisplay themeDisplay, Layout layout)
+		throws PortalException, SystemException {
 
 		Map<Locale, String> alternateURLs = new HashMap<Locale, String>();
 

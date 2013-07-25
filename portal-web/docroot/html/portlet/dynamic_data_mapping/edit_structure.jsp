@@ -21,6 +21,8 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 String portletResourceNamespace = ParamUtil.getString(request, "portletResourceNamespace");
 
+boolean showBackURL = ParamUtil.getBoolean(request, "showBackURL", true);
+
 DDMStructure structure = (DDMStructure)request.getAttribute(WebKeys.DYNAMIC_DATA_MAPPING_STRUCTURE);
 
 long groupId = BeanParamUtil.getLong(structure, request, "groupId", scopeGroupId);
@@ -105,6 +107,7 @@ if (Validator.isNotNull(script)) {
 	<liferay-ui:header
 		backURL="<%= viewRecordsURL %>"
 		localizeTitle="<%= localizeTitle %>"
+		showBackURL="<%= showBackURL %>"
 		title="<%= title %>"
 	/>
 

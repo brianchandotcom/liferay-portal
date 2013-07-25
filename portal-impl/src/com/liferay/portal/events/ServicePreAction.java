@@ -1302,15 +1302,17 @@ public class ServicePreAction extends Action {
 					controlPanelCategory, themeDisplay);
 
 				for (Portlet portlet : portlets) {
-					if (PortletPermissionUtil.hasControlPanelAccessPermission(
+					if (!PortletPermissionUtil.hasControlPanelAccessPermission(
 							permissionChecker, scopeGroupId, portlet)) {
 
-						String redirect = HttpUtil.setParameter(
-							currentURL, "p_p_id", portlet.getPortletId());
-
-						response.sendRedirect(
-							PortalUtil.getAbsoluteURL(request, redirect));
+						continue;
 					}
+
+					String redirect = HttpUtil.setParameter(
+						currentURL, "p_p_id", portlet.getPortletId());
+
+					response.sendRedirect(
+						PortalUtil.getAbsoluteURL(request, redirect));
 				}
 			}
 		}

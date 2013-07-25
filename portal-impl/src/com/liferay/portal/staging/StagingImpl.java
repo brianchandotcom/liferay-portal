@@ -798,7 +798,7 @@ public class StagingImpl implements Staging {
 			errorMessage = LanguageUtil.format(
 				locale,
 				"the-available-languages-in-the-lar-file-x-do-not-match-the-" +
-					"portal's-available-languages-x",
+					"site's-available-languages-x",
 				new String[] {
 					StringUtil.merge(
 						le.getSourceAvailableLocales(),

@@ -168,7 +168,7 @@ public class SampleSQLBuilder {
 			_maxAssetVocabularyCount, _maxBlogsEntryCount,
 			_maxDDLCustomFieldCount, _maxGroupCount, _maxJournalArticleCount,
 			_maxJournalArticleSize, _maxMBCategoryCount, _maxMBThreadCount,
-			_maxMBMessageCount, _maxUserToGroupCount);
+			_maxMBMessageCount, _maxUserCount, _maxUserToGroupCount);
 
 		_db = DBFactoryUtil.getDB(_dbType);
 

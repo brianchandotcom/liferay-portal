@@ -209,7 +209,7 @@ public class DataFactory {
 			int maxDDLCustomFieldCount, int maxGroupsCount,
 			int maxJournalArticleCount, int maxJournalArticleSize,
 			int maxMBCategoryCount, int maxMBThreadCount, int maxMBMessageCount,
-			int maxUserToGroupCount)
+			int maxUserCount, int maxUserToGroupCount)
 		throws Exception {
 
 		_maxAssetCategoryCount = maxAssetCategoryCount;
@@ -226,6 +226,7 @@ public class DataFactory {
 		_maxMBCategoryCount = maxMBCategoryCount;
 		_maxMBThreadCount = maxMBThreadCount;
 		_maxMBMessageCount = maxMBMessageCount;
+		_maxUserCount = maxUserCount;
 		_maxUserToGroupCount = maxUserToGroupCount;
 
 		_counter = new SimpleCounter(_maxGroupsCount + 1);
@@ -2059,12 +2060,18 @@ public class DataFactory {
 			wikiPageModel.getResourcePrimKey());
 	}
 
-	public UserModel newUserModel(int index) {
-		String[] userName = nextUserName(index - 1);
+	public List<UserModel> newUserModels() {
+		List<UserModel> userModels = new ArrayList<UserModel>(_maxUserCount);
 
-		return newUserModel(
-			_counter.get(), userName[0], userName[1],
-			"test" + _userScreenNameCounter.get(), false);
+		for (int i = 0; i < _maxUserCount; i++) {
+			String[] userName = nextUserName(i);
+			userModels.add(
+				newUserModel(
+					_counter.get(), userName[0], userName[1],
+					"test" + _userScreenNameCounter.get(), false));
+		}
+
+		return userModels;
 	}
 
 	public WikiNodeModel newWikiNodeModel(long groupId, int index) {
@@ -2689,6 +2696,7 @@ public class DataFactory {
 	private int _maxMBCategoryCount;
 	private int _maxMBMessageCount;
 	private int _maxMBThreadCount;
+	private int _maxUserCount;
 	private int _maxUserToGroupCount;
 	private RoleModel _ownerRoleModel;
 	private RoleModel _powerUserRoleModel;

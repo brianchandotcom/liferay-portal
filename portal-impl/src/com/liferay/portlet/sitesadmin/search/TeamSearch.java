@@ -40,7 +40,7 @@ public class TeamSearch extends SearchContainer<Role> {
 	public TeamSearch(PortletRequest portletRequest, PortletURL iteratorURL) {
 		super(
 			portletRequest, new TeamDisplayTerms(portletRequest),
-			new TeamSearchTerms(portletRequest), DEFAULT_CUR_PARAM,
+			new TeamDisplayTerms(portletRequest), DEFAULT_CUR_PARAM,
 			DEFAULT_DELTA, iteratorURL, headerNames, EMPTY_RESULTS_MESSAGE);
 
 		TeamDisplayTerms displayTerms = (TeamDisplayTerms)getDisplayTerms();

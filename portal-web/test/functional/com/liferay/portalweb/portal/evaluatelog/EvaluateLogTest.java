@@ -134,6 +134,27 @@ public class EvaluateLogTest extends BaseTestCase {
 				continue;
 			}
 
+			// LPS-28954
+
+			if (line.matches(
+					".*The web application \\[/wsrp-portlet\\] created a " +
+						"ThreadLocal with key of type.*")) {
+
+				if (line.contains(
+						"[org.apache.axis.utils.XMLUtils." +
+							"ThreadLocalDocumentBuilder]")) {
+
+					continue;
+				}
+
+				if (line.contains(
+						"[org.apache.xml.security.utils." +
+							"UnsyncByteArrayOutputStream$1]")) {
+
+					continue;
+				}
+			}
+
 			// LPS-37574
 
 			if (line.contains("java.util.zip.ZipException: ZipFile closed")) {

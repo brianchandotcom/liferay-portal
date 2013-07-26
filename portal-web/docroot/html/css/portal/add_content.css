@@ -10,6 +10,16 @@
 	width: 330px;
 	z-index: 450;
 
+	.add-content-menu .lfr-add-page-toolbar {
+		bottom: 0;
+		margin-left: -10px;
+		padding: 10px;
+		position: fixed;
+		width: 330px;
+	}
+}
+
+.lfr-add-dialog, .lfr-add-panel {
 	.add-content-menu {
 		.btn-toolbar {
 			.control-group-inline {
@@ -23,15 +33,6 @@
 			.control-group-inline, .btn-group {
 				margin-right: 5px;
 			}
-		}
-
-		.lfr-add-page-toolbar {
-			background-color: #FFFFFF;
-			bottom: 0;
-			margin-left: -10px;
-			padding: 10px;
-			position: fixed;
-			width: 330px;
 		}
 
 		.template-selector {
@@ -228,6 +229,10 @@
 	background-color: #FFF;
 
 	.add-content-menu {
+		.lfr-add-page-toolbar {
+			background-color: #FFF;
+		}
+
 		.lfr-content-item {
 			color: #3EA9DB;
 

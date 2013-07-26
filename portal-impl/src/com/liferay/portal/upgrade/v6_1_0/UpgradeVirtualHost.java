@@ -16,7 +16,6 @@ package com.liferay.portal.upgrade.v6_1_0;
 
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -58,9 +57,7 @@ public class UpgradeVirtualHost extends UpgradeProcess {
 
 			ps = con.prepareStatement(
 				"select companyId, virtualHost from Company where " +
-					"virtualHost != ?");
-
-			ps.setString(1, StringPool.BLANK);
+					"virtualHost != ''");
 
 			rs = ps.executeQuery();
 
@@ -90,9 +87,7 @@ public class UpgradeVirtualHost extends UpgradeProcess {
 
 			ps = con.prepareStatement(
 				"select layoutSetId, companyId, virtualHost from LayoutSet " +
-					"where virtualHost != ?");
-
-			ps.setString(1, StringPool.BLANK);
+					"where virtualHost != ''");
 
 			rs = ps.executeQuery();
 

@@ -29,19 +29,10 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 	PortletURL portletURL = renderResponse.createRenderURL();
 
 	portletURL.setParameter("struts_action", "/document_library/select_group");
-
-	List<Group> mySiteGroups = user.getMySiteGroups();
-
-	if (PortalUtil.isCompanyControlPanelPortlet(PortletKeys.DOCUMENT_LIBRARY, themeDisplay)) {
-		mySiteGroups = ListUtil.copy(mySiteGroups);
-
-		mySiteGroups.add(0, GroupLocalServiceUtil.getGroup(themeDisplay.getCompanyGroupId()));
-	}
 	%>
 
 	<liferay-ui:search-container
 		searchContainer="<%= new GroupSearch(renderRequest, portletURL) %>"
-		total="<%= mySiteGroups.size() %>"
 	>
 		<liferay-ui:search-form
 			page="/html/portlet/users_admin/group_search.jsp"
@@ -50,9 +41,56 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 
 		<div class="separator"><!-- --></div>
 
-		<liferay-ui:search-container-results
-			results="<%= mySiteGroups %>"
-		/>
+		<%
+		GroupSearchTerms searchTerms = (GroupSearchTerms)searchContainer.getSearchTerms();
+
+		LinkedHashMap<String, Object> groupParams = new LinkedHashMap<String, Object>();
+
+		groupParams.put("active", true);
+		groupParams.put("usersGroups", user.getUserId());
+		%>
+
+		<liferay-ui:search-container-results>
+
+			<%
+			int additionalSites = 0;
+
+			if (PortalUtil.isCompanyControlPanelPortlet(PortletKeys.DOCUMENT_LIBRARY, themeDisplay)) {
+				if (searchContainer.getStart() == 0) {
+					results.add(company.getGroup());
+				}
+
+				additionalSites++;
+
+				if (searchContainer.getStart() == 0) {
+					Group userPersonalSite = GroupLocalServiceUtil.getGroup(company.getCompanyId(), GroupConstants.USER_PERSONAL_SITE);
+
+					results.add(userPersonalSite);
+				}
+
+				additionalSites++;
+			}
+
+			List<Group> sites = null;
+
+			if (searchTerms.isAdvancedSearch()) {
+				sites = GroupLocalServiceUtil.search(company.getCompanyId(), null, searchTerms.getName(), searchTerms.getDescription(), groupParams, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+				total = GroupLocalServiceUtil.searchCount(company.getCompanyId(), null, searchTerms.getName(), searchTerms.getDescription(), groupParams, searchTerms.isAndOperator());
+			}
+			else {
+				sites = GroupLocalServiceUtil.search(company.getCompanyId(), null, searchTerms.getKeywords(), groupParams, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+				total = GroupLocalServiceUtil.searchCount(company.getCompanyId(), null, searchTerms.getKeywords(), groupParams);
+			}
+
+			total += additionalSites;
+
+			results.addAll(sites);
+
+			pageContext.setAttribute("results", results);
+			pageContext.setAttribute("total", total);
+			%>
+
+		</liferay-ui:search-container-results>
 
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.model.Group"

@@ -743,6 +743,8 @@ public interface PropsKeys {
 
 	public static final String DL_FILE_RANK_MAX_SIZE = "dl.file.rank.max.size";
 
+	public static final String DL_NAME_BLACKLIST = "dl.name.blacklist";
+
 	public static final String DL_PUBLISH_TO_LIVE_BY_DEFAULT = "dl.publish.to.live.by.default";
 
 	public static final String DL_REPOSITORY_CMIS_DELETE_DEPTH = "dl.repository.cmis.delete.depth";

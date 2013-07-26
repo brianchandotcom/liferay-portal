@@ -358,8 +358,24 @@ public class DLStoreImpl implements DLStore {
 			return false;
 		}
 
-		for (String blackListChar : PropsValues.DL_CHAR_BLACKLIST) {
-			if (name.contains(blackListChar)) {
+		for (String charBlacklist : PropsValues.DL_CHAR_BLACKLIST) {
+			if (name.contains(charBlacklist)) {
+				return false;
+			}
+		}
+
+		String nameWithoutExtension = name;
+
+		if (name.contains(StringPool.PERIOD)) {
+			int pos = name.lastIndexOf(StringPool.PERIOD);
+
+			nameWithoutExtension = name.substring(0, pos);
+		}
+
+		for (String nameBlacklist : PropsValues.DL_NAME_BLACKLIST) {
+			if (StringUtil.equalsIgnoreCase(
+					nameWithoutExtension, nameBlacklist)) {
+
 				return false;
 			}
 		}

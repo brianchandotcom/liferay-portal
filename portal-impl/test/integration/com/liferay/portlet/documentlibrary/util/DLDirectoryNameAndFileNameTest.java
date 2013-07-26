@@ -107,6 +107,22 @@ public class DLDirectoryNameAndFileNameTest {
 	}
 
 	@Test
+	public void testIsValidNameBlacklist() throws Exception {
+		for (String name : PropsValues.DL_NAME_BLACKLIST) {
+			Assert.assertFalse(name, DLStoreUtil.isValidName(name));
+		}
+	}
+
+	@Test
+	public void testIsValidNameBlacklistWithExtension() throws Exception {
+		for (String blacklistName : PropsValues.DL_NAME_BLACKLIST) {
+			String name = blacklistName + ".txt";
+
+			Assert.assertFalse(name, DLStoreUtil.isValidName(name));
+		}
+	}
+
+	@Test
 	public void testIsValidNameEmptyString() {
 		Assert.assertFalse(DLStoreUtil.isValidName(StringPool.BLANK));
 	}
@@ -145,6 +161,19 @@ public class DLDirectoryNameAndFileNameTest {
 
 			Assert.assertFalse(
 				sb.toString(), DLStoreUtil.isValidName(sb.toString()));
+		}
+	}
+
+	@Test
+	public void testIsValidNameStartingWithBlacklist() throws Exception {
+		for (String nameBlacklist : PropsValues.DL_NAME_BLACKLIST) {
+			String name = nameBlacklist + StringUtil.randomString(10);
+
+			Assert.assertTrue(name, DLStoreUtil.isValidName(name));
+
+			name = nameBlacklist + " .txt";
+
+			Assert.assertTrue(name, DLStoreUtil.isValidName(name));
 		}
 	}
 

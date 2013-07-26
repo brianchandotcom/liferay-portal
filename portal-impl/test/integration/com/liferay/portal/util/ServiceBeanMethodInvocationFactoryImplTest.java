@@ -102,6 +102,7 @@ public class ServiceBeanMethodInvocationFactoryImplTest {
 
 		EmailAddress emailAddress = EmailAddressUtil.create(emailAddressId);
 
+		emailAddress.setCompanyId(TestPropsValues.getCompanyId());
 		emailAddress.setAddress(address);
 
 		return emailAddress;

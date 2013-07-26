@@ -16,7 +16,7 @@
 	<property name="font-awesome.file" value="font-awesome-3.2.1.zip" />
 	<property name="scayt.file" value="scayt_4.0.3.zip" />
 	<property name="tinymce.file" value="tinymce_3.5.6.zip" />
-	<property name="vaadin.file" value="vaadin-6.7.4-liferay.zip" />
+	<property name="vaadin.file" value="vaadin-6.8.12-liferay.zip" />
 	<property name="wsc.file" value="wsc_4.0.3.zip" />
 
 	<path id="jspc.common.classpath">

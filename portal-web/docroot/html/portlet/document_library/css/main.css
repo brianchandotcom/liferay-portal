@@ -416,8 +416,9 @@
 		.entry-title {
 			overflow: hidden;
 			position: relative;
-			text-overflow: ellipsis;
 			white-space: nowrap;
+
+			@include ellipsis;
 		}
 
 		.entry-title-text {

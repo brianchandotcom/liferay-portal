@@ -12,14 +12,14 @@
 		_categoryAndTag = true
 	/>
 
-	<#assign mbThreadId = counter.get()>
-	<#assign mbRootMessageId = counter.get()>
+	<#assign mbThreadId = dataFactory.counter.get()>
+	<#assign mbRootMessageId = dataFactory.counter.get()>
 
 	<@insertMBDiscussion
 		_classNameId = dataFactory.blogsEntryClassNameId
 		_classPK = blogsEntryModel.entryId
 		_groupId = groupId
-		_maxCommentCount = maxBlogsEntryCommentCount
+		_maxCommentCount = dataFactory.maxBlogsEntryCommentCount
 		_mbRootMessageId = mbRootMessageId
 		_mbThreadId = mbThreadId
 	/>

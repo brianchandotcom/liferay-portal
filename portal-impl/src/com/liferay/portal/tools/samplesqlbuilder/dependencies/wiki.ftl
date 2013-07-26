@@ -29,14 +29,14 @@
 			_categoryAndTag = true
 		/>
 
-		<#assign mbRootMessageId = counter.get()>
-		<#assign mbThreadId = counter.get()>
+		<#assign mbRootMessageId = dataFactory.counter.get()>
+		<#assign mbThreadId = dataFactory.counter.get()>
 
 		<@insertMBDiscussion
 			_classNameId = dataFactory.wikiPageClassNameId
 			_classPK = wikiPageModel.resourcePrimKey
 			_groupId = groupId
-			_maxCommentCount = maxWikiPageCommentCount
+			_maxCommentCount = dataFactory.maxWikiPageCommentCount
 			_mbRootMessageId = mbRootMessageId
 			_mbThreadId = mbThreadId
 		/>

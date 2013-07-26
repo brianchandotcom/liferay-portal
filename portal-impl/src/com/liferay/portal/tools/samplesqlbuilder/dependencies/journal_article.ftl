@@ -1,4 +1,4 @@
-<#assign journalArticlePageCounts = dataFactory.getSequence(maxJournalArticlePageCount)>
+<#assign journalArticlePageCounts = dataFactory.getSequence(dataFactory.maxJournalArticlePageCount)>
 
 <#list journalArticlePageCounts as journalArticlePageCount>
 	<#assign portletIdPrefix = "56_INSTANCE_TEST_" + journalArticlePageCount + "_">
@@ -19,14 +19,14 @@
 		/>
 	</#list>
 
-	<#assign journalArticleCounts = dataFactory.getSequence(maxJournalArticleCount)>
+	<#assign journalArticleCounts = dataFactory.getSequence(dataFactory.maxJournalArticleCount)>
 
 	<#list journalArticleCounts as journalArticleCount>
 		<#assign journalArticleResourceModel = dataFactory.newJournalArticleResourceModel(groupId)>
 
 		insert into JournalArticleResource values ('${journalArticleResourceModel.uuid}', ${journalArticleResourceModel.resourcePrimKey}, ${journalArticleResourceModel.groupId}, '${journalArticleResourceModel.articleId}');
 
-		<#assign versionCounts = dataFactory.getSequence(maxJournalArticleVersionCount)>
+		<#assign versionCounts = dataFactory.getSequence(dataFactory.maxJournalArticleVersionCount)>
 
 		<#list versionCounts as versionCount>
 			<#assign journalArticleModel = dataFactory.newJournalArticleModel(journalArticleResourceModel, journalArticleCount, versionCount)>
@@ -37,7 +37,7 @@
 				_entry = journalArticleModel
 			/>
 
-			<#if (versionCount = maxJournalArticleVersionCount) >
+			<#if (versionCount = dataFactory.maxJournalArticleVersionCount) >
 				<@insertAssetEntry
 					_entry = journalArticleModel
 					_categoryAndTag = true
@@ -54,8 +54,8 @@
 			_classPK = journalArticleResourceModel.resourcePrimKey
 			_groupId = groupId
 			_maxCommentCount = 0
-			_mbRootMessageId = counter.get()
-			_mbThreadId = counter.get()
+			_mbRootMessageId = dataFactory.counter.get()
+			_mbThreadId = dataFactory.counter.get()
 		/>
 
 		<#assign portletPreferencesModel = dataFactory.newPortletPreferencesModel(layoutModel.plid, portletIdPrefix + journalArticleCount, journalArticleResourceModel)>

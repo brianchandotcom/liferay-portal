@@ -1,4 +1,4 @@
-<#assign pageCounts = dataFactory.getSequence(maxAssetPublisherPageCount)>
+<#assign pageCounts = dataFactory.getSequence(dataFactory.maxAssetPublisherPageCount)>
 
 <#list pageCounts as pageCount>
 	<#assign portletId = "101_INSTANCE_TEST_" + pageCount>

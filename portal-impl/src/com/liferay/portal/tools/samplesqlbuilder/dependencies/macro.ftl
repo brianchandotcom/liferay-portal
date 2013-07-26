@@ -56,7 +56,7 @@
 	_groupId
 	_parentDLFolderId
 >
-	<#if (_dlFolderDepth <= maxDLFolderDepth)>
+	<#if (_dlFolderDepth <= dataFactory.maxDLFolderDepth)>
 		<#local dlFolderModels = dataFactory.newDLFolderModels(_groupId, _parentDLFolderId)>
 
 		<#list dlFolderModels as dlFolderModel>
@@ -87,7 +87,7 @@
 					_entry = dlFileEntryModel
 				/>
 
-				<#local ddmStorageLinkId = counter.get()>
+				<#local ddmStorageLinkId = dataFactory.counter.get()>
 
 				<@insertDDMContent
 					_ddmStorageLinkId = ddmStorageLinkId
@@ -100,8 +100,8 @@
 					_classPK = dlFileEntryModel.fileEntryId
 					_groupId = dlFileEntryModel.groupId
 					_maxCommentCount = 0
-					_mbRootMessageId = counter.get()
-					_mbThreadId = counter.get()
+					_mbRootMessageId = dataFactory.counter.get()
+					_mbThreadId = dataFactory.counter.get()
 				/>
 
 				<@insertSocialActivity

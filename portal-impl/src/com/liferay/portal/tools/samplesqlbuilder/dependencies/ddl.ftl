@@ -1,4 +1,4 @@
-<#assign ddlRecordSetCounts = dataFactory.getSequence(maxDDLRecordSetCount)>
+<#assign ddlRecordSetCounts = dataFactory.getSequence(dataFactory.maxDDLRecordSetCount)>
 
 <#list ddlRecordSetCounts as ddlRecordSetCount>
 	<#if (ddlRecordSetCount = 1)>
@@ -31,7 +31,7 @@
 		_entry = ddlRecordSetModel
 	/>
 
-	<#assign ddlRecordCounts = dataFactory.getSequence(maxDDLRecordCount)>
+	<#assign ddlRecordCounts = dataFactory.getSequence(dataFactory.maxDDLRecordCount)>
 
 	<#list ddlRecordCounts as ddlRecordCount>
 		<#assign ddlRecordModel = dataFactory.newDDLRecordModel(ddlRecordSetModel)>
@@ -44,7 +44,7 @@
 
 		<@insertDDMContent
 			_currentIndex = ddlRecordCount
-			_ddmStorageLinkId = counter.get()
+			_ddmStorageLinkId = dataFactory.counter.get()
 			_ddmStructureId = ddmStructureModel.structureId
 			_entry = ddlRecordModel
 		/>

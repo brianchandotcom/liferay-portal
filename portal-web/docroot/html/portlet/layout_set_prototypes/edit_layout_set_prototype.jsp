@@ -71,25 +71,6 @@ request.setAttribute("edit_layout_set_prototype.jsp-redirect", currentURL);
 
 		<aui:input helpMessage="allow-site-administrators-to-modify-pages-associated-with-this-site-template-help" label="allow-site-administrators-to-modify-pages-associated-with-this-site-template" name="layoutsUpdateable" type="checkbox" value="<%= layoutsUpdateable %>" />
 
-		<c:if test="<%= !layoutSetPrototype.isNew() %>">
-			<aui:field-wrapper label="configuration">
-				<liferay-portlet:actionURL portletName="<%= PortletKeys.SITE_REDIRECTOR %>" var="viewURL">
-					<portlet:param name="struts_action" value="/my_sites/view" />
-					<portlet:param name="groupId" value="<%= String.valueOf(layoutSetPrototype.getGroupId()) %>" />
-					<portlet:param name="privateLayout" value="<%= Boolean.TRUE.toString() %>" />
-				</liferay-portlet:actionURL>
-
-				<liferay-ui:icon
-					image="view"
-					label="<%= true %>"
-					message="open-site-template"
-					method="get"
-					target="_blank"
-					url="<%= viewURL %>"
-				/>
-			</aui:field-wrapper>
-		</c:if>
-
 		<%
 		Set<String> servletContextNames = CustomJspRegistryUtil.getServletContextNames();
 

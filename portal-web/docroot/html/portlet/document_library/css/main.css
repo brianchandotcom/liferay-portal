@@ -414,7 +414,10 @@
 		}
 
 		.entry-title {
+			overflow: hidden;
 			position: relative;
+			text-overflow: ellipsis;
+			white-space: nowrap;
 		}
 
 		.entry-title-text {

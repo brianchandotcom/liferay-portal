@@ -98,6 +98,15 @@ public class DLDirectoryNameAndFileNameTest {
 	}
 
 	@Test
+	public void testIsValidNameBackSlash() {
+		String name =
+			StringUtil.randomString(10) + StringPool.BACK_SLASH +
+				StringUtil.randomString(10);
+
+		Assert.assertFalse(name, DLStoreUtil.isValidName(name));
+	}
+
+	@Test
 	public void testIsValidNameEmptyString() {
 		Assert.assertFalse(DLStoreUtil.isValidName(StringPool.BLANK));
 	}

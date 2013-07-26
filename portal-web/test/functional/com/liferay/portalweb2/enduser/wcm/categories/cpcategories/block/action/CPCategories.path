@@ -123,6 +123,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CATEGORY_DETAILS_DELETE_BUTTON</td>
+	<td>//button[@id='deleteCategoryButton']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CATEGORY_DETAILS_ADD_SUBCATEGORY_BUTTON</td>
 	<td>//button[@id='addSubCategoryButton']</td>
 	<td></td>

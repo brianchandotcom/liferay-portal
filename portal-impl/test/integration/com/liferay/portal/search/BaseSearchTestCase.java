@@ -485,8 +485,15 @@ public abstract class BaseSearchTestCase {
 
 		long userId = serviceContext.getUserId();
 
+		long initialSearchGroupEntriesCountUser1 = searchGroupEntriesCount(
+			group.getGroupId(), user1.getUserId());
+
+		long initialSearchGroupEntriesCountUser2 = searchGroupEntriesCount(
+			group.getGroupId(), user2.getUserId());
+
 		try {
 			PrincipalThreadLocal.setName(user1.getUserId());
+
 			serviceContext.setUserId(user1.getUserId());
 
 			baseModel = addBaseModel(
@@ -502,6 +509,7 @@ public abstract class BaseSearchTestCase {
 				serviceContext);
 
 			PrincipalThreadLocal.setName(user2.getUserId());
+
 			serviceContext.setUserId(user2.getUserId());
 
 			baseModel = addBaseModel(
@@ -519,18 +527,22 @@ public abstract class BaseSearchTestCase {
 		}
 
 		Assert.assertEquals(
-			3, searchGroupEntriesCount(group.getGroupId(), user1.getUserId()));
+			initialSearchGroupEntriesCountUser1 + 3,
+			searchGroupEntriesCount(group.getGroupId(), user1.getUserId()));
 
 		Assert.assertEquals(
-			2, searchGroupEntriesCount(group.getGroupId(), user2.getUserId()));
+			initialSearchGroupEntriesCountUser2 + 2,
+			searchGroupEntriesCount(group.getGroupId(), user2.getUserId()));
 
 		moveParentBaseModelToTrash((Long)parentBaseModel2.getPrimaryKeyObj());
 
 		Assert.assertEquals(
-			2, searchGroupEntriesCount(group.getGroupId(), user1.getUserId()));
+			initialSearchGroupEntriesCountUser1 + 2,
+			searchGroupEntriesCount(group.getGroupId(), user1.getUserId()));
 
 		Assert.assertEquals(
-			1, searchGroupEntriesCount(group.getGroupId(), user2.getUserId()));
+			initialSearchGroupEntriesCountUser2 + 1,
+			searchGroupEntriesCount(group.getGroupId(), user2.getUserId()));
 
 		TrashHandler parentTrashHandler =
 			TrashHandlerRegistryUtil.getTrashHandler(
@@ -540,10 +552,12 @@ public abstract class BaseSearchTestCase {
 			user1.getUserId(), (Long)parentBaseModel2.getPrimaryKeyObj());
 
 		Assert.assertEquals(
-			3, searchGroupEntriesCount(group.getGroupId(), user1.getUserId()));
+			initialSearchGroupEntriesCountUser1 + 3,
+			searchGroupEntriesCount(group.getGroupId(), user1.getUserId()));
 
 		Assert.assertEquals(
-			2, searchGroupEntriesCount(group.getGroupId(), user2.getUserId()));
+			initialSearchGroupEntriesCountUser2 + 2,
+			searchGroupEntriesCount(group.getGroupId(), user2.getUserId()));
 	}
 
 	protected void searchRecentEntries() throws Exception {
@@ -557,6 +571,9 @@ public abstract class BaseSearchTestCase {
 			group, serviceContext);
 
 		String name = PrincipalThreadLocal.getName();
+
+		long initialSearchGroupEntriesCount = searchGroupEntriesCount(
+			group.getGroupId(), 0);
 
 		try {
 			User user1 = UserTestUtil.addUser(null, 0);
@@ -591,11 +608,15 @@ public abstract class BaseSearchTestCase {
 			PrincipalThreadLocal.setName(name);
 		}
 
-		Assert.assertEquals(5, searchGroupEntriesCount(group.getGroupId(), 0));
+		Assert.assertEquals(
+			initialSearchGroupEntriesCount + 5,
+			searchGroupEntriesCount(group.getGroupId(), 0));
 
 		moveParentBaseModelToTrash((Long)parentBaseModel2.getPrimaryKeyObj());
 
-		Assert.assertEquals(3, searchGroupEntriesCount(group.getGroupId(), 0));
+		Assert.assertEquals(
+			initialSearchGroupEntriesCount + 3,
+			searchGroupEntriesCount(group.getGroupId(), 0));
 
 		TrashHandler parentTrashHandler =
 			TrashHandlerRegistryUtil.getTrashHandler(
@@ -605,7 +626,9 @@ public abstract class BaseSearchTestCase {
 			TestPropsValues.getUserId(),
 			(Long)parentBaseModel2.getPrimaryKeyObj());
 
-		Assert.assertEquals(5, searchGroupEntriesCount(group.getGroupId(), 0));
+		Assert.assertEquals(
+			initialSearchGroupEntriesCount + 5,
+			searchGroupEntriesCount(group.getGroupId(), 0));
 	}
 
 	protected void searchStatus() throws Exception {

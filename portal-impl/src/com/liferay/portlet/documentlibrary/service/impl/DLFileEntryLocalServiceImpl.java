@@ -36,8 +36,8 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
-import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -924,7 +924,7 @@ public class DLFileEntryLocalServiceImpl
 		throws SystemException {
 
 		return dlFileEntryFinder.findByDDMStructureIds(
-				ddmStructureIds, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+			ddmStructureIds, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 
 	@Override
@@ -961,8 +961,8 @@ public class DLFileEntryLocalServiceImpl
 			userId, new LiferayFileEntry(dlFileEntry), incrementCounter);
 
 		return DLStoreUtil.getFile(
-				dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
-				dlFileEntry.getName(), version);
+			dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
+			dlFileEntry.getName(), version);
 	}
 
 	@Override
@@ -980,7 +980,7 @@ public class DLFileEntryLocalServiceImpl
 		throws PortalException, SystemException {
 
 		return getFileAsStream(
-				userId, fileEntryId, version, incrementCounter, 1);
+			userId, fileEntryId, version, incrementCounter, 1);
 	}
 
 	@Override
@@ -1001,8 +1001,8 @@ public class DLFileEntryLocalServiceImpl
 			userId, new LiferayFileEntry(dlFileEntry), incrementCounter);
 
 		return DLStoreUtil.getFileAsStream(
-				dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
-				dlFileEntry.getName(), version);
+			dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
+			dlFileEntry.getName(), version);
 	}
 
 	@Override
@@ -1073,7 +1073,7 @@ public class DLFileEntryLocalServiceImpl
 		folderIds.add(folderId);
 
 		return dlFileEntryFinder.countByG_F(
-				groupId, folderIds, new QueryDefinition(status));
+			groupId, folderIds, new QueryDefinition(status));
 	}
 
 	@Override

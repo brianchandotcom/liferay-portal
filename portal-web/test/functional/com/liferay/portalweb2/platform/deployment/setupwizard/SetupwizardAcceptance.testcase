@@ -25,10 +25,10 @@
 		<execute action="Setupwizard#assertTextEquals" locator-key1="DATABASE_CHANGE_PASSWORD_LABEL" />
 		<execute action="Setupwizard#click" locator-key1="FINISH_CONFIGURATION_BUTTON" />
 
-		<execute action="SetupwizardFinishconfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" />
-		<execute action="SetupwizardFinishconfiguration#assertTextEquals" locator-key1="CONFIGURATION_SAVE_MESSAGE" />
-		<execute action="SetupwizardFinishconfiguration#assertTextEquals" locator-key1="CONFIGURATION_SAVE_LOCATION" />
-		<execute action="SetupwizardFinishconfiguration#click" locator-key1="GO_TO_MY_PORTAL_BUTTON" />
+		<execute action="SetupwizardFinishconfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your configuration was saved successfully." />
+		<execute action="SetupwizardFinishconfiguration#assertTextEquals" locator-key1="CONFIGURATION_SAVE_MESSAGE" value1="The configuration was saved in" />
+		<execute action="SetupwizardFinishconfiguration#assertTextEquals" locator-key1="CONFIGURATION_SAVE_LOCATION" value1="portal-setup-wizard.properties" />
+		<execute action="SetupwizardFinishconfiguration#assertClick" locator-key1="GO_TO_MY_PORTAL_BUTTON" value1="Go to My Portal" />
 
 		<execute action="PGLoginTermsofservice#click" locator-key1="I_AGREE_BUTTON" />
 

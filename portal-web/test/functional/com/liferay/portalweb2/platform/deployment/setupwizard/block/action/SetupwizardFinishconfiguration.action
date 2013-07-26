@@ -1,19 +1,16 @@
 <definition>
 	<command name="assertTextEquals">
 		<case locator-key1="CONFIGURATION_SAVE_LOCATION">
-			<execute function="AssertTextEquals#assertPartialText" value1="portal-setup-wizard.properties" />
+			<execute function="AssertTextEquals#assertPartialText" />
 		</case>
 		<case locator-key1="CONFIGURATION_SAVE_MESSAGE">
-			<execute function="AssertTextEquals#assertPartialText" value1="The configuration was saved in" />
-		</case>
-		<case locator-key1="SUCCESS_MESSAGE">
-			<execute function="AssertTextEquals#assertText" value1="Your configuration was saved successfully." />
+			<execute function="AssertTextEquals#assertPartialText" />
 		</case>
 	</command>
 
-	<command name="click">
+	<command name="assertClick">
 		<case locator-key1="GO_TO_MY_PORTAL_BUTTON">
-			<execute function="Click#textClickAtAndWait" value1="Go to My Portal" />
+			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
 	</command>
 </definition>

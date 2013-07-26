@@ -32,28 +32,23 @@ Group group = layoutSetPrototype.getGroup();
 
 <liferay-ui:icon-menu>
 	<c:if test="<%= LayoutSetPrototypePermissionUtil.contains(permissionChecker, layoutSetPrototypeId, ActionKeys.UPDATE) %>">
-		<portlet:renderURL var="editURL">
-			<portlet:param name="struts_action" value="/layout_set_prototypes/edit_layout_set_prototype" />
-			<portlet:param name="redirect" value="<%= redirect %>" />
-			<portlet:param name="layoutSetPrototypeId" value="<%= String.valueOf(layoutSetPrototypeId) %>" />
-		</portlet:renderURL>
 
-		<liferay-ui:icon
-			image="edit"
-			url="<%= editURL %>"
-		/>
+		<%
+		ThemeDisplay siteThemeDisplay = (ThemeDisplay)themeDisplay.clone();
 
-		<portlet:renderURL var="managePagesURL">
-			<portlet:param name="struts_action" value="/layout_set_prototypes/edit_layouts" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
-		</portlet:renderURL>
+		siteThemeDisplay.setScopeGroupId(group.getGroupId());
 
-		<liferay-ui:icon
-			image="pages"
-			message="manage-pages"
-			url="<%= managePagesURL %>"
-		/>
+		PortletURL siteAdministrationURL = PortalUtil.getSiteAdministrationURL(renderResponse, siteThemeDisplay);
+		%>
+
+		<c:if test="<%= siteAdministrationURL != null %>">
+			<liferay-ui:icon
+				image="edit"
+				message="manage"
+				method="get"
+				url="<%= siteAdministrationURL.toString() %>"
+			/>
+		</c:if>
 
 		<c:if test="<%= group.getPrivateLayoutsPageCount() > 0 %>">
 			<liferay-portlet:actionURL portletName="<%= PortletKeys.SITE_REDIRECTOR %>" var="viewPagesURL">

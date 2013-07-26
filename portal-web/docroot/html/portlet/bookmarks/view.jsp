@@ -243,9 +243,7 @@ if (folder != null) {
 
 					Hits hits = BookmarksEntryServiceUtil.search(scopeGroupId, creatorUserId, status, searchContainer.getStart(), searchContainer.getEnd());
 
-					total = hits.getLength();
-
-					searchContainer.setTotal(total);
+					searchContainer.setTotal(hits.getLength());
 
 					Document[] docs = hits.getDocs();
 
@@ -311,6 +309,7 @@ if (folder != null) {
 
 	</c:when>
 </c:choose>
+
 <%!
 private static Log _log = LogFactoryUtil.getLog("portal-web.docroot.html.portlet.bookmarks.view__jsp");
 %>

@@ -227,10 +227,10 @@ public class DLFileEntryIndexer extends BaseIndexer {
 				searchContext);
 
 			for (String mimeType : mimeTypes) {
-				String tmp = StringUtil.replace(
-					mimeType, CharPool.FORWARD_SLASH, CharPool.UNDERLINE);
-
-				mimeTypesQuery.addTerm("mimeType", tmp);
+				mimeTypesQuery.addTerm(
+					"mimeType",
+					StringUtil.replace(
+						mimeType, CharPool.FORWARD_SLASH, CharPool.UNDERLINE));
 			}
 
 			contextQuery.add(mimeTypesQuery, BooleanClauseOccur.MUST);

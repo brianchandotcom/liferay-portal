@@ -32,17 +32,21 @@ if (layoutSetPrototype == null) {
 long layoutSetPrototypeId = BeanParamUtil.getLong(layoutSetPrototype, request, "layoutSetPrototypeId");
 
 boolean layoutsUpdateable = GetterUtil.getBoolean(layoutSetPrototype.getSettingsProperty("layoutsUpdateable"), true);
+
+Group group = themeDisplay.getScopeGroup();
 %>
 
-<liferay-util:include page="/html/portlet/layout_set_prototypes/toolbar.jsp">
-	<liferay-util:param name="toolbarItem" value='<%= layoutSetPrototype.isNew() ? "add" : StringPool.BLANK %>' />
-</liferay-util:include>
+<c:if test="<%= !group.isLayoutSetPrototype() %>">
+	<liferay-util:include page="/html/portlet/layout_set_prototypes/toolbar.jsp">
+		<liferay-util:param name="toolbarItem" value='<%= layoutSetPrototype.isNew() ? "add" : StringPool.BLANK %>' />
+	</liferay-util:include>
 
-<liferay-ui:header
-	backURL="<%= backURL %>"
-	localizeTitle="<%= layoutSetPrototype.isNew() %>"
-	title='<%= layoutSetPrototype.isNew() ? "new-site-template" : layoutSetPrototype.getName(locale) %>'
-/>
+	<liferay-ui:header
+		backURL="<%= backURL %>"
+		localizeTitle="<%= layoutSetPrototype.isNew() %>"
+		title='<%= layoutSetPrototype.isNew() ? "new-site-template" : layoutSetPrototype.getName(locale) %>'
+	/>
+</c:if>
 
 <%
 request.setAttribute("edit_layout_set_prototype.jsp-layoutSetPrototype", layoutSetPrototype);

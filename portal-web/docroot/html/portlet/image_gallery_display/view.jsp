@@ -253,9 +253,7 @@ long portletDisplayDDMTemplateId = PortletDisplayTemplateUtil.getPortletDisplayT
 
 				Hits hits = DLAppServiceUtil.search(repositoryId, creatorUserId, defaultFolderId, mediaGalleryMimeTypes, status, searchContainer.getStart(), searchContainer.getEnd());
 
-				int total = hits.getLength();
-
-				searchContainer.setTotal(total);
+				searchContainer.setTotal(hits.getLength());
 
 				List results = new ArrayList();
 

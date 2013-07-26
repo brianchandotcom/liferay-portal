@@ -244,9 +244,7 @@ request.setAttribute("view.jsp-useAssetEntryQuery", String.valueOf(useAssetEntry
 
 					Hits hits = DLAppServiceUtil.search(repositoryId, creatorUserId, status, searchContainer.getStart(), searchContainer.getEnd());
 
-					total = hits.getLength();
-
-					searchContainer.setTotal(total);
+					searchContainer.setTotal(hits.getLength());
 
 					results = new ArrayList();
 

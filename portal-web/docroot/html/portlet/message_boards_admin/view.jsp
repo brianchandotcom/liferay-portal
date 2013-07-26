@@ -433,9 +433,7 @@ if ((category != null) && layout.isTypeControlPanel()) {
 
 					Hits hits = MBThreadServiceUtil.search(scopeGroupId, groupThreadsUserId, startDate.getTime(), endDate.getTime(), WorkflowConstants.STATUS_APPROVED, searchContainer.getStart(), searchContainer.getEnd());
 
-					total = hits.getLength();
-
-					searchContainer.setTotal(total);
+					searchContainer.setTotal(hits.getLength());
 
 					for (int i = 0; i < hits.getDocs().length; i++) {
 						Document doc = hits.doc(i);
@@ -459,7 +457,6 @@ if ((category != null) && layout.isTypeControlPanel()) {
 					}
 
 					pageContext.setAttribute("results", results);
-					pageContext.setAttribute("total", total);
 					%>
 
 				</liferay-ui:search-container-results>

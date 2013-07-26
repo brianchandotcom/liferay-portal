@@ -35,12 +35,12 @@
 </tr>
 <tr>
 	<td>ADDRESS</td>
-	<td>//div[@id='apiServiceAddressPanelContent']/div</td>
+	<td>//div[@id='apiServiceAddressServiceImplPanelContent']/div</td>
 	<td></td>
 </tr>
 <tr>
 	<td>WIKI_PAGE</td>
-	<td>//div[@id='apiServiceWikiPagePanelContent']/div</td>
+	<td>//div[@id='apiServiceWikiPageServiceImplPanelContent']/div</td>
 	<td></td>
 </tr>
 <tr>
@@ -51,7 +51,7 @@
 <!--ADDRESS-->
 <tr>
 	<td>ADDRESS_ADD_ADDRESS</td>
-	<td>//div[@id='apiServiceAddressPanelContent']/div/ul/li/a[contains(text(),'add-address')]</td>
+	<td>//div[@id='apiServiceAddressServiceImplPanelContent']/div/ul/li/a[contains(.,'add-address')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -62,7 +62,7 @@
 <!--WIKI_PAGE-->
 <tr>
 	<td>WIKI_PAGE_ADD_PAGE</td>
-	<td>//div[@id='apiServiceWikiPagePanelContent']/div/ul/li/a[contains(text(),'add-page')]</td>
+	<td>//div[@id='apiServiceWikiPageServiceImplPanelContent']/div/ul/li/a[contains(.,'add-page')]</td>
 	<td>add-page</td>
 </tr>
 </tbody>

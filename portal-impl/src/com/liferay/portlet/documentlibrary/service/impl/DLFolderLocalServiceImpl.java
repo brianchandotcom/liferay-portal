@@ -44,6 +44,7 @@ import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.DuplicateFolderNameException;
+import com.liferay.portlet.documentlibrary.FolderNameException;
 import com.liferay.portlet.documentlibrary.NoSuchDirectoryException;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
@@ -1156,6 +1157,8 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 			long folderId, long groupId, long parentFolderId, String name)
 		throws PortalException, SystemException {
 
+		validateFolderName(name);
+
 		DLStoreUtil.validateDirectoryName(name);
 
 		try {
@@ -1181,6 +1184,14 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		long folderId = 0;
 
 		validateFolder(folderId, groupId, parentFolderId, name);
+	}
+
+	protected void validateFolderName(String folderName)
+		throws PortalException {
+
+		if (folderName.contains(StringPool.SLASH)) {
+			throw new FolderNameException(folderName);
+		}
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

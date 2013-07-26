@@ -261,6 +261,30 @@ public class MBThreadIndexer extends BaseIndexer {
 		actionableDynamicQuery.performActions();
 	}
 
+	protected void reindexRoot(final long companyId)
+		throws PortalException, SystemException {
+
+		ActionableDynamicQuery actionableDynamicQuery =
+			new GroupActionableDynamicQuery() {
+
+			@Override
+			protected void performAction(Object object)
+				throws PortalException, SystemException {
+
+				Group group = (Group)object;
+
+				reindexThreads(
+						companyId, group.getGroupId(),
+						MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
+			}
+
+		};
+
+		actionableDynamicQuery.setCompanyId(companyId);
+
+		actionableDynamicQuery.performActions();
+	}
+
 	protected void reindexThreads(
 			long companyId, long groupId, final long categoryId)
 		throws PortalException, SystemException {
@@ -300,30 +324,6 @@ public class MBThreadIndexer extends BaseIndexer {
 
 		SearchEngineUtil.updateDocuments(
 			getSearchEngineId(), companyId, documents);
-	}
-
-	protected void reindexRoot(final long companyId)
-		throws PortalException, SystemException {
-
-		ActionableDynamicQuery actionableDynamicQuery =
-			new GroupActionableDynamicQuery() {
-
-			@Override
-			protected void performAction(Object object)
-				throws PortalException, SystemException {
-
-				Group group = (Group)object;
-
-				reindexThreads(
-						companyId, group.getGroupId(),
-						MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
-			}
-
-		};
-
-		actionableDynamicQuery.setCompanyId(companyId);
-
-		actionableDynamicQuery.performActions();
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(MBThreadIndexer.class);

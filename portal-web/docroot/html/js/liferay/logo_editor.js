@@ -126,14 +126,6 @@ AUI.add(
 							var cropHeight = portraitPreviewImg.height();
 							var cropWidth = portraitPreviewImg.width();
 
-							if (cropHeight > 50) {
-								cropHeight *= 0.3;
-							}
-
-							if (cropWidth > 50) {
-								cropHeight *= 0.3;
-							}
-
 							if (imageCropper) {
 								imageCropper.enable();
 

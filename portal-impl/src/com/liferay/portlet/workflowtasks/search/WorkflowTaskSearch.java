@@ -59,7 +59,7 @@ public class WorkflowTaskSearch extends SearchContainer<WorkflowTask> {
 
 		super(
 			portletRequest, new WorkflowTaskDisplayTerms(portletRequest),
-			new WorkflowTaskSearchTerms(portletRequest), curParam,
+			new WorkflowTaskDisplayTerms(portletRequest), curParam,
 			DEFAULT_DELTA, iteratorURL, headerNames, null);
 
 		WorkflowTaskDisplayTerms displayTerms =

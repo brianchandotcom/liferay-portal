@@ -41,7 +41,7 @@ portletURL.setParameter("tabs1", tabs1);
 	/>
 
 	<%
-	CouponSearchTerms searchTerms = (CouponSearchTerms)searchContainer.getSearchTerms();
+	CouponDisplayTerms searchTerms = (CouponDisplayTerms)searchContainer.getSearchTerms();
 
 	int total = ShoppingCouponLocalServiceUtil.searchCount(scopeGroupId, company.getCompanyId(), searchTerms.getCode(), searchTerms.isActive(), searchTerms.getDiscountType(), searchTerms.isAndOperator());
 

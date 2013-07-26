@@ -58,7 +58,7 @@ public class UserGroupSearch extends SearchContainer<UserGroup> {
 
 		super(
 			portletRequest, new UserGroupDisplayTerms(portletRequest),
-			new UserGroupSearchTerms(portletRequest), DEFAULT_CUR_PARAM,
+			new UserGroupDisplayTerms(portletRequest), DEFAULT_CUR_PARAM,
 			DEFAULT_DELTA, iteratorURL, headerNames, EMPTY_RESULTS_MESSAGE);
 
 		UserGroupDisplayTerms displayTerms =

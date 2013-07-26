@@ -23,7 +23,6 @@ page import="com.liferay.portal.security.membershippolicy.UserGroupMembershipPol
 page import="com.liferay.portal.service.permission.UserGroupPermissionUtil" %><%@
 page import="com.liferay.portlet.usergroupsadmin.search.UserGroupDisplayTerms" %><%@
 page import="com.liferay.portlet.usergroupsadmin.search.UserGroupSearch" %><%@
-page import="com.liferay.portlet.usergroupsadmin.search.UserGroupSearchTerms" %><%@
 page import="com.liferay.portlet.usergroupsadmin.search.UserUserGroupChecker" %><%@
 page import="com.liferay.portlet.usersadmin.search.UserSearch" %><%@
 page import="com.liferay.portlet.usersadmin.search.UserSearchTerms" %><%@

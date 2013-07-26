@@ -33,8 +33,7 @@ page import="com.liferay.portlet.asset.model.AssetEntry" %><%@
 page import="com.liferay.portlet.asset.model.AssetRenderer" %><%@
 page import="com.liferay.portlet.asset.model.AssetRendererFactory" %><%@
 page import="com.liferay.portlet.workflowtasks.search.WorkflowTaskDisplayTerms" %><%@
-page import="com.liferay.portlet.workflowtasks.search.WorkflowTaskSearch" %><%@
-page import="com.liferay.portlet.workflowtasks.search.WorkflowTaskSearchTerms" %>
+page import="com.liferay.portlet.workflowtasks.search.WorkflowTaskSearch" %>
 
 <%
 Format dateFormatDate = FastDateFormatFactoryUtil.getDate(locale, timeZone);

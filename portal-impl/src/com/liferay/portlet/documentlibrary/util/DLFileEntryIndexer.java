@@ -452,8 +452,6 @@ public class DLFileEntryIndexer extends BaseIndexer {
 					for (Indexer indexer : IndexerRegistryUtil.getIndexers()) {
 						if (portletId.equals(indexer.getPortletId())) {
 							indexer.addRelatedEntryFields(document, obj);
-
-							break;
 						}
 					}
 				}

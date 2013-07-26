@@ -2,7 +2,7 @@
 	<command name="addPG">
 		<execute macro="Page#openURL" />
 
-		<execute action="Dockbar#assertClick" locator-key1="ADD" value1="Add" />
+		<execute action="Dockbar#click" locator-key1="ADD" value1="Add" />
 		<execute action="Dockbar#assertClick" locator-key1="ADD_PAGE_LINK" value1="Page" />
 		<execute action="Dockbar#type" locator-key1="ADD_PAGE_NAME_FIELD" value1="${pageName}" />
 		<execute action="Dockbar#assertClick" locator-key1="ADD_PAGE_BUTTON" value1="Add Page" />

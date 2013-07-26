@@ -21,6 +21,9 @@
 	</command>
 
 	<command name="click">
+		<case locator-key1="ADD">
+			<execute function="Click#clickAtSidebarClickAt" />
+		</case>
 		<case locator-key1="ADMIN">
 			<execute function="Click#textClickAtClickDockbar" value1="Admin" />
 		</case>

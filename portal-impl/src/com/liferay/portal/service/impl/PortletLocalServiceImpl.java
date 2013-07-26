@@ -552,7 +552,9 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 	public Portlet getPortletById(String portletId) {
 		Map<String, Portlet> portletsPool = _getPortletsPool();
 
-		return portletsPool.get(portletId);
+		String rootPortletId = PortletConstants.getRootPortletId(portletId);
+
+		return portletsPool.get(rootPortletId);
 	}
 
 	@Override

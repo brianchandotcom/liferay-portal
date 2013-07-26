@@ -30,6 +30,10 @@
 			<var name="entryContent" value="${entryContent}" />
 		</execute>
 
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
 		<execute macro="ApplicationDisplayTemplates#addPG">
 			<var name="adtFile" value="${adtFile}" />
 			<var name="adtTitle" value="${adtTitle}" />

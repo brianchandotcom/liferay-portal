@@ -21,8 +21,6 @@
 
 	<execute test-case="PGWebcontentdisplayAcceptance" />
 
-	<execute test-case="PGWebcontentlistAcceptance" />
-
 	<execute test-case="RecyclebinBlogsAcceptance" />
 
 	<execute test-case="RecyclebinMessageboardsAcceptance" />

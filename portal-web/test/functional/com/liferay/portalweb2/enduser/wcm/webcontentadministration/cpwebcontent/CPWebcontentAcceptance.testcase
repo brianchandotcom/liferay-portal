@@ -51,9 +51,17 @@
 		<var name="structureDescription" value="WC Structure Description" />
 		<var name="structureName" value="WC Structure Name" />
 
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
 		<execute macro="WebContentStructures#addCP">
 			<var name="structureDescription" value="${structureDescription}" />
 			<var name="structureName" value="${structureName}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
 		</execute>
 
 		<execute macro="WebContentTemplates#addCP">

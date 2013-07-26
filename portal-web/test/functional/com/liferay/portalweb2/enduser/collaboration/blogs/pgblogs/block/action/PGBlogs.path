@@ -35,12 +35,12 @@
 </tr>
 <tr>
 	<td>ADD_ENTRY_BUTTON</td>
-	<td>//button[@id='_33_addEntryButton']</td>
+	<td>//li[@name='addEntryButton']/a[contains(.,'Add Blog Entry')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PERMISSIONS_BUTTON</td>
-	<td>//button[contains(.,'Permissions')]</td>
+	<td>//li/a[contains(.,'Permissions')]</td>
 	<td></td>
 </tr>
 <tr>

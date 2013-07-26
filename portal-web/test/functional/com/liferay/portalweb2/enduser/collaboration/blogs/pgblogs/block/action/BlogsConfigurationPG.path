@@ -60,7 +60,7 @@
 </tr>
 <tr>
 	<td>DISPLAY_SETTINGS_MANAGE_ADT_LINK</td>
-	<td>//span[@class='manage-display-templates']/a/span</td>
+	<td>//a[@id='_86_selectDDMTemplate']/span</td>
 	<td></td>
 </tr>
 <tr>

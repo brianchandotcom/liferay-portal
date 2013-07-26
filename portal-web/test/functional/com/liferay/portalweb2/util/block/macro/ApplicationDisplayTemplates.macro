@@ -1,9 +1,5 @@
 <definition>
 	<command name="addPG">
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
 		<execute action="BasePortlet#click" locator-key1="OPTIONS_ICON" />
 		<execute action="BasePortlet#assertClick" locator-key1="OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
 
@@ -48,7 +44,7 @@
 	</command>
 
 	<command name="tearDownPG">
-		<execute macro="Page#gotoContentCP">
+		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Application Display Templates" />
 		</execute>
 

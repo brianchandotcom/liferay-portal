@@ -12,11 +12,20 @@
 		<execute action="Home#assertClick" locator-key1="PAGE" value1="${pageName}" />
 	</command>
 
+	<command name="gotoConfigurationCP">
+		<execute macro="Page#openURL" />
+
+		<execute action="Dockbar#assertClick" locator-key1="ADMIN" value1="Admin" />
+		<execute action="Dockbar#assertClick" locator-key1="ADMIN_SITE_ADMINISTRATION_CONFIGURATION" value1="Configuration" />
+
+		<execute action="Home#click" locator1="//ul[@class='category-portlets']/li[contains(.,'${portletName}')]/a" />
+	</command>
+
 	<command name="gotoContentCP">
 		<execute macro="Page#openURL" />
 
-		<execute action="Dockbar#click" locator-key1="ADMIN" />
-		<execute action="Dockbar#click" locator-key1="ADMIN_SITE_ADMINISTRATION" />
+		<execute action="Dockbar#assertClick" locator-key1="ADMIN" value1="Admin" />
+		<execute action="Dockbar#assertClick" locator-key1="ADMIN_SITE_ADMINISTRATION_CONTENT" value1="Content" />
 
 		<execute action="Home#click" locator1="//ul[@class='category-portlets']/li[contains(.,'${portletName}')]/a" />
 	</command>
@@ -24,8 +33,8 @@
 	<command name="gotoCP">
 		<execute macro="Page#openURL" />
 
-		<execute action="Dockbar#click" locator-key1="ADMIN" />
-		<execute action="Dockbar#click" locator-key1="ADMIN_CONTROL_PANEL" />
+		<execute action="Dockbar#assertClick" locator-key1="ADMIN" value1="Admin" />
+		<execute action="Dockbar#assertClick" locator-key1="ADMIN_CONTROL_PANEL" value1="Control Panel" />
 
 		<execute action="Home#click" locator1="//ul[@class='unstyled']/li/span/a[contains(.,'${portletName}')]" />
 	</command>

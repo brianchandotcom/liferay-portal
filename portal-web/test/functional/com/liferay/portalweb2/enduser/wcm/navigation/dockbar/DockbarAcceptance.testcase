@@ -13,11 +13,21 @@
 		</execute>
 
 		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Server Administration" />
+			<var name="portletName" value="License Manager" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Update Manager" />
+			<var name="portletName" value="Server Administration" />
+		</execute>
+	</command>
+
+	<command name="GotoConfiguration">
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Site Settings" />
+		</execute>
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Application Display Templates" />
 		</execute>
 	</command>
 

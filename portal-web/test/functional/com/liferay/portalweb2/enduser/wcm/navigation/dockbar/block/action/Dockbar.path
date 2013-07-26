@@ -130,6 +130,26 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADMIN_SITE_ADMINISTRATION_PAGES</td>
+	<td>//li[@id='_145_adminLinks']/ul/li/ul/li/a[contains(.,'Pages')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADMIN_SITE_ADMINISTRATION_CONTENT</td>
+	<td>//li[@id='_145_adminLinks']/ul/li/ul/li/a[contains(.,'Content')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADMIN_SITE_ADMINISTRATION_USERS</td>
+	<td>//li[@id='_145_adminLinks']/ul/li/ul/li/a[contains(.,'Users')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADMIN_SITE_ADMINISTRATION_CONFIGURATION</td>
+	<td>//li[@id='_145_adminLinks']/ul/li/ul/li/a[contains(.,'Configuration')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADMIN_CONTROL_PANEL</td>
 	<td>//li[@id='_145_adminLinks']/ul/li/a[contains(.,'Control Panel')]</td>
 	<td></td>

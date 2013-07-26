@@ -24,6 +24,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SITE_TITLE</td>
+	<td>//h1[@class='site-title']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>HEADER</td>
 	<td>//h2[@id='cpPortletTitle']/span</td>
 	<td></td>

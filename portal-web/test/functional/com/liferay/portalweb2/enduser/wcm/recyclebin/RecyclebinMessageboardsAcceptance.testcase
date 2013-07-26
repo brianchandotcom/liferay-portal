@@ -9,9 +9,17 @@
 		<var name="threadBody" value="MB Thread Message Body" />
 		<var name="threadSubject" value="MB Thread Message Subject" />
 
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Message Boards" />
+		</execute>
+
 		<execute macro="MessageboardsThread#addCP">
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadSubject" value="${threadSubject}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Message Boards" />
 		</execute>
 
 		<execute macro="MessageboardsThread#moveToRecycleBinCP">
@@ -28,6 +36,10 @@
 			<var name="assetName" value="${threadSubject}" />
 		</execute>
 
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Message Boards" />
+		</execute>
+
 		<execute macro="MessageboardsThread#viewDefaultCP">
 			<var name="threadSubject" value="${threadSubject}" />
 		</execute>
@@ -40,9 +52,17 @@
 		<var name="threadBody" value="MB Thread Message Body" />
 		<var name="threadSubject" value="MB Thread Message Subject" />
 
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Message Boards" />
+		</execute>
+
 		<execute macro="MessageboardsThread#addCP">
 			<var name="threadBody" value="${threadBody}" />
 			<var name="threadSubject" value="${threadSubject}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Message Boards" />
 		</execute>
 
 		<execute macro="MessageboardsThread#moveToRecycleBinCP">
@@ -58,6 +78,10 @@
 
 		<execute macro="RecycleBin#viewDefaultCP">
 			<var name="assetName" value="${threadSubject}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Message Boards" />
 		</execute>
 
 		<execute macro="MessageboardsThread#viewCP">

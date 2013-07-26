@@ -15,6 +15,9 @@
 		<case locator-key1="USER_MY_ACCOUNT">
 			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
+		<case comparator="startsWith" locator-key1="ADMIN_SITE_ADMINISTRATION">
+			<execute function="AssertClick#assertTextClickAtAndWait" />
+		</case>
 	</command>
 
 	<command name="click">
@@ -34,7 +37,7 @@
 			<execute function="Click#textClickAtAndWait" value1="Sign Out" />
 		</case>
 		<case comparator="startsWith" locator1="//span[@data-title='">
-			<execute function="Click#makeVisibleClickAt" />
+			<execute function="Click#pauseMakeVisibleClickAt" />
 		</case>
 	</command>
 

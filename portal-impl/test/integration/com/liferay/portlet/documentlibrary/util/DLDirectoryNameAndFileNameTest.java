@@ -133,6 +133,15 @@ public class DLDirectoryNameAndFileNameTest {
 	}
 
 	@Test
+	public void testIsValidNameEndCharacter() throws Exception {
+		for (String invalidEndCharacter : _DL_CHAR_END_BLACLIST) {
+			String name = StringUtil.randomString(20) + invalidEndCharacter;
+
+			Assert.assertFalse(name, DLStoreUtil.isValidName(name));
+		}
+	}
+
+	@Test
 	public void testIsValidNameHiddenOSX() throws Exception {
 		String name = "._" + StringUtil.randomString(20) + ".tmp";
 
@@ -211,5 +220,8 @@ public class DLDirectoryNameAndFileNameTest {
 	}
 
 	private static Group _group;
+
+	private String[] _DL_CHAR_END_BLACLIST =
+		{StringPool.SPACE, StringPool.PERIOD};
 
 }

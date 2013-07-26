@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodeFormatter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.security.permission.ActionKeys;
@@ -360,6 +361,17 @@ public class DLStoreImpl implements DLStore {
 
 		for (String blacklistChar : PropsValues.DL_CHAR_BLACKLIST) {
 			if (name.contains(blacklistChar)) {
+				return false;
+			}
+		}
+
+		for (String blacklistCharEnd : PropsValues.DL_CHAR_END_BLACKLIST) {
+			if (blacklistCharEnd.startsWith(_UNICODE_PREFIX)) {
+				blacklistCharEnd = UnicodeFormatter.parseString(
+					blacklistCharEnd);
+			}
+
+			if (name.endsWith(blacklistCharEnd)) {
 				return false;
 			}
 		}
@@ -802,5 +814,7 @@ public class DLStoreImpl implements DLStore {
 	private static final String[] _KEYWORDS_FIELDS = {
 		Field.ASSET_TAG_NAMES, Field.CONTENT, Field.PROPERTIES
 	};
+
+	private static final String _UNICODE_PREFIX = "\\u";
 
 }

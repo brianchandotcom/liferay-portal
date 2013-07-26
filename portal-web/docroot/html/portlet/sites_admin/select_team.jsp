@@ -46,7 +46,7 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 		<div class="separator"><!-- --></div>
 
 		<%
-		TeamSearchTerms searchTerms = (TeamSearchTerms)searchContainer.getSearchTerms();
+		TeamDisplayTerms searchTerms = (TeamDisplayTerms)searchContainer.getSearchTerms();
 
 		portletURL.setParameter(searchContainer.getCurParam(), String.valueOf(searchContainer.getCur()));
 		%>

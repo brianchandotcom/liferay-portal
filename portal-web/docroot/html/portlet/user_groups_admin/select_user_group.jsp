@@ -45,7 +45,7 @@ portletURL.setParameter("eventName", eventName);
 		/>
 
 		<%
-		UserGroupSearchTerms searchTerms = (UserGroupSearchTerms)searchContainer.getSearchTerms();
+		UserGroupDisplayTerms searchTerms = (UserGroupDisplayTerms)searchContainer.getSearchTerms();
 		%>
 
 		<liferay-ui:search-container-results>

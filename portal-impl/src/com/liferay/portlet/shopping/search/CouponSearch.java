@@ -43,7 +43,7 @@ public class CouponSearch extends SearchContainer<ShoppingCoupon> {
 	public CouponSearch(PortletRequest portletRequest, PortletURL iteratorURL) {
 		super(
 			portletRequest, new CouponDisplayTerms(portletRequest),
-			new CouponSearchTerms(portletRequest), DEFAULT_CUR_PARAM,
+			new CouponDisplayTerms(portletRequest), DEFAULT_CUR_PARAM,
 			DEFAULT_DELTA, iteratorURL, headerNames, EMPTY_RESULTS_MESSAGE);
 
 		CouponDisplayTerms displayTerms = (CouponDisplayTerms)getDisplayTerms();

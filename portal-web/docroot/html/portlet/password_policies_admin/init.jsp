@@ -23,7 +23,6 @@ page import="com.liferay.portal.service.permission.PasswordPolicyPermissionUtil"
 page import="com.liferay.portlet.passwordpoliciesadmin.search.OrganizationPasswordPolicyChecker" %><%@
 page import="com.liferay.portlet.passwordpoliciesadmin.search.PasswordPolicyDisplayTerms" %><%@
 page import="com.liferay.portlet.passwordpoliciesadmin.search.PasswordPolicySearch" %><%@
-page import="com.liferay.portlet.passwordpoliciesadmin.search.PasswordPolicySearchTerms" %><%@
 page import="com.liferay.portlet.passwordpoliciesadmin.search.UserPasswordPolicyChecker" %><%@
 page import="com.liferay.portlet.usersadmin.search.OrganizationSearch" %><%@
 page import="com.liferay.portlet.usersadmin.search.OrganizationSearchTerms" %><%@

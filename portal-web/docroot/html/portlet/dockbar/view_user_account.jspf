@@ -27,7 +27,7 @@ if (PropsValues.DOCKBAR_ADMINISTRATIVE_LINKS_SHOW_IN_POP_UP) {
 		<b class="alert-icon icon-warning-sign"></b>
 	</c:if>
 
-	<img alt="<liferay-ui:message key="my-account" />" src="<%= HtmlUtil.escape(user.getPortraitURL(themeDisplay)) %>" />
+	<img alt="<liferay-ui:message key="my-account" />" class="user-avatar-image" src="<%= HtmlUtil.escape(user.getPortraitURL(themeDisplay)) %>" />
 
 	<span class="user-full-name">
 		<%= HtmlUtil.escape(user.getFullName()) %>

@@ -176,19 +176,17 @@
 		_mbMessageModel = mbRootMessageModel
 	/>
 
-	<#if (_maxCommentCount > 0)>
-		<#list 1.._maxCommentCount as commentCount>
-			<#local mbMessageModel = dataFactory.newMBMessageModel(mbThreadModel, _classNameId, _classPK, commentCount)>
+	<#local mbMessageModels = dataFactory.newMBMessageModels(mbThreadModel, _classNameId, _classPK, _maxCommentCount)>
 
-			<@insertMBMessage
-				_mbMessageModel = mbMessageModel
-			/>
+	<#list mbMessageModels as mbMessageModel>
+		<@insertMBMessage
+			_mbMessageModel = mbMessageModel
+		/>
 
-			<@insertSocialActivity
-				_entry = mbMessageModel
-			/>
-		</#list>
-	</#if>
+		<@insertSocialActivity
+			_entry = mbMessageModel
+		/>
+	</#list>
 
 	<#local mbDiscussionModel = dataFactory.newMBDiscussionModel(_groupId, _classNameId, _classPK, _mbThreadId)>
 

@@ -255,7 +255,7 @@ request.setAttribute("view_entries.jsp-entryEnd", String.valueOf(searchContainer
 			</c:when>
 			<c:otherwise>
 				<c:if test="<%= total == 0 %>">
-					<liferay-ui:message key="no-web-content-were-found" />
+					<liferay-ui:message key="no-web-content-was-found" />
 				</c:if>
 			</c:otherwise>
 		</c:choose>

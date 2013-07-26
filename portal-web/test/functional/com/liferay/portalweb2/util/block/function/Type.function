@@ -40,6 +40,6 @@
 
 		<execute selenium="typeFrame" />
 
-		<execute selenium="waitForElementPresent" argument1="//body[contains(@onpageshow,'CKEDITOR')]" />
+		<execute selenium="pause" argument1="1000" />
 	</command>
 </definition>

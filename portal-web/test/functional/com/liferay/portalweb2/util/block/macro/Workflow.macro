@@ -193,7 +193,7 @@
 	</command>
 
 	<command name="tearDownSiteWorkflow">
-		<execute macro="Page#gotoContentCP">
+		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Workflow Configuration" />
 		</execute>
 

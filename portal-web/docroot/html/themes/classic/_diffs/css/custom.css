@@ -128,7 +128,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 						visibility: hidden;
 					}
 
-					#_145_previewPanel {
+					&.page-preview-controls {
 						@include respond-to(phone) {
 							display: none;
 						}

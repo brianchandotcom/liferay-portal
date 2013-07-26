@@ -64,7 +64,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 				<liferay-ui:search-container-row
 					className="com.liferay.portlet.asset.model.AssetEntry"
 					escapedModel="<%= true %>"
-					keyProperty="assetEntryId"
+					keyProperty="entryId"
 					modelVar="assetEntry"
 				>
 

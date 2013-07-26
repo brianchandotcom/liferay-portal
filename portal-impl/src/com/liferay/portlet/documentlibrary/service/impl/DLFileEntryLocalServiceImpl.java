@@ -2507,7 +2507,7 @@ public class DLFileEntryLocalServiceImpl
 	}
 
 	protected void validateFileName(String fileName) throws PortalException {
-		if (fileName.contains(StringPool.SLASH)) {
+		if (!DLFileEntryConstants.isValidName(fileName)) {
 			throw new FileNameException(fileName);
 		}
 	}

@@ -70,6 +70,11 @@ import org.junit.runner.RunWith;
 public class AssetPublisherExportImportTest
 	extends BasePortletExportImportTestCase {
 
+	@Override
+	public String getPortletId() {
+		return PortletKeys.ASSET_PUBLISHER;
+	}
+
 	@Test
 	public void testAnyDLFileEntryType() throws Exception {
 		Map<String, String[]> preferenceMap = new HashMap<String, String[]>();
@@ -613,23 +618,6 @@ public class AssetPublisherExportImportTest
 			new String[] {Boolean.TRUE.toString()});
 
 		return parameterMap;
-	}
-
-	protected PortletPreferences getImportedPortletPreferences(
-			Map<String, String[]> preferenceMap)
-		throws Exception {
-
-		// Export site LAR
-
-		String assetPublisherPortletId = LayoutTestUtil.addPortletToLayout(
-			TestPropsValues.getUserId(), this.layout,
-			PortletKeys.ASSET_PUBLISHER, "column-1", preferenceMap);
-
-		doExportImportPortlet(assetPublisherPortletId);
-
-		return LayoutTestUtil.getPortletPreferences(
-			importedLayout.getCompanyId(), importedLayout.getPlid(),
-			assetPublisherPortletId);
 	}
 
 	@Override

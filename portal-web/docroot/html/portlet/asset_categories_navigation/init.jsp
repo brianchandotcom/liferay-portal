@@ -44,7 +44,8 @@ if (!allAssetVocabularies && (portletPreferences.getValues("assetVocabularyIds",
 	assetVocabularyIds = StringUtil.split(portletPreferences.getValue("assetVocabularyIds", null), 0L);
 }
 
-String displayTemplate = portletPreferences.getValue("displayTemplate", StringPool.BLANK);
+String displayStyle = portletPreferences.getValue("displayStyle", StringPool.BLANK);
+long displayStyleGroupId = GetterUtil.getLong(portletPreferences.getValue("displayStyleGroupId", null), themeDisplay.getScopeGroupId());
 %>
 
 <%@ include file="/html/portlet/asset_categories_navigation/init-ext.jsp" %>

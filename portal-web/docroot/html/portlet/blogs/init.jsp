@@ -53,7 +53,8 @@ page import="com.liferay.util.RSSUtil" %>
 
 <%
 int pageDelta = GetterUtil.getInteger(portletPreferences.getValue("pageDelta", StringPool.BLANK), SearchContainer.DEFAULT_DELTA);
-String pageDisplayStyle = portletPreferences.getValue("pageDisplayStyle", BlogsUtil.DISPLAY_STYLE_FULL_CONTENT);
+String displayStyle = portletPreferences.getValue("displayStyle", BlogsUtil.DISPLAY_STYLE_FULL_CONTENT);
+long displayStyleGroupId = GetterUtil.getLong(portletPreferences.getValue("displayStyleGroupId", null), themeDisplay.getScopeGroupId());
 int pageAbstractLength = PropsValues.BLOGS_PAGE_ABSTRACT_LENGTH;
 boolean enableFlags = GetterUtil.getBoolean(portletPreferences.getValue("enableFlags", null), true);
 boolean enableRelatedAssets = GetterUtil.getBoolean(portletPreferences.getValue("enableRelatedAssets", null), true);

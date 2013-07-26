@@ -159,7 +159,7 @@ if (!paginationType.equals("none")) {
 </c:if>
 
 <%
-long portletDisplayDDMTemplateId = PortletDisplayTemplateUtil.getPortletDisplayTemplateDDMTemplateId(themeDisplay.getScopeGroupId(), displayStyle);
+long portletDisplayDDMTemplateId = PortletDisplayTemplateUtil.getPortletDisplayTemplateDDMTemplateId(displayStyleGroupId, displayStyle);
 
 Map<String, Object> contextObjects = new HashMap<String, Object>();
 

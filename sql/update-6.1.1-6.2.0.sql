@@ -385,6 +385,10 @@ alter table Image drop column text_;
 
 alter table JournalArticle add folderId LONG;
 
+COMMIT_TRANSACTION;
+
+update JournalArticle set folderId = 0;
+
 create table JournalFolder (
 	uuid_ VARCHAR(75) null,
 	folderId LONG not null primary key,

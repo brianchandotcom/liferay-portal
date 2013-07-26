@@ -15,7 +15,11 @@
 package com.liferay.portlet.documentlibrary.model;
 
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Samuel Kong
@@ -34,5 +38,16 @@ public class DLFileEntryConstants {
 	public static String getClassName() {
 		return DLFileEntry.class.getName();
 	}
+
+	public static boolean isValidName(String fileName) {
+		Matcher matcher = DL_FILE_VALID_NAME_REGEXP.matcher(fileName);
+
+		return matcher.matches();
+	}
+
+	private static final Pattern DL_FILE_VALID_NAME_REGEXP =
+		Pattern.compile(
+			PropsUtil.get(PropsKeys.DL_FILE_VALID_NAME_REGEXP),
+			Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE);
 
 }

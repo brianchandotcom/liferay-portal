@@ -3251,7 +3251,7 @@
 	</library>
 	<library>
 		<file-name>lib/portal/vaadin.jar</file-name>
-		<version>6.7.4</version>
+		<version>6.8.12</version>
 		<project-name>Vaadin</project-name>
 		<project-url>http://vaadin.com</project-url>
 		<licenses>

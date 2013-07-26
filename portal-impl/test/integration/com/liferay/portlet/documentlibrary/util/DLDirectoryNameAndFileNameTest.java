@@ -27,6 +27,7 @@ import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.util.GroupTestUtil;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.FileNameException;
 import com.liferay.portlet.documentlibrary.FolderNameException;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
@@ -64,7 +65,8 @@ public class DLDirectoryNameAndFileNameTest {
 
 	@Test
 	public void testAddFileEntry() throws Exception {
-		String name = StringUtil.randomString(20) + _BLACKLIST_CHARS[0];
+		String name =
+			StringUtil.randomString(20) + PropsValues.DL_CHAR_BLACKLIST[0];
 
 		try {
 			DLAppTestUtil.addFileEntry(
@@ -80,7 +82,8 @@ public class DLDirectoryNameAndFileNameTest {
 
 	@Test
 	public void testAddFolder() throws Exception {
-		String name = StringUtil.randomString(20) + _BLACKLIST_CHARS[0];
+		String name =
+			StringUtil.randomString(20) + PropsValues.DL_CHAR_BLACKLIST[0];
 
 		try {
 			DLAppTestUtil.addFolder(
@@ -114,7 +117,7 @@ public class DLDirectoryNameAndFileNameTest {
 			Assert.assertTrue(name, DLStoreUtil.isValidName(name));
 		}
 
-		for (String blacklistChar : _BLACKLIST_CHARS) {
+		for (String blacklistChar : PropsValues.DL_CHAR_BLACKLIST) {
 			StringBuilder sb = new StringBuilder(4);
 
 			sb.append(StringUtil.randomString(10));
@@ -137,7 +140,8 @@ public class DLDirectoryNameAndFileNameTest {
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			true, StringUtil.randomString(20));
 
-		String name = StringUtil.randomString(20) + _BLACKLIST_CHARS[0];
+		String name =
+			StringUtil.randomString(20) + PropsValues.DL_CHAR_BLACKLIST[0];
 
 		try {
 			DLAppTestUtil.updateFileEntry(
@@ -156,7 +160,8 @@ public class DLDirectoryNameAndFileNameTest {
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			StringUtil.randomString(20));
 
-		String name = StringUtil.randomString(20) + _BLACKLIST_CHARS[0];
+		String name =
+			StringUtil.randomString(20) + PropsValues.DL_CHAR_BLACKLIST[0];
 
 		try {
 			DLAppServiceUtil.updateFolder(
@@ -169,11 +174,6 @@ public class DLDirectoryNameAndFileNameTest {
 			Assert.assertTrue(e instanceof FolderNameException);
 		}
 	}
-
-	private static final String[] _BLACKLIST_CHARS = {
-		"\\", "\\\\", "//", ":", "*", "?", "\"", "<", ">", "|", "[", "]", "../",
-		"/.."
-	};
 
 	private static Group _group;
 

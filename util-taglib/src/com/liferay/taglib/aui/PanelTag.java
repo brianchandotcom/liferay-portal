@@ -67,7 +67,7 @@ public class PanelTag extends BasePanelTag {
 		String id = getId();
 
 		if (Validator.isNull(id)) {
-			id = PwdGenerator.getPassword(PwdGenerator.KEY3, 4);
+			id = PwdGenerator.getRandomId();
 		}
 
 		setNamespacedAttribute(request, "id", id);

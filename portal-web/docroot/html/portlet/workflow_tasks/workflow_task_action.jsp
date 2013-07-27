@@ -26,7 +26,7 @@ ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_
 WorkflowTask workflowTask = null;
 
 if (row != null) {
-	randomId = PwdGenerator.getPassword(PwdGenerator.KEY3, 4);
+	randomId = PwdGenerator.getRandomId();
 
 	workflowTask = (WorkflowTask)row.getParameter("workflowTask");
 }

@@ -44,7 +44,7 @@ public class IconHelpTag extends IconTag {
 
 		JspWriter jspWriter = pageContext.getOut();
 
-		String id = PwdGenerator.getPassword(PwdGenerator.KEY3, 4);
+		String id = PwdGenerator.getRandomId();
 
 		jspWriter.write("<span class=\"taglib-icon-help\"><img alt=\"\" ");
 		jspWriter.write("aria-labelledby=\"");

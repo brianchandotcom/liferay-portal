@@ -10025,7 +10025,7 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	protected class ContainsDLFileEntryType {
 		protected ContainsDLFileEntryType() {
 			_mappingSqlQuery = MappingSqlQueryFactoryUtil.getMappingSqlQuery(getDataSource(),
-					"SELECT COUNT(*) AS COUNT_VALUE FROM DLFileEntryTypes_DDMStructures WHERE structureId = ? AND fileEntryTypeId = ?",
+					"SELECT 1 FROM DLFileEntryTypes_DDMStructures WHERE structureId = ? AND fileEntryTypeId = ?",
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT },
 					RowMapper.COUNT);
 		}
@@ -10035,15 +10035,11 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 						new Long(structureId), new Long(fileEntryTypeId)
 					});
 
-			if (results.size() > 0) {
-				Integer count = results.get(0);
-
-				if (count.intValue() > 0) {
-					return true;
-				}
+			if (results.isEmpty()) {
+				return false;
 			}
 
-			return false;
+			return true;
 		}
 
 		private MappingSqlQuery<Integer> _mappingSqlQuery;

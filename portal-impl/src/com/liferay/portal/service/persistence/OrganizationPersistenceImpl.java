@@ -6699,7 +6699,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	protected class ContainsGroup {
 		protected ContainsGroup() {
 			_mappingSqlQuery = MappingSqlQueryFactoryUtil.getMappingSqlQuery(getDataSource(),
-					"SELECT COUNT(*) AS COUNT_VALUE FROM Groups_Orgs WHERE organizationId = ? AND groupId = ?",
+					"SELECT 1 FROM Groups_Orgs WHERE organizationId = ? AND groupId = ?",
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT },
 					RowMapper.COUNT);
 		}
@@ -6709,15 +6709,11 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 						new Long(organizationId), new Long(groupId)
 					});
 
-			if (results.size() > 0) {
-				Integer count = results.get(0);
-
-				if (count.intValue() > 0) {
-					return true;
-				}
+			if (results.isEmpty()) {
+				return false;
 			}
 
-			return false;
+			return true;
 		}
 
 		private MappingSqlQuery<Integer> _mappingSqlQuery;
@@ -6858,7 +6854,7 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	protected class ContainsUser {
 		protected ContainsUser() {
 			_mappingSqlQuery = MappingSqlQueryFactoryUtil.getMappingSqlQuery(getDataSource(),
-					"SELECT COUNT(*) AS COUNT_VALUE FROM Users_Orgs WHERE organizationId = ? AND userId = ?",
+					"SELECT 1 FROM Users_Orgs WHERE organizationId = ? AND userId = ?",
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT },
 					RowMapper.COUNT);
 		}
@@ -6868,15 +6864,11 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 						new Long(organizationId), new Long(userId)
 					});
 
-			if (results.size() > 0) {
-				Integer count = results.get(0);
-
-				if (count.intValue() > 0) {
-					return true;
-				}
+			if (results.isEmpty()) {
+				return false;
 			}
 
-			return false;
+			return true;
 		}
 
 		private MappingSqlQuery<Integer> _mappingSqlQuery;

@@ -2046,7 +2046,7 @@ public class SCProductVersionPersistenceImpl extends BasePersistenceImpl<SCProdu
 	protected class ContainsSCFrameworkVersion {
 		protected ContainsSCFrameworkVersion() {
 			_mappingSqlQuery = MappingSqlQueryFactoryUtil.getMappingSqlQuery(getDataSource(),
-					"SELECT COUNT(*) AS COUNT_VALUE FROM SCFrameworkVersi_SCProductVers WHERE productVersionId = ? AND frameworkVersionId = ?",
+					"SELECT 1 FROM SCFrameworkVersi_SCProductVers WHERE productVersionId = ? AND frameworkVersionId = ?",
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT },
 					RowMapper.COUNT);
 		}
@@ -2057,15 +2057,11 @@ public class SCProductVersionPersistenceImpl extends BasePersistenceImpl<SCProdu
 						new Long(productVersionId), new Long(frameworkVersionId)
 					});
 
-			if (results.size() > 0) {
-				Integer count = results.get(0);
-
-				if (count.intValue() > 0) {
-					return true;
-				}
+			if (results.isEmpty()) {
+				return false;
 			}
 
-			return false;
+			return true;
 		}
 
 		private MappingSqlQuery<Integer> _mappingSqlQuery;

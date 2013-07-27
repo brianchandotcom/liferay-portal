@@ -81,8 +81,7 @@ public class LayoutTypePortletImpl
 	extends LayoutTypeImpl implements LayoutTypePortlet {
 
 	public static String generateInstanceId() {
-		return PwdGenerator.getPassword(
-			PwdGenerator.KEY1 + PwdGenerator.KEY2 + PwdGenerator.KEY3, 12);
+		return PwdGenerator.getRandomString(12);
 	}
 
 	public LayoutTypePortletImpl(Layout layout) {

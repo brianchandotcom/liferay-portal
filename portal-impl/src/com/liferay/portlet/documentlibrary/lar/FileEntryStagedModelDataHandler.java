@@ -462,7 +462,7 @@ public class FileEntryStagedModelDataHandler
 
 				String[] titleParts = title.split("\\.", 2);
 
-				title = titleParts[0] + PwdGenerator.getPassword();
+				title = titleParts[0] + PwdGenerator.getRandomString();
 
 				if (titleParts.length > 1) {
 					title += StringPool.PERIOD + titleParts[1];

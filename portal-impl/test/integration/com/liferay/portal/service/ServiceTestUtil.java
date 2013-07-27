@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.User;
@@ -51,7 +52,6 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.TestPropsValues;
-import com.liferay.util.PwdGenerator;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -391,11 +391,11 @@ public class ServiceTestUtil {
 	}
 
 	public static String randomString() throws Exception {
-		return PwdGenerator.getPassword();
+		return StringUtil.randomString();
 	}
 
 	public static String randomString(int length) throws Exception {
-		return PwdGenerator.getPassword(length);
+		return StringUtil.randomString(length);
 	}
 
 	public static void setUser(User user) throws Exception {

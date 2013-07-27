@@ -43,7 +43,6 @@ import com.liferay.portlet.dynamicdatamapping.util.DDMFieldsCounter;
 import com.liferay.portlet.dynamicdatamapping.util.DDMImpl;
 import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil;
-import com.liferay.util.PwdGenerator;
 
 import java.io.Serializable;
 
@@ -727,7 +726,7 @@ public class JournalConverterImpl implements JournalConverter {
 	protected void updateFieldsDisplay(Fields ddmFields, String fieldName) {
 		String fieldsDisplayValue =
 			fieldName.concat(DDMImpl.INSTANCE_SEPARATOR).concat(
-				PwdGenerator.getPassword());
+				StringUtil.randomString());
 
 		Field fieldsDisplayField = ddmFields.get(DDMImpl.FIELDS_DISPLAY_NAME);
 

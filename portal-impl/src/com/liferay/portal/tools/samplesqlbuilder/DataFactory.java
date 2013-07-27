@@ -181,7 +181,6 @@ import com.liferay.portlet.wiki.model.impl.WikiNodeModelImpl;
 import com.liferay.portlet.wiki.model.impl.WikiPageModelImpl;
 import com.liferay.portlet.wiki.model.impl.WikiPageResourceModelImpl;
 import com.liferay.portlet.wiki.social.WikiActivityKeys;
-import com.liferay.util.PwdGenerator;
 import com.liferay.util.SimpleCounter;
 
 import java.io.IOException;
@@ -1261,7 +1260,7 @@ public class DataFactory {
 		for (int i = 0; i < _maxDDLCustomFieldCount; i++) {
 			sb.append(nextDDLCustomFieldName(ddlRecordModel.getGroupId(), i));
 			sb.append(DDMImpl.INSTANCE_SEPARATOR);
-			sb.append(PwdGenerator.getPassword(4));
+			sb.append(StringUtil.randomId());
 			sb.append(StringPool.COMMA);
 		}
 

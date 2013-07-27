@@ -773,8 +773,7 @@ public class JournalConverterImpl implements JournalConverter {
 
 				addMetadataEntry(metadataElement, "label", name);
 
-				element.addAttribute(
-					"name", "option" + PwdGenerator.getPassword(4));
+				element.addAttribute("name", "option" + StringUtil.randomId());
 				element.addAttribute("type", "option");
 				element.addAttribute("value", name);
 

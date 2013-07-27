@@ -16,8 +16,8 @@ package com.liferay.taglib.ui;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.taglib.FileAvailabilityUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.util.PwdGenerator;
 
 import javax.servlet.jsp.JspWriter;
 
@@ -44,7 +44,7 @@ public class IconHelpTag extends IconTag {
 
 		JspWriter jspWriter = pageContext.getOut();
 
-		String id = PwdGenerator.getPassword(PwdGenerator.KEY3, 4);
+		String id = StringUtil.randomId();
 
 		jspWriter.write("<span class=\"taglib-icon-help\"><img alt=\"\" ");
 		jspWriter.write("aria-labelledby=\"");

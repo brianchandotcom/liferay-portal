@@ -15,9 +15,9 @@
 package com.liferay.taglib.aui;
 
 import com.liferay.portal.kernel.servlet.taglib.aui.ToolTag;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.aui.base.BasePanelTag;
-import com.liferay.util.PwdGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,7 +67,7 @@ public class PanelTag extends BasePanelTag {
 		String id = getId();
 
 		if (Validator.isNull(id)) {
-			id = PwdGenerator.getPassword(PwdGenerator.KEY3, 4);
+			id = StringUtil.randomId();
 		}
 
 		setNamespacedAttribute(request, "id", id);

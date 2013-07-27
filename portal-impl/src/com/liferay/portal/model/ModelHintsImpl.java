@@ -100,7 +100,7 @@ public class ModelHintsImpl implements ModelHints {
 	@Override
 	public String buildCustomValidatorName(String validatorName) {
 		return validatorName.concat(StringPool.UNDERLINE).concat(
-			PwdGenerator.getPassword(PwdGenerator.KEY3, 4));
+			PwdGenerator.getRandomId());
 	}
 
 	@Override

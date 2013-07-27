@@ -152,7 +152,7 @@ public class DDMXSDImpl implements DDMXSD {
 		StringBundler sb = new StringBundler(fieldRepetition);
 
 		while (fieldRepetition > 0) {
-			fieldStructure.put("fieldNamespace", PwdGenerator.getPassword(4));
+			fieldStructure.put("fieldNamespace", PwdGenerator.getRandomId());
 			fieldStructure.put("valueIndex", ddmFieldsCounter.get(name));
 
 			if ((fields != null) && fields.contains(name)) {
@@ -471,7 +471,7 @@ public class DDMXSDImpl implements DDMXSD {
 			freeMarkerContext.put("fields", fields);
 		}
 
-		fieldStructure.put("fieldNamespace", PwdGenerator.getPassword(4));
+		fieldStructure.put("fieldNamespace", PwdGenerator.getRandomId());
 		fieldStructure.put("valueIndex", ddmFieldsCounter.get(name));
 
 		List<Element> dynamicElementElements = element.elements(
@@ -639,7 +639,7 @@ public class DDMXSDImpl implements DDMXSD {
 			fieldContext.put(attribute.getName(), attribute.getValue());
 		}
 
-		fieldContext.put("fieldNamespace", PwdGenerator.getPassword(4));
+		fieldContext.put("fieldNamespace", PwdGenerator.getRandomId());
 
 		fieldsContext.put(name, fieldContext);
 

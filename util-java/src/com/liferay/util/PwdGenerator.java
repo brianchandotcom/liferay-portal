@@ -63,6 +63,10 @@ public class PwdGenerator {
 		return _getPassword(true, PwdGenerator.KEY2, 8, false);
 	}
 
+	public static String getRandomId() {
+		return _getPassword(false, PwdGenerator.KEY3, 4, false);
+	}
+
 	public static String getSecurePassword() {
 		return getSecurePassword(8);
 	}

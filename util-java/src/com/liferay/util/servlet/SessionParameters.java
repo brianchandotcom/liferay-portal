@@ -54,7 +54,8 @@ public class SessionParameters {
 
 		if (newParameter == null) {
 			newParameter =
-				PwdGenerator.getPassword() + StringPool.UNDERLINE + parameter;
+				PwdGenerator.getRandomString() + StringPool.UNDERLINE +
+					parameter;
 
 			parameters.put(parameter, newParameter);
 		}
@@ -77,7 +78,8 @@ public class SessionParameters {
 
 		if (newParameter == null) {
 			newParameter =
-				PwdGenerator.getPassword() + StringPool.UNDERLINE + parameter;
+				PwdGenerator.getRandomString() + StringPool.UNDERLINE +
+					parameter;
 
 			parameters.put(parameter, newParameter);
 		}

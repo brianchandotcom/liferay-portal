@@ -181,7 +181,8 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 		ComboPooledDataSource comboPooledDataSource =
 			new ComboPooledDataSource();
 
-		String identityToken = PwdGenerator.getPassword(PwdGenerator.KEY2, 8);
+		String identityToken = PwdGenerator.getRandomString(
+			PwdGenerator.KEY2, 8);
 
 		comboPooledDataSource.setIdentityToken(identityToken);
 
@@ -275,7 +276,7 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 			}
 		}
 
-		String poolName = PwdGenerator.getPassword(PwdGenerator.KEY2, 8);
+		String poolName = PwdGenerator.getRandomString(PwdGenerator.KEY2, 8);
 
 		poolProperties.setName(poolName);
 

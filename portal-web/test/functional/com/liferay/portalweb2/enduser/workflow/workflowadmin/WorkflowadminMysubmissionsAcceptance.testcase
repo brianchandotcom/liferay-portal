@@ -3,7 +3,7 @@
 	<set-up>
 		<execute macro="User#firstLoginPG" />
 
-		<execute macro="Page#gotoContentCP">
+		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Workflow Configuration" />
 		</execute>
 

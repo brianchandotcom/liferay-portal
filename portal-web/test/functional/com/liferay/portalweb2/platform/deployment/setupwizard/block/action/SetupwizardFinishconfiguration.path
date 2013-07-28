@@ -20,12 +20,12 @@
 </tr>
 <tr>
 	<td>SUCCESS_MESSAGE</td>
-	<td>//span[@class='alert alert-success span12']</td>
+	<td>//div[@class='alert alert-success']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CONFIGURATION_SAVE_MESSAGE</td>
-	<td>//span[@class='field-hint']</td>
+	<td>//p[@class='lfr-setup-notice']</td>
 	<td></td>
 </tr>
 <tr>

@@ -118,6 +118,10 @@
 			<var name="vocabularyName" value="${vocabularyName}" />
 		</execute>
 
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Categories" />
+		</execute>
+
 		<execute macro="Subcategory#deleteCPByActions">
 			<var name="categoryName" value="${categoryName}" />
 			<var name="subcategoryName" value="${subcategoryName}" />

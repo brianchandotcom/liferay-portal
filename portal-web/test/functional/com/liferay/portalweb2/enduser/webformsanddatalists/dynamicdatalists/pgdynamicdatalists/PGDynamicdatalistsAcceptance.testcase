@@ -131,6 +131,10 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
+		<execute macro="Page#gotoPG">
+			<var name="portletName" value="${pageName}" />
+		</execute>
+
 		<execute macro="List#viewPG">
 			<var name="listName" value="${listNameEdit}" />
 			<var name="pageName" value="${pageName}" />

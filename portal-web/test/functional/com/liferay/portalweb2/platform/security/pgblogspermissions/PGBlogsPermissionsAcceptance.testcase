@@ -22,9 +22,11 @@
 
 		<execute macro="User#logoutPG" />
 
-		<execute macro="BlogsEntry#viewPortletAsGuestPG">
+		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
+
+		<execute macro="BlogsEntry#viewPortletAsGuestPG" />
 	</command>
 
 	<tear-down>

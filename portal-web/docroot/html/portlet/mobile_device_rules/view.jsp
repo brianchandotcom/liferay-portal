@@ -95,16 +95,18 @@ portletURL.setParameter("chooseCallback", chooseCallback);
 			String taglibOnClick = null;
 
 			if (Validator.isNull(chooseCallback)) {
+				if (MDRRuleGroupPermissionUtil.contains(permissionChecker, ruleGroup, ActionKeys.UPDATE)) {
 			%>
 
-				<liferay-portlet:renderURL var="editURL">
-					<portlet:param name="struts_action" value="/mobile_device_rules/edit_rule_group" />
-					<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
-					<portlet:param name="ruleGroupId" value="<%= String.valueOf(ruleGroup.getRuleGroupId()) %>" />
-				</liferay-portlet:renderURL>
+					<liferay-portlet:renderURL var="editURL">
+						<portlet:param name="struts_action" value="/mobile_device_rules/edit_rule_group" />
+						<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
+						<portlet:param name="ruleGroupId" value="<%= String.valueOf(ruleGroup.getRuleGroupId()) %>" />
+					</liferay-portlet:renderURL>
 
 			<%
-				rowHREF = editURL;
+					rowHREF = editURL;
+				}
 			}
 			else {
 				MDRRuleGroupInstance ruleGroupInstance = MDRRuleGroupInstanceLocalServiceUtil.fetchRuleGroupInstance(className, classPK, ruleGroup.getRuleGroupId());

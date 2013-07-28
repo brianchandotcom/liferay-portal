@@ -566,8 +566,6 @@ AUI.add(
 					_showSelectPopup: function(event) {
 						var instance = this;
 
-						event.domEvent.preventDefault();
-
 						instance._showPopup(event);
 
 						var popup = instance._popup;

@@ -2161,6 +2161,15 @@ public class JournalArticleLocalServiceWrapper
 			ddmTemplateKey);
 	}
 
+	@Override
+	public java.lang.String getUniqueUrlTitle(long groupId,
+		java.lang.String articleId, java.lang.String urlTitle)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _journalArticleLocalService.getUniqueUrlTitle(groupId,
+			articleId, urlTitle);
+	}
+
 	/**
 	* Returns <code>true</code> if the specified web content article exists.
 	*

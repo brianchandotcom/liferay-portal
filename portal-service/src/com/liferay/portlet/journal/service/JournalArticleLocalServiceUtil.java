@@ -2070,6 +2070,13 @@ public class JournalArticleLocalServiceUtil {
 		return getService().getTemplateArticlesCount(groupId, ddmTemplateKey);
 	}
 
+	public static java.lang.String getUniqueUrlTitle(long groupId,
+		java.lang.String articleId, java.lang.String urlTitle)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getUniqueUrlTitle(groupId, articleId, urlTitle);
+	}
+
 	/**
 	* Returns <code>true</code> if the specified web content article exists.
 	*

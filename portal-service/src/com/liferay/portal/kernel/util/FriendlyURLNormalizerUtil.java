@@ -16,6 +16,8 @@ package com.liferay.portal.kernel.util;
 
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 
+import java.util.regex.Pattern;
+
 /**
  * @author Julio Camarero
  * @author Samuel Kong
@@ -33,8 +35,18 @@ public class FriendlyURLNormalizerUtil {
 		return getFriendlyURLNormalizer().normalize(friendlyURL);
 	}
 
+	/**
+	 * @deprecated As of 6.2.0
+	 */
 	public static String normalize(String friendlyURL, char[] replaceChars) {
 		return getFriendlyURLNormalizer().normalize(friendlyURL, replaceChars);
+	}
+
+	public static String normalize(
+		String friendlyURL, Pattern friendlyURLPattern) {
+
+		return getFriendlyURLNormalizer().normalize(
+			friendlyURL, friendlyURLPattern);
 	}
 
 	public void setFriendlyURLNormalizer(

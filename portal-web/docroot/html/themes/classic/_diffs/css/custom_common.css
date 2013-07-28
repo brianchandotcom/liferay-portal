@@ -291,7 +291,7 @@
 					left: auto;
 				}
 
-				.user-avatar-link > img {
+				.user-avatar-image {
 					width: 27px;
 				}
 			}
@@ -595,7 +595,7 @@
 
 			li.dropdown {
 				&.user-avatar {
-					.user-avatar-link > img {
+					.user-avatar-image {
 						@include border-radius(50%);
 						@include box-shadow(0 0 0 2px #5594E0);
 					}

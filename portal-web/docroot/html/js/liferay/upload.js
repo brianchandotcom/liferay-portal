@@ -657,9 +657,11 @@ AUI.add(
 							A.io.request(
 								deleteFile,
 								{
-									data: {
-										fileName : li.attr('data-fileName')
-									},
+									data: instance.ns(
+										{
+											fileName: li.attr('data-fileName')
+										}
+									),
 									dataType: 'json',
 									on: {
 										success: function(event, id, obj) {

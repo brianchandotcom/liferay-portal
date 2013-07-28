@@ -91,13 +91,7 @@ public class BlogsIndexer extends BaseIndexer {
 			BooleanQuery contextQuery, SearchContext searchContext)
 		throws Exception {
 
-		int status = GetterUtil.getInteger(
-			searchContext.getAttribute(Field.STATUS),
-			WorkflowConstants.STATUS_APPROVED);
-
-		if (status != WorkflowConstants.STATUS_ANY) {
-			contextQuery.addRequiredTerm(Field.STATUS, status);
-		}
+		addStatus(contextQuery, searchContext);
 	}
 
 	@Override

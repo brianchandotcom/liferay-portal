@@ -156,7 +156,7 @@ public class MBTestUtil {
 		}
 
 		MBMessage message = MBMessageLocalServiceUtil.addMessage(
-			TestPropsValues.getUserId(), ServiceTestUtil.randomString(),
+			serviceContext.getUserId(), ServiceTestUtil.randomString(),
 			categoryId, subject, body, serviceContext);
 
 		if (!approved) {

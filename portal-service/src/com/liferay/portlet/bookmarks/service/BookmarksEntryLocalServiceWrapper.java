@@ -520,6 +520,15 @@ public class BookmarksEntryLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.search.Hits search(long groupId,
+		long userId, long creatorUserId, int status, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _bookmarksEntryLocalService.search(groupId, userId,
+			creatorUserId, status, start, end);
+	}
+
+	@Override
 	public void subscribeEntry(long userId, long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

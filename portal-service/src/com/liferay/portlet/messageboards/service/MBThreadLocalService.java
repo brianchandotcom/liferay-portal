@@ -519,6 +519,19 @@ public interface MBThreadLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.kernel.search.Hits search(long groupId,
+		long userId, long creatorUserId, int status, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.kernel.search.Hits search(long groupId,
+		long userId, long creatorUserId, long startDate, long endDate,
+		int status, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	public com.liferay.portlet.messageboards.model.MBThread splitThread(
 		long messageId, java.lang.String subject,
 		com.liferay.portal.service.ServiceContext serviceContext)

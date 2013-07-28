@@ -2036,6 +2036,24 @@ public class DLAppServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.search.Hits search(
+		long repositoryId, long creatorUserId, int status, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .search(repositoryId, creatorUserId, status, start, end);
+	}
+
+	public static com.liferay.portal.kernel.search.Hits search(
+		long repositoryId, long creatorUserId, long folderId,
+		java.lang.String[] mimeTypes, int status, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .search(repositoryId, creatorUserId, folderId, mimeTypes,
+			status, start, end);
+	}
+
+	public static com.liferay.portal.kernel.search.Hits search(
 		long repositoryId,
 		com.liferay.portal.kernel.search.SearchContext searchContext)
 		throws com.liferay.portal.kernel.search.SearchException {

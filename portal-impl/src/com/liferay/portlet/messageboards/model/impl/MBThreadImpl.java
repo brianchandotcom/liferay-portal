@@ -17,6 +17,8 @@ package com.liferay.portlet.messageboards.model.impl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Lock;
 import com.liferay.portal.model.Repository;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
@@ -30,6 +32,10 @@ import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * @author Brian Wing Shun Chan
@@ -131,6 +137,20 @@ public class MBThreadImpl extends MBThreadBaseImpl {
 		}
 
 		return null;
+	}
+
+	@Override
+	public long[] getParticipantsIds() throws SystemException {
+		List<MBMessage> messages = MBMessageLocalServiceUtil.getThreadMessages(
+			getThreadId(), WorkflowConstants.STATUS_ANY);
+
+		Set<Long> userIds = new HashSet<Long>();
+
+		for (MBMessage message : messages) {
+			userIds.add(message.getUserId());
+		}
+
+		return ArrayUtil.toLongArray(userIds);
 	}
 
 	@Override

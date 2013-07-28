@@ -206,6 +206,15 @@ public class BookmarksEntryServiceWrapper implements BookmarksEntryService,
 	}
 
 	@Override
+	public com.liferay.portal.kernel.search.Hits search(long groupId,
+		long creatorUserId, int status, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _bookmarksEntryService.search(groupId, creatorUserId, status,
+			start, end);
+	}
+
+	@Override
 	public void subscribeEntry(long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

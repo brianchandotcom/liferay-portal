@@ -1828,6 +1828,19 @@ public interface DLAppService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.kernel.search.Hits search(long repositoryId,
+		long creatorUserId, int status, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.kernel.search.Hits search(long repositoryId,
+		long creatorUserId, long folderId, java.lang.String[] mimeTypes,
+		int status, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.kernel.search.Hits search(long repositoryId,
 		com.liferay.portal.kernel.search.SearchContext searchContext)
 		throws com.liferay.portal.kernel.search.SearchException;
 

@@ -56,32 +56,52 @@
 
 			results = AssetEntryServiceUtil.getEntries(assetEntryQuery);
 		}
-		else if (topLink.equals("my-posts")) {
-			total = MBThreadServiceUtil.getGroupThreadsCount(scopeGroupId, groupThreadsUserId, WorkflowConstants.STATUS_ANY);
+		else {
+			if (topLink.equals("my-posts") || topLink.equals("recent-posts")) {
+				Hits hits = null;
 
-			searchContainer.setTotal(total);
+				if (topLink.equals("my-posts")) {
+					hits = MBThreadServiceUtil.search(scopeGroupId, groupThreadsUserId, WorkflowConstants.STATUS_ANY, searchContainer.getStart(), searchContainer.getEnd());
+				}
+				else {
+					Calendar calendar = Calendar.getInstance();
 
-			results = MBThreadServiceUtil.getGroupThreads(scopeGroupId, groupThreadsUserId, WorkflowConstants.STATUS_ANY, searchContainer.getStart(), searchContainer.getEnd());
-		}
-		else if (topLink.equals("my-subscriptions")) {
-			total = MBThreadServiceUtil.getGroupThreadsCount(scopeGroupId, groupThreadsUserId, WorkflowConstants.STATUS_APPROVED, true);
+					int offset = GetterUtil.getInteger(recentPostsDateOffset);
 
-			searchContainer.setTotal(total);
+					calendar.add(Calendar.DATE, -offset);
 
-			results = MBThreadServiceUtil.getGroupThreads(scopeGroupId, groupThreadsUserId, WorkflowConstants.STATUS_APPROVED, true, searchContainer.getStart(), searchContainer.getEnd());
-		}
-		else if (topLink.equals("recent-posts")) {
-			Calendar calendar = Calendar.getInstance();
+					Date endDate = new Date();
+					Date startDate = calendar.getTime();
 
-			int offset = GetterUtil.getInteger(recentPostsDateOffset);
+					hits = MBThreadServiceUtil.search(scopeGroupId, groupThreadsUserId, startDate.getTime(), endDate.getTime(), WorkflowConstants.STATUS_APPROVED, searchContainer.getStart(), searchContainer.getEnd());
+				}
 
-			calendar.add(Calendar.DATE, -offset);
+				searchContainer.setTotal(hits.getLength());
 
-			total = MBThreadServiceUtil.getGroupThreadsCount(scopeGroupId, groupThreadsUserId, calendar.getTime(), WorkflowConstants.STATUS_APPROVED);
+				for (int i = 0; i < hits.getDocs().length; i++) {
+					Document doc = hits.doc(i);
 
-			searchContainer.setTotal(total);
+					long classPK = GetterUtil.getLong(doc.get(Field.ENTRY_CLASS_PK));
 
-			results = MBThreadServiceUtil.getGroupThreads(scopeGroupId, groupThreadsUserId, calendar.getTime(), WorkflowConstants.STATUS_APPROVED, searchContainer.getStart(), searchContainer.getEnd());
+					MBThread thread = null;
+
+					try {
+						thread = MBThreadLocalServiceUtil.getMBThread(classPK);
+					}
+					catch (Exception e) {
+						if (_log.isWarnEnabled()) {
+							_log.warn("MB Message search index is stale and contains message {" + classPK + "}");
+						}
+
+						continue;
+					}
+
+					results.add(thread);
+				}
+			}
+			else if (topLink.equals("my-subscriptions")) {
+				results = MBThreadServiceUtil.getGroupThreads(scopeGroupId, groupThreadsUserId, WorkflowConstants.STATUS_APPROVED, true, searchContainer.getStart(), searchContainer.getEnd());
+			}
 		}
 
 		pageContext.setAttribute("results", results);

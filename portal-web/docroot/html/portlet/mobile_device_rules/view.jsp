@@ -45,7 +45,7 @@ portletURL.setParameter("chooseCallback", chooseCallback);
 	RowChecker rowChecker = null;
 
 	if (Validator.isNull(chooseCallback)) {
-		rowChecker = new RowChecker(renderResponse);
+		rowChecker = new RuleGroupChecker(renderResponse);
 	}
 	%>
 

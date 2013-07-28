@@ -131,20 +131,20 @@ public class EditRuleGroupAction extends PortletAction {
 	protected void deleteRuleGroups(ActionRequest actionRequest)
 		throws Exception {
 
-		long[] deleteRuleGroupIds = null;
+		long[] ruleGroupIds = null;
 
 		long ruleGroupId = ParamUtil.getLong(actionRequest, "ruleGroupId");
 
 		if (ruleGroupId > 0) {
-			deleteRuleGroupIds = new long[] {ruleGroupId};
+			ruleGroupIds = new long[] {ruleGroupId};
 		}
 		else {
-			deleteRuleGroupIds = StringUtil.split(
-				ParamUtil.getString(actionRequest, "deleteRuleIds"), 0L);
+			ruleGroupIds = StringUtil.split(
+				ParamUtil.getString(actionRequest, "ruleGroupIds"), 0L);
 		}
 
-		for (long deleteRuleGroupId : deleteRuleGroupIds) {
-			MDRRuleGroupServiceUtil.deleteRuleGroup(deleteRuleGroupId);
+		for (long curRuleGroupId : ruleGroupIds) {
+			MDRRuleGroupServiceUtil.deleteRuleGroup(curRuleGroupId);
 		}
 	}
 

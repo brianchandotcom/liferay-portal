@@ -37,11 +37,13 @@ portletURL.setParameter("chooseCallback", chooseCallback);
 <aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
-	<aui:input name="deleteRuleIds" type="hidden" />
+	<aui:input name="ruleGroupIds" type="hidden" />
 
 	<%
 	RuleGroupSearch ruleGroupSearch = new RuleGroupSearch(liferayPortletRequest, portletURL);
+
 	RowChecker rowChecker = null;
+
 	if (Validator.isNull(chooseCallback)) {
 		rowChecker = new RowChecker(renderResponse);
 	}
@@ -150,7 +152,7 @@ portletURL.setParameter("chooseCallback", chooseCallback);
 			if (confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-delete-this") %>')) {
 				document.<portlet:namespace />fm.method = "post";
 				document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= Constants.DELETE %>";
-				document.<portlet:namespace />fm.<portlet:namespace />deleteRuleIds.value = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
+				document.<portlet:namespace />fm.<portlet:namespace />ruleGroupIds.value = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
 
 				submitForm(document.<portlet:namespace />fm, "<portlet:actionURL><portlet:param name="struts_action" value="/mobile_device_rules/edit_rule_group" /></portlet:actionURL>");
 			}

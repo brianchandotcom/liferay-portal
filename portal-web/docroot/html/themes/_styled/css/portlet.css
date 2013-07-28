@@ -94,13 +94,13 @@ body.portlet {
 	@extend %portlet-action-bar;
 }
 
-.portlet-dynamic-data-list-display, .portlet-journal-content, .portlet-polls-display {
+.portlet-content {
 	.lfr-icon-actions {
 		@extend %portlet-action-bar;
 	}
 }
 
-.portlet-dynamic-data-list-display, .portlet-journal-content, .portlet-polls-display {
+.portlet-content {
 	.lfr-icon-actions {
 		float: left;
 		margin: 1px 10px 1px 1px;
@@ -219,7 +219,7 @@ body.portlet {
 		@include opacity(0.6);
 	}
 
-	&.portlet-dynamic-data-list-display, &.portlet-journal-content, &.portlet-polls-display {
+	.portlet-content {
 		.lfr-icon-actions {
 			@include opacity(1);
 		}
@@ -234,7 +234,7 @@ body.portlet {
 	}
 }
 
-.portlet-dynamic-data-list-display, .portlet-journal-content, .portlet-polls-display {
+.portlet-content {
 	&:hover {
 		.lfr-icon-actions {
 			@extend %portlet-action-bar-hover;
@@ -658,7 +658,7 @@ body.portlet {
 		@include opacity(0.5);
 	}
 
-	.portlet-dynamic-data-list-display, .portlet-journal-content, .portlet-polls-display {
+	.portlet-content {
 		.lfr-icon-actions {
 			@include opacity(0.5);
 		}
@@ -674,7 +674,7 @@ body.portlet {
 }
 
 .ie6, .ie7 {
-	.portlet-dynamic-data-list-display, .portlet-journal-content, .portlet-polls-display {
+	.portlet-content {
 		.icons-container {
 			overflow: visible;
 		}

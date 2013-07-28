@@ -35,11 +35,20 @@ else {
 }
 
 boolean inheritLocales = GetterUtil.getBoolean(typeSettingsProperties.getProperty("inheritLocales"), true);
+
+LayoutSet publicLayoutSet = liveGroup.getPublicLayoutSet();
+LayoutSet privateLayoutSet = liveGroup.getPrivateLayoutSet();
+
+boolean disabledLocaleSettings = false;
+
+if (publicLayoutSet.isLayoutSetPrototypeLinkEnabled() || privateLayoutSet.isLayoutSetPrototypeLinkEnabled()) {
+	disabledLocaleSettings = true;
+}
 %>
 
-<aui:input checked="<%= inheritLocales %>" id="inheritLocales" label="use-the-default-language-options" name="TypeSettingsProperties--inheritLocales--" type="radio" value="<%= true %>" />
+<aui:input checked="<%= inheritLocales %>" disabled="<%= disabledLocaleSettings %>" id="inheritLocales" label="use-the-default-language-options" name="TypeSettingsProperties--inheritLocales--" type="radio" value="<%= true %>" />
 
-<aui:input checked="<%= !inheritLocales %>" id="customLocales" label="define-a-custom-default-language-and-additional-available-languages-for-this-site" name="TypeSettingsProperties--inheritLocales--" type="radio" value="<%= false %>" />
+<aui:input checked="<%= !inheritLocales %>" disabled="<%= disabledLocaleSettings %>" id="customLocales" label="define-a-custom-default-language-and-additional-available-languages-for-this-site" name="TypeSettingsProperties--inheritLocales--" type="radio" value="<%= false %>" />
 
 <aui:fieldset id="customLocalesFieldset">
 	<aui:fieldset cssClass="default-language" label="default-language">
@@ -76,7 +85,7 @@ boolean inheritLocales = GetterUtil.getBoolean(typeSettingsProperties.getPropert
 	%>
 
 	<aui:fieldset cssClass="default-language" label="default-language">
-		<aui:select label="" name="TypeSettingsProperties--languageId--">
+		<aui:select disabled="<%= disabledLocaleSettings %>"  label="" name="TypeSettingsProperties--languageId--">
 
 			<%
 			Locale siteDefaultLocale = PortalUtil.getSiteDefaultLocale(liveGroup.getGroupId());

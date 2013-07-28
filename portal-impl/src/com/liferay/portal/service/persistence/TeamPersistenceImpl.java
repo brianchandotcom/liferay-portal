@@ -2872,7 +2872,7 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 	protected class ContainsUser {
 		protected ContainsUser() {
 			_mappingSqlQuery = MappingSqlQueryFactoryUtil.getMappingSqlQuery(getDataSource(),
-					"SELECT COUNT(*) AS COUNT_VALUE FROM Users_Teams WHERE teamId = ? AND userId = ?",
+					"SELECT 1 FROM Users_Teams WHERE teamId = ? AND userId = ?",
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT },
 					RowMapper.COUNT);
 		}
@@ -2882,15 +2882,11 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 						new Long(teamId), new Long(userId)
 					});
 
-			if (results.size() > 0) {
-				Integer count = results.get(0);
-
-				if (count.intValue() > 0) {
-					return true;
-				}
+			if (results.isEmpty()) {
+				return false;
 			}
 
-			return false;
+			return true;
 		}
 
 		private MappingSqlQuery<Integer> _mappingSqlQuery;
@@ -3030,7 +3026,7 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 	protected class ContainsUserGroup {
 		protected ContainsUserGroup() {
 			_mappingSqlQuery = MappingSqlQueryFactoryUtil.getMappingSqlQuery(getDataSource(),
-					"SELECT COUNT(*) AS COUNT_VALUE FROM UserGroups_Teams WHERE teamId = ? AND userGroupId = ?",
+					"SELECT 1 FROM UserGroups_Teams WHERE teamId = ? AND userGroupId = ?",
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT },
 					RowMapper.COUNT);
 		}
@@ -3040,15 +3036,11 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 						new Long(teamId), new Long(userGroupId)
 					});
 
-			if (results.size() > 0) {
-				Integer count = results.get(0);
-
-				if (count.intValue() > 0) {
-					return true;
-				}
+			if (results.isEmpty()) {
+				return false;
 			}
 
-			return false;
+			return true;
 		}
 
 		private MappingSqlQuery<Integer> _mappingSqlQuery;

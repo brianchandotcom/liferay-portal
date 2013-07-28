@@ -2377,7 +2377,7 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 	protected class ContainsAssetEntry {
 		protected ContainsAssetEntry() {
 			_mappingSqlQuery = MappingSqlQueryFactoryUtil.getMappingSqlQuery(getDataSource(),
-					"SELECT COUNT(*) AS COUNT_VALUE FROM AssetEntries_AssetTags WHERE tagId = ? AND entryId = ?",
+					"SELECT 1 FROM AssetEntries_AssetTags WHERE tagId = ? AND entryId = ?",
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT },
 					RowMapper.COUNT);
 		}
@@ -2387,15 +2387,11 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 						new Long(tagId), new Long(entryId)
 					});
 
-			if (results.size() > 0) {
-				Integer count = results.get(0);
-
-				if (count.intValue() > 0) {
-					return true;
-				}
+			if (results.isEmpty()) {
+				return false;
 			}
 
-			return false;
+			return true;
 		}
 
 		private MappingSqlQuery<Integer> _mappingSqlQuery;

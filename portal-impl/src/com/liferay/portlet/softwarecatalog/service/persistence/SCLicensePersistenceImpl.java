@@ -2984,7 +2984,7 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	protected class ContainsSCProductEntry {
 		protected ContainsSCProductEntry() {
 			_mappingSqlQuery = MappingSqlQueryFactoryUtil.getMappingSqlQuery(getDataSource(),
-					"SELECT COUNT(*) AS COUNT_VALUE FROM SCLicenses_SCProductEntries WHERE licenseId = ? AND productEntryId = ?",
+					"SELECT 1 FROM SCLicenses_SCProductEntries WHERE licenseId = ? AND productEntryId = ?",
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT },
 					RowMapper.COUNT);
 		}
@@ -2994,15 +2994,11 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 						new Long(licenseId), new Long(productEntryId)
 					});
 
-			if (results.size() > 0) {
-				Integer count = results.get(0);
-
-				if (count.intValue() > 0) {
-					return true;
-				}
+			if (results.isEmpty()) {
+				return false;
 			}
 
-			return false;
+			return true;
 		}
 
 		private MappingSqlQuery<Integer> _mappingSqlQuery;

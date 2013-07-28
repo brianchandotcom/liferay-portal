@@ -15,7 +15,6 @@
 package com.liferay.portal.kernel.dao.jdbc;
 
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
 /**
  * @author Brian Wing Shun Chan
@@ -23,10 +22,8 @@ import java.sql.SQLException;
 public class CountRowMapper implements RowMapper<Integer> {
 
 	@Override
-	public Integer mapRow(ResultSet rs, int rowNumber) throws SQLException {
-		return new Integer(rs.getInt(_COUNT_VALUE));
+	public Integer mapRow(ResultSet rs, int rowNumber) {
+		return 1;
 	}
-
-	private static final String _COUNT_VALUE = "COUNT_VALUE";
 
 }

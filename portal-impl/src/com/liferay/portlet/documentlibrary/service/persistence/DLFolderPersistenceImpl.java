@@ -9381,7 +9381,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	protected class ContainsDLFileEntryType {
 		protected ContainsDLFileEntryType() {
 			_mappingSqlQuery = MappingSqlQueryFactoryUtil.getMappingSqlQuery(getDataSource(),
-					"SELECT COUNT(*) AS COUNT_VALUE FROM DLFileEntryTypes_DLFolders WHERE folderId = ? AND fileEntryTypeId = ?",
+					"SELECT 1 FROM DLFileEntryTypes_DLFolders WHERE folderId = ? AND fileEntryTypeId = ?",
 					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT },
 					RowMapper.COUNT);
 		}
@@ -9391,15 +9391,11 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 						new Long(folderId), new Long(fileEntryTypeId)
 					});
 
-			if (results.size() > 0) {
-				Integer count = results.get(0);
-
-				if (count.intValue() > 0) {
-					return true;
-				}
+			if (results.isEmpty()) {
+				return false;
 			}
 
-			return false;
+			return true;
 		}
 
 		private MappingSqlQuery<Integer> _mappingSqlQuery;

@@ -46,7 +46,7 @@
 		/>
 	</#list>
 
-	<#assign publicPageCount = publicLayoutModels?size + maxDDLRecordSetCount + maxJournalArticleCount>
+	<#assign publicPageCount = publicLayoutModels?size + dataFactory.maxDDLRecordSetCount + dataFactory.maxJournalArticleCount>
 
 	<@insertGroup
 		_groupModel = groupModel

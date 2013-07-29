@@ -61,7 +61,7 @@ public class NetChecker extends BaseChecker {
 	}
 
 	protected boolean hasGetProxySelector(Permission permission) {
-		int stackIndex = getStackIndex(11, 10);
+		int stackIndex = Reflection.getStackIndex(11, 10);
 
 		Class<?> callerClass = Reflection.getCallerClass(stackIndex);
 
@@ -73,7 +73,7 @@ public class NetChecker extends BaseChecker {
 	}
 
 	protected boolean hasSpecifyStreamHandler(Permission permission) {
-		int stackIndex = getStackIndex(11, 10);
+		int stackIndex = Reflection.getStackIndex(11, 10);
 
 		Class<?> callerClass = Reflection.getCallerClass(stackIndex);
 

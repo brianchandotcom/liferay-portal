@@ -118,7 +118,7 @@ public class PortalServiceChecker extends BaseChecker {
 		String servletContextName, String className, String methodName,
 		Permission permission) {
 
-		int stackIndex = getStackIndex(15, 14);
+		int stackIndex = Reflection.getStackIndex(15, 14);
 
 		Class<?> callerClass = Reflection.getCallerClass(stackIndex);
 

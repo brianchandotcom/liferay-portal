@@ -247,7 +247,7 @@ public class PortalRuntimeChecker extends BaseChecker {
 			return true;
 		}
 
-		int stackIndex = getStackIndex(13, 12);
+		int stackIndex = Reflection.getStackIndex(13, 12);
 
 		Class<?> callerClass = Reflection.getCallerClass(stackIndex);
 
@@ -292,7 +292,7 @@ public class PortalRuntimeChecker extends BaseChecker {
 	protected boolean hasGetClassLoader(
 		String classLoaderReferenceId, Permission permission) {
 
-		int stackIndex = getStackIndex(12, 11);
+		int stackIndex = Reflection.getStackIndex(12, 11);
 
 		if (_classLoaderReferenceIds.contains(classLoaderReferenceId)) {
 			return true;

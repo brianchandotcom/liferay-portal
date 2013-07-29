@@ -79,7 +79,7 @@ public class ReflectChecker extends BaseChecker {
 			}
 		}
 
-		int stackIndex = getStackIndex(10, 9);
+		int stackIndex = Reflection.getStackIndex(10, 9);
 
 		Class<?> callerClass = Reflection.getCallerClass(stackIndex);
 

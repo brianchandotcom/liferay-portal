@@ -66,7 +66,8 @@ public class SecurityChecker extends BaseChecker {
 	}
 
 	protected boolean hasGetPolicy(Permission permission) {
-		int stackIndex = getStackIndex(11, 11, 10);
+		int stackIndex = Reflection.getStackIndex(
+			new int[] {11, 11}, new int[] {11, 10});
 
 		Class<?> callerClass = Reflection.getCallerClass(stackIndex);
 
@@ -80,7 +81,8 @@ public class SecurityChecker extends BaseChecker {
 	}
 
 	protected boolean hasSetPolicy(Permission permission) {
-		int stackIndex = getStackIndex(11, 11, 10);
+		int stackIndex = Reflection.getStackIndex(
+			new int[] {11, 11}, new int[] {11, 10});
 
 		Class<?> callerClass = Reflection.getCallerClass(stackIndex);
 

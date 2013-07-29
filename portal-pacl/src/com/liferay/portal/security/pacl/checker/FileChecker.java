@@ -209,7 +209,7 @@ public class FileChecker extends BaseChecker {
 			return true;
 		}
 
-		int stackIndex = getStackIndex(10, 9);
+		int stackIndex = Reflection.getStackIndex(10, 9);
 
 		Class<?> callerClass1 = Reflection.getCallerClass(stackIndex);
 		Class<?> callerClass2 = Reflection.getCallerClass(stackIndex + 1);

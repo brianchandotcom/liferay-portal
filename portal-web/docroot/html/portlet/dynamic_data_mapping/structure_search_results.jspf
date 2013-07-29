@@ -20,7 +20,7 @@ StructureSearchTerms searchTerms = (StructureSearchTerms)searchContainer.getSear
 long[] groupIds = new long[] {groupId};
 
 if (showGlobalScope) {
-	groupIds = PortalUtil.getSiteAndCompanyGroupIds(themeDisplay);
+	groupIds = PortalUtil.getSiteAndCompanyGroupIds(groupId);
 }
 
 if (searchTerms.isAdvancedSearch()) {

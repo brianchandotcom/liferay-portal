@@ -19,6 +19,8 @@
 <%
 String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all");
 
+long groupId = ParamUtil.getLong(request, "groupId", scopeGroupId);
+
 long classPK = ParamUtil.getLong(request, "classPK");
 String eventName = ParamUtil.getString(request, "eventName", "selectStructure");
 %>
@@ -37,6 +39,7 @@ String eventName = ParamUtil.getString(request, "eventName", "selectStructure");
 			<portlet:renderURL var="addStructureURL">
 				<portlet:param name="struts_action" value="/dynamic_data_mapping/edit_structure" />
 				<portlet:param name="redirect" value="<%= viewStructureURL %>" />
+				<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 			</portlet:renderURL>
 
 			<aui:nav-item href="<%= addStructureURL %>" iconClass="icon-plus" label="add" selected='<%= toolbarItem.equals("add") %>' />

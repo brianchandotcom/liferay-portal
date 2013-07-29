@@ -71,14 +71,22 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 				additionalSites++;
 			}
 
+			int start = searchContainer.getStart();
+
+			if (searchContainer.getStart() > additionalSites) {
+				start = searchContainer.getStart() - additionalSites;
+			}
+
+			int end = searchContainer.getEnd() - additionalSites;
+
 			List<Group> sites = null;
 
 			if (searchTerms.isAdvancedSearch()) {
-				sites = GroupLocalServiceUtil.search(company.getCompanyId(), null, searchTerms.getName(), searchTerms.getDescription(), groupParams, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+				sites = GroupLocalServiceUtil.search(company.getCompanyId(), null, searchTerms.getName(), searchTerms.getDescription(), groupParams, searchTerms.isAndOperator(), start, end, searchContainer.getOrderByComparator());
 				total = GroupLocalServiceUtil.searchCount(company.getCompanyId(), null, searchTerms.getName(), searchTerms.getDescription(), groupParams, searchTerms.isAndOperator());
 			}
 			else {
-				sites = GroupLocalServiceUtil.search(company.getCompanyId(), null, searchTerms.getKeywords(), groupParams, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+				sites = GroupLocalServiceUtil.search(company.getCompanyId(), null, searchTerms.getKeywords(), groupParams, start, end, searchContainer.getOrderByComparator());
 				total = GroupLocalServiceUtil.searchCount(company.getCompanyId(), null, searchTerms.getKeywords(), groupParams);
 			}
 

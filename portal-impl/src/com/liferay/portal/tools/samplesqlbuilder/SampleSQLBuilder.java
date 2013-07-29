@@ -116,9 +116,7 @@ public class SampleSQLBuilder {
 
 		_tempDir.mkdirs();
 
-		final CharPipe charPipe = new CharPipe(_PIPE_BUFFER_SIZE);
-
-		generateSQL(charPipe);
+		CharPipe charPipe = generateSQL();
 
 		try {
 
@@ -219,12 +217,6 @@ public class SampleSQLBuilder {
 		return createUnsyncBufferedWriter(writer);
 	}
 
-	protected Writer createFileWriter(String fileName) throws IOException {
-		File file = new File(fileName);
-
-		return createFileWriter(file);
-	}
-
 	protected Writer createUnsyncBufferedWriter(Writer writer) {
 		return new UnsyncBufferedWriter(writer, _WRITER_BUFFER_SIZE) {
 
@@ -238,7 +230,8 @@ public class SampleSQLBuilder {
 		};
 	}
 
-	protected void generateSQL(final CharPipe charPipe) {
+	protected CharPipe generateSQL() {
+		final CharPipe charPipe = new CharPipe(_PIPE_BUFFER_SIZE);
 		final Writer writer = createUnsyncBufferedWriter(charPipe.getWriter());
 
 		Thread thread = new Thread() {
@@ -246,12 +239,13 @@ public class SampleSQLBuilder {
 			@Override
 			public void run() {
 				try {
-					_writerSampleSQL = new UnsyncTeeWriter(
-						writer, createFileWriter(_outputDir + "/sample.sql"));
+					Writer writerSampleSQL = new UnsyncTeeWriter(
+						writer,
+						createFileWriter(new File(_outputDir, "sample.sql")));
 
 					Map<String, Object> context = getContext();
 
-					processTemplate(_tplSample, context);
+					FreeMarkerUtil.process(_SCRIPT, context, writerSampleSQL);
 
 					for (String fileName : _CSV_FILE_NAMES) {
 						Writer writer = (Writer)context.get(
@@ -260,7 +254,7 @@ public class SampleSQLBuilder {
 						writer.close();
 					}
 
-					_writerSampleSQL.close();
+					writerSampleSQL.close();
 
 					charPipe.close();
 				}
@@ -272,6 +266,8 @@ public class SampleSQLBuilder {
 		};
 
 		thread.start();
+
+		return charPipe;
 	}
 
 	protected Map<String, Object> getContext() throws Exception {
@@ -367,12 +363,6 @@ public class SampleSQLBuilder {
 		}
 	}
 
-	protected void processTemplate(String name, Map<String, Object> context)
-		throws Exception {
-
-		FreeMarkerUtil.process(name, context, _writerSampleSQL);
-	}
-
 	protected void writeToInsertSQLFile(String tableName, String sql)
 		throws IOException {
 
@@ -396,8 +386,8 @@ public class SampleSQLBuilder {
 
 	private static final int _PIPE_BUFFER_SIZE = 16 * 1024 * 1024;
 
-	private static final String _TPL_ROOT =
-		"com/liferay/portal/tools/samplesqlbuilder/dependencies/";
+	private static final String _SCRIPT =
+		"com/liferay/portal/tools/samplesqlbuilder/dependencies/sample.ftl";
 
 	private static final int _WRITER_BUFFER_SIZE = 16 * 1024;
 
@@ -413,7 +403,5 @@ public class SampleSQLBuilder {
 	private String _outputDir;
 	private boolean _outputMerge;
 	private File _tempDir;
-	private String _tplSample = _TPL_ROOT + "sample.ftl";
-	private Writer _writerSampleSQL;
 
 }

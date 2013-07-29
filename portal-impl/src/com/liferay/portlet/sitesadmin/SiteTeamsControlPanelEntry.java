@@ -22,10 +22,9 @@ import com.liferay.portal.service.permission.GroupPermissionUtil;
 import com.liferay.portlet.BaseControlPanelEntry;
 
 /**
- * @author Raymond Augé
  * @author Jorge Ferrer
  */
-public class SiteMembershipsControlPanelEntry extends BaseControlPanelEntry {
+public class SiteTeamsControlPanelEntry extends BaseControlPanelEntry {
 
 	@Override
 	protected boolean hasAccessPermissionDenied(
@@ -48,7 +47,7 @@ public class SiteMembershipsControlPanelEntry extends BaseControlPanelEntry {
 
 		if (GroupPermissionUtil.contains(
 				permissionChecker, group.getGroupId(),
-				ActionKeys.ASSIGN_MEMBERS)) {
+				ActionKeys.MANAGE_TEAMS)) {
 
 			return true;
 		}

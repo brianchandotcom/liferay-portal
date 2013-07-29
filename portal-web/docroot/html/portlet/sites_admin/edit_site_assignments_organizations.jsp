@@ -22,8 +22,6 @@ String tabs2 = (String)request.getAttribute("edit_site_assignments.jsp-tabs2");
 
 int cur = (Integer)request.getAttribute("edit_site_assignments.jsp-cur");
 
-String redirect = ParamUtil.getString(request, "redirect");
-
 Group group = (Group)request.getAttribute("edit_site_assignments.jsp-group");
 
 PortletURL portletURL = (PortletURL)request.getAttribute("edit_site_assignments.jsp-portletURL");
@@ -33,7 +31,7 @@ PortletURL viewOrganizationsURL = renderResponse.createRenderURL();
 viewOrganizationsURL.setParameter("struts_action", "/sites_admin/edit_site_assignments");
 viewOrganizationsURL.setParameter("tabs1", "organizations");
 viewOrganizationsURL.setParameter("tabs2", tabs2);
-viewOrganizationsURL.setParameter("redirect", redirect);
+viewOrganizationsURL.setParameter("redirect", currentURL);
 viewOrganizationsURL.setParameter("groupId", String.valueOf(group.getGroupId()));
 
 OrganizationGroupChecker organizationGroupChecker = null;

@@ -36,9 +36,12 @@ portletURL.setParameter("p_u_i_d", String.valueOf(selUser.getUserId()));
 <aui:input name="addRoleIds" type="hidden" />
 <aui:input name="removeRoleIds" type="hidden" />
 
-<liferay-ui:message key="edit-site-roles-for-user" />: <%= HtmlUtil.escape(selUser.getFullName()) %>
-
-<br /><br />
+<liferay-ui:header
+	backURL="<%= redirect %>"
+	escapeXml="<%= false %>"
+	localizeTitle="<%= false %>"
+	title='<%= LanguageUtil.get(pageContext, "edit-site-roles-for-user") + ": " + HtmlUtil.escape(selUser.getFullName()) %>'
+/>
 
 <liferay-ui:membership-policy-error />
 

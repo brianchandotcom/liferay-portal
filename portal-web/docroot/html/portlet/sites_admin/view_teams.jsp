@@ -47,12 +47,6 @@ pageContext.setAttribute("portletURL", portletURL);
 	/>
 </c:if>
 
-<liferay-util:include page="/html/portlet/sites_admin/edit_site_assignments_toolbar.jsp">
-	<liferay-util:param name="toolbarItem" value="view-teams" />
-</liferay-util:include>
-
-<br />
-
 <aui:form action="<%= portletURL.toString() %>" method="get" name="fm">
 	<liferay-portlet:renderURLParams varImpl="portletURL" />
 

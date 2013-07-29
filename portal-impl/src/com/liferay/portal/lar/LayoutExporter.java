@@ -14,7 +14,6 @@
 
 package com.liferay.portal.lar;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
@@ -22,6 +21,7 @@ import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataContextFactoryUtil;
 import com.liferay.portal.kernel.lar.PortletDataHandler;
+import com.liferay.portal.kernel.lar.PortletDataHandlerControl;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.lar.StagedModelType;
@@ -138,7 +138,7 @@ public class LayoutExporter {
 
 	public static List<Portlet> getPortletDataHandlerPortlets(
 			List<Layout> layouts)
-		throws SystemException {
+		throws Exception {
 
 		List<Portlet> portlets = new ArrayList<Portlet>();
 		Set<String> rootPortletIds = new HashSet<String>();
@@ -161,9 +161,21 @@ public class LayoutExporter {
 					continue;
 				}
 
-				rootPortletIds.add(portlet.getRootPortletId());
+				PortletDataHandler portletDataHandler =
+					portlet.getPortletDataHandlerInstance();
 
-				portlets.add(portlet);
+				PortletDataHandlerControl[] configurationControls =
+					portletDataHandler.getExportConfigurationControls(
+						curLayout.getCompanyId(), curLayout.getGroupId(),
+						portlet, curLayout.getPrivateLayout());
+
+				if ((configurationControls != null) &&
+					(configurationControls.length > 0)) {
+
+					rootPortletIds.add(portlet.getRootPortletId());
+
+					portlets.add(portlet);
+				}
 			}
 		}
 
@@ -172,7 +184,7 @@ public class LayoutExporter {
 
 	public static List<Portlet> getPortletDataHandlerPortlets(
 			long groupId, boolean privateLayout)
-		throws SystemException {
+		throws Exception {
 
 		return getPortletDataHandlerPortlets(
 			LayoutLocalServiceUtil.getLayouts(groupId, privateLayout));

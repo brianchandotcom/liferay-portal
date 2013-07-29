@@ -286,6 +286,12 @@ public class WikiPageResourceLocalServiceUtil {
 		return getService().fetchPageResource(nodeId, title);
 	}
 
+	public static com.liferay.portlet.wiki.model.WikiPageResource fetchPageResource(
+		java.lang.String uuid)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().fetchPageResource(uuid);
+	}
+
 	public static com.liferay.portlet.wiki.model.WikiPageResource getPageResource(
 		long pageResourcePrimKey)
 		throws com.liferay.portal.kernel.exception.PortalException,

@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.dynamicdatalists.lar;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
@@ -36,6 +38,20 @@ public class DDLRecordSetStagedModelDataHandler
 	extends BaseStagedModelDataHandler<DDLRecordSet> {
 
 	public static final String[] CLASS_NAMES = {DDLRecordSet.class.getName()};
+
+	@Override
+	public void deleteStagedModel(
+			String uuid, long groupId, String className, String extraData)
+		throws PortalException, SystemException {
+
+		DDLRecordSet ddlRecordSet =
+			DDLRecordSetLocalServiceUtil.fetchDDLRecordSetByUuidAndGroupId(
+				uuid, groupId);
+
+		if (ddlRecordSet != null) {
+			DDLRecordSetLocalServiceUtil.deleteRecordSet(ddlRecordSet);
+		}
+	}
 
 	@Override
 	public String[] getClassNames() {

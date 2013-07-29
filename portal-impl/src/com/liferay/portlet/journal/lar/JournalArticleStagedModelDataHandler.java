@@ -16,6 +16,8 @@ package com.liferay.portlet.journal.lar;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
@@ -70,6 +72,37 @@ public class JournalArticleStagedModelDataHandler
 	extends BaseStagedModelDataHandler<JournalArticle> {
 
 	public static final String[] CLASS_NAMES = {JournalArticle.class.getName()};
+
+	@Override
+	public void deleteStagedModel(
+			String uuid, long groupId, String className, String extraData)
+		throws PortalException, SystemException {
+
+		JournalArticleResource articleResource =
+			JournalArticleResourceLocalServiceUtil.fetchArticleResource(
+				uuid, groupId);
+
+		if (articleResource == null) {
+			return;
+		}
+
+		if (Validator.isNull(extraData)) {
+			JournalArticleLocalServiceUtil.deleteArticle(
+				groupId, articleResource.getArticleId(), null);
+		}
+		else {
+			JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject(
+				extraData);
+
+			double version = extraDataJSONObject.getDouble("version");
+
+			JournalArticle journalArticle =
+				JournalArticleLocalServiceUtil.getArticle(
+					groupId, articleResource.getArticleId(), version);
+
+			JournalArticleLocalServiceUtil.deleteArticle(journalArticle);
+		}
+	}
 
 	@Override
 	public String[] getClassNames() {

@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.messageboards.lar;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
@@ -49,6 +51,20 @@ public class MBMessageStagedModelDataHandler
 	extends BaseStagedModelDataHandler<MBMessage> {
 
 	public static final String[] CLASS_NAMES = {MBMessage.class.getName()};
+
+	@Override
+	public void deleteStagedModel(
+			String uuid, long groupId, String className, String extraData)
+		throws PortalException, SystemException {
+
+		MBMessage mbMessage =
+			MBMessageLocalServiceUtil.fetchMBMessageByUuidAndGroupId(
+				uuid, groupId);
+
+		if (mbMessage != null) {
+			MBMessageLocalServiceUtil.deleteMessage(mbMessage);
+		}
+	}
 
 	@Override
 	public String[] getClassNames() {

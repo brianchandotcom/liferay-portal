@@ -14,9 +14,13 @@
 
 package com.liferay.portlet.usersadmin.lar;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 
 /**
@@ -26,6 +30,21 @@ public class UserStagedModelDataHandler
 	extends BaseStagedModelDataHandler<User> {
 
 	public static final String[] CLASS_NAMES = {User.class.getName()};
+
+	@Override
+	public void deleteStagedModel(
+			String uuid, long groupId, String className, String extraData)
+		throws PortalException, SystemException {
+
+		Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+		User user = UserLocalServiceUtil.fetchUserByUuidAndCompanyId(
+			uuid, group.getCompanyId());
+
+		if (user != null) {
+			UserLocalServiceUtil.deleteUser(user);
+		}
+	}
 
 	@Override
 	public String[] getClassNames() {

@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.polls.lar;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
@@ -35,6 +37,14 @@ public class PollsChoiceStagedModelDataHandler
 	extends BaseStagedModelDataHandler<PollsChoice> {
 
 	public static final String[] CLASS_NAMES = {PollsChoice.class.getName()};
+
+	@Override
+	public void deleteStagedModel(
+			String uuid, long groupId, String className, String extraData)
+		throws PortalException, SystemException {
+
+		throw new UnsupportedOperationException();
+	}
 
 	@Override
 	public String[] getClassNames() {

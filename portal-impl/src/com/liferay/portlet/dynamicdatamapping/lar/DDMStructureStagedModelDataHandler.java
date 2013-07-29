@@ -15,6 +15,7 @@
 package com.liferay.portlet.dynamicdatamapping.lar;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
@@ -41,6 +42,20 @@ public class DDMStructureStagedModelDataHandler
 	extends BaseStagedModelDataHandler<DDMStructure> {
 
 	public static final String[] CLASS_NAMES = {DDMStructure.class.getName()};
+
+	@Override
+	public void deleteStagedModel(
+			String uuid, long groupId, String className, String extraData)
+		throws PortalException, SystemException {
+
+		DDMStructure ddmStructure =
+			DDMStructureLocalServiceUtil.fetchDDMStructureByUuidAndGroupId(
+				uuid, groupId);
+
+		if (ddmStructure != null) {
+			DDMStructureLocalServiceUtil.deleteStructure(ddmStructure);
+		}
+	}
 
 	@Override
 	public String[] getClassNames() {

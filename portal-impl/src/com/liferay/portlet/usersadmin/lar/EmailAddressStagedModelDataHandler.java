@@ -14,12 +14,16 @@
 
 package com.liferay.portlet.usersadmin.lar;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.EmailAddress;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.service.EmailAddressLocalServiceUtil;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 
 /**
@@ -29,6 +33,20 @@ public class EmailAddressStagedModelDataHandler
 	extends BaseStagedModelDataHandler<EmailAddress> {
 
 	public static final String[] CLASS_NAMES = {EmailAddress.class.getName()};
+
+	@Override
+	public void deleteStagedModel(
+			String uuid, long groupId, String className, String extraData)
+		throws PortalException, SystemException {
+
+		Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+		EmailAddress emailAddress =
+			EmailAddressLocalServiceUtil.fetchEmailAddressByUuidAndCompanyId(
+				uuid, group.getCompanyId());
+
+		EmailAddressLocalServiceUtil.deleteEmailAddress(emailAddress);
+	}
 
 	@Override
 	public String[] getClassNames() {

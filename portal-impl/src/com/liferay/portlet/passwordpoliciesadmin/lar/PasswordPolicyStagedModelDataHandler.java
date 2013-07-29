@@ -14,11 +14,15 @@
 
 package com.liferay.portlet.passwordpoliciesadmin.lar;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.model.PasswordPolicy;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.PasswordPolicyLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 
@@ -29,6 +33,23 @@ public class PasswordPolicyStagedModelDataHandler
 	extends BaseStagedModelDataHandler<PasswordPolicy> {
 
 	public static final String[] CLASS_NAMES = {PasswordPolicy.class.getName()};
+
+	@Override
+	public void deleteStagedModel(
+			String uuid, long groupId, String className, String extraData)
+		throws PortalException, SystemException {
+
+		Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+		PasswordPolicy passwordPolicy =
+			PasswordPolicyLocalServiceUtil.
+				fetchPasswordPolicyByUuidAndCompanyId(
+					uuid, group.getCompanyId());
+
+		if (passwordPolicy != null) {
+			PasswordPolicyLocalServiceUtil.deletePasswordPolicy(passwordPolicy);
+		}
+	}
 
 	@Override
 	public String[] getClassNames() {

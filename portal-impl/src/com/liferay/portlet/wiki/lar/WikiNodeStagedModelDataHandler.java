@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.wiki.lar;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
@@ -31,6 +33,20 @@ public class WikiNodeStagedModelDataHandler
 	extends BaseStagedModelDataHandler<WikiNode> {
 
 	public static final String[] CLASS_NAMES = {WikiNode.class.getName()};
+
+	@Override
+	public void deleteStagedModel(
+			String uuid, long groupId, String className, String extraData)
+		throws PortalException, SystemException {
+
+		WikiNode wikiNode =
+			WikiNodeLocalServiceUtil.fetchWikiNodeByUuidAndGroupId(
+				uuid, groupId);
+
+		if (wikiNode != null) {
+			WikiNodeLocalServiceUtil.deleteNode(wikiNode);
+		}
+	}
 
 	@Override
 	public String[] getClassNames() {

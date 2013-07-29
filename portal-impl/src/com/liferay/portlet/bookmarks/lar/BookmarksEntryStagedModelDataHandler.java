@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.bookmarks.lar;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
@@ -36,6 +38,20 @@ public class BookmarksEntryStagedModelDataHandler
 	extends BaseStagedModelDataHandler<BookmarksEntry> {
 
 	public static final String[] CLASS_NAMES = {BookmarksEntry.class.getName()};
+
+	@Override
+	public void deleteStagedModel(
+			String uuid, long groupId, String className, String extraData)
+		throws PortalException, SystemException {
+
+		BookmarksEntry entry =
+			BookmarksEntryLocalServiceUtil.fetchBookmarksEntryByUuidAndGroupId(
+				uuid, groupId);
+
+		if (entry != null) {
+			BookmarksEntryLocalServiceUtil.deleteEntry(entry);
+		}
+	}
 
 	@Override
 	public String[] getClassNames() {

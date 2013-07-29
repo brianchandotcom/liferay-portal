@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.messageboards.lar;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
@@ -33,6 +35,19 @@ public class MBBanStagedModelDataHandler
 	extends BaseStagedModelDataHandler<MBBan> {
 
 	public static final String[] CLASS_NAMES = {MBBan.class.getName()};
+
+	@Override
+	public void deleteStagedModel(
+			String uuid, long groupId, String className, String extraData)
+		throws PortalException, SystemException {
+
+		MBBan mbBan = MBBanLocalServiceUtil.fetchMBBanByUuidAndGroupId(
+			uuid, groupId);
+
+		if (mbBan != null) {
+			MBBanLocalServiceUtil.deleteBan(mbBan);
+		}
+	}
 
 	@Override
 	public String[] getClassNames() {
@@ -81,6 +96,8 @@ public class MBBanStagedModelDataHandler
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			ban, MBPortletDataHandler.NAMESPACE);
+
+		serviceContext.setUuid(ban.getUuid());
 
 		MBBanLocalServiceUtil.addBan(userId, user.getUserId(), serviceContext);
 	}

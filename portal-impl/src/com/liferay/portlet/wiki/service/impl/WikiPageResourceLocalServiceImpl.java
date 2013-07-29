@@ -58,6 +58,13 @@ public class WikiPageResourceLocalServiceImpl
 	}
 
 	@Override
+	public WikiPageResource fetchPageResource(String uuid)
+		throws SystemException {
+
+		return wikiPageResourcePersistence.fetchByUuid_First(uuid, null);
+	}
+
+	@Override
 	public WikiPageResource getPageResource(long pageResourcePrimKey)
 		throws PortalException, SystemException {
 

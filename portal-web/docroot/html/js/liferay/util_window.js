@@ -101,10 +101,6 @@ AUI.add(
 					}
 				},
 
-				setTitle: function(modal, title) {
-					modal.titleNode.html(title);
-				},
-
 				_bindDOMWinResizeIfNeeded: function() {
 					var instance = this;
 

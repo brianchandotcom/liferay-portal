@@ -33,7 +33,7 @@ long layoutSetPrototypeId = BeanParamUtil.getLong(layoutSetPrototype, request, "
 
 boolean layoutsUpdateable = GetterUtil.getBoolean(layoutSetPrototype.getSettingsProperty("layoutsUpdateable"), true);
 
-Group group = themeDisplay.getScopeGroup();
+Group group = themeDisplay.getSiteGroup();
 %>
 
 <c:if test="<%= !group.isLayoutSetPrototype() %>">

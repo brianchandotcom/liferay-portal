@@ -79,19 +79,10 @@ portletURL.setParameter("sourceVersion", String.valueOf(sourceVersion));
 						curSourceVersion = tempVersion;
 					}
 
-					PortletURL compareVersionURL = renderResponse.createRenderURL();
-
-					compareVersionURL.setParameter("struts_action", "/wiki/compare_versions");
-					compareVersionURL.setParameter("redirect", redirect.toString());
-					compareVersionURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
-					compareVersionURL.setParameter("title", HtmlUtil.unescape(wikiPage.getTitle()));
-					compareVersionURL.setParameter("sourceVersion", String.valueOf(curSourceVersion));
-					compareVersionURL.setParameter("targetVersion", String.valueOf(targetVersion));
-					compareVersionURL.setParameter("type", "html");
-
 					Map<String, Object> data = new HashMap<String, Object>();
 
-					data.put("uri", compareVersionURL.toString());
+					data.put("sourceVersion", curSourceVersion);
+					data.put("targetVersion", targetVersion);
 					%>
 
 					<aui:button cssClass="selector-button" data="<%= data %>" value="choose" />

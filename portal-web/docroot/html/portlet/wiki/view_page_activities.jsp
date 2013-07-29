@@ -267,6 +267,21 @@ iteratorURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
 	/>
 </div>
 
+<%
+PortletURL compareVersionsURL = renderResponse.createRenderURL();
+
+compareVersionsURL.setParameter("struts_action", "/wiki/compare_versions");
+%>
+
+<aui:form action="<%= compareVersionsURL %>" method="post" name="compareVersionForm" onSubmit='<%= "event.preventDefault();" %>'>
+	<aui:input name="backURL" type="hidden" value="<%= currentURL %>" />
+	<aui:input name="nodeId" type="hidden" value="<%= node.getNodeId() %>" />
+	<aui:input name="title" type="hidden" value="<%= wikiPage.getTitle() %>" />
+	<aui:input name="sourceVersion" type="hidden" value="" />
+	<aui:input name="targetVersion" type="hidden" value="" />
+	<aui:input name="type" type="hidden" value="html" />
+</aui:form>
+
 <aui:script use="aui-base,escape">
 	A.getBody().delegate(
 		'click',
@@ -284,7 +299,10 @@ iteratorURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
 					uri: event.currentTarget.attr('data-uri')
 				},
 				function(event) {
-					location.href = event.uri;
+					document.<portlet:namespace />compareVersionForm.<portlet:namespace />sourceVersion.value = event.sourceversion;
+					document.<portlet:namespace />compareVersionForm.<portlet:namespace />targetVersion.value = event.targetversion;
+
+					submitForm(document.<portlet:namespace />compareVersionForm);
 				}
 			);
 		},

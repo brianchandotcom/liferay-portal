@@ -42,7 +42,6 @@ import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.OpenSearch;
-import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.servlet.URLEncoder;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
@@ -71,7 +70,6 @@ import com.liferay.portal.kernel.xmlrpc.Method;
 import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.language.LiferayResourceBundle;
 import com.liferay.portal.model.Portlet;
-import com.liferay.portal.model.PortletApp;
 import com.liferay.portal.notifications.UserNotificationHandlerImpl;
 import com.liferay.portal.poller.PollerProcessorUtil;
 import com.liferay.portal.pop.POPServerUtil;
@@ -118,31 +116,9 @@ import javax.servlet.ServletContext;
 public class PortletBagFactory {
 
 	public PortletBag create(Portlet portlet) throws Exception {
-		PortletApp portletApp = portlet.getPortletApp();
+		validate();
 
-		if (!portletApp.isWARFile() && _warFile) {
-			String contextPath = PortalUtil.getPathContext();
-
-			_servletContext = ServletContextPool.get(contextPath);
-
-			_classLoader = ClassLoaderUtil.getPortalClassLoader();
-		}
-
-		Class<?> portletClass = null;
-
-		try {
-			portletClass = _classLoader.loadClass(portlet.getPortletClass());
-		}
-		catch (Throwable t) {
-			_log.error(t, t);
-
-			PortletLocalServiceUtil.destroyPortlet(portlet);
-
-			return null;
-		}
-
-		javax.portlet.Portlet portletInstance =
-			(javax.portlet.Portlet)portletClass.newInstance();
+		javax.portlet.Portlet portletInstance = getPortletInstance(portlet);
 
 		ConfigurationAction configurationActionInstance =
 			newConfigurationAction(portlet);
@@ -419,6 +395,25 @@ public class PortletBagFactory {
 		java.lang.reflect.Method method = clazz.getMethod("get", String.class);
 
 		return (String)method.invoke(null, propertyKey);
+	}
+
+	protected javax.portlet.Portlet getPortletInstance(Portlet portlet)
+		throws InstantiationException, IllegalAccessException {
+
+		Class<?> portletClass = null;
+
+		try {
+			portletClass = _classLoader.loadClass(portlet.getPortletClass());
+		}
+		catch (Throwable t) {
+			_log.error(t, t);
+
+			PortletLocalServiceUtil.destroyPortlet(portlet);
+
+			return null;
+		}
+
+		return (javax.portlet.Portlet)portletClass.newInstance();
 	}
 
 	protected InputStream getResourceBundleInputStream(
@@ -1038,10 +1033,24 @@ public class PortletBagFactory {
 		return userNotificationHandlerInstances;
 	}
 
+	protected void validate() {
+		if (_classLoader == null) {
+			throw new IllegalStateException("classLoader must not be bull");
+		}
+
+		if (_servletContext == null) {
+			throw new IllegalStateException("servletContext must not be bull");
+		}
+
+		if (_warFile == null) {
+			throw new IllegalStateException("warFile must not be bull");
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(PortletBagFactory.class);
 
 	private ClassLoader _classLoader;
 	private ServletContext _servletContext;
-	private boolean _warFile;
+	private Boolean _warFile;
 
 }

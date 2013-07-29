@@ -504,23 +504,9 @@ public class LayoutStagedModelDataHandler
 		}
 
 		importedLayout.setHidden(layout.isHidden());
-		importedLayout.setFriendlyURL(friendlyURL);
-
-		for (int i = 1;; i++) {
-			Layout duplicateFriendlyURLLayout =
-				LayoutLocalServiceUtil.fetchLayoutByFriendlyURL(
-					groupId, privateLayout, importedLayout.getFriendlyURL());
-
-			if ((duplicateFriendlyURLLayout == null) ||
-				(duplicateFriendlyURLLayout.getPlid() ==
-					importedLayout.getPlid())) {
-
-				break;
-			}
-
-			importedLayout.setFriendlyURL(friendlyURL + i);
-		}
-
+		importedLayout.setFriendlyURL(
+			getUniqueFriendlyURL(
+				portletDataContext, importedLayout, friendlyURL));
 		importedLayout.setIconImage(false);
 
 		if (layout.isIconImage()) {
@@ -769,6 +755,30 @@ public class LayoutStagedModelDataHandler
 		typeSettings.setProperty(
 			"url",
 			url.substring(0, x) + group.getFriendlyURL() + url.substring(y));
+	}
+
+	protected String getUniqueFriendlyURL(
+			PortletDataContext portletDataContext, Layout existingLayout,
+			String friendlyURL)
+		throws SystemException {
+
+		for (int i = 1;; i++) {
+			Layout duplicateFriendlyURLLayout =
+				LayoutLocalServiceUtil.fetchLayoutByFriendlyURL(
+					portletDataContext.getGroupId(),
+					portletDataContext.isPrivateLayout(), friendlyURL);
+
+			if ((duplicateFriendlyURLLayout == null) ||
+				(duplicateFriendlyURLLayout.getPlid() ==
+					existingLayout.getPlid())) {
+
+				break;
+			}
+
+			friendlyURL = friendlyURL + i;
+		}
+
+		return friendlyURL;
 	}
 
 	protected void importJournalArticle(

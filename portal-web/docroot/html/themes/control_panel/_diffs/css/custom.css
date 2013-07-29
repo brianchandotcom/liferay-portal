@@ -34,7 +34,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 	}
 
 	#wrapper {
-		padding: 1.1em 0 0;
+		padding: 0;
 	}
 
 	.container-fluid.panel-manage-frontpage {
@@ -61,6 +61,10 @@ $dockbarOpenGradientStart: #0EA6F9;
 	}
 
 	/* ---------- Control Panel Secondary Nav ---------- */
+
+	.control-panel-bar-secondary {
+		padding-top: 1.1em;
+	}
 
 	.control-panel-bar-secondary.nav-pills {
 		li {

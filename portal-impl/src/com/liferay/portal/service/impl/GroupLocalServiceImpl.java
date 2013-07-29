@@ -49,6 +49,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.GroupThreadLocal;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -4047,8 +4048,11 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	protected void validateLanguageIds(String languageIds)
 		throws PortalException {
 
+		String[] availableLanguageIds = LocaleUtil.toLanguageIds(
+			LanguageUtil.getAvailableLocales());
+
 		for (String languageId : StringUtil.split(languageIds)) {
-			if (!ArrayUtil.contains(PropsValues.LOCALES, languageId)) {
+			if (!ArrayUtil.contains(availableLanguageIds, languageId)) {
 				throw new LocaleException();
 			}
 		}

@@ -414,11 +414,11 @@
 		}
 
 		.entry-title {
+			@include ellipsis;
+
 			overflow: hidden;
 			position: relative;
 			white-space: nowrap;
-
-			@include ellipsis;
 		}
 
 		.entry-title-text {

@@ -45,7 +45,7 @@
 
 		<@insertDDMContent
 			_currentIndex = ddlRecordCount
-			_ddmStorageLinkId = dataFactory.counterNext()
+			_ddmStorageLinkId = dataFactory.getCounterNext()
 			_ddmStructureId = ddmStructureModel.structureId
 			_entry = ddlRecordModel
 		/>

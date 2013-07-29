@@ -247,7 +247,7 @@ else {
 			entryEnd = entryStart + searchContainer.getDelta();
 		}
 
-		results = DLAppServiceUtil.getGroupFileEntries(repositoryId, groupFileEntriesUserId, folderId, null, status, entryStart, entryEnd, null);
+		results = DLAppServiceUtil.getGroupFileEntries(repositoryId, groupFileEntriesUserId, folderId, null, status, entryStart, entryEnd, searchContainer.getOrderByComparator());
 	}
 }
 

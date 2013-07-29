@@ -370,7 +370,13 @@ AUI.add(
 					_onAddEntryClick: function(event) {
 						var instance = this;
 
-						event.domEvent.preventDefault();
+						if (event) {
+							var domEvent = event.domEvent;
+
+							if (domEvent) {
+								domEvent.preventDefault();
+							}
+						}
 
 						var text = Liferay.Util.escapeHTML(instance.inputNode.val());
 

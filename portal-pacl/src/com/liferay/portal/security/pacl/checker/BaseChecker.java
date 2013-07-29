@@ -16,7 +16,6 @@ package com.liferay.portal.security.pacl.checker;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.security.pacl.PACLConstants;
-import com.liferay.portal.kernel.util.JavaDetector;
 import com.liferay.portal.security.pacl.PACLPolicy;
 import com.liferay.portal.security.pacl.PACLUtil;
 
@@ -51,22 +50,6 @@ public abstract class BaseChecker implements Checker, PACLConstants {
 	@Override
 	public String getServletContextName() {
 		return _paclPolicy.getServletContextName();
-	}
-
-	public int getStackIndex(int oracle, int ibm) {
-		return getStackIndex(oracle, ibm, ibm);
-	}
-
-	public int getStackIndex(int oracle, int ibm, int ibm7) {
-		if (JavaDetector.isIBM()) {
-			if (JavaDetector.isJDK6()) {
-				return ibm;
-			}
-
-			return ibm7;
-		}
-
-		return oracle;
 	}
 
 	public boolean isTrustedCaller(

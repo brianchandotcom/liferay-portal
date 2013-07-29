@@ -34,6 +34,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+
 import java.net.URL;
 
 import java.util.ArrayList;
@@ -79,7 +80,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			return imports + "\n";
 		}
 
-		List<String> importsList = new ArrayList<String>();
+		List<ImportPackageModel> importsList = new ArrayList<ImportPackageModel>();
 
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
 			new UnsyncStringReader(imports));
@@ -87,10 +88,11 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		String line = null;
 
 		while ((line = unsyncBufferedReader.readLine()) != null) {
-			if ((line.contains("import=") || line.contains("import ")) &&
-				!importsList.contains(line)) {
+			ImportPackageModel importPackageModel = ImportPackageModel.create(
+				line);
 
-				importsList.add(line);
+			if (importPackageModel != null && !importsList.contains(line)) {
+				importsList.add(importPackageModel);
 			}
 		}
 
@@ -101,7 +103,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		String temp = null;
 
 		for (int i = 0; i < importsList.size(); i++) {
-			String s = importsList.get(i);
+			String s = importsList.get(i).toString();
 
 			int pos = s.indexOf(".");
 

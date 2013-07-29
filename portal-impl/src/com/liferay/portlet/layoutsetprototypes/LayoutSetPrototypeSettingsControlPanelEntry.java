@@ -16,9 +16,7 @@ package com.liferay.portlet.layoutsetprototypes;
 
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Portlet;
-import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.service.permission.PortalPermissionUtil;
 import com.liferay.portlet.BaseControlPanelEntry;
 
 /**
@@ -32,14 +30,12 @@ public class LayoutSetPrototypeSettingsControlPanelEntry
 			PermissionChecker permissionChecker, Group group, Portlet portlet)
 		throws Exception {
 
-		if (group.isLayoutSetPrototype() &&
-			PortalPermissionUtil.contains(
-				permissionChecker, ActionKeys.ADD_LAYOUT_SET_PROTOTYPE)) {
-
-			return false;
+		if (!group.isLayoutSetPrototype()) {
+			return true;
 		}
 
-		return true;
+		return super.hasAccessPermissionDenied(
+			permissionChecker, group, portlet);
 	}
 
 }

@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.util.Encryptor;
+import com.liferay.portlet.SecurityPortletContainerWrapper;
 import com.liferay.util.PwdGenerator;
 
 import javax.servlet.http.HttpServletRequest;
@@ -33,39 +33,50 @@ public class SessionAuthToken implements AuthToken {
 
 	@Override
 	public void check(HttpServletRequest request) throws PrincipalException {
-		long companyId = PortalUtil.getCompanyId(request);
+		checkCSRFToken(
+			request, SecurityPortletContainerWrapper.class.getName());
+	}
 
-		String ppid = ParamUtil.getString(request, "p_p_id");
+	@Override
+	public void checkCSRFToken(HttpServletRequest request, String context)
+		throws PrincipalException {
 
-		String portletNamespace = PortalUtil.getPortletNamespace(ppid);
-
-		String strutsAction = ParamUtil.getString(
-			request, portletNamespace + "struts_action");
-
-		if (AuthTokenWhitelistUtil.isPortletCSRFWhitelisted(
-				companyId, ppid, strutsAction)) {
-
+		if (!PropsValues.AUTH_TOKEN_CHECK_ENABLED) {
 			return;
 		}
 
-		String requestAuthenticationToken = ParamUtil.getString(
-			request, "p_auth");
+		String csrfSharedSecret = ParamUtil.getString(request, "p_auth_secret");
 
-		String sessionAuthenticationToken = getSessionAuthenticationToken(
+		if (AuthTokenWhitelistUtil.isValidCSRFSharedSecret(csrfSharedSecret)) {
+			return;
+		}
+
+		long companyId = PortalUtil.getCompanyId(request);
+
+		if (context.equals(SecurityPortletContainerWrapper.class.getName())) {
+			String ppid = ParamUtil.getString(request, "p_p_id");
+
+			String portletNamespace = PortalUtil.getPortletNamespace(ppid);
+
+			String strutsAction = ParamUtil.getString(
+				request, portletNamespace + "struts_action");
+
+			if (AuthTokenWhitelistUtil.isPortletCSRFWhitelisted(
+					companyId, ppid, strutsAction)) {
+
+				return;
+			}
+		}
+
+		String csrfToken = ParamUtil.getString(request, "p_auth");
+
+		String sessionToken = getSessionAuthenticationToken(
 			request, _CSRF, false);
 
-		String propertiesAuthenticatonTokenSharedSecret = Encryptor.digest(
-			PropsValues.AUTH_TOKEN_SHARED_SECRET);
-
-		String requestAuthenticatonTokenSharedSecret = ParamUtil.getString(
-			request, "p_auth_secret");
-
-		if (!requestAuthenticationToken.equals(sessionAuthenticationToken) &&
-			!requestAuthenticatonTokenSharedSecret.equals(
-				propertiesAuthenticatonTokenSharedSecret)) {
-
+		if (!csrfToken.equals(sessionToken)) {
 			throw new PrincipalException("Invalid authentication token");
 		}
+
 	}
 
 	@Override

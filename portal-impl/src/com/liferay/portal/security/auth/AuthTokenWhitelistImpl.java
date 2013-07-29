@@ -22,6 +22,7 @@ import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.util.Encryptor;
 
 import java.util.Collections;
 import java.util.Set;
@@ -103,6 +104,24 @@ public class AuthTokenWhitelistImpl implements AuthTokenWhitelist {
 				isValidStrutsAction(companyId, portletId, strutsAction)) {
 
 				return true;
+			}
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean isValidCSRFSharedSecret(String sharedSecret) {
+		if (Validator.isNotNull(sharedSecret)) {
+			String authTokenSharedSecret = PropsValues.AUTH_TOKEN_SHARED_SECRET;
+
+			if (Validator.isNotNull(authTokenSharedSecret)) {
+				String expectedSharedSecretValue = Encryptor.digest(
+					authTokenSharedSecret);
+
+				if (expectedSharedSecretValue.equals(sharedSecret)) {
+					return true;
+				}
 			}
 		}
 

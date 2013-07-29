@@ -723,6 +723,20 @@
 			return str.replace(regex, A.bind('_unescapeHTML', Util, entitiesMap));
 		},
 
+		_defaultPreviewArticleFn: function(event) {
+			var instance = this;
+
+			event.preventDefault();
+
+			Liferay.Util.openWindow(
+				{
+					cache: false,
+					title: event.title,
+					uri: event.uri
+				}
+			);
+		},
+
 		_defaultSubmitFormFn: function(event) {
 			var form = event.form;
 
@@ -857,20 +871,6 @@
 			}
 
 			return editable;
-		},
-
-		_onPreviewArticle: function(event) {
-			var instance = this;
-
-			event.preventDefault();
-
-			Liferay.Util.openWindow(
-				{
-					cache: false,
-					title: event.title,
-					uri: event.uri
-				}
-			);
 		},
 
 		_ns: A.cached(
@@ -2056,7 +2056,7 @@
 	Liferay.publish(
 		'previewArticle',
 		{
-			defaultFn: Util._onPreviewArticle
+			defaultFn: Util._defaultPreviewArticleFn
 		}
 	);
 

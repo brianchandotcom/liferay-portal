@@ -2587,7 +2587,7 @@ AUI.add(
 							instance._currentPanelEditIOHandle.detach();
 						}
 
-						categoryPanelEdit.set(STR_TITLE, Liferay.Language.get('edit-category'));
+						Liferay.Util.Window.setTitle(categoryPanelEdit, Liferay.Language.get('edit-category'));
 
 						var categoryEditURL = instance._createURL(CATEGORY, ACTION_EDIT, LIFECYCLE_RENDER);
 
@@ -2733,7 +2733,7 @@ AUI.add(
 							instance._currentPanelEditIOHandle.detach();
 						}
 
-						vocabularyPanelEdit.set(STR_TITLE, Liferay.Language.get('edit-vocabulary'));
+						Liferay.Util.Window.setTitle(vocabularyPanelEdit, Liferay.Language.get('edit-vocabulary'));
 
 						var vocabularyEditURL = instance._createURL(TYPE_VOCABULARY, ACTION_EDIT, LIFECYCLE_RENDER);
 

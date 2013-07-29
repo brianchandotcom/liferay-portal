@@ -15,13 +15,17 @@
 package com.liferay.portal.service;
 
 import com.liferay.portal.GroupParentException;
+import com.liferay.portal.LocaleException;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
@@ -63,6 +67,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Julio Camarero
  * @author Roberto Díaz
+ * @author Sergio González
  */
 @ExecutionTestListeners(
 	listeners = {
@@ -469,6 +474,13 @@ public class GroupServiceTest {
 	}
 
 	@Test
+	public void testInvalidChangeAvailableLanguageIds() throws Exception {
+		testUpdateDisplaySettings(
+			new Locale[] {LocaleUtil.US, LocaleUtil.SPAIN},
+			new Locale[] {LocaleUtil.US, LocaleUtil.GERMANY}, true);
+	}
+
+	@Test
 	public void testScopes() throws Exception {
 		Group group = GroupTestUtil.addGroup();
 
@@ -705,6 +717,13 @@ public class GroupServiceTest {
 			true);
 	}
 
+	@Test
+	public void testValidChangeAvailableLanguageIds() throws Exception {
+		testUpdateDisplaySettings(
+			new Locale[] {LocaleUtil.US, LocaleUtil.SPAIN, LocaleUtil.GERMANY},
+			new Locale[] {LocaleUtil.US, LocaleUtil.SPAIN}, false);
+	}
+
 	protected Group addGroup(
 			boolean site, boolean layout, boolean layoutPrototype)
 		throws Exception {
@@ -936,6 +955,39 @@ public class GroupServiceTest {
 				if (selectableGroupId == group.getLiveGroupId()) {
 					Assert.fail("A group cannot have its live group as parent");
 				}
+			}
+		}
+	}
+
+	protected void testUpdateDisplaySettings(
+			Locale[] portalAvailableLocales, Locale[] groupAvailableLocales,
+			boolean fail)
+		throws Exception {
+
+		UnicodeProperties properties = new UnicodeProperties();
+
+		properties.put(
+			PropsKeys.LOCALES,
+			StringUtil.merge(LocaleUtil.toLanguageIds(portalAvailableLocales)));
+
+		CompanyLocalServiceUtil.updatePreferences(
+			TestPropsValues.getCompanyId(), properties);
+
+		Group group = GroupTestUtil.addGroup(
+			GroupConstants.DEFAULT_PARENT_GROUP_ID,
+			ServiceTestUtil.randomString());
+
+		try {
+			GroupTestUtil.updateDisplaySettings(
+				group.getGroupId(), groupAvailableLocales, null);
+
+			if (fail) {
+				Assert.fail();
+			}
+		}
+		catch (LocaleException le) {
+			if (!fail) {
+				Assert.fail();
 			}
 		}
 	}

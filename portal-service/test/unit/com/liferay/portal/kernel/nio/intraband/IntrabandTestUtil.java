@@ -15,8 +15,8 @@
 package com.liferay.portal.kernel.nio.intraband;
 
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.SocketUtil.ServerSocketConfigurator;
 import com.liferay.portal.kernel.util.SocketUtil;
+import com.liferay.portal.kernel.util.SocketUtil.ServerSocketConfigurator;
 
 import java.io.IOException;
 

@@ -21,8 +21,8 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InetAddressUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.SocketUtil.ServerSocketConfigurator;
 import com.liferay.portal.kernel.util.SocketUtil;
+import com.liferay.portal.kernel.util.SocketUtil.ServerSocketConfigurator;
 
 import java.io.IOException;
 

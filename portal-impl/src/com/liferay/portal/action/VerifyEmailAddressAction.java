@@ -119,7 +119,8 @@ public class VerifyEmailAddressAction extends Action {
 			ThemeDisplay themeDisplay)
 		throws Exception {
 
-		AuthTokenUtil.check(request);
+		AuthTokenUtil.checkCSRFToken(
+			request, VerifyEmailAddressAction.class.getName());
 
 		String ticketKey = ParamUtil.getString(request, "ticketKey");
 

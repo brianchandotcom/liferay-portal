@@ -109,7 +109,8 @@ page import="com.liferay.portlet.journal.search.FileEntryDisplayTerms" %><%@
 page import="com.liferay.portlet.journal.search.FileEntrySearch" %><%@
 page import="com.liferay.portlet.trash.model.TrashEntry" %><%@
 page import="com.liferay.portlet.trash.util.TrashUtil" %><%@
-page import="com.liferay.portlet.usersadmin.search.GroupSearch" %>
+page import="com.liferay.portlet.usersadmin.search.GroupSearch" %><%@
+page import="com.liferay.portlet.usersadmin.search.GroupSearchTerms" %>
 
 <%
 PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(liferayPortletRequest);

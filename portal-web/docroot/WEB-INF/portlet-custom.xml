@@ -3340,7 +3340,7 @@
 		</init-param>
 		<init-param>
 			<name>view-action</name>
-			<value>/layout_set_prototypes_settings/edit_layout_set_prototype</value>
+			<value>/layout_set_prototypes/edit_layout_set_prototype</value>
 		</init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>

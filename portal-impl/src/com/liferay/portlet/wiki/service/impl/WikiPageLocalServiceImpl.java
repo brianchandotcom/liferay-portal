@@ -1333,6 +1333,12 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		int oldStatus = page.getStatus();
 		String oldTitle = page.getTitle();
 
+		if (oldStatus == WorkflowConstants.STATUS_PENDING) {
+			page.setStatus(WorkflowConstants.STATUS_DRAFT);
+
+			wikiPagePersistence.update(page);
+		}
+
 		page = updateStatus(
 			userId, page, WorkflowConstants.STATUS_IN_TRASH,
 			new ServiceContext());

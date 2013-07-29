@@ -116,6 +116,7 @@ import javax.servlet.ServletContext;
 public class PortletBagFactory {
 
 	public PortletBag create(Portlet portlet) throws Exception {
+		validate();
 
 		Class<?> portletClass = null;
 
@@ -1027,10 +1028,24 @@ public class PortletBagFactory {
 		return userNotificationHandlerInstances;
 	}
 
+	protected void validate() {
+		if (_classLoader == null) {
+			throw new IllegalStateException("classLoader must not be bull");
+		}
+
+		if (_servletContext == null) {
+			throw new IllegalStateException("servletContext must not be bull");
+		}
+
+		if (_warFile == null) {
+			throw new IllegalStateException("warFile must not be bull");
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(PortletBagFactory.class);
 
 	private ClassLoader _classLoader;
 	private ServletContext _servletContext;
-	private boolean _warFile;
+	private Boolean _warFile;
 
 }

@@ -3332,7 +3332,7 @@
 	</portlet>
 	<portlet>
 		<portlet-name>192</portlet-name>
-		<display-name>Site Templates Settings</display-name>
+		<display-name>Site Template Settings</display-name>
 		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
 		<init-param>
 			<name>template-path</name>

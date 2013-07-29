@@ -118,21 +118,7 @@ public class PortletBagFactory {
 	public PortletBag create(Portlet portlet) throws Exception {
 		validate();
 
-		Class<?> portletClass = null;
-
-		try {
-			portletClass = _classLoader.loadClass(portlet.getPortletClass());
-		}
-		catch (Throwable t) {
-			_log.error(t, t);
-
-			PortletLocalServiceUtil.destroyPortlet(portlet);
-
-			return null;
-		}
-
-		javax.portlet.Portlet portletInstance =
-			(javax.portlet.Portlet)portletClass.newInstance();
+		javax.portlet.Portlet portletInstance = getPortletInstance(portlet);
 
 		ConfigurationAction configurationActionInstance =
 			newConfigurationAction(portlet);
@@ -409,6 +395,25 @@ public class PortletBagFactory {
 		java.lang.reflect.Method method = clazz.getMethod("get", String.class);
 
 		return (String)method.invoke(null, propertyKey);
+	}
+
+	protected javax.portlet.Portlet getPortletInstance(Portlet portlet)
+		throws InstantiationException, IllegalAccessException {
+
+		Class<?> portletClass = null;
+
+		try {
+			portletClass = _classLoader.loadClass(portlet.getPortletClass());
+		}
+		catch (Throwable t) {
+			_log.error(t, t);
+
+			PortletLocalServiceUtil.destroyPortlet(portlet);
+
+			return null;
+		}
+
+		return (javax.portlet.Portlet)portletClass.newInstance();
 	}
 
 	protected InputStream getResourceBundleInputStream(

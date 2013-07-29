@@ -79,7 +79,7 @@
 </tr>
 <tr>
 	<td>ADD_PAGE_NAME_FIELD</td>
-	<td>//input[@id='_145_name']</td>
+	<td>//input[@id='_145_addLayoutName']</td>
 	<td></td>
 </tr>
 <tr>

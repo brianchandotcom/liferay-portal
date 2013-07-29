@@ -39,34 +39,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--REG_PERMISSION_TABLE-->
-<tr>
-	<td>REG_PERMISSION_TABLE_RESOURCE_SET_1</td>
-	<td>xpath=(//div[@id='_128_ocerSearchContainer']//tr/td[1]/a)[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>REG_PERMISSION_TABLE_RESOURCE_1</td>
-	<td>xpath=(//div[@id='_128_ocerSearchContainer']//tr/td[2])[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>REG_PERMISSION_TABLE_ACTION_1</td>
-	<td>xpath=(//div[@id='_128_ocerSearchContainer']//tr/td[3])[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>REG_PERMISSION_TABLE_SCOPE_1</td>
-	<td>xpath=(//div[@id='_128_ocerSearchContainer']//tr/td[4])[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>REG_PERMISSION_TABLE_DELETE_1</td>
-	<td>xpath=(//div[@id='_128_ocerSearchContainer']//tr/td[5]/span/a/span)[1]</td>
+	<td>NAVIGATION_HEADER_COLLAPSED</td>
+	<td>//div[contains(@class,'permission-navigation-item-header') and contains(@class,'toggler-header-collapsed')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -74,25 +48,15 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--ORG_PERMISSION_TABLE-->
+<!--PERMISSION_TABLE-->
 <tr>
-	<td>ORG_PERMISSION_TABLE_RESOURCE_SET_1</td>
-	<td>xpath=(//div[@id='_128_ocerSearchContainer']//tr/td[1]/a)[1]</td>
+	<td>PERMISSION_TABLE_PERMISSIONS</td>
+	<td>//tr[contains(.,'${key_permissionNavigationValue}') and contains(.,'${key_permissionValue}')]/td</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ORG_PERMISSION_TABLE_RESOURCE_1</td>
-	<td>xpath=(//div[@id='_128_ocerSearchContainer']//tr/td[2])[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ORG_PERMISSION_TABLE_ACTION_1</td>
-	<td>xpath=(//div[@id='_128_ocerSearchContainer']//tr/td[3])[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ORG_PERMISSION_TABLE_DELETE_1</td>
-	<td>xpath=(//div[@id='_128_ocerSearchContainer']//tr/td[4]/span/a/span)[1]</td>
+	<td>PERMISSION_TABLE_REMOVE</td>
+	<td>//tr[contains(.,'${key_permissionNavigationValue}') and contains(.,'${key_permissionValue}')]/td//a[contains(.,'Remove')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -100,25 +64,24 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--SITE_PERMISSION_TABLE-->
+<!--SITE_ADMIN_PAGES-->
+<!--SITE_ADMIN_CONTENT-->
 <tr>
-	<td>SITE_PERMISSION_TABLE_RESOURCE_SET_1</td>
-	<td>xpath=(//div[@id='_128_ocerSearchContainer']//tr/td[1]/a)[1]</td>
+	<td>SITE_ADMIN_CONTENT_BLOGS</td>
+	<td>//div[contains(.,'Content') and contains(@class,'permission-navigation-item-header')]/following-sibling::div//span[contains(@class,'permission-navigation-item')]/a[contains(.,'Blogs')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>SITE_PERMISSION_TABLE_RESOURCE_1</td>
-	<td>xpath=(//div[@id='_128_ocerSearchContainer']//tr/td[2])[1]</td>
+	<td></td>
+	<td></td>
 	<td></td>
 </tr>
+<!--SITE_ADMIN_USERS-->
+<!--SITE_ADMIN_CONFIGURATION-->
+<!--SITE_ADMIN_APPLICATIONS-->
 <tr>
-	<td>SITE_PERMISSION_TABLE_ACTION_1</td>
-	<td>xpath=(//div[@id='_128_ocerSearchContainer']//tr/td[3])[1]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SITE_PERMISSION_TABLE_DELETE_1</td>
-	<td>xpath=(//div[@id='_128_ocerSearchContainer']//tr/td[4]/span/a/span)[1]</td>
+	<td>SITE_ADMIN_APPLICATIONS_BLOGS</td>
+	<td>//div[contains(.,'Applications') and contains(@class,'permission-navigation-item-header')]/following-sibling::div//span[contains(@class,'permission-navigation-item')]/a[contains(.,'Blogs')]</td>
 	<td></td>
 </tr>
 </tbody>

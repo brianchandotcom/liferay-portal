@@ -54,17 +54,20 @@ WikiPage socialActivityPage = WikiPageLocalServiceUtil.getPage(wikiPage.getNodeI
 		<portlet:param name="nodeId" value="<%= String.valueOf(wikiPage.getNodeId()) %>" />
 		<portlet:param name="title" value="<%= HtmlUtil.unescape(wikiPage.getTitle()) %>" />
 		<portlet:param name="sourceVersion" value="<%= String.valueOf(version) %>" />
-		<portlet:param name="callback" value='<%= renderResponse.getNamespace() + "selectVersion" %>' />
 	</portlet:renderURL>
 
 	<%
-	String taglibURL = "javascript:Liferay.Util.openWindow({id: '" + liferayPortletResponse.getNamespace() + "selectVersion', title: '" + LanguageUtil.get(pageContext, "select-version") + "', uri:'" + HtmlUtil.escapeURL(compareVersionsURL.toString()) + "'});";
+	Map<String, Object> data = new HashMap<String, Object>();
+
+	data.put("uri", compareVersionsURL);
 	%>
 
 	<liferay-ui:icon
+		cssClass="compare-to-link"
+		data="<%= data %>"
 		image="copy"
 		label="<%= true %>"
 		message="compare-to"
-		url="<%= taglibURL %>"
+		url="javascript:;"
 	/>
 </liferay-ui:icon-menu>

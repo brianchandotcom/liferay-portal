@@ -266,3 +266,28 @@ iteratorURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
 		restoreEntryAction="/wiki/restore_page_attachment"
 	/>
 </div>
+
+<aui:script use="aui-base,escape">
+	A.getBody().delegate(
+		'click',
+		function(event) {
+			Liferay.Util.selectEntity(
+				{
+					dialog: {
+						constrain: true,
+						modal: true,
+						width: 680
+					},
+					eventName: '<portlet:namespace />selectVersion',
+					id: '<portlet:namespace />selectVersion' + event.currentTarget.attr('id'),
+					title: '<%= UnicodeLanguageUtil.get(pageContext, "select-version") %>',
+					uri: event.currentTarget.attr('data-uri')
+				},
+				function(event) {
+					location.href = event.uri;
+				}
+			);
+		},
+		'.compare-to-link a'
+	);
+</aui:script>

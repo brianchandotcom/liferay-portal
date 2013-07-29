@@ -19,6 +19,8 @@
 <%
 WikiPage wikiPage = (WikiPage)request.getAttribute(WebKeys.WIKI_PAGE);
 
+String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectVersion");
+
 double sourceVersion = ParamUtil.getDouble(request, "sourceVersion");
 
 WikiNode node = wikiPage.getNode();
@@ -28,77 +30,91 @@ PortletURL redirect = renderResponse.createRenderURL();
 redirect.setParameter("struts_action", "/wiki/view_page_history");
 redirect.setParameter("nodeId", String.valueOf(node.getNodeId()));
 redirect.setParameter("title", wikiPage.getTitle());
+
+PortletURL portletURL = renderResponse.createRenderURL();
+
+portletURL.setParameter("struts_action", "/wiki/select_version");
+portletURL.setParameter("redirect", currentURL);
+portletURL.setParameter("nodeId", String.valueOf(wikiPage.getNodeId()));
+portletURL.setParameter("title", HtmlUtil.unescape(wikiPage.getTitle()));
+portletURL.setParameter("sourceVersion", String.valueOf(sourceVersion));
 %>
 
-<liferay-ui:search-container
-	id="wikiPageVersionSearchContainer"
-	total="<%= WikiPageLocalServiceUtil.getPagesCount(wikiPage.getNodeId(), wikiPage.getTitle()) %>"
->
-	<liferay-ui:search-container-results
-		results="<%= WikiPageLocalServiceUtil.getPages(wikiPage.getNodeId(), wikiPage.getTitle(), searchContainer.getStart(), searchContainer.getEnd(), new PageVersionComparator()) %>"
-	/>
-
-	<liferay-ui:search-container-row
-		className="com.liferay.portlet.wiki.model.WikiPage"
-		modelVar="curWikiPage"
+<aui:form action="<%= portletURL.toString() %>" method="post" name="selectVersionFm">
+	<liferay-ui:search-container
+		id="wikiPageVersionSearchContainer"
+		total="<%= WikiPageLocalServiceUtil.getPagesCount(wikiPage.getNodeId(), wikiPage.getTitle()) %>"
 	>
-		<liferay-ui:search-container-column-text
-			name="version"
-			value="<%= String.valueOf(curWikiPage.getVersion()) %>"
+		<liferay-ui:search-container-results
+			results="<%= WikiPageLocalServiceUtil.getPages(wikiPage.getNodeId(), wikiPage.getTitle(), searchContainer.getStart(), searchContainer.getEnd(), new PageVersionComparator()) %>"
 		/>
 
-		<liferay-ui:search-container-column-date
-			name="date"
-			value="<%= curWikiPage.getModifiedDate() %>"
-		/>
-
-		<liferay-ui:search-container-column-text
-			name=""
+		<liferay-ui:search-container-row
+			className="com.liferay.portlet.wiki.model.WikiPage"
+			modelVar="curWikiPage"
 		>
-			<c:if test="<%= sourceVersion != curWikiPage.getVersion() %>">
+			<liferay-ui:search-container-column-text
+				name="version"
+				value="<%= String.valueOf(curWikiPage.getVersion()) %>"
+			/>
 
-				<%
-				double curSourceVersion = sourceVersion;
-				double targetVersion = curWikiPage.getVersion();
+			<liferay-ui:search-container-column-date
+				name="date"
+				value="<%= curWikiPage.getModifiedDate() %>"
+			/>
 
-				if (targetVersion < curSourceVersion) {
-					double tempVersion = targetVersion;
+			<liferay-ui:search-container-column-text
+				name=""
+			>
+				<c:if test="<%= sourceVersion != curWikiPage.getVersion() %>">
 
-					targetVersion = curSourceVersion;
-					curSourceVersion = tempVersion;
-				}
-				%>
+					<%
+					double curSourceVersion = sourceVersion;
+					double targetVersion = curWikiPage.getVersion();
 
-				<portlet:renderURL var="compareVersionURL">
-					<portlet:param name="struts_action" value="/wiki/compare_versions" />
-					<portlet:param name="redirect" value="<%= redirect.toString() %>" />
-					<portlet:param name="nodeId" value="<%= String.valueOf(node.getNodeId()) %>" />
-					<portlet:param name="title" value="<%= wikiPage.getTitle() %>" />
-					<portlet:param name="sourceVersion" value="<%= String.valueOf(curSourceVersion) %>" />
-					<portlet:param name="targetVersion" value="<%= String.valueOf(targetVersion) %>" />
-					<portlet:param name="type" value="html" />
-				</portlet:renderURL>
+					if (targetVersion < curSourceVersion) {
+						double tempVersion = targetVersion;
 
-				<aui:button cssClass="select-wiki-page-version" data-uri="<%= compareVersionURL %>" href="javascript:;" value="choose" />
-			</c:if>
-		</liferay-ui:search-container-column-text>
-	</liferay-ui:search-container-row>
+						targetVersion = curSourceVersion;
+						curSourceVersion = tempVersion;
+					}
 
-	<liferay-ui:search-iterator />
-</liferay-ui:search-container>
+					PortletURL compareVersionURL = renderResponse.createRenderURL();
 
-<aui:script use="liferay-search-container">
-	var searchContainer = Liferay.SearchContainer.get('<portlet:namespace />wikiPageVersionSearchContainer');
+					compareVersionURL.setParameter("struts_action", "/wiki/compare_versions");
+					compareVersionURL.setParameter("redirect", redirect.toString());
+					compareVersionURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
+					compareVersionURL.setParameter("title", HtmlUtil.unescape(wikiPage.getTitle()));
+					compareVersionURL.setParameter("sourceVersion", String.valueOf(curSourceVersion));
+					compareVersionURL.setParameter("targetVersion", String.valueOf(targetVersion));
+					compareVersionURL.setParameter("type", "html");
 
-	searchContainer.get('contentBox').delegate(
+					Map<String, Object> data = new HashMap<String, Object>();
+
+					data.put("uri", compareVersionURL.toString());
+					%>
+
+					<aui:button cssClass="selector-button" data="<%= data %>" value="choose" />
+				</c:if>
+			</liferay-ui:search-container-column-text>
+		</liferay-ui:search-container-row>
+
+		<liferay-ui:search-iterator />
+	</liferay-ui:search-container>
+</aui:form>
+
+<aui:script use="aui-base">
+	var Util = Liferay.Util;
+
+	A.one('#<portlet:namespace />selectVersionFm').delegate(
 		'click',
 		function(event) {
-			var link = event.currentTarget;
+			var result = Util.getAttributes(event.currentTarget, 'data-');
 
-			var uri = link.getAttribute('data-uri');
+			Util.getOpener().Liferay.fire('<%= HtmlUtil.escapeJS(eventName) %>', result);
 
-			Liferay.Util.getOpener().location.href = uri;
+			Util.getWindow().hide();
 		},
-		'.select-wiki-page-version'
+		'.selector-button'
 	);
 </aui:script>

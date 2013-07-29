@@ -42,7 +42,6 @@ import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.OpenSearch;
-import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.servlet.URLEncoder;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
@@ -71,7 +70,6 @@ import com.liferay.portal.kernel.xmlrpc.Method;
 import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.language.LiferayResourceBundle;
 import com.liferay.portal.model.Portlet;
-import com.liferay.portal.model.PortletApp;
 import com.liferay.portal.notifications.UserNotificationHandlerImpl;
 import com.liferay.portal.poller.PollerProcessorUtil;
 import com.liferay.portal.pop.POPServerUtil;
@@ -118,15 +116,6 @@ import javax.servlet.ServletContext;
 public class PortletBagFactory {
 
 	public PortletBag create(Portlet portlet) throws Exception {
-		PortletApp portletApp = portlet.getPortletApp();
-
-		if (!portletApp.isWARFile() && _warFile) {
-			String contextPath = PortalUtil.getPathContext();
-
-			_servletContext = ServletContextPool.get(contextPath);
-
-			_classLoader = ClassLoaderUtil.getPortalClassLoader();
-		}
 
 		Class<?> portletClass = null;
 

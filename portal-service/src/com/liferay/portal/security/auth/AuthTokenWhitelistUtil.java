@@ -60,6 +60,10 @@ public class AuthTokenWhitelistUtil {
 			companyId, portletId, strutsAction);
 	}
 
+	public static boolean isValidCSRFSharedSecret(String sharedSecret) {
+		return getAuthTokenWhitelist().isValidCSRFSharedSecret(sharedSecret);
+	}
+
 	public static Set<String> resetPortletCSRFWhitelist() {
 		return getAuthTokenWhitelist().resetPortletCSRFWhitelist();
 	}

@@ -3454,8 +3454,11 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			String oldLanguageIds = oldTypeSettingsProperties.getProperty(
 				PropsKeys.LOCALES, StringPool.BLANK);
 
+			String defaultLanguageId = typeSettingsProperties.getProperty(
+				"languageId", LocaleUtil.toLanguageId(LocaleUtil.getDefault()));
+
 			if (!Validator.equals(oldLanguageIds, newLanguageIds)) {
-				validateLanguageIds(newLanguageIds);
+				validateLanguageIds(defaultLanguageId, newLanguageIds);
 
 				LanguageUtil.resetAvailableGroupLocales(groupId);
 			}
@@ -4045,16 +4048,23 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		}
 	}
 
-	protected void validateLanguageIds(String languageIds)
+	protected void validateLanguageIds(
+			String defaultLanguageId, String languageIds)
 		throws PortalException {
 
 		String[] availableLanguageIds = LocaleUtil.toLanguageIds(
 			LanguageUtil.getAvailableLocales());
 
-		for (String languageId : StringUtil.split(languageIds)) {
+		String[] languageIdsArray = StringUtil.split(languageIds);
+
+		for (String languageId : languageIdsArray) {
 			if (!ArrayUtil.contains(availableLanguageIds, languageId)) {
 				throw new LocaleException();
 			}
+		}
+
+		if (!ArrayUtil.contains(languageIdsArray, defaultLanguageId)) {
+			throw new LocaleException();
 		}
 	}
 

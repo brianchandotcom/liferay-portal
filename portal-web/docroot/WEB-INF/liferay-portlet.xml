@@ -2089,7 +2089,7 @@
 	</portlet>
 	<portlet>
 		<portlet-name>192</portlet-name>
-		<icon>/html/icons/layout_set_prototypes.png</icon>
+		<icon>/html/icons/site_settings.png</icon>
 		<struts-path>layout_set_prototype_settings</struts-path>
 		<parent-struts-path>layout_set_prototypes</parent-struts-path>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>

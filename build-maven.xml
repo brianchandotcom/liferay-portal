@@ -93,20 +93,24 @@ for GPG setup instructions.
 	<target name="jar-javadoc">
 		<ant dir="portal-client" target="jar-javadoc" inheritAll="false" />
 		<ant dir="portal-impl" target="jar-javadoc" inheritAll="false" />
+		<ant dir="portal-pacl" target="jar-javadoc" inheritAll="false" />
 		<ant dir="portal-service" target="jar-javadoc" inheritAll="false" />
 		<ant dir="support-tomcat" target="jar-javadoc" inheritAll="false" />
 		<ant dir="util-bridges" target="jar-javadoc" inheritAll="false" />
 		<ant dir="util-java" target="jar-javadoc" inheritAll="false" />
+		<ant dir="util-slf4j" target="jar-javadoc" inheritAll="false" />
 		<ant dir="util-taglib" target="jar-javadoc" inheritAll="false" />
 	</target>
 
 	<target name="jar-sources">
 		<ant dir="portal-client" target="jar-sources" inheritAll="false" />
 		<ant dir="portal-impl" target="jar-sources" inheritAll="false" />
+		<ant dir="portal-pacl" target="jar-sources" inheritAll="false" />
 		<ant dir="portal-service" target="jar-sources" inheritAll="false" />
 		<ant dir="support-tomcat" target="jar-sources" inheritAll="false" />
 		<ant dir="util-bridges" target="jar-sources" inheritAll="false" />
 		<ant dir="util-java" target="jar-sources" inheritAll="false" />
+		<ant dir="util-slf4j" target="jar-sources" inheritAll="false" />
 		<ant dir="util-taglib" target="jar-sources" inheritAll="false" />
 	</target>
 
@@ -166,6 +170,10 @@ Run "ant -f build-dist.xml all zip-portal-war" to generate that file.
 				includes="portal-impl.jar,portal-impl-javadoc.jar,portal-impl-sources.jar"
 			/>
 			<fileset
+				dir="portal-pacl"
+				includes="portal-pacl.jar,portal-pacl-javadoc.jar,portal-pacl-sources.jar"
+				/>
+			<fileset
 				dir="portal-service"
 				includes="portal-service.jar,portal-service-javadoc.jar,portal-service-sources.jar"
 			/>
@@ -180,6 +188,10 @@ Run "ant -f build-dist.xml all zip-portal-war" to generate that file.
 			<fileset
 				dir="util-java"
 				includes="util-java.jar,util-java-javadoc.jar,util-java-sources.jar"
+			/>
+			<fileset
+				dir="util-slf4j"
+				includes="util-slf4j.jar,util-slf4j-javadoc.jar,util-slf4j-sources.jar"
 			/>
 			<fileset
 				dir="util-taglib"

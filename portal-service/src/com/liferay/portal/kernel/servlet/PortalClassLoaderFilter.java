@@ -67,6 +67,8 @@ public class PortalClassLoaderFilter
 			InvokerFilterChain invokerFilterChain = new InvokerFilterChain(
 				contextClassLoaderFilterChain);
 
+			invokerFilterChain.setContextClassLoader(contextClassLoader);
+
 			invokerFilterChain.addFilter(_filter);
 
 			invokerFilterChain.doFilter(servletRequest, servletResponse);

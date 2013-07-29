@@ -98,7 +98,7 @@ String toggleControlsState = GetterUtil.getString(SessionClicks.get(request, "li
 				<h1>
 					<c:choose>
 						<c:when test="<%= controlPanelCategory.startsWith(PortletCategoryKeys.CURRENT_SITE) %>">
-							<liferay-ui:message key="site-administration" />
+							<strong><%= themeDisplay.getSiteGroup().getDescriptiveName()%></strong> / <liferay-ui:message key="site-administration" />
 						</c:when>
 						<c:otherwise>
 							<a href="<%= themeDisplay.getURLControlPanel() %>">

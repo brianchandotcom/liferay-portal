@@ -870,10 +870,10 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	public int getUserSitesGroupsCount()
 		throws PortalException, SystemException {
 
-		List<Group> userPlacesGroups = getUserSitesGroups(
+		List<Group> userSitesGroups = getUserSitesGroups(
 			getGuestOrUserId(), null, true, QueryUtil.ALL_POS);
 
-		return userPlacesGroups.size();
+		return userSitesGroups.size();
 	}
 
 	/**

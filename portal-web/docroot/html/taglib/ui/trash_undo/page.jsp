@@ -37,7 +37,30 @@ if (SessionMessages.contains(portletRequest, portletDisplay.getId() + SessionMes
 
 		<div class="alert alert-success taglib-trash-undo">
 			<aui:form action="<%= portletURL %>" name="undoForm">
-				<liferay-ui:message arguments="<%= trashedEntriesCount %>" key='<%= trashedEntriesCount > 1 ? "x-items-were-moved-to-the-recycle-bin" : "the-selected-item-was-moved-to-the-recycle-bin" %>' />
+				<liferay-util:buffer var="trashLink">
+					<c:choose>
+						<c:when test="<%= themeDisplay.isShowSiteAdministrationIcon() %>">
+							<liferay-portlet:renderURL plid="<%= PortalUtil.getControlPanelPlid(company.getCompanyId()) %>" portletName="<%= PortletKeys.TRASH %>" varImpl="trashURL" windowState="<%= WindowState.NORMAL.toString() %>">
+								<portlet:param name="struts_action" value="/trash/view" />
+							</liferay-portlet:renderURL>
+
+							<%
+							String trashURLString = HttpUtil.setParameter(trashURL.toString(), "doAsGroupId", String.valueOf(themeDisplay.getScopeGroupId()));
+
+							if (Validator.isNull(themeDisplay.getControlPanelCategory())) {
+								trashURLString = HttpUtil.setParameter(trashURLString, "controlPanelCategory", "current_site");
+							}
+							%>
+
+							<aui:a href="<%= trashURLString %>" label="the-recycle-bin" />
+						</c:when>
+						<c:otherwise>
+							<liferay-ui:message key="the-recycle-bin" />
+						</c:otherwise>
+					</c:choose>
+				</liferay-util:buffer>
+
+				<liferay-ui:message arguments="<%= new Object[] {trashLink, trashedEntriesCount} %>" key='<%= trashedEntriesCount > 1 ? "x-items-were-moved-to-x" : "the-selected-item-was-moved-to-x" %>' />
 
 				<a class="trash-undo-link" href="javascript:;" id="<%= namespace %>undo"><liferay-ui:message key="undo" /></a>
 

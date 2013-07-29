@@ -24,7 +24,7 @@ import com.liferay.portlet.BaseControlPanelEntry;
 /**
  * @author Eduardo Garcia
  */
-public class LayoutSetPrototypesControlPanelEntry
+public class LayoutSetPrototypeSettingsControlPanelEntry
 	extends BaseControlPanelEntry {
 
 	@Override

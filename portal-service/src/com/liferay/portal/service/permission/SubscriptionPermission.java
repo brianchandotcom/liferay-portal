@@ -19,8 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.security.permission.PermissionChecker;
 
 /**
- * Interface describing the checking of permissions with respect to
- * subscriptions.
+ * Retrieves and checks permissions with respect to subscriptions.
  *
  * @author Mate Thurzo
  * @author Raymond Augé
@@ -29,22 +28,25 @@ public interface SubscriptionPermission {
 
 	/**
 	 * Performs a security check determining if a user can subscribe or receive
-	 * notifications about subscribed entities. A view permission check is
-	 * performed on the inferred entity which is the subject of the notification
-	 * when the subscribed entity is a container entity. A failed view check on
-	 * the inferred entity will prevent the notification from being sent. This
-	 * is useful for enforcing a private subtree within a larger container to
-	 * which a user is subscribed.
+	 * notifications about subscribed entities.
+	 *
+	 * <p>
+	 * A view permission check is performed on the inferred entity which is the
+	 * subject of the notification when the subscribed entity is a container
+	 * entity. A failed view check on the inferred entity will prevent the
+	 * notification from being sent. This is useful for enforcing a private
+	 * subtree within a larger container to which a user is subscribed.
+	 * </p>
 	 *
 	 * @param  permissionChecker the permission checker
 	 * @param  subscriptionClassName the class name of the subscribed entity
 	 * @param  subscriptionClassPK the primary key of the subscribed entity
 	 * @param  inferredClassName the class name of the inferred entity when the
 	 *         subscribed entity is a container entity
-	 * @param  inferredClassPK the class name of the inferred entity when the
+	 * @param  inferredClassPK the primary key of the inferred entity when the
 	 *         subscribed entity is a container entity
-	 * @throws PortalException
-	 * @throws SystemException
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
 	 */
 	public void check(
 			PermissionChecker permissionChecker, String subscriptionClassName,
@@ -53,24 +55,22 @@ public interface SubscriptionPermission {
 		throws PortalException, SystemException;
 
 	/**
-	 * Checks whether a user can subscribe or receive notifications about
-	 * subscribed entities. A view permission check is performed on the inferred
-	 * entity which is the subject of the notification when the subscribed
-	 * entity is a container entity. A failed view check the inferred entity
-	 * will prevent the notification from being sent. This is useful for
-	 * enforcing a private subtree within a larger container to which a user is
-	 * subscribed.
+	 * Returns <code>true</code> if a user can subscribe or receive
+	 * notifications about subscribed entities.
 	 *
 	 * @param  permissionChecker the permission checker
 	 * @param  subscriptionClassName the class name of the subscribed entity
 	 * @param  subscriptionClassPK the primary key of the subscribed entity
 	 * @param  inferredClassName the class name of the inferred entity when the
 	 *         subscribed entity is a container entity
-	 * @param  inferredClassPK the class name of the inferred entity when the
+	 * @param  inferredClassPK the primary key of the inferred entity when the
 	 *         subscribed entity is a container entity
-	 * @return
-	 * @throws PortalException
-	 * @throws SystemException
+	 * @return <code>true</code> if a user can subscribe or receive
+	 *         notifications about subscribed entities; <code>false</code>
+	 *         otherwise
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 * @see    #check(PermissionChecker, String, long, String, long)
 	 */
 	public boolean contains(
 			PermissionChecker permissionChecker, String subscriptionClassName,

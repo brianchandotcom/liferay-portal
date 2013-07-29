@@ -54,8 +54,8 @@
 			_classPK = journalArticleResourceModel.resourcePrimKey
 			_groupId = groupId
 			_maxCommentCount = 0
-			_mbRootMessageId = dataFactory.counterNext()
-			_mbThreadId = dataFactory.counterNext()
+			_mbRootMessageId = dataFactory.getCounterNext()
+			_mbThreadId = dataFactory.getCounterNext()
 		/>
 
 		<#assign portletPreferencesModel = dataFactory.newPortletPreferencesModel(layoutModel.plid, portletIdPrefix + journalArticleCount, journalArticleResourceModel)>

@@ -32,10 +32,10 @@
 		}
 
 		&.error:hover {
-            background-color: #FDD;
-        }
+			background-color: #FDD;
+		}
 
-        &:hover .image-thumbnail img {
+		&:hover .image-thumbnail img {
 			background-color: #B0D2E1;
 			border-color: #7ABFDD;
 		}
@@ -43,15 +43,15 @@
 		a {
 			color: #5B677D;
 		}
-    }
+	}
 
 	.image-link {
 		text-align: center;
 		text-decoration: none;
- 	}
+	}
 
 	.image-thumbnail {
-       	display: inline-block;
+		display: inline-block;
 		position: relative;
 
 		img {
@@ -85,5 +85,13 @@
 		display: block;
 		padding: 0 10px;
 		word-wrap: break-word;
+	}
+}
+
+.firefox {
+	.portlet-image-gallery-display {
+		.audio-node {
+			height: 35px;
+		}
 	}
 }

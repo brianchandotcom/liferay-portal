@@ -531,12 +531,11 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 			int max)
 		throws PortalException, SystemException {
 
-		return getUserSitesGroups(
-			userId, classNames, includeControlPanel, max);
+		return getUserSitesGroups(userId, classNames, includeControlPanel, max);
 	}
 
 	/**
-	 * Returns the user's group &quot;places&quot; associated with the group
+	 * Returns the user's groups &quot;sites&quot; associated with the group
 	 * entity class names, including the Control Panel group if the user is
 	 * permitted to view the Control Panel.
 	 *
@@ -565,7 +564,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	 *             <code>null</code>). For more information see {@link
 	 *             #getUserSitesGroups(long, String[], int)}
 	 * @param      max the maximum number of groups to return
-	 * @return     the user's group &quot;places&quot;
+	 * @return     the user's groups &quot;sites&quot;
 	 * @throws     PortalException if a portal exception occurred
 	 * @throws     SystemException if a system exception occurred
 	 * @deprecated As of 6.2.0, replaced by {@link #getUserSitesGroups(long,
@@ -593,7 +592,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	}
 
 	/**
-	 * Returns the guest or current user's group &quot;places&quot; associated
+	 * Returns the guest or current user's groups &quot;sites&quot; associated
 	 * with the group entity class names, including the Control Panel group if
 	 * the user is permitted to view the Control Panel.
 	 *
@@ -621,7 +620,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	 *             <code>null</code>). For more information see {@link
 	 *             #getUserSitesGroups(String[], int)}
 	 * @param      max the maximum number of groups to return
-	 * @return     the user's group &quot;places&quot;
+	 * @return     the user's groups &quot;sites&quot;
 	 * @throws     PortalException if a portal exception occurred
 	 * @throws     SystemException if a system exception occurred
 	 * @deprecated As of 6.2.0, replaced by {@link #getUserSitesGroups(
@@ -635,12 +634,12 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	}
 
 	/**
-	 * Returns the number of the guest or current user's group
-	 * &quot;places&quot; associated with the group entity class names,
-	 * including the Control Panel group if the user is permitted to view the
-	 * Control Panel.
+	 * Returns the number of the guest or current user's groups
+	 * &quot;sites&quot; associated with the group entity class names, including
+	 * the Control Panel group if the user is permitted to view the Control
+	 * Panel.
 	 *
-	 * @return     the number of user's group &quot;places&quot;
+	 * @return     the number of user's groups &quot;sites&quot;
 	 * @throws     PortalException if a portal exception occurred
 	 * @throws     SystemException if a system exception occurred
 	 * @deprecated As of 6.2.0, replaced by {@link #getUserSitesGroupsCount()}
@@ -648,6 +647,21 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	@Override
 	public int getUserPlacesCount() throws PortalException, SystemException {
 		return getUserSitesGroupsCount();
+	}
+
+	/**
+	 * Returns the guest or current user's layout set group, organization
+	 * groups, inherited organization groups, and site groups.
+	 *
+	 * @return     the user's layout set group, organization groups, and
+	 *             inherited organization groups, and site groups
+	 * @throws     PortalException if a portal exception occurred
+	 * @throws     SystemException if a system exception occurred
+	 * @deprecated As of 6.2.0, replaced by {@link #getUserSitesGroups()}
+	 */
+	@Override
+	public List<Group> getUserSites() throws PortalException, SystemException {
+		return getUserSitesGroups();
 	}
 
 	@Override
@@ -669,7 +683,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	}
 
 	/**
-	 * Returns the user's group &quot;places&quot; associated with the group
+	 * Returns the user's groups &quot;sites&quot; associated with the group
 	 * entity class names, including the Control Panel group if the user is
 	 * permitted to view the Control Panel.
 	 *
@@ -698,7 +712,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	 *         <code>null</code>). For more information see {@link
 	 *         #getUserSitesGroups(long, String[], boolean, int)}
 	 * @param  max the maximum number of groups to return
-	 * @return the user's group &quot;places&quot;
+	 * @return the user's groups &quot;sites&quot;
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -765,8 +779,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 							continue;
 						}
 
-						userSiteGroups.add(
-							0, ancestorOrganization.getGroup());
+						userSiteGroups.add(0, ancestorOrganization.getGroup());
 					}
 				}
 			}
@@ -817,7 +830,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	}
 
 	/**
-	 * Returns the guest or current user's group &quot;places&quot; associated
+	 * Returns the guest or current user's groups &quot;sites&quot; associated
 	 * with the group entity class names, including the Control Panel group if
 	 * the user is permitted to view the Control Panel.
 	 *
@@ -845,7 +858,7 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	 *         <code>null</code>). For more information see {@link
 	 *         #getUserSitesGroups(long, String[], boolean, int)}
 	 * @param  max the maximum number of groups to return
-	 * @return the user's group &quot;places&quot;
+	 * @return the user's groups &quot;sites&quot;
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -857,12 +870,12 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	}
 
 	/**
-	 * Returns the number of the guest or current user's group
-	 * &quot;places&quot; associated with the group entity class names,
-	 * including the Control Panel group if the user is permitted to view the
-	 * Control Panel.
+	 * Returns the number of the guest or current user's groups
+	 * &quot;sites&quot; associated with the group entity class names, including
+	 * the Control Panel group if the user is permitted to view the Control
+	 * Panel.
 	 *
-	 * @return the number of user's group &quot;places&quot;
+	 * @return the number of user's groups &quot;sites&quot;
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
@@ -874,21 +887,6 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 			getGuestOrUserId(), null, true, QueryUtil.ALL_POS);
 
 		return userSitesGroups.size();
-	}
-
-	/**
-	 * Returns the guest or current user's layout set group, organization
-	 * groups, inherited organization groups, and site groups.
-	 *
-	 * @return     the user's layout set group, organization groups, and
-	 *             inherited organization groups, and site groups
-	 * @throws     PortalException if a portal exception occurred
-	 * @throws     SystemException if a system exception occurred
-	 * @deprecated As of 6.2.0, replaced by {@link #getUserSitesGroups()}
-	 */
-	@Override
-	public List<Group> getUserSites() throws PortalException, SystemException {
-		return getUserSitesGroups();
 	}
 
 	/**

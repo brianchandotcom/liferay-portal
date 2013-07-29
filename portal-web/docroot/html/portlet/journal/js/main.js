@@ -117,7 +117,7 @@ AUI.add(
 				alert(templateMessage);
 
 				instance.showMessage(
-					'#selectTemplateMessage',
+					instance.getById('selectTemplateMessage'),
 					'info',
 					templateMessage,
 					30000

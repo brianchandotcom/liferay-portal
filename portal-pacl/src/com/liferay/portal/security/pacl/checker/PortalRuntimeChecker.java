@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.security.pacl.Reflection;
 import com.liferay.portal.service.BaseLocalServiceImpl;
 import com.liferay.portal.service.BaseServiceImpl;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
@@ -46,7 +47,7 @@ import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import sun.reflect.Reflection;
+
 
 /**
  * @author Brian Wing Shun Chan

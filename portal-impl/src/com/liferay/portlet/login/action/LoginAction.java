@@ -249,6 +249,13 @@ public class LoginAction extends PortletAction {
 
 		portletURL.setWindowState(WindowState.MAXIMIZED);
 
+		String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+		if (Validator.isNotNull(redirect)) {
+			portletURL.setParameter(
+				"redirect", PortalUtil.escapeRedirect(redirect));
+		}
+
 		actionResponse.sendRedirect(portletURL.toString());
 	}
 

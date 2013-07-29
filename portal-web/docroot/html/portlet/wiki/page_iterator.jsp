@@ -306,8 +306,14 @@ for (int i = 0; i < results.size(); i++) {
 	row.addText(curWikiPage.getTitle(), rowURL);
 
 	// Status
+	%>
 
-	row.addText(LanguageUtil.get(pageContext, WorkflowConstants.getStatusLabel(curWikiPage.getStatus())), rowURL);
+	<liferay-util:buffer var="wikiPageStatus">
+		<aui:workflow-status showIcon="<%= false %>" showLabel="<%= false %>" status="<%= curWikiPage.getStatus() %>" />
+	</liferay-util:buffer>
+
+	<%
+	row.addText(wikiPageStatus);
 
 	// Revision
 

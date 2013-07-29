@@ -150,10 +150,8 @@ iteratorURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
 
 						String comment = mbMessage.getBody();
 
-						int pos = Math.min(comment.length(), 50);
-
-						if (pos == 50) {
-							comment = comment.substring(0, pos) + "...";
+						if (comment.length() > 50) {
+							comment = comment.substring(0, 50) + "...";
 						}
 						%>
 

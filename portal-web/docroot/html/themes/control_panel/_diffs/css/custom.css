@@ -64,30 +64,30 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 	.control-panel-bar-secondary {
 		padding-top: 1.1em;
-	}
 
-	.control-panel-bar-secondary.nav-pills {
-		li {
-			margin-right: 20px;
+		&.nav-pills {
+			li {
+				margin-right: 20px;
 
-			a {
-				font-size: 15px;
-				font-weight: normal;
-				margin: 0;
-				padding: 10px 10px 11px;
+				a {
+					font-size: 15px;
+					font-weight: normal;
+					margin: 0;
+					padding: 10px 10px 11px;
 
-				&:hover {
-					background: #E5F5FC;
+					&:hover {
+						background: #E5F5FC;
+					}
 				}
 			}
-		}
 
-		> .active > a {
-			background: #009AE5;
-			color: #FFF;
-
-			&:hover {
+			> .active > a {
 				background: #009AE5;
+				color: #FFF;
+
+				&:hover {
+					background: #009AE5;
+				}
 			}
 		}
 	}
@@ -206,6 +206,15 @@ $dockbarOpenGradientStart: #0EA6F9;
 					color: #FFF;
 					font-weight: lighter;
 					text-shadow: none;
+				}
+
+				.control-panel-site-selector {
+					margin-top: 0;
+
+					.caret {
+						border-top-color: #FFF;
+						margin-top: -4px;
+					}
 				}
 
 				.control-panel-back-link {

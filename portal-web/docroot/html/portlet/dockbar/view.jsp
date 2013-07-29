@@ -102,7 +102,11 @@ String toggleControlsState = GetterUtil.getString(SessionClicks.get(request, "li
 
 							<%@ include file="/html/portal/layout/view/control_panel_site_selector.jspf" %>
 
-							/ <liferay-ui:message key="site-administration" />
+							<span class="divider">/</span>
+
+							<span class="site-administration-title">
+								<liferay-ui:message key="site-administration" />
+							</span>
 						</c:when>
 						<c:otherwise>
 							<a href="<%= themeDisplay.getURLControlPanel() %>">

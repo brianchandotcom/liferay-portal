@@ -49,13 +49,14 @@ if ((article != null) && article.isDraft()) {
 
 		var previewArticleContentURL = '<%= previewArticleContentURL %>';
 
-		var form = A.one('#<portlet:namespace />fm1');
+		var form = A.one(document.<portlet:namespace />fm1);
 
-		form.on(
+		form.delegate(
 			'change',
 			function(event) {
 				previewArticleContentURL = null;
-			}
+			},
+			':input'
 		);
 
 		toolbarButtonGroup.push(

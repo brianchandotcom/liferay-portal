@@ -487,6 +487,7 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 		<portlet:param name="<%= SearchContainer.DEFAULT_DELTA_PARAM %>" value="<%= ParamUtil.getString(request, SearchContainer.DEFAULT_DELTA_PARAM) %>" />
 		<portlet:param name="closeRedirect" value="<%= closeRedirect %>" />
 		<portlet:param name="groupId" value="<%= String.valueOf(stagingGroupId) %>" />
+		<portlet:param name="localPublishing" value="<%= String.valueOf(localPublishing) %>" />
 	</liferay-portlet:resourceURL>
 
 	new Liferay.ExportImport(

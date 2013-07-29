@@ -28,6 +28,7 @@ renderURL.setParameter("struts_action", "/layouts_admin/publish_layouts");
 renderURL.setParameter("tabs2", "all-publication-processes");
 renderURL.setParameter("closeRedirect", closeRedirect);
 renderURL.setParameter("groupId", String.valueOf(groupId));
+renderURL.setParameter("localPublishing", String.valueOf(localPublishing));
 
 String orderByCol = ParamUtil.getString(request, "orderByCol");
 String orderByType = ParamUtil.getString(request, "orderByType");

@@ -39,6 +39,7 @@ PortletURL viewFullContentURL = liferayPortletResponse.createLiferayPortletURL(p
 
 viewFullContentURL.setParameter("struts_action", "/asset_publisher/view_content");
 viewFullContentURL.setParameter("assetEntryId", String.valueOf(assetEntry.getEntryId()));
+viewFullContentURL.setParameter("redirect", currentURL);
 viewFullContentURL.setParameter("type", assetRendererFactory.getType());
 
 if (Validator.isNotNull(assetRenderer.getUrlTitle())) {

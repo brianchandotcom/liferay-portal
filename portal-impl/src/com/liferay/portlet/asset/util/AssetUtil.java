@@ -295,6 +295,7 @@ public class AssetUtil {
 
 			redirectURL.setParameter(
 				"struts_action", "/asset_publisher/add_asset_redirect");
+			redirectURL.setParameter("redirect", themeDisplay.getURLCurrent());
 			redirectURL.setWindowState(LiferayWindowState.POP_UP);
 
 			redirect = redirectURL.toString();

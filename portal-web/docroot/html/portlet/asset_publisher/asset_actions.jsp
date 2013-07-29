@@ -35,6 +35,9 @@ if (showEditURL && assetRenderer.hasEditPermission(permissionChecker)) {
 	if (fullContentRedirect != null) {
 		redirectURL.setParameter("redirect", fullContentRedirect);
 	}
+	else {
+		redirectURL.setParameter("redirect", currentURL);
+	}
 
 	redirectURL.setWindowState(LiferayWindowState.POP_UP);
 

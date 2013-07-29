@@ -35,6 +35,7 @@ page import="com.liferay.portlet.mobiledevicerules.model.MDRAction" %><%@
 page import="com.liferay.portlet.mobiledevicerules.model.MDRRule" %><%@
 page import="com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup" %><%@
 page import="com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance" %><%@
+page import="com.liferay.portlet.mobiledevicerules.search.RuleGroupChecker" %><%@
 page import="com.liferay.portlet.mobiledevicerules.search.RuleGroupDisplayTerms" %><%@
 page import="com.liferay.portlet.mobiledevicerules.search.RuleGroupSearch" %><%@
 page import="com.liferay.portlet.mobiledevicerules.search.RuleGroupSearchTerms" %><%@

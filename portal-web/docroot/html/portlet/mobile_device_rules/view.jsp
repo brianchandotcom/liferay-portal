@@ -35,12 +35,22 @@ portletURL.setParameter("chooseCallback", chooseCallback);
 </c:if>
 
 <aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
+	<aui:input name="<%= Constants.CMD %>" type="hidden" />
+	<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
+	<aui:input name="ruleGroupIds" type="hidden" />
 
 	<%
 	RuleGroupSearch ruleGroupSearch = new RuleGroupSearch(liferayPortletRequest, portletURL);
+
+	RowChecker rowChecker = null;
+
+	if (Validator.isNull(chooseCallback)) {
+		rowChecker = new RuleGroupChecker(renderResponse);
+	}
 	%>
 
 	<liferay-ui:search-container
+		rowChecker="<%= rowChecker %>"
 		searchContainer="<%= ruleGroupSearch %>"
 	>
 		<c:if test="<%= MDRPermissionUtil.contains(permissionChecker, groupId, ActionKeys.ADD_RULE_GROUP) %>">
@@ -85,16 +95,18 @@ portletURL.setParameter("chooseCallback", chooseCallback);
 			String taglibOnClick = null;
 
 			if (Validator.isNull(chooseCallback)) {
+				if (MDRRuleGroupPermissionUtil.contains(permissionChecker, ruleGroup, ActionKeys.UPDATE)) {
 			%>
 
-				<liferay-portlet:renderURL var="editURL">
-					<portlet:param name="struts_action" value="/mobile_device_rules/edit_rule_group" />
-					<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
-					<portlet:param name="ruleGroupId" value="<%= String.valueOf(ruleGroup.getRuleGroupId()) %>" />
-				</liferay-portlet:renderURL>
+					<liferay-portlet:renderURL var="editURL">
+						<portlet:param name="struts_action" value="/mobile_device_rules/edit_rule_group" />
+						<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
+						<portlet:param name="ruleGroupId" value="<%= String.valueOf(ruleGroup.getRuleGroupId()) %>" />
+					</liferay-portlet:renderURL>
 
 			<%
-				rowHREF = editURL;
+					rowHREF = editURL;
+				}
 			}
 			else {
 				MDRRuleGroupInstance ruleGroupInstance = MDRRuleGroupInstanceLocalServiceUtil.fetchRuleGroupInstance(className, classPK, ruleGroup.getRuleGroupId());
@@ -120,8 +132,33 @@ portletURL.setParameter("chooseCallback", chooseCallback);
 			<%@ include file="/html/portlet/mobile_device_rules/rule_group_columns.jspf" %>
 		</liferay-ui:search-container-row>
 
-		<div class="separator"><!-- --></div>
+		<c:if test="<%= ((total > 0) && (Validator.isNull(chooseCallback))) %>">
+			<aui:button-row>
+				<aui:button cssClass="delete-rules-button" disabled="<%= true %>" name="delete" onClick='<%= renderResponse.getNamespace() + "deleteRules();" %>' value="delete" />
+			</aui:button-row>
+
+			<div class="separator"><!-- --></div>
+		</c:if>
 
 		<liferay-ui:search-iterator type="more" />
 	</liferay-ui:search-container>
 </aui:form>
+
+<aui:script>
+	Liferay.Util.toggleSearchContainerButton('#<portlet:namespace />delete', '#<portlet:namespace /><%= searchContainerReference.getId() %>SearchContainer', document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
+
+	Liferay.provide(
+		window,
+		'<portlet:namespace />deleteRules',
+		function() {
+			if (confirm('<%= UnicodeLanguageUtil.get(pageContext, "are-you-sure-you-want-to-delete-this") %>')) {
+				document.<portlet:namespace />fm.method = "post";
+				document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= Constants.DELETE %>";
+				document.<portlet:namespace />fm.<portlet:namespace />ruleGroupIds.value = Liferay.Util.listCheckedExcept(document.<portlet:namespace />fm, '<portlet:namespace />allRowIds');
+
+				submitForm(document.<portlet:namespace />fm, "<portlet:actionURL><portlet:param name="struts_action" value="/mobile_device_rules/edit_rule_group" /></portlet:actionURL>");
+			}
+		},
+		['liferay-util-list-fields']
+	);
+</aui:script>

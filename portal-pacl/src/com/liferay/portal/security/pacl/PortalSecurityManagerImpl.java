@@ -101,8 +101,6 @@ import javax.sql.DataSource;
 
 import org.springframework.aop.framework.AdvisedSupport;
 
-import sun.reflect.Reflection;
-
 import sun.security.util.SecurityConstants;
 
 /**
@@ -454,7 +452,9 @@ public class PortalSecurityManagerImpl extends SecurityManager
 			}
 
 			if (classLoader == ClassLoaderUtil.getPortalClassLoader()) {
-				Class<?> callerClass = Reflection.getCallerClass(5);
+				int stackIndex = Reflection.getStackIndex(5, 5);
+
+				Class<?> callerClass = Reflection.getCallerClass(stackIndex);
 
 				ClassLoader callerClassLoader = ClassLoaderUtil.getClassLoader(
 					callerClass);
@@ -885,7 +885,9 @@ public class PortalSecurityManagerImpl extends SecurityManager
 				return;
 			}
 
-			Class<?> callerClass = Reflection.getCallerClass(5);
+			int stackIndex = Reflection.getStackIndex(5, 5);
+
+			Class<?> callerClass = Reflection.getCallerClass(stackIndex);
 
 			if (clazz == callerClass) {
 

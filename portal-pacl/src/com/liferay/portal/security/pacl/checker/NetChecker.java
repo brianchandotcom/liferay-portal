@@ -16,10 +16,11 @@ package com.liferay.portal.security.pacl.checker;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.security.pacl.Reflection;
 
 import java.security.Permission;
 
-import sun.reflect.Reflection;
+
 
 /**
  * @author Brian Wing Shun Chan
@@ -60,7 +61,7 @@ public class NetChecker extends BaseChecker {
 	}
 
 	protected boolean hasGetProxySelector(Permission permission) {
-		int stackIndex = getStackIndex(11, 10);
+		int stackIndex = Reflection.getStackIndex(11, 10);
 
 		Class<?> callerClass = Reflection.getCallerClass(stackIndex);
 
@@ -72,7 +73,7 @@ public class NetChecker extends BaseChecker {
 	}
 
 	protected boolean hasSpecifyStreamHandler(Permission permission) {
-		int stackIndex = getStackIndex(11, 10);
+		int stackIndex = Reflection.getStackIndex(11, 10);
 
 		Class<?> callerClass = Reflection.getCallerClass(stackIndex);
 

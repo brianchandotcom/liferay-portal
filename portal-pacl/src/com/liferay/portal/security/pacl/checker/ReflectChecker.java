@@ -16,10 +16,11 @@ package com.liferay.portal.security.pacl.checker;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.security.pacl.Reflection;
 
 import java.security.Permission;
 
-import sun.reflect.Reflection;
+
 
 /**
  * @author Brian Wing Shun Chan
@@ -78,7 +79,7 @@ public class ReflectChecker extends BaseChecker {
 			}
 		}
 
-		int stackIndex = getStackIndex(10, 9);
+		int stackIndex = Reflection.getStackIndex(10, 9);
 
 		Class<?> callerClass = Reflection.getCallerClass(stackIndex);
 

@@ -20,13 +20,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- *
  * @author Carlos Sierra Andrés
- *
  */
-public class ImportRepr implements Comparable<ImportRepr> {
+public class ImportPackageModel implements Comparable<ImportPackageModel> {
 
-	public static ImportRepr create(String line) {
+	public static ImportPackageModel create(String line) {
 		if (Validator.isNull(line)) {
 			return null;
 		}
@@ -34,35 +32,32 @@ public class ImportRepr implements Comparable<ImportRepr> {
 		Matcher jspMatcher = _jspImportPattern.matcher(line);
 
 		if (jspMatcher.find()) {
-			return new ImportRepr(jspMatcher.group(1), line);
+			return new ImportPackageModel(jspMatcher.group(1), line);
 		}
 
 		Matcher javaMatcher = _javaImportPattern.matcher(line);
 
 		if (javaMatcher.find()) {
-			return new ImportRepr(javaMatcher.group(1), line);
+			return new ImportPackageModel(javaMatcher.group(1), line);
 		}
 
 		return null;
 	}
 
 	@Override
-	public int compareTo(ImportRepr o) {
-		return _plainImport.compareTo(o._plainImport);
+	public int compareTo(ImportPackageModel importPackageModel) {
+		return _plainImport.compareTo(importPackageModel._plainImport);
 	}
 
 	@Override
-	public boolean equals(Object o) {
-		if (o == null) {
-			return false;
-		}
-
-		if (this == o) {
+	public boolean equals(Object obj) {
+		if (this == obj) {
 			return true;
 		}
 
-		if (o instanceof ImportRepr) {
-			ImportRepr otherRepr = (ImportRepr)o;
+		if (obj instanceof ImportPackageModel) {
+			ImportPackageModel otherRepr = (ImportPackageModel)obj;
+
 			return _plainImport.equals(otherRepr._plainImport);
 		}
 
@@ -79,15 +74,15 @@ public class ImportRepr implements Comparable<ImportRepr> {
 		return _originalLine;
 	}
 
-	protected ImportRepr(String plainImport, String originalLine) {
-		_originalLine = originalLine;
+	protected ImportPackageModel(String plainImport, String originalLine) {
 		_plainImport = plainImport;
+		_originalLine = originalLine;
 	}
 
 	private static final Pattern _javaImportPattern = Pattern.compile(
-			"import ([^\\s;]+)");
+		"import ([^\\s;]+)");
 	private static final Pattern _jspImportPattern = Pattern.compile(
-			"import=\"([^\\s\"]+)\"");
+		"import=\"([^\\s\"]+)\"");
 
 	private String _originalLine;
 	private String _plainImport;

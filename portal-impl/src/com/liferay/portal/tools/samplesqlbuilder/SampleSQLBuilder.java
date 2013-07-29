@@ -113,6 +113,7 @@ public class SampleSQLBuilder {
 		// Generic
 
 		_tempDir = new File(_outputDir, "temp");
+		_endSQLFileName = "others.sql";
 
 		_tempDir.mkdirs();
 
@@ -207,6 +208,30 @@ public class SampleSQLBuilder {
 		}
 
 		unsyncBufferedReader.close();
+
+		for (Map.Entry<String, StringBundler> entry : _insertSQLs.entrySet()) {
+			String tableName = entry.getKey();
+
+			String sql = _db.buildSQL(entry.getValue().toString());
+
+			writeToInsertSQLFile(tableName, sql);
+
+			Writer insertSQLWriter = _insertSQLWriters.remove(tableName);
+
+			insertSQLWriter.write(";\n");
+
+			insertSQLWriter.close();
+		}
+
+		Writer endSQLFileWriter = new FileWriter(
+			new File(_tempDir, _endSQLFileName));
+
+		for (String sql : _otherSQLs) {
+			endSQLFileWriter.write(_db.buildSQL(sql));
+			endSQLFileWriter.write(StringPool.NEW_LINE);
+		}
+
+		endSQLFileWriter.close();
 	}
 
 	protected Writer createFileWriter(File file) throws IOException {
@@ -306,16 +331,6 @@ public class SampleSQLBuilder {
 		for (Map.Entry<String, StringBundler> entry : insertSQLs) {
 			String tableName = entry.getKey();
 
-			String sql = _db.buildSQL(entry.getValue().toString());
-
-			writeToInsertSQLFile(tableName, sql);
-
-			Writer insertSQLWriter = _insertSQLWriters.remove(tableName);
-
-			insertSQLWriter.write(";\n");
-
-			insertSQLWriter.close();
-
 			if (_outputMerge) {
 				File insertSQLFile = getInsertSQLFile(tableName);
 
@@ -334,23 +349,18 @@ public class SampleSQLBuilder {
 			}
 		}
 
-		Writer writer = null;
-
 		if (_outputMerge) {
-			writer = new OutputStreamWriter(fileOutputStream);
-		}
-		else {
-			writer = new FileWriter(getInsertSQLFile("others"));
-		}
+			Writer writer = new OutputStreamWriter(fileOutputStream);
 
-		for (String sql : _otherSQLs) {
-			sql = _db.buildSQL(sql);
+			for (String sql : _otherSQLs) {
+				sql = _db.buildSQL(sql);
 
-			writer.write(sql);
-			writer.write(StringPool.NEW_LINE);
+				writer.write(sql);
+				writer.write(StringPool.NEW_LINE);
+			}
+
+			writer.close();
 		}
-
-		writer.close();
 
 		File outputFolder = new File(_outputDir, "output");
 
@@ -394,6 +404,7 @@ public class SampleSQLBuilder {
 	private DataFactory _dataFactory;
 	private DB _db;
 	private String _dbType;
+	private String _endSQLFileName;
 	private Map<String, StringBundler> _insertSQLs =
 		new ConcurrentHashMap<String, StringBundler>();
 	private Map<String, Writer> _insertSQLWriters =

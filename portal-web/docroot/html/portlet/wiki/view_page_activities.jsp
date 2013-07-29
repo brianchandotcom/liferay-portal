@@ -280,6 +280,7 @@ compareVersionsURL.setParameter("struts_action", "/wiki/compare_versions");
 	<aui:input name="sourceVersion" type="hidden" value="" />
 	<aui:input name="targetVersion" type="hidden" value="" />
 	<aui:input name="type" type="hidden" value="html" />
+	<aui:input name="tabs3" type="hidden" value="activities" />
 </aui:form>
 
 <aui:script use="aui-base,escape">

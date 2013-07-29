@@ -28,6 +28,8 @@ String type = ParamUtil.getString(request, "type");
 	<liferay-util:param name="tabs1" value="history" />
 </liferay-util:include>
 
+<liferay-util:include page="/html/portlet/wiki/page_tabs_history.jsp" />
+
 <liferay-util:include page="/html/portlet/wiki/history_navigation.jsp">
 	<liferay-util:param name="mode" value="<%= type %>" />
 </liferay-util:include>

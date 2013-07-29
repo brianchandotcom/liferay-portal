@@ -87,7 +87,7 @@ iteratorURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
 						catch (NoSuchModelException nsme) {
 						}
 
-						String title = extraDataJSONObject.getString("title");
+						String title = extraDataJSONObject.getString("fileEntryTitle");
 
 						if (fileEntry != null) {
 							fileVersion = fileEntry.getFileVersion();

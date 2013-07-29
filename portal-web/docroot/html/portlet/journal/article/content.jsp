@@ -258,7 +258,7 @@ if (Validator.isNotNull(content)) {
 										<c:when test="<%= ddmTemplates.isEmpty() %>">
 											<aui:input name="templateId" type="hidden" value="<%= templateId %>" />
 
-											<div id="selectTemplateMessage"></div>
+											<div id="<portlet:namespace />selectTemplateMessage"></div>
 
 											<span class="template-name-label">
 												<liferay-ui:message key="none" />

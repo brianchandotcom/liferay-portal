@@ -50,19 +50,7 @@ public class EditorUtil {
 		}
 
 		if (!BrowserSnifferUtil.isRtf(request)) {
-			if (BrowserSnifferUtil.isSafari(request) &&
-				BrowserSnifferUtil.isMobile(request)) {
-
-				editorImpl = "simple";
-			}
-			else if (BrowserSnifferUtil.isSafari(request) &&
-					 !editorImpl.contains("simple")) {
-
-				editorImpl = "tinymce_simple";
-			}
-			else {
-				editorImpl = "simple";
-			}
+			editorImpl = "simple";
 		}
 
 		if (Validator.isNull(editorImpl)) {

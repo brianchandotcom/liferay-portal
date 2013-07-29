@@ -14,12 +14,23 @@
  */
 --%>
 
+<%@ page import="com.liferay.portal.util.PortalUtil" %>
+<%@ page import="com.liferay.portlet.dynamicdatamapping.model.DDMTemplate" %>
+<%@ page import="com.liferay.portlet.dynamicdatamapping.service.DDMTemplateServiceUtil" %>
 <%@ page import="com.liferay.portlet.dynamicdatamapping.util.DDMXSDUtil" %>
 
 <%
 String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ddm_init-ext");
 
 String fieldsDisplayInputName = fieldsNamespace + "_fieldsDisplay";
+
+String mode = null;
+
+if (classNameId == PortalUtil.getClassNameId(DDMTemplate.class)) {
+	DDMTemplate ddmTemplate = DDMTemplateServiceUtil.getTemplate(classPK);
+
+	mode = ddmTemplate.getMode();
+}
 
 String xsd = DDMXSDUtil.getXSD(classNameId, classPK);
 

@@ -75,6 +75,12 @@ public interface DDMXSD {
 		throws Exception;
 
 	public String getHTML(
+			PageContext pageContext, String xml, Fields fields,
+			String portletNamespace, String namespace, String mode,
+			boolean readOnly, Locale locale)
+		throws Exception;
+
+	public String getHTML(
 			PageContext pageContext, String xml, String portletNamespace,
 			Locale locale)
 		throws Exception;

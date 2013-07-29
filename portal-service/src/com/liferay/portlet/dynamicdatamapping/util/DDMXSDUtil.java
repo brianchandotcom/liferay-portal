@@ -104,6 +104,17 @@ public class DDMXSDUtil {
 	}
 
 	public static String getHTML(
+			PageContext pageContext, String xml, Fields fields,
+			String portletNamespace, String namespace, String mode,
+			boolean readOnly, Locale locale)
+		throws Exception {
+
+		return getDDMXSD().getHTML(
+			pageContext, xml, fields, portletNamespace, namespace, mode,
+			readOnly, locale);
+	}
+
+	public static String getHTML(
 			PageContext pageContext, String xml, String portletNamespace,
 			Locale locale)
 		throws Exception {

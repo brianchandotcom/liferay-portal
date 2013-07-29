@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.AuthTokenUtil;
-import com.liferay.portal.util.PropsValues;
 
 import java.io.IOException;
 
@@ -55,9 +54,8 @@ public class LanguageServlet extends HttpServlet {
 		}
 
 		try {
-			if (PropsValues.AUTH_TOKEN_CHECK_ENABLED) {
-				AuthTokenUtil.check(request);
-			}
+			AuthTokenUtil.checkCSRFToken(
+				request, LanguageServlet.class.getName());
 		}
 		catch (PortalException pe) {
 			_log.error("Invalid authentication token received");

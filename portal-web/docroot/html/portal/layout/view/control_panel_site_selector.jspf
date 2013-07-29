@@ -26,7 +26,7 @@ if (PortletPermissionUtil.hasControlPanelAccessPermission(permissionChecker, use
 }
 
 if (PortalUtil.isCompanyControlPanelVisible(themeDisplay)) {
-	Group companyGroup = GroupLocalServiceUtil.getCompanyGroup(themeDisplay.getCompanyId());
+	Group companyGroup = company.getGroup();
 
 	if (!manageableSiteGroups.contains(companyGroup)) {
 		manageableSiteGroups.add(0, companyGroup);

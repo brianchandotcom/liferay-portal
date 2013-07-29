@@ -68,7 +68,7 @@ portletURL.setParameter("target", target);
 
 			List<Long> excludedGroupIds = new ArrayList<Long>();
 
-			Group companyGroup = GroupLocalServiceUtil.getCompanyGroup(company.getCompanyId());
+			Group companyGroup = company.getGroup();
 
 			excludedGroupIds.add(companyGroup.getGroupId());
 
@@ -99,7 +99,7 @@ portletURL.setParameter("target", target);
 
 			if (includeCompany) {
 				if (searchContainer.getStart() == 0) {
-					results.add(company.getGroup());
+					results.add(companyGroup);
 				}
 
 				additionalSites++;

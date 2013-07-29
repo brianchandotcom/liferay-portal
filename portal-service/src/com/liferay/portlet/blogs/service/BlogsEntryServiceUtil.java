@@ -89,6 +89,10 @@ public class BlogsEntryServiceUtil {
 				   .getCompanyEntries(companyId, displayDate, status, max);
 	}
 
+	/**
+	* @deprecated As of 6.2.0, replaced by {@link
+	com.liferay.portlet.blogs.rss.BlogsCompanyRSSRenderer}
+	*/
 	public static java.lang.String getCompanyEntriesRSS(long companyId,
 		java.util.Date displayDate, int status, int max, java.lang.String type,
 		double version, java.lang.String displayStyle,
@@ -151,6 +155,10 @@ public class BlogsEntryServiceUtil {
 		return getService().getGroupEntriesCount(groupId, status);
 	}
 
+	/**
+	* @deprecated As of 6.2.0, replaced by {@link
+	com.liferay.portlet.blogs.rss.BlogsGroupRSSRenderer}
+	*/
 	public static java.lang.String getGroupEntriesRSS(long groupId,
 		java.util.Date displayDate, int status, int max, java.lang.String type,
 		double version, java.lang.String displayStyle,
@@ -182,6 +190,10 @@ public class BlogsEntryServiceUtil {
 			max);
 	}
 
+	/**
+	* @deprecated As of 6.2.0, replaced by {@link
+	com.liferay.portlet.blogs.rss.BlogsOrganizationRSSRenderer}
+	*/
 	public static java.lang.String getOrganizationEntriesRSS(
 		long organizationId, java.util.Date displayDate, int status, int max,
 		java.lang.String type, double version, java.lang.String displayStyle,

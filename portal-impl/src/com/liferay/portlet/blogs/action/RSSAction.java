@@ -16,92 +16,82 @@ package com.liferay.portlet.blogs.action;
 
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.model.Layout;
+import com.liferay.portal.service.CompanyLocalServiceUtil;
+import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.Portal;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.portlet.blogs.model.BlogsEntry;
+import com.liferay.portlet.blogs.rss.BlogsCompanyRSSRenderer;
+import com.liferay.portlet.blogs.rss.BlogsGroupRSSRenderer;
+import com.liferay.portlet.blogs.rss.BlogsOrganizationRSSRenderer;
 import com.liferay.portlet.blogs.service.BlogsEntryServiceUtil;
-import com.liferay.util.RSSUtil;
+import com.liferay.portlet.rss.RSSRenderer;
+import com.liferay.portlet.rss.action.DefaultRSSAction;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class RSSAction extends com.liferay.portal.struts.RSSAction {
+public class RSSAction extends DefaultRSSAction {
 
 	@Override
-	protected byte[] getRSS(HttpServletRequest request) throws Exception {
+	public RSSRenderer getRSSRenderer(HttpServletRequest request)
+		throws Exception {
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Layout layout = themeDisplay.getLayout();
-
-		long plid = ParamUtil.getLong(request, "p_l_id");
 		long companyId = ParamUtil.getLong(request, "companyId");
 		long groupId = ParamUtil.getLong(request, "groupId");
-		long organizationId = ParamUtil.getLong(request, "organizationId");
-		int status = WorkflowConstants.STATUS_APPROVED;
 		int max = ParamUtil.getInteger(
 			request, "max", SearchContainer.DEFAULT_DELTA);
-		String type = ParamUtil.getString(
-			request, "type", RSSUtil.FORMAT_DEFAULT);
-		double version = ParamUtil.getDouble(
-			request, "version", RSSUtil.VERSION_DEFAULT);
-		String displayStyle = ParamUtil.getString(
-			request, "displayStyle", RSSUtil.DISPLAY_STYLE_DEFAULT);
+		long organizationId = ParamUtil.getLong(request, "organizationId");
 
-		String feedURL =
-			themeDisplay.getPortalURL() + themeDisplay.getPathMain() +
-				"/blogs/find_entry?";
-
-		String entryURL = feedURL;
-
-		String rss = StringPool.BLANK;
+		List<BlogsEntry> entries = null;
 
 		if (companyId > 0) {
-			feedURL = StringPool.BLANK;
+			entries = BlogsEntryServiceUtil.getCompanyEntries(
+				companyId, new Date(), WorkflowConstants.STATUS_APPROVED, max);
 
-			rss = BlogsEntryServiceUtil.getCompanyEntriesRSS(
-				companyId, new Date(), status, max, type, version, displayStyle,
-				feedURL, entryURL, themeDisplay);
+			return new BlogsCompanyRSSRenderer(
+				CompanyLocalServiceUtil.getCompany(companyId), entries,
+				request);
 		}
 		else if (groupId > 0) {
-			feedURL += "p_l_id=" + plid;
+			entries = BlogsEntryServiceUtil.getGroupEntries(
+				groupId, new Date(), WorkflowConstants.STATUS_APPROVED, max);
 
-			entryURL = feedURL;
-
-			rss = BlogsEntryServiceUtil.getGroupEntriesRSS(
-				groupId, new Date(), status, max, type, version, displayStyle,
-				feedURL, entryURL, themeDisplay);
+			return new BlogsGroupRSSRenderer(
+				GroupLocalServiceUtil.getGroup(
+					groupId), entries, request, true);
 		}
 		else if (organizationId > 0) {
-			feedURL = StringPool.BLANK;
+			entries = BlogsEntryServiceUtil.getOrganizationEntries(
+				organizationId, new Date(), WorkflowConstants.STATUS_APPROVED,
+				max);
 
-			rss = BlogsEntryServiceUtil.getOrganizationEntriesRSS(
-				organizationId, new Date(), status, max, type, version,
-				displayStyle, feedURL, entryURL, themeDisplay);
+			return new BlogsOrganizationRSSRenderer(
+				OrganizationLocalServiceUtil.getOrganization(organizationId),
+				entries, request);
 		}
-		else if (layout != null) {
+		else if (themeDisplay.getLayout() != null) {
 			groupId = themeDisplay.getScopeGroupId();
 
-			feedURL =
-				PortalUtil.getLayoutFullURL(themeDisplay) +
-					Portal.FRIENDLY_URL_SEPARATOR + "blogs/rss";
+			entries = BlogsEntryServiceUtil.getGroupEntries(
+				groupId, new Date(), WorkflowConstants.STATUS_APPROVED, max);
 
-			entryURL = feedURL;
-
-			rss = BlogsEntryServiceUtil.getGroupEntriesRSS(
-				groupId, new Date(), status, max, type, version, displayStyle,
-				feedURL, entryURL, themeDisplay);
+			return new BlogsGroupRSSRenderer(
+				GroupLocalServiceUtil.getGroup(groupId), entries, request,
+				false);
 		}
 
-		return rss.getBytes(StringPool.UTF8);
+		throw new UnsupportedOperationException();
 	}
 
 }

@@ -81,6 +81,10 @@ public interface BlogsEntryService extends BaseService {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	/**
+	* @deprecated As of 6.2.0, replaced by {@link
+	com.liferay.portlet.blogs.rss.BlogsCompanyRSSRenderer}
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.lang.String getCompanyEntriesRSS(long companyId,
 		java.util.Date displayDate, int status, int max, java.lang.String type,
@@ -129,6 +133,10 @@ public interface BlogsEntryService extends BaseService {
 	public int getGroupEntriesCount(long groupId, int status)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	/**
+	* @deprecated As of 6.2.0, replaced by {@link
+	com.liferay.portlet.blogs.rss.BlogsGroupRSSRenderer}
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.lang.String getGroupEntriesRSS(long groupId,
 		java.util.Date displayDate, int status, int max, java.lang.String type,
@@ -151,6 +159,10 @@ public interface BlogsEntryService extends BaseService {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	/**
+	* @deprecated As of 6.2.0, replaced by {@link
+	com.liferay.portlet.blogs.rss.BlogsOrganizationRSSRenderer}
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.lang.String getOrganizationEntriesRSS(long organizationId,
 		java.util.Date displayDate, int status, int max, java.lang.String type,

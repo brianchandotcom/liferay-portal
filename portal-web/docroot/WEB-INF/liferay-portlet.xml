@@ -1833,6 +1833,7 @@
 		<header-portlet-css>/html/portlet/asset_publisher/css/main.css</header-portlet-css>
 		<css-class-wrapper>portlet-asset-publisher</css-class-wrapper>
 		<add-default-resource>true</add-default-resource>
+		<active>false</active>
 	</portlet>
 	<portlet>
 		<portlet-name>174</portlet-name>

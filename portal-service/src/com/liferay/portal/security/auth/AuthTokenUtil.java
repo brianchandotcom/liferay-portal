@@ -24,10 +24,21 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class AuthTokenUtil {
 
+	/**
+	 * @deprecated As of 6.2.0, please use {@link
+	 *             #checkCSRFToken(HttpServletRequest, String)}
+	 */
+	@Deprecated
 	public static void check(HttpServletRequest request)
 		throws PortalException {
 
 		getAuthToken().check(request);
+	}
+
+	public static void checkCSRFToken(HttpServletRequest request, String origin)
+		throws PrincipalException {
+
+		getAuthToken().checkCSRFToken(request, origin);
 	}
 
 	public static AuthToken getAuthToken() {

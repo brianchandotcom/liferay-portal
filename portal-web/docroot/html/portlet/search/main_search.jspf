@@ -135,10 +135,10 @@ boolean showMenu = advancedConfiguration || displayScopeFacet || displayAssetTyp
 	<aui:col cssClass="result" first="<%= !showMenu %>" span="10">
 		<liferay-ui:search-container
 			searchContainer="<%= mainSearchSearchContainer %>"
+			total="<%= hits.getLength() %>"
 		>
 			<liferay-ui:search-container-results
 				results="<%= hits.toList() %>"
-				total="<%= hits.getLength() %>"
 			/>
 
 			<liferay-ui:search-container-row

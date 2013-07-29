@@ -244,13 +244,6 @@ ArticleSearch searchContainer = new ArticleSearch(liferayPortletRequest, entryEn
 
 						searchContainer.setTotal(total);
 
-						if (searchContainer.isRecalculateCur()) {
-							searchContext.setEnd(searchContainer.getEnd());
-							searchContext.setStart(searchContainer.getStart());
-
-							hits = indexer.search(searchContext);
-						}
-
 						PortletURL hitURL = liferayPortletResponse.createRenderURL();
 
 						List<SearchResult> searchResultsList = SearchResultUtil.getSearchResults(hits, locale, hitURL);

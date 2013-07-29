@@ -40,12 +40,15 @@ while (true) {
 
 	if (!corruptIndex) {
 		results = (List<Organization>)tuple.getObject(0);
-		total = hits.getLength();
+
+		organizationSearchContainer.setTotal(hits.getLength());
 
 		break;
+	}
+	else {
+		organizationSearchContainer.setTotal(0);
 	}
 }
 
 pageContext.setAttribute("results", results);
-pageContext.setAttribute("total", total);
 %>

@@ -33,16 +33,7 @@ else {
 
 	Hits hits = indexer.search(searchContext);
 
-	total = hits.getLength();
-
-	searchContainer.setTotal(total);
-
-	if (searchContainer.isRecalculateCur()) {
-		searchContext.setEnd(searchContainer.getEnd());
-		searchContext.setStart(searchContainer.getStart());
-
-		hits = indexer.search(searchContext);
-	}
+	searchContainer.setTotal(hits.getLength());
 
 	for (int i = 0; i < hits.getDocs().length; i++) {
 		Document doc = hits.doc(i);
@@ -69,7 +60,6 @@ else {
 }
 
 pageContext.setAttribute("results", results);
-pageContext.setAttribute("total", total);
 %>
 
 <%!

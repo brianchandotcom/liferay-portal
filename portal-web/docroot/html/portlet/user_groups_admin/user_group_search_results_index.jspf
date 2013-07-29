@@ -33,12 +33,15 @@ while (true) {
 
 	if (!corruptIndex) {
 		results = (List<UserGroup>)tuple.getObject(0);
-		total = hits.getLength();
+
+		searchContainer.setTotal(hits.getLength());
 
 		break;
+	}
+	else {
+		searchContainer.setTotal(0);
 	}
 }
 
 pageContext.setAttribute("results", results);
-pageContext.setAttribute("total", total);
 %>

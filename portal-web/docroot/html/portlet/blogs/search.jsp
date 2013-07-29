@@ -78,13 +78,6 @@ String keywords = ParamUtil.getString(request, "keywords");
 
 		searchContainer.setTotal(hits.getLength());
 
-		if (searchContainer.isRecalculateCur()) {
-			searchContext.setEnd(searchContainer.getEnd());
-			searchContext.setStart(searchContainer.getStart());
-
-			hits = indexer.search(searchContext);
-		}
-
 		PortletURL hitURL = renderResponse.createRenderURL();
 
 		hitURL.setParameter("struts_action", "/blogs/view_entry");

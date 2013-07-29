@@ -111,9 +111,7 @@ boolean useAssetEntryQuery = false;
 			}
 		}
 
-		int total = results.size();
-
-		searchContainer.setTotal(total);
+		searchContainer.setTotal(results.size());
 	%>
 
 	<div id="<portlet:namespace />imageGalleryAssetInfo">

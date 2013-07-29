@@ -111,33 +111,25 @@ portletURL.setParameter("tabs1", tabs1);
 
 			Hits hits = TrashEntryLocalServiceUtil.search(company.getCompanyId(), groupId, user.getUserId(), searchTerms.getKeywords(), searchContainer.getStart(), searchContainer.getEnd(), sort);
 
-			total = hits.getLength();
+			searchContainer.setTotal(hits.getLength());
 
-			searchContainer.setTotal(total);
-
-			if (searchContainer.isRecalculateCur()) {
-				hits = TrashEntryLocalServiceUtil.search(company.getCompanyId(), groupId, user.getUserId(), searchTerms.getKeywords(), searchContainer.getStart(), searchContainer.getEnd(), sort);
-			}
-
-			pageContext.setAttribute("results", TrashUtil.getEntries(hits));
-			pageContext.setAttribute("total", total);
+			results = TrashUtil.getEntries(hits);
 		}
 		else {
 			TrashEntryList trashEntryList = TrashEntryServiceUtil.getEntries(groupId, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 
-			total = trashEntryList.getCount();
-
-			searchContainer.setTotal(total);
+			searchContainer.setTotal(trashEntryList.getCount());
 
 			if (searchContainer.isRecalculateCur()) {
 				trashEntryList = TrashEntryServiceUtil.getEntries(groupId, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 			}
 
-			pageContext.setAttribute("results", TrashEntryImpl.toModels(trashEntryList.getArray()));
-			pageContext.setAttribute("total", total);
+			results = TrashEntryImpl.toModels(trashEntryList.getArray());
 
 			approximate = trashEntryList.isApproximate();
 		}
+
+		pageContext.setAttribute("results", results);
 
 		if ((total == 0) && Validator.isNotNull(searchTerms.getKeywords())) {
 			searchContainer.setEmptyResultsMessage(LanguageUtil.format(pageContext, "no-entries-were-found-that-matched-the-keywords-x", "<strong>" + HtmlUtil.escape(searchTerms.getKeywords()) + "</strong>"));

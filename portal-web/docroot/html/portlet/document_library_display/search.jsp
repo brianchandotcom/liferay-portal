@@ -150,13 +150,6 @@ int mountFoldersCount = DLAppServiceUtil.getMountFoldersCount(scopeGroupId, DLFo
 
 		searchContainer.setTotal(hits.getLength());
 
-		if (searchContainer.isRecalculateCur()) {
-			searchContext.setEnd(searchContainer.getEnd());
-			searchContext.setStart(searchContainer.getStart());
-
-			hits = DLAppServiceUtil.search(repositoryId, searchContext);
-		}
-
 		PortletURL hitURL = renderResponse.createRenderURL();
 		%>
 

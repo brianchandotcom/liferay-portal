@@ -92,11 +92,12 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "sea
 		searchContext.setStart(searchContainer.getStart());
 
 		Hits hits = indexer.search(searchContext);
+
+		searchContainer.setTotal(hits.getLength());
 		%>
 
 		<liferay-ui:search-container-results
 			results="<%= BookmarksUtil.getEntries(hits) %>"
-			total="<%= hits.getLength() %>"
 		/>
 
 		<liferay-ui:search-container-row

@@ -160,21 +160,11 @@ if (fileEntryTypeId >= 0) {
 
 	searchContainer.setTotal(total);
 
-	if (total <= entryStart) {
-		entryStart = (searchContainer.getCur() - 1) * searchContainer.getDelta();
-		entryEnd = entryStart + searchContainer.getDelta();
+	Document[] docs = hits.getDocs();
 
-		searchContext.setEnd(entryEnd);
-		searchContext.setStart(entryStart);
+	results = new ArrayList(docs.length);
 
-		hits = indexer.search(searchContext);
-	}
-
-	results = new ArrayList();
-
-	for (int i = 0; i < hits.getDocs().length; i++) {
-		Document doc = hits.doc(i);
-
+	for (Document doc : docs) {
 		long fileEntryId = GetterUtil.getLong(doc.get(Field.ENTRY_CLASS_PK));
 
 		FileEntry fileEntry = null;
@@ -255,8 +245,8 @@ searchContainer.setResults(results);
 
 request.setAttribute("view.jsp-total", String.valueOf(total));
 
-request.setAttribute("view_entries.jsp-entryStart", String.valueOf(entryStart));
-request.setAttribute("view_entries.jsp-entryEnd", String.valueOf(entryEnd));
+request.setAttribute("view_entries.jsp-entryStart", String.valueOf(searchContainer.getStart()));
+request.setAttribute("view_entries.jsp-entryEnd", String.valueOf(searchContainer.getEnd()));
 %>
 
 <div class="subscribe-action">

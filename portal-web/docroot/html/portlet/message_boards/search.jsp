@@ -105,21 +105,11 @@ String keywords = ParamUtil.getString(request, "keywords");
 
 			hits = indexer.search(searchContext);
 
-			total = hits.getLength();
-
-			searchContainer.setTotal(total);
-
-			if (searchContainer.isRecalculateCur()) {
-				searchContext.setStart(searchContainer.getStart());
-				searchContext.setEnd(searchContainer.getEnd());
-
-				hits = indexer.search(searchContext);
-			}
+			searchContainer.setTotal(hits.getLength());
 
 			PortletURL hitURL = renderResponse.createRenderURL();
 
 			pageContext.setAttribute("results", SearchResultUtil.getSearchResults(hits, locale, hitURL));
-			pageContext.setAttribute("total", total);
 			%>
 
 		</liferay-ui:search-container-results>

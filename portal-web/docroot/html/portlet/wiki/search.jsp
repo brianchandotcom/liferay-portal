@@ -90,13 +90,6 @@ portletURL.setParameter("keywords", keywords);
 
 		searchContainer.setTotal(hits.getLength());
 
-		if (searchContainer.isRecalculateCur()) {
-			searchContext.setEnd(searchContainer.getEnd());
-			searchContext.setStart(searchContainer.getStart());
-
-			hits = indexer.search(searchContext);
-		}
-
 		PortletURL hitURL = renderResponse.createRenderURL();
 
 		hitURL.setParameter("struts_action", "/wiki/view");

@@ -3984,6 +3984,120 @@ public class StringUtil {
 		return String.valueOf(obj);
 	}
 
+	public static boolean wildMatch(
+		String wild, String s, char singleWild, char multipleWild, char escape,
+		boolean ignoreCase) {
+
+		if (ignoreCase) {
+			wild = wild.toLowerCase();
+			s = s.toLowerCase();
+		}
+
+		int index = wild.indexOf(escape);
+
+		// Purify wild
+
+		if (index != -1) {
+
+			// Search for safe wildcard replacement
+
+			char newSingleWild = 0;
+
+			while (wild.indexOf(newSingleWild) != -1) {
+				newSingleWild++;
+			}
+
+			char newMultipleWild = (char)(newSingleWild + 1);
+
+			while (wild.indexOf(newMultipleWild) != -1) {
+				newMultipleWild++;
+			}
+
+			// Purification
+
+			StringBuilder sb = new StringBuilder(wild);
+
+			for (int i = 0; i < sb.length(); i++) {
+				char c = sb.charAt(i);
+
+				if (c == escape) {
+					sb.deleteCharAt(i);
+				}
+				else if (c == singleWild) {
+					sb.setCharAt(i, newSingleWild);
+				}
+				else if (c == multipleWild) {
+					sb.setCharAt(i, newMultipleWild);
+				}
+			}
+
+			wild = sb.toString();
+
+			singleWild = newSingleWild;
+			multipleWild = newMultipleWild;
+		}
+
+		// Align head
+
+		for (index = 0; index < s.length(); index++) {
+			char w = wild.charAt(index);
+
+			if (w == multipleWild) {
+				break;
+			}
+
+			if ((s.charAt(index) != w) && (w != singleWild)) {
+				return false;
+			}
+		}
+
+		// Match body
+
+		int wildIndex = index;
+		int sIndex = index;
+
+		int matchPoint = 0;
+		int comparePoint = 0;
+
+		while (sIndex < s.length()) {
+			char w = wild.charAt(wildIndex);
+
+			if (w == multipleWild) {
+				if (++wildIndex == wild.length()) {
+					return true;
+				}
+
+				matchPoint = wildIndex;
+				comparePoint = sIndex + 1;
+			}
+			else if ((w == s.charAt(sIndex)) || (w == singleWild)) {
+				wildIndex++;
+				sIndex++;
+			}
+			else {
+				wildIndex = matchPoint;
+				sIndex = comparePoint++;
+			}
+		}
+
+		// Match tail
+
+		while (wildIndex < wild.length()) {
+			if (wild.charAt(wildIndex) != multipleWild) {
+				break;
+			}
+
+			wildIndex++;
+		}
+
+		if (wildIndex == wild.length()) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
 	public static String wrap(String text) {
 		return wrap(text, 80, StringPool.NEW_LINE);
 	}

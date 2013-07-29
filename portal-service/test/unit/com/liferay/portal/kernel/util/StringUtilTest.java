@@ -296,4 +296,131 @@ public class StringUtilTest {
 		Assert.assertEquals("abcd", StringUtil.strip(" a b  c   d", ' '));
 	}
 
+	@Test
+	public void testWildMatch() {
+
+		// Exact match
+
+		String wild = "abc";
+		String s = "abc";
+
+		Assert.assertTrue(
+			s,
+			StringUtil.wildMatch(
+				wild, s, CharPool.UNDERLINE, CharPool.PERCENT,
+				CharPool.BACK_SLASH, false));
+
+		// Ignore case exact match
+
+		wild = "abc";
+		s = "aBc";
+
+		Assert.assertTrue(
+			s,
+			StringUtil.wildMatch(
+				wild, s, CharPool.UNDERLINE, CharPool.PERCENT,
+				CharPool.BACK_SLASH, true));
+
+		// Wildcard head match, multiple
+
+		wild = "%c";
+		s = "abc";
+
+		Assert.assertTrue(
+			s,
+			StringUtil.wildMatch(
+				wild, s, CharPool.UNDERLINE, CharPool.PERCENT,
+				CharPool.BACK_SLASH, false));
+
+		// Wildcard head match, single
+
+		wild = "__c";
+		s = "abc";
+
+		Assert.assertTrue(
+			s,
+			StringUtil.wildMatch(
+				wild, s, CharPool.UNDERLINE, CharPool.PERCENT,
+				CharPool.BACK_SLASH, false));
+
+		// Wildcard head mismatch(single only)
+
+		wild = "a_Z";
+		s = "abc";
+
+		Assert.assertFalse(
+			s,
+			StringUtil.wildMatch(
+				wild, s, CharPool.UNDERLINE, CharPool.PERCENT,
+				CharPool.BACK_SLASH, false));
+
+		// Wildcard body match, multiple
+
+		wild = "a%";
+		s = "abc";
+
+		Assert.assertTrue(
+			s,
+			StringUtil.wildMatch(
+				wild, s, CharPool.UNDERLINE, CharPool.PERCENT,
+				CharPool.BACK_SLASH, false));
+
+		// Wildcard body match, single
+
+		wild = "a%__d";
+		s = "abcd";
+
+		Assert.assertTrue(
+			s,
+			StringUtil.wildMatch(
+				wild, s, CharPool.UNDERLINE, CharPool.PERCENT,
+				CharPool.BACK_SLASH, false));
+
+		// Wildcard tail match
+
+		wild = "abc%";
+		s = "abc";
+
+		Assert.assertTrue(
+			s,
+			StringUtil.wildMatch(
+				wild, s, CharPool.UNDERLINE, CharPool.PERCENT,
+				CharPool.BACK_SLASH, false));
+
+		// Wildcard tail mismatch
+
+		wild = "abc%z";
+		s = "abc";
+
+		Assert.assertFalse(
+			s,
+			StringUtil.wildMatch(
+				wild, s, CharPool.UNDERLINE, CharPool.PERCENT,
+				CharPool.BACK_SLASH, false));
+
+		// Wildcard with escape, clean
+
+		wild = "a\\_b\\%c";
+		s = "a_b%c";
+
+		Assert.assertTrue(
+			s,
+			StringUtil.wildMatch(
+				wild, s, CharPool.UNDERLINE, CharPool.PERCENT,
+				CharPool.BACK_SLASH, false));
+
+		// Wildcard with escape, auto swapping wildcards
+
+		wild = new String(
+			new char[]{(char)0, '\\', '_', '_', (char)2, '\\', '%', 'c', '%'});
+		s = new String(
+				new char[]{(char)0, '_', 'a', (char)2, '%', 'c', 'd', 'e'});
+
+		Assert.assertTrue(
+			s,
+			StringUtil.wildMatch(
+				wild, s, CharPool.UNDERLINE, CharPool.PERCENT,
+				CharPool.BACK_SLASH, false));
+	}
+
 }

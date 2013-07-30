@@ -39,6 +39,7 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileRank;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
+import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
@@ -364,6 +365,14 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 
 				DLFileEntry dlFileEntry = (DLFileEntry)object;
 
+				DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
+
+				if (dlFileVersion.isInTrash() ||
+					dlFileEntry.isInTrashContainer()) {
+
+					return;
+				}
+
 				FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
 					dlFileEntry.getFileEntryId());
 
@@ -400,6 +409,10 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 				throws PortalException, SystemException {
 
 				DLFolder dlFolder = (DLFolder)object;
+
+				if (dlFolder.isInTrash() || dlFolder.isInTrashContainer()) {
+					return;
+				}
 
 				Folder folder = DLAppLocalServiceUtil.getFolder(
 					dlFolder.getFolderId());

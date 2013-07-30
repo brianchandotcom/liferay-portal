@@ -53,6 +53,12 @@ public class SessionAuthToken implements AuthToken {
 
 		long companyId = PortalUtil.getCompanyId(request);
 
+		if (AuthTokenWhitelistUtil.isCSRFContextWhitelisted(
+				companyId, context)) {
+
+			return;
+		}
+
 		if (context.equals(SecurityPortletContainerWrapper.class.getName())) {
 			String ppid = ParamUtil.getString(request, "p_p_id");
 

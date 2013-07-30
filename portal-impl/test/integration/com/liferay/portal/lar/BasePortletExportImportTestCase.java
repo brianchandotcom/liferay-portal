@@ -14,6 +14,7 @@
 
 package com.liferay.portal.lar;
 
+import com.liferay.portal.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
@@ -44,6 +45,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.portlet.PortletPreferences;
@@ -173,6 +175,28 @@ public class BasePortletExportImportTestCase extends BaseExportImportTestCase {
 		testExportImportDisplayStyle(group.getGroupId(), "layout");
 	}
 
+	@Test
+	public void testExportImportInvalidAvailableLocales() throws Exception {
+		Locale enLocale = Locale.US;
+		Locale esLocale = new Locale("es", "ES");
+		Locale deLocale = new Locale("de", "DE");
+
+		testExportImportAvailableLocales(
+			new Locale[] {enLocale, esLocale},
+			new Locale[] {enLocale, deLocale}, true);
+	}
+
+	@Test
+	public void testExportImportValidAvailableLocales() throws Exception {
+		Locale enLocale = Locale.US;
+		Locale esLocale = new Locale("es", "ES");
+		Locale deLocale = new Locale("de", "DE");
+
+		testExportImportAvailableLocales(
+			new Locale[] {enLocale, esLocale},
+			new Locale[] {enLocale, esLocale, deLocale}, false);
+	}
+
 	protected AssetLink addAssetLink(
 			long groupId, String sourceStagedModelUuid,
 			String targetStagedModelUuid, int weight)
@@ -232,6 +256,46 @@ public class BasePortletExportImportTestCase extends BaseExportImportTestCase {
 
 		return LayoutTestUtil.getPortletPreferences(
 			importedLayout.getCompanyId(), importedLayout.getPlid(), portletId);
+	}
+
+	protected void testExportImportAvailableLocales(
+			Locale[] sourceAvailableLocales, Locale[] targetAvailableLocales,
+			boolean fail)
+		throws Exception {
+
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			group.getCompanyId(), getPortletId());
+
+		if (portlet == null) {
+			return;
+		}
+
+		com.liferay.portal.kernel.lar.PortletDataHandler portletDataHandler =
+			portlet.getPortletDataHandlerInstance();
+
+		if (!portletDataHandler.isDataLocalized()) {
+			Assert.assertTrue("This test does not apply", true);
+
+			return;
+		}
+
+		GroupTestUtil.updateDisplaySettings(
+			group.getGroupId(), sourceAvailableLocales, null);
+		GroupTestUtil.updateDisplaySettings(
+			importedGroup.getGroupId(), targetAvailableLocales, null);
+
+		try {
+			doExportImportPortlet(getPortletId());
+
+			if (fail) {
+				Assert.fail();
+			}
+		}
+		catch (LocaleException le) {
+			if (!fail) {
+				Assert.fail();
+			}
+		}
 	}
 
 	protected void testExportImportDisplayStyle(

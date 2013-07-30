@@ -232,10 +232,6 @@ public class CustomSQL {
 			return new String[] {null};
 		}
 
-		if (isVendorMySQL() || isVendorOracle()) {
-			keywords = StringUtil.replace(keywords, "_", "\\_");
-		}
-
 		if (lowerCase) {
 			keywords = keywords.toLowerCase();
 		}

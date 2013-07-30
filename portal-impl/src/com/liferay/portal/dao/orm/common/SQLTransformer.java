@@ -235,10 +235,6 @@ public class SQLTransformer {
 		return sql;
 	}
 
-	private String _replaceEscape(String sql) {
-		return StringUtil.replace(sql, "LIKE ?", "LIKE ? ESCAPE '\\'");
-	}
-
 	private String _replaceIntegerDivision(String sql) {
 		Matcher matcher = _integerDivisionPattern.matcher(sql);
 
@@ -314,7 +310,6 @@ public class SQLTransformer {
 			}
 		}
 		else if (_vendorOracle) {
-			newSQL = _replaceEscape(newSQL);
 			newSQL = _replaceNotEqualsBlankStringComparison(newSQL);
 		}
 		else if (_vendorPostgreSQL) {

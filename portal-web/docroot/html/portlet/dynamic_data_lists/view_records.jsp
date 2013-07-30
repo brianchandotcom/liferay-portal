@@ -17,6 +17,8 @@
 <%@ include file="/html/portlet/dynamic_data_lists/init.jsp" %>
 
 <%
+String redirect = ParamUtil.getString(request, "redirect");
+
 DDLRecordSet recordSet = (DDLRecordSet)request.getAttribute(WebKeys.DYNAMIC_DATA_LISTS_RECORD_SET);
 
 long formDDMTemplateId = ParamUtil.getLong(request, "formDDMTemplateId");
@@ -32,6 +34,7 @@ if (DDLUtil.isEditable(request, portletDisplay.getId(), themeDisplay.getScopeGro
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/dynamic_data_lists/view_record_set");
+portletURL.setParameter("redirect", redirect);
 portletURL.setParameter("recordSetId", String.valueOf(recordSet.getRecordSetId()));
 %>
 

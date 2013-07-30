@@ -18,7 +18,6 @@
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
-String backURL = ParamUtil.getString(request, "backURL");
 
 DDLRecord record = (DDLRecord)request.getAttribute(WebKeys.DYNAMIC_DATA_LISTS_RECORD);
 
@@ -40,7 +39,7 @@ DDLRecordVersion latestRecordVersion = record.getLatestRecordVersion();
 %>
 
 <liferay-ui:header
-	backURL="<%= backURL %>"
+	backURL="<%= redirect %>"
 	title='<%= LanguageUtil.format(pageContext, "view-x", ddmStructure.getName(locale)) %>'
 />
 
@@ -81,7 +80,7 @@ DDLRecordVersion latestRecordVersion = record.getLatestRecordVersion();
 			<portlet:renderURL var="editRecordURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
 				<portlet:param name="struts_action" value="/dynamic_data_lists/edit_record" />
 				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UPDATE %>" />
-				<portlet:param name="redirect" value="<%= redirect %>" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
 				<portlet:param name="recordId" value="<%= String.valueOf(record.getRecordId()) %>" />
 				<portlet:param name="formDDMTemplateId" value="<%= String.valueOf(formDDMTemplateId) %>" />
 			</portlet:renderURL>

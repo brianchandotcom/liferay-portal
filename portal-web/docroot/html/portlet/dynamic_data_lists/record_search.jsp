@@ -49,7 +49,7 @@ long formDDMTemplateId = ParamUtil.getLong(request, "formDDMTemplateId");
 
 	<aui:script>
 		function <portlet:namespace />addRecord() {
-			submitForm(document.<portlet:namespace />fm, '<liferay-portlet:renderURL windowState="<%= WindowState.MAXIMIZED.toString() %>"><portlet:param name="struts_action" value="/dynamic_data_lists/edit_record" /><portlet:param name="redirect" value="<%= currentURL %>" /><portlet:param name="backURL" value="<%= currentURL %>" /><portlet:param name="recordSetId" value="<%= String.valueOf(recordSet.getRecordSetId()) %>" /><portlet:param name="formDDMTemplateId" value="<%= String.valueOf(formDDMTemplateId) %>" /></liferay-portlet:renderURL>');
+			submitForm(document.<portlet:namespace />fm, '<liferay-portlet:renderURL windowState="<%= WindowState.MAXIMIZED.toString() %>"><portlet:param name="struts_action" value="/dynamic_data_lists/edit_record" /><portlet:param name="redirect" value="<%= currentURL %>" /><portlet:param name="recordSetId" value="<%= String.valueOf(recordSet.getRecordSetId()) %>" /><portlet:param name="formDDMTemplateId" value="<%= String.valueOf(formDDMTemplateId) %>" /></liferay-portlet:renderURL>');
 		}
 	</aui:script>
 </c:if>

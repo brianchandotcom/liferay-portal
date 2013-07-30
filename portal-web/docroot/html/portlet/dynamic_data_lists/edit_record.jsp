@@ -18,7 +18,6 @@
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
-String backURL = ParamUtil.getString(request, "backURL");
 
 DDLRecord record = (DDLRecord)request.getAttribute(WebKeys.DYNAMIC_DATA_LISTS_RECORD);
 
@@ -76,7 +75,7 @@ if (translating) {
 %>
 
 <liferay-ui:header
-	backURL="<%= backURL %>"
+	backURL="<%= redirect %>"
 	showBackURL="<%= !translating %>"
 	title='<%= (record != null) ? LanguageUtil.format(pageContext, "edit-x", ddmStructure.getName(locale)) : LanguageUtil.format(pageContext, "new-x", ddmStructure.getName(locale)) %>'
 />
@@ -88,7 +87,6 @@ if (translating) {
 <aui:form action="<%= editRecordURL %>" cssClass="lfr-dynamic-form" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= "event.preventDefault(); submitForm(event.target);" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
 	<aui:input name="recordSetId" type="hidden" value="<%= recordSetId %>" />
 	<aui:input name="recordId" type="hidden" value="<%= recordId %>" />
 	<aui:input name="defaultLanguageId" type="hidden" value="<%= defaultLanguageId %>" />

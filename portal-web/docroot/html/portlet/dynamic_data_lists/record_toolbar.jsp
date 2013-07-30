@@ -17,6 +17,8 @@
 <%@ include file="/html/portlet/dynamic_data_lists/init.jsp" %>
 
 <%
+String redirect = ParamUtil.getString(request, "redirect");
+
 DDLRecord record = (DDLRecord)request.getAttribute(WebKeys.DYNAMIC_DATA_LISTS_RECORD);
 
 long formDDMTemplateId = ParamUtil.getLong(request, "formDDMTemplateId");
@@ -31,7 +33,7 @@ long formDDMTemplateId = ParamUtil.getLong(request, "formDDMTemplateId");
 		<c:if test="<%= record != null %>">
 			<portlet:renderURL var="viewHistoryURL">
 				<portlet:param name="struts_action" value="/dynamic_data_lists/view_record_history" />
-				<portlet:param name="backURL" value="<%= currentURL %>" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
 				<portlet:param name="recordId" value="<%= String.valueOf(record.getRecordId()) %>" />
 				<portlet:param name="formDDMTemplateId" value="<%= String.valueOf(formDDMTemplateId) %>" />
 			</portlet:renderURL>

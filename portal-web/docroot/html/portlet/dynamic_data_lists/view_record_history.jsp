@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/dynamic_data_lists/init.jsp" %>
 
 <%
-String backURL = ParamUtil.getString(request, "backURL");
+String redirect = ParamUtil.getString(request, "redirect");
 
 DDLRecord record = (DDLRecord)request.getAttribute(WebKeys.DYNAMIC_DATA_LISTS_RECORD);
 
@@ -30,12 +30,12 @@ long formDDMTemplateId = ParamUtil.getLong(request, "formDDMTemplateId");
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/dynamic_data_lists/view_record_history");
-portletURL.setParameter("backURL", backURL);
+portletURL.setParameter("redirect", redirect);
 portletURL.setParameter("recordId", String.valueOf(record.getRecordId()));
 %>
 
 <liferay-ui:header
-	backURL="<%= backURL %>"
+	backURL="<%= redirect %>"
 	title='<%= LanguageUtil.format(pageContext, "x-history", ddmStructure.getName(locale)) %>'
 />
 

@@ -73,14 +73,20 @@
 		</if>
 
 		<if>
-			<equals arg1="${pageType}" arg2="Site" />
+			<equals arg1="${pageType}" arg2="Open Site" />
 			<then>
-				<var name="pageTypeURL" value="/site-name" />
+				<var name="pageTypeURL" value="/open-site-name" />
 			</then>
 			<elseif>
 				<equals arg1="${pageType}" arg2="Organization" />
 				<then>
 					<var name="pageTypeURL" value="/organization-name" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${pageType}" arg2="Site" />
+				<then>
+					<var name="pageTypeURL" value="/site-name" />
 				</then>
 			</elseif>
 			<else>

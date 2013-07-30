@@ -127,10 +127,12 @@
 			<var name="portletName" value="Roles" />
 		</execute>
 
-		<execute macro="Role#definePermissionBlogsEntryCP">
+		<execute macro="Role#definePermission">
 			<var name="roleName" value="${roleName}" />
-			<var name="roleType" value="${roleType}" />
-			<var name="rolePermission" value="${rolePermission}" />
+			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_BLOGS" />
+			<var name="permissionNavigationValue" value="Blogs" />
+			<var name="permissionKey" value="BLOGS_TABLE_ADD_ENTRY_CHECKBOX" />
+			<var name="permissionValue" value="Add Entry" />
 		</execute>
 
 		<execute macro="User#logoutPG" />
@@ -157,10 +159,12 @@
 			<var name="portletName" value="Roles" />
 		</execute>
 
-		<execute macro="Role#removePermissionBlogsEntryCP">
+		<execute macro="Role#removePermission">
 			<var name="roleName" value="${roleName}" />
-			<var name="roleType" value="${roleType}" />
-			<var name="rolePermission" value="${rolePermission}" />
+			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_BLOGS" />
+			<var name="permissionNavigationValue" value="Blogs" />
+			<var name="permissionKey" value="BLOGS_TABLE_ADD_ENTRY_CHECKBOX" />
+			<var name="permissionValue" value="Add Entry" />
 		</execute>
 
 		<execute macro="User#logoutPG" />
@@ -261,9 +265,12 @@
 			<var name="portletName" value="Roles" />
 		</execute>
 
-		<execute macro="Role#definePermissionBlogsEntryCP">
+		<execute macro="Role#definePermission">
 			<var name="roleName" value="${roleName}" />
-			<var name="rolePermission" value="${rolePermission}" />
+			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_BLOGS" />
+			<var name="permissionNavigationValue" value="Blogs" />
+			<var name="permissionKey" value="BLOGS_TABLE_ADD_ENTRY_CHECKBOX" />
+			<var name="permissionValue" value="Add Entry" />
 		</execute>
 
 		<execute macro="User#logoutPG" />
@@ -290,9 +297,12 @@
 			<var name="portletName" value="Roles" />
 		</execute>
 
-		<execute macro="Role#removePermissionBlogsEntryCP">
+		<execute macro="Role#removePermission">
 			<var name="roleName" value="${roleName}" />
-			<var name="rolePermission" value="${rolePermission}" />
+			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_BLOGS" />
+			<var name="permissionNavigationValue" value="Blogs" />
+			<var name="permissionKey" value="BLOGS_TABLE_ADD_ENTRY_CHECKBOX" />
+			<var name="permissionValue" value="Add Entry" />
 		</execute>
 
 		<execute macro="User#logoutPG" />
@@ -413,12 +423,10 @@
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="BlogsEntry#addNoPermissionPG">
-			<var name="pageName" value="${pageName}" />
 			<var name="pageType" value="Site" />
 		</execute>
+
+		<execute macro="BlogsEntry#addNoPermissionPG" />
 
 		<execute macro="User#logoutPG" />
 		<execute macro="User#loginPG">
@@ -429,10 +437,12 @@
 			<var name="portletName" value="Roles" />
 		</execute>
 
-		<execute macro="Role#definePermissionBlogsEntryCP">
+		<execute macro="Role#definePermission">
 			<var name="roleName" value="${roleName}" />
-			<var name="roleType" value="${roleType}" />
-			<var name="rolePermission" value="${rolePermission}" />
+			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_BLOGS" />
+			<var name="permissionNavigationValue" value="Blogs" />
+			<var name="permissionKey" value="BLOGS_TABLE_ADD_ENTRY_CHECKBOX" />
+			<var name="permissionValue" value="Add Entry" />
 		</execute>
 
 		<execute macro="User#logoutPG" />
@@ -442,13 +452,12 @@
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
+			<var name="pageType" value="Site" />
 		</execute>
 
 		<execute macro="BlogsEntry#addPG">
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
-			<var name="pageName" value="${pageName}" />
-			<var name="pageType" value="Site" />
 		</execute>
 
 		<execute macro="User#logoutPG" />
@@ -460,10 +469,12 @@
 			<var name="portletName" value="Roles" />
 		</execute>
 
-		<execute macro="Role#removePermissionBlogsEntryCP">
+		<execute macro="Role#removePermission">
 			<var name="roleName" value="${roleName}" />
-			<var name="roleType" value="${roleType}" />
-			<var name="rolePermission" value="${rolePermission}" />
+			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_BLOGS" />
+			<var name="permissionNavigationValue" value="Blogs" />
+			<var name="permissionKey" value="BLOGS_TABLE_ADD_ENTRY_CHECKBOX" />
+			<var name="permissionValue" value="Add Entry" />
 		</execute>
 
 		<execute macro="User#logoutPG" />
@@ -473,12 +484,10 @@
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="BlogsEntry#addNoPermissionPG">
-			<var name="pageName" value="${pageName}" />
 			<var name="pageType" value="Site" />
 		</execute>
+
+		<execute macro="BlogsEntry#addNoPermissionPG" />
 
 		<execute macro="User#logoutPG" />
 		<execute macro="User#loginPG">
@@ -538,7 +547,7 @@
 		<var name="roleType" value="Organization" />
 		<var name="siteName" value="Organization Name" />
 		<var name="sitePageName" value="${pageName}" />
-		<var name="sitePageName" value="Public" />
+		<var name="sitePageType" value="Public" />
 		<var name="userEmailAddress" value="userea@liferay.com" />
 		<var name="userFirstName" value="userfn" />
 		<var name="userLastName" value="userln" />
@@ -631,13 +640,12 @@
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
+			<var name="pageType" value="Organization" />
 		</execute>
 
 		<execute macro="BlogsEntry#addPG">
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
-			<var name="pageName" value="${pageName}" />
-			<var name="pageType" value="Organization" />
 		</execute>
 
 		<execute macro="User#logoutPG" />
@@ -647,12 +655,10 @@
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="BlogsEntry#moveToRecycleBinNoPermissionPG">
-			<var name="pageName" value="${pageName}" />
 			<var name="pageType" value="Organization" />
 		</execute>
+
+		<execute macro="BlogsEntry#moveToRecycleBinNoPermissionPG" />
 
 		<execute macro="User#logoutPG" />
 		<execute macro="User#loginPG">
@@ -663,10 +669,12 @@
 			<var name="portletName" value="Roles" />
 		</execute>
 
-		<execute macro="Role#definePermissionBlogsEntryCP">
+		<execute macro="Role#definePermission">
 			<var name="roleName" value="${roleName}" />
-			<var name="roleType" value="${roleType}" />
-			<var name="rolePermission" value="${rolePermission}" />
+			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_BLOGS" />
+			<var name="permissionNavigationValue" value="Blogs" />
+			<var name="permissionKey" value="BLOGS_ENTRY_TABLE_DELETE_CHECKBOX" />
+			<var name="permissionValue" value="Delete" />
 		</execute>
 
 		<execute macro="User#logoutPG" />
@@ -676,13 +684,12 @@
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
+			<var name="pageType" value="Organization" />
 		</execute>
 
 		<execute macro="BlogsEntry#moveToRecycleBinPG">
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
-			<var name="pageName" value="${pageName}" />
-			<var name="pageType" value="Organization" />
 		</execute>
 
 		<execute macro="User#logoutPG" />
@@ -694,21 +701,22 @@
 			<var name="portletName" value="Roles" />
 		</execute>
 
-		<execute macro="Role#removePermissionBlogsEntryCP">
+		<execute macro="Role#removePermission">
 			<var name="roleName" value="${roleName}" />
-			<var name="roleType" value="${roleType}" />
-			<var name="rolePermission" value="${rolePermission}" />
+			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_BLOGS" />
+			<var name="permissionNavigationValue" value="Blogs" />
+			<var name="permissionKey" value="BLOGS_ENTRY_TABLE_DELETE_CHECKBOX" />
+			<var name="permissionValue" value="Delete" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
+			<var name="pageType" value="Organization" />
 		</execute>
 
 		<execute macro="BlogsEntry#addPG">
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
-			<var name="pageName" value="${pageName}" />
-			<var name="pageType" value="Organization" />
 		</execute>
 
 		<execute macro="User#logoutPG" />
@@ -718,12 +726,10 @@
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="BlogsEntry#moveToRecycleBinNoPermissionPG">
-			<var name="pageName" value="${pageName}" />
 			<var name="pageType" value="Organization" />
 		</execute>
+
+		<execute macro="BlogsEntry#moveToRecycleBinNoPermissionPG" />
 
 		<execute macro="User#logoutPG" />
 		<execute macro="User#loginPG">
@@ -808,9 +814,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="BlogsEntry#moveToRecycleBinNoPermissionPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
+		<execute macro="BlogsEntry#moveToRecycleBinNoPermissionPG" />
 
 		<execute macro="User#logoutPG" />
 		<execute macro="User#loginPG">
@@ -821,9 +825,12 @@
 			<var name="portletName" value="Roles" />
 		</execute>
 
-		<execute macro="Role#definePermissionBlogsEntryCP">
+		<execute macro="Role#definePermission">
 			<var name="roleName" value="${roleName}" />
-			<var name="rolePermission" value="${rolePermission}" />
+			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_BLOGS" />
+			<var name="permissionNavigationValue" value="Blogs" />
+			<var name="permissionKey" value="BLOGS_ENTRY_TABLE_DELETE_CHECKBOX" />
+			<var name="permissionValue" value="Delete" />
 		</execute>
 
 		<execute macro="User#logoutPG" />
@@ -850,9 +857,12 @@
 			<var name="portletName" value="Roles" />
 		</execute>
 
-		<execute macro="Role#removePermissionBlogsEntryCP">
+		<execute macro="Role#removePermission">
 			<var name="roleName" value="${roleName}" />
-			<var name="rolePermission" value="${rolePermission}" />
+			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_BLOGS" />
+			<var name="permissionNavigationValue" value="Blogs" />
+			<var name="permissionKey" value="BLOGS_ENTRY_TABLE_DELETE_CHECKBOX" />
+			<var name="permissionValue" value="Delete" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -874,9 +884,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="BlogsEntry#moveToRecycleBinNoPermissionPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
+		<execute macro="BlogsEntry#moveToRecycleBinNoPermissionPG" />
 
 		<execute macro="User#logoutPG" />
 		<execute macro="User#loginPG">
@@ -978,6 +986,7 @@
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
+			<var name="pageType" value="Site" />
 		</execute>
 
 		<execute macro="BlogsEntry#addPG">
@@ -994,12 +1003,10 @@
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="BlogsEntry#moveToRecycleBinNoPermissionPG">
-			<var name="pageName" value="${pageName}" />
 			<var name="pageType" value="Site" />
 		</execute>
+
+		<execute macro="BlogsEntry#moveToRecycleBinNoPermissionPG" />
 
 		<execute macro="User#logoutPG" />
 		<execute macro="User#loginPG">
@@ -1010,10 +1017,12 @@
 			<var name="portletName" value="Roles" />
 		</execute>
 
-		<execute macro="Role#definePermissionBlogsEntryCP">
+		<execute macro="Role#definePermission">
 			<var name="roleName" value="${roleName}" />
-			<var name="roleType" value="${roleType}" />
-			<var name="rolePermission" value="${rolePermission}" />
+			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_BLOGS" />
+			<var name="permissionNavigationValue" value="Blogs" />
+			<var name="permissionKey" value="BLOGS_ENTRY_TABLE_DELETE_CHECKBOX" />
+			<var name="permissionValue" value="Delete" />
 		</execute>
 
 		<execute macro="User#logoutPG" />
@@ -1023,13 +1032,12 @@
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
+			<var name="pageType" value="Site" />
 		</execute>
 
 		<execute macro="BlogsEntry#moveToRecycleBinPG">
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
-			<var name="pageName" value="${pageName}" />
-			<var name="pageType" value="Site" />
 		</execute>
 
 		<execute macro="User#logoutPG" />
@@ -1041,21 +1049,22 @@
 			<var name="portletName" value="Roles" />
 		</execute>
 
-		<execute macro="Role#removePermissionBlogsEntryCP">
+		<execute macro="Role#removePermission">
 			<var name="roleName" value="${roleName}" />
-			<var name="roleType" value="${roleType}" />
-			<var name="rolePermission" value="${rolePermission}" />
+			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_BLOGS" />
+			<var name="permissionNavigationValue" value="Blogs" />
+			<var name="permissionKey" value="BLOGS_ENTRY_TABLE_DELETE_CHECKBOX" />
+			<var name="permissionValue" value="Delete" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
+			<var name="pageType" value="Site" />
 		</execute>
 
 		<execute macro="BlogsEntry#addPG">
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
-			<var name="pageName" value="${pageName}" />
-			<var name="pageType" value="Site" />
 		</execute>
 
 		<execute macro="User#logoutPG" />
@@ -1065,12 +1074,10 @@
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="BlogsEntry#moveToRecycleBinNoPermissionPG">
-			<var name="pageName" value="${pageName}" />
 			<var name="pageType" value="Site" />
 		</execute>
+
+		<execute macro="BlogsEntry#moveToRecycleBinNoPermissionPG" />
 
 		<execute macro="User#logoutPG" />
 		<execute macro="User#loginPG">
@@ -1079,6 +1086,8 @@
 	</command>
 
 	<tear-down>
+		<execute macro="User#firstLoginPG" />
+
 		<execute macro="User#tearDownCP" />
 
 		<execute macro="Role#tearDownCP" />

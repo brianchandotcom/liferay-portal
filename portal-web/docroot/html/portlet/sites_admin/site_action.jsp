@@ -48,7 +48,7 @@ if (row == null) {
 }
 %>
 
-<liferay-ui:icon-menu showExpanded="<%= view %>" showWhenSingleIcon="<%= view %>">
+<liferay-ui:icon-menu showExpanded="<%= view %>" showWhenSingleIcon="<%= true %>">
 
 	<%
 	ThemeDisplay siteThemeDisplay = (ThemeDisplay)themeDisplay.clone();
@@ -87,44 +87,10 @@ if (row == null) {
 				url="<%= viewSubsitesURL %>"
 			/>
 		</c:if>
-
-		<liferay-portlet:renderURL doAsGroupId="<%= group.getGroupId() %>" portletName="<%= PortletKeys.SITE_SETTINGS %>" var="editURL">
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-		</liferay-portlet:renderURL>
-
-		<liferay-ui:icon
-			image="edit"
-			message="edit-settings"
-			url="<%= editURL %>"
-		/>
 	</c:if>
 
 	<c:if test="<%= group.isCompany() && hasUpdatePermission %>">
 		<liferay-ui:staging extended="<%= true %>" groupId="<%= group.getGroupId() %>" onlyActions="<%= true %>" showManageBranches="<%= false %>" />
-	</c:if>
-
-	<c:if test="<%= !group.isCompany() && GroupPermissionUtil.contains(permissionChecker, group.getGroupId(), ActionKeys.MANAGE_LAYOUTS) %>">
-		<liferay-portlet:renderURL doAsGroupId="<%= group.getGroupId() %>" portletName="<%= PortletKeys.GROUP_PAGES %>" var="managePagesURL">
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-		</liferay-portlet:renderURL>
-
-		<liferay-ui:icon
-			image="pages"
-			message="manage-pages"
-			url="<%= managePagesURL %>"
-		/>
-	</c:if>
-
-	<c:if test="<%= !group.isCompany() && GroupPermissionUtil.contains(permissionChecker, group.getGroupId(), ActionKeys.ASSIGN_MEMBERS) && group.isManualMembership() %>">
-		<liferay-portlet:renderURL doAsGroupId="<%= group.getGroupId() %>" portletName="<%= PortletKeys.SITE_MEMBERSHIPS_ADMIN %>" var="assignMembersURL">
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-		</liferay-portlet:renderURL>
-
-		<liferay-ui:icon
-			image="assign"
-			message="manage-memberships"
-			url="<%= assignMembersURL %>"
-		/>
 	</c:if>
 
 	<c:if test="<%= group.getPublicLayoutsPageCount() > 0 %>">

@@ -163,7 +163,14 @@ request.setAttribute("control_panel.jsp-ppid", ppid);
 											<c:if test="<%= showControlPanelMenu %>">
 
 												<%
-												String backURL = HttpUtil.setParameter(themeDisplay.getURLControlPanel(), "p_p_id", PortletKeys.SITES_ADMIN);
+												String backURL = null;
+
+												if (group.isLayoutSetPrototype()) {
+													backURL = HttpUtil.setParameter(themeDisplay.getURLControlPanel(), "p_p_id", PortletKeys.LAYOUT_SET_PROTOTYPE);
+												}
+												else {
+													backURL = HttpUtil.setParameter(themeDisplay.getURLControlPanel(), "p_p_id", PortletKeys.SITES_ADMIN);
+												}
 												%>
 
 												<a class="control-panel-back-link" href="<%= backURL %>" title="<liferay-ui:message key="back" />">

@@ -202,6 +202,8 @@ if (inlineEdit && (inlineEditSaveURL != null)) {
 
 <script type="text/javascript">
 	CKEDITOR.disableAutoInline = true;
+
+	CKEDITOR.env.isCompatible = true;
 </script>
 
 <aui:script use="<%= modules %>">

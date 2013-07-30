@@ -102,22 +102,22 @@ String modelName = (String)request.getAttribute("liferay-ui:input-permissions:mo
 				<option <%= (inputPermissionsViewRole.equals(RoleConstants.GUEST)) ? "selected=\"selected\"" : "" %> value="<%= RoleConstants.GUEST %>"><%= guestRoleLabel %></option>
 
 				<c:if test="<%= viewDefaultGroupRole %>">
-				<option <%= (inputPermissionsViewRole.equals(defaultGroupRole.getName())) ? "selected=\"selected\"" : "" %> value="<%= defaultGroupRole.getName() %>">
-					<c:choose>
-						<c:when test="<%= defaultGroupRole.getName().equals(RoleConstants.ORGANIZATION_USER) %>">
-							<liferay-ui:message key="organization-members" />
-						</c:when>
-						<c:when test="<%= defaultGroupRole.getName().equals(RoleConstants.POWER_USER) %>">
-							<liferay-ui:message key="power-users" />
-						</c:when>
-						<c:when test="<%= defaultGroupRole.getName().equals(RoleConstants.SITE_MEMBER) %>">
-							<liferay-ui:message key="site-members" />
-						</c:when>
-						<c:otherwise>
-							<liferay-ui:message key="user" />
-						</c:otherwise>
-					</c:choose>
-				</option>
+					<option <%= (inputPermissionsViewRole.equals(defaultGroupRole.getName())) ? "selected=\"selected\"" : "" %> value="<%= defaultGroupRole.getName() %>">
+						<c:choose>
+							<c:when test="<%= defaultGroupRole.getName().equals(RoleConstants.ORGANIZATION_USER) %>">
+								<liferay-ui:message key="organization-members" />
+							</c:when>
+							<c:when test="<%= defaultGroupRole.getName().equals(RoleConstants.POWER_USER) %>">
+								<liferay-ui:message key="power-users" />
+							</c:when>
+							<c:when test="<%= defaultGroupRole.getName().equals(RoleConstants.SITE_MEMBER) %>">
+								<liferay-ui:message key="site-members" />
+							</c:when>
+							<c:otherwise>
+								<liferay-ui:message key="user" />
+							</c:otherwise>
+						</c:choose>
+					</option>
 				</c:if>
 
 				<option <%= (inputPermissionsViewRole.equals(RoleConstants.OWNER)) ? "selected=\"selected\"" : "" %> value="<%= RoleConstants.OWNER %>"><liferay-ui:message key="owner" /></option>

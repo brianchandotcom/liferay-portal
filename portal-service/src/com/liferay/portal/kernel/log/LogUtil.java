@@ -14,16 +14,13 @@
 
 package com.liferay.portal.kernel.log;
 
-import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
-import com.liferay.portal.kernel.util.StackTraceUtil;
-import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.Properties;
-
-import javax.servlet.ServletException;
-import javax.servlet.jsp.JspException;
 
 /**
  * @author Brian Wing Shun Chan
@@ -34,80 +31,54 @@ public class LogUtil {
 
 	public static final int STACK_TRACE_LENGTH = 20;
 
+	@SuppressWarnings("rawtypes")
 	public static void debug(Log log, Properties props) {
 		if (log.isDebugEnabled()) {
-			UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter(
-				props.size() + 1);
+			Enumeration enumeration = props.propertyNames();
 
-			props.list(UnsyncPrintWriterPool.borrow(unsyncStringWriter));
+			while (enumeration.hasMoreElements()) {
+				String key = (String)enumeration.nextElement();
+				String value = props.getProperty(key);
 
-			log.debug(unsyncStringWriter.toString());
-		}
-	}
-
-	public static void log(Log log, JspException jspe) {
-		Throwable cause = jspe.getCause();
-
-		if (cause == null) {
-			cause = jspe;
-		}
-
-		if ((cause != jspe) && (cause instanceof JspException)) {
-			log(log, (JspException)cause);
-		}
-		else if (cause instanceof ServletException) {
-			log(log, (ServletException)cause);
-		}
-		else {
-			_log(log, cause);
-		}
-	}
-
-	public static void log(Log log, ServletException se) {
-		Throwable cause = se.getRootCause();
-
-		if (cause == null) {
-			cause = se;
-		}
-
-		if (cause instanceof JspException) {
-			log(log, (JspException)cause);
-		}
-		else if ((cause != se) && (cause instanceof ServletException)) {
-			log(log, (ServletException)cause);
-		}
-		else {
-			_log(log, cause);
-		}
-	}
-
-	public static void log(Log log, Throwable t) {
-		if (t instanceof JspException) {
-			log(log, (JspException)t);
-		}
-		else if (t instanceof ServletException) {
-			log(log, (ServletException)t);
-		}
-		else {
-			Throwable cause = t.getCause();
-
-			if (cause != null) {
-				log(log, cause);
-			}
-			else {
-				_log(log, t);
+				log.debug(key + StringPool.EQUAL + value);
 			}
 		}
 	}
 
-	private static void _log(Log log, Throwable cause) {
+	public static void log(Log log, Throwable throwable) {
+		log(log, throwable, null);
+	}
+
+	public static void log(Log log, Throwable throwable, String message) {
+		if (throwable == null) {
+			if (Validator.isNotNull(message)) {
+				log.error(message);
+
+				return;
+			}
+
+			throw new IllegalArgumentException(
+				"Either throwable or message must not be null");
+		}
+
+		Throwable cause = throwable;
+
+		while (cause.getCause() != null) {
+			cause = cause.getCause();
+		}
+
 		StackTraceElement[] steArray = cause.getStackTrace();
 
 		// Make the stack trace more readable by limiting the number of
 		// elements.
 
 		if (steArray.length <= STACK_TRACE_LENGTH) {
-			log.error(StackTraceUtil.getStackTrace(cause));
+			if (Validator.isNotNull(message)) {
+				log.error(message, cause);
+			}
+			else {
+				log.error(cause);
+			}
 
 			return;
 		}
@@ -116,8 +87,7 @@ public class LogUtil {
 
 		List<StackTraceElement> steList = new ArrayList<StackTraceElement>();
 
-		for (int i = 0; i < steArray.length; i++) {
-			StackTraceElement ste = steArray[i];
+		for (StackTraceElement ste : steArray) {
 
 			// Make the stack trace more readable by removing elements that
 			// refer to classes with no packages, or starts with a $, or are
@@ -154,7 +124,12 @@ public class LogUtil {
 
 		cause.setStackTrace(steArray);
 
-		log.error(StackTraceUtil.getStackTrace(cause));
+		if (Validator.isNotNull(message)) {
+			log.error(message, cause);
+		}
+		else {
+			log.error(cause);
+		}
 	}
 
 }

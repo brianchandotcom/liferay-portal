@@ -18,9 +18,13 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.xml.Document;
+import com.liferay.portal.kernel.xml.DocumentException;
+import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portlet.PortletPreferencesImpl;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -36,6 +40,7 @@ import org.springframework.mock.web.portlet.MockPortletRequest;
 
 /**
  * @author Connor McKay
+ * @author Peter Borkuti
  */
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class LocalizationImplTest {
@@ -47,10 +52,7 @@ public class LocalizationImplTest {
 
 		_german = new Locale("de", "DE");
 		_germanId = LocaleUtil.toLanguageId(_german);
-	}
 
-	@Test
-	public void testChunkedText() {
 		StringBundler sb = new StringBundler();
 
 		sb.append("<?xml version='1.0' encoding='UTF-8'?>");
@@ -65,17 +67,55 @@ public class LocalizationImplTest {
 		sb.append("</static-content>");
 		sb.append("</root>");
 
-		String translation = LocalizationUtil.getLocalization(
-			sb.toString(), "es_ES");
+		_xml = sb.toString();
+	}
+
+	@Test
+	public void testAvailableLocales() throws DocumentException {
+		int numOfAvailableLocales = 2;
+
+		Document document = SAXReaderUtil.read(_xml);
+
+		String[] localesFromDoc = LocalizationUtil.getAvailableLocales(
+			document);
+
+		String[] localesFromXml = LocalizationUtil.getAvailableLocales(_xml);
+
+		Assert.assertEquals(localesFromDoc.length, numOfAvailableLocales);
+		Assert.assertEquals(localesFromXml.length, numOfAvailableLocales);
+
+		Arrays.sort(localesFromDoc);
+		Arrays.sort(localesFromXml);
+
+		Assert.assertTrue(
+			"Available locales from Document and XML don't match",
+			Arrays.equals(localesFromDoc, localesFromXml));
+	}
+
+	@Test
+	public void testChunkedText() {
+		String translation = LocalizationUtil.getLocalization(_xml, "es_ES");
 
 		Assert.assertNotNull(translation);
 		Assert.assertEquals("foo&bar", translation);
 		Assert.assertEquals(7, translation.length());
 
-		translation = LocalizationUtil.getLocalization(sb.toString(), "en_US");
+		translation = LocalizationUtil.getLocalization(_xml, "en_US");
 
 		Assert.assertNotNull(translation);
 		Assert.assertEquals(18, translation.length());
+	}
+
+	@Test
+	public void testDefaultLocale() throws DocumentException {
+		Document document = SAXReaderUtil.read(_xml);
+
+		String localeFromDoc = LocalizationUtil.getDefaultLocale(document);
+		String localeFromXml = LocalizationUtil.getDefaultLocale(_xml);
+
+		Assert.assertEquals(
+			"The default locales from Document and XML doesn't match",
+			localeFromDoc, localeFromXml);
 	}
 
 	@Test
@@ -186,7 +226,7 @@ public class LocalizationImplTest {
 		sb.append("<root available-locales=\"en_US,de_DE\" ");
 		sb.append("default-locale=\"en_US\">");
 		sb.append("<greeting language-id=\"de_DE\">");
-		sb.append("<![CDATA[Beispiel auf Deutschl]]>");
+		sb.append("<![CDATA[Beispiel auf Deutsch]]>");
 		sb.append("</greeting>");
 		sb.append("<greeting language-id=\"en_US\">");
 		sb.append("<![CDATA[Example in English]]>");
@@ -211,5 +251,6 @@ public class LocalizationImplTest {
 	private Locale _german;
 	private String _germanHello = "Hallo Welt";
 	private String _germanId;
+	private String _xml;
 
 }

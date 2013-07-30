@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.util;
 
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.xml.Document;
 
 import java.util.Locale;
 import java.util.Map;
@@ -56,7 +57,16 @@ public interface Localization {
 	public Object deserialize(JSONObject jsonObject);
 
 	/**
-	 * Returns the available locales from the localizations XML.
+	 * Returns the language IDs of the available locales from the document.
+	 *
+	 * @param  document the document with localizations
+	 * @return the language IDs of the available locales
+	 */
+	public String[] getAvailableLocales(Document document);
+
+	/**
+	 * Returns the language IDs of the available locales from the localizations
+	 * XML.
 	 *
 	 * @param  xml the localizations XML
 	 * @return the language IDs of the available locales
@@ -70,18 +80,29 @@ public interface Localization {
 	 * @param  classPK the primary keys of the entity
 	 * @param  contentDefaultLocale the default Locale of the entity
 	 * @param  contentAvailableLocales the available locales of the entity
-	 * @return the valid locale
+	 * @return the valid default locale
 	 */
 	public Locale getDefaultImportLocale(
 		String className, long classPK, Locale contentDefaultLocale,
 		Locale[] contentAvailableLocales);
 
 	/**
-	 * Returns the default locale from the localizations XML.
+	 * Returns the language ID of the default locale from the document.
+	 *
+	 * @param  document the Document with localizations
+	 * @return the language ID of the default locale from the document, or the
+	 *         system default locale if the default locale cannot be retrieved
+	 *         from the document
+	 */
+	public String getDefaultLocale(Document document);
+
+	/**
+	 * Returns the language ID of the default locale from the localizations XML.
 	 *
 	 * @param  xml the localizations XML
-	 * @return the language ID of the default locale, or the system default
-	 *         locale if the default locale cannot be retrieved from the XML
+	 * @return the language ID of the default locale from the localizations XML,
+	 *         or the system default locale if the default locale cannot be
+	 *         retrieved from the XML
 	 */
 	public String getDefaultLocale(String xml);
 
@@ -120,7 +141,7 @@ public interface Localization {
 	 * @param  parameter the prefix of the parameters containing the localized
 	 *         strings. Each localization will be loaded from a parameter with
 	 *         this prefix, followed by an underscore, and the language ID.
-	 * @return the locales and localized strings
+	 * @return the map of locales and localized strings
 	 */
 	public Map<Locale, String> getLocalizationMap(
 		HttpServletRequest request, String parameter);
@@ -133,7 +154,7 @@ public interface Localization {
 	 * @param  parameter the prefix of the parameters containing the localized
 	 *         strings. Each localization will be loaded from a parameter with
 	 *         this prefix, followed by an underscore, and the language ID.
-	 * @return the locales and localized strings
+	 * @return the map of locales and localized strings
 	 */
 	public Map<Locale, String> getLocalizationMap(
 		PortletPreferences preferences, String parameter);
@@ -146,7 +167,7 @@ public interface Localization {
 	 * @param  parameter the prefix of the parameters containing the localized
 	 *         strings. Each localization will be loaded from a parameter with
 	 *         this prefix, followed by an underscore, and the language ID.
-	 * @return the locales and localized strings
+	 * @return the map of locales and localized strings
 	 */
 	public Map<Locale, String> getLocalizationMap(
 		PortletRequest portletRequest, String parameter);
@@ -156,7 +177,7 @@ public interface Localization {
 	 * XML.
 	 *
 	 * @param  xml the localizations XML
-	 * @return the locales and localized strings
+	 * @return the map of locales and localized strings
 	 */
 	public Map<Locale, String> getLocalizationMap(String xml);
 
@@ -173,7 +194,7 @@ public interface Localization {
 	 *
 	 * @param  languageIds the languageIds of the localized Strings
 	 * @param  values the localized strings for the different languageId
-	 * @return the map of locales and values for the given parameters
+	 * @return the map of locales and values
 	 */
 	public Map<Locale, String> getLocalizationMap(
 		String[] languageIds, String[] values);
@@ -188,7 +209,7 @@ public interface Localization {
 	 * @param  parameter the prefix of the parameters containing the localized
 	 *         strings. Each localization will be loaded from a parameter with
 	 *         this prefix, followed by an underscore, and the language ID.
-	 * @return the locales and localized strings
+	 * @return the localizations XML
 	 */
 	public String getLocalizationXmlFromPreferences(
 		PortletPreferences preferences, PortletRequest portletRequest,

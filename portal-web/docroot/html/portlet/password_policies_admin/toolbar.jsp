@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/password_policies_admin/init.jsp" %>
 
 <%
-String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all");
+String toolbarItem = ParamUtil.getString(request, "toolbarItem");
 %>
 
 <aui:nav-bar>
@@ -25,8 +25,6 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all");
 		<portlet:renderURL var="viewPasswordPoliciesURL">
 			<portlet:param name="struts_action" value="/password_policies_admin/view" />
 		</portlet:renderURL>
-
-		<aui:nav-item href="<%= viewPasswordPoliciesURL %>" label="view-all" selected='<%= toolbarItem.equals("view-all") %>' />
 
 		<c:if test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_PASSWORD_POLICY) %>">
 			<portlet:renderURL var="addPasswordPolicyURL">

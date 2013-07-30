@@ -19,7 +19,7 @@
 <%
 String strutsAction = ParamUtil.getString(request, "strutsAction", "/document_library/view_file_entry_type");
 
-String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all");
+String toolbarItem = ParamUtil.getString(request, "toolbarItem");
 %>
 
 <aui:nav-bar>
@@ -27,8 +27,6 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all");
 		<portlet:renderURL var="viewFileEntryTypesURL">
 			<portlet:param name="struts_action" value="<%= strutsAction %>" />
 		</portlet:renderURL>
-
-		<aui:nav-item href="<%= viewFileEntryTypesURL %>" label="view-all" selected='<%= toolbarItem.equals("view-all") %>' />
 
 		<c:if test="<%= DLPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_DOCUMENT_TYPE) %>">
 			<portlet:renderURL var="addFileEntryTypeURL">

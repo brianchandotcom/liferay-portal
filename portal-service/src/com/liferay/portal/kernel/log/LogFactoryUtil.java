@@ -23,6 +23,7 @@ import java.util.concurrent.ConcurrentMap;
 /**
  * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
+ * @author Raymond Augé
  */
 public class LogFactoryUtil {
 
@@ -40,7 +41,7 @@ public class LogFactoryUtil {
 		LogWrapper logWrapper = _logWrappers.get(name);
 
 		if (logWrapper == null) {
-			logWrapper = new LogWrapper(_logFactory.getLog(name));
+			logWrapper = new SanitizingLogWrapper(_logFactory.getLog(name));
 
 			LogWrapper previousLogWrapper = _logWrappers.putIfAbsent(
 				name, logWrapper);

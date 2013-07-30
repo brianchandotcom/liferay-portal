@@ -59,6 +59,10 @@ public class PwdGenerator {
 		return _getPassword(false, KEY1, 4, false);
 	}
 
+	public static String getRandomFileName() {
+		return _getPassword(true, PwdGenerator.KEY2, 8, false);
+	}
+
 	public static String getSecurePassword() {
 		return getSecurePassword(8);
 	}

@@ -27,8 +27,6 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all");
 			<portlet:param name="tabs1" value="workflow-definitions" />
 		</portlet:renderURL>
 
-		<aui:nav-item href="<%= viewDefinitionsURL %>" label="view-all" selected='<%= toolbarItem.equals("view-all") %>' />
-
 		<portlet:renderURL var="addWorkflowDefinitionURL">
 			<portlet:param name="struts_action" value="/workflow_definitions/edit_workflow_definition" />
 			<portlet:param name="tabs1" value="workflow-definitions" />

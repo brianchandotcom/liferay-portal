@@ -33,7 +33,7 @@ long layoutPrototypeId = BeanParamUtil.getLong(layoutPrototype, request, "layout
 %>
 
 <liferay-util:include page="/html/portlet/layout_prototypes/toolbar.jsp">
-	<liferay-util:param name="toolbarItem" value='<%= layoutPrototype.isNew() ? "add" : "view-all" %>' />
+	<liferay-util:param name="toolbarItem" value='<%= layoutPrototype.isNew() ? "add" : StringPool.BLANK %>' />
 </liferay-util:include>
 
 <liferay-ui:header

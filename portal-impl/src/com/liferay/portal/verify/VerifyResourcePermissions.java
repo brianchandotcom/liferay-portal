@@ -254,6 +254,9 @@ public class VerifyResourcePermissions extends VerifyProcess {
 			JournalFeed.class.getName(), "JournalFeed", "id_"
 		},
 		new String[] {
+			Layout.class.getName(), "Layout", "plid"
+		},
+		new String[] {
 			LayoutSetBranch.class.getName(), "LayoutSetBranch",
 			"layoutSetBranchId"
 		},

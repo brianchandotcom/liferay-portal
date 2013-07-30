@@ -1862,6 +1862,15 @@ public class JournalArticleLocalServiceWrapper
 			status, preferApproved);
 	}
 
+	@Override
+	public com.liferay.portlet.journal.model.JournalArticle fetchLatestArticle(
+		long resourcePrimKey, int status, boolean preferApproved)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _journalArticleLocalService.fetchLatestArticle(resourcePrimKey,
+			status, preferApproved);
+	}
+
 	/**
 	* Returns the latest web content article with the group and article ID.
 	*

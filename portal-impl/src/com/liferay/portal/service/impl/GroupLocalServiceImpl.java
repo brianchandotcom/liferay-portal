@@ -44,7 +44,6 @@ import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -3734,29 +3733,28 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			return name;
 		}
 
-		Company company = companyPersistence.fetchByPrimaryKey(companyId);
+		String realName = name;
 
-		if (company == null) {
-			return name;
+		try {
+			Company company = companyLocalService.getCompany(companyId);
+
+			Account account = company.getAccount();
+
+			String companyName = account.getName();
+
+			name = StringUtil.replace(
+				name, StringPool.PERCENT, StringPool.BLANK);
+
+			if (StringUtil.matchesIgnoreCase(companyName, name)) {
+				realName =
+					StringPool.PERCENT + GroupConstants.GUEST.toLowerCase() +
+						StringPool.PERCENT;
+			}
+		}
+		catch (PortalException pe) {
 		}
 
-		Account account = accountPersistence.fetchByPrimaryKey(
-			company.getAccountId());
-
-		if (account == null) {
-			return name;
-		}
-
-		String companyName = account.getName();
-
-		if (StringUtil.wildcardMatches(
-				companyName, name, CharPool.UNDERLINE, CharPool.PERCENT,
-				CharPool.BACK_SLASH, true)) {
-
-			return GroupConstants.GUEST;
-		}
-
-		return name;
+		return realName;
 	}
 
 	protected void initImportLARFile() {

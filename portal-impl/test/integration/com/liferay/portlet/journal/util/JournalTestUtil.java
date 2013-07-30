@@ -525,6 +525,7 @@ public class JournalTestUtil {
 		}
 
 		serviceContext.setCommand(Constants.UPDATE);
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
 
 		return JournalArticleLocalServiceUtil.updateArticle(
 			article.getUserId(), article.getGroupId(), article.getFolderId(),

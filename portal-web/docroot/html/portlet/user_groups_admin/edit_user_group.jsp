@@ -42,8 +42,6 @@ long userGroupId = BeanParamUtil.getLong(userGroup, request, "userGroupId");
 				<portlet:param name="struts_action" value="/user_groups_admin/view" />
 			</portlet:renderURL>
 
-			<aui:nav-item href="<%= viewUserGroupsURL %>" label="view-all" />
-
 			<c:if test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_USER_GROUP) %>">
 				<portlet:renderURL var="addUsergroupURL">
 					<portlet:param name="struts_action" value="/user_groups_admin/edit_user_group" />

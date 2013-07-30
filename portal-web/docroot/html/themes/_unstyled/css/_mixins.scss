@@ -1,19 +1,40 @@
 $phone: 768px !default;
 $tablet: 980px !default;
 
-@mixin respond-to($media) {
-	@if $media == phone {
-		@media only screen and (max-width: $phone - 1) {
+@mixin respond-to($types...) {
+	$minWidth: -1;
+	$maxWidth: -1;
+
+	@each $type in $types {
+		@if $type == phone {
+			$minWidth: 0;
+			$maxWidth: if($maxWidth == -1, $phone - 1, $maxWidth);
+		}
+		@else if $type == tablet {
+			$minWidth: if($minWidth == -1, $phone, min($phone, $minWidth));
+			$maxWidth: if($maxWidth == -1, $tablet - 1, $maxWidth);
+		}
+		@else if $type == desktop {
+			$minWidth: if($minWidth == -1, $tablet, $minWidth);
+			$maxWidth: 0;
+		}
+	}
+
+	@if $minWidth <= 0 and $maxWidth <= 0 {
+		@content;
+	}
+	@else if $minWidth <= 0 {
+		@media (max-width: $maxWidth) {
 			@content;
 		}
 	}
-	@else if $media == tablet {
-		@media only screen and (min-width: $phone) and (max-width: $tablet - 1) {
+	@else if $maxWidth <= 0 {
+		@media (min-width: $minWidth) {
 			@content;
 		}
 	}
-	@else if $media == desktop {
-		@media only screen and (min-width: $tablet) {
+	@else {
+		@media (min-width: $minWidth) and (max-width: $maxWidth) {
 			@content;
 		}
 	}

@@ -3751,7 +3751,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 		if (StringUtil.wildcardMatches(
 				companyName, name, CharPool.UNDERLINE, CharPool.PERCENT,
-				CharPool.BACK_SLASH, true)) {
+				CharPool.BACK_SLASH, false)) {
 
 			return GroupConstants.GUEST;
 		}

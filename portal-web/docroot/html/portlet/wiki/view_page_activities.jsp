@@ -139,6 +139,24 @@ iteratorURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
 						</c:choose>
 					</c:when>
 
+					<c:when test="<%= socialActivity.getType() == SocialActivityConstants.TYPE_ADD_COMMENT %>">
+
+						<%
+						WikiPage socialActivityWikiPage = WikiPageLocalServiceUtil.getPage(node.getNodeId(), wikiPage.getTitle());
+						%>
+
+						<portlet:renderURL var="viewPageURL">
+							<portlet:param name="struts_action" value="/wiki/view" />
+							<portlet:param name="nodeName" value="<%= node.getName() %>" />
+							<portlet:param name="title" value="<%= socialActivityWikiPage.getTitle() %>" />
+						</portlet:renderURL>
+
+						<liferay-ui:icon
+							label="<%= true %>"
+							message='<%= LanguageUtil.format(pageContext, "x-added-a-comment", new Object[] {socialActivityUser.getFullName(), viewPageURL + "#wikiCommentsPanel"}) %>'
+						/>
+					</c:when>
+
 					<c:when test="<%= (socialActivity.getType() == SocialActivityConstants.TYPE_MOVE_TO_TRASH) || (socialActivity.getType() == SocialActivityConstants.TYPE_RESTORE_FROM_TRASH) || (socialActivity.getType() == WikiActivityKeys.ADD_PAGE) || (socialActivity.getType() == WikiActivityKeys.UPDATE_PAGE) %>">
 
 						<%

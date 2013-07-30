@@ -1404,7 +1404,8 @@ public class JournalArticleLocalServiceImpl
 	/**
 	 * Returns the latest web content article matching the resource primary key
 	 * and workflow status, optionally preferring articles with approved
-	 * workflow status.
+	 * workflow status. Returns null if a matching web content article could
+	 * not be found.
 	 *
 	 * @param  resourcePrimKey the primary key of the resource instance
 	 * @param  status the web content article's workflow status. For more
@@ -1416,44 +1417,38 @@ public class JournalArticleLocalServiceImpl
 	 *         different status
 	 * @return the latest web content article matching the resource primary key
 	 *         and workflow status, optionally preferring articles with approved
-	 *         workflow status
-	 * @throws PortalException if a matching web content article could not be
-	 *         found
+	 *         workflow status. Returns null if a matching web content article
+	 *         could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public JournalArticle fetchLatestArticle(
 			long resourcePrimKey, int status, boolean preferApproved)
-		throws PortalException, SystemException {
+		throws SystemException {
 
-		List<JournalArticle> articles = null;
+		JournalArticle article = null;
 
 		OrderByComparator orderByComparator = new ArticleVersionComparator();
 
 		if (status == WorkflowConstants.STATUS_ANY) {
 			if (preferApproved) {
-				articles = journalArticlePersistence.findByR_ST(
-					resourcePrimKey, WorkflowConstants.STATUS_APPROVED, 0, 1,
+				article = journalArticlePersistence.fetchByR_ST_First(
+					resourcePrimKey, WorkflowConstants.STATUS_APPROVED,
 					orderByComparator);
 			}
 
-			if ((articles == null) || (articles.size() == 0)) {
-				articles = journalArticlePersistence.findByResourcePrimKey(
-					resourcePrimKey, 0, 1, orderByComparator);
+			if (article == null) {
+				article =
+					journalArticlePersistence.fetchByResourcePrimKey_First(
+						resourcePrimKey, orderByComparator);
 			}
 		}
 		else {
-			articles = journalArticlePersistence.findByR_ST(
-				resourcePrimKey, status, 0, 1, orderByComparator);
+			article = journalArticlePersistence.fetchByR_ST_First(
+				resourcePrimKey, status, orderByComparator);
 		}
 
-		if (articles.isEmpty()) {
-			throw new NoSuchArticleException(
-				"No JournalArticle exists with the key {resourcePrimKey=" +
-					resourcePrimKey + "}");
-		}
-
-		return articles.get(0);
+		return article;
 	}
 
 	/**

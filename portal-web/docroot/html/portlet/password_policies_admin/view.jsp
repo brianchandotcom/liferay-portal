@@ -37,9 +37,7 @@ boolean passwordPolicyEnabled = LDAPSettingsUtil.isPasswordPolicyEnabled(company
 		</div>
 	</c:if>
 
-	<liferay-util:include page="/html/portlet/password_policies_admin/toolbar.jsp">
-		<liferay-util:param name="toolbarItem" value="view-all" />
-	</liferay-util:include>
+	<liferay-util:include page="/html/portlet/password_policies_admin/toolbar.jsp" />
 
 	<%
 	PasswordPolicySearch searchContainer = new PasswordPolicySearch(renderRequest, portletURL);

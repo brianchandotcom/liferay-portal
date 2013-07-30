@@ -39,9 +39,7 @@ portletURL.setParameter("struts_action", "/blogs_admin/view");
 	<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
 	<aui:input name="deleteEntryIds" type="hidden" />
 
-	<liferay-util:include page="/html/portlet/blogs_admin/toolbar.jsp">
-		<liferay-util:param name="toolbarItem" value="view-all" />
-	</liferay-util:include>
+	<liferay-util:include page="/html/portlet/blogs_admin/toolbar.jsp" />
 
 	<liferay-ui:search-container
 		rowChecker="<%= new RowChecker(renderResponse) %>"

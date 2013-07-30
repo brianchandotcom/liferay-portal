@@ -27,10 +27,6 @@ long passwordPolicyId = BeanParamUtil.getLong(passwordPolicy, request, "password
 boolean defaultPolicy = BeanParamUtil.getBoolean(passwordPolicy, request, "defaultPolicy");
 %>
 
-<liferay-util:include page="/html/portlet/password_policies_admin/toolbar.jsp">
-	<liferay-util:param name="toolbarItem" value='<%= (passwordPolicy == null) ? "add" : "view-all" %>' />
-</liferay-util:include>
-
 <liferay-ui:header
 	backURL="<%= backURL %>"
 	localizeTitle="<%= (passwordPolicy == null) %>"

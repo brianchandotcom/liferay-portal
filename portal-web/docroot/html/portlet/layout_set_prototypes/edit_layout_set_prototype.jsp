@@ -35,7 +35,7 @@ boolean layoutsUpdateable = GetterUtil.getBoolean(layoutSetPrototype.getSettings
 %>
 
 <liferay-util:include page="/html/portlet/layout_set_prototypes/toolbar.jsp">
-	<liferay-util:param name="toolbarItem" value='<%= layoutSetPrototype.isNew() ? "add" : "view-all" %>' />
+	<liferay-util:param name="toolbarItem" value='<%= layoutSetPrototype.isNew() ? "add" : StringPool.BLANK %>' />
 </liferay-util:include>
 
 <liferay-ui:header

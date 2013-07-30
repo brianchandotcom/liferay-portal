@@ -40,10 +40,6 @@ String portletURLString = portletURL.toString();
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="redirect" type="hidden" value="<%= portletURLString %>" />
 
-	<liferay-ui:header
-		title="user-groups"
-	/>
-
 	<%@ include file="/html/portlet/user_groups_admin/view_flat_user_groups.jspf" %>
 
 </aui:form>

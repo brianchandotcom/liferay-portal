@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/layout_set_prototypes/init.jsp" %>
 
 <%
-String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all");
+String toolbarItem = ParamUtil.getString(request, "toolbarItem");
 %>
 
 <aui:nav-bar>
@@ -25,8 +25,6 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all");
 		<portlet:renderURL var="viewLayoutSetPrototypesURL">
 			<portlet:param name="struts_action" value="/layout_set_prototypes/view" />
 		</portlet:renderURL>
-
-		<aui:nav-item href="<%= viewLayoutSetPrototypesURL %>" label="view-all" selected='<%= toolbarItem.equals("view-all") %>' />
 
 		<c:if test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_LAYOUT_SET_PROTOTYPE) %>">
 			<portlet:renderURL var="addLayoutSetPrototypeURL">

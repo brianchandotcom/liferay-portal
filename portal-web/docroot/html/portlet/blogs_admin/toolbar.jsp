@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/blogs_admin/init.jsp" %>
 
 <%
-String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all");
+String toolbarItem = ParamUtil.getString(request, "toolbarItem");
 %>
 
 <aui:nav-bar>
@@ -25,8 +25,6 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all");
 		<portlet:renderURL var="viewEntriesURL">
 			<portlet:param name="struts_action" value="/blogs_admin/view" />
 		</portlet:renderURL>
-
-		<aui:nav-item href="<%= viewEntriesURL %>" label="view-all" selected='<%= toolbarItem.equals("view-all") %>' />
 
 		<c:if test="<%= BlogsPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_ENTRY) %>">
 			<portlet:renderURL var="addEntryURL">

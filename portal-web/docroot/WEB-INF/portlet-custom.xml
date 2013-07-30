@@ -601,11 +601,12 @@
 		<resource-bundle>com.liferay.portlet.StrutsResourceBundle</resource-bundle>
 		<portlet-preferences>
 			<preference>
-				<name>items-per-channel</name>
-				<value>2</value>
+				<name>entriesPerFeed</name>
+				<value>4</value>
 			</preference>
 			<preference>
 				<name>urls</name>
+				<value>http://www.liferay.com/community/blogs/-/blogs_stream/community/rss</value>
 				<value>http://rss.news.yahoo.com/rss/tech</value>
 				<value>http://partners.userland.com/nytRss/technology.xml</value>
 			</preference>

@@ -803,8 +803,8 @@
 					<replacetoken><![CDATA[<meta http-equiv="Content-Type" content="text/html; charset=utf-8">]]></replacetoken>
 					<replacevalue>
 						<![CDATA[
-							<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-							<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE9">
+							<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+							<meta content="IE=EmulateIE9" http-equiv="X-UA-Compatible">
 						]]>
 					</replacevalue>
 				</replace>

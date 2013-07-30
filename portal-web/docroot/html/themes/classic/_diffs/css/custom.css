@@ -141,6 +141,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 					> a {
 						background: #45CBF5;
 						color: #FFF;
+						line-height: inherit;
 						padding: 6px 8px;
 						text-align: center;
 
@@ -206,6 +207,10 @@ $dockbarOpenGradientStart: #0EA6F9;
 				}
 			}
 		}
+	}
+
+	&.touch .dockbar .navbar-inner .nav-add-controls > li.toggle-controls {
+		visibility: visible;
 	}
 
 	.controls-hidden .dockbar {

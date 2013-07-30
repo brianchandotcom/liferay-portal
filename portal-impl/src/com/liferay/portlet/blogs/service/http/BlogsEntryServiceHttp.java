@@ -643,8 +643,8 @@ public class BlogsEntryServiceHttp {
 		}
 	}
 
-	public static void moveEntryToTrash(HttpPrincipal httpPrincipal,
-		long entryId)
+	public static com.liferay.portlet.blogs.model.BlogsEntry moveEntryToTrash(
+		HttpPrincipal httpPrincipal, long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
@@ -653,8 +653,10 @@ public class BlogsEntryServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, entryId);
 
+			Object returnObj = null;
+
 			try {
-				TunnelUtil.invoke(httpPrincipal, methodHandler);
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
 				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
@@ -667,6 +669,8 @@ public class BlogsEntryServiceHttp {
 
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
+
+			return (com.liferay.portlet.blogs.model.BlogsEntry)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);

@@ -248,9 +248,12 @@ public class BlogsEntryServiceSoap {
 		}
 	}
 
-	public static void moveEntryToTrash(long entryId) throws RemoteException {
+	public static com.liferay.portlet.blogs.model.BlogsEntrySoap moveEntryToTrash(
+		long entryId) throws RemoteException {
 		try {
-			BlogsEntryServiceUtil.moveEntryToTrash(entryId);
+			com.liferay.portlet.blogs.model.BlogsEntry returnValue = BlogsEntryServiceUtil.moveEntryToTrash(entryId);
+
+			return com.liferay.portlet.blogs.model.BlogsEntrySoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

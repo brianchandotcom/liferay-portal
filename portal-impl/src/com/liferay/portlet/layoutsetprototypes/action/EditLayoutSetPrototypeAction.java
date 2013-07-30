@@ -86,7 +86,8 @@ public class EditLayoutSetPrototypeAction extends PortletAction {
 
 					PortletURL siteAdministrationURL =
 						PortalUtil.getSiteAdministrationURL(
-							actionResponse, siteThemeDisplay);
+							actionResponse, siteThemeDisplay,
+							PortletKeys.SITE_TEMPLATE_SETTINGS);
 
 					redirect = siteAdministrationURL.toString();
 

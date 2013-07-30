@@ -162,6 +162,8 @@ public class PropsValues {
 
 	public static String[] AUTH_TOKEN_IGNORE_ACTIONS = PropsUtil.getArray(PropsKeys.AUTH_TOKEN_IGNORE_ACTIONS);
 
+	public static String[] AUTH_TOKEN_IGNORE_CONTEXTS = PropsUtil.getArray(PropsKeys.AUTH_TOKEN_IGNORE_CONTEXTS);
+
 	public static String[] AUTH_TOKEN_IGNORE_PORTLETS = PropsUtil.getArray(PropsKeys.AUTH_TOKEN_IGNORE_PORTLETS);
 
 	public static final String AUTH_TOKEN_IMPL = PropsUtil.get(PropsKeys.AUTH_TOKEN_IMPL);

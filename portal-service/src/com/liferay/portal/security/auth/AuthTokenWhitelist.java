@@ -22,6 +22,8 @@ import java.util.Set;
  */
 public interface AuthTokenWhitelist {
 
+	public Set<String> getContextCSRFWhitelist();
+
 	public Set<String> getPortletCSRFWhitelist();
 
 	public Set<String> getPortletCSRFWhitelistActions();
@@ -30,6 +32,8 @@ public interface AuthTokenWhitelist {
 
 	public Set<String> getPortletInvocationWhitelistActions();
 
+	public boolean isCSRFContextWhitelisted(long companyId, String context);
+
 	public boolean isPortletCSRFWhitelisted(
 		long companyId, String portletId, String strutsAction);
 
@@ -37,6 +41,8 @@ public interface AuthTokenWhitelist {
 		long companyId, String portletId, String strutsAction);
 
 	public boolean isValidCSRFSharedSecret(String sharedSecret);
+
+	public Set<String> resetContextCSRFWhitelist();
 
 	public Set<String> resetPortletCSRFWhitelist();
 

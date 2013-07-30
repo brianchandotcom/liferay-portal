@@ -67,7 +67,6 @@ import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.ResourceLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
-import com.liferay.portal.service.persistence.LayoutUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.journal.NoSuchArticleException;
 import com.liferay.portlet.journal.model.JournalArticle;
@@ -405,7 +404,7 @@ public class LayoutStagedModelDataHandler
 		if (existingLayout == null) {
 			long plid = CounterLocalServiceUtil.increment();
 
-			importedLayout = LayoutUtil.create(plid);
+			importedLayout = LayoutLocalServiceUtil.createLayout(plid);
 
 			if (layoutsImportMode.equals(
 					PortletDataHandlerKeys.

@@ -146,7 +146,10 @@ public class LayoutLocalServiceStagingAdvice implements MethodInterceptor {
 		Object thisObject = methodInvocation.getThis();
 		Object[] arguments = methodInvocation.getArguments();
 
-		if (methodName.equals("deleteLayout")) {
+		if (methodName.equals("createLayout")) {
+			return methodInvocation.proceed();
+		}
+		else if (methodName.equals("deleteLayout")) {
 			if (arguments.length == 3) {
 				deleteLayout(
 					(LayoutLocalService)thisObject, (Layout)arguments[0],
@@ -654,6 +657,7 @@ public class LayoutLocalServiceStagingAdvice implements MethodInterceptor {
 		new HashSet<String>();
 
 	static {
+		_layoutLocalServiceStagingAdviceMethodNames.add("createLayout");
 		_layoutLocalServiceStagingAdviceMethodNames.add("deleteLayout");
 		_layoutLocalServiceStagingAdviceMethodNames.add("getLayouts");
 		_layoutLocalServiceStagingAdviceMethodNames.add("updateLayout");

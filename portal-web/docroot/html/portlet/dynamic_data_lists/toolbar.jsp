@@ -29,8 +29,7 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem");
 		<c:if test="<%= DDLPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_RECORD_SET) %>">
 			<portlet:renderURL var="addRecordSetURL">
 				<portlet:param name="struts_action" value="/dynamic_data_lists/edit_record_set" />
-				<portlet:param name="redirect" value="<%= viewRecordsURL %>" />
-				<portlet:param name="backURL" value="<%= viewRecordsURL %>" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
 			</portlet:renderURL>
 
 			<aui:nav-item href="<%= addRecordSetURL %>" iconClass="icon-plus" label="add" selected='<%= toolbarItem.equals("add") %>' />

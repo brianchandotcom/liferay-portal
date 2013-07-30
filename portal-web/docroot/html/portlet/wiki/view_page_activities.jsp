@@ -139,20 +139,10 @@ iteratorURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
 						</c:choose>
 					</c:when>
 
-					<c:when test="<%= (socialActivity.getType() == SocialActivityConstants.TYPE_ADD_COMMENT) %>">
+					<c:when test="<%= socialActivity.getType() == SocialActivityConstants.TYPE_ADD_COMMENT %>">
 
 						<%
-						long messageId = extraDataJSONObject.getLong("messageId");
-
-						MBMessage mbMessage = MBMessageLocalServiceUtil.getMBMessage(messageId);
-
 						WikiPage socialActivityWikiPage = WikiPageLocalServiceUtil.getPage(node.getNodeId(), wikiPage.getTitle());
-
-						String comment = mbMessage.getBody();
-
-						if (comment.length() > 50) {
-							comment = comment.substring(0, 50) + "...";
-						}
 						%>
 
 						<portlet:renderURL var="viewPageURL">
@@ -161,13 +151,9 @@ iteratorURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
 							<portlet:param name="title" value="<%= socialActivityWikiPage.getTitle() %>" />
 						</portlet:renderURL>
 
-						<liferay-util:buffer var="commentLink">
-							<aui:a href="<%= viewPageURL.toString() %>"><%= comment %></aui:a>
-						</liferay-util:buffer>
-
 						<liferay-ui:icon
 							label="<%= true %>"
-							message='<%= LanguageUtil.format(pageContext, "x-added-the-comment-x", new Object[] {socialActivityUser.getFullName(), commentLink}) %>'
+							message='<%= LanguageUtil.format(pageContext, "x-added-a-comment", new Object[] {socialActivityUser.getFullName(), viewPageURL + "#wikiCommentsPanel"}) %>'
 						/>
 					</c:when>
 

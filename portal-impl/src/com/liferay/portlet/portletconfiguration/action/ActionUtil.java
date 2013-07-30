@@ -98,9 +98,7 @@ public class ActionUtil {
 		LayoutTypePortlet layoutTypePortlet =
 			themeDisplay.getLayoutTypePortlet();
 
-		List<Portlet> portlets = layoutTypePortlet.getAllPortlets();
-
-		for (Portlet portlet : portlets) {
+		for (Portlet portlet : layoutTypePortlet.getAllPortlets()) {
 			for (PublicRenderParameter publicRenderParameter :
 					portlet.getPublicRenderParameters()) {
 

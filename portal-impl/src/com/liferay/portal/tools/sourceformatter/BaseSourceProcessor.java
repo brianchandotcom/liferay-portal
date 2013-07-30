@@ -80,7 +80,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			return imports + "\n";
 		}
 
-		List<ImportPackageModel> importsList = new ArrayList<ImportPackageModel>();
+		List<ImportPackage> importsList = new ArrayList<ImportPackage>();
 
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
 			new UnsyncStringReader(imports));
@@ -88,11 +88,12 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		String line = null;
 
 		while ((line = unsyncBufferedReader.readLine()) != null) {
-			ImportPackageModel importPackageModel = ImportPackageModel.create(
-				line);
+			ImportPackage importPackage = new ImportPackage(line);
 
-			if (importPackageModel != null && !importsList.contains(line)) {
-				importsList.add(importPackageModel);
+			if (Validator.isNotNull(importPackage.getImport()) &&
+				!importsList.contains(line)) {
+
+				importsList.add(importPackage);
 			}
 		}
 
@@ -103,7 +104,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		String temp = null;
 
 		for (int i = 0; i < importsList.size(); i++) {
-			String s = importsList.get(i).toString();
+			String s = importsList.get(i).getLine();
 
 			int pos = s.indexOf(".");
 

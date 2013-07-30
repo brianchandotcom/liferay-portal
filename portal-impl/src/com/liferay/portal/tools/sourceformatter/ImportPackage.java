@@ -22,31 +22,31 @@ import java.util.regex.Pattern;
 /**
  * @author Carlos Sierra Andrés
  */
-public class ImportPackageModel implements Comparable<ImportPackageModel> {
+public class ImportPackage implements Comparable<ImportPackage> {
 
-	public static ImportPackageModel create(String line) {
+	public ImportPackage(String line) {
 		if (Validator.isNull(line)) {
-			return null;
+			return;
 		}
+
+		_line = line;
 
 		Matcher jspMatcher = _jspImportPattern.matcher(line);
 
 		if (jspMatcher.find()) {
-			return new ImportPackageModel(jspMatcher.group(1), line);
+			_import = jspMatcher.group(1);
 		}
 
 		Matcher javaMatcher = _javaImportPattern.matcher(line);
 
 		if (javaMatcher.find()) {
-			return new ImportPackageModel(javaMatcher.group(1), line);
+			_import = javaMatcher.group(1);
 		}
-
-		return null;
 	}
 
 	@Override
-	public int compareTo(ImportPackageModel importPackageModel) {
-		return _plainImport.compareTo(importPackageModel._plainImport);
+	public int compareTo(ImportPackage importPackage) {
+		return _import.compareTo(importPackage._import);
 	}
 
 	@Override
@@ -55,28 +55,26 @@ public class ImportPackageModel implements Comparable<ImportPackageModel> {
 			return true;
 		}
 
-		if (obj instanceof ImportPackageModel) {
-			ImportPackageModel otherRepr = (ImportPackageModel)obj;
+		if (obj instanceof ImportPackage) {
+			ImportPackage importPackage = (ImportPackage)obj;
 
-			return _plainImport.equals(otherRepr._plainImport);
+			return _import.equals(importPackage._import);
 		}
 
 		return false;
 	}
 
+	public String getImport() {
+		return _import;
+	}
+
+	public String getLine() {
+		return _line;
+	}
+
 	@Override
 	public int hashCode() {
-		return _plainImport.hashCode();
-	}
-
-	@Override
-	public String toString() {
-		return _originalLine;
-	}
-
-	protected ImportPackageModel(String plainImport, String originalLine) {
-		_plainImport = plainImport;
-		_originalLine = originalLine;
+		return _import.hashCode();
 	}
 
 	private static final Pattern _javaImportPattern = Pattern.compile(
@@ -84,7 +82,7 @@ public class ImportPackageModel implements Comparable<ImportPackageModel> {
 	private static final Pattern _jspImportPattern = Pattern.compile(
 		"import=\"([^\\s\"]+)\"");
 
-	private String _originalLine;
-	private String _plainImport;
+	private String _import;
+	private String _line;
 
 }

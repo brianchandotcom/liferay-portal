@@ -1,0 +1,108 @@
+<%--
+/**
+ * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<div class="search-query-spell-check aui-helper-clearfix">
+	<c:if test="<%= collatedSpellCheckResultEnabled && Validator.isNotNull(hits.getCollatedSpellCheckResult()) && !hits.getCollatedSpellCheckResult().equals(searchContext.getKeywords()) %>">
+
+		<div class="did-you-mean">
+			<span class="label">
+				<liferay-ui:message key="did-you-mean" />:
+			</span>
+
+			<%
+			String taglibSearchCollatedKeywords = renderResponse.getNamespace() + "searchKeywords('" + HtmlUtil.escapeJS(hits.getCollatedSpellCheckResult()) + "')";
+			%>
+
+			<aui:a href="javascript:;" onclick="<%= taglibSearchCollatedKeywords %>">
+
+				<%
+				KeywordsFormatter collatedKeywordsFormatter = new KeywordsFormatter(hits.getCollatedSpellCheckResult(), searchContext.getKeywords());
+				%>
+
+				<c:forEach items="<%= collatedKeywordsFormatter.getSuggestedKeywords() %>" var="suggestedKeyword">
+
+					<%
+					String suggestedKeyword = (String)pageContext.getAttribute("suggestedKeyword");
+					%>
+
+					<span class='<%= collatedKeywordsFormatter.isChanged(suggestedKeyword) ? "changed-keyword" : "unchanged-keyword" %>'>
+						<%= HtmlUtil.escape(suggestedKeyword) %>
+					</span>
+				</c:forEach>
+			</aui:a>
+		</div>
+	</c:if>
+
+	<c:if test="<%= querySuggestionsEnabled && Validator.isNotNull(hits.getQuerySuggestions()) %>">
+
+		<div class="query-suggestions">
+			<span class="label">
+				<liferay-ui:message key="related-queries" />:
+			</span>
+
+			<br />
+
+			<ul>
+				<c:forEach items="<%= hits.getQuerySuggestions() %>" var="relatedQueryKeywords">
+
+					<%
+					String relatedQueryKeywords = (String)pageContext.getAttribute("relatedQueryKeywords");
+					String taglibSearchRelatedQuery = renderResponse.getNamespace() + "searchKeywords('" + HtmlUtil.escapeJS(relatedQueryKeywords) + "')";
+					%>
+
+					<c:if test="<%= Validator.isNotNull(relatedQueryKeywords) && !relatedQueryKeywords.equals(searchContext.getKeywords()) %>">
+
+						<li>
+							<aui:a href="javascript:;" onclick="<%= taglibSearchRelatedQuery %>">
+
+								<%
+								KeywordsFormatter relatedQueryKeywordsFormatter = new KeywordsFormatter(relatedQueryKeywords, searchContext.getKeywords());
+								%>
+
+								<c:forEach items="<%= relatedQueryKeywordsFormatter.getSuggestedKeywords() %>" var="relatedQueryKeyword">
+
+									<%
+									String relatedQueryKeyword = (String)pageContext.getAttribute("relatedQueryKeyword");
+									%>
+
+									<span class='<%= relatedQueryKeywordsFormatter.isChanged(relatedQueryKeyword) ? "changed-keyword" : "unchanged-keyword" %>'>
+										<%= HtmlUtil.escape(relatedQueryKeyword) %>
+									</span>
+								</c:forEach>
+							</aui:a>
+						</li>
+					</c:if>
+				</c:forEach>
+			</ul>
+		</div>
+	</c:if>
+</div>
+
+<aui:script use="aui-base">
+	Liferay.provide(
+		window,
+		'<portlet:namespace />searchKeywords',
+		function(newKeywords) {
+			document.<portlet:namespace />fm.<portlet:namespace />keywords.value = newKeywords;
+
+			submitForm(document.<portlet:namespace />fm);
+
+			search();
+			document.<portlet:namespace />fm.submit();
+		},
+		['aui-base']
+	);
+</aui:script>

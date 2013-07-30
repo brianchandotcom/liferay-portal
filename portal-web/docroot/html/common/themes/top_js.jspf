@@ -341,14 +341,14 @@
 		<c:if test="<%= (layoutTypePortlet != null) %>">
 
 			<%
-			List<Portlet> allPortlets = layoutTypePortlet.getAllPortlets();
+			List<Portlet> allPortlets = layoutTypePortlet.getAllPortlets(false);
 
 			Iterator<Portlet> itr = allPortlets.iterator();
 
 			while (itr.hasNext()) {
 				Portlet portlet = itr.next();
 
-				if (portlet.isUndeployedPortlet()) {
+				if (!portlet.isActive() || !portlet.isReady() || portlet.isUndeployedPortlet()) {
 					itr.remove();
 				}
 			}

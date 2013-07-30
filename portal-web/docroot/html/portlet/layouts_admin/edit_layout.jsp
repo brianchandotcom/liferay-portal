@@ -86,8 +86,8 @@ if (selLayout.isSupportsEmbeddedPortlets()) {
 
 	List<String> portletIds = selLayoutTypePortlet.getPortletIds();
 
-	for (Portlet portlet : selLayoutTypePortlet.getAllPortlets()) {
-		if (!portlet.isSystem() && !portletIds.contains(portlet.getPortletId())) {
+	for (Portlet portlet : selLayoutTypePortlet.getAllPortlets(false)) {
+		if (!portletIds.contains(portlet.getPortletId())) {
 			embeddedPortlets.add(portlet);
 		}
 	}

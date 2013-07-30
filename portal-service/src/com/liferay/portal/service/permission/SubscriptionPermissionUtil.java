@@ -20,8 +20,10 @@ import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermissio
 import com.liferay.portal.security.permission.PermissionChecker;
 
 /**
- * Provides the utility for SubscriptionPermission. Retrieves and checks
- * permissions with respect to subscriptions.
+ * Provides the utility for SubscriptionPermission, checking permissions with
+ * respect to subscriptions. This utility wraps {@link
+ * com.liferay.portal.service.permission.SubscriptionPermissionImpl} and is the
+ * primary access point for subscription permission operations.
  *
  * @author Mate Thurzo
  * @author Raymond Augé

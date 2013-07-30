@@ -1872,6 +1872,7 @@ public class PortletImporter {
 						targetAvailableLocales, sourceAvailableLocale)) {
 
 					LocaleException le = new LocaleException(
+						LocaleException.EXPORT_IMPORT,
 						"Locale " + sourceAvailableLocale + " is not " +
 							"available in company " +
 								portletDataContext.getCompanyId());

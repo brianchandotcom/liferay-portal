@@ -78,7 +78,16 @@ if (publicLayoutSet.isLayoutSetPrototypeLinkEnabled() || privateLayoutSet.isLayo
 </aui:fieldset>
 
 <aui:fieldset id="inheritLocalesFieldset">
-	<liferay-ui:error exception="<%= LocaleException.class %>" message="please-enter-a-valid-locale" />
+	<liferay-ui:error exception="<%= LocaleException.class %>">
+
+		<%
+		LocaleException le = (LocaleException)errorException;
+		%>
+
+		<c:if test="<%= le.getType() == LocaleException.DISPLAY_SETTINGS %>">
+			<liferay-ui:message key="please-enter-a-valid-locale" />
+		</c:if>
+	</liferay-ui:error>
 
 	<%
 	Locale[] siteAvailableLocales = LanguageUtil.getAvailableLocales(liveGroup.getGroupId());

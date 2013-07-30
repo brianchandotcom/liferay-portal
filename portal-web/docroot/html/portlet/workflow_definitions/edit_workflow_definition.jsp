@@ -34,14 +34,10 @@ PortletURL portletURL = renderResponse.createRenderURL();
 portletURL.setParameter("struts_action", "/workflow_definitions/view");
 %>
 
-<liferay-util:include page="/html/portlet/workflow_definitions/toolbar.jsp">
-	<liferay-util:param name="toolbarItem" value="add" />
-</liferay-util:include>
-
 <liferay-ui:header
 	backURL="<%= redirect %>"
 	localizeTitle="<%= (workflowDefinition == null) %>"
-	title='<%= (workflowDefinition == null) ? "new-workflow-definition" : workflowDefinition.getName() %>'
+	title='<%= (workflowDefinition == null) ? "upload-definition" : workflowDefinition.getName() %>'
 />
 
 <portlet:actionURL var="editWorkflowDefinitionURL">
@@ -57,17 +53,9 @@ portletURL.setParameter("struts_action", "/workflow_definitions/view");
 	<liferay-ui:error exception="<%= WorkflowDefinitionFileException.class %>" message="please-enter-a-valid-file" />
 
 	<aui:fieldset>
-		<c:if test="<%= workflowDefinition != null %>">
-			<aui:field-wrapper helpMessage="the-definition-name-is-defined-in-the-workflow-definition-file" label="name">
-				<%= name %>
-			</aui:field-wrapper>
-		</c:if>
-
-		<span>
-			<liferay-ui:message key="title" />
-		</span>
-
-		<liferay-ui:input-localized name="title" xml='<%= BeanPropertiesUtil.getString(workflowDefinition, "title") %>' />
+		<aui:field-wrapper label="title">
+			<liferay-ui:input-localized name="title" xml='<%= BeanPropertiesUtil.getString(workflowDefinition, "title") %>' />
+		</aui:field-wrapper>
 
 		<aui:input name="file" type="file" />
 
@@ -80,5 +68,5 @@ portletURL.setParameter("struts_action", "/workflow_definitions/view");
 </aui:form>
 
 <%
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, (workflowDefinition == null) ? "new-workflow-definition" : workflowDefinition.getName()), currentURL);
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, (workflowDefinition == null) ? "upload-definition" : workflowDefinition.getName()), currentURL);
 %>

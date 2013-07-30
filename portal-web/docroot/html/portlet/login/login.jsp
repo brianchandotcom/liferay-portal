@@ -140,6 +140,24 @@
 		<liferay-util:include page="/html/portlet/login/navigation.jsp" />
 
 		<aui:script use="aui-base">
+			<c:if test="<%= windowState.equals(LiferayWindowState.EXCLUSIVE) %>">
+				var rules = {
+					<portlet:namespace />login: {
+						required: true
+					},
+					<portlet:namespace />password: {
+						required: true
+					}
+				};
+
+				new A.FormValidator(
+					{
+						boundingBox: '.modal-body #<portlet:namespace />fm',
+						rules: rules
+					}
+				);
+			</c:if>
+
 			var password = A.one('#<portlet:namespace />password');
 
 			if (password) {

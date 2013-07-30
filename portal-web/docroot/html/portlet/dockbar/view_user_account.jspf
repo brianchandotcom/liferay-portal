@@ -148,6 +148,14 @@ if (PropsValues.DOCKBAR_ADMINISTRATIVE_LINKS_SHOW_IN_POP_UP) {
 		</aui:nav-item>
 	</c:when>
 	<c:otherwise>
-		<aui:nav-item cssClass="sign-in" href="<%= themeDisplay.getURLSignIn() %>" label="sign-in" />
+
+		<%
+		PortletURL signInURL = new PortletURLImpl(request, PortletKeys.LOGIN, plid, PortletRequest.RENDER_PHASE);
+
+		signInURL.setPortletMode(PortletMode.VIEW);
+		signInURL.setWindowState(LiferayWindowState.MAXIMIZED);
+		%>
+
+		<aui:nav-item cssClass="sign-in" href="<%= signInURL.toString() %>" label="sign-in" />
 	</c:otherwise>
 </c:choose>

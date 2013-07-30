@@ -455,7 +455,7 @@ public class PortletPermissionImpl implements PortletPermission {
 		LayoutTypePortlet layoutTypePortlet =
 			(LayoutTypePortlet)layout.getLayoutType();
 
-		for (Portlet portlet : layoutTypePortlet.getAllPortlets()) {
+		for (Portlet portlet : layoutTypePortlet.getAllPortlets(false)) {
 			if (contains(
 					permissionChecker, groupId, layout, portlet.getPortletId(),
 					actionId)) {

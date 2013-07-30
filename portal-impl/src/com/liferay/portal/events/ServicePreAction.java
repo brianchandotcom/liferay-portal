@@ -1312,6 +1312,8 @@ public class ServicePreAction extends Action {
 
 						response.sendRedirect(
 							PortalUtil.getAbsoluteURL(request, redirect));
+
+						break;
 					}
 				}
 			}

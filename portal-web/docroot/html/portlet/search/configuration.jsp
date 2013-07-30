@@ -59,6 +59,50 @@
 
 	<br />
 
+<%
+String namespace = liferayPortletResponse.getNamespace();
+String showOptionsMessage = LanguageUtil.get(pageContext, "show-spell-check-options");
+String hideOptionsMessage = LanguageUtil.get(pageContext, "hide-spell-check-options");
+%>
+
+<aui:fieldset label="spell-check-settings">
+
+	<aui:input helpMessage="collated-spell-check-result-enabled-help" id="collatedSpellCheckResultEnabled" name="preferences--collatedSpellCheckResultEnabled--" type="checkbox" value="<%= collatedSpellCheckResultEnabled %>" />
+
+	<div class='options-container <%= !collatedSpellCheckResultEnabled ? "aui-helper-hidden" : "" %>' id='<%= namespace + "collatedSpellCheckResultOptionsContainer" %>'>
+		<liferay-ui:toggle-area align="none" defaultShowContent="<%= collatedSpellCheckResultEnabled %>"
+								hideMessage="<%= hideOptionsMessage %>" id='<%= namespace + "collatedSpellCheckResultOptions" %>'
+								showMessage="<%= showOptionsMessage %>">
+			<aui:input disabled="<%= !collatedSpellCheckResultEnabled %>" helpMessage="collated-spell-check-result-display-threshold-help" name="preferences--collatedSpellCheckResultDisplayThreshold--" size="10" type="text" value="<%= collatedSpellCheckResultDisplayThreshold %>" />
+		</liferay-ui:toggle-area>
+	</div>
+
+	<aui:input helpMessage="query-suggestions-enabled-help" id="querySuggestionsEnabled" name="preferences--querySuggestionsEnabled--" type="checkbox" value="<%= querySuggestionsEnabled %>" />
+
+	<div class='options-container <%= !querySuggestionsEnabled ? "aui-helper-hidden" : "" %>' id='<%= namespace + "querySuggestionsOptionsContainer" %>'>
+		<liferay-ui:toggle-area align="none" defaultShowContent="<%= querySuggestionsEnabled %>"
+								hideMessage="<%= hideOptionsMessage %>" id='<%= namespace + "querySuggestionsOptions" %>'
+								showMessage="<%= showOptionsMessage %>">
+			<aui:input disabled="<%= !querySuggestionsEnabled %>" name="preferences--querySuggestionsMax--" size="10" type="text" value="<%= querySuggestionsMax %>" />
+
+			<aui:input disabled="<%= !querySuggestionsEnabled %>" helpMessage="query-suggestions-display-threshold-help" name="preferences--querySuggestionsDisplayThreshold--" size="10" type="text" value="<%= querySuggestionsDisplayThreshold %>" />
+		</liferay-ui:toggle-area>
+	</div>
+
+	<aui:input helpMessage="query-indexing-enabled-help" id="queryIndexingEnabled" name="preferences--queryIndexingEnabled--" type="checkbox" value="<%= queryIndexingEnabled %>" />
+
+	<div class='options-container <%= !queryIndexingEnabled ? "aui-helper-hidden" : "" %>' id='<%= namespace + "queryIndexingOptionsContainer" %>'>
+		<liferay-ui:toggle-area align="none" defaultShowContent="<%= queryIndexingEnabled %>"
+								hideMessage="<%= hideOptionsMessage %>" id='<%= namespace + "queryIndexingOptions" %>'
+								showMessage="<%= showOptionsMessage %>">
+
+			<aui:input disabled="<%= !queryIndexingEnabled %>" helpMessage="query-indexing-threshold-help" name="preferences--queryIndexingThreshold--" size="10" type="text" value="<%= queryIndexingThreshold %>" />
+		</liferay-ui:toggle-area>
+	</div>
+</aui:fieldset>
+
+<br />
+
 	<aui:fieldset label="other-settings">
 		<c:if test="<%= permissionChecker.isCompanyAdmin() %>">
 			<aui:input helpMessage="display-results-in-document-form-help" name="preferences--displayResultsInDocumentForm--" type="checkbox" value="<%= displayResultsInDocumentForm %>" />
@@ -90,6 +134,69 @@
 			basicConfiguration.toggle(value != 'true');
 
 			advancedConfiguration.toggle(value == 'true');
+		}
+	);
+</aui:script>
+<aui:script use="aui-base">
+
+	var _DISABLED = 'disabled';
+
+	var toggleNestedInputs = function(parentNode, newToggleValue) {
+
+		if (parentNode) {
+			parentNode.all('input')
+				.each(
+					function(node) {
+						if (newToggleValue) {
+							node.removeAttribute(_DISABLED);
+						}
+						else {
+							node.attr(_DISABLED, _DISABLED);
+						}
+					}
+				);
+		}
+	}
+
+	var collatedSpellCheckResultEnabledCheckbox = A.one('#<portlet:namespace />collatedSpellCheckResultEnabledCheckbox');
+	var collatedSpellCheckResultOptionsContainer = A.one('#<portlet:namespace />collatedSpellCheckResultOptionsContainer');
+
+	collatedSpellCheckResultEnabledCheckbox.after(
+		'change',
+		function(event) {
+			var checked = collatedSpellCheckResultEnabledCheckbox.attr('checked');
+
+			collatedSpellCheckResultOptionsContainer.toggle(checked);
+
+			toggleNestedInputs(collatedSpellCheckResultOptionsContainer, checked);
+		}
+	);
+
+	var querySuggestionsEnabledCheckbox = A.one('#<portlet:namespace />querySuggestionsEnabledCheckbox');
+	var querySuggestionsOptionsContainer = A.one('#<portlet:namespace />querySuggestionsOptionsContainer');
+
+	querySuggestionsEnabledCheckbox.after(
+		'change',
+		function(event) {
+			var checked = querySuggestionsEnabledCheckbox.attr('checked');
+
+			querySuggestionsOptionsContainer.toggle(checked);
+
+			toggleNestedInputs(querySuggestionsOptionsContainer, checked);
+		}
+	);
+
+	var queryIndexingEnabledCheckbox = A.one('#<portlet:namespace />queryIndexingEnabledCheckbox');
+	var queryIndexingOptionsContainer = A.one('#<portlet:namespace />queryIndexingOptionsContainer');
+
+	queryIndexingEnabledCheckbox.after(
+		'change',
+		function(event) {
+			var checked = queryIndexingEnabledCheckbox.attr('checked');
+
+			queryIndexingOptionsContainer.toggle(checked);
+
+			toggleNestedInputs(queryIndexingOptionsContainer, checked);
 		}
 	);
 </aui:script>

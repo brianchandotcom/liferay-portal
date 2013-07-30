@@ -24,6 +24,7 @@ page import="com.liferay.portal.kernel.search.Hits" %><%@
 page import="com.liferay.portal.kernel.search.HitsOpenSearchImpl" %><%@
 page import="com.liferay.portal.kernel.search.Indexer" %><%@
 page import="com.liferay.portal.kernel.search.IndexerRegistryUtil" %><%@
+page import=" com.liferay.portal.kernel.search.KeywordsFormatter" %><%@
 page import="com.liferay.portal.kernel.search.OpenSearch" %><%@
 page import="com.liferay.portal.kernel.search.OpenSearchUtil" %><%@
 page import="com.liferay.portal.kernel.search.QueryConfig" %><%@
@@ -90,6 +91,31 @@ String searchConfiguration = portletPreferences.getValue("searchConfiguration", 
 
 if (!advancedConfiguration && Validator.isNull(searchConfiguration)) {
 	searchConfiguration = ContentUtil.get(PropsValues.SEARCH_FACET_CONFIGURATION);
+}
+
+int collatedSpellCheckResultDisplayThreshold = GetterUtil.getInteger(portletPreferences.getValue("collatedSpellCheckResultDisplayThreshold", null), PropsValues.INDEX_SEARCH_COLLATED_SPELL_CHECK_RESULT_SCORES_THRESHOLD);
+boolean collatedSpellCheckResultEnabled = GetterUtil.getBoolean(portletPreferences.getValue("collatedSpellCheckResultEnabled", null), PropsValues.INDEX_SEARCH_COLLATED_SPELL_CHECK_RESULT_ENABLED);
+
+if (collatedSpellCheckResultDisplayThreshold < 0) {
+	collatedSpellCheckResultDisplayThreshold = PropsValues.INDEX_SEARCH_COLLATED_SPELL_CHECK_RESULT_SCORES_THRESHOLD;
+}
+
+int querySuggestionsDisplayThreshold = GetterUtil.getInteger(portletPreferences.getValue("querySuggestionsDisplayThreshold", null), PropsValues.INDEX_SEARCH_QUERY_SUGGESTION_SCORES_THRESHOLD);
+boolean querySuggestionsEnabled = GetterUtil.getBoolean(portletPreferences.getValue("querySuggestionsEnabled", null), PropsValues.INDEX_SEARCH_QUERY_SUGGESTION_ENABLED);
+int querySuggestionsMax = GetterUtil.getInteger(portletPreferences.getValue("querySuggestionsMax", null), PropsValues.INDEX_SEARCH_QUERY_SUGGESTION_MAX);
+
+if (querySuggestionsDisplayThreshold < 0) {
+	querySuggestionsDisplayThreshold = PropsValues.INDEX_SEARCH_QUERY_SUGGESTION_SCORES_THRESHOLD;
+}
+if (querySuggestionsMax <= 0) {
+	querySuggestionsMax = PropsValues.INDEX_SEARCH_QUERY_SUGGESTION_MAX;
+}
+
+boolean queryIndexingEnabled = GetterUtil.getBoolean(portletPreferences.getValue("queryIndexingEnabled", null), PropsValues.INDEX_SEARCH_QUERY_INDEXING_ENABLED);
+int queryIndexingThreshold = GetterUtil.getInteger(portletPreferences.getValue("queryIndexingThreshold", null), PropsValues.INDEX_SEARCH_QUERY_INDEXING_THRESHOLD);
+
+if (queryIndexingThreshold < 0) {
+	queryIndexingThreshold = PropsValues.INDEX_SEARCH_QUERY_INDEXING_THRESHOLD;
 }
 
 boolean dlLinkToViewURL = false;

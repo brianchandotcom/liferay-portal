@@ -55,6 +55,10 @@ public class PwdGenerator {
 		return _generate(true, KEY1, 4, false);
 	}
 
+	public static String getRandomFileName() {
+		return _generate(true, PwdGenerator.KEY2, 8, false);
+	}
+
 	public static String getRandomId() {
 		return _generate(false, PwdGenerator.KEY3, 4, false);
 	}

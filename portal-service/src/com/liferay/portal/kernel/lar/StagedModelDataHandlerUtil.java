@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.lar;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Attribute;
@@ -27,6 +29,25 @@ import com.liferay.portal.util.PortalUtil;
  * @author Brian Wing Shun Chan
  */
 public class StagedModelDataHandlerUtil {
+
+	public static void deleteStagedModel(
+			PortletDataContext portletDataContext, Element deletionElement)
+		throws PortalException, SystemException {
+
+		String className = deletionElement.attributeValue("class-name");
+		String extraData = deletionElement.attributeValue("extra-data");
+		String uuid = deletionElement.attributeValue("uuid");
+
+		StagedModelDataHandler<?> stagedModelDataHandler =
+			StagedModelDataHandlerRegistryUtil.getStagedModelDataHandler(
+				className);
+
+		if (stagedModelDataHandler != null) {
+			stagedModelDataHandler.deleteStagedModel(
+				uuid, portletDataContext.getScopeGroupId(), className,
+				extraData);
+		}
+	}
 
 	public static <T extends StagedModel> void exportStagedModel(
 			PortletDataContext portletDataContext, T stagedModel)

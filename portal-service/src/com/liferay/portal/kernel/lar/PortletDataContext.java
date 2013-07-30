@@ -305,6 +305,9 @@ public interface PortletDataContext extends Serializable {
 	public List<Element> getReferenceDataElements(
 		StagedModel parentStagedModel, Class<?> clazz, String referenceType);
 
+	public List<Element> getReferenceElements(
+		StagedModel parentStagedModel, Class<?> clazz);
+
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link
 	 *             ExportImportPathUtil#getRootPath(PortletDataContext)}

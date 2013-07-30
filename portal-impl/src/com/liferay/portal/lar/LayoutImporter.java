@@ -809,6 +809,8 @@ public class LayoutImporter {
 			}
 		}
 
+		_deletionSystemEventImporter.importDeletions(portletDataContext);
+
 		zipReader.close();
 	}
 
@@ -1158,6 +1160,8 @@ public class LayoutImporter {
 	private static MethodHandler _loadThemesMethodHandler = new MethodHandler(
 		new MethodKey(ThemeLoaderFactory.class, "loadThemes"));
 
+	private DeletionSystemEventImporter _deletionSystemEventImporter =
+		new DeletionSystemEventImporter();
 	private Element _headerElement;
 	private List<Element> _layoutElements;
 	private Element _layoutsElement;

@@ -494,12 +494,12 @@ portletURL.setParameter("rootNodeName", rootNodeName);
 
 											</ul>
 
-											<aui:fieldset cssClass="comments-and-ratings" label="for-each-of-the-selected-content-types,-export-their">
-												<span class="selected-labels" id="<portlet:namespace />selectedCommentsAndRatings"></span>
+											<aui:fieldset cssClass="content-options" label="for-each-of-the-selected-content-types,-export-their">
+												<span class="selected-labels" id="<portlet:namespace />selectedContentOptions"></span>
 
-												<aui:a cssClass="modify-link" href="javascript:;" id="commentsAndRatingsLink" label="change" method="get" />
+												<aui:a cssClass="modify-link" href="javascript:;" id="contentOptionsLink" label="change" method="get" />
 
-												<div class="hide" id="<portlet:namespace />commentsAndRatings">
+												<div class="hide" id="<portlet:namespace />contentOptions">
 													<ul class="lfr-tree unstyled">
 														<li class="tree-item">
 															<aui:input label="comments" name="<%= PortletDataHandlerKeys.COMMENTS %>" type="checkbox" value="<%= true %>" />

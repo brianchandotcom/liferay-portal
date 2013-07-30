@@ -217,7 +217,10 @@ public class EditEntryAction extends PortletAction {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		TrashEntryServiceUtil.deleteEntries(themeDisplay.getScopeGroupId());
+		long groupId = ParamUtil.getLong(
+			actionRequest, "groupId", themeDisplay.getScopeGroupId());
+
+		TrashEntryServiceUtil.deleteEntries(groupId);
 	}
 
 	protected List<ObjectValuePair<String, Long>> getEntryOVPs(

@@ -600,6 +600,7 @@ create table SocialActivitySetting (
 );
 
 update Role_ set name = 'Site Administrator' where name = 'Community Administrator';
+update Role_ set name = 'Site Content Reviewer' where name = 'Community Content Reviewer';
 update Role_ set name = 'Site Member' where name = 'Community Member';
 update Role_ set name = 'Site Owner' where name = 'Community Owner';
 update Role_ set name = 'Organization User' where name = 'Organization Member';

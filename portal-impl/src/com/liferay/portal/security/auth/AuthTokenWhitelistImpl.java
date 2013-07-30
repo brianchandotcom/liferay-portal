@@ -71,8 +71,10 @@ public class AuthTokenWhitelistImpl implements AuthTokenWhitelist {
 	public boolean isCSRFContextWhitelisted(long companyId, String context) {
 		Set<String> whitelist = getContextCSRFWhitelist();
 
-		if (whitelist.contains(context)) {
-			return true;
+		for (String whitelistedContext : whitelist) {
+			if (context.startsWith(whitelistedContext)) {
+				return true;
+			}
 		}
 
 		return false;

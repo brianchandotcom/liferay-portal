@@ -17,39 +17,59 @@
 <%
 Collection<Portlet> siteAdministrationPortlets = PortalUtil.getControlPanelPortlets(themeDisplay.getCompanyId(), PortletCategoryKeys.SITE_ADMINISTRATION);
 
-List<Group> manageableSiteGroups = GroupServiceUtil.getManageableSiteGroups(siteAdministrationPortlets, PropsValues.CONTROL_PANEL_NAVIGATION_MAX_SITES);
+List<Group> manageableSiteGroups = null;
 
-Group userGroup = user.getGroup();
+if (group.isLayoutSetPrototype()) {
+	List<LayoutSetPrototype> layoutSetPrototypes = LayoutSetPrototypeLocalServiceUtil.search(company.getCompanyId(), null, 0, PropsValues.CONTROL_PANEL_NAVIGATION_MAX_SITES, null);
 
-if (PortletPermissionUtil.hasControlPanelAccessPermission(permissionChecker, userGroup.getGroupId(), siteAdministrationPortlets)) {
-	manageableSiteGroups.add(0, userGroup);
+	manageableSiteGroups = new ArrayList<Group>(layoutSetPrototypes.size());
+
+	for (LayoutSetPrototype curLayoutSetPrototype : layoutSetPrototypes) {
+		if (LayoutSetPrototypePermissionUtil.contains(permissionChecker, curLayoutSetPrototype.getLayoutSetPrototypeId(), ActionKeys.UPDATE)) {
+			manageableSiteGroups.add(curLayoutSetPrototype.getGroup());
+		}
+	}
 }
+else if (group.isSite()) {
+	manageableSiteGroups = GroupServiceUtil.getManageableSiteGroups(siteAdministrationPortlets, PropsValues.CONTROL_PANEL_NAVIGATION_MAX_SITES);
 
-if (PortalUtil.isCompanyControlPanelVisible(themeDisplay)) {
-	Group companyGroup = company.getGroup();
+	Group userGroup = user.getGroup();
 
-	if (!manageableSiteGroups.contains(companyGroup)) {
-		manageableSiteGroups.add(0, companyGroup);
+	if (PortletPermissionUtil.hasControlPanelAccessPermission(permissionChecker, userGroup.getGroupId(), siteAdministrationPortlets)) {
+		manageableSiteGroups.add(0, userGroup);
+	}
+
+	if (PortalUtil.isCompanyControlPanelVisible(themeDisplay)) {
+		Group companyGroup = company.getGroup();
+
+		if (!manageableSiteGroups.contains(companyGroup)) {
+			manageableSiteGroups.add(0, companyGroup);
+		}
 	}
 }
 
-manageableSiteGroups.remove(group);
+if (manageableSiteGroups != null) {
+	manageableSiteGroups.remove(group);
 %>
 
-<liferay-ui:icon-menu cssClass="control-panel-site-selector" direction="down" extended="<%= false %>" icon="" id="controlPanelSiteSelector" message="" showWhenSingleIcon="<%= true %>">
+	<liferay-ui:icon-menu cssClass="control-panel-site-selector" direction="down" extended="<%= false %>" icon="" id="controlPanelSiteSelector" message="" showWhenSingleIcon="<%= true %>">
 
-	<%
-	for (Group manageableSiteGroup : manageableSiteGroups) {
-	%>
+		<%
+		for (Group manageableSiteGroup : manageableSiteGroups) {
+		%>
 
-		<liferay-ui:icon
-			message="<%= HtmlUtil.escape(manageableSiteGroup.getDescriptiveName(locale)) %>"
-			src="<%= manageableSiteGroup.getIconURL(themeDisplay) %>"
-			url='<%= HttpUtil.setParameter(PortalUtil.getCurrentURL(request), "doAsGroupId", manageableSiteGroup.getGroupId()) %>'
-		/>
+			<liferay-ui:icon
+				message="<%= HtmlUtil.escape(manageableSiteGroup.getDescriptiveName(locale)) %>"
+				src="<%= manageableSiteGroup.getIconURL(themeDisplay) %>"
+				url='<%= HttpUtil.setParameter(PortalUtil.getCurrentURL(request), "doAsGroupId", manageableSiteGroup.getGroupId()) %>'
+			/>
 
-	<%
-	}
-	%>
+		<%
+		}
+		%>
 
-</liferay-ui:icon-menu>
+	</liferay-ui:icon-menu>
+
+<%
+}
+%>

@@ -20,7 +20,7 @@
 
 	<%
 	String currentLanguageId = LanguageUtil.getLanguageId(request);
-	Locale defaultLocale = LocaleUtil.getDefault();
+	Locale defaultLocale = LocaleUtil.getSiteDefault();
 	String defaultLanguageId = LocaleUtil.toLanguageId(defaultLocale);
 
 	String w3cCurrentLanguageId = LocaleUtil.toW3cLanguageId(currentLanguageId);

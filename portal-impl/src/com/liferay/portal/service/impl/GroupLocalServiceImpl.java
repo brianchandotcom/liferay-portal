@@ -4360,7 +4360,13 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		}
 
 		if (!ArrayUtil.contains(languageIdsArray, defaultLanguageId)) {
-			throw new LocaleException();
+			LocaleException le = new LocaleException(LocaleException.DEFAULT);
+
+			le.setSourceAvailableLocales(availableLocales);
+			le.setTargetAvailableLocales(
+				LocaleUtil.fromLanguageIds(languageIdsArray));
+
+			throw le;
 		}
 	}
 

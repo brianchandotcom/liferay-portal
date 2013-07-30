@@ -25,6 +25,8 @@ public class LocaleException extends PortalException {
 
 	public static final int CONTENT = 3;
 
+	public static final int DEFAULT = 4;
+
 	public static final int DISPLAY_SETTINGS = 1;
 
 	public static final int EXPORT_IMPORT = 2;

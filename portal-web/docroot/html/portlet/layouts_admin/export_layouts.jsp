@@ -505,24 +505,22 @@ portletURL.setParameter("rootNodeName", rootNodeName);
 															<aui:input label="comments" name="<%= PortletDataHandlerKeys.COMMENTS %>" type="checkbox" value="<%= true %>" />
 
 															<aui:input label="ratings" name="<%= PortletDataHandlerKeys.RATINGS %>" type="checkbox" value="<%= true %>" />
+
+															<%
+															long modelDeletionCount = manifestSummary.getModelDeletionCount();
+															%>
+
+															<c:if test="<%= modelDeletionCount != 0 %>">
+
+																<%
+																String deletionsLabel = LanguageUtil.get(pageContext, "deletions") + (modelDeletionCount > 0 ? " (" + modelDeletionCount + ")" : StringPool.BLANK);
+																%>
+
+																<aui:input data-name="<%= deletionsLabel %>" helpMessage="deletions-help" label="<%= deletionsLabel %>" name="<%= PortletDataHandlerKeys.DELETIONS %>" type="checkbox" />
+															</c:if>
 														</li>
 													</ul>
 												</div>
-											</aui:fieldset>
-
-											<aui:fieldset cssClass="export-deletions">
-
-												<%
-												long modelDeletionCount = manifestSummary.getModelDeletionCount();
-												%>
-
-												<c:if test="<%= modelDeletionCount != 0 %>">
-													<liferay-util:buffer var="badgeHTML">
-														<span class="badge badge-info"><%= modelDeletionCount > 0 ? modelDeletionCount : StringPool.BLANK %></span>
-													</liferay-util:buffer>
-
-													<aui:input checked="<%= true %>" helpMessage="deletions-help" id="deletions" label='<%= LanguageUtil.get(pageContext, "deletions") + badgeHTML %>' name="<%= PortletDataHandlerKeys.DELETIONS %>" type="checkbox" value="<%= true %>" />
-												</c:if>
 											</aui:fieldset>
 										</li>
 									</ul>
@@ -576,6 +574,7 @@ portletURL.setParameter("rootNodeName", rootNodeName);
 		{
 			archivedSetupsNode: '#<%= PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS_ALL %>Checkbox',
 			commentsNode: '#<%= PortletDataHandlerKeys.COMMENTS %>Checkbox',
+			deletionsNode: '#<%= PortletDataHandlerKeys.DELETIONS %>Checkbox',
 			form: document.<portlet:namespace />fm1,
 			layoutSetSettingsNode: '#<%= PortletDataHandlerKeys.LAYOUT_SET_SETTINGS %>Checkbox',
 			logoNode: '#<%= PortletDataHandlerKeys.LOGO %>Checkbox',

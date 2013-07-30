@@ -28,6 +28,7 @@ AUI.add(
 					commentsNode: defaultConfig,
 					deleteMissingLayoutsNode: defaultConfig,
 					deletePortletDataNode: defaultConfig,
+					deletionsNode: defaultConfig,
 					form: defaultConfig,
 					layoutSetSettingsNode: defaultConfig,
 					logoNode: defaultConfig,
@@ -928,6 +929,12 @@ AUI.add(
 
 						if (instance._isChecked('ratingsNode')) {
 							selectedContentOptions.push(Liferay.Language.get('ratings'));
+						}
+
+						if (instance._isChecked('deletionsNode')) {
+							var deletionsNode = instance.get('deletionsNode');
+
+							selectedContentOptions.push(deletionsNode.attr('data-name'));
 						}
 
 						instance._setLabels('contentOptionsLink', 'selectedContentOptions', selectedContentOptions.join(', '));

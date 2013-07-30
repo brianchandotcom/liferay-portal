@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataSourceFactoryUtil;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.log.SanitizingLogWrapper;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaDetector;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -121,6 +122,10 @@ public class InitUtil {
 			LogFactoryUtil.setLogFactory(
 				DoPrivilegedUtil.wrap(LogFactoryUtil.getLogFactory()));
 		}
+
+		// Log Sanitizing
+
+		SanitizingLogWrapper.init();
 
 		// Cache registry
 

@@ -183,6 +183,10 @@ $dockbarOpenGradientStart: #0EA6F9;
 						}
 					}
 				}
+
+				&:hover > li.toggle-controls {
+					visibility: visible;
+				}
 			}
 
 			.site-administration-menu li {
@@ -201,10 +205,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 					}
 				}
 			}
-		}
-
-		&:hover .navbar-inner .nav-add-controls > li.toggle-controls {
-			visibility: visible;
 		}
 	}
 

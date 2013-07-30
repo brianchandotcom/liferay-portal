@@ -23,7 +23,9 @@ ServiceContext#deriveDefaultPermissions(long, String).
 
 <%@ include file="/html/taglib/init.jsp" %>
 
-<%@ page import="com.liferay.taglib.ui.InputPermissionsParamsTag" %>
+<%@
+page import="com.liferay.portal.service.permission.RolePermissionUtil" %><%@
+page import="com.liferay.taglib.ui.InputPermissionsParamsTag" %>
 
 <%
 String uniqueNamespace = namespace + PortalUtil.getUniqueElementId(request, namespace, StringPool.BLANK);
@@ -46,9 +48,16 @@ String modelName = (String)request.getAttribute("liferay-ui:input-permissions:mo
 		Group siteGroup = GroupLocalServiceUtil.getGroup(themeDisplay.getSiteGroupId());
 
 		Role defaultGroupRole = RoleLocalServiceUtil.getDefaultGroupRole(siteGroup.getGroupId());
+
+		boolean viewDefaultGroupRole = RolePermissionUtil.contains(themeDisplay.getPermissionChecker(), siteGroup.getGroupId(), defaultGroupRole.getRoleId(), ActionKeys.VIEW);
+
 		Role guestRole = RoleLocalServiceUtil.getRole(themeDisplay.getCompanyId(), RoleConstants.GUEST);
 
-		String[] roleNames = new String[] {RoleConstants.GUEST, defaultGroupRole.getName()};
+		String[] roleNames = new String[] {RoleConstants.GUEST};
+
+		if (viewDefaultGroupRole) {
+			roleNames = ArrayUtil.append(roleNames, defaultGroupRole.getName());
+		}
 
 		String guestPermissionsName = "guestPermissions";
 		String groupPermissionsName = "groupPermissions";
@@ -91,6 +100,8 @@ String modelName = (String)request.getAttribute("liferay-ui:input-permissions:mo
 				%>
 
 				<option <%= (inputPermissionsViewRole.equals(RoleConstants.GUEST)) ? "selected=\"selected\"" : "" %> value="<%= RoleConstants.GUEST %>"><%= guestRoleLabel %></option>
+
+				<c:if test="<%= viewDefaultGroupRole %>">
 				<option <%= (inputPermissionsViewRole.equals(defaultGroupRole.getName())) ? "selected=\"selected\"" : "" %> value="<%= defaultGroupRole.getName() %>">
 					<c:choose>
 						<c:when test="<%= defaultGroupRole.getName().equals(RoleConstants.ORGANIZATION_USER) %>">
@@ -107,6 +118,8 @@ String modelName = (String)request.getAttribute("liferay-ui:input-permissions:mo
 						</c:otherwise>
 					</c:choose>
 				</option>
+				</c:if>
+
 				<option <%= (inputPermissionsViewRole.equals(RoleConstants.OWNER)) ? "selected=\"selected\"" : "" %> value="<%= RoleConstants.OWNER %>"><liferay-ui:message key="owner" /></option>
 			</select>
 

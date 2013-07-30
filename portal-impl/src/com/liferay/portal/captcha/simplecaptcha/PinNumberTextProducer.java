@@ -25,7 +25,7 @@ public class PinNumberTextProducer implements TextProducer {
 
 	@Override
 	public String getText() {
-		return PwdGenerator.getPinNumber();
+		return PwdGenerator.getSecurePinNumber();
 	}
 
 }

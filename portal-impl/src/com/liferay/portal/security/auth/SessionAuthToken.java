@@ -122,7 +122,7 @@ public class SessionAuthToken implements AuthToken {
 			tokenKey);
 
 		if (createToken && Validator.isNull(sessionAuthenticationToken)) {
-			sessionAuthenticationToken = PwdGenerator.getPassword();
+			sessionAuthenticationToken = PwdGenerator.getSecurePassword();
 
 			session.setAttribute(tokenKey, sessionAuthenticationToken);
 		}

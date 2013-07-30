@@ -39,7 +39,7 @@ if (upperCaseLetters) {
 String newPassword = StringPool.BLANK;
 
 try {
-	newPassword = PwdGenerator.getPassword(key, length);
+	newPassword = PwdGenerator.getSecurePassword(key, length);
 }
 catch (Exception e) {
 }

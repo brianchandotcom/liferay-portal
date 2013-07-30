@@ -55,7 +55,7 @@ public class OpenSSOAutoLogin extends BaseAutoLogin {
 
 		long creatorUserId = 0;
 		boolean autoPassword = false;
-		String password1 = PwdGenerator.getPassword();
+		String password1 = PwdGenerator.getSecurePassword();
 		String password2 = password1;
 		boolean autoScreenName = false;
 		long facebookId = 0;

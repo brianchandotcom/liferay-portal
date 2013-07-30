@@ -37,7 +37,7 @@ public class NullSession implements HttpSession {
 		_creationTime = System.currentTimeMillis();
 		_id =
 			NullSession.class.getName() + StringPool.POUND +
-				PwdGenerator.getPinNumber();
+				PwdGenerator.getPassword(PwdGenerator.KEY1, 4, false);
 		_lastAccessedTime = _creationTime;
 		_maxInactiveInterval = 0;
 		_servletContext = null;

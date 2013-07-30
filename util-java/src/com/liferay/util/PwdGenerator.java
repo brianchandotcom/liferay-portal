@@ -51,8 +51,12 @@ public class PwdGenerator {
 		return _getPassword(false, key, length, useAllKeys);
 	}
 
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link #getSecurePinNumber()}
+	 */
+	@Deprecated
 	public static String getPinNumber() {
-		return _getPassword(false, KEY1, 4, true);
+		return _getPassword(false, KEY1, 4, false);
 	}
 
 	public static String getSecurePassword() {
@@ -71,6 +75,10 @@ public class PwdGenerator {
 		String key, int length, boolean useAllKeys) {
 
 		return _getPassword(true, key, length, useAllKeys);
+	}
+
+	public static String getSecurePinNumber() {
+		return _getPassword(true, KEY1, 4, false);
 	}
 
 	private static String _getPassword(

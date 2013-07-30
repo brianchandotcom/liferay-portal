@@ -24,33 +24,7 @@ String controlPanelCategory = themeDisplay.getControlPanelCategory();
 boolean showControlPanelMenu = true;
 
 if (controlPanelCategory.startsWith(PortletCategoryKeys.CURRENT_SITE)) {
-	if (controlPanelCategory.indexOf(StringPool.PERIOD) == -1) {
-		controlPanelCategory = StringUtil.replace(controlPanelCategory, PortletCategoryKeys.CURRENT_SITE, PortletCategoryKeys.SITE_ADMINISTRATION);
-	}
-	else {
-		controlPanelCategory = StringUtil.replace(controlPanelCategory, PortletCategoryKeys.CURRENT_SITE + StringPool.PERIOD, PortletCategoryKeys.SITE_ADMINISTRATION);
-	}
-
 	showControlPanelMenu = false;
-}
-
-List<Portlet> portlets = PortalUtil.getControlPanelPortlets(controlPanelCategory, themeDisplay);
-
-if (Validator.isNull(ppid)) {
-	if (controlPanelCategory.equals(PortletCategoryKeys.SITE_ADMINISTRATION)) {
-		Portlet firstPortlet = PortalUtil.getFirstSiteAdministrationPortlet(themeDisplay);
-
-		ppid = firstPortlet.getPortletId();
-	}
-	else {
-		for (Portlet portlet : portlets) {
-			if (PortletPermissionUtil.hasControlPanelAccessPermission(permissionChecker, scopeGroupId, portlet)) {
-				ppid = portlet.getPortletId();
-
-				break;
-			}
-		}
-	}
 }
 
 if (ppid.equals(PortletKeys.PORTLET_CONFIGURATION)) {
@@ -178,10 +152,10 @@ request.setAttribute("control_panel.jsp-ppid", ppid);
 											<h1 class="site-title">
 												<%= group.getDescriptiveName(themeDisplay.getLocale()) %>
 
-												<c:if test="<%= Validator.isNotNull(controlPanelCategory) && !controlPanelCategory.startsWith(PortletCategoryKeys.CURRENT_SITE) %>">
-													<%@ include file="/html/portal/layout/view/control_panel_site_selector.jspf" %>
-												</c:if>
-											</h1>
+											<c:if test="<%= showControlPanelMenu && Validator.isNotNull(controlPanelCategory) %>">
+												<%@ include file="/html/portal/layout/view/control_panel_site_selector.jspf" %>
+											</c:if>
+										</h1>
 
 											<c:if test="<%= group.hasPrivateLayouts() || group.hasPublicLayouts() %>">
 												<ul class="visit-links">

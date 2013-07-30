@@ -59,10 +59,16 @@ private String _getActionLabel(PageContext pageContext, ThemeDisplay themeDispla
 	String actionLabel = null;
 
 	if (actionId.equals(ActionKeys.ACCESS_IN_CONTROL_PANEL)) {
-		if (PortalUtil.isControlPanelPortlet(resourceName, PortletCategoryKeys.SITE_ADMINISTRATION, themeDisplay)) {
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(themeDisplay.getCompanyId(), resourceName);
+
+		String controlPanelCategory = portlet.getControlPanelEntryCategory();
+
+		if (Validator.isNull(controlPanelCategory)) {
+		}
+		else if (controlPanelCategory.startsWith(PortletCategoryKeys.SITE_ADMINISTRATION)) {
 			actionLabel = LanguageUtil.get(pageContext, "access-in-site-administration");
 		}
-		else if (PortalUtil.isControlPanelPortlet(resourceName, PortletCategoryKeys.MY, themeDisplay)) {
+		else if (controlPanelCategory.equals(PortletCategoryKeys.MY)) {
 			actionLabel = LanguageUtil.get(pageContext, "access-in-my-account");
 		}
 	}

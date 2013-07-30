@@ -25,13 +25,17 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
+import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.security.permission.comparator.ActionComparator;
+import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.ResourceBlockLocalServiceUtil;
 import com.liferay.portal.service.ResourceBlockServiceUtil;
 import com.liferay.portal.service.ResourcePermissionServiceUtil;
@@ -39,6 +43,8 @@ import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PortletCategoryKeys;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
 
 import java.util.HashMap;
@@ -351,6 +357,14 @@ public class EditRolePermissionsAction extends PortletAction {
 						role, themeDisplay.getScopeGroupId(), selResource,
 						actionId, selected, scope, groupIds);
 				}
+
+				if (selected &&
+					actionId.equals(ActionKeys.ACCESS_IN_CONTROL_PANEL)) {
+
+					updateViewControlPanelPermission(
+						role, themeDisplay.getScopeGroupId(), selResource,
+						scope, groupIds);
+				}
 			}
 		}
 
@@ -399,6 +413,45 @@ public class EditRolePermissionsAction extends PortletAction {
 				scopeGroupId, companyId, selResource, roleId, actionId);
 			ResourceBlockServiceUtil.removeCompanyScopePermission(
 				scopeGroupId, companyId, selResource, roleId, actionId);
+		}
+	}
+
+	protected void updateViewControlPanelPermission(
+			Role role, long scopeGroupId, String portletId, int scope,
+			String[] groupIds)
+		throws Exception {
+
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			role.getCompanyId(), portletId);
+
+		String controlPanelCategory =
+			portlet.getControlPanelEntryCategory();
+
+		if (Validator.isNull(controlPanelCategory)) {
+			return;
+		}
+
+		String selResource = null;
+		String actionId = null;
+
+		if (ArrayUtil.contains(
+				PortletCategoryKeys.ALL, controlPanelCategory)) {
+
+			selResource = PortletKeys.PORTAL;
+			actionId = ActionKeys.VIEW_CONTROL_PANEL;
+		}
+		else if (ArrayUtil.contains(
+					PortletCategoryKeys.SITE_ADMINISTRATION_ALL,
+					controlPanelCategory)) {
+
+			selResource = Group.class.getName();
+			actionId = ActionKeys.VIEW_SITE_ADMINISTRATION;
+		}
+
+		if (selResource != null) {
+			updateAction(
+				role, scopeGroupId, selResource, actionId, true, scope,
+				groupIds);
 		}
 	}
 

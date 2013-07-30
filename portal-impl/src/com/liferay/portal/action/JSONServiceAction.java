@@ -394,6 +394,21 @@ public class JSONServiceAction extends JSONAction {
 		}
 	}
 
+	@Override
+	protected String getCSRFContext(HttpServletRequest request) {
+		String className = ParamUtil.getString(request, "serviceClassName");
+		String methodName = ParamUtil.getString(request, "serviceMethodName");
+
+		StringBundler sb = new StringBundler(5);
+		sb.append(getClass().getName());
+		sb.append(StringPool.COLON);
+		sb.append(className);
+		sb.append(StringPool.POUND);
+		sb.append(methodName);
+
+		return sb.toString();
+	}
+
 	protected Object[] getMethodAndParameterTypes(
 			Class<?> clazz, String methodName, String[] parameters,
 			String[] parameterTypes)

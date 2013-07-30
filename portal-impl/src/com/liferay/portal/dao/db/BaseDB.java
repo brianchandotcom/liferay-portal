@@ -188,7 +188,7 @@ public abstract class BaseDB implements DB {
 
 		runSQL(
 			DataAccess.getUpgradeOptimizedConnection(),
-			buildSQLDropDatabase(databaseName));
+			buildDropDatabaseSQL(databaseName));
 	}
 
 	@Override
@@ -579,7 +579,7 @@ public abstract class BaseDB implements DB {
 			String sqlDir, String databaseName, int population)
 		throws IOException;
 
-	protected String buildSQLDropDatabase(String databaseName) {
+	protected String buildDropDatabaseSQL(String databaseName) {
 		StringBundler sb = new StringBundler(2);
 
 		sb.append("drop database ");

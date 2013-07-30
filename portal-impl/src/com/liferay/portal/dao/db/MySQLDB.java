@@ -134,7 +134,7 @@ public class MySQLDB extends BaseDB {
 	}
 
 	@Override
-	protected String buildSQLDropDatabase(String databaseName) {
+	protected String buildDropDatabaseSQL(String databaseName) {
 		StringBundler sb = new StringBundler(3);
 
 		sb.append("drop database if exists ");

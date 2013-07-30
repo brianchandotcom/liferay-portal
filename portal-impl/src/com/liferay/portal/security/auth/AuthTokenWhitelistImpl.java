@@ -35,10 +35,16 @@ import java.util.Set;
 public class AuthTokenWhitelistImpl implements AuthTokenWhitelist {
 
 	public AuthTokenWhitelistImpl() {
+		resetContextCSRFWhitelist();
 		resetPortletCSRFWhitelist();
 		resetPortletCSRFWhitelistActions();
 		resetPortletInvocationWhitelist();
 		resetPortletInvocationWhitelistActions();
+	}
+
+	@Override
+	public Set<String> getContextCSRFWhitelist() {
+		return _contextCSRFWhitelist;
 	}
 
 	@Override
@@ -59,6 +65,17 @@ public class AuthTokenWhitelistImpl implements AuthTokenWhitelist {
 	@Override
 	public Set<String> getPortletInvocationWhitelistActions() {
 		return _portletInvocationWhitelistActions;
+	}
+
+	@Override
+	public boolean isCSRFContextWhitelisted(long companyId, String context) {
+		Set<String> whitelist = getContextCSRFWhitelist();
+
+		if (whitelist.contains(context)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override
@@ -129,6 +146,16 @@ public class AuthTokenWhitelistImpl implements AuthTokenWhitelist {
 	}
 
 	@Override
+	public Set<String> resetContextCSRFWhitelist() {
+		_contextCSRFWhitelist = SetUtil.fromArray(
+			PropsValues.AUTH_TOKEN_IGNORE_CONTEXTS);
+		_contextCSRFWhitelist = Collections.unmodifiableSet(
+			_contextCSRFWhitelist);
+
+		return _contextCSRFWhitelist;
+	}
+
+	@Override
 	public Set<String> resetPortletCSRFWhitelist() {
 		_portletCSRFWhitelist = SetUtil.fromArray(
 			PropsValues.AUTH_TOKEN_IGNORE_PORTLETS);
@@ -194,6 +221,7 @@ public class AuthTokenWhitelistImpl implements AuthTokenWhitelist {
 		return false;
 	}
 
+	private Set<String> _contextCSRFWhitelist;
 	private Set<String> _portletCSRFWhitelist;
 	private Set<String> _portletCSRFWhitelistActions;
 	private Set<String> _portletInvocationWhitelist;

@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/dynamic_data_mapping/init.jsp" %>
 
 <%
-String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all");
+String toolbarItem = ParamUtil.getString(request, "toolbarItem");
 
 String redirect = ParamUtil.getString(request, "redirect");
 
@@ -28,7 +28,6 @@ long classPK = ParamUtil.getLong(request, "classPK");
 
 <aui:nav-bar>
 	<aui:nav>
-		<aui:nav-item href="<%= PortalUtil.escapeRedirect(redirect) %>" label="view-all" selected='<%= toolbarItem.equals("view-all") %>' />
 
 		<%
 		String message = "add";

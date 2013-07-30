@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/dynamic_data_mapping/init.jsp" %>
 
 <%
-String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all");
+String toolbarItem = ParamUtil.getString(request, "toolbarItem");
 
 long groupId = ParamUtil.getLong(request, "groupId", scopeGroupId);
 long classPK = ParamUtil.getLong(request, "classPK");
@@ -31,8 +31,6 @@ String eventName = ParamUtil.getString(request, "eventName", "selectStructure");
 			<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
 			<portlet:param name="eventName" value="<%= eventName %>" />
 		</portlet:renderURL>
-
-		<aui:nav-item href="<%= viewStructureURL %>" label="view-all" selected='<%= toolbarItem.equals("view-all") %>' />
 
 		<c:if test="<%= ddmDisplay.isShowAddStructureButton(permissionChecker, scopeGroupId) %>">
 			<portlet:renderURL var="addStructureURL">

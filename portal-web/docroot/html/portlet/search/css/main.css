@@ -232,6 +232,35 @@
 		padding: 5px 0;
 	}
 
+	.search-query-spell-check {
+		font-size: 140%;
+		margin: 0 0 1em 0.5em;
+
+		.did-you-mean {
+			margin-right: 4em;
+
+			label {
+				color: #dd4b39;
+			}
+		}
+
+		.query-suggestions ul {
+			margin: 0.1em 1em;
+
+			li {
+				list-style: none;
+			}
+		}
+
+		.changed-keyword {
+			font-weight: bold;
+			font-style: italic;
+		}
+
+		.unchanged-keyword {
+		}
+	}
+
 	.section-title {
 		font-size: 1.3em;
 		font-weight: bold;
@@ -247,6 +276,10 @@
 .portlet-search.portlet-configuration {
 	.fieldset-content {
 		padding-top: 0.5em;
+	}
+
+	.options-container {
+		margin-left: 1.8em;
 	}
 
 	.search-configuration-text {

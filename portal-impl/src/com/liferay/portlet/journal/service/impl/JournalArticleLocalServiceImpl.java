@@ -1402,6 +1402,56 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	/**
+	 * Returns the latest web content article matching the resource primary key
+	 * and workflow status, optionally preferring articles with approved
+	 * workflow status. Returns null if a matching web content article could
+	 * not be found.
+	 *
+	 * @param  resourcePrimKey the primary key of the resource instance
+	 * @param  status the web content article's workflow status. For more
+	 *         information see {@link WorkflowConstants} for constants starting
+	 *         with the "STATUS_" prefix.
+	 * @param  preferApproved whether to prefer returning the latest matching
+	 *         article that has workflow status {@link
+	 *         WorkflowConstants#STATUS_APPROVED} over returning one that has a
+	 *         different status
+	 * @return the latest web content article matching the resource primary key
+	 *         and workflow status, optionally preferring articles with approved
+	 *         workflow status. Returns null if a matching web content article
+	 *         could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public JournalArticle fetchLatestArticle(
+			long resourcePrimKey, int status, boolean preferApproved)
+		throws SystemException {
+
+		JournalArticle article = null;
+
+		OrderByComparator orderByComparator = new ArticleVersionComparator();
+
+		if (status == WorkflowConstants.STATUS_ANY) {
+			if (preferApproved) {
+				article = journalArticlePersistence.fetchByR_ST_First(
+					resourcePrimKey, WorkflowConstants.STATUS_APPROVED,
+					orderByComparator);
+			}
+
+			if (article == null) {
+				article =
+					journalArticlePersistence.fetchByResourcePrimKey_First(
+						resourcePrimKey, orderByComparator);
+			}
+		}
+		else {
+			article = journalArticlePersistence.fetchByR_ST_First(
+				resourcePrimKey, status, orderByComparator);
+		}
+
+		return article;
+	}
+
+	/**
 	 * Returns the web content article with the ID.
 	 *
 	 * @param  id the primary key of the web content article
@@ -4685,7 +4735,7 @@ public class JournalArticleLocalServiceImpl
 			reindex(article);
 		}
 
-		return article;
+		return getArticle(article.getPrimaryKey());
 	}
 
 	/**

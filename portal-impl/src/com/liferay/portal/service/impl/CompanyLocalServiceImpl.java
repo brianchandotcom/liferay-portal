@@ -1319,11 +1319,20 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	protected void validateLanguageIds(String languageIds)
 		throws PortalException {
 
-		for (String languageId :
-				StringUtil.split(languageIds, StringPool.COMMA)) {
+		String[] languageIdsArray = StringUtil.split(
+			languageIds, StringPool.COMMA);
 
+		for (String languageId : languageIdsArray) {
 			if (!ArrayUtil.contains(PropsValues.LOCALES, languageId)) {
-				throw new LocaleException();
+				LocaleException le = new LocaleException(
+					LocaleException.DISPLAY_SETTINGS);
+
+				le.setSourceAvailableLocales(
+					LocaleUtil.fromLanguageIds(PropsValues.LOCALES));
+				le.setTargetAvailableLocales(
+					LocaleUtil.fromLanguageIds(languageIdsArray));
+
+				throw le;
 			}
 		}
 	}

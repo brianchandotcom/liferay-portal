@@ -440,7 +440,7 @@ public class DDMStructureImpl extends DDMStructureBaseImpl {
 					getXsd(), ddmStructureDefaultLocale, defaultImportLocale));
 		}
 		catch (Exception e) {
-			throw new LocaleException(e);
+			throw new LocaleException(LocaleException.EXPORT_IMPORT, e);
 		}
 	}
 

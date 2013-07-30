@@ -21,7 +21,16 @@
 <h3><liferay-ui:message key="language-and-time-zone" /></h3>
 
 <aui:fieldset>
-	<liferay-ui:error exception="<%= LocaleException.class %>" message="please-enter-a-valid-locale" />
+	<liferay-ui:error exception="<%= LocaleException.class %>">
+
+		<%
+		LocaleException le = (LocaleException)errorException;
+		%>
+
+		<c:if test="<%= le.getType() == LocaleException.DISPLAY_SETTINGS %>">
+			<liferay-ui:message key="please-enter-a-valid-locale" />
+		</c:if>
+	</liferay-ui:error>
 
 	<aui:select label="default-language" name="languageId">
 

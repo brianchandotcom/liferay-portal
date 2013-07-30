@@ -23,20 +23,36 @@ import java.util.Locale;
  */
 public class LocaleException extends PortalException {
 
+	public static final int CONTENT = 3;
+
+	public static final int DISPLAY_SETTINGS = 1;
+
+	public static final int EXPORT_IMPORT = 2;
+
 	public LocaleException() {
 		super();
 	}
 
-	public LocaleException(String msg) {
+	public LocaleException(int type) {
+		_type = type;
+	}
+
+	public LocaleException(int type, String msg) {
 		super(msg);
+
+		_type = type;
 	}
 
-	public LocaleException(String msg, Throwable cause) {
+	public LocaleException(int type, String msg, Throwable cause) {
 		super(msg, cause);
+
+		_type = type;
 	}
 
-	public LocaleException(Throwable cause) {
+	public LocaleException(int type, Throwable cause) {
 		super(cause);
+
+		_type = type;
 	}
 
 	public Locale[] getSourceAvailableLocales() {
@@ -45,6 +61,10 @@ public class LocaleException extends PortalException {
 
 	public Locale[] getTargetAvailableLocales() {
 		return _targetAvailableLocales;
+	}
+
+	public int getType() {
+		return _type;
 	}
 
 	public void setSourceAvailableLocales(Locale[] sourceAvailableLocales) {
@@ -57,5 +77,6 @@ public class LocaleException extends PortalException {
 
 	private Locale[] _sourceAvailableLocales;
 	private Locale[] _targetAvailableLocales;
+	private int _type;
 
 }

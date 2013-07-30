@@ -1088,7 +1088,8 @@ public class LayoutImporter {
 			if (!ArrayUtil.contains(
 					targetAvailableLocales, sourceAvailableLocale)) {
 
-				LocaleException le = new LocaleException();
+				LocaleException le = new LocaleException(
+					LocaleException.EXPORT_IMPORT);
 
 				le.setSourceAvailableLocales(sourceAvailableLocales);
 				le.setTargetAvailableLocales(targetAvailableLocales);

@@ -799,6 +799,16 @@
 					<replacefilter token="FCKeditor" value="CKeditor" />
 				</replace>
 
+				<replace file="docroot/html/js/editor/ckeditor/editor/filemanager/browser/liferay/browser.html">
+					<replacetoken><![CDATA[<meta http-equiv="Content-Type" content="text/html; charset=utf-8">]]></replacetoken>
+					<replacevalue>
+						<![CDATA[
+							<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+							<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE9">
+						]]>
+					</replacevalue>
+				</replace>
+
 				<replace file="docroot/html/js/editor/ckeditor/editor/filemanager/browser/liferay/frmresourceslist.html">
 					<replacetoken><![CDATA[window.top.opener.SetUrl( encodeURI( fileUrl ).replace( '#', '%23' ) ) ;]]></replacetoken>
 					<replacevalue>

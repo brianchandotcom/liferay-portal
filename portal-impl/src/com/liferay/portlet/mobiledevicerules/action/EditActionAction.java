@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.mobile.device.rulegroup.action.impl.LayoutTemplateModificationActionHandler;
 import com.liferay.portal.mobile.device.rulegroup.action.impl.SimpleRedirectActionHandler;
@@ -84,7 +85,7 @@ public class EditActionAction extends EditRuleAction {
 				updateAction(actionRequest);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
-				deleteAction(actionRequest);
+				deleteActions(actionRequest);
 			}
 
 			sendRedirect(actionRequest, actionResponse);
@@ -171,10 +172,23 @@ public class EditActionAction extends EditRuleAction {
 			portletConfig, resourceRequest, resourceResponse, type);
 	}
 
-	protected void deleteAction(ActionRequest actionRequest) throws Exception {
+	protected void deleteActions(ActionRequest actionRequest) throws Exception {
+
+		long[] actionIds = null;
+
 		long actionId = ParamUtil.getLong(actionRequest, "actionId");
 
-		MDRActionServiceUtil.deleteAction(actionId);
+		if (actionId > 0) {
+			actionIds = new long[] {actionId};
+		}
+		else {
+			actionIds = StringUtil.split(
+				ParamUtil.getString(actionRequest, "actionIds"), 0L);
+		}
+
+		for (long curActionId : actionIds) {
+			MDRActionServiceUtil.deleteAction(curActionId);
+		}
 	}
 
 	@Override

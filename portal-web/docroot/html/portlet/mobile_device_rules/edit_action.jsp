@@ -81,7 +81,7 @@ else {
 
 		<aui:input name="description" />
 
-		<aui:select changesContext="<%= true %>" name="type" onChange='<%= renderResponse.getNamespace() + "changeType();" %>' showEmptyOption="<%= true %>">
+		<aui:select changesContext="<%= true %>" name="type" onChange='<%= renderResponse.getNamespace() + "changeType();" %>' required="<%=true %>" showEmptyOption="<%= true %>">
 
 			<%
 			for (ActionHandler actionHandler : ActionHandlerManagerUtil.getActionHandlers()) {
@@ -149,9 +149,10 @@ else {
 			var A = AUI();
 
 			A.io.request(
-				<portlet:resourceURL var="editorURL">
+				<liferay-portlet:resourceURL copyCurrentRenderParameters="false" var="editorURL">
 					<portlet:param name="struts_action" value="/mobile_device_rules/edit_action_editor" />
-				</portlet:resourceURL>
+					<portlet:param name="ajax" value="true" />
+				</liferay-portlet:resourceURL>
 
 				'<%= editorURL.toString() %>',
 				{
@@ -164,13 +165,15 @@ else {
 							var typeSettings = A.one('#<portlet:namespace />typeSettings');
 
 							if (typeSettings) {
-								typeSettings.html(this.get('responseData'));
+								typeSettings.plug(A.Plugin.ParseContent);
+
+								typeSettings.setContent(this.get('responseData'));
 							}
 						}
 					}
 				}
 			);
 		},
-		['aui-io']
+		['aui-io', 'aui-parse-content']
 	);
 </aui:script>

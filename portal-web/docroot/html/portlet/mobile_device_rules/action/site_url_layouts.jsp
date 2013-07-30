@@ -38,8 +38,8 @@ else {
 
 <aui:input name="actionPlid" type="hidden" value="<%= actionPlid %>" />
 
-<aui:select label="page" name="plid">
-	<aui:option disabled="<%= true %>" label="select-a-page" selected="<%= actionPlid == 0 %>" value="0" />
+<aui:select label="page" name="plid" required="<%= true %>">
+	<aui:option disabled="<%= true %>" label="select-a-page" selected="<%= actionPlid == 0 %>" value="" />
 
 	<%
 	List<Layout> publicLayouts = LayoutServiceUtil.getLayouts(actionGroupId, false);

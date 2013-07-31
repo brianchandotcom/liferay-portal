@@ -145,13 +145,14 @@ public class JSONWebServiceServiceAction extends JSONServiceAction {
 	protected String getCSRFContext(HttpServletRequest request) {
 		String uri = request.getRequestURI();
 
-		int idx = uri.indexOf("jsonws/");
+		int x = uri.indexOf("jsonws/");
 
-		if (idx < 0) {
+		if (x < 0) {
 			return getClass().getName();
 		}
 
-		String apiPath = uri.substring(idx + 7);
+		String apiPath = uri.substring(x + 7);
+
 		String[] apiComponents = StringUtil.split(apiPath, CharPool.SLASH);
 
 		if (apiComponents.length < 2) {
@@ -162,6 +163,7 @@ public class JSONWebServiceServiceAction extends JSONServiceAction {
 		String methodName = apiComponents[1];
 
 		StringBundler sb = new StringBundler(6);
+
 		sb.append(getClass().getName());
 		sb.append(StringPool.COLON);
 		sb.append(StringPool.SLASH);

@@ -477,7 +477,15 @@ public class GroupServiceTest {
 	public void testInvalidChangeAvailableLanguageIds() throws Exception {
 		testUpdateDisplaySettings(
 			new Locale[] {LocaleUtil.US, LocaleUtil.SPAIN},
-			new Locale[] {LocaleUtil.US, LocaleUtil.GERMANY}, true);
+			new Locale[] {LocaleUtil.US, LocaleUtil.GERMANY}, null, true);
+	}
+
+	@Test
+	public void testInvalidChangeDefaultLanguageId() throws Exception {
+		testUpdateDisplaySettings(
+			new Locale[] {LocaleUtil.US, LocaleUtil.SPAIN},
+			new Locale[] {LocaleUtil.US, LocaleUtil.SPAIN}, LocaleUtil.GERMANY,
+			true);
 	}
 
 	@Test
@@ -721,7 +729,15 @@ public class GroupServiceTest {
 	public void testValidChangeAvailableLanguageIds() throws Exception {
 		testUpdateDisplaySettings(
 			new Locale[] {LocaleUtil.US, LocaleUtil.SPAIN, LocaleUtil.GERMANY},
-			new Locale[] {LocaleUtil.US, LocaleUtil.SPAIN}, false);
+			new Locale[] {LocaleUtil.US, LocaleUtil.SPAIN}, null, false);
+	}
+
+	@Test
+	public void testValidChangeDefaultLanguageId() throws Exception {
+		testUpdateDisplaySettings(
+			new Locale[] {LocaleUtil.US, LocaleUtil.SPAIN, LocaleUtil.GERMANY},
+			new Locale[] {LocaleUtil.US, LocaleUtil.SPAIN, LocaleUtil.GERMANY},
+			LocaleUtil.GERMANY, false);
 	}
 
 	protected Group addGroup(
@@ -961,7 +977,7 @@ public class GroupServiceTest {
 
 	protected void testUpdateDisplaySettings(
 			Locale[] portalAvailableLocales, Locale[] groupAvailableLocales,
-			boolean fail)
+			Locale groupDefaultLocale, boolean fail)
 		throws Exception {
 
 		UnicodeProperties properties = new UnicodeProperties();
@@ -979,7 +995,7 @@ public class GroupServiceTest {
 
 		try {
 			GroupTestUtil.updateDisplaySettings(
-				group.getGroupId(), groupAvailableLocales, null);
+				group.getGroupId(), groupAvailableLocales, groupDefaultLocale);
 
 			if (fail) {
 				Assert.fail();

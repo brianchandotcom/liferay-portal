@@ -29,16 +29,16 @@
 			<aui:a href="javascript:;" onclick="<%= taglibSearchCollatedKeywords %>">
 
 				<%
-				KeywordsFormatter collatedKeywordsFormatter = new KeywordsFormatter(hits.getCollatedSpellCheckResult(), searchContext.getKeywords());
+				KeywordsSuggestionHolder keywordsSuggestionHolder = new KeywordsSuggestionHolder(hits.getCollatedSpellCheckResult(), searchContext.getKeywords());
 				%>
 
-				<c:forEach items="<%= collatedKeywordsFormatter.getSuggestedKeywords() %>" var="suggestedKeyword">
+				<c:forEach items="<%= keywordsSuggestionHolder.getSuggestedKeywords() %>" var="suggestedKeyword">
 
 					<%
 					String suggestedKeyword = (String)pageContext.getAttribute("suggestedKeyword");
 					%>
 
-					<span class='<%= collatedKeywordsFormatter.isChanged(suggestedKeyword) ? "changed-keyword" : "unchanged-keyword" %>'>
+					<span class='<%= keywordsSuggestionHolder.hasChanged(suggestedKeyword) ? "changed-keyword" : "unchanged-keyword" %>'>
 						<%= HtmlUtil.escape(suggestedKeyword) %>
 					</span>
 				</c:forEach>
@@ -69,16 +69,16 @@
 							<aui:a href="javascript:;" onclick="<%= taglibSearchRelatedQuery %>">
 
 								<%
-								KeywordsFormatter relatedQueryKeywordsFormatter = new KeywordsFormatter(relatedQueryKeywords, searchContext.getKeywords());
+									KeywordsSuggestionHolder keywordsSuggestionHolder = new KeywordsSuggestionHolder(relatedQueryKeywords, searchContext.getKeywords());
 								%>
 
-								<c:forEach items="<%= relatedQueryKeywordsFormatter.getSuggestedKeywords() %>" var="relatedQueryKeyword">
+								<c:forEach items="<%= keywordsSuggestionHolder.getSuggestedKeywords() %>" var="relatedQueryKeyword">
 
 									<%
 									String relatedQueryKeyword = (String)pageContext.getAttribute("relatedQueryKeyword");
 									%>
 
-									<span class='<%= relatedQueryKeywordsFormatter.isChanged(relatedQueryKeyword) ? "changed-keyword" : "unchanged-keyword" %>'>
+									<span class='<%= keywordsSuggestionHolder.hasChanged(relatedQueryKeyword) ? "changed-keyword" : "unchanged-keyword" %>'>
 										<%= HtmlUtil.escape(relatedQueryKeyword) %>
 									</span>
 								</c:forEach>

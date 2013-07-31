@@ -164,6 +164,26 @@ public class AssetPublisherExportImportTest
 			Validator.isNull(portletPreferences.getValues("scopeIds", null)));
 	}
 
+	@Test
+	public void testDisplayStyle() throws Exception {
+		Map<String, String[]> preferenceMap = new HashMap<String, String[]>();
+
+		String initialDisplayStyle = ServiceTestUtil.randomString();
+
+		preferenceMap.put("displayStyle", new String[] {initialDisplayStyle});
+
+		PortletPreferences portletPreferences = getImportedPortletPreferences(
+			preferenceMap);
+
+		Assert.assertEquals(
+			initialDisplayStyle,
+			portletPreferences.getValue("displayStyle", null));
+		Assert.assertTrue(
+			"The display style should not be null",
+			Validator.isNotNull(
+				portletPreferences.getValue("displayStyle", null)));
+	}
+
 	@Override
 	public void testExportImportAssetLinks() throws Exception {
 		Assert.assertTrue("This test does not apply", true);

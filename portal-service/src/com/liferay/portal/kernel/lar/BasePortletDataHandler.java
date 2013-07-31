@@ -487,7 +487,6 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 					String.valueOf(importedDisplayStyleGroupId));
 			}
 			else {
-				portletPreferences.setValue("displayStyle", StringPool.BLANK);
 				portletPreferences.setValue(
 					"displayStyleGroupId", StringPool.BLANK);
 			}

@@ -94,7 +94,7 @@
 			</map>
 		</property>
 		<property name="defaultCacheKeyGenerator">
-			<bean class="com.liferay.portal.cache.key.HashCodeCacheKeyGenerator" />
+			<bean class="com.liferay.portal.cache.key.SimpleCacheKeyGenerator" />
 		</property>
 	</bean>
 	<bean id="com.liferay.portal.kernel.captcha.CaptchaUtil" class="com.liferay.portal.kernel.captcha.CaptchaUtil">

@@ -381,7 +381,14 @@ public class ListUtil {
 		for (int i = 0; i < list.size(); i++) {
 			Object bean = list.get(i);
 
-			Object value = BeanPropertiesUtil.getObject(bean, param);
+			Object value = null;
+
+			if (Validator.isNull(param)) {
+				value = String.valueOf(bean);
+			}
+			else {
+				value = BeanPropertiesUtil.getObject(bean, param);
+			}
 
 			if (value != null) {
 				sb.append(value);
@@ -389,29 +396,6 @@ public class ListUtil {
 
 			if ((i + 1) != list.size()) {
 				sb.append(delimiter);
-			}
-		}
-
-		return sb.toString();
-	}
-
-	public static String toString(List<String> list) {
-
-		if ((list == null) || list.isEmpty()) {
-			return StringPool.BLANK;
-		}
-
-		StringBundler sb = new StringBundler(2 * list.size() - 1);
-
-		for (int i = 0; i < list.size(); i++) {
-			String value = list.get(i);
-
-			if (value != null) {
-				sb.append(value);
-			}
-
-			if ((i + 1) != list.size()) {
-				sb.append(StringPool.COMMA_AND_SPACE);
 			}
 		}
 

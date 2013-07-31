@@ -24,9 +24,11 @@ if (DDLRecordSetPermission.contains(permissionChecker, recordSet, ActionKeys.ADD
 }
 
 if (Validator.isNull(displayTerms.getKeywords())) {
-	results = DDLRecordLocalServiceUtil.getRecords(recordSet.getRecordSetId(), status, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
-
 	total = DDLRecordLocalServiceUtil.getRecordsCount(recordSet.getRecordSetId(), status);
+
+	searchContainer.setTotal(total);
+
+	results = DDLRecordLocalServiceUtil.getRecords(recordSet.getRecordSetId(), status, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 }
 else {
 	SearchContext searchContext = SearchContextFactory.getInstance(request);
@@ -42,8 +44,9 @@ else {
 	results = DDLUtil.getRecords(hits);
 
 	total = results.size();
+
+	searchContainer.setTotal(total);
 }
 
 pageContext.setAttribute("results", results);
-pageContext.setAttribute("total", total);
 %>

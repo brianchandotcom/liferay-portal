@@ -400,6 +400,7 @@ public class JSONServiceAction extends JSONAction {
 		String methodName = ParamUtil.getString(request, "serviceMethodName");
 
 		StringBundler sb = new StringBundler(5);
+
 		sb.append(getClass().getName());
 		sb.append(StringPool.COLON);
 		sb.append(className);

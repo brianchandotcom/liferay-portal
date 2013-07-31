@@ -202,10 +202,27 @@ if (inlineEdit && (inlineEditSaveURL != null)) {
 
 <script type="text/javascript">
 	CKEDITOR.disableAutoInline = true;
+
+	CKEDITOR.env.isCompatible = true;
 </script>
 
 <aui:script use="<%= modules %>">
 	(function() {
+		var BREAKPOINTS = Liferay.BREAKPOINTS;
+
+		function getToolbarSet(toolbarSet) {
+			var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+
+			if (width < BREAKPOINTS.PHONE) {
+				toolbarSet = 'phone';
+			}
+			else if (width < BREAKPOINTS.TABLET) {
+				toolbarSet = 'tablet';
+			}
+
+			return toolbarSet;
+		}
+
 		function initData() {
 			<c:if test="<%= Validator.isNotNull(initMethod) && !(inlineEdit && (inlineEditSaveURL != null)) %>">
 				ckEditor.setData(
@@ -248,7 +265,7 @@ if (inlineEdit && (inlineEditSaveURL != null)) {
 				customConfig: '<%= PortalUtil.getPathContext() %>/html/js/editor/ckeditor/<%= HtmlUtil.escapeJS(ckEditorConfigFileName) %>?p_l_id=<%= plid %>&p_p_id=<%= HttpUtil.encodeURL(portletId) %>&p_main_path=<%= HttpUtil.encodeURL(mainPath) %>&doAsUserId=<%= HttpUtil.encodeURL(doAsUserId) %>&doAsGroupId=<%= HttpUtil.encodeURL(String.valueOf(doAsGroupId)) %>&contentsLanguageId=<%= HttpUtil.encodeURL(Validator.isNotNull(contentsLanguageId) ? contentsLanguageId : LocaleUtil.toLanguageId(locale)) %>&cssPath=<%= HttpUtil.encodeURL(themeDisplay.getPathThemeCss()) %>&cssClasses=<%= HttpUtil.encodeURL(cssClasses) %>&imagesPath=<%= HttpUtil.encodeURL(themeDisplay.getPathThemeImages()) %>&languageId=<%= HttpUtil.encodeURL(LocaleUtil.toLanguageId(locale)) %>&resizable=<%= resizable %>&inlineEdit=<%= inlineEdit %><%= configParams %>',
 				filebrowserBrowseUrl: '<%= PortalUtil.getPathContext() %>/html/js/editor/ckeditor/editor/filemanager/browser/liferay/browser.html?Connector=<%= connectorURL %><%= fileBrowserParams %>',
 				filebrowserUploadUrl: null,
-				toolbar: '<%= TextFormatter.format(HtmlUtil.escapeJS(toolbarSet), TextFormatter.M) %>'
+				toolbar: getToolbarSet('<%= TextFormatter.format(HtmlUtil.escapeJS(toolbarSet), TextFormatter.M) %>')
 			}
 		);
 

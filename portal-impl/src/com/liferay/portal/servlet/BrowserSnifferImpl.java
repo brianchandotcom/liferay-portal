@@ -278,6 +278,10 @@ public class BrowserSnifferImpl implements BrowserSniffer {
 	public boolean isRtf(HttpServletRequest request) {
 		float majorVersion = getMajorVersion(request);
 
+		if (isChrome(request)) {
+			return true;
+		}
+
 		if (isIe(request) && (majorVersion >= 5.5)) {
 			return true;
 		}
@@ -286,12 +290,20 @@ public class BrowserSnifferImpl implements BrowserSniffer {
 			return true;
 		}
 
-		if (!isMobile(request)) {
-			if (isOpera(request) && (majorVersion >= 10.0)) {
+		if (isOpera(request)) {
+			if (isMobile(request) && (majorVersion >= 10.0)) {
 				return true;
 			}
+			else if (!isMobile(request)) {
+				return true;
+			}
+		}
 
-			if (isSafari(request) && (majorVersion >= 3.0)) {
+		if (isSafari(request)) {
+			if (isMobile(request) && (majorVersion >= 5.0)) {
+				return true;
+			}
+			else if (!isMobile(request) && (majorVersion >= 3.0)) {
 				return true;
 			}
 		}

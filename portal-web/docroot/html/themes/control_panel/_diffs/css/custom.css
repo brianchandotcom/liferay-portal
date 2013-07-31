@@ -211,6 +211,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 				.control-panel-site-selector {
 					font-size: inherit;
 					margin-top: 0;
+					vertical-align: baseline;
 
 					a {
 						text-decoration: none;

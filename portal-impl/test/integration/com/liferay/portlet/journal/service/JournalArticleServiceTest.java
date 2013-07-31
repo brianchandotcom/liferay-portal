@@ -85,6 +85,13 @@ public class JournalArticleServiceTest {
 		testFetchLatestArticle(false, WorkflowConstants.STATUS_APPROVED);
 	}
 
+	@Test
+	public void testFetchLatestArticleNotExpiredWithStatusExpired()
+		throws Exception {
+
+		testFetchLatestArticle(false, WorkflowConstants.STATUS_EXPIRED);
+	}
+
 	protected void testFetchLatestArticle(
 			boolean expireLatestVersion, int status)
 		throws Exception {
@@ -119,10 +126,9 @@ public class JournalArticleServiceTest {
 				article.getResourcePrimKey(), status,
 				status == WorkflowConstants.STATUS_APPROVED);
 
-		Assert.assertNotNull(latestArticle);
-
 		if (expireLatestVersion) {
 			if (status == WorkflowConstants.STATUS_APPROVED) {
+				Assert.assertNotNull(latestArticle);
 				Assert.assertTrue(latestArticle.isApproved());
 				Assert.assertEquals(
 					"Version 1",
@@ -132,6 +138,7 @@ public class JournalArticleServiceTest {
 			else if ((status == WorkflowConstants.STATUS_ANY) ||
 					 (status == WorkflowConstants.STATUS_EXPIRED)) {
 
+				Assert.assertNotNull(latestArticle);
 				Assert.assertTrue(latestArticle.isExpired());
 				Assert.assertEquals(
 					"Version 2",
@@ -143,6 +150,7 @@ public class JournalArticleServiceTest {
 			if ((status == WorkflowConstants.STATUS_ANY) ||
 				(status == WorkflowConstants.STATUS_APPROVED)) {
 
+				Assert.assertNotNull(latestArticle);
 				Assert.assertTrue(latestArticle.isApproved());
 				Assert.assertEquals(
 					"Version 2",
@@ -150,7 +158,7 @@ public class JournalArticleServiceTest {
 				Assert.assertEquals(1.1, latestArticle.getVersion(), 0);
 			}
 			else {
-				Assert.assertNull(article);
+				Assert.assertNull(latestArticle);
 			}
 		}
 

@@ -17,8 +17,6 @@ package com.liferay.portlet.expando.model.impl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -142,12 +140,7 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 			}
 		}
 		catch (Exception e) {
-			if (e instanceof PortalException) {
-				throw (PortalException)e;
-			}
-			else {
-				_log.error(e, e);
-			}
+			throw new RuntimeException(e);
 		}
 	}
 
@@ -218,9 +211,7 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 			}
 		}
 		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
-			}
+			throw new RuntimeException(e);
 		}
 
 		return data;
@@ -236,9 +227,7 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 			return column.getDefaultValue();
 		}
 		catch (Exception e) {
-			_log.error(e, e);
-
-			return null;
+			throw new RuntimeException(e);
 		}
 	}
 
@@ -263,11 +252,7 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 			return column.getTypeSettingsProperties();
 		}
 		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Properties for " + name, e);
-			}
-
-			return new UnicodeProperties(true);
+			throw new RuntimeException(e);
 		}
 	}
 
@@ -327,9 +312,7 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 			}
 		}
 		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
-			}
+			throw new RuntimeException(e);
 		}
 
 		return attributeValues;
@@ -345,9 +328,7 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 			return column.getType();
 		}
 		catch (Exception e) {
-			_log.error(e, e);
-
-			return 0;
+			throw new RuntimeException(e);
 		}
 	}
 
@@ -375,14 +356,14 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 				_companyId, _className, name);
 		}
 		catch (Exception e) {
+			throw new RuntimeException(e);
 		}
 
 		if (column != null) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	@Override
@@ -390,9 +371,8 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 		if (_indexEnabled && (_classPK > 0)) {
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	public void reindex() {
@@ -407,7 +387,7 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 				indexer.reindex(_className, _classPK);
 			}
 			catch (Exception e) {
-				_log.error(e, e);
+				throw new RuntimeException(e);
 			}
 		}
 	}
@@ -446,7 +426,7 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 			}
 		}
 		catch (Exception e) {
-			_log.error(e, e);
+			throw new RuntimeException(e);
 		}
 	}
 
@@ -462,7 +442,7 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 				defaultValue);
 		}
 		catch (Exception e) {
-			_log.error(e, e);
+			throw new RuntimeException(e);
 		}
 	}
 
@@ -499,7 +479,7 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 			}
 		}
 		catch (Exception e) {
-			_log.error(e, e);
+			throw new RuntimeException(e);
 		}
 	}
 
@@ -543,7 +523,7 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 			}
 		}
 		catch (Exception e) {
-			_log.error(e, e);
+			throw new RuntimeException(e);
 		}
 	}
 
@@ -657,9 +637,7 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 				_companyId, _className);
 		}
 		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(e, e);
-			}
+			throw new RuntimeException(e);
 		}
 
 		return columns;
@@ -676,8 +654,6 @@ public class ExpandoBridgeImpl implements ExpandoBridge {
 
 		return table;
 	}
-
-	private static Log _log = LogFactoryUtil.getLog(ExpandoBridgeImpl.class);
 
 	private String _className;
 	private long _classPK;

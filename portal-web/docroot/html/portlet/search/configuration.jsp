@@ -60,7 +60,6 @@
 	<br />
 
 <%
-String namespace = liferayPortletResponse.getNamespace();
 String showOptionsMessage = LanguageUtil.get(pageContext, "show-spell-check-options");
 String hideOptionsMessage = LanguageUtil.get(pageContext, "hide-spell-check-options");
 %>
@@ -69,9 +68,9 @@ String hideOptionsMessage = LanguageUtil.get(pageContext, "hide-spell-check-opti
 
 	<aui:input helpMessage="collated-spell-check-result-enabled-help" id="collatedSpellCheckResultEnabled" name="preferences--collatedSpellCheckResultEnabled--" type="checkbox" value="<%= collatedSpellCheckResultEnabled %>" />
 
-	<div class='options-container <%= !collatedSpellCheckResultEnabled ? "aui-helper-hidden" : "" %>' id='<%= namespace + "collatedSpellCheckResultOptionsContainer" %>'>
+	<div class='options-container <%= !collatedSpellCheckResultEnabled ? "aui-helper-hidden" : "" %>' id="<portlet:namespace />collatedSpellCheckResultOptionsContainer">
 		<liferay-ui:toggle-area align="none" defaultShowContent="<%= collatedSpellCheckResultEnabled %>"
-								hideMessage="<%= hideOptionsMessage %>" id='<%= namespace + "collatedSpellCheckResultOptions" %>'
+								hideMessage="<%= hideOptionsMessage %>" id="<portlet:namespace />collatedSpellCheckResultOptions"
 								showMessage="<%= showOptionsMessage %>">
 			<aui:input disabled="<%= !collatedSpellCheckResultEnabled %>" helpMessage="collated-spell-check-result-display-threshold-help" name="preferences--collatedSpellCheckResultDisplayThreshold--" size="10" type="text" value="<%= collatedSpellCheckResultDisplayThreshold %>" />
 		</liferay-ui:toggle-area>
@@ -79,9 +78,9 @@ String hideOptionsMessage = LanguageUtil.get(pageContext, "hide-spell-check-opti
 
 	<aui:input helpMessage="query-suggestions-enabled-help" id="querySuggestionsEnabled" name="preferences--querySuggestionsEnabled--" type="checkbox" value="<%= querySuggestionsEnabled %>" />
 
-	<div class='options-container <%= !querySuggestionsEnabled ? "aui-helper-hidden" : "" %>' id='<%= namespace + "querySuggestionsOptionsContainer" %>'>
+	<div class='options-container <%= !querySuggestionsEnabled ? "aui-helper-hidden" : "" %>' id="<portlet:namespace />querySuggestionsOptionsContainer">
 		<liferay-ui:toggle-area align="none" defaultShowContent="<%= querySuggestionsEnabled %>"
-								hideMessage="<%= hideOptionsMessage %>" id='<%= namespace + "querySuggestionsOptions" %>'
+								hideMessage="<%= hideOptionsMessage %>" id="<portlet:namespace />querySuggestionsOptions"
 								showMessage="<%= showOptionsMessage %>">
 			<aui:input disabled="<%= !querySuggestionsEnabled %>" name="preferences--querySuggestionsMax--" size="10" type="text" value="<%= querySuggestionsMax %>" />
 
@@ -91,9 +90,9 @@ String hideOptionsMessage = LanguageUtil.get(pageContext, "hide-spell-check-opti
 
 	<aui:input helpMessage="query-indexing-enabled-help" id="queryIndexingEnabled" name="preferences--queryIndexingEnabled--" type="checkbox" value="<%= queryIndexingEnabled %>" />
 
-	<div class='options-container <%= !queryIndexingEnabled ? "aui-helper-hidden" : "" %>' id='<%= namespace + "queryIndexingOptionsContainer" %>'>
+	<div class='options-container <%= !queryIndexingEnabled ? "aui-helper-hidden" : "" %>' id="<portlet:namespace />queryIndexingOptionsContainer">
 		<liferay-ui:toggle-area align="none" defaultShowContent="<%= queryIndexingEnabled %>"
-								hideMessage="<%= hideOptionsMessage %>" id='<%= namespace + "queryIndexingOptions" %>'
+								hideMessage="<%= hideOptionsMessage %>" id="<portlet:namespace />queryIndexingOptions"
 								showMessage="<%= showOptionsMessage %>">
 
 			<aui:input disabled="<%= !queryIndexingEnabled %>" helpMessage="query-indexing-threshold-help" name="preferences--queryIndexingThreshold--" size="10" type="text" value="<%= queryIndexingThreshold %>" />

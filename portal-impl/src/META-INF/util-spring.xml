@@ -80,16 +80,16 @@
 					<bean class="com.liferay.portal.cache.key.HashCodeCacheKeyGenerator" />
 				</entry>
 				<entry key="com.liferay.portal.kernel.servlet.filters.invoker.InvokerFilter">
-					<bean class="com.liferay.portal.cache.key.HashCodeCacheKeyGenerator" />
+					<bean class="com.liferay.portal.cache.key.SimpleCacheKeyGenerator" />
 				</entry>
-				<entry key="com.liferay.portal.language.LanguageResources">
-					<bean class="com.liferay.portal.cache.key.HashCodeCacheKeyGenerator" />
+				<entry key="com.liferay.portal.servlet.filters.aggregate.AggregateFilter">
+					<bean class="com.liferay.portal.cache.key.SimpleCacheKeyGenerator" />
 				</entry>
-				<entry key="com.liferay.portal.servlet.ComboServlet">
-					<bean class="com.liferay.portal.cache.key.HashCodeCacheKeyGenerator" />
+				<entry key="com.liferay.portal.servlet.filters.dynamiccss.DynamicCSSFilter">
+					<bean class="com.liferay.portal.cache.key.SimpleCacheKeyGenerator" />
 				</entry>
 				<entry key="com.liferay.portal.servlet.filters.strip.StripFilter">
-					<bean class="com.liferay.portal.cache.key.HashCodeCacheKeyGenerator" />
+					<bean class="com.liferay.portal.cache.key.SimpleCacheKeyGenerator" />
 				</entry>
 			</map>
 		</property>

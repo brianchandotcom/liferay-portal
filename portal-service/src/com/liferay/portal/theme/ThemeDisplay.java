@@ -416,9 +416,8 @@ public class ThemeDisplay
 		if (_scopeGroup == null) {
 			return StringPool.BLANK;
 		}
-		else {
-			return _scopeGroup.getDescriptiveName();
-		}
+
+		return _scopeGroup.getDescriptiveName();
 	}
 
 	public Layout getScopeLayout() throws PortalException, SystemException {
@@ -467,9 +466,8 @@ public class ThemeDisplay
 		if (_siteGroup == null) {
 			return StringPool.BLANK;
 		}
-		else {
-			return _siteGroup.getDescriptiveName();
-		}
+
+		return _siteGroup.getDescriptiveName();
 	}
 
 	public Theme getTheme() {
@@ -650,9 +648,8 @@ public class ThemeDisplay
 		if (getUserId() == getRealUserId()) {
 			return false;
 		}
-		else {
-			return true;
-		}
+
+		return true;
 	}
 
 	public boolean isIncludedJs(String js) {
@@ -663,9 +660,8 @@ public class ThemeDisplay
 
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	public boolean isIncludePortletCssJs() {

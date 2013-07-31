@@ -37,118 +37,114 @@ if (PropsValues.DOCKBAR_ADMINISTRATIVE_LINKS_SHOW_IN_POP_UP) {
 <c:choose>
 	<c:when test="<%= themeDisplay.isSignedIn() %>">
 		<aui:nav-item anchorCssClass="user-avatar-link" cssClass='<%= themeDisplay.isImpersonated() ? "user-avatar impersonating-user" : "user-avatar" %>' dropdown="<%= true %>" id="userAvatar" label="<%= userName %>">
-			<c:choose>
-				<c:when test="<%= themeDisplay.isImpersonated() %>">
+			<c:if test="<%= themeDisplay.isImpersonated() %>">
+
+				<%
+				String impersonatingUserLabel = "you-are-impersonating-the-guest-user";
+
+				if (themeDisplay.isSignedIn()) {
+					impersonatingUserLabel = LanguageUtil.format(pageContext, "you-are-impersonating-x", new Object[] {HtmlUtil.escape(user.getFullName())});
+				}
+				%>
+
+				<div class="alert alert-info"><%= impersonatingUserLabel %></div>
+
+				<liferay-util:buffer var="leaveImpersonationLabel">
+					<liferay-ui:message key="be-yourself-again" /> (<%= HtmlUtil.escape(realUser.getFullName()) %>)
+				</liferay-util:buffer>
+
+				<aui:nav-item href="<%= PortalUtil.getLayoutURL(layout, themeDisplay, false) %>" label="<%= leaveImpersonationLabel %>" />
+
+				<%
+				Locale realUserLocale = realUser.getLocale();
+				Locale userLocale = user.getLocale();
+				%>
+
+				<c:if test="<%= !realUserLocale.equals(userLocale) %>">
 
 					<%
-					String impersonatingUserLabel = "you-are-impersonating-the-guest-user";
+					String doAsUserLanguageId = null;
+					String changeLanguageMessage = null;
 
-					if (themeDisplay.isSignedIn()) {
-						impersonatingUserLabel = LanguageUtil.format(pageContext, "you-are-impersonating-x", new Object[] {HtmlUtil.escape(user.getFullName())});
+					if (locale.getLanguage().equals(realUserLocale.getLanguage()) && locale.getCountry().equals(realUserLocale.getCountry())) {
+						doAsUserLanguageId = userLocale.getLanguage() + "_" + userLocale.getCountry();
+						changeLanguageMessage = LanguageUtil.format(realUserLocale, "use-x's-preferred-language-(x)", new String[] {HtmlUtil.escape(user.getFullName()), userLocale.getDisplayLanguage(realUserLocale)});
+					}
+					else {
+						doAsUserLanguageId = realUserLocale.getLanguage() + "_" + realUserLocale.getCountry();
+						changeLanguageMessage = LanguageUtil.format(realUserLocale, "use-your-preferred-language-(x)", realUserLocale.getDisplayLanguage(realUserLocale));
 					}
 					%>
 
-					<div class="alert alert-info"><%= impersonatingUserLabel %></div>
+					<aui:nav-item cssClass="current-user-language" href='<%= HttpUtil.setParameter(PortalUtil.getCurrentURL(request), "doAsUserLanguageId", doAsUserLanguageId) %>' label="<%= changeLanguageMessage %>" />
+				</c:if>
+			</c:if>
+			<c:if test="<%= Validator.isNotNull(themeDisplay.getURLMyAccount()) %>">
 
-					<liferay-util:buffer var="leaveImpersonationLabel">
-						<liferay-ui:message key="be-yourself-again" /> (<%= HtmlUtil.escape(realUser.getFullName()) %>)
-					</liferay-util:buffer>
+				<%
+				List<Group> mySiteGroups = user.getMySiteGroups(new String[] {User.class.getName()}, false, QueryUtil.ALL_POS);
 
-					<aui:nav-item href="<%= PortalUtil.getLayoutURL(layout, themeDisplay, false) %>" label="<%= leaveImpersonationLabel %>" />
+				for (Group mySiteGroup : mySiteGroups) {
+				%>
 
-					<%
-					Locale realUserLocale = realUser.getLocale();
-					Locale userLocale = user.getLocale();
-					%>
-
-					<c:if test="<%= !realUserLocale.equals(userLocale) %>">
+					<c:if test="<%= mySiteGroup.getPublicLayoutsPageCount() > 0 %>">
 
 						<%
-						String doAsUserLanguageId = null;
-						String changeLanguageMessage = null;
+						PortletURL myProfileURL = new PortletURLImpl(request, PortletKeys.SITE_REDIRECTOR, plid, PortletRequest.ACTION_PHASE);
 
-						if (locale.getLanguage().equals(realUserLocale.getLanguage()) && locale.getCountry().equals(realUserLocale.getCountry())) {
-							doAsUserLanguageId = userLocale.getLanguage() + "_" + userLocale.getCountry();
-							changeLanguageMessage = LanguageUtil.format(realUserLocale, "use-x's-preferred-language-(x)", new String[] {HtmlUtil.escape(user.getFullName()), userLocale.getDisplayLanguage(realUserLocale)});
-						}
-						else {
-							doAsUserLanguageId = realUserLocale.getLanguage() + "_" + realUserLocale.getCountry();
-							changeLanguageMessage = LanguageUtil.format(realUserLocale, "use-your-preferred-language-(x)", realUserLocale.getDisplayLanguage(realUserLocale));
-						}
+						myProfileURL.setParameter("struts_action", "/my_sites/view");
+						myProfileURL.setParameter("groupId", String.valueOf(mySiteGroup.getGroupId()));
+						myProfileURL.setParameter("privateLayout", Boolean.FALSE.toString());
+						myProfileURL.setPortletMode(PortletMode.VIEW);
+						myProfileURL.setWindowState(WindowState.NORMAL);
 						%>
 
-						<aui:nav-item cssClass="current-user-language" href='<%= HttpUtil.setParameter(PortalUtil.getCurrentURL(request), "doAsUserLanguageId", doAsUserLanguageId) %>' label="<%= changeLanguageMessage %>" />
-					</c:if>
-				</c:when>
-				<c:otherwise>
-					<c:if test="<%= Validator.isNotNull(themeDisplay.getURLMyAccount()) %>">
+						<li class="my-sites-menu public-site">
+							<a href="<%= myProfileURL.toString() %>">
+								<span class="site-name"><liferay-ui:message key="my-profile" /></span>
 
-						<%
-						List<Group> mySiteGroups = user.getMySiteGroups(new String[] {User.class.getName()}, false, QueryUtil.ALL_POS);
-
-						for (Group mySiteGroup : mySiteGroups) {
-						%>
-
-							<c:if test="<%= mySiteGroup.getPublicLayoutsPageCount() > 0 %>">
-
-								<%
-								PortletURL myProfileURL = new PortletURLImpl(request, PortletKeys.SITE_REDIRECTOR, plid, PortletRequest.ACTION_PHASE);
-
-								myProfileURL.setParameter("struts_action", "/my_sites/view");
-								myProfileURL.setParameter("groupId", String.valueOf(mySiteGroup.getGroupId()));
-								myProfileURL.setParameter("privateLayout", Boolean.FALSE.toString());
-								myProfileURL.setPortletMode(PortletMode.VIEW);
-								myProfileURL.setWindowState(WindowState.NORMAL);
-								%>
-
-								<li class="my-sites-menu public-site">
-									<a href="<%= myProfileURL.toString() %>">
-										<span class="site-name"><liferay-ui:message key="my-profile" /></span>
-
-										<span class="badge site-type"><liferay-ui:message key="public" /></span>
-									</a>
-								</li>
-							</c:if>
-
-							<c:if test="<%= mySiteGroup.getPrivateLayoutsPageCount() > 0 %>">
-
-								<%
-								PortletURL myDashboardURL = new PortletURLImpl(request, PortletKeys.SITE_REDIRECTOR, plid, PortletRequest.ACTION_PHASE);
-
-								myDashboardURL.setParameter("struts_action", "/my_sites/view");
-								myDashboardURL.setParameter("groupId", String.valueOf(mySiteGroup.getGroupId()));
-								myDashboardURL.setParameter("privateLayout", Boolean.TRUE.toString());
-								myDashboardURL.setPortletMode(PortletMode.VIEW);
-								myDashboardURL.setWindowState(WindowState.NORMAL);
-								%>
-
-								<li class="my-sites-menu private-site">
-									<a href="<%= myDashboardURL %>">
-										<span class="site-name"><liferay-ui:message key="my-dashboard" /></span>
-
-										<span class="badge site-type"><liferay-ui:message key="private" /></span>
-									</a>
-								</li>
-							</c:if>
-
-						<%
-						}
-						%>
-
-						<%
-						String myAccountURL = themeDisplay.getURLMyAccount().toString();
-
-						myAccountURL = HttpUtil.setParameter(myAccountURL, "controlPanelCategory", PortletCategoryKeys.MY);
-						%>
-
-						<aui:nav-item anchorCssClass='<%= themeDisplay.isImpersonated() ? "" : useDialog %>' href="<%= myAccountURL %>" iconClass="icon-user" label="my-account" title="my-account" />
+								<span class="badge site-type"><liferay-ui:message key="public" /></span>
+							</a>
+						</li>
 					</c:if>
 
-					<c:if test="<%= themeDisplay.isShowSignOutIcon() %>">
-						<aui:nav-item cssClass="sign-out" href="<%= themeDisplay.getURLSignOut() %>" iconClass="icon-off" label="sign-out" />
+					<c:if test="<%= mySiteGroup.getPrivateLayoutsPageCount() > 0 %>">
+
+						<%
+						PortletURL myDashboardURL = new PortletURLImpl(request, PortletKeys.SITE_REDIRECTOR, plid, PortletRequest.ACTION_PHASE);
+
+						myDashboardURL.setParameter("struts_action", "/my_sites/view");
+						myDashboardURL.setParameter("groupId", String.valueOf(mySiteGroup.getGroupId()));
+						myDashboardURL.setParameter("privateLayout", Boolean.TRUE.toString());
+						myDashboardURL.setPortletMode(PortletMode.VIEW);
+						myDashboardURL.setWindowState(WindowState.NORMAL);
+						%>
+
+						<li class="my-sites-menu private-site">
+							<a href="<%= myDashboardURL %>">
+								<span class="site-name"><liferay-ui:message key="my-dashboard" /></span>
+
+								<span class="badge site-type"><liferay-ui:message key="private" /></span>
+							</a>
+						</li>
 					</c:if>
-				</c:otherwise>
-			</c:choose>
+
+				<%
+				}
+				%>
+
+				<%
+				String myAccountURL = themeDisplay.getURLMyAccount().toString();
+
+				myAccountURL = HttpUtil.setParameter(myAccountURL, "controlPanelCategory", PortletCategoryKeys.MY);
+				%>
+
+				<aui:nav-item anchorCssClass='<%= themeDisplay.isImpersonated() ? "" : useDialog %>' href="<%= myAccountURL %>" iconClass="icon-user" label="my-account" title="my-account" />
+			</c:if>
+
+			<c:if test="<%= themeDisplay.isShowSignOutIcon() %>">
+				<aui:nav-item cssClass="sign-out" href="<%= themeDisplay.getURLSignOut() %>" iconClass="icon-off" label="sign-out" />
+			</c:if>
 		</aui:nav-item>
 	</c:when>
 	<c:otherwise>

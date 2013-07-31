@@ -137,4 +137,52 @@ public class ListUtilTest {
 		Assert.assertEquals(expectedList, ListUtil.remove(list, removeList));
 	}
 
+	@Test
+	public void testToStringIntegerList() throws Exception {
+		List<Integer> list = new ArrayList<Integer>();
+
+		list.add(111);
+		list.add(222);
+		list.add(333);
+		list.add(444);
+
+		String expectedString = "111, 222, 333, 444";
+
+		Assert.assertEquals(
+			expectedString,
+			ListUtil.toString(list, (String)null, StringPool.COMMA_AND_SPACE));
+	}
+
+	@Test
+	public void testToStringLongList() throws Exception {
+		List<Long> list = new ArrayList<Long>();
+
+		list.add(111L);
+		list.add(222L);
+		list.add(333L);
+		list.add(444L);
+
+		String expectedString = "111, 222, 333, 444";
+
+		Assert.assertEquals(
+			expectedString,
+			ListUtil.toString(list, (String)null, StringPool.COMMA_AND_SPACE));
+	}
+
+	@Test
+	public void testToStringStringList() throws Exception {
+		List<String> list = new ArrayList<String>();
+
+		list.add("aaa");
+		list.add("bbb");
+		list.add("ccc");
+		list.add("ddd");
+
+		String expectedString = "aaa, bbb, ccc, ddd";
+
+		Assert.assertEquals(
+			expectedString,
+			ListUtil.toString(list, (String)null, StringPool.COMMA_AND_SPACE));
+	}
+
 }

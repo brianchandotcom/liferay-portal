@@ -1,3 +1,4 @@
+<%@ page import="com.liferay.portal.kernel.staging.StagingUtil" %>
 <%--
 /**
  * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
@@ -22,6 +23,7 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_input_
 String eventName = randomNamespace + "selectAsset";
 
 long assetEntryId = GetterUtil.getLong((String)request.getAttribute("liferay-ui:input-asset-links:assetEntryId"));
+String className = (String)request.getAttribute("liferay-ui:input-asset-links:className");
 
 List<AssetLink> assetLinks = new ArrayList<AssetLink>();
 
@@ -72,11 +74,15 @@ else {
 
 long controlPanelPlid = PortalUtil.getControlPanelPlid(company.getCompanyId());
 
+Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
+
+AssetRendererFactory originalAssetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(className);
+
+boolean isStagedSource = group.isStagedPortlet(originalAssetRendererFactory.getPortletId());
+
 PortletURL assetBrowserURL = PortletURLFactoryUtil.create(request, PortletKeys.ASSET_BROWSER, controlPanelPlid, PortletRequest.RENDER_PHASE);
 
 assetBrowserURL.setParameter("struts_action", "/asset_browser/view");
-assetBrowserURL.setParameter("groupId", String.valueOf(scopeGroupId));
-assetBrowserURL.setParameter("selectedGroupIds", themeDisplay.getCompanyGroupId() + "," + scopeGroupId);
 assetBrowserURL.setParameter("eventName", eventName);
 assetBrowserURL.setPortletMode(PortletMode.VIEW);
 assetBrowserURL.setWindowState(LiferayWindowState.POP_UP);
@@ -91,6 +97,19 @@ assetBrowserURL.setWindowState(LiferayWindowState.POP_UP);
 				assetBrowserURL.setParameter("refererAssetEntryId", String.valueOf(assetEntryId));
 			}
 
+			long groupId = scopeGroupId;
+
+			if (isStagedSource) {
+				groupId = group.getLiveGroupId();
+			}
+
+			List<Long> groupIds = new ArrayList<Long>();
+
+			groupIds.add(themeDisplay.getCompanyGroupId());
+			groupIds.add(groupId);
+
+			assetBrowserURL.setParameter("groupId", String.valueOf(groupId));
+			assetBrowserURL.setParameter("selectedGroupIds", StringUtil.merge(groupIds));
 			assetBrowserURL.setParameter("typeSelection", assetRendererFactory.getClassName());
 
 			Map<String, Object> data = new HashMap<String, Object>();

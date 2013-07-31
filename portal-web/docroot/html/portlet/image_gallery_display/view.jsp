@@ -241,21 +241,42 @@ long portletDisplayDDMTemplateId = PortletDisplayTemplateUtil.getPortletDisplayT
 			<c:when test='<%= topLink.equals("mine") || topLink.equals("recent") %>'>
 
 				<%
-				long groupImagesUserId = 0;
+				long creatorUserId = 0;
 
 				if (topLink.equals("mine") && themeDisplay.isSignedIn()) {
-					groupImagesUserId = user.getUserId();
+					creatorUserId = user.getUserId();
 				}
 
 				SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, portletURL, null, null);
 
 				String[] mediaGalleryMimeTypes = DLUtil.getMediaGalleryMimeTypes(portletPreferences, renderRequest);
 
-				int total = DLAppServiceUtil.getGroupFileEntriesCount(repositoryId, groupImagesUserId, defaultFolderId, mediaGalleryMimeTypes, status);
+				Hits hits = DLAppServiceUtil.search(repositoryId, creatorUserId, defaultFolderId, mediaGalleryMimeTypes, status, searchContainer.getStart(), searchContainer.getEnd());
 
-				searchContainer.setTotal(total);
+				searchContainer.setTotal(hits.getLength());
 
-				List results = DLAppServiceUtil.getGroupFileEntries(repositoryId, groupImagesUserId, defaultFolderId, mediaGalleryMimeTypes, status, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+				List results = new ArrayList();
+
+				for (int i = 0; i < hits.getDocs().length; i++) {
+					Document doc = hits.doc(i);
+
+					long fileEntryId = GetterUtil.getLong(doc.get(Field.ENTRY_CLASS_PK));
+
+					FileEntry fileEntry = null;
+
+					try {
+						fileEntry = DLAppLocalServiceUtil.getFileEntry(fileEntryId);
+					}
+					catch (Exception e) {
+						if (_log.isWarnEnabled()) {
+							_log.warn("Documents and Media search index is stale and contains file entry {" + fileEntryId + "}");
+						}
+
+						continue;
+					}
+
+					results.add(fileEntry);
+				}
 
 				searchContainer.setResults(results);
 
@@ -282,3 +303,7 @@ long portletDisplayDDMTemplateId = PortletDisplayTemplateUtil.getPortletDisplayT
 		</c:choose>
 	</c:otherwise>
 </c:choose>
+
+<%!
+private static Log _log = LogFactoryUtil.getLog("portal-web.docroot.html.portlet.image_gallery_display.view_jsp");
+%>

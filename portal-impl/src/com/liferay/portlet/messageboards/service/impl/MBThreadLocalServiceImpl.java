@@ -21,12 +21,17 @@ import com.liferay.portal.kernel.increment.BufferedIncrement;
 import com.liferay.portal.kernel.increment.NumberIncrement;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
@@ -145,10 +150,10 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 		// Indexer
 
-		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+		Indexer messageIndexer = IndexerRegistryUtil.nullSafeGetIndexer(
 			MBMessage.class);
 
-		indexer.delete(thread);
+		messageIndexer.delete(thread);
 
 		// Attachments
 
@@ -250,6 +255,13 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 		trashEntryLocalService.deleteEntry(
 			MBThread.class.getName(), thread.getThreadId());
+
+		// Indexer
+
+		Indexer threadIndexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			MBThread.class);
+
+		threadIndexer.delete(thread);
 
 		// Thread
 
@@ -708,6 +720,13 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 				category.getCompanyId(), category.getCategoryId());
 		}
 
+		// Indexer
+
+		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			MBThread.class);
+
+		indexer.reindex(thread);
+
 		return thread;
 	}
 
@@ -791,6 +810,55 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		updateStatus(
 			userId, threadId, trashEntry.getStatus(),
 			WorkflowConstants.STATUS_ANY);
+	}
+
+	@Override
+	public Hits search(
+			long groupId, long userId, long creatorUserId, int status,
+			int start, int end)
+		throws PortalException, SystemException {
+
+		return search(groupId, userId, creatorUserId, 0, 0, status, start, end);
+	}
+
+	@Override
+	public Hits search(
+			long groupId, long userId, long creatorUserId, long startDate,
+			long endDate, int status, int start, int end)
+		throws PortalException, SystemException {
+
+		Indexer indexer = IndexerRegistryUtil.getIndexer(
+			MBThread.class.getName());
+
+		SearchContext searchContext = new SearchContext();
+
+		if ((endDate > 0) && (startDate > 0)) {
+			searchContext.setAttribute("endDate", endDate);
+			searchContext.setAttribute("startDate", startDate);
+		}
+
+		searchContext.setAttribute("paginationType", "none");
+		searchContext.setAttribute(Field.STATUS, status);
+
+		if (creatorUserId > 0) {
+			searchContext.setAttribute(
+				"participantId", String.valueOf(creatorUserId));
+		}
+
+		Group group = groupLocalService.getGroup(groupId);
+
+		searchContext.setCompanyId(group.getCompanyId());
+		searchContext.setEnd(end);
+
+		searchContext.setGroupIds(new long[]{groupId});
+
+		Sort sort = new Sort("lastPostDate", true);
+
+		searchContext.setSorts(new Sort[] {sort});
+		searchContext.setStart(start);
+		searchContext.setUserId(userId);
+
+		return indexer.search(searchContext);
 	}
 
 	@Override
@@ -898,6 +966,14 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			MBUtil.updateCategoryThreadCount(
 				category.getCompanyId(), category.getCategoryId());
 		}
+
+		//Indexer
+
+		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			MBThread.class);
+
+		indexer.reindex(oldThread);
+		indexer.reindex(message.getThread());
 
 		return thread;
 	}
@@ -1010,6 +1086,13 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		else {
 			updateDependentStatus(thread.getGroupId(), threadId, status);
 		}
+
+		// Index
+
+		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			MBThread.class);
+
+		indexer.reindex(thread);
 
 		return thread;
 	}

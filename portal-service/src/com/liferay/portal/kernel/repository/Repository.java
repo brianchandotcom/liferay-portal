@@ -269,6 +269,14 @@ public interface Repository {
 			long fileEntryId, String version, ServiceContext serviceContext)
 		throws PortalException, SystemException;
 
+	public Hits search(long creatorUserId, int status, int start, int end)
+		throws PortalException, SystemException;
+
+	public Hits search(
+			long creatorUserId, long folderId, String[] mimeTypes, int status,
+			int start, int end)
+		throws PortalException, SystemException;
+
 	public Hits search(SearchContext searchContext) throws SearchException;
 
 	public Hits search(SearchContext searchContext, Query query)

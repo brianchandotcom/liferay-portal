@@ -4011,6 +4011,41 @@ public class JournalArticleLocalServiceImpl
 		}
 	}
 
+	@Override
+	public Hits search(
+			long groupId, long userId, long creatorUserId, int status,
+			int start, int end)
+		throws PortalException, SystemException {
+
+		Indexer indexer = IndexerRegistryUtil.getIndexer(
+			JournalArticle.class.getName());
+
+		SearchContext searchContext = new SearchContext();
+
+		searchContext.setAttribute("paginationType", "none");
+		searchContext.setAttribute(Field.STATUS, status);
+
+		if (creatorUserId > 0) {
+			searchContext.setAttribute(
+				Field.USER_ID, String.valueOf(creatorUserId));
+		}
+
+		Group group = groupLocalService.getGroup(groupId);
+
+		searchContext.setCompanyId(group.getCompanyId());
+		searchContext.setEnd(end);
+
+		searchContext.setGroupIds(new long[]{groupId});
+
+		Sort sort = new Sort("modified", true);
+
+		searchContext.setSorts(new Sort[] {sort});
+		searchContext.setStart(start);
+		searchContext.setUserId(userId);
+
+		return indexer.search(searchContext);
+	}
+
 	/**
 	 * Returns the number of web content articles matching the parameters,
 	 * including a keywords parameter for matching with the article's ID, title,

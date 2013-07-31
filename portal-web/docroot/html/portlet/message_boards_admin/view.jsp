@@ -428,14 +428,35 @@ if ((category != null) && layout.isTypeControlPanel()) {
 
 					calendar.add(Calendar.DATE, -offset);
 
-					total = MBThreadServiceUtil.getGroupThreadsCount(scopeGroupId, groupThreadsUserId, calendar.getTime(), WorkflowConstants.STATUS_APPROVED);
+					Date endDate = new Date();
+					Date startDate = calendar.getTime();
 
-					searchContainer.setTotal(total);
+					Hits hits = MBThreadServiceUtil.search(scopeGroupId, groupThreadsUserId, startDate.getTime(), endDate.getTime(), WorkflowConstants.STATUS_APPROVED, searchContainer.getStart(), searchContainer.getEnd());
 
-					results = MBThreadServiceUtil.getGroupThreads(scopeGroupId, groupThreadsUserId, calendar.getTime(), WorkflowConstants.STATUS_APPROVED, searchContainer.getStart(), searchContainer.getEnd());
+					searchContainer.setTotal(hits.getLength());
+
+					for (int i = 0; i < hits.getDocs().length; i++) {
+						Document doc = hits.doc(i);
+
+						long classPK = GetterUtil.getLong(doc.get(Field.ENTRY_CLASS_PK));
+
+						MBThread thread = null;
+
+						try {
+							thread = MBThreadLocalServiceUtil.getMBThread(classPK);
+						}
+						catch (Exception e) {
+							if (_log.isWarnEnabled()) {
+								_log.warn("MB Message search index is stale and contains message {" + classPK + "}");
+							}
+
+							continue;
+						}
+
+						results.add(thread);
+					}
 
 					pageContext.setAttribute("results", results);
-					pageContext.setAttribute("total", total);
 					%>
 
 				</liferay-ui:search-container-results>

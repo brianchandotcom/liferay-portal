@@ -811,6 +811,25 @@ public class DLFileEntryLocalServiceWrapper implements DLFileEntryLocalService,
 	}
 
 	@Override
+	public com.liferay.portal.kernel.search.Hits search(long groupId,
+		long userId, long creatorUserId, int status, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dlFileEntryLocalService.search(groupId, userId, creatorUserId,
+			status, start, end);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.search.Hits search(long groupId,
+		long userId, long creatorUserId, long folderId,
+		java.lang.String[] mimeTypes, int status, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dlFileEntryLocalService.search(groupId, userId, creatorUserId,
+			folderId, mimeTypes, status, start, end);
+	}
+
+	@Override
 	public void unlockFileEntry(long fileEntryId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_dlFileEntryLocalService.unlockFileEntry(fileEntryId);

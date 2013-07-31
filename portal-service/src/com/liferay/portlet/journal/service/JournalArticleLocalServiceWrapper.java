@@ -2769,6 +2769,15 @@ public class JournalArticleLocalServiceWrapper
 			start, end, sort);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.search.Hits search(long groupId,
+		long userId, long creatorUserId, int status, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _journalArticleLocalService.search(groupId, userId,
+			creatorUserId, status, start, end);
+	}
+
 	/**
 	* Returns the number of web content articles matching the parameters,
 	* including a keywords parameter for matching with the article's ID, title,

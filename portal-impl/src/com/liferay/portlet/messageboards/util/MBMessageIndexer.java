@@ -129,13 +129,7 @@ public class MBMessageIndexer extends BaseIndexer {
 			BooleanQuery contextQuery, SearchContext searchContext)
 		throws Exception {
 
-		int status = GetterUtil.getInteger(
-			searchContext.getAttribute(Field.STATUS),
-			WorkflowConstants.STATUS_APPROVED);
-
-		if (status != WorkflowConstants.STATUS_ANY) {
-			contextQuery.addRequiredTerm(Field.STATUS, status);
-		}
+		addStatus(contextQuery, searchContext);
 
 		boolean discussion = GetterUtil.getBoolean(
 			searchContext.getAttribute("discussion"), false);
@@ -155,29 +149,26 @@ public class MBMessageIndexer extends BaseIndexer {
 
 		long[] categoryIds = searchContext.getCategoryIds();
 
-		if ((categoryIds == null) || (categoryIds.length == 0)) {
-			return;
-		}
+		if ((categoryIds != null) && (categoryIds.length > 0) &&
+			(categoryIds[0] !=
+				MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID)) {
 
-		if (categoryIds[0] == MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
-			return;
-		}
+			BooleanQuery categoriesQuery = BooleanQueryFactoryUtil.create(
+				searchContext);
 
-		BooleanQuery categoriesQuery = BooleanQueryFactoryUtil.create(
-			searchContext);
+			for (long categoryId : categoryIds) {
+				try {
+					MBCategoryServiceUtil.getCategory(categoryId);
+				}
+				catch (Exception e) {
+					continue;
+				}
 
-		for (long categoryId : categoryIds) {
-			try {
-				MBCategoryServiceUtil.getCategory(categoryId);
+				categoriesQuery.addTerm(Field.CATEGORY_ID, categoryId);
 			}
-			catch (Exception e) {
-				continue;
-			}
 
-			categoriesQuery.addTerm(Field.CATEGORY_ID, categoryId);
+			contextQuery.add(categoriesQuery, BooleanClauseOccur.MUST);
 		}
-
-		contextQuery.add(categoriesQuery, BooleanClauseOccur.MUST);
 	}
 
 	@Override

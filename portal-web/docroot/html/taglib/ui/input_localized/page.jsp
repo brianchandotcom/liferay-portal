@@ -251,7 +251,6 @@ List<String> languageIds = new ArrayList<String>();
 <c:if test="<%= (availableLocales.length > 1) && Validator.isNull(languageId) %>">
 	<aui:script use="liferay-input-localized">
 		var defaultLanguageId = themeDisplay.getDefaultLanguageId();
-		var userLanguageId = themeDisplay.getLanguageId();
 
 		var available = {};
 

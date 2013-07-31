@@ -1,5 +1,5 @@
 <definition>
-	<var name="workflowAssetType" value="Web Content Article" />
+	<var name="workflowAssetType" value="Web Content" />
 	<set-up>
 		<execute macro="User#firstLoginPG" />
 
@@ -89,7 +89,7 @@
 			<var name="workflowAssetContent" value="${webContentContent}" />
 			<var name="workflowAssetTitle" value="${webContentTitle}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
-			<var name="workflowAssetTypeCAPS" value="WEB CONTENT ARTICLE" />
+			<var name="workflowAssetTypeCAPS" value="WEB CONTENT" />
 			<var name="workflowDefinition" value="Single Approver" />
 			<var name="workflowTask" value="Review" />
 		</execute>
@@ -159,7 +159,7 @@
 			<var name="workflowAssetContent" value="${webContentContent}" />
 			<var name="workflowAssetTitle" value="${webContentTitle}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
-			<var name="workflowAssetTypeCAPS" value="WEB CONTENT ARTICLE" />
+			<var name="workflowAssetTypeCAPS" value="WEB CONTENT" />
 			<var name="workflowDefinition" value="Single Approver" />
 			<var name="workflowTask" value="Review" />
 		</execute>
@@ -262,7 +262,7 @@
 			<var name="workflowAssetContent" value="${webContentContent}" />
 			<var name="workflowAssetTitle" value="${webContentTitle}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
-			<var name="workflowAssetTypeCAPS" value="WEB CONTENT ARTICLE" />
+			<var name="workflowAssetTypeCAPS" value="WEB CONTENT" />
 			<var name="workflowDefinition" value="Single Approver" />
 			<var name="workflowTask" value="Approved" />
 		</execute>

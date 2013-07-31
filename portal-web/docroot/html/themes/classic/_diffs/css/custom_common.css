@@ -603,7 +603,7 @@
 
 	/* ---------- Tablet and Below ---------- */
 
-	@media (max-width: 979px) {
+	@include respond-to(tablet, phone) {
 		.taglib-form-navigator {
 			.form-navigator-content {
 				clear: both;

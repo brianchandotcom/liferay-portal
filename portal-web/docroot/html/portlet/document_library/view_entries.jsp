@@ -593,6 +593,10 @@ for (int i = 0; i < results.size(); i++) {
 						if (columnName.equals("size")) {
 							row.addText("--");
 						}
+
+						if (columnName.equals("status")) {
+							row.addText("--");
+						}
 					}
 
 					resultRows.add(row);

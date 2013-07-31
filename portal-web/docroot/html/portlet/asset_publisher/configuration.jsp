@@ -326,14 +326,6 @@ String emailBodyParam = emailParam + "Body_" + currentLanguageId;
 		submitForm(document.<portlet:namespace />fm);
 	}
 
-	function <portlet:namespace />selectAsset(assetEntryId, assetClassName, assetType, assetEntryTitle, groupName) {
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = 'add-selection';
-		document.<portlet:namespace />fm.<portlet:namespace />assetEntryId.value = assetEntryId;
-		document.<portlet:namespace />fm.<portlet:namespace />assetEntryType.value = assetClassName;
-
-		submitForm(document.<portlet:namespace />fm);
-	}
-
 	Liferay.provide(
 		window,
 		'<portlet:namespace />saveSelectBoxes',

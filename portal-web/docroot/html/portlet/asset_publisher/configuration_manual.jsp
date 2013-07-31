@@ -23,6 +23,8 @@ String redirect = (String)request.getAttribute("configuration.jsp-redirect");
 String rootPortletId = (String)request.getAttribute("configuration.jsp-rootPortletId");
 String selectScope = (String)request.getAttribute("configuration.jsp-selectScope");
 String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle");
+
+String eventName = "_" + HtmlUtil.escapeJS(portletResource) + "_selectAsset";
 %>
 
 <liferay-ui:tabs
@@ -119,9 +121,9 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 							PortletURL assetBrowserURL = PortletURLFactoryUtil.create(request, PortletKeys.ASSET_BROWSER, PortalUtil.getControlPanelPlid(company.getCompanyId()), PortletRequest.RENDER_PHASE);
 
 							assetBrowserURL.setParameter("struts_action", "/asset_browser/view");
+							assetBrowserURL.setParameter("eventName", eventName);
 							assetBrowserURL.setParameter("groupId", String.valueOf(groupId));
 							assetBrowserURL.setParameter("selectedGroupIds", String.valueOf(groupId));
-							assetBrowserURL.setParameter("callback", liferayPortletResponse.getNamespace() + "selectAsset");
 							assetBrowserURL.setPortletMode(PortletMode.VIEW);
 							assetBrowserURL.setWindowState(LiferayWindowState.POP_UP);
 
@@ -132,10 +134,21 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 
 								assetBrowserURL.setParameter("typeSelection", curRendererFactory.getClassName());
 
-								String taglibURL = "javascript:Liferay.Util.openWindow({id: '" + liferayPortletResponse.getNamespace() + "selectAsset', title: '" + LanguageUtil.format(pageContext, "select-x", curRendererFactory.getTypeName(locale, false)) + "', uri:'" + HtmlUtil.escapeURL(assetBrowserURL.toString()) + "'});";
+								Map<String, Object> data = new HashMap<String, Object>();
+
+								data.put("groupid", String.valueOf(groupId));
+								data.put("href", assetBrowserURL.toString());
+								data.put("title", LanguageUtil.format(pageContext, "select-x", curRendererFactory.getTypeName(locale, false)));
+								data.put("type", curRendererFactory.getTypeName(locale, false));
 							%>
 
-								<liferay-ui:icon message="<%= curRendererFactory.getTypeName(locale, false) %>" src="<%= curRendererFactory.getIconPath(renderRequest) %>" url="<%= taglibURL %>" />
+								<liferay-ui:icon
+									cssClass="asset-selector"
+									data="<%= data %>"
+									message="<%= curRendererFactory.getTypeName(locale, false) %>"
+									src="<%= curRendererFactory.getIconPath(renderRequest) %>"
+									url="javascript:;"
+								/>
 
 							<%
 							}
@@ -166,3 +179,40 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 <aui:button-row>
 	<aui:button onClick='<%= renderResponse.getNamespace() + "saveSelectBoxes();" %>' type="submit" />
 </aui:button-row>
+
+<aui:script use="aui-base">
+	function selectAsset(assetEntryId, assetClassName, assetType, assetEntryTitle, groupName) {
+		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = 'add-selection';
+		document.<portlet:namespace />fm.<portlet:namespace />assetEntryId.value = assetEntryId;
+		document.<portlet:namespace />fm.<portlet:namespace />assetEntryType.value = assetClassName;
+
+		submitForm(document.<portlet:namespace />fm);
+	}
+
+	A.getBody().delegate(
+		'click',
+		function(event) {
+			event.preventDefault();
+
+			var currentTarget = event.currentTarget;
+
+			Liferay.Util.selectEntity(
+				{
+					dialog: {
+						constrain: true,
+						modal: true,
+						width: 900
+					},
+					eventName: '<%= eventName %>',
+					id: '<%= eventName %>_' + currentTarget.attr('data-groupid') + '_' + currentTarget.attr('data-type'),
+					title: currentTarget.attr('data-title'),
+					uri: currentTarget.attr('data-href')
+				},
+				function(event) {
+					selectAsset(event.assetentryid, event.assetclassname, event.assettype, event.assettitle, event.groupname);
+				}
+			);
+		},
+		'.asset-selector a'
+	);
+</aui:script>

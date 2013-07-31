@@ -32,7 +32,6 @@ if (Validator.isNull(type) && (types.length > 0)) {
 String filter = ParamUtil.getString(request, "filter");
 boolean includeCompany = ParamUtil.getBoolean(request, "includeCompany");
 boolean includeUserPersonalSite = ParamUtil.getBoolean(request, "includeUserPersonalSite");
-String callback = ParamUtil.getString(request, "callback");
 String target = ParamUtil.getString(request, "target");
 
 PortletURL portletURL = renderResponse.createRenderURL();
@@ -44,7 +43,6 @@ portletURL.setParameter("groupId", String.valueOf(groupId));
 portletURL.setParameter("filter", filter);
 portletURL.setParameter("includeCompany", String.valueOf(includeCompany));
 portletURL.setParameter("includeUserPersonalSite", String.valueOf(includeUserPersonalSite));
-portletURL.setParameter("callback", callback);
 portletURL.setParameter("target", target);
 %>
 

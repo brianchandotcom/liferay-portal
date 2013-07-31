@@ -21,7 +21,8 @@ long groupId = ParamUtil.getLong(request, "groupId");
 long[] selectedGroupIds = StringUtil.split(ParamUtil.getString(request, "selectedGroupIds"), 0L);
 long refererAssetEntryId = ParamUtil.getLong(request, "refererAssetEntryId");
 String typeSelection = ParamUtil.getString(request, "typeSelection");
-String callback = ParamUtil.getString(request, "callback");
+
+String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectAsset");
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
@@ -30,7 +31,6 @@ portletURL.setParameter("groupId", String.valueOf(groupId));
 portletURL.setParameter("selectedGroupIds", StringUtil.merge(selectedGroupIds));
 portletURL.setParameter("refererAssetEntryId", String.valueOf(refererAssetEntryId));
 portletURL.setParameter("typeSelection", typeSelection);
-portletURL.setParameter("callback", callback);
 
 request.setAttribute("view.jsp-portletURL", portletURL);
 %>
@@ -41,8 +41,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 </liferay-util:include>
 
 <div class="asset-search">
-	<aui:form action="<%= portletURL %>" method="post" name="searchFm">
-		<aui:input name="callback" type="hidden" value="<%= callback %>" />
+	<aui:form action="<%= portletURL %>" method="post" name="selectAssetFm">
 		<aui:input name="typeSelection" type="hidden" value="<%= typeSelection %>" />
 
 		<liferay-ui:search-container
@@ -88,60 +87,50 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 					continue;
 				}
 
-				String rowHREF = null;
-
 				Group group = GroupLocalServiceUtil.getGroup(assetEntry.getGroupId());
-
-				if (assetEntry.getEntryId() != refererAssetEntryId) {
-					StringBundler sb = new StringBundler(13);
-
-					sb.append("javascript:Liferay.Util.getOpener().");
-					sb.append(callback);
-					sb.append("('");
-					sb.append(assetEntry.getEntryId());
-					sb.append("', '");
-					sb.append(assetEntry.getClassName());
-					sb.append("', '");
-					sb.append(assetRendererFactory.getTypeName(locale, true));
-					sb.append("', '");
-					sb.append(HtmlUtil.escapeJS(assetEntry.getTitle(locale)));
-					sb.append("', '");
-					sb.append(HtmlUtil.escapeJS(group.getDescriptiveName(locale)));
-					sb.append("');Liferay.Util.getWindow().hide();");
-
-					rowHREF = sb.toString();
-				}
 				%>
 
 				<liferay-ui:search-container-column-text
-					href="<%= rowHREF %>"
 					name="title"
 					value="<%= HtmlUtil.escape(assetEntry.getTitle(locale)) %>"
 				/>
 
 				<liferay-ui:search-container-column-text
-					href="<%= rowHREF %>"
 					name="description"
 					value="<%= HtmlUtil.stripHtml(assetEntry.getDescription(locale)) %>"
 				/>
 
 				<liferay-ui:search-container-column-text
-					href="<%= rowHREF %>"
 					name="userName"
 					value="<%= PortalUtil.getUserName(assetEntry) %>"
 				/>
 
 				<liferay-ui:search-container-column-date
-					href="<%= rowHREF %>"
 					name="modifiedDate"
 					value="<%= assetEntry.getModifiedDate() %>"
 				/>
 
 				<liferay-ui:search-container-column-text
-					href="<%= rowHREF %>"
 					name="descriptiveName"
 					value="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>"
 				/>
+
+				<c:if test="<%= assetEntry.getEntryId() != refererAssetEntryId %>">
+					<liferay-ui:search-container-column-text>
+
+						<%
+						Map<String, Object> data = new HashMap<String, Object>();
+
+						data.put("assetentryid", assetEntry.getEntryId());
+						data.put("assetclassname", assetEntry.getClassName());
+						data.put("assettype", assetRendererFactory.getTypeName(locale, true));
+						data.put("assettitle", HtmlUtil.escapeJS(assetEntry.getTitle(locale)));
+						data.put("groupname", HtmlUtil.escapeJS(group.getDescriptiveName(locale)));
+						%>
+
+						<aui:button cssClass="selector-button" data="<%= data %>" value="choose" />
+					</liferay-ui:search-container-column-text>
+				</c:if>
 
 			</liferay-ui:search-container-row>
 
@@ -149,3 +138,19 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 		</liferay-ui:search-container>
 	</aui:form>
 </div>
+
+<aui:script use="aui-base">
+	var Util = Liferay.Util;
+
+	A.one('#<portlet:namespace />selectAssetFm').delegate(
+		'click',
+		function(event) {
+			var result = Util.getAttributes(event.currentTarget, 'data-');
+
+			Util.getOpener().Liferay.fire('<%= HtmlUtil.escapeJS(eventName) %>', result);
+
+			Util.getWindow().hide();
+		},
+		'.selector-button'
+	);
+</aui:script>

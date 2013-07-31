@@ -19,6 +19,8 @@
 <%
 String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_input_asset_links_page") + StringPool.UNDERLINE;
 
+String eventName = randomNamespace + "selectAsset";
+
 long assetEntryId = GetterUtil.getLong((String)request.getAttribute("liferay-ui:input-asset-links:assetEntryId"));
 
 List<AssetLink> assetLinks = new ArrayList<AssetLink>();
@@ -73,6 +75,7 @@ long controlPanelPlid = PortalUtil.getControlPanelPlid(company.getCompanyId());
 PortletURL assetBrowserURL = PortletURLFactoryUtil.create(request, PortletKeys.ASSET_BROWSER, controlPanelPlid, PortletRequest.RENDER_PHASE);
 
 assetBrowserURL.setParameter("struts_action", "/asset_browser/view");
+assetBrowserURL.setParameter("eventName", eventName);
 assetBrowserURL.setParameter("groupId", String.valueOf(scopeGroupId));
 assetBrowserURL.setParameter("selectedGroupIds", themeDisplay.getCompanyGroupId() + "," + scopeGroupId);
 assetBrowserURL.setPortletMode(PortletMode.VIEW);
@@ -89,15 +92,20 @@ assetBrowserURL.setWindowState(LiferayWindowState.POP_UP);
 			}
 
 			assetBrowserURL.setParameter("typeSelection", assetRendererFactory.getClassName());
-			assetBrowserURL.setParameter("callback", randomNamespace + "addAssetLink");
 
-			String href = "javascript:" + randomNamespace + "openAssetBrowser('" + assetBrowserURL.toString() + "', '" + UnicodeLanguageUtil.format(pageContext, "select-x", assetRendererFactory.getTypeName(locale, false)) + "')";
+			Map<String, Object> data = new HashMap<String, Object>();
+
+			data.put("href", assetBrowserURL.toString());
+			data.put("title", LanguageUtil.format(pageContext, "select-x", assetRendererFactory.getTypeName(locale, false)));
+			data.put("type", assetRendererFactory.getClassName());
 		%>
 
 			<liferay-ui:icon
+				cssClass="asset-selector"
+				data="<%= data %>"
 				message="<%= assetRendererFactory.getTypeName(locale, false) %>"
 				src="<%= assetRendererFactory.getIconPath(portletRequest) %>"
-				url="<%= href %>"
+				url="javascript:;"
 			/>
 
 		<%
@@ -175,36 +183,39 @@ assetBrowserURL.setWindowState(LiferayWindowState.POP_UP);
 
 <aui:input name="assetLinkEntryIds" type="hidden" />
 
-<aui:script>
-	function <%= randomNamespace %>openAssetBrowser(url, title) {
-		Liferay.Util.openWindow(
-			{
-				id: '<portlet:namespace />assetBrowser',
-				title: title,
-				uri: url
-			}
-		);
-	}
+<aui:script use="aui-base,escape,liferay-search-container">
+	A.getBody().delegate(
+		'click',
+		function(event) {
+			event.preventDefault();
 
-	Liferay.provide(
-		window,
-		'<%= randomNamespace %>addAssetLink',
-		function(entryId, entryClassName, entryType, entryTitle, entryScope) {
-			var A = AUI();
+			Liferay.Util.selectEntity(
+				{
+					dialog: {
+						constrain: true,
+						modal: true,
+						width: 900
+					},
+					eventName: '<%= eventName %>',
+					id: '<%= eventName %>' + event.currentTarget.attr('data-type'),
+					title: event.currentTarget.attr('data-title'),
+					uri: event.currentTarget.attr('data-href')
+				},
+				function(event) {
+					var searchContainerName = '<%= portletResponse.getNamespace() %>assetLinksSearchContainer';
 
-			var searchContainerName = '<%= portletResponse.getNamespace() %>assetLinksSearchContainer';
+					searchContainer = Liferay.SearchContainer.get(searchContainerName);
 
-			searchContainer = Liferay.SearchContainer.get(searchContainerName);
+					var entryLink = '<a class="modify-link" data-rowId="' + event.assetentryid + '" href="javascript:;"><%= UnicodeFormatter.toString(removeLinkIcon) %></a>';
 
-			var entryLink = '<a class="modify-link" data-rowId="' + entryId + '" href="javascript:;"><%= UnicodeFormatter.toString(removeLinkIcon) %></a>';
+					searchContainer.addRow([event.assettype, A.Escape.html(event.assettitle), A.Escape.html(event.groupname), entryLink], event.assetentryid);
 
-			searchContainer.addRow([entryType, A.Escape.html(entryTitle), A.Escape.html(entryScope), entryLink], entryId);
-
-			searchContainer.updateDataStore();
+					searchContainer.updateDataStore();
+				}
+			);
 		},
-		['liferay-search-container', 'escape']
+		'.asset-selector a'
 	);
-
 </aui:script>
 
 <aui:script use="liferay-search-container">

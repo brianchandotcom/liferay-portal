@@ -209,7 +209,12 @@ $dockbarOpenGradientStart: #0EA6F9;
 				}
 
 				.control-panel-site-selector {
+					font-size: inherit;
 					margin-top: 0;
+
+					a {
+						text-decoration: none;
+					}
 
 					.caret {
 						border-top-color: #FFF;
@@ -535,6 +540,8 @@ $dockbarOpenGradientStart: #0EA6F9;
 				vertical-align: middle;
 
 				.control-panel-site-selector {
+					font-size: inherit;
+
 					.dropdown-toggle {
 						i.caret {
 							background: url(../images/custom/arrow_option_down.png) no-repeat 0 0;

@@ -23,9 +23,9 @@ String logoURL = themeDisplay.getPathImage() + "/company_logo?img_id=" + company
 <c:choose>
 	<c:when test='<%= SessionMessages.contains(renderRequest, "requestProcessed") %>'>
 		<aui:script>
-			opener.<portlet:namespace />changeLogo('<%= logoURL %>');
+			Liferay.Util.getOpener().<portlet:namespace />changeLogo('<%= logoURL %>');
 
-			window.close();
+			Liferay.Util.getWindow().hide();
 		</aui:script>
 	</c:when>
 	<c:otherwise>

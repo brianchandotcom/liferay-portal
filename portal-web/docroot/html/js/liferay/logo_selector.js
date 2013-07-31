@@ -92,9 +92,17 @@ AUI.add(
 
 						var editLogoURL = instance.get('editLogoURL');
 
-						var editLogoWindow = window.open(editLogoURL, 'changeLogo', 'directories=no,height=400,location=no,menubar=no,resizable=yes,scrollbars=yes,status=no,toolbar=no,width=500');
-
-						editLogoWindow.focus();
+						Liferay.Util.openWindow(
+							{
+								dialog: {
+									destroyOnHide: true,
+									width: 600
+								},
+								id: instance._portletNamespace + 'changeLogo',
+								title: Liferay.Language.get('upload-image'),
+								uri: editLogoURL
+							}
+						);
 
 						event.preventDefault();
 					},
@@ -124,6 +132,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-base']
+		requires: ['aui-base','liferay-util-window']
 	}
 );

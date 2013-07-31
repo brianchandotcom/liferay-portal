@@ -15,6 +15,7 @@
 package com.liferay.portlet.dynamicdatamapping.util;
 
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
@@ -101,7 +102,19 @@ public class DDMStructureTestUtil {
 		throws Exception {
 
 		return addStructure(
-			TestPropsValues.getGroupId(), className, 0, getSampleStructureXSD(),
+			TestPropsValues.getGroupId(), className, 0,
+			getSampleStructureXSD(
+				"name", new Locale[] {Locale.US}, defaultLocale),
+			defaultLocale, ServiceTestUtil.getServiceContext());
+	}
+
+	public static DDMStructure addStructure(
+			String className, Locale[] availableLocales, Locale defaultLocale)
+		throws Exception {
+
+		return addStructure(
+			TestPropsValues.getGroupId(), className, 0,
+			getSampleStructureXSD("name", availableLocales, defaultLocale),
 			defaultLocale, ServiceTestUtil.getServiceContext());
 	}
 
@@ -154,7 +167,14 @@ public class DDMStructureTestUtil {
 	}
 
 	public static String getSampleStructureXSD(String name) {
-		Document document = createDocumentStructure();
+		return getSampleStructureXSD(name, new Locale[] {Locale.US}, Locale.US);
+	}
+
+	public static String getSampleStructureXSD(
+		String name, Locale[] availableLocales, Locale defaultLocale) {
+
+		Document document = createDocumentStructure(
+			availableLocales, defaultLocale);
 
 		Element rootElement = document.getRootElement();
 
@@ -170,7 +190,8 @@ public class DDMStructureTestUtil {
 
 		Element metaDataElement = dynamicElementElement.addElement("meta-data");
 
-		metaDataElement.addAttribute("locale", "en_US");
+		metaDataElement.addAttribute(
+			"locale", LocaleUtil.toLanguageId(defaultLocale));
 
 		Element labelElement = metaDataElement.addElement("entry");
 
@@ -202,13 +223,18 @@ public class DDMStructureTestUtil {
 		return document;
 	}
 
-	protected static Document createDocumentStructure() {
+	protected static Document createDocumentStructure(
+		Locale[] availableLocales, Locale defaultLocale) {
+
 		Document document = SAXReaderUtil.createDocument();
 
 		Element rootElement = document.addElement("root");
 
-		rootElement.addAttribute("available-locales", "en_US");
-		rootElement.addAttribute("default-locale", "en_US");
+		rootElement.addAttribute(
+			"available-locales",
+			StringUtil.merge(LocaleUtil.toLanguageIds(availableLocales)));
+		rootElement.addAttribute(
+			"default-locale", LocaleUtil.toLanguageId(defaultLocale));
 
 		return document;
 	}

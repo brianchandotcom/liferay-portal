@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
@@ -39,6 +40,7 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.util.DDMStructureTestUtil;
 
 import java.util.List;
 import java.util.Locale;
@@ -152,6 +154,34 @@ public class DLFileEntryTypeServiceTest {
 	}
 
 	@Test
+	@Transactional
+	public void testLocalizedSiteAddFileEntryType() throws Exception {
+		Group group = GroupTestUtil.addGroup();
+
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			group.getGroupId());
+
+		LocaleThreadLocal.setSiteDefaultLocale(new Locale("es", "ES"));
+
+		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
+			DLFileEntry.class.getName(), new Locale[] {new Locale("es", "ES")},
+			new Locale("es", "ES"));
+
+		String name = ServiceTestUtil.randomString();
+		String description = ServiceTestUtil.randomString();
+
+		DLFileEntryType dlFileEntryType =
+			DLFileEntryTypeLocalServiceUtil.addFileEntryType(
+				TestPropsValues.getUserId(), group.getGroupId(), name,
+				description, new long[] {ddmStructure.getStructureId()},
+				serviceContext);
+
+		Assert.assertEquals(name, dlFileEntryType.getName(Locale.US, true));
+		Assert.assertEquals(
+			description, dlFileEntryType.getDescription(Locale.US, true));
+	}
+
+	@Test
 	public void testCheckDefaultFileEntryTypes() throws Exception {
 		Assert.assertNotNull(
 			DLFileEntryTypeConstants.NAME_BASIC_DOCUMENT + " cannot be null",
@@ -214,6 +244,45 @@ public class DLFileEntryTypeServiceTest {
 		fileEntry = DLAppServiceUtil.getFileEntry(fileEntry.getFileEntryId());
 
 		assertFileEntryType(fileEntry, _basicDocumentDLFileEntryType);
+	}
+
+	@Test
+	@Transactional
+	public void testLocalizedSiteUpdateFileEntryType() throws Exception {
+		Group group = GroupTestUtil.addGroup();
+
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			group.getGroupId());
+
+		LocaleThreadLocal.setSiteDefaultLocale(new Locale("es", "ES"));
+
+		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
+			DLFileEntry.class.getName(), new Locale[] {new Locale("es", "ES")},
+			new Locale("es", "ES"));
+
+		String name = ServiceTestUtil.randomString();
+		String description = ServiceTestUtil.randomString();
+
+		DLFileEntryType dlFileEntryType =
+			DLFileEntryTypeLocalServiceUtil.addFileEntryType(
+				TestPropsValues.getUserId(), group.getGroupId(), name,
+				description, new long[] {ddmStructure.getStructureId()},
+				serviceContext);
+
+		name = ServiceTestUtil.randomString();
+		description = ServiceTestUtil.randomString();
+
+		DLFileEntryTypeLocalServiceUtil.updateFileEntryType(
+			TestPropsValues.getUserId(), dlFileEntryType.getFileEntryTypeId(),
+			name, description, new long[] {ddmStructure.getStructureId()},
+			serviceContext);
+
+		dlFileEntryType = DLFileEntryTypeLocalServiceUtil.getFileEntryType(
+			dlFileEntryType.getFileEntryTypeId());
+
+		Assert.assertEquals(name, dlFileEntryType.getName(Locale.US, true));
+		Assert.assertEquals(
+			description, dlFileEntryType.getDescription(Locale.US, true));
 	}
 
 	protected void assertFileEntryType(

@@ -623,4 +623,8 @@
 	body.yui3-skin-sam .yui3-widget-mask {
 		@include opacity(0.8);
 	}
+
+	.portlet-asset-category-admin .vocabulary-item-check, .portlet-asset-tag-admin .tag-item-check {
+		margin: 0 5px 0 0;
+	}
 }

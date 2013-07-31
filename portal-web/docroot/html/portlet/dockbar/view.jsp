@@ -98,8 +98,6 @@ String toggleControlsState = GetterUtil.getString(SessionClicks.get(request, "li
 				<h1>
 					<c:choose>
 						<c:when test="<%= controlPanelCategory.startsWith(PortletCategoryKeys.CURRENT_SITE) %>">
-							<strong><%= themeDisplay.getSiteGroup().getDescriptiveName() %></strong>
-
 							<%@ include file="/html/portal/layout/view/control_panel_site_selector.jspf" %>
 
 							<span class="divider">/</span>

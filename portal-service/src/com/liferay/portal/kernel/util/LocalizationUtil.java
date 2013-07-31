@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.util;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+import com.liferay.portal.kernel.xml.Document;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -43,6 +44,10 @@ public class LocalizationUtil {
 		return getLocalization().deserialize(jsonObject);
 	}
 
+	public static String[] getAvailableLanguageIds(Document document) {
+		return getLocalization().getAvailableLanguageIds(document);
+	}
+
 	public static String[] getAvailableLanguageIds(String xml) {
 		return getLocalization().getAvailableLanguageIds(xml);
 	}
@@ -63,8 +68,12 @@ public class LocalizationUtil {
 			className, classPK, contentDefaultLocale, contentAvailableLocales);
 	}
 
+	public static String getDefaultLanguageId(Document document) {
+		return getLocalization().getDefaultLanguageId(document);
+	}
+
 	public static String getDefaultLanguageId(String xml) {
-		return getLocalization().getDefaultLocale(xml);
+		return getLocalization().getDefaultLanguageId(xml);
 	}
 
 	/**

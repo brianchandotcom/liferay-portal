@@ -67,11 +67,12 @@ public class DDMWebDavUtil {
 
 			String xsd = StringUtil.read(request.getInputStream());
 
-			String defaultLocale = LocalizationUtil.getDefaultLanguageId(xsd);
+			String defaultLanguageId = LocalizationUtil.getDefaultLanguageId(
+				xsd);
 
 			Map<Locale, String> nameMap = new HashMap<Locale, String>();
 
-			nameMap.put(LocaleUtil.fromLanguageId(defaultLocale), typeId);
+			nameMap.put(LocaleUtil.fromLanguageId(defaultLanguageId), typeId);
 
 			ServiceContext serviceContext = new ServiceContext();
 

@@ -233,14 +233,14 @@
 	}
 
 	.search-query-spell-check {
-		font-size: 140%;
+		font-size: 1.5em;
 		margin: 0 0 1em 0.5em;
 
 		.did-you-mean {
 			margin-right: 4em;
 
 			label {
-				color: #dd4b39;
+				color: #DD4B39;
 			}
 		}
 
@@ -255,9 +255,6 @@
 		.changed-keyword {
 			font-weight: bold;
 			font-style: italic;
-		}
-
-		.unchanged-keyword {
 		}
 	}
 

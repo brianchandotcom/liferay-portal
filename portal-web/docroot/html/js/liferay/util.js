@@ -2114,6 +2114,11 @@
 
 	Liferay.Util = Util;
 
+	Liferay.BREAKPOINTS = {
+		PHONE: 768,
+		TABLET: 980
+	};
+
 	Liferay.STATUS_CODE = {
 		BAD_REQUEST: 400,
 		INTERNAL_SERVER_ERROR: 500,

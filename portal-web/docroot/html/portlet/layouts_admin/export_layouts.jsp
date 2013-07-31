@@ -521,7 +521,7 @@ portletURL.setParameter("rootNodeName", rootNodeName);
 														<span class="badge badge-info"><%= modelDeletionCount > 0 ? modelDeletionCount : StringPool.BLANK %></span>
 													</liferay-util:buffer>
 
-													<aui:input checked="<%= true %>" helpMessage="export-deletions-help" id="deletions" label='<%= LanguageUtil.get(pageContext, "export-deletions") + badgeHTML %>' name="<%= PortletDataHandlerKeys.EXPORT_DELETIONS %>" type="checkbox" value="<%= true %>" />
+													<aui:input checked="<%= true %>" helpMessage="deletions-help" id="deletions" label='<%= LanguageUtil.get(pageContext, "deletions") + badgeHTML %>' name="<%= PortletDataHandlerKeys.DELETIONS %>" type="checkbox" value="<%= true %>" />
 												</c:if>
 											</aui:fieldset>
 										</li>

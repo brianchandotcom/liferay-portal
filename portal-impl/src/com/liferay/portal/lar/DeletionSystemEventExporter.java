@@ -59,7 +59,7 @@ public class DeletionSystemEventExporter {
 		if (!deletionSystemEventStagedModelTypes.isEmpty() &&
 			MapUtil.getBoolean(
 				portletDataContext.getParameterMap(),
-				PortletDataHandlerKeys.EXPORT_DELETIONS)) {
+				PortletDataHandlerKeys.DELETIONS)) {
 
 			doExportDeletionSystemEvents(
 				portletDataContext, rootElement,

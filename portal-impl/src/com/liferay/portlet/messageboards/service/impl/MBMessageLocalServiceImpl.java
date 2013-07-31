@@ -555,7 +555,10 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 			// Thread
 
-			mbThreadPersistence.remove(message.getThreadId());
+			MBThread thread = mbThreadPersistence.findByPrimaryKey(
+				message.getThreadId());
+
+			mbThreadPersistence.remove(thread);
 
 			// Category
 
@@ -572,9 +575,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 				MBThread.class);
-
-			MBThread thread = mbThreadPersistence.findByPrimaryKey(
-				message.getThreadId());
 
 			indexer.delete(thread);
 		}

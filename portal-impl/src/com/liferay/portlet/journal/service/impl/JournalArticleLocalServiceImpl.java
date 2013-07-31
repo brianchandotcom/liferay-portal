@@ -6396,6 +6396,7 @@ public class JournalArticleLocalServiceImpl
 
 		if (!ArrayUtil.contains(availableLocales, articleDefaultLocale)) {
 			LocaleException le = new LocaleException(
+				LocaleException.CONTENT,
 				"The locale " + articleDefaultLocale +
 					" is not available in site with groupId" + groupId);
 

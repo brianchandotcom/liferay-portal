@@ -24,15 +24,15 @@ import java.util.regex.Pattern;
 /**
  * @author Josef Sustacek
  */
-public class KeywordsFormatter {
+public class KeywordsSuggestionHolder {
 
-	public KeywordsFormatter(
+	public KeywordsSuggestionHolder(
 		String suggestedKeywords, String originalKeywords) {
 
 		this(suggestedKeywords, originalKeywords, "[ ]+");
 	}
 
-	public KeywordsFormatter(
+	public KeywordsSuggestionHolder(
 		String suggestedKeywords, String originalKeywords,
 		String keywordsDelimiterRegExp) {
 
@@ -60,8 +60,12 @@ public class KeywordsFormatter {
 		return _suggestedKeywords;
 	}
 
-	public boolean isChanged(String suggestedKeyword) {
-		return !_originalKeywords.contains(suggestedKeyword);
+	public boolean hasChanged(String suggestedKeyword) {
+		if (_originalKeywords.contains(suggestedKeyword)) {
+			return false;
+		}
+
+		return true;
 	}
 
 	private List<String> _originalKeywords;

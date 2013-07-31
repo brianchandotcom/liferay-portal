@@ -65,13 +65,13 @@ if (selContact != null) {
 		List<String> fields = ufe.getFields();
 
 		for (int i = 0; i < fields.size(); i++) {
-			if ((i + 1) < fields.size()) {
-				sb.append(StringPool.COMMA_AND_SPACE);
-			}
-
 			String field = fields.get(i);
 
 			sb.append(LanguageUtil.get(pageContext, TextFormatter.format(field, TextFormatter.K)));
+
+			if ((i + 1) < fields.size()) {
+				sb.append(StringPool.COMMA_AND_SPACE);
+			}
 		}
 		%>
 

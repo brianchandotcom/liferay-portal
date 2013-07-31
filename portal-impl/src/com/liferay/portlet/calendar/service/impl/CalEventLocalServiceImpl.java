@@ -1014,10 +1014,11 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 
 		String title = StringPool.BLANK;
 
-		if (event.getSummary() != null) {
+		Summary summary = event.getSummary();
+
+		if ((summary != null) && Validator.isNotNull(summary.getValue())) {
 			title = ModelHintsUtil.trimString(
-				CalEvent.class.getName(), "title",
-				event.getSummary().getValue());
+				CalEvent.class.getName(), "title", summary.getValue());
 		}
 		else {
 			title =

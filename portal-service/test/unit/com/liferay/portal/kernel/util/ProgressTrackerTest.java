@@ -124,7 +124,7 @@ public class ProgressTrackerTest {
 
 		public MockInstallProcess(MockHttpSession mockHttpSession) {
 			ProgressTracker progressTracker = new ProgressTracker(
-				mockHttpSession, ProgressTrackerTest.class.getName());
+				ProgressTrackerTest.class.getName());
 
 			progressTracker.addProgress(
 				ProgressStatusConstants.DOWNLOADING, 25, "downloading");
@@ -143,11 +143,11 @@ public class ProgressTrackerTest {
 		}
 
 		public void finish() {
-			_progressTracker.finish();
+			_progressTracker.finish(_mockHttpSession);
 		}
 
 		public void initialize() {
-			_progressTracker.initialize();
+			_progressTracker.initialize(_mockHttpSession);
 		}
 
 		private ProgressTracker _progressTracker;

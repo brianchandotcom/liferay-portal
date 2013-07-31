@@ -334,14 +334,14 @@ public class EditServerAction extends PortletAction {
 		throws Exception {
 
 		ProgressTracker progressTracker = new ProgressTracker(
-			actionRequest, WebKeys.XUGGLER_INSTALL_STATUS);
+			WebKeys.XUGGLER_INSTALL_STATUS);
 
 		progressTracker.addProgress(
 			ProgressStatusConstants.DOWNLOADING, 15, "downloading-xuggler");
 		progressTracker.addProgress(
 			ProgressStatusConstants.COPYING, 70, "copying-xuggler-files");
 
-		progressTracker.initialize();
+		progressTracker.initialize(actionRequest);
 
 		String jarName = ParamUtil.getString(actionRequest, "jarName");
 
@@ -363,7 +363,7 @@ public class EditServerAction extends PortletAction {
 			writeJSON(actionRequest, actionResponse, jsonObject);
 		}
 
-		progressTracker.finish();
+		progressTracker.finish(actionRequest);
 	}
 
 	protected void reindex(ActionRequest actionRequest) throws Exception {

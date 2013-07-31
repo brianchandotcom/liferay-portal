@@ -351,7 +351,7 @@ public class DDMXSDImpl implements DDMXSD {
 
 		Document document = element.getDocument();
 
-		String defaultLocale = LocalizationUtil.getDefaultLanguageId(
+		String defaultLanguageId = LocalizationUtil.getDefaultLanguageId(
 			document.asXML());
 
 		List<Element> dynamicElementElements = element.elements(
@@ -393,7 +393,7 @@ public class DDMXSDImpl implements DDMXSD {
 					putMetadataValue(
 						localeMap, attributeName, attributeValue, type);
 
-					if (defaultLocale.equals(locale)) {
+					if (defaultLanguageId.equals(locale)) {
 						putMetadataValue(
 							jsonObject, attributeName, attributeValue, type);
 					}

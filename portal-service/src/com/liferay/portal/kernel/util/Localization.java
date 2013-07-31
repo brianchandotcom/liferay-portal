@@ -83,7 +83,7 @@ public interface Localization {
 	 * @return the language ID of the default locale, or the system default
 	 *         locale if the default locale cannot be retrieved from the XML
 	 */
-	public String getDefaultLocale(String xml);
+	public String getDefaultLanguageId(String xml);
 
 	/**
 	 * Returns the localized string from the localizations XML in the language.

@@ -64,7 +64,7 @@ public class LocalizationUtil {
 	}
 
 	public static String getDefaultLanguageId(String xml) {
-		return getLocalization().getDefaultLocale(xml);
+		return getLocalization().getDefaultLanguageId(xml);
 	}
 
 	/**

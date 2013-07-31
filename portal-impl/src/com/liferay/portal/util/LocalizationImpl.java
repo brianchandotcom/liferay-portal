@@ -133,7 +133,7 @@ public class LocalizationImpl implements Localization {
 	}
 
 	@Override
-	public String getDefaultLocale(String xml) {
+	public String getDefaultLanguageId(String xml) {
 		String defaultLanguageId = LocaleUtil.toLanguageId(
 			LocaleUtil.getDefault());
 

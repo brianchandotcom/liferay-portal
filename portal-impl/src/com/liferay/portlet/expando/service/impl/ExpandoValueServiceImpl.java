@@ -139,9 +139,10 @@ public class ExpandoValueServiceImpl extends ExpandoValueServiceBaseImpl {
 		if (ExpandoColumnPermissionUtil.contains(
 				getPermissionChecker(), column, ActionKeys.VIEW)) {
 
-			String data = expandoValueLocalService.getData(
-				companyId, className, tableName, columnName, classPK,
-				StringPool.BLANK);
+			Serializable rawData = expandoValueLocalService.getData(
+				companyId, className, tableName, columnName, classPK);
+
+			String data = rawData.toString();
 
 			if (Validator.isNotNull(data)) {
 				if (!data.startsWith(StringPool.OPEN_CURLY_BRACE)) {

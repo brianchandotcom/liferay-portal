@@ -14,9 +14,12 @@
 
 package com.liferay.portlet.journal.lar;
 
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.lar.BaseWorkflowedStagedModelDataHandlerTestCase;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
@@ -207,14 +210,52 @@ public class JournalArticleStagedModelDataHandlerTest
 	}
 
 	@Override
-	protected StagedModel getStagedModel(String uuid, Group group) {
-		try {
-			return JournalArticleLocalServiceUtil.
-				getJournalArticleByUuidAndGroupId(uuid, group.getGroupId());
-		}
-		catch (Exception e) {
-			return null;
-		}
+	protected void deleteStagedModel(
+			StagedModel stagedModel,
+			Map<String, List<StagedModel>> dependentStagedModelsMap,
+			Group group)
+		throws Exception {
+
+		JournalArticleLocalServiceUtil.deleteArticle(
+			(JournalArticle)stagedModel);
+
+		List<StagedModel> dependentStagedModels = dependentStagedModelsMap.get(
+			JournalFolder.class.getSimpleName());
+
+		JournalFolder folder = (JournalFolder)dependentStagedModels.get(0);
+
+		JournalFolderLocalServiceUtil.deleteFolder(folder);
+
+		dependentStagedModels = dependentStagedModelsMap.get(
+			DDMTemplate.class.getSimpleName());
+
+		DDMTemplate ddmTemplate = (DDMTemplate)dependentStagedModels.get(0);
+
+		DDMTemplateLocalServiceUtil.deleteTemplate(ddmTemplate);
+
+		dependentStagedModels = dependentStagedModelsMap.get(
+			DDMStructure.class.getSimpleName());
+
+		DDMStructure ddmStructure = (DDMStructure)dependentStagedModels.get(0);
+
+		DDMStructureLocalServiceUtil.deleteStructure(ddmStructure);
+	}
+
+	@Override
+	protected StagedModelType[] getDeletionSystemEventStagedModelTypes() {
+		JournalPortletDataHandler journalPortletDataHandler =
+			new JournalPortletDataHandler();
+
+		return journalPortletDataHandler.
+			getDeletionSystemEventStagedModelTypes();
+	}
+
+	@Override
+	protected StagedModel getStagedModel(String uuid, Group group)
+		throws SystemException {
+
+		return JournalArticleLocalServiceUtil.
+			fetchJournalArticleByUuidAndGroupId(uuid, group.getGroupId());
 	}
 
 	@Override
@@ -266,6 +307,52 @@ public class JournalArticleStagedModelDataHandlerTest
 	}
 
 	@Override
+	protected void validateDeletion(
+			Map<String, List<StagedModel>> dependentStagedModelsMap,
+			Group group)
+		throws Exception {
+
+		List<StagedModel> dependentStagedModels = dependentStagedModelsMap.get(
+			DDMStructure.class.getSimpleName());
+
+		Assert.assertEquals(1, dependentStagedModels.size());
+
+		DDMStructure ddmStructure = (DDMStructure)dependentStagedModels.get(0);
+
+		ddmStructure =
+			DDMStructureLocalServiceUtil.fetchDDMStructureByUuidAndGroupId(
+				ddmStructure.getUuid(), group.getGroupId());
+
+		Assert.assertNull("Not Deleted: " + DDMStructure.class, ddmStructure);
+
+		dependentStagedModels = dependentStagedModelsMap.get(
+			DDMTemplate.class.getSimpleName());
+
+		Assert.assertEquals(1, dependentStagedModels.size());
+
+		DDMTemplate ddmTemplate = (DDMTemplate)dependentStagedModels.get(0);
+
+		ddmTemplate =
+			DDMTemplateLocalServiceUtil.fetchDDMTemplateByUuidAndGroupId(
+				ddmTemplate.getUuid(), group.getGroupId());
+
+		Assert.assertNull("Not Deleted: " + DDMTemplate.class, ddmTemplate);
+
+		dependentStagedModels = dependentStagedModelsMap.get(
+			JournalFolder.class.getSimpleName());
+
+		Assert.assertEquals(1, dependentStagedModels.size());
+
+		JournalFolder folder = (JournalFolder)dependentStagedModels.get(0);
+
+		folder =
+			JournalFolderLocalServiceUtil.fetchJournalFolderByUuidAndGroupId(
+				folder.getUuid(), group.getGroupId());
+
+		Assert.assertNull("Not Deleted: " + JournalFolder.class, folder);
+	}
+
+	@Override
 	protected void validateImport(
 			Map<String, List<StagedModel>> dependentStagedModelsMap,
 			Group group)
@@ -314,9 +401,15 @@ public class JournalArticleStagedModelDataHandlerTest
 
 		JournalArticle article = (JournalArticle)stagedModel;
 
+		Element dataElement =
+			portletDataContext.getImportDataStagedModelElement(stagedModel);
+
+		String resourceUuid = dataElement.attributeValue(
+			"article-resource-uuid");
+
 		JournalArticleResource articleResource =
 			JournalArticleResourceUtil.fetchByUUID_G(
-				article.getArticleResourceUuid(), group.getGroupId());
+				resourceUuid, group.getGroupId());
 
 		Assert.assertNotNull(articleResource);
 

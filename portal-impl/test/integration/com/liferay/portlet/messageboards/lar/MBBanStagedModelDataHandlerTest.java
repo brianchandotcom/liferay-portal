@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.messageboards.lar;
 
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.lar.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.model.Group;
@@ -50,6 +51,23 @@ public class MBBanStagedModelDataHandlerTest
 		throws Exception {
 
 		return MBTestUtil.addBan(group.getGroupId());
+	}
+
+	@Override
+	protected void deleteStagedModel(
+			StagedModel stagedModel,
+			Map<String, List<StagedModel>> dependentStagedModelsMap,
+			Group group)
+		throws Exception {
+
+		MBBanLocalServiceUtil.deleteBan((MBBan)stagedModel);
+	}
+
+	@Override
+	protected StagedModelType[] getDeletionSystemEventStagedModelTypes() {
+		MBPortletDataHandler mbPortletDataHandler = new MBPortletDataHandler();
+
+		return mbPortletDataHandler.getDeletionSystemEventStagedModelTypes();
 	}
 
 	@Override

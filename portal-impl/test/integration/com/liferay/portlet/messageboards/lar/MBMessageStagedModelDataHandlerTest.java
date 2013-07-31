@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.messageboards.lar;
 
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringPool;
@@ -103,19 +105,59 @@ public class MBMessageStagedModelDataHandlerTest
 	}
 
 	@Override
-	protected StagedModel getStagedModel(String uuid, Group group) {
-		try {
-			return MBMessageLocalServiceUtil.getMBMessageByUuidAndGroupId(
-				uuid, group.getGroupId());
-		}
-		catch (Exception e) {
-			return null;
-		}
+	protected void deleteStagedModel(
+			StagedModel stagedModel,
+			Map<String, List<StagedModel>> dependentStagedModelsMap,
+			Group group)
+		throws Exception {
+
+		MBMessageLocalServiceUtil.deleteMessage((MBMessage)stagedModel);
+
+		List<StagedModel> dependentStagedModels = dependentStagedModelsMap.get(
+			MBCategory.class.getSimpleName());
+
+		MBCategory category = (MBCategory)dependentStagedModels.get(0);
+
+		MBCategoryLocalServiceUtil.deleteCategory(category);
+	}
+
+	@Override
+	protected StagedModelType[] getDeletionSystemEventStagedModelTypes() {
+		MBPortletDataHandler mbPortletDataHandler = new MBPortletDataHandler();
+
+		return mbPortletDataHandler.getDeletionSystemEventStagedModelTypes();
+	}
+
+	@Override
+	protected StagedModel getStagedModel(String uuid, Group group)
+		throws SystemException {
+
+		return MBMessageLocalServiceUtil.fetchMBMessageByUuidAndGroupId(
+			uuid, group.getGroupId());
 	}
 
 	@Override
 	protected Class<? extends StagedModel> getStagedModelClass() {
 		return MBMessage.class;
+	}
+
+	@Override
+	protected void validateDeletion(
+			Map<String, List<StagedModel>> dependentStagedModelsMap,
+			Group group)
+		throws Exception {
+
+		List<StagedModel> dependentStagedModels = dependentStagedModelsMap.get(
+			MBCategory.class.getSimpleName());
+
+		Assert.assertEquals(1, dependentStagedModels.size());
+
+		MBCategory category = (MBCategory)dependentStagedModels.get(0);
+
+		category = MBCategoryLocalServiceUtil.fetchMBCategoryByUuidAndGroupId(
+			category.getUuid(), group.getGroupId());
+
+		Assert.assertNull("Not Deleted: " + MBCategory.class, category);
 	}
 
 	@Override

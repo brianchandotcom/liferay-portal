@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.mobiledevicerules.lar;
 
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.lar.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.model.Group;
@@ -52,14 +54,29 @@ public class MDRRuleGroupStagedModelDataHandlerTest
 	}
 
 	@Override
-	protected StagedModel getStagedModel(String uuid, Group group) {
-		try {
-			return MDRRuleGroupLocalServiceUtil.getMDRRuleGroupByUuidAndGroupId(
-				uuid, group.getGroupId());
-		}
-		catch (Exception e) {
-			return null;
-		}
+	protected void deleteStagedModel(
+			StagedModel stagedModel,
+			Map<String, List<StagedModel>> dependentStagedModelsMap,
+			Group group)
+		throws Exception {
+
+		MDRRuleGroupLocalServiceUtil.deleteRuleGroup((MDRRuleGroup)stagedModel);
+	}
+
+	@Override
+	protected StagedModelType[] getDeletionSystemEventStagedModelTypes() {
+		MDRPortletDataHandler mdrPortletDataHandler =
+			new MDRPortletDataHandler();
+
+		return mdrPortletDataHandler.getDeletionSystemEventStagedModelTypes();
+	}
+
+	@Override
+	protected StagedModel getStagedModel(String uuid, Group group)
+		throws SystemException {
+
+		return MDRRuleGroupLocalServiceUtil.fetchMDRRuleGroupByUuidAndGroupId(
+			uuid, group.getGroupId());
 	}
 
 	@Override

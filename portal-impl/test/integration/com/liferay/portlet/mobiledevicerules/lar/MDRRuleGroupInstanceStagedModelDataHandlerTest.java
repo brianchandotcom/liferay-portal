@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.mobiledevicerules.lar;
 
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.lar.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.model.Group;
@@ -104,20 +106,62 @@ public class MDRRuleGroupInstanceStagedModelDataHandlerTest
 	}
 
 	@Override
-	protected StagedModel getStagedModel(String uuid, Group group) {
-		try {
-			return MDRRuleGroupInstanceLocalServiceUtil.
-				getMDRRuleGroupInstanceByUuidAndGroupId(
-					uuid, group.getGroupId());
-		}
-		catch (Exception e) {
-			return null;
-		}
+	protected void deleteStagedModel(
+			StagedModel stagedModel,
+			Map<String, List<StagedModel>> dependentStagedModelsMap,
+			Group group)
+		throws Exception {
+
+		MDRRuleGroupInstanceLocalServiceUtil.deleteRuleGroupInstance(
+			(MDRRuleGroupInstance)stagedModel);
+
+		List<StagedModel> dependentStagedModels = dependentStagedModelsMap.get(
+			MDRRuleGroup.class.getSimpleName());
+
+		MDRRuleGroup ruleGroup = (MDRRuleGroup)dependentStagedModels.get(0);
+
+		MDRRuleGroupLocalServiceUtil.deleteRuleGroup(ruleGroup);
+	}
+
+	@Override
+	protected StagedModelType[] getDeletionSystemEventStagedModelTypes() {
+		MDRPortletDataHandler mdrPortletDataHandler =
+			new MDRPortletDataHandler();
+
+		return mdrPortletDataHandler.getDeletionSystemEventStagedModelTypes();
+	}
+
+	@Override
+	protected StagedModel getStagedModel(String uuid, Group group)
+		throws SystemException {
+
+		return MDRRuleGroupInstanceLocalServiceUtil.
+			fetchMDRRuleGroupInstanceByUuidAndGroupId(uuid, group.getGroupId());
 	}
 
 	@Override
 	protected Class<? extends StagedModel> getStagedModelClass() {
 		return MDRRuleGroupInstance.class;
+	}
+
+	@Override
+	protected void validateDeletion(
+			Map<String, List<StagedModel>> dependentStagedModelsMap,
+			Group group)
+		throws Exception {
+
+		List<StagedModel> dependentStagedModels = dependentStagedModelsMap.get(
+			MDRRuleGroup.class.getSimpleName());
+
+		Assert.assertEquals(1, dependentStagedModels.size());
+
+		MDRRuleGroup ruleGroup = (MDRRuleGroup)dependentStagedModels.get(0);
+
+		ruleGroup =
+			MDRRuleGroupLocalServiceUtil.fetchMDRRuleGroupByUuidAndGroupId(
+				ruleGroup.getUuid(), group.getGroupId());
+
+		Assert.assertNull("Not Deleted: " + MDRRuleGroup.class, ruleGroup);
 	}
 
 	@Override

@@ -445,7 +445,7 @@ if (Validator.isNotNull(scriptContent)) {
 				}
 			</c:if>
 
-			submitForm(form);
+			submitForm(form, null, null, false);
 		}
 	);
 </aui:script>

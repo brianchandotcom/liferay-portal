@@ -150,7 +150,7 @@ if (Validator.isNotNull(structureAvailableFields)) {
 					</aui:field-wrapper>
 				</c:if>
 
-				<aui:select helpMessage='<%= (template == null) ? StringPool.BLANK : "changing-the-language-will-not-automatically-translate-the-existing-template-script" %>' label="language" name="language">
+				<aui:select changesContext="<%= true %>" helpMessage='<%= (template == null) ? StringPool.BLANK : "changing-the-language-will-not-automatically-translate-the-existing-template-script" %>' label="language" name="language">
 
 					<%
 					for (String curLangType : ddmDisplay.getTemplateLanguageTypes()) {

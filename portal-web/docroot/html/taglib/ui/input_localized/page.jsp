@@ -196,7 +196,6 @@ List<String> languageIds = new ArrayList<String>();
 				LinkedHashSet<String> uniqueLanguageIds = new LinkedHashSet<String>();
 
 				uniqueLanguageIds.add(defaultLanguageId);
-				uniqueLanguageIds.add(themeDisplay.getLanguageId());
 
 				for (int i = 0; i < availableLocales.length; i++) {
 					String curLanguageId = LocaleUtil.toLanguageId(availableLocales[i]);
@@ -268,7 +267,7 @@ List<String> languageIds = new ArrayList<String>();
 		%>
 
 		var availableLanguageIds = A.Array.dedupe(
-			[defaultLanguageId, userLanguageId].concat(A.Object.keys(available))
+			[defaultLanguageId].concat(A.Object.keys(available))
 		);
 
 		Liferay.InputLocalized.register(

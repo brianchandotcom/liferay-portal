@@ -62,9 +62,6 @@ public class CustomSQL {
 	public static final String DB2_FUNCTION_IS_NULL =
 		"CAST(? AS VARCHAR(32672)) IS NULL";
 
-	public static final boolean escapeWildCardsEnabled = GetterUtil.getBoolean(
-		PropsUtil.get(PropsKeys.CUSTOM_SQL_AUTO_ESCAPE_WILDCARDS_ENABLED));
-
 	public static final String INFORMIX_FUNCTION_IS_NOT_NULL =
 		"NOT lportal.isnull(?)";
 
@@ -237,7 +234,7 @@ public class CustomSQL {
 			return new String[] {null};
 		}
 
-		if (escapeWildCardsEnabled) {
+		if (_CUSTOM_SQL_AUTO_ESCAPE_WILDCARDS_ENABLED) {
 			keywords = escapeWildCards(keywords);
 		}
 
@@ -802,26 +799,29 @@ public class CustomSQL {
 		StringBuilder sb = new StringBuilder(keywords);
 
 		for (int i = 0; i < sb.length(); ++i) {
-			if (sb.charAt(i) == '\\') {
+			char c = sb.charAt(i);
+
+			if (c == CharPool.BACK_SLASH) {
 				i++;
+
 				continue;
 			}
 
-			if (sb.charAt(i) == '_') {
-				sb.insert(i,'\\');
-				i++;
-				continue;
-			}
+			if ((c == CharPool.UNDERLINE) || (c == CharPool.PERCENT)) {
+				sb.insert(i, CharPool.BACK_SLASH);
 
-			if (sb.charAt(i) == '%') {
-				sb.insert(i,'\\');
 				i++;
+
 				continue;
 			}
 		}
 
 		return sb.toString();
 	}
+
+	private static final boolean _CUSTOM_SQL_AUTO_ESCAPE_WILDCARDS_ENABLED =
+		GetterUtil.getBoolean(
+			PropsUtil.get(PropsKeys.CUSTOM_SQL_AUTO_ESCAPE_WILDCARDS_ENABLED));
 
 	private static final String _GROUP_BY_CLAUSE = " GROUP BY ";
 

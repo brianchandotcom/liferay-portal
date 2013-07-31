@@ -45,100 +45,108 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 		<aui:input name="callback" type="hidden" value="<%= callback %>" />
 		<aui:input name="typeSelection" type="hidden" value="<%= typeSelection %>" />
 
-		<%
-		AssetSearch searchContainer = new AssetSearch(renderRequest, portletURL);
-		%>
+		<liferay-ui:search-container
+			searchContainer="<%= new AssetSearch(renderRequest, portletURL) %>"
+		>
+			<liferay-ui:search-form
+				page="/html/portlet/asset_publisher/asset_search.jsp"
+			/>
 
-		<liferay-ui:search-form
-			page="/html/portlet/asset_publisher/asset_search.jsp"
-			searchContainer="<%= searchContainer %>"
-		/>
+			<%
+			AssetSearchTerms searchTerms = (AssetSearchTerms)searchContainer.getSearchTerms();
 
-		<%
-		AssetSearchTerms searchTerms = (AssetSearchTerms)searchContainer.getSearchTerms();
+			long[] groupIds = selectedGroupIds;
 
-		long[] groupIds = selectedGroupIds;
-		%>
+			AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(typeSelection);
+			%>
 
-		<%@ include file="/html/portlet/asset_publisher/asset_search_results.jspf" %>
+			<liferay-ui:search-container-results>
+				<%@ include file="/html/portlet/asset_publisher/asset_search_results.jspf" %>
+			</liferay-ui:search-container-results>
 
-		<div class="separator"><!-- --></div>
+			<div class="separator"><!-- --></div>
 
-		<%
-		List resultRows = searchContainer.getResultRows();
+			<liferay-ui:search-container-row
+				className="com.liferay.portal.kernel.search.Document"
+				escapedModel="<%= true %>"
+				keyProperty="entryId"
+				modelVar="doc"
+			>
 
-		for (int i = 0; i < results.getDocs().length; i++) {
-			Document doc = results.doc(i);
+				<%
+				long assetEntryId = 0;
 
-			ResultRow row = new ResultRow(doc, i, i);
+				if (typeSelection.equals(JournalArticle.class.getName())) {
+					assetEntryId = GetterUtil.getLong(doc.get(Field.ROOT_ENTRY_CLASS_PK));
+				}
+				else {
+					assetEntryId = GetterUtil.getLong(doc.get(Field.ENTRY_CLASS_PK));
+				}
 
-			long assetEntryId = 0;
+				AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(typeSelection, assetEntryId);
 
-			if (typeSelection.equals(JournalArticle.class.getName())) {
-				assetEntryId = GetterUtil.getLong(doc.get(Field.ROOT_ENTRY_CLASS_PK));
-			}
-			else {
-				assetEntryId = GetterUtil.getLong(doc.get(Field.ENTRY_CLASS_PK));
-			}
+				if ((assetEntry == null) || !assetEntry.isVisible()) {
+					continue;
+				}
 
-			AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(typeSelection, assetEntryId);
+				String rowHREF = null;
 
-			if ((assetEntry == null) || !assetEntry.isVisible()) {
-				continue;
-			}
+				Group group = GroupLocalServiceUtil.getGroup(assetEntry.getGroupId());
 
-			String rowHREF = null;
+				if (assetEntry.getEntryId() != refererAssetEntryId) {
+					StringBundler sb = new StringBundler(13);
 
-			Group group = GroupLocalServiceUtil.getGroup(assetEntry.getGroupId());
+					sb.append("javascript:Liferay.Util.getOpener().");
+					sb.append(callback);
+					sb.append("('");
+					sb.append(assetEntry.getEntryId());
+					sb.append("', '");
+					sb.append(assetEntry.getClassName());
+					sb.append("', '");
+					sb.append(assetRendererFactory.getTypeName(locale, true));
+					sb.append("', '");
+					sb.append(HtmlUtil.escapeJS(assetEntry.getTitle(locale)));
+					sb.append("', '");
+					sb.append(HtmlUtil.escapeJS(group.getDescriptiveName(locale)));
+					sb.append("');Liferay.Util.getWindow().hide();");
 
-			if (assetEntry.getEntryId() != refererAssetEntryId) {
-				StringBundler sb = new StringBundler(13);
+					rowHREF = sb.toString();
+				}
+				%>
 
-				sb.append("javascript:Liferay.Util.getOpener().");
-				sb.append(callback);
-				sb.append("('");
-				sb.append(assetEntry.getEntryId());
-				sb.append("', '");
-				sb.append(assetEntry.getClassName());
-				sb.append("', '");
-				sb.append(assetRendererFactory.getTypeName(locale, true));
-				sb.append("', '");
-				sb.append(HtmlUtil.escapeJS(assetEntry.getTitle(locale)));
-				sb.append("', '");
-				sb.append(HtmlUtil.escapeJS(group.getDescriptiveName(locale)));
-				sb.append("');Liferay.Util.getWindow().hide();");
+				<liferay-ui:search-container-column-text
+					href="<%= rowHREF %>"
+					name="title"
+					value="<%= HtmlUtil.escape(assetEntry.getTitle(locale)) %>"
+				/>
 
-				rowHREF = sb.toString();
-			}
+				<liferay-ui:search-container-column-text
+					href="<%= rowHREF %>"
+					name="description"
+					value="<%= HtmlUtil.stripHtml(assetEntry.getDescription(locale)) %>"
+				/>
 
-			// Title
+				<liferay-ui:search-container-column-text
+					href="<%= rowHREF %>"
+					name="userName"
+					value="<%= PortalUtil.getUserName(assetEntry) %>"
+				/>
 
-			row.addText(HtmlUtil.escape(assetEntry.getTitle(locale)), rowHREF);
+				<liferay-ui:search-container-column-date
+					href="<%= rowHREF %>"
+					name="modifiedDate"
+					value="<%= assetEntry.getModifiedDate() %>"
+				/>
 
-			// Description
+				<liferay-ui:search-container-column-text
+					href="<%= rowHREF %>"
+					name="descriptiveName"
+					value="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>"
+				/>
 
-			row.addText(HtmlUtil.stripHtml(assetEntry.getDescription(locale)), rowHREF);
+			</liferay-ui:search-container-row>
 
-			// User name
-
-			row.addText(PortalUtil.getUserName(assetEntry), rowHREF);
-
-			// Modified date
-
-			Date modifiedDate = assetEntry.getModifiedDate();
-
-			row.addDate(modifiedDate, rowHREF);
-
-			// Scope
-
-			row.addText(HtmlUtil.escape(group.getDescriptiveName(locale)), rowHREF);
-
-			// Add result row
-
-			resultRows.add(row);
-		}
-		%>
-
-		<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" />
+			<liferay-ui:search-iterator />
+		</liferay-ui:search-container>
 	</aui:form>
 </div>

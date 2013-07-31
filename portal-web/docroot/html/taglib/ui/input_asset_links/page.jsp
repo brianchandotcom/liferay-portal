@@ -97,12 +97,16 @@ assetBrowserURL.setWindowState(LiferayWindowState.POP_UP);
 
 			data.put("href", assetBrowserURL.toString());
 			data.put("title", LanguageUtil.format(pageContext, "select-x", assetRendererFactory.getTypeName(locale, false)));
+
+			String type = assetRendererFactory.getTypeName(locale, false);
+
 			data.put("type", assetRendererFactory.getClassName());
 		%>
 
 			<liferay-ui:icon
 				cssClass="asset-selector"
 				data="<%= data %>"
+				id="<%= FriendlyURLNormalizerUtil.normalize(type) %>"
 				message="<%= assetRendererFactory.getTypeName(locale, false) %>"
 				src="<%= assetRendererFactory.getIconPath(portletRequest) %>"
 				url="javascript:;"
@@ -197,7 +201,7 @@ assetBrowserURL.setWindowState(LiferayWindowState.POP_UP);
 						width: 900
 					},
 					eventName: '<%= eventName %>',
-					id: '<%= eventName %>' + event.currentTarget.attr('data-type'),
+					id: '<%= eventName %>' + event.currentTarget.attr('id'),
 					title: event.currentTarget.attr('data-title'),
 					uri: event.currentTarget.attr('data-href')
 				},

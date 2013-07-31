@@ -124,8 +124,8 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 						data.put("assetentryid", assetEntry.getEntryId());
 						data.put("assetclassname", assetEntry.getClassName());
 						data.put("assettype", assetRendererFactory.getTypeName(locale, true));
-						data.put("assettitle", HtmlUtil.escapeJS(assetEntry.getTitle(locale)));
-						data.put("groupname", HtmlUtil.escapeJS(group.getDescriptiveName(locale)));
+						data.put("assettitle", HtmlUtil.escape(assetEntry.getTitle(locale)));
+						data.put("groupname", HtmlUtil.escape(group.getDescriptiveName(locale)));
 						%>
 
 						<aui:button cssClass="selector-button" data="<%= data %>" value="choose" />

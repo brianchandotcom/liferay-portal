@@ -270,13 +270,6 @@ String emailBodyParam = emailParam + "Body_" + currentLanguageId;
 </aui:form>
 
 <aui:script use="aui-base">
-	function selectGroup(groupId, name, scopeId, target) {
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = 'add-scope';
-		document.<portlet:namespace />fm.<portlet:namespace />scopeId.value = scopeId;
-
-		submitForm(document.<portlet:namespace />fm);
-	}
-
 	A.getBody().delegate(
 		'click',
 		function(event) {
@@ -297,7 +290,10 @@ String emailBodyParam = emailParam + "Body_" + currentLanguageId;
 					uri: currentTarget.attr('data-href')
 				},
 				function(event) {
-					selectGroup(event.groupid, event.groupname, event.scopeid, event.target);
+					document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = 'add-scope';
+					document.<portlet:namespace />fm.<portlet:namespace />scopeId.value = event.scopeid;
+
+					submitForm(document.<portlet:namespace />fm);
 				}
 			);
 		},

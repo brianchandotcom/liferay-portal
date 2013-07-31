@@ -139,12 +139,16 @@ String eventName = "_" + HtmlUtil.escapeJS(portletResource) + "_selectAsset";
 								data.put("groupid", String.valueOf(groupId));
 								data.put("href", assetBrowserURL.toString());
 								data.put("title", LanguageUtil.format(pageContext, "select-x", curRendererFactory.getTypeName(locale, false)));
-								data.put("type", curRendererFactory.getTypeName(locale, false));
+
+								String type = curRendererFactory.getTypeName(locale, false);
+
+								data.put("type", type);
 							%>
 
 								<liferay-ui:icon
 									cssClass="asset-selector"
 									data="<%= data %>"
+									id="<%= groupId + FriendlyURLNormalizerUtil.normalize(type) %>"
 									message="<%= curRendererFactory.getTypeName(locale, false) %>"
 									src="<%= curRendererFactory.getIconPath(renderRequest) %>"
 									url="javascript:;"
@@ -204,7 +208,7 @@ String eventName = "_" + HtmlUtil.escapeJS(portletResource) + "_selectAsset";
 						width: 900
 					},
 					eventName: '<%= eventName %>',
-					id: '<%= eventName %>_' + currentTarget.attr('data-groupid') + '_' + currentTarget.attr('data-type'),
+					id: '<%= eventName %>' + currentTarget.attr('id'),
 					title: currentTarget.attr('data-title'),
 					uri: currentTarget.attr('data-href')
 				},

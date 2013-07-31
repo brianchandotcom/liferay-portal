@@ -16,7 +16,8 @@
 
 <%@ include file="/html/taglib/init.jsp" %>
 
-<%@ page import="com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil" %><%@
+<%@ page import="com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil" %><%@
+page import="com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil" %><%@
 page import="com.liferay.portlet.asset.model.AssetEntry" %><%@
 page import="com.liferay.portlet.asset.model.AssetLink" %><%@
 page import="com.liferay.portlet.asset.model.AssetRendererFactory" %><%@

@@ -163,6 +163,26 @@ CKEDITOR.config.toolbar_simple = [
 	['Image', 'Link', 'Unlink', 'Table']
 ];
 
+CKEDITOR.config.toolbar_smartphone = [
+	['Bold', 'Italic', 'Underline', 'Strike'],
+	['NumberedList', 'BulletedList'],
+	['Image', 'Link', 'Unlink']
+];
+
+CKEDITOR.config.toolbar_smartphone_small = [
+	['Bold', 'Italic', 'Underline'],
+	['NumberedList', 'BulletedList'],
+	['Image', 'Link', 'Unlink']
+];
+
+CKEDITOR.config.toolbar_tablet = [
+	['Bold', 'Italic', 'Underline', 'Strike'],
+	['NumberedList', 'BulletedList'],
+	['Image', 'Link', 'Unlink'],
+	['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+	['Styles', 'FontSize']
+];
+
 CKEDITOR.on(
 	'dialogDefinition',
 	function(event) {

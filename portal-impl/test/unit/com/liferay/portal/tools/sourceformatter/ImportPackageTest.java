@@ -60,10 +60,10 @@ public class ImportPackageTest {
 	public void testImportSorting() {
 		List<ImportPackage> importPackages = new ArrayList<ImportPackage>();
 
-		ImportPackage graphics2dImportPackage = ImportPackageFactoryUtil.create(
-				"import java.awt.Graphics2D;");
 		ImportPackage graphicsImportPackage = ImportPackageFactoryUtil.create(
-				"import java.awt.Graphics;");
+			"import java.awt.Graphics;");
+		ImportPackage graphics2dImportPackage = ImportPackageFactoryUtil.create(
+			"import java.awt.Graphics2D;");
 		ImportPackage mapEntryImportPackage = ImportPackageFactoryUtil.create(
 			"import java.util.Map.Entry;");
 		ImportPackage mapImportPackage = ImportPackageFactoryUtil.create(

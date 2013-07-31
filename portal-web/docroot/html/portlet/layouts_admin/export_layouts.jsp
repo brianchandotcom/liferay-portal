@@ -389,12 +389,15 @@ portletURL.setParameter("rootNodeName", rootNodeName);
 													portletDataHandler.prepareManifestSummary(portletDataContext);
 
 													long exportModelCount = portletDataHandler.getExportModelCount(manifestSummary);
+
+													long modelDeletionCount = manifestSummary.getModelDeletionCount(portletDataHandler.getDeletionSystemEventStagedModelTypes());
 												%>
 
-													<c:if test="<%= exportModelCount != 0 %>">
+													<c:if test="<%= (exportModelCount != 0) || (modelDeletionCount != 0) %>">
 														<li class="tree-item">
 															<liferay-util:buffer var="badgeHTML">
 																<span class="badge badge-info"><%= exportModelCount > 0 ? exportModelCount : StringPool.BLANK %></span>
+																<span class="badge badge-warning deletions"><%= modelDeletionCount > 0 ? (modelDeletionCount + StringPool.SPACE + LanguageUtil.get(pageContext, "deletions")) : StringPool.BLANK %></span>
 															</liferay-util:buffer>
 
 															<aui:input checked="<%= portletDataHandler.isPublishToLiveByDefault() %>" label="<%= portletTitle + badgeHTML %>" name="<%= PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE + portlet.getPortletId() %>" type="checkbox" />

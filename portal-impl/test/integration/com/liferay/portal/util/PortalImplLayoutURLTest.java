@@ -14,107 +14,79 @@
 
 package com.liferay.portal.util;
 
-import com.liferay.portal.RequiredGroupException;
-import com.liferay.portal.kernel.test.ExecutionTestListeners;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.model.Company;
-import com.liferay.portal.model.Group;
-import com.liferay.portal.model.Layout;
-import com.liferay.portal.model.LayoutSet;
-import com.liferay.portal.service.CompanyLocalServiceUtil;
-import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portal.service.LayoutLocalServiceUtil;
-import com.liferay.portal.service.LayoutSetLocalServiceUtil;
-import com.liferay.portal.service.ServiceTestUtil;
-import com.liferay.portal.test.EnvironmentExecutionTestListener;
-import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.theme.ThemeDisplay;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * @author Vilmos Papp
  * @author Akos Thurzo
  */
-@ExecutionTestListeners(listeners = {EnvironmentExecutionTestListener.class})
-@RunWith(LiferayIntegrationJUnitTestRunner.class)
-public class PortalImplLayoutURLTest {
-
-	@Before
-	public void setUp() throws Exception {
-		company = CompanyLocalServiceUtil.getCompany(
-			TestPropsValues.getCompanyId());
-
-		long controlPanelPlid = PortalUtil.getControlPanelPlid(
-			company.getCompanyId());
-
-		controlPanelLayout = LayoutLocalServiceUtil.getLayout(controlPanelPlid);
-
-		group = GroupTestUtil.addGroup();
-
-		layout = LayoutTestUtil.addLayout(
-			group.getGroupId(), ServiceTestUtil.randomString());
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		try {
-			GroupLocalServiceUtil.deleteGroup(group);
-		}
-		catch (RequiredGroupException rge) {
-			LayoutLocalServiceUtil.deleteLayout(layout);
-		}
-	}
+public class PortalImplLayoutURLTest extends PortalImplBaseURLTestCase {
 
 	@Test
 	public void testFromControlPanel() throws Exception {
 		ThemeDisplay themeDisplay = initThemeDisplay(
-			company, group, layout, _VIRTUAL_HOSTNAME);
+			company, group, layout, VIRTUAL_HOSTNAME);
 
 		String virtualHostnameFriendlyURL = PortalUtil.getLayoutURL(
-			layout, themeDisplay, false);
+			layout, themeDisplay, true);
 
 		themeDisplay = initThemeDisplay(
-			company, group, controlPanelLayout, _VIRTUAL_HOSTNAME);
+			company, group, controlPanelLayout, VIRTUAL_HOSTNAME);
 
 		String controlPanelFriendlyURL = PortalUtil.getLayoutURL(
-			layout, themeDisplay, false);
+			layout, themeDisplay, true);
 
 		Assert.assertEquals(
 			virtualHostnameFriendlyURL, controlPanelFriendlyURL);
 	}
 
 	@Test
-	public void testLayoutSetFriendlyURLPreservesParameters() throws Exception {
+	public void testNotPreservesParameters() throws Exception {
 		ThemeDisplay themeDisplay = initThemeDisplay(
-			company, group, controlPanelLayout, _VIRTUAL_HOSTNAME);
+			company, group, layout, VIRTUAL_HOSTNAME);
 
 		themeDisplay.setDoAsUserId("impersonated");
 
-		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
-			group.getGroupId(), false);
-		String layoutSetFriendlyURL = PortalUtil.getLayoutSetFriendlyURL(
-			layoutSet, themeDisplay);
-		Assert.assertTrue(
-			layoutSetFriendlyURL.contains("doAsUserId=impersonated"));
+		String virtualHostnameFriendlyURL = PortalUtil.getLayoutURL(
+			layout, themeDisplay, false);
+
+		Assert.assertEquals(
+			StringPool.BLANK,
+			HttpUtil.getParameter(virtualHostnameFriendlyURL, "doAsUserId"));
+	}
+
+	@Test
+	public void testPreservesParameters() throws Exception {
+		ThemeDisplay themeDisplay = initThemeDisplay(
+			company, group, layout, VIRTUAL_HOSTNAME);
+
+		themeDisplay.setDoAsUserId("impersonated");
+
+		String virtualHostnameFriendlyURL = PortalUtil.getLayoutURL(
+			layout, themeDisplay, true);
+
+		Assert.assertEquals(
+			"impersonated",
+			HttpUtil.getParameter(virtualHostnameFriendlyURL, "doAsUserId"));
 	}
 
 	@Test
 	public void testUsingLocalhost() throws Exception {
 		ThemeDisplay themeDisplay = initThemeDisplay(
-			company, group, layout, _VIRTUAL_HOSTNAME);
+			company, group, layout, VIRTUAL_HOSTNAME);
 
 		String virtualHostnameFriendlyURL = PortalUtil.getLayoutURL(
-			layout, themeDisplay, false);
+			layout, themeDisplay, true);
 
-		themeDisplay.setServerName(_LOCALHOST);
+		themeDisplay.setServerName(LOCALHOST);
 
 		String localhostFriendlyURL = PortalUtil.getLayoutURL(
-			layout, themeDisplay, false);
+			layout, themeDisplay, true);
 
 		Assert.assertEquals(localhostFriendlyURL, virtualHostnameFriendlyURL);
 	}
@@ -122,15 +94,15 @@ public class PortalImplLayoutURLTest {
 	@Test
 	public void testUsingLocalhostFromControlPanel() throws Exception {
 		ThemeDisplay themeDisplay = initThemeDisplay(
-			company, group, controlPanelLayout, _VIRTUAL_HOSTNAME);
+			company, group, controlPanelLayout, VIRTUAL_HOSTNAME);
 
 		String virtualHostnameFriendlyURL = PortalUtil.getLayoutURL(
-			layout, themeDisplay, false);
+			layout, themeDisplay, true);
 
-		themeDisplay.setServerName(_LOCALHOST);
+		themeDisplay.setServerName(LOCALHOST);
 
 		String localhostFriendlyURL = PortalUtil.getLayoutURL(
-			layout, themeDisplay, false);
+			layout, themeDisplay, true);
 
 		Assert.assertEquals(localhostFriendlyURL, virtualHostnameFriendlyURL);
 	}
@@ -138,52 +110,21 @@ public class PortalImplLayoutURLTest {
 	@Test
 	public void testUsingLocalhostFromControlPanelOnly() throws Exception {
 		ThemeDisplay themeDisplay = initThemeDisplay(
-			company, group, layout, _VIRTUAL_HOSTNAME);
+			company, group, layout, VIRTUAL_HOSTNAME);
 
 		String virtualHostnameFriendlyURL = PortalUtil.getLayoutURL(
-			layout, themeDisplay, false);
+			layout, themeDisplay, true);
 
 		themeDisplay = initThemeDisplay(
-			company, group, controlPanelLayout, _VIRTUAL_HOSTNAME);
+			company, group, controlPanelLayout, VIRTUAL_HOSTNAME);
 
-		themeDisplay.setServerName(_LOCALHOST);
+		themeDisplay.setServerName(LOCALHOST);
 
 		String controlPanelFriendlyURL = PortalUtil.getLayoutURL(
-			layout, themeDisplay, false);
+			layout, themeDisplay, true);
 
 		Assert.assertEquals(
 			virtualHostnameFriendlyURL, controlPanelFriendlyURL);
 	}
-
-	protected ThemeDisplay initThemeDisplay(
-			Company company, Group group, Layout layout, String virtualHostname)
-		throws Exception {
-
-		company.setVirtualHostname(virtualHostname);
-
-		ThemeDisplay themeDisplay = new ThemeDisplay();
-
-		themeDisplay.setCompany(company);
-		themeDisplay.setI18nLanguageId(StringPool.BLANK);
-		themeDisplay.setLayout(layout);
-		themeDisplay.setLayoutSet(layout.getLayoutSet());
-		themeDisplay.setSecure(false);
-		themeDisplay.setServerName(virtualHostname);
-		themeDisplay.setServerPort(8080);
-		themeDisplay.setSiteGroupId(group.getGroupId());
-		themeDisplay.setUser(TestPropsValues.getUser());
-		themeDisplay.setWidget(false);
-
-		return themeDisplay;
-	}
-
-	protected Company company;
-	protected Layout controlPanelLayout;
-	protected Group group;
-	protected Layout layout;
-
-	private static final String _LOCALHOST = "localhost";
-
-	private static final String _VIRTUAL_HOSTNAME = "test.com";
 
 }

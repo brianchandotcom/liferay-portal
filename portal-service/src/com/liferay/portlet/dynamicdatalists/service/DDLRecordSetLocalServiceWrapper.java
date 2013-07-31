@@ -413,6 +413,13 @@ public class DDLRecordSetLocalServiceWrapper implements DDLRecordSetLocalService
 
 	@Override
 	public com.liferay.portlet.dynamicdatalists.model.DDLRecordSet fetchRecordSet(
+		long recordSetId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _ddlRecordSetLocalService.fetchRecordSet(recordSetId);
+	}
+
+	@Override
+	public com.liferay.portlet.dynamicdatalists.model.DDLRecordSet fetchRecordSet(
 		long groupId, java.lang.String recordSetKey)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _ddlRecordSetLocalService.fetchRecordSet(groupId, recordSetKey);

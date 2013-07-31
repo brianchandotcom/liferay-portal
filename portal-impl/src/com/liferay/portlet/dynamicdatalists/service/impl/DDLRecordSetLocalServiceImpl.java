@@ -202,6 +202,13 @@ public class DDLRecordSetLocalServiceImpl
 	}
 
 	@Override
+	public DDLRecordSet fetchRecordSet(long recordSetId)
+		throws SystemException {
+
+		return ddlRecordSetPersistence.fetchByPrimaryKey(recordSetId);
+	}
+
+	@Override
 	public DDLRecordSet fetchRecordSet(long groupId, String recordSetKey)
 		throws SystemException {
 

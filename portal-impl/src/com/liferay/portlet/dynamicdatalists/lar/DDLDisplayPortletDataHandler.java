@@ -85,8 +85,12 @@ public class DDLDisplayPortletDataHandler extends DDLPortletDataHandler {
 
 		Element rootElement = addExportDataRootElement(portletDataContext);
 
-		DDLRecordSet recordSet = DDLRecordSetLocalServiceUtil.getRecordSet(
+		DDLRecordSet recordSet = DDLRecordSetLocalServiceUtil.fetchRecordSet(
 			recordSetId);
+
+		if (recordSet == null) {
+			return getExportDataRootElementString(rootElement);
+		}
 
 		StagedModelDataHandlerUtil.exportStagedModel(
 			portletDataContext, recordSet);

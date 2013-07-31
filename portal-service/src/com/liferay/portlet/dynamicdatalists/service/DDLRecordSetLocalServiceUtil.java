@@ -388,6 +388,12 @@ public class DDLRecordSetLocalServiceUtil {
 	}
 
 	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordSet fetchRecordSet(
+		long recordSetId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().fetchRecordSet(recordSetId);
+	}
+
+	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordSet fetchRecordSet(
 		long groupId, java.lang.String recordSetKey)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().fetchRecordSet(groupId, recordSetKey);

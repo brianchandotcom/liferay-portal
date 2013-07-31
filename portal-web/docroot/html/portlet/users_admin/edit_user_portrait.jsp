@@ -25,9 +25,9 @@ long maxFileSize = PrefsPropsUtil.getLong(PropsKeys.UPLOAD_SERVLET_REQUEST_IMPL_
 <c:choose>
 	<c:when test='<%= SessionMessages.contains(renderRequest, "requestProcessed") %>'>
 		<aui:script>
-			opener.<portlet:namespace />changeLogo('<%= selUser.getPortraitURL(themeDisplay) %>');
+			Liferay.Util.getOpener().<portlet:namespace />changeLogo('<%= selUser.getPortraitURL(themeDisplay) %>');
 
-			window.close();
+			Liferay.Util.getWindow().hide();
 		</aui:script>
 	</c:when>
 	<c:otherwise>

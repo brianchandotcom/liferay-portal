@@ -3049,7 +3049,10 @@ public class PortalImpl implements Portal {
 			friendlyURL = themeDisplay.getI18nPath() + friendlyURL;
 		}
 
-		return _pathContext + friendlyURL + group.getFriendlyURL();
+		String layoutSetFriendlyURL =
+			_pathContext + friendlyURL + group.getFriendlyURL();
+
+		return addPreservedParameters(themeDisplay, layoutSetFriendlyURL);
 	}
 
 	@Override

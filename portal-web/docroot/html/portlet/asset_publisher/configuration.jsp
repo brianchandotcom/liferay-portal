@@ -23,6 +23,8 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 String typeSelection = ParamUtil.getString(request, "typeSelection", StringPool.BLANK);
 
+String eventName = "_" + HtmlUtil.escapeJS(portletResource) + "_selectSite";
+
 List<AssetRendererFactory> classTypesAssetRendererFactories = new ArrayList<AssetRendererFactory>();
 
 String emailParam = "emailAssetEntryAdded";
@@ -133,6 +135,8 @@ String emailBodyParam = emailParam + "Body_" + currentLanguageId;
 				<liferay-ui:icon-menu cssClass="select-existing-selector" direction="right" icon='<%= themeDisplay.getPathThemeImages() + "/common/add.png" %>' message="select" showWhenSingleIcon="<%= true %>">
 
 					<%
+					Map<String, Object> data = new HashMap<String, Object>();
+
 					for (Group group : availableGroups) {
 						if (ArrayUtil.contains(groupIds, group.getGroupId())) {
 							continue;
@@ -171,15 +175,20 @@ String emailBodyParam = emailParam + "Body_" + currentLanguageId;
 						layoutSiteBrowserURL.setWindowState(LiferayWindowState.POP_UP);
 
 						String layoutSiteBrowserURLString = HttpUtil.addParameter(layoutSiteBrowserURL.toString(), "doAsGroupId", scopeGroupId);
+
+						data = new HashMap<String, Object>();
+
+						data.put("href", layoutSiteBrowserURLString);
 						%>
 
 						<liferay-ui:icon
 							cssClass="highlited scope-selector"
+							data="<%= data %>"
 							id="selectGroup"
 							image="add"
 							message='<%= LanguageUtil.get(pageContext, "pages") + StringPool.TRIPLE_PERIOD %>'
 							method="get"
-							url="<%= layoutSiteBrowserURLString %>"
+							url="javascript:;"
 						/>
 					</c:if>
 
@@ -207,6 +216,7 @@ String emailBodyParam = emailParam + "Body_" + currentLanguageId;
 						PortletURL siteBrowserURL = PortletURLFactoryUtil.create(request, PortletKeys.SITE_BROWSER, PortalUtil.getControlPanelPlid(company.getCompanyId()), PortletRequest.RENDER_PHASE);
 
 						siteBrowserURL.setParameter("struts_action", "/site_browser/view");
+						siteBrowserURL.setParameter("eventName", eventName);
 						siteBrowserURL.setParameter("groupId", String.valueOf(layout.getGroupId()));
 						siteBrowserURL.setParameter("selectedGroupIds", StringUtil.merge(groupIds));
 						siteBrowserURL.setParameter("types", StringUtil.merge(types));
@@ -215,15 +225,20 @@ String emailBodyParam = emailParam + "Body_" + currentLanguageId;
 						siteBrowserURL.setWindowState(LiferayWindowState.POP_UP);
 
 						String siteBrowserURLString = HttpUtil.addParameter(siteBrowserURL.toString(), "doAsGroupId", scopeGroupId);
+
+						data = new HashMap<String, Object>();
+
+						data.put("href", siteBrowserURLString);
 						%>
 
 						<liferay-ui:icon
 							cssClass="highlited scope-selector"
+							data="<%= data %>"
 							id="selectManageableGroup"
 							image="add"
 							message='<%= LanguageUtil.get(pageContext, "other-site") + StringPool.TRIPLE_PERIOD %>'
 							method="get"
-							url="<%= siteBrowserURLString %>"
+							url="javascript:;"
 						/>
 					</c:if>
 				</liferay-ui:icon-menu>
@@ -254,18 +269,31 @@ String emailBodyParam = emailParam + "Body_" + currentLanguageId;
 </aui:form>
 
 <aui:script use="aui-base">
+	function selectGroup(groupId, name, scopeId, target) {
+		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = 'add-scope';
+		document.<portlet:namespace />fm.<portlet:namespace />scopeId.value = scopeId;
+
+		submitForm(document.<portlet:namespace />fm);
+	}
+
 	A.getBody().delegate(
 		'click',
 		function(event) {
 			event.preventDefault();
 
-			var link = event.currentTarget;
-
-			Liferay.Util.openWindow(
+			Liferay.Util.selectEntity(
 				{
-					id: link.attr('id'),
-					title: link.html(),
-					uri: link.attr('href')
+					dialog: {
+						constrain: true,
+						modal: true,
+						width: 600
+					},
+					id: '<%= eventName %>',
+					title: '<liferay-ui:message key="other-site" /><%= StringPool.TRIPLE_PERIOD %>',
+					uri: event.currentTarget.attr('data-href')
+				},
+				function(event) {
+					selectGroup(event.groupid, event.groupname, event.scopeid, event.target);
 				}
 			);
 		},
@@ -298,13 +326,6 @@ String emailBodyParam = emailParam + "Body_" + currentLanguageId;
 		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = 'add-selection';
 		document.<portlet:namespace />fm.<portlet:namespace />assetEntryId.value = assetEntryId;
 		document.<portlet:namespace />fm.<portlet:namespace />assetEntryType.value = assetClassName;
-
-		submitForm(document.<portlet:namespace />fm);
-	}
-
-	function <portlet:namespace />selectGroup(groupId, name, scopeId, target) {
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = 'add-scope';
-		document.<portlet:namespace />fm.<portlet:namespace />scopeId.value = scopeId;
 
 		submitForm(document.<portlet:namespace />fm);
 	}

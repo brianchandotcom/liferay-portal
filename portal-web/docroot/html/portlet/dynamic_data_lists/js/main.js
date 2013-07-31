@@ -701,8 +701,6 @@ AUI.add(
 
 					previewDialog.set('bodyContent', content);
 				}
-
-				return previewDialog;
 			}
 		};
 

@@ -46,12 +46,14 @@ AUI.add(
 			]
 		);
 
+		var STR_BLANK = '';
+
 		var TPL_CHECKED = ' checked="checked" ';
 
 		var TPL_LOADING = '<div class="loading-animation" />';
 
 		var TPL_TAG = new A.Template(
-			'<fieldset class="{[(!values.tags || !values.tags.length) ? "', CSS_NO_MATCHES, '" : "', STR_BLANK ,'" ]}">',
+			'<fieldset class="{[(!values.tags || !values.tags.length) ? "', CSS_NO_MATCHES, '" : "', STR_BLANK, '" ]}">',
 				'<tpl for="tags">',
 					'<label title="{name}"><input {checked} type="checkbox" value="{name}" />{name}</label>',
 				'</tpl>',
@@ -62,8 +64,6 @@ AUI.add(
 		var TPL_URL_SUGGESTIONS = 'http://search.yahooapis.com/ContentAnalysisService/V1/termExtraction?appid=YahooDemo&output=json&context={context}';
 
 		var TPL_TAGS_CONTAINER = '<div class="' + CSS_TAGS_LIST + '"></div>';
-
-		var STR_BLANK = '';
 
 		/**
 		 * OPTIONS
@@ -483,7 +483,7 @@ AUI.add(
 
 						var popup = instance._popup;
 
-						var tplTag = TPL_TAG.render(
+						TPL_TAG.render(
 							{
 								checked: data.checked,
 								message: Liferay.Language.get('no-tags-found'),
@@ -566,7 +566,7 @@ AUI.add(
 									success: function(event, id, obj) {
 										var results = this.get('responseData');
 
-											var resultData = results && results.ResultSet && results.ResultSet.Result;
+										var resultData = results && results.ResultSet && results.ResultSet.Result;
 
 										if (resultData) {
 											for (var i = 0; i < resultData.length; i++) {

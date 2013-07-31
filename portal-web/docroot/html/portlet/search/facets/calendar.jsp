@@ -24,6 +24,10 @@ String dateString = StringPool.BLANK;
 
 Calendar cal = Calendar.getInstance();
 
+Calendar localeCal = CalendarFactoryUtil.getCalendar(timeZone, locale);
+
+int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
+
 if (Validator.isNotNull(fieldParam)) {
 	DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat("yyyyMMddHHmmss", timeZone);
 
@@ -170,7 +174,8 @@ if (Validator.isNotNull(fieldParam)) {
 			allowNone: true,
 			dateFormat: '%Y%m%d000000',
 			dates: [<%= dateString %>],
-			firstDayOfWeek: 0,
+			firstDayOfWeek: <%= firstDayOfWeek %>,
+			locale: '<%= locale %>',
 			maxDate: now,
 			minDate: A.DataType.DateMath.subtract(now, A.DataType.DateMath.YEAR, 2),
 			selectMultipleDates: true,

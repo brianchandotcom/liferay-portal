@@ -30,6 +30,10 @@ int index = 0;
 if (fieldParamSelection.equals("0")) {
 	modifiedLabel = LanguageUtil.get(pageContext, "any-time");
 }
+
+Calendar localeCal = CalendarFactoryUtil.getCalendar(timeZone, locale);
+
+int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
 %>
 
 <div class="<%= cssClass %>" data-facetFieldName="<%= facet.getFieldId() %>" id="<%= randomNamespace %>facet">
@@ -295,6 +299,10 @@ if (fieldParamSelection.equals("0")) {
 			calendar: {
 				dateFormat: '%Y-%m-%d',
 
+				firstDayOfWeek: <%= firstDayOfWeek %>,
+
+				locale: '<%= locale %>',
+
 				<c:if test='<%= fieldParamSelection.equals("6") && Validator.isNotNull(fieldParamFrom) %>'>
 					selectedDates: [
 
@@ -328,6 +336,10 @@ if (fieldParamSelection.equals("0")) {
 			},
 			calendar: {
 				dateFormat: '%Y-%m-%d',
+
+				firstDayOfWeek: <%= firstDayOfWeek %>,
+
+				locale: '<%= locale %>',
 
 				<c:if test='<%= fieldParamSelection.equals("6") && Validator.isNotNull(fieldParamTo) %>'>
 					selectedDates: [

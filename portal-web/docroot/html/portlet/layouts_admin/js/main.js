@@ -935,6 +935,19 @@ AUI.add(
 							var deletionsNode = instance.get('deletionsNode');
 
 							selectedContentOptions.push(deletionsNode.attr('data-name'));
+
+							instance.all('.deletions').each(
+								function(item, index, collection) {
+									item.show();
+								}
+							);
+						}
+						else {
+							instance.all('.deletions').each(
+								function(item, index, collection) {
+									item.hide();
+								}
+							);
 						}
 
 						instance._setLabels('contentOptionsLink', 'selectedContentOptions', selectedContentOptions.join(', '));

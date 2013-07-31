@@ -67,7 +67,7 @@ if ((article != null) && article.isDraft()) {
 					click: function(event) {
 						event.domEvent.preventDefault();
 
-						if (previewArticleContentURL && !(typeof CKEDITOR === 'undefined') && !CKEDITOR.instances.<portlet:namespace />articleContent.checkDirty()) {
+						if (((typeof CKEDITOR === 'undefined') && previewArticleContentURL) || (!(typeof CKEDITOR === 'undefined') && !CKEDITOR.instances.<portlet:namespace />articleContent.checkDirty())) {
 							Liferay.fire(
 								'previewArticle',
 								{

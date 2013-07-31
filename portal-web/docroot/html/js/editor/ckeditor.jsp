@@ -211,17 +211,14 @@ if (inlineEdit && (inlineEditSaveURL != null)) {
 		function getToolbarSet(toolbarSet) {
 			var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
 
-			if (width < 360) {
-				toolbarSet = 'smartphone_small'
-			}
-			else if (width < 768) {
-				toolbarSet = 'smartphone';
+			if (width < 768) {
+				toolbarSet = 'phone';
 			}
 			else if (width < 980) {
 				toolbarSet = 'tablet';
 			}
 
-	        return toolbarSet;
+			return toolbarSet;
 		}
 
 		function initData() {

@@ -88,10 +88,10 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		String line = null;
 
 		while ((line = unsyncBufferedReader.readLine()) != null) {
-			ImportPackage importPackage = new ImportPackage(line);
+			ImportPackage importPackage = ImportPackageFactoryUtil.create(line);
 
-			if (Validator.isNotNull(importPackage.getImport()) &&
-				!importPackages.contains(line)) {
+			if ((importPackage != null) &&
+				!importPackages.contains(importPackage)) {
 
 				importPackages.add(importPackage);
 			}

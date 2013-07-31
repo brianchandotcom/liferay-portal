@@ -29,9 +29,9 @@ public class ImportPackageTest {
 
 	@Test
 	public void testContains() {
-		ImportPackage importPackage = new ImportPackage(
+		ImportPackage importPackage = ImportPackageFactoryUtil.create(
 			_ARRAYS_IMPORT_STATEMENT);
-		ImportPackage importPackage2 = new ImportPackage(
+		ImportPackage importPackage2 = ImportPackageFactoryUtil.create(
 			_ARRAYS_IMPORT_STATEMENT);
 
 		List<ImportPackage> importPackages = new ArrayList<ImportPackage>();
@@ -47,10 +47,10 @@ public class ImportPackageTest {
 
 	@Test
 	public void testEquals() {
-		ImportPackage importPackage = new ImportPackage(
+		ImportPackage importPackage = ImportPackageFactoryUtil.create(
 			_ARRAYS_IMPORT_STATEMENT);
 
-		ImportPackage importPackage2 = new ImportPackage(
+		ImportPackage importPackage2 = ImportPackageFactoryUtil.create(
 			_ARRAYS_IMPORT_STATEMENT);
 
 		Assert.assertEquals(importPackage, importPackage2);
@@ -60,14 +60,14 @@ public class ImportPackageTest {
 	public void testImportSorting() {
 		List<ImportPackage> importPackages = new ArrayList<ImportPackage>();
 
-		ImportPackage mapEntryImportPackage = new ImportPackage(
-			"import java.util.Map.Entry;");
-		ImportPackage mapImportPackage = new ImportPackage(
-			"import java.util.Map;");
-		ImportPackage graphicsImportPackage = new ImportPackage(
+		ImportPackage graphicsImportPackage = ImportPackageFactoryUtil.create(
 			"import java.awt.Graphics;");
-		ImportPackage graphics2dImportPackage = new ImportPackage(
+		ImportPackage graphics2dImportPackage = ImportPackageFactoryUtil.create(
 			"import java.awt.Graphics2D;");
+		ImportPackage mapEntryImportPackage = ImportPackageFactoryUtil.create(
+			"import java.util.Map.Entry;");
+		ImportPackage mapImportPackage = ImportPackageFactoryUtil.create(
+			"import java.util.Map;");
 
 		importPackages.add(graphicsImportPackage);
 		importPackages.add(graphics2dImportPackage);

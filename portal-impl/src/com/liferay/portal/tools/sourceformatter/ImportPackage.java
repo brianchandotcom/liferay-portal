@@ -14,35 +14,10 @@
 
 package com.liferay.portal.tools.sourceformatter;
 
-import com.liferay.portal.kernel.util.Validator;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 /**
  * @author Carlos Sierra Andrés
  */
 public class ImportPackage implements Comparable<ImportPackage> {
-
-	public ImportPackage(String line) {
-		if (Validator.isNull(line)) {
-			return;
-		}
-
-		_line = line;
-
-		Matcher javaMatcher = _javaImportPattern.matcher(line);
-
-		if (javaMatcher.find()) {
-			_import = javaMatcher.group(1);
-		}
-
-		Matcher jspMatcher = _jspImportPattern.matcher(line);
-
-		if (jspMatcher.find()) {
-			_import = jspMatcher.group(1);
-		}
-	}
 
 	@Override
 	public int compareTo(ImportPackage importPackage) {
@@ -61,11 +36,7 @@ public class ImportPackage implements Comparable<ImportPackage> {
 
 		ImportPackage importPackage = (ImportPackage)obj;
 
-		if (Validator.equals(_import, importPackage._import)) {
-			return true;
-		}
-
-		return false;
+		return _import.equals(importPackage._import);
 	}
 
 	public String getImport() {
@@ -81,10 +52,10 @@ public class ImportPackage implements Comparable<ImportPackage> {
 		return _import.hashCode();
 	}
 
-	private static final Pattern _javaImportPattern = Pattern.compile(
-		"import ([^\\s;]+)");
-	private static final Pattern _jspImportPattern = Pattern.compile(
-		"import=\"([^\\s\"]+)\"");
+	protected ImportPackage(String importString, String line) {
+		_import = importString;
+		_line = line;
+	}
 
 	private String _import;
 	private String _line;

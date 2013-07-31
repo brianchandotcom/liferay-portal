@@ -82,7 +82,6 @@ public class SessionAuthToken implements AuthToken {
 		if (!csrfToken.equals(sessionToken)) {
 			throw new PrincipalException("Invalid authentication token");
 		}
-
 	}
 
 	@Override

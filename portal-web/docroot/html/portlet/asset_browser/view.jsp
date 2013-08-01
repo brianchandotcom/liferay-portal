@@ -69,7 +69,6 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 			<liferay-ui:search-container-row
 				className="com.liferay.portal.kernel.search.Document"
 				escapedModel="<%= true %>"
-				keyProperty="entryId"
 				modelVar="doc"
 			>
 

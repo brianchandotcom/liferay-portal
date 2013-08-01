@@ -14,6 +14,8 @@
 
 package com.liferay.portal.security.membershippolicy.util;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -45,6 +47,8 @@ import com.liferay.portlet.asset.model.AssetVocabulary;
 import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
+import com.liferay.portlet.expando.model.ExpandoBridge;
+import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
 
 import java.io.Serializable;
 
@@ -74,7 +78,7 @@ public class MembershipPolicyTestUtil {
 			GroupConstants.DEFAULT_LIVE_GROUP_ID, name, "This is a test group",
 			GroupConstants.TYPE_SITE_OPEN, true,
 			GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, friendlyURL, true,
-			true, populateServiceContext(true));
+			true, populateServiceContext(Group.class.getName(), true));
 	}
 
 	public static Organization addOrganization() throws Exception {
@@ -84,7 +88,7 @@ public class MembershipPolicyTestUtil {
 			OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID, name,
 			OrganizationConstants.TYPE_REGULAR_ORGANIZATION, 0, 0,
 			ListTypeConstants.ORGANIZATION_STATUS_DEFAULT, StringPool.BLANK,
-			false, populateServiceContext(true));
+			false, populateServiceContext(Organization.class.getName(), true));
 	}
 
 	public static Role addRole(int type) throws Exception {
@@ -93,7 +97,8 @@ public class MembershipPolicyTestUtil {
 		return RoleServiceUtil.addRole(
 			null, 0, name, ServiceTestUtil.randomLocaleStringMap(),
 			ServiceTestUtil.randomLocaleStringMap(), type,
-			ServiceTestUtil.randomString(), populateServiceContext(false));
+			ServiceTestUtil.randomString(),
+			populateServiceContext(Role.class.getName(), false));
 	}
 
 	public static User addUser(
@@ -138,7 +143,8 @@ public class MembershipPolicyTestUtil {
 		String description = ServiceTestUtil.randomString(50);
 
 		return UserGroupServiceUtil.addUserGroup(
-			name, description, populateServiceContext(false));
+			name, description, populateServiceContext(
+				UserGroup.class.getName(), false));
 	}
 
 	public static void updateUser(
@@ -209,9 +215,19 @@ public class MembershipPolicyTestUtil {
 			announcementsDelivers, serviceContext);
 	}
 
-	protected static Map<String, Serializable> addExpandoMap() {
+	protected static Map<String, Serializable> addExpandoMap(String className)
+		throws PortalException, SystemException {
+
 		Map<String, Serializable> expandoMap =
 			new HashMap<String, Serializable>();
+
+		ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(
+			TestPropsValues.getCompanyId(), className);
+
+		expandoBridge.addAttribute("key1", false);
+		expandoBridge.addAttribute("key2", false);
+		expandoBridge.addAttribute("key3", false);
+		expandoBridge.addAttribute("key4", false);
 
 		expandoMap.put("key1", "value1");
 		expandoMap.put("key2", "value2");
@@ -222,7 +238,7 @@ public class MembershipPolicyTestUtil {
 	}
 
 	protected static ServiceContext populateServiceContext(
-			boolean includeCategorization)
+			String className, boolean includeCategorization)
 		throws Exception {
 
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
@@ -250,7 +266,7 @@ public class MembershipPolicyTestUtil {
 				new long[]{category.getCategoryId()});
 		}
 
-		serviceContext.setExpandoBridgeAttributes(addExpandoMap());
+		serviceContext.setExpandoBridgeAttributes(addExpandoMap(className));
 
 		return serviceContext;
 	}

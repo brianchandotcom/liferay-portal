@@ -99,7 +99,7 @@ public class SampleSQLBuilder {
 
 		// Generic
 
-		CharPipe charPipe = generateSQL();
+		Reader reader = generateSQL();
 
 		String endSQLFileName = "others.sql";
 		File tempDir = new File(_outputDir, "temp");
@@ -110,7 +110,7 @@ public class SampleSQLBuilder {
 
 			// Specific
 
-			compressSQL(charPipe.getReader(), tempDir, endSQLFileName);
+			compressSQL(reader, tempDir, endSQLFileName);
 
 			// Merge
 
@@ -293,9 +293,8 @@ public class SampleSQLBuilder {
 		inputFileChannel.close();
 	}
 
-	protected CharPipe generateSQL() {
+	protected Reader generateSQL() {
 		final CharPipe charPipe = new CharPipe(_PIPE_BUFFER_SIZE);
-		final Writer writer = createUnsyncBufferedWriter(charPipe.getWriter());
 
 		Thread thread = new Thread() {
 
@@ -303,7 +302,7 @@ public class SampleSQLBuilder {
 			public void run() {
 				try {
 					Writer writerSampleSQL = new UnsyncTeeWriter(
-						writer,
+						createUnsyncBufferedWriter(charPipe.getWriter()),
 						createFileWriter(new File(_outputDir, "sample.sql")));
 
 					Map<String, Object> context = getContext();
@@ -330,7 +329,7 @@ public class SampleSQLBuilder {
 
 		thread.start();
 
-		return charPipe;
+		return charPipe.getReader();
 	}
 
 	protected Map<String, Object> getContext() throws Exception {

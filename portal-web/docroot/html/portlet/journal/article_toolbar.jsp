@@ -48,16 +48,29 @@ if ((article != null) && article.isDraft()) {
 		</liferay-portlet:renderURL>
 
 		var previewArticleContentURL = '<%= previewArticleContentURL %>';
+		var hasChangedForm = false;
 
 		var form = A.one(document.<portlet:namespace />fm1);
 
 		form.delegate(
 			'change',
 			function(event) {
-				previewArticleContentURL = null;
+				hasChangedForm = true;
 			},
 			':input'
 		);
+
+		function hasUnsavedChanges() {
+			if (hasChangedForm) {
+		    	return true;
+			}
+
+			if (typeof CKEDITOR !== 'undefined') {
+				return CKEDITOR.instances.<portlet:namespace />articleContent.checkDirty();
+			}
+
+			return false;
+		}
 
 		toolbarButtonGroup.push(
 			{
@@ -67,7 +80,7 @@ if ((article != null) && article.isDraft()) {
 					click: function(event) {
 						event.domEvent.preventDefault();
 
-						if (((typeof CKEDITOR === 'undefined') && previewArticleContentURL) || (!(typeof CKEDITOR === 'undefined') && !CKEDITOR.instances.<portlet:namespace />articleContent.checkDirty())) {
+						if (!hasUnsavedChanges()) {
 							Liferay.fire(
 								'previewArticle',
 								{

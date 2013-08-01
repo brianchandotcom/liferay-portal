@@ -10,7 +10,7 @@
 
 <#assign fieldType = "cur_record.getFieldType(\"" + name + "\")">
 
-<#assign fieldValue = "cur_record.getFieldValue(\"" + name + "\")">
+<#assign fieldValue = "cur_record.getFieldValue(\"" + name + "\", " + localeVariable + ")">
 
 <#if repeatable>
 	<#assign fieldValue = "curValue_" + name>

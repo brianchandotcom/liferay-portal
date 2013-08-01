@@ -21,11 +21,11 @@ Layout exportableLayout = ExportImportHelperUtil.getExportableLayout(themeDispla
 
 PortletURL portletURL = currentURLObj;
 
-portletURL.setParameter("tabs3", "all-export-processes");
+portletURL.setParameter("tabs3", "current-and-previous");
 %>
 
 <liferay-ui:tabs
-	names="new-export-process,all-export-processes"
+	names="new-export-process,current-and-previous"
 	param="tabs3"
 	refresh="<%= false %>"
 >

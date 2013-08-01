@@ -178,7 +178,7 @@ portletURL.setParameter("privateLayout", String.valueOf(privateLayout));
 PortletURL renderURL = renderResponse.createRenderURL();
 
 renderURL.setParameter("struts_action", "/layouts_admin/publish_layouts");
-renderURL.setParameter("tabs2", "all-publication-processes");
+renderURL.setParameter("tabs2", "current-and-previous");
 renderURL.setParameter("closeRedirect", closeRedirect);
 renderURL.setParameter("groupId", String.valueOf(stagingGroupId));
 renderURL.setParameter("privateLayout", String.valueOf(privateLayout));
@@ -220,7 +220,7 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 </c:if>
 
 <liferay-ui:tabs
-	names="new-publication-process,all-publication-processes,scheduled-events"
+	names="new-publication-process,current-and-previous,scheduled"
 	param="tabs2"
 	refresh="<%= false %>"
 >

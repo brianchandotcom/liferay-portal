@@ -25,7 +25,7 @@ boolean localPublishing = ParamUtil.getBoolean(request, "localPublishing");
 PortletURL renderURL = liferayPortletResponse.createRenderURL();
 
 renderURL.setParameter("struts_action", "/layouts_admin/publish_layouts");
-renderURL.setParameter("tabs2", "all-publication-processes");
+renderURL.setParameter("tabs2", "current-and-previous");
 renderURL.setParameter("closeRedirect", closeRedirect);
 renderURL.setParameter("groupId", String.valueOf(groupId));
 renderURL.setParameter("localPublishing", String.valueOf(localPublishing));

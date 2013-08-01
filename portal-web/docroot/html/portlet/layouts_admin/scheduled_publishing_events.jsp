@@ -31,7 +31,7 @@ headerNames.add("end-date");
 headerNames.add(StringPool.BLANK);
 
 searchContainer.setHeaderNames(headerNames);
-searchContainer.setEmptyResultsMessage("there-are-no-scheduled-events");
+searchContainer.setEmptyResultsMessage("there-are-no-scheduled-publication-processes");
 
 List<SchedulerResponse> scheduledJobs = SchedulerEngineHelperUtil.getScheduledJobs(StagingUtil.getSchedulerGroupName(destinationName, groupId), StorageType.PERSISTED);
 

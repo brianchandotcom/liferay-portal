@@ -14,10 +14,15 @@
 
 package com.liferay.portal.util;
 
+import com.liferay.portal.kernel.cache.Lifecycle;
+import com.liferay.portal.kernel.cache.ThreadLocalCacheManager;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
@@ -26,6 +31,7 @@ import com.liferay.portal.service.GroupServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
 
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -150,6 +156,40 @@ public class GroupTestUtil {
 		StagingUtil.enableLocalStaging(
 			TestPropsValues.getUserId(), group, group, false, false,
 			serviceContext);
+	}
+
+	public static Group updateDisplaySettings(
+			long groupId, Locale[] availableLocales, Locale defaultLocale)
+		throws Exception {
+
+		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
+
+		boolean inheritLocales = false;
+
+		if ((availableLocales == null) && (defaultLocale == null)) {
+			inheritLocales = true;
+		}
+
+		typeSettingsProperties.put(
+			"inheritLocales", String.valueOf(inheritLocales));
+
+		if (availableLocales != null) {
+			typeSettingsProperties.put(
+				com.liferay.portal.kernel.util.PropsKeys.LOCALES,
+				StringUtil.merge(LocaleUtil.toLanguageIds(availableLocales)));
+		}
+
+		if (defaultLocale != null) {
+			typeSettingsProperties.put(
+				"languageId", LocaleUtil.toLanguageId(defaultLocale));
+		}
+
+		Group group = GroupLocalServiceUtil.updateGroup(
+			groupId, typeSettingsProperties.toString());
+
+		ThreadLocalCacheManager.clearAll(Lifecycle.REQUEST);
+
+		return group;
 	}
 
 }

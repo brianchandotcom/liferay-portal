@@ -358,8 +358,10 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 								<aui:option label="publish-date" selected='<%= orderByColumn1.equals("publishDate") %>' value="publishDate" />
 								<aui:option label="expiration-date" selected='<%= orderByColumn1.equals("expirationDate") %>' value="expirationDate" />
 								<aui:option label="priority" selected='<%= orderByColumn1.equals("priority") %>' value="priority" />
-								<aui:option label="view-count" selected='<%= orderByColumn1.equals("viewCount") %>' value="viewCount" />
-								<aui:option label="ratings" selected='<%= orderByColumn1.equals("ratings") %>' value="ratings" />
+								<c:if test="<%= !PropsValues.ASSET_PUBLISHER_SEARCH_WITH_INDEX %>">
+									<aui:option label="view-count" selected='<%= orderByColumn1.equals("viewCount") %>' value="viewCount" />
+									<aui:option label="ratings" selected='<%= orderByColumn1.equals("ratings") %>' value="ratings" />
+								</c:if>
 							</aui:select>
 
 							<aui:select inlineField="<%= true %>" label="" name="preferences--orderByType1--">
@@ -376,8 +378,10 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 								<aui:option label="publish-date" selected='<%= orderByColumn2.equals("publishDate") %>' value="publishDate" />
 								<aui:option label="expiration-date" selected='<%= orderByColumn2.equals("expirationDate") %>' value="expirationDate" />
 								<aui:option label="priority" selected='<%= orderByColumn2.equals("priority") %>' value="priority" />
-								<aui:option label="view-count" selected='<%= orderByColumn2.equals("viewCount") %>' value="viewCount" />
-								<aui:option label="ratings" selected='<%= orderByColumn2.equals("ratings") %>' value="ratings" />
+								<c:if test="<%= !PropsValues.ASSET_PUBLISHER_SEARCH_WITH_INDEX %>">
+									<aui:option label="view-count" selected='<%= orderByColumn2.equals("viewCount") %>' value="viewCount" />
+									<aui:option label="ratings" selected='<%= orderByColumn2.equals("ratings") %>' value="ratings" />
+								</c:if>
 							</aui:select>
 
 							<aui:select inlineField="<%= true %>" label="" name="preferences--orderByType2--">

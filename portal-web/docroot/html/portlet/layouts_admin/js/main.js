@@ -1156,26 +1156,23 @@ AUI.add(
 						instance._setLabels('remoteLink', 'selectedRemote', selectedRemote.join(', '));
 					},
 
-					_updateUncompletedProcessMessage: function(isInProgress, content) {
+					_updateUncompletedProcessMessage: function(inProgress, content) {
 						var instance = this;
 
 						var uncompletedProcessMessageNode = instance.get('uncompletedProcessMessageNode');
 
-						if (!uncompletedProcessMessageNode) {
-							return;
-						}
+						if (uncompletedProcessMessageNode) {
+							content.show();
 
-						content.show();
+							if (inProgress || uncompletedProcessMessageNode.hasClass('in-progress')) {
+								uncompletedProcessMessageNode.setContent(content);
 
-						if (isInProgress) {
-							uncompletedProcessMessageNode.addClass('in-progress');
+								if (inProgress) {
+									uncompletedProcessMessageNode.addClass('in-progress');
 
-							uncompletedProcessMessageNode.setContent(content);
-
-							uncompletedProcessMessageNode.show();
-						}
-						else if (uncompletedProcessMessageNode.hasClass('in-progress')) {
-							uncompletedProcessMessageNode.setContent(content);
+									uncompletedProcessMessageNode.show();
+								}
+							}
 						}
 					}
 				}

@@ -105,7 +105,11 @@ else {
 </liferay-ui:error>
 
 <aui:fieldset>
+	<!-- LPS-38289 -->
+
 	<input class="hide" />
+
+	<!-- /LPS-38289 -->
 
 	<c:if test="<%= portletName.equals(PortletKeys.MY_ACCOUNT) %>">
 		<aui:input autocomplete="off" label="current-password" name="password0" size="30" type="password" />

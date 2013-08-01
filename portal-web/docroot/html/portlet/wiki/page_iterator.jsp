@@ -313,7 +313,11 @@ for (int i = 0; i < results.size(); i++) {
 	</liferay-util:buffer>
 
 	<%
-	row.addText(wikiPageStatus);
+	TextSearchEntry wikiPageTextSearchEntry = new TextSearchEntry();
+
+	wikiPageTextSearchEntry.setName(wikiPageStatus);
+
+	row.addSearchEntry(wikiPageTextSearchEntry);
 
 	// Revision
 

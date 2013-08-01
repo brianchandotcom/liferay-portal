@@ -195,10 +195,11 @@ public class BlogsEntryServiceUtil {
 			themeDisplay);
 	}
 
-	public static void moveEntryToTrash(long entryId)
+	public static com.liferay.portlet.blogs.model.BlogsEntry moveEntryToTrash(
+		long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().moveEntryToTrash(entryId);
+		return getService().moveEntryToTrash(entryId);
 	}
 
 	public static void restoreEntryFromTrash(long entryId)

@@ -375,13 +375,13 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 	}
 
 	@Override
-	public void moveEntryToTrash(long entryId)
+	public BlogsEntry moveEntryToTrash(long entryId)
 		throws PortalException, SystemException {
 
 		BlogsEntryPermission.check(
 			getPermissionChecker(), entryId, ActionKeys.DELETE);
 
-		blogsEntryLocalService.moveEntryToTrash(getUserId(), entryId);
+		return blogsEntryLocalService.moveEntryToTrash(getUserId(), entryId);
 	}
 
 	@Override

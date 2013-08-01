@@ -235,7 +235,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 											</ul>
 										</div>
 
-										<ul id="<portlet:namespace />showChangeContent">
+										<ul id="<portlet:namespace />showChangeContent_<%= selPortlet.getRootPortletId() %>">
 											<li class="tree-item">
 												<span class="selected-labels" id="<portlet:namespace />selectedContent_<%= selPortlet.getRootPortletId() %>"></span>
 
@@ -250,7 +250,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 										</ul>
 
 										<aui:script>
-											Liferay.Util.toggleBoxes('<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE + selPortlet.getRootPortletId() %>Checkbox', '<portlet:namespace />showChangeContent');
+											Liferay.Util.toggleBoxes('<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE + selPortlet.getRootPortletId() %>Checkbox', '<portlet:namespace />showChangeContent<%= StringPool.UNDERLINE + selPortlet.getRootPortletId() %>');
 										</aui:script>
 
 									<%

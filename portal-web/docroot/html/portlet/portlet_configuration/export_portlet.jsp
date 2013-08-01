@@ -304,7 +304,7 @@ portletURL.setParameter("tabs3", "all-export-processes");
 														</ul>
 													</div>
 
-													<ul id="<portlet:namespace />showChangeContent">
+													<ul id="<portlet:namespace />showChangeContent_<%= selPortlet.getRootPortletId() %>">
 														<li>
 															<span class="selected-labels" id="<portlet:namespace />selectedContent_<%= selPortlet.getRootPortletId() %>"></span>
 
@@ -319,7 +319,7 @@ portletURL.setParameter("tabs3", "all-export-processes");
 													</ul>
 
 													<aui:script>
-														Liferay.Util.toggleBoxes('<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE + selPortlet.getRootPortletId() %>Checkbox', '<portlet:namespace />showChangeContent');
+														Liferay.Util.toggleBoxes('<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE + selPortlet.getRootPortletId() %>Checkbox', '<portlet:namespace />showChangeContent<%= StringPool.UNDERLINE + selPortlet.getRootPortletId() %>');
 													</aui:script>
 
 												<%

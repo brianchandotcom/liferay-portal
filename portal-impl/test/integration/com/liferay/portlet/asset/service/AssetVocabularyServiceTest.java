@@ -33,7 +33,9 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -48,6 +50,16 @@ import org.junit.runner.RunWith;
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Transactional
 public class AssetVocabularyServiceTest {
+
+	@Before
+	public void setUp() {
+		_locale = LocaleThreadLocal.getSiteDefaultLocale();
+	}
+
+	@After
+	public void tearDown() {
+		LocaleThreadLocal.setSiteDefaultLocale(_locale);
+	}
 
 	@Test
 	public void testLocalizedSiteAddDefaultVocabulary() throws Exception {
@@ -138,5 +150,7 @@ public class AssetVocabularyServiceTest {
 
 		Assert.assertEquals(title, assetVocabulary.getName());
 	}
+
+	private Locale _locale;
 
 }

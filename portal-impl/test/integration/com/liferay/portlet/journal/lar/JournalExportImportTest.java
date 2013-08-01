@@ -98,6 +98,12 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 			ServiceTestUtil.randomString());
 	}
 
+	@Override
+	protected void deleteStagedModel(StagedModel stagedModel) throws Exception {
+		JournalArticleLocalServiceUtil.deleteArticle(
+			(JournalArticle)stagedModel);
+	}
+
 	protected void exportImportJournalArticle(
 			boolean structuredContent, boolean companyScopeDependencies)
 		throws Exception {

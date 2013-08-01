@@ -16,6 +16,7 @@ package com.liferay.portal.servlet.filters.aggregate;
 
 /**
  * @author Raymond Augé
+ * @author Eduardo Lundgren
  */
 public interface AggregateContext {
 
@@ -23,8 +24,14 @@ public interface AggregateContext {
 
 	public String getFullPath(String path);
 
-	public void popPath(String path);
+	public String getResourcePath(String path);
+
+	public String popPath();
 
 	public void pushPath(String path);
+
+	public String shiftPath();
+
+	public void unshiftPath(String path);
 
 }

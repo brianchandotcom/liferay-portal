@@ -171,14 +171,19 @@ public class DynamicCSSUtil {
 			return content;
 		}
 
+		String contextPath = PortalUtil.getPathContext();
+
+		if (contextPath.endsWith(StringPool.SLASH)) {
+			contextPath = contextPath.substring(0, contextPath.length() - 1);
+		}
+
 		parsedContent = StringUtil.replace(
 			parsedContent,
 			new String[] {
 				"@portal_ctx@", "@theme_image_path@"
 			},
 			new String[] {
-				PortalUtil.getPathContext(),
-				_getThemeImagesPath(request, themeDisplay, theme)
+				contextPath, _getThemeImagesPath(request, themeDisplay, theme)
 			});
 
 		return parsedContent;

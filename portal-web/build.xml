@@ -480,9 +480,10 @@
 			newenvironment="true"
 		>
 			<jvmarg value="-Dliferay.lib.portal.dir=${basedir}/../lib/portal" />
-			<arg value="sass.dir.0=${basedir}/docroot/html/css" />
-			<arg value="sass.dir.1=${basedir}/docroot/html/portlet" />
-			<arg value="sass.dir.2=${basedir}/docroot/html/themes" />
+			<arg value="docroot=${basedir}/docroot" />
+			<arg value="sass.dir.0=/html/css" />
+			<arg value="sass.dir.1=/html/portlet" />
+			<arg value="sass.dir.2=/html/themes" />
 		</java>
 	</target>
 

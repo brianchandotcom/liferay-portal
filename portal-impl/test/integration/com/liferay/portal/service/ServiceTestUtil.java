@@ -348,6 +348,20 @@ public class ServiceTestUtil {
 		return _random.nextBoolean();
 	}
 
+	public static int randomInt() throws Exception {
+		int value = _random.nextInt();
+
+		if (value > 0) {
+			return value;
+		}
+		else if (value == 0) {
+			return randomInt();
+		}
+		else {
+			return -value;
+		}
+	}
+
 	public static Map<Locale, String> randomLocaleStringMap() throws Exception {
 		return randomLocaleStringMap(LocaleUtil.getDefault());
 	}

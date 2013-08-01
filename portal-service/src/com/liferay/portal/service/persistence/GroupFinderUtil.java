@@ -33,16 +33,14 @@ public class GroupFinderUtil {
 	}
 
 	public static int countByC_C_PG_N_D(long companyId, long[] classNameIds,
-		long parentGroupId, java.lang.String parentGroupIdComparator,
-		java.lang.String[] names, java.lang.String[] realNames,
-		java.lang.String[] descriptions,
+		long parentGroupId, java.lang.String[] names,
+		java.lang.String[] realNames, java.lang.String[] descriptions,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
 		boolean andOperator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getFinder()
 				   .countByC_C_PG_N_D(companyId, classNameIds, parentGroupId,
-			parentGroupIdComparator, names, realNames, descriptions, params,
-			andOperator);
+			names, realNames, descriptions, params,	andOperator);
 	}
 
 	public static java.util.List<com.liferay.portal.model.Group> findByLayouts(
@@ -92,16 +90,16 @@ public class GroupFinderUtil {
 
 	public static java.util.List<com.liferay.portal.model.Group> findByC_C_PG_N_D(
 		long companyId, long[] classNameIds, long parentGroupId,
-		java.lang.String parentGroupIdComparator, java.lang.String[] names,
-		java.lang.String[] realNames, java.lang.String[] descriptions,
+		java.lang.String[] names, java.lang.String[] realNames,
+		java.lang.String[] descriptions,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
 		boolean andOperator, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getFinder()
 				   .findByC_C_PG_N_D(companyId, classNameIds, parentGroupId,
-			parentGroupIdComparator, names, realNames, descriptions, params,
-			andOperator, start, end, obc);
+			names, realNames, descriptions, params,	andOperator, start, end,
+			obc);
 	}
 
 	public static GroupFinder getFinder() {

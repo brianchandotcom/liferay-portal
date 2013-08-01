@@ -25,9 +25,8 @@ public interface GroupFinder {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public int countByC_C_PG_N_D(long companyId, long[] classNameIds,
-		long parentGroupId, java.lang.String parentGroupIdComparator,
-		java.lang.String[] names, java.lang.String[] realNames,
-		java.lang.String[] descriptions,
+		long parentGroupId, java.lang.String[] names,
+		java.lang.String[] realNames, java.lang.String[] descriptions,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
 		boolean andOperator)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -63,8 +62,8 @@ public interface GroupFinder {
 
 	public java.util.List<com.liferay.portal.model.Group> findByC_C_PG_N_D(
 		long companyId, long[] classNameIds, long parentGroupId,
-		java.lang.String parentGroupIdComparator, java.lang.String[] names,
-		java.lang.String[] realNames, java.lang.String[] descriptions,
+		java.lang.String[] names, java.lang.String[] realNames,
+		java.lang.String[] descriptions,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
 		boolean andOperator, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator obc)

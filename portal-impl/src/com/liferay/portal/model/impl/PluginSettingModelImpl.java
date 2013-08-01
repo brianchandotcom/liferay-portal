@@ -221,8 +221,8 @@ public class PluginSettingModelImpl extends BaseModelImpl<PluginSetting>
 		}
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getPluginSettingId() {
 		return _pluginSettingId;
 	}
@@ -232,8 +232,8 @@ public class PluginSettingModelImpl extends BaseModelImpl<PluginSetting>
 		_pluginSettingId = pluginSettingId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getCompanyId() {
 		return _companyId;
 	}
@@ -255,8 +255,8 @@ public class PluginSettingModelImpl extends BaseModelImpl<PluginSetting>
 		return _originalCompanyId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getPluginId() {
 		if (_pluginId == null) {
 			return StringPool.BLANK;
@@ -281,8 +281,8 @@ public class PluginSettingModelImpl extends BaseModelImpl<PluginSetting>
 		return GetterUtil.getString(_originalPluginId);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getPluginType() {
 		if (_pluginType == null) {
 			return StringPool.BLANK;
@@ -307,8 +307,8 @@ public class PluginSettingModelImpl extends BaseModelImpl<PluginSetting>
 		return GetterUtil.getString(_originalPluginType);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getRoles() {
 		if (_roles == null) {
 			return StringPool.BLANK;
@@ -323,8 +323,8 @@ public class PluginSettingModelImpl extends BaseModelImpl<PluginSetting>
 		_roles = roles;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public boolean getActive() {
 		return _active;
 	}

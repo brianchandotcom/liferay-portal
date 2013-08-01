@@ -308,8 +308,8 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 		}
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getAccountId() {
 		return _accountId;
 	}
@@ -319,8 +319,8 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 		_accountId = accountId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getCompanyId() {
 		return _companyId;
 	}
@@ -330,8 +330,8 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 		_companyId = companyId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getUserId() {
 		return _userId;
 	}
@@ -351,8 +351,8 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 		_userUuid = userUuid;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getUserName() {
 		if (_userName == null) {
 			return StringPool.BLANK;
@@ -367,8 +367,8 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 		_userName = userName;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getCreateDate() {
 		return _createDate;
 	}
@@ -378,8 +378,8 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 		_createDate = createDate;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
 	}
@@ -389,8 +389,8 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 		_modifiedDate = modifiedDate;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getParentAccountId() {
 		return _parentAccountId;
 	}
@@ -400,8 +400,8 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 		_parentAccountId = parentAccountId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getName() {
 		if (_name == null) {
 			return StringPool.BLANK;
@@ -416,8 +416,8 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 		_name = name;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getLegalName() {
 		if (_legalName == null) {
 			return StringPool.BLANK;
@@ -432,8 +432,8 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 		_legalName = legalName;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getLegalId() {
 		if (_legalId == null) {
 			return StringPool.BLANK;
@@ -448,8 +448,8 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 		_legalId = legalId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getLegalType() {
 		if (_legalType == null) {
 			return StringPool.BLANK;
@@ -464,8 +464,8 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 		_legalType = legalType;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getSicCode() {
 		if (_sicCode == null) {
 			return StringPool.BLANK;
@@ -480,8 +480,8 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 		_sicCode = sicCode;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getTickerSymbol() {
 		if (_tickerSymbol == null) {
 			return StringPool.BLANK;
@@ -496,8 +496,8 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 		_tickerSymbol = tickerSymbol;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getIndustry() {
 		if (_industry == null) {
 			return StringPool.BLANK;
@@ -512,8 +512,8 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 		_industry = industry;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getType() {
 		if (_type == null) {
 			return StringPool.BLANK;
@@ -528,8 +528,8 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 		_type = type;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getSize() {
 		if (_size == null) {
 			return StringPool.BLANK;

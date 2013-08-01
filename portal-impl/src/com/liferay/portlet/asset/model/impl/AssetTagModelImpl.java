@@ -259,8 +259,8 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 		}
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getTagId() {
 		return _tagId;
 	}
@@ -270,8 +270,8 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 		_tagId = tagId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getGroupId() {
 		return _groupId;
 	}
@@ -293,8 +293,8 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 		return _originalGroupId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getCompanyId() {
 		return _companyId;
 	}
@@ -304,8 +304,8 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 		_companyId = companyId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getUserId() {
 		return _userId;
 	}
@@ -325,8 +325,8 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 		_userUuid = userUuid;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getUserName() {
 		if (_userName == null) {
 			return StringPool.BLANK;
@@ -341,8 +341,8 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 		_userName = userName;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getCreateDate() {
 		return _createDate;
 	}
@@ -352,8 +352,8 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 		_createDate = createDate;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
 	}
@@ -363,8 +363,8 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 		_modifiedDate = modifiedDate;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getName() {
 		if (_name == null) {
 			return StringPool.BLANK;
@@ -389,8 +389,8 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 		return GetterUtil.getString(_originalName);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public int getAssetCount() {
 		return _assetCount;
 	}

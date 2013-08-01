@@ -345,15 +345,15 @@ public interface LockLocalService extends BaseLocalService,
 	public void unlock(java.lang.String className, java.lang.String key)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	public void unlock(java.lang.String className, java.lang.String key,
+		java.lang.String owner)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link #unlock(String, String,
 	String)}
 	*/
 	public void unlock(java.lang.String className, java.lang.String key,
 		java.lang.String owner, boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public void unlock(java.lang.String className, java.lang.String key,
-		java.lang.String owner)
 		throws com.liferay.portal.kernel.exception.SystemException;
 }

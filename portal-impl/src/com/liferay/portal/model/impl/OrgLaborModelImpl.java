@@ -317,8 +317,8 @@ public class OrgLaborModelImpl extends BaseModelImpl<OrgLabor>
 		}
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getOrgLaborId() {
 		return _orgLaborId;
 	}
@@ -328,8 +328,8 @@ public class OrgLaborModelImpl extends BaseModelImpl<OrgLabor>
 		_orgLaborId = orgLaborId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getOrganizationId() {
 		return _organizationId;
 	}
@@ -351,8 +351,8 @@ public class OrgLaborModelImpl extends BaseModelImpl<OrgLabor>
 		return _originalOrganizationId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public int getTypeId() {
 		return _typeId;
 	}
@@ -364,8 +364,8 @@ public class OrgLaborModelImpl extends BaseModelImpl<OrgLabor>
 		_typeId = typeId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public int getSunOpen() {
 		return _sunOpen;
 	}
@@ -375,8 +375,8 @@ public class OrgLaborModelImpl extends BaseModelImpl<OrgLabor>
 		_sunOpen = sunOpen;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public int getSunClose() {
 		return _sunClose;
 	}
@@ -386,8 +386,8 @@ public class OrgLaborModelImpl extends BaseModelImpl<OrgLabor>
 		_sunClose = sunClose;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public int getMonOpen() {
 		return _monOpen;
 	}
@@ -397,8 +397,8 @@ public class OrgLaborModelImpl extends BaseModelImpl<OrgLabor>
 		_monOpen = monOpen;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public int getMonClose() {
 		return _monClose;
 	}
@@ -408,8 +408,8 @@ public class OrgLaborModelImpl extends BaseModelImpl<OrgLabor>
 		_monClose = monClose;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public int getTueOpen() {
 		return _tueOpen;
 	}
@@ -419,8 +419,8 @@ public class OrgLaborModelImpl extends BaseModelImpl<OrgLabor>
 		_tueOpen = tueOpen;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public int getTueClose() {
 		return _tueClose;
 	}
@@ -430,8 +430,8 @@ public class OrgLaborModelImpl extends BaseModelImpl<OrgLabor>
 		_tueClose = tueClose;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public int getWedOpen() {
 		return _wedOpen;
 	}
@@ -441,8 +441,8 @@ public class OrgLaborModelImpl extends BaseModelImpl<OrgLabor>
 		_wedOpen = wedOpen;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public int getWedClose() {
 		return _wedClose;
 	}
@@ -452,8 +452,8 @@ public class OrgLaborModelImpl extends BaseModelImpl<OrgLabor>
 		_wedClose = wedClose;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public int getThuOpen() {
 		return _thuOpen;
 	}
@@ -463,8 +463,8 @@ public class OrgLaborModelImpl extends BaseModelImpl<OrgLabor>
 		_thuOpen = thuOpen;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public int getThuClose() {
 		return _thuClose;
 	}
@@ -474,8 +474,8 @@ public class OrgLaborModelImpl extends BaseModelImpl<OrgLabor>
 		_thuClose = thuClose;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public int getFriOpen() {
 		return _friOpen;
 	}
@@ -485,8 +485,8 @@ public class OrgLaborModelImpl extends BaseModelImpl<OrgLabor>
 		_friOpen = friOpen;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public int getFriClose() {
 		return _friClose;
 	}
@@ -496,8 +496,8 @@ public class OrgLaborModelImpl extends BaseModelImpl<OrgLabor>
 		_friClose = friClose;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public int getSatOpen() {
 		return _satOpen;
 	}
@@ -507,8 +507,8 @@ public class OrgLaborModelImpl extends BaseModelImpl<OrgLabor>
 		_satOpen = satOpen;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public int getSatClose() {
 		return _satClose;
 	}

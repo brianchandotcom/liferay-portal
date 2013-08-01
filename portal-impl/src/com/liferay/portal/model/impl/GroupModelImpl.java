@@ -382,8 +382,8 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 		}
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getUuid() {
 		if (_uuid == null) {
 			return StringPool.BLANK;
@@ -406,8 +406,8 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 		return GetterUtil.getString(_originalUuid);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getGroupId() {
 		return _groupId;
 	}
@@ -429,8 +429,8 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 		return _originalGroupId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getCompanyId() {
 		return _companyId;
 	}
@@ -452,8 +452,8 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 		return _originalCompanyId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getCreatorUserId() {
 		return _creatorUserId;
 	}
@@ -494,8 +494,8 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 		setClassNameId(classNameId);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getClassNameId() {
 		return _classNameId;
 	}
@@ -517,8 +517,8 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 		return _originalClassNameId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getClassPK() {
 		return _classPK;
 	}
@@ -540,8 +540,8 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 		return _originalClassPK;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getParentGroupId() {
 		return _parentGroupId;
 	}
@@ -563,8 +563,8 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 		return _originalParentGroupId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getLiveGroupId() {
 		return _liveGroupId;
 	}
@@ -586,8 +586,8 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 		return _originalLiveGroupId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getTreePath() {
 		if (_treePath == null) {
 			return StringPool.BLANK;
@@ -602,8 +602,8 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 		_treePath = treePath;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getName() {
 		if (_name == null) {
 			return StringPool.BLANK;
@@ -628,8 +628,8 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 		return GetterUtil.getString(_originalName);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getDescription() {
 		if (_description == null) {
 			return StringPool.BLANK;
@@ -644,8 +644,8 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 		_description = description;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public int getType() {
 		return _type;
 	}
@@ -667,8 +667,8 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 		return _originalType;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getTypeSettings() {
 		if (_typeSettings == null) {
 			return StringPool.BLANK;
@@ -683,8 +683,8 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 		_typeSettings = typeSettings;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public boolean getManualMembership() {
 		return _manualMembership;
 	}
@@ -699,8 +699,8 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 		_manualMembership = manualMembership;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public int getMembershipRestriction() {
 		return _membershipRestriction;
 	}
@@ -710,8 +710,8 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 		_membershipRestriction = membershipRestriction;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getFriendlyURL() {
 		if (_friendlyURL == null) {
 			return StringPool.BLANK;
@@ -736,8 +736,8 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 		return GetterUtil.getString(_originalFriendlyURL);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public boolean getSite() {
 		return _site;
 	}
@@ -764,8 +764,8 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 		return _originalSite;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public int getRemoteStagingGroupCount() {
 		return _remoteStagingGroupCount;
 	}
@@ -775,8 +775,8 @@ public class GroupModelImpl extends BaseModelImpl<Group> implements GroupModel {
 		_remoteStagingGroupCount = remoteStagingGroupCount;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public boolean getActive() {
 		return _active;
 	}

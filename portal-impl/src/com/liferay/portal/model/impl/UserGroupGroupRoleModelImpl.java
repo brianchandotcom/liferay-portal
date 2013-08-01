@@ -192,8 +192,8 @@ public class UserGroupGroupRoleModelImpl extends BaseModelImpl<UserGroupGroupRol
 		}
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getUserGroupId() {
 		return _userGroupId;
 	}
@@ -215,8 +215,8 @@ public class UserGroupGroupRoleModelImpl extends BaseModelImpl<UserGroupGroupRol
 		return _originalUserGroupId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getGroupId() {
 		return _groupId;
 	}
@@ -238,8 +238,8 @@ public class UserGroupGroupRoleModelImpl extends BaseModelImpl<UserGroupGroupRol
 		return _originalGroupId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getRoleId() {
 		return _roleId;
 	}

@@ -261,8 +261,8 @@ public class ShoppingCategoryModelImpl extends BaseModelImpl<ShoppingCategory>
 		}
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getCategoryId() {
 		return _categoryId;
 	}
@@ -272,8 +272,8 @@ public class ShoppingCategoryModelImpl extends BaseModelImpl<ShoppingCategory>
 		_categoryId = categoryId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getGroupId() {
 		return _groupId;
 	}
@@ -295,8 +295,8 @@ public class ShoppingCategoryModelImpl extends BaseModelImpl<ShoppingCategory>
 		return _originalGroupId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getCompanyId() {
 		return _companyId;
 	}
@@ -306,8 +306,8 @@ public class ShoppingCategoryModelImpl extends BaseModelImpl<ShoppingCategory>
 		_companyId = companyId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getUserId() {
 		return _userId;
 	}
@@ -327,8 +327,8 @@ public class ShoppingCategoryModelImpl extends BaseModelImpl<ShoppingCategory>
 		_userUuid = userUuid;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getUserName() {
 		if (_userName == null) {
 			return StringPool.BLANK;
@@ -343,8 +343,8 @@ public class ShoppingCategoryModelImpl extends BaseModelImpl<ShoppingCategory>
 		_userName = userName;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getCreateDate() {
 		return _createDate;
 	}
@@ -354,8 +354,8 @@ public class ShoppingCategoryModelImpl extends BaseModelImpl<ShoppingCategory>
 		_createDate = createDate;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
 	}
@@ -365,8 +365,8 @@ public class ShoppingCategoryModelImpl extends BaseModelImpl<ShoppingCategory>
 		_modifiedDate = modifiedDate;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getParentCategoryId() {
 		return _parentCategoryId;
 	}
@@ -388,8 +388,8 @@ public class ShoppingCategoryModelImpl extends BaseModelImpl<ShoppingCategory>
 		return _originalParentCategoryId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getName() {
 		if (_name == null) {
 			return StringPool.BLANK;
@@ -406,8 +406,8 @@ public class ShoppingCategoryModelImpl extends BaseModelImpl<ShoppingCategory>
 		_name = name;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getDescription() {
 		if (_description == null) {
 			return StringPool.BLANK;

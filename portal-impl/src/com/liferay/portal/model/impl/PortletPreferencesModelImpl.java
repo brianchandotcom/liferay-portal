@@ -223,8 +223,8 @@ public class PortletPreferencesModelImpl extends BaseModelImpl<PortletPreference
 		}
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getPortletPreferencesId() {
 		return _portletPreferencesId;
 	}
@@ -234,8 +234,8 @@ public class PortletPreferencesModelImpl extends BaseModelImpl<PortletPreference
 		_portletPreferencesId = portletPreferencesId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getOwnerId() {
 		return _ownerId;
 	}
@@ -257,8 +257,8 @@ public class PortletPreferencesModelImpl extends BaseModelImpl<PortletPreference
 		return _originalOwnerId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public int getOwnerType() {
 		return _ownerType;
 	}
@@ -280,8 +280,8 @@ public class PortletPreferencesModelImpl extends BaseModelImpl<PortletPreference
 		return _originalOwnerType;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getPlid() {
 		return _plid;
 	}
@@ -303,8 +303,8 @@ public class PortletPreferencesModelImpl extends BaseModelImpl<PortletPreference
 		return _originalPlid;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getPortletId() {
 		if (_portletId == null) {
 			return StringPool.BLANK;
@@ -329,8 +329,8 @@ public class PortletPreferencesModelImpl extends BaseModelImpl<PortletPreference
 		return GetterUtil.getString(_originalPortletId);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getPreferences() {
 		if (_preferences == null) {
 			return StringPool.BLANK;

@@ -264,8 +264,8 @@ public class TrashEntryModelImpl extends BaseModelImpl<TrashEntry>
 		}
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getEntryId() {
 		return _entryId;
 	}
@@ -275,8 +275,8 @@ public class TrashEntryModelImpl extends BaseModelImpl<TrashEntry>
 		_entryId = entryId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getGroupId() {
 		return _groupId;
 	}
@@ -298,8 +298,8 @@ public class TrashEntryModelImpl extends BaseModelImpl<TrashEntry>
 		return _originalGroupId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getCompanyId() {
 		return _companyId;
 	}
@@ -321,8 +321,8 @@ public class TrashEntryModelImpl extends BaseModelImpl<TrashEntry>
 		return _originalCompanyId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getUserId() {
 		return _userId;
 	}
@@ -342,8 +342,8 @@ public class TrashEntryModelImpl extends BaseModelImpl<TrashEntry>
 		_userUuid = userUuid;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getUserName() {
 		if (_userName == null) {
 			return StringPool.BLANK;
@@ -358,8 +358,8 @@ public class TrashEntryModelImpl extends BaseModelImpl<TrashEntry>
 		_userName = userName;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getCreateDate() {
 		return _createDate;
 	}
@@ -399,8 +399,8 @@ public class TrashEntryModelImpl extends BaseModelImpl<TrashEntry>
 		setClassNameId(classNameId);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getClassNameId() {
 		return _classNameId;
 	}
@@ -422,8 +422,8 @@ public class TrashEntryModelImpl extends BaseModelImpl<TrashEntry>
 		return _originalClassNameId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getClassPK() {
 		return _classPK;
 	}
@@ -445,8 +445,8 @@ public class TrashEntryModelImpl extends BaseModelImpl<TrashEntry>
 		return _originalClassPK;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getTypeSettings() {
 		if (_typeSettings == null) {
 			return StringPool.BLANK;
@@ -461,8 +461,8 @@ public class TrashEntryModelImpl extends BaseModelImpl<TrashEntry>
 		_typeSettings = typeSettings;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public int getStatus() {
 		return _status;
 	}

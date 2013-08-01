@@ -284,8 +284,8 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 		}
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getUuid() {
 		if (_uuid == null) {
 			return StringPool.BLANK;
@@ -308,8 +308,8 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 		return GetterUtil.getString(_originalUuid);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getEmailAddressId() {
 		return _emailAddressId;
 	}
@@ -319,8 +319,8 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 		_emailAddressId = emailAddressId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getCompanyId() {
 		return _companyId;
 	}
@@ -342,8 +342,8 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 		return _originalCompanyId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getUserId() {
 		return _userId;
 	}
@@ -375,8 +375,8 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 		return _originalUserId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getUserName() {
 		if (_userName == null) {
 			return StringPool.BLANK;
@@ -391,8 +391,8 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 		_userName = userName;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getCreateDate() {
 		return _createDate;
 	}
@@ -404,8 +404,8 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 		_createDate = createDate;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
 	}
@@ -435,8 +435,8 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 		setClassNameId(classNameId);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getClassNameId() {
 		return _classNameId;
 	}
@@ -458,8 +458,8 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 		return _originalClassNameId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getClassPK() {
 		return _classPK;
 	}
@@ -481,8 +481,8 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 		return _originalClassPK;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getAddress() {
 		if (_address == null) {
 			return StringPool.BLANK;
@@ -497,8 +497,8 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 		_address = address;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public int getTypeId() {
 		return _typeId;
 	}
@@ -508,8 +508,8 @@ public class EmailAddressModelImpl extends BaseModelImpl<EmailAddress>
 		_typeId = typeId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public boolean getPrimary() {
 		return _primary;
 	}

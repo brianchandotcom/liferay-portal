@@ -274,8 +274,8 @@ public class PollsVoteModelImpl extends BaseModelImpl<PollsVote>
 		}
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getUuid() {
 		if (_uuid == null) {
 			return StringPool.BLANK;
@@ -298,8 +298,8 @@ public class PollsVoteModelImpl extends BaseModelImpl<PollsVote>
 		return GetterUtil.getString(_originalUuid);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getVoteId() {
 		return _voteId;
 	}
@@ -309,8 +309,8 @@ public class PollsVoteModelImpl extends BaseModelImpl<PollsVote>
 		_voteId = voteId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getGroupId() {
 		return _groupId;
 	}
@@ -332,8 +332,8 @@ public class PollsVoteModelImpl extends BaseModelImpl<PollsVote>
 		return _originalGroupId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getCompanyId() {
 		return _companyId;
 	}
@@ -355,8 +355,8 @@ public class PollsVoteModelImpl extends BaseModelImpl<PollsVote>
 		return _originalCompanyId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getUserId() {
 		return _userId;
 	}
@@ -388,8 +388,8 @@ public class PollsVoteModelImpl extends BaseModelImpl<PollsVote>
 		return _originalUserId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getUserName() {
 		if (_userName == null) {
 			return StringPool.BLANK;
@@ -404,8 +404,8 @@ public class PollsVoteModelImpl extends BaseModelImpl<PollsVote>
 		_userName = userName;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getCreateDate() {
 		return _createDate;
 	}
@@ -415,8 +415,8 @@ public class PollsVoteModelImpl extends BaseModelImpl<PollsVote>
 		_createDate = createDate;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
 	}
@@ -426,8 +426,8 @@ public class PollsVoteModelImpl extends BaseModelImpl<PollsVote>
 		_modifiedDate = modifiedDate;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getQuestionId() {
 		return _questionId;
 	}
@@ -449,8 +449,8 @@ public class PollsVoteModelImpl extends BaseModelImpl<PollsVote>
 		return _originalQuestionId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getChoiceId() {
 		return _choiceId;
 	}
@@ -472,8 +472,8 @@ public class PollsVoteModelImpl extends BaseModelImpl<PollsVote>
 		return _originalChoiceId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getVoteDate() {
 		return _voteDate;
 	}

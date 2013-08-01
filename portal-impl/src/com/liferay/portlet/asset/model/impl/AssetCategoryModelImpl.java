@@ -326,8 +326,8 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 		}
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getUuid() {
 		if (_uuid == null) {
 			return StringPool.BLANK;
@@ -350,8 +350,8 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 		return GetterUtil.getString(_originalUuid);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getCategoryId() {
 		return _categoryId;
 	}
@@ -361,8 +361,8 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 		_categoryId = categoryId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getGroupId() {
 		return _groupId;
 	}
@@ -384,8 +384,8 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 		return _originalGroupId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getCompanyId() {
 		return _companyId;
 	}
@@ -407,8 +407,8 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 		return _originalCompanyId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getUserId() {
 		return _userId;
 	}
@@ -428,8 +428,8 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 		_userUuid = userUuid;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getUserName() {
 		if (_userName == null) {
 			return StringPool.BLANK;
@@ -444,8 +444,8 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 		_userName = userName;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getCreateDate() {
 		return _createDate;
 	}
@@ -455,8 +455,8 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 		_createDate = createDate;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
 	}
@@ -466,8 +466,8 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 		_modifiedDate = modifiedDate;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getParentCategoryId() {
 		return _parentCategoryId;
 	}
@@ -489,8 +489,8 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 		return _originalParentCategoryId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getLeftCategoryId() {
 		return _leftCategoryId;
 	}
@@ -500,8 +500,8 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 		_leftCategoryId = leftCategoryId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getRightCategoryId() {
 		return _rightCategoryId;
 	}
@@ -511,8 +511,8 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 		_rightCategoryId = rightCategoryId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getName() {
 		if (_name == null) {
 			return StringPool.BLANK;
@@ -537,8 +537,8 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 		return GetterUtil.getString(_originalName);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getTitle() {
 		if (_title == null) {
 			return StringPool.BLANK;
@@ -636,8 +636,8 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 				"Title", LocaleUtil.toLanguageId(defaultLocale)));
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getDescription() {
 		if (_description == null) {
 			return StringPool.BLANK;
@@ -739,8 +739,8 @@ public class AssetCategoryModelImpl extends BaseModelImpl<AssetCategory>
 				LocaleUtil.toLanguageId(defaultLocale)));
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getVocabularyId() {
 		return _vocabularyId;
 	}

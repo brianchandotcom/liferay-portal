@@ -239,8 +239,8 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 		}
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getCountryId() {
 		return _countryId;
 	}
@@ -250,8 +250,8 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 		_countryId = countryId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getName() {
 		if (_name == null) {
 			return StringPool.BLANK;
@@ -276,8 +276,8 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 		return GetterUtil.getString(_originalName);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getA2() {
 		if (_a2 == null) {
 			return StringPool.BLANK;
@@ -302,8 +302,8 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 		return GetterUtil.getString(_originalA2);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getA3() {
 		if (_a3 == null) {
 			return StringPool.BLANK;
@@ -328,8 +328,8 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 		return GetterUtil.getString(_originalA3);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getNumber() {
 		if (_number == null) {
 			return StringPool.BLANK;
@@ -344,8 +344,8 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 		_number = number;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getIdd() {
 		if (_idd == null) {
 			return StringPool.BLANK;
@@ -360,8 +360,8 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 		_idd = idd;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public boolean getZipRequired() {
 		return _zipRequired;
 	}
@@ -376,8 +376,8 @@ public class CountryModelImpl extends BaseModelImpl<Country>
 		_zipRequired = zipRequired;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public boolean getActive() {
 		return _active;
 	}

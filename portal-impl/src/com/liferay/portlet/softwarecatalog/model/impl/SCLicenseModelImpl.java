@@ -233,8 +233,8 @@ public class SCLicenseModelImpl extends BaseModelImpl<SCLicense>
 		}
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getLicenseId() {
 		return _licenseId;
 	}
@@ -244,8 +244,8 @@ public class SCLicenseModelImpl extends BaseModelImpl<SCLicense>
 		_licenseId = licenseId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getName() {
 		if (_name == null) {
 			return StringPool.BLANK;
@@ -262,8 +262,8 @@ public class SCLicenseModelImpl extends BaseModelImpl<SCLicense>
 		_name = name;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getUrl() {
 		if (_url == null) {
 			return StringPool.BLANK;
@@ -278,8 +278,8 @@ public class SCLicenseModelImpl extends BaseModelImpl<SCLicense>
 		_url = url;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public boolean getOpenSource() {
 		return _openSource;
 	}
@@ -294,8 +294,8 @@ public class SCLicenseModelImpl extends BaseModelImpl<SCLicense>
 		_openSource = openSource;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public boolean getActive() {
 		return _active;
 	}
@@ -322,8 +322,8 @@ public class SCLicenseModelImpl extends BaseModelImpl<SCLicense>
 		return _originalActive;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public boolean getRecommended() {
 		return _recommended;
 	}

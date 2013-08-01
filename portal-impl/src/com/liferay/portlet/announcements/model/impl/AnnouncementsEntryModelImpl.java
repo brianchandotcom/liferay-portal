@@ -332,8 +332,8 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 		}
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getUuid() {
 		if (_uuid == null) {
 			return StringPool.BLANK;
@@ -356,8 +356,8 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 		return GetterUtil.getString(_originalUuid);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getEntryId() {
 		return _entryId;
 	}
@@ -367,8 +367,8 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 		_entryId = entryId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getCompanyId() {
 		return _companyId;
 	}
@@ -390,8 +390,8 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 		return _originalCompanyId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getUserId() {
 		return _userId;
 	}
@@ -423,8 +423,8 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 		return _originalUserId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getUserName() {
 		if (_userName == null) {
 			return StringPool.BLANK;
@@ -439,8 +439,8 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 		_userName = userName;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getCreateDate() {
 		return _createDate;
 	}
@@ -450,8 +450,8 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 		_createDate = createDate;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
 	}
@@ -483,8 +483,8 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 		setClassNameId(classNameId);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getClassNameId() {
 		return _classNameId;
 	}
@@ -506,8 +506,8 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 		return _originalClassNameId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getClassPK() {
 		return _classPK;
 	}
@@ -529,8 +529,8 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 		return _originalClassPK;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getTitle() {
 		if (_title == null) {
 			return StringPool.BLANK;
@@ -545,8 +545,8 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 		_title = title;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getContent() {
 		if (_content == null) {
 			return StringPool.BLANK;
@@ -561,8 +561,8 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 		_content = content;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getUrl() {
 		if (_url == null) {
 			return StringPool.BLANK;
@@ -577,8 +577,8 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 		_url = url;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getType() {
 		if (_type == null) {
 			return StringPool.BLANK;
@@ -593,8 +593,8 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 		_type = type;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getDisplayDate() {
 		return _displayDate;
 	}
@@ -604,8 +604,8 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 		_displayDate = displayDate;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getExpirationDate() {
 		return _expirationDate;
 	}
@@ -615,8 +615,8 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 		_expirationDate = expirationDate;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public int getPriority() {
 		return _priority;
 	}
@@ -628,8 +628,8 @@ public class AnnouncementsEntryModelImpl extends BaseModelImpl<AnnouncementsEntr
 		_priority = priority;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public boolean getAlert() {
 		return _alert;
 	}

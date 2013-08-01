@@ -405,8 +405,8 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		}
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getUuid() {
 		if (_uuid == null) {
 			return StringPool.BLANK;
@@ -429,8 +429,8 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		return GetterUtil.getString(_originalUuid);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getFileVersionId() {
 		return _fileVersionId;
 	}
@@ -440,8 +440,8 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		_fileVersionId = fileVersionId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getGroupId() {
 		return _groupId;
 	}
@@ -463,8 +463,8 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		return _originalGroupId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getCompanyId() {
 		return _companyId;
 	}
@@ -486,8 +486,8 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		return _originalCompanyId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getUserId() {
 		return _userId;
 	}
@@ -507,8 +507,8 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		_userUuid = userUuid;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getUserName() {
 		if (_userName == null) {
 			return StringPool.BLANK;
@@ -523,8 +523,8 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		_userName = userName;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getCreateDate() {
 		return _createDate;
 	}
@@ -536,8 +536,8 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		_createDate = createDate;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
 	}
@@ -547,8 +547,8 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		_modifiedDate = modifiedDate;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getRepositoryId() {
 		return _repositoryId;
 	}
@@ -558,8 +558,8 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		_repositoryId = repositoryId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getFolderId() {
 		return _folderId;
 	}
@@ -581,8 +581,8 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		return _originalFolderId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getFileEntryId() {
 		return _fileEntryId;
 	}
@@ -604,8 +604,8 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		return _originalFileEntryId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getExtension() {
 		if (_extension == null) {
 			return StringPool.BLANK;
@@ -620,8 +620,8 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		_extension = extension;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getMimeType() {
 		if (_mimeType == null) {
 			return StringPool.BLANK;
@@ -646,8 +646,8 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		return GetterUtil.getString(_originalMimeType);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getTitle() {
 		if (_title == null) {
 			return StringPool.BLANK;
@@ -672,8 +672,8 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		return GetterUtil.getString(_originalTitle);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getDescription() {
 		if (_description == null) {
 			return StringPool.BLANK;
@@ -688,8 +688,8 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		_description = description;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getChangeLog() {
 		if (_changeLog == null) {
 			return StringPool.BLANK;
@@ -704,8 +704,8 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		_changeLog = changeLog;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getExtraSettings() {
 		if (_extraSettings == null) {
 			return StringPool.BLANK;
@@ -720,8 +720,8 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		_extraSettings = extraSettings;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getFileEntryTypeId() {
 		return _fileEntryTypeId;
 	}
@@ -731,8 +731,8 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		_fileEntryTypeId = fileEntryTypeId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getVersion() {
 		if (_version == null) {
 			return StringPool.BLANK;
@@ -757,8 +757,8 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		return GetterUtil.getString(_originalVersion);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getSize() {
 		return _size;
 	}
@@ -768,8 +768,8 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		_size = size;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getChecksum() {
 		if (_checksum == null) {
 			return StringPool.BLANK;
@@ -784,8 +784,8 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		_checksum = checksum;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public int getStatus() {
 		return _status;
 	}
@@ -807,8 +807,8 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		return _originalStatus;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getStatusByUserId() {
 		return _statusByUserId;
 	}
@@ -829,8 +829,8 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		_statusByUserUuid = statusByUserUuid;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getStatusByUserName() {
 		if (_statusByUserName == null) {
 			return StringPool.BLANK;
@@ -845,8 +845,8 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		_statusByUserName = statusByUserName;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getStatusDate() {
 		return _statusDate;
 	}

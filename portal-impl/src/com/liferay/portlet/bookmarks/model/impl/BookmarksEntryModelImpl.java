@@ -348,8 +348,8 @@ public class BookmarksEntryModelImpl extends BaseModelImpl<BookmarksEntry>
 		}
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getUuid() {
 		if (_uuid == null) {
 			return StringPool.BLANK;
@@ -372,8 +372,8 @@ public class BookmarksEntryModelImpl extends BaseModelImpl<BookmarksEntry>
 		return GetterUtil.getString(_originalUuid);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getEntryId() {
 		return _entryId;
 	}
@@ -383,8 +383,8 @@ public class BookmarksEntryModelImpl extends BaseModelImpl<BookmarksEntry>
 		_entryId = entryId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getGroupId() {
 		return _groupId;
 	}
@@ -406,8 +406,8 @@ public class BookmarksEntryModelImpl extends BaseModelImpl<BookmarksEntry>
 		return _originalGroupId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getCompanyId() {
 		return _companyId;
 	}
@@ -429,8 +429,8 @@ public class BookmarksEntryModelImpl extends BaseModelImpl<BookmarksEntry>
 		return _originalCompanyId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getUserId() {
 		return _userId;
 	}
@@ -462,8 +462,8 @@ public class BookmarksEntryModelImpl extends BaseModelImpl<BookmarksEntry>
 		return _originalUserId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getUserName() {
 		if (_userName == null) {
 			return StringPool.BLANK;
@@ -478,8 +478,8 @@ public class BookmarksEntryModelImpl extends BaseModelImpl<BookmarksEntry>
 		_userName = userName;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getCreateDate() {
 		return _createDate;
 	}
@@ -489,8 +489,8 @@ public class BookmarksEntryModelImpl extends BaseModelImpl<BookmarksEntry>
 		_createDate = createDate;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
 	}
@@ -500,8 +500,8 @@ public class BookmarksEntryModelImpl extends BaseModelImpl<BookmarksEntry>
 		_modifiedDate = modifiedDate;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getResourceBlockId() {
 		return _resourceBlockId;
 	}
@@ -523,8 +523,8 @@ public class BookmarksEntryModelImpl extends BaseModelImpl<BookmarksEntry>
 		return _originalResourceBlockId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getFolderId() {
 		return _folderId;
 	}
@@ -546,8 +546,8 @@ public class BookmarksEntryModelImpl extends BaseModelImpl<BookmarksEntry>
 		return _originalFolderId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getName() {
 		if (_name == null) {
 			return StringPool.BLANK;
@@ -564,8 +564,8 @@ public class BookmarksEntryModelImpl extends BaseModelImpl<BookmarksEntry>
 		_name = name;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getUrl() {
 		if (_url == null) {
 			return StringPool.BLANK;
@@ -580,8 +580,8 @@ public class BookmarksEntryModelImpl extends BaseModelImpl<BookmarksEntry>
 		_url = url;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getDescription() {
 		if (_description == null) {
 			return StringPool.BLANK;
@@ -596,8 +596,8 @@ public class BookmarksEntryModelImpl extends BaseModelImpl<BookmarksEntry>
 		_description = description;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public int getVisits() {
 		return _visits;
 	}
@@ -607,8 +607,8 @@ public class BookmarksEntryModelImpl extends BaseModelImpl<BookmarksEntry>
 		_visits = visits;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public int getPriority() {
 		return _priority;
 	}
@@ -618,8 +618,8 @@ public class BookmarksEntryModelImpl extends BaseModelImpl<BookmarksEntry>
 		_priority = priority;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public int getStatus() {
 		return _status;
 	}
@@ -641,8 +641,8 @@ public class BookmarksEntryModelImpl extends BaseModelImpl<BookmarksEntry>
 		return _originalStatus;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getStatusByUserId() {
 		return _statusByUserId;
 	}
@@ -663,8 +663,8 @@ public class BookmarksEntryModelImpl extends BaseModelImpl<BookmarksEntry>
 		_statusByUserUuid = statusByUserUuid;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getStatusByUserName() {
 		if (_statusByUserName == null) {
 			return StringPool.BLANK;
@@ -679,8 +679,8 @@ public class BookmarksEntryModelImpl extends BaseModelImpl<BookmarksEntry>
 		_statusByUserName = statusByUserName;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getStatusDate() {
 		return _statusDate;
 	}

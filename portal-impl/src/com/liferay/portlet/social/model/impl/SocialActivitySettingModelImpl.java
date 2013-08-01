@@ -236,8 +236,8 @@ public class SocialActivitySettingModelImpl extends BaseModelImpl<SocialActivity
 		}
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getActivitySettingId() {
 		return _activitySettingId;
 	}
@@ -247,8 +247,8 @@ public class SocialActivitySettingModelImpl extends BaseModelImpl<SocialActivity
 		_activitySettingId = activitySettingId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getGroupId() {
 		return _groupId;
 	}
@@ -270,8 +270,8 @@ public class SocialActivitySettingModelImpl extends BaseModelImpl<SocialActivity
 		return _originalGroupId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getCompanyId() {
 		return _companyId;
 	}
@@ -301,8 +301,8 @@ public class SocialActivitySettingModelImpl extends BaseModelImpl<SocialActivity
 		setClassNameId(classNameId);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getClassNameId() {
 		return _classNameId;
 	}
@@ -324,8 +324,8 @@ public class SocialActivitySettingModelImpl extends BaseModelImpl<SocialActivity
 		return _originalClassNameId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public int getActivityType() {
 		return _activityType;
 	}
@@ -347,8 +347,8 @@ public class SocialActivitySettingModelImpl extends BaseModelImpl<SocialActivity
 		return _originalActivityType;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getName() {
 		if (_name == null) {
 			return StringPool.BLANK;
@@ -373,8 +373,8 @@ public class SocialActivitySettingModelImpl extends BaseModelImpl<SocialActivity
 		return GetterUtil.getString(_originalName);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getValue() {
 		if (_value == null) {
 			return StringPool.BLANK;

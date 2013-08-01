@@ -468,8 +468,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		}
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getUuid() {
 		if (_uuid == null) {
 			return StringPool.BLANK;
@@ -492,8 +492,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		return GetterUtil.getString(_originalUuid);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getPlid() {
 		return _plid;
 	}
@@ -503,8 +503,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		_plid = plid;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getGroupId() {
 		return _groupId;
 	}
@@ -526,8 +526,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		return _originalGroupId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getCompanyId() {
 		return _companyId;
 	}
@@ -549,8 +549,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		return _originalCompanyId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getUserId() {
 		return _userId;
 	}
@@ -570,8 +570,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		_userUuid = userUuid;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getUserName() {
 		if (_userName == null) {
 			return StringPool.BLANK;
@@ -586,8 +586,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		_userName = userName;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getCreateDate() {
 		return _createDate;
 	}
@@ -597,8 +597,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		_createDate = createDate;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
 	}
@@ -608,8 +608,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		_modifiedDate = modifiedDate;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public boolean getPrivateLayout() {
 		return _privateLayout;
 	}
@@ -636,8 +636,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		return _originalPrivateLayout;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getLayoutId() {
 		return _layoutId;
 	}
@@ -659,8 +659,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		return _originalLayoutId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getParentLayoutId() {
 		return _parentLayoutId;
 	}
@@ -682,8 +682,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		return _originalParentLayoutId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getName() {
 		if (_name == null) {
 			return StringPool.BLANK;
@@ -781,8 +781,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 				LocaleUtil.toLanguageId(defaultLocale)));
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getTitle() {
 		if (_title == null) {
 			return StringPool.BLANK;
@@ -880,8 +880,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 				"Title", LocaleUtil.toLanguageId(defaultLocale)));
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getDescription() {
 		if (_description == null) {
 			return StringPool.BLANK;
@@ -983,8 +983,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 				LocaleUtil.toLanguageId(defaultLocale)));
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getKeywords() {
 		if (_keywords == null) {
 			return StringPool.BLANK;
@@ -1084,8 +1084,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 				LocaleUtil.toLanguageId(defaultLocale)));
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getRobots() {
 		if (_robots == null) {
 			return StringPool.BLANK;
@@ -1183,8 +1183,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 				"Robots", LocaleUtil.toLanguageId(defaultLocale)));
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getType() {
 		if (_type == null) {
 			return StringPool.BLANK;
@@ -1209,8 +1209,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		return GetterUtil.getString(_originalType);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getTypeSettings() {
 		if (_typeSettings == null) {
 			return StringPool.BLANK;
@@ -1225,8 +1225,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		_typeSettings = typeSettings;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public boolean getHidden() {
 		return _hidden;
 	}
@@ -1241,8 +1241,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		_hidden = hidden;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getFriendlyURL() {
 		if (_friendlyURL == null) {
 			return StringPool.BLANK;
@@ -1267,8 +1267,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		return GetterUtil.getString(_originalFriendlyURL);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public boolean getIconImage() {
 		return _iconImage;
 	}
@@ -1283,8 +1283,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		_iconImage = iconImage;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getIconImageId() {
 		return _iconImageId;
 	}
@@ -1306,8 +1306,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		return _originalIconImageId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getThemeId() {
 		if (_themeId == null) {
 			return StringPool.BLANK;
@@ -1322,8 +1322,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		_themeId = themeId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getColorSchemeId() {
 		if (_colorSchemeId == null) {
 			return StringPool.BLANK;
@@ -1338,8 +1338,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		_colorSchemeId = colorSchemeId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getWapThemeId() {
 		if (_wapThemeId == null) {
 			return StringPool.BLANK;
@@ -1354,8 +1354,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		_wapThemeId = wapThemeId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getWapColorSchemeId() {
 		if (_wapColorSchemeId == null) {
 			return StringPool.BLANK;
@@ -1370,8 +1370,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		_wapColorSchemeId = wapColorSchemeId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getCss() {
 		if (_css == null) {
 			return StringPool.BLANK;
@@ -1386,8 +1386,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		_css = css;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public int getPriority() {
 		return _priority;
 	}
@@ -1399,8 +1399,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		_priority = priority;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getLayoutPrototypeUuid() {
 		if (_layoutPrototypeUuid == null) {
 			return StringPool.BLANK;
@@ -1425,8 +1425,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		return GetterUtil.getString(_originalLayoutPrototypeUuid);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public boolean getLayoutPrototypeLinkEnabled() {
 		return _layoutPrototypeLinkEnabled;
 	}
@@ -1442,8 +1442,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		_layoutPrototypeLinkEnabled = layoutPrototypeLinkEnabled;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getSourcePrototypeLayoutUuid() {
 		if (_sourcePrototypeLayoutUuid == null) {
 			return StringPool.BLANK;

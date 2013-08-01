@@ -79,7 +79,7 @@
 		width: 16px;
 	}
 
-	.vocabulary-item-check {
+	input.vocabulary-item-check {
 		float: left;
 		margin-right: 5px;
 		margin-top: 0;
@@ -249,7 +249,7 @@
 
 		.tree-node-selected {
 			background: #08C;
-			
+
 			.tree-label {
 				color: #FFF;
 				cursor: move;

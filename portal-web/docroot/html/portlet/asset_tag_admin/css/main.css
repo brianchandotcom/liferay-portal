@@ -71,7 +71,7 @@
 		width: 16px;
 	}
 
-	.tag-item-check {
+	input.tag-item-check {
 		margin-right: 10px;
 		margin-top: 0;
 		position: static;

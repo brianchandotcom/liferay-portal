@@ -62,7 +62,7 @@ if ((article != null) && article.isDraft()) {
 
 		function hasUnsavedChanges() {
 			if (hasChangedForm) {
-		    	return true;
+				return true;
 			}
 
 			if (typeof CKEDITOR !== 'undefined') {

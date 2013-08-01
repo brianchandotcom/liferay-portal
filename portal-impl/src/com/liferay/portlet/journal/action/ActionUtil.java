@@ -223,6 +223,7 @@ public class ActionUtil {
 			article.setNew(true);
 
 			article.setId(0);
+			article.setGroupId(groupId);
 			article.setClassNameId(
 				JournalArticleConstants.CLASSNAME_ID_DEFAULT);
 			article.setClassPK(0);

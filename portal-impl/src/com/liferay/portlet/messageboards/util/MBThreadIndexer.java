@@ -155,8 +155,8 @@ public class MBThreadIndexer extends BaseIndexer {
 				document, MBThread.class.getName(), thread.getThreadId(), null,
 				null, MBThreadTrashRenderer.TYPE);
 
-			String className = MBThread.class.getName();
-			long classPK = thread.getThreadId();
+			String className = MBCategory.class.getName();
+			long classPK = thread.getCategoryId();
 
 			if (thread.isInTrashContainer()) {
 				MBCategory category = thread.getTrashContainer();

@@ -152,6 +152,12 @@ boolean showAddArticleButton = JournalPermission.contains(permissionChecker, sco
 </c:if>
 
 <%
+int status = WorkflowConstants.STATUS_APPROVED;
+
+if (permissionChecker.isCompanyAdmin() || permissionChecker.isGroupAdmin(scopeGroupId)) {
+	status = WorkflowConstants.STATUS_ANY;
+}
+
 ArticleSearchTerms searchTerms = (ArticleSearchTerms)searchContainer.getSearchTerms();
 
 if (folderId != JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
@@ -188,16 +194,42 @@ int total = 0;
 	<c:when test='<%= displayTerms.getNavigation().equals("mine") || displayTerms.isNavigationRecent() %>'>
 
 		<%
-		long userId = 0;
+		long creatorUserId = 0;
 
-		if (displayTerms.getNavigation().equals("mine")) {
-			userId = themeDisplay.getUserId();
+		if (displayTerms.getNavigation().equals("mine") && themeDisplay.isSignedIn()) {
+			creatorUserId = user.getUserId();
 		}
-		total = JournalArticleServiceUtil.getGroupArticlesCount(scopeGroupId, userId, folderId);
+
+		Hits hits = JournalArticleServiceUtil.search(scopeGroupId, creatorUserId, status, entryStart, entryEnd);
+
+		total = hits.getLength();
 
 		searchContainer.setTotal(total);
 
-		results = JournalArticleServiceUtil.getGroupArticles(scopeGroupId, userId, folderId, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+		com.liferay.portal.kernel.search.Document[] docs = hits.getDocs();
+
+		results = new ArrayList(docs.length);
+
+		for (com.liferay.portal.kernel.search.Document doc : docs) {
+			long classPK = GetterUtil.getLong(doc.get(Field.ENTRY_CLASS_PK));
+
+			JournalArticle article = null;
+
+			try {
+				JournalArticleResource articleResource = JournalArticleResourceLocalServiceUtil.getArticleResource(classPK);
+
+				article = JournalArticleLocalServiceUtil.getArticle(articleResource.getGroupId(), articleResource.getArticleId());
+			}
+			catch (Exception e) {
+				if (_log.isWarnEnabled()) {
+					_log.warn("Web content search index is stale and contains web content {" + classPK + "}");
+				}
+
+				continue;
+			}
+
+			results.add(article);
+		}
 		%>
 
 	</c:when>

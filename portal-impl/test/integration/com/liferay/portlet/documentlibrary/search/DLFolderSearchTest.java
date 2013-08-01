@@ -70,6 +70,16 @@ public class DLFolderSearchTest extends BaseSearchTestCase {
 	}
 
 	@Override
+	public void testSearchMyEntries() throws Exception {
+		Assert.assertTrue("This test does not apply", true);
+	}
+
+	@Override
+	public void testSearchRecentEntries() throws Exception {
+		Assert.assertTrue("This test does not apply", true);
+	}
+
+	@Override
 	public void testSearchStatus() throws Exception {
 		Assert.assertTrue("This test does not apply", true);
 	}

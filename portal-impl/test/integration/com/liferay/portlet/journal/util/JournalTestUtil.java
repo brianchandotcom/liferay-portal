@@ -89,7 +89,7 @@ public class JournalTestUtil {
 		}
 
 		return JournalArticleLocalServiceUtil.addArticle(
-			TestPropsValues.getUserId(), groupId, folderId, classNameId, 0,
+			serviceContext.getUserId(), groupId, folderId, classNameId, 0,
 			StringPool.BLANK, true, JournalArticleConstants.VERSION_DEFAULT,
 			titleMap, descriptionMap,
 			createLocalizedContent(content, defaultLocale), "general", null,
@@ -275,7 +275,7 @@ public class JournalTestUtil {
 		titleMap.put(defaultLocale, "Test Article");
 
 		return JournalArticleLocalServiceUtil.addArticle(
-			TestPropsValues.getUserId(), serviceContext.getScopeGroupId(),
+			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
 			folderId, classNameId, 0, StringPool.BLANK, true, 0, titleMap, null,
 			xml, "general", ddmStructureKey, ddmTemplateKey, null, 1, 1, 1965,
 			0, 0, 0, 0, 0, 0, 0, true, 0, 0, 0, 0, 0, true, true, false, null,

@@ -978,13 +978,19 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 						modelResourceDescription="<%= fileEntry.getTitle() %>"
 						resourcePrimKey="<%= String.valueOf(fileEntry.getFileEntryId()) %>"
 						var="permissionsURL"
+					    windowState="<%= LiferayWindowState.POP_UP.toString() %>"
 					/>
 
 					icon: 'icon-permissions',
 					label: '<%= UnicodeLanguageUtil.get(pageContext, "permissions") %>',
 					on: {
 						click: function(event) {
-							location.href = '<%= permissionsURL.toString() %>';
+							Liferay.Util.openWindow(
+								{
+									title: '<%= UnicodeLanguageUtil.get(pageContext, "permissions") %>',
+								 	uri: '<%= permissionsURL.toString() %>',
+			                    }
+							);
 						}
 					}
 				}

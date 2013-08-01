@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.ResourceAction;
 import com.liferay.portal.model.impl.GroupImpl;
@@ -231,10 +232,15 @@ public class GroupFinderImpl
 	@Override
 	public int countByC_C_PG_N_D(
 			long companyId, long[] classNameIds, long parentGroupId,
-			String parentGroupIdComparator, String[] names, String[] realNames,
-			String[] descriptions, LinkedHashMap<String, Object> params,
-			boolean andOperator)
+			String[] names, String[] realNames, String[] descriptions,
+			LinkedHashMap<String, Object> params, boolean andOperator)
 		throws SystemException {
+
+		String parentGroupIdComparator = StringPool.EQUAL;
+
+		if (parentGroupId == GroupConstants.ANY_PARENT_GROUP_ID) {
+			parentGroupIdComparator = StringPool.NOT_EQUAL;
+		}
 
 		names = CustomSQLUtil.keywords(names);
 		realNames = CustomSQLUtil.keywords(realNames);
@@ -642,10 +648,16 @@ public class GroupFinderImpl
 	@Override
 	public List<Group> findByC_C_PG_N_D(
 			long companyId, long[] classNameIds, long parentGroupId,
-			String parentGroupIdComparator, String[] names, String[] realNames,
-			String[] descriptions, LinkedHashMap<String, Object> params,
-			boolean andOperator, int start, int end, OrderByComparator obc)
+			String[] names, String[] realNames, String[] descriptions,
+			LinkedHashMap<String, Object> params, boolean andOperator,
+			int start, int end, OrderByComparator obc)
 		throws SystemException {
+
+		String parentGroupIdComparator = StringPool.EQUAL;
+
+		if (parentGroupId == GroupConstants.ANY_PARENT_GROUP_ID) {
+			parentGroupIdComparator = StringPool.NOT_EQUAL;
+		}
 
 		names = CustomSQLUtil.keywords(names);
 		realNames = CustomSQLUtil.keywords(realNames);
@@ -653,6 +665,10 @@ public class GroupFinderImpl
 
 		if (params == null) {
 			params = _emptyLinkedHashMap;
+		}
+
+		if (obc == null) {
+			obc = new GroupNameComparator(true);
 		}
 
 		LinkedHashMap<String, Object> params1 = params;

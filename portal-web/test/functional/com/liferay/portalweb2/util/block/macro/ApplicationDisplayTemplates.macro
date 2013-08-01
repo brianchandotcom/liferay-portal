@@ -7,6 +7,8 @@
 		<execute action="BlogsConfigurationPG#assertClick" locator-key1="DISPLAY_SETTINGS" value1="Display Settings" />
 		<execute action="BlogsConfigurationPG#assertClick" locator-key1="DISPLAY_SETTINGS_MANAGE_ADT_LINK" value1="Manage Display Templates for Liferay" />
 
+		<var name="key_adtTitle" value="${adtTitle}" />
+
 		<execute action="PGApplicationdisplaytemplates#selectFrameTop" locator-key1="ADT_IFRAME_TOP" value1="relative=top" />
 		<execute action="PGApplicationdisplaytemplates#selectFrame" locator-key1="ADT_IFRAME" />
 		<execute action="PGApplicationdisplaytemplates#assertClick" locator-key1="ADD" value1="Add" />

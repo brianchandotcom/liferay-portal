@@ -40,7 +40,7 @@
 </tr>
 <tr>
 	<td>ADD</td>
-	<td>//div[@class='container']/ul/li[2]/a[contains(.,'Add')]</td>
+	<td>//div[@class='container']/ul/li/a[contains(.,'Add')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -76,7 +76,7 @@
 <!--ADD_MENULIST-->
 <tr>
 	<td>ADD_MENULIST_ADT_TEMPLATE</td>
-	<td>//div[@class='container']/ul/li[2]/ul/li/a[contains(.,'${key_adtTitle}')]</td>
+	<td>//div[@class='container']/ul/li/ul/li/a[contains(.,'${key_adtTitle} Template')]</td>
 	<td></td>
 </tr>
 <tr>

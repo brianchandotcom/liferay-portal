@@ -21,23 +21,33 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
-import com.liferay.portal.test.TransactionalExecutionTestListener;
 import com.liferay.portal.util.GroupTestUtil;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.asset.model.AssetCategory;
+import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetVocabulary;
 import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
+import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetEntryServiceUtil;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.portlet.asset.service.impl.AssetEntryServiceImpl;
+import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
+import com.liferay.portlet.blogs.util.BlogsTestUtil;
+import com.liferay.portlet.ratings.model.RatingsStats;
+import com.liferay.portlet.ratings.service.RatingsEntryServiceUtil;
+import com.liferay.portlet.ratings.service.RatingsStatsLocalServiceUtil;
+
+import java.util.Arrays;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -50,7 +60,6 @@ import org.junit.runner.RunWith;
 @ExecutionTestListeners(
 	listeners = {
 		EnvironmentExecutionTestListener.class,
-		TransactionalExecutionTestListener.class
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Transactional
@@ -299,6 +308,68 @@ public class AssetEntryQueryTest {
 		testAssetTags(new String[] {"modularity", "osgi"}, true, true, 1);
 	}
 
+	@Test
+	public void testOrderByRatingsAsc() throws Exception {
+		double[] scores = {
+			2.2, 1.0, 3.0, 1.1, 4.3
+		};
+
+		double[] orderedScores = {
+			1.0, 1.1, 2.2, 3.0, 4.3
+		};
+
+		testOrderByRatings(scores, orderedScores, "ASC");
+	}
+
+	@Test
+	public void testOrderByRatingsDesc() throws Exception {
+		double[] scores = {
+			2.2, 1.0, 3.0, 1.1, 4.3
+		};
+
+		double[] orderedScores = {
+			4.3, 3.0, 2.2, 1.1, 1.0
+		};
+
+		testOrderByRatings(scores, orderedScores, "DESC");
+	}
+
+	@Test
+	public void testOrderByViewCountsAsc() throws Exception {
+		int[] orderedViewCounts = new int[10];
+		int[] viewCounts = new int[10];
+
+		for (int i = 0; i < viewCounts.length; i++) {
+			int randomInt = ServiceTestUtil.randomInt();
+
+			viewCounts[i] = randomInt;
+			orderedViewCounts[i] = randomInt;
+		}
+
+		Arrays.sort(orderedViewCounts);
+
+		testOrderByViewCount(viewCounts, orderedViewCounts, "ASC");
+	}
+
+	@Test
+	public void testOrderByViewCountsDesc() throws Exception {
+		int[] orderedViewCounts = new int[10];
+		int[] viewCounts = new int[10];
+
+		for (int i = 0; i < viewCounts.length; i++) {
+			int randomInt = ServiceTestUtil.randomInt();
+
+			viewCounts[i] = randomInt;
+			orderedViewCounts[i] = randomInt;
+		}
+
+		Arrays.sort(orderedViewCounts);
+
+		ArrayUtil.reverse(orderedViewCounts);
+
+		testOrderByViewCount(viewCounts, orderedViewCounts, "DESC");
+	}
+
 	protected AssetEntryQuery buildAssetEntryQuery(
 			long groupId, long[] assetCategoryIds, String[] assetTagNames,
 			boolean any, boolean not)
@@ -453,6 +524,100 @@ public class AssetEntryQueryTest {
 			"Modularity with OSGI", null,
 			new String[] {"liferay", "architecture", "modularity", "osgi"}, any,
 			not, expectedResults);
+	}
+
+	protected void testOrderByRatings(
+			double[] scores, double[] orderedScores, String orderByType)
+		throws Exception {
+
+		// Clear the thread local cache which is populated in AssetPublisherUtil
+
+		ThreadLocalCache<Object[]> threadLocalCache =
+			ThreadLocalCacheManager.getThreadLocalCache(
+				Lifecycle.REQUEST, AssetEntryServiceImpl.class.getName());
+
+		threadLocalCache.removeAll();
+
+		Group group = GroupTestUtil.addGroup();
+
+		for (int i = 0; i < scores.length; i++) {
+			BlogsEntry entry = BlogsTestUtil.addEntry(
+				TestPropsValues.getUserId(), group, true);
+
+			RatingsEntryServiceUtil.updateEntry(
+				BlogsEntry.class.getName(), entry.getEntryId(), scores[i]);
+		}
+
+		// Clear the thread local cache which is populated in AssetPublisherUtil
+
+		threadLocalCache.removeAll();
+
+		AssetEntryQuery assetEntryQuery = buildAssetEntryQuery(
+			group.getGroupId(), null, null, false, false);
+
+		assetEntryQuery.setOrderByCol1("ratings");
+		assetEntryQuery.setOrderByType1(orderByType);
+
+		List<AssetEntry> assetEntries = AssetEntryServiceUtil.getEntries(
+			assetEntryQuery);
+
+		for (int i = 0; i < assetEntries.size(); i++) {
+			AssetEntry assetEntry = assetEntries.get(i);
+
+			RatingsStats ratingsStats =
+				RatingsStatsLocalServiceUtil.getStats(
+					assetEntry.getClassName(), assetEntry.getClassPK());
+
+			Assert.assertEquals(
+				ratingsStats.getAverageScore(), orderedScores[i], 0);
+		}
+	}
+
+	protected void testOrderByViewCount(
+			int[] viewCounts, int[] orderedViewCounts, String orderByType)
+		throws Exception {
+
+		// Clear the thread local cache which is populated in AssetPublisherUtil
+
+		ThreadLocalCache<Object[]> threadLocalCache =
+			ThreadLocalCacheManager.getThreadLocalCache(
+				Lifecycle.REQUEST, AssetEntryServiceImpl.class.getName());
+
+		threadLocalCache.removeAll();
+
+		Group group = GroupTestUtil.addGroup();
+
+		for (int i = 0; i < viewCounts.length; i++) {
+			BlogsEntry entry = BlogsTestUtil.addEntry(
+				TestPropsValues.getUserId(), group, true);
+
+			AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
+				BlogsEntry.class.getName(), entry.getEntryId());
+
+			assetEntry.setViewCount(viewCounts[i]);
+
+			AssetEntryLocalServiceUtil.updateAssetEntry(assetEntry);
+		}
+
+		// Clear the thread local cache which is populated in AssetPublisherUtil
+
+		threadLocalCache.removeAll();
+
+		AssetEntryQuery assetEntryQuery = buildAssetEntryQuery(
+			group.getGroupId(), null, null, false, false);
+
+		assetEntryQuery.setOrderByCol1("viewCount");
+		assetEntryQuery.setOrderByType1(orderByType);
+
+		List<AssetEntry> assetEntries = AssetEntryServiceUtil.getEntries(
+			assetEntryQuery);
+
+		for (int i = 0; i < assetEntries.size(); i++) {
+			AssetEntry assetEntry = assetEntries.get(i);
+
+			Assert.assertEquals(
+				assetEntry.getViewCount(), orderedViewCounts[i]);
+		}
 	}
 
 	private long[] _assetCategoryIds1;

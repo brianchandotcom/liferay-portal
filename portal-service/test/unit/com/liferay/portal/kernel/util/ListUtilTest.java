@@ -144,13 +144,10 @@ public class ListUtilTest {
 		list.add(111);
 		list.add(222);
 		list.add(333);
-		list.add(444);
-
-		String expectedString = "111, 222, 333, 444";
 
 		Assert.assertEquals(
-			expectedString,
-			ListUtil.toString(list, (String)null, StringPool.COMMA_AND_SPACE));
+			"111,222,333",
+			ListUtil.toString(list, StringPool.NULL, StringPool.COMMA));
 	}
 
 	@Test
@@ -160,13 +157,11 @@ public class ListUtilTest {
 		list.add(111L);
 		list.add(222L);
 		list.add(333L);
-		list.add(444L);
-
-		String expectedString = "111, 222, 333, 444";
 
 		Assert.assertEquals(
-			expectedString,
-			ListUtil.toString(list, (String)null, StringPool.COMMA_AND_SPACE));
+			"111, 222, 333",
+			ListUtil.toString(
+				list, StringPool.BLANK, StringPool.COMMA_AND_SPACE));
 	}
 
 	@Test
@@ -176,13 +171,10 @@ public class ListUtilTest {
 		list.add("aaa");
 		list.add("bbb");
 		list.add("ccc");
-		list.add("ddd");
-
-		String expectedString = "aaa, bbb, ccc, ddd";
 
 		Assert.assertEquals(
-			expectedString,
-			ListUtil.toString(list, (String)null, StringPool.COMMA_AND_SPACE));
+			"aaa.bbb.ccc",
+			ListUtil.toString(list, (String)null, StringPool.PERIOD));
 	}
 
 }

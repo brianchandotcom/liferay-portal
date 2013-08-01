@@ -128,16 +128,23 @@ public class LayoutFriendlyURLServiceTest {
 		Layout layout = LayoutTestUtil.addLayout(
 			group.getGroupId(), false, nameMap, friendlyURLMap);
 
-		LocaleThreadLocal.setSiteDefaultLocale(defaultLocale);
+		Locale locale = LocaleThreadLocal.getSiteDefaultLocale();
 
-		LayoutFriendlyURL layoutFriendlyURL =
-			LayoutFriendlyURLLocalServiceUtil.fetchLayoutFriendlyURL(
-				layout.getPlid(), LocaleUtil.toLanguageId(deLocale), true);
+		try {
+			LocaleThreadLocal.setSiteDefaultLocale(defaultLocale);
 
-		Assert.assertEquals("/spanishurl", layoutFriendlyURL.getFriendlyURL());
-		Assert.assertEquals(
-			LocaleUtil.toLanguageId(defaultLocale),
-			layoutFriendlyURL.getLanguageId());
+			LayoutFriendlyURL layoutFriendlyURL =
+				LayoutFriendlyURLLocalServiceUtil.fetchLayoutFriendlyURL(
+					layout.getPlid(), LocaleUtil.toLanguageId(deLocale), true);
+
+			Assert.assertEquals("/spanishurl", layoutFriendlyURL.getFriendlyURL());
+			Assert.assertEquals(
+				LocaleUtil.toLanguageId(defaultLocale),
+				layoutFriendlyURL.getLanguageId());
+		}
+		finally {
+			LocaleThreadLocal.setSiteDefaultLocale(locale);
+		}
 	}
 
 }

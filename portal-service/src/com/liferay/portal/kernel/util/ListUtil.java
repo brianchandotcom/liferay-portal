@@ -381,7 +381,14 @@ public class ListUtil {
 		for (int i = 0; i < list.size(); i++) {
 			Object bean = list.get(i);
 
-			Object value = BeanPropertiesUtil.getObject(bean, param);
+			Object value = null;
+
+			if (Validator.isNull(param)) {
+				value = String.valueOf(bean);
+			}
+			else {
+				value = BeanPropertiesUtil.getObject(bean, param);
+			}
 
 			if (value != null) {
 				sb.append(value);

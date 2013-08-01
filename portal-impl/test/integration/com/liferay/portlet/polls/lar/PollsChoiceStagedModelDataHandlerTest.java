@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.polls.lar;
 
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.lar.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.model.Group;
@@ -79,19 +81,55 @@ public class PollsChoiceStagedModelDataHandlerTest
 	}
 
 	@Override
-	protected StagedModel getStagedModel(String uuid, Group group) {
-		try {
-			return PollsChoiceLocalServiceUtil.getPollsChoiceByUuidAndGroupId(
-				uuid, group.getGroupId());
-		}
-		catch (Exception e) {
-			return null;
-		}
+	protected void deleteStagedModel(
+			StagedModel stagedModel,
+			Map<String, List<StagedModel>> dependentStagedModelsMap,
+			Group group)
+		throws Exception {
+
+		PollsChoice pollsChoice = (PollsChoice)stagedModel;
+
+		PollsQuestion pollsQuestion = PollsQuestionLocalServiceUtil.getQuestion(
+			pollsChoice.getQuestionId());
+
+		PollsQuestionLocalServiceUtil.deleteQuestion(pollsQuestion);
+	}
+
+	@Override
+	protected StagedModelType[] getDeletionSystemEventStagedModelTypes() {
+		return new StagedModelType[] {new StagedModelType(PollsQuestion.class)};
+	}
+
+	@Override
+	protected StagedModel getStagedModel(String uuid, Group group)
+		throws SystemException {
+
+		return PollsChoiceLocalServiceUtil.fetchPollsChoiceByUuidAndGroupId(
+			uuid, group.getGroupId());
 	}
 
 	@Override
 	protected Class<? extends StagedModel> getStagedModelClass() {
 		return PollsChoice.class;
+	}
+
+	@Override
+	protected void validateDeletion(
+			Map<String, List<StagedModel>> dependentStagedModelsMap,
+			Group group)
+		throws Exception {
+
+		List<StagedModel> questionDependentStagedModels =
+			dependentStagedModelsMap.get(PollsQuestion.class.getSimpleName());
+
+		Assert.assertEquals(1, questionDependentStagedModels.size());
+
+		PollsQuestion question =
+			(PollsQuestion)questionDependentStagedModels.get(0);
+
+		Assert.assertNull(
+			PollsQuestionLocalServiceUtil.fetchPollsQuestionByUuidAndGroupId(
+				question.getUuid(), group.getGroupId()));
 	}
 
 	@Override

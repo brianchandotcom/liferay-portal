@@ -93,10 +93,14 @@ public class LayoutStagedModelDataHandler
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException, SystemException {
 
-		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject(
+		boolean privateLayout = false;
+
+		if (Validator.isNotNull(extraData)) {
+			JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject(
 			extraData);
 
-		boolean privateLayout = extraDataJSONObject.getBoolean("privateLayout");
+			privateLayout = extraDataJSONObject.getBoolean("privateLayout");
+		}
 
 		Layout layout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
 			uuid, groupId, privateLayout);

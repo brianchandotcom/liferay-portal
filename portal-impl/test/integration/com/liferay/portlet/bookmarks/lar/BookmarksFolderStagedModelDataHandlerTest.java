@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.bookmarks.lar;
 
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.lar.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.model.Group;
@@ -79,19 +81,63 @@ public class BookmarksFolderStagedModelDataHandlerTest
 	}
 
 	@Override
-	protected StagedModel getStagedModel(String uuid, Group group) {
-		try {
-			return BookmarksFolderLocalServiceUtil.
-				getBookmarksFolderByUuidAndGroupId(uuid, group.getGroupId());
-		}
-		catch (Exception e) {
-			return null;
-		}
+	protected void deleteStagedModel(
+			StagedModel stagedModel, Map<String,
+			List<StagedModel>> dependentStagedModelsMap, Group group)
+		throws Exception {
+
+		BookmarksFolderLocalServiceUtil.deleteFolder(
+			(BookmarksFolder)stagedModel);
+
+		List<StagedModel> dependentStagedModels = dependentStagedModelsMap.get(
+			BookmarksFolder.class.getSimpleName());
+
+		BookmarksFolder folder = (BookmarksFolder)dependentStagedModels.get(0);
+
+		BookmarksFolderLocalServiceUtil.deleteFolder(folder);
+	}
+
+	@Override
+	protected StagedModelType[] getDeletionSystemEventStagedModelTypes() {
+		BookmarksPortletDataHandler bookmarksPortletDataHandler =
+			new BookmarksPortletDataHandler();
+
+		return bookmarksPortletDataHandler.
+			getDeletionSystemEventStagedModelTypes();
+	}
+
+	@Override
+	protected StagedModel getStagedModel(String uuid, Group group)
+		throws SystemException {
+
+		return BookmarksFolderLocalServiceUtil.
+			fetchBookmarksFolderByUuidAndGroupId(uuid, group.getGroupId());
 	}
 
 	@Override
 	protected Class<? extends StagedModel> getStagedModelClass() {
 		return BookmarksFolder.class;
+	}
+
+	@Override
+	protected void validateDeletion(
+			Map<String, List<StagedModel>> dependentStagedModelsMap,
+			Group group)
+		throws Exception {
+
+		List<StagedModel> dependentStagedModels = dependentStagedModelsMap.get(
+			BookmarksFolder.class.getSimpleName());
+
+		Assert.assertEquals(1, dependentStagedModels.size());
+
+		BookmarksFolder folder = (BookmarksFolder)dependentStagedModels.get(0);
+
+		folder =
+			BookmarksFolderLocalServiceUtil.
+				fetchBookmarksFolderByUuidAndGroupId(
+					folder.getUuid(), group.getGroupId());
+
+		Assert.assertNull("Not Deleted: " + BookmarksFolder.class, folder);
 	}
 
 	@Override

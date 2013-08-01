@@ -50,10 +50,13 @@ UserGroup userGroup = (UserGroup)row.getObject();
 			modelResourceDescription="<%= userGroup.getName() %>"
 			resourcePrimKey="<%= String.valueOf(userGroup.getUserGroupId()) %>"
 			var="permissionsURL"
+		    windowState="<%= LiferayWindowState.POP_UP.toString() %>"
 		/>
 
 		<liferay-ui:icon
+			linkCssClass="use-dialog"
 			image="permissions"
+			method="get"
 			url="<%= permissionsURL %>"
 		/>
 	</c:if>

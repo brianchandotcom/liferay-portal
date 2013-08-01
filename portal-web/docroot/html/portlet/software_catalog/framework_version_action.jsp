@@ -44,10 +44,13 @@ String frameworkVersionId = String.valueOf(frameworkVersion.getFrameworkVersionI
 			modelResourceDescription="<%= frameworkVersion.getName() %>"
 			resourcePrimKey="<%= frameworkVersionId %>"
 			var="permissionsURL"
+		    windowState="<%= LiferayWindowState.POP_UP.toString() %>"
 		/>
 
 		<liferay-ui:icon
+			linkCssClass="use-dialog"
 			image="permissions"
+			method="get"
 			url="<%= permissionsURL %>"
 		/>
 	</c:if>

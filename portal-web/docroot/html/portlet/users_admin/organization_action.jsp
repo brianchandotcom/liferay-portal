@@ -78,10 +78,13 @@ if (row == null) {
 			modelResourceDescription="<%= HtmlUtil.escape(organization.getName()) %>"
 			resourcePrimKey="<%= String.valueOf(organization.getOrganizationId()) %>"
 			var="editOrganizationPermissionsURL"
+		    windowState="<%= LiferayWindowState.POP_UP.toString() %>"
 		/>
 
 		<liferay-ui:icon
+			linkCssClass="use-dialog"
 			image="permissions"
+			method="get"
 			url="<%= editOrganizationPermissionsURL %>"
 		/>
 	</c:if>--%>

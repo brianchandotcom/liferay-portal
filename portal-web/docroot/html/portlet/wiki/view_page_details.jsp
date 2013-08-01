@@ -284,11 +284,14 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "det
 						modelResourceDescription="<%= wikiPage.getTitle() %>"
 						resourcePrimKey="<%= String.valueOf(wikiPage.getResourcePrimKey()) %>"
 						var="permissionsURL"
+					    windowState="<%= LiferayWindowState.POP_UP.toString() %>"
 					/>
 
 					<liferay-ui:icon
+						linkCssClass="use-dialog"
 						image="permissions"
 						label="<%= true %>"
+						method="get"
 						url="<%= permissionsURL %>"
 					/>
 				</c:if>

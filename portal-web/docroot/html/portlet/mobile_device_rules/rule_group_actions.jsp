@@ -43,9 +43,15 @@ MDRRuleGroup ruleGroup = (MDRRuleGroup)row.getObject();
 			modelResourceDescription="<%= ruleGroup.getName(locale) %>"
 			resourcePrimKey="<%= String.valueOf(ruleGroup.getRuleGroupId()) %>"
 			var="permissionsURL"
+			windowState="<%= LiferayWindowState.POP_UP.toString() %>"
 		/>
 
-		<liferay-ui:icon image="permissions" url="<%= permissionsURL %>" />
+		<liferay-ui:icon
+			linkCssClass="use-dialog"
+			image="permissions"
+			method="get"
+			url="<%= permissionsURL %>"
+		/>
 	</c:if>
 
 	<c:if test="<%= MDRRuleGroupPermissionUtil.contains(permissionChecker, ruleGroup.getRuleGroupId(), ActionKeys.VIEW) && MDRPermissionUtil.contains(permissionChecker, groupId, ActionKeys.ADD_RULE_GROUP) %>">

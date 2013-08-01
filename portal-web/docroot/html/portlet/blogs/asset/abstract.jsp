@@ -31,6 +31,8 @@ BlogsEntry entry = (BlogsEntry)request.getAttribute(WebKeys.BLOGS_ENTRY);
 <%
 String summary = HtmlUtil.escape(entry.getDescription());
 
+summary = HtmlUtil.replaceNewLine(summary);
+
 if (Validator.isNull(summary)) {
 	summary = HtmlUtil.stripHtml(entry.getContent());
 }

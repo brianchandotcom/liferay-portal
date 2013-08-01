@@ -851,14 +851,13 @@ AUI.add(
 
 											var renderInterval = RENDER_INTERVAL_IDLE;
 
-											if (processesNode.one(".background-task-status-in-progress")) {
-												renderInterval = RENDER_INTERVAL_IN_PROGRESS;
+											var inProgress = !!processesNode.one('.background-task-status-in-progress');
 
-												instance._updateUncompletedProcessMessage(true, processesNode.one(".uncompleted-process-message"));
+											if (inProgress) {
+												renderInterval = RENDER_INTERVAL_IN_PROGRESS;
 											}
-											else {
-												instance._updateUncompletedProcessMessage(false, processesNode.one(".uncompleted-process-message"));
-											}
+
+											instance._updateUncompletedProcessMessage(inProgress, processesNode.one('.uncompleted-process-message'));
 
 											A.later(renderInterval, instance, instance._renderProcesses);
 										}

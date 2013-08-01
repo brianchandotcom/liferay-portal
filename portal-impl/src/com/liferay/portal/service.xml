@@ -158,6 +158,11 @@
 			<finder-column name="name" />
 			<finder-column name="taskExecutorClassName" />
 		</finder>
+		<finder name="G_T_C" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="taskExecutorClassName" />
+			<finder-column name="completed" />
+		</finder>
 		<finder name="G_T_S" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="taskExecutorClassName" />

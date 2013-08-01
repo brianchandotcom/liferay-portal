@@ -14,6 +14,10 @@
  */
 --%>
 
+<%
+boolean isExclusiveState = windowState.equals(LiferayWindowState.EXCLUSIVE);
+%>
+
 <liferay-ui:search-container
 	deltaConfigurable="<%= false %>"
 	emptyResultsMessage="no-device-rules-are-configured"
@@ -31,7 +35,7 @@
 		keyProperty="ruleGroupInstanceId"
 		modelVar="mdrRuleGroupInstance"
 	>
-		<liferay-portlet:renderURL portletName="<%= PortletKeys.MOBILE_DEVICE_SITE_ADMIN %>" varImpl="rowURL">
+		<liferay-portlet:renderURL portletName="<%= PortletKeys.MOBILE_DEVICE_SITE_ADMIN %>" varImpl="rowURL" windowState="<%= isExclusiveState ? LiferayWindowState.POP_UP.toString() : WindowState.MAXIMIZED.toString() %>">
 			<portlet:param name="struts_action" value="/mobile_device_rules/view_actions" />
 			<portlet:param name="redirect" value='<%= portletURL.toString() + "#tab=mobileDeviceRules" %>' />
 			<portlet:param name="ruleGroupInstanceId" value="<%= String.valueOf(mdrRuleGroupInstance.getRuleGroupInstanceId()) %>" />
@@ -42,3 +46,52 @@
 
 	<liferay-ui:search-iterator type="more" />
 </liferay-ui:search-container>
+
+<c:if test="<%= isExclusiveState %>">
+	<aui:script use="aui-base">
+		var uniqueRuleGroupInstancesContainer = A.one('#<portlet:namespace />uniqueRuleGroupInstancesContainer');
+
+		uniqueRuleGroupInstancesContainer.delegate(
+			'click',
+			function(event) {
+				event.preventDefault();
+
+				var href = event.target.attr('href');
+
+				Liferay.Util.openWindow(
+					{
+						dialog: {
+							width: 820
+						},
+						title: Liferay.Language.get('javax.portlet.title.178'),
+						uri: href
+					}
+				);
+			},
+			'.mobile-device-rule a'
+		);
+	</aui:script>
+</c:if>
+
+<aui:script>
+	Liferay.provide(
+		window,
+		'<portlet:namespace />mobileDeviceActionHandler',
+		function(href) {
+			if (<%= isExclusiveState %>) {
+				Liferay.Util.openWindow(
+					{
+						dialog: {
+							width: 820
+						},
+						title: Liferay.Language.get('javax.portlet.title.178'),
+						uri: href
+					}
+				);
+			}
+			else {
+				location.href = href;
+			}
+		}
+	);
+</aui:script>

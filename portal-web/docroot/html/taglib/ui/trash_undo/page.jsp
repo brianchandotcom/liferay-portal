@@ -26,10 +26,16 @@ if (SessionMessages.contains(portletRequest, portletDisplay.getId() + SessionMes
 	if (data != null) {
 		int trashedEntriesCount = 0;
 
+		String[] primaryKeys = new String[0];
+
 		Set<String> keys = data.keySet();
 
 		for (String key : keys) {
-			String[] primaryKeys = data.get(key);
+			if (!key.endsWith("Ids")) {
+				continue;
+			}
+
+			primaryKeys = data.get(key);
 
 			trashedEntriesCount += primaryKeys.length;
 		}
@@ -60,15 +66,74 @@ if (SessionMessages.contains(portletRequest, portletDisplay.getId() + SessionMes
 					</c:choose>
 				</liferay-util:buffer>
 
-				<liferay-ui:message arguments="<%= new Object[] {trashLink, trashedEntriesCount} %>" key='<%= trashedEntriesCount > 1 ? "x-items-were-moved-to-x" : "the-selected-item-was-moved-to-x" %>' />
+				<c:choose>
+					<c:when test="<%= trashedEntriesCount > 1 %>">
+						<liferay-ui:message arguments="<%= new Object[] {trashedEntriesCount, trashLink} %>" key="x-items-were-moved-to-x" />
+					</c:when>
+					<c:otherwise>
 
-				<a class="trash-undo-link" href="javascript:;" id="<%= namespace %>undo"><liferay-ui:message key="undo" /></a>
+						<%
+						String type = "selected-item";
+
+						String[] classNames = data.get("deleteEntryClassName");
+
+						String className = null;
+
+						if ((classNames != null) && (classNames.length > 0)) {
+							className = classNames[0];
+
+							type = ResourceActionsUtil.getModelResource(pageContext, className);
+						}
+
+						String[] titles = data.get("deleteEntryTitle");
+
+						String title = StringPool.BLANK;
+
+						if ((titles != null) && (titles.length > 0)) {
+							title = titles[0];
+						}
+						%>
+
+						<liferay-util:buffer var="trashEntityLink">
+							<c:choose>
+								<c:when test="<%= themeDisplay.isShowSiteAdministrationIcon() && Validator.isNotNull(className) && Validator.isNotNull(title) && Validator.isNotNull(primaryKeys[0]) %>">
+									<liferay-portlet:renderURL plid="<%= PortalUtil.getControlPanelPlid(company.getCompanyId()) %>" portletName="<%= PortletKeys.TRASH %>" varImpl="trashURL" windowState="<%= WindowState.NORMAL.toString() %>">
+										<portlet:param name="struts_action" value="/trash/view_content" />
+										<portlet:param name="className" value="<%= className %>" />
+										<portlet:param name="classPK" value="<%= String.valueOf(primaryKeys[0]) %>" />
+									</liferay-portlet:renderURL>
+
+									<%
+									String trashURLString = HttpUtil.setParameter(trashURL.toString(), "doAsGroupId", String.valueOf(themeDisplay.getScopeGroupId()));
+
+									if (Validator.isNull(themeDisplay.getControlPanelCategory())) {
+										trashURLString = HttpUtil.setParameter(trashURLString, "controlPanelCategory", "current_site");
+									}
+									%>
+
+									<em><aui:a href="<%= trashURLString %>" label="<%= title %>" /></em>
+								</c:when>
+								<c:when test="<%= Validator.isNotNull(title) %>">
+									<em><%= title %></em>
+								</c:when>
+							</c:choose>
+						</liferay-util:buffer>
+
+						<liferay-ui:message arguments="<%= new Object[] {type, trashEntityLink, trashLink.trim()} %>" key="the-x-x-was-moved-to-x" />
+					</c:otherwise>
+				</c:choose>
+
+				<a class="btn btn-primary btn-small trash-undo-link" href="javascript:;" id="<%= namespace %>undo"><liferay-ui:message key="undo" /></a>
 
 				<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 
 				<%
 				for (String key : keys) {
-					String[] primaryKeys = data.get(key);
+					if (!key.endsWith("Ids")) {
+						continue;
+					}
+
+					primaryKeys = data.get(key);
 				%>
 
 					<aui:input name="<%= key %>" type="hidden" value="<%= StringUtil.merge(primaryKeys) %>" />

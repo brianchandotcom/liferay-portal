@@ -134,7 +134,7 @@
 
 	<command name="viewDefaultCP">
 		<execute action="CPBlogs#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No entries were found." />
-		<execute action="CPBlogs#assertTextNotPresent" value1="${entryTitle}" />	
+		<execute action="CPBlogs#assertTextNotPresent" value1="${entryTitle}" />
 	</command>
 
 	<command name="viewPortletAsGuestPG">

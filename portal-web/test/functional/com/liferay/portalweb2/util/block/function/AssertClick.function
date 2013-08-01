@@ -92,4 +92,12 @@
 
 		<execute function="AssertClick#assertTextClickAtAndWait" />
 	</command>
+
+	<command name="pauseMakeVisibleAssertTextEqualsClickAt">
+		<execute selenium="pause" argument1="1000" />
+
+		<execute selenium="makeVisible" />
+
+		<execute function="AssertClick#assertTextClickAt" />
+	</command>
 </definition>

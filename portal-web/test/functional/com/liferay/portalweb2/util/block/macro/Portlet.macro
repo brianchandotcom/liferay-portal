@@ -7,8 +7,35 @@
 		<execute action="Dockbar#click" locator-key1="ADD" value1="Add" />
 		<execute action="Dockbar#assertClick" locator-key1="ADD_APPLICATION_LINK" value1="Applications" />
 		<execute action="Dockbar#type" locator-key1="ADD_APPLICATION_SEARCH_FIELD" value1="${portletName}" />
-		<execute action="Dockbar#makeVisible" locator1="//span[contains(@class,'add-content-item') and @data-title='${portletName}']" />
-		<execute action="Dockbar#assertClick" locator1="//span[contains(@class,'add-content-item') and @data-title='${portletName}']" value1="Add" />
+
+		<var name="portletLocator" value="//span[@data-title='${portletName}' and contains(@class,'add-content-item')]" />
+
+		<if>
+			<equals arg1="${portletName}" arg2="Asset Publisher" />
+			<then>
+				<var name="portletLocator" value="xpath=(${portletLocator})[2]" />
+			</then>
+			<elseif>
+				<equals arg1="${portletName}" arg2="Documents and Media Display" />
+				<then>
+					<var name="portletLocator" value="xpath=(${portletLocator})[2]" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${portletName}" arg2="Navigation" />
+				<then>
+					<var name="portletLocator" value="xpath=(${portletLocator})[2]" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${portletName}" arg2="Web Content Display" />
+				<then>
+					<var name="portletLocator" value="xpath=(${portletLocator})[2]" />
+				</then>
+			</elseif>
+		</if>
+
+		<execute action="Dockbar#assertClick" locator1="${portletLocator}" value1="Add" />
 
 		<execute action="Home#assertElementPresent" locator-key1="PORTLET_1" />
 	</command>

@@ -362,7 +362,17 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 								scheduleCMD = "schedule_publish_to_remote";
 								unscheduleCMD = "unschedule_publish_to_remote";
 							}
+
+							String backgroundTaskExecutorClassName = localPublishing ? LayoutStagingBackgroundTaskExecutor.class.getName() : LayoutRemoteStagingBackgroundTaskExecutor.class.getName();
+
+							int uncompletedBackgrounTaskCount = BackgroundTaskLocalServiceUtil.getBackgroundTasksCount(stagingGroupId, backgroundTaskExecutorClassName, false);
 							%>
+
+							<div class="<%= uncompletedBackgrounTaskCount == 0 ? "hide" : "in-progress" %>" id="<portlet:namespace />uncompletedProcessMessage">
+								<liferay-util:include page="/html/portlet/layouts_admin/uncompleted_processes_message.jsp">
+									<liferay-util:param name="uncompletedBackgroundTaskCount" value="<%= String.valueOf(uncompletedBackgrounTaskCount) %>" />
+								</liferay-util:include>
+							</div>
 
 							<aui:fieldset cssClass="options-group" label="date">
 								<%@ include file="/html/portlet/layouts_admin/publish_layouts_scheduler.jspf" %>
@@ -516,6 +526,7 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 			setupNode: '#<%= PortletDataHandlerKeys.PORTLET_SETUP_ALL %>Checkbox',
 			themeNode: '#<%= PortletDataHandlerKeys.THEME %>Checkbox',
 			themeReferenceNode: '#<%= PortletDataHandlerKeys.THEME_REFERENCE %>Checkbox',
+			uncompletedProcessMessageNode: '#<portlet:namespace />uncompletedProcessMessage',
 			userPreferencesNode: '#<%= PortletDataHandlerKeys.PORTLET_USER_PREFERENCES_ALL %>Checkbox'
 		}
 	);

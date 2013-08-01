@@ -110,3 +110,13 @@ String backgroundTaskExecutorClassName = localPublishing ? LayoutStagingBackgrou
 
 	<liferay-ui:search-iterator />
 </liferay-ui:search-container>
+
+<%
+int uncompletedBackgrounTaskCount = BackgroundTaskLocalServiceUtil.getBackgroundTasksCount(groupId, backgroundTaskExecutorClassName, false);
+%>
+
+<div class="hide uncompleted-process-message">
+	<liferay-util:include page="/html/portlet/layouts_admin/uncompleted_processes_message.jsp">
+		<liferay-util:param name="uncompletedBackgroundTaskCount" value="<%= String.valueOf(uncompletedBackgrounTaskCount) %>" />
+	</liferay-util:include>
+</div>

@@ -7,35 +7,54 @@
 	margin-top: 20px;
 }
 
-.lfr-ddm-container .field-wrapper {
-	position: relative;
+.aui .lfr-ddm-container .control-group {
+	margin-bottom: 15px;
+}
 
-	.aui-field-wrapper {
-		margin-left: 20px;
+.lfr-ddm-container {
+	.control-group label {
+		margin-left: 0px;
 	}
 
-	.datepicker-display {
-		float: none;
+	.field-wrapper {
+		position: relative;
+	
+		.aui-field-wrapper {
+			margin-left: 20px;
+		}
 
-		.datepicker-button-wrapper, .datepicker-select-wrapper {
-			display: inline;
+		.datepicker-display {
 			float: none;
+
+			.datepicker-button-wrapper, .datepicker-select-wrapper {
+				display: inline;
+				float: none;
+			}
+		}
+
+		.lfr-ddm-repeatable-add-button, .lfr-ddm-repeatable-delete-button {
+			display: block;
+			height: 16px;
+			position: absolute;
+			top: 4px;
+			width: 16px;
+
+			&.lfr-ddm-repeatable-add-button {
+				right: 4px;
+			}
+
+			&.lfr-ddm-repeatable-delete-button {
+				right: 24px;
+			}
 		}
 	}
 
-	.lfr-ddm-repeatable-add-button, .lfr-ddm-repeatable-delete-button {
-		display: block;
-		height: 16px;
-		position: absolute;
-		top: 4px;
-		width: 16px;
+	.field-wrapper-content {
+		margin-bottom: 6px;
 
-		&.lfr-ddm-repeatable-add-button {
-			right: 4px;
-		}
-
-		&.lfr-ddm-repeatable-delete-button {
-			right: 24px;
+		label {
+			font-weight: bold;
+			margin-left: 0px;
 		}
 	}
 }

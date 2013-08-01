@@ -391,6 +391,7 @@ for (int i = 0; i < results.size(); i++) {
 		<aui:input name="sourceVersion" type="hidden" value="<%= latestWikiPage.getVersion() %>" />
 		<aui:input name="targetVersion" type="hidden" value="<%= wikiPage.getVersion() %>" />
 		<aui:input name="type" type="hidden" value="html" />
+		<aui:input name="tabs3" type="hidden" value="versions" />
 
 		<aui:button-row>
 			<aui:button name="submitButton" type="submit" value="compare-versions" />

@@ -324,8 +324,8 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 		}
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getLayoutSetId() {
 		return _layoutSetId;
 	}
@@ -335,8 +335,8 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 		_layoutSetId = layoutSetId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getGroupId() {
 		return _groupId;
 	}
@@ -358,8 +358,8 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 		return _originalGroupId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getCompanyId() {
 		return _companyId;
 	}
@@ -369,8 +369,8 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 		_companyId = companyId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getCreateDate() {
 		return _createDate;
 	}
@@ -380,8 +380,8 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 		_createDate = createDate;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
 	}
@@ -391,8 +391,8 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 		_modifiedDate = modifiedDate;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public boolean getPrivateLayout() {
 		return _privateLayout;
 	}
@@ -419,8 +419,8 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 		return _originalPrivateLayout;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public boolean getLogo() {
 		return _logo;
 	}
@@ -435,8 +435,8 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 		_logo = logo;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getLogoId() {
 		return _logoId;
 	}
@@ -446,8 +446,8 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 		_logoId = logoId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getThemeId() {
 		if (_themeId == null) {
 			return StringPool.BLANK;
@@ -462,8 +462,8 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 		_themeId = themeId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getColorSchemeId() {
 		if (_colorSchemeId == null) {
 			return StringPool.BLANK;
@@ -478,8 +478,8 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 		_colorSchemeId = colorSchemeId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getWapThemeId() {
 		if (_wapThemeId == null) {
 			return StringPool.BLANK;
@@ -494,8 +494,8 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 		_wapThemeId = wapThemeId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getWapColorSchemeId() {
 		if (_wapColorSchemeId == null) {
 			return StringPool.BLANK;
@@ -510,8 +510,8 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 		_wapColorSchemeId = wapColorSchemeId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getCss() {
 		if (_css == null) {
 			return StringPool.BLANK;
@@ -526,8 +526,8 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 		_css = css;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public int getPageCount() {
 		return _pageCount;
 	}
@@ -537,8 +537,8 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 		_pageCount = pageCount;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getSettings() {
 		if (_settings == null) {
 			return StringPool.BLANK;
@@ -553,8 +553,8 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 		_settings = settings;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getLayoutSetPrototypeUuid() {
 		if (_layoutSetPrototypeUuid == null) {
 			return StringPool.BLANK;
@@ -579,8 +579,8 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 		return GetterUtil.getString(_originalLayoutSetPrototypeUuid);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public boolean getLayoutSetPrototypeLinkEnabled() {
 		return _layoutSetPrototypeLinkEnabled;
 	}

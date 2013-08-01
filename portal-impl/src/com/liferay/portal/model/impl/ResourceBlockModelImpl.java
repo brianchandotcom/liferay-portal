@@ -222,8 +222,8 @@ public class ResourceBlockModelImpl extends BaseModelImpl<ResourceBlock>
 		}
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getResourceBlockId() {
 		return _resourceBlockId;
 	}
@@ -233,8 +233,8 @@ public class ResourceBlockModelImpl extends BaseModelImpl<ResourceBlock>
 		_resourceBlockId = resourceBlockId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getCompanyId() {
 		return _companyId;
 	}
@@ -256,8 +256,8 @@ public class ResourceBlockModelImpl extends BaseModelImpl<ResourceBlock>
 		return _originalCompanyId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getGroupId() {
 		return _groupId;
 	}
@@ -279,8 +279,8 @@ public class ResourceBlockModelImpl extends BaseModelImpl<ResourceBlock>
 		return _originalGroupId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getName() {
 		if (_name == null) {
 			return StringPool.BLANK;
@@ -305,8 +305,8 @@ public class ResourceBlockModelImpl extends BaseModelImpl<ResourceBlock>
 		return GetterUtil.getString(_originalName);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getPermissionsHash() {
 		if (_permissionsHash == null) {
 			return StringPool.BLANK;
@@ -331,8 +331,8 @@ public class ResourceBlockModelImpl extends BaseModelImpl<ResourceBlock>
 		return GetterUtil.getString(_originalPermissionsHash);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getReferenceCount() {
 		return _referenceCount;
 	}

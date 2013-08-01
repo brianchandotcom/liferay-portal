@@ -258,8 +258,8 @@ public class CompanyModelImpl extends BaseModelImpl<Company>
 		}
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getCompanyId() {
 		return _companyId;
 	}
@@ -269,8 +269,8 @@ public class CompanyModelImpl extends BaseModelImpl<Company>
 		_companyId = companyId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getAccountId() {
 		return _accountId;
 	}
@@ -280,8 +280,8 @@ public class CompanyModelImpl extends BaseModelImpl<Company>
 		_accountId = accountId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getWebId() {
 		if (_webId == null) {
 			return StringPool.BLANK;
@@ -306,8 +306,8 @@ public class CompanyModelImpl extends BaseModelImpl<Company>
 		return GetterUtil.getString(_originalWebId);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getKey() {
 		if (_key == null) {
 			return StringPool.BLANK;
@@ -322,8 +322,8 @@ public class CompanyModelImpl extends BaseModelImpl<Company>
 		_key = key;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getMx() {
 		if (_mx == null) {
 			return StringPool.BLANK;
@@ -348,8 +348,8 @@ public class CompanyModelImpl extends BaseModelImpl<Company>
 		return GetterUtil.getString(_originalMx);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getHomeURL() {
 		if (_homeURL == null) {
 			return StringPool.BLANK;
@@ -364,8 +364,8 @@ public class CompanyModelImpl extends BaseModelImpl<Company>
 		_homeURL = homeURL;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getLogoId() {
 		return _logoId;
 	}
@@ -387,8 +387,8 @@ public class CompanyModelImpl extends BaseModelImpl<Company>
 		return _originalLogoId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public boolean getSystem() {
 		return _system;
 	}
@@ -415,8 +415,8 @@ public class CompanyModelImpl extends BaseModelImpl<Company>
 		return _originalSystem;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public int getMaxUsers() {
 		return _maxUsers;
 	}
@@ -426,8 +426,8 @@ public class CompanyModelImpl extends BaseModelImpl<Company>
 		_maxUsers = maxUsers;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public boolean getActive() {
 		return _active;
 	}

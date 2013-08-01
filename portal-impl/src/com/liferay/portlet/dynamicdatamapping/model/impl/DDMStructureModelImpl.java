@@ -339,8 +339,8 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 		}
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getUuid() {
 		if (_uuid == null) {
 			return StringPool.BLANK;
@@ -363,8 +363,8 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 		return GetterUtil.getString(_originalUuid);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getStructureId() {
 		return _structureId;
 	}
@@ -374,8 +374,8 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 		_structureId = structureId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getGroupId() {
 		return _groupId;
 	}
@@ -397,8 +397,8 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 		return _originalGroupId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getCompanyId() {
 		return _companyId;
 	}
@@ -420,8 +420,8 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 		return _originalCompanyId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getUserId() {
 		return _userId;
 	}
@@ -441,8 +441,8 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 		_userUuid = userUuid;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getUserName() {
 		if (_userName == null) {
 			return StringPool.BLANK;
@@ -457,8 +457,8 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 		_userName = userName;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getCreateDate() {
 		return _createDate;
 	}
@@ -468,8 +468,8 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 		_createDate = createDate;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
 	}
@@ -479,8 +479,8 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 		_modifiedDate = modifiedDate;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getParentStructureId() {
 		return _parentStructureId;
 	}
@@ -522,8 +522,8 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 		setClassNameId(classNameId);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getClassNameId() {
 		return _classNameId;
 	}
@@ -545,8 +545,8 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 		return _originalClassNameId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getStructureKey() {
 		if (_structureKey == null) {
 			return StringPool.BLANK;
@@ -571,8 +571,8 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 		return GetterUtil.getString(_originalStructureKey);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getName() {
 		if (_name == null) {
 			return StringPool.BLANK;
@@ -680,8 +680,8 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 		return GetterUtil.getString(_originalName);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getDescription() {
 		if (_description == null) {
 			return StringPool.BLANK;
@@ -793,8 +793,8 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 		return GetterUtil.getString(_originalDescription);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getXsd() {
 		if (_xsd == null) {
 			return StringPool.BLANK;
@@ -809,8 +809,8 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 		_xsd = xsd;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getStorageType() {
 		if (_storageType == null) {
 			return StringPool.BLANK;
@@ -825,8 +825,8 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 		_storageType = storageType;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public int getType() {
 		return _type;
 	}

@@ -264,8 +264,8 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 		}
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getTeamId() {
 		return _teamId;
 	}
@@ -275,8 +275,8 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 		_teamId = teamId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getCompanyId() {
 		return _companyId;
 	}
@@ -286,8 +286,8 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 		_companyId = companyId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getUserId() {
 		return _userId;
 	}
@@ -307,8 +307,8 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 		_userUuid = userUuid;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getUserName() {
 		if (_userName == null) {
 			return StringPool.BLANK;
@@ -323,8 +323,8 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 		_userName = userName;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getCreateDate() {
 		return _createDate;
 	}
@@ -334,8 +334,8 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 		_createDate = createDate;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
 	}
@@ -345,8 +345,8 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 		_modifiedDate = modifiedDate;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getGroupId() {
 		return _groupId;
 	}
@@ -368,8 +368,8 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 		return _originalGroupId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getName() {
 		if (_name == null) {
 			return StringPool.BLANK;
@@ -394,8 +394,8 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 		return GetterUtil.getString(_originalName);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getDescription() {
 		if (_description == null) {
 			return StringPool.BLANK;

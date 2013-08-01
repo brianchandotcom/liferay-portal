@@ -310,8 +310,8 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 		}
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getUuid() {
 		if (_uuid == null) {
 			return StringPool.BLANK;
@@ -334,8 +334,8 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 		return GetterUtil.getString(_originalUuid);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getFolderId() {
 		return _folderId;
 	}
@@ -345,8 +345,8 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 		_folderId = folderId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getGroupId() {
 		return _groupId;
 	}
@@ -368,8 +368,8 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 		return _originalGroupId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getCompanyId() {
 		return _companyId;
 	}
@@ -391,8 +391,8 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 		return _originalCompanyId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getUserId() {
 		return _userId;
 	}
@@ -412,8 +412,8 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 		_userUuid = userUuid;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getUserName() {
 		if (_userName == null) {
 			return StringPool.BLANK;
@@ -428,8 +428,8 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 		_userName = userName;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getCreateDate() {
 		return _createDate;
 	}
@@ -439,8 +439,8 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 		_createDate = createDate;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
 	}
@@ -450,8 +450,8 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 		_modifiedDate = modifiedDate;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getParentFolderId() {
 		return _parentFolderId;
 	}
@@ -473,8 +473,8 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 		return _originalParentFolderId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getName() {
 		if (_name == null) {
 			return StringPool.BLANK;
@@ -499,8 +499,8 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 		return GetterUtil.getString(_originalName);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getDescription() {
 		if (_description == null) {
 			return StringPool.BLANK;
@@ -515,8 +515,8 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 		_description = description;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public int getStatus() {
 		return _status;
 	}
@@ -538,8 +538,8 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 		return _originalStatus;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getStatusByUserId() {
 		return _statusByUserId;
 	}
@@ -560,8 +560,8 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 		_statusByUserUuid = statusByUserUuid;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getStatusByUserName() {
 		if (_statusByUserName == null) {
 			return StringPool.BLANK;
@@ -576,8 +576,8 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 		_statusByUserName = statusByUserName;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getStatusDate() {
 		return _statusDate;
 	}

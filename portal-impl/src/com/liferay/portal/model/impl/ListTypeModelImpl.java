@@ -188,8 +188,8 @@ public class ListTypeModelImpl extends BaseModelImpl<ListType>
 		}
 	}
 
-	@Override
 	@JSON
+	@Override
 	public int getListTypeId() {
 		return _listTypeId;
 	}
@@ -199,8 +199,8 @@ public class ListTypeModelImpl extends BaseModelImpl<ListType>
 		_listTypeId = listTypeId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getName() {
 		if (_name == null) {
 			return StringPool.BLANK;
@@ -217,8 +217,8 @@ public class ListTypeModelImpl extends BaseModelImpl<ListType>
 		_name = name;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getType() {
 		if (_type == null) {
 			return StringPool.BLANK;

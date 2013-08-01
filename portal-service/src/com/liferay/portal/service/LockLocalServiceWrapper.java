@@ -429,6 +429,13 @@ public class LockLocalServiceWrapper implements LockLocalService,
 		_lockLocalService.unlock(className, key);
 	}
 
+	@Override
+	public void unlock(java.lang.String className, java.lang.String key,
+		java.lang.String owner)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_lockLocalService.unlock(className, key, owner);
+	}
+
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link #unlock(String, String,
 	String)}
@@ -438,13 +445,6 @@ public class LockLocalServiceWrapper implements LockLocalService,
 		java.lang.String owner, boolean retrieveFromCache)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_lockLocalService.unlock(className, key, owner, retrieveFromCache);
-	}
-
-	@Override
-	public void unlock(java.lang.String className, java.lang.String key,
-		java.lang.String owner)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		_lockLocalService.unlock(className, key, owner);
 	}
 
 	/**

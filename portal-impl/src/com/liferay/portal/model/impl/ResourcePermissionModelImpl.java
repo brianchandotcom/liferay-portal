@@ -242,8 +242,8 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 		}
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getResourcePermissionId() {
 		return _resourcePermissionId;
 	}
@@ -253,8 +253,8 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 		_resourcePermissionId = resourcePermissionId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getCompanyId() {
 		return _companyId;
 	}
@@ -276,8 +276,8 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 		return _originalCompanyId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getName() {
 		if (_name == null) {
 			return StringPool.BLANK;
@@ -302,8 +302,8 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 		return GetterUtil.getString(_originalName);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public int getScope() {
 		return _scope;
 	}
@@ -325,8 +325,8 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 		return _originalScope;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getPrimKey() {
 		if (_primKey == null) {
 			return StringPool.BLANK;
@@ -351,8 +351,8 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 		return GetterUtil.getString(_originalPrimKey);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getRoleId() {
 		return _roleId;
 	}
@@ -374,8 +374,8 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 		return _originalRoleId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getOwnerId() {
 		return _ownerId;
 	}
@@ -385,8 +385,8 @@ public class ResourcePermissionModelImpl extends BaseModelImpl<ResourcePermissio
 		_ownerId = ownerId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getActionIds() {
 		return _actionIds;
 	}

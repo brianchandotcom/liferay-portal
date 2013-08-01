@@ -348,8 +348,8 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 		}
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getUuid() {
 		if (_uuid == null) {
 			return StringPool.BLANK;
@@ -372,8 +372,8 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 		return GetterUtil.getString(_originalUuid);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getAddressId() {
 		return _addressId;
 	}
@@ -383,8 +383,8 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 		_addressId = addressId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getCompanyId() {
 		return _companyId;
 	}
@@ -406,8 +406,8 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 		return _originalCompanyId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getUserId() {
 		return _userId;
 	}
@@ -439,8 +439,8 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 		return _originalUserId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getUserName() {
 		if (_userName == null) {
 			return StringPool.BLANK;
@@ -455,8 +455,8 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 		_userName = userName;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getCreateDate() {
 		return _createDate;
 	}
@@ -468,8 +468,8 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 		_createDate = createDate;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
 	}
@@ -499,8 +499,8 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 		setClassNameId(classNameId);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getClassNameId() {
 		return _classNameId;
 	}
@@ -522,8 +522,8 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 		return _originalClassNameId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getClassPK() {
 		return _classPK;
 	}
@@ -545,8 +545,8 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 		return _originalClassPK;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getStreet1() {
 		if (_street1 == null) {
 			return StringPool.BLANK;
@@ -561,8 +561,8 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 		_street1 = street1;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getStreet2() {
 		if (_street2 == null) {
 			return StringPool.BLANK;
@@ -577,8 +577,8 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 		_street2 = street2;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getStreet3() {
 		if (_street3 == null) {
 			return StringPool.BLANK;
@@ -593,8 +593,8 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 		_street3 = street3;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getCity() {
 		if (_city == null) {
 			return StringPool.BLANK;
@@ -609,8 +609,8 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 		_city = city;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getZip() {
 		if (_zip == null) {
 			return StringPool.BLANK;
@@ -625,8 +625,8 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 		_zip = zip;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getRegionId() {
 		return _regionId;
 	}
@@ -636,8 +636,8 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 		_regionId = regionId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getCountryId() {
 		return _countryId;
 	}
@@ -647,8 +647,8 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 		_countryId = countryId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public int getTypeId() {
 		return _typeId;
 	}
@@ -658,8 +658,8 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 		_typeId = typeId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public boolean getMailing() {
 		return _mailing;
 	}
@@ -686,8 +686,8 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 		return _originalMailing;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public boolean getPrimary() {
 		return _primary;
 	}

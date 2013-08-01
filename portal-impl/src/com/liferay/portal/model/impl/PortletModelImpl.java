@@ -211,8 +211,8 @@ public class PortletModelImpl extends BaseModelImpl<Portlet>
 		}
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getId() {
 		return _id;
 	}
@@ -222,8 +222,8 @@ public class PortletModelImpl extends BaseModelImpl<Portlet>
 		_id = id;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getCompanyId() {
 		return _companyId;
 	}
@@ -245,8 +245,8 @@ public class PortletModelImpl extends BaseModelImpl<Portlet>
 		return _originalCompanyId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getPortletId() {
 		if (_portletId == null) {
 			return StringPool.BLANK;
@@ -271,8 +271,8 @@ public class PortletModelImpl extends BaseModelImpl<Portlet>
 		return GetterUtil.getString(_originalPortletId);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getRoles() {
 		if (_roles == null) {
 			return StringPool.BLANK;
@@ -287,8 +287,8 @@ public class PortletModelImpl extends BaseModelImpl<Portlet>
 		_roles = roles;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public boolean getActive() {
 		return _active;
 	}

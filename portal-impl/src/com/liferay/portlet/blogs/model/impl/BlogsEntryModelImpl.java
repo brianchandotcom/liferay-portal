@@ -385,8 +385,8 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 		}
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getUuid() {
 		if (_uuid == null) {
 			return StringPool.BLANK;
@@ -409,8 +409,8 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 		return GetterUtil.getString(_originalUuid);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getEntryId() {
 		return _entryId;
 	}
@@ -420,8 +420,8 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 		_entryId = entryId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getGroupId() {
 		return _groupId;
 	}
@@ -443,8 +443,8 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 		return _originalGroupId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getCompanyId() {
 		return _companyId;
 	}
@@ -466,8 +466,8 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 		return _originalCompanyId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getUserId() {
 		return _userId;
 	}
@@ -499,8 +499,8 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 		return _originalUserId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getUserName() {
 		if (_userName == null) {
 			return StringPool.BLANK;
@@ -515,8 +515,8 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 		_userName = userName;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getCreateDate() {
 		return _createDate;
 	}
@@ -528,8 +528,8 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 		_createDate = createDate;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
 	}
@@ -539,8 +539,8 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 		_modifiedDate = modifiedDate;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getTitle() {
 		if (_title == null) {
 			return StringPool.BLANK;
@@ -555,8 +555,8 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 		_title = title;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getUrlTitle() {
 		if (_urlTitle == null) {
 			return StringPool.BLANK;
@@ -581,8 +581,8 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 		return GetterUtil.getString(_originalUrlTitle);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getDescription() {
 		if (_description == null) {
 			return StringPool.BLANK;
@@ -597,8 +597,8 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 		_description = description;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getContent() {
 		if (_content == null) {
 			return StringPool.BLANK;
@@ -613,8 +613,8 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 		_content = content;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getDisplayDate() {
 		return _displayDate;
 	}
@@ -634,8 +634,8 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 		return _originalDisplayDate;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public boolean getAllowPingbacks() {
 		return _allowPingbacks;
 	}
@@ -650,8 +650,8 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 		_allowPingbacks = allowPingbacks;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public boolean getAllowTrackbacks() {
 		return _allowTrackbacks;
 	}
@@ -666,8 +666,8 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 		_allowTrackbacks = allowTrackbacks;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getTrackbacks() {
 		if (_trackbacks == null) {
 			return StringPool.BLANK;
@@ -682,8 +682,8 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 		_trackbacks = trackbacks;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public boolean getSmallImage() {
 		return _smallImage;
 	}
@@ -698,8 +698,8 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 		_smallImage = smallImage;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getSmallImageId() {
 		return _smallImageId;
 	}
@@ -709,8 +709,8 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 		_smallImageId = smallImageId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getSmallImageURL() {
 		if (_smallImageURL == null) {
 			return StringPool.BLANK;
@@ -725,8 +725,8 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 		_smallImageURL = smallImageURL;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public int getStatus() {
 		return _status;
 	}
@@ -748,8 +748,8 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 		return _originalStatus;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getStatusByUserId() {
 		return _statusByUserId;
 	}
@@ -770,8 +770,8 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 		_statusByUserUuid = statusByUserUuid;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getStatusByUserName() {
 		if (_statusByUserName == null) {
 			return StringPool.BLANK;
@@ -786,8 +786,8 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 		_statusByUserName = statusByUserName;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getStatusDate() {
 		return _statusDate;
 	}

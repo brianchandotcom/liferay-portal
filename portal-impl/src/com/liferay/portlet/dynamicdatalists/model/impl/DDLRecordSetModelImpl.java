@@ -304,8 +304,8 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 		}
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getUuid() {
 		if (_uuid == null) {
 			return StringPool.BLANK;
@@ -328,8 +328,8 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 		return GetterUtil.getString(_originalUuid);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getRecordSetId() {
 		return _recordSetId;
 	}
@@ -339,8 +339,8 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 		_recordSetId = recordSetId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getGroupId() {
 		return _groupId;
 	}
@@ -362,8 +362,8 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 		return _originalGroupId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getCompanyId() {
 		return _companyId;
 	}
@@ -385,8 +385,8 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 		return _originalCompanyId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getUserId() {
 		return _userId;
 	}
@@ -406,8 +406,8 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 		_userUuid = userUuid;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getUserName() {
 		if (_userName == null) {
 			return StringPool.BLANK;
@@ -422,8 +422,8 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 		_userName = userName;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getCreateDate() {
 		return _createDate;
 	}
@@ -433,8 +433,8 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 		_createDate = createDate;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
 	}
@@ -444,8 +444,8 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 		_modifiedDate = modifiedDate;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getDDMStructureId() {
 		return _DDMStructureId;
 	}
@@ -455,8 +455,8 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 		_DDMStructureId = DDMStructureId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getRecordSetKey() {
 		if (_recordSetKey == null) {
 			return StringPool.BLANK;
@@ -481,8 +481,8 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 		return GetterUtil.getString(_originalRecordSetKey);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getName() {
 		if (_name == null) {
 			return StringPool.BLANK;
@@ -580,8 +580,8 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 				LocaleUtil.toLanguageId(defaultLocale)));
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getDescription() {
 		if (_description == null) {
 			return StringPool.BLANK;
@@ -683,8 +683,8 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 				LocaleUtil.toLanguageId(defaultLocale)));
 	}
 
-	@Override
 	@JSON
+	@Override
 	public int getMinDisplayRows() {
 		return _minDisplayRows;
 	}
@@ -694,8 +694,8 @@ public class DDLRecordSetModelImpl extends BaseModelImpl<DDLRecordSet>
 		_minDisplayRows = minDisplayRows;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public int getScope() {
 		return _scope;
 	}

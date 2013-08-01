@@ -254,8 +254,8 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 		}
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getEntryId() {
 		return _entryId;
 	}
@@ -265,8 +265,8 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 		_entryId = entryId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getCompanyId() {
 		return _companyId;
 	}
@@ -276,8 +276,8 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 		_companyId = companyId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getUserId() {
 		return _userId;
 	}
@@ -309,8 +309,8 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 		return _originalUserId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getUserName() {
 		if (_userName == null) {
 			return StringPool.BLANK;
@@ -325,8 +325,8 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 		_userName = userName;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getCreateDate() {
 		return _createDate;
 	}
@@ -336,8 +336,8 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 		_createDate = createDate;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
 	}
@@ -367,8 +367,8 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 		setClassNameId(classNameId);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getClassNameId() {
 		return _classNameId;
 	}
@@ -390,8 +390,8 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 		return _originalClassNameId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getClassPK() {
 		return _classPK;
 	}
@@ -413,8 +413,8 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 		return _originalClassPK;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public double getScore() {
 		return _score;
 	}

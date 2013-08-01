@@ -373,8 +373,8 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 		}
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getUuid() {
 		if (_uuid == null) {
 			return StringPool.BLANK;
@@ -397,8 +397,8 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 		return GetterUtil.getString(_originalUuid);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getTemplateId() {
 		return _templateId;
 	}
@@ -408,8 +408,8 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 		_templateId = templateId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getGroupId() {
 		return _groupId;
 	}
@@ -431,8 +431,8 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 		return _originalGroupId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getCompanyId() {
 		return _companyId;
 	}
@@ -454,8 +454,8 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 		return _originalCompanyId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getUserId() {
 		return _userId;
 	}
@@ -475,8 +475,8 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 		_userUuid = userUuid;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getUserName() {
 		if (_userName == null) {
 			return StringPool.BLANK;
@@ -491,8 +491,8 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 		_userName = userName;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getCreateDate() {
 		return _createDate;
 	}
@@ -502,8 +502,8 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 		_createDate = createDate;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
 	}
@@ -533,8 +533,8 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 		setClassNameId(classNameId);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getClassNameId() {
 		return _classNameId;
 	}
@@ -556,8 +556,8 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 		return _originalClassNameId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getClassPK() {
 		return _classPK;
 	}
@@ -579,8 +579,8 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 		return _originalClassPK;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getTemplateKey() {
 		if (_templateKey == null) {
 			return StringPool.BLANK;
@@ -605,8 +605,8 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 		return GetterUtil.getString(_originalTemplateKey);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getName() {
 		if (_name == null) {
 			return StringPool.BLANK;
@@ -704,8 +704,8 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 				LocaleUtil.toLanguageId(defaultLocale)));
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getDescription() {
 		if (_description == null) {
 			return StringPool.BLANK;
@@ -807,8 +807,8 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 				LocaleUtil.toLanguageId(defaultLocale)));
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getType() {
 		if (_type == null) {
 			return StringPool.BLANK;
@@ -833,8 +833,8 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 		return GetterUtil.getString(_originalType);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getMode() {
 		if (_mode == null) {
 			return StringPool.BLANK;
@@ -859,8 +859,8 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 		return GetterUtil.getString(_originalMode);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getLanguage() {
 		if (_language == null) {
 			return StringPool.BLANK;
@@ -885,8 +885,8 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 		return GetterUtil.getString(_originalLanguage);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getScript() {
 		if (_script == null) {
 			return StringPool.BLANK;
@@ -901,8 +901,8 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 		_script = script;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public boolean getCacheable() {
 		return _cacheable;
 	}
@@ -917,8 +917,8 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 		_cacheable = cacheable;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public boolean getSmallImage() {
 		return _smallImage;
 	}
@@ -933,8 +933,8 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 		_smallImage = smallImage;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getSmallImageId() {
 		return _smallImageId;
 	}
@@ -956,8 +956,8 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 		return _originalSmallImageId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getSmallImageURL() {
 		if (_smallImageURL == null) {
 			return StringPool.BLANK;

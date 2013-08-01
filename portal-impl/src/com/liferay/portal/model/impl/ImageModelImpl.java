@@ -219,8 +219,8 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 		}
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getImageId() {
 		return _imageId;
 	}
@@ -232,8 +232,8 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 		_imageId = imageId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
 	}
@@ -243,8 +243,8 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 		_modifiedDate = modifiedDate;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getType() {
 		if (_type == null) {
 			return StringPool.BLANK;
@@ -259,8 +259,8 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 		_type = type;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public int getHeight() {
 		return _height;
 	}
@@ -270,8 +270,8 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 		_height = height;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public int getWidth() {
 		return _width;
 	}
@@ -281,8 +281,8 @@ public class ImageModelImpl extends BaseModelImpl<Image> implements ImageModel {
 		_width = width;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public int getSize() {
 		return _size;
 	}

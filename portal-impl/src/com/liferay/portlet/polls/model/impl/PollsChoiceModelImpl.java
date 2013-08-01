@@ -277,8 +277,8 @@ public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
 		}
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getUuid() {
 		if (_uuid == null) {
 			return StringPool.BLANK;
@@ -301,8 +301,8 @@ public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
 		return GetterUtil.getString(_originalUuid);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getChoiceId() {
 		return _choiceId;
 	}
@@ -312,8 +312,8 @@ public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
 		_choiceId = choiceId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getGroupId() {
 		return _groupId;
 	}
@@ -335,8 +335,8 @@ public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
 		return _originalGroupId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getCompanyId() {
 		return _companyId;
 	}
@@ -358,8 +358,8 @@ public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
 		return _originalCompanyId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getUserId() {
 		return _userId;
 	}
@@ -379,8 +379,8 @@ public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
 		_userUuid = userUuid;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getUserName() {
 		if (_userName == null) {
 			return StringPool.BLANK;
@@ -395,8 +395,8 @@ public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
 		_userName = userName;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getCreateDate() {
 		return _createDate;
 	}
@@ -406,8 +406,8 @@ public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
 		_createDate = createDate;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
 	}
@@ -417,8 +417,8 @@ public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
 		_modifiedDate = modifiedDate;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getQuestionId() {
 		return _questionId;
 	}
@@ -440,8 +440,8 @@ public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
 		return _originalQuestionId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getName() {
 		if (_name == null) {
 			return StringPool.BLANK;
@@ -466,8 +466,8 @@ public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
 		return GetterUtil.getString(_originalName);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getDescription() {
 		if (_description == null) {
 			return StringPool.BLANK;

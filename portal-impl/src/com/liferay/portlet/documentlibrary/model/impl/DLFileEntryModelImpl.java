@@ -422,8 +422,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		}
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getUuid() {
 		if (_uuid == null) {
 			return StringPool.BLANK;
@@ -446,8 +446,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		return GetterUtil.getString(_originalUuid);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getFileEntryId() {
 		return _fileEntryId;
 	}
@@ -457,8 +457,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		_fileEntryId = fileEntryId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getGroupId() {
 		return _groupId;
 	}
@@ -480,8 +480,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		return _originalGroupId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getCompanyId() {
 		return _companyId;
 	}
@@ -503,8 +503,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		return _originalCompanyId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getUserId() {
 		return _userId;
 	}
@@ -536,8 +536,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		return _originalUserId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getUserName() {
 		if (_userName == null) {
 			return StringPool.BLANK;
@@ -552,8 +552,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		_userName = userName;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getCreateDate() {
 		return _createDate;
 	}
@@ -563,8 +563,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		_createDate = createDate;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
 	}
@@ -594,8 +594,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		setClassNameId(classNameId);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getClassNameId() {
 		return _classNameId;
 	}
@@ -605,8 +605,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		_classNameId = classNameId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getClassPK() {
 		return _classPK;
 	}
@@ -616,8 +616,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		_classPK = classPK;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getRepositoryId() {
 		return _repositoryId;
 	}
@@ -627,8 +627,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		_repositoryId = repositoryId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getFolderId() {
 		return _folderId;
 	}
@@ -650,8 +650,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		return _originalFolderId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getName() {
 		if (_name == null) {
 			return StringPool.BLANK;
@@ -676,8 +676,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		return GetterUtil.getString(_originalName);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getExtension() {
 		if (_extension == null) {
 			return StringPool.BLANK;
@@ -692,8 +692,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		_extension = extension;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getMimeType() {
 		if (_mimeType == null) {
 			return StringPool.BLANK;
@@ -718,8 +718,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		return GetterUtil.getString(_originalMimeType);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getTitle() {
 		if (_title == null) {
 			return StringPool.BLANK;
@@ -744,8 +744,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		return GetterUtil.getString(_originalTitle);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getDescription() {
 		if (_description == null) {
 			return StringPool.BLANK;
@@ -760,8 +760,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		_description = description;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getExtraSettings() {
 		if (_extraSettings == null) {
 			return StringPool.BLANK;
@@ -776,8 +776,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		_extraSettings = extraSettings;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getFileEntryTypeId() {
 		return _fileEntryTypeId;
 	}
@@ -799,8 +799,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		return _originalFileEntryTypeId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getVersion() {
 		if (_version == null) {
 			return StringPool.BLANK;
@@ -815,8 +815,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		_version = version;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getSize() {
 		return _size;
 	}
@@ -826,8 +826,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		_size = size;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public int getReadCount() {
 		return _readCount;
 	}
@@ -837,8 +837,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		_readCount = readCount;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getSmallImageId() {
 		return _smallImageId;
 	}
@@ -848,8 +848,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		_smallImageId = smallImageId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getLargeImageId() {
 		return _largeImageId;
 	}
@@ -859,8 +859,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		_largeImageId = largeImageId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getCustom1ImageId() {
 		return _custom1ImageId;
 	}
@@ -870,8 +870,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		_custom1ImageId = custom1ImageId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getCustom2ImageId() {
 		return _custom2ImageId;
 	}
@@ -881,8 +881,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		_custom2ImageId = custom2ImageId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public boolean getManualCheckInRequired() {
 		return _manualCheckInRequired;
 	}

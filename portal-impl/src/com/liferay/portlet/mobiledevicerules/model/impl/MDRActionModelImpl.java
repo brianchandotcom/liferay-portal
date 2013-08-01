@@ -313,8 +313,8 @@ public class MDRActionModelImpl extends BaseModelImpl<MDRAction>
 		}
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getUuid() {
 		if (_uuid == null) {
 			return StringPool.BLANK;
@@ -337,8 +337,8 @@ public class MDRActionModelImpl extends BaseModelImpl<MDRAction>
 		return GetterUtil.getString(_originalUuid);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getActionId() {
 		return _actionId;
 	}
@@ -348,8 +348,8 @@ public class MDRActionModelImpl extends BaseModelImpl<MDRAction>
 		_actionId = actionId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getGroupId() {
 		return _groupId;
 	}
@@ -371,8 +371,8 @@ public class MDRActionModelImpl extends BaseModelImpl<MDRAction>
 		return _originalGroupId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getCompanyId() {
 		return _companyId;
 	}
@@ -394,8 +394,8 @@ public class MDRActionModelImpl extends BaseModelImpl<MDRAction>
 		return _originalCompanyId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getUserId() {
 		return _userId;
 	}
@@ -415,8 +415,8 @@ public class MDRActionModelImpl extends BaseModelImpl<MDRAction>
 		_userUuid = userUuid;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getUserName() {
 		if (_userName == null) {
 			return StringPool.BLANK;
@@ -431,8 +431,8 @@ public class MDRActionModelImpl extends BaseModelImpl<MDRAction>
 		_userName = userName;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getCreateDate() {
 		return _createDate;
 	}
@@ -442,8 +442,8 @@ public class MDRActionModelImpl extends BaseModelImpl<MDRAction>
 		_createDate = createDate;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
 	}
@@ -473,8 +473,8 @@ public class MDRActionModelImpl extends BaseModelImpl<MDRAction>
 		setClassNameId(classNameId);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getClassNameId() {
 		return _classNameId;
 	}
@@ -484,8 +484,8 @@ public class MDRActionModelImpl extends BaseModelImpl<MDRAction>
 		_classNameId = classNameId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getClassPK() {
 		return _classPK;
 	}
@@ -495,8 +495,8 @@ public class MDRActionModelImpl extends BaseModelImpl<MDRAction>
 		_classPK = classPK;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getRuleGroupInstanceId() {
 		return _ruleGroupInstanceId;
 	}
@@ -518,8 +518,8 @@ public class MDRActionModelImpl extends BaseModelImpl<MDRAction>
 		return _originalRuleGroupInstanceId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getName() {
 		if (_name == null) {
 			return StringPool.BLANK;
@@ -617,8 +617,8 @@ public class MDRActionModelImpl extends BaseModelImpl<MDRAction>
 				LocaleUtil.toLanguageId(defaultLocale)));
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getDescription() {
 		if (_description == null) {
 			return StringPool.BLANK;
@@ -720,8 +720,8 @@ public class MDRActionModelImpl extends BaseModelImpl<MDRAction>
 				LocaleUtil.toLanguageId(defaultLocale)));
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getType() {
 		if (_type == null) {
 			return StringPool.BLANK;
@@ -736,8 +736,8 @@ public class MDRActionModelImpl extends BaseModelImpl<MDRAction>
 		_type = type;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getTypeSettings() {
 		if (_typeSettings == null) {
 			return StringPool.BLANK;

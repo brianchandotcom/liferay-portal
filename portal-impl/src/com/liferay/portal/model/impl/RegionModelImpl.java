@@ -212,8 +212,8 @@ public class RegionModelImpl extends BaseModelImpl<Region>
 		}
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getRegionId() {
 		return _regionId;
 	}
@@ -223,8 +223,8 @@ public class RegionModelImpl extends BaseModelImpl<Region>
 		_regionId = regionId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getCountryId() {
 		return _countryId;
 	}
@@ -246,8 +246,8 @@ public class RegionModelImpl extends BaseModelImpl<Region>
 		return _originalCountryId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getRegionCode() {
 		if (_regionCode == null) {
 			return StringPool.BLANK;
@@ -272,8 +272,8 @@ public class RegionModelImpl extends BaseModelImpl<Region>
 		return GetterUtil.getString(_originalRegionCode);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getName() {
 		if (_name == null) {
 			return StringPool.BLANK;
@@ -290,8 +290,8 @@ public class RegionModelImpl extends BaseModelImpl<Region>
 		_name = name;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public boolean getActive() {
 		return _active;
 	}

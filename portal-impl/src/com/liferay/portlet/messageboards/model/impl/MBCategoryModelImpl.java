@@ -346,8 +346,8 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 		}
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getUuid() {
 		if (_uuid == null) {
 			return StringPool.BLANK;
@@ -370,8 +370,8 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 		return GetterUtil.getString(_originalUuid);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getCategoryId() {
 		return _categoryId;
 	}
@@ -381,8 +381,8 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 		_categoryId = categoryId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getGroupId() {
 		return _groupId;
 	}
@@ -404,8 +404,8 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 		return _originalGroupId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getCompanyId() {
 		return _companyId;
 	}
@@ -427,8 +427,8 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 		return _originalCompanyId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getUserId() {
 		return _userId;
 	}
@@ -448,8 +448,8 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 		_userUuid = userUuid;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getUserName() {
 		if (_userName == null) {
 			return StringPool.BLANK;
@@ -464,8 +464,8 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 		_userName = userName;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getCreateDate() {
 		return _createDate;
 	}
@@ -475,8 +475,8 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 		_createDate = createDate;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
 	}
@@ -486,8 +486,8 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 		_modifiedDate = modifiedDate;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getParentCategoryId() {
 		return _parentCategoryId;
 	}
@@ -509,8 +509,8 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 		return _originalParentCategoryId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getName() {
 		if (_name == null) {
 			return StringPool.BLANK;
@@ -527,8 +527,8 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 		_name = name;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getDescription() {
 		if (_description == null) {
 			return StringPool.BLANK;
@@ -543,8 +543,8 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 		_description = description;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getDisplayStyle() {
 		if (_displayStyle == null) {
 			return StringPool.BLANK;
@@ -559,8 +559,8 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 		_displayStyle = displayStyle;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public int getThreadCount() {
 		return _threadCount;
 	}
@@ -570,8 +570,8 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 		_threadCount = threadCount;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public int getMessageCount() {
 		return _messageCount;
 	}
@@ -581,8 +581,8 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 		_messageCount = messageCount;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getLastPostDate() {
 		return _lastPostDate;
 	}
@@ -592,8 +592,8 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 		_lastPostDate = lastPostDate;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public int getStatus() {
 		return _status;
 	}
@@ -615,8 +615,8 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 		return _originalStatus;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getStatusByUserId() {
 		return _statusByUserId;
 	}
@@ -637,8 +637,8 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 		_statusByUserUuid = statusByUserUuid;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getStatusByUserName() {
 		if (_statusByUserName == null) {
 			return StringPool.BLANK;
@@ -653,8 +653,8 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 		_statusByUserName = statusByUserName;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getStatusDate() {
 		return _statusDate;
 	}

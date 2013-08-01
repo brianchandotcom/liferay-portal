@@ -260,8 +260,8 @@ public class LayoutBranchModelImpl extends BaseModelImpl<LayoutBranch>
 		}
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getLayoutBranchId() {
 		return _LayoutBranchId;
 	}
@@ -271,8 +271,8 @@ public class LayoutBranchModelImpl extends BaseModelImpl<LayoutBranch>
 		_LayoutBranchId = LayoutBranchId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getGroupId() {
 		return _groupId;
 	}
@@ -282,8 +282,8 @@ public class LayoutBranchModelImpl extends BaseModelImpl<LayoutBranch>
 		_groupId = groupId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getCompanyId() {
 		return _companyId;
 	}
@@ -293,8 +293,8 @@ public class LayoutBranchModelImpl extends BaseModelImpl<LayoutBranch>
 		_companyId = companyId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getUserId() {
 		return _userId;
 	}
@@ -314,8 +314,8 @@ public class LayoutBranchModelImpl extends BaseModelImpl<LayoutBranch>
 		_userUuid = userUuid;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getUserName() {
 		if (_userName == null) {
 			return StringPool.BLANK;
@@ -330,8 +330,8 @@ public class LayoutBranchModelImpl extends BaseModelImpl<LayoutBranch>
 		_userName = userName;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getLayoutSetBranchId() {
 		return _layoutSetBranchId;
 	}
@@ -353,8 +353,8 @@ public class LayoutBranchModelImpl extends BaseModelImpl<LayoutBranch>
 		return _originalLayoutSetBranchId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getPlid() {
 		return _plid;
 	}
@@ -376,8 +376,8 @@ public class LayoutBranchModelImpl extends BaseModelImpl<LayoutBranch>
 		return _originalPlid;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getName() {
 		if (_name == null) {
 			return StringPool.BLANK;
@@ -402,8 +402,8 @@ public class LayoutBranchModelImpl extends BaseModelImpl<LayoutBranch>
 		return GetterUtil.getString(_originalName);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getDescription() {
 		if (_description == null) {
 			return StringPool.BLANK;
@@ -418,8 +418,8 @@ public class LayoutBranchModelImpl extends BaseModelImpl<LayoutBranch>
 		_description = description;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public boolean getMaster() {
 		return _master;
 	}

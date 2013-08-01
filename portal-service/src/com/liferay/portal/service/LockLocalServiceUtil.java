@@ -410,6 +410,12 @@ public class LockLocalServiceUtil {
 		getService().unlock(className, key);
 	}
 
+	public static void unlock(java.lang.String className, java.lang.String key,
+		java.lang.String owner)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().unlock(className, key, owner);
+	}
+
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link #unlock(String, String,
 	String)}
@@ -418,12 +424,6 @@ public class LockLocalServiceUtil {
 		java.lang.String owner, boolean retrieveFromCache)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		getService().unlock(className, key, owner, retrieveFromCache);
-	}
-
-	public static void unlock(java.lang.String className, java.lang.String key,
-		java.lang.String owner)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getService().unlock(className, key, owner);
 	}
 
 	public static LockLocalService getService() {

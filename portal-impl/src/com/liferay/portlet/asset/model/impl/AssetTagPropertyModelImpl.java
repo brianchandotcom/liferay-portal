@@ -252,8 +252,8 @@ public class AssetTagPropertyModelImpl extends BaseModelImpl<AssetTagProperty>
 		}
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getTagPropertyId() {
 		return _tagPropertyId;
 	}
@@ -263,8 +263,8 @@ public class AssetTagPropertyModelImpl extends BaseModelImpl<AssetTagProperty>
 		_tagPropertyId = tagPropertyId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getCompanyId() {
 		return _companyId;
 	}
@@ -286,8 +286,8 @@ public class AssetTagPropertyModelImpl extends BaseModelImpl<AssetTagProperty>
 		return _originalCompanyId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getUserId() {
 		return _userId;
 	}
@@ -307,8 +307,8 @@ public class AssetTagPropertyModelImpl extends BaseModelImpl<AssetTagProperty>
 		_userUuid = userUuid;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getUserName() {
 		if (_userName == null) {
 			return StringPool.BLANK;
@@ -323,8 +323,8 @@ public class AssetTagPropertyModelImpl extends BaseModelImpl<AssetTagProperty>
 		_userName = userName;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getCreateDate() {
 		return _createDate;
 	}
@@ -334,8 +334,8 @@ public class AssetTagPropertyModelImpl extends BaseModelImpl<AssetTagProperty>
 		_createDate = createDate;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
 	}
@@ -345,8 +345,8 @@ public class AssetTagPropertyModelImpl extends BaseModelImpl<AssetTagProperty>
 		_modifiedDate = modifiedDate;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getTagId() {
 		return _tagId;
 	}
@@ -368,8 +368,8 @@ public class AssetTagPropertyModelImpl extends BaseModelImpl<AssetTagProperty>
 		return _originalTagId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getKey() {
 		if (_key == null) {
 			return StringPool.BLANK;
@@ -394,8 +394,8 @@ public class AssetTagPropertyModelImpl extends BaseModelImpl<AssetTagProperty>
 		return GetterUtil.getString(_originalKey);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getValue() {
 		if (_value == null) {
 			return StringPool.BLANK;

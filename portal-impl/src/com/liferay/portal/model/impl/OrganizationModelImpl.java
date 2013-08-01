@@ -331,8 +331,8 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 		}
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getUuid() {
 		if (_uuid == null) {
 			return StringPool.BLANK;
@@ -355,8 +355,8 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 		return GetterUtil.getString(_originalUuid);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getOrganizationId() {
 		return _organizationId;
 	}
@@ -366,8 +366,8 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 		_organizationId = organizationId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getCompanyId() {
 		return _companyId;
 	}
@@ -389,8 +389,8 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 		return _originalCompanyId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getUserId() {
 		return _userId;
 	}
@@ -410,8 +410,8 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 		_userUuid = userUuid;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getUserName() {
 		if (_userName == null) {
 			return StringPool.BLANK;
@@ -426,8 +426,8 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 		_userName = userName;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getCreateDate() {
 		return _createDate;
 	}
@@ -437,8 +437,8 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 		_createDate = createDate;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
 	}
@@ -448,8 +448,8 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 		_modifiedDate = modifiedDate;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getParentOrganizationId() {
 		return _parentOrganizationId;
 	}
@@ -471,8 +471,8 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 		return _originalParentOrganizationId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getTreePath() {
 		if (_treePath == null) {
 			return StringPool.BLANK;
@@ -487,8 +487,8 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 		_treePath = treePath;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getName() {
 		if (_name == null) {
 			return StringPool.BLANK;
@@ -513,8 +513,8 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 		return GetterUtil.getString(_originalName);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getType() {
 		if (_type == null) {
 			return StringPool.BLANK;
@@ -529,8 +529,8 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 		_type = type;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public boolean getRecursable() {
 		return _recursable;
 	}
@@ -545,8 +545,8 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 		_recursable = recursable;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getRegionId() {
 		return _regionId;
 	}
@@ -556,8 +556,8 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 		_regionId = regionId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getCountryId() {
 		return _countryId;
 	}
@@ -567,8 +567,8 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 		_countryId = countryId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public int getStatusId() {
 		return _statusId;
 	}
@@ -578,8 +578,8 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 		_statusId = statusId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getComments() {
 		if (_comments == null) {
 			return StringPool.BLANK;

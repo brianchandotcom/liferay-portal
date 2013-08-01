@@ -286,8 +286,8 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 		}
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getUuid() {
 		if (_uuid == null) {
 			return StringPool.BLANK;
@@ -310,8 +310,8 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 		return GetterUtil.getString(_originalUuid);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getVocabularyId() {
 		return _vocabularyId;
 	}
@@ -321,8 +321,8 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 		_vocabularyId = vocabularyId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getGroupId() {
 		return _groupId;
 	}
@@ -344,8 +344,8 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 		return _originalGroupId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getCompanyId() {
 		return _companyId;
 	}
@@ -367,8 +367,8 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 		return _originalCompanyId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getUserId() {
 		return _userId;
 	}
@@ -388,8 +388,8 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 		_userUuid = userUuid;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getUserName() {
 		if (_userName == null) {
 			return StringPool.BLANK;
@@ -404,8 +404,8 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 		_userName = userName;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getCreateDate() {
 		return _createDate;
 	}
@@ -415,8 +415,8 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 		_createDate = createDate;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
 	}
@@ -426,8 +426,8 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 		_modifiedDate = modifiedDate;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getName() {
 		if (_name == null) {
 			return StringPool.BLANK;
@@ -452,8 +452,8 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 		return GetterUtil.getString(_originalName);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getTitle() {
 		if (_title == null) {
 			return StringPool.BLANK;
@@ -551,8 +551,8 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 				"Title", LocaleUtil.toLanguageId(defaultLocale)));
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getDescription() {
 		if (_description == null) {
 			return StringPool.BLANK;
@@ -654,8 +654,8 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 				LocaleUtil.toLanguageId(defaultLocale)));
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getSettings() {
 		if (_settings == null) {
 			return StringPool.BLANK;

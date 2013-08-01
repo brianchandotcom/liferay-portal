@@ -300,8 +300,8 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 		}
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getUuid() {
 		if (_uuid == null) {
 			return StringPool.BLANK;
@@ -324,8 +324,8 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 		return GetterUtil.getString(_originalUuid);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getRepositoryId() {
 		return _repositoryId;
 	}
@@ -335,8 +335,8 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 		_repositoryId = repositoryId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getGroupId() {
 		return _groupId;
 	}
@@ -358,8 +358,8 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 		return _originalGroupId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getCompanyId() {
 		return _companyId;
 	}
@@ -381,8 +381,8 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 		return _originalCompanyId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getUserId() {
 		return _userId;
 	}
@@ -402,8 +402,8 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 		_userUuid = userUuid;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getUserName() {
 		if (_userName == null) {
 			return StringPool.BLANK;
@@ -418,8 +418,8 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 		_userName = userName;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getCreateDate() {
 		return _createDate;
 	}
@@ -429,8 +429,8 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 		_createDate = createDate;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
 	}
@@ -460,8 +460,8 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 		setClassNameId(classNameId);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getClassNameId() {
 		return _classNameId;
 	}
@@ -471,8 +471,8 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 		_classNameId = classNameId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getName() {
 		if (_name == null) {
 			return StringPool.BLANK;
@@ -497,8 +497,8 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 		return GetterUtil.getString(_originalName);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getDescription() {
 		if (_description == null) {
 			return StringPool.BLANK;
@@ -513,8 +513,8 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 		_description = description;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getPortletId() {
 		if (_portletId == null) {
 			return StringPool.BLANK;
@@ -539,8 +539,8 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 		return GetterUtil.getString(_originalPortletId);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getTypeSettings() {
 		if (_typeSettings == null) {
 			return StringPool.BLANK;
@@ -555,8 +555,8 @@ public class RepositoryModelImpl extends BaseModelImpl<Repository>
 		_typeSettings = typeSettings;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getDlFolderId() {
 		return _dlFolderId;
 	}

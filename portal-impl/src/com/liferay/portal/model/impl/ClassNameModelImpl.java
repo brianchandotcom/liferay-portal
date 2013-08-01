@@ -205,8 +205,8 @@ public class ClassNameModelImpl extends BaseModelImpl<ClassName>
 		setClassNameId(classNameId);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getClassNameId() {
 		return _classNameId;
 	}
@@ -216,8 +216,8 @@ public class ClassNameModelImpl extends BaseModelImpl<ClassName>
 		_classNameId = classNameId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getValue() {
 		if (_value == null) {
 			return StringPool.BLANK;

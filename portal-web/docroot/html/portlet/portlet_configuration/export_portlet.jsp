@@ -128,9 +128,11 @@ portletURL.setParameter("tabs3", "all-export-processes");
 					ManifestSummary manifestSummary = portletDataContext.getManifestSummary();
 
 					long exportModelCount = portletDataHandler.getExportModelCount(manifestSummary);
+
+					long modelDeletionCount = manifestSummary.getModelDeletionCount(portletDataHandler.getDeletionSystemEventStagedModelTypes());
 					%>
 
-					<c:if test="<%= (exportModelCount != 0) || (startDate != null) || (endDate != null) %>">
+					<c:if test="<%= (exportModelCount != 0) || (modelDeletionCount != 0) || (startDate != null) || (endDate != null) %>">
 						<aui:fieldset cssClass="options-group" label="content">
 							<ul class="lfr-tree select-options unstyled">
 								<li class="tree-item">
@@ -241,6 +243,7 @@ portletURL.setParameter("tabs3", "all-export-processes");
 
 												<liferay-util:buffer var="badgeHTML">
 													<span class="badge badge-info"><%= exportModelCount > 0 ? exportModelCount : StringPool.BLANK %></span>
+													<span class="badge badge-warning deletions"><%= modelDeletionCount > 0 ? (modelDeletionCount + StringPool.SPACE + LanguageUtil.get(pageContext, "deletions")) : StringPool.BLANK %></span>
 												</liferay-util:buffer>
 
 												<aui:input label='<%= LanguageUtil.get(pageContext, "content") + badgeHTML %>' name='<%= PortletDataHandlerKeys.PORTLET_DATA + "_" + selPortlet.getRootPortletId() %>' type="checkbox" value="<%= true %>" />
@@ -327,17 +330,26 @@ portletURL.setParameter("tabs3", "all-export-processes");
 										</ul>
 
 										<ul>
-											<aui:fieldset cssClass="comments-and-ratings" label="for-each-of-the-selected-content-types,-export-their">
-												<span class="selected-labels" id="<portlet:namespace />selectedCommentsAndRatings"></span>
+											<aui:fieldset cssClass="content-options" label="for-each-of-the-selected-content-types,-export-their">
+												<span class="selected-labels" id="<portlet:namespace />selectedContentOptions"></span>
 
-												<aui:a cssClass="modify-link" href="javascript:;" id="commentsAndRatingsLink" label="change" method="get" />
+												<aui:a cssClass="modify-link" href="javascript:;" id="contentOptionsLink" label="change" method="get" />
 
-												<div class="hide" id="<portlet:namespace />commentsAndRatings">
+												<div class="hide" id="<portlet:namespace />contentOptions">
 													<ul class="lfr-tree unstyled">
 														<li class="tree-item">
 															<aui:input label="comments" name="<%= PortletDataHandlerKeys.COMMENTS %>" type="checkbox" value="<%= true %>" />
 
 															<aui:input label="ratings" name="<%= PortletDataHandlerKeys.RATINGS %>" type="checkbox" value="<%= true %>" />
+
+															<c:if test="<%= modelDeletionCount != 0 %>">
+
+																<%
+																String deletionsLabel = LanguageUtil.get(pageContext, "deletions") + (modelDeletionCount > 0 ? " (" + modelDeletionCount + ")" : StringPool.BLANK);
+																%>
+
+																<aui:input data-name="<%= deletionsLabel %>" helpMessage="deletions-help" label="<%= deletionsLabel %>" name="<%= PortletDataHandlerKeys.EXPORT_DELETIONS %>" type="checkbox" />
+															</c:if>
 														</li>
 													</ul>
 												</div>
@@ -393,6 +405,7 @@ portletURL.setParameter("tabs3", "all-export-processes");
 	new Liferay.ExportImport(
 		{
 			commentsNode: '#<%= PortletDataHandlerKeys.COMMENTS %>Checkbox',
+			deletionsNode: '#<%= PortletDataHandlerKeys.EXPORT_DELETIONS %>Checkbox',
 			form: document.<portlet:namespace />fm1,
 			namespace: '<portlet:namespace />',
 			processesNode: '#exportProcesses',

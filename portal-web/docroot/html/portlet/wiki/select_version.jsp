@@ -70,19 +70,19 @@ portletURL.setParameter("sourceVersion", String.valueOf(sourceVersion));
 
 					<%
 					double curSourceVersion = sourceVersion;
-					double targetVersion = curWikiPage.getVersion();
+					double curTargetVersion = curWikiPage.getVersion();
 
-					if (targetVersion < curSourceVersion) {
-						double tempVersion = targetVersion;
+					if (curTargetVersion < curSourceVersion) {
+						double tempVersion = curTargetVersion;
 
-						targetVersion = curSourceVersion;
+						curTargetVersion = curSourceVersion;
 						curSourceVersion = tempVersion;
 					}
 
 					Map<String, Object> data = new HashMap<String, Object>();
 
-					data.put("sourceVersion", curSourceVersion);
-					data.put("targetVersion", targetVersion);
+					data.put("sourceversion", curSourceVersion);
+					data.put("targetversion", curTargetVersion);
 					%>
 
 					<aui:button cssClass="selector-button" data="<%= data %>" value="choose" />

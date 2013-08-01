@@ -28,7 +28,7 @@ import com.liferay.portal.kernel.lar.ManifestSummary;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.kernel.lar.StagedModelType;
-import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
@@ -57,8 +57,9 @@ public class DeletionSystemEventExporter {
 			portletDataContext.getDeletionSystemEventStagedModelTypes();
 
 		if (!deletionSystemEventStagedModelTypes.isEmpty() &&
-			portletDataContext.getBooleanParameter(
-				StringPool.BLANK, PortletDataHandlerKeys.EXPORT_DELETIONS)) {
+			MapUtil.getBoolean(
+				portletDataContext.getParameterMap(),
+				PortletDataHandlerKeys.EXPORT_DELETIONS)) {
 
 			doExportDeletionSystemEvents(
 				portletDataContext, rootElement,

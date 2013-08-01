@@ -158,7 +158,7 @@ CKEDITOR.config.toolbar_liferayArticle = [
 ];
 
 CKEDITOR.config.toolbar_phone = [
-	['Bold', 'Italic', 'Underline', 'Strike'],
+	['Bold', 'Italic', 'Underline'],
 	['NumberedList', 'BulletedList'],
 	['Image', 'Link', 'Unlink']
 ];

@@ -345,12 +345,15 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 										PortletDataHandler portletDataHandler = portlet.getPortletDataHandlerInstance();
 
 										long importModelCount = portletDataHandler.getExportModelCount(manifestSummary);
+
+										long modelDeletionCount = manifestSummary.getModelDeletionCount(portletDataHandler.getDeletionSystemEventStagedModelTypes());
 									%>
 
-										<c:if test="<%= importModelCount != 0 %>">
+										<c:if test="<%= (importModelCount != 0) || (modelDeletionCount != 0) %>">
 											<li class="tree-item">
 												<liferay-util:buffer var="badgeHTML">
 													<span class="badge badge-info"><%= importModelCount > 0 ? importModelCount : StringPool.BLANK %></span>
+													<span class="badge badge-warning deletions"><%= modelDeletionCount > 0 ? (modelDeletionCount + StringPool.SPACE + LanguageUtil.get(pageContext, "deletions")) : StringPool.BLANK %></span>
 												</liferay-util:buffer>
 
 												<aui:input checked="<%= true %>" label="<%= portletTitle + badgeHTML %>" name="<%= PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE + portlet.getRootPortletId() %>" type="checkbox" />
@@ -450,17 +453,30 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 
 								</ul>
 
-								<aui:fieldset cssClass="comments-and-ratings" label="for-each-of-the-selected-content-types,-import-their">
-									<span class="selected-labels" id="<portlet:namespace />selectedCommentsAndRatings"></span>
+								<aui:fieldset cssClass="content-options" label="for-each-of-the-selected-content-types,-import-their">
+									<span class="selected-labels" id="<portlet:namespace />selectedContentOptions"></span>
 
-									<aui:a cssClass="modify-link" href="javascript:;" id="commentsAndRatingsLink" label="change" method="get" />
+									<aui:a cssClass="modify-link" href="javascript:;" id="contentOptionsLink" label="change" method="get" />
 
-									<div class="hide" id="<portlet:namespace />commentsAndRatings">
+									<div class="hide" id="<portlet:namespace />contentOptions">
 										<ul class="lfr-tree unstyled">
 											<li class="tree-item">
 												<aui:input label="comments" name="<%= PortletDataHandlerKeys.COMMENTS %>" type="checkbox" value="<%= true %>" />
 
 												<aui:input label="ratings" name="<%= PortletDataHandlerKeys.RATINGS %>" type="checkbox" value="<%= true %>" />
+
+												<%
+												long modelDeletionCount = manifestSummary.getModelDeletionCount();
+												%>
+
+												<c:if test="<%= modelDeletionCount != 0 %>">
+
+													<%
+													String deletionsLabel = LanguageUtil.get(pageContext, "deletions") + (modelDeletionCount > 0 ? " (" + modelDeletionCount + ")" : StringPool.BLANK);
+													%>
+
+													<aui:input data-name="<%= deletionsLabel %>" helpMessage="deletions-help" label="<%= deletionsLabel %>" name="<%= PortletDataHandlerKeys.DELETIONS %>" type="checkbox" />
+												</c:if>
 											</li>
 										</ul>
 									</div>
@@ -560,6 +576,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 			commentsNode: '#<%= PortletDataHandlerKeys.COMMENTS %>Checkbox',
 			deleteMissingLayoutsNode: '#<%= PortletDataHandlerKeys.DELETE_MISSING_LAYOUTS %>Checkbox',
 			deletePortletDataNode: '#<%= PortletDataHandlerKeys.DELETE_PORTLET_DATA %>Checkbox',
+			deletionsNode: '#<%= PortletDataHandlerKeys.DELETIONS %>Checkbox',
 			form: document.<portlet:namespace />fm1,
 			layoutSetSettingsNode: '#<%= PortletDataHandlerKeys.LAYOUT_SET_SETTINGS %>Checkbox',
 			logoNode: '#<%= PortletDataHandlerKeys.LOGO %>Checkbox',

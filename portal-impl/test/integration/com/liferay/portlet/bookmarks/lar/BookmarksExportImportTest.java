@@ -24,6 +24,7 @@ import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.TransactionalCallbackAwareExecutionTestListener;
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.portlet.bookmarks.model.BookmarksEntry;
 import com.liferay.portlet.bookmarks.service.BookmarksEntryLocalServiceUtil;
 import com.liferay.portlet.bookmarks.util.BookmarksTestUtil;
 
@@ -56,6 +57,11 @@ public class BookmarksExportImportTest extends BasePortletExportImportTestCase {
 	@Override
 	protected StagedModel addStagedModel(long groupId) throws Exception {
 		return BookmarksTestUtil.addEntry(groupId, true);
+	}
+
+	@Override
+	protected void deleteStagedModel(StagedModel stagedModel) throws Exception {
+		BookmarksEntryLocalServiceUtil.deleteEntry((BookmarksEntry)stagedModel);
 	}
 
 	@Override

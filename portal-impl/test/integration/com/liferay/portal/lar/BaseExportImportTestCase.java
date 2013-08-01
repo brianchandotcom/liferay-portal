@@ -104,6 +104,10 @@ public class BaseExportImportTestCase extends PowerMockito {
 		return null;
 	}
 
+	protected void deleteStagedModel(StagedModel stagedModel) throws Exception {
+		return;
+	}
+
 	protected Map<String, String[]> getExportParameterMap() throws Exception {
 		Map<String, String[]> parameterMap =
 			new LinkedHashMap<String, String[]>();

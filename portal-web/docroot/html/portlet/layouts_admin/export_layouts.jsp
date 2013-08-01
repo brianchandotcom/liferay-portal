@@ -236,6 +236,10 @@ portletURL.setParameter("rootNodeName", rootNodeName);
 
 					<%
 					List<Portlet> dataSiteLevelPortlets = LayoutExporter.getDataSiteLevelPortlets(company.getCompanyId());
+
+					PortletDataContext portletDataContext = PortletDataContextFactoryUtil.createPreparePortletDataContext(themeDisplay, startDate, endDate);
+
+					ManifestSummary manifestSummary = portletDataContext.getManifestSummary();
 					%>
 
 					<c:if test="<%= !dataSiteLevelPortlets.isEmpty() %>">
@@ -366,8 +370,6 @@ portletURL.setParameter("rootNodeName", rootNodeName);
 												Set<String> displayedControls = new HashSet<String>();
 												Set<String> portletDataHandlerClasses = new HashSet<String>();
 
-												PortletDataContext portletDataContext = PortletDataContextFactoryUtil.createPreparePortletDataContext(themeDisplay, startDate, endDate);
-
 												dataSiteLevelPortlets = ListUtil.sort(dataSiteLevelPortlets, new PortletTitleComparator(application, locale));
 
 												for (Portlet portlet : dataSiteLevelPortlets) {
@@ -386,15 +388,16 @@ portletURL.setParameter("rootNodeName", rootNodeName);
 
 													portletDataHandler.prepareManifestSummary(portletDataContext);
 
-													ManifestSummary manifestSummary = portletDataContext.getManifestSummary();
-
 													long exportModelCount = portletDataHandler.getExportModelCount(manifestSummary);
+
+													long modelDeletionCount = manifestSummary.getModelDeletionCount(portletDataHandler.getDeletionSystemEventStagedModelTypes());
 												%>
 
-													<c:if test="<%= exportModelCount != 0 %>">
+													<c:if test="<%= (exportModelCount != 0) || (modelDeletionCount != 0) %>">
 														<li class="tree-item">
 															<liferay-util:buffer var="badgeHTML">
 																<span class="badge badge-info"><%= exportModelCount > 0 ? exportModelCount : StringPool.BLANK %></span>
+																<span class="badge badge-warning deletions"><%= modelDeletionCount > 0 ? (modelDeletionCount + StringPool.SPACE + LanguageUtil.get(pageContext, "deletions")) : StringPool.BLANK %></span>
 															</liferay-util:buffer>
 
 															<aui:input checked="<%= portletDataHandler.isPublishToLiveByDefault() %>" label="<%= portletTitle + badgeHTML %>" name="<%= PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE + portlet.getPortletId() %>" type="checkbox" />
@@ -494,17 +497,30 @@ portletURL.setParameter("rootNodeName", rootNodeName);
 
 											</ul>
 
-											<aui:fieldset cssClass="comments-and-ratings" label="for-each-of-the-selected-content-types,-export-their">
-												<span class="selected-labels" id="<portlet:namespace />selectedCommentsAndRatings"></span>
+											<aui:fieldset cssClass="content-options" label="for-each-of-the-selected-content-types,-export-their">
+												<span class="selected-labels" id="<portlet:namespace />selectedContentOptions"></span>
 
-												<aui:a cssClass="modify-link" href="javascript:;" id="commentsAndRatingsLink" label="change" method="get" />
+												<aui:a cssClass="modify-link" href="javascript:;" id="contentOptionsLink" label="change" method="get" />
 
-												<div class="hide" id="<portlet:namespace />commentsAndRatings">
+												<div class="hide" id="<portlet:namespace />contentOptions">
 													<ul class="lfr-tree unstyled">
 														<li class="tree-item">
 															<aui:input label="comments" name="<%= PortletDataHandlerKeys.COMMENTS %>" type="checkbox" value="<%= true %>" />
 
 															<aui:input label="ratings" name="<%= PortletDataHandlerKeys.RATINGS %>" type="checkbox" value="<%= true %>" />
+
+															<%
+															long modelDeletionCount = manifestSummary.getModelDeletionCount();
+															%>
+
+															<c:if test="<%= modelDeletionCount != 0 %>">
+
+																<%
+																String deletionsLabel = LanguageUtil.get(pageContext, "deletions") + (modelDeletionCount > 0 ? " (" + modelDeletionCount + ")" : StringPool.BLANK);
+																%>
+
+																<aui:input data-name="<%= deletionsLabel %>" helpMessage="deletions-help" label="<%= deletionsLabel %>" name="<%= PortletDataHandlerKeys.DELETIONS %>" type="checkbox" />
+															</c:if>
 														</li>
 													</ul>
 												</div>
@@ -561,6 +577,7 @@ portletURL.setParameter("rootNodeName", rootNodeName);
 		{
 			archivedSetupsNode: '#<%= PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS_ALL %>Checkbox',
 			commentsNode: '#<%= PortletDataHandlerKeys.COMMENTS %>Checkbox',
+			deletionsNode: '#<%= PortletDataHandlerKeys.DELETIONS %>Checkbox',
 			form: document.<portlet:namespace />fm1,
 			layoutSetSettingsNode: '#<%= PortletDataHandlerKeys.LAYOUT_SET_SETTINGS %>Checkbox',
 			logoNode: '#<%= PortletDataHandlerKeys.LOGO %>Checkbox',

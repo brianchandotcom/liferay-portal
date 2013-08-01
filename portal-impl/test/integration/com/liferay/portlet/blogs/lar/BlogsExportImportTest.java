@@ -26,6 +26,7 @@ import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.TransactionalCallbackAwareExecutionTestListener;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.TestPropsValues;
+import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portlet.blogs.util.BlogsTestUtil;
 
@@ -60,6 +61,11 @@ public class BlogsExportImportTest extends BasePortletExportImportTestCase {
 		return BlogsTestUtil.addEntry(
 			TestPropsValues.getUserId(), groupId,
 			ServiceTestUtil.randomString(), true);
+	}
+
+	@Override
+	protected void deleteStagedModel(StagedModel stagedModel) throws Exception {
+		BlogsEntryLocalServiceUtil.deleteEntry((BlogsEntry)stagedModel);
 	}
 
 	@Override

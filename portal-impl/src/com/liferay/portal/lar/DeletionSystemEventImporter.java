@@ -16,10 +16,12 @@ package com.liferay.portal.lar;
 
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.ElementHandler;
@@ -41,6 +43,13 @@ public class DeletionSystemEventImporter {
 	public void importDeletionSystemEvents(
 			final PortletDataContext portletDataContext)
 		throws Exception {
+
+		if (!MapUtil.getBoolean(
+				portletDataContext.getParameterMap(),
+				PortletDataHandlerKeys.DELETIONS)) {
+
+			return;
+		}
 
 		String xml = portletDataContext.getZipEntryAsString(
 			ExportImportPathUtil.getSourceRootPath(portletDataContext) +

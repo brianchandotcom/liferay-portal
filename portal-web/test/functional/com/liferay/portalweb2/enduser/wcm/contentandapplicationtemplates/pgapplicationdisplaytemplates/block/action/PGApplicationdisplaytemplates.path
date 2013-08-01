@@ -35,12 +35,12 @@
 </tr>
 <tr>
 	<td>VIEW_ALL</td>
-	<td>//div[@class='container']/ul/li/a[contains(.,'View All')]</td>
+	<td>//div[@class='container']/ul/li/a[contains(@class,'dropdown')]/span[contains(.,'View All')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADD</td>
-	<td>//div[@class='container']/ul/li/a[contains(.,'Add')]</td>
+	<td>//div[@class='container']/ul/li/a[contains(@class,'dropdown')]/span[contains(.,'Add')]</td>
 	<td></td>
 </tr>
 <tr>

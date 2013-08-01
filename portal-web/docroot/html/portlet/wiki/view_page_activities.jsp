@@ -273,7 +273,7 @@ PortletURL compareVersionsURL = renderResponse.createRenderURL();
 compareVersionsURL.setParameter("struts_action", "/wiki/compare_versions");
 %>
 
-<aui:form action="<%= compareVersionsURL %>" method="post" name="compareVersionForm" onSubmit='<%= "event.preventDefault();" %>'>
+<aui:form action="<%= compareVersionsURL %>" method="post" name="compareVersionForm" onSubmit="event.preventDefault();">
 	<aui:input name="backURL" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="nodeId" type="hidden" value="<%= node.getNodeId() %>" />
 	<aui:input name="title" type="hidden" value="<%= wikiPage.getTitle() %>" />

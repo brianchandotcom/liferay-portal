@@ -55,7 +55,7 @@ request.setAttribute("search.jsp-returnToFullPageURL", portletDisplay.getURLBack
 	<portlet:param name="struts_action" value="/search/search" />
 </liferay-portlet:renderURL>
 
-<aui:form action="<%= searchURL %>" method="get" name="fm" onSubmit='<%= "event.preventDefault();" %>'>
+<aui:form action="<%= searchURL %>" method="get" name="fm" onSubmit="event.preventDefault();">
 	<liferay-portlet:renderURLParams varImpl="searchURL" />
 	<aui:input name="<%= SearchContainer.DEFAULT_CUR_PARAM %>" type="hidden" value="<%= ParamUtil.getInteger(request, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_CUR) %>" />
 	<aui:input name="format" type="hidden" value="<%= format %>" />

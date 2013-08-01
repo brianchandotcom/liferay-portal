@@ -81,6 +81,7 @@ page import="com.liferay.portlet.journal.model.JournalFeedConstants" %><%@
 page import="com.liferay.portlet.journal.model.JournalFolder" %><%@
 page import="com.liferay.portlet.journal.model.JournalFolderConstants" %><%@
 page import="com.liferay.portlet.journal.model.JournalSearchConstants" %><%@
+page import="com.liferay.portlet.journal.model.JournalStructureConstants" %><%@
 page import="com.liferay.portlet.journal.model.impl.JournalArticleImpl" %><%@
 page import="com.liferay.portlet.journal.search.ArticleDisplayTerms" %><%@
 page import="com.liferay.portlet.journal.search.ArticleSearch" %><%@

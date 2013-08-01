@@ -79,9 +79,11 @@ searchContainer.setRowChecker(entriesChecker);
 ArticleDisplayTerms displayTerms = (ArticleDisplayTerms)searchContainer.getDisplayTerms();
 
 boolean showAddArticleButton = JournalPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_ARTICLE);
+
+String browseBy = ParamUtil.getString(request, "browseBy");
 %>
 
-<c:if test="<%= Validator.isNotNull(displayTerms.getStructureId()) %>">
+<c:if test='<%= Validator.isNotNull(displayTerms.getStructureId()) && !browseBy.equals("structure") %>'>
 	<aui:input name="<%= displayTerms.STRUCTURE_ID %>" type="hidden" value="<%= displayTerms.getStructureId() %>" />
 
 	<c:if test="<%= showAddArticleButton %>">

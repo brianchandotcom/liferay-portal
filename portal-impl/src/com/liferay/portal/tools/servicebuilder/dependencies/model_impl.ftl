@@ -428,14 +428,13 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 			}
 		</#if>
 
-		@Override
-
 		<#if column.jsonEnabled>
 			@JSON
 		<#elseif entity.jsonEnabled>
 			@JSON(include = false)
 		</#if>
 
+		@Override
 		public ${column.type} get${column.methodName}() {
 			<#if column.type == "String" && column.isConvertNull()>
 				if (_${column.name} == null) {

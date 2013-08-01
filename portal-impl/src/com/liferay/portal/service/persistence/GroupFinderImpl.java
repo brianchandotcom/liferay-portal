@@ -353,19 +353,6 @@ public class GroupFinderImpl
 	}
 
 	@Override
-	public int countByC_N_D(
-			long companyId, String[] names, String[] realNames,
-			String[] descriptions, LinkedHashMap<String, Object> params,
-			boolean andOperator)
-		throws SystemException {
-
-		return countByC_C_PG_N_D(
-			companyId, _getGroupOrganizationClassNameIds(),
-			GroupConstants.ANY_PARENT_GROUP_ID, StringPool.NOT_EQUAL, names,
-			realNames, descriptions, params, andOperator);
-	}
-
-	@Override
 	public int countByC_C_N_D(
 			long companyId, long[] classNameIds, String name, String realName,
 			String description, LinkedHashMap<String, Object> params,
@@ -395,19 +382,6 @@ public class GroupFinderImpl
 		String[] names = CustomSQLUtil.keywords(name);
 		String[] realNames = CustomSQLUtil.keywords(realName);
 		String[] descriptions = CustomSQLUtil.keywords(description);
-
-		return countByC_C_PG_N_D(
-			companyId, _getGroupOrganizationClassNameIds(), parentGroupId,
-			parentGroupIdComparator, names, realNames, descriptions, params,
-			andOperator);
-	}
-
-	@Override
-	public int countByC_PG_N_D(
-			long companyId, long parentGroupId, String parentGroupIdComparator,
-			String[] names, String[] realNames, String[] descriptions,
-			LinkedHashMap<String, Object> params, boolean andOperator)
-		throws SystemException {
 
 		return countByC_C_PG_N_D(
 			companyId, _getGroupOrganizationClassNameIds(), parentGroupId,
@@ -973,19 +947,6 @@ public class GroupFinderImpl
 	}
 
 	@Override
-	public List<Group> findByC_N_D(
-			long companyId, String[] names, String[] realNames,
-			String[] descriptions, LinkedHashMap<String, Object> params,
-			boolean andOperator, int start, int end, OrderByComparator obc)
-		throws SystemException {
-
-		return findByC_C_PG_N_D(
-			companyId, _getGroupOrganizationClassNameIds(),
-			GroupConstants.ANY_PARENT_GROUP_ID, StringPool.NOT_EQUAL, names,
-			realNames, descriptions, params, andOperator, start, end, obc);
-	}
-
-	@Override
 	public List<Group> findByC_C_N_D(
 			long companyId, long[] classNameIds, String name, String realName,
 			String description, LinkedHashMap<String, Object> params,
@@ -1016,20 +977,6 @@ public class GroupFinderImpl
 		String[] names = CustomSQLUtil.keywords(name);
 		String[] realNames = CustomSQLUtil.keywords(realName);
 		String[] descriptions = CustomSQLUtil.keywords(description);
-
-		return findByC_C_PG_N_D(
-			companyId, _getGroupOrganizationClassNameIds(), parentGroupId,
-			parentGroupIdComparator, names, realNames, descriptions, params,
-			andOperator, start, end, obc);
-	}
-
-	@Override
-	public List<Group> findByC_PG_N_D(
-			long companyId, long parentGroupId, String parentGroupIdComparator,
-			String[] names, String[] realNames, String[] descriptions,
-			LinkedHashMap<String, Object> params, boolean andOperator,
-			int start, int end, OrderByComparator obc)
-		throws SystemException {
 
 		return findByC_C_PG_N_D(
 			companyId, _getGroupOrganizationClassNameIds(), parentGroupId,

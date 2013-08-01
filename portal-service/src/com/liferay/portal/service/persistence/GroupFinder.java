@@ -50,12 +50,6 @@ public interface GroupFinder {
 		boolean andOperator)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	public int countByC_N_D(long companyId, java.lang.String[] names,
-		java.lang.String[] realNames, java.lang.String[] descriptions,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		boolean andOperator)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
 	public int countByC_C_N_D(long companyId, long[] classNameIds,
 		java.lang.String name, java.lang.String realName,
 		java.lang.String description,
@@ -66,13 +60,6 @@ public interface GroupFinder {
 	public int countByC_PG_N_D(long companyId, long parentGroupId,
 		java.lang.String parentGroupIdComparator, java.lang.String name,
 		java.lang.String realName, java.lang.String description,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		boolean andOperator)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public int countByC_PG_N_D(long companyId, long parentGroupId,
-		java.lang.String parentGroupIdComparator, java.lang.String[] names,
-		java.lang.String[] realNames, java.lang.String[] descriptions,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
 		boolean andOperator)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -156,14 +143,6 @@ public interface GroupFinder {
 		com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	public java.util.List<com.liferay.portal.model.Group> findByC_N_D(
-		long companyId, java.lang.String[] names, java.lang.String[] realNames,
-		java.lang.String[] descriptions,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		boolean andOperator, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
 	public java.util.List<com.liferay.portal.model.Group> findByC_C_N_D(
 		long companyId, long[] classNameIds, java.lang.String name,
 		java.lang.String realName, java.lang.String description,
@@ -176,15 +155,6 @@ public interface GroupFinder {
 		long companyId, long parentGroupId,
 		java.lang.String parentGroupIdComparator, java.lang.String name,
 		java.lang.String realName, java.lang.String description,
-		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
-		boolean andOperator, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public java.util.List<com.liferay.portal.model.Group> findByC_PG_N_D(
-		long companyId, long parentGroupId,
-		java.lang.String parentGroupIdComparator, java.lang.String[] names,
-		java.lang.String[] realNames, java.lang.String[] descriptions,
 		java.util.LinkedHashMap<java.lang.String, java.lang.Object> params,
 		boolean andOperator, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator obc)

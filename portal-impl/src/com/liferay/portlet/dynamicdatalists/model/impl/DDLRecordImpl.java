@@ -83,6 +83,19 @@ public class DDLRecordImpl extends DDLRecordBaseImpl {
 	}
 
 	@Override
+	public Serializable getFieldValue(String fieldName, Locale locale)
+		throws PortalException {
+
+		Field field = getField(fieldName);
+
+		if (field == null) {
+			return null;
+		}
+
+		return field.getValue(locale);
+	}
+
+	@Override
 	public List<Serializable> getFieldValues(String fieldName, Locale locale)
 		throws PortalException {
 

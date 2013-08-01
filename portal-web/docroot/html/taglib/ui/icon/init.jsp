@@ -102,6 +102,14 @@ String linkCssClass = GetterUtil.getString((String)request.getAttribute("liferay
 Map<String, Object> data = (Map<String, Object>)request.getAttribute("liferay-ui:icon:data");
 String onClick = GetterUtil.getString((String)request.getAttribute("liferay-ui:icon:onClick"));
 
+if (data == null) {
+	data = new HashMap<String, Object>(1);
+}
+
+if (Validator.isNull(data.get("title"))) {
+	data.put("title", localizeMessage? LanguageUtil.get(pageContext, message) : message);
+}
+
 if ((iconListIconCount != null) || (iconListSingleIcon != null)) {
 	label = true;
 }

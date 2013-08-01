@@ -17,8 +17,10 @@ package com.liferay.portlet.service.persistence;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.ResourceAction;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.ResourcePermission;
@@ -154,8 +156,10 @@ public class GroupFinderTest {
 
 		long[] classNameIds = {PortalUtil.getClassNameId(Group.class)};
 
-		return GroupFinderUtil.findByC_C_N_D(
-			TestPropsValues.getCompanyId(), classNameIds, null, null, null,
+		return GroupFinderUtil.findByC_C_PG_N_D(
+			TestPropsValues.getCompanyId(), classNameIds,
+			GroupConstants.ANY_PARENT_GROUP_ID, StringPool.NOT_EQUAL,
+			new String[] {null}, new String[] {null}, new String[] {null},
 			groupParams, true, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 

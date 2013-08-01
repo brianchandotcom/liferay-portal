@@ -182,9 +182,10 @@ boolean urlIsNotNull = Validator.isNotNull(url);
 
 <%
 boolean forcePost = method.equals("post") && (url.startsWith(Http.HTTP_WITH_SLASH) || url.startsWith(Http.HTTPS_WITH_SLASH));
+boolean useDialog = linkCssClass.contains("use-dialog");
 %>
 
-<c:if test="<%= Validator.isNotNull(srcHover) || forcePost %>">
+<c:if test="<%= Validator.isNotNull(srcHover) || forcePost || useDialog %>">
 	<aui:script use="liferay-icon">
 		Liferay.Icon.register(
 			{
@@ -195,6 +196,8 @@ boolean forcePost = method.equals("post") && (url.startsWith(Http.HTTP_WITH_SLAS
 					, src: '<%= src %>',
 					srcHover: '<%= srcHover %>'
 				</c:if>
+
+				, useDialog: <%= useDialog %>
 			}
 		);
 	</aui:script>

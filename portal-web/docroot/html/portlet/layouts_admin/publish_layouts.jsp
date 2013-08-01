@@ -365,12 +365,12 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 
 							String backgroundTaskExecutorClassName = localPublishing ? LayoutStagingBackgroundTaskExecutor.class.getName() : LayoutRemoteStagingBackgroundTaskExecutor.class.getName();
 
-							int uncompletedBackgrounTaskCount = BackgroundTaskLocalServiceUtil.getBackgroundTasksCount(stagingGroupId, backgroundTaskExecutorClassName, false);
+							int uncompletedBackgroundTaskCount = BackgroundTaskLocalServiceUtil.getBackgroundTasksCount(stagingGroupId, backgroundTaskExecutorClassName, false);
 							%>
 
-							<div class="<%= uncompletedBackgrounTaskCount == 0 ? "hide" : "in-progress" %>" id="<portlet:namespace />uncompletedProcessMessage">
+							<div class="<%= uncompletedBackgroundTaskCount == 0 ? "hide" : "in-progress" %>" id="<portlet:namespace />uncompletedProcessMessage">
 								<liferay-util:include page="/html/portlet/layouts_admin/uncompleted_processes_message.jsp">
-									<liferay-util:param name="uncompletedBackgroundTaskCount" value="<%= String.valueOf(uncompletedBackgrounTaskCount) %>" />
+									<liferay-util:param name="uncompletedBackgroundTaskCount" value="<%= String.valueOf(uncompletedBackgroundTaskCount) %>" />
 								</liferay-util:include>
 							</div>
 

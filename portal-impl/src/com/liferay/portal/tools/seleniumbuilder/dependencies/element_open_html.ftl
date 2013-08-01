@@ -36,6 +36,18 @@
 		</#list>
 
 		<span class="arrow">&gt;</span>
+
+		<#if !bold??>
+			<#assign bold = false>
+		</#if>
+
+		<div class="line-number">
+			<#if bold>
+				<b>${lineNumber}</b>
+			<#else>
+				<div style="font-weight: normal;">${lineNumber}</div>
+			</#if>
+		</div>
 	</div>
 </div>
 

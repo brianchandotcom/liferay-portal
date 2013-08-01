@@ -1,5 +1,7 @@
 <#assign elements = testCaseBlockElement.elements()>
 
+<#assign bold = true>
+
 <#list elements as element>
 	<#assign lineNumber = element.attributeValue("line-number")>
 

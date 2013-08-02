@@ -886,6 +886,7 @@
 		<private-session-attributes>false</private-session-attributes>
 		<render-weight>50</render-weight>
 		<css-class-wrapper>portlet-software-catalog</css-class-wrapper>
+		<active>false</active>
 	</portlet>
 	<portlet>
 		<portlet-name>99</portlet-name>

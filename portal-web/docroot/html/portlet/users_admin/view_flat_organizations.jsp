@@ -67,7 +67,7 @@ if (filterManageableOrganizations) {
 						<portlet:param name="saveUsersListView" value="<%= Boolean.TRUE.toString() %>" />
 					</portlet:renderURL>
 
-					<aui:nav-item href="<%= viewOrganizationsFlatURL %>" label="view-organizations" selected='<%= toolbarItem.equals("view-all-organizations") %>' />
+					<aui:nav-item href="<%= viewOrganizationsFlatURL %>" label="all-organizations" selected='<%= toolbarItem.equals("view-all-organizations") %>' />
 
 					<portlet:renderURL var="viewUsersFlatURL">
 						<portlet:param name="struts_action" value="/users_admin/view" />
@@ -76,7 +76,7 @@ if (filterManageableOrganizations) {
 						<portlet:param name="saveUsersListView" value="<%= Boolean.TRUE.toString() %>" />
 					</portlet:renderURL>
 
-					<aui:nav-item href="<%= viewUsersFlatURL %>" label="view-users" selected='<%= toolbarItem.equals("view-all-users") %>' />
+					<aui:nav-item href="<%= viewUsersFlatURL %>" label="all-users" selected='<%= toolbarItem.equals("view-all-users") %>' />
 				</aui:nav>
 
 				<aui:nav-bar>

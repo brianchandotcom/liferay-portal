@@ -167,10 +167,10 @@ String emailBodyParam = emailParam + "Body_" + currentLanguageId;
 						PortletURL layoutSiteBrowserURL = PortletURLFactoryUtil.create(request, PortletKeys.SITE_BROWSER, PortalUtil.getControlPanelPlid(company.getCompanyId()), PortletRequest.RENDER_PHASE);
 
 						layoutSiteBrowserURL.setParameter("struts_action", "/site_browser/view");
+						layoutSiteBrowserURL.setParameter("eventName", eventName);
 						layoutSiteBrowserURL.setParameter("groupId", String.valueOf(layout.getGroupId()));
 						layoutSiteBrowserURL.setParameter("selectedGroupIds", StringUtil.merge(groupIds));
 						layoutSiteBrowserURL.setParameter("type", "layoutScopes");
-						layoutSiteBrowserURL.setParameter("callback", liferayPortletResponse.getNamespace() + "selectGroup");
 						layoutSiteBrowserURL.setPortletMode(PortletMode.VIEW);
 						layoutSiteBrowserURL.setWindowState(LiferayWindowState.POP_UP);
 
@@ -179,6 +179,7 @@ String emailBodyParam = emailParam + "Body_" + currentLanguageId;
 						data = new HashMap<String, Object>();
 
 						data.put("href", layoutSiteBrowserURLString);
+						data.put("title", LanguageUtil.get(pageContext, "pages"));
 						%>
 
 						<liferay-ui:icon
@@ -220,7 +221,6 @@ String emailBodyParam = emailParam + "Body_" + currentLanguageId;
 						siteBrowserURL.setParameter("groupId", String.valueOf(layout.getGroupId()));
 						siteBrowserURL.setParameter("selectedGroupIds", StringUtil.merge(groupIds));
 						siteBrowserURL.setParameter("types", StringUtil.merge(types));
-						siteBrowserURL.setParameter("callback", liferayPortletResponse.getNamespace() + "selectGroup");
 						siteBrowserURL.setPortletMode(PortletMode.VIEW);
 						siteBrowserURL.setWindowState(LiferayWindowState.POP_UP);
 
@@ -229,6 +229,7 @@ String emailBodyParam = emailParam + "Body_" + currentLanguageId;
 						data = new HashMap<String, Object>();
 
 						data.put("href", siteBrowserURLString);
+						data.put("title", LanguageUtil.get(pageContext, "sites"));
 						%>
 
 						<liferay-ui:icon
@@ -288,8 +289,9 @@ String emailBodyParam = emailParam + "Body_" + currentLanguageId;
 						modal: true,
 						width: 600
 					},
-					id: '<%= eventName %>',
-					title: '<liferay-ui:message key="other-site" /><%= StringPool.TRIPLE_PERIOD %>',
+					eventName: '<%= eventName %>',
+					id: '<%= eventName %>' + event.currentTarget.attr('id'),
+					title: event.currentTarget.attr('data-title'),
 					uri: event.currentTarget.attr('data-href')
 				},
 				function(event) {

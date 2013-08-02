@@ -863,7 +863,9 @@ public class JavadocFormatter {
 
 					String entireElement = cdata.substring(startIndex, endIndex + endTagLength);
 
+					sb.append("\n");
 					sb.append(entireElement);
+					sb.append("\n");
 
 					nextIndex = endIndex + endTagLength;
 				}

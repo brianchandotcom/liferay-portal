@@ -77,7 +77,12 @@ public class SearchContainerResultsTag<R> extends TagSupport {
 			}
 
 			if (_results == null) {
-				_results = (List<R>)pageContext.getAttribute(_resultsVar);
+				_results = searchContainer.getResults();
+
+				if (_results.isEmpty()) {
+					_results = (List<R>)pageContext.getAttribute(_resultsVar);
+				}
+
 				_deprecatedTotal = (Integer)pageContext.getAttribute(
 					_deprecatedTotalVar);
 			}

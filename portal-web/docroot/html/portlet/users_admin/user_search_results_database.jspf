@@ -30,5 +30,5 @@ else {
 	results = UserLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), searchTerms.getStatus(), userParams, userSearchContainer.getStart(), userSearchContainer.getEnd(), userSearchContainer.getOrderByComparator());
 }
 
-pageContext.setAttribute("results", results);
+userSearchContainer.setResults(results);
 %>

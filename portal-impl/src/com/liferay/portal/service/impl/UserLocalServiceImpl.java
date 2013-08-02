@@ -4037,7 +4037,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			autoPassword = false;
 
 			if ((password1 == null) || (password2 == null)) {
-				password1 = PwdGenerator.getPassword();
+				password1 = PwdGenerator.getSecurePassword();
 				password2 = password1;
 			}
 

@@ -420,7 +420,7 @@ public class CreateAccountAction extends PortletAction {
 			session.getAttribute(WebKeys.FACEBOOK_INCOMPLETE_USER_ID));
 
 		if (facebookId > 0) {
-			password1 = PwdGenerator.getPassword();
+			password1 = PwdGenerator.getSecurePassword();
 			password2 = password1;
 		}
 

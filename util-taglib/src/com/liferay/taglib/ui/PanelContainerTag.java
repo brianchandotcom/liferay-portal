@@ -94,7 +94,7 @@ public class PanelContainerTag extends BaseBodyTagSupport implements BodyTag {
 			(HttpServletRequest)pageContext.getRequest();
 
 		if (Validator.isNull(_id)) {
-			_id = PwdGenerator.getPassword(PwdGenerator.KEY3, 4);
+			_id = PwdGenerator.getRandomId();
 		}
 
 		request.setAttribute("liferay-ui:panel-container:id", _id);

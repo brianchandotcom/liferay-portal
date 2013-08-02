@@ -51,7 +51,7 @@ public class CounterLocalServiceTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		_COUNTER_NAME = PwdGenerator.getPassword();
+		_COUNTER_NAME = PwdGenerator.getRandomString();
 
 		CounterLocalServiceUtil.reset(_COUNTER_NAME);
 

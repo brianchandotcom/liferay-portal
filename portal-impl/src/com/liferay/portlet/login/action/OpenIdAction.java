@@ -346,7 +346,7 @@ public class OpenIdAction extends PortletAction {
 		long creatorUserId = 0;
 		long companyId = themeDisplay.getCompanyId();
 		boolean autoPassword = false;
-		String password1 = PwdGenerator.getPassword();
+		String password1 = PwdGenerator.getSecurePassword();
 		String password2 = password1;
 		boolean autoScreenName = true;
 		String screenName = StringPool.BLANK;

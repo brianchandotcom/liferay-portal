@@ -118,8 +118,7 @@ public class ValidatorTagImpl
 			_custom = true;
 
 			return name.concat(
-				StringPool.UNDERLINE).concat(
-					PwdGenerator.getPassword(PwdGenerator.KEY3, 4));
+				StringPool.UNDERLINE).concat(PwdGenerator.getRandomId());
 		}
 
 		return name;

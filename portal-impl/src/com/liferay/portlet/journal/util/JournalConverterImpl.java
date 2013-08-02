@@ -727,7 +727,7 @@ public class JournalConverterImpl implements JournalConverter {
 	protected void updateFieldsDisplay(Fields ddmFields, String fieldName) {
 		String fieldsDisplayValue =
 			fieldName.concat(DDMImpl.INSTANCE_SEPARATOR).concat(
-				PwdGenerator.getPassword());
+				PwdGenerator.getRandomString());
 
 		Field fieldsDisplayField = ddmFields.get(DDMImpl.FIELDS_DISPLAY_NAME);
 
@@ -774,7 +774,7 @@ public class JournalConverterImpl implements JournalConverter {
 				addMetadataEntry(metadataElement, "label", name);
 
 				element.addAttribute(
-					"name", "option" + PwdGenerator.getPassword(4));
+					"name", "option" + PwdGenerator.getRandomId());
 				element.addAttribute("type", "option");
 				element.addAttribute("value", name);
 

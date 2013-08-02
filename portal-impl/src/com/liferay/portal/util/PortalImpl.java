@@ -842,7 +842,7 @@ public class PortalImpl implements Portal {
 			themeDisplay.isLifecycleResource() ||
 			themeDisplay.isStateExclusive()) {
 
-			return PwdGenerator.getPassword(PwdGenerator.KEY3, 4);
+			return PwdGenerator.getRandomId();
 		}
 		else {
 			return DeterminateKeyGenerator.generate(input);

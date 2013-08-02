@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/workflow_tasks/init.jsp" %>
 
 <%
-String randomId = PwdGenerator.getPassword(PwdGenerator.KEY3, 4);
+String randomId = PwdGenerator.getRandomId();
 
 String redirect = ParamUtil.getString(request, "redirect");
 

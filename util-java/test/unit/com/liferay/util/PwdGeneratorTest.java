@@ -26,11 +26,11 @@ import org.junit.Test;
 public class PwdGeneratorTest {
 
 	@Test
-	public void testGetPassword() {
+	public void testGetRandomString() {
 		long start = System.currentTimeMillis();
 
 		for (int i = 0; i < 100000; i++) {
-			PwdGenerator.getPassword();
+			PwdGenerator.getRandomString();
 		}
 
 		long end = System.currentTimeMillis();
@@ -49,7 +49,7 @@ public class PwdGeneratorTest {
 		long start = System.currentTimeMillis();
 
 		for (int i = 0; i < 100000; i++) {
-			PwdGenerator.getPassword();
+			PwdGenerator.getSecurePassword();
 		}
 
 		long end = System.currentTimeMillis();

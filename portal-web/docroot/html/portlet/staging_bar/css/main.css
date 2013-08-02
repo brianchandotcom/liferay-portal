@@ -219,9 +219,8 @@
 
 	.navbar {
 		position: absolute;
-		z-index: 100;
+		z-index: 500;
 	}
-
 }
 
 .js .controls-hidden .staging-bar {

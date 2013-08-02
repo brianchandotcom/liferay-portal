@@ -37,7 +37,7 @@ String sitesListView = ParamUtil.get(request, "sitesListView", SiteConstants.LIS
 		<portlet:param name="sitesListView" value="<%= SiteConstants.LIST_VIEW_FLAT_SITES %>" />
 	</portlet:renderURL>
 
-	<aui:nav-item href="<%= viewSitesFlatURL %>" label="view-all" selected='<%= toolbarItem.equals("view-all-sites") %>' />
+	<aui:nav-item href="<%= viewSitesFlatURL %>" label="all-sites" selected='<%= toolbarItem.equals("view-all-sites") %>' />
 </aui:nav>
 
 <aui:nav-bar>

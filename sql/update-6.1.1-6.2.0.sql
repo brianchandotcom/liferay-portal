@@ -503,6 +503,7 @@ alter table PollsVote add uuid_ VARCHAR(75) null;
 alter table PollsVote add groupId LONG;
 
 update Portlet set active_ = FALSE where portletId = "62";
+update Portlet set active_ = FALSE where portletId = "98";
 update Portlet set active_ = FALSE where portletId = "173";
 
 alter table RepositoryEntry add companyId LONG;

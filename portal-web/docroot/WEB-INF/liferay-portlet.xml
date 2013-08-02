@@ -821,6 +821,9 @@
 		<icon>/html/icons/portal_settings.png</icon>
 		<struts-path>portlet_configuration</struts-path>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
+		<friendly-url-mapper-class>com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper</friendly-url-mapper-class>
+		<friendly-url-mapping>portlet_configuration</friendly-url-mapping>
+		<friendly-url-routes>com/liferay/portlet/portletconfiguration/portlet-configuration-friendly-url-routes.xml</friendly-url-routes>
 		<use-default-template>false</use-default-template>
 		<private-request-attributes>false</private-request-attributes>
 		<private-session-attributes>false</private-session-attributes>
@@ -1600,6 +1603,9 @@
 		<icon>/html/icons/group_pages.png</icon>
 		<struts-path>group_pages</struts-path>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
+		<friendly-url-mapper-class>com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper</friendly-url-mapper-class>
+		<friendly-url-mapping>group_pages</friendly-url-mapping>
+		<friendly-url-routes>com/liferay/portlet/grouppages/group-pages-friendly-url-routes.xml</friendly-url-routes>
 		<control-panel-entry-category>site_administration.pages</control-panel-entry-category>
 		<control-panel-entry-weight>2.0</control-panel-entry-weight>
 		<control-panel-entry-class>com.liferay.portlet.grouppages.GroupPagesControlPanelEntry</control-panel-entry-class>

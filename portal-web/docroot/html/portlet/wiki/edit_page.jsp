@@ -311,12 +311,12 @@ if (Validator.isNull(redirect)) {
 							FileEntry attachmentsFileEntry = attachmentsFileEntries.get(i);
 						%>
 
-							<portlet:actionURL var="getPageAttachmentURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
+							<portlet:resourceURL var="getPageAttachmentURL">
 								<portlet:param name="struts_action" value="/wiki/get_page_attachment" />
 								<portlet:param name="nodeId" value="<%= String.valueOf(node.getNodeId()) %>" />
 								<portlet:param name="title" value="<%= wikiPage.getTitle() %>" />
 								<portlet:param name="fileName" value="<%= attachmentsFileEntry.getTitle() %>" />
-							</portlet:actionURL>
+							</portlet:resourceURL>
 
 							<aui:a href="<%= getPageAttachmentURL %>"><%= attachmentsFileEntry.getTitle() %></aui:a> (<%= TextFormatter.formatStorageSize(attachmentsFileEntry.getSize(), locale) %>)<%= (i < (attachmentsFileEntries.size() - 1)) ? ", " : "" %>
 

@@ -95,11 +95,11 @@ OrderByComparator orderByComparator = BackgroundTaskUtil.getBackgroundTaskOrderB
 					for (FileEntry fileEntry : attachmentsFileEntries) {
 					%>
 
-						<portlet:actionURL var="attachmentURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
+						<portlet:resourceURL var="attachmentURL">
 							<portlet:param name="struts_action" value="/group_pages/get_background_task_attachment" />
 							<portlet:param name="backgroundTaskId" value="<%= String.valueOf(backgroundTask.getBackgroundTaskId()) %>" />
 							<portlet:param name="attachment" value="<%= fileEntry.getTitle() %>" />
-						</portlet:actionURL>
+						</portlet:resourceURL>
 
 						<%
 						StringBundler sb = new StringBundler(4);

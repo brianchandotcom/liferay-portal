@@ -28,9 +28,9 @@ import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBMessageServiceUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
 
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -45,29 +45,30 @@ import org.apache.struts.action.ActionMapping;
 public class GetMessageAttachmentAction extends PortletAction {
 
 	@Override
-	public void processAction(
+	public void serveResource(
 			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ActionRequest actionRequest,
-			ActionResponse actionResponse)
+			PortletConfig portletConfig, ResourceRequest resourceRequest,
+			ResourceResponse resourceResponse)
 		throws Exception {
 
-		try {
-			long messageId = ParamUtil.getLong(actionRequest, "messageId");
-			String fileName = ParamUtil.getString(actionRequest, "attachment");
-			int status = ParamUtil.getInteger(
-				actionRequest, "status", WorkflowConstants.STATUS_APPROVED);
+		HttpServletRequest request = PortalUtil.getHttpServletRequest(
+			resourceRequest);
+		HttpServletResponse response = PortalUtil.getHttpServletResponse(
+			resourceResponse);
 
-			HttpServletRequest request = PortalUtil.getHttpServletRequest(
-				actionRequest);
-			HttpServletResponse response = PortalUtil.getHttpServletResponse(
-				actionResponse);
+		try {
+			long messageId = ParamUtil.getLong(resourceRequest, "messageId");
+			String fileName = ParamUtil.getString(
+				resourceRequest, "attachment");
+			int status = ParamUtil.getInteger(
+				resourceRequest, "status", WorkflowConstants.STATUS_APPROVED);
 
 			getFile(messageId, fileName, status, request, response);
 
-			setForward(actionRequest, ActionConstants.COMMON_NULL);
+			setForward(resourceRequest, ActionConstants.COMMON_NULL);
 		}
 		catch (Exception e) {
-			PortalUtil.sendError(e, actionRequest, actionResponse);
+			PortalUtil.sendError(e, request, response);
 		}
 	}
 

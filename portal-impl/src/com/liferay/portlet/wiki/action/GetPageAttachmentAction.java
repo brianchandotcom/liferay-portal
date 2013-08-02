@@ -32,9 +32,9 @@ import com.liferay.portlet.wiki.NoSuchPageException;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.service.WikiPageServiceUtil;
 
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -49,30 +49,30 @@ import org.apache.struts.action.ActionMapping;
 public class GetPageAttachmentAction extends PortletAction {
 
 	@Override
-	public void processAction(
+	public void serveResource(
 			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ActionRequest actionRequest,
-			ActionResponse actionResponse)
+			PortletConfig portletConfig, ResourceRequest resourceRequest,
+			ResourceResponse resourceResponse)
 		throws Exception {
 
-		try {
-			long nodeId = ParamUtil.getLong(actionRequest, "nodeId");
-			String title = ParamUtil.getString(actionRequest, "title");
-			String fileName = ParamUtil.getString(actionRequest, "fileName");
-			int status = ParamUtil.getInteger(
-				actionRequest, "status", WorkflowConstants.STATUS_APPROVED);
+		HttpServletRequest request = PortalUtil.getHttpServletRequest(
+			resourceRequest);
+		HttpServletResponse response = PortalUtil.getHttpServletResponse(
+			resourceResponse);
 
-			HttpServletRequest request = PortalUtil.getHttpServletRequest(
-				actionRequest);
-			HttpServletResponse response = PortalUtil.getHttpServletResponse(
-				actionResponse);
+		try {
+			long nodeId = ParamUtil.getLong(resourceRequest, "nodeId");
+			String title = ParamUtil.getString(resourceRequest, "title");
+			String fileName = ParamUtil.getString(resourceRequest, "fileName");
+			int status = ParamUtil.getInteger(
+				resourceRequest, "status", WorkflowConstants.STATUS_APPROVED);
 
 			getFile(nodeId, title, fileName, status, request, response);
 
-			setForward(actionRequest, ActionConstants.COMMON_NULL);
+			setForward(resourceRequest, ActionConstants.COMMON_NULL);
 		}
 		catch (Exception e) {
-			PortalUtil.sendError(e, actionRequest, actionResponse);
+			PortalUtil.sendError(e, request, response);
 		}
 	}
 

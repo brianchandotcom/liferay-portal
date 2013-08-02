@@ -7,18 +7,14 @@
 	margin-top: 20px;
 }
 
-.aui .lfr-ddm-container .control-group {
-	margin-bottom: 15px;
-}
-
 .lfr-ddm-container {
 	.control-group label {
-		margin-left: 0px;
+		margin-left: 0;
 	}
 
 	.field-wrapper {
 		position: relative;
-	
+
 		.aui-field-wrapper {
 			margin-left: 20px;
 		}
@@ -54,7 +50,7 @@
 
 		label {
 			font-weight: bold;
-			margin-left: 0px;
+			margin-left: 0;
 		}
 	}
 }

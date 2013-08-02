@@ -40,7 +40,7 @@
 			<aui:nav-item href="<%= addSiteURL %>" iconClass="icon-plus" label="add" selected='<%= toolbarItem.equals("add") %>' />
 		</c:when>
 		<c:otherwise>
-			<aui:nav-item dropdown="<%= true %>" label="add" selected='<%= toolbarItem.equals("add") %>'>
+			<aui:nav-item dropdown="<%= true %>" iconClass="icon-plus" label="add" selected='<%= toolbarItem.equals("add") %>'>
 
 				<%
 				addSiteURL.setParameter("showPrototypes", "0");

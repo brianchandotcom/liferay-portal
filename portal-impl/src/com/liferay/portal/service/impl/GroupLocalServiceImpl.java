@@ -1871,9 +1871,9 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		groupParams.put("site", Boolean.TRUE);
 		groupParams.put("usersGroups", userId);
 
-		return groupLocalService.search(
+		return groupFinder.findByCompanyId(
 			user.getCompanyId(), groupParams, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
+			QueryUtil.ALL_POS, new GroupNameComparator(true));
 	}
 
 	@Override
@@ -4032,7 +4032,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 				GroupParentException.SELF_DESCENDANT);
 		}
 
-		Group group = groupLocalService.fetchGroup(groupId);
+		Group group = groupPersistence.fetchByPrimaryKey(groupId);
 
 		if (group == null) {
 			return;
@@ -4049,7 +4049,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			}
 		}
 
-		Group parentGroup = groupLocalService.getGroup(parentGroupId);
+		Group parentGroup = groupPersistence.findByPrimaryKey(parentGroupId);
 
 		if (group.isStagingGroup()) {
 			Group stagingGroup = parentGroup.getStagingGroup();

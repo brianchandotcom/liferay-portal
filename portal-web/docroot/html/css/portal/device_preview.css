@@ -8,7 +8,7 @@
 	position: fixed;
 	top: 0;
 	width: 200px;
-	z-index: 450;
+	z-index: 1002;
 
 	.nav-list {
 		margin: 20px -10px;

@@ -8,7 +8,7 @@
 	position: fixed;
 	top: 0;
 	width: 330px;
-	z-index: 450;
+	z-index: 1002;
 
 	.add-content-menu .lfr-add-page-toolbar {
 		bottom: 0;

@@ -6,7 +6,7 @@
 	position: fixed;
 	top: 0;
 	width: 440px;
-	z-index: 450;
+	z-index: 1002;
 
 	h3 {
 		display: none;

@@ -915,6 +915,8 @@ public interface PropsKeys {
 
 	public static final String HTTP_HEADER_VERSION_VERBOSITY = "http.header.version.verbosity";
 
+	public static final String HTTPONLY_IGNORE_COOKIE_NAMES = "httponly.ignore.cookie.names";
+
 	public static final String ICON_MENU_MAX_DISPLAY_ITEMS = "icon.menu.max.display.items";
 
 	public static final String ICQ_JAR = "icq.jar";

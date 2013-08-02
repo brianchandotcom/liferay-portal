@@ -23,7 +23,7 @@ String[] tempFileEntryNames = LayoutServiceUtil.getTempFileEntryNames(scopeGroup
 %>
 
 <liferay-ui:tabs
-	names="new-import-process,all-import-processes"
+	names="new-import-process,current-and-previous"
 	param="tabs3"
 	refresh="<%= false %>"
 >

@@ -70,7 +70,7 @@ else if (stagingGroup.isLayout()) {
 
 PortletURL portletURL = currentURLObj;
 
-portletURL.setParameter("tabs3", "all-publication-processes");
+portletURL.setParameter("tabs3", "current-and-previous");
 %>
 
 <c:choose>
@@ -81,7 +81,7 @@ portletURL.setParameter("tabs3", "all-publication-processes");
 	</c:when>
 	<c:otherwise>
 		<liferay-ui:tabs
-			names="new-publication-process,all-publication-processes"
+			names="new-publication-process,current-and-previous"
 			param="tabs3"
 			refresh="<%= false %>"
 		>

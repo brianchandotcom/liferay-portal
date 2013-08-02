@@ -374,6 +374,15 @@ public class BackgroundTaskLocalServiceImpl
 
 	@Override
 	public int getBackgroundTasksCount(
+			long groupId, String taskExecutorClassName, boolean completed)
+		throws SystemException {
+
+		return backgroundTaskPersistence.countByG_T_C(
+			groupId, taskExecutorClassName, completed);
+	}
+
+	@Override
+	public int getBackgroundTasksCount(
 			long groupId, String name, String taskExecutorClassName)
 		throws SystemException {
 

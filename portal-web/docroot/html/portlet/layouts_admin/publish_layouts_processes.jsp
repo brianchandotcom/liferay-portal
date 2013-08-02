@@ -25,7 +25,7 @@ boolean localPublishing = ParamUtil.getBoolean(request, "localPublishing");
 PortletURL renderURL = liferayPortletResponse.createRenderURL();
 
 renderURL.setParameter("struts_action", "/layouts_admin/publish_layouts");
-renderURL.setParameter("tabs2", "all-publication-processes");
+renderURL.setParameter("tabs2", "current-and-previous");
 renderURL.setParameter("closeRedirect", closeRedirect);
 renderURL.setParameter("groupId", String.valueOf(groupId));
 renderURL.setParameter("localPublishing", String.valueOf(localPublishing));
@@ -110,3 +110,13 @@ String backgroundTaskExecutorClassName = localPublishing ? LayoutStagingBackgrou
 
 	<liferay-ui:search-iterator />
 </liferay-ui:search-container>
+
+<%
+int incompleteBackgroundTaskCount = BackgroundTaskLocalServiceUtil.getBackgroundTasksCount(groupId, backgroundTaskExecutorClassName, false);
+%>
+
+<div class="hide incomplete-process-message">
+	<liferay-util:include page="/html/portlet/layouts_admin/incomplete_processes_message.jsp">
+		<liferay-util:param name="incompleteBackgroundTaskCount" value="<%= String.valueOf(incompleteBackgroundTaskCount) %>" />
+	</liferay-util:include>
+</div>

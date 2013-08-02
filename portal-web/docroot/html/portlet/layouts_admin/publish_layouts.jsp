@@ -178,7 +178,7 @@ portletURL.setParameter("privateLayout", String.valueOf(privateLayout));
 PortletURL renderURL = renderResponse.createRenderURL();
 
 renderURL.setParameter("struts_action", "/layouts_admin/publish_layouts");
-renderURL.setParameter("tabs2", "all-publication-processes");
+renderURL.setParameter("tabs2", "current-and-previous");
 renderURL.setParameter("closeRedirect", closeRedirect);
 renderURL.setParameter("groupId", String.valueOf(stagingGroupId));
 renderURL.setParameter("privateLayout", String.valueOf(privateLayout));
@@ -220,7 +220,7 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 </c:if>
 
 <liferay-ui:tabs
-	names="new-publication-process,all-publication-processes,scheduled-events"
+	names="new-publication-process,current-and-previous,scheduled"
 	param="tabs2"
 	refresh="<%= false %>"
 >
@@ -362,7 +362,17 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 								scheduleCMD = "schedule_publish_to_remote";
 								unscheduleCMD = "unschedule_publish_to_remote";
 							}
+
+							String backgroundTaskExecutorClassName = localPublishing ? LayoutStagingBackgroundTaskExecutor.class.getName() : LayoutRemoteStagingBackgroundTaskExecutor.class.getName();
+
+							int incompleteBackgroundTaskCount = BackgroundTaskLocalServiceUtil.getBackgroundTasksCount(stagingGroupId, backgroundTaskExecutorClassName, false);
 							%>
+
+							<div class="<%= incompleteBackgroundTaskCount == 0 ? "hide" : "in-progress" %>" id="<portlet:namespace />incompleteProcessMessage">
+								<liferay-util:include page="/html/portlet/layouts_admin/incomplete_processes_message.jsp">
+									<liferay-util:param name="incompleteBackgroundTaskCount" value="<%= String.valueOf(incompleteBackgroundTaskCount) %>" />
+								</liferay-util:include>
+							</div>
 
 							<aui:fieldset cssClass="options-group" label="date">
 								<%@ include file="/html/portlet/layouts_admin/publish_layouts_scheduler.jspf" %>
@@ -516,6 +526,7 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 			setupNode: '#<%= PortletDataHandlerKeys.PORTLET_SETUP_ALL %>Checkbox',
 			themeNode: '#<%= PortletDataHandlerKeys.THEME %>Checkbox',
 			themeReferenceNode: '#<%= PortletDataHandlerKeys.THEME_REFERENCE %>Checkbox',
+			incompleteProcessMessageNode: '#<portlet:namespace />incompleteProcessMessage',
 			userPreferencesNode: '#<%= PortletDataHandlerKeys.PORTLET_USER_PREFERENCES_ALL %>Checkbox'
 		}
 	);

@@ -77,7 +77,7 @@ if (selectedLayouts.isEmpty()) {
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/layouts_admin/export_layouts");
-portletURL.setParameter("tabs2", "all-export-processes");
+portletURL.setParameter("tabs2", "current-and-previous");
 portletURL.setParameter("groupId", String.valueOf(groupId));
 portletURL.setParameter("liveGroupId", String.valueOf(liveGroupId));
 portletURL.setParameter("privateLayout", String.valueOf(privateLayout));
@@ -85,7 +85,7 @@ portletURL.setParameter("rootNodeName", rootNodeName);
 %>
 
 <liferay-ui:tabs
-	names="new-export-process,all-export-processes"
+	names="new-export-process,current-and-previous"
 	param="tabs2"
 	refresh="<%= false %>"
 >

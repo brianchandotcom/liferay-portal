@@ -232,7 +232,7 @@ public class GroupFinderImpl
 	@Override
 	public int countByC_C_PG_N_D(
 			long companyId, long[] classNameIds, long parentGroupId,
-			String[] names, String[] realNames, String[] descriptions,
+			String[] names, String[] descriptions,
 			LinkedHashMap<String, Object> params, boolean andOperator)
 		throws SystemException {
 
@@ -243,7 +243,6 @@ public class GroupFinderImpl
 		}
 
 		names = CustomSQLUtil.keywords(names);
-		realNames = CustomSQLUtil.keywords(realNames);
 		descriptions = CustomSQLUtil.keywords(descriptions);
 
 		if (params == null) {
@@ -289,27 +288,27 @@ public class GroupFinderImpl
 			groupIds.addAll(
 				countByC_C_PG_N_D(
 					session, companyId, classNameIds, parentGroupId,
-					parentGroupIdComparator, names, realNames, descriptions,
-					params1, andOperator));
+					parentGroupIdComparator, names, descriptions, params1,
+					andOperator));
 
 			if (doUnion) {
 				groupIds.addAll(
 					countByC_C_PG_N_D(
 						session, companyId, classNameIds, parentGroupId,
-						parentGroupIdComparator, names, realNames, descriptions,
-						params2, andOperator));
+						parentGroupIdComparator, names, descriptions, params2,
+						andOperator));
 
 				groupIds.addAll(
 					countByC_C_PG_N_D(
 						session, companyId, classNameIds, parentGroupId,
-						parentGroupIdComparator, names, realNames, descriptions,
-						params3, andOperator));
+						parentGroupIdComparator, names, descriptions, params3,
+						andOperator));
 
 				groupIds.addAll(
 					countByC_C_PG_N_D(
 						session, companyId, classNameIds, parentGroupId,
-						parentGroupIdComparator, names, realNames, descriptions,
-						params4, andOperator));
+						parentGroupIdComparator, names, descriptions, params4,
+						andOperator));
 			}
 
 			return groupIds.size();
@@ -648,7 +647,7 @@ public class GroupFinderImpl
 	@Override
 	public List<Group> findByC_C_PG_N_D(
 			long companyId, long[] classNameIds, long parentGroupId,
-			String[] names, String[] realNames, String[] descriptions,
+			String[] names, String[] descriptions,
 			LinkedHashMap<String, Object> params, boolean andOperator,
 			int start, int end, OrderByComparator obc)
 		throws SystemException {
@@ -660,7 +659,6 @@ public class GroupFinderImpl
 		}
 
 		names = CustomSQLUtil.keywords(names);
-		realNames = CustomSQLUtil.keywords(realNames);
 		descriptions = CustomSQLUtil.keywords(descriptions);
 
 		if (params == null) {
@@ -764,8 +762,7 @@ public class GroupFinderImpl
 			parentGroupIdComparator.equals(StringPool.EQUAL) ?
 				StringPool.EQUAL : StringPool.NOT_EQUAL);
 		sql = CustomSQLUtil.replaceKeywords(
-			sql, "lower(Group_.name) LIKE ? OR lower(Group_.name)",
-			StringPool.LIKE, false, names);
+			sql, "lower(Group_.name)", StringPool.LIKE, false, names);
 		sql = CustomSQLUtil.replaceKeywords(
 			sql, "lower(Group_.description)", StringPool.LIKE, true,
 			descriptions);
@@ -786,9 +783,7 @@ public class GroupFinderImpl
 
 			qPos.add(companyId);
 			qPos.add(parentGroupId);
-			qPos.add(names);
-			qPos.add(realNames);
-			qPos.add(names);
+			qPos.add(names, 2);
 			qPos.add(descriptions, 2);
 
 			if (doUnion) {
@@ -796,27 +791,21 @@ public class GroupFinderImpl
 
 				qPos.add(companyId);
 				qPos.add(parentGroupId);
-				qPos.add(names);
-				qPos.add(realNames);
-				qPos.add(names);
+				qPos.add(names, 2);
 				qPos.add(descriptions, 2);
 
 				setJoin(qPos, params3);
 
 				qPos.add(companyId);
 				qPos.add(parentGroupId);
-				qPos.add(names);
-				qPos.add(realNames);
-				qPos.add(names);
+				qPos.add(names, 2);
 				qPos.add(descriptions, 2);
 
 				setJoin(qPos, params4);
 
 				qPos.add(companyId);
 				qPos.add(parentGroupId);
-				qPos.add(names);
-				qPos.add(realNames);
-				qPos.add(names);
+				qPos.add(names, 2);
 				qPos.add(descriptions, 2);
 			}
 
@@ -875,8 +864,8 @@ public class GroupFinderImpl
 	protected List<Long> countByC_C_PG_N_D(
 			Session session, long companyId, long[] classNameIds,
 			long parentGroupId, String parentGroupIdComparator, String[] names,
-			String[] realNames, String[] descriptions,
-			LinkedHashMap<String, Object> params, boolean andOperator)
+			String[] descriptions, LinkedHashMap<String, Object> params,
+			boolean andOperator)
 		throws Exception {
 
 		String sql = CustomSQLUtil.get(COUNT_BY_C_C_PG_N_D);
@@ -898,8 +887,7 @@ public class GroupFinderImpl
 			parentGroupIdComparator.equals(StringPool.EQUAL) ?
 				StringPool.EQUAL : StringPool.NOT_EQUAL);
 		sql = CustomSQLUtil.replaceKeywords(
-			sql, "lower(Group_.name) LIKE ? OR lower(Group_.name)",
-			StringPool.LIKE, false, names);
+			sql, "lower(Group_.name)", StringPool.LIKE, false, names);
 		sql = CustomSQLUtil.replaceKeywords(
 			sql, "lower(Group_.description)", StringPool.LIKE, true,
 			descriptions);
@@ -917,9 +905,7 @@ public class GroupFinderImpl
 
 		qPos.add(companyId);
 		qPos.add(parentGroupId);
-		qPos.add(names);
-		qPos.add(realNames);
-		qPos.add(names);
+		qPos.add(names, 2);
 		qPos.add(descriptions, 2);
 
 		return q.list(true);

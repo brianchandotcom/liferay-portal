@@ -2345,13 +2345,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			int end, OrderByComparator obc)
 		throws SystemException {
 
-		keywords = getRealName(companyId, keywords);
-
-		String[] keywordsArray = null;
-
-		if (Validator.isNotNull(keywords)) {
-			keywordsArray = CustomSQLUtil.keywords(keywords);
-		}
+		String[] keywordsArray = getSearchNames(companyId, keywords);
 
 		boolean andOperator = false;
 
@@ -2361,7 +2355,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 		return groupFinder.findByC_C_PG_N_D(
 			companyId, classNameIds, parentGroupId, keywordsArray,
-			keywordsArray, keywordsArray, params, andOperator, start, end, obc);
+			keywordsArray, params, andOperator, start, end, obc);
 	}
 
 	/**
@@ -2463,17 +2457,13 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			int start, int end, OrderByComparator obc)
 		throws SystemException {
 
-		String[] names = CustomSQLUtil.keywords(name);
-
-		String realName = getRealName(companyId, name);
-
-		String[] realNames = CustomSQLUtil.keywords(realName);
+		String[] names = getSearchNames(companyId, name);
 
 		String[] descriptions = CustomSQLUtil.keywords(description);
 
 		return groupFinder.findByC_C_PG_N_D(
-			companyId, classNameIds, parentGroupId, names, realNames,
-			descriptions, params, andOperator, start, end, obc);
+			companyId, classNameIds, parentGroupId, names, descriptions, params,
+			andOperator, start, end, obc);
 	}
 
 	/**
@@ -2938,13 +2928,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			String keywords, LinkedHashMap<String, Object> params)
 		throws SystemException {
 
-		keywords = getRealName(companyId, keywords);
-
-		String[] keywordsArray = null;
-
-		if (Validator.isNotNull(keywords)) {
-			keywordsArray = CustomSQLUtil.keywords(keywords);
-		}
+		String[] keywordsArray = getSearchNames(companyId, keywords);
 
 		boolean andOperator = false;
 
@@ -2954,7 +2938,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 		return groupFinder.countByC_C_PG_N_D(
 			companyId, classNameIds, parentGroupId, keywordsArray,
-			keywordsArray, keywordsArray, params, andOperator);
+			keywordsArray, params, andOperator);
 	}
 
 	/**
@@ -2989,17 +2973,13 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			LinkedHashMap<String, Object> params, boolean andOperator)
 		throws SystemException {
 
-		String[] names = CustomSQLUtil.keywords(name);
-
-		String realName = getRealName(companyId, name);
-
-		String[] realNames = CustomSQLUtil.keywords(realName);
+		String[] names = getSearchNames(companyId, name);
 
 		String[] descriptions = CustomSQLUtil.keywords(description);
 
 		return groupFinder.countByC_C_PG_N_D(
-			companyId, classNameIds, parentGroupId, names, realNames,
-			descriptions, params, andOperator);
+			companyId, classNameIds, parentGroupId, names, descriptions, params,
+			andOperator);
 	}
 
 	/**
@@ -3680,24 +3660,24 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		return name + ORGANIZATION_NAME_SUFFIX;
 	}
 
-	protected String getRealName(long companyId, String name)
+	protected String[] getSearchNames(long companyId, String name)
 		throws SystemException {
 
 		if (Validator.isNull(name)) {
-			return name;
+			return new String[] {null};
 		}
 
 		Company company = companyPersistence.fetchByPrimaryKey(companyId);
 
 		if (company == null) {
-			return name;
+			return CustomSQLUtil.keywords(name);
 		}
 
 		Account account = accountPersistence.fetchByPrimaryKey(
 			company.getAccountId());
 
 		if (account == null) {
-			return name;
+			return CustomSQLUtil.keywords(name);
 		}
 
 		String companyName = account.getName();
@@ -3706,10 +3686,15 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 				companyName, name, CharPool.UNDERLINE, CharPool.PERCENT,
 				CharPool.BACK_SLASH, false)) {
 
-			return GroupConstants.GUEST;
+			String[] searchNames = CustomSQLUtil.keywords(name);
+
+			String guestName = StringUtil.quote(
+				GroupConstants.GUEST.toLowerCase(), StringPool.PERCENT);
+
+			return ArrayUtil.append(searchNames, guestName);
 		}
 
-		return name;
+		return CustomSQLUtil.keywords(name);
 	}
 
 	protected void initImportLARFile() {

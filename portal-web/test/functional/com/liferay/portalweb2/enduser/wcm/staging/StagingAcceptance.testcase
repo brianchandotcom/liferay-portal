@@ -5,7 +5,7 @@
 		<execute macro="User#firstLoginPG" />
 	</set-up>
 
-	<!--<command name="ActivateStaging">
+	<command name="ActivateStaging">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Site Settings" />
 		</execute>
@@ -31,10 +31,10 @@
 		<execute macro="Staging#deactivateStagingCP">
 			<var name="siteName" value="${siteName}" />
 		</execute>
-	</command>-->
+	</command>
 
 	<command name="StagingPublishPortlet">
-	<var name="pageName" value="Staging Portlet Test Page" />
+		<var name="pageName" value="Staging Portlet Test Page" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Site Settings" />

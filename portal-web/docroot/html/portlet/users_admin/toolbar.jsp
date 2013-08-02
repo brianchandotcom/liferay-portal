@@ -23,33 +23,6 @@ String usersListView = ParamUtil.get(request, "usersListView", UserConstants.LIS
 %>
 
 <aui:nav>
-	<portlet:renderURL var="viewUsersTreeURL">
-		<portlet:param name="struts_action" value="/users_admin/view" />
-		<portlet:param name="toolbarItem" value="browse" />
-		<portlet:param name="usersListView" value="<%= UserConstants.LIST_VIEW_TREE %>" />
-		<portlet:param name="saveUsersListView" value="<%= Boolean.TRUE.toString() %>" />
-	</portlet:renderURL>
-
-	<aui:nav-item href="<%= viewUsersTreeURL %>" label="browse" selected='<%= toolbarItem.equals("browse") %>' />
-
-	<portlet:renderURL var="viewOrganizationsFlatURL">
-		<portlet:param name="struts_action" value="/users_admin/view" />
-		<portlet:param name="toolbarItem" value="view-all-organizations" />
-		<portlet:param name="usersListView" value="<%= UserConstants.LIST_VIEW_FLAT_ORGANIZATIONS %>" />
-		<portlet:param name="saveUsersListView" value="<%= Boolean.TRUE.toString() %>" />
-	</portlet:renderURL>
-
-	<aui:nav-item href="<%= viewOrganizationsFlatURL %>" label="view-organizations" selected='<%= toolbarItem.equals("view-all-organizations") %>' />
-
-	<portlet:renderURL var="viewUsersFlatURL">
-		<portlet:param name="struts_action" value="/users_admin/view" />
-		<portlet:param name="toolbarItem" value="view-all-users" />
-		<portlet:param name="usersListView" value="<%= UserConstants.LIST_VIEW_FLAT_USERS %>" />
-		<portlet:param name="saveUsersListView" value="<%= Boolean.TRUE.toString() %>" />
-	</portlet:renderURL>
-
-	<aui:nav-item href="<%= viewUsersFlatURL %>" label="view-users" selected='<%= toolbarItem.equals("view-all-users") %>' />
-
 	<%
 	boolean hasAddOrganizationPermission = PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_ORGANIZATION);
 	boolean hasAddUserPermission = PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_USER);

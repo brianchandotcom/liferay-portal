@@ -296,7 +296,7 @@ compareVersionsURL.setParameter("struts_action", "/wiki/compare_versions");
 					},
 					eventName: '<portlet:namespace />selectVersion',
 					id: '<portlet:namespace />selectVersion' + event.currentTarget.attr('id'),
-					title: '<%= UnicodeLanguageUtil.get(pageContext, "select-version") %>',
+					title: '<liferay-ui:message key="select-version" />',
 					uri: event.currentTarget.attr('data-uri')
 				},
 				function(event) {

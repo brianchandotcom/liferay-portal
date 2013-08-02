@@ -87,7 +87,7 @@
 						width: 680
 					},
 					id: '<portlet:namespace />selectFolder',
-					title: '<%= UnicodeLanguageUtil.get(pageContext, "warning") %>',
+					title: '<liferay-ui:message key="warning" />',
 					uri: uri
 				},
 				function(event) {

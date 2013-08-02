@@ -19,7 +19,7 @@ package com.liferay.portlet.dynamicdatalists.model;
  */
 public class DDLRecordSetConstants {
 
-	public static final int MIN_DISPLAY_ROWS_DEFAULT = 20;
+	public static final int MIN_DISPLAY_ROWS_DEFAULT = 10;
 
 	public static final int SCOPE_ANY = -1;
 

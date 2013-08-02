@@ -39,6 +39,27 @@ import com.liferay.portal.parsers.creole.ast.UnorderedListNode;
 import com.liferay.portal.parsers.creole.ast.WikiPageNode;
 import com.liferay.portal.parsers.creole.ast.extension.TableOfContentsNode;
 import com.liferay.portal.parsers.creole.ast.link.LinkNode;
+import com.liferay.portal.parsers.creole.ast.link.interwiki.C2InterwikiLinkNode;
+import com.liferay.portal.parsers.creole.ast.link.interwiki.DokuWikiInterwikiLinkNode;
+import com.liferay.portal.parsers.creole.ast.link.interwiki.FlickrInterwikiLinkNode;
+import com.liferay.portal.parsers.creole.ast.link.interwiki.GoogleInterwikiLinkNode;
+import com.liferay.portal.parsers.creole.ast.link.interwiki.InterwikiLinkNode;
+import com.liferay.portal.parsers.creole.ast.link.interwiki.JSPWikiInterwikiLinkNode;
+import com.liferay.portal.parsers.creole.ast.link.interwiki.MeatballInterwikiLinkNode;
+import com.liferay.portal.parsers.creole.ast.link.interwiki.MediaWikiInterwikiLinkNode;
+import com.liferay.portal.parsers.creole.ast.link.interwiki.MoinMoinInterwikiLinkNode;
+import com.liferay.portal.parsers.creole.ast.link.interwiki.OddmuseInterwikiLinkNode;
+import com.liferay.portal.parsers.creole.ast.link.interwiki.OhanaInterwikiLinkNode;
+import com.liferay.portal.parsers.creole.ast.link.interwiki.PmWikiInterwikiLinkNode;
+import com.liferay.portal.parsers.creole.ast.link.interwiki.PukiWikiInterwikiLinkNode;
+import com.liferay.portal.parsers.creole.ast.link.interwiki.PurpleWikiInterwikiLinkNode;
+import com.liferay.portal.parsers.creole.ast.link.interwiki.RadeoxInterwikiLinkNode;
+import com.liferay.portal.parsers.creole.ast.link.interwiki.SnipSnapInterwikiLinkNode;
+import com.liferay.portal.parsers.creole.ast.link.interwiki.TWikiInterwikiLinkNode;
+import com.liferay.portal.parsers.creole.ast.link.interwiki.TiddlyWikiInterwikiLinkNode;
+import com.liferay.portal.parsers.creole.ast.link.interwiki.UsemodInterwikiLinkNode;
+import com.liferay.portal.parsers.creole.ast.link.interwiki.WikipediaInterwikiLinkNode;
+import com.liferay.portal.parsers.creole.ast.link.interwiki.XWikiInterwikiLinkNode;
 import com.liferay.portal.parsers.creole.ast.table.TableDataNode;
 import com.liferay.portal.parsers.creole.ast.table.TableHeaderNode;
 import com.liferay.portal.parsers.creole.ast.table.TableNode;
@@ -72,10 +93,25 @@ public class XhtmlTranslationVisitor implements ASTVisitor {
 	}
 
 	@Override
+	public void visit(C2InterwikiLinkNode c2InterwikiLinkNode) {
+		appendInterwikiLinkNode(c2InterwikiLinkNode);
+	}
+
+	@Override
 	public void visit(CollectionNode collectionNode) {
 		for (ASTNode astNode : collectionNode.getASTNodes()) {
 			astNode.accept(this);
 		}
+	}
+
+	@Override
+	public void visit(DokuWikiInterwikiLinkNode dokuWikiInterwikiLinkNode) {
+		appendInterwikiLinkNode(dokuWikiInterwikiLinkNode);
+	}
+
+	@Override
+	public void visit(FlickrInterwikiLinkNode flickrInterwikiLinkNode) {
+		appendInterwikiLinkNode(flickrInterwikiLinkNode);
 	}
 
 	@Override
@@ -91,6 +127,11 @@ public class XhtmlTranslationVisitor implements ASTVisitor {
 		else {
 			traverse(formattedTextNode.getChildASTNodes());
 		}
+	}
+
+	@Override
+	public void visit(GoogleInterwikiLinkNode googleInterwikiLinkNode) {
+		appendInterwikiLinkNode(googleInterwikiLinkNode);
 	}
 
 	@Override
@@ -144,6 +185,11 @@ public class XhtmlTranslationVisitor implements ASTVisitor {
 	}
 
 	@Override
+	public void visit(JSPWikiInterwikiLinkNode jspWikiInterwikiLinkNode) {
+		appendInterwikiLinkNode(jspWikiInterwikiLinkNode);
+	}
+
+	@Override
 	public void visit(LineNode lineNode) {
 		traverse(lineNode.getChildASTNodes(), null, StringPool.SPACE);
 	}
@@ -172,10 +218,35 @@ public class XhtmlTranslationVisitor implements ASTVisitor {
 	}
 
 	@Override
+	public void visit(MeatballInterwikiLinkNode meatballInterwikiLinkNode) {
+		appendInterwikiLinkNode(meatballInterwikiLinkNode);
+	}
+
+	@Override
+	public void visit(MediaWikiInterwikiLinkNode mediaWikiInterwikiLinkNode) {
+		appendInterwikiLinkNode(mediaWikiInterwikiLinkNode);
+	}
+
+	@Override
+	public void visit(MoinMoinInterwikiLinkNode moinMoinInterwikiLinkNode) {
+		appendInterwikiLinkNode(moinMoinInterwikiLinkNode);
+	}
+
+	@Override
 	public void visit(NoWikiSectionNode noWikiSectionNode) {
 		append("<pre>");
 		append(HtmlUtil.escape(noWikiSectionNode.getContent()));
 		append("</pre>");
+	}
+
+	@Override
+	public void visit(OddmuseInterwikiLinkNode oddmuseInterwikiLinkNode) {
+		appendInterwikiLinkNode(oddmuseInterwikiLinkNode);
+	}
+
+	@Override
+	public void visit(OhanaInterwikiLinkNode ohanaInterwikiLinkNode) {
+		appendInterwikiLinkNode(ohanaInterwikiLinkNode);
 	}
 
 	@Override
@@ -198,8 +269,33 @@ public class XhtmlTranslationVisitor implements ASTVisitor {
 	}
 
 	@Override
+	public void visit(PmWikiInterwikiLinkNode pmWikiInterwikiLinkNode) {
+		appendInterwikiLinkNode(pmWikiInterwikiLinkNode);
+	}
+
+	@Override
+	public void visit(PukiWikiInterwikiLinkNode pukiWikiInterwikiLinkNode) {
+		appendInterwikiLinkNode(pukiWikiInterwikiLinkNode);
+	}
+
+	@Override
+	public void visit(PurpleWikiInterwikiLinkNode purpleWikiInterwikiLinkNode) {
+		appendInterwikiLinkNode(purpleWikiInterwikiLinkNode);
+	}
+
+	@Override
+	public void visit(RadeoxInterwikiLinkNode radeoxInterwikiLinkNode) {
+		appendInterwikiLinkNode(radeoxInterwikiLinkNode);
+	}
+
+	@Override
 	public void visit(ScapedNode scapedNode) {
 		append(HtmlUtil.escape(scapedNode.getContent()));
+	}
+
+	@Override
+	public void visit(SnipSnapInterwikiLinkNode snipSnapInterwikiLinkNode) {
+		appendInterwikiLinkNode(snipSnapInterwikiLinkNode);
 	}
 
 	@Override
@@ -223,6 +319,16 @@ public class XhtmlTranslationVisitor implements ASTVisitor {
 
 	@Override
 	public void visit(TableOfContentsNode tableOfContentsNode) {
+	}
+
+	@Override
+	public void visit(TiddlyWikiInterwikiLinkNode tiddlyWikiInterwikiLinkNode) {
+		appendInterwikiLinkNode(tiddlyWikiInterwikiLinkNode);
+	}
+
+	@Override
+	public void visit(TWikiInterwikiLinkNode tWikiInterwikiLinkNode) {
+		appendInterwikiLinkNode(tWikiInterwikiLinkNode);
 	}
 
 	@Override
@@ -250,14 +356,42 @@ public class XhtmlTranslationVisitor implements ASTVisitor {
 	}
 
 	@Override
+	public void visit(UsemodInterwikiLinkNode usemodInterwikiLinkNode) {
+		appendInterwikiLinkNode(usemodInterwikiLinkNode);
+	}
+
+	@Override
 	public void visit(WikiPageNode wikiPageNode) {
 		traverse(wikiPageNode.getChildASTNodes());
+	}
+
+	@Override
+	public void visit(WikipediaInterwikiLinkNode wikipediaInterwikiLinkNode) {
+		appendInterwikiLinkNode(wikipediaInterwikiLinkNode);
+	}
+
+	@Override
+	public void visit(XWikiInterwikiLinkNode xWikiInterwikiLinkNode) {
+		appendInterwikiLinkNode(xWikiInterwikiLinkNode);
 	}
 
 	protected void append(Object object) {
 		if (object != null) {
 			_sb.append(object);
 		}
+	}
+
+	protected void appendInterwikiLinkNode(
+		InterwikiLinkNode interwikiLinkNode) {
+
+		append("<a href=\"");
+		append(HtmlUtil.escape(interwikiLinkNode.getURL()));
+		append("\">");
+
+		append(HtmlUtil.escape(interwikiLinkNode.getTitle()));
+
+		append("</a>");
+
 	}
 
 	protected void appendLevelTags(int nodeLevel, boolean ordered) {

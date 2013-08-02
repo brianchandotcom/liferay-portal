@@ -12,7 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.parsers.creole.ast.link;
+package com.liferay.portal.parsers.creole.ast.link.interwiki;
+
+import com.liferay.portal.parsers.creole.ast.link.LinkNode;
+import com.liferay.portal.parsers.creole.visitor.ASTVisitor;
 
 /**
  * @author Miguel Pastor
@@ -26,35 +29,32 @@ public abstract class InterwikiLinkNode extends LinkNode {
 		super(token);
 	}
 
-	public InterwikiLinkNode(int token, String uri, String wikiName) {
+	abstract public void accept(ASTVisitor astVisitor);
+
+	public InterwikiLinkNode(int token, String title) {
 		this(token);
 
-		_uri = uri;
-		_wikiName = wikiName;
+		_title = title;
 	}
 
-	public InterwikiLinkNode(String wikiname) {
-		_wikiName = wikiname;
+	public InterwikiLinkNode(String title) {
+		_title = title;
 	}
 
-	public InterwikiLinkNode(String uri, String wikiname) {
-		_uri = uri;
-		_wikiName = wikiname;
+	public String getTitle() {
+		return _title;
 	}
 
-	public String getUri() {
-		return _uri;
+	public String getURL() {
+		return getBaseURL() + _title;
 	}
 
-	public String getWikiName() {
-		return _wikiName;
+	public void setTitle(String title) {
+		_title = title;
 	}
 
-	public void setUri(String uri) {
-		_uri = uri;
-	}
+	protected abstract String getBaseURL();
 
-	private String _uri;
-	private String _wikiName;
+	private String _title;
 
 }

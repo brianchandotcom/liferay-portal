@@ -107,7 +107,7 @@ if (data == null) {
 }
 
 if (Validator.isNull(data.get("title"))) {
-	data.put("title", localizeMessage? LanguageUtil.get(pageContext, message) : message);
+	data.put("title", localizeMessage ? LanguageUtil.get(pageContext, message) : message);
 }
 
 if ((iconListIconCount != null) || (iconListSingleIcon != null)) {

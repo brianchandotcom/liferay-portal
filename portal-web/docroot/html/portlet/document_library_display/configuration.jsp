@@ -186,7 +186,7 @@ String portletNameSpace = PortalUtil.getPortletNamespace(portletResource);
 						width: 600
 					},
 					id: '_<%= HtmlUtil.escapeJS(portletResource) %>_selectFolder',
-					title: '<%= UnicodeLanguageUtil.format(pageContext, "select-x", "folder") %>',
+					title: '<liferay-ui:message arguments="folder" key="select-x" />',
 					uri: '<%= selectFolderURL.toString() %>'
 				},
 				function(event) {

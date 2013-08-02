@@ -290,7 +290,7 @@ if (parentOrganization != null) {
 							modal: true
 						},
 						id: '<portlet:namespace />selectOrganization',
-						title: '<%= UnicodeLanguageUtil.format(pageContext, "select-x", "organization") %>',
+						title: '<liferay-ui:message arguments="organization" key="select-x" />',
 						uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/users_admin/select_organization" /><portlet:param name="p_u_i_d" value='<%= (selUser == null) ? "0" : String.valueOf(selUser.getUserId()) %>' /></portlet:renderURL>'
 					},
 					function(event) {

@@ -91,7 +91,7 @@ boolean mergeWithParentFolderDisabled = ParamUtil.getBoolean(request, "mergeWith
 										width: 680
 									},
 									id: '<portlet:namespace />selectFolder',
-									title: '<%= UnicodeLanguageUtil.format(pageContext, "select-x", "folder") %>',
+									title: '<liferay-ui:message arguments="folder" key="select-x" />',
 									uri: '<%= selectFolderURL.toString() %>'
 								},
 								function(event) {

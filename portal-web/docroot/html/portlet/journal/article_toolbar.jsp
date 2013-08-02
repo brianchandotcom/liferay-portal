@@ -47,30 +47,29 @@ if ((article != null) && article.isDraft()) {
 			<portlet:param name="version" value="<%= String.valueOf(article.getVersion()) %>" />
 		</liferay-portlet:renderURL>
 
-		var previewArticleContentURL = '<%= previewArticleContentURL %>';
-		var hasChangedForm = false;
-
 		var form = A.one(document.<portlet:namespace />fm1);
+
+		var formChanged = false;
+
+		var hasUnsavedChanges = function() {
+			var unsavedChanges = formChanged;
+
+			if (!unsavedChanges && typeof CKEDITOR !== 'undefined') {
+				unsavedChanges = CKEDITOR.instances.<portlet:namespace />articleContent.checkDirty();
+			}
+
+			return unsavedChanges;
+		};
+
+		var previewArticleContentURL = '<%= previewArticleContentURL %>';
 
 		form.delegate(
 			'change',
 			function(event) {
-				hasChangedForm = true;
+				formChanged = true;
 			},
 			':input'
 		);
-
-		function hasUnsavedChanges() {
-			if (hasChangedForm) {
-				return true;
-			}
-
-			if (typeof CKEDITOR !== 'undefined') {
-				return CKEDITOR.instances.<portlet:namespace />articleContent.checkDirty();
-			}
-
-			return false;
-		}
 
 		toolbarButtonGroup.push(
 			{

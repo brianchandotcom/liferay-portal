@@ -47,7 +47,7 @@ AUI.add(
 					setupNode: defaultConfig,
 					themeNode: defaultConfig,
 					themeReferenceNode: defaultConfig,
-					uncompletedProcessMessageNode: defaultConfig,
+					incompleteProcessMessageNode: defaultConfig,
 					userPreferencesNode: defaultConfig
 				},
 
@@ -857,7 +857,7 @@ AUI.add(
 												renderInterval = RENDER_INTERVAL_IN_PROGRESS;
 											}
 
-											instance._updateUncompletedProcessMessage(inProgress, processesNode.one('.uncompleted-process-message'));
+											instance._updateincompleteProcessMessage(inProgress, processesNode.one('.incomplete-process-message'));
 
 											A.later(renderInterval, instance, instance._renderProcesses);
 										}
@@ -1156,21 +1156,21 @@ AUI.add(
 						instance._setLabels('remoteLink', 'selectedRemote', selectedRemote.join(', '));
 					},
 
-					_updateUncompletedProcessMessage: function(inProgress, content) {
+					_updateincompleteProcessMessage: function(inProgress, content) {
 						var instance = this;
 
-						var uncompletedProcessMessageNode = instance.get('uncompletedProcessMessageNode');
+						var incompleteProcessMessageNode = instance.get('incompleteProcessMessageNode');
 
-						if (uncompletedProcessMessageNode) {
+						if (incompleteProcessMessageNode) {
 							content.show();
 
-							if (inProgress || uncompletedProcessMessageNode.hasClass('in-progress')) {
-								uncompletedProcessMessageNode.setContent(content);
+							if (inProgress || incompleteProcessMessageNode.hasClass('in-progress')) {
+								incompleteProcessMessageNode.setContent(content);
 
 								if (inProgress) {
-									uncompletedProcessMessageNode.addClass('in-progress');
+									incompleteProcessMessageNode.addClass('in-progress');
 
-									uncompletedProcessMessageNode.show();
+									incompleteProcessMessageNode.show();
 								}
 							}
 						}

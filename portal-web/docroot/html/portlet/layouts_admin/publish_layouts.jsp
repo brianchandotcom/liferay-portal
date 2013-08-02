@@ -365,12 +365,12 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 
 							String backgroundTaskExecutorClassName = localPublishing ? LayoutStagingBackgroundTaskExecutor.class.getName() : LayoutRemoteStagingBackgroundTaskExecutor.class.getName();
 
-							int uncompletedBackgroundTaskCount = BackgroundTaskLocalServiceUtil.getBackgroundTasksCount(stagingGroupId, backgroundTaskExecutorClassName, false);
+							int incompleteBackgroundTaskCount = BackgroundTaskLocalServiceUtil.getBackgroundTasksCount(stagingGroupId, backgroundTaskExecutorClassName, false);
 							%>
 
-							<div class="<%= uncompletedBackgroundTaskCount == 0 ? "hide" : "in-progress" %>" id="<portlet:namespace />uncompletedProcessMessage">
-								<liferay-util:include page="/html/portlet/layouts_admin/uncompleted_processes_message.jsp">
-									<liferay-util:param name="uncompletedBackgroundTaskCount" value="<%= String.valueOf(uncompletedBackgroundTaskCount) %>" />
+							<div class="<%= incompleteBackgroundTaskCount == 0 ? "hide" : "in-progress" %>" id="<portlet:namespace />incompleteProcessMessage">
+								<liferay-util:include page="/html/portlet/layouts_admin/incomplete_processes_message.jsp">
+									<liferay-util:param name="incompleteBackgroundTaskCount" value="<%= String.valueOf(incompleteBackgroundTaskCount) %>" />
 								</liferay-util:include>
 							</div>
 
@@ -526,7 +526,7 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 			setupNode: '#<%= PortletDataHandlerKeys.PORTLET_SETUP_ALL %>Checkbox',
 			themeNode: '#<%= PortletDataHandlerKeys.THEME %>Checkbox',
 			themeReferenceNode: '#<%= PortletDataHandlerKeys.THEME_REFERENCE %>Checkbox',
-			uncompletedProcessMessageNode: '#<portlet:namespace />uncompletedProcessMessage',
+			incompleteProcessMessageNode: '#<portlet:namespace />incompleteProcessMessage',
 			userPreferencesNode: '#<%= PortletDataHandlerKeys.PORTLET_USER_PREFERENCES_ALL %>Checkbox'
 		}
 	);

@@ -46,7 +46,7 @@ request.setAttribute("edit_role_assignments.jsp-portletURL", portletURL);
 %>
 
 <liferay-util:include page="/html/portlet/roles_admin/toolbar.jsp">
-	<liferay-util:param name="toolbarItem" value='<%= (role == null) ? "add" : "view-all" %>' />
+	<liferay-util:param name="toolbarItem" value='<%= (role == null) ? "add" : StringPool.BLANK %>' />
 </liferay-util:include>
 
 <liferay-ui:header

@@ -31,9 +31,7 @@ String portletURLString = portletURL.toString();
 <aui:form action="<%= portletURLString %>" method="get" name="fm">
 	<liferay-portlet:renderURLParams varImpl="portletURL" />
 
-	<liferay-util:include page="/html/portlet/roles_admin/toolbar.jsp">
-		<liferay-util:param name="toolbarItem" value="view-all" />
-	</liferay-util:include>
+	<liferay-util:include page="/html/portlet/roles_admin/toolbar.jsp" />
 
 	<%
 	RoleSearch searchContainer = new RoleSearch(renderRequest, portletURL);

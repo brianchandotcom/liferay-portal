@@ -15,6 +15,7 @@
 package com.liferay.portlet.messageboards.lar;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
+import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.lar.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.StagedModel;
@@ -76,12 +77,13 @@ public class MBBanStagedModelDataHandlerTest
 
 	@Override
 	protected void validateImport(
-			StagedModel stagedModel,
+			StagedModel stagedModel, Tuple assetsTuple,
 			Map<String, List<StagedModel>> dependentStagedModelsMap,
 			Group group)
 		throws Exception {
 
-		super.validateImport(stagedModel, dependentStagedModelsMap, group);
+		super.validateImport(
+			stagedModel, assetsTuple, dependentStagedModelsMap, group);
 
 		MBBan ban = (MBBan)stagedModel;
 		MBBan importedBan = (MBBan)getStagedModel(stagedModel.getUuid(), group);

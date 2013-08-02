@@ -17,6 +17,7 @@ package com.liferay.portlet.journal.lar;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.lar.BaseWorkflowedStagedModelDataHandlerTestCase;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
@@ -307,7 +308,7 @@ public class JournalArticleStagedModelDataHandlerTest
 
 	@Override
 	protected void validateImport(
-			StagedModel stagedModel,
+			StagedModel stagedModel, Tuple assetsTuple,
 			Map<String, List<StagedModel>> dependentStagedModelsMap,
 			Group group)
 		throws Exception {
@@ -322,6 +323,8 @@ public class JournalArticleStagedModelDataHandlerTest
 
 		JournalArticleLocalServiceUtil.getLatestArticle(
 			articleResource.getResourcePrimKey(), article.getStatus(), false);
+
+		validateAssets(articleResource.getUuid(), assetsTuple, group);
 
 		validateImport(dependentStagedModelsMap, group);
 	}

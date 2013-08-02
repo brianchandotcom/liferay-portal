@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.lar.UserIdStrategy;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Time;
+import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.zip.ZipReader;
@@ -35,8 +36,18 @@ import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
+import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.util.GroupTestUtil;
 import com.liferay.portal.util.TestPropsValues;
+import com.liferay.portlet.asset.NoSuchEntryException;
+import com.liferay.portlet.asset.model.AssetCategory;
+import com.liferay.portlet.asset.model.AssetEntry;
+import com.liferay.portlet.asset.model.AssetTag;
+import com.liferay.portlet.asset.model.AssetVocabulary;
+import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
+import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
+import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
+import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -91,6 +102,8 @@ public abstract class BaseStagedModelDataHandlerTestCase extends PowerMockito {
 		StagedModel stagedModel = addStagedModel(
 			stagingGroup, dependentStagedModelsMap);
 
+		Tuple assetsTuple = updateAssetEntry(stagedModel);
+
 		StagedModelDataHandlerUtil.exportStagedModel(
 			portletDataContext, stagedModel);
 
@@ -112,7 +125,8 @@ public abstract class BaseStagedModelDataHandlerTestCase extends PowerMockito {
 		StagedModelDataHandlerUtil.importStagedModel(
 			portletDataContext, exportedStagedModel);
 
-		validateImport(stagedModel, dependentStagedModelsMap, liveGroup);
+		validateImport(
+			stagedModel, assetsTuple, dependentStagedModelsMap, liveGroup);
 	}
 
 	protected List<StagedModel> addDependentStagedModel(
@@ -219,6 +233,11 @@ public abstract class BaseStagedModelDataHandlerTestCase extends PowerMockito {
 	}
 
 	protected void initImport() throws Exception {
+		PortletExporter portletExporter = new PortletExporter();
+
+		portletExporter.exportAssetCategories(portletDataContext);
+		portletExporter.exportAssetTags(portletDataContext);
+
 		userIdStrategy = new CurrentUserIdStrategy(TestPropsValues.getUser());
 		zipReader = ZipReaderFactoryUtil.getZipReader(zipWriter.getFile());
 
@@ -229,6 +248,11 @@ public abstract class BaseStagedModelDataHandlerTestCase extends PowerMockito {
 
 		portletDataContext.setImportDataRootElement(rootElement);
 		portletDataContext.setSourceGroupId(stagingGroup.getGroupId());
+
+		PortletImporter portletImporter = new PortletImporter();
+
+		portletImporter.readAssetCategories(portletDataContext);
+		portletImporter.readAssetTags(portletDataContext);
 	}
 
 	protected StagedModel readExportedStagedModel(StagedModel stagedModel) {
@@ -240,6 +264,86 @@ public abstract class BaseStagedModelDataHandlerTestCase extends PowerMockito {
 				stagedModelPath);
 
 		return exportedStagedModel;
+	}
+
+	protected Tuple updateAssetEntry(StagedModel stagedModel) throws Exception {
+		AssetEntry assetEntry = null;
+
+		try {
+			assetEntry = AssetEntryLocalServiceUtil.getEntry(
+				stagingGroup.getGroupId(), stagedModel.getUuid());
+		}
+		catch (NoSuchEntryException nsee) {
+			return null;
+		}
+
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			stagingGroup.getGroupId());
+
+		AssetVocabulary assetVocabulary =
+			AssetVocabularyLocalServiceUtil.addVocabulary(
+				TestPropsValues.getUserId(), ServiceTestUtil.randomString(),
+				serviceContext);
+
+		AssetCategory assetCategory = AssetCategoryLocalServiceUtil.addCategory(
+			TestPropsValues.getUserId(), ServiceTestUtil.randomString(),
+			assetVocabulary.getVocabularyId(), serviceContext);
+
+		AssetTag assetTag = AssetTagLocalServiceUtil.addTag(
+			TestPropsValues.getUserId(), ServiceTestUtil.randomString(), null,
+			serviceContext);
+
+		AssetEntryLocalServiceUtil.updateEntry(
+			TestPropsValues.getUserId(), stagingGroup.getGroupId(),
+			assetEntry.getClassName(), assetEntry.getClassPK(),
+			new long[] {assetCategory.getCategoryId()},
+			new String[] {assetTag.getName()});
+
+		return new Tuple(assetVocabulary, assetCategory, assetTag);
+	}
+
+	protected void validateAssets(
+			String classUuid, Tuple assetsTuple, Group group)
+		throws Exception {
+
+		if (assetsTuple == null) {
+			return;
+		}
+
+		AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
+			group.getGroupId(), classUuid);
+
+		List<AssetCategory> assetCategories =
+			AssetCategoryLocalServiceUtil.getEntryCategories(
+				assetEntry.getEntryId());
+
+		Assert.assertEquals(1, assetCategories.size());
+
+		AssetCategory assetCategory = (AssetCategory)assetsTuple.getObject(1);
+		AssetCategory importedAssetCategory = assetCategories.get(0);
+
+		Assert.assertEquals(
+			assetCategory.getUuid(), importedAssetCategory.getUuid());
+
+		AssetVocabulary assetVocabulary =
+			(AssetVocabulary)assetsTuple.getObject(0);
+
+		AssetVocabulary importedAssetVocabulary =
+			AssetVocabularyLocalServiceUtil.getVocabulary(
+				importedAssetCategory.getVocabularyId());
+
+		Assert.assertEquals(
+			assetVocabulary.getUuid(), importedAssetVocabulary.getUuid());
+
+		List<AssetTag> assetTags = AssetTagLocalServiceUtil.getEntryTags(
+			assetEntry.getEntryId());
+
+		Assert.assertEquals(1, assetTags.size());
+
+		AssetTag assetTag = (AssetTag)assetsTuple.getObject(2);
+		AssetTag importedAssetTag = assetTags.get(0);
+
+		Assert.assertEquals(assetTag.getName(), importedAssetTag.getName());
 	}
 
 	protected void validateExport(
@@ -307,7 +411,7 @@ public abstract class BaseStagedModelDataHandlerTestCase extends PowerMockito {
 	}
 
 	protected void validateImport(
-			StagedModel stagedModel,
+			StagedModel stagedModel, Tuple assetsTuple,
 			Map<String, List<StagedModel>> dependentStagedModelsMap,
 			Group group)
 		throws Exception {
@@ -316,6 +420,8 @@ public abstract class BaseStagedModelDataHandlerTestCase extends PowerMockito {
 			stagedModel.getUuid(), group);
 
 		Assert.assertNotNull(importedStagedModel);
+
+		validateAssets(importedStagedModel.getUuid(), assetsTuple, group);
 
 		validateImport(dependentStagedModelsMap, group);
 	}

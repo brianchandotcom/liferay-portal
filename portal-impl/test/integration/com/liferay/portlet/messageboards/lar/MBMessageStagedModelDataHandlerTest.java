@@ -17,6 +17,7 @@ package com.liferay.portlet.messageboards.lar;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.lar.BaseWorkflowedStagedModelDataHandlerTestCase;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.StagedModel;
@@ -137,12 +138,13 @@ public class MBMessageStagedModelDataHandlerTest
 
 	@Override
 	protected void validateImport(
-			StagedModel stagedModel,
+			StagedModel stagedModel, Tuple assetsTuple,
 			Map<String, List<StagedModel>> dependentStagedModelsMap,
 			Group group)
 		throws Exception {
 
-		super.validateImport(stagedModel, dependentStagedModelsMap, group);
+		super.validateImport(
+			stagedModel, assetsTuple, dependentStagedModelsMap, group);
 
 		MBMessage importedMessage = (MBMessage)getStagedModel(
 			stagedModel.getUuid(), group);

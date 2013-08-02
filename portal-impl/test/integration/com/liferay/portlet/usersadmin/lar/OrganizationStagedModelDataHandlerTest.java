@@ -15,6 +15,7 @@
 package com.liferay.portlet.usersadmin.lar;
 
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
+import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.lar.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.model.Address;
 import com.liferay.portal.model.EmailAddress;
@@ -145,7 +146,7 @@ public class OrganizationStagedModelDataHandlerTest
 
 	@Override
 	protected void validateImport(
-			StagedModel stagedModel,
+			StagedModel stagedModel, Tuple assetsTuple,
 			Map<String, List<StagedModel>> dependentStagedModelsMap,
 			Group group)
 		throws Exception {
@@ -153,6 +154,8 @@ public class OrganizationStagedModelDataHandlerTest
 		Organization organization =
 			OrganizationLocalServiceUtil.fetchOrganizationByUuidAndCompanyId(
 				stagedModel.getUuid(), group.getCompanyId());
+
+		validateAssets(organization.getUuid(), assetsTuple, group);
 
 		List<StagedModel> addressDependentStagedModels =
 			dependentStagedModelsMap.get(Address.class.getSimpleName());

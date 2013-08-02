@@ -49,10 +49,6 @@ portletURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 
 <c:choose>
 	<c:when test="<%= !portletName.equals(PortletKeys.ADMIN_SERVER) %>">
-		<liferay-util:include page="/html/portlet/roles_admin/toolbar.jsp">
-			<liferay-util:param name="toolbarItem" value='<%= (role == null) ? "add" : "view-all" %>' />
-		</liferay-util:include>
-
 		<liferay-ui:header
 			backURL="<%= backURL %>"
 			localizeTitle="<%= false %>"

@@ -28,10 +28,6 @@ int type = ParamUtil.getInteger(request, "type");
 String subtype = BeanParamUtil.getString(role, request, "subtype");
 %>
 
-<liferay-util:include page="/html/portlet/roles_admin/toolbar.jsp">
-	<liferay-util:param name="toolbarItem" value='<%= (role == null) ? "add" : "view-all" %>' />
-</liferay-util:include>
-
 <liferay-ui:header
 	backURL="<%= backURL %>"
 	localizeTitle="<%= (role == null) %>"

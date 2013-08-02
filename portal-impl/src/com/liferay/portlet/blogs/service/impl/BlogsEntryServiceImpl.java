@@ -139,6 +139,10 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 		return entries;
 	}
 
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link
+	 *             com.liferay.portlet.blogs.rss.BlogsCompanyRSSRenderer}
+	 */
 	@Override
 	public String getCompanyEntriesRSS(
 			long companyId, Date displayDate, int status, int max, String type,
@@ -252,6 +256,10 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 		}
 	}
 
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link
+	 *             com.liferay.portlet.blogs.rss.BlogsGroupRSSRenderer}
+	 */
 	@Override
 	public String getGroupEntriesRSS(
 			long groupId, Date displayDate, int status, int max, String type,
@@ -355,6 +363,10 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 		return entries;
 	}
 
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link
+	 *             com.liferay.portlet.blogs.rss.BlogsOrganizationRSSRenderer}
+	 */
 	@Override
 	public String getOrganizationEntriesRSS(
 			long organizationId, Date displayDate, int status, int max,
@@ -435,6 +447,10 @@ public class BlogsEntryServiceImpl extends BlogsEntryServiceBaseImpl {
 			serviceContext);
 	}
 
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link
+	 *             com.liferay.portlet.blogs.rss.BlogsBaseRSSRenderer}
+	 */
 	protected String exportToRSS(
 			String name, String description, String type, double version,
 			String displayStyle, String feedURL, String entryURL,

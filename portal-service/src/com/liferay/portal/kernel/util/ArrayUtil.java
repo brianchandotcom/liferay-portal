@@ -855,6 +855,7 @@ public class ArrayUtil {
 		return toArray(filteredList.toArray(new Short[filteredList.size()]));
 	}
 
+	@SuppressWarnings("unchecked")
 	public static <T> T[] filter(
 		T[] array, PredicateFilter<T> filterPredicate) {
 

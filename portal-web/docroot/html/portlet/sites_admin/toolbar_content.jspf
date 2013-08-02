@@ -14,22 +14,6 @@
  */
 --%>
 
-<portlet:renderURL var="viewSitesTreeURL">
-	<portlet:param name="struts_action" value="/sites_admin/view" />
-	<portlet:param name="toolbarItem" value="browse" />
-	<portlet:param name="sitesListView" value="<%= SiteConstants.LIST_VIEW_TREE %>" />
-</portlet:renderURL>
-
-<aui:nav-item href="<%= viewSitesTreeURL %>" label="browse" selected='<%= toolbarItem.equals("browse") %>' />
-
-<portlet:renderURL var="viewSitesFlatURL">
-	<portlet:param name="struts_action" value="/sites_admin/view" />
-	<portlet:param name="toolbarItem" value="view-all-sites" />
-	<portlet:param name="sitesListView" value="<%= SiteConstants.LIST_VIEW_FLAT_SITES %>" />
-</portlet:renderURL>
-
-<aui:nav-item href="<%= viewSitesFlatURL %>" label="view-all" selected='<%= toolbarItem.equals("view-all-sites") %>' />
-
 <c:if test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_COMMUNITY) %>">
 
 	<%

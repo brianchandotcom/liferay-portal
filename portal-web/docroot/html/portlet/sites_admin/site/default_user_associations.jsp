@@ -198,7 +198,7 @@ for (long defaultTeamId : defaultTeamIds) {
 						width: 600
 					},
 					id: '<portlet:namespace />selectSiteRole',
-					title: '<%= UnicodeLanguageUtil.format(pageContext, "select-x", "site-role") %>',
+					title: '<liferay-ui:message arguments="site-role" key="select-x" />',
 					uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/sites_admin/select_site_role" /><portlet:param name="step" value="2" /><portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" /></portlet:renderURL>'
 				},
 				function(event) {
@@ -244,7 +244,7 @@ for (long defaultTeamId : defaultTeamIds) {
 						width: 680
 					},
 					id: '<portlet:namespace />selectTeam',
-					title: '<%= UnicodeLanguageUtil.format(pageContext, "select-x", "team") %>',
+					title: '<liferay-ui:message arguments="team" key="select-x" />',
 					uri: '<%= selectTeamURL.toString() %>'
 				},
 				function(event) {

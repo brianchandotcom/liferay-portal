@@ -20,6 +20,8 @@
 long groupId = ParamUtil.getLong(request, "groupId");
 long[] selectedGroupIds = StringUtil.split(ParamUtil.getString(request, "selectedGroupIds"), 0L);
 
+String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectSite");
+
 String type = ParamUtil.getString(request, "type", "sites-that-i-administer");
 String[] types = ParamUtil.getParameterValues(request, "types", new String[] {type});
 
@@ -30,7 +32,6 @@ if (Validator.isNull(type) && (types.length > 0)) {
 String filter = ParamUtil.getString(request, "filter");
 boolean includeCompany = ParamUtil.getBoolean(request, "includeCompany");
 boolean includeUserPersonalSite = ParamUtil.getBoolean(request, "includeUserPersonalSite");
-String callback = ParamUtil.getString(request, "callback");
 String target = ParamUtil.getString(request, "target");
 
 PortletURL portletURL = renderResponse.createRenderURL();
@@ -42,11 +43,10 @@ portletURL.setParameter("groupId", String.valueOf(groupId));
 portletURL.setParameter("filter", filter);
 portletURL.setParameter("includeCompany", String.valueOf(includeCompany));
 portletURL.setParameter("includeUserPersonalSite", String.valueOf(includeUserPersonalSite));
-portletURL.setParameter("callback", callback);
 portletURL.setParameter("target", target);
 %>
 
-<aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
+<aui:form action="<%= portletURL.toString() %>" method="post" name="selectSiteFm">
 	<liferay-ui:search-container
 		searchContainer="<%= new GroupSearch(renderRequest, portletURL) %>"
 	>
@@ -189,40 +189,30 @@ portletURL.setParameter("target", target);
 			modelVar="group"
 			rowIdProperty="friendlyURL"
 		>
-
-			<%
-			String rowHREF = null;
-
-			if (!ArrayUtil.contains(selectedGroupIds, group.getGroupId())) {
-				StringBundler sb = new StringBundler(11);
-
-				sb.append("javascript:Liferay.Util.getOpener().");
-				sb.append(Validator.isNotNull(callback) ? callback : "selectGroup");
-				sb.append("('");
-				sb.append(group.getGroupId());
-				sb.append("', '");
-				sb.append(HtmlUtil.escapeJS(group.getDescriptiveName(locale)));
-				sb.append("', '");
-				sb.append(AssetPublisherUtil.getScopeId(group, scopeGroupId));
-				sb.append("', '");
-				sb.append(target);
-				sb.append("'); Liferay.Util.getWindow().hide();");
-
-				rowHREF = sb.toString();
-			}
-			%>
-
 			<liferay-ui:search-container-column-text
-				href="<%= rowHREF %>"
 				name="name"
 				value="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>"
 			/>
 
 			<liferay-ui:search-container-column-text
-				href="<%= rowHREF %>"
 				name="type"
 				value="<%= LanguageUtil.get(pageContext, group.getScopeLabel(themeDisplay)) %>"
 			/>
+
+			<liferay-ui:search-container-column-text>
+
+				<%
+				Map<String, Object> data = new HashMap<String, Object>();
+
+				data.put("groupid", group.getGroupId());
+				data.put("groupname", HtmlUtil.escape(group.getDescriptiveName(locale)));
+				data.put("scopeid", HtmlUtil.escape(AssetPublisherUtil.getScopeId(group, scopeGroupId)));
+				data.put("target", target);
+				%>
+
+				<aui:button cssClass="selector-button" data="<%= data %>" value="choose" />
+			</liferay-ui:search-container-column-text>
+
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator />
@@ -242,3 +232,19 @@ private List<Group> _filterGroups(List<Group> groups, String filter) throws Exce
 	return filteredGroups;
 }
 %>
+
+<aui:script use="aui-base">
+	var Util = Liferay.Util;
+
+	A.one('#<portlet:namespace />selectSiteFm').delegate(
+		'click',
+		function(event) {
+			var result = Util.getAttributes(event.currentTarget, 'data-');
+
+			Util.getOpener().Liferay.fire('<%= HtmlUtil.escapeJS(eventName) %>', result);
+
+			Util.getWindow().hide();
+		},
+		'.selector-button'
+	);
+</aui:script>

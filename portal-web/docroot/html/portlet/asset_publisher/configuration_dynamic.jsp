@@ -713,7 +713,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 					},
 					eventName: '<portlet:namespace />selectDDMStructureField',
 					id: '<portlet:namespace />selectDDMStructure' + event.currentTarget.attr('id'),
-					title: '<%= UnicodeLanguageUtil.format(pageContext, "select-x", "structure-field") %>',
+					title: '<liferay-ui:message arguments="structure-field" key="select-x" />',
 					uri: event.target.attr('data-href')
 				},
 				function(event) {

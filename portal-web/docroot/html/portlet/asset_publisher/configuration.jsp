@@ -282,6 +282,8 @@ String emailBodyParam = emailParam + "Body_" + currentLanguageId;
 		function(event) {
 			event.preventDefault();
 
+			var currentTarget = event.currentTarget;
+
 			Liferay.Util.selectEntity(
 				{
 					dialog: {
@@ -290,9 +292,9 @@ String emailBodyParam = emailParam + "Body_" + currentLanguageId;
 						width: 600
 					},
 					eventName: '<%= eventName %>',
-					id: '<%= eventName %>' + event.currentTarget.attr('id'),
-					title: event.currentTarget.attr('data-title'),
-					uri: event.currentTarget.attr('data-href')
+					id: '<%= eventName %>' + currentTarget.attr('id'),
+					title: currentTarget.attr('data-title'),
+					uri: currentTarget.attr('data-href')
 				},
 				function(event) {
 					selectGroup(event.groupid, event.groupname, event.scopeid, event.target);

@@ -140,6 +140,10 @@ public class PortletPreferencesLocalServiceStagingAdvice
 		LayoutRevision layoutRevision = LayoutStagingUtil.getLayoutRevision(
 			layout);
 
+		if (layoutRevision == null) {
+			return methodInvocation.proceed();
+		}
+
 		plid = layoutRevision.getLayoutRevisionId();
 
 		if (arguments.length == 1) {

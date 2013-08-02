@@ -45,7 +45,7 @@
 					else if (siteGroup.isLayoutSetPrototype() && curPortletId.equals(PortletKeys.LAYOUT_SET_PROTOTYPE)) {
 						selected = true;
 					}
-					else if (curPortletId.equals(PortletKeys.SITES_ADMIN)) {
+					else if (siteGroup.isSite() && curPortletId.equals(PortletKeys.SITES_ADMIN)) {
 						selected = true;
 					}
 				}

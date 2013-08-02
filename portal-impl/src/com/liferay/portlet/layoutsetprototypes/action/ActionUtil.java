@@ -16,8 +16,12 @@ package com.liferay.portlet.layoutsetprototypes.action;
 
 import com.liferay.portal.NoSuchLayoutSetPrototypeException;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.model.LayoutSetPrototype;
+import com.liferay.portal.service.LayoutSetPrototypeLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetPrototypeServiceUtil;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 
@@ -27,21 +31,36 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Eduardo Garcia
  */
 public class ActionUtil {
 
 	public static void getLayoutSetPrototype(HttpServletRequest request)
 		throws Exception {
 
-		long layoutSetPrototypeId = ParamUtil.getLong(
-			request, "layoutSetPrototypeId");
-
 		LayoutSetPrototype layoutSetPrototype = null;
 
 		try {
-			layoutSetPrototype =
-				LayoutSetPrototypeServiceUtil.getLayoutSetPrototype(
-					layoutSetPrototypeId);
+			long layoutSetPrototypeId = ParamUtil.getLong(
+				request, "layoutSetPrototypeId");
+
+			if (Validator.isNotNull(layoutSetPrototypeId)) {
+				layoutSetPrototype =
+					LayoutSetPrototypeServiceUtil.getLayoutSetPrototype(
+						layoutSetPrototypeId);
+			}
+			else {
+				ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+				Group group = themeDisplay.getScopeGroup();
+
+				if (group.isLayoutSetPrototype()) {
+					layoutSetPrototype =
+						LayoutSetPrototypeLocalServiceUtil.
+							getLayoutSetPrototype(group.getClassPK());
+				}
+			}
 		}
 		catch (NoSuchLayoutSetPrototypeException nslspe) {
 		}

@@ -29,7 +29,10 @@ import com.liferay.portal.service.LayoutSetPrototypeServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.struts.PortletAction;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PortletKeys;
+import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.sites.util.SitesUtil;
 
 import java.util.Locale;
@@ -38,6 +41,7 @@ import java.util.Map;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
+import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -62,9 +66,29 @@ public class EditLayoutSetPrototypeAction extends PortletAction {
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
+		String redirect = ParamUtil.getString(actionRequest, "redirect");
+
 		try {
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
-				updateLayoutSetPrototype(actionRequest);
+				LayoutSetPrototype layoutSetPrototype =
+					updateLayoutSetPrototype(actionRequest);
+
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)actionRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
+
+				ThemeDisplay siteThemeDisplay =
+					(ThemeDisplay)themeDisplay.clone();
+
+				siteThemeDisplay.setScopeGroupId(
+					layoutSetPrototype.getGroupId());
+
+				PortletURL siteAdministrationURL =
+					PortalUtil.getSiteAdministrationURL(
+						actionResponse, siteThemeDisplay,
+						PortletKeys.SITE_TEMPLATE_SETTINGS);
+
+				redirect = siteAdministrationURL.toString();
 			}
 			else if (cmd.equals(Constants.DELETE)) {
 				deleteLayoutSetPrototypes(actionRequest);
@@ -73,7 +97,7 @@ public class EditLayoutSetPrototypeAction extends PortletAction {
 				resetMergeFailCount(actionRequest);
 			}
 
-			sendRedirect(actionRequest, actionResponse);
+			sendRedirect(actionRequest, actionResponse, redirect);
 		}
 		catch (Exception e) {
 			if (e instanceof PrincipalException) {
@@ -85,8 +109,7 @@ public class EditLayoutSetPrototypeAction extends PortletAction {
 			else if (e instanceof RequiredLayoutSetPrototypeException) {
 				SessionErrors.add(actionRequest, e.getClass());
 
-				String redirect = PortalUtil.escapeRedirect(
-					ParamUtil.getString(actionRequest, "redirect"));
+				redirect = PortalUtil.escapeRedirect(redirect);
 
 				if (Validator.isNotNull(redirect)) {
 					actionResponse.sendRedirect(redirect);
@@ -140,6 +163,11 @@ public class EditLayoutSetPrototypeAction extends PortletAction {
 		}
 	}
 
+	@Override
+	protected boolean isCheckMethodOnProcessAction() {
+		return _CHECK_METHOD_ON_PROCESS_ACTION;
+	}
+
 	protected void resetMergeFailCount(ActionRequest actionRequest)
 		throws Exception {
 
@@ -153,7 +181,8 @@ public class EditLayoutSetPrototypeAction extends PortletAction {
 		SitesUtil.setMergeFailCount(layoutSetPrototype, 0);
 	}
 
-	protected void updateLayoutSetPrototype(ActionRequest actionRequest)
+	protected LayoutSetPrototype updateLayoutSetPrototype(
+			ActionRequest actionRequest)
 		throws Exception {
 
 		long layoutSetPrototypeId = ParamUtil.getLong(
@@ -201,9 +230,11 @@ public class EditLayoutSetPrototypeAction extends PortletAction {
 		settingsProperties.setProperty(
 			"customJspServletContextName", customJspServletContextName);
 
-		LayoutSetPrototypeServiceUtil.updateLayoutSetPrototype(
+		return LayoutSetPrototypeServiceUtil.updateLayoutSetPrototype(
 			layoutSetPrototype.getLayoutSetPrototypeId(),
 			settingsProperties.toString());
 	}
+
+	private static final boolean _CHECK_METHOD_ON_PROCESS_ACTION = false;
 
 }

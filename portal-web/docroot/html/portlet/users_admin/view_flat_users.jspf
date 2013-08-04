@@ -95,12 +95,12 @@ if (!ParamUtil.getBoolean(renderRequest, "advancedSearch")) {
 
 	if (role != null) {
 		PortalUtil.addPortletBreadcrumbEntry(request, role.getName(), null);
-		PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "view-users"), currentURL);
+		PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "all-users"), currentURL);
 	}
 
 	if (userGroup != null) {
 		PortalUtil.addPortletBreadcrumbEntry(request, userGroup.getName(), null);
-		PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "view-users"), currentURL);
+		PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "all-users"), currentURL);
 	}
 	%>
 
@@ -110,7 +110,7 @@ if (!ParamUtil.getBoolean(renderRequest, "advancedSearch")) {
 		if (userOrganization != null) {
 			UsersAdminUtil.addPortletBreadcrumbEntries(userOrganization, request, renderResponse);
 
-			PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "view-users"), currentURL);
+			PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "all-users"), currentURL);
 		}
 		%>
 
@@ -119,6 +119,35 @@ if (!ParamUtil.getBoolean(renderRequest, "advancedSearch")) {
 				<liferay-ui:breadcrumb showCurrentGroup="<%= false %>" showCurrentPortlet="<%= false %>" showGuestGroup="<%= false %>" showLayout="<%= false %>" showPortletBreadcrumb="<%= true %>" />
 			</div>
 		</c:if>
+
+	<aui:nav cssClass="nav-tabs">
+		<portlet:renderURL var="viewUsersTreeURL">
+			<portlet:param name="struts_action" value="/users_admin/view" />
+			<portlet:param name="toolbarItem" value="browse" />
+			<portlet:param name="usersListView" value="<%= UserConstants.LIST_VIEW_TREE %>" />
+			<portlet:param name="saveUsersListView" value="<%= Boolean.TRUE.toString() %>" />
+		</portlet:renderURL>
+
+		<aui:nav-item href="<%= viewUsersTreeURL %>" label="browse" selected='<%= toolbarItem.equals("browse") %>' />
+
+		<portlet:renderURL var="viewOrganizationsFlatURL">
+			<portlet:param name="struts_action" value="/users_admin/view" />
+			<portlet:param name="toolbarItem" value="view-all-organizations" />
+			<portlet:param name="usersListView" value="<%= UserConstants.LIST_VIEW_FLAT_ORGANIZATIONS %>" />
+			<portlet:param name="saveUsersListView" value="<%= Boolean.TRUE.toString() %>" />
+		</portlet:renderURL>
+
+		<aui:nav-item href="<%= viewOrganizationsFlatURL %>" label="all-organizations" selected='<%= toolbarItem.equals("view-all-organizations") %>' />
+
+		<portlet:renderURL var="viewUsersFlatURL">
+			<portlet:param name="struts_action" value="/users_admin/view" />
+			<portlet:param name="toolbarItem" value="view-all-users" />
+			<portlet:param name="usersListView" value="<%= UserConstants.LIST_VIEW_FLAT_USERS %>" />
+			<portlet:param name="saveUsersListView" value="<%= Boolean.TRUE.toString() %>" />
+		</portlet:renderURL>
+
+		<aui:nav-item href="<%= viewUsersFlatURL %>" label="all-users" selected='<%= toolbarItem.equals("view-all-users") %>' />
+	</aui:nav>
 
 		<aui:nav-bar>
 			<liferay-util:include page="/html/portlet/users_admin/toolbar.jsp" />

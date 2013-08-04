@@ -74,6 +74,10 @@ public class HtmlUtil {
 		return _html;
 	}
 
+	public static String replaceNewLine(String html) {
+		return getHtml().replaceNewLine(html);
+	}
+
 	public static String render(String html) {
 		return getHtml().render(html);
 	}

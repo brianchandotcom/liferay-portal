@@ -330,6 +330,15 @@ public class HtmlImpl implements Html {
 	}
 
 	@Override
+	public String replaceNewLine(String text) {
+		if (text == null) {
+			return null;
+		}
+
+		return text.replaceAll("\r?\n", "<br />");
+	}
+
+	@Override
 	public String replaceMsWordCharacters(String text) {
 		return StringUtil.replace(text, _MS_WORD_UNICODE, _MS_WORD_HTML);
 	}

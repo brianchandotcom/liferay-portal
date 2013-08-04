@@ -53,10 +53,13 @@ MBThread thread = message.getThread();
 			modelResourceDescription="<%= message.getSubject() %>"
 			resourcePrimKey="<%= String.valueOf(message.getMessageId()) %>"
 			var="permissionsURL"
+		    windowState="<%= LiferayWindowState.POP_UP.toString() %>"
 		/>
 
 		<liferay-ui:icon
+			linkCssClass="use-dialog"
 			image="permissions"
+			method="get"
 			url="<%= permissionsURL %>"
 		/>
 	</c:if>

@@ -48,10 +48,13 @@ String modelResource = (String)row.getParameter("modelResource");
 			modelResourceDescription="<%= HtmlUtil.escape(expandoColumn.getName()) %>"
 			resourcePrimKey="<%= String.valueOf(expandoColumn.getColumnId()) %>"
 			var="permissionsURL"
+		    windowState="<%= LiferayWindowState.POP_UP.toString() %>"
 		/>
 
 		<liferay-ui:icon
+			linkCssClass="use-dialog"
 			image="permissions"
+			method="get"
 			url="<%= permissionsURL %>"
 		/>
 	</c:if>

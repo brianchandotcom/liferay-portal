@@ -101,11 +101,14 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 									modelResourceDescription="<%= entry.getTitle() %>"
 									resourcePrimKey="<%= String.valueOf(entry.getEntryId()) %>"
 									var="permissionsEntryURL"
+								    windowState="<%= LiferayWindowState.POP_UP.toString() %>"
 								/>
 
 								<liferay-ui:icon
+									linkCssClass="use-dialog"
 									image="permissions"
 									label="<%= true %>"
+									method="get"
 									url="<%= permissionsEntryURL %>"
 								/>
 							</td>

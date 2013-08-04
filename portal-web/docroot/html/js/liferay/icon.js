@@ -10,6 +10,7 @@ AUI.add(
 				var srcHover = config.srcHover;
 				var src = config.src;
 				var forcePost = config.forcePost;
+				var useDialog = config.useDialog;
 
 				if (icon) {
 					if (srcHover) {
@@ -19,13 +20,16 @@ AUI.add(
 						icon.hover(instance._onMouseOver, instance._onMouseOut);
 					}
 
-					if (forcePost) {
-						icon.on('click', instance._onClick, instance);
+					if (useDialog) {
+						icon.on('click', instance._useDialog, instance);
+					}
+					else if (forcePost) {
+						icon.on('click', instance._forcePost, instance);
 					}
 				}
 			},
 
-			_onClick: function(event) {
+			_forcePost: function(event) {
 				var instance = this;
 
 				Liferay.Util.forcePost(event.currentTarget);
@@ -41,6 +45,22 @@ AUI.add(
 				if (img) {
 					img.attr('src', src);
 				}
+			},
+
+			_useDialog: function(event) {
+				var instance = this;
+
+				var currentTarget = event.currentTarget;
+
+				var config = currentTarget.getData();
+
+				if (!config.uri) {
+					config.uri = currentTarget.getData('href') || currentTarget.attr('href');
+				}
+
+				Liferay.Util.openWindow(config);
+
+				event.preventDefault();
 			}
 		};
 
@@ -48,6 +68,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-base']
+		requires: ['aui-base', 'liferay-util-window']
 	}
 );

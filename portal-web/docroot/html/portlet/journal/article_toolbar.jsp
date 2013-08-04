@@ -47,14 +47,26 @@ if ((article != null) && article.isDraft()) {
 			<portlet:param name="version" value="<%= String.valueOf(article.getVersion()) %>" />
 		</liferay-portlet:renderURL>
 
-		var previewArticleContentURL = '<%= previewArticleContentURL %>';
-
 		var form = A.one(document.<portlet:namespace />fm1);
+
+		var formChanged = false;
+
+		var hasUnsavedChanges = function() {
+			var unsavedChanges = formChanged;
+
+			if (!unsavedChanges && typeof CKEDITOR !== 'undefined') {
+				unsavedChanges = CKEDITOR.instances.<portlet:namespace />articleContent.checkDirty();
+			}
+
+			return unsavedChanges;
+		};
+
+		var previewArticleContentURL = '<%= previewArticleContentURL %>';
 
 		form.delegate(
 			'change',
 			function(event) {
-				previewArticleContentURL = null;
+				formChanged = true;
 			},
 			':input'
 		);
@@ -67,7 +79,7 @@ if ((article != null) && article.isDraft()) {
 					click: function(event) {
 						event.domEvent.preventDefault();
 
-						if (previewArticleContentURL && !(typeof CKEDITOR === 'undefined') && !CKEDITOR.instances.<portlet:namespace />articleContent.checkDirty()) {
+						if (!hasUnsavedChanges()) {
 							Liferay.fire(
 								'previewArticle',
 								{

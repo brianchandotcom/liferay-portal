@@ -1127,10 +1127,10 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 			recurrence = new TZSRecurrence(
 				recStartCal, duration, Recurrence.DAILY);
 
-			Calendar until = CalendarFactoryUtil.getCalendar(
-				TimeZoneUtil.getTimeZone(StringPool.UTC));
+			Calendar until = (Calendar)recStartCal.clone();
 
-			until.setTimeInMillis(until.getTimeInMillis() + diffMillis);
+			until.setTimeInMillis(
+				until.getTimeInMillis() + diffMillis - Time.DAY);
 
 			recurrence.setUntil(until);
 		}

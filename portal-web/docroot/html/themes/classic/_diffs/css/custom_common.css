@@ -127,6 +127,10 @@
 		margin-bottom: 30px;
 	}
 
+	.lfr-ddm-container .control-group {
+		margin-bottom: 15px;
+	}
+
 	.input-append {
 		padding-right: 12px;
 	}

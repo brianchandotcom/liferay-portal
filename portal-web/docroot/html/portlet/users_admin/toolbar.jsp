@@ -23,6 +23,7 @@ String usersListView = ParamUtil.get(request, "usersListView", UserConstants.LIS
 %>
 
 <aui:nav>
+
 	<%
 	boolean hasAddOrganizationPermission = PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_ORGANIZATION);
 	boolean hasAddUserPermission = PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_USER);

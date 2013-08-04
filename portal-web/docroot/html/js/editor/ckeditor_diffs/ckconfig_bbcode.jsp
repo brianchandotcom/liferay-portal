@@ -65,6 +65,20 @@ CKEDITOR.config.toolbar_bbcode = [
 	['Font', 'FontSize', '-', 'Format', '-', 'Undo', 'Redo', '-', 'Source']
 ];
 
+CKEDITOR.config.toolbar_phone = [
+	['Bold', 'Italic', 'Underline'],
+	['NumberedList', 'BulletedList'],
+	['Image', 'Link', 'Unlink']
+];
+
+CKEDITOR.config.toolbar_tablet = [
+	['Bold', 'Italic', 'Underline', 'Strike'],
+	['NumberedList', 'BulletedList'],
+	['Image', 'Link', 'Unlink'],
+	['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+	['Styles', 'FontSize']
+];
+
 CKEDITOR.config.bodyClass = 'html-editor <%= HtmlUtil.escapeJS(cssClasses) %>';
 
 CKEDITOR.config.contentsCss = '<%= HtmlUtil.escapeJS(cssPath) %>/main.css';

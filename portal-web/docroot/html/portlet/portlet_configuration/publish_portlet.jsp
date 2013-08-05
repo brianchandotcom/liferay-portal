@@ -86,6 +86,17 @@ portletURL.setParameter("tabs3", "current-and-previous");
 			refresh="<%= false %>"
 		>
 			<liferay-ui:section>
+
+				<%
+				int incompleteBackgroundTaskCount = BackgroundTaskLocalServiceUtil.getBackgroundTasksCount(themeDisplay.getScopeGroupId(), selPortlet.getPortletId(), PortletStagingBackgroundTaskExecutor.class.getName(), false);
+				%>
+
+				<div class="<%= incompleteBackgroundTaskCount == 0 ? "hide" : "in-progress" %>" id="<portlet:namespace />incompleteProcessMessage">
+					<liferay-util:include page="/html/portlet/layouts_admin/incomplete_processes_message.jsp">
+						<liferay-util:param name="incompleteBackgroundTaskCount" value="<%= String.valueOf(incompleteBackgroundTaskCount) %>" />
+					</liferay-util:include>
+				</div>
+
 				<portlet:actionURL var="publishPortletURL">
 					<portlet:param name="struts_action" value="/portlet_configuration/export_import" />
 				</portlet:actionURL>
@@ -482,6 +493,7 @@ portletURL.setParameter("tabs3", "current-and-previous");
 					deletePortletDataNode: '#<%= PortletDataHandlerKeys.DELETE_PORTLET_DATA %>Checkbox',
 					deletionsNode: '#<%= PortletDataHandlerKeys.DELETIONS %>Checkbox',
 					form: document.<portlet:namespace />fm1,
+					incompleteProcessMessageNode: '#<portlet:namespace />incompleteProcessMessage',
 					namespace: '<portlet:namespace />',
 					processesNode: '#publishProcesses',
 					processesResourceURL: '<%= publishProcessesURL.toString() %>',

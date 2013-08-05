@@ -315,8 +315,7 @@ public class AssetTagFinderImpl
 
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
-					sql, AssetTag.class.getName(), "AssetTag.tagId",
-					PortalUtil.getSiteGroupId(groupId));
+					sql, AssetTag.class.getName(), "AssetTag.tagId", groupId);
 			}
 
 			SQLQuery q = session.createSQLQuery(sql);
@@ -366,8 +365,7 @@ public class AssetTagFinderImpl
 
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
-					sql, AssetTag.class.getName(), "AssetTag.tagId",
-					PortalUtil.getSiteGroupId(groupId));
+					sql, AssetTag.class.getName(), "AssetTag.tagId", groupId);
 			}
 
 			SQLQuery q = session.createSQLQuery(sql);

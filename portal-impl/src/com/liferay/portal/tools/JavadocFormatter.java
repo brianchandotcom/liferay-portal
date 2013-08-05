@@ -799,27 +799,27 @@ public class JavadocFormatter {
 			return StringPool.BLANK;
 		}
 		else if (cdata.contains("<pre>") || cdata.contains("<table>")) {
-			int nextIndex = 0;
-			int startIndex = 0;
+			int cdataBeginIndex = 0;
+			int startTagIndex = 0;
 
 			while (!cdata.isEmpty()) {
-				int preIndex = cdata.indexOf("<pre>");
-				int tableIndex = cdata.indexOf("<table>");		
-				boolean bothPreformattedTagsExist = ((preIndex > -1) && (tableIndex > -1)) ? true : false;
-				boolean noPreformattedTagsExist = ((preIndex == -1) && (tableIndex == -1)) ? true : false;
-				boolean preExistsWithNoExistingTable = ((preIndex != -1) && (tableIndex == -1)) ? true : false;
-				boolean startsWithPreformattedTag = ((preIndex == 0) || (tableIndex == 0)) ? true : false;
-				boolean tableExistsWithNoExistingPre = ((preIndex == -1) && (tableIndex != -1)) ? true : false;
+				int preTagIndex = cdata.indexOf("<pre>");
+				int tableTagIndex = cdata.indexOf("<table>");		
+				boolean bothPreformattedTagsExist = ((preTagIndex > -1) && (tableTagIndex > -1)) ? true : false;
+				boolean noPreformattedTagsExist = ((preTagIndex == -1) && (tableTagIndex == -1)) ? true : false;
+				boolean preExistsWithNoExistingTable = ((preTagIndex != -1) && (tableTagIndex == -1)) ? true : false;
+				boolean startsWithPreformattedTag = ((preTagIndex == 0) || (tableTagIndex == 0)) ? true : false;
+				boolean tableExistsWithNoExistingPre = ((preTagIndex == -1) && (tableTagIndex != -1)) ? true : false;
 				String tagName = null;
 
 				if (bothPreformattedTagsExist) {
 
-					if (preIndex < tableIndex) {
-						startIndex = preIndex;
+					if (preTagIndex < tableTagIndex) {
+						startTagIndex = preTagIndex;
 						tagName = "pre";
 					}
 					else {
-						startIndex = tableIndex;
+						startTagIndex = tableTagIndex;
 						tagName = "table";
 					}
 				}
@@ -827,25 +827,25 @@ public class JavadocFormatter {
 				if (!startsWithPreformattedTag) {
 
 					if (noPreformattedTagsExist) {
-						startIndex = cdata.length();
+						startTagIndex = cdata.length();
 					}
 					else if (tableExistsWithNoExistingPre) {
-						startIndex = tableIndex;
+						startTagIndex = tableTagIndex;
 					}
 					else if (preExistsWithNoExistingTable){
-						startIndex = preIndex;
+						startTagIndex = preTagIndex;
 					}
 
-					String textToFormat = cdata.substring(0, startIndex);
+					String textToFormat = cdata.substring(0, startTagIndex);
 
 					sb.append( _formatCDATA(textToFormat));
 
-					nextIndex = startIndex;
+					cdataBeginIndex = startTagIndex;
 				}
 				else {
-					startIndex = 0;
+					startTagIndex = 0;
 
-					if (preIndex == 0) {
+					if (preTagIndex == 0) {
 						tagName = "pre";
 					}
 					else {
@@ -857,18 +857,18 @@ public class JavadocFormatter {
 
 					int startTagLength = startTag.length();
 					int endTagLength = endTag.length();
-					int endIndex = cdata.indexOf(endTag, startTagLength - 1);
+					int endTagIndex = cdata.indexOf(endTag, startTagLength - 1);
 
-					String entireElement = cdata.substring(startIndex, endIndex + endTagLength);
+					String entireElement = cdata.substring(startTagIndex, endTagIndex + endTagLength);
 
 					sb.append("\n");
 					sb.append(entireElement);
 					sb.append("\n");
 
-					nextIndex = endIndex + endTagLength;
+					cdataBeginIndex = endTagIndex + endTagLength;
 				}
 
-				cdata = cdata.substring(nextIndex);
+				cdata = cdata.substring(cdataBeginIndex);
 			}
 		}
 

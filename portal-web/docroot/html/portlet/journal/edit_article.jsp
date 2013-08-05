@@ -244,7 +244,7 @@ request.setAttribute("edit_article.jsp-toLanguageId", toLanguageId);
 					<%
 					boolean hasSavePermission = false;
 
-					if (article != null && !article.isNew()) {
+					if ((article != null) && !article.isNew()) {
 						hasSavePermission = JournalArticlePermission.contains(permissionChecker, article, ActionKeys.UPDATE);
 					}
 					else {

@@ -38,37 +38,50 @@
 	</c:if>
 
 	<c:if test="<%= dropdown %>">
-		<aui:script use="aui-base,event-outside">
-			A.one('#<%= id %>').on(
-				'click',
+		<aui:script use="aui-base,event-move,event-outside">
+			A.Event.defineOutside('touchend');
+
+			var container = A.one('#<%= id %>');
+
+			container.one('a').on(
+				'gesturemovestart',
 				function(event) {
 					var currentTarget = event.currentTarget;
 
-					currentTarget.toggleClass('open');
+					currentTarget.once(
+						'gesturemoveend',
+						function(event) {
+							var eventOutside = event._event.type + 'outside';
 
-					var menuOpen = currentTarget.hasClass('open');
+							container.toggleClass('open');
 
-					var handle = Liferay.Data['<%= id %>Handle'];
+							var menuOpen = container.hasClass('open');
 
-					if (menuOpen && !handle) {
-						handle = currentTarget.on(
-							'clickoutside',
-							function(event) {
-								Liferay.Data['<%= id %>Handle'] = null;
+							var handle = Liferay.Data['<%= id %>Handle'];
 
+							if (menuOpen && !handle) {
+								handle = currentTarget.on(
+									eventOutside,
+									function(event) {
+										if (!event.target.ancestor('#<%= id %>')) {
+											Liferay.Data['<%= id %>Handle'] = null;
+
+											handle.detach();
+
+											container.removeClass('open');
+										}
+									}
+								);
+							}
+							else if (handle) {
 								handle.detach();
 
-								currentTarget.removeClass('open');
+								handle = null;
 							}
-						);
-					}
-					else if (handle) {
-						handle.detach();
 
-						handle = null;
-					}
-
-					Liferay.Data['<%= id %>Handle'] = handle;
+							Liferay.Data['<%= id %>Handle'] = handle;
+						}
+					);
 				}
 			);
 		</aui:script>

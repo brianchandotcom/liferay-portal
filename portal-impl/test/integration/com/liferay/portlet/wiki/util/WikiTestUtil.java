@@ -126,40 +126,19 @@ public class WikiTestUtil {
 		return file;
 	}
 
-	public static WikiPage copyPage(
+	public static WikiPage copyPageAttachments(
 			WikiPage page, boolean approved, ServiceContext serviceContext)
 		throws Exception {
 
-		boolean workflowEnabled = WorkflowThreadLocal.isEnabled();
+		WikiPage copyPage = addPage(
+			page.getUserId(), page.getNodeId(), ServiceTestUtil.randomString(),
+			page.getContent(), approved, serviceContext);
 
-		try {
-			WorkflowThreadLocal.setEnabled(true);
+		WikiPageLocalServiceUtil.copyPageAttachments(
+			page.getUserId(), page.getNodeId(), page.getTitle(),
+			copyPage.getNodeId(), copyPage.getTitle());
 
-			serviceContext = (ServiceContext)serviceContext.clone();
-
-			serviceContext.setWorkflowAction(
-				WorkflowConstants.ACTION_SAVE_DRAFT);
-
-			WikiPage copy = WikiPageLocalServiceUtil.addPage(
-				page.getUserId(), page.getNodeId(),
-				ServiceTestUtil.randomString(), page.getContent(), "Summary",
-				true, serviceContext);
-
-			if (approved) {
-				copy = WikiPageLocalServiceUtil.updateStatus(
-					page.getUserId(), copy.getResourcePrimKey(),
-					WorkflowConstants.STATUS_APPROVED, serviceContext);
-			}
-
-			WikiPageLocalServiceUtil.copyPageAttachments(
-				page.getUserId(), page.getNodeId(), page.getTitle(),
-				copy.getTitle());
-
-			return copy;
-		}
-		finally {
-			WorkflowThreadLocal.setEnabled(workflowEnabled);
-		}
+		return copyPage;
 	}
 
 	public static WikiPage updatePage(

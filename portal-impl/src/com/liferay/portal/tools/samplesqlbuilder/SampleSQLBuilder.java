@@ -46,7 +46,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -259,6 +258,19 @@ public class SampleSQLBuilder {
 		};
 	}
 
+	protected void doMergeSQL(File sqlFile, FileChannel outputFileChannel)
+		throws IOException {
+
+		FileInputStream fileInputStream = new FileInputStream(sqlFile);
+
+		FileChannel inputFileChannel = fileInputStream.getChannel();
+
+		inputFileChannel.transferTo(
+			0, inputFileChannel.size(), outputFileChannel);
+
+		inputFileChannel.close();
+	}
+
 	protected CharPipe generateSQL() {
 		final CharPipe charPipe = new CharPipe(_PIPE_BUFFER_SIZE);
 
@@ -320,62 +332,48 @@ public class SampleSQLBuilder {
 	}
 
 	protected void mergeSQL() throws IOException {
-		File outputFile = new File(_outputDir + "/sample-" + _dbType + ".sql");
+		if (!_outputMerge) {
+			File outputFolder = new File(_outputDir, "output");
 
-		FileOutputStream fileOutputStream = null;
-		FileChannel fileChannel = null;
+			if (!_tempDir.renameTo(outputFolder)) {
 
-		if (_outputMerge) {
-			fileOutputStream = new FileOutputStream(outputFile);
-			fileChannel = fileOutputStream.getChannel();
-		}
+				// This will only happen when temp and output folders are on
+				// different file systems
 
-		Set<Map.Entry<String, StringBundler>> insertSQLs =
-			_insertSQLs.entrySet();
-
-		for (Map.Entry<String, StringBundler> entry : insertSQLs) {
-			String tableName = entry.getKey();
-
-			if (_outputMerge) {
-				File insertSQLFile = getInsertSQLFile(tableName);
-
-				FileInputStream insertSQLFileInputStream = new FileInputStream(
-					insertSQLFile);
-
-				FileChannel insertSQLFileChannel =
-					insertSQLFileInputStream.getChannel();
-
-				insertSQLFileChannel.transferTo(
-					0, insertSQLFileChannel.size(), fileChannel);
-
-				insertSQLFileChannel.close();
-
-				insertSQLFile.delete();
-			}
-		}
-
-		if (_outputMerge) {
-			Writer writer = new OutputStreamWriter(fileOutputStream);
-
-			for (String sql : _otherSQLs) {
-				sql = _db.buildSQL(sql);
-
-				writer.write(sql);
-				writer.write(StringPool.NEW_LINE);
+				FileUtil.copyDirectory(_tempDir, outputFolder);
 			}
 
-			writer.close();
+			return;
 		}
 
-		File outputFolder = new File(_outputDir, "output");
+		File outputFile = new File(_outputDir, "sample-" + _dbType + ".sql");
 
-		if (!_outputMerge && !_tempDir.renameTo(outputFolder)) {
+		FileOutputStream fileOutputStream = new FileOutputStream(outputFile);
+		FileChannel fileChannel = fileOutputStream.getChannel();
 
-			// This will only happen when temp and output folders are on
-			// different file systems
+		File lastSQLFile = null;
 
-			FileUtil.copyDirectory(_tempDir, outputFolder);
+		for (File tableFile : _tempDir.listFiles()) {
+			String fileName = tableFile.getName();
+
+			if (fileName.equals(_endSQLFileName)) {
+				lastSQLFile = tableFile;
+
+				continue;
+			}
+
+			doMergeSQL(tableFile, fileChannel);
+
+			tableFile.delete();
 		}
+
+		if (lastSQLFile != null) {
+			doMergeSQL(lastSQLFile, fileChannel);
+
+			lastSQLFile.delete();
+		}
+
+		fileChannel.close();
 	}
 
 	protected void writeToInsertSQLFile(String tableName, String sql)

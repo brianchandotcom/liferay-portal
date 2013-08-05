@@ -202,8 +202,14 @@ public class SassToCssBuilder {
 
 	private String _normalizeFileName(String dirName, String fileName) {
 		return StringUtil.replace(
-			dirName + StringPool.SLASH + fileName, StringPool.BACK_SLASH,
-			StringPool.SLASH);
+			dirName + StringPool.SLASH + fileName,
+			new String[] {
+				StringPool.BACK_SLASH, StringPool.DOUBLE_SLASH
+			},
+			new String[] {
+				StringPool.SLASH, StringPool.SLASH
+			}
+		);
 	}
 
 	private void _parseSassDirectory(String docrootDirName, String dirName)
@@ -242,7 +248,8 @@ public class SassToCssBuilder {
 				long end = System.currentTimeMillis();
 
 				System.out.println(
-					"Parsed " + fileName + " in " + (end - start) + " ms");
+					"Parsed " + docrootDirName + fileName + " in " +
+						(end - start) + " ms");
 			}
 			catch (Exception e) {
 				System.out.println("Unable to parse " + fileName);

@@ -242,7 +242,7 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 		content = StringUtil.replace(
 			content,
 			new String[] {
-				"[$RELATIVE_1$]", "[$RELATIVE_2$]", "[$RELATIVE_3$]",
+				"[$RELATIVE_1$]", "[$RELATIVE_2$]", "[$RELATIVE_3$]"
 			},
 			new String[] {
 				"url('" + baseURL, "url(\"" + baseURL, "url(" + baseURL
@@ -598,7 +598,7 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 
 	private static Log _log = LogFactoryUtil.getLog(AggregateFilter.class);
 
-	private static String _BASE_URL = "@portal_ctx@";
+	private static String _BASE_URL = "@base_url@";
 
 	private static Pattern _pattern = Pattern.compile(
 		"^(\\.ie|\\.js\\.ie)([^}]*)}", Pattern.MULTILINE);

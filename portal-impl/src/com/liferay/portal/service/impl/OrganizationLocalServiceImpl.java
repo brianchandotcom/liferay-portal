@@ -604,11 +604,7 @@ public class OrganizationLocalServiceImpl
 
 		Collections.sort(organizations, obc);
 
-		if ((start != QueryUtil.ALL_POS) || (end != QueryUtil.ALL_POS)) {
-			organizations = ListUtil.subList(organizations, start, end);
-		}
-
-		return organizations;
+		return ListUtil.subList(organizations, start, end);
 	}
 
 	/**

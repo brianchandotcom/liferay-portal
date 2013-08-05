@@ -49,6 +49,7 @@ portletURL.setParameter("ruleGroupInstanceId", String.valueOf(ruleGroupInstanceI
 		emptyResultsMessage="no-actions-are-configured-for-this-device-family"
 		headerNames="name,description,type"
 		iteratorURL="<%= portletURL %>"
+		rowChecker="<%= new RowChecker(renderResponse) %>"
 		total="<%= MDRActionLocalServiceUtil.getActionsCount(ruleGroupInstanceId) %>"
 	>
 		<liferay-ui:search-container-results

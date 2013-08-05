@@ -228,10 +228,12 @@ public class ResultRow {
 	}
 
 	public void addStatus(int status) {
-		addStatus(_searchEntries.size(), status, null);
+		addStatus(_searchEntries.size(), status, 0, null, null);
 	}
 
-	public void addStatus(int index, int status, String href) {
+	public void addStatus(
+		int index, int status, long statusByUserId, Date statusDate,
+		String href) {
 
 		StatusSearchEntry statusSearchEntry = new StatusSearchEntry();
 
@@ -239,6 +241,8 @@ public class ResultRow {
 		statusSearchEntry.setColspan(SearchEntry.DEFAULT_COLSPAN);
 		statusSearchEntry.setHref(href);
 		statusSearchEntry.setStatus(status);
+		statusSearchEntry.setStatusDate(statusDate);
+		statusSearchEntry.setStatusByUserId(statusByUserId);
 		statusSearchEntry.setValign(SearchEntry.DEFAULT_VALIGN);
 
 		_searchEntries.add(index, statusSearchEntry);
@@ -262,18 +266,40 @@ public class ResultRow {
 		_searchEntries.add(index, statusSearchEntry);
 	}
 
+	public void addStatus(int status, long statusByUserId, Date statusDate) {
+		addStatus(
+			_searchEntries.size(), status, statusByUserId, statusDate, null);
+	}
+
+	public void addStatus(
+		int status, long statusByUserId, Date statusDate,
+		PortletURL portletURL) {
+
+		addStatus(
+			_searchEntries.size(), status, statusByUserId, statusDate,
+			portletURL.toString());
+	}
+
+	public void addStatus(
+		int status, long statusByUserId, Date statusDate, String href) {
+
+		addStatus(
+			_searchEntries.size(), status, statusByUserId, statusDate, href);
+	}
+
 	public void addStatus(int status, PortletURL portletURL) {
 		if (portletURL != null) {
-			addStatus(_searchEntries.size(), status, portletURL.toString());
+			addStatus(
+				_searchEntries.size(), status, 0, null, portletURL.toString());
 
 		}
 		else {
-			addStatus(_searchEntries.size(), status, null);
+			addStatus(_searchEntries.size(), status, 0, null, null);
 		}
 	}
 
 	public void addStatus(int status, String href) {
-		addStatus(_searchEntries.size(), status, null);
+		addStatus(_searchEntries.size(), status, 0, null, href);
 	}
 
 	public void addText(int index, String name) {

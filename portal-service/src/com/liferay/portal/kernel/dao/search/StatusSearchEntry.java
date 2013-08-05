@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.servlet.DirectRequestDispatcherFactoryUtil;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
 
+import java.util.Date;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -54,6 +56,14 @@ public class StatusSearchEntry extends TextSearchEntry {
 		return _status;
 	}
 
+	public long getStatusByUserId() {
+		return _statusByUserId;
+	}
+
+	public Date getStatusDate() {
+		return _statusDate;
+	}
+
 	@Override
 	public void print(PageContext pageContext) throws Exception {
 		if (_request == null) {
@@ -61,8 +71,13 @@ public class StatusSearchEntry extends TextSearchEntry {
 		}
 
 		_request.setAttribute(
-			"liferay-ui:search-container-column-status:status",
-			String.valueOf(_status));
+			"liferay-ui:search-container-column-status:status", _status);
+		_request.setAttribute(
+			"liferay-ui:search-container-column-status:statusByUserId",
+			_statusByUserId);
+		_request.setAttribute(
+			"liferay-ui:search-container-column-status:statusDate",
+			_statusDate);
 
 		if (_servletContext != null) {
 			RequestDispatcher requestDispatcher =
@@ -93,6 +108,14 @@ public class StatusSearchEntry extends TextSearchEntry {
 		_status = status;
 	}
 
+	public void setStatusByUserId(long statusByUserId) {
+		_statusByUserId = statusByUserId;
+	}
+
+	public void setStatusDate(Date statusDate) {
+		_statusDate = statusDate;
+	}
+
 	private static final String _PAGE =
 		"/html/taglib/ui/search_container/status.jsp";
 
@@ -100,5 +123,7 @@ public class StatusSearchEntry extends TextSearchEntry {
 	private HttpServletResponse _response;
 	private ServletContext _servletContext;
 	private int _status;
+	private long _statusByUserId;
+	private Date _statusDate;
 
 }

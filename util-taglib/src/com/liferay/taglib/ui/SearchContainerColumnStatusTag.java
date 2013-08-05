@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.search.StatusSearchEntry;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -72,6 +73,8 @@ public class SearchContainerColumnStatusTag<R>
 				(HttpServletResponse)pageContext.getResponse());
 			statusSearchEntry.setServletContext(
 				pageContext.getServletContext());
+			statusSearchEntry.setStatusByUserId(_statusByUserId);
+			statusSearchEntry.setStatusDate(_statusDate);
 			statusSearchEntry.setStatus(_value);
 			statusSearchEntry.setValign(getValign());
 
@@ -81,6 +84,8 @@ public class SearchContainerColumnStatusTag<R>
 		}
 		finally {
 			index = -1;
+			_statusByUserId = -1;
+			_statusDate = null;
 			_value = -1;
 
 			if (!ServerDetector.isResin()) {
@@ -158,6 +163,14 @@ public class SearchContainerColumnStatusTag<R>
 		return _property;
 	}
 
+	public long getStatusByUserId() {
+		return _statusByUserId;
+	}
+
+	public Date getStatusDate() {
+		return _statusDate;
+	}
+
 	public int getValue() {
 		return _value;
 	}
@@ -182,6 +195,14 @@ public class SearchContainerColumnStatusTag<R>
 		_property = property;
 	}
 
+	public void setStatusByUserId(long statusByUserId) {
+		_statusByUserId = statusByUserId;
+	}
+
+	public void setStatusDate(Date statusDate) {
+		_statusDate = statusDate;
+	}
+
 	public void setValue(int value) {
 		_value = value;
 	}
@@ -190,6 +211,8 @@ public class SearchContainerColumnStatusTag<R>
 	private boolean _orderable;
 	private String _orderableProperty;
 	private String _property;
+	private long _statusByUserId;
+	private Date _statusDate;
 	private int _value;
 
 }

@@ -208,15 +208,15 @@
 	</target>
 
 	<target name="build-dist-tcat">
-		<property name="tcat.dir" value="${app.server.parent.dir}/tcat-6.4.5" />
-		<property name="tcat.zip.name" value="TcatServer-6.4.5.zip" />
+		<property name="tcat.dir" value="${app.server.parent.dir}/tcat-7.0.2" />
+		<property name="tcat.zip.name" value="TcatServer-7.0.2.zip" />
 		<property name="tcat.zip.url" value="http://files.liferay.com/public/bundles/trunk/${tcat.zip.name}" />
 
 		<echo file="app.server.${user.name}.properties">
 			app.server.type=tomcat
 
-			app.server.tomcat.version=6.0.35
-			app.server.tomcat.zip.url=http://archive.apache.org/dist/tomcat/tomcat-6/v6.0.35/bin/apache-tomcat-6.0.35.zip
+			app.server.tomcat.version=7.0.39
+			app.server.tomcat.zip.url=http://archive.apache.org/dist/tomcat/tomcat-7/v7.0.39/bin/apache-tomcat-7.0.39.zip
 		</echo>
 
 		<antcall target="build-dist-tomcat" inheritAll="false">
@@ -285,6 +285,13 @@
 			/>
 			<flattenmapper />
 		</unzip>
+
+		<replace file="${tcat.dir}/admin/conf/server.xml">
+			<replacefilter token="8005" value="8105"/>
+			<replacefilter token="8009" value="8109"/>
+			<replacefilter token="8080" value="8180"/>
+			<replacefilter token="8443" value="81443"/>
+		</replace>
 
 		<mkdir dir="${tcat.dir}/admin/tcat_init/profiles" />
 

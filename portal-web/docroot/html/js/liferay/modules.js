@@ -327,6 +327,9 @@ window.YUI_config = {
 				'liferay-layout': {
 					path: 'layout.js'
 				},
+				'liferay-language': {
+					path: 'language.js'
+				},
 				'liferay-layout-column': {
 					path: 'layout_column.js',
 					requires: [
@@ -527,7 +530,7 @@ window.YUI_config = {
 					path: 'session.js',
 					requires: [
 						'aui-io-request',
-						'aui-task-manager',
+						'aui-timer',
 						'cookie',
 						'liferay-notice'
 					]
@@ -568,7 +571,7 @@ window.YUI_config = {
 					path: 'token_list.js',
 					requires: [
 						'aui-base',
-						'aui-template'
+						'aui-template-deprecated'
 					]
 				},
 				'liferay-translation-manager': {

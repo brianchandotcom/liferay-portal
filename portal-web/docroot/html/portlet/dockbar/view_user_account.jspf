@@ -152,6 +152,8 @@ if (PropsValues.DOCKBAR_ADMINISTRATIVE_LINKS_SHOW_IN_POP_UP) {
 		<%
 		PortletURL signInURL = new PortletURLImpl(request, PortletKeys.LOGIN, plid, PortletRequest.RENDER_PHASE);
 
+		signInURL.setParameter("redirect", themeDisplay.getURLSignIn());
+
 		signInURL.setPortletMode(PortletMode.VIEW);
 		signInURL.setWindowState(LiferayWindowState.MAXIMIZED);
 		%>

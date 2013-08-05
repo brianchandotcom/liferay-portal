@@ -152,7 +152,7 @@
 
 				new A.FormValidator(
 					{
-						boundingBox: '.modal-body #<portlet:namespace />fm',
+						boundingBox: '.modal #<portlet:namespace />fm',
 						rules: rules
 					}
 				);

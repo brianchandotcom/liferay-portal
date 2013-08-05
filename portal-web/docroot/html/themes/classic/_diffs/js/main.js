@@ -2,18 +2,16 @@ AUI().ready(
 	'aui-io-request', 'aui-modal', 'aui-parse-content', 'liferay-hudcrumbs', 'liferay-navigation-interaction', 'liferay-portlet-url',
 	function(A) {
 		var navigation = A.one('#navigation');
+		var signIn = A.one('li.sign-in a');
+		var siteBreadcrumbs = A.one('#breadcrumbs');
 
 		if (navigation) {
 			navigation.plug(Liferay.NavigationInteraction);
 		}
 
-		var siteBreadcrumbs = A.one('#breadcrumbs');
-
 		if (siteBreadcrumbs) {
 			siteBreadcrumbs.plug(A.Hudcrumbs);
 		}
-
-		var signIn = A.one('li.sign-in a');
 
 		if (signIn) {
 			signIn.on(

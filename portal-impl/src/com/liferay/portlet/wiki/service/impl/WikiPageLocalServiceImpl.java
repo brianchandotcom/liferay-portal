@@ -468,10 +468,11 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 	@Override
 	public void copyPageAttachments(
-			long userId, long nodeId, String templateTitle, String title)
+			long userId, long templateNodeId, String templateTitle, long nodeId,
+			String title)
 		throws PortalException, SystemException {
 
-		WikiPage templatePage = getPage(nodeId, templateTitle);
+		WikiPage templatePage = getPage(templateNodeId, templateTitle);
 
 		List<FileEntry> templateFileEntries =
 			templatePage.getAttachmentsFileEntries();

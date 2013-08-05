@@ -414,11 +414,14 @@ public class EditPageAction extends PortletAction {
 				redirectTitle, serviceContext);
 
 			if (copyPageAttachments) {
+				long templateNodeId = ParamUtil.getLong(
+					actionRequest, "templateNodeId");
 				String templateTitle = ParamUtil.getString(
 					actionRequest, "templateTitle");
 
 				WikiPageLocalServiceUtil.copyPageAttachments(
-					page.getUserId(), nodeId, templateTitle, page.getTitle());
+					page.getUserId(), templateNodeId, templateTitle,
+					page.getNodeId(), page.getTitle());
 			}
 		}
 

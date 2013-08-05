@@ -199,6 +199,7 @@ if (Validator.isNull(redirect)) {
 	</c:if>
 
 	<c:if test="<%= templatePage != null %>">
+		<aui:input name="templateNodeId" type="hidden" value="<%= String.valueOf(templateNodeId) %>" />
 		<aui:input name="templateTitle" type="hidden" value="<%= templateTitle %>" />
 	</c:if>
 

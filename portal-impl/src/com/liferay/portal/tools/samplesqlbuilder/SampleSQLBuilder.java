@@ -46,7 +46,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Brian Wing Shun Chan
@@ -98,12 +97,6 @@ public class SampleSQLBuilder {
 
 		_dataFactory = new DataFactory(properties);
 
-		_db = DBFactoryUtil.getDB(_dbType);
-
-		if (_db instanceof MySQLDB) {
-			_db = new SampleMySQLDB();
-		}
-
 		// Clean up previous output
 
 		FileUtil.delete(_outputDir + "/sample-" + _dbType + ".sql");
@@ -152,19 +145,23 @@ public class SampleSQLBuilder {
 			sb.toString());
 	}
 
-	protected void compressInsertSQL(String insertSQL) throws IOException {
+	protected void compressInsertSQL(
+			DB db, String insertSQL, Map<String, StringBundler> insertSQLs,
+			Map<String, Writer> insertSQLWriters)
+		throws IOException {
+
 		String tableName = insertSQL.substring(0, insertSQL.indexOf(' '));
 
 		int pos = insertSQL.indexOf(" values ") + 8;
 
 		String values = insertSQL.substring(pos, insertSQL.length() - 1);
 
-		StringBundler sb = _insertSQLs.get(tableName);
+		StringBundler sb = insertSQLs.get(tableName);
 
 		if ((sb == null) || (sb.index() == 0)) {
 			sb = new StringBundler();
 
-			_insertSQLs.put(tableName, sb);
+			insertSQLs.put(tableName, sb);
 
 			sb.append("insert into ");
 			sb.append(insertSQL.substring(0, pos));
@@ -179,15 +176,26 @@ public class SampleSQLBuilder {
 		if (sb.index() >= _optimizeBufferSize) {
 			sb.append(";\n");
 
-			String sql = _db.buildSQL(sb.toString());
+			String sql = db.buildSQL(sb.toString());
 
 			sb.setIndex(0);
 
-			writeToInsertSQLFile(tableName, sql);
+			writeToInsertSQLFile(insertSQLWriters, tableName, sql);
 		}
 	}
 
 	protected void compressSQL(Reader reader) throws IOException {
+		DB db = DBFactoryUtil.getDB(_dbType);
+
+		if (db instanceof MySQLDB) {
+			db = new SampleMySQLDB();
+		}
+
+		Map<String, StringBundler> insertSQLs =
+			new HashMap<String, StringBundler>();
+		Map<String, Writer> insertSQLWriters = new HashMap<String, Writer>();
+		List<String> otherSQLs = new ArrayList<String>();
+
 		UnsyncBufferedReader unsyncBufferedReader = new UnsyncBufferedReader(
 			reader);
 
@@ -198,25 +206,26 @@ public class SampleSQLBuilder {
 
 			if (s.length() > 0) {
 				if (s.startsWith("insert into ")) {
-					compressInsertSQL(s.substring(12));
+					compressInsertSQL(
+						db, s.substring(12), insertSQLs, insertSQLWriters);
 				}
-				else if (s.length() > 0) {
-					_otherSQLs.add(s);
+				else {
+					otherSQLs.add(s);
 				}
 			}
 		}
 
 		unsyncBufferedReader.close();
 
-		for (Map.Entry<String, StringBundler> entry : _insertSQLs.entrySet()) {
+		for (Map.Entry<String, StringBundler> entry : insertSQLs.entrySet()) {
 			String tableName = entry.getKey();
 			StringBundler sb = entry.getValue();
 
-			String sql = _db.buildSQL(sb.toString());
+			String sql = db.buildSQL(sb.toString());
 
-			writeToInsertSQLFile(tableName, sql);
+			writeToInsertSQLFile(insertSQLWriters, tableName, sql);
 
-			Writer insertSQLWriter = _insertSQLWriters.remove(tableName);
+			Writer insertSQLWriter = insertSQLWriters.remove(tableName);
 
 			insertSQLWriter.write(";\n");
 
@@ -227,8 +236,8 @@ public class SampleSQLBuilder {
 
 		Writer endSQLFileWriter = new FileWriter(endSQLFile);
 
-		for (String sql : _otherSQLs) {
-			sql = _db.buildSQL(sql);
+		for (String sql : otherSQLs) {
+			sql = db.buildSQL(sql);
 
 			endSQLFileWriter.write(sql);
 			endSQLFileWriter.write(StringPool.NEW_LINE);
@@ -327,10 +336,6 @@ public class SampleSQLBuilder {
 		return context;
 	}
 
-	protected File getInsertSQLFile(String tableName) {
-		return new File(_tempDir, tableName + ".sql");
-	}
-
 	protected void mergeSQL() throws IOException {
 		if (!_outputMerge) {
 			File outputFolder = new File(_outputDir, "output");
@@ -376,17 +381,18 @@ public class SampleSQLBuilder {
 		fileChannel.close();
 	}
 
-	protected void writeToInsertSQLFile(String tableName, String sql)
+	protected void writeToInsertSQLFile(
+			Map<String, Writer> writers, String tableName, String sql)
 		throws IOException {
 
-		Writer writer = _insertSQLWriters.get(tableName);
+		Writer writer = writers.get(tableName);
 
 		if (writer == null) {
-			File file = getInsertSQLFile(tableName);
+			File file = new File(_tempDir, tableName + ".sql");
 
 			writer = createFileWriter(file);
 
-			_insertSQLWriters.put(tableName, writer);
+			writers.put(tableName, writer);
 		}
 
 		writer.write(sql);
@@ -405,15 +411,9 @@ public class SampleSQLBuilder {
 	private static final int _WRITER_BUFFER_SIZE = 16 * 1024;
 
 	private DataFactory _dataFactory;
-	private DB _db;
 	private String _dbType;
 	private String _endSQLFileName;
-	private Map<String, StringBundler> _insertSQLs =
-		new ConcurrentHashMap<String, StringBundler>();
-	private Map<String, Writer> _insertSQLWriters =
-		new ConcurrentHashMap<String, Writer>();
 	private int _optimizeBufferSize;
-	private List<String> _otherSQLs = new ArrayList<String>();
 	private String _outputDir;
 	private boolean _outputMerge;
 	private File _tempDir;

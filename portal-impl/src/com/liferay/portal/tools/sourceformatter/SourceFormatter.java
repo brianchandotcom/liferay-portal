@@ -116,6 +116,30 @@ public class SourceFormatter {
 		}
 	}
 
+	public String[] format(String fileName) throws Exception {
+		SourceProcessor sourceProcessor = null;
+
+		if (fileName.endsWith(".testjava")) {
+			sourceProcessor = JavaSourceProcessor.class.newInstance();
+		}
+
+		if (sourceProcessor == null) {
+			return null;
+		}
+
+		String newContent = sourceProcessor.format(
+			fileName, _useProperties, _throwException, _autoFix);
+
+		List<String> errorMessages = sourceProcessor.getErrorMessages();
+
+		if (errorMessages.isEmpty()) {
+			return new String[] {newContent, null};
+		}
+		else {
+			return new String[] {newContent, errorMessages.get(0)};
+		}
+	}
+
 	private static boolean _autoFix;
 	private static List<String> _errorMessages = new UniqueList<String>();
 	private static boolean _throwException;

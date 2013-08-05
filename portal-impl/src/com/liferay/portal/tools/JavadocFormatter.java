@@ -795,7 +795,7 @@ public class JavadocFormatter {
 	private String _getCDATA(String cdata) {
 		StringBundler sb = new StringBundler();
 
-		if (cdata == null) {
+		if ((cdata == null) || cdata.isEmpty()) {
 			return StringPool.BLANK;
 		}
 		else if (cdata.contains("<pre>") || cdata.contains("<table>")) {

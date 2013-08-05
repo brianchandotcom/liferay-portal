@@ -53,7 +53,7 @@ String emailBodyParam = emailParam + "Body_" + currentLanguageId;
 
 	<liferay-util:buffer var="selectStyle">
 		<c:choose>
-			<c:when test="<%= rootPortletId.equals(PortletKeys.RELATED_ASSETS) %>">
+			<c:when test="<%= rootPortletId.equals(PortletKeys.HIGHEST_RATED_ASSETS) || rootPortletId.equals(PortletKeys.MOST_VIEWED_ASSETS) || rootPortletId.equals(PortletKeys.RELATED_ASSETS) %>">
 				<aui:input name="preferences--selectionStyle--" type="hidden" value="dynamic" />
 			</c:when>
 			<c:otherwise>

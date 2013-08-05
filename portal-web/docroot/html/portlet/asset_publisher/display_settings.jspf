@@ -15,7 +15,9 @@
 --%>
 
 <aui:fieldset cssClass="general-display-settings">
-	<aui:input helpMessage="show-add-content-button-help" name="preferences--showAddContentButton--" type="checkbox" value="<%= showAddContentButton %>" />
+	<c:if test="<%= !rootPortletId.equals(PortletKeys.HIGHEST_RATED_ASSETS) && !rootPortletId.equals(PortletKeys.MOST_VIEWED_ASSETS) %>">
+		<aui:input helpMessage="show-add-content-button-help" name="preferences--showAddContentButton--" type="checkbox" value="<%= showAddContentButton %>" />
+	</c:if>
 
 	<div class="display-template">
 

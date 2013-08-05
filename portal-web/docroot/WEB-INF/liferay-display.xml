@@ -22,6 +22,8 @@
 		<portlet id="141" />
 		<portlet id="148" />
 		<portlet id="175" />
+		<portlet id="193" />
+		<portlet id="194" />
 	</category>
 	<category name="category.collaboration">
 		<portlet id="19" />

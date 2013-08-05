@@ -419,9 +419,9 @@ public class EditPageAction extends PortletAction {
 				String templateTitle = ParamUtil.getString(
 					actionRequest, "templateTitle");
 
-				WikiPageLocalServiceUtil.copyPageAttachments(
-					page.getUserId(), templateNodeId, templateTitle,
-					page.getNodeId(), page.getTitle());
+				WikiPageServiceUtil.copyPageAttachments(
+					templateNodeId, templateTitle, page.getNodeId(),
+					page.getTitle());
 			}
 		}
 

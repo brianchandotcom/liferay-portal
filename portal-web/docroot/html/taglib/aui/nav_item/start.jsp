@@ -38,22 +38,20 @@
 	</c:if>
 
 	<c:if test="<%= dropdown %>">
-		<aui:script use="aui-base,event-outside,event-move">
-			var EVENT_CLICK = 'gesturemovestart';
-			var EVENT_MOUSEUP = 'gesturemoveend';
-
+		<aui:script use="aui-base,event-move,event-outside">
 			A.Event.defineOutside('touchend');
 
-			A.one('#<%= id %> a').on(
-				EVENT_CLICK,
+			var container = A.one('#<%= id %>');
+
+			container.one('a').on(
+				'gesturemovestart',
 				function(event) {
 					var currentTarget = event.currentTarget;
-					var container = currentTarget.ancestor('li#<%= id %>');
 
 					currentTarget.once(
-						EVENT_MOUSEUP, 
+						'gesturemoveend',
 						function(event) {
-							var EVENT_CLICKOUTSIDE = event._event.type + 'outside';
+							var eventOutside = event._event.type + 'outside';
 
 							container.toggleClass('open');
 
@@ -63,7 +61,7 @@
 
 							if (menuOpen && !handle) {
 								handle = currentTarget.on(
-									EVENT_CLICKOUTSIDE,
+									eventOutside,
 									function(event) {
 										if (!event.target.ancestor('#<%= id %>')) {
 											Liferay.Data['<%= id %>Handle'] = null;

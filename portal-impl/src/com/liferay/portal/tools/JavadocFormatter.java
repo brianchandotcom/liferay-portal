@@ -774,6 +774,42 @@ public class JavadocFormatter {
 			fileName, originalContent, javadocLessContent, document);
 	}
 
+	private String _formatCDATA(String cdata) {
+		cdata = cdata.replaceAll(
+				"(?s)\\s*<(p|[ou]l)>\\s*(.*?)\\s*</\\1>\\s*",
+				"\n\n<$1>\n$2\n</$1>\n\n");
+			cdata = cdata.replaceAll(
+				"(?s)\\s*<li>\\s*(.*?)\\s*</li>\\s*", "\n<li>\n$1\n</li>\n");
+			cdata = StringUtil.replace(cdata, "</li>\n\n<li>", "</li>\n<li>");
+			cdata = cdata.replaceAll("\n\\s+\n", "\n\n");
+			cdata.replaceAll(" +", " ");
+
+			// Trim whitespace inside paragraph tags or in the first paragraph
+
+			Pattern pattern = Pattern.compile(
+				"(^.*?(?=\n\n|$)+|(?<=<p>\n).*?(?=\n</p>))", Pattern.DOTALL);
+
+			Matcher matcher = pattern.matcher(cdata);
+
+			StringBuffer sb = new StringBuffer();
+
+			while (matcher.find()) {
+				String trimmed = _trimMultilineText(matcher.group());
+
+				// Escape dollar signs
+
+				trimmed = trimmed.replaceAll("\\$", "\\\\\\$");
+
+				matcher.appendReplacement(sb, trimmed);
+			}
+
+			matcher.appendTail(sb);
+
+			cdata = sb.toString();
+
+		return cdata.trim();
+	}
+
 	private String _formatInlines(String text) {
 
 		// Capitalize ID
@@ -871,42 +907,6 @@ public class JavadocFormatter {
 		}
 
 		return sb.toString().trim();
-	}
-
-	private String _formatCDATA(String cdata) {
-		cdata = cdata.replaceAll(
-				"(?s)\\s*<(p|[ou]l)>\\s*(.*?)\\s*</\\1>\\s*",
-				"\n\n<$1>\n$2\n</$1>\n\n");
-			cdata = cdata.replaceAll(
-				"(?s)\\s*<li>\\s*(.*?)\\s*</li>\\s*", "\n<li>\n$1\n</li>\n");
-			cdata = StringUtil.replace(cdata, "</li>\n\n<li>", "</li>\n<li>");
-			cdata = cdata.replaceAll("\n\\s+\n", "\n\n");
-			cdata.replaceAll(" +", " ");
-
-			// Trim whitespace inside paragraph tags or in the first paragraph
-
-			Pattern pattern = Pattern.compile(
-				"(^.*?(?=\n\n|$)+|(?<=<p>\n).*?(?=\n</p>))", Pattern.DOTALL);
-
-			Matcher matcher = pattern.matcher(cdata);
-
-			StringBuffer sb = new StringBuffer();
-
-			while (matcher.find()) {
-				String trimmed = _trimMultilineText(matcher.group());
-
-				// Escape dollar signs
-
-				trimmed = trimmed.replaceAll("\\$", "\\\\\\$");
-
-				matcher.appendReplacement(sb, trimmed);
-			}
-
-			matcher.appendTail(sb);
-
-			cdata = sb.toString();
-			
-		return cdata.trim();
 	}
 
 	private String _getClassName(String fileName) {

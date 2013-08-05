@@ -56,14 +56,32 @@ import org.apache.tools.ant.DirectoryScanner;
 public abstract class BaseSourceProcessor implements SourceProcessor {
 
 	@Override
-	public void format(boolean useProperties, boolean throwException)
+	public void format(
+			boolean useProperties, boolean throwException, boolean printErrors,
+			boolean autoFix)
 		throws Exception {
 
-		_init(useProperties, throwException);
+		_init(useProperties, throwException, printErrors, autoFix);
 
 		doFormat();
 
 		sourceFormatterHelper.close();
+	}
+
+	@Override
+	public String format(
+			String fileName, boolean useProperties, boolean throwException,
+			boolean printErrors, boolean autoFix)
+		throws Exception {
+
+		try {
+			_init(useProperties, throwException, printErrors, autoFix);
+
+			return doFormat(fileName);
+		}
+		finally {
+			sourceFormatterHelper.close();
+		}
 	}
 
 	@Override
@@ -274,6 +292,12 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	protected abstract void doFormat() throws Exception;
+
+	protected String doFormat(String fileName)
+		throws Exception {
+
+		return null;
+	}
 
 	protected String fixCompatClassImports(String fileName, String content)
 		throws IOException {
@@ -510,17 +534,21 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	protected String getCopyright() throws IOException {
-		String copyright = fileUtil.read("copyright.txt");
-
-		if (Validator.isNull(copyright)) {
-			copyright = fileUtil.read("../copyright.txt");
+		if (Validator.isNotNull(_copyright)) {
+			return _copyright;
 		}
 
-		if (Validator.isNull(copyright)) {
-			copyright = fileUtil.read("../../copyright.txt");
+		_copyright = fileUtil.read("copyright.txt");
+
+		if (Validator.isNull(_copyright)) {
+			_copyright = fileUtil.read("../copyright.txt");
 		}
 
-		return copyright;
+		if (Validator.isNull(_copyright)) {
+			_copyright = fileUtil.read("../../copyright.txt");
+		}
+
+		return _copyright;
 	}
 
 	protected String getCustomCopyright(File file) throws IOException {
@@ -629,17 +657,21 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	protected String getOldCopyright() throws IOException {
-		String copyright = fileUtil.read("old-copyright.txt");
-
-		if (Validator.isNull(copyright)) {
-			copyright = fileUtil.read("../old-copyright.txt");
+		if (Validator.isNotNull(_oldCopyright)) {
+			return _oldCopyright;
 		}
 
-		if (Validator.isNull(copyright)) {
-			copyright = fileUtil.read("../../old-copyright.txt");
+		_oldCopyright = fileUtil.read("old-copyright.txt");
+
+		if (Validator.isNull(_oldCopyright)) {
+			_oldCopyright = fileUtil.read("../old-copyright.txt");
 		}
 
-		return copyright;
+		if (Validator.isNull(_oldCopyright)) {
+			_oldCopyright = fileUtil.read("../../old-copyright.txt");
+		}
+
+		return _oldCopyright;
 	}
 
 	protected Properties getExclusionsProperties(String fileName)
@@ -763,11 +795,14 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 	}
 
+	protected boolean isAutoFix() {
+		return _autoFix;
+	}
+
 	protected void processErrorMessage(String fileName, String message) {
-		if (_throwException) {
-			_errorMessages.add(message);
-		}
-		else {
+		_errorMessages.add(message);
+
+		if (_printErrors) {
 			sourceFormatterHelper.printError(fileName, message);
 		}
 	}
@@ -958,7 +993,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		"<liferay-ui:error [^>]+>|<liferay-ui:success [^>]+>",
 		Pattern.MULTILINE);
 
-	private void _init(boolean useProperties, boolean throwException)
+	private void _init(
+			boolean useProperties, boolean throwException, boolean printErrors,
+			boolean autoFix)
 		throws Exception {
 
 		_errorMessages = new ArrayList<String>();
@@ -971,6 +1008,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			return;
 		}
 
+		_autoFix = autoFix;
+
 		_setVersion();
 
 		_excludes = StringUtil.split(
@@ -978,6 +1017,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 				System.getProperty("source.formatter.excludes")));
 
 		portalSource = _isPortalSource();
+
+		_printErrors = printErrors;
 
 		_throwException = throwException;
 
@@ -1008,11 +1049,15 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 	}
 
-	private Map<String, String> _compatClassNamesMap;
+	private static boolean _autoFix;
+	private static Map<String, String> _compatClassNamesMap;
+	private static String _copyright;
 	private static List<String> _errorMessages = new ArrayList<String>();
 	private static String[] _excludes;
 	private static boolean _initialized;
+	private static String _oldCopyright;
 	private static Properties _portalLanguageKeysProperties;
+	private static boolean _printErrors;
 	private static boolean _throwException;
 
 }

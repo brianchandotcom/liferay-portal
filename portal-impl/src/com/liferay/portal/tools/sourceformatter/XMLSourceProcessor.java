@@ -108,7 +108,9 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 				newContent = formatWebXML(fileName, content);
 			}
 
-			if ((newContent != null) && !content.equals(newContent)) {
+			if (isAutoFix() && (newContent != null) &&
+				!content.equals(newContent)) {
+
 				fileUtil.write(file, newContent);
 
 				sourceFormatterHelper.printError(fileName, file);

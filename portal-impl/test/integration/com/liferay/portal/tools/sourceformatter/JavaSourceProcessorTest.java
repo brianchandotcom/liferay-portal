@@ -14,23 +14,25 @@
 
 package com.liferay.portal.tools.sourceformatter;
 
-import java.util.List;
+import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Hugo Huijser
  */
-public interface SourceProcessor {
+@RunWith(LiferayIntegrationJUnitTestRunner.class)
+public class JavaSourceProcessorTest extends BaseSourceProcessorTest {
 
-	public void format(
-			boolean useProperties, boolean throwException, boolean printErrors,
-			boolean autoFix)
-		throws Exception;
+	@Test
+	public void testExceedMaxLineLength() throws Exception {
+		test("ExceedMaxLineLength.testjava", "> 80:", 22);
+	}
 
-	public String format(
-			String fileName, boolean useProperties, boolean throwException,
-			boolean printErrors, boolean autoFix)
-		throws Exception;
-
-	public List<String> getErrorMessages();
+	@Test
+	public void testUnusedImport() throws Exception {
+		test("UnusedImport.testjava");
+	}
 
 }

@@ -45,9 +45,11 @@ public class SHSourceProcessor extends BaseSourceProcessor {
 		if (content.contains("\r")) {
 			processErrorMessage(fileName, "Invalid new line character");
 
-			content = StringUtil.replace(content, "\r", "");
+			if (isAutoFix()) {
+				content = StringUtil.replace(content, "\r", "");
 
-			fileUtil.write(fileName, content);
+				fileUtil.write(fileName, content);
+			}
 		}
 	}
 

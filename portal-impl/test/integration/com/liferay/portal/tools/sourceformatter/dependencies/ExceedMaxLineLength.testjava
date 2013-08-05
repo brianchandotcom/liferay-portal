@@ -12,25 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.tools.sourceformatter;
-
-import java.util.List;
+package com.liferay.portal.tools.sourceformatter.dependencies;
 
 /**
  * @author Hugo Huijser
  */
-public interface SourceProcessor {
+public class ExceedMaxLineLength {
 
-	public void format(
-			boolean useProperties, boolean throwException, boolean printErrors,
-			boolean autoFix)
-		throws Exception;
-
-	public String format(
-			String fileName, boolean useProperties, boolean throwException,
-			boolean printErrors, boolean autoFix)
-		throws Exception;
-
-	public List<String> getErrorMessages();
+	public static final String TEST = "This is very long line and therefore it will exceed the maximum allowed line length";
 
 }

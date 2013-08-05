@@ -19,10 +19,10 @@
 	emptyResultsMessage="no-device-rules-are-configured"
 	headerNames="name,description,priority"
 	iteratorURL="<%= portletURL %>"
+	total="<%= MDRRuleGroupInstanceServiceUtil.getRuleGroupInstancesCount(className, classPK) %>"
 >
 	<liferay-ui:search-container-results
 		results="<%= MDRRuleGroupInstanceServiceUtil.getRuleGroupInstances(className, classPK, searchContainer.getStart(), searchContainer.getEnd(), new RuleGroupInstancePriorityComparator()) %>"
-		total="<%= MDRRuleGroupInstanceServiceUtil.getRuleGroupInstancesCount(className, classPK) %>"
 	/>
 
 	<liferay-ui:search-container-row

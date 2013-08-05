@@ -91,11 +91,14 @@
 											visibleGroups.add(childGroup);
 										}
 									}
+
+									total = visibleGroups.size();
+
+									searchContainer.setTotal(total);
 									%>
 
 									<liferay-ui:search-container-results
 										results="<%= ListUtil.subList(visibleGroups, searchContainer.getStart(), searchContainer.getEnd()) %>"
-										total="<%= visibleGroups.size() %>"
 									/>
 
 									<liferay-ui:search-container-row

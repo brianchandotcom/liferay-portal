@@ -17,12 +17,14 @@
 <liferay-ui:search-container
 	iteratorURL="<%= portletURL %>"
 >
-	<%@ include file="/html/portlet/workflow_instances/workflow_search_results.jspf" %>
 
-	<liferay-ui:search-container-results
-		results="<%= resultsInstances %>"
-		total="<%= totalInstances %>"
-	/>
+	<%
+	boolean allInstances = false;
+	%>
+
+	<liferay-ui:search-container-results>
+		<%@ include file="/html/portlet/workflow_instances/workflow_search_results.jspf" %>
+	</liferay-ui:search-container-results>
 
 	<liferay-ui:search-container-row
 		className="com.liferay.portal.kernel.workflow.WorkflowInstance"

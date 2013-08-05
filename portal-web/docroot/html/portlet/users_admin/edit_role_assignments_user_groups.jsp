@@ -49,15 +49,16 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_role_assignments.
 	LinkedHashMap<String, Object> userGroupParams = new LinkedHashMap<String, Object>();
 
 	if (tabs3.equals("current")) {
-		List userGroupsRoles = new ArrayList();
-
 		userGroupParams.put("userGroupsRoles", new Long(role.getRoleId()));
 	}
+
+	total = UserGroupLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getKeywords(), userGroupParams);
+
+	searchContainer.setTotal(total);
 	%>
 
 	<liferay-ui:search-container-results
 		results="<%= UserGroupLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), userGroupParams, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>"
-		total="<%= UserGroupLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getKeywords(), userGroupParams) %>"
 	/>
 
 	<liferay-ui:search-container-row

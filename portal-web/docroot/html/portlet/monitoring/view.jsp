@@ -28,22 +28,21 @@ portletURL.setParameter("struts_action", "/monitoring/view");
 			title="live-sessions"
 		/>
 
+		<%
+		Map<String, UserTracker> sessionUsers = LiveUsers.getSessionUsers(company.getCompanyId());
+
+		List<UserTracker> userTrackers = new ArrayList<UserTracker>(sessionUsers.values());
+
+		userTrackers = ListUtil.sort(userTrackers, new UserTrackerModifiedDateComparator());
+		%>
+
 		<liferay-ui:search-container
 			emptyResultsMessage="there-are-no-live-sessions"
 			headerNames="session-id,user-id,name,screen-name,last-request,num-of-hits"
+			total="<%= userTrackers.size() %>"
 		>
-
-			<%
-			Map<String, UserTracker> sessionUsers = LiveUsers.getSessionUsers(company.getCompanyId());
-
-			List<UserTracker> userTrackers = new ArrayList<UserTracker>(sessionUsers.values());
-
-			userTrackers = ListUtil.sort(userTrackers, new UserTrackerModifiedDateComparator());
-			%>
-
 			<liferay-ui:search-container-results
 				results="<%= ListUtil.subList(userTrackers, searchContainer.getStart(), searchContainer.getEnd()) %>"
-				total="<%= userTrackers.size() %>"
 			/>
 
 			<liferay-ui:search-container-row

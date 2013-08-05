@@ -50,18 +50,11 @@ portletURL.setParameter("ruleGroupInstanceId", String.valueOf(ruleGroupInstanceI
 		headerNames="name,description,type"
 		iteratorURL="<%= portletURL %>"
 		rowChecker="<%= new RowChecker(renderResponse) %>"
+		total="<%= MDRActionLocalServiceUtil.getActionsCount(ruleGroupInstanceId) %>"
 	>
-		<liferay-ui:search-container-results>
-
-			<%
-			results = MDRActionLocalServiceUtil.getActions(ruleGroupInstanceId, searchContainer.getStart(), searchContainer.getEnd());
-			total = MDRActionLocalServiceUtil.getActionsCount(ruleGroupInstanceId);
-
-			pageContext.setAttribute("results", results);
-			pageContext.setAttribute("total", total);
-			%>
-
-		</liferay-ui:search-container-results>
+		<liferay-ui:search-container-results
+			results="<%= MDRActionLocalServiceUtil.getActions(ruleGroupInstanceId, searchContainer.getStart(), searchContainer.getEnd()) %>"
+		/>
 
 		<liferay-ui:search-container-row
 			className="com.liferay.portlet.mobiledevicerules.model.MDRAction"

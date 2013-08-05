@@ -17,12 +17,7 @@
 <%
 WorkflowTaskDisplayTerms searchTerms = (WorkflowTaskDisplayTerms)searchContainer.getSearchTerms();
 
-boolean allTasks = false;
-
 String[] assetTypes = WorkflowHandlerUtil.getSearchableAssetTypes();
-
-List<WorkflowTask> resultsTasks = null;
-int totalTasks = 0;
 
 if (portletName.equals(PortletKeys.WORKFLOW_TASKS)) {
 	searchContainer.setEmptyResultsMessage("there-are-no-tasks");
@@ -30,24 +25,36 @@ if (portletName.equals(PortletKeys.WORKFLOW_TASKS)) {
 	allTasks = true;
 
 	if (searchTerms.isAdvancedSearch()) {
-		resultsTasks = WorkflowTaskManagerUtil.search(company.getCompanyId(), 0, searchTerms.getName(), searchTerms.getType(), null, null, null, null, null, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
-		totalTasks = WorkflowTaskManagerUtil.searchCount(company.getCompanyId(), 0, searchTerms.getName(), searchTerms.getType(), null, null, null, null, null, searchTerms.isAndOperator());
+		total = WorkflowTaskManagerUtil.searchCount(company.getCompanyId(), 0, searchTerms.getName(), searchTerms.getType(), null, null, null, null, null, searchTerms.isAndOperator());
+
+		searchContainer.setTotal(total);
+
+		results = WorkflowTaskManagerUtil.search(company.getCompanyId(), 0, searchTerms.getName(), searchTerms.getType(), null, null, null, null, null, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 	}
 	else {
-		resultsTasks = WorkflowTaskManagerUtil.search(company.getCompanyId(), 0, searchTerms.getKeywords(), assetTypes, null, null, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
-		totalTasks = WorkflowTaskManagerUtil.searchCount(company.getCompanyId(), 0, searchTerms.getKeywords(), assetTypes, null, null);
+		total = WorkflowTaskManagerUtil.searchCount(company.getCompanyId(), 0, searchTerms.getKeywords(), assetTypes, null, null);
+
+		searchContainer.setTotal(total);
+
+		results = WorkflowTaskManagerUtil.search(company.getCompanyId(), 0, searchTerms.getKeywords(), assetTypes, null, null, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 	}
 }
 else if (type.equals("assigned-to-my-roles")) {
 	searchContainer.setEmptyResultsMessage("there-are-no-pending-tasks-assigned-to-your-roles");
 
 	if (searchTerms.isAdvancedSearch()) {
-		resultsTasks = WorkflowTaskManagerUtil.search(company.getCompanyId(), user.getUserId(), searchTerms.getName(), searchTerms.getType(), null, null, null, false, true, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
-		totalTasks = WorkflowTaskManagerUtil.searchCount(company.getCompanyId(), user.getUserId(), searchTerms.getName(), searchTerms.getType(), null, null, null, false, true, searchTerms.isAndOperator());
+		total = WorkflowTaskManagerUtil.searchCount(company.getCompanyId(), user.getUserId(), searchTerms.getName(), searchTerms.getType(), null, null, null, false, true, searchTerms.isAndOperator());
+
+		searchContainer.setTotal(total);
+
+		results = WorkflowTaskManagerUtil.search(company.getCompanyId(), user.getUserId(), searchTerms.getName(), searchTerms.getType(), null, null, null, false, true, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 	}
 	else {
-		resultsTasks = WorkflowTaskManagerUtil.search(company.getCompanyId(), user.getUserId(), searchTerms.getKeywords(), assetTypes, false, true, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
-		totalTasks = WorkflowTaskManagerUtil.searchCount(company.getCompanyId(), user.getUserId(), searchTerms.getKeywords(), assetTypes, false, true);
+		total = WorkflowTaskManagerUtil.searchCount(company.getCompanyId(), user.getUserId(), searchTerms.getKeywords(), assetTypes, false, true);
+
+		searchContainer.setTotal(total);
+
+		results = WorkflowTaskManagerUtil.search(company.getCompanyId(), user.getUserId(), searchTerms.getKeywords(), assetTypes, false, true, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 	}
 }
 else {
@@ -63,14 +70,22 @@ else {
 	}
 
 	if (searchTerms.isAdvancedSearch()) {
-		resultsTasks = WorkflowTaskManagerUtil.search(company.getCompanyId(), user.getUserId(), searchTerms.getName(), searchTerms.getType(), null, null, null, completedTasks, false, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
-		totalTasks = WorkflowTaskManagerUtil.searchCount(company.getCompanyId(), user.getUserId(), searchTerms.getName(), searchTerms.getType(), null, null, null, completedTasks, false, searchTerms.isAndOperator());
+		total = WorkflowTaskManagerUtil.searchCount(company.getCompanyId(), user.getUserId(), searchTerms.getName(), searchTerms.getType(), null, null, null, completedTasks, false, searchTerms.isAndOperator());
+
+		searchContainer.setTotal(total);
+
+		results = WorkflowTaskManagerUtil.search(company.getCompanyId(), user.getUserId(), searchTerms.getName(), searchTerms.getType(), null, null, null, completedTasks, false, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 	}
 	else {
-		resultsTasks = WorkflowTaskManagerUtil.search(company.getCompanyId(), user.getUserId(), searchTerms.getKeywords(), assetTypes, completedTasks, false, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
-		totalTasks = WorkflowTaskManagerUtil.searchCount(company.getCompanyId(), user.getUserId(), searchTerms.getKeywords(), assetTypes, completedTasks, false);
+		total = WorkflowTaskManagerUtil.searchCount(company.getCompanyId(), user.getUserId(), searchTerms.getKeywords(), assetTypes, completedTasks, false);
+
+		searchContainer.setTotal(total);
+
+		results = WorkflowTaskManagerUtil.search(company.getCompanyId(), user.getUserId(), searchTerms.getKeywords(), assetTypes, completedTasks, false, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 	}
 }
+
+searchContainer.setResults(results);
 
 if (Validator.isNotNull(searchTerms.getKeywords()) || Validator.isNotNull(searchTerms.getName()) || Validator.isNotNull(searchTerms.getType())) {
 	searchContainer.setEmptyResultsMessage(searchContainer.getEmptyResultsMessage() + "-with-the-specified-search-criteria");

@@ -96,10 +96,10 @@
 							curParam="cur1"
 							deltaConfigurable="<%= false %>"
 							iteratorURL="<%= iteratorURL %>"
+							total="<%= containerModelsCount %>"
 						>
 							<liferay-ui:search-container-results
 								results="<%= trashHandler.getTrashContainerModelTrashRenderers(classPK, searchContainer.getStart(), searchContainer.getEnd()) %>"
-								total="<%= containerModelsCount %>"
 							/>
 
 							<liferay-ui:search-container-row
@@ -154,10 +154,10 @@
 							curParam="cur2"
 							deltaConfigurable="<%= false %>"
 							iteratorURL="<%= iteratorURL %>"
+							total="<%= baseModelsCount %>"
 						>
 							<liferay-ui:search-container-results
 								results="<%= trashHandler.getTrashContainedModelTrashRenderers(classPK, searchContainer.getStart(), searchContainer.getEnd()) %>"
-								total="<%= baseModelsCount %>"
 							/>
 
 							<liferay-ui:search-container-row

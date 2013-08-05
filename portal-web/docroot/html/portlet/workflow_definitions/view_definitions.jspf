@@ -25,10 +25,10 @@ portletURL.setParameter("struts_action", "/workflow_definitions/view");
 <liferay-ui:search-container
 	emptyResultsMessage="no-workflow-definitions-are-defined"
 	iteratorURL="<%= portletURL %>"
+	total="<%= workflowDefinitions.size() %>"
 >
 	<liferay-ui:search-container-results
 		results="<%= ListUtil.subList(workflowDefinitions, searchContainer.getStart(), searchContainer.getEnd()) %>"
-		total="<%= workflowDefinitions.size() %>"
 	/>
 
 	<liferay-ui:search-container-row

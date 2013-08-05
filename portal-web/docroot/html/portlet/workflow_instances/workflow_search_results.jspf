@@ -15,13 +15,7 @@
 --%>
 
 <%
-boolean allInstances = false;
-
 String[] assetTypes = WorkflowHandlerUtil.getSearchableAssetTypes();
-
-List<WorkflowInstance> resultsInstances = null;
-
-int totalInstances = 0;
 
 if (portletName.equals(PortletKeys.WORKFLOW_DEFINITIONS) || portletName.equals(PortletKeys.WORKFLOW_INSTANCES)) {
 	if (completedInstances) {
@@ -33,8 +27,11 @@ if (portletName.equals(PortletKeys.WORKFLOW_DEFINITIONS) || portletName.equals(P
 
 	allInstances = true;
 
-	resultsInstances = WorkflowInstanceManagerUtil.getWorkflowInstances(company.getCompanyId(), null, assetTypes, completedInstances, searchContainer.getStart(), searchContainer.getEnd(), WorkflowComparatorFactoryUtil.getInstanceStartDateComparator());
-	totalInstances = WorkflowInstanceManagerUtil.getWorkflowInstanceCount(company.getCompanyId(), null, assetTypes, completedInstances);
+	total = WorkflowInstanceManagerUtil.getWorkflowInstanceCount(company.getCompanyId(), null, assetTypes, completedInstances);
+
+	searchContainer.setTotal(total);
+
+	results = WorkflowInstanceManagerUtil.getWorkflowInstances(company.getCompanyId(), null, assetTypes, completedInstances, searchContainer.getStart(), searchContainer.getEnd(), WorkflowComparatorFactoryUtil.getInstanceStartDateComparator());
 }
 else {
 	if (completedInstances) {
@@ -44,7 +41,12 @@ else {
 		searchContainer.setEmptyResultsMessage("there-are-no-pending-instances-started-by-me");
 	}
 
-	resultsInstances = WorkflowInstanceManagerUtil.getWorkflowInstances(company.getCompanyId(), user.getUserId(), assetTypes, completedInstances, searchContainer.getStart(), searchContainer.getEnd(), WorkflowComparatorFactoryUtil.getInstanceStartDateComparator());
-	totalInstances = WorkflowInstanceManagerUtil.getWorkflowInstanceCount(company.getCompanyId(), user.getUserId(), assetTypes, completedInstances);
+	total = WorkflowInstanceManagerUtil.getWorkflowInstanceCount(company.getCompanyId(), user.getUserId(), assetTypes, completedInstances);
+
+	searchContainer.setTotal(total);
+
+	results = WorkflowInstanceManagerUtil.getWorkflowInstances(company.getCompanyId(), user.getUserId(), assetTypes, completedInstances, searchContainer.getStart(), searchContainer.getEnd(), WorkflowComparatorFactoryUtil.getInstanceStartDateComparator());
 }
+
+searchContainer.setResults(results);
 %>

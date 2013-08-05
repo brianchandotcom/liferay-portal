@@ -28,12 +28,14 @@ else if (type.equals("assigned-to-my-roles")) {
 <liferay-ui:search-container
 	searchContainer="<%= new WorkflowTaskSearch(renderRequest, curParam, currentURLObj) %>"
 >
-	<%@ include file="/html/portlet/workflow_tasks/workflow_search_results.jspf" %>
 
-	<liferay-ui:search-container-results
-		results="<%= resultsTasks %>"
-		total="<%= totalTasks %>"
-	/>
+	<%
+	boolean allTasks = false;
+	%>
+
+	<liferay-ui:search-container-results>
+		<%@ include file="/html/portlet/workflow_tasks/workflow_search_results.jspf" %>
+	</liferay-ui:search-container-results>
 
 	<liferay-ui:search-container-row
 		className="com.liferay.portal.kernel.workflow.WorkflowTask"

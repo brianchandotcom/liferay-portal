@@ -53,11 +53,14 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_organization_assi
 	if (tabs3.equals("current")) {
 		userGroupParams.put("userGroupsGroups", new Long(group.getGroupId()));
 	}
+
+	total = UserGroupLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getKeywords(), userGroupParams);
+
+	searchContainer.setTotal(total);
 	%>
 
 	<liferay-ui:search-container-results
 		results="<%= UserGroupLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), userGroupParams, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>"
-		total="<%= UserGroupLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getKeywords(), userGroupParams) %>"
 	/>
 
 	<liferay-ui:search-container-row

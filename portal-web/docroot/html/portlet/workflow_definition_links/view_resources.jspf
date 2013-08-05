@@ -60,10 +60,10 @@ portletURL.setParameter("tabs1", "default-configuration");
 
 	<liferay-ui:search-container
 		iteratorURL="<%= portletURL %>"
+		total="<%= workflowHandlers.size() %>"
 	>
 		<liferay-ui:search-container-results
 			results="<%= ListUtil.subList(workflowHandlers, searchContainer.getStart(), searchContainer.getEnd()) %>"
-			total="<%= workflowHandlers.size() %>"
 		/>
 
 		<liferay-ui:search-container-row
@@ -162,10 +162,10 @@ portletURL.setParameter("tabs1", "default-configuration");
 
 	<liferay-ui:search-container
 		iteratorURL="<%= portletURL %>"
+		total="<%= hiddenWorkflowHandlers.size() %>"
 	>
 		<liferay-ui:search-container-results
 			results="<%= ListUtil.subList(hiddenWorkflowHandlers, searchContainer.getStart(), searchContainer.getEnd()) %>"
-			total="<%= hiddenWorkflowHandlers.size() %>"
 		/>
 
 		<liferay-ui:search-container-row

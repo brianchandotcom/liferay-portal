@@ -34,10 +34,10 @@ portletURL.setParameter("classTypeId", String.valueOf(classTypeId));
 <div id="<portlet:namespace />selectDDMStructureFieldForm">
 	<liferay-ui:search-container
 		iteratorURL="<%= portletURL %>"
+		total="<%= assetRendererFactory.getClassTypeFieldNamesCount(classTypeId, locale) %>"
 	>
 		<liferay-ui:search-container-results
 			results="<%= assetRendererFactory.getClassTypeFieldNames(classTypeId, locale, searchContainer.getStart(), searchContainer.getEnd()) %>"
-			total="<%= assetRendererFactory.getClassTypeFieldNamesCount(classTypeId, locale) %>"
 		/>
 
 		<liferay-ui:search-container-row

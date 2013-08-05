@@ -40,10 +40,10 @@ PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
 	curParam="cur1"
 	headerNames="folder,num-of-folders,num-of-images"
 	iteratorURL="<%= portletURL %>"
+	total="<%= DLAppServiceUtil.getFoldersCount(repositoryId, folderId) %>"
 >
 	<liferay-ui:search-container-results
 		results="<%= DLAppServiceUtil.getFolders(repositoryId, folderId, searchContainer.getStart(), searchContainer.getEnd()) %>"
-		total="<%= DLAppServiceUtil.getFoldersCount(repositoryId, folderId) %>"
 	/>
 
 	<liferay-ui:search-container-row

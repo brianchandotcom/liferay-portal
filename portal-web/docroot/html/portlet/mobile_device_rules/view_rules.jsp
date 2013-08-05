@@ -68,10 +68,10 @@ portletURL.setParameter("redirect", redirect);
 	emptyResultsMessage="no-classification-rules-are-configured-for-this-device-family"
 	headerNames="name,type"
 	iteratorURL="<%= portletURL %>"
+	total="<%= MDRRuleLocalServiceUtil.getRulesCount(ruleGroupId) %>"
 >
 	<liferay-ui:search-container-results
 		results="<%= MDRRuleLocalServiceUtil.getRules(ruleGroupId, searchContainer.getStart(), searchContainer.getEnd()) %>"
-		total="<%= MDRRuleLocalServiceUtil.getRulesCount(ruleGroupId) %>"
 	/>
 
 	<liferay-ui:search-container-row

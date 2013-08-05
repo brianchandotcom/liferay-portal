@@ -818,15 +818,8 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 			userSiteGroups.add(0, controlPanelGroup);
 		}
 
-		if ((end != QueryUtil.ALL_POS) && (userSiteGroups.size() > end)) {
-			if (start < 0) {
-				start = 0;
-			}
-
-			userSiteGroups = ListUtil.subList(userSiteGroups, start, end);
-		}
-
-		return Collections.unmodifiableList(userSiteGroups);
+		return Collections.unmodifiableList(
+			ListUtil.subList(userSiteGroups, start, end));
 	}
 
 	/**

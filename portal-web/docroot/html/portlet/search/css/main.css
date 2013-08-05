@@ -234,10 +234,10 @@
 
 	.search-query-spell-check {
 		font-size: 1.5em;
-		margin: 0 0 1em 0.5em;
+		margin: 0 0 0 0;
 
 		.did-you-mean {
-			margin-right: 4em;
+			margin: 0 4em 1em 0.5em;
 
 			label {
 				color: #DD4B39;
@@ -245,7 +245,7 @@
 		}
 
 		.query-suggestions ul {
-			margin: 0.1em 1em;
+			margin: 0.1em 1em 1em 0.5em;
 
 			li {
 				list-style: none;

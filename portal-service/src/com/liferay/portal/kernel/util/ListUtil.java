@@ -236,21 +236,19 @@ public class ListUtil {
 	}
 
 	public static <E> List<E> subList(List<E> list, int start, int end) {
-		List<E> newList = new ArrayList<E>();
-
-		int normalizedSize = list.size() - 1;
-
-		if ((start < 0) || (start > normalizedSize) || (end < 0) ||
-			(start > end)) {
-
-			return newList;
+		if (start < 0) {
+			start = 0;
 		}
 
-		for (int i = start; (i < end) && (i <= normalizedSize); i++) {
-			newList.add(list.get(i));
+		if ((end < 0) || (end > list.size())) {
+			end = list.size();
 		}
 
-		return newList;
+		if (start < end) {
+			return list.subList(start, end);
+		}
+
+		return Collections.emptyList();
 	}
 
 	public static List<Boolean> toList(boolean[] array) {

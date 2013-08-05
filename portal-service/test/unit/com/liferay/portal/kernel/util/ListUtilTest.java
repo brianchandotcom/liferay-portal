@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.util;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -135,6 +136,38 @@ public class ListUtilTest {
 		expectedList.add("ccc");
 
 		Assert.assertEquals(expectedList, ListUtil.remove(list, removeList));
+	}
+
+	@Test
+	public void testSubList() {
+		List<Integer> list = Arrays.asList(1, 2, 3, 4);
+
+		// Negative start, positive end within range
+
+		Assert.assertEquals(
+			Arrays.asList(1, 2, 3), ListUtil.subList(list, -1, 3));
+
+		// Negative start, positive end out of range
+
+		Assert.assertEquals(list, ListUtil.subList(list, -1, 5));
+
+		// Negative start, negative end
+
+		Assert.assertEquals(list, ListUtil.subList(list, -1, -1));
+
+		// Proper start and end
+
+		Assert.assertEquals(Arrays.asList(2, 3), ListUtil.subList(list, 1, 3));
+
+		// Start == end
+
+		Assert.assertSame(
+			Collections.emptyList(), ListUtil.subList(list, 1, 1));
+
+		// Start > end
+
+		Assert.assertSame(
+			Collections.emptyList(), ListUtil.subList(list, 2, 1));
 	}
 
 	@Test

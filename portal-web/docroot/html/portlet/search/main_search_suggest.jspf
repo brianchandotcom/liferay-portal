@@ -99,10 +99,6 @@
 			document.<portlet:namespace />fm.<portlet:namespace />keywords.value = newKeywords;
 
 			submitForm(document.<portlet:namespace />fm);
-
-			search();
-
-			document.<portlet:namespace />fm.submit();
 		},
 		['aui-base']
 	);

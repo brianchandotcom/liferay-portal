@@ -93,7 +93,7 @@ public class RemoteSPITest {
 	public void setUp() {
 		_spiConfiguration = new SPIConfiguration(
 			"spiId", MockSPIAgent.class.getName(), 8081, "", new String[0],
-			new String[0]);
+			new String[0], null);
 
 		_mockRemoteSPI = new MockRemoteSPI(_spiConfiguration);
 	}

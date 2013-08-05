@@ -51,7 +51,8 @@ public class SPIAgentFactoryUtilTest {
 		try {
 			SPIAgentFactoryUtil.createSPIAgent(
 				new SPIConfiguration(
-					"testId", null, 8081, "", new String[0], new String[0]),
+					"testId", null, 8081, "", new String[0], new String[0],
+					null),
 				null);
 
 			Assert.fail();
@@ -66,7 +67,8 @@ public class SPIAgentFactoryUtilTest {
 		try {
 			SPIAgentFactoryUtil.createSPIAgent(
 				new SPIConfiguration(
-					"testId", badName, 8081, "", new String[0], new String[0]),
+					"testId", badName, 8081, "", new String[0], new String[0],
+					null),
 				null);
 
 			Assert.fail();
@@ -82,7 +84,7 @@ public class SPIAgentFactoryUtilTest {
 			SPIAgentFactoryUtil.createSPIAgent(
 				new SPIConfiguration(
 					"testId", BadMockSPIAgent.class.getName(), 8081, "",
-					new String[0], new String[0]),
+					new String[0], new String[0], null),
 				null);
 
 			Assert.fail();
@@ -98,7 +100,7 @@ public class SPIAgentFactoryUtilTest {
 		SPIAgent spiAgent = SPIAgentFactoryUtil.createSPIAgent(
 			new SPIConfiguration(
 				"testId", MockSPIAgent.class.getName(), 8081, "", new String[0],
-				new String[0]),
+				new String[0], null),
 			null);
 
 		Assert.assertSame(MockSPIAgent.class, spiAgent.getClass());

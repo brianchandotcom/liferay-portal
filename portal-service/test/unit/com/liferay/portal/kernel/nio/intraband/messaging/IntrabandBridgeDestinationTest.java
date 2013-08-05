@@ -408,7 +408,7 @@ public class IntrabandBridgeDestinationTest {
 		};
 
 		mockSPI.spiConfiguration = new SPIConfiguration(
-			spiId, null, -1, null, null, null);
+			spiId, null, -1, null, null, null, null);
 		mockSPI.spiProviderName = spiProviderName;
 
 		return mockSPI;

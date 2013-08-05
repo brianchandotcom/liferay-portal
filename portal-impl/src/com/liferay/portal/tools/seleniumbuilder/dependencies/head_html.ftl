@@ -36,6 +36,8 @@
 			font-family: verdana;
 			font-size: 12px;
 			line-height: 1.75em;
+			margin-bottom: 0px;
+			padding: 0px;
 		}
 
 		li {
@@ -43,14 +45,30 @@
 		}
 
 		ul {
+			display: block;
 			list-style-type: none;
+		}
+
+		#code {
+			height: 65%;
+			margin: 0px;
+			overflow: auto;
+			padding: 0px;
+			width: 100%;
 		}
 
 		#log {
 			border: 1px solid #CCC;
-			height: 250px;
+			height: 25%;
 			overflow: auto;
-			width: 500px;
+			width: 100%;
+		}
+
+		#title {
+			margin: 0px;
+			max-height: 5%;
+			padding: 0px;
+			width: 100%;
 		}
 
 		.arrow {

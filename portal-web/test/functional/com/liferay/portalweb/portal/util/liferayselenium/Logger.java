@@ -49,7 +49,7 @@ public class Logger {
 		WebDriver.Window window = options.window();
 
 		window.setPosition(new Point(1000, 50));
-		window.setSize(new Dimension(600, 700));
+		window.setSize(new Dimension(650, 850));
 
 		JavascriptExecutor javascriptExecutor = (JavascriptExecutor)_webDriver;
 

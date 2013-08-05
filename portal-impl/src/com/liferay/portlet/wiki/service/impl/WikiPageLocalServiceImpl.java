@@ -437,36 +437,6 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	}
 
 	@Override
-	public void copyPageAttachment(
-			long userId, WikiPage page, Folder folder,
-			FileEntry templateFileEntry)
-		throws PortalException, SystemException {
-
-		FileEntry fileEntry =
-			PortletFileRepositoryUtil.addPortletFileEntry(
-				page.getGroupId(), userId, WikiPage.class.getName(),
-				page.getResourcePrimKey(), PortletKeys.WIKI,
-				folder.getFolderId(), templateFileEntry.getContentStream(),
-				templateFileEntry.getTitle(), templateFileEntry.getMimeType(),
-				true);
-
-		if (userId == 0) {
-			userId = page.getUserId();
-		}
-
-		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
-
-		extraDataJSONObject.put("fileEntryId", fileEntry.getFileEntryId());
-		extraDataJSONObject.put("title", fileEntry.getTitle());
-
-		socialActivityLocalService.addActivity(
-			userId, page.getGroupId(), WikiPage.class.getName(),
-			page.getResourcePrimKey(),
-			SocialActivityConstants.TYPE_ADD_ATTACHMENT,
-			extraDataJSONObject.toString(), 0);
-	}
-
-	@Override
 	public void copyPageAttachments(
 			long userId, long templateNodeId, String templateTitle, long nodeId,
 			String title)
@@ -477,12 +447,11 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		List<FileEntry> templateFileEntries =
 			templatePage.getAttachmentsFileEntries();
 
-		WikiPage page = getPage(nodeId, title);
-
-		Folder folder = page.addAttachmentsFolder();
-
 		for (FileEntry templateFileEntry : templateFileEntries) {
-			copyPageAttachment(userId, page, folder, templateFileEntry);
+			addPageAttachment(
+				userId, nodeId, title, templateFileEntry.getTitle(),
+				templateFileEntry.getContentStream(),
+				templateFileEntry.getMimeType());
 		}
 	}
 

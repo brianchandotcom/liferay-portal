@@ -183,9 +183,32 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 		result = invokerResult.getResult();
 
 		Assert.assertTrue(result instanceof List);
-
 		Assert.assertEquals(
 			"[{\"id\":1},{\"id\":2},{\"id\":3}]", toJSON(result));
+	}
+
+	@Test
+	public void testFilteringPrimitivesList() throws Exception {
+		Map<String, Object> map = new LinkedHashMap<String, Object>();
+
+		Map<String, Object> params = new LinkedHashMap<String, Object>();
+
+		map.put("$datas[id] = /foo/get-foo-datas3", params);
+
+		String json = toJSON(map);
+
+		JSONWebServiceAction jsonWebServiceAction = prepareInvokerAction(json);
+
+		Object result = jsonWebServiceAction.invoke();
+
+		JSONWebServiceInvokerAction.InvokerResult invokerResult =
+			(JSONWebServiceInvokerAction.InvokerResult)result;
+
+		result = invokerResult.getResult();
+
+		Assert.assertTrue(result instanceof List);
+		Assert.assertEquals(
+			"[{\"id\":null},{\"id\":null},{\"id\":null}]", toJSON(result));
 	}
 
 	@Test

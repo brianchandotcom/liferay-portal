@@ -31,6 +31,8 @@ import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
 
+import java.lang.reflect.Array;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -318,11 +320,23 @@ public class JSONWebServiceInvokerAction implements JSONWebServiceAction {
 
 		Class<?> clazz = object.getClass();
 
-		if (clazz.isArray()) {
+		if (!clazz.isArray()) {
+			return null;
+		}
+
+		Class<?> componentType = clazz.getComponentType();
+
+		if (!componentType.isPrimitive()) {
 			return ListUtil.toList((Object[])object);
 		}
 
-		return null;
+		List<Object> list = new ArrayList<Object>();
+
+		for (int i = 0; i < Array.getLength(object); i++) {
+			list.add(Array.get(object, i));
+		}
+
+		return list;
 	}
 
 	private Map<String, Object> _convertObjectToMap(

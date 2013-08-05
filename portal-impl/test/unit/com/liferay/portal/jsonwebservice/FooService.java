@@ -96,6 +96,16 @@ public class FooService {
 		return fooDataArray;
 	}
 
+	public static int[] getFooDatas3() {
+		int[] fooDataArray = new int[3];
+
+		fooDataArray[0] = 1;
+		fooDataArray[1] = 2;
+		fooDataArray[2] = 3;
+
+		return fooDataArray;
+	}
+
 	public static String hello() {
 		return "world";
 	}

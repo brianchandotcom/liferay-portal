@@ -46,13 +46,6 @@ String parentTitle = BeanParamUtil.getString(wikiPage, request, "parentTitle");
 
 boolean preview = ParamUtil.getBoolean(request, "preview");
 
-String cmd = ParamUtil.getString(request, Constants.CMD, StringPool.BLANK);
-boolean copy = false;
-
-if (cmd.equals(Constants.COPY)) {
-	copy = true;
-}
-
 boolean newPage = ParamUtil.getBoolean(request, "newPage");
 
 if (wikiPage == null) {
@@ -60,6 +53,8 @@ if (wikiPage == null) {
 }
 
 boolean editable = false;
+
+boolean copyPageAttachments = ParamUtil.getBoolean(request, "copyPageAttachments", true);
 
 List<FileEntry> attachmentsFileEntries = null;
 
@@ -203,7 +198,7 @@ if (Validator.isNull(redirect)) {
 		<aui:input name="version" type="hidden" value="<%= wikiPage.getVersion() %>" />
 	</c:if>
 
-	<c:if test="<%= copy %>">
+	<c:if test="<%= templatePage != null %>">
 		<aui:input name="templateTitle" type="hidden" value="<%= templateTitle %>" />
 	</c:if>
 
@@ -314,8 +309,11 @@ if (Validator.isNull(redirect)) {
 			</c:if>
 
 			<aui:fieldset>
-				<c:if test="<%= (attachmentsFileEntries != null) && !attachmentsFileEntries.isEmpty() %>">
+				<c:if test="<%= (attachmentsFileEntries != null) && !attachmentsFileEntries.isEmpty() || ((templatePage != null) && (templatePage.getAttachmentsFileEntriesCount() > 0)) %>">
 					<aui:field-wrapper label="attachments">
+						<c:if test="<%= (templatePage != null) %>">
+							<aui:input name="copyPageAttachments" type="checkbox" value="<%= copyPageAttachments %>" />
+						</c:if>
 
 						<%
 						for (int i = 0; i < attachmentsFileEntries.size(); i++) {
@@ -540,19 +538,7 @@ if (Validator.isNull(redirect)) {
 	}
 
 	function <portlet:namespace />savePage() {
-
-	<%
-		String action = Constants.UPDATE;
-
-		if (copy) {
-			action = Constants.COPY;
-		}
-		else if (newPage) {
-			action = Constants.ADD;
-		}
-	%>
-
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= action %>";
+		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = "<%= newPage ? Constants.ADD : Constants.UPDATE %>";
 
 		if (window.<portlet:namespace />editor) {
 			document.<portlet:namespace />fm.<portlet:namespace />content.value = window.<portlet:namespace />editor.getHTML();

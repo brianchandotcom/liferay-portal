@@ -60,7 +60,6 @@ WikiPage wikiPage = (WikiPage)row.getObject();
 			<liferay-portlet:param name="nodeId" value="<%= String.valueOf(wikiPage.getNodeId()) %>" />
 			<liferay-portlet:param name="title" value="" />
 			<liferay-portlet:param name="editTitle" value="1" />
-			<liferay-portlet:param name="<%= Constants.CMD %>" value="<%= Constants.COPY %>" />
 			<liferay-portlet:param name="templateNodeId" value="<%= String.valueOf(wikiPage.getNodeId()) %>" />
 			<liferay-portlet:param name="templateTitle" value="<%= HtmlUtil.unescape(wikiPage.getTitle()) %>" />
 		</liferay-portlet:renderURL>

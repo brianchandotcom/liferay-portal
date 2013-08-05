@@ -115,14 +115,11 @@
 	}
 
 	.journal-article-header-edit {
-		@include box-sizing(border-box);
-
 		background: #FCFCFC;
 		border: solid #DDD;
 		border-width: 1px 0;
 		margin: 0 0 1em;
 		padding: 1em;
-		width: 100%;
 	}
 
 	.subscribe-link {

@@ -101,7 +101,7 @@ public class SourceFormatter {
 		thread2.join();
 
 		if (throwException && !_errorMessages.isEmpty()) {
-			System.out.println(StringUtil.merge(_errorMessages, "\n"));
+			throw new Exception(StringUtil.merge(_errorMessages, "\n"));
 		}
 	}
 

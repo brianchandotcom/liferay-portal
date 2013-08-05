@@ -550,7 +550,7 @@
 				}
 			}
 		},
-		['aui-base', 'aui-task-manager']
+		['aui-base', 'aui-timer']
 	);
 
 	Liferay.provide(

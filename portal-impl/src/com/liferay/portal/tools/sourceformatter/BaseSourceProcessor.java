@@ -68,6 +68,22 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	@Override
+	public String format(
+			String fileName, boolean useProperties, boolean throwException,
+			boolean autoFix)
+		throws Exception {
+
+		try {
+			_init(useProperties, throwException, autoFix);
+
+			return doFormat(fileName);
+		}
+		finally {
+			sourceFormatterHelper.close();
+		}
+	}
+
+	@Override
 	public List<String> getErrorMessages() {
 		return _errorMessages;
 	}
@@ -275,6 +291,12 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	protected abstract void doFormat() throws Exception;
+
+	protected String doFormat(String fileName)
+		throws Exception {
+
+		return null;
+	}
 
 	protected String fixCompatClassImports(String fileName, String content)
 		throws IOException {

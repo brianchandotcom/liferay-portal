@@ -25,6 +25,11 @@ public interface SourceProcessor {
 			boolean useProperties, boolean throwException, boolean autoFix)
 		throws Exception;
 
+	public String format(
+			String fileName, boolean useProperties, boolean throwException,
+			boolean autoFix)
+		throws Exception;
+
 	public List<String> getErrorMessages();
 
 }

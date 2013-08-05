@@ -104,7 +104,7 @@ public class SPIRegistryImplTest {
 
 		SPIConfiguration spiConfiguration = new SPIConfiguration(
 			"", "", 8081, "", new String[] {"portlet1", "portlet2"},
-			new String[] {"portletApp1", "portletApp2"});
+			new String[] {"portletApp1", "portletApp2"}, null);
 
 		final AtomicBoolean throwException = new AtomicBoolean();
 

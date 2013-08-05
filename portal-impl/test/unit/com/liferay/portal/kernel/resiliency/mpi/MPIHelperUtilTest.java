@@ -588,7 +588,7 @@ public class MPIHelperUtilTest {
 		mockSPI1.mpi = MPIHelperUtil.getMPI();
 		mockSPI1.spiConfiguration = new SPIConfiguration(
 			"testId1", "", 8081, "", new String[0],
-			new String[] {"servletContextName1"});
+			new String[] {"servletContextName1"}, null);
 		mockSPI1.spiProviderName = name;
 
 		logRecords = JDKLoggerTestUtil.configureJDKLogger(
@@ -637,7 +637,7 @@ public class MPIHelperUtilTest {
 		mockSPI2.mpi = MPIHelperUtil.getMPI();
 		mockSPI2.spiConfiguration = new SPIConfiguration(
 			"testId2", "", 8082, "", new String[0],
-			new String[] {"servletContextName2"});
+			new String[] {"servletContextName2"}, null);
 		mockSPI2.spiProviderName = name;
 
 		Assert.assertTrue(MPIHelperUtil.registerSPI(mockSPI2));
@@ -720,7 +720,7 @@ public class MPIHelperUtilTest {
 
 		mockSPI2.mpi = MPIHelperUtil.getMPI();
 		mockSPI2.spiConfiguration = new SPIConfiguration(
-			"testId2", "", 8082, "", new String[0], new String[0]);
+			"testId2", "", 8082, "", new String[0], new String[0], null);
 		mockSPI2.spiProviderName = name;
 
 		Assert.assertTrue(MPIHelperUtil.registerSPI(mockSPI2));
@@ -810,7 +810,7 @@ public class MPIHelperUtilTest {
 
 		mockSPI1.mpi = MPIHelperUtil.getMPI();
 		mockSPI1.spiConfiguration = new SPIConfiguration(
-			"testId3", "", 8083, "", new String[0], new String[0]);
+			"testId3", "", 8083, "", new String[0], new String[0], null);
 		mockSPI1.spiProviderName = name;
 
 		Assert.assertFalse(MPIHelperUtil.unregisterSPI(mockSPI1));
@@ -831,7 +831,7 @@ public class MPIHelperUtilTest {
 
 		mockSPI1.mpi = MPIHelperUtil.getMPI();
 		mockSPI1.spiConfiguration = new SPIConfiguration(
-			"testId3", "", 8083, "", new String[0], new String[0]);
+			"testId3", "", 8083, "", new String[0], new String[0], null);
 		mockSPI1.spiProviderName = name;
 
 		Assert.assertFalse(MPIHelperUtil.unregisterSPI(mockSPI1));

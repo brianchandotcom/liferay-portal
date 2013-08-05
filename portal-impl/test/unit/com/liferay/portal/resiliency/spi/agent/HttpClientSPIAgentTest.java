@@ -108,7 +108,7 @@ public class HttpClientSPIAgentTest {
 
 		SPIConfiguration spiConfiguration = new SPIConfiguration(
 			null, null, serverSocket.getLocalPort(),
-			_spiConfiguration.getBaseDir(), null, null);
+			_spiConfiguration.getBaseDir(), null, null, null);
 
 		HttpClientSPIAgent httpClientSPIAgent = new HttpClientSPIAgent(
 			spiConfiguration,
@@ -579,7 +579,7 @@ public class HttpClientSPIAgentTest {
 		HttpClientSPIAgent httpClientSPIAgent = new HttpClientSPIAgent(
 			new SPIConfiguration(
 				null, null, serverSocket.getLocalPort(),
-				_spiConfiguration.getBaseDir(), null, null),
+				_spiConfiguration.getBaseDir(), null, null, null),
 			new MockRegistrationReference(new MockIntraband()));
 
 		SocketChannel socketChannel = SocketChannel.open(
@@ -1038,7 +1038,7 @@ public class HttpClientSPIAgentTest {
 	}
 
 	private SPIConfiguration _spiConfiguration = new SPIConfiguration(
-		null, null, 1234, "baseDir", null, null);
+		null, null, 1234, "baseDir", null, null, null);
 
 	private static class DirectMailboxIntraBand extends MockIntraband {
 

@@ -812,7 +812,35 @@ public class JavadocFormatter {
 				break;
 			}
 
-			if ((preTagIndex != 0) && (tableTagIndex != 0)) {
+			boolean startsWithPreTag = (preTagIndex == 0) ? true : false;
+			boolean startsWithTableTag = (tableTagIndex == 0) ? true : false;
+
+			if (startsWithPreTag || startsWithTableTag) {
+				String tagName = null;
+
+				if (preTagIndex == 0) {
+					tagName = "pre";
+				}
+				else {
+					tagName = "table";
+				}
+
+				String startTag = "<" + tagName + ">";
+				String endTag = "</" + tagName + ">";
+
+				int startTagLength = startTag.length();
+				int endTagLength = endTag.length();
+				int endTagIndex = cdata.indexOf(endTag, startTagLength - 1);
+
+				String entireElement = cdata.substring(
+					0, endTagIndex + endTagLength);
+				sb.append("\n");
+				sb.append(entireElement);
+				sb.append("\n");
+
+				cdataBeginIndex = endTagIndex + endTagLength;
+			}
+			else {
 
 				// Format the comment up to the next pre or table tag
 
@@ -837,31 +865,6 @@ public class JavadocFormatter {
 				sb.append(_formatCDATA(textToFormat));
 
 				cdataBeginIndex = startTagIndex;
-			}
-			else {
-				String tagName = null;
-
-				if (preTagIndex == 0) {
-					tagName = "pre";
-				}
-				else {
-					tagName = "table";
-				}
-
-				String startTag = "<" + tagName + ">";
-				String endTag = "</" + tagName + ">";
-
-				int startTagLength = startTag.length();
-				int endTagLength = endTag.length();
-				int endTagIndex = cdata.indexOf(endTag, startTagLength - 1);
-
-				String entireElement = cdata.substring(
-					0, endTagIndex + endTagLength);
-				sb.append("\n");
-				sb.append(entireElement);
-				sb.append("\n");
-
-				cdataBeginIndex = endTagIndex + endTagLength;
 			}
 
 			cdata = cdata.substring(cdataBeginIndex);

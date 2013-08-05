@@ -4104,7 +4104,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 	protected boolean isUseComplexSQL(long[] classNameIds) {
 		if ((classNameIds == null) || (classNameIds.length == 0)) {
-			return false;
+			return true;
 		}
 
 		if (_complexSQLClassNameIds == null) {
@@ -4126,11 +4126,11 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 		for (long classNameId : classNameIds) {
 			if (ArrayUtil.contains(_complexSQLClassNameIds, classNameId)) {
-				return false;
+				return true;
 			}
 		}
 
-		return true;
+		return false;
 	}
 
 	protected boolean matches(String s, String[] keywords) {

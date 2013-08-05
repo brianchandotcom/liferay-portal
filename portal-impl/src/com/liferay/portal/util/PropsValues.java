@@ -746,6 +746,8 @@ public class PropsValues {
 
 	public static final String GOOGLE_GADGET_SERVLET_MAPPING = PropsUtil.get(PropsKeys.GOOGLE_GADGET_SERVLET_MAPPING);
 
+	public static final String[] GROUP_FINDER_IN_MEMORY_FILTER_CLASSNAME_BLACKLIST = PropsUtil.getArray(PropsKeys.GROUP_FINDER_IN_MEMORY_FILTER_CLASSNAME_BLACKLIST);
+
 	public static final int GZIP_COMPRESSION_LEVEL = GetterUtil.getInteger(PropsUtil.get(PropsKeys.GZIP_COMPRESSION_LEVEL));
 
 	public static final boolean HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE));

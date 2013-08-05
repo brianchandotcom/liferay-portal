@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+~ Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
+~
+~ This library is free software; you can redistribute it and/or modify it under
+~ the terms of the GNU Lesser General Public License as published by the Free
+~ Software Foundation; either version 2.1 of the License, or (at your option)
+~ any later version.
+~
+~ This library is distributed in the hope that it will be useful, but WITHOUT
+~ ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+~ FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+~ details.
+-->
+
+<application xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.zeroturnaround.com" xsi:schemaLocation="http://www.zeroturnaround.com http://www.zeroturnaround.com/alderaan/rebel-2_0.xsd">
+
+	<classpath>
+
+		<!-- IMPORTANT: Do not monitor the folder of portal-service because plugins will not be deployed when JRebel is enabled -->
+
+		<dir name="${liferay.root}/osgi/bootstrap/classes" />
+		<dir name="${liferay.root}/portal-impl/classes" />
+		<dir name="${liferay.root}/portal-pacl/classes" />
+		<dir name="${liferay.root}/util-java/classes" />
+		<dir name="${liferay.root}/util-bridges/classes" />
+		<dir name="${liferay.root}/util-taglib/classes" />
+		<dir name="${liferay.root}/util-slf4j/classes" />
+	</classpath>
+
+	<web>
+		<link target="/">
+			<dir name="${liferay.root}/portal-web/docroot/" />
+		</link>
+	</web>
+
+</application>

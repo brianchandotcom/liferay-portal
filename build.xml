@@ -776,6 +776,76 @@ Portal: ${lp.source.dir}
 Plugins: ${lp.plugins.dir}</echo>
 	</target>
 
+	<target name="setup-jrebel">
+		<if>
+			<equals arg1="${jrebel.configuration.enabled}" arg2="true" />
+			<then>
+				<var name="global.rebel.xml" value="tools/jrebel/global-rebel.xml"/>
+
+				<if>
+					<available file="tools/jrebel/global-rebel-overwrite.xml" />
+					<then>
+						<var name="global.rebel.xml" value="tools/jrebel/global-rebel-overwrite.xml"/>
+					</then>
+				</if>
+
+				<copy
+					file="${global.rebel.xml}"
+					tofile="${app.server.lib.global.dir}/rebel.xml"
+					overwrite="true"
+				/>
+
+				<var name="lportal.rebel.xml" value="tools/jrebel/lportal-rebel.xml"/>
+
+				<if>
+					<available file="tools/jrebel/lportal-rebel-overwrite.xml" />
+					<then>
+						<var name="lportal.rebel.xml" value="tools/jrebel/lportal-rebel-overwrite.xml"/>
+					</then>
+				</if>
+
+				<copy
+					file="${lportal.rebel.xml}"
+					tofile="${app.server.classes.portal.dir}/rebel.xml"
+					overwrite="true"
+				/>
+
+				<pathconvert property="system.ext.file" pathsep=" " setonempty="false">
+					<path>
+						<fileset file="portal-impl/src/system-ext.properties">
+	  						<contains text="liferay.lib.portal.dir" casesensitive="yes" />
+						</fileset>
+					</path>
+				</pathconvert>
+
+				<if>
+					<not>
+						<isset property="system.ext.file" />
+					</not>
+					<then>
+						<concat
+							append="true"
+							destfile="portal-impl/src/system-ext.properties"
+						>
+							liferay.lib.portal.dir=${app.server.lib.portal.dir}
+						</concat>
+					</then>
+				</if>
+
+				<copy
+					file="portal-impl/src/system-ext.properties"
+					tofile="portal-impl/classes/system-ext.properties"
+					overwrite="true"
+				/>
+			</then>
+			<else>
+				<echo>You need to enable the build property "jrebel.configuration.enabled" in your build.${username}.properties</echo>
+			</else>
+		</if>
+
+		<echo>You need to define a variable liferay.root pointing to you Liferay repo and start your app server using the jrebel agent</echo>
+	</target>
+
 	<target name="start">
 		<antcall target="compile" />
 

@@ -205,50 +205,6 @@ public class AssetTagFinderImpl
 		}
 	}
 
-	protected List<AssetTag> doFindByG_N_P(
-			long[] groupIds, String name, String[] tagProperties, int start,
-			int end, OrderByComparator obc, boolean inlineSQLHelper)
-		throws SystemException {
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			String sql = CustomSQLUtil.get(FIND_BY_G_N_P);
-
-			sql = StringUtil.replace(sql, "[$JOIN$]", getJoin(tagProperties));
-			sql = StringUtil.replace(
-				sql, "[$GROUP_ID$]", getGroupIds(groupIds));
-			sql = CustomSQLUtil.replaceOrderBy(sql, obc);
-
-			if (inlineSQLHelper) {
-				sql = InlineSQLHelperUtil.replacePermissionCheck(
-					sql, AssetTag.class.getName(), "AssetTag.tagId", groupIds);
-			}
-
-			SQLQuery q = session.createSQLQuery(sql);
-
-			q.addEntity("AssetTag", AssetTagImpl.class);
-
-			QueryPos qPos = QueryPos.getInstance(q);
-
-			setJoin(qPos, tagProperties);
-
-			qPos.add(groupIds);
-			qPos.add(name);
-			qPos.add(name);
-
-			return (List<AssetTag>)QueryUtil.list(q, getDialect(), start, end);
-		}
-		catch (Exception e) {
-			throw new SystemException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
 	protected int doCountByG_N(
 			long groupId, String name, boolean inlineSQLHelper)
 		throws SystemException {
@@ -477,6 +433,50 @@ public class AssetTagFinderImpl
 
 			qPos.add(groupId);
 			qPos.add(classNameId);
+			qPos.add(name);
+			qPos.add(name);
+
+			return (List<AssetTag>)QueryUtil.list(q, getDialect(), start, end);
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected List<AssetTag> doFindByG_N_P(
+			long[] groupIds, String name, String[] tagProperties, int start,
+			int end, OrderByComparator obc, boolean inlineSQLHelper)
+		throws SystemException {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(FIND_BY_G_N_P);
+
+			sql = StringUtil.replace(sql, "[$JOIN$]", getJoin(tagProperties));
+			sql = StringUtil.replace(
+				sql, "[$GROUP_ID$]", getGroupIds(groupIds));
+			sql = CustomSQLUtil.replaceOrderBy(sql, obc);
+
+			if (inlineSQLHelper) {
+				sql = InlineSQLHelperUtil.replacePermissionCheck(
+					sql, AssetTag.class.getName(), "AssetTag.tagId", groupIds);
+			}
+
+			SQLQuery q = session.createSQLQuery(sql);
+
+			q.addEntity("AssetTag", AssetTagImpl.class);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			setJoin(qPos, tagProperties);
+
+			qPos.add(groupIds);
 			qPos.add(name);
 			qPos.add(name);
 

@@ -112,6 +112,7 @@ String title = ddmDisplay.getViewTemplatesTitle(structure, controlPanel, locale)
 
 			rowURL.setParameter("struts_action", "/dynamic_data_mapping/edit_template");
 			rowURL.setParameter("redirect", currentURL);
+			rowURL.setParameter("backURL", currentURL);
 			rowURL.setParameter("groupId", String.valueOf(template.getGroupId()));
 			rowURL.setParameter("templateId", String.valueOf(template.getTemplateId()));
 			rowURL.setParameter("classNameId", String.valueOf(classNameId));

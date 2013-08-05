@@ -28,7 +28,7 @@ public class SourceFormatter {
 	public static void main(String[] args) {
 		try {
 			SourceFormatter sourceFormatter = SourceFormatterUtil.create(
-				false, false, true);
+				false, false, true, true);
 
 			sourceFormatter.format();
 		}
@@ -38,11 +38,13 @@ public class SourceFormatter {
 	}
 
 	public SourceFormatter(
-			boolean useProperties, boolean throwException, boolean autoFix)
+			boolean useProperties, boolean throwException, boolean printErrors,
+			boolean autoFix)
 		throws Exception {
 
 		_useProperties = useProperties;
 		_throwException = throwException;
+		_printErrors = printErrors;
 		_autoFix = autoFix;
 	}
 
@@ -72,7 +74,8 @@ public class SourceFormatter {
 
 					for (SourceProcessor sourceProcessor : sourceProcessors) {
 						sourceProcessor.format(
-							_useProperties, _throwException, _autoFix);
+							_useProperties, _throwException, _printErrors,
+							_autoFix);
 
 						_errorMessages.addAll(
 							sourceProcessor.getErrorMessages());
@@ -94,7 +97,8 @@ public class SourceFormatter {
 						JSPSourceProcessor.class.newInstance();
 
 					sourceProcessor.format(
-						_useProperties, _throwException, _autoFix);
+						_useProperties, _throwException, _printErrors,
+						_autoFix);
 
 					_errorMessages.addAll(sourceProcessor.getErrorMessages());
 				}
@@ -128,7 +132,7 @@ public class SourceFormatter {
 		}
 
 		String newContent = sourceProcessor.format(
-			fileName, _useProperties, _throwException, _autoFix);
+			fileName, _useProperties, _throwException, _printErrors, _autoFix);
 
 		List<String> errorMessages = sourceProcessor.getErrorMessages();
 
@@ -142,6 +146,7 @@ public class SourceFormatter {
 
 	private static boolean _autoFix;
 	private static List<String> _errorMessages = new UniqueList<String>();
+	private static boolean _printErrors;
 	private static boolean _throwException;
 	private static boolean _useProperties;
 

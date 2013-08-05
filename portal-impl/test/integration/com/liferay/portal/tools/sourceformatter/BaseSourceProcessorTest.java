@@ -32,7 +32,8 @@ public class BaseSourceProcessorTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_sourceFormatter = SourceFormatterUtil.create(false, false, false);
+		_sourceFormatter = SourceFormatterUtil.create(
+			false, false, false, false);
 	}
 
 	protected void test(String fileName) throws Exception {

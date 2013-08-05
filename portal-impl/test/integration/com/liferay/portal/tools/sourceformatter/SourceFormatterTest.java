@@ -24,7 +24,7 @@ public class SourceFormatterTest {
 	@Test
 	public void testSourceFormatter() throws Exception {
 		SourceFormatter sourceFormatter = SourceFormatterUtil.create(
-			false, true, false);
+			false, true, false, false);
 
 		sourceFormatter.format();
 	}

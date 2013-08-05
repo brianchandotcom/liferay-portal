@@ -22,12 +22,13 @@ import java.util.List;
 public interface SourceProcessor {
 
 	public void format(
-			boolean useProperties, boolean throwException, boolean autoFix)
+			boolean useProperties, boolean throwException, boolean printErrors,
+			boolean autoFix)
 		throws Exception;
 
 	public String format(
 			String fileName, boolean useProperties, boolean throwException,
-			boolean autoFix)
+			boolean printErrors, boolean autoFix)
 		throws Exception;
 
 	public List<String> getErrorMessages();

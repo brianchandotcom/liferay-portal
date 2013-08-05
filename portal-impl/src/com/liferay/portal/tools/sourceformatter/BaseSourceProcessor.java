@@ -57,10 +57,11 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 	@Override
 	public void format(
-			boolean useProperties, boolean throwException, boolean autoFix)
+			boolean useProperties, boolean throwException, boolean printErrors,
+			boolean autoFix)
 		throws Exception {
 
-		_init(useProperties, throwException, autoFix);
+		_init(useProperties, throwException, printErrors, autoFix);
 
 		doFormat();
 
@@ -70,11 +71,11 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	@Override
 	public String format(
 			String fileName, boolean useProperties, boolean throwException,
-			boolean autoFix)
+			boolean printErrors, boolean autoFix)
 		throws Exception {
 
 		try {
-			_init(useProperties, throwException, autoFix);
+			_init(useProperties, throwException, printErrors, autoFix);
 
 			return doFormat(fileName);
 		}
@@ -801,7 +802,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	protected void processErrorMessage(String fileName, String message) {
 		_errorMessages.add(message);
 
-		if (!_throwException) {
+		if (_printErrors) {
 			sourceFormatterHelper.printError(fileName, message);
 		}
 	}
@@ -993,7 +994,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		Pattern.MULTILINE);
 
 	private void _init(
-			boolean useProperties, boolean throwException, boolean autoFix)
+			boolean useProperties, boolean throwException, boolean printErrors,
+			boolean autoFix)
 		throws Exception {
 
 		_errorMessages = new ArrayList<String>();
@@ -1015,6 +1017,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 				System.getProperty("source.formatter.excludes")));
 
 		portalSource = _isPortalSource();
+
+		_printErrors = printErrors;
 
 		_throwException = throwException;
 
@@ -1053,6 +1057,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	private static boolean _initialized;
 	private static String _oldCopyright;
 	private static Properties _portalLanguageKeysProperties;
+	private static boolean _printErrors;
 	private static boolean _throwException;
 
 }

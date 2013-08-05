@@ -804,15 +804,13 @@ public class JavadocFormatter {
 
 			while (!cdata.isEmpty()) {
 				int preTagIndex = cdata.indexOf("<pre>");
-				int tableTagIndex = cdata.indexOf("<table>");		
-				boolean bothPreformattedTagsExist = ((preTagIndex > -1) && (tableTagIndex > -1)) ? true : false;
-				boolean noPreformattedTagsExist = ((preTagIndex == -1) && (tableTagIndex == -1)) ? true : false;
-				boolean preExistsWithNoExistingTable = ((preTagIndex != -1) && (tableTagIndex == -1)) ? true : false;
+				int tableTagIndex = cdata.indexOf("<table>");
+				boolean hasPreTag = (preTagIndex != -1) ? true : false;
+				boolean hasTableTag = (tableTagIndex != -1) ? true : false;
 				boolean startsWithPreformattedTag = ((preTagIndex == 0) || (tableTagIndex == 0)) ? true : false;
-				boolean tableExistsWithNoExistingPre = ((preTagIndex == -1) && (tableTagIndex != -1)) ? true : false;
 				String tagName = null;
 
-				if (bothPreformattedTagsExist) {
+				if (hasPreTag && hasTableTag) {
 
 					if (preTagIndex < tableTagIndex) {
 						startTagIndex = preTagIndex;
@@ -826,14 +824,14 @@ public class JavadocFormatter {
 
 				if (!startsWithPreformattedTag) {
 
-					if (noPreformattedTagsExist) {
+					if (!hasPreTag && !hasTableTag) {
 						startTagIndex = cdata.length();
 					}
-					else if (tableExistsWithNoExistingPre) {
-						startTagIndex = tableTagIndex;
-					}
-					else if (preExistsWithNoExistingTable){
+					else if (hasPreTag && !hasTableTag){
 						startTagIndex = preTagIndex;
+					}
+					else {
+						startTagIndex = tableTagIndex;
 					}
 
 					String textToFormat = cdata.substring(0, startTagIndex);

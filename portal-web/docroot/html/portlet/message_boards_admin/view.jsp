@@ -351,6 +351,8 @@ if ((category != null) && layout.isTypeControlPanel()) {
 							<liferay-ui:search-container-column-status
 								href="<%= rowURL %>"
 								name="status"
+								statusByUserId="<%= thread.getStatusByUserId() %>"
+								statusDate="<%= thread.getStatusDate() %>"
 								value="<%= thread.getStatus() %>"
 							/>
 

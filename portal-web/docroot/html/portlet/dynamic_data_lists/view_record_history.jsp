@@ -89,7 +89,7 @@ portletURL.setParameter("recordId", String.valueOf(record.getRecordId()));
 
 		// Status
 
-		row.addStatus(recordVersion.getStatus(), rowURL);
+		row.addStatus(recordVersion.getStatus(), recordVersion.getStatusByUserId(), recordVersion.getStatusDate(), rowURL);
 
 		// Author
 

@@ -469,7 +469,7 @@ for (int i = 0; i < results.size(); i++) {
 						}
 
 						if (columnName.equals("status")) {
-							row.addStatus(latestFileVersion.getStatus());
+							row.addStatus(latestFileVersion.getStatus(), latestFileVersion.getStatusByUserId(), latestFileVersion.getStatusDate());
 						}
 					}
 

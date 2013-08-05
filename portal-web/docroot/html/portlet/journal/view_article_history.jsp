@@ -126,7 +126,7 @@ JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_AR
 
 				// Status
 
-				row.addStatus(articleVersion.getStatus(), rowURL);
+				row.addStatus(articleVersion.getStatus(), articleVersion.getStatusByUserId(), articleVersion.getStatusDate(), rowURL);
 
 				// Modified date
 

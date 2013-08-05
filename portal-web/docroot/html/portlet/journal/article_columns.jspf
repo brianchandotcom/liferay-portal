@@ -30,7 +30,7 @@ row.addSearchEntry(articleTitleTextSearchEntry);
 
 // Status
 
-row.addStatus(curArticle.getStatus());
+row.addStatus(curArticle.getStatus(), curArticle.getStatusByUserId(), curArticle.getStatusDate());
 
 // Modified date
 

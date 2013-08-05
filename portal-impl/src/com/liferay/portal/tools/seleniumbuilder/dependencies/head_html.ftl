@@ -50,7 +50,7 @@
 		}
 
 		#code {
-			height: 40%;
+			height: 65%;
 			margin: 0px;
 			overflow: auto;
 			padding: 0px;
@@ -65,10 +65,10 @@
 		}
 
 		#title {
-			width: 100%;
-			padding: 0px;
 			margin: 0px;
 			max-height: 5%;
+			padding: 0px;
+			width: 100%;
 		}
 
 		.arrow {

@@ -27,17 +27,24 @@ public class SourceFormatter {
 
 	public static void main(String[] args) {
 		try {
-			new SourceFormatter(false, false);
+			SourceFormatter sourceFormatter = SourceFormatterUtil.create(
+				false, false);
+
+			sourceFormatter.format();
 		}
 		catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	public SourceFormatter(
-			final boolean useProperties, final boolean throwException)
+	public SourceFormatter(boolean useProperties, boolean throwException)
 		throws Exception {
 
+		_useProperties = useProperties;
+		_throwException = throwException;
+	}
+
+	public void format() throws Exception {
 		Thread thread1 = new Thread () {
 
 			@Override
@@ -62,7 +69,7 @@ public class SourceFormatter {
 						XMLSourceProcessor.class.newInstance());
 
 					for (SourceProcessor sourceProcessor : sourceProcessors) {
-						sourceProcessor.format(useProperties, throwException);
+						sourceProcessor.format(_useProperties, _throwException);
 
 						_errorMessages.addAll(
 							sourceProcessor.getErrorMessages());
@@ -83,7 +90,7 @@ public class SourceFormatter {
 					SourceProcessor sourceProcessor =
 						JSPSourceProcessor.class.newInstance();
 
-					sourceProcessor.format(useProperties, throwException);
+					sourceProcessor.format(_useProperties, _throwException);
 
 					_errorMessages.addAll(sourceProcessor.getErrorMessages());
 				}
@@ -100,11 +107,13 @@ public class SourceFormatter {
 		thread1.join();
 		thread2.join();
 
-		if (throwException && !_errorMessages.isEmpty()) {
+		if (_throwException && !_errorMessages.isEmpty()) {
 			throw new Exception(StringUtil.merge(_errorMessages, "\n"));
 		}
 	}
 
 	private static List<String> _errorMessages = new UniqueList<String>();
+	private static boolean _throwException;
+	private static boolean _useProperties;
 
 }

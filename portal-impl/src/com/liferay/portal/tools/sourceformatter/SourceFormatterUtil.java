@@ -14,19 +14,16 @@
 
 package com.liferay.portal.tools.sourceformatter;
 
-import org.junit.Test;
-
 /**
  * @author Hugo Huijser
  */
-public class SourceFormatterTest {
+public class SourceFormatterUtil {
 
-	@Test
-	public void testSourceFormatter() throws Exception {
-		SourceFormatter sourceFormatter = SourceFormatterUtil.create(
-			false, true);
+	public static SourceFormatter create(
+			boolean useProperties, boolean throwException)
+		throws Exception {
 
-		sourceFormatter.format();
+		return new SourceFormatter(useProperties, throwException);
 	}
 
 }

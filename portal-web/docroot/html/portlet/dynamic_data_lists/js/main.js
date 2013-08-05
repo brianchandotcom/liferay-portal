@@ -331,7 +331,7 @@ AUI.add(
 									fieldsMap,
 									function(json) {
 										if (json.recordId > 0) {
-											record.set('recordId', json.recordId);
+											record.set('recordId', json.recordId, {silent: true});
 										}
 									}
 								);

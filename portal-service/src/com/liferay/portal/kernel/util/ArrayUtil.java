@@ -1004,7 +1004,7 @@ public class ArrayUtil {
 
 	public static void reverse(int[] array) {
 		for (int left = 0, right = array.length - 1; left < right;
-			left++, right--) {
+				left++, right--) {
 
 			int value = array[left];
 

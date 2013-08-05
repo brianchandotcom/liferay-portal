@@ -108,6 +108,24 @@ public class ArrayUtilTest {
 	}
 
 	@Test
+	public void testReverseIntArray() throws Exception {
+		int[] array = new int[] {111, 222, 333};
+
+		ArrayUtil.reverse(array);
+
+		Assert.assertArrayEquals(new int[] {333, 222, 111}, array);
+	}
+
+	@Test
+	public void testReverseStringArray() throws Exception {
+		String[] array = new String[] {"aaa", "bbb", "ccc"};
+
+		ArrayUtil.reverse(array);
+
+		Assert.assertArrayEquals(new String[] {"ccc", "bbb", "aaa"}, array);
+	}
+
+	@Test
 	public void testToDoubleArray() throws Exception {
 		List<Double> list = new ArrayList<Double>();
 

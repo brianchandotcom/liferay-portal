@@ -12,9 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.tools;
-
-import com.liferay.portal.tools.sourceformatter.SourceFormatter;
+package com.liferay.portal.tools.sourceformatter;
 
 import org.junit.Test;
 

@@ -533,17 +533,21 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	protected String getCopyright() throws IOException {
-		String copyright = fileUtil.read("copyright.txt");
-
-		if (Validator.isNull(copyright)) {
-			copyright = fileUtil.read("../copyright.txt");
+		if (Validator.isNotNull(_copyright)) {
+			return _copyright;
 		}
 
-		if (Validator.isNull(copyright)) {
-			copyright = fileUtil.read("../../copyright.txt");
+		_copyright = fileUtil.read("copyright.txt");
+
+		if (Validator.isNull(_copyright)) {
+			_copyright = fileUtil.read("../copyright.txt");
 		}
 
-		return copyright;
+		if (Validator.isNull(_copyright)) {
+			_copyright = fileUtil.read("../../copyright.txt");
+		}
+
+		return _copyright;
 	}
 
 	protected String getCustomCopyright(File file) throws IOException {
@@ -652,17 +656,21 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	protected String getOldCopyright() throws IOException {
-		String copyright = fileUtil.read("old-copyright.txt");
-
-		if (Validator.isNull(copyright)) {
-			copyright = fileUtil.read("../old-copyright.txt");
+		if (Validator.isNotNull(_oldCopyright)) {
+			return _oldCopyright;
 		}
 
-		if (Validator.isNull(copyright)) {
-			copyright = fileUtil.read("../../old-copyright.txt");
+		_oldCopyright = fileUtil.read("old-copyright.txt");
+
+		if (Validator.isNull(_oldCopyright)) {
+			_oldCopyright = fileUtil.read("../old-copyright.txt");
 		}
 
-		return copyright;
+		if (Validator.isNull(_oldCopyright)) {
+			_oldCopyright = fileUtil.read("../../old-copyright.txt");
+		}
+
+		return _oldCopyright;
 	}
 
 	protected Properties getExclusionsProperties(String fileName)
@@ -1038,10 +1046,12 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	private static boolean _autoFix;
-	private Map<String, String> _compatClassNamesMap;
+	private static Map<String, String> _compatClassNamesMap;
+	private static String _copyright;
 	private static List<String> _errorMessages = new ArrayList<String>();
 	private static String[] _excludes;
 	private static boolean _initialized;
+	private static String _oldCopyright;
 	private static Properties _portalLanguageKeysProperties;
 	private static boolean _throwException;
 

@@ -774,59 +774,8 @@ public class JavadocFormatter {
 			fileName, originalContent, javadocLessContent, document);
 	}
 
-	private String _formatCDATA(String cdata, String exclude) {
-		StringBundler sb = new StringBundler();
-
-		String startTag = "<" + exclude + ">";
-		String endTag = "</" + exclude + ">";
-
-		String[] cdataParts = cdata.split(startTag);
-
-		for (String cdataPart : cdataParts) {
-			if (!cdataPart.contains(endTag)) {
-				cdataPart = _getCDATA(cdataPart);
-			}
-
-			if (cdataPart.contains("</" + exclude + ">")) {
-				sb.append(startTag);
-			}
-
-			sb.append(cdataPart);
-		}
-
-		return sb.toString();
-	}
-
-	private String _formatInlines(String text) {
-
-		// Capitalize ID
-
-		text = text.replaceAll("[?@param id](?i)\\bid(s)?\\b", " ID$1");
-
-		// Wrap special constants in code tags
-
-		text = text.replaceAll(
-			"(?i)(?<!<code>|\\w)(null|false|true)(?!\\w)", "<code>$1</code>");
-
-		return text;
-	}
-
-	private String _getCDATA(AbstractJavaEntity abstractJavaEntity) {
-		return _getCDATA(abstractJavaEntity.getComment());
-	}
-
-	private String _getCDATA(String cdata) {
-		if (cdata == null) {
-			return StringPool.BLANK;
-		}
-		else if (cdata.contains("<pre>")) {
-			cdata = _formatCDATA(cdata, "pre");
-		}
-		else if (cdata.contains("<table>")) {
-			cdata = _formatCDATA(cdata, "table");
-		}
-		else {
-			cdata = cdata.replaceAll(
+	private String _formatCDATA(String cdata) {
+		cdata = cdata.replaceAll(
 				"(?s)\\s*<(p|[ou]l)>\\s*(.*?)\\s*</\\1>\\s*",
 				"\n\n<$1>\n$2\n</$1>\n\n");
 			cdata = cdata.replaceAll(
@@ -857,9 +806,107 @@ public class JavadocFormatter {
 			matcher.appendTail(sb);
 
 			cdata = sb.toString();
-		}
 
 		return cdata.trim();
+	}
+
+	private String _formatInlines(String text) {
+
+		// Capitalize ID
+
+		text = text.replaceAll("[?@param id](?i)\\bid(s)?\\b", " ID$1");
+
+		// Wrap special constants in code tags
+
+		text = text.replaceAll(
+			"(?i)(?<!<code>|\\w)(null|false|true)(?!\\w)", "<code>$1</code>");
+
+		return text;
+	}
+
+	private String _getCDATA(AbstractJavaEntity abstractJavaEntity) {
+		return _getCDATA(abstractJavaEntity.getComment());
+	}
+
+	private String _getCDATA(String cdata) {
+		StringBundler sb = new StringBundler();
+
+		if ((cdata == null) || cdata.isEmpty()) {
+			return StringPool.BLANK;
+		}
+
+		int cdataBeginIndex = 0;
+
+		while (!cdata.isEmpty()) {
+			int preTagIndex = cdata.indexOf("<pre>");
+			int tableTagIndex = cdata.indexOf("<table>");
+			boolean hasPreTag = (preTagIndex != -1) ? true : false;
+			boolean hasTableTag = (tableTagIndex != -1) ? true : false;
+
+			if (!hasPreTag && !hasTableTag) {
+				sb.append(_formatCDATA(cdata));
+				break;
+			}
+
+			boolean startsWithPreTag = (preTagIndex == 0) ? true : false;
+			boolean startsWithTableTag = (tableTagIndex == 0) ? true : false;
+
+			if (startsWithPreTag || startsWithTableTag) {
+				String tagName = null;
+
+				if (preTagIndex == 0) {
+					tagName = "pre";
+				}
+				else {
+					tagName = "table";
+				}
+
+				String startTag = "<" + tagName + ">";
+				String endTag = "</" + tagName + ">";
+
+				int startTagLength = startTag.length();
+				int endTagLength = endTag.length();
+				int endTagIndex = cdata.indexOf(endTag, startTagLength - 1);
+
+				String entireElement = cdata.substring(
+					0, endTagIndex + endTagLength);
+				sb.append("\n");
+				sb.append(entireElement);
+				sb.append("\n");
+
+				cdataBeginIndex = endTagIndex + endTagLength;
+			}
+			else {
+
+				// Format the comment up to the next pre or table tag
+
+				int startTagIndex = 0;
+
+				if (hasPreTag && hasTableTag) {
+					if (preTagIndex < tableTagIndex) {
+						startTagIndex = preTagIndex;
+					}
+					else {
+						startTagIndex = tableTagIndex;
+					}
+				}
+				else if (hasPreTag && !hasTableTag) {
+					startTagIndex = preTagIndex;
+				}
+				else {
+					startTagIndex = tableTagIndex;
+				}
+
+				String textToFormat = cdata.substring(0, startTagIndex);
+				sb.append(_formatCDATA(textToFormat));
+
+				cdataBeginIndex = startTagIndex;
+			}
+
+			cdata = cdata.substring(cdataBeginIndex);
+		}
+
+		return sb.toString().trim();
 	}
 
 	private String _getClassName(String fileName) {

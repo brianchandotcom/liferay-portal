@@ -49,7 +49,6 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.GroupThreadLocal;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -4104,7 +4103,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 	protected boolean isUseComplexSQL(long[] classNameIds) {
 		if ((classNameIds == null) || (classNameIds.length == 0)) {
-			return false;
+			return true;
 		}
 
 		if (_complexSQLClassNameIds == null) {
@@ -4126,11 +4125,11 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 		for (long classNameId : classNameIds) {
 			if (ArrayUtil.contains(_complexSQLClassNameIds, classNameId)) {
-				return false;
+				return true;
 			}
 		}
 
-		return true;
+		return false;
 	}
 
 	protected boolean matches(String s, String[] keywords) {
@@ -4196,17 +4195,29 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	protected List<Group> sort(
 		List<Group> groups, int start, int end, OrderByComparator obc) {
 
-		if (obc == null) {
-			obc = new GroupNameComparator(true);
+		if (start < 0) {
+			start = 0;
 		}
 
-		Collections.sort(groups, obc);
+		if ((end < 0) || (end > groups.size())) {
+			end = groups.size();
+		}
 
-		return Collections.unmodifiableList(
-			ListUtil.subList(groups, start, end));
+		if (start < end) {
+			if (obc == null) {
+				obc = new GroupNameComparator(true);
+			}
+
+			Collections.sort(groups, obc);
+
+			return Collections.unmodifiableList(groups.subList(start, end));
+		}
+
+		return Collections.emptyList();
 	}
 
 	protected void unscheduleStaging(Group group) {

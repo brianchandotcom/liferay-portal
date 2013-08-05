@@ -29,7 +29,7 @@ int incompleteBackgroundTaskCount = ParamUtil.getInteger(request, "incompleteBac
 			<liferay-ui:message arguments="<%= incompleteBackgroundTaskCount - 1 %>" key="there-is-currently-1-process-in-progress-and-x-pending" />
 		</c:when>
 		<c:otherwise>
-			<liferay-ui:message key="there-are-no-processes-in-progress" />
+			<liferay-ui:message key="there-are-no-processes-in-progress-anymore" />
 		</c:otherwise>
 	</c:choose>
 </div>

@@ -20,10 +20,10 @@ package com.liferay.portal.tools.sourceformatter;
 public class SourceFormatterUtil {
 
 	public static SourceFormatter create(
-			boolean useProperties, boolean throwException)
+			boolean useProperties, boolean throwException, boolean autoFix)
 		throws Exception {
 
-		return new SourceFormatter(useProperties, throwException);
+		return new SourceFormatter(useProperties, throwException, autoFix);
 	}
 
 }

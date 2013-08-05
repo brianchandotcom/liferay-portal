@@ -56,10 +56,11 @@ import org.apache.tools.ant.DirectoryScanner;
 public abstract class BaseSourceProcessor implements SourceProcessor {
 
 	@Override
-	public void format(boolean useProperties, boolean throwException)
+	public void format(
+			boolean useProperties, boolean throwException, boolean autoFix)
 		throws Exception {
 
-		_init(useProperties, throwException);
+		_init(useProperties, throwException, autoFix);
 
 		doFormat();
 
@@ -763,6 +764,10 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 	}
 
+	protected boolean isAutoFix() {
+		return _autoFix;
+	}
+
 	protected void processErrorMessage(String fileName, String message) {
 		if (_throwException) {
 			_errorMessages.add(message);
@@ -958,7 +963,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		"<liferay-ui:error [^>]+>|<liferay-ui:success [^>]+>",
 		Pattern.MULTILINE);
 
-	private void _init(boolean useProperties, boolean throwException)
+	private void _init(
+			boolean useProperties, boolean throwException, boolean autoFix)
 		throws Exception {
 
 		_errorMessages = new ArrayList<String>();
@@ -970,6 +976,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		if (_initialized) {
 			return;
 		}
+
+		_autoFix = autoFix;
 
 		_setVersion();
 
@@ -1008,6 +1016,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 	}
 
+	private static boolean _autoFix;
 	private Map<String, String> _compatClassNamesMap;
 	private static List<String> _errorMessages = new ArrayList<String>();
 	private static String[] _excludes;

@@ -814,7 +814,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				oldContent = newContent;
 			}
 
-			if ((newContent != null) && !content.equals(newContent)) {
+			if (isAutoFix() && (newContent != null) &&
+				!content.equals(newContent)) {
+
 				fileUtil.write(file, newContent);
 
 				sourceFormatterHelper.printError(fileName, file);

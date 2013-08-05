@@ -19,8 +19,9 @@
 <%
 Long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
 String[] mediaGalleryMimeTypes = (String[])request.getAttribute("view.jsp-mediaGalleryMimeTypes");
-List results = (List)request.getAttribute("view.jsp-results");
 SearchContainer searchContainer = (SearchContainer)request.getAttribute("view.jsp-searchContainer");
+
+List results = searchContainer.getResults();
 %>
 
 <c:choose>

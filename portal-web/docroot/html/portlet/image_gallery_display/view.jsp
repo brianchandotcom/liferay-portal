@@ -131,7 +131,6 @@ long portletDisplayDDMTemplateId = PortletDisplayTemplateUtil.getPortletDisplayT
 				String[] mediaGalleryMimeTypes = null;
 
 				request.setAttribute("view.jsp-mediaGalleryMimeTypes", mediaGalleryMimeTypes);
-				request.setAttribute("view.jsp-results", results);
 				request.setAttribute("view.jsp-searchContainer", searchContainer);
 				%>
 
@@ -164,7 +163,6 @@ long portletDisplayDDMTemplateId = PortletDisplayTemplateUtil.getPortletDisplayT
 					searchContainer.setResults(results);
 
 					request.setAttribute("view.jsp-mediaGalleryMimeTypes", mediaGalleryMimeTypes);
-					request.setAttribute("view.jsp-results", results);
 					request.setAttribute("view.jsp-searchContainer", searchContainer);
 					%>
 
@@ -260,7 +258,6 @@ long portletDisplayDDMTemplateId = PortletDisplayTemplateUtil.getPortletDisplayT
 				searchContainer.setResults(results);
 
 				request.setAttribute("view.jsp-mediaGalleryMimeTypes", mediaGalleryMimeTypes);
-				request.setAttribute("view.jsp-results", results);
 				request.setAttribute("view.jsp-searchContainer", searchContainer);
 				%>
 

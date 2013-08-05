@@ -340,18 +340,14 @@ $dockbarOpenGradientStart: #0EA6F9;
 			margin-bottom: 0;
 		}
 
-		.article-toolbar {
-			height: 0;
-			line-height: 0;
-			margin: 0;
-		}
+		.article-form-add {
+			.taglib-header {
+				margin-bottom: 0;
+			}
 
-		.journal-article-header-edit {
-			border-top-width: 0;
-		}
-
-		.taglib-header {
-			margin-bottom: 0;
+			.journal-article-header-edit {
+				border-top-width: 0;
+			}
 		}
 	}
 

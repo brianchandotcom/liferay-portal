@@ -531,8 +531,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		String copyright = getCopyright();
 		String oldCopyright = getOldCopyright();
 
-		boolean portalJavaFiles = true;
-
 		Collection<String> fileNames = null;
 
 		if (portalSource) {
@@ -543,8 +541,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					"source.formatter.check.unprocessed.exceptions"));
 		}
 		else {
-			portalJavaFiles = false;
-
 			fileNames = getPluginJavaFiles();
 		}
 
@@ -713,7 +709,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				processErrorMessage(fileName, "}: " + fileName);
 			}
 
-			if (portalJavaFiles && !className.equals("BaseServiceImpl") &&
+			if (portalSource && !className.equals("BaseServiceImpl") &&
 				className.endsWith("ServiceImpl") &&
 				newContent.contains("ServiceUtil.")) {
 
@@ -728,7 +724,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				excluded = upgradeServiceUtilExclusions.getProperty(fileName);
 			}
 
-			if ((excluded == null) && portalJavaFiles &&
+			if ((excluded == null) && portalSource &&
 				fileName.contains("/portal/upgrade/") &&
 				!fileName.contains("/test/") &&
 				newContent.contains("ServiceUtil.")) {

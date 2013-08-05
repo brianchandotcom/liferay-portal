@@ -79,6 +79,16 @@ public class StagingServiceWrapper implements StagingService,
 		_stagingService.updateStagingRequest(stagingRequestId, fileName, bytes);
 	}
 
+	@Override
+	public com.liferay.portal.kernel.lar.MissingReferences validateStagingRequest(
+		long stagingRequestId, boolean privateLayout,
+		java.util.Map<java.lang.String, java.lang.String[]> parameterMap)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _stagingService.validateStagingRequest(stagingRequestId,
+			privateLayout, parameterMap);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

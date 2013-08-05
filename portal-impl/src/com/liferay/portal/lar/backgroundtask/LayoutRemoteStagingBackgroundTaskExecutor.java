@@ -16,13 +16,8 @@ package com.liferay.portal.lar.backgroundtask;
 
 import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.RemoteExportException;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatus;
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusRegistryUtil;
-import com.liferay.portal.kernel.backgroundtask.BaseBackgroundTaskExecutor;
-import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.staging.StagingUtil;
+import com.liferay.portal.kernel.lar.MissingReferences;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -48,14 +43,7 @@ import java.util.Map;
  * @author Mate Thurzo
  */
 public class LayoutRemoteStagingBackgroundTaskExecutor
-	extends BaseBackgroundTaskExecutor {
-
-	public LayoutRemoteStagingBackgroundTaskExecutor() {
-		setBackgroundTaskStatusMessageTranslator(
-			new DefaultExportImportBackgroundTaskStatusMessageTranslator());
-
-		setSerial(true);
-	}
+	extends BaseStagingBackgroundTaskExecutor {
 
 	@Override
 	public BackgroundTaskResult execute(BackgroundTask backgroundTask)
@@ -77,16 +65,13 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 		HttpPrincipal httpPrincipal = (HttpPrincipal)taskContextMap.get(
 			"httpPrincipal");
 
-		BackgroundTaskStatus backgroundTaskStatus =
-			BackgroundTaskStatusRegistryUtil.getBackgroundTaskStatus(
-				backgroundTask.getBackgroundTaskId());
-
-		backgroundTaskStatus.clearAttributes();
+		clearBackgroundTaskStatus(backgroundTask);
 
 		long stagingRequestId = 0;
 
 		File file = null;
 		FileInputStream fileInputStream = null;
+		MissingReferences missingReferences = null;
 
 		try {
 			file = exportLayoutsAsFile(
@@ -124,6 +109,9 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 					new byte[PropsValues.STAGING_REMOTE_TRANSFER_BUFFER_SIZE];
 			}
 
+			missingReferences = StagingServiceHttp.validateStagingRequest(
+				httpPrincipal, stagingRequestId, privateLayout, parameterMap);
+
 			StagingServiceHttp.publishStagingRequest(
 				httpPrincipal, stagingRequestId, privateLayout, parameterMap);
 		}
@@ -138,16 +126,7 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 			}
 		}
 
-		return new BackgroundTaskResult(
-			BackgroundTaskConstants.STATUS_SUCCESSFUL);
-	}
-
-	@Override
-	public String handleException(BackgroundTask backgroundTask, Exception e) {
-		JSONObject jsonObject = StagingUtil.getExceptionMessagesJSONObject(
-			getLocale(backgroundTask), e, backgroundTask.getTaskContextMap());
-
-		return jsonObject.toString();
+		return processMissingReferences(backgroundTask, missingReferences);
 	}
 
 	protected File exportLayoutsAsFile(

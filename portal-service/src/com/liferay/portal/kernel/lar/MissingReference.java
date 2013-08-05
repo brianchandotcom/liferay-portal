@@ -17,6 +17,8 @@ package com.liferay.portal.kernel.lar;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.xml.Element;
 
+import java.io.Serializable;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -24,7 +26,7 @@ import java.util.Set;
 /**
  * @author Zsolt Berentey
  */
-public class MissingReference {
+public class MissingReference implements Serializable {
 
 	public MissingReference(Element element) {
 		_className = element.attributeValue("class-name");

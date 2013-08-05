@@ -1915,6 +1915,17 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 	}
 
 	@Override
+	public com.liferay.portal.kernel.lar.MissingReferences validateImportLayoutsFile(
+		long userId, long groupId, boolean privateLayout,
+		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
+		java.io.InputStream inputStream)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _layoutLocalService.validateImportLayoutsFile(userId, groupId,
+			privateLayout, parameterMap, inputStream);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.lar.MissingReferences validateImportPortletInfo(
 		long userId, long plid, long groupId, java.lang.String portletId,
 		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,

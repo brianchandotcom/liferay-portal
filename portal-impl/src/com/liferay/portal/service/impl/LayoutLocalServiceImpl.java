@@ -2825,6 +2825,30 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	}
 
 	@Override
+	public MissingReferences validateImportLayoutsFile(
+			long userId, long groupId, boolean privateLayout,
+			Map<String, String[]> parameterMap, InputStream inputStream)
+		throws PortalException, SystemException {
+
+		File file = null;
+
+		try {
+			file = FileUtil.createTempFile("lar");
+
+			FileUtil.write(file, inputStream);
+
+			return validateImportLayoutsFile(
+				userId, groupId, privateLayout, parameterMap, file);
+		}
+		catch (IOException ioe) {
+			throw new SystemException(ioe);
+		}
+		finally {
+			FileUtil.delete(file);
+		}
+	}
+
+	@Override
 	public MissingReferences validateImportPortletInfo(
 			long userId, long plid, long groupId, String portletId,
 			Map<String, String[]> parameterMap, File file)

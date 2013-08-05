@@ -73,4 +73,10 @@ public interface StagingLocalService extends BaseLocalService {
 		java.lang.String fileName, byte[] bytes)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
+
+	public com.liferay.portal.kernel.lar.MissingReferences validateStagingRequest(
+		long userId, long stagingRequestId, boolean privateLayout,
+		java.util.Map<java.lang.String, java.lang.String[]> parameterMap)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
 }

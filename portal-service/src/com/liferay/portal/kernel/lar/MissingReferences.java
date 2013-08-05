@@ -14,13 +14,15 @@
 
 package com.liferay.portal.kernel.lar;
 
+import java.io.Serializable;
+
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * @author Julio Camarero
  */
-public class MissingReferences {
+public class MissingReferences implements Serializable {
 
 	public void add(MissingReference missingReference) {
 		String type = missingReference.getType();

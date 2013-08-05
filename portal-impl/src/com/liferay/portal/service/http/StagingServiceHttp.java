@@ -189,6 +189,46 @@ public class StagingServiceHttp {
 		}
 	}
 
+	public static com.liferay.portal.kernel.lar.MissingReferences validateStagingRequest(
+		HttpPrincipal httpPrincipal, long stagingRequestId,
+		boolean privateLayout,
+		java.util.Map<java.lang.String, java.lang.String[]> parameterMap)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		try {
+			MethodKey methodKey = new MethodKey(StagingServiceUtil.class,
+					"validateStagingRequest",
+					_validateStagingRequestParameterTypes4);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					stagingRequestId, privateLayout, parameterMap);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
+					throw (com.liferay.portal.kernel.exception.SystemException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.portal.kernel.lar.MissingReferences)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(StagingServiceHttp.class);
 	private static final Class<?>[] _cleanUpStagingRequestParameterTypes0 = new Class[] {
 			long.class
@@ -201,5 +241,8 @@ public class StagingServiceHttp {
 		};
 	private static final Class<?>[] _updateStagingRequestParameterTypes3 = new Class[] {
 			long.class, java.lang.String.class, byte[].class
+		};
+	private static final Class<?>[] _validateStagingRequestParameterTypes4 = new Class[] {
+			long.class, boolean.class, java.util.Map.class
 		};
 }

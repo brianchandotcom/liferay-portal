@@ -87,6 +87,16 @@ public class StagingLocalServiceUtil {
 			.updateStagingRequest(userId, stagingRequestId, fileName, bytes);
 	}
 
+	public static com.liferay.portal.kernel.lar.MissingReferences validateStagingRequest(
+		long userId, long stagingRequestId, boolean privateLayout,
+		java.util.Map<java.lang.String, java.lang.String[]> parameterMap)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .validateStagingRequest(userId, stagingRequestId,
+			privateLayout, parameterMap);
+	}
+
 	public static StagingLocalService getService() {
 		if (_service == null) {
 			_service = (StagingLocalService)PortalBeanLocatorUtil.locate(StagingLocalService.class.getName());

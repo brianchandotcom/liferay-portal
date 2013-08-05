@@ -32,6 +32,7 @@ import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.StagingLocalServiceBaseImpl;
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.portlet.documentlibrary.NoSuchFileException;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 
@@ -143,7 +144,7 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 				folder.getGroupId(), folder.getFolderId(),
 				_ASSEMBLED_LAR_PREFIX + String.valueOf(stagingRequestId));
 		}
-		catch (Exception e) {
+		catch (NoSuchFileException e) {
 			return null;
 		}
 	}

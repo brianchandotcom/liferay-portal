@@ -804,9 +804,7 @@ public class JavadocFormatter {
 
 			while (!cdata.isEmpty()) {
 				int preIndex = cdata.indexOf("<pre>");
-				int endPreIndex = cdata.indexOf("</pre>");
-				int tableIndex = cdata.indexOf("<table>");
-				int endTableIndex = cdata.indexOf("</table>");		
+				int tableIndex = cdata.indexOf("<table>");		
 				boolean bothPreformattedTagsExist = ((preIndex > -1) && (tableIndex > -1)) ? true : false;
 				boolean noPreformattedTagsExist = ((preIndex == -1) && (tableIndex == -1)) ? true : false;
 				boolean preExistsWithNoExistingTable = ((preIndex != -1) && (tableIndex == -1)) ? true : false;

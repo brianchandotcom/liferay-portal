@@ -769,10 +769,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	protected void processErrorMessage(String fileName, String message) {
-		if (_throwException) {
-			_errorMessages.add(message);
-		}
-		else {
+		_errorMessages.add(message);
+
+		if (!_throwException) {
 			sourceFormatterHelper.printError(fileName, message);
 		}
 	}

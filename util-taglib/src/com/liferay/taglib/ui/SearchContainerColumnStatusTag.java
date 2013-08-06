@@ -48,7 +48,7 @@ public class SearchContainerColumnStatusTag<R>
 			ResultRow resultRow = searchContainerRowTag.getRow();
 
 			if (Validator.isNotNull(_property)) {
-				_value = (Integer)BeanPropertiesUtil.getObject(
+				_status = (Integer)BeanPropertiesUtil.getObject(
 					resultRow.getObject(), _property);
 			}
 
@@ -75,7 +75,7 @@ public class SearchContainerColumnStatusTag<R>
 				pageContext.getServletContext());
 			statusSearchEntry.setStatusByUserId(_statusByUserId);
 			statusSearchEntry.setStatusDate(_statusDate);
-			statusSearchEntry.setStatus(_value);
+			statusSearchEntry.setStatus(_status);
 			statusSearchEntry.setValign(getValign());
 
 			resultRow.addSearchEntry(index, statusSearchEntry);
@@ -86,7 +86,7 @@ public class SearchContainerColumnStatusTag<R>
 			index = -1;
 			_statusByUserId = -1;
 			_statusDate = null;
-			_value = -1;
+			_status = -1;
 
 			if (!ServerDetector.isResin()) {
 				align = SearchEntry.DEFAULT_ALIGN;
@@ -171,8 +171,8 @@ public class SearchContainerColumnStatusTag<R>
 		return _statusDate;
 	}
 
-	public int getValue() {
-		return _value;
+	public int getStatus() {
+		return _status;
 	}
 
 	public boolean isOrderable() {
@@ -195,6 +195,10 @@ public class SearchContainerColumnStatusTag<R>
 		_property = property;
 	}
 
+	public void setStatus(int status) {
+		_status = status;
+	}
+
 	public void setStatusByUserId(long statusByUserId) {
 		_statusByUserId = statusByUserId;
 	}
@@ -203,16 +207,12 @@ public class SearchContainerColumnStatusTag<R>
 		_statusDate = statusDate;
 	}
 
-	public void setValue(int value) {
-		_value = value;
-	}
-
 	private Object _href;
 	private boolean _orderable;
 	private String _orderableProperty;
 	private String _property;
+	private int _status = -1;
 	private long _statusByUserId;
 	private Date _statusDate;
-	private int _value;
 
 }

@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.staging.LayoutStagingUtil;
 import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -182,7 +183,7 @@ public class LayoutStagedModelDataHandler
 			portletDataContext.getParameterMap(), "delete_" + layout.getPlid());
 
 		if (deleteLayout) {
-			layoutElement.addAttribute("delete", String.valueOf(true));
+			layoutElement.addAttribute("action", Constants.DELETE);
 
 			return;
 		}
@@ -257,20 +258,15 @@ public class LayoutStagedModelDataHandler
 
 		long oldLayoutId = layoutId;
 
-		boolean deleteLayout = GetterUtil.getBoolean(
-			layoutElement.attributeValue("delete"));
-
 		boolean privateLayout = portletDataContext.isPrivateLayout();
 
 		Map<Long, Layout> newLayoutsMap =
 			(Map<Long, Layout>)portletDataContext.getNewPrimaryKeysMap(
 				Layout.class + ".layout");
 
-		Map<Long, Long> layoutPlids =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				Layout.class);
+		String action = layoutElement.attributeValue("action");
 
-		if (deleteLayout) {
+		if (action.equals(Constants.DELETE)) {
 			Layout deletingLayout =
 				LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
 					layoutUuid, groupId, privateLayout);
@@ -568,6 +564,10 @@ public class LayoutStagedModelDataHandler
 		List<Layout> newLayouts = portletDataContext.getNewLayouts();
 
 		newLayouts.add(importedLayout);
+
+		Map<Long, Long> layoutPlids =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				Layout.class);
 
 		layoutPlids.put(layout.getPlid(), importedLayout.getPlid());
 

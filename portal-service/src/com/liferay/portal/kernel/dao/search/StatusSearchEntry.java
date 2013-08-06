@@ -25,9 +25,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.PageContext;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Eudaldo Alonso
  */
-public class StatusSearchEntry extends SearchEntry {
+public class StatusSearchEntry extends TextSearchEntry {
 
 	@Override
 	public Object clone() {
@@ -36,10 +36,6 @@ public class StatusSearchEntry extends SearchEntry {
 		BeanPropertiesUtil.copyProperties(this, jspSearchEntry);
 
 		return jspSearchEntry;
-	}
-
-	public String getPath() {
-		return _path;
 	}
 
 	public HttpServletRequest getRequest() {
@@ -54,23 +50,31 @@ public class StatusSearchEntry extends SearchEntry {
 		return _servletContext;
 	}
 
+	public int getStatus() {
+		return _status;
+	}
+
 	@Override
 	public void print(PageContext pageContext) throws Exception {
+		if (_request == null) {
+			_request = (HttpServletRequest)pageContext.getRequest();
+		}
+
+		_request.setAttribute(
+			"liferay-ui:search-container-column-status:status",
+			String.valueOf(_status));
+
 		if (_servletContext != null) {
 			RequestDispatcher requestDispatcher =
 				DirectRequestDispatcherFactoryUtil.getRequestDispatcher(
-					_servletContext, _path);
+					_servletContext, _PAGE);
 
 			requestDispatcher.include(
 				_request, new PipingServletResponse(pageContext));
 		}
 		else {
-			pageContext.include(_path);
+			pageContext.include(_PAGE);
 		}
-	}
-
-	public void setPath(String path) {
-		_path = path;
 	}
 
 	public void setRequest(HttpServletRequest request) {
@@ -85,9 +89,16 @@ public class StatusSearchEntry extends SearchEntry {
 		_servletContext = servletContext;
 	}
 
-	private String _path;
+	public void setStatus(int status) {
+		_status = status;
+	}
+
+	private static final String _PAGE =
+		"/html/taglib/ui/search_container/status.jsp";
+
 	private HttpServletRequest _request;
 	private HttpServletResponse _response;
 	private ServletContext _servletContext;
+	private int _status;
 
 }

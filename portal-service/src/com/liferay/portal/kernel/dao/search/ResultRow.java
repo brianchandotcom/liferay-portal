@@ -227,6 +227,55 @@ public class ResultRow {
 		_searchEntries.add(searchEntry);
 	}
 
+	public void addStatus(int status) {
+		addStatus(_searchEntries.size(), status, null);
+	}
+
+	public void addStatus(int index, int status, String href) {
+
+		StatusSearchEntry statusSearchEntry = new StatusSearchEntry();
+
+		statusSearchEntry.setAlign(SearchEntry.DEFAULT_ALIGN);
+		statusSearchEntry.setColspan(SearchEntry.DEFAULT_COLSPAN);
+		statusSearchEntry.setHref(href);
+		statusSearchEntry.setStatus(status);
+		statusSearchEntry.setValign(SearchEntry.DEFAULT_VALIGN);
+
+		_searchEntries.add(index, statusSearchEntry);
+	}
+
+	public void addStatus(
+			int index, int status, String href, ServletContext servletContext,
+			HttpServletRequest request, HttpServletResponse response) {
+
+		StatusSearchEntry statusSearchEntry = new StatusSearchEntry();
+
+		statusSearchEntry.setAlign(SearchEntry.DEFAULT_ALIGN);
+		statusSearchEntry.setColspan(SearchEntry.DEFAULT_COLSPAN);
+		statusSearchEntry.setHref(href);
+		statusSearchEntry.setRequest(request);
+		statusSearchEntry.setResponse(response);
+		statusSearchEntry.setServletContext(servletContext);
+		statusSearchEntry.setStatus(status);
+		statusSearchEntry.setValign(SearchEntry.DEFAULT_VALIGN);
+
+		_searchEntries.add(index, statusSearchEntry);
+	}
+
+	public void addStatus(int status, PortletURL portletURL) {
+		if (portletURL != null) {
+			addStatus(_searchEntries.size(), status, portletURL.toString());
+
+		}
+		else {
+			addStatus(_searchEntries.size(), status, null);
+		}
+	}
+
+	public void addStatus(int status, String href) {
+		addStatus(_searchEntries.size(), status, null);
+	}
+
 	public void addText(int index, String name) {
 		addText(
 			index, SearchEntry.DEFAULT_ALIGN, SearchEntry.DEFAULT_VALIGN,

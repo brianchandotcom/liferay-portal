@@ -15,24 +15,27 @@
 package com.liferay.taglib.ui;
 
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
-import com.liferay.portal.kernel.dao.search.DateSearchEntry;
 import com.liferay.portal.kernel.dao.search.ResultRow;
 import com.liferay.portal.kernel.dao.search.SearchEntry;
+import com.liferay.portal.kernel.dao.search.StatusSearchEntry;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import javax.portlet.PortletURL;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspTagException;
 
 /**
- * @author Raymond Augé
+ * @author Eudaldo Alonso
  */
-public class SearchContainerColumnStatusTag<R> extends SearchContainerColumnTag {
+public class SearchContainerColumnStatusTag<R>
+	extends SearchContainerColumnTag {
 
 	@Override
 	public int doEndTag() {
@@ -44,7 +47,7 @@ public class SearchContainerColumnStatusTag<R> extends SearchContainerColumnTag 
 			ResultRow resultRow = searchContainerRowTag.getRow();
 
 			if (Validator.isNotNull(_property)) {
-				_value = (Date)BeanPropertiesUtil.getObject(
+				_value = (Integer)BeanPropertiesUtil.getObject(
 					resultRow.getObject(), _property);
 			}
 
@@ -58,22 +61,27 @@ public class SearchContainerColumnStatusTag<R> extends SearchContainerColumnTag 
 				_href = null;
 			}
 
-			DateSearchEntry dateSearchEntry = new DateSearchEntry();
+			StatusSearchEntry statusSearchEntry = new StatusSearchEntry();
 
-			dateSearchEntry.setAlign(getAlign());
-			dateSearchEntry.setColspan(getColspan());
-			dateSearchEntry.setCssClass(getCssClass());
-			dateSearchEntry.setDate(_value);
-			dateSearchEntry.setHref((String)getHref());
-			dateSearchEntry.setValign(getValign());
+			statusSearchEntry.setAlign(getAlign());
+			statusSearchEntry.setColspan(getColspan());
+			statusSearchEntry.setCssClass(getCssClass());
+			statusSearchEntry.setRequest(
+				(HttpServletRequest)pageContext.getRequest());
+			statusSearchEntry.setResponse(
+				(HttpServletResponse)pageContext.getResponse());
+			statusSearchEntry.setServletContext(
+				pageContext.getServletContext());
+			statusSearchEntry.setStatus(_value);
+			statusSearchEntry.setValign(getValign());
 
-			resultRow.addSearchEntry(index, dateSearchEntry);
+			resultRow.addSearchEntry(index, statusSearchEntry);
 
 			return EVAL_PAGE;
 		}
 		finally {
 			index = -1;
-			_value = null;
+			_value = -1;
 
 			if (!ServerDetector.isResin()) {
 				align = SearchEntry.DEFAULT_ALIGN;
@@ -150,7 +158,7 @@ public class SearchContainerColumnStatusTag<R> extends SearchContainerColumnTag 
 		return _property;
 	}
 
-	public Date getValue() {
+	public int getValue() {
 		return _value;
 	}
 
@@ -174,7 +182,7 @@ public class SearchContainerColumnStatusTag<R> extends SearchContainerColumnTag 
 		_property = property;
 	}
 
-	public void setValue(Date value) {
+	public void setValue(int value) {
 		_value = value;
 	}
 
@@ -182,6 +190,6 @@ public class SearchContainerColumnStatusTag<R> extends SearchContainerColumnTag 
 	private boolean _orderable;
 	private String _orderableProperty;
 	private String _property;
-	private Date _value;
+	private int _value;
 
 }

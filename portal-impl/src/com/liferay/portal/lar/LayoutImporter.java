@@ -1132,6 +1132,12 @@ public class LayoutImporter {
 		}
 
 		for (Element layoutElement : layoutElements) {
+			String action = layoutElement.attributeValue("action");
+
+			if (action.equals(Constants.SKIP)) {
+				continue;
+			}
+
 			String layoutPrototypeUuid = GetterUtil.getString(
 				layoutElement.attributeValue("layout-prototype-uuid"));
 

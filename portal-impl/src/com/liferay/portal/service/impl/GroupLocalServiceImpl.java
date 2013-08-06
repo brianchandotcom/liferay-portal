@@ -843,6 +843,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 					Group.class.getName(), group.getGroupId());
 			}
 
+			assetTagLocalService.deleteTags(group.getGroupId());
+
 			assetVocabularyLocalService.deleteVocabularies(group.getGroupId());
 
 			// Expando

@@ -33,6 +33,9 @@ public class TestPropsValues extends com.liferay.portal.util.TestPropsValues {
 	public static final String CLUSTER_NODE_2 = TestPropsUtil.get(
 		"cluster.node2");
 
+	public static final String[] FIXED_ISSUES = StringUtil.split(
+		TestPropsUtil.get("fixed.issues"));
+
 	public static final String OUTPUT_DIR = TestPropsUtil.get("output.dir");
 
 	public static final String PORTAL_URL = TestPropsUtil.get("portal.url");

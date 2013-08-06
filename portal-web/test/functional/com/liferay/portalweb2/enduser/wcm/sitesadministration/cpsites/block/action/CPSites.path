@@ -154,18 +154,8 @@
 </tr>
 <!--SITE_MENULIST-->
 <tr>
-	<td>SITE_MENULIST_EDIT_SETTINGS</td>
-	<td>//a[@role='menuitem' and contains(.,'Edit Settings')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SITE_MENULIST_MANAGE_PAGES</td>
-	<td>//a[@role='menuitem' and contains(.,'Manage Pages')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SITE_MENULIST_MANAGE_MEMBERSHIPS</td>
-	<td>//a[@role='menuitem' and contains(.,'Manage Memberships')]</td>
+	<td>SITE_MENULIST_MANAGE</td>
+	<td>//a[@role='menuitem' and contains(.,'Manage')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -24,8 +24,45 @@ import org.junit.Test;
 
 /**
  * @author Eudaldo Alonso
+ * @author Roberto Díaz
  */
 public class ArrayUtilTest {
+
+	@Test
+	public void testBooleanArrayContainsAllBooleanArray() throws Exception {
+		boolean[] array1 = new boolean[]{true};
+		boolean[] array2 = new boolean[]{true, false};
+
+		Assert.assertFalse(ArrayUtil.containsAll(array1, array2));
+		Assert.assertTrue(ArrayUtil.containsAll(array2, array1));
+	}
+
+	@Test
+	public void testByteArrayContainsAllByteArray() throws Exception {
+		byte[] array1 = new byte[]{1, 2};
+		byte[] array2= new byte[]{1, 2, 3};
+
+		Assert.assertFalse(ArrayUtil.containsAll(array1, array2));
+		Assert.assertTrue(ArrayUtil.containsAll(array2, array1));
+	}
+
+	@Test
+	public void testCharArrayContainsAllCharArray() throws Exception {
+		char[] array1 = new char[]{'a', 'b'};
+		char[] array2 = new char[]{'a', 'b', 'c'};
+
+		Assert.assertFalse(ArrayUtil.containsAll(array1, array2));
+		Assert.assertTrue(ArrayUtil.containsAll(array2, array1));
+	}
+
+	@Test
+	public void testDoubleArrayContainsAllDoubleArray() throws Exception {
+		double[] array1 = new double[]{1.5D, 2.5D};
+		double[] array2 = new double[]{1.5D, 2.5D, 3.5D};
+
+		Assert.assertFalse(ArrayUtil.containsAll(array1, array2));
+		Assert.assertTrue(ArrayUtil.containsAll(array2, array1));
+	}
 
 	@Test
 	public void testFilterDoubleArray() {
@@ -108,6 +145,33 @@ public class ArrayUtilTest {
 	}
 
 	@Test
+	public void testFloatArrayContainsAllFloatArray() throws Exception {
+		float[] array1 = new float[]{1.5f, 2.5f};
+		float[] array2 = new float[]{1.5f, 2.5f, 3.5f};
+
+		Assert.assertFalse(ArrayUtil.containsAll(array1, array2));
+		Assert.assertTrue(ArrayUtil.containsAll(array2, array1));
+	}
+
+	@Test
+	public void testIntArrayContainsAllIntArray() throws Exception {
+		int[] array1 = new int[]{1, 2};
+		int[] array2 = new int[]{1, 2, 3};
+
+		Assert.assertFalse(ArrayUtil.containsAll(array1, array2));
+		Assert.assertTrue(ArrayUtil.containsAll(array2, array1));
+	}
+
+	@Test
+	public void testLongArrayContainsAllLongArray() throws Exception {
+		long[] array1 = new long[]{1L, 2L};
+		long[] array2 = new long[]{1L, 2L, 3L};
+
+		Assert.assertFalse(ArrayUtil.containsAll(array1, array2));
+		Assert.assertTrue(ArrayUtil.containsAll(array2, array1));
+	}
+
+	@Test
 	public void testReverseBooleanArray() throws Exception {
 		boolean[] array = new boolean[] {true, true, false};
 
@@ -170,6 +234,15 @@ public class ArrayUtilTest {
 		ArrayUtil.reverse(array);
 
 		Assert.assertArrayEquals(new String[] {"ccc", "bbb", "aaa"}, array);
+	}
+
+	@Test
+	public void testShortArrayContainsAllOShortArray() throws Exception {
+		short[] array1 = new short[]{1, 2};
+		short[] array2 = new short[]{1, 2, 3};
+
+		Assert.assertFalse(ArrayUtil.containsAll(array1, array2));
+		Assert.assertTrue(ArrayUtil.containsAll(array2, array1));
 	}
 
 	@Test
@@ -242,6 +315,19 @@ public class ArrayUtilTest {
 
 			Assert.assertEquals(value.longValue(), array[i]);
 		}
+	}
+
+	@Test
+	public void testUserArrayContainsAllUserArray() throws Exception {
+		User julio = new User("julio", 20);
+		User sergio = new User("sergio", 20);
+		User brian = new User("brian", 20);
+
+		User[] array1 = {julio, sergio};
+		User[] array2 = {julio, sergio, brian};
+
+		Assert.assertFalse(ArrayUtil.containsAll(array1, array2));
+		Assert.assertTrue(ArrayUtil.containsAll(array2, array1));
 	}
 
 	private PredicateFilter<Double> _doublePredicateFilter =

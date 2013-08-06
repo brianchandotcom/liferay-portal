@@ -551,11 +551,9 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 
 				var form = A.one('#<%= namespace %><%= HtmlUtil.escapeJS(formName) %>');
 
-				var refreshPage = !anonymousAccount;
-
 				form.one('#<%= namespace %>emailAddress').val(emailAddress);
 
-				<portlet:namespace />sendMessage(form, refreshPage);
+				<portlet:namespace />sendMessage(form, !anonymousAccount);
 			},
 			['aui-base']
 		);
@@ -589,7 +587,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 
 						<portlet:namespace />showStatusMessage('success', '<%= UnicodeLanguageUtil.get(pageContext, "your-request-processed-successfully") %>');
 
-						location.hash = '#' + A.one("#<portlet:namespace />randomNamespace").val() + 'message_' + response.messageId;
+						location.hash = '#' + A.one('#<portlet:namespace />randomNamespace').val() + 'message_' + response.messageId;
 					}
 				);
 
@@ -682,7 +680,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 									Liferay.fire('<%= portletDisplay.getId() %>:messagePosted', response);
 								}
 								else {
-									var errorKey = '';
+									var errorKey = '<%= UnicodeLanguageUtil.get(pageContext, "your-request-failed-to-complete") %>';
 
 									if (exception.indexOf('MessageBodyException') > -1) {
 										errorKey = '<%= UnicodeLanguageUtil.get(pageContext, "please-enter-a-valid-message") %>';
@@ -695,9 +693,6 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 									}
 									else if (exception.indexOf('RequiredMessageException') > -1) {
 										errorKey = '<%= UnicodeLanguageUtil.get(pageContext, "you-cannot-delete-a-root-message-that-has-more-than-one-immediate-reply") %>';
-									}
-									else {
-										errorKey = '<%= UnicodeLanguageUtil.get(pageContext, "your-request-failed-to-complete") %>';
 									}
 
 									<portlet:namespace />showStatusMessage('error', errorKey);
@@ -739,18 +734,18 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 
 				var cmd = form.one('#<%= namespace %><%= Constants.CMD %>');
 
+				var cmdVal = '<%= Constants.UNSUBSCRIBE_FROM_COMMENTS %>';
+
 				if (subscribe) {
-					cmd.val('<%= Constants.SUBSCRIBE_TO_COMMENTS %>');
+					cmdVal = '<%= Constants.SUBSCRIBE_TO_COMMENTS %>';
 				}
-				else {
-					cmd.val('<%= Constants.UNSUBSCRIBE_FROM_COMMENTS %>');
-				}
+
+				cmd.val(cmdVal);
 
 				<portlet:namespace />sendMessage(form);
 			},
 			['aui-base']
 		);
-
 
 		Liferay.provide(
 			window,

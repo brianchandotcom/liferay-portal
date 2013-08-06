@@ -16,12 +16,6 @@
 
 <%@ include file="/html/taglib/ui/social_bookmark/init.jsp" %>
 
-<liferay-util:html-bottom outputKey='<%= "taglib_ui_social_bookmark_link_" + type %>'>
-	<style type="text/css">
-		.taglib-social-bookmarks .taglib-social-bookmark-<%= type %> a.social-bookmark-link {
-			background-image: url(/html/taglib/ui/social_bookmark/icons/<%= type %>.png);
-		}
-	</style>
-</liferay-util:html-bottom>
+<liferay-util:html-bottom outputKey='<%= "taglib_ui_social_bookmark_link_" + type %>' />
 
 <aui:a cssClass="social-bookmark-link" href="<%= postUrl %>" target="<%= target %>"><liferay-ui:message key="<%= messageKey %>" /></aui:a>

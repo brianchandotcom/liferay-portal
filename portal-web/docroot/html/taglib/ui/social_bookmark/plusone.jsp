@@ -16,13 +16,10 @@
 
 <%@ include file="/html/taglib/ui/social_bookmark/init.jsp" %>
 
-<%
-	String strUrlPlusOne = "https://plus.google.com/share?url=" + url;
-%>
-
 <liferay-ui:icon
 	cssClass="social-bookmark"
 	message="<%= type %>"
+	method="get"
 	src="/html/themes/classic/images/common/logo-plusone.png"
-	url="<%= strUrlPlusOne %>"
+	url='<%= "https://plus.google.com/share?url=" + url %>'
 />

@@ -22,7 +22,7 @@
 	String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_social_bookmarks_page") + StringPool.UNDERLINE;
 	%>
 
-	<div id="<%= randomNamespace %>socialBookmarks">
+	<div class="taglib-social-bookmarks" id="<%= randomNamespace %>socialBookmarks">
 		<liferay-ui:icon-menu icon="/html/themes/classic/images/common/share.png" message="share">
 
 			<%
@@ -39,10 +39,6 @@
 	</div>
 
 	<aui:script use="liferay-social-bookmarks">
-		new Liferay.SocialBookmarks(
-			{
-				trigger: '<%= randomNamespace %>socialBookmarks'
-			}
-		);
+		new Liferay.SocialBookmarks();
 	</aui:script>
 </c:if>

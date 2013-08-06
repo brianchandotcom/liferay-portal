@@ -624,6 +624,41 @@ public class DLAppHelperLocalServiceImpl
 		}
 	}
 
+	public void registerDLSyncEventCallback(
+			final String event, final String type, final long typePK)
+		throws SystemException {
+
+		DLSyncEvent dlSyncEvent = dlSyncEventLocalService.addDLSyncEvent(
+			event, type, typePK);
+
+		final long modifiedDate = dlSyncEvent.getModifiedDate();
+
+		TransactionCommitCallbackRegistryUtil.registerCallback(
+			new Callable<Void>() {
+
+				@Override
+				public Void call() throws Exception {
+					Message message = new Message();
+
+					Map<String, Object> values = new HashMap<String, Object>(4);
+
+					values.put("event", event);
+					values.put("modifiedDate", modifiedDate);
+					values.put("type", type);
+					values.put("typePK", typePK);
+
+					message.setValues(values);
+
+					MessageBusUtil.sendMessage(
+						DestinationNames.DOCUMENT_LIBRARY_SYNC_EVENT_PROCESSOR,
+						message);
+
+					return null;
+				}
+
+			});
+	}
+
 	@Override
 	public void restoreFileEntryFromTrash(long userId, FileEntry fileEntry)
 		throws PortalException, SystemException {
@@ -1740,41 +1775,6 @@ public class DLAppHelperLocalServiceImpl
 				public Void call() throws Exception {
 					DLProcessorRegistryUtil.trigger(
 						fileEntry, fileVersion, true);
-
-					return null;
-				}
-
-			});
-	}
-
-	protected void registerDLSyncEventCallback(
-			final String event, final String type, final long typePK)
-		throws SystemException {
-
-		DLSyncEvent dlSyncEvent = dlSyncEventLocalService.addDLSyncEvent(
-			event, type, typePK);
-
-		final long modifiedDate = dlSyncEvent.getModifiedDate();
-
-		TransactionCommitCallbackRegistryUtil.registerCallback(
-			new Callable<Void>() {
-
-				@Override
-				public Void call() throws Exception {
-					Message message = new Message();
-
-					Map<String, Object> values = new HashMap<String, Object>(4);
-
-					values.put("event", event);
-					values.put("modifiedDate", modifiedDate);
-					values.put("type", type);
-					values.put("typePK", typePK);
-
-					message.setValues(values);
-
-					MessageBusUtil.sendMessage(
-						DestinationNames.DOCUMENT_LIBRARY_SYNC_EVENT_PROCESSOR,
-						message);
 
 					return null;
 				}

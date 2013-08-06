@@ -1,0 +1,69 @@
+<html>
+<head>
+<title>PGADTConfiguration</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGADTConfiguration</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td>PGADTConfiguration</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADT_CONFIGURATION_IFRAME</td>
+	<td>//iframe</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADT_CONFIGURATION_IFRAME_TOP</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>CLOSE_BUTTON</td>
+	<td>//button[@class,'close-content']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[@class='alert alert-success']</td>
+	<td>You have successfully updated the setup. </td>
+</tr>
+<tr>
+	<td>SETUP</td>
+	<td>//a[contains(.,'Setup')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_SETTINGS</td>
+	<td>//a[contains(.,'Display Settings')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MANAGE_DISPLAY_TEMPLATES_LINK</td>
+	<td>//a[@id='_86_selectDDMTemplate']/span[contains(.,'Manage Display Templates for Liferay')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_TEMPLATE_SELECT</td>
+	<td>//select[contains(@id,'displayStyle')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE_BUTTON</td>
+	<td>//div[@class='button-holder ']/button[contains(.,' Save ')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

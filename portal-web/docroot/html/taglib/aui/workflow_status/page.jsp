@@ -16,7 +16,7 @@
 
 <%@ include file="/html/taglib/aui/workflow_status/init.jsp" %>
 
-<div class="taglib-workflow-status">
+<span class="taglib-workflow-status">
 	<c:if test="<%= Validator.isNotNull(id) %>">
 		<span class="workflow-id"><liferay-ui:message key="id" />: <%= HtmlUtil.escape(id) %></span>
 	</c:if>
@@ -67,4 +67,4 @@
 	<c:if test="<%= Validator.isNotNull(helpMessage) %>">
 		<liferay-ui:icon-help message="<%= helpMessage %>" />
 	</c:if>
-</div>
+</span>

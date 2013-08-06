@@ -1,7 +1,5 @@
 <#assign displayElement = macroElement>
 
-<#assign bold = true>
-
 <#include "element_open_html.ftl">
 
 <#assign macro = macroElement.attributeValue("macro")>

@@ -31,8 +31,6 @@
 				<li id="${testCaseName?uncap_first}TestCase${lineNumber}">
 					<#assign displayElement = testCaseVarElement>
 
-					<#assign bold = true>
-
 					<#include "element_whole_html.ftl">
 				</li>
 			</#list>
@@ -43,8 +41,6 @@
 				<#assign lineNumber = testCaseSetupElement.attributeValue("line-number")>
 
 				<li id="${testCaseName?uncap_first}TestCase${lineNumber}">
-					<#assign bold = true>
-
 					<#assign displayElement = testCaseSetupElement>
 
 					<#include "element_open_html.ftl">
@@ -62,9 +58,6 @@
 			<#assign lineNumber = testCaseCommandElement.attributeValue("line-number")>
 
 			<li id="${testCaseName?uncap_first}TestCase${lineNumber}">
-
-				<#assign bold = true>
-
 				<#assign displayElement = testCaseCommandElement>
 
 				<#include "element_open_html.ftl">
@@ -79,8 +72,6 @@
 			</li>
 
 			<#if testCaseRootElement.element("tear-down")??>
-				<#assign bold = true>
-
 				<#assign testCaseTearDownElement = testCaseRootElement.element("tear-down")>
 
 				<#assign lineNumber = testCaseTearDownElement.attributeValue("line-number")>

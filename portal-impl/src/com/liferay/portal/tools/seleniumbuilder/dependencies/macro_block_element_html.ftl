@@ -1,7 +1,5 @@
 <#assign elements = macroBlockElement.elements()>
 
-<#assign bold = false>
-
 <#list elements as element>
 	<#assign lineNumber = element.attributeValue("line-number")>
 

@@ -981,6 +981,10 @@ public interface PropsKeys {
 
 	public static final String INDEX_SEARCH_SCORING_ENABLED = "index.search.scoring.enabled";
 
+	public static final String INDEX_SEARCH_SPELL_CHECKER_DICTIONARY = "index.search.spell.checker.dictionary";
+
+	public static final String INDEX_SEARCH_SPELL_CHECKER_SUPPORTED_LOCALES = "index.search.spell.checker.supported.locales";
+
 	public static final String INDEX_SORTABLE_TEXT_FIELDS = "index.sortable.text.fields";
 
 	public static final String INDEX_SORTABLE_TEXT_FIELDS_TRUNCATED_LENGTH = "index.sortable.text.fields.truncated.length";
@@ -1480,10 +1484,6 @@ public interface PropsKeys {
 	public static final String LUCENE_MERGE_POLICY = "lucene.merge.policy";
 
 	public static final String LUCENE_REPLICATE_WRITE = "lucene.replicate.write";
-
-	public static final String LUCENE_SPELL_CHECKER_DICTIONARY = "lucene.spell.checker.dictionary";
-
-	public static final String LUCENE_SPELL_CHECKER_SUPPORTED_LOCALES = "lucene.spell.checker.supported.locales";
 
 	public static final String LUCENE_STORE_TYPE = "lucene.store.type";
 

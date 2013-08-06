@@ -84,7 +84,8 @@ public abstract class BaseSpellCheckIndexWriter
 		throws Exception {
 
 		String[] dictionaryFileNames = PropsUtil.getArray(
-			PropsKeys.LUCENE_SPELL_CHECKER_DICTIONARY, new Filter(languageId));
+			PropsKeys.INDEX_SEARCH_SPELL_CHECKER_DICTIONARY,
+			new Filter(languageId));
 
 		for (String dictionaryFileName : dictionaryFileNames) {
 			InputStream inputStream = null;
@@ -119,7 +120,7 @@ public abstract class BaseSpellCheckIndexWriter
 	}
 
 	private static final String[] _SUPPORTED_LANGUAGE_IDS = StringUtil.split(
-		PropsUtil.get(PropsKeys.LUCENE_SPELL_CHECKER_SUPPORTED_LOCALES));
+		PropsUtil.get(PropsKeys.INDEX_SEARCH_SPELL_CHECKER_SUPPORTED_LOCALES));
 
 	private static Log _log = LogFactoryUtil.getLog(
 		BaseSpellCheckIndexWriter.class);

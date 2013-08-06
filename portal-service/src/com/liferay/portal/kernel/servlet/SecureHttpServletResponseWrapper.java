@@ -14,10 +14,16 @@
 
 package com.liferay.portal.kernel.servlet;
 
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.IOException;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
 
@@ -29,6 +35,12 @@ public class SecureHttpServletResponseWrapper
 
 	public SecureHttpServletResponseWrapper(HttpServletResponse response) {
 		super(response);
+	}
+
+	@Override
+	public void addCookie(Cookie cookie) {
+		String header = createCookieHeader(cookie);
+		super.addHeader("Set-Cookie", HttpUtil.sanitizeHeader(header));
 	}
 
 	@Override
@@ -55,5 +67,54 @@ public class SecureHttpServletResponseWrapper
 	public void setHeader(String name, String value) {
 		super.setHeader(name, HttpUtil.sanitizeHeader(value));
 	}
+
+	private String createCookieHeader(Cookie cookie) {
+		String domain = cookie.getDomain();
+		boolean httpOnly = true;
+		String name = cookie.getName();
+		String value = cookie.getValue();
+		int maxAge = cookie.getMaxAge();
+		String path = cookie.getPath();
+		boolean secure = cookie.getSecure();
+
+		if (ArrayUtil.contains(
+				_HTTPONLY_IGNORE_COOKIE_NAMES, cookie.getName())) {
+
+			httpOnly = false;
+		}
+
+		StringBundler result = new StringBundler();
+		result.append(name);
+		result.append(StringPool.EQUAL);
+		result.append(value);
+		result.append("; Max-Age");
+		result.append(StringPool.EQUAL);
+		result.append(String.valueOf(maxAge));
+
+		if (domain != null) {
+			result.append("; Domain");
+			result.append(StringPool.EQUAL);
+			result.append(domain);
+		}
+
+		if (path != null) {
+			result.append("; Path");
+			result.append(StringPool.EQUAL);
+			result.append(path);
+		}
+
+		if (secure) {
+			result.append("; Secure");
+		}
+
+		if (httpOnly) {
+			result.append("; HttpOnly");
+		}
+
+		return result.toString();
+	}
+
+	private static final String[] _HTTPONLY_IGNORE_COOKIE_NAMES =
+		PropsUtil.getArray(PropsKeys.HTTPONLY_IGNORE_COOKIE_NAMES);
 
 }

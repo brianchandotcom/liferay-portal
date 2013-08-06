@@ -91,12 +91,6 @@ public class CookieKeys {
 		cookie.setValue(encodedValue);
 		cookie.setVersion(0);
 
-		if (!ArrayUtil.contains(
-				_HTTPONLY_IGNORE_COOKIE_NAMES, cookie.getName())) {
-
-			cookie.setHttpOnly(true);
-		}
-
 		// Setting a cookie will cause the TCK to lose its ability to track
 		// sessions
 
@@ -293,9 +287,6 @@ public class CookieKeys {
 
 		return cookieMap;
 	}
-
-	private static final String[] _HTTPONLY_IGNORE_COOKIE_NAMES =
-		PropsUtil.getArray(PropsKeys.HTTPONLY_IGNORE_COOKIE_NAMES);
 
 	private static final String _SESSION_COOKIE_DOMAIN = PropsUtil.get(
 		PropsKeys.SESSION_COOKIE_DOMAIN);

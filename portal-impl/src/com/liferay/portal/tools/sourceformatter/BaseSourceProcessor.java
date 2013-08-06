@@ -290,14 +290,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 	}
 
-	protected abstract void format() throws Exception;
-
-	protected String format(String fileName)
-		throws Exception {
-
-		return null;
-	}
-
 	protected String fixCompatClassImports(String fileName, String content)
 		throws IOException {
 
@@ -476,6 +468,14 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		while (matcher.find());
 
 		return newContent;
+	}
+
+	protected abstract void format() throws Exception;
+
+	protected String format(String fileName)
+		throws Exception {
+
+		return null;
 	}
 
 	protected Map<String, String> getCompatClassNamesMap() throws IOException {

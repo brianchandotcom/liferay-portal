@@ -526,6 +526,182 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
+	protected String fixDataAccessConnection(String className, String content) {
+		int x = content.indexOf("package ");
+
+		int y = content.indexOf(CharPool.SEMICOLON, x);
+
+		if ((x == -1) || (y == -1)) {
+			return content;
+		}
+
+		String packageName = content.substring(x + 8, y);
+
+		if (!packageName.startsWith("com.liferay.portal.kernel.upgrade") &&
+			!packageName.startsWith("com.liferay.portal.kernel.verify") &&
+			!packageName.startsWith("com.liferay.portal.upgrade") &&
+			!packageName.startsWith("com.liferay.portal.verify")) {
+
+			return content;
+		}
+
+		content = StringUtil.replace(
+			content, "DataAccess.getConnection",
+			"DataAccess.getUpgradeOptimizedConnection");
+
+		return content;
+	}
+
+	protected String fixIfClause(String ifClause, String line, int delta) {
+		String newLine = line;
+
+		String whiteSpace = StringPool.BLANK;
+		int whiteSpaceLength = Math.abs(delta);
+
+		while (whiteSpaceLength > 0) {
+			if (whiteSpaceLength >= 4) {
+				whiteSpace += StringPool.TAB;
+
+				whiteSpaceLength -= 4;
+			}
+			else {
+				whiteSpace += StringPool.SPACE;
+
+				whiteSpaceLength -= 1;
+			}
+		}
+
+		if (delta > 0) {
+			if (!line.contains(StringPool.TAB + whiteSpace)) {
+				newLine = StringUtil.replaceLast(
+					newLine, StringPool.TAB, StringPool.FOUR_SPACES);
+			}
+
+			newLine = StringUtil.replaceLast(
+				newLine, StringPool.TAB + whiteSpace, StringPool.TAB);
+		}
+		else {
+			newLine = StringUtil.replaceLast(
+				newLine, StringPool.TAB, StringPool.TAB + whiteSpace);
+		}
+
+		return StringUtil.replace(ifClause, line, newLine);
+	}
+
+	protected String fixJavaTermsDividers(
+		String fileName, String content, Set<JavaTerm> javaTerms) {
+
+		JavaTerm previousJavaTerm = null;
+
+		Iterator<JavaTerm> itr = javaTerms.iterator();
+
+		while (itr.hasNext()) {
+			JavaTerm javaTerm = itr.next();
+
+			if (previousJavaTerm == null) {
+				previousJavaTerm = javaTerm;
+
+				continue;
+			}
+
+			String javaTermContent = javaTerm.getContent();
+
+			if (javaTermContent.startsWith(StringPool.TAB + "//") ||
+				javaTermContent.contains(StringPool.TAB + "static {")) {
+
+				previousJavaTerm = javaTerm;
+
+				continue;
+			}
+
+			String previousJavaTermContent = previousJavaTerm.getContent();
+
+			if (previousJavaTermContent.startsWith(StringPool.TAB + "//") ||
+				previousJavaTermContent.contains(StringPool.TAB + "static {")) {
+
+				previousJavaTerm = javaTerm;
+
+				continue;
+			}
+
+			String javaTermName = javaTerm.getName();
+
+			String excluded = null;
+
+			if (_javaTermSortExclusions != null) {
+				excluded = _javaTermSortExclusions.getProperty(
+					fileName + StringPool.AT + javaTerm.getLineCount());
+
+				if (excluded == null) {
+					excluded = _javaTermSortExclusions.getProperty(
+						fileName + StringPool.AT + javaTermName);
+				}
+
+				if (excluded == null) {
+					excluded = _javaTermSortExclusions.getProperty(fileName);
+				}
+			}
+
+			if (excluded != null) {
+				previousJavaTerm = javaTerm;
+
+				continue;
+			}
+
+			String previousJavaTermName = previousJavaTerm.getName();
+
+			boolean requiresEmptyLine = false;
+
+			if (previousJavaTerm.getType() != javaTerm.getType()) {
+				requiresEmptyLine = true;
+			}
+			else if (!isInJavaTermTypeGroup(
+						javaTerm.getType(), TYPE_VARIABLE)) {
+
+				requiresEmptyLine = true;
+			}
+			else if (previousJavaTermName.equals(
+						previousJavaTermName.toUpperCase()) ||
+					 javaTermName.equals(javaTermName.toUpperCase())) {
+
+				requiresEmptyLine = true;
+			}
+			else if (hasAnnotationCommentOrJavadoc(javaTermContent) ||
+					 hasAnnotationCommentOrJavadoc(previousJavaTermContent)) {
+
+				requiresEmptyLine = true;
+			}
+			else if ((previousJavaTerm.getType() ==
+						TYPE_VARIABLE_PRIVATE_STATIC) &&
+					 (previousJavaTermName.equals("_log") ||
+					  previousJavaTermName.equals("_instance"))) {
+
+				requiresEmptyLine = true;
+			}
+			else if (previousJavaTermContent.contains("\n\n\t") ||
+					 javaTermContent.contains("\n\n\t")) {
+
+				requiresEmptyLine = true;
+			}
+
+			if (requiresEmptyLine) {
+				if (!content.contains("\n\n" + javaTermContent)) {
+					return StringUtil.replace(
+						content,
+						"\n" + javaTermContent, "\n\n" + javaTermContent);
+				}
+			}
+			else if (content.contains("\n\n" + javaTermContent)) {
+				return StringUtil.replace(
+					content, "\n\n" + javaTermContent, "\n" + javaTermContent);
+			}
+
+			previousJavaTerm = javaTerm;
+		}
+
+		return content;
+	}
+
 	@Override
 	protected void format() throws Exception {
 		Collection<String> fileNames = null;
@@ -813,182 +989,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 
 		return newContent;
-	}
-
-	protected String fixDataAccessConnection(String className, String content) {
-		int x = content.indexOf("package ");
-
-		int y = content.indexOf(CharPool.SEMICOLON, x);
-
-		if ((x == -1) || (y == -1)) {
-			return content;
-		}
-
-		String packageName = content.substring(x + 8, y);
-
-		if (!packageName.startsWith("com.liferay.portal.kernel.upgrade") &&
-			!packageName.startsWith("com.liferay.portal.kernel.verify") &&
-			!packageName.startsWith("com.liferay.portal.upgrade") &&
-			!packageName.startsWith("com.liferay.portal.verify")) {
-
-			return content;
-		}
-
-		content = StringUtil.replace(
-			content, "DataAccess.getConnection",
-			"DataAccess.getUpgradeOptimizedConnection");
-
-		return content;
-	}
-
-	protected String fixIfClause(String ifClause, String line, int delta) {
-		String newLine = line;
-
-		String whiteSpace = StringPool.BLANK;
-		int whiteSpaceLength = Math.abs(delta);
-
-		while (whiteSpaceLength > 0) {
-			if (whiteSpaceLength >= 4) {
-				whiteSpace += StringPool.TAB;
-
-				whiteSpaceLength -= 4;
-			}
-			else {
-				whiteSpace += StringPool.SPACE;
-
-				whiteSpaceLength -= 1;
-			}
-		}
-
-		if (delta > 0) {
-			if (!line.contains(StringPool.TAB + whiteSpace)) {
-				newLine = StringUtil.replaceLast(
-					newLine, StringPool.TAB, StringPool.FOUR_SPACES);
-			}
-
-			newLine = StringUtil.replaceLast(
-				newLine, StringPool.TAB + whiteSpace, StringPool.TAB);
-		}
-		else {
-			newLine = StringUtil.replaceLast(
-				newLine, StringPool.TAB, StringPool.TAB + whiteSpace);
-		}
-
-		return StringUtil.replace(ifClause, line, newLine);
-	}
-
-	protected String fixJavaTermsDividers(
-		String fileName, String content, Set<JavaTerm> javaTerms) {
-
-		JavaTerm previousJavaTerm = null;
-
-		Iterator<JavaTerm> itr = javaTerms.iterator();
-
-		while (itr.hasNext()) {
-			JavaTerm javaTerm = itr.next();
-
-			if (previousJavaTerm == null) {
-				previousJavaTerm = javaTerm;
-
-				continue;
-			}
-
-			String javaTermContent = javaTerm.getContent();
-
-			if (javaTermContent.startsWith(StringPool.TAB + "//") ||
-				javaTermContent.contains(StringPool.TAB + "static {")) {
-
-				previousJavaTerm = javaTerm;
-
-				continue;
-			}
-
-			String previousJavaTermContent = previousJavaTerm.getContent();
-
-			if (previousJavaTermContent.startsWith(StringPool.TAB + "//") ||
-				previousJavaTermContent.contains(StringPool.TAB + "static {")) {
-
-				previousJavaTerm = javaTerm;
-
-				continue;
-			}
-
-			String javaTermName = javaTerm.getName();
-
-			String excluded = null;
-
-			if (_javaTermSortExclusions != null) {
-				excluded = _javaTermSortExclusions.getProperty(
-					fileName + StringPool.AT + javaTerm.getLineCount());
-
-				if (excluded == null) {
-					excluded = _javaTermSortExclusions.getProperty(
-						fileName + StringPool.AT + javaTermName);
-				}
-
-				if (excluded == null) {
-					excluded = _javaTermSortExclusions.getProperty(fileName);
-				}
-			}
-
-			if (excluded != null) {
-				previousJavaTerm = javaTerm;
-
-				continue;
-			}
-
-			String previousJavaTermName = previousJavaTerm.getName();
-
-			boolean requiresEmptyLine = false;
-
-			if (previousJavaTerm.getType() != javaTerm.getType()) {
-				requiresEmptyLine = true;
-			}
-			else if (!isInJavaTermTypeGroup(
-						javaTerm.getType(), TYPE_VARIABLE)) {
-
-				requiresEmptyLine = true;
-			}
-			else if (previousJavaTermName.equals(
-						previousJavaTermName.toUpperCase()) ||
-					 javaTermName.equals(javaTermName.toUpperCase())) {
-
-				requiresEmptyLine = true;
-			}
-			else if (hasAnnotationCommentOrJavadoc(javaTermContent) ||
-					 hasAnnotationCommentOrJavadoc(previousJavaTermContent)) {
-
-				requiresEmptyLine = true;
-			}
-			else if ((previousJavaTerm.getType() ==
-						TYPE_VARIABLE_PRIVATE_STATIC) &&
-					 (previousJavaTermName.equals("_log") ||
-					  previousJavaTermName.equals("_instance"))) {
-
-				requiresEmptyLine = true;
-			}
-			else if (previousJavaTermContent.contains("\n\n\t") ||
-					 javaTermContent.contains("\n\n\t")) {
-
-				requiresEmptyLine = true;
-			}
-
-			if (requiresEmptyLine) {
-				if (!content.contains("\n\n" + javaTermContent)) {
-					return StringUtil.replace(
-						content,
-						"\n" + javaTermContent, "\n\n" + javaTermContent);
-				}
-			}
-			else if (content.contains("\n\n" + javaTermContent)) {
-				return StringUtil.replace(
-					content, "\n\n" + javaTermContent, "\n" + javaTermContent);
-			}
-
-			previousJavaTerm = javaTerm;
-		}
-
-		return content;
 	}
 
 	protected String formatAnnotations(

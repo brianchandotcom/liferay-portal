@@ -43,6 +43,67 @@ import java.util.TreeSet;
  */
 public class XMLSourceProcessor extends BaseSourceProcessor {
 
+	protected String fixAntXMLProjectName(String fileName, String content) {
+		int x = 0;
+
+		if (fileName.endsWith("-ext/build.xml")) {
+			if (fileName.startsWith("ext/")) {
+				x = 4;
+			}
+		}
+		else if (fileName.endsWith("-hook/build.xml")) {
+			if (fileName.startsWith("hooks/")) {
+				x = 6;
+			}
+		}
+		else if (fileName.endsWith("-layouttpl/build.xml")) {
+			if (fileName.startsWith("layouttpl/")) {
+				x = 10;
+			}
+		}
+		else if (fileName.endsWith("-portlet/build.xml")) {
+			if (fileName.startsWith("portlets/")) {
+				x = 9;
+			}
+		}
+		else if (fileName.endsWith("-theme/build.xml")) {
+			if (fileName.startsWith("themes/")) {
+				x = 7;
+			}
+		}
+		else if (fileName.endsWith("-web/build.xml") &&
+				 !fileName.endsWith("/ext-web/build.xml")) {
+
+			if (fileName.startsWith("webs/")) {
+				x = 5;
+			}
+		}
+		else {
+			return content;
+		}
+
+		int y = fileName.indexOf("/", x);
+
+		String correctProjectElementText =
+			"<project name=\"" + fileName.substring(x, y) + "\"";
+
+		if (!content.contains(correctProjectElementText)) {
+			x = content.indexOf("<project name=\"");
+
+			y = content.indexOf("\"", x) + 1;
+			y = content.indexOf("\"", y) + 1;
+
+			content =
+				content.substring(0, x) + correctProjectElementText +
+					content.substring(y);
+
+			processErrorMessage(
+				fileName, fileName + " has an incorrect project name");
+		}
+
+		return content;
+	}
+
 	@Override
 	protected void format() throws Exception {
 		String[] excludes = new String[] {
@@ -116,67 +177,6 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 				sourceFormatterHelper.printError(fileName, file);
 			}
 		}
-	}
-
-	protected String fixAntXMLProjectName(String fileName, String content) {
-		int x = 0;
-
-		if (fileName.endsWith("-ext/build.xml")) {
-			if (fileName.startsWith("ext/")) {
-				x = 4;
-			}
-		}
-		else if (fileName.endsWith("-hook/build.xml")) {
-			if (fileName.startsWith("hooks/")) {
-				x = 6;
-			}
-		}
-		else if (fileName.endsWith("-layouttpl/build.xml")) {
-			if (fileName.startsWith("layouttpl/")) {
-				x = 10;
-			}
-		}
-		else if (fileName.endsWith("-portlet/build.xml")) {
-			if (fileName.startsWith("portlets/")) {
-				x = 9;
-			}
-		}
-		else if (fileName.endsWith("-theme/build.xml")) {
-			if (fileName.startsWith("themes/")) {
-				x = 7;
-			}
-		}
-		else if (fileName.endsWith("-web/build.xml") &&
-				 !fileName.endsWith("/ext-web/build.xml")) {
-
-			if (fileName.startsWith("webs/")) {
-				x = 5;
-			}
-		}
-		else {
-			return content;
-		}
-
-		int y = fileName.indexOf("/", x);
-
-		String correctProjectElementText =
-			"<project name=\"" + fileName.substring(x, y) + "\"";
-
-		if (!content.contains(correctProjectElementText)) {
-			x = content.indexOf("<project name=\"");
-
-			y = content.indexOf("\"", x) + 1;
-			y = content.indexOf("\"", y) + 1;
-
-			content =
-				content.substring(0, x) + correctProjectElementText +
-					content.substring(y);
-
-			processErrorMessage(
-				fileName, fileName + " has an incorrect project name");
-		}
-
-		return content;
 	}
 
 	protected String formatAntXML(String fileName, String content)

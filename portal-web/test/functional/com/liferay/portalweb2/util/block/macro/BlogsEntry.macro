@@ -72,7 +72,7 @@
 		<execute action="CPBlogs#assertTextEquals" locator-key1="ENTRY_TABLE_TITLE" value1="${entryTitle}" />
 		<execute action="CPBlogs#assertClick" locator-key1="ENTRY_TABLE_ACTIONS" value1="Actions" />
 		<execute action="CPBlogs#assertClick" locator-key1="ENTRY_MENULIST_MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
-		<execute action="CPBlogs#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="The selected item was moved to the Recycle Bin. Undo" />
+		<execute action="CPBlogs#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="The Blogs Entry Blogs Entry Title was moved to Recycle Bin. Undo" />
 	</command>
 
 	<command name="moveToRecycleBinNoPermissionPG">
@@ -83,9 +83,9 @@
 		<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_TITLE_1" value1="${entryTitle}" />
 		<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_CONTENT_1" value1="${entryContent}" />
 		<execute action="PGBlogs#assertClick" locator-key1="ENTRY_RECYCLE_BIN_1" value1="Move to the Recycle Bin" />
-		<execute action="PGBlogs#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="The selected item was moved to the Recycle Bin. Undo" />
-		<execute action="PGBlogs#assertTextNotPresent" value1="${entryTitle}" />
-		<execute action="PGBlogs#assertTextNotPresent" value1="${entryContent}" />
+		<execute action="PGBlogs#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="The Blogs Entry Blogs Entry Title was moved to Recycle Bin. Undo" />
+		<execute action="PGBlogs#assertElementNotPresent" locator-key1="ENTRY_TITLE_1" />
+		<execute action="PGBlogs#assertElementNotPresent" locator-key1="ENTRY_CONTENT_1" />
 	</command>
 
 	<command name="tearDownCP">

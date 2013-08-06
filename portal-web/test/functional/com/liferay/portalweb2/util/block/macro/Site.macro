@@ -52,12 +52,6 @@
 	</command>
 
 	<command name="addMemberCP">
-		<execute action="CPSites#type" locator-key1="BASIC_SEARCH_FIELD" value1="${siteName}" />
-		<execute action="CPSites#click" locator-key1="BASIC_SEARCH_BUTTON" />
-		<execute action="CPSites#assertTextEquals" locator-key1="SITE_TABLE_NAME" value1="${siteName}" />
-		<execute action="CPSites#click" locator-key1="SITE_TABLE_ACTIONS" />
-		<execute action="CPSites#click" locator-key1="SITE_MENULIST_MANAGE_MEMBERSHIPS" />
-
 		<execute action="CPSitememberships#click" locator-key1="TOOLBAR_ADD_MEMBERS" />
 		<execute action="CPSitememberships#click" locator-key1="ADD_MEMBERS_MENULIST_USER" />
 
@@ -71,12 +65,6 @@
 	</command>
 
 	<command name="assignRoleCP">
-		<execute action="CPSites#type" locator-key1="BASIC_SEARCH_FIELD" value1="${siteName}" />
-		<execute action="CPSites#click" locator-key1="BASIC_SEARCH_BUTTON" />
-		<execute action="CPSites#assertTextEquals" locator-key1="SITE_TABLE_NAME" value1="${siteName}" />
-		<execute action="CPSites#click" locator-key1="SITE_TABLE_ACTIONS" />
-		<execute action="CPSites#click" locator-key1="SITE_MENULIST_MANAGE_MEMBERSHIPS" />
-
 		<execute action="CPSitememberships#click" locator-key1="TOOLBAR_ADD_SITE_ROLES_TO" />
 		<execute action="CPSitememberships#click" locator-key1="ADD_SITE_ROLES_TO_MENULIST_USERS" />
 

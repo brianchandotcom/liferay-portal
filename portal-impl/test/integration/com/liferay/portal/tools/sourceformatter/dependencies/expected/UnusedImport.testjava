@@ -12,24 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.tools.sourceformatter;
-
-import java.util.List;
+package com.liferay.portal.tools.sourceformatter.dependencies;
 
 /**
  * @author Hugo Huijser
  */
-public interface SourceProcessor {
-
-	public void format(
-			boolean useProperties, boolean printErrors, boolean autoFix)
-		throws Exception;
-
-	public String format(
-			String fileName, boolean useProperties, boolean printErrors,
-			boolean autoFix)
-		throws Exception;
-
-	public List<String> getErrorMessages();
-
+public class UnusedImport {
 }

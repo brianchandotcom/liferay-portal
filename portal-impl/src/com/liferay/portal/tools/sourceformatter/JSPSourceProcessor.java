@@ -225,7 +225,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	}
 
 	@Override
-	protected void doFormat() throws Exception {
+	protected void format() throws Exception {
 		String copyright = getCopyright();
 		String oldCopyright = getOldCopyright();
 
@@ -355,7 +355,9 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			checkLanguageKeys(fileName, newContent, _taglibLanguageKeyPattern);
 			checkXSS(fileName, newContent);
 
-			if ((newContent != null) && !content.equals(newContent)) {
+			if (isAutoFix() && (newContent != null) &&
+				!content.equals(newContent)) {
+
 				fileUtil.write(file, newContent);
 
 				sourceFormatterHelper.printError(fileName, file);

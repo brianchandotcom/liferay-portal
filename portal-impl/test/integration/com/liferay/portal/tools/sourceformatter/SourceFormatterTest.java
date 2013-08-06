@@ -12,9 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.tools;
-
-import com.liferay.portal.tools.sourceformatter.SourceFormatter;
+package com.liferay.portal.tools.sourceformatter;
 
 import org.junit.Test;
 
@@ -25,7 +23,10 @@ public class SourceFormatterTest {
 
 	@Test
 	public void testSourceFormatter() throws Exception {
-		new SourceFormatter(false, true);
+		SourceFormatter sourceFormatter = SourceFormatterUtil.create(
+			false, true, false, false);
+
+		sourceFormatter.format();
 	}
 
 }

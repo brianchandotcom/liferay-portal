@@ -526,302 +526,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
-	@Override
-	protected void doFormat() throws Exception {
-		String copyright = getCopyright();
-		String oldCopyright = getOldCopyright();
-
-		boolean portalJavaFiles = true;
-
-		Collection<String> fileNames = null;
-
-		if (portalSource) {
-			fileNames = getPortalJavaFiles();
-
-			_checkUnprocessedExceptions = GetterUtil.getBoolean(
-				System.getProperty(
-					"source.formatter.check.unprocessed.exceptions"));
-		}
-		else {
-			portalJavaFiles = false;
-
-			fileNames = getPluginJavaFiles();
-		}
-
-		_javaTermSortExclusions = getExclusionsProperties(
-			"source_formatter_javaterm_sort_exclusions.properties");
-		_lineLengthExclusions = getExclusionsProperties(
-			"source_formatter_line_length_exclusions.properties");
-		Properties staticLogVariableExclusions = getExclusionsProperties(
-			"source_formatter_static_log_exclusions.properties");
-		Properties upgradeServiceUtilExclusions = getExclusionsProperties(
-			"source_formatter_upgrade_service_util_exclusions.properties");
-
-		for (String fileName : fileNames) {
-			if (fileName.endsWith("SourceProcessor.java")) {
-				continue;
-			}
-
-			File file = new File(BASEDIR + fileName);
-
-			fileName = StringUtil.replace(
-				fileName, StringPool.BACK_SLASH, StringPool.SLASH);
-
-			String content = fileUtil.read(file);
-
-			if (isGenerated(content) &&
-				!fileName.endsWith("JavadocFormatter.java")) {
-
-				continue;
-			}
-
-			String className = file.getName();
-
-			className = className.substring(0, className.length() - 5);
-
-			String packagePath = fileName;
-
-			int packagePathX = packagePath.indexOf("/src/");
-			int packagePathY = packagePath.lastIndexOf(StringPool.SLASH);
-
-			if ((packagePathX + 5) >= packagePathY) {
-				packagePath = StringPool.BLANK;
-			}
-			else {
-				packagePath = packagePath.substring(
-					packagePathX + 5, packagePathY);
-			}
-
-			packagePath = StringUtil.replace(
-				packagePath, StringPool.SLASH, StringPool.PERIOD);
-
-			if (packagePath.endsWith(".model")) {
-				if (content.contains("extends " + className + "Model")) {
-					continue;
-				}
-			}
-
-			String newContent = content;
-
-			if (newContent.contains("$\n */")) {
-				processErrorMessage(fileName, "*: " + fileName);
-
-				newContent = StringUtil.replace(
-					newContent, "$\n */", "$\n *\n */");
-			}
-
-			newContent = fixCopyright(
-				newContent, copyright, oldCopyright, file, fileName);
-
-			if (newContent.contains(className + ".java.html")) {
-				processErrorMessage(fileName, "Java2HTML: " + fileName);
-			}
-
-			if (newContent.contains(" * @author Raymond Aug") &&
-				!newContent.contains(" * @author Raymond Aug\u00e9")) {
-
-				newContent = newContent.replaceFirst(
-					"Raymond Aug.++", "Raymond Aug\u00e9");
-
-				processErrorMessage(fileName, "UTF-8: " + fileName);
-			}
-
-			newContent = fixDataAccessConnection(className, newContent);
-			newContent = fixSessionKey(fileName, newContent, sessionKeyPattern);
-
-			newContent = StringUtil.replace(
-				newContent,
-				new String[] {
-					"com.liferay.portal.PortalException",
-					"com.liferay.portal.SystemException",
-					"com.liferay.util.LocalizationUtil",
-					"private static final Log _log"
-				},
-				new String[] {
-					"com.liferay.portal.kernel.exception.PortalException",
-					"com.liferay.portal.kernel.exception.SystemException",
-					"com.liferay.portal.kernel.util.LocalizationUtil",
-					"private static Log _log"
-				});
-
-			newContent = fixCompatClassImports(fileName, newContent);
-
-			newContent = stripJavaImports(newContent, packagePath, className);
-
-			newContent = StringUtil.replace(
-				newContent,
-				new String[] {
-					";\n/**", "\t/*\n\t *", "catch(", "else{", "if(", "for(",
-					"while(", "List <", "){\n", "]{\n"
-				},
-				new String[] {
-					";\n\n/**", "\t/**\n\t *", "catch (", "else {", "if (",
-					"for (", "while (", "List<", ") {\n", "] {\n"
-				});
-
-			Pattern pattern = Pattern.compile(
-				"\t(catch |else |finally |for |if |try |while ).*\\{\n\n" +
-					"\t+\\w");
-
-			for (;;) {
-				Matcher matcher = pattern.matcher(newContent);
-
-				if (!matcher.find()) {
-					break;
-				}
-
-				String match = matcher.group();
-
-				String replacement = StringUtil.replaceFirst(
-					match, StringPool.NEW_LINE, StringPool.BLANK);
-
-				newContent = StringUtil.replaceFirst(
-					newContent, match, replacement);
-			}
-
-			pattern = Pattern.compile(
-				"Log _log = LogFactoryUtil.getLog\\(\n*\t*(.+)\\.class\\)");
-
-			Matcher matcher = pattern.matcher(newContent);
-
-			if (matcher.find()) {
-				String logClassName = matcher.group(1);
-
-				if (!logClassName.equals(className)) {
-					newContent = StringUtil.replaceLast(
-						newContent, logClassName + ".class)",
-						className + ".class)");
-				}
-			}
-
-			String excluded = null;
-
-			if (staticLogVariableExclusions != null) {
-				excluded = staticLogVariableExclusions.getProperty(fileName);
-			}
-
-			if (excluded == null) {
-				newContent = StringUtil.replace(
-					newContent, "private Log _log", "private static Log _log");
-			}
-
-			if (newContent.contains("*/\npackage ")) {
-				processErrorMessage(fileName, "package: " + fileName);
-			}
-
-			if (!newContent.endsWith("\n\n}") && !newContent.endsWith("{\n}")) {
-				processErrorMessage(fileName, "}: " + fileName);
-			}
-
-			if (portalJavaFiles && !className.equals("BaseServiceImpl") &&
-				className.endsWith("ServiceImpl") &&
-				newContent.contains("ServiceUtil.")) {
-
-				processErrorMessage(fileName, "ServiceUtil: " + fileName);
-			}
-
-			// LPS-34911
-
-			excluded = null;
-
-			if (upgradeServiceUtilExclusions != null) {
-				excluded = upgradeServiceUtilExclusions.getProperty(fileName);
-			}
-
-			if ((excluded == null) && portalJavaFiles &&
-				fileName.contains("/portal/upgrade/") &&
-				!fileName.contains("/test/") &&
-				newContent.contains("ServiceUtil.")) {
-
-				processErrorMessage(fileName, "ServiceUtil: " + fileName);
-			}
-
-			if (!className.equals("DeepNamedValueScanner") &&
-				!className.equals("ProxyUtil") &&
-				newContent.contains("import java.lang.reflect.Proxy;")) {
-
-				processErrorMessage(fileName, "Proxy: " + fileName);
-			}
-
-			if (newContent.contains("import edu.emory.mathcs.backport.java")) {
-				processErrorMessage(
-					fileName, "edu.emory.mathcs.backport.java: " + fileName);
-			}
-
-			// LPS-28266
-
-			for (int pos1 = -1;;) {
-				pos1 = newContent.indexOf(StringPool.TAB + "try {", pos1 + 1);
-
-				if (pos1 == -1) {
-					break;
-				}
-
-				int pos2 = newContent.indexOf(
-					StringPool.TAB + "try {", pos1 + 1);
-				int pos3 = newContent.indexOf("\"select count(", pos1);
-
-				if ((pos2 != -1) && (pos3 != -1) && (pos2 < pos3)) {
-					continue;
-				}
-
-				int pos4 = newContent.indexOf("rs.getLong(1)", pos1);
-				int pos5 = newContent.indexOf(
-					StringPool.TAB + "finally {", pos1);
-
-				if ((pos3 == -1) || (pos4 == -1) || (pos5 == -1)) {
-					break;
-				}
-
-				if ((pos3 < pos4) && (pos4 < pos5)) {
-					processErrorMessage(
-						fileName, "Use getInt(1) for count: " + fileName);
-				}
-			}
-
-			// LPS-33070
-
-			if (content.contains("implements ProcessCallable") &&
-				!content.contains(
-					"private static final long serialVersionUID")) {
-
-				processErrorMessage(
-					fileName,
-					"Assign ProcessCallable implementation a " +
-						"serialVersionUID: " + fileName);
-			}
-
-			checkLanguageKeys(fileName, newContent, languageKeyPattern);
-
-			// LPS-36174
-
-			if (_checkUnprocessedExceptions && !fileName.contains("/test/")) {
-				checkUnprocessedExceptions(
-					newContent, file, packagePath, fileName);
-			}
-
-			String oldContent = newContent;
-
-			for (;;) {
-				newContent = formatJava(fileName, oldContent);
-
-				newContent = StringUtil.replace(newContent, "\n\n\n", "\n\n");
-
-				if (oldContent.equals(newContent)) {
-					break;
-				}
-
-				oldContent = newContent;
-			}
-
-			if ((newContent != null) && !content.equals(newContent)) {
-				fileUtil.write(file, newContent);
-
-				sourceFormatterHelper.printError(fileName, file);
-			}
-		}
-	}
-
 	protected String fixDataAccessConnection(String className, String content) {
 		int x = content.indexOf("package ");
 
@@ -996,6 +700,295 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 
 		return content;
+	}
+
+	@Override
+	protected void format() throws Exception {
+		Collection<String> fileNames = null;
+
+		if (portalSource) {
+			fileNames = getPortalJavaFiles();
+
+			_checkUnprocessedExceptions = GetterUtil.getBoolean(
+				System.getProperty(
+					"source.formatter.check.unprocessed.exceptions"));
+		}
+		else {
+			fileNames = getPluginJavaFiles();
+		}
+
+		_javaTermSortExclusions = getExclusionsProperties(
+			"source_formatter_javaterm_sort_exclusions.properties");
+		_lineLengthExclusions = getExclusionsProperties(
+			"source_formatter_line_length_exclusions.properties");
+		_staticLogVariableExclusions = getExclusionsProperties(
+			"source_formatter_static_log_exclusions.properties");
+		_upgradeServiceUtilExclusions = getExclusionsProperties(
+			"source_formatter_upgrade_service_util_exclusions.properties");
+
+		for (String fileName : fileNames) {
+			format(fileName);
+		}
+	}
+
+	@Override
+	protected String format(String fileName) throws Exception {
+		if (fileName.endsWith("SourceProcessor.java")) {
+			return null;
+		}
+
+		File file = new File(BASEDIR + fileName);
+
+		fileName = StringUtil.replace(
+			fileName, StringPool.BACK_SLASH, StringPool.SLASH);
+
+		String content = fileUtil.read(file);
+
+		if (isGenerated(content) &&
+			!fileName.endsWith("JavadocFormatter.java")) {
+
+			return null;
+		}
+
+		String className = file.getName();
+
+		className = className.substring(0, className.length() - 5);
+
+		String packagePath = fileName;
+
+		int packagePathX = packagePath.indexOf("/src/");
+		int packagePathY = packagePath.lastIndexOf(StringPool.SLASH);
+
+		if ((packagePathX + 5) >= packagePathY) {
+			packagePath = StringPool.BLANK;
+		}
+		else {
+			packagePath = packagePath.substring(packagePathX + 5, packagePathY);
+		}
+
+		packagePath = StringUtil.replace(
+			packagePath, StringPool.SLASH, StringPool.PERIOD);
+
+		if (packagePath.endsWith(".model")) {
+			if (content.contains("extends " + className + "Model")) {
+				return null;
+			}
+		}
+
+		String newContent = content;
+
+		if (newContent.contains("$\n */")) {
+			processErrorMessage(fileName, "*: " + fileName);
+
+			newContent = StringUtil.replace(newContent, "$\n */", "$\n *\n */");
+		}
+
+		newContent = fixCopyright(
+			newContent, getCopyright(), getOldCopyright(), file, fileName);
+
+		if (newContent.contains(className + ".java.html")) {
+			processErrorMessage(fileName, "Java2HTML: " + fileName);
+		}
+
+		if (newContent.contains(" * @author Raymond Aug") &&
+			!newContent.contains(" * @author Raymond Aug\u00e9")) {
+
+			newContent = newContent.replaceFirst(
+				"Raymond Aug.++", "Raymond Aug\u00e9");
+
+			processErrorMessage(fileName, "UTF-8: " + fileName);
+		}
+
+		newContent = fixDataAccessConnection(className, newContent);
+		newContent = fixSessionKey(fileName, newContent, sessionKeyPattern);
+
+		newContent = StringUtil.replace(
+			newContent,
+			new String[] {
+				"com.liferay.portal.PortalException",
+				"com.liferay.portal.SystemException",
+				"com.liferay.util.LocalizationUtil",
+				"private static final Log _log"
+			},
+			new String[] {
+				"com.liferay.portal.kernel.exception.PortalException",
+				"com.liferay.portal.kernel.exception.SystemException",
+				"com.liferay.portal.kernel.util.LocalizationUtil",
+				"private static Log _log"
+			});
+
+		newContent = fixCompatClassImports(fileName, newContent);
+
+		newContent = stripJavaImports(newContent, packagePath, className);
+
+		newContent = StringUtil.replace(
+			newContent,
+			new String[] {
+				";\n/**", "\t/*\n\t *", "catch(", "else{", "if(", "for(",
+				"while(", "List <", "){\n", "]{\n"
+			},
+			new String[] {
+				";\n\n/**", "\t/**\n\t *", "catch (", "else {", "if (", "for (",
+				"while (", "List<", ") {\n", "] {\n"
+			});
+
+		Pattern pattern = Pattern.compile(
+			"\t(catch |else |finally |for |if |try |while ).*\\{\n\n\t+\\w");
+
+		for (;;) {
+			Matcher matcher = pattern.matcher(newContent);
+
+			if (!matcher.find()) {
+				break;
+			}
+
+			String match = matcher.group();
+
+			String replacement = StringUtil.replaceFirst(
+				match, StringPool.NEW_LINE, StringPool.BLANK);
+
+			newContent = StringUtil.replaceFirst(
+				newContent, match, replacement);
+		}
+
+		pattern = Pattern.compile(
+			"Log _log = LogFactoryUtil.getLog\\(\n*\t*(.+)\\.class\\)");
+
+		Matcher matcher = pattern.matcher(newContent);
+
+		if (matcher.find()) {
+			String logClassName = matcher.group(1);
+
+			if (!logClassName.equals(className)) {
+				newContent = StringUtil.replaceLast(
+					newContent, logClassName + ".class)",
+					className + ".class)");
+			}
+		}
+
+		String excluded = null;
+
+		if (_staticLogVariableExclusions != null) {
+			excluded = _staticLogVariableExclusions.getProperty(fileName);
+		}
+
+		if (excluded == null) {
+			newContent = StringUtil.replace(
+				newContent, "private Log _log", "private static Log _log");
+		}
+
+		if (newContent.contains("*/\npackage ")) {
+			processErrorMessage(fileName, "package: " + fileName);
+		}
+
+		if (!newContent.endsWith("\n\n}") && !newContent.endsWith("{\n}")) {
+			processErrorMessage(fileName, "}: " + fileName);
+		}
+
+		if (portalSource && !className.equals("BaseServiceImpl") &&
+			className.endsWith("ServiceImpl") &&
+			newContent.contains("ServiceUtil.")) {
+
+			processErrorMessage(fileName, "ServiceUtil: " + fileName);
+		}
+
+		// LPS-34911
+
+		excluded = null;
+
+		if (_upgradeServiceUtilExclusions != null) {
+			excluded = _upgradeServiceUtilExclusions.getProperty(fileName);
+		}
+
+		if ((excluded == null) && portalSource &&
+			fileName.contains("/portal/upgrade/") &&
+			!fileName.contains("/test/") &&
+			newContent.contains("ServiceUtil.")) {
+
+			processErrorMessage(fileName, "ServiceUtil: " + fileName);
+		}
+
+		if (!className.equals("DeepNamedValueScanner") &&
+			!className.equals("ProxyUtil") &&
+			newContent.contains("import java.lang.reflect.Proxy;")) {
+
+			processErrorMessage(fileName, "Proxy: " + fileName);
+		}
+
+		if (newContent.contains("import edu.emory.mathcs.backport.java")) {
+			processErrorMessage(
+				fileName, "edu.emory.mathcs.backport.java: " + fileName);
+		}
+
+		// LPS-28266
+
+		for (int pos1 = -1;;) {
+			pos1 = newContent.indexOf(StringPool.TAB + "try {", pos1 + 1);
+
+			if (pos1 == -1) {
+				break;
+			}
+
+			int pos2 = newContent.indexOf(StringPool.TAB + "try {", pos1 + 1);
+			int pos3 = newContent.indexOf("\"select count(", pos1);
+
+			if ((pos2 != -1) && (pos3 != -1) && (pos2 < pos3)) {
+				continue;
+			}
+
+			int pos4 = newContent.indexOf("rs.getLong(1)", pos1);
+			int pos5 = newContent.indexOf(StringPool.TAB + "finally {", pos1);
+
+			if ((pos3 == -1) || (pos4 == -1) || (pos5 == -1)) {
+				break;
+			}
+
+			if ((pos3 < pos4) && (pos4 < pos5)) {
+				processErrorMessage(
+					fileName, "Use getInt(1) for count: " + fileName);
+			}
+		}
+
+		// LPS-33070
+
+		if (content.contains("implements ProcessCallable") &&
+			!content.contains("private static final long serialVersionUID")) {
+
+			processErrorMessage(
+				fileName,
+				"Assign ProcessCallable implementation a serialVersionUID: " +
+					fileName);
+		}
+
+		checkLanguageKeys(fileName, newContent, languageKeyPattern);
+
+		// LPS-36174
+
+		if (_checkUnprocessedExceptions && !fileName.contains("/test/")) {
+			checkUnprocessedExceptions(newContent, file, packagePath, fileName);
+		}
+
+		String oldContent = newContent;
+
+		for (;;) {
+			newContent = formatJava(fileName, oldContent);
+
+			newContent = StringUtil.replace(newContent, "\n\n\n", "\n\n");
+
+			if (oldContent.equals(newContent)) {
+				break;
+			}
+
+			oldContent = newContent;
+		}
+
+		if (isAutoFix() && (newContent != null) && !content.equals(newContent)) {
+			fileUtil.write(file, newContent);
+
+			sourceFormatterHelper.printError(fileName, file);
+		}
+
+		return newContent;
 	}
 
 	protected String formatAnnotations(
@@ -2554,5 +2547,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	private boolean _checkUnprocessedExceptions;
 	private Properties _javaTermSortExclusions;
 	private Properties _lineLengthExclusions;
+	private Properties _staticLogVariableExclusions;
+	private Properties _upgradeServiceUtilExclusions;
 
 }

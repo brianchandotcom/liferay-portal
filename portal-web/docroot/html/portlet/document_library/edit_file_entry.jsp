@@ -17,11 +17,7 @@
 <%@ include file="/html/portlet/document_library/init.jsp" %>
 
 <%
-String strutsAction = ParamUtil.getString(request, "struts_action");
-
 String cmd = ParamUtil.getString(request, Constants.CMD, Constants.EDIT);
-
-String tabs2 = ParamUtil.getString(request, "tabs2", "version-history");
 
 String redirect = ParamUtil.getString(request, "redirect");
 
@@ -117,13 +113,6 @@ boolean saveAsDraft = false;
 if ((checkedOut || pending) && !PropsValues.DL_FILE_ENTRY_DRAFTS_ENABLED) {
 	saveAsDraft = true;
 }
-
-PortletURL portletURL = renderResponse.createRenderURL();
-
-portletURL.setParameter("struts_action", strutsAction);
-portletURL.setParameter("tabs2", tabs2);
-portletURL.setParameter("redirect", redirect);
-portletURL.setParameter("fileEntryId", String.valueOf(fileEntryId));
 %>
 
 <c:if test="<%= Validator.isNull(referringPortletResource) %>">

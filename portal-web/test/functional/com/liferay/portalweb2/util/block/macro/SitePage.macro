@@ -3,7 +3,7 @@
 		<execute action="CPSites#type" locator-key1="BASIC_SEARCH_FIELD" value1="${siteName}" />
 		<execute action="CPSites#click" locator-key1="BASIC_SEARCH_BUTTON" />
 		<execute action="CPSites#click" locator-key1="SITE_TABLE_ACTIONS" />
-		<execute action="CPSites#click" locator-key1="SITE_MENULIST_MANAGE_PAGES" />
+		<execute action="CPSites#click" locator-key1="SITE_MENULIST_MANAGE" />
 
 		<if>
 			<equals arg1="${sitePageType}" arg2="Private" />
@@ -40,7 +40,7 @@
 		<execute action="CPSites#type" locator-key1="BASIC_SEARCH_FIELD" value1="${siteName}" />
 		<execute action="CPSites#click" locator-key1="BASIC_SEARCH_BUTTON" />
 		<execute action="CPSites#click" locator-key1="SITE_TABLE_ACTIONS" />
-		<execute action="CPSites#click" locator-key1="SITE_MENULIST_MANAGE_PAGES" />
+		<execute action="CPSites#click" locator-key1="SITE_MENULIST_MANAGE" />
 
 		<if>
 			<equals arg1="${sitePageType}" arg2="Private" />

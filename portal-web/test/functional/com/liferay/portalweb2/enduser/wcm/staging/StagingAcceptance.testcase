@@ -1,13 +1,33 @@
 <definition>
-	<var name="siteName" value="Liferay" />
+	<var name="siteName" value="Site Name" />
 
 	<set-up>
 		<execute macro="User#firstLoginPG" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="SitePage#addCP">
+			<var name="siteName" value="${siteName}" />
+			<var name="sitePageType" value="Public" />
+			<var name="sitePageName" value="Staging Test Page" />
+		</execute>
 	</set-up>
 
 	<command name="ActivateStaging">
-		<execute macro="Page#gotoContentCP">
+		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Site Settings" />
+			<var name="pageTypeURL" value="${siteName}" />
+			<var name="pageType" value="Site" />
 		</execute>
 
 		<execute macro="Staging#activateStagingCP">
@@ -16,17 +36,21 @@
 	</command>
 
 	<command name="DeactivateStaging">
-		<execute macro="Page#gotoContentCP">
+		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Site Settings" />
-		</execute>
+			<var name="pageTypeURL" value="${siteName}" />
+			<var name="pageType" value="Site" />
+		</execute> 
 
 		<execute macro="Staging#activateStagingCP">
 			<var name="siteName" value="${siteName}" />
 		</execute>
 
-		<execute macro="Page#gotoContentCP">
+		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Site Settings" />
-		</execute>
+			<var name="pageTypeURL" value="${siteName}" />
+			<var name="pageType" value="Site" />
+		</execute> 
 
 		<execute macro="Staging#deactivateStagingCP">
 			<var name="siteName" value="${siteName}" />
@@ -36,9 +60,11 @@
 	<command name="StagingPublishPortlet">
 		<var name="pageName" value="Staging Portlet Test Page" />
 
-		<execute macro="Page#gotoContentCP">
+		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Site Settings" />
-		</execute>
+			<var name="pageTypeURL" value="${siteName}" />
+			<var name="pageType" value="Site" />
+		</execute> 
 
 		<execute macro="Staging#activateStagingCP">
 			<var name="siteName" value="${siteName}" />
@@ -47,36 +73,32 @@
 		<execute macro="Page#addPG">
 			<var name="pageName" value="${pageName}" />
 			<var name="pageStaging" value="true" />
+			<var name="pageType" value="Site" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
 			<var name="pageName" value="${pageName}" />
-			<var name="pageStaging" value="true" />
 			<var name="portletName" value="Blogs" />
+			<var name="pageStaging" value="true" />
+			<var name="pageType" value="Site" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
 			<var name="pageStaging" value="true" />
+			<var name="pageType" value="Site" />
 		</execute>
 
 		<execute macro="Staging#publishToLiveNowPG" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
+			<var name="pageType" value="Site" />
 		</execute>
 
 		<execute action="Home#assertElementPresent" locator-key1="PORTLET_1" />
 	</command>
 
 	<tear-down>
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Site Settings" />
-		</execute>
-
-		<execute macro="Staging#deactivateStagingCP">
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
-		<execute macro="Page#tearDownPG" />
+		<execute macro="Site#tearDownCP" />
 	</tear-down>
 </definition>

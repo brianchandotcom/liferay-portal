@@ -80,7 +80,7 @@ if (categoryId > 0) {
 					<portlet:param name="title" value="<%= WikiPageConstants.FRONT_PAGE %>" />
 				</portlet:renderURL>
 
-				<aui:nav-item cssClass="<%= cssClass %>" href="<%= viewPageURL %>" label="<%= curNode.getName() %>" />
+				<aui:nav-item cssClass="<%= cssClass %>" href="<%= viewPageURL %>" label="<%= HtmlUtil.escape(curNode.getName()) %>" />
 
 			<%
 			}

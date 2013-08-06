@@ -38,7 +38,4 @@
 <liferay-ui:search-container-column-status
 	href="<%= rowURL %>"
 	name="status"
-	statusByUserId="<%= entry.getStatusByUserId() %>"
-	statusDate="<%= entry.getStatusDate() %>"
-	value="<%= entry.getStatus() %>"
 />

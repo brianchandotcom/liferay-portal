@@ -47,9 +47,19 @@ public class SearchContainerColumnStatusTag<R>
 
 			ResultRow resultRow = searchContainerRowTag.getRow();
 
-			if (Validator.isNotNull(_property)) {
-				_status = (Integer)BeanPropertiesUtil.getObject(
-					resultRow.getObject(), _property);
+			if ((_status == -1) && (resultRow.getObject() != null)) {
+				if (Validator.isNull(_property)) {
+					_status = (Integer)BeanPropertiesUtil.getObject(
+						resultRow.getObject(), "status");
+					_statusByUserId = (Long)BeanPropertiesUtil.getObject(
+						resultRow.getObject(), "statusByUserId");
+					_statusDate = (Date)BeanPropertiesUtil.getObject(
+						resultRow.getObject(), "statusDate");
+				}
+				else {
+					_status = (Integer)BeanPropertiesUtil.getObject(
+						resultRow.getObject(), _property);
+				}
 			}
 
 			if (index <= -1) {
@@ -163,16 +173,16 @@ public class SearchContainerColumnStatusTag<R>
 		return _property;
 	}
 
+	public int getStatus() {
+		return _status;
+	}
+
 	public long getStatusByUserId() {
 		return _statusByUserId;
 	}
 
 	public Date getStatusDate() {
 		return _statusDate;
-	}
-
-	public int getStatus() {
-		return _status;
 	}
 
 	public boolean isOrderable() {

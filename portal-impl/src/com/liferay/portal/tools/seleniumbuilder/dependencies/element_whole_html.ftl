@@ -13,4 +13,6 @@
 	</#list>
 
 	<span class="arrow">/&gt;</span>
+
+	<div class="line-number">${lineNumber}</div>
 </div>

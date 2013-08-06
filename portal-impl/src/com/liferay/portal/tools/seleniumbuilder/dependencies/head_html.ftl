@@ -99,6 +99,12 @@
 			background-color: #FF8B8B;
 		}
 
+		.line-number {
+			float: right;
+			margin-left: 5px;
+			margin-right: 5px;
+		}
+
 		.pass {
 			background-color: #B5FF8B;
 		}

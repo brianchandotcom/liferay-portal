@@ -171,20 +171,24 @@ public class GroupServiceTest {
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
 			group.getGroupId());
 
+		List<AssetTag> tags = AssetTagLocalServiceUtil.getGroupTags(
+			group.getGroupId());
+
+		int initialTagsCount = tags.size();
+
 		AssetTagLocalServiceUtil.addTag(
 			TestPropsValues.getUserId(), ServiceTestUtil.randomString(), null,
 			serviceContext);
 
-		List<AssetTag> tags = AssetTagLocalServiceUtil.getGroupTags(
-			group.getGroupId());
+		tags = AssetTagLocalServiceUtil.getGroupTags(group.getGroupId());
 
-		Assert.assertEquals(1, tags.size());
+		Assert.assertEquals(initialTagsCount + 1, tags.size());
 
 		GroupLocalServiceUtil.deleteGroup(group.getGroupId());
 
 		tags = AssetTagLocalServiceUtil.getGroupTags(group.getGroupId());
 
-		Assert.assertEquals(0, tags.size());
+		Assert.assertEquals(initialTagsCount, tags.size());
 	}
 
 	@Test

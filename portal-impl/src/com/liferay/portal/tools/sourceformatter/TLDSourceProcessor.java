@@ -27,7 +27,7 @@ import java.util.List;
 public class TLDSourceProcessor extends BaseSourceProcessor {
 
 	@Override
-	protected void doFormat() throws Exception {
+	protected void format() throws Exception {
 		String[] excludes = new String[] {
 			"**\\bin\\**", "**\\classes\\**", "**\\WEB-INF\\tld\\**"
 		};
@@ -42,7 +42,9 @@ public class TLDSourceProcessor extends BaseSourceProcessor {
 
 			String newContent = trimContent(content, false);
 
-			if ((newContent != null) && !content.equals(newContent)) {
+			if (isAutoFix() && (newContent != null) &&
+				!content.equals(newContent)) {
+
 				fileUtil.write(file, newContent);
 
 				fileName = StringUtil.replace(

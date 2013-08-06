@@ -30,7 +30,7 @@ import java.util.regex.Pattern;
 public class JSSourceProcessor extends BaseSourceProcessor {
 
 	@Override
-	protected void doFormat() throws Exception {
+	protected void format() throws Exception {
 		String[] excludes = {
 			"**\\js\\aui\\**", "**\\js\\editor\\**", "**\\js\\misc\\**",
 			"**\\tools\\**", "**\\VAADIN\\**"
@@ -90,7 +90,9 @@ public class JSSourceProcessor extends BaseSourceProcessor {
 
 			checkLanguageKeys(fileName, newContent, languageKeyPattern);
 
-			if ((newContent != null) && !content.equals(newContent)) {
+			if (isAutoFix() && (newContent != null) &&
+				!content.equals(newContent)) {
+
 				fileUtil.write(file, newContent);
 
 				sourceFormatterHelper.printError(fileName, file);

@@ -33,7 +33,7 @@ import java.util.List;
 public class SQLSourceProcessor extends BaseSourceProcessor {
 
 	@Override
-	protected void doFormat() throws Exception {
+	protected void format() throws Exception {
 		String[] includes = new String[] {"**\\sql\\*.sql"};
 
 		List<String> fileNames = getFileNames(new String[0], includes);
@@ -45,7 +45,9 @@ public class SQLSourceProcessor extends BaseSourceProcessor {
 
 			String newContent = formatSQL(content);
 
-			if ((newContent != null) && !content.equals(newContent)) {
+			if (isAutoFix() && (newContent != null) &&
+				!content.equals(newContent)) {
+
 				fileUtil.write(file, newContent);
 
 				fileName = StringUtil.replace(

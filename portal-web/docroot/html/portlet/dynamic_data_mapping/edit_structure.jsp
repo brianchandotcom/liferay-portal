@@ -99,12 +99,8 @@ if (Validator.isNotNull(script)) {
 	}
 	%>
 
-	<portlet:renderURL var="viewRecordsURL">
-		<portlet:param name="struts_action" value="/dynamic_data_lists/view" />
-	</portlet:renderURL>
-
 	<liferay-ui:header
-		backURL="<%= viewRecordsURL %>"
+		backURL="<%= redirect %>"
 		localizeTitle="<%= localizeTitle %>"
 		showBackURL="<%= showBackURL %>"
 		title="<%= title %>"

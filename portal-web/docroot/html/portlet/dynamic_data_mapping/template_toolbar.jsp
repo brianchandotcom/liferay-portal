@@ -92,7 +92,6 @@ long classPK = ParamUtil.getLong(request, "classPK");
 						<liferay-portlet:renderURL varImpl="addPortletDisplayTemplateURL">
 							<portlet:param name="struts_action" value="/dynamic_data_mapping/edit_template" />
 							<portlet:param name="redirect" value="<%= redirect %>" />
-							<portlet:param name="backURL" value="<%= redirect %>" />
 							<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
 							<portlet:param name="type" value="<%= DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY %>" />
 						</liferay-portlet:renderURL>

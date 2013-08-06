@@ -52,7 +52,6 @@ DDMStructure structure = (DDMStructure)row.getObject();
 	<c:if test="<%= DDMStructurePermission.contains(permissionChecker, structure, ActionKeys.VIEW) && showManageTemplates %>">
 		<portlet:renderURL var="manageViewURL">
 			<portlet:param name="struts_action" value="/dynamic_data_mapping/view_template" />
-			<portlet:param name="backURL" value="<%= currentURL %>" />
 			<portlet:param name="classNameId" value="<%= String.valueOf(PortalUtil.getClassNameId(DDMStructure.class)) %>" />
 			<portlet:param name="classPK" value="<%= String.valueOf(structure.getStructureId()) %>" />
 		</portlet:renderURL>

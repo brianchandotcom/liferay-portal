@@ -14,11 +14,8 @@
 
 package com.liferay.portal.test;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.tools.DBUpgrader;
+import com.liferay.portal.util.InitUtil;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.junit.runners.model.InitializationError;
@@ -26,31 +23,24 @@ import org.junit.runners.model.InitializationError;
 /**
  * @author Miguel Pastor
  */
-public class LiferayPersistenceIntegrationJUnitTestRunner
-	extends CustomizableSpringContextJUnitTestRunner {
+public abstract class CustomizableSpringContextJUnitTestRunner
+	extends LiferayIntegrationJUnitTestRunner {
 
-	public LiferayPersistenceIntegrationJUnitTestRunner(Class<?> clazz)
+	public CustomizableSpringContextJUnitTestRunner(Class<?> clazz)
 		throws InitializationError {
 
 		super(clazz);
 	}
 
-	@Override
-	public void doAfterApplicationContextInit() {
-		try {
-			DBUpgrader.upgrade();
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-	}
+	public abstract void doAfterApplicationContextInit();
+
+	public abstract List<String> getExtraConfigLocations();
 
 	@Override
-	public List<String> getExtraConfigLocations() {
-		return Arrays.asList("META-INF/test-persistence-spring.xml");
-	}
+	public void initApplicationContext() {
+		System.setProperty("catalina.base", ".");
 
-	private static Log _log = LogFactoryUtil.getLog(
-		LiferayPersistenceIntegrationJUnitTestRunner.class);
+		InitUtil.initWithSpring(getExtraConfigLocations());
+	}
 
 }

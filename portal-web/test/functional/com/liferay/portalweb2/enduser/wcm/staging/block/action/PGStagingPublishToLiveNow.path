@@ -1,11 +1,11 @@
 <html>
 <head>
-<title>StagingPublishToLiveNowPG</title>
+<title>PGStagingPublishToLiveNow</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">StagingPublishToLiveNowPG</td></tr>
+<tr><td rowspan="1" colspan="3">PGStagingPublishToLiveNow</td></tr>
 </thead>
 <tbody>
 <tr>
@@ -66,11 +66,6 @@
 <tr>
 	<td>DATE_SCHEDULE</td>
 	<td>//input[@id='_88_publishingEventSchedule']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ALL_APPLICATIONS</td>
-	<td>//input[@id='_88_allApplications']</td>
 	<td></td>
 </tr>
 <tr>

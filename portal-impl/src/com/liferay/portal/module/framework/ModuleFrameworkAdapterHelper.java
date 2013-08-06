@@ -155,16 +155,20 @@ public class ModuleFrameworkAdapterHelper {
 			StringUtil.read(urlConnection.getInputStream()));
 
 		for (String jarFileName : jarFileNames) {
-			File distinationFile = new File(destinationPath, jarFileName);
+			File destinationFile = new File(destinationPath, jarFileName);
 
-			if (distinationFile.lastModified() <
-					urlConnection.getLastModified()) {
+			long lastModified = urlConnection.getLastModified();
+
+			// Because LPS-38581
+
+			if ((destinationFile.lastModified() < lastModified) ||
+				(lastModified == 0)) {
 
 				byte[] bytes = FileUtil.getBytes(
 					classLoader.getResourceAsStream(
 						sourcePath + "/" + jarFileName));
 
-				FileUtil.write(distinationFile, bytes);
+				FileUtil.write(destinationFile, bytes);
 			}
 		}
 	}

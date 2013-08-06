@@ -537,7 +537,35 @@ print AdminControl.invoke(appManager, 'startApplication', 'liferay-portal')
 			</then>
 		</if>
 
+		<foreach list="calendar-portlet,marketplace-portlet,resources-importer-web" delimiter="," target="deploy-plugin" param="plugin.name" />
+		<foreach list="${plugins.to.deploy.custom}" delimiter="," target="deploy-plugin" param="plugin.name" />
+
 		<antcall target="print-current-time" />
+	</target>
+
+	<target name="deploy-plugin">
+		<first id="plugin.path.type">
+			<dirset dir="${plugins.sdk.path}" includes="**/${plugin.name}" />
+		</first>
+
+		<var name="plugin.path" value="${toString:plugin.path.type}" />
+
+		<if>
+			<length string="${plugin.path}" trim="true" when="greater" length="0" />
+			<then>
+				<echo>Deploying plugin ${plugin.name}</echo>
+				<java classname="org.apache.tools.ant.launch.Launcher" fork="true" failonerror="true" dir="${plugin.path}" timeout="4000000" taskname="deploy">
+					<classpath>
+						<fileset dir="${ant.home}" includes="lib/**/*.jar" />
+					</classpath>
+					<arg value="-buildfile"/>
+					<arg file="${plugin.path}/build.xml"/>
+				</java>
+			</then>
+			<else>
+				<echo>Could not find a plugin with name: ${plugin.name}</echo>
+			</else>
+		</if>
 	</target>
 
 	<target name="deploy-properties">

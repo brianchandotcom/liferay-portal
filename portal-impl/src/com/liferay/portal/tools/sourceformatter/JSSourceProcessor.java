@@ -40,64 +40,70 @@ public class JSSourceProcessor extends BaseSourceProcessor {
 		List<String> fileNames = getFileNames(excludes, includes);
 
 		for (String fileName : fileNames) {
-			File file = new File(BASEDIR + fileName);
-
-			fileName = StringUtil.replace(
-				fileName, StringPool.BACK_SLASH, StringPool.SLASH);
-
-			String content = fileUtil.read(file);
-
-			String newContent = trimContent(content, false);
-
-			newContent = StringUtil.replace(
-				newContent,
-				new String[] {
-					"else{", "for(", "function (", "if(", "while(", "){\n",
-					"= new Array();", "= new Object();"
-				},
-				new String[] {
-					"else {", "for (", "function(", "if (", "while (", ") {\n",
-					"= [];", "= {};"
-				});
-
-			Pattern pattern = Pattern.compile("\t+var \\w+\\, ");
-
-			for (;;) {
-				Matcher matcher = pattern.matcher(newContent);
-
-				if (!matcher.find()) {
-					break;
-				}
-
-				String match = matcher.group();
-
-				int pos = match.indexOf("var ");
-
-				StringBundler sb = new StringBundler(4);
-
-				sb.append(match.substring(0, match.length() - 2));
-				sb.append(StringPool.SEMICOLON);
-				sb.append("\n");
-				sb.append(match.substring(0, pos + 4));
-
-				newContent = StringUtil.replace(
-					newContent, match, sb.toString());
-			}
-
-			if (newContent.endsWith("\n")) {
-				newContent = newContent.substring(0, newContent.length() - 1);
-			}
-
-			checkLanguageKeys(fileName, newContent, languageKeyPattern);
-
-			if (isAutoFix() && (newContent != null) &&
-				!content.equals(newContent)) {
-
-				fileUtil.write(file, newContent);
-
-				sourceFormatterHelper.printError(fileName, file);
-			}
+			format(fileName);
 		}
+	}
+
+	@Override
+	protected String format(String fileName) throws Exception {
+		File file = new File(BASEDIR + fileName);
+
+		fileName = StringUtil.replace(
+			fileName, StringPool.BACK_SLASH, StringPool.SLASH);
+
+		String content = fileUtil.read(file);
+
+		String newContent = trimContent(content, false);
+
+		newContent = StringUtil.replace(
+			newContent,
+			new String[] {
+				"else{", "for(", "function (", "if(", "while(", "){\n",
+				"= new Array();", "= new Object();"
+			},
+			new String[] {
+				"else {", "for (", "function(", "if (", "while (", ") {\n",
+				"= [];", "= {};"
+			});
+
+		Pattern pattern = Pattern.compile("\t+var \\w+\\, ");
+
+		for (;;) {
+			Matcher matcher = pattern.matcher(newContent);
+
+			if (!matcher.find()) {
+				break;
+			}
+
+			String match = matcher.group();
+
+			int pos = match.indexOf("var ");
+
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(match.substring(0, match.length() - 2));
+			sb.append(StringPool.SEMICOLON);
+			sb.append("\n");
+			sb.append(match.substring(0, pos + 4));
+
+			newContent = StringUtil.replace(newContent, match, sb.toString());
+		}
+
+		if (newContent.endsWith("\n")) {
+			newContent = newContent.substring(0, newContent.length() - 1);
+		}
+
+		checkLanguageKeys(fileName, newContent, languageKeyPattern);
+
+		if (isAutoFix() && (newContent != null) &&
+			!content.equals(newContent)) {
+
+			fileUtil.write(file, newContent);
+
+			sourceFormatterHelper.printError(fileName, file);
+		}
+
+		return newContent;
 	}
 
 }

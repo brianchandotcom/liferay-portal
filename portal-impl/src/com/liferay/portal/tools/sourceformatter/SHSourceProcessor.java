@@ -26,18 +26,19 @@ public class SHSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected void format() throws Exception {
-		formatSH("ext/create.sh");
-		formatSH("hooks/create.sh");
-		formatSH("layouttpl/create.sh");
-		formatSH("portlets/create.sh");
-		formatSH("themes/create.sh");
+		format("ext/create.sh");
+		format("hooks/create.sh");
+		format("layouttpl/create.sh");
+		format("portlets/create.sh");
+		format("themes/create.sh");
 	}
 
-	protected void formatSH(String fileName) throws IOException {
+	@Override
+	protected String format(String fileName) throws IOException {
 		File file = new File(fileName);
 
 		if (!file.exists()) {
-			return;
+			return null;
 		}
 
 		String content = fileUtil.read(new File(fileName), true);
@@ -51,6 +52,8 @@ public class SHSourceProcessor extends BaseSourceProcessor {
 				fileUtil.write(fileName, content);
 			}
 		}
+
+		return content;
 	}
 
 }

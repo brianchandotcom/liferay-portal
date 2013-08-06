@@ -226,9 +226,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected void format() throws Exception {
-		String copyright = getCopyright();
-		String oldCopyright = getOldCopyright();
-
 		String[] excludes = new String[] {
 			"**\\portal\\aui\\**", "**\\bin\\**", "**\\null.jsp", "**\\tmp\\**",
 			"**\\tools\\**"
@@ -250,119 +247,123 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			_jspContents.put(fileName, content);
 		}
 
-		boolean stripJSPImports = true;
-
 		for (String fileName : fileNames) {
-			File file = new File(BASEDIR + fileName);
+			format(fileName);
+		}
+	}
 
-			fileName = StringUtil.replace(
-				fileName, StringPool.BACK_SLASH, StringPool.SLASH);
+	@Override
+	protected String format(String fileName) throws Exception {
+		File file = new File(BASEDIR + fileName);
 
-			String content = fileUtil.read(file);
+		fileName = StringUtil.replace(
+			fileName, StringPool.BACK_SLASH, StringPool.SLASH);
 
-			String oldContent = content;
-			String newContent = StringPool.BLANK;
+		String content = fileUtil.read(file);
 
-			for (;;) {
-				newContent = formatJSP(fileName, oldContent);
+		String oldContent = content;
+		String newContent = StringPool.BLANK;
 
-				if (oldContent.equals(newContent)) {
-					break;
-				}
+		for (;;) {
+			newContent = formatJSP(fileName, oldContent);
 
-				oldContent = newContent;
+			if (oldContent.equals(newContent)) {
+				break;
 			}
 
-			newContent = StringUtil.replace(
-				newContent,
-				new String[] {
-					"<br/>", "\"/>", "\" >", "@page import", "\"%>", ")%>",
-					"else{", "for(", "function (", "if(", "javascript: ",
-					"while(", "){\n", "\n\n\n"
-				},
-				new String[] {
-					"<br />", "\" />", "\">", "@ page import", "\" %>", ") %>",
-					"else {", "for (", "function(", "if (", "javascript:",
-					"while (", ") {\n", "\n\n"
-				});
+			oldContent = newContent;
+		}
 
-			newContent = fixCompatClassImports(fileName, newContent);
+		newContent = StringUtil.replace(
+			newContent,
+			new String[] {
+				"<br/>", "\"/>", "\" >", "@page import", "\"%>", ")%>", "else{",
+				"for(", "function (", "if(", "javascript: ", "while(", "){\n",
+				"\n\n\n"
+			},
+			new String[] {
+				"<br />", "\" />", "\">", "@ page import", "\" %>", ") %>",
+				"else {", "for (", "function(", "if (", "javascript:",
+				"while (", ") {\n", "\n\n"
+			});
 
-			if (stripJSPImports) {
-				try {
-					newContent = stripJSPImports(fileName, newContent);
-				}
-				catch (RuntimeException re) {
-					stripJSPImports = false;
-				}
+		newContent = fixCompatClassImports(fileName, newContent);
+
+		if (_stripJSPImports && !_jspContents.isEmpty()) {
+			try {
+				newContent = stripJSPImports(fileName, newContent);
 			}
-
-			newContent = fixCopyright(
-				newContent, copyright, oldCopyright, file, fileName);
-
-			newContent = StringUtil.replace(
-				newContent,
-				new String[] {
-					"alert('<%= LanguageUtil.",
-					"alert(\"<%= LanguageUtil.", "confirm('<%= LanguageUtil.",
-					"confirm(\"<%= LanguageUtil."
-				},
-				new String[] {
-					"alert('<%= UnicodeLanguageUtil.",
-					"alert(\"<%= UnicodeLanguageUtil.",
-					"confirm('<%= UnicodeLanguageUtil.",
-					"confirm(\"<%= UnicodeLanguageUtil."
-				});
-
-			if (newContent.contains("    ")) {
-				if (!fileName.matches(".*template.*\\.vm$")) {
-					processErrorMessage(fileName, "tab: " + fileName);
-				}
-			}
-
-			if (fileName.endsWith("init.jsp")) {
-				int x = newContent.indexOf("<%@ page import=");
-
-				int y = newContent.lastIndexOf("<%@ page import=");
-
-				y = newContent.indexOf("%>", y);
-
-				if ((x != -1) && (y != -1) && (y > x)) {
-
-					// Set compressImports to false to decompress imports
-
-					boolean compressImports = true;
-
-					if (compressImports) {
-						String imports = newContent.substring(x, y);
-
-						imports = StringUtil.replace(
-							imports, new String[] {"%>\r\n<%@ ", "%>\n<%@ "},
-							new String[] {"%><%@\r\n", "%><%@\n"});
-
-						newContent =
-							newContent.substring(0, x) + imports +
-								newContent.substring(y);
-					}
-				}
-			}
-
-			newContent = fixSessionKey(fileName, newContent, sessionKeyPattern);
-			newContent = fixSessionKey(
-				fileName, newContent, taglibSessionKeyPattern);
-
-			checkLanguageKeys(fileName, newContent, languageKeyPattern);
-			checkLanguageKeys(fileName, newContent, _taglibLanguageKeyPattern);
-			checkXSS(fileName, newContent);
-
-			if (isAutoFix() && (newContent != null) &&
-				!content.equals(newContent)) {
-
-				fileUtil.write(file, newContent);
-
-				sourceFormatterHelper.printError(fileName, file);
+			catch (RuntimeException re) {
+				_stripJSPImports = false;
 			}
 		}
+
+		newContent = fixCopyright(
+			newContent, getCopyright(), getOldCopyright(), file, fileName);
+
+		newContent = StringUtil.replace(
+			newContent,
+			new String[] {
+				"alert('<%= LanguageUtil.", "alert(\"<%= LanguageUtil.",
+				"confirm('<%= LanguageUtil.", "confirm(\"<%= LanguageUtil."
+			},
+			new String[] {
+				"alert('<%= UnicodeLanguageUtil.",
+				"alert(\"<%= UnicodeLanguageUtil.",
+				"confirm('<%= UnicodeLanguageUtil.",
+				"confirm(\"<%= UnicodeLanguageUtil."
+			});
+
+		if (newContent.contains("    ")) {
+			if (!fileName.matches(".*template.*\\.vm$")) {
+				processErrorMessage(fileName, "tab: " + fileName);
+			}
+		}
+
+		if (fileName.endsWith("init.jsp")) {
+			int x = newContent.indexOf("<%@ page import=");
+
+			int y = newContent.lastIndexOf("<%@ page import=");
+
+			y = newContent.indexOf("%>", y);
+
+			if ((x != -1) && (y != -1) && (y > x)) {
+
+				// Set compressImports to false to decompress imports
+
+				boolean compressImports = true;
+
+				if (compressImports) {
+					String imports = newContent.substring(x, y);
+
+					imports = StringUtil.replace(
+						imports, new String[] {"%>\r\n<%@ ", "%>\n<%@ "},
+						new String[] {"%><%@\r\n", "%><%@\n"});
+
+					newContent =
+						newContent.substring(0, x) + imports +
+							newContent.substring(y);
+				}
+			}
+		}
+
+		newContent = fixSessionKey(fileName, newContent, sessionKeyPattern);
+		newContent = fixSessionKey(
+			fileName, newContent, taglibSessionKeyPattern);
+
+		checkLanguageKeys(fileName, newContent, languageKeyPattern);
+		checkLanguageKeys(fileName, newContent, _taglibLanguageKeyPattern);
+		checkXSS(fileName, newContent);
+
+		if (isAutoFix() && (newContent != null) &&
+			!content.equals(newContent)) {
+
+			fileUtil.write(file, newContent);
+
+			sourceFormatterHelper.printError(fileName, file);
+		}
+
+		return newContent;
 	}
 
 	protected String formatJSP(String fileName, String content)
@@ -418,7 +419,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 				javaSource = false;
 			}
 
-			if (javaSource && portalSource &&
+			if (javaSource && portalSource && !_jspContents.isEmpty() &&
 				hasUnusedVariable(fileName, trimmedLine)) {
 
 				processErrorMessage(
@@ -1153,6 +1154,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	private Pattern _jspImportPattern = Pattern.compile(
 		"(<.*\n*page.import=\".*>\n*)+", Pattern.MULTILINE);
 	private Pattern _jspIncludeFilePattern = Pattern.compile("/.*[.]jsp[f]?");
+	private boolean _stripJSPImports = true;
 	private Pattern _taglibLanguageKeyPattern = Pattern.compile(
 		"(?:confirmation|label|(?:M|m)essage|message key|names|title)=\"[^A-Z" +
 			"<=%\\[\\s]+\"");

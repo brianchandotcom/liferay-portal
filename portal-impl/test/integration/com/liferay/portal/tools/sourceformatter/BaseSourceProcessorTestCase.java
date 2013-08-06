@@ -28,7 +28,7 @@ import org.junit.Before;
 /**
  * @author Hugo Huijser
  */
-public class BaseSourceProcessorTest {
+public class BaseSourceProcessorTestCase {
 
 	@Before
 	public void setUp() throws Exception {

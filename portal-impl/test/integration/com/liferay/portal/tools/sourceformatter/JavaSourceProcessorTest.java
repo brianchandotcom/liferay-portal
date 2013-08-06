@@ -23,7 +23,7 @@ import org.junit.runner.RunWith;
  * @author Hugo Huijser
  */
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
-public class JavaSourceProcessorTest extends BaseSourceProcessorTest {
+public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 
 	@Test
 	public void testExceedMaxLineLength() throws Exception {

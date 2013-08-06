@@ -55,6 +55,26 @@
 		<execute action="Home#click" locator1="link=${pageName}" />
 	</command>
 
+	<command name="gotoUsersCP">
+		<execute macro="Page#openURL" />
+
+		<execute action="Dockbar#assertClick" locator-key1="ADMIN" value1="Admin" />
+		<execute action="Dockbar#assertClick" locator-key1="ADMIN_SITE_ADMINISTRATION_USERS" value1="Users" />
+		
+		<if>
+			<isset var="siteScopeName" />
+			<then>
+				<execute action="Home#click" locator-key1="SCOPE_SELECTOR" />
+
+				<var name="key_siteScopeName" value="${siteScopeName}" />
+
+				<execute action="Home#click" locator-key1="SCOPE_SELECTOR_MENULIST_ITEM" />
+			</then>
+		</if>
+
+		<execute action="Home#click" locator1="//ul[@class='category-portlets']/li[contains(.,'${portletName}')]/a" />
+	</command>
+
 	<command name="isPresent">
 		<execute macro="Page#openURL" />
 

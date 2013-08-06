@@ -27,7 +27,10 @@ public class SourceFormatter {
 
 	public static void main(String[] args) {
 		try {
-			new SourceFormatter(false, false);
+			SourceFormatter sourceFormatter = SourceFormatterUtil.create(
+				false, false, true, true);
+
+			sourceFormatter.format();
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -35,9 +38,17 @@ public class SourceFormatter {
 	}
 
 	public SourceFormatter(
-			final boolean useProperties, final boolean throwException)
+			boolean useProperties, boolean throwException, boolean printErrors,
+			boolean autoFix)
 		throws Exception {
 
+		_useProperties = useProperties;
+		_throwException = throwException;
+		_printErrors = printErrors;
+		_autoFix = autoFix;
+	}
+
+	public void format() throws Exception {
 		Thread thread1 = new Thread () {
 
 			@Override
@@ -62,7 +73,8 @@ public class SourceFormatter {
 						XMLSourceProcessor.class.newInstance());
 
 					for (SourceProcessor sourceProcessor : sourceProcessors) {
-						sourceProcessor.format(useProperties, throwException);
+						sourceProcessor.format(
+							_useProperties, _printErrors, _autoFix);
 
 						_errorMessages.addAll(
 							sourceProcessor.getErrorMessages());
@@ -83,7 +95,8 @@ public class SourceFormatter {
 					SourceProcessor sourceProcessor =
 						JSPSourceProcessor.class.newInstance();
 
-					sourceProcessor.format(useProperties, throwException);
+					sourceProcessor.format(
+						_useProperties, _printErrors, _autoFix);
 
 					_errorMessages.addAll(sourceProcessor.getErrorMessages());
 				}
@@ -100,11 +113,39 @@ public class SourceFormatter {
 		thread1.join();
 		thread2.join();
 
-		if (throwException && !_errorMessages.isEmpty()) {
-			System.out.println(StringUtil.merge(_errorMessages, "\n"));
+		if (_throwException && !_errorMessages.isEmpty()) {
+			throw new Exception(StringUtil.merge(_errorMessages, "\n"));
 		}
 	}
 
+	public String[] format(String fileName) throws Exception {
+		SourceProcessor sourceProcessor = null;
+
+		if (fileName.endsWith(".testjava")) {
+			sourceProcessor = JavaSourceProcessor.class.newInstance();
+		}
+
+		if (sourceProcessor == null) {
+			return null;
+		}
+
+		String newContent = sourceProcessor.format(
+			fileName, _useProperties, _printErrors, _autoFix);
+
+		List<String> errorMessages = sourceProcessor.getErrorMessages();
+
+		if (errorMessages.isEmpty()) {
+			return new String[] {newContent, null};
+		}
+		else {
+			return new String[] {newContent, errorMessages.get(0)};
+		}
+	}
+
+	private static boolean _autoFix;
 	private static List<String> _errorMessages = new UniqueList<String>();
+	private static boolean _printErrors;
+	private static boolean _throwException;
+	private static boolean _useProperties;
 
 }

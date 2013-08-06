@@ -27,7 +27,7 @@ import java.util.List;
 public class FTLSourceProcessor extends BaseSourceProcessor {
 
 	@Override
-	protected void doFormat() throws Exception {
+	protected void format() throws Exception {
 		String[] excludes = new String[] {
 			"**\\journal\\dependencies\\template.ftl",
 			"**\\servicebuilder\\dependencies\\props.ftl"
@@ -43,7 +43,9 @@ public class FTLSourceProcessor extends BaseSourceProcessor {
 
 			String newContent = trimContent(content, false);
 
-			if ((newContent != null) && !content.equals(newContent)) {
+			if (isAutoFix() && (newContent != null) &&
+				!content.equals(newContent)) {
+
 				fileUtil.write(file, newContent);
 
 				fileName = StringUtil.replace(

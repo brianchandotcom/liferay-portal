@@ -14,22 +14,18 @@
 
 package com.liferay.portal.tools.sourceformatter;
 
-import java.util.List;
-
 /**
  * @author Hugo Huijser
  */
-public interface SourceProcessor {
+public class SourceFormatterUtil {
 
-	public void format(
-			boolean useProperties, boolean printErrors, boolean autoFix)
-		throws Exception;
-
-	public String format(
-			String fileName, boolean useProperties, boolean printErrors,
+	public static SourceFormatter create(
+			boolean useProperties, boolean throwException, boolean printErrors,
 			boolean autoFix)
-		throws Exception;
+		throws Exception {
 
-	public List<String> getErrorMessages();
+		return new SourceFormatter(
+			useProperties, throwException, printErrors, autoFix);
+	}
 
 }

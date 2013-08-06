@@ -55,10 +55,6 @@ String title = ddmDisplay.getViewTemplatesTitle(structure, locale);
 		/>
 	</c:if>
 
-	<liferay-ui:search-form
-		page="/html/portlet/dynamic_data_mapping/template_search.jsp"
-	/>
-
 	<div class="separator"><!-- --></div>
 
 	<liferay-ui:search-container

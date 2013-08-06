@@ -4,7 +4,7 @@
 		<execute action="CPSites#click" locator-key1="BASIC_SEARCH_BUTTON" value1="${siteName}" />
 		<execute action="CPSites#assertTextEquals" locator-key1="SITE_TABLE_NAME" value1="${siteName}" />
 		<execute action="CPSites#click" locator-key1="SITE_TABLE_ACTIONS" />
-		<execute action="CPSites#click" locator-key1="SITE_MENULIST_MANAGE_MEMBERSHIPS" />
+		<execute action="CPSites#click" locator-key1="SITE_MENULIST_MANAGE" />
 
 		<execute action="CPSitememberships#click" locator-key1="TOOLBAR_VIEW_TEAMS" />
 

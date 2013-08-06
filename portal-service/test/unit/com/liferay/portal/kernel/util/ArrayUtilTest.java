@@ -108,12 +108,59 @@ public class ArrayUtilTest {
 	}
 
 	@Test
+	public void testReverseBooleanArray() throws Exception {
+		boolean[] array = new boolean[] {true, true, false};
+
+		ArrayUtil.reverse(array);
+
+		Assert.assertFalse(array[0]);
+		Assert.assertTrue(array[1]);
+		Assert.assertTrue(array[2]);
+	}
+
+	@Test
+	public void testReverseCharArray() throws Exception {
+		char[] array = new char[] {'a', 'b', 'c'};
+
+		ArrayUtil.reverse(array);
+
+		Assert.assertArrayEquals(new char[] {'c', 'b', 'a'}, array);
+	}
+
+	@Test
+	public void testReverseDoubleArray() throws Exception {
+		double[] array = new double[] {111.0, 222.0, 333.0};
+
+		ArrayUtil.reverse(array);
+
+		Assert.assertArrayEquals(new double[] {333.0, 222.0, 111.0}, array, 0);
+	}
+
+	@Test
 	public void testReverseIntArray() throws Exception {
 		int[] array = new int[] {111, 222, 333};
 
 		ArrayUtil.reverse(array);
 
 		Assert.assertArrayEquals(new int[] {333, 222, 111}, array);
+	}
+
+	@Test
+	public void testReverseLongArray() throws Exception {
+		long[] array = new long[] {111, 222, 333};
+
+		ArrayUtil.reverse(array);
+
+		Assert.assertArrayEquals(new long[] {333, 222, 111}, array);
+	}
+
+	@Test
+	public void testReverseShortArray() throws Exception {
+		short[] array = new short[] {111, 222, 333};
+
+		ArrayUtil.reverse(array);
+
+		Assert.assertArrayEquals(new short[] {333, 222, 111}, array);
 	}
 
 	@Test

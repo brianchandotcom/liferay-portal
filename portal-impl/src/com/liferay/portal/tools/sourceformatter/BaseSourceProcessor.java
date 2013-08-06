@@ -62,7 +62,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		_init(useProperties, printErrors, autoFix);
 
-		doFormat();
+		format();
 
 		sourceFormatterHelper.close();
 	}
@@ -76,7 +76,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		try {
 			_init(useProperties, printErrors, autoFix);
 
-			return doFormat(fileName);
+			return format(fileName);
 		}
 		finally {
 			sourceFormatterHelper.close();
@@ -290,9 +290,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 	}
 
-	protected abstract void doFormat() throws Exception;
+	protected abstract void format() throws Exception;
 
-	protected String doFormat(String fileName)
+	protected String format(String fileName)
 		throws Exception {
 
 		return null;

@@ -44,7 +44,7 @@ import java.util.TreeSet;
 public class XMLSourceProcessor extends BaseSourceProcessor {
 
 	@Override
-	protected void doFormat() throws Exception {
+	protected void format() throws Exception {
 		String[] excludes = new String[] {
 			"**\\.idea\\**", "**\\bin\\**", "**\\classes\\**"
 		};

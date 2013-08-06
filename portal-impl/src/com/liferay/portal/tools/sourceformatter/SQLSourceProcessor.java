@@ -33,7 +33,7 @@ import java.util.List;
 public class SQLSourceProcessor extends BaseSourceProcessor {
 
 	@Override
-	protected void doFormat() throws Exception {
+	protected void format() throws Exception {
 		String[] includes = new String[] {"**\\sql\\*.sql"};
 
 		List<String> fileNames = getFileNames(new String[0], includes);

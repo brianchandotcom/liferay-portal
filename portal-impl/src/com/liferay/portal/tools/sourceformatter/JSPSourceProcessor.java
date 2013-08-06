@@ -225,7 +225,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	}
 
 	@Override
-	protected void doFormat() throws Exception {
+	protected void format() throws Exception {
 		String copyright = getCopyright();
 		String oldCopyright = getOldCopyright();
 

@@ -27,7 +27,7 @@ import java.util.List;
 public class FTLSourceProcessor extends BaseSourceProcessor {
 
 	@Override
-	protected void doFormat() throws Exception {
+	protected void format() throws Exception {
 		String[] excludes = new String[] {
 			"**\\journal\\dependencies\\template.ftl",
 			"**\\servicebuilder\\dependencies\\props.ftl"

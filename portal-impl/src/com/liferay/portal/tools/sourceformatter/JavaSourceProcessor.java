@@ -527,7 +527,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	}
 
 	@Override
-	protected void doFormat() throws Exception {
+	protected void format() throws Exception {
 		Collection<String> fileNames = null;
 
 		if (portalSource) {
@@ -551,14 +551,12 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			"source_formatter_upgrade_service_util_exclusions.properties");
 
 		for (String fileName : fileNames) {
-			doFormat(fileName);
+			format(fileName);
 		}
 	}
 
 	@Override
-	protected String doFormat(String fileName)
-		throws Exception {
-
+	protected String format(String fileName) throws Exception {
 		if (fileName.endsWith("SourceProcessor.java")) {
 			return null;
 		}

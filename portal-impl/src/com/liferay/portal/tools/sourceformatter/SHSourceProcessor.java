@@ -25,7 +25,7 @@ import java.io.IOException;
 public class SHSourceProcessor extends BaseSourceProcessor {
 
 	@Override
-	protected void doFormat() throws Exception {
+	protected void format() throws Exception {
 		_formatSH("ext/create.sh");
 		_formatSH("hooks/create.sh");
 		_formatSH("layouttpl/create.sh");

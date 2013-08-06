@@ -10,7 +10,7 @@
 
 	<command name="type">
 		<case locator-key1="CONTENT_FIELD">
-			<execute function="Type#typeFrameWaitForCKEditor" />
+			<execute function="Type#typeFrame" />
 		</case>
 	</command>
 </definition>

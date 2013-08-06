@@ -2,34 +2,34 @@ $phone: 768px !default;
 $tablet: 980px !default;
 
 @mixin respond-to($types...) {
-	$minWidth: -1;
 	$maxWidth: -1;
+	$minWidth: -1;
 
 	@each $type in $types {
 		@if $type == phone {
-			$minWidth: 0;
 			$maxWidth: if($maxWidth == -1, $phone - 1, $maxWidth);
+			$minWidth: 0;
 		}
 		@else if $type == tablet {
-			$minWidth: if($minWidth == -1, $phone, min($phone, $minWidth));
 			$maxWidth: if($maxWidth == -1, $tablet - 1, $maxWidth);
+			$minWidth: if($minWidth == -1, $phone, min($phone, $minWidth));
 		}
 		@else if $type == desktop {
-			$minWidth: if($minWidth == -1, $tablet, $minWidth);
 			$maxWidth: 0;
+			$minWidth: if($minWidth == -1, $tablet, $minWidth);
 		}
 	}
 
-	@if $minWidth <= 0 and $maxWidth <= 0 {
+	@if $maxWidth <= 0 and $minWidth <= 0 {
 		@content;
-	}
-	@else if $minWidth <= 0 {
-		@media (max-width: $maxWidth) {
-			@content;
-		}
 	}
 	@else if $maxWidth <= 0 {
 		@media (min-width: $minWidth) {
+			@content;
+		}
+	}
+	@else if $minWidth <= 0 {
+		@media (max-width: $maxWidth) {
 			@content;
 		}
 	}

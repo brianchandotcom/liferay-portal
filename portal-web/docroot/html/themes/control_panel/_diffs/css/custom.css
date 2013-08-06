@@ -782,12 +782,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 	/* ---------- Media Queries ---------- */
 
-	/* ---------- Tablet and Below ---------- */
-
-	@include respond-to(tablet, phone) {
-
-		/* ---------- Form Navigator ---------- */
-
+	@include respond-to(phone, tablet) {
 		ul.form-navigator.well {
 			.button-holder {
 				bottom: 0;
@@ -819,9 +814,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 	}
 
 	@include respond-to(phone) {
-
-		/* ---------- Form Navigator ---------- */
-
 		.panel-page-menu .portlet-borderless-container {
 			border-left: 1px solid #D1D1D1;
 

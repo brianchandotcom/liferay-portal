@@ -529,66 +529,9 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 	%>
 
 	<aui:script>
-		function <%= randomNamespace %>afterLogin(emailAddress, anonymousAccount) {
-			var A = AUI();
-
-			var form = A.one('#<%= namespace %><%= HtmlUtil.escapeJS(formName) %>');
-
-			form.one('#<%= namespace %>emailAddress').val(emailAddress);
-
-			if (anonymousAccount) {
-				<portlet:namespace />sendMessage(form);
-			}
-			else {
-				<portlet:namespace />sendMessage(form, true);
-			}
-		}
-
-		function <%= randomNamespace %>deleteMessage(i) {
-			var A = AUI();
-
-			var form = A.one('#<%= namespace %><%= HtmlUtil.escapeJS(formName) %>');
-
-			var messageId = form.one('#<%= namespace %>messageId' + i).val();
-
-			form.one('#<%= namespace %><%= Constants.CMD %>').val('<%= Constants.DELETE %>');
-			form.one('#<%= namespace %>messageId').val(messageId);
-
-			<portlet:namespace />sendMessage(form);
-		}
-
 		function <%= randomNamespace %>hideForm(rowId, textAreaId, textAreaValue) {
 			document.getElementById(rowId).style.display = "none";
 			document.getElementById(textAreaId).value = textAreaValue;
-		}
-
-		function <%= randomNamespace %>postReply(i) {
-			var A = AUI();
-
-			var form = A.one('#<%= namespace %><%= HtmlUtil.escapeJS(formName) %>');
-
-			var parentMessageId = form.one('#<%= namespace %>parentMessageId' + i).val();
-			var body = form.one('#<%= namespace %><%= randomNamespace%>postReplyBody' + i).val();
-
-			form.one('#<%= namespace %><%= Constants.CMD %>').val('<%= Constants.ADD %>');
-			form.one('#<%= namespace %>parentMessageId').val(parentMessageId);
-			form.one('#<%= namespace %>body').val(body);
-
-			if (!themeDisplay.isSignedIn()) {
-				window.namespace = '<%= namespace %>';
-				window.randomNamespace = '<%= randomNamespace %>';
-
-				Liferay.Util.openWindow(
-					{
-						id: '<%= namespace %>signInDialog',
-						title: '<%= UnicodeLanguageUtil.get(pageContext, "sign-in") %>',
-						uri: '<%= loginURL.toString() %>'
-					}
-				);
-			}
-			else {
-				<portlet:namespace />sendMessage(form);
-			}
 		}
 
 		function <%= randomNamespace %>scrollIntoView(messageId) {
@@ -596,51 +539,111 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 		}
 
 		function <%= randomNamespace %>showForm(rowId, textAreaId) {
-			document.getElementById(rowId).style.display = "";
+			document.getElementById(rowId).style.display = "block";
 			document.getElementById(textAreaId).focus();
 		}
 
-		function <%= randomNamespace %>subscribeToComments(subscribe) {
-			var A = AUI();
+		Liferay.provide(
+			window,
+			'<%= randomNamespace %>afterLogin',
+			function(emailAddress, anonymousAccount) {
+				var A = AUI();
 
-			var form = A.one('#<%= namespace %><%= HtmlUtil.escapeJS(formName) %>');
+				var form = A.one('#<%= namespace %><%= HtmlUtil.escapeJS(formName) %>');
 
-			if (subscribe) {
-				form.one('#<%= namespace %><%= Constants.CMD %>').val('<%= Constants.SUBSCRIBE_TO_COMMENTS %>');
-			}
-			else {
-				form.one('#<%= namespace %><%= Constants.CMD %>').val('<%= Constants.UNSUBSCRIBE_FROM_COMMENTS %>');
-			}
+				var refreshPage = !anonymousAccount;
 
-			<portlet:namespace />sendMessage(form);
-		}
+				form.one('#<%= namespace %>emailAddress').val(emailAddress);
 
-		function <%= randomNamespace %>updateMessage(i, pending) {
-			var A = AUI();
+				<portlet:namespace />sendMessage(form, refreshPage);
+			},
+			['aui-base']
+		);
 
-			var form = A.one('#<%= namespace %><%= HtmlUtil.escapeJS(formName) %>');
+		Liferay.provide(
+			window,
+			'<%= randomNamespace %>deleteMessage',
+			function(i) {
+				var A = AUI();
 
-			var messageId = form.one('#<%= namespace %>messageId' + i).val();
-			var body = form.one('#<%= namespace %><%= randomNamespace%>editReplyBody' + i).val();
+				var form = A.one('#<%= namespace %><%= HtmlUtil.escapeJS(formName) %>');
 
-			if (pending) {
-				form.one('#<%= namespace %>workflowAction').val('<%= WorkflowConstants.ACTION_SAVE_DRAFT %>');
-			}
+				var messageId = form.one('#<%= namespace %>messageId' + i).val();
 
-			form.one('#<%= namespace %><%= Constants.CMD %>').val('<%= Constants.UPDATE %>');
-			form.one('#<%= namespace %>messageId').val(messageId);
-			form.one('#<%= namespace %>body').val(body);
+				form.one('#<%= namespace %><%= Constants.CMD %>').val('<%= Constants.DELETE %>');
+				form.one('#<%= namespace %>messageId').val(messageId);
 
-			<portlet:namespace />sendMessage(form);
-		}
+				<portlet:namespace />sendMessage(form);
+			},
+			['aui-base']
+		);
+
+		Liferay.provide(
+			window,
+			'<portlet:namespace />onMessagePosted',
+			function(response, refreshPage) {
+				Liferay.after(
+					'<%= portletDisplay.getId() %>:portletRefreshed',
+					function(event) {
+						var A = AUI();
+
+						<portlet:namespace />showStatusMessage('success', '<%= UnicodeLanguageUtil.get(pageContext, "your-request-processed-successfully") %>');
+
+						location.hash = '#' + A.one("#<portlet:namespace />randomNamespace").val() + 'message_' + response.messageId;
+					}
+				);
+
+				if (refreshPage) {
+					window.location.reload();
+				}
+				else {
+					Liferay.Portlet.refresh('#p_p_id_<%= portletDisplay.getId() %>_');
+				}
+			},
+			['aui-base']
+		);
+
+		Liferay.provide(
+			window,
+			'<%= randomNamespace %>postReply',
+			function(i) {
+				var A = AUI();
+
+				var form = A.one('#<%= namespace %><%= HtmlUtil.escapeJS(formName) %>');
+
+				var body = form.one('#<%= namespace %><%= randomNamespace%>postReplyBody' + i).val();
+				var parentMessageId = form.one('#<%= namespace %>parentMessageId' + i).val();
+
+				form.one('#<%= namespace %><%= Constants.CMD %>').val('<%= Constants.ADD %>');
+				form.one('#<%= namespace %>parentMessageId').val(parentMessageId);
+				form.one('#<%= namespace %>body').val(body);
+
+				if (!themeDisplay.isSignedIn()) {
+					window.namespace = '<%= namespace %>';
+					window.randomNamespace = '<%= randomNamespace %>';
+
+					Liferay.Util.openWindow(
+						{
+							id: '<%= namespace %>signInDialog',
+							title: '<%= UnicodeLanguageUtil.get(pageContext, "sign-in") %>',
+							uri: '<%= loginURL.toString() %>'
+						}
+					);
+				}
+				else {
+					<portlet:namespace />sendMessage(form);
+				}
+			},
+			['aui-base']
+		);
 
 		Liferay.provide(
 			window,
 			'<portlet:namespace />sendMessage',
 			function(form, refreshPage) {
-				var Util = Liferay.Util;
-
 				var A = AUI();
+
+				var Util = Liferay.Util;
 
 				form = A.one(form);
 
@@ -709,31 +712,6 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 
 		Liferay.provide(
 			window,
-			'<portlet:namespace />onMessagePosted',
-			function(response, refreshPage) {
-				var A = AUI();
-
-				Liferay.after(
-					'<%= portletDisplay.getId() %>:portletRefreshed',
-					function(event) {
-						<portlet:namespace />showStatusMessage('success', '<%= UnicodeLanguageUtil.get(pageContext, "your-request-processed-successfully") %>');
-
-						location.hash = '#' + A.one("#<portlet:namespace />randomNamespace").val() + 'message_' + response.messageId;
-					}
-				);
-
-				if (refreshPage) {
-					window.location.reload();
-				}
-				else {
-					Liferay.Portlet.refresh('#p_p_id_<%= portletDisplay.getId() %>_');
-				}
-			},
-			['aui-base']
-		);
-
-		Liferay.provide(
-			window,
 			'<portlet:namespace />showStatusMessage',
 			function(type, message) {
 				var A = AUI();
@@ -747,6 +725,53 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 				messageContainer.html(message);
 
 				messageContainer.show();
+			},
+			['aui-base']
+		);
+
+		Liferay.provide(
+			window,
+			'<%= randomNamespace %>subscribeToComments',
+			function(subscribe) {
+				var A = AUI();
+
+				var form = A.one('#<%= namespace %><%= HtmlUtil.escapeJS(formName) %>');
+
+				var cmd = form.one('#<%= namespace %><%= Constants.CMD %>');
+
+				if (subscribe) {
+					cmd.val('<%= Constants.SUBSCRIBE_TO_COMMENTS %>');
+				}
+				else {
+					cmd.val('<%= Constants.UNSUBSCRIBE_FROM_COMMENTS %>');
+				}
+
+				<portlet:namespace />sendMessage(form);
+			},
+			['aui-base']
+		);
+
+
+		Liferay.provide(
+			window,
+			'<%= randomNamespace %>updateMessage',
+			function(i, pending) {
+				var A = AUI();
+
+				var form = A.one('#<%= namespace %><%= HtmlUtil.escapeJS(formName) %>');
+
+				var body = form.one('#<%= namespace %><%= randomNamespace%>editReplyBody' + i).val();
+				var messageId = form.one('#<%= namespace %>messageId' + i).val();
+
+				if (pending) {
+					form.one('#<%= namespace %>workflowAction').val('<%= WorkflowConstants.ACTION_SAVE_DRAFT %>');
+				}
+
+				form.one('#<%= namespace %><%= Constants.CMD %>').val('<%= Constants.UPDATE %>');
+				form.one('#<%= namespace %>messageId').val(messageId);
+				form.one('#<%= namespace %>body').val(body);
+
+				<portlet:namespace />sendMessage(form);
 			},
 			['aui-base']
 		);

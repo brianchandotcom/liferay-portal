@@ -776,36 +776,40 @@ public class JavadocFormatter {
 
 	private String _formatCDATA(String cdata) {
 		cdata = cdata.replaceAll(
-				"(?s)\\s*<(p|[ou]l)>\\s*(.*?)\\s*</\\1>\\s*",
-				"\n\n<$1>\n$2\n</$1>\n\n");
-			cdata = cdata.replaceAll(
-				"(?s)\\s*<li>\\s*(.*?)\\s*</li>\\s*", "\n<li>\n$1\n</li>\n");
-			cdata = StringUtil.replace(cdata, "</li>\n\n<li>", "</li>\n<li>");
-			cdata = cdata.replaceAll("\n\\s+\n", "\n\n");
-			cdata.replaceAll(" +", " ");
+			"(?s)\\s*<(p|[ou]l)>\\s*(.*?)\\s*</\\1>\\s*",
+			"\n\n<$1>\n$2\n</$1>\n\n");
 
-			// Trim whitespace inside paragraph tags or in the first paragraph
+		cdata = cdata.replaceAll(
+			"(?s)\\s*<li>\\s*(.*?)\\s*</li>\\s*", "\n<li>\n$1\n</li>\n");
 
-			Pattern pattern = Pattern.compile(
-				"(^.*?(?=\n\n|$)+|(?<=<p>\n).*?(?=\n</p>))", Pattern.DOTALL);
+		cdata = StringUtil.replace(cdata, "</li>\n\n<li>", "</li>\n<li>");
 
-			Matcher matcher = pattern.matcher(cdata);
+		cdata = cdata.replaceAll("\n\\s+\n", "\n\n");
 
-			StringBuffer sb = new StringBuffer();
+		cdata = cdata.replaceAll(" +", " ");
 
-			while (matcher.find()) {
-				String trimmed = _trimMultilineText(matcher.group());
+		// Trim whitespace inside paragraph tags or in the first paragraph
 
-				// Escape dollar signs
+		Pattern pattern = Pattern.compile(
+			"(^.*?(?=\n\n|$)+|(?<=<p>\n).*?(?=\n</p>))", Pattern.DOTALL);
 
-				trimmed = trimmed.replaceAll("\\$", "\\\\\\$");
+		Matcher matcher = pattern.matcher(cdata);
 
-				matcher.appendReplacement(sb, trimmed);
-			}
+		StringBuffer sb = new StringBuffer();
 
-			matcher.appendTail(sb);
+		while (matcher.find()) {
+			String trimmed = _trimMultilineText(matcher.group());
 
-			cdata = sb.toString();
+			// Escape dollar signs
+
+			trimmed = trimmed.replaceAll("\\$", "\\\\\\$");
+
+			matcher.appendReplacement(sb, trimmed);
+		}
+
+		matcher.appendTail(sb);
+
+		cdata = sb.toString();
 
 		return cdata.trim();
 	}
@@ -840,11 +844,13 @@ public class JavadocFormatter {
 		while (!cdata.isEmpty()) {
 			int preTagIndex = cdata.indexOf("<pre>");
 			int tableTagIndex = cdata.indexOf("<table>");
+
 			boolean hasPreTag = (preTagIndex != -1) ? true : false;
 			boolean hasTableTag = (tableTagIndex != -1) ? true : false;
 
 			if (!hasPreTag && !hasTableTag) {
 				sb.append(_formatCDATA(cdata));
+
 				break;
 			}
 
@@ -866,10 +872,12 @@ public class JavadocFormatter {
 
 				int startTagLength = startTag.length();
 				int endTagLength = endTag.length();
+
 				int endTagIndex = cdata.indexOf(endTag, startTagLength - 1);
 
 				String entireElement = cdata.substring(
 					0, endTagIndex + endTagLength);
+
 				sb.append("\n");
 				sb.append(entireElement);
 				sb.append("\n");
@@ -878,7 +886,7 @@ public class JavadocFormatter {
 			}
 			else {
 
-				// Format the comment up to the next pre or table tag
+				// Format the cdata up to the next pre or table tag
 
 				int startTagIndex = 0;
 
@@ -894,10 +902,14 @@ public class JavadocFormatter {
 					startTagIndex = preTagIndex;
 				}
 				else {
+
+					// Must have table tag and no pre tag
+
 					startTagIndex = tableTagIndex;
 				}
 
 				String textToFormat = cdata.substring(0, startTagIndex);
+
 				sb.append(_formatCDATA(textToFormat));
 
 				cdataBeginIndex = startTagIndex;

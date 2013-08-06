@@ -36,23 +36,30 @@ public class TLDSourceProcessor extends BaseSourceProcessor {
 		List<String> fileNames = getFileNames(excludes, includes);
 
 		for (String fileName : fileNames) {
-			File file = new File(BASEDIR + fileName);
-
-			String content = fileUtil.read(file);
-
-			String newContent = trimContent(content, false);
-
-			if (isAutoFix() && (newContent != null) &&
-				!content.equals(newContent)) {
-
-				fileUtil.write(file, newContent);
-
-				fileName = StringUtil.replace(
-					fileName, StringPool.BACK_SLASH, StringPool.SLASH);
-
-				sourceFormatterHelper.printError(fileName, file);
-			}
+			format(fileName);
 		}
+	}
+
+	@Override
+	protected String format(String fileName) throws Exception {
+		File file = new File(BASEDIR + fileName);
+
+		String content = fileUtil.read(file);
+
+		String newContent = trimContent(content, false);
+
+		if (isAutoFix() && (newContent != null) &&
+			!content.equals(newContent)) {
+
+			fileUtil.write(file, newContent);
+
+			fileName = StringUtil.replace(
+				fileName, StringPool.BACK_SLASH, StringPool.SLASH);
+
+			sourceFormatterHelper.printError(fileName, file);
+		}
+
+		return newContent;
 	}
 
 }

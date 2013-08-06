@@ -69,7 +69,7 @@ public class VerifyOrganization extends VerifyProcess {
 					if (_log.isWarnEnabled()) {
 						_log.warn(
 							"Unable to update organization asset" +
-							organization.getOrganizationId(), e);
+								organization.getOrganizationId(), e);
 					}
 				}
 			}

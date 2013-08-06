@@ -133,10 +133,6 @@ AUI.add(
 
 						var selector = ['>'];
 
-						if (container.hasClass('field-wrapper')) {
-							selector.push(' .field-wrapper-content >');
-						}
-
 						selector.push(' .field-wrapper');
 
 						if (fieldName) {

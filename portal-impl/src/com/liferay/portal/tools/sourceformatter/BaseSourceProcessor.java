@@ -57,11 +57,10 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 	@Override
 	public void format(
-			boolean useProperties, boolean throwException, boolean printErrors,
-			boolean autoFix)
+			boolean useProperties, boolean printErrors, boolean autoFix)
 		throws Exception {
 
-		_init(useProperties, throwException, printErrors, autoFix);
+		_init(useProperties, printErrors, autoFix);
 
 		doFormat();
 
@@ -70,12 +69,12 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 	@Override
 	public String format(
-			String fileName, boolean useProperties, boolean throwException,
-			boolean printErrors, boolean autoFix)
+			String fileName, boolean useProperties, boolean printErrors,
+			boolean autoFix)
 		throws Exception {
 
 		try {
-			_init(useProperties, throwException, printErrors, autoFix);
+			_init(useProperties, printErrors, autoFix);
 
 			return doFormat(fileName);
 		}
@@ -994,8 +993,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		Pattern.MULTILINE);
 
 	private void _init(
-			boolean useProperties, boolean throwException, boolean printErrors,
-			boolean autoFix)
+			boolean useProperties, boolean printErrors, boolean autoFix)
 		throws Exception {
 
 		_errorMessages = new ArrayList<String>();
@@ -1019,8 +1017,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		portalSource = _isPortalSource();
 
 		_printErrors = printErrors;
-
-		_throwException = throwException;
 
 		_initialized = true;
 	}
@@ -1058,6 +1054,5 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	private static String _oldCopyright;
 	private static Properties _portalLanguageKeysProperties;
 	private static boolean _printErrors;
-	private static boolean _throwException;
 
 }

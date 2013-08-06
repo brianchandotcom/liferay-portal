@@ -74,8 +74,7 @@ public class SourceFormatter {
 
 					for (SourceProcessor sourceProcessor : sourceProcessors) {
 						sourceProcessor.format(
-							_useProperties, _throwException, _printErrors,
-							_autoFix);
+							_useProperties, _printErrors, _autoFix);
 
 						_errorMessages.addAll(
 							sourceProcessor.getErrorMessages());
@@ -97,8 +96,7 @@ public class SourceFormatter {
 						JSPSourceProcessor.class.newInstance();
 
 					sourceProcessor.format(
-						_useProperties, _throwException, _printErrors,
-						_autoFix);
+						_useProperties, _printErrors, _autoFix);
 
 					_errorMessages.addAll(sourceProcessor.getErrorMessages());
 				}
@@ -132,7 +130,7 @@ public class SourceFormatter {
 		}
 
 		String newContent = sourceProcessor.format(
-			fileName, _useProperties, _throwException, _printErrors, _autoFix);
+			fileName, _useProperties, _printErrors, _autoFix);
 
 		List<String> errorMessages = sourceProcessor.getErrorMessages();
 

@@ -807,6 +807,10 @@ Plugins: ${lp.plugins.dir}</echo>
 			tofile="${app.server.classes.portal.dir}/rebel.xml"
 		/>
 
+				<replace dir="${app.server.dir}" token="liferay.root" value="${basedir}">
+						<include name="**/rebel.xml" />
+				</replace>
+
 		<pathconvert pathsep=" " property="system-ext.properties" setonempty="false">
 			<path>
 				<fileset file="portal-impl/src/system-ext.properties">

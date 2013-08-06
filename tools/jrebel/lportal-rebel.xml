@@ -6,17 +6,17 @@
 	xsi:schemaLocation="http://www.zeroturnaround.com http://www.zeroturnaround.com/alderaan/rebel-2_0.xsd"
 >
 	<classpath>
-		<dir name="${liferay.root}/osgi/bootstrap/classes" />
-		<dir name="${liferay.root}/portal-impl/classes" />
-		<dir name="${liferay.root}/portal-pacl/classes" />
-		<dir name="${liferay.root}/util-java/classes" />
-		<dir name="${liferay.root}/util-bridges/classes" />
-		<dir name="${liferay.root}/util-taglib/classes" />
-		<dir name="${liferay.root}/util-slf4j/classes" />
+		<dir name="liferay.root/osgi/bootstrap/classes" />
+		<dir name="liferay.root/portal-impl/classes" />
+		<dir name="liferay.root/portal-pacl/classes" />
+		<dir name="liferay.root/util-java/classes" />
+		<dir name="liferay.root/util-bridges/classes" />
+		<dir name="liferay.root/util-taglib/classes" />
+		<dir name="liferay.root/util-slf4j/classes" />
 	</classpath>
 	<web>
 		<link target="/">
-			<dir name="${liferay.root}/portal-web/docroot/" />
+			<dir name="liferay.root/portal-web/docroot/" />
 		</link>
 	</web>
 </application>

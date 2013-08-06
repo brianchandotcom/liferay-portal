@@ -6,6 +6,6 @@
 	xsi:schemaLocation="http://www.zeroturnaround.com http://www.zeroturnaround.com/alderaan/rebel-2_0.xsd"
 >
 	<classpath>
-		<dir name="${liferay.root}/portal-service/classes" />
+		<dir name="liferay.root/portal-service/classes" />
 	</classpath>
 </application>

@@ -179,7 +179,13 @@ public class JavadocFormatter {
 		for (String fileName : fileNames) {
 			fileName = StringUtil.replace(fileName, "\\", "/");
 
-			_format(fileName);
+			try {
+				_format(fileName);
+			}
+			catch (Exception e) {
+				throw new RuntimeException(
+					"Error while formatting file " + fileName, e);
+			}
 		}
 
 		for (Map.Entry<String, Tuple> entry : _javadocxXmlTuples.entrySet()) {

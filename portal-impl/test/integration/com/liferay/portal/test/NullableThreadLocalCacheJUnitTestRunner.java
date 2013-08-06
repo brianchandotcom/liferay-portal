@@ -14,10 +14,6 @@
 
 package com.liferay.portal.test;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.tools.DBUpgrader;
-
 import java.util.Arrays;
 import java.util.List;
 
@@ -26,10 +22,10 @@ import org.junit.runners.model.InitializationError;
 /**
  * @author Miguel Pastor
  */
-public class LiferayPersistenceIntegrationJUnitTestRunner
+public class NullableThreadLocalCacheJUnitTestRunner
 	extends CustomizableSpringContextJUnitTestRunner {
 
-	public LiferayPersistenceIntegrationJUnitTestRunner(Class<?> clazz)
+	public NullableThreadLocalCacheJUnitTestRunner(Class<?> clazz)
 		throws InitializationError {
 
 		super(clazz);
@@ -37,20 +33,11 @@ public class LiferayPersistenceIntegrationJUnitTestRunner
 
 	@Override
 	public void doAfterApplicationContextInit() {
-		try {
-			DBUpgrader.upgrade();
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
 	}
 
 	@Override
 	public List<String> getExtraConfigLocations() {
-		return Arrays.asList("META-INF/test-persistence-spring.xml");
+		return Arrays.asList("META-INF/test-thread-local-spring.xml");
 	}
-
-	private static Log _log = LogFactoryUtil.getLog(
-		LiferayPersistenceIntegrationJUnitTestRunner.class);
 
 }

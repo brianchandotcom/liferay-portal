@@ -1,0 +1,19 @@
+<definition>
+	<command name="assertElementPresent">
+		<default>
+			<execute function="AssertElementPresent#assertVisible" />
+		</default>
+	</command>
+
+	<command name="click">
+		<default>
+			<execute function="Click#clickAt" />
+		</default>
+	</command>
+
+	<command name="isElementPresent">
+		<default>
+			<execute function="IsElementPresent#isElementPresent" />
+		</default>
+	</command>
+</definition>

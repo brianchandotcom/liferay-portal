@@ -663,7 +663,7 @@ public class PortletImporter {
 	}
 
 	protected Map<Locale, String> getAssetVocabularyTitleMap(
-			AssetVocabulary assetVocabulary, String name)
+			long groupId, AssetVocabulary assetVocabulary, String name)
 		throws PortalException, SystemException {
 
 		Map<Locale, String> titleMap = assetVocabulary.getTitleMap();
@@ -672,9 +672,7 @@ public class PortletImporter {
 			titleMap = new HashMap<Locale, String>();
 		}
 
-		titleMap.put(
-			PortalUtil.getSiteDefaultLocale(assetVocabulary.getGroupId()),
-			name);
+		titleMap.put(PortalUtil.getSiteDefaultLocale(groupId), name);
 
 		return titleMap;
 	}
@@ -936,7 +934,7 @@ public class PortletImporter {
 			importedAssetVocabulary =
 				AssetVocabularyLocalServiceUtil.addVocabulary(
 					userId, StringPool.BLANK,
-					getAssetVocabularyTitleMap(assetVocabulary, name),
+					getAssetVocabularyTitleMap(groupId, assetVocabulary, name),
 					assetVocabulary.getDescriptionMap(),
 					assetVocabulary.getSettings(), serviceContext);
 		}
@@ -953,7 +951,7 @@ public class PortletImporter {
 			importedAssetVocabulary =
 				AssetVocabularyLocalServiceUtil.updateVocabulary(
 					existingAssetVocabulary.getVocabularyId(), StringPool.BLANK,
-					getAssetVocabularyTitleMap(assetVocabulary, name),
+					getAssetVocabularyTitleMap(groupId, assetVocabulary, name),
 					assetVocabulary.getDescriptionMap(),
 					assetVocabulary.getSettings(), serviceContext);
 		}

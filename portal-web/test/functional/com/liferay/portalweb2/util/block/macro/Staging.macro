@@ -1,6 +1,7 @@
 <definition>
 	<command name="activateStagingCP">
 		<execute action="CPSitesEdit#assertClick" locator-key1="MENU_STAGING" value1="Staging" />
+		<execute action="CPSitesEdit#assertTextEquals" locator-key1="SITE_TITLE" value1="${siteName}" />
 		<execute action="CPSitesEdit#check" locator-key1="STAGING_LOCAL_LIVE" />
 
 		<if>
@@ -11,7 +12,6 @@
 			</then>
 		</if>
 
-		<execute action="CPSitesEdit#check" locator-key1="STAGING_ACCOUNT_SETTINGS_CHECKBOX" />
 		<execute action="CPSitesEdit#check" locator-key1="STAGING_APPLICATION_DISPLAY_TEMPLATES_CHECKBOX" />
 		<execute action="CPSitesEdit#check" locator-key1="STAGING_BLOGS_CHECKBOX" />
 		<execute action="CPSitesEdit#check" locator-key1="STAGING_BOOKMARKS_CHECKBOX" />
@@ -23,38 +23,37 @@
 		<execute action="CPSitesEdit#check" locator-key1="STAGING_WEB_CONTENT_CHECKBOX" />
 		<execute action="CPSitesEdit#check" locator-key1="STAGING_WIKI_CHECKBOX" />
 		<execute action="CPSitesEdit#assertClick" locator-key1="MENU_SAVE" value1="Save" />
-		<execute action="CPSitesEdit#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to activate local staging for Liferay?" />
+		<execute action="CPSitesEdit#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to activate local staging for ${siteName}?" />
 		<execute action="CPSitesEdit#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute action="CPSitesEdit#assertTextEquals" locator-key1="HEADER" value1="${siteName} (Staging)" />
+		<execute action="CPSitesEdit#assertTextEquals" locator-key1="SITE_TITLE" value1="${siteName} (Staging)" />
 	</command>
 
 	<command name="deactivateStagingCP">
 		<if>
-			<condition action="CPSitesEdit#isTextEqual" locator-key1="HEADER" value1="${siteName} (Staging)" />
+			<condition action="CPSitesEdit#isTextEqual" locator-key1="SITE_TITLE" value1="${siteName} (Staging)" />
 			<then>
 				<execute action="CPSitesEdit#assertClick" locator-key1="MENU_STAGING" value1="Staging" />
 				<execute action="CPSitesEdit#check" locator-key1="STAGING_NONE" />
 				<execute action="CPSitesEdit#assertClick" locator-key1="MENU_SAVE" value1="Save" />
-				<execute action="CPSitesEdit#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to deactivate staging for Liferay?" />
+				<execute action="CPSitesEdit#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to deactivate staging for ${siteName}?" />
 				<execute action="CPSitesEdit#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 			</then>
 		</if>
 
-		<execute action="CPSitesEdit#assertTextEquals" locator-key1="HEADER" value1="${siteName}" />
+		<execute action="CPSitesEdit#assertTextEquals" locator-key1="SITE_TITLE" value1="${siteName}" />
 	</command>
 
 	<command name="publishToLiveNowPG">
-		<execute action="StagingPG#click" locator-key1="STAGING_DROP_DOWN_BUTTON" />
-		<execute action="StagingPG#assertClick" locator-key1="STAGING_MENULIST_PUBLISH_TO_LIVE_NOW" value1="Publish to Live" />
+		<execute action="PGStaging#click" locator-key1="STAGING_DROP_DOWN_BUTTON" />
+		<execute action="PGStaging#assertClick" locator-key1="STAGING_MENULIST_PUBLISH_TO_LIVE_NOW" value1="Publish to Live" />
 
-		<execute action="StagingPublishToLiveNowPG#selectFrame" locator-key1="PUBLISH_TO_LIVE_IFRAME" />
-		<execute action="StagingPublishToLiveNowPG#check" locator-key1="DATE_NOW" />
-		<execute action="StagingPublishToLiveNowPG#check" locator-key1="ALL_APPLICATIONS" />
-		<execute action="StagingPublishToLiveNowPG#check" locator-key1="ALL_CONTENT" />
-		<execute action="StagingPublishToLiveNowPG#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
-		<execute action="StagingPublishToLiveNowPG#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to publish these pages?" />
-		<execute action="StagingPublishToLiveNowPG#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute action="StagingPublishToLiveNowPG#assertTextEquals" locator-key1="PUBLICATION_TABLE_USER_STATUS" value1="Successful" />
-		<execute action="StagingPublishToLiveNowPG#selectFrameTop" locator-key1="PUBLISH_TO_LIVE_IFRAME_TOP" value1="relative=top" />
+		<execute action="PGStagingPublishToLiveNow#selectFrame" locator-key1="PUBLISH_TO_LIVE_IFRAME" />
+		<execute action="PGStagingPublishToLiveNow#check" locator-key1="DATE_NOW" />
+		<execute action="PGStagingPublishToLiveNow#check" locator-key1="ALL_CONTENT" />
+		<execute action="PGStagingPublishToLiveNow#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+		<execute action="PGStagingPublishToLiveNow#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to publish these pages?" />
+		<execute action="PGStagingPublishToLiveNow#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="PGStagingPublishToLiveNow#assertTextEquals" locator-key1="PUBLICATION_TABLE_USER_STATUS" value1="Successful" />
+		<execute action="PGStagingPublishToLiveNow#selectFrameTop" locator-key1="PUBLISH_TO_LIVE_IFRAME_TOP" value1="relative=top" />
 	</command>
 </definition>

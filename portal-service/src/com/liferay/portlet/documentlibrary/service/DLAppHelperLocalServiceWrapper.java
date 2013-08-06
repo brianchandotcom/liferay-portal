@@ -267,6 +267,13 @@ public class DLAppHelperLocalServiceWrapper implements DLAppHelperLocalService,
 	}
 
 	@Override
+	public void registerDLSyncEventCallback(java.lang.String event,
+		java.lang.String type, long typePK)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_dlAppHelperLocalService.registerDLSyncEventCallback(event, type, typePK);
+	}
+
+	@Override
 	public void restoreFileEntryFromTrash(long userId,
 		com.liferay.portal.kernel.repository.model.FileEntry fileEntry)
 		throws com.liferay.portal.kernel.exception.PortalException,

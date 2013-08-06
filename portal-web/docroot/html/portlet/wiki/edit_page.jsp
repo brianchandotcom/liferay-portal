@@ -312,28 +312,31 @@ if (Validator.isNull(redirect)) {
 			<aui:fieldset>
 				<c:if test="<%= (attachmentsFileEntries != null) && !attachmentsFileEntries.isEmpty() || ((templatePage != null) && (templatePage.getAttachmentsFileEntriesCount() > 0)) %>">
 					<aui:field-wrapper label="attachments">
-						<c:if test="<%= (templatePage != null) %>">
+						<c:if test="<%= templatePage != null %>">
 							<aui:input name="copyPageAttachments" type="checkbox" value="<%= copyPageAttachments %>" />
 						</c:if>
 
-						<%
-						for (int i = 0; i < attachmentsFileEntries.size(); i++) {
-							FileEntry attachmentsFileEntry = attachmentsFileEntries.get(i);
-						%>
+						<c:if test="<%= attachmentsFileEntries != null %>">
 
-							<portlet:resourceURL var="getPageAttachmentURL">
-								<portlet:param name="struts_action" value="/wiki/get_page_attachment" />
-								<portlet:param name="nodeId" value="<%= String.valueOf(node.getNodeId()) %>" />
-								<portlet:param name="title" value="<%= wikiPage.getTitle() %>" />
-								<portlet:param name="fileName" value="<%= attachmentsFileEntry.getTitle() %>" />
-							</portlet:resourceURL>
+							<%
+							for (int i = 0; i < attachmentsFileEntries.size(); i++) {
+								FileEntry attachmentsFileEntry = attachmentsFileEntries.get(i);
+							%>
 
-							<aui:a href="<%= getPageAttachmentURL %>"><%= attachmentsFileEntry.getTitle() %></aui:a> (<%= TextFormatter.formatStorageSize(attachmentsFileEntry.getSize(), locale) %>)<%= (i < (attachmentsFileEntries.size() - 1)) ? ", " : "" %>
+								<portlet:resourceURL var="getPageAttachmentURL">
+									<portlet:param name="struts_action" value="/wiki/get_page_attachment" />
+									<portlet:param name="nodeId" value="<%= String.valueOf(node.getNodeId()) %>" />
+									<portlet:param name="title" value="<%= wikiPage.getTitle() %>" />
+									<portlet:param name="fileName" value="<%= attachmentsFileEntry.getTitle() %>" />
+								</portlet:resourceURL>
 
-						<%
-						}
-						%>
+								<aui:a href="<%= getPageAttachmentURL %>"><%= attachmentsFileEntry.getTitle() %></aui:a> (<%= TextFormatter.formatStorageSize(attachmentsFileEntry.getSize(), locale) %>)<%= (i < (attachmentsFileEntries.size() - 1)) ? ", " : "" %>
 
+							<%
+							}
+							%>
+
+						</c:if>
 					</aui:field-wrapper>
 				</c:if>
 

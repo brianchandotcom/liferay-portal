@@ -12,32 +12,36 @@
  * details.
  */
 
-package com.liferay.portal.tools.sourceformatter;
-
-import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
+package com.liferay.portal.tools.sourceformatter.dependencies;
 
 /**
  * @author Hugo Huijser
  */
-@RunWith(LiferayIntegrationJUnitTestRunner.class)
-public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
+public class CombineLines extends SuperClass {
 
-	@Test
-	public void testCombineLines() throws Exception {
-		test("CombineLines.testjava");
+	public String getString(String test) {
+		return test;
 	}
 
-	@Test
-	public void testExceedMaxLineLength() throws Exception {
-		test("ExceedMaxLineLength.testjava", "> 80:", 22);
+	public void method1(
+		String test1, String test2, String test3, String test4) {
+
+		// These comments should all fit on one single line
+
+		int i1 = 0;
+		int i2 = 0;
+
+		if ((i1 == 0) || (i2 == 0)) {
+		}
 	}
 
-	@Test
-	public void testUnusedImport() throws Exception {
-		test("UnusedImport.testjava");
+	public void method2() throws Exception {
+		String test1 = getString("test1");
+
+		List<String> testList = new ArrayList<String>();
+
+		for (String test2 : testList) {
+		}
 	}
 
 }

@@ -17,6 +17,8 @@ package com.liferay.portal.verify;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.service.persistence.OrganizationActionableDynamicQuery;
@@ -54,18 +56,29 @@ public class VerifyOrganization extends VerifyProcess {
 
 				Organization organization = (Organization)object;
 
-				AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
-					Organization.class.getName(),
-					organization.getOrganizationId());
+				try {
+					AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
+						Organization.class.getName(),
+						organization.getOrganizationId());
 
-				assetEntry.setClassUuid(organization.getUuid());
+					assetEntry.setClassUuid(organization.getUuid());
 
-				AssetEntryLocalServiceUtil.updateAssetEntry(assetEntry);
+					AssetEntryLocalServiceUtil.updateAssetEntry(assetEntry);
+				}
+				catch (Exception e) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Unable to update organization asset" +
+							organization.getOrganizationId(), e);
+					}
+				}
 			}
 
 		};
 
 		actionableDynamicQuery.performActions();
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(VerifyOrganization.class);
 
 }

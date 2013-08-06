@@ -99,7 +99,7 @@ public class SampleSQLBuilder {
 
 		// Generic
 
-		CharPipe charPipe = generateSQL();
+		Reader reader = generateSQL();
 
 		String endSQLFileName = "others.sql";
 		File tempDir = new File(_outputDir, "temp");
@@ -110,7 +110,7 @@ public class SampleSQLBuilder {
 
 			// Specific
 
-			compressSQL(charPipe.getReader(), tempDir, endSQLFileName);
+			compressSQL(reader, tempDir, endSQLFileName);
 
 			// Merge
 
@@ -252,9 +252,8 @@ public class SampleSQLBuilder {
 			insertSQLWriter.close();
 		}
 
-		File endSQLFile = new File(directory, endSQLFileName);
-
-		Writer endSQLFileWriter = new FileWriter(endSQLFile);
+		Writer endSQLFileWriter = new FileWriter(
+			new File(directory, endSQLFileName));
 
 		for (String sql : otherSQLs) {
 			sql = db.buildSQL(sql);
@@ -298,25 +297,25 @@ public class SampleSQLBuilder {
 			0, inputFileChannel.size(), outputFileChannel);
 
 		inputFileChannel.close();
+
+		sqlFile.delete();
 	}
 
-	protected CharPipe generateSQL() {
+	protected Reader generateSQL() {
 		final CharPipe charPipe = new CharPipe(_PIPE_BUFFER_SIZE);
-
-		final Writer writer = createUnsyncBufferedWriter(charPipe.getWriter());
 
 		Thread thread = new Thread() {
 
 			@Override
 			public void run() {
 				try {
-					Writer writerSampleSQL = new UnsyncTeeWriter(
-						writer,
+					Writer sampleSQLWriter = new UnsyncTeeWriter(
+						createUnsyncBufferedWriter(charPipe.getWriter()),
 						createFileWriter(new File(_outputDir, "sample.sql")));
 
 					Map<String, Object> context = getContext();
 
-					FreeMarkerUtil.process(_SCRIPT, context, writerSampleSQL);
+					FreeMarkerUtil.process(_SCRIPT, context, sampleSQLWriter);
 
 					for (String fileName : _CSV_FILE_NAMES) {
 						Writer writer = (Writer)context.get(
@@ -325,7 +324,7 @@ public class SampleSQLBuilder {
 						writer.close();
 					}
 
-					writerSampleSQL.close();
+					sampleSQLWriter.close();
 
 					charPipe.close();
 				}
@@ -338,7 +337,7 @@ public class SampleSQLBuilder {
 
 		thread.start();
 
-		return charPipe;
+		return charPipe.getReader();
 	}
 
 	protected Map<String, Object> getContext() throws Exception {
@@ -363,26 +362,22 @@ public class SampleSQLBuilder {
 		FileOutputStream fileOutputStream = new FileOutputStream(mergedSQLFile);
 		FileChannel fileChannel = fileOutputStream.getChannel();
 
-		File lastSQLFile = null;
+		File endSQLFile = null;
 
-		for (File tableFile : directory.listFiles()) {
-			String fileName = tableFile.getName();
+		for (File sqlFile : directory.listFiles()) {
+			String fileName = sqlFile.getName();
 
 			if (fileName.equals(endSQLFileName)) {
-				lastSQLFile = tableFile;
+				endSQLFile = sqlFile;
 
 				continue;
 			}
 
-			doMergeSQL(tableFile, fileChannel);
-
-			tableFile.delete();
+			doMergeSQL(sqlFile, fileChannel);
 		}
 
-		if (lastSQLFile != null) {
-			doMergeSQL(lastSQLFile, fileChannel);
-
-			lastSQLFile.delete();
+		if (endSQLFile != null) {
+			doMergeSQL(endSQLFile, fileChannel);
 		}
 
 		fileChannel.close();

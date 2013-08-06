@@ -14,84 +14,82 @@
  */
 --%>
 
-<div class="search-query-spell-check aui-helper-clearfix">
+<div class="search-suggested-spelling">
 	<c:if test="<%= collatedSpellCheckResultEnabled && Validator.isNotNull(hits.getCollatedSpellCheckResult()) && !hits.getCollatedSpellCheckResult().equals(searchContext.getKeywords()) %>">
 
-		<div class="did-you-mean">
-			<span class="label">
+		<ul class="inline suggested-keywords">
+			<li class="label">
 				<liferay-ui:message key="did-you-mean" />:
-			</span>
+			</li>
 
 			<%
 			String taglibSearchCollatedKeywords = renderResponse.getNamespace() + "searchKeywords('" + HtmlUtil.escapeJS(hits.getCollatedSpellCheckResult()) + "')";
 			%>
 
-			<aui:a href="javascript:;" onclick="<%= taglibSearchCollatedKeywords %>">
-
-				<%
-				KeywordsSuggestionHolder keywordsSuggestionHolder = new KeywordsSuggestionHolder(hits.getCollatedSpellCheckResult(), searchContext.getKeywords());
-				%>
-
-				<c:forEach items="<%= keywordsSuggestionHolder.getSuggestedKeywords() %>" var="suggestedKeyword">
+			<li>
+				<aui:a href="javascript:;" onclick="<%= taglibSearchCollatedKeywords %>">
 
 					<%
-					String suggestedKeyword = (String)pageContext.getAttribute("suggestedKeyword");
+					KeywordsSuggestionHolder keywordsSuggestionHolder = new KeywordsSuggestionHolder(hits.getCollatedSpellCheckResult(), searchContext.getKeywords());
 					%>
 
-					<span class='<%= keywordsSuggestionHolder.hasChanged(suggestedKeyword) ? "changed-keyword" : "unchanged-keyword" %>'>
-						<%= HtmlUtil.escape(suggestedKeyword) %>
-					</span>
-				</c:forEach>
-			</aui:a>
-		</div>
+					<c:forEach items="<%= keywordsSuggestionHolder.getSuggestedKeywords() %>" var="suggestedKeyword">
+
+						<%
+						String suggestedKeyword = (String)pageContext.getAttribute("suggestedKeyword");
+						%>
+
+						<span class="<%= keywordsSuggestionHolder.hasChanged(suggestedKeyword) ? "changed-keyword" : "unchanged-keyword" %>">
+							<%= HtmlUtil.escape(suggestedKeyword) %>
+						</span>
+					</c:forEach>
+				</aui:a>
+			</li>
+		</ul>
 	</c:if>
 
 	<c:if test="<%= querySuggestionsEnabled && Validator.isNotNull(hits.getQuerySuggestions()) %>">
 
-		<div class="query-suggestions">
-			<span class="label">
+		<ul class="inline related-queries">
+			<li class="label">
 				<liferay-ui:message key="related-queries" />:
-			</span>
+			</li>
 
-			<br />
+			<c:forEach items="<%= hits.getQuerySuggestions() %>" var="relatedQueryKeywords">
 
-			<ul>
-				<c:forEach items="<%= hits.getQuerySuggestions() %>" var="relatedQueryKeywords">
+				<%
+				String relatedQueryKeywords = (String)pageContext.getAttribute("relatedQueryKeywords");
+				String taglibSearchRelatedQuery = renderResponse.getNamespace() + "searchKeywords('" + HtmlUtil.escapeJS(relatedQueryKeywords) + "')";
+				%>
 
-					<%
-					String relatedQueryKeywords = (String)pageContext.getAttribute("relatedQueryKeywords");
-					String taglibSearchRelatedQuery = renderResponse.getNamespace() + "searchKeywords('" + HtmlUtil.escapeJS(relatedQueryKeywords) + "')";
-					%>
+				<c:if test="<%= Validator.isNotNull(relatedQueryKeywords) && !relatedQueryKeywords.equals(searchContext.getKeywords()) %>">
 
-					<c:if test="<%= Validator.isNotNull(relatedQueryKeywords) && !relatedQueryKeywords.equals(searchContext.getKeywords()) %>">
+					<li>
+						<aui:a href="javascript:;" onclick="<%= taglibSearchRelatedQuery %>">
 
-						<li>
-							<aui:a href="javascript:;" onclick="<%= taglibSearchRelatedQuery %>">
+							<%
+								KeywordsSuggestionHolder keywordsSuggestionHolder = new KeywordsSuggestionHolder(relatedQueryKeywords, searchContext.getKeywords());
+							%>
+
+							<c:forEach items="<%= keywordsSuggestionHolder.getSuggestedKeywords() %>" var="relatedQueryKeyword">
 
 								<%
-									KeywordsSuggestionHolder keywordsSuggestionHolder = new KeywordsSuggestionHolder(relatedQueryKeywords, searchContext.getKeywords());
+								String relatedQueryKeyword = (String)pageContext.getAttribute("relatedQueryKeyword");
 								%>
 
-								<c:forEach items="<%= keywordsSuggestionHolder.getSuggestedKeywords() %>" var="relatedQueryKeyword">
-
-									<%
-									String relatedQueryKeyword = (String)pageContext.getAttribute("relatedQueryKeyword");
-									%>
-
-									<span class='<%= keywordsSuggestionHolder.hasChanged(relatedQueryKeyword) ? "changed-keyword" : "unchanged-keyword" %>'>
-										<%= HtmlUtil.escape(relatedQueryKeyword) %>
-									</span>
-								</c:forEach>
-							</aui:a>
-						</li>
-					</c:if>
-				</c:forEach>
-			</ul>
-		</div>
+								<span class="<%= keywordsSuggestionHolder.hasChanged(relatedQueryKeyword) ? "changed-keyword" : "unchanged-keyword" %>">
+									<%= HtmlUtil.escape(relatedQueryKeyword) %>
+								</span>
+							</c:forEach>
+						</aui:a>
+					</li>
+				</c:if>
+			</c:forEach>
+		</ul>
 	</c:if>
 </div>
 
-<aui:script use="aui-base">
+<aui:script>
 	Liferay.provide(
 		window,
 		'<portlet:namespace />searchKeywords',

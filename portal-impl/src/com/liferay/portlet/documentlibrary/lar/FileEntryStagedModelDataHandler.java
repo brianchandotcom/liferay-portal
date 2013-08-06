@@ -219,8 +219,8 @@ public class FileEntryStagedModelDataHandler
 		exportMetaData(portletDataContext, fileEntryElement, fileEntry);
 
 		portletDataContext.addClassedModel(
-			fileEntryElement, fileEntryPath, fileEntry,
-			DLPortletDataHandler.NAMESPACE);
+			fileEntryElement, fileEntryPath, liferayFileEntry,
+			DLFileEntry.class, DLPortletDataHandler.NAMESPACE);
 	}
 
 	@Override
@@ -275,7 +275,7 @@ public class FileEntryStagedModelDataHandler
 			DLFileEntry.class, fileEntry.getFileEntryId());
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
-			fileEntry, DLPortletDataHandler.NAMESPACE);
+			fileEntry, DLFileEntry.class, DLPortletDataHandler.NAMESPACE);
 
 		serviceContext.setAttribute(
 			"sourceFileName", "A." + fileEntry.getExtension());
@@ -489,7 +489,8 @@ public class FileEntryStagedModelDataHandler
 		}
 
 		portletDataContext.importClassedModel(
-			fileEntry, importedFileEntry, DLPortletDataHandler.NAMESPACE);
+			fileEntry, importedFileEntry, DLFileEntry.class,
+			DLPortletDataHandler.NAMESPACE);
 
 		Map<Long, Long> fileEntryIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(

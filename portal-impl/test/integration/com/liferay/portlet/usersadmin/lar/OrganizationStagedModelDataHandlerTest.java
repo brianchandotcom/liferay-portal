@@ -145,7 +145,7 @@ public class OrganizationStagedModelDataHandlerTest
 
 	@Override
 	protected void validateImport(
-			StagedModel stagedModel,
+			StagedModel stagedModel, StagedModelAssets stagedModelAssets,
 			Map<String, List<StagedModel>> dependentStagedModelsMap,
 			Group group)
 		throws Exception {
@@ -153,6 +153,8 @@ public class OrganizationStagedModelDataHandlerTest
 		Organization organization =
 			OrganizationLocalServiceUtil.fetchOrganizationByUuidAndCompanyId(
 				stagedModel.getUuid(), group.getCompanyId());
+
+		validateAssets(organization.getUuid(), stagedModelAssets, group);
 
 		List<StagedModel> addressDependentStagedModels =
 			dependentStagedModelsMap.get(Address.class.getSimpleName());

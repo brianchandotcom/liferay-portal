@@ -307,7 +307,7 @@ public class JournalArticleStagedModelDataHandlerTest
 
 	@Override
 	protected void validateImport(
-			StagedModel stagedModel,
+			StagedModel stagedModel, StagedModelAssets stagedModelAssets,
 			Map<String, List<StagedModel>> dependentStagedModelsMap,
 			Group group)
 		throws Exception {
@@ -322,6 +322,8 @@ public class JournalArticleStagedModelDataHandlerTest
 
 		JournalArticleLocalServiceUtil.getLatestArticle(
 			articleResource.getResourcePrimKey(), article.getStatus(), false);
+
+		validateAssets(articleResource.getUuid(), stagedModelAssets, group);
 
 		validateImport(dependentStagedModelsMap, group);
 	}

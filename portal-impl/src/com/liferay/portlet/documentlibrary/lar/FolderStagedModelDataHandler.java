@@ -132,7 +132,8 @@ public class FolderStagedModelDataHandler
 		exportFolderFileEntryTypes(portletDataContext, folderElement, folder);
 
 		portletDataContext.addClassedModel(
-			folderElement, folderPath, folder, DLPortletDataHandler.NAMESPACE);
+			folderElement, folderPath, folder, DLFolder.class,
+			DLPortletDataHandler.NAMESPACE);
 	}
 
 	@Override
@@ -182,7 +183,7 @@ public class FolderStagedModelDataHandler
 			folderIds, folder.getParentFolderId(), folder.getParentFolderId());
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
-			folder, DLPortletDataHandler.NAMESPACE);
+			folder, DLFolder.class, DLPortletDataHandler.NAMESPACE);
 
 		serviceContext.setUserId(userId);
 
@@ -228,7 +229,8 @@ public class FolderStagedModelDataHandler
 			portletDataContext, folderElement, folder, serviceContext);
 
 		portletDataContext.importClassedModel(
-			folder, importedFolder, DLPortletDataHandler.NAMESPACE);
+			folder, importedFolder, DLFolder.class,
+			DLPortletDataHandler.NAMESPACE);
 
 		folderIds.put(folder.getFolderId(), importedFolder.getFolderId());
 	}

@@ -126,6 +126,21 @@ public class WikiTestUtil {
 		return file;
 	}
 
+	public static WikiPage copyPageAttachments(
+			WikiPage page, boolean approved, ServiceContext serviceContext)
+		throws Exception {
+
+		WikiPage copyPage = addPage(
+			page.getUserId(), page.getNodeId(), ServiceTestUtil.randomString(),
+			page.getContent(), approved, serviceContext);
+
+		WikiPageLocalServiceUtil.copyPageAttachments(
+			page.getUserId(), page.getNodeId(), page.getTitle(),
+			copyPage.getNodeId(), copyPage.getTitle());
+
+		return copyPage;
+	}
+
 	public static WikiPage updatePage(
 			WikiPage page, long userId, String content,
 			ServiceContext serviceContext)

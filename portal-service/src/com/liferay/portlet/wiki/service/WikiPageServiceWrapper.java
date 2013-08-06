@@ -120,6 +120,15 @@ public class WikiPageServiceWrapper implements WikiPageService,
 	}
 
 	@Override
+	public void copyPageAttachments(long templateNodeId,
+		java.lang.String templateTitle, long nodeId, java.lang.String title)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_wikiPageService.copyPageAttachments(templateNodeId, templateTitle,
+			nodeId, title);
+	}
+
+	@Override
 	public void deletePage(long nodeId, java.lang.String title)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

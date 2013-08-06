@@ -54,6 +54,8 @@ if (wikiPage == null) {
 
 boolean editable = false;
 
+boolean copyPageAttachments = ParamUtil.getBoolean(request, "copyPageAttachments", true);
+
 List<FileEntry> attachmentsFileEntries = null;
 
 if (wikiPage != null) {
@@ -196,6 +198,11 @@ if (Validator.isNull(redirect)) {
 		<aui:input name="version" type="hidden" value="<%= wikiPage.getVersion() %>" />
 	</c:if>
 
+	<c:if test="<%= templatePage != null %>">
+		<aui:input name="templateNodeId" type="hidden" value="<%= String.valueOf(templateNodeId) %>" />
+		<aui:input name="templateTitle" type="hidden" value="<%= templateTitle %>" />
+	</c:if>
+
 	<aui:input name="workflowAction" type="hidden" value="<%= WorkflowConstants.ACTION_SAVE_DRAFT %>" />
 	<aui:input name="preview" type="hidden" value="<%= preview %>" />
 
@@ -303,8 +310,11 @@ if (Validator.isNull(redirect)) {
 			</c:if>
 
 			<aui:fieldset>
-				<c:if test="<%= (attachmentsFileEntries != null) && !attachmentsFileEntries.isEmpty() %>">
+				<c:if test="<%= (attachmentsFileEntries != null) && !attachmentsFileEntries.isEmpty() || ((templatePage != null) && (templatePage.getAttachmentsFileEntriesCount() > 0)) %>">
 					<aui:field-wrapper label="attachments">
+						<c:if test="<%= (templatePage != null) %>">
+							<aui:input name="copyPageAttachments" type="checkbox" value="<%= copyPageAttachments %>" />
+						</c:if>
 
 						<%
 						for (int i = 0; i < attachmentsFileEntries.size(); i++) {

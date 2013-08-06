@@ -130,6 +130,20 @@ public class WikiPageServiceSoap {
 		}
 	}
 
+	public static void copyPageAttachments(long templateNodeId,
+		java.lang.String templateTitle, long nodeId, java.lang.String title)
+		throws RemoteException {
+		try {
+			WikiPageServiceUtil.copyPageAttachments(templateNodeId,
+				templateTitle, nodeId, title);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static void deletePage(long nodeId, java.lang.String title)
 		throws RemoteException {
 		try {

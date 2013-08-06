@@ -395,21 +395,34 @@ public class EditPageAction extends PortletAction {
 		String format = ParamUtil.getString(actionRequest, "format");
 		String parentTitle = ParamUtil.getString(actionRequest, "parentTitle");
 		String redirectTitle = null;
+		boolean copyPageAttachments = ParamUtil.getBoolean(
+			actionRequest, "copyPageAttachments");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			WikiPage.class.getName(), actionRequest);
 
 		WikiPage page = null;
 
-		if (cmd.equals(Constants.ADD)) {
-			page = WikiPageServiceUtil.addPage(
-				nodeId, title, content, summary, minorEdit, format, parentTitle,
-				redirectTitle, serviceContext);
-		}
-		else {
+		if (cmd.equals(Constants.UPDATE)) {
 			page = WikiPageServiceUtil.updatePage(
 				nodeId, title, version, content, summary, minorEdit, format,
 				parentTitle, redirectTitle, serviceContext);
+		}
+		else {
+			page = WikiPageServiceUtil.addPage(
+				nodeId, title, content, summary, minorEdit, format, parentTitle,
+				redirectTitle, serviceContext);
+
+			if (copyPageAttachments) {
+				long templateNodeId = ParamUtil.getLong(
+					actionRequest, "templateNodeId");
+				String templateTitle = ParamUtil.getString(
+					actionRequest, "templateTitle");
+
+				WikiPageServiceUtil.copyPageAttachments(
+					templateNodeId, templateTitle, page.getNodeId(),
+					page.getTitle());
+			}
 		}
 
 		return page;

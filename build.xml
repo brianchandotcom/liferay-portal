@@ -553,12 +553,11 @@ print AdminControl.invoke(appManager, 'startApplication', 'liferay-portal')
 			<length string="${plugin.path}" trim="true" when="greater" length="0" />
 			<then>
 				<echo>Deploying plugin ${plugin.name}</echo>
+
 				<java classname="org.apache.tools.ant.launch.Launcher" fork="true" failonerror="true" dir="${plugin.path}" timeout="4000000" taskname="deploy">
 					<classpath>
 						<fileset dir="${ant.home}" includes="lib/**/*.jar" />
 					</classpath>
-					<arg value="-buildfile"/>
-					<arg file="${plugin.path}/build.xml"/>
 				</java>
 			</then>
 			<else>
@@ -570,7 +569,7 @@ print AdminControl.invoke(appManager, 'startApplication', 'liferay-portal')
 	<target name="deploy-plugins">
 		<foreach list="calendar-portlet,marketplace-portlet,resources-importer-web" delimiter="," target="deploy-plugin" param="plugin.name" />
 
-				<foreach list="${plugins.to.deploy.custom}" delimiter="," target="deploy-plugin" param="plugin.name" />
+		<foreach list="${plugins.to.deploy.custom}" delimiter="," target="deploy-plugin" param="plugin.name" />
 	</target>
 
 	<target name="deploy-properties">

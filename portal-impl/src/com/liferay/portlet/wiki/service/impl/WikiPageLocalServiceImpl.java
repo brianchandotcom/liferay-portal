@@ -162,6 +162,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		page.setMinorEdit(minorEdit);
 		page.setContent(content);
 		page.setStatus(WorkflowConstants.STATUS_DRAFT);
+		page.setStatusByUserId(userId);
+		page.setStatusDate(serviceContext.getModifiedDate(now));
 		page.setSummary(summary);
 		page.setFormat(format);
 		page.setHead(head);

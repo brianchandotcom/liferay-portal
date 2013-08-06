@@ -387,6 +387,8 @@ public class JournalArticleLocalServiceImpl
 			article.setStatus(WorkflowConstants.STATUS_EXPIRED);
 		}
 
+		article.setStatusByUserId(userId);
+		article.setStatusDate(serviceContext.getModifiedDate(now));
 		article.setExpandoBridgeAttributes(serviceContext);
 
 		journalArticlePersistence.update(article);

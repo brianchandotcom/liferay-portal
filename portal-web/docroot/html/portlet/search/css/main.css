@@ -232,24 +232,11 @@
 		padding: 5px 0;
 	}
 
-	.search-query-spell-check {
-		font-size: 1.5em;
-		margin: 0 0 0 0;
+	.search-suggested-spelling {
+		margin: 0;
 
-		.did-you-mean {
-			margin: 0 4em 1em 0.5em;
-
-			label {
-				color: #DD4B39;
-			}
-		}
-
-		.query-suggestions ul {
-			margin: 0.1em 1em 1em 0.5em;
-
-			li {
-				list-style: none;
-			}
+		.suggested-keywords a {
+			font-size: 1.3em;
 		}
 
 		.changed-keyword {

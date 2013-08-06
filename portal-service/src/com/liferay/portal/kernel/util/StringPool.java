@@ -190,6 +190,8 @@ public class StringPool {
 
 	public static final String UNDERLINE = "_";
 
+	public static final int UNICODE_BYTE_ORDER_MARK = 65279;
+
 	public static final String UTC = "UTC";
 
 	public static final String UTF8 = "UTF-8";

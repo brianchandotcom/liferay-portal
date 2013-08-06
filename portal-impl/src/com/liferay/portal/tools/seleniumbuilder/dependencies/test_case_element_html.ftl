@@ -14,7 +14,11 @@
 
 		<div>
 			<div class="expand-line">
-				<h3 class="testCaseCommand">${testCaseName}#${testCaseCommand}</h3>
+				<h3 class="testCaseCommand">${testCaseName}#${testCaseCommand}
+					<#if testCaseCommandElement.attributeValue("depends")??>
+						[depends ~ ${testCaseCommandElement.attributeValue("depends")}]
+					</#if>
+				</h3>
 			</div>
 		</div>
 

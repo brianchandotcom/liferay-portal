@@ -111,6 +111,10 @@
 			color: deeppink;
 		}
 
+		.skip {
+			background-color: lightgray;
+		}
+
 		.tag {
 			color: green;
 		}

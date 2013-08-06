@@ -26,14 +26,14 @@ public class SHSourceProcessor extends BaseSourceProcessor {
 
 	@Override
 	protected void format() throws Exception {
-		_formatSH("ext/create.sh");
-		_formatSH("hooks/create.sh");
-		_formatSH("layouttpl/create.sh");
-		_formatSH("portlets/create.sh");
-		_formatSH("themes/create.sh");
+		formatSH("ext/create.sh");
+		formatSH("hooks/create.sh");
+		formatSH("layouttpl/create.sh");
+		formatSH("portlets/create.sh");
+		formatSH("themes/create.sh");
 	}
 
-	private void _formatSH(String fileName) throws IOException {
+	protected void formatSH(String fileName) throws IOException {
 		File file = new File(fileName);
 
 		if (!file.exists()) {

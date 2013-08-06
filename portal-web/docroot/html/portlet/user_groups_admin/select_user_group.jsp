@@ -56,16 +56,19 @@ portletURL.setParameter("eventName", eventName);
 
 				userGroups = UsersAdminUtil.filterUserGroups(permissionChecker, userGroups);
 
-				total = userGroups.size();
+				searchContainer.setTotal(userGroups.size());
+
 				results = ListUtil.subList(userGroups, searchContainer.getStart(), searchContainer.getEnd());
 			}
 			else {
-				results = UserGroupLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), null, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 				total = UserGroupLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getKeywords(), null);
+
+				searchContainer.setTotal(total);
+
+				results = UserGroupLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), null, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 			}
 
-			pageContext.setAttribute("results", results);
-			pageContext.setAttribute("total", total);
+			searchContainer.setResults(results);
 			%>
 
 		</liferay-ui:search-container-results>

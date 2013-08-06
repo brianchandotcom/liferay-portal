@@ -22,6 +22,8 @@
 SearchContainer searchContainer = (SearchContainer)request.getAttribute("liferay-ui:search:searchContainer");
 Hits hits = (Hits)request.getAttribute("liferay-ui:search:hits");
 
+searchContainer.setTotal(hits.getLength());
+
 NumberFormat doubleFormat = NumberFormat.getInstance(locale);
 doubleFormat.setMaximumFractionDigits(2);
 

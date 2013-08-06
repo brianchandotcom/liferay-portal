@@ -109,7 +109,9 @@ String keywords = ParamUtil.getString(request, "keywords");
 
 			PortletURL hitURL = renderResponse.createRenderURL();
 
-			pageContext.setAttribute("results", SearchResultUtil.getSearchResults(hits, locale, hitURL));
+			results = SearchResultUtil.getSearchResults(hits, locale, hitURL);
+
+			searchContainer.setResults(results);
 			%>
 
 		</liferay-ui:search-container-results>

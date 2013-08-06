@@ -330,21 +330,20 @@ portletURL.setParameter("tabs1", tabs1);
 
 		int total = 0;
 
-		if (tabs1.equals("products")) {
-			total = SCProductEntryLocalServiceUtil.getProductEntriesCount(scopeGroupId);
-		}
-		else {
-			total = SCProductEntryLocalServiceUtil.getProductEntriesCount(scopeGroupId, user.getUserId());
-		}
-
-		searchContainer.setTotal(total);
-
 		List results = null;
 
 		if (tabs1.equals("products")) {
+			total = SCProductEntryLocalServiceUtil.getProductEntriesCount(scopeGroupId);
+
+			searchContainer.setTotal(total);
+
 			results = SCProductEntryLocalServiceUtil.getProductEntries(scopeGroupId, searchContainer.getStart(), searchContainer.getEnd(), orderByComparator);
 		}
 		else {
+			total = SCProductEntryLocalServiceUtil.getProductEntriesCount(scopeGroupId, user.getUserId());
+
+			searchContainer.setTotal(total);
+
 			results = SCProductEntryLocalServiceUtil.getProductEntries(scopeGroupId, user.getUserId(), searchContainer.getStart(), searchContainer.getEnd(), orderByComparator);
 		}
 

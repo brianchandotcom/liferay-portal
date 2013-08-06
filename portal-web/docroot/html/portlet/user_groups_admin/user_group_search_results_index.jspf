@@ -43,5 +43,5 @@ while (true) {
 	}
 }
 
-pageContext.setAttribute("results", results);
+searchContainer.setResults(results);
 %>

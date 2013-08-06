@@ -59,15 +59,20 @@ portletURL.setParameter("eventName", eventName);
 				roles = UsersAdminUtil.filterRoles(permissionChecker, roles);
 
 				total = roles.size();
+
+				searchContainer.setTotal(total);
+
 				results = ListUtil.subList(roles, searchContainer.getStart(), searchContainer.getEnd());
 			}
 			else {
-				results = RoleLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), new Integer[] {RoleConstants.TYPE_REGULAR}, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 				total = RoleLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getKeywords(), new Integer[] {RoleConstants.TYPE_REGULAR});
+
+				searchContainer.setTotal(total);
+
+				results = RoleLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), new Integer[] {RoleConstants.TYPE_REGULAR}, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 			}
 
-			pageContext.setAttribute("results", results);
-			pageContext.setAttribute("total", total);
+			searchContainer.setResults(results);
 			%>
 
 		</liferay-ui:search-container-results>

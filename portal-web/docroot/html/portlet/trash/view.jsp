@@ -129,7 +129,7 @@ portletURL.setParameter("tabs1", tabs1);
 			approximate = trashEntryList.isApproximate();
 		}
 
-		pageContext.setAttribute("results", results);
+		searchContainer.setResults(results);
 
 		if ((searchContainer.getTotal() == 0) && Validator.isNotNull(searchTerms.getKeywords())) {
 			searchContainer.setEmptyResultsMessage(LanguageUtil.format(pageContext, "no-entries-were-found-that-matched-the-keywords-x", "<strong>" + HtmlUtil.escape(searchTerms.getKeywords()) + "</strong>"));

@@ -175,9 +175,6 @@ portletURL.setParameter("target", target);
 			results.addAll(groups);
 
 			searchContainer.setResults(results);
-
-			pageContext.setAttribute("results", results);
-			pageContext.setAttribute("total", total);
 			%>
 
 		</liferay-ui:search-container-results>

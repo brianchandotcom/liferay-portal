@@ -292,11 +292,13 @@ if (organization != null) {
 										<c:when test="<%= !searchTerms.hasSearchTerms() && (parentOrganizationId <= 0) && (filterManageableOrganizations) %>">
 
 											<%
-											results = ListUtil.subList(organizations, searchContainer.getStart(), searchContainer.getEnd());
 											total = organizations.size();
 
-											pageContext.setAttribute("results", results);
-											pageContext.setAttribute("total", total);
+											searchContainer.setTotal(total);
+
+											results = ListUtil.subList(organizations, searchContainer.getStart(), searchContainer.getEnd());
+
+											searchContainer.setResults(results);
 											%>
 
 										</c:when>

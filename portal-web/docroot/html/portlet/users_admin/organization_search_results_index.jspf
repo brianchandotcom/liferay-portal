@@ -50,5 +50,5 @@ while (true) {
 	}
 }
 
-pageContext.setAttribute("results", results);
+organizationSearchContainer.setResults(results);
 %>

@@ -48,5 +48,5 @@ else {
 	searchContainer.setTotal(total);
 }
 
-pageContext.setAttribute("results", results);
+searchContainer.setResults(results);
 %>

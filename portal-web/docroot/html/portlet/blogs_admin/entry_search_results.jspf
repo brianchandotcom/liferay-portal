@@ -59,7 +59,7 @@ else {
 	}
 }
 
-pageContext.setAttribute("results", results);
+searchContainer.setResults(results);
 %>
 
 <%!

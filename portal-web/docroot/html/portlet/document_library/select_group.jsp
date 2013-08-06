@@ -102,9 +102,6 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 			results.addAll(sites);
 
 			searchContainer.setResults(results);
-
-			pageContext.setAttribute("results", results);
-			pageContext.setAttribute("total", total);
 			%>
 
 		</liferay-ui:search-container-results>

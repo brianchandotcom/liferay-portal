@@ -82,11 +82,13 @@ SearchContainer searchContainer = new SearchContainer(renderRequest, null, null,
 
 searchContainer.setHeaderNames(headerNames);
 
-List results = MembershipRequestLocalServiceUtil.search(group.getGroupId(), statusId, searchContainer.getStart(), searchContainer.getEnd());
-
 int total = MembershipRequestLocalServiceUtil.searchCount(group.getGroupId(), statusId);
 
 searchContainer.setTotal(total);
+
+List results = MembershipRequestLocalServiceUtil.search(group.getGroupId(), statusId, searchContainer.getStart(), searchContainer.getEnd());
+
+searchContainer.setResults(results);
 
 List resultRows = searchContainer.getResultRows();
 

@@ -86,6 +86,11 @@ public abstract class BaseSpellCheckIndexWriter
 		for (String dictionaryFileName : dictionaryFileNames) {
 			InputStream inputStream = null;
 
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Start indexing dictionary for " + dictionaryFileName);
+			}
+
 			try {
 				URL url = getResource(dictionaryFileName);
 
@@ -111,6 +116,11 @@ public abstract class BaseSpellCheckIndexWriter
 			}
 			finally {
 				StreamUtil.cleanUp(inputStream);
+			}
+
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Finished indexing dictionary for " + dictionaryFileName);
 			}
 		}
 	}

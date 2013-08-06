@@ -14,8 +14,6 @@
 
 package com.liferay.portal.search.lucene;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BaseSpellCheckIndexWriter;
 import com.liferay.portal.kernel.search.DictionaryEntry;
 import com.liferay.portal.kernel.search.DictionaryReader;
@@ -141,10 +139,6 @@ public class LuceneSpellCheckIndexWriter extends BaseSpellCheckIndexWriter {
 			long companyId, String languageId, InputStream inputStream)
 		throws Exception {
 
-		if (_log.isInfoEnabled()) {
-			_log.info("Start indexing dictionaries for " + languageId);
-		}
-
 		IndexAccessor indexAccessor = LuceneHelperUtil.getIndexAccessor(
 			companyId);
 
@@ -197,10 +191,6 @@ public class LuceneSpellCheckIndexWriter extends BaseSpellCheckIndexWriter {
 		finally {
 			LuceneHelperUtil.cleanUp(indexSearcher);
 		}
-
-		if (_log.isInfoEnabled()) {
-			_log.info("Finished indexing dictionaries for " + languageId);
-		}
 	}
 
 	protected boolean isValidWord(
@@ -222,8 +212,5 @@ public class LuceneSpellCheckIndexWriter extends BaseSpellCheckIndexWriter {
 	}
 
 	private static final int _MINIMUM_WORD_LENGTH = 3;
-
-	private static Log _log = LogFactoryUtil.getLog(
-		LuceneSpellCheckIndexWriter.class);
 
 }

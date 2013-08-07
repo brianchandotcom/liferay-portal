@@ -14,14 +14,6 @@
  */
 --%>
 
-<%
-String useDialog = StringPool.BLANK;
-
-if (PropsValues.DOCKBAR_ADMINISTRATIVE_LINKS_SHOW_IN_POP_UP) {
-	useDialog = StringPool.SPACE + "use-dialog";
-}
-%>
-
 <liferay-util:buffer var="userName">
 	<c:if test="<%= themeDisplay.isImpersonated() %>">
 		<b class="alert-icon icon-warning-sign"></b>
@@ -139,7 +131,7 @@ if (PropsValues.DOCKBAR_ADMINISTRATIVE_LINKS_SHOW_IN_POP_UP) {
 				myAccountURL = HttpUtil.setParameter(myAccountURL, "controlPanelCategory", PortletCategoryKeys.MY);
 				%>
 
-				<aui:nav-item anchorCssClass='<%= themeDisplay.isImpersonated() ? "" : useDialog %>' href="<%= myAccountURL %>" iconClass="icon-user" label="my-account" title="my-account" />
+				<aui:nav-item href="<%= myAccountURL %>" iconClass="icon-user" label="my-account" title="my-account" useDialog="<%= !themeDisplay.isImpersonated() %>" />
 			</c:if>
 
 			<c:if test="<%= themeDisplay.isShowSignOutIcon() %>">

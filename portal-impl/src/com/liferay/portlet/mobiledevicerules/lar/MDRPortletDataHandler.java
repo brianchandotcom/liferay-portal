@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.mobiledevicerules.model.MDRAction;
 import com.liferay.portlet.mobiledevicerules.model.MDRRule;
 import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup;
@@ -60,7 +61,8 @@ public class MDRPortletDataHandler extends BasePortletDataHandler {
 				NAMESPACE, "actions", true, false, null,
 				MDRAction.class.getName(), Layout.class.getName()));
 		setImportControls(getExportControls());
-		setPublishToLiveByDefault(true);
+		setPublishToLiveByDefault(
+			PropsValues.MOBILE_DEVICE_RULES_PUBLISH_TO_LIVE_BY_DEFAULT);
 	}
 
 	@Override

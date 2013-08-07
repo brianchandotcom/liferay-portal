@@ -31,6 +31,7 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.calendar.model.CalEvent;
 import com.liferay.portlet.calendar.service.CalEventLocalServiceUtil;
 import com.liferay.portlet.calendar.service.permission.CalendarPermission;
@@ -59,7 +60,8 @@ public class CalendarPortletDataHandler extends BasePortletDataHandler {
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "events", true, true, null,
 				CalEvent.class.getName()));
-		setPublishToLiveByDefault(true);
+		setPublishToLiveByDefault(
+			PropsValues.CALENDAR_PUBLISH_TO_LIVE_BY_DEFAULT);
 	}
 
 	@Override

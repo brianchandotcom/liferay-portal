@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Image;
 import com.liferay.portal.service.ImageLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -32,6 +33,7 @@ import com.liferay.portlet.journal.NoSuchFolderException;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalArticleResource;
 import com.liferay.portlet.journal.model.JournalFolder;
+import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalArticleResourceLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.portlet.journal.util.LocaleTransformerListener;
@@ -201,6 +203,22 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 		}
 
 		return folder.getTrashContainer();
+	}
+
+	@Override
+	public boolean hasApprovedVersion()
+		throws PortalException, SystemException {
+
+		JournalArticle latestAprovedVersion =
+			JournalArticleLocalServiceUtil.fetchLatestArticleByStatus(
+				getGroupId(), getArticleId(),
+				WorkflowConstants.STATUS_APPROVED);
+
+		if (latestAprovedVersion == null) {
+			return false;
+		}
+
+		return true;
 	}
 
 	@Override

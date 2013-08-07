@@ -14,11 +14,10 @@
 
 package com.liferay.portal.kernel.servlet;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
 
-import javax.servlet.ServletConfig;
+import javax.servlet.Servlet;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServlet;
 
 /**
@@ -29,43 +28,43 @@ import javax.servlet.http.HttpServlet;
  * @author Olaf Fricke
  * @author Brian Wing Shun Chan
  */
-public class PortalDelegateServlet extends HttpServlet {
+public class PortalDelegateServlet extends SecureServlet {
 
 	@Override
-	public void destroy() {
+	protected void doPortalDestroy() {
 		PortalDelegatorServlet.removeDelegate(_subContext);
+
+		_servlet.destroy();
 	}
 
 	@Override
-	public void init(ServletConfig servletConfig) {
-		String servletClass = servletConfig.getInitParameter("servlet-class");
+	protected void doPortalInit() throws Exception {
+		ServletContext servletContext = _servletConfig.getServletContext();
 
-		_subContext = servletConfig.getInitParameter("sub-context");
+		ClassLoader classLoader = (ClassLoader)servletContext.getAttribute(
+			PluginContextListener.PLUGIN_CLASS_LOADER);
+
+		String servletClass = _servletConfig.getInitParameter("servlet-class");
+
+		_subContext = _servletConfig.getInitParameter("sub-context");
 
 		if (_subContext == null) {
 			_subContext = getServletName();
 		}
 
-		try {
-			Thread currentThread = Thread.currentThread();
+		_servlet = (Servlet)InstanceFactory.newInstance(
+			classLoader, servletClass);
 
-			ClassLoader contextClassLoader =
-				currentThread.getContextClassLoader();
-
-			HttpServlet servlet = (HttpServlet)InstanceFactory.newInstance(
-				contextClassLoader, servletClass);
-
-			servlet.init(servletConfig);
-
-			PortalDelegatorServlet.addDelegate(_subContext, servlet);
+		if (!(_servlet instanceof HttpServlet)) {
+			throw new IllegalArgumentException(
+				"servlet-class is not an instance of " +
+					"javax.servlet.http.HttpServlet");
 		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
+
+		_servlet.init(_servletConfig);
+
+		PortalDelegatorServlet.addDelegate(_subContext, (HttpServlet)_servlet);
 	}
-
-	private static Log _log = LogFactoryUtil.getLog(
-		PortalDelegateServlet.class);
 
 	private String _subContext;
 

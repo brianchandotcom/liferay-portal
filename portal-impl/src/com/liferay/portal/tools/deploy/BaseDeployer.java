@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.plugin.License;
 import com.liferay.portal.kernel.plugin.PluginPackage;
 import com.liferay.portal.kernel.servlet.PluginContextListener;
 import com.liferay.portal.kernel.servlet.PortalClassLoaderServlet;
+import com.liferay.portal.kernel.servlet.PortalDelegateServlet;
 import com.liferay.portal.kernel.servlet.PortletServlet;
 import com.liferay.portal.kernel.servlet.SecurePluginContextListener;
 import com.liferay.portal.kernel.servlet.SecureServlet;
@@ -2055,6 +2056,7 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 
 			if (servletClass.equals(
 					PortalClassLoaderServlet.class.getName()) ||
+				servletClass.equals(PortalDelegateServlet.class.getName()) ||
 				servletClass.equals(PortletServlet.class.getName())) {
 
 				continue;

@@ -451,6 +451,9 @@ public class EditArticleAction extends PortletAction {
 			"groupId", String.valueOf(article.getGroupId()), false);
 		portletURL.setParameter("articleId", article.getArticleId(), false);
 		portletURL.setParameter(
+			"resourcePrimKey", String.valueOf(article.getResourcePrimKey()),
+			false);
+		portletURL.setParameter(
 			"version", String.valueOf(article.getVersion()), false);
 		portletURL.setParameter("languageId", languageId, false);
 		portletURL.setWindowState(actionRequest.getWindowState());

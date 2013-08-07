@@ -176,6 +176,7 @@ public class ActionUtil {
 		long classNameId = ParamUtil.getLong(request, "classNameId");
 		long classPK = ParamUtil.getLong(request, "classPK");
 		String articleId = ParamUtil.getString(request, "articleId");
+		long resourcePrimKey = ParamUtil.getLong(request, "resourcePrimKey");
 		String structureId = ParamUtil.getString(request, "structureId");
 
 		JournalArticle article = null;
@@ -183,6 +184,10 @@ public class ActionUtil {
 		if (!cmd.equals(Constants.ADD) && Validator.isNotNull(articleId)) {
 			article = JournalArticleServiceUtil.getLatestArticle(
 				groupId, articleId, WorkflowConstants.STATUS_ANY);
+		}
+		else if (cmd.equals(Constants.ADD) && (resourcePrimKey != 0)) {
+			article = JournalArticleLocalServiceUtil.getLatestArticle(
+				resourcePrimKey, WorkflowConstants.STATUS_ANY, false);
 		}
 		else if ((classNameId > 0) &&
 				 (classPK > JournalArticleConstants.CLASSNAME_ID_DEFAULT)) {

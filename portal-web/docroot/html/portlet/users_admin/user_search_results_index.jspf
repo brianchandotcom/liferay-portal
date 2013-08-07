@@ -24,9 +24,12 @@ userParams.put("expandoAttributes", searchTerms.getKeywords());
 
 Sort sort = SortFactoryUtil.getSort(User.class, userSearchContainer.getOrderByCol(), userSearchContainer.getOrderByType());
 
-while (true) {
-	Hits hits = null;
+boolean corruptIndex = false;
 
+Hits hits = null;
+Tuple tuple = null;
+
+do {
 	if (searchTerms.isAdvancedSearch()) {
 		hits = UserLocalServiceUtil.search(company.getCompanyId(), searchTerms.getFirstName(), searchTerms.getMiddleName(), searchTerms.getLastName(), searchTerms.getScreenName(), searchTerms.getEmailAddress(), searchTerms.getStatus(), userParams, searchTerms.isAndOperator(), userSearchContainer.getStart(), userSearchContainer.getEnd(), sort);
 	}
@@ -34,21 +37,14 @@ while (true) {
 		hits = UserLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), searchTerms.getStatus(), userParams, userSearchContainer.getStart(), userSearchContainer.getEnd(), sort);
 	}
 
-	Tuple tuple = UsersAdminUtil.getUsers(hits);
+	tuple = UsersAdminUtil.getUsers(hits);
 
-	boolean corruptIndex = (Boolean)tuple.getObject(1);
-
-	if (!corruptIndex) {
-		results = (List<User>)tuple.getObject(0);
-
-		userSearchContainer.setTotal(hits.getLength());
-
-		break;
-	}
-	else {
-		userSearchContainer.setTotal(0);
-	}
+	corruptIndex = (Boolean)tuple.getObject(1);
 }
+while (corruptIndex);
+
+results = (List<User>)tuple.getObject(0);
 
 userSearchContainer.setResults(results);
+userSearchContainer.setTotal(hits.getLength());
 %>

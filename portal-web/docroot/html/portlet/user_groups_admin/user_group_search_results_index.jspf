@@ -24,24 +24,22 @@ userGroupParams.put("expandoAttributes", searchTerms.getKeywords());
 
 Sort sort = SortFactoryUtil.getSort(UserGroup.class, searchContainer.getOrderByCol(), searchContainer.getOrderByType());
 
-while (true) {
-	Hits hits = UserGroupLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), userGroupParams, searchContainer.getStart(), searchContainer.getEnd(), sort);
+boolean corruptIndex = false;
 
-	Tuple tuple = UsersAdminUtil.getUserGroups(hits);
+Hits hits = null;
+Tuple tuple = null;
 
-	boolean corruptIndex = (Boolean)tuple.getObject(1);
+do {
+	hits = UserGroupLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), userGroupParams, searchContainer.getStart(), searchContainer.getEnd(), sort);
 
-	if (!corruptIndex) {
-		results = (List<UserGroup>)tuple.getObject(0);
+	tuple = UsersAdminUtil.getUserGroups(hits);
 
-		searchContainer.setTotal(hits.getLength());
-
-		break;
-	}
-	else {
-		searchContainer.setTotal(0);
-	}
+	corruptIndex = (Boolean)tuple.getObject(1);
 }
+while (corruptIndex);
+
+results = (List<UserGroup>)tuple.getObject(0);
 
 searchContainer.setResults(results);
+searchContainer.setTotal(hits.getLength());
 %>

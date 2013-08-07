@@ -1,6 +1,8 @@
 AUI.add(
 	'liferay-input-localized',
 	function(A) {
+		var Lang = A.Lang;
+
 		var AArray = A.Array;
 
 		var STR_INPUT_PLACEHOLDER = 'inputPlaceholder';
@@ -31,9 +33,13 @@ AUI.add(
 
 					editor: {},
 
-					inputName: {},
+					inputName: {
+						validator: Lang.isString
+					},
 
-					inputNamespace: {},
+					inputNamespace: {
+						validator: Lang.isString
+					},
 
 					inputPlaceholder: {
 						setter: A.one

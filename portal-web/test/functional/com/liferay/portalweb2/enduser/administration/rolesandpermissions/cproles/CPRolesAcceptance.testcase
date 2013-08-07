@@ -131,7 +131,7 @@
 			<var name="roleName" value="${roleName}" />
 			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_BLOGS" />
 			<var name="permissionNavigationValue" value="Blogs" />
-			<var name="permissionKey" value="BLOGS_TABLE_ADD_ENTRY_CHECKBOX" />
+			<var name="permissionKey" value="SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRIES_ADD_ENTRY_CHECKBOX" />
 			<var name="permissionValue" value="Add Entry" />
 		</execute>
 
@@ -163,7 +163,7 @@
 			<var name="roleName" value="${roleName}" />
 			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_BLOGS" />
 			<var name="permissionNavigationValue" value="Blogs" />
-			<var name="permissionKey" value="BLOGS_TABLE_ADD_ENTRY_CHECKBOX" />
+			<var name="permissionKey" value="SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRIES_ADD_ENTRY_CHECKBOX" />
 			<var name="permissionValue" value="Add Entry" />
 		</execute>
 
@@ -269,7 +269,7 @@
 			<var name="roleName" value="${roleName}" />
 			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_BLOGS" />
 			<var name="permissionNavigationValue" value="Blogs" />
-			<var name="permissionKey" value="BLOGS_TABLE_ADD_ENTRY_CHECKBOX" />
+			<var name="permissionKey" value="SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRIES_ADD_ENTRY_CHECKBOX" />
 			<var name="permissionValue" value="Add Entry" />
 		</execute>
 
@@ -301,7 +301,7 @@
 			<var name="roleName" value="${roleName}" />
 			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_BLOGS" />
 			<var name="permissionNavigationValue" value="Blogs" />
-			<var name="permissionKey" value="BLOGS_TABLE_ADD_ENTRY_CHECKBOX" />
+			<var name="permissionKey" value="SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRIES_ADD_ENTRY_CHECKBOX" />
 			<var name="permissionValue" value="Add Entry" />
 		</execute>
 
@@ -444,7 +444,7 @@
 			<var name="roleName" value="${roleName}" />
 			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_BLOGS" />
 			<var name="permissionNavigationValue" value="Blogs" />
-			<var name="permissionKey" value="BLOGS_TABLE_ADD_ENTRY_CHECKBOX" />
+			<var name="permissionKey" value="SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRIES_ADD_ENTRY_CHECKBOX" />
 			<var name="permissionValue" value="Add Entry" />
 		</execute>
 
@@ -476,7 +476,7 @@
 			<var name="roleName" value="${roleName}" />
 			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_BLOGS" />
 			<var name="permissionNavigationValue" value="Blogs" />
-			<var name="permissionKey" value="BLOGS_TABLE_ADD_ENTRY_CHECKBOX" />
+			<var name="permissionKey" value="SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRIES_ADD_ENTRY_CHECKBOX" />
 			<var name="permissionValue" value="Add Entry" />
 		</execute>
 
@@ -702,7 +702,7 @@
 			<var name="roleName" value="${roleName}" />
 			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_BLOGS" />
 			<var name="permissionNavigationValue" value="Blogs" />
-			<var name="permissionKey" value="BLOGS_ENTRY_TABLE_DELETE_CHECKBOX" />
+			<var name="permissionKey" value="SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRY_DELETE_CHECKBOX" />
 			<var name="permissionValue" value="Delete" />
 		</execute>
 
@@ -717,6 +717,7 @@
 		</execute>
 
 		<execute macro="BlogsEntry#moveToRecycleBinPG">
+			<var name="assetType" value="Blogs Entry" />
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
@@ -734,7 +735,7 @@
 			<var name="roleName" value="${roleName}" />
 			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_BLOGS" />
 			<var name="permissionNavigationValue" value="Blogs" />
-			<var name="permissionKey" value="BLOGS_ENTRY_TABLE_DELETE_CHECKBOX" />
+			<var name="permissionKey" value="SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRY_DELETE_CHECKBOX" />
 			<var name="permissionValue" value="Delete" />
 		</execute>
 
@@ -858,7 +859,7 @@
 			<var name="roleName" value="${roleName}" />
 			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_BLOGS" />
 			<var name="permissionNavigationValue" value="Blogs" />
-			<var name="permissionKey" value="BLOGS_ENTRY_TABLE_DELETE_CHECKBOX" />
+			<var name="permissionKey" value="SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRY_DELETE_CHECKBOX" />
 			<var name="permissionValue" value="Delete" />
 		</execute>
 
@@ -872,6 +873,7 @@
 		</execute>
 
 		<execute macro="BlogsEntry#moveToRecycleBinPG">
+			<var name="assetType" value="Blogs Entry" />
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
@@ -889,7 +891,7 @@
 			<var name="roleName" value="${roleName}" />
 			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_BLOGS" />
 			<var name="permissionNavigationValue" value="Blogs" />
-			<var name="permissionKey" value="BLOGS_ENTRY_TABLE_DELETE_CHECKBOX" />
+			<var name="permissionKey" value="SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRY_DELETE_CHECKBOX" />
 			<var name="permissionValue" value="Delete" />
 		</execute>
 
@@ -1052,7 +1054,7 @@
 			<var name="roleName" value="${roleName}" />
 			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_BLOGS" />
 			<var name="permissionNavigationValue" value="Blogs" />
-			<var name="permissionKey" value="BLOGS_ENTRY_TABLE_DELETE_CHECKBOX" />
+			<var name="permissionKey" value="SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRY_DELETE_CHECKBOX" />
 			<var name="permissionValue" value="Delete" />
 		</execute>
 
@@ -1067,6 +1069,7 @@
 		</execute>
 
 		<execute macro="BlogsEntry#moveToRecycleBinPG">
+			<var name="assetType" value="Blogs Entry" />
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
@@ -1084,7 +1087,7 @@
 			<var name="roleName" value="${roleName}" />
 			<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_BLOGS" />
 			<var name="permissionNavigationValue" value="Blogs" />
-			<var name="permissionKey" value="BLOGS_ENTRY_TABLE_DELETE_CHECKBOX" />
+			<var name="permissionKey" value="SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRY_DELETE_CHECKBOX" />
 			<var name="permissionValue" value="Delete" />
 		</execute>
 

@@ -82,12 +82,9 @@ public class DDMStructureStagedModelDataHandler
 				DDMStructureLocalServiceUtil.getStructure(
 					structure.getParentStructureId());
 
-			StagedModelDataHandlerUtil.exportStagedModel(
-				portletDataContext, parentStructure);
-
-			portletDataContext.addReferenceElement(
-				structure, structureElement, parentStructure,
-				PortletDataContext.REFERENCE_TYPE_PARENT, false);
+			StagedModelDataHandlerUtil.exportReferencedStagedModel(
+				portletDataContext, structure, parentStructure,
+				PortletDataContext.REFERENCE_TYPE_PARENT);
 		}
 
 		long defaultUserId = UserLocalServiceUtil.getDefaultUserId(

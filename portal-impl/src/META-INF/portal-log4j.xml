@@ -322,6 +322,10 @@
 		<priority value="INFO" />
 	</category>
 
+	<category name="com.liferay.portal.kernel.search.BaseSpellCheckIndexWriter">
+		<priority value="INFO" />
+	</category>
+
 	<category name="com.liferay.portal.kernel.search.HitsOpenSearchImpl">
 		<priority value="WARN" />
 	</category>

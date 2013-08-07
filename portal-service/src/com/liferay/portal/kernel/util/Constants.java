@@ -115,6 +115,8 @@ public interface Constants {
 
 	public static final String SIGNAL = "signal";
 
+	public static final String SKIP = "skip";
+
 	public static final String SUBSCRIBE = "subscribe";
 
 	public static final String SUBSCRIBE_TO_COMMENTS = "subscribe_to_comments";

@@ -36,6 +36,12 @@ import org.apache.tools.ant.DirectoryScanner;
 public class SeleniumBuilderContext {
 
 	public SeleniumBuilderContext(String baseDir) throws Exception {
+		this(baseDir, "com/liferay/portalweb/portal/util/liferayselenium/");
+	}
+
+	public SeleniumBuilderContext(String baseDir, String liferaySeleniumDir)
+		throws Exception {
+
 		_baseDir = baseDir;
 
 		_seleniumBuilderFileUtil = new SeleniumBuilderFileUtil(_baseDir);
@@ -58,10 +64,8 @@ public class SeleniumBuilderContext {
 		}
 
 		String[] seleniumFileNames = {
-			"com/liferay/portalweb/portal/util/liferayselenium/" +
-				"LiferaySelenium.java",
-			"com/liferay/portalweb/portal/util/liferayselenium/" +
-				"SeleniumWrapper.java"
+			liferaySeleniumDir + "LiferaySelenium.java",
+			liferaySeleniumDir + "SeleniumWrapper.java"
 		};
 
 		for (String seleniumFileName : seleniumFileNames) {

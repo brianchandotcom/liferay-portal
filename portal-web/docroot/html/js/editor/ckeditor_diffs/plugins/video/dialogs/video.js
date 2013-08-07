@@ -19,8 +19,6 @@ CKEDITOR.dialog.add(
 								'	}' +
 								');';
 
-		var lang = editor.lang.video;
-
 		function commitValue(videoNode, extraStyles) {
 			var instance = this;
 
@@ -169,7 +167,7 @@ CKEDITOR.dialog.add(
 									{
 										commit: commitValue,
 										id: 'poster',
-										label: lang.poster,
+										label: Liferay.Language.get('video'),
 										setup: loadValue,
 										type: 'text'
 									},
@@ -199,7 +197,7 @@ CKEDITOR.dialog.add(
 										label: editor.lang.common.width,
 										setup: loadValue,
 										type: 'text',
-										validate: CKEDITOR.dialog.validate.notEmpty(lang.widthRequired)
+										validate: CKEDITOR.dialog.validate.notEmpty(Liferay.Language.get('width-field-cannot-be-empty'))
 									},
 									{
 										commit: commitValue,
@@ -208,7 +206,7 @@ CKEDITOR.dialog.add(
 										label: editor.lang.common.height,
 										setup: loadValue,
 										type: 'text',
-										validate: CKEDITOR.dialog.validate.notEmpty(lang.heightRequired)
+										validate: CKEDITOR.dialog.validate.notEmpty(Liferay.Language.get('height-field-cannot-be-empty'))
 									},
 									{
 										commit: commitValue,
@@ -278,7 +276,7 @@ CKEDITOR.dialog.add(
 				},
 				minHeight: 200,
 				minWidth: 400,
-				title: lang.dialogTitle
+				title: Liferay.Language.get('video-properties')
 		};
 	}
 );

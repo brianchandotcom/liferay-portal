@@ -72,7 +72,8 @@ public abstract class MimeResponseImpl
 	public OutputStream getPortletOutputStream() throws IOException {
 		if (_calledGetWriter) {
 			throw new IllegalStateException(
-				"Unable obtain OutputStream because Writer is already in use");
+				"Unable to obtain OutputStream because Writer is already in " +
+					"use");
 		}
 
 		if (_contentType == null) {

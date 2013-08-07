@@ -251,6 +251,8 @@ public class SPIAgentResponseTest {
 
 		bufferCacheServletResponse.setString(content);
 
+		mockHttpServletRequest.setParameter("prpsf", StringPool.FALSE);
+
 		spiAgentResponse.captureResponse(
 			mockHttpServletRequest, bufferCacheServletResponse);
 

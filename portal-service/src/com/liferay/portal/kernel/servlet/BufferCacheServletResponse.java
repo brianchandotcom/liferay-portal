@@ -156,7 +156,8 @@ public class BufferCacheServletResponse extends MetaInfoCacheServletResponse {
 	public ServletOutputStream getOutputStream() {
 		if (calledGetWriter) {
 			throw new IllegalStateException(
-				"Unable obtain OutputStream because Writer is already in use");
+				"Unable to obtain OutputStream because Writer is already in " +
+					"use");
 		}
 
 		if (_servletOutputStream != null) {

@@ -441,7 +441,7 @@ public class BaseInputTag extends com.liferay.taglib.util.IncludeTag {
 		_first = false;
 		_formName = null;
 		_helpMessage = null;
-		_helpTextCssClass = null;
+		_helpTextCssClass = "add-on";
 		_id = null;
 		_ignoreRequestValue = false;
 		_inlineField = false;
@@ -522,7 +522,6 @@ public class BaseInputTag extends com.liferay.taglib.util.IncludeTag {
 	private boolean _autoFocus = false;
 	private boolean _autoSize = false;
 	private java.lang.Object _bean = null;
-	private java.lang.String _helpTextCssClass = "add-on";
 	private boolean _changesContext = false;
 	private boolean _checked = false;
 	private long _classPK = 0;
@@ -536,6 +535,7 @@ public class BaseInputTag extends com.liferay.taglib.util.IncludeTag {
 	private boolean _first = false;
 	private java.lang.String _formName = null;
 	private java.lang.String _helpMessage = null;
+	private java.lang.String _helpTextCssClass = "add-on";
 	private java.lang.String _id = null;
 	private boolean _ignoreRequestValue = false;
 	private boolean _inlineField = false;

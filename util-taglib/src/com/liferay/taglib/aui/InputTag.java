@@ -294,7 +294,13 @@ public class InputTag extends BaseInputTag {
 			List<ValidatorTag> validatorTags = ListUtil.fromMapValues(
 				_validators);
 
-			validatorTagsMap.put(_inputName, validatorTags);
+			String inputName = _inputName;
+
+			if (Validator.equals(getType(), "checkbox")) {
+				inputName = inputName.concat("Checkbox");
+			}
+
+			validatorTagsMap.put(inputName, validatorTags);
 		}
 	}
 

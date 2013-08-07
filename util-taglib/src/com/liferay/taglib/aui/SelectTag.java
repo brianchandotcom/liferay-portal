@@ -15,13 +15,20 @@
 package com.liferay.taglib.aui;
 
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
+import com.liferay.portal.kernel.servlet.taglib.aui.ValidatorTag;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.aui.base.BaseSelectTag;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.JspException;
 
 /**
  * @author Julio Camarero
@@ -29,6 +36,41 @@ import javax.servlet.http.HttpServletRequest;
  * @author Brian Wing Shun Chan
  */
 public class SelectTag extends BaseSelectTag {
+
+	@Override
+	public int doEndTag() throws JspException {
+		updateFormValidators();
+
+		return super.doEndTag();
+	}
+
+	@Override
+	public int doStartTag() throws JspException {
+		addRequiredValidatorTag();
+
+		return super.doStartTag();
+	}
+
+	protected void addRequiredValidatorTag() {
+		if (!getRequired()) {
+			return;
+		}
+
+		ValidatorTag validatorTag = new ValidatorTagImpl(
+			"required", null, null, false);
+
+		addValidatorTag("required", validatorTag);
+	}
+
+	protected void addValidatorTag(
+		String validatorName, ValidatorTag validatorTag) {
+
+		if (_validators == null) {
+			_validators = new HashMap<String, ValidatorTag>();
+		}
+
+		_validators.put(validatorName, validatorTag);
+	}
 
 	@Override
 	protected boolean isCleanUpSetAttributes() {
@@ -93,6 +135,28 @@ public class SelectTag extends BaseSelectTag {
 		setNamespacedAttribute(request, "value", value);
 	}
 
+	protected void updateFormValidators() {
+		if (_validators == null) {
+			return;
+		}
+
+		HttpServletRequest request =
+			(HttpServletRequest)pageContext.getRequest();
+
+		Map<String, List<ValidatorTag>> validatorTagsMap =
+			(Map<String, List<ValidatorTag>>)request.getAttribute(
+				"aui:form:validatorTagsMap");
+
+		if (validatorTagsMap != null) {
+			List<ValidatorTag> validatorTags = ListUtil.fromMapValues(
+				_validators);
+
+			validatorTagsMap.put(getName(), validatorTags);
+		}
+	}
+
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;
+
+	private Map<String, ValidatorTag> _validators;
 
 }

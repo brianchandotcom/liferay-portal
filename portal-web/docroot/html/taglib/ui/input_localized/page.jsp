@@ -279,6 +279,7 @@ String fieldName = HtmlUtil.escapeAttribute(name + fieldSuffix);
 					editor: window['<portlet:namespace /><%= fieldName %>'],
 				</c:if>
 
+				inputName: '<portlet:namespace /><%= name + StringPool.UNDERLINE %>',
 				inputNamespace: '<portlet:namespace /><%= id + StringPool.UNDERLINE %>',
 				inputPlaceholder: '#<portlet:namespace /><%= HtmlUtil.escapeJS(id + fieldSuffix) %>',
 				items: availableLanguageIds,

@@ -611,11 +611,11 @@ public class SeleniumBuilderContextTest {
 		}
 	}
 
-	private static final String _BASE_DIR =
-		"./portal-impl/test/integration/com/liferay/portal/tools" +
-			"/seleniumbuilder/dependencies/context";
+	private static final String _BASE_DIR = "./portal-web/test/functional/";
 
-	private static final String _DIR_NAME = "/..";
+	private static final String _DIR_NAME =
+		"/../../../portal-impl/test/integration/com/liferay/portal/tools/" +
+			"seleniumbuilder/dependencies";
 
 	private static Log _log = LogFactoryUtil.getLog(
 		SeleniumBuilderContextTest.class);

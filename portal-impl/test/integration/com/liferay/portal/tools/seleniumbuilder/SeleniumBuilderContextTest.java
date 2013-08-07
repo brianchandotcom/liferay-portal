@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -30,14 +31,13 @@ import org.junit.runner.RunWith;
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class SeleniumBuilderContextTest {
 
-	public SeleniumBuilderContextTest() {
-		if (_seleniumBuilderContext == null) {
-			try {
-				_seleniumBuilderContext = new SeleniumBuilderContext(_BASE_DIR);
-			}
-			catch (Exception e) {
-				_log.error(e, e);
-			}
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		try {
+			_seleniumBuilderContext = new SeleniumBuilderContext(_BASE_DIR);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
 		}
 	}
 

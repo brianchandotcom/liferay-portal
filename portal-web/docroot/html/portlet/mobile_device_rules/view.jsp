@@ -56,6 +56,8 @@ portletURL.setParameter("chooseCallback", chooseCallback);
 		<c:if test="<%= MDRPermissionUtil.contains(permissionChecker, groupId, ActionKeys.ADD_RULE_GROUP) %>">
 			<portlet:renderURL var="viewRulesURL">
 				<portlet:param name="struts_action" value="/mobile_device_rules/view" />
+				<portlet:param name="className" value="<%= className %>" />
+				<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
 				<portlet:param name="chooseCallback" value="<%= chooseCallback %>" />
 			</portlet:renderURL>
 

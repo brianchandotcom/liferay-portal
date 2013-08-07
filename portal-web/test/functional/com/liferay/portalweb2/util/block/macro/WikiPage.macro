@@ -18,10 +18,6 @@
 	</command>
 
 	<command name="addFrontPageCP">
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Wiki" />
-		</execute>
-
 		<var name="key_wikiNodeName" value="${wikiNodeName}" />
 
 		<execute action="CPWiki#assertClick" locator-key1="WIKI_NODE_TABLE_WIKI" value1="${wikiNodeName}" />
@@ -103,17 +99,13 @@
 
 		<execute action="PGWikiAllpages#assertClick" locator-key1="WIKI_PAGE_TABLE_ACTIONS_1" value1="Actions" />
 		<execute action="PGWikiAllpages#assertClick" locator-key1="WIKI_PAGE_MENULIST_RECYCLE_BIN" value1="Move to the Recycle Bin" />
-		<execute action="PGWikiAllpages#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="The selected item was moved to the Recycle Bin. Undo" />
+		<execute action="PGWikiAllpages#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="The Selected Item was moved to the Recycle Bin. Undo" />
 		<execute action="PGWikiAllpages#assertElementNotPresent" locator-key1="WIKI_PAGE_TABLE_PAGE_1" />
 
 		<execute macro="RecycleBin#emptyCP" />
 	</command>
 
 	<command name="moveToRecycleBinCP">
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Wiki" />
-		</execute>
-
 		<var name="key_wikiNodeName" value="${wikiNodeName}" />
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
 
@@ -121,7 +113,7 @@
 
 		<execute action="CPWikiAllpages#assertClick" locator-key1="WIKI_PAGE_TABLE_ACTIONS" value1="Actions" />
 		<execute action="CPWikiAllpages#assertClick" locator-key1="WIKI_PAGE_MENULIST_RECYCLE_BIN" value1="Move to the Recycle Bin" />
-		<execute action="CPWikiAllpages#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="The selected item was moved to the Recycle Bin. Undo" />
+		<execute action="CPWikiAllpages#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="The Selected Item was moved to the Recycle Bin. Undo" />
 	</command>
 
 	<command name="tearDownCP">
@@ -138,25 +130,24 @@
 			<then>
 				<execute action="CPWikiAllpages#assertClick" locator1="//a[@title='Actions']" value1="Actions"/>
 				<execute action="CPWikiAllpages#assertClick" locator-key1="WIKI_PAGE_MENULIST_RECYCLE_BIN" value1="Move to the Recycle Bin" />
-				<execute action="CPWikiAllpages#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="The selected item was moved to the Recycle Bin. Undo" />
+				<execute action="CPWikiAllpages#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="moved to the Recycle Bin. Undo" />
 			</then>
 		</while>
 
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Recycle Bin" />
+		</execute>
+		
 		<execute macro="RecycleBin#emptyCP" />
 	</command>
 
 	<command name="viewFrontPageCP">
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Wiki" />
-		</execute>
-
 		<var name="key_wikiNodeName" value="${wikiNodeName}" />
 
 		<execute action="CPWiki#assertClick" locator-key1="WIKI_NODE_TABLE_WIKI" value1="${wikiNodeName}" />
 
 		<execute action="CPWikiAllpages#assertClick" locator-key1="NAVIGATION_FRONTPAGE" value1="FrontPage" />
 
-		<execute action="CPWikiFrontpage#assertTextEquals" locator-key1="PORLET_TITLE_HEADER" value1="${portletName}" />
 		<execute action="CPWikiFrontpage#assertTextEquals" locator-key1="PORLET_BODY_TITLE_HEADER" value1="${wikiNodeName}" />
 		<execute action="CPWikiFrontpage#assertTextEquals" locator-key1="FRONTPAGE_TITLE_HEADER" value1="FrontPage" />
 		<execute action="CPWikiFrontpage#assertTextEquals" locator-key1="FRONTPAGE_BODY" value1="${wikiFrontPageContent}" />
@@ -164,11 +155,7 @@
 		<execute action="CPWikiFrontpage#assertTextNotPresent" value1="This page is empty. Edit it to add some text." />
 	</command>
 
-	<command name="viewFrontPageNoCP">
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Wiki" />
-		</execute>
-
+	<command name="viewFrontPageDefaultCP">
 		<var name="key_wikiNodeName" value="${wikiNodeName}" />
 
 		<execute action="CPWiki#assertClick" locator-key1="WIKI_NODE_TABLE_WIKI" value1="${wikiNodeName}" />

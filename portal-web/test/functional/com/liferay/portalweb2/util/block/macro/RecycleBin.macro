@@ -1,9 +1,5 @@
 <definition>
 	<command name="emptyCP">
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Recycle Bin" />
-		</execute>
-
 		<if>
 			<condition action="CPRecyclebin#isElementPresent" locator-key1="EMPTY_RECYCLE_BIN" />
 			<then>
@@ -14,10 +10,6 @@
 	</command>
 
 	<command name="deleteCP">
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Recycle Bin" />
-		</execute>
-
 		<var name="key_assetName" value="${assetName}" />
 
 		<execute action="CPRecyclebin#assertTextEquals" locator-key1="RECYCLE_BIN_TABLE_NAME" value1="${assetName}" />
@@ -31,10 +23,6 @@
 	</command>
 
 	<command name="restoreCP">
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Recycle Bin" />
-		</execute>
-
 		<var name="key_assetName" value="${assetName}" />
 
 		<execute action="CPRecyclebin#assertTextEquals" locator-key1="RECYCLE_BIN_TABLE_NAME" value1="${assetName}" />
@@ -43,14 +31,10 @@
 		<execute action="CPRecyclebin#assertClick" locator-key1="RECYCLE_BIN_MENULIST_RESTORE" value1="Restore" />
 		<execute action="CPRecyclebin#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="The item has been restored to ${assetRestoreLocation}" />
 		<execute action="CPRecyclebin#assertTextEquals" locator-key1="INFO_MESSAGE" value1="The Recycle Bin is empty." />
-		<execute action="CPRecyclebin#assertTextNotPresent" value1="${assetName}" />
+		<execute action="CPRecyclebin#assertElementNotPresent" locator-key1="RECYCLE_BIN_TABLE_NAME" />
 	</command>
 
 	<command name="viewCP">
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Recycle Bin" />
-		</execute>
-
 		<var name="key_assetName" value="${assetName}" />
 
 		<execute action="CPRecyclebin#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="Entries that have been in the Recycle Bin for more than 1 month will be automatically deleted. Empty the Recycle Bin" />
@@ -62,10 +46,6 @@
 	</command>
 
 	<command name="viewDefaultCP">
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Recycle Bin" />
-		</execute>
-
 		<execute action="CPRecyclebin#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="Entries that have been in the Recycle Bin for more than 1 month will be automatically deleted." />
 		<execute action="CPRecyclebin#assertTextEquals" locator-key1="INFO_MESSAGE" value1="The Recycle Bin is empty." />
 		<execute action="CPRecyclebin#assertTextNotPresent" value1="${assetName}" />

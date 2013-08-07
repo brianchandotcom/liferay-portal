@@ -82,15 +82,16 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 			long classPK, String portletResource)
 		throws Exception {
 
-		String backURL = ParamUtil.getString(liferayPortletRequest, "backURL");
+		String redirect = ParamUtil.getString(
+			liferayPortletRequest, "redirect");
 
-		if (Validator.isNull(backURL) || Validator.isNull(portletResource)) {
-			backURL = getViewTemplatesURL(
+		if (Validator.isNull(redirect) || Validator.isNull(portletResource)) {
+			return getViewTemplatesURL(
 				liferayPortletRequest, liferayPortletResponse, classNameId,
 				classPK);
 		}
 
-		return backURL;
+		return redirect;
 	}
 
 	@Override

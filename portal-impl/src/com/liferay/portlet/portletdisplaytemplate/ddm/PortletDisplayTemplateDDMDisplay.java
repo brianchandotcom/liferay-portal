@@ -53,15 +53,16 @@ public class PortletDisplayTemplateDDMDisplay extends BaseDDMDisplay {
 			long classPK, String portletResource)
 		throws Exception {
 
-		String backURL = ParamUtil.getString(liferayPortletRequest, "backURL");
+		String redirect = ParamUtil.getString(
+			liferayPortletRequest, "redirect");
 
-		if (Validator.isNull(backURL)) {
-			backURL = getViewTemplatesURL(
+		if (Validator.isNull(redirect)) {
+			return getViewTemplatesURL(
 				liferayPortletRequest, liferayPortletResponse, classNameId,
 				classPK);
 		}
 
-		return backURL;
+		return redirect;
 	}
 
 	@Override

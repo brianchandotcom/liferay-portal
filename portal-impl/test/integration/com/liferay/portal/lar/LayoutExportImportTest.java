@@ -14,6 +14,7 @@
 
 package com.liferay.portal.lar;
 
+import com.liferay.portal.LocaleException;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -24,9 +25,11 @@ import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.TransactionalCallbackAwareExecutionTestListener;
+import com.liferay.portal.util.GroupTestUtil;
 import com.liferay.portal.util.LayoutTestUtil;
 import com.liferay.portal.util.TestPropsValues;
 
+import java.util.Locale;
 import java.util.Map;
 
 import org.junit.Assert;
@@ -103,6 +106,32 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 	}
 
 	@Test
+	public void testExportImportLayoutsInvalidAvailableLocales()
+		throws Exception {
+
+		Locale enLocale = Locale.US;
+		Locale esLocale = new Locale("es", "ES");
+		Locale deLocale = new Locale("de", "DE");
+
+		testAvailableLocales(
+			new Locale[] {enLocale, esLocale},
+			new Locale[] {enLocale, deLocale}, true);
+	}
+
+	@Test
+	public void testExportImportLayoutsValidAvailableLocales()
+		throws Exception {
+
+		Locale enLocale = Locale.US;
+		Locale esLocale = new Locale("es", "ES");
+		Locale deLocale = new Locale("de", "DE");
+
+		testAvailableLocales(
+			new Locale[] {enLocale, deLocale},
+			new Locale[] {enLocale, esLocale, deLocale}, false);
+	}
+
+	@Test
 	public void testExportImportSelectedLayouts() throws Exception {
 		Layout layout = LayoutTestUtil.addLayout(
 			group.getGroupId(), ServiceTestUtil.randomString());
@@ -174,6 +203,35 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 		LayoutLocalServiceUtil.importLayouts(
 			TestPropsValues.getUserId(), importedGroup.getGroupId(), false,
 			parameterMap, larFile);
+	}
+
+	protected void testAvailableLocales(
+			Locale[] sourceAvailableLocales, Locale[] targetAvailableLocales,
+			boolean fail)
+		throws Exception {
+
+		group = GroupTestUtil.updateDisplaySettings(
+			group.getGroupId(), sourceAvailableLocales, null);
+		importedGroup = GroupTestUtil.updateDisplaySettings(
+			importedGroup.getGroupId(), targetAvailableLocales, null);
+
+		LayoutTestUtil.addLayout(
+			group.getGroupId(), ServiceTestUtil.randomString());
+
+		long[] layoutIds = new long[0];
+
+		try {
+			exportImportLayouts(layoutIds, getImportParameterMap());
+
+			if (fail) {
+				Assert.fail();
+			}
+		}
+		catch (LocaleException le) {
+			if (!fail) {
+				Assert.fail();
+			}
+		}
 	}
 
 }

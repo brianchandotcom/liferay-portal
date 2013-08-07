@@ -17,6 +17,7 @@ package com.liferay.portal.service;
 import com.liferay.portal.GroupParentException;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -41,6 +42,7 @@ import com.liferay.portal.test.TransactionalCallbackAwareExecutionTestListener;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.GroupTestUtil;
 import com.liferay.portal.util.LayoutTestUtil;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portal.util.UserTestUtil;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
@@ -51,6 +53,7 @@ import com.liferay.portlet.blogs.util.BlogsTestUtil;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -452,6 +455,20 @@ public class GroupServiceTest {
 	}
 
 	@Test
+	public void testInheritLocalesByDefault() throws Exception {
+		Group group = GroupTestUtil.addGroup();
+
+		Assert.assertTrue(LanguageUtil.isInheritLocales(group.getGroupId()));
+
+		Locale[] portalAvailableLocales = LanguageUtil.getAvailableLocales();
+
+		Locale[] groupAvailableLocales = LanguageUtil.getAvailableLocales(
+			group.getGroupId());
+
+		Assert.assertArrayEquals(portalAvailableLocales, groupAvailableLocales);
+	}
+
+	@Test
 	public void testScopes() throws Exception {
 		Group group = GroupTestUtil.addGroup();
 
@@ -592,6 +609,37 @@ public class GroupServiceTest {
 		Assert.assertFalse(group111.isRoot());
 		Assert.assertEquals(group1.getGroupId(), group11.getParentGroupId());
 		Assert.assertEquals(group11.getGroupId(), group111.getParentGroupId());
+	}
+
+	@Test
+	public void testUpdateAvailableLocales() throws Exception {
+		Group group = GroupTestUtil.addGroup();
+
+		Locale enLocale = Locale.US;
+		Locale esLocale = new Locale("es", "ES");
+		Locale deLocale = new Locale("de", "DE");
+
+		Locale[] availableLocales = new Locale[] {enLocale, esLocale, deLocale};
+
+		group = GroupTestUtil.updateDisplaySettings(
+			group.getGroupId(), availableLocales, null);
+
+		Assert.assertArrayEquals(
+			availableLocales,
+			LanguageUtil.getAvailableLocales(group.getGroupId()));
+	}
+
+	@Test
+	public void testUpdateDefaultLocale() throws Exception {
+		Group group = GroupTestUtil.addGroup();
+
+		Locale esLocale = new Locale("es", "ES");
+
+		group = GroupTestUtil.updateDisplaySettings(
+			group.getGroupId(), null, esLocale);
+
+		Assert.assertEquals(
+			esLocale, PortalUtil.getSiteDefaultLocale(group.getGroupId()));
 	}
 
 	@Test

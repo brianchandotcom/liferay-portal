@@ -290,13 +290,15 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 	}
 
-	protected String fixCompatClassImports(String fileName, String content)
+	protected String fixCompatClassImports(File file, String content)
 		throws IOException {
+
+		String absolutePath = fileUtil.getAbsolutePath(file);
 
 		if (portalSource ||
 			!mainReleaseVersion.equals(MAIN_RELEASE_VERSION_6_1_0) ||
-			fileName.contains("/ext-") ||
-			fileName.contains("/portal-compat-shared/")) {
+			absolutePath.contains("/ext-") ||
+			absolutePath.contains("/portal-compat-shared/")) {
 
 			return content;
 		}

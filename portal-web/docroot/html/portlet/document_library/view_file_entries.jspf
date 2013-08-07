@@ -58,32 +58,29 @@
 
 				searchContainer.setTotal(total);
 
-				if (searchContainer.isRecalculateCur()) {
-					assetEntryQuery = new AssetEntryQuery(classNameIds, searchContainer);
-				}
+				assetEntryQuery.setEnd(searchContainer.getEnd());
+				assetEntryQuery.setStart(searchContainer.getStart());
 
 				results = AssetEntryServiceUtil.getEntries(assetEntryQuery);
 			}
 			else {
 				if (mergedView) {
 					total = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcutsCount(repositoryId, folderId, status, true);
-				}
-				else {
-					total = DLAppServiceUtil.getFileEntriesAndFileShortcutsCount(repositoryId, folderId, status);
-				}
 
-				searchContainer.setTotal(total);
+					searchContainer.setTotal(total);
 
-				if (mergedView) {
 					results = DLAppServiceUtil.getFoldersAndFileEntriesAndFileShortcuts(repositoryId, folderId, status, true, searchContainer.getStart(), searchContainer.getEnd());
 				}
 				else {
+					total = DLAppServiceUtil.getFileEntriesAndFileShortcutsCount(repositoryId, folderId, status);
+
+					searchContainer.setTotal(total);
+
 					results = DLAppServiceUtil.getFileEntriesAndFileShortcuts(repositoryId, folderId, status, searchContainer.getStart(), searchContainer.getEnd());
 				}
 			}
 
-			pageContext.setAttribute("results", results);
-			pageContext.setAttribute("total", total);
+			searchContainer.setResults(results);
 			%>
 
 		</liferay-ui:search-container-results>

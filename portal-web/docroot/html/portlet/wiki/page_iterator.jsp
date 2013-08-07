@@ -188,9 +188,8 @@ else if (type.equals("categorized_pages") || type.equals("tagged_pages")) {
 
 	searchContainer.setTotal(total);
 
-	if (searchContainer.isRecalculateCur()) {
-		assetEntryQuery = new AssetEntryQuery(WikiPage.class.getName(), searchContainer);
-	}
+	assetEntryQuery.setEnd(searchContainer.getEnd());
+	assetEntryQuery.setStart(searchContainer.getStart());
 
 	List<AssetEntry> assetEntries = AssetEntryServiceUtil.getEntries(assetEntryQuery);
 

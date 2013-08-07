@@ -60,10 +60,8 @@ portletURL.setParameter("struts_action", "/blogs/view");
 
 		searchContainer.setTotal(total);
 
-		if (searchContainer.isRecalculateCur()) {
-			assetEntryQuery.setEnd(searchContainer.getEnd());
-			assetEntryQuery.setStart(searchContainer.getStart());
-		}
+		assetEntryQuery.setEnd(searchContainer.getEnd());
+		assetEntryQuery.setStart(searchContainer.getStart());
 
 		results = AssetEntryServiceUtil.getEntries(assetEntryQuery);
 	}

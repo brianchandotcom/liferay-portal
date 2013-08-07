@@ -51,15 +51,9 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 				iteratorURL="<%= configurationRenderURL %>"
 				total="<%= assetEntries.size() %>"
 			>
-				<liferay-ui:search-container-results>
-
-					<%
-					int end = (assetEntries.size() < searchContainer.getEnd()) ? assetEntries.size() : searchContainer.getEnd();
-
-					pageContext.setAttribute("results", assetEntries.subList(searchContainer.getStart(), end));
-					%>
-
-				</liferay-ui:search-container-results>
+				<liferay-ui:search-container-results
+					results="<%= assetEntries.subList(searchContainer.getStart(), searchContainer.getResultEnd()) %>"
+				/>
 
 				<liferay-ui:search-container-row
 					className="com.liferay.portlet.asset.model.AssetEntry"

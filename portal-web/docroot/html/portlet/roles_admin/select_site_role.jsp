@@ -71,18 +71,11 @@ if (step == 1) {
 
 			<liferay-ui:search-container
 				searchContainer="<%= new GroupSearch(renderRequest, portletURL) %>"
+				total="<%= groups.size() %>"
 			>
-				<liferay-ui:search-container-results>
-
-					<%
-					total = groups.size();
-					results = ListUtil.subList(groups, searchContainer.getStart(), searchContainer.getEnd());
-
-					pageContext.setAttribute("results", results);
-					pageContext.setAttribute("total", total);
-					%>
-
-				</liferay-ui:search-container-results>
+				<liferay-ui:search-container-results
+					results="<%= ListUtil.subList(groups, searchContainer.getStart(), searchContainer.getEnd()) %>"
+				/>
 
 				<liferay-ui:search-container-row
 					className="com.liferay.portal.model.Group"
@@ -189,16 +182,19 @@ if (step == 1) {
 
 						roles = UsersAdminUtil.filterGroupRoles(permissionChecker, groupId, roles);
 
-						total = roles.size();
+						searchContainer.setTotal(roles.size());
+
 						results = ListUtil.subList(roles, searchContainer.getStart(), searchContainer.getEnd());
 					}
 					else {
-						results = RoleLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), new Integer[] {RoleConstants.TYPE_SITE}, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 						total = RoleLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getKeywords(), new Integer[] {RoleConstants.TYPE_SITE});
+
+						searchContainer.setTotal(total);
+
+						results = RoleLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), new Integer[] {RoleConstants.TYPE_SITE}, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 					}
 
-					pageContext.setAttribute("results", results);
-					pageContext.setAttribute("total", total);
+					searchContainer.setResults(results);
 					%>
 
 				</liferay-ui:search-container-results>

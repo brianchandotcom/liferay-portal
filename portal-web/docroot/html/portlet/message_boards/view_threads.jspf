@@ -50,9 +50,8 @@
 
 			searchContainer.setTotal(total);
 
-			if (searchContainer.isRecalculateCur()) {
-				assetEntryQuery = new AssetEntryQuery(MBMessage.class.getName(), searchContainer);
-			}
+			assetEntryQuery.setEnd(searchContainer.getEnd());
+			assetEntryQuery.setStart(searchContainer.getStart());
 
 			results = AssetEntryServiceUtil.getEntries(assetEntryQuery);
 		}
@@ -84,8 +83,7 @@
 			results = MBThreadServiceUtil.getGroupThreads(scopeGroupId, groupThreadsUserId, calendar.getTime(), WorkflowConstants.STATUS_APPROVED, searchContainer.getStart(), searchContainer.getEnd());
 		}
 
-		pageContext.setAttribute("results", results);
-		pageContext.setAttribute("total", total);
+		searchContainer.setResults(results);
 		%>
 
 	</liferay-ui:search-container-results>

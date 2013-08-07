@@ -19,11 +19,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>VIEW_ALL</td>
-	<td>//div[@class='navbar-inner']//li/a[contains(.,'View All')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>ADD</td>
 	<td>//div[@class='navbar-inner']//li/a[contains(.,'Add')]</td>
 	<td></td>

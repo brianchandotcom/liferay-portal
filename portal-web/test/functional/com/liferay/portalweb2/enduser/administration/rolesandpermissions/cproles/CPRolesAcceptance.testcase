@@ -332,6 +332,7 @@
 		<var name="roleName" value="Roles Siterole Name" />
 		<var name="rolePermission" value="Add Entry" />
 		<var name="roleType" value="Site" />
+		<var name="siteScopeName" value="Site Name" />
 		<var name="siteName" value="Site Name" />
 		<var name="sitePageName" value="${pageName}" />
 		<var name="sitePageType" value="Public" />
@@ -368,8 +369,9 @@
 			<var name="siteName" value="${siteName}" />
 		</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Sites" />
+		<execute macro="Page#gotoUsersCP">
+			<var name="siteScopeName" value="Site Name" />
+			<var name="portletName" value="Site Memberships" />
 		</execute>
 
 		<execute macro="Site#addMemberCP">
@@ -404,8 +406,9 @@
 			<var name="roleType" value="${roleType}" />
 		</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Sites" />
+		<execute macro="Page#gotoUsersCP">
+			<var name="siteScopeName" value="Site Name" />
+			<var name="portletName" value="Site Memberships" />
 		</execute>
 
 		<execute macro="Site#assignRoleCP">
@@ -507,6 +510,15 @@
 			<var name="roleName" value="${roleName}" />
 			<var name="roleType" value="${roleType}" />
 		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#viewCP">
+			<var name="roleName" value="${roleName}" />
+			<var name="roleType" value="${roleType}" />
+		</execute>
 	</command>
 
 	<command name="AddRegularRole">
@@ -517,6 +529,14 @@
 		</execute>
 
 		<execute macro="Role#addCP">
+			<var name="roleName" value="${roleName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#viewCP">
 			<var name="roleName" value="${roleName}" />
 		</execute>
 	</command>
@@ -530,6 +550,15 @@
 		</execute>
 
 		<execute macro="Role#addCP">
+			<var name="roleName" value="${roleName}" />
+			<var name="roleType" value="${roleType}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#viewCP">
 			<var name="roleName" value="${roleName}" />
 			<var name="roleType" value="${roleType}" />
 		</execute>
@@ -845,7 +874,6 @@
 		<execute macro="BlogsEntry#moveToRecycleBinPG">
 			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
-			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="User#logoutPG" />
@@ -900,6 +928,7 @@
 		<var name="roleName" value="Roles Siterole Name" />
 		<var name="rolePermission" value="Delete" />
 		<var name="roleType" value="Site" />
+		<var name="siteScopeName" value="Site Name" />
 		<var name="siteName" value="Site Name" />
 		<var name="sitePageName" value="${pageName}" />
 		<var name="sitePageType" value="Public" />
@@ -936,8 +965,9 @@
 			<var name="siteName" value="${siteName}" />
 		</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Sites" />
+		<execute macro="Page#gotoUsersCP">
+			<var name="siteScopeName" value="Site Name" />
+			<var name="portletName" value="Site Memberships" />
 		</execute>
 
 		<execute macro="Site#addMemberCP">
@@ -972,8 +1002,9 @@
 			<var name="roleType" value="${roleType}" />
 		</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Sites" />
+		<execute macro="Page#gotoUsersCP">
+			<var name="siteScopeName" value="Site Name" />
+			<var name="portletName" value="Site Memberships" />
 		</execute>
 
 		<execute macro="Site#assignRoleCP">

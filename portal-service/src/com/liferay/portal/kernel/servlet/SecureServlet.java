@@ -104,7 +104,7 @@ public class SecureServlet
 		_servlet.init(_servletConfig);
 	}
 
-	private Servlet _servlet;
-	private ServletConfig _servletConfig;
+	protected Servlet _servlet;
+	protected ServletConfig _servletConfig;
 
 }

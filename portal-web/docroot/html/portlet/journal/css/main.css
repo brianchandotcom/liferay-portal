@@ -72,8 +72,7 @@
 		color: #34404F;
 		display: block;
 		margin: 0 auto;
-		padding: 0.5em;
-		padding-bottom: 0;
+		padding: 0;
 	}
 
 	.article-structure-template-toolbar {
@@ -111,11 +110,16 @@
 		}
 	}
 
+	.article-translation-toolbar {
+		padding: 1em 0 0 0;
+	}
+
 	.journal-article-header-edit {
 		background: #FCFCFC;
 		border: solid #DDD;
 		border-width: 1px 0;
 		margin: 0 0 1em;
+		padding: 1em;
 	}
 
 	.subscribe-link {
@@ -522,9 +526,6 @@
 	}
 
 	.form-navigator {
-		position: relative;
-		z-index: 430;
-
 		.article-info {
 			font-weight: bold;
 			margin-bottom: 15px;

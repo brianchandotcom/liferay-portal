@@ -56,6 +56,10 @@
 		}
 	}
 
+	form fieldset.fieldset {
+		min-width: 100%;
+	}
+
 	form .accordion-heading .accordion-toggle {
 		padding-left: 0;
 	}
@@ -393,7 +397,7 @@
 
 	/* ---------- Form navigator ---------- */
 
-	@include respond-to(tablet) {
+	@include respond-to(phone, tablet) {
 		.taglib-form-navigator {
 			.form-navigator-content {
 				clear: both;
@@ -420,6 +424,10 @@
 						padding: 0.1em 1em;
 					}
 				}
+			}
+
+			.nobr {
+				white-space: normal;
 			}
 		}
 	}

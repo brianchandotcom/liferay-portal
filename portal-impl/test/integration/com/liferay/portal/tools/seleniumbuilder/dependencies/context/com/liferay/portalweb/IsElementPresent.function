@@ -1,0 +1,5 @@
+<definition>
+	<command name="isElementPresent">
+		<execute selenium="isElementPresent" />
+	</command>
+</definition>

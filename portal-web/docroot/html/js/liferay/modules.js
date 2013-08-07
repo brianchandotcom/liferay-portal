@@ -535,6 +535,18 @@ window.YUI_config = {
 						'liferay-notice'
 					]
 				},
+				'liferay-sign-in-modal': {
+					path: 'sign_in_modal.js',
+					requires: [
+						'aui-base',
+						'aui-component',
+						'aui-io-request',
+						'aui-modal',
+						'aui-parse-content',
+						'liferay-portlet-url',
+						'plugin'
+					]
+				},
 				'liferay-staging': {
 					path: 'staging.js',
 					requires: [

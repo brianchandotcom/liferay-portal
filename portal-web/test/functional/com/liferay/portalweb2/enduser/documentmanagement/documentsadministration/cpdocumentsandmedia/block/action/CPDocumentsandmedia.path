@@ -82,7 +82,7 @@
 <tr>
 	<td>CONFIRMATION</td>
 	<td>//div[@class='alert alert-success taglib-trash-undo']/form</td>
-	<td>The selected item was moved to the Recycle Bin. Undo</td>
+	<td>The Selected Item was moved to the Recycle Bin. Undo</td>
 </tr>
 <tr>
 	<td></td>

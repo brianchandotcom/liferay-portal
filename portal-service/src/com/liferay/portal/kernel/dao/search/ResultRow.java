@@ -275,9 +275,16 @@ public class ResultRow {
 		int status, long statusByUserId, Date statusDate,
 		PortletURL portletURL) {
 
-		addStatus(
-			_searchEntries.size(), status, statusByUserId, statusDate,
-			portletURL.toString());
+		if (portletURL != null) {
+			addStatus(
+				_searchEntries.size(), status, statusByUserId, statusDate,
+				portletURL.toString());
+		}
+		else {
+			addStatus(
+				_searchEntries.size(), status, statusByUserId, statusDate,
+				null);
+		}
 	}
 
 	public void addStatus(

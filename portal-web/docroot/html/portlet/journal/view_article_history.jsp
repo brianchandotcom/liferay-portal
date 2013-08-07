@@ -110,35 +110,33 @@ JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_AR
 
 				ResultRow row = new ResultRow(articleVersion, articleVersion.getArticleId() + EditArticleAction.VERSION_SEPARATOR + articleVersion.getVersion(), i);
 
-				PortletURL rowURL = null;
-
 				// Article id
 
-				row.addText(articleVersion.getArticleId(), rowURL);
+				row.addText(articleVersion.getArticleId());
 
 				// Title
 
-				row.addText(articleVersion.getTitle(locale), rowURL);
+				row.addText(articleVersion.getTitle(locale));
 
 				// Version
 
-				row.addText(String.valueOf(articleVersion.getVersion()), rowURL);
+				row.addText(String.valueOf(articleVersion.getVersion()));
 
 				// Status
 
-				row.addStatus(articleVersion.getStatus(), articleVersion.getStatusByUserId(), articleVersion.getStatusDate(), rowURL);
+				row.addStatus(articleVersion.getStatus(), articleVersion.getStatusByUserId(), articleVersion.getStatusDate());
 
 				// Modified date
 
-				row.addDate(articleVersion.getModifiedDate(), rowURL);
+				row.addDate(articleVersion.getModifiedDate());
 
 				// Display date
 
-				row.addDate(articleVersion.getDisplayDate(), rowURL);
+				row.addDate(articleVersion.getDisplayDate());
 
 				// Author
 
-				row.addText(PortalUtil.getUserName(articleVersion), rowURL);
+				row.addText(PortalUtil.getUserName(articleVersion));
 
 				// Action
 

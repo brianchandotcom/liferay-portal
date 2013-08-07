@@ -5,6 +5,7 @@
 
 	<command name="AddMember">
 		<var name="siteName" value="Site Name" />
+		<var name="siteScopeName" value="Site Name" />
 		<var name="userEmailAddress" value="userea@liferay.com" />
 		<var name="userFirstName" value="userfn" />
 		<var name="userLastName" value="userln" />
@@ -29,8 +30,9 @@
 			<var name="siteName" value="${siteName}" />
 		</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Sites" />
+		<execute macro="Page#gotoUsersCP">
+			<var name="siteScopeName" value="Site Name" />
+			<var name="portletName" value="Site Memberships" />
 		</execute>
 
 		<execute macro="Site#addMemberCP">
@@ -44,6 +46,7 @@
 
 	<command name="AddTeam">
 		<var name="siteName" value="Site Name" />
+		<var name="siteScopeName" value="Site Name" />
 		<var name="teamName" value="Site Team Name" />
 		<var name="teamDescription" value="Site Team Description" />
 
@@ -55,12 +58,12 @@
 			<var name="siteName" value="${siteName}" />
 		</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Sites" />
+		<execute macro="Page#gotoUsersCP">
+			<var name="siteScopeName" value="Site Name" />
+			<var name="portletName" value="Site Teams" />
 		</execute>
 
 		<execute macro="Team#addCP">
-			<var name="siteScopeName" value="${siteName}" />
 			<var name="teamName" value="${teamName}" />
 			<var name="teamDescription" value="${teamDescription}" />
 		</execute>

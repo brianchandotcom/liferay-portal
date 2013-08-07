@@ -98,7 +98,7 @@ public class ReflectChecker extends BaseChecker {
 			return true;
 		}
 
-		int stackIndex = Reflection.getStackIndex(10, 9);
+		int stackIndex = Reflection.getStackIndex(11, 10);
 
 		Class<?> callerClass = Reflection.getCallerClass(stackIndex);
 

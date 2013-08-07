@@ -13,7 +13,6 @@
 </#if>
 
 <#assign fileEntryTitle = "">
-<#assign fileEntryURL = "">
 
 <#if (fieldRawValue != "")>
 	<#assign fileJSONObject = getFileJSONObject(fieldRawValue)>
@@ -22,12 +21,11 @@
 
 	<#if (fileEntry != "")>
 		<#assign fileEntryTitle = fileEntry.getTitle()>
-		<#assign fileEntryURL = getFileEntryURL(fileEntry)>
 	</#if>
 </#if>
 
 <@aui["field-wrapper"] data=data>
-	<@aui.input inlineField=true label=escape(label) name="${namespacedFieldName}Title" readonly="readonly" type="text" url=fileEntryURL value=fileEntryTitle>
+	<@aui.input inlineField=true label=escape(label) name="${namespacedFieldName}Title" readonly="readonly" type="text" value=fileEntryTitle>
 		<#if required>
 			<@aui.validator name="required" />
 		</#if>
@@ -35,8 +33,6 @@
 
 	<@aui["button-row"]>
 		<@aui.button id=namespacedFieldName value="select" />
-
-		<@aui.button onClick="window['${portletNamespace}${namespacedFieldName}downloadFileEntry']();" value="download" />
 
 		<@aui.button onClick="window['${portletNamespace}${namespacedFieldName}clearFileEntry']();" value="clear" />
 	</@>
@@ -48,25 +44,6 @@
 	window['${portletNamespace}${namespacedFieldName}clearFileEntry'] = function() {
 		window['${portletNamespace}${namespacedFieldName}setFileEntry']('', '', '', '', '');
 	};
-
-	Liferay.provide(
-		window,
-		'${portletNamespace}${namespacedFieldName}downloadFileEntry',
-		function() {
-			var A = AUI();
-
-			var titleNode = A.one('#${portletNamespace}${namespacedFieldName}Title');
-
-			if (titleNode) {
-				var url = titleNode.attr('url');
-
-				if (url) {
-					location.href = url;
-				}
-			}
-		},
-		['aui-base']
-	);
 
 	Liferay.provide(
 		window,
@@ -96,7 +73,6 @@
 			var titleNode = A.one('#${portletNamespace}${namespacedFieldName}Title');
 
 			if (titleNode) {
-				titleNode.attr('url', url);
 				titleNode.val(title);
 			}
 		},

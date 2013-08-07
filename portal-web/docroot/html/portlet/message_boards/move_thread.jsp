@@ -133,7 +133,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "mov
 						width: 680
 					},
 					id: '<portlet:namespace />selectCategory',
-					title: '<%= UnicodeLanguageUtil.format(pageContext, "select-x", "category") %>',
+					title: '<liferay-ui:message arguments="category" key="select-x" />',
 					uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/message_boards/select_category" /><portlet:param name="mbCategoryId" value="<%= String.valueOf(category.getParentCategoryId()) %>" /></portlet:renderURL>'
 				},
 				function(event) {

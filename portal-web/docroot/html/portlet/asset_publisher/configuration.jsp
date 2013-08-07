@@ -23,6 +23,8 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 String typeSelection = ParamUtil.getString(request, "typeSelection", StringPool.BLANK);
 
+String eventName = "_" + HtmlUtil.escapeJS(portletResource) + "_selectSite";
+
 List<AssetRendererFactory> classTypesAssetRendererFactories = new ArrayList<AssetRendererFactory>();
 
 String emailParam = "emailAssetEntryAdded";
@@ -133,6 +135,8 @@ String emailBodyParam = emailParam + "Body_" + currentLanguageId;
 				<liferay-ui:icon-menu cssClass="select-existing-selector" direction="right" icon='<%= themeDisplay.getPathThemeImages() + "/common/add.png" %>' message="select" showWhenSingleIcon="<%= true %>">
 
 					<%
+					Map<String, Object> data = new HashMap<String, Object>();
+
 					for (Group group : availableGroups) {
 						if (ArrayUtil.contains(groupIds, group.getGroupId())) {
 							continue;
@@ -163,23 +167,29 @@ String emailBodyParam = emailParam + "Body_" + currentLanguageId;
 						PortletURL layoutSiteBrowserURL = PortletURLFactoryUtil.create(request, PortletKeys.SITE_BROWSER, PortalUtil.getControlPanelPlid(company.getCompanyId()), PortletRequest.RENDER_PHASE);
 
 						layoutSiteBrowserURL.setParameter("struts_action", "/site_browser/view");
+						layoutSiteBrowserURL.setParameter("eventName", eventName);
 						layoutSiteBrowserURL.setParameter("groupId", String.valueOf(layout.getGroupId()));
 						layoutSiteBrowserURL.setParameter("selectedGroupIds", StringUtil.merge(groupIds));
 						layoutSiteBrowserURL.setParameter("type", "layoutScopes");
-						layoutSiteBrowserURL.setParameter("callback", liferayPortletResponse.getNamespace() + "selectGroup");
 						layoutSiteBrowserURL.setPortletMode(PortletMode.VIEW);
 						layoutSiteBrowserURL.setWindowState(LiferayWindowState.POP_UP);
 
 						String layoutSiteBrowserURLString = HttpUtil.addParameter(layoutSiteBrowserURL.toString(), "doAsGroupId", scopeGroupId);
+
+						data = new HashMap<String, Object>();
+
+						data.put("href", layoutSiteBrowserURLString);
+						data.put("title", LanguageUtil.get(pageContext, "pages"));
 						%>
 
 						<liferay-ui:icon
 							cssClass="highlited scope-selector"
+							data="<%= data %>"
 							id="selectGroup"
 							image="add"
 							message='<%= LanguageUtil.get(pageContext, "pages") + StringPool.TRIPLE_PERIOD %>'
 							method="get"
-							url="<%= layoutSiteBrowserURLString %>"
+							url="javascript:;"
 						/>
 					</c:if>
 
@@ -207,23 +217,29 @@ String emailBodyParam = emailParam + "Body_" + currentLanguageId;
 						PortletURL siteBrowserURL = PortletURLFactoryUtil.create(request, PortletKeys.SITE_BROWSER, PortalUtil.getControlPanelPlid(company.getCompanyId()), PortletRequest.RENDER_PHASE);
 
 						siteBrowserURL.setParameter("struts_action", "/site_browser/view");
+						siteBrowserURL.setParameter("eventName", eventName);
 						siteBrowserURL.setParameter("groupId", String.valueOf(layout.getGroupId()));
 						siteBrowserURL.setParameter("selectedGroupIds", StringUtil.merge(groupIds));
 						siteBrowserURL.setParameter("types", StringUtil.merge(types));
-						siteBrowserURL.setParameter("callback", liferayPortletResponse.getNamespace() + "selectGroup");
 						siteBrowserURL.setPortletMode(PortletMode.VIEW);
 						siteBrowserURL.setWindowState(LiferayWindowState.POP_UP);
 
 						String siteBrowserURLString = HttpUtil.addParameter(siteBrowserURL.toString(), "doAsGroupId", scopeGroupId);
+
+						data = new HashMap<String, Object>();
+
+						data.put("href", siteBrowserURLString);
+						data.put("title", LanguageUtil.get(pageContext, "sites"));
 						%>
 
 						<liferay-ui:icon
 							cssClass="highlited scope-selector"
+							data="<%= data %>"
 							id="selectManageableGroup"
 							image="add"
 							message='<%= LanguageUtil.get(pageContext, "other-site") + StringPool.TRIPLE_PERIOD %>'
 							method="get"
-							url="<%= siteBrowserURLString %>"
+							url="javascript:;"
 						/>
 					</c:if>
 				</liferay-ui:icon-menu>
@@ -259,13 +275,25 @@ String emailBodyParam = emailParam + "Body_" + currentLanguageId;
 		function(event) {
 			event.preventDefault();
 
-			var link = event.currentTarget;
+			var currentTarget = event.currentTarget;
 
-			Liferay.Util.openWindow(
+			Liferay.Util.selectEntity(
 				{
-					id: link.attr('id'),
-					title: link.html(),
-					uri: link.attr('href')
+					dialog: {
+						constrain: true,
+						modal: true,
+						width: 600
+					},
+					eventName: '<%= eventName %>',
+					id: '<%= eventName %>' + currentTarget.attr('id'),
+					title: currentTarget.attr('data-title'),
+					uri: currentTarget.attr('data-href')
+				},
+				function(event) {
+					document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = 'add-scope';
+					document.<portlet:namespace />fm.<portlet:namespace />scopeId.value = event.scopeid;
+
+					submitForm(document.<portlet:namespace />fm);
 				}
 			);
 		},
@@ -290,21 +318,6 @@ String emailBodyParam = emailParam + "Body_" + currentLanguageId;
 	function <portlet:namespace />moveSelectionUp(assetEntryOrder) {
 		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = 'move-selection-up';
 		document.<portlet:namespace />fm.<portlet:namespace />assetEntryOrder.value = assetEntryOrder;
-
-		submitForm(document.<portlet:namespace />fm);
-	}
-
-	function <portlet:namespace />selectAsset(assetEntryId, assetClassName, assetType, assetEntryTitle, groupName) {
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = 'add-selection';
-		document.<portlet:namespace />fm.<portlet:namespace />assetEntryId.value = assetEntryId;
-		document.<portlet:namespace />fm.<portlet:namespace />assetEntryType.value = assetClassName;
-
-		submitForm(document.<portlet:namespace />fm);
-	}
-
-	function <portlet:namespace />selectGroup(groupId, name, scopeId, target) {
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = 'add-scope';
-		document.<portlet:namespace />fm.<portlet:namespace />scopeId.value = scopeId;
 
 		submitForm(document.<portlet:namespace />fm);
 	}

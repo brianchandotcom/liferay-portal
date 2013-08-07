@@ -107,7 +107,7 @@ else {
 										width: 680
 									},
 									id: '<portlet:namespace />selectFolder',
-									title: '<%= UnicodeLanguageUtil.format(pageContext, "select-x", "folder") %>',
+									title: '<liferay-ui:message arguments="folder" key="select-x" />',
 									uri: '<liferay-portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/bookmarks/select_folder" /></liferay-portlet:renderURL>'
 								},
 								function(event) {

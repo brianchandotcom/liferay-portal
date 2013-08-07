@@ -187,6 +187,9 @@ public class LayoutStagedModelDataHandler
 
 			return;
 		}
+		else {
+			layoutElement.addAttribute("action", Constants.ADD);
+		}
 
 		portletDataContext.setPlid(layout.getPlid());
 

@@ -85,8 +85,6 @@ CKEDITOR.plugins.add(
 		init: function(editor) {
 			var instance = this;
 
-			var lang = editor.lang.video;
-
 			CKEDITOR.dialog.add('video', instance.path + 'dialogs/video.js');
 
 			editor.addCommand('Video', new CKEDITOR.dialogCommand('video'));
@@ -96,7 +94,7 @@ CKEDITOR.plugins.add(
 				{
 					command: 'Video',
 					icon: instance.path + 'icons/icon.png',
-					label: lang.toolbar
+					label: Liferay.Language.get('video')
 				}
 			);
 
@@ -106,7 +104,7 @@ CKEDITOR.plugins.add(
 						video: {
 							command: 'Video',
 							group: 'flash',
-							label: lang.properties
+							label: Liferay.Language.get('edit-video')
 						}
 					}
 				);
@@ -137,10 +135,8 @@ CKEDITOR.plugins.add(
 				);
 			}
 
-			editor.lang.fakeobjects.video = lang.fakeObject;
+			editor.lang.fakeobjects.video = Liferay.Language.get('video');
 		},
-
-		lang: ['en', 'es'],
 
 		onLoad: function() {
 			var instance = this;

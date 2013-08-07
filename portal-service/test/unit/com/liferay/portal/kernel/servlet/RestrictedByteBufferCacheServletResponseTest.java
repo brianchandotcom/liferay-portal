@@ -1,0 +1,389 @@
+/**
+ * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.portal.kernel.servlet;
+
+import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
+import com.liferay.portal.kernel.test.CodeCoverageAssertor;
+import com.liferay.portal.kernel.util.ReflectionUtil;
+
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintWriter;
+
+import java.lang.reflect.Field;
+
+import java.nio.ByteBuffer;
+
+import javax.servlet.ServletOutputStream;
+
+import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Test;
+
+/**
+ * @author Shuyang Zhou
+ */
+public class RestrictedByteBufferCacheServletResponseTest {
+
+	@ClassRule
+	public static CodeCoverageAssertor codeCoverageAssertor =
+		new CodeCoverageAssertor();
+
+	@Test
+	public void testConstructor() {
+		StubHttpServletResponse stubHttpServletResponse =
+			new StubHttpServletResponse();
+
+		RestrictedByteBufferCacheServletResponse
+			restrictedByteBufferCacheServletResponse =
+				new RestrictedByteBufferCacheServletResponse(
+					stubHttpServletResponse, 1024);
+
+		Assert.assertSame(
+			stubHttpServletResponse,
+			restrictedByteBufferCacheServletResponse.getResponse());
+		Assert.assertFalse(
+			restrictedByteBufferCacheServletResponse.isOverflowed());
+	}
+
+	@Test
+	public void testGetBufferSize() throws IOException {
+		StubHttpServletResponse stubHttpServletResponse =
+			new StubHttpServletResponse() {
+
+				@Override
+				public ServletOutputStream getOutputStream() {
+					return new ServletOutputStreamAdapter(
+						new UnsyncByteArrayOutputStream());
+				}
+
+				@Override
+				public boolean isCommitted() {
+					return false;
+				}
+
+			};
+
+		RestrictedByteBufferCacheServletResponse
+			restrictedByteBufferCacheServletResponse =
+				new RestrictedByteBufferCacheServletResponse(
+					stubHttpServletResponse, 1024);
+
+		Assert.assertEquals(
+			1024, restrictedByteBufferCacheServletResponse.getBufferSize());
+
+		OutputStream outputStream =
+			restrictedByteBufferCacheServletResponse.getOutputStream();
+
+		Assert.assertEquals(
+			1024, restrictedByteBufferCacheServletResponse.getBufferSize());
+
+		outputStream.flush();
+
+		Assert.assertEquals(
+			0, restrictedByteBufferCacheServletResponse.getBufferSize());
+	}
+
+	@Test
+	public void testGetByteBuffer() throws Exception {
+		StubHttpServletResponse stubHttpServletResponse =
+			new StubHttpServletResponse() {
+
+				@Override
+				public ServletOutputStream getOutputStream() {
+					return new ServletOutputStreamAdapter(
+						new UnsyncByteArrayOutputStream());
+				}
+
+				@Override
+				public boolean isCommitted() {
+					return false;
+				}
+
+			};
+
+		RestrictedByteBufferCacheServletResponse
+			restrictedByteBufferCacheServletResponse =
+				new RestrictedByteBufferCacheServletResponse(
+					stubHttpServletResponse, 1024);
+
+		Field emptyByteBufferField = ReflectionUtil.getDeclaredField(
+			RestrictedByteBufferCacheServletResponse.class, "_emptyByteBuffer");
+
+		ByteBuffer emptyByteBuffer = (ByteBuffer)emptyByteBufferField.get(
+			restrictedByteBufferCacheServletResponse);
+
+		Assert.assertSame(
+			emptyByteBuffer,
+			restrictedByteBufferCacheServletResponse.getByteBuffer());
+
+		OutputStream outputStream =
+			restrictedByteBufferCacheServletResponse.getOutputStream();
+
+		ByteBuffer byteBuffer =
+			restrictedByteBufferCacheServletResponse.getByteBuffer();
+
+		Assert.assertNotSame(
+			emptyByteBuffer,
+			restrictedByteBufferCacheServletResponse.getByteBuffer());
+		Assert.assertEquals(0, byteBuffer.remaining());
+
+		outputStream.flush();
+
+		try {
+			restrictedByteBufferCacheServletResponse.getByteBuffer();
+
+			Assert.fail();
+		}
+		catch (IllegalStateException ise) {
+			Assert.assertEquals("Cache overflowed", ise.getMessage());
+		}
+
+		Assert.assertTrue(
+			restrictedByteBufferCacheServletResponse.isOverflowed());
+	}
+
+	@Test
+	public void testGetOutputStream() throws IOException {
+
+		// Two gets
+
+		StubHttpServletResponse stubHttpServletResponse =
+			new StubHttpServletResponse() {
+
+				@Override
+				public ServletOutputStream getOutputStream() {
+					return new ServletOutputStreamAdapter(
+						new UnsyncByteArrayOutputStream());
+				}
+
+			};
+
+		RestrictedByteBufferCacheServletResponse
+			restrictedByteBufferCacheServletResponse =
+				new RestrictedByteBufferCacheServletResponse(
+					stubHttpServletResponse, 1024);
+
+		ServletOutputStream servletOutputStream1 =
+			restrictedByteBufferCacheServletResponse.getOutputStream();
+		ServletOutputStream servletOutputStream2 =
+			restrictedByteBufferCacheServletResponse.getOutputStream();
+
+		Assert.assertSame(servletOutputStream1, servletOutputStream2);
+
+		// Get servlet output stream after getting print writer
+
+		restrictedByteBufferCacheServletResponse =
+			new RestrictedByteBufferCacheServletResponse(
+				stubHttpServletResponse, 1024);
+
+		restrictedByteBufferCacheServletResponse.getWriter();
+
+		try {
+			restrictedByteBufferCacheServletResponse.getOutputStream();
+		}
+		catch (IllegalStateException ise) {
+		}
+	}
+
+	@Test
+	public void testGetWriter() throws IOException {
+
+		// Two gets
+
+		StubHttpServletResponse stubHttpServletResponse =
+			new StubHttpServletResponse() {
+
+				@Override
+				public ServletOutputStream getOutputStream() {
+					return new ServletOutputStreamAdapter(
+						new UnsyncByteArrayOutputStream());
+				}
+
+			};
+
+		RestrictedByteBufferCacheServletResponse
+			restrictedByteBufferCacheServletResponse =
+				new RestrictedByteBufferCacheServletResponse(
+					stubHttpServletResponse, 1024);
+
+		PrintWriter printWriter1 =
+			restrictedByteBufferCacheServletResponse.getWriter();
+		PrintWriter printWriter2 =
+			restrictedByteBufferCacheServletResponse.getWriter();
+
+		Assert.assertSame(printWriter1, printWriter2);
+
+		// Get printWriter after getting servlet output stream
+
+		restrictedByteBufferCacheServletResponse =
+			new RestrictedByteBufferCacheServletResponse(
+				stubHttpServletResponse, 1024);
+
+		restrictedByteBufferCacheServletResponse.getOutputStream();
+
+		try {
+			restrictedByteBufferCacheServletResponse.getWriter();
+		}
+		catch (IllegalStateException ise) {
+		}
+	}
+
+	@Test
+	public void testResetBuffer() throws IOException {
+
+		// Null out servlet output stream
+
+		StubHttpServletResponse stubHttpServletResponse =
+			new StubHttpServletResponse() {
+
+				@Override
+				public ServletOutputStream getOutputStream() {
+					return new ServletOutputStreamAdapter(
+						new UnsyncByteArrayOutputStream());
+				}
+
+				@Override
+				public boolean isCommitted() {
+					return false;
+				}
+
+			};
+
+		RestrictedByteBufferCacheServletResponse
+			restrictedByteBufferCacheServletResponse =
+				new RestrictedByteBufferCacheServletResponse(
+					stubHttpServletResponse, 1024);
+
+		OutputStream outputStream =
+			restrictedByteBufferCacheServletResponse.getOutputStream();
+
+		Assert.assertTrue(
+			restrictedByteBufferCacheServletResponse.calledGetOutputStream);
+		Assert.assertFalse(
+			restrictedByteBufferCacheServletResponse.calledGetWriter);
+		Assert.assertSame(
+			outputStream,
+			restrictedByteBufferCacheServletResponse.getOutputStream());
+
+		restrictedByteBufferCacheServletResponse.resetBuffer(true);
+
+		Assert.assertFalse(
+			restrictedByteBufferCacheServletResponse.calledGetOutputStream);
+		Assert.assertFalse(
+			restrictedByteBufferCacheServletResponse.calledGetWriter);
+		Assert.assertNotSame(
+			outputStream,
+			restrictedByteBufferCacheServletResponse.getOutputStream());
+
+		// Null out print writer
+
+		restrictedByteBufferCacheServletResponse =
+			new RestrictedByteBufferCacheServletResponse(
+				stubHttpServletResponse, 1024);
+
+		PrintWriter printWriter =
+			restrictedByteBufferCacheServletResponse.getWriter();
+
+		Assert.assertFalse(
+			restrictedByteBufferCacheServletResponse.calledGetOutputStream);
+		Assert.assertTrue(
+			restrictedByteBufferCacheServletResponse.calledGetWriter);
+		Assert.assertSame(
+			printWriter, restrictedByteBufferCacheServletResponse.getWriter());
+
+		restrictedByteBufferCacheServletResponse.resetBuffer(true);
+
+		Assert.assertFalse(
+			restrictedByteBufferCacheServletResponse.calledGetOutputStream);
+		Assert.assertFalse(
+			restrictedByteBufferCacheServletResponse.calledGetWriter);
+		Assert.assertNotSame(
+			printWriter, restrictedByteBufferCacheServletResponse.getWriter());
+
+		// Reset buffer
+
+		restrictedByteBufferCacheServletResponse =
+			new RestrictedByteBufferCacheServletResponse(
+				stubHttpServletResponse, 1024);
+
+		restrictedByteBufferCacheServletResponse.flushCache();
+		restrictedByteBufferCacheServletResponse.resetBuffer(false);
+
+		outputStream =
+			restrictedByteBufferCacheServletResponse.getOutputStream();
+
+		byte[] data = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+
+		outputStream.write(data);
+
+		ByteBuffer byteBuffer =
+			restrictedByteBufferCacheServletResponse.getByteBuffer();
+
+		Assert.assertEquals(ByteBuffer.wrap(data), byteBuffer);
+
+		restrictedByteBufferCacheServletResponse.resetBuffer(false);
+
+		byteBuffer = restrictedByteBufferCacheServletResponse.getByteBuffer();
+
+		Assert.assertEquals(0, byteBuffer.remaining());
+
+		restrictedByteBufferCacheServletResponse.flushCache();
+
+		try {
+			restrictedByteBufferCacheServletResponse.resetBuffer(false);
+
+			Assert.fail();
+		}
+		catch (IllegalStateException ise) {
+		}
+	}
+
+	@Test
+	public void testSetBufferSize() throws IOException {
+
+		// Normal
+
+		StubHttpServletResponse stubHttpServletResponse =
+			new StubHttpServletResponse() {
+
+				@Override
+				public boolean isCommitted() {
+					return false;
+				}
+
+			};
+
+		RestrictedByteBufferCacheServletResponse
+			restrictedByteBufferCacheServletResponse =
+				new RestrictedByteBufferCacheServletResponse(
+					stubHttpServletResponse, 1024);
+
+		restrictedByteBufferCacheServletResponse.setBufferSize(2048);
+
+		// Set after commit
+
+		restrictedByteBufferCacheServletResponse.flushBuffer();
+
+		try {
+			restrictedByteBufferCacheServletResponse.setBufferSize(2048);
+
+			Assert.fail();
+		}
+		catch (IllegalStateException ise) {
+		}
+	}
+
+}

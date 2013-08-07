@@ -1,4 +1,5 @@
 .taglib-workflow-status {
+	display: inline-block;
 	margin: 0.5em 0;
 
 	.workflow-id, .workflow-version {

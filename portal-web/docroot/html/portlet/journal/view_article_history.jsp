@@ -126,9 +126,7 @@ JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_AR
 
 				// Status
 
-				String status = WorkflowConstants.getStatusLabel(articleVersion.getStatus());
-
-				row.addText(LanguageUtil.get(pageContext, status), rowURL);
+				row.addStatus(articleVersion.getStatus(), articleVersion.getStatusByUserId(), articleVersion.getStatusDate(), rowURL);
 
 				// Modified date
 

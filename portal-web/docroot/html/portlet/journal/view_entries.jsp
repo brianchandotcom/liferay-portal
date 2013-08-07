@@ -320,10 +320,6 @@ for (int i = 0; i < results.size(); i++) {
 						/>
 					</liferay-util:buffer>
 
-					<liferay-util:buffer var="articleStatus">
-						<aui:workflow-status showIcon="<%= false %>" showLabel="<%= false %>" status="<%= curArticle.getStatus() %>" />
-					</liferay-util:buffer>
-
 					<%
 					List resultRows = searchContainer.getResultRows();
 

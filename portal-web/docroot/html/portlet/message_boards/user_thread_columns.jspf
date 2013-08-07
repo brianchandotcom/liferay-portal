@@ -59,10 +59,9 @@
 <%@ include file="/html/portlet/message_boards/user_thread_columns_last_post.jspf" %>
 
 <c:if test='<%= topLink.equals("my-posts") %>'>
-	<liferay-ui:search-container-column-text
+	<liferay-ui:search-container-column-status
 		href="<%= rowURL %>"
 		name="status"
-		value="<%= LanguageUtil.get(pageContext, WorkflowConstants.getStatusLabel(thread.getStatus())) %>"
 	/>
 </c:if>
 

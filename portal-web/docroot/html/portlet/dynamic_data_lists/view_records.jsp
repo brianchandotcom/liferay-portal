@@ -124,7 +124,7 @@ portletURL.setParameter("recordSetId", String.valueOf(recordSet.getRecordSetId()
 			}
 
 			if (editable) {
-				row.addText(LanguageUtil.get(pageContext, WorkflowConstants.getStatusLabel(recordVersion.getStatus())), rowURL);
+				row.addStatus(recordVersion.getStatus(), recordVersion.getStatusByUserId(), recordVersion.getStatusDate(), rowURL);
 				row.addDate(record.getModifiedDate(), rowURL);
 				row.addText(HtmlUtil.escape(PortalUtil.getUserName(recordVersion)), rowURL);
 

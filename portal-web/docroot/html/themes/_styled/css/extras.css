@@ -373,3 +373,7 @@ body:first-of-type {
 .upload-drop-intent .lfr-upload-container .upload-target {
 	@include experimental(animation, lfr-drop-active 1s ease 0.2s infinite);
 }
+
+.user-status-tooltip .user-status-avatar-image {
+	@include border-radius(50%);
+}

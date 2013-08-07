@@ -157,6 +157,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		entry.setSmallImageId(counterLocalService.increment());
 		entry.setSmallImageURL(smallImageURL);
 		entry.setStatus(WorkflowConstants.STATUS_DRAFT);
+		entry.setStatusByUserId(userId);
 		entry.setStatusDate(serviceContext.getModifiedDate(now));
 		entry.setExpandoBridgeAttributes(serviceContext);
 

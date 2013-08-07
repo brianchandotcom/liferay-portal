@@ -702,7 +702,7 @@ request.setAttribute("view_file_entry.jsp-fileEntry", fileEntry);
 									// Status
 
 									if (showNonApprovedDocuments && !portletId.equals(PortletKeys.TRASH)) {
-										row.addText(LanguageUtil.get(pageContext, WorkflowConstants.getStatusLabel(curFileVersion.getStatus())));
+										row.addStatus(curFileVersion.getStatus(), curFileVersion.getStatusByUserId(), curFileVersion.getStatusDate());
 									}
 
 									// Action

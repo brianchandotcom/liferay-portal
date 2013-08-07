@@ -14,28 +14,4 @@
  */
 --%>
 
-<liferay-ui:search-container-column-text
-	href="<%= rowURL %>"
-	name="title"
-	orderable="<%= false %>"
-	property="title"
-/>
-
-<liferay-ui:search-container-column-text
-	href="<%= rowURL %>"
-	name="author"
-	orderable="<%= false %>"
-	property="userName"
-/>
-
-<liferay-ui:search-container-column-date
-	href="<%= rowURL %>"
-	name="create-date"
-	orderable="<%= false %>"
-	property="createDate"
-/>
-
-<liferay-ui:search-container-column-status
-	href="<%= rowURL %>"
-	name="status"
-/>
+<%@ include file="/html/taglib/init.jsp" %>

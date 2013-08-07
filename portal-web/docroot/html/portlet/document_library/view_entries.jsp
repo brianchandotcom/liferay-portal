@@ -418,10 +418,6 @@ for (int i = 0; i < results.size(); i++) {
 						/>
 					</liferay-util:buffer>
 
-					<liferay-util:buffer var="fileEntryStatus">
-						<aui:workflow-status showIcon="<%= false %>" showLabel="<%= false %>" status="<%= latestFileVersion.getStatus() %>" />
-					</liferay-util:buffer>
-
 					<%
 					List resultRows = searchContainer.getResultRows();
 
@@ -473,11 +469,7 @@ for (int i = 0; i < results.size(); i++) {
 						}
 
 						if (columnName.equals("status")) {
-							TextSearchEntry fileEntryStatusSearchEntry = new TextSearchEntry();
-
-							fileEntryStatusSearchEntry.setName(fileEntryStatus);
-
-							row.addSearchEntry(fileEntryStatusSearchEntry);
+							row.addStatus(latestFileVersion.getStatus(), latestFileVersion.getStatusByUserId(), latestFileVersion.getStatusDate());
 						}
 					}
 

@@ -83,7 +83,7 @@
 		<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_TITLE_1" value1="${entryTitle}" />
 		<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_CONTENT_1" value1="${entryContent}" />
 		<execute action="PGBlogs#assertClick" locator-key1="ENTRY_RECYCLE_BIN_1" value1="Move to the Recycle Bin" />
-		<execute action="PGBlogs#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="The Blogs Entry Blogs Entry Title was moved to Recycle Bin. Undo" />
+		<execute action="PGBlogs#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="The ${assetType} ${entryTitle} was moved to the Recycle Bin. Undo" />
 		<execute action="PGBlogs#assertElementNotPresent" locator-key1="ENTRY_TITLE_1" />
 		<execute action="PGBlogs#assertElementNotPresent" locator-key1="ENTRY_CONTENT_1" />
 	</command>

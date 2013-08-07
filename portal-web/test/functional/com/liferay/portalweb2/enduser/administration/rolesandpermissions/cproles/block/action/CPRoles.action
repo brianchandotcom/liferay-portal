@@ -16,4 +16,10 @@
 			<execute function="IsElementPresent#pauseIsElementPresent" />
 		</case>
 	</command>
+
+	<command name="type">
+		<case locator-key1="SEARCH_FIELD">
+			<execute function="Type#sendKeys"/>
+		</case>
+	</command>
 </definition>

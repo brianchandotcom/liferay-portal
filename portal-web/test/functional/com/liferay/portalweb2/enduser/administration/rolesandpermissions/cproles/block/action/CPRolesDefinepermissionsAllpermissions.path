@@ -1,0 +1,127 @@
+<html>
+<head>
+<title>CPRolesDefinepermissionsAllpermissions</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPRolesDefinepermissionsAllpermissions</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>CPRolesDefinepermissionsAllpermissions</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[@class='alert alert-success']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_FIELD</td>
+	<td>//input[@id='_128_permissionNavigationSearch']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE_BUTTON</td>
+	<td>//button[contains(.,'Save')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIRMATION</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SITE_ADMIN_CONTENT_BLOGS_GENERAL-->
+<tr>
+	<td>SITE_ADMIN_CONTENT_BLOGS_GENERAL_CHECKBOX</td>
+	<td>xpath=(//input[@name='_128_allRowIds'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRIES-->
+<tr>
+	<td>SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRIES_ALL_CHECKBOX</td>
+	<td>xpath=(//input[@name='_128_allRowIds'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRIES_ADD_ENTRY_CHECKBOX</td>
+	<td>//input[@value='com.liferay.portlet.blogsADD_ENTRY']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRIES_PERMISSIONS_CHECKBOX</td>
+	<td>//input[@value='com.liferay.portlet.blogsPERMISSIONS']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRIES_SUBSCRIBE_CHECKBOX</td>
+	<td>//input[@value='com.liferay.portlet.blogsSUBSCRIBE']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRY-->
+<tr>
+	<td>SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRY_ALL_CHECKBOX</td>
+	<td>xpath=(//input[@name='_128_allRowIds'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRY_ADD_DISCUSSION_CHECKBOX</td>
+	<td>//input[@value='com.liferay.portlet.blogs.model.BlogsEntryADD_DISCUSSION']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRY_DELETE_CHECKBOX</td>
+	<td>//input[@value='com.liferay.portlet.blogs.model.BlogsEntryDELETE']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRY_DELETE_DISCUSSION_CHECKBOX</td>
+	<td>//input[@value='com.liferay.portlet.blogs.model.BlogsEntryDELETE_DISCUSSION']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRY_PERMISSIONS_CHECKBOX</td>
+	<td>//input[@value='com.liferay.portlet.blogs.model.BlogsEntryPERMISSIONS']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRY_UPDATE_CHECKBOX</td>
+	<td>//input[@value='com.liferay.portlet.blogs.model.BlogsEntryUPDATE']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRY_UPDATE_DISCUSSION_CHECKBOX</td>
+	<td>//input[@value='com.liferay.portlet.blogs.model.BlogsEntryUPDATE_DISCUSSION']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRY_VIEW_CHECKBOX</td>
+	<td>//input[@value='com.liferay.portlet.blogs.model.BlogsEntryVIEW']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

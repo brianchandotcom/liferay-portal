@@ -114,6 +114,7 @@
 		<var name="orgName" value="Organization Name" />
 		<var name="orgType" value="Regular Organization" />
 		<var name="siteName" value="${orgName}" />
+		<var name="siteScopeName" value="Organization Name" />
 		<var name="teamName" value="Site Team Name" />
 		<var name="teamDescription" value="Site Team Description" />
 
@@ -132,6 +133,20 @@
 
 		<execute macro="Organization#addSiteCP">
 			<var name="orgName" value="${orgName}" />
+		</execute>
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="siteScopeName" value="Organization Name" />
+			<var name="portletName" value="Site Settings" />
+		</execute>
+
+		<execute macro="Organization#allowMembershipManagementCP">
+			<var name="orgName" value="${orgName}" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="siteScopeName" value="Organization Name" />
+			<var name="portletName" value="Site Teams" />
 		</execute>
 
 		<execute macro="Team#addCP">

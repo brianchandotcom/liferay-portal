@@ -113,8 +113,16 @@ public class BaseSelectTag extends com.liferay.taglib.util.IncludeTag {
 		return _prefix;
 	}
 
+	public boolean getRequired() {
+		return _required;
+	}
+
 	public boolean getShowEmptyOption() {
 		return _showEmptyOption;
+	}
+
+	public boolean getShowRequiredLabel() {
+		return _showRequiredLabel;
 	}
 
 	public java.lang.String getSuffix() {
@@ -249,10 +257,22 @@ public class BaseSelectTag extends com.liferay.taglib.util.IncludeTag {
 		setScopedAttribute("prefix", prefix);
 	}
 
+	public void setRequired(boolean required) {
+		_required = required;
+
+		setScopedAttribute("required", required);
+	}
+
 	public void setShowEmptyOption(boolean showEmptyOption) {
 		_showEmptyOption = showEmptyOption;
 
 		setScopedAttribute("showEmptyOption", showEmptyOption);
+	}
+
+	public void setShowRequiredLabel(boolean showRequiredLabel) {
+		_showRequiredLabel = showRequiredLabel;
+
+		setScopedAttribute("showRequiredLabel", showRequiredLabel);
 	}
 
 	public void setSuffix(java.lang.String suffix) {
@@ -295,7 +315,9 @@ public class BaseSelectTag extends com.liferay.taglib.util.IncludeTag {
 		_onChange = null;
 		_onClick = null;
 		_prefix = null;
+		_required = false;
 		_showEmptyOption = false;
+		_showRequiredLabel = true;
 		_suffix = null;
 		_title = null;
 		_useNamespace = true;
@@ -333,7 +355,9 @@ public class BaseSelectTag extends com.liferay.taglib.util.IncludeTag {
 		setNamespacedAttribute(request, "onChange", _onChange);
 		setNamespacedAttribute(request, "onClick", _onClick);
 		setNamespacedAttribute(request, "prefix", _prefix);
+		setNamespacedAttribute(request, "required", _required);
 		setNamespacedAttribute(request, "showEmptyOption", _showEmptyOption);
+		setNamespacedAttribute(request, "showRequiredLabel", _showRequiredLabel);
 		setNamespacedAttribute(request, "suffix", _suffix);
 		setNamespacedAttribute(request, "title", _title);
 		setNamespacedAttribute(request, "useNamespace", _useNamespace);
@@ -367,7 +391,9 @@ public class BaseSelectTag extends com.liferay.taglib.util.IncludeTag {
 	private java.lang.String _onChange = null;
 	private java.lang.String _onClick = null;
 	private java.lang.String _prefix = null;
+	private boolean _required = false;
 	private boolean _showEmptyOption = false;
+	private boolean _showRequiredLabel = true;
 	private java.lang.String _suffix = null;
 	private java.lang.String _title = null;
 	private boolean _useNamespace = true;

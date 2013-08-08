@@ -225,7 +225,7 @@
 	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryTypeFinder.findByC_G_N_D_S">
 		<![CDATA[
 			SELECT
-				{DLFileEntryType.*}
+				DISTINCT {DLFileEntryType.*}
 			FROM
 				DLFileEntryType
 			WHERE

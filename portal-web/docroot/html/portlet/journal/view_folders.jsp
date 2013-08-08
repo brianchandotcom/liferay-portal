@@ -260,30 +260,32 @@ else {
 					/>
 
 					<c:if test="<%= total > 0 %>">
-						<liferay-portlet:renderURL varImpl="viewBasicDDMStructureArticlesURL">
-							<portlet:param name="struts_action" value="/journal/view" />
-							<portlet:param name="folderId" value="<%= String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
-							<portlet:param name="structureId" value="0" />
-							<portlet:param name="entryStart" value="0" />
-							<portlet:param name="entryEnd" value="<%= String.valueOf(entryEnd - entryStart) %>" />
-							<portlet:param name="folderStart" value="0" />
-							<portlet:param name="folderEnd" value="<%= String.valueOf(folderEnd - folderStart) %>" />
-						</liferay-portlet:renderURL>
+						<c:if test="<%= searchContainer.getStart() == 0 %>">
+							<liferay-portlet:renderURL varImpl="viewBasicDDMStructureArticlesURL">
+								<portlet:param name="struts_action" value="/journal/view" />
+								<portlet:param name="folderId" value="<%= String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
+								<portlet:param name="structureId" value="0" />
+								<portlet:param name="entryStart" value="0" />
+								<portlet:param name="entryEnd" value="<%= String.valueOf(entryEnd - entryStart) %>" />
+								<portlet:param name="folderStart" value="0" />
+								<portlet:param name="folderEnd" value="<%= String.valueOf(folderEnd - folderStart) %>" />
+							</liferay-portlet:renderURL>
 
-						<%
-						dataView = new HashMap<String, Object>();
+							<%
+							dataView = new HashMap<String, Object>();
 
-						dataView.put("structure-id", 0);
-						%>
+							dataView.put("structure-id", 0);
+							%>
 
-						<liferay-ui:app-view-navigation-entry
-							cssClass="folder structure"
-							dataView="<%= dataView %>"
-							entryTitle='<%= LanguageUtil.get(pageContext, "basic-web-content") %>'
-							iconImage="copy"
-							selected='<%= structureId.equals("0") %>'
-							viewURL="<%= viewBasicDDMStructureArticlesURL.toString() %>"
-						/>
+							<liferay-ui:app-view-navigation-entry
+								cssClass="folder structure"
+								dataView="<%= dataView %>"
+								entryTitle='<%= LanguageUtil.get(pageContext, "basic-web-content") %>'
+								iconImage="copy"
+								selected='<%= structureId.equals("0") %>'
+								viewURL="<%= viewBasicDDMStructureArticlesURL.toString() %>"
+							/>
+						</c:if>
 
 						<%
 						List<DDMStructure> ddmStructures = DDMStructureLocalServiceUtil.getStructures(PortalUtil.getSiteAndCompanyGroupIds(themeDisplay), PortalUtil.getClassNameId(JournalArticle.class), searchContainer.getStart(), searchContainer.getEnd());

@@ -68,10 +68,6 @@ SearchContainer searchContainer = new SearchContainer(liferayPortletRequest, nul
 
 searchContainer.setTotal(total);
 
-List<JournalFolder> folders = JournalFolderServiceUtil.getFolders(scopeGroupId, parentFolderId, searchContainer.getStart(), searchContainer.getEnd());
-
-List<DDMStructure> ddmStructures = DDMStructureLocalServiceUtil.getStructures(PortalUtil.getSiteAndCompanyGroupIds(themeDisplay), PortalUtil.getClassNameId(JournalArticle.class), searchContainer.getStart(), searchContainer.getEnd());
-
 String parentTitle = StringPool.BLANK;
 
 if (browseBy.equals("structure")) {
@@ -198,7 +194,7 @@ else {
 						/>
 					</c:if>
 
-					<c:if test="<%= !ddmStructures.isEmpty() %>">
+					<c:if test="<%= DDMStructureLocalServiceUtil.getStructuresCount(PortalUtil.getSiteAndCompanyGroupIds(themeDisplay), PortalUtil.getClassNameId(JournalArticle.class)) > 0 %>">
 						<liferay-portlet:renderURL varImpl="filterDDMStructureArticlesURL">
 							<portlet:param name="struts_action" value="/journal/view" />
 							<portlet:param name="folderId" value="<%= String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
@@ -263,7 +259,7 @@ else {
 						viewURL="<%= viewURL.toString() %>"
 					/>
 
-					<c:if test="<%= !ddmStructures.isEmpty() %>">
+					<c:if test="<%= total > 0 %>">
 						<liferay-portlet:renderURL varImpl="viewBasicDDMStructureArticlesURL">
 							<portlet:param name="struts_action" value="/journal/view" />
 							<portlet:param name="folderId" value="<%= String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
@@ -288,41 +284,43 @@ else {
 							selected='<%= structureId.equals("0") %>'
 							viewURL="<%= viewBasicDDMStructureArticlesURL.toString() %>"
 						/>
-					</c:if>
-
-					<%
-					for (DDMStructure ddmStructure : ddmStructures) {
-					%>
-
-						<liferay-portlet:renderURL varImpl="viewDDMStructureArticlesURL">
-							<portlet:param name="struts_action" value="/journal/view" />
-							<portlet:param name="folderId" value="<%= String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
-							<portlet:param name="structureId" value="<%= ddmStructure.getStructureKey() %>" />
-							<portlet:param name="entryStart" value="0" />
-							<portlet:param name="entryEnd" value="<%= String.valueOf(entryEnd - entryStart) %>" />
-							<portlet:param name="folderStart" value="0" />
-							<portlet:param name="folderEnd" value="<%= String.valueOf(folderEnd - folderStart) %>" />
-						</liferay-portlet:renderURL>
 
 						<%
-						dataView = new HashMap<String, Object>();
+						List<DDMStructure> ddmStructures = DDMStructureLocalServiceUtil.getStructures(PortalUtil.getSiteAndCompanyGroupIds(themeDisplay), PortalUtil.getClassNameId(JournalArticle.class), searchContainer.getStart(), searchContainer.getEnd());
 
-						dataView.put("structure-id", ddmStructure.getStructureKey());
+						for (DDMStructure ddmStructure : ddmStructures) {
 						%>
 
-						<liferay-ui:app-view-navigation-entry
-							cssClass="folder structure"
-							dataView="<%= dataView %>"
-							entryTitle="<%= HtmlUtil.escape(ddmStructure.getName(locale)) %>"
-							iconImage="copy"
-							selected="<%= structureId.equals(ddmStructure.getStructureKey()) %>"
-							viewURL="<%= viewDDMStructureArticlesURL.toString() %>"
-						/>
+							<liferay-portlet:renderURL varImpl="viewDDMStructureArticlesURL">
+								<portlet:param name="struts_action" value="/journal/view" />
+								<portlet:param name="folderId" value="<%= String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
+								<portlet:param name="structureId" value="<%= ddmStructure.getStructureKey() %>" />
+								<portlet:param name="entryStart" value="0" />
+								<portlet:param name="entryEnd" value="<%= String.valueOf(entryEnd - entryStart) %>" />
+								<portlet:param name="folderStart" value="0" />
+								<portlet:param name="folderEnd" value="<%= String.valueOf(folderEnd - folderStart) %>" />
+							</liferay-portlet:renderURL>
 
-					<%
-					}
-					%>
+							<%
+							dataView = new HashMap<String, Object>();
 
+							dataView.put("structure-id", ddmStructure.getStructureKey());
+							%>
+
+							<liferay-ui:app-view-navigation-entry
+								cssClass="folder structure"
+								dataView="<%= dataView %>"
+								entryTitle="<%= HtmlUtil.escape(ddmStructure.getName(locale)) %>"
+								iconImage="copy"
+								selected="<%= structureId.equals(ddmStructure.getStructureKey()) %>"
+								viewURL="<%= viewDDMStructureArticlesURL.toString() %>"
+							/>
+
+						<%
+						}
+						%>
+
+					</c:if>
 				</c:when>
 				<c:otherwise>
 					<liferay-portlet:renderURL varImpl="viewURL">
@@ -361,6 +359,8 @@ else {
 					/>
 
 					<%
+					List<JournalFolder> folders = JournalFolderServiceUtil.getFolders(scopeGroupId, parentFolderId, searchContainer.getStart(), searchContainer.getEnd());
+
 					for (JournalFolder curFolder : folders) {
 						request.setAttribute("view_entries.jsp-folder", curFolder);
 						request.setAttribute("view_entries.jsp-folderId", String.valueOf(curFolder.getFolderId()));

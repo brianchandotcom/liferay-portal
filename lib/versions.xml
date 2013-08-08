@@ -8,7 +8,7 @@
 		<project-url>http://java.sun.com/products/javabeans/jaf</project-url>
 		<licenses>
 			<license>
-				<license-name>JavaBeans Activation Framework 1.1 License</license-name>
+				<license-name>CDDL 1.0</license-name>
 			</license>
 		</licenses>
 	</library>
@@ -2574,13 +2574,13 @@
 	</library>
 	<library>
 		<file-name>lib/portal/odmg.jar</file-name>
-		<version></version>
+		<version>3.0</version>
 		<project-name>ODMG - Object Data Management Group Java Bindings</project-name>
-		<project-url>http://www.odmg.org</project-url>
+		<project-url>http://www.odbms.org/odmg</project-url>
 		<licenses>
 			<license>
-				<license-name>ODMG License</license-name>
-				<copyright-notice>Copyright (c) 1999 E. Wray Johnson. All rights reserved.</copyright-notice>
+				<license-name>Apache License 2.0</license-name>
+				<copyright-notice>Authored by David Jordan (as Java Editor of the Object Data Management Group)</copyright-notice>
 			</license>
 		</licenses>
 	</library>

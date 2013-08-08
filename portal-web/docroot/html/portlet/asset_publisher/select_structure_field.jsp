@@ -159,7 +159,7 @@ portletURL.setParameter("classTypeId", String.valueOf(classTypeId));
 		function(event) {
 			var buttonId = event.target.attr('data-button-id');
 
-			Liferay.Util.toggleDisabled(selectDDMStructureFieldForm.all('.button-input'), true);
+			Liferay.Util.toggleDisabled(selectDDMStructureFieldForm.all('.selector-button'), true);
 
 			Liferay.Util.toggleDisabled('#' + buttonId, false);
 		},

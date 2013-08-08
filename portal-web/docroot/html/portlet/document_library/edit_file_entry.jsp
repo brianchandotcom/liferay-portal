@@ -342,13 +342,13 @@ editFileEntryURL.setParameter("workflowAction", String.valueOf(WorkflowConstants
 				<%
 				boolean inherited = false;
 
-					if (folder != null) {
-						DLFolder dlFolder = (DLFolder)folder.getModel();
+				if (folder != null) {
+					DLFolder dlFolder = (DLFolder)folder.getModel();
 
-						inherited = !dlFolder.isOverrideFileEntryTypes();
-					}
+					inherited = !dlFolder.isOverrideFileEntryTypes();
+				}
 
-					List<DLFileEntryType> dlFileEntryTypes = DLFileEntryTypeLocalServiceUtil.getFolderFileEntryTypes(PortalUtil.getSiteAndCompanyGroupIds(themeDisplay), folderId, inherited);
+				List<DLFileEntryType> dlFileEntryTypes = DLFileEntryTypeLocalServiceUtil.getFolderFileEntryTypes(PortalUtil.getSiteAndCompanyGroupIds(themeDisplay), folderId, inherited);
 				%>
 
 				<c:choose>

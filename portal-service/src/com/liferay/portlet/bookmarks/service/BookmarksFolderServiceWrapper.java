@@ -204,10 +204,11 @@ public class BookmarksFolderServiceWrapper implements BookmarksFolderService,
 	}
 
 	@Override
-	public void moveFolderToTrash(long folderId)
+	public com.liferay.portlet.bookmarks.model.BookmarksFolder moveFolderToTrash(
+		long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_bookmarksFolderService.moveFolderToTrash(folderId);
+		return _bookmarksFolderService.moveFolderToTrash(folderId);
 	}
 
 	@Override

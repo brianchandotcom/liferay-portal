@@ -855,8 +855,9 @@ public class WikiPageLocalServiceWrapper implements WikiPageLocalService,
 	}
 
 	@Override
-	public long movePageAttachmentToTrash(long userId, long nodeId,
-		java.lang.String title, java.lang.String fileName)
+	public com.liferay.portal.kernel.repository.model.FileEntry movePageAttachmentToTrash(
+		long userId, long nodeId, java.lang.String title,
+		java.lang.String fileName)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _wikiPageLocalService.movePageAttachmentToTrash(userId, nodeId,

@@ -788,8 +788,9 @@ public class WikiPageLocalServiceUtil {
 		getService().movePage(userId, nodeId, title, newTitle, serviceContext);
 	}
 
-	public static long movePageAttachmentToTrash(long userId, long nodeId,
-		java.lang.String title, java.lang.String fileName)
+	public static com.liferay.portal.kernel.repository.model.FileEntry movePageAttachmentToTrash(
+		long userId, long nodeId, java.lang.String title,
+		java.lang.String fileName)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()

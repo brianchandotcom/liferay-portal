@@ -160,7 +160,8 @@ public interface JournalFolderService extends BaseService {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
-	public void moveFolderToTrash(long folderId)
+	public com.liferay.portlet.journal.model.JournalFolder moveFolderToTrash(
+		long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

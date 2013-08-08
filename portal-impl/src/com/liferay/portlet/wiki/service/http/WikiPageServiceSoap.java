@@ -564,14 +564,14 @@ public class WikiPageServiceSoap {
 		}
 	}
 
-	public static long movePageAttachmentToTrash(long nodeId,
-		java.lang.String title, java.lang.String fileName)
+	public static com.liferay.portal.kernel.repository.model.FileEntrySoap movePageAttachmentToTrash(
+		long nodeId, java.lang.String title, java.lang.String fileName)
 		throws RemoteException {
 		try {
-			long returnValue = WikiPageServiceUtil.movePageAttachmentToTrash(nodeId,
+			com.liferay.portal.kernel.repository.model.FileEntry returnValue = WikiPageServiceUtil.movePageAttachmentToTrash(nodeId,
 					title, fileName);
 
-			return returnValue;
+			return com.liferay.portal.kernel.repository.model.FileEntrySoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -592,10 +592,14 @@ public class WikiPageServiceSoap {
 		}
 	}
 
-	public static void movePageToTrash(long nodeId, java.lang.String title,
-		double version) throws RemoteException {
+	public static com.liferay.portlet.wiki.model.WikiPageSoap movePageToTrash(
+		long nodeId, java.lang.String title, double version)
+		throws RemoteException {
 		try {
-			WikiPageServiceUtil.movePageToTrash(nodeId, title, version);
+			com.liferay.portlet.wiki.model.WikiPage returnValue = WikiPageServiceUtil.movePageToTrash(nodeId,
+					title, version);
+
+			return com.liferay.portlet.wiki.model.WikiPageSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

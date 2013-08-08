@@ -176,10 +176,11 @@ public class BookmarksEntryServiceWrapper implements BookmarksEntryService,
 	}
 
 	@Override
-	public void moveEntryToTrash(long entryId)
+	public com.liferay.portlet.bookmarks.model.BookmarksEntry moveEntryToTrash(
+		long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_bookmarksEntryService.moveEntryToTrash(entryId);
+		return _bookmarksEntryService.moveEntryToTrash(entryId);
 	}
 
 	@Override

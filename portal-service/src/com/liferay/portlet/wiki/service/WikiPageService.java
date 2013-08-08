@@ -272,8 +272,8 @@ public interface WikiPageService extends BaseService {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
-	public long movePageAttachmentToTrash(long nodeId, java.lang.String title,
-		java.lang.String fileName)
+	public com.liferay.portal.kernel.repository.model.FileEntry movePageAttachmentToTrash(
+		long nodeId, java.lang.String title, java.lang.String fileName)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

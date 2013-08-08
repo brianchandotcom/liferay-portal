@@ -723,8 +723,8 @@ public class JournalFolderServiceHttp {
 		}
 	}
 
-	public static void moveFolderToTrash(HttpPrincipal httpPrincipal,
-		long folderId)
+	public static com.liferay.portlet.journal.model.JournalFolder moveFolderToTrash(
+		HttpPrincipal httpPrincipal, long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
@@ -733,8 +733,10 @@ public class JournalFolderServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, folderId);
 
+			Object returnObj = null;
+
 			try {
-				TunnelUtil.invoke(httpPrincipal, methodHandler);
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
 				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
@@ -747,6 +749,8 @@ public class JournalFolderServiceHttp {
 
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
+
+			return (com.liferay.portlet.journal.model.JournalFolder)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);

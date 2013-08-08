@@ -477,10 +477,11 @@ public class BookmarksFolderLocalServiceUtil {
 		return getService().moveFolderFromTrash(userId, folderId, parentFolderId);
 	}
 
-	public static void moveFolderToTrash(long userId, long folderId)
+	public static com.liferay.portlet.bookmarks.model.BookmarksFolder moveFolderToTrash(
+		long userId, long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().moveFolderToTrash(userId, folderId);
+		return getService().moveFolderToTrash(userId, folderId);
 	}
 
 	public static void restoreFolderFromTrash(long userId, long folderId)

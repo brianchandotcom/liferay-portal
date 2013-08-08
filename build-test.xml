@@ -2075,6 +2075,12 @@ svn --username ${svn.username} --password ${svn.password} update -r ${svn.info.r
 
 		<replace
 			file="portal-web/test/test-portal-web.properties"
+			token="portal.url=http://localhost:8080"
+			value="portal.url=file:///${basedir.unix}/portal-web/test/functional/com/liferay/portalweb/selenium/dependencies/Site.html"
+		/>
+
+		<replace
+			file="portal-web/test/test-portal-web.properties"
 			token="#selenium.executable.dir="
 			value="selenium.executable.dir=${basedir.unix}/tools/selenium/"
 		/>

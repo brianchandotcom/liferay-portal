@@ -1,24 +1,9 @@
-.document-library-file-entry-cell-editor-hidden, .fileupload-cell-editor-hidden, .password-cell-editor-hidden {
-	display: none;
-}
+.portlet-dynamic-data-lists, .portlet-dynamic-data-list-display {
+	.lfr-spreadsheet-container .table {
+		overflow: auto;
 
-.basecelleditor {
-	z-index: 999 !important;
-
-	.buttonitem-content {
-		padding: 3px 3px 2px 1px;
+		&.yui3-datatable td:after {
+			content: '\0000a0';
+		}
 	}
-
-	[class~="form-validator-message"] {
-		clip: rect(auto auto auto auto);
-		width: auto;
-	}
-}
-
-.lfr-spreadsheet-container .yui3-datatable td:after {
-	content: '\0000a0';
-}
-
-.webkit .basecelleditor .buttonitem-label-only {
-	padding-bottom: 2px;
 }

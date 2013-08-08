@@ -211,7 +211,6 @@
 			FROM
 				DLFileEntryType
 			WHERE
-				[$WHERE$]
 				(
 					(companyId = ?) AND
 					[$GROUP_ID$]
@@ -224,12 +223,12 @@
 	</sql>
 	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryTypeFinder.findByC_G_N_D_S">
 		<![CDATA[
+			[$BASIC_DOCUMENT$]
 			SELECT
 				DISTINCT {DLFileEntryType.*}
 			FROM
 				DLFileEntryType
 			WHERE
-				[$WHERE$]
 				(
 					(companyId = ?) AND
 					[$GROUP_ID$]

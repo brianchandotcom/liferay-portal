@@ -131,11 +131,13 @@ public abstract class BaseSpellCheckIndexWriter
 
 			byte[] bytes = messageDigest.digest();
 
-			return Base64.encode(bytes);
+			sb.append(Base64.encode(bytes));
 		}
 		catch (Exception e) {
 			throw new IllegalStateException(e);
 		}
+
+		return sb.toString();
 	}
 
 	protected void indexDictionary(long companyId, String languageId)

@@ -625,7 +625,7 @@ public class PortletImporter {
 	}
 
 	protected Map<Locale, String> getAssetCategoryTitleMap(
-			AssetCategory assetCategory, String name)
+			long groupId, AssetCategory assetCategory, String name)
 		throws PortalException, SystemException {
 
 		Map<Locale, String> titleMap = assetCategory.getTitleMap();
@@ -634,8 +634,7 @@ public class PortletImporter {
 			titleMap = new HashMap<Locale, String>();
 		}
 
-		titleMap.put(
-			PortalUtil.getSiteDefaultLocale(assetCategory.getGroupId()), name);
+		titleMap.put(PortalUtil.getSiteDefaultLocale(groupId), name);
 
 		return titleMap;
 	}
@@ -785,7 +784,7 @@ public class PortletImporter {
 			importedAssetCategory =
 				AssetCategoryLocalServiceUtil.addCategory(
 					userId, parentAssetCategoryId,
-					getAssetCategoryTitleMap(assetCategory, name),
+					getAssetCategoryTitleMap(groupId, assetCategory, name),
 					assetCategory.getDescriptionMap(), assetVocabularyId,
 					properties, serviceContext);
 		}
@@ -804,7 +803,7 @@ public class PortletImporter {
 				AssetCategoryLocalServiceUtil.updateCategory(
 					userId, existingAssetCategory.getCategoryId(),
 					parentAssetCategoryId,
-					getAssetCategoryTitleMap(assetCategory, name),
+					getAssetCategoryTitleMap(groupId, assetCategory, name),
 					assetCategory.getDescriptionMap(), assetVocabularyId,
 					properties, serviceContext);
 		}

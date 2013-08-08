@@ -52,8 +52,7 @@ public class LuceneSpellCheckIndexWriter extends BaseSpellCheckIndexWriter {
 		throws SearchException {
 
 		Term term = new Term(
-			com.liferay.portal.kernel.search.Field.PORTLET_ID,
-			PortletKeys.SEARCH);
+			com.liferay.portal.kernel.search.Field.TYPE, DICTIONARY_TYPE);
 
 		try {
 			LuceneHelperUtil.deleteDocuments(
@@ -92,8 +91,8 @@ public class LuceneSpellCheckIndexWriter extends BaseSpellCheckIndexWriter {
 	}
 
 	protected Document createDocument(
-			String localizedFieldName, String word, String languageId,
-			float weight)
+			long companyId, String localizedFieldName, String word,
+			String languageId, float weight)
 		throws SearchException {
 
 		Document document = new Document();
@@ -108,6 +107,14 @@ public class LuceneSpellCheckIndexWriter extends BaseSpellCheckIndexWriter {
 		addField(
 			document, com.liferay.portal.kernel.search.Field.PRIORITY,
 			String.valueOf(weight), Field.Store.YES,
+			FieldInfo.IndexOptions.DOCS_ONLY, true);
+		addField(
+			document, com.liferay.portal.kernel.search.Field.TYPE,
+			DICTIONARY_TYPE, Field.Store.YES, FieldInfo.IndexOptions.DOCS_ONLY,
+			true);
+		addField(
+			document, com.liferay.portal.kernel.search.Field.UID,
+			getUID(companyId, languageId, word), Field.Store.YES,
 			FieldInfo.IndexOptions.DOCS_ONLY, true);
 		addField(
 			document, localizedFieldName, word, Field.Store.YES,
@@ -180,7 +187,7 @@ public class LuceneSpellCheckIndexWriter extends BaseSpellCheckIndexWriter {
 				}
 
 				Document document = createDocument(
-					localizedFieldName, word, languageId,
+					companyId, localizedFieldName, word, languageId,
 					dictionaryEntry.getWeight());
 
 				documents.add(document);

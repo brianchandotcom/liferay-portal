@@ -694,6 +694,8 @@ public class PropsValues {
 
 	public static final int EHCACHE_SOCKET_START_PORT = GetterUtil.getInteger(PropsUtil.get(PropsKeys.EHCACHE_SOCKET_START_PORT));
 
+	public static final int ETAG_CACHE_CAPACITY = GetterUtil.getInteger(PropsUtil.get(PropsKeys.ETAG_CACHE_CAPACITY));
+
 	public static final String FACEBOOK_CONNECT_APP_ID = PropsUtil.get(PropsKeys.FACEBOOK_CONNECT_APP_ID);
 
 	public static final String FACEBOOK_CONNECT_APP_SECRET = PropsUtil.get(PropsKeys.FACEBOOK_CONNECT_APP_SECRET);

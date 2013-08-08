@@ -815,6 +815,8 @@ public interface PropsKeys {
 
 	public static final String EHCACHE_SOCKET_START_PORT = "ehcache.socket.start.port";
 
+	public static final String ETAG_CACHE_CAPACITY = "etag.cache.capacity";
+
 	public static final String FACEBOOK_CONNECT_APP_ID = "facebook.connect.app.id";
 
 	public static final String FACEBOOK_CONNECT_APP_SECRET = "facebook.connect.app.secret";

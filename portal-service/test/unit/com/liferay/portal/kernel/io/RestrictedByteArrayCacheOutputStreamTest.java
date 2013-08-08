@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.io.RestrictedByteArrayCacheOutputStream.FlushPr
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.IOException;
 
@@ -221,7 +220,7 @@ public class RestrictedByteArrayCacheOutputStreamTest {
 				new RestrictedByteArrayCacheOutputStream(
 					unsyncByteArrayOutputStream, 10, 27, flushPreAction);
 
-		StringBundler sb = new StringBundler(26);
+		StringBuilder sb = new StringBuilder(26);
 
 		for (int i = 'a'; i <= 'z'; i++) {
 			restrictedByteArrayCacheOutputStream.write(i);

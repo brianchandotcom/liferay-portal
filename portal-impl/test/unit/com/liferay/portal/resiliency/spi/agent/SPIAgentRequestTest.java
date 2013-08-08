@@ -22,11 +22,14 @@ import com.liferay.portal.kernel.util.CookieUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.ThreadLocalDistributor;
 import com.liferay.portal.resiliency.spi.agent.SPIAgentRequest.AgentHttpServletRequestWrapper;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.upload.UploadServletRequestImpl;
 import com.liferay.portal.util.PortalImpl;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.WebKeys;
 
 import java.io.Serializable;
 
@@ -546,6 +549,51 @@ public class SPIAgentRequestTest {
 		sb.append("}");
 
 		Assert.assertEquals(sb.toString(), spiAgentRequest.toString());
+	}
+
+	@Test
+	public void testFooterControl() {
+
+		// No theme display
+
+		_mockHttpServletRequest.setParameter(
+			"portalResiliencyPortletShowFooter", StringPool.TRUE);
+
+		SPIAgentRequest spiAgentRequest = new SPIAgentRequest(
+			_mockHttpServletRequest);
+
+		Map<String, String[]> parameterMap = spiAgentRequest.parameterMap;
+
+		Assert.assertArrayEquals(
+			new String[] {StringPool.TRUE},
+			parameterMap.get("portalResiliencyPortletShowFooter"));
+
+		// Has theme display, not ajax
+
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		_mockHttpServletRequest.setAttribute(
+			WebKeys.THEME_DISPLAY, themeDisplay);
+
+		spiAgentRequest = new SPIAgentRequest(_mockHttpServletRequest);
+
+		parameterMap = spiAgentRequest.parameterMap;
+
+		Assert.assertArrayEquals(
+			new String[] {StringPool.TRUE},
+			parameterMap.get("portalResiliencyPortletShowFooter"));
+
+		// Has theme display, is ajax
+
+		themeDisplay.setAjax(true);
+
+		spiAgentRequest = new SPIAgentRequest(_mockHttpServletRequest);
+
+		parameterMap = spiAgentRequest.parameterMap;
+
+		Assert.assertArrayEquals(
+			new String[] {StringPool.FALSE},
+			parameterMap.get("portalResiliencyPortletShowFooter"));
 	}
 
 	private static final String _HEADER_NAME_1 = "HEADER_NAME_1";

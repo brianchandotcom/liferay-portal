@@ -251,6 +251,9 @@ public class SPIAgentResponseTest {
 
 		bufferCacheServletResponse.setString(content);
 
+		mockHttpServletRequest.setParameter(
+			"portalResiliencyPortletShowFooter", StringPool.FALSE);
+
 		spiAgentResponse.captureResponse(
 			mockHttpServletRequest, bufferCacheServletResponse);
 
@@ -263,7 +266,8 @@ public class SPIAgentResponseTest {
 
 		bufferCacheServletResponse.setString(content);
 
-		mockHttpServletRequest.setParameter("prpsf", StringPool.TRUE);
+		mockHttpServletRequest.setParameter(
+			"portalResiliencyPortletShowFooter", StringPool.TRUE);
 
 		spiAgentResponse.captureResponse(
 			mockHttpServletRequest, bufferCacheServletResponse);
@@ -283,7 +287,8 @@ public class SPIAgentResponseTest {
 
 		PortalUtil.setPortalPort(mockHttpServletRequest);
 
-		mockHttpServletRequest.setParameter("prpsf", StringPool.TRUE);
+		mockHttpServletRequest.setParameter(
+			"portalResiliencyPortletShowFooter", StringPool.TRUE);
 
 		spiAgentResponse.captureResponse(
 			mockHttpServletRequest, bufferCacheServletResponse);

@@ -23,9 +23,12 @@ import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
+import com.liferay.portlet.dynamicdatalists.service.DDLRecordSetLocalServiceUtil;
 import com.liferay.portlet.dynamicdatalists.util.DDLTestUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.util.DDMStructureTestUtil;
+
+import java.util.List;
 
 import org.junit.runner.RunWith;
 
@@ -55,6 +58,17 @@ public class DDLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 	@Override
 	protected PortletDataHandler createPortletDataHandler() {
 		return new DDLPortletDataHandler();
+	}
+
+	@Override
+	protected void deleteStagedModels() throws Exception {
+		List<DDLRecordSet> recordSets =
+			DDLRecordSetLocalServiceUtil.getRecordSets(
+				stagingGroup.getGroupId());
+
+		for (DDLRecordSet recordSet : recordSets) {
+			DDLRecordSetLocalServiceUtil.deleteRecordSet(recordSet);
+		}
 	}
 
 	@Override

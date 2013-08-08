@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.polls.lar;
 
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.lar.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.model.Group;
@@ -52,14 +54,27 @@ public class PollsQuestionStagedModelDataHandlerTest
 	}
 
 	@Override
-	protected StagedModel getStagedModel(String uuid, Group group) {
-		try {
-			return PollsQuestionLocalServiceUtil.
-				getPollsQuestionByUuidAndGroupId(uuid, group.getGroupId());
-		}
-		catch (Exception e) {
-			return null;
-		}
+	protected void deleteStagedModel(
+			StagedModel stagedModel,
+			Map<String, List<StagedModel>> dependentStagedModelsMap,
+			Group group)
+		throws Exception {
+
+		PollsQuestionLocalServiceUtil.deleteQuestion(
+			(PollsQuestion)stagedModel);
+	}
+
+	@Override
+	protected StagedModelType[] getDeletionSystemEventStagedModelTypes() {
+		return new StagedModelType[] {new StagedModelType(PollsQuestion.class)};
+	}
+
+	@Override
+	protected StagedModel getStagedModel(String uuid, Group group)
+		throws SystemException {
+
+		return PollsQuestionLocalServiceUtil.fetchPollsQuestionByUuidAndGroupId(
+			uuid, group.getGroupId());
 	}
 
 	@Override

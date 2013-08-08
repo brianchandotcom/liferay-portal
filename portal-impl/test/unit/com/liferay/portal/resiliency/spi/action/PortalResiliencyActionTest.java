@@ -35,7 +35,6 @@ import com.liferay.portlet.EventImpl;
 
 import javax.portlet.Event;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -83,6 +82,8 @@ public class PortalResiliencyActionTest {
 
 		_portlet = new PortletImpl();
 
+		_portlet.setPortletId(_PORTLET_ID);
+
 		_request.setAttribute(WebKeys.SPI_AGENT_PORTLET, _portlet);
 
 		_request.setAttribute(
@@ -101,7 +102,13 @@ public class PortalResiliencyActionTest {
 
 	@After
 	public void tearDown() {
-		Assert.assertTrue(_mockPortletContainer.prepared);
+		if (_request.getParameter("p_p_id") == null) {
+			Assert.assertFalse(_mockPortletContainer.prepared);
+		}
+		else {
+			Assert.assertTrue(_mockPortletContainer.prepared);
+		}
+
 		Assert.assertEquals("password", PrincipalThreadLocal.getPassword());
 		Assert.assertSame(
 			Boolean.TRUE,
@@ -132,6 +139,8 @@ public class PortalResiliencyActionTest {
 		// Update layout type settings
 
 		_mockPortletContainer.modifyLayoutTypeSettings = true;
+
+		_request.setParameter("p_p_id", _PORTLET_ID);
 
 		_portalResiliencyAction.execute(null, null, _request, _response);
 
@@ -178,6 +187,8 @@ public class PortalResiliencyActionTest {
 		// Update layout type settings
 
 		_mockPortletContainer.modifyLayoutTypeSettings = true;
+
+		_request.setParameter("p_p_id", _PORTLET_ID);
 
 		_portalResiliencyAction.execute(null, null, _request, _response);
 
@@ -267,12 +278,14 @@ public class PortalResiliencyActionTest {
 	private static final String _DEFAULT_LAYOUT_TYPE_SETTINGS =
 		"_DEFAULT_LAYOUT_TYPE_SETTINGS";
 
+	private static final String _PORTLET_ID = "PORTLET_ID";
+
 	private Layout _layout;
 	private MockPortletContainer _mockPortletContainer;
 	private PortalResiliencyAction _portalResiliencyAction =
 		new PortalResiliencyAction();
 	private Portlet _portlet;
-	private HttpServletRequest _request;
+	private MockHttpServletRequest _request;
 	private HttpServletResponse _response;
 
 }

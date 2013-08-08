@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.portlet.ActionResult;
 import com.liferay.portal.kernel.portlet.PortletContainer;
 import com.liferay.portal.kernel.portlet.PortletContainerUtil;
 import com.liferay.portal.kernel.resiliency.spi.agent.SPIAgent;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.resiliency.spi.agent.SPIAgentRequest;
@@ -86,7 +87,11 @@ public class PortalResiliencyAction extends Action {
 		Portlet portlet = (Portlet)request.getAttribute(
 			WebKeys.SPI_AGENT_PORTLET);
 
-		portletContainer.preparePortlet(request, portlet);
+		String portletId = ParamUtil.getString(request, "p_p_id");
+
+		if (portletId.equals(portlet.getPortletId())) {
+			portletContainer.preparePortlet(request, portlet);
+		}
 
 		SPIAgent.Lifecycle lifecycle = (SPIAgent.Lifecycle)request.getAttribute(
 			WebKeys.SPI_AGENT_LIFECYCLE);

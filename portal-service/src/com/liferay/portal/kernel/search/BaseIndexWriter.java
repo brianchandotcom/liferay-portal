@@ -37,6 +37,19 @@ public abstract class BaseIndexWriter
 	}
 
 	@Override
+	public void clearKeywordQueryIndexes(SearchContext searchContext)
+		throws SearchException {
+
+		if (_spellCheckIndexWriter == null) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("No spell check index writer configured");
+			}
+		}
+
+		_spellCheckIndexWriter.clearKeywordQueryIndexes(searchContext);
+	}
+
+	@Override
 	public void indexDictionaries(SearchContext searchContext)
 		throws SearchException {
 
@@ -60,6 +73,32 @@ public abstract class BaseIndexWriter
 		}
 
 		_spellCheckIndexWriter.indexDictionary(searchContext);
+	}
+
+	@Override
+	public void indexKeywordQueryFile(SearchContext searchContext)
+		throws SearchException {
+
+		if (_spellCheckIndexWriter == null) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("No spell check index writer configured");
+			}
+		}
+
+		_spellCheckIndexWriter.indexKeywordQueryFile(searchContext);
+	}
+
+	@Override
+	public void indexKeywordQueryFiles(SearchContext searchContext)
+		throws SearchException {
+
+		if (_spellCheckIndexWriter == null) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("No spell check index writer configured");
+			}
+		}
+
+		_spellCheckIndexWriter.indexKeywordQueryFiles(searchContext);
 	}
 
 	public void setSpellCheckIndexWriter(

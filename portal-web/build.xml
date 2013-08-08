@@ -247,7 +247,7 @@
 
 				<if>
 					<not>
-						<available file="docroot/html/js/editor/ckeditor_diffs/ckeditor.js" />
+						<available file="docroot/html/js/editor/CKEDITOR_ZIP/dev/builder/release/ckeditor" />
 					</not>
 					<then>
 						<property name="arg.line" value="" />
@@ -1505,10 +1505,6 @@ Please set the property "jdk.6.home" in build.properties.
 			destfile="${war.file}.war"
 			excludes="WEB-INF/web.xml,html/js/editor/fckeditor/_samples/**,html/js/editor/fckeditor_diffs/**"
 			webxml="docroot/WEB-INF/web.xml"
-		>
-			<metainf dir="${project.dir}/oss-licenses">
-				<exclude name="**/development/**" />
-			</metainf>
-		</war>
+		/>
 	</target>
 </project>

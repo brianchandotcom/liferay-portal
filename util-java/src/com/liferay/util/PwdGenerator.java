@@ -38,7 +38,7 @@ public class PwdGenerator {
 	}
 
 	public static String getPassword(int length) {
-		return _getPassword(false, KEY1 + KEY2 + KEY3, length, true);
+		return _generate(true, KEY1 + KEY2 + KEY3, length, true);
 	}
 
 	public static String getPassword(String key, int length) {
@@ -48,32 +48,71 @@ public class PwdGenerator {
 	public static String getPassword(
 		String key, int length, boolean useAllKeys) {
 
-		return _getPassword(false, key, length, useAllKeys);
+		return _generate(true, key, length, useAllKeys);
 	}
 
 	public static String getPinNumber() {
-		return _getPassword(false, KEY1, 4, true);
+		return _generate(true, KEY1, 4, false);
 	}
 
+	public static String getRandomId() {
+		return _generate(false, PwdGenerator.KEY3, 4, false);
+	}
+
+	public static String getRandomString() {
+		return getRandomString(8);
+	}
+
+	public static String getRandomString(int length) {
+		return _generate(false, KEY1 + KEY2 + KEY3, length, true);
+	}
+
+	public static String getRandomString(String key, int length) {
+		return _generate(false, key, length, true);
+	}
+
+	public static String getRandomString(
+		String key, int length, boolean useAllKeys) {
+
+		return _generate(false, key, length, useAllKeys);
+	}
+
+	/**
+	 * @deprecated As of 6.2.0 please use {@link #getPassword()}}
+	 */
+	@Deprecated
 	public static String getSecurePassword() {
 		return getSecurePassword(8);
 	}
 
+	/**
+	 * @deprecated As of 6.2.0 please use {@link #getPassword()}}
+	 */
+	@Deprecated
 	public static String getSecurePassword(int length) {
-		return _getPassword(true, KEY1 + KEY2 + KEY3, length, true);
+		return _generate(true, KEY1 + KEY2 + KEY3, length, true);
 	}
 
+	/**
+	 * @deprecated As of 6.2.0 please use {@link #getPassword(String, int)}
+	 */
+	@Deprecated
 	public static String getSecurePassword(String key, int length) {
 		return getSecurePassword(key, length, true);
 	}
 
+	/**
+	 * @deprecated As of 6.2.0 please use {@link #getPassword(String, int,
+	 *             boolean)}
+	 */
+	@Deprecated
 	public static String getSecurePassword(
 		String key, int length, boolean useAllKeys) {
 
-		return _getPassword(true, key, length, useAllKeys);
+		return _generate(true, key, length, useAllKeys);
 	}
 
-	private static String _getPassword(
+	private static String _generate(
 		boolean secure, String key, int length, boolean useAllKeys) {
 
 		int keysCount = 0;
@@ -131,7 +170,7 @@ public class PwdGenerator {
 		}
 
 		if (invalidPassword) {
-			return _getPassword(secure, key, length, useAllKeys);
+			return _generate(secure, key, length, useAllKeys);
 		}
 
 		return password;

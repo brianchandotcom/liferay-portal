@@ -38,18 +38,19 @@ public class PwdGeneratorTest {
 		long delta = end - start;
 
 		if (_log.isInfoEnabled()) {
-			_log.info("Generated 100 thousand passwords in " + delta + " ms");
+			_log.info(
+				"Generated 100 thousand secure passwords in " + delta + " ms");
 		}
 
-		Assert.assertTrue(delta < 1000);
+		Assert.assertTrue(delta < 2000);
 	}
 
 	@Test
-	public void testGetSecurePassword() {
+	public void testGetRandomString() {
 		long start = System.currentTimeMillis();
 
 		for (int i = 0; i < 100000; i++) {
-			PwdGenerator.getPassword();
+			PwdGenerator.getRandomString();
 		}
 
 		long end = System.currentTimeMillis();
@@ -58,10 +59,10 @@ public class PwdGeneratorTest {
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
-				"Generated 100 thousand secure passwords in " + delta + " ms");
+				"Generated 100 thousand random strings in " + delta + " ms");
 		}
 
-		Assert.assertTrue(delta < 2000);
+		Assert.assertTrue(delta < 1000);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(PwdGeneratorTest.class);

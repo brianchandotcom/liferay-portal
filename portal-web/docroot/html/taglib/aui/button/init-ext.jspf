@@ -15,21 +15,44 @@
 --%>
 
 <%
+String escapedHref = "";
+
 if (Validator.isNotNull(href)) {
-	String escapedHref = HtmlUtil.escapeJS(PortalUtil.escapeRedirect(href));
+	escapedHref = HtmlUtil.escapeJS(PortalUtil.escapeRedirect(href));
 
 	if (Validator.isNotNull(escapedHref)) {
-		onClick = "location.href = '" + escapedHref + "';";
+		escapedHref = "'" + escapedHref + "'";
 	}
 	else {
-		onClick = "location.href = location.href.replace(location.hash, '');";
+		escapedHref = "location.href.replace(location.hash, '');";
 	}
 }
 else if (onClick.startsWith(Http.HTTP_WITH_SLASH) || onClick.startsWith(Http.HTTPS_WITH_SLASH) || onClick.startsWith(StringPool.SLASH)) {
-	onClick = "location.href = '" + HtmlUtil.escape(PortalUtil.escapeRedirect(onClick)) + "';";
+	href = onClick;
+
+	escapedHref = "'" + HtmlUtil.escape(PortalUtil.escapeRedirect(href)) + "'";
 }
 else if (onClick.startsWith("wsrp_rewrite?")) {
-	onClick = "location.href = '" + HtmlUtil.escape(onClick) + "';";
+	href = onClick;
+
+	escapedHref = "'" + HtmlUtil.escape(href) + "'";
+}
+
+if (Validator.isNotNull(escapedHref)) {
+	if(useDialog) {
+		if (data == null) {
+			data = new HashMap<String, Object>();
+		}
+
+		data.put("href", href);
+
+		data.put("title", LanguageUtil.get(pageContext, value));
+
+		onClick = "Liferay.Util.openInDialog(event, this);";
+	}
+	else {
+		onClick = "location.href = " + escapedHref + ";";
+	}
 }
 
 if (primary == null) {

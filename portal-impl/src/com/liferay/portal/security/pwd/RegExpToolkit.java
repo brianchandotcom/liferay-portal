@@ -38,7 +38,7 @@ public class RegExpToolkit extends BasicToolkit {
 
 	@Override
 	public String generate(PasswordPolicy passwordPolicy) {
-		return PwdGenerator.getSecurePassword(_charset, _length);
+		return PwdGenerator.getPassword(_charset, _length);
 	}
 
 	@Override

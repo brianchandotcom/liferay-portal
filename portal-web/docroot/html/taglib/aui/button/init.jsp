@@ -42,6 +42,7 @@ java.lang.String name = GetterUtil.getString((java.lang.String)request.getAttrib
 java.lang.String onClick = GetterUtil.getString((java.lang.String)request.getAttribute("aui:button:onClick"));
 java.lang.Object primary = (java.lang.Object)request.getAttribute("aui:button:primary");
 java.lang.String type = GetterUtil.getString((java.lang.String)request.getAttribute("aui:button:type"), "button");
+boolean useDialog = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:button:useDialog")), false);
 java.lang.String value = GetterUtil.getString((java.lang.String)request.getAttribute("aui:button:value"));
 
 _updateOptions(_options, "cssClass", cssClass);
@@ -54,6 +55,7 @@ _updateOptions(_options, "name", name);
 _updateOptions(_options, "onClick", onClick);
 _updateOptions(_options, "primary", primary);
 _updateOptions(_options, "type", type);
+_updateOptions(_options, "useDialog", useDialog);
 _updateOptions(_options, "value", value);
 %>
 

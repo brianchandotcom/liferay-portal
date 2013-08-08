@@ -196,8 +196,10 @@
 			<entry key="sample.sql.max.wiki.page.comment.count" value="1"/>
 			<entry key="sample.sql.max.wiki.page.count" value="1"/>
 			<entry key="sample.sql.optimize.buffer.size" value="8192"/>
+			<entry key="sample.sql.output.csv.file.names" value="assetPublisher,blog,company,documentLibrary,dynamicDataList,layout,messageBoard,repository,wiki"/>
 			<entry key="sample.sql.output.dir" value="${tstamp.value}"/>
 			<entry key="sample.sql.output.merge" value="true"/>
+			<entry key="sample.sql.script" value="com/liferay/portal/tools/samplesqlbuilder/dependencies/sample.ftl"/>
 		</propertyfile>
 
 		<java

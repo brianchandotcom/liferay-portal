@@ -155,6 +155,22 @@ public class DLFileEntryTypeServiceSoap {
 		}
 	}
 
+	public static com.liferay.portlet.documentlibrary.model.DLFileEntryTypeSoap[] getFileEntryTypes(
+		long[] groupIds, int start, int end) throws RemoteException {
+		try {
+			java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntryType> returnValue =
+				DLFileEntryTypeServiceUtil.getFileEntryTypes(groupIds, start,
+					end);
+
+			return com.liferay.portlet.documentlibrary.model.DLFileEntryTypeSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static int getFileEntryTypesCount(long[] groupIds)
 		throws RemoteException {
 		try {

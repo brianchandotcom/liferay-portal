@@ -27,5 +27,7 @@
 
 	<execute test-case="RecyclebinWebcontentAcceptance" />
 
+	<execute test-case="RecyclebinWikiAcceptance" />
+
 	<execute test-case="DockbarAcceptance" />
 </definition>

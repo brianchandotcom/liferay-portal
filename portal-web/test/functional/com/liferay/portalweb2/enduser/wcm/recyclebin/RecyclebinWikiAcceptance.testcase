@@ -1,0 +1,115 @@
+<definition>
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<command name="DeleteDeleteWikiFrontpage">
+		<var name="assetName" value="${webContentTitle}" />
+		<var name="assetType" value="Wiki Page" />
+		<var name="wikiFrontPageContent" value="Wiki FrontPage Content" />
+		<var name="wikiNodeName" value="Main" />
+		<var name="wikiPageTitle" value="FrontPage" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Wiki" />
+		</execute>
+
+		<execute macro="WikiPage#addFrontPageCP">
+			<var name="wikiFrontPageContent" value="${wikiFrontPageContent}" />
+			<var name="wikiNodeName" value="${wikiNodeName}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Wiki" />
+		</execute>
+
+		<execute macro="WikiPage#moveToRecycleBinCP">
+			<var name="wikiNodeName" value="${wikiNodeName}" />
+			<var name="wikiPageTitle" value="${wikiPageTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Recycle Bin" />
+		</execute>
+
+		<execute macro="RecycleBin#deleteCP">
+			<var name="assetName" value="${wikiPageTitle}" />
+			<var name="assetType" value="${assetType}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Recycle Bin" />
+		</execute>
+
+		<execute macro="RecycleBin#viewDefaultCP">
+			<var name="assetName" value="${wikiPageTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Wiki" />
+		</execute>
+
+		<execute macro="WikiPage#viewFrontPageDefaultCP">
+			<var name="wikiPageTitle" value="${wikiPageTitle}" />
+		</execute>
+	</command>
+
+	<command name="RestoreDeleteWikiFrontpage">
+		<var name="assetName" value="${wikiPageTitle}" />
+		<var name="assetRestoreLocation" value="FrontPage" />
+		<var name="assetType" value="Wiki Page" />
+		<var name="wikiFrontPageContent" value="Wiki FrontPage Content" />
+		<var name="wikiNodeName" value="Main" />
+		<var name="wikiPageTitle" value="FrontPage" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Wiki" />
+		</execute>
+
+		<execute macro="WikiPage#addFrontPageCP">
+			<var name="wikiFrontPageContent" value="${wikiFrontPageContent}" />
+			<var name="wikiPageTitle" value="${wikiPageTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Wiki" />
+		</execute>
+
+		<execute macro="WikiPage#moveToRecycleBinCP">
+			<var name="wikiNodeName" value="${wikiNodeName}" />
+			<var name="wikiPageTitle" value="${wikiPageTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Recycle Bin" />
+		</execute>
+
+		<execute macro="RecycleBin#restoreCP">
+			<var name="assetName" value="${wikiPageTitle}" />
+			<var name="assetRestoreLocation" value="${assetRestoreLocation}" />
+			<var name="assetType" value="${assetType}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Recycle Bin" />
+		</execute>
+
+		<execute macro="RecycleBin#viewDefaultCP">
+			<var name="assetName" value="${wikiPageTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Wiki" />
+		</execute>
+
+		<execute macro="WikiPage#viewFrontPageCP">
+			<var name="webContentContent" value="${webContentContent}" />
+			<var name="wikiNodeName" value="${wikiNodeName}" />
+			<var name="wikiPageTitle" value="${wikiPageTitle}" />
+		</execute>
+	</command>
+
+	<tear-down>
+		<execute macro="WikiPage#tearDownCP" />
+	</tear-down>
+</definition>

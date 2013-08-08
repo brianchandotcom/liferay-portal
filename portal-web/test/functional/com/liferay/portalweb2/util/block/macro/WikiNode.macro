@@ -19,7 +19,7 @@
 		<execute action="CPWiki#assertTextEquals" locator-key1="WIKI_NODE_TABLE_WIKI" value1="${wikiNodeName}" />
 		<execute action="CPWiki#assertClick" locator-key1="WIKI_NODE_TABLE_ACTIONS" value1="Actions" />
 		<execute action="CPWiki#assertClick" locator-key1="WIKI_NODE_MENULIST_RECYCLE_BIN" value1="Move to the Recycle Bin" />
-		<execute action="CPWiki#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="The selected item was moved to the Recycle Bin. Undo" />
+		<execute action="CPWiki#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="The Selected Item was moved to the Recycle Bin. Undo" />
 		<execute action="CPWiki#assertTextNotPresent" value1="${wikiNodeName}" />
 
 		<execute macro="RecycleBin#emptyCP" />
@@ -53,7 +53,7 @@
 			<then>
 				<execute action="CPWiki#assertClick" locator1="xpath=(//a[@title='Actions'])[2]" value1="Actions" />
 				<execute action="CPWiki#assertClick" locator-key1="WIKI_NODE_MENULIST_RECYCLE_BIN" value1="Move to the Recycle Bin" />
-				<execute action="CPWiki#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="The selected item was moved to the Recycle Bin. Undo" />
+				<execute action="CPWiki#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="The Selected Item was moved to the Recycle Bin. Undo" />
 			</then>
 		</while>
 

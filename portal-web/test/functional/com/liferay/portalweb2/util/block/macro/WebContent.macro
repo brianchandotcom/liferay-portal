@@ -119,7 +119,7 @@
 		<execute action="CPWebcontent#assertTextEquals" locator-key1="ENTRY_DESCRIPTIVE_TITLE" value1="${webContentTitle}" />
 		<execute action="CPWebcontent#click" locator-key1="ENTRY_DESCRIPTIVE_MENULIST_ARROW" />
 		<execute action="CPWebcontent#assertClick" locator-key1="ENTRY_MENULIST_MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
-		<execute action="CPWebcontent#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="The selected item was moved to the Recycle Bin. Undo" />
+		<execute action="CPWebcontent#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="The Selected Item was moved to the Recycle Bin. Undo" />
 	</command>
 
 	<command name="tearDownCP">
@@ -135,10 +135,14 @@
 				<execute action="CPWebcontent#check" locator-key1="TOOLBAR_SELECT_ALL_CHECKBOX" />
 				<execute action="CPWebcontent#assertClick" locator-key1="TOOLBAR_ACTIONS" value1="Actions" />
 				<execute action="CPWebcontent#assertClick" locator-key1="ACTION_MENULIST_MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
-				<execute action="CPWebcontent#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="The selected item was moved to the Recycle Bin. Undo" />
+				<execute action="CPWebcontent#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="moved to the Recycle Bin. Undo" />
 			</then>
 		</while>
 
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Recycle Bin" />
+		</execute>
+		
 		<execute macro="RecycleBin#emptyCP" />
 	</command>
 

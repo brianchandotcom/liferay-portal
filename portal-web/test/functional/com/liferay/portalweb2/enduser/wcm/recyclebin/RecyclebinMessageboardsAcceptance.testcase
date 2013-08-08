@@ -27,9 +27,17 @@
 			<var name="threadSubject" value="${threadSubject}" />
 		</execute>
 
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Recycle Bin" />
+		</execute>
+
 		<execute macro="RecycleBin#deleteCP">
 			<var name="assetName" value="${threadSubject}" />
 			<var name="assetType" value="${assetType}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Recycle Bin" />
 		</execute>
 
 		<execute macro="RecycleBin#viewDefaultCP">
@@ -70,12 +78,20 @@
 			<var name="threadSubject" value="${threadSubject}" />
 		</execute>
 
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Recycle Bin" />
+		</execute>
+
 		<execute macro="RecycleBin#restoreCP">
 			<var name="assetName" value="${threadSubject}" />
 			<var name="assetRestoreLocation" value="${assetRestoreLocation}" />
 			<var name="assetRestoreType" value="${assetRestoreType}" />
 		</execute>
 
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Recycle Bin" />
+		</execute>
+		
 		<execute macro="RecycleBin#viewDefaultCP">
 			<var name="assetName" value="${threadSubject}" />
 		</execute>

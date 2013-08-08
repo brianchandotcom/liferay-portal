@@ -996,6 +996,7 @@ AUI.add(
 						customTitle: EMPTY,
 						language: 'en_US',
 						portletLinksTarget: EMPTY,
+						showBorders: EMPTY,
 						title: EMPTY,
 						titles: {},
 						useCustomTitle: false

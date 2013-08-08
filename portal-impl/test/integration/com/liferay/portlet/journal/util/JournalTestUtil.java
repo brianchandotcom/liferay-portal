@@ -479,6 +479,14 @@ public class JournalTestUtil {
 		return document.asXML();
 	}
 
+	public static void expireArticle(long groupId, JournalArticle article)
+		throws PortalException, SystemException {
+
+		JournalArticleLocalServiceUtil.expireArticle(
+			article.getUserId(), article.getGroupId(), article.getArticleId(),
+			null, ServiceTestUtil.getServiceContext(groupId));
+	}
+
 	public static JournalArticle expireArticle(
 			long groupId, JournalArticle article, double version)
 		throws PortalException, SystemException {

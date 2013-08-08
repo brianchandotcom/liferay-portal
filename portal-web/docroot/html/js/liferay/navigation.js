@@ -633,9 +633,13 @@ AUI.add(
 				if (instance.get('isSortable')) {
 					var navBlock = instance.get('navBlock');
 
+					var navListSelector = Liferay.Data.NAV_LIST_SELECTOR || 'ul';
+
+					var navList = navBlock.one(navListSelector);
+
 					var sortable = new A.Sortable(
 						{
-							container: navBlock,
+							container: navList,
 							moveType: 'move',
 							nodes: '.lfr-nav-sortable',
 							opacity: '.5',

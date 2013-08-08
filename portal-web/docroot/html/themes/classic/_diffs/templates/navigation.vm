@@ -50,5 +50,6 @@
 </nav>
 
 <script>
+	Liferay.Data.NAV_LIST_SELECTOR = '.navbar-inner > ul';
 	Liferay.Data.NAV_ITEM_SELECTOR = '.navbar-inner > ul > li';
 </script>

@@ -39,6 +39,8 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.documentlibrary.FileSizeException;
 import com.liferay.portlet.documentlibrary.action.EditFileEntryAction;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.trash.util.TrashUtil;
 import com.liferay.portlet.wiki.NoSuchNodeException;
 import com.liferay.portlet.wiki.NoSuchPageException;
 import com.liferay.portlet.wiki.model.WikiPage;
@@ -324,6 +326,18 @@ public class EditPageAttachmentsAction extends EditFileEntryAction {
 
 		if (moveToTrash && (fileEntry != null)) {
 			Map<String, String[]> data = new HashMap<String, String[]>();
+
+			data.put(Constants.CMD, new String[] {Constants.REMOVE});
+			data.put(
+				"deleteEntryClassName",
+				new String[] {DLFileEntry.class.getName()});
+
+			if (Validator.isNotNull(fileEntry.getTitle())) {
+				data.put(
+					"deleteEntryTitle",
+					new String[] {
+						TrashUtil.getOriginalTitle(fileEntry.getTitle())});
+			}
 
 			data.put(
 				"restoreEntryIds",

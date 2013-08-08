@@ -151,6 +151,10 @@ public class PortletPreferencesImpl
 		}
 	}
 
+	public void setPlid(long plid) {
+		_plid = plid;
+	}
+
 	@Override
 	public void store() throws IOException, ValidatorException {
 		if (_portletId == null) {

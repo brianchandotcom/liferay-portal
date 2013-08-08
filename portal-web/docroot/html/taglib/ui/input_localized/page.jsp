@@ -17,6 +17,8 @@
 <%@ include file="/html/taglib/init.jsp" %>
 
 <%
+String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_input_localized") + StringPool.UNDERLINE;
+
 boolean autoFocus = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-localized:autoFocus"));
 boolean autoSize = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-localized:autoSize"));
 Locale[] availableLocales = (Locale[])request.getAttribute("liferay-ui:input-localized:availableLocales");
@@ -69,45 +71,42 @@ if ((availableLocales.length > 1) && !Validator.isNull(languageId)) {
 }
 
 List<String> languageIds = new ArrayList<String>();
+
+String fieldName = HtmlUtil.escapeAttribute(name + fieldSuffix);
 %>
 
 <span class="input-localized input-localized-<%= type %>" id="<portlet:namespace /><%= id %>BoundingBox">
 	<c:choose>
 		<c:when test='<%= type.equals("editor") %>'>
-
-			<%
-			String fieldName = HtmlUtil.escapeAttribute(name + fieldSuffix);
-			%>
-
 			<liferay-ui:input-editor
 				cssClass='<%= \"language-value \" + cssClass %>'
 				editorImpl="ckeditor"
-				initMethod='<%= fieldName + \"InitEditor\" %>'
+				initMethod='<%= randomNamespace + \"InitEditor\" %>'
 				name="<%= fieldName %>"
-				onBlurMethod='<%= fieldName + \"OnBlurEditor\" %>'
-				onChangeMethod='<%= fieldName + \"OnChangeEditor\" %>'
-				onFocusMethod='<%= fieldName + \"OnFocusEditor\" %>'
+				onBlurMethod='<%= randomNamespace + \"OnBlurEditor\" %>'
+				onChangeMethod='<%= randomNamespace + \"OnChangeEditor\" %>'
+				onFocusMethod='<%= randomNamespace + \"OnFocusEditor\" %>'
 				toolbarSet="simple"
 			/>
 
 			<aui:script>
-				function <portlet:namespace /><%= fieldName %>InitEditor() {
+				function <portlet:namespace /><%= randomNamespace %>InitEditor() {
 					return "<%= UnicodeFormatter.toString(mainLanguageValue) %>";
 				}
 
-				function <portlet:namespace /><%= fieldName %>OnBlurEditor() {
+				function <portlet:namespace /><%= randomNamespace %>OnBlurEditor() {
 					Liferay.component('<portlet:namespace /><%= fieldName %>').blur();
 				}
 
-				function <portlet:namespace /><%= fieldName %>OnChangeEditor() {
+				function <portlet:namespace /><%= randomNamespace %>OnChangeEditor() {
 					var inputLocalized = Liferay.component('<portlet:namespace /><%= fieldName %>');
 
-					var editor = window.<portlet:namespace /><%= fieldName %>;
+					var editor = window['<portlet:namespace /><%= fieldName %>'];
 
 					inputLocalized.updateInputLanguage(editor.getHTML());
 				}
 
-				function <portlet:namespace /><%= fieldName %>OnFocusEditor() {
+				function <portlet:namespace /><%= randomNamespace %>OnFocusEditor() {
 					Liferay.component('<portlet:namespace /><%= fieldName %>').focus();
 				}
 			</aui:script>
@@ -116,7 +115,7 @@ List<String> languageIds = new ArrayList<String>();
 				A.all('#<portlet:namespace /><%= id %>ContentBox .palette-item-inner').on(
 					'click',
 					function() {
-						window.<portlet:namespace /><%= fieldName %>.focus();
+						window['<portlet:namespace /><%= fieldName %>'].focus();
 					}
 				);
 			</aui:script>
@@ -277,7 +276,7 @@ List<String> languageIds = new ArrayList<String>();
 				contentBox: '#<portlet:namespace /><%= id %>ContentBox',
 
 				<c:if test='<%= type.equals("editor") %>'>
-					editor: window.<portlet:namespace /><%= name + fieldSuffix %>,
+					editor: window['<portlet:namespace /><%= fieldName %>'],
 				</c:if>
 
 				inputNamespace: '<portlet:namespace /><%= id + StringPool.UNDERLINE %>',

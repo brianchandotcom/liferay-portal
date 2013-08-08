@@ -961,10 +961,12 @@ public class SeleniumBuilderContext {
 		return false;
 	}
 
-	private boolean _isTestCaseMethod(String testCase, String methodName) {
-		Set<String> commands = _testCaseCommands.get(testCase);
+	private boolean _isTestCaseCommand(
+		String testCaseName, String testCaseCommand) {
 
-		return commands.contains(methodName);
+		Set<String> commands = _testCaseCommands.get(testCaseName);
+
+		return commands.contains(testCaseCommand);
 	}
 
 	private boolean _isTestCaseName(String name) {
@@ -1159,22 +1161,23 @@ public class SeleniumBuilderContext {
 	private void _validateTestCaseCommandElement(
 		String fileName, Element element) {
 
-		String testCaseCommand = element.attributeValue("test-case-command");
+		String statement = element.attributeValue("test-case-command");
 
-		int x = testCaseCommand.lastIndexOf("#");
+		int x = statement.lastIndexOf("#");
 
-		String testCase = testCaseCommand.substring(0, x);
+		String testCaseName = statement.substring(0, x);
 
-		String method = testCaseCommand.substring(x + 1);
+		String testCaseCommand = statement.substring(x + 1);
 
-		if (!_isTestCaseName(testCase)) {
+		if (!_isTestCaseName(testCaseName)) {
 			_seleniumBuilderFileUtil.throwValidationException(
-				1011, fileName, element, "test-case-command class", testCase);
+				1011, fileName, element, "test-case-command class",
+				testCaseName);
 		}
 
-		if (!_isTestCaseMethod(testCase, method)) {
+		if (!_isTestCaseCommand(testCaseName, testCaseCommand)) {
 			_seleniumBuilderFileUtil.throwValidationException(
-				1013, fileName, element, method, testCase);
+				1013, fileName, element, testCaseCommand, testCaseName);
 		}
 	}
 

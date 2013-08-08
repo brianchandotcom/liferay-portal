@@ -1348,8 +1348,11 @@ public class SeleniumBuilderFileUtil {
 			if (elementName.equals("execute")) {
 				validateExecuteElement(
 					fileName, element,
-					new String[] {"test-case", "test-class", "test-suite",
-						"test-case-command"},".+", new String[0]);
+					new String[] {
+						"test-case", "test-class", "test-suite",
+						"test-case-command"
+					},
+					".+", new String[0]);
 			}
 			else {
 				throwValidationException(1002, fileName, element, elementName);

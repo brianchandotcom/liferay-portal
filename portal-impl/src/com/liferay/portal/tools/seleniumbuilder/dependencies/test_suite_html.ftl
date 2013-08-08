@@ -25,7 +25,7 @@
 					<#elseif testSuiteExecuteElement.attributeValue("test-case-command")??>
 						<#assign testCaseCommandPhrase = testSuiteExecuteElement.attributeValue("test-case-command")>
 
-						<#include "test_case_command_element_html.ftl">
+						<#include "test_case_element_html.ftl">
 					<#elseif testSuiteExecuteElement.attributeValue("test-suite")??>
 						<#assign testSuiteName = testSuiteExecuteElement.attributeValue("test-suite")>
 

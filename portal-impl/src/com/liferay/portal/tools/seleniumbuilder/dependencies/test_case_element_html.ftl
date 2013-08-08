@@ -1,95 +1,31 @@
-<#assign testCaseRootElement = seleniumBuilderContext.getTestCaseRootElement(testCaseName)>
+<#if testCaseCommandPhrase??>
+	<#assign x = testCaseCommandPhrase?last_index_of("#")>
 
-<#assign testCaseCommandElements = testCaseRootElement.elements("command")>
+	<#assign testCaseName = testCaseCommandPhrase?substring(0, x)>
 
-<#list testCaseCommandElements as testCaseCommandElement>
-	<#assign testCaseCommand = testCaseCommandElement.attributeValue("name")>
+	<#assign desiredMethod = testCaseCommandPhrase?substring(x + 1)>
 
-	<li id="${testCaseName?uncap_first}TestCase${testCaseCommand}">
-		<#assign lineFolds = lineFolds + 1>
+	<#assign testCaseCommandClassName = seleniumBuilderContext.getTestCaseClassName(testCaseName)>
 
-		<div>
-			<div id="toggle${lineFolds}" class="expand-toggle">+</div>
-		</div>
+	<#assign testCaseRootElement = seleniumBuilderContext.getTestCaseRootElement(testCaseName)>
 
-		<div>
-			<div class="expand-line">
-				<h3 class="testCaseCommand">${testCaseName}#${testCaseCommand}
-					<#if testCaseCommandElement.attributeValue("depends")??>
-						[depends ~ ${testCaseCommandElement.attributeValue("depends")}]
-					</#if>
-				</h3>
-			</div>
-		</div>
+	<#assign testCaseCommandElements = testCaseRootElement.elements("command")>
 
-		<ul id="collapseToggle${lineFolds}" class="collapse">
-			<#assign testCaseVarElements = testCaseRootElement.elements("var")>
+	<#list testCaseCommandElements as testCaseCommandElement>
+		<#assign testCaseCommand = testCaseCommandElement.attributeValue("name")>
 
-			<#list testCaseVarElements as testCaseVarElement>
-				<#assign lineNumber = testCaseVarElement.attributeValue("line-number")>
+		<#if testCaseCommand == desiredMethod>
+			<#include "test_case_command_element_html.ftl">
+		</#if>
+	</#list>
+<#else>
+	<#assign testCaseRootElement = seleniumBuilderContext.getTestCaseRootElement(testCaseName)>
 
-				<li id="${testCaseName?uncap_first}TestCase${lineNumber}">
-					<#assign displayElement = testCaseVarElement>
+	<#assign testCaseCommandElements = testCaseRootElement.elements("command")>
 
-					<#include "element_whole_html.ftl">
-				</li>
-			</#list>
+	<#list testCaseCommandElements as testCaseCommandElement>
+		<#assign testCaseCommand = testCaseCommandElement.attributeValue("name")>
 
-			<#if testCaseRootElement.element("set-up")??>
-				<#assign testCaseSetupElement = testCaseRootElement.element("set-up")>
-
-				<#assign lineNumber = testCaseSetupElement.attributeValue("line-number")>
-
-				<li id="${testCaseName?uncap_first}TestCase${lineNumber}">
-					<#assign displayElement = testCaseSetupElement>
-
-					<#include "element_open_html.ftl">
-
-					<#assign testCaseBlockElement = testCaseSetupElement>
-
-					<#include "test_case_block_element_html.ftl">
-
-					<#assign displayElement = testCaseSetupElement>
-
-					<#include "element_close_html.ftl">
-				</li>
-			</#if>
-
-			<#assign lineNumber = testCaseCommandElement.attributeValue("line-number")>
-
-			<li id="${testCaseName?uncap_first}TestCase${lineNumber}">
-				<#assign displayElement = testCaseCommandElement>
-
-				<#include "element_open_html.ftl">
-
-				<#assign testCaseBlockElement = testCaseCommandElement>
-
-				<#include "test_case_block_element_html.ftl">
-
-				<#assign displayElement = testCaseCommandElement>
-
-				<#include "element_close_html.ftl">
-			</li>
-
-			<#if testCaseRootElement.element("tear-down")??>
-				<#assign testCaseTearDownElement = testCaseRootElement.element("tear-down")>
-
-				<#assign lineNumber = testCaseTearDownElement.attributeValue("line-number")>
-
-				<li id="${testCaseName?uncap_first}TestCase${lineNumber}">
-					<#assign displayElement = testCaseTearDownElement>
-
-					<#include "element_open_html.ftl">
-
-					<#assign testCaseBlockElement = testCaseTearDownElement>
-
-					<#include "test_case_block_element_html.ftl">
-
-					<#assign displayElement = testCaseTearDownElement>
-
-					<#include "element_close_html.ftl">
-				</li>
-			</#if>
-		</ul>
-	</li>
-</#list>
+		<#include "test_case_command_element_html.ftl">
+	</#list>
+</#if>

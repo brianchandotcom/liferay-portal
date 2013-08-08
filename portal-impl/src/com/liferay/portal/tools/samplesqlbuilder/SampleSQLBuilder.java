@@ -55,35 +55,19 @@ import java.util.Properties;
 public class SampleSQLBuilder {
 
 	public static void main(String[] args) {
-		InitUtil.initWithSpring();
-
-		Reader reader = null;
-
 		try {
-			Properties properties = new SortedProperties();
-
-			reader = new FileReader(args[0]);
-
-			properties.load(reader);
-
-			new SampleSQLBuilder(properties);
+			new SampleSQLBuilder(args);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-		finally {
-			if (reader != null) {
-				try {
-					reader.close();
-				}
-				catch (IOException ioe) {
-					ioe.printStackTrace();
-				}
-			}
-		}
 	}
 
-	public SampleSQLBuilder(Properties properties) throws Exception {
+	public SampleSQLBuilder(String[] args) throws Exception {
+		InitUtil.initWithSpring();
+
+		Properties properties = getProperties(args);
+
 		_dbType = properties.getProperty("sample.sql.db.type");
 
 		_csvFileNames = StringUtil.split(
@@ -333,6 +317,30 @@ public class SampleSQLBuilder {
 		}
 
 		return context;
+	}
+
+	protected Properties getProperties(String[] args) throws Exception {
+		Reader reader = null;
+
+		try {
+			Properties properties = new SortedProperties();
+
+			reader = new FileReader(args[0]);
+
+			properties.load(reader);
+
+			return properties;
+		}
+		finally {
+			if (reader != null) {
+				try {
+					reader.close();
+				}
+				catch (IOException ioe) {
+					ioe.printStackTrace();
+				}
+			}
+		}
 	}
 
 	protected void mergeSQL(File inputDir, File outputSQLFile)

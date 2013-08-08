@@ -89,6 +89,10 @@ public class BaseNavItemTag extends com.liferay.taglib.util.IncludeTag {
 		return _title;
 	}
 
+	public boolean getUseDialog() {
+		return _useDialog;
+	}
+
 	public boolean getWrapDropDownMenu() {
 		return _wrapDropDownMenu;
 	}
@@ -177,6 +181,12 @@ public class BaseNavItemTag extends com.liferay.taglib.util.IncludeTag {
 		setScopedAttribute("title", title);
 	}
 
+	public void setUseDialog(boolean useDialog) {
+		_useDialog = useDialog;
+
+		setScopedAttribute("useDialog", useDialog);
+	}
+
 	public void setWrapDropDownMenu(boolean wrapDropDownMenu) {
 		_wrapDropDownMenu = wrapDropDownMenu;
 
@@ -199,6 +209,7 @@ public class BaseNavItemTag extends com.liferay.taglib.util.IncludeTag {
 		_label = null;
 		_selected = false;
 		_title = null;
+		_useDialog = false;
 		_wrapDropDownMenu = true;
 	}
 
@@ -228,6 +239,7 @@ public class BaseNavItemTag extends com.liferay.taglib.util.IncludeTag {
 		setNamespacedAttribute(request, "label", _label);
 		setNamespacedAttribute(request, "selected", _selected);
 		setNamespacedAttribute(request, "title", _title);
+		setNamespacedAttribute(request, "useDialog", _useDialog);
 		setNamespacedAttribute(request, "wrapDropDownMenu", _wrapDropDownMenu);
 	}
 
@@ -253,6 +265,7 @@ public class BaseNavItemTag extends com.liferay.taglib.util.IncludeTag {
 	private java.lang.String _label = null;
 	private boolean _selected = false;
 	private java.lang.String _title = null;
+	private boolean _useDialog = false;
 	private boolean _wrapDropDownMenu = true;
 
 }

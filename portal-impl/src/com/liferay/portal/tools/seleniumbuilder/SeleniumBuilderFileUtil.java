@@ -467,6 +467,11 @@ public class SeleniumBuilderFileUtil {
 			throw new IllegalArgumentException(
 				prefix + "Invalid path " + string1 + " at " + suffix);
 		}
+		else if (errorCode == 1015) {
+			throw new IllegalArgumentException(
+				prefix + "Poorly formed test case command " + string1 +
+					" at " + suffix);
+		}
 		else if (errorCode == 2000) {
 			throw new IllegalArgumentException(
 				prefix + "Too many child elements in the " + string1 +
@@ -753,6 +758,8 @@ public class SeleniumBuilderFileUtil {
 		String macro = executeElement.attributeValue("macro");
 		String selenium = executeElement.attributeValue("selenium");
 		String testCase = executeElement.attributeValue("test-case");
+		String testCaseCommand = executeElement.attributeValue(
+			"test-case-command");
 		String testClass = executeElement.attributeValue("test-class");
 		String testSuite = executeElement.attributeValue("test-suite");
 
@@ -867,6 +874,44 @@ public class SeleniumBuilderFileUtil {
 
 				if (!attributeName.equals("line-number") &&
 					!attributeName.equals("test-case")) {
+
+					throwValidationException(
+						1005, fileName, executeElement, attributeName);
+				}
+			}
+		}
+		else if (testCaseCommand != null) {
+			if (Validator.isNull(testCaseCommand) ||
+				!testCaseCommand.matches(allowedExecuteAttributeValuesRegex)) {
+
+				throwValidationException(
+					1006, fileName, executeElement, "test-case-command");
+			}
+
+			if (testCaseCommand.contains("#")) {
+				int x = testCaseCommand.lastIndexOf("#");
+
+				String testCaseName = testCaseCommand.substring(0, x);
+
+				String methodName = testCaseCommand.substring(x + 1);
+
+				if (Validator.isNull(testCaseName) ||
+					Validator.isNull(methodName)) {
+
+					throwValidationException(
+						1015, fileName, executeElement, testCaseCommand);
+				}
+			}
+			else {
+				throwValidationException(
+					1015, fileName, executeElement, testCaseCommand);
+			}
+
+			for (Attribute attribute : attributes) {
+				String attributeName = attribute.getName();
+
+				if (!attributeName.equals("line-number") &&
+					!attributeName.equals("test-case-command")) {
 
 					throwValidationException(
 						1005, fileName, executeElement, attributeName);
@@ -1303,8 +1348,8 @@ public class SeleniumBuilderFileUtil {
 			if (elementName.equals("execute")) {
 				validateExecuteElement(
 					fileName, element,
-					new String[] {"test-case", "test-class", "test-suite"},
-					".+", new String[0]);
+					new String[] {"test-case", "test-class", "test-suite",
+						"test-case-command"},".+", new String[0]);
 			}
 			else {
 				throwValidationException(1002, fileName, element, elementName);

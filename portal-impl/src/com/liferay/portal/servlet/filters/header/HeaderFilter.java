@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -30,7 +31,6 @@ import java.text.Format;
 import java.util.Calendar;
 import java.util.Enumeration;
 import java.util.GregorianCalendar;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -53,7 +53,7 @@ public class HeaderFilter extends BasePortalFilter {
 
 		_filterConfig = filterConfig;
 		_dateFormat = FastDateFormatFactoryUtil.getSimpleDateFormat(
-			_DATE_FORMAT, Locale.US, TimeZoneUtil.getTimeZone(_TIME_ZONE));
+			_DATE_FORMAT, LocaleUtil.US, TimeZoneUtil.getTimeZone(_TIME_ZONE));
 	}
 
 	protected long getLastModified(HttpServletRequest request) {

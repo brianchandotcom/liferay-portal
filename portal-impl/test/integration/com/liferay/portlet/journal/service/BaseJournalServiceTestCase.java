@@ -15,6 +15,7 @@
 package com.liferay.portlet.journal.service;
 
 import com.liferay.portal.kernel.template.TemplateConstants;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.GroupLocalServiceUtil;
@@ -61,7 +62,7 @@ public class BaseJournalServiceTestCase {
 
 		Map<Locale, String> nameMap = new HashMap<Locale, String>();
 
-		nameMap.put(Locale.US, name);
+		nameMap.put(LocaleUtil.US, name);
 
 		return JournalStructureLocalServiceUtil.addStructure(
 			TestPropsValues.getUserId(), groupId, structureId, false, null,
@@ -83,7 +84,7 @@ public class BaseJournalServiceTestCase {
 
 		Map<Locale, String> nameMap = new HashMap<Locale, String>();
 
-		nameMap.put(Locale.US, name);
+		nameMap.put(LocaleUtil.US, name);
 
 		return JournalTemplateLocalServiceUtil.addTemplate(
 			TestPropsValues.getUserId(), groupId, templateId, false,

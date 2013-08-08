@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.dynamicdatalists.service;
 
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
@@ -32,7 +33,7 @@ public class BaseDDLServiceTestCase  extends BaseDDMServiceTestCase {
 	protected DDLRecordSet addRecordSet(long ddmStructureId) throws Exception {
 		Map<Locale, String> nameMap = new HashMap<Locale, String>();
 
-		nameMap.put(Locale.US, "Test Record Set");
+		nameMap.put(LocaleUtil.US, "Test Record Set");
 
 		ServiceContext serviceContext = new ServiceContext();
 

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
@@ -34,7 +35,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -242,11 +242,11 @@ public class AmazonRankingsWebCacheItem implements WebCacheItem {
 
 		if (releaseDateAsString.length() > 7) {
 			dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
-				"yyyy-MM-dd", Locale.US);
+				"yyyy-MM-dd", LocaleUtil.US);
 		}
 		else {
 			dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
-				"yyyy-MM", Locale.US);
+				"yyyy-MM", LocaleUtil.US);
 		}
 
 		return GetterUtil.getDate(releaseDateAsString, dateFormat);

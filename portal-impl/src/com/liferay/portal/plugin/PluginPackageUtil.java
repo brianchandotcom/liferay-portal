@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ReleaseInfo;
@@ -67,7 +68,6 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
@@ -787,7 +787,7 @@ public class PluginPackageUtil {
 	private Date _readDate(String text) {
 		if (Validator.isNotNull(text)) {
 			DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
-				Time.RFC822_FORMAT, Locale.US);
+				Time.RFC822_FORMAT, LocaleUtil.US);
 
 			try {
 				return dateFormat.parse(text);

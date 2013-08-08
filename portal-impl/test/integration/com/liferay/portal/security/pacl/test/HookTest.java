@@ -27,8 +27,6 @@ import com.liferay.portal.security.pacl.test.hook.indexer.UserIndexerPostProcess
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.portlet.blogs.service.BlogsStatsUserLocalServiceUtil;
 
-import java.util.Locale;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -53,7 +51,7 @@ public class HookTest {
 	@Test
 	public void testLanguage1() throws Exception {
 		Assert.assertEquals(
-			LanguageUtil.get(new Locale("es"), "stars"), "Estrellas");
+			LanguageUtil.get(LocaleUtil.SPAIN, "stars"), "Estrellas");
 	}
 
 	@Test

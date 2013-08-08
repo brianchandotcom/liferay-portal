@@ -591,7 +591,7 @@ public class JournalTestUtil {
 	}
 
 	private static Locale[] _locales = {
-		new Locale("en", "US"), new Locale("de", "DE"), new Locale("es", "ES")
+		LocaleUtil.US, LocaleUtil.GERMANY, LocaleUtil.SPAIN
 	};
 
 }

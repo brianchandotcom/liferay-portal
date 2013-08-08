@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.lar.PortletDataHandler;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
@@ -179,17 +180,16 @@ public class BasePortletExportImportTestCase extends BaseExportImportTestCase {
 	@Test
 	public void testExportImportInvalidAvailableLocales() throws Exception {
 		testExportImportAvailableLocales(
-			new Locale[] {Locale.US, new Locale("es", "ES")},
-			new Locale[] {Locale.US, new Locale("de", "DE")}, true);
+			new Locale[] {LocaleUtil.US, LocaleUtil.SPAIN},
+			new Locale[] {LocaleUtil.US, LocaleUtil.GERMANY}, true);
 	}
 
 	@Test
 	public void testExportImportValidAvailableLocales() throws Exception {
-		Locale esLocale = new Locale("es", "ES");
-
 		testExportImportAvailableLocales(
-			new Locale[] {Locale.US, esLocale},
-			new Locale[] {Locale.US, esLocale, new Locale("de", "DE")}, false);
+			new Locale[] {LocaleUtil.US, LocaleUtil.SPAIN},
+			new Locale[] {LocaleUtil.US, LocaleUtil.SPAIN, LocaleUtil.GERMANY},
+			false);
 	}
 
 	protected AssetLink addAssetLink(

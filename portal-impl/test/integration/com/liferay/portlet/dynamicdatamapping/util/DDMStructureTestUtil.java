@@ -104,7 +104,7 @@ public class DDMStructureTestUtil {
 		return addStructure(
 			TestPropsValues.getGroupId(), className, 0,
 			getSampleStructureXSD(
-				"name", new Locale[] {Locale.US}, defaultLocale),
+				"name", new Locale[] {LocaleUtil.US}, defaultLocale),
 			defaultLocale, ServiceTestUtil.getServiceContext());
 	}
 
@@ -167,7 +167,8 @@ public class DDMStructureTestUtil {
 	}
 
 	public static String getSampleStructureXSD(String name) {
-		return getSampleStructureXSD(name, new Locale[] {Locale.US}, Locale.US);
+		return getSampleStructureXSD(
+			name, new Locale[] {LocaleUtil.US}, LocaleUtil.US);
 	}
 
 	public static String getSampleStructureXSD(

@@ -16,6 +16,7 @@ package com.liferay.portal.action;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.Layout;
@@ -149,7 +150,7 @@ public class TCKAction extends Action {
 			String emailAddress = "tck@liferay.com";
 			long facebookId = 0;
 			String openId = StringPool.BLANK;
-			Locale locale = Locale.US;
+			Locale locale = LocaleUtil.US;
 			String firstName = "TCK";
 			String middleName = StringPool.BLANK;
 			String lastName = "User";

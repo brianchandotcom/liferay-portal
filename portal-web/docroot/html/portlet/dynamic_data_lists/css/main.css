@@ -1,30 +1,9 @@
 .portlet-dynamic-data-lists, .portlet-dynamic-data-list-display {
-	.lfr-spreadsheet-container .table { 
+	.lfr-spreadsheet-container .table {
 		overflow: auto;
 
 		&.yui3-datatable td:after {
 			content: '\0000a0';
 		}
 	}
-}
-
-.document-library-file-entry-cell-editor-hidden, .fileupload-cell-editor-hidden, .password-cell-editor-hidden {
-	display: none;
-}
-
-.basecelleditor {
-	z-index: 999 !important;
-
-	.buttonitem-content {
-		padding: 3px 3px 2px 1px;
-	}
-
-	[class~="form-validator-message"] {
-		clip: rect(auto auto auto auto);
-		width: auto;
-	}
-}
-
-.webkit .basecelleditor .buttonitem-label-only {
-	padding-bottom: 2px;
 }

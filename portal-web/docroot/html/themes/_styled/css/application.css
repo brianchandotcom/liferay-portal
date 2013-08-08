@@ -254,6 +254,15 @@
 	font-weight: bold;
 }
 
+.basecelleditor [class~="form-validator-message"] {
+	clip: rect(auto auto auto auto);
+	width: auto;
+}
+
+.document-library-file-entry-cell-editor-hidden {
+	display: none;
+}
+
 /* ---------- Menus ---------- */
 
 .lfr-menu-list {

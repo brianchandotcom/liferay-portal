@@ -257,6 +257,25 @@ public class TrashEntryServiceImpl extends TrashEntryServiceBaseImpl {
 
 		int filteredEntriesCount = filteredEntries.size();
 
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS)) {
+			start = 0;
+			end = filteredEntriesCount;
+		}
+
+		if ((filteredEntriesCount > 0) && (start >= filteredEntriesCount)) {
+			int delta = end - start;
+
+			int cur = start / delta;
+
+			start = 0;
+
+			if (cur > 0) {
+				start = (cur - 1) * delta;
+			}
+
+			end = start + delta;
+		}
+
 		if ((end != QueryUtil.ALL_POS) && (start != QueryUtil.ALL_POS)) {
 			if (end > filteredEntriesCount) {
 				end = filteredEntriesCount;

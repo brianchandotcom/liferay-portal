@@ -45,7 +45,7 @@ if (selLayout != null) {
 </aui:fieldset>
 
 <c:if test="<%= PortalUtil.isLayoutSitemapable(selLayout) %>">
-	<h4><liferay-ui:message key="robots" /></h4>
+	<h4><liferay-ui:message key="sitemap" /></h4>
 
 	<aui:fieldset>
 		<liferay-ui:error exception="<%= SitemapChangeFrequencyException.class %>" message="please-select-a-valid-change-frequency" />

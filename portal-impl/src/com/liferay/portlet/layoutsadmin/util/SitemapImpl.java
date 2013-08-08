@@ -278,7 +278,7 @@ public class SitemapImpl implements Sitemap {
 		UnicodeProperties typeSettingsProperties =
 			layout.getTypeSettingsProperties();
 
-		if (layout.isHidden() || !PortalUtil.isLayoutSitemapable(layout) ||
+		if (!PortalUtil.isLayoutSitemapable(layout) ||
 			!GetterUtil.getBoolean(
 				typeSettingsProperties.getProperty("sitemap-include"), true)) {
 
@@ -316,9 +316,6 @@ public class SitemapImpl implements Sitemap {
 					getAlternateURLs(layoutFullURL, themeDisplay, layout));
 			}
 		}
-
-		visitArticles(element, layout, themeDisplay);
-		visitLayouts(element, layout.getChildren(), themeDisplay);
 	}
 
 	protected void visitLayouts(
@@ -327,6 +324,8 @@ public class SitemapImpl implements Sitemap {
 
 		for (Layout layout : layouts) {
 			visitLayout(element, layout, themeDisplay);
+			visitArticles(element, layout, themeDisplay);
+			visitLayouts(element, layout.getChildren(), themeDisplay);
 		}
 	}
 

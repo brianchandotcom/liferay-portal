@@ -54,11 +54,7 @@ import java.util.Properties;
 public class SampleSQLBuilder {
 
 	public static void main(String[] args) {
-		List<String> extraConfigLocations = new ArrayList<String>();
-
-		extraConfigLocations.add("META-INF/portlet-container-spring.xml");
-
-		InitUtil.initWithSpring(false, extraConfigLocations);
+		InitUtil.initWithSpring();
 
 		Reader reader = null;
 

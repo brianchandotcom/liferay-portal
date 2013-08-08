@@ -79,7 +79,8 @@ import com.liferay.portal.security.auth.FullNameGeneratorFactory;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portlet.PortletPreferencesFactory;
+import com.liferay.portlet.PortletPreferencesFactoryImpl;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetCategoryConstants;
 import com.liferay.portlet.asset.model.AssetCategoryModel;
@@ -1801,7 +1802,7 @@ public class DataFactory {
 
 		return newPortletPreferencesModel(
 			plid, portletId,
-			PortletPreferencesFactoryUtil.toXML(jxPortletPreferences));
+			_PORTLET_PREFERENCES_FACTORY.toXML(jxPortletPreferences));
 	}
 
 	public PortletPreferencesModel newPortletPreferencesModel(
@@ -1818,7 +1819,7 @@ public class DataFactory {
 
 		return newPortletPreferencesModel(
 			plid, portletId,
-			PortletPreferencesFactoryUtil.toXML(jxPortletPreferences));
+			_PORTLET_PREFERENCES_FACTORY.toXML(jxPortletPreferences));
 	}
 
 	public PortletPreferencesModel newPortletPreferencesModel(
@@ -1844,7 +1845,7 @@ public class DataFactory {
 
 		return newPortletPreferencesModel(
 			plid, portletId,
-			PortletPreferencesFactoryUtil.toXML(jxPortletPreferences));
+			_PORTLET_PREFERENCES_FACTORY.toXML(jxPortletPreferences));
 	}
 
 	public List<PortletPreferencesModel> newPortletPreferencesModels(
@@ -2783,11 +2784,14 @@ public class DataFactory {
 
 	private static final long _CURRENT_TIME = System.currentTimeMillis();
 
-	private static final String _DEPENDENCIES_DIR=
+	private static final String _DEPENDENCIES_DIR =
 		"com/liferay/portal/tools/samplesqlbuilder/dependencies/";
 
 	private static final long _FUTURE_TIME =
 		System.currentTimeMillis() + Time.YEAR;
+
+	private static final PortletPreferencesFactory
+		_PORTLET_PREFERENCES_FACTORY = new PortletPreferencesFactoryImpl();
 
 	private static final String _SAMPLE_USER_NAME = "Sample";
 

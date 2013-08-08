@@ -282,30 +282,32 @@ else {
 					/>
 
 					<c:if test="<%= total > 0 %>">
-						<liferay-portlet:renderURL varImpl="viewBasicFileEntryTypeURL">
-							<portlet:param name="struts_action" value="/document_library/view" />
-							<portlet:param name="folderId" value="<%= String.valueOf(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
-							<portlet:param name="fileEntryTypeId" value="<%= String.valueOf(0) %>" />
-							<portlet:param name="entryStart" value="0" />
-							<portlet:param name="entryEnd" value="<%= String.valueOf(entryEnd - entryStart) %>" />
-							<portlet:param name="folderStart" value="0" />
-							<portlet:param name="folderEnd" value="<%= String.valueOf(folderEnd - folderStart) %>" />
-						</liferay-portlet:renderURL>
+						<c:if test="<%= searchContainer.getStart() == 0 %>">
+							<liferay-portlet:renderURL varImpl="viewBasicFileEntryTypeURL">
+								<portlet:param name="struts_action" value="/document_library/view" />
+								<portlet:param name="folderId" value="<%= String.valueOf(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
+								<portlet:param name="fileEntryTypeId" value="<%= String.valueOf(0) %>" />
+								<portlet:param name="entryStart" value="0" />
+								<portlet:param name="entryEnd" value="<%= String.valueOf(entryEnd - entryStart) %>" />
+								<portlet:param name="folderStart" value="0" />
+								<portlet:param name="folderEnd" value="<%= String.valueOf(folderEnd - folderStart) %>" />
+							</liferay-portlet:renderURL>
 
-						<%
-						dataView = new HashMap<String, Object>();
+							<%
+							dataView = new HashMap<String, Object>();
 
-						dataView.put("file-entry-type-id", 0);
-						%>
+							dataView.put("file-entry-type-id", 0);
+							%>
 
-						<liferay-ui:app-view-navigation-entry
-							cssClass="folder file-entry-type"
-							dataView="<%= dataView %>"
-							entryTitle='<%= LanguageUtil.get(pageContext, "basic-document") %>'
-							iconImage="icon-file"
-							selected="<%= (fileEntryTypeId == 0) %>"
-							viewURL="<%= viewBasicFileEntryTypeURL.toString() %>"
-						/>
+							<liferay-ui:app-view-navigation-entry
+								cssClass="folder file-entry-type"
+								dataView="<%= dataView %>"
+								entryTitle='<%= LanguageUtil.get(pageContext, "basic-document") %>'
+								iconImage="icon-file"
+								selected="<%= (fileEntryTypeId == 0) %>"
+								viewURL="<%= viewBasicFileEntryTypeURL.toString() %>"
+							/>
+						</c:if>
 
 						<%
 						List<DLFileEntryType> fileEntryTypes = DLFileEntryTypeServiceUtil.getFileEntryTypes(PortalUtil.getSiteAndCompanyGroupIds(themeDisplay), searchContainer.getStart(), searchContainer.getEnd());

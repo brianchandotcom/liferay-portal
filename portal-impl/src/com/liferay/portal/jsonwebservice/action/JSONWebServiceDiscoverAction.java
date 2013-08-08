@@ -33,6 +33,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -131,8 +132,8 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 			MethodParameter[] methodParameters =
 				jsonWebServiceActionMapping.getMethodParameters();
 
-			List<String[]> parametersList = new ArrayList<String[]>(
-				methodParameters.length);
+			List<Map<String, String>> parametersList =
+				new ArrayList<Map<String, String>>(methodParameters.length);
 
 			for (MethodParameter methodParameter : methodParameters) {
 				Class<?>[] genericTypes = null;
@@ -144,11 +145,13 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 					throw new PortalException(cnfe);
 				}
 
-				parametersList.add(
-					new String[] {
-						methodParameter.getName(),
-						_formatType(methodParameter.getType(), genericTypes)
-					});
+				Map<String, String> parameter = new HashMap<String, String>(2);
+
+				parameter.put("name", methodParameter.getName());
+				parameter.put("type", _formatType(
+					methodParameter.getType(), genericTypes));
+
+				parametersList.add(parameter);
 			}
 
 			jsonWebServiceActionMappingMap.put("parameters", parametersList);

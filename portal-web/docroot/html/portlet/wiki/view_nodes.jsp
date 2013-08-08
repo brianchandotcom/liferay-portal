@@ -122,9 +122,10 @@ searchContainer.setResults(results);
 						modelResourceDescription="<%= HtmlUtil.escape(themeDisplay.getScopeGroupName()) %>"
 						resourcePrimKey="<%= String.valueOf(scopeGroupId) %>"
 						var="permissionsURL"
+						windowState="<%= LiferayWindowState.POP_UP.toString() %>"
 					/>
 
-					<aui:button href="<%= permissionsURL %>" name="permissionsButton" value="permissions" />
+					<aui:button href="<%= permissionsURL %>" name="permissionsButton" useDialog="<%= true %>" value="permissions" />
 				</c:if>
 			</aui:button-row>
 		</c:if>

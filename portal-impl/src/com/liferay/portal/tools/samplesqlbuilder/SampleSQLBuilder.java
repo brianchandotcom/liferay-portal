@@ -221,6 +221,10 @@ public class SampleSQLBuilder {
 			String tableName = entry.getKey();
 			StringBundler sb = entry.getValue();
 
+			if (sb.index() == 0) {
+				continue;
+			}
+
 			String insertSQL = db.buildSQL(sb.toString());
 
 			writeToInsertSQLFile(dir, tableName, insertSQLWriters, insertSQL);

@@ -296,8 +296,7 @@ public class DLFileEntryTypeLocalServiceImpl
 			dlFileEntryTypes = dlFolderPersistence.getDLFileEntryTypes(
 				folderId);
 		}
-
-		if ((dlFileEntryTypes == null) || dlFileEntryTypes.isEmpty()) {
+		else {
 			dlFileEntryTypes = new ArrayList<DLFileEntryType>(
 				getFileEntryTypes(groupIds));
 

@@ -264,6 +264,7 @@ else {
 							<liferay-portlet:renderURL varImpl="viewBasicDDMStructureArticlesURL">
 								<portlet:param name="struts_action" value="/journal/view" />
 								<portlet:param name="folderId" value="<%= String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
+								<portlet:param name="browseBy" value="structure" />
 								<portlet:param name="structureId" value="0" />
 								<portlet:param name="entryStart" value="0" />
 								<portlet:param name="entryEnd" value="<%= String.valueOf(entryEnd - entryStart) %>" />
@@ -274,6 +275,7 @@ else {
 							<%
 							dataView = new HashMap<String, Object>();
 
+							dataView.put("browse-by", "structure");
 							dataView.put("structure-id", 0);
 							%>
 
@@ -296,6 +298,7 @@ else {
 							<liferay-portlet:renderURL varImpl="viewDDMStructureArticlesURL">
 								<portlet:param name="struts_action" value="/journal/view" />
 								<portlet:param name="folderId" value="<%= String.valueOf(JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
+								<portlet:param name="browseBy" value="structure" />
 								<portlet:param name="structureId" value="<%= ddmStructure.getStructureKey() %>" />
 								<portlet:param name="entryStart" value="0" />
 								<portlet:param name="entryEnd" value="<%= String.valueOf(entryEnd - entryStart) %>" />
@@ -306,6 +309,7 @@ else {
 							<%
 							dataView = new HashMap<String, Object>();
 
+							dataView.put("browse-by", "structure");
 							dataView.put("structure-id", ddmStructure.getStructureKey());
 							%>
 

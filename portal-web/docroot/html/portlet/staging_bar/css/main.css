@@ -1,228 +1,100 @@
 @import "compass";
+@import "compass/css3/user-interface";
 
 .portlet-staging-bar {
-	.staging-tabview-list {
-		a, .taglib-text {
-			text-decoration: none
+	button.history {
+		float: right;
+	}
+
+	button.mark-as-ready {
+		float: left;
+	}
+
+	.button-holder {
+		margin: 20px 0 10px;
+	}
+
+	.page-variation-label, .site-pages-variation-label {
+		font-weight: 300;
+	}
+
+	.page-variations-options, .site-pages-variation-options, .staging-details {
+		padding: 0 15px;
+	}
+
+	.publish-link-container {
+		clear: both;
+		margin-bottom: 15px;
+		text-align: center;
+	}
+
+	.site-pages-variation-options {
+		position: relative;
+
+		.icon-angle-right {
+			font-size: 30px;
+			position: absolute;
+			right: -14px;
+			top: 38px;
 		}
 	}
 
-	.manage-layout-branches-tab {
-		margin-left: 1em;
-
-		&.tab-label {
-			margin-left: 0;
-		}
+	.status-message {
+		float: left;
+		line-height: 20px;
 	}
 
-	.staging-tabview-list {
-		border-bottom: 1px solid #CCC;
-		border-width: 0;
-		font-size: 1.3em;
-		margin-bottom: 0;
-
-		.tab, .tab-content {
-			background: none;
-			border-width: 0;
-			height: 28px;
-			min-width: 60px;
-			text-align: center;
-		}
-
-		.tab-active .tab-content {
-			background-color: #333;
-
-			.tab-label {
-				text-shadow: -1px -1px 0 #000;
-			}
-		}
-
-		.remote-live-link {
-			font-size: 0.9em;
-		}
+	.toolbar-spacer {
+		display: none;
 	}
 
-	.site-variations-tabview-list {
-		background-image: none;
-		background-color: #999;
-		border-width: 0;
-		font-size: 1.2em;
-		margin-bottom: 0;
-
-		.tab, .tab-content {
-			background: none;
-			border-width: 0;
-
-			.tab-label {
-				padding: 7px 10px;
-
-				a {
-					color: #BBB;
-					text-shadow: none;
-					text-decoration: underline;
-
-					&:hover {
-						text-decoration: none;
-					}
-				}
-			}
-		}
-
-		.manage-layout-set-branches-tab .manage-layout-set-branches a {
-			border-left: 1px solid #999;
-			color: #DDD;
-			font-size: 0.9em;
-			margin-left: 10px;
-			padding-left: 10px;
-			text-decoration: none;
-
-			.taglib-text {
-				text-decoration: none;
-
-				&:hover {
-					text-decoration: underline;
-				}
-			}
-		}
-	}
-
-	.branch-results {
-		min-height: 300px;
-	}
-
-	.staging-bar {
-		background: #888;
-
-		.variations-tabview-list {
-			background-color: #DDD;
-		}
-
-		.staging-tabview-content {
-			border: solid #636364;
-			border-top-color: #333;
-			border-width: 1px 0;
-			color: #EEE;
-			margin-top: -1px;
-			padding: 0.5em 1em;
-
-			.staging-icon {
-				float: left;
-				margin-right: 1em;
-			}
-
-			.layout-set-branch-info {
-				font-size: 1.1em;
-				margin: 0.5em 0;
-				text-indent: -0.5em;
-
-				.layout-set-branch-description {
-					border-right: 1px solid #AAA;
-					padding: 0 0.5em 0;
-					font-style: italic;
-				}
-
-				.layout-set-branch-pages {
-					padding-left: 0.5em;
-				}
-			}
-
-			.layout-info {
-				.variations-tabview-list {
-					margin: 0.5em 0;
-				}
-
-				.variations-tabview-content {
-					overflow: hidden;
-
-					.layout-branch-description {
-						font-style: italic;
-						margin-bottom: 0.5em;
-					}
-
-					.manage-layout-branches-tab a {
-						color: #EEE;
-					}
-
-					.layout-actions, .layout-revision-details {
-						float: left;
-					}
-
-					.layout-revision-id {
-						font-size: 0.6em;
-					}
-				}
-
-				.layout-title {
-					font-size: 1.2em;
-
-					.layout-title-label {
-						float: left;
-					}
-				}
-			}
-
-			.last-publication-user {
-				background: url(@theme_image_path@/common/time.png) no-repeat 0 50%;
-				padding-left: 20px;
-			}
-
-			.last-publication-variation-details {
-				font-size: 0.8em;
-
-				.layout-version {
-					background: url(@theme_image_path@/common/pages.png) no-repeat 0 50%;
-					padding: 2px 0 2px 20px;
-				}
-
-				.variation-name {
-					background: url(@theme_image_path@/common/signal_instance.png) no-repeat 0 50%;
-					margin-right: 10px;
-					padding: 2px 0 2px 20px;
-				}
-			}
-
-			.taglib-workflow-status {
-				clear: left;
-				color: #FFF;
-				float: left;
-				margin-right: 5em;
-
-				.workflow-status, .workflow-version {
-					color: #FFF;
-				}
-
-				.workflow-status-approved, .workflow-status-ready-for-publication {
-					color: #8BEC59;
-				}
-
-				.workflow-status-draft {
-					color: #CAD8F3;
-				}
-
-				.workflow-status-expired {
-					color: #FF8E8E;
-				}
-			}
-
-			.last-publication-branch, .staging-live-group-name {
-				display: block;
-				font-size: 1.3em;
-				padding: 5px 0 0;
-			}
-
-			.layout-revision-toolbar {
-				float: left;
-				padding-left: 1em;
-			}
-		}
-	}
-
-	.navbar {
-		position: absolute;
-		z-index: 500;
+	.variations-content {
+		clear: both;
 	}
 }
 
-.js .controls-hidden .staging-bar {
-	display: none;
+.staging-bar {
+	select {
+		width: 100%;
+	}
+
+	span.dropdown-toggle {
+		cursor: pointer;
+
+		@include user-select(none);
+	}
+
+	.dropdown-menu.site-variations {
+		font-size: 13px;
+		width: 100%;
+
+		.btn-link {
+			float: left;
+			font-size: 11px;
+			margin: 0 5px 0 0;
+			padding: 0;
+			text-decoration: underline;
+
+			@include text-shadow(none);
+
+			&:hover {
+				text-decoration: none;
+			}
+
+			&.history {
+				float: right;
+			}
+		}
+	}
+
+	.staging-nav-items {
+		li {
+			&.active {
+				> a, > span {
+					display: block;
+					padding: 10px 15px;
+				}
+			}
+		}
+	}
 }

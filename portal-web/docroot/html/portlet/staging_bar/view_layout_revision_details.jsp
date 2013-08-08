@@ -38,8 +38,10 @@ if (workflowEnabled) {
 }
 
 String taglibHelpMessage = null;
+String statusMessage = null;
 
 if (layoutRevision.isHead()) {
+	statusMessage = "ready-for-publication";
 	taglibHelpMessage = LanguageUtil.format(pageContext, "this-version-will-be-published-when-x-is-published-to-live", HtmlUtil.escape(layoutSetBranch.getName()));
 }
 else if (hasWorkflowTask) {
@@ -50,20 +52,25 @@ else {
 }
 %>
 
+<span class="layout-revision-toolbar" id="<portlet:namespace />layoutRevisionToolbar">
+	<c:if test="<%= layoutRevision.getStatus() != WorkflowConstants.STATUS_INCOMPLETE %>">
+		<aui:model-context bean="<%= layoutRevision %>" model="<%= LayoutRevision.class %>" />
+
+		<c:if test="<%= Validator.isNotNull(statusMessage) %>">
+			<span class="status-message">
+				<liferay-ui:message key="<%= statusMessage %>" />
+			</span>
+		</c:if>
+	</c:if>
+</span>
+
 <div class="layout-actions">
-	<c:choose>
-		<c:when test="<%= layoutRevision.getStatus() == WorkflowConstants.STATUS_INCOMPLETE %>">
+	<c:if test="<%= layoutRevision.getStatus() == WorkflowConstants.STATUS_INCOMPLETE %>">
+		<span class="status-message">
 			<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(layoutRevision.getName(locale)), HtmlUtil.escape(layoutSetBranch.getName())} %>" key="the-page-x-is-not-enabled-in-x,-but-is-available-in-other-pages-variations" />
-		</c:when>
-		<c:otherwise>
-			<aui:model-context bean="<%= layoutRevision %>" model="<%= LayoutRevision.class %>" />
-
-			<aui:workflow-status helpMessage="<%= taglibHelpMessage %>" status="<%= layoutRevision.getStatus() %>" statusMessage='<%= layoutRevision.isHead() ? "ready-for-publication" : null %>' version="<%= String.valueOf(layoutRevision.getLayoutRevisionId()) %>" />
-		</c:otherwise>
-	</c:choose>
+		</span>
+	</c:if>
 </div>
-
-<span class="layout-revision-toolbar" id="<portlet:namespace />layoutRevisionToolbar"></span>
 
 <aui:script position="inline" use="liferay-staging-version">
 	var stagingBar = Liferay.StagingBar;
@@ -89,7 +96,6 @@ else {
 
 			stagingBar.layoutRevisionToolbar.add(
 				{
-					icon: 'shuffle',
 					label: '<%= UnicodeLanguageUtil.get(pageContext, "workflow") %>',
 					on: {
 						click: function(event) {
@@ -170,11 +176,7 @@ else {
 			</c:if>
 
 			<c:if test="<%= !layoutRevision.isHead() && LayoutPermissionUtil.contains(permissionChecker, layoutRevision.getPlid(), ActionKeys.UPDATE) %>">
-				stagingBar.layoutRevisionToolbar.add(
-					{
-						type: 'ToolbarSpacer'
-					}
-				);
+
 
 				stagingBar.layoutRevisionToolbar.add(
 					{
@@ -235,7 +237,7 @@ else {
 						</c:choose>
 
 						<%
-						String icon = "circle-check";
+						String cssClass = "btn-link ";
 						String label = null;
 
 						if (layoutRevision.getStatus() == WorkflowConstants.STATUS_INCOMPLETE) {
@@ -243,7 +245,6 @@ else {
 						}
 						else {
 							if (workflowEnabled) {
-								icon = "shuffle";
 								label = "submit-for-publication";
 							}
 							else {
@@ -252,7 +253,7 @@ else {
 						}
 						%>
 
-						icon: '<%= icon %>',
+						cssClass: '<%= cssClass %>',
 						label: '<%= UnicodeLanguageUtil.get(pageContext, label) %>'
 					}
 				);

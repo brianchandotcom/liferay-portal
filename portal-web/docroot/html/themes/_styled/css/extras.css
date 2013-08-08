@@ -232,33 +232,12 @@ body > .lfr-menu-list ul, .active-area-proxy, .entry-display-style .entry-thumbn
 	@include border-radius(6px);
 }
 
-.live-view .staging-tabview-list {
-	@include filter-gradient(#E3F8DF, #C4F0BC);
-}
-
 .staging-tabview-list {
 	@include border-radius(0);
-}
-
-.staging-bar {
-	@include box-shadow(inset 0 3em 1em rgba(0, 0, 0, 0.8));
 }
 
 .site-variations-tabview-list .tab-content, .staging-tabview-list .tab-active .tab-content {
 	@include box-shadow(none);
-}
-
-.staging-tabview-list {
-	@include background-image(linear-gradient(0 0, rgba(0, 0, 0, 0.06), rgba(0, 0, 0, 0.06) 25%, rgba(0, 0, 0, 0) 25%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.06) 50%, rgba(0, 0, 0, 0.06) 75%, rgba(0, 0, 0, 0) 75%, rgba(0, 0, 0, 0)));
-	@include background-size(100px 100px);
-	@include border-radius(0);
-	@include box-shadow(inset 0 0.75em 0.75em rgba(255, 255, 255, 0.55));
-	@include filter-gradient(#FFEED4, #FFDBA6);
-}
-
-.portlet-staging-bar .staging-bar .site-variations-tabview-list {
-	@include box-shadow(0 1px 5px rgba(0, 0, 0, 0.8) inset, 1px 3px 8px rgba(0, 0, 0, 0.8));
-	@include background-image(linear-gradient(center bottom , #777, #333 80%, #333));
 }
 
 .rule-group-instance-container .rule-group-instance {
@@ -416,8 +395,4 @@ body:first-of-type {
 
 .upload-drop-intent .lfr-upload-container .upload-target {
 	@include experimental(animation, lfr-drop-active 1s ease 0.2s infinite);
-}
-
-.user-status-tooltip .user-status-avatar-image {
-	@include border-radius(50%);
 }

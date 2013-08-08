@@ -46,6 +46,18 @@ $editLayoutPanelWidth: 460px;
 				}
 			}
 
+			.nav li.staging-toggle {
+				a, span {
+					@include border-radius(4px);
+
+					padding: 0 7px;
+				}
+
+				&.active span {
+					background-color: #008000;
+				}
+			}
+
 			.site-administration-menu li {
 				list-style: none;
 
@@ -67,11 +79,34 @@ $editLayoutPanelWidth: 460px;
 			}
 		}
 
+		.nav.staging-nav-items {
+			margin: 0;
+			position: static;
+
+			li.dropdown.active > .dropdown-toggle {
+				background-color: transparent;
+				display: block;
+
+				&:hover {
+					color: #0077B3;
+				}
+			}
+
+			.staging-link {
+				position: static;
+			}
+		}
+
+		.staging-toggle {
+			background-color: #0ECD27;
+			padding: 10px 8px;
+		}
+
 		.user-avatar img {
 			margin-top: -2px;
 			text-decoration: none;
 			vertical-align: middle;
-			width: 27px;
+			width: 20px;
 		}
 	}
 
@@ -87,14 +122,12 @@ $editLayoutPanelWidth: 460px;
 			.navbar-inner {
 				background-color: transparent;
 				border-width: 0;
-				color: #FFF;
 				padding: 0;
 				width: 0;
 
 				.nav {
 					background-color: #333;
 					border-bottom-width: 0;
-					color: #FFF;
 
 					> li {
 						> a {
@@ -112,19 +145,17 @@ $editLayoutPanelWidth: 460px;
 
 						&.active > a {
 							color: #FFF;
-
-							&, &:hover, &:focus {
-								background: #333;
-							}
 						}
 					}
 
 					li.dropdown {
-						&.open, &.active, &.open.active {
-							> .dropdown-toggle {
-								background-color: #555;
-								color: #FFF;
-							}
+						&.active > .dropdown-toggle {
+							color: #FFF;
+						}
+
+						&.open > .dropdown-toggle {
+							background-color: #555;
+							color: #FFF;
 						}
 					}
 				}
@@ -136,10 +167,6 @@ $editLayoutPanelWidth: 460px;
 					position: fixed;
 					right: 5em;
 					z-index: 325;
-
-					> li > a {
-						padding: 6px 15px;
-					}
 				}
 
 				.nav-add-controls {
@@ -223,6 +250,15 @@ $editLayoutPanelWidth: 460px;
 						clip: rect(auto auto auto auto);
 						position: static;
 					}
+				}
+			}
+
+			.staging-nav-items {
+				li > span {
+					color: #FFF;
+					display: block;
+					padding: 10px 15px;
+					line-height: 31px;
 				}
 			}
 		}
@@ -314,32 +350,6 @@ $editLayoutPanelWidth: 460px;
 
 	.layout-revision-container-root {
 		margin: 0;
-	}
-
-	.staging-details {
-		background: url() no-repeat 0 0;
-		min-height: 50px;
-		padding-left: 65px;
-	}
-
-	.staging {
-		.staging-details {
-			background-image: url(../images/staging_bar/staging.png);
-		}
-
-		.staging-tabview-list {
-			background-color: #FFDBA6;
-		}
-	}
-
-	.live-view {
-		.staging-details {
-			background-image: url(../images/staging_bar/live.png);
-		}
-
-		.staging-tabview-list {
-			background-color: #C4F0BC;
-		}
 	}
 
 	/* ---------- Add Content ---------- */

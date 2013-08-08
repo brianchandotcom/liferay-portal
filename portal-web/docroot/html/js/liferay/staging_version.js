@@ -31,6 +31,8 @@ AUI.add(
 
 					var namespace = instance._namespace;
 
+					var cssClass = "btn-link";
+
 					instance._destroyToolbarContent();
 
 					var layoutRevisionToolbar = new A.Toolbar(
@@ -42,7 +44,7 @@ AUI.add(
 					if (!event.hideHistory) {
 						layoutRevisionToolbar.add(
 							{
-								icon: 'icon-time',
+								cssClass: cssClass + ' history',
 								label: Liferay.Language.get('history'),
 								on: {
 									click: A.bind('_onViewHistory', instance)
@@ -58,7 +60,7 @@ AUI.add(
 
 					StagingBar.redoButton = new A.Button(
 						{
-							icon: 'icon-forward',
+							cssClass: cssClass + ' redo-button',
 							label: redoText,
 							on: {
 								click: A.bind('_onRevisionChange', instance, 'redo')
@@ -69,7 +71,7 @@ AUI.add(
 
 					StagingBar.undoButton = new A.Button(
 						{
-							icon: 'icon-backward',
+							cssClass: cssClass + ' undo-button',
 							label: undoText,
 							on: {
 								click: A.bind('_onRevisionChange', instance, 'undo')

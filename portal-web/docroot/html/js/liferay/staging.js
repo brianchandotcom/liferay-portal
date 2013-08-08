@@ -9,6 +9,8 @@ AUI.add(
 
 				instance._namespace = config.namespace;
 
+				instance._bindUI();
+
 				Liferay.publish(
 					{
 						fireOnce: true
@@ -23,6 +25,77 @@ AUI.add(
 				);
 
 				Liferay.fire('initStagingBar', config);
+			},
+
+			_bindSelectBoxNav: function() {
+				var selectBoxNav = 'select.select-box-nav';
+
+				var stagingBarContainer = A.one('.staging-bar');
+
+				if (stagingBarContainer) {
+					stagingBarContainer.delegate(
+						'change',
+						function(event) {
+							var currentTarget = event.currentTarget;
+
+							window.location.href = currentTarget.get('value');
+						},
+						selectBoxNav
+					);
+				}
+			},
+
+			_bindStagingLink: function() {
+				var instance = this;
+
+				var initialized = false;
+
+				var stagingLink = A.one('.staging-bar .active.staging-link');
+
+				if (stagingLink) {
+					stagingLink.on(
+						'click',
+						function(event) {
+							var currentTarget = event.currentTarget;
+
+							var dropdownMenu = currentTarget.one('.dropdown-menu');
+
+							var target = event.target;
+
+							if (target.ancestor('.dropdown-toggle') || target.hasClass('dropdown-toggle')) {
+								currentTarget.toggleClass('open');
+							}
+
+							var menuOpen = currentTarget.hasClass('open');
+
+							if (menuOpen && !initialized) {
+								currentTarget.once(
+									'clickoutside',
+									function(event) {
+										this.removeClass('open');
+
+										initialized = false;
+									}
+								);
+
+								initialized = true;
+							}
+							else if (!menuOpen) {
+								currentTarget.detach('clickoutside');
+
+								initialized = false;
+							}
+						}
+					);
+				}
+			},
+
+			_bindUI: function() {
+				var instance = this;
+
+				instance._bindSelectBoxNav();
+
+				instance._bindStagingLink();
 			}
 		};
 

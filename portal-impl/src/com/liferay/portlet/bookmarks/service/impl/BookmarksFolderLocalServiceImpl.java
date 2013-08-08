@@ -370,7 +370,7 @@ public class BookmarksFolderLocalServiceImpl
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public void moveFolderToTrash(long userId, long folderId)
+	public BookmarksFolder moveFolderToTrash(long userId, long folderId)
 		throws PortalException, SystemException {
 
 		// Folder
@@ -393,6 +393,8 @@ public class BookmarksFolderLocalServiceImpl
 			userId, folder.getGroupId(), BookmarksFolder.class.getName(),
 			folder.getFolderId(), SocialActivityConstants.TYPE_MOVE_TO_TRASH,
 			extraDataJSONObject.toString(), 0);
+
+		return folder;
 	}
 
 	@Indexable(type = IndexableType.REINDEX)

@@ -280,7 +280,7 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 	}
 
 	@Override
-	public void moveFolderToTrash(long folderId)
+	public JournalFolder moveFolderToTrash(long folderId)
 		throws PortalException, SystemException {
 
 		JournalFolder folder = journalFolderLocalService.getFolder(folderId);
@@ -288,7 +288,8 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 		JournalFolderPermission.check(
 			getPermissionChecker(), folder, ActionKeys.DELETE);
 
-		journalFolderLocalService.moveFolderToTrash(getUserId(), folderId);
+		return journalFolderLocalService.moveFolderToTrash(
+			getUserId(), folderId);
 	}
 
 	@Override

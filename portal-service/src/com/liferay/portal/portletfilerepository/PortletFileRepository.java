@@ -120,10 +120,10 @@ public interface PortletFileRepository {
 	public Repository getPortletRepository(long groupId, String portletId)
 		throws PortalException, SystemException;
 
-	public void movePortletFileEntryToTrash(long userId, long fileEntryId)
+	public FileEntry movePortletFileEntryToTrash(long userId, long fileEntryId)
 		throws PortalException, SystemException;
 
-	public void movePortletFileEntryToTrash(
+	public FileEntry movePortletFileEntryToTrash(
 			long groupId, long userId, long folderId, String fileName)
 		throws PortalException, SystemException;
 

@@ -45,7 +45,6 @@ import com.liferay.portlet.wiki.PageVersionException;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.model.WikiPageConstants;
-import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.portlet.wiki.service.WikiPageServiceUtil;
 
 import java.util.HashMap;
@@ -210,16 +209,14 @@ public class EditPageAction extends PortletAction {
 
 		WikiPage wikiPage = null;
 
+		String deleteEntryTitle = null;
+
 		if (moveToTrash) {
 			if (version > 0) {
-				wikiPage = WikiPageLocalServiceUtil.getPage(
+				wikiPage = WikiPageServiceUtil.movePageToTrash(
 					nodeId, title, version);
-
-				WikiPageServiceUtil.movePageToTrash(nodeId, title, version);
 			}
 			else {
-				wikiPage = WikiPageLocalServiceUtil.getPage(nodeId, title);
-
 				WikiPageServiceUtil.movePageToTrash(nodeId, title);
 			}
 		}
@@ -232,8 +229,17 @@ public class EditPageAction extends PortletAction {
 			}
 		}
 
-		if (moveToTrash) {
+		if (moveToTrash && (wikiPage != null)) {
 			Map<String, String[]> data = new HashMap<String, String[]>();
+
+			data.put(
+				"deleteEntryClassName",
+				new String[] {WikiPage.class.getName()});
+
+			if (Validator.isNotNull(deleteEntryTitle)) {
+				data.put(
+					"deleteEntryTitle", new String[] {wikiPage.getTitle()});
+			}
 
 			data.put(
 				"restoreEntryIds",

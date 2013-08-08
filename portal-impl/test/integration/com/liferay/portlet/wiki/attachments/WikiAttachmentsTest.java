@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
@@ -352,12 +351,10 @@ public class WikiAttachmentsTest {
 			initialTrashEntriesCount,
 			_page.getDeletedAttachmentsFileEntriesCount());
 
-		long fileEntryId = WikiPageLocalServiceUtil.movePageAttachmentToTrash(
-			TestPropsValues.getUserId(), _page.getNodeId(), _page.getTitle(),
-			fileName);
-
-		FileEntry fileEntry = PortletFileRepositoryUtil.getPortletFileEntry(
-			fileEntryId);
+		FileEntry fileEntry =
+			WikiPageLocalServiceUtil.movePageAttachmentToTrash(
+				TestPropsValues.getUserId(), _page.getNodeId(),
+				_page.getTitle(), fileName);
 
 		Assert.assertEquals(
 			initialNotInTrashCount, _page.getAttachmentsFileEntriesCount());
@@ -367,7 +364,8 @@ public class WikiAttachmentsTest {
 
 		if (restore) {
 			TrashEntry trashEntry = TrashEntryLocalServiceUtil.getEntry(
-				DLFileEntryConstants.getClassName(), fileEntryId);
+				DLFileEntryConstants.getClassName(),
+				fileEntry.getFileEntryId());
 
 			TrashEntryServiceUtil.restoreEntry(trashEntry.getEntryId());
 

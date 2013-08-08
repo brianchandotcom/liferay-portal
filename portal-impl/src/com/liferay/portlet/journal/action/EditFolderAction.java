@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
@@ -34,6 +35,7 @@ import com.liferay.portlet.journal.NoSuchFolderException;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalFolder;
 import com.liferay.portlet.journal.service.JournalFolderServiceUtil;
+import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -146,9 +148,19 @@ public class EditFolderAction extends PortletAction {
 				ParamUtil.getString(actionRequest, "folderIds"), 0L);
 		}
 
-		for (long deleteFolderId : deleteFolderIds) {
+		String deleteEntryTitle = null;
+
+		for (int i = 0; i < deleteFolderIds.length; i++) {
+			long deleteFolderId = deleteFolderIds[i];
+
 			if (moveToTrash) {
-				JournalFolderServiceUtil.moveFolderToTrash(deleteFolderId);
+				JournalFolder folder =
+					JournalFolderServiceUtil.moveFolderToTrash(deleteFolderId);
+
+				if (i == 0) {
+					deleteEntryTitle = TrashUtil.getOriginalTitle(
+						folder.getName());
+				}
 			}
 			else {
 				JournalFolderServiceUtil.deleteFolder(deleteFolderId);
@@ -160,6 +172,14 @@ public class EditFolderAction extends PortletAction {
 
 		if (moveToTrash && (deleteFolderIds.length > 0)) {
 			Map<String, String[]> data = new HashMap<String, String[]>();
+
+			data.put(
+				"deleteEntryClassName",
+				new String[] {JournalFolder.class.getName()});
+
+			if (Validator.isNotNull(deleteEntryTitle)) {
+				data.put("deleteEntryTitle", new String[] {deleteEntryTitle});
+			}
 
 			data.put(
 				"restoreFolderIds", ArrayUtil.toStringArray(deleteFolderIds));

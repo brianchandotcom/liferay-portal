@@ -21,9 +21,13 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portlet.messageboards.LockedThreadException;
+import com.liferay.portlet.messageboards.model.MBMessage;
+import com.liferay.portlet.messageboards.model.MBThread;
+import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBThreadServiceUtil;
 
 import java.util.HashMap;
@@ -95,9 +99,21 @@ public class DeleteThreadAction extends PortletAction {
 				ParamUtil.getString(actionRequest, "threadIds"), 0L);
 		}
 
-		for (long deleteThreadId : deleteThreadIds) {
+		String deleteEntryTitle = null;
+
+		for (int i = 0; i < deleteThreadIds.length; i++) {
+			long deleteThreadId = deleteThreadIds[i];
+
 			if (moveToTrash) {
-				MBThreadServiceUtil.moveThreadToTrash(deleteThreadId);
+				MBThread thread = MBThreadServiceUtil.moveThreadToTrash(
+					deleteThreadId);
+
+				if (i == 0) {
+					MBMessage message = MBMessageLocalServiceUtil.getMessage(
+						thread.getRootMessageId());
+
+					deleteEntryTitle = message.getSubject();
+				}
 			}
 			else {
 				MBThreadServiceUtil.deleteThread(deleteThreadId);
@@ -106,6 +122,14 @@ public class DeleteThreadAction extends PortletAction {
 
 		if (moveToTrash && (deleteThreadIds.length > 0)) {
 			Map<String, String[]> data = new HashMap<String, String[]>();
+
+			data.put(
+				"deleteEntryClassName",
+				new String[] {MBThread.class.getName()});
+
+			if (Validator.isNotNull(deleteEntryTitle)) {
+				data.put("deleteEntryTitle", new String[] {deleteEntryTitle});
+			}
 
 			data.put(
 				"restoreThreadIds", ArrayUtil.toStringArray(deleteThreadIds));

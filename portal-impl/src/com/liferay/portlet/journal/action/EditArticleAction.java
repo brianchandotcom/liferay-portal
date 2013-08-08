@@ -359,6 +359,8 @@ public class EditArticleAction extends PortletAction {
 
 		long[] restoreArticleIds = new long[deleteArticleIds.length];
 
+		String deleteEntryTitle = null;
+
 		for (int i = 0; i < deleteArticleIds.length; i++) {
 			String deleteArticleId = deleteArticleIds[i];
 
@@ -366,6 +368,11 @@ public class EditArticleAction extends PortletAction {
 				JournalArticle article =
 					JournalArticleServiceUtil.moveArticleToTrash(
 						themeDisplay.getScopeGroupId(), deleteArticleId);
+
+				if (i == 0) {
+					deleteEntryTitle = article.getTitle(
+						themeDisplay.getLocale());
+				}
 
 				restoreArticleIds[i] = article.getResourcePrimKey();
 			}
@@ -376,6 +383,14 @@ public class EditArticleAction extends PortletAction {
 
 		if (moveToTrash && (deleteArticleIds.length > 0)) {
 			Map<String, String[]> data = new HashMap<String, String[]>();
+
+			data.put(
+				"deleteEntryClassName",
+				new String[] {JournalArticle.class.getName()});
+
+			if (Validator.isNotNull(deleteEntryTitle)) {
+				data.put("deleteEntryTitle", new String[] {deleteEntryTitle});
+			}
 
 			data.put(
 				"restoreArticleIds",

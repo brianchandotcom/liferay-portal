@@ -39,6 +39,8 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.documentlibrary.FileSizeException;
 import com.liferay.portlet.documentlibrary.action.EditFileEntryAction;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.trash.util.TrashUtil;
 import com.liferay.portlet.wiki.NoSuchNodeException;
 import com.liferay.portlet.wiki.NoSuchPageException;
 import com.liferay.portlet.wiki.model.WikiPage;
@@ -312,22 +314,34 @@ public class EditPageAttachmentsAction extends EditFileEntryAction {
 		String title = ParamUtil.getString(actionRequest, "title");
 		String attachment = ParamUtil.getString(actionRequest, "fileName");
 
-		long dlFileEntryId = 0;
+		FileEntry fileEntry = null;
 
 		if (moveToTrash) {
-			dlFileEntryId = WikiPageServiceUtil.movePageAttachmentToTrash(
+			fileEntry = WikiPageServiceUtil.movePageAttachmentToTrash(
 				nodeId, title, attachment);
 		}
 		else {
 			WikiPageServiceUtil.deletePageAttachment(nodeId, title, attachment);
 		}
 
-		if (moveToTrash && (dlFileEntryId > 0)) {
+		if (moveToTrash && (fileEntry != null)) {
 			Map<String, String[]> data = new HashMap<String, String[]>();
+
+			data.put(Constants.CMD, new String[] {Constants.REMOVE});
+			data.put(
+				"deleteEntryClassName",
+				new String[] {DLFileEntry.class.getName()});
+
+			if (Validator.isNotNull(fileEntry.getTitle())) {
+				data.put(
+					"deleteEntryTitle",
+					new String[] {
+						TrashUtil.getOriginalTitle(fileEntry.getTitle())});
+			}
 
 			data.put(
 				"restoreEntryIds",
-				new String[] {String.valueOf(dlFileEntryId)});
+				new String[] {String.valueOf(fileEntry.getFileEntryId())});
 
 			SessionMessages.add(
 				actionRequest,

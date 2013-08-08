@@ -1271,7 +1271,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	}
 
 	@Override
-	public long movePageAttachmentToTrash(
+	public FileEntry movePageAttachmentToTrash(
 			long userId, long nodeId, String title, String fileName)
 		throws PortalException, SystemException {
 
@@ -1280,7 +1280,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		FileEntry fileEntry = PortletFileRepositoryUtil.getPortletFileEntry(
 			page.getGroupId(), page.getAttachmentsFolderId(), fileName);
 
-		PortletFileRepositoryUtil.movePortletFileEntryToTrash(
+		fileEntry = PortletFileRepositoryUtil.movePortletFileEntryToTrash(
 			userId, fileEntry.getFileEntryId());
 
 		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
@@ -1297,7 +1297,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			SocialActivityConstants.TYPE_MOVE_ATTACHMENT_TO_TRASH,
 			extraDataJSONObject.toString(), 0);
 
-		return fileEntry.getFileEntryId();
+		return fileEntry;
 	}
 
 	@Override

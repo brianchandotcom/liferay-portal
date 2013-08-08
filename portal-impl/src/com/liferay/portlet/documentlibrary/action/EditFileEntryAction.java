@@ -75,6 +75,7 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.dynamicdatamapping.StorageFieldRequiredException;
+import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.io.InputStream;
 
@@ -534,9 +535,20 @@ public class EditFileEntryAction extends PortletAction {
 			return;
 		}
 
-		DLAppServiceUtil.moveFileEntryToTrash(fileEntryId);
+		FileEntry fileEntry = DLAppServiceUtil.moveFileEntryToTrash(
+			fileEntryId);
 
 		Map<String, String[]> data = new HashMap<String, String[]>();
+
+		data.put(
+			"deleteEntryClassName", new String[] {DLFileEntry.class.getName()});
+
+		if (fileEntry != null) {
+			data.put(
+				"deleteEntryTitle",
+				new String[] {
+					TrashUtil.getOriginalTitle(fileEntry.getTitle())});
+		}
 
 		data.put(
 			"restoreFileEntryIds", new String[] {String.valueOf(fileEntryId)});

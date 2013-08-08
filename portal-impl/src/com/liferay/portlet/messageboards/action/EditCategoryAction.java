@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
@@ -165,9 +166,18 @@ public class EditCategoryAction extends PortletAction {
 				ParamUtil.getString(actionRequest, "deleteCategoryIds"), 0L);
 		}
 
-		for (long deleteCategoryId : deleteCategoryIds) {
+		String deleteEntryTitle = null;
+
+		for (int i = 0; i < deleteCategoryIds.length; i++) {
+			long deleteCategoryId = deleteCategoryIds[i];
+
 			if (moveToTrash) {
-				MBCategoryServiceUtil.moveCategoryToTrash(deleteCategoryId);
+				MBCategory category = MBCategoryServiceUtil.moveCategoryToTrash(
+					deleteCategoryId);
+
+				if (i == 0) {
+					deleteEntryTitle = category.getName();
+				}
 			}
 			else {
 				MBCategoryServiceUtil.deleteCategory(
@@ -177,6 +187,14 @@ public class EditCategoryAction extends PortletAction {
 
 		if (moveToTrash && (deleteCategoryIds.length > 0)) {
 			Map<String, String[]> data = new HashMap<String, String[]>();
+
+			data.put(
+				"deleteEntryClassName",
+				new String[] {MBCategory.class.getName()});
+
+			if (Validator.isNotNull(deleteEntryTitle)) {
+				data.put("deleteEntryTitle", new String[] {deleteEntryTitle});
+			}
 
 			data.put(
 				"restoreCategoryIds",

@@ -425,7 +425,7 @@ public class JournalFolderLocalServiceImpl
 	}
 
 	@Override
-	public void moveFolderToTrash(long userId, long folderId)
+	public JournalFolder moveFolderToTrash(long userId, long folderId)
 		throws PortalException, SystemException {
 
 		JournalFolder folder = journalFolderPersistence.findByPrimaryKey(
@@ -456,6 +456,8 @@ public class JournalFolderLocalServiceImpl
 			userId, folder.getGroupId(), JournalFolder.class.getName(),
 			folder.getFolderId(), SocialActivityConstants.TYPE_MOVE_TO_TRASH,
 			extraDataJSONObject.toString(), 0);
+
+		return folder;
 	}
 
 	@Override

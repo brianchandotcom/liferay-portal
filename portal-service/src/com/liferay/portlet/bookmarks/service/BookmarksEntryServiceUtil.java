@@ -165,10 +165,11 @@ public class BookmarksEntryServiceUtil {
 		return getService().moveEntryFromTrash(entryId, parentFolderId);
 	}
 
-	public static void moveEntryToTrash(long entryId)
+	public static com.liferay.portlet.bookmarks.model.BookmarksEntry moveEntryToTrash(
+		long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().moveEntryToTrash(entryId);
+		return getService().moveEntryToTrash(entryId);
 	}
 
 	public static com.liferay.portlet.bookmarks.model.BookmarksEntry openEntry(

@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
@@ -148,9 +149,19 @@ public class EditFolderAction extends PortletAction {
 				ParamUtil.getString(actionRequest, "folderIds"), 0L);
 		}
 
-		for (long deleteFolderId : deleteFolderIds) {
+		String deleteFolderTitle = null;
+
+		for (int i = 0; i < deleteFolderIds.length; i++) {
+			long deleteFolderId = deleteFolderIds[i];
+
 			if (moveToTrash) {
-				BookmarksFolderServiceUtil.moveFolderToTrash(deleteFolderId);
+				BookmarksFolder folder =
+					BookmarksFolderServiceUtil.moveFolderToTrash(
+						deleteFolderId);
+
+				if (i == 0) {
+					deleteFolderTitle = folder.getName();
+				}
 			}
 			else {
 				BookmarksFolderServiceUtil.deleteFolder(deleteFolderId);
@@ -162,6 +173,14 @@ public class EditFolderAction extends PortletAction {
 
 		if (moveToTrash && (deleteFolderIds.length > 0)) {
 			Map<String, String[]> data = new HashMap<String, String[]>();
+
+			data.put(
+				"deleteEntryClassName",
+				new String[] {BookmarksFolder.class.getName()});
+
+			if (Validator.isNotNull(deleteFolderTitle)) {
+				data.put("deleteEntryTitle", new String[] {deleteFolderTitle});
+			}
 
 			data.put(
 				"restoreFolderIds", ArrayUtil.toStringArray(deleteFolderIds));

@@ -40,8 +40,10 @@ import com.liferay.portlet.journal.DuplicateFolderNameException;
 import com.liferay.portlet.journal.NoSuchArticleException;
 import com.liferay.portlet.journal.NoSuchFolderException;
 import com.liferay.portlet.journal.model.JournalArticle;
+import com.liferay.portlet.journal.model.JournalFolder;
 import com.liferay.portlet.journal.service.JournalArticleServiceUtil;
 import com.liferay.portlet.journal.service.JournalFolderServiceUtil;
+import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -198,9 +200,22 @@ public class EditEntryAction extends PortletAction {
 		long[] deleteFolderIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "folderIds"), 0L);
 
-		for (long deleteFolderId : deleteFolderIds) {
+		String deleteEntryClassName = null;
+		String deleteEntryTitle = null;
+
+		for (int i = 0; i < deleteFolderIds.length; i++) {
+			long deleteFolderId = deleteFolderIds[i];
+
 			if (moveToTrash) {
-				JournalFolderServiceUtil.moveFolderToTrash(deleteFolderId);
+				JournalFolder folder =
+					JournalFolderServiceUtil.moveFolderToTrash(deleteFolderId);
+
+				if (i == 0) {
+					deleteEntryClassName = JournalFolder.class.getName();
+
+					deleteEntryTitle = TrashUtil.getOriginalTitle(
+						folder.getName());
+				}
 			}
 			else {
 				JournalFolderServiceUtil.deleteFolder(deleteFolderId);
@@ -220,6 +235,13 @@ public class EditEntryAction extends PortletAction {
 					JournalArticleServiceUtil.moveArticleToTrash(
 						themeDisplay.getScopeGroupId(), deleteArticleId);
 
+				if (i == 0) {
+					deleteEntryClassName = JournalArticle.class.getName();
+
+					deleteEntryTitle = article.getTitle(
+						themeDisplay.getLocale());
+				}
+
 				restoreArticleIds[i] = article.getResourcePrimKey();
 			}
 			else {
@@ -231,6 +253,16 @@ public class EditEntryAction extends PortletAction {
 			((deleteArticleIds.length > 0) || (deleteFolderIds.length > 0))) {
 
 			Map<String, String[]> data = new HashMap<String, String[]>();
+
+			if (Validator.isNotNull(deleteEntryClassName)) {
+				data.put(
+					"deleteEntryClassName",
+					new String[] {deleteEntryClassName});
+			}
+
+			if (Validator.isNotNull(deleteEntryTitle)) {
+				data.put("deleteEntryTitle", new String[] {deleteEntryTitle});
+			}
 
 			data.put(
 				"restoreArticleIds",

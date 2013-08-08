@@ -228,13 +228,14 @@ public class BookmarksEntryServiceImpl extends BookmarksEntryServiceBaseImpl {
 	}
 
 	@Override
-	public void moveEntryToTrash(long entryId)
+	public BookmarksEntry moveEntryToTrash(long entryId)
 		throws PortalException, SystemException {
 
 		BookmarksEntryPermission.check(
 			getPermissionChecker(), entryId, ActionKeys.DELETE);
 
-		bookmarksEntryLocalService.moveEntryToTrash(getUserId(), entryId);
+		return bookmarksEntryLocalService.moveEntryToTrash(
+			getUserId(), entryId);
 	}
 
 	@Override

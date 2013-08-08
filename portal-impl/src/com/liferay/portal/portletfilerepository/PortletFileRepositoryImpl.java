@@ -388,7 +388,7 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 	}
 
 	@Override
-	public void movePortletFileEntryToTrash(long userId, long fileEntryId)
+	public FileEntry movePortletFileEntryToTrash(long userId, long fileEntryId)
 		throws PortalException, SystemException {
 
 		boolean dlAppHelperEnabled = DLAppHelperThreadLocal.isEnabled();
@@ -396,7 +396,8 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 		try {
 			DLAppHelperThreadLocal.setEnabled(false);
 
-			DLAppLocalServiceUtil.moveFileEntryToTrash(userId, fileEntryId);
+			return DLAppLocalServiceUtil.moveFileEntryToTrash(
+				userId, fileEntryId);
 		}
 		finally {
 			DLAppHelperThreadLocal.setEnabled(dlAppHelperEnabled);
@@ -404,14 +405,14 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 	}
 
 	@Override
-	public void movePortletFileEntryToTrash(
+	public FileEntry movePortletFileEntryToTrash(
 			long groupId, long userId, long folderId, String fileName)
 		throws PortalException, SystemException {
 
 		FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
 			groupId, folderId, fileName);
 
-		movePortletFileEntryToTrash(userId, fileEntry.getFileEntryId());
+		return movePortletFileEntryToTrash(userId, fileEntry.getFileEntryId());
 	}
 
 	@Override

@@ -217,19 +217,19 @@ public class PortletFileRepositoryUtil {
 			groupId, portletId);
 	}
 
-	public static void movePortletFileEntryToTrash(
+	public static FileEntry movePortletFileEntryToTrash(
 			long userId, long fileEntryId)
 		throws PortalException, SystemException {
 
-		getPortletFileRepository().movePortletFileEntryToTrash(
+		return getPortletFileRepository().movePortletFileEntryToTrash(
 			userId, fileEntryId);
 	}
 
-	public static void movePortletFileEntryToTrash(
+	public static FileEntry movePortletFileEntryToTrash(
 			long groupId, long userId, long folderId, String fileName)
 		throws PortalException, SystemException {
 
-		getPortletFileRepository().movePortletFileEntryToTrash(
+		return getPortletFileRepository().movePortletFileEntryToTrash(
 			groupId, userId, folderId, fileName);
 	}
 

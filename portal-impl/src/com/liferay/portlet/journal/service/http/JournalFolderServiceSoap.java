@@ -352,10 +352,12 @@ public class JournalFolderServiceSoap {
 		}
 	}
 
-	public static void moveFolderToTrash(long folderId)
-		throws RemoteException {
+	public static com.liferay.portlet.journal.model.JournalFolderSoap moveFolderToTrash(
+		long folderId) throws RemoteException {
 		try {
-			JournalFolderServiceUtil.moveFolderToTrash(folderId);
+			com.liferay.portlet.journal.model.JournalFolder returnValue = JournalFolderServiceUtil.moveFolderToTrash(folderId);
+
+			return com.liferay.portlet.journal.model.JournalFolderSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

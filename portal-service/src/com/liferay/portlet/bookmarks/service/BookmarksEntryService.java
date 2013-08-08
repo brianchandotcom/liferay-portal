@@ -143,7 +143,8 @@ public interface BookmarksEntryService extends BaseService {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
-	public void moveEntryToTrash(long entryId)
+	public com.liferay.portlet.bookmarks.model.BookmarksEntry moveEntryToTrash(
+		long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

@@ -99,6 +99,7 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 		}
 
 		private Map<String, Object> _resultsMap;
+
 	}
 
 	private Map<String, Object> _buildJsonWebServiceActionMappingMaps()

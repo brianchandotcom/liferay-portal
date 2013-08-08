@@ -113,6 +113,12 @@
 				<defaultValue>button</defaultValue>
 			</attribute>
 			<attribute>
+				<name>useDialog</name>
+				<inputType>boolean</inputType>
+				<outputType>boolean</outputType>
+				<defaultValue>false</defaultValue>
+			</attribute>
+			<attribute>
 				<name>value</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>

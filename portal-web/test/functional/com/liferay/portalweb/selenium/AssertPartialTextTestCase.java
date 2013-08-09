@@ -31,28 +31,6 @@ public class AssertPartialTextTestCase extends BaseTestCase {
 	}
 
 	@Test
-	public void testAssertPartialNotText() throws Exception {
-		String expectedException =
-			"\"This is Site 1\" does not contain \"Blah Blah Blah\" " +
-				"at \"//html/body/h1\"";
-
-		if (TestPropsValues.SELENIUM_LOGGER_ENABLED) {
-			expectedException =
-				"Command failure \"assertPartialText\" with parameters " +
-					"\"//html/body/h1\" \"Blah Blah Blah\" : " +
-						"\"This is Site 1\" does not contain " +
-							"\"Blah Blah Blah\" at \"//html/body/h1\"";
-		}
-
-		try {
-			selenium.assertPartialText("//html/body/h1", "Blah Blah Blah");
-		}
-		catch (Throwable e) {
-			assertEquals(e.getMessage(), expectedException);
-		}
-	}
-
-	@Test
 	public void testAssertPartialText() throws Exception {
 		selenium.waitForVisible("//html/body/p[1]/a");
 		selenium.assertPartialText("//html/body/p[1]/a", "This i");
@@ -73,6 +51,28 @@ public class AssertPartialTextTestCase extends BaseTestCase {
 		selenium.waitForVisible("//html/body/p[1]/a");
 		selenium.clickAt("//html/body/p[1]/a", RuntimeVariables.replace(""));
 
+	}
+
+	@Test
+	public void testFailAssertPartialText() throws Exception {
+		String expectedException =
+			"\"This is Site 1\" does not contain \"Blah Blah Blah\" " +
+				"at \"//html/body/h1\"";
+
+		if (TestPropsValues.SELENIUM_LOGGER_ENABLED) {
+			expectedException =
+				"Command failure \"assertPartialText\" with parameters " +
+					"\"//html/body/h1\" \"Blah Blah Blah\" : " +
+						"\"This is Site 1\" does not contain " +
+							"\"Blah Blah Blah\" at \"//html/body/h1\"";
+		}
+
+		try {
+			selenium.assertPartialText("//html/body/h1", "Blah Blah Blah");
+		}
+		catch (Throwable e) {
+			assertEquals(e.getMessage(), expectedException);
+		}
 	}
 
 }

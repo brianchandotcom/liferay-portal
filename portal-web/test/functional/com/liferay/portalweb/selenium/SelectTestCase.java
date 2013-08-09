@@ -29,14 +29,7 @@ public class SelectTestCase extends BaseTestCase {
 	}
 
 	@Test
-	public void testSelect() throws Exception {
-		selenium.select("//html/body/div[1]/select", "value=Test 1");
-		selenium.select("//html/body/div[1]/select", "value=Test 2");
-		selenium.select("//html/body/div[1]/select", "value=Test 3");
-	}
-
-	@Test
-	public void testSelectFaile() throws Exception {
+	public void testFailSelect() throws Exception {
 		String expectedException = null;
 
 		if (TestPropsValues.SELENIUM_LOGGER_ENABLED) {
@@ -51,6 +44,13 @@ public class SelectTestCase extends BaseTestCase {
 		catch (Throwable e) {
 			assertEquals(e.getMessage(), expectedException);
 		}
+	}
+
+	@Test
+	public void testSelect() throws Exception {
+		selenium.select("//html/body/div[1]/select", "value=Test 1");
+		selenium.select("//html/body/div[1]/select", "value=Test 2");
+		selenium.select("//html/body/div[1]/select", "value=Test 3");
 	}
 
 }

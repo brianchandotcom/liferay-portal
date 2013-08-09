@@ -30,7 +30,7 @@ public class WaitForVisibleTestCase extends BaseTestCase {
 	}
 
 	@Test
-	public void testWaitForNotVisible() throws Exception {
+	public void testFailWaitForVisible() throws Exception {
 		String expectedException =
 			"Element is not present at \"//Does/Not/Exists\"";
 

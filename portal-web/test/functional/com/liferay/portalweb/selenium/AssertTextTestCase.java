@@ -30,7 +30,24 @@ public class AssertTextTestCase extends BaseTestCase {
 	}
 
 	@Test
-	public void testAssertNotText() throws Exception {
+	public void testAssertText() throws Exception {
+		System.out.println("testAssertText running");
+		selenium.assertText("//html/body/h1", "This is Site 1");
+		selenium.clickAt("//html/body/p[1]/a", RuntimeVariables.replace(""));
+		selenium.assertText("//html/body/h1", "This is Site 2");
+		selenium.clickAt("//html/body/p[2]/a", RuntimeVariables.replace(""));
+		selenium.assertText("//html/body/h1", "This is Site 3");
+		selenium.clickAt("//html/body/p[3]/a", RuntimeVariables.replace(""));
+		selenium.assertText("//html/body/h1", "This is Site 4");
+		selenium.clickAt("//html/body/p[4]/a", RuntimeVariables.replace(""));
+		selenium.assertText("//html/body/h1", "This is Site 5");
+		selenium.clickAt("//html/body/p[5]/a", RuntimeVariables.replace(""));
+		selenium.assertText("//html/body/h1", "This is Site 6");
+		selenium.clickAt("//html/body/p[1]/a", RuntimeVariables.replace(""));
+	}
+
+	@Test
+	public void testFailAssertText() throws Exception {
 		String expectedException =
 			"Pattern \"This is Site 2\" does not match \"This is Site 1\" " +
 				"at \"//html/body/h1\"";
@@ -49,23 +66,6 @@ public class AssertTextTestCase extends BaseTestCase {
 		catch (Throwable e) {
 			assertEquals(e.getMessage(), expectedException);
 		}
-	}
-
-	@Test
-	public void testAssertText() throws Exception {
-		System.out.println("testAssertText running");
-		selenium.assertText("//html/body/h1", "This is Site 1");
-		selenium.clickAt("//html/body/p[1]/a", RuntimeVariables.replace(""));
-		selenium.assertText("//html/body/h1", "This is Site 2");
-		selenium.clickAt("//html/body/p[2]/a", RuntimeVariables.replace(""));
-		selenium.assertText("//html/body/h1", "This is Site 3");
-		selenium.clickAt("//html/body/p[3]/a", RuntimeVariables.replace(""));
-		selenium.assertText("//html/body/h1", "This is Site 4");
-		selenium.clickAt("//html/body/p[4]/a", RuntimeVariables.replace(""));
-		selenium.assertText("//html/body/h1", "This is Site 5");
-		selenium.clickAt("//html/body/p[5]/a", RuntimeVariables.replace(""));
-		selenium.assertText("//html/body/h1", "This is Site 6");
-		selenium.clickAt("//html/body/p[1]/a", RuntimeVariables.replace(""));
 	}
 
 }

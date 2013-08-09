@@ -19,12 +19,17 @@ import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatus;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusRegistryUtil;
 import com.liferay.portal.kernel.backgroundtask.BaseBackgroundTaskExecutor;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.lar.MissingReference;
 import com.liferay.portal.kernel.lar.MissingReferences;
 import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.model.BackgroundTask;
+import com.liferay.portal.service.BackgroundTaskLocalServiceUtil;
+
+import java.io.Serializable;
 
 import java.util.Map;
 
@@ -55,6 +60,22 @@ public abstract class BaseStagingBackgroundTaskExecutor
 				backgroundTask.getBackgroundTaskId());
 
 		backgroundTaskStatus.clearAttributes();
+	}
+
+	protected BackgroundTask markBackgroundTaskAsValidated(
+			BackgroundTask backgroundTask)
+		throws SystemException {
+
+		Map<String, Serializable> taskContextMap =
+			backgroundTask.getTaskContextMap();
+
+		taskContextMap.put("validated", true);
+
+		backgroundTask.setTaskContext(
+			JSONFactoryUtil.serialize(taskContextMap));
+
+		return BackgroundTaskLocalServiceUtil.updateBackgroundTask(
+			backgroundTask);
 	}
 
 	protected BackgroundTaskResult processMissingReferences(

@@ -16,9 +16,7 @@ package com.liferay.portal.lar.backgroundtask;
 
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
-import com.liferay.portal.kernel.backgroundtask.BaseBackgroundTaskExecutor;
 import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.lar.MissingReference;
 import com.liferay.portal.kernel.lar.MissingReferences;
 import com.liferay.portal.kernel.staging.StagingUtil;
@@ -36,13 +34,7 @@ import java.util.Map;
  * @author Julio Camarero
  */
 public class PortletStagingBackgroundTaskExecutor
-	extends BaseBackgroundTaskExecutor {
-
-	public PortletStagingBackgroundTaskExecutor() {
-		setBackgroundTaskStatusMessageTranslator(
-			new DefaultExportImportBackgroundTaskStatusMessageTranslator());
-		setSerial(true);
-	}
+	extends BaseStagingBackgroundTaskExecutor {
 
 	@Override
 	public BackgroundTaskResult execute(BackgroundTask backgroundTask)
@@ -75,6 +67,8 @@ public class PortletStagingBackgroundTaskExecutor
 					userId, targetGroupId, targetPlid, portletId, parameterMap,
 					larFile);
 
+			backgroundTask = markBackgroundTaskAsValidated(backgroundTask);
+
 			LayoutLocalServiceUtil.importPortletInfo(
 				userId, targetPlid, targetGroupId, portletId, parameterMap,
 				larFile);
@@ -100,14 +94,6 @@ public class PortletStagingBackgroundTaskExecutor
 		}
 
 		return backgroundTaskResult;
-	}
-
-	@Override
-	public String handleException(BackgroundTask backgroundTask, Exception e) {
-		JSONObject jsonObject = StagingUtil.getExceptionMessagesJSONObject(
-			getLocale(backgroundTask), e, backgroundTask.getTaskContextMap());
-
-		return jsonObject.toString();
 	}
 
 }

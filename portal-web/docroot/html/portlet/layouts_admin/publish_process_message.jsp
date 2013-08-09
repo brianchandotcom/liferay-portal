@@ -111,7 +111,15 @@ BackgroundTask backgroundTask = (BackgroundTask)row.getObject();
 			</c:when>
 			<c:otherwise>
 				<div class="alert alert-error publish-error">
-					<h4 class="upload-error-message"><liferay-ui:message key="the-publication-process-did-not-start-due-to-validation-errors" /></h4>
+					<h4 class="upload-error-message">
+						<c:choose>
+							<c:when test='<%= MapUtil.getBoolean(backgroundTask.getTaskContextMap(), "validated") %>'>
+								<liferay-ui:message key="the-publication-process-failed" /></h4>
+							</c:when>
+							<c:otherwise>
+								<liferay-ui:message key="the-publication-process-did-not-start-due-to-validation-errors" /></h4>
+							</c:otherwise>
+						</c:choose>
 
 					<span class="error-message"><%= jsonObject.getString("message") %></span>
 

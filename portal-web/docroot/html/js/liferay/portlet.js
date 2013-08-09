@@ -491,6 +491,12 @@
 			var portletId = options.portletId;
 			var refreshURL = options.refreshURL;
 
+			var EVENTS_LAZY_LOAD = ['focus', 'gesturemovestart'];
+
+			if(!A.UA.touch) {
+				EVENTS_LAZY_LOAD.push('mousemove');
+			}
+
 			if (isStatic) {
 				instance.registerStatic(portletId);
 			}
@@ -508,7 +514,7 @@
 
 				if (canEditTitle) {
 					var handle = portlet.on(
-						['focus', 'mousedown', 'mousemove'],
+						EVENTS_LAZY_LOAD,
 						function(event) {
 							Util.portletTitleEdit(
 								{
@@ -550,7 +556,7 @@
 				}
 			}
 		},
-		['aui-base', 'aui-timer']
+		['aui-base', 'aui-timer', 'event-move']
 	);
 
 	Liferay.provide(

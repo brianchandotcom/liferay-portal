@@ -35,11 +35,12 @@
 		thead th {
 			background-color: #F0EFEF;
 			font-size: 15px;
+			font-weight: normal;
 		}
 
 		.table-sort-liner a {
 			color: #555;
-			font-weight: bold;
+			font-weight: normal;
 			text-decoration: underline;
 		}
 	}

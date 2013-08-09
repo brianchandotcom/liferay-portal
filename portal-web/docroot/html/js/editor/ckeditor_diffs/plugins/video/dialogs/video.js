@@ -138,23 +138,27 @@ CKEDITOR.dialog.add(
 			var id = instance.id;
 
 			if (videoNode) {
+				var value = null;
+
 				if (id === 'id') {
-					instance.setValue(videoNode.getChild(0).getAttribute('id'));
+					value = videoNode.getChild(0).getAttribute('id');
 				}
 				else if (id === 'poster') {
-					instance.setValue(videoNode.getAttribute('data-document-url'));
+					value = videoNode.getAttribute('data-document-url');
 				}
 				else if (id === 'height') {
-					instance.setValue(videoNode.getAttribute('data-height'));
+					value = videoNode.getAttribute('data-height');
 				}
 				else if (id === 'width') {
-					instance.setValue(videoNode.getAttribute('data-width'));
+					value = videoNode.getAttribute('data-width');
+				}
+
+				if (value !== null) {
+					instance.setValue(value);
 				}
 			}
-			else {
-				if (id === 'id') {
-					instance.setValue(generateId());
-				}
+			else if (id === 'id') {
+				instance.setValue(generateId());
 			}
 		}
 

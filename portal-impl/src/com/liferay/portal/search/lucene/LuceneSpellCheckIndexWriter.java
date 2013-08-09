@@ -91,15 +91,21 @@ public class LuceneSpellCheckIndexWriter extends BaseSpellCheckIndexWriter {
 	}
 
 	protected Document createDocument(
-			long companyId, String localizedFieldName, String word,
-			String languageId, float weight)
+			long companyId, long groupId, String localizedFieldName,
+			String word, String languageId, float weight)
 		throws SearchException {
 
 		Document document = new Document();
 
 		addField(
+			document, com.liferay.portal.kernel.search.Field.GROUP_ID,
+			String.valueOf(groupId), Field.Store.YES,
+			FieldInfo.IndexOptions.DOCS_ONLY, true);
+
+		addField(
 			document, com.liferay.portal.kernel.search.Field.LANGUAGE_ID,
-			languageId, Field.Store.NO, FieldInfo.IndexOptions.DOCS_ONLY, true);
+			languageId, Field.Store.YES, FieldInfo.IndexOptions.DOCS_ONLY,
+			true);
 		addField(
 			document, com.liferay.portal.kernel.search.Field.PORTLET_ID,
 			PortletKeys.SEARCH, Field.Store.YES,
@@ -143,7 +149,8 @@ public class LuceneSpellCheckIndexWriter extends BaseSpellCheckIndexWriter {
 
 	@Override
 	protected void indexDictionary(
-			long companyId, String languageId, InputStream inputStream)
+			long companyId, long groupId, String languageId,
+			InputStream inputStream)
 		throws Exception {
 
 		IndexAccessor indexAccessor = LuceneHelperUtil.getIndexAccessor(
@@ -187,7 +194,7 @@ public class LuceneSpellCheckIndexWriter extends BaseSpellCheckIndexWriter {
 				}
 
 				Document document = createDocument(
-					companyId, localizedFieldName, word, languageId,
+					companyId, groupId, localizedFieldName, word, languageId,
 					dictionaryEntry.getWeight());
 
 				documents.add(document);

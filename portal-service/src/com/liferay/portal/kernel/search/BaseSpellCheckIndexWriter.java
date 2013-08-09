@@ -28,6 +28,9 @@ import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.util.PortletKeys;
 
 import java.io.InputStream;
@@ -36,6 +39,8 @@ import java.net.URL;
 
 import java.nio.CharBuffer;
 import java.nio.charset.CharsetEncoder;
+
+import java.util.List;
 
 /**
  * @author Michael C. Han
@@ -136,12 +141,15 @@ public abstract class BaseSpellCheckIndexWriter
 		return uidSB.toString();
 	}
 
-	protected void indexDictionary(long companyId, String languageId)
-		throws Exception {
+	protected abstract void indexDictionary(
+			long companyId, long groupId, String languageId,
+			InputStream inputStream)
+		throws Exception;
 
-		String[] dictionaryFileNames = PropsUtil.getArray(
-			PropsKeys.INDEX_SEARCH_SPELL_CHECKER_DICTIONARY,
-			new Filter(languageId));
+	protected void indexDictionary(
+			long companyId, long groupId, String languageId,
+			String[] dictionaryFileNames)
+		throws Exception {
 
 		for (String dictionaryFileName : dictionaryFileNames) {
 			InputStream inputStream = null;
@@ -172,7 +180,7 @@ public abstract class BaseSpellCheckIndexWriter
 					continue;
 				}
 
-				indexDictionary(companyId, languageId, inputStream);
+				indexDictionary(companyId, groupId, languageId, inputStream);
 			}
 			finally {
 				StreamUtil.cleanUp(inputStream);
@@ -185,9 +193,29 @@ public abstract class BaseSpellCheckIndexWriter
 		}
 	}
 
-	protected abstract void indexDictionary(
-			long companyId, String languageId, InputStream inputStream)
-		throws Exception;
+	protected void indexDictionary(long companyId, String languageId)
+		throws Exception {
+
+		String[] dictionaryFileNames = PropsUtil.getArray(
+			PropsKeys.INDEX_SEARCH_SPELL_CHECKER_DICTIONARY,
+			new Filter(languageId));
+
+		indexDictionary(companyId, 0, languageId, dictionaryFileNames);
+
+		List<Group> groups = GroupLocalServiceUtil.getLiveGroups();
+
+		for (Group group : groups) {
+			String[] groupSpecificDictionaryFileNames = PropsUtil.getArray(
+				PropsKeys.INDEX_SEARCH_SPELL_CHECKER_DICTIONARY,
+				new Filter(languageId, String.valueOf(group.getGroupId())));
+
+			if (Validator.isNotNull(groupSpecificDictionaryFileNames)) {
+				indexDictionary(
+					companyId, group.getGroupId(), languageId,
+					groupSpecificDictionaryFileNames);
+			}
+		}
+	}
 
 	protected static final String DICTIONARY_TYPE = "dictionary";
 

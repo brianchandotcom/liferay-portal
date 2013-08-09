@@ -102,9 +102,9 @@
 	</library>
 	<library>
 		<file-name>lib/development/ckbuilder.jar</file-name>
-		<version>1.6</version>
+		<version>1.6.1</version>
 		<project-name>CKBuilder</project-name>
-		<project-url>http://download.cksource.com/CKBuilder/1.6</project-url>
+		<project-url>http://download.cksource.com/CKBuilder/1.6.1</project-url>
 		<licenses>
 			<license>
 				<license-name>LGPL 2.1</license-name>

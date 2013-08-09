@@ -45,19 +45,15 @@ CKEDITOR.dialog.add(
 			if (id === 'poster') {
 				videoNode.setAttribute('data-document-url', value);
 
-				var urlChar = '?';
+				videoUrl = Liferay.Util.addParams('videoPreview=1&type=mp4', value);
 
-				if (value.indexOf(urlChar) >= 0) {
-					urlChar = '&';
-				}
-
-				videoUrl = value + urlChar + 'videoPreview=1&type=mp4';
 				videoNode.setAttribute('data-video-url', videoUrl);
 
-				videoOgvUrl = value + urlChar + 'videoPreview=1&type=ogv';
+				videoOgvUrl = Liferay.Util.addParams('videoPreview=1&type=ogv', value);
+
 				videoNode.setAttribute('data-video-ogv-url', videoOgvUrl);
 
-				value = value + urlChar + 'videoThumbnail=1';
+				value = Liferay.Util.addParams('videoThumbnail=1', value);
 
 				videoNode.setAttribute('data-poster', value);
 

@@ -23,6 +23,7 @@ import com.liferay.portal.model.ColorScheme;
 import com.liferay.portal.model.LayoutBranch;
 import com.liferay.portal.model.LayoutRevision;
 import com.liferay.portal.model.LayoutSet;
+import com.liferay.portal.model.LayoutTypePortletConstants;
 import com.liferay.portal.model.Theme;
 import com.liferay.portal.service.LayoutBranchLocalServiceUtil;
 import com.liferay.portal.service.LayoutRevisionLocalServiceUtil;
@@ -166,6 +167,22 @@ public class LayoutRevisionImpl extends LayoutRevisionBaseImpl {
 		}
 
 		return false;
+	}
+
+	@Override
+	public boolean isContentDisplayPage() {
+		UnicodeProperties typeSettingsProperties = getTypeSettingsProperties();
+
+		String defaultAssetPublisherPortletId =
+			typeSettingsProperties.getProperty(
+				LayoutTypePortletConstants.DEFAULT_ASSET_PUBLISHER_PORTLET_ID);
+
+		if (Validator.isNotNull(defaultAssetPublisherPortletId)) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	@Override

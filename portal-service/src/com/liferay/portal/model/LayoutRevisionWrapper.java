@@ -1888,6 +1888,11 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	}
 
 	@Override
+	public boolean isContentDisplayPage() {
+		return _layoutRevision.isContentDisplayPage();
+	}
+
+	@Override
 	public boolean isInheritLookAndFeel() {
 		return _layoutRevision.isInheritLookAndFeel();
 	}

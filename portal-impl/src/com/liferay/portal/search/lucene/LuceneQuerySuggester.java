@@ -199,6 +199,24 @@ public class LuceneQuerySuggester implements QuerySuggester {
 		booleanQuery.add(booleanClause);
 	}
 
+	protected BooleanQuery buildGroupIdQuery(long[] groupIds) {
+		BooleanQuery booleanQuery = new BooleanQuery();
+
+		addTermQuery(
+			booleanQuery, Field.GROUP_ID, String.valueOf(0), null,
+			BooleanClause.Occur.SHOULD);
+
+		if ((groupIds != null) && (groupIds.length > 0)) {
+			for (long groupId : groupIds) {
+				addTermQuery(
+					booleanQuery, Field.GROUP_ID, String.valueOf(groupId), null,
+					BooleanClause.Occur.SHOULD);
+			}
+		}
+
+		return booleanQuery;
+	}
+
 	protected BooleanQuery buildNGramQuery(String word) throws SearchException {
 		NGramHolder nGramHolder = NGramHolderBuilderUtil.buildNGramHolder(word);
 
@@ -234,7 +252,8 @@ public class LuceneQuerySuggester implements QuerySuggester {
 		return booleanQuery;
 	}
 
-	protected BooleanQuery buildSpellCheckQuery(String word, String languageId)
+	protected BooleanQuery buildSpellCheckQuery(
+			long groupIds[], String word, String languageId)
 		throws SearchException {
 
 		BooleanQuery suggestWordQuery = new BooleanQuery();
@@ -245,6 +264,13 @@ public class LuceneQuerySuggester implements QuerySuggester {
 			nGramQuery, BooleanClause.Occur.MUST);
 
 		suggestWordQuery.add(booleanNGramQueryClause);
+
+		BooleanQuery groupIdQuery = buildGroupIdQuery(groupIds);
+
+		BooleanClause groupIdQueryClause = new BooleanClause(
+			groupIdQuery, BooleanClause.Occur.MUST);
+
+		suggestWordQuery.add(groupIdQueryClause);
 
 		addTermQuery(
 			suggestWordQuery, Field.LANGUAGE_ID, languageId, null,
@@ -342,7 +368,7 @@ public class LuceneQuerySuggester implements QuerySuggester {
 					}
 					else {
 						BooleanQuery suggestWordQuery = buildSpellCheckQuery(
-							keyword, languageId);
+							searchContext.getGroupIds(), keyword, languageId);
 
 						RelevancyChecker relevancyChecker =
 							new StringDistanceRelevancyChecker(

@@ -286,6 +286,7 @@ else {
 							<liferay-portlet:renderURL varImpl="viewBasicFileEntryTypeURL">
 								<portlet:param name="struts_action" value="/document_library/view" />
 								<portlet:param name="folderId" value="<%= String.valueOf(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
+								<portlet:param name="browseBy" value="file-entry-type" />
 								<portlet:param name="fileEntryTypeId" value="<%= String.valueOf(0) %>" />
 								<portlet:param name="entryStart" value="0" />
 								<portlet:param name="entryEnd" value="<%= String.valueOf(entryEnd - entryStart) %>" />
@@ -296,6 +297,7 @@ else {
 							<%
 							dataView = new HashMap<String, Object>();
 
+							dataView.put("browse-by", "file-entry-type");
 							dataView.put("file-entry-type-id", 0);
 							%>
 
@@ -319,6 +321,7 @@ else {
 							<liferay-portlet:renderURL varImpl="viewFileEntryTypeURL">
 								<portlet:param name="struts_action" value="/document_library/view" />
 								<portlet:param name="folderId" value="<%= String.valueOf(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) %>" />
+								<portlet:param name="browseBy" value="file-entry-type" />
 								<portlet:param name="fileEntryTypeId" value="<%= String.valueOf(fileEntryType.getFileEntryTypeId()) %>" />
 								<portlet:param name="entryStart" value="0" />
 								<portlet:param name="entryEnd" value="<%= String.valueOf(entryEnd - entryStart) %>" />
@@ -329,6 +332,7 @@ else {
 							<%
 							dataView = new HashMap<String, Object>();
 
+							dataView.put("browse-by", "file-entry-type");
 							dataView.put("file-entry-type-id", fileEntryType.getFileEntryTypeId());
 							%>
 

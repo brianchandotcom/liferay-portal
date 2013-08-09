@@ -8,9 +8,9 @@
 
 		<#include "test_case_element_html.ftl">
 	<#elseif executeElement.attributeValue("test-case-command")??>
-		<#assign testCaseCommandPhrase = executeElement.attributeValue("test-case-command")>
+		<#assign testCaseCommandAttribute = executeElement.attributeValue("test-case-command")>
 
-		<#include "test_case_element_html.ftl">
+		<#include "test_case_command_element_html.ftl">
 	<#elseif executeElement.attributeValue("test-suite")??>
 		<#assign testSuiteName = executeElement.attributeValue("test-suite")>
 

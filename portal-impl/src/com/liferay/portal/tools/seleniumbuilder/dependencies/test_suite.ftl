@@ -3,6 +3,7 @@ package ${seleniumBuilderContext.getTestSuitePackageName(testSuiteName)};
 import com.liferay.portalweb.portal.BaseTestSuite;
 import com.liferay.portalweb.portal.NamedTestSuite;
 import com.liferay.portalweb.portal.StopSeleniumTest;
+import com.liferay.portalweb.portal.util.SeleniumUtil;
 import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
 
 <#assign rootElement = seleniumBuilderContext.getTestSuiteRootElement(testSuiteName)>
@@ -21,11 +22,11 @@ import com.liferay.portalweb.portal.util.liferayselenium.LiferaySelenium;
 
 		<#assign x = testCaseCommand?last_index_of("#")>
 
-		<#assign testCaseCommandClass = testCaseCommand?substring(0, x)>
+		<#assign testCaseName = testCaseCommand?substring(0, x)>
 
-		<#assign testCaseCommandClassName = seleniumBuilderContext.getTestCaseClassName(testCaseCommandClass)>
+		<#assign testCaseClassName = seleniumBuilderContext.getTestCaseClassName(testCaseName)>
 
-		import ${testCaseCommandClassName};
+		import ${testCaseClassName};
 	<#elseif executeElement.attributeValue("test-class")??>
 		import ${executeElement.attributeValue("test-class")};
 	<#elseif executeElement.attributeValue("test-suite")??>
@@ -44,26 +45,12 @@ public class ${seleniumBuilderContext.getTestSuiteSimpleClassName(testSuiteName)
 	public static TestSuite suite() {
 		TestSuite testSuite = new NamedTestSuite();
 
-		<#assign testCaseClasses = [] />
+		<#assign childElementAttributeValues = seleniumBuilderFileUtil.getChildElementAttributeValues(rootElement, "test-case-command")>
 
-		<#list executeElements as executeElement>
-			<#if executeElement.attributeValue("test-case-command")??>
-				<#assign testCaseCommand = executeElement.attributeValue("test-case-command")>
+		<#list childElementAttributeValues as childElementAttributeValue>
+			<#assign testCaseClassName = seleniumBuilderContext.getTestCaseSimpleClassName(childElementAttributeValue)>
 
-				<#assign x = testCaseCommand?last_index_of("#")>
-
-				<#assign testCaseCommandClass = testCaseCommand?substring(0, x)>
-
-				<#assign testCaseCommandMethod = testCaseCommand?substring(x + 1)>
-
-				<#assign testCaseClassName = seleniumBuilderContext.getTestCaseSimpleClassName(testCaseCommandClass)>
-
-				<#if !testCaseClasses?seq_contains(testCaseClassName)>
-					${testCaseClassName} ${testCaseClassName?uncap_first} = null;
-
-					<#assign testCaseClasses = testCaseClasses + [testCaseClassName] />
-				</#if>
-			</#if>
+			${testCaseClassName} ${seleniumBuilderFileUtil.getVariableName(testCaseClassName)};
 		</#list>
 
 		<#list executeElements as executeElement>
@@ -84,17 +71,15 @@ public class ${seleniumBuilderContext.getTestSuiteSimpleClassName(testSuiteName)
 
 				<#assign x = testCaseCommand?last_index_of("#")>
 
-				<#assign testCaseCommandClass = testCaseCommand?substring(0, x)>
+				<#assign testCaseName = testCaseCommand?substring(0, x)>
 
-				<#assign testCaseCommandMethod = testCaseCommand?substring(x + 1)>
+				<#assign testCaseSimpleClassName = seleniumBuilderContext.getTestCaseSimpleClassName(testCaseName)>
 
-				<#assign testCaseClassName = seleniumBuilderContext.getTestCaseSimpleClassName(testCaseCommandClass)>
+				${seleniumBuilderFileUtil.getVariableName(testCaseSimpleClassName)} = new ${testCaseSimpleClassName}();
 
-				${testCaseClassName?uncap_first} = new ${testCaseClassName}();
+				${seleniumBuilderFileUtil.getVariableName(testCaseSimpleClassName)}.setName("test${testCaseCommand?substring(x + 1)}");
 
-				${testCaseClassName?uncap_first}.setName("test${testCaseCommandMethod}");
-
-				testSuite.addTest(${testCaseClassName?uncap_first});
+				testSuite.addTest(${seleniumBuilderFileUtil.getVariableName(testCaseSimpleClassName)});
 			<#elseif executeElement.attributeValue("test-suite")??>
 				<#assign importTestSuiteName = executeElement.attributeValue("test-suite")>
 
@@ -104,7 +89,13 @@ public class ${seleniumBuilderContext.getTestSuiteSimpleClassName(testSuiteName)
 			</#if>
 		</#list>
 
-		testSuite.addTestSuite(StopSeleniumTest.class);
+		LiferaySelenium liferaySelenium = SeleniumUtil.getSelenium();
+
+		String primaryTestSuiteName = liferaySelenium.getPrimaryTestSuiteName();
+
+		if (primaryTestSuiteName.equals("${seleniumBuilderContext.getTestSuiteClassName(testSuiteName)}")) {
+			testSuite.addTestSuite(StopSeleniumTest.class);
+		}
 
 		return testSuite;
 	}

@@ -469,8 +469,13 @@ public class SeleniumBuilderFileUtil {
 		}
 		else if (errorCode == 1015) {
 			throw new IllegalArgumentException(
-				prefix + "Poorly formed test case command " + string1 +
-					" at " + suffix);
+				prefix + "Poorly formed test case command " + string1 + " at " +
+					suffix);
+		}
+		else if (errorCode == 1016) {
+			throw new IllegalArgumentException(
+				prefix + "Invalid " + string1 + " attribute value " + string2 +
+					" in " + suffix);
 		}
 		else if (errorCode == 2000) {
 			throw new IllegalArgumentException(
@@ -893,10 +898,10 @@ public class SeleniumBuilderFileUtil {
 
 				String testCaseName = testCaseCommand.substring(0, x);
 
-				String methodName = testCaseCommand.substring(x + 1);
+				String testCaseCommandName = testCaseCommand.substring(x + 1);
 
-				if (Validator.isNull(testCaseName) ||
-					Validator.isNull(methodName)) {
+				if (Validator.isNull(testCaseCommandName) ||
+					Validator.isNull(testCaseName)) {
 
 					throwValidationException(
 						1015, fileName, executeElement, testCaseCommand);

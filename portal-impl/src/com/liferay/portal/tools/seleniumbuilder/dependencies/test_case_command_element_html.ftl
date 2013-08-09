@@ -1,87 +1,19 @@
-<li id="${testCaseName?uncap_first}TestCase${testCaseCommand}">
-	<#assign lineFolds = lineFolds + 1>
+<#assign x = testCaseCommandAttribute?last_index_of("#")>
 
-	<div>
-		<div id="toggle${lineFolds}" class="expand-toggle">+</div>
-	</div>
+<#assign targetTestCaseName = testCaseCommandAttribute?substring(0, x)>
 
-	<div>
-		<div class="expand-line">
-			<h3 class="testCaseCommand">${testCaseName}#${testCaseCommand}
-				<#if testCaseCommandElement.attributeValue("depends")??>
-					[depends ~ ${testCaseCommandElement.attributeValue("depends")}]
-				</#if>
-			</h3>
-		</div>
-	</div>
+<#assign targetTestCaseCommand = testCaseCommandAttribute?substring(x + 1)>
 
-	<ul id="collapseToggle${lineFolds}" class="collapse">
-		<#assign testCaseVarElements = testCaseRootElement.elements("var")>
+<#assign testCaseRootElement = seleniumBuilderContext.getTestCaseRootElement(targetTestCaseName)>
 
-		<#list testCaseVarElements as testCaseVarElement>
-			<#assign lineNumber = testCaseVarElement.attributeValue("line-number")>
+<#assign testCaseCommandElements = testCaseRootElement.elements("command")>
 
-			<li id="${testCaseName?uncap_first}TestCase${lineNumber}">
-				<#assign displayElement = testCaseVarElement>
+<#list testCaseCommandElements as testCaseCommandElement>
+	<#assign testCaseCommand = testCaseCommandElement.attributeValue("name")>
 
-				<#include "element_whole_html.ftl">
-			</li>
-		</#list>
+	<#if testCaseCommand == targetTestCaseCommand>
+		<#assign testCaseName = targetTestCaseName>
 
-		<#if testCaseRootElement.element("set-up")??>
-			<#assign testCaseSetupElement = testCaseRootElement.element("set-up")>
-
-			<#assign lineNumber = testCaseSetupElement.attributeValue("line-number")>
-
-			<li id="${testCaseName?uncap_first}TestCase${lineNumber}">
-				<#assign displayElement = testCaseSetupElement>
-
-				<#include "element_open_html.ftl">
-
-				<#assign testCaseBlockElement = testCaseSetupElement>
-
-				<#include "test_case_block_element_html.ftl">
-
-				<#assign displayElement = testCaseSetupElement>
-
-				<#include "element_close_html.ftl">
-			</li>
-		</#if>
-
-		<#assign lineNumber = testCaseCommandElement.attributeValue("line-number")>
-
-		<li id="${testCaseName?uncap_first}TestCase${lineNumber}">
-			<#assign displayElement = testCaseCommandElement>
-
-			<#include "element_open_html.ftl">
-
-			<#assign testCaseBlockElement = testCaseCommandElement>
-
-			<#include "test_case_block_element_html.ftl">
-
-			<#assign displayElement = testCaseCommandElement>
-
-			<#include "element_close_html.ftl">
-		</li>
-
-		<#if testCaseRootElement.element("tear-down")??>
-			<#assign testCaseTearDownElement = testCaseRootElement.element("tear-down")>
-
-			<#assign lineNumber = testCaseTearDownElement.attributeValue("line-number")>
-
-			<li id="${testCaseName?uncap_first}TestCase${lineNumber}">
-				<#assign displayElement = testCaseTearDownElement>
-
-				<#include "element_open_html.ftl">
-
-				<#assign testCaseBlockElement = testCaseTearDownElement>
-
-				<#include "test_case_block_element_html.ftl">
-
-				<#assign displayElement = testCaseTearDownElement>
-
-				<#include "element_close_html.ftl">
-			</li>
-		</#if>
-	</ul>
-</li>
+		<#include "test_case_execute_element_html.ftl">
+	</#if>
+</#list>

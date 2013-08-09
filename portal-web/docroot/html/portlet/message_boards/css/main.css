@@ -21,19 +21,18 @@
 		white-space: pre;
 		word-break: normal;
 
-		.line-number {
-			color: #000;
-			display: block;
-			text-align: right;
-		}
-
 		tr td {
-			background: #FFF;
 			border-width: 0;
 
 			&.line-numbers {
 				border-right-width: 1px;
 				padding: 0 8px;
+
+				.number {
+					color: #000;
+					display: block;
+					text-align: right;
+				}
 			}
 		}
 	}

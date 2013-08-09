@@ -60,14 +60,14 @@ String strutsAction = ParamUtil.getString(request, "struts_action");
 				taglibURL = "javascript:" + renderResponse.getNamespace() + "openTemplatesView()";
 				%>
 
-				<aui:nav-item href="<%= taglibURL %>" label="templates" />
+				<aui:nav-item href="<%= taglibURL %>" iconClass="icon-list-alt" label="templates" />
 
 				<%
 				taglibURL = "javascript:" + renderResponse.getNamespace() + "openFeedsView()";
 				%>
 
 				<c:if test="<%= PortalUtil.isRSSFeedsEnabled() %>">
-					<aui:nav-item href="<%= taglibURL %>" label="feeds" />
+					<aui:nav-item href="<%= taglibURL %>" iconClass="icon-rss" label="feeds" />
 				</c:if>
 			</aui:nav-item>
 		</c:if>

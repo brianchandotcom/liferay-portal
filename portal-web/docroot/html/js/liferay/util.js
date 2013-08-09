@@ -427,7 +427,7 @@
 
 					parentThemeDisplay = parentWindow.themeDisplay;
 
-					if (!parentThemeDisplay) {
+					if (!parentThemeDisplay || window.name === 'devicePreview_iframe') {
 						break;
 					}
 					else if (!parentThemeDisplay.isStatePopUp() || (parentWindow == parentWindow.parent)) {

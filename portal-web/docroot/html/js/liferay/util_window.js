@@ -175,7 +175,9 @@ AUI.add(
 						config.id = A.guid();
 					}
 
-					config.iframeId = config.id + instance.IFRAME_SUFFIX;
+					if (!config.iframeId) {
+						config.iframeId = config.id + instance.IFRAME_SUFFIX;
+					}
 				},
 
 				_getWindow: function(config) {

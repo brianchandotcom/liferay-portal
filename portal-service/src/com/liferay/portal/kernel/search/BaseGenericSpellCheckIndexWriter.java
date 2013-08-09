@@ -54,12 +54,14 @@ public abstract class BaseGenericSpellCheckIndexWriter
 	}
 
 	protected Document createDocument(
-			long companyId, String languageId, String word, float weight)
+			long companyId, long groupId, String languageId, String word,
+			float weight)
 		throws SearchException {
 
 		Document document = (Document)_documentPrototype.clone();
 
 		document.addKeyword(Field.COMPANY_ID, companyId);
+		document.addKeyword(Field.GROUP_ID, groupId);
 		document.addKeyword(Field.LANGUAGE_ID, languageId);
 		document.addKeyword(Field.PORTLET_ID, PortletKeys.SEARCH);
 		document.addKeyword(Field.PRIORITY, String.valueOf(weight));
@@ -88,7 +90,8 @@ public abstract class BaseGenericSpellCheckIndexWriter
 
 	@Override
 	protected void indexDictionary(
-			long companyId, String languageId, InputStream inputStream)
+			long companyId, long groupId, String languageId,
+			InputStream inputStream)
 		throws Exception {
 
 		Set<Document> documents = new HashSet<Document>();
@@ -108,7 +111,7 @@ public abstract class BaseGenericSpellCheckIndexWriter
 				DictionaryEntry dictionaryEntry = iterator.next();
 
 				Document document = createDocument(
-					companyId, languageId, dictionaryEntry.getWord(),
+					companyId, groupId, languageId, dictionaryEntry.getWord(),
 					dictionaryEntry.getWeight());
 
 				documents.add(document);

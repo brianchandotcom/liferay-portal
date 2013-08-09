@@ -331,7 +331,13 @@ AUI.add(
 									fieldsMap,
 									function(json) {
 										if (json.recordId > 0) {
-											record.set('recordId', json.recordId, {silent: true});
+											record.set(
+												'recordId',
+												json.recordId,
+												{
+													silent: true
+												}
+											);
 										}
 									}
 								);
@@ -493,7 +499,7 @@ AUI.add(
 								item.formatter = function(obj) {
 									var data = obj.data;
 
-									var value = A.DataType.Number.parse(data[name])
+									var value = A.DataType.Number.parse(data[name]);
 
 									if (!Lang.isNumber(value)) {
 										value = STR_EMPTY;

@@ -23,6 +23,7 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.trash.model.TrashEntry;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.portlet.PortletURL;
@@ -50,6 +51,13 @@ public interface Trash {
 			long companyId, long repositoryId, Date date,
 			String[] attachmentFileNames)
 		throws PortalException, SystemException;
+
+	public HashMap<Long, Integer> getDependentStatuses(long entryId)
+		throws SystemException;
+
+	public HashMap<Long, Integer> getDependentStatuses(
+			long entryId, String className)
+		throws SystemException;
 
 	public List<TrashEntry> getEntries(Hits hits)
 		throws PortalException, SystemException;

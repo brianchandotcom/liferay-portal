@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.persistence.GroupActionableDynamicQuery;
@@ -113,6 +114,23 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 		}
 
 		return trashEntry;
+	}
+
+	@Override
+	public void addTrashVersion(
+			long trashEntryId, String className, long classPK, int status)
+		throws PortalException, SystemException {
+
+		long versionId = counterLocalService.increment();
+
+		TrashVersion trashVersion = trashVersionPersistence.create(versionId);
+
+		trashVersion.setEntryId(trashEntryId);
+		trashVersion.setClassName(className);
+		trashVersion.setClassPK(classPK);
+		trashVersion.setStatus(status);
+
+		trashVersionPersistence.update(trashVersion);
 	}
 
 	@Override
@@ -228,6 +246,19 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 		return trashEntryPersistence.fetchByC_C(classNameId, classPK);
 	}
 
+	@Override
+	public TrashVersion fetchVersion(
+			long entryId, String className, long classPK)
+		throws SystemException {
+
+		long classNameId = PortalUtil.getClassNameId(className);
+
+		TrashVersion version = trashVersionPersistence.fetchByE_C_C(
+			entryId, classNameId, classPK);
+
+		return version;
+	}
+
 	/**
 	 * Returns the trash entries with the matching group ID.
 	 *
@@ -276,6 +307,15 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 		throws SystemException {
 
 		return trashEntryPersistence.findByGroupId(groupId, start, end, obc);
+	}
+
+	@Override
+	public List<TrashEntry> getEntries(long groupId, String className)
+		throws SystemException {
+
+		long classNameId = PortalUtil.getClassNameId(className);
+
+		return trashEntryPersistence.findByG_C(groupId, classNameId);
 	}
 
 	/**
@@ -335,6 +375,20 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 	@Override
 	public List<TrashVersion> getVersions(long entryId) throws SystemException {
 		return trashVersionPersistence.findByEntryId(entryId);
+	}
+
+	@Override
+	public List<TrashVersion> getVersions(long entryId, String className)
+		throws SystemException {
+
+		if (Validator.isNull(className)) {
+			return trashVersionPersistence.findByEntryId(entryId);
+		}
+		else {
+			long classNameId = PortalUtil.getClassNameId(className);
+
+			return trashVersionPersistence.findByE_C(entryId, classNameId);
+		}
 	}
 
 	/**

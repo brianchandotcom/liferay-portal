@@ -3,6 +3,10 @@
 		<h1>This is Site 1</h1>
 
 		<p>
+			<a href="Site.html">This is Site 1</a>
+		</p>
+
+		<p>
 			<a href="Site2.html">This is Site 2</a>
 		</p>
 
@@ -23,8 +27,12 @@
 		</p>
 
 		<a href="Site.html">
-			<img src="Dog.jpg" alt="Dog or Cat" onMouseOver="this.src='Cat.jpg'" 
-			onMouseOut="this.src='Dog.jpg'" />
+			<img
+				alt="Dog"
+				onMouseOut="this.src='Dog.jpg'; this.alt='Dog'"
+				onMouseOver="this.src='Cat.jpg'; this.alt='Cat';"
+				src="Dog.jpg"
+			/>
 		</a>
 
 		<div align="left">

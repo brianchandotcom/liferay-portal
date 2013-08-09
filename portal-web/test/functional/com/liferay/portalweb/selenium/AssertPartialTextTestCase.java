@@ -14,43 +14,30 @@
 
 package com.liferay.portalweb.selenium;
 
-import com.liferay.portalweb.portal.BaseTestCase;
-import com.liferay.portalweb.portal.util.RuntimeVariables;
-import com.liferay.portalweb.portal.util.TestPropsValues;
-
 import org.junit.Test;
 
 /**
  * @author Kwang Lee
  */
-
-public class AssertPartialTextTestCase extends BaseTestCase {
-
-	@Override
-	public void tearDown() throws Exception {
-	}
+public class AssertPartialTextTestCase extends BaseSeleniumTestCase {
 
 	@Test
 	public void testAssertPartialText() throws Exception {
 		selenium.waitForVisible("//html/body/p[1]/a");
 		selenium.assertPartialText("//html/body/p[1]/a", "This i");
-		selenium.clickAt("//html/body/p[1]/a", RuntimeVariables.replace(""));
-		selenium.assertPartialText("//html/body/p[1]/a", "This is");
-		selenium.waitForVisible("//html/body/p[1]/a");
-		selenium.clickAt("//html/body/p[2]/a", RuntimeVariables.replace(""));
-		selenium.assertPartialText("//html/body/p[1]/a", "This is Si");
-		selenium.waitForVisible("//html/body/p[1]/a");
-		selenium.clickAt("//html/body/p[3]/a", RuntimeVariables.replace(""));
-		selenium.assertPartialText("//html/body/p[1]/a", "This is Sit");
-		selenium.waitForVisible("//html/body/p[1]/a");
-		selenium.clickAt("//html/body/p[4]/a", RuntimeVariables.replace(""));
-		selenium.assertPartialText("//html/body/p[1]/a", "Thi");
-		selenium.waitForVisible("//html/body/p[1]/a");
-		selenium.clickAt("//html/body/p[5]/a", RuntimeVariables.replace(""));
-		selenium.assertPartialText("//html/body/p[1]/a", "This is Site");
-		selenium.waitForVisible("//html/body/p[1]/a");
-		selenium.clickAt("//html/body/p[1]/a", RuntimeVariables.replace(""));
-
+		selenium.clickAt("//html/body/p[1]/a", "");
+		selenium.assertPartialText("//html/body/p[2]/a", "This is");
+		selenium.clickAt("//html/body/p[2]/a", "");
+		selenium.assertPartialText("//html/body/p[3]/a", "This is Si");
+		selenium.clickAt("//html/body/p[3]/a", "");
+		selenium.assertPartialText("//html/body/p[4]/a", "This is Sit");
+		selenium.clickAt("//html/body/p[4]/a", "");
+		selenium.assertPartialText("//html/body/p[5]/a", "Thi");
+		selenium.clickAt("//html/body/p[5]/a", "");
+		selenium.assertPartialText("//html/body/p[6]/a", "This is Site");
+		selenium.clickAt("//html/body/p[6]/a", "");
+		selenium.assertPartialText("//html/body/p[1]/a", "This is Site 1");
+		selenium.clickAt("//html/body/p[1]/a", "");
 	}
 
 	@Test
@@ -59,19 +46,18 @@ public class AssertPartialTextTestCase extends BaseTestCase {
 			"\"This is Site 1\" does not contain \"Blah Blah Blah\" " +
 				"at \"//html/body/h1\"";
 
-		if (TestPropsValues.SELENIUM_LOGGER_ENABLED) {
+		if (SELENIUM_LOGGER_ENABLED) {
 			expectedException =
 				"Command failure \"assertPartialText\" with parameters " +
 					"\"//html/body/h1\" \"Blah Blah Blah\" : " +
-						"\"This is Site 1\" does not contain " +
-							"\"Blah Blah Blah\" at \"//html/body/h1\"";
+					expectedException;
 		}
 
 		try {
 			selenium.assertPartialText("//html/body/h1", "Blah Blah Blah");
 		}
-		catch (Throwable e) {
-			assertEquals(e.getMessage(), expectedException);
+		catch (Throwable t) {
+			assertEquals(t.getMessage(), expectedException);
 		}
 	}
 

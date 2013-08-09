@@ -14,19 +14,12 @@
 
 package com.liferay.portalweb.selenium;
 
-import com.liferay.portalweb.portal.BaseTestCase;
-import com.liferay.portalweb.portal.util.TestPropsValues;
-
 import org.junit.Test;
 
 /**
  * @author Kwang Lee
  */
-public class ClickTestCase extends BaseTestCase {
-
-	@Override
-	public void tearDown() throws Exception {
-	}
+public class ClickTestCase extends BaseSeleniumTestCase {
 
 	@Test
 	public void testClick() throws Exception {
@@ -35,15 +28,15 @@ public class ClickTestCase extends BaseTestCase {
 		selenium.click("//html/body/p[3]/a");
 		selenium.click("//html/body/p[4]/a");
 		selenium.click("//html/body/p[5]/a");
+		selenium.click("//html/body/p[6]/a");
 		selenium.click("//html/body/p[1]/a");
-
 	}
 
 	@Test
 	public void testFailClick() throws Exception {
 		String expectedException = null;
 
-		if (TestPropsValues.SELENIUM_LOGGER_ENABLED) {
+		if (SELENIUM_LOGGER_ENABLED) {
 			expectedException =
 				"Command failure \"click\" with parameter " +
 					"\"//Does/Not/Exists\" : null";
@@ -52,8 +45,8 @@ public class ClickTestCase extends BaseTestCase {
 		try {
 			selenium.click("//Does/Not/Exists");
 		}
-		catch (Throwable e) {
-			assertEquals(e.getMessage(), expectedException);
+		catch (Throwable t) {
+			assertEquals(t.getMessage(), expectedException);
 		}
 	}
 

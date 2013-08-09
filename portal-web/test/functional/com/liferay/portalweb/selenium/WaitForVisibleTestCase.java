@@ -14,56 +14,46 @@
 
 package com.liferay.portalweb.selenium;
 
-import com.liferay.portalweb.portal.BaseTestCase;
-import com.liferay.portalweb.portal.util.RuntimeVariables;
-import com.liferay.portalweb.portal.util.TestPropsValues;
-
 import org.junit.Test;
 
 /**
  * @author Kwang Lee
  */
-public class WaitForVisibleTestCase extends BaseTestCase {
-
-	@Override
-	public void tearDown() throws Exception {
-	}
+public class WaitForVisibleTestCase extends BaseSeleniumTestCase {
 
 	@Test
 	public void testFailWaitForVisible() throws Exception {
 		String expectedException =
 			"Element is not present at \"//Does/Not/Exists\"";
 
-		if (TestPropsValues.SELENIUM_LOGGER_ENABLED) {
+		if (SELENIUM_LOGGER_ENABLED) {
 			expectedException =
 				"Command failure \"waitForVisible\" with parameter " +
-					"\"//Does/Not/Exists\" : Element is not present at " +
-						"\"//Does/Not/Exists\"";
+					"\"//Does/Not/Exists\" : " + expectedException;
 		}
 
 		try {
 			selenium.waitForVisible("//Does/Not/Exists");
 		}
-		catch (Throwable e) {
-			assertEquals(e.getMessage(), expectedException);
+		catch (Throwable t) {
+			assertEquals(t.getMessage(), expectedException);
 		}
 	}
 
 	@Test
 	public void testWaitForVisible() throws Exception {
 		selenium.waitForVisible("//html/body/p[1]/a");
-		selenium.clickAt("//html/body/p[1]/a", RuntimeVariables.replace(""));
+		selenium.clickAt("//html/body/p[1]/a", "");
 		selenium.waitForVisible("//html/body/p[1]/a");
-		selenium.clickAt("//html/body/p[2]/a", RuntimeVariables.replace(""));
+		selenium.clickAt("//html/body/p[2]/a", "");
 		selenium.waitForVisible("//html/body/p[1]/a");
-		selenium.clickAt("//html/body/p[3]/a", RuntimeVariables.replace(""));
+		selenium.clickAt("//html/body/p[3]/a", "");
 		selenium.waitForVisible("//html/body/p[1]/a");
-		selenium.clickAt("//html/body/p[4]/a", RuntimeVariables.replace(""));
+		selenium.clickAt("//html/body/p[4]/a", "");
 		selenium.waitForVisible("//html/body/p[1]/a");
-		selenium.clickAt("//html/body/p[5]/a", RuntimeVariables.replace(""));
+		selenium.clickAt("//html/body/p[5]/a", "");
 		selenium.waitForVisible("//html/body/p[1]/a");
-		selenium.clickAt("//html/body/p[1]/a", RuntimeVariables.replace(""));
-
+		selenium.clickAt("//html/body/p[1]/a", "");
 	}
 
 }

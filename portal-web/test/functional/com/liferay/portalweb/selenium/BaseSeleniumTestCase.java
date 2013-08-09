@@ -14,35 +14,19 @@
 
 package com.liferay.portalweb.selenium;
 
-import org.junit.Test;
+import com.liferay.portalweb.portal.BaseTestCase;
+import com.liferay.portalweb.portal.util.TestPropsValues;
 
 /**
  * @author Kwang Lee
  */
-public class MouseOverTestCase extends BaseSeleniumTestCase {
+public class BaseSeleniumTestCase extends BaseTestCase {
 
-	@Test
-	public void testFailMouseOver() throws Exception {
-		String expectedException = null;
-
-		if (SELENIUM_LOGGER_ENABLED) {
-			expectedException =
-				"Command failure \"mouseOver\" with parameter " +
-					"\"//Does/Not/Exists\" : null";
-		}
-
-		try {
-			selenium.mouseOver("//Does/Not/Exists");
-		}
-		catch (Throwable t) {
-			assertEquals(t.getMessage(), expectedException);
-		}
+	@Override
+	public void tearDown() throws Exception {
 	}
 
-	@Test
-	public void testMouseOver() throws Exception {
-		selenium.mouseOver("//html/body/a/img");
-		selenium.waitForVisible("//html/body/a/img[@src='Cat.jpg']");
-	}
+	protected static final boolean SELENIUM_LOGGER_ENABLED =
+		TestPropsValues.SELENIUM_LOGGER_ENABLED;
 
 }

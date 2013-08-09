@@ -14,25 +14,18 @@
 
 package com.liferay.portalweb.selenium;
 
-import com.liferay.portalweb.portal.BaseTestCase;
-import com.liferay.portalweb.portal.util.TestPropsValues;
-
 import org.junit.Test;
 
 /**
  * @author Kwang Lee
  */
-public class SelectTestCase extends BaseTestCase {
-
-	@Override
-	public void tearDown() throws Exception {
-	}
+public class SelectTestCase extends BaseSeleniumTestCase {
 
 	@Test
 	public void testFailSelect() throws Exception {
 		String expectedException = null;
 
-		if (TestPropsValues.SELENIUM_LOGGER_ENABLED) {
+		if (SELENIUM_LOGGER_ENABLED) {
 			expectedException =
 				"Command failure \"select\" with parameters " +
 					"\"//Does/Not/Exists\" \"value=Failure\" : null";
@@ -41,8 +34,8 @@ public class SelectTestCase extends BaseTestCase {
 		try {
 			selenium.select("//Does/Not/Exists", "value=Failure");
 		}
-		catch (Throwable e) {
-			assertEquals(e.getMessage(), expectedException);
+		catch (Throwable t) {
+			assertEquals(t.getMessage(), expectedException);
 		}
 	}
 

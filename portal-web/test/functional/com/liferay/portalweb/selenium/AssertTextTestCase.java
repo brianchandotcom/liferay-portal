@@ -14,36 +14,28 @@
 
 package com.liferay.portalweb.selenium;
 
-import com.liferay.portalweb.portal.BaseTestCase;
-import com.liferay.portalweb.portal.util.RuntimeVariables;
-import com.liferay.portalweb.portal.util.TestPropsValues;
-
 import org.junit.Test;
 
 /**
  * @author Kwang Lee
  */
-public class AssertTextTestCase extends BaseTestCase {
-
-	@Override
-	public void tearDown() throws Exception {
-	}
+public class AssertTextTestCase extends BaseSeleniumTestCase {
 
 	@Test
 	public void testAssertText() throws Exception {
-		System.out.println("testAssertText running");
+		selenium.clickAt("//html/body/p[1]/a", "");
 		selenium.assertText("//html/body/h1", "This is Site 1");
-		selenium.clickAt("//html/body/p[1]/a", RuntimeVariables.replace(""));
+		selenium.clickAt("//html/body/p[2]/a", "");
 		selenium.assertText("//html/body/h1", "This is Site 2");
-		selenium.clickAt("//html/body/p[2]/a", RuntimeVariables.replace(""));
+		selenium.clickAt("//html/body/p[3]/a", "");
 		selenium.assertText("//html/body/h1", "This is Site 3");
-		selenium.clickAt("//html/body/p[3]/a", RuntimeVariables.replace(""));
+		selenium.clickAt("//html/body/p[4]/a", "");
 		selenium.assertText("//html/body/h1", "This is Site 4");
-		selenium.clickAt("//html/body/p[4]/a", RuntimeVariables.replace(""));
+		selenium.clickAt("//html/body/p[5]/a", "");
 		selenium.assertText("//html/body/h1", "This is Site 5");
-		selenium.clickAt("//html/body/p[5]/a", RuntimeVariables.replace(""));
+		selenium.clickAt("//html/body/p[6]/a", "");
 		selenium.assertText("//html/body/h1", "This is Site 6");
-		selenium.clickAt("//html/body/p[1]/a", RuntimeVariables.replace(""));
+		selenium.clickAt("//html/body/p[1]/a", "");
 	}
 
 	@Test
@@ -52,19 +44,18 @@ public class AssertTextTestCase extends BaseTestCase {
 			"Pattern \"This is Site 2\" does not match \"This is Site 1\" " +
 				"at \"//html/body/h1\"";
 
-		if (TestPropsValues.SELENIUM_LOGGER_ENABLED) {
+		if (SELENIUM_LOGGER_ENABLED) {
 			expectedException =
 				"Command failure \"assertText\" with parameters " +
-					"\"//html/body/h1\" \"This is Site 2\" : Pattern " +
-						"\"This is Site 2\" does not match " +
-							"\"This is Site 1\" at \"//html/body/h1\"";
+					"\"//html/body/h1\" \"This is Site 2\" : " +
+					expectedException;
 		}
 
 		try {
 			selenium.assertText("//html/body/h1", "This is Site 2");
 		}
-		catch (Throwable e) {
-			assertEquals(e.getMessage(), expectedException);
+		catch (Throwable t) {
+			assertEquals(t.getMessage(), expectedException);
 		}
 	}
 

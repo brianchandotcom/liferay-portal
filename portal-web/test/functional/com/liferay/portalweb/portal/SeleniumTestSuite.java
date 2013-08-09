@@ -12,9 +12,15 @@
  * details.
  */
 
-package com.liferay.portalweb.selenium;
+package com.liferay.portalweb.portal;
 
-import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.selenium.AssertPartialTextTestCase;
+import com.liferay.portalweb.selenium.AssertTextTestCase;
+import com.liferay.portalweb.selenium.ClickAtTestCase;
+import com.liferay.portalweb.selenium.ClickTestCase;
+import com.liferay.portalweb.selenium.MouseOverTestCase;
+import com.liferay.portalweb.selenium.SelectTestCase;
+import com.liferay.portalweb.selenium.WaitForVisibleTestCase;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -26,6 +32,7 @@ public class SeleniumTestSuite extends BaseTestSuite {
 
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
+
 		testSuite.addTestSuite(AssertPartialTextTestCase.class);
 		testSuite.addTestSuite(AssertTextTestCase.class);
 		testSuite.addTestSuite(ClickAtTestCase.class);
@@ -34,8 +41,9 @@ public class SeleniumTestSuite extends BaseTestSuite {
 		testSuite.addTestSuite(SelectTestCase.class);
 		testSuite.addTestSuite(WaitForVisibleTestCase.class);
 
-		return testSuite;
+		testSuite.addTestSuite(StopSeleniumTest.class);
 
+		return testSuite;
 	}
 
 }

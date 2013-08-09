@@ -22,6 +22,7 @@ CKEDITOR.plugins.add(
 	{
 		afterInit: function(editor) {
 			var dataProcessor = editor.dataProcessor;
+
 			var	dataFilter = dataProcessor && dataProcessor.dataFilter;
 
 			if (dataFilter) {
@@ -31,8 +32,10 @@ CKEDITOR.plugins.add(
 							'div': function(realElement) {
 								var attributeClass = realElement.attributes['class'];
 
+								var fakeElement;
+
 								if (attributeClass && attributeClass.indexOf('liferayckevideo') >= 0) {
-									var fakeElement = editor.createFakeParserElement(realElement, 'liferay_cke_video', 'video', false);
+									fakeElement = editor.createFakeParserElement(realElement, 'liferay_cke_video', 'video', false);
 
 									var fakeStyle = fakeElement.attributes.style || '';
 
@@ -41,25 +44,25 @@ CKEDITOR.plugins.add(
 									var width = attributes['data-width'];
 
 									if (poster) {
-										fakeElement.attributes.style = fakeStyle + 'background-image:url(' + poster + ');';
+										fakeStyle += 'background-image:url(' + poster + ');';
 
-										fakeStyle = fakeElement.attributes.style;
+										fakeElement.attributes.style = fakeStyle;
 									}
 
 									if (typeof height != 'undefined') {
-										fakeElement.attributes.style = fakeStyle + 'height:' + CKEDITOR.tools.cssLength(height) + ';';
+										fakeStyle += 'height:' + CKEDITOR.tools.cssLength(height) + ';';
 
-										fakeStyle = fakeElement.attributes.style;
+										fakeElement.attributes.style = fakeStyle;
 									}
 
 									if (typeof width != 'undefined') {
-										fakeElement.attributes.style = fakeStyle + 'width:' + CKEDITOR.tools.cssLength(width) + ';';
+										fakeStyle += 'width:' + CKEDITOR.tools.cssLength(width) + ';';
 
-										fakeStyle = fakeElement.attributes.style;
+										fakeElement.attributes.style = fakeStyle;
 									}
-
-									return fakeElement;
 								}
+
+								return fakeElement;
 							}
 						}
 					}

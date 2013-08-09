@@ -331,7 +331,13 @@ AUI.add(
 									fieldsMap,
 									function(json) {
 										if (json.recordId > 0) {
-											record.set('recordId', json.recordId);
+											record.set(
+												'recordId',
+												json.recordId,
+												{
+													silent: true
+												}
+											);
 										}
 									}
 								);
@@ -472,6 +478,31 @@ AUI.add(
 										date = DateMath.add(date, DateMath.MINUTES, date.getTimezoneOffset());
 
 										value = A.DataType.Date.format(date);
+									}
+
+									return value;
+								};
+							}
+							else if ((type === 'ddm-decimal') || (type === 'ddm-integer') || (type === 'ddm-number')) {
+								config.outputFormatter = function(value) {
+									var number = A.DataType.Number.parse(value);
+
+									var numberValue = STR_EMPTY;
+
+									if (Lang.isNumber(number)) {
+										numberValue = number;
+									}
+
+									return numberValue;
+								};
+
+								item.formatter = function(obj) {
+									var data = obj.data;
+
+									var value = A.DataType.Number.parse(data[name]);
+
+									if (!Lang.isNumber(value)) {
+										value = STR_EMPTY;
 									}
 
 									return value;

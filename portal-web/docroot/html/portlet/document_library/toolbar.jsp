@@ -82,13 +82,13 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 				String taglibURL = "javascript:" + renderResponse.getNamespace() + "openFileEntryTypeView()";
 				%>
 
-				<aui:nav-item href="<%= taglibURL %>" label="document-types" />
+				<aui:nav-item href="<%= taglibURL %>" iconClass="icon-file" label="document-types" />
 
 				<%
 				taglibURL = "javascript:" + renderResponse.getNamespace() + "openDDMStructureView()";
 				%>
 
-				<aui:nav-item href="<%= taglibURL %>" label="metadata-sets" />
+				<aui:nav-item href="<%= taglibURL %>" iconClass="icon-file-text" label="metadata-sets" />
 			</aui:nav-item>
 		</c:if>
 	</aui:nav>

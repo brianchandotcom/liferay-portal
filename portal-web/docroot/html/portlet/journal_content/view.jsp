@@ -126,6 +126,7 @@ boolean expired = true;
 											printPageURL.setParameter("groupId", String.valueOf(articleDisplay.getGroupId()));
 											printPageURL.setParameter("articleId", articleDisplay.getArticleId());
 											printPageURL.setParameter("viewMode", Constants.PRINT);
+											printPageURL.setParameter("page", String.valueOf(articleDisplay.getCurrentPage()));
 											printPageURL.setWindowState(LiferayWindowState.POP_UP);
 											%>
 

@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Conjunction;
 import com.liferay.portal.kernel.dao.orm.Disjunction;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
@@ -130,6 +131,8 @@ public class DeletionSystemEventExporter {
 					typeProperty.eq(SystemEventConstants.TYPE_DELETE));
 
 				_addCreateDateProperty(dynamicQuery);
+
+				dynamicQuery.addOrder(OrderFactoryUtil.asc("createDate"));
 			}
 
 			@Override

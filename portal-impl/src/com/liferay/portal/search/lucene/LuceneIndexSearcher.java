@@ -62,6 +62,7 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.BoboFacetCollector;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.util.SearchPaginationUtil;
 
 import java.io.IOException;
 
@@ -565,19 +566,11 @@ public class LuceneIndexSearcher extends BaseIndexSearcher {
 			end = total;
 		}
 
-		if ((total > 0) && (start >= total)) {
-			int delta = end - start;
+		int[] startAndEnd = SearchPaginationUtil.calculateStartAndEnd(
+			start, end, total);
 
-			int cur = start / delta;
-
-			start = 0;
-
-			if (cur > 0) {
-				start = (cur - 1) * delta;
-			}
-
-			end = start + delta;
-		}
+		start = startAndEnd[0];
+		end = startAndEnd[1];
 
 		Set<String> queryTerms = new HashSet<String>();
 

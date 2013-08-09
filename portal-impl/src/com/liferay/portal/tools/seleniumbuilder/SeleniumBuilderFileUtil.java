@@ -1354,8 +1354,8 @@ public class SeleniumBuilderFileUtil {
 				validateExecuteElement(
 					fileName, element,
 					new String[] {
-						"test-case", "test-class", "test-suite",
-						"test-case-command"
+						"test-case", "test-case-command", "test-class",
+						"test-suite"
 					},
 					".+", new String[0]);
 			}

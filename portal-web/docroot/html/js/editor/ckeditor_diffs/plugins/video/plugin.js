@@ -12,7 +12,6 @@
  *  - Mozilla Public License Version 1.1 or later (the "MPL")
  * http://www.mozilla.org/MPL/MPL-1.1.html
  *  == END LICENSE ==
- *
  */
 
 (function() {
@@ -75,13 +74,13 @@ CKEDITOR.plugins.add(
 
 			return 'img.cke_video' +
 				'{' +
-					'background-image: url(' + CKEDITOR.getUrl(instance.path + 'icons/placeholder.png' ) + ');' +
+					'background-color: gray;'+
+					'background-image: url(' + CKEDITOR.getUrl(instance.path + 'icons/placeholder.png') + ');' +
 					'background-position: center center;' +
 					'background-repeat: no-repeat;' +
-					'background-color:gray;'+
-					'border: 1px solid #a9a9a9;' +
-					'width: 80px;' +
+					'border: 1px solid #A9A9A9;' +
 					'height: 80px;' +
+					'width: 80px;' +
 				'}';
 		},
 

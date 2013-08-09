@@ -16,7 +16,7 @@ package com.liferay.util.servlet;
 
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.util.PwdGenerator;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Collections;
 import java.util.Enumeration;
@@ -37,7 +37,7 @@ public class NullSession implements HttpSession {
 		_creationTime = System.currentTimeMillis();
 		_id =
 			NullSession.class.getName() + StringPool.POUND +
-				PwdGenerator.getPinNumber();
+				StringUtil.randomId();
 		_lastAccessedTime = _creationTime;
 		_maxInactiveInterval = 0;
 		_servletContext = null;

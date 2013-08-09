@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Repository;
@@ -58,7 +59,6 @@ import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageEngineUtil;
-import com.liferay.util.PwdGenerator;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -462,7 +462,7 @@ public class FileEntryStagedModelDataHandler
 
 				String[] titleParts = title.split("\\.", 2);
 
-				title = titleParts[0] + PwdGenerator.getPassword();
+				title = titleParts[0] + StringUtil.randomString();
 
 				if (titleParts.length > 1) {
 					title += StringPool.PERIOD + titleParts[1];

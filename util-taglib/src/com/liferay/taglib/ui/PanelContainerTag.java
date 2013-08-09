@@ -18,8 +18,8 @@ import com.liferay.portal.kernel.servlet.PortalIncludeUtil;
 import com.liferay.portal.kernel.servlet.taglib.BaseBodyTagSupport;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.ServerDetector;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.util.PwdGenerator;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
@@ -94,7 +94,7 @@ public class PanelContainerTag extends BaseBodyTagSupport implements BodyTag {
 			(HttpServletRequest)pageContext.getRequest();
 
 		if (Validator.isNull(_id)) {
-			_id = PwdGenerator.getPassword(PwdGenerator.KEY3, 4);
+			_id = StringUtil.randomId();
 		}
 
 		request.setAttribute("liferay-ui:panel-container:id", _id);

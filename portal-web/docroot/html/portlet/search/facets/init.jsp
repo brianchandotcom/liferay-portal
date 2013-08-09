@@ -35,5 +35,5 @@ String cssClass = "search-facet search-".concat(facetConfiguration.getDisplaySty
 %>
 
 <%!
-private static final String _RANDOM_KEY_INPUT = "portlet_search_facets_" + PwdGenerator.getPassword();
+private static final String _RANDOM_KEY_INPUT = "portlet_search_facets_" + StringUtil.randomString();
 %>

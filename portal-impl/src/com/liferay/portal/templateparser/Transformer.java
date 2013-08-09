@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
@@ -54,7 +55,6 @@ import com.liferay.portal.xsl.XSLURIResolver;
 import com.liferay.portlet.journal.util.JournalXSLURIResolver;
 import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateConstants;
 import com.liferay.taglib.util.VelocityTaglib;
-import com.liferay.util.PwdGenerator;
 
 import java.io.IOException;
 
@@ -156,8 +156,7 @@ public class Transformer {
 				PermissionThreadLocal.getPermissionChecker());
 			template.put(
 				"randomNamespace",
-				PwdGenerator.getPassword(PwdGenerator.KEY3, 4) +
-					StringPool.UNDERLINE);
+				StringUtil.randomId() + StringPool.UNDERLINE);
 			template.put("scopeGroupId", scopeGroupId);
 			template.put("siteGroupId", siteGroupId);
 			template.put("templatesPath", templatesPath);
@@ -341,8 +340,7 @@ public class Transformer {
 					PermissionThreadLocal.getPermissionChecker());
 				template.put(
 					"randomNamespace",
-					PwdGenerator.getPassword(PwdGenerator.KEY3, 4) +
-						StringPool.UNDERLINE);
+					StringUtil.randomId() + StringPool.UNDERLINE);
 				template.put("scopeGroupId", scopeGroupId);
 				template.put("siteGroupId", siteGroupId);
 				template.put("templatesPath", templatesPath);

@@ -16,9 +16,9 @@ package com.liferay.taglib.ui;
 
 import com.liferay.portal.kernel.servlet.taglib.BaseBodyTagSupport;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.util.IncludeTag;
-import com.liferay.util.PwdGenerator;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
@@ -35,7 +35,7 @@ public class PanelTag extends IncludeTag {
 			(HttpServletRequest)pageContext.getRequest();
 
 		if (Validator.isNull(_id)) {
-			_id = PwdGenerator.getPassword(PwdGenerator.KEY3, 4);
+			_id = StringUtil.randomId();
 		}
 
 		if (Validator.isNull(_parentId)) {

@@ -200,7 +200,6 @@ import com.liferay.portlet.social.util.FacebookUtil;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.util.Encryptor;
 import com.liferay.util.JS;
-import com.liferay.util.PwdGenerator;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -842,7 +841,7 @@ public class PortalImpl implements Portal {
 			themeDisplay.isLifecycleResource() ||
 			themeDisplay.isStateExclusive()) {
 
-			return PwdGenerator.getPassword(PwdGenerator.KEY3, 4);
+			return StringUtil.randomId();
 		}
 		else {
 			return DeterminateKeyGenerator.generate(input);

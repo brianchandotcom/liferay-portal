@@ -88,7 +88,7 @@ searchContainer.setTotal(total);
 String parentTitle = StringPool.BLANK;
 
 if (browseBy.equals("file-entry-type")) {
-	parentTitle = LanguageUtil.get(pageContext, "browse-by-document-type");
+	parentTitle = LanguageUtil.get(pageContext, "browse-by-type");
 }
 else {
 	if ((folderId != rootFolderId) && (parentFolderId > 0) && (folder != null) && (!folder.isMountPoint() || expandFolder)) {
@@ -236,7 +236,7 @@ else {
 							<liferay-ui:app-view-navigation-entry
 								cssClass="folder file-entry-type"
 								dataView="<%= dataView %>"
-								entryTitle='<%= LanguageUtil.get(pageContext, "browse-by-document-type") %>'
+								entryTitle='<%= LanguageUtil.get(pageContext, "browse-by-type") %>'
 								iconImage="icon-file"
 								selected='<%= browseBy.equals("file-entry-type") %>'
 								viewURL="<%= viewBasicFileEntryTypeURL.toString() %>"

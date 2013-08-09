@@ -27,19 +27,23 @@
 			}
 
 			.overlay.entry-action {
+				bottom: 0;
 				display: block;
-				height: 16px;
-				margin-top: -8px;
 				overflow: hidden;
 				position: absolute;
-				right: -10px;
-				top: 50%;
-				width: 10px;
+				right: -15px;
+				top: 0;
 
 				a {
 					display: block;
 					float: right;
 					min-height: 15px;
+					text-align: center;
+					width: 20px;
+
+					.caret {
+						vertical-align: middle;
+					}
 				}
 			}
 		}

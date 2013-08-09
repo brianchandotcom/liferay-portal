@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.lar.DLPortletDataHandler;
 import com.liferay.portlet.journal.NoSuchArticleException;
 import com.liferay.portlet.journal.lar.JournalPortletDataHandler;
@@ -82,7 +83,7 @@ public class RSSPortletDataHandler extends BasePortletDataHandler {
 		setExportMetadataControls(exportMetadataControls);
 
 		setImportControls(getExportControls()[0]);
-		setPublishToLiveByDefault(true);
+		setPublishToLiveByDefault(PropsValues.RSS_PUBLISH_TO_LIVE_BY_DEFAULT);
 	}
 
 	@Override

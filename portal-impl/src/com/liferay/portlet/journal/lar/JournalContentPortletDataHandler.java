@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.lar.DLPortletDataHandler;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
@@ -98,7 +99,8 @@ public class JournalContentPortletDataHandler
 				dlPortletDataHandler.getExportMetadataControls()));
 
 		setImportControls(getExportControls()[0]);
-		setPublishToLiveByDefault(true);
+		setPublishToLiveByDefault(
+			PropsValues.JOURNAL_CONTENT_PUBLISH_TO_LIVE_BY_DEFAULT);
 	}
 
 	@Override

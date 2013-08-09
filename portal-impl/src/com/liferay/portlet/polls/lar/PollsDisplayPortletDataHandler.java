@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.polls.NoSuchQuestionException;
 import com.liferay.portlet.polls.model.PollsChoice;
 import com.liferay.portlet.polls.model.PollsQuestion;
@@ -56,7 +57,7 @@ public class PollsDisplayPortletDataHandler extends PollsPortletDataHandler {
 						PollsVote.class.getName())
 				},
 				PollsQuestion.class.getName()));
-		setPublishToLiveByDefault(true);
+		setPublishToLiveByDefault(PropsValues.POLLS_PUBLISH_TO_LIVE_BY_DEFAULT);
 	}
 
 	@Override

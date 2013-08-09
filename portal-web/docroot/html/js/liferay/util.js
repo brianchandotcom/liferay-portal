@@ -2018,7 +2018,12 @@
 				var value = 'false';
 
 				if (checked) {
-					value = checkbox.val();
+					if (checkbox.val() == 'false') {
+						value = 'true';
+					}
+					else {
+						value = checkbox.val();
+					}
 				}
 
 				checkbox.previous().val(value);

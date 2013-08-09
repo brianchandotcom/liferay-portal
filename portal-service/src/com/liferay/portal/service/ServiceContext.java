@@ -41,10 +41,13 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 import java.util.TimeZone;
 
 import javax.servlet.http.HttpServletRequest;
@@ -424,6 +427,39 @@ public class ServiceContext implements Cloneable, Serializable {
 		return _headers;
 	}
 
+	public Set<Long> getIdSet(String name) {
+		HashSet<Long> idSet = (HashSet<Long>)getAttribute(name);
+
+		if (idSet == null) {
+			idSet = new HashSet<Long>();
+
+			setAttribute(name, idSet);
+		}
+
+		return idSet;
+	}
+
+	public Set<Long> getIdSet(String name, String className) {
+		HashMap<String, HashSet<Long>> idSets =
+			(HashMap<String, HashSet<Long>>)getAttribute(name);
+
+		if (idSets == null) {
+			idSets = new HashMap<String, HashSet<Long>>();
+
+			setAttribute(name, idSets);
+		}
+
+		HashSet<Long> idSet = idSets.get(className);
+
+		if (idSet == null) {
+			idSet = new HashSet<Long>();
+
+			idSets.put(className, idSet);
+		}
+
+		return idSet;
+	}
+
 	/**
 	 * Returns the language ID of the locale of this service context's current
 	 * user.
@@ -654,6 +690,40 @@ public class ServiceContext implements Cloneable, Serializable {
 	 */
 	public long getScopeGroupId() {
 		return _scopeGroupId;
+	}
+
+	public Map<Long, Integer> getStatusMap(String name) {
+		HashMap<Long, Integer> statusMap = (HashMap<Long, Integer>)getAttribute(
+			name);
+
+		if (statusMap == null) {
+			statusMap = new HashMap<Long, Integer>();
+
+			setAttribute(name, statusMap);
+		}
+
+		return statusMap;
+	}
+
+	public Map<Long, Integer> getStatusMap(String name, String className) {
+		HashMap<String, HashMap<Long, Integer>> statusMaps =
+			(HashMap<String, HashMap<Long, Integer>>)getAttribute(name);
+
+		if (statusMaps == null) {
+			statusMaps = new HashMap<String, HashMap<Long, Integer>>();
+
+			setAttribute(name, statusMaps);
+		}
+
+		HashMap<Long, Integer> statusMap = statusMaps.get(className);
+
+		if (statusMap == null) {
+			statusMap = new HashMap<Long, Integer>();
+
+			statusMaps.put(className, statusMap);
+		}
+
+		return statusMap;
 	}
 
 	public ThemeDisplay getThemeDisplay() {
@@ -1225,6 +1295,31 @@ public class ServiceContext implements Cloneable, Serializable {
 		_headers = headers;
 	}
 
+	public void setIdSet(String name, HashSet<Long> idSet) {
+		if (idSet == null) {
+			return;
+		}
+
+		setAttribute(name, idSet);
+	}
+
+	public void setIdSet(String name, String className, HashSet<Long> idSet) {
+		if (idSet == null) {
+			return;
+		}
+
+		HashMap<String, HashSet<Long>> idSets =
+			(HashMap<String, HashSet<Long>>)getAttribute(name);
+
+		if (idSets == null) {
+			idSets = new HashMap<String, HashSet<Long>>();
+
+			setAttribute(name, idSets);
+		}
+
+		idSets.put(className, idSet);
+	}
+
 	/**
 	 * Sets whether the primary entity of this service context is to be
 	 * indexed/re-indexed.
@@ -1401,6 +1496,33 @@ public class ServiceContext implements Cloneable, Serializable {
 	 */
 	public void setSignedIn(boolean signedIn) {
 		_signedIn = signedIn;
+	}
+
+	public void setStatusMap(String name, HashMap<Long, Integer> statusMap) {
+		if (statusMap == null) {
+			return;
+		}
+
+		setAttribute(name, statusMap);
+	}
+
+	public void setStatusMap(
+		String name, String className, HashMap<Long, Integer> statusMap) {
+
+		if (statusMap == null) {
+			return;
+		}
+
+		HashMap<String, HashMap<Long, Integer>> statusMaps =
+			(HashMap<String, HashMap<Long, Integer>>)getAttribute(name);
+
+		if (statusMaps == null) {
+			statusMaps = new HashMap<String, HashMap<Long, Integer>>();
+
+			setAttribute(name, statusMaps);
+		}
+
+		statusMaps.put(className, statusMap);
 	}
 
 	public void setTimeZone(TimeZone timeZone) {

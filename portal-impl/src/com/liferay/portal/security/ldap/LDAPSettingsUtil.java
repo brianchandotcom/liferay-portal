@@ -78,7 +78,8 @@ public class LDAPSettingsUtil {
 
 		Properties contactExpandoMappings = PropertiesUtil.load(
 			PrefsPropsUtil.getString(
-				companyId, PropsKeys.LDAP_CONTACT_CUSTOM_MAPPINGS + postfix));
+				companyId, PropsKeys.LDAP_CONTACT_CUSTOM_MAPPINGS + postfix,
+				StringPool.BLANK));
 
 		LogUtil.debug(_log, contactExpandoMappings);
 
@@ -93,7 +94,8 @@ public class LDAPSettingsUtil {
 
 		Properties contactMappings = PropertiesUtil.load(
 			PrefsPropsUtil.getString(
-				companyId, PropsKeys.LDAP_CONTACT_MAPPINGS + postfix));
+				companyId, PropsKeys.LDAP_CONTACT_MAPPINGS + postfix,
+				StringPool.BLANK));
 
 		LogUtil.debug(_log, contactMappings);
 
@@ -107,7 +109,8 @@ public class LDAPSettingsUtil {
 
 		Properties groupMappings = PropertiesUtil.load(
 			PrefsPropsUtil.getString(
-				companyId, PropsKeys.LDAP_GROUP_MAPPINGS + postfix));
+				companyId, PropsKeys.LDAP_GROUP_MAPPINGS + postfix,
+				StringPool.BLANK));
 
 		LogUtil.debug(_log, groupMappings);
 
@@ -136,7 +139,8 @@ public class LDAPSettingsUtil {
 
 		Properties userExpandoMappings = PropertiesUtil.load(
 			PrefsPropsUtil.getString(
-				companyId, PropsKeys.LDAP_USER_CUSTOM_MAPPINGS + postfix));
+				companyId, PropsKeys.LDAP_USER_CUSTOM_MAPPINGS + postfix,
+				StringPool.BLANK));
 
 		LogUtil.debug(_log, userExpandoMappings);
 
@@ -150,7 +154,8 @@ public class LDAPSettingsUtil {
 
 		Properties userMappings = PropertiesUtil.load(
 			PrefsPropsUtil.getString(
-				companyId, PropsKeys.LDAP_USER_MAPPINGS + postfix));
+				companyId, PropsKeys.LDAP_USER_MAPPINGS + postfix,
+				StringPool.BLANK));
 
 		LogUtil.debug(_log, userMappings);
 

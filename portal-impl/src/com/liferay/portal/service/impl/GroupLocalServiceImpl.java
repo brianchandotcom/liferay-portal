@@ -50,6 +50,7 @@ import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -3411,8 +3412,11 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			String oldLanguageIds = oldTypeSettingsProperties.getProperty(
 				PropsKeys.LOCALES, StringPool.BLANK);
 
+			String defaultLanguageId = typeSettingsProperties.getProperty(
+				"languageId", LocaleUtil.toLanguageId(LocaleUtil.getDefault()));
+
 			if (!Validator.equals(oldLanguageIds, newLanguageIds)) {
-				validateLanguageIds(newLanguageIds);
+				validateLanguageIds(defaultLanguageId, newLanguageIds);
 
 				LanguageUtil.resetAvailableGroupLocales(groupId);
 			}
@@ -4331,13 +4335,38 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		}
 	}
 
-	protected void validateLanguageIds(String languageIds)
+	protected void validateLanguageIds(
+			String defaultLanguageId, String languageIds)
 		throws PortalException {
 
-		for (String languageId : StringUtil.split(languageIds)) {
-			if (!ArrayUtil.contains(PropsValues.LOCALES, languageId)) {
-				throw new LocaleException();
+		Locale[] availableLocales = LanguageUtil.getAvailableLocales();
+
+		String[] availableLanguageIds = LocaleUtil.toLanguageIds(
+			availableLocales);
+
+		String[] languageIdsArray = StringUtil.split(languageIds);
+
+		for (String languageId : languageIdsArray) {
+			if (!ArrayUtil.contains(availableLanguageIds, languageId)) {
+				LocaleException le = new LocaleException(
+					LocaleException.DISPLAY_SETTINGS);
+
+				le.setSourceAvailableLocales(availableLocales);
+				le.setTargetAvailableLocales(
+					LocaleUtil.fromLanguageIds(languageIdsArray));
+
+				throw le;
 			}
+		}
+
+		if (!ArrayUtil.contains(languageIdsArray, defaultLanguageId)) {
+			LocaleException le = new LocaleException(LocaleException.DEFAULT);
+
+			le.setSourceAvailableLocales(availableLocales);
+			le.setTargetAvailableLocales(
+				LocaleUtil.fromLanguageIds(languageIdsArray));
+
+			throw le;
 		}
 	}
 

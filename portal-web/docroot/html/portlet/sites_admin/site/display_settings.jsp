@@ -78,7 +78,47 @@ if (publicLayoutSet.isLayoutSetPrototypeLinkEnabled() || privateLayoutSet.isLayo
 </aui:fieldset>
 
 <aui:fieldset id="inheritLocalesFieldset">
-	<liferay-ui:error exception="<%= LocaleException.class %>" message="please-enter-a-valid-locale" />
+	<liferay-ui:error exception="<%= LocaleException.class %>">
+
+		<%
+		LocaleException le = (LocaleException)errorException;
+		%>
+
+		<c:choose>
+			<c:when test="<%= le.getType() == LocaleException.DEFAULT %>">
+
+				<%
+				Locale[] targetAvailableLocales = le.getTargetAvailableLocales();
+
+				String[] targetAvailableLocaleDisplayNames = new String[targetAvailableLocales.length];
+
+				for (int i = 0; i < targetAvailableLocales.length; i++) {
+					Locale targetAvailableLocale = targetAvailableLocales[i];
+
+					targetAvailableLocaleDisplayNames[i] = targetAvailableLocale.getDisplayName(locale);
+				}
+				%>
+
+				<liferay-ui:message arguments="<%= StringUtil.merge(targetAvailableLocaleDisplayNames, StringPool.COMMA_AND_SPACE) %>" key="please-select-a-default-language-amongst-the-available-languages-of-the-site-x" />
+			</c:when>
+			<c:when test="<%= le.getType() == LocaleException.DISPLAY_SETTINGS %>">
+
+				<%
+				Locale[] sourceAvailableLocales = le.getSourceAvailableLocales();
+
+				String[] sourceAvailableLocaleDisplayNames = new String[sourceAvailableLocales.length];
+
+				for (int i = 0; i < sourceAvailableLocales.length; i++) {
+					Locale sourceAvailableLocale = sourceAvailableLocales[i];
+
+					sourceAvailableLocaleDisplayNames[i] = sourceAvailableLocale.getDisplayName(locale);
+				}
+				%>
+
+				<liferay-ui:message arguments="<%= StringUtil.merge(sourceAvailableLocaleDisplayNames, StringPool.COMMA_AND_SPACE) %>" key="please-select-the-available-languages-of-the-site-amongst-the-available-languages-of-the-portal-x" />
+			</c:when>
+		</c:choose>
+	</liferay-ui:error>
 
 	<%
 	Locale[] siteAvailableLocales = LanguageUtil.getAvailableLocales(liveGroup.getGroupId());

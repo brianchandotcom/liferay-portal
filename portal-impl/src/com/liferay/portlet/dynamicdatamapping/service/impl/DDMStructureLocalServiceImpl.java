@@ -1722,6 +1722,7 @@ public class DDMStructureLocalServiceImpl
 			Long companyId = CompanyThreadLocal.getCompanyId();
 
 			LocaleException le = new LocaleException(
+				LocaleException.CONTENT,
 				"The locale " + contentDefaultLocale +
 					" is not available in company " + companyId);
 

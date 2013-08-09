@@ -32,21 +32,17 @@ public class SearchPaginationUtil {
 	}
 
 	public static int[] calculateStartAndEnd(int start, int end, int total) {
+		int[] startAndEnd = {start, end};
+
 		if ((total > 0) && (start >= total)) {
 			int delta = end - start;
 
 			int cur = start / delta;
 
-			start = 0;
-
-			if (cur > 0) {
-				start = (cur - 1) * delta;
-			}
-
-			end = start + delta;
+			startAndEnd = calculateStartAndEnd(cur, delta);
 		}
 
-		return new int[] {start, end};
+		return startAndEnd;
 	}
 
 }

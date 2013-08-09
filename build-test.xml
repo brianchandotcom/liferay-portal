@@ -2073,11 +2073,16 @@ svn --username ${svn.username} --password ${svn.password} update -r ${svn.info.r
 			value="browser.commands.dir=${basedir.unix}/tools/selenium/browser-commands/${test.selenium.implementation}/${os.type}/${browser.type}/${browser.version}/"
 		/>
 
-		<replace
-			file="portal-web/test/test-portal-web.properties"
-			token="portal.url=http://localhost:8080"
-			value="portal.url=file:///${basedir.unix}/portal-web/test/functional/com/liferay/portalweb/selenium/dependencies/Site.html"
-		/>
+		<if>
+			<equals arg1="${test.selenium.unit.enabled}" arg2="true" />
+			<then>
+				<replace
+					file="portal-web/test/test-portal-web.properties"
+					token="portal.url=http://localhost:8080"
+					value="portal.url=file:///${basedir.unix}/portal-web/test/functional/com/liferay/portalweb/selenium/dependencies/Site.html"
+				/>
+			</then>
+		</if>
 
 		<replace
 			file="portal-web/test/test-portal-web.properties"

@@ -10,6 +10,18 @@
 		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
+	<command name="addPGViaMG">
+		<execute action="PGMediagallery#assertClick" locator-key1="FOLDER_MENU_ADD_FOLDER" value1="Add Folder" />
+
+		<execute action="PGMediagalleryAddfolder#type" locator-key1="NAME_FIELD" value1="${mgFolderName}" />
+		<execute action="PGMediagalleryAddfolder#type" locator-key1="DESCRIPTION_FIELD" value1="${mgFolderDescription}" />
+		<execute action="PGMediagalleryAddfolder#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="PGMediagalleryAddfolder#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+
+		<execute action="PGMediagallery#assertElementPresent" locator-key1="ENTRY_THUMBNAIL_1" />
+		<execute action="PGMediagallery#assertTextEquals" locator-key1="ENTRY_TITLE_1" value1="${mgFolderName}" />
+	</command>
+
 	<command name="deletePG">
 		<execute action="PGDocumentsandmedia#assertElementPresent" locator-key1="ENTRIES_FOLDER" />
 		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ENTRIES_FOLDER_TITLE" value1="${dmFolderName}" />
@@ -33,6 +45,22 @@
 		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ENTRIES_FOLDER_TITLE" value1="${dmFolderNameEdit}" />
 	</command>
 
+	<command name="editPGViaMG">
+		<execute action="PGMediagalleryFolder#assertClick" locator-key1="FOLDER_MENU_EDIT" value1="Edit" />
+
+		<execute action="PGMediagalleryEditfolder#type" locator-key1="NAME_FIELD" value1="${mgFolderName} Edit" />
+		<execute action="PGMediagalleryEditfolder#type" locator-key1="DESCRIPTION_FIELD" value1="${mgFolderDescription} Edit" />
+		<execute action="PGMediagalleryEditfolder#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+
+		<execute action="PGMediagalleryFolder#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="PGMediagalleryFolder#assertTextEquals" locator-key1="ENTRY_TITLE_1" value1="${mgFolderName} Edit" />
+	</command>
+
+	<command name="gotoPGViaMG">
+		<execute action="PGMediagallery#assertTextEquals" locator-key1="ENTRY_TITLE_1" value1="${mgFolderName}" />
+		<execute action="PGMediagallery#assertClick" locator-key1="ENTRY_TITLE_1" value1="${mgFolderName}" />
+	</command>
+
 	<command name="tearDownPG">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -50,6 +78,25 @@
 				<execute macro="RecycleBin#emptyCP"/>
 			</then>
 		</if>
+	</command>
+
+	<command name="tearDownPGViaMG" >
+		<while>
+			<condition action="PGMediagallery#isElementPresent" locator-key1="ENTRY_THUMBNAIL_1" />
+			<then>
+				<execute action="PGMediagallery#click" locator-key1="ENTRY_TITLE_1" />
+
+				<execute action="PGMediagalleryFolder#assertClick" locator-key1="FOLDER_MENU_MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
+
+				<execute action="PGMediagallery#assertTextEquals" locator-key1="RECYCLE_BIN_SUCCESS_MESSAGE" value1="The Selected Item was moved to Recycle Bin. Undo" />
+
+				<execute action="PGMediagallery#assertTextEquals" locator-key1="INFO_MESSSAGE" value1="There are no media files in this folder." />
+
+				<execute macro="RecycleBin#emptyCP">
+					<var name="pageName" value="${pageName}" />
+				</execute>
+			</then>
+		</while>
 	</command>
 
 	<command name="viewPG">

@@ -19,13 +19,34 @@
 	<td></td>
 </tr>
 <tr>
+	<td>OPTIONS</td>
+	<td>//a[@title='Options']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RECYCLE_BIN_SUCCESS_MESSAGE</td>
+	<td>//div[@class='alert alert-success taglib-trash-undo']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SUCCESS_MESSAGE</td>
 	<td>//div[@class='alert alert-success']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>INFO_MESSSAGE</td>
-	<td>//div[@class='alert alert-info']</td>
+	<td>//div[contains(@id,'imageGalleryAssetInfo')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--OPTIONS_MENULIST-->
+<tr>
+	<td>OPTIONS_MENULIST_CONFIGURATION</td>
+	<td>//ul/li[2]/a[contains(.,'Configuration')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -52,12 +73,12 @@
 <!--ENTRY-->
 <tr>
 	<td>ENTRY_THUMBNAIL_1</td>
-	<td>xpath=(//div[@class='image-icon']/a/span[@class='image-thumbnail'])[1]</td>
+	<td>//span[@class='image-thumbnail']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENTRY_TITLE_1</td>
-	<td>xpath=(//div[@class='image-icon']/a/span[@class='image-title'])[1]</td>
+	<td>//span[@class='image-title']</td>
 	<td></td>
 </tr>
 <tr>
@@ -89,11 +110,6 @@
 <tr>
 	<td>FOLDER_MENU_ADD_MEDIA</td>
 	<td>//ul[@class='lfr-menu-expanded lfr-menu-list']/li/a[contains(.,'Add Media')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FOLDER_MENU_VIEW_SLIDE_SHOW</td>
-	<td>//ul[@class='lfr-menu-expanded lfr-menu-list']/li/a[contains(.,'View Slide Show')]</td>
 	<td></td>
 </tr>
 <tr>

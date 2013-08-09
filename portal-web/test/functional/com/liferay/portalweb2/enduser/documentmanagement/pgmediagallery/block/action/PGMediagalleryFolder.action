@@ -1,0 +1,17 @@
+<definition>
+	<command name="assertClick">
+		<case locator-key1="FOLDER_MENU_EDIT">
+			<execute function="AssertClick#assertTextClickAtAndWait" />
+		</case>
+
+		<case locator-key1="FOLDER_MENU_MOVE_TO_THE_RECYCLE_BIN">
+			<execute function="AssertClick#assertTextClickAtAndWait" />
+		</case>
+	</command>
+
+	<command name="assertTextEquals">
+		<case locator-key1="RECYCLE_BIN_SUCCESS_MESSAGE">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+	</command>
+</definition>

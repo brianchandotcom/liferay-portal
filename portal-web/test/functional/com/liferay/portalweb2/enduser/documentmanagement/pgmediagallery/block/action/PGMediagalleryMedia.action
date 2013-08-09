@@ -1,0 +1,7 @@
+<definition>
+	<command name="click">
+		<case locator-key1="MOVE_TO_THE_RECYCLE_BIN">
+			<execute function="Click#clickAtAndWait" />
+		</case>
+	</command>
+</definition>

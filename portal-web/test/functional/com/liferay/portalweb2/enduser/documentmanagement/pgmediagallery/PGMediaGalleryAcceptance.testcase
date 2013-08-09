@@ -1,0 +1,202 @@
+<definition>
+	<var name="pageName" value="Media Gallery Page" />
+	<var name="portletName" value="Media Gallery" />
+
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="portletName" value="${portletName}" />
+		</execute>
+
+		<execute macro="MGPortlet#configureShowAllPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+	</set-up>
+
+	<command name="AddFolder">
+		<var name="mgFolderName" value="DM Folder Name" />
+		<var name="mgFolderDescription" value="DM Folder Description" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DMFolder#addPGViaMG">
+			<var name="mgFolderName" value="${mgFolderName}" />
+			<var name="mgFolderDescription" value="${mgFolderDescription}" />
+		</execute>
+	</command>
+
+	<command name="AddFolderDocument">
+		<var name="mgFolderName" value="DM Folder Name" />
+		<var name="mgFolderDescription" value="DM Folder Description" />
+		<var name="mgDocumentFile" value="Document_1.jpg" />
+		<var name="mgDocumentTitle" value="DM Document Title" />
+		<var name="mgDocumentDescription" value="DM Document Description" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DMFolder#addPGViaMG">
+			<var name="mgFolderName" value="${mgFolderName}" />
+			<var name="mgFolderDescription" value="${mgFolderDescription}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DMFolder#gotoPGViaMG">
+			<var name="mgFolderName" value="${mgFolderName}" />
+		</execute>
+
+		<execute macro="DMFolderDocument#addPGViaMG">
+			<var name="mgFolderName" value="${mgFolderName}" />
+			<var name="mgDocumentFile" value="${mgDocumentFile}" />
+			<var name="mgDocumentTitle" value="${mgDocumentTitle}" />
+			<var name="mgDocumentDescription" value="${mgDocumentDescription}" />
+		</execute>
+	</command>
+
+	<command name="DeleteFolderDocument">
+		<var name="mgFolderName" value="DM Folder Name" />
+		<var name="mgFolderDescription" value="DM Folder Description" />
+		<var name="mgDocumentFile" value="Document_1.jpg" />
+		<var name="mgDocumentTitle" value="DM Document Title" />
+
+		<var name="mgDocumentDescription" value="DM Document Description" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DMFolder#addPGViaMG">
+			<var name="mgFolderName" value="${mgFolderName}" />
+			<var name="mgFolderDescription" value="${mgFolderDescription}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DMFolder#gotoPGViaMG">
+			<var name="mgFolderName" value="${mgFolderName}" />
+		</execute>
+
+		<execute macro="DMFolderDocument#addPGViaMG">
+			<var name="mgFolderName" value="${mgFolderName}" />
+			<var name="mgDocumentFile" value="${mgDocumentFile}" />
+			<var name="mgDocumentTitle" value="${mgDocumentTitle}" />
+			<var name="mgDocumentDescription" value="${mgDocumentDescription}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DMFolder#gotoPGViaMG">
+			<var name="mgFolderName" value="${mgFolderName}" />
+		</execute>
+
+		<execute macro="DMFolderDocument#deletePGViaMG">
+			<var name="mgFolderName" value="${mgFolderName}" />
+			<var name="mgDocumentTitle" value="${mgDocumentTitle}" />
+		</execute>
+	</command>
+
+	<command name="EditDMFolder">
+		<var name="mgFolderName" value="DM Folder Name" />
+		<var name="mgFolderDescription" value="DM Folder Description" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DMFolder#addPGViaMG">
+			<var name="mgFolderName" value="${mgFolderName}" />
+			<var name="mgFolderDescription" value="${mgFolderDescription}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DMFolder#gotoPGViaMG">
+			<var name="mgFolderName" value="${mgFolderName}" />
+		</execute>
+
+		<execute macro="DMFolder#editPGViaMG">
+			<var name="mgFolderName" value="${mgFolderName}" />
+			<var name="mgFolderNameEdit" value="${mgFolderName} Edit" />
+			<var name="mgFolderDescriptionEdit" value="${mgFolderDescription} Edit" />
+		</execute>
+	</command>
+
+	<command name="EditFolderDocument">
+		<var name="mgFolderName" value="DM Folder Name" />
+		<var name="mgFolderDescription" value="DM Folder Description" />
+		<var name="mgDocumentFile" value="Document_1.jpg" />
+		<var name="mgDocumentTitle" value="DM Document Title" />
+		<var name="mgDocumentDescription" value="DM Document Description" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DMFolder#addPGViaMG">
+			<var name="mgFolderName" value="${mgFolderName}" />
+			<var name="mgFolderDescription" value="${mgFolderDescription}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DMFolder#gotoPGViaMG">
+			<var name="mgFolderName" value="${mgFolderName}" />
+		</execute>
+
+		<execute macro="DMFolderDocument#addPGViaMG">
+			<var name="mgFolderName" value="${mgFolderName}" />
+			<var name="mgDocumentFile" value="${mgDocumentFile}" />
+			<var name="mgDocumentTitle" value="${mgDocumentTitle}" />
+			<var name="mgDocumentDescription" value="${mgDocumentDescription}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DMFolder#gotoPGViaMG">
+			<var name="mgFolderName" value="${mgFolderName}" />
+		</execute>
+
+		<execute macro="DMFolderDocument#editPGViaMG">
+			<var name="mgFolderName" value="${mgFolderName}" />
+			<var name="mgDocumentTitle" value="${mgDocumentTitle}" />
+			<var name="mgDocumentTitleEdit" value="${mgDocumentTitle} Edit" />
+			<var name="mgDocumentDescriptionEdit" value="${mgDocumentDescription} Edit" />
+		</execute>
+	</command>
+
+	<tear-down>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DMFolder#tearDownPGViaMG">
+			<var name="pageName" value="${pageName}" />
+			<var name="mgFolderName" value="DM Folder Name" />
+		</execute>
+
+		<execute macro="Page#tearDownPG" />
+	</tear-down>
+</definition>

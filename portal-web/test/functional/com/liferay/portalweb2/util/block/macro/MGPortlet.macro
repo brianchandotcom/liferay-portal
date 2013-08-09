@@ -1,0 +1,19 @@
+<definition>
+	<command name="configureShowAllPG">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute action="PGMediagallery#assertElementPresent" locator-key1="OPTIONS" />
+		<execute action="PGMediagallery#assertClick" locator-key1="OPTIONS" value1="Options" />
+		<execute action="PGMediagallery#assertClick" locator-key1="OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
+
+		<execute action="PGMediagalleryConfiguration#selectFrame" locator-key1="MG_CONFIGURATION_IFRAME" />
+		<execute action="PGMediagalleryConfiguration#check" locator-key1="DISPLAY_SETTINGS_SHOW_ACTIONS_CHECKBOX" />
+		<execute action="PGMediagalleryConfiguration#check" locator-key1="DISPLAY_SETTINGS_SHOW_FOLDER_MENU_CHECKBOX" />
+		<execute action="PGMediagalleryConfiguration#check" locator-key1="DISPLAY_SETTINGS_SHOW_NAVIGATION_LINKS_CHECKBOX" />
+		<execute action="PGMediagalleryConfiguration#check" locator-key1="DISPLAY_SETTINGS_SHOW_SEARCH_CHECKBOX" />
+		<execute action="PGMediagalleryConfiguration#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="PGMediagalleryConfiguration#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+	</command>
+</definition>

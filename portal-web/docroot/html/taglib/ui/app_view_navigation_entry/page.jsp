@@ -36,7 +36,7 @@ data.putAll(dataView);
 if (browseUp) {
 	data.put("direction-right", Boolean.TRUE);
 }
-else {
+else if (!data.containsKey("view-folders")) {
 	data.put("view-folders", Boolean.FALSE);
 }
 %>

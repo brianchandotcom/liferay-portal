@@ -9,6 +9,8 @@ AUI.add(
 
 		var owns = AObject.owns;
 
+		var BROWSE_BY = 'browseBy';
+
 		var CSS_SELECTED = 'active';
 
 		var DATA_DIRECTION_RIGHT = 'data-direction-right';
@@ -318,6 +320,7 @@ AUI.add(
 
 						var entryConfig = instance.get('entry');
 
+						var dataBrowseBy = item.attr('data-browse-by');
 						var dataExpandFolder = item.attr('data-expand-folder');
 						var dataStructureId = item.attr(entryConfig.typeId);
 						var dataFolderId = item.attr(DATA_FOLDER_ID);
@@ -336,6 +339,10 @@ AUI.add(
 						var requestParams = {};
 
 						requestParams[instance.ns(PARAM_STRUTS_ACTION)] = instance.get(STR_STRUTS_ACTION);
+
+						if (dataBrowseBy) {
+							requestParams[instance.ns(BROWSE_BY)] = dataBrowseBy;
+						}
 
 						if (dataExpandFolder) {
 							requestParams[instance.ns(EXPAND_FOLDER)] = dataExpandFolder;

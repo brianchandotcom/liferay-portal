@@ -103,6 +103,15 @@ public class DLFileEntryTypeServiceImpl extends DLFileEntryTypeServiceBaseImpl {
 	}
 
 	@Override
+	public List<DLFileEntryType> getFileEntryTypes(
+			long[] groupIds, int start, int end)
+		throws SystemException {
+
+		return dlFileEntryTypePersistence.filterFindByGroupId(
+			groupIds, start, end);
+	}
+
+	@Override
 	public int getFileEntryTypesCount(long[] groupIds) throws SystemException {
 		return dlFileEntryTypePersistence.filterCountByGroupId(groupIds);
 	}

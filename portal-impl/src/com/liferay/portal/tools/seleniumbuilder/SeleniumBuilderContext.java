@@ -214,6 +214,11 @@ public class SeleniumBuilderContext {
 
 			_testCaseClassNames.put(testCaseName, _getClassName(fileName));
 
+			Element rootElement = _getRootElement(fileName);
+
+			_testCaseCommandNames.put(
+				testCaseName, _getTestCaseCommandNames(rootElement));
+
 			_testCaseFileNames.put(testCaseName, fileName);
 
 			_testCaseHTMLFileNames.put(
@@ -231,7 +236,7 @@ public class SeleniumBuilderContext {
 
 			_testCasePackageNames.put(testCaseName, _getPackageName(fileName));
 
-			_testCaseRootElements.put(testCaseName, _getRootElement(fileName));
+			_testCaseRootElements.put(testCaseName, rootElement);
 
 			_testCaseSimpleClassNames.put(
 				testCaseName, _getSimpleClassName(fileName));
@@ -768,10 +773,16 @@ public class SeleniumBuilderContext {
 
 		for (Element executeElement : executeElements) {
 			String testCase = executeElement.attributeValue("test-case");
+			String testCaseCommand = executeElement.attributeValue(
+				"test-case-command");
 			String testSuite = executeElement.attributeValue("test-suite");
 
 			if (testCase != null) {
 				_validateTestCaseElement(testSuiteFileName, executeElement);
+			}
+			else if (testCaseCommand != null) {
+				_validateTestCaseCommandElement(
+					testSuiteFileName, executeElement);
 			}
 			else if (testSuite != null) {
 				_validateTestSuiteElement(testSuiteFileName, executeElement);
@@ -850,6 +861,20 @@ public class SeleniumBuilderContext {
 	private String _getSimpleClassName(String fileName, String classSuffix) {
 		return _seleniumBuilderFileUtil.getSimpleClassName(
 			fileName, classSuffix);
+	}
+
+	private Set<String> _getTestCaseCommandNames(Element rootElement) {
+		List<Element> commandElements =
+			_seleniumBuilderFileUtil.getAllChildElements(
+				rootElement, "command");
+
+		Set<String> commandNames = new HashSet<String>();
+
+		for (Element commandElement : commandElements) {
+			commandNames.add(commandElement.attributeValue("name"));
+		}
+
+		return commandNames;
 	}
 
 	private boolean _isActionName(String name) {
@@ -932,6 +957,14 @@ public class SeleniumBuilderContext {
 		}
 
 		return false;
+	}
+
+	private boolean _isTestCaseCommand(
+		String testCaseName, String testCaseCommand) {
+
+		Set<String> commands = _testCaseCommandNames.get(testCaseName);
+
+		return commands.contains(testCaseCommand);
 	}
 
 	private boolean _isTestCaseName(String name) {
@@ -1123,6 +1156,29 @@ public class SeleniumBuilderContext {
 		}
 	}
 
+	private void _validateTestCaseCommandElement(
+		String fileName, Element element) {
+
+		String testCaseCommand = element.attributeValue("test-case-command");
+
+		int x = testCaseCommand.lastIndexOf("#");
+
+		String testCaseName = testCaseCommand.substring(0, x);
+
+		if (!_isTestCaseName(testCaseName)) {
+			_seleniumBuilderFileUtil.throwValidationException(
+				1016, fileName, element, "test-case-command", testCaseName);
+		}
+
+		String testCaseCommandName = testCaseCommand.substring(x + 1);
+
+		if (!_isTestCaseCommand(testCaseName, testCaseCommandName)) {
+			_seleniumBuilderFileUtil.throwValidationException(
+				1016, fileName, element, "test-case-command",
+				testCaseCommandName);
+		}
+	}
+
 	private void _validateTestCaseElement(String fileName, Element element) {
 		String testCase = element.attributeValue("test-case");
 
@@ -1200,6 +1256,8 @@ public class SeleniumBuilderContext {
 		new HashMap<String, Integer>();
 	private Map<String, String> _testCaseClassNames =
 		new HashMap<String, String>();
+	private Map<String, Set<String>> _testCaseCommandNames =
+		new HashMap<String, Set<String>>();
 	private Map<String, String> _testCaseFileNames =
 		new HashMap<String, String>();
 	private Map<String, String> _testCaseHTMLFileNames =

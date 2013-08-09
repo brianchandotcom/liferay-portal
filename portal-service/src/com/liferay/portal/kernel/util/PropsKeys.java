@@ -983,6 +983,10 @@ public interface PropsKeys {
 
 	public static final String INDEX_SEARCH_SCORING_ENABLED = "index.search.scoring.enabled";
 
+	public static final String INDEX_SEARCH_SPELL_CHECKER_CUSTOM_GROUP_DICTIONARY = "index.search.spell.checker.custom.group.dictionary";
+
+	public static final String INDEX_SEARCH_SPELL_CHECKER_CUSTOM_GROUPS = "index.search.spell.checker.custom.groups";
+
 	public static final String INDEX_SEARCH_SPELL_CHECKER_DICTIONARY = "index.search.spell.checker.dictionary";
 
 	public static final String INDEX_SEARCH_SPELL_CHECKER_SUPPORTED_LOCALES = "index.search.spell.checker.supported.locales";

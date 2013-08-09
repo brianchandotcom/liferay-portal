@@ -296,6 +296,13 @@ public class TrashEntryLocalServiceUtil {
 			statusOVPs, typeSettingsProperties);
 	}
 
+	public static void addTrashVersion(long trashEntryId,
+		java.lang.String className, long classPK, int status)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().addTrashVersion(trashEntryId, className, classPK, status);
+	}
+
 	public static void checkEntries()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -368,6 +375,12 @@ public class TrashEntryLocalServiceUtil {
 		return getService().fetchEntry(className, classPK);
 	}
 
+	public static com.liferay.portlet.trash.model.TrashVersion fetchVersion(
+		long entryId, java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().fetchVersion(entryId, className, classPK);
+	}
+
 	/**
 	* Returns the trash entries with the matching group ID.
 	*
@@ -415,6 +428,12 @@ public class TrashEntryLocalServiceUtil {
 		com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getEntries(groupId, start, end, obc);
+	}
+
+	public static java.util.List<com.liferay.portlet.trash.model.TrashEntry> getEntries(
+		long groupId, java.lang.String className)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getEntries(groupId, className);
 	}
 
 	/**
@@ -473,6 +492,12 @@ public class TrashEntryLocalServiceUtil {
 		long entryId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getVersions(entryId);
+	}
+
+	public static java.util.List<com.liferay.portlet.trash.model.TrashVersion> getVersions(
+		long entryId, java.lang.String className)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getVersions(entryId, className);
 	}
 
 	/**

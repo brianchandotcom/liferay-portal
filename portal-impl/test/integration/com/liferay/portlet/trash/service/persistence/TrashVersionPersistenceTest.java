@@ -30,9 +30,11 @@ import com.liferay.portal.service.persistence.BasePersistence;
 import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
 import com.liferay.portal.test.LiferayPersistenceIntegrationJUnitTestRunner;
 import com.liferay.portal.test.persistence.TransactionalPersistenceAdvice;
+import com.liferay.portal.util.PropsValues;
 
 import com.liferay.portlet.trash.NoSuchVersionException;
 import com.liferay.portlet.trash.model.TrashVersion;
+import com.liferay.portlet.trash.model.impl.TrashVersionModelImpl;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -260,6 +262,26 @@ public class TrashVersionPersistenceTest {
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
 		Assert.assertEquals(0, result.size());
+	}
+
+	@Test
+	public void testResetOriginalValues() throws Exception {
+		if (!PropsValues.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
+			return;
+		}
+
+		TrashVersion newTrashVersion = addTrashVersion();
+
+		_persistence.clearCache();
+
+		TrashVersionModelImpl existingTrashVersionModelImpl = (TrashVersionModelImpl)_persistence.findByPrimaryKey(newTrashVersion.getPrimaryKey());
+
+		Assert.assertEquals(existingTrashVersionModelImpl.getEntryId(),
+			existingTrashVersionModelImpl.getOriginalEntryId());
+		Assert.assertEquals(existingTrashVersionModelImpl.getClassNameId(),
+			existingTrashVersionModelImpl.getOriginalClassNameId());
+		Assert.assertEquals(existingTrashVersionModelImpl.getClassPK(),
+			existingTrashVersionModelImpl.getOriginalClassPK());
 	}
 
 	protected TrashVersion addTrashVersion() throws Exception {

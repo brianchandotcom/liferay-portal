@@ -880,10 +880,13 @@ create index IX_B2468446 on Ticket (key_);
 create unique index IX_B35F73D5 on TrashEntry (classNameId, classPK);
 create index IX_2674F2A8 on TrashEntry (companyId);
 create index IX_526A032A on TrashEntry (groupId);
+create index IX_FC4EEA64 on TrashEntry (groupId, classNameId);
 create index IX_6CAAE2E8 on TrashEntry (groupId, createDate);
 
 create index IX_630A643B on TrashVersion (classNameId, classPK);
 create index IX_55D44577 on TrashVersion (entryId);
+create index IX_72D58D37 on TrashVersion (entryId, classNameId);
+create unique index IX_D639348C on TrashVersion (entryId, classNameId, classPK);
 
 create index IX_524FEFCE on UserGroup (companyId);
 create unique index IX_23EAD0D on UserGroup (companyId, name);

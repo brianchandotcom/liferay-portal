@@ -26,7 +26,9 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.kernel.xml.XPath;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.service.ServiceContext;
@@ -98,6 +100,19 @@ public class VerifyDynamicDataMapping extends VerifyProcess {
 		return fileEntry;
 	}
 
+	protected void createDefaultMetadataElement(
+		Element dynamicElementElement, String defaultLanguageId) {
+
+		Element metadataElement = dynamicElementElement.addElement("meta-data");
+
+		metadataElement.addAttribute("locale", defaultLanguageId);
+
+		Element entryElement = metadataElement.addElement("entry");
+
+		entryElement.addAttribute("name", "label");
+		entryElement.addCDATA(StringPool.BLANK);
+	}
+
 	@Override
 	protected void doVerify() throws Exception {
 		_ddlRecordSetClassNameId = PortalUtil.getClassNameId(
@@ -109,6 +124,8 @@ public class VerifyDynamicDataMapping extends VerifyProcess {
 			DDMStructureLocalServiceUtil.getStructures();
 
 		for (DDMStructure structure : structures) {
+			verifyStructure(structure);
+
 			updateFileUploadReferences(structure);
 		}
 	}
@@ -160,6 +177,23 @@ public class VerifyDynamicDataMapping extends VerifyProcess {
 		jsonObject.put("uuid", fileEntry.getUuid());
 
 		return jsonObject.toString();
+	}
+
+	protected boolean hasDefaultMetadataElement(
+		Element dynamicElementElement, String defaultLanguageId) {
+
+		List<Element> metadataElements = dynamicElementElement.elements(
+			"meta-data");
+
+		for (Element metadataElement : metadataElements) {
+			String languageId = metadataElement.attributeValue("locale");
+
+			if (languageId.equals(defaultLanguageId)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	protected boolean hasFileUploadFields(DDMStructure structure)
@@ -348,6 +382,42 @@ public class VerifyDynamicDataMapping extends VerifyProcess {
 
 		for (Element dynamicElementElement : dynamicElementElements) {
 			updateXSDDynamicElement(dynamicElementElement);
+		}
+	}
+
+	protected void verifyStructure(DDMStructure structure) throws Exception {
+		String defaultLanguageId = structure.getDefaultLanguageId();
+
+		XPath xPathSelector = SAXReaderUtil.createXPath("//dynamic-element");
+
+		Document document = structure.getDocument();
+
+		List<Node> nodes = xPathSelector.selectNodes(document);
+
+		boolean isModified = false;
+
+		for (Node node : nodes) {
+			Element dynamicElementElement = (Element)node;
+
+			boolean hasDefaultMetadataElement = hasDefaultMetadataElement(
+				dynamicElementElement, defaultLanguageId);
+
+			if (hasDefaultMetadataElement) {
+				continue;
+			}
+
+			createDefaultMetadataElement(
+				dynamicElementElement, defaultLanguageId);
+
+			isModified = true;
+		}
+
+		if (isModified) {
+			String xsd = DDMXMLUtil.formatXML(document);
+
+			structure.setXsd(xsd);
+
+			DDMStructureLocalServiceUtil.updateDDMStructure(structure);
 		}
 	}
 

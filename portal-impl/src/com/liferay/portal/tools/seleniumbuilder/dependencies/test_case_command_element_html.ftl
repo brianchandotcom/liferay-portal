@@ -14,6 +14,6 @@
 	<#if testCaseCommand == targetTestCaseCommand>
 		<#assign testCaseName = targetTestCaseName>
 
-		<#include "test_case_execute_element_html.ftl">
+		<#include "test_case_command_block_element_html.ftl">
 	</#if>
 </#list>

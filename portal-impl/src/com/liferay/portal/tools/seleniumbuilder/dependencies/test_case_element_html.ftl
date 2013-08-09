@@ -5,5 +5,5 @@
 <#list testCaseCommandElements as testCaseCommandElement>
 	<#assign testCaseCommand = testCaseCommandElement.attributeValue("name")>
 
-	<#include "test_case_execute_element_html.ftl">
+	<#include "test_case_command_block_element_html.ftl">
 </#list>

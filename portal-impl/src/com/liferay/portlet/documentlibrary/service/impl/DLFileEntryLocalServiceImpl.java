@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.image.ImageBag;
 import com.liferay.portal.kernel.image.ImageToolUtil;
 import com.liferay.portal.kernel.increment.BufferedIncrement;
 import com.liferay.portal.kernel.increment.NumberIncrement;
+import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Field;
@@ -1257,9 +1258,11 @@ public class DLFileEntryLocalServiceImpl
 	public void incrementViewCounter(DLFileEntry dlFileEntry, int increment)
 		throws SystemException {
 
-		dlFileEntry.setReadCount(dlFileEntry.getReadCount() + increment);
+		if (!ExportImportThreadLocal.isImportInProcess()) {
+			dlFileEntry.setReadCount(dlFileEntry.getReadCount() + increment);
 
-		dlFileEntryPersistence.update(dlFileEntry);
+			dlFileEntryPersistence.update(dlFileEntry);
+		}
 	}
 
 	@Override

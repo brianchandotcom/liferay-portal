@@ -217,7 +217,7 @@ else {
 							cssClass="folder structure"
 							dataView="<%= dataView %>"
 							entryTitle='<%= LanguageUtil.get(pageContext, "browse-by-structure") %>'
-							iconImage="icon-filter"
+							iconImage="icon-tasks"
 							selected='<%= browseBy.equals("structure") %>'
 							viewURL="<%= filterDDMStructureArticlesURL.toString() %>"
 						/>
@@ -283,7 +283,7 @@ else {
 								cssClass="folder structure"
 								dataView="<%= dataView %>"
 								entryTitle='<%= LanguageUtil.get(pageContext, "basic-web-content") %>'
-								iconImage="copy"
+								iconImage="icon-tasks"
 								selected='<%= structureId.equals("0") %>'
 								viewURL="<%= viewBasicDDMStructureArticlesURL.toString() %>"
 							/>
@@ -317,7 +317,7 @@ else {
 								cssClass="folder structure"
 								dataView="<%= dataView %>"
 								entryTitle="<%= HtmlUtil.escape(ddmStructure.getName(locale)) %>"
-								iconImage="copy"
+								iconImage="icon-tasks"
 								selected="<%= structureId.equals(ddmStructure.getStructureKey()) %>"
 								viewURL="<%= viewDDMStructureArticlesURL.toString() %>"
 							/>

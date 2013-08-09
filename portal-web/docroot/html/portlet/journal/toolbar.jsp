@@ -54,7 +54,7 @@ String strutsAction = ParamUtil.getString(request, "struts_action");
 				String taglibURL = "javascript:" + renderResponse.getNamespace() + "openStructuresView()";
 				%>
 
-				<aui:nav-item href="<%= taglibURL %>" label="structures" />
+				<aui:nav-item href="<%= taglibURL %>" iconClass="icon-tasks" label="structures" />
 
 				<%
 				taglibURL = "javascript:" + renderResponse.getNamespace() + "openTemplatesView()";

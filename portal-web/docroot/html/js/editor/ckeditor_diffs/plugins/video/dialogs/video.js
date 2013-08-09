@@ -2,15 +2,15 @@ CKEDITOR.dialog.add(
 	'video',
 	function(editor) {
 		var TPL_SCRIPT_PREFIX = 'AUI().use(' +
-								'	\'aui-base\',\'aui-video\',' +
+								'	"aui-base", "aui-video",' +
 								'	function(A) {' +
 								'		new A.Video(' +
 								'			{';
 
-		var TPL_SCRIPT =		'				ogvUrl: \'{ogvUrl}\',' +
-								'				url: \'{url}\',' +
-								'				poster: \'{poster}\',' +
-								'				boundingBox: \'#{videoBoxId}\',' +
+		var TPL_SCRIPT =		'				ogvUrl: "{ogvUrl}",' +
+								'				url: "{url}",' +
+								'				poster: "{poster}",' +
+								'				boundingBox: "#{videoBoxId}",' +
 								'				height: {height},' +
 								'				width: {width}';
 

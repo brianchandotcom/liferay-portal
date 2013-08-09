@@ -255,14 +255,14 @@ public class TrashEntryServiceImpl extends TrashEntryServiceBaseImpl {
 			}
 		}
 
-		int filteredEntriesCount = filteredEntries.size();
+		int total = filteredEntries.size();
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS)) {
 			start = 0;
-			end = filteredEntriesCount;
+			end = total;
 		}
 
-		if ((filteredEntriesCount > 0) && (start >= filteredEntriesCount)) {
+		if ((total > 0) && (start >= total)) {
 			int delta = end - start;
 
 			int cur = start / delta;
@@ -277,19 +277,19 @@ public class TrashEntryServiceImpl extends TrashEntryServiceBaseImpl {
 		}
 
 		if ((end != QueryUtil.ALL_POS) && (start != QueryUtil.ALL_POS)) {
-			if (end > filteredEntriesCount) {
-				end = filteredEntriesCount;
+			if (end > total) {
+				end = total;
 			}
 
-			if (start > filteredEntriesCount) {
-				start = filteredEntriesCount;
+			if (start > total) {
+				start = total;
 			}
 
 			filteredEntries = filteredEntries.subList(start, end);
 		}
 
 		trashEntriesList.setArray(TrashEntrySoap.toSoapModels(filteredEntries));
-		trashEntriesList.setCount(filteredEntriesCount);
+		trashEntriesList.setCount(total);
 
 		return trashEntriesList;
 	}

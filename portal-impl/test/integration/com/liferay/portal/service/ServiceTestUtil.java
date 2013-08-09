@@ -391,11 +391,11 @@ public class ServiceTestUtil {
 	}
 
 	public static String randomString() throws Exception {
-		return PwdGenerator.getPassword();
+		return PwdGenerator.getRandomString();
 	}
 
 	public static String randomString(int length) throws Exception {
-		return PwdGenerator.getPassword(length);
+		return PwdGenerator.getRandomString(length);
 	}
 
 	public static void setUser(User user) throws Exception {

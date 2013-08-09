@@ -156,8 +156,7 @@ public class Transformer {
 				PermissionThreadLocal.getPermissionChecker());
 			template.put(
 				"randomNamespace",
-				PwdGenerator.getPassword(PwdGenerator.KEY3, 4) +
-					StringPool.UNDERLINE);
+				PwdGenerator.getRandomId() + StringPool.UNDERLINE);
 			template.put("scopeGroupId", scopeGroupId);
 			template.put("siteGroupId", siteGroupId);
 			template.put("templatesPath", templatesPath);
@@ -341,8 +340,7 @@ public class Transformer {
 					PermissionThreadLocal.getPermissionChecker());
 				template.put(
 					"randomNamespace",
-					PwdGenerator.getPassword(PwdGenerator.KEY3, 4) +
-						StringPool.UNDERLINE);
+					PwdGenerator.getRandomId() + StringPool.UNDERLINE);
 				template.put("scopeGroupId", scopeGroupId);
 				template.put("siteGroupId", siteGroupId);
 				template.put("templatesPath", templatesPath);

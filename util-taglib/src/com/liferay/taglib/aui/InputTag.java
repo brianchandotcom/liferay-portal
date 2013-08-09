@@ -214,7 +214,7 @@ public class InputTag extends BaseInputTag {
 				id = name;
 			}
 			else {
-				id = PwdGenerator.getPassword(PwdGenerator.KEY3, 4);
+				id = PwdGenerator.getRandomId();
 			}
 		}
 

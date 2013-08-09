@@ -1261,7 +1261,7 @@ public class DataFactory {
 		for (int i = 0; i < _maxDDLCustomFieldCount; i++) {
 			sb.append(nextDDLCustomFieldName(ddlRecordModel.getGroupId(), i));
 			sb.append(DDMImpl.INSTANCE_SEPARATOR);
-			sb.append(PwdGenerator.getPassword(4));
+			sb.append(PwdGenerator.getRandomId());
 			sb.append(StringPool.COMMA);
 		}
 

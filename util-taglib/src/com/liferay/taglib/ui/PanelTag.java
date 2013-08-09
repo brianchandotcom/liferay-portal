@@ -35,7 +35,7 @@ public class PanelTag extends IncludeTag {
 			(HttpServletRequest)pageContext.getRequest();
 
 		if (Validator.isNull(_id)) {
-			_id = PwdGenerator.getPassword(PwdGenerator.KEY3, 4);
+			_id = PwdGenerator.getRandomId();
 		}
 
 		if (Validator.isNull(_parentId)) {

@@ -57,7 +57,7 @@ portletURL.setParameter("classTypeId", String.valueOf(classTypeId));
 			</liferay-ui:search-container-column-text>
 
 			<%
-			String fieldsNamespace = PwdGenerator.getPassword(4);
+			String fieldsNamespace = PwdGenerator.getRandomId();
 			%>
 
 			<liferay-ui:search-container-column-text

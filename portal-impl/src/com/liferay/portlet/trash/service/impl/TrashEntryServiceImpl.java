@@ -269,17 +269,7 @@ public class TrashEntryServiceImpl extends TrashEntryServiceBaseImpl {
 		start = startAndEnd[0];
 		end = startAndEnd[1];
 
-		if ((end != QueryUtil.ALL_POS) && (start != QueryUtil.ALL_POS)) {
-			if (end > total) {
-				end = total;
-			}
-
-			if (start > total) {
-				start = total;
-			}
-
-			filteredEntries = filteredEntries.subList(start, end);
-		}
+		filteredEntries = filteredEntries.subList(start, end);
 
 		trashEntriesList.setArray(TrashEntrySoap.toSoapModels(filteredEntries));
 		trashEntriesList.setCount(total);

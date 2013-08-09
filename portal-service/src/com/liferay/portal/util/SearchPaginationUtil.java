@@ -40,12 +40,22 @@ public class SearchPaginationUtil {
 
 		int delta = end - start;
 
+		if (delta < 0) {
+			return new int[] {0, 0};
+		}
+
 		while ((start > 0) && (start >= total)) {
 			int cur = start / delta;
 
 			startAndEnd = calculateStartAndEnd(cur, delta);
 
 			start = startAndEnd[0];
+		}
+
+		end = startAndEnd[1];
+
+		if (end > total) {
+			startAndEnd[1] = total;
 		}
 
 		return startAndEnd;

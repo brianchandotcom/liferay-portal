@@ -592,14 +592,6 @@ public class LuceneIndexSearcher extends BaseIndexSearcher {
 			return hits;
 		}
 
-		if (end > total) {
-			end = total;
-		}
-
-		if (start > end) {
-			start = end;
-		}
-
 		int subsetTotal = end - start;
 
 		if (subsetTotal > PropsValues.INDEX_SEARCH_LIMIT) {

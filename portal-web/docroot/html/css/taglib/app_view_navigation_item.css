@@ -18,7 +18,7 @@
 
 		.app-view-navigation-entry {
 			position: relative;
-			
+
 			&.folder.error {
 				color: #34404F;
 				display: block;
@@ -27,18 +27,23 @@
 			}
 
 			.overlay.entry-action {
+				bottom: 0;
 				display: block;
-				height: 16px;
 				overflow: hidden;
 				position: absolute;
-				right: 15px;
-				top: 5px;
-				width: 24px;
+				right: -15px;
+				top: 0;
 
 				a {
 					display: block;
 					float: right;
 					min-height: 15px;
+					text-align: center;
+					width: 20px;
+
+					.caret {
+						vertical-align: middle;
+					}
 				}
 			}
 		}

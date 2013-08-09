@@ -55,9 +55,9 @@ long currentLayoutSetBranchId = GetterUtil.getLong((String)request.getAttribute(
 
 		<liferay-ui:icon
 			image="permissions"
-			linkCssClass="use-dialog"
 			method="get"
 			url="<%= permissionsURL %>"
+			useDialog="<%= true %>"
 		/>
 	</c:if>
 

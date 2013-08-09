@@ -49,9 +49,9 @@ String frameworkVersionId = String.valueOf(frameworkVersion.getFrameworkVersionI
 
 		<liferay-ui:icon
 			image="permissions"
-			linkCssClass="use-dialog"
 			method="get"
 			url="<%= permissionsURL %>"
+			useDialog="<%= true %>"
 		/>
 	</c:if>
 

@@ -290,9 +290,9 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "det
 					<liferay-ui:icon
 						image="permissions"
 						label="<%= true %>"
-						linkCssClass="use-dialog"
 						method="get"
 						url="<%= permissionsURL %>"
+						useDialog="<%= true %>"
 					/>
 				</c:if>
 

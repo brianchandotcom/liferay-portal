@@ -107,9 +107,9 @@ DDLRecordSet selRecordSet = (DDLRecordSet)request.getAttribute("record_set_actio
 
 		<liferay-ui:icon
 			image="permissions"
-			linkCssClass="use-dialog"
 			method="get"
 			url="<%= permissionsRecordSetURL %>"
+			useDialog="<%= true %>"
 		/>
 	</c:if>
 

@@ -107,9 +107,9 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 								<liferay-ui:icon
 									image="permissions"
 									label="<%= true %>"
-									linkCssClass="use-dialog"
 									method="get"
 									url="<%= permissionsEntryURL %>"
+									useDialog="<%= true %>"
 								/>
 							</td>
 						</c:if>

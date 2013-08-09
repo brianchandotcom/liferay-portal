@@ -457,9 +457,9 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 							<liferay-ui:icon
 								image="permissions"
 								label="<%= true %>"
-								linkCssClass="use-dialog"
 								method="get"
 								url="<%= permissionsURL %>"
+								useDialog="<%= true %>"
 							/>
 						</li>
 					</c:if>

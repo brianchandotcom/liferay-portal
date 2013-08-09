@@ -22,11 +22,11 @@ CKEDITOR.dialog.add(
 		function commitValue(videoNode, extraStyles) {
 			var instance = this;
 
-			var value = instance.getValue();
 			var id = instance.id;
+			var value = instance.getValue();
 
-			var videoDivNode = videoNode.getChild(0);
 			var scriptNode = videoNode.getChild(1);
+			var videoDivNode = videoNode.getChild(0);
 
 			var scriptTPL = null;
 			var textScript = null;
@@ -134,6 +134,7 @@ CKEDITOR.dialog.add(
 
 		function loadValue(videoNode) {
 			var instance = this;
+
 			var id = instance.id;
 
 			if (videoNode) {
@@ -232,10 +233,13 @@ CKEDITOR.dialog.add(
 					var fakeImage = instance.getSelectedElement();
 
 					if (fakeImage && fakeImage.data('cke-real-element-type') && fakeImage.data('cke-real-element-type') === 'video') {
-							instance.fakeImage = fakeImage;
-							var videoNode = editor.restoreRealElement(fakeImage);
-							instance.videoNode = videoNode;
-							instance.setupContent( videoNode);
+						instance.fakeImage = fakeImage;
+
+						var videoNode = editor.restoreRealElement(fakeImage);
+
+						instance.videoNode = videoNode;
+
+						instance.setupContent(videoNode);
 					}
 					else {
 						instance.setupContent(null);

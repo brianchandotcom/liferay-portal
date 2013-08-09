@@ -34,7 +34,7 @@ public class PwdGenerator {
 	public static final String KEY3 = "abcdefghijklmnopqrstuvwxyz";
 
 	public static String getPassword() {
-		return getPassword(8);
+		return _generate(KEY1 + KEY2 + KEY3, 8, true);
 	}
 
 	public static String getPassword(int length) {
@@ -42,7 +42,7 @@ public class PwdGenerator {
 	}
 
 	public static String getPassword(String key, int length) {
-		return getPassword(key, length, true);
+		return _generate(key, length, true);
 	}
 
 	public static String getPassword(
@@ -87,7 +87,7 @@ public class PwdGenerator {
 		StringBuilder sb = new StringBuilder(length);
 
 		for (int i = 0; i < length; i++) {
-			sb.append(key.charAt(_random(key.length())));
+			sb.append(key.charAt(_secureRandom.nextInt(key.length())));
 		}
 
 		String password = sb.toString();
@@ -123,16 +123,8 @@ public class PwdGenerator {
 		return password;
 	}
 
-	private static int _random(int n) {
-		if (_secureRandom == null) {
-			_secureRandom = new SecureRandom();
-		}
-
-		return _secureRandom.nextInt(n);
-	}
-
 	private static Log _log = LogFactoryUtil.getLog(PwdGenerator.class);
 
-	private static SecureRandom _secureRandom;
+	private static SecureRandom _secureRandom = new SecureRandom();;
 
 }

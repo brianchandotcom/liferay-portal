@@ -1870,11 +1870,12 @@ public class StringUtil {
 	}
 
 	public static String randomId() {
-		Random rand = new Random();
+		Random random = new Random();
+
 		char[] result = new char[4];
 
 		for (int i = 0; i < 4; i++) {
-			result[i] = (char) (97 + rand.nextInt(26));
+			result[i] = (char) (CharPool.LOWER_CASE_A + random.nextInt(26));
 		}
 
 		return new String(result);
@@ -1897,12 +1898,14 @@ public class StringUtil {
 	}
 
 	public static String randomString(int length) {
-		Random rand = new Random();
+		Random random = new Random();
+
 		char[] result = new char[length];
 
 		for (int i = 0; i < length; i++) {
-			result[i] = _ALPHABET_AND_DIGITS[rand.nextInt(
-				_ALPHABET_AND_DIGITS.length)];
+			int index = random.nextInt(_RANDOM_STRING_CHAR_TABLE.length);
+
+			result[i] = _RANDOM_STRING_CHAR_TABLE[index];
 		}
 
 		return new String(result);
@@ -4283,17 +4286,17 @@ public class StringUtil {
 		return sb.toString();
 	}
 
-	private static final char[] _ALPHABET_AND_DIGITS = {
+	private static final char[] _HEX_DIGITS = {
+		'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd',
+		'e', 'f'
+	};
+
+	private static final char[] _RANDOM_STRING_CHAR_TABLE = {
 		'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D',
 		'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R',
 		'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f',
 		'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't',
 		'u', 'v', 'w', 'x', 'y', 'z'
-	};
-
-	private static final char[] _HEX_DIGITS = {
-		'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd',
-		'e', 'f'
 	};
 
 	private static Log _log = LogFactoryUtil.getLog(StringUtil.class);

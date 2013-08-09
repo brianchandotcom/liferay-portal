@@ -1006,6 +1006,9 @@ public class GroupServiceTest {
 				Assert.fail();
 			}
 		}
+		finally {
+			LanguageUtil.resetAvailableLocales(TestPropsValues.getCompanyId());
+		}
 	}
 
 }

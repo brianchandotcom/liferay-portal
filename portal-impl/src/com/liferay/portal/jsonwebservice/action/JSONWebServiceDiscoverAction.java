@@ -145,13 +145,15 @@ public class JSONWebServiceDiscoverAction implements JSONWebServiceAction {
 					throw new PortalException(cnfe);
 				}
 
-				Map<String, String> parameter = new HashMap<String, String>(2);
+				Map<String, String> parameterMap =
+					new HashMap<String, String>();
 
-				parameter.put("name", methodParameter.getName());
-				parameter.put("type", _formatType(
-					methodParameter.getType(), genericTypes));
+				parameterMap.put("name", methodParameter.getName());
+				parameterMap.put(
+					"type",
+					_formatType(methodParameter.getType(), genericTypes));
 
-				parametersList.add(parameter);
+				parametersList.add(parameterMap);
 			}
 
 			jsonWebServiceActionMappingMap.put("parameters", parametersList);

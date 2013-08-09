@@ -155,6 +155,9 @@ public class WorkflowHandlerRegistryUtil {
 			workflowHandler.getType(LocaleUtil.getDefault()));
 		workflowContext.put(
 			WorkflowConstants.CONTEXT_SERVICE_CONTEXT, serviceContext);
+		workflowContext.put(
+			WorkflowConstants.CONTEXT_TASK_COMMENTS,
+			serviceContext.getAttribute("comments"));
 
 		workflowHandler.updateStatus(status, workflowContext);
 

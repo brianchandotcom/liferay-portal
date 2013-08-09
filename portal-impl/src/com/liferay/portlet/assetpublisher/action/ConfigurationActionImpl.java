@@ -219,7 +219,7 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 
 		Field field = fields.get(fieldName);
 
-		Serializable fieldValue = field.getValue(themeDisplay.getLocale());
+		Serializable fieldValue = field.getValue(themeDisplay.getLocale(), 0);
 
 		DDMStructure ddmStructure = field.getDDMStructure();
 

@@ -48,19 +48,7 @@ AUI.add(
 			},
 
 			_useDialog: function(event) {
-				var instance = this;
-
-				var currentTarget = event.currentTarget;
-
-				var config = currentTarget.getData();
-
-				if (!config.uri) {
-					config.uri = currentTarget.getData('href') || currentTarget.attr('href');
-				}
-
-				Liferay.Util.openWindow(config);
-
-				event.preventDefault();
+				Liferay.Util.openInDialog(event, event.currentTarget);
 			}
 		};
 

@@ -55,6 +55,7 @@ String srcHover = (String)request.getAttribute("liferay-ui:icon:srcHover");
 boolean toolTip = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:icon:toolTip"));
 String target = GetterUtil.getString((String)request.getAttribute("liferay-ui:icon:target"));
 String url = GetterUtil.getString((String)request.getAttribute("liferay-ui:icon:url"));
+boolean useDialog = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:icon:useDialog"));
 
 if (data == null) {
 	data = new HashMap<String, Object>(1);

@@ -109,6 +109,10 @@ public class IconTag extends IncludeTag {
 		_url = url;
 	}
 
+	public void setUseDialog(boolean useDialog) {
+		_useDialog = useDialog;
+	}
+
 	@Override
 	protected void cleanUp() {
 		_alt = null;
@@ -129,6 +133,7 @@ public class IconTag extends IncludeTag {
 		_target = null;
 		_toolTip = false;
 		_url = null;
+		_useDialog = false;
 	}
 
 	protected String getImage() {
@@ -210,6 +215,7 @@ public class IconTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-ui:icon:toolTip", String.valueOf(_toolTip));
 		request.setAttribute("liferay-ui:icon:url", _url);
+		request.setAttribute("liferay-ui:icon:useDialog", String.valueOf(_useDialog));
 	}
 
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;
@@ -234,5 +240,6 @@ public class IconTag extends IncludeTag {
 	private String _target = "_self";
 	private boolean _toolTip;
 	private String _url;
+	private boolean _useDialog = false;
 
 }

@@ -254,7 +254,7 @@ else {
 						dataView="<%= dataView %>"
 						entryTitle='<%= LanguageUtil.get(pageContext, "up") %>'
 						expandURL="<%= expandViewURL.toString() %>"
-						iconSrc='<%= themeDisplay.getPathThemeImages() + "/arrows/01_up.png" %>'
+						iconImage="icon-level-up"
 						showExpand="<%= true %>"
 						viewURL="<%= viewURL.toString() %>"
 					/>
@@ -359,7 +359,7 @@ else {
 						dataView="<%= dataView %>"
 						entryTitle='<%= LanguageUtil.get(pageContext, "up") %>'
 						expandURL="<%= expandViewURL.toString() %>"
-						iconSrc='<%= themeDisplay.getPathThemeImages() + "/arrows/01_up.png" %>'
+						iconImage="icon-level-up"
 						showExpand="<%= true %>"
 						viewURL="<%= viewURL.toString() %>"
 					/>

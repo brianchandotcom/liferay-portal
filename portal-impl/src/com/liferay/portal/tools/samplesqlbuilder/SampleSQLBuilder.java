@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.SortedProperties;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.InitUtil;
 
 import java.io.File;
@@ -54,44 +55,27 @@ import java.util.Properties;
 public class SampleSQLBuilder {
 
 	public static void main(String[] args) {
-		List<String> extraConfigLocations = new ArrayList<String>();
-
-		extraConfigLocations.add("META-INF/portlet-container-spring.xml");
-
-		InitUtil.initWithSpring(false, extraConfigLocations);
-
-		Reader reader = null;
-
 		try {
-			Properties properties = new SortedProperties();
-
-			reader = new FileReader(args[0]);
-
-			properties.load(reader);
-
-			new SampleSQLBuilder(properties);
+			new SampleSQLBuilder(args);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-		finally {
-			if (reader != null) {
-				try {
-					reader.close();
-				}
-				catch (IOException ioe) {
-					ioe.printStackTrace();
-				}
-			}
-		}
 	}
 
-	public SampleSQLBuilder(Properties properties) throws Exception {
+	public SampleSQLBuilder(String[] args) throws Exception {
+		InitUtil.initWithSpring();
+
+		Properties properties = getProperties(args);
+
 		_dbType = properties.getProperty("sample.sql.db.type");
 
+		_csvFileNames = StringUtil.split(
+			properties.getProperty("sample.sql.output.csv.file.names"));
 		_optimizeBufferSize = GetterUtil.getInteger(
 			properties.getProperty("sample.sql.optimize.buffer.size"));
 		_outputDir = properties.getProperty("sample.sql.output.dir");
+		_script = properties.getProperty("sample.sql.script");
 
 		_dataFactory = new DataFactory(properties);
 
@@ -237,6 +221,10 @@ public class SampleSQLBuilder {
 			String tableName = entry.getKey();
 			StringBundler sb = entry.getValue();
 
+			if (sb.index() == 0) {
+				continue;
+			}
+
 			String insertSQL = db.buildSQL(sb.toString());
 
 			writeToInsertSQLFile(dir, tableName, insertSQLWriters, insertSQL);
@@ -295,9 +283,9 @@ public class SampleSQLBuilder {
 
 					Map<String, Object> context = getContext();
 
-					FreeMarkerUtil.process(_SCRIPT, context, sampleSQLWriter);
+					FreeMarkerUtil.process(_script, context, sampleSQLWriter);
 
-					for (String csvFileName : _CSV_FILE_NAMES) {
+					for (String csvFileName : _csvFileNames) {
 						Writer csvWriter = (Writer)context.get(
 							csvFileName + "CSVWriter");
 
@@ -325,7 +313,7 @@ public class SampleSQLBuilder {
 
 		context.put("dataFactory", _dataFactory);
 
-		for (String csvFileName : _CSV_FILE_NAMES) {
+		for (String csvFileName : _csvFileNames) {
 			Writer csvWriter = createFileWriter(
 				new File(_outputDir, csvFileName + ".csv"));
 
@@ -333,6 +321,30 @@ public class SampleSQLBuilder {
 		}
 
 		return context;
+	}
+
+	protected Properties getProperties(String[] args) throws Exception {
+		Reader reader = null;
+
+		try {
+			Properties properties = new SortedProperties();
+
+			reader = new FileReader(args[0]);
+
+			properties.load(reader);
+
+			return properties;
+		}
+		finally {
+			if (reader != null) {
+				try {
+					reader.close();
+				}
+				catch (IOException ioe) {
+					ioe.printStackTrace();
+				}
+			}
+		}
 	}
 
 	protected void mergeSQL(File inputDir, File outputSQLFile)
@@ -397,21 +409,15 @@ public class SampleSQLBuilder {
 		insertSQLWriter.write(insertSQL);
 	}
 
-	private static final String[] _CSV_FILE_NAMES = {
-		"assetPublisher", "blog", "company", "documentLibrary",
-		"dynamicDataList", "layout", "messageBoard", "repository", "wiki"
-	};
-
 	private static final int _PIPE_BUFFER_SIZE = 16 * 1024 * 1024;
-
-	private static final String _SCRIPT =
-		"com/liferay/portal/tools/samplesqlbuilder/dependencies/sample.ftl";
 
 	private static final int _WRITER_BUFFER_SIZE = 16 * 1024;
 
+	private String[] _csvFileNames;
 	private DataFactory _dataFactory;
 	private String _dbType;
 	private int _optimizeBufferSize;
 	private String _outputDir;
+	private String _script;
 
 }

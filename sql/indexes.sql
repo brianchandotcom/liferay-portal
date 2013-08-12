@@ -362,6 +362,7 @@ create index IX_DFF98523 on JournalArticle (companyId);
 create index IX_323DF109 on JournalArticle (companyId, status);
 create index IX_3D070845 on JournalArticle (companyId, version);
 create index IX_E82F322B on JournalArticle (companyId, version, status);
+create index IX_EA05E9E1 on JournalArticle (displayDate, status);
 create index IX_9356F865 on JournalArticle (groupId);
 create index IX_68C0F69C on JournalArticle (groupId, articleId);
 create index IX_4D5CD982 on JournalArticle (groupId, articleId, status);

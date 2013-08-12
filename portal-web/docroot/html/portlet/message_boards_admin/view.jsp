@@ -242,7 +242,6 @@ if ((category != null) && layout.isTypeControlPanel()) {
 							message = message.toEscapedModel();
 
 							row.setBold(!MBThreadFlagLocalServiceUtil.hasThreadFlag(themeDisplay.getUserId(), thread));
-							row.setObject(new Object[] {message});
 							row.setRestricted(!MBMessagePermission.contains(permissionChecker, message, ActionKeys.VIEW));
 							%>
 
@@ -351,7 +350,12 @@ if ((category != null) && layout.isTypeControlPanel()) {
 							<liferay-ui:search-container-column-status
 								href="<%= rowURL %>"
 								name="status"
+								status="<%= thread.getStatus() %>"
 							/>
+
+							<%
+							row.setObject(new Object[] {message});
+							%>
 
 							<liferay-ui:search-container-column-jsp
 								align="right"

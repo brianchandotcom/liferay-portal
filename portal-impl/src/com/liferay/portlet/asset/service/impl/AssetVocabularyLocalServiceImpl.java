@@ -239,6 +239,13 @@ public class AssetVocabularyLocalServiceImpl
 	}
 
 	@Override
+	public AssetVocabulary fetchGroupVocabulary(long groupId, String name)
+		throws SystemException {
+
+		return assetVocabularyPersistence.fetchByG_N(groupId, name);
+	}
+
+	@Override
 	public List<AssetVocabulary> getCompanyVocabularies(long companyId)
 		throws SystemException {
 

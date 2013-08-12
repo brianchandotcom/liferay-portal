@@ -128,6 +128,10 @@ public class DDMStructureStagedModelDataHandler
 			structureIds, structure.getParentStructureId(),
 			structure.getParentStructureId());
 
+		Map<String, String> ddmStructureKeys =
+			(Map<String, String>)portletDataContext.getNewPrimaryKeysMap(
+				DDMStructure.class + ".ddmStructureKey");
+
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			structure, DDMPortletDataHandler.NAMESPACE);
 
@@ -177,6 +181,14 @@ public class DDMStructureStagedModelDataHandler
 			else if (portletDataContext.isCompanyStagedGroupedModel(
 						existingStructure)) {
 
+				structureIds.put(
+					structure.getStructureId(),
+					existingStructure.getStructureId());
+
+				ddmStructureKeys.put(
+					structure.getStructureKey(),
+					existingStructure.getStructureKey());
+
 				return;
 			}
 			else {
@@ -199,8 +211,8 @@ public class DDMStructureStagedModelDataHandler
 		portletDataContext.importClassedModel(
 			structure, importedStructure, DDMPortletDataHandler.NAMESPACE);
 
-		structureIds.put(
-			structure.getStructureId(), importedStructure.getStructureId());
+		ddmStructureKeys.put(
+			structure.getStructureKey(), importedStructure.getStructureKey());
 	}
 
 	protected void prepareLanguagesForImport(DDMStructure structure)

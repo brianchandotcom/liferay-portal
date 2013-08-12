@@ -29,21 +29,36 @@
 	</target>
 
 	<target name="compile">
-		<copy file="src/META-INF/aui.tld" overwrite="true" tofile="src/META-INF/liferay-aui.tld" />
+		<if>
+			<not>
+				<uptodate targetfile="classes/.touch">
+					<srcfiles dir="src" includes="**/*.*" />
+				</uptodate>
+			</not>
+			<then>
+				<copy file="src/META-INF/aui.tld" overwrite="true" tofile="src/META-INF/liferay-aui.tld" />
 
-		<replace file="src/META-INF/liferay-aui.tld">
-			<replacetoken><![CDATA[<uri>http://alloy.liferay.com/tld/aui</uri>]]></replacetoken>
-			<replacevalue><![CDATA[<uri>http://liferay.com/tld/aui</uri>]]></replacevalue>
-		</replace>
+				<replace file="src/META-INF/liferay-aui.tld">
+					<replacetoken><![CDATA[<uri>http://alloy.liferay.com/tld/aui</uri>]]></replacetoken>
+					<replacevalue><![CDATA[<uri>http://liferay.com/tld/aui</uri>]]></replacevalue>
+				</replace>
 
-		<copy file="src/META-INF/liferay-portlet.tld" tofile="src/META-INF/liferay-portlet_2_0.tld" />
+				<copy file="src/META-INF/liferay-portlet.tld" tofile="src/META-INF/liferay-portlet_2_0.tld" />
 
-		<replace file="src/META-INF/liferay-portlet_2_0.tld">
-			<replacetoken><![CDATA[<uri>http://java.sun.com/portlet</uri>]]></replacetoken>
-			<replacevalue><![CDATA[<uri>http://java.sun.com/portlet_2_0</uri>]]></replacevalue>
-		</replace>
+				<replace file="src/META-INF/liferay-portlet_2_0.tld">
+					<replacetoken><![CDATA[<uri>http://java.sun.com/portlet</uri>]]></replacetoken>
+					<replacevalue><![CDATA[<uri>http://java.sun.com/portlet_2_0</uri>]]></replacevalue>
+				</replace>
 
-		<antcall target="build-common-java.compile" />
+				<mkdir dir="classes" />
+
+				<antcall target="compile-java">
+					<param name="javac.classpathref" value="project.classpath" />
+					<param name="javac.destdir" value="classes" />
+					<param name="javac.srcdir" value="src" />
+				</antcall>
+			</then>
+		</if>
 	</target>
 
 	<target name="deploy" depends="jar">

@@ -215,7 +215,8 @@ public class IconTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-ui:icon:toolTip", String.valueOf(_toolTip));
 		request.setAttribute("liferay-ui:icon:url", _url);
-		request.setAttribute("liferay-ui:icon:useDialog", String.valueOf(_useDialog));
+		request.setAttribute(
+			"liferay-ui:icon:useDialog", String.valueOf(_useDialog));
 	}
 
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;

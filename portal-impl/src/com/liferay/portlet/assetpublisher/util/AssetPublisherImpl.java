@@ -68,6 +68,7 @@ import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
+import com.liferay.portlet.asset.model.AssetTag;
 import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetEntryServiceUtil;
@@ -450,6 +451,39 @@ public class AssetPublisherImpl implements AssetPublisher {
 		}
 
 		return assetEntries;
+	}
+
+	@Override
+	public List<AssetEntry> getAssetEntries(
+			PortletRequest portletRequest,
+			PortletPreferences portletPreferences,
+			PermissionChecker permissionChecker, long[] groupIds,
+			String[] assetEntryXmls, boolean deleteMissingAssetEntries,
+			boolean checkPermission, long[] allCategoryIds,
+			String[] allTagNames)
+		throws Exception {
+
+		List<AssetEntry> entries = getAssetEntries(
+			portletRequest, portletPreferences, permissionChecker, groupIds,
+			assetEntryXmls, deleteMissingAssetEntries, checkPermission);
+
+		if (entries.isEmpty() ||
+			(ArrayUtil.isEmpty(allCategoryIds) &&
+			 ArrayUtil.isEmpty(allTagNames))) {
+
+			return entries;
+		}
+
+		if (!ArrayUtil.isEmpty(allCategoryIds)) {
+			entries = _filterAssetEntriesByAllCategories(
+				entries, allCategoryIds);
+		}
+
+		if (!ArrayUtil.isEmpty(allTagNames)) {
+			entries = _filterAssetEntriesByAllTags(entries, allTagNames);
+		}
+
+		return entries;
 	}
 
 	@Override
@@ -1134,6 +1168,47 @@ public class AssetPublisherImpl implements AssetPublisher {
 		catch (PortletException pe) {
 			throw new SystemException(pe);
 		}
+	}
+
+	private List<AssetEntry> _filterAssetEntriesByAllCategories(
+			List<AssetEntry> entries, long[] categoryIds)
+		throws Exception {
+
+		List<AssetEntry> filteredAssetEntries = new ArrayList<AssetEntry>();
+
+		for (AssetEntry assetEntry : entries) {
+			long[] assetEntryCategoryIds = assetEntry.getCategoryIds();
+
+			if (ArrayUtil.containsAll(assetEntryCategoryIds, categoryIds)) {
+				filteredAssetEntries.add(assetEntry);
+			}
+		}
+
+		return filteredAssetEntries;
+	}
+
+	private List<AssetEntry> _filterAssetEntriesByAllTags(
+			List<AssetEntry> entries, String[] tagNames)
+		throws Exception {
+
+		List<AssetEntry> filteredAssetEntries = new ArrayList<AssetEntry>();
+
+		for (AssetEntry assetEntry : entries) {
+			List<AssetTag> assetEntryTags = assetEntry.getTags();
+
+			String[] assetEntryTagNames = new String[tagNames.length];
+
+			for (AssetTag assetEntryTag : assetEntryTags) {
+				assetEntryTagNames = ArrayUtil.append(
+					assetEntryTagNames, assetEntryTag.getName());
+			}
+
+			if (ArrayUtil.containsAll(assetEntryTagNames, tagNames)) {
+				filteredAssetEntries.add(assetEntry);
+			}
+		}
+
+		return filteredAssetEntries;
 	}
 
 	private String _getAssetEntryXml(

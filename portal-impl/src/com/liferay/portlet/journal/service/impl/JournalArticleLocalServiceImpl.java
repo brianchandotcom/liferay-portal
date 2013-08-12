@@ -1433,6 +1433,29 @@ public class JournalArticleLocalServiceImpl
 		return article;
 	}
 
+	@Override
+	public JournalArticle fetchLatestIndexableArticle(long resourcePrimKey)
+		throws SystemException {
+
+		OrderByComparator orderByComparator = new ArticleVersionComparator();
+
+		Date now = new Date();
+
+		int[] statuses = new int[] {
+			WorkflowConstants.STATUS_APPROVED, WorkflowConstants.STATUS_IN_TRASH
+		};
+
+		List<JournalArticle> articles =
+			journalArticlePersistence.findByR_I_S(
+				resourcePrimKey, true, statuses, 0, 1, orderByComparator);
+
+		if (articles.isEmpty()) {
+			return null;
+		}
+
+		return articles.get(0);
+	}
+
 	/**
 	 * Returns the web content article with the ID.
 	 *

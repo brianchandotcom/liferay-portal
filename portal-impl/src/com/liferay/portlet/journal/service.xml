@@ -126,6 +126,11 @@
 			<finder-column name="companyId" />
 			<finder-column name="status" />
 		</finder>
+		<finder name="R_I_S" return-type="Collection">
+			<finder-column name="resourcePrimKey" />
+			<finder-column name="indexable" />
+			<finder-column name="status" arrayable-operator="OR" />
+		</finder>
 		<finder name="G_F_ST" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="folderId" />

@@ -65,6 +65,7 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -606,6 +607,12 @@ public class JournalArticleIndexer extends BaseIndexer {
 
 				Junction approvedArticlesJunction =
 					RestrictionsFactoryUtil.conjunction();
+
+				Property displayDateProperty = PropertyFactoryUtil.forName(
+					"displayDate");
+
+				approvedArticlesJunction.add(
+					displayDateProperty.lt(new Date()));
 
 				Property statusProperty = PropertyFactoryUtil.forName("status");
 

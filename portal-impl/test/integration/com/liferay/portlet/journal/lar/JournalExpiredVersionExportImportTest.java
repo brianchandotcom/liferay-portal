@@ -14,14 +14,8 @@
 
 package com.liferay.portlet.journal.lar;
 
-import com.liferay.portal.kernel.search.Hits;
-import com.liferay.portal.kernel.search.Indexer;
-import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.search.QueryConfig;
-import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
@@ -65,7 +59,7 @@ public class JournalExpiredVersionExportImportTest
 		int initialArticlesCount =
 			JournalArticleLocalServiceUtil.getArticlesCount(group.getGroupId());
 
-		int initialSearchArticlesCount = getSearchArticlesCount(
+		int initialSearchArticlesCount = JournalTestUtil.getSearchArticlesCount(
 			group.getCompanyId(), group.getGroupId());
 
 		JournalArticle article = JournalTestUtil.addArticle(
@@ -85,7 +79,8 @@ public class JournalExpiredVersionExportImportTest
 				group.getGroupId()));
 		Assert.assertEquals(
 			initialSearchArticlesCount + 1,
-			getSearchArticlesCount(group.getCompanyId(), group.getGroupId()));
+			JournalTestUtil.getSearchArticlesCount(
+				group.getCompanyId(), group.getGroupId()));
 
 		doExportImportPortlet(PortletKeys.JOURNAL);
 
@@ -95,7 +90,7 @@ public class JournalExpiredVersionExportImportTest
 				importedGroup.getGroupId()));
 		Assert.assertEquals(
 			initialSearchArticlesCount + 1,
-			getSearchArticlesCount(
+			JournalTestUtil.getSearchArticlesCount(
 				importedGroup.getCompanyId(), importedGroup.getGroupId()));
 
 		JournalArticleServiceUtil.expireArticle(
@@ -104,13 +99,14 @@ public class JournalExpiredVersionExportImportTest
 
 		Assert.assertEquals(
 			initialSearchArticlesCount,
-			getSearchArticlesCount(group.getCompanyId(), group.getGroupId()));
+			JournalTestUtil.getSearchArticlesCount(
+				group.getCompanyId(), group.getGroupId()));
 
 		doExportImportPortlet(PortletKeys.JOURNAL);
 
 		Assert.assertEquals(
 			initialSearchArticlesCount,
-			getSearchArticlesCount(
+			JournalTestUtil.getSearchArticlesCount(
 				importedGroup.getCompanyId(), importedGroup.getGroupId()));
 	}
 
@@ -118,26 +114,6 @@ public class JournalExpiredVersionExportImportTest
 	@Test
 	public void testExportImportStructuredJournalArticle() throws Exception {
 		Assert.assertTrue("This test does not apply", true);
-	}
-
-	protected int getSearchArticlesCount(long companyId, long groupId)
-		throws Exception {
-
-		Indexer indexer = IndexerRegistryUtil.getIndexer(JournalArticle.class);
-
-		SearchContext searchContext = new SearchContext();
-
-		searchContext.setCompanyId(companyId);
-		searchContext.setGroupIds(new long[] {groupId});
-		searchContext.setKeywords(StringPool.BLANK);
-
-		QueryConfig queryConfig = new QueryConfig();
-
-		searchContext.setQueryConfig(queryConfig);
-
-		Hits results = indexer.search(searchContext);
-
-		return results.getLength();
 	}
 
 }

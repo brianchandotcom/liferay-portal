@@ -124,8 +124,14 @@ $dockbarOpenGradientStart: #0EA6F9;
 					margin: 10px;
 					position: relative;
 
-					&.toggle-controls {
-						visibility: hidden;
+					&.toggle-controls a {
+						clip: rect(0 0 0 0);
+						position: absolute;
+
+						&:focus {
+							clip: rect(auto auto auto auto);
+							position: static;
+						}
 					}
 
 					&.page-preview-controls {
@@ -185,8 +191,9 @@ $dockbarOpenGradientStart: #0EA6F9;
 					}
 				}
 
-				&:hover > li.toggle-controls {
-					visibility: visible;
+				&:hover > li.toggle-controls a {
+					clip: rect(auto auto auto auto);
+					position: static;
 				}
 			}
 
@@ -209,8 +216,9 @@ $dockbarOpenGradientStart: #0EA6F9;
 		}
 	}
 
-	&.touch .dockbar .navbar-inner .nav-add-controls > li.toggle-controls {
-		visibility: visible;
+	&.touch .dockbar .navbar-inner .nav-add-controls > li.toggle-controls a {
+		clip: rect(auto auto auto auto);
+		position: static;
 	}
 
 	.controls-hidden .dockbar {

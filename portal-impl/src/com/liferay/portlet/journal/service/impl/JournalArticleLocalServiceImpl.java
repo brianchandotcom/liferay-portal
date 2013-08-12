@@ -738,36 +738,27 @@ public class JournalArticleLocalServiceImpl
 				new ServiceContext());
 		}
 
-		_previousCheckDate = now;
-
-		int count = journalArticlePersistence.countByLtD_S(
+		articles = journalArticlePersistence.findByLtD_S(
 			now, WorkflowConstants.STATUS_SCHEDULED);
 
-		if (count == 0) {
-			return;
-		}
-
-		List<JournalArticle> scheduledArticles =
-			journalArticlePersistence.findByLtD_S(
-				now, WorkflowConstants.STATUS_SCHEDULED);
-
-		for (JournalArticle scheduledArticle : scheduledArticles) {
+		for (JournalArticle article : articles) {
 			ServiceContext serviceContext = new ServiceContext();
 
 			serviceContext.setCommand(Constants.UPDATE);
 
 			String layoutFullURL = PortalUtil.getLayoutFullURL(
-				scheduledArticle.getGroupId(), PortletKeys.JOURNAL);
+				article.getGroupId(), PortletKeys.JOURNAL);
 
 			serviceContext.setLayoutFullURL(layoutFullURL);
 
-			serviceContext.setScopeGroupId(scheduledArticle.getGroupId());
+			serviceContext.setScopeGroupId(article.getGroupId());
 
 			updateStatus(
-				scheduledArticle.getUserId(), scheduledArticle,
-				WorkflowConstants.STATUS_APPROVED, null,
-				new HashMap<String, Serializable>(), serviceContext);
+				article.getUserId(), article, WorkflowConstants.STATUS_APPROVED,
+				null, new HashMap<String, Serializable>(), serviceContext);
 		}
+
+		_previousCheckDate = now;
 	}
 
 	/**

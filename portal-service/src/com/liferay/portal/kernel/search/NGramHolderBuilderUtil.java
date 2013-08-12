@@ -27,6 +27,20 @@ public class NGramHolderBuilderUtil {
 		return getNGramHolderBuilder().buildNGramHolder(input);
 	}
 
+	public static NGramHolder buildNGramHolder(String input, int maxNGramLength)
+		throws SearchException {
+
+		return getNGramHolderBuilder().buildNGramHolder(input, maxNGramLength);
+	}
+
+	public static NGramHolder buildNGramHolder(
+			String input, int nGramMinLength, int nGramMaxLength)
+		throws SearchException {
+
+		return getNGramHolderBuilder().buildNGramHolder(
+			input, nGramMinLength, nGramMaxLength);
+	}
+
 	public static NGramHolderBuilder getNGramHolderBuilder() {
 		PortalRuntimePermission.checkGetBeanProperty(
 			NGramHolderBuilderUtil.class);

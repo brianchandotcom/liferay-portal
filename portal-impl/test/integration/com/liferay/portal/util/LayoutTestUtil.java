@@ -24,6 +24,7 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutPrototype;
 import com.liferay.portal.model.LayoutSetPrototype;
+import com.liferay.portal.model.LayoutTemplate;
 import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
@@ -146,6 +147,26 @@ public class LayoutTestUtil {
 			nameMap, null, true, true, ServiceTestUtil.getServiceContext());
 	}
 
+	public static String addPortletToLayout(Layout layout, String portletId)
+		throws Exception {
+
+		long userId = TestPropsValues.getUserId();
+
+		LayoutTypePortlet layoutTypePortlet =
+			(LayoutTypePortlet)layout.getLayoutType();
+
+		LayoutTemplate layoutTemplate = layoutTypePortlet.getLayoutTemplate();
+
+		List<String> columns = layoutTemplate.getColumns();
+
+		String columnId = columns.get(0);
+
+		Map<String, String[]> preferencesMap = null;
+
+		return addPortletToLayout(
+			userId, layout, portletId, columnId, preferencesMap);
+	}
+
 	public static String addPortletToLayout(
 			long userId, Layout layout, String portletId, String columnId,
 			Map<String, String[]> preferenceMap)
@@ -160,6 +181,10 @@ public class LayoutTestUtil {
 		LayoutLocalServiceUtil.updateLayout(
 			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
 			layout.getTypeSettings());
+
+		if (preferenceMap == null) {
+			return newPortletId;
+		}
 
 		PortletPreferences portletPreferences = getPortletPreferences(
 			layout.getCompanyId(), layout.getPlid(), newPortletId);

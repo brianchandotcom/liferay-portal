@@ -53,29 +53,7 @@ if (liveGroup.isStagingGroup()) {
 	liveGroup = liveGroup.getLiveGroup();
 }
 
-String pagesName = null;
-
-if (liveGroup.isLayoutPrototype() || liveGroup.isLayoutSetPrototype() || liveGroup.isUserGroup()) {
-	pagesName = "pages";
-}
-else if (privateLayout) {
-	if (liveGroup.isUser()) {
-		pagesName = "my-dashboard";
-	}
-	else {
-		pagesName = "private-pages";
-	}
-}
-else {
-	if (liveGroup.isUser()) {
-		pagesName = "my-profile";
-	}
-	else {
-		pagesName = "public-pages";
-	}
-}
-
-String rootNodeName = LanguageUtil.get(pageContext, pagesName);
+String rootNodeName = liveGroup.getLayoutRootNodeName(privateLayout, locale);
 %>
 
 <aui:model-context model="<%= Layout.class %>" />

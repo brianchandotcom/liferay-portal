@@ -221,7 +221,7 @@ public class PortletImporter {
 		throws Exception {
 
 		try {
-			ExportImportThreadLocal.setPortletExportInProcess(true);
+			ExportImportThreadLocal.setPortletValidationInProcess(true);
 
 			Layout layout = LayoutLocalServiceUtil.getLayout(plid);
 
@@ -248,7 +248,7 @@ public class PortletImporter {
 			return missingReferences;
 		}
 		finally {
-			ExportImportThreadLocal.setPortletExportInProcess(false);
+			ExportImportThreadLocal.setPortletValidationInProcess(false);
 		}
 	}
 

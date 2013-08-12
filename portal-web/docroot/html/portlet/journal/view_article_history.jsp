@@ -60,13 +60,34 @@ JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_AR
 			<%
 			ArticleSearch searchContainer = new ArticleSearch(renderRequest, portletURL);
 
-			List headerNames = searchContainer.getHeaderNames();
+			List<String> headerNames = new ArrayList<String>();
 
-			headerNames.add(2, "version");
+			headerNames.add("id");
+			headerNames.add("title");
+			headerNames.add("version");
+			headerNames.add("status");
+			headerNames.add("modified-date");
 
-			Map<String, String> orderableHeaders = searchContainer.getOrderableHeaders();
+			if (Validator.isNotNull(article.getDisplayDate())) {
+				headerNames.add("display-date");
+			}
+
+			headerNames.add("author");
+			headerNames.add(StringPool.BLANK);
+
+			searchContainer.setHeaderNames(headerNames);
+
+			Map orderableHeaders = new HashMap();
+
+			orderableHeaders.put("modified-date", "modified-date");
+
+			if (Validator.isNotNull(article.getDisplayDate())) {
+				orderableHeaders.put("display-date", "display-date");
+			}
 
 			orderableHeaders.put("version", "version");
+
+			searchContainer.setOrderableHeaders(orderableHeaders);
 
 			if (Validator.isNull(orderByCol)) {
 				searchContainer.setOrderByCol("version");

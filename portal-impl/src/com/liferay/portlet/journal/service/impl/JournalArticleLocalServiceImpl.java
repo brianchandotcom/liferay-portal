@@ -1446,9 +1446,8 @@ public class JournalArticleLocalServiceImpl
 		};
 
 		List<JournalArticle> articles =
-			journalArticlePersistence.findByR_NotC_LtD_I_ST(
-				resourcePrimKey, PortalUtil.getClassNameId(DDMStructure.class),
-				now, true, statuses, 0, 1, orderByComparator);
+			journalArticlePersistence.findByR_I_S(
+				resourcePrimKey, true, statuses, 0, 1, orderByComparator);
 
 		if (articles.isEmpty()) {
 			return null;

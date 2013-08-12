@@ -42,6 +42,13 @@ public class DDMIndexerUtil {
 		return getDDMIndexer().encodeName(ddmStructureId, fieldName, locale);
 	}
 
+	public static String extractAttributes(
+		DDMStructure ddmStructure, Fields fields, Locale locale) {
+
+		return getDDMIndexer().extractIndexableAttributes(
+			ddmStructure, fields, locale);
+	}
+
 	public static DDMIndexer getDDMIndexer() {
 		PortalRuntimePermission.checkGetBeanProperty(DDMIndexerUtil.class);
 

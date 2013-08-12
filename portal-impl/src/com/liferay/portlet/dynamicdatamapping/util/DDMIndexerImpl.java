@@ -21,7 +21,10 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -30,6 +33,8 @@ import com.liferay.portlet.dynamicdatamapping.storage.Field;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 
 import java.io.Serializable;
+
+import java.text.Format;
 
 import java.util.Date;
 import java.util.Locale;
@@ -165,6 +170,86 @@ public class DDMIndexerImpl implements DDMIndexer {
 		if (Validator.isNotNull(locale)) {
 			sb.append(StringPool.UNDERLINE);
 			sb.append(LocaleUtil.toLanguageId(locale));
+		}
+
+		return sb.toString();
+	}
+
+	@Override
+	public String extractIndexableAttributes(
+		DDMStructure ddmStructure, Fields fields, Locale locale) {
+
+		Format dateFormat = FastDateFormatFactoryUtil.getSimpleDateFormat(
+			PropsUtil.get(PropsKeys.INDEX_DATE_FORMAT_PATTERN));
+
+		StringBundler sb = new StringBundler();
+
+		for (Field field : fields) {
+			try {
+				String indexType = ddmStructure.getFieldProperty(
+					field.getName(), "indexType");
+
+				if (Validator.isNull(indexType)) {
+					continue;
+				}
+
+				Serializable value = field.getValue(locale);
+
+				if ((value instanceof Boolean) || (value instanceof Double) ||
+					(value instanceof Integer) || (value instanceof Long) ||
+					(value instanceof Float)) {
+
+					sb.append(value);
+					sb.append(StringPool.SPACE);
+				}
+				else if (value instanceof Date) {
+					sb.append(dateFormat.format(value));
+					sb.append(StringPool.SPACE);
+				}
+				else if (value instanceof Date[]) {
+					Date[] dates = (Date[])value;
+
+					for (Date date : dates) {
+						sb.append(dateFormat.format(date));
+						sb.append(StringPool.SPACE);
+					}
+				}
+				else if (value instanceof Object[]) {
+					Object[] values = (Object[])value;
+
+					for (Object object : values) {
+						sb.append(object);
+						sb.append(StringPool.SPACE);
+					}
+				}
+				else {
+					String valueString = String.valueOf(value);
+
+					String type = field.getType();
+
+					if (type.equals(DDMImpl.TYPE_RADIO) ||
+						type.equals(DDMImpl.TYPE_SELECT)) {
+
+						JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
+							valueString);
+
+						String[] stringArray = ArrayUtil.toStringArray(
+							jsonArray);
+
+						sb.append(stringArray);
+						sb.append(StringPool.SPACE);
+					}
+					else {
+						sb.append(valueString);
+						sb.append(StringPool.SPACE);
+					}
+				}
+			}
+			catch (Exception e) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(e, e);
+				}
+			}
 		}
 
 		return sb.toString();

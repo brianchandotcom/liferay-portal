@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.mobiledevicerules.lar;
 
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.lar.BaseStagedModelDataHandlerTestCase;
 import com.liferay.portal.model.Group;
@@ -115,19 +117,95 @@ public class MDRActionStagedModelDataHandlerTest
 	}
 
 	@Override
-	protected StagedModel getStagedModel(String uuid, Group group) {
-		try {
-			return MDRActionLocalServiceUtil.getMDRActionByUuidAndGroupId(
-				uuid, group.getGroupId());
-		}
-		catch (Exception e) {
-			return null;
-		}
+	protected void deleteStagedModel(
+			StagedModel stagedModel,
+			Map<String, List<StagedModel>> dependentStagedModelsMap,
+			Group group)
+		throws Exception {
+
+		MDRActionLocalServiceUtil.deleteAction((MDRAction)stagedModel);
+
+		List<StagedModel> mdrRuleGroupInstanceDependentStagedModels =
+			dependentStagedModelsMap.get(
+				MDRRuleGroupInstance.class.getSimpleName());
+
+		MDRRuleGroupInstance ruleGroupInstance =
+			(MDRRuleGroupInstance)mdrRuleGroupInstanceDependentStagedModels.get(
+				0);
+
+		MDRRuleGroupInstanceLocalServiceUtil.deleteRuleGroupInstance(
+			ruleGroupInstance);
+
+		List<StagedModel> mdrRuleGroupDependentStagedModels =
+			dependentStagedModelsMap.get(MDRRuleGroup.class.getSimpleName());
+
+		MDRRuleGroup ruleGroup =
+			(MDRRuleGroup)mdrRuleGroupDependentStagedModels.get(0);
+
+		MDRRuleGroupLocalServiceUtil.deleteRuleGroup(ruleGroup);
+	}
+
+	@Override
+	protected StagedModelType[] getDeletionSystemEventStagedModelTypes() {
+		MDRPortletDataHandler mdrPortletDataHandler =
+			new MDRPortletDataHandler();
+
+		return mdrPortletDataHandler.getDeletionSystemEventStagedModelTypes();
+	}
+
+	@Override
+	protected StagedModel getStagedModel(String uuid, Group group)
+		throws SystemException {
+
+		return MDRActionLocalServiceUtil.fetchMDRActionByUuidAndGroupId(
+			uuid, group.getGroupId());
 	}
 
 	@Override
 	protected Class<? extends StagedModel> getStagedModelClass() {
 		return MDRAction.class;
+	}
+
+	@Override
+	protected void validateDeletion(
+			Map<String, List<StagedModel>> dependentStagedModelsMap,
+			Group group)
+		throws Exception {
+
+		List<StagedModel> mdrRuleGroupDependentStagedModels =
+			dependentStagedModelsMap.get(MDRRuleGroup.class.getSimpleName());
+
+		Assert.assertEquals(1, mdrRuleGroupDependentStagedModels.size());
+
+		MDRRuleGroup ruleGroup =
+			(MDRRuleGroup)mdrRuleGroupDependentStagedModels.get(0);
+
+		ruleGroup =
+			MDRRuleGroupLocalServiceUtil.fetchMDRRuleGroupByUuidAndGroupId(
+				ruleGroup.getUuid(), group.getGroupId());
+
+		Assert.assertNull(
+			MDRRuleGroup.class.getName() + " was not deleted", ruleGroup);
+
+		List<StagedModel> mdrRuleGroupInstanceDependentStagedModels =
+			dependentStagedModelsMap.get(
+				MDRRuleGroupInstance.class.getSimpleName());
+
+		Assert.assertEquals(
+			1, mdrRuleGroupInstanceDependentStagedModels.size());
+
+		MDRRuleGroupInstance ruleGroupInstance =
+			(MDRRuleGroupInstance)mdrRuleGroupInstanceDependentStagedModels.get(
+				0);
+
+		ruleGroupInstance =
+			MDRRuleGroupInstanceLocalServiceUtil.
+				fetchMDRRuleGroupInstanceByUuidAndGroupId(
+					ruleGroupInstance.getUuid(), group.getGroupId());
+
+		Assert.assertNull(
+			MDRRuleGroupInstance.class.getName() + " was not deleted",
+			ruleGroupInstance);
 	}
 
 	@Override

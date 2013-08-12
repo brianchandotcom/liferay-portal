@@ -45,6 +45,43 @@ import java.util.regex.Pattern;
  */
 public class XMLSourceProcessor extends BaseSourceProcessor {
 
+	public static String formatXML(String content) {
+		String newContent = StringUtil.replace(content, "\"/>\n", "\" />\n");
+
+		Pattern pattern1 = Pattern.compile(">\n\t+<!--[\n ]");
+		Pattern pattern2 = Pattern.compile("[\t ]-->\n[\t<]");
+
+		for (;;) {
+			Matcher matcher = pattern1.matcher(newContent);
+
+			if (matcher.find()) {
+				String match = matcher.group();
+
+				String replacement = StringUtil.replaceFirst(
+					match, ">\n", ">\n\n");
+
+				newContent = StringUtil.replace(newContent, match, replacement);
+
+				continue;
+			}
+
+			matcher = pattern2.matcher(newContent);
+
+			if (!matcher.find()) {
+				break;
+			}
+
+			String match = matcher.group();
+
+			String replacement = StringUtil.replaceFirst(
+				match, "-->\n", "-->\n\n");
+
+			newContent = StringUtil.replace(newContent, match, replacement);
+		}
+
+		return newContent;
+	}
+
 	protected String fixAntXMLProjectName(String fileName, String content) {
 		int x = 0;
 
@@ -634,43 +671,6 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 		return newContent.substring(0, x) + sb.toString() +
 			newContent.substring(y);
-	}
-
-	public static String formatXML(String content) {
-		String newContent = StringUtil.replace(content, "\"/>\n", "\" />\n");
-
-		Pattern pattern1 = Pattern.compile(">\n\t+<!--[\n ]");
-		Pattern pattern2 = Pattern.compile("[\t ]-->\n[\t<]");
-
-		for (;;) {
-			Matcher matcher = pattern1.matcher(newContent);
-
-			if (matcher.find()) {
-				String match = matcher.group();
-
-				String replacement = StringUtil.replaceFirst(
-					match, ">\n", ">\n\n");
-
-				newContent = StringUtil.replace(newContent, match, replacement);
-
-				continue;
-			}
-
-			matcher = pattern2.matcher(newContent);
-
-			if (!matcher.find()) {
-				break;
-			}
-
-			String match = matcher.group();
-
-			String replacement = StringUtil.replaceFirst(
-				match, "-->\n", "-->\n\n");
-
-			newContent = StringUtil.replace(newContent, match, replacement);
-		}
-
-		return newContent;
 	}
 
 }

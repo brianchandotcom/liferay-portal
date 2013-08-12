@@ -39,7 +39,7 @@ else if (onClick.startsWith("wsrp_rewrite?")) {
 }
 
 if (Validator.isNotNull(escapedHref)) {
-	if(useDialog) {
+	if (useDialog) {
 		if (data == null) {
 			data = new HashMap<String, Object>();
 		}

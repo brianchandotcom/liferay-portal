@@ -1322,6 +1322,8 @@
 		Util,
 		'openInDialog',
 		function(event, target) {
+			event.preventDefault();
+
 			target = A.one(target);
 
 			var config = target.getData();
@@ -1335,8 +1337,6 @@
 			}
 
 			Liferay.Util.openWindow(config);
-
-			event.preventDefault();
 		},
 		['aui-base', 'liferay-util-window']
 	);

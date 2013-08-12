@@ -68,7 +68,7 @@ JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_AR
 			headerNames.add("status");
 			headerNames.add("modified-date");
 
-			if (Validator.isNotNull(article.getDisplayDate())) {
+			if (article.getDisplayDate() != null) {
 				headerNames.add("display-date");
 			}
 
@@ -81,7 +81,7 @@ JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_AR
 
 			orderableHeaders.put("modified-date", "modified-date");
 
-			if (Validator.isNotNull(article.getDisplayDate())) {
+			if (article.getDisplayDate() != null) {
 				orderableHeaders.put("display-date", "display-date");
 			}
 

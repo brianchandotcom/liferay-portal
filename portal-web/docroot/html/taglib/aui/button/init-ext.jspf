@@ -15,7 +15,7 @@
 --%>
 
 <%
-String escapedHref = "";
+String escapedHref = StringPool.BLANK;
 
 if (Validator.isNotNull(href)) {
 	escapedHref = HtmlUtil.escapeJS(PortalUtil.escapeRedirect(href));
@@ -45,7 +45,6 @@ if (Validator.isNotNull(escapedHref)) {
 		}
 
 		data.put("href", href);
-
 		data.put("title", LanguageUtil.get(pageContext, value));
 
 		onClick = "Liferay.Util.openInDialog(event, this);";

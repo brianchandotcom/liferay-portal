@@ -1604,6 +1604,13 @@ public class JournalArticleLocalServiceWrapper
 		return _journalArticleLocalService.getArticles(groupId, articleId);
 	}
 
+	@Override
+	public java.util.List<com.liferay.portlet.journal.model.JournalArticle> getArticlesByResourcePrimKey(
+		long resourcePrimKey)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _journalArticleLocalService.getArticlesByResourcePrimKey(resourcePrimKey);
+	}
+
 	/**
 	* Returns all the web content articles matching the small image ID.
 	*

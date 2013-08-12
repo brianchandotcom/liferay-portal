@@ -2414,6 +2414,14 @@ public class JournalArticleLocalServiceImpl
 		return journalArticlePersistence.findByG_A(groupId, articleId);
 	}
 
+	@Override
+	public List<JournalArticle> getArticlesByResourcePrimKey(
+			long resourcePrimKey)
+		throws SystemException {
+
+		return journalArticlePersistence.findByResourcePrimKey(resourcePrimKey);
+	}
+
 	/**
 	 * Returns all the web content articles matching the small image ID.
 	 *

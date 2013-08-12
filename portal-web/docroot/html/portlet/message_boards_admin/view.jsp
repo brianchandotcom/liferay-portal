@@ -350,6 +350,7 @@ if ((category != null) && layout.isTypeControlPanel()) {
 							<liferay-ui:search-container-column-status
 								href="<%= rowURL %>"
 								name="status"
+								status="<%= thread.getStatus() %>"
 							/>
 
 							<%

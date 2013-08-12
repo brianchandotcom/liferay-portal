@@ -33,11 +33,11 @@ AUI.add(
 
 					editor: {},
 
-					inputName: {
+					name: {
 						validator: Lang.isString
 					},
 
-					inputNamespace: {
+					namespace: {
 						validator: Lang.isString
 					},
 
@@ -84,7 +84,7 @@ AUI.add(
 				prototype: {
 					BOUNDING_TEMPLATE: '<span />',
 
-					INPUT_HIDDEN_TEMPLATE: '<input id="{inputNamespace}{value}" name="{inputName}{value}" type="hidden" value="" />',
+					INPUT_HIDDEN_TEMPLATE: '<input id="{namespace}{value}" name="{name}{value}" type="hidden" value="" />',
 
 					ITEM_TEMPLATE: '<td class="palette-item {selectedClassName}" data-column={column} data-index={index} data-row={row} data-value="{value}">' +
 						'<a href="" class="palette-item-inner" onclick="return false;">' +
@@ -245,18 +245,18 @@ AUI.add(
 						var instance = this;
 
 						var boundingBox = instance.get('boundingBox');
-						var inputName = instance.get('inputName');
-						var inputNamespace = instance.get('inputNamespace');
+						var name = instance.get('name');
+						var namespace = instance.get('namespace');
 
-						var inputLanguage = boundingBox.one('#' + inputNamespace + languageId);
+						var inputLanguage = boundingBox.one('#' + namespace + languageId);
 
 						if (!inputLanguage) {
 							inputLanguage = A.Node.create(
 								A.Lang.sub(
 									instance.INPUT_HIDDEN_TEMPLATE,
 									{
-										inputName: inputName,
-										inputNamespace: inputNamespace,
+										name: name,
+										namespace: namespace,
 										value: languageId
 									}
 								)

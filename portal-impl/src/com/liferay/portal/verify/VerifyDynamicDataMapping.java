@@ -100,8 +100,15 @@ public class VerifyDynamicDataMapping extends VerifyProcess {
 		return fileEntry;
 	}
 
-	protected void createDefaultMetadataElement(
+	protected boolean createDefaultMetadataElement(
 		Element dynamicElementElement, String defaultLanguageId) {
+
+		boolean hasDefaultMetadataElement = hasDefaultMetadataElement(
+			dynamicElementElement, defaultLanguageId);
+
+		if (hasDefaultMetadataElement) {
+			return false;
+		}
 
 		Element metadataElement = dynamicElementElement.addElement("meta-data");
 
@@ -111,6 +118,8 @@ public class VerifyDynamicDataMapping extends VerifyProcess {
 
 		entryElement.addAttribute("name", "label");
 		entryElement.addCDATA(StringPool.BLANK);
+
+		return true;
 	}
 
 	@Override
@@ -294,7 +303,9 @@ public class VerifyDynamicDataMapping extends VerifyProcess {
 			updateFileUploadReferences(structureLink);
 		}
 
-		updateStructure(structure);
+		String xsd = updateXSD(structure.getXsd());
+
+		updateStructure(structure, xsd);
 	}
 
 	protected void updateFileUploadReferences(DDMStructureLink structureLink)
@@ -346,8 +357,10 @@ public class VerifyDynamicDataMapping extends VerifyProcess {
 		updateFieldValues(storageId, fieldValues);
 	}
 
-	protected void updateStructure(DDMStructure structure) throws Exception {
-		String xsd = updateXSD(structure.getXsd());
+	protected void updateStructure(DDMStructure structure, String xsd)
+		throws Exception {
+
+		xsd = DDMXMLUtil.formatXML(xsd);
 
 		structure.setXsd(xsd);
 
@@ -366,7 +379,7 @@ public class VerifyDynamicDataMapping extends VerifyProcess {
 			updateXSDDynamicElement(dynamicElementElement);
 		}
 
-		return DDMXMLUtil.formatXML(document);
+		return document.asXML();
 	}
 
 	protected void updateXSDDynamicElement(Element element) {
@@ -394,30 +407,20 @@ public class VerifyDynamicDataMapping extends VerifyProcess {
 
 		List<Node> nodes = xPathSelector.selectNodes(document);
 
-		boolean isModified = false;
+		boolean modified = false;
 
 		for (Node node : nodes) {
 			Element dynamicElementElement = (Element)node;
 
-			boolean hasDefaultMetadataElement = hasDefaultMetadataElement(
-				dynamicElementElement, defaultLanguageId);
+			if (createDefaultMetadataElement(
+					dynamicElementElement, defaultLanguageId)) {
 
-			if (hasDefaultMetadataElement) {
-				continue;
+				modified = true;
 			}
-
-			createDefaultMetadataElement(
-				dynamicElementElement, defaultLanguageId);
-
-			isModified = true;
 		}
 
-		if (isModified) {
-			String xsd = DDMXMLUtil.formatXML(document);
-
-			structure.setXsd(xsd);
-
-			DDMStructureLocalServiceUtil.updateDDMStructure(structure);
+		if (modified) {
+			updateStructure(structure, document.asXML());
 		}
 	}
 

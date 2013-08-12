@@ -174,7 +174,7 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 
 		try {
 			Locale articleDefaultLocale = LocaleUtil.fromLanguageId(
-				getDefaultLocale());
+				getDefaultLanguageId());
 
 			LocaleThreadLocal.setDefaultLocale(articleDefaultLocale);
 

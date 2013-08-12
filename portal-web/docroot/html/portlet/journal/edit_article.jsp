@@ -111,7 +111,7 @@ if ((article == null) && (Validator.isNull(defaultLanguageId) || !LanguageUtil.i
 }
 else {
 	if (Validator.isNull(defaultLanguageId) || !LanguageUtil.isAvailableLocale(themeDisplay.getSiteGroupId(), defaultLanguageId)) {
-		defaultLanguageId = article.getDefaultLocale();
+		defaultLanguageId = article.getDefaultLanguageId();
 	}
 }
 

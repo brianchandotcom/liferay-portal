@@ -636,7 +636,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			newContent.substring(y);
 	}
 
-	protected String formatXML(String content) {
+	public static String formatXML(String content) {
 		String newContent = StringUtil.replace(content, "\"/>\n", "\" />\n");
 
 		Pattern pattern1 = Pattern.compile(">\n\t+<!--[\n ]");

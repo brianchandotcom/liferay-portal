@@ -165,41 +165,41 @@
 
 		<propertyfile file="test-sample-sql.properties">
 			<entry key="sql.dir" value="${basedir}" />
-			<entry key="sample.sql.db.type" value="hypersonic"/>
-			<entry key="sample.sql.max.asset.category.count" value="1"/>
-			<entry key="sample.sql.max.asset.entry.to.asset.category.count" value="1"/>
-			<entry key="sample.sql.max.asset.entry.to.asset.tag.count" value="1"/>
-			<entry key="sample.sql.max.asset.publisher.filter.rule.count" value="1"/>
-			<entry key="sample.sql.max.asset.publisher.page.count" value="2"/>
-			<entry key="sample.sql.max.asset.tag.count" value="1"/>
-			<entry key="sample.sql.max.asset.vocabulary.count" value="1"/>
-			<entry key="sample.sql.max.blogs.entry.comment.count" value="1"/>
-			<entry key="sample.sql.max.blogs.entry.count" value="1"/>
-			<entry key="sample.sql.max.ddl.custom.field.count" value="1"/>
-			<entry key="sample.sql.max.ddl.record.count" value="1"/>
-			<entry key="sample.sql.max.ddl.record.set.count" value="1"/>
-			<entry key="sample.sql.max.dl.file.entry.count" value="1"/>
-			<entry key="sample.sql.max.dl.file.entry.size" value="1"/>
-			<entry key="sample.sql.max.dl.folder.count" value="1"/>
-			<entry key="sample.sql.max.dl.folder.depth" value="1"/>
-			<entry key="sample.sql.max.group.count" value="1"/>
-			<entry key="sample.sql.max.journal.article.count" value="1"/>
-			<entry key="sample.sql.max.journal.article.page.count" value="1"/>
-			<entry key="sample.sql.max.journal.article.size" value="1"/>
-			<entry key="sample.sql.max.journal.article.version.count" value="1"/>
-			<entry key="sample.sql.max.mb.category.count" value="1"/>
-			<entry key="sample.sql.max.mb.message.count" value="1"/>
-			<entry key="sample.sql.max.mb.thread.count" value="1"/>
-			<entry key="sample.sql.max.user.count" value="1"/>
-			<entry key="sample.sql.max.user.to.group.count" value="1"/>
-			<entry key="sample.sql.max.wiki.node.count" value="1"/>
-			<entry key="sample.sql.max.wiki.page.comment.count" value="1"/>
-			<entry key="sample.sql.max.wiki.page.count" value="1"/>
-			<entry key="sample.sql.optimize.buffer.size" value="8192"/>
-			<entry key="sample.sql.output.csv.file.names" value="assetPublisher,blog,company,documentLibrary,dynamicDataList,layout,messageBoard,repository,wiki"/>
-			<entry key="sample.sql.output.dir" value="${tstamp.value}"/>
-			<entry key="sample.sql.output.merge" value="true"/>
-			<entry key="sample.sql.script" value="com/liferay/portal/tools/samplesqlbuilder/dependencies/sample.ftl"/>
+			<entry key="sample.sql.db.type" value="hypersonic" />
+			<entry key="sample.sql.max.asset.category.count" value="1" />
+			<entry key="sample.sql.max.asset.entry.to.asset.category.count" value="1" />
+			<entry key="sample.sql.max.asset.entry.to.asset.tag.count" value="1" />
+			<entry key="sample.sql.max.asset.publisher.filter.rule.count" value="1" />
+			<entry key="sample.sql.max.asset.publisher.page.count" value="2" />
+			<entry key="sample.sql.max.asset.tag.count" value="1" />
+			<entry key="sample.sql.max.asset.vocabulary.count" value="1" />
+			<entry key="sample.sql.max.blogs.entry.comment.count" value="1" />
+			<entry key="sample.sql.max.blogs.entry.count" value="1" />
+			<entry key="sample.sql.max.ddl.custom.field.count" value="1" />
+			<entry key="sample.sql.max.ddl.record.count" value="1" />
+			<entry key="sample.sql.max.ddl.record.set.count" value="1" />
+			<entry key="sample.sql.max.dl.file.entry.count" value="1" />
+			<entry key="sample.sql.max.dl.file.entry.size" value="1" />
+			<entry key="sample.sql.max.dl.folder.count" value="1" />
+			<entry key="sample.sql.max.dl.folder.depth" value="1" />
+			<entry key="sample.sql.max.group.count" value="1" />
+			<entry key="sample.sql.max.journal.article.count" value="1" />
+			<entry key="sample.sql.max.journal.article.page.count" value="1" />
+			<entry key="sample.sql.max.journal.article.size" value="1" />
+			<entry key="sample.sql.max.journal.article.version.count" value="1" />
+			<entry key="sample.sql.max.mb.category.count" value="1" />
+			<entry key="sample.sql.max.mb.message.count" value="1" />
+			<entry key="sample.sql.max.mb.thread.count" value="1" />
+			<entry key="sample.sql.max.user.count" value="1" />
+			<entry key="sample.sql.max.user.to.group.count" value="1" />
+			<entry key="sample.sql.max.wiki.node.count" value="1" />
+			<entry key="sample.sql.max.wiki.page.comment.count" value="1" />
+			<entry key="sample.sql.max.wiki.page.count" value="1" />
+			<entry key="sample.sql.optimize.buffer.size" value="8192" />
+			<entry key="sample.sql.output.csv.file.names" value="assetPublisher,blog,company,documentLibrary,dynamicDataList,layout,messageBoard,repository,wiki" />
+			<entry key="sample.sql.output.dir" value="${tstamp.value}" />
+			<entry key="sample.sql.output.merge" value="true" />
+			<entry key="sample.sql.script" value="com/liferay/portal/tools/samplesqlbuilder/dependencies/sample.ftl" />
 		</propertyfile>
 
 		<java
@@ -208,7 +208,7 @@
 			failonerror="true"
 		>
 			<sysproperty key="external-properties" value="com/liferay/portal/tools/dependencies/portal-tools.properties" />
-			<arg value="test-sample-sql.properties"/>
+			<arg value="test-sample-sql.properties" />
 		</java>
 
 		<delete file="test-sample-sql.properties" />

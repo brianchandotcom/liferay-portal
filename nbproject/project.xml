@@ -6,7 +6,9 @@
 			<name>Liferay Portal</name>
 		</general-data>
 		<general-data xmlns="http://www.netbeans.org/ns/freeform-project/2">
+
 			<!-- Do not use Project Properties customizer when editing this file manually. -->
+
 			<name>Liferay Portal</name>
 			<properties/>
 			<folders>
@@ -206,14 +208,14 @@
 					</source-file>
 				</items>
 				<context-menu>
-					<ide-action name="All"/>
-					<ide-action name="Build"/>
-					<ide-action name="Clean"/>
-					<ide-action name="Compile"/>
-					<ide-action name="Deploy"/>
-					<ide-action name="Javadoc"/>
-					<ide-action name="Rebuild"/>
-					<ide-action name="Test"/>
+					<ide-action name="All" />
+					<ide-action name="Build" />
+					<ide-action name="Clean" />
+					<ide-action name="Compile" />
+					<ide-action name="Deploy" />
+					<ide-action name="Javadoc" />
+					<ide-action name="Rebuild" />
+					<ide-action name="Test" />
 				</context-menu>
 			</view>
 			<subprojects/>

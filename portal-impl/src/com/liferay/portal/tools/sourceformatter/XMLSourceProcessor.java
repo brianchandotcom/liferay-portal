@@ -37,11 +37,50 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Hugo Huijser
  */
 public class XMLSourceProcessor extends BaseSourceProcessor {
+
+	public static String formatXML(String content) {
+		String newContent = StringUtil.replace(content, "\"/>\n", "\" />\n");
+
+		Pattern pattern1 = Pattern.compile(">\n\t+<!--[\n ]");
+		Pattern pattern2 = Pattern.compile("[\t ]-->\n[\t<]");
+
+		for (;;) {
+			Matcher matcher = pattern1.matcher(newContent);
+
+			if (matcher.find()) {
+				String match = matcher.group();
+
+				String replacement = StringUtil.replaceFirst(
+					match, ">\n", ">\n\n");
+
+				newContent = StringUtil.replace(newContent, match, replacement);
+
+				continue;
+			}
+
+			matcher = pattern2.matcher(newContent);
+
+			if (!matcher.find()) {
+				break;
+			}
+
+			String match = matcher.group();
+
+			String replacement = StringUtil.replaceFirst(
+				match, "-->\n", "-->\n\n");
+
+			newContent = StringUtil.replace(newContent, match, replacement);
+		}
+
+		return newContent;
+	}
 
 	protected String fixAntXMLProjectName(String fileName, String content) {
 		int x = 0;
@@ -111,6 +150,9 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		};
 		String[] includes = new String[] {"**\\*.xml"};
 
+		Properties exclusions = getExclusionsProperties(
+			"source_formatter_xml_exclusions.properties");
+
 		List<String> fileNames = getFileNames(excludes, includes);
 
 		for (String fileName : fileNames) {
@@ -119,24 +161,18 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			fileName = StringUtil.replace(
 				fileName, StringPool.BACK_SLASH, StringPool.SLASH);
 
+			if ((exclusions != null) &&
+				(exclusions.getProperty(fileName) != null)) {
+
+				continue;
+			}
+
 			String content = fileUtil.read(file);
 
 			String newContent = content;
 
 			if (!fileName.contains("/build")) {
-				Properties leadingSpacesExclusions = getExclusionsProperties(
-					"source_formatter_xml_leading_spaces_exclusions." +
-						"properties");
-
-				String excluded = null;
-
-				if (leadingSpacesExclusions != null) {
-					excluded = leadingSpacesExclusions.getProperty(fileName);
-				}
-
-				if (excluded == null) {
-					newContent = trimContent(newContent, false);
-				}
+				newContent = trimContent(newContent, false);
 			}
 
 			if (fileName.contains("/build") && !fileName.contains("/tools/")) {
@@ -168,6 +204,8 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 				newContent = formatWebXML(fileName, content);
 			}
+
+			newContent = formatXML(newContent);
 
 			if (isAutoFix() && (newContent != null) &&
 				!content.equals(newContent)) {

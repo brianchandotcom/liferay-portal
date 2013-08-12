@@ -97,7 +97,7 @@
 		<if>
 			<not>
 				<uptodate targetfile="${jar.file}.jar">
-					<srcfiles dir="classes" includes="**/*.*"/>
+					<srcfiles dir="classes" includes="**/*.*" />
 				</uptodate>
 			</not>
 			<then>

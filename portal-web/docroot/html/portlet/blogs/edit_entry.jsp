@@ -463,7 +463,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 		);
 	}
 
-	<c:if test="<%= (entry == null) || (entry.getStatus() == WorkflowConstants.STATUS_DRAFT) %>">
+	<c:if test="<%= (entry == null) || ((entry.getStatus() == WorkflowConstants.STATUS_DRAFT) && (entry.getUserId() == user.getUserId())) %>">
 		<portlet:namespace />saveDraftIntervalId = setInterval('<portlet:namespace />saveEntry(true, true)', 30000);
 		<portlet:namespace />oldTitle = document.<portlet:namespace />fm.<portlet:namespace />title.value;
 		<portlet:namespace />oldContent = <portlet:namespace />initEditor();

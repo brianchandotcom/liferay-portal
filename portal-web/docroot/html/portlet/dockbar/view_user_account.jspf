@@ -131,7 +131,7 @@
 				myAccountURL = HttpUtil.setParameter(myAccountURL, "controlPanelCategory", PortletCategoryKeys.MY);
 				%>
 
-				<aui:nav-item href="<%= myAccountURL %>" iconClass="icon-user" label="my-account" title="my-account" useDialog="<%= !themeDisplay.isImpersonated() %>" />
+				<aui:nav-item href="<%= myAccountURL %>" iconClass="icon-user" label="my-account" title="my-account" useDialog="<%= !themeDisplay.isImpersonated() && PropsValues.DOCKBAR_ADMINISTRATIVE_LINKS_SHOW_IN_POP_UP %>" />
 			</c:if>
 
 			<c:if test="<%= themeDisplay.isShowSignOutIcon() %>">

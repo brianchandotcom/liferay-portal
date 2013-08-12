@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.Randomizer;
 import com.liferay.portal.kernel.util.UnmodifiableList;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -169,8 +170,25 @@ public class QueryUtil {
 			return query.list(unmodifiable);
 		}
 		else {
-			if (dialect.supportsLimit()) {
-				query.setMaxResults(end - start);
+
+			// Adjust negative parameters to be positive
+
+			start = start < 0 ? 0 : start;
+			end = end < start ? start : end;
+
+			int maxResults = end - start;
+
+			if (maxResults==0) {
+				if (unmodifiable) {
+					return new UnmodifiableList<Object>(
+						Collections.emptyList());
+				}
+				else {
+					return new ArrayList<Object>();
+				}
+			}
+			else if (dialect.supportsLimit()) {
+				query.setMaxResults(maxResults);
 				query.setFirstResult(start);
 
 				return query.list(unmodifiable);

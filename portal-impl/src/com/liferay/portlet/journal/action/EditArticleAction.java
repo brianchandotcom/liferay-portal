@@ -176,12 +176,12 @@ public class EditArticleAction extends PortletAction {
 				actionRequest, "workflowAction",
 				WorkflowConstants.ACTION_PUBLISH);
 
-			if (Validator.isNotNull(oldUrlTitle)) {
-				String portletId = HttpUtil.getParameter(
-					redirect, "p_p_id", false);
+			String portletId = HttpUtil.getParameter(redirect, "p_p_id", false);
 
-				String oldRedirectParam =
-					PortalUtil.getPortletNamespace(portletId) + "redirect";
+			String namespace = PortalUtil.getPortletNamespace(portletId);
+
+			if (Validator.isNotNull(oldUrlTitle)) {
+				String oldRedirectParam = namespace + "redirect";
 
 				String oldRedirect = HttpUtil.getParameter(
 					redirect, oldRedirectParam, false);
@@ -255,10 +255,10 @@ public class EditArticleAction extends PortletAction {
 					if (Validator.isNotNull(redirect)) {
 						if (cmd.equals(Constants.ADD) && (article != null)) {
 							redirect = HttpUtil.addParameter(
-								redirect, "className",
+								redirect, namespace + "className",
 								JournalArticle.class.getName());
 							redirect = HttpUtil.addParameter(
-								redirect, "classPK",
+								redirect, namespace + "classPK",
 								JournalArticleAssetRenderer.getClassPK(
 									article));
 						}

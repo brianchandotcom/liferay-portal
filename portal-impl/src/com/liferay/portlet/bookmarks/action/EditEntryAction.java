@@ -107,11 +107,18 @@ public class EditEntryAction extends PortletAction {
 
 				if (Validator.isNotNull(redirect)) {
 					if (cmd.equals(Constants.ADD) && (entry != null)) {
+						String portletId = HttpUtil.getParameter(
+							redirect, "p_p_id", false);
+
+						String namespace = PortalUtil.getPortletNamespace(
+							portletId);
+
 						redirect = HttpUtil.addParameter(
-							redirect, "className",
+							redirect, namespace + "className",
 							BookmarksEntry.class.getName());
 						redirect = HttpUtil.addParameter(
-							redirect, "classPK", entry.getEntryId());
+							redirect, namespace + "classPK",
+							entry.getEntryId());
 					}
 
 					actionResponse.sendRedirect(redirect);

@@ -132,10 +132,9 @@ public class EditEntryAction extends PortletAction {
 			String redirect = ParamUtil.getString(actionRequest, "redirect");
 			boolean updateRedirect = false;
 
-			if (Validator.isNotNull(oldUrlTitle)) {
-				String portletId = HttpUtil.getParameter(
-					redirect, "p_p_id", false);
+			String portletId = HttpUtil.getParameter(redirect, "p_p_id", false);
 
+			if (Validator.isNotNull(oldUrlTitle)) {
 				String oldRedirectParam =
 					PortalUtil.getPortletNamespace(portletId) + "redirect";
 
@@ -201,11 +200,15 @@ public class EditEntryAction extends PortletAction {
 
 					if (Validator.isNotNull(redirect)) {
 						if (cmd.equals(Constants.ADD) && (entry != null)) {
+							String namespace = PortalUtil.getPortletNamespace(
+								portletId);
+
 							redirect = HttpUtil.addParameter(
-								redirect, "className",
+								redirect, namespace + "className",
 								BlogsEntry.class.getName());
 							redirect = HttpUtil.addParameter(
-								redirect, "classPK", entry.getEntryId());
+								redirect, namespace + "classPK",
+								entry.getEntryId());
 						}
 
 						actionResponse.sendRedirect(redirect);

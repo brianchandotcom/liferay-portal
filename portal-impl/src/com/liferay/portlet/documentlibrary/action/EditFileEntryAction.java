@@ -229,11 +229,17 @@ public class EditFileEntryAction extends PortletAction {
 							if (cmd.equals(Constants.ADD) &&
 								(fileEntry != null)) {
 
+								String portletId = HttpUtil.getParameter(
+									redirect, "p_p_id", false);
+
+								String namespace =
+									PortalUtil.getPortletNamespace(portletId);
+
 								redirect = HttpUtil.addParameter(
-									redirect, "className",
+									redirect, namespace + "className",
 									DLFileEntry.class.getName());
 								redirect = HttpUtil.addParameter(
-									redirect, "classPK",
+									redirect, namespace + "classPK",
 									fileEntry.getFileEntryId());
 							}
 

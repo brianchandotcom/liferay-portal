@@ -220,28 +220,36 @@ public class PortletImporter {
 			Map<String, String[]> parameterMap, File file)
 		throws Exception {
 
-		Layout layout = LayoutLocalServiceUtil.getLayout(plid);
+		try {
+			ExportImportThreadLocal.setPortletValidationInProcess(true);
 
-		ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(file);
+			Layout layout = LayoutLocalServiceUtil.getLayout(plid);
 
-		PortletDataContext portletDataContext =
-			PortletDataContextFactoryUtil.createImportPortletDataContext(
-				layout.getCompanyId(), groupId, parameterMap, null, zipReader);
+			ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(file);
 
-		validateFile(portletDataContext, portletId);
+			PortletDataContext portletDataContext =
+				PortletDataContextFactoryUtil.createImportPortletDataContext(
+					layout.getCompanyId(), groupId, parameterMap, null,
+					zipReader);
 
-		MissingReferences missingReferences =
-			ExportImportHelperUtil.validateMissingReferences(
-				userId, groupId, parameterMap, file);
+			validateFile(portletDataContext, portletId);
 
-		Map<String, MissingReference> dependencyMissingReferences =
-			missingReferences.getDependencyMissingReferences();
+			MissingReferences missingReferences =
+				ExportImportHelperUtil.validateMissingReferences(
+					userId, groupId, parameterMap, file);
 
-		if (!dependencyMissingReferences.isEmpty()) {
-			throw new MissingReferenceException(missingReferences);
+			Map<String, MissingReference> dependencyMissingReferences =
+				missingReferences.getDependencyMissingReferences();
+
+			if (!dependencyMissingReferences.isEmpty()) {
+				throw new MissingReferenceException(missingReferences);
+			}
+
+			return missingReferences;
 		}
-
-		return missingReferences;
+		finally {
+			ExportImportThreadLocal.setPortletValidationInProcess(false);
+		}
 	}
 
 	protected void deletePortletData(

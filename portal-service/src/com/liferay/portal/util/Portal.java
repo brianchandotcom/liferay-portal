@@ -992,6 +992,9 @@ public interface Portal {
 	public String getRelativeHomeURL(HttpServletRequest request)
 		throws PortalException, SystemException;
 
+	public String getRootNodeName(
+		Group group, boolean privateLayout, Locale locale);
+
 	public long getScopeGroupId(HttpServletRequest request)
 		throws PortalException, SystemException;
 

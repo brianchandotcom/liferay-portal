@@ -4397,6 +4397,37 @@ public class PortalImpl implements Portal {
 	}
 
 	@Override
+	public String getRootNodeName(
+		Group group, boolean privateLayout, Locale locale) {
+
+		String pagesName = null;
+
+		if (group.isLayoutPrototype() || group.isLayoutSetPrototype() ||
+			group.isUserGroup()) {
+
+			pagesName = "pages";
+		}
+		else if (privateLayout) {
+			if (group.isUser()) {
+				pagesName = "my-dashboard";
+			}
+			else {
+				pagesName = "private-pages";
+			}
+		}
+		else {
+			if (group.isUser()) {
+				pagesName = "my-profile";
+			}
+			else {
+				pagesName = "public-pages";
+			}
+		}
+
+		return LanguageUtil.get(locale, pagesName);
+	}
+
+	@Override
 	public long getScopeGroupId(HttpServletRequest request)
 		throws PortalException, SystemException {
 

@@ -53,7 +53,7 @@ if (liveGroup.isStagingGroup()) {
 	liveGroup = liveGroup.getLiveGroup();
 }
 
-String rootNodeName = PortalUtil.getRootNodeName(liveGroup, privateLayout, pageContext);
+String rootNodeName = PortalUtil.getRootNodeName(liveGroup, privateLayout, locale);
 %>
 
 <aui:model-context model="<%= Layout.class %>" />

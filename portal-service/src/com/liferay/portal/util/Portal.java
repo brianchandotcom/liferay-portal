@@ -993,7 +993,7 @@ public interface Portal {
 		throws PortalException, SystemException;
 
 	public String getRootNodeName(
-		Group group, boolean privateLayout, PageContext pageContext);
+		Group group, boolean privateLayout, Locale locale);
 
 	public long getScopeGroupId(HttpServletRequest request)
 		throws PortalException, SystemException;

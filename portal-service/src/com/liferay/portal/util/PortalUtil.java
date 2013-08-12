@@ -1251,9 +1251,9 @@ public class PortalUtil {
 	}
 
 	public static String getRootNodeName(
-		Group group, boolean privateLayout, PageContext pageContext) {
+		Group group, boolean privateLayout, Locale locale) {
 
-		return getPortal().getRootNodeName(group, privateLayout, pageContext);
+		return getPortal().getRootNodeName(group, privateLayout, locale);
 	}
 
 	public static long getScopeGroupId(HttpServletRequest request)

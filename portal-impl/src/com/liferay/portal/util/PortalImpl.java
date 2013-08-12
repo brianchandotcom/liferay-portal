@@ -4398,7 +4398,7 @@ public class PortalImpl implements Portal {
 
 	@Override
 	public String getRootNodeName(
-		Group group, boolean privateLayout, PageContext pageContext) {
+		Group group, boolean privateLayout, Locale locale) {
 
 		String pagesName = null;
 
@@ -4424,7 +4424,7 @@ public class PortalImpl implements Portal {
 			}
 		}
 
-		return LanguageUtil.get(pageContext, pagesName);
+		return LanguageUtil.get(locale, pagesName);
 	}
 
 	@Override

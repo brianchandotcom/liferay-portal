@@ -152,7 +152,7 @@ LayoutSet selLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(groupId, private
 
 LayoutLister layoutLister = new LayoutLister();
 
-String rootNodeName = PortalUtil.getRootNodeName(liveGroup, privateLayout, pageContext);
+String rootNodeName = PortalUtil.getRootNodeName(liveGroup, privateLayout, locale);
 
 LayoutView layoutView = layoutLister.getLayoutView(groupId, privateLayout, rootNodeName, locale);
 

@@ -786,24 +786,24 @@
 
 		<if>
 			<not>
-				<isset property="lp-plugins.edition" />
+				<isset property="liferay-plugins.edition" />
 			</not>
 			<then>
-				<property name="lp-plugins.edition" value="CE" />
+				<property name="liferay-plugins.edition" value="CE" />
 			</then>
 		</if>
 
 		<if>
 			<not>
-				<isset property="lp-plugins.git-id" />
+				<isset property="liferay-plugins.git-id" />
 			</not>
 			<then>
-				<exec dir="${lp.plugins.dir}" executable="git" outputproperty="lp-plugins.git-log.output">
+				<exec dir="${lp.plugins.dir}" executable="git" outputproperty="liferay-plugins.git-log.output">
 					<arg line="log -n 1" />
 				</exec>
 
 				<script classpathref="project.classpath" language="beanshell">
-					String gitLogOutput = project.getProperty("lp-plugins.git-log.output");
+					String gitLogOutput = project.getProperty("liferay-plugins.git-log.output");
 
 					int x = gitLogOutput.indexOf("commit ");
 
@@ -813,14 +813,14 @@
 
 					String gitID = gitLogOutput.substring(x, y).trim();
 
-					project.setProperty("lp-plugins.git-id", gitID);
+					project.setProperty("liferay-plugins.git-id", gitID);
 				</script>
 			</then>
 		</if>
 
 		<if>
 			<not>
-				<isset property="lp-plugins.version" />
+				<isset property="liferay-plugins.version" />
 			</not>
 			<then>
 				<var name="lp.version" unset="true" />
@@ -831,47 +831,47 @@
 				<property file="${lp.plugins.dir}/build.${env.HOSTNAME}.properties" />
 				<property file="${lp.plugins.dir}/build.properties" />
 
-				<property name="lp-plugins.version" value="${lp.version}" />
+				<property name="liferay-plugins.version" value="${lp.version}" />
 			</then>
 		</if>
 
 		<if>
 			<not>
-				<isset property="lp-plugins.version.major" />
+				<isset property="liferay-plugins.version.major" />
 			</not>
 			<then>
 				<script classpathref="project.classpath" language="beanshell">
-					String lpPluginsVersion = project.getProperty("lp-plugins.version");
+					String liferayPluginsVersion = project.getProperty("liferay-plugins.version");
 
-					int x = lpPluginsVersion.lastIndexOf(".");
+					int x = liferayPluginsVersion.lastIndexOf(".");
 
-					String lpPluginsVersionMajor = lpPluginsVersion.substring(0, x).trim();
+					String liferayPluginsVersionMajor = liferayPluginsVersion.substring(0, x).trim();
 
-					project.setProperty("lp-plugins.version.major", lpPluginsVersionMajor);
+					project.setProperty("liferay-plugins.version.major", liferayPluginsVersionMajor);
 				</script>
 			</then>
 		</if>
 
 		<if>
 			<not>
-				<isset property="lp-portal.edition" />
+				<isset property="liferay-portal.edition" />
 			</not>
 			<then>
-				<property name="lp-portal.edition" value="CE" />
+				<property name="liferay-portal.edition" value="CE" />
 			</then>
 		</if>
 
 		<if>
 			<not>
-				<isset property="lp-portal.git-id" />
+				<isset property="liferay-portal.git-id" />
 			</not>
 			<then>
-				<exec dir="${project.dir}" executable="git" outputproperty="lp-portal.git-log.output">
+				<exec dir="${project.dir}" executable="git" outputproperty="liferay-portal.git-log.output">
 					<arg line="log -n 1" />
 				</exec>
 
 				<script classpathref="project.classpath" language="beanshell">
-					String gitLogOutput = project.getProperty("lp-portal.git-log.output");
+					String gitLogOutput = project.getProperty("liferay-portal.git-log.output");
 
 					int x = gitLogOutput.indexOf("commit ");
 
@@ -881,14 +881,14 @@
 
 					String gitID = gitLogOutput.substring(x, y).trim();
 
-					project.setProperty("lp-portal.git-id", gitID);
+					project.setProperty("liferay-portal.git-id", gitID);
 				</script>
 			</then>
 		</if>
 
 		<if>
 			<not>
-				<isset property="lp-portal.version" />
+				<isset property="liferay-portal.version" />
 			</not>
 			<then>
 				<var name="lp.version" unset="true" />
@@ -899,23 +899,23 @@
 				<property file="${project.dir}/release.${env.HOSTNAME}.properties" />
 				<property file="${project.dir}/release.properties" />
 
-				<property name="lp-portal.version" value="${lp.version}" />
+				<property name="liferay-portal.version" value="${lp.version}" />
 			</then>
 		</if>
 
 		<if>
 			<not>
-				<isset property="lp-portal.version.major" />
+				<isset property="liferay-portal.version.major" />
 			</not>
 			<then>
 				<script classpathref="project.classpath" language="beanshell">
-					String lpPortalVersion = project.getProperty("lp-portal.version");
+					String liferayPortalVersion = project.getProperty("liferay-portal.version");
 
-					int x = lpPortalVersion.lastIndexOf(".");
+					int x = liferayPortalVersion.lastIndexOf(".");
 
-					String lpPortalVersionMajor = lpPortalVersion.substring(0, x).trim();
+					String liferayPortalVersionMajor = liferayPortalVersion.substring(0, x).trim();
 
-					project.setProperty("lp-portal.version.major", lpPortalVersionMajor);
+					project.setProperty("liferay-portal.version.major", liferayPortalVersionMajor);
 				</script>
 			</then>
 		</if>
@@ -935,14 +935,14 @@
 	<property name="os.version" value="${os.version}" />
 </environment-properties>
 <test-properties>
-	<property name="lp-plugins.edition" value="${lp-plugins.edition}" />
-	<property name="lp-plugins.git-id" value="${lp-plugins.git-id}" />
-	<property name="lp-plugins.version" value="${lp-plugins.version}" />
-	<property name="lp-plugins.version.major" value="${lp-plugins.version.major}" />
-	<property name="lp-portal.edition" value="${lp-portal.edition}" />
-	<property name="lp-portal.git-id" value="${lp-portal.git-id}" />
-	<property name="lp-portal.version" value="${lp-portal.version}" />
-	<property name="lp-portal.version.major" value="${lp-portal.version.major}" />
+	<property name="liferay-plugins.edition" value="${liferay-plugins.edition}" />
+	<property name="liferay-plugins.git-id" value="${liferay-plugins.git-id}" />
+	<property name="liferay-plugins.version" value="${liferay-plugins.version}" />
+	<property name="liferay-plugins.version.major" value="${liferay-plugins.version.major}" />
+	<property name="liferay-portal.edition" value="${liferay-portal.edition}" />
+	<property name="liferay-portal.git-id" value="${liferay-portal.git-id}" />
+	<property name="liferay-portal.version" value="${liferay-portal.version}" />
+	<property name="liferay-portal.version.major" value="${liferay-portal.version.major}" />
 </test-properties>
 			]]>
 		</property>
@@ -1001,6 +1001,8 @@
 
 								fileContent += line.trim() + "\n";
 							}
+						}
+						catch (Exception e) {
 						}
 
 						while (fileContent.contains("\n\n")) {

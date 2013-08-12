@@ -14,8 +14,22 @@
  */
 --%>
 
+<%@ include file="/html/portlet/users_admin/init.jsp" %>
+
 <%
 String keywords = ParamUtil.getString(request, "keywords");
+
+String backURL = (String)request.getAttribute("view.jsp-backURL");
+int inactiveUsersCount = (Integer)request.getAttribute("view.jsp-inactiveUsersCount");
+Organization organization = (Organization)request.getAttribute("view.jsp-organization");
+long organizationId = (Long)request.getAttribute("view.jsp-organizationId");
+long organizationGroupId = (Long)request.getAttribute("view.jsp-organizationGroupId");
+PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
+int status = (Integer)request.getAttribute("view.jsp-status");
+String toolbarItem = (String)request.getAttribute("view.jsp-toolbarItem");
+int usersCount = (Integer)request.getAttribute("view.jsp-usersCount");
+String usersListView = (String)request.getAttribute("view.jsp-usersListView");
+String viewUsersRedirect = (String)request.getAttribute("view.jsp-viewUsersRedirect");
 
 if (organization != null) {
 	Group organizationGroup = organization.getGroup();

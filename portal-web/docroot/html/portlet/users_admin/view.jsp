@@ -96,7 +96,22 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 			<%@ include file="/html/portlet/users_admin/view_flat_users.jspf" %>
 		</c:when>
 		<c:otherwise>
-			<%@ include file="/html/portlet/users_admin/view_tree.jspf" %>
+
+			<%
+			request.setAttribute("view.jsp-backURL", backURL);
+			request.setAttribute("view.jsp-inactiveUsersCount", inactiveUsersCount);
+			request.setAttribute("view.jsp-organization", organization);
+			request.setAttribute("view.jsp-organizationGroupId", organizationGroupId);
+			request.setAttribute("view.jsp-organizationId", organizationId);
+			request.setAttribute("view.jsp-portletURL", portletURL);
+			request.setAttribute("view.jsp-status", status);
+			request.setAttribute("view.jsp-toolbarItem", toolbarItem);
+			request.setAttribute("view.jsp-usersCount", usersCount);
+			request.setAttribute("view.jsp-usersListView", usersListView);
+			request.setAttribute("view.jsp-viewUsersRedirect", viewUsersRedirect);
+			%>
+
+			<liferay-util:include page="/html/portlet/users_admin/view_tree.jsp" />
 		</c:otherwise>
 	</c:choose>
 </aui:form>

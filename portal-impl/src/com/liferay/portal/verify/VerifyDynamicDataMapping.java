@@ -26,7 +26,9 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.kernel.xml.XPath;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.service.ServiceContext;
@@ -98,6 +100,28 @@ public class VerifyDynamicDataMapping extends VerifyProcess {
 		return fileEntry;
 	}
 
+	protected boolean createDefaultMetadataElement(
+		Element dynamicElementElement, String defaultLanguageId) {
+
+		boolean hasDefaultMetadataElement = hasDefaultMetadataElement(
+			dynamicElementElement, defaultLanguageId);
+
+		if (hasDefaultMetadataElement) {
+			return false;
+		}
+
+		Element metadataElement = dynamicElementElement.addElement("meta-data");
+
+		metadataElement.addAttribute("locale", defaultLanguageId);
+
+		Element entryElement = metadataElement.addElement("entry");
+
+		entryElement.addAttribute("name", "label");
+		entryElement.addCDATA(StringPool.BLANK);
+
+		return true;
+	}
+
 	@Override
 	protected void doVerify() throws Exception {
 		_ddlRecordSetClassNameId = PortalUtil.getClassNameId(
@@ -109,6 +133,8 @@ public class VerifyDynamicDataMapping extends VerifyProcess {
 			DDMStructureLocalServiceUtil.getStructures();
 
 		for (DDMStructure structure : structures) {
+			verifyStructure(structure);
+
 			updateFileUploadReferences(structure);
 		}
 	}
@@ -160,6 +186,23 @@ public class VerifyDynamicDataMapping extends VerifyProcess {
 		jsonObject.put("uuid", fileEntry.getUuid());
 
 		return jsonObject.toString();
+	}
+
+	protected boolean hasDefaultMetadataElement(
+		Element dynamicElementElement, String defaultLanguageId) {
+
+		List<Element> metadataElements = dynamicElementElement.elements(
+			"meta-data");
+
+		for (Element metadataElement : metadataElements) {
+			String languageId = metadataElement.attributeValue("locale");
+
+			if (languageId.equals(defaultLanguageId)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	protected boolean hasFileUploadFields(DDMStructure structure)
@@ -260,7 +303,9 @@ public class VerifyDynamicDataMapping extends VerifyProcess {
 			updateFileUploadReferences(structureLink);
 		}
 
-		updateStructure(structure);
+		String xsd = updateXSD(structure.getXsd());
+
+		updateStructure(structure, xsd);
 	}
 
 	protected void updateFileUploadReferences(DDMStructureLink structureLink)
@@ -312,8 +357,10 @@ public class VerifyDynamicDataMapping extends VerifyProcess {
 		updateFieldValues(storageId, fieldValues);
 	}
 
-	protected void updateStructure(DDMStructure structure) throws Exception {
-		String xsd = updateXSD(structure.getXsd());
+	protected void updateStructure(DDMStructure structure, String xsd)
+		throws Exception {
+
+		xsd = DDMXMLUtil.formatXML(xsd);
 
 		structure.setXsd(xsd);
 
@@ -332,7 +379,7 @@ public class VerifyDynamicDataMapping extends VerifyProcess {
 			updateXSDDynamicElement(dynamicElementElement);
 		}
 
-		return DDMXMLUtil.formatXML(document);
+		return document.asXML();
 	}
 
 	protected void updateXSDDynamicElement(Element element) {
@@ -348,6 +395,32 @@ public class VerifyDynamicDataMapping extends VerifyProcess {
 
 		for (Element dynamicElementElement : dynamicElementElements) {
 			updateXSDDynamicElement(dynamicElementElement);
+		}
+	}
+
+	protected void verifyStructure(DDMStructure structure) throws Exception {
+		String defaultLanguageId = structure.getDefaultLanguageId();
+
+		XPath xPathSelector = SAXReaderUtil.createXPath("//dynamic-element");
+
+		Document document = structure.getDocument();
+
+		List<Node> nodes = xPathSelector.selectNodes(document);
+
+		boolean modified = false;
+
+		for (Node node : nodes) {
+			Element dynamicElementElement = (Element)node;
+
+			if (createDefaultMetadataElement(
+					dynamicElementElement, defaultLanguageId)) {
+
+				modified = true;
+			}
+		}
+
+		if (modified) {
+			updateStructure(structure, document.asXML());
 		}
 	}
 

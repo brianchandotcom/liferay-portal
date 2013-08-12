@@ -113,6 +113,9 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		};
 		String[] includes = new String[] {"**\\*.xml"};
 
+		Properties exclusions = getExclusionsProperties(
+			"source_formatter_xml_exclusions.properties");
+
 		List<String> fileNames = getFileNames(excludes, includes);
 
 		for (String fileName : fileNames) {
@@ -121,24 +124,18 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			fileName = StringUtil.replace(
 				fileName, StringPool.BACK_SLASH, StringPool.SLASH);
 
+			if ((exclusions != null) &&
+				(exclusions.getProperty(fileName) != null)) {
+
+				continue;
+			}
+
 			String content = fileUtil.read(file);
 
 			String newContent = content;
 
 			if (!fileName.contains("/build")) {
-				Properties leadingSpacesExclusions = getExclusionsProperties(
-					"source_formatter_xml_leading_spaces_exclusions." +
-						"properties");
-
-				String excluded = null;
-
-				if (leadingSpacesExclusions != null) {
-					excluded = leadingSpacesExclusions.getProperty(fileName);
-				}
-
-				if (excluded == null) {
-					newContent = trimContent(newContent, false);
-				}
+				newContent = trimContent(newContent, false);
 			}
 
 			if (fileName.contains("/build") && !fileName.contains("/tools/")) {

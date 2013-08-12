@@ -746,7 +746,7 @@ Please set the environment variable ANT_OPTS to the recommended value of
 
 		<if>
 			<and>
-				<isset property="test.functional.count"/>
+				<isset property="test.functional.count" />
 				<not>
 					<equals arg1="${test.functional.count}" arg2="0" />
 				</not>
@@ -756,7 +756,7 @@ Please set the environment variable ANT_OPTS to the recommended value of
 			</then>
 			<elseif>
 				<and>
-					<isset property="test.functional-generated.count"/>
+					<isset property="test.functional-generated.count" />
 					<not>
 						<equals arg1="${test.functional-generated.count}" arg2="0" />
 					</not>
@@ -768,7 +768,7 @@ Please set the environment variable ANT_OPTS to the recommended value of
 			</elseif>
 			<elseif>
 				<and>
-					<isset property="test.integration.count"/>
+					<isset property="test.integration.count" />
 					<not>
 						<equals arg1="${test.integration.count}" arg2="0" />
 					</not>
@@ -779,7 +779,7 @@ Please set the environment variable ANT_OPTS to the recommended value of
 			</elseif>
 			<elseif>
 				<and>
-					<isset property="test.unit.count"/>
+					<isset property="test.unit.count" />
 					<not>
 						<equals arg1="${test.unit.count}" arg2="0" />
 					</not>
@@ -903,7 +903,7 @@ Please set the environment variable ANT_OPTS to the recommended value of
 			<jvmarg value="-Duser.timezone=GMT" />
 			<classpath location="test-coverage" />
 			<classpath refid="test.classpath" />
-			<test name="${class}" methods="${methods}"/>
+			<test name="${class}" methods="${methods}" />
 		</junit>
 	</target>
 

@@ -94,7 +94,7 @@
 	<structure>
 		<name><![CDATA[Image Gallery Image]]></name>
 		<dynamic-structure>true</dynamic-structure>
-		<root available-locales="en_US" default-locale="en_US"/>
+		<root available-locales="en_US" default-locale="en_US" />
 	</structure>
 	<structure>
 		<name><![CDATA[Learning Module Metadata]]></name>

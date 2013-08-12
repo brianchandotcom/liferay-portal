@@ -779,12 +779,12 @@ Plugins: ${lp.plugins.dir}</echo>
 	</target>
 
 	<target name="setup-jrebel">
-		<var name="global.rebel.xml" value="tools/jrebel/global-rebel.xml"/>
+		<var name="global.rebel.xml" value="tools/jrebel/global-rebel.xml" />
 
 		<if>
 			<available file="tools/jrebel/global-rebel-overwrite.xml" />
 			<then>
-				<var name="global.rebel.xml" value="tools/jrebel/global-rebel-overwrite.xml"/>
+				<var name="global.rebel.xml" value="tools/jrebel/global-rebel-overwrite.xml" />
 			</then>
 		</if>
 
@@ -794,12 +794,12 @@ Plugins: ${lp.plugins.dir}</echo>
 			tofile="${app.server.lib.global.dir}/rebel.xml"
 		/>
 
-		<var name="lportal.rebel.xml" value="tools/jrebel/lportal-rebel.xml"/>
+		<var name="lportal.rebel.xml" value="tools/jrebel/lportal-rebel.xml" />
 
 		<if>
 			<available file="tools/jrebel/lportal-rebel-overwrite.xml" />
 			<then>
-				<var name="lportal.rebel.xml" value="tools/jrebel/lportal-rebel-overwrite.xml"/>
+				<var name="lportal.rebel.xml" value="tools/jrebel/lportal-rebel-overwrite.xml" />
 			</then>
 		</if>
 

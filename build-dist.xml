@@ -287,10 +287,10 @@
 		</unzip>
 
 		<replace file="${tcat.dir}/admin/conf/server.xml">
-			<replacefilter token="8005" value="8105"/>
-			<replacefilter token="8009" value="8109"/>
-			<replacefilter token="8080" value="8180"/>
-			<replacefilter token="8443" value="81443"/>
+			<replacefilter token="8005" value="8105" />
+			<replacefilter token="8009" value="8109" />
+			<replacefilter token="8080" value="8180" />
+			<replacefilter token="8443" value="81443" />
 		</replace>
 
 		<mkdir dir="${tcat.dir}/admin/tcat_init/profiles" />

@@ -172,7 +172,7 @@ boolean showAddAction = ParamUtil.getBoolean(request, "showAddAction", true);
 		</c:when>
 		<c:otherwise>
 			<c:if test="<%= !group.isLayoutPrototype() && (selLayout != null) %>">
-				<c:if test="<%= liveGroup.isStaged() %>">
+				<c:if test="<%= selGroup.isStagingGroup() %>">
 					<liferay-ui:error exception="<%= RemoteExportException.class %>">
 
 						<%
@@ -194,6 +194,12 @@ boolean showAddAction = ParamUtil.getBoolean(request, "showAddAction", true);
 
 					<div class="alert alert-block">
 						<liferay-ui:message key="the-staging-environment-is-activated-changes-have-to-be-published-to-make-them-available-to-end-users" />
+					</div>
+				</c:if>
+
+				<c:if test="<%= selGroup.hasStagingGroup() && !selGroup.isStagingGroup() %>">
+					<div class="alert alert-block">
+						<liferay-ui:message key="changes-are-immediately-available-to-end-users" />
 					</div>
 				</c:if>
 

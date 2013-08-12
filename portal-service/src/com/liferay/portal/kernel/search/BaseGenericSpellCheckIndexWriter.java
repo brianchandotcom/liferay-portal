@@ -54,8 +54,9 @@ public abstract class BaseGenericSpellCheckIndexWriter
 	}
 
 	protected Document createDocument(
-			long companyId, long groupId, String languageId, String word,
-			float weight)
+			long companyId, long groupId, String languageId, String keywords,
+			float weight, String keywordFieldName, String typeFieldValue,
+			int maxNGramLength)
 		throws SearchException {
 
 		Document document = (Document)_documentPrototype.clone();
@@ -65,11 +66,12 @@ public abstract class BaseGenericSpellCheckIndexWriter
 		document.addKeyword(Field.LANGUAGE_ID, languageId);
 		document.addKeyword(Field.PORTLET_ID, PortletKeys.SEARCH);
 		document.addKeyword(Field.PRIORITY, String.valueOf(weight));
-		document.addKeyword(Field.SPELL_CHECK_WORD, word);
-		document.addKeyword(Field.TYPE, DICTIONARY_TYPE);
-		document.addKeyword(Field.UID, getUID(companyId, languageId, word));
+		document.addKeyword(keywordFieldName, keywords);
+		document.addKeyword(Field.TYPE, typeFieldValue);
+		document.addKeyword(Field.UID, getUID(companyId, languageId, keywords));
 
-		NGramHolder nGramHolder = NGramHolderBuilderUtil.buildNGramHolder(word);
+		NGramHolder nGramHolder = NGramHolderBuilderUtil.buildNGramHolder(
+			keywords, maxNGramLength);
 
 		addNGramFields(document, nGramHolder.getNGramEnds());
 
@@ -89,9 +91,10 @@ public abstract class BaseGenericSpellCheckIndexWriter
 	}
 
 	@Override
-	protected void indexDictionary(
+	protected void indexKeywords(
 			long companyId, long groupId, String languageId,
-			InputStream inputStream)
+			InputStream inputStream, String keywordFieldName,
+			String typeFieldValue, int maxNGramLength)
 		throws Exception {
 
 		Set<Document> documents = new HashSet<Document>();
@@ -112,7 +115,8 @@ public abstract class BaseGenericSpellCheckIndexWriter
 
 				Document document = createDocument(
 					companyId, groupId, languageId, dictionaryEntry.getWord(),
-					dictionaryEntry.getWeight());
+					dictionaryEntry.getWeight(), keywordFieldName,
+					typeFieldValue, maxNGramLength);
 
 				documents.add(document);
 

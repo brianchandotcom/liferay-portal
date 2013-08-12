@@ -54,7 +54,10 @@ public abstract class BaseSpellCheckIndexWriter
 
 		try {
 			for (String languageId : _SUPPORTED_LOCALES) {
-				indexDictionary(searchContext.getCompanyId(), languageId);
+				indexKeywords(
+					searchContext.getCompanyId(), languageId,
+					PropsKeys.INDEX_SEARCH_SPELL_CHECKER_DICTIONARY,
+					Field.SPELL_CHECK_WORD, DICTIONARY_TYPE, 0);
 			}
 		}
 		catch (Exception e) {
@@ -67,8 +70,42 @@ public abstract class BaseSpellCheckIndexWriter
 		throws SearchException {
 
 		try {
-			indexDictionary(
-				searchContext.getCompanyId(), searchContext.getLanguageId());
+			indexKeywords(
+				searchContext.getCompanyId(), searchContext.getLanguageId(),
+				PropsKeys.INDEX_SEARCH_SPELL_CHECKER_DICTIONARY,
+				Field.SPELL_CHECK_WORD, DICTIONARY_TYPE, 0);
+		}
+		catch (Exception e) {
+			throw new SearchException(e);
+		}
+	}
+
+	@Override
+	public void indexKeywordQueryFile(SearchContext searchContext)
+		throws SearchException {
+
+		try {
+			indexKeywords(
+				searchContext.getCompanyId(), searchContext.getLanguageId(),
+				PropsKeys.INDEX_SEARCH_QUERY_SUGGESTION_FILE,
+				Field.KEYWORD_SEARCH, KEYWORD_QUERY_TYPE, 0);
+		}
+		catch (Exception e) {
+			throw new SearchException(e);
+		}
+	}
+
+	@Override
+	public void indexKeywordQueryFiles(SearchContext searchContext)
+		throws SearchException {
+
+		try {
+			for (String languageId : _SUPPORTED_LOCALES) {
+				indexKeywords(
+					searchContext.getCompanyId(), languageId,
+					PropsKeys.INDEX_SEARCH_QUERY_SUGGESTION_FILE,
+					Field.KEYWORD_SEARCH, KEYWORD_QUERY_TYPE, 0);
+			}
 		}
 		catch (Exception e) {
 			throw new SearchException(e);
@@ -141,14 +178,16 @@ public abstract class BaseSpellCheckIndexWriter
 		return uidSB.toString();
 	}
 
-	protected abstract void indexDictionary(
-			long companyId, long groupId, String languageId,
-			InputStream inputStream)
-		throws Exception;
+	protected abstract void indexKeywords(
+				long companyId, long groupId, String languageId,
+				InputStream inputStream, String keywordFieldName,
+				String typeFieldValue, int maxNGramLength)
+			throws Exception;
 
-	protected void indexDictionary(
+	protected void indexKeywords(
 			long companyId, long groupId, String languageId,
-			String[] dictionaryFileNames)
+			String[] dictionaryFileNames, String keywordFieldName,
+			String typeFieldValue, int maxNGramLength)
 		throws Exception {
 
 		for (String dictionaryFileName : dictionaryFileNames) {
@@ -180,7 +219,9 @@ public abstract class BaseSpellCheckIndexWriter
 					continue;
 				}
 
-				indexDictionary(companyId, groupId, languageId, inputStream);
+				indexKeywords(
+					companyId, groupId, languageId, inputStream,
+					keywordFieldName, typeFieldValue, maxNGramLength);
 			}
 			finally {
 				StreamUtil.cleanUp(inputStream);
@@ -193,14 +234,17 @@ public abstract class BaseSpellCheckIndexWriter
 		}
 	}
 
-	protected void indexDictionary(long companyId, String languageId)
+	protected void indexKeywords(
+			long companyId, String languageId, String fileToIndexPropertyName,
+			String keywordFieldName, String typeFieldValue, int maxNGramLength)
 		throws Exception {
 
 		String[] dictionaryFileNames = PropsUtil.getArray(
-			PropsKeys.INDEX_SEARCH_SPELL_CHECKER_DICTIONARY,
-			new Filter(languageId));
+			fileToIndexPropertyName, new Filter(languageId));
 
-		indexDictionary(companyId, 0, languageId, dictionaryFileNames);
+		indexKeywords(
+			companyId, 0, languageId, dictionaryFileNames, keywordFieldName,
+			typeFieldValue, maxNGramLength);
 
 		List<Group> groups = GroupLocalServiceUtil.getLiveGroups();
 
@@ -213,13 +257,15 @@ public abstract class BaseSpellCheckIndexWriter
 				continue;
 			}
 
-			indexDictionary(
-				companyId, group.getGroupId(), languageId,
-				groupDictionaryFileNames);
+			indexKeywords(
+				companyId, group.getGroupId(), languageId, dictionaryFileNames,
+				keywordFieldName, typeFieldValue, maxNGramLength);
 		}
 	}
 
 	protected static final String DICTIONARY_TYPE = "dictionary";
+
+	protected static final String KEYWORD_QUERY_TYPE = "keywordQuery";
 
 	private static final String _PORTLET_SEPARATOR = "_PORTLET_";
 

@@ -294,9 +294,9 @@ public class DLSyncEventLocalServiceWrapper implements DLSyncEventLocalService,
 
 	@Override
 	public java.util.List<com.liferay.portlet.documentlibrary.model.DLSyncEvent> getDLSyncEvents(
-		long modifiedDate)
+		long modifiedTime)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _dlSyncEventLocalService.getDLSyncEvents(modifiedDate);
+		return _dlSyncEventLocalService.getDLSyncEvents(modifiedTime);
 	}
 
 	@Override

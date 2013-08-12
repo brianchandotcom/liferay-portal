@@ -1452,6 +1452,22 @@ public class JournalArticleWrapper implements JournalArticle,
 	}
 
 	@Override
+	public java.lang.String[] getAvailableLanguageIds() {
+		return _journalArticle.getAvailableLanguageIds();
+	}
+
+	@Override
+	public java.lang.String getDefaultLanguageId() {
+		return _journalArticle.getDefaultLanguageId();
+	}
+
+	@Override
+	public void prepareLocalizedFieldsForImport()
+		throws com.liferay.portal.LocaleException {
+		_journalArticle.prepareLocalizedFieldsForImport();
+	}
+
+	@Override
 	public void prepareLocalizedFieldsForImport(
 		java.util.Locale defaultImportLocale)
 		throws com.liferay.portal.LocaleException {
@@ -1525,11 +1541,6 @@ public class JournalArticleWrapper implements JournalArticle,
 		return _journalArticle.getArticleResourceUuid();
 	}
 
-	@Override
-	public java.lang.String[] getAvailableLanguageIds() {
-		return _journalArticle.getAvailableLanguageIds();
-	}
-
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link #getAvailableLanguageIds}
 	*/
@@ -1543,6 +1554,9 @@ public class JournalArticleWrapper implements JournalArticle,
 		return _journalArticle.getContentByLocale(languageId);
 	}
 
+	/**
+	* @deprecated As of 6.2.0, replaced by {@link #getDefaultLanguageId}
+	*/
 	@Override
 	public java.lang.String getDefaultLocale() {
 		return _journalArticle.getDefaultLocale();

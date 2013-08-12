@@ -280,9 +280,9 @@ public class DLSyncEventLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLSyncEvent> getDLSyncEvents(
-		long modifiedDate)
+		long modifiedTime)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getDLSyncEvents(modifiedDate);
+		return getService().getDLSyncEvents(modifiedTime);
 	}
 
 	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLSyncEvent> getLatestDLSyncEvents()

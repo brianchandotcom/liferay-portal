@@ -755,7 +755,7 @@ public class JournalArticleStagedModelDataHandler
 		throws PortalException {
 
 		Locale articleDefaultLocale = LocaleUtil.fromLanguageId(
-			article.getDefaultLocale());
+			article.getDefaultLanguageId());
 
 		Locale[] articleAvailableLocales = LocaleUtil.fromLanguageIds(
 			article.getAvailableLanguageIds());

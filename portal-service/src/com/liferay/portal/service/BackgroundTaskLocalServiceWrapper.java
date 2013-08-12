@@ -448,18 +448,18 @@ public class BackgroundTaskLocalServiceWrapper
 
 	@Override
 	public int getBackgroundTasksCount(long groupId, java.lang.String name,
-		java.lang.String taskExecutorClassName, boolean completed)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _backgroundTaskLocalService.getBackgroundTasksCount(groupId,
-			name, taskExecutorClassName, completed);
-	}
-
-	@Override
-	public int getBackgroundTasksCount(long groupId, java.lang.String name,
 		java.lang.String taskExecutorClassName)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _backgroundTaskLocalService.getBackgroundTasksCount(groupId,
 			name, taskExecutorClassName);
+	}
+
+	@Override
+	public int getBackgroundTasksCount(long groupId, java.lang.String name,
+		java.lang.String taskExecutorClassName, boolean completed)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _backgroundTaskLocalService.getBackgroundTasksCount(groupId,
+			name, taskExecutorClassName, completed);
 	}
 
 	@Override

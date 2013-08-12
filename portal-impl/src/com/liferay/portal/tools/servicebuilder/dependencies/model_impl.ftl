@@ -59,6 +59,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * The base model implementation for the ${entity.name} service. Represents a row in the &quot;${entity.table}&quot; database table, with each column mapped to a property of this class.
@@ -851,12 +853,63 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 	</#if>
 
 	<#if entity.hasLocalizedColumn()>
+		public String[] getAvailableLanguageIds() {
+			Set<String> availableLanguageIds = new TreeSet<String>();
+
+			<#list entity.regularColList as column>
+				<#if column.localized>
+					Map<Locale, String> ${column.name}Map = get${column.methodName}Map();
+
+					for (Map.Entry<Locale, String> entry : ${column.name}Map.entrySet()) {
+						Locale locale = entry.getKey();
+						String value = entry.getValue();
+
+						if (Validator.isNotNull(value)) {
+							availableLanguageIds.add(locale.toString());
+						}
+					}
+				</#if>
+			</#list>
+
+		return availableLanguageIds.toArray(new String[availableLanguageIds.size()]);
+		}
+
+		public String getDefaultLanguageId() {
+			<#list entity.regularColList as column>
+				<#if column.localized>
+					String xml = get${column.methodName}();
+
+						if (xml == null) {
+						return StringPool.BLANK;
+					}
+
+					return LocalizationUtil.getDefaultLanguageId(xml);
+					<#break>
+				</#if>
+			</#list>
+		}
+
+		@SuppressWarnings("unused")
+		public void prepareLocalizedFieldsForImport() throws LocaleException {
+			prepareLocalizedFieldsForImport (null);
+		}
+
 		@Override
 		@SuppressWarnings("unused")
 		public void prepareLocalizedFieldsForImport(Locale defaultImportLocale) throws LocaleException {
+			Locale defaultLocale = LocaleUtil.getDefault();
+			String dataDefaultLanguageId = getDefaultLanguageId();
+
 			<#list entity.regularColList as column>
 				<#if column.localized>
-					set${column.methodName}(get${column.methodName}(defaultImportLocale), defaultImportLocale, defaultImportLocale);
+					String ${column.name} = get${column.methodName}(defaultLocale);
+
+					if (Validator.isNull(${column.name})) {
+						set${column.methodName}(get${column.methodName}(dataDefaultLanguageId), defaultLocale);
+					}
+					else {
+					  set${column.methodName}(get${column.methodName}(defaultLocale), defaultLocale, defaultLocale);
+					}
 				</#if>
 			</#list>
 		}

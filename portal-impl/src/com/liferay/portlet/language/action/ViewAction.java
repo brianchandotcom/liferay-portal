@@ -134,8 +134,7 @@ public class ViewAction extends PortletAction {
 			}
 			else {
 				redirect = PortalUtil.getGroupFriendlyURL(
-					themeDisplay.getScopeGroup(), layout.isPrivateLayout(),
-					themeDisplay, locale);
+					group, layout.isPrivateLayout(), themeDisplay, locale);
 			}
 		}
 		else {

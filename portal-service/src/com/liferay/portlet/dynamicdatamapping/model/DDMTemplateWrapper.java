@@ -1003,6 +1003,22 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	}
 
 	@Override
+	public java.lang.String[] getAvailableLanguageIds() {
+		return _ddmTemplate.getAvailableLanguageIds();
+	}
+
+	@Override
+	public java.lang.String getDefaultLanguageId() {
+		return _ddmTemplate.getDefaultLanguageId();
+	}
+
+	@Override
+	public void prepareLocalizedFieldsForImport()
+		throws com.liferay.portal.LocaleException {
+		_ddmTemplate.prepareLocalizedFieldsForImport();
+	}
+
+	@Override
 	public void prepareLocalizedFieldsForImport(
 		java.util.Locale defaultImportLocale)
 		throws com.liferay.portal.LocaleException {
@@ -1054,11 +1070,6 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_ddmTemplate.persist();
-	}
-
-	@Override
-	public java.lang.String getDefaultLanguageId() {
-		return _ddmTemplate.getDefaultLanguageId();
 	}
 
 	@Override

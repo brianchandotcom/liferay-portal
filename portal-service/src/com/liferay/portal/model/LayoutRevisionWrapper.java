@@ -1759,6 +1759,22 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	}
 
 	@Override
+	public java.lang.String[] getAvailableLanguageIds() {
+		return _layoutRevision.getAvailableLanguageIds();
+	}
+
+	@Override
+	public java.lang.String getDefaultLanguageId() {
+		return _layoutRevision.getDefaultLanguageId();
+	}
+
+	@Override
+	public void prepareLocalizedFieldsForImport()
+		throws com.liferay.portal.LocaleException {
+		_layoutRevision.prepareLocalizedFieldsForImport();
+	}
+
+	@Override
 	public void prepareLocalizedFieldsForImport(
 		java.util.Locale defaultImportLocale)
 		throws com.liferay.portal.LocaleException {

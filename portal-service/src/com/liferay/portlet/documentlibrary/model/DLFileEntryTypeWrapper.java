@@ -698,6 +698,22 @@ public class DLFileEntryTypeWrapper implements DLFileEntryType,
 	}
 
 	@Override
+	public java.lang.String[] getAvailableLanguageIds() {
+		return _dlFileEntryType.getAvailableLanguageIds();
+	}
+
+	@Override
+	public java.lang.String getDefaultLanguageId() {
+		return _dlFileEntryType.getDefaultLanguageId();
+	}
+
+	@Override
+	public void prepareLocalizedFieldsForImport()
+		throws com.liferay.portal.LocaleException {
+		_dlFileEntryType.prepareLocalizedFieldsForImport();
+	}
+
+	@Override
 	public void prepareLocalizedFieldsForImport(
 		java.util.Locale defaultImportLocale)
 		throws com.liferay.portal.LocaleException {

@@ -471,6 +471,13 @@ public class AssetTagLocalServiceWrapper implements AssetTagLocalService,
 	}
 
 	@Override
+	public void deleteGroupTags(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_assetTagLocalService.deleteGroupTags(groupId);
+	}
+
+	@Override
 	public void deleteTag(com.liferay.portlet.asset.model.AssetTag tag)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -482,13 +489,6 @@ public class AssetTagLocalServiceWrapper implements AssetTagLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		_assetTagLocalService.deleteTag(tagId);
-	}
-
-	@Override
-	public void deleteGroupTags(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		_assetTagLocalService.deleteGroupTags(groupId);
 	}
 
 	@Override

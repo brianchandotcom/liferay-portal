@@ -776,6 +776,12 @@ public interface AssetEntryModel extends AttachedModel, BaseModel<AssetEntry>,
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext);
 
+	public String[] getAvailableLanguageIds();
+
+	public String getDefaultLanguageId();
+
+	public void prepareLocalizedFieldsForImport() throws LocaleException;
+
 	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
 		throws LocaleException;
 

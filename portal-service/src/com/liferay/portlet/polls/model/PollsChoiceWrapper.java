@@ -578,6 +578,22 @@ public class PollsChoiceWrapper implements PollsChoice,
 	}
 
 	@Override
+	public java.lang.String[] getAvailableLanguageIds() {
+		return _pollsChoice.getAvailableLanguageIds();
+	}
+
+	@Override
+	public java.lang.String getDefaultLanguageId() {
+		return _pollsChoice.getDefaultLanguageId();
+	}
+
+	@Override
+	public void prepareLocalizedFieldsForImport()
+		throws com.liferay.portal.LocaleException {
+		_pollsChoice.prepareLocalizedFieldsForImport();
+	}
+
+	@Override
 	public void prepareLocalizedFieldsForImport(
 		java.util.Locale defaultImportLocale)
 		throws com.liferay.portal.LocaleException {

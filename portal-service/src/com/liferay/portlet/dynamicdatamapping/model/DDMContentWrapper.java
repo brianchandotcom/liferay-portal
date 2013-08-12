@@ -575,6 +575,22 @@ public class DDMContentWrapper implements DDMContent, ModelWrapper<DDMContent> {
 	}
 
 	@Override
+	public java.lang.String[] getAvailableLanguageIds() {
+		return _ddmContent.getAvailableLanguageIds();
+	}
+
+	@Override
+	public java.lang.String getDefaultLanguageId() {
+		return _ddmContent.getDefaultLanguageId();
+	}
+
+	@Override
+	public void prepareLocalizedFieldsForImport()
+		throws com.liferay.portal.LocaleException {
+		_ddmContent.prepareLocalizedFieldsForImport();
+	}
+
+	@Override
 	public void prepareLocalizedFieldsForImport(
 		java.util.Locale defaultImportLocale)
 		throws com.liferay.portal.LocaleException {

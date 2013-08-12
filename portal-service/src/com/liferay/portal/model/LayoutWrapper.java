@@ -1645,6 +1645,22 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	}
 
 	@Override
+	public java.lang.String[] getAvailableLanguageIds() {
+		return _layout.getAvailableLanguageIds();
+	}
+
+	@Override
+	public java.lang.String getDefaultLanguageId() {
+		return _layout.getDefaultLanguageId();
+	}
+
+	@Override
+	public void prepareLocalizedFieldsForImport()
+		throws com.liferay.portal.LocaleException {
+		_layout.prepareLocalizedFieldsForImport();
+	}
+
+	@Override
 	public void prepareLocalizedFieldsForImport(
 		java.util.Locale defaultImportLocale)
 		throws com.liferay.portal.LocaleException {

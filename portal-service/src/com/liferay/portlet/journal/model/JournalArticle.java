@@ -50,8 +50,6 @@ public interface JournalArticle extends JournalArticleModel, PersistedModel {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
-	public java.lang.String[] getAvailableLanguageIds();
-
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link #getAvailableLanguageIds}
 	*/
@@ -59,6 +57,9 @@ public interface JournalArticle extends JournalArticleModel, PersistedModel {
 
 	public java.lang.String getContentByLocale(java.lang.String languageId);
 
+	/**
+	* @deprecated As of 6.2.0, replaced by {@link #getDefaultLanguageId}
+	*/
 	public java.lang.String getDefaultLocale();
 
 	public com.liferay.portlet.journal.model.JournalFolder getFolder()

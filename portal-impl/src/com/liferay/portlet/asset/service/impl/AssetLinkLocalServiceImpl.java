@@ -19,11 +19,13 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.model.User;
 import com.liferay.portlet.asset.NoSuchLinkException;
+import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetLink;
 import com.liferay.portlet.asset.model.AssetLinkConstants;
 import com.liferay.portlet.asset.service.base.AssetLinkLocalServiceBaseImpl;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -181,7 +183,25 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 	 */
 	@Override
 	public List<AssetLink> getDirectLinks(long entryId) throws SystemException {
-		return assetLinkFinder.findByE1_V(entryId, true);
+		List<AssetLink> assetLinks = assetLinkPersistence.findByE1(entryId);
+
+		if (!assetLinks.isEmpty()) {
+			List<AssetLink> filteredAssetLinks = new ArrayList<AssetLink>(
+				assetLinks.size());
+
+			for (AssetLink assetLink : assetLinks) {
+				AssetEntry assetEntry = assetEntryPersistence.fetchByPrimaryKey(
+					assetLink.getEntryId2());
+
+				if ((assetEntry != null) && assetEntry.isVisible()) {
+					filteredAssetLinks.add(assetLink);
+				}
+			}
+
+			assetLinks = Collections.unmodifiableList(filteredAssetLinks);
+		}
+
+		return assetLinks;
 	}
 
 	/**
@@ -203,7 +223,26 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 	public List<AssetLink> getDirectLinks(long entryId, int typeId)
 		throws SystemException {
 
-		return assetLinkFinder.findByE1_T_V(entryId, typeId, true);
+		List<AssetLink> assetLinks = assetLinkPersistence.findByE1_T(
+			entryId, typeId);
+
+		if (!assetLinks.isEmpty()) {
+			List<AssetLink> filteredAssetLinks = new ArrayList<AssetLink>(
+				assetLinks.size());
+
+			for (AssetLink assetLink : assetLinks) {
+				AssetEntry assetEntry = assetEntryPersistence.fetchByPrimaryKey(
+					assetLink.getEntryId2());
+
+				if ((assetEntry != null) && assetEntry.isVisible()) {
+					filteredAssetLinks.add(assetLink);
+				}
+			}
+
+			assetLinks = Collections.unmodifiableList(filteredAssetLinks);
+		}
+
+		return assetLinks;
 	}
 
 	/**

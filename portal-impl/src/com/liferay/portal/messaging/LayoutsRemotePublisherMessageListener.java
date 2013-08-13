@@ -23,8 +23,10 @@ import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Time;
+import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.User;
+import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
@@ -116,14 +118,33 @@ public class LayoutsRemotePublisherMessageListener
 			}
 		}
 
-		PrincipalThreadLocal.setName(userId);
+		initThreadLocals(userId, parameterMap);
+
+		try {
+			StagingUtil.copyRemoteLayouts(
+				sourceGroupId, privateLayout, layoutIdMap, parameterMap,
+				remoteAddress, remotePort, remotePathContext, secureConnection,
+				remoteGroupId, remotePrivateLayout, startDate, endDate);
+		}
+		finally {
+			resetThreadLocals();
+		}
+	}
+
+	protected void initThreadLocals(
+			long userId, Map<String, String[]> parameterMap)
+		throws Exception {
 
 		User user = UserLocalServiceUtil.getUserById(userId);
+
+		CompanyThreadLocal.setCompanyId(user.getCompanyId());
 
 		PermissionChecker permissionChecker =
 			PermissionCheckerFactoryUtil.create(user);
 
 		PermissionThreadLocal.setPermissionChecker(permissionChecker);
+
+		PrincipalThreadLocal.setName(user.getUserId());
 
 		ServiceContext serviceContext = new ServiceContext();
 
@@ -152,17 +173,13 @@ public class LayoutsRemotePublisherMessageListener
 		serviceContext.setAttributes(attributes);
 
 		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+	}
 
-		try {
-			StagingUtil.copyRemoteLayouts(
-				sourceGroupId, privateLayout, layoutIdMap, parameterMap,
-				remoteAddress, remotePort, remotePathContext, secureConnection,
-				remoteGroupId, remotePrivateLayout, startDate, endDate);
-		}
-		finally {
-			PrincipalThreadLocal.setName(null);
-			PermissionThreadLocal.setPermissionChecker(null);
-		}
+	protected void resetThreadLocals() {
+		CompanyThreadLocal.setCompanyId(CompanyConstants.SYSTEM);
+		PermissionThreadLocal.setPermissionChecker(null);
+		PrincipalThreadLocal.setName(null);
+		ServiceContextThreadLocal.popServiceContext();
 	}
 
 }

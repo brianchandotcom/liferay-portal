@@ -157,7 +157,10 @@ public class Time {
 			}
 		}
 
-		if (x > 1) {
+		if (x == 0) {
+			s += "s";
+		}
+		else if (x > 1) {
 			s += "s";
 		}
 

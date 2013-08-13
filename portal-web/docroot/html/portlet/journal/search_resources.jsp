@@ -226,7 +226,9 @@ ArticleSearch searchContainer = new ArticleSearch(liferayPortletRequest, entryEn
 
 						params.put("expandoAttributes", searchTerms.getKeywords());
 
+						searchContext.setAttribute("head", Boolean.FALSE.toString());
 						searchContext.setAttribute("params", params);
+						searchContext.setAttribute("status", WorkflowConstants.STATUS_ANY);
 						searchContext.setEnd(searchContainer.getEnd());
 						searchContext.setFolderIds(searchTerms.getFolderIds());
 
@@ -283,6 +285,10 @@ ArticleSearch searchContainer = new ArticleSearch(liferayPortletRequest, entryEn
 									rowURL.setParameter("articleId", article.getArticleId());
 
 									request.setAttribute("view_entries.jsp-article", article);
+
+									List<String> versions = ListUtil.fromCollection(searchResult.getVersions());
+
+									Collections.sort(versions);
 									%>
 
 									<liferay-ui:app-view-search-entry
@@ -299,6 +305,7 @@ ArticleSearch searchContainer = new ArticleSearch(liferayPortletRequest, entryEn
 										thumbnailSrc='<%= Validator.isNotNull(article.getArticleImageURL(themeDisplay)) ? article.getArticleImageURL(themeDisplay) : themeDisplay.getPathThemeImages() + "/file_system/large/article.png" %>'
 										title="<%= (summary != null) ? HtmlUtil.escape(summary.getTitle()) : article.getTitle(locale) %>"
 										url="<%= rowURL.toString() %>"
+										versions="<%= versions %>"
 									/>
 								</c:when>
 

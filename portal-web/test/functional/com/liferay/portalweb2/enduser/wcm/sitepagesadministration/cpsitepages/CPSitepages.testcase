@@ -3,6 +3,10 @@
 		<execute macro="User#firstLoginPG" />
 	</set-up>
 
+	<tear-down>
+		<execute macro="Site#tearDownCP" />
+	</tear-down>
+
 	<command name="AddSitePrivateChildPage">
 		<var name="siteName" value="Site Name" />
 		<var name="siteChildPageName" value="Site Child Page" />
@@ -239,8 +243,4 @@
 			<var name="portletName" value="${portletName}" />
 		</execute>
 	</command>
-
-	<tear-down>
-		<execute macro="Site#tearDownCP" />
-	</tear-down>
 </definition>

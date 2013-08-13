@@ -1,0 +1,4 @@
+<definition>
+	<execute test-case-command="CPSitememberships#AddMember" />
+	<execute test-case-command="CPSitememberships#AddTeam" />
+</definition>

@@ -3,6 +3,10 @@
 		<execute macro="User#firstLoginPG" />
 	</set-up>
 
+	<tear-down>
+		<execute macro="MessageboardsThread#tearDownCP" />
+	</tear-down>
+
 	<command name="DeleteMessageboardsThread">
 		<var name="assetName" value="${threadSubject}" />
 		<var name="assetType" value="Message Boards Thread" />
@@ -105,8 +109,4 @@
 			<var name="threadSubject" value="${threadSubject}" />
 		</execute>
 	</command>
-
-	<tear-down>
-		<execute macro="MessageboardsThread#tearDownCP" />
-	</tear-down>
 </definition>

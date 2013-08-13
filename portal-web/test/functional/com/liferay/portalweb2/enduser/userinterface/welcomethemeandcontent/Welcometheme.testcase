@@ -40,6 +40,10 @@
 		<execute action="PGLoginPasswordreminder#click" locator-key1="SAVE_BUTTON" />
 	</set-up>
 
+	<tear-down>
+		<execute macro="User#logoutPG" />
+	</tear-down>
+
 	<command name="WelcomeThemeView">
 		<execute action="PGWelcomePage1#assertTextEquals" locator-key1="PAGE_1" value1="What We Do" />
 		<execute action="PGWelcomePage1#assertTextEquals" locator-key1="PAGE_2" value1="Who Is Using Liferay" />
@@ -72,8 +76,4 @@
 		<execute action="PGWelcomePage3#assertTextEquals" locator-key1="MENU_PAGE_4" value1="Approved by IT" />
 		<execute action="PGWelcomePage3#assertTextEquals" locator-key1="MENU_PAGE_5" value1="Open for Business" />
 	</command>
-
-	<tear-down>
-		<execute macro="User#logoutPG" />
-	</tear-down>
 </definition>

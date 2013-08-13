@@ -3,6 +3,10 @@
 		<execute macro="User#firstLoginPG" />
 	</set-up>
 
+	<tear-down>
+		<execute macro="WikiPage#tearDownCP" />
+	</tear-down>
+
 	<command name="DeleteDeleteWikiFrontpage">
 		<var name="assetName" value="${webContentTitle}" />
 		<var name="assetType" value="Wiki Page" />
@@ -108,8 +112,4 @@
 			<var name="wikiPageTitle" value="${wikiPageTitle}" />
 		</execute>
 	</command>
-
-	<tear-down>
-		<execute macro="WikiPage#tearDownCP" />
-	</tear-down>
 </definition>

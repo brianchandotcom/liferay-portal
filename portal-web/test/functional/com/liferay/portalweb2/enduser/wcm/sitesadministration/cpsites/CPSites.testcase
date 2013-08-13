@@ -3,6 +3,10 @@
 		<execute macro="User#firstLoginPG" />
 	</set-up>
 
+	<tear-down>
+		<execute macro="Site#tearDownCP" />
+	</tear-down>
+
 	<command name="AddSite">
 		<var name="siteName" value="Site Name" />
 
@@ -42,8 +46,4 @@
 			<var name="siteName" value="${siteName}" />
 		</execute>
 	</command>
-
-	<tear-down>
-		<execute macro="Site#tearDownCP" />
-	</tear-down>
 </definition>

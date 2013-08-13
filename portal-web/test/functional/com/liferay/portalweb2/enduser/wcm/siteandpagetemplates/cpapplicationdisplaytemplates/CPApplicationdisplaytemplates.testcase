@@ -5,6 +5,24 @@
 		<execute macro="User#firstLoginPG" />
 	</set-up>
 
+	<tear-down>
+		<var name="defaultADT" value="Full Content" />
+
+		<execute macro="BlogsEntry#tearDownCP" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Application Display Templates" />
+		</execute>
+
+		<execute macro="ApplicationDisplayTemplates#tearDownCP" />
+
+		<execute macro="ApplicationDisplayTemplates#tearDownADTviaPortletPG">
+			<var name="defaultADT" value="${defaultADT}" />
+		</execute>
+
+		<execute macro="Page#tearDownPG" />
+	</tear-down>
+
 	<command name="addCP">
 		<var name="adtType" value="Blogs" />
 		<var name="adtFile" value="portlet_display_template_basic.ftl" />
@@ -82,22 +100,4 @@
 		<execute action="PGBlogs#assertElementNotPresent" locator-key1="ENTRY_PERMISSIONS_1" value1="Permissions" />
 		<execute action="PGBlogs#assertElementNotPresent" locator-key1="ENTRY_RECYCLE_BIN_1" value1="Move to the Recycle Bin" />
 	</command>
-
-	<tear-down>
-		<var name="defaultADT" value="Full Content" />
-
-		<execute macro="BlogsEntry#tearDownCP" />
-
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Application Display Templates" />
-		</execute>
-
-		<execute macro="ApplicationDisplayTemplates#tearDownCP" />
-
-		<execute macro="ApplicationDisplayTemplates#tearDownADTviaPortletPG">
-			<var name="defaultADT" value="${defaultADT}" />
-		</execute>
-
-		<execute macro="Page#tearDownPG" />
-	</tear-down>
 </definition>

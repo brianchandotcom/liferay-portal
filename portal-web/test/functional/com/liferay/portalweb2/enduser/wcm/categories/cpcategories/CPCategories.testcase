@@ -3,6 +3,10 @@
 		<execute macro="User#firstLoginPG" />
 	</set-up>
 
+	<tear-down>
+		<execute macro="Vocabulary#tearDownCP" />
+	</tear-down>
+
 	<command name="AddCategory">
 		<var name="vocabularyName" value="Vocabulary Name" />
 		<var name="categoryName" value="Category Name" />
@@ -220,8 +224,4 @@
 			<var name="vocabularyNameEdit" value="${vocabularyNameEdit}" />
 		</execute>
 	</command>
-
-	<tear-down>
-		<execute macro="Vocabulary#tearDownCP" />
-	</tear-down>
 </definition>

@@ -3,6 +3,10 @@
 		<execute macro="User#firstLoginPG" />
 	</set-up>
 
+	<tear-down>
+		<execute macro="WebContent#tearDownCP" />
+	</tear-down>
+
 	<command name="DeleteWebcontent">
 		<var name="assetName" value="${webContentTitle}" />
 		<var name="assetType" value="Web Content" />
@@ -105,8 +109,4 @@
 			<var name="webContentTitle" value="${webContentTitle}" />
 		</execute>
 	</command>
-
-	<tear-down>
-		<execute macro="WebContent#tearDownCP" />
-	</tear-down>
 </definition>

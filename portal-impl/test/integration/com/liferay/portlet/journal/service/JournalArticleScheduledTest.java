@@ -43,6 +43,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -60,8 +61,15 @@ import org.junit.runner.RunWith;
 public class JournalArticleScheduledTest {
 
 	@Before
-	public void setUp() {
+	public void setUp() throws Exception {
 		FinderCacheUtil.clearCache();
+
+		_group = GroupTestUtil.addGroup();
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		GroupLocalServiceUtil.deleteGroup(_group);
 	}
 
 	@Test
@@ -121,15 +129,13 @@ public class JournalArticleScheduledTest {
 	}
 
 	protected void testScheduledArticle(boolean approved) throws Exception {
-		Group group = GroupTestUtil.addGroup();
-
 		int initialSearchArticlesCount = JournalTestUtil.getSearchArticlesCount(
-			group.getCompanyId(), group.getGroupId());
+			_group.getCompanyId(), _group.getGroupId());
 
 		Date now = new Date();
 
 		JournalArticle article = addJournalArticle(
-			group.getGroupId(), approved, now);
+			_group.getGroupId(), approved, now);
 
 		AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
 			JournalArticle.class.getName(), article.getResourcePrimKey());
@@ -148,7 +154,7 @@ public class JournalArticleScheduledTest {
 		Assert.assertEquals(
 			initialSearchArticlesCount,
 			JournalTestUtil.getSearchArticlesCount(
-				group.getCompanyId(), group.getGroupId()));
+				_group.getCompanyId(), _group.getGroupId()));
 
 		// Modify the article Date surpassing the service to simulate the time
 		// has passed
@@ -178,7 +184,7 @@ public class JournalArticleScheduledTest {
 			Assert.assertEquals(
 				initialSearchArticlesCount + 1,
 				JournalTestUtil.getSearchArticlesCount(
-					group.getCompanyId(), group.getGroupId()));
+					_group.getCompanyId(), _group.getGroupId()));
 		}
 		else {
 			Assert.assertTrue(article.isDraft());
@@ -188,10 +194,10 @@ public class JournalArticleScheduledTest {
 			Assert.assertEquals(
 				initialSearchArticlesCount,
 				JournalTestUtil.getSearchArticlesCount(
-					group.getCompanyId(), group.getGroupId()));
+					_group.getCompanyId(), _group.getGroupId()));
 		}
-
-		GroupLocalServiceUtil.deleteGroup(group);
 	}
+
+	private Group _group;
 
 }

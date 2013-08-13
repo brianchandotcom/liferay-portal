@@ -65,4 +65,8 @@
 	/>
 </c:if>
 
+<%
+	row.setObject(new Object[] {message, threadSubscriptionClassPKs});
+%>
+
 <%@ include file="/html/portlet/message_boards/user_thread_columns_action.jspf" %>

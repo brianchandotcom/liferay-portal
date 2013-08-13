@@ -216,19 +216,15 @@ $dockbarOpenGradientStart: #0EA6F9;
 		}
 	}
 
-	&.touch .dockbar .navbar-inner .nav-add-controls > li.toggle-controls a {
-		clip: rect(auto auto auto auto);
-		position: static;
+	&.touch, .controls-hidden {
+		.dockbar .navbar-inner .nav-add-controls > li.toggle-controls > .toggle-controls-link {
+			clip: rect(auto auto auto auto);
+			position: static;
+		}
 	}
 
-	.controls-hidden .dockbar {
-		.navbar-inner .nav-add-controls > li.toggle-controls {
-			visibility: visible;
-
-			> a.toggle-controls-link {
-				background: #F5AF45;
-			}
-		}
+	.controls-hidden .dockbar .navbar-inner .nav-add-controls > li.toggle-controls > .toggle-controls-link {
+		background: #F5AF45;
 	}
 
 	/* ---------- Main navigation ---------- */

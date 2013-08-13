@@ -90,19 +90,10 @@ public class ClusterLinkPortalCacheClusterListener extends BaseMessageListener {
 					portalCacheClusterEvent.getElementValue();
 
 				if (elementValue == null) {
-					ehcache.remove(
-						portalCacheClusterEvent.getElementKey(), true);
+					ehcache.remove(elementKey, true);
 				}
 				else {
-					Element oldElement = ehcache.get(elementKey);
-					Element newElement = new Element(elementKey, elementValue);
-
-					if (oldElement != null) {
-						ehcache.replace(newElement);
-					}
-					else {
-						ehcache.put(newElement);
-					}
+					ehcache.put(new Element(elementKey, elementValue), true);
 				}
 			}
 			else {

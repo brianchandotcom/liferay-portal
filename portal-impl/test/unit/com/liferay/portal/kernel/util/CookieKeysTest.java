@@ -118,7 +118,7 @@ public class CookieKeysTest {
 
 			String domain = CookieKeys.getDomain(mockHttpServletRequest);
 
-			Assert.assertEquals("www.liferay.com", domain);
+			Assert.assertEquals(StringPool.BLANK, domain);
 		}
 		finally {
 			field.set(null, value);

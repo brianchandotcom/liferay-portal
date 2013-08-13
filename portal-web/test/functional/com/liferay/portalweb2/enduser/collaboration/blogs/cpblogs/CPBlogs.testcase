@@ -3,6 +3,10 @@
 		<execute macro="User#firstLoginPG" />
 	</set-up>
 
+	<tear-down>
+		<execute macro="BlogsEntry#tearDownCP" />
+	</tear-down>
+
 	<command name="AddBlogsEntry">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
@@ -16,8 +20,4 @@
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 	</command>
-
-	<tear-down>
-		<execute macro="BlogsEntry#tearDownCP" />
-	</tear-down>
 </definition>

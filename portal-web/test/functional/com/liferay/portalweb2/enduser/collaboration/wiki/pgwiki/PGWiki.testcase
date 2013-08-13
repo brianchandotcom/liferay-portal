@@ -15,6 +15,14 @@
 		</execute>
 	</set-up>
 
+	<tear-down>
+		<execute macro="WikiNode#tearDownCP" />
+
+		<execute macro="WikiPage#tearDownCP" />
+
+		<execute macro="Page#tearDownPG" />
+	</tear-down>
+
 	<command name="AddWikiFrontPage">
 		<var name="wikiPageContent" value="Wiki FrontPage Content" />
 
@@ -25,23 +33,6 @@
 		<execute macro="WikiPage#addFrontPagePG">
 			<var name="pageName" value="${pageName}" />
 			<var name="wikiPageContent" value="${wikiPageContent}" />
-		</execute>
-	</command>
-
-	<command name="DeleteWikiFrontPage">
-		<var name="wikiPageContent" value="Wiki FrontPage Content" />
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="WikiPage#addFrontPagePG">
-			<var name="pageName" value="${pageName}" />
-			<var name="wikiPageContent" value="${wikiPageContent}" />
-		</execute>
-
-		<execute macro="WikiPage#deleteFrontPagePG">
-			<var name="pageName" value="${pageName}" />
 		</execute>
 	</command>
 
@@ -69,11 +60,20 @@
 		</execute>
 	</command>
 
-	<tear-down>
-		<execute macro="WikiNode#tearDownCP" />
+	<command name="DeleteWikiFrontPage">
+		<var name="wikiPageContent" value="Wiki FrontPage Content" />
 
-		<execute macro="WikiPage#tearDownCP" />
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
 
-		<execute macro="Page#tearDownPG" />
-	</tear-down>
+		<execute macro="WikiPage#addFrontPagePG">
+			<var name="pageName" value="${pageName}" />
+			<var name="wikiPageContent" value="${wikiPageContent}" />
+		</execute>
+
+		<execute macro="WikiPage#deleteFrontPagePG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+	</command>
 </definition>

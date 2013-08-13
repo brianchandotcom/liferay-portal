@@ -15,6 +15,12 @@
 		</execute>
 	</set-up>
 
+	<tear-down>
+		<execute macro="BlogsEntry#tearDownCP" />
+
+		<execute macro="Page#tearDownPG" />
+	</tear-down>
+
 	<command name="AddBlogsEntry">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
@@ -98,10 +104,4 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 	</command>
-
-	<tear-down>
-		<execute macro="BlogsEntry#tearDownCP" />
-
-		<execute macro="Page#tearDownPG" />
-	</tear-down>
 </definition>

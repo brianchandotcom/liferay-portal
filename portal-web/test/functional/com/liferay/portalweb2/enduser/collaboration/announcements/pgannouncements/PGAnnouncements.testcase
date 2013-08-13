@@ -14,6 +14,12 @@
 		</execute>
 	</set-up>
 
+	<tear-down>
+		<execute macro="AnnouncementsEntry#tearDownPG" />
+
+		<execute macro="Page#tearDownPG" />
+	</tear-down>
+
 	<command name="AddAnnouncementsEntry">
 		<var name="distributionScope" value="General" />
 		<var name="entryContent" value="Announcements Entry Content" />
@@ -119,10 +125,4 @@
 			<var name="entryTitleEdit" value="${entryTitleEdit}" />
 		</execute>
 	</command>
-
-	<tear-down>
-		<execute macro="AnnouncementsEntry#tearDownPG" />
-
-		<execute macro="Page#tearDownPG" />
-	</tear-down>
 </definition>

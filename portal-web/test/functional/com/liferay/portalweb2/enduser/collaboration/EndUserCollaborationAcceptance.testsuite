@@ -1,15 +1,15 @@
 <definition>
-	<execute test-case="CPBlogsAcceptance" />
+	<execute test-suite="CPBlogsAcceptance" />
 
-	<execute test-case="CPMessageboardsAcceptance" />
+	<execute test-suite="CPMessageboardsAcceptance" />
 
-	<execute test-case="CPWikiAcceptance" />
+	<execute test-suite="CPWikiAcceptance" />
 
-	<execute test-case="PGAnnouncementsAcceptance" />
+	<execute test-suite="PGAnnouncementsAcceptance" />
 
-	<execute test-case="PGBlogsAcceptance" />
+	<execute test-suite="PGBlogsAcceptance" />
 
-	<execute test-case="PGMessageboardsAcceptance" />
+	<execute test-suite="PGMessageboardsAcceptance" />
 
-	<execute test-case="PGWikiAcceptance" />
+	<execute test-suite="PGWikiAcceptance" />
 </definition>

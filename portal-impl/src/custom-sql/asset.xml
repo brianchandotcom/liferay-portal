@@ -126,35 +126,6 @@
 				([$TAG_ID$])
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.asset.service.persistence.AssetLinkFinder.findByE1_V">
-		<![CDATA[
-			SELECT
-				{AssetLink.*}
-			FROM
-				AssetLink
-			INNER JOIN
-				AssetEntry ON
-					(AssetEntry.entryId = AssetLink.entryId2)
-			WHERE
-				(AssetLink.entryId1 = ?) AND
-				(AssetEntry.visible = ?)
-		]]>
-	</sql>
-	<sql id="com.liferay.portlet.asset.service.persistence.AssetLinkFinder.findByE1_T_V">
-		<![CDATA[
-			SELECT
-				{AssetLink.*}
-			FROM
-				AssetLink
-			INNER JOIN
-				AssetEntry ON
-					(AssetEntry.entryId = AssetLink.entryId2)
-			WHERE
-				(AssetLink.entryId1 = ?) AND
-				(AssetLink.type_ = ?) AND
-				(AssetEntry.visible = ?)
-		]]>
-	</sql>
 	<sql id="com.liferay.portlet.asset.service.persistence.AssetTagFinder.countByG_N">
 		<![CDATA[
 			SELECT

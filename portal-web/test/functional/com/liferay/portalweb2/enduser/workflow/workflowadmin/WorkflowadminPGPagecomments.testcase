@@ -88,7 +88,7 @@
 		</execute>
 	</command>
 
-	<command name="RejectBlogsEntryCP">
+	<command name="RejectPageCommentPG">
 		<var name="commentBody" value="Page Comment Comment" />
 		<var name="commentUsername" value="Test Test" />
 

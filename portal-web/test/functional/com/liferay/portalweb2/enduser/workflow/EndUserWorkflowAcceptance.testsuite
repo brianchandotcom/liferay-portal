@@ -1,19 +1,19 @@
 <definition>
-	<execute test-case="WorkflowadminCPBlogsAcceptance" />
+	<execute test-suite="WorkflowadminCPBlogsAcceptance" />
 
-	<execute test-case="WorkflowadminCPWebcontentAcceptance" />
+	<execute test-suite="WorkflowadminCPWebcontentAcceptance" />
 
-	<execute test-case="WorkflowadminMysubmissionsAcceptance" />
+	<execute test-suite="WorkflowadminMysubmissionsAcceptance" />
 
-	<execute test-case="WorkflowadminMyworkflowtasksAcceptance" />
+	<execute test-suite="WorkflowadminMyworkflowtasksAcceptance" />
 
-	<execute test-case="WorkflowadminPGAssetpublisherAcceptance" />
+	<execute test-suite="WorkflowadminPGAssetpublisherAcceptance" />
 
-	<execute test-case="WorkflowadminPGMessageboardsAcceptance" />
+	<execute test-suite="WorkflowadminPGMessageboardsAcceptance" />
 
-	<execute test-case="WorkflowadminPGPagecommentsAcceptance" />
+	<execute test-suite="WorkflowadminPGPagecommentsAcceptance" />
 
-	<execute test-case="WorkflowadminPGWebcontentdisplayAcceptance" />
+	<execute test-suite="WorkflowadminPGWebcontentdisplayAcceptance" />
 
-	<execute test-case="WorkflowadminPGWikiAcceptance" />
+	<execute test-suite="WorkflowadminPGWikiAcceptance" />
 </definition>

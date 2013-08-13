@@ -1,7 +1,7 @@
 <definition>
-	<execute test-case="CPDynamicdatalistsAcceptance" />
+	<execute test-suite="CPDynamicdatalistsAcceptance" />
 
-	<execute test-case="PGDynamicdatalistsAcceptance" />
+	<execute test-suite="PGDynamicdatalistsAcceptance" />
 
-	<execute test-case="PGWebformAcceptance" />
+	<execute test-suite="PGWebformAcceptance" />
 </definition>

@@ -92,7 +92,7 @@
 		</execute>
 	</command>
 
-<command name="RejectWikiPageCP">
+	<command name="RejectWikiPageCP">
 		<var name="wikiPageContent" value="Wiki Page Content" />
 		<var name="wikiPageTitle" value="Wiki Page Title" />
 		<var name="wikiPageUsername" value="Test Test" />

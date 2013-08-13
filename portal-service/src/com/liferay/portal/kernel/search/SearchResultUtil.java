@@ -26,6 +26,7 @@ import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
+import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 
@@ -97,6 +98,12 @@ public class SearchResultUtil {
 				}
 				else {
 					searchResult = searchResults.get(index);
+				}
+
+				if (entryClassName.equals(JournalArticle.class.getName())) {
+					String version = document.get(Field.VERSION);
+
+					searchResult.addVersion(version);
 				}
 
 				if (fileEntry != null) {

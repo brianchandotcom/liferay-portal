@@ -268,6 +268,10 @@ public class NtlmFilter extends BasePortalFilter {
 
 				return;
 			}
+			else {
+				request.setAttribute(
+					WebKeys.NTLM_REMOTE_USER, ntlmUserAccount.getUserName());
+			}
 		}
 
 		processFilter(NtlmPostFilter.class, request, response, filterChain);

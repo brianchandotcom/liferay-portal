@@ -23,6 +23,10 @@
 		</execute>
 	</set-up>
 
+	<tear-down>
+		<execute macro="Site#tearDownCP" />
+	</tear-down>
+
 	<command name="ActivateStaging">
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Site Settings" />
@@ -97,8 +101,4 @@
 
 		<execute action="Home#assertElementPresent" locator-key1="PORTLET_1" />
 	</command>
-
-	<tear-down>
-		<execute macro="Site#tearDownCP" />
-	</tear-down>
 </definition>

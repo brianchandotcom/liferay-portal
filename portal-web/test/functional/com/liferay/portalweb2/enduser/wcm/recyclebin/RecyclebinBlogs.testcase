@@ -3,6 +3,10 @@
 		<execute macro="User#firstLoginPG" />
 	</set-up>
 
+	<tear-down>
+		<execute macro="BlogsEntry#tearDownCP" />
+	</tear-down>
+
 	<command name="DeleteBlogsEntry">
 		<var name="assetName" value="${entryTitle}" />
 		<var name="assetType" value="Blogs Entry" />
@@ -105,8 +109,4 @@
 			<var name="assetName" value="${entryTitle}" />
 		</execute>
 	</command>
-
-	<tear-down>
-		<execute macro="BlogsEntry#tearDownCP" />
-	</tear-down>
 </definition>

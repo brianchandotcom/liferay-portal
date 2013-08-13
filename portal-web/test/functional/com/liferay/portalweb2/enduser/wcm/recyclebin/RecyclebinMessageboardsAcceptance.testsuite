@@ -1,0 +1,4 @@
+<definition>
+	<execute test-case-command="RecyclebinMessageboards#DeleteMessageboardsThread" />
+	<execute test-case-command="RecyclebinMessageboards#RestoreMessageboardsThread" />
+</definition>

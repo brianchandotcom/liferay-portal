@@ -15,6 +15,12 @@
 		</execute>
 	</set-up>
 
+	<tear-down>
+		<execute macro="WebContent#tearDownCP" />
+
+		<execute macro="Page#tearDownPG" />
+	</tear-down>
+
 	<command name="AddWebContentPGViaAP">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC Webcontent Title" />
@@ -29,10 +35,4 @@
 			<var name="webContentContent" value="${webContentContent}" />
 		</execute>
 	</command>
-
-	<tear-down>
-		<execute macro="WebContent#tearDownCP" />
-
-		<execute macro="Page#tearDownPG" />
-	</tear-down>
 </definition>

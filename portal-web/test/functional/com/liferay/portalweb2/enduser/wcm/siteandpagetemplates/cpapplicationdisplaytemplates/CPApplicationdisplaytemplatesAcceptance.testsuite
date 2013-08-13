@@ -1,0 +1,4 @@
+<definition>
+	<execute test-case-command="CPApplicationdisplaytemplates#addCP" />
+	<execute test-case-command="CPApplicationdisplaytemplates#addCPviaBlogs" />
+</definition>

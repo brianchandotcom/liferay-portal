@@ -3,6 +3,10 @@
 		<execute macro="User#firstLoginPG" />
 	</set-up>
 
+	<tear-down>
+		<execute macro="PageTemplate#tearDownCP" />
+	</tear-down>
+
 	<command name="AddPageTemplate">
 		<var name="pageTemplateActive" value="Yes" />
 		<var name="pageTemplateName" value="Page Template Name" />
@@ -38,8 +42,4 @@
 			<var name="pageTemplateNameNew" value="${pageTemplateNameNew}" />
 		</execute>
 	</command>
-
-	<tear-down>
-		<execute macro="PageTemplate#tearDownCP" />
-	</tear-down>
 </definition>

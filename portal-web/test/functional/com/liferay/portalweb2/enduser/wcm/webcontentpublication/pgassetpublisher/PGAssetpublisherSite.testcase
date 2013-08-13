@@ -3,6 +3,10 @@
 		<execute macro="User#firstLoginPG" />
 	</set-up>
 
+	<tear-down>
+		<execute macro="Site#tearDownCP" />
+	</tear-down>
+
 	<command name="AddAPPortletToSite">
 		<var name="pageName" value="Asset Publisher Page" />
 		<var name="portletName" value="Asset Publisher" />
@@ -33,8 +37,4 @@
 			<var name="portletName" value="${portletName}" />
 		</execute>
 	</command>
-
-	<tear-down>
-		<execute macro="Site#tearDownCP" />
-	</tear-down>
 </definition>

@@ -63,6 +63,9 @@ public interface Group extends GroupModel, PersistedModel {
 	public java.lang.String getIconURL(
 		com.liferay.portal.theme.ThemeDisplay themeDisplay);
 
+	public java.lang.String getLayoutRootNodeName(boolean privateLayout,
+		java.util.Locale locale);
+
 	public com.liferay.portal.model.Group getLiveGroup();
 
 	public java.lang.String getLiveParentTypeSettingsProperty(

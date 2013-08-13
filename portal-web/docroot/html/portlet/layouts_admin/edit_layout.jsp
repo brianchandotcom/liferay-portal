@@ -117,16 +117,16 @@ boolean showAddAction = ParamUtil.getBoolean(request, "showAddAction", true);
 
 <aui:nav-bar>
 	<aui:nav id="layoutsNav">
-		<c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, selPlid, ActionKeys.ADD_LAYOUT) && PortalUtil.isLayoutParentable(selLayout.getType()) && SitesUtil.isLayoutSortable(selLayout) && showAddAction %>">
+		<c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, selPlid, ActionKeys.ADD_LAYOUT) && PortalUtil.isLayoutParentable(selLayout.getType()) && SitesUtil.isLayoutSortable(selLayout) && (!selGroup.hasStagingGroup() || selGroup.isStagingGroup()) && showAddAction %>">
 			<aui:nav-item data-value="add-child-page" iconClass="icon-plus" label="add-child-page" />
 		</c:if>
-		<c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, selPlid, ActionKeys.PERMISSIONS) %>">
+		<c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, selPlid, ActionKeys.PERMISSIONS) && (!selGroup.hasStagingGroup() || selGroup.isStagingGroup()) %>">
 			<aui:nav-item data-value="permissions" iconClass="icon-lock" label="permissions" />
 		</c:if>
 		<c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, selPlid, ActionKeys.DELETE) %>">
 			<aui:nav-item data-value="delete" iconClass="icon-remove" label="delete" />
 		</c:if>
-		<c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, selLayout, ActionKeys.UPDATE) %>">
+		<c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, selLayout, ActionKeys.UPDATE) && (!selGroup.hasStagingGroup() || selGroup.isStagingGroup()) %>">
 			<aui:nav-item data-value="copy-applications" iconClass="icon-list-alt" label="copy-applications" />
 		</c:if>
 	</aui:nav>
@@ -140,7 +140,7 @@ boolean showAddAction = ParamUtil.getBoolean(request, "showAddAction", true);
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="redirect" type="hidden" value='<%= HttpUtil.addParameter(redirectURL.toString(), liferayPortletResponse.getNamespace() + "selPlid", selPlid) %>' />
 	<aui:input name="closeRedirect" type="hidden" value="<%= closeRedirect %>" />
-	<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
+	<aui:input name="groupId" type="hidden" value="<%= selGroup.getGroupId() %>" />
 	<aui:input name="liveGroupId" type="hidden" value="<%= liveGroupId %>" />
 	<aui:input name="stagingGroupId" type="hidden" value="<%= stagingGroupId %>" />
 	<aui:input name="selPlid" type="hidden" value="<%= selPlid %>" />
@@ -172,7 +172,7 @@ boolean showAddAction = ParamUtil.getBoolean(request, "showAddAction", true);
 		</c:when>
 		<c:otherwise>
 			<c:if test="<%= !group.isLayoutPrototype() && (selLayout != null) %>">
-				<c:if test="<%= liveGroup.isStaged() %>">
+				<c:if test="<%= selGroup.isStagingGroup() %>">
 					<liferay-ui:error exception="<%= RemoteExportException.class %>">
 
 						<%
@@ -194,6 +194,12 @@ boolean showAddAction = ParamUtil.getBoolean(request, "showAddAction", true);
 
 					<div class="alert alert-block">
 						<liferay-ui:message key="the-staging-environment-is-activated-changes-have-to-be-published-to-make-them-available-to-end-users" />
+					</div>
+				</c:if>
+
+				<c:if test="<%= selGroup.hasStagingGroup() && !selGroup.isStagingGroup() %>">
+					<div class="alert alert-block">
+						<liferay-ui:message key="changes-are-immediately-available-to-end-users" />
 					</div>
 				</c:if>
 
@@ -334,13 +340,15 @@ boolean showAddAction = ParamUtil.getBoolean(request, "showAddAction", true);
 				</aui:script>
 			</c:if>
 
-			<liferay-ui:form-navigator
-				categoryNames="<%= _CATEGORY_NAMES %>"
-				categorySections="<%= categorySections %>"
-				displayStyle="<%= displayStyle %>"
-				jspPath="/html/portlet/layouts_admin/layout/"
-				showButtons="<%= (selLayout.getGroupId() == groupId) && SitesUtil.isLayoutUpdateable(selLayout) && LayoutPermissionUtil.contains(permissionChecker, selPlid, ActionKeys.UPDATE) %>"
-			/>
+			<c:if test="<%= !selGroup.hasStagingGroup() || selGroup.isStagingGroup() %>">
+				<liferay-ui:form-navigator
+					categoryNames="<%= _CATEGORY_NAMES %>"
+					categorySections="<%= categorySections %>"
+					displayStyle="<%= displayStyle %>"
+					jspPath="/html/portlet/layouts_admin/layout/"
+					showButtons="<%= (selLayout.getGroupId() == groupId) && SitesUtil.isLayoutUpdateable(selLayout) && LayoutPermissionUtil.contains(permissionChecker, selPlid, ActionKeys.UPDATE) %>"
+				/>
+			</c:if>
 		</c:otherwise>
 	</c:choose>
 </aui:form>

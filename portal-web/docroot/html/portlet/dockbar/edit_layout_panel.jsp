@@ -76,7 +76,11 @@
 			<aui:script use="aui-io-request,aui-loading-mask-deprecated,liferay-dockbar">
 				A.one('#<portlet:namespace />closePanelEdit').on('click', Liferay.Dockbar.toggleEditLayoutPanel, Liferay.Dockbar);
 
-				A.one('#<portlet:namespace />name').focus();
+				var nameInput = A.one('#<portlet:namespace />name');
+
+				if (nameInput) {
+					nameInput.focus();
+				}
 
 				var loadingMask = A.getBody().plug(A.LoadingMask).loadingmask;
 

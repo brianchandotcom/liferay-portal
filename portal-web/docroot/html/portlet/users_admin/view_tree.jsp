@@ -14,8 +14,22 @@
  */
 --%>
 
+<%@ include file="/html/portlet/users_admin/init.jsp" %>
+
 <%
 String keywords = ParamUtil.getString(request, "keywords");
+
+String backURL = GetterUtil.getString(request.getAttribute("view.jsp-backURL"));
+int inactiveUsersCount = GetterUtil.getInteger(request.getAttribute("view.jsp-inactiveUsersCount"));
+Organization organization = (Organization)request.getAttribute("view.jsp-organization");
+long organizationId = GetterUtil.getLong(request.getAttribute("view.jsp-organizationId"));
+long organizationGroupId = GetterUtil.getLong(request.getAttribute("view.jsp-organizationGroupId"));
+PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
+int status = GetterUtil.getInteger(request.getAttribute("view.jsp-status"));
+String toolbarItem = GetterUtil.getString(request.getAttribute("view.jsp-toolbarItem"));
+int usersCount = GetterUtil.getInteger(request.getAttribute("view.jsp-usersCount"));
+String usersListView = GetterUtil.getString(request.getAttribute("view.jsp-usersListView"));
+String viewUsersRedirect = GetterUtil.getString(request.getAttribute("view.jsp-viewUsersRedirect"));
 
 if (organization != null) {
 	Group organizationGroup = organization.getGroup();
@@ -49,6 +63,35 @@ if (organization != null) {
 %>
 
 <c:if test="<%= portletName.equals(PortletKeys.USERS_ADMIN) && usersListView.equals(UserConstants.LIST_VIEW_TREE) %>">
+	<aui:nav cssClass="nav-tabs">
+		<portlet:renderURL var="viewUsersTreeURL">
+			<portlet:param name="struts_action" value="/users_admin/view" />
+			<portlet:param name="toolbarItem" value="browse" />
+			<portlet:param name="usersListView" value="<%= UserConstants.LIST_VIEW_TREE %>" />
+			<portlet:param name="saveUsersListView" value="<%= Boolean.TRUE.toString() %>" />
+		</portlet:renderURL>
+
+		<aui:nav-item href="<%= viewUsersTreeURL %>" label="browse" selected='<%= toolbarItem.equals("browse") %>' />
+
+		<portlet:renderURL var="viewOrganizationsFlatURL">
+			<portlet:param name="struts_action" value="/users_admin/view" />
+			<portlet:param name="toolbarItem" value="view-all-organizations" />
+			<portlet:param name="usersListView" value="<%= UserConstants.LIST_VIEW_FLAT_ORGANIZATIONS %>" />
+			<portlet:param name="saveUsersListView" value="<%= Boolean.TRUE.toString() %>" />
+		</portlet:renderURL>
+
+		<aui:nav-item href="<%= viewOrganizationsFlatURL %>" label="all-organizations" selected='<%= toolbarItem.equals("view-all-organizations") %>' />
+
+		<portlet:renderURL var="viewUsersFlatURL">
+			<portlet:param name="struts_action" value="/users_admin/view" />
+			<portlet:param name="toolbarItem" value="view-all-users" />
+			<portlet:param name="usersListView" value="<%= UserConstants.LIST_VIEW_FLAT_USERS %>" />
+			<portlet:param name="saveUsersListView" value="<%= Boolean.TRUE.toString() %>" />
+		</portlet:renderURL>
+
+		<aui:nav-item href="<%= viewUsersFlatURL %>" label="all-users" selected='<%= toolbarItem.equals("view-all-users") %>' />
+	</aui:nav>
+
 	<aui:nav-bar>
 		<liferay-util:include page="/html/portlet/users_admin/toolbar.jsp" />
 

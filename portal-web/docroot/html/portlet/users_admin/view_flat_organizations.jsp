@@ -17,6 +17,8 @@
 <%@ include file="/html/portlet/users_admin/init.jsp" %>
 
 <%
+String toolbarItem = ParamUtil.getString(request, "toolbarItem", "browse");
+
 String usersListView = (String)request.getAttribute("view.jsp-usersListView");
 
 PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
@@ -48,6 +50,35 @@ if (filterManageableOrganizations) {
 			<aui:input name="deleteOrganizationIds" type="hidden" />
 
 			<c:if test="<%= usersListView.equals(UserConstants.LIST_VIEW_FLAT_ORGANIZATIONS) %>">
+				<aui:nav cssClass="nav-tabs">
+					<portlet:renderURL var="viewUsersTreeURL">
+						<portlet:param name="struts_action" value="/users_admin/view" />
+						<portlet:param name="toolbarItem" value="browse" />
+						<portlet:param name="usersListView" value="<%= UserConstants.LIST_VIEW_TREE %>" />
+						<portlet:param name="saveUsersListView" value="<%= Boolean.TRUE.toString() %>" />
+					</portlet:renderURL>
+
+					<aui:nav-item href="<%= viewUsersTreeURL %>" label="browse" selected='<%= toolbarItem.equals("browse") %>' />
+
+					<portlet:renderURL var="viewOrganizationsFlatURL">
+						<portlet:param name="struts_action" value="/users_admin/view" />
+						<portlet:param name="toolbarItem" value="view-all-organizations" />
+						<portlet:param name="usersListView" value="<%= UserConstants.LIST_VIEW_FLAT_ORGANIZATIONS %>" />
+						<portlet:param name="saveUsersListView" value="<%= Boolean.TRUE.toString() %>" />
+					</portlet:renderURL>
+
+					<aui:nav-item href="<%= viewOrganizationsFlatURL %>" label="all-organizations" selected='<%= toolbarItem.equals("view-all-organizations") %>' />
+
+					<portlet:renderURL var="viewUsersFlatURL">
+						<portlet:param name="struts_action" value="/users_admin/view" />
+						<portlet:param name="toolbarItem" value="view-all-users" />
+						<portlet:param name="usersListView" value="<%= UserConstants.LIST_VIEW_FLAT_USERS %>" />
+						<portlet:param name="saveUsersListView" value="<%= Boolean.TRUE.toString() %>" />
+					</portlet:renderURL>
+
+					<aui:nav-item href="<%= viewUsersFlatURL %>" label="all-users" selected='<%= toolbarItem.equals("view-all-users") %>' />
+				</aui:nav>
+
 				<aui:nav-bar>
 					<liferay-util:include page="/html/portlet/users_admin/toolbar.jsp" />
 

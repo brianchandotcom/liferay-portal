@@ -5133,6 +5133,9 @@ public class JournalArticleLocalServiceImpl
 		Date now = new Date();
 
 		if ((status == WorkflowConstants.STATUS_APPROVED) &&
+			(article.getClassNameId() ==
+				JournalArticleConstants.CLASSNAME_ID_DEFAULT) &&
+			(article.getDisplayDate() != null) &&
 			now.before(article.getDisplayDate())) {
 
 			status = WorkflowConstants.STATUS_SCHEDULED;

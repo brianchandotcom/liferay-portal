@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.SearchPaginationUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -502,8 +503,11 @@ public class SearchContainer<R> {
 	}
 
 	private void _calculateStartAndEnd() {
-		_start = (_cur - 1) * _delta;
-		_end = _start + _delta;
+		int[] startAndEnd = SearchPaginationUtil.calculateStartAndEnd(
+			_cur, _delta);
+
+		_start = startAndEnd[0];
+		_end = startAndEnd[1];
 
 		_resultEnd = _end;
 

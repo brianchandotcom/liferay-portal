@@ -376,7 +376,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 			boolean checkPermission)
 		throws Exception {
 
-		List<AssetEntry> aassetEntries = new ArrayList<AssetEntry>();
+		List<AssetEntry> assetEntries = new ArrayList<AssetEntry>();
 
 		List<String> missingAssetEntryUuids = new ArrayList<String>();
 
@@ -435,7 +435,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 				continue;
 			}
 
-			aassetEntries.add(assetEntry);
+			assetEntries.add(assetEntry);
 		}
 
 		if (deleteMissingAssetEntries) {
@@ -449,7 +449,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 			}
 		}
 
-		return aassetEntries;
+		return assetEntries;
 	}
 
 	@Override

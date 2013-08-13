@@ -31,6 +31,7 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.util.SearchPaginationUtil;
 import com.liferay.portlet.trash.TrashEntryConstants;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.model.TrashEntryList;
@@ -255,22 +256,23 @@ public class TrashEntryServiceImpl extends TrashEntryServiceBaseImpl {
 			}
 		}
 
-		int filteredEntriesCount = filteredEntries.size();
+		int total = filteredEntries.size();
 
-		if ((end != QueryUtil.ALL_POS) && (start != QueryUtil.ALL_POS)) {
-			if (end > filteredEntriesCount) {
-				end = filteredEntriesCount;
-			}
-
-			if (start > filteredEntriesCount) {
-				start = filteredEntriesCount;
-			}
-
-			filteredEntries = filteredEntries.subList(start, end);
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS)) {
+			start = 0;
+			end = total;
 		}
 
+		int[] startAndEnd = SearchPaginationUtil.calculateStartAndEnd(
+			start, end, total);
+
+		start = startAndEnd[0];
+		end = startAndEnd[1];
+
+		filteredEntries = filteredEntries.subList(start, end);
+
 		trashEntriesList.setArray(TrashEntrySoap.toSoapModels(filteredEntries));
-		trashEntriesList.setCount(filteredEntriesCount);
+		trashEntriesList.setCount(total);
 
 		return trashEntriesList;
 	}

@@ -235,6 +235,7 @@ AUI.add(
 									dialog: A.merge(DIALOG_DEFAULTS, dialogConfig),
 									dialogIframe: DIALOG_IFRAME_DEFAULTS,
 									id: instance._dialogId,
+									iframeId: 'devicePreviewIframe',
 									uri: WIN.location.href
 								},
 								function(dialogWindow) {

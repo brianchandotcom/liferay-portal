@@ -70,24 +70,26 @@
 
 				searchContext.setQueryConfig(queryConfig);
 
-				Hits results = indexer.search(searchContext);
+				Hits hits = indexer.search(searchContext);
 
-				String[] queryTerms = results.getQueryTerms();
+				String[] queryTerms = hits.getQueryTerms();
 
 				ContentHits contentHits = new ContentHits();
 
 				contentHits.setShowListed(showListed);
 
-				contentHits.recordHits(results, layout.getGroupId(), layout.isPrivateLayout(), searchContainer.getStart(), searchContainer.getEnd());
+				contentHits.recordHits(hits, layout.getGroupId(), layout.isPrivateLayout(), searchContainer.getStart(), searchContainer.getEnd());
 
-				int total = results.getLength();
+				int total = hits.getLength();
 
 				searchContainer.setTotal(total);
 
+				List<Document> results = ListUtil.toList(hits.getDocs());
+
 				List resultRows = searchContainer.getResultRows();
 
-				for (int i = 0; i < results.getDocs().length; i++) {
-					Document doc = results.doc(i);
+				for (int i = 0; i < results.size(); i++) {
+					Document doc = results.get(i);
 
 					PortletURL summaryURL = PortletURLUtil.clone(portletURL, renderResponse);
 
@@ -129,7 +131,7 @@
 			<aui:input align="absmiddle" alt='<%= LanguageUtil.get(pageContext, "search") %>' border="0" cssClass="lfr-search-button" inlineField="<%= true %>" label="" name="search" src='<%= themeDisplay.getPathThemeImages() + "/common/search.png" %>' title="search" type="image" />
 
 			<div class="search-results">
-				<liferay-ui:search-speed hits="<%= results %>" searchContainer="<%= searchContainer %>" />
+				<liferay-ui:search-speed hits="<%= hits %>" searchContainer="<%= searchContainer %>" />
 
 				<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" />
 			</div>

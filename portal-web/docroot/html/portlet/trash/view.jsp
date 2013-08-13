@@ -120,10 +120,6 @@ portletURL.setParameter("tabs1", tabs1);
 
 			searchContainer.setTotal(trashEntryList.getCount());
 
-			if (searchContainer.isRecalculateCur()) {
-				trashEntryList = TrashEntryServiceUtil.getEntries(groupId, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
-			}
-
 			results = TrashEntryImpl.toModels(trashEntryList.getArray());
 
 			approximate = trashEntryList.isApproximate();

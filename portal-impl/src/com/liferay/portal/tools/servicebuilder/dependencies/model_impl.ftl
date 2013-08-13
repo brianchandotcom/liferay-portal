@@ -1020,7 +1020,7 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 		}
 	</#if>
 
-	<#if entity.hasLocalizedColumn()>
+	<#if entity.isLocalizedModel()>
 		@Override
 		public String[] getAvailableLanguageIds() {
 			Set<String> availableLanguageIds = new TreeSet<String>();
@@ -1061,7 +1061,17 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 
 		@Override
 		public void prepareLocalizedFieldsForImport() throws LocaleException {
-			prepareLocalizedFieldsForImport (null);
+			Locale defaultLocale = LocaleUtil.fromLanguageId(
+				getDefaultLanguageId());
+
+			Locale[] availableLocales = LocaleUtil.fromLanguageIds(
+				getAvailableLanguageIds());
+
+			Locale defaultImportLocale = LocalizationUtil.getDefaultImportLocale(
+				${entity.name}.class.getName(), getPrimaryKey(), defaultLocale,
+				availableLocales);
+
+			prepareLocalizedFieldsForImport(defaultImportLocale);
 		}
 
 		@Override

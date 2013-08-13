@@ -710,6 +710,10 @@ public class Entity {
 		return _jsonEnabled;
 	}
 
+	public boolean isLocalizedModel() {
+		return hasLocalizedColumn();
+	}
+
 	public boolean isMvccEnabled() {
 		return _mvccEnabled;
 	}

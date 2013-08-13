@@ -58,10 +58,10 @@ List<String> versions = (List<String>)request.getAttribute("liferay-ui:app-view-
 				</c:if>
 			</span>
 
-			<c:if test="<%= (versions != null) || Validator.isNotNull(containerName) %>">
+			<c:if test="<%= ((versions != null) && !versions.isEmpty()) || Validator.isNotNull(containerName) %>">
 				<small>
 					<dl>
-						<c:if test="<%= versions != null %>">
+						<c:if test="<%= (versions != null) && !versions.isEmpty() %>">
 							<dt>
 								<liferay-ui:message key="versions" />:
 							</dt>

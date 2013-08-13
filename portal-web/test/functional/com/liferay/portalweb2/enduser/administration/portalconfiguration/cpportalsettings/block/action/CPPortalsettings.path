@@ -1,0 +1,173 @@
+<html>
+<head>
+<title>CPPortalsettings</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPPortalsettings</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>CPPortalsettings</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[@class='alert alert-success']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE_BUTTON</td>
+	<td>//button[contains(.,'Save')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CANCEL_BUTTON</td>
+	<td>//button[contains(.,'Cancel')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--MENU_CONFIGURATION-->
+<tr>
+	<td>MENU_CONFIGURATION_GENERAL</td>
+	<td>//a[@id='_130_generalLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENU_CONFIGURATION_AUTHENTICATION</td>
+	<td>//a[@id='_130_authenticationLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENU_CONFIGURATION_USERS</td>
+	<td>//a[@id='_130_usersLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENU_CONFIGURATION_MAIL_HOST_NAMES</td>
+	<td>//a[@id='_130_mailHostNamesLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENU_CONFIGURATION_EMAIL_NOTIFICATIONS</td>
+	<td>//a[@id='_130_emailNotificationsLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENU_CONFIGURATION_CONTENT_SHARING</td>
+	<td>//a[@id='_130_contentSharingLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--MAIN_CONFIGURATION-->
+<tr>
+	<td>MAIN_CONFIGURATION_NAME_FIELD</td>
+	<td>//input[@id='_130_name']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MAIN_CONFIGURATION_MAIL_DOMAIN_FIELD</td>
+	<td>//input[@id='_130_mx']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MAIN_CONFIGURATION_VIRTUAL_HOST_FIELD</td>
+	<td>//input[@id='_130_virtualHostname']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MAIN_CONFIGURATION_CDN_HOST_HTTP_FIELD</td>
+	<td>//input[@id='_130_cdn.host.http']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MAIN_CONFIGURATION_CDN_HOST_HTTPS_FIELD</td>
+	<td>//input[@id='_130_cdn.host.https']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MAIN_CONFIGURATION_CDN_DYNAMIC_RESOURCES_ENABLE_CHECKBOX</td>
+	<td>//input[@id='_130_cdn.dynamic.resources.enabledCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--NAVIGATION-->
+<tr>
+	<td>NAVIGATION_HOME_URL_FIELD</td>
+	<td>//input[@id='_130_homeURL']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_DEFAULT_LANDING_PAGE_FIELD</td>
+	<td>//input[@name='_130_settings--default.landing.page.path--']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_DEFAULT_LOGOUT_PAGE_FIELD</td>
+	<td>//input[@name='_130_settings--default.logout.page.path--']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ADDITIONAL_INFORMATION-->
+<tr>
+	<td>ADDITIONAL_INFORMATION_LEGAL_NAME_FIELD</td>
+	<td>//input[@id='_130_legalName']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADDITIONAL_INFORMATION_LEGAL_ID_FIELD</td>
+	<td>//input[@id='_130_legalId']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADDITIONAL_INFORMATION_LEGAL_TYPE_FIELD</td>
+	<td>//input[@id='_130_legalType']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADDITIONAL_INFORMATION_SIC_CODE_FIELD</td>
+	<td>//input[@id='_130_sicCode']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADDITIONAL_INFORMATION_TICKER_SYMBOL_FIELD</td>
+	<td>//input[@id='_130_tickerSymbol']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADDITIONAL_INFORMATION_INDUSTRY_FIELD</td>
+	<td>//input[@id='_130_industry']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADDITIONAL_INFORMATION_TYPE_FIELD</td>
+	<td>//input[@id='_130_type']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

@@ -3,6 +3,10 @@
 		<execute macro="User#firstLoginPG" />
 	</set-up>
 
+	<tear-down>
+		<execute macro="UserGroup#tearDownCP" />
+	</tear-down>
+
 	<command name="AddUserGroup">
 		<var name="userGroupName" value="UG UserGroup Name" />
 
@@ -44,8 +48,4 @@
 			<var name="userGroupNameEdit" value="${userGroupNameEdit}" />
 		</execute>
 	</command>
-
-	<tear-down>
-		<execute macro="UserGroup#tearDownCP" />
-	</tear-down>
 </definition>

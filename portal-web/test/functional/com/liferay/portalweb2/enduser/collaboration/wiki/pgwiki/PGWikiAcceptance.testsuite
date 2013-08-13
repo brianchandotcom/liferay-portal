@@ -1,0 +1,5 @@
+<definition>
+	<execute test-case-command="PGWiki#AddWikiFrontPage" />
+	<execute test-case-command="PGWiki#AddWikiFrontPageChildPage" />
+	<execute test-case-command="PGWiki#DeleteWikiFrontPage" />
+</definition>

@@ -1,0 +1,5 @@
+<definition>
+	<execute test-case-command="PGAnnouncements#AddAnnouncementsEntry" />
+	<execute test-case-command="PGAnnouncements#DeleteAnnoucementsEntry" />
+	<execute test-case-command="PGAnnouncements#EditAnnouncementsEntry" />
+</definition>

@@ -3,6 +3,14 @@
 		<execute macro="User#firstLoginPG" />
 	</set-up>
 
+	<tear-down>
+		<execute macro="Suborganization#tearDownCP" />
+
+		<execute macro="Organization#tearDownCP" />
+
+		<execute macro="User#tearDownCP" />
+	</tear-down>
+
 	<command name="AddMember">
 		<var name="orgName" value="Organization Name" />
 		<var name="orgType" value="Regular Organization" />
@@ -344,12 +352,4 @@
 			<var name="userFirstName" value="${userFirstName}" />
 		</execute>
 	</command>
-
-	<tear-down>
-		<execute macro="Suborganization#tearDownCP" />
-
-		<execute macro="Organization#tearDownCP" />
-
-		<execute macro="User#tearDownCP" />
-	</tear-down>
 </definition>

@@ -1,0 +1,5 @@
+<definition>
+	<execute test-case-command="CPMessageboards#AddMBCategory" />
+	<execute test-case-command="CPMessageboards#AddMBThread" />
+	<execute test-case-command="CPMessageboards#MoveToRecycleBinMBThread" />
+</definition>

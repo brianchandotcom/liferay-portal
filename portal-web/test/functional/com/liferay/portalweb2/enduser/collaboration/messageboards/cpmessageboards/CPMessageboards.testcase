@@ -3,6 +3,12 @@
 		<execute macro="User#firstLoginPG" />
 	</set-up>
 
+	<tear-down>
+		<execute macro="MessageboardsCategory#tearDownCP" />
+
+		<execute macro="MessageboardsThread#tearDownCP" />
+	</tear-down>
+
 	<command name="AddMBCategory">
 		<var name="categoryName" value="MB Category Name" />
 
@@ -67,10 +73,4 @@
 			<var name="threadSubject" value="${threadSubject}" />
 		</execute>
 	</command>
-
-	<tear-down>
-		<execute macro="MessageboardsCategory#tearDownCP" />
-
-		<execute macro="MessageboardsThread#tearDownCP" />
-	</tear-down>
 </definition>

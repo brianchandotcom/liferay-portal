@@ -3,6 +3,22 @@
 		<execute macro="User#firstLoginPG" />
 	</set-up>
 
+	<tear-down>
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="User#tearDownCP" />
+
+		<execute macro="Role#tearDownCP" />
+
+		<execute macro="Organization#tearDownCP" />
+
+		<execute macro="Site#tearDownCP" />
+
+		<execute macro="BlogsEntry#tearDownCP" />
+
+		<execute macro="Page#tearDownPG" />
+	</tear-down>
+
 	<command name="AddBlogsEntryOrgRole">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
@@ -1118,20 +1134,4 @@
 			<var name="userEmailAddress" value="test@liferay.com" />
 		</execute>
 	</command>
-
-	<tear-down>
-		<execute macro="User#firstLoginPG" />
-
-		<execute macro="User#tearDownCP" />
-
-		<execute macro="Role#tearDownCP" />
-
-		<execute macro="Organization#tearDownCP" />
-
-		<execute macro="Site#tearDownCP" />
-
-		<execute macro="BlogsEntry#tearDownCP" />
-
-		<execute macro="Page#tearDownPG" />
-	</tear-down>
 </definition>

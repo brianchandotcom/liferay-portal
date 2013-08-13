@@ -3,6 +3,12 @@
 		<execute macro="User#firstLoginPG" />
 	</set-up>
 
+	<tear-down>
+		<execute macro="WikiNode#tearDownCP" />
+
+		<execute macro="WikiPage#tearDownCP" />
+	</tear-down>
+
 	<command name="AddWikiFrontPage">
 		<var name="wikiNodeName" value="Main" />
 		<var name="wikiFrontPageContent" value="Wiki FrontPage Content" />
@@ -115,10 +121,4 @@
 			<var name="wikiFrontPageContent" value="${wikiFrontPageContent}" />
 		</execute>
 	</command>
-
-	<tear-down>
-		<execute macro="WikiNode#tearDownCP" />
-
-		<execute macro="WikiPage#tearDownCP" />
-	</tear-down>
 </definition>

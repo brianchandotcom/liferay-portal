@@ -507,8 +507,14 @@
 				// Functions to run on portlet load
 
 				if (canEditTitle) {
+					var events = ['focus', 'gesturemovestart'];
+
+					if(!A.UA.touch) {
+						events.push('mousemove');
+					}
+
 					var handle = portlet.on(
-						['focus', 'mousedown', 'mousemove'],
+						events,
 						function(event) {
 							Util.portletTitleEdit(
 								{
@@ -550,7 +556,7 @@
 				}
 			}
 		},
-		['aui-base', 'aui-timer']
+		['aui-base', 'aui-timer', 'event-move']
 	);
 
 	Liferay.provide(

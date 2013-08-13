@@ -656,6 +656,8 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 
 						thread.setLastPostByUserId(parentMessage.getUserId());
 						thread.setLastPostDate(parentMessage.getModifiedDate());
+
+						mbThreadPersistence.update(thread);
 					}
 				}
 			}
@@ -665,9 +667,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			if (message.isApproved()) {
 				MBUtil.updateThreadMessageCount(
 					thread.getCompanyId(), thread.getThreadId());
-			}
-			else {
-				mbThreadPersistence.update(thread);
 			}
 
 			// Category

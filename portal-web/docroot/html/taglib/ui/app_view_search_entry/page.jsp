@@ -34,6 +34,7 @@ int status = GetterUtil.getInteger(request.getAttribute("liferay-ui:app-view-sea
 String thumbnailSrc = (String)request.getAttribute("liferay-ui:app-view-search-entry:thumbnailSrc");
 String title = (String)request.getAttribute("liferay-ui:app-view-search-entry:title");
 String url = (String)request.getAttribute("liferay-ui:app-view-search-entry:url");
+List<String> versions = (List<String>)request.getAttribute("liferay-ui:app-view-search-entry:versions");
 %>
 
 <div class="app-view-entry app-view-search-entry-taglib entry-display-style <%= showCheckbox ? "selectable" : StringPool.BLANK %> <%= cssClass %>" data-title="<%= HtmlUtil.escapeAttribute(StringUtil.shorten(title, 60)) %>">
@@ -55,6 +56,12 @@ String url = (String)request.getAttribute("liferay-ui:app-view-search-entry:url"
 				<aui:workflow-status showIcon="<%= false %>" showLabel="<%= false %>" status="<%= status %>" />
 			</c:if>
 		</span>
+
+		<c:if test="<%= versions != null %>">
+			<span class="entry-metadata">
+				<liferay-ui:message key="versions" />: <%= ListUtil.toString(versions, (String)null) %>
+			</span>
+		</c:if>
 
 		<c:if test="<%= Validator.isNotNull(containerName) %>">
 			<span class="entry-folder">

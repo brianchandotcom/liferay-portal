@@ -67,7 +67,7 @@ List<String> versions = (List<String>)request.getAttribute("liferay-ui:app-view-
 							</dt>
 							<dd>
 
-								<%= ListUtil.toString(versions, (String)null) %>
+								<%= StringUtil.merge(versions, StringPool.COMMA_AND_SPACE) %>
 
 							</dd>
 						</c:if>

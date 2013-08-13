@@ -209,12 +209,12 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 	public boolean hasApprovedVersion()
 		throws PortalException, SystemException {
 
-		JournalArticle latestAprovedVersion =
-			JournalArticleLocalServiceUtil.fetchLatestArticleByStatus(
+		JournalArticle article =
+			JournalArticleLocalServiceUtil.fetchLatestArticle(
 				getGroupId(), getArticleId(),
 				WorkflowConstants.STATUS_APPROVED);
 
-		if (latestAprovedVersion == null) {
+		if (article == null) {
 			return false;
 		}
 

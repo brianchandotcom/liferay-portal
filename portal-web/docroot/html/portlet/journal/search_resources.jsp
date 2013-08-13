@@ -286,7 +286,7 @@ ArticleSearch searchContainer = new ArticleSearch(liferayPortletRequest, entryEn
 
 									request.setAttribute("view_entries.jsp-article", article);
 
-									List<String> versions = ListUtil.fromCollection(searchResult.getVersions());
+									List<String> versions = searchResult.getVersions();
 
 									Collections.sort(versions);
 									%>

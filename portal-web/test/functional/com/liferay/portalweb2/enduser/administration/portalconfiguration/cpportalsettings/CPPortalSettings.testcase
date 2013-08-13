@@ -1,0 +1,234 @@
+<definition>
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<tear-down>
+		<execute macro="PortalSettings#tearDownCP" />
+
+		<execute macro="User#tearDownCP" />
+
+		<execute macro="Role#tearDownCP" />
+
+		<execute macro="Organization#tearDownCP" />
+
+		<execute macro="UserGroup#tearDownCP" />
+
+		<execute macro="Site#tearDownCP" />
+	</tear-down>
+
+	<command name="EditDefaultUserAssociationsOrganizationSites">
+		<var name="orgName" value="Organization Name" />
+		<var name="orgType" value="Regular Organization" />
+		<var name="siteName" value="Organization Name" />
+		<var name="userEmailAddress" value="userea@liferay.com" />
+		<var name="userFirstName" value="userfn" />
+		<var name="userLastName" value="userln" />
+		<var name="userScreenName" value="usersn" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Organization#addCP">
+			<var name="orgName" value="${orgName}" />
+			<var name="orgType" value="${orgType}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Organization#addSiteCP">
+			<var name="orgName" value="${orgName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Portal Settings" />
+		</execute>
+
+		<execute macro="PortalSettings#editConfigurationUsersDefaultUserAssociationsOrganizationSitesCP">
+			<var name="orgName" value="${orgName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Portal Settings" />
+		</execute>
+
+		<execute macro="PortalSettings#viewConfigurationUsersDefaultUserAssociationsOrganizationSitesCP">
+			<var name="orgName" value="${orgName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#viewUserInfomationOrganizationSitesCP">
+			<var name="orgName" value="${orgName}" />
+		</execute>
+	</command>
+
+	<command name="EditDefaultUserAssociationsRoles">
+		<var name="roleName" value="Roles Regrole Name" />
+		<var name="userEmailAddress" value="userea@liferay.com" />
+		<var name="userFirstName" value="userfn" />
+		<var name="userLastName" value="userln" />
+		<var name="userScreenName" value="usersn" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#addCP">
+			<var name="roleName" value="${roleName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Portal Settings" />
+		</execute>
+
+		<execute macro="PortalSettings#editConfigurationUsersDefaultUserAssociationsRolesCP">
+			<var name="roleName" value="${roleName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Portal Settings" />
+		</execute>
+
+		<execute macro="PortalSettings#viewConfigurationUsersDefaultUserAssociationsRolesCP">
+			<var name="roleName" value="${roleName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#viewUserInfomationRolesCP">
+			<var name="roleName" value="${roleName}" />
+		</execute>
+	</command>
+
+	<command name="EditDefaultUserAssociationsSites">
+		<var name="siteName" value="Site Name" />
+		<var name="userEmailAddress" value="userea@liferay.com" />
+		<var name="userFirstName" value="userfn" />
+		<var name="userLastName" value="userln" />
+		<var name="userScreenName" value="usersn" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Portal Settings" />
+		</execute>
+
+		<execute macro="PortalSettings#editConfigurationUsersDefaultUserAssociationsSitesCP">
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Portal Settings" />
+		</execute>
+
+		<execute macro="PortalSettings#viewConfigurationUsersDefaultUserAssociationsSitesCP">
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#viewUserInfomationSitesCP">
+			<var name="siteName" value="${siteName}" />
+		</execute>
+	</command>
+
+	<command name="EditDefaultUserAssociationsUserGroups">
+		<var name="userEmailAddress" value="userea@liferay.com" />
+		<var name="userFirstName" value="userfn" />
+		<var name="userGroupName" value="UG UserGroup Name" />
+		<var name="userLastName" value="userln" />
+		<var name="userScreenName" value="usersn" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="User Groups" />
+		</execute>
+
+		<execute macro="UserGroup#addCP">
+			<var name="userGroupName" value="${userGroupName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Portal Settings" />
+		</execute>
+
+		<execute macro="PortalSettings#editConfigurationUsersDefaultUserAssociationsUserGroupsCP">
+			<var name="userGroupName" value="${userGroupName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Portal Settings" />
+		</execute>
+
+		<execute macro="PortalSettings#viewConfigurationUsersDefaultUserAssociationsUserGroupsCP">
+			<var name="userGroupName" value="${userGroupName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#viewUserInfomationUserGroupsCP">
+			<var name="userGroupName" value="${userGroupName}" />
+		</execute>
+	</command>
+</definition>

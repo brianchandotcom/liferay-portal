@@ -1,0 +1,6 @@
+<definition>
+	<execute test-case-command="CPPortalSettings#EditDefaultUserAssociationsOrganizationSites" />
+	<execute test-case-command="CPPortalSettings#EditDefaultUserAssociationsRoles" />
+	<execute test-case-command="CPPortalSettings#EditDefaultUserAssociationsSites" />
+	<execute test-case-command="CPPortalSettings#EditDefaultUserAssociationsUserGroups" />
+</definition>

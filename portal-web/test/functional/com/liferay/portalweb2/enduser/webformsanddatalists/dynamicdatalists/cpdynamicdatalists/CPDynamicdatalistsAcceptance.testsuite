@@ -1,0 +1,11 @@
+<definition>
+	<execute test-case-command="CPDynamicdatalists#AddDataDefinition" />
+	<execute test-case-command="CPDynamicdatalists#AddList" />
+	<execute test-case-command="CPDynamicdatalists#AddRecord" />
+	<execute test-case-command="CPDynamicdatalists#DeleteDataDefinition" />
+	<execute test-case-command="CPDynamicdatalists#DeleteList" />
+	<execute test-case-command="CPDynamicdatalists#DeleteRecord" />
+	<execute test-case-command="CPDynamicdatalists#EditDataDefinition" />
+	<execute test-case-command="CPDynamicdatalists#EditList" />
+	<execute test-case-command="CPDynamicdatalists#EditRecord" />
+</definition>

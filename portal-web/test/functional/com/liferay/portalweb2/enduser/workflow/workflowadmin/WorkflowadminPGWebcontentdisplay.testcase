@@ -1,6 +1,6 @@
 <definition>
-	<var name="pageName" value="Asset Publisher Page" />
-	<var name="portletName" value="Asset Publisher" />
+	<var name="pageName" value="Web Content Display Page" />
+	<var name="portletName" value="Web Content Display" />
 	<var name="workflowAssetType" value="Web Content" />
 
 	<set-up>
@@ -25,7 +25,17 @@
 		</execute>
 	</set-up>
 
-	<command name="ApproveWebContentViaAssetPublisherPG">
+	<tear-down>
+		<execute macro="WebContent#tearDownCP" />
+
+		<execute macro="Page#tearDownPG" />
+
+		<execute macro="Workflow#tearDownPortalWorkflow" />
+
+		<execute macro="Workflow#tearDownSiteWorkflow" />
+	</tear-down>
+
+	<command name="ApproveWebContentViaWebContentDisplayPG">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
 
@@ -33,9 +43,19 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="WebContent#addPGWithWorkflowViaAP">
+		<execute macro="WebContent#addPGWithWorkflowViaWCD">
 			<var name="webContentContent" value="${webContentContent}" />
 			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="WebContent#viewPGWithWorkflowViaWCD">
+			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+			<var name="workflowTask" value="Review" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -52,8 +72,10 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="WebContent#viewPGWithWorkflowViaAP">
+		<execute macro="WebContent#viewPGWithWorkflowViaWCD">
+			<var name="webContentContent" value="${webContentContent}" />
 			<var name="webContentTitle" value="${webContentTitle}" />
+			<var name="workflowTask" value="Review" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -70,13 +92,13 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="WebContent#viewPGViaAP">
+		<execute macro="WebContent#viewPGViaWCD">
 			<var name="webContentContent" value="${webContentContent}" />
 			<var name="webContentTitle" value="${webContentTitle}" />
 		</execute>
 	</command>
 
-	<command name="RejectWebContentCP">
+	<command name="RejectWebContentViaWebContentDisplayPG">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
 
@@ -84,7 +106,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="WebContent#addPGWithWorkflowViaAP">
+		<execute macro="WebContent#addPGWithWorkflowViaWCD">
 			<var name="webContentContent" value="${webContentContent}" />
 			<var name="webContentTitle" value="${webContentTitle}" />
 		</execute>
@@ -97,14 +119,6 @@
 			<var name="workflowAssetTitle" value="${webContentTitle}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="WebContent#viewPGWithWorkflowViaAP">
-			<var name="webContentTitle" value="${webContentTitle}" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">
@@ -130,18 +144,10 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="WebContent#viewPGWithWorkflowViaAP">
+		<execute macro="WebContent#viewPGWithWorkflowViaWCD">
+			<var name="webContentContent" value="${webContentContent}" />
 			<var name="webContentTitle" value="${webContentTitle}" />
+			<var name="workflowTask" value="Update" />
 		</execute>
 	</command>
-
-	<tear-down>
-		<execute macro="WebContent#tearDownCP" />
-
-		<execute macro="Page#tearDownPG" />
-
-		<execute macro="Workflow#tearDownPortalWorkflow" />
-
-		<execute macro="Workflow#tearDownSiteWorkflow" />
-	</tear-down>
 </definition>

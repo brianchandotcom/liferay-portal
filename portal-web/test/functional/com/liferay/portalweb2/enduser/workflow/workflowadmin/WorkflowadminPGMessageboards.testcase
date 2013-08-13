@@ -25,6 +25,18 @@
 		</execute>
 	</set-up>
 
+	<tear-down>
+		<execute macro="MessageboardsThread#tearDownPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Page#tearDownPG" />
+
+		<execute macro="Workflow#tearDownPortalWorkflow" />
+
+		<execute macro="Workflow#tearDownSiteWorkflow" />
+	</tear-down>
+
 	<command name="ApproveMessageBoardsThreadPG">
 		<var name="threadBody" value="MB Thread Body" />
 		<var name="threadSubject" value="MB Thread Subject" />
@@ -144,16 +156,4 @@
 			<var name="workflowTask" value="Update" />
 		</execute>
 	</command>
-
-	<tear-down>
-		<execute macro="MessageboardsThread#tearDownPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="Page#tearDownPG" />
-
-		<execute macro="Workflow#tearDownPortalWorkflow" />
-
-		<execute macro="Workflow#tearDownSiteWorkflow" />
-	</tear-down>
 </definition>

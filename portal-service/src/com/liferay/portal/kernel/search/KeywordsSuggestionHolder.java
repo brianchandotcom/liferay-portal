@@ -34,17 +34,17 @@ public class KeywordsSuggestionHolder {
 
 	public KeywordsSuggestionHolder(
 		String suggestedKeywords, String originalKeywords,
-		String keywordsDelimiterRegExp) {
+		String keywordsDelimiterRegexp) {
 
-		Pattern keywordsDelimiterRegExpPattern = Pattern.compile(
-			keywordsDelimiterRegExp);
+		Pattern keywordsDelimiterRegexpPattern = Pattern.compile(
+			keywordsDelimiterRegexp);
 
 		if (Validator.isNull(suggestedKeywords)) {
 			_suggestedKeywords = Collections.emptyList();
 		}
 		else {
 			_suggestedKeywords = Arrays.asList(
-				keywordsDelimiterRegExpPattern.split(suggestedKeywords));
+				keywordsDelimiterRegexpPattern.split(suggestedKeywords));
 		}
 
 		if (Validator.isNull(originalKeywords)) {
@@ -52,7 +52,7 @@ public class KeywordsSuggestionHolder {
 		}
 		else {
 			_originalKeywords = Arrays.asList(
-				keywordsDelimiterRegExpPattern.split(originalKeywords));
+				keywordsDelimiterRegexpPattern.split(originalKeywords));
 		}
 	}
 

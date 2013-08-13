@@ -16,6 +16,7 @@ package com.liferay.portal.model.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.staging.StagingConstants;
@@ -190,6 +191,33 @@ public class GroupImpl extends GroupBaseImpl {
 		}
 
 		return iconURL;
+	}
+
+	@Override
+	public String getLayoutRootNodeName(boolean privateLayout, Locale locale) {
+		String pagesName = null;
+
+		if (isLayoutPrototype() || isLayoutSetPrototype() || isUserGroup()) {
+			pagesName = "pages";
+		}
+		else if (privateLayout) {
+			if (isUser()) {
+				pagesName = "my-dashboard";
+			}
+			else {
+				pagesName = "private-pages";
+			}
+		}
+		else {
+			if (isUser()) {
+				pagesName = "my-profile";
+			}
+			else {
+				pagesName = "public-pages";
+			}
+		}
+
+		return LanguageUtil.get(locale, pagesName);
 	}
 
 	@Override

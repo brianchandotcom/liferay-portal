@@ -42,6 +42,10 @@ public class SearchResult {
 		_mbMessages.add(mbMessage);
 	}
 
+	public void addVersion(String version) {
+		_versions.add(version);
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -83,6 +87,10 @@ public class SearchResult {
 		return _summary;
 	}
 
+	public List<String> getVersions() {
+		return _versions;
+	}
+
 	public void setClassName(String className) {
 		_className = className;
 	}
@@ -104,5 +112,6 @@ public class SearchResult {
 	private List<Tuple> _fileEntryTuples = new ArrayList<Tuple>();
 	private List<MBMessage> _mbMessages = new ArrayList<MBMessage>();
 	private Summary _summary;
+	private List<String> _versions = new ArrayList<String>();
 
 }

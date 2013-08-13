@@ -101,6 +101,10 @@ public class AppViewSearchEntryTag extends IncludeTag {
 		_url = url;
 	}
 
+	public void setVersions(List<String> versions) {
+		_versions = versions;
+	}
+
 	@Override
 	protected void cleanUp() {
 		_actionJsp = null;
@@ -120,6 +124,7 @@ public class AppViewSearchEntryTag extends IncludeTag {
 		_thumbnailSrc = null;
 		_title = null;
 		_url = null;
+		_versions = null;
 	}
 
 	@Override
@@ -167,6 +172,8 @@ public class AppViewSearchEntryTag extends IncludeTag {
 			"liferay-ui:app-view-search-entry:thumbnailSrc", _thumbnailSrc);
 		request.setAttribute("liferay-ui:app-view-search-entry:title", _title);
 		request.setAttribute("liferay-ui:app-view-search-entry:url", _url);
+		request.setAttribute(
+			"liferay-ui:app-view-search-entry:versions", _versions);
 	}
 
 	private static final boolean _CLEAN_UP_SET_ATTRIBUTES = true;
@@ -191,5 +198,6 @@ public class AppViewSearchEntryTag extends IncludeTag {
 	private String _thumbnailSrc;
 	private String _title;
 	private String _url;
+	private List<String> _versions;
 
 }

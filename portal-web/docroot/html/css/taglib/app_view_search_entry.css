@@ -5,6 +5,15 @@
 	position: relative;
 	text-align: left;
 
+	dl {
+		margin: 0;
+
+		dt {
+			float: left;
+			margin-right: 3px;
+		}
+	}
+
 	.tabview-list {
 		margin-bottom: 0;
 	}
@@ -15,6 +24,10 @@
 		.workflow-status {
 			padding-left: .2em;
 		}
+	}
+
+	.entry-description {
+		margin-top: 20px;
 	}
 
 	.entry-discussion, .entry-attachment {
@@ -54,6 +67,7 @@
 
 	.entry-link .entry-thumbnail-image {
 		border-width: 0;
+		color: #000;
 		text-decoration: none;
 		width: 128px;
 	}

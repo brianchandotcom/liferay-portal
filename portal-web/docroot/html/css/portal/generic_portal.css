@@ -1,3 +1,5 @@
+@import "compass/css3/user-interface";
+
 td {
 	&.lfr-center {
 		text-align: center;
@@ -31,6 +33,43 @@ td {
 .dialog-iframe-bd {
 	overflow-x: hidden;
 	overflow-y: auto;
+}
+
+.lfr-code {
+	border: 1px solid transparent;
+	font-family: monospace;
+	overflow: hidden;
+	overflow-x: auto;
+	white-space: pre;
+	word-break: normal;
+
+	table {
+		table-layout: auto;
+		width: 100%;
+
+		tr td {
+			&.lines, &.line-numbers {
+				border-width: 0;
+			}
+
+			&.line-numbers {
+				border-right-width: 1px;
+				text-align: right;
+
+				@include user-select(none);
+
+				vertical-align: top;
+				width: 1%;
+
+				.number {
+					cursor: default;
+					display: block;
+					padding: 0 8px;
+					text-align: right;
+				}
+			}
+		}
+	}
 }
 
 .lfr-grid {
@@ -112,6 +151,20 @@ img.icon {
 
 .definition-of-terms dt {
 	font-weight: bold;
+}
+
+.lfr-code {
+	background: #FFF;
+	border-color: #777;
+
+	tr td.line-numbers {
+		background: #FAFAFA;
+
+		.number {
+			color: #AAA;
+			text-shadow: 1px 1px #FFF;
+		}
+	}
 }
 
 .popup-alert-notice .countdown-timer {

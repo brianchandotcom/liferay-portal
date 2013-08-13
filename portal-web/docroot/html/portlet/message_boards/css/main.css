@@ -13,21 +13,6 @@
 		float: right;
 	}
 
-	.code {
-		background: #FFF;
-		border: 1px solid #777;
-		font-family: monospace;
-		overflow-x: auto;
-		white-space: pre;
-	}
-
-	.code-lines {
-		border-right: 1px solid #CCC;
-		color: #000;
-		margin-right: 5px;
-		padding: 0px 5px 0px 5px;
-	}
-
 	.quote {
 		background: #FFF url(@theme_image_path@/message_boards/quoteleft.png) left top no-repeat;
 		border: 1px solid #777;
@@ -91,6 +76,10 @@
 		table {
 			border-collapse: collapse;
 			table-layout: fixed;
+		}
+
+		.lfr-code table {
+			table-layout: auto;
 		}
 
 		td {

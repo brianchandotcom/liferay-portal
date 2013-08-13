@@ -1062,6 +1062,10 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByActive(active);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<Country> list = findByActive(active, count - 1, count,
 				orderByComparator);
 

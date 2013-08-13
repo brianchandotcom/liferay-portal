@@ -341,6 +341,10 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUserId(userId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<DLFileRank> list = findByUserId(userId, count - 1, count,
 				orderByComparator);
 
@@ -829,6 +833,10 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 	public DLFileRank fetchByFileEntryId_Last(long fileEntryId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByFileEntryId(fileEntryId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<DLFileRank> list = findByFileEntryId(fileEntryId, count - 1,
 				count, orderByComparator);
@@ -1339,6 +1347,10 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 	public DLFileRank fetchByG_U_Last(long groupId, long userId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByG_U(groupId, userId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<DLFileRank> list = findByG_U(groupId, userId, count - 1, count,
 				orderByComparator);
@@ -1891,6 +1903,10 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 		boolean active, OrderByComparator orderByComparator)
 		throws SystemException {
 		int count = countByG_U_A(groupId, userId, active);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<DLFileRank> list = findByG_U_A(groupId, userId, active, count - 1,
 				count, orderByComparator);

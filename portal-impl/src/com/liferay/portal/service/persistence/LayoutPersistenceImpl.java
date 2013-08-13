@@ -358,6 +358,10 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid(uuid);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<Layout> list = findByUuid(uuid, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -1200,6 +1204,10 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid_C(uuid, companyId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<Layout> list = findByUuid_C(uuid, companyId, count - 1, count,
 				orderByComparator);
 
@@ -1727,6 +1735,10 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	public Layout fetchByGroupId_Last(long groupId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByGroupId(groupId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<Layout> list = findByGroupId(groupId, count - 1, count,
 				orderByComparator);
@@ -2576,6 +2588,10 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByCompanyId(companyId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<Layout> list = findByCompanyId(companyId, count - 1, count,
 				orderByComparator);
 
@@ -3306,6 +3322,10 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByLayoutPrototypeUuid(layoutPrototypeUuid);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<Layout> list = findByLayoutPrototypeUuid(layoutPrototypeUuid,
 				count - 1, count, orderByComparator);
 
@@ -3859,6 +3879,10 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		throws SystemException {
 		int count = countBySourcePrototypeLayoutUuid(sourcePrototypeLayoutUuid);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<Layout> list = findBySourcePrototypeLayoutUuid(sourcePrototypeLayoutUuid,
 				count - 1, count, orderByComparator);
 
@@ -4406,6 +4430,10 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	public Layout fetchByG_P_Last(long groupId, boolean privateLayout,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByG_P(groupId, privateLayout);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<Layout> list = findByG_P(groupId, privateLayout, count - 1, count,
 				orderByComparator);
@@ -5601,6 +5629,10 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		long parentLayoutId, OrderByComparator orderByComparator)
 		throws SystemException {
 		int count = countByG_P_P(groupId, privateLayout, parentLayoutId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<Layout> list = findByG_P_P(groupId, privateLayout, parentLayoutId,
 				count - 1, count, orderByComparator);
@@ -6877,6 +6909,10 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 		String type, OrderByComparator orderByComparator)
 		throws SystemException {
 		int count = countByG_P_T(groupId, privateLayout, type);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<Layout> list = findByG_P_T(groupId, privateLayout, type,
 				count - 1, count, orderByComparator);

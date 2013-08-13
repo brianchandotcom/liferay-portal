@@ -365,6 +365,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid(uuid);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<WikiPage> list = findByUuid(uuid, count - 1, count,
 				orderByComparator);
 
@@ -1185,6 +1189,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid_C(uuid, companyId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<WikiPage> list = findByUuid_C(uuid, companyId, count - 1, count,
 				orderByComparator);
 
@@ -1713,6 +1721,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByNodeId(nodeId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<WikiPage> list = findByNodeId(nodeId, count - 1, count,
 				orderByComparator);
 
@@ -2211,6 +2223,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	public WikiPage fetchByFormat_Last(String format,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByFormat(format);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<WikiPage> list = findByFormat(format, count - 1, count,
 				orderByComparator);
@@ -2754,6 +2770,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByR_N(resourcePrimKey, nodeId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<WikiPage> list = findByR_N(resourcePrimKey, nodeId, count - 1,
 				count, orderByComparator);
 
@@ -3288,6 +3308,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	public WikiPage fetchByN_T_Last(long nodeId, String title,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByN_T(nodeId, title);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<WikiPage> list = findByN_T(nodeId, title, count - 1, count,
 				orderByComparator);
@@ -3840,6 +3864,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByN_H(nodeId, head);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<WikiPage> list = findByN_H(nodeId, head, count - 1, count,
 				orderByComparator);
 
@@ -4377,6 +4405,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	public WikiPage fetchByN_P_Last(long nodeId, String parentTitle,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByN_P(nodeId, parentTitle);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<WikiPage> list = findByN_P(nodeId, parentTitle, count - 1, count,
 				orderByComparator);
@@ -4949,6 +4981,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByN_R(nodeId, redirectTitle);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<WikiPage> list = findByN_R(nodeId, redirectTitle, count - 1,
 				count, orderByComparator);
 
@@ -5500,6 +5536,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	public WikiPage fetchByN_S_Last(long nodeId, int status,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByN_S(nodeId, status);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<WikiPage> list = findByN_S(nodeId, status, count - 1, count,
 				orderByComparator);
@@ -6311,6 +6351,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		throws SystemException {
 		int count = countByR_N_H(resourcePrimKey, nodeId, head);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<WikiPage> list = findByR_N_H(resourcePrimKey, nodeId, head,
 				count - 1, count, orderByComparator);
 
@@ -6878,6 +6922,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		throws SystemException {
 		int count = countByR_N_S(resourcePrimKey, nodeId, status);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<WikiPage> list = findByR_N_S(resourcePrimKey, nodeId, status,
 				count - 1, count, orderByComparator);
 
@@ -7442,6 +7490,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	public WikiPage fetchByG_N_H_Last(long groupId, long nodeId, boolean head,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByG_N_H(groupId, nodeId, head);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<WikiPage> list = findByG_N_H(groupId, nodeId, head, count - 1,
 				count, orderByComparator);
@@ -8407,6 +8459,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByG_N_S(groupId, nodeId, status);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<WikiPage> list = findByG_N_S(groupId, nodeId, status, count - 1,
 				count, orderByComparator);
 
@@ -9371,6 +9427,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByU_N_S(userId, nodeId, status);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<WikiPage> list = findByU_N_S(userId, nodeId, status, count - 1,
 				count, orderByComparator);
 
@@ -10237,6 +10297,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByN_T_H(nodeId, title, head);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<WikiPage> list = findByN_T_H(nodeId, title, head, count - 1,
 				count, orderByComparator);
 
@@ -10843,6 +10907,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	public WikiPage fetchByN_T_S_Last(long nodeId, String title, int status,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByN_T_S(nodeId, title, status);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<WikiPage> list = findByN_T_S(nodeId, title, status, count - 1,
 				count, orderByComparator);
@@ -11454,6 +11522,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		throws SystemException {
 		int count = countByN_H_P(nodeId, head, parentTitle);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<WikiPage> list = findByN_H_P(nodeId, head, parentTitle, count - 1,
 				count, orderByComparator);
 
@@ -12048,6 +12120,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByN_H_S(nodeId, head, status);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<WikiPage> list = findByN_H_S(nodeId, head, status, count - 1,
 				count, orderByComparator);
 
@@ -12633,6 +12709,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		int status, OrderByComparator orderByComparator)
 		throws SystemException {
 		int count = countByG_U_N_S(groupId, userId, nodeId, status);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<WikiPage> list = findByG_U_N_S(groupId, userId, nodeId, status,
 				count - 1, count, orderByComparator);
@@ -13665,6 +13745,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		String title, boolean head, OrderByComparator orderByComparator)
 		throws SystemException {
 		int count = countByG_N_T_H(groupId, nodeId, title, head);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<WikiPage> list = findByG_N_T_H(groupId, nodeId, title, head,
 				count - 1, count, orderByComparator);
@@ -14757,6 +14841,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		throws SystemException {
 		int count = countByG_N_H_S(groupId, nodeId, head, status);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<WikiPage> list = findByG_N_H_S(groupId, nodeId, head, status,
 				count - 1, count, orderByComparator);
 
@@ -15790,6 +15878,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		throws SystemException {
 		int count = countByN_H_P_S(nodeId, head, parentTitle, status);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<WikiPage> list = findByN_H_P_S(nodeId, head, parentTitle, status,
 				count - 1, count, orderByComparator);
 
@@ -16459,6 +16551,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 		boolean head, String parentTitle, int status,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByG_N_H_P_S(groupId, nodeId, head, parentTitle, status);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<WikiPage> list = findByG_N_H_P_S(groupId, nodeId, head,
 				parentTitle, status, count - 1, count, orderByComparator);

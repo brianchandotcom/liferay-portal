@@ -350,6 +350,10 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByGroupId(groupId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<BlogsStatsUser> list = findByGroupId(groupId, count - 1, count,
 				orderByComparator);
 
@@ -837,6 +841,10 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 	public BlogsStatsUser fetchByUserId_Last(long userId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUserId(userId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<BlogsStatsUser> list = findByUserId(userId, count - 1, count,
 				orderByComparator);
@@ -1566,6 +1574,10 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByG_NotE(groupId, entryCount);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<BlogsStatsUser> list = findByG_NotE(groupId, entryCount,
 				count - 1, count, orderByComparator);
 
@@ -2076,6 +2088,10 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 	public BlogsStatsUser fetchByC_NotE_Last(long companyId, int entryCount,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByC_NotE(companyId, entryCount);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<BlogsStatsUser> list = findByC_NotE(companyId, entryCount,
 				count - 1, count, orderByComparator);
@@ -2615,6 +2631,10 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 	public BlogsStatsUser fetchByU_L_Last(long userId, Date lastPostDate,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByU_L(userId, lastPostDate);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<BlogsStatsUser> list = findByU_L(userId, lastPostDate, count - 1,
 				count, orderByComparator);

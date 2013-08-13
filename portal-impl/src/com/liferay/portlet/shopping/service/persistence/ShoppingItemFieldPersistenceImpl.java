@@ -349,6 +349,10 @@ public class ShoppingItemFieldPersistenceImpl extends BasePersistenceImpl<Shoppi
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByItemId(itemId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<ShoppingItemField> list = findByItemId(itemId, count - 1, count,
 				orderByComparator);
 

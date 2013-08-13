@@ -362,6 +362,10 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid(uuid);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<User> list = findByUuid(uuid, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -911,6 +915,10 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid_C(uuid, companyId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<User> list = findByUuid_C(uuid, companyId, count - 1, count,
 				orderByComparator);
 
@@ -1438,6 +1446,10 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	public User fetchByCompanyId_Last(long companyId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByCompanyId(companyId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<User> list = findByCompanyId(companyId, count - 1, count,
 				orderByComparator);
@@ -2151,6 +2163,10 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	public User fetchByEmailAddress_Last(String emailAddress,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByEmailAddress(emailAddress);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<User> list = findByEmailAddress(emailAddress, count - 1, count,
 				orderByComparator);
@@ -3151,6 +3167,10 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByC_CD(companyId, createDate);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<User> list = findByC_CD(companyId, createDate, count - 1, count,
 				orderByComparator);
 
@@ -3705,6 +3725,10 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	public User fetchByC_MD_Last(long companyId, Date modifiedDate,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByC_MD(companyId, modifiedDate);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<User> list = findByC_MD(companyId, modifiedDate, count - 1, count,
 				orderByComparator);
@@ -5523,6 +5547,10 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByC_S(companyId, status);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<User> list = findByC_S(companyId, status, count - 1, count,
 				orderByComparator);
 
@@ -6094,6 +6122,10 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		Date modifiedDate, OrderByComparator orderByComparator)
 		throws SystemException {
 		int count = countByC_CD_MD(companyId, createDate, modifiedDate);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<User> list = findByC_CD_MD(companyId, createDate, modifiedDate,
 				count - 1, count, orderByComparator);

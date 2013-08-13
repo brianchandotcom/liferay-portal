@@ -354,6 +354,10 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByType(type);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<ListType> list = findByType(type, count - 1, count,
 				orderByComparator);
 

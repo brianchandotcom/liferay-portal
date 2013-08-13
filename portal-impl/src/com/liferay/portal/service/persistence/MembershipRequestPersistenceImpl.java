@@ -346,6 +346,10 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByGroupId(groupId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<MembershipRequest> list = findByGroupId(groupId, count - 1, count,
 				orderByComparator);
 
@@ -835,6 +839,10 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 	public MembershipRequest fetchByUserId_Last(long userId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUserId(userId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<MembershipRequest> list = findByUserId(userId, count - 1, count,
 				orderByComparator);
@@ -1349,6 +1357,10 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 	public MembershipRequest fetchByG_S_Last(long groupId, int statusId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByG_S(groupId, statusId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<MembershipRequest> list = findByG_S(groupId, statusId, count - 1,
 				count, orderByComparator);
@@ -1903,6 +1915,10 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 		int statusId, OrderByComparator orderByComparator)
 		throws SystemException {
 		int count = countByG_U_S(groupId, userId, statusId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<MembershipRequest> list = findByG_U_S(groupId, userId, statusId,
 				count - 1, count, orderByComparator);

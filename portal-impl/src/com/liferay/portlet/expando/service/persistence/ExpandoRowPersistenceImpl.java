@@ -341,6 +341,10 @@ public class ExpandoRowPersistenceImpl extends BasePersistenceImpl<ExpandoRow>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByTableId(tableId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<ExpandoRow> list = findByTableId(tableId, count - 1, count,
 				orderByComparator);
 
@@ -823,6 +827,10 @@ public class ExpandoRowPersistenceImpl extends BasePersistenceImpl<ExpandoRow>
 	public ExpandoRow fetchByClassPK_Last(long classPK,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByClassPK(classPK);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<ExpandoRow> list = findByClassPK(classPK, count - 1, count,
 				orderByComparator);

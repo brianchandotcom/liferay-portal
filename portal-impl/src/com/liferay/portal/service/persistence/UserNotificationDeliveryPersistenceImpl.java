@@ -346,6 +346,10 @@ public class UserNotificationDeliveryPersistenceImpl extends BasePersistenceImpl
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUserId(userId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<UserNotificationDelivery> list = findByUserId(userId, count - 1,
 				count, orderByComparator);
 

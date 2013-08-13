@@ -372,6 +372,10 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid(uuid);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<DLFileEntryType> list = findByUuid(uuid, count - 1, count,
 				orderByComparator);
 
@@ -1193,6 +1197,10 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid_C(uuid, companyId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<DLFileEntryType> list = findByUuid_C(uuid, companyId, count - 1,
 				count, orderByComparator);
 
@@ -1728,6 +1736,10 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 	public DLFileEntryType fetchByGroupId_Last(long groupId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByGroupId(groupId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<DLFileEntryType> list = findByGroupId(groupId, count - 1, count,
 				orderByComparator);

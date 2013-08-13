@@ -362,6 +362,10 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid(uuid);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<Group> list = findByUuid(uuid, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -1175,6 +1179,10 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid_C(uuid, companyId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<Group> list = findByUuid_C(uuid, companyId, count - 1, count,
 				orderByComparator);
 
@@ -1704,6 +1712,10 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	public Group fetchByCompanyId_Last(long companyId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByCompanyId(companyId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<Group> list = findByCompanyId(companyId, count - 1, count,
 				orderByComparator);
@@ -2429,6 +2441,10 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByC_C(companyId, classNameId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<Group> list = findByC_C(companyId, classNameId, count - 1, count,
 				orderByComparator);
 
@@ -2952,6 +2968,10 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	public Group fetchByC_P_Last(long companyId, long parentGroupId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByC_P(companyId, parentGroupId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<Group> list = findByC_P(companyId, parentGroupId, count - 1,
 				count, orderByComparator);
@@ -4000,6 +4020,10 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByC_S(companyId, site);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<Group> list = findByC_S(companyId, site, count - 1, count,
 				orderByComparator);
 
@@ -4519,6 +4543,10 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 	public Group fetchByT_A_Last(int type, boolean active,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByT_A(type, active);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<Group> list = findByT_A(type, active, count - 1, count,
 				orderByComparator);
@@ -5325,6 +5353,10 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		throws SystemException {
 		int count = countByC_C_P(companyId, classNameId, parentGroupId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<Group> list = findByC_C_P(companyId, classNameId, parentGroupId,
 				count - 1, count, orderByComparator);
 
@@ -5890,6 +5922,10 @@ public class GroupPersistenceImpl extends BasePersistenceImpl<Group>
 		boolean site, OrderByComparator orderByComparator)
 		throws SystemException {
 		int count = countByC_P_S(companyId, parentGroupId, site);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<Group> list = findByC_P_S(companyId, parentGroupId, site,
 				count - 1, count, orderByComparator);

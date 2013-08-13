@@ -348,6 +348,10 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByRecordId(recordId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<DDLRecordVersion> list = findByRecordId(recordId, count - 1,
 				count, orderByComparator);
 
@@ -1122,6 +1126,10 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 	public DDLRecordVersion fetchByR_S_Last(long recordId, int status,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByR_S(recordId, status);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<DDLRecordVersion> list = findByR_S(recordId, status, count - 1,
 				count, orderByComparator);

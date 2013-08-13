@@ -355,6 +355,10 @@ public class MBDiscussionPersistenceImpl extends BasePersistenceImpl<MBDiscussio
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid(uuid);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<MBDiscussion> list = findByUuid(uuid, count - 1, count,
 				orderByComparator);
 
@@ -1173,6 +1177,10 @@ public class MBDiscussionPersistenceImpl extends BasePersistenceImpl<MBDiscussio
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid_C(uuid, companyId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<MBDiscussion> list = findByUuid_C(uuid, companyId, count - 1,
 				count, orderByComparator);
 
@@ -1704,6 +1712,10 @@ public class MBDiscussionPersistenceImpl extends BasePersistenceImpl<MBDiscussio
 	public MBDiscussion fetchByClassNameId_Last(long classNameId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByClassNameId(classNameId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<MBDiscussion> list = findByClassNameId(classNameId, count - 1,
 				count, orderByComparator);

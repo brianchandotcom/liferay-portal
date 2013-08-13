@@ -362,6 +362,10 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid(uuid);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<WikiPageResource> list = findByUuid(uuid, count - 1, count,
 				orderByComparator);
 

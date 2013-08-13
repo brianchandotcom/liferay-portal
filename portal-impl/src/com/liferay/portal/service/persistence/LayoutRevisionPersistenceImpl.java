@@ -355,6 +355,10 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 		throws SystemException {
 		int count = countByLayoutSetBranchId(layoutSetBranchId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<LayoutRevision> list = findByLayoutSetBranchId(layoutSetBranchId,
 				count - 1, count, orderByComparator);
 
@@ -843,6 +847,10 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 	public LayoutRevision fetchByPlid_Last(long plid,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByPlid(plid);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<LayoutRevision> list = findByPlid(plid, count - 1, count,
 				orderByComparator);
@@ -1357,6 +1365,10 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 	public LayoutRevision fetchByL_H_Last(long layoutSetBranchId, boolean head,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByL_H(layoutSetBranchId, head);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<LayoutRevision> list = findByL_H(layoutSetBranchId, head,
 				count - 1, count, orderByComparator);
@@ -1886,6 +1898,10 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByL_P(layoutSetBranchId, plid);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<LayoutRevision> list = findByL_P(layoutSetBranchId, plid,
 				count - 1, count, orderByComparator);
 
@@ -2413,6 +2429,10 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByL_S(layoutSetBranchId, status);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<LayoutRevision> list = findByL_S(layoutSetBranchId, status,
 				count - 1, count, orderByComparator);
 
@@ -2934,6 +2954,10 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByH_P(head, plid);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<LayoutRevision> list = findByH_P(head, plid, count - 1, count,
 				orderByComparator);
 
@@ -3437,6 +3461,10 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 	public LayoutRevision fetchByP_NotS_Last(long plid, int status,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByP_NotS(plid, status);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<LayoutRevision> list = findByP_NotS(plid, status, count - 1,
 				count, orderByComparator);
@@ -3989,6 +4017,10 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 		long layoutBranchId, long plid, OrderByComparator orderByComparator)
 		throws SystemException {
 		int count = countByL_L_P(layoutSetBranchId, layoutBranchId, plid);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<LayoutRevision> list = findByL_L_P(layoutSetBranchId,
 				layoutBranchId, plid, count - 1, count, orderByComparator);
@@ -4565,6 +4597,10 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 		long parentLayoutRevisionId, long plid,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByL_P_P(layoutSetBranchId, parentLayoutRevisionId, plid);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<LayoutRevision> list = findByL_P_P(layoutSetBranchId,
 				parentLayoutRevisionId, plid, count - 1, count,
@@ -5407,6 +5443,10 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 		int status, OrderByComparator orderByComparator)
 		throws SystemException {
 		int count = countByL_P_S(layoutSetBranchId, plid, status);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<LayoutRevision> list = findByL_P_S(layoutSetBranchId, plid,
 				status, count - 1, count, orderByComparator);

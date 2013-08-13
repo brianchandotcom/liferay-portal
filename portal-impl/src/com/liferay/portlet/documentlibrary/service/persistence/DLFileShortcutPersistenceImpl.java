@@ -363,6 +363,10 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid(uuid);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<DLFileShortcut> list = findByUuid(uuid, count - 1, count,
 				orderByComparator);
 
@@ -1184,6 +1188,10 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid_C(uuid, companyId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<DLFileShortcut> list = findByUuid_C(uuid, companyId, count - 1,
 				count, orderByComparator);
 
@@ -1723,6 +1731,10 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByToFileEntryId(toFileEntryId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<DLFileShortcut> list = findByToFileEntryId(toFileEntryId,
 				count - 1, count, orderByComparator);
 
@@ -2237,6 +2249,10 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 	public DLFileShortcut fetchByG_F_Last(long groupId, long folderId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByG_F(groupId, folderId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<DLFileShortcut> list = findByG_F(groupId, folderId, count - 1,
 				count, orderByComparator);
@@ -3174,6 +3190,10 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 		boolean active, OrderByComparator orderByComparator)
 		throws SystemException {
 		int count = countByG_F_A(groupId, folderId, active);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<DLFileShortcut> list = findByG_F_A(groupId, folderId, active,
 				count - 1, count, orderByComparator);
@@ -4165,6 +4185,10 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 		boolean active, int status, OrderByComparator orderByComparator)
 		throws SystemException {
 		int count = countByG_F_A_S(groupId, folderId, active, status);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<DLFileShortcut> list = findByG_F_A_S(groupId, folderId, active,
 				status, count - 1, count, orderByComparator);

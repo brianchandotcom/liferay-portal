@@ -363,6 +363,10 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid(uuid);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<Organization> list = findByUuid(uuid, count - 1, count,
 				orderByComparator);
 
@@ -1327,6 +1331,10 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid_C(uuid, companyId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<Organization> list = findByUuid_C(uuid, companyId, count - 1,
 				count, orderByComparator);
 
@@ -2288,6 +2296,10 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByCompanyId(companyId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<Organization> list = findByCompanyId(companyId, count - 1, count,
 				orderByComparator);
 
@@ -3140,6 +3152,10 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 	public Organization fetchByLocations_Last(long companyId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByLocations(companyId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<Organization> list = findByLocations(companyId, count - 1, count,
 				orderByComparator);
@@ -4018,6 +4034,10 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 		long parentOrganizationId, OrderByComparator orderByComparator)
 		throws SystemException {
 		int count = countByC_P(companyId, parentOrganizationId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<Organization> list = findByC_P(companyId, parentOrganizationId,
 				count - 1, count, orderByComparator);

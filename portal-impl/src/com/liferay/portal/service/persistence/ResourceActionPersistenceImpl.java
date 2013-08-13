@@ -358,6 +358,10 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByName(name);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<ResourceAction> list = findByName(name, count - 1, count,
 				orderByComparator);
 

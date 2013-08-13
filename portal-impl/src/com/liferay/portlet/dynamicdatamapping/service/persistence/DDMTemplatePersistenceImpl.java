@@ -358,6 +358,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid(uuid);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<DDMTemplate> list = findByUuid(uuid, count - 1, count,
 				orderByComparator);
 
@@ -1176,6 +1180,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid_C(uuid, companyId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<DDMTemplate> list = findByUuid_C(uuid, companyId, count - 1,
 				count, orderByComparator);
 
@@ -1703,6 +1711,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	public DDMTemplate fetchByGroupId_Last(long groupId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByGroupId(groupId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<DDMTemplate> list = findByGroupId(groupId, count - 1, count,
 				orderByComparator);
@@ -2551,6 +2563,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByClassPK(classPK);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<DDMTemplate> list = findByClassPK(classPK, count - 1, count,
 				orderByComparator);
 
@@ -3052,6 +3068,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	public DDMTemplate fetchByTemplateKey_Last(String templateKey,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByTemplateKey(templateKey);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<DDMTemplate> list = findByTemplateKey(templateKey, count - 1,
 				count, orderByComparator);
@@ -3578,6 +3598,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	public DDMTemplate fetchByType_Last(String type,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByType(type);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<DDMTemplate> list = findByType(type, count - 1, count,
 				orderByComparator);
@@ -4109,6 +4133,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	public DDMTemplate fetchByLanguage_Last(String language,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByLanguage(language);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<DDMTemplate> list = findByLanguage(language, count - 1, count,
 				orderByComparator);
@@ -4867,6 +4895,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	public DDMTemplate fetchByG_C_Last(long groupId, long classNameId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByG_C(groupId, classNameId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<DDMTemplate> list = findByG_C(groupId, classNameId, count - 1,
 				count, orderByComparator);
@@ -5776,6 +5808,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	public DDMTemplate fetchByG_CPK_Last(long groupId, long classPK,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByG_CPK(groupId, classPK);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<DDMTemplate> list = findByG_CPK(groupId, classPK, count - 1,
 				count, orderByComparator);
@@ -7224,6 +7260,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 		throws SystemException {
 		int count = countByG_C_C(groupId, classNameId, classPK);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<DDMTemplate> list = findByG_C_C(groupId, classNameId, classPK,
 				count - 1, count, orderByComparator);
 
@@ -8493,6 +8533,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 		throws SystemException {
 		int count = countByC_C_T(classNameId, classPK, type);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<DDMTemplate> list = findByC_C_T(classNameId, classPK, type,
 				count - 1, count, orderByComparator);
 
@@ -9123,6 +9167,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 		long classPK, String type, OrderByComparator orderByComparator)
 		throws SystemException {
 		int count = countByG_C_C_T(groupId, classNameId, classPK, type);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<DDMTemplate> list = findByG_C_C_T(groupId, classNameId, classPK,
 				type, count - 1, count, orderByComparator);
@@ -10268,6 +10316,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 		long classPK, String type, String mode,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByG_C_C_T_M(groupId, classNameId, classPK, type, mode);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<DDMTemplate> list = findByG_C_C_T_M(groupId, classNameId, classPK,
 				type, mode, count - 1, count, orderByComparator);

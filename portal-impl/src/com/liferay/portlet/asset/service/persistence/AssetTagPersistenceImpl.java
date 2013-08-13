@@ -350,6 +350,10 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByGroupId(groupId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<AssetTag> list = findByGroupId(groupId, count - 1, count,
 				orderByComparator);
 

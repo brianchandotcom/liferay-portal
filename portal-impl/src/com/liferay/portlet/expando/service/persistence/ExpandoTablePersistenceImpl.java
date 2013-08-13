@@ -367,6 +367,10 @@ public class ExpandoTablePersistenceImpl extends BasePersistenceImpl<ExpandoTabl
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByC_C(companyId, classNameId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<ExpandoTable> list = findByC_C(companyId, classNameId, count - 1,
 				count, orderByComparator);
 

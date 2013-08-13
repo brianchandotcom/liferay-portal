@@ -384,6 +384,10 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByC_N(companyId, name);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<ResourceBlock> list = findByC_N(companyId, name, count - 1, count,
 				orderByComparator);
 
@@ -981,6 +985,10 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 		String name, OrderByComparator orderByComparator)
 		throws SystemException {
 		int count = countByC_G_N(companyId, groupId, name);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<ResourceBlock> list = findByC_G_N(companyId, groupId, name,
 				count - 1, count, orderByComparator);

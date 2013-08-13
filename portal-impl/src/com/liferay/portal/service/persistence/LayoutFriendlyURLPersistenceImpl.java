@@ -361,6 +361,10 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid(uuid);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<LayoutFriendlyURL> list = findByUuid(uuid, count - 1, count,
 				orderByComparator);
 
@@ -1183,6 +1187,10 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid_C(uuid, companyId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<LayoutFriendlyURL> list = findByUuid_C(uuid, companyId, count - 1,
 				count, orderByComparator);
 
@@ -1716,6 +1724,10 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByGroupId(groupId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<LayoutFriendlyURL> list = findByGroupId(groupId, count - 1, count,
 				orderByComparator);
 
@@ -2207,6 +2219,10 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByCompanyId(companyId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<LayoutFriendlyURL> list = findByCompanyId(companyId, count - 1,
 				count, orderByComparator);
 
@@ -2693,6 +2709,10 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	public LayoutFriendlyURL fetchByPlid_Last(long plid,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByPlid(plid);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<LayoutFriendlyURL> list = findByPlid(plid, count - 1, count,
 				orderByComparator);
@@ -3220,6 +3240,10 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	public LayoutFriendlyURL fetchByP_F_Last(long plid, String friendlyURL,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByP_F(plid, friendlyURL);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<LayoutFriendlyURL> list = findByP_F(plid, friendlyURL, count - 1,
 				count, orderByComparator);
@@ -4087,6 +4111,10 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 		boolean privateLayout, String friendlyURL,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByG_P_F(groupId, privateLayout, friendlyURL);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<LayoutFriendlyURL> list = findByG_P_F(groupId, privateLayout,
 				friendlyURL, count - 1, count, orderByComparator);

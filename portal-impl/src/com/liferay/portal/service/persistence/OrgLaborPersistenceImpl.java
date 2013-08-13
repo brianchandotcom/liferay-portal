@@ -348,6 +348,10 @@ public class OrgLaborPersistenceImpl extends BasePersistenceImpl<OrgLabor>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByOrganizationId(organizationId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<OrgLabor> list = findByOrganizationId(organizationId, count - 1,
 				count, orderByComparator);
 

@@ -355,6 +355,10 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid(uuid);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<MBThreadFlag> list = findByUuid(uuid, count - 1, count,
 				orderByComparator);
 
@@ -1173,6 +1177,10 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid_C(uuid, companyId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<MBThreadFlag> list = findByUuid_C(uuid, companyId, count - 1,
 				count, orderByComparator);
 
@@ -1701,6 +1709,10 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUserId(userId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<MBThreadFlag> list = findByUserId(userId, count - 1, count,
 				orderByComparator);
 
@@ -2187,6 +2199,10 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 	public MBThreadFlag fetchByThreadId_Last(long threadId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByThreadId(threadId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<MBThreadFlag> list = findByThreadId(threadId, count - 1, count,
 				orderByComparator);

@@ -366,6 +366,10 @@ public class RatingsEntryPersistenceImpl extends BasePersistenceImpl<RatingsEntr
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByC_C(classNameId, classPK);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<RatingsEntry> list = findByC_C(classNameId, classPK, count - 1,
 				count, orderByComparator);
 
@@ -1173,6 +1177,10 @@ public class RatingsEntryPersistenceImpl extends BasePersistenceImpl<RatingsEntr
 		double score, OrderByComparator orderByComparator)
 		throws SystemException {
 		int count = countByC_C_S(classNameId, classPK, score);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<RatingsEntry> list = findByC_C_S(classNameId, classPK, score,
 				count - 1, count, orderByComparator);

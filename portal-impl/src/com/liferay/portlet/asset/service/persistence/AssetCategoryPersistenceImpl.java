@@ -369,6 +369,10 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid(uuid);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<AssetCategory> list = findByUuid(uuid, count - 1, count,
 				orderByComparator);
 
@@ -1190,6 +1194,10 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid_C(uuid, companyId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<AssetCategory> list = findByUuid_C(uuid, companyId, count - 1,
 				count, orderByComparator);
 
@@ -1721,6 +1729,10 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 	public AssetCategory fetchByGroupId_Last(long groupId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByGroupId(groupId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<AssetCategory> list = findByGroupId(groupId, count - 1, count,
 				orderByComparator);
@@ -2581,6 +2593,10 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByParentCategoryId(parentCategoryId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<AssetCategory> list = findByParentCategoryId(parentCategoryId,
 				count - 1, count, orderByComparator);
 
@@ -3077,6 +3093,10 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 	public AssetCategory fetchByVocabularyId_Last(long vocabularyId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByVocabularyId(vocabularyId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<AssetCategory> list = findByVocabularyId(vocabularyId, count - 1,
 				count, orderByComparator);
@@ -3595,6 +3615,10 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 	public AssetCategory fetchByG_V_Last(long groupId, long vocabularyId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByG_V(groupId, vocabularyId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<AssetCategory> list = findByG_V(groupId, vocabularyId, count - 1,
 				count, orderByComparator);
@@ -5041,6 +5065,10 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByP_N(parentCategoryId, name);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<AssetCategory> list = findByP_N(parentCategoryId, name, count - 1,
 				count, orderByComparator);
 
@@ -5600,6 +5628,10 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 		throws SystemException {
 		int count = countByP_V(parentCategoryId, vocabularyId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<AssetCategory> list = findByP_V(parentCategoryId, vocabularyId,
 				count - 1, count, orderByComparator);
 
@@ -6140,6 +6172,10 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 	public AssetCategory fetchByN_V_Last(String name, long vocabularyId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByN_V(name, vocabularyId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<AssetCategory> list = findByN_V(name, vocabularyId, count - 1,
 				count, orderByComparator);
@@ -6723,6 +6759,10 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 		long vocabularyId, OrderByComparator orderByComparator)
 		throws SystemException {
 		int count = countByG_P_V(groupId, parentCategoryId, vocabularyId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<AssetCategory> list = findByG_P_V(groupId, parentCategoryId,
 				vocabularyId, count - 1, count, orderByComparator);
@@ -7696,6 +7736,10 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 		long vocabularyId, OrderByComparator orderByComparator)
 		throws SystemException {
 		int count = countByG_LikeN_V(groupId, name, vocabularyId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<AssetCategory> list = findByG_LikeN_V(groupId, name, vocabularyId,
 				count - 1, count, orderByComparator);
@@ -9689,6 +9733,10 @@ public class AssetCategoryPersistenceImpl extends BasePersistenceImpl<AssetCateg
 		long parentCategoryId, String name, long vocabularyId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByG_P_N_V(groupId, parentCategoryId, name, vocabularyId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<AssetCategory> list = findByG_P_N_V(groupId, parentCategoryId,
 				name, vocabularyId, count - 1, count, orderByComparator);

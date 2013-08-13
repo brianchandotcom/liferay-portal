@@ -361,6 +361,10 @@ public class RepositoryEntryPersistenceImpl extends BasePersistenceImpl<Reposito
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid(uuid);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<RepositoryEntry> list = findByUuid(uuid, count - 1, count,
 				orderByComparator);
 
@@ -1182,6 +1186,10 @@ public class RepositoryEntryPersistenceImpl extends BasePersistenceImpl<Reposito
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid_C(uuid, companyId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<RepositoryEntry> list = findByUuid_C(uuid, companyId, count - 1,
 				count, orderByComparator);
 
@@ -1720,6 +1728,10 @@ public class RepositoryEntryPersistenceImpl extends BasePersistenceImpl<Reposito
 	public RepositoryEntry fetchByRepositoryId_Last(long repositoryId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByRepositoryId(repositoryId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<RepositoryEntry> list = findByRepositoryId(repositoryId,
 				count - 1, count, orderByComparator);

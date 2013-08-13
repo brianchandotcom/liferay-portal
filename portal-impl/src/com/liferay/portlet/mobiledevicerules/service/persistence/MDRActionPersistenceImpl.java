@@ -355,6 +355,10 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid(uuid);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<MDRAction> list = findByUuid(uuid, count - 1, count,
 				orderByComparator);
 
@@ -1172,6 +1176,10 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid_C(uuid, companyId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<MDRAction> list = findByUuid_C(uuid, companyId, count - 1, count,
 				orderByComparator);
 
@@ -1710,6 +1718,10 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 	public MDRAction fetchByRuleGroupInstanceId_Last(long ruleGroupInstanceId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByRuleGroupInstanceId(ruleGroupInstanceId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<MDRAction> list = findByRuleGroupInstanceId(ruleGroupInstanceId,
 				count - 1, count, orderByComparator);

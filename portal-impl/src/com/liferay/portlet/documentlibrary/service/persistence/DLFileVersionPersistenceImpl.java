@@ -361,6 +361,10 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid(uuid);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<DLFileVersion> list = findByUuid(uuid, count - 1, count,
 				orderByComparator);
 
@@ -1183,6 +1187,10 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid_C(uuid, companyId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<DLFileVersion> list = findByUuid_C(uuid, companyId, count - 1,
 				count, orderByComparator);
 
@@ -1717,6 +1725,10 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByFileEntryId(fileEntryId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<DLFileVersion> list = findByFileEntryId(fileEntryId, count - 1,
 				count, orderByComparator);
 
@@ -2220,6 +2232,10 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	public DLFileVersion fetchByMimeType_Last(String mimeType,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByMimeType(mimeType);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<DLFileVersion> list = findByMimeType(mimeType, count - 1, count,
 				orderByComparator);
@@ -3027,6 +3043,10 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByF_S(fileEntryId, status);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<DLFileVersion> list = findByF_S(fileEntryId, status, count - 1,
 				count, orderByComparator);
 
@@ -3582,6 +3602,10 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 		int status, OrderByComparator orderByComparator)
 		throws SystemException {
 		int count = countByG_F_S(groupId, folderId, status);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<DLFileVersion> list = findByG_F_S(groupId, folderId, status,
 				count - 1, count, orderByComparator);
@@ -4200,6 +4224,10 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 		String title, String version, OrderByComparator orderByComparator)
 		throws SystemException {
 		int count = countByG_F_T_V(groupId, folderId, title, version);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<DLFileVersion> list = findByG_F_T_V(groupId, folderId, title,
 				version, count - 1, count, orderByComparator);

@@ -361,6 +361,10 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid(uuid);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<SocialRelation> list = findByUuid(uuid, count - 1, count,
 				orderByComparator);
 
@@ -918,6 +922,10 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid_C(uuid, companyId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<SocialRelation> list = findByUuid_C(uuid, companyId, count - 1,
 				count, orderByComparator);
 
@@ -1452,6 +1460,10 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByCompanyId(companyId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<SocialRelation> list = findByCompanyId(companyId, count - 1,
 				count, orderByComparator);
 
@@ -1939,6 +1951,10 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	public SocialRelation fetchByUserId1_Last(long userId1,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUserId1(userId1);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<SocialRelation> list = findByUserId1(userId1, count - 1, count,
 				orderByComparator);
@@ -2428,6 +2444,10 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUserId2(userId2);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<SocialRelation> list = findByUserId2(userId2, count - 1, count,
 				orderByComparator);
 
@@ -2911,6 +2931,10 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	public SocialRelation fetchByType_Last(int type,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByType(type);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<SocialRelation> list = findByType(type, count - 1, count,
 				orderByComparator);
@@ -3422,6 +3446,10 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	public SocialRelation fetchByC_T_Last(long companyId, int type,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByC_T(companyId, type);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<SocialRelation> list = findByC_T(companyId, type, count - 1,
 				count, orderByComparator);
@@ -3946,6 +3974,10 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	public SocialRelation fetchByU1_U2_Last(long userId1, long userId2,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByU1_U2(userId1, userId2);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<SocialRelation> list = findByU1_U2(userId1, userId2, count - 1,
 				count, orderByComparator);
@@ -4472,6 +4504,10 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByU1_T(userId1, type);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<SocialRelation> list = findByU1_T(userId1, type, count - 1, count,
 				orderByComparator);
 
@@ -4994,6 +5030,10 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	public SocialRelation fetchByU2_T_Last(long userId2, int type,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByU2_T(userId2, type);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<SocialRelation> list = findByU2_T(userId2, type, count - 1, count,
 				orderByComparator);

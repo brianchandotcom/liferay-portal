@@ -340,6 +340,10 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByCompanyId(companyId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<Contact> list = findByCompanyId(companyId, count - 1, count,
 				orderByComparator);
 
@@ -824,6 +828,10 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 	public Contact fetchByAccountId_Last(long accountId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByAccountId(accountId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<Contact> list = findByAccountId(accountId, count - 1, count,
 				orderByComparator);
@@ -1333,6 +1341,10 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 	public Contact fetchByC_C_Last(long classNameId, long classPK,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByC_C(classNameId, classPK);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<Contact> list = findByC_C(classNameId, classPK, count - 1, count,
 				orderByComparator);

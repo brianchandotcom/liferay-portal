@@ -342,6 +342,10 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUserId(userId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<UserIdMapper> list = findByUserId(userId, count - 1, count,
 				orderByComparator);
 

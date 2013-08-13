@@ -365,6 +365,10 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid(uuid);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<CalEvent> list = findByUuid(uuid, count - 1, count,
 				orderByComparator);
 
@@ -1184,6 +1188,10 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid_C(uuid, companyId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<CalEvent> list = findByUuid_C(uuid, companyId, count - 1, count,
 				orderByComparator);
 
@@ -1715,6 +1723,10 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByCompanyId(companyId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<CalEvent> list = findByCompanyId(companyId, count - 1, count,
 				orderByComparator);
 
@@ -2198,6 +2210,10 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	public CalEvent fetchByGroupId_Last(long groupId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByGroupId(groupId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<CalEvent> list = findByGroupId(groupId, count - 1, count,
 				orderByComparator);
@@ -3034,6 +3050,10 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByNotRemindBy(remindBy);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<CalEvent> list = findByNotRemindBy(remindBy, count - 1, count,
 				orderByComparator);
 
@@ -3559,6 +3579,10 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	public CalEvent fetchByG_T_Last(long groupId, String type,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByG_T(groupId, type);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<CalEvent> list = findByG_T(groupId, type, count - 1, count,
 				orderByComparator);
@@ -5104,6 +5128,10 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByG_R(groupId, repeating);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<CalEvent> list = findByG_R(groupId, repeating, count - 1, count,
 				orderByComparator);
 
@@ -6060,6 +6088,10 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 		boolean repeating, OrderByComparator orderByComparator)
 		throws SystemException {
 		int count = countByG_T_R(groupId, type, repeating);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<CalEvent> list = findByG_T_R(groupId, type, repeating, count - 1,
 				count, orderByComparator);

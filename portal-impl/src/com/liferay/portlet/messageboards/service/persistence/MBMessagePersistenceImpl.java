@@ -364,6 +364,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid(uuid);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<MBMessage> list = findByUuid(uuid, count - 1, count,
 				orderByComparator);
 
@@ -1182,6 +1186,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid_C(uuid, companyId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<MBMessage> list = findByUuid_C(uuid, companyId, count - 1, count,
 				orderByComparator);
 
@@ -1709,6 +1717,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	public MBMessage fetchByGroupId_Last(long groupId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByGroupId(groupId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<MBMessage> list = findByGroupId(groupId, count - 1, count,
 				orderByComparator);
@@ -2561,6 +2573,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByCompanyId(companyId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<MBMessage> list = findByCompanyId(companyId, count - 1, count,
 				orderByComparator);
 
@@ -3045,6 +3061,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	public MBMessage fetchByThreadId_Last(long threadId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByThreadId(threadId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<MBMessage> list = findByThreadId(threadId, count - 1, count,
 				orderByComparator);
@@ -3535,6 +3555,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByThreadReplies(threadId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<MBMessage> list = findByThreadReplies(threadId, count - 1, count,
 				orderByComparator);
 
@@ -4017,6 +4041,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	public MBMessage fetchByUserId_Last(long userId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUserId(userId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<MBMessage> list = findByUserId(userId, count - 1, count,
 				orderByComparator);
@@ -4526,6 +4554,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	public MBMessage fetchByG_U_Last(long groupId, long userId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByG_U(groupId, userId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<MBMessage> list = findByG_U(groupId, userId, count - 1, count,
 				orderByComparator);
@@ -5432,6 +5464,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByG_C(groupId, categoryId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<MBMessage> list = findByG_C(groupId, categoryId, count - 1, count,
 				orderByComparator);
 
@@ -6337,6 +6373,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByG_S(groupId, status);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<MBMessage> list = findByG_S(groupId, status, count - 1, count,
 				orderByComparator);
 
@@ -7240,6 +7280,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByC_S(companyId, status);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<MBMessage> list = findByC_S(companyId, status, count - 1, count,
 				orderByComparator);
 
@@ -7766,6 +7810,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	public MBMessage fetchByU_C_Last(long userId, long classNameId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByU_C(userId, classNameId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<MBMessage> list = findByU_C(userId, classNameId, count - 1, count,
 				orderByComparator);
@@ -8571,6 +8619,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByC_C(classNameId, classPK);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<MBMessage> list = findByC_C(classNameId, classPK, count - 1,
 				count, orderByComparator);
 
@@ -9096,6 +9148,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByT_P(threadId, parentMessageId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<MBMessage> list = findByT_P(threadId, parentMessageId, count - 1,
 				count, orderByComparator);
 
@@ -9619,6 +9675,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	public MBMessage fetchByT_A_Last(long threadId, boolean answer,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByT_A(threadId, answer);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<MBMessage> list = findByT_A(threadId, answer, count - 1, count,
 				orderByComparator);
@@ -10144,6 +10204,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByT_S(threadId, status);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<MBMessage> list = findByT_S(threadId, status, count - 1, count,
 				orderByComparator);
 
@@ -10666,6 +10730,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	public MBMessage fetchByTR_S_Last(long threadId, int status,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByTR_S(threadId, status);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<MBMessage> list = findByTR_S(threadId, status, count - 1, count,
 				orderByComparator);
@@ -11216,6 +11284,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	public MBMessage fetchByG_U_S_Last(long groupId, long userId, int status,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByG_U_S(groupId, userId, status);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<MBMessage> list = findByG_U_S(groupId, userId, status, count - 1,
 				count, orderByComparator);
@@ -12179,6 +12251,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		long threadId, OrderByComparator orderByComparator)
 		throws SystemException {
 		int count = countByG_C_T(groupId, categoryId, threadId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<MBMessage> list = findByG_C_T(groupId, categoryId, threadId,
 				count - 1, count, orderByComparator);
@@ -13146,6 +13222,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		throws SystemException {
 		int count = countByG_C_S(groupId, categoryId, status);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<MBMessage> list = findByG_C_S(groupId, categoryId, status,
 				count - 1, count, orderByComparator);
 
@@ -14109,6 +14189,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		throws SystemException {
 		int count = countByU_C_C(userId, classNameId, classPK);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<MBMessage> list = findByU_C_C(userId, classNameId, classPK,
 				count - 1, count, orderByComparator);
 
@@ -14680,6 +14764,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		int status, OrderByComparator orderByComparator)
 		throws SystemException {
 		int count = countByU_C_S(userId, classNameId, status);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<MBMessage> list = findByU_C_S(userId, classNameId, status,
 				count - 1, count, orderByComparator);
@@ -15555,6 +15643,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		throws SystemException {
 		int count = countByC_C_S(classNameId, classPK, status);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<MBMessage> list = findByC_C_S(classNameId, classPK, status,
 				count - 1, count, orderByComparator);
 
@@ -16149,6 +16241,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		long categoryId, int status, OrderByComparator orderByComparator)
 		throws SystemException {
 		int count = countByG_U_C_S(groupId, userId, categoryId, status);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<MBMessage> list = findByG_U_C_S(groupId, userId, categoryId,
 				status, count - 1, count, orderByComparator);
@@ -17799,6 +17895,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		throws SystemException {
 		int count = countByG_C_T_A(groupId, categoryId, threadId, answer);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<MBMessage> list = findByG_C_T_A(groupId, categoryId, threadId,
 				answer, count - 1, count, orderByComparator);
 
@@ -18821,6 +18921,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		throws SystemException {
 		int count = countByG_C_T_S(groupId, categoryId, threadId, status);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<MBMessage> list = findByG_C_T_S(groupId, categoryId, threadId,
 				status, count - 1, count, orderByComparator);
 
@@ -19841,6 +19945,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 		long classPK, int status, OrderByComparator orderByComparator)
 		throws SystemException {
 		int count = countByU_C_C_S(userId, classNameId, classPK, status);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<MBMessage> list = findByU_C_C_S(userId, classNameId, classPK,
 				status, count - 1, count, orderByComparator);

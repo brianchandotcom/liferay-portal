@@ -362,6 +362,10 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid(uuid);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<MBThread> list = findByUuid(uuid, count - 1, count,
 				orderByComparator);
 
@@ -1181,6 +1185,10 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid_C(uuid, companyId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<MBThread> list = findByUuid_C(uuid, companyId, count - 1, count,
 				orderByComparator);
 
@@ -1708,6 +1716,10 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	public MBThread fetchByGroupId_Last(long groupId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByGroupId(groupId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<MBThread> list = findByGroupId(groupId, count - 1, count,
 				orderByComparator);
@@ -2805,6 +2817,10 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	public MBThread fetchByG_C_Last(long groupId, long categoryId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByG_C(groupId, categoryId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<MBThread> list = findByG_C(groupId, categoryId, count - 1, count,
 				orderByComparator);
@@ -4217,6 +4233,10 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByG_NotC(groupId, categoryId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<MBThread> list = findByG_NotC(groupId, categoryId, count - 1,
 				count, orderByComparator);
 
@@ -5122,6 +5142,10 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByG_S(groupId, status);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<MBThread> list = findByG_S(groupId, status, count - 1, count,
 				orderByComparator);
 
@@ -6026,6 +6050,10 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByC_P(categoryId, priority);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<MBThread> list = findByC_P(categoryId, priority, count - 1, count,
 				orderByComparator);
 
@@ -6560,6 +6588,10 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	public MBThread fetchByL_P_Last(Date lastPostDate, double priority,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByL_P(lastPostDate, priority);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<MBThread> list = findByL_P(lastPostDate, priority, count - 1,
 				count, orderByComparator);
@@ -7145,6 +7177,10 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 		Date lastPostDate, OrderByComparator orderByComparator)
 		throws SystemException {
 		int count = countByG_C_L(groupId, categoryId, lastPostDate);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<MBThread> list = findByG_C_L(groupId, categoryId, lastPostDate,
 				count - 1, count, orderByComparator);
@@ -8176,6 +8212,10 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 		int status, OrderByComparator orderByComparator)
 		throws SystemException {
 		int count = countByG_C_S(groupId, categoryId, status);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<MBThread> list = findByG_C_S(groupId, categoryId, status,
 				count - 1, count, orderByComparator);
@@ -9697,6 +9737,10 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 		int status, OrderByComparator orderByComparator)
 		throws SystemException {
 		int count = countByG_C_NotS(groupId, categoryId, status);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<MBThread> list = findByG_C_NotS(groupId, categoryId, status,
 				count - 1, count, orderByComparator);
@@ -11222,6 +11266,10 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 		throws SystemException {
 		int count = countByG_NotC_S(groupId, categoryId, status);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<MBThread> list = findByG_NotC_S(groupId, categoryId, status,
 				count - 1, count, orderByComparator);
 
@@ -12171,6 +12219,10 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 		int status, OrderByComparator orderByComparator)
 		throws SystemException {
 		int count = countByG_NotC_NotS(groupId, categoryId, status);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<MBThread> list = findByG_NotC_NotS(groupId, categoryId, status,
 				count - 1, count, orderByComparator);

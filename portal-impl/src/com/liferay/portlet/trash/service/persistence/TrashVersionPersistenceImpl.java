@@ -341,6 +341,10 @@ public class TrashVersionPersistenceImpl extends BasePersistenceImpl<TrashVersio
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByEntryId(entryId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<TrashVersion> list = findByEntryId(entryId, count - 1, count,
 				orderByComparator);
 
@@ -850,6 +854,10 @@ public class TrashVersionPersistenceImpl extends BasePersistenceImpl<TrashVersio
 	public TrashVersion fetchByC_C_Last(long classNameId, long classPK,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByC_C(classNameId, classPK);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<TrashVersion> list = findByC_C(classNameId, classPK, count - 1,
 				count, orderByComparator);

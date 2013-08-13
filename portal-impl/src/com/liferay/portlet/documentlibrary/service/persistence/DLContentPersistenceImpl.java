@@ -370,6 +370,10 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByC_R(companyId, repositoryId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<DLContent> list = findByC_R(companyId, repositoryId, count - 1,
 				count, orderByComparator);
 
@@ -936,6 +940,10 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 		String path, OrderByComparator orderByComparator)
 		throws SystemException {
 		int count = countByC_R_P(companyId, repositoryId, path);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<DLContent> list = findByC_R_P(companyId, repositoryId, path,
 				count - 1, count, orderByComparator);
@@ -1528,6 +1536,10 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 		String path, OrderByComparator orderByComparator)
 		throws SystemException {
 		int count = countByC_R_LikeP(companyId, repositoryId, path);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<DLContent> list = findByC_R_LikeP(companyId, repositoryId, path,
 				count - 1, count, orderByComparator);

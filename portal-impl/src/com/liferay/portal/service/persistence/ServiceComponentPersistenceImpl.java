@@ -371,6 +371,10 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByBuildNamespace(buildNamespace);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<ServiceComponent> list = findByBuildNamespace(buildNamespace,
 				count - 1, count, orderByComparator);
 

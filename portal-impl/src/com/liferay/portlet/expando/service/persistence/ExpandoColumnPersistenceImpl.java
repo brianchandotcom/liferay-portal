@@ -352,6 +352,10 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByTableId(tableId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<ExpandoColumn> list = findByTableId(tableId, count - 1, count,
 				orderByComparator);
 

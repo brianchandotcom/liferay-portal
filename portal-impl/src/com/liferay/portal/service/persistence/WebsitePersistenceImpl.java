@@ -355,6 +355,10 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid(uuid);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<Website> list = findByUuid(uuid, count - 1, count,
 				orderByComparator);
 
@@ -907,6 +911,10 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid_C(uuid, companyId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<Website> list = findByUuid_C(uuid, companyId, count - 1, count,
 				orderByComparator);
 
@@ -1437,6 +1445,10 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByCompanyId(companyId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<Website> list = findByCompanyId(companyId, count - 1, count,
 				orderByComparator);
 
@@ -1919,6 +1931,10 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 	public Website fetchByUserId_Last(long userId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUserId(userId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<Website> list = findByUserId(userId, count - 1, count,
 				orderByComparator);
@@ -2428,6 +2444,10 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 	public Website fetchByC_C_Last(long companyId, long classNameId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByC_C(companyId, classNameId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<Website> list = findByC_C(companyId, classNameId, count - 1,
 				count, orderByComparator);
@@ -2978,6 +2998,10 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 		long classPK, OrderByComparator orderByComparator)
 		throws SystemException {
 		int count = countByC_C_C(companyId, classNameId, classPK);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<Website> list = findByC_C_C(companyId, classNameId, classPK,
 				count - 1, count, orderByComparator);
@@ -3565,6 +3589,10 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 		long classPK, boolean primary, OrderByComparator orderByComparator)
 		throws SystemException {
 		int count = countByC_C_C_P(companyId, classNameId, classPK, primary);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<Website> list = findByC_C_C_P(companyId, classNameId, classPK,
 				primary, count - 1, count, orderByComparator);

@@ -347,6 +347,10 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByGroupId(groupId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<BackgroundTask> list = findByGroupId(groupId, count - 1, count,
 				orderByComparator);
 
@@ -838,6 +842,10 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByCompanyId(companyId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<BackgroundTask> list = findByCompanyId(companyId, count - 1,
 				count, orderByComparator);
 
@@ -1325,6 +1333,10 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 	public BackgroundTask fetchByStatus_Last(int status,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByStatus(status);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<BackgroundTask> list = findByStatus(status, count - 1, count,
 				orderByComparator);
@@ -1856,6 +1868,10 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 		String taskExecutorClassName, OrderByComparator orderByComparator)
 		throws SystemException {
 		int count = countByG_T(groupId, taskExecutorClassName);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<BackgroundTask> list = findByG_T(groupId, taskExecutorClassName,
 				count - 1, count, orderByComparator);
@@ -2416,6 +2432,10 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByG_S(groupId, status);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<BackgroundTask> list = findByG_S(groupId, status, count - 1,
 				count, orderByComparator);
 
@@ -2957,6 +2977,10 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 		int status, OrderByComparator orderByComparator)
 		throws SystemException {
 		int count = countByT_S(taskExecutorClassName, status);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<BackgroundTask> list = findByT_S(taskExecutorClassName, status,
 				count - 1, count, orderByComparator);
@@ -3574,6 +3598,10 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 		String taskExecutorClassName, OrderByComparator orderByComparator)
 		throws SystemException {
 		int count = countByG_N_T(groupId, name, taskExecutorClassName);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<BackgroundTask> list = findByG_N_T(groupId, name,
 				taskExecutorClassName, count - 1, count, orderByComparator);
@@ -4225,6 +4253,10 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByG_T_C(groupId, taskExecutorClassName, completed);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<BackgroundTask> list = findByG_T_C(groupId, taskExecutorClassName,
 				completed, count - 1, count, orderByComparator);
 
@@ -4845,6 +4877,10 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 		String taskExecutorClassName, int status,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByG_T_S(groupId, taskExecutorClassName, status);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<BackgroundTask> list = findByG_T_S(groupId, taskExecutorClassName,
 				status, count - 1, count, orderByComparator);
@@ -5504,6 +5540,10 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByG_N_T_C(groupId, name, taskExecutorClassName,
 				completed);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<BackgroundTask> list = findByG_N_T_C(groupId, name,
 				taskExecutorClassName, completed, count - 1, count,

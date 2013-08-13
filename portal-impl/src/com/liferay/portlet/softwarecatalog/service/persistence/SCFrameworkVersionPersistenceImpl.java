@@ -357,6 +357,10 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByGroupId(groupId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<SCFrameworkVersion> list = findByGroupId(groupId, count - 1,
 				count, orderByComparator);
 
@@ -1215,6 +1219,10 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByCompanyId(companyId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<SCFrameworkVersion> list = findByCompanyId(companyId, count - 1,
 				count, orderByComparator);
 
@@ -1728,6 +1736,10 @@ public class SCFrameworkVersionPersistenceImpl extends BasePersistenceImpl<SCFra
 	public SCFrameworkVersion fetchByG_A_Last(long groupId, boolean active,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByG_A(groupId, active);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<SCFrameworkVersion> list = findByG_A(groupId, active, count - 1,
 				count, orderByComparator);

@@ -349,6 +349,10 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByClassNameId(classNameId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<DDMStructureLink> list = findByClassNameId(classNameId, count - 1,
 				count, orderByComparator);
 
@@ -1051,6 +1055,10 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 	public DDMStructureLink fetchByStructureId_Last(long structureId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByStructureId(structureId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<DDMStructureLink> list = findByStructureId(structureId, count - 1,
 				count, orderByComparator);

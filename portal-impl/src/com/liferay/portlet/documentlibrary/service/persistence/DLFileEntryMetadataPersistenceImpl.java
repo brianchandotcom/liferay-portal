@@ -363,6 +363,10 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid(uuid);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<DLFileEntryMetadata> list = findByUuid(uuid, count - 1, count,
 				orderByComparator);
 
@@ -891,6 +895,10 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 		throws SystemException {
 		int count = countByFileEntryTypeId(fileEntryTypeId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<DLFileEntryMetadata> list = findByFileEntryTypeId(fileEntryTypeId,
 				count - 1, count, orderByComparator);
 
@@ -1389,6 +1397,10 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByFileEntryId(fileEntryId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<DLFileEntryMetadata> list = findByFileEntryId(fileEntryId,
 				count - 1, count, orderByComparator);
 
@@ -1884,6 +1896,10 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 	public DLFileEntryMetadata fetchByFileVersionId_Last(long fileVersionId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByFileVersionId(fileVersionId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<DLFileEntryMetadata> list = findByFileVersionId(fileVersionId,
 				count - 1, count, orderByComparator);

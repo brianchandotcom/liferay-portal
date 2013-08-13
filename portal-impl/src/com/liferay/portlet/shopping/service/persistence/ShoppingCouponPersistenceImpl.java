@@ -350,6 +350,10 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByGroupId(groupId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<ShoppingCoupon> list = findByGroupId(groupId, count - 1, count,
 				orderByComparator);
 

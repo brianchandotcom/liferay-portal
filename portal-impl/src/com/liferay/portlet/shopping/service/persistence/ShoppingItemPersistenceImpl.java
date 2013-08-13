@@ -1026,6 +1026,10 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByG_C(groupId, categoryId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<ShoppingItem> list = findByG_C(groupId, categoryId, count - 1,
 				count, orderByComparator);
 

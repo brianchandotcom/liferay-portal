@@ -348,6 +348,10 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByEntryId(entryId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<AnnouncementsFlag> list = findByEntryId(entryId, count - 1, count,
 				orderByComparator);
 

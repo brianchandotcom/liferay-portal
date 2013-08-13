@@ -32,6 +32,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.social.model.SocialAchievement;
 import com.liferay.portlet.social.model.SocialActivity;
+import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.social.model.SocialActivityCounter;
 import com.liferay.portlet.social.model.SocialActivityCounterConstants;
 import com.liferay.portlet.social.model.SocialActivityCounterDefinition;
@@ -304,6 +305,28 @@ public class SocialActivityCounterLocalServiceImpl
 		if (!socialActivitySettingLocalService.isEnabled(
 				activity.getGroupId(), activity.getClassNameId(),
 				activity.getClassPK())) {
+
+			return;
+		}
+
+		if ((activity.getType() ==
+				SocialActivityConstants.TYPE_MOVE_ATTACHMENT_TO_TRASH) ||
+			(activity.getType() ==
+				SocialActivityConstants.TYPE_MOVE_TO_TRASH)) {
+
+			disableActivityCounters(
+				activity.getClassNameId(), activity.getClassPK());
+
+			return;
+		}
+
+		if ((activity.getType() ==
+				SocialActivityConstants.TYPE_RESTORE_ATTACHMENT_FROM_TRASH) ||
+			(activity.getType() ==
+				SocialActivityConstants.TYPE_RESTORE_FROM_TRASH)) {
+
+			enableActivityCounters(
+				activity.getClassNameId(), activity.getClassPK());
 
 			return;
 		}

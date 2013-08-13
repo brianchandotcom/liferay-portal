@@ -1,5 +1,5 @@
 <definition>
-	<execute test-case="PGLoginAcceptance" />
+	<execute test-suite="PGDocumentsandmediaAcceptance" />
 
-	<execute test-case="PGMediaGalleryAcceptance" />
+	<execute test-suite="PGMediagalleryAcceptance" />
 </definition>

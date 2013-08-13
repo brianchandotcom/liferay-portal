@@ -981,6 +981,8 @@ public interface PropsKeys {
 
 	public static final String INDEX_SEARCH_QUERY_SUGGESTION_ENABLED = "index.search.query.suggestion.enabled";
 
+	public static final String INDEX_SEARCH_QUERY_SUGGESTION_FILE = "index.search.query.suggestion.file";
+
 	public static final String INDEX_SEARCH_QUERY_SUGGESTION_MAX = "index.search.query.suggestion.max";
 
 	public static final String INDEX_SEARCH_QUERY_SUGGESTION_SCORES_THRESHOLD = "index.search.query.suggestion.scores.threshold";

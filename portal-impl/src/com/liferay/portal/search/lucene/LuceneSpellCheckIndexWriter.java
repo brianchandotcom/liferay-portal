@@ -63,6 +63,22 @@ public class LuceneSpellCheckIndexWriter extends BaseSpellCheckIndexWriter {
 		}
 	}
 
+	@Override
+	public void clearKeywordQueryIndexes(SearchContext searchContext)
+		throws SearchException {
+
+		Term term = new Term(
+			com.liferay.portal.kernel.search.Field.TYPE, KEYWORD_QUERY_TYPE);
+
+		try {
+			LuceneHelperUtil.deleteDocuments(
+				searchContext.getCompanyId(), term);
+		}
+		catch (IOException e) {
+			throw new SearchException(e);
+		}
+	}
+
 	protected void addField(
 		Document document, String fieldName, String fieldValue,
 		Field.Store fieldStore, FieldInfo.IndexOptions indexOptions,
@@ -91,8 +107,9 @@ public class LuceneSpellCheckIndexWriter extends BaseSpellCheckIndexWriter {
 	}
 
 	protected Document createDocument(
-			long companyId, long groupId, String localizedFieldName,
-			String word, String languageId, float weight)
+			long companyId, long groupId, String languageId,
+			String localizedFieldName, String word, float weight,
+			String typeFieldValue, int maxNGramLength)
 		throws SearchException {
 
 		Document document = new Document();
@@ -115,7 +132,7 @@ public class LuceneSpellCheckIndexWriter extends BaseSpellCheckIndexWriter {
 			FieldInfo.IndexOptions.DOCS_ONLY, true);
 		addField(
 			document, com.liferay.portal.kernel.search.Field.TYPE,
-			DICTIONARY_TYPE, Field.Store.YES, FieldInfo.IndexOptions.DOCS_ONLY,
+			typeFieldValue, Field.Store.YES, FieldInfo.IndexOptions.DOCS_ONLY,
 			true);
 		addField(
 			document, com.liferay.portal.kernel.search.Field.UID,
@@ -125,7 +142,8 @@ public class LuceneSpellCheckIndexWriter extends BaseSpellCheckIndexWriter {
 			document, localizedFieldName, word, Field.Store.YES,
 			FieldInfo.IndexOptions.DOCS_ONLY, true);
 
-		NGramHolder nGramHolder = NGramHolderBuilderUtil.buildNGramHolder(word);
+		NGramHolder nGramHolder = NGramHolderBuilderUtil.buildNGramHolder(
+			word, maxNGramLength);
 
 		addNGramFields(document, nGramHolder.getNGramEnds());
 
@@ -147,9 +165,10 @@ public class LuceneSpellCheckIndexWriter extends BaseSpellCheckIndexWriter {
 	}
 
 	@Override
-	protected void indexDictionary(
+	protected void indexKeywords(
 			long companyId, long groupId, String languageId,
-			InputStream inputStream)
+			InputStream inputStream, String keywordFieldName,
+			String typeFieldValue, int maxNGramLength)
 		throws Exception {
 
 		IndexAccessor indexAccessor = LuceneHelperUtil.getIndexAccessor(
@@ -159,8 +178,7 @@ public class LuceneSpellCheckIndexWriter extends BaseSpellCheckIndexWriter {
 
 		try {
 			String localizedFieldName = DocumentImpl.getLocalizedName(
-				languageId,
-				com.liferay.portal.kernel.search.Field.SPELL_CHECK_WORD);
+				languageId, keywordFieldName);
 
 			indexSearcher = LuceneHelperUtil.getSearcher(
 				indexAccessor.getCompanyId(), true);
@@ -193,8 +211,9 @@ public class LuceneSpellCheckIndexWriter extends BaseSpellCheckIndexWriter {
 				}
 
 				Document document = createDocument(
-					companyId, groupId, localizedFieldName, word, languageId,
-					dictionaryEntry.getWeight());
+					companyId, groupId, languageId, localizedFieldName, word,
+					dictionaryEntry.getWeight(), typeFieldValue,
+					maxNGramLength);
 
 				documents.add(document);
 			}

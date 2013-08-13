@@ -31,11 +31,30 @@ public class NGramHolderBuilderImpl implements NGramHolderBuilder {
 
 	@Override
 	public NGramHolder buildNGramHolder(String input) throws SearchException {
+		return buildNGramHolder(
+			input, getNGramMinLength(input.length()),
+			getNGramMaxLength(input.length()));
+	}
+
+	@Override
+	public NGramHolder buildNGramHolder(String input, int nGramMaxLength)
+		throws SearchException {
+
+		if (nGramMaxLength <= 0) {
+			nGramMaxLength = getNGramMaxLength(input.length());
+		}
+
+		return buildNGramHolder(
+			input, getNGramMinLength(input.length()), nGramMaxLength);
+	}
+
+	@Override
+	public NGramHolder buildNGramHolder(
+			String input, int nGramMinLength, int nGramMaxLength)
+		throws SearchException {
+
 		try {
 			NGramHolder nGramHolder = new NGramHolder();
-
-			int nGramMinLength = getNGramMinLength(input.length());
-			int nGramMaxLength = getNGramMaxLength(input.length());
 
 			NGramTokenizer nGramTokenizer = new NGramTokenizer(
 				new StringReader(input), nGramMinLength, nGramMaxLength);
@@ -63,9 +82,6 @@ public class NGramHolderBuilderImpl implements NGramHolderBuilder {
 					else {
 						nGramHolder.addNGram(currentNGramSize, nGram);
 					}
-				}
-				else {
-					continue;
 				}
 			}
 

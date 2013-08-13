@@ -22,10 +22,19 @@ public interface SpellCheckIndexWriter {
 	public void clearDictionaryIndexes(SearchContext searchContext)
 		throws SearchException;
 
+	public void clearKeywordQueryIndexes(SearchContext searchContext)
+		throws SearchException;
+
 	public void indexDictionaries(SearchContext searchContext)
 		throws SearchException;
 
 	public void indexDictionary(SearchContext searchContext)
+		throws SearchException;
+
+	public void indexKeywordQueryFile(SearchContext searchContext)
+		throws SearchException;
+
+	public void indexKeywordQueryFiles(SearchContext searchContext)
 		throws SearchException;
 
 }

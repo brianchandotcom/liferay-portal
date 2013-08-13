@@ -44,6 +44,11 @@ public class IndexWriterProxyBean extends BaseMultiDestinationProxyBean
 	}
 
 	@Override
+	public void clearKeywordQueryIndexes(SearchContext searchContext) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public void deleteDocument(SearchContext searchContext, String uid) {
 		throw new UnsupportedOperationException();
 	}
@@ -81,6 +86,18 @@ public class IndexWriterProxyBean extends BaseMultiDestinationProxyBean
 	@Override
 	public void indexDictionary(SearchContext searchContext) {
 		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void indexKeywordQueryFile(SearchContext searchContext) {
+		throw new UnsupportedOperationException();
+
+	}
+
+	@Override
+	public void indexKeywordQueryFiles(SearchContext searchContext) {
+		throw new UnsupportedOperationException();
+
 	}
 
 	@Override

@@ -371,6 +371,59 @@ public class SearchEngineUtil {
 		indexWriter.indexDictionary(searchContext);
 	}
 
+	public static void indexKeywordQueryFile(long companyId, Locale locale)
+		throws SearchException {
+
+		Set<String> searchEngineIds = getSearchEngineIds();
+
+		for (String searchEngineId : searchEngineIds) {
+			indexKeywordQueryFile(searchEngineId, companyId, locale);
+		}
+	}
+
+	public static void indexKeywordQueryFile(
+			String searchEngineId, long companyId, Locale locale)
+		throws SearchException {
+
+		SearchEngine searchEngine = getSearchEngine(searchEngineId);
+
+		IndexWriter indexWriter = searchEngine.getIndexWriter();
+
+		SearchContext searchContext = new SearchContext();
+
+		searchContext.setCompanyId(companyId);
+		searchContext.setSearchEngineId(searchEngineId);
+		searchContext.setLocale(locale);
+
+		indexWriter.indexKeywordQueryFile(searchContext);
+	}
+
+	public static void indexKeywordQueryFiles(long companyId)
+		throws SearchException {
+
+		Set<String> searchEngineIds = getSearchEngineIds();
+
+		for (String searchEngineId : searchEngineIds) {
+			indexKeywordQueryFiles(searchEngineId, companyId);
+		}
+	}
+
+	public static void indexKeywordQueryFiles(
+			String searchEngineId, long companyId)
+		throws SearchException {
+
+		SearchEngine searchEngine = getSearchEngine(searchEngineId);
+
+		IndexWriter indexWriter = searchEngine.getIndexWriter();
+
+		SearchContext searchContext = new SearchContext();
+
+		searchContext.setCompanyId(companyId);
+		searchContext.setSearchEngineId(searchEngineId);
+
+		indexWriter.indexKeywordQueryFiles(searchContext);
+	}
+
 	public static boolean isIndexReadOnly() {
 		PortalRuntimePermission.checkGetBeanProperty(
 			SearchEngineUtil.class, "indexReadOnly");

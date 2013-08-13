@@ -364,6 +364,10 @@ public class SCProductVersionPersistenceImpl extends BasePersistenceImpl<SCProdu
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByProductEntryId(productEntryId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<SCProductVersion> list = findByProductEntryId(productEntryId,
 				count - 1, count, orderByComparator);
 

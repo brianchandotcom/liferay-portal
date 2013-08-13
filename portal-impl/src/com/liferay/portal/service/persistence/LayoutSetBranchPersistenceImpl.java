@@ -351,6 +351,10 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByGroupId(groupId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<LayoutSetBranch> list = findByGroupId(groupId, count - 1, count,
 				orderByComparator);
 
@@ -1229,6 +1233,10 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 	public LayoutSetBranch fetchByG_P_Last(long groupId, boolean privateLayout,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByG_P(groupId, privateLayout);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<LayoutSetBranch> list = findByG_P(groupId, privateLayout,
 				count - 1, count, orderByComparator);
@@ -2464,6 +2472,10 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 		boolean privateLayout, boolean master,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByG_P_M(groupId, privateLayout, master);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<LayoutSetBranch> list = findByG_P_M(groupId, privateLayout,
 				master, count - 1, count, orderByComparator);

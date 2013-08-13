@@ -346,6 +346,10 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByRoleId(roleId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<ResourceTypePermission> list = findByRoleId(roleId, count - 1,
 				count, orderByComparator);
 
@@ -900,6 +904,10 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 		String name, long roleId, OrderByComparator orderByComparator)
 		throws SystemException {
 		int count = countByC_N_R(companyId, name, roleId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<ResourceTypePermission> list = findByC_N_R(companyId, name,
 				roleId, count - 1, count, orderByComparator);

@@ -343,6 +343,10 @@ public class AssetTagStatsPersistenceImpl extends BasePersistenceImpl<AssetTagSt
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByTagId(tagId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<AssetTagStats> list = findByTagId(tagId, count - 1, count,
 				orderByComparator);
 
@@ -832,6 +836,10 @@ public class AssetTagStatsPersistenceImpl extends BasePersistenceImpl<AssetTagSt
 	public AssetTagStats fetchByClassNameId_Last(long classNameId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByClassNameId(classNameId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<AssetTagStats> list = findByClassNameId(classNameId, count - 1,
 				count, orderByComparator);

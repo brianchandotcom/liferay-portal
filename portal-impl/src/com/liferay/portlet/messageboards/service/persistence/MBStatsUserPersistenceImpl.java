@@ -341,6 +341,10 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByGroupId(groupId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<MBStatsUser> list = findByGroupId(groupId, count - 1, count,
 				orderByComparator);
 
@@ -824,6 +828,10 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 	public MBStatsUser fetchByUserId_Last(long userId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUserId(userId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<MBStatsUser> list = findByUserId(userId, count - 1, count,
 				orderByComparator);
@@ -1577,6 +1585,10 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 		int messageCount, OrderByComparator orderByComparator)
 		throws SystemException {
 		int count = countByG_NotU_NotM(groupId, userId, messageCount);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<MBStatsUser> list = findByG_NotU_NotM(groupId, userId,
 				messageCount, count - 1, count, orderByComparator);

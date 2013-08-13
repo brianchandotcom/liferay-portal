@@ -340,6 +340,10 @@ public class OrgGroupRolePersistenceImpl extends BasePersistenceImpl<OrgGroupRol
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByGroupId(groupId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<OrgGroupRole> list = findByGroupId(groupId, count - 1, count,
 				orderByComparator);
 
@@ -824,6 +828,10 @@ public class OrgGroupRolePersistenceImpl extends BasePersistenceImpl<OrgGroupRol
 	public OrgGroupRole fetchByRoleId_Last(long roleId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByRoleId(roleId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<OrgGroupRole> list = findByRoleId(roleId, count - 1, count,
 				orderByComparator);

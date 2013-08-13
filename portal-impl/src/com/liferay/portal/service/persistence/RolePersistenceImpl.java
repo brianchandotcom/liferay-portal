@@ -362,6 +362,10 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid(uuid);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<Role> list = findByUuid(uuid, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -1312,6 +1316,10 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	public Role fetchByUuid_C_Last(String uuid, long companyId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid_C(uuid, companyId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<Role> list = findByUuid_C(uuid, companyId, count - 1, count,
 				orderByComparator);
@@ -2266,6 +2274,10 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByCompanyId(companyId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<Role> list = findByCompanyId(companyId, count - 1, count,
 				orderByComparator);
 
@@ -3117,6 +3129,10 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	public Role fetchByName_Last(String name,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByName(name);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<Role> list = findByName(name, count - 1, count, orderByComparator);
 
@@ -4024,6 +4040,10 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 		throws SystemException {
 		int count = countByType(type);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<Role> list = findByType(type, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -4875,6 +4895,10 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	public Role fetchBySubtype_Last(String subtype,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countBySubtype(subtype);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<Role> list = findBySubtype(subtype, count - 1, count,
 				orderByComparator);
@@ -6088,6 +6112,10 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	public Role fetchByT_S_Last(int type, String subtype,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByT_S(type, subtype);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<Role> list = findByT_S(type, subtype, count - 1, count,
 				orderByComparator);

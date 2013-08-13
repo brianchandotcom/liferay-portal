@@ -356,6 +356,10 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByCompanyId(companyId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<AssetEntry> list = findByCompanyId(companyId, count - 1, count,
 				orderByComparator);
 
@@ -838,6 +842,10 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	public AssetEntry fetchByVisible_Last(boolean visible,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByVisible(visible);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<AssetEntry> list = findByVisible(visible, count - 1, count,
 				orderByComparator);
@@ -1337,6 +1345,10 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	public AssetEntry fetchByPublishDate_Last(Date publishDate,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByPublishDate(publishDate);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<AssetEntry> list = findByPublishDate(publishDate, count - 1,
 				count, orderByComparator);
@@ -1866,6 +1878,10 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByExpirationDate(expirationDate);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<AssetEntry> list = findByExpirationDate(expirationDate, count - 1,
 				count, orderByComparator);
 
@@ -2392,6 +2408,10 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 	public AssetEntry fetchByLayoutUuid_Last(String layoutUuid,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByLayoutUuid(layoutUuid);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<AssetEntry> list = findByLayoutUuid(layoutUuid, count - 1, count,
 				orderByComparator);

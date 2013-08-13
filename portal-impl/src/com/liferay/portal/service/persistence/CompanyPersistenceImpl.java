@@ -1045,6 +1045,10 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countBySystem(system);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<Company> list = findBySystem(system, count - 1, count,
 				orderByComparator);
 

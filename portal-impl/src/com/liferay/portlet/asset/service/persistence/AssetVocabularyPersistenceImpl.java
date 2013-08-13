@@ -365,6 +365,10 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid(uuid);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<AssetVocabulary> list = findByUuid(uuid, count - 1, count,
 				orderByComparator);
 
@@ -1187,6 +1191,10 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid_C(uuid, companyId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<AssetVocabulary> list = findByUuid_C(uuid, companyId, count - 1,
 				count, orderByComparator);
 
@@ -1719,6 +1727,10 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	public AssetVocabulary fetchByGroupId_Last(long groupId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByGroupId(groupId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<AssetVocabulary> list = findByGroupId(groupId, count - 1, count,
 				orderByComparator);
@@ -2574,6 +2586,10 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	public AssetVocabulary fetchByCompanyId_Last(long companyId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByCompanyId(companyId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<AssetVocabulary> list = findByCompanyId(companyId, count - 1,
 				count, orderByComparator);

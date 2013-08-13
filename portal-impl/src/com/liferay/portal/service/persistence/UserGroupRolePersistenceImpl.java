@@ -343,6 +343,10 @@ public class UserGroupRolePersistenceImpl extends BasePersistenceImpl<UserGroupR
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUserId(userId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<UserGroupRole> list = findByUserId(userId, count - 1, count,
 				orderByComparator);
 
@@ -831,6 +835,10 @@ public class UserGroupRolePersistenceImpl extends BasePersistenceImpl<UserGroupR
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByGroupId(groupId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<UserGroupRole> list = findByGroupId(groupId, count - 1, count,
 				orderByComparator);
 
@@ -1317,6 +1325,10 @@ public class UserGroupRolePersistenceImpl extends BasePersistenceImpl<UserGroupR
 	public UserGroupRole fetchByRoleId_Last(long roleId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByRoleId(roleId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<UserGroupRole> list = findByRoleId(roleId, count - 1, count,
 				orderByComparator);
@@ -1829,6 +1841,10 @@ public class UserGroupRolePersistenceImpl extends BasePersistenceImpl<UserGroupR
 	public UserGroupRole fetchByU_G_Last(long userId, long groupId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByU_G(userId, groupId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<UserGroupRole> list = findByU_G(userId, groupId, count - 1, count,
 				orderByComparator);
@@ -2354,6 +2370,10 @@ public class UserGroupRolePersistenceImpl extends BasePersistenceImpl<UserGroupR
 	public UserGroupRole fetchByG_R_Last(long groupId, long roleId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByG_R(groupId, roleId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<UserGroupRole> list = findByG_R(groupId, roleId, count - 1, count,
 				orderByComparator);

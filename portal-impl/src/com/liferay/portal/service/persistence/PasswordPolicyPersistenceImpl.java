@@ -362,6 +362,10 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid(uuid);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<PasswordPolicy> list = findByUuid(uuid, count - 1, count,
 				orderByComparator);
 
@@ -1327,6 +1331,10 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid_C(uuid, companyId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<PasswordPolicy> list = findByUuid_C(uuid, companyId, count - 1,
 				count, orderByComparator);
 
@@ -2289,6 +2297,10 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 	public PasswordPolicy fetchByCompanyId_Last(long companyId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByCompanyId(companyId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<PasswordPolicy> list = findByCompanyId(companyId, count - 1,
 				count, orderByComparator);

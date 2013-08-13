@@ -354,6 +354,10 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 		throws SystemException {
 		int count = countByResourceBlockId(resourceBlockId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<ResourceBlockPermission> list = findByResourceBlockId(resourceBlockId,
 				count - 1, count, orderByComparator);
 
@@ -848,6 +852,10 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 	public ResourceBlockPermission fetchByRoleId_Last(long roleId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByRoleId(roleId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<ResourceBlockPermission> list = findByRoleId(roleId, count - 1,
 				count, orderByComparator);

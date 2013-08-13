@@ -333,6 +333,10 @@ public class DLSyncEventPersistenceImpl extends BasePersistenceImpl<DLSyncEvent>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByModifiedTime(modifiedTime);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<DLSyncEvent> list = findByModifiedTime(modifiedTime, count - 1,
 				count, orderByComparator);
 

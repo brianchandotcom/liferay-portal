@@ -348,6 +348,10 @@ public class ShoppingOrderItemPersistenceImpl extends BasePersistenceImpl<Shoppi
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByOrderId(orderId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<ShoppingOrderItem> list = findByOrderId(orderId, count - 1, count,
 				orderByComparator);
 

@@ -361,6 +361,10 @@ public class DDMStorageLinkPersistenceImpl extends BasePersistenceImpl<DDMStorag
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid(uuid);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<DDMStorageLink> list = findByUuid(uuid, count - 1, count,
 				orderByComparator);
 
@@ -1091,6 +1095,10 @@ public class DDMStorageLinkPersistenceImpl extends BasePersistenceImpl<DDMStorag
 	public DDMStorageLink fetchByStructureId_Last(long structureId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByStructureId(structureId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<DDMStorageLink> list = findByStructureId(structureId, count - 1,
 				count, orderByComparator);

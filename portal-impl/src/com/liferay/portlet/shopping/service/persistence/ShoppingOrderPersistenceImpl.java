@@ -351,6 +351,10 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByGroupId(groupId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<ShoppingOrder> list = findByGroupId(groupId, count - 1, count,
 				orderByComparator);
 
@@ -1760,6 +1764,10 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 		String ppPaymentStatus, OrderByComparator orderByComparator)
 		throws SystemException {
 		int count = countByG_U_PPPS(groupId, userId, ppPaymentStatus);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<ShoppingOrder> list = findByG_U_PPPS(groupId, userId,
 				ppPaymentStatus, count - 1, count, orderByComparator);

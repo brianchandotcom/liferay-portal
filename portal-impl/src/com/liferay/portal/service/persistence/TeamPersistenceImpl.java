@@ -349,6 +349,10 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByGroupId(groupId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<Team> list = findByGroupId(groupId, count - 1, count,
 				orderByComparator);
 

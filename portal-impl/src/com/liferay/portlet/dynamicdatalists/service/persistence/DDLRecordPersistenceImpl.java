@@ -355,6 +355,10 @@ public class DDLRecordPersistenceImpl extends BasePersistenceImpl<DDLRecord>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid(uuid);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<DDLRecord> list = findByUuid(uuid, count - 1, count,
 				orderByComparator);
 
@@ -1172,6 +1176,10 @@ public class DDLRecordPersistenceImpl extends BasePersistenceImpl<DDLRecord>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid_C(uuid, companyId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<DDLRecord> list = findByUuid_C(uuid, companyId, count - 1, count,
 				orderByComparator);
 
@@ -1703,6 +1711,10 @@ public class DDLRecordPersistenceImpl extends BasePersistenceImpl<DDLRecord>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByCompanyId(companyId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<DDLRecord> list = findByCompanyId(companyId, count - 1, count,
 				orderByComparator);
 
@@ -2190,6 +2202,10 @@ public class DDLRecordPersistenceImpl extends BasePersistenceImpl<DDLRecord>
 	public DDLRecord fetchByRecordSetId_Last(long recordSetId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByRecordSetId(recordSetId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<DDLRecord> list = findByRecordSetId(recordSetId, count - 1, count,
 				orderByComparator);
@@ -2699,6 +2715,10 @@ public class DDLRecordPersistenceImpl extends BasePersistenceImpl<DDLRecord>
 	public DDLRecord fetchByR_U_Last(long recordSetId, long userId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByR_U(recordSetId, userId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<DDLRecord> list = findByR_U(recordSetId, userId, count - 1, count,
 				orderByComparator);

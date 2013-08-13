@@ -354,6 +354,10 @@ public class PasswordPolicyRelPersistenceImpl extends BasePersistenceImpl<Passwo
 		throws SystemException {
 		int count = countByPasswordPolicyId(passwordPolicyId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<PasswordPolicyRel> list = findByPasswordPolicyId(passwordPolicyId,
 				count - 1, count, orderByComparator);
 

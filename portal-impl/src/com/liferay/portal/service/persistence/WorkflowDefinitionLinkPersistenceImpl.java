@@ -350,6 +350,10 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByCompanyId(companyId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<WorkflowDefinitionLink> list = findByCompanyId(companyId,
 				count - 1, count, orderByComparator);
 
@@ -918,6 +922,10 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByC_W_W(companyId, workflowDefinitionName,
 				workflowDefinitionVersion);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<WorkflowDefinitionLink> list = findByC_W_W(companyId,
 				workflowDefinitionName, workflowDefinitionVersion, count - 1,

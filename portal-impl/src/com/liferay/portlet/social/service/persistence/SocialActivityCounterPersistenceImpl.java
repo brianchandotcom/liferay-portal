@@ -349,6 +349,10 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByGroupId(groupId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<SocialActivityCounter> list = findByGroupId(groupId, count - 1,
 				count, orderByComparator);
 
@@ -863,6 +867,10 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 		long classPK, OrderByComparator orderByComparator)
 		throws SystemException {
 		int count = countByC_C(classNameId, classPK);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<SocialActivityCounter> list = findByC_C(classNameId, classPK,
 				count - 1, count, orderByComparator);
@@ -1443,6 +1451,10 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 		long classNameId, long classPK, int ownerType,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByG_C_C_O(groupId, classNameId, classPK, ownerType);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<SocialActivityCounter> list = findByG_C_C_O(groupId, classNameId,
 				classPK, ownerType, count - 1, count, orderByComparator);

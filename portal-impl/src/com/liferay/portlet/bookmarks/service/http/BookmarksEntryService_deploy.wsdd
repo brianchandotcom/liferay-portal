@@ -88,7 +88,7 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="entryId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="parentFolderId" type="tns:long"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.bookmarks.portlet.liferay.com" name="moveEntryToTrash" qname="operNS:moveEntryToTrash" soapAction="">
+		<operation xmlns:operNS="urn:http.service.bookmarks.portlet.liferay.com" xmlns:rtns="http://model.bookmarks.portlet.liferay.com" name="moveEntryToTrash" qname="operNS:moveEntryToTrash" returnQName="moveEntryToTrashReturn" returnType="rtns:BookmarksEntrySoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="entryId" type="tns:long"></parameter>
 		</operation>
 		<operation xmlns:operNS="urn:http.service.bookmarks.portlet.liferay.com" xmlns:rtns="http://model.bookmarks.portlet.liferay.com" name="moveEntry" qname="operNS:moveEntry" returnQName="moveEntryReturn" returnType="rtns:BookmarksEntrySoap" soapAction="">

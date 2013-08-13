@@ -363,6 +363,10 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid(uuid);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<UserGroup> list = findByUuid(uuid, count - 1, count,
 				orderByComparator);
 
@@ -1321,6 +1325,10 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid_C(uuid, companyId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<UserGroup> list = findByUuid_C(uuid, companyId, count - 1, count,
 				orderByComparator);
 
@@ -2277,6 +2285,10 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByCompanyId(companyId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<UserGroup> list = findByCompanyId(companyId, count - 1, count,
 				orderByComparator);
 
@@ -3147,6 +3159,10 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	public UserGroup fetchByC_P_Last(long companyId, long parentUserGroupId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByC_P(companyId, parentUserGroupId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<UserGroup> list = findByC_P(companyId, parentUserGroupId,
 				count - 1, count, orderByComparator);

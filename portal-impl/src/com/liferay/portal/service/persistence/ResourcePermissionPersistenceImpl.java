@@ -350,6 +350,10 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByScope(scope);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<ResourcePermission> list = findByScope(scope, count - 1, count,
 				orderByComparator);
 
@@ -1085,6 +1089,10 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByRoleId(roleId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<ResourcePermission> list = findByRoleId(roleId, count - 1, count,
 				orderByComparator);
 
@@ -1599,6 +1607,10 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 		String primKey, OrderByComparator orderByComparator)
 		throws SystemException {
 		int count = countByC_LikeP(companyId, primKey);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<ResourcePermission> list = findByC_LikeP(companyId, primKey,
 				count - 1, count, orderByComparator);
@@ -2198,6 +2210,10 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 		int scope, OrderByComparator orderByComparator)
 		throws SystemException {
 		int count = countByC_N_S(companyId, name, scope);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<ResourcePermission> list = findByC_N_S(companyId, name, scope,
 				count - 1, count, orderByComparator);
@@ -2845,6 +2861,10 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 		int scope, String primKey, OrderByComparator orderByComparator)
 		throws SystemException {
 		int count = countByC_N_S_P(companyId, name, scope, primKey);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<ResourcePermission> list = findByC_N_S_P(companyId, name, scope,
 				primKey, count - 1, count, orderByComparator);

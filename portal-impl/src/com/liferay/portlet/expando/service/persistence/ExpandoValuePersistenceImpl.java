@@ -346,6 +346,10 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByTableId(tableId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<ExpandoValue> list = findByTableId(tableId, count - 1, count,
 				orderByComparator);
 
@@ -835,6 +839,10 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByColumnId(columnId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<ExpandoValue> list = findByColumnId(columnId, count - 1, count,
 				orderByComparator);
 
@@ -1317,6 +1325,10 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 	public ExpandoValue fetchByRowId_Last(long rowId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByRowId(rowId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<ExpandoValue> list = findByRowId(rowId, count - 1, count,
 				orderByComparator);
@@ -1827,6 +1839,10 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 	public ExpandoValue fetchByT_C_Last(long tableId, long columnId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByT_C(tableId, columnId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<ExpandoValue> list = findByT_C(tableId, columnId, count - 1,
 				count, orderByComparator);
@@ -2354,6 +2370,10 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByT_CPK(tableId, classPK);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<ExpandoValue> list = findByT_CPK(tableId, classPK, count - 1,
 				count, orderByComparator);
 
@@ -2877,6 +2897,10 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 	public ExpandoValue fetchByT_R_Last(long tableId, long rowId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByT_R(tableId, rowId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<ExpandoValue> list = findByT_R(tableId, rowId, count - 1, count,
 				orderByComparator);
@@ -3633,6 +3657,10 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 	public ExpandoValue fetchByC_C_Last(long classNameId, long classPK,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByC_C(classNameId, classPK);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<ExpandoValue> list = findByC_C(classNameId, classPK, count - 1,
 				count, orderByComparator);
@@ -4456,6 +4484,10 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 		String data, OrderByComparator orderByComparator)
 		throws SystemException {
 		int count = countByT_C_D(tableId, columnId, data);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<ExpandoValue> list = findByT_C_D(tableId, columnId, data,
 				count - 1, count, orderByComparator);

@@ -363,6 +363,10 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid(uuid);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<JournalArticleResource> list = findByUuid(uuid, count - 1, count,
 				orderByComparator);
 
@@ -1146,6 +1150,10 @@ public class JournalArticleResourcePersistenceImpl extends BasePersistenceImpl<J
 	public JournalArticleResource fetchByGroupId_Last(long groupId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByGroupId(groupId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<JournalArticleResource> list = findByGroupId(groupId, count - 1,
 				count, orderByComparator);

@@ -360,6 +360,10 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid(uuid);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<MBCategory> list = findByUuid(uuid, count - 1, count,
 				orderByComparator);
 
@@ -1180,6 +1184,10 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid_C(uuid, companyId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<MBCategory> list = findByUuid_C(uuid, companyId, count - 1, count,
 				orderByComparator);
 
@@ -1708,6 +1716,10 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	public MBCategory fetchByGroupId_Last(long groupId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByGroupId(groupId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<MBCategory> list = findByGroupId(groupId, count - 1, count,
 				orderByComparator);
@@ -2562,6 +2574,10 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByCompanyId(companyId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<MBCategory> list = findByCompanyId(companyId, count - 1, count,
 				orderByComparator);
 
@@ -3076,6 +3092,10 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	public MBCategory fetchByG_P_Last(long groupId, long parentCategoryId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByG_P(groupId, parentCategoryId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<MBCategory> list = findByG_P(groupId, parentCategoryId, count - 1,
 				count, orderByComparator);
@@ -4507,6 +4527,10 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByG_S(groupId, status);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<MBCategory> list = findByG_S(groupId, status, count - 1, count,
 				orderByComparator);
 
@@ -5412,6 +5436,10 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByC_S(companyId, status);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<MBCategory> list = findByC_S(companyId, status, count - 1, count,
 				orderByComparator);
 
@@ -5970,6 +5998,10 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 		int status, OrderByComparator orderByComparator)
 		throws SystemException {
 		int count = countByG_P_S(groupId, parentCategoryId, status);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<MBCategory> list = findByG_P_S(groupId, parentCategoryId, status,
 				count - 1, count, orderByComparator);

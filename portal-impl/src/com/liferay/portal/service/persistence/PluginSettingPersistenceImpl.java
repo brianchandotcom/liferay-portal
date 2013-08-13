@@ -349,6 +349,10 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByCompanyId(companyId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<PluginSetting> list = findByCompanyId(companyId, count - 1, count,
 				orderByComparator);
 

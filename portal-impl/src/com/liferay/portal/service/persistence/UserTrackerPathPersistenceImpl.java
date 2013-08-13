@@ -354,6 +354,10 @@ public class UserTrackerPathPersistenceImpl extends BasePersistenceImpl<UserTrac
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUserTrackerId(userTrackerId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<UserTrackerPath> list = findByUserTrackerId(userTrackerId,
 				count - 1, count, orderByComparator);
 

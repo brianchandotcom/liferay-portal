@@ -349,6 +349,10 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByGroupId(groupId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<SocialActivity> list = findByGroupId(groupId, count - 1, count,
 				orderByComparator);
 
@@ -840,6 +844,10 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByCompanyId(companyId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<SocialActivity> list = findByCompanyId(companyId, count - 1,
 				count, orderByComparator);
 
@@ -1327,6 +1335,10 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 	public SocialActivity fetchByUserId_Last(long userId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUserId(userId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<SocialActivity> list = findByUserId(userId, count - 1, count,
 				orderByComparator);
@@ -1823,6 +1835,10 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 	public SocialActivity fetchByActivitySetId_Last(long activitySetId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByActivitySetId(activitySetId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<SocialActivity> list = findByActivitySetId(activitySetId,
 				count - 1, count, orderByComparator);
@@ -2537,6 +2553,10 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByClassNameId(classNameId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<SocialActivity> list = findByClassNameId(classNameId, count - 1,
 				count, orderByComparator);
 
@@ -3032,6 +3052,10 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 	public SocialActivity fetchByReceiverUserId_Last(long receiverUserId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByReceiverUserId(receiverUserId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<SocialActivity> list = findByReceiverUserId(receiverUserId,
 				count - 1, count, orderByComparator);
@@ -3547,6 +3571,10 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 	public SocialActivity fetchByC_C_Last(long classNameId, long classPK,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByC_C(classNameId, classPK);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<SocialActivity> list = findByC_C(classNameId, classPK, count - 1,
 				count, orderByComparator);
@@ -4101,6 +4129,10 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 		long classNameId, long classPK, OrderByComparator orderByComparator)
 		throws SystemException {
 		int count = countByM_C_C(mirrorActivityId, classNameId, classPK);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<SocialActivity> list = findByM_C_C(mirrorActivityId, classNameId,
 				classPK, count - 1, count, orderByComparator);
@@ -4673,6 +4705,10 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 		int type, OrderByComparator orderByComparator)
 		throws SystemException {
 		int count = countByC_C_T(classNameId, classPK, type);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<SocialActivity> list = findByC_C_T(classNameId, classPK, type,
 				count - 1, count, orderByComparator);
@@ -5315,6 +5351,10 @@ public class SocialActivityPersistenceImpl extends BasePersistenceImpl<SocialAct
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByG_U_C_C_T_R(groupId, userId, classNameId, classPK,
 				type, receiverUserId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<SocialActivity> list = findByG_U_C_C_T_R(groupId, userId,
 				classNameId, classPK, type, receiverUserId, count - 1, count,

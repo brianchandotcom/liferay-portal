@@ -340,6 +340,10 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByE1(entryId1);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<AssetLink> list = findByE1(entryId1, count - 1, count,
 				orderByComparator);
 
@@ -821,6 +825,10 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 	public AssetLink fetchByE2_Last(long entryId2,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByE2(entryId2);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<AssetLink> list = findByE2(entryId2, count - 1, count,
 				orderByComparator);
@@ -1331,6 +1339,10 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 	public AssetLink fetchByE_E_Last(long entryId1, long entryId2,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByE_E(entryId1, entryId2);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<AssetLink> list = findByE_E(entryId1, entryId2, count - 1, count,
 				orderByComparator);
@@ -1855,6 +1867,10 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByE1_T(entryId1, type);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<AssetLink> list = findByE1_T(entryId1, type, count - 1, count,
 				orderByComparator);
 
@@ -2375,6 +2391,10 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 	public AssetLink fetchByE2_T_Last(long entryId2, int type,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByE2_T(entryId2, type);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<AssetLink> list = findByE2_T(entryId2, type, count - 1, count,
 				orderByComparator);

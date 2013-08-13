@@ -350,6 +350,10 @@ public class SocialActivityAchievementPersistenceImpl
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByGroupId(groupId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<SocialActivityAchievement> list = findByGroupId(groupId,
 				count - 1, count, orderByComparator);
 
@@ -864,6 +868,10 @@ public class SocialActivityAchievementPersistenceImpl
 	public SocialActivityAchievement fetchByG_U_Last(long groupId, long userId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByG_U(groupId, userId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<SocialActivityAchievement> list = findByG_U(groupId, userId,
 				count - 1, count, orderByComparator);
@@ -1407,6 +1415,10 @@ public class SocialActivityAchievementPersistenceImpl
 	public SocialActivityAchievement fetchByG_N_Last(long groupId, String name,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByG_N(groupId, name);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<SocialActivityAchievement> list = findByG_N(groupId, name,
 				count - 1, count, orderByComparator);
@@ -1966,6 +1978,10 @@ public class SocialActivityAchievementPersistenceImpl
 		boolean firstInGroup, OrderByComparator orderByComparator)
 		throws SystemException {
 		int count = countByG_F(groupId, firstInGroup);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<SocialActivityAchievement> list = findByG_F(groupId, firstInGroup,
 				count - 1, count, orderByComparator);
@@ -2818,6 +2834,10 @@ public class SocialActivityAchievementPersistenceImpl
 		long userId, boolean firstInGroup, OrderByComparator orderByComparator)
 		throws SystemException {
 		int count = countByG_U_F(groupId, userId, firstInGroup);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<SocialActivityAchievement> list = findByG_U_F(groupId, userId,
 				firstInGroup, count - 1, count, orderByComparator);

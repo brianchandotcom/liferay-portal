@@ -341,6 +341,10 @@ public class ShoppingCartPersistenceImpl extends BasePersistenceImpl<ShoppingCar
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByGroupId(groupId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<ShoppingCart> list = findByGroupId(groupId, count - 1, count,
 				orderByComparator);
 
@@ -824,6 +828,10 @@ public class ShoppingCartPersistenceImpl extends BasePersistenceImpl<ShoppingCar
 	public ShoppingCart fetchByUserId_Last(long userId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUserId(userId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<ShoppingCart> list = findByUserId(userId, count - 1, count,
 				orderByComparator);

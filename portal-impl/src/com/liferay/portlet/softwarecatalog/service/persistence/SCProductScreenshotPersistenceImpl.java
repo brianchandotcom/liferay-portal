@@ -355,6 +355,10 @@ public class SCProductScreenshotPersistenceImpl extends BasePersistenceImpl<SCPr
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByProductEntryId(productEntryId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<SCProductScreenshot> list = findByProductEntryId(productEntryId,
 				count - 1, count, orderByComparator);
 

@@ -423,6 +423,10 @@ public class WorkflowInstanceLinkPersistenceImpl extends BasePersistenceImpl<Wor
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByG_C_C_C(groupId, companyId, classNameId, classPK);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<WorkflowInstanceLink> list = findByG_C_C_C(groupId, companyId,
 				classNameId, classPK, count - 1, count, orderByComparator);
 

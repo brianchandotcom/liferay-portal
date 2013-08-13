@@ -365,6 +365,10 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid(uuid);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<DDMStructure> list = findByUuid(uuid, count - 1, count,
 				orderByComparator);
 
@@ -1183,6 +1187,10 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid_C(uuid, companyId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<DDMStructure> list = findByUuid_C(uuid, companyId, count - 1,
 				count, orderByComparator);
 
@@ -1715,6 +1723,10 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	public DDMStructure fetchByGroupId_Last(long groupId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByGroupId(groupId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<DDMStructure> list = findByGroupId(groupId, count - 1, count,
 				orderByComparator);
@@ -3034,6 +3046,10 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByParentStructureId(parentStructureId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<DDMStructure> list = findByParentStructureId(parentStructureId,
 				count - 1, count, orderByComparator);
 
@@ -3525,6 +3541,10 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	public DDMStructure fetchByClassNameId_Last(long classNameId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByClassNameId(classNameId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<DDMStructure> list = findByClassNameId(classNameId, count - 1,
 				count, orderByComparator);
@@ -4033,6 +4053,10 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	public DDMStructure fetchByStructureKey_Last(String structureKey,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByStructureKey(structureKey);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<DDMStructure> list = findByStructureKey(structureKey, count - 1,
 				count, orderByComparator);
@@ -4575,6 +4599,10 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	public DDMStructure fetchByG_P_Last(long groupId, long parentStructureId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByG_P(groupId, parentStructureId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<DDMStructure> list = findByG_P(groupId, parentStructureId,
 				count - 1, count, orderByComparator);
@@ -5488,6 +5516,10 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 	public DDMStructure fetchByG_C_Last(long groupId, long classNameId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByG_C(groupId, classNameId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<DDMStructure> list = findByG_C(groupId, classNameId, count - 1,
 				count, orderByComparator);
@@ -6916,6 +6948,10 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByC_C(companyId, classNameId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<DDMStructure> list = findByC_C(companyId, classNameId, count - 1,
 				count, orderByComparator);
 
@@ -7789,6 +7825,10 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 		String description, OrderByComparator orderByComparator)
 		throws SystemException {
 		int count = countByG_N_D(groupId, name, description);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<DDMStructure> list = findByG_N_D(groupId, name, description,
 				count - 1, count, orderByComparator);

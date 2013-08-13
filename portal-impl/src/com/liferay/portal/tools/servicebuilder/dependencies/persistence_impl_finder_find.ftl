@@ -428,6 +428,10 @@ that may or may not be enforced with a unique index at the database level. Case
 
 		);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<${entity.name}> list = findBy${finder.name}(
 
 		<#list finderColsList as finderCol>

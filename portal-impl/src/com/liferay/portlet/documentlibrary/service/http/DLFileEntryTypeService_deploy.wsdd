@@ -43,6 +43,11 @@
 		<operation xmlns:operNS="urn:http.service.documentlibrary.portlet.liferay.com" xmlns:rtns="urn:http.service.documentlibrary.portlet.liferay.com" xmlns:tns2="http://model.documentlibrary.portlet.liferay.com" name="getFileEntryTypes" qname="operNS:getFileEntryTypes" returnQName="getFileEntryTypesReturn" returnType="rtns:ArrayOf_tns3_DLFileEntryTypeSoap" returnItemType="tns2:DLFileEntryTypeSoap" soapAction="">
 			<parameter xmlns:tns="urn:http.service.documentlibrary.portlet.liferay.com" qname="groupIds" type="tns:ArrayOf_xsd_long"></parameter>
 		</operation>
+		<operation xmlns:operNS="urn:http.service.documentlibrary.portlet.liferay.com" xmlns:rtns="urn:http.service.documentlibrary.portlet.liferay.com" xmlns:tns2="http://model.documentlibrary.portlet.liferay.com" name="getFileEntryTypes" qname="operNS:getFileEntryTypes" returnQName="getFileEntryTypesReturn" returnType="rtns:ArrayOf_tns3_DLFileEntryTypeSoap" returnItemType="tns2:DLFileEntryTypeSoap" soapAction="">
+			<parameter xmlns:tns="urn:http.service.documentlibrary.portlet.liferay.com" qname="groupIds" type="tns:ArrayOf_xsd_long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="start" type="tns:int"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="end" type="tns:int"></parameter>
+		</operation>
 		<operation xmlns:operNS="urn:http.service.documentlibrary.portlet.liferay.com" xmlns:rtns="urn:http.service.documentlibrary.portlet.liferay.com" xmlns:tns2="http://model.documentlibrary.portlet.liferay.com" name="getFolderFileEntryTypes" qname="operNS:getFolderFileEntryTypes" returnQName="getFolderFileEntryTypesReturn" returnType="rtns:ArrayOf_tns3_DLFileEntryTypeSoap" returnItemType="tns2:DLFileEntryTypeSoap" soapAction="">
 			<parameter xmlns:tns="urn:http.service.documentlibrary.portlet.liferay.com" qname="groupIds" type="tns:ArrayOf_xsd_long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="folderId" type="tns:long"></parameter>

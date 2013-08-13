@@ -363,6 +363,10 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid(uuid);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<LayoutPrototype> list = findByUuid(uuid, count - 1, count,
 				orderByComparator);
 
@@ -1328,6 +1332,10 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid_C(uuid, companyId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<LayoutPrototype> list = findByUuid_C(uuid, companyId, count - 1,
 				count, orderByComparator);
 
@@ -2291,6 +2299,10 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByCompanyId(companyId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<LayoutPrototype> list = findByCompanyId(companyId, count - 1,
 				count, orderByComparator);
 
@@ -3169,6 +3181,10 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 	public LayoutPrototype fetchByC_A_Last(long companyId, boolean active,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByC_A(companyId, active);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<LayoutPrototype> list = findByC_A(companyId, active, count - 1,
 				count, orderByComparator);

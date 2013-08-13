@@ -324,6 +324,10 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByLtSize(size);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<Image> list = findByLtSize(size, count - 1, count,
 				orderByComparator);
 

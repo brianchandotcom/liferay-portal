@@ -361,6 +361,10 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByResourceBlockId(resourceBlockId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<BookmarksEntry> list = findByResourceBlockId(resourceBlockId,
 				count - 1, count, orderByComparator);
 
@@ -864,6 +868,10 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 	public BookmarksEntry fetchByUuid_Last(String uuid,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid(uuid);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<BookmarksEntry> list = findByUuid(uuid, count - 1, count,
 				orderByComparator);
@@ -1688,6 +1696,10 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid_C(uuid, companyId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<BookmarksEntry> list = findByUuid_C(uuid, companyId, count - 1,
 				count, orderByComparator);
 
@@ -2248,6 +2260,10 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 	public BookmarksEntry fetchByG_F_Last(long groupId, long folderId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByG_F(groupId, folderId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<BookmarksEntry> list = findByG_F(groupId, folderId, count - 1,
 				count, orderByComparator);
@@ -3589,6 +3605,10 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByG_S(groupId, status);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<BookmarksEntry> list = findByG_S(groupId, status, count - 1,
 				count, orderByComparator);
 
@@ -4465,6 +4485,10 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 		int status, OrderByComparator orderByComparator)
 		throws SystemException {
 		int count = countByG_U_S(groupId, userId, status);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<BookmarksEntry> list = findByG_U_S(groupId, userId, status,
 				count - 1, count, orderByComparator);
@@ -5381,6 +5405,10 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 		int status, OrderByComparator orderByComparator)
 		throws SystemException {
 		int count = countByG_F_S(groupId, folderId, status);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<BookmarksEntry> list = findByG_F_S(groupId, folderId, status,
 				count - 1, count, orderByComparator);
@@ -6818,6 +6846,10 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 		int status, OrderByComparator orderByComparator)
 		throws SystemException {
 		int count = countByG_F_NotS(groupId, folderId, status);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<BookmarksEntry> list = findByG_F_NotS(groupId, folderId, status,
 				count - 1, count, orderByComparator);
@@ -8304,6 +8336,10 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 		long folderId, int status, OrderByComparator orderByComparator)
 		throws SystemException {
 		int count = countByG_U_F_S(groupId, userId, folderId, status);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<BookmarksEntry> list = findByG_U_F_S(groupId, userId, folderId,
 				status, count - 1, count, orderByComparator);

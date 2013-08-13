@@ -355,6 +355,10 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid(uuid);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<Phone> list = findByUuid(uuid, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -905,6 +909,10 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid_C(uuid, companyId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<Phone> list = findByUuid_C(uuid, companyId, count - 1, count,
 				orderByComparator);
 
@@ -1435,6 +1443,10 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByCompanyId(companyId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<Phone> list = findByCompanyId(companyId, count - 1, count,
 				orderByComparator);
 
@@ -1916,6 +1928,10 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 	public Phone fetchByUserId_Last(long userId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUserId(userId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<Phone> list = findByUserId(userId, count - 1, count,
 				orderByComparator);
@@ -2423,6 +2439,10 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 	public Phone fetchByC_C_Last(long companyId, long classNameId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByC_C(companyId, classNameId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<Phone> list = findByC_C(companyId, classNameId, count - 1, count,
 				orderByComparator);
@@ -2973,6 +2993,10 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 		long classPK, OrderByComparator orderByComparator)
 		throws SystemException {
 		int count = countByC_C_C(companyId, classNameId, classPK);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<Phone> list = findByC_C_C(companyId, classNameId, classPK,
 				count - 1, count, orderByComparator);
@@ -3560,6 +3584,10 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 		long classPK, boolean primary, OrderByComparator orderByComparator)
 		throws SystemException {
 		int count = countByC_C_C_P(companyId, classNameId, classPK, primary);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<Phone> list = findByC_C_C_P(companyId, classNameId, classPK,
 				primary, count - 1, count, orderByComparator);

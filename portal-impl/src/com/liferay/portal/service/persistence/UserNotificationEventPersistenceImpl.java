@@ -363,6 +363,10 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid(uuid);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<UserNotificationEvent> list = findByUuid(uuid, count - 1, count,
 				orderByComparator);
 
@@ -924,6 +928,10 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 		throws SystemException {
 		int count = countByUuid_C(uuid, companyId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<UserNotificationEvent> list = findByUuid_C(uuid, companyId,
 				count - 1, count, orderByComparator);
 
@@ -1458,6 +1466,10 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUserId(userId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<UserNotificationEvent> list = findByUserId(userId, count - 1,
 				count, orderByComparator);
 
@@ -1973,6 +1985,10 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 		boolean delivered, OrderByComparator orderByComparator)
 		throws SystemException {
 		int count = countByU_D(userId, delivered);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<UserNotificationEvent> list = findByU_D(userId, delivered,
 				count - 1, count, orderByComparator);
@@ -2502,6 +2518,10 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	public UserNotificationEvent fetchByU_A_Last(long userId, boolean archived,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByU_A(userId, archived);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<UserNotificationEvent> list = findByU_A(userId, archived,
 				count - 1, count, orderByComparator);

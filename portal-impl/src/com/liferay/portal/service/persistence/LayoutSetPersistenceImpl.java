@@ -341,6 +341,10 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByGroupId(groupId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<LayoutSet> list = findByGroupId(groupId, count - 1, count,
 				orderByComparator);
 
@@ -855,6 +859,10 @@ public class LayoutSetPersistenceImpl extends BasePersistenceImpl<LayoutSet>
 		String layoutSetPrototypeUuid, OrderByComparator orderByComparator)
 		throws SystemException {
 		int count = countByLayoutSetPrototypeUuid(layoutSetPrototypeUuid);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<LayoutSet> list = findByLayoutSetPrototypeUuid(layoutSetPrototypeUuid,
 				count - 1, count, orderByComparator);

@@ -355,6 +355,10 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid(uuid);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<PollsVote> list = findByUuid(uuid, count - 1, count,
 				orderByComparator);
 
@@ -1172,6 +1176,10 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid_C(uuid, companyId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<PollsVote> list = findByUuid_C(uuid, companyId, count - 1, count,
 				orderByComparator);
 
@@ -1704,6 +1712,10 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByQuestionId(questionId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<PollsVote> list = findByQuestionId(questionId, count - 1, count,
 				orderByComparator);
 
@@ -2187,6 +2199,10 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 	public PollsVote fetchByChoiceId_Last(long choiceId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByChoiceId(choiceId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<PollsVote> list = findByChoiceId(choiceId, count - 1, count,
 				orderByComparator);

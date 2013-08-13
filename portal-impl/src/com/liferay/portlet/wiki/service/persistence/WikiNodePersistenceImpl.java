@@ -358,6 +358,10 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid(uuid);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<WikiNode> list = findByUuid(uuid, count - 1, count,
 				orderByComparator);
 
@@ -1176,6 +1180,10 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid_C(uuid, companyId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<WikiNode> list = findByUuid_C(uuid, companyId, count - 1, count,
 				orderByComparator);
 
@@ -1702,6 +1710,10 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 	public WikiNode fetchByGroupId_Last(long groupId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByGroupId(groupId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<WikiNode> list = findByGroupId(groupId, count - 1, count,
 				orderByComparator);
@@ -2551,6 +2563,10 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByCompanyId(companyId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<WikiNode> list = findByCompanyId(companyId, count - 1, count,
 				orderByComparator);
 
@@ -3319,6 +3335,10 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 	public WikiNode fetchByG_S_Last(long groupId, int status,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByG_S(groupId, status);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<WikiNode> list = findByG_S(groupId, status, count - 1, count,
 				orderByComparator);
@@ -4221,6 +4241,10 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 	public WikiNode fetchByC_S_Last(long companyId, int status,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByC_S(companyId, status);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<WikiNode> list = findByC_S(companyId, status, count - 1, count,
 				orderByComparator);

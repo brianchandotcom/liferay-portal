@@ -353,6 +353,10 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByCompanyId(companyId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<AssetCategoryProperty> list = findByCompanyId(companyId,
 				count - 1, count, orderByComparator);
 
@@ -845,6 +849,10 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 	public AssetCategoryProperty fetchByCategoryId_Last(long categoryId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByCategoryId(categoryId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<AssetCategoryProperty> list = findByCategoryId(categoryId,
 				count - 1, count, orderByComparator);
@@ -1372,6 +1380,10 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 	public AssetCategoryProperty fetchByC_K_Last(long companyId, String key,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByC_K(companyId, key);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<AssetCategoryProperty> list = findByC_K(companyId, key, count - 1,
 				count, orderByComparator);

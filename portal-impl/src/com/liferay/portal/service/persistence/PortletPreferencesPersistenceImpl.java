@@ -344,6 +344,10 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByPlid(plid);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<PortletPreferences> list = findByPlid(plid, count - 1, count,
 				orderByComparator);
 
@@ -850,6 +854,10 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	public PortletPreferences fetchByPortletId_Last(String portletId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByPortletId(portletId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<PortletPreferences> list = findByPortletId(portletId, count - 1,
 				count, orderByComparator);
@@ -1408,6 +1416,10 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	public PortletPreferences fetchByO_P_Last(int ownerType, String portletId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByO_P(ownerType, portletId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<PortletPreferences> list = findByO_P(ownerType, portletId,
 				count - 1, count, orderByComparator);
@@ -1980,6 +1992,10 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	public PortletPreferences fetchByP_P_Last(long plid, String portletId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByP_P(plid, portletId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<PortletPreferences> list = findByP_P(plid, portletId, count - 1,
 				count, orderByComparator);
@@ -2566,6 +2582,10 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 		throws SystemException {
 		int count = countByO_O_P(ownerId, ownerType, plid);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<PortletPreferences> list = findByO_O_P(ownerId, ownerType, plid,
 				count - 1, count, orderByComparator);
 
@@ -3148,6 +3168,10 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 		String portletId, OrderByComparator orderByComparator)
 		throws SystemException {
 		int count = countByO_O_PI(ownerId, ownerType, portletId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<PortletPreferences> list = findByO_O_PI(ownerId, ownerType,
 				portletId, count - 1, count, orderByComparator);
@@ -3760,6 +3784,10 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 		String portletId, OrderByComparator orderByComparator)
 		throws SystemException {
 		int count = countByO_P_P(ownerType, plid, portletId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<PortletPreferences> list = findByO_P_P(ownerType, plid, portletId,
 				count - 1, count, orderByComparator);

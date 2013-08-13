@@ -350,6 +350,10 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByActive(active);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<SCLicense> list = findByActive(active, count - 1, count,
 				orderByComparator);
 
@@ -1220,6 +1224,10 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	public SCLicense fetchByA_R_Last(boolean active, boolean recommended,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByA_R(active, recommended);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<SCLicense> list = findByA_R(active, recommended, count - 1, count,
 				orderByComparator);

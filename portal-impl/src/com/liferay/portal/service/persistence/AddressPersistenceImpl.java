@@ -355,6 +355,10 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid(uuid);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<Address> list = findByUuid(uuid, count - 1, count,
 				orderByComparator);
 
@@ -907,6 +911,10 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid_C(uuid, companyId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<Address> list = findByUuid_C(uuid, companyId, count - 1, count,
 				orderByComparator);
 
@@ -1437,6 +1445,10 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByCompanyId(companyId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<Address> list = findByCompanyId(companyId, count - 1, count,
 				orderByComparator);
 
@@ -1919,6 +1931,10 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	public Address fetchByUserId_Last(long userId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUserId(userId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<Address> list = findByUserId(userId, count - 1, count,
 				orderByComparator);
@@ -2428,6 +2444,10 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	public Address fetchByC_C_Last(long companyId, long classNameId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByC_C(companyId, classNameId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<Address> list = findByC_C(companyId, classNameId, count - 1,
 				count, orderByComparator);
@@ -2978,6 +2998,10 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 		long classPK, OrderByComparator orderByComparator)
 		throws SystemException {
 		int count = countByC_C_C(companyId, classNameId, classPK);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<Address> list = findByC_C_C(companyId, classNameId, classPK,
 				count - 1, count, orderByComparator);
@@ -3565,6 +3589,10 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 		long classPK, boolean mailing, OrderByComparator orderByComparator)
 		throws SystemException {
 		int count = countByC_C_C_M(companyId, classNameId, classPK, mailing);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<Address> list = findByC_C_C_M(companyId, classNameId, classPK,
 				mailing, count - 1, count, orderByComparator);
@@ -4167,6 +4195,10 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 		long classPK, boolean primary, OrderByComparator orderByComparator)
 		throws SystemException {
 		int count = countByC_C_C_P(companyId, classNameId, classPK, primary);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<Address> list = findByC_C_C_P(companyId, classNameId, classPK,
 				primary, count - 1, count, orderByComparator);

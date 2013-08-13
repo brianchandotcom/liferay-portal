@@ -365,6 +365,10 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid(uuid);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<DLFolder> list = findByUuid(uuid, count - 1, count,
 				orderByComparator);
 
@@ -1184,6 +1188,10 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid_C(uuid, companyId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<DLFolder> list = findByUuid_C(uuid, companyId, count - 1, count,
 				orderByComparator);
 
@@ -1711,6 +1719,10 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	public DLFolder fetchByGroupId_Last(long groupId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByGroupId(groupId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<DLFolder> list = findByGroupId(groupId, count - 1, count,
 				orderByComparator);
@@ -2562,6 +2574,10 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByCompanyId(companyId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<DLFolder> list = findByCompanyId(companyId, count - 1, count,
 				orderByComparator);
 
@@ -3290,6 +3306,10 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 	public DLFolder fetchByG_P_Last(long groupId, long parentFolderId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByG_P(groupId, parentFolderId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<DLFolder> list = findByG_P(groupId, parentFolderId, count - 1,
 				count, orderByComparator);
@@ -4212,6 +4232,10 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByP_N(parentFolderId, name);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<DLFolder> list = findByP_N(parentFolderId, name, count - 1, count,
 				orderByComparator);
 
@@ -5107,6 +5131,10 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 		long parentFolderId, boolean hidden, OrderByComparator orderByComparator)
 		throws SystemException {
 		int count = countByG_M_P_H(groupId, mountPoint, parentFolderId, hidden);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<DLFolder> list = findByG_M_P_H(groupId, mountPoint,
 				parentFolderId, hidden, count - 1, count, orderByComparator);
@@ -6135,6 +6163,10 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 		boolean hidden, int status, OrderByComparator orderByComparator)
 		throws SystemException {
 		int count = countByG_P_H_S(groupId, parentFolderId, hidden, status);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<DLFolder> list = findByG_P_H_S(groupId, parentFolderId, hidden,
 				status, count - 1, count, orderByComparator);
@@ -7190,6 +7222,10 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByG_M_P_H_S(groupId, mountPoint, parentFolderId,
 				hidden, status);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<DLFolder> list = findByG_M_P_H_S(groupId, mountPoint,
 				parentFolderId, hidden, status, count - 1, count,

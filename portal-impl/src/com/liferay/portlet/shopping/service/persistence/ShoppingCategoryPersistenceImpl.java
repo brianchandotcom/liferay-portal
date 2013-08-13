@@ -350,6 +350,10 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByGroupId(groupId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<ShoppingCategory> list = findByGroupId(groupId, count - 1, count,
 				orderByComparator);
 
@@ -1228,6 +1232,10 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 		long parentCategoryId, OrderByComparator orderByComparator)
 		throws SystemException {
 		int count = countByG_P(groupId, parentCategoryId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<ShoppingCategory> list = findByG_P(groupId, parentCategoryId,
 				count - 1, count, orderByComparator);

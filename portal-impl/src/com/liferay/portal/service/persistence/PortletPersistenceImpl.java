@@ -343,6 +343,10 @@ public class PortletPersistenceImpl extends BasePersistenceImpl<Portlet>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByCompanyId(companyId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<Portlet> list = findByCompanyId(companyId, count - 1, count,
 				orderByComparator);
 

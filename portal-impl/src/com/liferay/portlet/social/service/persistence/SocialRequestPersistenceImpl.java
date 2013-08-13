@@ -359,6 +359,10 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid(uuid);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<SocialRequest> list = findByUuid(uuid, count - 1, count,
 				orderByComparator);
 
@@ -1179,6 +1183,10 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid_C(uuid, companyId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<SocialRequest> list = findByUuid_C(uuid, companyId, count - 1,
 				count, orderByComparator);
 
@@ -1712,6 +1720,10 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByCompanyId(companyId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<SocialRequest> list = findByCompanyId(companyId, count - 1, count,
 				orderByComparator);
 
@@ -2197,6 +2209,10 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	public SocialRequest fetchByUserId_Last(long userId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUserId(userId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<SocialRequest> list = findByUserId(userId, count - 1, count,
 				orderByComparator);
@@ -2691,6 +2707,10 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	public SocialRequest fetchByReceiverUserId_Last(long receiverUserId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByReceiverUserId(receiverUserId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<SocialRequest> list = findByReceiverUserId(receiverUserId,
 				count - 1, count, orderByComparator);
@@ -3204,6 +3224,10 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	public SocialRequest fetchByU_S_Last(long userId, int status,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByU_S(userId, status);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<SocialRequest> list = findByU_S(userId, status, count - 1, count,
 				orderByComparator);
@@ -3728,6 +3752,10 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	public SocialRequest fetchByR_S_Last(long receiverUserId, int status,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByR_S(receiverUserId, status);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<SocialRequest> list = findByR_S(receiverUserId, status, count - 1,
 				count, orderByComparator);
@@ -4634,6 +4662,10 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 		throws SystemException {
 		int count = countByU_C_C_T_S(userId, classNameId, classPK, type, status);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<SocialRequest> list = findByU_C_C_T_S(userId, classNameId,
 				classPK, type, status, count - 1, count, orderByComparator);
 
@@ -5280,6 +5312,10 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByC_C_T_R_S(classNameId, classPK, type,
 				receiverUserId, status);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<SocialRequest> list = findByC_C_T_R_S(classNameId, classPK, type,
 				receiverUserId, status, count - 1, count, orderByComparator);

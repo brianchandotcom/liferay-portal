@@ -7,6 +7,7 @@
 		<arrayMapping xmlns:ns="urn:http.service.wiki.portlet.liferay.com" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema" qname="ns:ArrayOf_xsd_long" type="java:long[]" innerType="cmp-ns:long" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
 		<arrayMapping xmlns:ns="urn:http.service.wiki.portlet.liferay.com" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema" qname="ns:ArrayOf_xsd_string" type="java:java.lang.String[]" innerType="cmp-ns:string" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
 		<typeMapping xmlns:ns="http://model.portal.liferay.com" qname="ns:PortletPreferencesIds" type="java:com.liferay.portal.model.PortletPreferencesIds" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></typeMapping>
+		<typeMapping xmlns:ns="http://model.repository.kernel.portal.liferay.com" qname="ns:FileEntrySoap" type="java:com.liferay.portal.kernel.repository.model.FileEntrySoap" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></typeMapping>
 		<typeMapping xmlns:ns="http://model.wiki.portlet.liferay.com" qname="ns:WikiPageSoap" type="java:com.liferay.portlet.wiki.model.WikiPageSoap" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></typeMapping>
 		<typeMapping xmlns:ns="http://service.portal.liferay.com" qname="ns:ServiceContext" type="java:com.liferay.portal.service.ServiceContext" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></typeMapping>
 		<typeMapping xmlns:ns="http://theme.portal.liferay.com" qname="ns:PortletDisplay" type="java:com.liferay.portal.theme.PortletDisplay" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></typeMapping>
@@ -43,6 +44,12 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="title" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="newParentTitle" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://service.portal.liferay.com" qname="serviceContext" type="tns:ServiceContext"></parameter>
+		</operation>
+		<operation xmlns:operNS="urn:http.service.wiki.portlet.liferay.com" name="copyPageAttachments" qname="operNS:copyPageAttachments" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="templateNodeId" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="templateTitle" type="tns:string"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="nodeId" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="title" type="tns:string"></parameter>
 		</operation>
 		<operation xmlns:operNS="urn:http.service.wiki.portlet.liferay.com" name="deletePageAttachment" qname="operNS:deletePageAttachment" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="nodeId" type="tns:long"></parameter>
@@ -199,7 +206,7 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="nodeId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="tempFolderName" type="tns:string"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.wiki.portlet.liferay.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="movePageAttachmentToTrash" qname="operNS:movePageAttachmentToTrash" returnQName="movePageAttachmentToTrashReturn" returnType="rtns:long" soapAction="">
+		<operation xmlns:operNS="urn:http.service.wiki.portlet.liferay.com" xmlns:rtns="http://model.repository.kernel.portal.liferay.com" name="movePageAttachmentToTrash" qname="operNS:movePageAttachmentToTrash" returnQName="movePageAttachmentToTrashReturn" returnType="rtns:FileEntrySoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="nodeId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="title" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="fileName" type="tns:string"></parameter>
@@ -208,7 +215,7 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="nodeId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="title" type="tns:string"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.wiki.portlet.liferay.com" name="movePageToTrash" qname="operNS:movePageToTrash" soapAction="">
+		<operation xmlns:operNS="urn:http.service.wiki.portlet.liferay.com" xmlns:rtns="http://model.wiki.portlet.liferay.com" name="movePageToTrash" qname="operNS:movePageToTrash" returnQName="movePageToTrashReturn" returnType="rtns:WikiPageSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="nodeId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="title" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="version" type="tns:double"></parameter>
@@ -253,9 +260,9 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="redirectTitle" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://service.portal.liferay.com" qname="serviceContext" type="tns:ServiceContext"></parameter>
 		</operation>
-		<parameter name="allowedMethods" value="addPage addPageAttachments changeParent deletePage deletePageAttachment deletePageAttachments deleteTempPageAttachment deleteTrashPageAttachments discardDraft getChildren getDraftPage getNodePages getNodePagesRSS getOrphans getPage getPages getPagesCount getPagesRSS getRecentChanges getRecentChangesCount getTempPageAttachmentNames movePage movePageAttachmentToTrash movePageToTrash restorePageAttachmentFromTrash restorePageFromTrash revertPage subscribePage unsubscribePage updatePage" />
+		<parameter name="allowedMethods" value="addPage addPageAttachments changeParent copyPageAttachments deletePage deletePageAttachment deletePageAttachments deleteTempPageAttachment deleteTrashPageAttachments discardDraft getChildren getDraftPage getNodePages getNodePagesRSS getOrphans getPage getPages getPagesCount getPagesRSS getRecentChanges getRecentChangesCount getTempPageAttachmentNames movePage movePageAttachmentToTrash movePageToTrash restorePageAttachmentFromTrash restorePageFromTrash revertPage subscribePage unsubscribePage updatePage" />
 		<parameter name="className" value="com.liferay.portlet.wiki.service.http.WikiPageServiceSoap" />
-		<parameter name="schemaUnqualified" value="http://model.portal.liferay.com,http://model.wiki.portlet.liferay.com,http://service.portal.liferay.com,http://theme.portal.liferay.com,http://util.kernel.portal.liferay.com,http://xml.apache.org/xml-soap,urn:http.service.wiki.portlet.liferay.com" />
+		<parameter name="schemaUnqualified" value="http://model.portal.liferay.com,http://model.repository.kernel.portal.liferay.com,http://model.wiki.portlet.liferay.com,http://service.portal.liferay.com,http://theme.portal.liferay.com,http://util.kernel.portal.liferay.com,http://xml.apache.org/xml-soap,urn:http.service.wiki.portlet.liferay.com" />
 		<parameter name="typeMappingVersion" value="1.2" />
 		<parameter name="wsdlPortType" value="WikiPageServiceSoap" />
 		<parameter name="wsdlServiceElement" value="WikiPageServiceSoapService" />

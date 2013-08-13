@@ -85,7 +85,7 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="folderId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="parentFolderId" type="tns:long"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.bookmarks.portlet.liferay.com" name="moveFolderToTrash" qname="operNS:moveFolderToTrash" soapAction="">
+		<operation xmlns:operNS="urn:http.service.bookmarks.portlet.liferay.com" xmlns:rtns="http://model.bookmarks.portlet.liferay.com" name="moveFolderToTrash" qname="operNS:moveFolderToTrash" returnQName="moveFolderToTrashReturn" returnType="rtns:BookmarksFolderSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="folderId" type="tns:long"></parameter>
 		</operation>
 		<operation xmlns:operNS="urn:http.service.bookmarks.portlet.liferay.com" xmlns:rtns="http://model.bookmarks.portlet.liferay.com" name="moveFolder" qname="operNS:moveFolder" returnQName="moveFolderReturn" returnType="rtns:BookmarksFolderSoap" soapAction="">

@@ -344,6 +344,10 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByCompanyId(companyId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<UserTracker> list = findByCompanyId(companyId, count - 1, count,
 				orderByComparator);
 
@@ -826,6 +830,10 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 	public UserTracker fetchByUserId_Last(long userId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUserId(userId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<UserTracker> list = findByUserId(userId, count - 1, count,
 				orderByComparator);
@@ -1328,6 +1336,10 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 	public UserTracker fetchBySessionId_Last(String sessionId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countBySessionId(sessionId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<UserTracker> list = findBySessionId(sessionId, count - 1, count,
 				orderByComparator);

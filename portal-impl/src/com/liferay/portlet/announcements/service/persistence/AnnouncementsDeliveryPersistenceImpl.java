@@ -349,6 +349,10 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUserId(userId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<AnnouncementsDelivery> list = findByUserId(userId, count - 1,
 				count, orderByComparator);
 

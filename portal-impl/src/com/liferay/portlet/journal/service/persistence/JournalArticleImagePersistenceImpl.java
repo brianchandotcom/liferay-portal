@@ -347,6 +347,10 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByGroupId(groupId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<JournalArticleImage> list = findByGroupId(groupId, count - 1,
 				count, orderByComparator);
 
@@ -837,6 +841,10 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 	public JournalArticleImage fetchByTempImage_Last(boolean tempImage,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByTempImage(tempImage);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<JournalArticleImage> list = findByTempImage(tempImage, count - 1,
 				count, orderByComparator);
@@ -1394,6 +1402,10 @@ public class JournalArticleImagePersistenceImpl extends BasePersistenceImpl<Jour
 		String articleId, double version, OrderByComparator orderByComparator)
 		throws SystemException {
 		int count = countByG_A_V(groupId, articleId, version);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<JournalArticleImage> list = findByG_A_V(groupId, articleId,
 				version, count - 1, count, orderByComparator);

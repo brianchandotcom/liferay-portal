@@ -343,6 +343,10 @@ public class TrashEntryPersistenceImpl extends BasePersistenceImpl<TrashEntry>
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByGroupId(groupId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<TrashEntry> list = findByGroupId(groupId, count - 1, count,
 				orderByComparator);
 
@@ -831,6 +835,10 @@ public class TrashEntryPersistenceImpl extends BasePersistenceImpl<TrashEntry>
 	public TrashEntry fetchByCompanyId_Last(long companyId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByCompanyId(companyId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<TrashEntry> list = findByCompanyId(companyId, count - 1, count,
 				orderByComparator);
@@ -1338,6 +1346,10 @@ public class TrashEntryPersistenceImpl extends BasePersistenceImpl<TrashEntry>
 	public TrashEntry fetchByG_LtCD_Last(long groupId, Date createDate,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByG_LtCD(groupId, createDate);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<TrashEntry> list = findByG_LtCD(groupId, createDate, count - 1,
 				count, orderByComparator);

@@ -355,6 +355,10 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid(uuid);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<EmailAddress> list = findByUuid(uuid, count - 1, count,
 				orderByComparator);
 
@@ -911,6 +915,10 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUuid_C(uuid, companyId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<EmailAddress> list = findByUuid_C(uuid, companyId, count - 1,
 				count, orderByComparator);
 
@@ -1444,6 +1452,10 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByCompanyId(companyId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<EmailAddress> list = findByCompanyId(companyId, count - 1, count,
 				orderByComparator);
 
@@ -1928,6 +1940,10 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 	public EmailAddress fetchByUserId_Last(long userId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByUserId(userId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<EmailAddress> list = findByUserId(userId, count - 1, count,
 				orderByComparator);
@@ -2439,6 +2455,10 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 	public EmailAddress fetchByC_C_Last(long companyId, long classNameId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByC_C(companyId, classNameId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<EmailAddress> list = findByC_C(companyId, classNameId, count - 1,
 				count, orderByComparator);
@@ -2989,6 +3009,10 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 		long classPK, OrderByComparator orderByComparator)
 		throws SystemException {
 		int count = countByC_C_C(companyId, classNameId, classPK);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<EmailAddress> list = findByC_C_C(companyId, classNameId, classPK,
 				count - 1, count, orderByComparator);
@@ -3577,6 +3601,10 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 		long classPK, boolean primary, OrderByComparator orderByComparator)
 		throws SystemException {
 		int count = countByC_C_C_P(companyId, classNameId, classPK, primary);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<EmailAddress> list = findByC_C_C_P(companyId, classNameId,
 				classPK, primary, count - 1, count, orderByComparator);

@@ -359,6 +359,10 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByGroupId(groupId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<SCProductEntry> list = findByGroupId(groupId, count - 1, count,
 				orderByComparator);
 
@@ -1215,6 +1219,10 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByCompanyId(companyId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<SCProductEntry> list = findByCompanyId(companyId, count - 1,
 				count, orderByComparator);
 
@@ -1727,6 +1735,10 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 	public SCProductEntry fetchByG_U_Last(long groupId, long userId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByG_U(groupId, userId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<SCProductEntry> list = findByG_U(groupId, userId, count - 1,
 				count, orderByComparator);

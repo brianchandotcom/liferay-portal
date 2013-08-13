@@ -1162,6 +1162,10 @@ public class JournalArticleLocalServiceImpl
 
 		SystemEventHierarchyEntryThreadLocal.push(JournalArticle.class, 0);
 
+		JournalArticleResource articleResource =
+			journalArticleResourceLocalService.fetchArticleResource(
+				groupId, articleId);
+
 		try {
 			List<JournalArticle> articles = journalArticlePersistence.findByG_A(
 				groupId, articleId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
@@ -1174,10 +1178,6 @@ public class JournalArticleLocalServiceImpl
 		finally {
 			SystemEventHierarchyEntryThreadLocal.pop();
 		}
-
-		JournalArticleResource articleResource =
-			journalArticleResourceLocalService.fetchArticleResource(
-				groupId, articleId);
 
 		if (articleResource != null) {
 			systemEventLocalService.addSystemEvent(

@@ -169,70 +169,67 @@ public class QueryUtil {
 		if ((start == ALL_POS) && (end == ALL_POS)) {
 			return query.list(unmodifiable);
 		}
-		else {
 
-			// Adjust negative parameters to be positive
+		if (start < 0) {
+			start = 0;
+		}
 
-			start = start < 0 ? 0 : start;
-			end = end < start ? start : end;
+		if (end < start) {
+			end = start;
+		}
 
-			int maxResults = end - start;
-
-			if (maxResults==0) {
-				if (unmodifiable) {
-					return new UnmodifiableList<Object>(
-						Collections.emptyList());
-				}
-				else {
-					return new ArrayList<Object>();
-				}
-			}
-			else if (dialect.supportsLimit()) {
-				query.setMaxResults(maxResults);
-				query.setFirstResult(start);
-
-				return query.list(unmodifiable);
+		if (start == end) {
+			if (unmodifiable) {
+				return Collections.emptyList();
 			}
 			else {
-				List<Object> list = new ArrayList<Object>();
+				return new ArrayList<Object>();
+			}
+		}
 
-				DB db = DBFactoryUtil.getDB();
+		if (dialect.supportsLimit()) {
+			query.setMaxResults(end - start);
+			query.setFirstResult(start);
 
-				if (!db.isSupportsScrollableResults()) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							"Database does not support scrollable results");
-					}
+			return query.list(unmodifiable);
+		}
 
-					return list;
-				}
+		List<Object> list = new ArrayList<Object>();
 
-				ScrollableResults sr = query.scroll();
+		DB db = DBFactoryUtil.getDB();
 
-				if (sr.first() && sr.scroll(start)) {
-					for (int i = start; i < end; i++) {
-						Object[] array = sr.get();
+		if (!db.isSupportsScrollableResults()) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Database does not support scrollable results");
+			}
 
-						if (array.length == 1) {
-							list.add(array[0]);
-						}
-						else {
-							list.add(array);
-						}
+			return list;
+		}
 
-						if (!sr.next()) {
-							break;
-						}
-					}
-				}
+		ScrollableResults sr = query.scroll();
 
-				if (unmodifiable) {
-					return new UnmodifiableList<Object>(list);
+		if (sr.first() && sr.scroll(start)) {
+			for (int i = start; i < end; i++) {
+				Object[] array = sr.get();
+
+				if (array.length == 1) {
+					list.add(array[0]);
 				}
 				else {
-					return list;
+					list.add(array);
+				}
+
+				if (!sr.next()) {
+					break;
 				}
 			}
+		}
+
+		if (unmodifiable) {
+			return new UnmodifiableList<Object>(list);
+		}
+		else {
+			return list;
 		}
 	}
 

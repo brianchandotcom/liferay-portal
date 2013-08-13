@@ -491,12 +491,6 @@
 			var portletId = options.portletId;
 			var refreshURL = options.refreshURL;
 
-			var EVENTS_LAZY_LOAD = ['focus', 'gesturemovestart'];
-
-			if(!A.UA.touch) {
-				EVENTS_LAZY_LOAD.push('mousemove');
-			}
-
 			if (isStatic) {
 				instance.registerStatic(portletId);
 			}
@@ -513,8 +507,14 @@
 				// Functions to run on portlet load
 
 				if (canEditTitle) {
+					var events = ['focus', 'gesturemovestart'];
+
+					if(!A.UA.touch) {
+						events.push('mousemove');
+					}
+
 					var handle = portlet.on(
-						EVENTS_LAZY_LOAD,
+						events,
 						function(event) {
 							Util.portletTitleEdit(
 								{

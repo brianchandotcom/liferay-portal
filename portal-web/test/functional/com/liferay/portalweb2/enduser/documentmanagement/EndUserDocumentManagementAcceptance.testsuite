@@ -2,4 +2,6 @@
 	<execute test-suite="PGDocumentsandmediaAcceptance" />
 
 	<execute test-suite="PGMediagalleryAcceptance" />
+
+	<execute test-suite="CPDocumentsandmediaAcceptance" />
 </definition>

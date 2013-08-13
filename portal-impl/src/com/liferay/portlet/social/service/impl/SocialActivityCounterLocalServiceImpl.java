@@ -340,7 +340,8 @@ public class SocialActivityCounterLocalServiceImpl
 				activityDefinition.getActivityCounterDefinitions()) {
 
 			if (isAddActivityCounter(
-					user, assetEntryUser, activityCounterDefinition)) {
+					user, assetEntryUser, assetEntry,
+					activityCounterDefinition)) {
 
 				SocialActivityCounter activityCounter = addActivityCounter(
 					activity.getGroupId(), user, activity,
@@ -352,7 +353,9 @@ public class SocialActivityCounterLocalServiceImpl
 
 		SocialActivityCounter assetActivitiesCounter = null;
 
-		if (!assetEntryUser.isDefaultUser() && assetEntryUser.isActive()) {
+		if (!assetEntryUser.isDefaultUser() && assetEntryUser.isActive() &&
+			assetEntry.isVisible()) {
+
 			assetActivitiesCounter = addAssetActivitiesCounter(activity);
 		}
 
@@ -1261,7 +1264,7 @@ public class SocialActivityCounterLocalServiceImpl
 	}
 
 	protected boolean isAddActivityCounter(
-		User user, User assetEntryUser,
+		User user, User assetEntryUser, AssetEntry assetEntry,
 		SocialActivityCounterDefinition activityCounterDefinition) {
 
 		if ((user.isDefaultUser() || !user.isActive()) &&
@@ -1289,6 +1292,13 @@ public class SocialActivityCounterLocalServiceImpl
 		if ((user.getUserId() == assetEntryUser.getUserId()) &&
 			(name.equals(SocialActivityCounterConstants.NAME_CONTRIBUTION) ||
 			 name.equals(SocialActivityCounterConstants.NAME_POPULARITY))) {
+
+			return false;
+		}
+
+		if ((activityCounterDefinition.getOwnerType() ==
+				SocialActivityCounterConstants.TYPE_ASSET) &&
+			!assetEntry.isVisible()) {
 
 			return false;
 		}

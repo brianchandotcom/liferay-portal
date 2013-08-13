@@ -20,7 +20,9 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.messageboards.model.MBMessage;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Eudaldo Alonso
@@ -40,6 +42,10 @@ public class SearchResult {
 
 	public void addMBMessage(MBMessage mbMessage) {
 		_mbMessages.add(mbMessage);
+	}
+
+	public void addVersion(String version) {
+		_versions.add(version);
 	}
 
 	@Override
@@ -83,6 +89,10 @@ public class SearchResult {
 		return _summary;
 	}
 
+	public Set<String> getVersions() {
+		return _versions;
+	}
+
 	public void setClassName(String className) {
 		_className = className;
 	}
@@ -104,5 +114,6 @@ public class SearchResult {
 	private List<Tuple> _fileEntryTuples = new ArrayList<Tuple>();
 	private List<MBMessage> _mbMessages = new ArrayList<MBMessage>();
 	private Summary _summary;
+	private Set<String> _versions = new HashSet<String>();
 
 }

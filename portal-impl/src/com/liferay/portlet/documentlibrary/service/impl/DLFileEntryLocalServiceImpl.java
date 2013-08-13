@@ -1258,11 +1258,13 @@ public class DLFileEntryLocalServiceImpl
 	public void incrementViewCounter(DLFileEntry dlFileEntry, int increment)
 		throws SystemException {
 
-		if (!ExportImportThreadLocal.isImportInProcess()) {
-			dlFileEntry.setReadCount(dlFileEntry.getReadCount() + increment);
-
-			dlFileEntryPersistence.update(dlFileEntry);
+		if (ExportImportThreadLocal.isImportInProcess()) {
+			return;
 		}
+
+		dlFileEntry.setReadCount(dlFileEntry.getReadCount() + increment);
+
+		dlFileEntryPersistence.update(dlFileEntry);
 	}
 
 	@Override

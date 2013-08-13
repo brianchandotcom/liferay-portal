@@ -891,6 +891,13 @@ public class JournalArticleLocalServiceUtil {
 				   .fetchLatestArticle(resourcePrimKey, status, preferApproved);
 	}
 
+	public static com.liferay.portlet.journal.model.JournalArticle fetchLatestArticle(
+		long groupId, java.lang.String articleId, int status)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().fetchLatestArticle(groupId, articleId, status);
+	}
+
 	public static com.liferay.portlet.journal.model.JournalArticle fetchLatestIndexableArticle(
 		long resourcePrimKey)
 		throws com.liferay.portal.kernel.exception.SystemException {

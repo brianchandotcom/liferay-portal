@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.journal.util;
 
+import com.liferay.portal.LocaleException;
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.diff.DiffHtmlUtil;
@@ -1256,6 +1257,62 @@ public class JournalUtil {
 		}
 
 		return curContent;
+	}
+
+	public static String prepareLocalizedContentForImport(
+			String content, Locale defaultImportLocale)
+		throws LocaleException {
+
+		try {
+			Document curDocument = SAXReaderUtil.read(content);
+
+			Document updatedDocument = SAXReaderUtil.read(content);
+
+			Element updatedRootElement = updatedDocument.getRootElement();
+
+			Attribute availableLocales = updatedRootElement.attribute(
+				"available-locales");
+
+			String defaultImportLocaleId = LocaleUtil.toLanguageId(
+				defaultImportLocale);
+
+			if (!StringUtil.contains(
+					availableLocales.getValue(), defaultImportLocaleId)) {
+
+				StringBundler sb = new StringBundler(3);
+
+				sb.append(availableLocales.getValue());
+				sb.append(StringPool.COMMA);
+				sb.append(defaultImportLocaleId);
+
+				availableLocales.setValue(sb.toString());
+
+				_mergeArticleContentUpdate(
+					curDocument, updatedRootElement,
+					LocaleUtil.toLanguageId(defaultImportLocale));
+
+				content = DDMXMLUtil.formatXML(updatedDocument);
+			}
+
+			Attribute defaultLocale = updatedRootElement.attribute(
+				"default-locale");
+
+			Locale contentDefaultLocale = LocaleUtil.fromLanguageId(
+				defaultLocale.getValue());
+
+			if (!LocaleUtil.equals(contentDefaultLocale, defaultImportLocale)) {
+				defaultLocale.setValue(defaultImportLocaleId);
+
+				content = DDMXMLUtil.formatXML(updatedDocument);
+			}
+		}
+		catch (Exception e) {
+			throw new LocaleException(
+				LocaleException.TYPE_CONTENT,
+				"The locale " + defaultImportLocale + " is not available");
+		}
+
+		return content;
 	}
 
 	public static String removeArticleLocale(

@@ -49,7 +49,6 @@
 	</c:if>
 
 	<c:if test="<%= querySuggestionsEnabled && Validator.isNotNull(hits.getQuerySuggestions()) %>">
-
 		<ul class="inline related-queries">
 			<li class="label">
 				<liferay-ui:message key="related-queries" />:
@@ -59,16 +58,16 @@
 
 				<%
 				String relatedQueryKeywords = (String)pageContext.getAttribute("relatedQueryKeywords");
+
 				String taglibSearchRelatedQuery = renderResponse.getNamespace() + "searchKeywords('" + HtmlUtil.escapeJS(relatedQueryKeywords) + "')";
 				%>
 
 				<c:if test="<%= Validator.isNotNull(relatedQueryKeywords) && !relatedQueryKeywords.equals(searchContext.getKeywords()) %>">
-
 					<li>
 						<aui:a href="javascript:;" onclick="<%= taglibSearchRelatedQuery %>">
 
 							<%
-								KeywordsSuggestionHolder keywordsSuggestionHolder = new KeywordsSuggestionHolder(relatedQueryKeywords, searchContext.getKeywords());
+							KeywordsSuggestionHolder keywordsSuggestionHolder = new KeywordsSuggestionHolder(relatedQueryKeywords, searchContext.getKeywords());
 							%>
 
 							<c:forEach items="<%= keywordsSuggestionHolder.getSuggestedKeywords() %>" var="relatedQueryKeyword">

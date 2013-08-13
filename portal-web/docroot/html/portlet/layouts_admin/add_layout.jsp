@@ -46,6 +46,14 @@ else {
 	parentPlid = layout.getParentPlid();
 	parentLayoutId = layout.getParentLayoutId();
 }
+
+Group liveGroup = GroupLocalServiceUtil.getGroup(scopeGroupId);
+
+if (liveGroup.isStagingGroup()) {
+	liveGroup = liveGroup.getLiveGroup();
+}
+
+String rootNodeName = liveGroup.getLayoutRootNodeName(privateLayout, locale);
 %>
 
 <aui:model-context model="<%= Layout.class %>" />
@@ -136,7 +144,7 @@ else {
 						<%
 						LayoutLister layoutLister = new LayoutLister();
 
-						LayoutView layoutView = layoutLister.getLayoutView(scopeGroupId, layout.isPrivateLayout(), StringPool.BLANK, locale);
+						LayoutView layoutView = layoutLister.getLayoutView(scopeGroupId, privateLayout, rootNodeName, locale);
 
 						liferayPortletRequest.setAttribute(WebKeys.LAYOUT_LISTER_LIST, layoutView.getList());
 

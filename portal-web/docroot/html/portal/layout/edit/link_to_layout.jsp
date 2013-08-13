@@ -55,13 +55,7 @@ if (selLayout != null) {
 			name = "-&nbsp;" + name;
 		}
 
-		Layout linkableLayout = null;
-
-		try {
-			linkableLayout = LayoutLocalServiceUtil.getLayout(objId);
-		}
-		catch (Exception e) {
-		}
+		Layout linkableLayout = LayoutLocalServiceUtil.fetchLayout(objId);
 
 		if (linkableLayout != null) {
 	%>

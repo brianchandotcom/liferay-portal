@@ -825,6 +825,12 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	}
 
 	@Override
+	public java.lang.String getLayoutRootNodeName(boolean privateLayout,
+		java.util.Locale locale) {
+		return _group.getLayoutRootNodeName(privateLayout, locale);
+	}
+
+	@Override
 	public com.liferay.portal.model.Group getLiveGroup() {
 		return _group.getLiveGroup();
 	}

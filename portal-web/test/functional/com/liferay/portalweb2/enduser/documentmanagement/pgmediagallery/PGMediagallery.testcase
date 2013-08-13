@@ -19,6 +19,20 @@
 		</execute>
 	</set-up>
 
+	<tear-down>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DMFolder#tearDownPGViaMG">
+			<var name="pageName" value="${pageName}" />
+			<var name="mgFolderName" value="DM Folder Name" />
+		</execute>
+
+		<execute macro="Page#tearDownPG" />
+	</tear-down>
+
 	<command name="AddFolder">
 		<var name="mgFolderName" value="DM Folder Name" />
 		<var name="mgFolderDescription" value="DM Folder Description" />
@@ -185,18 +199,4 @@
 			<var name="mgDocumentDescriptionEdit" value="${mgDocumentDescription} Edit" />
 		</execute>
 	</command>
-
-	<tear-down>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="DMFolder#tearDownPGViaMG">
-			<var name="pageName" value="${pageName}" />
-			<var name="mgFolderName" value="DM Folder Name" />
-		</execute>
-
-		<execute macro="Page#tearDownPG" />
-	</tear-down>
 </definition>

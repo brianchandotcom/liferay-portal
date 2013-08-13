@@ -15,6 +15,18 @@
 		</execute>
 	</set-up>
 
+	<tear-down>
+		<execute macro="DMDocument#tearDownPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DMFolder#tearDownPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Page#tearDownPG" />
+	</tear-down>
+
 	<command name="AddDocument">
 		<var name="dmDocumentDescription" value="DM Document Description" />
 		<var name="dmDocumentFile" value="Document_1.doc" />
@@ -225,16 +237,4 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 	</command>
-
-	<tear-down>
-		<execute macro="DMDocument#tearDownPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="DMFolder#tearDownPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="Page#tearDownPG" />
-	</tear-down>
 </definition>

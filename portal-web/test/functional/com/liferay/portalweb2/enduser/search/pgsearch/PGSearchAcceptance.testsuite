@@ -1,0 +1,6 @@
+<definition>
+	<execute test-case-command="PGSearch#SearchBlogsEntry" />
+	<execute test-case-command="PGSearch#SearchMessageBoardsThread" />
+	<execute test-case-command="PGSearch#SearchUser" />
+	<execute test-case-command="PGSearch#SearchWikiPage" />
+</definition>

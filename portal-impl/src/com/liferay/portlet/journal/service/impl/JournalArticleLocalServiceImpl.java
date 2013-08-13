@@ -1179,10 +1179,12 @@ public class JournalArticleLocalServiceImpl
 			SystemEventHierarchyEntryThreadLocal.pop();
 		}
 
-		systemEventLocalService.addSystemEvent(
-			0, groupId, JournalArticle.class.getName(),
-			articleResource.getResourcePrimKey(), articleResource.getUuid(),
-			null, SystemEventConstants.TYPE_DELETE, StringPool.BLANK);
+		if (articleResource != null) {
+			systemEventLocalService.addSystemEvent(
+				0, groupId, JournalArticle.class.getName(),
+				articleResource.getResourcePrimKey(), articleResource.getUuid(),
+				null, SystemEventConstants.TYPE_DELETE, StringPool.BLANK);
+		}
 	}
 
 	/**
@@ -1452,6 +1454,22 @@ public class JournalArticleLocalServiceImpl
 		}
 
 		return article;
+	}
+
+	@Override
+	public JournalArticle fetchLatestArticle(
+			long groupId, String articleId, int status)
+		throws PortalException, SystemException {
+
+		OrderByComparator orderByComparator = new ArticleVersionComparator();
+
+		if (status == WorkflowConstants.STATUS_ANY) {
+			return journalArticlePersistence.fetchByG_A_First(
+				groupId, articleId, orderByComparator);
+		}
+
+		return journalArticlePersistence.fetchByG_A_ST_First(
+			groupId, articleId, status, orderByComparator);
 	}
 
 	@Override
@@ -5133,6 +5151,9 @@ public class JournalArticleLocalServiceImpl
 		Date now = new Date();
 
 		if ((status == WorkflowConstants.STATUS_APPROVED) &&
+			(article.getClassNameId() ==
+				JournalArticleConstants.CLASSNAME_ID_DEFAULT) &&
+			(article.getDisplayDate() != null) &&
 			now.before(article.getDisplayDate())) {
 
 			status = WorkflowConstants.STATUS_SCHEDULED;

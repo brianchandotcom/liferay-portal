@@ -1,0 +1,14 @@
+<definition>
+	<command name="assertTextEquals">
+		<case locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+	</command>
+
+	<command name="click">
+		<case locator-key1="DOCUMENT_CONTAINER_FOLDER1">
+			<execute function="Click#clickAtAndWait" />
+		</case>
+	</command>
+
+</definition>

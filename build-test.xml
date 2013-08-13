@@ -699,6 +699,32 @@
 		</if>
 
 		<if>
+			<equals arg1="${app-server.type}" arg2="tomcat" />
+			<then>
+				<script classpathref="project.classpath" language="beanshell">
+					String appServerVersion = project.getProperty("app-server.version");
+
+					int x = appServerVersion.lastIndexOf(".");
+
+					String appServerVersionMajor = appServerVersion.substring(0, x).trim();
+
+					String appServerType = project.getProperty("app-server.type");
+
+					String appServerIDKey =
+						"app-server." + appServerType + "-" + appServerVersionMajor + ".id";
+
+					project.setProperty("app-server.id.key", appServerIDKey);
+				</script>
+			</then>
+		</if>
+
+		<propertycopy
+			from="${app-server.id.key}"
+			name="app-server.id"
+			override="true"
+		/>
+
+		<if>
 			<not>
 				<isset property="browser.type" />
 			</not>
@@ -742,6 +768,65 @@
 		</if>
 
 		<if>
+			<equals arg1="${browser.type}" arg2="firefox" />
+			<then>
+				<script classpathref="project.classpath" language="beanshell">
+					<![CDATA[
+						import com.liferay.portal.kernel.util.GetterUtil;
+
+						import java.util.regex.Matcher;
+
+						import java.util.regex.Pattern;
+
+						String browserVersion = project.getProperty("browser.version");
+
+						String browserVersionMajor = "3.6";
+
+						try {
+							Pattern pattern = Pattern.compile("[0-9]*\\.[0-9]*");
+
+							Matcher matcher = pattern.matcher(browserVersion);
+
+							if (matcher.find()) {
+								browserVersionMajor = matcher.group();
+
+								double d = GetterUtil.getDouble(browserVersionMajor);
+
+								if (d >= 20) {
+									browserVersionMajor = "20.0";
+								}
+								else if (d >= 15) {
+									browserVersionMajor = "15.0";
+								}
+								else if (d >= 10) {
+									browserVersionMajor = "10.0";
+								}
+								else if (d >= 5) {
+									browserVersionMajor = "5.0";
+								}
+							}
+						}
+						catch (Exception e) {
+						}
+
+						String browserType = project.getProperty("browser.type");
+
+						String browserIDKey =
+							"browser." + browserType + "-" + browserVersionMajor + ".id";
+
+						project.setProperty("browser.id.key", browserIDKey);
+					]]>
+				</script>
+			</then>
+		</if>
+
+		<propertycopy
+			from="${browser.id.key}"
+			name="browser.id"
+			override="true"
+		/>
+
+		<if>
 			<not>
 				<isset property="database.type" />
 			</not>
@@ -776,6 +861,32 @@
 		</if>
 
 		<if>
+			<equals arg1="${database.type}" arg2="mysql" />
+			<then>
+				<script classpathref="project.classpath" language="beanshell">
+					String databaseVersion = project.getProperty("database.version");
+
+					int x = databaseVersion.lastIndexOf(".");
+
+					String databaseVersionMajor = databaseVersion.substring(0, x).trim();
+
+					String databaseType = project.getProperty("database.type");
+
+					String databaseIDKey =
+						"database." + databaseType + "-" + databaseVersionMajor + ".id";
+
+					project.setProperty("database.id.key", databaseIDKey);
+				</script>
+			</then>
+		</if>
+
+		<propertycopy
+			from="${database.id.key}"
+			name="database.id"
+			override="true"
+		/>
+
+		<if>
 			<not>
 				<isset property="java.name" />
 			</not>
@@ -783,6 +894,53 @@
 				<property name="java.name" value="${java.vm.name}" />
 			</then>
 		</if>
+
+		<script classpathref="project.classpath" language="beanshell">
+			String javaName = project.getProperty("java.name");
+
+			String javaBitKey = "";
+
+			if (javaName.contains("64-Bit")) {
+				javaBitKey = "-64";
+			}
+
+			String javaVersion = project.getProperty("java.version");
+
+			String javaVersionKey = "";
+
+			if (javaVersion.contains("1.5.0")) {
+				javaVersionKey = "jdk-5.0";
+			}
+			else if (javaVersion.contains("1.6.0")) {
+				javaVersionKey = "jdk-6.0";
+			}
+			else if (javaVersion.contains("1.7.0")) {
+				javaVersionKey = "jdk-7.0";
+			}
+
+			String javaIDKey = "java." + javaVersionKey + javaBitKey + ".id";
+
+			project.setProperty("java.id.key", javaIDKey);
+		</script>
+
+		<propertycopy
+			from="${java.id.key}"
+			name="java.id"
+			override="true"
+		/>
+
+		<if>
+			<equals arg1="${os.name}" arg2="Windows 7" />
+			<then>
+				<property name="os.id.key" value="os.windows-7.id" />
+			</then>
+		</if>
+
+		<propertycopy
+			from="${os.id.key}"
+			name="os.id"
+			override="true"
+		/>
 
 		<if>
 			<not>
@@ -933,6 +1091,7 @@
 	<property name="java.version" value="${java.version}" />
 	<property name="os.name" value="${os.name}" />
 	<property name="os.version" value="${os.version}" />
+	<property name="unique.id" value="${app-server.id}${browser.id}${database.id}${java.id}${os.id}" />
 </environment-properties>
 <test-properties>
 	<property name="liferay-plugins.edition" value="${liferay-plugins.edition}" />

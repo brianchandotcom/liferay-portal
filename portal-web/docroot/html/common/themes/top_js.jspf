@@ -245,7 +245,7 @@
 			},
 
 			PropsValues: {
-				NTLM_AUTH_ENABLED: <%= PropsValues.NTLM_AUTH_ENABLED %>
+				NTLM_AUTH_ENABLED: <%= PrefsPropsUtil.getBoolean(themeDisplay.getCompanyId(), PropsKeys.NTLM_AUTH_ENABLED, PropsValues.NTLM_AUTH_ENABLED) %>
 			}
 		};
 

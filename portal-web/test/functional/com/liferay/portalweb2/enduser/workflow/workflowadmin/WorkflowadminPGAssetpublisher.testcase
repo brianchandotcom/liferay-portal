@@ -25,6 +25,16 @@
 		</execute>
 	</set-up>
 
+	<tear-down>
+		<execute macro="WebContent#tearDownCP" />
+
+		<execute macro="Page#tearDownPG" />
+
+		<execute macro="Workflow#tearDownPortalWorkflow" />
+
+		<execute macro="Workflow#tearDownSiteWorkflow" />
+	</tear-down>
+
 	<command name="ApproveWebContentViaAssetPublisherPG">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
@@ -134,14 +144,4 @@
 			<var name="webContentTitle" value="${webContentTitle}" />
 		</execute>
 	</command>
-
-	<tear-down>
-		<execute macro="WebContent#tearDownCP" />
-
-		<execute macro="Page#tearDownPG" />
-
-		<execute macro="Workflow#tearDownPortalWorkflow" />
-
-		<execute macro="Workflow#tearDownSiteWorkflow" />
-	</tear-down>
 </definition>

@@ -15,6 +15,14 @@
 		</execute>
 	</set-up>
 
+	<tear-down>
+		<execute macro="List#tearDownCP" />
+
+		<execute macro="DataDefinition#tearDownCP" />
+
+		<execute macro="Page#tearDownPG" />
+	</tear-down>
+
 	<command name="AddList">
 		<var name="dataDefinitionDescription" value="Data Definition Description" />
 		<var name="dataDefinitionName" value="Data Definition Name" />
@@ -294,12 +302,4 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 	</command>
-
-	<tear-down>
-		<execute macro="List#tearDownCP" />
-
-		<execute macro="DataDefinition#tearDownCP" />
-
-		<execute macro="Page#tearDownPG" />
-	</tear-down>
 </definition>

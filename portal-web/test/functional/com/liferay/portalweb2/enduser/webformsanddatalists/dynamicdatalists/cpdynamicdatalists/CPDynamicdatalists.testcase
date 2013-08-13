@@ -3,6 +3,12 @@
 		<execute macro="User#firstLoginPG" />
 	</set-up>
 
+	<tear-down>
+		<execute macro="List#tearDownCP" />
+
+		<execute macro="DataDefinition#tearDownCP" />
+	</tear-down>
+
 	<command name="AddDataDefinition">
 		<var name="dataDefinitionDescription" value="Data Definition Description" />
 		<var name="dataDefinitionName" value="Data Definition" />
@@ -276,10 +282,4 @@
 			<var name="recordText" value="${recordTextEdit}" />
 		</execute>
 	</command>
-
-	<tear-down>
-		<execute macro="List#tearDownCP" />
-
-		<execute macro="DataDefinition#tearDownCP" />
-	</tear-down>
 </definition>

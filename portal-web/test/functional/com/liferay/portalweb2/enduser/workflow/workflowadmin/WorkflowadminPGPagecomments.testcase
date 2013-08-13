@@ -25,6 +25,16 @@
 		</execute>
 	</set-up>
 
+	<tear-down>
+		<execute macro="PageComment#tearDownPG" />
+
+		<execute macro="Page#tearDownPG" />
+
+		<execute macro="Workflow#tearDownPortalWorkflow" />
+
+		<execute macro="Workflow#tearDownSiteWorkflow" />
+	</tear-down>
+
 	<command name="ApprovePageCommentPG">
 		<var name="commentBody" value="Page Comment Comment" />
 		<var name="commentUsername" value="Test Test" />
@@ -150,14 +160,4 @@
 			<var name="commentUsername" value="${commentUsername}" />
 		</execute>
 	</command>
-
-	<tear-down>
-		<execute macro="PageComment#tearDownPG" />
-
-		<execute macro="Page#tearDownPG" />
-
-		<execute macro="Workflow#tearDownPortalWorkflow" />
-
-		<execute macro="Workflow#tearDownSiteWorkflow" />
-	</tear-down>
 </definition>

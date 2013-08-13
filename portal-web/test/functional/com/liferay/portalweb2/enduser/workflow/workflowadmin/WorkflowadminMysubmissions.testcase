@@ -13,6 +13,14 @@
 		</execute>
 	</set-up>
 
+	<tear-down>
+		<execute macro="WebContent#tearDownCP" />
+
+		<execute macro="Workflow#tearDownPortalWorkflow" />
+
+		<execute macro="Workflow#tearDownSiteWorkflow" />
+	</tear-down>
+
 	<command name="WithdrawTaskAssignedToMeByActions">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
@@ -267,12 +275,4 @@
 			<var name="workflowTask" value="Approved" />
 		</execute>
 	</command>
-
-	<tear-down>
-		<execute macro="WebContent#tearDownCP" />
-
-		<execute macro="Workflow#tearDownPortalWorkflow" />
-
-		<execute macro="Workflow#tearDownSiteWorkflow" />
-	</tear-down>
 </definition>

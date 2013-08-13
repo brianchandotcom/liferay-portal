@@ -25,6 +25,18 @@
 		</execute>
 	</set-up>
 
+	<tear-down>
+		<execute macro="WikiNode#tearDownCP" />
+
+		<execute macro="WikiPage#tearDownCP" />
+
+		<execute macro="Page#tearDownPG" />
+
+		<execute macro="Workflow#tearDownPortalWorkflow" />
+
+		<execute macro="Workflow#tearDownSiteWorkflow" />
+	</tear-down>
+
 	<command name="ApproveWikiPageCP">
 		<var name="wikiPageContent" value="Wiki Page Content" />
 		<var name="wikiPageTitle" value="Wiki Page Title" />
@@ -156,16 +168,4 @@
 			<var name="wikiPageUsername" value="${wikiPageUsername}" />
 		</execute>
 	</command>
-
-	<tear-down>
-		<execute macro="WikiNode#tearDownCP" />
-
-		<execute macro="WikiPage#tearDownCP" />
-
-		<execute macro="Page#tearDownPG" />
-
-		<execute macro="Workflow#tearDownPortalWorkflow" />
-
-		<execute macro="Workflow#tearDownSiteWorkflow" />
-	</tear-down>
 </definition>

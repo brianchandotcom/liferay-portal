@@ -14,6 +14,14 @@
 		</execute>
 	</set-up>
 
+	<tear-down>
+		<execute macro="BlogsEntry#tearDownCP" />
+
+		<execute macro="Workflow#tearDownPortalWorkflow" />
+
+		<execute macro="Workflow#tearDownSiteWorkflow" />
+	</tear-down>
+
 	<command name="ApproveBlogsEntryCP">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
@@ -126,12 +134,4 @@
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 	</command>
-
-	<tear-down>
-		<execute macro="BlogsEntry#tearDownCP" />
-
-		<execute macro="Workflow#tearDownPortalWorkflow" />
-
-		<execute macro="Workflow#tearDownSiteWorkflow" />
-	</tear-down>
 </definition>

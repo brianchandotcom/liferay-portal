@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -232,7 +233,7 @@ public class HtmlBBCodeTranslatorImpl implements BBCodeTranslator {
 	protected void handleCode(
 		StringBundler sb, List<BBCodeItem> bbCodeItems, IntegerWrapper marker) {
 
-		sb.append("<div class=\"code\">");
+		sb.append("<div class=\"lfr-code\">");
 		sb.append("<table>");
 		sb.append("<tbody>");
 		sb.append("<tr>");
@@ -255,21 +256,24 @@ public class HtmlBBCodeTranslatorImpl implements BBCodeTranslator {
 		}
 
 		sb.append("</td>");
-		sb.append("<td>");
+		sb.append("<td class=\"lines\">");
 
 		for (int i = 0; i < lines.length; i++) {
 			String index = String.valueOf(i + 1);
+			String line = lines[i];
 
-			lines[i] = StringUtil.replace(
-				lines[i], StringPool.THREE_SPACES, "&nbsp; &nbsp;");
-			lines[i] = StringUtil.replace(
-				lines[i], StringPool.DOUBLE_SPACE, "&nbsp; ");
+			line = StringUtil.replace(
+				line, StringPool.THREE_SPACES, "&nbsp; &nbsp;");
+			line = StringUtil.replace(
+				line, StringPool.DOUBLE_SPACE, "&nbsp; ");
 
-			sb.append(lines[i]);
-
-			if (index.length() < (lines.length - 1)) {
-				sb.append("<br />");
+			if (Validator.isNull(line)) {
+				line = "<br />";
 			}
+
+			sb.append("<div class=\"line\">");
+			sb.append(line);
+			sb.append("</div>");
 		}
 
 		sb.append("</td>");

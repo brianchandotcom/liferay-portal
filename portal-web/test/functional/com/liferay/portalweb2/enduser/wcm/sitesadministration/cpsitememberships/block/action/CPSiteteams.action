@@ -3,13 +3,27 @@
 		<case locator-key1="SUCCESS_MESSAGE">
 			<execute function="AssertTextEquals#assertText" />
 		</case>
+
+		<case locator-key1="INFO_MESSAGE">
+			<execute function="AssertTextEquals#assertText" />
+		</case>
+
+		<case locator-key1="TEAM_TABLE_NAME">
+			<execute function="AssertTextEquals#assertText" />
+		</case>
+	</command>
+
+	<command name="type">
+		<case locator-key1="SEARCH_FIELD">
+			<execute function="Type#type" />
+		</case>
 	</command>
 
 	<command name="assertClick">
-		<case locator-key1="SAVE_BUTTON">
+		<case locator-key1="ADD_TEAM_BUTTON">
 			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
-		
+
 		<case locator-key1="SEARCH_BUTTON">
 			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>

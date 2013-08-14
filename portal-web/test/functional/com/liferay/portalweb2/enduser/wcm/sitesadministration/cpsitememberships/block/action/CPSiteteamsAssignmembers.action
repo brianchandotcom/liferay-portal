@@ -1,0 +1,31 @@
+<definition>
+	<command name="assertClick">
+		<case locator-key1="AVAILABLE">
+			<execute function="AssertClick#assertTextClickAt" />
+		</case>
+
+		<case locator-key1="SEARCH_BUTTON">
+			<execute function="AssertClick#assertTextClickAt" />
+		</case>
+
+		<case locator-key1="UPDATE_ASSOCIATIONS_BUTTON">
+			<execute function="AssertClick#assertTextClickAt" />
+		</case>
+	</command>
+
+	<command name="type">
+		<case locator-key1="BASIC_SEARCH_FIELD">
+			<execute function="Type#type" />
+		</case>
+	</command>
+
+	<command name="assertTextEquals">
+		<case locator-key1="USER_TABLE_SCREEN_NAME">
+			<execute function="AssertTextEquals#assertText" />
+		</case>
+		
+		<case locator-key1="SUCCESS_MESSAGE">
+			<execute function="AssertTextEquals#assertText" />
+		</case>
+	</command>
+</definition>

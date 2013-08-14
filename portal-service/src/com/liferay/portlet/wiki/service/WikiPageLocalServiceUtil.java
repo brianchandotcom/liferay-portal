@@ -504,6 +504,28 @@ public class WikiPageLocalServiceUtil {
 		getService().discardDraft(nodeId, title, version);
 	}
 
+	public static com.liferay.portlet.wiki.model.WikiPage fetchLatestPage(
+		long resourcePrimKey, int status, boolean preferApproved)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .fetchLatestPage(resourcePrimKey, status, preferApproved);
+	}
+
+	public static com.liferay.portlet.wiki.model.WikiPage fetchLatestPage(
+		long resourcePrimKey, long nodeId, int status, boolean preferApproved)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .fetchLatestPage(resourcePrimKey, nodeId, status,
+			preferApproved);
+	}
+
+	public static com.liferay.portlet.wiki.model.WikiPage fetchLatestPage(
+		long nodeId, java.lang.String title, int status, boolean preferApproved)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .fetchLatestPage(nodeId, title, status, preferApproved);
+	}
+
 	public static com.liferay.portlet.wiki.model.WikiPage fetchPage(
 		long nodeId, java.lang.String title, double version)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -528,6 +550,30 @@ public class WikiPageLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService().getIncomingLinks(nodeId, title);
+	}
+
+	public static com.liferay.portlet.wiki.model.WikiPage getLatestPage(
+		long resourcePrimKey, int status, boolean preferApproved)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getLatestPage(resourcePrimKey, status, preferApproved);
+	}
+
+	public static com.liferay.portlet.wiki.model.WikiPage getLatestPage(
+		long resourcePrimKey, long nodeId, int status, boolean preferApproved)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getLatestPage(resourcePrimKey, nodeId, status,
+			preferApproved);
+	}
+
+	public static com.liferay.portlet.wiki.model.WikiPage getLatestPage(
+		long nodeId, java.lang.String title, int status, boolean preferApproved)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getLatestPage(nodeId, title, status, preferApproved);
 	}
 
 	public static java.util.List<com.liferay.portlet.wiki.model.WikiPage> getNoAssetPages()

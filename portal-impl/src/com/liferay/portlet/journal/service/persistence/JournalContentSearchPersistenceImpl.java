@@ -365,6 +365,10 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByPortletId(portletId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<JournalContentSearch> list = findByPortletId(portletId, count - 1,
 				count, orderByComparator);
 
@@ -901,6 +905,10 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 	public JournalContentSearch fetchByArticleId_Last(String articleId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByArticleId(articleId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<JournalContentSearch> list = findByArticleId(articleId, count - 1,
 				count, orderByComparator);
@@ -1447,6 +1455,10 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 		throws SystemException {
 		int count = countByG_P(groupId, privateLayout);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<JournalContentSearch> list = findByG_P(groupId, privateLayout,
 				count - 1, count, orderByComparator);
 
@@ -1989,6 +2001,10 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 	public JournalContentSearch fetchByG_A_Last(long groupId, String articleId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByG_A(groupId, articleId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<JournalContentSearch> list = findByG_A(groupId, articleId,
 				count - 1, count, orderByComparator);
@@ -2577,6 +2593,10 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByG_P_L(groupId, privateLayout, layoutId);
 
+		if (count == 0) {
+			return null;
+		}
+
 		List<JournalContentSearch> list = findByG_P_L(groupId, privateLayout,
 				layoutId, count - 1, count, orderByComparator);
 
@@ -3163,6 +3183,10 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 		boolean privateLayout, String articleId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByG_P_A(groupId, privateLayout, articleId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<JournalContentSearch> list = findByG_P_A(groupId, privateLayout,
 				articleId, count - 1, count, orderByComparator);
@@ -3804,6 +3828,10 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 		boolean privateLayout, long layoutId, String portletId,
 		OrderByComparator orderByComparator) throws SystemException {
 		int count = countByG_P_L_P(groupId, privateLayout, layoutId, portletId);
+
+		if (count == 0) {
+			return null;
+		}
 
 		List<JournalContentSearch> list = findByG_P_L_P(groupId, privateLayout,
 				layoutId, portletId, count - 1, count, orderByComparator);

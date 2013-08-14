@@ -194,6 +194,74 @@ public class ArrayUtilTest {
 	}
 
 	@Test
+	public void testIsEmptyBooleanArray() {
+		Assert.assertTrue(ArrayUtil.isEmpty((boolean[])null));
+		Assert.assertTrue(ArrayUtil.isEmpty(new boolean[] {}));
+		Assert.assertFalse(ArrayUtil.isEmpty(new boolean[] {true, true}));
+	}
+
+	@Test
+	public void testIsEmptyByteArray() {
+		Assert.assertTrue(ArrayUtil.isEmpty((byte[])null));
+		Assert.assertTrue(ArrayUtil.isEmpty(new byte[] {}));
+		Assert.assertFalse(ArrayUtil.isEmpty(new byte[] {1, 2}));
+	}
+
+	@Test
+	public void testIsEmptyCharArray() {
+		Assert.assertTrue(ArrayUtil.isEmpty((char[])null));
+		Assert.assertTrue(ArrayUtil.isEmpty(new char[] {}));
+		Assert.assertFalse(ArrayUtil.isEmpty(new char[] {1, 2}));
+	}
+
+	@Test
+	public void testIsEmptyDoubleArray() {
+		Assert.assertTrue(ArrayUtil.isEmpty((double[])null));
+		Assert.assertTrue(ArrayUtil.isEmpty(new double[] {}));
+		Assert.assertFalse(ArrayUtil.isEmpty(new double[] {1, 2}));
+	}
+
+	@Test
+	public void testIsEmptyFloatArray() {
+		Assert.assertTrue(ArrayUtil.isEmpty((float[])null));
+		Assert.assertTrue(ArrayUtil.isEmpty(new float[] {}));
+		Assert.assertFalse(ArrayUtil.isEmpty(new float[] {1, 2}));
+	}
+
+	@Test
+	public void testIsEmptyIntArray() {
+		Assert.assertTrue(ArrayUtil.isEmpty((int[])null));
+		Assert.assertTrue(ArrayUtil.isEmpty(new int[] {}));
+		Assert.assertFalse(ArrayUtil.isEmpty(new int[] {1, 2}));
+	}
+
+	@Test
+	public void testIsEmptyLongArray() {
+		Assert.assertTrue(ArrayUtil.isEmpty((long[])null));
+		Assert.assertTrue(ArrayUtil.isEmpty(new long[] {}));
+		Assert.assertFalse(ArrayUtil.isEmpty(new long[] {1, 2}));
+	}
+
+	@Test
+	public void testIsEmptyShortArray() {
+		Assert.assertTrue(ArrayUtil.isEmpty((short[])null));
+		Assert.assertTrue(ArrayUtil.isEmpty(new short[] {}));
+		Assert.assertFalse(ArrayUtil.isEmpty(new short[] {1, 2}));
+	}
+
+	@Test
+	public void testIsEmptyUserArray() {
+		Assert.assertTrue(ArrayUtil.isEmpty((User[])null));
+		Assert.assertTrue(ArrayUtil.isEmpty(new User[] {}));
+		Assert.assertFalse(
+			ArrayUtil.isEmpty(
+				new User[] {
+					new User("brian", 20), new User("julio", 20),
+					new User("sergio", 20)
+				}));
+	}
+
+	@Test
 	public void testReverseBooleanArray() throws Exception {
 		boolean[] array = new boolean[] {true, true, false};
 

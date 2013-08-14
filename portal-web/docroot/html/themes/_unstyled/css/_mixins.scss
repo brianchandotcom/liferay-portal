@@ -11,7 +11,10 @@ $tablet: 980px !default;
 			$minWidth: 0;
 		}
 		@else if $type == tablet {
-			$maxWidth: if($maxWidth == -1, $tablet - 1, $maxWidth);
+			@if $maxWidth != 0 {
+				$maxWidth: if($maxWidth == -1, $tablet - 1, max($tablet - 1, $maxWidth));
+			}
+
 			$minWidth: if($minWidth == -1, $phone, min($phone, $minWidth));
 		}
 		@else if $type == desktop {

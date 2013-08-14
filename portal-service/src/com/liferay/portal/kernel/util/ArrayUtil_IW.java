@@ -326,6 +326,42 @@ public class ArrayUtil_IW {
 		return ArrayUtil.getValue(array, pos);
 	}
 
+	public boolean isEmpty(boolean[] array) {
+		return ArrayUtil.isEmpty(array);
+	}
+
+	public boolean isEmpty(byte[] array) {
+		return ArrayUtil.isEmpty(array);
+	}
+
+	public boolean isEmpty(char[] array) {
+		return ArrayUtil.isEmpty(array);
+	}
+
+	public boolean isEmpty(double[] array) {
+		return ArrayUtil.isEmpty(array);
+	}
+
+	public boolean isEmpty(float[] array) {
+		return ArrayUtil.isEmpty(array);
+	}
+
+	public boolean isEmpty(int[] array) {
+		return ArrayUtil.isEmpty(array);
+	}
+
+	public boolean isEmpty(long[] array) {
+		return ArrayUtil.isEmpty(array);
+	}
+
+	public boolean isEmpty(Object[] array) {
+		return ArrayUtil.isEmpty(array);
+	}
+
+	public static boolean isEmpty(short[] array) {
+		return ArrayUtil.isEmpty(array);
+	}
+
 	public boolean[] remove(boolean[] array, boolean value) {
 		return ArrayUtil.remove(array, value);
 	}

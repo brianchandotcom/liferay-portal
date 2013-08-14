@@ -1038,6 +1038,78 @@ public class ArrayUtil {
 		}
 	}
 
+	public static boolean isEmpty(boolean[] array) {
+		if ((array == null) || (array.length == 0)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public static boolean isEmpty(byte[] array) {
+		if ((array == null) || (array.length == 0)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public static boolean isEmpty(char[] array) {
+		if ((array == null) || (array.length == 0)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public static boolean isEmpty(double[] array) {
+		if ((array == null) || (array.length == 0)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public static boolean isEmpty(float[] array) {
+		if ((array == null) || (array.length == 0)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public static boolean isEmpty(int[] array) {
+		if ((array == null) || (array.length == 0)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public static boolean isEmpty(long[] array) {
+		if ((array == null) || (array.length == 0)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public static boolean isEmpty(Object[] array) {
+		if ((array == null) || (array.length == 0)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public static boolean isEmpty(short[] array) {
+		if ((array == null) || (array.length == 0)) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public static boolean[] remove(boolean[] array, boolean value) {
 		List<Boolean> list = new ArrayList<Boolean>();
 

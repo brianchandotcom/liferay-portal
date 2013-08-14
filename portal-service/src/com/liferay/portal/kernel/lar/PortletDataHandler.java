@@ -203,4 +203,6 @@ public interface PortletDataHandler {
 
 	public void setPortletId(String portletId);
 
+	public boolean supportsDataStrategyCopyAsNew();
+
 }

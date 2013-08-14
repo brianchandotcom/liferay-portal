@@ -18,6 +18,8 @@ import java.text.DateFormat;
 
 import java.util.Date;
 
+import java.math.BigDecimal;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -209,12 +211,7 @@ public class GetterUtil {
 				return defaultValue;
 			}
 
-			if (getFloat(value) == getInteger(value)) {
-				return getInteger(value);
-			}
-			else {
-				return getFloat(value);
-			}
+			return new BigDecimal((String)value);
 		}
 
 		Class<?> clazz = value.getClass();

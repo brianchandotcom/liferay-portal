@@ -287,8 +287,8 @@ public class LiferaySeleniumHelper {
 		BaseTestCase.fail(message);
 	}
 
-	public static void getContent(String number) throws Exception {
-		MailFetching.getContent(number);
+	public static String getContent(String number) throws Exception {
+		return MailFetching.getContent(number);
 	}
 
 	public static String getNumberDecrement(String value) {
@@ -299,8 +299,8 @@ public class LiferaySeleniumHelper {
 		return StringUtil.valueOf(GetterUtil.getInteger(value) + 1);
 	}
 
-	public static void getSubject(String number) throws Exception {
-		MailFetching.getSubject(number);
+	public static String getSubject(String number) throws Exception {
+		return MailFetching.getSubject(number);
 	}
 
 	public static boolean isConfirmation(

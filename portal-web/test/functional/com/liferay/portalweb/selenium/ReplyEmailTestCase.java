@@ -14,8 +14,6 @@
 
 package com.liferay.portalweb.selenium;
 
-import com.liferay.portalweb.portal.BaseTestCase;
-import com.liferay.portalweb.portal.util.MailFetching;
 import com.liferay.portalweb.portal.util.SendEmail;
 
 import org.junit.Test;
@@ -23,11 +21,7 @@ import org.junit.Test;
 /**
  * @author Kwang Lee
  */
-public class ReplyEmailTestCase extends BaseTestCase {
-
-	@Override
-	public void tearDown() throws Exception {
-	}
+public class ReplyEmailTestCase extends BaseSeleniumTestCase {
 
 	@Test
 	public void testReplyEmail() throws Exception {
@@ -35,13 +29,13 @@ public class ReplyEmailTestCase extends BaseTestCase {
 		email.send(
 			"kwanglee.test@gmail.com", "l33kw4ng", "kwanglee.test1@gmail.com",
 			"Email Test", "This is a test message");
-		selenium.pause("1000");
+		selenium.pause("1500");
 		selenium.connect("kwanglee.test1@gmail.com", "l33kw4ng");
 		selenium.replyEmail("kwanglee.test@gmail.com", "This is a reply");
 		selenium.deleteEmails();
 		selenium.connect("kwanglee.test@gmail.com", "l33kw4ng");
 		selenium.getContent("1");
-		assertEquals(MailFetching.getContent("1"), "This is a reply");
+		assertEquals(selenium.getContent("1"), "This is a reply");
 		selenium.deleteEmails();
 	}
 

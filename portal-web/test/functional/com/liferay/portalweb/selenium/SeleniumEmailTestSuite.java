@@ -12,9 +12,11 @@
  * details.
  */
 
-package com.liferay.portalweb.selenium;
+package com.liferay.portalweb.portal;
 
-import com.liferay.portalweb.portal.BaseTestSuite;
+import com.liferay.portalweb.selenium.AssertEmailContentTestCase;
+import com.liferay.portalweb.selenium.AssertEmailSubjectTestCase;
+import com.liferay.portalweb.selenium.ReplyEmailTestCase;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

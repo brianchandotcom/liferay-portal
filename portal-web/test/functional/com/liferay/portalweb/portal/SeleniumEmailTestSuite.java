@@ -14,26 +14,21 @@
 
 package com.liferay.portalweb.selenium;
 
-import com.liferay.portalweb.portal.util.SendEmail;
-
-import org.junit.Test;
+import junit.framework.Test;
+import junit.framework.TestSuite;
 
 /**
  * @author Kwang Lee
  */
-public class AssertEmailSubjectTestCase extends BaseSeleniumTestCase {
+public class SeleniumEmailTestSuite extends BaseSeleniumTestCase {
 
-	@Test
-	public void testAssertEmailSubject() throws Exception {
-		SendEmail email = new SendEmail();
-		email.send(
-			"kwanglee.test@gmail.com", "l33kw4ng", "kwanglee.test1@gmail.com",
-			"Email Test", "This is a test message");
-		selenium.pause("1500");
-		selenium.connect("kwanglee.test1@gmail.com", "l33kw4ng");
-		selenium.getSubject("1");
-		assertEquals(selenium.getSubject("1"), "Email Test");
-		selenium.deleteEmails();
+	public static Test suite() {
+		TestSuite testSuite = new TestSuite();
+		testSuite.addTestSuite(AssertEmailSubjectTestCase.class);
+		testSuite.addTestSuite(AssertEmailContentTestCase.class);
+		testSuite.addTestSuite(ReplyEmailTestCase.class);
+
+		return testSuite;
 	}
 
 }

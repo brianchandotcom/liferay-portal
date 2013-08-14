@@ -186,6 +186,11 @@ public abstract class BaseWebDriverImpl
 	}
 
 	@Override
+	public void connect(String emailAddress, String password) throws Exception {
+		LiferaySeleniumHelper.connect(emailAddress, password);
+	}
+
+	@Override
 	public void copyText(String locator) {
 		_clipBoard = super.getText(locator);
 	}
@@ -196,6 +201,11 @@ public abstract class BaseWebDriverImpl
 	}
 
 	@Override
+	public void deleteEmails() throws Exception {
+		LiferaySeleniumHelper.deleteEmails();
+	}
+
+	@Override
 	public void echo(String message) {
 		LiferaySeleniumHelper.echo(message);
 	}
@@ -203,6 +213,11 @@ public abstract class BaseWebDriverImpl
 	@Override
 	public void fail(String message) {
 		LiferaySeleniumHelper.fail(message);
+	}
+
+	@Override
+	public void getContent(String number) throws Exception {
+		LiferaySeleniumHelper.getContent(number);
 	}
 
 	@Override
@@ -284,6 +299,11 @@ public abstract class BaseWebDriverImpl
 	@Override
 	public String getProjectDir() {
 		return _projectDir;
+	}
+
+	@Override
+	public void getSubject(String number) throws Exception {
+		LiferaySeleniumHelper.getSubject(number);
 	}
 
 	@Override
@@ -426,6 +446,11 @@ public abstract class BaseWebDriverImpl
 	public void refreshAndWait() {
 		super.refresh();
 		super.waitForPageToLoad("30000");
+	}
+
+	@Override
+	public void replyEmail(String to, String content) throws Exception {
+		LiferaySeleniumHelper.replyEmail(to, content);
 	}
 
 	@Override

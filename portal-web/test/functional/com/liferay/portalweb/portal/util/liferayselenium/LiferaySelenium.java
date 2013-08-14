@@ -71,13 +71,19 @@ public interface LiferaySelenium extends Selenium {
 
 	public void clickAtAndWait(String locator, String coordString);
 
+	public void connect(String emailAddress, String password) throws Exception;
+
 	public void copyText(String locator);
 
 	public void copyValue(String locator);
 
+	public void deleteEmails() throws Exception;
+
 	public void echo(String message);
 
 	public void fail(String message);
+
+	public void getContent(String number) throws Exception;
 
 	public String getCurrentDay();
 
@@ -96,6 +102,8 @@ public interface LiferaySelenium extends Selenium {
 	public String getPrimaryTestSuiteName();
 
 	public String getProjectDir();
+
+	public void getSubject(String number) throws Exception;
 
 	public void goBackAndWait();
 
@@ -138,6 +146,8 @@ public interface LiferaySelenium extends Selenium {
 	public void pause(String waitTime) throws Exception;
 
 	public void refreshAndWait();
+
+	public void replyEmail(String to, String content) throws Exception;
 
 	public void saveScreenshot(String fileName) throws Exception;
 

@@ -20,7 +20,6 @@
 	</set-up>
 
 	<tear-down>
-
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>

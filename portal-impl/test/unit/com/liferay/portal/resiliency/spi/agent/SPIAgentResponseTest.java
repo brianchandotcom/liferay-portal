@@ -279,7 +279,7 @@ public class SPIAgentResponseTest {
 
 		// Portal resiliency action, char model output, with footer
 
-		content = "<body>content</body>";
+		content = "<div>content</div>";
 
 		bufferCacheServletResponse.setString(content);
 
@@ -297,8 +297,8 @@ public class SPIAgentResponseTest {
 		Assert.assertNotNull(spiAgentResponse.metaData);
 		Assert.assertNull(spiAgentResponse.byteData);
 		Assert.assertEquals(
-			"<body>content<div class=\"alert alert-info\"><strong>This " +
-				"portlet is from SPI 1234</strong></div></body>",
+			"<div>content<div class=\"alert alert-info\"><strong>This " +
+				"portlet is from SPI 1234</strong></div></div>",
 			spiAgentResponse.stringData);
 	}
 

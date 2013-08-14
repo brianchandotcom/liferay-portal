@@ -73,17 +73,27 @@ public class JournalArticleScheduledTest {
 	}
 
 	@Test
-	public void testScheduledApprovedArticle() throws Exception {
-		testScheduledArticle(true);
+	public void testScheduleApprovedArticleToTheFuture() throws Exception {
+		testScheduledArticle(true, FUTURE);
 	}
 
 	@Test
-	public void testScheduledDraftArticle() throws Exception {
-		testScheduledArticle(false);
+	public void testScheduleApprovedArticleToThePast() throws Exception {
+		testScheduledArticle(true, PAST);
+	}
+
+	@Test
+	public void testScheduleDraftArticleToTheFuture() throws Exception {
+		testScheduledArticle(false, FUTURE);
+	}
+
+	@Test
+	public void testScheduleDraftArticleToThePast() throws Exception {
+		testScheduledArticle(false, PAST);
 	}
 
 	protected JournalArticle addJournalArticle(
-			long groupId, boolean approved, Date displayDate)
+			long groupId, boolean approved, Date displayDate, int when)
 		throws Exception {
 
 		Map<Locale, String> titleMap = new HashMap<Locale, String>();
@@ -95,7 +105,7 @@ public class JournalArticleScheduledTest {
 		descriptionMap.put(
 			LocaleUtil.getDefault(), ServiceTestUtil.randomString());
 
-		Calendar displayDateCalendar = getCalendarFromDate(displayDate, FUTURE);
+		Calendar displayDateCalendar = getCalendarFromDate(displayDate, when);
 
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
 			groupId);
@@ -134,42 +144,16 @@ public class JournalArticleScheduledTest {
 		return calendar;
 	}
 
-	protected void testScheduledArticle(boolean approved) throws Exception {
+	protected void testScheduledArticle(boolean approved, int when)
+		throws Exception {
+
 		int initialSearchArticlesCount = JournalTestUtil.getSearchArticlesCount(
 			_group.getCompanyId(), _group.getGroupId());
 
 		Date now = new Date();
 
 		JournalArticle article = addJournalArticle(
-			_group.getGroupId(), approved, now);
-
-		AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
-			JournalArticle.class.getName(), article.getResourcePrimKey());
-
-		if (approved) {
-			Assert.assertFalse(article.isApproved());
-			Assert.assertTrue(article.isScheduled());
-			Assert.assertFalse(assetEntry.isVisible());
-		}
-		else {
-			Assert.assertTrue(article.isDraft());
-			Assert.assertFalse(article.isScheduled());
-			Assert.assertFalse(assetEntry.isVisible());
-		}
-
-		Assert.assertEquals(
-			initialSearchArticlesCount,
-			JournalTestUtil.getSearchArticlesCount(
-				_group.getCompanyId(), _group.getGroupId()));
-
-		// Modify the article Date surpassing the service to simulate the time
-		// has passed
-
-		Calendar pastDisplayDateCalendar = getCalendarFromDate(now, PAST);
-
-		article.setDisplayDate(pastDisplayDateCalendar.getTime());
-
-		article = JournalArticleLocalServiceUtil.updateJournalArticle(article);
+			_group.getGroupId(), approved, now, when);
 
 		// Launch the scheduled task
 
@@ -177,28 +161,37 @@ public class JournalArticleScheduledTest {
 
 		article = JournalArticleLocalServiceUtil.getArticle(article.getId());
 
-		assetEntry = AssetEntryLocalServiceUtil.getEntry(
+		AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
 			JournalArticle.class.getName(), article.getResourcePrimKey());
 
-		if (approved) {
-			Assert.assertTrue(article.isApproved());
-			Assert.assertFalse(article.isScheduled());
-			Assert.assertTrue(assetEntry.isVisible());
+		if (when == FUTURE) {
+			if (approved) {
+				Assert.assertTrue(article.isScheduled());
+			}
+			else {
+				Assert.assertTrue(article.isDraft());
+			}
 
-			Assert.assertEquals(
-				initialSearchArticlesCount + 1,
-				JournalTestUtil.getSearchArticlesCount(
-					_group.getCompanyId(), _group.getGroupId()));
+			Assert.assertFalse(article.isApproved());
+			Assert.assertFalse(assetEntry.isVisible());
 		}
 		else {
-			Assert.assertTrue(article.isDraft());
 			Assert.assertFalse(article.isScheduled());
-			Assert.assertFalse(assetEntry.isVisible());
+			Assert.assertEquals(approved, article.isApproved());
+			Assert.assertEquals(approved, assetEntry.isVisible());
 
-			Assert.assertEquals(
-				initialSearchArticlesCount,
-				JournalTestUtil.getSearchArticlesCount(
-					_group.getCompanyId(), _group.getGroupId()));
+			if (approved) {
+				Assert.assertEquals(
+					initialSearchArticlesCount + 1,
+					JournalTestUtil.getSearchArticlesCount(
+						_group.getCompanyId(), _group.getGroupId()));
+			}
+			else {
+				Assert.assertEquals(
+					initialSearchArticlesCount,
+					JournalTestUtil.getSearchArticlesCount(
+						_group.getCompanyId(), _group.getGroupId()));
+			}
 		}
 	}
 

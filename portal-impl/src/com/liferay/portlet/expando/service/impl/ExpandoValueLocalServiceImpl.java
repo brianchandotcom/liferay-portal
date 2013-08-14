@@ -19,6 +19,9 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.CompanyThreadLocal;
+import com.liferay.portal.util.DateArrayConverter;
+import com.liferay.portal.util.NumberArrayConverter;
+import com.liferay.portal.util.NumberConverter;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.expando.model.ExpandoColumn;
 import com.liferay.portlet.expando.model.ExpandoColumnConstants;
@@ -40,6 +43,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import jodd.typeconverter.TypeConverterManager;
+import jodd.typeconverter.TypeConverterManagerBean;
 
 /**
  * @author Raymond Augé
@@ -2440,6 +2444,22 @@ public class ExpandoValueLocalServiceImpl
 		}
 
 		return false;
+	}
+
+	static {
+		TypeConverterManagerBean defaultTypeConverterManager =
+			TypeConverterManager.getDefaultTypeConverterManager();
+
+		defaultTypeConverterManager.register(
+			Date[].class,
+			new DateArrayConverter(
+				defaultTypeConverterManager.getConvertBean()));
+		defaultTypeConverterManager.register(
+			Number[].class,
+			new NumberArrayConverter(
+				defaultTypeConverterManager.getConvertBean()));
+		defaultTypeConverterManager.register(
+			Number.class, new NumberConverter());
 	}
 
 }

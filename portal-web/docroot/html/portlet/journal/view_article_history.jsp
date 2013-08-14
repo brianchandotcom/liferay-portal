@@ -153,7 +153,9 @@ JournalArticle article = (JournalArticle)request.getAttribute(WebKeys.JOURNAL_AR
 
 				// Display date
 
-				row.addDate(articleVersion.getDisplayDate());
+				if (articleVersion.getDisplayDate() != null) {
+					row.addDate(articleVersion.getDisplayDate());
+				}
 
 				// Author
 

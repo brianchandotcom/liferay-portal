@@ -504,6 +504,11 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 		_portletId = portletId;
 	}
 
+	@Override
+	public boolean supportsDataStrategyCopyAsNew() {
+		return true;
+	}
+
 	protected Element addExportDataRootElement(
 		PortletDataContext portletDataContext) {
 

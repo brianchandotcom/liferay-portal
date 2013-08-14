@@ -51,6 +51,11 @@ public class PasswordPolicyPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	@Override
+	public boolean supportsDataStrategyCopyAsNew() {
+		return false;
+	}
+
+	@Override
 	protected PortletPreferences doDeleteData(
 			PortletDataContext portletDataContext, String portletId,
 			PortletPreferences portletPreferences)

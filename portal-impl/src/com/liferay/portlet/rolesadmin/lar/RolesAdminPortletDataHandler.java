@@ -63,6 +63,11 @@ public class RolesAdminPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	@Override
+	public boolean supportsDataStrategyCopyAsNew() {
+		return false;
+	}
+
+	@Override
 	protected PortletPreferences doDeleteData(
 			PortletDataContext portletDataContext, String portletId,
 			PortletPreferences portletPreferences)

@@ -137,6 +137,20 @@
 		</if>
 	</command>
 
+	<command name="logoutAndLoginPG">
+		<execute macro="Page#openURL" />
+
+		<if>
+			<condition action="Dockbar#isTextNotEqual" locator-key1="USER_NAME" value1="${userLoginFullName}" />
+			<then>
+				<execute macro="User#logoutPG" />
+				<execute macro="User#loginPG">
+					<var name="userEmailAddress" value="${userLoginEmailAddress}" />
+				</execute>
+			</then>
+		</if>
+	</command>
+
 	<command name="logoutPG">
 		<execute macro="Page#openURL" />
 

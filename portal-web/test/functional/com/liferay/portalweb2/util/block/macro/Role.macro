@@ -40,7 +40,7 @@
 		<execute action="CPRolesAssignmembersUsers#assertChecked" locator-key1="USER_TABLE_CHECKBOX_1" />
 	</command>
 
-	<command name="definePermission">
+	<command name="definePermissionCP">
 		<if>
 			<contains string="${roleName}" substring="Orgrole" />
 			<then>
@@ -65,19 +65,19 @@
 		<execute action="CPRolesDefinepermissions#type" locator-key1="SEARCH_FIELD" value1="${permissionNavigationValue}" />
 		<execute action="CPRolesDefinepermissions#assertClick" locator-key1="${permissionNavigationKey}" value1="${permissionNavigationValue}" />
 
-		<execute action="CPRolesDefinepermissionsAllpermissions#check" locator-key1="${permissionKey}" />
+		<execute action="CPRolesDefinepermissionsAllpermissions#check" locator-key1="${permissionDefinitionKey}" />
 		<execute action="CPRolesDefinepermissionsAllpermissions#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 
 		<var name="key_permissionNavigationValue" value="${permissionNavigationValue}" />
-		<var name="key_permissionValue" value="${permissionValue}" />
+		<var name="key_permissionDefinitionValue" value="${permissionDefinitionValue}" />
 
 		<execute action="CPRolesDefinepermissions#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="The role permissions were updated." />
 		<execute action="CPRolesDefinepermissions#assertTextEquals" locator-key1="PERMISSION_TABLE_PERMISSIONS" value1="${permissionNavigationValue}" />
-		<execute action="CPRolesDefinepermissions#assertTextEquals" locator-key1="PERMISSION_TABLE_PERMISSIONS" value1="${permissionValue}" />
+		<execute action="CPRolesDefinepermissions#assertTextEquals" locator-key1="PERMISSION_TABLE_PERMISSIONS" value1="${permissionDefinitionValue}" />
 		<execute action="CPRolesDefinepermissions#assertTextEquals" locator-key1="PERMISSION_TABLE_REMOVE" value1="Remove" />
 	</command>
 
-	<command name="removePermission">
+	<command name="removePermissionCP">
 		<if>
 			<contains string="${roleName}" substring="Orgrole" />
 			<then>
@@ -102,15 +102,15 @@
 		<execute action="CPRolesDefinepermissions#type" locator-key1="SEARCH_FIELD" value1="${permissionNavigationValue}" />
 		<execute action="CPRolesDefinepermissions#assertClick" locator-key1="${permissionNavigationKey}" value1="${permissionNavigationValue}" />
 
-		<execute action="CPRolesDefinepermissionsAllpermissions#uncheck" locator-key1="${permissionKey}" />
+		<execute action="CPRolesDefinepermissionsAllpermissions#uncheck" locator-key1="${permissionDefinitionKey}" />
 		<execute action="CPRolesDefinepermissionsAllpermissions#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 
 		<var name="key_permissionNavigationValue" value="${permissionNavigationValue}" />
-		<var name="key_permissionValue" value="${permissionValue}" />
+		<var name="key_permissionDefinitionValue" value="${permissionDefinitionValue}" />
 
 		<execute action="CPRolesDefinepermissions#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="The role permissions were updated." />
 		<execute action="CPRolesDefinepermissions#assertElementNotPresent" locator-key1="PERMISSION_TABLE_PERMISSIONS" value1="${permissionNavigationValue}" />
-		<execute action="CPRolesDefinepermissions#assertElementNotPresent" locator-key1="PERMISSION_TABLE_PERMISSIONS" value1="${permissionValue}" />
+		<execute action="CPRolesDefinepermissions#assertElementNotPresent" locator-key1="PERMISSION_TABLE_PERMISSIONS" value1="${permissionDefinitionValue}" />
 		<execute action="CPRolesDefinepermissions#assertElementNotPresent" locator-key1="PERMISSION_TABLE_REMOVE" value1="Remove" />
 	</command>
 

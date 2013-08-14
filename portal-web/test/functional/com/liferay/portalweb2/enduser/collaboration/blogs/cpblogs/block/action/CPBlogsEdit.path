@@ -1,17 +1,17 @@
 <html>
 <head>
-<title>CPBlogsAdd</title>
+<title>CPBlogsEdit</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">CPBlogsAdd</td></tr>
+<tr><td rowspan="1" colspan="3">CPBlogsEdit</td></tr>
 </thead>
 <tbody>
 <tr>
 	<td>PAGE_NAME</td>
 	<td></td>
-	<td>CPBlogsAdd</td>
+	<td>CPBlogsEdit</td>
 </tr>
 <tr>
 	<td>SUCCESS_MESSAGE</td>

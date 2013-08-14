@@ -14,27 +14,6 @@
  */
 --%>
 
-<%
-List<String> headerNames = new ArrayList<String>();
-
-headerNames.add("pages");
-headerNames.add("options");
-headerNames.add("type");
-
-SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, selectedLayouts.size(), portletURL, headerNames, "there-are-no-selected-pages-all-pages-will-therefore-be-exported");
-
-searchContainer.setTotal(selectedLayouts.size());
-searchContainer.setResults(selectedLayouts);
-
-RowChecker rowChecker = new AlwaysTrueRowChecker(renderResponse);
-
-rowChecker.setAlign("left");
-rowChecker.setFormName("exportPagesFm");
-rowChecker.setValign("top");
-
-searchContainer.setRowChecker(rowChecker);
-%>
-
 <aui:input name="layoutIds" type="hidden" />
 
 <span class="selected-labels" id="<portlet:namespace />selectedPages"></span>
@@ -56,49 +35,7 @@ searchContainer.setRowChecker(rowChecker);
 			</liferay-util:include>
 		</div>
 
-		<%
-		List resultRows = searchContainer.getResultRows();
-
-		for (int i = 0; i < selectedLayouts.size(); i++) {
-			Layout curLayout = selectedLayouts.get(i);
-
-			ResultRow row = new ResultRow(curLayout, curLayout.getPrimaryKey(), i);
-
-			row.addText("left", "top", HtmlUtil.escape(curLayout.getName(locale)));
-
-			JSPSearchEntry jspSearchEntry = new JSPSearchEntry();
-
-			jspSearchEntry.setAlign("left");
-			jspSearchEntry.setColspan(1);
-			jspSearchEntry.setPath("/html/portlet/layouts_admin/publish_layout_options.jsp");
-			jspSearchEntry.setValign("top");
-
-			row.addSearchEntry(jspSearchEntry);
-
-			row.addText("left", "top", LanguageUtil.get(pageContext, StringUtil.replace(curLayout.getType(), "_", "-")));
-
-			resultRows.add(row);
-		}
-		%>
-
-		<c:choose>
-			<c:when test="<%= !selectedLayouts.isEmpty() %>">
-				<div class="selected-pages" id="<portlet:namespace />pane">
-					<liferay-ui:search-iterator paginate="<%= false %>" searchContainer="<%= searchContainer %>" />
-				</div>
-			</c:when>
-			<c:otherwise>
-				<div class="alert alert-info">
-					<liferay-ui:message key="there-are-no-selected-pages-all-pages-will-therefore-be-exported" />
-				</div>
-			</c:otherwise>
-		</c:choose>
-
 		<aui:input name="scope" type="hidden" value='<%= (selectedLayouts.isEmpty() ? "all-pages" : "selected-pages") %>' />
-
-		<aui:button-row>
-			<aui:button href="<%= selectURL.toString() %>" value='<%= selectedLayouts.isEmpty() ? "select-pages" : "change-selection" %>' />
-		</aui:button-row>
 
 		<c:choose>
 			<c:when test="<%= layoutSetBranchId > 0 %>">
@@ -148,32 +85,3 @@ searchContainer.setRowChecker(rowChecker);
 		<aui:input inlineLabel="right" label="logo" name="<%= PortletDataHandlerKeys.LOGO %>" type="checkbox" value="<%= true %>" />
 	</aui:fieldset>
 </div>
-
-<aui:script use="aui-io-request">
-	var searchContainer = A.one('#<portlet:namespace /><%= searchContainer.getId(request, renderResponse.getNamespace()) %>');
-
-	if (searchContainer) {
-		searchContainer.delegate(
-			'change',
-			function(event) {
-				var node = event.currentTarget;
-
-				var cmd = node.attr('checked') ? 'layoutCheck' : 'layoutUncheck';
-
-				A.io.request(
-					themeDisplay.getPathMain() + '/portal/session_tree_js_click',
-					{
-						data: {
-							cmd: cmd,
-							groupId: <%= themeDisplay.getSiteGroupId() %>,
-							plid: node.val(),
-							privateLayout: <%= privateLayout %>,
-							treeId: '<%= treeId %>' + 'SelectedNode'
-						}
-					}
-				);
-			},
-			'.col-rowChecker input'
-		);
-	}
-</aui:script>

@@ -682,6 +682,94 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	}
 
 	@Override
+	public WikiPage fetchLatestPage(
+			long resourcePrimKey, int status, boolean preferApproved)
+		throws SystemException {
+
+		WikiPage page = null;
+
+		OrderByComparator orderByComparator = new PageVersionComparator();
+
+		if (status == WorkflowConstants.STATUS_ANY) {
+			if (preferApproved) {
+				page = wikiPagePersistence.fetchByR_S_First(
+					resourcePrimKey, WorkflowConstants.STATUS_APPROVED,
+					orderByComparator);
+			}
+
+			if (page == null) {
+				page = wikiPagePersistence.fetchByResourcePrimKey_First(
+					resourcePrimKey, orderByComparator);
+			}
+		}
+		else {
+			page = wikiPagePersistence.fetchByR_S_First(
+				resourcePrimKey, status, orderByComparator);
+		}
+
+		return page;
+	}
+
+	@Override
+	public WikiPage fetchLatestPage(
+			long resourcePrimKey, long nodeId, int status,
+			boolean preferApproved)
+		throws SystemException {
+
+		WikiPage page = null;
+
+		OrderByComparator orderByComparator = new PageVersionComparator();
+
+		if (status == WorkflowConstants.STATUS_ANY) {
+			if (preferApproved) {
+				page = wikiPagePersistence.fetchByR_N_S_First(
+					resourcePrimKey, nodeId, WorkflowConstants.STATUS_APPROVED,
+					orderByComparator);
+			}
+
+			if (page == null) {
+				page = wikiPagePersistence.fetchByR_N_First(
+					resourcePrimKey, nodeId, orderByComparator);
+			}
+		}
+		else {
+			page = wikiPagePersistence.fetchByR_N_S_First(
+				resourcePrimKey, nodeId, status, orderByComparator);
+		}
+
+		return page;
+	}
+
+	@Override
+	public WikiPage fetchLatestPage(
+			long nodeId, String title, int status, boolean preferApproved)
+		throws SystemException {
+
+		WikiPage page = null;
+
+		OrderByComparator orderByComparator = new PageVersionComparator();
+
+		if (status == WorkflowConstants.STATUS_ANY) {
+			if (preferApproved) {
+				page = wikiPagePersistence.fetchByN_T_S_First(
+					nodeId, title, WorkflowConstants.STATUS_APPROVED,
+					orderByComparator);
+			}
+
+			if (page == null) {
+				page = wikiPagePersistence.fetchByN_T_First(
+					nodeId, title, orderByComparator);
+			}
+		}
+		else {
+			page = wikiPagePersistence.fetchByN_T_S_First(
+				nodeId, title, status, orderByComparator);
+		}
+
+		return page;
+	}
+
+	@Override
 	public WikiPage fetchPage(long nodeId, String title, double version)
 		throws SystemException {
 

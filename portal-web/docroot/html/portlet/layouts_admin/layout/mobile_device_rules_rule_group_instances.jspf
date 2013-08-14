@@ -14,10 +14,6 @@
  */
 --%>
 
-<%
-boolean isExclusiveState = windowState.equals(LiferayWindowState.EXCLUSIVE);
-%>
-
 <liferay-ui:search-container
 	deltaConfigurable="<%= false %>"
 	emptyResultsMessage="no-device-rules-are-configured"
@@ -35,7 +31,7 @@ boolean isExclusiveState = windowState.equals(LiferayWindowState.EXCLUSIVE);
 		keyProperty="ruleGroupInstanceId"
 		modelVar="mdrRuleGroupInstance"
 	>
-		<liferay-portlet:renderURL portletName="<%= PortletKeys.MOBILE_DEVICE_SITE_ADMIN %>" varImpl="rowURL" windowState="<%= isExclusiveState ? LiferayWindowState.POP_UP.toString() : WindowState.MAXIMIZED.toString() %>">
+		<liferay-portlet:renderURL portletName="<%= PortletKeys.MOBILE_DEVICE_SITE_ADMIN %>" varImpl="rowURL" windowState="<%= themeDisplay.isStateExclusive() ? LiferayWindowState.POP_UP.toString() : windowState.toString() %>">
 			<portlet:param name="struts_action" value="/mobile_device_rules/view_actions" />
 			<portlet:param name="redirect" value='<%= portletURL.toString() + "#tab=mobileDeviceRules" %>' />
 			<portlet:param name="ruleGroupInstanceId" value="<%= String.valueOf(mdrRuleGroupInstance.getRuleGroupInstanceId()) %>" />
@@ -49,7 +45,7 @@ boolean isExclusiveState = windowState.equals(LiferayWindowState.EXCLUSIVE);
 
 <aui:script>
 	function <portlet:namespace />mobileDeviceActionHandler(href) {
-		if (<%= isExclusiveState %>) {
+		if (<%= themeDisplay.isStateExclusive() %>) {
 			<portlet:namespace />mobileDeviceOpenWindow(
 				{
 					uri: href
@@ -62,9 +58,7 @@ boolean isExclusiveState = windowState.equals(LiferayWindowState.EXCLUSIVE);
 	}
 
 	function <portlet:namespace />mobileDeviceOpenWindow(config) {
-		var A = AUI();
-
-		var data = A.mix(
+		var data = AUI().mix(
 			config,
 			{
 				dialog: {
@@ -78,7 +72,7 @@ boolean isExclusiveState = windowState.equals(LiferayWindowState.EXCLUSIVE);
 	}
 </aui:script>
 
-<c:if test="<%= isExclusiveState %>">
+<c:if test="<%= themeDisplay.isStateExclusive() %>">
 	<aui:script use="aui-base">
 		var uniqueRuleGroupInstancesContainer = A.one('#<portlet:namespace />uniqueRuleGroupInstancesContainer');
 

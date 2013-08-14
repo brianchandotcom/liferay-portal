@@ -1,5 +1,6 @@
 <definition>
 	<execute test-case-command="CPBlogs#AddBlogsEntries" />
 	<execute test-case-command="CPBlogs#AddBlogsEntryTitleEscapeCharactersCP" />
+	<execute test-case-command="CPBlogs#EditBlogsEntryContentCP" />
 	<execute test-case-command="CPBlogs#PublishBlogsEntryDraftCP" />
 </definition>

@@ -1,3 +1,4 @@
 <definition>
 	<execute test-case-command="CPBlogs#AddBlogsEntries" />
+	<execute test-case-command="CPBlogs#AddBlogsEntryWithTitleEscapeCharacterCP" />
 </definition>

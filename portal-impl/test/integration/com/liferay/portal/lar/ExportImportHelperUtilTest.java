@@ -125,7 +125,14 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 
 		Element rootElement = SAXReaderUtil.createElement("root");
 
+		_stagingPublicLayout = LayoutTestUtil.addLayout(
+			_stagingGroup.getGroupId(), ServiceTestUtil.randomString(), false);
+
+		_stagingPrivateLayout = LayoutTestUtil.addLayout(
+			_stagingGroup.getGroupId(), ServiceTestUtil.randomString(), true);
+
 		_portletDataContextExport.setExportDataRootElement(rootElement);
+		_portletDataContextExport.setPlid(_stagingPublicLayout.getPlid());
 
 		_portletDataContextImport =
 			PortletDataContextFactoryUtil.createImportPortletDataContext(
@@ -134,7 +141,11 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 				new CurrentUserIdStrategy(TestPropsValues.getUser()),
 				testReaderWriter);
 
+		_livePublicLayout = LayoutTestUtil.addLayout(
+			_liveGroup.getGroupId(), ServiceTestUtil.randomString(), false);
+
 		_portletDataContextImport.setImportDataRootElement(rootElement);
+		_portletDataContextImport.setPlid(_livePublicLayout.getPlid());
 		_portletDataContextImport.setSourceGroupId(_stagingGroup.getGroupId());
 
 		rootElement.addElement("entry");
@@ -291,11 +302,6 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 
 	@Test
 	public void testExportLinksToLayouts() throws Exception {
-		Layout publicLayout = LayoutTestUtil.addLayout(
-			_stagingGroup.getGroupId(), ServiceTestUtil.randomString(), false);
-		Layout privateLayout = LayoutTestUtil.addLayout(
-			_stagingGroup.getGroupId(), ServiceTestUtil.randomString(), true);
-
 		Element rootElement =
 			_portletDataContextExport.getExportDataRootElement();
 
@@ -309,9 +315,9 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 		StringBundler sb = new StringBundler(5);
 
 		sb.append("[1@private-group@");
-		sb.append(privateLayout.getUuid());
+		sb.append(_stagingPrivateLayout.getUuid());
 		sb.append(StringPool.AT);
-		sb.append(privateLayout.getFriendlyURL());
+		sb.append(_stagingPrivateLayout.getFriendlyURL());
 		sb.append(StringPool.CLOSE_BRACKET);
 
 		Assert.assertTrue(content.contains(sb.toString()));
@@ -319,9 +325,9 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 		sb.setIndex(0);
 
 		sb.append("[1@public@");
-		sb.append(publicLayout.getUuid());
+		sb.append(_stagingPublicLayout.getUuid());
 		sb.append(StringPool.AT);
-		sb.append(publicLayout.getFriendlyURL());
+		sb.append(_stagingPublicLayout.getFriendlyURL());
 		sb.append(StringPool.CLOSE_BRACKET);
 
 		Assert.assertTrue(content.contains(sb.toString()));
@@ -375,11 +381,6 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 
 	@Test
 	public void testImportLinksToLayouts() throws Exception {
-		LayoutTestUtil.addLayout(
-			_stagingGroup.getGroupId(), ServiceTestUtil.randomString(), false);
-		LayoutTestUtil.addLayout(
-			_stagingGroup.getGroupId(), ServiceTestUtil.randomString(), true);
-
 		Element rootElement =
 			_portletDataContextExport.getExportDataRootElement();
 
@@ -494,10 +495,13 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 
 	private FileEntry _fileEntry;
 	private Group _liveGroup;
+	private Layout _livePublicLayout;
 	private PortletDataContext _portletDataContextExport;
 	private PortletDataContext _portletDataContextImport;
 	private StagedModel _referrerStagedModel;
 	private Group _stagingGroup;
+	private Layout _stagingPrivateLayout;
+	private Layout _stagingPublicLayout;
 
 	private class TestReaderWriter implements ZipReader, ZipWriter {
 

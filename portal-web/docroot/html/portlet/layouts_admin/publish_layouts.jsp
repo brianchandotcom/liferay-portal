@@ -320,19 +320,6 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 
 			<c:choose>
 				<c:when test="<%= selectPages %>">
-					<div class="alert alert-info">
-						<liferay-ui:message key="note-that-selecting-no-pages-from-tree-reverts-to-implicit-selection-of-all-pages" />
-					</div>
-
-					<div class="selected-pages" id="<portlet:namespace />pane">
-						<liferay-util:include page="/html/portlet/layouts_admin/tree_js.jsp">
-							<liferay-util:param name="selectableTree" value="1" />
-							<liferay-util:param name="treeId" value="<%= treeId %>" />
-							<liferay-util:param name="incomplete" value="<%= String.valueOf(false) %>" />
-							<liferay-util:param name="tabs1" value='<%= (privateLayout) ? "private-pages" : "public-pages" %>' />
-						</liferay-util:include>
-					</div>
-
 					<aui:button-row>
 
 						<%

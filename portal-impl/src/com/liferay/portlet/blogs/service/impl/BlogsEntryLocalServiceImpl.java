@@ -869,9 +869,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		// Social
 
-		socialActivityCounterLocalService.disableActivityCounters(
-			BlogsEntry.class.getName(), entry.getEntryId());
-
 		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
 
 		extraDataJSONObject.put("title", entry.getTitle());
@@ -936,9 +933,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			userId, entryId, trashEntry.getStatus(), new ServiceContext());
 
 		// Social
-
-		socialActivityCounterLocalService.enableActivityCounters(
-			BlogsEntry.class.getName(), entryId);
 
 		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
 

@@ -3430,9 +3430,6 @@ public class JournalArticleLocalServiceImpl
 
 		article = journalArticlePersistence.update(article);
 
-		socialActivityCounterLocalService.disableActivityCounters(
-			JournalFolder.class.getName(), article.getFolderId());
-
 		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
 
 		extraDataJSONObject.put("title", article.getTitle());
@@ -3601,9 +3598,6 @@ public class JournalArticleLocalServiceImpl
 		updateStatus(
 			userId, article, trashEntry.getStatus(), null, workflowContext,
 			serviceContext);
-
-		socialActivityCounterLocalService.enableActivityCounters(
-			JournalFolder.class.getName(), article.getFolderId());
 
 		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
 

@@ -16,6 +16,7 @@ package com.liferay.portlet.expando.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.util.PortalUtil;
@@ -427,14 +428,7 @@ public class ExpandoValueLocalServiceImpl
 
 		int type = column.getType();
 
-		Class<?> clazz = data.getClass();
-
-		if ((type != ExpandoColumnConstants.STRING) &&
-			clazz.equals(String.class)) {
-
-			data = ExpandoColumnConstants.getSerializable(
-				type, data.toString());
-		}
+		data = convertType(type, data);
 
 		if (type == ExpandoColumnConstants.BOOLEAN) {
 			return expandoValueLocalService.addValue(
@@ -447,16 +441,14 @@ public class ExpandoValueLocalServiceImpl
 				(boolean[])data);
 		}
 		else if (type == ExpandoColumnConstants.DATE) {
-			Date date = TypeConverterManager.convertType(data, Date.class);
-
 			return expandoValueLocalService.addValue(
-				companyId, className, tableName, columnName, classPK, date);
+				companyId, className, tableName, columnName, classPK,
+				(Date)data);
 		}
 		else if (type == ExpandoColumnConstants.DATE_ARRAY) {
-			Date[] dates = TypeConverterManager.convertType(data, Date[].class);
-
 			return expandoValueLocalService.addValue(
-				companyId, className, tableName, columnName, classPK, dates);
+				companyId, className, tableName, columnName, classPK,
+				(Date[])data);
 		}
 		else if (type == ExpandoColumnConstants.DOUBLE) {
 			return expandoValueLocalService.addValue(
@@ -2344,6 +2336,110 @@ public class ExpandoValueLocalServiceImpl
 				companyId, className, tableName, columnName, classPK,
 				new HashMap<Object, Object>());
 		}
+	}
+
+	protected <T> T convertType(int type, Object data) {
+		data = handleCollections(type, data);
+		data = handleStrings(type, data);
+
+		if (type == ExpandoColumnConstants.BOOLEAN) {
+			data = TypeConverterManager.convertType(data, Boolean.TYPE);
+		}
+		else if (type == ExpandoColumnConstants.BOOLEAN_ARRAY) {
+			data = TypeConverterManager.convertType(data, boolean[].class);
+		}
+		else if (type == ExpandoColumnConstants.DATE) {
+			data = TypeConverterManager.convertType(data, Date.class);
+		}
+		else if (type == ExpandoColumnConstants.DATE_ARRAY) {
+			data = TypeConverterManager.convertType(data, Date[].class);
+		}
+		else if (type == ExpandoColumnConstants.DOUBLE) {
+			data = TypeConverterManager.convertType(data, Double.TYPE);
+		}
+		else if (type == ExpandoColumnConstants.DOUBLE_ARRAY) {
+			data = TypeConverterManager.convertType(data, double[].class);
+		}
+		else if (type == ExpandoColumnConstants.FLOAT) {
+			data = TypeConverterManager.convertType(data, Float.TYPE);
+		}
+		else if (type == ExpandoColumnConstants.FLOAT_ARRAY) {
+			data = TypeConverterManager.convertType(data, float[].class);
+		}
+		else if (type == ExpandoColumnConstants.INTEGER) {
+			data = TypeConverterManager.convertType(data, Integer.TYPE);
+		}
+		else if (type == ExpandoColumnConstants.INTEGER_ARRAY) {
+			data = TypeConverterManager.convertType(data, int[].class);
+		}
+		else if (type == ExpandoColumnConstants.LONG) {
+			data = TypeConverterManager.convertType(data, Long.TYPE);
+		}
+		else if (type == ExpandoColumnConstants.LONG_ARRAY) {
+			data = TypeConverterManager.convertType(data, long[].class);
+		}
+		else if (type == ExpandoColumnConstants.NUMBER) {
+			data = TypeConverterManager.convertType(data, Number.class);
+		}
+		else if (type == ExpandoColumnConstants.NUMBER_ARRAY) {
+			data = TypeConverterManager.convertType(data, Number[].class);
+		}
+		else if (type == ExpandoColumnConstants.SHORT) {
+			data = TypeConverterManager.convertType(data, Short.TYPE);
+		}
+		else if (type == ExpandoColumnConstants.SHORT_ARRAY) {
+			data = TypeConverterManager.convertType(data, short[].class);
+		}
+		else if (type == ExpandoColumnConstants.STRING_ARRAY) {
+			data = TypeConverterManager.convertType(data, String[].class);
+		}
+
+		return (T)data;
+	}
+
+	protected Object handleCollections(int type, Object object) {
+		if (!Collection.class.isAssignableFrom(object.getClass()) ||
+			!isTypeArray(type)) {
+
+			return object;
+		}
+
+		Collection collection = (Collection)object;
+
+		return collection.toArray();
+	}
+
+	protected Object handleStrings(int type, Object object) {
+		if (!String.class.isAssignableFrom(object.getClass())) {
+			return object;
+		}
+
+		String string = (String)object;
+
+		if (string.startsWith(StringPool.OPEN_BRACKET) &&
+			string.endsWith(StringPool.CLOSE_BRACKET)) {
+
+			string = string.substring(1, (string.length() - 1));
+		}
+
+		return string;
+	}
+
+	protected boolean isTypeArray(int type) {
+		if ((type == ExpandoColumnConstants.BOOLEAN_ARRAY) ||
+			(type == ExpandoColumnConstants.DATE_ARRAY) ||
+			(type == ExpandoColumnConstants.DOUBLE_ARRAY) ||
+			(type == ExpandoColumnConstants.FLOAT_ARRAY) ||
+			(type == ExpandoColumnConstants.INTEGER_ARRAY) ||
+			(type == ExpandoColumnConstants.LONG_ARRAY) ||
+			(type == ExpandoColumnConstants.NUMBER_ARRAY) ||
+			(type == ExpandoColumnConstants.SHORT_ARRAY) ||
+			(type == ExpandoColumnConstants.STRING_ARRAY)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 }

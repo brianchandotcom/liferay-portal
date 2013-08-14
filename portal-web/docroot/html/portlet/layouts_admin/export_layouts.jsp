@@ -592,6 +592,7 @@ portletURL.setParameter("rootNodeName", rootNodeName);
 			layoutSetSettingsNode: '#<%= PortletDataHandlerKeys.LAYOUT_SET_SETTINGS %>Checkbox',
 			logoNode: '#<%= PortletDataHandlerKeys.LOGO %>Checkbox',
 			namespace: '<portlet:namespace />',
+			pageTreeId: '<%= treeId %>',
 			processesNode: '#exportProcesses',
 			processesResourceURL: '<%= exportProcessesURL.toString() %>',
 			rangeAllNode: '#rangeAll',

@@ -498,6 +498,7 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 			layoutSetSettingsNode: '#<%= PortletDataHandlerKeys.LAYOUT_SET_SETTINGS %>Checkbox',
 			logoNode: '#<%= PortletDataHandlerKeys.LOGO %>Checkbox',
 			namespace: '<portlet:namespace />',
+			pageTreeId: '<%= treeId %>',
 			processesNode: '#publishProcesses',
 			processesResourceURL: '<%= publishProcessesURL.toString() %>',
 			rangeAllNode: '#rangeAll',

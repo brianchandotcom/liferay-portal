@@ -63,6 +63,8 @@ AUI.add(
 
 						instance._bindUI();
 
+						instance._pageTreeId = config.pageTreeId;
+
 						instance._initLabels();
 
 						instance._processesResourceURL = config.processesResourceURL;
@@ -1029,7 +1031,7 @@ AUI.add(
 
 						var selectedPages = [];
 
-						var layoutsExportTreeOutput = instance.byId('layoutsExportTreeOutput');
+						var layoutsExportTreeOutput = instance.byId(instance._pageTreeId + 'Output');
 
 						if (layoutsExportTreeOutput) {
 							var layoutIdsInput = instance.byId('layoutIds');

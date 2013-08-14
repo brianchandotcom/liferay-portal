@@ -75,7 +75,7 @@ if ((article != null) && article.isDraft()) {
 			toolbarButtonGroup.push(
 				{
 					icon: 'icon-search',
-					label: '<%= UnicodeLanguageUtil.get(pageContext, "preview") %>',
+					label: '<%= UnicodeLanguageUtil.get(pageContext, "basic-preview") %>',
 					on: {
 						click: function(event) {
 							event.domEvent.preventDefault();

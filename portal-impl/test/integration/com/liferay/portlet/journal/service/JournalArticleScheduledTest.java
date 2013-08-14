@@ -74,22 +74,22 @@ public class JournalArticleScheduledTest {
 
 	@Test
 	public void testScheduleApprovedArticleToTheFuture() throws Exception {
-		testScheduledArticle(true, FUTURE);
+		testScheduleArticle(true, FUTURE);
 	}
 
 	@Test
 	public void testScheduleApprovedArticleToThePast() throws Exception {
-		testScheduledArticle(true, PAST);
+		testScheduleArticle(true, PAST);
 	}
 
 	@Test
 	public void testScheduleDraftArticleToTheFuture() throws Exception {
-		testScheduledArticle(false, FUTURE);
+		testScheduleArticle(false, FUTURE);
 	}
 
 	@Test
 	public void testScheduleDraftArticleToThePast() throws Exception {
-		testScheduledArticle(false, PAST);
+		testScheduleArticle(false, PAST);
 	}
 
 	protected JournalArticle addJournalArticle(
@@ -144,7 +144,7 @@ public class JournalArticleScheduledTest {
 		return calendar;
 	}
 
-	protected void testScheduledArticle(boolean approved, int when)
+	protected void testScheduleArticle(boolean approved, int when)
 		throws Exception {
 
 		int initialSearchArticlesCount = JournalTestUtil.getSearchArticlesCount(

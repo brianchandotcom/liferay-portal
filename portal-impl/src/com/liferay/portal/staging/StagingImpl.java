@@ -2181,14 +2181,7 @@ public class StagingImpl implements Staging {
 		Map<Long, Boolean> layoutIdMap = new LinkedHashMap<Long, Boolean>();
 
 		if (scope.equals("selected-pages")) {
-			long[] rowIds = ParamUtil.getLongValues(portletRequest, "rowIds");
-
-			for (long selPlid : rowIds) {
-				boolean includeChildren = ParamUtil.getBoolean(
-					portletRequest, "includeChildren_" + selPlid);
-
-				layoutIdMap.put(selPlid, includeChildren);
-			}
+			layoutIdMap = ExportImportHelperUtil.getLayoutIdMap(portletRequest);
 		}
 
 		DateRange dateRange = ExportImportHelperUtil.getDateRange(
@@ -2300,16 +2293,7 @@ public class StagingImpl implements Staging {
 		Map<Long, Boolean> layoutIdMap = null;
 
 		if (scope.equals("selected-pages")) {
-			layoutIdMap = new LinkedHashMap<Long, Boolean>();
-
-			long[] rowIds = ParamUtil.getLongValues(portletRequest, "rowIds");
-
-			for (long selPlid : rowIds) {
-				boolean includeChildren = ParamUtil.getBoolean(
-					portletRequest, "includeChildren_" + selPlid);
-
-					layoutIdMap.put(selPlid, includeChildren);
-			}
+			layoutIdMap = ExportImportHelperUtil.getLayoutIdMap(portletRequest);
 		}
 
 		Map<String, String[]> parameterMap = getStagingParameters(

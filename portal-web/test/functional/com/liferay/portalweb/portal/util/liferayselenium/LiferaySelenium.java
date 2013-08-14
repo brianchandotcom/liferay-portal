@@ -83,7 +83,7 @@ public interface LiferaySelenium extends Selenium {
 
 	public void fail(String message);
 
-	public void getContent(String number) throws Exception;
+	public String getContent(String number) throws Exception;
 
 	public String getCurrentDay();
 
@@ -103,7 +103,7 @@ public interface LiferaySelenium extends Selenium {
 
 	public String getProjectDir();
 
-	public void getSubject(String number) throws Exception;
+	public String getSubject(String number) throws Exception;
 
 	public void goBackAndWait();
 

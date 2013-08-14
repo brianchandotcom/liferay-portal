@@ -14,7 +14,6 @@
 
 package com.liferay.portalweb.selenium;
 
-import com.liferay.portalweb.portal.BaseTestCase;
 import com.liferay.portalweb.portal.util.SendEmail;
 
 import org.junit.Test;
@@ -22,11 +21,7 @@ import org.junit.Test;
 /**
  * @author Kwang Lee
  */
-public class AssertSendEmailTestCase extends BaseTestCase {
-
-	@Override
-	public void tearDown() throws Exception {
-	}
+public class AssertSendEmailTestCase extends BaseSeleniumTestCase {
 
 	@Test
 	public void testSendEmails() throws Exception {

@@ -14,18 +14,12 @@
 
 package com.liferay.portalweb.selenium;
 
-import com.liferay.portalweb.portal.BaseTestCase;
-
 import org.junit.Test;
 
 /**
  * @author Kwang Lee
  */
-public class DeleteEmailsTestCase extends BaseTestCase {
-
-	@Override
-	public void tearDown() throws Exception {
-	}
+public class DeleteEmailsTestCase extends BaseSeleniumTestCase {
 
 	@Test
 	public void testDeleteMails() throws Exception {

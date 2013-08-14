@@ -216,8 +216,8 @@ public abstract class BaseWebDriverImpl
 	}
 
 	@Override
-	public void getContent(String number) throws Exception {
-		LiferaySeleniumHelper.getContent(number);
+	public String getContent(String number) throws Exception {
+		return LiferaySeleniumHelper.getContent(number);
 	}
 
 	@Override
@@ -302,8 +302,8 @@ public abstract class BaseWebDriverImpl
 	}
 
 	@Override
-	public void getSubject(String number) throws Exception {
-		LiferaySeleniumHelper.getSubject(number);
+	public String getSubject(String number) throws Exception {
+		return LiferaySeleniumHelper.getSubject(number);
 	}
 
 	@Override

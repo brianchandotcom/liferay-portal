@@ -310,7 +310,6 @@ public class ArrayUtilTest {
 		boolean[] array = null;
 
 		Assert.assertTrue(ArrayUtil.isEmpty(array));
-
 	}
 
 	@Test
@@ -318,7 +317,6 @@ public class ArrayUtilTest {
 		byte[] array = null;
 
 		Assert.assertTrue(ArrayUtil.isEmpty(array));
-
 	}
 
 	@Test
@@ -326,7 +324,6 @@ public class ArrayUtilTest {
 		char[] array = null;
 
 		Assert.assertTrue(ArrayUtil.isEmpty(array));
-
 	}
 
 	@Test

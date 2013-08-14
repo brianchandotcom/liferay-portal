@@ -15,6 +15,12 @@
 		</execute>
 	</set-up>
 
+	<tear-down>
+		<execute macro="WikiPage#tearDownCP" />
+
+		<execute macro="Page#tearDownPG" />
+	</tear-down>
+
 	<command name="AddWikiFrontPageContentJavascript">
 		<var name="wikiPageContent">
 			<![CDATA[
@@ -34,10 +40,4 @@
 			<var name="wikiPageText" value="${wikiPageText}" />
 		</execute>
 	</command>
-
-	<tear-down>
-		<execute macro="WikiPage#tearDownCP" />
-
-		<execute macro="Page#tearDownPG" />
-	</tear-down>
 </definition>

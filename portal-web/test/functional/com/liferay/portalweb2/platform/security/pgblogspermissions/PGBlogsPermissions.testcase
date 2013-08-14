@@ -15,6 +15,12 @@
 		</execute>
 	</set-up>
 
+	<tear-down>
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="Page#tearDownPG" />
+	</tear-down>
+
 	<command name="ViewBlogsPortletAsGuestPG">
 		<execute macro="BlogsEntry#viewPortletPG">
 			<var name="pageName" value="${pageName}" />
@@ -28,10 +34,4 @@
 
 		<execute macro="BlogsEntry#viewPortletAsGuestPG" />
 	</command>
-
-	<tear-down>
-		<execute macro="User#firstLoginPG" />
-
-		<execute macro="Page#tearDownPG" />
-	</tear-down>
 </definition>

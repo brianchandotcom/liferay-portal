@@ -1,5 +1,5 @@
 <definition>
-	<execute test-case="PGAntisamyAcceptance" />
+	<execute test-suite="PGAntisamyAcceptance" />
 
-	<execute test-case="PGBlogsPermissionsAcceptance" />
+	<execute test-suite="PGBlogsPermissionsAcceptance" />
 </definition>

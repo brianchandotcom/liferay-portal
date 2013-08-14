@@ -1,0 +1,3 @@
+<definition>
+	<execute test-case-command="PGAntisamy#AddWikiFrontPageContentJavascript" />
+</definition>

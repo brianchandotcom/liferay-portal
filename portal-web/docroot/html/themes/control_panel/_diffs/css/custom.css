@@ -616,12 +616,18 @@ $dockbarOpenGradientStart: #0EA6F9;
 			background: #FCFCFC;
 			border: 1px solid #D1D1D1;
 			border-width: 0 0 0 1px;
+			padding-top: 0;
 
 			.nav-header {
 				background: #F3F3F3;
 				font-size: 14px;
 				font-weight: lighter;
 				text-transform: capitalize;
+			}
+
+			.nav-header:first-child {
+				margin-top: 0;
+				padding-top: 0;
 			}
 		}
 	}

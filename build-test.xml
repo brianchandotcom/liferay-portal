@@ -933,15 +933,15 @@
 
 		<if>
 			<not>
-				<isset property="liferay.plugins.git-id" />
+				<isset property="liferay.plugins.git.id" />
 			</not>
 			<then>
-				<exec dir="${lp.plugins.dir}" executable="git" outputproperty="liferay.plugins.git-log.output">
+				<exec dir="${lp.plugins.dir}" executable="git" outputproperty="liferay.plugins.git.log.output">
 					<arg line="log -n 1" />
 				</exec>
 
 				<script classpathref="project.classpath" language="beanshell">
-					String gitLogOutput = project.getProperty("liferay.plugins.git-log.output");
+					String gitLogOutput = project.getProperty("liferay.plugins.git.log.output");
 
 					int x = gitLogOutput.indexOf("commit ");
 
@@ -951,7 +951,7 @@
 
 					String gitID = gitLogOutput.substring(x, y).trim();
 
-					project.setProperty("liferay.plugins.git-id", gitID);
+					project.setProperty("liferay.plugins.git.id", gitID);
 				</script>
 			</then>
 		</if>
@@ -1001,15 +1001,15 @@
 
 		<if>
 			<not>
-				<isset property="liferay.portal.git-id" />
+				<isset property="liferay.portal.git.id" />
 			</not>
 			<then>
-				<exec dir="${project.dir}" executable="git" outputproperty="liferay.portal.git-log.output">
+				<exec dir="${project.dir}" executable="git" outputproperty="liferay.portal.git.log.output">
 					<arg line="log -n 1" />
 				</exec>
 
 				<script classpathref="project.classpath" language="beanshell">
-					String gitLogOutput = project.getProperty("liferay.portal.git-log.output");
+					String gitLogOutput = project.getProperty("liferay.portal.git.log.output");
 
 					int x = gitLogOutput.indexOf("commit ");
 
@@ -1019,7 +1019,7 @@
 
 					String gitID = gitLogOutput.substring(x, y).trim();
 
-					project.setProperty("liferay.portal.git-id", gitID);
+					project.setProperty("liferay.portal.git.id", gitID);
 				</script>
 			</then>
 		</if>
@@ -1060,7 +1060,7 @@
 
 		<property name="file.properties">
 			<![CDATA[
-<environment-properties>
+<environmentproperties>
 	<property name="app.server.type" value="${app.server.type}" />
 	<property name="app.server.version" value="${app.server.version}" />
 	<property name="browser.type" value="${browser.type}" />
@@ -1072,17 +1072,17 @@
 	<property name="os.name" value="${os.name}" />
 	<property name="os.version" value="${os.version}" />
 	<property name="unique.id" value="${app.server.id}${browser.id}${database.id}${java.id}${os.id}" />
-</environment-properties>
-<test-properties>
+</environmentproperties>
+<testproperties>
 	<property name="liferay.plugins.edition" value="${liferay.plugins.edition}" />
-	<property name="liferay.plugins.git-id" value="${liferay.plugins.git-id}" />
+	<property name="liferay.plugins.git.id" value="${liferay.plugins.git.id}" />
 	<property name="liferay.plugins.version" value="${liferay.plugins.version}" />
 	<property name="liferay.plugins.version.major" value="${liferay.plugins.version.major}" />
 	<property name="liferay.portal.edition" value="${liferay.portal.edition}" />
-	<property name="liferay.portal.git-id" value="${liferay.portal.git-id}" />
+	<property name="liferay.portal.git.id" value="${liferay.portal.git.id}" />
 	<property name="liferay.portal.version" value="${liferay.portal.version}" />
 	<property name="liferay.portal.version.major" value="${liferay.portal.version.major}" />
-</test-properties>
+</testproperties>
 			]]>
 		</property>
 
@@ -1118,13 +1118,13 @@
 							while (scanner.hasNextLine()) {
 								String line = scanner.nextLine();
 
-								if (line.contains("<environment-properties") ||
-									line.contains("</environment-properties") ||
+								if (line.contains("<environmentproperties") ||
+									line.contains("</environmentproperties") ||
 									line.contains("<properties") ||
 									line.contains("</properties") ||
 									line.contains("<property") ||
-									line.contains("<test-properties") ||
-									line.contains("</test-properties") ||
+									line.contains("<testproperties") ||
+									line.contains("</testproperties") ||
 									line.contains("<?xml")) {
 
 									continue;

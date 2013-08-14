@@ -5,7 +5,7 @@ AUI.add(
 
 		var FAILURE_TIMEOUT = 10000;
 
-		var REGEX_LAYOUT_ID = /layoutId_(\d+)/;
+		var REGEX_LAYOUT_ID = /plid_(\d+)/;
 
 		var RENDER_INTERVAL_IDLE = 60000;
 
@@ -1055,7 +1055,7 @@ AUI.add(
 												layoutIds.push(
 													{
 														includeChildren: !item.hasChildNodes(),
-														layoutId: match[1]
+														plid: match[1]
 													}
 												);
 											}

@@ -28,33 +28,21 @@ Layout curLayout = (Layout)row.getObject();
 	String taglibHref = "javascript:Liferay.LayoutExporter.details({toggle: '#" + renderResponse.getNamespace() + "_detail_" + curLayout.getPlid() + "_toggle img', detail: '#_detail_" + curLayout.getPlid() + "'});";
 	%>
 
-	<em class="hide" id="<portlet:namespace /><%= curLayout.getPlid() %>deleteLivePage"><liferay-ui:message key="delete-live-page" /></em>
-
 	<em class="hide" id="<portlet:namespace /><%= curLayout.getPlid() %>includeChildren"><liferay-ui:message key="include-all-descendent-pages" /></em>
 
 	<liferay-ui:icon cssClass="nobr" id='<%= "_detail_" + curLayout.getPlid() + "_toggle" %>' image="../arrows/01_plus" label="<%= true %>" message="change" target="_self" toolTip="options" url="<%= taglibHref %>" />
 </div>
 
 <div class="hide export-layout-detail" id="_detail_<%= curLayout.getPlid() %>" style="border-top: 1px solid #CCC; margin-top: 4px; padding-top: 4px; width: 95%;">
-	<aui:input label="delete-live-page" name='<%= "delete_" + curLayout.getPlid() %>' type="radio" value="<%= true %>" />
-
-	<aui:input checked="<%= true %>" label="publish" name='<%= "delete_" + curLayout.getPlid() %>' type="radio" value="<%= false %>" />
-
-	<div id="<portlet:namespace />publishChangesOptions_<%= curLayout.getPlid() %>" style="margin-left: 2em;">
-		<c:if test="<%= !curLayout.getChildren().isEmpty() %>">
-			<aui:input checked="<%= false %>" label="include-all-descendent-pages" name='<%= "includeChildren_" + curLayout.getPlid() %>' type="checkbox" value="<%= false %>" />
-		</c:if>
-	</div>
+	<c:if test="<%= !curLayout.getChildren().isEmpty() %>">
+		<aui:input checked="<%= false %>" label="include-all-descendent-pages" name='<%= "includeChildren_" + curLayout.getPlid() %>' type="checkbox" value="<%= false %>" />
+	</c:if>
 </div>
 
 <aui:script use="aui-base">
 	var childrenMsg = A.one('#<portlet:namespace /><%= curLayout.getPlid() %>includeChildren');
-	var deleteMsg = A.one('#<portlet:namespace /><%= curLayout.getPlid() %>deleteLivePage');
-	var publishOptions = A.one('#<portlet:namespace />publishChangesOptions_<%= curLayout.getPlid() %>');
 
 	var childrenCheckbox = A.one('#<portlet:namespace />includeChildren_<%= curLayout.getPlid() %>Checkbox');
-
-	var radioButtons = A.all('#_detail_<%= curLayout.getPlid() %> input[type=radio]');
 
 	<c:if test="<%= !curLayout.getChildren().isEmpty() %>">
 		childrenCheckbox.on(
@@ -64,22 +52,4 @@ Layout curLayout = (Layout)row.getObject();
 			}
 		);
 	</c:if>
-
-	radioButtons.on(
-		'change',
-		function(event) {
-			deleteMsg.toggle();
-
-			if (event.currentTarget.get('value') == 'true') {
-				childrenMsg.hide();
-			}
-			else {
-				if (childrenCheckbox && childrenCheckbox.get('checked')) {
-					childrenMsg.show();
-				}
-			}
-
-			publishOptions.toggle();
-		}
-	);
 </aui:script>

@@ -179,17 +179,7 @@ public class LayoutStagedModelDataHandler
 
 		populateElementLayoutMetadata(layoutElement, layout, layoutRevision);
 
-		boolean deleteLayout = MapUtil.getBoolean(
-			portletDataContext.getParameterMap(), "delete_" + layout.getPlid());
-
-		if (deleteLayout) {
-			layoutElement.addAttribute("action", Constants.DELETE);
-
-			return;
-		}
-		else {
-			layoutElement.addAttribute("action", Constants.ADD);
-		}
+		layoutElement.addAttribute("action", Constants.ADD);
 
 		portletDataContext.setPlid(layout.getPlid());
 

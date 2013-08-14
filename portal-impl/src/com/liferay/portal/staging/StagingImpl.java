@@ -2196,17 +2196,10 @@ public class StagingImpl implements Staging {
 			long[] rowIds = ParamUtil.getLongValues(portletRequest, "rowIds");
 
 			for (long selPlid : rowIds) {
-				boolean delete = ParamUtil.getBoolean(
-					portletRequest, "delete_" + selPlid);
 				boolean includeChildren = ParamUtil.getBoolean(
 					portletRequest, "includeChildren_" + selPlid);
 
-				if (!delete && includeChildren) {
-					layoutIdMap.put(selPlid, true);
-				}
-				else {
-					layoutIdMap.put(selPlid, false);
-				}
+				layoutIdMap.put(selPlid, includeChildren);
 			}
 		}
 
@@ -2324,17 +2317,10 @@ public class StagingImpl implements Staging {
 			long[] rowIds = ParamUtil.getLongValues(portletRequest, "rowIds");
 
 			for (long selPlid : rowIds) {
-				boolean delete = ParamUtil.getBoolean(
-					portletRequest, "delete_" + selPlid);
 				boolean includeChildren = ParamUtil.getBoolean(
 					portletRequest, "includeChildren_" + selPlid);
 
-				if (!delete && includeChildren) {
-					layoutIdMap.put(selPlid, true);
-				}
-				else {
-					layoutIdMap.put(selPlid, false);
-				}
+					layoutIdMap.put(selPlid, includeChildren);
 			}
 		}
 

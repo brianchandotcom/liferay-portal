@@ -47,6 +47,37 @@ boolean isExclusiveState = windowState.equals(LiferayWindowState.EXCLUSIVE);
 	<liferay-ui:search-iterator type="more" />
 </liferay-ui:search-container>
 
+<aui:script>
+	function <portlet:namespace />mobileDeviceActionHandler(href) {
+		if (<%= isExclusiveState %>) {
+			<portlet:namespace />mobileDeviceOpenWindow(
+				{
+					uri: href
+				}
+			);
+		}
+		else {
+			location.href = href;
+		}
+	}
+
+	function <portlet:namespace />mobileDeviceOpenWindow(config) {
+		var A = AUI();
+
+		var data = A.mix(
+			config,
+			{
+				dialog: {
+					width: 820
+				},
+				title: Liferay.Language.get('javax.portlet.title.178')
+			}
+		);
+
+		Liferay.Util.openWindow(data);
+	}
+</aui:script>
+
 <c:if test="<%= isExclusiveState %>">
 	<aui:script use="aui-base">
 		var uniqueRuleGroupInstancesContainer = A.one('#<portlet:namespace />uniqueRuleGroupInstancesContainer');
@@ -58,12 +89,8 @@ boolean isExclusiveState = windowState.equals(LiferayWindowState.EXCLUSIVE);
 
 				var href = event.target.attr('href');
 
-				Liferay.Util.openWindow(
+				<portlet:namespace />mobileDeviceOpenWindow(
 					{
-						dialog: {
-							width: 820
-						},
-						title: Liferay.Language.get('javax.portlet.title.178'),
 						uri: href
 					}
 				);
@@ -72,26 +99,3 @@ boolean isExclusiveState = windowState.equals(LiferayWindowState.EXCLUSIVE);
 		);
 	</aui:script>
 </c:if>
-
-<aui:script>
-	Liferay.provide(
-		window,
-		'<portlet:namespace />mobileDeviceActionHandler',
-		function(href) {
-			if (<%= isExclusiveState %>) {
-				Liferay.Util.openWindow(
-					{
-						dialog: {
-							width: 820
-						},
-						title: Liferay.Language.get('javax.portlet.title.178'),
-						uri: href
-					}
-				);
-			}
-			else {
-				location.href = href;
-			}
-		}
-	);
-</aui:script>

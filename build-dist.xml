@@ -1556,10 +1556,29 @@ rerun this task.
 
 		<delete dir="${app.server.weblogic.dir}" />
 
-		<unzip
-			dest="${app.server.weblogic.dir}"
-			src="${app.server.parent.dir}/${app.server.weblogic.zip.name}"
-		/>
+		<if>
+			<equals arg1="${app.server.weblogic.version.build}" arg2="1212" />
+			<then>
+				<unzip
+					dest="${app.server.weblogic.dir}"
+					src="${app.server.parent.dir}/${app.server.weblogic.zip.name}"
+				/>
+
+				<move todir="${app.server.weblogic.dir}">
+					<fileset dir="${app.server.weblogic.dir}/wls12120"/>
+				</move>
+
+				<property name="weblogic.template.path" value="${app.server.weblogic.wlserver.dir}/common/templates/wls/wls.jar" />
+			</then>
+			<else>
+				<unzip
+					dest="${app.server.weblogic.dir}"
+					src="${app.server.parent.dir}/${app.server.weblogic.zip.name}"
+				/>
+
+				<property name="weblogic.template.path" value="${app.server.weblogic.wlserver.dir}/common/templates/domains/wls.jar" />
+			</else>
+		</if>
 
 		<tstamp>
 			<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
@@ -1568,7 +1587,7 @@ rerun this task.
 		<mkdir dir="${tstamp.value}" />
 
 		<echo file="${tstamp.value}/create-weblogic-domain.py">
-readTemplate('${app.server.weblogic.wlserver.dir}/common/templates/domains/wls.jar')
+readTemplate('${weblogic.template.path}')
 
 set('Name', '${app.server.weblogic.instance.name}')
 

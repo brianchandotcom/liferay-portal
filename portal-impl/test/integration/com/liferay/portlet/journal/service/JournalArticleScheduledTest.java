@@ -95,10 +95,7 @@ public class JournalArticleScheduledTest {
 		descriptionMap.put(
 			LocaleUtil.getDefault(), ServiceTestUtil.randomString());
 
-		Calendar displayDateCalendar = new GregorianCalendar();
-
-		displayDateCalendar.setTime(
-			new Date(displayDate.getTime() + Time.MINUTE * 5));
+		Calendar displayDateCalendar = getCalendarFromDate(displayDate, FUTURE);
 
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
 			groupId);
@@ -124,8 +121,17 @@ public class JournalArticleScheduledTest {
 			displayDateCalendar.get(Calendar.DAY_OF_MONTH),
 			displayDateCalendar.get(Calendar.YEAR),
 			displayDateCalendar.get(Calendar.HOUR_OF_DAY),
-			displayDateCalendar.get(Calendar.MINUTE), 0, 0, 0, 0, 0, true, 0, 0,
-			0, 0, 0, true, true, false, null, null, null, null, serviceContext);
+			displayDateCalendar.get(Calendar.MINUTE), 0, 0, 0, 0, 0, true,
+			0, 0, 0, 0, 0, true, true, false, null, null, null, null,
+			serviceContext);
+	}
+
+	protected Calendar getCalendarFromDate(Date date, int when) {
+		Calendar calendar = new GregorianCalendar();
+
+		calendar.setTime(new Date(date.getTime() + Time.MINUTE * when * 5));
+
+		return calendar;
 	}
 
 	protected void testScheduledArticle(boolean approved) throws Exception {
@@ -159,11 +165,9 @@ public class JournalArticleScheduledTest {
 		// Modify the article Date surpassing the service to simulate the time
 		// has passed
 
-		Calendar displayDateCalendar = new GregorianCalendar();
+		Calendar pastDisplayDateCalendar = getCalendarFromDate(now, PAST);
 
-		displayDateCalendar.setTime(new Date(now.getTime() - Time.MINUTE * 5));
-
-		article.setDisplayDate(displayDateCalendar.getTime());
+		article.setDisplayDate(pastDisplayDateCalendar.getTime());
 
 		article = JournalArticleLocalServiceUtil.updateJournalArticle(article);
 
@@ -197,6 +201,10 @@ public class JournalArticleScheduledTest {
 					_group.getCompanyId(), _group.getGroupId()));
 		}
 	}
+
+	private static final int FUTURE = 1;
+
+	private static final int PAST = -1;
 
 	private Group _group;
 

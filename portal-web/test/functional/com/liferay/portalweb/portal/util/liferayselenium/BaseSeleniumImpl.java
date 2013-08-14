@@ -171,6 +171,11 @@ public abstract class BaseSeleniumImpl
 	}
 
 	@Override
+	public void connect(String emailAddress, String password) throws Exception {
+		LiferaySeleniumHelper.connect(emailAddress, password);
+	}
+
+	@Override
 	public void copyText(String locator) {
 		_clipBoard = super.getText(locator);
 	}
@@ -181,6 +186,11 @@ public abstract class BaseSeleniumImpl
 	}
 
 	@Override
+	public void deleteEmails() throws Exception {
+		LiferaySeleniumHelper.deleteEmails();
+	}
+
+	@Override
 	public void echo(String message) {
 		LiferaySeleniumHelper.echo(message);
 	}
@@ -188,6 +198,11 @@ public abstract class BaseSeleniumImpl
 	@Override
 	public void fail(String message) {
 		LiferaySeleniumHelper.fail(message);
+	}
+
+	@Override
+	public void getContent(String number) throws Exception {
+		LiferaySeleniumHelper.getContent(number);
 	}
 
 	@Override
@@ -235,6 +250,11 @@ public abstract class BaseSeleniumImpl
 	@Override
 	public String getProjectDir() {
 		return _projectDir;
+	}
+
+	@Override
+	public void getSubject(String number) throws Exception {
+		LiferaySeleniumHelper.getSubject(number);
 	}
 
 	@Override
@@ -365,6 +385,11 @@ public abstract class BaseSeleniumImpl
 	public void refreshAndWait() {
 		super.refresh();
 		super.waitForPageToLoad("30000");
+	}
+
+	@Override
+	public void replyEmail(String to, String content) throws Exception {
+		LiferaySeleniumHelper.replyEmail(to, content);
 	}
 
 	@Override
@@ -664,6 +689,8 @@ public abstract class BaseSeleniumImpl
 
 	private String _clipBoard = "";
 	private CommandProcessor _commandProcessor;
+	private String _emailAddress = "";
+	private String _password = "";
 	private String _primaryTestSuiteName;
 	private String _projectDir;
 	private int _screenshotCount = 0;

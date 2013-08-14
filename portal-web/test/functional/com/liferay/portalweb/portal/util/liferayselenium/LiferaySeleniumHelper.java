@@ -17,6 +17,7 @@ package com.liferay.portalweb.portal.util.liferayselenium;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portalweb.portal.BaseTestCase;
+import com.liferay.portalweb.portal.util.MailFetching;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
 import com.liferay.portalweb.portal.util.TestPropsValues;
 
@@ -268,6 +269,16 @@ public class LiferaySeleniumHelper {
 		}
 	}
 
+	public static void connect(String emailAddress, String password)
+		throws Exception {
+
+		MailFetching.connect(emailAddress, password);
+	}
+
+	public static void deleteEmails() throws Exception {
+		MailFetching.deleteMails();
+	}
+
 	public static void echo(String message) {
 		System.out.println(message);
 	}
@@ -276,12 +287,20 @@ public class LiferaySeleniumHelper {
 		BaseTestCase.fail(message);
 	}
 
+	public static void getContent(String number) throws Exception {
+		MailFetching.getContent(number);
+	}
+
 	public static String getNumberDecrement(String value) {
 		return StringUtil.valueOf(GetterUtil.getInteger(value) - 1);
 	}
 
 	public static String getNumberIncrement(String value) {
 		return StringUtil.valueOf(GetterUtil.getInteger(value) + 1);
+	}
+
+	public static void getSubject(String number) throws Exception {
+		MailFetching.getSubject(number);
 	}
 
 	public static boolean isConfirmation(
@@ -336,6 +355,10 @@ public class LiferaySeleniumHelper {
 
 	public static void pause(String waitTime) throws Exception {
 		Thread.sleep(GetterUtil.getInteger(waitTime));
+	}
+
+	public static void replyEmail(String to, String content) throws Exception {
+		MailFetching.reply(to, content);
 	}
 
 	public static void typeFrame(

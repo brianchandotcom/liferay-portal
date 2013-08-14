@@ -23,6 +23,9 @@ import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.lar.DefaultConfigurationPortletDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportHelper;
 import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
@@ -117,6 +120,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -298,6 +302,32 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		}
 
 		return PortletConstants.getRootPortletId(portletId);
+	}
+
+	@Override
+	public Map<Long, Boolean> getLayoutIdMap(PortletRequest portletRequest)
+		throws Exception {
+
+		String layoutIdsJSON = ParamUtil.getString(portletRequest, "layoutIds");
+
+		Map<Long, Boolean> layoutIdMap = new LinkedHashMap<Long, Boolean>();
+
+		if (Validator.isNull(layoutIdsJSON)) {
+			return layoutIdMap;
+		}
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(layoutIdsJSON);
+
+		for (int i = 0; i < jsonArray.length(); ++i) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+			long plid = jsonObject.getLong("plid");
+			boolean includeChildren = jsonObject.getBoolean("includeChildren");
+
+			layoutIdMap.put(plid, includeChildren);
+		}
+
+		return layoutIdMap;
 	}
 
 	@Override

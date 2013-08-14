@@ -57,6 +57,9 @@ public interface ExportImportHelper {
 	public String getExportableRootPortletId(long companyId, String portletId)
 		throws Exception;
 
+	public Map<Long, Boolean> getLayoutIdMap(PortletRequest portletRequest)
+		throws Exception;
+
 	public long[] getLayoutIds(List<Layout> layouts);
 
 	public ManifestSummary getManifestSummary(

@@ -78,6 +78,13 @@ public class ExportImportHelperUtil {
 		return _exportImportHelper;
 	}
 
+	public static Map<Long, Boolean> getLayoutIdMap(
+			PortletRequest portletRequest)
+		throws Exception {
+
+		return getExportImportHelper().getLayoutIdMap(portletRequest);
+	}
+
 	public static long[] getLayoutIds(List<Layout> layouts) {
 		return getExportImportHelper().getLayoutIds(layouts);
 	}

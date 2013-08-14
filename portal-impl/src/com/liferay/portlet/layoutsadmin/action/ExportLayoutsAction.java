@@ -15,9 +15,6 @@
 package com.liferay.portlet.layoutsadmin.action;
 
 import com.liferay.portal.NoSuchGroupException;
-import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -36,7 +33,6 @@ import com.liferay.portlet.sites.action.ActionUtil;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -44,7 +40,6 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletContext;
-import javax.portlet.PortletRequest;
 import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -77,7 +72,8 @@ public class ExportLayoutsAction extends PortletAction {
 			String fileName = ParamUtil.getString(
 				actionRequest, "exportFileName");
 
-			Map<Long, Boolean> layoutIdMap = getLayoutIdMap(actionRequest);
+			Map<Long, Boolean> layoutIdMap =
+				ExportImportHelperUtil.getLayoutIdMap(actionRequest);
 
 			long[] layoutIds = getLayoutIds(layoutIdMap);
 
@@ -163,31 +159,6 @@ public class ExportLayoutsAction extends PortletAction {
 				"/html/portlet/layouts_admin/export_layouts_processes.jsp");
 
 		portletRequestDispatcher.include(resourceRequest, resourceResponse);
-	}
-
-	protected Map<Long, Boolean> getLayoutIdMap(PortletRequest portletRequest)
-		throws Exception {
-
-		String layoutIdsJSON = ParamUtil.getString(portletRequest, "layoutIds");
-
-		Map<Long, Boolean> layoutIdMap = new LinkedHashMap<Long, Boolean>();
-
-		if (Validator.isNull(layoutIdsJSON)) {
-			return layoutIdMap;
-		}
-
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(layoutIdsJSON);
-
-		for (int i = 0; i < jsonArray.length(); ++i) {
-			JSONObject jsonObject = jsonArray.getJSONObject(i);
-
-			long plid = jsonObject.getLong("plid");
-			boolean includeChildren = jsonObject.getBoolean("includeChildren");
-
-			layoutIdMap.put(plid, includeChildren);
-		}
-
-		return layoutIdMap;
 	}
 
 	protected long[] getLayoutIds(Map<Long, Boolean> layoutIdMap)

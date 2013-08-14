@@ -837,6 +837,51 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 	}
 
 	@Override
+	public WikiPage getLatestPage(
+			long resourcePrimKey, int status, boolean preferApproved)
+		throws PortalException, SystemException {
+
+		WikiPage page = fetchLatestPage(
+			resourcePrimKey, status, preferApproved);
+
+		if (page == null) {
+			throw new NoSuchPageException();
+		}
+
+		return page;
+	}
+
+	@Override
+	public WikiPage getLatestPage(
+			long resourcePrimKey, long nodeId, int status,
+			boolean preferApproved)
+		throws PortalException, SystemException {
+
+		WikiPage page = fetchLatestPage(
+			resourcePrimKey, nodeId, status, preferApproved);
+
+		if (page == null) {
+			throw new NoSuchPageException();
+		}
+
+		return page;
+	}
+
+	@Override
+	public WikiPage getLatestPage(
+			long nodeId, String title, int status, boolean preferApproved)
+		throws PortalException, SystemException {
+
+		WikiPage page = fetchLatestPage(nodeId, title, status, preferApproved);
+
+		if (page == null) {
+			throw new NoSuchPageException();
+		}
+
+		return page;
+	}
+
+	@Override
 	public List<WikiPage> getNoAssetPages() throws SystemException {
 		return wikiPageFinder.findByNoAssets();
 	}

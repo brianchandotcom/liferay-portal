@@ -194,6 +194,202 @@ public class ArrayUtilTest {
 	}
 
 	@Test
+	public void testIsEmptyBooleanArray() {
+		boolean[] array = new boolean[] {true, true};
+
+		Assert.assertFalse(ArrayUtil.isEmpty(array));
+	}
+
+	@Test
+	public void testIsEmptyByteArray() {
+		byte[] array = new byte[] {1, 2};
+
+		Assert.assertFalse(ArrayUtil.isEmpty(array));
+	}
+
+	@Test
+	public void testIsEmptyCharArray() {
+		char[] array = new char[] {1, 2};
+
+		Assert.assertFalse(ArrayUtil.isEmpty(array));
+	}
+
+	@Test
+	public void testIsEmptyDoubleArray() {
+		double[] array = new double[] {1d, 2d};
+
+		Assert.assertFalse(ArrayUtil.isEmpty(array));
+	}
+
+	@Test
+	public void testIsEmptyEmptyBooleanArray() {
+		boolean[] array = new boolean[] {};
+
+		Assert.assertTrue(ArrayUtil.isEmpty(array));
+	}
+
+	@Test
+	public void testIsEmptyEmptyByteArray() {
+		byte[] array = new byte[] {};
+
+		Assert.assertTrue(ArrayUtil.isEmpty(array));
+	}
+
+	@Test
+	public void testIsEmptyEmptyCharArray() {
+		char[] array = new char[] {};
+
+		Assert.assertTrue(ArrayUtil.isEmpty(array));
+	}
+
+	@Test
+	public void testIsEmptyEmptyDoubleArray() {
+		double[] array = new double[] {};
+
+		Assert.assertTrue(ArrayUtil.isEmpty(array));
+	}
+
+	@Test
+	public void testIsEmptyEmptyFloatArray() {
+		float[] array = new float[] {};
+
+		Assert.assertTrue(ArrayUtil.isEmpty(array));
+	}
+
+	@Test
+	public void testIsEmptyEmptyIntArray() {
+		int[] array = new int[] {};
+
+		Assert.assertTrue(ArrayUtil.isEmpty(array));
+	}
+
+	@Test
+	public void testIsEmptyEmptyLongArray() {
+		long[] array = new long[] {};
+
+		Assert.assertTrue(ArrayUtil.isEmpty(array));
+	}
+
+	@Test
+	public void testIsEmptyEmptyShortArray() {
+		short[] array = new short[] {};
+
+		Assert.assertTrue(ArrayUtil.isEmpty(array));
+	}
+
+	@Test
+	public void testIsEmptyEmptyUserArray() {
+		User[] array = new User[] {};
+
+		Assert.assertTrue(ArrayUtil.isEmpty(array));
+	}
+
+	@Test
+	public void testIsEmptyFloatArray() {
+		float[] array = new float[] {1f, 2f};
+
+		Assert.assertFalse(ArrayUtil.isEmpty(array));
+	}
+
+	@Test
+	public void testIsEmptyIntArray() {
+		int[] array = new int[] {1, 2};
+
+		Assert.assertFalse(ArrayUtil.isEmpty(array));
+	}
+
+	@Test
+	public void testIsEmptyLongArray() {
+		long[] array = new long[] {1L, 2L};
+
+		Assert.assertFalse(ArrayUtil.isEmpty(array));
+	}
+
+	@Test
+	public void testIsEmptyNullBooleanArray() {
+		boolean[] array = null;
+
+		Assert.assertTrue(ArrayUtil.isEmpty(array));
+
+	}
+
+	@Test
+	public void testIsEmptyNullByteArray() {
+		byte[] array = null;
+
+		Assert.assertTrue(ArrayUtil.isEmpty(array));
+
+	}
+
+	@Test
+	public void testIsEmptyNullCharArray() {
+		char[] array = null;
+
+		Assert.assertTrue(ArrayUtil.isEmpty(array));
+
+	}
+
+	@Test
+	public void testIsEmptyNullDoubleArray() {
+		double[] array = null;
+
+		Assert.assertTrue(ArrayUtil.isEmpty(array));
+	}
+
+	@Test
+	public void testIsEmptyNullFloatArray() {
+		float[] array = null;
+
+		Assert.assertTrue(ArrayUtil.isEmpty(array));
+	}
+
+	@Test
+	public void testIsEmptyNullIntArray() {
+		int[] array = null;
+
+		Assert.assertTrue(ArrayUtil.isEmpty(array));
+	}
+
+	@Test
+	public void testIsEmptyNullLongArray() {
+		long[] array = null;
+
+		Assert.assertTrue(ArrayUtil.isEmpty(array));
+	}
+
+	@Test
+	public void testIsEmptyNullShortArray() {
+		short[] array = null;
+
+		Assert.assertTrue(ArrayUtil.isEmpty(array));
+	}
+
+	@Test
+	public void testIsEmptyNullUserArray() {
+		Object[] array = null;
+
+		Assert.assertTrue(ArrayUtil.isEmpty(array));
+	}
+
+	@Test
+	public void testIsEmptyShortArray() {
+		short[] array = new short[] {1, 2};
+
+		Assert.assertFalse(ArrayUtil.isEmpty(array));
+	}
+
+	@Test
+	public void testIsEmptyUserArray() {
+		User brian = new User("brian", 20);
+		User julio = new User("julio", 20);
+		User sergio = new User("sergio", 20);
+
+		User[] array = {brian, julio, sergio};
+
+		Assert.assertFalse(ArrayUtil.isEmpty(array));
+	}
+
+	@Test
 	public void testReverseBooleanArray() throws Exception {
 		boolean[] array = new boolean[] {true, true, false};
 

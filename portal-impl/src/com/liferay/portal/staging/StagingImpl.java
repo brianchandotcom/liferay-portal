@@ -1345,7 +1345,7 @@ public class StagingImpl implements Staging {
 			layouts.addAll(layout.getAllChildren());
 		}
 
-		long[] layoutIds = getLayoutIds(layouts);
+		long[] layoutIds = ExportImportHelperUtil.getLayoutIds(layouts);
 
 		publishLayouts(
 			userId, layout.getGroupId(), liveGroupId, layout.isPrivateLayout(),
@@ -1414,7 +1414,7 @@ public class StagingImpl implements Staging {
 			}
 		}
 
-		long[] layoutIds = getLayoutIds(layouts);
+		long[] layoutIds = ExportImportHelperUtil.getLayoutIds(layouts);
 
 		publishLayouts(
 			userId, sourceGroupId, targetGroupId, privateLayout, layoutIds,
@@ -2022,18 +2022,6 @@ public class StagingImpl implements Staging {
 		return ParamUtil.getInteger(
 			portletRequest, param,
 			GetterUtil.getInteger(group.getTypeSettingsProperty(param)));
-	}
-
-	protected long[] getLayoutIds(List<Layout> layouts) {
-		long[] layoutIds = new long[layouts.size()];
-
-		for (int i = 0; i < layouts.size(); i++) {
-			Layout layout = layouts.get(i);
-
-			layoutIds[i] = layout.getLayoutId();
-		}
-
-		return layoutIds;
 	}
 
 	protected long getLong(

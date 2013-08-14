@@ -301,6 +301,19 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	}
 
 	@Override
+	public long[] getLayoutIds(List<Layout> layouts) {
+		long[] layoutIds = new long[layouts.size()];
+
+		for (int i = 0; i < layouts.size(); i++) {
+			Layout layout = layouts.get(i);
+
+			layoutIds[i] = layout.getLayoutId();
+		}
+
+		return layoutIds;
+	}
+
+	@Override
 	public ManifestSummary getManifestSummary(
 			long userId, long groupId, Map<String, String[]> parameterMap,
 			File file)

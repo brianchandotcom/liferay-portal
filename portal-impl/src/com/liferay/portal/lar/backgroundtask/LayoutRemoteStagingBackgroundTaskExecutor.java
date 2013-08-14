@@ -17,6 +17,7 @@ package com.liferay.portal.lar.backgroundtask;
 import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.RemoteExportException;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
+import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
 import com.liferay.portal.kernel.lar.MissingReferences;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -174,7 +175,7 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 				}
 			}
 
-			long[] layoutIds = getLayoutIds(layouts);
+			long[] layoutIds = ExportImportHelperUtil.getLayoutIds(layouts);
 
 			if (layoutIds.length <= 0) {
 				throw new RemoteExportException(
@@ -185,18 +186,6 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 				sourceGroupId, privateLayout, layoutIds, parameterMap,
 				startDate, endDate);
 		}
-	}
-
-	protected long[] getLayoutIds(List<Layout> layouts) {
-		long[] layoutIds = new long[layouts.size()];
-
-		for (int i = 0; i < layouts.size(); i++) {
-			Layout layout = layouts.get(i);
-
-			layoutIds[i] = layout.getLayoutId();
-		}
-
-		return layoutIds;
 	}
 
 	/**

@@ -354,6 +354,11 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 	}
 
 	@Override
+	public boolean isSupportsDataStrategyCopyAsNew() {
+		return _supportsDataStrategyCopyAsNew;
+	}
+
+	@Override
 	public void prepareManifestSummary(PortletDataContext portletDataContext)
 		throws PortletDataException {
 
@@ -795,6 +800,12 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 		_publishToLiveByDefault = publishToLiveByDefault;
 	}
 
+	protected void setSupportsDataStrategyCopyAsNew(
+		boolean supportsDataStrategyCopyAsNew) {
+
+		_supportsDataStrategyCopyAsNew = supportsDataStrategyCopyAsNew;
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(
 		BasePortletDataHandler.class);
 
@@ -813,5 +824,6 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 		new PortletDataHandlerControl[0];
 	private String _portletId;
 	private boolean _publishToLiveByDefault;
+	private boolean _supportsDataStrategyCopyAsNew = true;
 
 }

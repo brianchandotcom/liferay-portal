@@ -183,6 +183,8 @@ public interface PortletDataHandler {
 	 */
 	public boolean isPublishToLiveByDefault();
 
+	public boolean isSupportsDataStrategyCopyAsNew();
+
 	public void prepareManifestSummary(PortletDataContext portletDataContext)
 		throws PortletDataException;
 

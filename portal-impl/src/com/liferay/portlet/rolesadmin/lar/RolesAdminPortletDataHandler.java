@@ -60,6 +60,7 @@ public class RolesAdminPortletDataHandler extends BasePortletDataHandler {
 				},
 				Role.class.getName()
 			));
+		setSupportsDataStrategyCopyAsNew(false);
 	}
 
 	@Override

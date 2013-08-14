@@ -35,7 +35,7 @@ if ((article != null) && article.isDraft()) {
 <c:if test="<%= article != null %>">
 	<div class="article-toolbar" id="<portlet:namespace />articleToolbar"></div>
 
-	<aui:script use="aui-toolbar,aui-dialog-iframe-deprecated,liferay-util-window">
+		<aui:script use="aui-toolbar,aui-dialog-iframe-deprecated,aui-tooltip,liferay-util-window">
 		var permissionPopUp = null;
 
 		var toolbarButtonGroup = [];
@@ -72,9 +72,12 @@ if ((article != null) && article.isDraft()) {
 				':input'
 			);
 
+			var tooltip;
+
 			toolbarButtonGroup.push(
 				{
 					icon: 'icon-search',
+					id: '<portlet:namespace/>basicPreviewButton',
 					label: '<%= UnicodeLanguageUtil.get(pageContext, "basic-preview") %>',
 					on: {
 						click: function(event) {
@@ -103,8 +106,18 @@ if ((article != null) && article.isDraft()) {
 									submitForm(form);
 								}
 							}
+						},
+						render: function(event) {
+							if (!tooltip) {
+								tooltip = new A.Tooltip(
+									{
+										trigger: '#<portlet:namespace/>basicPreviewButton'
+									}
+								).render();
+							}
 						}
-					}
+					},
+					title: '<%= HtmlUtil.escape(LanguageUtil.get(pageContext, "this-preview-won't-include-the-theme-context")) %>'
 				}
 			);
 		</c:if>

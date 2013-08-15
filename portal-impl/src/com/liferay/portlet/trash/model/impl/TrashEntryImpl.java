@@ -14,7 +14,10 @@
 
 package com.liferay.portlet.trash.model.impl;
 
+import com.liferay.portal.kernel.trash.TrashHandler;
+import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.model.ClassedModel;
 import com.liferay.portlet.trash.model.TrashEntry;
 
 /**
@@ -60,6 +63,18 @@ public class TrashEntryImpl extends TrashEntryBaseImpl {
 		UnicodeProperties typeSettingsProperties = getTypeSettingsProperties();
 
 		return typeSettingsProperties.getProperty(key, defaultValue);
+	}
+
+	@Override
+	public boolean isTrashEntry(ClassedModel classedModel) {
+		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
+			classedModel.getModelClassName());
+
+		if (trashHandler == null) {
+			return false;
+		}
+
+		return trashHandler.isTrashEntry(this, classedModel);
 	}
 
 	@Override

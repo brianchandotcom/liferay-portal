@@ -1191,14 +1191,12 @@ public class HttpImpl implements Http {
 		Cookie cookie = new Cookie(
 			commonsCookie.getName(), commonsCookie.getValue());
 
-		String domain = StringPool.BLANK;
-
 		if (!PropsValues.SESSION_COOKIE_USE_FULL_HOSTNAME) {
-			domain = commonsCookie.getDomain();
-		}
+			String domain = commonsCookie.getDomain();
 
-		if (Validator.isNotNull(domain)) {
-			cookie.setDomain(domain);
+			if (Validator.isNotNull(domain)) {
+				cookie.setDomain(domain);
+			}
 		}
 
 		Date expiryDate = commonsCookie.getExpiryDate();

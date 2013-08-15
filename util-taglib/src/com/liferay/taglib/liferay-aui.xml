@@ -704,13 +704,30 @@
 				<outputType>java.lang.String</outputType>
 			</attribute>
 			<attribute>
+				<name>collapsible</name>
+				<inputType>boolean</inputType>
+				<outputType>boolean</outputType>
+				<defaultValue>true</defaultValue>
+			</attribute>
+			<attribute>
+				<name>icon</name>
+				<inputType>java.lang.String</inputType>
+				<outputType>java.lang.String</outputType>
+			</attribute>
+			<attribute>
 				<name>id</name>
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 			</attribute>
+			<attribute>
+				<name>useNamespace</name>
+				<inputType>boolean</inputType>
+				<outputType>boolean</outputType>
+				<defaultValue>true</defaultValue>
+			</attribute>
 		</attributes>
 	</component>
-	<component name="NavBar" bodyContent="true">
+	<component name="NavBar" bodyContent="false">
 		<attributes>
 			<attribute>
 				<name>cssClass</name>

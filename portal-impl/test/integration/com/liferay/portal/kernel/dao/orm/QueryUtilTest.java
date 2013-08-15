@@ -17,12 +17,10 @@ package com.liferay.portal.kernel.dao.orm;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
-import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.service.persistence.PersistenceExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
-
-import java.sql.Connection;
 
 import java.util.List;
 
@@ -40,30 +38,23 @@ import org.junit.runner.RunWith;
 public class QueryUtilTest {
 
 	@BeforeClass
-	public static void setUpClass() {
-		DB db = DBFactoryUtil.getDB();
-		Connection connection = null;
-		try {
-			connection = DataAccess.getConnection();
-			db.runSQL(connection, _CREATE_TABLE);
-			db.runSQL(connection, createInserts(_AMOUNT));
-			connection.commit();
-		}
-		catch (Exception e) {
-			DataAccess.cleanUp(connection);
-		}
+	public static void setUpClass() throws Exception {
+		_db = DBFactoryUtil.getDB();
+
+		_db.runSQL(_SQL_CREATE_TABLE);
+		_db.runSQL(createInserts(_AMOUNT));
 	}
 
 	@AfterClass
 	public static void tearDownClass() throws Exception {
-		DB db = DBFactoryUtil.getDB();
-		db.runSQL(_DROP_TABLE);
+		_db.runSQL(_SQL_DROP_TABLE);
 	}
 
 	@Test
 	public void testListModifiableAllPos() throws Exception {
 		doListTest(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, false, _AMOUNT, 1, _AMOUNT);
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, false, _AMOUNT, 0,
+			_AMOUNT - 1);
 	}
 
 	@Test
@@ -83,7 +74,7 @@ public class QueryUtilTest {
 
 	@Test
 	public void testListModifiableFaultyParameters4() throws Exception {
-		doListTest(-1, 10, false, 10, 1, 10);
+		doListTest(-1, 10, false, 10, 0, 9);
 	}
 
 	@Test
@@ -93,12 +84,12 @@ public class QueryUtilTest {
 
 	@Test
 	public void testListModifiableFirstTen() throws Exception {
-		doListTest(0, 10, false, 10, 1, 10);
+		doListTest(0, 10, false, 10, 0, 9);
 	}
 
 	@Test
 	public void testListModifiableFiveAfterFive() throws Exception {
-		doListTest(5, 10, false, 5, 6, 10);
+		doListTest(5, 10, false, 5, 5, 9);
 	}
 
 	@Test
@@ -109,7 +100,8 @@ public class QueryUtilTest {
 	@Test
 	public void testListUnmodifiableAllPos() throws Exception {
 		doListTest(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, true, _AMOUNT, 1, _AMOUNT);
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, true, _AMOUNT, 0,
+			_AMOUNT - 1);
 	}
 
 	@Test
@@ -129,7 +121,7 @@ public class QueryUtilTest {
 
 	@Test
 	public void testListUnmodifiableFaultyParameters4() throws Exception {
-		doListTest(-1, 10, true, 10, 1, 10);
+		doListTest(-1, 10, true, 10, 0, 9);
 	}
 
 	@Test
@@ -139,12 +131,12 @@ public class QueryUtilTest {
 
 	@Test
 	public void testListUnmodifiableFirstTen() throws Exception {
-		doListTest(0, 10, true, 10, 1, 10);
+		doListTest(0, 10, true, 10, 0, 9);
 	}
 
 	@Test
 	public void testListUnmodifiableFiveAfterFive() throws Exception {
-		doListTest(5, 10, true, 5, 6, 10);
+		doListTest(5, 10, true, 5, 5, 9);
 	}
 
 	@Test
@@ -156,15 +148,15 @@ public class QueryUtilTest {
 		String[] sqls = new String[amount];
 
 		for (int i = 0; i < amount; i++) {
-			int id = i + 1;
-			int value = Double.valueOf(Math.random() * 1000).intValue();
-			sqls[i] = String.format(
-				"INSERT INTO QueryUtilTest VALUES (%d, %d)", id, value);
+			sqls[i] = StringUtil.replace(
+				_SQL_INSERT, new String[] {"[$ID$]", "[$VALUE$]"},
+				new String[] {String.valueOf(i), String.valueOf(i)});
 		}
 
 		return sqls;
 	}
 
+	@SuppressWarnings("unchecked")
 	protected void doListTest(
 			int start, int end, boolean unmodifiable, int expectedResultSize,
 			int expectedFirstValue, int expectedLastValue)
@@ -175,9 +167,9 @@ public class QueryUtilTest {
 		try {
 			session = _sessionFactory.openSession();
 
-			SQLQuery q = session.createSQLQuery(_SELECT);
+			SQLQuery q = session.createSQLQuery(_SQL_SELECT);
 
-			List result = QueryUtil.list(
+			List<Object[]> result = (List<Object[]>)QueryUtil.list(
 				q, _sessionFactory.getDialect(), start, end, unmodifiable);
 
 			Assert.assertNotNull("Verify that result is not null", result);
@@ -188,19 +180,21 @@ public class QueryUtilTest {
 				Object[] firstRow = (Object[])result.get(0);
 				Object[] lastRow = (Object[])result.get(result.size() - 1);
 
-				int firstId = (Integer)firstRow[0];
-				int lastId  =  (Integer)lastRow[0];
+				Number firstId = (Number)firstRow[0];
+				Number lastId  =  (Number)lastRow[0];
 
 				Assert.assertEquals(
-					"Verify firstId", expectedFirstValue, firstId);
-				Assert.assertEquals("Verify lastId", expectedLastValue, lastId);
+					"Verify firstId", expectedFirstValue, firstId.intValue());
+				Assert.assertEquals(
+					"Verify lastId", expectedLastValue, lastId.intValue());
 			}
 
 			try {
-				Object newItem = new Object[] {_AMOUNT + 1, 2};
-				result.add(newItem);
-				Assert.assertFalse("Verify modifiable", unmodifiable);
+				result.add(new Object[0]);
+
 				expectedResultSize++;
+
+				Assert.assertFalse("Verify modifiable", unmodifiable);
 			}
 			catch (UnsupportedOperationException e) {
 				Assert.assertTrue("Verify unmodifiable", unmodifiable);
@@ -215,16 +209,21 @@ public class QueryUtilTest {
 		}
 	}
 
-	private static int _AMOUNT = 20;
+	private static final int _AMOUNT = 20;
 
-	private static String _CREATE_TABLE =
-		"create table QueryUtilTest ( id INT not null primary key, " +
-		"valueId INT )";
+	private static final String _SQL_CREATE_TABLE =
+		"CREATE TABLE QueryUtilTest (id INTEGER NOT NULL PRIMARY KEY, " +
+			"value INTEGER)";
 
-	private static String _DROP_TABLE = "drop table QueryUtilTest";
+	private static final String _SQL_DROP_TABLE = "DROP TABLE QueryUtilTest";
 
-	private static String _SELECT =
-		"select id, valueId from QueryUtilTest order by id asc";
+	private static final String _SQL_INSERT =
+		"INSERT INTO QueryUtilTest VALUES ([$ID$], [$VALUE$])";
+
+	private static final String _SQL_SELECT =
+		"SELECT id, value FROM QueryUtilTest ORDER BY id ASC";
+
+	private static DB _db;
 
 	private SessionFactory _sessionFactory =
 		(SessionFactory)PortalBeanLocatorUtil.locate("liferaySessionFactory");

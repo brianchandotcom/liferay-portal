@@ -42,6 +42,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketAddress;
 import java.net.SocketException;
+import java.net.SocketTimeoutException;
 
 import java.nio.channels.ServerSocketChannel;
 
@@ -259,7 +260,18 @@ public class EhcacheStreamBootstrapHelpUtil {
 			Socket socket = null;
 
 			try {
-				socket = _serverSocket.accept();
+				try {
+					socket = _serverSocket.accept();
+				}
+				catch (SocketTimeoutException ste) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(
+							"Client connect back waiting timeout. Terminate " +
+								"server thread " + getName());
+					}
+
+					return;
+				}
 
 				_serverSocket.close();
 

@@ -1224,15 +1224,12 @@ public class WebDriverToSeleniumBridge
 
 		String label = optionLocator;
 
-		int index = -1;
-
 		if (optionLocator.startsWith("index=")) {
 			String indexString = optionLocator.substring(6);
 
-			index = GetterUtil.getInteger(indexString);
-		}
-		else if (optionLocator.startsWith("label=")) {
-			label = optionLocator.substring(6);
+			int index = GetterUtil.getInteger(indexString);
+
+			select.selectByIndex(index - 1);
 		}
 		else if (optionLocator.startsWith("value=")) {
 			String value = optionLocator.substring(6);
@@ -1240,19 +1237,7 @@ public class WebDriverToSeleniumBridge
 			if (value.startsWith("regexp:")) {
 				String regexp = value.substring(7);
 
-				Pattern pattern = Pattern.compile(regexp);
-
-				for (WebElement option : options) {
-					String optionValue = option.getAttribute("value");
-
-					Matcher matcher = pattern.matcher(optionValue);
-
-					if (matcher.matches()) {
-						index = options.indexOf(option);
-
-						break;
-					}
-				}
+				selectByRegexpValue(selectLocator, regexp);
 			}
 			else {
 				for (WebElement option : options) {
@@ -1264,19 +1249,22 @@ public class WebDriverToSeleniumBridge
 						break;
 					}
 				}
+
+				selectByLabel(selectLocator, label);
 			}
 		}
-
-		if (index > -1) {
-			select.selectByIndex(index);
-		}
 		else {
-			keyPress(selectLocator, "\\36");
+			if (optionLocator.startsWith("label=")) {
+				label = optionLocator.substring(6);
+			}
 
-			if (!label.equals(getSelectedLabel(selectLocator))) {
-				webElement.sendKeys(label);
+			if (label.startsWith("regexp:")) {
+				String regexp = label.substring(7);
 
-				keyPress(selectLocator, "\\13");
+				selectByRegexpText(selectLocator, regexp);
+			}
+			else {
+				selectByLabel(selectLocator, label);
 			}
 		}
 	}
@@ -1766,6 +1754,106 @@ public class WebDriverToSeleniumBridge
 		_keysSpecialChars.put(">", ".");
 		_keysSpecialChars.put("(", "9");
 		_keysSpecialChars.put(")", "0");
+	}
+
+	protected void selectByLabel(String selectLocator, String label) {
+		WebElement webElement = getWebElement(selectLocator);
+
+		keyPress(selectLocator, "\\36");
+
+		if (!label.equals(getSelectedLabel(selectLocator))) {
+			webElement.sendKeys(label);
+
+			keyPress(selectLocator, "\\13");
+		}
+
+		if (!label.equals(getSelectedLabel(selectLocator))) {
+			Select select = new Select(webElement);
+
+			select.selectByVisibleText(label);
+		}
+
+		if (!label.equals(getSelectedLabel(selectLocator))) {
+			webElement.click();
+
+			Select select = new Select(webElement);
+
+			List<WebElement> options = select.getOptions();
+
+			for (WebElement option : options) {
+				String optionText = option.getText();
+
+				if (optionText.equals(label)) {
+					WrapsDriver wrapsDriver = (WrapsDriver)option;
+
+					WebDriver webDriver = wrapsDriver.getWrappedDriver();
+
+					Actions actions = new Actions(webDriver);
+
+					actions.moveToElement(option);
+
+					actions.doubleClick(option);
+
+					Action action = actions.build();
+
+					action.perform();
+
+					break;
+				}
+			}
+		}
+	}
+
+	protected void selectByRegexpText(String selectLocator, String regexp) {
+		WebElement webElement = getWebElement(selectLocator);
+
+		Select select = new Select(webElement);
+
+		List<WebElement> options = select.getOptions();
+
+		Pattern pattern = Pattern.compile(regexp);
+
+		int index = -1;
+
+		for (WebElement option : options) {
+			String optionText = option.getText();
+
+			Matcher matcher = pattern.matcher(optionText);
+
+			if (matcher.matches()) {
+				index = options.indexOf(option);
+
+				break;
+			}
+		}
+
+		select.selectByIndex(index);
+	}
+
+	protected void selectByRegexpValue(String selectLocator, String regexp) {
+		WebElement webElement = getWebElement(selectLocator);
+
+		Select select = new Select(webElement);
+
+		List<WebElement> options = select.getOptions();
+
+		Pattern pattern = Pattern.compile(regexp);
+
+		int index = -1;
+
+		for (WebElement option : options) {
+			String optionValue = option.getAttribute("value");
+
+			Matcher matcher = pattern.matcher(optionValue);
+
+			if (matcher.matches()) {
+				index = options.indexOf(option);
+
+				break;
+			}
+		}
+
+		select.selectByIndex(index);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

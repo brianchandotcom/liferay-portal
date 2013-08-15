@@ -24,63 +24,28 @@
 	<td></td>
 </tr>
 <tr>
-	<td>PUBLISH_TO_LIVE_IFRAME_TOP</td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
-	<td>ALL_PUBLICATION_PROCESSES</td>
-	<td>//ul[@class='nav nav-tabs']/li[2]/a[contains(.,'All Publication Processes')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PUBLICATION_PROCESS_INFO_MESSAGE</td>
-	<td>//div[@class='alert alert-info']</td>
-	<td>No publication processes were found. </td>
-</tr>
-<tr>
-	<td>SCHEDULED_EVENTS</td>
-	<td>//ul[@class='nav nav-tabs']/li[3]/a[contains(.,'Scheduled Events')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SUCCESS_MESSAGE</td>
 	<td>//div[@class='alert alert-success']</td>
-	<td></td>
+	<td>Your request completed successfully. The page will be refreshed when you close this dialog.</td>
 </tr>
 <tr>
-	<td>CLOSE_BUTTON</td>
-	<td>//button[contains(@class,'close-content')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CONFIRMATION</td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
-	<td>DATE_NOW</td>
+	<td>DATE_NOW_CHECKBOX</td>
 	<td>//input[@id='_88_publishingEventNow']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>DATE_SCHEDULE</td>
-	<td>//input[@id='_88_publishingEventSchedule']</td>
+	<td>PAGES_CHANGE</td>
+	<td>//div/a[@id='_88_pagesLink']</td>
+	<td>Change</td>
+</tr>
+<tr>
+	<td>ALL_APPLICATIONS_CHECKBOX</td>
+	<td>//input[@id='_88_allApplications']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>CHOOSE_APPLICATIONS</td>
-	<td>//input[@id='_88_chooseApplications']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>ALL_CONTENT</td>
+	<td>ALL_CONTENT_CHECKBOX</td>
 	<td>//input[@id='_88_allContent']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CHOOSE_CONTENT</td>
-	<td>//input[@id='_88_chooseContent']</td>
 	<td></td>
 </tr>
 <tr>
@@ -94,35 +59,41 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONFIRMATION</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
 </tr>
-<!--PUBLICATION_TABLE-->
+<!--PAGES-->
 <tr>
-	<td>PUBLICATION_TABLE_USER_NAME</td>
-	<td>//tbody[@class='table-data']/tr/td</td>
+	<td>PAGES_SELECT_PAGES_BUTTON</td>
+	<td>//button[contains(.,'Select Pages')]</td>
+	<td>Select Pages</td>
+</tr>
+<tr>
+	<td>PAGES_DELETE_MISSING_PAGES_CHECKBOX</td>
+	<td>//input[@id='_88_DELETE_MISSING_LAYOUTSCheckbox']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>PUBLICATION_TABLE_USER_STATUS</td>
-	<td>//tbody[@class='table-data']/tr/td[2]/strong[contains(.,'Successful')]</td>
+	<td></td>
+	<td></td>
 	<td></td>
 </tr>
+<!--CURRENT_AND_PREVIOUS_TABLE-->
 <tr>
-	<td>PUBLICATION_TABLE_USER_CREATE_DATE</td>
-	<td>//tbody[@class='table-data']/tr/td[3]</td>
-	<td></td>
+	<td>CURRENT_AND_PREVIOUS_TABLE_USER_NAME</td>
+	<td>//tbody/tr/td[1]</td>
+	<td>Test Test</td>
 </tr>
 <tr>
-	<td>PUBLICATION_TABLE_USER_COMPLETION_DATE</td>
-	<td>//tbody[@class='table-data']/tr/td[4]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PUBLICATION_TABLE_USER_CLEAR</td>
-	<td>//tbody[@class='table-data']/tr/td[5]/span</td>
-	<td></td>
+	<td>CURRENT_AND_PREVIOUS_TABLE_STATUS</td>
+	<td>//tbody/tr/td[2]/strong</td>
+	<td>Successful</td>
 </tr>
 </tbody>
 </table>

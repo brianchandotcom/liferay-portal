@@ -145,40 +145,43 @@ AUI.add(
 					_setupNodeResize: function(node) {
 						var instance = this;
 
-						var resizable = node.hasClass('resize');
+						var resizable = node.hasClass('yui3-resize');
 
 						if (!resizable) {
 							var resize = new A.Resize(
 								{
 									after: {
 										end: function(event) {
-											var info = event.info;
+											instance.savePosition(node);
+										},
+										resize: function(event) {
+											var portletContentContainerNode = node.one('.portlet-content-container');
 
-											var portletNode = this.get('node');
+											if (portletContentContainerNode) {
+												var offsetHeight = event.info.offsetHeight;
 
-											var containerNode = portletNode.one('.portlet-content-container');
+												var adjustOffsetHeight = function(childNode) {
+													if (childNode) {
+														offsetHeight -= (childNode.get('offsetHeight') - childNode.height());
+													}
+												};
 
-											if (containerNode) {
-												var containerHeight = info.offsetHeight;
+												var portletBodyNode = node.one('.portlet-body');
+												var portletNode = node.one('.portlet');
+												var portletTopperNode = node.one('.portlet-topper');
+												var portletContentNode = node.one('.portlet-content');
 
-												var topperNode = portletNode.one('.portlet-topper');
+												adjustOffsetHeight(portletBodyNode);
+												adjustOffsetHeight(portletNode);
+												adjustOffsetHeight(portletContentNode);
+												adjustOffsetHeight(portletContentContainerNode);
 
-												if (topperNode) {
-													containerHeight -= topperNode.get('offsetHeight');
+												if (portletTopperNode) {
+													offsetHeight -= portletTopperNode.get('offsetHeight');
 												}
 
-												var contentNode = portletNode.one('.portlet-content');
-
-												if (contentNode) {
-													containerHeight -= contentNode.getPadding('tb');
-												}
-
-												containerNode.setStyle('height', containerHeight);
-
-												portletNode.setStyle('height', 'auto');
+												portletContentContainerNode.setStyle('height', offsetHeight);
 											}
-
-											instance.savePosition(portletNode);
 										}
 									},
 									handles: 'r,br,b',
@@ -217,6 +220,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-resize-deprecated', 'liferay-layout-column']
+		requires: ['resize', 'liferay-layout-column']
 	}
 );

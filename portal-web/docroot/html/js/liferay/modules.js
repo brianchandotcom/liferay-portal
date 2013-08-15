@@ -349,7 +349,7 @@ window.YUI_config = {
 				'liferay-layout-freeform': {
 					path: 'layout_freeform.js',
 					requires: [
-						'aui-resize-deprecated',
+						'resize',
 						'liferay-layout-column'
 					]
 				},

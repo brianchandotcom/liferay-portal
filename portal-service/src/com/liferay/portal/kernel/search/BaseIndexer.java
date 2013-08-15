@@ -855,7 +855,13 @@ public abstract class BaseIndexer implements Indexer {
 				ddmStructure.getStructureId(), fieldName,
 				searchContext.getLocale());
 
-			addSearchTerm(searchQuery, searchContext, name, false);
+			boolean like = false;
+
+			if (indexType.equals("text")) {
+				like = true;
+			}
+
+			addSearchTerm(searchQuery, searchContext, name, like);
 		}
 	}
 

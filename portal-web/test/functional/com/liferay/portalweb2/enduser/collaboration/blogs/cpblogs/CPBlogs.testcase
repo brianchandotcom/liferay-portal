@@ -93,7 +93,7 @@
 		</execute>
 	</command>
 
-	<command name="AddBlogsEntryWithTitleEscapeCharacterCP">
+	<command name="AddBlogsEntryTitleEscapeCharactersCP">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="&lt;!--Html Escape Character Test--&gt;" />
 

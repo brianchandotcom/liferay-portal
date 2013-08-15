@@ -95,7 +95,7 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
 					'keyword': '<liferay-ui:message key="yes" />'
 				};
 
-				if ((type == 'text') || (type == 'textarea')) {
+				if ((type == 'ddm-text-html') || (type == 'text') || (type == 'textarea')) {
 					indexTypeOptions = {
 						'': '<liferay-ui:message key="not-indexable" />',
 						'keyword': '<liferay-ui:message key="indexable-keyword" />',

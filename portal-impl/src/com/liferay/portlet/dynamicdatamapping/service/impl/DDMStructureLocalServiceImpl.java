@@ -889,8 +889,7 @@ public class DDMStructureLocalServiceImpl
 	 * @param  start the lower bound of the range of structures to return
 	 * @param  end the upper bound of the range of structures to return (not
 	 *         inclusive)
-	 * @return the range of matching structures, or <code>null</code> if no
-	 *         matches could be found
+	 * @return the range of matching structures
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
@@ -936,8 +935,7 @@ public class DDMStructureLocalServiceImpl
 	 * @param  start the lower bound of the range of structures to return
 	 * @param  end the upper bound of the range of structures to return (not
 	 *         inclusive)
-	 * @return the matching structures, or <code>null</code> if no matching
-	 *         structures could be found
+	 * @return the range of matching structures
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
@@ -1013,8 +1011,7 @@ public class DDMStructureLocalServiceImpl
 	 * @param  groupIds the primary keys of the groups
 	 * @param  classNameId the primary key of the class name for the structure's
 	 *         related model
-	 * @return the structures matching the class name ID and belonging to the
-	 *         groups
+	 * @return the matching structures
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
@@ -1024,6 +1021,29 @@ public class DDMStructureLocalServiceImpl
 		return ddmStructurePersistence.findByG_C(groupIds, classNameId);
 	}
 
+	/**
+	 * Returns a range of all the structures matching the class name ID and
+	 * belonging to the groups.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end -
+	 * start</code> instances. <code>start</code> and <code>end</code> are not
+	 * primary keys, they are indexes in the result set. Thus, <code>0</code>
+	 * refers to the first result in the set. Setting both <code>start</code>
+	 * and <code>end</code> to {@link
+	 * com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full
+	 * result set.
+	 * </p>
+	 *
+	 * @param  groupIds the primary keys of the groups
+	 * @param  classNameId the primary key of the class name for the structure's
+	 *         related model
+	 * @param  start the lower bound of the range of structures to return
+	 * @param  end the upper bound of the range of structures to return (not
+	 *         inclusive)
+	 * @return the range of matching structures
+	 * @throws SystemException if a system exception occurred
+	 */
 	@Override
 	public List<DDMStructure> getStructures(
 			long[] groupIds, long classNameId, int start, int end)
@@ -1061,6 +1081,16 @@ public class DDMStructureLocalServiceImpl
 		return ddmStructurePersistence.countByG_C(groupId, classNameId);
 	}
 
+	/**
+	 * Returns the number of structures matching the class name ID and belonging
+	 * to the groups.
+	 *
+	 * @param  groupIds the primary keys of the groups
+	 * @param  classNameId the primary key of the class name for the structure's
+	 *         related model
+	 * @return the number of matching structures
+	 * @throws SystemException if a system exception occurred
+	 */
 	@Override
 	public int getStructuresCount(long[] groupIds, long classNameId)
 		throws SystemException {

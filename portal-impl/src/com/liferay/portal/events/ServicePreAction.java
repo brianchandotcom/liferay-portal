@@ -325,6 +325,8 @@ public class ServicePreAction extends Action {
 
 		long plid = ParamUtil.getLong(request, "p_l_id");
 
+		boolean viewableSourceGroup = true;
+
 		if (plid > 0) {
 			layout = LayoutLocalServiceUtil.getLayout(plid);
 
@@ -341,7 +343,7 @@ public class ServicePreAction extends Action {
 					layout = new VirtualLayout(layout, sourceGroup);
 				}
 				else {
-					layout = null;
+					viewableSourceGroup = false;
 				}
 			}
 		}
@@ -418,11 +420,13 @@ public class ServicePreAction extends Action {
 					layout.getGroupId(), layout.isPrivateLayout(),
 					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 			}
-			else if (!viewableGroup && group.isStagingGroup()) {
+			else if ((!viewableGroup || !viewableSourceGroup) &&
+					 group.isStagingGroup()) {
+
 				layout = null;
 			}
 			else if (!isLoginRequest(request) &&
-					 (!viewableGroup ||
+					 ((!viewableGroup || !viewableSourceGroup) ||
 					  (!redirectToDefaultLayout &&
 					   !hasAccessPermission(
 						   permissionChecker, layout, doAsGroupId,

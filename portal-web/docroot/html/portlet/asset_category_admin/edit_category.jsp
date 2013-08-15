@@ -34,9 +34,7 @@ int[] categoryPropertiesIndexes = null;
 List<AssetCategoryProperty> categoryProperties = Collections.emptyList();
 
 String categoryDescriptionId = "categoryDescription";
-
 String categoryNameId = "categoryName";
-
 String categoryPropertiesId = "categoryProperties";
 
 String categoryPropertiesIndexesParam = ParamUtil.getString(request, "categoryPropertiesIndexes");
@@ -92,13 +90,12 @@ else {
 				<aui:input name="categoryId" type="hidden" value="<%= categoryId %>" />
 				<aui:input name="parentCategoryId" type="hidden" value="<%= parentCategoryId %>" />
 
-				<c:if test="<%= category != null %>">
-					<%
-						categoryNameId += "Edit";
-
-						categoryDescriptionId += "Edit";
-					%>
-				</c:if>
+				<%
+				if (category != null) {
+					categoryNameId += "Edit";
+					categoryDescriptionId += "Edit";
+				}
+				%>
 
 				<aui:input autoFocus="<%= true %>" cssClass="category-name" id="<%= categoryNameId %>" label="name" name="title" />
 
@@ -134,11 +131,11 @@ else {
 						</liferay-ui:panel>
 					</c:if>
 
-					<c:if test="<%= category != null %>">
-						<%
-							categoryPropertiesId += "Edit";
-						%>
-					</c:if>
+					<%
+					if (category != null) {
+						categoryPropertiesId += "Edit";
+					}
+					%>
 
 					<liferay-ui:panel collapsible="<%= true %>" defaultState="closed" extended="<%= true %>" helpMessage="properties-are-a-way-to-add-more-detailed-information-to-a-specific-category" id="assetCategoryPropertiesPanel" persistState="<%= true %>" title="properties">
 						<aui:fieldset cssClass="category-categoryProperties" id="<%= categoryPropertiesId %>">

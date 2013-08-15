@@ -129,6 +129,8 @@ AUI.add(
 						}
 
 						instance._setModalContent(signInPortletBody);
+
+						Liferay.Util.focusFormField('input:text');
 					},
 
 					_loadIO: function() {

@@ -1,0 +1,4 @@
+<definition>
+	<execute test-case-command="CPUserGroups#AddMember" />
+	<execute test-case-command="CPUserGroups#AddUserGroups" />
+</definition>

@@ -49,6 +49,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.documentlibrary.store.DLStoreUtil;
 import com.liferay.portlet.trash.model.TrashEntry;
+import com.liferay.portlet.trash.model.TrashVersion;
 import com.liferay.portlet.trash.model.impl.TrashEntryImpl;
 import com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil;
 import com.liferay.portlet.trash.util.comparator.EntryCreateDateComparator;
@@ -60,6 +61,7 @@ import java.text.Format;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.portlet.PortletRequest;
@@ -132,6 +134,30 @@ public class TrashImpl implements Trash {
 					companyId, repositoryId, attachmentFileName);
 			}
 		}
+	}
+
+	@Override
+	public HashMap<Long, Integer> getDependentStatuses(long entryId)
+		throws SystemException {
+
+		return getDependentStatuses(entryId, null);
+	}
+
+	@Override
+	public HashMap<Long, Integer> getDependentStatuses(
+			long entryId, String className)
+		throws SystemException {
+
+		List<TrashVersion> versions = TrashEntryLocalServiceUtil.getVersions(
+			entryId, className);
+
+		HashMap<Long, Integer> statusMap = new HashMap<Long, Integer>();
+
+		for (TrashVersion version : versions) {
+			statusMap.put(version.getClassPK(), version.getStatus());
+		}
+
+		return statusMap;
 	}
 
 	@Override

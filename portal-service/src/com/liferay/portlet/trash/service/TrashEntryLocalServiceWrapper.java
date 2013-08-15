@@ -308,6 +308,15 @@ public class TrashEntryLocalServiceWrapper implements TrashEntryLocalService,
 	}
 
 	@Override
+	public void addTrashVersion(long trashEntryId, java.lang.String className,
+		long classPK, int status)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_trashEntryLocalService.addTrashVersion(trashEntryId, className,
+			classPK, status);
+	}
+
+	@Override
 	public void checkEntries()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -383,6 +392,13 @@ public class TrashEntryLocalServiceWrapper implements TrashEntryLocalService,
 		return _trashEntryLocalService.fetchEntry(className, classPK);
 	}
 
+	@Override
+	public com.liferay.portlet.trash.model.TrashVersion fetchVersion(
+		long entryId, java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _trashEntryLocalService.fetchVersion(entryId, className, classPK);
+	}
+
 	/**
 	* Returns the trash entries with the matching group ID.
 	*
@@ -433,6 +449,13 @@ public class TrashEntryLocalServiceWrapper implements TrashEntryLocalService,
 		com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _trashEntryLocalService.getEntries(groupId, start, end, obc);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portlet.trash.model.TrashEntry> getEntries(
+		long groupId, java.lang.String className)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _trashEntryLocalService.getEntries(groupId, className);
 	}
 
 	/**
@@ -494,6 +517,13 @@ public class TrashEntryLocalServiceWrapper implements TrashEntryLocalService,
 		long entryId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _trashEntryLocalService.getVersions(entryId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portlet.trash.model.TrashVersion> getVersions(
+		long entryId, java.lang.String className)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _trashEntryLocalService.getVersions(entryId, className);
 	}
 
 	/**

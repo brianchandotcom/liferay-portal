@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.ClassedModel;
 import com.liferay.portal.model.ContainerModel;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -27,6 +28,8 @@ import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.trash.model.TrashEntry;
+
+import java.io.Serializable;
 
 import java.util.Collections;
 import java.util.List;
@@ -264,6 +267,27 @@ public abstract class BaseTrashHandler implements TrashHandler {
 		throws PortalException, SystemException {
 
 		return true;
+	}
+
+	@Override
+	public boolean isTrashEntry(
+		TrashEntry trashEntry, ClassedModel classedModel) {
+
+		if ((trashEntry == null) || (classedModel == null)) {
+			return false;
+		}
+
+		Serializable primaryKeyObj = classedModel.getPrimaryKeyObj();
+
+		if (!(primaryKeyObj instanceof Long)) {
+			return false;
+		}
+
+		if (trashEntry.getClassPK() == (Long)primaryKeyObj) {
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override

@@ -29,28 +29,54 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DETAILS</td>
+	<td>SAVE_BUTTON</td>
+	<td>//button[contains(.,'Save')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--MENU_USER_INFORMATION-->
+<tr>
+	<td>MENU_USER_INFORMATION_DETAILS</td>
 	<td>//a[@id='_125_detailsLink']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>PASSWORD</td>
+	<td>MENU_USER_INFORMATION_PASSWORD</td>
 	<td>//a[@id='_125_passwordLink']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ORGANIZATIONS</td>
+	<td>MENU_USER_INFORMATION_ORGANIZATIONS</td>
 	<td>//a[@id='_125_organizationsLink']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>PERSONAL_SITE</td>
+	<td>MENU_USER_INFORMATION_SITES</td>
+	<td>//a[@id='_125_sitesLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENU_USER_INFORMATION_USER_GROUPS</td>
+	<td>//a[@id='_125_userGroupsLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENU_USER_INFORMATION_ROLES</td>
+	<td>//a[@id='_125_rolesLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENU_USER_INFORMATION_PERSONAL_SITE</td>
 	<td>//a[@id='_125_personalSiteLink']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>SAVE_BUTTON</td>
-	<td>//button[contains(.,'Save')]</td>
+	<td>MENU_USER_INFORMATION_CATEGORIZATION</td>
+	<td>//a[@id='_125_categorizationLink']</td>
 	<td></td>
 </tr>
 <tr>
@@ -101,9 +127,104 @@
 	<td></td>
 </tr>
 <!--ORGANIZATIONS-->
+<tr>
+	<td>ORGANIZATIONS_TABLE_NAME</td>
+	<td>//tr[contains(.,'${key_orgName}')]/td[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ORGANIZATIONS_TABLE_TYPE</td>
+	<td>//tr[contains(.,'${key_orgName}')]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ORGANIZATIONS_TABLE_ROLES</td>
+	<td>//tr[contains(.,'${key_orgName}')]/td[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ORGANIZATIONS_TABLE</td>
+	<td>//tr[contains(.,'${key_orgName}')]/td[3]/a/span[contains(.,'Remove')]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ORGANIZATIONS_SELECT_LINK</td>
+	<td>//a[@id='_125_selectOrganizationLink']/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--SITES-->
+<tr>
+	<td>SITES_TABLE_NAME</td>
+	<td>//tr[contains(.,'${key_siteName}')]/td[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITES_TABLE_ROLES</td>
+	<td>//tr[contains(.,'${key_siteName}')]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITES_TABLE</td>
+	<td>//tr[contains(.,'${key_siteName}')]/td[3]/a/span[contains(.,'Remove')]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITES_SELECT_LINK</td>
+	<td>//a[@id='_125_selectSiteLink']/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--USER_GROUPS-->
-<!--ROLES-->
+<tr>
+	<td>USER_GROUPS_TABLE_NAME</td>
+	<td>//tr[contains(.,'${key_userGroupName}')]/td[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_GROUPS_TABLE</td>
+	<td>//tr[contains(.,'${key_userGroupName}')]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_GROUPS_SELECT_LINK</td>
+	<td>//a[@id='_125_openUserGroupsLink']/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ROLES_REGULAR_ROLES-->
+<tr>
+	<td>ROLES_REGULAR_ROLES_TABLE_TITLE</td>
+	<td>//tr[contains(.,'${key_roleName}')]/td[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ROLES_REGULAR_ROLES_TABLE</td>
+	<td>//tr[contains(.,'${key_roleName}')]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ROLES_REGULAR_ROLES_SELECT_LINK</td>
+	<td>//a[@id='_125_selectRegularRoleLink']/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--PERSONAL_SITE-->
 <!--CATEGORIZATION-->
 <!--ADDRESSES-->

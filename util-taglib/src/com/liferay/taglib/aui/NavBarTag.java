@@ -14,7 +14,11 @@
 
 package com.liferay.taglib.aui;
 
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.taglib.aui.base.BaseNavBarTag;
+
+import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.tagext.BodyTag;
 
 /**
  * @author Eduardo Lundgren
@@ -22,5 +26,32 @@ import com.liferay.taglib.aui.base.BaseNavBarTag;
  * @author Nathan Cavanaugh
  * @author Julio Camarero
  */
-public class NavBarTag extends BaseNavBarTag {
+public class NavBarTag extends BaseNavBarTag implements BodyTag {
+
+	@Override
+	public int doEndTag() throws JspException {
+		setNamespacedAttribute(
+			request, "responsiveButtons", _responsiveButtonsSB.toString());
+
+		return super.doEndTag();
+	}
+
+	public StringBundler getResponsiveButtonsSB() {
+		return _responsiveButtonsSB;
+	}
+
+	@Override
+	protected void cleanUp() {
+		super.cleanUp();
+
+		_responsiveButtonsSB = new StringBundler();
+	}
+
+	@Override
+	protected int processStartTag() throws Exception {
+		return EVAL_BODY_BUFFERED;
+	}
+
+	private StringBundler _responsiveButtonsSB = new StringBundler();
+
 }

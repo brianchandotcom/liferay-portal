@@ -160,8 +160,6 @@ portletURL.setParameter("modelResource", modelResource);
 							monthParam="defaultValueMonth"
 							monthValue="<%= defaultValueDate.get(Calendar.MONTH) %>"
 							yearParam="defaultValueYear"
-							yearRangeEnd="<%= defaultValueDate.get(Calendar.YEAR) + 100 %>"
-							yearRangeStart="<%= defaultValueDate.get(Calendar.YEAR) - 100 %>"
 							yearValue="<%= defaultValueDate.get(Calendar.YEAR) %>"
 						/>
 
@@ -171,7 +169,6 @@ portletURL.setParameter("modelResource", modelResource);
 							disabled="<%= false %>"
 							hourParam="defaultValueHour"
 							hourValue="<%= defaultValueDate.get(Calendar.HOUR) %>"
-							minuteInterval="<%= 1 %>"
 							minuteParam="defaultValueMinute"
 							minuteValue="<%= defaultValueDate.get(Calendar.MINUTE) %>"
 						/>

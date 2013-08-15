@@ -292,8 +292,6 @@ portletURL.setParameter("rootNodeName", rootNodeName);
 																			monthParam="startDateMonth"
 																			monthValue="<%= yesterday.get(Calendar.MONTH) %>"
 																			yearParam="startDateYear"
-																			yearRangeEnd="<%= yesterday.get(Calendar.YEAR) %>"
-																			yearRangeStart="<%= yesterday.get(Calendar.YEAR) - 100 %>"
 																			yearValue="<%= yesterday.get(Calendar.YEAR) %>"
 																		/>
 
@@ -305,7 +303,6 @@ portletURL.setParameter("rootNodeName", rootNodeName);
 																			disabled="<%= false %>"
 																			hourParam='<%= "startDateHour" %>'
 																			hourValue="<%= yesterday.get(Calendar.HOUR) %>"
-																			minuteInterval="<%= 1 %>"
 																			minuteParam='<%= "startDateMinute" %>'
 																			minuteValue="<%= yesterday.get(Calendar.MINUTE) %>"
 																		/>
@@ -322,8 +319,6 @@ portletURL.setParameter("rootNodeName", rootNodeName);
 																			monthParam="endDateMonth"
 																			monthValue="<%= today.get(Calendar.MONTH) %>"
 																			yearParam="endDateYear"
-																			yearRangeEnd="<%= today.get(Calendar.YEAR) %>"
-																			yearRangeStart="<%= today.get(Calendar.YEAR) - 100 %>"
 																			yearValue="<%= today.get(Calendar.YEAR) %>"
 																		/>
 
@@ -335,7 +330,6 @@ portletURL.setParameter("rootNodeName", rootNodeName);
 																			disabled="<%= false %>"
 																			hourParam='<%= "endDateHour" %>'
 																			hourValue="<%= today.get(Calendar.HOUR) %>"
-																			minuteInterval="<%= 1 %>"
 																			minuteParam='<%= "endDateMinute" %>'
 																			minuteValue="<%= today.get(Calendar.MINUTE) %>"
 																		/>

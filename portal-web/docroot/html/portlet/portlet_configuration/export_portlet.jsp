@@ -172,8 +172,6 @@ portletURL.setParameter("tabs3", "current-and-previous");
 															monthParam="startDateMonth"
 															monthValue="<%= yesterday.get(Calendar.MONTH) %>"
 															yearParam="startDateYear"
-															yearRangeEnd="<%= yesterday.get(Calendar.YEAR) %>"
-															yearRangeStart="<%= yesterday.get(Calendar.YEAR) - 100 %>"
 															yearValue="<%= yesterday.get(Calendar.YEAR) %>"
 														/>
 
@@ -185,7 +183,6 @@ portletURL.setParameter("tabs3", "current-and-previous");
 															disabled="<%= false %>"
 															hourParam='<%= "startDateHour" %>'
 															hourValue="<%= yesterday.get(Calendar.HOUR) %>"
-															minuteInterval="<%= 1 %>"
 															minuteParam='<%= "startDateMinute" %>'
 															minuteValue="<%= yesterday.get(Calendar.MINUTE) %>"
 														/>
@@ -202,8 +199,6 @@ portletURL.setParameter("tabs3", "current-and-previous");
 															monthParam="endDateMonth"
 															monthValue="<%= today.get(Calendar.MONTH) %>"
 															yearParam="endDateYear"
-															yearRangeEnd="<%= today.get(Calendar.YEAR) %>"
-															yearRangeStart="<%= today.get(Calendar.YEAR) - 100 %>"
 															yearValue="<%= today.get(Calendar.YEAR) %>"
 														/>
 

@@ -17,80 +17,142 @@
 <%@ include file="/html/taglib/init.jsp" %>
 
 <%
+String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_input_time_page") + StringPool.UNDERLINE;
+
 String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-time:cssClass"));
 String hourParam = namespace + request.getAttribute("liferay-ui:input-time:hourParam");
 int hourValue = GetterUtil.getInteger((String)request.getAttribute("liferay-ui:input-time:hourValue"));
-boolean hourNullable = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-time:hourNullable"));
 String minuteParam = namespace + request.getAttribute("liferay-ui:input-time:minuteParam");
 int minuteValue = GetterUtil.getInteger((String)request.getAttribute("liferay-ui:input-time:minuteValue"));
 int minuteInterval = GetterUtil.getInteger((String)request.getAttribute("liferay-ui:input-time:minuteInterval"));
-boolean minuteNullable = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-time:minuteNullable"));
+String name = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-time:name"));
 String amPmParam = namespace + request.getAttribute("liferay-ui:input-time:amPmParam");
 int amPmValue = GetterUtil.getInteger((String)request.getAttribute("liferay-ui:input-time:amPmValue"));
-boolean amPmNullable = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-time:amPmNullable"));
 boolean disabled = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-time:disabled"));
 
-NumberFormat numberFormat = NumberFormat.getInstance(locale);
+if (minuteInterval < 1) {
+	minuteInterval = 30;
+}
 
-numberFormat.setMinimumIntegerDigits(2);
+String datePattern = _TIME_PATTERN_ISO;
+
+if (BrowserSnifferUtil.isMobile(request)) {
+	datePattern = _TIME_PATTERN_HTML5;
+}
+else if (DateUtil.isFormatAmPm(locale)) {
+	datePattern = _TIME_PATTERN;
+}
+
+String datePlaceholder = _TIME_PLACEHOLDER;
+
+if (!DateUtil.isFormatAmPm(locale)) {
+	datePlaceholder = _TIME_PLACEHOLDER_ISO;
+
+	amPmValue = Calendar.AM;
+}
+
+Format dateFormat = FastDateFormatFactoryUtil.getSimpleDateFormat(datePattern);
+
+Calendar calendar = CalendarFactoryUtil.getCalendar(1970, 0, 1, hourValue, minuteValue);
+
+String timePickerClazz = "A.TimePicker";
+String timePickerModuleName = "aui-timepicker";
+
+if (BrowserSnifferUtil.isMobile(request)) {
+	timePickerClazz = "A.TimePickerNative";
+	timePickerModuleName = "aui-timepicker-native";
+}
 %>
 
-<div class="lfr-input-time <%= cssClass %>">
-	<select <%= disabled ? "disabled=\"disabled\"" : "" %> name="<%= hourParam %>">
-		<c:if test="<%= hourNullable %>">
-			<option value=""></option>
-		</c:if>
-
-		<%
-		for (int i = 0; i < (DateUtil.isFormatAmPm(locale) ? 12 : 24); i++) {
-			String hourString = String.valueOf(i);
-
-			if (DateUtil.isFormatAmPm(locale) && (i == 0)) {
-				hourString = "12";
-			}
-		%>
-
-			<option <%= (hourValue == i) ? "selected" : "" %> value="<%= i %>"><%= hourString %></option>
-
-		<%
-		}
-		%>
-
-	</select>
-
-	<select <%= disabled ? "disabled=\"disabled\"" : "" %> name="<%= minuteParam %>">
-		<c:if test="<%= minuteNullable %>">
-			<option value=""></option>
-		</c:if>
-
-		<%
-		for (int i = 0; i < 60; i++) {
-			String minute = numberFormat.format(i);
-		%>
-
-			<c:if test="<%= (minuteInterval == 0) || ((i % minuteInterval) == 0) %>">
-				<option <%= (minuteValue == i) ? "selected" : "" %> value="<%= i %>">:<%= minute %></option>
-			</c:if>
-
-		<%
-		}
-		%>
-
-	</select>
-
+<span class="lfr-input-time <%= cssClass %>" id="<%= randomNamespace %>displayTime">
 	<c:choose>
-		<c:when test="<%= !DateUtil.isFormatAmPm(locale) %>">
-			<input name="<%= amPmParam %>" type="hidden" value="<%= Calendar.AM %>" />
+		<c:when test="<%= BrowserSnifferUtil.isMobile(request) %>">
+			<input class="input-small" <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= namespace + name %>" name="<%= namespace + name %>" type="time" value="<%= dateFormat.format(calendar.getTime()) %>" />
 		</c:when>
 		<c:otherwise>
-			<select <%= disabled ? "disabled=\"disabled\"" : "" %> name="<%= amPmParam %>">
-				<c:if test="<%= amPmNullable %>">
-					<option value=""></option>
-				</c:if>
-
-				<option <%= (amPmValue == Calendar.AM) ? "selected" : "" %> value="<%= Calendar.AM %>"><liferay-ui:message key="am" /></option>
-				<option <%= (amPmValue == Calendar.PM) ? "selected" : "" %> value="<%= Calendar.PM %>"><liferay-ui:message key="pm" /></option>
-			</select>
+			<input class="input-small" <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= namespace + name %>" name="<%= namespace + name %>" type="text" placeholder="<%= datePlaceholder %>" value="<%= dateFormat.format(calendar.getTime()) %>" />
 		</c:otherwise>
 	</c:choose>
-</div>
+
+	<input <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= hourParam %>" name="<%= hourParam %>" type="hidden" value="<%= hourValue %>" />
+	<input <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= minuteParam %>" name="<%= minuteParam %>" type="hidden" value="<%= minuteValue %>" />
+	<input <%= disabled ? "disabled=\"disabled\"" : "" %> id="<%= amPmParam %>" name="<%= amPmParam %>" type="hidden" value="<%= amPmValue %>" />
+</span>
+
+<aui:script use="<%= timePickerModuleName %>">
+	Liferay.component(
+		'<%= namespace + name %>TimePicker',
+		function() {
+			return new <%= timePickerClazz %>({
+				container: '#<%= randomNamespace %>displayTime',
+				mask: '<%= DateUtil.isFormatAmPm(locale) ? "%I:%M %p" : "%H:%M" %>',
+				on: {
+					selectionChange: function(event) {
+						var date = event.newSelection[0];
+
+						var hours = date.getHours();
+
+						var amPm = 0;
+
+						<c:if test="<%= DateUtil.isFormatAmPm(locale) %>">
+							if (hours > 11) {
+								amPm = 1;
+							}
+
+							if (hours > 12) {
+								hours -= 12;
+							}
+						</c:if>
+
+						if (date) {
+							A.one('#<%= hourParam %>').val(hours);
+							A.one('#<%= minuteParam %>').val(date.getMinutes());
+							A.one('#<%= amPmParam %>').val(amPm);
+						}
+					}
+				},
+				popover: {
+					zIndex: Liferay.zIndex.TOOLTIP
+				},
+				trigger: '#<%= namespace + name %>',
+				values: <%= _getHoursJSONArray(minuteInterval, locale) %>
+			});
+		}
+	);
+
+	Liferay.component('<%= namespace + name %>TimePicker');
+</aui:script>
+
+<%!
+private JSONArray _getHoursJSONArray(int minuteInterval, Locale locale) throws Exception {
+	NumberFormat numberFormat = NumberFormat.getInstance(locale);
+
+	numberFormat.setMinimumIntegerDigits(2);
+
+	JSONArray hoursJSONArray = JSONFactoryUtil.createJSONArray();
+
+	for (int h = 0; h < 24; h++) {
+		for (int m = 0; m < 60; m += minuteInterval) {
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(numberFormat.format(h));
+			sb.append(StringPool.COLON);
+			sb.append(numberFormat.format(m));
+
+			hoursJSONArray.put(sb.toString());
+		}
+	}
+
+	return hoursJSONArray;
+}
+
+private static final String _TIME_PATTERN = "hh:mm a";
+
+private static final String _TIME_PATTERN_HTML5 = "HH:mm";
+
+private static final String _TIME_PATTERN_ISO = "HH:mm";
+
+private static final String _TIME_PLACEHOLDER = "h:mm am/pm";
+
+private static final String _TIME_PLACEHOLDER_ISO = "h:mm";
+%>

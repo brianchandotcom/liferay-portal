@@ -16,13 +16,10 @@
 		dayParam="${namespacedFieldName}Day"
 		dayValue=fieldDateValue?string("dd")?number
 		disabled=false
-		imageInputId="${namespacedFieldName}ImageInput"
 		monthParam="${namespacedFieldName}Month"
 		monthValue=fieldDateValue?string("MM")?number - 1
 		name="${namespacedFieldName}"
 		yearParam="${namespacedFieldName}Year"
-		yearRangeEnd=fieldDateValue?string("yyyy")?number + 100
-		yearRangeStart=fieldDateValue?string("yyyy")?number - 100
 		yearValue=fieldDateValue?string("yyyy")?number
 	/>
 

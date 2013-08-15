@@ -72,8 +72,6 @@ if (hints != null) {
 		<c:when test='<%= type.equals("Date") %>'>
 
 			<%
-			Calendar now = CalendarFactoryUtil.getCalendar(timeZone, locale);
-
 			boolean checkDefaultDelta = false;
 
 			Calendar cal = null;
@@ -115,12 +113,6 @@ if (hints != null) {
 				}
 			}
 
-			boolean monthNullable = false;
-
-			if (hints != null) {
-				monthNullable = GetterUtil.getBoolean(hints.get("month-nullable"), monthNullable);
-			}
-
 			int day = -1;
 
 			if (!ignoreRequestValue) {
@@ -137,12 +129,6 @@ if (hints != null) {
 
 					updateFromDefaultDelta = true;
 				}
-			}
-
-			boolean dayNullable = false;
-
-			if (hints != null) {
-				dayNullable = GetterUtil.getBoolean(hints.get("day-nullable"), dayNullable);
 			}
 
 			int year = -1;
@@ -167,58 +153,6 @@ if (hints != null) {
 				month = cal.get(Calendar.MONTH);
 				day = cal.get(Calendar.DATE);
 				year = cal.get(Calendar.YEAR);
-			}
-
-			boolean yearNullable = false;
-
-			if (hints != null) {
-				yearNullable = GetterUtil.getBoolean(hints.get("year-nullable"), yearNullable);
-			}
-
-			int yearRangeDelta = 5;
-
-			if (hints != null) {
-				yearRangeDelta = GetterUtil.getInteger(hints.get("year-range-delta"), yearRangeDelta);
-			}
-
-			int yearRangeStart = year - yearRangeDelta;
-			int yearRangeEnd = year + yearRangeDelta;
-
-			if (year == -1) {
-				yearRangeStart = now.get(Calendar.YEAR) - yearRangeDelta;
-				yearRangeEnd = now.get(Calendar.YEAR) + yearRangeDelta;
-			}
-
-			boolean yearRangePast = true;
-
-			if (hints != null) {
-				yearRangePast = GetterUtil.getBoolean(hints.get("year-range-past"), true);
-			}
-
-			if (!yearRangePast) {
-				if (yearRangeStart < now.get(Calendar.YEAR)) {
-					yearRangeStart = now.get(Calendar.YEAR);
-				}
-
-				if (yearRangeEnd < now.get(Calendar.YEAR)) {
-					yearRangeEnd = now.get(Calendar.YEAR);
-				}
-			}
-
-			boolean yearRangeFuture = true;
-
-			if (hints != null) {
-				yearRangeFuture = GetterUtil.getBoolean(hints.get("year-range-future"), true);
-			}
-
-			if (!yearRangeFuture) {
-				if (yearRangeStart > now.get(Calendar.YEAR)) {
-					yearRangeStart = now.get(Calendar.YEAR);
-				}
-
-				if (yearRangeEnd > now.get(Calendar.YEAR)) {
-					yearRangeEnd = now.get(Calendar.YEAR);
-				}
 			}
 
 			int firstDayOfWeek = Calendar.SUNDAY - 1;
@@ -276,21 +210,15 @@ if (hints != null) {
 				<liferay-ui:input-date
 					autoFocus="<%= autoFocus %>"
 					cssClass="<%= cssClass %>"
-					dayNullable="<%= dayNullable %>"
 					dayParam='<%= fieldParam + "Day" %>'
 					dayValue="<%= day %>"
 					disabled="<%= disabled %>"
 					firstDayOfWeek="<%= firstDayOfWeek %>"
 					formName="<%= formName %>"
-					imageInputId='<%= fieldParam + "ImageInputId" %>'
-					monthNullable="<%= monthNullable %>"
 					monthParam='<%= fieldParam + "Month" %>'
 					monthValue="<%= month %>"
 					name="<%= fieldParam %>"
-					yearNullable="<%= yearNullable %>"
 					yearParam='<%= fieldParam + "Year" %>'
-					yearRangeEnd="<%= yearRangeEnd %>"
-					yearRangeStart="<%= yearRangeStart %>"
 					yearValue="<%= year %>"
 				/>
 
@@ -302,9 +230,9 @@ if (hints != null) {
 						disabled="<%= disabled %>"
 						hourParam='<%= fieldParam + "Hour" %>'
 						hourValue="<%= hour %>"
-						minuteInterval="<%= 1 %>"
 						minuteParam='<%= fieldParam + "Minute" %>'
 						minuteValue="<%= minute %>"
+						name='<%= fieldParam + "Time" %>'
 					/>
 				</c:if>
 			</div>
@@ -334,21 +262,17 @@ if (hints != null) {
 						function(event) {
 							var checked = document.getElementById('<portlet:namespace /><%= formName + fieldParam %>Checkbox').checked;
 
+							document.<portlet:namespace /><%= formName %>["<portlet:namespace /><%= fieldParam %>"].disabled = checked;
 							document.<portlet:namespace /><%= formName %>["<portlet:namespace /><%= fieldParam %>Month"].disabled = checked;
 							document.<portlet:namespace /><%= formName %>["<portlet:namespace /><%= fieldParam %>Day"].disabled = checked;
 							document.<portlet:namespace /><%= formName %>["<portlet:namespace /><%= fieldParam %>Year"].disabled = checked;
 
 							<c:if test="<%= showTime %>">
+								document.<portlet:namespace /><%= formName %>["<portlet:namespace /><%= fieldParam %>Time"].disabled = checked;
 								document.<portlet:namespace /><%= formName %>["<portlet:namespace /><%= fieldParam %>Hour"].disabled = checked;
 								document.<portlet:namespace /><%= formName %>["<portlet:namespace /><%= fieldParam %>Minute"].disabled = checked;
 								document.<portlet:namespace /><%= formName %>["<portlet:namespace /><%= fieldParam %>AmPm"].disabled = checked;
 							</c:if>
-
-							var calendarWidget = A.Widget.getByNode(document.<portlet:namespace />fm["<portlet:namespace /><%= fieldParam %>Month"]);
-
-							if (calendarWidget) {
-								calendarWidget.set('disabled', checked);
-							}
 						}
 					);
 				</aui:script>

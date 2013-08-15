@@ -70,15 +70,6 @@
 	margin-bottom: 1.5em;
 }
 
-.lfr-input-time {
-	float: left;
-	clear: right;
-}
-
-.gecko .lfr-input-time, .ie .lfr-input-time {
-	padding-left: 2px;
-}
-
 .lfr-change-logo {
 	display: block;
 	margin-bottom: 10px;

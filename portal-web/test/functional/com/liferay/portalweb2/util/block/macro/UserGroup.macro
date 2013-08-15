@@ -1,31 +1,61 @@
 <definition>
 	<command name="addCP">
-		<execute action="CPUsergroups#click" locator-key1="ADD" />
+		<var name="key_userGroupName" value="${userGroupName}" />
+
+		<execute action="CPUsergroups#assertClick" locator-key1="ADD" value1="Add" />
 
 		<execute action="CPUsergroupsAddusergroup#type" locator-key1="NAME_FIELD" value1="${userGroupName}" />
-		<execute action="CPUsergroupsAddusergroup#click" locator-key1="SAVE_BUTTON" />
+		<execute action="CPUsergroupsAddusergroup#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 
-		<execute action="CPUsergroups#assertTextEquals" locator-key1="SUCCESS_MESSAGE" />
-		<execute action="CPUsergroups#assertTextEquals" locator-key1="USER_GROUP_TABLE_NAME_1" value1="${userGroupName}" />
+		<execute action="CPUsergroups#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="CPUsergroups#assertTextEquals" locator-key1="USER_GROUP_TABLE_NAME" value1="${userGroupName}" />
+	</command>
+
+	<command name="assignMemberCP">
+		<var name="key_userGroupName" value="${userGroupName}" />
+
+		<execute action="CPUsergroups#type" locator-key1="BASIC_SEARCH_FIELD" value1="${userGroupName}" />
+		<execute action="CPUsergroups#assertClick" locator-key1="BASIC_SEARCH_BUTTON" value1="Search" />
+		<execute action="CPUsergroups#assertTextEquals" locator-key1="USER_GROUP_TABLE_NAME" value1="${userGroupName}" />
+		<execute action="CPUsergroups#assertClick" locator-key1="USER_GROUP_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPUsergroups#assertClick" locator-key1="USER_GROUP_MENULIST_ASSIGN_MEMBERS" value1="Assign Members" />
+
+		<var name="key_userScreenName" value="${userScreenName}" />
+
+		<execute action="CPUsergroupsAssignmembers#assertClick" locator-key1="AVAILABLE" value1="Available" />
+		<execute action="CPUsergroupsAssignmembers#type" locator-key1="BASIC_SEARCH_FIELD" value1="${userScreenName}" />
+		<execute action="CPUsergroupsAssignmembers#assertClick" locator-key1="BASIC_SEARCH_BUTTON" value1="Search" />
+		<execute action="CPUsergroupsAssignmembers#assertTextEquals" locator-key1="USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
+		<execute action="CPUsergroupsAssignmembers#check" locator-key1="USER_TABLE_CHECKBOX" />
+		<execute action="CPUsergroupsAssignmembers#assertClick" locator-key1="UPDATE_ASSOCIATIONS_BUTTON" value1="Update Associations" />
+		<execute action="CPUsergroupsAssignmembers#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+
+		<execute action="CPUsergroupsAssignmembers#assertClick" locator-key1="CURRENT" value1="Current" />
+		<execute action="CPUsergroupsAssignmembers#assertChecked" locator-key1="USER_TABLE_CHECKBOX" />
+		<execute action="CPUsergroupsAssignmembers#assertTextEquals" locator-key1="USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 	</command>
 
 	<command name="deleteCP">
-		<execute action="CPUsergroups#click" locator-key1="USER_GROUP_TABLE_ACTIONS_1" />
-		<execute action="CPUsergroups#click" locator-key1="USER_GROUP_MENULIST_DELETE" />
+		<var name="key_vocabularyName" value="${userGroupName}" />
+
+		<execute action="CPUsergroups#assertClick" locator-key1="USER_GROUP_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPUsergroups#assertClick" locator-key1="USER_GROUP_MENULIST_DELETE" value1="Delete" />
 		<execute action="CPUsergroups#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
-		<execute action="CPUsergroups#assertTextEquals" locator-key1="SUCCESS_MESSAGE" />
-		<execute action="CPUsergroups#assertElementNotPresent" locator-key1="USER_GROUP_TABLE_NAME_1" />
+		<execute action="CPUsergroups#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="CPUsergroups#assertElementNotPresent" locator-key1="USER_GROUP_TABLE_NAME" value1="${userGroupName}" />
 	</command>
 
 	<command name="editCP">
-		<execute action="CPUsergroups#click" locator-key1="USER_GROUP_TABLE_ACTIONS_1" />
-		<execute action="CPUsergroups#click" locator-key1="USER_GROUP_MENULIST_EDIT" />
+		<var name="key_vocabularyName" value="${userGroupName}" />
+
+		<execute action="CPUsergroups#assertClick" locator-key1="USER_GROUP_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPUsergroups#assertClick" locator-key1="USER_GROUP_MENULIST_EDIT" value1="Edit" />
 
 		<execute action="CPUsergroupsEditusergroup#type" locator-key1="NAME_FIELD" value1="${userGroupNameEdit}" />
-		<execute action="CPUsergroupsEditusergroup#click" locator-key1="SAVE_BUTTON" />
+		<execute action="CPUsergroupsEditusergroup#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 
-		<execute action="CPUsergroups#assertTextEquals" locator-key1="SUCCESS_MESSAGE" />
-		<execute action="CPUsergroups#assertTextEquals" locator-key1="USER_GROUP_TABLE_NAME_1" value1="${userGroupNameEdit}" />
+		<execute action="CPUsergroups#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="CPUsergroups#assertTextEquals" locator-key1="USER_GROUP_TABLE_NAME" value1="${userGroupNameEdit}" />
 	</command>
 
 	<command name="tearDownCP">
@@ -33,16 +63,47 @@
 			<var name="portletName" value="User Groups" />
 		</execute>
 
-		<while>
-			<condition action="CPUsergroups#isElementPresent" locator-key1="USER_GROUP_TABLE_CHECKBOX_1" />
+		<if>
+			<condition action="CPUsergroups#isElementPresent" locator-key1="USER_GROUP_TABLE_ALL_CHECKBOX" />
 			<then>
-				<execute action="CPUsergroups#click" locator-key1="USER_GROUP_TABLE_ALL_CHECKBOX" />
-				<execute action="CPUsergroups#assertChecked" locator-key1="USER_GROUP_TABLE_ALL_CHECKBOX" />
-				<execute action="CPUsergroups#click" locator-key1="DELETE_BUTTON" />
+				<execute action="CPUsergroups#check" locator-key1="USER_GROUP_TABLE_ALL_CHECKBOX" />
+				<execute action="CPUsergroups#assertClick" locator-key1="DELETE_BUTTON" value1="Delete" />
 				<execute action="CPUsergroups#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
-				<execute action="CPUsergroups#assertTextEquals" locator-key1="SUCCESS_MESSAGE" />
-				<execute action="CPUsergroups#assertTextEquals" locator-key1="INFO_MESSAGE" />
+				<execute action="CPUsergroups#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+				<execute action="CPUsergroups#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No user groups were found." />
 			</then>
-		</while>
+		</if>
+	</command>
+
+	<command name="viewAssignMemberCP">
+		<var name="key_userGroupName" value="${userGroupName}" />
+
+		<execute action="CPUsergroups#type" locator-key1="BASIC_SEARCH_FIELD" value1="$${userGroupName}" />
+		<execute action="CPUsergroups#assertClick" locator-key1="BASIC_SEARCH_BUTTON" value1="Search" />
+		<execute action="CPUsergroups#assertTextEquals" locator-key1="USER_GROUP_TABLE_NAME" value1="${userGroupName}" />
+		<execute action="CPUsergroups#assertClick" locator-key1="USER_GROUP_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPUsergroups#assertClick" locator-key1="USER_GROUP_MENULIST_ASSIGN_MEMBERS" value1="Assign Members" />
+
+		<var name="key_userScreenName" value="${userScreenName}" />
+
+		<execute action="CPUsergroupsAssignmembers#assertClick" locator-key1="CURRENT" value1="Current" />
+		<execute action="CPUsergroupsAssignmembers#assertChecked" locator-key1="USER_TABLE_CHECKBOX" />
+		<execute action="CPUsergroupsAssignmembers#assertTextEquals" locator-key1="USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
+	</command>
+
+	<command name="viewCP">
+		<var name="key_userGroupName" value="${userGroupName}" />
+
+		<execute action="CPUsergroups#type" locator-key1="BASIC_SEARCH_FIELD" value1="${userGroupName}" />
+		<execute action="CPUsergroups#assertClick" locator-key1="BASIC_SEARCH_BUTTON" value1="Search" />
+		<execute action="CPUsergroups#assertTextEquals" locator-key1="USER_GROUP_TABLE_NAME" value1="${userGroupName}" />
+		<execute action="CPUsergroups#assertTextEquals" locator-key1="USER_GROUP_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPUsergroups#assertElementPresent" locator-key1="USER_GROUP_TABLE_ALL_CHECKBOX" />
+		<execute action="CPUsergroups#assertElementPresent" locator-key1="USER_GROUP_TABLE_CHECKBOX" />
+		<execute action="CPUsergroups#assertElementPresent" locator-key1="ADD" value1="Add" />
+		<execute action="CPUsergroups#assertElementPresent" locator-key1="DELETE_BUTTON" value1="Delete" />
+		<execute action="CPUsergroups#assertElementPresent" locator-key1="BASIC_SEARCH_FIELD" />
+		<execute action="CPUsergroups#assertElementPresent" locator-key1="BASIC_SEARCH_BUTTON" value1="Search" />
+		<execute action="CPUsergroups#assertElementPresent" locator-key1="BASIC_SEARCH_ADVANCED" />
 	</command>
 </definition>

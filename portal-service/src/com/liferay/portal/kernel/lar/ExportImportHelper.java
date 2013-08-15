@@ -28,6 +28,7 @@ import com.liferay.portal.theme.ThemeDisplay;
 import java.io.File;
 
 import java.util.Calendar;
+import java.util.List;
 import java.util.Map;
 
 import javax.portlet.PortletPreferences;
@@ -55,6 +56,11 @@ public interface ExportImportHelper {
 
 	public String getExportableRootPortletId(long companyId, String portletId)
 		throws Exception;
+
+	public Map<Long, Boolean> getLayoutIdMap(PortletRequest portletRequest)
+		throws Exception;
+
+	public long[] getLayoutIds(List<Layout> layouts);
 
 	public ManifestSummary getManifestSummary(
 			long userId, long groupId, Map<String, String[]> parameterMap,

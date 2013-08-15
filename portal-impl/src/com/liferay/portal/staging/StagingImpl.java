@@ -1345,7 +1345,7 @@ public class StagingImpl implements Staging {
 			layouts.addAll(layout.getAllChildren());
 		}
 
-		long[] layoutIds = getLayoutIds(layouts);
+		long[] layoutIds = ExportImportHelperUtil.getLayoutIds(layouts);
 
 		publishLayouts(
 			userId, layout.getGroupId(), liveGroupId, layout.isPrivateLayout(),
@@ -1414,7 +1414,7 @@ public class StagingImpl implements Staging {
 			}
 		}
 
-		long[] layoutIds = getLayoutIds(layouts);
+		long[] layoutIds = ExportImportHelperUtil.getLayoutIds(layouts);
 
 		publishLayouts(
 			userId, sourceGroupId, targetGroupId, privateLayout, layoutIds,
@@ -2024,18 +2024,6 @@ public class StagingImpl implements Staging {
 			GetterUtil.getInteger(group.getTypeSettingsProperty(param)));
 	}
 
-	protected long[] getLayoutIds(List<Layout> layouts) {
-		long[] layoutIds = new long[layouts.size()];
-
-		for (int i = 0; i < layouts.size(); i++) {
-			Layout layout = layouts.get(i);
-
-			layoutIds[i] = layout.getLayoutId();
-		}
-
-		return layoutIds;
-	}
-
 	protected long getLong(
 		PortletRequest portletRequest, Group group, String param) {
 
@@ -2193,21 +2181,7 @@ public class StagingImpl implements Staging {
 		Map<Long, Boolean> layoutIdMap = new LinkedHashMap<Long, Boolean>();
 
 		if (scope.equals("selected-pages")) {
-			long[] rowIds = ParamUtil.getLongValues(portletRequest, "rowIds");
-
-			for (long selPlid : rowIds) {
-				boolean delete = ParamUtil.getBoolean(
-					portletRequest, "delete_" + selPlid);
-				boolean includeChildren = ParamUtil.getBoolean(
-					portletRequest, "includeChildren_" + selPlid);
-
-				if (!delete && includeChildren) {
-					layoutIdMap.put(selPlid, true);
-				}
-				else {
-					layoutIdMap.put(selPlid, false);
-				}
-			}
+			layoutIdMap = ExportImportHelperUtil.getLayoutIdMap(portletRequest);
 		}
 
 		DateRange dateRange = ExportImportHelperUtil.getDateRange(
@@ -2319,23 +2293,7 @@ public class StagingImpl implements Staging {
 		Map<Long, Boolean> layoutIdMap = null;
 
 		if (scope.equals("selected-pages")) {
-			layoutIdMap = new LinkedHashMap<Long, Boolean>();
-
-			long[] rowIds = ParamUtil.getLongValues(portletRequest, "rowIds");
-
-			for (long selPlid : rowIds) {
-				boolean delete = ParamUtil.getBoolean(
-					portletRequest, "delete_" + selPlid);
-				boolean includeChildren = ParamUtil.getBoolean(
-					portletRequest, "includeChildren_" + selPlid);
-
-				if (!delete && includeChildren) {
-					layoutIdMap.put(selPlid, true);
-				}
-				else {
-					layoutIdMap.put(selPlid, false);
-				}
-			}
+			layoutIdMap = ExportImportHelperUtil.getLayoutIdMap(portletRequest);
 		}
 
 		Map<String, String[]> parameterMap = getStagingParameters(

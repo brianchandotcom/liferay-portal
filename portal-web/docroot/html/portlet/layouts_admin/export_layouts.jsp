@@ -130,8 +130,6 @@ portletURL.setParameter("rootNodeName", rootNodeName);
 										<liferay-util:param name="tabs1" value='<%= privateLayout ? "private-pages" : "public-pages" %>' />
 										<liferay-util:param name="treeId" value="<%= treeId %>" />
 										<liferay-util:param name="defaultStateChecked" value="1" />
-										<liferay-util:param name="expandFirstNode" value="1" />
-										<liferay-util:param name="saveState" value="1" />
 										<liferay-util:param name="selectableTree" value="1" />
 									</liferay-util:include>
 
@@ -594,6 +592,7 @@ portletURL.setParameter("rootNodeName", rootNodeName);
 			layoutSetSettingsNode: '#<%= PortletDataHandlerKeys.LAYOUT_SET_SETTINGS %>Checkbox',
 			logoNode: '#<%= PortletDataHandlerKeys.LOGO %>Checkbox',
 			namespace: '<portlet:namespace />',
+			pageTreeId: '<%= treeId %>',
 			processesNode: '#exportProcesses',
 			processesResourceURL: '<%= exportProcessesURL.toString() %>',
 			rangeAllNode: '#rangeAll',

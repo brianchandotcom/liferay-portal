@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -147,16 +146,14 @@ public class LayoutStagedModelDataHandler
 
 		LayoutRevision layoutRevision = null;
 
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		boolean exportLAR = ParamUtil.getBoolean(serviceContext, "exportLAR");
+		boolean exportLAR = MapUtil.getBoolean(
+			portletDataContext.getParameterMap(), "exportLAR");
 
 		if (!exportLAR && LayoutStagingUtil.isBranchingLayout(layout) &&
 			!layout.isTypeURL()) {
 
-			long layoutSetBranchId = ParamUtil.getLong(
-				serviceContext, "layoutSetBranchId");
+			long layoutSetBranchId = MapUtil.getLong(
+				portletDataContext.getParameterMap(), "layoutSetBranchId");
 
 			if (layoutSetBranchId <= 0) {
 				return;
@@ -179,17 +176,7 @@ public class LayoutStagedModelDataHandler
 
 		populateElementLayoutMetadata(layoutElement, layout, layoutRevision);
 
-		boolean deleteLayout = MapUtil.getBoolean(
-			portletDataContext.getParameterMap(), "delete_" + layout.getPlid());
-
-		if (deleteLayout) {
-			layoutElement.addAttribute("action", Constants.DELETE);
-
-			return;
-		}
-		else {
-			layoutElement.addAttribute("action", Constants.ADD);
-		}
+		layoutElement.addAttribute("action", Constants.ADD);
 
 		portletDataContext.setPlid(layout.getPlid());
 

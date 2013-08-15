@@ -66,8 +66,8 @@
 	</command>
 
 	<command name="assignRoleCP">
-		<execute action="CPSitememberships#click" locator-key1="TOOLBAR_ADD_SITE_ROLES_TO" />
-		<execute action="CPSitememberships#click" locator-key1="ADD_SITE_ROLES_TO_MENULIST_USERS" />
+		<execute action="CPSitememberships#assertClick" locator-key1="TOOLBAR_ADD_SITE_ROLES_TO" value1="Add Site Roles to" />
+		<execute action="CPSitememberships#assertClick" locator-key1="ADD_SITE_ROLES_TO_MENULIST_USERS" value1="Users"/>
 
 		<execute action="CPSitemembershipsAssignuserroles#type" locator-key1="ROLES_SEARCH_FIELD" value1="Siterole" />
 		<execute action="CPSitemembershipsAssignuserroles#click" locator-key1="ROLES_SEARCH_BUTTON" />

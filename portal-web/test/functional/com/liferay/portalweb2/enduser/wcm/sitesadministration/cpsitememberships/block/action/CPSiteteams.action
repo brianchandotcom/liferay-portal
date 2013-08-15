@@ -1,10 +1,20 @@
 <definition>
+	<command name="assertClick">
+		<case locator-key1="ADD_TEAM_BUTTON">
+			<execute function="AssertClick#assertTextClickAtAndWait" />
+		</case>
+
+		<case locator-key1="SEARCH_BUTTON">
+			<execute function="AssertClick#assertTextClickAtAndWait" />
+		</case>
+	</command>
+
 	<command name="assertTextEquals">
-		<case locator-key1="SUCCESS_MESSAGE">
+		<case locator-key1="INFO_MESSAGE">
 			<execute function="AssertTextEquals#assertText" />
 		</case>
 
-		<case locator-key1="INFO_MESSAGE">
+		<case locator-key1="SUCCESS_MESSAGE">
 			<execute function="AssertTextEquals#assertText" />
 		</case>
 
@@ -16,16 +26,6 @@
 	<command name="type">
 		<case locator-key1="SEARCH_FIELD">
 			<execute function="Type#type" />
-		</case>
-	</command>
-
-	<command name="assertClick">
-		<case locator-key1="ADD_TEAM_BUTTON">
-			<execute function="AssertClick#assertTextClickAtAndWait" />
-		</case>
-
-		<case locator-key1="SEARCH_BUTTON">
-			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
 	</command>
 </definition>

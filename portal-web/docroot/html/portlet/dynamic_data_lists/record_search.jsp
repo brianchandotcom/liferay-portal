@@ -17,16 +17,13 @@
 <%@ include file="/html/portlet/dynamic_data_lists/init.jsp" %>
 
 <%
-DDLRecordSet recordSet = (DDLRecordSet)request.getAttribute(WebKeys.DYNAMIC_DATA_LISTS_RECORD_SET);
-
-DDMStructure ddmStructure = recordSet.getDDMStructure();
-
 SearchContainer searchContainer = (SearchContainer)request.getAttribute("liferay-ui:search:searchContainer");
 
 DisplayTerms displayTerms = searchContainer.getDisplayTerms();
 %>
 
 <liferay-ui:search-toggle
+	autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>"
 	buttonLabel="search"
 	displayTerms="<%= displayTerms %>"
 	id="toggle_id_dynamic_data_lists_record_search"
@@ -35,21 +32,3 @@ DisplayTerms displayTerms = searchContainer.getDisplayTerms();
 		<aui:input name="<%= displayTerms.KEYWORDS %>" size="30" value="<%= displayTerms.getKeywords() %>" />
 	</aui:fieldset>
 </liferay-ui:search-toggle>
-
-<%
-boolean showAddRecordButton = GetterUtil.getBoolean(request.getAttribute("liferay-ui:search:showAddButton"));
-
-long formDDMTemplateId = ParamUtil.getLong(request, "formDDMTemplateId");
-%>
-
-<c:if test="<%= showAddRecordButton %>">
-	<div class="add-record-button-row">
-		<aui:button onClick='<%= renderResponse.getNamespace() + "addRecord();" %>' value='<%= LanguageUtil.format(pageContext, "add-x", ddmStructure.getName(locale)) %>' />
-	</div>
-
-	<aui:script>
-		function <portlet:namespace />addRecord() {
-			submitForm(document.<portlet:namespace />fm, '<liferay-portlet:renderURL windowState="<%= WindowState.MAXIMIZED.toString() %>"><portlet:param name="struts_action" value="/dynamic_data_lists/edit_record" /><portlet:param name="redirect" value="<%= currentURL %>" /><portlet:param name="recordSetId" value="<%= String.valueOf(recordSet.getRecordSetId()) %>" /><portlet:param name="formDDMTemplateId" value="<%= String.valueOf(formDDMTemplateId) %>" /></liferay-portlet:renderURL>');
-		}
-	</aui:script>
-</c:if>

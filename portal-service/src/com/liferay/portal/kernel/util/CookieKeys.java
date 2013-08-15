@@ -154,7 +154,7 @@ public class CookieKeys {
 		String host = request.getServerName();
 
 		if (_SESSION_COOKIE_USE_FULL_HOSTNAME) {
-			return host;
+			return StringPool.BLANK;
 		}
 
 		return getDomain(host);

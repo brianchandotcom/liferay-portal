@@ -1389,9 +1389,6 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		// Social
 
-		socialActivityCounterLocalService.disableActivityCounters(
-			WikiPage.class.getName(), page.getPageId());
-
 		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
 
 		extraDataJSONObject.put(
@@ -1503,9 +1500,6 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		}
 
 		// Social
-
-		socialActivityCounterLocalService.enableActivityCounters(
-			WikiPage.class.getName(), page.getPageId());
 
 		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
 

@@ -714,9 +714,6 @@ public class DLAppHelperLocalServiceImpl
 
 		// Social
 
-		socialActivityCounterLocalService.enableActivityCounters(
-			DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId());
-
 		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
 
 		extraDataJSONObject.put("title", fileEntry.getTitle());
@@ -743,9 +740,6 @@ public class DLAppHelperLocalServiceImpl
 			new ServiceContext());
 
 		// Social
-
-		socialActivityCounterLocalService.enableActivityCounters(
-			DLFileShortcut.class.getName(), dlFileShortcut.getFileShortcutId());
 
 		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
 
@@ -789,9 +783,6 @@ public class DLAppHelperLocalServiceImpl
 			folder.getFolderId());
 
 		// Social
-
-		socialActivityCounterLocalService.enableActivityCounters(
-			DLFolderConstants.class.getName(), folder.getFolderId());
 
 		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
 
@@ -1028,21 +1019,6 @@ public class DLAppHelperLocalServiceImpl
 						dlFileEntry.getFileEntryId(), false);
 				}
 
-				// Social
-
-				if (status == WorkflowConstants.STATUS_APPROVED) {
-					socialActivityCounterLocalService.enableActivityCounters(
-						DLFileEntryConstants.getClassName(),
-						dlFileEntry.getFileEntryId());
-				}
-				else if (latestDlFileVersion.getStatus() ==
-							WorkflowConstants.STATUS_APPROVED) {
-
-					socialActivityCounterLocalService.disableActivityCounters(
-						DLFileEntryConstants.getClassName(),
-						dlFileEntry.getFileEntryId());
-				}
-
 				// Index
 
 				Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
@@ -1099,12 +1075,6 @@ public class DLAppHelperLocalServiceImpl
 					assetEntryLocalService.updateVisible(
 						DLFolderConstants.getClassName(),
 						dlFolder.getFolderId(), false);
-
-					// Social
-
-					socialActivityCounterLocalService.disableActivityCounters(
-						DLFolderConstants.getClassName(),
-						dlFolder.getFolderId());
 				}
 				else {
 
@@ -1113,12 +1083,6 @@ public class DLAppHelperLocalServiceImpl
 					assetEntryLocalService.updateVisible(
 						DLFolderConstants.getClassName(),
 						dlFolder.getFolderId(), true);
-
-					// Social
-
-					socialActivityCounterLocalService.enableActivityCounters(
-						DLFolderConstants.getClassName(),
-						dlFolder.getFolderId());
 				}
 
 				// Index
@@ -1400,10 +1364,6 @@ public class DLAppHelperLocalServiceImpl
 
 			// Social
 
-			socialActivityCounterLocalService.enableActivityCounters(
-				DLFileEntryConstants.getClassName(),
-				fileEntry.getFileEntryId());
-
 			JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
 
 			extraDataJSONObject.put("title", fileEntry.getTitle());
@@ -1478,9 +1438,6 @@ public class DLAppHelperLocalServiceImpl
 
 		// Social
 
-		socialActivityCounterLocalService.disableActivityCounters(
-			DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId());
-
 		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
 
 		extraDataJSONObject.put(
@@ -1535,9 +1492,6 @@ public class DLAppHelperLocalServiceImpl
 
 			// Social
 
-			socialActivityCounterLocalService.enableActivityCounters(
-				DLFolderConstants.class.getName(), folder.getFolderId());
-
 			JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
 
 			extraDataJSONObject.put("title", folder.getName());
@@ -1582,9 +1536,6 @@ public class DLAppHelperLocalServiceImpl
 			folder.getFolderId());
 
 		// Social
-
-		socialActivityCounterLocalService.disableActivityCounters(
-			DLFolderConstants.class.getName(), folder.getFolderId());
 
 		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
 

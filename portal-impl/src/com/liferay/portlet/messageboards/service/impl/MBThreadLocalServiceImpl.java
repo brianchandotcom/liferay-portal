@@ -1166,11 +1166,6 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 						false);
 				}
 
-				// Social
-
-				socialActivityCounterLocalService.disableActivityCounters(
-					MBMessage.class.getName(), message.getMessageId());
-
 				// Indexer
 
 				Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
@@ -1199,11 +1194,6 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 						MBMessage.class.getName(), message.getMessageId(),
 						true);
 				}
-
-				// Social
-
-				socialActivityCounterLocalService.enableActivityCounters(
-					MBMessage.class.getName(), message.getMessageId());
 
 				// Indexer
 

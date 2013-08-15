@@ -1044,8 +1044,7 @@ public class DDMStructureLocalServiceImpl
 	 * @param  start the lower bound of the range of structures to return
 	 * @param  end the upper bound of the range of structures to return (not
 	 *         inclusive)
-	 * @return the structures matching the class name ID and belonging to the
-	 *         groups
+	 * @return the range of matching structures
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override

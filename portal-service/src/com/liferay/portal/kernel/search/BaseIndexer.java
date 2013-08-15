@@ -844,6 +844,13 @@ public abstract class BaseIndexer implements Indexer {
 		Set<String> fieldNames = ddmStructure.getFieldNames();
 
 		for (String fieldName : fieldNames) {
+			String indexType = ddmStructure.getFieldProperty(
+				fieldName, "indexType");
+
+			if (Validator.isNull(indexType)) {
+				continue;
+			}
+
 			String name = DDMIndexerUtil.encodeName(
 				ddmStructure.getStructureId(), fieldName,
 				searchContext.getLocale());

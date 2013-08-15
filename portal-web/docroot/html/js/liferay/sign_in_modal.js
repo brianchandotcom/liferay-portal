@@ -130,9 +130,7 @@ AUI.add(
 
 						instance._setModalContent(signInPortletBody);
 
-						var loginField = instance._signInPortletBody.one('#_58_login');
-
-						Liferay.Util.focusFormField(loginField);
+						Liferay.Util.focusFormField('input[type="text"]');
 					},
 
 					_loadIO: function() {

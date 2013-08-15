@@ -39,6 +39,8 @@ import com.liferay.portlet.documentlibrary.util.DLFileEntryIndexer;
 import com.liferay.portlet.documentlibrary.util.DLFolderIndexer;
 import com.liferay.portlet.documentlibrary.workflow.DLFileEntryWorkflowHandler;
 import com.liferay.portlet.dynamicdatalists.asset.DDLRecordAssetRendererFactory;
+import com.liferay.portlet.dynamicdatalists.util.DDLIndexer;
+import com.liferay.portlet.dynamicdatalists.workflow.DDLRecordWorkflowHandler;
 import com.liferay.portlet.journal.asset.JournalArticleAssetRendererFactory;
 import com.liferay.portlet.journal.asset.JournalFolderAssetRendererFactory;
 import com.liferay.portlet.journal.trash.JournalArticleTrashHandler;
@@ -95,6 +97,7 @@ public class PortalRegisterTestUtil {
 		IndexerRegistryUtil.register(new ContactIndexer());
 		IndexerRegistryUtil.register(new BookmarksEntryIndexer());
 		IndexerRegistryUtil.register(new BookmarksFolderIndexer());
+		IndexerRegistryUtil.register(new DDLIndexer());
 		IndexerRegistryUtil.register(new DLFileEntryIndexer());
 		IndexerRegistryUtil.register(new DLFolderIndexer());
 		IndexerRegistryUtil.register(new JournalArticleIndexer());
@@ -122,6 +125,7 @@ public class PortalRegisterTestUtil {
 
 	protected static void registerWorkflowHandlers() {
 		WorkflowHandlerRegistryUtil.register(new BlogsEntryWorkflowHandler());
+		WorkflowHandlerRegistryUtil.register(new DDLRecordWorkflowHandler());
 		WorkflowHandlerRegistryUtil.register(new DLFileEntryWorkflowHandler());
 		WorkflowHandlerRegistryUtil.register(
 			new JournalArticleWorkflowHandler());

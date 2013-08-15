@@ -64,10 +64,10 @@ public class DB2Dialect extends org.hibernate.dialect.DB2Dialect {
 		// Outer query
 
 		sb.append("SELECT outerQuery.* FROM (");
-		sb.append("SELECT innerQuery.*, ");
 
 		// Inner query
 
+		sb.append("SELECT innerQuery.*, ");
 		sb.append("ROW_NUMBER() OVER() AS rowNumber_ FROM (");
 
 		addQueryForLimitedRows(sb, sql, limit);

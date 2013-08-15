@@ -170,34 +170,29 @@ if ((checkedOut || pending) && !PropsValues.DL_FILE_ENTRY_DRAFTS_ENABLED) {
 
 <%
 PortletURL editFileEntryURL = renderResponse.createActionURL();
-PortletURL editFileEntryDraftURL = renderResponse.createActionURL();
 
 editFileEntryURL.setParameter("struts_action", "/document_library/edit_file_entry");
-editFileEntryDraftURL.setParameter("struts_action", "/document_library/edit_file_entry");
 
 if (repositoryId > 0) {
 	editFileEntryURL.setParameter("repositoryId", String.valueOf(repositoryId));
-	editFileEntryDraftURL.setParameter("repositoryId", String.valueOf(repositoryId));
 }
+
 if (folderId > 0) {
 	editFileEntryURL.setParameter("folderId", String.valueOf(folderId));
-	editFileEntryDraftURL.setParameter("folderId", String.valueOf(folderId));
 }
+
 if (fileEntryId > 0) {
 	editFileEntryURL.setParameter("fileEntryId", String.valueOf(fileEntryId));
-	editFileEntryDraftURL.setParameter("fileEntryId", String.valueOf(fileEntryId));
 }
+
 if (Validator.isNotNull(referringPortletResource)) {
 	editFileEntryURL.setParameter("referringPortletResource", referringPortletResource);
-	editFileEntryDraftURL.setParameter("referringPortletResource", referringPortletResource);
 }
 
 editFileEntryURL.setParameter("workflowAction", String.valueOf(WorkflowConstants.ACTION_PUBLISH));
-editFileEntryDraftURL.setParameter("workflowAction", String.valueOf(WorkflowConstants.ACTION_SAVE_DRAFT));
 
 if (Validator.isNotNull(redirect)) {
 	editFileEntryURL.setParameter("redirect", redirect);
-	editFileEntryDraftURL.setParameter("redirect", redirect);
 }
 %>
 
@@ -538,10 +533,15 @@ if (Validator.isNotNull(redirect)) {
 	function <portlet:namespace />saveFileEntry(draft) {
 		<%= HtmlUtil.escape(uploadProgressId) %>.startProgress();
 
-		if (draft) {
-			document.<portlet:namespace />fm.action = "<%= editFileEntryDraftURL.toString() %>";
+		if (!draft) {
+			document.<portlet:namespace />fm.action = "<%= editFileEntryURL.toString() %>";
 		}
 		else {
+
+			<%
+			editFileEntryURL.setParameter("workflowAction", String.valueOf(WorkflowConstants.ACTION_SAVE_DRAFT));
+			%>
+
 			document.<portlet:namespace />fm.action = "<%= editFileEntryURL.toString() %>";
 		}
 

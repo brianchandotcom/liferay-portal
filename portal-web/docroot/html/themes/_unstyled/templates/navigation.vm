@@ -1,5 +1,5 @@
 <nav class="$nav_css_class" id="navigation" role="navigation">
-	<ul role="menubar">
+	<ul aria-label="#language ("site-pages")" role="menubar">
 		#foreach ($nav_item in $nav_items)
 			#set ($nav_item_attr_has_popup="")
 			#set ($nav_item_attr_selected="")
@@ -15,7 +15,7 @@
 			#end
 
 			<li class="$nav_item_css_class" id="layout_$nav_item.getLayoutId()" $nav_item_attr_selected role="presentation">
-				<a href="$nav_item.getURL()" $nav_item_attr_has_popup $nav_item.getTarget() role="menuitem"><span>$nav_item.icon() $nav_item.getName()</span></a>
+				<a aria-labelledby="layout_$nav_item.getLayoutId()" href="$nav_item.getURL()" $nav_item_attr_has_popup $nav_item.getTarget() role="menuitem"><span>$nav_item.icon() $nav_item.getName()</span></a>
 
 				#if ($nav_item.hasChildren())
 					<ul class="child-menu" role="menu">
@@ -29,7 +29,7 @@
 							#end
 
 							<li class="$nav_child_css_class" id="layout_$nav_child.getLayoutId()" $nav_child_attr_selected role="presentation">
-								<a href="$nav_child.getURL()" $nav_child.getTarget() role="menuitem">$nav_child.getName()</a>
+								<a aria-labelledby="layout_$nav_child.getLayoutId()" href="$nav_child.getURL()" $nav_child.getTarget() role="menuitem">$nav_child.getName()</a>
 							</li>
 						#end
 					</ul>

@@ -45,6 +45,14 @@ public class BaseNavItemTag extends com.liferay.taglib.util.IncludeTag {
 		return _anchorId;
 	}
 
+	public java.lang.String getAriaLabel() {
+		return _ariaLabel;
+	}
+
+	public java.lang.String getAriaRole() {
+		return _ariaRole;
+	}
+
 	public java.lang.String getCssClass() {
 		return _cssClass;
 	}
@@ -101,6 +109,18 @@ public class BaseNavItemTag extends com.liferay.taglib.util.IncludeTag {
 		_anchorId = anchorId;
 
 		setScopedAttribute("anchorId", anchorId);
+	}
+
+	public void setAriaLabel(java.lang.String ariaLabel) {
+		_ariaLabel = ariaLabel;
+
+		setScopedAttribute("ariaLabel", ariaLabel);
+	}
+
+	public void setAriaRole(java.lang.String ariaRole) {
+		_ariaRole = ariaRole;
+
+		setScopedAttribute("ariaRole", ariaRole);
 	}
 
 	public void setCssClass(java.lang.String cssClass) {
@@ -168,6 +188,8 @@ public class BaseNavItemTag extends com.liferay.taglib.util.IncludeTag {
 		_anchorCssClass = null;
 		_anchorData = null;
 		_anchorId = null;
+		_ariaLabel = null;
+		_ariaRole = null;
 		_cssClass = null;
 		_data = null;
 		_dropdown = false;
@@ -195,6 +217,8 @@ public class BaseNavItemTag extends com.liferay.taglib.util.IncludeTag {
 		setNamespacedAttribute(request, "anchorCssClass", _anchorCssClass);
 		setNamespacedAttribute(request, "anchorData", _anchorData);
 		setNamespacedAttribute(request, "anchorId", _anchorId);
+		setNamespacedAttribute(request, "ariaLabel", _ariaLabel);
+		setNamespacedAttribute(request, "ariaRole", _ariaRole);
 		setNamespacedAttribute(request, "cssClass", _cssClass);
 		setNamespacedAttribute(request, "data", _data);
 		setNamespacedAttribute(request, "dropdown", _dropdown);
@@ -218,6 +242,8 @@ public class BaseNavItemTag extends com.liferay.taglib.util.IncludeTag {
 	private java.lang.String _anchorCssClass = null;
 	private java.lang.Object _anchorData = null;
 	private java.lang.String _anchorId = null;
+	private java.lang.String _ariaLabel = null;
+	private java.lang.String _ariaRole = null;
 	private java.lang.String _cssClass = null;
 	private java.lang.Object _data = null;
 	private boolean _dropdown = false;

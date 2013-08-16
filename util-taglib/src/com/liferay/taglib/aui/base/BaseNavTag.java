@@ -33,12 +33,32 @@ public class BaseNavTag extends com.liferay.taglib.util.IncludeTag {
 		return super.doStartTag();
 	}
 
+	public java.lang.String getAriaLabel() {
+		return _ariaLabel;
+	}
+
+	public java.lang.String getAriaRole() {
+		return _ariaRole;
+	}
+
 	public java.lang.String getCssClass() {
 		return _cssClass;
 	}
 
 	public java.lang.String getId() {
 		return _id;
+	}
+
+	public void setAriaLabel(java.lang.String ariaLabel) {
+		_ariaLabel = ariaLabel;
+
+		setScopedAttribute("ariaLabel", ariaLabel);
+	}
+
+	public void setAriaRole(java.lang.String ariaRole) {
+		_ariaRole = ariaRole;
+
+		setScopedAttribute("ariaRole", ariaRole);
 	}
 
 	public void setCssClass(java.lang.String cssClass) {
@@ -55,6 +75,8 @@ public class BaseNavTag extends com.liferay.taglib.util.IncludeTag {
 
 	@Override
 	protected void cleanUp() {
+		_ariaLabel = null;
+		_ariaRole = null;
 		_cssClass = null;
 		_id = null;
 	}
@@ -71,6 +93,8 @@ public class BaseNavTag extends com.liferay.taglib.util.IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
+		setNamespacedAttribute(request, "ariaLabel", _ariaLabel);
+		setNamespacedAttribute(request, "ariaRole", _ariaRole);
 		setNamespacedAttribute(request, "cssClass", _cssClass);
 		setNamespacedAttribute(request, "id", _id);
 	}
@@ -83,6 +107,8 @@ public class BaseNavTag extends com.liferay.taglib.util.IncludeTag {
 	private static final String _START_PAGE =
 		"/html/taglib/aui/nav/start.jsp";
 
+	private java.lang.String _ariaLabel = null;
+	private java.lang.String _ariaRole = null;
 	private java.lang.String _cssClass = null;
 	private java.lang.String _id = null;
 

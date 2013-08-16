@@ -117,7 +117,7 @@ String toggleControlsState = GetterUtil.getString(SessionClicks.get(request, "li
 		</c:if>
 	</c:if>
 
-	<aui:nav cssClass="nav-add-controls">
+	<aui:nav ariaLabel='<%= LanguageUtil.get(pageContext, "layout-controls") %>' cssClass="nav-add-controls">
 		<c:if test="<%= group.isControlPanel() %>">
 
 			<%

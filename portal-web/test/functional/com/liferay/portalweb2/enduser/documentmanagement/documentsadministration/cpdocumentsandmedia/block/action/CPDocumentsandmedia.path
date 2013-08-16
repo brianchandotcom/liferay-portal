@@ -291,65 +291,51 @@
 	<td></td>
 </tr>
 <!---->
-<!--DOCUMENT_CONTAINER-->
+<!--DOCUMENT_CONTAINER_DOCUMENT-->
 <tr>
-	<td>DOCUMENT_CONTAINER_DOCUMENT1</td>
+	<td>DOCUMENT_CONTAINER_DOCUMENT</td>
 	<td>//div[@id='_20_entriesContainer']//div[contains(.,'${key_dmDocumentTitle}')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>DOCUMENT_CONTAINER_DOCUMENT1_CHECKBOX</td>
+	<td>DOCUMENT_CONTAINER_DOCUMENT_CHECKBOX</td>
 	<td>//div[@id='_20_entriesContainer']//div[contains(.,'${key_dmDocumentTitle}')]/input[contains(@id,'_20_rowIdsFileEntryCheckbox')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>DOCUMENT_CONTAINER_DOCUMENT1_DROPDOWN</td>
+	<td>DOCUMENT_CONTAINER_DOCUMENT_DROPDOWN</td>
 	<td>//div[@id='_20_entriesContainer']//div[contains(.,'${key_dmDocumentTitle}')]/span/div/a</td>
 	<td></td>
 </tr>
 <tr>
-	<td>DOCUMENT_CONTAINER_DOCUMENT1_TITLE</td>
+	<td>DOCUMENT_CONTAINER_DOCUMENT_TITLE</td>
 	<td>//div[@id='_20_entriesContainer']//div[contains(.,'${key_dmDocumentTitle}')]/a/span/span</td>
 	<td></td>
 </tr>
 <tr>
-	<td>DOCUMENT_CONTAINER_FOLDER1</td>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--DOCUMENT_CONTAINER_FOLDER-->
+<tr>
+	<td>DOCUMENT_CONTAINER_FOLDER</td>
 	<td>//div[@id='_20_entriesContainer']//div[contains(.,'${key_dmFolderName}')]/a</td>
 	<td></td>
 </tr>
 <tr>
-	<td>DOCUMENT_CONTAINER_FOLDER1_CHECKBOX</td>
+	<td>DOCUMENT_CONTAINER_FOLDER_CHECKBOX</td>
 	<td>//div[@id='_20_entriesContainer']//div[contains(.,'${key_dmFolderName}')]/input[contains(@id,'_20_rowIdsFolderCheckbox')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>DOCUMENT_CONTAINER_FOLDER1_DROPDOWN</td>
+	<td>DOCUMENT_CONTAINER_FOLDER_DROPDOWN</td>
 	<td>//div[@id='_20_entriesContainer']//div[contains(.,'${key_dmFolderName}')]/span/div/a</td>
 	<td></td>
 </tr>
 <tr>
-	<td>DOCUMENT_CONTAINER_FOLDER1_TITLE</td>
+	<td>DOCUMENT_CONTAINER_FOLDER_TITLE</td>
 	<td>//div[@id='_20_entriesContainer']//div[contains(.,'${key_dmFolderName}')]/a/span/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DOCUMENT_CONTAINER_FOLDER2</td>
-	<td>//div[@id='_20_entriesContainer']//div[contains(.,'${key_dmFolderName2}')]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DOCUMENT_CONTAINER_FOLDER2_CHECKBOX</td>
-	<td>//div[@id='_20_entriesContainer']//div[contains(.,'${key_dmFolderName2}')]/input[contains(@id,'_20_rowIdsFolderCheckbox')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DOCUMENT_CONTAINER_FOLDER2_DROPDOWN</td>
-	<td>//div[@id='_20_entriesContainer']//div[contains(.,'${key_dmFolderName2}')]/span/div/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>DOCUMENT_CONTAINER_FOLDER2_TITLE</td>
-	<td>//div[@id='_20_entriesContainer']//div[contains(.,'${key_dmFolderName2}')]/a/span/span</td>
 	<td></td>
 </tr>
 <tr>
@@ -359,22 +345,22 @@
 </tr>
 <!--FOLDER_VIEW-->
 <tr>
-	<td>FOLDER_VIEW_FOLDER1</td>
+	<td>FOLDER_VIEW_FOLDER</td>
 	<td>//div[@id='_20_entriesContainer']//div[contains(.,'${key_dmFolderName}')]/a</td>
 	<td></td>
 </tr>
 <tr>
-	<td>FOLDER_VIEW_FOLDER1_TITLE</td>
+	<td>FOLDER_VIEW_FOLDER_TITLE</td>
 	<td>//div[@id='_20_entriesContainer']//div[contains(.,'${key_dmFolderName}')]/a/span/span</td>
 	<td></td>
 </tr>
 <tr>
-	<td>FOLDER_VIEW_DOCUMENT1</td>
+	<td>FOLDER_VIEW_DOCUMENT</td>
 	<td>//div[@id='_20_entriesContainer']//div[contains(.,'${key_dmDocumentTitle}')]/a</td>
 	<td></td>
 </tr>
 <tr>
-	<td>FOLDER_VIEW_DOCUMENT1_TITLE</td>
+	<td>FOLDER_VIEW_DOCUMENT_TITLE</td>
 	<td>//div[@id='_20_entriesContainer']//div[contains(.,'${key_dmDocumentTitle}')]/a/span/span</td>
 	<td></td>
 </tr>

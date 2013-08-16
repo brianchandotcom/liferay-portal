@@ -3,6 +3,14 @@
 		<execute macro="User#firstLoginPG" />
 	</set-up>
 
+	<tear-down>
+		<execute macro="DMDocument#tearDownCP" />
+
+		<execute macro="DMFolder#tearDownCP" />
+
+		<execute macro="User#logoutPG" />
+	</tear-down>
+
 	<command name="AddDocument">
 		<var name="dmDocumentDescription" value="DM Document Description" />
 		<var name="dmDocumentFile" value="Document_1.txt" />
@@ -66,6 +74,10 @@
 			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
 		</execute>
 
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Documents and Media" />
+		</execute>
+
 		<execute macro="DMDocument#editCP">
 			<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
 			<var name="dmDocumentDescriptionEdit" value="${dmDocumentDescriptionEdit}" />
@@ -95,6 +107,10 @@
 
 		<execute macro="DMFolder#viewCP">
 			<var name="dmFolderName" value="${dmFolderName}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Documents and Media" />
 		</execute>
 
 		<execute macro="DMFolder#editCP">
@@ -156,9 +172,9 @@
 	</command>
 
 	<command name="MoveFolderToFolder">
-		<var name="dmFolderDescription1" value="DM Folder Description" />
+		<var name="dmFolderDescription1" value="DM Folder1 Description" />
 		<var name="dmFolderDescription2" value="DM Folder2 Description" />
-		<var name="dmFolderName" value="DM Folder Name" />
+		<var name="dmFolderName1" value="DM Folder1 Name" />
 		<var name="dmFolderName2" value="DM Folder2 Name" />
 
 		<execute macro="Page#gotoContentCP">
@@ -167,7 +183,7 @@
 
 		<execute macro="DMFolder#addCP">
 			<var name="dmFolderDescription" value="${dmFolderDescription1}" />
-			<var name="dmFolderName" value="${dmFolderName}" />
+			<var name="dmFolderName" value="${dmFolderName1}" />
 		</execute>
 
 		<execute macro="DMFolder#addCP">
@@ -177,11 +193,14 @@
 
 		<execute macro="DMFolder#moveToFolderCP">
 			<var name="dmFolderName" value="${dmFolderName}" />
-			<var name="dmFolderName2" value="${dmFolderName2}" />
+			<var name="dmFolderName" value="${dmFolderName1}" />
+			<var name="dmFolderName" value="${dmFolderName2}" />
 		</execute>
 	</command>
 
 	<command name="MoveToRecycleBinDocument">
+		<var name="assetName" value="${dmDocumentTitle}" />
+		<var name="assetType" value="Document" />
 		<var name="dmDocumentDescription" value="DM Document Description1" />
 		<var name="dmDocumentFile" value="Document_1.txt" />
 		<var name="dmDocumentSize" value="0k" />
@@ -199,13 +218,14 @@
 		</execute>
 
 		<execute macro="DMDocument#moveToRecycleBinCP">
+			<var name="assetType" value="${assetType}" />
 			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
 		</execute>
-
-		<execute macro="DMDocument#viewRecycleCP" />
 	</command>
 
 	<command name="MoveToRecycleBinFolder">
+		<var name="assetName" value="${dmFolderName}" />
+		<var name="assetType" value="Documents Folder" />
 		<var name="dmFolderDescription" value="DM Folder Description" />
 		<var name="dmFolderName" value="DM Folder Name" />
 
@@ -218,18 +238,13 @@
 			<var name="dmFolderName" value="${dmFolderName}" />
 		</execute>
 
-		<execute macro="DMFolder#moveToRecycleBinCP">
-			<var name="dmFolderName" value="${dmFolderName}" />
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Documents and Media" />
 		</execute>
 
-		<execute macro="DMFolder#viewRecycleCP" />
+		<execute macro="DMFolder#moveToRecycleBinCP">
+			<var name="assetType" value="${assetType}" />
+			<var name="dmFolderName" value="${dmFolderName}" />
+		</execute>
 	</command>
-
-	<tear-down>
-		<execute macro="DMDocument#tearDownCP" />
-
-		<execute macro="DMFolder#tearDownCP" />
-
-		<execute macro="User#logoutPG" />
-	</tear-down>
 </definition>

@@ -27,7 +27,7 @@
 <tr>
 	<td>BACK</td>
 	<td>//a[@id='_20_TabsBack']</td>
-	<td>Back</td>
+	<td></td>
 </tr>
 <tr>
 	<td>CURRENT_FOLDER</td>
@@ -83,7 +83,7 @@
 <!--FOLDER_WINDOW-->
 <tr>
 	<td>FOLDER_WINDOW_ID</td>
-	<td>id=_20_selectFolder</td>
+	<td>//iframe[@id='_20_selectFolder_iframe_']</td>
 	<td></td>
 </tr>
 <tr>
@@ -97,23 +97,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FOLDER_WINDOW_FOLDER1</td>
+	<td>FOLDER_WINDOW_FOLDER</td>
 	<td>//tbody[@class='table-data']/tr/td/span/a</td>
 	<td></td>
 </tr>
 <tr>
-	<td>FOLDER_WINDOW_FOLDER1_CHOOSE_BUTTON</td>
+	<td>FOLDER_WINDOW_FOLDER_CHOOSE_BUTTON</td>
 	<td>//tbody[@class='table-data']/tr/td/button[contains(.,'Choose')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FOLDER_WINDOW_FOLDER2</td>
-	<td>//tbody[@class='table-data']/tr[2]/td/span/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FOLDER_WINDOW_FOLDER2_CHOOSE_BUTTON</td>
-	<td>//tbody[@class='table-data']/tr[2]/td/button[contains(.,'Choose')]</td>
 	<td></td>
 </tr>
 </tbody>

@@ -87,23 +87,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FOLDER_WINDOW_FOLDER1</td>
+	<td>FOLDER_WINDOW_FOLDER</td>
 	<td>//tbody[@class='table-data']//a[contains(.,'${key_dmFolderName}')]/span</td>
 	<td></td>
 </tr>
 <tr>
-	<td>FOLDER_WINDOW_FOLDER1_CHOOSE_BUTTON</td>
+	<td>FOLDER_WINDOW_FOLDER_CHOOSE_BUTTON</td>
 	<td>//tbody[@class='table-data']//button[contains(@data-foldername,'${key_dmFolderName}')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FOLDER_WINDOW_FOLDER2</td>
-	<td>//tbody[@class='table-data']//a[contains(.,'${key_dmFolderName2}')]/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FOLDER_WINDOW_FOLDER2_CHOOSE_BUTTON</td>
-	<td>//tbody[@class='table-data']//button[contains(@data-foldername,'${key_dmFolderName2}')]</td>
 	<td></td>
 </tr>
 </tbody>

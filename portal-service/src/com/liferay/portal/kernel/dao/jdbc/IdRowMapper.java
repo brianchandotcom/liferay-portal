@@ -18,14 +18,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Shuyang Zhou
  */
-public interface RowMapper<T> {
+public class IdRowMapper implements RowMapper<Long> {
 
-	public static final RowMapper<Integer> COUNT = new CountRowMapper();
-
-	public static final RowMapper<Long> ID = new IdRowMapper();
-
-	public T mapRow(ResultSet rs, int rowNumber) throws SQLException;
+	@Override
+	public Long mapRow(ResultSet rs, int rowNumber) throws SQLException {
+		return rs.getLong(1);
+	}
 
 }

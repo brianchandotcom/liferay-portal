@@ -889,8 +889,7 @@ public class DDMStructureLocalServiceImpl
 	 * @param  start the lower bound of the range of structures to return
 	 * @param  end the upper bound of the range of structures to return (not
 	 *         inclusive)
-	 * @return the range of matching structures, or <code>null</code> if no
-	 *         matches could be found
+	 * @return the range of matching structures
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
@@ -936,8 +935,7 @@ public class DDMStructureLocalServiceImpl
 	 * @param  start the lower bound of the range of structures to return
 	 * @param  end the upper bound of the range of structures to return (not
 	 *         inclusive)
-	 * @return the matching structures, or <code>null</code> if no matching
-	 *         structures could be found
+	 * @return the range of matching structures
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override

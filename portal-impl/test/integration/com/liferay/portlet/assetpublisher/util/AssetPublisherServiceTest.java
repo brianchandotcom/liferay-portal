@@ -30,7 +30,6 @@ import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetVocabulary;
 import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
-import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
@@ -62,38 +61,28 @@ public class AssetPublisherServiceTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
+		addVocabulary();
+
 		_permissionChecker = PermissionCheckerFactoryUtil.create(
 			TestPropsValues.getUser());
 	}
 
 	@Before
 	public void setUp() throws Exception {
-		AssetVocabulary assetVocabulary =
-			AssetVocabularyLocalServiceUtil.fetchGroupVocabulary(
-				TestPropsValues.getGroupId(), "Spanish_Teams");
-
-		if (assetVocabulary != null) {
-			AssetVocabularyLocalServiceUtil.deleteAssetVocabulary(
-				assetVocabulary.getVocabularyId());
-		}
+		_initalEntries = addManualAssetEntries(_NO_CATEGORIES, _NO_TAGS, 5);
 	}
 
 	@After
-	public void tearDown() throws Exception {
+	public void tearDown() {
+		_assetEntryXmls = null;
 		_expectedEntries = new ArrayList<AssetEntry>();
-
-		if (_vocabulary != null) {
-			AssetVocabularyLocalServiceUtil.deleteAssetVocabulary(
-				_vocabulary.getVocabularyId());
-		}
-
-		_vocabulary = null;
+		_initalEntries = new ArrayList<AssetEntry>();
 	}
 
 	@Test
 	@Transactional
 	public void testGetAssetEntries() throws Exception {
-		addJournalArticles(false, false);
+		_expectedEntries = _initalEntries;
 
 		List<AssetEntry> entries = AssetPublisherUtil.getAssetEntries(
 			new MockPortletRequest(), new MockPortletPreferences(),
@@ -107,17 +96,18 @@ public class AssetPublisherServiceTest {
 	@Test
 	@Transactional
 	public void testGetAssetEntriesFilteredByCategories() throws Exception {
-		addJournalArticles(true, false);
-
 		long[] allAssetCategoryIds =
 			new long[] {_categoryIds[0], _categoryIds[1], _categoryIds[2]};
+
+		_expectedEntries = addManualAssetEntries(
+			allAssetCategoryIds, _NO_TAGS, 2);
 
 		List<AssetEntry> entries = AssetPublisherUtil.getAssetEntries(
 			new MockPortletRequest(), new MockPortletPreferences(),
 			_permissionChecker, new long[] {TestPropsValues.getGroupId()},
 			_assetEntryXmls, false, false, allAssetCategoryIds, _NO_TAGS);
 
-		Assert.assertEquals(1, entries.size());
+		Assert.assertEquals(2, entries.size());
 		Assert.assertEquals(_expectedEntries, entries);
 	}
 
@@ -126,12 +116,13 @@ public class AssetPublisherServiceTest {
 	public void testGetAssetEntriesFilteredByCategoriesAndTags()
 		throws Exception {
 
-		addJournalArticles(true, true);
-
 		long[] allAssetCategoyIds = new long[] {
 			_categoryIds[0], _categoryIds[1], _categoryIds[2], _categoryIds[3]};
 
 		String[] allAssetTagNames = new String[] {_tagNames[0], _tagNames[1]};
+
+		_expectedEntries = addManualAssetEntries(
+			allAssetCategoyIds, allAssetTagNames, 2);
 
 		List<AssetEntry> entries = AssetPublisherUtil.getAssetEntries(
 			new MockPortletRequest(), new MockPortletPreferences(),
@@ -139,101 +130,28 @@ public class AssetPublisherServiceTest {
 			_assetEntryXmls, false, false, allAssetCategoyIds,
 			allAssetTagNames);
 
-		Assert.assertEquals(1, entries.size());
+		Assert.assertEquals(2, entries.size());
 		Assert.assertEquals(_expectedEntries, entries);
 	}
 
 	@Test
 	@Transactional
 	public void testGetAssetEntriesFilteredByTags() throws Exception {
-		addJournalArticles(false, true);
-
 		String[] allAssetTagNames = new String[] {_tagNames[0], _tagNames[1]};
+
+		_expectedEntries = addManualAssetEntries(
+			_NO_CATEGORIES, allAssetTagNames, 2);
 
 		List<AssetEntry> entries = AssetPublisherUtil.getAssetEntries(
 			new MockPortletRequest(), new MockPortletPreferences(),
 			_permissionChecker, new long[] {TestPropsValues.getGroupId()},
 			_assetEntryXmls, false, false, _NO_CATEGORIES, allAssetTagNames);
 
-		Assert.assertEquals(1, entries.size());
+		Assert.assertEquals(2, entries.size());
 		Assert.assertEquals(_expectedEntries, entries);
 	}
 
-	protected void _addArticles() throws Exception {
-		_addArticles(_NO_CATEGORIES, _NO_TAGS, 5, true);
-	}
-
-	protected void _addArticles(
-			long[] categoryIds, String[] tagNames, int number, boolean expected)
-		throws Exception {
-
-		for (int i = 0; i < number; i++) {
-			JournalArticle article = JournalTestUtil.addArticle(
-				TestPropsValues.getGroupId(), ServiceTestUtil.randomString(),
-				ServiceTestUtil.randomString(100));
-
-			JournalArticleLocalServiceUtil.updateAsset(
-				TestPropsValues.getUserId(), article, categoryIds, tagNames,
-				null);
-
-			StringBuilder sb = new StringBuilder(6);
-
-			AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
-				JournalArticle.class.getName(), article.getResourcePrimKey());
-
-			if (expected) {
-				_expectedEntries.add(assetEntry);
-			}
-
-			sb .append("<?xml version=\"1.0\"?><asset-entry>");
-			sb.append("<asset-entry-type>");
-			sb.append(JournalArticle.class.getName());
-			sb.append("</asset-entry-type><asset-entry-uuid>");
-			sb.append(assetEntry.getClassUuid());
-			sb.append("</asset-entry-uuid></asset-entry>");
-
-			_assetEntryXmls = ArrayUtil.append(_assetEntryXmls, sb.toString());
-		}
-	}
-
-	protected void _addCategorizedArticles() throws Exception {
-		_addArticles(new long[] {_categoryIds[0]}, _NO_TAGS, 1, false);
-		_addArticles(new long[] {_categoryIds[1]}, _NO_TAGS, 2, false);
-		_addArticles(new long[] {_categoryIds[2]}, _NO_TAGS, 1, false);
-		_addArticles(new long[] {_categoryIds[3]}, _NO_TAGS, 2, false);
-		_addArticles(new long[] {_categoryIds[4]}, _NO_TAGS, 1, false);
-
-		_addArticles(
-			new long[] {_categoryIds[0], _categoryIds[1], _categoryIds[2]},
-			_NO_TAGS, 1, true);
-	}
-
-	protected void addJournalArticles(boolean hasCategories, boolean hasTags)
-		throws Exception {
-
-		if (hasCategories && hasTags) {
-			_addVocabulary();
-
-			_addTags();
-
-			_addCategorizedAndTaggedArticles();
-		}
-		else if (hasCategories) {
-			_addVocabulary();
-
-			_addCategorizedArticles();
-		}
-		else if (hasTags) {
-			_addTags();
-
-			_addTaggedArticles();
-		}
-		else {
-			_addArticles();
-		}
-	}
-
-	private void _addCategories(long vocabularyId) throws Exception {
+	protected static void addCategories(long vocabularyId) throws Exception {
 		for (String categoryName : _categoryNames) {
 			AssetCategory category = AssetCategoryLocalServiceUtil.addCategory(
 				TestPropsValues.getUserId(), categoryName, vocabularyId,
@@ -244,77 +162,73 @@ public class AssetPublisherServiceTest {
 		}
 	}
 
-	private void _addCategorizedAndTaggedArticles() throws Exception {
-		_addArticles(
-			new long[] {_categoryIds[0]}, new String[] {_tagNames[0]}, 1,
-			false);
-		_addArticles(
-			new long[] {_categoryIds[1]}, new String[] {_tagNames[1]}, 2,
-			false);
-		_addArticles(
-			new long[] {_categoryIds[2]}, new String[] {_tagNames[2]}, 1,
-			false);
-		_addArticles(
-			new long[] {_categoryIds[3]}, new String[] {_tagNames[1]}, 2,
-			false);
-		_addArticles(
-			new long[] {
-				_categoryIds[0], _categoryIds[1], _categoryIds[2]},
-			new String[] {_tagNames[0], _tagNames[1]}, 1, false);
-		_addArticles(
-			new long[] {
-				_categoryIds[0], _categoryIds[1], _categoryIds[2],
-				_categoryIds[3]},
-			new String[] {_tagNames[0]}, 1, false);
-		_addArticles(
-			new long[] {
-				_categoryIds[0], _categoryIds[1], _categoryIds[2],
-				_categoryIds[3]},
-			new String[] {_tagNames[0], _tagNames[1]}, 1, true);
-	}
-
-	private void _addTaggedArticles() throws Exception {
-		_addArticles(_NO_CATEGORIES, new String[] {_tagNames[0]}, 1, false);
-		_addArticles(_NO_CATEGORIES, new String[] {_tagNames[1]}, 2, false);
-		_addArticles(_NO_CATEGORIES, new String[] {_tagNames[2]}, 1, false);
-		_addArticles(
-			_NO_CATEGORIES, new String[] {_tagNames[0], _tagNames[1]}, 1, true);
-	}
-
-	private void _addTags() throws Exception {
-		for (String tagName : _tagNames) {
-			AssetTagLocalServiceUtil.addTag(
-				TestPropsValues.getUserId(), tagName, new String[] {},
-				ServiceTestUtil.getServiceContext());
-		}
-	}
-
-	private void _addVocabulary() throws Exception {
+	protected static void addVocabulary() throws Exception {
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
 			TestPropsValues.getGroupId());
 
 		serviceContext.setAddGroupPermissions(false);
 		serviceContext.setAddGuestPermissions(false);
 
-		_vocabulary = AssetVocabularyLocalServiceUtil.addVocabulary(
-			TestPropsValues.getUserId(), "Spanish_Teams",
-			ServiceTestUtil.getServiceContext(TestPropsValues.getGroupId()));
+		AssetVocabulary vocabulary =
+			AssetVocabularyLocalServiceUtil.addVocabulary(
+				TestPropsValues.getUserId(), ServiceTestUtil.randomString(),
+				ServiceTestUtil.getServiceContext(
+					TestPropsValues.getGroupId()));
 
-		_addCategories(_vocabulary.getVocabularyId());
+		addCategories(vocabulary.getVocabularyId());
+	}
+
+	protected List<AssetEntry> addManualAssetEntries(
+			long[] categoryIds, String[] tagNames, int number)
+		throws Exception {
+
+		List<AssetEntry> assetEntries = new ArrayList<AssetEntry>();
+
+		for (int i = 0; i < number; i++) {
+			JournalArticle article = JournalTestUtil.addArticle(
+				TestPropsValues.getGroupId(), ServiceTestUtil.randomString(),
+				ServiceTestUtil.randomString(100));
+
+			JournalArticleLocalServiceUtil.updateAsset(
+				TestPropsValues.getUserId(), article, categoryIds, tagNames,
+				null);
+
+			AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
+				JournalArticle.class.getName(), article.getResourcePrimKey());
+
+			assetEntries.add(assetEntry);
+
+			_formatXml(assetEntry);
+		}
+
+		return assetEntries;
+	}
+
+	private void _formatXml(AssetEntry assetEntry) {
+		StringBuilder sb = new StringBuilder(6);
+
+		sb .append("<?xml version=\"1.0\"?><asset-entry>");
+		sb.append("<asset-entry-type>");
+		sb.append(JournalArticle.class.getName());
+		sb.append("</asset-entry-type><asset-entry-uuid>");
+		sb.append(assetEntry.getClassUuid());
+		sb.append("</asset-entry-uuid></asset-entry>");
+
+		_assetEntryXmls = ArrayUtil.append(_assetEntryXmls, sb.toString());
 	}
 
 	private static final long[] _NO_CATEGORIES = new long[] {};
 
 	private static final String[] _NO_TAGS = new String[] {};
 
+	private static long[] _categoryIds = new long[] {};
+	private static String[] _categoryNames =
+		{"Athletic", "Barcelona", "RealMadrid", "Sevilla", "Sporting"};
 	private static PermissionChecker _permissionChecker;
+	private static String[] _tagNames = {"basketball", "football", "tennis"};
 
 	private String[] _assetEntryXmls = new String[] {};
-	private long[] _categoryIds = new long[] {};
-	private String[] _categoryNames =
-		{"Athletic", "Barcelona", "RealMadrid", "Sevilla", "Sporting"};
 	private List<AssetEntry> _expectedEntries = new ArrayList<AssetEntry>();
-	private String[] _tagNames = {"basketball", "football", "tennis"};
-	private AssetVocabulary _vocabulary;
+	private List<AssetEntry> _initalEntries = new ArrayList<AssetEntry>();
 
 }

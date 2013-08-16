@@ -64,20 +64,23 @@ public class PortalDelegatorServlet extends HttpServlet {
 		String uri = request.getPathInfo();
 
 		if ((uri == null) || (uri.length() == 0)) {
-			throw new ServletException("Path information is not specified");
+			response.sendError(404, "Path information is not specified");
+			return;
 		}
 
 		String[] paths = uri.split(StringPool.SLASH);
 
 		if (paths.length < 2) {
-			throw new ServletException("Path " + uri + " is invalid");
+			response.sendError(404, "Path " + uri + " is invalid");
+			return;
 		}
 
 		HttpServlet delegate = _delegates.get(paths[1]);
 
 		if (delegate == null) {
-			throw new ServletException(
-				"No servlet registred for context " + paths[1]);
+			response.sendError(
+				404, "No servlet registred for context " + paths[1]);
+			return;
 		}
 
 		Thread currentThread = Thread.currentThread();

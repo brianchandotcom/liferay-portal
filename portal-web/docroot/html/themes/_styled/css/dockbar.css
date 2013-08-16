@@ -1,4 +1,5 @@
 @import "compass";
+@import "mixins";
 
 .dockbar {
 	left: 0;
@@ -36,6 +37,30 @@
 			margin-left: 0;
 			margin-right: 0;
 			width: 100%;
+
+			.nav-account-controls {
+				float: right;
+			}
+		}
+
+		.site-administration-menu li {
+			list-style: none;
+
+			a {
+				color: #000;
+				display: block;
+				padding: 3px 5px 3px 40px;
+
+				&:hover {
+					background: #0DB5E7;
+					color: #FFF;
+					text-decoration: none;
+				}
+
+				i {
+					font-size: 0.8em;
+				}
+			}
 		}
 	}
 
@@ -43,7 +68,171 @@
 		margin-top: -2px;
 		text-decoration: none;
 		vertical-align: middle;
-		width: 18px;
+		width: 27px;
+	}
+}
+
+.dockbar-split {
+	.dockbar {
+		height: 0;
+		position: absolute;
+
+		.divider-vertical {
+			display: none;
+		}
+
+		.navbar-inner {
+			background-color: transparent;
+			border-width: 0;
+			color: #FFF;
+			padding: 0;
+			width: 0;
+
+			.nav {
+				background-color: #333;
+				border-bottom-width: 0;
+				color: #FFF;
+
+				> li {
+					> a {
+						color: #FFF;
+						line-height: 31px;
+
+						&:focus, &:hover {
+							color: #FFF;
+						}
+
+						[class^="icon-"], [class*=" icon-"] {
+							margin-top: 3px;
+						}
+					}
+
+					&.active > a {
+						color: #FFF;
+
+						&, &:hover, &:focus {
+							background: #333;
+						}
+					}
+				}
+
+				li.dropdown {
+					&.open, &.active, &.open.active {
+						> .dropdown-toggle {
+							background-color: #555;
+							color: #FFF;
+						}
+					}
+				}
+			}
+
+			.nav-account-controls {
+				left: auto;
+				margin-right: 0;
+				padding: 0 5px;
+				position: fixed;
+				right: 5em;
+				z-index: 325;
+
+				> li > a {
+					padding: 6px 15px;
+				}
+			}
+
+			.nav-add-controls {
+				background: transparent;
+				position: fixed;
+				top: 10%;
+				z-index: 350;
+
+				> li {
+					float: none;
+					margin: 10px;
+					position: relative;
+
+					&.toggle-controls a {
+						clip: rect(0 0 0 0);
+						position: absolute;
+
+						&:focus {
+							clip: rect(auto auto auto auto);
+							position: static;
+						}
+					}
+
+					&.page-preview-controls {
+						@include respond-to(phone) {
+							display: none;
+						}
+
+						@include respond-to(tablet) {
+							display: none;
+						}
+					}
+
+					> a {
+						background: #333;
+						color: #FFF;
+						padding: 6px 8px;
+						text-align: center;
+
+						&:hover {
+							background: #555;
+						}
+
+						[class^="icon-"], [class^="icon-"], [class*=" icon-"] {
+							font-size: 25px;
+							position: relative;
+							vertical-align: middle;
+						}
+
+						&.toggle-controls-link {
+							background: #92F545;
+
+							[class^="icon-"], [class^="icon-"], [class*=" icon-"] {
+								color: #000;
+							}
+						}
+
+						.nav-item-label {
+							background: #333;
+							display: none;
+							left: 100%;
+							margin-left: 0.5em;
+							margin-top: -1em;
+							padding: 0 20px;
+							position: absolute;
+							top: 50%;
+							white-space: nowrap;
+						}
+
+						&:hover .nav-item-label {
+							display: block;
+						}
+
+						.icon-caret-down {
+							display: none;
+						}
+					}
+				}
+
+				&:hover > li.toggle-controls a {
+					clip: rect(auto auto auto auto);
+					position: static;
+				}
+			}
+		}
+	}
+
+	&.controls-hidden .dockbar .navbar-inner .nav-add-controls > li.toggle-controls > .toggle-controls-link {
+		background: #F5AF45;
+	}
+}
+
+.touch .dockbar-split, .controls-hidden.dockbar-split {
+	.dockbar .navbar-inner .nav-add-controls > li.toggle-controls > .toggle-controls-link {
+		clip: rect(auto auto auto auto);
+		position: static;
 	}
 }
 

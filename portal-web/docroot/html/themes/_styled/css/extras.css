@@ -76,10 +76,34 @@
 	@include box-shadow(inset 0 1px 5px rgba(0, 0, 0, 0.7));
 }
 
+.dockbar-split .dockbar {
+	.navbar-inner {
+		.nav > li > a {
+			@include text-shadow(none);
+		}
+
+		.nav-add-controls {
+			> li {
+				a {
+					@include border-radius(4px);
+
+					.nav-item-label {
+						@include border-radius(30px);
+					}
+				}
+
+				&.open a {
+					@include border-radius(4px 4px 0 0);
+				}
+			}
+		}
+	}
+}
+
 .portlet-document-library, .portlet-dynamic-data-mapping {
 	.lfr-ddm-small-image-preview {
 		@include box-shadow(0 1px 3px #ccc);
-    }
+	}
 }
 
 .portlet-asset-category-admin {

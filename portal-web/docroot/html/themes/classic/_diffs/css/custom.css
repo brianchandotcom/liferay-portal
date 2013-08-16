@@ -82,149 +82,32 @@ $dockbarOpenGradientStart: #0EA6F9;
 	/* ---------- Dockbar ---------- */
 
 	.dockbar {
-		height: 0;
-		position: absolute;
-
 		.navbar-inner {
-			background-color: transparent;
-			border-width: 0;
-			color: #FFF;
-			padding: 0;
-			width: 0;
-
 			.nav {
 				background-color: $dockbarGradientEnd;
-				border-bottom-width: 0;
 				border-top: 1px solid #00AEFF;
-				color: #FFF;
-			}
-
-			.nav-account-controls {
-				left: auto;
-				margin-right: 0;
-				padding: 0 5px;
-				position: fixed;
-				right: 5em;
-				z-index: 325;
-
-				> li > a {
-					padding: 6px 15px;
-				}
 			}
 
 			.nav-add-controls {
 				background: transparent;
 				border-top-width: 0;
-				position: fixed;
-				top: 10%;
-				z-index: 350;
 
 				> li {
-					float: none;
-					margin: 10px;
-					position: relative;
-
-					&.toggle-controls a {
-						clip: rect(0 0 0 0);
-						position: absolute;
-
-						&:focus {
-							clip: rect(auto auto auto auto);
-							position: static;
-						}
-					}
-
-					&.page-preview-controls {
-						@include respond-to(phone) {
-							display: none;
-						}
-
-						@include respond-to(tablet) {
-							display: none;
-						}
-					}
-
 					> a {
 						background: #45CBF5;
-						color: #FFF;
 						line-height: inherit;
-						padding: 6px 8px;
-						text-align: center;
 
 						&:hover {
 							background: #5BBAE8;
 						}
 
-						[class^="icon-"], [class^="icon-"], [class*=" icon-"] {
-							font-size: 25px;
-							position: relative;
-							vertical-align: middle;
-						}
-
 						&.toggle-controls-link {
 							background: #92F545;
-
-							[class^="icon-"], [class^="icon-"], [class*=" icon-"] {
-								color: #000;
-							}
 						}
-
-						.nav-item-label {
-							background: #333;
-							display: none;
-							left: 100%;
-							margin-left: 0.5em;
-							margin-top: -1em;
-							padding: 0 20px;
-							position: absolute;
-							top: 50%;
-							white-space: nowrap;
-						}
-
-						&:hover .nav-item-label {
-							display: block;
-						}
-
-						.icon-caret-down {
-							display: none;
-						}
-					}
-				}
-
-				&:hover > li.toggle-controls a {
-					clip: rect(auto auto auto auto);
-					position: static;
-				}
-			}
-
-			.site-administration-menu li {
-				list-style: none;
-
-				a {
-					display: block;
-					padding: 3px 5px 3px 40px;
-
-					&:hover {
-						text-decoration: none;
-					}
-
-					i {
-						font-size: 0.8em;
 					}
 				}
 			}
 		}
-	}
-
-	&.touch, .controls-hidden {
-		.dockbar .navbar-inner .nav-add-controls > li.toggle-controls > .toggle-controls-link {
-			clip: rect(auto auto auto auto);
-			position: static;
-		}
-	}
-
-	.controls-hidden .dockbar .navbar-inner .nav-add-controls > li.toggle-controls > .toggle-controls-link {
-		background: #F5AF45;
 	}
 
 	/* ---------- Main navigation ---------- */
@@ -568,22 +451,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 			.nav-account-controls {
 				@include background-image(linear-gradient($dockbarGradientStart 0%, $dockbarGradientStart 47%, $dockbarGradientEnd 100%));
 				@include filter-gradient($dockbarGradientStart, $dockbarGradientEnd, vertical);
-			}
-
-			.nav-add-controls {
-				> li {
-					a {
-						@include border-radius(4px);
-
-						.nav-item-label {
-							@include border-radius(30px);
-						}
-					}
-
-					&.open a {
-						@include border-radius(4px 4px 0 0);
-					}
-				}
 			}
 		}
 	}

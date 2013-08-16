@@ -306,13 +306,9 @@
 			}
 		}
 
-		.nav-account-controls {
-			float: right;
-
-			li ul li a:hover i {
-				background-image: none;
-				text-decoration: none;
-			}
+		.nav-account-controls li ul li a:hover i {
+			background-image: none;
+			text-decoration: none;
 		}
 
 		.divider-vertical {

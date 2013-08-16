@@ -62,6 +62,114 @@
 		</execute>
 	</command>
 
+	<command name="AddVocabularyAssetTypeAllAssetTypes">
+		<var name="vocabularyName" value="Vocabulary Name" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Categories" />
+		</execute>
+
+		<execute macro="Vocabulary#addCPWithAssociatedAssetType">
+			<var name="vocabularyAssociatedAssetType" value="All Asset Types" />
+			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
+
+		<execute macro="Vocabulary#viewCPWithAssociatedAssetType">
+			<var name="vocabularyAssociatedAssetType" value="All Asset Types" />
+			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
+	</command>
+
+	<command name="AddVocabularyAssetTypeBlogsEntry">
+		<var name="vocabularyName" value="Vocabulary Name" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Categories" />
+		</execute>
+
+		<execute macro="Vocabulary#addCPWithAssociatedAssetType">
+			<var name="vocabularyAssociatedAssetType" value="Blogs Entry" />
+			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
+
+		<execute macro="Vocabulary#viewCPWithAssociatedAssetType">
+			<var name="vocabularyAssociatedAssetType" value="Blogs Entry" />
+			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
+	</command>
+
+	<command name="AddVocabularyAssetTypeBookmarksEntry">
+		<var name="vocabularyName" value="Vocabulary Name" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Categories" />
+		</execute>
+
+		<execute macro="Vocabulary#addCPWithAssociatedAssetType">
+			<var name="vocabularyAssociatedAssetType" value="Bookmarks Entry" />
+			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
+
+		<execute macro="Vocabulary#viewCPWithAssociatedAssetType">
+			<var name="vocabularyAssociatedAssetType" value="Bookmarks Entry" />
+			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
+	</command>
+
+	<command name="AddVocabularyAssetTypeDocument">
+		<var name="vocabularyName" value="Vocabulary Name" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Categories" />
+		</execute>
+
+		<execute macro="Vocabulary#addCPWithAssociatedAssetType">
+			<var name="vocabularyAssociatedAssetType" value="Document" />
+			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
+
+		<execute macro="Vocabulary#viewCPWithAssociatedAssetType">
+			<var name="vocabularyAssociatedAssetType" value="Document" />
+			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
+	</command>
+
+	<command name="AddVocabularyAssetTypeUser">
+		<var name="vocabularyName" value="Vocabulary Name" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Categories" />
+		</execute>
+
+		<execute macro="Vocabulary#addCPWithAssociatedAssetType">
+			<var name="vocabularyAssociatedAssetType" value="User" />
+			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
+
+		<execute macro="Vocabulary#viewCPWithAssociatedAssetType">
+			<var name="vocabularyAssociatedAssetType" value="User" />
+			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
+	</command>
+
+	<command name="AddVocabularyAssetTypeWebContent">
+		<var name="vocabularyName" value="Vocabulary Name" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Categories" />
+		</execute>
+
+		<execute macro="Vocabulary#addCPWithAssociatedAssetType">
+			<var name="vocabularyAssociatedAssetType" value="Web Content" />
+			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
+
+		<execute macro="Vocabulary#viewCPWithAssociatedAssetType">
+			<var name="vocabularyAssociatedAssetType" value="Web Content" />
+			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
+	</command>
+
 	<command name="AddVocabularyAssetTypeWikiPage">
 		<var name="vocabularyName" value="Vocabulary Name" />
 
@@ -70,6 +178,11 @@
 		</execute>
 
 		<execute macro="Vocabulary#addCPWithAssociatedAssetType">
+			<var name="vocabularyAssociatedAssetType" value="Wiki Page" />
+			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
+
+		<execute macro="Vocabulary#viewCPWithAssociatedAssetType">
 			<var name="vocabularyAssociatedAssetType" value="Wiki Page" />
 			<var name="vocabularyName" value="${vocabularyName}" />
 		</execute>

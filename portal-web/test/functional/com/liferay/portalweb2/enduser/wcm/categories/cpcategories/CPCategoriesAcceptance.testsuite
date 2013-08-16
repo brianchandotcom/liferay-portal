@@ -2,7 +2,6 @@
 	<execute test-case-command="CPCategories#AddCategory" />
 	<execute test-case-command="CPCategories#AddSubcategory" />
 	<execute test-case-command="CPCategories#AddVocabulary" />
-	<execute test-case-command="CPCategories#AddVocabularyAssetTypeWikiPage" />
 	<execute test-case-command="CPCategories#DeleteCategory" />
 	<execute test-case-command="CPCategories#DeleteSubcategory" />
 	<execute test-case-command="CPCategories#DeleteVocabulary" />

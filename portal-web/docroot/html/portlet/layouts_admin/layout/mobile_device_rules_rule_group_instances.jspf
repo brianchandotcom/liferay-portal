@@ -31,7 +31,7 @@
 		keyProperty="ruleGroupInstanceId"
 		modelVar="mdrRuleGroupInstance"
 	>
-		<liferay-portlet:renderURL portletName="<%= PortletKeys.MOBILE_DEVICE_SITE_ADMIN %>" varImpl="rowURL">
+		<liferay-portlet:renderURL portletName="<%= PortletKeys.MOBILE_DEVICE_SITE_ADMIN %>" varImpl="rowURL" windowState="<%= themeDisplay.isStateExclusive() ? LiferayWindowState.POP_UP.toString() : windowState.toString() %>">
 			<portlet:param name="struts_action" value="/mobile_device_rules/view_actions" />
 			<portlet:param name="redirect" value='<%= portletURL.toString() + "#tab=mobileDeviceRules" %>' />
 			<portlet:param name="ruleGroupInstanceId" value="<%= String.valueOf(mdrRuleGroupInstance.getRuleGroupInstanceId()) %>" />
@@ -42,3 +42,54 @@
 
 	<liferay-ui:search-iterator type="more" />
 </liferay-ui:search-container>
+
+<aui:script>
+	function <portlet:namespace />mobileDeviceActionHandler(href) {
+		if (<%= themeDisplay.isStateExclusive() %>) {
+			<portlet:namespace />mobileDeviceOpenWindow(
+				{
+					uri: href
+				}
+			);
+		}
+		else {
+			location.href = href;
+		}
+	}
+
+	function <portlet:namespace />mobileDeviceOpenWindow(config) {
+		var data = AUI().mix(
+			config,
+			{
+				dialog: {
+					width: 820
+				},
+				title: Liferay.Language.get('javax.portlet.title.178')
+			}
+		);
+
+		Liferay.Util.openWindow(data);
+	}
+</aui:script>
+
+<c:if test="<%= themeDisplay.isStateExclusive() %>">
+	<aui:script use="aui-base">
+		var uniqueRuleGroupInstancesContainer = A.one('#<portlet:namespace />uniqueRuleGroupInstancesContainer');
+
+		uniqueRuleGroupInstancesContainer.delegate(
+			'click',
+			function(event) {
+				event.preventDefault();
+
+				var href = event.target.attr('href');
+
+				<portlet:namespace />mobileDeviceOpenWindow(
+					{
+						uri: href
+					}
+				);
+			},
+			'.mobile-device-rule a'
+		);
+	</aui:script>
+</c:if>

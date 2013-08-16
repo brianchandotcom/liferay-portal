@@ -70,6 +70,8 @@ public class EditLayoutSetPrototypeAction extends PortletAction {
 
 		try {
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
+				hideDefaultSuccessMessage(portletConfig, actionRequest);
+
 				LayoutSetPrototype layoutSetPrototype =
 					updateLayoutSetPrototype(actionRequest);
 

@@ -32,9 +32,13 @@ if ((dynamicAttributes != null) && !dynamicAttributes.isEmpty()) {
 	_options.putAll(dynamicAttributes);
 }
 
+java.lang.String ariaLabel = GetterUtil.getString((java.lang.String)request.getAttribute("aui:nav:ariaLabel"));
+java.lang.String ariaRole = GetterUtil.getString((java.lang.String)request.getAttribute("aui:nav:ariaRole"));
 java.lang.String cssClass = GetterUtil.getString((java.lang.String)request.getAttribute("aui:nav:cssClass"));
 java.lang.String id = GetterUtil.getString((java.lang.String)request.getAttribute("aui:nav:id"));
 
+_updateOptions(_options, "ariaLabel", ariaLabel);
+_updateOptions(_options, "ariaRole", ariaRole);
 _updateOptions(_options, "cssClass", cssClass);
 _updateOptions(_options, "id", id);
 %>

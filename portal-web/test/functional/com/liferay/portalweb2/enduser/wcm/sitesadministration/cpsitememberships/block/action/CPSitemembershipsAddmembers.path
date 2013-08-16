@@ -52,12 +52,12 @@
 <!--USER_TABLE-->
 <tr>
 	<td>USER_TABLE_ALL_CHECKBOX</td>
-	<td>//input[@name='_191_allRowIds']</td>
+	<td>//input[@name='_174_allRowIds']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>USER_TABLE_CHECKBOX</td>
-	<td>//td[1]/input[@name='_191_rowIds']</td>
+	<td>//td[1]/input[@name='_174_rowIds']</td>
 	<td></td>
 </tr>
 <tr>

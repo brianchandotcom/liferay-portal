@@ -547,9 +547,6 @@ public class BookmarksEntryLocalServiceImpl
 
 			// Social
 
-			socialActivityCounterLocalService.enableActivityCounters(
-				BookmarksEntry.class.getName(), entry.getEntryId());
-
 			socialActivityLocalService.addActivity(
 				userId, entry.getGroupId(), BookmarksEntry.class.getName(),
 				entry.getEntryId(),
@@ -564,9 +561,6 @@ public class BookmarksEntryLocalServiceImpl
 				BookmarksEntry.class.getName(), entry.getEntryId(), false);
 
 			// Social
-
-			socialActivityCounterLocalService.disableActivityCounters(
-				BookmarksEntry.class.getName(), entry.getEntryId());
 
 			socialActivityLocalService.addActivity(
 				userId, entry.getGroupId(), BookmarksEntry.class.getName(),

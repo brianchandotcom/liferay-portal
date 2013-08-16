@@ -385,7 +385,21 @@ public class ExpandoValueImpl extends ExpandoValueBaseImpl {
 
 		validate(ExpandoColumnConstants.DATE_ARRAY);
 
-		setData(StringUtil.merge(data));
+		if (data.length > 0) {
+			StringBundler sb = new StringBundler(data.length * 2);
+
+			for (Date date : data) {
+				sb.append(date.getTime());
+				sb.append(StringPool.COMMA);
+			}
+
+			sb.setIndex(sb.index() - 1);
+
+			setData(sb.toString());
+		}
+		else {
+			setData(StringPool.BLANK);
+		}
 	}
 
 	@Override

@@ -1,0 +1,5 @@
+<definition>
+	<execute test-suite="CPPortalSettingsP5" />
+
+	<execute test-suite="CPUserGroupsP5" />
+</definition>

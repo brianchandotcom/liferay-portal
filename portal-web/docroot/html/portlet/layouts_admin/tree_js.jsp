@@ -288,7 +288,10 @@ if (!selectableTree) {
 					newNode.label = Util.escapeHTML(node.name);
 
 					if (node.layoutRevisionId) {
-						if (node.layoutBranchName) {
+						if (!node.layoutRevisionHead) {
+							title = '<%= UnicodeLanguageUtil.get(pageContext, "there-is-not-a-version-of-this-page-marked-as-ready-for-publication") %>';
+						}
+						else if (node.layoutBranchName) {
 							node.layoutBranchName = Util.escapeHTML(node.layoutBranchName);
 
 							newNode.label += Lang.sub(' <span class="layout-branch-name" title="<%= UnicodeLanguageUtil.get(pageContext, "this-is-the-page-variation-that-is-marked-as-ready-for-publication") %>">[{layoutBranchName}]</span>', node);

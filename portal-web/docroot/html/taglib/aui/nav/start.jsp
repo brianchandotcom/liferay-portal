@@ -16,4 +16,4 @@
 
 <%@ include file="/html/taglib/aui/nav/init.jsp" %>
 
-<ul class="nav <%= cssClass %>" id="<%= id %>" <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>>
+<ul aria-label="<%= Validator.isNull(ariaLabel) ? portletDisplay.getTitle() : ariaLabel %>" class="nav <%= cssClass %>" id="<%= id %>" role="<%= Validator.isNull(ariaRole) ? "menubar" : ariaRole %>" <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>>

@@ -38,8 +38,6 @@
 				monthParam="schedulerStartDateMonth"
 				monthValue="<%= cal.get(Calendar.MONTH) %>"
 				yearParam="schedulerStartDateYear"
-				yearRangeEnd="<%= cal.get(Calendar.YEAR) + 5 %>"
-				yearRangeStart="<%= cal.get(Calendar.YEAR) %>"
 				yearValue="<%= cal.get(Calendar.YEAR) %>"
 			/>
 
@@ -50,7 +48,6 @@
 				amPmValue="<%= cal.get(Calendar.AM_PM) %>"
 				hourParam="schedulerStartDateHour"
 				hourValue="<%= hour %>"
-				minuteInterval="<%= 1 %>"
 				minuteParam="schedulerStartDateMinute"
 				minuteValue="<%= cal.get(Calendar.MINUTE) %>"
 			/>
@@ -70,8 +67,6 @@
 				monthParam="schedulerEndDateMonth"
 				monthValue="<%= cal.get(Calendar.MONTH) %>"
 				yearParam="schedulerEndDateYear"
-				yearRangeEnd="<%= cal.get(Calendar.YEAR) + 5 %>"
-				yearRangeStart="<%= cal.get(Calendar.YEAR) %>"
 				yearValue="<%= cal.get(Calendar.YEAR) %>"
 			/>
 
@@ -82,7 +77,6 @@
 				amPmValue="<%= cal.get(Calendar.AM_PM) %>"
 				hourParam="schedulerEndDateHour"
 				hourValue="<%= hour %>"
-				minuteInterval="<%= 1 %>"
 				minuteParam="schedulerEndDateMinute"
 				minuteValue="<%= cal.get(Calendar.MINUTE) %>"
 			/>

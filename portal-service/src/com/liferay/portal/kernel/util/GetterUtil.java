@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.util;
 
+import java.math.BigDecimal;
+
 import java.text.DateFormat;
 
 import java.util.Date;
@@ -209,12 +211,7 @@ public class GetterUtil {
 				return defaultValue;
 			}
 
-			if (getFloat(value) == getInteger(value)) {
-				return getInteger(value);
-			}
-			else {
-				return getFloat(value);
-			}
+			return new BigDecimal((String)value);
 		}
 
 		Class<?> clazz = value.getClass();

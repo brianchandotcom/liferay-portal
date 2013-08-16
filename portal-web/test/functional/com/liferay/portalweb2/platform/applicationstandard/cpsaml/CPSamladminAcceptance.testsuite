@@ -1,0 +1,4 @@
+<definition>
+	<execute test-case-command="CPSamladmin#SetUpSamladminSP" />
+	<execute test-case-command="CPSamladmin#SetUpSamladminIdP" />
+</definition>

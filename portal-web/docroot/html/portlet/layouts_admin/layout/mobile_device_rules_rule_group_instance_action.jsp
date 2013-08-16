@@ -21,6 +21,8 @@ SearchContainer searchContainer = (SearchContainer)request.getAttribute("liferay
 
 String redirect = searchContainer.getIteratorURL().toString();
 
+String closeRedirect = ParamUtil.getString(request, "closeRedirect");
+
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 MDRRuleGroupInstance mdrRuleGroupInstance = (MDRRuleGroupInstance)row.getObject();
@@ -30,13 +32,18 @@ MDRRuleGroup mdrRuleGroup = MDRRuleGroupLocalServiceUtil.getMDRRuleGroup(mdrRule
 
 <liferay-ui:icon-menu>
 	<c:if test="<%= MDRRuleGroupInstancePermissionUtil.contains(permissionChecker, mdrRuleGroupInstance.getRuleGroupInstanceId(), ActionKeys.UPDATE) %>">
-		<liferay-portlet:renderURL portletName="<%= PortletKeys.MOBILE_DEVICE_SITE_ADMIN %>" varImpl="viewRuleGroupInstanceActionsURL">
+		<liferay-portlet:renderURL portletName="<%= PortletKeys.MOBILE_DEVICE_SITE_ADMIN %>" varImpl="viewRuleGroupInstanceActionsURL" windowState="<%= themeDisplay.isStateExclusive() ? LiferayWindowState.POP_UP.toString() : windowState.toString() %>">
 			<portlet:param name="struts_action" value="/mobile_device_rules/view_actions" />
 			<portlet:param name="redirect" value='<%= HttpUtil.setParameter(redirect, liferayPortletResponse.getNamespace() + "historyKey", "mobileDeviceRules") %>' />
 			<portlet:param name="ruleGroupInstanceId" value="<%= String.valueOf(mdrRuleGroupInstance.getRuleGroupInstanceId()) %>" />
 		</liferay-portlet:renderURL>
 
-		<liferay-ui:icon image="manage_nodes" message="manage-actions" url="<%= viewRuleGroupInstanceActionsURL.toString() %>" />
+		<%
+		String taglibActionHandler = renderResponse.getNamespace() + "mobileDeviceActionHandler('" + viewRuleGroupInstanceActionsURL.toString() + "');";
+		%>
+
+		<liferay-ui:icon image="manage_nodes" message="manage-actions" url='<%= "javascript:" + taglibActionHandler + ";" %>' />
+
 	</c:if>
 
 	<c:if test="<%= MDRRuleGroupInstancePermissionUtil.contains(permissionChecker, mdrRuleGroupInstance.getRuleGroupInstanceId(), ActionKeys.PERMISSIONS) %>">
@@ -45,22 +52,26 @@ MDRRuleGroup mdrRuleGroup = MDRRuleGroupLocalServiceUtil.getMDRRuleGroup(mdrRule
 			modelResourceDescription="<%= mdrRuleGroup.getName(locale) %>"
 			resourcePrimKey="<%= String.valueOf(mdrRuleGroupInstance.getRuleGroupInstanceId()) %>"
 			var="permissionsURL"
-			windowState="<%= LiferayWindowState.POP_UP.toString() %>"
+			windowState="<%= themeDisplay.isStateExclusive() ? LiferayWindowState.POP_UP.toString() : windowState.toString() %>"
 		/>
 
-		<liferay-ui:icon
-			image="permissions"
-			linkCssClass="use-dialog"
-			method="get"
-			url="<%= permissionsURL %>"
-		/>
+		<%
+		String taglibActionHandler = renderResponse.getNamespace() + "mobileDeviceActionHandler('" + permissionsURL + "');";
+		%>
+
+		<liferay-ui:icon image="permissions" url='<%= "javascript:" + taglibActionHandler + ";" %>' />
 	</c:if>
 
 	<c:if test="<%= MDRRuleGroupInstancePermissionUtil.contains(permissionChecker, mdrRuleGroupInstance.getRuleGroupInstanceId(), ActionKeys.DELETE) %>">
+
+		<%
+		redirect = themeDisplay.isStateExclusive() ? closeRedirect : HttpUtil.setParameter(redirect, liferayPortletResponse.getNamespace() + "historyKey", "mobileDeviceRules");
+		%>
+
 		<liferay-portlet:actionURL portletName="<%= PortletKeys.MOBILE_DEVICE_SITE_ADMIN %>" var="deleteURL">
 			<portlet:param name="struts_action" value="/mobile_device_rules/edit_rule_group_instance" />
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
-			<portlet:param name="redirect" value='<%= HttpUtil.setParameter(redirect, liferayPortletResponse.getNamespace() + "historyKey", "mobileDeviceRules") %>' />
+			<portlet:param name="redirect" value="<%= redirect %>" />
 			<portlet:param name="ruleGroupInstanceId" value="<%= String.valueOf(mdrRuleGroupInstance.getRuleGroupInstanceId()) %>" />
 		</liferay-portlet:actionURL>
 

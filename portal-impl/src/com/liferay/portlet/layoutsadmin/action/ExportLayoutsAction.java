@@ -15,17 +15,15 @@
 package com.liferay.portlet.layoutsadmin.action;
 
 import com.liferay.portal.NoSuchGroupException;
-import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.DateRange;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.UniqueList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.security.auth.PrincipalException;
@@ -34,14 +32,15 @@ import com.liferay.portal.service.LayoutServiceUtil;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portlet.sites.action.ActionUtil;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletContext;
+import javax.portlet.PortletRequest;
 import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -68,15 +67,12 @@ public class ExportLayoutsAction extends PortletAction {
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		try {
+			String fileName = ParamUtil.getString(
+				actionRequest, "exportFileName");
 			long groupId = ParamUtil.getLong(actionRequest, "groupId");
 			boolean privateLayout = ParamUtil.getBoolean(
 				actionRequest, "privateLayout");
-			long[] layoutIds = getLayoutIds(
-				groupId, privateLayout,
-				ParamUtil.getString(actionRequest, "layoutIds"));
-			String fileName = ParamUtil.getString(
-				actionRequest, "exportFileName");
-
+			long[] layoutIds = getLayoutIds(actionRequest);
 			DateRange dateRange = ExportImportHelperUtil.getDateRange(
 				actionRequest, groupId, privateLayout, 0, null);
 
@@ -161,50 +157,30 @@ public class ExportLayoutsAction extends PortletAction {
 		portletRequestDispatcher.include(resourceRequest, resourceResponse);
 	}
 
-	protected void addLayoutIds(
-			List<Long> layoutIds, long groupId, boolean privateLayout,
-			long layoutId)
+	protected long[] getLayoutIds(PortletRequest portletRequest)
 		throws Exception {
 
-		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
-			groupId, privateLayout, layoutId);
+		List<Layout> layouts = new UniqueList<Layout>();
 
-		for (Layout layout : layouts) {
-			layoutIds.add(layout.getLayoutId());
+		Map<Long, Boolean> layoutIdMap = ExportImportHelperUtil.getLayoutIdMap(
+			portletRequest);
 
-			addLayoutIds(
-				layoutIds, layout.getGroupId(), layout.isPrivateLayout(),
-				layout.getLayoutId());
-		}
-	}
+		for (Map.Entry<Long, Boolean> entry : layoutIdMap.entrySet()) {
+			long plid = GetterUtil.getLong(String.valueOf(entry.getKey()));
+			boolean includeChildren = entry.getValue();
 
-	protected long[] getLayoutIds(
-			long groupId, boolean privateLayout, String layoutIdsJSON)
-		throws Exception {
+			Layout layout = LayoutLocalServiceUtil.getLayout(plid);
 
-		if (Validator.isNull(layoutIdsJSON)) {
-			return new long[0];
-		}
-
-		List<Long> layoutIds = new ArrayList<Long>();
-
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(layoutIdsJSON);
-
-		for (int i = 0; i < jsonArray.length(); ++i) {
-			JSONObject jsonObject = jsonArray.getJSONObject(i);
-
-			long layoutId = jsonObject.getLong("layoutId");
-
-			if (layoutId > 0) {
-				layoutIds.add(layoutId);
+			if (!layouts.contains(layout)) {
+				layouts.add(layout);
 			}
 
-			if (jsonObject.getBoolean("includeChildren")) {
-				addLayoutIds(layoutIds, groupId, privateLayout, layoutId);
+			if (includeChildren) {
+				layouts.addAll(layout.getAllChildren());
 			}
 		}
 
-		return ArrayUtil.toArray(layoutIds.toArray(new Long[layoutIds.size()]));
+		return ExportImportHelperUtil.getLayoutIds(layouts);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(ExportLayoutsAction.class);

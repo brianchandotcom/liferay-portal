@@ -5,7 +5,7 @@ AUI.add(
 
 		var FAILURE_TIMEOUT = 10000;
 
-		var REGEX_LAYOUT_ID = /layoutId_(\d+)/;
+		var REGEX_LAYOUT_ID = /plid_(\d+)/;
 
 		var RENDER_INTERVAL_IDLE = 60000;
 
@@ -62,6 +62,8 @@ AUI.add(
 						var instance = this;
 
 						instance._bindUI();
+
+						instance._pageTreeId = config.pageTreeId;
 
 						instance._initLabels();
 
@@ -1029,7 +1031,7 @@ AUI.add(
 
 						var selectedPages = [];
 
-						var layoutsExportTreeOutput = instance.byId('layoutsExportTreeOutput');
+						var layoutsExportTreeOutput = instance.byId(instance._pageTreeId + 'Output');
 
 						if (layoutsExportTreeOutput) {
 							var layoutIdsInput = instance.byId('layoutIds');
@@ -1055,7 +1057,7 @@ AUI.add(
 												layoutIds.push(
 													{
 														includeChildren: !item.hasChildNodes(),
-														layoutId: match[1]
+														plid: match[1]
 													}
 												);
 											}

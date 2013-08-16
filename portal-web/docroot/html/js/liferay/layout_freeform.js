@@ -42,6 +42,8 @@ AUI.add(
 			dragConfig.startCentered = false;
 
 			Layout.layoutHandler = new Layout.FreeFormLayout(freeformLayoutDefaults);
+
+			Layout.syncDraggableClassUI();
 		};
 
 		var FreeFormLayout = A.Component.create(

@@ -32,6 +32,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.social.model.SocialAchievement;
 import com.liferay.portlet.social.model.SocialActivity;
+import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.social.model.SocialActivityCounter;
 import com.liferay.portlet.social.model.SocialActivityCounterConstants;
 import com.liferay.portlet.social.model.SocialActivityCounterDefinition;
@@ -308,6 +309,28 @@ public class SocialActivityCounterLocalServiceImpl
 			return;
 		}
 
+		if ((activity.getType() ==
+				SocialActivityConstants.TYPE_MOVE_ATTACHMENT_TO_TRASH) ||
+			(activity.getType() ==
+				SocialActivityConstants.TYPE_MOVE_TO_TRASH)) {
+
+			disableActivityCounters(
+				activity.getClassNameId(), activity.getClassPK());
+
+			return;
+		}
+
+		if ((activity.getType() ==
+				SocialActivityConstants.TYPE_RESTORE_ATTACHMENT_FROM_TRASH) ||
+			(activity.getType() ==
+				SocialActivityConstants.TYPE_RESTORE_FROM_TRASH)) {
+
+			enableActivityCounters(
+				activity.getClassNameId(), activity.getClassPK());
+
+			return;
+		}
+
 		User user = userPersistence.findByPrimaryKey(activity.getUserId());
 
 		SocialActivityDefinition activityDefinition =
@@ -340,7 +363,8 @@ public class SocialActivityCounterLocalServiceImpl
 				activityDefinition.getActivityCounterDefinitions()) {
 
 			if (isAddActivityCounter(
-					user, assetEntryUser, activityCounterDefinition)) {
+					user, assetEntryUser, assetEntry,
+					activityCounterDefinition)) {
 
 				SocialActivityCounter activityCounter = addActivityCounter(
 					activity.getGroupId(), user, activity,
@@ -352,7 +376,9 @@ public class SocialActivityCounterLocalServiceImpl
 
 		SocialActivityCounter assetActivitiesCounter = null;
 
-		if (!assetEntryUser.isDefaultUser() && assetEntryUser.isActive()) {
+		if (!assetEntryUser.isDefaultUser() && assetEntryUser.isActive() &&
+			assetEntry.isVisible()) {
+
 			assetActivitiesCounter = addAssetActivitiesCounter(activity);
 		}
 
@@ -1261,7 +1287,7 @@ public class SocialActivityCounterLocalServiceImpl
 	}
 
 	protected boolean isAddActivityCounter(
-		User user, User assetEntryUser,
+		User user, User assetEntryUser, AssetEntry assetEntry,
 		SocialActivityCounterDefinition activityCounterDefinition) {
 
 		if ((user.isDefaultUser() || !user.isActive()) &&
@@ -1289,6 +1315,13 @@ public class SocialActivityCounterLocalServiceImpl
 		if ((user.getUserId() == assetEntryUser.getUserId()) &&
 			(name.equals(SocialActivityCounterConstants.NAME_CONTRIBUTION) ||
 			 name.equals(SocialActivityCounterConstants.NAME_POPULARITY))) {
+
+			return false;
+		}
+
+		if ((activityCounterDefinition.getOwnerType() ==
+				SocialActivityCounterConstants.TYPE_ASSET) &&
+			!assetEntry.isVisible()) {
 
 			return false;
 		}

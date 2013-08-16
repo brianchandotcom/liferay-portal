@@ -67,6 +67,10 @@ else {
 		categoryPropertiesIndexes = new int[0];
 	}
 }
+
+String categoryDescriptionId = "categoryDescription";
+String categoryNameId = "categoryName";
+String categoryPropertiesId = "categoryProperties";
 %>
 
 <portlet:actionURL var="editCategoryURL">
@@ -86,9 +90,16 @@ else {
 				<aui:input name="categoryId" type="hidden" value="<%= categoryId %>" />
 				<aui:input name="parentCategoryId" type="hidden" value="<%= parentCategoryId %>" />
 
-				<aui:input autoFocus="<%= true %>" cssClass="category-name" label="name" name="title" />
+				<%
+				if (category != null) {
+					categoryNameId += "Edit";
+					categoryDescriptionId += "Edit";
+				}
+				%>
 
-				<aui:input name="description" />
+				<aui:input autoFocus="<%= true %>" cssClass="category-name" id="<%= categoryNameId %>" label="name" name="title" />
+
+				<aui:input id="<%= categoryDescriptionId %>" name="description" />
 
 				<c:choose>
 					<c:when test="<%= parentCategoryId == 0 %>">
@@ -120,8 +131,14 @@ else {
 						</liferay-ui:panel>
 					</c:if>
 
+					<%
+					if (category != null) {
+						categoryPropertiesId += "Edit";
+					}
+					%>
+
 					<liferay-ui:panel collapsible="<%= true %>" defaultState="closed" extended="<%= true %>" helpMessage="properties-are-a-way-to-add-more-detailed-information-to-a-specific-category" id="assetCategoryPropertiesPanel" persistState="<%= true %>" title="properties">
-						<aui:fieldset cssClass="category-categoryProperties" id="categoryProperties">
+						<aui:fieldset cssClass="category-categoryProperties" id="<%= categoryPropertiesId %>">
 
 							<%
 							for (int i = 0; i < categoryPropertiesIndexes.length; i++) {
@@ -180,12 +197,12 @@ else {
 <aui:script use="liferay-auto-fields">
 	var autoFields = new Liferay.AutoFields(
 		{
-			contentBox: 'fieldset#<portlet:namespace />categoryProperties',
+			contentBox: 'fieldset#<portlet:namespace /><%= categoryPropertiesId %>',
 			fieldIndexes: '<portlet:namespace />categoryPropertiesIndexes'
 		}
 	).render();
 
-	var categoryPropertiesTrigger = A.one('fieldset#<portlet:namespace />categoryProperties');
+	var categoryPropertiesTrigger = A.one('fieldset#<portlet:namespace /><%= categoryPropertiesId %>');
 
 	if (categoryPropertiesTrigger) {
 		categoryPropertiesTrigger.setData('autoFieldsInstance', autoFields);

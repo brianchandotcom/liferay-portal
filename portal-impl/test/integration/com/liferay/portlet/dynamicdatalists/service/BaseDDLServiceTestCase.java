@@ -17,9 +17,12 @@ package com.liferay.portlet.dynamicdatalists.service;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.TestPropsValues;
+import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
+import com.liferay.portlet.dynamicdatalists.model.DDLRecordConstants;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordSetConstants;
 import com.liferay.portlet.dynamicdatamapping.service.BaseDDMServiceTestCase;
+import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -29,6 +32,20 @@ import java.util.Map;
  * @author Marcellus Tavares
  */
 public class BaseDDLServiceTestCase  extends BaseDDMServiceTestCase {
+
+	protected DDLRecord addRecord(long recordSetId, Fields fields)
+		throws Exception {
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+		serviceContext.setUserId(TestPropsValues.getUserId());
+
+		return DDLRecordLocalServiceUtil.addRecord(
+			TestPropsValues.getUserId(), group.getGroupId(), recordSetId,
+			DDLRecordConstants.DISPLAY_INDEX_DEFAULT, fields, serviceContext);
+	}
 
 	protected DDLRecordSet addRecordSet(long ddmStructureId) throws Exception {
 		Map<Locale, String> nameMap = new HashMap<Locale, String>();

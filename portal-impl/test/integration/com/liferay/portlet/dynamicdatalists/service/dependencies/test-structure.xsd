@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US">
+	<dynamic-element dataType="string" indexType="keyword" name="name" required="false" showLabel="true" type="text" width="50">
+		<meta-data locale="en_US">
+			<entry name="label"><![CDATA[Name]]></entry>
+			<entry name="predefinedValue"><![CDATA[]]></entry>
+		</meta-data>
+	</dynamic-element>
+	<dynamic-element dataType="string" indexType="text" name="description" required="false" showLabel="true" type="textarea" width="100">
+		<meta-data locale="en_US">
+			<entry name="label"><![CDATA[Description]]></entry>
+			<entry name="predefinedValue"><![CDATA[]]></entry>
+		</meta-data>
+	</dynamic-element>
+</root>
+	

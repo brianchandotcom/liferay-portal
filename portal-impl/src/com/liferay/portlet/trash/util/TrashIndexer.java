@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
+import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.trash.model.TrashEntry;
 
 import java.util.Locale;
@@ -75,6 +76,18 @@ public class TrashIndexer extends BaseIndexer {
 
 			contextQuery.add(
 				excludeAttachmentsQuery, BooleanClauseOccur.MUST_NOT);
+
+			BooleanQuery excludeJournalArticleVersionsQuery =
+				BooleanQueryFactoryUtil.create(searchContext);
+
+			excludeJournalArticleVersionsQuery.addRequiredTerm(
+				Field.ENTRY_CLASS_NAME, JournalArticle.class.getName());
+
+			excludeJournalArticleVersionsQuery.addRequiredTerm("head", false);
+
+			contextQuery.add(
+				excludeJournalArticleVersionsQuery,
+				BooleanClauseOccur.MUST_NOT);
 
 			BooleanQuery groupQuery = BooleanQueryFactoryUtil.create(
 				searchContext);

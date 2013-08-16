@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.trash.model;
 
+import com.liferay.portal.model.PersistedModel;
+
 /**
  * The extended model interface for the TrashVersion service. Represents a row in the &quot;TrashVersion&quot; database table, with each column mapped to a property of this class.
  *
@@ -23,7 +25,7 @@ package com.liferay.portlet.trash.model;
  * @see com.liferay.portlet.trash.model.impl.TrashVersionModelImpl
  * @generated
  */
-public interface TrashVersion extends TrashVersionModel {
+public interface TrashVersion extends TrashVersionModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *

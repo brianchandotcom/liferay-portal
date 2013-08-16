@@ -65,7 +65,6 @@
 		<reference package-path="com.liferay.portal" entity="SystemEvent" />
 		<reference package-path="com.liferay.portal" entity="WorkflowInstanceLink" />
 		<reference package-path="com.liferay.portlet.asset" entity="AssetEntry" />
-		<reference package-path="com.liferay.portlet.social" entity="SocialActivityCounter" />
 		<reference package-path="com.liferay.portlet.trash" entity="TrashEntry" />
 	</entity>
 	<entity name="WikiPage" uuid="true" local-service="true" remote-service="true">
@@ -117,6 +116,9 @@
 
 		<!-- Finder methods -->
 
+		<finder name="ResourcePrimKey" return-type="Collection">
+			<finder-column name="resourcePrimKey" />
+		</finder>
 		<finder name="NodeId" return-type="Collection">
 			<finder-column name="nodeId" />
 		</finder>
@@ -126,6 +128,10 @@
 		<finder name="R_N" return-type="Collection">
 			<finder-column name="resourcePrimKey" />
 			<finder-column name="nodeId" />
+		</finder>
+		<finder name="R_S" return-type="Collection">
+			<finder-column name="resourcePrimKey" />
+			<finder-column name="status" />
 		</finder>
 		<finder name="N_T" return-type="Collection">
 			<finder-column name="nodeId" />
@@ -250,7 +256,6 @@
 		<reference package-path="com.liferay.portlet.expando" entity="ExpandoRow" />
 		<reference package-path="com.liferay.portlet.messageboards" entity="MBMessage" />
 		<reference package-path="com.liferay.portlet.social" entity="SocialActivity" />
-		<reference package-path="com.liferay.portlet.social" entity="SocialActivityCounter" />
 		<reference package-path="com.liferay.portlet.trash" entity="TrashEntry" />
 
 		<!-- Transactions -->

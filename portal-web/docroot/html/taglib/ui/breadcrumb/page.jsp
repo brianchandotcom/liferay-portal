@@ -17,7 +17,7 @@
 <%@ include file="/html/taglib/ui/breadcrumb/init.jsp" %>
 
 <c:if test="<%= Validator.isNotNull(breadcrumbString) %>">
-	<ul class="breadcrumb">
+	<ul aria-label="<%= LanguageUtil.get(pageContext, "breadcrumb") %>" class="breadcrumb">
 		<%= breadcrumbString %>
 	</ul>
 </c:if>

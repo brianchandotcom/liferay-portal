@@ -45,6 +45,10 @@
 			<finder-column name="groupId" />
 			<finder-column name="createDate" comparator="&lt;" />
 		</finder>
+		<finder name="G_C" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="classNameId" />
+		</finder>
 		<finder name="C_C" return-type="TrashEntry" unique="true">
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
@@ -54,7 +58,7 @@
 
 		<reference package-path="com.liferay.portal" entity="Group" />
 	</entity>
-	<entity name="TrashVersion" local-service="false" remote-service="false">
+	<entity name="TrashVersion" local-service="true" remote-service="false">
 
 		<!-- PK fields -->
 
@@ -72,7 +76,16 @@
 		<finder name="EntryId" return-type="Collection">
 			<finder-column name="entryId" />
 		</finder>
+		<finder name="E_C" return-type="Collection">
+			<finder-column name="entryId" />
+			<finder-column name="classNameId" />
+		</finder>
 		<finder name="C_C" return-type="Collection">
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+		</finder>
+		<finder name="E_C_C" return-type="TrashVersion" unique="true">
+			<finder-column name="entryId" />
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 		</finder>

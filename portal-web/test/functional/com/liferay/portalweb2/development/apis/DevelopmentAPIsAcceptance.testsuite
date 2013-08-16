@@ -1,5 +1,5 @@
 <definition>
-	<execute test-case="ApisAxisServicesAcceptance" />
+	<execute test-suite="ApisAxisServicesAcceptance" />
 
-	<execute test-case="ApisJsonWebServicesAcceptance" />
+	<execute test-suite="ApisJsonWebServicesAcceptance" />
 </definition>

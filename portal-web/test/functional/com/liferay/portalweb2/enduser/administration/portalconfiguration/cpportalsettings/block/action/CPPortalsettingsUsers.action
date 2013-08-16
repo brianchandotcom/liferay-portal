@@ -1,0 +1,16 @@
+<definition>
+	<command name="assertTextEquals">
+		<case locator-key1="DEFAULT_USER_ASSOCIATIONS_SITES_HEADER">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+		<case locator-key1="DEFAULT_USER_ASSOCIATIONS_ORGANIZATION_SITES_HEADER">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+		<case locator-key1="DEFAULT_USER_ASSOCIATIONS_ROLES_HEADER">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+		<case locator-key1="DEFAULT_USER_ASSOCIATIONS_USER_GROUPS_HEADER">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+	</command>
+</definition>

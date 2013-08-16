@@ -417,6 +417,12 @@ public class TrashEntryLocalServiceUtil {
 		return getService().getEntries(groupId, start, end, obc);
 	}
 
+	public static java.util.List<com.liferay.portlet.trash.model.TrashEntry> getEntries(
+		long groupId, java.lang.String className)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getEntries(groupId, className);
+	}
+
 	/**
 	* Returns the number of trash entries with the group ID.
 	*
@@ -460,33 +466,6 @@ public class TrashEntryLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService().getEntry(className, classPK);
-	}
-
-	/**
-	* Returns all the trash versions associated with the trash entry.
-	*
-	* @param entryId the primary key of the trash entry
-	* @return all the trash versions associated with the trash entry
-	* @throws SystemException if a system exception occurred
-	*/
-	public static java.util.List<com.liferay.portlet.trash.model.TrashVersion> getVersions(
-		long entryId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getVersions(entryId);
-	}
-
-	/**
-	* Returns all the trash versions associated with the trash entry.
-	*
-	* @param className the class name of the trash entity
-	* @param classPK the primary key of the trash entity
-	* @return all the trash versions associated with the trash entry
-	* @throws SystemException if a system exception occurred
-	*/
-	public static java.util.List<com.liferay.portlet.trash.model.TrashVersion> getVersions(
-		java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getVersions(className, classPK);
 	}
 
 	public static com.liferay.portal.kernel.search.Hits search(long companyId,

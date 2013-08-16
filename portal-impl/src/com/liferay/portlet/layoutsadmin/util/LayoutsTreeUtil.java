@@ -203,6 +203,10 @@ public class LayoutsTreeUtil {
 					jsonObject.put("layoutBranchName", layoutBranch.getName());
 				}
 
+				if (layoutRevision.isHead()) {
+					jsonObject.put("layoutRevisionHead", true);
+				}
+
 				jsonObject.put(
 					"layoutRevisionId", layoutRevision.getLayoutRevisionId());
 				jsonObject.put("layoutSetBranchId", layoutSetBranchId);

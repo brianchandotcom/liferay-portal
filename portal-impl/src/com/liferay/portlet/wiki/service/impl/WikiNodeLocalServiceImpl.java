@@ -587,11 +587,6 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 						false);
 				}
 
-				// Social
-
-				socialActivityCounterLocalService.disableActivityCounters(
-					WikiPage.class.getName(), page.getResourcePrimKey());
-
 				// Index
 
 				Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
@@ -624,11 +619,6 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 						WikiPage.class.getName(), page.getResourcePrimKey(),
 						true);
 				}
-
-				// Social
-
-				socialActivityCounterLocalService.enableActivityCounters(
-					WikiPage.class.getName(), page.getResourcePrimKey());
 
 				// Index
 

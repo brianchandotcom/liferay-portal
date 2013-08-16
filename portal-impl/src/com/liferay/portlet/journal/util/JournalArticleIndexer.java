@@ -16,10 +16,8 @@ package com.liferay.portlet.journal.util;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.dao.orm.Junction;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
-import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.BaseIndexer;
@@ -52,7 +50,6 @@ import com.liferay.portlet.dynamicdatamapping.util.DDMIndexerUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
 import com.liferay.portlet.journal.asset.JournalArticleAssetRendererFactory;
 import com.liferay.portlet.journal.model.JournalArticle;
-import com.liferay.portlet.journal.model.JournalArticleConstants;
 import com.liferay.portlet.journal.model.JournalFolder;
 import com.liferay.portlet.journal.model.JournalFolderConstants;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
@@ -65,12 +62,9 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Set;
 
 import javax.portlet.PortletURL;
 
@@ -203,6 +197,15 @@ public class JournalArticleIndexer extends BaseIndexer {
 		if (Validator.isNotNull(ddmTemplateKey)) {
 			contextQuery.addRequiredTerm("ddmTemplateKey", ddmTemplateKey);
 		}
+
+		boolean head = GetterUtil.getBoolean(
+			searchContext.getAttribute("head"), Boolean.TRUE);
+		boolean relatedClassName = GetterUtil.getBoolean(
+			searchContext.getAttribute("relatedClassName"));
+
+		if (head && !relatedClassName) {
+			contextQuery.addRequiredTerm("head", Boolean.TRUE);
+		}
 	}
 
 	@Override
@@ -302,9 +305,9 @@ public class JournalArticleIndexer extends BaseIndexer {
 	protected void doDelete(Object obj) throws Exception {
 		JournalArticle article = (JournalArticle)obj;
 
-		deleteDocument(
-			article.getCompanyId(), article.getGroupId(),
-			article.getArticleId());
+		deleteDocument(article.getCompanyId(), article.getId());
+
+		updateArticles(article);
 	}
 
 	@Override
@@ -313,8 +316,7 @@ public class JournalArticleIndexer extends BaseIndexer {
 
 		Document document = getBaseModelDocument(PORTLET_ID, article);
 
-		document.addUID(
-			PORTLET_ID, article.getGroupId(), article.getArticleId());
+		document.addUID(PORTLET_ID, article.getId());
 
 		String articleDefaultLanguageId = LocalizationUtil.getDefaultLanguageId(
 			article.getContent());
@@ -366,6 +368,7 @@ public class JournalArticleIndexer extends BaseIndexer {
 		document.addKeyword("ddmStructureKey", article.getStructureId());
 		document.addKeyword("ddmTemplateKey", article.getTemplateId());
 		document.addDate("displayDate", article.getDisplayDate());
+		document.addKeyword("head", false);
 
 		addDDMStructureAttributes(document, article);
 
@@ -454,10 +457,6 @@ public class JournalArticleIndexer extends BaseIndexer {
 		Document document = getDocument(article);
 
 		if (!article.isIndexable() ||
-			(!article.isApproved() && !article.isInTrash() &&
-			 !article.isExpired() &&
-			 (article.getVersion() !=
-				  JournalArticleConstants.VERSION_DEFAULT)) ||
 			(PortalUtil.getClassNameId(DDMStructure.class) ==
 				article.getClassNameId())) {
 
@@ -470,13 +469,14 @@ public class JournalArticleIndexer extends BaseIndexer {
 
 		SearchEngineUtil.updateDocument(
 			getSearchEngineId(), article.getCompanyId(), document);
+
+		updateArticles(article);
 	}
 
 	@Override
 	protected void doReindex(String className, long classPK) throws Exception {
-		JournalArticle article =
-			JournalArticleLocalServiceUtil.getLatestArticle(
-				classPK, WorkflowConstants.STATUS_APPROVED);
+		JournalArticle article = JournalArticleLocalServiceUtil.getArticle(
+			classPK);
 
 		doReindex(article);
 	}
@@ -559,7 +559,7 @@ public class JournalArticleIndexer extends BaseIndexer {
 
 		try {
 			fields = JournalConverterUtil.getDDMFields(
-					ddmStructure, article.getContent());
+				ddmStructure, article.getContent());
 		}
 		catch (Exception e) {
 			return StringPool.BLANK;
@@ -596,56 +596,11 @@ public class JournalArticleIndexer extends BaseIndexer {
 
 		final Collection<Document> documents = new ArrayList<Document>();
 
-		final Set<String> latestArticleIds = new HashSet<String>();
-
 		ActionableDynamicQuery actionableDynamicQuery =
 			new JournalArticleActionableDynamicQuery() {
 
 			@Override
 			protected void addCriteria(DynamicQuery dynamicQuery) {
-				Junction junction = RestrictionsFactoryUtil.disjunction();
-
-				Junction approvedArticlesJunction =
-					RestrictionsFactoryUtil.conjunction();
-
-				Property displayDateProperty = PropertyFactoryUtil.forName(
-					"displayDate");
-
-				approvedArticlesJunction.add(
-					displayDateProperty.lt(new Date()));
-
-				Property statusProperty = PropertyFactoryUtil.forName("status");
-
-				approvedArticlesJunction.add(
-					statusProperty.eq(WorkflowConstants.STATUS_APPROVED));
-
-				junction.add(approvedArticlesJunction);
-
-				Junction draftArticlesJunction =
-					RestrictionsFactoryUtil.conjunction();
-
-				Property versionProperty = PropertyFactoryUtil.forName(
-					"version");
-
-				draftArticlesJunction.add(
-					versionProperty.eq(
-						JournalArticleConstants.VERSION_DEFAULT));
-
-				draftArticlesJunction.add(
-					statusProperty.eq(WorkflowConstants.STATUS_DRAFT));
-
-				junction.add(draftArticlesJunction);
-
-				Junction expiredArticlesJunction =
-					RestrictionsFactoryUtil.conjunction();
-
-				expiredArticlesJunction.add(
-					statusProperty.eq(WorkflowConstants.STATUS_EXPIRED));
-
-				junction.add(expiredArticlesJunction);
-
-				dynamicQuery.add(junction);
-
 				Property indexableProperty = PropertyFactoryUtil.forName(
 					"indexable");
 
@@ -653,46 +608,8 @@ public class JournalArticleIndexer extends BaseIndexer {
 			}
 
 			@Override
-			protected void performAction(Object object)
-				throws PortalException, SystemException {
-
+			protected void performAction(Object object) throws PortalException {
 				JournalArticle article = (JournalArticle)object;
-
-				if (article.isApproved() || article.isExpired()) {
-					JournalArticle latestArticle = null;
-
-					if (article.isApproved()) {
-						latestArticle =
-							JournalArticleLocalServiceUtil.getLatestArticle(
-								article.getResourcePrimKey(),
-								WorkflowConstants.STATUS_APPROVED);
-					}
-					else if (article.isExpired()) {
-						latestArticle =
-							JournalArticleLocalServiceUtil.fetchLatestArticle(
-								article.getResourcePrimKey(),
-								WorkflowConstants.STATUS_APPROVED, true);
-
-						if (latestArticle != null) {
-							return;
-						}
-
-						latestArticle =
-							JournalArticleLocalServiceUtil.getLatestArticle(
-								article.getResourcePrimKey(),
-								WorkflowConstants.STATUS_EXPIRED);
-					}
-
-					String latestArticleId = latestArticle.getArticleId();
-
-					if (latestArticleIds.contains(latestArticleId)) {
-						return;
-					}
-
-					latestArticleIds.add(latestArticleId);
-
-					article = latestArticle;
-				}
 
 				Document document = getDocument(article);
 
@@ -707,6 +624,51 @@ public class JournalArticleIndexer extends BaseIndexer {
 
 		SearchEngineUtil.updateDocuments(
 			getSearchEngineId(), companyId, documents);
+	}
+
+	protected void updateArticles(JournalArticle article) throws Exception {
+		JournalArticle latestIndexableArticle =
+			JournalArticleLocalServiceUtil.fetchLatestIndexableArticle(
+				article.getResourcePrimKey());
+
+		List<JournalArticle> articles =
+			JournalArticleLocalServiceUtil.getArticlesByResourcePrimKey(
+				article.getResourcePrimKey());
+
+		for (JournalArticle curArticle : articles) {
+			if (!curArticle.isIndexable() ||
+				((latestIndexableArticle != null) &&
+				 (curArticle.getArticleId() ==
+					latestIndexableArticle.getArticleId()))) {
+
+				continue;
+			}
+
+			Document document = getDocument(curArticle);
+
+			document.addKeyword("head", false);
+
+			SearchEngineUtil.updateDocument(
+				getSearchEngineId(), curArticle.getCompanyId(), document);
+		}
+
+		if (latestIndexableArticle != null) {
+			Document document = getDocument(latestIndexableArticle);
+
+			document.addKeyword("head", true);
+
+			SearchEngineUtil.updateDocument(
+				getSearchEngineId(), latestIndexableArticle.getCompanyId(),
+				document);
+		}
+		else if (article.getStatus() == WorkflowConstants.STATUS_IN_TRASH) {
+			Document document = getDocument(article);
+
+			document.addKeyword("head", true);
+
+			SearchEngineUtil.updateDocument(
+				getSearchEngineId(), article.getCompanyId(), document);
+		}
 	}
 
 }

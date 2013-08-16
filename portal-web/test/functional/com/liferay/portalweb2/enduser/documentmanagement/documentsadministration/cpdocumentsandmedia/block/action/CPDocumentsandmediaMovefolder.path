@@ -15,8 +15,8 @@
 </tr>
 <!---->
 <tr>
-	<td>CONFIGURATION_OPTIONS</td>
-	<td>//div[@class='btn-group portlet-options']/a</td>
+	<td>OPTIONS_WRENCH_ICON</td>
+	<td>//a[@title='Options']</td>
 	<td></td>
 </tr>
 <tr>
@@ -27,7 +27,7 @@
 <tr>
 	<td>BACK</td>
 	<td>//a[@id='_20_TabsBack']</td>
-	<td>Back</td>
+	<td></td>
 </tr>
 <tr>
 	<td>PARENT_FOLDER</td>
@@ -59,9 +59,9 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--CONFIGURATION_OPTIONS_MENULIST-->
+<!--OPTIONS_MENULIST-->
 <tr>
-	<td>CONFIGURATION_OPTIONS_MENULIST_EXPORT_IMPORT</td>
+	<td>OPTIONS_MENULIST_EXPORT_IMPORT</td>
 	<td>//a[contains(@id, 'menu_export-import')]</td>
 	<td></td>
 </tr>
@@ -73,7 +73,7 @@
 <!--FOLDER_WINDOW-->
 <tr>
 	<td>FOLDER_WINDOW_ID</td>
-	<td>//h3[contains(.,'Select Folder')]</td>
+	<td>//iframe[@id='_20_selectFolder_iframe_']</td>
 	<td></td>
 </tr>
 <tr>
@@ -87,23 +87,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FOLDER_WINDOW_FOLDER1</td>
-	<td>//tbody[@class='table-data']/tr/td/span/a/span</td>
+	<td>FOLDER_WINDOW_FOLDER</td>
+	<td>//tbody[@class='table-data']//a[contains(.,'${key_dmFolderName}')]/span</td>
 	<td></td>
 </tr>
 <tr>
-	<td>FOLDER_WINDOW_FOLDER1_CHOOSE_BUTTON</td>
-	<td>//tbody[@class='table-data']/tr/td[contains(.,'Choose')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FOLDER_WINDOW_FOLDER2</td>
-	<td>//tbody[@class='table-data']/tr[2]/td/span/a/span</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FOLDER_WINDOW_FOLDER2_CHOOSE_BUTTON</td>
-	<td>//tbody[@class='table-data']/tr[2]/td[contains(.,'Choose')]</td>
+	<td>FOLDER_WINDOW_FOLDER_CHOOSE_BUTTON</td>
+	<td>//tbody[@class='table-data']//button[contains(@data-foldername,'${key_dmFolderName}')]</td>
 	<td></td>
 </tr>
 </tbody>

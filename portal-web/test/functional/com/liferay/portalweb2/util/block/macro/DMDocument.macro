@@ -1,4 +1,19 @@
 <definition>
+	<command name="addCP">
+		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
+
+		<execute action="CPDocumentsandmedia#assertClick" locator-key1="TOOLBAR_ADD" value1="Add" />
+		<execute action="CPDocumentsandmedia#assertClick" locator-key1="ADD_MENULIST_BASIC_DOCUMENT" value1="Basic Document" />
+
+		<execute action="CPDocumentsandmediaAdddocument#uploadCommonFile" locator-key1="FILE_FIELD" value1="${dmDocumentFile}" />
+		<execute action="CPDocumentsandmediaAdddocument#type" locator-key1="TITLE_FIELD" value1="${dmDocumentTitle}" />
+		<execute action="CPDocumentsandmediaAdddocument#type" locator-key1="DESCRIPTION_FIELD" value1="${dmDocumentDescription}" />
+		<execute action="CPDocumentsandmediaAdddocument#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+
+		<execute action="CPDocumentsandmedia#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully."/>
+		<execute action="CPDocumentsandmedia#assertTextEquals" locator-key1="DOCUMENT_CONTAINER_DOCUMENT_TITLE" value1="${dmDocumentTitle}"/>
+	</command>
+
 	<command name="addPG">
 		<execute action="PGDocumentsandmedia#assertClick" locator-key1="TOOLBAR_ADD" value1="Add" />
 		<execute action="PGDocumentsandmedia#assertClick" locator-key1="ADD_MENULIST_BASIC_DOCUMENT" value1="Basic Document" />
@@ -24,8 +39,26 @@
 		<execute action="PGDocumentsandmediaDocument#assertClick" locator-key1="TOOLBAR_MOVE_TO_RECYCLE_BIN_BUTTON" value1="Move to the Recycle Bin" />
 		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="moved to the Recycle Bin. Undo" />
 		<execute action="PGDocumentsandmediaDocument#assertElementNotPresent" locator-key1="DOCUMENT_INFO_TITLE" />
+	</command>
 
-		<execute macro="RecycleBin#emptyCP"/>
+	<command name="editCP">
+		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
+
+		<execute action="CPDocumentsandmedia#assertElementPresent" locator-key1="DOCUMENT_CONTAINER_DOCUMENT" />
+		<execute action="CPDocumentsandmedia#assertTextEquals" locator-key1="DOCUMENT_CONTAINER_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
+
+		<execute action="CPDocumentsandmedia#mouseOver" locator-key1="DOCUMENT_CONTAINER_DOCUMENT" />
+		<execute action="CPDocumentsandmedia#assertElementPresent" locator-key1="DOCUMENT_CONTAINER_DOCUMENT_DROPDOWN" />
+		<execute action="CPDocumentsandmedia#click" locator-key1="DOCUMENT_CONTAINER_DOCUMENT_DROPDOWN" />
+		<execute action="CPDocumentsandmedia#assertElementPresent" locator-key1="DOCUMENT_MENULIST_EDIT" />
+		<execute action="CPDocumentsandmedia#assertClick" locator-key1="DOCUMENT_MENULIST_EDIT" value1="Edit" />
+
+		<execute action="CPDocumentsandmediaEditdocument#type" locator-key1="TITLE_FIELD" value1="${dmDocumentTitleEdit}" />
+		<execute action="CPDocumentsandmediaEditdocument#type" locator-key1="DESCRIPTION_FIELD" value1="${dmDocumentDescriptionEdit}" />
+		<execute action="CPDocumentsandmediaEditdocument#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+
+		<execute action="CPDocumentsandmedia#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully."/>
+		<execute action="CPDocumentsandmedia#assertTextEquals" locator-key1="DOCUMENT_CONTAINER_DOCUMENT_TITLE" value1="${dmDocumentTitleEdit}" />
 	</command>
 
 	<command name="editPG">
@@ -42,12 +75,121 @@
 		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_INFO_TITLE" value1="${dmDocumentTitleEdit}" />
 	</command>
 
+	<command name="moveToFolderCP">
+		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
+		<var name="key_dmFolderName" value="${dmFolderName}" />
+
+		<execute action="CPDocumentsandmedia#assertElementPresent" locator-key1="DOCUMENT_CONTAINER_DOCUMENT" value1="${dmDocumentTitle}" />
+		<execute action="CPDocumentsandmedia#assertElementPresent" locator-key1="DOCUMENT_CONTAINER_FOLDER" value1="${dmFolderName}" />
+
+		<execute action="CPDocumentsandmedia#click" locator-key1="DOCUMENT_CONTAINER_DOCUMENT_DROPDOWN" />
+		<execute action="CPDocumentsandmedia#assertElementPresent" locator-key1="DOCUMENT_MENULIST_MOVE" />
+		<execute action="CPDocumentsandmedia#assertClick" locator-key1="DOCUMENT_MENULIST_MOVE" value1="Move" />
+
+		<execute action="CPDocumentsandmediaMovedocument#assertClick" locator-key1="SELECT_PARENT_FOLDER_BUTTON" value1="Select" />
+		<execute action="CPDocumentsandmediaMovedocument#selectFrame" locator-key1="FOLDER_WINDOW_ID" />
+
+		<var name="key_dmFolderName" value="${dmFolderName}" />
+
+		<execute action="CPDocumentsandmediaMovedocument#assertClick" locator-key1="FOLDER_WINDOW_FOLDER_CHOOSE_BUTTON" value1="Choose" />
+		<execute action="CPDocumentsandmediaMovedocument#selectFrame" locator1="relative=top" />
+
+		<execute action="CPDocumentsandmediaMovedocument#assertTextEquals" locator-key1="PARENT_FOLDER" value1="${dmFolderName}" />
+		<execute action="CPDocumentsandmediaMovedocument#assertClick" locator-key1="MOVE_BUTTON" value1="Move" />
+
+		<execute action="CPDocumentsandmedia#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+
+		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
+		<var name="key_dmFolderName" value="${dmFolderName}" />
+
+		<execute action="CPDocumentsandmedia#assertElementPresent" locator-key1="DOCUMENT_CONTAINER_FOLDER" />
+		<execute action="CPDocumentsandmedia#assertTextEquals" locator-key1="DOCUMENT_CONTAINER_FOLDER_TITLE" value1="${dmFolderName}" />
+		<execute action="CPDocumentsandmedia#click" locator-key1="DOCUMENT_CONTAINER_FOLDER" value1="${dmFolderName}" />
+		<execute action="CPDocumentsandmedia#assertTextEquals" locator-key1="BREADCRUMB_LAST" value1="${dmFolderName}" />
+		<execute action="CPDocumentsandmedia#assertElementPresent" locator-key1="FOLDER_VIEW_DOCUMENT" />
+		<execute action="CPDocumentsandmedia#assertTextEquals" locator-key1="FOLDER_VIEW_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
+	</command>
+
+	<command name="moveToFolderPG">
+		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
+		<var name="key_dmFolderName" value="${dmFolderName}" />
+
+		<execute action="CPDocumentsandmedia#assertElementPresent" locator-key1="DOCUMENT_CONTAINER_DOCUMENT" />
+		<execute action="CPDocumentsandmedia#assertElementPresent" locator-key1="DOCUMENT_CONTAINER_FOLDER" />
+
+		<execute action="CPDocumentsandmedia#click" locator-key1="DOCUMENT_CONTAINER_DOCUMENT_DROPDOWN" />
+		<execute action="CPDocumentsandmedia#assertElementPresent" locator-key1="DOCUMENT_MENULIST_MOVE" />
+		<execute action="CPDocumentsandmedia#assertClick" locator-key1="DOCUMENT_MENULIST_MOVE" value1="Move" />
+
+		<execute action="CPDocumentsandmediaMovedocument#assertClick" locator-key1="SELECT_PARENT_FOLDER_BUTTON" value1="Select" />
+
+		<execute action="CPDocumentsandmediaMovedocument#selectWindow" locator-key1="FOLDER_WINDOW_ID" />
+		
+		<var name="key_dmFolderName" value="${dmFolderName}" />
+
+		<execute action="CPDocumentsandmediaMovedocument#assertClick" locator-key1="FOLDER_WINDOW_FOLDER_CHOOSE_BUTTON" value1="Choose" />
+		<execute action="CPDocumentsandmediaMovedocument#selectWindow" locator1="null" />
+
+		<execute action="CPDocumentsandmediaMovedocument#assertTextEquals" locator-key1="PARENT_FOLDER" value1="${dmFolderName}" />
+		<execute action="CPDocumentsandmediaMovedocument#assertClick" locator-key1="MOVE_BUTTON" value1="Move" />
+
+		<execute action="CPDocumentsandmedia#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+
+		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
+		<var name="key_dmFolderName" value="${dmFolderName}" />
+
+		<execute action="CPDocumentsandmedia#assertElementPresent" locator-key1="DOCUMENT_CONTAINER_FOLDER" />
+		<execute action="CPDocumentsandmedia#assertTextEquals" locator-key1="DOCUMENT_CONTAINER_FOLDER_TITLE" value1="${dmFolderName}" />
+		<execute action="CPDocumentsandmedia#click" locator-key1="DOCUMENT_CONTAINER_FOLDER" />
+		<execute action="CPDocumentsandmedia#assertTextEquals" locator-key1="BREADCRUMB_LAST" value1="${dmFolderName}" />
+		<execute action="CPDocumentsandmedia#assertElementPresent" locator-key1="FOLDER_VIEW_DOCUMENT" />
+		<execute action="CPDocumentsandmedia#assertTextEquals" locator-key1="FOLDER_VIEW_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
+	</command>
+
+	<command name="moveToRecycleBinCP">
+		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
+
+		<execute action="CPDocumentsandmedia#assertElementPresent" locator-key1="DOCUMENT_CONTAINER_DOCUMENT" />
+		<execute action="CPDocumentsandmedia#assertTextEquals" locator-key1="DOCUMENT_CONTAINER_DOCUMENT_TITLE" value1="${dmDocumentTitle}"/>
+
+		<execute action="CPDocumentsandmedia#mouseOver" locator-key1="DOCUMENT_CONTAINER_DOCUMENT" />
+		<execute action="CPDocumentsandmedia#assertElementPresent" locator-key1="DOCUMENT_CONTAINER_DOCUMENT_CHECKBOX" />
+		<execute action="CPDocumentsandmedia#click" locator-key1="DOCUMENT_CONTAINER_DOCUMENT_CHECKBOX" />
+		<execute action="CPDocumentsandmedia#assertElementPresent" locator-key1="TOOLBAR_ACTIONS" />
+		<execute action="CPDocumentsandmedia#assertClick" locator-key1="TOOLBAR_ACTIONS" value1="Actions" />
+		<execute action="CPDocumentsandmedia#assertClick" locator-key1="ACTIONS_MENULIST_MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
+		<execute action="CPDocumentsandmedia#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="The ${assetType} ${dmDocumentTitle} was moved to the Recycle Bin. Undo" />
+		<execute action="CPDocumentsandmedia#assertTextEquals" locator-key1="INFO_MESSAGE" value1="There are no documents or media files in this folder." />
+	</command>
+
+	<command name="tearDownCP">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Documents and Media" />
+		</execute>
+			
+		<if>
+			<condition action="CPDocumentsandmedia#isElementNotPresent" locator-key1="INFO_MESSAGE" />
+			<then>
+				<execute action="CPDocumentsandmedia#check" locator-key1="TOOLBAR_SELECT_ALL_ROWS_CHECKBOX" />
+				<execute action="CPDocumentsandmedia#assertClick" locator-key1="TOOLBAR_ACTIONS" value1="Actions" />
+				<execute action="CPDocumentsandmedia#assertElementPresent" locator-key1="ACTIONS_MENULIST_MOVE_TO_THE_RECYCLE_BIN" />
+				<execute action="CPDocumentsandmedia#assertClick" locator-key1="ACTIONS_MENULIST_MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
+			</then>
+		</if>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Recycle Bin" />
+		</execute>
+		
+		<execute macro="RecycleBin#emptyCP" />
+	</command>
+
 	<command name="tearDownPG">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<if>
+		<while>
 			<condition action="PGDocumentsandmedia#isElementPresent" locator-key1="ENTRIES_DOCUMENT" />
 			<then>
 				<execute action="PGDocumentsandmedia#check" locator-key1="TOOLBAR_SELECT_ALL_CHECKBOX" />
@@ -58,7 +200,27 @@
 
 				<execute macro="RecycleBin#emptyCP"/>
 			</then>
-		</if>
+		</while>
+	</command>
+
+	<command name="viewCP">
+		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
+
+		<execute action="CPDocumentsandmedia#assertElementPresent" locator-key1="DOCUMENT_CONTAINER_DOCUMENT" />
+		<execute action="CPDocumentsandmedia#assertClick" locator-key1="DOCUMENT_CONTAINER_DOCUMENT_TITLE" value1="${dmDocumentTitle}"/>
+
+		<execute action="CPDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_INFO_TITLE" value1="${dmDocumentTitle}" />
+	</command>
+
+	<command name="viewEditCP">
+		<var name="key_dmDocumentTitle" value="${dmDocumentTitleEdit}" />
+		
+		<execute action="CPDocumentsandmedia#assertElementPresent" locator-key1="DOCUMENT_CONTAINER_DOCUMENT" />
+		<execute action="CPDocumentsandmedia#assertClick" locator-key1="DOCUMENT_CONTAINER_DOCUMENT_TITLE" value1="${dmDocumentTitleEdit}"/>
+
+		<var name="key_dmDocumentTitle" value="${dmDocumentTitleEdit}" />
+
+		<execute action="CPDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_INFO_TITLE" value1="${dmDocumentTitleEdit}" />
 	</command>
 
 	<command name="viewPG">

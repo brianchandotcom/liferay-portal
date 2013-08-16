@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
@@ -38,6 +37,7 @@ import org.junit.runner.RunWith;
 
 /**
  * @author Juan Fernández
+ * @author Roberto Díaz
  */
 @ExecutionTestListeners(
 	listeners = {
@@ -77,9 +77,7 @@ public class JournalArticleServiceTest {
 
 	@Test
 	public void testExpireArticle() throws Exception {
-		updateArticle("Version 2");
-
-		expireLatestArticle();
+		updateAndExpireLatestArticle("Version 2");
 
 		Assert.assertEquals(
 			"Version 2", _article.getTitle(LocaleUtil.getDefault()));
@@ -89,47 +87,91 @@ public class JournalArticleServiceTest {
 
 	@Test
 	public void testFetchLatestArticleExpiredWithStatusAny() throws Exception {
-		testFetchLatestArticle(true, WorkflowConstants.STATUS_ANY);
+		updateAndExpireLatestArticle("Version 2");
+
+		_latestArticle = fetchLatestArticle(WorkflowConstants.STATUS_ANY);
+
+		Assert.assertNotNull(_latestArticle);
+		Assert.assertTrue(_latestArticle.isExpired());
+		Assert.assertEquals(
+			"Version 2", _latestArticle.getTitle(LocaleUtil.getDefault()));
+		Assert.assertEquals(1.1, _latestArticle.getVersion(), 0);
 	}
 
 	@Test
 	public void testFetchLatestArticleExpiredWithStatusApproved()
 		throws Exception {
 
-		testFetchLatestArticle(true, WorkflowConstants.STATUS_APPROVED);
+		updateAndExpireLatestArticle("Version 2");
+
+		_latestArticle = fetchLatestArticle(WorkflowConstants.STATUS_APPROVED);
+
+		Assert.assertNotNull(_latestArticle);
+		Assert.assertTrue(_latestArticle.isApproved());
+		Assert.assertEquals(
+			"Version 1", _latestArticle.getTitle(LocaleUtil.getDefault()));
+		Assert.assertEquals(1.0, _latestArticle.getVersion(), 0);
 	}
 
 	@Test
 	public void testFetchLatestArticleExpiredWithStatusExpired()
 		throws Exception {
 
-		testFetchLatestArticle(true, WorkflowConstants.STATUS_EXPIRED);
+		updateAndExpireLatestArticle("Version 2");
+
+		_latestArticle = fetchLatestArticle(WorkflowConstants.STATUS_EXPIRED);
+
+		Assert.assertNotNull(_latestArticle);
+		Assert.assertTrue(_latestArticle.isExpired());
+		Assert.assertEquals(
+			"Version 2", _latestArticle.getTitle(LocaleUtil.getDefault()));
+		Assert.assertEquals(1.1, _latestArticle.getVersion(), 0);
 	}
 
 	@Test
 	public void testFetchLatestArticleNotExpiredWithStatusAny()
 		throws Exception {
 
-		testFetchLatestArticle(false, WorkflowConstants.STATUS_ANY);
+		_article = JournalTestUtil.updateArticle(_article, "Version 2");
+
+		_latestArticle = fetchLatestArticle(WorkflowConstants.STATUS_ANY);
+
+		Assert.assertNotNull(_latestArticle);
+		Assert.assertTrue(_latestArticle.isApproved());
+		Assert.assertEquals(
+			"Version 2", _latestArticle.getTitle(LocaleUtil.getDefault()));
+		Assert.assertEquals(1.1, _latestArticle.getVersion(), 0);
 	}
 
 	@Test
 	public void testFetchLatestArticleNotExpiredWithStatusApproved()
 		throws Exception {
 
-		testFetchLatestArticle(false, WorkflowConstants.STATUS_APPROVED);
+		_article = JournalTestUtil.updateArticle(_article, "Version 2");
+
+		_latestArticle = fetchLatestArticle(WorkflowConstants.STATUS_APPROVED);
+
+		Assert.assertNotNull(_latestArticle);
+		Assert.assertTrue(_latestArticle.isApproved());
+		Assert.assertEquals(
+			"Version 2", _latestArticle.getTitle(LocaleUtil.getDefault()));
+		Assert.assertEquals(1.1, _latestArticle.getVersion(), 0);
 	}
 
 	@Test
 	public void testFetchLatestArticleNotExpiredWithStatusExpired()
 		throws Exception {
 
-		testFetchLatestArticle(false, WorkflowConstants.STATUS_EXPIRED);
+		_article = JournalTestUtil.updateArticle(_article, "Version 2");
+
+		_latestArticle = fetchLatestArticle(WorkflowConstants.STATUS_EXPIRED);
+
+		Assert.assertNull(_latestArticle);
 	}
 
 	@Test
 	public void testUpdateArticle() throws Exception {
-		updateArticle("Version 2");
+		_article = JournalTestUtil.updateArticle(_article, "Version 2");
 
 		Assert.assertEquals(
 			"Version 2", _article.getTitle(LocaleUtil.getDefault()));
@@ -137,71 +179,17 @@ public class JournalArticleServiceTest {
 		Assert.assertEquals(1.1, _article.getVersion(), 0);
 	}
 
-	protected void expireLatestArticle() throws Exception {
-		_article = JournalArticleLocalServiceUtil.expireArticle(
-			_article.getUserId(), _article.getGroupId(),
-			_article.getArticleId(), 1.1, null,
-			ServiceTestUtil.getServiceContext(_group.getGroupId()));
-	}
-
-	protected void fetchLatestArticle(int status) throws Exception {
-		_latestArticle = JournalArticleLocalServiceUtil.fetchLatestArticle(
+	protected JournalArticle fetchLatestArticle(int status) throws Exception {
+		return JournalArticleLocalServiceUtil.fetchLatestArticle(
 			_article.getResourcePrimKey(), status,
 			status == WorkflowConstants.STATUS_APPROVED);
 	}
 
-	protected void testFetchLatestArticle(
-			boolean expireLatestVersion, int status)
-		throws Exception {
+	protected void updateAndExpireLatestArticle(String title) throws Exception {
+		JournalTestUtil.updateArticle(_article, title);
 
-		updateArticle("Version 2");
-
-		if (expireLatestVersion) {
-			expireLatestArticle();
-		}
-
-		fetchLatestArticle(status);
-
-		if (expireLatestVersion) {
-			if (status == WorkflowConstants.STATUS_APPROVED) {
-				Assert.assertNotNull(_latestArticle);
-				Assert.assertTrue(_latestArticle.isApproved());
-				Assert.assertEquals(
-					"Version 1",
-					_latestArticle.getTitle(LocaleUtil.getDefault()));
-				Assert.assertEquals(1.0, _latestArticle.getVersion(), 0);
-			}
-			else if ((status == WorkflowConstants.STATUS_ANY) ||
-					 (status == WorkflowConstants.STATUS_EXPIRED)) {
-
-				Assert.assertNotNull(_latestArticle);
-				Assert.assertTrue(_latestArticle.isExpired());
-				Assert.assertEquals(
-					"Version 2",
-					_latestArticle.getTitle(LocaleUtil.getDefault()));
-				Assert.assertEquals(1.1, _latestArticle.getVersion(), 0);
-			}
-		}
-		else {
-			if ((status == WorkflowConstants.STATUS_ANY) ||
-				(status == WorkflowConstants.STATUS_APPROVED)) {
-
-				Assert.assertNotNull(_latestArticle);
-				Assert.assertTrue(_latestArticle.isApproved());
-				Assert.assertEquals(
-					"Version 2",
-					_latestArticle.getTitle(LocaleUtil.getDefault()));
-				Assert.assertEquals(1.1, _latestArticle.getVersion(), 0);
-			}
-			else {
-				Assert.assertNull(_latestArticle);
-			}
-		}
-	}
-
-	protected void updateArticle(String title) throws Exception {
-		_article = JournalTestUtil.updateArticle(
-			_article, title, _article.getContent());
+		_article = JournalTestUtil.expireArticle(
+			_group.getGroupId(), _article, 1.1);
 	}
 
 	private JournalArticle _article;

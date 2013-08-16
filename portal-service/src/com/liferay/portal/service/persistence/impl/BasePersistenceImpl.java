@@ -66,6 +66,13 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 
 	public static final String COUNT_COLUMN_NAME = "COUNT_VALUE";
 
+	public BasePersistenceImpl() {
+	}
+
+	public BasePersistenceImpl(Class<T> modelClass) {
+		_modelClass = modelClass;
+	}
+
 	@Override
 	public void clearCache() {
 	}
@@ -221,6 +228,11 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	@Override
 	public ModelListener<T>[] getListeners() {
 		return listeners;
+	}
+
+	@Override
+	public Class<T> getModelClass() {
+		return _modelClass;
 	}
 
 	@Override
@@ -532,6 +544,7 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 	private DataSource _dataSource;
 	private DB _db;
 	private Dialect _dialect;
+	private Class<T> _modelClass;
 	private SessionFactory _sessionFactory;
 
 }

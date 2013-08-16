@@ -144,6 +144,10 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		<#include "persistence_impl_finder_fields.ftl">
 	</#list>
 
+	public ${entity.name}PersistenceImpl() {
+		super(${entity.name}.class);
+	}
+
 	/**
 	 * Caches the ${entity.humanName} in the entity cache if it is enabled.
 	 *

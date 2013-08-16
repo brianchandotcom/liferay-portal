@@ -34,9 +34,7 @@ if (layout.isTypeControlPanel()) {
 		parentLayoutId = selLayout.getLayoutId();
 	}
 	else {
-		String tabs1 = ParamUtil.getString(request, "tabs1", "public-pages");
-
-		privateLayout = tabs1.equals("my-dashboard") || tabs1.equals("private-pages");
+	 	privateLayout = ((Boolean)request.getAttribute("edit_pages.jsp-privateLayout")).booleanValue();
 	}
 }
 else {

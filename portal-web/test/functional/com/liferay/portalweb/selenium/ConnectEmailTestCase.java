@@ -12,27 +12,19 @@
  * details.
  */
 
-package com.liferay.portalweb.portal;
+package com.liferay.portalweb.selenium;
 
-import com.liferay.portalweb.selenium.AssertEmailContentTestCase;
-import com.liferay.portalweb.selenium.AssertEmailSubjectTestCase;
-import com.liferay.portalweb.selenium.ReplyEmailTestCase;
-
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.Test;
 
 /**
  * @author Kwang Lee
  */
-public class SeleniumEmailTestSuite extends BaseTestSuite {
+public class ConnectEmailTestCase extends BaseSeleniumTestCase {
 
-	public static Test suite() {
-		TestSuite testSuite = new TestSuite();
-		testSuite.addTestSuite(AssertEmailSubjectTestCase.class);
-		testSuite.addTestSuite(AssertEmailContentTestCase.class);
-		testSuite.addTestSuite(ReplyEmailTestCase.class);
-
-		return testSuite;
+	@Test
+	public void testConnectEmail() throws Exception {
+		selenium.connectToEmailAccount(
+			"liferay.qa.testing.trunk@gmail.com", "loveispatient");
 	}
 
 }

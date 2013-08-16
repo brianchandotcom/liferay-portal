@@ -14,21 +14,27 @@
 
 package com.liferay.portalweb.selenium;
 
-import com.liferay.portalweb.portal.util.SendEmail;
-
 import org.junit.Test;
 
 /**
  * @author Kwang Lee
  */
-public class AssertSendEmailTestCase extends BaseSeleniumTestCase {
+public class SendEmailTestCase extends BaseSeleniumTestCase {
 
 	@Test
-	public void testSendEmails() throws Exception {
-		SendEmail email = new SendEmail();
-		email.send(
-			"kwanglee.test@gmail.com", "l33kw4ng", "kwanglee.test1@gmail.com",
-			"Email Test", "this is a test message");
+	public void testSendEmail() throws Exception {
+		String serverEmailAddress = "liferay.qa.server.trunk@gmail.com";
+		String serverEmailPassword = "loveispatient";
+		String userEmailAddress = "liferay.qa.testing.trunk@gmail.com";
+		String userEmailPassword = "loveispatient";
+
+		selenium.connectToEmailAccount(serverEmailAddress, serverEmailPassword);
+		selenium.sendEmail(
+			userEmailAddress, "Email Test", "This is a test message");
+		selenium.deleteAllEmails();
+
+		selenium.connectToEmailAccount(userEmailAddress, userEmailPassword);
+		selenium.deleteAllEmails();
 	}
 
 }

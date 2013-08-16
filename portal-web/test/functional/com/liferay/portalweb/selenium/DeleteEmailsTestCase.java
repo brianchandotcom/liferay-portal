@@ -23,10 +23,13 @@ public class DeleteEmailsTestCase extends BaseSeleniumTestCase {
 
 	@Test
 	public void testDeleteMails() throws Exception {
-		selenium.connect("kwanglee.test1@gmail.com", "l33kw4ng");
-		selenium.deleteEmails();
-		selenium.connect("kwanglee.test@gmail.com", "l33kw4ng");
-		selenium.deleteEmails();
+		selenium.connectToEmailAccount(
+			"liferay.qa.testing.trunk@gmail.com", "loveispatient");
+		selenium.deleteAllEmails();
+
+		selenium.connectToEmailAccount(
+			"liferay.qa.server.trunk@gmail.com", "loveispatient");
+		selenium.deleteAllEmails();
 	}
 
 }

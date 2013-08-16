@@ -12,7 +12,14 @@
  * details.
  */
 
-package com.liferay.portalweb.selenium;
+package com.liferay.portalweb.portal;
+
+import com.liferay.portalweb.selenium.AssertEmailContentTestCase;
+import com.liferay.portalweb.selenium.AssertEmailSubjectTestCase;
+import com.liferay.portalweb.selenium.ConnectEmailTestCase;
+import com.liferay.portalweb.selenium.DeleteEmailsTestCase;
+import com.liferay.portalweb.selenium.ReplyEmailTestCase;
+import com.liferay.portalweb.selenium.SendEmailTestCase;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -20,13 +27,19 @@ import junit.framework.TestSuite;
 /**
  * @author Kwang Lee
  */
-public class SeleniumEmailTestSuite extends BaseSeleniumTestCase {
+public class SeleniumEmailTestSuite extends BaseTestSuite {
 
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
+
 		testSuite.addTestSuite(AssertEmailSubjectTestCase.class);
 		testSuite.addTestSuite(AssertEmailContentTestCase.class);
+		testSuite.addTestSuite(ConnectEmailTestCase.class);
+		testSuite.addTestSuite(DeleteEmailsTestCase.class);
 		testSuite.addTestSuite(ReplyEmailTestCase.class);
+		testSuite.addTestSuite(SendEmailTestCase.class);
+
+		testSuite.addTestSuite(StopSeleniumTest.class);
 
 		return testSuite;
 	}

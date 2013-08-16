@@ -17,7 +17,7 @@ package com.liferay.portalweb.portal.util.liferayselenium;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portalweb.portal.BaseTestCase;
-import com.liferay.portalweb.portal.util.MailFetching;
+import com.liferay.portalweb.portal.util.EmailCommands;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
 import com.liferay.portalweb.portal.util.TestPropsValues;
 
@@ -75,6 +75,22 @@ public class LiferaySeleniumHelper {
 			throw new Exception(
 				"Element is not present at \"" + locator + "\"");
 		}
+	}
+
+	public static void assertEmailContent(
+			LiferaySelenium liferaySelenium, String index, String content)
+		throws Exception {
+
+		BaseTestCase.assertEquals(
+			liferaySelenium.getEmailContent(index), content);
+	}
+
+	public static void assertEmailSubject(
+			LiferaySelenium liferaySelenium, String index, String subject)
+		throws Exception {
+
+		BaseTestCase.assertEquals(
+			liferaySelenium.getEmailSubject(index), subject);
 	}
 
 	public static void assertLocation(
@@ -269,14 +285,15 @@ public class LiferaySeleniumHelper {
 		}
 	}
 
-	public static void connect(String emailAddress, String password)
+	public static void connectToEmailAccount(
+			String emailAddress, String emailPassword)
 		throws Exception {
 
-		MailFetching.connect(emailAddress, password);
+		EmailCommands.connectToEmailAccount(emailAddress, emailPassword);
 	}
 
-	public static void deleteEmails() throws Exception {
-		MailFetching.deleteMails();
+	public static void deleteAllEmails() throws Exception {
+		EmailCommands.deleteAllEmails();
 	}
 
 	public static void echo(String message) {
@@ -287,8 +304,12 @@ public class LiferaySeleniumHelper {
 		BaseTestCase.fail(message);
 	}
 
-	public static String getContent(String number) throws Exception {
-		return MailFetching.getContent(number);
+	public static String getEmailContent(String index) throws Exception {
+		return EmailCommands.getEmailContent(index);
+	}
+
+	public static String getEmailSubject(String index) throws Exception {
+		return EmailCommands.getEmailSubject(index);
 	}
 
 	public static String getNumberDecrement(String value) {
@@ -297,10 +318,6 @@ public class LiferaySeleniumHelper {
 
 	public static String getNumberIncrement(String value) {
 		return StringUtil.valueOf(GetterUtil.getInteger(value) + 1);
-	}
-
-	public static String getSubject(String number) throws Exception {
-		return MailFetching.getSubject(number);
 	}
 
 	public static boolean isConfirmation(
@@ -357,8 +374,23 @@ public class LiferaySeleniumHelper {
 		Thread.sleep(GetterUtil.getInteger(waitTime));
 	}
 
-	public static void replyEmail(String to, String content) throws Exception {
-		MailFetching.reply(to, content);
+	public static void replyToEmail(
+			LiferaySelenium liferaySelenium, String to, String content)
+		throws Exception {
+
+		EmailCommands.replyToEmail(to, content);
+
+		liferaySelenium.pause("3000");
+	}
+
+	public static void sendEmail(
+			LiferaySelenium liferaySelenium, String to, String subject,
+			String content)
+		throws Exception {
+
+		EmailCommands.sendEmail(to, subject, content);
+
+		liferaySelenium.pause("3000");
 	}
 
 	public static void typeFrame(

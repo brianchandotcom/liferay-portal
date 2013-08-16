@@ -1,19 +1,29 @@
 <definition>
+	<command name="assertClick">
+		<case locator-key1="ADD_MEMBERS_MENULIST_USER">
+			<execute function="AssertClick#assertTextClickAtAndWait" />
+		</case>
+
+		<case locator-key1="ADD_SITE_ROLES_TO_MENULIST_USERS">
+			<execute function="AssertClick#assertTextClickAtAndWait" />
+		</case>
+
+		<case locator-key1="TOOLBAR_ADD_MEMBERS">
+			<execute function="AssertClick#assertTextClickAtAndWait" />
+		</case>
+		
+		<case locator-key1="TOOLBAR_ADD_SITE_ROLES_TO">
+			<execute function="AssertClick#assertTextClickAtAndWait" />
+		</case>
+
+		<case locator-key1="USER_SEARCH_BUTTON">
+			<execute function="AssertClick#assertTextClickAtAndWait" />
+		</case>
+	</command>
+	
 	<command name="assertTextEquals">
 		<case locator-key1="SUCCESS_MESSAGE">
 			<execute function="AssertTextEquals#assertText" value1="Your request completed successfully." />
-		</case>
-	</command>
-
-	<command name="click">
-		<case locator-key1="ADD_SITE_ROLES_TO_MENULIST_USERS">
-			<execute function="Click#textClickAtAndWait" value1="Users" />
-		</case>
-		<case locator-key1="TOOLBAR_ADD_SITE_ROLES_TO">
-			<execute function="Click#textClickAt" value1="Add Site Roles to" />
-		</case>
-		<case locator-key1="TOOLBAR_VIEW_TEAMS">
-			<execute function="Click#textClickAtAndWait" value1="View Teams" />
 		</case>
 	</command>
 </definition>

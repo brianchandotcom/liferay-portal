@@ -30,11 +30,6 @@
 </tr>
 <!--TOOLBAR-->
 <tr>
-	<td>TOOLBAR_VIEW_MEMBERS</td>
-	<td>//div[@class='navbar ']//a[contains(.,'View Members')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>TOOLBAR_ADD_MEMBERS</td>
 	<td>//div[@class='navbar ']//a[contains(.,'Add Members')]</td>
 	<td></td>
@@ -42,11 +37,6 @@
 <tr>
 	<td>TOOLBAR_ADD_SITE_ROLES_TO</td>
 	<td>//div[@class='navbar ']//a[contains(.,'Add Site Roles to')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>TOOLBAR_VIEW_TEAMS</td>
-	<td>//div[@class='navbar ']//a[contains(.,'View Teams')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -134,6 +124,37 @@
 	<td></td>
 </tr>
 <!--USER_TABLE-->
+<tr>
+	<td>USER_TABLE_NAME</td>
+	<td>//div[contains(@id,'usersSearchContainerSearchContainer')]//tr[contains(.,'${key_userScreenName}')]/td[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_TABLE_SCREEN_NAME</td>
+	<td>//div[contains(@id,'usersSearchContainerSearchContainer')]//tr[contains(.,'${key_userScreenName}')]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_TABLE_ACTIONS</td>
+	<td>//div[contains(@id,'usersSearchContainerSearchContainer')]//tr[contains(.,'${key_userScreenName}')]/td[4]/div/a[contains(@title,'Actions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--USER_MENULIST-->
+<tr>
+	<td>USER_MENULIST_ASSIGN_SITE_ROLES</td>
+	<td>//a[@role='menuitem' and contains(.,'Assign Site Roles')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_MENULIST_REMOVE_MEMBERSHIP</td>
+	<td>//a[@role='menuitem' and contains(.,'Remove Membership')]</td>
+	<td></td>
+</tr>
 <tr>
 	<td></td>
 	<td></td>

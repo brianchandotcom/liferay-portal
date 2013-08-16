@@ -105,7 +105,11 @@ AUI.add(
 						if (navBlock) {
 							instance._updateURL = themeDisplay.getPathMain() + '/layouts_admin/update_page?p_auth=' + Liferay.authToken;
 
-							var navItemSelector = Liferay.Data.NAV_ITEM_SELECTOR || '> ul > li';
+							var navListSelector = Liferay.Data.NAV_LIST_SELECTOR || '> ul';
+
+							var navItemSelector = Liferay.Data.NAV_ITEM_SELECTOR || navListSelector + '> li';
+
+							var navList = navBlock.one(navListSelector);
 
 							var items = navBlock.all(navItemSelector);
 
@@ -142,6 +146,9 @@ AUI.add(
 							);
 
 							instance._navItemSelector = navItemSelector;
+							instance._navListSelector = navListSelector;
+
+							instance._navList = navList;
 
 							instance._makeDeletable();
 							instance._makeSortable();
@@ -635,7 +642,7 @@ AUI.add(
 
 					var sortable = new A.Sortable(
 						{
-							container: navBlock,
+							container: instance._navList,
 							moveType: 'move',
 							nodes: '.lfr-nav-sortable',
 							opacity: '.5',

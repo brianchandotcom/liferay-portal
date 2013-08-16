@@ -92,7 +92,6 @@ public class JournalArticleServiceTest {
 		_latestArticle = fetchLatestArticle(
 			WorkflowConstants.STATUS_ANY, false);
 
-		Assert.assertNotNull(_latestArticle);
 		Assert.assertTrue(_latestArticle.isExpired());
 		Assert.assertEquals(
 			"Version 2", _latestArticle.getTitle(LocaleUtil.getDefault()));
@@ -108,7 +107,6 @@ public class JournalArticleServiceTest {
 		_latestArticle = fetchLatestArticle(
 			WorkflowConstants.STATUS_APPROVED, false);
 
-		Assert.assertNotNull(_latestArticle);
 		Assert.assertTrue(_latestArticle.isApproved());
 		Assert.assertEquals(
 			"Version 1", _latestArticle.getTitle(LocaleUtil.getDefault()));
@@ -124,7 +122,6 @@ public class JournalArticleServiceTest {
 		_latestArticle = fetchLatestArticle(
 			WorkflowConstants.STATUS_EXPIRED, false);
 
-		Assert.assertNotNull(_latestArticle);
 		Assert.assertTrue(_latestArticle.isExpired());
 		Assert.assertEquals(
 			"Version 2", _latestArticle.getTitle(LocaleUtil.getDefault()));
@@ -140,7 +137,6 @@ public class JournalArticleServiceTest {
 		_latestArticle = fetchLatestArticle(
 			WorkflowConstants.STATUS_ANY, false);
 
-		Assert.assertNotNull(_latestArticle);
 		Assert.assertTrue(_latestArticle.isApproved());
 		Assert.assertEquals(
 			"Version 2", _latestArticle.getTitle(LocaleUtil.getDefault()));
@@ -156,7 +152,6 @@ public class JournalArticleServiceTest {
 		_latestArticle = fetchLatestArticle(
 			WorkflowConstants.STATUS_APPROVED, false);
 
-		Assert.assertNotNull(_latestArticle);
 		Assert.assertTrue(_latestArticle.isApproved());
 		Assert.assertEquals(
 			"Version 2", _latestArticle.getTitle(LocaleUtil.getDefault()));

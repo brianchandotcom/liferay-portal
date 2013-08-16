@@ -88,6 +88,8 @@ public class EditLayoutSetPrototypeAction extends PortletAction {
 						actionResponse, siteThemeDisplay,
 						PortletKeys.SITE_TEMPLATE_SETTINGS);
 
+				hideDefaultSuccessMessage(portletConfig, actionRequest);
+
 				redirect = siteAdministrationURL.toString();
 			}
 			else if (cmd.equals(Constants.DELETE)) {

@@ -51,7 +51,7 @@
 </tr>
 <tr>
 	<td>FORM_INFORMATION_DESCRIPTION</td>
-	<td>//div[@class='portlet-body']/form/fieldset/div/em</td>
+	<td>//div[@class='portlet-body']/form/fieldset/div/p</td>
 	<td></td>
 </tr>
 <tr>

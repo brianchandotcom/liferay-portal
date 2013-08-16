@@ -62,7 +62,7 @@
 <!--SETUP_FORM_FIELDS-->
 <tr>
 	<td>SETUP_FORM_FIELDS_INFO_MESSAGE</td>
-	<td>//div[@class='portlet-msg-alert']</td>
+	<td>//div[@class='alert']</td>
 	<td></td>
 </tr>
 <tr>

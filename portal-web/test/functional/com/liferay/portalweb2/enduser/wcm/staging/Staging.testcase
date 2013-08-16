@@ -44,7 +44,7 @@
 			<var name="portletName" value="Site Settings" />
 			<var name="pageTypeURL" value="${siteName}" />
 			<var name="pageType" value="Site" />
-		</execute> 
+		</execute>
 
 		<execute macro="Staging#activateStagingCP">
 			<var name="siteName" value="${siteName}" />
@@ -54,7 +54,7 @@
 			<var name="portletName" value="Site Settings" />
 			<var name="pageTypeURL" value="${siteName}" />
 			<var name="pageType" value="Site" />
-		</execute> 
+		</execute>
 
 		<execute macro="Staging#deactivateStagingCP">
 			<var name="siteName" value="${siteName}" />
@@ -68,7 +68,7 @@
 			<var name="portletName" value="Site Settings" />
 			<var name="pageTypeURL" value="${siteName}" />
 			<var name="pageType" value="Site" />
-		</execute> 
+		</execute>
 
 		<execute macro="Staging#activateStagingCP">
 			<var name="siteName" value="${siteName}" />
@@ -80,11 +80,14 @@
 			<var name="pageType" value="Site" />
 		</execute>
 
-		<execute macro="Portlet#addPG">
+		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
-			<var name="portletName" value="Blogs" />
 			<var name="pageStaging" value="true" />
 			<var name="pageType" value="Site" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Blogs" />
 		</execute>
 
 		<execute macro="Page#gotoPG">

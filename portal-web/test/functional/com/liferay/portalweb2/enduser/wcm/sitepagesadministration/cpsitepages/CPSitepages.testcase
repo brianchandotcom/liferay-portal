@@ -237,9 +237,12 @@
 			<var name="pageType" value="Site" />
 		</execute>
 
-		<execute macro="Portlet#addPG">
+		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 			<var name="pageType" value="Site" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
 			<var name="portletName" value="${portletName}" />
 		</execute>
 	</command>

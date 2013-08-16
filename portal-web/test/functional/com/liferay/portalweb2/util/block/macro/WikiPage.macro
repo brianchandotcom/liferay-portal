@@ -72,7 +72,7 @@
 		<execute action="PGWiki#assertTextEquals" locator-key1="WIKI_PAGE_BODY" value1="${wikiPageContent}" />
 	</command>
 
-	<command name="addPagePGWithWorkflow">
+	<command name="addPageWithWorkflowPG">
 		<execute action="PGWiki#assertClick" locator-key1="NAVIGATION_ALL_PAGES" value1="All Pages" />
 
 		<execute action="PGWikiAllpages#assertClick" locator-key1="ADD_PAGE_BUTTON" value1="Add Page" />
@@ -137,7 +137,7 @@
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Recycle Bin" />
 		</execute>
-		
+
 		<execute macro="RecycleBin#emptyCP" />
 	</command>
 
@@ -182,7 +182,7 @@
 		<execute action="PGWiki#assertTextEquals" locator-key1="WIKI_PAGE_BODY" value1="${wikiPageContent}" />
 	</command>
 
-	<command name="viewPagePGWithWorkflow">
+	<command name="viewPageWithWorkflowPG">
 		<execute action="PGWiki#assertClick" locator-key1="NAVIGATION_DRAFT_PAGES" value1="Draft Pages" />
 
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />

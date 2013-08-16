@@ -19,8 +19,11 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="Portlet#addPG">
+		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
 			<var name="portletName" value="${portletName}" />
 		</execute>
 	</set-up>
@@ -43,7 +46,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="WebContent#addPGWithWorkflowViaAP">
+		<execute macro="WebContent#addWithWorkflowPGViaAP">
 			<var name="webContentContent" value="${webContentContent}" />
 			<var name="webContentTitle" value="${webContentTitle}" />
 		</execute>
@@ -62,7 +65,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="WebContent#viewPGWithWorkflowViaAP">
+		<execute macro="WebContent#viewWithWorkflowPGViaAP">
 			<var name="webContentTitle" value="${webContentTitle}" />
 		</execute>
 
@@ -94,7 +97,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="WebContent#addPGWithWorkflowViaAP">
+		<execute macro="WebContent#addWithWorkflowPGViaAP">
 			<var name="webContentContent" value="${webContentContent}" />
 			<var name="webContentTitle" value="${webContentTitle}" />
 		</execute>
@@ -113,7 +116,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="WebContent#viewPGWithWorkflowViaAP">
+		<execute macro="WebContent#viewWithWorkflowPGViaAP">
 			<var name="webContentTitle" value="${webContentTitle}" />
 		</execute>
 
@@ -140,7 +143,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="WebContent#viewPGWithWorkflowViaAP">
+		<execute macro="WebContent#viewWithWorkflowPGViaAP">
 			<var name="webContentTitle" value="${webContentTitle}" />
 		</execute>
 	</command>

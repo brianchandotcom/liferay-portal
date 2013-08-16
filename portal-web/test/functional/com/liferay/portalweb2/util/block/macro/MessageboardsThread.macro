@@ -21,7 +21,7 @@
 		<execute action="PGMessageboards#assertTextEquals" locator-key1="SUCCESS_MESSAGE" />
 	</command>
 
-	<command name="addPGWithWorkflow">
+	<command name="addWithWorkflowPG">
 		<execute action="PGMessageboards#click" locator-key1="POST_NEW_THREAD_BUTTON" />
 
 		<execute action="PGMessageboardsPostthread#type" locator-key1="SUBJECT_FIELD" value1="${threadSubject}" />
@@ -199,28 +199,6 @@
 		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_BODY_1" value1="${threadBody}" />
 	</command>
 
-	<command name="viewPGWithWorkflow">
-		<var name="key_threadSubject" value="${threadSubject}" />
-
-		<execute action="PGMessageboards#assertElementNotPresent" locator-key1="THREAD_TABLE_THREAD" />
-		<execute action="PGMessageboards#assertElementNotPresent" locator-key1="THREAD_TABLE_STARTED_BY" />
-		<execute action="PGMessageboards#assertElementNotPresent" locator-key1="THREAD_TABLE_POSTS" />
-		<execute action="PGMessageboards#assertElementNotPresent" locator-key1="THREAD_TABLE_LAST_POST" />
-
-		<execute action="PGMessageboards#assertClick" locator-key1="NAVIGATION_MY_POSTS" value1="My Posts" />
-
-		<execute action="PGMessageboardsMyposts#assertTextEquals" locator-key1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
-		<execute action="PGMessageboardsMyposts#assertTextEquals" locator-key1="THREAD_TABLE_STATUS" value1="Pending" />
-
-		<execute action="PGMessageboardsMyposts#assertClick" locator-key1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
-
-		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="TITLE_HEADER" value1="${threadSubject}" />
-		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_USERNAME_1" value1="${userName}" />
-		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_SUBJECT_1" value1="${threadSubject}" />
-		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_WORKFLOW_STATUS_1" value1="Pending (${workflowTask})" />
-		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_BODY_1" value1="${threadBody}" />
-	</command>
-
 	<command name="viewReplyPG">
 		<var name="key_threadSubject" value="${threadSubject}" />
 
@@ -240,5 +218,27 @@
 		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_BODY_2" value1="${threadReplyBody}" />
 		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_USERNAME_2" value1="${userName}" />
 		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_RATING_2" value1="0 (0 Votes)" />
+	</command>
+
+	<command name="viewWithWorkflowPG">
+		<var name="key_threadSubject" value="${threadSubject}" />
+
+		<execute action="PGMessageboards#assertElementNotPresent" locator-key1="THREAD_TABLE_THREAD" />
+		<execute action="PGMessageboards#assertElementNotPresent" locator-key1="THREAD_TABLE_STARTED_BY" />
+		<execute action="PGMessageboards#assertElementNotPresent" locator-key1="THREAD_TABLE_POSTS" />
+		<execute action="PGMessageboards#assertElementNotPresent" locator-key1="THREAD_TABLE_LAST_POST" />
+
+		<execute action="PGMessageboards#assertClick" locator-key1="NAVIGATION_MY_POSTS" value1="My Posts" />
+
+		<execute action="PGMessageboardsMyposts#assertTextEquals" locator-key1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
+		<execute action="PGMessageboardsMyposts#assertTextEquals" locator-key1="THREAD_TABLE_STATUS" value1="Pending" />
+
+		<execute action="PGMessageboardsMyposts#assertClick" locator-key1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
+
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="TITLE_HEADER" value1="${threadSubject}" />
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_USERNAME_1" value1="${userName}" />
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_SUBJECT_1" value1="${threadSubject}" />
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_WORKFLOW_STATUS_1" value1="Pending (${workflowTask})" />
+		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_BODY_1" value1="${threadBody}" />
 	</command>
 </definition>

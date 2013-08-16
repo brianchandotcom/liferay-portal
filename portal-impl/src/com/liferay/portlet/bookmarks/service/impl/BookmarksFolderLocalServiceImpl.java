@@ -119,9 +119,8 @@ public class BookmarksFolderLocalServiceImpl
 			BookmarksFolder folder, boolean includeTrashedEntries)
 		throws PortalException, SystemException {
 
-		List<BookmarksFolder> folders = bookmarksFolderPersistence.findByG_P_S(
-			folder.getGroupId(), folder.getFolderId(),
-			WorkflowConstants.STATUS_ANY);
+		List<BookmarksFolder> folders = bookmarksFolderPersistence.findByG_P(
+			folder.getGroupId(), folder.getFolderId());
 
 		for (BookmarksFolder curFolder : folders) {
 			if (includeTrashedEntries || !curFolder.isInTrash()) {

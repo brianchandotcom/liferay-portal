@@ -61,7 +61,7 @@ public class RuntimeVariables {
 				}
 
 				String[] arguments = StringUtil.split(
-					statementMatcher.group(3));
+					statementMatcher.group(3), "'");
 
 				List<String> argumentsList = new ArrayList<String>();
 

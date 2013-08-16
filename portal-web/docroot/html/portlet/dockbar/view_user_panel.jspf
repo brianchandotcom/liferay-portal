@@ -14,7 +14,7 @@
  */
 --%>
 
-<aui:nav aria-label='<%= LanguageUtil.get(pageContext, "javax.portlet.title.145") %>' cssClass="nav-account-controls" role="menubar">
+<aui:nav cssClass="nav-account-controls">
 	<%@ include file="/html/portlet/dockbar/view_admin_links.jspf" %>
 
 	<%@ include file="/html/portlet/dockbar/view_my_sites.jspf" %>

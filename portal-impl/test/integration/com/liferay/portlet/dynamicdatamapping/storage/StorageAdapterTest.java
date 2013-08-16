@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.dynamicdatamapping.storage;
 
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONSerializer;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -413,13 +415,19 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 	protected void validate(long ddmStructureId, Fields fields)
 		throws Exception {
 
+		JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
+
+		String s1 = jsonSerializer.serializeDeep(fields);
+
 		// Expando
 
 		long classPK = create(_expandoStorageAdapater, ddmStructureId, fields);
 
 		Fields actualFields = _expandoStorageAdapater.getFields(classPK);
 
-		Assert.assertEquals(fields, actualFields);
+		String s2 = jsonSerializer.serializeDeep(actualFields);
+
+		Assert.assertEquals(s1, s2);
 
 		// XML
 
@@ -427,7 +435,9 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 
 		actualFields = _xmlStorageAdapater.getFields(classPK);
 
-		Assert.assertEquals(fields, actualFields);
+		s2 = jsonSerializer.serializeDeep(actualFields);
+
+		Assert.assertEquals(s1, s2);
 	}
 
 	private long _classNameId = PortalUtil.getClassNameId(DDLRecordSet.class);

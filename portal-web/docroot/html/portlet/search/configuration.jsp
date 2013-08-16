@@ -59,6 +59,41 @@
 
 	<br />
 
+<%
+String showOptionsMessage = LanguageUtil.get(pageContext, "show-spell-check-options");
+String hideOptionsMessage = LanguageUtil.get(pageContext, "hide-spell-check-options");
+%>
+
+	<aui:fieldset label="spell-check-settings">
+		<aui:input helpMessage="collated-spell-check-result-enabled-help" id="collatedSpellCheckResultEnabled" name="preferences--collatedSpellCheckResultEnabled--" type="checkbox" value="<%= collatedSpellCheckResultEnabled %>" />
+
+		<div class="options-container <%= !collatedSpellCheckResultEnabled ? "hide" : "" %>" id="<portlet:namespace />collatedSpellCheckResultOptionsContainer">
+			<liferay-ui:toggle-area align="none" defaultShowContent="<%= collatedSpellCheckResultEnabled %>" hideMessage="<%= hideOptionsMessage %>" id="collatedSpellCheckResultOptions" showMessage="<%= showOptionsMessage %>">
+				<aui:input disabled="<%= !collatedSpellCheckResultEnabled %>" helpMessage="collated-spell-check-result-display-threshold-help" name="preferences--collatedSpellCheckResultDisplayThreshold--" size="10" type="text" value="<%= collatedSpellCheckResultDisplayThreshold %>" />
+			</liferay-ui:toggle-area>
+		</div>
+
+		<aui:input helpMessage="query-suggestions-enabled-help" id="querySuggestionsEnabled" name="preferences--querySuggestionsEnabled--" type="checkbox" value="<%= querySuggestionsEnabled %>" />
+
+		<div class="options-container <%= !querySuggestionsEnabled ? "hide" : "" %>" id="<portlet:namespace />querySuggestionsOptionsContainer">
+			<liferay-ui:toggle-area align="none" defaultShowContent="<%= querySuggestionsEnabled %>" hideMessage="<%= hideOptionsMessage %>" id="querySuggestionsOptions" showMessage="<%= showOptionsMessage %>">
+				<aui:input disabled="<%= !querySuggestionsEnabled %>" name="preferences--querySuggestionsMax--" size="10" type="text" value="<%= querySuggestionsMax %>" />
+
+				<aui:input disabled="<%= !querySuggestionsEnabled %>" helpMessage="query-suggestions-display-threshold-help" name="preferences--querySuggestionsDisplayThreshold--" size="10" type="text" value="<%= querySuggestionsDisplayThreshold %>" />
+			</liferay-ui:toggle-area>
+		</div>
+
+		<aui:input helpMessage="query-indexing-enabled-help" id="queryIndexingEnabled" name="preferences--queryIndexingEnabled--" type="checkbox" value="<%= queryIndexingEnabled %>" />
+
+		<div class="options-container <%= !queryIndexingEnabled ? "hide" : "" %>" id="<portlet:namespace />queryIndexingOptionsContainer">
+			<liferay-ui:toggle-area align="none" defaultShowContent="<%= queryIndexingEnabled %>" hideMessage="<%= hideOptionsMessage %>" id="queryIndexingOptions" showMessage="<%= showOptionsMessage %>">
+				<aui:input disabled="<%= !queryIndexingEnabled %>" helpMessage="query-indexing-threshold-help" name="preferences--queryIndexingThreshold--" size="10" type="text" value="<%= queryIndexingThreshold %>" />
+			</liferay-ui:toggle-area>
+		</div>
+	</aui:fieldset>
+
+	<br />
+
 	<aui:fieldset label="other-settings">
 		<c:if test="<%= permissionChecker.isCompanyAdmin() %>">
 			<aui:input helpMessage="display-results-in-document-form-help" name="preferences--displayResultsInDocumentForm--" type="checkbox" value="<%= displayResultsInDocumentForm %>" />
@@ -77,19 +112,10 @@
 </aui:form>
 
 <aui:script use="aui-base">
-	var basicConfiguration = A.one('#<portlet:namespace />basicConfiguration');
-	var advancedConfiguration = A.one('#<portlet:namespace />advancedConfiguration');
+	Liferay.Util.toggleBoxes('<portlet:namespace />collatedSpellCheckResultEnabledCheckbox', '<portlet:namespace />collatedSpellCheckResultOptionsContainer');
+	Liferay.Util.toggleBoxes('<portlet:namespace />queryIndexingEnabledCheckbox', '<portlet:namespace />queryIndexingOptionsContainer');
+	Liferay.Util.toggleBoxes('<portlet:namespace />querySuggestionsEnabledCheckbox', '<portlet:namespace />querySuggestionsOptionsContainer');
 
-	var configurationStyles = A.all('#<portlet:namespace />configurationStyle input');
-
-	configurationStyles.on(
-		'change',
-		function(event) {
-			var value = event.currentTarget.val();
-
-			basicConfiguration.toggle(value != 'true');
-
-			advancedConfiguration.toggle(value == 'true');
-		}
-	);
+	Liferay.Util.toggleRadio('<portlet:namespace />basic', '<portlet:namespace />basicConfiguration', '<portlet:namespace />advancedConfiguration');
+	Liferay.Util.toggleRadio('<portlet:namespace />advanced', '<portlet:namespace />advancedConfiguration', '<portlet:namespace />basicConfiguration');
 </aui:script>

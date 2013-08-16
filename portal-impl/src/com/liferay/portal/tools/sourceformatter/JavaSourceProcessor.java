@@ -2320,7 +2320,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			"**\\service\\persistence\\BatchSession*.java",
 			"**\\service\\persistence\\*FinderImpl.java",
 			"**\\service\\persistence\\*Query.java",
-			"**\\service\\persistence\\impl\\BasePersistenceImpl.java",
+			"**\\service\\persistence\\impl\\*.java",
 			"**\\portal-impl\\test\\**\\*.java",
 			"**\\portal-service\\**\\liferay\\documentlibrary\\**.java",
 			"**\\portal-service\\**\\liferay\\lock\\**.java",

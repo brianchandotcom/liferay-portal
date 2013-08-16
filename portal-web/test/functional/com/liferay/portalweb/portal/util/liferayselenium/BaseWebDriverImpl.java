@@ -83,6 +83,20 @@ public abstract class BaseWebDriverImpl
 	}
 
 	@Override
+	public void assertEmailContent(String index, String content)
+		throws Exception {
+
+		LiferaySeleniumHelper.assertEmailContent(this, index, content);
+	}
+
+	@Override
+	public void assertEmailSubject(String index, String subject)
+		throws Exception {
+
+		LiferaySeleniumHelper.assertEmailSubject(this, index, subject);
+	}
+
+	@Override
 	public void assertLocation(String pattern) {
 		LiferaySeleniumHelper.assertLocation(this, pattern);
 	}
@@ -186,8 +200,11 @@ public abstract class BaseWebDriverImpl
 	}
 
 	@Override
-	public void connect(String emailAddress, String password) throws Exception {
-		LiferaySeleniumHelper.connect(emailAddress, password);
+	public void connectToEmailAccount(String emailAddress, String emailPassword)
+		throws Exception {
+
+		LiferaySeleniumHelper.connectToEmailAccount(
+			emailAddress, emailPassword);
 	}
 
 	@Override
@@ -201,8 +218,8 @@ public abstract class BaseWebDriverImpl
 	}
 
 	@Override
-	public void deleteEmails() throws Exception {
-		LiferaySeleniumHelper.deleteEmails();
+	public void deleteAllEmails() throws Exception {
+		LiferaySeleniumHelper.deleteAllEmails();
 	}
 
 	@Override
@@ -213,11 +230,6 @@ public abstract class BaseWebDriverImpl
 	@Override
 	public void fail(String message) {
 		LiferaySeleniumHelper.fail(message);
-	}
-
-	@Override
-	public String getContent(String number) throws Exception {
-		return LiferaySeleniumHelper.getContent(number);
 	}
 
 	@Override
@@ -239,6 +251,16 @@ public abstract class BaseWebDriverImpl
 		Calendar calendar = Calendar.getInstance();
 
 		return StringUtil.valueOf(calendar.get(Calendar.YEAR));
+	}
+
+	@Override
+	public String getEmailContent(String index) throws Exception {
+		return LiferaySeleniumHelper.getEmailContent(index);
+	}
+
+	@Override
+	public String getEmailSubject(String index) throws Exception {
+		return LiferaySeleniumHelper.getEmailSubject(index);
 	}
 
 	@Override
@@ -299,11 +321,6 @@ public abstract class BaseWebDriverImpl
 	@Override
 	public String getProjectDir() {
 		return _projectDir;
-	}
-
-	@Override
-	public String getSubject(String number) throws Exception {
-		return LiferaySeleniumHelper.getSubject(number);
 	}
 
 	@Override
@@ -449,8 +466,8 @@ public abstract class BaseWebDriverImpl
 	}
 
 	@Override
-	public void replyEmail(String to, String content) throws Exception {
-		LiferaySeleniumHelper.replyEmail(to, content);
+	public void replyToEmail(String to, String content) throws Exception {
+		LiferaySeleniumHelper.replyToEmail(this, to, content);
 	}
 
 	@Override
@@ -494,6 +511,13 @@ public abstract class BaseWebDriverImpl
 	public void selectAndWait(String selectLocator, String optionLocator) {
 		super.select(selectLocator, optionLocator);
 		super.waitForPageToLoad("30000");
+	}
+
+	@Override
+	public void sendEmail(String to, String subject, String content)
+		throws Exception {
+
+		LiferaySeleniumHelper.sendEmail(this, to, subject, content);
 	}
 
 	@Override

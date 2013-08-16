@@ -14,8 +14,6 @@
 
 package com.liferay.portalweb.selenium;
 
-import com.liferay.portalweb.portal.util.SendEmail;
-
 import org.junit.Test;
 
 /**
@@ -25,15 +23,19 @@ public class AssertEmailSubjectTestCase extends BaseSeleniumTestCase {
 
 	@Test
 	public void testAssertEmailSubject() throws Exception {
-		SendEmail email = new SendEmail();
-		email.send(
-			"kwanglee.test@gmail.com", "l33kw4ng", "kwanglee.test1@gmail.com",
-			"Email Test", "This is a test message");
-		selenium.pause("1500");
-		selenium.connect("kwanglee.test1@gmail.com", "l33kw4ng");
-		selenium.getSubject("1");
-		assertEquals(selenium.getSubject("1"), "Email Test");
-		selenium.deleteEmails();
+		String serverEmailAddress = "liferay.qa.server.trunk@gmail.com";
+		String serverEmailPassword = "loveispatient";
+		String userEmailAddress = "liferay.qa.testing.trunk@gmail.com";
+		String userEmailPassword = "loveispatient";
+
+		selenium.connectToEmailAccount(serverEmailAddress, serverEmailPassword);
+		selenium.sendEmail(
+			userEmailAddress, "Email Test", "This is a test message");
+		selenium.deleteAllEmails();
+
+		selenium.connectToEmailAccount(userEmailAddress, userEmailPassword);
+		selenium.assertEmailSubject("1", "Email Test");
+		selenium.deleteAllEmails();
 	}
 
 }

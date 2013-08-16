@@ -2452,6 +2452,10 @@ public class SocialActivityCounterPersistenceImpl extends BasePersistenceImpl<So
 	private static final String _FINDER_COLUMN_G_C_C_N_O_E_OWNERTYPE_2 = "socialActivityCounter.ownerType = ? AND ";
 	private static final String _FINDER_COLUMN_G_C_C_N_O_E_ENDPERIOD_2 = "socialActivityCounter.endPeriod = ?";
 
+	public SocialActivityCounterPersistenceImpl() {
+		super(SocialActivityCounter.class);
+	}
+
 	/**
 	 * Caches the social activity counter in the entity cache if it is enabled.
 	 *

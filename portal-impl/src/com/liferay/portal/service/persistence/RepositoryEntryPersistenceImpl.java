@@ -2223,6 +2223,10 @@ public class RepositoryEntryPersistenceImpl extends BasePersistenceImpl<Reposito
 	private static final String _FINDER_COLUMN_R_M_MAPPEDID_2 = "repositoryEntry.mappedId = ?";
 	private static final String _FINDER_COLUMN_R_M_MAPPEDID_3 = "(repositoryEntry.mappedId IS NULL OR repositoryEntry.mappedId = '')";
 
+	public RepositoryEntryPersistenceImpl() {
+		super(RepositoryEntry.class);
+	}
+
 	/**
 	 * Caches the repository entry in the entity cache if it is enabled.
 	 *

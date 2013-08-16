@@ -5878,6 +5878,10 @@ public class BackgroundTaskPersistenceImpl extends BasePersistenceImpl<Backgroun
 	private static final String _FINDER_COLUMN_G_N_T_C_TASKEXECUTORCLASSNAME_3 = "(backgroundTask.taskExecutorClassName IS NULL OR backgroundTask.taskExecutorClassName = '') AND ";
 	private static final String _FINDER_COLUMN_G_N_T_C_COMPLETED_2 = "backgroundTask.completed = ?";
 
+	public BackgroundTaskPersistenceImpl() {
+		super(BackgroundTask.class);
+	}
+
 	/**
 	 * Caches the background task in the entity cache if it is enabled.
 	 *

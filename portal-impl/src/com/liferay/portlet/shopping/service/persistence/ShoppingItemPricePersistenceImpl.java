@@ -575,6 +575,10 @@ public class ShoppingItemPricePersistenceImpl extends BasePersistenceImpl<Shoppi
 
 	private static final String _FINDER_COLUMN_ITEMID_ITEMID_2 = "shoppingItemPrice.itemId = ?";
 
+	public ShoppingItemPricePersistenceImpl() {
+		super(ShoppingItemPrice.class);
+	}
+
 	/**
 	 * Caches the shopping item price in the entity cache if it is enabled.
 	 *

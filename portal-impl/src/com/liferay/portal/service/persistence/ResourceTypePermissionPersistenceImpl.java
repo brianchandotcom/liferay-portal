@@ -1508,6 +1508,10 @@ public class ResourceTypePermissionPersistenceImpl extends BasePersistenceImpl<R
 	private static final String _FINDER_COLUMN_C_G_N_R_NAME_3 = "(resourceTypePermission.name IS NULL OR resourceTypePermission.name = '') AND ";
 	private static final String _FINDER_COLUMN_C_G_N_R_ROLEID_2 = "resourceTypePermission.roleId = ?";
 
+	public ResourceTypePermissionPersistenceImpl() {
+		super(ResourceTypePermission.class);
+	}
+
 	/**
 	 * Caches the resource type permission in the entity cache if it is enabled.
 	 *

@@ -5936,6 +5936,10 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 	private static final String _FINDER_COLUMN_G_P_NOTS_PARENTFOLDERID_2 = "bookmarksFolder.parentFolderId = ? AND ";
 	private static final String _FINDER_COLUMN_G_P_NOTS_STATUS_2 = "bookmarksFolder.status != ?";
 
+	public BookmarksFolderPersistenceImpl() {
+		super(BookmarksFolder.class);
+	}
+
 	/**
 	 * Caches the bookmarks folder in the entity cache if it is enabled.
 	 *

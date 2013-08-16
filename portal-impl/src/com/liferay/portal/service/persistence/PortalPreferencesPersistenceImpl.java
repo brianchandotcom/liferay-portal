@@ -322,6 +322,10 @@ public class PortalPreferencesPersistenceImpl extends BasePersistenceImpl<Portal
 	private static final String _FINDER_COLUMN_O_O_OWNERID_2 = "portalPreferences.ownerId = ? AND ";
 	private static final String _FINDER_COLUMN_O_O_OWNERTYPE_2 = "portalPreferences.ownerType = ?";
 
+	public PortalPreferencesPersistenceImpl() {
+		super(PortalPreferences.class);
+	}
+
 	/**
 	 * Caches the portal preferences in the entity cache if it is enabled.
 	 *

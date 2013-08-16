@@ -697,6 +697,10 @@ public class WorkflowInstanceLinkPersistenceImpl extends BasePersistenceImpl<Wor
 	private static final String _FINDER_COLUMN_G_C_C_C_CLASSNAMEID_2 = "workflowInstanceLink.classNameId = ? AND ";
 	private static final String _FINDER_COLUMN_G_C_C_C_CLASSPK_2 = "workflowInstanceLink.classPK = ?";
 
+	public WorkflowInstanceLinkPersistenceImpl() {
+		super(WorkflowInstanceLink.class);
+	}
+
 	/**
 	 * Caches the workflow instance link in the entity cache if it is enabled.
 	 *

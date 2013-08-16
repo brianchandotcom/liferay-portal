@@ -3134,6 +3134,10 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 	private static final String _FINDER_COLUMN_G_B_GROUPID_2 = "mbBan.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_B_BANUSERID_2 = "mbBan.banUserId = ?";
 
+	public MBBanPersistenceImpl() {
+		super(MBBan.class);
+	}
+
 	/**
 	 * Caches the message boards ban in the entity cache if it is enabled.
 	 *

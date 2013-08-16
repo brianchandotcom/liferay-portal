@@ -1267,6 +1267,10 @@ public class SCProductScreenshotPersistenceImpl extends BasePersistenceImpl<SCPr
 	private static final String _FINDER_COLUMN_P_P_PRODUCTENTRYID_2 = "scProductScreenshot.productEntryId = ? AND ";
 	private static final String _FINDER_COLUMN_P_P_PRIORITY_2 = "scProductScreenshot.priority = ?";
 
+	public SCProductScreenshotPersistenceImpl() {
+		super(SCProductScreenshot.class);
+	}
+
 	/**
 	 * Caches the s c product screenshot in the entity cache if it is enabled.
 	 *

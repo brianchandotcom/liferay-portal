@@ -1882,6 +1882,10 @@ public class TrashVersionPersistenceImpl extends BasePersistenceImpl<TrashVersio
 	private static final String _FINDER_COLUMN_E_C_C_CLASSNAMEID_2 = "trashVersion.classNameId = ? AND ";
 	private static final String _FINDER_COLUMN_E_C_C_CLASSPK_2 = "trashVersion.classPK = ?";
 
+	public TrashVersionPersistenceImpl() {
+		super(TrashVersion.class);
+	}
+
 	/**
 	 * Caches the trash version in the entity cache if it is enabled.
 	 *

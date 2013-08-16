@@ -2172,6 +2172,10 @@ public class DLContentPersistenceImpl extends BasePersistenceImpl<DLContent>
 	private static final String _FINDER_COLUMN_C_R_P_V_VERSION_2 = "dlContent.version = ?";
 	private static final String _FINDER_COLUMN_C_R_P_V_VERSION_3 = "(dlContent.version IS NULL OR dlContent.version = '')";
 
+	public DLContentPersistenceImpl() {
+		super(DLContent.class);
+	}
+
 	/**
 	 * Caches the document library content in the entity cache if it is enabled.
 	 *

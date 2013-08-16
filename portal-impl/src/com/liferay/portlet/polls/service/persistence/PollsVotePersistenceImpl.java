@@ -2661,6 +2661,10 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 	private static final String _FINDER_COLUMN_Q_U_QUESTIONID_2 = "pollsVote.questionId = ? AND ";
 	private static final String _FINDER_COLUMN_Q_U_USERID_2 = "pollsVote.userId = ?";
 
+	public PollsVotePersistenceImpl() {
+		super(PollsVote.class);
+	}
+
 	/**
 	 * Caches the polls vote in the entity cache if it is enabled.
 	 *

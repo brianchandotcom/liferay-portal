@@ -26570,6 +26570,10 @@ public class JournalArticlePersistenceImpl extends BasePersistenceImpl<JournalAr
 	private static final String _FINDER_COLUMN_C_V_ST_VERSION_2 = "journalArticle.version = ? AND ";
 	private static final String _FINDER_COLUMN_C_V_ST_STATUS_2 = "journalArticle.status = ?";
 
+	public JournalArticlePersistenceImpl() {
+		super(JournalArticle.class);
+	}
+
 	/**
 	 * Caches the journal article in the entity cache if it is enabled.
 	 *

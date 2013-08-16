@@ -2569,6 +2569,10 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 	private static final String _FINDER_COLUMN_G_R_RECORDSETKEY_2 = "ddlRecordSet.recordSetKey = ?";
 	private static final String _FINDER_COLUMN_G_R_RECORDSETKEY_3 = "(ddlRecordSet.recordSetKey IS NULL OR ddlRecordSet.recordSetKey = '')";
 
+	public DDLRecordSetPersistenceImpl() {
+		super(DDLRecordSet.class);
+	}
+
 	/**
 	 * Caches the d d l record set in the entity cache if it is enabled.
 	 *

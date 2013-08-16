@@ -2367,6 +2367,10 @@ public class DLFileEntryMetadataPersistenceImpl extends BasePersistenceImpl<DLFi
 	private static final String _FINDER_COLUMN_D_F_DDMSTRUCTUREID_2 = "dlFileEntryMetadata.DDMStructureId = ? AND ";
 	private static final String _FINDER_COLUMN_D_F_FILEVERSIONID_2 = "dlFileEntryMetadata.fileVersionId = ?";
 
+	public DLFileEntryMetadataPersistenceImpl() {
+		super(DLFileEntryMetadata.class);
+	}
+
 	/**
 	 * Caches the document library file entry metadata in the entity cache if it is enabled.
 	 *

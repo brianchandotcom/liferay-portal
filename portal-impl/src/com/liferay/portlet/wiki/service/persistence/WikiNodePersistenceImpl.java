@@ -4484,6 +4484,10 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 	private static final String _FINDER_COLUMN_C_S_COMPANYID_2 = "wikiNode.companyId = ? AND ";
 	private static final String _FINDER_COLUMN_C_S_STATUS_2 = "wikiNode.status = ?";
 
+	public WikiNodePersistenceImpl() {
+		super(WikiNode.class);
+	}
+
 	/**
 	 * Caches the wiki node in the entity cache if it is enabled.
 	 *

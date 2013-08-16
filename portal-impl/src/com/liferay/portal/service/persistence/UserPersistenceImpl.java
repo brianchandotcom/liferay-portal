@@ -17,18 +17,12 @@ package com.liferay.portal.service.persistence;
 import com.liferay.portal.NoSuchUserException;
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
-import com.liferay.portal.kernel.dao.jdbc.MappingSqlQuery;
-import com.liferay.portal.kernel.dao.jdbc.MappingSqlQueryFactoryUtil;
-import com.liferay.portal.kernel.dao.jdbc.RowMapper;
-import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
-import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -50,6 +44,8 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.model.impl.UserImpl;
 import com.liferay.portal.model.impl.UserModelImpl;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.service.persistence.impl.MappingTable;
+import com.liferay.portal.service.persistence.impl.MappingTableUtil;
 
 import java.io.Serializable;
 
@@ -6424,6 +6420,10 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	private static final String _FINDER_COLUMN_C_CD_MD_MODIFIEDDATE_1 = "user.modifiedDate IS NULL";
 	private static final String _FINDER_COLUMN_C_CD_MD_MODIFIEDDATE_2 = "user.modifiedDate = ?";
 
+	public UserPersistenceImpl() {
+		super(User.class);
+	}
+
 	/**
 	 * Caches the user in the entity cache if it is enabled.
 	 *
@@ -6875,55 +6875,15 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	protected User removeImpl(User user) throws SystemException {
 		user = toUnwrappedModel(user);
 
-		try {
-			clearGroups.clear(user.getPrimaryKey());
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(UserModelImpl.MAPPING_TABLE_USERS_GROUPS_NAME);
-		}
+		userToGroupMappingTable.deleteByLeftPk(user.getPrimaryKey());
 
-		try {
-			clearOrganizations.clear(user.getPrimaryKey());
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(UserModelImpl.MAPPING_TABLE_USERS_ORGS_NAME);
-		}
+		userToOrganizationMappingTable.deleteByLeftPk(user.getPrimaryKey());
 
-		try {
-			clearRoles.clear(user.getPrimaryKey());
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(UserModelImpl.MAPPING_TABLE_USERS_ROLES_NAME);
-		}
+		userToRoleMappingTable.deleteByLeftPk(user.getPrimaryKey());
 
-		try {
-			clearTeams.clear(user.getPrimaryKey());
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(UserModelImpl.MAPPING_TABLE_USERS_TEAMS_NAME);
-		}
+		userToTeamMappingTable.deleteByLeftPk(user.getPrimaryKey());
 
-		try {
-			clearUserGroups.clear(user.getPrimaryKey());
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(UserModelImpl.MAPPING_TABLE_USERS_USERGROUPS_NAME);
-		}
+		userToUserGroupMappingTable.deleteByLeftPk(user.getPrimaryKey());
 
 		Session session = null;
 
@@ -7519,19 +7479,6 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		return getGroups(pk, start, end, null);
 	}
 
-	public static final FinderPath FINDER_PATH_GET_GROUPS = new FinderPath(com.liferay.portal.model.impl.GroupModelImpl.ENTITY_CACHE_ENABLED,
-			UserModelImpl.FINDER_CACHE_ENABLED_USERS_GROUPS,
-			com.liferay.portal.model.impl.GroupImpl.class,
-			UserModelImpl.MAPPING_TABLE_USERS_GROUPS_NAME, "getGroups",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			});
-
-	static {
-		FINDER_PATH_GET_GROUPS.setCacheKeyGeneratorCacheName(null);
-	}
-
 	/**
 	 * Returns an ordered range of all the groups associated with the user.
 	 *
@@ -7549,88 +7496,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	@Override
 	public List<com.liferay.portal.model.Group> getGroups(long pk, int start,
 		int end, OrderByComparator orderByComparator) throws SystemException {
-		boolean pagination = true;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-			pagination = false;
-			finderArgs = new Object[] { pk };
-		}
-		else {
-			finderArgs = new Object[] { pk, start, end, orderByComparator };
-		}
-
-		List<com.liferay.portal.model.Group> list = (List<com.liferay.portal.model.Group>)FinderCacheUtil.getResult(FINDER_PATH_GET_GROUPS,
-				finderArgs, this);
-
-		if (list == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				String sql = null;
-
-				if (orderByComparator != null) {
-					sql = _SQL_GETGROUPS.concat(ORDER_BY_CLAUSE)
-										.concat(orderByComparator.getOrderBy());
-				}
-				else {
-					sql = _SQL_GETGROUPS;
-
-					if (pagination) {
-						sql = sql.concat(com.liferay.portal.model.impl.GroupModelImpl.ORDER_BY_SQL);
-					}
-				}
-
-				SQLQuery q = session.createSQLQuery(sql);
-
-				q.addEntity("Group_",
-					com.liferay.portal.model.impl.GroupImpl.class);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(pk);
-
-				if (!pagination) {
-					list = (List<com.liferay.portal.model.Group>)QueryUtil.list(q,
-							getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = new UnmodifiableList<com.liferay.portal.model.Group>(list);
-				}
-				else {
-					list = (List<com.liferay.portal.model.Group>)QueryUtil.list(q,
-							getDialect(), start, end);
-				}
-
-				groupPersistence.cacheResult(list);
-
-				FinderCacheUtil.putResult(FINDER_PATH_GET_GROUPS, finderArgs,
-					list);
-			}
-			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_GET_GROUPS, finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
-	}
-
-	public static final FinderPath FINDER_PATH_GET_GROUPS_SIZE = new FinderPath(com.liferay.portal.model.impl.GroupModelImpl.ENTITY_CACHE_ENABLED,
-			UserModelImpl.FINDER_CACHE_ENABLED_USERS_GROUPS, Long.class,
-			UserModelImpl.MAPPING_TABLE_USERS_GROUPS_NAME, "getGroupsSize",
-			new String[] { Long.class.getName() });
-
-	static {
-		FINDER_PATH_GET_GROUPS_SIZE.setCacheKeyGeneratorCacheName(null);
+		return userToGroupMappingTable.findByLeftPkAsEntities(pk, start, end,
+			orderByComparator);
 	}
 
 	/**
@@ -7642,49 +7509,10 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public int getGroupsSize(long pk) throws SystemException {
-		Object[] finderArgs = new Object[] { pk };
+		long[] pks = userToGroupMappingTable.findByLeftPk(pk);
 
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_GET_GROUPS_SIZE,
-				finderArgs, this);
-
-		if (count == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				SQLQuery q = session.createSQLQuery(_SQL_GETGROUPSSIZE);
-
-				q.addScalar(COUNT_COLUMN_NAME,
-					com.liferay.portal.kernel.dao.orm.Type.LONG);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(pk);
-
-				count = (Long)q.uniqueResult();
-
-				FinderCacheUtil.putResult(FINDER_PATH_GET_GROUPS_SIZE,
-					finderArgs, count);
-			}
-			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_GET_GROUPS_SIZE,
-					finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return pks.length;
 	}
-
-	public static final FinderPath FINDER_PATH_CONTAINS_GROUP = new FinderPath(com.liferay.portal.model.impl.GroupModelImpl.ENTITY_CACHE_ENABLED,
-			UserModelImpl.FINDER_CACHE_ENABLED_USERS_GROUPS, Boolean.class,
-			UserModelImpl.MAPPING_TABLE_USERS_GROUPS_NAME, "containsGroup",
-			new String[] { Long.class.getName(), Long.class.getName() });
 
 	/**
 	 * Returns <code>true</code> if the group is associated with the user.
@@ -7697,27 +7525,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	@Override
 	public boolean containsGroup(long pk, long groupPK)
 		throws SystemException {
-		Object[] finderArgs = new Object[] { pk, groupPK };
-
-		Boolean value = (Boolean)FinderCacheUtil.getResult(FINDER_PATH_CONTAINS_GROUP,
-				finderArgs, this);
-
-		if (value == null) {
-			try {
-				value = Boolean.valueOf(containsGroup.contains(pk, groupPK));
-
-				FinderCacheUtil.putResult(FINDER_PATH_CONTAINS_GROUP,
-					finderArgs, value);
-			}
-			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_CONTAINS_GROUP,
-					finderArgs);
-
-				throw processException(e);
-			}
-		}
-
-		return value.booleanValue();
+		return userToGroupMappingTable.containsMapping(pk, groupPK);
 	}
 
 	/**
@@ -7746,15 +7554,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public void addGroup(long pk, long groupPK) throws SystemException {
-		try {
-			addGroup.add(pk, groupPK);
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(UserModelImpl.MAPPING_TABLE_USERS_GROUPS_NAME);
-		}
+		userToGroupMappingTable.addMapping(pk, groupPK);
 	}
 
 	/**
@@ -7767,15 +7567,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	@Override
 	public void addGroup(long pk, com.liferay.portal.model.Group group)
 		throws SystemException {
-		try {
-			addGroup.add(pk, group.getPrimaryKey());
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(UserModelImpl.MAPPING_TABLE_USERS_GROUPS_NAME);
-		}
+		userToGroupMappingTable.addMapping(pk, group.getPrimaryKey());
 	}
 
 	/**
@@ -7787,16 +7579,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public void addGroups(long pk, long[] groupPKs) throws SystemException {
-		try {
-			for (long groupPK : groupPKs) {
-				addGroup.add(pk, groupPK);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(UserModelImpl.MAPPING_TABLE_USERS_GROUPS_NAME);
+		for (long groupPK : groupPKs) {
+			userToGroupMappingTable.addMapping(pk, groupPK);
 		}
 	}
 
@@ -7810,16 +7594,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	@Override
 	public void addGroups(long pk, List<com.liferay.portal.model.Group> groups)
 		throws SystemException {
-		try {
-			for (com.liferay.portal.model.Group group : groups) {
-				addGroup.add(pk, group.getPrimaryKey());
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(UserModelImpl.MAPPING_TABLE_USERS_GROUPS_NAME);
+		for (com.liferay.portal.model.Group group : groups) {
+			userToGroupMappingTable.addMapping(pk, group.getPrimaryKey());
 		}
 	}
 
@@ -7831,15 +7607,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public void clearGroups(long pk) throws SystemException {
-		try {
-			clearGroups.clear(pk);
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(UserModelImpl.MAPPING_TABLE_USERS_GROUPS_NAME);
-		}
+		userToGroupMappingTable.deleteByLeftPk(pk);
 	}
 
 	/**
@@ -7851,15 +7619,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public void removeGroup(long pk, long groupPK) throws SystemException {
-		try {
-			removeGroup.remove(pk, groupPK);
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(UserModelImpl.MAPPING_TABLE_USERS_GROUPS_NAME);
-		}
+		userToGroupMappingTable.deleteMapping(pk, groupPK);
 	}
 
 	/**
@@ -7872,15 +7632,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	@Override
 	public void removeGroup(long pk, com.liferay.portal.model.Group group)
 		throws SystemException {
-		try {
-			removeGroup.remove(pk, group.getPrimaryKey());
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(UserModelImpl.MAPPING_TABLE_USERS_GROUPS_NAME);
-		}
+		userToGroupMappingTable.deleteMapping(pk, group.getPrimaryKey());
 	}
 
 	/**
@@ -7893,16 +7645,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	@Override
 	public void removeGroups(long pk, long[] groupPKs)
 		throws SystemException {
-		try {
-			for (long groupPK : groupPKs) {
-				removeGroup.remove(pk, groupPK);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(UserModelImpl.MAPPING_TABLE_USERS_GROUPS_NAME);
+		for (long groupPK : groupPKs) {
+			userToGroupMappingTable.deleteMapping(pk, groupPK);
 		}
 	}
 
@@ -7916,16 +7660,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	@Override
 	public void removeGroups(long pk,
 		List<com.liferay.portal.model.Group> groups) throws SystemException {
-		try {
-			for (com.liferay.portal.model.Group group : groups) {
-				removeGroup.remove(pk, group.getPrimaryKey());
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(UserModelImpl.MAPPING_TABLE_USERS_GROUPS_NAME);
+		for (com.liferay.portal.model.Group group : groups) {
+			userToGroupMappingTable.deleteMapping(pk, group.getPrimaryKey());
 		}
 	}
 
@@ -7938,26 +7674,10 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public void setGroups(long pk, long[] groupPKs) throws SystemException {
-		try {
-			Set<Long> groupPKSet = SetUtil.fromArray(groupPKs);
+		userToGroupMappingTable.deleteByLeftPk(pk);
 
-			List<com.liferay.portal.model.Group> groups = getGroups(pk);
-
-			for (com.liferay.portal.model.Group group : groups) {
-				if (!groupPKSet.remove(group.getPrimaryKey())) {
-					removeGroup.remove(pk, group.getPrimaryKey());
-				}
-			}
-
-			for (Long groupPK : groupPKSet) {
-				addGroup.add(pk, groupPK);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(UserModelImpl.MAPPING_TABLE_USERS_GROUPS_NAME);
+		for (Long groupPK : groupPKs) {
+			userToGroupMappingTable.addMapping(pk, groupPK);
 		}
 	}
 
@@ -8022,19 +7742,6 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		return getOrganizations(pk, start, end, null);
 	}
 
-	public static final FinderPath FINDER_PATH_GET_ORGANIZATIONS = new FinderPath(com.liferay.portal.model.impl.OrganizationModelImpl.ENTITY_CACHE_ENABLED,
-			UserModelImpl.FINDER_CACHE_ENABLED_USERS_ORGS,
-			com.liferay.portal.model.impl.OrganizationImpl.class,
-			UserModelImpl.MAPPING_TABLE_USERS_ORGS_NAME, "getOrganizations",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			});
-
-	static {
-		FINDER_PATH_GET_ORGANIZATIONS.setCacheKeyGeneratorCacheName(null);
-	}
-
 	/**
 	 * Returns an ordered range of all the organizations associated with the user.
 	 *
@@ -8053,89 +7760,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	public List<com.liferay.portal.model.Organization> getOrganizations(
 		long pk, int start, int end, OrderByComparator orderByComparator)
 		throws SystemException {
-		boolean pagination = true;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-			pagination = false;
-			finderArgs = new Object[] { pk };
-		}
-		else {
-			finderArgs = new Object[] { pk, start, end, orderByComparator };
-		}
-
-		List<com.liferay.portal.model.Organization> list = (List<com.liferay.portal.model.Organization>)FinderCacheUtil.getResult(FINDER_PATH_GET_ORGANIZATIONS,
-				finderArgs, this);
-
-		if (list == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				String sql = null;
-
-				if (orderByComparator != null) {
-					sql = _SQL_GETORGANIZATIONS.concat(ORDER_BY_CLAUSE)
-											   .concat(orderByComparator.getOrderBy());
-				}
-				else {
-					sql = _SQL_GETORGANIZATIONS;
-
-					if (pagination) {
-						sql = sql.concat(com.liferay.portal.model.impl.OrganizationModelImpl.ORDER_BY_SQL);
-					}
-				}
-
-				SQLQuery q = session.createSQLQuery(sql);
-
-				q.addEntity("Organization_",
-					com.liferay.portal.model.impl.OrganizationImpl.class);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(pk);
-
-				if (!pagination) {
-					list = (List<com.liferay.portal.model.Organization>)QueryUtil.list(q,
-							getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = new UnmodifiableList<com.liferay.portal.model.Organization>(list);
-				}
-				else {
-					list = (List<com.liferay.portal.model.Organization>)QueryUtil.list(q,
-							getDialect(), start, end);
-				}
-
-				organizationPersistence.cacheResult(list);
-
-				FinderCacheUtil.putResult(FINDER_PATH_GET_ORGANIZATIONS,
-					finderArgs, list);
-			}
-			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_GET_ORGANIZATIONS,
-					finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
-	}
-
-	public static final FinderPath FINDER_PATH_GET_ORGANIZATIONS_SIZE = new FinderPath(com.liferay.portal.model.impl.OrganizationModelImpl.ENTITY_CACHE_ENABLED,
-			UserModelImpl.FINDER_CACHE_ENABLED_USERS_ORGS, Long.class,
-			UserModelImpl.MAPPING_TABLE_USERS_ORGS_NAME,
-			"getOrganizationsSize", new String[] { Long.class.getName() });
-
-	static {
-		FINDER_PATH_GET_ORGANIZATIONS_SIZE.setCacheKeyGeneratorCacheName(null);
+		return userToOrganizationMappingTable.findByLeftPkAsEntities(pk, start,
+			end, orderByComparator);
 	}
 
 	/**
@@ -8147,50 +7773,10 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public int getOrganizationsSize(long pk) throws SystemException {
-		Object[] finderArgs = new Object[] { pk };
+		long[] pks = userToOrganizationMappingTable.findByLeftPk(pk);
 
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_GET_ORGANIZATIONS_SIZE,
-				finderArgs, this);
-
-		if (count == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				SQLQuery q = session.createSQLQuery(_SQL_GETORGANIZATIONSSIZE);
-
-				q.addScalar(COUNT_COLUMN_NAME,
-					com.liferay.portal.kernel.dao.orm.Type.LONG);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(pk);
-
-				count = (Long)q.uniqueResult();
-
-				FinderCacheUtil.putResult(FINDER_PATH_GET_ORGANIZATIONS_SIZE,
-					finderArgs, count);
-			}
-			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_GET_ORGANIZATIONS_SIZE,
-					finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return pks.length;
 	}
-
-	public static final FinderPath FINDER_PATH_CONTAINS_ORGANIZATION = new FinderPath(com.liferay.portal.model.impl.OrganizationModelImpl.ENTITY_CACHE_ENABLED,
-			UserModelImpl.FINDER_CACHE_ENABLED_USERS_ORGS, Boolean.class,
-			UserModelImpl.MAPPING_TABLE_USERS_ORGS_NAME,
-			"containsOrganization",
-			new String[] { Long.class.getName(), Long.class.getName() });
 
 	/**
 	 * Returns <code>true</code> if the organization is associated with the user.
@@ -8203,28 +7789,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	@Override
 	public boolean containsOrganization(long pk, long organizationPK)
 		throws SystemException {
-		Object[] finderArgs = new Object[] { pk, organizationPK };
-
-		Boolean value = (Boolean)FinderCacheUtil.getResult(FINDER_PATH_CONTAINS_ORGANIZATION,
-				finderArgs, this);
-
-		if (value == null) {
-			try {
-				value = Boolean.valueOf(containsOrganization.contains(pk,
-							organizationPK));
-
-				FinderCacheUtil.putResult(FINDER_PATH_CONTAINS_ORGANIZATION,
-					finderArgs, value);
-			}
-			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_CONTAINS_ORGANIZATION,
-					finderArgs);
-
-				throw processException(e);
-			}
-		}
-
-		return value.booleanValue();
+		return userToOrganizationMappingTable.containsMapping(pk, organizationPK);
 	}
 
 	/**
@@ -8254,15 +7819,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	@Override
 	public void addOrganization(long pk, long organizationPK)
 		throws SystemException {
-		try {
-			addOrganization.add(pk, organizationPK);
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(UserModelImpl.MAPPING_TABLE_USERS_ORGS_NAME);
-		}
+		userToOrganizationMappingTable.addMapping(pk, organizationPK);
 	}
 
 	/**
@@ -8276,15 +7833,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	public void addOrganization(long pk,
 		com.liferay.portal.model.Organization organization)
 		throws SystemException {
-		try {
-			addOrganization.add(pk, organization.getPrimaryKey());
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(UserModelImpl.MAPPING_TABLE_USERS_ORGS_NAME);
-		}
+		userToOrganizationMappingTable.addMapping(pk,
+			organization.getPrimaryKey());
 	}
 
 	/**
@@ -8297,16 +7847,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	@Override
 	public void addOrganizations(long pk, long[] organizationPKs)
 		throws SystemException {
-		try {
-			for (long organizationPK : organizationPKs) {
-				addOrganization.add(pk, organizationPK);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(UserModelImpl.MAPPING_TABLE_USERS_ORGS_NAME);
+		for (long organizationPK : organizationPKs) {
+			userToOrganizationMappingTable.addMapping(pk, organizationPK);
 		}
 	}
 
@@ -8321,16 +7863,9 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	public void addOrganizations(long pk,
 		List<com.liferay.portal.model.Organization> organizations)
 		throws SystemException {
-		try {
-			for (com.liferay.portal.model.Organization organization : organizations) {
-				addOrganization.add(pk, organization.getPrimaryKey());
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(UserModelImpl.MAPPING_TABLE_USERS_ORGS_NAME);
+		for (com.liferay.portal.model.Organization organization : organizations) {
+			userToOrganizationMappingTable.addMapping(pk,
+				organization.getPrimaryKey());
 		}
 	}
 
@@ -8342,15 +7877,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public void clearOrganizations(long pk) throws SystemException {
-		try {
-			clearOrganizations.clear(pk);
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(UserModelImpl.MAPPING_TABLE_USERS_ORGS_NAME);
-		}
+		userToOrganizationMappingTable.deleteByLeftPk(pk);
 	}
 
 	/**
@@ -8363,15 +7890,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	@Override
 	public void removeOrganization(long pk, long organizationPK)
 		throws SystemException {
-		try {
-			removeOrganization.remove(pk, organizationPK);
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(UserModelImpl.MAPPING_TABLE_USERS_ORGS_NAME);
-		}
+		userToOrganizationMappingTable.deleteMapping(pk, organizationPK);
 	}
 
 	/**
@@ -8385,15 +7904,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	public void removeOrganization(long pk,
 		com.liferay.portal.model.Organization organization)
 		throws SystemException {
-		try {
-			removeOrganization.remove(pk, organization.getPrimaryKey());
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(UserModelImpl.MAPPING_TABLE_USERS_ORGS_NAME);
-		}
+		userToOrganizationMappingTable.deleteMapping(pk,
+			organization.getPrimaryKey());
 	}
 
 	/**
@@ -8406,16 +7918,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	@Override
 	public void removeOrganizations(long pk, long[] organizationPKs)
 		throws SystemException {
-		try {
-			for (long organizationPK : organizationPKs) {
-				removeOrganization.remove(pk, organizationPK);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(UserModelImpl.MAPPING_TABLE_USERS_ORGS_NAME);
+		for (long organizationPK : organizationPKs) {
+			userToOrganizationMappingTable.deleteMapping(pk, organizationPK);
 		}
 	}
 
@@ -8430,16 +7934,9 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	public void removeOrganizations(long pk,
 		List<com.liferay.portal.model.Organization> organizations)
 		throws SystemException {
-		try {
-			for (com.liferay.portal.model.Organization organization : organizations) {
-				removeOrganization.remove(pk, organization.getPrimaryKey());
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(UserModelImpl.MAPPING_TABLE_USERS_ORGS_NAME);
+		for (com.liferay.portal.model.Organization organization : organizations) {
+			userToOrganizationMappingTable.deleteMapping(pk,
+				organization.getPrimaryKey());
 		}
 	}
 
@@ -8453,26 +7950,10 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	@Override
 	public void setOrganizations(long pk, long[] organizationPKs)
 		throws SystemException {
-		try {
-			Set<Long> organizationPKSet = SetUtil.fromArray(organizationPKs);
+		userToOrganizationMappingTable.deleteByLeftPk(pk);
 
-			List<com.liferay.portal.model.Organization> organizations = getOrganizations(pk);
-
-			for (com.liferay.portal.model.Organization organization : organizations) {
-				if (!organizationPKSet.remove(organization.getPrimaryKey())) {
-					removeOrganization.remove(pk, organization.getPrimaryKey());
-				}
-			}
-
-			for (Long organizationPK : organizationPKSet) {
-				addOrganization.add(pk, organizationPK);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(UserModelImpl.MAPPING_TABLE_USERS_ORGS_NAME);
+		for (Long organizationPK : organizationPKs) {
+			userToOrganizationMappingTable.addMapping(pk, organizationPK);
 		}
 	}
 
@@ -8538,19 +8019,6 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		return getRoles(pk, start, end, null);
 	}
 
-	public static final FinderPath FINDER_PATH_GET_ROLES = new FinderPath(com.liferay.portal.model.impl.RoleModelImpl.ENTITY_CACHE_ENABLED,
-			UserModelImpl.FINDER_CACHE_ENABLED_USERS_ROLES,
-			com.liferay.portal.model.impl.RoleImpl.class,
-			UserModelImpl.MAPPING_TABLE_USERS_ROLES_NAME, "getRoles",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			});
-
-	static {
-		FINDER_PATH_GET_ROLES.setCacheKeyGeneratorCacheName(null);
-	}
-
 	/**
 	 * Returns an ordered range of all the roles associated with the user.
 	 *
@@ -8568,88 +8036,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	@Override
 	public List<com.liferay.portal.model.Role> getRoles(long pk, int start,
 		int end, OrderByComparator orderByComparator) throws SystemException {
-		boolean pagination = true;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-			pagination = false;
-			finderArgs = new Object[] { pk };
-		}
-		else {
-			finderArgs = new Object[] { pk, start, end, orderByComparator };
-		}
-
-		List<com.liferay.portal.model.Role> list = (List<com.liferay.portal.model.Role>)FinderCacheUtil.getResult(FINDER_PATH_GET_ROLES,
-				finderArgs, this);
-
-		if (list == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				String sql = null;
-
-				if (orderByComparator != null) {
-					sql = _SQL_GETROLES.concat(ORDER_BY_CLAUSE)
-									   .concat(orderByComparator.getOrderBy());
-				}
-				else {
-					sql = _SQL_GETROLES;
-
-					if (pagination) {
-						sql = sql.concat(com.liferay.portal.model.impl.RoleModelImpl.ORDER_BY_SQL);
-					}
-				}
-
-				SQLQuery q = session.createSQLQuery(sql);
-
-				q.addEntity("Role_",
-					com.liferay.portal.model.impl.RoleImpl.class);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(pk);
-
-				if (!pagination) {
-					list = (List<com.liferay.portal.model.Role>)QueryUtil.list(q,
-							getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = new UnmodifiableList<com.liferay.portal.model.Role>(list);
-				}
-				else {
-					list = (List<com.liferay.portal.model.Role>)QueryUtil.list(q,
-							getDialect(), start, end);
-				}
-
-				rolePersistence.cacheResult(list);
-
-				FinderCacheUtil.putResult(FINDER_PATH_GET_ROLES, finderArgs,
-					list);
-			}
-			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_GET_ROLES, finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
-	}
-
-	public static final FinderPath FINDER_PATH_GET_ROLES_SIZE = new FinderPath(com.liferay.portal.model.impl.RoleModelImpl.ENTITY_CACHE_ENABLED,
-			UserModelImpl.FINDER_CACHE_ENABLED_USERS_ROLES, Long.class,
-			UserModelImpl.MAPPING_TABLE_USERS_ROLES_NAME, "getRolesSize",
-			new String[] { Long.class.getName() });
-
-	static {
-		FINDER_PATH_GET_ROLES_SIZE.setCacheKeyGeneratorCacheName(null);
+		return userToRoleMappingTable.findByLeftPkAsEntities(pk, start, end,
+			orderByComparator);
 	}
 
 	/**
@@ -8661,49 +8049,10 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public int getRolesSize(long pk) throws SystemException {
-		Object[] finderArgs = new Object[] { pk };
+		long[] pks = userToRoleMappingTable.findByLeftPk(pk);
 
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_GET_ROLES_SIZE,
-				finderArgs, this);
-
-		if (count == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				SQLQuery q = session.createSQLQuery(_SQL_GETROLESSIZE);
-
-				q.addScalar(COUNT_COLUMN_NAME,
-					com.liferay.portal.kernel.dao.orm.Type.LONG);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(pk);
-
-				count = (Long)q.uniqueResult();
-
-				FinderCacheUtil.putResult(FINDER_PATH_GET_ROLES_SIZE,
-					finderArgs, count);
-			}
-			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_GET_ROLES_SIZE,
-					finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return pks.length;
 	}
-
-	public static final FinderPath FINDER_PATH_CONTAINS_ROLE = new FinderPath(com.liferay.portal.model.impl.RoleModelImpl.ENTITY_CACHE_ENABLED,
-			UserModelImpl.FINDER_CACHE_ENABLED_USERS_ROLES, Boolean.class,
-			UserModelImpl.MAPPING_TABLE_USERS_ROLES_NAME, "containsRole",
-			new String[] { Long.class.getName(), Long.class.getName() });
 
 	/**
 	 * Returns <code>true</code> if the role is associated with the user.
@@ -8715,27 +8064,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public boolean containsRole(long pk, long rolePK) throws SystemException {
-		Object[] finderArgs = new Object[] { pk, rolePK };
-
-		Boolean value = (Boolean)FinderCacheUtil.getResult(FINDER_PATH_CONTAINS_ROLE,
-				finderArgs, this);
-
-		if (value == null) {
-			try {
-				value = Boolean.valueOf(containsRole.contains(pk, rolePK));
-
-				FinderCacheUtil.putResult(FINDER_PATH_CONTAINS_ROLE,
-					finderArgs, value);
-			}
-			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_CONTAINS_ROLE,
-					finderArgs);
-
-				throw processException(e);
-			}
-		}
-
-		return value.booleanValue();
+		return userToRoleMappingTable.containsMapping(pk, rolePK);
 	}
 
 	/**
@@ -8764,15 +8093,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public void addRole(long pk, long rolePK) throws SystemException {
-		try {
-			addRole.add(pk, rolePK);
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(UserModelImpl.MAPPING_TABLE_USERS_ROLES_NAME);
-		}
+		userToRoleMappingTable.addMapping(pk, rolePK);
 	}
 
 	/**
@@ -8785,15 +8106,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	@Override
 	public void addRole(long pk, com.liferay.portal.model.Role role)
 		throws SystemException {
-		try {
-			addRole.add(pk, role.getPrimaryKey());
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(UserModelImpl.MAPPING_TABLE_USERS_ROLES_NAME);
-		}
+		userToRoleMappingTable.addMapping(pk, role.getPrimaryKey());
 	}
 
 	/**
@@ -8805,16 +8118,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public void addRoles(long pk, long[] rolePKs) throws SystemException {
-		try {
-			for (long rolePK : rolePKs) {
-				addRole.add(pk, rolePK);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(UserModelImpl.MAPPING_TABLE_USERS_ROLES_NAME);
+		for (long rolePK : rolePKs) {
+			userToRoleMappingTable.addMapping(pk, rolePK);
 		}
 	}
 
@@ -8828,16 +8133,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	@Override
 	public void addRoles(long pk, List<com.liferay.portal.model.Role> roles)
 		throws SystemException {
-		try {
-			for (com.liferay.portal.model.Role role : roles) {
-				addRole.add(pk, role.getPrimaryKey());
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(UserModelImpl.MAPPING_TABLE_USERS_ROLES_NAME);
+		for (com.liferay.portal.model.Role role : roles) {
+			userToRoleMappingTable.addMapping(pk, role.getPrimaryKey());
 		}
 	}
 
@@ -8849,15 +8146,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public void clearRoles(long pk) throws SystemException {
-		try {
-			clearRoles.clear(pk);
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(UserModelImpl.MAPPING_TABLE_USERS_ROLES_NAME);
-		}
+		userToRoleMappingTable.deleteByLeftPk(pk);
 	}
 
 	/**
@@ -8869,15 +8158,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public void removeRole(long pk, long rolePK) throws SystemException {
-		try {
-			removeRole.remove(pk, rolePK);
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(UserModelImpl.MAPPING_TABLE_USERS_ROLES_NAME);
-		}
+		userToRoleMappingTable.deleteMapping(pk, rolePK);
 	}
 
 	/**
@@ -8890,15 +8171,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	@Override
 	public void removeRole(long pk, com.liferay.portal.model.Role role)
 		throws SystemException {
-		try {
-			removeRole.remove(pk, role.getPrimaryKey());
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(UserModelImpl.MAPPING_TABLE_USERS_ROLES_NAME);
-		}
+		userToRoleMappingTable.deleteMapping(pk, role.getPrimaryKey());
 	}
 
 	/**
@@ -8910,16 +8183,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public void removeRoles(long pk, long[] rolePKs) throws SystemException {
-		try {
-			for (long rolePK : rolePKs) {
-				removeRole.remove(pk, rolePK);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(UserModelImpl.MAPPING_TABLE_USERS_ROLES_NAME);
+		for (long rolePK : rolePKs) {
+			userToRoleMappingTable.deleteMapping(pk, rolePK);
 		}
 	}
 
@@ -8933,16 +8198,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	@Override
 	public void removeRoles(long pk, List<com.liferay.portal.model.Role> roles)
 		throws SystemException {
-		try {
-			for (com.liferay.portal.model.Role role : roles) {
-				removeRole.remove(pk, role.getPrimaryKey());
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(UserModelImpl.MAPPING_TABLE_USERS_ROLES_NAME);
+		for (com.liferay.portal.model.Role role : roles) {
+			userToRoleMappingTable.deleteMapping(pk, role.getPrimaryKey());
 		}
 	}
 
@@ -8955,26 +8212,10 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public void setRoles(long pk, long[] rolePKs) throws SystemException {
-		try {
-			Set<Long> rolePKSet = SetUtil.fromArray(rolePKs);
+		userToRoleMappingTable.deleteByLeftPk(pk);
 
-			List<com.liferay.portal.model.Role> roles = getRoles(pk);
-
-			for (com.liferay.portal.model.Role role : roles) {
-				if (!rolePKSet.remove(role.getPrimaryKey())) {
-					removeRole.remove(pk, role.getPrimaryKey());
-				}
-			}
-
-			for (Long rolePK : rolePKSet) {
-				addRole.add(pk, rolePK);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(UserModelImpl.MAPPING_TABLE_USERS_ROLES_NAME);
+		for (Long rolePK : rolePKs) {
+			userToRoleMappingTable.addMapping(pk, rolePK);
 		}
 	}
 
@@ -9039,19 +8280,6 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		return getTeams(pk, start, end, null);
 	}
 
-	public static final FinderPath FINDER_PATH_GET_TEAMS = new FinderPath(com.liferay.portal.model.impl.TeamModelImpl.ENTITY_CACHE_ENABLED,
-			UserModelImpl.FINDER_CACHE_ENABLED_USERS_TEAMS,
-			com.liferay.portal.model.impl.TeamImpl.class,
-			UserModelImpl.MAPPING_TABLE_USERS_TEAMS_NAME, "getTeams",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			});
-
-	static {
-		FINDER_PATH_GET_TEAMS.setCacheKeyGeneratorCacheName(null);
-	}
-
 	/**
 	 * Returns an ordered range of all the teams associated with the user.
 	 *
@@ -9069,87 +8297,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	@Override
 	public List<com.liferay.portal.model.Team> getTeams(long pk, int start,
 		int end, OrderByComparator orderByComparator) throws SystemException {
-		boolean pagination = true;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-			pagination = false;
-			finderArgs = new Object[] { pk };
-		}
-		else {
-			finderArgs = new Object[] { pk, start, end, orderByComparator };
-		}
-
-		List<com.liferay.portal.model.Team> list = (List<com.liferay.portal.model.Team>)FinderCacheUtil.getResult(FINDER_PATH_GET_TEAMS,
-				finderArgs, this);
-
-		if (list == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				String sql = null;
-
-				if (orderByComparator != null) {
-					sql = _SQL_GETTEAMS.concat(ORDER_BY_CLAUSE)
-									   .concat(orderByComparator.getOrderBy());
-				}
-				else {
-					sql = _SQL_GETTEAMS;
-
-					if (pagination) {
-						sql = sql.concat(com.liferay.portal.model.impl.TeamModelImpl.ORDER_BY_SQL);
-					}
-				}
-
-				SQLQuery q = session.createSQLQuery(sql);
-
-				q.addEntity("Team", com.liferay.portal.model.impl.TeamImpl.class);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(pk);
-
-				if (!pagination) {
-					list = (List<com.liferay.portal.model.Team>)QueryUtil.list(q,
-							getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = new UnmodifiableList<com.liferay.portal.model.Team>(list);
-				}
-				else {
-					list = (List<com.liferay.portal.model.Team>)QueryUtil.list(q,
-							getDialect(), start, end);
-				}
-
-				teamPersistence.cacheResult(list);
-
-				FinderCacheUtil.putResult(FINDER_PATH_GET_TEAMS, finderArgs,
-					list);
-			}
-			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_GET_TEAMS, finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
-	}
-
-	public static final FinderPath FINDER_PATH_GET_TEAMS_SIZE = new FinderPath(com.liferay.portal.model.impl.TeamModelImpl.ENTITY_CACHE_ENABLED,
-			UserModelImpl.FINDER_CACHE_ENABLED_USERS_TEAMS, Long.class,
-			UserModelImpl.MAPPING_TABLE_USERS_TEAMS_NAME, "getTeamsSize",
-			new String[] { Long.class.getName() });
-
-	static {
-		FINDER_PATH_GET_TEAMS_SIZE.setCacheKeyGeneratorCacheName(null);
+		return userToTeamMappingTable.findByLeftPkAsEntities(pk, start, end,
+			orderByComparator);
 	}
 
 	/**
@@ -9161,49 +8310,10 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public int getTeamsSize(long pk) throws SystemException {
-		Object[] finderArgs = new Object[] { pk };
+		long[] pks = userToTeamMappingTable.findByLeftPk(pk);
 
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_GET_TEAMS_SIZE,
-				finderArgs, this);
-
-		if (count == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				SQLQuery q = session.createSQLQuery(_SQL_GETTEAMSSIZE);
-
-				q.addScalar(COUNT_COLUMN_NAME,
-					com.liferay.portal.kernel.dao.orm.Type.LONG);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(pk);
-
-				count = (Long)q.uniqueResult();
-
-				FinderCacheUtil.putResult(FINDER_PATH_GET_TEAMS_SIZE,
-					finderArgs, count);
-			}
-			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_GET_TEAMS_SIZE,
-					finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return pks.length;
 	}
-
-	public static final FinderPath FINDER_PATH_CONTAINS_TEAM = new FinderPath(com.liferay.portal.model.impl.TeamModelImpl.ENTITY_CACHE_ENABLED,
-			UserModelImpl.FINDER_CACHE_ENABLED_USERS_TEAMS, Boolean.class,
-			UserModelImpl.MAPPING_TABLE_USERS_TEAMS_NAME, "containsTeam",
-			new String[] { Long.class.getName(), Long.class.getName() });
 
 	/**
 	 * Returns <code>true</code> if the team is associated with the user.
@@ -9215,27 +8325,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public boolean containsTeam(long pk, long teamPK) throws SystemException {
-		Object[] finderArgs = new Object[] { pk, teamPK };
-
-		Boolean value = (Boolean)FinderCacheUtil.getResult(FINDER_PATH_CONTAINS_TEAM,
-				finderArgs, this);
-
-		if (value == null) {
-			try {
-				value = Boolean.valueOf(containsTeam.contains(pk, teamPK));
-
-				FinderCacheUtil.putResult(FINDER_PATH_CONTAINS_TEAM,
-					finderArgs, value);
-			}
-			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_CONTAINS_TEAM,
-					finderArgs);
-
-				throw processException(e);
-			}
-		}
-
-		return value.booleanValue();
+		return userToTeamMappingTable.containsMapping(pk, teamPK);
 	}
 
 	/**
@@ -9264,15 +8354,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public void addTeam(long pk, long teamPK) throws SystemException {
-		try {
-			addTeam.add(pk, teamPK);
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(UserModelImpl.MAPPING_TABLE_USERS_TEAMS_NAME);
-		}
+		userToTeamMappingTable.addMapping(pk, teamPK);
 	}
 
 	/**
@@ -9285,15 +8367,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	@Override
 	public void addTeam(long pk, com.liferay.portal.model.Team team)
 		throws SystemException {
-		try {
-			addTeam.add(pk, team.getPrimaryKey());
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(UserModelImpl.MAPPING_TABLE_USERS_TEAMS_NAME);
-		}
+		userToTeamMappingTable.addMapping(pk, team.getPrimaryKey());
 	}
 
 	/**
@@ -9305,16 +8379,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public void addTeams(long pk, long[] teamPKs) throws SystemException {
-		try {
-			for (long teamPK : teamPKs) {
-				addTeam.add(pk, teamPK);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(UserModelImpl.MAPPING_TABLE_USERS_TEAMS_NAME);
+		for (long teamPK : teamPKs) {
+			userToTeamMappingTable.addMapping(pk, teamPK);
 		}
 	}
 
@@ -9328,16 +8394,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	@Override
 	public void addTeams(long pk, List<com.liferay.portal.model.Team> teams)
 		throws SystemException {
-		try {
-			for (com.liferay.portal.model.Team team : teams) {
-				addTeam.add(pk, team.getPrimaryKey());
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(UserModelImpl.MAPPING_TABLE_USERS_TEAMS_NAME);
+		for (com.liferay.portal.model.Team team : teams) {
+			userToTeamMappingTable.addMapping(pk, team.getPrimaryKey());
 		}
 	}
 
@@ -9349,15 +8407,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public void clearTeams(long pk) throws SystemException {
-		try {
-			clearTeams.clear(pk);
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(UserModelImpl.MAPPING_TABLE_USERS_TEAMS_NAME);
-		}
+		userToTeamMappingTable.deleteByLeftPk(pk);
 	}
 
 	/**
@@ -9369,15 +8419,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public void removeTeam(long pk, long teamPK) throws SystemException {
-		try {
-			removeTeam.remove(pk, teamPK);
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(UserModelImpl.MAPPING_TABLE_USERS_TEAMS_NAME);
-		}
+		userToTeamMappingTable.deleteMapping(pk, teamPK);
 	}
 
 	/**
@@ -9390,15 +8432,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	@Override
 	public void removeTeam(long pk, com.liferay.portal.model.Team team)
 		throws SystemException {
-		try {
-			removeTeam.remove(pk, team.getPrimaryKey());
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(UserModelImpl.MAPPING_TABLE_USERS_TEAMS_NAME);
-		}
+		userToTeamMappingTable.deleteMapping(pk, team.getPrimaryKey());
 	}
 
 	/**
@@ -9410,16 +8444,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public void removeTeams(long pk, long[] teamPKs) throws SystemException {
-		try {
-			for (long teamPK : teamPKs) {
-				removeTeam.remove(pk, teamPK);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(UserModelImpl.MAPPING_TABLE_USERS_TEAMS_NAME);
+		for (long teamPK : teamPKs) {
+			userToTeamMappingTable.deleteMapping(pk, teamPK);
 		}
 	}
 
@@ -9433,16 +8459,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	@Override
 	public void removeTeams(long pk, List<com.liferay.portal.model.Team> teams)
 		throws SystemException {
-		try {
-			for (com.liferay.portal.model.Team team : teams) {
-				removeTeam.remove(pk, team.getPrimaryKey());
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(UserModelImpl.MAPPING_TABLE_USERS_TEAMS_NAME);
+		for (com.liferay.portal.model.Team team : teams) {
+			userToTeamMappingTable.deleteMapping(pk, team.getPrimaryKey());
 		}
 	}
 
@@ -9455,26 +8473,10 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public void setTeams(long pk, long[] teamPKs) throws SystemException {
-		try {
-			Set<Long> teamPKSet = SetUtil.fromArray(teamPKs);
+		userToTeamMappingTable.deleteByLeftPk(pk);
 
-			List<com.liferay.portal.model.Team> teams = getTeams(pk);
-
-			for (com.liferay.portal.model.Team team : teams) {
-				if (!teamPKSet.remove(team.getPrimaryKey())) {
-					removeTeam.remove(pk, team.getPrimaryKey());
-				}
-			}
-
-			for (Long teamPK : teamPKSet) {
-				addTeam.add(pk, teamPK);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(UserModelImpl.MAPPING_TABLE_USERS_TEAMS_NAME);
+		for (Long teamPK : teamPKs) {
+			userToTeamMappingTable.addMapping(pk, teamPK);
 		}
 	}
 
@@ -9539,19 +8541,6 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 		return getUserGroups(pk, start, end, null);
 	}
 
-	public static final FinderPath FINDER_PATH_GET_USERGROUPS = new FinderPath(com.liferay.portal.model.impl.UserGroupModelImpl.ENTITY_CACHE_ENABLED,
-			UserModelImpl.FINDER_CACHE_ENABLED_USERS_USERGROUPS,
-			com.liferay.portal.model.impl.UserGroupImpl.class,
-			UserModelImpl.MAPPING_TABLE_USERS_USERGROUPS_NAME, "getUserGroups",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			});
-
-	static {
-		FINDER_PATH_GET_USERGROUPS.setCacheKeyGeneratorCacheName(null);
-	}
-
 	/**
 	 * Returns an ordered range of all the user groups associated with the user.
 	 *
@@ -9570,89 +8559,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	public List<com.liferay.portal.model.UserGroup> getUserGroups(long pk,
 		int start, int end, OrderByComparator orderByComparator)
 		throws SystemException {
-		boolean pagination = true;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-			pagination = false;
-			finderArgs = new Object[] { pk };
-		}
-		else {
-			finderArgs = new Object[] { pk, start, end, orderByComparator };
-		}
-
-		List<com.liferay.portal.model.UserGroup> list = (List<com.liferay.portal.model.UserGroup>)FinderCacheUtil.getResult(FINDER_PATH_GET_USERGROUPS,
-				finderArgs, this);
-
-		if (list == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				String sql = null;
-
-				if (orderByComparator != null) {
-					sql = _SQL_GETUSERGROUPS.concat(ORDER_BY_CLAUSE)
-											.concat(orderByComparator.getOrderBy());
-				}
-				else {
-					sql = _SQL_GETUSERGROUPS;
-
-					if (pagination) {
-						sql = sql.concat(com.liferay.portal.model.impl.UserGroupModelImpl.ORDER_BY_SQL);
-					}
-				}
-
-				SQLQuery q = session.createSQLQuery(sql);
-
-				q.addEntity("UserGroup",
-					com.liferay.portal.model.impl.UserGroupImpl.class);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(pk);
-
-				if (!pagination) {
-					list = (List<com.liferay.portal.model.UserGroup>)QueryUtil.list(q,
-							getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = new UnmodifiableList<com.liferay.portal.model.UserGroup>(list);
-				}
-				else {
-					list = (List<com.liferay.portal.model.UserGroup>)QueryUtil.list(q,
-							getDialect(), start, end);
-				}
-
-				userGroupPersistence.cacheResult(list);
-
-				FinderCacheUtil.putResult(FINDER_PATH_GET_USERGROUPS,
-					finderArgs, list);
-			}
-			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_GET_USERGROUPS,
-					finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
-	}
-
-	public static final FinderPath FINDER_PATH_GET_USERGROUPS_SIZE = new FinderPath(com.liferay.portal.model.impl.UserGroupModelImpl.ENTITY_CACHE_ENABLED,
-			UserModelImpl.FINDER_CACHE_ENABLED_USERS_USERGROUPS, Long.class,
-			UserModelImpl.MAPPING_TABLE_USERS_USERGROUPS_NAME,
-			"getUserGroupsSize", new String[] { Long.class.getName() });
-
-	static {
-		FINDER_PATH_GET_USERGROUPS_SIZE.setCacheKeyGeneratorCacheName(null);
+		return userToUserGroupMappingTable.findByLeftPkAsEntities(pk, start,
+			end, orderByComparator);
 	}
 
 	/**
@@ -9664,50 +8572,10 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public int getUserGroupsSize(long pk) throws SystemException {
-		Object[] finderArgs = new Object[] { pk };
+		long[] pks = userToUserGroupMappingTable.findByLeftPk(pk);
 
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_GET_USERGROUPS_SIZE,
-				finderArgs, this);
-
-		if (count == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				SQLQuery q = session.createSQLQuery(_SQL_GETUSERGROUPSSIZE);
-
-				q.addScalar(COUNT_COLUMN_NAME,
-					com.liferay.portal.kernel.dao.orm.Type.LONG);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(pk);
-
-				count = (Long)q.uniqueResult();
-
-				FinderCacheUtil.putResult(FINDER_PATH_GET_USERGROUPS_SIZE,
-					finderArgs, count);
-			}
-			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_GET_USERGROUPS_SIZE,
-					finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return pks.length;
 	}
-
-	public static final FinderPath FINDER_PATH_CONTAINS_USERGROUP = new FinderPath(com.liferay.portal.model.impl.UserGroupModelImpl.ENTITY_CACHE_ENABLED,
-			UserModelImpl.FINDER_CACHE_ENABLED_USERS_USERGROUPS, Boolean.class,
-			UserModelImpl.MAPPING_TABLE_USERS_USERGROUPS_NAME,
-			"containsUserGroup",
-			new String[] { Long.class.getName(), Long.class.getName() });
 
 	/**
 	 * Returns <code>true</code> if the user group is associated with the user.
@@ -9720,28 +8588,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	@Override
 	public boolean containsUserGroup(long pk, long userGroupPK)
 		throws SystemException {
-		Object[] finderArgs = new Object[] { pk, userGroupPK };
-
-		Boolean value = (Boolean)FinderCacheUtil.getResult(FINDER_PATH_CONTAINS_USERGROUP,
-				finderArgs, this);
-
-		if (value == null) {
-			try {
-				value = Boolean.valueOf(containsUserGroup.contains(pk,
-							userGroupPK));
-
-				FinderCacheUtil.putResult(FINDER_PATH_CONTAINS_USERGROUP,
-					finderArgs, value);
-			}
-			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_CONTAINS_USERGROUP,
-					finderArgs);
-
-				throw processException(e);
-			}
-		}
-
-		return value.booleanValue();
+		return userToUserGroupMappingTable.containsMapping(pk, userGroupPK);
 	}
 
 	/**
@@ -9771,15 +8618,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	@Override
 	public void addUserGroup(long pk, long userGroupPK)
 		throws SystemException {
-		try {
-			addUserGroup.add(pk, userGroupPK);
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(UserModelImpl.MAPPING_TABLE_USERS_USERGROUPS_NAME);
-		}
+		userToUserGroupMappingTable.addMapping(pk, userGroupPK);
 	}
 
 	/**
@@ -9792,15 +8631,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	@Override
 	public void addUserGroup(long pk,
 		com.liferay.portal.model.UserGroup userGroup) throws SystemException {
-		try {
-			addUserGroup.add(pk, userGroup.getPrimaryKey());
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(UserModelImpl.MAPPING_TABLE_USERS_USERGROUPS_NAME);
-		}
+		userToUserGroupMappingTable.addMapping(pk, userGroup.getPrimaryKey());
 	}
 
 	/**
@@ -9813,16 +8644,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	@Override
 	public void addUserGroups(long pk, long[] userGroupPKs)
 		throws SystemException {
-		try {
-			for (long userGroupPK : userGroupPKs) {
-				addUserGroup.add(pk, userGroupPK);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(UserModelImpl.MAPPING_TABLE_USERS_USERGROUPS_NAME);
+		for (long userGroupPK : userGroupPKs) {
+			userToUserGroupMappingTable.addMapping(pk, userGroupPK);
 		}
 	}
 
@@ -9837,16 +8660,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	public void addUserGroups(long pk,
 		List<com.liferay.portal.model.UserGroup> userGroups)
 		throws SystemException {
-		try {
-			for (com.liferay.portal.model.UserGroup userGroup : userGroups) {
-				addUserGroup.add(pk, userGroup.getPrimaryKey());
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(UserModelImpl.MAPPING_TABLE_USERS_USERGROUPS_NAME);
+		for (com.liferay.portal.model.UserGroup userGroup : userGroups) {
+			userToUserGroupMappingTable.addMapping(pk, userGroup.getPrimaryKey());
 		}
 	}
 
@@ -9858,15 +8673,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	 */
 	@Override
 	public void clearUserGroups(long pk) throws SystemException {
-		try {
-			clearUserGroups.clear(pk);
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(UserModelImpl.MAPPING_TABLE_USERS_USERGROUPS_NAME);
-		}
+		userToUserGroupMappingTable.deleteByLeftPk(pk);
 	}
 
 	/**
@@ -9879,15 +8686,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	@Override
 	public void removeUserGroup(long pk, long userGroupPK)
 		throws SystemException {
-		try {
-			removeUserGroup.remove(pk, userGroupPK);
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(UserModelImpl.MAPPING_TABLE_USERS_USERGROUPS_NAME);
-		}
+		userToUserGroupMappingTable.deleteMapping(pk, userGroupPK);
 	}
 
 	/**
@@ -9900,15 +8699,7 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	@Override
 	public void removeUserGroup(long pk,
 		com.liferay.portal.model.UserGroup userGroup) throws SystemException {
-		try {
-			removeUserGroup.remove(pk, userGroup.getPrimaryKey());
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(UserModelImpl.MAPPING_TABLE_USERS_USERGROUPS_NAME);
-		}
+		userToUserGroupMappingTable.deleteMapping(pk, userGroup.getPrimaryKey());
 	}
 
 	/**
@@ -9921,16 +8712,8 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	@Override
 	public void removeUserGroups(long pk, long[] userGroupPKs)
 		throws SystemException {
-		try {
-			for (long userGroupPK : userGroupPKs) {
-				removeUserGroup.remove(pk, userGroupPK);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(UserModelImpl.MAPPING_TABLE_USERS_USERGROUPS_NAME);
+		for (long userGroupPK : userGroupPKs) {
+			userToUserGroupMappingTable.deleteMapping(pk, userGroupPK);
 		}
 	}
 
@@ -9945,16 +8728,9 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	public void removeUserGroups(long pk,
 		List<com.liferay.portal.model.UserGroup> userGroups)
 		throws SystemException {
-		try {
-			for (com.liferay.portal.model.UserGroup userGroup : userGroups) {
-				removeUserGroup.remove(pk, userGroup.getPrimaryKey());
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(UserModelImpl.MAPPING_TABLE_USERS_USERGROUPS_NAME);
+		for (com.liferay.portal.model.UserGroup userGroup : userGroups) {
+			userToUserGroupMappingTable.deleteMapping(pk,
+				userGroup.getPrimaryKey());
 		}
 	}
 
@@ -9968,26 +8744,10 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 	@Override
 	public void setUserGroups(long pk, long[] userGroupPKs)
 		throws SystemException {
-		try {
-			Set<Long> userGroupPKSet = SetUtil.fromArray(userGroupPKs);
+		userToUserGroupMappingTable.deleteByLeftPk(pk);
 
-			List<com.liferay.portal.model.UserGroup> userGroups = getUserGroups(pk);
-
-			for (com.liferay.portal.model.UserGroup userGroup : userGroups) {
-				if (!userGroupPKSet.remove(userGroup.getPrimaryKey())) {
-					removeUserGroup.remove(pk, userGroup.getPrimaryKey());
-				}
-			}
-
-			for (Long userGroupPK : userGroupPKSet) {
-				addUserGroup.add(pk, userGroupPK);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(UserModelImpl.MAPPING_TABLE_USERS_USERGROUPS_NAME);
+		for (Long userGroupPK : userGroupPKs) {
+			userToUserGroupMappingTable.addMapping(pk, userGroupPK);
 		}
 	}
 
@@ -10050,35 +8810,20 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 			}
 		}
 
-		containsGroup = new ContainsGroup();
+		userToGroupMappingTable = MappingTableUtil.getMappingTable("Users_Groups",
+				"userId", "groupId", this, groupPersistence);
 
-		addGroup = new AddGroup();
-		clearGroups = new ClearGroups();
-		removeGroup = new RemoveGroup();
+		userToOrganizationMappingTable = MappingTableUtil.getMappingTable("Users_Orgs",
+				"userId", "organizationId", this, organizationPersistence);
 
-		containsOrganization = new ContainsOrganization();
+		userToRoleMappingTable = MappingTableUtil.getMappingTable("Users_Roles",
+				"userId", "roleId", this, rolePersistence);
 
-		addOrganization = new AddOrganization();
-		clearOrganizations = new ClearOrganizations();
-		removeOrganization = new RemoveOrganization();
+		userToTeamMappingTable = MappingTableUtil.getMappingTable("Users_Teams",
+				"userId", "teamId", this, teamPersistence);
 
-		containsRole = new ContainsRole();
-
-		addRole = new AddRole();
-		clearRoles = new ClearRoles();
-		removeRole = new RemoveRole();
-
-		containsTeam = new ContainsTeam();
-
-		addTeam = new AddTeam();
-		clearTeams = new ClearTeams();
-		removeTeam = new RemoveTeam();
-
-		containsUserGroup = new ContainsUserGroup();
-
-		addUserGroup = new AddUserGroup();
-		clearUserGroups = new ClearUserGroups();
-		removeUserGroup = new RemoveUserGroup();
+		userToUserGroupMappingTable = MappingTableUtil.getMappingTable("Users_UserGroups",
+				"userId", "userGroupId", this, userGroupPersistence);
 	}
 
 	public void destroy() {
@@ -10090,835 +8835,23 @@ public class UserPersistenceImpl extends BasePersistenceImpl<User>
 
 	@BeanReference(type = GroupPersistence.class)
 	protected GroupPersistence groupPersistence;
-	protected ContainsGroup containsGroup;
-	protected AddGroup addGroup;
-	protected ClearGroups clearGroups;
-	protected RemoveGroup removeGroup;
+	protected MappingTable<User, com.liferay.portal.model.Group> userToGroupMappingTable;
 	@BeanReference(type = OrganizationPersistence.class)
 	protected OrganizationPersistence organizationPersistence;
-	protected ContainsOrganization containsOrganization;
-	protected AddOrganization addOrganization;
-	protected ClearOrganizations clearOrganizations;
-	protected RemoveOrganization removeOrganization;
+	protected MappingTable<User, com.liferay.portal.model.Organization> userToOrganizationMappingTable;
 	@BeanReference(type = RolePersistence.class)
 	protected RolePersistence rolePersistence;
-	protected ContainsRole containsRole;
-	protected AddRole addRole;
-	protected ClearRoles clearRoles;
-	protected RemoveRole removeRole;
+	protected MappingTable<User, com.liferay.portal.model.Role> userToRoleMappingTable;
 	@BeanReference(type = TeamPersistence.class)
 	protected TeamPersistence teamPersistence;
-	protected ContainsTeam containsTeam;
-	protected AddTeam addTeam;
-	protected ClearTeams clearTeams;
-	protected RemoveTeam removeTeam;
+	protected MappingTable<User, com.liferay.portal.model.Team> userToTeamMappingTable;
 	@BeanReference(type = UserGroupPersistence.class)
 	protected UserGroupPersistence userGroupPersistence;
-	protected ContainsUserGroup containsUserGroup;
-	protected AddUserGroup addUserGroup;
-	protected ClearUserGroups clearUserGroups;
-	protected RemoveUserGroup removeUserGroup;
-
-	protected class ContainsGroup {
-		protected ContainsGroup() {
-			_mappingSqlQuery = MappingSqlQueryFactoryUtil.getMappingSqlQuery(getDataSource(),
-					"SELECT 1 FROM Users_Groups WHERE userId = ? AND groupId = ?",
-					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT },
-					RowMapper.COUNT);
-		}
-
-		protected boolean contains(long userId, long groupId) {
-			List<Integer> results = _mappingSqlQuery.execute(new Object[] {
-						new Long(userId), new Long(groupId)
-					});
-
-			if (results.isEmpty()) {
-				return false;
-			}
-
-			return true;
-		}
-
-		private MappingSqlQuery<Integer> _mappingSqlQuery;
-	}
-
-	protected class AddGroup {
-		protected AddGroup() {
-			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
-					"INSERT INTO Users_Groups (userId, groupId) VALUES (?, ?)",
-					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT });
-		}
-
-		protected void add(long userId, long groupId) throws SystemException {
-			if (!containsGroup.contains(userId, groupId)) {
-				ModelListener<com.liferay.portal.model.Group>[] groupListeners = groupPersistence.getListeners();
-
-				for (ModelListener<User> listener : listeners) {
-					listener.onBeforeAddAssociation(userId,
-						com.liferay.portal.model.Group.class.getName(), groupId);
-				}
-
-				for (ModelListener<com.liferay.portal.model.Group> listener : groupListeners) {
-					listener.onBeforeAddAssociation(groupId,
-						User.class.getName(), userId);
-				}
-
-				_sqlUpdate.update(new Object[] {
-						new Long(userId), new Long(groupId)
-					});
-
-				for (ModelListener<User> listener : listeners) {
-					listener.onAfterAddAssociation(userId,
-						com.liferay.portal.model.Group.class.getName(), groupId);
-				}
-
-				for (ModelListener<com.liferay.portal.model.Group> listener : groupListeners) {
-					listener.onAfterAddAssociation(groupId,
-						User.class.getName(), userId);
-				}
-			}
-		}
-
-		private SqlUpdate _sqlUpdate;
-	}
-
-	protected class ClearGroups {
-		protected ClearGroups() {
-			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
-					"DELETE FROM Users_Groups WHERE userId = ?",
-					new int[] { java.sql.Types.BIGINT });
-		}
-
-		protected void clear(long userId) throws SystemException {
-			ModelListener<com.liferay.portal.model.Group>[] groupListeners = groupPersistence.getListeners();
-
-			List<com.liferay.portal.model.Group> groups = null;
-
-			if ((listeners.length > 0) || (groupListeners.length > 0)) {
-				groups = getGroups(userId);
-
-				for (com.liferay.portal.model.Group group : groups) {
-					for (ModelListener<User> listener : listeners) {
-						listener.onBeforeRemoveAssociation(userId,
-							com.liferay.portal.model.Group.class.getName(),
-							group.getPrimaryKey());
-					}
-
-					for (ModelListener<com.liferay.portal.model.Group> listener : groupListeners) {
-						listener.onBeforeRemoveAssociation(group.getPrimaryKey(),
-							User.class.getName(), userId);
-					}
-				}
-			}
-
-			_sqlUpdate.update(new Object[] { new Long(userId) });
-
-			if ((listeners.length > 0) || (groupListeners.length > 0)) {
-				for (com.liferay.portal.model.Group group : groups) {
-					for (ModelListener<User> listener : listeners) {
-						listener.onAfterRemoveAssociation(userId,
-							com.liferay.portal.model.Group.class.getName(),
-							group.getPrimaryKey());
-					}
-
-					for (ModelListener<com.liferay.portal.model.Group> listener : groupListeners) {
-						listener.onAfterRemoveAssociation(group.getPrimaryKey(),
-							User.class.getName(), userId);
-					}
-				}
-			}
-		}
-
-		private SqlUpdate _sqlUpdate;
-	}
-
-	protected class RemoveGroup {
-		protected RemoveGroup() {
-			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
-					"DELETE FROM Users_Groups WHERE userId = ? AND groupId = ?",
-					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT });
-		}
-
-		protected void remove(long userId, long groupId)
-			throws SystemException {
-			if (containsGroup.contains(userId, groupId)) {
-				ModelListener<com.liferay.portal.model.Group>[] groupListeners = groupPersistence.getListeners();
-
-				for (ModelListener<User> listener : listeners) {
-					listener.onBeforeRemoveAssociation(userId,
-						com.liferay.portal.model.Group.class.getName(), groupId);
-				}
-
-				for (ModelListener<com.liferay.portal.model.Group> listener : groupListeners) {
-					listener.onBeforeRemoveAssociation(groupId,
-						User.class.getName(), userId);
-				}
-
-				_sqlUpdate.update(new Object[] {
-						new Long(userId), new Long(groupId)
-					});
-
-				for (ModelListener<User> listener : listeners) {
-					listener.onAfterRemoveAssociation(userId,
-						com.liferay.portal.model.Group.class.getName(), groupId);
-				}
-
-				for (ModelListener<com.liferay.portal.model.Group> listener : groupListeners) {
-					listener.onAfterRemoveAssociation(groupId,
-						User.class.getName(), userId);
-				}
-			}
-		}
-
-		private SqlUpdate _sqlUpdate;
-	}
-
-	protected class ContainsOrganization {
-		protected ContainsOrganization() {
-			_mappingSqlQuery = MappingSqlQueryFactoryUtil.getMappingSqlQuery(getDataSource(),
-					"SELECT 1 FROM Users_Orgs WHERE userId = ? AND organizationId = ?",
-					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT },
-					RowMapper.COUNT);
-		}
-
-		protected boolean contains(long userId, long organizationId) {
-			List<Integer> results = _mappingSqlQuery.execute(new Object[] {
-						new Long(userId), new Long(organizationId)
-					});
-
-			if (results.isEmpty()) {
-				return false;
-			}
-
-			return true;
-		}
-
-		private MappingSqlQuery<Integer> _mappingSqlQuery;
-	}
-
-	protected class AddOrganization {
-		protected AddOrganization() {
-			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
-					"INSERT INTO Users_Orgs (userId, organizationId) VALUES (?, ?)",
-					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT });
-		}
-
-		protected void add(long userId, long organizationId)
-			throws SystemException {
-			if (!containsOrganization.contains(userId, organizationId)) {
-				ModelListener<com.liferay.portal.model.Organization>[] organizationListeners =
-					organizationPersistence.getListeners();
-
-				for (ModelListener<User> listener : listeners) {
-					listener.onBeforeAddAssociation(userId,
-						com.liferay.portal.model.Organization.class.getName(),
-						organizationId);
-				}
-
-				for (ModelListener<com.liferay.portal.model.Organization> listener : organizationListeners) {
-					listener.onBeforeAddAssociation(organizationId,
-						User.class.getName(), userId);
-				}
-
-				_sqlUpdate.update(new Object[] {
-						new Long(userId), new Long(organizationId)
-					});
-
-				for (ModelListener<User> listener : listeners) {
-					listener.onAfterAddAssociation(userId,
-						com.liferay.portal.model.Organization.class.getName(),
-						organizationId);
-				}
-
-				for (ModelListener<com.liferay.portal.model.Organization> listener : organizationListeners) {
-					listener.onAfterAddAssociation(organizationId,
-						User.class.getName(), userId);
-				}
-			}
-		}
-
-		private SqlUpdate _sqlUpdate;
-	}
-
-	protected class ClearOrganizations {
-		protected ClearOrganizations() {
-			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
-					"DELETE FROM Users_Orgs WHERE userId = ?",
-					new int[] { java.sql.Types.BIGINT });
-		}
-
-		protected void clear(long userId) throws SystemException {
-			ModelListener<com.liferay.portal.model.Organization>[] organizationListeners =
-				organizationPersistence.getListeners();
-
-			List<com.liferay.portal.model.Organization> organizations = null;
-
-			if ((listeners.length > 0) || (organizationListeners.length > 0)) {
-				organizations = getOrganizations(userId);
-
-				for (com.liferay.portal.model.Organization organization : organizations) {
-					for (ModelListener<User> listener : listeners) {
-						listener.onBeforeRemoveAssociation(userId,
-							com.liferay.portal.model.Organization.class.getName(),
-							organization.getPrimaryKey());
-					}
-
-					for (ModelListener<com.liferay.portal.model.Organization> listener : organizationListeners) {
-						listener.onBeforeRemoveAssociation(organization.getPrimaryKey(),
-							User.class.getName(), userId);
-					}
-				}
-			}
-
-			_sqlUpdate.update(new Object[] { new Long(userId) });
-
-			if ((listeners.length > 0) || (organizationListeners.length > 0)) {
-				for (com.liferay.portal.model.Organization organization : organizations) {
-					for (ModelListener<User> listener : listeners) {
-						listener.onAfterRemoveAssociation(userId,
-							com.liferay.portal.model.Organization.class.getName(),
-							organization.getPrimaryKey());
-					}
-
-					for (ModelListener<com.liferay.portal.model.Organization> listener : organizationListeners) {
-						listener.onAfterRemoveAssociation(organization.getPrimaryKey(),
-							User.class.getName(), userId);
-					}
-				}
-			}
-		}
-
-		private SqlUpdate _sqlUpdate;
-	}
-
-	protected class RemoveOrganization {
-		protected RemoveOrganization() {
-			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
-					"DELETE FROM Users_Orgs WHERE userId = ? AND organizationId = ?",
-					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT });
-		}
-
-		protected void remove(long userId, long organizationId)
-			throws SystemException {
-			if (containsOrganization.contains(userId, organizationId)) {
-				ModelListener<com.liferay.portal.model.Organization>[] organizationListeners =
-					organizationPersistence.getListeners();
-
-				for (ModelListener<User> listener : listeners) {
-					listener.onBeforeRemoveAssociation(userId,
-						com.liferay.portal.model.Organization.class.getName(),
-						organizationId);
-				}
-
-				for (ModelListener<com.liferay.portal.model.Organization> listener : organizationListeners) {
-					listener.onBeforeRemoveAssociation(organizationId,
-						User.class.getName(), userId);
-				}
-
-				_sqlUpdate.update(new Object[] {
-						new Long(userId), new Long(organizationId)
-					});
-
-				for (ModelListener<User> listener : listeners) {
-					listener.onAfterRemoveAssociation(userId,
-						com.liferay.portal.model.Organization.class.getName(),
-						organizationId);
-				}
-
-				for (ModelListener<com.liferay.portal.model.Organization> listener : organizationListeners) {
-					listener.onAfterRemoveAssociation(organizationId,
-						User.class.getName(), userId);
-				}
-			}
-		}
-
-		private SqlUpdate _sqlUpdate;
-	}
-
-	protected class ContainsRole {
-		protected ContainsRole() {
-			_mappingSqlQuery = MappingSqlQueryFactoryUtil.getMappingSqlQuery(getDataSource(),
-					"SELECT 1 FROM Users_Roles WHERE userId = ? AND roleId = ?",
-					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT },
-					RowMapper.COUNT);
-		}
-
-		protected boolean contains(long userId, long roleId) {
-			List<Integer> results = _mappingSqlQuery.execute(new Object[] {
-						new Long(userId), new Long(roleId)
-					});
-
-			if (results.isEmpty()) {
-				return false;
-			}
-
-			return true;
-		}
-
-		private MappingSqlQuery<Integer> _mappingSqlQuery;
-	}
-
-	protected class AddRole {
-		protected AddRole() {
-			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
-					"INSERT INTO Users_Roles (userId, roleId) VALUES (?, ?)",
-					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT });
-		}
-
-		protected void add(long userId, long roleId) throws SystemException {
-			if (!containsRole.contains(userId, roleId)) {
-				ModelListener<com.liferay.portal.model.Role>[] roleListeners = rolePersistence.getListeners();
-
-				for (ModelListener<User> listener : listeners) {
-					listener.onBeforeAddAssociation(userId,
-						com.liferay.portal.model.Role.class.getName(), roleId);
-				}
-
-				for (ModelListener<com.liferay.portal.model.Role> listener : roleListeners) {
-					listener.onBeforeAddAssociation(roleId,
-						User.class.getName(), userId);
-				}
-
-				_sqlUpdate.update(new Object[] {
-						new Long(userId), new Long(roleId)
-					});
-
-				for (ModelListener<User> listener : listeners) {
-					listener.onAfterAddAssociation(userId,
-						com.liferay.portal.model.Role.class.getName(), roleId);
-				}
-
-				for (ModelListener<com.liferay.portal.model.Role> listener : roleListeners) {
-					listener.onAfterAddAssociation(roleId,
-						User.class.getName(), userId);
-				}
-			}
-		}
-
-		private SqlUpdate _sqlUpdate;
-	}
-
-	protected class ClearRoles {
-		protected ClearRoles() {
-			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
-					"DELETE FROM Users_Roles WHERE userId = ?",
-					new int[] { java.sql.Types.BIGINT });
-		}
-
-		protected void clear(long userId) throws SystemException {
-			ModelListener<com.liferay.portal.model.Role>[] roleListeners = rolePersistence.getListeners();
-
-			List<com.liferay.portal.model.Role> roles = null;
-
-			if ((listeners.length > 0) || (roleListeners.length > 0)) {
-				roles = getRoles(userId);
-
-				for (com.liferay.portal.model.Role role : roles) {
-					for (ModelListener<User> listener : listeners) {
-						listener.onBeforeRemoveAssociation(userId,
-							com.liferay.portal.model.Role.class.getName(),
-							role.getPrimaryKey());
-					}
-
-					for (ModelListener<com.liferay.portal.model.Role> listener : roleListeners) {
-						listener.onBeforeRemoveAssociation(role.getPrimaryKey(),
-							User.class.getName(), userId);
-					}
-				}
-			}
-
-			_sqlUpdate.update(new Object[] { new Long(userId) });
-
-			if ((listeners.length > 0) || (roleListeners.length > 0)) {
-				for (com.liferay.portal.model.Role role : roles) {
-					for (ModelListener<User> listener : listeners) {
-						listener.onAfterRemoveAssociation(userId,
-							com.liferay.portal.model.Role.class.getName(),
-							role.getPrimaryKey());
-					}
-
-					for (ModelListener<com.liferay.portal.model.Role> listener : roleListeners) {
-						listener.onAfterRemoveAssociation(role.getPrimaryKey(),
-							User.class.getName(), userId);
-					}
-				}
-			}
-		}
-
-		private SqlUpdate _sqlUpdate;
-	}
-
-	protected class RemoveRole {
-		protected RemoveRole() {
-			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
-					"DELETE FROM Users_Roles WHERE userId = ? AND roleId = ?",
-					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT });
-		}
-
-		protected void remove(long userId, long roleId)
-			throws SystemException {
-			if (containsRole.contains(userId, roleId)) {
-				ModelListener<com.liferay.portal.model.Role>[] roleListeners = rolePersistence.getListeners();
-
-				for (ModelListener<User> listener : listeners) {
-					listener.onBeforeRemoveAssociation(userId,
-						com.liferay.portal.model.Role.class.getName(), roleId);
-				}
-
-				for (ModelListener<com.liferay.portal.model.Role> listener : roleListeners) {
-					listener.onBeforeRemoveAssociation(roleId,
-						User.class.getName(), userId);
-				}
-
-				_sqlUpdate.update(new Object[] {
-						new Long(userId), new Long(roleId)
-					});
-
-				for (ModelListener<User> listener : listeners) {
-					listener.onAfterRemoveAssociation(userId,
-						com.liferay.portal.model.Role.class.getName(), roleId);
-				}
-
-				for (ModelListener<com.liferay.portal.model.Role> listener : roleListeners) {
-					listener.onAfterRemoveAssociation(roleId,
-						User.class.getName(), userId);
-				}
-			}
-		}
-
-		private SqlUpdate _sqlUpdate;
-	}
-
-	protected class ContainsTeam {
-		protected ContainsTeam() {
-			_mappingSqlQuery = MappingSqlQueryFactoryUtil.getMappingSqlQuery(getDataSource(),
-					"SELECT 1 FROM Users_Teams WHERE userId = ? AND teamId = ?",
-					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT },
-					RowMapper.COUNT);
-		}
-
-		protected boolean contains(long userId, long teamId) {
-			List<Integer> results = _mappingSqlQuery.execute(new Object[] {
-						new Long(userId), new Long(teamId)
-					});
-
-			if (results.isEmpty()) {
-				return false;
-			}
-
-			return true;
-		}
-
-		private MappingSqlQuery<Integer> _mappingSqlQuery;
-	}
-
-	protected class AddTeam {
-		protected AddTeam() {
-			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
-					"INSERT INTO Users_Teams (userId, teamId) VALUES (?, ?)",
-					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT });
-		}
-
-		protected void add(long userId, long teamId) throws SystemException {
-			if (!containsTeam.contains(userId, teamId)) {
-				ModelListener<com.liferay.portal.model.Team>[] teamListeners = teamPersistence.getListeners();
-
-				for (ModelListener<User> listener : listeners) {
-					listener.onBeforeAddAssociation(userId,
-						com.liferay.portal.model.Team.class.getName(), teamId);
-				}
-
-				for (ModelListener<com.liferay.portal.model.Team> listener : teamListeners) {
-					listener.onBeforeAddAssociation(teamId,
-						User.class.getName(), userId);
-				}
-
-				_sqlUpdate.update(new Object[] {
-						new Long(userId), new Long(teamId)
-					});
-
-				for (ModelListener<User> listener : listeners) {
-					listener.onAfterAddAssociation(userId,
-						com.liferay.portal.model.Team.class.getName(), teamId);
-				}
-
-				for (ModelListener<com.liferay.portal.model.Team> listener : teamListeners) {
-					listener.onAfterAddAssociation(teamId,
-						User.class.getName(), userId);
-				}
-			}
-		}
-
-		private SqlUpdate _sqlUpdate;
-	}
-
-	protected class ClearTeams {
-		protected ClearTeams() {
-			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
-					"DELETE FROM Users_Teams WHERE userId = ?",
-					new int[] { java.sql.Types.BIGINT });
-		}
-
-		protected void clear(long userId) throws SystemException {
-			ModelListener<com.liferay.portal.model.Team>[] teamListeners = teamPersistence.getListeners();
-
-			List<com.liferay.portal.model.Team> teams = null;
-
-			if ((listeners.length > 0) || (teamListeners.length > 0)) {
-				teams = getTeams(userId);
-
-				for (com.liferay.portal.model.Team team : teams) {
-					for (ModelListener<User> listener : listeners) {
-						listener.onBeforeRemoveAssociation(userId,
-							com.liferay.portal.model.Team.class.getName(),
-							team.getPrimaryKey());
-					}
-
-					for (ModelListener<com.liferay.portal.model.Team> listener : teamListeners) {
-						listener.onBeforeRemoveAssociation(team.getPrimaryKey(),
-							User.class.getName(), userId);
-					}
-				}
-			}
-
-			_sqlUpdate.update(new Object[] { new Long(userId) });
-
-			if ((listeners.length > 0) || (teamListeners.length > 0)) {
-				for (com.liferay.portal.model.Team team : teams) {
-					for (ModelListener<User> listener : listeners) {
-						listener.onAfterRemoveAssociation(userId,
-							com.liferay.portal.model.Team.class.getName(),
-							team.getPrimaryKey());
-					}
-
-					for (ModelListener<com.liferay.portal.model.Team> listener : teamListeners) {
-						listener.onAfterRemoveAssociation(team.getPrimaryKey(),
-							User.class.getName(), userId);
-					}
-				}
-			}
-		}
-
-		private SqlUpdate _sqlUpdate;
-	}
-
-	protected class RemoveTeam {
-		protected RemoveTeam() {
-			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
-					"DELETE FROM Users_Teams WHERE userId = ? AND teamId = ?",
-					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT });
-		}
-
-		protected void remove(long userId, long teamId)
-			throws SystemException {
-			if (containsTeam.contains(userId, teamId)) {
-				ModelListener<com.liferay.portal.model.Team>[] teamListeners = teamPersistence.getListeners();
-
-				for (ModelListener<User> listener : listeners) {
-					listener.onBeforeRemoveAssociation(userId,
-						com.liferay.portal.model.Team.class.getName(), teamId);
-				}
-
-				for (ModelListener<com.liferay.portal.model.Team> listener : teamListeners) {
-					listener.onBeforeRemoveAssociation(teamId,
-						User.class.getName(), userId);
-				}
-
-				_sqlUpdate.update(new Object[] {
-						new Long(userId), new Long(teamId)
-					});
-
-				for (ModelListener<User> listener : listeners) {
-					listener.onAfterRemoveAssociation(userId,
-						com.liferay.portal.model.Team.class.getName(), teamId);
-				}
-
-				for (ModelListener<com.liferay.portal.model.Team> listener : teamListeners) {
-					listener.onAfterRemoveAssociation(teamId,
-						User.class.getName(), userId);
-				}
-			}
-		}
-
-		private SqlUpdate _sqlUpdate;
-	}
-
-	protected class ContainsUserGroup {
-		protected ContainsUserGroup() {
-			_mappingSqlQuery = MappingSqlQueryFactoryUtil.getMappingSqlQuery(getDataSource(),
-					"SELECT 1 FROM Users_UserGroups WHERE userId = ? AND userGroupId = ?",
-					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT },
-					RowMapper.COUNT);
-		}
-
-		protected boolean contains(long userId, long userGroupId) {
-			List<Integer> results = _mappingSqlQuery.execute(new Object[] {
-						new Long(userId), new Long(userGroupId)
-					});
-
-			if (results.isEmpty()) {
-				return false;
-			}
-
-			return true;
-		}
-
-		private MappingSqlQuery<Integer> _mappingSqlQuery;
-	}
-
-	protected class AddUserGroup {
-		protected AddUserGroup() {
-			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
-					"INSERT INTO Users_UserGroups (userId, userGroupId) VALUES (?, ?)",
-					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT });
-		}
-
-		protected void add(long userId, long userGroupId)
-			throws SystemException {
-			if (!containsUserGroup.contains(userId, userGroupId)) {
-				ModelListener<com.liferay.portal.model.UserGroup>[] userGroupListeners =
-					userGroupPersistence.getListeners();
-
-				for (ModelListener<User> listener : listeners) {
-					listener.onBeforeAddAssociation(userId,
-						com.liferay.portal.model.UserGroup.class.getName(),
-						userGroupId);
-				}
-
-				for (ModelListener<com.liferay.portal.model.UserGroup> listener : userGroupListeners) {
-					listener.onBeforeAddAssociation(userGroupId,
-						User.class.getName(), userId);
-				}
-
-				_sqlUpdate.update(new Object[] {
-						new Long(userId), new Long(userGroupId)
-					});
-
-				for (ModelListener<User> listener : listeners) {
-					listener.onAfterAddAssociation(userId,
-						com.liferay.portal.model.UserGroup.class.getName(),
-						userGroupId);
-				}
-
-				for (ModelListener<com.liferay.portal.model.UserGroup> listener : userGroupListeners) {
-					listener.onAfterAddAssociation(userGroupId,
-						User.class.getName(), userId);
-				}
-			}
-		}
-
-		private SqlUpdate _sqlUpdate;
-	}
-
-	protected class ClearUserGroups {
-		protected ClearUserGroups() {
-			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
-					"DELETE FROM Users_UserGroups WHERE userId = ?",
-					new int[] { java.sql.Types.BIGINT });
-		}
-
-		protected void clear(long userId) throws SystemException {
-			ModelListener<com.liferay.portal.model.UserGroup>[] userGroupListeners =
-				userGroupPersistence.getListeners();
-
-			List<com.liferay.portal.model.UserGroup> userGroups = null;
-
-			if ((listeners.length > 0) || (userGroupListeners.length > 0)) {
-				userGroups = getUserGroups(userId);
-
-				for (com.liferay.portal.model.UserGroup userGroup : userGroups) {
-					for (ModelListener<User> listener : listeners) {
-						listener.onBeforeRemoveAssociation(userId,
-							com.liferay.portal.model.UserGroup.class.getName(),
-							userGroup.getPrimaryKey());
-					}
-
-					for (ModelListener<com.liferay.portal.model.UserGroup> listener : userGroupListeners) {
-						listener.onBeforeRemoveAssociation(userGroup.getPrimaryKey(),
-							User.class.getName(), userId);
-					}
-				}
-			}
-
-			_sqlUpdate.update(new Object[] { new Long(userId) });
-
-			if ((listeners.length > 0) || (userGroupListeners.length > 0)) {
-				for (com.liferay.portal.model.UserGroup userGroup : userGroups) {
-					for (ModelListener<User> listener : listeners) {
-						listener.onAfterRemoveAssociation(userId,
-							com.liferay.portal.model.UserGroup.class.getName(),
-							userGroup.getPrimaryKey());
-					}
-
-					for (ModelListener<com.liferay.portal.model.UserGroup> listener : userGroupListeners) {
-						listener.onAfterRemoveAssociation(userGroup.getPrimaryKey(),
-							User.class.getName(), userId);
-					}
-				}
-			}
-		}
-
-		private SqlUpdate _sqlUpdate;
-	}
-
-	protected class RemoveUserGroup {
-		protected RemoveUserGroup() {
-			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
-					"DELETE FROM Users_UserGroups WHERE userId = ? AND userGroupId = ?",
-					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT });
-		}
-
-		protected void remove(long userId, long userGroupId)
-			throws SystemException {
-			if (containsUserGroup.contains(userId, userGroupId)) {
-				ModelListener<com.liferay.portal.model.UserGroup>[] userGroupListeners =
-					userGroupPersistence.getListeners();
-
-				for (ModelListener<User> listener : listeners) {
-					listener.onBeforeRemoveAssociation(userId,
-						com.liferay.portal.model.UserGroup.class.getName(),
-						userGroupId);
-				}
-
-				for (ModelListener<com.liferay.portal.model.UserGroup> listener : userGroupListeners) {
-					listener.onBeforeRemoveAssociation(userGroupId,
-						User.class.getName(), userId);
-				}
-
-				_sqlUpdate.update(new Object[] {
-						new Long(userId), new Long(userGroupId)
-					});
-
-				for (ModelListener<User> listener : listeners) {
-					listener.onAfterRemoveAssociation(userId,
-						com.liferay.portal.model.UserGroup.class.getName(),
-						userGroupId);
-				}
-
-				for (ModelListener<com.liferay.portal.model.UserGroup> listener : userGroupListeners) {
-					listener.onAfterRemoveAssociation(userGroupId,
-						User.class.getName(), userId);
-				}
-			}
-		}
-
-		private SqlUpdate _sqlUpdate;
-	}
-
+	protected MappingTable<User, com.liferay.portal.model.UserGroup> userToUserGroupMappingTable;
 	private static final String _SQL_SELECT_USER = "SELECT user FROM User user";
 	private static final String _SQL_SELECT_USER_WHERE = "SELECT user FROM User user WHERE ";
 	private static final String _SQL_COUNT_USER = "SELECT COUNT(user) FROM User user";
 	private static final String _SQL_COUNT_USER_WHERE = "SELECT COUNT(user) FROM User user WHERE ";
-	private static final String _SQL_GETGROUPS = "SELECT {Group_.*} FROM Group_ INNER JOIN Users_Groups ON (Users_Groups.groupId = Group_.groupId) WHERE (Users_Groups.userId = ?)";
-	private static final String _SQL_GETGROUPSSIZE = "SELECT COUNT(*) AS COUNT_VALUE FROM Users_Groups WHERE userId = ?";
-	private static final String _SQL_GETORGANIZATIONS = "SELECT {Organization_.*} FROM Organization_ INNER JOIN Users_Orgs ON (Users_Orgs.organizationId = Organization_.organizationId) WHERE (Users_Orgs.userId = ?)";
-	private static final String _SQL_GETORGANIZATIONSSIZE = "SELECT COUNT(*) AS COUNT_VALUE FROM Users_Orgs WHERE userId = ?";
-	private static final String _SQL_GETROLES = "SELECT {Role_.*} FROM Role_ INNER JOIN Users_Roles ON (Users_Roles.roleId = Role_.roleId) WHERE (Users_Roles.userId = ?)";
-	private static final String _SQL_GETROLESSIZE = "SELECT COUNT(*) AS COUNT_VALUE FROM Users_Roles WHERE userId = ?";
-	private static final String _SQL_GETTEAMS = "SELECT {Team.*} FROM Team INNER JOIN Users_Teams ON (Users_Teams.teamId = Team.teamId) WHERE (Users_Teams.userId = ?)";
-	private static final String _SQL_GETTEAMSSIZE = "SELECT COUNT(*) AS COUNT_VALUE FROM Users_Teams WHERE userId = ?";
-	private static final String _SQL_GETUSERGROUPS = "SELECT {UserGroup.*} FROM UserGroup INNER JOIN Users_UserGroups ON (Users_UserGroups.userGroupId = UserGroup.userGroupId) WHERE (Users_UserGroups.userId = ?)";
-	private static final String _SQL_GETUSERGROUPSSIZE = "SELECT COUNT(*) AS COUNT_VALUE FROM Users_UserGroups WHERE userId = ?";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "user.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No User exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No User exists with the key {";

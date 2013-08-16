@@ -2429,6 +2429,10 @@ public class DDMContentPersistenceImpl extends BasePersistenceImpl<DDMContent>
 
 	private static final String _FINDER_COLUMN_COMPANYID_COMPANYID_2 = "ddmContent.companyId = ?";
 
+	public DDMContentPersistenceImpl() {
+		super(DDMContent.class);
+	}
+
 	/**
 	 * Caches the d d m content in the entity cache if it is enabled.
 	 *

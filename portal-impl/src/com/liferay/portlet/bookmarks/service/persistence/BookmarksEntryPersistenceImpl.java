@@ -9569,6 +9569,10 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 	private static final String _FINDER_COLUMN_G_U_F_S_STATUS_5 = "(" +
 		removeConjunction(_FINDER_COLUMN_G_U_F_S_STATUS_2) + ")";
 
+	public BookmarksEntryPersistenceImpl() {
+		super(BookmarksEntry.class);
+	}
+
 	/**
 	 * Caches the bookmarks entry in the entity cache if it is enabled.
 	 *

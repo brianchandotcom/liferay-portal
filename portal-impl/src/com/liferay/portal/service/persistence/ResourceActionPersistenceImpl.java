@@ -911,6 +911,10 @@ public class ResourceActionPersistenceImpl extends BasePersistenceImpl<ResourceA
 	private static final String _FINDER_COLUMN_N_A_ACTIONID_2 = "resourceAction.actionId = ?";
 	private static final String _FINDER_COLUMN_N_A_ACTIONID_3 = "(resourceAction.actionId IS NULL OR resourceAction.actionId = '')";
 
+	public ResourceActionPersistenceImpl() {
+		super(ResourceAction.class);
+	}
+
 	/**
 	 * Caches the resource action in the entity cache if it is enabled.
 	 *

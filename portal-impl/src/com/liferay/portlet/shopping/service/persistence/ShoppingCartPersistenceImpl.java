@@ -1289,6 +1289,10 @@ public class ShoppingCartPersistenceImpl extends BasePersistenceImpl<ShoppingCar
 	private static final String _FINDER_COLUMN_G_U_GROUPID_2 = "shoppingCart.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_U_USERID_2 = "shoppingCart.userId = ?";
 
+	public ShoppingCartPersistenceImpl() {
+		super(ShoppingCart.class);
+	}
+
 	/**
 	 * Caches the shopping cart in the entity cache if it is enabled.
 	 *

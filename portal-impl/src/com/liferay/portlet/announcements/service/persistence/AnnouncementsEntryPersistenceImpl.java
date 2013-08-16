@@ -4788,6 +4788,10 @@ public class AnnouncementsEntryPersistenceImpl extends BasePersistenceImpl<Annou
 	private static final String _FINDER_COLUMN_C_C_A_CLASSPK_2 = "announcementsEntry.classPK = ? AND ";
 	private static final String _FINDER_COLUMN_C_C_A_ALERT_2 = "announcementsEntry.alert = ?";
 
+	public AnnouncementsEntryPersistenceImpl() {
+		super(AnnouncementsEntry.class);
+	}
+
 	/**
 	 * Caches the announcements entry in the entity cache if it is enabled.
 	 *

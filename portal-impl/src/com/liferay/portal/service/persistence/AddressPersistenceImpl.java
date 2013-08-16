@@ -4466,6 +4466,10 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 	private static final String _FINDER_COLUMN_C_C_C_P_CLASSPK_2 = "address.classPK = ? AND ";
 	private static final String _FINDER_COLUMN_C_C_C_P_PRIMARY_2 = "address.primary = ?";
 
+	public AddressPersistenceImpl() {
+		super(Address.class);
+	}
+
 	/**
 	 * Caches the address in the entity cache if it is enabled.
 	 *

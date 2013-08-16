@@ -1535,6 +1535,10 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 	private static final String _FINDER_COLUMN_G_C_C_C_T_CLASSPK_2 = "workflowDefinitionLink.classPK = ? AND ";
 	private static final String _FINDER_COLUMN_G_C_C_C_T_TYPEPK_2 = "workflowDefinitionLink.typePK = ?";
 
+	public WorkflowDefinitionLinkPersistenceImpl() {
+		super(WorkflowDefinitionLink.class);
+	}
+
 	/**
 	 * Caches the workflow definition link in the entity cache if it is enabled.
 	 *

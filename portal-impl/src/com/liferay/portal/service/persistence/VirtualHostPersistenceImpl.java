@@ -555,6 +555,10 @@ public class VirtualHostPersistenceImpl extends BasePersistenceImpl<VirtualHost>
 	private static final String _FINDER_COLUMN_C_L_COMPANYID_2 = "virtualHost.companyId = ? AND ";
 	private static final String _FINDER_COLUMN_C_L_LAYOUTSETID_2 = "virtualHost.layoutSetId = ?";
 
+	public VirtualHostPersistenceImpl() {
+		super(VirtualHost.class);
+	}
+
 	/**
 	 * Caches the virtual host in the entity cache if it is enabled.
 	 *

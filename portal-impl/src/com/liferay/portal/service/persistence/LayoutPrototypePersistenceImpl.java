@@ -3810,6 +3810,10 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 	private static final String _FINDER_COLUMN_C_A_ACTIVE_2 = "layoutPrototype.active = ?";
 	private static final String _FINDER_COLUMN_C_A_ACTIVE_2_SQL = "layoutPrototype.active_ = ?";
 
+	public LayoutPrototypePersistenceImpl() {
+		super(LayoutPrototype.class);
+	}
+
 	/**
 	 * Caches the layout prototype in the entity cache if it is enabled.
 	 *

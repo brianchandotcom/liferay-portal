@@ -2959,6 +2959,10 @@ public class DDLRecordPersistenceImpl extends BasePersistenceImpl<DDLRecord>
 	private static final String _FINDER_COLUMN_R_U_RECORDSETID_2 = "ddlRecord.recordSetId = ? AND ";
 	private static final String _FINDER_COLUMN_R_U_USERID_2 = "ddlRecord.userId = ?";
 
+	public DDLRecordPersistenceImpl() {
+		super(DDLRecord.class);
+	}
+
 	/**
 	 * Caches the d d l record in the entity cache if it is enabled.
 	 *

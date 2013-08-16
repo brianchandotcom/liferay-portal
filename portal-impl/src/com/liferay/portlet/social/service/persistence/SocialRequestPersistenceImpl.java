@@ -5599,6 +5599,10 @@ public class SocialRequestPersistenceImpl extends BasePersistenceImpl<SocialRequ
 	private static final String _FINDER_COLUMN_C_C_T_R_S_RECEIVERUSERID_2 = "socialRequest.receiverUserId = ? AND ";
 	private static final String _FINDER_COLUMN_C_C_T_R_S_STATUS_2 = "socialRequest.status = ?";
 
+	public SocialRequestPersistenceImpl() {
+		super(SocialRequest.class);
+	}
+
 	/**
 	 * Caches the social request in the entity cache if it is enabled.
 	 *

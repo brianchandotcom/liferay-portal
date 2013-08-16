@@ -2305,6 +2305,10 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 
 	private static final String _FINDER_COLUMN_GROUPID_GROUPID_2 = "mdrRuleGroup.groupId = ?";
 
+	public MDRRuleGroupPersistenceImpl() {
+		super(MDRRuleGroup.class);
+	}
+
 	/**
 	 * Caches the m d r rule group in the entity cache if it is enabled.
 	 *

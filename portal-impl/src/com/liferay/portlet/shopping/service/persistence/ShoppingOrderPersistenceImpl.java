@@ -2498,6 +2498,10 @@ public class ShoppingOrderPersistenceImpl extends BasePersistenceImpl<ShoppingOr
 	private static final String _FINDER_COLUMN_G_U_PPPS_PPPAYMENTSTATUS_2 = "shoppingOrder.ppPaymentStatus = ?";
 	private static final String _FINDER_COLUMN_G_U_PPPS_PPPAYMENTSTATUS_3 = "(shoppingOrder.ppPaymentStatus IS NULL OR shoppingOrder.ppPaymentStatus = '')";
 
+	public ShoppingOrderPersistenceImpl() {
+		super(ShoppingOrder.class);
+	}
+
 	/**
 	 * Caches the shopping order in the entity cache if it is enabled.
 	 *

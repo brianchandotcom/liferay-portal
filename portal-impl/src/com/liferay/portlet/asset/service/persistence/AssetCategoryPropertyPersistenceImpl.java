@@ -1919,6 +1919,10 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 	private static final String _FINDER_COLUMN_CA_K_KEY_2 = "assetCategoryProperty.key = ?";
 	private static final String _FINDER_COLUMN_CA_K_KEY_3 = "(assetCategoryProperty.key IS NULL OR assetCategoryProperty.key = '')";
 
+	public AssetCategoryPropertyPersistenceImpl() {
+		super(AssetCategoryProperty.class);
+	}
+
 	/**
 	 * Caches the asset category property in the entity cache if it is enabled.
 	 *

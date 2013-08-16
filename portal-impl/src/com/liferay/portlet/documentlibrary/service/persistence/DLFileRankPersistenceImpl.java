@@ -2415,6 +2415,10 @@ public class DLFileRankPersistenceImpl extends BasePersistenceImpl<DLFileRank>
 	private static final String _FINDER_COLUMN_C_U_F_USERID_2 = "dlFileRank.userId = ? AND ";
 	private static final String _FINDER_COLUMN_C_U_F_FILEENTRYID_2 = "dlFileRank.fileEntryId = ?";
 
+	public DLFileRankPersistenceImpl() {
+		super(DLFileRank.class);
+	}
+
 	/**
 	 * Caches the document library file rank in the entity cache if it is enabled.
 	 *

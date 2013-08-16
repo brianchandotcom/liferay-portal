@@ -116,6 +116,9 @@
 
 		<!-- Finder methods -->
 
+		<finder name="ResourcePrimKey" return-type="Collection">
+			<finder-column name="resourcePrimKey" />
+		</finder>
 		<finder name="NodeId" return-type="Collection">
 			<finder-column name="nodeId" />
 		</finder>
@@ -125,6 +128,10 @@
 		<finder name="R_N" return-type="Collection">
 			<finder-column name="resourcePrimKey" />
 			<finder-column name="nodeId" />
+		</finder>
+		<finder name="R_S" return-type="Collection">
+			<finder-column name="resourcePrimKey" />
+			<finder-column name="status" />
 		</finder>
 		<finder name="N_T" return-type="Collection">
 			<finder-column name="nodeId" />

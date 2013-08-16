@@ -1,0 +1,3 @@
+<definition>
+	<execute test-suite="PGStagingP5" />
+</definition>

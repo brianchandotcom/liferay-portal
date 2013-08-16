@@ -1,5 +1,0 @@
-<definition>
-	<execute test-case-command="Staging#ActivateStaging" />
-	<execute test-case-command="Staging#DeactivateStaging" />
-	<execute test-case-command="Staging#StagingPublishPortlet" />
-</definition>

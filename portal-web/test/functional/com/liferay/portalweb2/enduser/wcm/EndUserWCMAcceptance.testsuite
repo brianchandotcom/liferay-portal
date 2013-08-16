@@ -13,11 +13,15 @@
 
 	<execute test-suite="CPWebcontentAcceptance" />
 
+	<execute test-suite="DockbarAcceptance" />
+
 	<execute test-suite="PGApplicationdisplaytemplatesAcceptance" />
 
 	<execute test-suite="PGAssetpublisherSiteAcceptance" />
 
 	<execute test-suite="PGAssetpublisherWebcontentAcceptance" />
+
+	<execute test-suite="PGStagingAcceptance" />
 
 	<execute test-suite="PGWebcontentdisplayAcceptance" />
 
@@ -28,6 +32,4 @@
 	<execute test-suite="RecyclebinWebcontentAcceptance" />
 
 	<execute test-suite="RecyclebinWikiAcceptance" />
-
-	<execute test-suite="DockbarAcceptance" />
 </definition>

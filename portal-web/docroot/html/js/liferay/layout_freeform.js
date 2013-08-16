@@ -155,9 +155,9 @@ AUI.add(
 											instance.savePosition(node);
 										},
 										resize: function(event) {
-											var portletContentContainerNode = node.one('.portlet-content-container');
+											var portletContentContainer = node.one('.portlet-content-container');
 
-											if (portletContentContainerNode) {
+											if (portletContentContainer) {
 												var offsetHeight = event.info.offsetHeight;
 
 												var adjustOffsetHeight = function(childNode) {
@@ -166,21 +166,21 @@ AUI.add(
 													}
 												};
 
-												var portletBodyNode = node.one('.portlet-body');
-												var portletNode = node.one('.portlet');
-												var portletTopperNode = node.one('.portlet-topper');
-												var portletContentNode = node.one('.portlet-content');
+												var portletBody = node.one('.portlet-body');
+												var portletContent = node.one('.portlet-content');
+												var portlet = node.one('.portlet');
+												var portletTopper = node.one('.portlet-topper');
 
-												adjustOffsetHeight(portletBodyNode);
-												adjustOffsetHeight(portletNode);
-												adjustOffsetHeight(portletContentNode);
-												adjustOffsetHeight(portletContentContainerNode);
+												adjustOffsetHeight(portletBody);
+												adjustOffsetHeight(portlet);
+												adjustOffsetHeight(portletContent);
+												adjustOffsetHeight(portletContentContainer);
 
-												if (portletTopperNode) {
-													offsetHeight -= portletTopperNode.get('offsetHeight');
+												if (portletTopper) {
+													offsetHeight -= portletTopper.get('offsetHeight');
 												}
 
-												portletContentContainerNode.setStyle('height', offsetHeight);
+												portletContentContainer.setStyle('height', offsetHeight);
 											}
 										}
 									},

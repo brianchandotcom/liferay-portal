@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.LocalizedModel;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.model.TrashedModel;
 import com.liferay.portal.model.WorkflowedModel;
@@ -214,6 +215,12 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 
 			PortletDataHandlerStatusMessageSenderUtil.sendStatusMessage(
 				"stagedModel", stagedModel, manifestSummary);
+
+			if (stagedModel instanceof LocalizedModel) {
+				LocalizedModel localizedModel = (LocalizedModel)stagedModel;
+
+				localizedModel.prepareLocalizedFieldsForImport();
+			}
 
 			if (stagedModel instanceof TrashedModel) {
 				restoreStagedModel(portletDataContext, stagedModel);

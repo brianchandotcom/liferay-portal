@@ -71,7 +71,7 @@
 </tr>
 <tr>
 	<td>TOOLBAR_SEARCH_BUTTON</td>
-	<td>//div[@class='navbar ']//button[contains(.,'Search')]</td>
+	<td>//div[@id='toggle_id_ddm_template_searchsimple']//button[contains(.,'Search')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -1,10 +1,11 @@
 <definition>
-	<command name="click">
+	<command name="assertClick">
 		<case comparator="startsWith" locator-key1="DATA_DEFINITION_TABLE_CHOOSE_BUTTON_">
-			<execute function="Click#textClick" value1="Choose" />
+			<execute function="AssertClick#assertTextClick" />
 		</case>
+
 		<case locator-key1="TOOLBAR_SEARCH_BUTTON">
-			<execute function="Click#textClickAtAndWait" value1="Search" />
+			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
 	</command>
 </definition>

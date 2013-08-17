@@ -17,6 +17,7 @@ package com.liferay.portalweb.portal.util.liferayselenium;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portalweb.portal.BaseTestCase;
+import com.liferay.portalweb.portal.util.EmailCommands;
 import com.liferay.portalweb.portal.util.RuntimeVariables;
 import com.liferay.portalweb.portal.util.TestPropsValues;
 
@@ -74,6 +75,22 @@ public class LiferaySeleniumHelper {
 			throw new Exception(
 				"Element is not present at \"" + locator + "\"");
 		}
+	}
+
+	public static void assertEmailContent(
+			LiferaySelenium liferaySelenium, String index, String content)
+		throws Exception {
+
+		BaseTestCase.assertEquals(
+			liferaySelenium.getEmailContent(index), content);
+	}
+
+	public static void assertEmailSubject(
+			LiferaySelenium liferaySelenium, String index, String subject)
+		throws Exception {
+
+		BaseTestCase.assertEquals(
+			liferaySelenium.getEmailSubject(index), subject);
 	}
 
 	public static void assertLocation(
@@ -268,12 +285,31 @@ public class LiferaySeleniumHelper {
 		}
 	}
 
+	public static void connectToEmailAccount(
+			String emailAddress, String emailPassword)
+		throws Exception {
+
+		EmailCommands.connectToEmailAccount(emailAddress, emailPassword);
+	}
+
+	public static void deleteAllEmails() throws Exception {
+		EmailCommands.deleteAllEmails();
+	}
+
 	public static void echo(String message) {
 		System.out.println(message);
 	}
 
 	public static void fail(String message) {
 		BaseTestCase.fail(message);
+	}
+
+	public static String getEmailContent(String index) throws Exception {
+		return EmailCommands.getEmailContent(index);
+	}
+
+	public static String getEmailSubject(String index) throws Exception {
+		return EmailCommands.getEmailSubject(index);
 	}
 
 	public static String getNumberDecrement(String value) {
@@ -336,6 +372,25 @@ public class LiferaySeleniumHelper {
 
 	public static void pause(String waitTime) throws Exception {
 		Thread.sleep(GetterUtil.getInteger(waitTime));
+	}
+
+	public static void replyToEmail(
+			LiferaySelenium liferaySelenium, String to, String content)
+		throws Exception {
+
+		EmailCommands.replyToEmail(to, content);
+
+		liferaySelenium.pause("3000");
+	}
+
+	public static void sendEmail(
+			LiferaySelenium liferaySelenium, String to, String subject,
+			String content)
+		throws Exception {
+
+		EmailCommands.sendEmail(to, subject, content);
+
+		liferaySelenium.pause("3000");
 	}
 
 	public static void typeFrame(

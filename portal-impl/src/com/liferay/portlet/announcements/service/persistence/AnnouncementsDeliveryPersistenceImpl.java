@@ -841,6 +841,10 @@ public class AnnouncementsDeliveryPersistenceImpl extends BasePersistenceImpl<An
 	private static final String _FINDER_COLUMN_U_T_TYPE_2 = "announcementsDelivery.type = ?";
 	private static final String _FINDER_COLUMN_U_T_TYPE_3 = "(announcementsDelivery.type IS NULL OR announcementsDelivery.type = '')";
 
+	public AnnouncementsDeliveryPersistenceImpl() {
+		super(AnnouncementsDelivery.class);
+	}
+
 	/**
 	 * Caches the announcements delivery in the entity cache if it is enabled.
 	 *

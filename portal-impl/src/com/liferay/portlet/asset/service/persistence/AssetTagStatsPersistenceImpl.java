@@ -1298,6 +1298,10 @@ public class AssetTagStatsPersistenceImpl extends BasePersistenceImpl<AssetTagSt
 	private static final String _FINDER_COLUMN_T_C_TAGID_2 = "assetTagStats.tagId = ? AND ";
 	private static final String _FINDER_COLUMN_T_C_CLASSNAMEID_2 = "assetTagStats.classNameId = ?";
 
+	public AssetTagStatsPersistenceImpl() {
+		super(AssetTagStats.class);
+	}
+
 	/**
 	 * Caches the asset tag stats in the entity cache if it is enabled.
 	 *

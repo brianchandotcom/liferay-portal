@@ -2898,6 +2898,10 @@ public class BlogsStatsUserPersistenceImpl extends BasePersistenceImpl<BlogsStat
 	private static final String _FINDER_COLUMN_U_L_LASTPOSTDATE_1 = "blogsStatsUser.lastPostDate IS NULL";
 	private static final String _FINDER_COLUMN_U_L_LASTPOSTDATE_2 = "blogsStatsUser.lastPostDate = ?";
 
+	public BlogsStatsUserPersistenceImpl() {
+		super(BlogsStatsUser.class);
+	}
+
 	/**
 	 * Caches the blogs stats user in the entity cache if it is enabled.
 	 *

@@ -2891,6 +2891,10 @@ public class AssetLinkPersistenceImpl extends BasePersistenceImpl<AssetLink>
 	private static final String _FINDER_COLUMN_E_E_T_ENTRYID2_2 = "assetLink.entryId2 = ? AND ";
 	private static final String _FINDER_COLUMN_E_E_T_TYPE_2 = "assetLink.type = ?";
 
+	public AssetLinkPersistenceImpl() {
+		super(AssetLink.class);
+	}
+
 	/**
 	 * Caches the asset link in the entity cache if it is enabled.
 	 *

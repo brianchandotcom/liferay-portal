@@ -1273,6 +1273,10 @@ public class CompanyPersistenceImpl extends BasePersistenceImpl<Company>
 
 	private static final String _FINDER_COLUMN_SYSTEM_SYSTEM_2 = "company.system = ?";
 
+	public CompanyPersistenceImpl() {
+		super(Company.class);
+	}
+
 	/**
 	 * Caches the company in the entity cache if it is enabled.
 	 *

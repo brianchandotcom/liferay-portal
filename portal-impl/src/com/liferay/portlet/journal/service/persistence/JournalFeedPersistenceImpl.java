@@ -2568,6 +2568,10 @@ public class JournalFeedPersistenceImpl extends BasePersistenceImpl<JournalFeed>
 	private static final String _FINDER_COLUMN_G_F_FEEDID_2 = "journalFeed.feedId = ?";
 	private static final String _FINDER_COLUMN_G_F_FEEDID_3 = "(journalFeed.feedId IS NULL OR journalFeed.feedId = '')";
 
+	public JournalFeedPersistenceImpl() {
+		super(JournalFeed.class);
+	}
+
 	/**
 	 * Caches the journal feed in the entity cache if it is enabled.
 	 *

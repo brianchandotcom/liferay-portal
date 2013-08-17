@@ -3395,6 +3395,10 @@ public class PasswordPolicyPersistenceImpl extends BasePersistenceImpl<PasswordP
 	private static final String _FINDER_COLUMN_C_N_NAME_2 = "passwordPolicy.name = ?";
 	private static final String _FINDER_COLUMN_C_N_NAME_3 = "(passwordPolicy.name IS NULL OR passwordPolicy.name = '')";
 
+	public PasswordPolicyPersistenceImpl() {
+		super(PasswordPolicy.class);
+	}
+
 	/**
 	 * Caches the password policy in the entity cache if it is enabled.
 	 *

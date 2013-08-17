@@ -4878,6 +4878,10 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 	private static final String _FINDER_COLUMN_G_F_A_S_ACTIVE_2_SQL = "dlFileShortcut.active_ = ? AND ";
 	private static final String _FINDER_COLUMN_G_F_A_S_STATUS_2 = "dlFileShortcut.status = ?";
 
+	public DLFileShortcutPersistenceImpl() {
+		super(DLFileShortcut.class);
+	}
+
 	/**
 	 * Caches the document library file shortcut in the entity cache if it is enabled.
 	 *

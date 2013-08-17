@@ -1907,6 +1907,10 @@ public class AssetTagPropertyPersistenceImpl extends BasePersistenceImpl<AssetTa
 	private static final String _FINDER_COLUMN_T_K_KEY_2 = "assetTagProperty.key = ?";
 	private static final String _FINDER_COLUMN_T_K_KEY_3 = "(assetTagProperty.key IS NULL OR assetTagProperty.key = '')";
 
+	public AssetTagPropertyPersistenceImpl() {
+		super(AssetTagProperty.class);
+	}
+
 	/**
 	 * Caches the asset tag property in the entity cache if it is enabled.
 	 *

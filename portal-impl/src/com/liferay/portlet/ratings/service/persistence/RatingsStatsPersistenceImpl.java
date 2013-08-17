@@ -313,6 +313,10 @@ public class RatingsStatsPersistenceImpl extends BasePersistenceImpl<RatingsStat
 	private static final String _FINDER_COLUMN_C_C_CLASSNAMEID_2 = "ratingsStats.classNameId = ? AND ";
 	private static final String _FINDER_COLUMN_C_C_CLASSPK_2 = "ratingsStats.classPK = ?";
 
+	public RatingsStatsPersistenceImpl() {
+		super(RatingsStats.class);
+	}
+
 	/**
 	 * Caches the ratings stats in the entity cache if it is enabled.
 	 *

@@ -1574,6 +1574,10 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 	private static final String _FINDER_COLUMN_G_N_P_C_PORTLETID_3 = "(portletItem.portletId IS NULL OR portletItem.portletId = '') AND ";
 	private static final String _FINDER_COLUMN_G_N_P_C_CLASSNAMEID_2 = "portletItem.classNameId = ?";
 
+	public PortletItemPersistenceImpl() {
+		super(PortletItem.class);
+	}
+
 	/**
 	 * Caches the portlet item in the entity cache if it is enabled.
 	 *

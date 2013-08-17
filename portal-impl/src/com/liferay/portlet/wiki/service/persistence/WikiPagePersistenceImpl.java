@@ -17347,6 +17347,10 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 	private static final String _FINDER_COLUMN_G_N_H_P_S_PARENTTITLE_3 = "(wikiPage.parentTitle IS NULL OR wikiPage.parentTitle = '') AND ";
 	private static final String _FINDER_COLUMN_G_N_H_P_S_STATUS_2 = "wikiPage.status = ?";
 
+	public WikiPagePersistenceImpl() {
+		super(WikiPage.class);
+	}
+
 	/**
 	 * Caches the wiki page in the entity cache if it is enabled.
 	 *

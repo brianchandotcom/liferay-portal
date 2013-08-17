@@ -2178,6 +2178,10 @@ public class MBMailingListPersistenceImpl extends BasePersistenceImpl<MBMailingL
 	private static final String _FINDER_COLUMN_G_C_GROUPID_2 = "mbMailingList.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_C_CATEGORYID_2 = "mbMailingList.categoryId = ?";
 
+	public MBMailingListPersistenceImpl() {
+		super(MBMailingList.class);
+	}
+
 	/**
 	 * Caches the message boards mailing list in the entity cache if it is enabled.
 	 *

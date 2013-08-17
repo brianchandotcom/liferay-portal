@@ -4553,6 +4553,10 @@ public class DLFileVersionPersistenceImpl extends BasePersistenceImpl<DLFileVers
 	private static final String _FINDER_COLUMN_G_F_T_V_VERSION_2 = "dlFileVersion.version = ?";
 	private static final String _FINDER_COLUMN_G_F_T_V_VERSION_3 = "(dlFileVersion.version IS NULL OR dlFileVersion.version = '')";
 
+	public DLFileVersionPersistenceImpl() {
+		super(DLFileVersion.class);
+	}
+
 	/**
 	 * Caches the document library file version in the entity cache if it is enabled.
 	 *

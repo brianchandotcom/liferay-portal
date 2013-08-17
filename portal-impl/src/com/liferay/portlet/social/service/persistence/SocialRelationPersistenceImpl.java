@@ -5531,6 +5531,10 @@ public class SocialRelationPersistenceImpl extends BasePersistenceImpl<SocialRel
 	private static final String _FINDER_COLUMN_U1_U2_T_USERID2_2 = "socialRelation.userId2 = ? AND ";
 	private static final String _FINDER_COLUMN_U1_U2_T_TYPE_2 = "socialRelation.type = ?";
 
+	public SocialRelationPersistenceImpl() {
+		super(SocialRelation.class);
+	}
+
 	/**
 	 * Caches the social relation in the entity cache if it is enabled.
 	 *

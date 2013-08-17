@@ -773,6 +773,10 @@ public class DLSyncEventPersistenceImpl extends BasePersistenceImpl<DLSyncEvent>
 
 	private static final String _FINDER_COLUMN_TYPEPK_TYPEPK_2 = "dlSyncEvent.typePK = ?";
 
+	public DLSyncEventPersistenceImpl() {
+		super(DLSyncEvent.class);
+	}
+
 	/**
 	 * Caches the d l sync event in the entity cache if it is enabled.
 	 *

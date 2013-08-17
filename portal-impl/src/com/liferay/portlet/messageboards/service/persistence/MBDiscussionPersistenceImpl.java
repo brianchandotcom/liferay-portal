@@ -2385,6 +2385,10 @@ public class MBDiscussionPersistenceImpl extends BasePersistenceImpl<MBDiscussio
 	private static final String _FINDER_COLUMN_C_C_CLASSNAMEID_2 = "mbDiscussion.classNameId = ? AND ";
 	private static final String _FINDER_COLUMN_C_C_CLASSPK_2 = "mbDiscussion.classPK = ?";
 
+	public MBDiscussionPersistenceImpl() {
+		super(MBDiscussion.class);
+	}
+
 	/**
 	 * Caches the message boards discussion in the entity cache if it is enabled.
 	 *

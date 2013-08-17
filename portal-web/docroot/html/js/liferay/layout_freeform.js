@@ -152,43 +152,39 @@ AUI.add(
 								{
 									after: {
 										end: function(event) {
-											instance.savePosition(node);
-										},
-										resize: function(event) {
-											var portletContentContainer = node.one('.portlet-content-container');
+											var info = event.info;
 
-											if (portletContentContainer) {
-												var offsetHeight = event.info.offsetHeight;
+											var portletNode = this.get('node');
 
-												var adjustOffsetHeight = function(childNode) {
-													if (childNode) {
-														offsetHeight -= (childNode.get('offsetHeight') - childNode.height());
-													}
-												};
+											var containerNode = portletNode.one('.portlet-content-container');
 
-												var portletBody = node.one('.portlet-body');
-												var portletContent = node.one('.portlet-content');
-												var portlet = node.one('.portlet');
-												var portletTopper = node.one('.portlet-topper');
+											if (containerNode) {
+												var containerHeight = info.offsetHeight;
 
-												adjustOffsetHeight(portletBody);
-												adjustOffsetHeight(portlet);
-												adjustOffsetHeight(portletContent);
-												adjustOffsetHeight(portletContentContainer);
+												var topperNode = portletNode.one('.portlet-topper');
 
-												if (portletTopper) {
-													offsetHeight -= portletTopper.get('offsetHeight');
+												if (topperNode) {
+													containerHeight -= topperNode.get('offsetHeight');
 												}
 
-												portletContentContainer.setStyle('height', offsetHeight);
+												var contentNode = portletNode.one('.portlet-content');
+
+												if (contentNode) {
+													containerHeight -= contentNode.getPadding('tb');
+												}
+
+												containerNode.setStyle('height', containerHeight);
+
+												portletNode.setStyle('height', 'auto');
 											}
+
+											instance.savePosition(portletNode);
 										}
 									},
 									handles: 'r,br,b',
-									node: node,
-									proxy: true
+									node: node
 								}
-							);
+							).plug(A.Plugin.ResizeProxy);
 						}
 					},
 
@@ -220,6 +216,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['resize', 'liferay-layout-column']
+		requires: ['liferay-layout-column', 'resize']
 	}
 );

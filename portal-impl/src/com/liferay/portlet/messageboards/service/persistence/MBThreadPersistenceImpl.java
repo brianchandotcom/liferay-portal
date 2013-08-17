@@ -12879,6 +12879,10 @@ public class MBThreadPersistenceImpl extends BasePersistenceImpl<MBThread>
 	private static final String _FINDER_COLUMN_G_NOTC_NOTS_CATEGORYID_2 = "mbThread.categoryId != ? AND ";
 	private static final String _FINDER_COLUMN_G_NOTC_NOTS_STATUS_2 = "mbThread.status != ?";
 
+	public MBThreadPersistenceImpl() {
+		super(MBThread.class);
+	}
+
 	/**
 	 * Caches the message boards thread in the entity cache if it is enabled.
 	 *

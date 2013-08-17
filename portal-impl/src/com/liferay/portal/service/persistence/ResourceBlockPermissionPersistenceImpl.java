@@ -1318,6 +1318,10 @@ public class ResourceBlockPermissionPersistenceImpl extends BasePersistenceImpl<
 	private static final String _FINDER_COLUMN_R_R_RESOURCEBLOCKID_2 = "resourceBlockPermission.resourceBlockId = ? AND ";
 	private static final String _FINDER_COLUMN_R_R_ROLEID_2 = "resourceBlockPermission.roleId = ?";
 
+	public ResourceBlockPermissionPersistenceImpl() {
+		super(ResourceBlockPermission.class);
+	}
+
 	/**
 	 * Caches the resource block permission in the entity cache if it is enabled.
 	 *

@@ -11193,6 +11193,10 @@ public class DDMTemplatePersistenceImpl extends BasePersistenceImpl<DDMTemplate>
 	private static final String _FINDER_COLUMN_G_C_C_T_M_MODE_2_SQL = "ddmTemplate.mode_ = ?";
 	private static final String _FINDER_COLUMN_G_C_C_T_M_MODE_3_SQL = "(ddmTemplate.mode_ IS NULL OR ddmTemplate.mode_ = '')";
 
+	public DDMTemplatePersistenceImpl() {
+		super(DDMTemplate.class);
+	}
+
 	/**
 	 * Caches the d d m template in the entity cache if it is enabled.
 	 *

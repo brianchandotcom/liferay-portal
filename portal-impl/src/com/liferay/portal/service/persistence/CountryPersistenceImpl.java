@@ -1290,6 +1290,10 @@ public class CountryPersistenceImpl extends BasePersistenceImpl<Country>
 
 	private static final String _FINDER_COLUMN_ACTIVE_ACTIVE_2 = "country.active = ?";
 
+	public CountryPersistenceImpl() {
+		super(Country.class);
+	}
+
 	/**
 	 * Caches the country in the entity cache if it is enabled.
 	 *

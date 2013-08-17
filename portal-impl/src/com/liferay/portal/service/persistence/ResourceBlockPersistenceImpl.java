@@ -1624,6 +1624,10 @@ public class ResourceBlockPersistenceImpl extends BasePersistenceImpl<ResourceBl
 	private static final String _FINDER_COLUMN_C_G_N_P_PERMISSIONSHASH_2 = "resourceBlock.permissionsHash = ?";
 	private static final String _FINDER_COLUMN_C_G_N_P_PERMISSIONSHASH_3 = "(resourceBlock.permissionsHash IS NULL OR resourceBlock.permissionsHash = '')";
 
+	public ResourceBlockPersistenceImpl() {
+		super(ResourceBlock.class);
+	}
+
 	/**
 	 * Caches the resource block in the entity cache if it is enabled.
 	 *

@@ -3860,6 +3860,10 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 	private static final String _FINDER_COLUMN_C_C_C_P_CLASSPK_2 = "website.classPK = ? AND ";
 	private static final String _FINDER_COLUMN_C_C_C_P_PRIMARY_2 = "website.primary = ?";
 
+	public WebsitePersistenceImpl() {
+		super(Website.class);
+	}
+
 	/**
 	 * Caches the website in the entity cache if it is enabled.
 	 *

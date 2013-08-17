@@ -1914,6 +1914,10 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 	private static final String _FINDER_COLUMN_C_S_SKU_2 = "shoppingItem.sku = ?";
 	private static final String _FINDER_COLUMN_C_S_SKU_3 = "(shoppingItem.sku IS NULL OR shoppingItem.sku = '')";
 
+	public ShoppingItemPersistenceImpl() {
+		super(ShoppingItem.class);
+	}
+
 	/**
 	 * Caches the shopping item in the entity cache if it is enabled.
 	 *

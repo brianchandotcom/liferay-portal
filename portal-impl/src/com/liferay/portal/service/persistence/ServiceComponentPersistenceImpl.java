@@ -904,6 +904,10 @@ public class ServiceComponentPersistenceImpl extends BasePersistenceImpl<Service
 	private static final String _FINDER_COLUMN_BNS_BNU_BUILDNAMESPACE_3 = "(serviceComponent.buildNamespace IS NULL OR serviceComponent.buildNamespace = '') AND ";
 	private static final String _FINDER_COLUMN_BNS_BNU_BUILDNUMBER_2 = "serviceComponent.buildNumber = ?";
 
+	public ServiceComponentPersistenceImpl() {
+		super(ServiceComponent.class);
+	}
+
 	/**
 	 * Caches the service component in the entity cache if it is enabled.
 	 *

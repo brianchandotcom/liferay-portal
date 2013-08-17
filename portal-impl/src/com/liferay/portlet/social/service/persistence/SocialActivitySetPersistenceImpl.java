@@ -3429,6 +3429,10 @@ public class SocialActivitySetPersistenceImpl extends BasePersistenceImpl<Social
 	private static final String _FINDER_COLUMN_U_C_C_T_CLASSPK_2 = "socialActivitySet.classPK = ? AND ";
 	private static final String _FINDER_COLUMN_U_C_C_T_TYPE_2 = "socialActivitySet.type = ?";
 
+	public SocialActivitySetPersistenceImpl() {
+		super(SocialActivitySet.class);
+	}
+
 	/**
 	 * Caches the social activity set in the entity cache if it is enabled.
 	 *

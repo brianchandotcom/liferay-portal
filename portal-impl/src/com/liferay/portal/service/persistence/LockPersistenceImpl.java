@@ -1992,6 +1992,10 @@ public class LockPersistenceImpl extends BasePersistenceImpl<Lock>
 	private static final String _FINDER_COLUMN_C_K_KEY_2 = "lock.key = ?";
 	private static final String _FINDER_COLUMN_C_K_KEY_3 = "(lock.key IS NULL OR lock.key = '')";
 
+	public LockPersistenceImpl() {
+		super(Lock.class);
+	}
+
 	/**
 	 * Caches the lock in the entity cache if it is enabled.
 	 *

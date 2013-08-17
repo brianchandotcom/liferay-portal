@@ -2172,6 +2172,10 @@ public class MembershipRequestPersistenceImpl extends BasePersistenceImpl<Member
 	private static final String _FINDER_COLUMN_G_U_S_USERID_2 = "membershipRequest.userId = ? AND ";
 	private static final String _FINDER_COLUMN_G_U_S_STATUSID_2 = "membershipRequest.statusId = ?";
 
+	public MembershipRequestPersistenceImpl() {
+		super(MembershipRequest.class);
+	}
+
 	/**
 	 * Caches the membership request in the entity cache if it is enabled.
 	 *

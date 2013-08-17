@@ -3078,6 +3078,10 @@ public class AssetVocabularyPersistenceImpl extends BasePersistenceImpl<AssetVoc
 	private static final String _FINDER_COLUMN_G_N_NAME_2 = "assetVocabulary.name = ?";
 	private static final String _FINDER_COLUMN_G_N_NAME_3 = "(assetVocabulary.name IS NULL OR assetVocabulary.name = '')";
 
+	public AssetVocabularyPersistenceImpl() {
+		super(AssetVocabulary.class);
+	}
+
 	/**
 	 * Caches the asset vocabulary in the entity cache if it is enabled.
 	 *

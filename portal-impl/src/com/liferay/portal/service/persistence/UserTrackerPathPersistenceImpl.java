@@ -586,6 +586,10 @@ public class UserTrackerPathPersistenceImpl extends BasePersistenceImpl<UserTrac
 
 	private static final String _FINDER_COLUMN_USERTRACKERID_USERTRACKERID_2 = "userTrackerPath.userTrackerId = ?";
 
+	public UserTrackerPathPersistenceImpl() {
+		super(UserTrackerPath.class);
+	}
+
 	/**
 	 * Caches the user tracker path in the entity cache if it is enabled.
 	 *

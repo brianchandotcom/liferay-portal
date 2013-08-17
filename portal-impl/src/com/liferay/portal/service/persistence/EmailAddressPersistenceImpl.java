@@ -3875,6 +3875,10 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 	private static final String _FINDER_COLUMN_C_C_C_P_CLASSPK_2 = "emailAddress.classPK = ? AND ";
 	private static final String _FINDER_COLUMN_C_C_C_P_PRIMARY_2 = "emailAddress.primary = ?";
 
+	public EmailAddressPersistenceImpl() {
+		super(EmailAddress.class);
+	}
+
 	/**
 	 * Caches the email address in the entity cache if it is enabled.
 	 *

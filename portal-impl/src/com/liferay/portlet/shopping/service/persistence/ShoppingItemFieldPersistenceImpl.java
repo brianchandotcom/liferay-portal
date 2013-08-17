@@ -578,6 +578,10 @@ public class ShoppingItemFieldPersistenceImpl extends BasePersistenceImpl<Shoppi
 
 	private static final String _FINDER_COLUMN_ITEMID_ITEMID_2 = "shoppingItemField.itemId = ?";
 
+	public ShoppingItemFieldPersistenceImpl() {
+		super(ShoppingItemField.class);
+	}
+
 	/**
 	 * Caches the shopping item field in the entity cache if it is enabled.
 	 *

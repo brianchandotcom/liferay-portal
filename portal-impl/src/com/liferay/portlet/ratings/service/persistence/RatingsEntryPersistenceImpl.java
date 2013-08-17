@@ -1434,6 +1434,10 @@ public class RatingsEntryPersistenceImpl extends BasePersistenceImpl<RatingsEntr
 	private static final String _FINDER_COLUMN_C_C_S_CLASSPK_2 = "ratingsEntry.classPK = ? AND ";
 	private static final String _FINDER_COLUMN_C_C_S_SCORE_2 = "ratingsEntry.score = ?";
 
+	public RatingsEntryPersistenceImpl() {
+		super(RatingsEntry.class);
+	}
+
 	/**
 	 * Caches the ratings entry in the entity cache if it is enabled.
 	 *

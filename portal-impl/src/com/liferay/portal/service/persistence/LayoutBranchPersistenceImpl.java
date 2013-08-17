@@ -1968,6 +1968,10 @@ public class LayoutBranchPersistenceImpl extends BasePersistenceImpl<LayoutBranc
 	private static final String _FINDER_COLUMN_L_P_M_PLID_2 = "layoutBranch.plid = ? AND ";
 	private static final String _FINDER_COLUMN_L_P_M_MASTER_2 = "layoutBranch.master = ?";
 
+	public LayoutBranchPersistenceImpl() {
+		super(LayoutBranch.class);
+	}
+
 	/**
 	 * Caches the layout branch in the entity cache if it is enabled.
 	 *

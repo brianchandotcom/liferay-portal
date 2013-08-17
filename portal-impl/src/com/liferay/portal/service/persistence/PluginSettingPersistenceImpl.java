@@ -900,6 +900,10 @@ public class PluginSettingPersistenceImpl extends BasePersistenceImpl<PluginSett
 	private static final String _FINDER_COLUMN_C_I_T_PLUGINTYPE_2 = "pluginSetting.pluginType = ?";
 	private static final String _FINDER_COLUMN_C_I_T_PLUGINTYPE_3 = "(pluginSetting.pluginType IS NULL OR pluginSetting.pluginType = '')";
 
+	public PluginSettingPersistenceImpl() {
+		super(PluginSetting.class);
+	}
+
 	/**
 	 * Caches the plugin setting in the entity cache if it is enabled.
 	 *

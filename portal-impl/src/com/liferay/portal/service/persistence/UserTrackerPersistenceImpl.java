@@ -1596,6 +1596,10 @@ public class UserTrackerPersistenceImpl extends BasePersistenceImpl<UserTracker>
 	private static final String _FINDER_COLUMN_SESSIONID_SESSIONID_2 = "userTracker.sessionId = ?";
 	private static final String _FINDER_COLUMN_SESSIONID_SESSIONID_3 = "(userTracker.sessionId IS NULL OR userTracker.sessionId = '')";
 
+	public UserTrackerPersistenceImpl() {
+		super(UserTracker.class);
+	}
+
 	/**
 	 * Caches the user tracker in the entity cache if it is enabled.
 	 *

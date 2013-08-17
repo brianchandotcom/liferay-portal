@@ -3134,6 +3134,10 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 	private static final String _FINDER_COLUMN_G_P_M_PRIVATELAYOUT_2 = "layoutSetBranch.privateLayout = ? AND ";
 	private static final String _FINDER_COLUMN_G_P_M_MASTER_2 = "layoutSetBranch.master = ?";
 
+	public LayoutSetBranchPersistenceImpl() {
+		super(LayoutSetBranch.class);
+	}
+
 	/**
 	 * Caches the layout set branch in the entity cache if it is enabled.
 	 *

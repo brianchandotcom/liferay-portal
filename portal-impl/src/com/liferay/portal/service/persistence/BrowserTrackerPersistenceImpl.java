@@ -292,6 +292,10 @@ public class BrowserTrackerPersistenceImpl extends BasePersistenceImpl<BrowserTr
 
 	private static final String _FINDER_COLUMN_USERID_USERID_2 = "browserTracker.userId = ?";
 
+	public BrowserTrackerPersistenceImpl() {
+		super(BrowserTracker.class);
+	}
+
 	/**
 	 * Caches the browser tracker in the entity cache if it is enabled.
 	 *

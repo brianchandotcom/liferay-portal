@@ -1369,6 +1369,10 @@ public class DDLRecordVersionPersistenceImpl extends BasePersistenceImpl<DDLReco
 	private static final String _FINDER_COLUMN_R_S_RECORDID_2 = "ddlRecordVersion.recordId = ? AND ";
 	private static final String _FINDER_COLUMN_R_S_STATUS_2 = "ddlRecordVersion.status = ?";
 
+	public DDLRecordVersionPersistenceImpl() {
+		super(DDLRecordVersion.class);
+	}
+
 	/**
 	 * Caches the d d l record version in the entity cache if it is enabled.
 	 *

@@ -4512,6 +4512,10 @@ public class JournalContentSearchPersistenceImpl extends BasePersistenceImpl<Jou
 	private static final String _FINDER_COLUMN_G_P_L_P_A_ARTICLEID_2 = "journalContentSearch.articleId = ?";
 	private static final String _FINDER_COLUMN_G_P_L_P_A_ARTICLEID_3 = "(journalContentSearch.articleId IS NULL OR journalContentSearch.articleId = '')";
 
+	public JournalContentSearchPersistenceImpl() {
+		super(JournalContentSearch.class);
+	}
+
 	/**
 	 * Caches the journal content search in the entity cache if it is enabled.
 	 *

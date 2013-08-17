@@ -2327,6 +2327,10 @@ public class SubscriptionPersistenceImpl extends BasePersistenceImpl<Subscriptio
 	private static final String _FINDER_COLUMN_C_U_C_C_CLASSPK_5 = "(" +
 		removeConjunction(_FINDER_COLUMN_C_U_C_C_CLASSPK_2) + ")";
 
+	public SubscriptionPersistenceImpl() {
+		super(Subscription.class);
+	}
+
 	/**
 	 * Caches the subscription in the entity cache if it is enabled.
 	 *

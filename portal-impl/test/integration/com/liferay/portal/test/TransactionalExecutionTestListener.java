@@ -14,9 +14,13 @@
 
 package com.liferay.portal.test;
 
+import com.liferay.portal.cache.transactional.TransactionalPortalCacheHelper;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
+import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.test.AbstractExecutionTestListener;
 import com.liferay.portal.kernel.test.TestContext;
+import com.liferay.portal.kernel.util.ReflectionUtil;
 
 import java.lang.reflect.Method;
 
@@ -30,6 +34,7 @@ import org.springframework.transaction.interceptor.TransactionAttributeSource;
 
 /**
  * @author Miguel Pastor
+ * @author Shuyang Zhou
  */
 public class TransactionalExecutionTestListener
 	extends AbstractExecutionTestListener {
@@ -104,16 +109,68 @@ public class TransactionalExecutionTestListener
 		public void startTransaction() {
 			_transactionStatus = _platformTransactionManager.getTransaction(
 				_transactionAttribute);
+
+			boolean newTransaction = _transactionStatus.isNewTransaction();
+
+			if (newTransaction) {
+				TransactionalPortalCacheHelper.begin();
+
+				try {
+					_pushCallbackListMethod.invoke(null);
+				}
+				catch (Exception e) {
+					throw new RuntimeException(e);
+				}
+			}
 		}
 
 		public void rollBackTransaction() {
 			_platformTransactionManager.rollback(_transactionStatus);
+
+			if (_transactionStatus.isNewTransaction()) {
+				TransactionalPortalCacheHelper.rollback();
+
+				try {
+					_popCallbackListMethod.invoke(null);
+				}
+				catch (Exception e) {
+					throw new RuntimeException(e);
+				}
+
+				EntityCacheUtil.clearLocalCache();
+				FinderCacheUtil.clearLocalCache();
+			}
 		}
 
 		private PlatformTransactionManager _platformTransactionManager;
 		private TransactionAttribute _transactionAttribute;
 		private TransactionStatus _transactionStatus;
+
 	}
+
+	private static Method _popCallbackListMethod;
+
+	static {
+		Class<?> clazz = TransactionalExecutionTestListener.class;
+
+		ClassLoader classLoader = clazz.getClassLoader();
+
+		try {
+			Class<?> transactionCommitCallbackUtilClass = classLoader.loadClass(
+				"com.liferay.portal.spring.transaction." +
+					"TransactionCommitCallbackUtil");
+
+			_pushCallbackListMethod = ReflectionUtil.getDeclaredMethod(
+				transactionCommitCallbackUtilClass, "pushCallbackList");
+			_popCallbackListMethod = ReflectionUtil.getDeclaredMethod(
+				transactionCommitCallbackUtilClass, "popCallbackList");
+		}
+		catch (Exception e) {
+			throw new ExceptionInInitializerError(e);
+		}
+	}
+
+	private static Method _pushCallbackListMethod;
 
 	private PlatformTransactionManager _platformTransactionManager;
 	private TransactionAttributeSource _transactionAttributeSource;

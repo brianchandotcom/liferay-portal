@@ -219,6 +219,8 @@ public interface BasePersistence<T extends BaseModel<T>> {
 	 */
 	public ModelListener<T>[] getListeners();
 
+	public Class<T> getModelClass();
+
 	public Session openSession() throws ORMException;
 
 	public SystemException processException(Exception e);

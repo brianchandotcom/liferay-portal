@@ -577,6 +577,10 @@ public class ShoppingOrderItemPersistenceImpl extends BasePersistenceImpl<Shoppi
 
 	private static final String _FINDER_COLUMN_ORDERID_ORDERID_2 = "shoppingOrderItem.orderId = ?";
 
+	public ShoppingOrderItemPersistenceImpl() {
+		super(ShoppingOrderItem.class);
+	}
+
 	/**
 	 * Caches the shopping order item in the entity cache if it is enabled.
 	 *

@@ -2763,6 +2763,10 @@ public class UserNotificationEventPersistenceImpl extends BasePersistenceImpl<Us
 	private static final String _FINDER_COLUMN_U_A_USERID_2 = "userNotificationEvent.userId = ? AND ";
 	private static final String _FINDER_COLUMN_U_A_ARCHIVED_2 = "userNotificationEvent.archived = ?";
 
+	public UserNotificationEventPersistenceImpl() {
+		super(UserNotificationEvent.class);
+	}
+
 	/**
 	 * Caches the user notification event in the entity cache if it is enabled.
 	 *

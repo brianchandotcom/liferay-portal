@@ -7951,6 +7951,10 @@ public class LayoutPersistenceImpl extends BasePersistenceImpl<Layout>
 	private static final String _FINDER_COLUMN_G_P_SPLU_SOURCEPROTOTYPELAYOUTUUID_3 =
 		"(layout.sourcePrototypeLayoutUuid IS NULL OR layout.sourcePrototypeLayoutUuid = '')";
 
+	public LayoutPersistenceImpl() {
+		super(Layout.class);
+	}
+
 	/**
 	 * Caches the layout in the entity cache if it is enabled.
 	 *

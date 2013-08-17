@@ -1741,6 +1741,10 @@ public class SystemEventPersistenceImpl extends BasePersistenceImpl<SystemEvent>
 	private static final String _FINDER_COLUMN_G_C_C_T_CLASSPK_2 = "systemEvent.classPK = ? AND ";
 	private static final String _FINDER_COLUMN_G_C_C_T_TYPE_2 = "systemEvent.type = ?";
 
+	public SystemEventPersistenceImpl() {
+		super(SystemEvent.class);
+	}
+
 	/**
 	 * Caches the system event in the entity cache if it is enabled.
 	 *

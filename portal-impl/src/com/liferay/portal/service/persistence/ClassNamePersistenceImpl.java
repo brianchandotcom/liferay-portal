@@ -322,6 +322,10 @@ public class ClassNamePersistenceImpl extends BasePersistenceImpl<ClassName>
 	private static final String _FINDER_COLUMN_VALUE_VALUE_2 = "className.value = ?";
 	private static final String _FINDER_COLUMN_VALUE_VALUE_3 = "(className.value IS NULL OR className.value = '')";
 
+	public ClassNamePersistenceImpl() {
+		super(ClassName.class);
+	}
+
 	/**
 	 * Caches the class name in the entity cache if it is enabled.
 	 *

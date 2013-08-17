@@ -3855,6 +3855,10 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 	private static final String _FINDER_COLUMN_C_C_C_P_CLASSPK_2 = "phone.classPK = ? AND ";
 	private static final String _FINDER_COLUMN_C_C_C_P_PRIMARY_2 = "phone.primary = ?";
 
+	public PhonePersistenceImpl() {
+		super(Phone.class);
+	}
+
 	/**
 	 * Caches the phone in the entity cache if it is enabled.
 	 *

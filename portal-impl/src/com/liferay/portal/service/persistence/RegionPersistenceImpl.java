@@ -1846,6 +1846,10 @@ public class RegionPersistenceImpl extends BasePersistenceImpl<Region>
 	private static final String _FINDER_COLUMN_C_A_COUNTRYID_2 = "region.countryId = ? AND ";
 	private static final String _FINDER_COLUMN_C_A_ACTIVE_2 = "region.active = ?";
 
+	public RegionPersistenceImpl() {
+		super(Region.class);
+	}
+
 	/**
 	 * Caches the region in the entity cache if it is enabled.
 	 *

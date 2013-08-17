@@ -4756,6 +4756,10 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 	private static final String _FINDER_COLUMN_G_P_F_L_LANGUAGEID_2 = "layoutFriendlyURL.languageId = ?";
 	private static final String _FINDER_COLUMN_G_P_F_L_LANGUAGEID_3 = "(layoutFriendlyURL.languageId IS NULL OR layoutFriendlyURL.languageId = '')";
 
+	public LayoutFriendlyURLPersistenceImpl() {
+		super(LayoutFriendlyURL.class);
+	}
+
 	/**
 	 * Caches the layout friendly u r l in the entity cache if it is enabled.
 	 *

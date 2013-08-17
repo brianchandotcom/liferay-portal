@@ -80,6 +80,10 @@ public class AccountPersistenceImpl extends BasePersistenceImpl<Account>
 			AccountModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
 
+	public AccountPersistenceImpl() {
+		super(Account.class);
+	}
+
 	/**
 	 * Caches the account in the entity cache if it is enabled.
 	 *

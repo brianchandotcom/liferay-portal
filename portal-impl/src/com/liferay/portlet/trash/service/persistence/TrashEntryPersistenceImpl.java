@@ -2374,6 +2374,10 @@ public class TrashEntryPersistenceImpl extends BasePersistenceImpl<TrashEntry>
 	private static final String _FINDER_COLUMN_C_C_CLASSNAMEID_2 = "trashEntry.classNameId = ? AND ";
 	private static final String _FINDER_COLUMN_C_C_CLASSPK_2 = "trashEntry.classPK = ?";
 
+	public TrashEntryPersistenceImpl() {
+		super(TrashEntry.class);
+	}
+
 	/**
 	 * Caches the trash entry in the entity cache if it is enabled.
 	 *

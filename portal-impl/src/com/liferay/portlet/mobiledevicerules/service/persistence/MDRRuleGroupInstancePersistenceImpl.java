@@ -4590,6 +4590,10 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 	private static final String _FINDER_COLUMN_C_C_R_CLASSPK_2 = "mdrRuleGroupInstance.classPK = ? AND ";
 	private static final String _FINDER_COLUMN_C_C_R_RULEGROUPID_2 = "mdrRuleGroupInstance.ruleGroupId = ?";
 
+	public MDRRuleGroupInstancePersistenceImpl() {
+		super(MDRRuleGroupInstance.class);
+	}
+
 	/**
 	 * Caches the m d r rule group instance in the entity cache if it is enabled.
 	 *

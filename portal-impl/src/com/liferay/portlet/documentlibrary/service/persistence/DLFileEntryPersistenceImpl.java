@@ -9925,6 +9925,10 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 	private static final String _FINDER_COLUMN_G_F_F_FILEENTRYTYPEID_5 = "(" +
 		removeConjunction(_FINDER_COLUMN_G_F_F_FILEENTRYTYPEID_2) + ")";
 
+	public DLFileEntryPersistenceImpl() {
+		super(DLFileEntry.class);
+	}
+
 	/**
 	 * Caches the document library file entry in the entity cache if it is enabled.
 	 *

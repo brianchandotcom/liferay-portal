@@ -552,6 +552,10 @@ public class ImagePersistenceImpl extends BasePersistenceImpl<Image>
 
 	private static final String _FINDER_COLUMN_LTSIZE_SIZE_2 = "image.size < ?";
 
+	public ImagePersistenceImpl() {
+		super(Image.class);
+	}
+
 	/**
 	 * Caches the image in the entity cache if it is enabled.
 	 *

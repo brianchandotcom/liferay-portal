@@ -7441,6 +7441,10 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 	private static final String _FINDER_COLUMN_G_T_R_REPEATING_5 = "(" +
 		removeConjunction(_FINDER_COLUMN_G_T_R_REPEATING_2) + ")";
 
+	public CalEventPersistenceImpl() {
+		super(CalEvent.class);
+	}
+
 	/**
 	 * Caches the cal event in the entity cache if it is enabled.
 	 *

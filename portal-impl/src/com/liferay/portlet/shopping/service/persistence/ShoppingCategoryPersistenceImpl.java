@@ -1860,6 +1860,10 @@ public class ShoppingCategoryPersistenceImpl extends BasePersistenceImpl<Shoppin
 	private static final String _FINDER_COLUMN_G_P_GROUPID_2 = "shoppingCategory.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_P_PARENTCATEGORYID_2 = "shoppingCategory.parentCategoryId = ?";
 
+	public ShoppingCategoryPersistenceImpl() {
+		super(ShoppingCategory.class);
+	}
+
 	/**
 	 * Caches the shopping category in the entity cache if it is enabled.
 	 *

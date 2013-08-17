@@ -132,6 +132,19 @@
 					},
 				</c:if>
 
+				getBCP47LanguageId: function() {
+					var languageId = "<%= LanguageUtil.getLanguageId(request) %>";
+
+					if (languageId === 'zh_CN') {
+						return 'zh-Hans-CN';
+					}
+					else if (languageId === 'zh_TW') {
+						return 'zh-Hant-TW';
+					}
+					else {
+						return languageId.replace(/_/g, '-');
+					}
+				},
 				getCDNBaseURL: function() {
 					return "<%= themeDisplay.getCDNBaseURL() %>";
 				},

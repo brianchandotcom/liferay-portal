@@ -85,7 +85,7 @@ CKEDITOR.config.contentsLanguage = '<%= HtmlUtil.escapeJS(contentsLanguageId.rep
 
 CKEDITOR.config.entities = false;
 
-CKEDITOR.config.extraPlugins = 'ajaxsave,restore,scayt,wsc';
+CKEDITOR.config.extraPlugins = 'ajaxsave,restore,scayt,video,wsc';
 
 CKEDITOR.config.height = 265;
 
@@ -132,7 +132,7 @@ CKEDITOR.config.toolbar_liferay = [
 	['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent'],
 	['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
 	['Image', 'Link', 'Unlink', 'Anchor'],
-	['Flash', 'Table', '-', 'Smiley', 'SpecialChar'],
+	['Flash', 'Video', 'Table', '-', 'Smiley', 'SpecialChar'],
 	['Find', 'Replace', 'SpellChecker', 'Scayt'],
 	['SelectAll', 'RemoveFormat'],
 	['Subscript', 'Superscript']
@@ -154,7 +154,7 @@ CKEDITOR.config.toolbar_liferayArticle = [
 	'/',
 	['Source'],
 	['Link', 'Unlink', 'Anchor'],
-	['Image', 'Flash', 'Table', '-', 'Smiley', 'SpecialChar', 'LiferayPageBreak']
+	['Image', 'Flash', 'Video', 'Table', '-', 'Smiley', 'SpecialChar', 'LiferayPageBreak']
 ];
 
 CKEDITOR.config.toolbar_phone = [

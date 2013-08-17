@@ -6221,6 +6221,10 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 	private static final String _FINDER_COLUMN_G_P_NOTS_PARENTFOLDERID_2 = "journalFolder.parentFolderId = ? AND ";
 	private static final String _FINDER_COLUMN_G_P_NOTS_STATUS_2 = "journalFolder.status != ?";
 
+	public JournalFolderPersistenceImpl() {
+		super(JournalFolder.class);
+	}
+
 	/**
 	 * Caches the journal folder in the entity cache if it is enabled.
 	 *

@@ -331,6 +331,10 @@ public class TicketPersistenceImpl extends BasePersistenceImpl<Ticket>
 	private static final String _FINDER_COLUMN_KEY_KEY_2 = "ticket.key = ?";
 	private static final String _FINDER_COLUMN_KEY_KEY_3 = "(ticket.key IS NULL OR ticket.key = '')";
 
+	public TicketPersistenceImpl() {
+		super(Ticket.class);
+	}
+
 	/**
 	 * Caches the ticket in the entity cache if it is enabled.
 	 *

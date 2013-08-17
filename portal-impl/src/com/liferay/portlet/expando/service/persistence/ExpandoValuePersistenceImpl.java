@@ -4770,6 +4770,10 @@ public class ExpandoValuePersistenceImpl extends BasePersistenceImpl<ExpandoValu
 	private static final String _FINDER_COLUMN_T_C_D_DATA_2 = "expandoValue.data = ?";
 	private static final String _FINDER_COLUMN_T_C_D_DATA_3 = "(expandoValue.data IS NULL OR expandoValue.data = '')";
 
+	public ExpandoValuePersistenceImpl() {
+		super(ExpandoValue.class);
+	}
+
 	/**
 	 * Caches the expando value in the entity cache if it is enabled.
 	 *

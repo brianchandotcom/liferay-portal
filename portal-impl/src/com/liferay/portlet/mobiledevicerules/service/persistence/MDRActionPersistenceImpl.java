@@ -1951,6 +1951,10 @@ public class MDRActionPersistenceImpl extends BasePersistenceImpl<MDRAction>
 	private static final String _FINDER_COLUMN_RULEGROUPINSTANCEID_RULEGROUPINSTANCEID_2 =
 		"mdrAction.ruleGroupInstanceId = ?";
 
+	public MDRActionPersistenceImpl() {
+		super(MDRAction.class);
+	}
+
 	/**
 	 * Caches the m d r action in the entity cache if it is enabled.
 	 *

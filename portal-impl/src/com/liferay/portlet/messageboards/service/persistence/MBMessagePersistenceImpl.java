@@ -20214,6 +20214,10 @@ public class MBMessagePersistenceImpl extends BasePersistenceImpl<MBMessage>
 	private static final String _FINDER_COLUMN_U_C_C_S_CLASSPK_2 = "mbMessage.classPK = ? AND ";
 	private static final String _FINDER_COLUMN_U_C_C_S_STATUS_2 = "mbMessage.status = ?";
 
+	public MBMessagePersistenceImpl() {
+		super(MBMessage.class);
+	}
+
 	/**
 	 * Caches the message-boards message in the entity cache if it is enabled.
 	 *

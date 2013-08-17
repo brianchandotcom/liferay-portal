@@ -1701,6 +1701,10 @@ public class ExpandoColumnPersistenceImpl extends BasePersistenceImpl<ExpandoCol
 	private static final String _FINDER_COLUMN_T_N_NAME_6 = "(" +
 		removeConjunction(_FINDER_COLUMN_T_N_NAME_3) + ")";
 
+	public ExpandoColumnPersistenceImpl() {
+		super(ExpandoColumn.class);
+	}
+
 	/**
 	 * Caches the expando column in the entity cache if it is enabled.
 	 *

@@ -7232,6 +7232,10 @@ public class MBCategoryPersistenceImpl extends BasePersistenceImpl<MBCategory>
 	private static final String _FINDER_COLUMN_G_P_S_STATUS_5 = "(" +
 		removeConjunction(_FINDER_COLUMN_G_P_S_STATUS_2) + ")";
 
+	public MBCategoryPersistenceImpl() {
+		super(MBCategory.class);
+	}
+
 	/**
 	 * Caches the message boards category in the entity cache if it is enabled.
 	 *

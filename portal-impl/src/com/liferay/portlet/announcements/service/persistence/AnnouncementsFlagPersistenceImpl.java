@@ -837,6 +837,10 @@ public class AnnouncementsFlagPersistenceImpl extends BasePersistenceImpl<Announ
 	private static final String _FINDER_COLUMN_U_E_V_ENTRYID_2 = "announcementsFlag.entryId = ? AND ";
 	private static final String _FINDER_COLUMN_U_E_V_VALUE_2 = "announcementsFlag.value = ?";
 
+	public AnnouncementsFlagPersistenceImpl() {
+		super(AnnouncementsFlag.class);
+	}
+
 	/**
 	 * Caches the announcements flag in the entity cache if it is enabled.
 	 *

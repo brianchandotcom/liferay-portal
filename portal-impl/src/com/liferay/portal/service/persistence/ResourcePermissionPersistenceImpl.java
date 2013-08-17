@@ -4026,6 +4026,10 @@ public class ResourcePermissionPersistenceImpl extends BasePersistenceImpl<Resou
 	private static final String _FINDER_COLUMN_C_N_S_P_R_ROLEID_5 = "(" +
 		removeConjunction(_FINDER_COLUMN_C_N_S_P_R_ROLEID_2) + ")";
 
+	public ResourcePermissionPersistenceImpl() {
+		super(ResourcePermission.class);
+	}
+
 	/**
 	 * Caches the resource permission in the entity cache if it is enabled.
 	 *

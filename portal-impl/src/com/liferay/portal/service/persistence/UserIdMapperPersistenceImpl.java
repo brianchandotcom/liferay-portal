@@ -1129,6 +1129,10 @@ public class UserIdMapperPersistenceImpl extends BasePersistenceImpl<UserIdMappe
 	private static final String _FINDER_COLUMN_T_E_EXTERNALUSERID_2 = "userIdMapper.externalUserId = ?";
 	private static final String _FINDER_COLUMN_T_E_EXTERNALUSERID_3 = "(userIdMapper.externalUserId IS NULL OR userIdMapper.externalUserId = '')";
 
+	public UserIdMapperPersistenceImpl() {
+		super(UserIdMapper.class);
+	}
+
 	/**
 	 * Caches the user ID mapper in the entity cache if it is enabled.
 	 *

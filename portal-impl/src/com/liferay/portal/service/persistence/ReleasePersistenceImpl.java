@@ -331,6 +331,10 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 	private static final String _FINDER_COLUMN_SERVLETCONTEXTNAME_SERVLETCONTEXTNAME_3 =
 		"(release.servletContextName IS NULL OR release.servletContextName = '')";
 
+	public ReleasePersistenceImpl() {
+		super(Release.class);
+	}
+
 	/**
 	 * Caches the release in the entity cache if it is enabled.
 	 *

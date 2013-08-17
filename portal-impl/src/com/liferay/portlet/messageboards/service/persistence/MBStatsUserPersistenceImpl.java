@@ -1842,6 +1842,10 @@ public class MBStatsUserPersistenceImpl extends BasePersistenceImpl<MBStatsUser>
 	private static final String _FINDER_COLUMN_G_NOTU_NOTM_USERID_2 = "mbStatsUser.userId != ? AND ";
 	private static final String _FINDER_COLUMN_G_NOTU_NOTM_MESSAGECOUNT_2 = "mbStatsUser.messageCount != ?";
 
+	public MBStatsUserPersistenceImpl() {
+		super(MBStatsUser.class);
+	}
+
 	/**
 	 * Caches the message boards stats user in the entity cache if it is enabled.
 	 *

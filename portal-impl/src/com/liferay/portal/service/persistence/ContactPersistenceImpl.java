@@ -1585,6 +1585,10 @@ public class ContactPersistenceImpl extends BasePersistenceImpl<Contact>
 	private static final String _FINDER_COLUMN_C_C_CLASSNAMEID_2 = "contact.classNameId = ? AND ";
 	private static final String _FINDER_COLUMN_C_C_CLASSPK_2 = "contact.classPK = ?";
 
+	public ContactPersistenceImpl() {
+		super(Contact.class);
+	}
+
 	/**
 	 * Caches the contact in the entity cache if it is enabled.
 	 *

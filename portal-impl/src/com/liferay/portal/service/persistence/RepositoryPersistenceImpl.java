@@ -2256,6 +2256,10 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 	private static final String _FINDER_COLUMN_G_N_P_PORTLETID_2 = "repository.portletId = ?";
 	private static final String _FINDER_COLUMN_G_N_P_PORTLETID_3 = "(repository.portletId IS NULL OR repository.portletId = '')";
 
+	public RepositoryPersistenceImpl() {
+		super(Repository.class);
+	}
+
 	/**
 	 * Caches the repository in the entity cache if it is enabled.
 	 *

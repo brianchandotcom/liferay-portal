@@ -5700,6 +5700,10 @@ public class LayoutRevisionPersistenceImpl extends BasePersistenceImpl<LayoutRev
 	private static final String _FINDER_COLUMN_L_P_S_PLID_2 = "layoutRevision.plid = ? AND ";
 	private static final String _FINDER_COLUMN_L_P_S_STATUS_2 = "layoutRevision.status = ?";
 
+	public LayoutRevisionPersistenceImpl() {
+		super(LayoutRevision.class);
+	}
+
 	/**
 	 * Caches the layout revision in the entity cache if it is enabled.
 	 *

@@ -1286,6 +1286,10 @@ public class DDMStructureLinkPersistenceImpl extends BasePersistenceImpl<DDMStru
 
 	private static final String _FINDER_COLUMN_STRUCTUREID_STRUCTUREID_2 = "ddmStructureLink.structureId = ?";
 
+	public DDMStructureLinkPersistenceImpl() {
+		super(DDMStructureLink.class);
+	}
+
 	/**
 	 * Caches the d d m structure link in the entity cache if it is enabled.
 	 *

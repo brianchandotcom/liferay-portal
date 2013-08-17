@@ -883,6 +883,10 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 	private static final String _FINDER_COLUMN_N_T_TITLE_2 = "wikiPageResource.title = ?";
 	private static final String _FINDER_COLUMN_N_T_TITLE_3 = "(wikiPageResource.title IS NULL OR wikiPageResource.title = '')";
 
+	public WikiPageResourcePersistenceImpl() {
+		super(WikiPageResource.class);
+	}
+
 	/**
 	 * Caches the wiki page resource in the entity cache if it is enabled.
 	 *

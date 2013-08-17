@@ -17933,6 +17933,10 @@ public class BlogsEntryPersistenceImpl extends BasePersistenceImpl<BlogsEntry>
 	private static final String _FINDER_COLUMN_G_U_LTD_S_DISPLAYDATE_2 = "blogsEntry.displayDate < ? AND ";
 	private static final String _FINDER_COLUMN_G_U_LTD_S_STATUS_2 = "blogsEntry.status = ?";
 
+	public BlogsEntryPersistenceImpl() {
+		super(BlogsEntry.class);
+	}
+
 	/**
 	 * Caches the blogs entry in the entity cache if it is enabled.
 	 *

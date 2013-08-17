@@ -1972,6 +1972,10 @@ public class SocialActivityLimitPersistenceImpl extends BasePersistenceImpl<Soci
 	private static final String _FINDER_COLUMN_G_U_C_C_A_A_ACTIVITYCOUNTERNAME_3 =
 		"(socialActivityLimit.activityCounterName IS NULL OR socialActivityLimit.activityCounterName = '')";
 
+	public SocialActivityLimitPersistenceImpl() {
+		super(SocialActivityLimit.class);
+	}
+
 	/**
 	 * Caches the social activity limit in the entity cache if it is enabled.
 	 *

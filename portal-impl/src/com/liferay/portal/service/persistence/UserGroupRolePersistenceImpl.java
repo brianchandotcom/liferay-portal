@@ -2614,6 +2614,10 @@ public class UserGroupRolePersistenceImpl extends BasePersistenceImpl<UserGroupR
 	private static final String _FINDER_COLUMN_G_R_GROUPID_2 = "userGroupRole.id.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_R_ROLEID_2 = "userGroupRole.id.roleId = ?";
 
+	public UserGroupRolePersistenceImpl() {
+		super(UserGroupRole.class);
+	}
+
 	/**
 	 * Caches the user group role in the entity cache if it is enabled.
 	 *

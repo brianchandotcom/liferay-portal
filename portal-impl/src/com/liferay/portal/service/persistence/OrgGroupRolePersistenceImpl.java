@@ -1059,6 +1059,10 @@ public class OrgGroupRolePersistenceImpl extends BasePersistenceImpl<OrgGroupRol
 
 	private static final String _FINDER_COLUMN_ROLEID_ROLEID_2 = "orgGroupRole.id.roleId = ?";
 
+	public OrgGroupRolePersistenceImpl() {
+		super(OrgGroupRole.class);
+	}
+
 	/**
 	 * Caches the org group role in the entity cache if it is enabled.
 	 *

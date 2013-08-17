@@ -2660,6 +2660,10 @@ public class MBThreadFlagPersistenceImpl extends BasePersistenceImpl<MBThreadFla
 	private static final String _FINDER_COLUMN_U_T_USERID_2 = "mbThreadFlag.userId = ? AND ";
 	private static final String _FINDER_COLUMN_U_T_THREADID_2 = "mbThreadFlag.threadId = ?";
 
+	public MBThreadFlagPersistenceImpl() {
+		super(MBThreadFlag.class);
+	}
+
 	/**
 	 * Caches the message boards thread flag in the entity cache if it is enabled.
 	 *

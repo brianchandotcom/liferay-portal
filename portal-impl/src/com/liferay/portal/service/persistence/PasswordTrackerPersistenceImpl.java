@@ -577,6 +577,10 @@ public class PasswordTrackerPersistenceImpl extends BasePersistenceImpl<Password
 
 	private static final String _FINDER_COLUMN_USERID_USERID_2 = "passwordTracker.userId = ?";
 
+	public PasswordTrackerPersistenceImpl() {
+		super(PasswordTracker.class);
+	}
+
 	/**
 	 * Caches the password tracker in the entity cache if it is enabled.
 	 *

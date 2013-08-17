@@ -613,6 +613,10 @@ public class ListTypePersistenceImpl extends BasePersistenceImpl<ListType>
 	private static final String _FINDER_COLUMN_TYPE_TYPE_2 = "listType.type = ?";
 	private static final String _FINDER_COLUMN_TYPE_TYPE_3 = "(listType.type IS NULL OR listType.type = '')";
 
+	public ListTypePersistenceImpl() {
+		super(ListType.class);
+	}
+
 	/**
 	 * Caches the list type in the entity cache if it is enabled.
 	 *

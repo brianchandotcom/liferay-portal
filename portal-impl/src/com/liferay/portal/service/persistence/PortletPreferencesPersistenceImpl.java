@@ -4387,6 +4387,10 @@ public class PortletPreferencesPersistenceImpl extends BasePersistenceImpl<Portl
 	private static final String _FINDER_COLUMN_O_O_P_P_PORTLETID_2 = "portletPreferences.portletId = ?";
 	private static final String _FINDER_COLUMN_O_O_P_P_PORTLETID_3 = "(portletPreferences.portletId IS NULL OR portletPreferences.portletId = '')";
 
+	public PortletPreferencesPersistenceImpl() {
+		super(PortletPreferences.class);
+	}
+
 	/**
 	 * Caches the portlet preferences in the entity cache if it is enabled.
 	 *

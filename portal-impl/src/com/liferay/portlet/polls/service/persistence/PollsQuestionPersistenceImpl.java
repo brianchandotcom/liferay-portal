@@ -2316,6 +2316,10 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 
 	private static final String _FINDER_COLUMN_GROUPID_GROUPID_2 = "pollsQuestion.groupId = ?";
 
+	public PollsQuestionPersistenceImpl() {
+		super(PollsQuestion.class);
+	}
+
 	/**
 	 * Caches the polls question in the entity cache if it is enabled.
 	 *

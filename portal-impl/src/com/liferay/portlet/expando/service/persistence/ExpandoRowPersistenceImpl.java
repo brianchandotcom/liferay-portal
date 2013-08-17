@@ -1288,6 +1288,10 @@ public class ExpandoRowPersistenceImpl extends BasePersistenceImpl<ExpandoRow>
 	private static final String _FINDER_COLUMN_T_C_TABLEID_2 = "expandoRow.tableId = ? AND ";
 	private static final String _FINDER_COLUMN_T_C_CLASSPK_2 = "expandoRow.classPK = ?";
 
+	public ExpandoRowPersistenceImpl() {
+		super(ExpandoRow.class);
+	}
+
 	/**
 	 * Caches the expando row in the entity cache if it is enabled.
 	 *

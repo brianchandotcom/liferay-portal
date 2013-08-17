@@ -1325,6 +1325,10 @@ public class DDMStorageLinkPersistenceImpl extends BasePersistenceImpl<DDMStorag
 
 	private static final String _FINDER_COLUMN_STRUCTUREID_STRUCTUREID_2 = "ddmStorageLink.structureId = ?";
 
+	public DDMStorageLinkPersistenceImpl() {
+		super(DDMStorageLink.class);
+	}
+
 	/**
 	 * Caches the d d m storage link in the entity cache if it is enabled.
 	 *

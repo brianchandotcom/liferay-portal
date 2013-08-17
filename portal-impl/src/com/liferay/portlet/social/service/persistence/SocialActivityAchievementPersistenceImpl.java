@@ -3095,6 +3095,10 @@ public class SocialActivityAchievementPersistenceImpl
 	private static final String _FINDER_COLUMN_G_U_F_USERID_2 = "socialActivityAchievement.userId = ? AND ";
 	private static final String _FINDER_COLUMN_G_U_F_FIRSTINGROUP_2 = "socialActivityAchievement.firstInGroup = ?";
 
+	public SocialActivityAchievementPersistenceImpl() {
+		super(SocialActivityAchievement.class);
+	}
+
 	/**
 	 * Caches the social activity achievement in the entity cache if it is enabled.
 	 *

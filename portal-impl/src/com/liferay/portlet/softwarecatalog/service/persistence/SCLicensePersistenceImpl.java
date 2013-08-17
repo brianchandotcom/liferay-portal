@@ -16,11 +16,6 @@ package com.liferay.portlet.softwarecatalog.service.persistence;
 
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
-import com.liferay.portal.kernel.dao.jdbc.MappingSqlQuery;
-import com.liferay.portal.kernel.dao.jdbc.MappingSqlQueryFactoryUtil;
-import com.liferay.portal.kernel.dao.jdbc.RowMapper;
-import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
-import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -44,6 +39,8 @@ import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.service.persistence.impl.MappingTable;
+import com.liferay.portal.service.persistence.impl.MappingTableUtil;
 
 import com.liferay.portlet.softwarecatalog.NoSuchLicenseException;
 import com.liferay.portlet.softwarecatalog.model.SCLicense;
@@ -1848,6 +1845,10 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	private static final String _FINDER_COLUMN_A_R_ACTIVE_2_SQL = "scLicense.active_ = ? AND ";
 	private static final String _FINDER_COLUMN_A_R_RECOMMENDED_2 = "scLicense.recommended = ?";
 
+	public SCLicensePersistenceImpl() {
+		super(SCLicense.class);
+	}
+
 	/**
 	 * Caches the s c license in the entity cache if it is enabled.
 	 *
@@ -2003,15 +2004,7 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 		throws SystemException {
 		scLicense = toUnwrappedModel(scLicense);
 
-		try {
-			clearSCProductEntries.clear(scLicense.getPrimaryKey());
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(SCLicenseModelImpl.MAPPING_TABLE_SCLICENSES_SCPRODUCTENTRIES_NAME);
-		}
+		scLicenseToSCProductEntryMappingTable.deleteByLeftPk(scLicense.getPrimaryKey());
 
 		Session session = null;
 
@@ -2449,20 +2442,6 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 		return getSCProductEntries(pk, start, end, null);
 	}
 
-	public static final FinderPath FINDER_PATH_GET_SCPRODUCTENTRIES = new FinderPath(com.liferay.portlet.softwarecatalog.model.impl.SCProductEntryModelImpl.ENTITY_CACHE_ENABLED,
-			SCLicenseModelImpl.FINDER_CACHE_ENABLED_SCLICENSES_SCPRODUCTENTRIES,
-			com.liferay.portlet.softwarecatalog.model.impl.SCProductEntryImpl.class,
-			SCLicenseModelImpl.MAPPING_TABLE_SCLICENSES_SCPRODUCTENTRIES_NAME,
-			"getSCProductEntries",
-			new String[] {
-				Long.class.getName(), Integer.class.getName(),
-				Integer.class.getName(), OrderByComparator.class.getName()
-			});
-
-	static {
-		FINDER_PATH_GET_SCPRODUCTENTRIES.setCacheKeyGeneratorCacheName(null);
-	}
-
 	/**
 	 * Returns an ordered range of all the s c product entries associated with the s c license.
 	 *
@@ -2481,90 +2460,8 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	public List<com.liferay.portlet.softwarecatalog.model.SCProductEntry> getSCProductEntries(
 		long pk, int start, int end, OrderByComparator orderByComparator)
 		throws SystemException {
-		boolean pagination = true;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-			pagination = false;
-			finderArgs = new Object[] { pk };
-		}
-		else {
-			finderArgs = new Object[] { pk, start, end, orderByComparator };
-		}
-
-		List<com.liferay.portlet.softwarecatalog.model.SCProductEntry> list = (List<com.liferay.portlet.softwarecatalog.model.SCProductEntry>)FinderCacheUtil.getResult(FINDER_PATH_GET_SCPRODUCTENTRIES,
-				finderArgs, this);
-
-		if (list == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				String sql = null;
-
-				if (orderByComparator != null) {
-					sql = _SQL_GETSCPRODUCTENTRIES.concat(ORDER_BY_CLAUSE)
-												  .concat(orderByComparator.getOrderBy());
-				}
-				else {
-					sql = _SQL_GETSCPRODUCTENTRIES;
-
-					if (pagination) {
-						sql = sql.concat(com.liferay.portlet.softwarecatalog.model.impl.SCProductEntryModelImpl.ORDER_BY_SQL);
-					}
-				}
-
-				SQLQuery q = session.createSQLQuery(sql);
-
-				q.addEntity("SCProductEntry",
-					com.liferay.portlet.softwarecatalog.model.impl.SCProductEntryImpl.class);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(pk);
-
-				if (!pagination) {
-					list = (List<com.liferay.portlet.softwarecatalog.model.SCProductEntry>)QueryUtil.list(q,
-							getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = new UnmodifiableList<com.liferay.portlet.softwarecatalog.model.SCProductEntry>(list);
-				}
-				else {
-					list = (List<com.liferay.portlet.softwarecatalog.model.SCProductEntry>)QueryUtil.list(q,
-							getDialect(), start, end);
-				}
-
-				scProductEntryPersistence.cacheResult(list);
-
-				FinderCacheUtil.putResult(FINDER_PATH_GET_SCPRODUCTENTRIES,
-					finderArgs, list);
-			}
-			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_GET_SCPRODUCTENTRIES,
-					finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
-	}
-
-	public static final FinderPath FINDER_PATH_GET_SCPRODUCTENTRIES_SIZE = new FinderPath(com.liferay.portlet.softwarecatalog.model.impl.SCProductEntryModelImpl.ENTITY_CACHE_ENABLED,
-			SCLicenseModelImpl.FINDER_CACHE_ENABLED_SCLICENSES_SCPRODUCTENTRIES,
-			Long.class,
-			SCLicenseModelImpl.MAPPING_TABLE_SCLICENSES_SCPRODUCTENTRIES_NAME,
-			"getSCProductEntriesSize", new String[] { Long.class.getName() });
-
-	static {
-		FINDER_PATH_GET_SCPRODUCTENTRIES_SIZE.setCacheKeyGeneratorCacheName(null);
+		return scLicenseToSCProductEntryMappingTable.findByLeftPkAsEntities(pk,
+			start, end, orderByComparator);
 	}
 
 	/**
@@ -2576,51 +2473,10 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	 */
 	@Override
 	public int getSCProductEntriesSize(long pk) throws SystemException {
-		Object[] finderArgs = new Object[] { pk };
+		long[] pks = scLicenseToSCProductEntryMappingTable.findByLeftPk(pk);
 
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_GET_SCPRODUCTENTRIES_SIZE,
-				finderArgs, this);
-
-		if (count == null) {
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				SQLQuery q = session.createSQLQuery(_SQL_GETSCPRODUCTENTRIESSIZE);
-
-				q.addScalar(COUNT_COLUMN_NAME,
-					com.liferay.portal.kernel.dao.orm.Type.LONG);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(pk);
-
-				count = (Long)q.uniqueResult();
-
-				FinderCacheUtil.putResult(FINDER_PATH_GET_SCPRODUCTENTRIES_SIZE,
-					finderArgs, count);
-			}
-			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_GET_SCPRODUCTENTRIES_SIZE,
-					finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
+		return pks.length;
 	}
-
-	public static final FinderPath FINDER_PATH_CONTAINS_SCPRODUCTENTRY = new FinderPath(com.liferay.portlet.softwarecatalog.model.impl.SCProductEntryModelImpl.ENTITY_CACHE_ENABLED,
-			SCLicenseModelImpl.FINDER_CACHE_ENABLED_SCLICENSES_SCPRODUCTENTRIES,
-			Boolean.class,
-			SCLicenseModelImpl.MAPPING_TABLE_SCLICENSES_SCPRODUCTENTRIES_NAME,
-			"containsSCProductEntry",
-			new String[] { Long.class.getName(), Long.class.getName() });
 
 	/**
 	 * Returns <code>true</code> if the s c product entry is associated with the s c license.
@@ -2633,28 +2489,8 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	@Override
 	public boolean containsSCProductEntry(long pk, long scProductEntryPK)
 		throws SystemException {
-		Object[] finderArgs = new Object[] { pk, scProductEntryPK };
-
-		Boolean value = (Boolean)FinderCacheUtil.getResult(FINDER_PATH_CONTAINS_SCPRODUCTENTRY,
-				finderArgs, this);
-
-		if (value == null) {
-			try {
-				value = Boolean.valueOf(containsSCProductEntry.contains(pk,
-							scProductEntryPK));
-
-				FinderCacheUtil.putResult(FINDER_PATH_CONTAINS_SCPRODUCTENTRY,
-					finderArgs, value);
-			}
-			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_CONTAINS_SCPRODUCTENTRY,
-					finderArgs);
-
-				throw processException(e);
-			}
-		}
-
-		return value.booleanValue();
+		return scLicenseToSCProductEntryMappingTable.containsMapping(pk,
+			scProductEntryPK);
 	}
 
 	/**
@@ -2684,15 +2520,7 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	@Override
 	public void addSCProductEntry(long pk, long scProductEntryPK)
 		throws SystemException {
-		try {
-			addSCProductEntry.add(pk, scProductEntryPK);
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(SCLicenseModelImpl.MAPPING_TABLE_SCLICENSES_SCPRODUCTENTRIES_NAME);
-		}
+		scLicenseToSCProductEntryMappingTable.addMapping(pk, scProductEntryPK);
 	}
 
 	/**
@@ -2706,15 +2534,8 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	public void addSCProductEntry(long pk,
 		com.liferay.portlet.softwarecatalog.model.SCProductEntry scProductEntry)
 		throws SystemException {
-		try {
-			addSCProductEntry.add(pk, scProductEntry.getPrimaryKey());
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(SCLicenseModelImpl.MAPPING_TABLE_SCLICENSES_SCPRODUCTENTRIES_NAME);
-		}
+		scLicenseToSCProductEntryMappingTable.addMapping(pk,
+			scProductEntry.getPrimaryKey());
 	}
 
 	/**
@@ -2727,16 +2548,9 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	@Override
 	public void addSCProductEntries(long pk, long[] scProductEntryPKs)
 		throws SystemException {
-		try {
-			for (long scProductEntryPK : scProductEntryPKs) {
-				addSCProductEntry.add(pk, scProductEntryPK);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(SCLicenseModelImpl.MAPPING_TABLE_SCLICENSES_SCPRODUCTENTRIES_NAME);
+		for (long scProductEntryPK : scProductEntryPKs) {
+			scLicenseToSCProductEntryMappingTable.addMapping(pk,
+				scProductEntryPK);
 		}
 	}
 
@@ -2751,16 +2565,9 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	public void addSCProductEntries(long pk,
 		List<com.liferay.portlet.softwarecatalog.model.SCProductEntry> scProductEntries)
 		throws SystemException {
-		try {
-			for (com.liferay.portlet.softwarecatalog.model.SCProductEntry scProductEntry : scProductEntries) {
-				addSCProductEntry.add(pk, scProductEntry.getPrimaryKey());
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(SCLicenseModelImpl.MAPPING_TABLE_SCLICENSES_SCPRODUCTENTRIES_NAME);
+		for (com.liferay.portlet.softwarecatalog.model.SCProductEntry scProductEntry : scProductEntries) {
+			scLicenseToSCProductEntryMappingTable.addMapping(pk,
+				scProductEntry.getPrimaryKey());
 		}
 	}
 
@@ -2772,15 +2579,7 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	 */
 	@Override
 	public void clearSCProductEntries(long pk) throws SystemException {
-		try {
-			clearSCProductEntries.clear(pk);
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(SCLicenseModelImpl.MAPPING_TABLE_SCLICENSES_SCPRODUCTENTRIES_NAME);
-		}
+		scLicenseToSCProductEntryMappingTable.deleteByLeftPk(pk);
 	}
 
 	/**
@@ -2793,15 +2592,7 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	@Override
 	public void removeSCProductEntry(long pk, long scProductEntryPK)
 		throws SystemException {
-		try {
-			removeSCProductEntry.remove(pk, scProductEntryPK);
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(SCLicenseModelImpl.MAPPING_TABLE_SCLICENSES_SCPRODUCTENTRIES_NAME);
-		}
+		scLicenseToSCProductEntryMappingTable.deleteMapping(pk, scProductEntryPK);
 	}
 
 	/**
@@ -2815,15 +2606,8 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	public void removeSCProductEntry(long pk,
 		com.liferay.portlet.softwarecatalog.model.SCProductEntry scProductEntry)
 		throws SystemException {
-		try {
-			removeSCProductEntry.remove(pk, scProductEntry.getPrimaryKey());
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(SCLicenseModelImpl.MAPPING_TABLE_SCLICENSES_SCPRODUCTENTRIES_NAME);
-		}
+		scLicenseToSCProductEntryMappingTable.deleteMapping(pk,
+			scProductEntry.getPrimaryKey());
 	}
 
 	/**
@@ -2836,16 +2620,9 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	@Override
 	public void removeSCProductEntries(long pk, long[] scProductEntryPKs)
 		throws SystemException {
-		try {
-			for (long scProductEntryPK : scProductEntryPKs) {
-				removeSCProductEntry.remove(pk, scProductEntryPK);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(SCLicenseModelImpl.MAPPING_TABLE_SCLICENSES_SCPRODUCTENTRIES_NAME);
+		for (long scProductEntryPK : scProductEntryPKs) {
+			scLicenseToSCProductEntryMappingTable.deleteMapping(pk,
+				scProductEntryPK);
 		}
 	}
 
@@ -2860,16 +2637,9 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	public void removeSCProductEntries(long pk,
 		List<com.liferay.portlet.softwarecatalog.model.SCProductEntry> scProductEntries)
 		throws SystemException {
-		try {
-			for (com.liferay.portlet.softwarecatalog.model.SCProductEntry scProductEntry : scProductEntries) {
-				removeSCProductEntry.remove(pk, scProductEntry.getPrimaryKey());
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(SCLicenseModelImpl.MAPPING_TABLE_SCLICENSES_SCPRODUCTENTRIES_NAME);
+		for (com.liferay.portlet.softwarecatalog.model.SCProductEntry scProductEntry : scProductEntries) {
+			scLicenseToSCProductEntryMappingTable.deleteMapping(pk,
+				scProductEntry.getPrimaryKey());
 		}
 	}
 
@@ -2883,28 +2653,11 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 	@Override
 	public void setSCProductEntries(long pk, long[] scProductEntryPKs)
 		throws SystemException {
-		try {
-			Set<Long> scProductEntryPKSet = SetUtil.fromArray(scProductEntryPKs);
+		scLicenseToSCProductEntryMappingTable.deleteByLeftPk(pk);
 
-			List<com.liferay.portlet.softwarecatalog.model.SCProductEntry> scProductEntries =
-				getSCProductEntries(pk);
-
-			for (com.liferay.portlet.softwarecatalog.model.SCProductEntry scProductEntry : scProductEntries) {
-				if (!scProductEntryPKSet.remove(scProductEntry.getPrimaryKey())) {
-					removeSCProductEntry.remove(pk,
-						scProductEntry.getPrimaryKey());
-				}
-			}
-
-			for (Long scProductEntryPK : scProductEntryPKSet) {
-				addSCProductEntry.add(pk, scProductEntryPK);
-			}
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			FinderCacheUtil.clearCache(SCLicenseModelImpl.MAPPING_TABLE_SCLICENSES_SCPRODUCTENTRIES_NAME);
+		for (Long scProductEntryPK : scProductEntryPKs) {
+			scLicenseToSCProductEntryMappingTable.addMapping(pk,
+				scProductEntryPK);
 		}
 	}
 
@@ -2968,11 +2721,8 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 			}
 		}
 
-		containsSCProductEntry = new ContainsSCProductEntry();
-
-		addSCProductEntry = new AddSCProductEntry();
-		clearSCProductEntries = new ClearSCProductEntries();
-		removeSCProductEntry = new RemoveSCProductEntry();
+		scLicenseToSCProductEntryMappingTable = MappingTableUtil.getMappingTable("SCLicenses_SCProductEntries",
+				"licenseId", "productEntryId", this, scProductEntryPersistence);
 	}
 
 	public void destroy() {
@@ -2984,180 +2734,11 @@ public class SCLicensePersistenceImpl extends BasePersistenceImpl<SCLicense>
 
 	@BeanReference(type = SCProductEntryPersistence.class)
 	protected SCProductEntryPersistence scProductEntryPersistence;
-	protected ContainsSCProductEntry containsSCProductEntry;
-	protected AddSCProductEntry addSCProductEntry;
-	protected ClearSCProductEntries clearSCProductEntries;
-	protected RemoveSCProductEntry removeSCProductEntry;
-
-	protected class ContainsSCProductEntry {
-		protected ContainsSCProductEntry() {
-			_mappingSqlQuery = MappingSqlQueryFactoryUtil.getMappingSqlQuery(getDataSource(),
-					"SELECT 1 FROM SCLicenses_SCProductEntries WHERE licenseId = ? AND productEntryId = ?",
-					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT },
-					RowMapper.COUNT);
-		}
-
-		protected boolean contains(long licenseId, long productEntryId) {
-			List<Integer> results = _mappingSqlQuery.execute(new Object[] {
-						new Long(licenseId), new Long(productEntryId)
-					});
-
-			if (results.isEmpty()) {
-				return false;
-			}
-
-			return true;
-		}
-
-		private MappingSqlQuery<Integer> _mappingSqlQuery;
-	}
-
-	protected class AddSCProductEntry {
-		protected AddSCProductEntry() {
-			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
-					"INSERT INTO SCLicenses_SCProductEntries (licenseId, productEntryId) VALUES (?, ?)",
-					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT });
-		}
-
-		protected void add(long licenseId, long productEntryId)
-			throws SystemException {
-			if (!containsSCProductEntry.contains(licenseId, productEntryId)) {
-				ModelListener<com.liferay.portlet.softwarecatalog.model.SCProductEntry>[] scProductEntryListeners =
-					scProductEntryPersistence.getListeners();
-
-				for (ModelListener<SCLicense> listener : listeners) {
-					listener.onBeforeAddAssociation(licenseId,
-						com.liferay.portlet.softwarecatalog.model.SCProductEntry.class.getName(),
-						productEntryId);
-				}
-
-				for (ModelListener<com.liferay.portlet.softwarecatalog.model.SCProductEntry> listener : scProductEntryListeners) {
-					listener.onBeforeAddAssociation(productEntryId,
-						SCLicense.class.getName(), licenseId);
-				}
-
-				_sqlUpdate.update(new Object[] {
-						new Long(licenseId), new Long(productEntryId)
-					});
-
-				for (ModelListener<SCLicense> listener : listeners) {
-					listener.onAfterAddAssociation(licenseId,
-						com.liferay.portlet.softwarecatalog.model.SCProductEntry.class.getName(),
-						productEntryId);
-				}
-
-				for (ModelListener<com.liferay.portlet.softwarecatalog.model.SCProductEntry> listener : scProductEntryListeners) {
-					listener.onAfterAddAssociation(productEntryId,
-						SCLicense.class.getName(), licenseId);
-				}
-			}
-		}
-
-		private SqlUpdate _sqlUpdate;
-	}
-
-	protected class ClearSCProductEntries {
-		protected ClearSCProductEntries() {
-			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
-					"DELETE FROM SCLicenses_SCProductEntries WHERE licenseId = ?",
-					new int[] { java.sql.Types.BIGINT });
-		}
-
-		protected void clear(long licenseId) throws SystemException {
-			ModelListener<com.liferay.portlet.softwarecatalog.model.SCProductEntry>[] scProductEntryListeners =
-				scProductEntryPersistence.getListeners();
-
-			List<com.liferay.portlet.softwarecatalog.model.SCProductEntry> scProductEntries =
-				null;
-
-			if ((listeners.length > 0) || (scProductEntryListeners.length > 0)) {
-				scProductEntries = getSCProductEntries(licenseId);
-
-				for (com.liferay.portlet.softwarecatalog.model.SCProductEntry scProductEntry : scProductEntries) {
-					for (ModelListener<SCLicense> listener : listeners) {
-						listener.onBeforeRemoveAssociation(licenseId,
-							com.liferay.portlet.softwarecatalog.model.SCProductEntry.class.getName(),
-							scProductEntry.getPrimaryKey());
-					}
-
-					for (ModelListener<com.liferay.portlet.softwarecatalog.model.SCProductEntry> listener : scProductEntryListeners) {
-						listener.onBeforeRemoveAssociation(scProductEntry.getPrimaryKey(),
-							SCLicense.class.getName(), licenseId);
-					}
-				}
-			}
-
-			_sqlUpdate.update(new Object[] { new Long(licenseId) });
-
-			if ((listeners.length > 0) || (scProductEntryListeners.length > 0)) {
-				for (com.liferay.portlet.softwarecatalog.model.SCProductEntry scProductEntry : scProductEntries) {
-					for (ModelListener<SCLicense> listener : listeners) {
-						listener.onAfterRemoveAssociation(licenseId,
-							com.liferay.portlet.softwarecatalog.model.SCProductEntry.class.getName(),
-							scProductEntry.getPrimaryKey());
-					}
-
-					for (ModelListener<com.liferay.portlet.softwarecatalog.model.SCProductEntry> listener : scProductEntryListeners) {
-						listener.onAfterRemoveAssociation(scProductEntry.getPrimaryKey(),
-							SCLicense.class.getName(), licenseId);
-					}
-				}
-			}
-		}
-
-		private SqlUpdate _sqlUpdate;
-	}
-
-	protected class RemoveSCProductEntry {
-		protected RemoveSCProductEntry() {
-			_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(),
-					"DELETE FROM SCLicenses_SCProductEntries WHERE licenseId = ? AND productEntryId = ?",
-					new int[] { java.sql.Types.BIGINT, java.sql.Types.BIGINT });
-		}
-
-		protected void remove(long licenseId, long productEntryId)
-			throws SystemException {
-			if (containsSCProductEntry.contains(licenseId, productEntryId)) {
-				ModelListener<com.liferay.portlet.softwarecatalog.model.SCProductEntry>[] scProductEntryListeners =
-					scProductEntryPersistence.getListeners();
-
-				for (ModelListener<SCLicense> listener : listeners) {
-					listener.onBeforeRemoveAssociation(licenseId,
-						com.liferay.portlet.softwarecatalog.model.SCProductEntry.class.getName(),
-						productEntryId);
-				}
-
-				for (ModelListener<com.liferay.portlet.softwarecatalog.model.SCProductEntry> listener : scProductEntryListeners) {
-					listener.onBeforeRemoveAssociation(productEntryId,
-						SCLicense.class.getName(), licenseId);
-				}
-
-				_sqlUpdate.update(new Object[] {
-						new Long(licenseId), new Long(productEntryId)
-					});
-
-				for (ModelListener<SCLicense> listener : listeners) {
-					listener.onAfterRemoveAssociation(licenseId,
-						com.liferay.portlet.softwarecatalog.model.SCProductEntry.class.getName(),
-						productEntryId);
-				}
-
-				for (ModelListener<com.liferay.portlet.softwarecatalog.model.SCProductEntry> listener : scProductEntryListeners) {
-					listener.onAfterRemoveAssociation(productEntryId,
-						SCLicense.class.getName(), licenseId);
-				}
-			}
-		}
-
-		private SqlUpdate _sqlUpdate;
-	}
-
+	protected MappingTable<SCLicense, com.liferay.portlet.softwarecatalog.model.SCProductEntry> scLicenseToSCProductEntryMappingTable;
 	private static final String _SQL_SELECT_SCLICENSE = "SELECT scLicense FROM SCLicense scLicense";
 	private static final String _SQL_SELECT_SCLICENSE_WHERE = "SELECT scLicense FROM SCLicense scLicense WHERE ";
 	private static final String _SQL_COUNT_SCLICENSE = "SELECT COUNT(scLicense) FROM SCLicense scLicense";
 	private static final String _SQL_COUNT_SCLICENSE_WHERE = "SELECT COUNT(scLicense) FROM SCLicense scLicense WHERE ";
-	private static final String _SQL_GETSCPRODUCTENTRIES = "SELECT {SCProductEntry.*} FROM SCProductEntry INNER JOIN SCLicenses_SCProductEntries ON (SCLicenses_SCProductEntries.productEntryId = SCProductEntry.productEntryId) WHERE (SCLicenses_SCProductEntries.licenseId = ?)";
-	private static final String _SQL_GETSCPRODUCTENTRIESSIZE = "SELECT COUNT(*) AS COUNT_VALUE FROM SCLicenses_SCProductEntries WHERE licenseId = ?";
 	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "scLicense.licenseId";
 	private static final String _FILTER_SQL_SELECT_SCLICENSE_WHERE = "SELECT DISTINCT {scLicense.*} FROM SCLicense scLicense WHERE ";
 	private static final String _FILTER_SQL_SELECT_SCLICENSE_NO_INLINE_DISTINCT_WHERE_1 =

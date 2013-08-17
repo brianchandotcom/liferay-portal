@@ -61,6 +61,8 @@ import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.service.persistence.impl.TableMapping;
+import com.liferay.portal.service.persistence.impl.TableMappingFactory;
 
 import java.io.Serializable;
 
@@ -415,15 +417,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			<#if column.isCollection() && column.isMappingManyToMany()>
 				<#assign tempEntity = serviceBuilder.getEntity(column.getEJBName())>
 
-				try {
-					clear${tempEntity.names}.clear(${entity.varName}.getPrimaryKey());
-				}
-				catch (Exception e) {
-					throw processException(e);
-				}
-				finally {
-					FinderCacheUtil.clearCache(${entity.name}ModelImpl.MAPPING_TABLE_${stringUtil.upperCase(column.mappingTable)}_NAME);
-				}
+				${entity.varName}To${tempEntity.name}TableMapping.deleteMappingsByLeftPrimaryKey(${entity.varName}.getPrimaryKey());
 			</#if>
 		</#list>
 
@@ -1004,28 +998,6 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				return get${tempEntity.names}(pk, start, end, null);
 			}
 
-			public static final FinderPath FINDER_PATH_GET_${tempEntity.names?upper_case} = new FinderPath(
-				${tempEntity.packagePath}.model.impl.${tempEntity.name}ModelImpl.ENTITY_CACHE_ENABLED,
-
-				<#if column.mappingTable??>
-					${entity.name}ModelImpl.FINDER_CACHE_ENABLED_${stringUtil.upperCase(column.mappingTable)},
-					${tempEntity.packagePath}.model.impl.${tempEntity.name}Impl.class,
-					${entity.name}ModelImpl.MAPPING_TABLE_${stringUtil.upperCase(column.mappingTable)}_NAME,
-				<#else>
-					${tempEntity.packagePath}.model.impl.${tempEntity.name}ModelImpl.FINDER_CACHE_ENABLED,
-					${tempEntity.packagePath}.model.impl.${tempEntity.name}Impl.class,
-					${tempEntity.packagePath}.service.persistence.${tempEntity.name}PersistenceImpl.FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-				</#if>
-
-				"get${tempEntity.names}",
-				new String[] {
-					${serviceBuilder.getPrimitiveObj(entity.getPKClassName())}.class.getName(), Integer.class.getName(), Integer.class.getName(), OrderByComparator.class.getName()
-				});
-
-			static {
-				FINDER_PATH_GET_${tempEntity.names?upper_case}.setCacheKeyGeneratorCacheName(null);
-			}
-
 			/**
 			 * Returns an ordered range of all the ${tempEntity.humanNames} associated with the ${entity.humanName}.
 			 *
@@ -1042,96 +1014,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			 */
 			@Override
 			public List<${tempEntity.packagePath}.model.${tempEntity.name}> get${tempEntity.names}(${entity.PKClassName} pk, int start, int end, OrderByComparator orderByComparator) throws SystemException {
-				boolean pagination = true;
-				Object[] finderArgs = null;
-
-				if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) && (orderByComparator == null)) {
-					pagination = false;
-					finderArgs = new Object[] {pk};
-				}
-				else {
-					finderArgs = new Object[] {
-						pk, start, end, orderByComparator
-					};
-				}
-
-				List<${tempEntity.packagePath}.model.${tempEntity.name}> list = (List<${tempEntity.packagePath}.model.${tempEntity.name}>)FinderCacheUtil.getResult(FINDER_PATH_GET_${tempEntity.names?upper_case}, finderArgs, this);
-
-				if (list == null) {
-					Session session = null;
-
-					try {
-						session = openSession();
-
-						String sql = null;
-
-						if (orderByComparator != null) {
-							sql = _SQL_GET${tempEntity.names?upper_case}.concat(ORDER_BY_CLAUSE).concat(orderByComparator.getOrderBy());
-						}
-						else {
-							sql = _SQL_GET${tempEntity.names?upper_case};
-
-							if (pagination) {
-								sql = sql.concat(${tempEntity.packagePath}.model.impl.${tempEntity.name}ModelImpl.ORDER_BY_SQL);
-							}
-						}
-
-						SQLQuery q = session.createSQLQuery(sql);
-
-						q.addEntity("${tempEntity.table}", ${tempEntity.packagePath}.model.impl.${tempEntity.name}Impl.class);
-
-						QueryPos qPos = QueryPos.getInstance(q);
-
-						qPos.add(pk);
-
-						if (!pagination) {
-							list = (List<${tempEntity.packagePath}.model.${tempEntity.name}>)QueryUtil.list(q, getDialect(), start, end, false);
-
-							Collections.sort(list);
-
-							list = new UnmodifiableList<${tempEntity.packagePath}.model.${tempEntity.name}>(list);
-						}
-						else {
-							list = (List<${tempEntity.packagePath}.model.${tempEntity.name}>)QueryUtil.list(q, getDialect(), start, end);
-						}
-
-						${tempEntity.varName}Persistence.cacheResult(list);
-
-						FinderCacheUtil.putResult(FINDER_PATH_GET_${tempEntity.names?upper_case}, finderArgs, list);
-					}
-					catch (Exception e) {
-						FinderCacheUtil.removeResult(FINDER_PATH_GET_${tempEntity.names?upper_case}, finderArgs);
-
-						throw processException(e);
-					}
-					finally {
-						closeSession(session);
-					}
-				}
-
-				return list;
-			}
-
-			public static final FinderPath FINDER_PATH_GET_${tempEntity.names?upper_case}_SIZE = new FinderPath(
-				${tempEntity.packagePath}.model.impl.${tempEntity.name}ModelImpl.ENTITY_CACHE_ENABLED,
-
-				<#if column.mappingTable??>
-					${entity.name}ModelImpl.FINDER_CACHE_ENABLED_${stringUtil.upperCase(column.mappingTable)},
-					Long.class,
-					${entity.name}ModelImpl.MAPPING_TABLE_${stringUtil.upperCase(column.mappingTable)}_NAME,
-				<#else>
-					${tempEntity.packagePath}.model.impl.${tempEntity.name}ModelImpl.FINDER_CACHE_ENABLED,
-					${tempEntity.packagePath}.model.impl.${tempEntity.name}Impl.class,
-					${tempEntity.packagePath}.service.persistence.${tempEntity.name}PersistenceImpl.FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-				</#if>
-
-				"get${tempEntity.names}Size",
-				new String[] {
-					${serviceBuilder.getPrimitiveObj(entity.getPKClassName())}.class.getName()
-				});
-
-			static {
-				FINDER_PATH_GET_${tempEntity.names?upper_case}_SIZE.setCacheKeyGeneratorCacheName(null);
+				return ${entity.varName}To${tempEntity.name}TableMapping.getRightBaseModelsByLeftPrimaryKey(pk, start, end, orderByComparator);
 			}
 
 			/**
@@ -1143,58 +1026,10 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			 */
 			@Override
 			public int get${tempEntity.names}Size(${entity.PKClassName} pk) throws SystemException {
-				Object[] finderArgs = new Object[] {pk};
+				long[] pks = ${entity.varName}To${tempEntity.name}TableMapping.getRightPrimaryKeysByLeftPrimaryKey(pk);
 
-				Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_GET_${tempEntity.names?upper_case}_SIZE, finderArgs, this);
-
-				if (count == null) {
-					Session session = null;
-
-					try {
-						session = openSession();
-
-						SQLQuery q = session.createSQLQuery(_SQL_GET${tempEntity.names?upper_case}SIZE);
-
-						q.addScalar(COUNT_COLUMN_NAME, com.liferay.portal.kernel.dao.orm.Type.LONG);
-
-						QueryPos qPos = QueryPos.getInstance(q);
-
-						qPos.add(pk);
-
-						count = (Long)q.uniqueResult();
-
-						FinderCacheUtil.putResult(FINDER_PATH_GET_${tempEntity.names?upper_case}_SIZE, finderArgs, count);
-					}
-					catch (Exception e) {
-						FinderCacheUtil.removeResult(FINDER_PATH_GET_${tempEntity.names?upper_case}_SIZE, finderArgs);
-
-						throw processException(e);
-					}
-					finally {
-						closeSession(session);
-					}
-				}
-
-				return count.intValue();
+				return pks.length;
 			}
-
-			public static final FinderPath FINDER_PATH_CONTAINS_${tempEntity.name?upper_case} = new FinderPath(
-				${tempEntity.packagePath}.model.impl.${tempEntity.name}ModelImpl.ENTITY_CACHE_ENABLED,
-
-				<#if column.mappingTable??>
-					${entity.name}ModelImpl.FINDER_CACHE_ENABLED_${stringUtil.upperCase(column.mappingTable)},
-					Boolean.class,
-					${entity.name}ModelImpl.MAPPING_TABLE_${stringUtil.upperCase(column.mappingTable)}_NAME,
-				<#else>
-					${tempEntity.packagePath}.model.impl.${tempEntity.name}ModelImpl.FINDER_CACHE_ENABLED,
-					${tempEntity.packagePath}.model.impl.${tempEntity.name}Impl.class,
-					${tempEntity.packagePath}.service.persistence.${tempEntity.name}PersistenceImpl.FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-				</#if>
-
-				"contains${tempEntity.name}",
-				new String[] {
-					${serviceBuilder.getPrimitiveObj(entity.getPKClassName())}.class.getName(), ${serviceBuilder.getPrimitiveObj(tempEntity.getPKClassName())}.class.getName()
-				});
 
 			/**
 			 * Returns <code>true</code> if the ${tempEntity.humanName} is associated with the ${entity.humanName}.
@@ -1206,24 +1041,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			 */
 			@Override
 			public boolean contains${tempEntity.name}(${entity.PKClassName} pk, ${tempEntity.PKClassName} ${tempEntity.varName}PK) throws SystemException {
-				Object[] finderArgs = new Object[] {pk, ${tempEntity.varName}PK};
-
-				Boolean value = (Boolean)FinderCacheUtil.getResult(FINDER_PATH_CONTAINS_${tempEntity.name?upper_case}, finderArgs, this);
-
-				if (value == null) {
-					try {
-						value = Boolean.valueOf(contains${tempEntity.name}.contains(pk, ${tempEntity.varName}PK));
-
-						FinderCacheUtil.putResult(FINDER_PATH_CONTAINS_${tempEntity.name?upper_case}, finderArgs, value);
-					}
-					catch (Exception e) {
-						FinderCacheUtil.removeResult(FINDER_PATH_CONTAINS_${tempEntity.name?upper_case}, finderArgs);
-
-						throw processException(e);
-					}
-				}
-
-				return value.booleanValue();
+				return ${entity.varName}To${tempEntity.name}TableMapping.containsMapping(pk, ${tempEntity.varName}PK);
 			}
 
 			/**
@@ -1255,15 +1073,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				 */
 				@Override
 				public void add${tempEntity.name}(${entity.PKClassName} pk, ${tempEntity.PKClassName} ${tempEntity.varName}PK) throws SystemException {
-					try {
-						add${tempEntity.name}.add(pk, ${tempEntity.varName}PK);
-					}
-					catch (Exception e) {
-						throw processException(e);
-					}
-					finally {
-						FinderCacheUtil.clearCache(${entity.name}ModelImpl.MAPPING_TABLE_${stringUtil.upperCase(column.mappingTable)}_NAME);
-					}
+					${entity.varName}To${tempEntity.name}TableMapping.addMapping(pk, ${tempEntity.varName}PK);
 				}
 
 				/**
@@ -1275,15 +1085,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				 */
 				@Override
 				public void add${tempEntity.name}(${entity.PKClassName} pk, ${tempEntity.packagePath}.model.${tempEntity.name} ${tempEntity.varName}) throws SystemException {
-					try {
-						add${tempEntity.name}.add(pk, ${tempEntity.varName}.getPrimaryKey());
-					}
-					catch (Exception e) {
-						throw processException(e);
-					}
-					finally {
-						FinderCacheUtil.clearCache(${entity.name}ModelImpl.MAPPING_TABLE_${stringUtil.upperCase(column.mappingTable)}_NAME);
-					}
+					${entity.varName}To${tempEntity.name}TableMapping.addMapping(pk, ${tempEntity.varName}.getPrimaryKey());
 				}
 
 				/**
@@ -1295,16 +1097,8 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				 */
 				@Override
 				public void add${tempEntity.names}(${entity.PKClassName} pk, ${tempEntity.PKClassName}[] ${tempEntity.varName}PKs) throws SystemException {
-					try {
-						for (${tempEntity.PKClassName} ${tempEntity.varName}PK : ${tempEntity.varName}PKs) {
-							add${tempEntity.name}.add(pk, ${tempEntity.varName}PK);
-						}
-					}
-					catch (Exception e) {
-						throw processException(e);
-					}
-					finally {
-						FinderCacheUtil.clearCache(${entity.name}ModelImpl.MAPPING_TABLE_${stringUtil.upperCase(column.mappingTable)}_NAME);
+					for (${tempEntity.PKClassName} ${tempEntity.varName}PK : ${tempEntity.varName}PKs) {
+						${entity.varName}To${tempEntity.name}TableMapping.addMapping(pk, ${tempEntity.varName}PK);
 					}
 				}
 
@@ -1317,16 +1111,8 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				 */
 				@Override
 				public void add${tempEntity.names}(${entity.PKClassName} pk, List<${tempEntity.packagePath}.model.${tempEntity.name}> ${tempEntity.varNames}) throws SystemException {
-					try {
-						for (${tempEntity.packagePath}.model.${tempEntity.name} ${tempEntity.varName} : ${tempEntity.varNames}) {
-							add${tempEntity.name}.add(pk, ${tempEntity.varName}.getPrimaryKey());
-						}
-					}
-					catch (Exception e) {
-						throw processException(e);
-					}
-					finally {
-						FinderCacheUtil.clearCache(${entity.name}ModelImpl.MAPPING_TABLE_${stringUtil.upperCase(column.mappingTable)}_NAME);
+					for (${tempEntity.packagePath}.model.${tempEntity.name} ${tempEntity.varName} : ${tempEntity.varNames}) {
+						${entity.varName}To${tempEntity.name}TableMapping.addMapping(pk, ${tempEntity.varName}.getPrimaryKey());
 					}
 				}
 
@@ -1338,15 +1124,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				 */
 				@Override
 				public void clear${tempEntity.names}(${entity.PKClassName} pk) throws SystemException {
-					try {
-						clear${tempEntity.names}.clear(pk);
-					}
-					catch (Exception e) {
-						throw processException(e);
-					}
-					finally {
-						FinderCacheUtil.clearCache(${entity.name}ModelImpl.MAPPING_TABLE_${stringUtil.upperCase(column.mappingTable)}_NAME);
-					}
+					${entity.varName}To${tempEntity.name}TableMapping.deleteMappingsByLeftPrimaryKey(pk);
 				}
 
 				/**
@@ -1358,15 +1136,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				 */
 				@Override
 				public void remove${tempEntity.name}(${entity.PKClassName} pk, ${tempEntity.PKClassName} ${tempEntity.varName}PK) throws SystemException {
-					try {
-						remove${tempEntity.name}.remove(pk, ${tempEntity.varName}PK);
-					}
-					catch (Exception e) {
-						throw processException(e);
-					}
-					finally {
-						FinderCacheUtil.clearCache(${entity.name}ModelImpl.MAPPING_TABLE_${stringUtil.upperCase(column.mappingTable)}_NAME);
-					}
+					${entity.varName}To${tempEntity.name}TableMapping.deleteMapping(pk, ${tempEntity.varName}PK);
 				}
 
 				/**
@@ -1378,15 +1148,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				 */
 				@Override
 				public void remove${tempEntity.name}(${entity.PKClassName} pk, ${tempEntity.packagePath}.model.${tempEntity.name} ${tempEntity.varName}) throws SystemException {
-					try {
-						remove${tempEntity.name}.remove(pk, ${tempEntity.varName}.getPrimaryKey());
-					}
-					catch (Exception e) {
-						throw processException(e);
-					}
-					finally {
-						FinderCacheUtil.clearCache(${entity.name}ModelImpl.MAPPING_TABLE_${stringUtil.upperCase(column.mappingTable)}_NAME);
-					}
+					${entity.varName}To${tempEntity.name}TableMapping.deleteMapping(pk, ${tempEntity.varName}.getPrimaryKey());
 				}
 
 				/**
@@ -1398,16 +1160,8 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				 */
 				@Override
 				public void remove${tempEntity.names}(${entity.PKClassName} pk, ${tempEntity.PKClassName}[] ${tempEntity.varName}PKs) throws SystemException {
-					try {
-						for (${tempEntity.PKClassName} ${tempEntity.varName}PK : ${tempEntity.varName}PKs) {
-							remove${tempEntity.name}.remove(pk, ${tempEntity.varName}PK);
-						}
-					}
-					catch (Exception e) {
-						throw processException(e);
-					}
-					finally {
-						FinderCacheUtil.clearCache(${entity.name}ModelImpl.MAPPING_TABLE_${stringUtil.upperCase(column.mappingTable)}_NAME);
+					for (${tempEntity.PKClassName} ${tempEntity.varName}PK : ${tempEntity.varName}PKs) {
+						${entity.varName}To${tempEntity.name}TableMapping.deleteMapping(pk, ${tempEntity.varName}PK);
 					}
 				}
 
@@ -1420,16 +1174,8 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				 */
 				@Override
 				public void remove${tempEntity.names}(${entity.PKClassName} pk, List<${tempEntity.packagePath}.model.${tempEntity.name}> ${tempEntity.varNames}) throws SystemException {
-					try {
-						for (${tempEntity.packagePath}.model.${tempEntity.name} ${tempEntity.varName} : ${tempEntity.varNames}) {
-							remove${tempEntity.name}.remove(pk, ${tempEntity.varName}.getPrimaryKey());
-						}
-					}
-					catch (Exception e) {
-						throw processException(e);
-					}
-					finally {
-						FinderCacheUtil.clearCache(${entity.name}ModelImpl.MAPPING_TABLE_${stringUtil.upperCase(column.mappingTable)}_NAME);
+					for (${tempEntity.packagePath}.model.${tempEntity.name} ${tempEntity.varName} : ${tempEntity.varNames}) {
+						${entity.varName}To${tempEntity.name}TableMapping.deleteMapping(pk, ${tempEntity.varName}.getPrimaryKey());
 					}
 				}
 
@@ -1442,26 +1188,10 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 				 */
 				@Override
 				public void set${tempEntity.names}(${entity.PKClassName} pk, ${tempEntity.PKClassName}[] ${tempEntity.varName}PKs) throws SystemException {
-					try {
-						Set<${serviceBuilder.getPrimitiveObj("${tempEntity.PKClassName}")}> ${tempEntity.varName}PKSet = SetUtil.fromArray(${tempEntity.varName}PKs);
+					${entity.varName}To${tempEntity.name}TableMapping.deleteMappingsByLeftPrimaryKey(pk);
 
-						List<${tempEntity.packagePath}.model.${tempEntity.name}> ${tempEntity.varNames} = get${tempEntity.names}(pk);
-
-						for (${tempEntity.packagePath}.model.${tempEntity.name} ${tempEntity.varName} : ${tempEntity.varNames}) {
-							if (!${tempEntity.varName}PKSet.remove(${tempEntity.varName}.getPrimaryKey())) {
-								remove${tempEntity.name}.remove(pk, ${tempEntity.varName}.getPrimaryKey());
-							}
-						}
-
-						for (${serviceBuilder.getPrimitiveObj("${tempEntity.PKClassName}")} ${tempEntity.varName}PK : ${tempEntity.varName}PKSet) {
-							add${tempEntity.name}.add(pk, ${tempEntity.varName}PK);
-						}
-					}
-					catch (Exception e) {
-						throw processException(e);
-					}
-					finally {
-						FinderCacheUtil.clearCache(${entity.name}ModelImpl.MAPPING_TABLE_${stringUtil.upperCase(column.mappingTable)}_NAME);
+					for (${serviceBuilder.getPrimitiveObj("${tempEntity.PKClassName}")} ${tempEntity.varName}PK : ${tempEntity.varName}PKs) {
+						${entity.varName}To${tempEntity.name}TableMapping.addMapping(pk, ${tempEntity.varName}PK);
 					}
 				}
 
@@ -1790,13 +1520,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 			<#if column.isCollection() && column.isMappingManyToMany()>
 				<#assign tempEntity = serviceBuilder.getEntity(column.getEJBName())>
 
-				contains${tempEntity.name} = new Contains${tempEntity.name}();
-
-				<#if column.isMappingManyToMany()>
-					add${tempEntity.name} = new Add${tempEntity.name}();
-					clear${tempEntity.names} = new Clear${tempEntity.names}();
-					remove${tempEntity.name} = new Remove${tempEntity.name}();
-				</#if>
+				${entity.varName}To${tempEntity.name}TableMapping = TableMappingFactory.getTableMapping("${column.mappingTable}", "${entity.PKDBName}", "${tempEntity.PKDBName}", this, ${tempEntity.varName}Persistence);
 			</#if>
 		</#list>
 
@@ -1822,168 +1546,7 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 			@BeanReference(type = ${tempEntity.name}Persistence.class)
 			protected ${tempEntity.name}Persistence ${tempEntity.varName}Persistence;
-
-			protected Contains${tempEntity.name} contains${tempEntity.name};
-
-			<#if column.isMappingManyToMany()>
-				protected Add${tempEntity.name} add${tempEntity.name};
-				protected Clear${tempEntity.names} clear${tempEntity.names};
-				protected Remove${tempEntity.name} remove${tempEntity.name};
-			</#if>
-		</#if>
-	</#list>
-
-	<#list entity.columnList as column>
-		<#if column.isCollection() && column.isMappingManyToMany()>
-			<#assign tempEntity = serviceBuilder.getEntity(column.getEJBName())>
-			<#assign entitySqlType = serviceBuilder.getSqlType(packagePath + ".model." + entity.getName(), entity.getPKVarName(), entity.getPKClassName())>
-			<#assign tempEntitySqlType = serviceBuilder.getSqlType(tempEntity.getPackagePath() + ".model." + entity.getName(), tempEntity.getPKVarName(), tempEntity.getPKClassName())>
-
-			<#if entity.hasPrimitivePK()>
-				<#assign pkVarNameWrapper = "new " + serviceBuilder.getPrimitiveObj(entity.getPKClassName()) + "("+ entity.getPKVarName() + ")">
-			<#else>
-				<#assign pkVarNameWrapper = entity.getPKVarName()>
-			</#if>
-
-			<#if tempEntity.hasPrimitivePK()>
-				<#assign tempEntityPkVarNameWrapper = "new " + serviceBuilder.getPrimitiveObj(tempEntity.getPKClassName()) + "("+ tempEntity.getPKVarName() + ")">
-			<#else>
-				<#assign tempEntityPkVarNameWrapper = tempEntity.getPKVarName()>
-			</#if>
-
-			protected class Contains${tempEntity.name} {
-
-				protected Contains${tempEntity.name}() {
-					_mappingSqlQuery = MappingSqlQueryFactoryUtil.getMappingSqlQuery(getDataSource(), "SELECT 1 FROM ${column.mappingTable} WHERE ${entity.PKDBName} = ? AND ${tempEntity.PKDBName} = ?", new int[] {java.sql.Types.${entitySqlType}, java.sql.Types.${tempEntitySqlType}}, RowMapper.COUNT);
-				}
-
-				protected boolean contains(${entity.PKClassName} ${entity.PKVarName}, ${tempEntity.PKClassName} ${tempEntity.PKVarName}) {
-					List<Integer> results = _mappingSqlQuery.execute(new Object[] {${pkVarNameWrapper}, ${tempEntityPkVarNameWrapper}});
-
-					if (results.isEmpty()) {
-						return false;
-					}
-
-					return true;
-				}
-
-				private MappingSqlQuery<Integer> _mappingSqlQuery;
-
-			}
-
-			<#if column.isMappingManyToMany()>
-				protected class Add${tempEntity.name} {
-
-					protected Add${tempEntity.name}() {
-						_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(), "INSERT INTO ${column.mappingTable} (${entity.PKVarName}, ${tempEntity.PKVarName}) VALUES (?, ?)", new int[] {java.sql.Types.${entitySqlType}, java.sql.Types.${tempEntitySqlType}});
-					}
-
-					protected void add(${entity.PKClassName} ${entity.PKVarName}, ${tempEntity.PKClassName} ${tempEntity.PKVarName}) throws SystemException {
-						if (!contains${tempEntity.name}.contains(${entity.PKVarName}, ${tempEntity.PKVarName})) {
-							ModelListener<${tempEntity.packagePath}.model.${tempEntity.name}>[] ${tempEntity.varName}Listeners = ${tempEntity.varName}Persistence.getListeners();
-
-							for (ModelListener<${entity.name}> listener : listeners) {
-								listener.onBeforeAddAssociation(${entity.PKVarName}, ${tempEntity.packagePath}.model.${tempEntity.name}.class.getName(), ${tempEntity.PKVarName});
-							}
-
-							for (ModelListener<${tempEntity.packagePath}.model.${tempEntity.name}> listener : ${tempEntity.varName}Listeners) {
-								listener.onBeforeAddAssociation(${tempEntity.PKVarName}, ${entity.name}.class.getName(), ${entity.PKVarName});
-							}
-
-							_sqlUpdate.update(new Object[] {${pkVarNameWrapper}, ${tempEntityPkVarNameWrapper}});
-
-							for (ModelListener<${entity.name}> listener : listeners) {
-								listener.onAfterAddAssociation(${entity.PKVarName}, ${tempEntity.packagePath}.model.${tempEntity.name}.class.getName(), ${tempEntity.PKVarName});
-							}
-
-							for (ModelListener<${tempEntity.packagePath}.model.${tempEntity.name}> listener : ${tempEntity.varName}Listeners) {
-								listener.onAfterAddAssociation(${tempEntity.PKVarName}, ${entity.name}.class.getName(), ${entity.PKVarName});
-							}
-						}
-					}
-
-					private SqlUpdate _sqlUpdate;
-
-				}
-
-				protected class Clear${tempEntity.names} {
-
-					protected Clear${tempEntity.names}() {
-						_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(), "DELETE FROM ${column.mappingTable} WHERE ${entity.PKVarName} = ?", new int[] {java.sql.Types.${entitySqlType}});
-					}
-
-					protected void clear(${entity.PKClassName} ${entity.PKVarName}) throws SystemException {
-						ModelListener<${tempEntity.packagePath}.model.${tempEntity.name}>[] ${tempEntity.varName}Listeners = ${tempEntity.varName}Persistence.getListeners();
-
-						List<${tempEntity.packagePath}.model.${tempEntity.name}> ${tempEntity.varNames} = null;
-
-						if ((listeners.length > 0) || (${tempEntity.varName}Listeners.length > 0)) {
-							${tempEntity.varNames} = get${tempEntity.names}(${entity.PKVarName});
-
-							for (${tempEntity.packagePath}.model.${tempEntity.name} ${tempEntity.varName} : ${tempEntity.varNames}) {
-								for (ModelListener<${entity.name}> listener : listeners) {
-									listener.onBeforeRemoveAssociation(${entity.PKVarName}, ${tempEntity.packagePath}.model.${tempEntity.name}.class.getName(), ${tempEntity.varName}.getPrimaryKey());
-								}
-
-								for (ModelListener<${tempEntity.packagePath}.model.${tempEntity.name}> listener : ${tempEntity.varName}Listeners) {
-									listener.onBeforeRemoveAssociation(${tempEntity.varName}.getPrimaryKey(), ${entity.name}.class.getName(), ${entity.PKVarName});
-								}
-							}
-						}
-
-						_sqlUpdate.update(new Object[] {${pkVarNameWrapper}});
-
-						if ((listeners.length > 0) || (${tempEntity.varName}Listeners.length > 0)) {
-							for (${tempEntity.packagePath}.model.${tempEntity.name} ${tempEntity.varName} : ${tempEntity.varNames}) {
-								for (ModelListener<${entity.name}> listener : listeners) {
-									listener.onAfterRemoveAssociation(${entity.PKVarName}, ${tempEntity.packagePath}.model.${tempEntity.name}.class.getName(), ${tempEntity.varName}.getPrimaryKey());
-								}
-
-								for (ModelListener<${tempEntity.packagePath}.model.${tempEntity.name}> listener : ${tempEntity.varName}Listeners) {
-									listener.onAfterRemoveAssociation(${tempEntity.varName}.getPrimaryKey(), ${entity.name}.class.getName(), ${entity.PKVarName});
-								}
-							}
-						}
-					}
-
-					private SqlUpdate _sqlUpdate;
-
-				}
-
-				protected class Remove${tempEntity.name} {
-
-					protected Remove${tempEntity.name}() {
-						_sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(getDataSource(), "DELETE FROM ${column.mappingTable} WHERE ${entity.PKVarName} = ? AND ${tempEntity.PKVarName} = ?", new int[] {java.sql.Types.${entitySqlType}, java.sql.Types.${tempEntitySqlType}});
-					}
-
-					protected void remove(${entity.PKClassName} ${entity.PKVarName}, ${tempEntity.PKClassName} ${tempEntity.PKVarName}) throws SystemException {
-						if (contains${tempEntity.name}.contains(${entity.PKVarName}, ${tempEntity.PKVarName})) {
-							ModelListener<${tempEntity.packagePath}.model.${tempEntity.name}>[] ${tempEntity.varName}Listeners = ${tempEntity.varName}Persistence.getListeners();
-
-							for (ModelListener<${entity.name}> listener : listeners) {
-								listener.onBeforeRemoveAssociation(${entity.PKVarName}, ${tempEntity.packagePath}.model.${tempEntity.name}.class.getName(), ${tempEntity.PKVarName});
-							}
-
-							for (ModelListener<${tempEntity.packagePath}.model.${tempEntity.name}> listener : ${tempEntity.varName}Listeners) {
-								listener.onBeforeRemoveAssociation(${tempEntity.PKVarName}, ${entity.name}.class.getName(), ${entity.PKVarName});
-							}
-
-							_sqlUpdate.update(new Object[] {${pkVarNameWrapper}, ${tempEntityPkVarNameWrapper}});
-
-							for (ModelListener<${entity.name}> listener : listeners) {
-								listener.onAfterRemoveAssociation(${entity.PKVarName}, ${tempEntity.packagePath}.model.${tempEntity.name}.class.getName(), ${tempEntity.PKVarName});
-							}
-
-							for (ModelListener<${tempEntity.packagePath}.model.${tempEntity.name}> listener : ${tempEntity.varName}Listeners) {
-								listener.onAfterRemoveAssociation(${tempEntity.PKVarName}, ${entity.name}.class.getName(), ${entity.PKVarName});
-							}
-						}
-					}
-
-					private SqlUpdate _sqlUpdate;
-
-				}
-			</#if>
+			protected TableMapping<${entity.name}, ${tempEntity.packagePath}.model.${tempEntity.name}> ${entity.varName}To${tempEntity.name}TableMapping;
 		</#if>
 	</#list>
 
@@ -2077,18 +1640,6 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 	<#if entity.getFinderList()?size != 0>
 		private static final String _SQL_COUNT_${entity.alias?upper_case}_WHERE = "SELECT COUNT(${entity.alias}) FROM ${entity.name} ${entity.alias} WHERE ";
 	</#if>
-
-	<#list entity.columnList as column>
-		<#if column.isCollection()>
-			<#assign tempEntity = serviceBuilder.getEntity(column.getEJBName())>
-
-			<#if column.isMappingManyToMany()>
-				private static final String _SQL_GET${tempEntity.names?upper_case} = "SELECT {${tempEntity.table}.*} FROM ${tempEntity.table} INNER JOIN ${column.mappingTable} ON (${column.mappingTable}.${tempEntity.PKDBName} = ${tempEntity.table}.${tempEntity.PKDBName}) WHERE (${column.mappingTable}.${entity.PKDBName} = ?)";
-
-				private static final String _SQL_GET${tempEntity.names?upper_case}SIZE = "SELECT COUNT(*) AS COUNT_VALUE FROM ${column.mappingTable} WHERE ${entity.PKDBName} = ?";
-			</#if>
-		</#if>
-	</#list>
 
 	<#if entity.isPermissionCheckEnabled()>
 		private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "${entity.alias}.${entity.filterPKColumn.DBName}";

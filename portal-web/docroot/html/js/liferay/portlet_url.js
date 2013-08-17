@@ -1,6 +1,8 @@
 AUI.add(
 	'liferay-portlet-url',
 	function(A) {
+		var Lang = A.Lang;
+
 		var Util = Liferay.Util;
 
 		var PortletURL = function(lifecycle, params, basePortletURL) {
@@ -56,7 +58,7 @@ AUI.add(
 			A.each(
 				params,
 				function(item, index, collection) {
-					if (item) {
+					if (Lang.isValue(item)) {
 						if (instance._isReservedParam(index)) {
 							instance.reservedParams[index] = item;
 						}
@@ -232,7 +234,7 @@ AUI.add(
 				A.each(
 					reservedParams,
 					function(item, index, collection) {
-						if (item) {
+						if (Lang.isValue(item)) {
 							resultURL.setParameter(index, item);
 						}
 					}
@@ -241,7 +243,7 @@ AUI.add(
 				A.each(
 					instance.params,
 					function(item, index, collection) {
-						if (item) {
+						if (Lang.isValue(item)) {
 							resultURL.setParameter(namespacePrefix + index, item);
 						}
 					}

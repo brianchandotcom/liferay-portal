@@ -1362,6 +1362,10 @@
 				ddmURL.setParameter('showGlobalScope', config.showGlobalScope);
 			}
 
+			if ('showHeader' in config) {
+				ddmURL.setParameter('showHeader', config.showHeader);
+			}
+
 			if ('showManageTemplates' in config) {
 				ddmURL.setParameter('showManageTemplates', config.showManageTemplates);
 			}

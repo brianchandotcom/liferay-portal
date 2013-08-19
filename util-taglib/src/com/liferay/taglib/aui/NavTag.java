@@ -40,33 +40,29 @@ public class NavTag extends BaseNavTag {
 				this, NavBarTag.class);
 
 			if (navBarTag != null) {
-				StringBundler responsiveButtonsSB =
-					navBarTag.getResponsiveButtonsSB();
+				StringBundler sb = navBarTag.getResponsiveButtonsSB();
 
-				responsiveButtonsSB.append("<a class=\"btn btn-navbar\" id=\"");
-				responsiveButtonsSB.append(_getNamespacedId());
-				responsiveButtonsSB.append("NavbarBtn\"");
-				responsiveButtonsSB.append("data-navId=\"");
-				responsiveButtonsSB.append(_getNamespacedId());
-				responsiveButtonsSB.append("\">");
+				sb.append("<a class=\"btn btn-navbar\" id=\"");
+				sb.append(_getNamespacedId());
+				sb.append("NavbarBtn\"");
+				sb.append("data-navId=\"");
+				sb.append(_getNamespacedId());
+				sb.append("\">");
 
 				String icon = getIcon();
 
 				if (Validator.isNull(icon)) {
-					responsiveButtonsSB.append(
-						"<span class=\"icon-bar\"></span>");
-					responsiveButtonsSB.append(
-						"<span class=\"icon-bar\"></span>");
-					responsiveButtonsSB.append(
-						"<span class=\"icon-bar\"></span>");
+					sb.append("<span class=\"icon-bar\"></span>");
+					sb.append("<span class=\"icon-bar\"></span>");
+					sb.append("<span class=\"icon-bar\"></span>");
 				}
 				else {
-					responsiveButtonsSB.append("<i class=\"icon-");
-					responsiveButtonsSB.append(icon);
-					responsiveButtonsSB.append("\"></i>");
+					sb.append("<i class=\"icon-");
+					sb.append(icon);
+					sb.append("\"></i>");
 				}
 
-				responsiveButtonsSB.append("</a>");
+				sb.append("</a>");
 			}
 		}
 
@@ -88,25 +84,22 @@ public class NavTag extends BaseNavTag {
 	}
 
 	private String _getNamespacedId() {
+		if (Validator.isNotNull(_namespacedId)) {
+			return _namespacedId;
+		}
+
+		HttpServletRequest request =
+			(HttpServletRequest)pageContext.getRequest();
+
+		PortletResponse portletResponse = (PortletResponse)request.getAttribute(
+			JavaConstants.JAVAX_PORTLET_RESPONSE);
+
+		if ((portletResponse != null) && getUseNamespace()) {
+			_namespacedId = portletResponse.getNamespace() + getId();
+		}
+
 		if (Validator.isNull(_namespacedId)) {
-			HttpServletRequest request =
-				(HttpServletRequest)pageContext.getRequest();
-
-			PortletResponse portletResponse =
-				(PortletResponse)request.getAttribute(
-					JavaConstants.JAVAX_PORTLET_RESPONSE);
-
-			_namespacedId = getId();
-
-			if (getUseNamespace() && (portletResponse != null) &&
-				Validator.isNotNull(_namespacedId)) {
-
-				_namespacedId = portletResponse.getNamespace() + _namespacedId;
-			}
-
-			if (Validator.isNull(_namespacedId)) {
-				_namespacedId = PwdGenerator.getPassword(4);
-			}
+			_namespacedId = PwdGenerator.getPassword(4);
 		}
 
 		return _namespacedId;

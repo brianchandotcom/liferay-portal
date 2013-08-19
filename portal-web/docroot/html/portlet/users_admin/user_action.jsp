@@ -60,9 +60,9 @@ long userId = user2.getUserId();
 
 		<liferay-ui:icon
 			image="permissions"
-			linkCssClass="use-dialog"
 			method="get"
 			url="<%= permissionsUserURL %>"
+			useDialog="<%= true %>"
 		/>
 	</c:if>
 

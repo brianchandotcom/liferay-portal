@@ -182,7 +182,6 @@ boolean urlIsNotNull = Validator.isNotNull(url);
 
 <%
 boolean forcePost = method.equals("post") && (url.startsWith(Http.HTTP_WITH_SLASH) || url.startsWith(Http.HTTPS_WITH_SLASH));
-boolean useDialog = linkCssClass.contains("use-dialog");
 %>
 
 <c:if test="<%= Validator.isNotNull(srcHover) || forcePost || useDialog %>">

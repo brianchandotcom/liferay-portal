@@ -27,6 +27,12 @@
 					<a aria-label="<%= ariaLabel %>" class="<%= anchorCssClass %>" <%= AUIUtil.buildData(anchorData) %> href="<%= href %>" id="<%= anchorId %>" role="<%= Validator.isNull(ariaRole) ? "menuitem" : ariaRole %>" title="<liferay-ui:message key="<%= title %>" />">
 				</c:otherwise>
 			</c:choose>
+
+			<c:if test="<%= useDialog %>">
+				<aui:script>
+					Liferay.delegateClick('<%= anchorId %>', AUI().bind('openInDialog', Liferay.Util));
+				</aui:script>
+			</c:if>
 		</c:if>
 				<c:if test="<%= Validator.isNotNull(iconClass) %>">
 					<i class="<%= iconClass %>"></i>

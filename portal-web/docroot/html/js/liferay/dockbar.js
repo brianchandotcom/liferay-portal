@@ -109,21 +109,6 @@ AUI.add(
 				Dockbar._togglePanel(STR_EDIT_LAYOUT_PANEL);
 			},
 
-			_openWindow: function(config, item) {
-				if (item) {
-					A.mix(
-						config,
-						{
-							id: item.guid(),
-							title: item.attr('title'),
-							uri: item.attr('href')
-						}
-					);
-				}
-
-				Util.openWindow(config);
-			},
-
 			_registerPanels: function() {
 				var instance = this;
 
@@ -220,20 +205,6 @@ AUI.add(
 				Liferay.fire('initNavigation');
 
 				instance._registerPanels();
-
-				var userAvatar = A.oneNS(namespace, '#userAvatar');
-
-				if (userAvatar) {
-					userAvatar.delegate(
-						EVENT_CLICK,
-						function(event) {
-							event.preventDefault();
-
-							instance._openWindow({}, event.currentTarget);
-						},
-						'a.use-dialog'
-					);
-				}
 
 				Liferay.fire('dockbarLoaded');
 			},

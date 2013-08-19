@@ -190,9 +190,9 @@ MBThreadFlag threadFlag = MBThreadFlagLocalServiceUtil.getThreadFlag(themeDispla
 
 				<liferay-ui:icon
 					image="permissions"
-					linkCssClass="use-dialog"
 					method="get"
 					url="<%= permissionsURL %>"
+					useDialog="<%= true %>"
 				/>
 			</c:if>
 

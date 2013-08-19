@@ -59,7 +59,7 @@ MDRRuleGroup mdrRuleGroup = MDRRuleGroupLocalServiceUtil.getMDRRuleGroup(mdrRule
 		String taglibActionHandler = renderResponse.getNamespace() + "mobileDeviceActionHandler('" + permissionsURL + "');";
 		%>
 
-		<liferay-ui:icon image="permissions" url='<%= "javascript:" + taglibActionHandler + ";" %>' />
+		<liferay-ui:icon image="permissions" url='<%= "javascript:" + taglibActionHandler + ";" %>' useDialog="<%= true %>" />
 	</c:if>
 
 	<c:if test="<%= MDRRuleGroupInstancePermissionUtil.contains(permissionChecker, mdrRuleGroupInstance.getRuleGroupInstanceId(), ActionKeys.DELETE) %>">

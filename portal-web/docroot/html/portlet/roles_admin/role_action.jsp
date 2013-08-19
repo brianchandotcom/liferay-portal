@@ -69,9 +69,9 @@ if (name.equals(RoleConstants.GUEST) || name.equals(RoleConstants.OWNER) || name
 
 		<liferay-ui:icon
 			image="permissions"
-			linkCssClass="use-dialog"
 			method="get"
 			url="<%= permissionsURL %>"
+			useDialog="<%= true %>"
 		/>
 	</c:if>
 

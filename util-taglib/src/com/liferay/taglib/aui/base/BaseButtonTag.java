@@ -73,6 +73,10 @@ public class BaseButtonTag extends com.liferay.taglib.util.IncludeTag {
 		return _type;
 	}
 
+	public boolean getUseDialog() {
+		return _useDialog;
+	}
+
 	public java.lang.String getValue() {
 		return _value;
 	}
@@ -137,6 +141,12 @@ public class BaseButtonTag extends com.liferay.taglib.util.IncludeTag {
 		setScopedAttribute("type", type);
 	}
 
+	public void setUseDialog(boolean useDialog) {
+		_useDialog = useDialog;
+
+		setScopedAttribute("useDialog", useDialog);
+	}
+
 	public void setValue(java.lang.String value) {
 		_value = value;
 
@@ -155,6 +165,7 @@ public class BaseButtonTag extends com.liferay.taglib.util.IncludeTag {
 		_onClick = null;
 		_primary = null;
 		_type = "button";
+		_useDialog = false;
 		_value = null;
 	}
 
@@ -175,6 +186,7 @@ public class BaseButtonTag extends com.liferay.taglib.util.IncludeTag {
 		setNamespacedAttribute(request, "onClick", _onClick);
 		setNamespacedAttribute(request, "primary", _primary);
 		setNamespacedAttribute(request, "type", _type);
+		setNamespacedAttribute(request, "useDialog", _useDialog);
 		setNamespacedAttribute(request, "value", _value);
 	}
 
@@ -193,6 +205,7 @@ public class BaseButtonTag extends com.liferay.taglib.util.IncludeTag {
 	private java.lang.String _onClick = null;
 	private java.lang.Object _primary = null;
 	private java.lang.String _type = "button";
+	private boolean _useDialog = false;
 	private java.lang.String _value = null;
 
 }

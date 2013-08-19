@@ -65,9 +65,9 @@ BlogsEntry entry = (BlogsEntry)row.getObject();
 
 		<liferay-ui:icon
 			image="permissions"
-			linkCssClass="use-dialog"
 			method="get"
 			url="<%= permissionsEntryURL %>"
+			useDialog="<%= true %>"
 		/>
 	</c:if>
 

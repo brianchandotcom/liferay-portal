@@ -55,13 +55,10 @@ String srcHover = (String)request.getAttribute("liferay-ui:icon:srcHover");
 boolean toolTip = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:icon:toolTip"));
 String target = GetterUtil.getString((String)request.getAttribute("liferay-ui:icon:target"));
 String url = GetterUtil.getString((String)request.getAttribute("liferay-ui:icon:url"));
+boolean useDialog = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:icon:useDialog"));
 
 if (data == null) {
 	data = new HashMap<String, Object>(1);
-}
-
-if (Validator.isNull(data.get("title"))) {
-	data.put("title", localizeMessage ? LanguageUtil.get(pageContext, message) : message);
 }
 
 if ((iconListIconCount != null) || (iconListSingleIcon != null)) {
@@ -74,6 +71,10 @@ if ((iconMenuIconCount != null) || (iconMenuSingleIcon != null)) {
 
 if (message == null) {
 	message = StringUtil.replace(image, StringPool.UNDERLINE, StringPool.DASH);
+}
+
+if (useDialog && Validator.isNull(data.get("title"))) {
+	data.put("title", HtmlUtil.stripHtml(localizeMessage ? LanguageUtil.get(pageContext, message) : message));
 }
 
 if (Validator.isNull(method)) {

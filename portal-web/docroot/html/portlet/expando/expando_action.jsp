@@ -53,9 +53,9 @@ String modelResource = (String)row.getParameter("modelResource");
 
 		<liferay-ui:icon
 			image="permissions"
-			linkCssClass="use-dialog"
 			method="get"
 			url="<%= permissionsURL %>"
+			useDialog="<%= true %>"
 		/>
 	</c:if>
 

@@ -55,9 +55,9 @@ UserGroup userGroup = (UserGroup)row.getObject();
 
 		<liferay-ui:icon
 			image="permissions"
-			linkCssClass="use-dialog"
 			method="get"
 			url="<%= permissionsURL %>"
+			useDialog="<%= true %>"
 		/>
 	</c:if>
 

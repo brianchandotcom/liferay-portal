@@ -56,6 +56,22 @@
 		<execute action="PGWiki#assertTextEquals" locator-key1="WIKI_PAGE_BODY" value1="${wikiPageText}" />
 	</command>
 
+	<command name="addPageCP">
+		<var name="key_wikiNodeName" value="${wikiNodeName}" />
+		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
+
+		<execute action="CPWiki#assertClick" locator-key1="WIKI_NODE_TABLE_WIKI" value1="${wikiNodeName}" />
+		<execute action="CPWikiAllpages#assertClick" locator-key1="NAVIGATION_ALL_PAGES" value1="All Pages" />
+		<execute action="CPWikiAllpages#assertClick" locator-key1="ADD_PAGE_BUTTON" value1="Add Page" />
+		<execute action="CPWikiAddpage#type" locator-key1="TITLE_FIELD" value1="${wikiPageTitle}" />
+
+		<execute action="CPWikiAddpage#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+
+		<execute action="CPWikiAllpages#assertTextEquals" locator-key1="WIKI_PAGE_TABLE_PAGE" value1="${wikiPageTitle}" />
+
+		<execute action="CPWikiAllpages#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
 	<command name="addPagePG">
 		<execute action="PGWiki#assertClick" locator-key1="NAVIGATION_ALL_PAGES" value1="All Pages" />
 		<execute action="PGWikiAllpages#assertClick" locator-key1="ADD_PAGE_BUTTON" value1="Add Page" />
@@ -72,7 +88,7 @@
 		<execute action="PGWiki#assertTextEquals" locator-key1="WIKI_PAGE_BODY" value1="${wikiPageContent}" />
 	</command>
 
-	<command name="addPageWithWorkflowPG">
+	<command name="addPagePGWithWorkflow">
 		<execute action="PGWiki#assertClick" locator-key1="NAVIGATION_ALL_PAGES" value1="All Pages" />
 
 		<execute action="PGWikiAllpages#assertClick" locator-key1="ADD_PAGE_BUTTON" value1="Add Page" />
@@ -182,7 +198,7 @@
 		<execute action="PGWiki#assertTextEquals" locator-key1="WIKI_PAGE_BODY" value1="${wikiPageContent}" />
 	</command>
 
-	<command name="viewPageWithWorkflowPG">
+	<command name="viewPagePGWithWorkflow">
 		<execute action="PGWiki#assertClick" locator-key1="NAVIGATION_DRAFT_PAGES" value1="Draft Pages" />
 
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />

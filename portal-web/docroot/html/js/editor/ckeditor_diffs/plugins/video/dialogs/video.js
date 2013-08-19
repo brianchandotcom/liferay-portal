@@ -7,11 +7,11 @@ CKEDITOR.dialog.add(
 								'		new A.Video(' +
 								'			{';
 
-		var TPL_SCRIPT =		'				ogvUrl: "{ogvUrl}",' +
-								'				url: "{url}",' +
-								'				poster: "{poster}",' +
-								'				boundingBox: "#{videoBoxId}",' +
+		var TPL_SCRIPT =		'				boundingBox: "#{videoBoxId}",' +
 								'				height: {height},' +
+								'				ogvUrl: "{ogvUrl}",' +
+								'				poster: "{poster}",' +
+								'				url: "{url}",' +
 								'				width: {width}';
 
 		var TPL_SCRIPT_SUFFIX = '			}' +
@@ -77,44 +77,32 @@ CKEDITOR.dialog.add(
 				if (id === 'poster') {
 					extraStyles.backgroundImage = 'url(' + value + ')';
 				}
-				else if (id === 'height') {
-					extraStyles.width = value + 'px';
+				else if (id === 'height' || id === 'width') {
+					var height;
+					var width;
 
-					videoNode.setAttribute('data-height', value);
-
-					if (scriptNode && scriptNode.getText()) {
-						scriptTPL = new CKEDITOR.template(TPL_SCRIPT);
-
-						textScript = scriptTPL.output(
-							{
-								height: value,
-								ogvUrl: videoOgvUrl,
-								poster: videoPoster,
-								url: videoUrl,
-								videoBoxId: videoId,
-								width: videoWidth
-							}
-						);
-
-						scriptNode.setText(TPL_SCRIPT_PREFIX + textScript + TPL_SCRIPT_SUFFIX);
+					if (id === 'height') {
+						height = value;
+						width = videoWidth;
 					}
-				}
-				else if (id === 'width') {
-					extraStyles.height = value + 'px';
+					else {
+						height = videoHeight;
+						width = value;
+					}
 
-					videoNode.setAttribute('data-width', value);
+					videoNode.setAttribute('data-' + id, value);
 
 					if (scriptNode && scriptNode.getText()) {
 						scriptTPL = new CKEDITOR.template(TPL_SCRIPT);
 
 						textScript = scriptTPL.output(
 							{
-								height: videoHeight,
+								height: height,
 								ogvUrl: videoOgvUrl,
 								poster: videoPoster,
 								url: videoUrl,
 								videoBoxId: videoId,
-								width: value
+								width: width
 							}
 						);
 
@@ -159,128 +147,137 @@ CKEDITOR.dialog.add(
 		}
 
 		return {
-				contents: [
-					{
-						elements:
-						[
-							{
-								children: [
+			minHeight: 200,
+			minWidth: 400,
+
+			contents: [
+				{
+					elements:
+					[
+						{
+							children: [
+								{
+									commit: commitValue,
+									id: 'poster',
+									label: Liferay.Language.get('video'),
+									setup: loadValue,
+									type: 'text'
+								},
+								{
+									filebrowser:
 									{
-										commit: commitValue,
-										id: 'poster',
-										label: Liferay.Language.get('video'),
-										setup: loadValue,
-										type: 'text'
+										action: 'Browse',
+										target: 'info:poster',
+										url: editor.config.filebrowserBrowseUrl + '&Type=Video'
 									},
-									{
-										filebrowser:
-										{
-											action: 'Browse',
-											target: 'info:poster',
-											url: editor.config.filebrowserBrowseUrl + '&Type=Video'
-										},
-										hidden: 'true',
-										id: 'browse',
-										label: editor.lang.common.browseServer,
-										style: 'display:inline-block;margin-top:10px;',
-										type: 'button'
-									}
-								],
-								type: 'hbox',
-								widths: [ '', '100px']
-							},
-							{
-								children: [
-									{
-										commit: commitValue,
-										'default': 400,
-										id: 'width',
-										label: editor.lang.common.width,
-										setup: loadValue,
-										type: 'text',
-										validate: CKEDITOR.dialog.validate.notEmpty(Liferay.Language.get('width-field-cannot-be-empty'))
-									},
-									{
-										commit: commitValue,
-										'default': 300,
-										id: 'height',
-										label: editor.lang.common.height,
-										setup: loadValue,
-										type: 'text',
-										validate: CKEDITOR.dialog.validate.notEmpty(Liferay.Language.get('height-field-cannot-be-empty'))
-									},
-									{
-										commit: commitValue,
-										id: 'id',
-										label: 'Id',
-										setup: loadValue,
-										type: 'text'
-									}
-								],
-								type: 'hbox',
-								widths: [ '33%', '33%', '33%']
-							}
-						],
-						id: 'info'
-					}
-				],
-				onShow: function() {
-					var instance = this;
+									hidden: 'true',
+									id: 'browse',
+									label: editor.lang.common.browseServer,
+									style: 'display:inline-block;margin-top:10px;',
+									type: 'button'
+								}
+							],
+							type: 'hbox',
+							widths: [ '', '100px']
+						},
+						{
+							children: [
+								{
+									commit: commitValue,
+									'default': 400,
+									id: 'width',
+									label: editor.lang.common.width,
+									setup: loadValue,
+									type: 'text',
+									validate: CKEDITOR.dialog.validate.notEmpty(Liferay.Language.get('width-field-cannot-be-empty'))
+								},
+								{
+									commit: commitValue,
+									'default': 300,
+									id: 'height',
+									label: editor.lang.common.height,
+									setup: loadValue,
+									type: 'text',
+									validate: CKEDITOR.dialog.validate.notEmpty(Liferay.Language.get('height-field-cannot-be-empty'))
+								},
+								{
+									commit: commitValue,
+									id: 'id',
+									label: 'Id',
+									setup: loadValue,
+									type: 'text'
+								}
+							],
+							type: 'hbox',
+							widths: [ '33%', '33%', '33%']
+						}
+					],
+					id: 'info'
+				}
+			],
 
-					instance.fakeImage = null;
-					instance.videoNode = null;
+			title: Liferay.Language.get('video-properties'),
 
-					var fakeImage = instance.getSelectedElement();
+			onShow: function() {
+				var instance = this;
 
-					if (fakeImage && fakeImage.data('cke-real-element-type') && fakeImage.data('cke-real-element-type') === 'video') {
-						instance.fakeImage = fakeImage;
+				instance.fakeImage = null;
+				instance.videoNode = null;
 
-						var videoNode = editor.restoreRealElement(fakeImage);
+				var fakeImage = instance.getSelectedElement();
 
-						instance.videoNode = videoNode;
+				if (fakeImage && fakeImage.data('cke-real-element-type') && fakeImage.data('cke-real-element-type') === 'video') {
+					instance.fakeImage = fakeImage;
 
-						instance.setupContent(videoNode);
-					}
-					else {
-						instance.setupContent(null);
-					}
-				},
-				onOk: function() {
-					var instance = this;
+					var videoNode = editor.restoreRealElement(fakeImage);
 
-					var STR_DIV = 'div';
+					instance.videoNode = videoNode;
 
-					var tmpid = generateId();
-					var extraStyles = {};
+					instance.setupContent(videoNode);
+				}
+				else {
+					instance.setupContent(null);
+				}
+			},
+			onOk: function() {
+				var instance = this;
 
-					var divNode = editor.document.createElement(STR_DIV);
-					divNode.setAttribute('class', 'liferayckevideo video-container');
+				var STR_DIV = 'div';
 
-					var boundingBoxTmp = editor.document.createElement(STR_DIV);
-					boundingBoxTmp.setAttribute('id', tmpid);
+				var tmpid = generateId();
 
-					var scriptTmp = editor.document.createElement('script');
-					scriptTmp.setAttribute('type', 'text/javascript');
+				var extraStyles = {};
 
-					divNode.append(boundingBoxTmp);
-					divNode.append(scriptTmp);
+				var divNode = editor.document.createElement(STR_DIV);
 
-					instance.commitContent(divNode, extraStyles);
+				divNode.setAttribute('class', 'liferayckevideo video-container');
 
-					var newFakeImage = editor.createFakeElement(divNode, 'liferay_cke_video', 'video', false);
-					newFakeImage.setStyles(extraStyles);
+				var boundingBoxTmp = editor.document.createElement(STR_DIV);
 
-					if (instance.fakeImage) {
-						newFakeImage.replace(instance.fakeImage);
-						editor.getSelection().selectElement(newFakeImage);
-					}
-					else {
-						editor.insertElement(newFakeImage);
-					}
-				},
-				minHeight: 200,
-				minWidth: 400,
-				title: Liferay.Language.get('video-properties')
+				boundingBoxTmp.setAttribute('id', tmpid);
+
+				var scriptTmp = editor.document.createElement('script');
+
+				scriptTmp.setAttribute('type', 'text/javascript');
+
+				divNode.append(boundingBoxTmp);
+				divNode.append(scriptTmp);
+
+				instance.commitContent(divNode, extraStyles);
+
+				var newFakeImage = editor.createFakeElement(divNode, 'liferay_cke_video', 'video', false);
+
+				newFakeImage.setStyles(extraStyles);
+
+				if (instance.fakeImage) {
+					newFakeImage.replace(instance.fakeImage);
+
+					editor.getSelection().selectElement(newFakeImage);
+				}
+				else {
+					editor.insertElement(newFakeImage);
+				}
+			}
 		};
 	}
 );

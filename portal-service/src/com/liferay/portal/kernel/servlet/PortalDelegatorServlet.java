@@ -64,14 +64,20 @@ public class PortalDelegatorServlet extends HttpServlet {
 		String uri = request.getPathInfo();
 
 		if ((uri == null) || (uri.length() == 0)) {
-			response.sendError(404, "Path information is not specified");
+			response.sendError(
+				HttpServletResponse.SC_NOT_FOUND,
+				"Path information is not specified");
+
 			return;
 		}
 
 		String[] paths = uri.split(StringPool.SLASH);
 
 		if (paths.length < 2) {
-			response.sendError(404, "Path " + uri + " is invalid");
+			response.sendError(
+				HttpServletResponse.SC_NOT_FOUND,
+				"Path " + uri + " is invalid");
+
 			return;
 		}
 
@@ -79,7 +85,9 @@ public class PortalDelegatorServlet extends HttpServlet {
 
 		if (delegate == null) {
 			response.sendError(
-				404, "No servlet registred for context " + paths[1]);
+				HttpServletResponse.SC_NOT_FOUND,
+				"No servlet registred for context " + paths[1]);
+
 			return;
 		}
 

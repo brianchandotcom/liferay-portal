@@ -134,12 +134,9 @@ public class FileEntryStagedModelDataHandler
 			Repository repository = RepositoryLocalServiceUtil.getRepository(
 				fileEntry.getRepositoryId());
 
-			StagedModelDataHandlerUtil.exportStagedModel(
-				portletDataContext, repository);
-
-			portletDataContext.addReferenceElement(
-				fileEntry, fileEntryElement, repository,
-				PortletDataContext.REFERENCE_TYPE_STRONG, false);
+			StagedModelDataHandlerUtil.exportReferencedStagedModel(
+				portletDataContext, fileEntry, FileEntry.class, repository,
+				Repository.class, PortletDataContext.REFERENCE_TYPE_STRONG);
 
 			portletDataContext.addClassedModel(
 				fileEntryElement, fileEntryPath, fileEntry,
@@ -162,8 +159,10 @@ public class FileEntryStagedModelDataHandler
 		if (fileEntry.getFolderId() !=
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
-			StagedModelDataHandlerUtil.exportStagedModel(
-				portletDataContext, fileEntry.getFolder());
+			StagedModelDataHandlerUtil.exportReferencedStagedModel(
+				portletDataContext, fileEntry, FileEntry.class,
+				fileEntry.getFolder(), Folder.class,
+				PortletDataContext.REFERENCE_TYPE_PARENT);
 		}
 
 		LiferayFileEntry liferayFileEntry = (LiferayFileEntry)fileEntry;
@@ -518,12 +517,9 @@ public class FileEntryStagedModelDataHandler
 			return;
 		}
 
-		StagedModelDataHandlerUtil.exportStagedModel(
-			portletDataContext, dlFileEntryType);
-
-		portletDataContext.addReferenceElement(
-			fileEntry, fileEntryElement, dlFileEntryType,
-			PortletDataContext.REFERENCE_TYPE_STRONG, false);
+		StagedModelDataHandlerUtil.exportReferencedStagedModel(
+			portletDataContext, fileEntry, FileEntry.class, dlFileEntryType,
+			DLFileEntryType.class, PortletDataContext.REFERENCE_TYPE_STRONG);
 
 		List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();
 

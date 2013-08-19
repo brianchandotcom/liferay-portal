@@ -97,12 +97,9 @@ public class FolderStagedModelDataHandler
 			repository = RepositoryLocalServiceUtil.getRepository(
 				folder.getRepositoryId());
 
-			StagedModelDataHandlerUtil.exportStagedModel(
-				portletDataContext, repository);
-
-			portletDataContext.addReferenceElement(
-				folder, folderElement, repository,
-				PortletDataContext.REFERENCE_TYPE_STRONG, false);
+			StagedModelDataHandlerUtil.exportReferencedStagedModel(
+				portletDataContext, folder, Folder.class, repository,
+				Repository.class, PortletDataContext.REFERENCE_TYPE_STRONG);
 
 			portletDataContext.addClassedModel(
 				folderElement, folderPath, folder,
@@ -125,8 +122,10 @@ public class FolderStagedModelDataHandler
 		if (folder.getParentFolderId() !=
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
-			StagedModelDataHandlerUtil.exportStagedModel(
-				portletDataContext, folder.getParentFolder());
+			StagedModelDataHandlerUtil.exportReferencedStagedModel(
+				portletDataContext, folder, Folder.class,
+				folder.getParentFolder(), Folder.class,
+				PortletDataContext.REFERENCE_TYPE_PARENT);
 		}
 
 		exportFolderFileEntryTypes(portletDataContext, folderElement, folder);
@@ -271,12 +270,10 @@ public class FolderStagedModelDataHandler
 			}
 
 			if (dlFileEntryType.isExportable()) {
-				StagedModelDataHandlerUtil.exportStagedModel(
-					portletDataContext, dlFileEntryType);
-
-				portletDataContext.addReferenceElement(
-					folder, folderElement, dlFileEntryType,
-					PortletDataContext.REFERENCE_TYPE_STRONG, false);
+				StagedModelDataHandlerUtil.exportReferencedStagedModel(
+					portletDataContext, folder, Folder.class, dlFileEntryType,
+					DLFileEntryType.class,
+					PortletDataContext.REFERENCE_TYPE_STRONG);
 			}
 		}
 

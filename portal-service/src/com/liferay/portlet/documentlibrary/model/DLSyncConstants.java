@@ -21,6 +21,12 @@ public class DLSyncConstants {
 
 	public static final String EVENT_ADD = "add";
 
+	public static final String EVENT_CANCEL_CHECK_OUT = "cancelCheckOut";
+
+	public static final String EVENT_CHECK_IN = "checkIn";
+
+	public static final String EVENT_CHECK_OUT = "checkOut";
+
 	public static final String EVENT_DELETE = "delete";
 
 	public static final String EVENT_GET = "get";

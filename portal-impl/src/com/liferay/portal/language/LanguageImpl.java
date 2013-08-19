@@ -854,7 +854,16 @@ public class LanguageImpl implements Language {
 			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-			locale = themeDisplay.getLocale();
+			if (themeDisplay != null) {
+				locale = themeDisplay.getLocale();
+			}
+			else {
+				locale = request.getLocale();
+
+				if (!isAvailableLocale(locale)) {
+					locale = LocaleUtil.getDefault();
+				}
+			}
 
 			portletConfig = (PortletConfig)request.getAttribute(
 				JavaConstants.JAVAX_PORTLET_CONFIG);

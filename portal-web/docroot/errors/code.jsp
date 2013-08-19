@@ -17,6 +17,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page isErrorPage="true" %>
 
 <%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %>
 <%@ page import="com.liferay.portal.kernel.log.Log" %>
@@ -38,14 +39,14 @@
 // However, if the original request was an AJAX request, sending a redirect is
 // less than ideal. In this case we will simply print the error message.
 
-response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+ErrorData errorData = pageContext.getErrorData();
 
-Throwable t = (Throwable)request.getAttribute(JavaConstants.JAVAX_SERVLET_ERROR_EXCEPTION);
-Object msg = request.getAttribute(JavaConstants.JAVAX_SERVLET_ERROR_MESSAGE);
-String uri = (String)request.getAttribute(JavaConstants.JAVAX_SERVLET_ERROR_REQUEST_URI);
+int code = errorData.getStatusCode();
+String msg = String.valueOf(request.getAttribute(JavaConstants.JAVAX_SERVLET_ERROR_MESSAGE));
+String uri = errorData.getRequestURI();
 
 if (_log.isWarnEnabled()) {
-	_log.warn("{msg=\"" + msg + "\", uri=" + uri + "}", t);
+	_log.warn("{code=\"" + code + "\", msg=\"" + msg + "\", uri=" + uri + "}", exception);
 }
 
 String xRequestWith = request.getHeader(HttpHeaders.X_REQUESTED_WITH);
@@ -94,11 +95,11 @@ String xRequestWith = request.getHeader(HttpHeaders.X_REQUESTED_WITH);
 	</c:when>
 	<c:otherwise>
 		<head>
-			<title>Http Status 404 - <%= LanguageUtil.get(pageContext, "not-found") %></title>
+			<title>Http Status <%= code %> - <%= LanguageUtil.get(pageContext, "http-status-code[" + code + "]") %></title>
 		</head>
 
 		<body>
-			<h1>Http Status 404 - <%= LanguageUtil.get(pageContext, "not-found") %></h1>
+			<h1>Http Status <%= code %> - <%= LanguageUtil.get(pageContext, "http-status-code[" + code + "]") %></h1>
 
 			<p>
 				<%= LanguageUtil.get(pageContext, "message") %>: <%= msg %>
@@ -114,5 +115,5 @@ String xRequestWith = request.getHeader(HttpHeaders.X_REQUESTED_WITH);
 </html>
 
 <%!
-private static Log _log = LogFactoryUtil.getLog("portal-web.docroot.errors.404_jsp");
+private static Log _log = LogFactoryUtil.getLog("portal-web.docroot.errors.code_jsp");
 %>

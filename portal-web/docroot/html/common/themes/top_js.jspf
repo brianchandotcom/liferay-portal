@@ -132,6 +132,9 @@
 					},
 				</c:if>
 
+				getBCP47LanguageId: function() {
+					return "<%= LanguageUtil.getBCP47LanguageId(request) %>";
+				},
 				getCDNBaseURL: function() {
 					return "<%= themeDisplay.getCDNBaseURL() %>";
 				},

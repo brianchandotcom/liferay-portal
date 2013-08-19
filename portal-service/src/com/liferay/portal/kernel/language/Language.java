@@ -108,6 +108,12 @@ public interface Language {
 
 	public Locale[] getAvailableLocales(long groupId);
 
+	public String getBCP47LanguageId(HttpServletRequest request);
+
+	public String getBCP47LanguageId(Locale locale);
+
+	public String getBCP47LanguageId(PortletRequest portletRequest);
+
 	public String getCharset(Locale locale);
 
 	public String getLanguageId(HttpServletRequest request);

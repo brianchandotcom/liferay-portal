@@ -194,6 +194,18 @@ public class LanguageUtil {
 		return getLanguage().getAvailableLocales(groupId);
 	}
 
+	public static String getBCP47LanguageId(HttpServletRequest request) {
+		return getLanguage().getBCP47LanguageId(request);
+	}
+
+	public static String getBCP47LanguageId(Locale locale) {
+		return getLanguage().getBCP47LanguageId(locale);
+	}
+
+	public static String getBCP47LanguageId(PortletRequest portletRequest) {
+		return getLanguage().getBCP47LanguageId(portletRequest);
+	}
+
 	public static String getCharset(Locale locale) {
 		return getLanguage().getCharset(locale);
 	}

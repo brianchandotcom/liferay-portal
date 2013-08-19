@@ -29,6 +29,7 @@ import java.util.TreeMap;
 /**
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
+ * @author Eduardo Lundgren
  */
 public class LocaleUtil {
 
@@ -148,6 +149,22 @@ public class LocaleUtil {
 		String userLanguage, String userCountry, String userVariant) {
 
 		getInstance()._setDefault(userLanguage, userCountry, userVariant);
+	}
+
+	public static String toBCP47LanguageId(Locale locale) {
+		return getInstance()._toBCP47LanguageId(locale);
+	}
+
+	public static String toBCP47LanguageId(String languageId) {
+		return getInstance()._toBCP47LanguageId(languageId);
+	}
+
+	public static String[] toBCP47LanguageIds(Locale[] locales) {
+		return getInstance()._toBCP47LanguageIds(locales);
+	}
+
+	public static String[] toBCP47LanguageIds(String[] languageIds) {
+		return getInstance()._toBCP47LanguageIds(languageIds);
 	}
 
 	public static String[] toDisplayNames(Locale[] locales, Locale locale) {
@@ -391,6 +408,37 @@ public class LocaleUtil {
 
 			_locale = new Locale(userLanguage, userCountry, userVariant);
 		}
+	}
+
+	private String _toBCP47LanguageId(Locale locale) {
+		return _toBCP47LanguageId(_toLanguageId(locale));
+	}
+
+	private String _toBCP47LanguageId(String languageId) {
+		if (languageId.equals("zh_CN")) {
+			return "zh-Hans-CN";
+		}
+		else if (languageId.equals("zh_TW")) {
+			return "zh-Hant-TW";
+		}
+		else {
+			return StringUtil.replace(
+				languageId, CharPool.UNDERLINE, CharPool.MINUS);
+		}
+	}
+
+	private String[] _toBCP47LanguageIds(Locale[] locales) {
+		return _toBCP47LanguageIds(_toLanguageIds(locales));
+	}
+
+	private String[] _toBCP47LanguageIds(String[] languageIds) {
+		String[] bcp47LanguageIds = new String[languageIds.length];
+
+		for (int i = 0; i < languageIds.length; i++) {
+			bcp47LanguageIds[i] = _toBCP47LanguageId(languageIds[i]);
+		}
+
+		return bcp47LanguageIds;
 	}
 
 	private String[] _toDisplayNames(Locale[] locales, Locale locale) {

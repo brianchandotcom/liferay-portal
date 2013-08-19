@@ -1,0 +1,67 @@
+<html>
+<head>
+<title>CPSpamModerationWikis</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPSpamModerationWikis</td></tr>
+</thead>
+<tbody>
+<!--CP_SPAM_MODERATION-->
+<!---->
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[@class='alert alert-success']</td>
+	<td>Your request completed succesfully.</td>
+</tr>
+<tr>
+	<td>CONFIRMATION</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SPAM_MODERATION_NAVIGATION-->
+<tr>
+	<td>SPAM_MODERATION_MESSAGE_BOARDS</td>
+	<td>//li[@id='_2_WAR_akismetportlet_tabs110910111511597103101459811197114100115TabsId']/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SPAM_MODERATION_DISCUSSIONS</td>
+	<td>//li[@id='_2_WAR_akismetportlet_tabs110010511599117115115105111110115TabsId']/a</td>
+	<td>Discussions</td>
+</tr>
+<tr>
+	<td>SPAM_MODERATION_WIKIS</td>
+	<td>//li[@id='_2_WAR_akismetportlet_tabs1119105107105115TabsId']/a</td>
+	<td>Wikis</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>WIKIS_NOT_SPAM_BUTTON</td>
+	<td>//div[@class='button-holder ']/button[contains(.,'Not Spam')]</td>
+	<td>Not Spam</td>
+</tr>
+<tr>
+	<td>WIKIS_SPAM_BUTTON</td>
+	<td>//div[@class='button-holder ']/button[contains(.,'Spam')]</td>
+	<td>Spam</td>
+</tr>
+<tr>
+	<td>WIKIS_CHECKBOX</td>
+	<td>//input[@type='checkbox']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

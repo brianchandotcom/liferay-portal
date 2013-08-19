@@ -8,7 +8,7 @@
 <tr><td rowspan="1" colspan="3">CPWikiPageHistory</td></tr>
 </thead>
 <tbody>
-<!--CPWikiPageHistory-->
+<!--CP_WIKI_PAGE_HISTORY-->
 <!---->
 <tr>
 	<td>SUCCESS_MESSAGE</td>
@@ -95,7 +95,7 @@
 <!--WIKI_PAGE_HISTORY-->
 <tr>
 	<td>WIKI_PAGE_HISTORY_ACTIVITY</td>
-	<td>//tbody[@class='table-data']/tr/td/span/span/a[contains(.,'${wikiPageName}')]</td>
+	<td>//tbody[@class='table-data']/tr/td/span/span/a[contains(.,'Akismet this')]</td>
 	<td></td>
 </tr>
 </tbody>

@@ -61,10 +61,6 @@ if (data == null) {
 	data = new HashMap<String, Object>(1);
 }
 
-if (useDialog && Validator.isNull(data.get("title"))) {
-	data.put("title", HtmlUtil.stripHtml(localizeMessage ? LanguageUtil.get(pageContext, message) : message));
-}
-
 if ((iconListIconCount != null) || (iconListSingleIcon != null)) {
 	label = true;
 }
@@ -75,6 +71,10 @@ if ((iconMenuIconCount != null) || (iconMenuSingleIcon != null)) {
 
 if (message == null) {
 	message = StringUtil.replace(image, StringPool.UNDERLINE, StringPool.DASH);
+}
+
+if (useDialog && Validator.isNull(data.get("title"))) {
+	data.put("title", HtmlUtil.stripHtml(localizeMessage ? LanguageUtil.get(pageContext, message) : message));
 }
 
 if (Validator.isNull(method)) {

@@ -170,6 +170,8 @@ AUI.add(
 							tagsPermissionsButton.on(EVENT_CLICK, instance._onTagChangePermissions, instance);
 						}
 
+						instance._tagsActionsButton = A.one('#' + namespace + 'tagsActionsButton');
+
 						A.one('#' + namespace + 'deleteSelectedTags').on(EVENT_CLICK, instance._deleteSelectedTags, instance);
 						A.one('#' + namespace + 'mergeSelectedTags').on(EVENT_CLICK, instance._mergeSelectedTags, instance);
 
@@ -1721,6 +1723,10 @@ AUI.add(
 						var instance = this;
 
 						instance._stagedTagsWrapper.toggle(!!instance._getStagedTags().size());
+
+						var toggleFn = instance._getStagedTags().size() ? 'show' : 'hide';
+
+						instance._tagsActionsButton[toggleFn].apply(instance._tagsActionsButton);
 					},
 
 					_updateMergeItemsTarget: function() {

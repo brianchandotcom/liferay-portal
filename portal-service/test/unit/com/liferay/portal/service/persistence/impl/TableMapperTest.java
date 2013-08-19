@@ -1658,13 +1658,13 @@ public class TableMapperTest {
 
 			if (count == 0) {
 				return (MappingSqlQuery<T>)
-					new MockGetRightPrimaryKeysSqlQuery(
+					new MockGetLeftPrimaryKeysSqlQuery(
 						dataSource, sql, types, RowMapper.PRIMARY_KEY);
 			}
 
 			if (count == 1) {
 				return (MappingSqlQuery<T>)
-					new MockGetLeftPrimaryKeysSqlQuery(
+					new MockGetRightPrimaryKeysSqlQuery(
 						dataSource, sql, types, RowMapper.PRIMARY_KEY);
 			}
 
@@ -1727,17 +1727,17 @@ public class TableMapperTest {
 			}
 
 			if (count == 1) {
-				return new MockDeleteMappingSqlUpdate(dataSource, sql, types);
-			}
-
-			if (count == 2) {
 				return new MockDeleteLeftPrimaryKeyTableMappingsSqlUpdate(
 					dataSource, sql, types);
 			}
 
-			if (count == 3) {
+			if (count == 2) {
 				return new MockDeleteRightPrimaryKeyTableMappingsSqlUpdate(
 					dataSource, sql, types);
+			}
+
+			if (count == 3) {
+				return new MockDeleteMappingSqlUpdate(dataSource, sql, types);
 			}
 
 			return null;

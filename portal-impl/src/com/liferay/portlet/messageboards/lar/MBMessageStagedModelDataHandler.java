@@ -87,7 +87,7 @@ public class MBMessageStagedModelDataHandler
 			return;
 		}
 
-		StagedModelDataHandlerUtil.exportReferencedStagedModel(
+		StagedModelDataHandlerUtil.exportReferenceStagedModel(
 			portletDataContext, message, message.getCategory(),
 			PortletDataContext.REFERENCE_TYPE_PARENT);
 

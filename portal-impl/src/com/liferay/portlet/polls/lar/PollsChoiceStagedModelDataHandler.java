@@ -61,7 +61,7 @@ public class PollsChoiceStagedModelDataHandler
 		PollsQuestion question = PollsQuestionLocalServiceUtil.getQuestion(
 			choice.getQuestionId());
 
-		StagedModelDataHandlerUtil.exportReferencedStagedModel(
+		StagedModelDataHandlerUtil.exportReferenceStagedModel(
 			portletDataContext, choice, question,
 			PortletDataContext.REFERENCE_TYPE_STRONG);
 

@@ -82,7 +82,7 @@ public class DDMStructureStagedModelDataHandler
 				DDMStructureLocalServiceUtil.getStructure(
 					structure.getParentStructureId());
 
-			StagedModelDataHandlerUtil.exportReferencedStagedModel(
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
 				portletDataContext, structure, parentStructure,
 				PortletDataContext.REFERENCE_TYPE_PARENT);
 		}

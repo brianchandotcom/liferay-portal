@@ -157,7 +157,7 @@ public class LayoutPrototypeStagedModelDataHandler
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
 		for (Layout layout : layouts) {
-			StagedModelDataHandlerUtil.exportReferencedStagedModel(
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
 				portletDataContext, layoutPrototype, layout,
 				PortletDataContext.REFERENCE_TYPE_EMBEDDED);
 		}

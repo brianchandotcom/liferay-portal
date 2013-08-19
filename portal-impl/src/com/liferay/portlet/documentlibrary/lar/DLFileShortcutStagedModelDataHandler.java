@@ -74,7 +74,7 @@ public class DLFileShortcutStagedModelDataHandler
 		if (fileShortcut.getFolderId() !=
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
-			StagedModelDataHandlerUtil.exportReferencedStagedModel(
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
 				portletDataContext, fileShortcut, fileShortcut.getFolder(),
 				PortletDataContext.REFERENCE_TYPE_PARENT);
 		}
@@ -82,7 +82,7 @@ public class DLFileShortcutStagedModelDataHandler
 		FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
 			fileShortcut.getToFileEntryId());
 
-		StagedModelDataHandlerUtil.exportReferencedStagedModel(
+		StagedModelDataHandlerUtil.exportReferenceStagedModel(
 			portletDataContext, fileShortcut, DLFileShortcut.class, fileEntry,
 			FileEntry.class, PortletDataContext.REFERENCE_TYPE_STRONG);
 

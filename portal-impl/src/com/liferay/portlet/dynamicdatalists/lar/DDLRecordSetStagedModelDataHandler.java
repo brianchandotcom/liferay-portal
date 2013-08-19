@@ -79,7 +79,7 @@ public class DDLRecordSetStagedModelDataHandler
 			recordSet);
 
 		for (DDMTemplate ddmTemplate : ddmTemplates) {
-			StagedModelDataHandlerUtil.exportReferencedStagedModel(
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
 				portletDataContext, recordSet, ddmTemplate,
 				PortletDataContext.REFERENCE_TYPE_STRONG);
 		}

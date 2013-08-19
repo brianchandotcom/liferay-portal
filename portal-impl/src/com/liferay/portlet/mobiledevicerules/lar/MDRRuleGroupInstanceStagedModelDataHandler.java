@@ -75,7 +75,7 @@ public class MDRRuleGroupInstanceStagedModelDataHandler
 		MDRRuleGroup ruleGroup = MDRRuleGroupLocalServiceUtil.getRuleGroup(
 			ruleGroupInstance.getRuleGroupId());
 
-		StagedModelDataHandlerUtil.exportReferencedStagedModel(
+		StagedModelDataHandlerUtil.exportReferenceStagedModel(
 			portletDataContext, ruleGroupInstance, ruleGroup,
 			PortletDataContext.REFERENCE_TYPE_PARENT);
 

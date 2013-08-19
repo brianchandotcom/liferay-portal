@@ -84,7 +84,7 @@ public class JournalFeedStagedModelDataHandler
 			feed.getStructureId(), true);
 
 		if (ddmStructure != null) {
-			StagedModelDataHandlerUtil.exportReferencedStagedModel(
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
 				portletDataContext, feed, ddmStructure,
 				PortletDataContext.REFERENCE_TYPE_STRONG);
 		}
@@ -101,7 +101,7 @@ public class JournalFeedStagedModelDataHandler
 			feed.getTemplateId());
 
 		if (ddmTemplate != null) {
-			StagedModelDataHandlerUtil.exportReferencedStagedModel(
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
 				portletDataContext, feed, ddmTemplate,
 				PortletDataContext.REFERENCE_TYPE_STRONG);
 		}
@@ -121,7 +121,7 @@ public class JournalFeedStagedModelDataHandler
 
 		if (rendererDDMTemplate != null) {
 			Element rendererDDMTemplateElement =
-				StagedModelDataHandlerUtil.exportReferencedStagedModel(
+				StagedModelDataHandlerUtil.exportReferenceStagedModel(
 					portletDataContext, feed, rendererDDMTemplate,
 					PortletDataContext.REFERENCE_TYPE_STRONG);
 

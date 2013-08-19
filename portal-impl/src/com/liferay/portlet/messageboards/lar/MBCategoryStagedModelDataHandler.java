@@ -75,7 +75,7 @@ public class MBCategoryStagedModelDataHandler
 		}
 
 		if (category.getParentCategory() != null) {
-			StagedModelDataHandlerUtil.exportReferencedStagedModel(
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
 				portletDataContext, category, category.getParentCategory(),
 				PortletDataContext.REFERENCE_TYPE_PARENT);
 		}

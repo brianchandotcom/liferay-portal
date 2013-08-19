@@ -76,7 +76,7 @@ public class DLFileEntryTypeStagedModelDataHandler
 
 		for (DDMStructure ddmStructure : ddmStructures) {
 			Element referenceElement =
-				StagedModelDataHandlerUtil.exportReferencedStagedModel(
+				StagedModelDataHandlerUtil.exportReferenceStagedModel(
 					portletDataContext, fileEntryType, ddmStructure,
 					PortletDataContext.REFERENCE_TYPE_STRONG);
 

@@ -128,7 +128,7 @@ public class DDMTemplateStagedModelDataHandler
 			template.getClassPK());
 
 		if (structure != null) {
-			StagedModelDataHandlerUtil.exportReferencedStagedModel(
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
 				portletDataContext, template, structure,
 				PortletDataContext.REFERENCE_TYPE_STRONG);
 		}

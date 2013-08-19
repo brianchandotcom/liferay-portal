@@ -187,7 +187,7 @@ public class LayoutStagedModelDataHandler
 				layout.getGroupId(), layout.isPrivateLayout(), parentLayoutId);
 
 			if (parentLayout != null) {
-				StagedModelDataHandlerUtil.exportReferencedStagedModel(
+				StagedModelDataHandlerUtil.exportReferenceStagedModel(
 					portletDataContext, layout, parentLayout,
 					PortletDataContext.REFERENCE_TYPE_PARENT);
 
@@ -201,7 +201,7 @@ public class LayoutStagedModelDataHandler
 				layout.getPlid());
 
 		for (LayoutFriendlyURL layoutFriendlyURL : layoutFriendlyURLs) {
-			StagedModelDataHandlerUtil.exportReferencedStagedModel(
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
 				portletDataContext, layout, layoutFriendlyURL,
 				PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
 		}
@@ -606,7 +606,7 @@ public class LayoutStagedModelDataHandler
 			return;
 		}
 
-		StagedModelDataHandlerUtil.exportReferencedStagedModel(
+		StagedModelDataHandlerUtil.exportReferenceStagedModel(
 			portletDataContext, layout, article,
 			PortletDataContext.REFERENCE_TYPE_EMBEDDED);
 	}
@@ -650,7 +650,7 @@ public class LayoutStagedModelDataHandler
 					portletDataContext.getScopeGroupId(),
 					layout.isPrivateLayout(), linkToLayoutId);
 
-				StagedModelDataHandlerUtil.exportReferencedStagedModel(
+				StagedModelDataHandlerUtil.exportReferenceStagedModel(
 					portletDataContext, layout, linkedToLayout,
 					PortletDataContext.REFERENCE_TYPE_STRONG);
 

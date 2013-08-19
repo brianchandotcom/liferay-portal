@@ -97,7 +97,7 @@ public class FolderStagedModelDataHandler
 			repository = RepositoryLocalServiceUtil.getRepository(
 				folder.getRepositoryId());
 
-			StagedModelDataHandlerUtil.exportReferencedStagedModel(
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
 				portletDataContext, folder, Folder.class, repository,
 				Repository.class, PortletDataContext.REFERENCE_TYPE_STRONG);
 
@@ -122,7 +122,7 @@ public class FolderStagedModelDataHandler
 		if (folder.getParentFolderId() !=
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
-			StagedModelDataHandlerUtil.exportReferencedStagedModel(
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
 				portletDataContext, folder, Folder.class,
 				folder.getParentFolder(), Folder.class,
 				PortletDataContext.REFERENCE_TYPE_PARENT);
@@ -270,7 +270,7 @@ public class FolderStagedModelDataHandler
 			}
 
 			if (dlFileEntryType.isExportable()) {
-				StagedModelDataHandlerUtil.exportReferencedStagedModel(
+				StagedModelDataHandlerUtil.exportReferenceStagedModel(
 					portletDataContext, folder, Folder.class, dlFileEntryType,
 					DLFileEntryType.class,
 					PortletDataContext.REFERENCE_TYPE_STRONG);

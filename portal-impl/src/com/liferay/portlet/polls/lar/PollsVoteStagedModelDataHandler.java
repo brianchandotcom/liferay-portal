@@ -55,7 +55,7 @@ public class PollsVoteStagedModelDataHandler
 			PortletDataContext portletDataContext, PollsVote vote)
 		throws Exception {
 
-		StagedModelDataHandlerUtil.exportReferencedStagedModel(
+		StagedModelDataHandlerUtil.exportReferenceStagedModel(
 			portletDataContext, vote, vote.getChoice(),
 			PortletDataContext.REFERENCE_TYPE_STRONG);
 

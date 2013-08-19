@@ -600,10 +600,10 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 			try {
 				if (exportReferencedContent) {
-					StagedModelDataHandlerUtil.exportReferencedStagedModel(
+					StagedModelDataHandlerUtil.exportReferenceStagedModel(
 						portletDataContext, entityStagedModel, entityElement,
-							fileEntry, FileEntry.class,
-							PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
+						fileEntry, FileEntry.class,
+						PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
 				}
 				else {
 					portletDataContext.addReferenceElement(
@@ -814,7 +814,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 				newLinksToLayout.add(newLinkToLayout);
 
 				if (exportReferencedContent) {
-					StagedModelDataHandlerUtil.exportReferencedStagedModel(
+					StagedModelDataHandlerUtil.exportReferenceStagedModel(
 						portletDataContext, entityStagedModel, layout,
 						PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
 				}

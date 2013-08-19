@@ -71,7 +71,7 @@ public class WikiPageStagedModelDataHandler
 
 		Element pageElement = portletDataContext.getExportDataElement(page);
 
-		StagedModelDataHandlerUtil.exportReferencedStagedModel(
+		StagedModelDataHandlerUtil.exportReferenceStagedModel(
 			portletDataContext, page, page.getNode(),
 			PortletDataContext.REFERENCE_TYPE_PARENT);
 
@@ -84,7 +84,7 @@ public class WikiPageStagedModelDataHandler
 
 		if (page.isHead()) {
 			for (FileEntry fileEntry : page.getAttachmentsFileEntries()) {
-				StagedModelDataHandlerUtil.exportReferencedStagedModel(
+				StagedModelDataHandlerUtil.exportReferenceStagedModel(
 					portletDataContext, page, WikiPage.class, fileEntry,
 					FileEntry.class, PortletDataContext.REFERENCE_TYPE_WEAK);
 			}

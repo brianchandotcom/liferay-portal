@@ -51,7 +51,7 @@ public class StagedModelDataHandlerUtil {
 	}
 
 	public static <T extends StagedModel, U extends StagedModel> Element
-		exportReferencedStagedModel(
+		exportReferenceStagedModel(
 			PortletDataContext portletDataContext, T referrerStagedModel,
 			Class<?> referrerStagedModelClass, U stagedModel,
 			Class<?> stagedModelClass, String referenceType)
@@ -61,13 +61,13 @@ public class StagedModelDataHandlerUtil {
 			portletDataContext.getExportDataElement(
 				referrerStagedModel, referrerStagedModelClass);
 
-		return exportReferencedStagedModel(
+		return exportReferenceStagedModel(
 			portletDataContext, referrerStagedModel, referrerStagedModelElement,
 			stagedModel, stagedModelClass, referenceType);
 	}
 
 	public static <T extends StagedModel, U extends StagedModel> Element
-		exportReferencedStagedModel(
+		exportReferenceStagedModel(
 			PortletDataContext portletDataContext, T referrerStagedModel,
 			Element referrerStagedModelElement, U stagedModel,
 			Class<?> stagedModelClass, String referenceType)
@@ -100,12 +100,12 @@ public class StagedModelDataHandlerUtil {
 	}
 
 	public static <T extends StagedModel, U extends StagedModel> Element
-		exportReferencedStagedModel(
+		exportReferenceStagedModel(
 			PortletDataContext portletDataContext, T referrerStagedModel,
 			U stagedModel, String referenceType)
 		throws PortletDataException {
 
-		return exportReferencedStagedModel(
+		return exportReferenceStagedModel(
 			portletDataContext, referrerStagedModel,
 			referrerStagedModel.getModelClass(), stagedModel,
 			stagedModel.getModelClass(), referenceType);

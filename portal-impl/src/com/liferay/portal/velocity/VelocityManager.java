@@ -75,6 +75,10 @@ public class VelocityManager extends BaseTemplateManager {
 		ExtendedProperties extendedProperties = new FastExtendedProperties();
 
 		extendedProperties.setProperty(
+			VelocityEngine.DIRECTIVE_IF_TOSTRING_NULLCHECK,
+			PropsValues.VELOCITY_ENGINE_DIRECTIVE_IF_TOSTRING_NULLCHECK);
+
+		extendedProperties.setProperty(
 			VelocityEngine.EVENTHANDLER_METHODEXCEPTION,
 			LiferayMethodExceptionEventHandler.class.getName());
 

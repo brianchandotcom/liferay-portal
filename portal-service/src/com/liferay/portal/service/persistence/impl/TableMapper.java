@@ -24,7 +24,7 @@ import java.util.List;
  *
  * @author Shuyang Zhou
  */
-public interface TableMapping<L extends BaseModel<L>, R extends BaseModel<R>> {
+public interface TableMapper<L extends BaseModel<L>, R extends BaseModel<R>> {
 
 	public boolean addTableMapping(long leftPrimaryKey, long rightPrimaryKey)
 		throws SystemException;
@@ -49,7 +49,7 @@ public interface TableMapping<L extends BaseModel<L>, R extends BaseModel<R>> {
 	public long[] getLeftPrimaryKeys(long rightPrimaryKey)
 		throws SystemException;
 
-	public TableMapping<R, L> getReverseTableMapping();
+	public TableMapper<R, L> getReverseTableMapper();
 
 	public List<R> getRightBaseModels(
 			long leftPrimaryKey, int start, int end, OrderByComparator obc)

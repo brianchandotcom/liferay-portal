@@ -23,18 +23,18 @@ import java.util.List;
 /**
  * @author Shuyang Zhou
  */
-public class ReverseTableMapping<L extends BaseModel<L>, R extends BaseModel<R>>
-	implements TableMapping<L, R> {
+public class ReverseTableMapper<L extends BaseModel<L>, R extends BaseModel<R>>
+	implements TableMapper<L, R> {
 
-	public ReverseTableMapping(TableMapping<R, L> tableMapping) {
-		_tableMapping = tableMapping;
+	public ReverseTableMapper(TableMapper<R, L> tableMapper) {
+		_tableMapper = tableMapper;
 	}
 
 	@Override
 	public boolean addTableMapping(long leftPrimaryKey, long rightPrimaryKey)
 		throws SystemException {
 
-		return _tableMapping.addTableMapping(rightPrimaryKey, leftPrimaryKey);
+		return _tableMapper.addTableMapping(rightPrimaryKey, leftPrimaryKey);
 	}
 
 	@Override
@@ -42,7 +42,7 @@ public class ReverseTableMapping<L extends BaseModel<L>, R extends BaseModel<R>>
 			long leftPrimaryKey, long rightPrimaryKey)
 		throws SystemException {
 
-		return _tableMapping.containsTableMapping(
+		return _tableMapper.containsTableMapping(
 			rightPrimaryKey, leftPrimaryKey);
 	}
 
@@ -50,22 +50,21 @@ public class ReverseTableMapping<L extends BaseModel<L>, R extends BaseModel<R>>
 	public int deleteLeftPrimaryKeyTableMappings(long leftPrimaryKey)
 		throws SystemException {
 
-		return _tableMapping.deleteRightPrimaryKeyTableMappings(leftPrimaryKey);
+		return _tableMapper.deleteRightPrimaryKeyTableMappings(leftPrimaryKey);
 	}
 
 	@Override
 	public int deleteRightPrimaryKeyTableMappings(long rightPrimaryKey)
 		throws SystemException {
 
-		return _tableMapping.deleteLeftPrimaryKeyTableMappings(rightPrimaryKey);
+		return _tableMapper.deleteLeftPrimaryKeyTableMappings(rightPrimaryKey);
 	}
 
 	@Override
 	public boolean deleteTableMapping(long leftPrimaryKey, long rightPrimaryKey)
 		throws SystemException {
 
-		return _tableMapping.deleteTableMapping(
-			rightPrimaryKey, leftPrimaryKey);
+		return _tableMapper.deleteTableMapping(rightPrimaryKey, leftPrimaryKey);
 	}
 
 	@Override
@@ -73,7 +72,7 @@ public class ReverseTableMapping<L extends BaseModel<L>, R extends BaseModel<R>>
 			long rightPrimaryKey, int start, int end, OrderByComparator obc)
 		throws SystemException {
 
-		return _tableMapping.getRightBaseModels(
+		return _tableMapper.getRightBaseModels(
 			rightPrimaryKey, start, end, obc);
 	}
 
@@ -81,12 +80,12 @@ public class ReverseTableMapping<L extends BaseModel<L>, R extends BaseModel<R>>
 	public long[] getLeftPrimaryKeys(long rightPrimaryKey)
 		throws SystemException {
 
-		return _tableMapping.getRightPrimaryKeys(rightPrimaryKey);
+		return _tableMapper.getRightPrimaryKeys(rightPrimaryKey);
 	}
 
 	@Override
-	public TableMapping<R, L> getReverseTableMapping() {
-		return _tableMapping;
+	public TableMapper<R, L> getReverseTableMapper() {
+		return _tableMapper;
 	}
 
 	@Override
@@ -94,21 +93,21 @@ public class ReverseTableMapping<L extends BaseModel<L>, R extends BaseModel<R>>
 			long leftPrimaryKey, int start, int end, OrderByComparator obc)
 		throws SystemException {
 
-		return _tableMapping.getLeftBaseModels(leftPrimaryKey, start, end, obc);
+		return _tableMapper.getLeftBaseModels(leftPrimaryKey, start, end, obc);
 	}
 
 	@Override
 	public long[] getRightPrimaryKeys(long leftPrimaryKey)
 		throws SystemException {
 
-		return _tableMapping.getLeftPrimaryKeys(leftPrimaryKey);
+		return _tableMapper.getLeftPrimaryKeys(leftPrimaryKey);
 	}
 
 	@Override
 	public boolean matches(String leftColumnName, String rightColumnName) {
-		return _tableMapping.matches(rightColumnName, leftColumnName);
+		return _tableMapper.matches(rightColumnName, leftColumnName);
 	}
 
-	private TableMapping<R, L> _tableMapping;
+	private TableMapper<R, L> _tableMapper;
 
 }

@@ -1,0 +1,109 @@
+/**
+ * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.portal.tools.sourceformatter.dependencies;
+
+/**
+ * @author Hugo Huijser
+ */
+public class SortJavaTerms1 {
+
+	public static final String VAR4;
+
+	public static String var9;
+
+	public static void method4() {
+	}
+
+	public SortJavaTerms1() {
+	}
+
+	public void method3() {
+	}
+
+	public String var8;
+
+	public static class Class4 {
+
+		public Class4() {
+		}
+
+	}
+
+	public class Class3 {
+
+		public Class3() {
+		}
+
+	}
+
+	protected static void method1() {
+	}
+
+	protected SortJavaTerms1() {
+	}
+
+	protected void method2() {
+	}
+
+	protected static final String VAR3;
+
+	protected static String var1;
+
+	protected String var7;
+
+	protected static class Class6 {
+
+		public Class6() {
+		}
+
+	}
+
+	protected class Class1 {
+
+		public Class1() {
+		}
+
+	}
+
+	private static void method6() {
+	}
+
+	private SortJavaTerms1() {
+	}
+
+	private void _method5() {
+	}
+
+	private static final String _VAR6;
+
+	private static String _var2;
+
+	private String _var5;
+
+	private static class Class2 {
+
+		public Class2() {
+		}
+
+	}
+
+	private class Class5 {
+
+		public Class5() {
+		}
+
+	}
+
+}

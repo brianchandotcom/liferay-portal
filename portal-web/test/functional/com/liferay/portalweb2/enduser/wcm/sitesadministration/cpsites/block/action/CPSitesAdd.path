@@ -18,6 +18,16 @@
 	<td></td>
 	<td></td>
 </tr>
+<tr>
+	<td>MEMBERSHIP_TYPE</td>
+	<td>//select[@name='_134_type']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--DETAILS-->
 <tr>
 	<td>DETAILS_NAME</td>

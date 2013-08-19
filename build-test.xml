@@ -551,9 +551,15 @@
 		</antcall>
 
 		<antcall target="build-test-ant-script">
-			<param name="test.ant.script.command" value="end-user-personalization-acceptance" />
+			<param name="test.ant.script.command" value="end-user-personalizationandcusomization-acceptance" />
 			<param name="test.ant.script.database.minimal" value="true" />
-			<param name="test.ant.script.suite" value="EndUserPersonalizationAcceptanceTestSuite" />
+			<param name="test.ant.script.suite" value="EndUserPersonalizationAndCustomizationAcceptance" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="end-user-personalizationandcusomization-p5" />
+			<param name="test.ant.script.database.minimal" value="true" />
+			<param name="test.ant.script.suite" value="EndUserPersonalizationAndCustomizationP5" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">

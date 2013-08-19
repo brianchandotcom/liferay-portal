@@ -911,16 +911,19 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			}
 			catch (NoSuchFileEntryException nsfee) {
 				try {
-					Map<Long, Long> map =
-						(Map<Long, Long>)portletDataContext.
-							getNewPrimaryKeysMap(DLFileEntry.class);
-
-					FileEntry origFileEntry =
+					FileEntry originalFileEntry =
 						(FileEntry)portletDataContext.getZipEntryAsObject(
 							referenceDataElement, path);
 
+					Map<Long, Long> fileEntryIds =
+						(Map<Long, Long>)portletDataContext.
+							getNewPrimaryKeysMap(DLFileEntry.class);
+
+					long originalFileEntryId = fileEntryIds.get(
+						originalFileEntry.getFileEntryId());
+
 					fileEntry = DLAppLocalServiceUtil.getFileEntry(
-						map.get(origFileEntry.getFileEntryId()));
+						originalFileEntryId);
 				}
 				catch (NoSuchFileEntryException nsfee2) {
 					if (_log.isWarnEnabled()) {

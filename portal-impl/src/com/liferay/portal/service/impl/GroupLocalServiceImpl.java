@@ -3478,6 +3478,26 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	protected void addDefaultGuestPublicLayoutByProperties(Group group)
 		throws PortalException, SystemException {
 
+		List<Portlet> portlets = portletLocalService.getPortlets(
+			group.getCompanyId());
+
+		Map<String, String[]> portletIdsMap = new HashMap<String, String[]>();
+
+		for (int i = 0; i < 10; i++) {
+			String portletIds = PropsUtil.get(
+				PropsKeys.DEFAULT_GUEST_PUBLIC_LAYOUT_COLUMN + i);
+
+			if (Validator.isNull(portletIds)) {
+				continue;
+			}
+
+			if (portlets.isEmpty()) {
+				return;
+			}
+
+			portletIdsMap.put("column-" + i, StringUtil.split(portletIds));
+		}
+
 		long defaultUserId = userLocalService.getDefaultUserId(
 			group.getCompanyId());
 		String friendlyURL = getFriendlyURL(
@@ -3498,13 +3518,9 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		layoutTypePortlet.setLayoutTemplateId(
 			0, PropsValues.DEFAULT_GUEST_PUBLIC_LAYOUT_TEMPLATE_ID, false);
 
-		for (int i = 0; i < 10; i++) {
-			String columnId = "column-" + i;
-			String portletIds = PropsUtil.get(
-				PropsKeys.DEFAULT_GUEST_PUBLIC_LAYOUT_COLUMN + i);
-
+		for (Map.Entry<String, String[]> entry : portletIdsMap.entrySet()) {
 			layoutTypePortlet.addPortletIds(
-				0, StringUtil.split(portletIds), columnId, false);
+				0, entry.getValue(), entry.getKey(), false);
 		}
 
 		layoutLocalService.updateLayout(

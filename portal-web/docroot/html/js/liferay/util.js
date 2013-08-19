@@ -1321,19 +1321,19 @@
 	Liferay.provide(
 		Util,
 		'openInDialog',
-		function(event, target) {
+		function(event) {
 			event.preventDefault();
 
-			target = A.one(target);
+			var currentTarget = event.currentTarget;
 
-			var config = target.getData();
+			var config = currentTarget.getData();
 
 			if (!config.uri) {
-				config.uri = target.getData('href') || target.attr('href');
+				config.uri = currentTarget.getData('href') || currentTarget.attr('href');
 			}
 
 			if (!config.title) {
-				config.title = target.attr('title');
+				config.title = currentTarget.attr('title');
 			}
 
 			Liferay.Util.openWindow(config);

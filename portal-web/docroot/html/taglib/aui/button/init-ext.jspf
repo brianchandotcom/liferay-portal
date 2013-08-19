@@ -47,7 +47,11 @@ if (Validator.isNotNull(escapedHref)) {
 		data.put("href", href);
 		data.put("title", LanguageUtil.get(pageContext, value));
 
-		onClick = "Liferay.Util.openInDialog(event, this);";
+		onClick = StringPool.BLANK;
+
+		if (Validator.isNull(name)) {
+			name = StringUtil.randomId();
+		}
 	}
 	else {
 		onClick = "location.href = " + escapedHref + ";";

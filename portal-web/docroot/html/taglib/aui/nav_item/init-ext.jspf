@@ -24,6 +24,10 @@ else if (portletResponse != null) {
 	id = portletResponse.getNamespace() + id;
 }
 
+if (useDialog && Validator.isNull(anchorId)) {
+	anchorId = StringUtil.randomId();
+}
+
 if ((portletResponse != null) && Validator.isNotNull(anchorId)) {
 	anchorId = portletResponse.getNamespace() + anchorId;
 }

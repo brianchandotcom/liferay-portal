@@ -27,3 +27,9 @@
 		<i class="<%= icon %>"></i>
 	</c:if>
 </button>
+
+<c:if test="<%= useDialog %>">
+	<aui:script use="aui-base">
+		Liferay.delegateClick('<%= namespace + name %>', A.bind('openInDialog', Liferay.Util));
+	</aui:script>
+</c:if>

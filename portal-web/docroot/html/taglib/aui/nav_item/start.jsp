@@ -21,12 +21,18 @@
 		<c:if test="<%= Validator.isNotNull(href) %>">
 			<c:choose>
 				<c:when test="<%= Validator.isNull(ariaLabel) %>">
-					<a aria-labelledby="<%= id %>" class="<%= anchorCssClass %>" <%= AUIUtil.buildData(anchorData) %> href="<%= href %>" id="<%= anchorId %>" <%= useDialog ? "onClick=\"Liferay.Util.openInDialog(event, this);\"" : StringPool.BLANK %> role="<%= Validator.isNull(ariaRole) ? "menuitem" : ariaRole %>" title="<liferay-ui:message key="<%= title %>" />">
+					<a aria-labelledby="<%= id %>" class="<%= anchorCssClass %>" <%= AUIUtil.buildData(anchorData) %> href="<%= href %>" id="<%= anchorId %>" role="<%= Validator.isNull(ariaRole) ? "menuitem" : ariaRole %>" title="<liferay-ui:message key="<%= title %>" />">
 				</c:when>
 				<c:otherwise>
-					<a aria-label="<%= ariaLabel %>" class="<%= anchorCssClass %>" <%= AUIUtil.buildData(anchorData) %> href="<%= href %>" id="<%= anchorId %>" <%= useDialog ? "onClick=\"Liferay.Util.openInDialog(event, this);\"" : StringPool.BLANK %> role="<%= Validator.isNull(ariaRole) ? "menuitem" : ariaRole %>" title="<liferay-ui:message key="<%= title %>" />">
+					<a aria-label="<%= ariaLabel %>" class="<%= anchorCssClass %>" <%= AUIUtil.buildData(anchorData) %> href="<%= href %>" id="<%= anchorId %>" role="<%= Validator.isNull(ariaRole) ? "menuitem" : ariaRole %>" title="<liferay-ui:message key="<%= title %>" />">
 				</c:otherwise>
 			</c:choose>
+
+			<c:if test="<%= useDialog %>">
+				<aui:script use="aui-base">
+					Liferay.delegateClick('<%= anchorId %>', A.bind('openInDialog', Liferay.Util));
+				</aui:script>
+			</c:if>
 		</c:if>
 				<c:if test="<%= Validator.isNotNull(iconClass) %>">
 					<i class="<%= iconClass %>"></i>

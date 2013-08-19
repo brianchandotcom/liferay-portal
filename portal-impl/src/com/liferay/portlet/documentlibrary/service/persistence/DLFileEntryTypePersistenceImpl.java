@@ -42,8 +42,8 @@ import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.service.persistence.impl.TableMapping;
-import com.liferay.portal.service.persistence.impl.TableMappingFactory;
+import com.liferay.portal.service.persistence.impl.TableMapper;
+import com.liferay.portal.service.persistence.impl.TableMapperFactory;
 
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryTypeException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
@@ -3325,9 +3325,9 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 		throws SystemException {
 		dlFileEntryType = toUnwrappedModel(dlFileEntryType);
 
-		dlFileEntryTypeToDLFolderTableMapping.deleteLeftPrimaryKeyTableMappings(dlFileEntryType.getPrimaryKey());
+		dlFileEntryTypeToDLFolderTableMapper.deleteLeftPrimaryKeyTableMappings(dlFileEntryType.getPrimaryKey());
 
-		dlFileEntryTypeToDDMStructureTableMapping.deleteLeftPrimaryKeyTableMappings(dlFileEntryType.getPrimaryKey());
+		dlFileEntryTypeToDDMStructureTableMapper.deleteLeftPrimaryKeyTableMappings(dlFileEntryType.getPrimaryKey());
 
 		Session session = null;
 
@@ -3816,7 +3816,7 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 	public List<com.liferay.portlet.documentlibrary.model.DLFolder> getDLFolders(
 		long pk, int start, int end, OrderByComparator orderByComparator)
 		throws SystemException {
-		return dlFileEntryTypeToDLFolderTableMapping.getRightBaseModels(pk,
+		return dlFileEntryTypeToDLFolderTableMapper.getRightBaseModels(pk,
 			start, end, orderByComparator);
 	}
 
@@ -3829,7 +3829,7 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 	 */
 	@Override
 	public int getDLFoldersSize(long pk) throws SystemException {
-		long[] pks = dlFileEntryTypeToDLFolderTableMapping.getRightPrimaryKeys(pk);
+		long[] pks = dlFileEntryTypeToDLFolderTableMapper.getRightPrimaryKeys(pk);
 
 		return pks.length;
 	}
@@ -3845,7 +3845,7 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 	@Override
 	public boolean containsDLFolder(long pk, long dlFolderPK)
 		throws SystemException {
-		return dlFileEntryTypeToDLFolderTableMapping.containsTableMapping(pk,
+		return dlFileEntryTypeToDLFolderTableMapper.containsTableMapping(pk,
 			dlFolderPK);
 	}
 
@@ -3875,7 +3875,7 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 	 */
 	@Override
 	public void addDLFolder(long pk, long dlFolderPK) throws SystemException {
-		dlFileEntryTypeToDLFolderTableMapping.addTableMapping(pk, dlFolderPK);
+		dlFileEntryTypeToDLFolderTableMapper.addTableMapping(pk, dlFolderPK);
 	}
 
 	/**
@@ -3889,7 +3889,7 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 	public void addDLFolder(long pk,
 		com.liferay.portlet.documentlibrary.model.DLFolder dlFolder)
 		throws SystemException {
-		dlFileEntryTypeToDLFolderTableMapping.addTableMapping(pk,
+		dlFileEntryTypeToDLFolderTableMapper.addTableMapping(pk,
 			dlFolder.getPrimaryKey());
 	}
 
@@ -3904,7 +3904,7 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 	public void addDLFolders(long pk, long[] dlFolderPKs)
 		throws SystemException {
 		for (long dlFolderPK : dlFolderPKs) {
-			dlFileEntryTypeToDLFolderTableMapping.addTableMapping(pk, dlFolderPK);
+			dlFileEntryTypeToDLFolderTableMapper.addTableMapping(pk, dlFolderPK);
 		}
 	}
 
@@ -3920,7 +3920,7 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 		List<com.liferay.portlet.documentlibrary.model.DLFolder> dlFolders)
 		throws SystemException {
 		for (com.liferay.portlet.documentlibrary.model.DLFolder dlFolder : dlFolders) {
-			dlFileEntryTypeToDLFolderTableMapping.addTableMapping(pk,
+			dlFileEntryTypeToDLFolderTableMapper.addTableMapping(pk,
 				dlFolder.getPrimaryKey());
 		}
 	}
@@ -3933,7 +3933,7 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 	 */
 	@Override
 	public void clearDLFolders(long pk) throws SystemException {
-		dlFileEntryTypeToDLFolderTableMapping.deleteLeftPrimaryKeyTableMappings(pk);
+		dlFileEntryTypeToDLFolderTableMapper.deleteLeftPrimaryKeyTableMappings(pk);
 	}
 
 	/**
@@ -3946,7 +3946,7 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 	@Override
 	public void removeDLFolder(long pk, long dlFolderPK)
 		throws SystemException {
-		dlFileEntryTypeToDLFolderTableMapping.deleteTableMapping(pk, dlFolderPK);
+		dlFileEntryTypeToDLFolderTableMapper.deleteTableMapping(pk, dlFolderPK);
 	}
 
 	/**
@@ -3960,7 +3960,7 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 	public void removeDLFolder(long pk,
 		com.liferay.portlet.documentlibrary.model.DLFolder dlFolder)
 		throws SystemException {
-		dlFileEntryTypeToDLFolderTableMapping.deleteTableMapping(pk,
+		dlFileEntryTypeToDLFolderTableMapper.deleteTableMapping(pk,
 			dlFolder.getPrimaryKey());
 	}
 
@@ -3975,7 +3975,7 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 	public void removeDLFolders(long pk, long[] dlFolderPKs)
 		throws SystemException {
 		for (long dlFolderPK : dlFolderPKs) {
-			dlFileEntryTypeToDLFolderTableMapping.deleteTableMapping(pk,
+			dlFileEntryTypeToDLFolderTableMapper.deleteTableMapping(pk,
 				dlFolderPK);
 		}
 	}
@@ -3992,7 +3992,7 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 		List<com.liferay.portlet.documentlibrary.model.DLFolder> dlFolders)
 		throws SystemException {
 		for (com.liferay.portlet.documentlibrary.model.DLFolder dlFolder : dlFolders) {
-			dlFileEntryTypeToDLFolderTableMapping.deleteTableMapping(pk,
+			dlFileEntryTypeToDLFolderTableMapper.deleteTableMapping(pk,
 				dlFolder.getPrimaryKey());
 		}
 	}
@@ -4007,10 +4007,10 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 	@Override
 	public void setDLFolders(long pk, long[] dlFolderPKs)
 		throws SystemException {
-		dlFileEntryTypeToDLFolderTableMapping.deleteLeftPrimaryKeyTableMappings(pk);
+		dlFileEntryTypeToDLFolderTableMapper.deleteLeftPrimaryKeyTableMappings(pk);
 
 		for (Long dlFolderPK : dlFolderPKs) {
-			dlFileEntryTypeToDLFolderTableMapping.addTableMapping(pk, dlFolderPK);
+			dlFileEntryTypeToDLFolderTableMapper.addTableMapping(pk, dlFolderPK);
 		}
 	}
 
@@ -4094,7 +4094,7 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 	public List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getDDMStructures(
 		long pk, int start, int end, OrderByComparator orderByComparator)
 		throws SystemException {
-		return dlFileEntryTypeToDDMStructureTableMapping.getRightBaseModels(pk,
+		return dlFileEntryTypeToDDMStructureTableMapper.getRightBaseModels(pk,
 			start, end, orderByComparator);
 	}
 
@@ -4107,7 +4107,7 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 	 */
 	@Override
 	public int getDDMStructuresSize(long pk) throws SystemException {
-		long[] pks = dlFileEntryTypeToDDMStructureTableMapping.getRightPrimaryKeys(pk);
+		long[] pks = dlFileEntryTypeToDDMStructureTableMapper.getRightPrimaryKeys(pk);
 
 		return pks.length;
 	}
@@ -4123,7 +4123,7 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 	@Override
 	public boolean containsDDMStructure(long pk, long ddmStructurePK)
 		throws SystemException {
-		return dlFileEntryTypeToDDMStructureTableMapping.containsTableMapping(pk,
+		return dlFileEntryTypeToDDMStructureTableMapper.containsTableMapping(pk,
 			ddmStructurePK);
 	}
 
@@ -4154,7 +4154,7 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 	@Override
 	public void addDDMStructure(long pk, long ddmStructurePK)
 		throws SystemException {
-		dlFileEntryTypeToDDMStructureTableMapping.addTableMapping(pk,
+		dlFileEntryTypeToDDMStructureTableMapper.addTableMapping(pk,
 			ddmStructurePK);
 	}
 
@@ -4169,7 +4169,7 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 	public void addDDMStructure(long pk,
 		com.liferay.portlet.dynamicdatamapping.model.DDMStructure ddmStructure)
 		throws SystemException {
-		dlFileEntryTypeToDDMStructureTableMapping.addTableMapping(pk,
+		dlFileEntryTypeToDDMStructureTableMapper.addTableMapping(pk,
 			ddmStructure.getPrimaryKey());
 	}
 
@@ -4184,7 +4184,7 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 	public void addDDMStructures(long pk, long[] ddmStructurePKs)
 		throws SystemException {
 		for (long ddmStructurePK : ddmStructurePKs) {
-			dlFileEntryTypeToDDMStructureTableMapping.addTableMapping(pk,
+			dlFileEntryTypeToDDMStructureTableMapper.addTableMapping(pk,
 				ddmStructurePK);
 		}
 	}
@@ -4201,7 +4201,7 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 		List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> ddmStructures)
 		throws SystemException {
 		for (com.liferay.portlet.dynamicdatamapping.model.DDMStructure ddmStructure : ddmStructures) {
-			dlFileEntryTypeToDDMStructureTableMapping.addTableMapping(pk,
+			dlFileEntryTypeToDDMStructureTableMapper.addTableMapping(pk,
 				ddmStructure.getPrimaryKey());
 		}
 	}
@@ -4214,7 +4214,7 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 	 */
 	@Override
 	public void clearDDMStructures(long pk) throws SystemException {
-		dlFileEntryTypeToDDMStructureTableMapping.deleteLeftPrimaryKeyTableMappings(pk);
+		dlFileEntryTypeToDDMStructureTableMapper.deleteLeftPrimaryKeyTableMappings(pk);
 	}
 
 	/**
@@ -4227,7 +4227,7 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 	@Override
 	public void removeDDMStructure(long pk, long ddmStructurePK)
 		throws SystemException {
-		dlFileEntryTypeToDDMStructureTableMapping.deleteTableMapping(pk,
+		dlFileEntryTypeToDDMStructureTableMapper.deleteTableMapping(pk,
 			ddmStructurePK);
 	}
 
@@ -4242,7 +4242,7 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 	public void removeDDMStructure(long pk,
 		com.liferay.portlet.dynamicdatamapping.model.DDMStructure ddmStructure)
 		throws SystemException {
-		dlFileEntryTypeToDDMStructureTableMapping.deleteTableMapping(pk,
+		dlFileEntryTypeToDDMStructureTableMapper.deleteTableMapping(pk,
 			ddmStructure.getPrimaryKey());
 	}
 
@@ -4257,7 +4257,7 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 	public void removeDDMStructures(long pk, long[] ddmStructurePKs)
 		throws SystemException {
 		for (long ddmStructurePK : ddmStructurePKs) {
-			dlFileEntryTypeToDDMStructureTableMapping.deleteTableMapping(pk,
+			dlFileEntryTypeToDDMStructureTableMapper.deleteTableMapping(pk,
 				ddmStructurePK);
 		}
 	}
@@ -4274,7 +4274,7 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 		List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> ddmStructures)
 		throws SystemException {
 		for (com.liferay.portlet.dynamicdatamapping.model.DDMStructure ddmStructure : ddmStructures) {
-			dlFileEntryTypeToDDMStructureTableMapping.deleteTableMapping(pk,
+			dlFileEntryTypeToDDMStructureTableMapper.deleteTableMapping(pk,
 				ddmStructure.getPrimaryKey());
 		}
 	}
@@ -4289,10 +4289,10 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 	@Override
 	public void setDDMStructures(long pk, long[] ddmStructurePKs)
 		throws SystemException {
-		dlFileEntryTypeToDDMStructureTableMapping.deleteLeftPrimaryKeyTableMappings(pk);
+		dlFileEntryTypeToDDMStructureTableMapper.deleteLeftPrimaryKeyTableMappings(pk);
 
 		for (Long ddmStructurePK : ddmStructurePKs) {
-			dlFileEntryTypeToDDMStructureTableMapping.addTableMapping(pk,
+			dlFileEntryTypeToDDMStructureTableMapper.addTableMapping(pk,
 				ddmStructurePK);
 		}
 	}
@@ -4357,10 +4357,10 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 			}
 		}
 
-		dlFileEntryTypeToDLFolderTableMapping = TableMappingFactory.getTableMapping("DLFileEntryTypes_DLFolders",
+		dlFileEntryTypeToDLFolderTableMapper = TableMapperFactory.getTableMapper("DLFileEntryTypes_DLFolders",
 				"fileEntryTypeId", "folderId", this, dlFolderPersistence);
 
-		dlFileEntryTypeToDDMStructureTableMapping = TableMappingFactory.getTableMapping("DLFileEntryTypes_DDMStructures",
+		dlFileEntryTypeToDDMStructureTableMapper = TableMapperFactory.getTableMapper("DLFileEntryTypes_DDMStructures",
 				"fileEntryTypeId", "structureId", this, ddmStructurePersistence);
 	}
 
@@ -4373,10 +4373,10 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 
 	@BeanReference(type = DLFolderPersistence.class)
 	protected DLFolderPersistence dlFolderPersistence;
-	protected TableMapping<DLFileEntryType, com.liferay.portlet.documentlibrary.model.DLFolder> dlFileEntryTypeToDLFolderTableMapping;
+	protected TableMapper<DLFileEntryType, com.liferay.portlet.documentlibrary.model.DLFolder> dlFileEntryTypeToDLFolderTableMapper;
 	@BeanReference(type = DDMStructurePersistence.class)
 	protected DDMStructurePersistence ddmStructurePersistence;
-	protected TableMapping<DLFileEntryType, com.liferay.portlet.dynamicdatamapping.model.DDMStructure> dlFileEntryTypeToDDMStructureTableMapping;
+	protected TableMapper<DLFileEntryType, com.liferay.portlet.dynamicdatamapping.model.DDMStructure> dlFileEntryTypeToDDMStructureTableMapper;
 	private static final String _SQL_SELECT_DLFILEENTRYTYPE = "SELECT dlFileEntryType FROM DLFileEntryType dlFileEntryType";
 	private static final String _SQL_SELECT_DLFILEENTRYTYPE_WHERE = "SELECT dlFileEntryType FROM DLFileEntryType dlFileEntryType WHERE ";
 	private static final String _SQL_COUNT_DLFILEENTRYTYPE = "SELECT COUNT(dlFileEntryType) FROM DLFileEntryType dlFileEntryType";

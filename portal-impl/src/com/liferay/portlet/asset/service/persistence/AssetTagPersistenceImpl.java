@@ -39,8 +39,8 @@ import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.service.persistence.impl.TableMapping;
-import com.liferay.portal.service.persistence.impl.TableMappingFactory;
+import com.liferay.portal.service.persistence.impl.TableMapper;
+import com.liferay.portal.service.persistence.impl.TableMapperFactory;
 
 import com.liferay.portlet.asset.NoSuchTagException;
 import com.liferay.portlet.asset.model.AssetTag;
@@ -1417,7 +1417,7 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 	protected AssetTag removeImpl(AssetTag assetTag) throws SystemException {
 		assetTag = toUnwrappedModel(assetTag);
 
-		assetTagToAssetEntryTableMapping.deleteLeftPrimaryKeyTableMappings(assetTag.getPrimaryKey());
+		assetTagToAssetEntryTableMapper.deleteLeftPrimaryKeyTableMappings(assetTag.getPrimaryKey());
 
 		Session session = null;
 
@@ -1855,7 +1855,7 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 	public List<com.liferay.portlet.asset.model.AssetEntry> getAssetEntries(
 		long pk, int start, int end, OrderByComparator orderByComparator)
 		throws SystemException {
-		return assetTagToAssetEntryTableMapping.getRightBaseModels(pk, start,
+		return assetTagToAssetEntryTableMapper.getRightBaseModels(pk, start,
 			end, orderByComparator);
 	}
 
@@ -1868,7 +1868,7 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 	 */
 	@Override
 	public int getAssetEntriesSize(long pk) throws SystemException {
-		long[] pks = assetTagToAssetEntryTableMapping.getRightPrimaryKeys(pk);
+		long[] pks = assetTagToAssetEntryTableMapper.getRightPrimaryKeys(pk);
 
 		return pks.length;
 	}
@@ -1884,7 +1884,7 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 	@Override
 	public boolean containsAssetEntry(long pk, long assetEntryPK)
 		throws SystemException {
-		return assetTagToAssetEntryTableMapping.containsTableMapping(pk,
+		return assetTagToAssetEntryTableMapper.containsTableMapping(pk,
 			assetEntryPK);
 	}
 
@@ -1915,7 +1915,7 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 	@Override
 	public void addAssetEntry(long pk, long assetEntryPK)
 		throws SystemException {
-		assetTagToAssetEntryTableMapping.addTableMapping(pk, assetEntryPK);
+		assetTagToAssetEntryTableMapper.addTableMapping(pk, assetEntryPK);
 	}
 
 	/**
@@ -1929,7 +1929,7 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 	public void addAssetEntry(long pk,
 		com.liferay.portlet.asset.model.AssetEntry assetEntry)
 		throws SystemException {
-		assetTagToAssetEntryTableMapping.addTableMapping(pk,
+		assetTagToAssetEntryTableMapper.addTableMapping(pk,
 			assetEntry.getPrimaryKey());
 	}
 
@@ -1944,7 +1944,7 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 	public void addAssetEntries(long pk, long[] assetEntryPKs)
 		throws SystemException {
 		for (long assetEntryPK : assetEntryPKs) {
-			assetTagToAssetEntryTableMapping.addTableMapping(pk, assetEntryPK);
+			assetTagToAssetEntryTableMapper.addTableMapping(pk, assetEntryPK);
 		}
 	}
 
@@ -1960,7 +1960,7 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 		List<com.liferay.portlet.asset.model.AssetEntry> assetEntries)
 		throws SystemException {
 		for (com.liferay.portlet.asset.model.AssetEntry assetEntry : assetEntries) {
-			assetTagToAssetEntryTableMapping.addTableMapping(pk,
+			assetTagToAssetEntryTableMapper.addTableMapping(pk,
 				assetEntry.getPrimaryKey());
 		}
 	}
@@ -1973,7 +1973,7 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 	 */
 	@Override
 	public void clearAssetEntries(long pk) throws SystemException {
-		assetTagToAssetEntryTableMapping.deleteLeftPrimaryKeyTableMappings(pk);
+		assetTagToAssetEntryTableMapper.deleteLeftPrimaryKeyTableMappings(pk);
 	}
 
 	/**
@@ -1986,7 +1986,7 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 	@Override
 	public void removeAssetEntry(long pk, long assetEntryPK)
 		throws SystemException {
-		assetTagToAssetEntryTableMapping.deleteTableMapping(pk, assetEntryPK);
+		assetTagToAssetEntryTableMapper.deleteTableMapping(pk, assetEntryPK);
 	}
 
 	/**
@@ -2000,7 +2000,7 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 	public void removeAssetEntry(long pk,
 		com.liferay.portlet.asset.model.AssetEntry assetEntry)
 		throws SystemException {
-		assetTagToAssetEntryTableMapping.deleteTableMapping(pk,
+		assetTagToAssetEntryTableMapper.deleteTableMapping(pk,
 			assetEntry.getPrimaryKey());
 	}
 
@@ -2015,7 +2015,7 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 	public void removeAssetEntries(long pk, long[] assetEntryPKs)
 		throws SystemException {
 		for (long assetEntryPK : assetEntryPKs) {
-			assetTagToAssetEntryTableMapping.deleteTableMapping(pk, assetEntryPK);
+			assetTagToAssetEntryTableMapper.deleteTableMapping(pk, assetEntryPK);
 		}
 	}
 
@@ -2031,7 +2031,7 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 		List<com.liferay.portlet.asset.model.AssetEntry> assetEntries)
 		throws SystemException {
 		for (com.liferay.portlet.asset.model.AssetEntry assetEntry : assetEntries) {
-			assetTagToAssetEntryTableMapping.deleteTableMapping(pk,
+			assetTagToAssetEntryTableMapper.deleteTableMapping(pk,
 				assetEntry.getPrimaryKey());
 		}
 	}
@@ -2046,10 +2046,10 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 	@Override
 	public void setAssetEntries(long pk, long[] assetEntryPKs)
 		throws SystemException {
-		assetTagToAssetEntryTableMapping.deleteLeftPrimaryKeyTableMappings(pk);
+		assetTagToAssetEntryTableMapper.deleteLeftPrimaryKeyTableMappings(pk);
 
 		for (Long assetEntryPK : assetEntryPKs) {
-			assetTagToAssetEntryTableMapping.addTableMapping(pk, assetEntryPK);
+			assetTagToAssetEntryTableMapper.addTableMapping(pk, assetEntryPK);
 		}
 	}
 
@@ -2107,7 +2107,7 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 			}
 		}
 
-		assetTagToAssetEntryTableMapping = TableMappingFactory.getTableMapping("AssetEntries_AssetTags",
+		assetTagToAssetEntryTableMapper = TableMapperFactory.getTableMapper("AssetEntries_AssetTags",
 				"tagId", "entryId", this, assetEntryPersistence);
 	}
 
@@ -2120,7 +2120,7 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 
 	@BeanReference(type = AssetEntryPersistence.class)
 	protected AssetEntryPersistence assetEntryPersistence;
-	protected TableMapping<AssetTag, com.liferay.portlet.asset.model.AssetEntry> assetTagToAssetEntryTableMapping;
+	protected TableMapper<AssetTag, com.liferay.portlet.asset.model.AssetEntry> assetTagToAssetEntryTableMapper;
 	private static final String _SQL_SELECT_ASSETTAG = "SELECT assetTag FROM AssetTag assetTag";
 	private static final String _SQL_SELECT_ASSETTAG_WHERE = "SELECT assetTag FROM AssetTag assetTag WHERE ";
 	private static final String _SQL_COUNT_ASSETTAG = "SELECT COUNT(assetTag) FROM AssetTag assetTag";

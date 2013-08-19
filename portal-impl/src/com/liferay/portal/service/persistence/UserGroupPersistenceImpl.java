@@ -45,8 +45,8 @@ import com.liferay.portal.model.impl.UserGroupImpl;
 import com.liferay.portal.model.impl.UserGroupModelImpl;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.service.persistence.impl.TableMapping;
-import com.liferay.portal.service.persistence.impl.TableMappingFactory;
+import com.liferay.portal.service.persistence.impl.TableMapper;
+import com.liferay.portal.service.persistence.impl.TableMapperFactory;
 
 import java.io.Serializable;
 
@@ -4264,11 +4264,11 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 		throws SystemException {
 		userGroup = toUnwrappedModel(userGroup);
 
-		userGroupToGroupTableMapping.deleteLeftPrimaryKeyTableMappings(userGroup.getPrimaryKey());
+		userGroupToGroupTableMapper.deleteLeftPrimaryKeyTableMappings(userGroup.getPrimaryKey());
 
-		userGroupToTeamTableMapping.deleteLeftPrimaryKeyTableMappings(userGroup.getPrimaryKey());
+		userGroupToTeamTableMapper.deleteLeftPrimaryKeyTableMappings(userGroup.getPrimaryKey());
 
-		userGroupToUserTableMapping.deleteLeftPrimaryKeyTableMappings(userGroup.getPrimaryKey());
+		userGroupToUserTableMapper.deleteLeftPrimaryKeyTableMappings(userGroup.getPrimaryKey());
 
 		Session session = null;
 
@@ -4776,7 +4776,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	@Override
 	public List<com.liferay.portal.model.Group> getGroups(long pk, int start,
 		int end, OrderByComparator orderByComparator) throws SystemException {
-		return userGroupToGroupTableMapping.getRightBaseModels(pk, start, end,
+		return userGroupToGroupTableMapper.getRightBaseModels(pk, start, end,
 			orderByComparator);
 	}
 
@@ -4789,7 +4789,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 */
 	@Override
 	public int getGroupsSize(long pk) throws SystemException {
-		long[] pks = userGroupToGroupTableMapping.getRightPrimaryKeys(pk);
+		long[] pks = userGroupToGroupTableMapper.getRightPrimaryKeys(pk);
 
 		return pks.length;
 	}
@@ -4805,7 +4805,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	@Override
 	public boolean containsGroup(long pk, long groupPK)
 		throws SystemException {
-		return userGroupToGroupTableMapping.containsTableMapping(pk, groupPK);
+		return userGroupToGroupTableMapper.containsTableMapping(pk, groupPK);
 	}
 
 	/**
@@ -4834,7 +4834,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 */
 	@Override
 	public void addGroup(long pk, long groupPK) throws SystemException {
-		userGroupToGroupTableMapping.addTableMapping(pk, groupPK);
+		userGroupToGroupTableMapper.addTableMapping(pk, groupPK);
 	}
 
 	/**
@@ -4847,7 +4847,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	@Override
 	public void addGroup(long pk, com.liferay.portal.model.Group group)
 		throws SystemException {
-		userGroupToGroupTableMapping.addTableMapping(pk, group.getPrimaryKey());
+		userGroupToGroupTableMapper.addTableMapping(pk, group.getPrimaryKey());
 	}
 
 	/**
@@ -4860,7 +4860,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	@Override
 	public void addGroups(long pk, long[] groupPKs) throws SystemException {
 		for (long groupPK : groupPKs) {
-			userGroupToGroupTableMapping.addTableMapping(pk, groupPK);
+			userGroupToGroupTableMapper.addTableMapping(pk, groupPK);
 		}
 	}
 
@@ -4875,7 +4875,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	public void addGroups(long pk, List<com.liferay.portal.model.Group> groups)
 		throws SystemException {
 		for (com.liferay.portal.model.Group group : groups) {
-			userGroupToGroupTableMapping.addTableMapping(pk,
+			userGroupToGroupTableMapper.addTableMapping(pk,
 				group.getPrimaryKey());
 		}
 	}
@@ -4888,7 +4888,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 */
 	@Override
 	public void clearGroups(long pk) throws SystemException {
-		userGroupToGroupTableMapping.deleteLeftPrimaryKeyTableMappings(pk);
+		userGroupToGroupTableMapper.deleteLeftPrimaryKeyTableMappings(pk);
 	}
 
 	/**
@@ -4900,7 +4900,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 */
 	@Override
 	public void removeGroup(long pk, long groupPK) throws SystemException {
-		userGroupToGroupTableMapping.deleteTableMapping(pk, groupPK);
+		userGroupToGroupTableMapper.deleteTableMapping(pk, groupPK);
 	}
 
 	/**
@@ -4913,8 +4913,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	@Override
 	public void removeGroup(long pk, com.liferay.portal.model.Group group)
 		throws SystemException {
-		userGroupToGroupTableMapping.deleteTableMapping(pk,
-			group.getPrimaryKey());
+		userGroupToGroupTableMapper.deleteTableMapping(pk, group.getPrimaryKey());
 	}
 
 	/**
@@ -4928,7 +4927,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	public void removeGroups(long pk, long[] groupPKs)
 		throws SystemException {
 		for (long groupPK : groupPKs) {
-			userGroupToGroupTableMapping.deleteTableMapping(pk, groupPK);
+			userGroupToGroupTableMapper.deleteTableMapping(pk, groupPK);
 		}
 	}
 
@@ -4943,7 +4942,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	public void removeGroups(long pk,
 		List<com.liferay.portal.model.Group> groups) throws SystemException {
 		for (com.liferay.portal.model.Group group : groups) {
-			userGroupToGroupTableMapping.deleteTableMapping(pk,
+			userGroupToGroupTableMapper.deleteTableMapping(pk,
 				group.getPrimaryKey());
 		}
 	}
@@ -4957,10 +4956,10 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 */
 	@Override
 	public void setGroups(long pk, long[] groupPKs) throws SystemException {
-		userGroupToGroupTableMapping.deleteLeftPrimaryKeyTableMappings(pk);
+		userGroupToGroupTableMapper.deleteLeftPrimaryKeyTableMappings(pk);
 
 		for (Long groupPK : groupPKs) {
-			userGroupToGroupTableMapping.addTableMapping(pk, groupPK);
+			userGroupToGroupTableMapper.addTableMapping(pk, groupPK);
 		}
 	}
 
@@ -5042,7 +5041,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	@Override
 	public List<com.liferay.portal.model.Team> getTeams(long pk, int start,
 		int end, OrderByComparator orderByComparator) throws SystemException {
-		return userGroupToTeamTableMapping.getRightBaseModels(pk, start, end,
+		return userGroupToTeamTableMapper.getRightBaseModels(pk, start, end,
 			orderByComparator);
 	}
 
@@ -5055,7 +5054,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 */
 	@Override
 	public int getTeamsSize(long pk) throws SystemException {
-		long[] pks = userGroupToTeamTableMapping.getRightPrimaryKeys(pk);
+		long[] pks = userGroupToTeamTableMapper.getRightPrimaryKeys(pk);
 
 		return pks.length;
 	}
@@ -5070,7 +5069,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 */
 	@Override
 	public boolean containsTeam(long pk, long teamPK) throws SystemException {
-		return userGroupToTeamTableMapping.containsTableMapping(pk, teamPK);
+		return userGroupToTeamTableMapper.containsTableMapping(pk, teamPK);
 	}
 
 	/**
@@ -5099,7 +5098,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 */
 	@Override
 	public void addTeam(long pk, long teamPK) throws SystemException {
-		userGroupToTeamTableMapping.addTableMapping(pk, teamPK);
+		userGroupToTeamTableMapper.addTableMapping(pk, teamPK);
 	}
 
 	/**
@@ -5112,7 +5111,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	@Override
 	public void addTeam(long pk, com.liferay.portal.model.Team team)
 		throws SystemException {
-		userGroupToTeamTableMapping.addTableMapping(pk, team.getPrimaryKey());
+		userGroupToTeamTableMapper.addTableMapping(pk, team.getPrimaryKey());
 	}
 
 	/**
@@ -5125,7 +5124,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	@Override
 	public void addTeams(long pk, long[] teamPKs) throws SystemException {
 		for (long teamPK : teamPKs) {
-			userGroupToTeamTableMapping.addTableMapping(pk, teamPK);
+			userGroupToTeamTableMapper.addTableMapping(pk, teamPK);
 		}
 	}
 
@@ -5140,7 +5139,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	public void addTeams(long pk, List<com.liferay.portal.model.Team> teams)
 		throws SystemException {
 		for (com.liferay.portal.model.Team team : teams) {
-			userGroupToTeamTableMapping.addTableMapping(pk, team.getPrimaryKey());
+			userGroupToTeamTableMapper.addTableMapping(pk, team.getPrimaryKey());
 		}
 	}
 
@@ -5152,7 +5151,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 */
 	@Override
 	public void clearTeams(long pk) throws SystemException {
-		userGroupToTeamTableMapping.deleteLeftPrimaryKeyTableMappings(pk);
+		userGroupToTeamTableMapper.deleteLeftPrimaryKeyTableMappings(pk);
 	}
 
 	/**
@@ -5164,7 +5163,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 */
 	@Override
 	public void removeTeam(long pk, long teamPK) throws SystemException {
-		userGroupToTeamTableMapping.deleteTableMapping(pk, teamPK);
+		userGroupToTeamTableMapper.deleteTableMapping(pk, teamPK);
 	}
 
 	/**
@@ -5177,7 +5176,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	@Override
 	public void removeTeam(long pk, com.liferay.portal.model.Team team)
 		throws SystemException {
-		userGroupToTeamTableMapping.deleteTableMapping(pk, team.getPrimaryKey());
+		userGroupToTeamTableMapper.deleteTableMapping(pk, team.getPrimaryKey());
 	}
 
 	/**
@@ -5190,7 +5189,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	@Override
 	public void removeTeams(long pk, long[] teamPKs) throws SystemException {
 		for (long teamPK : teamPKs) {
-			userGroupToTeamTableMapping.deleteTableMapping(pk, teamPK);
+			userGroupToTeamTableMapper.deleteTableMapping(pk, teamPK);
 		}
 	}
 
@@ -5205,7 +5204,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	public void removeTeams(long pk, List<com.liferay.portal.model.Team> teams)
 		throws SystemException {
 		for (com.liferay.portal.model.Team team : teams) {
-			userGroupToTeamTableMapping.deleteTableMapping(pk,
+			userGroupToTeamTableMapper.deleteTableMapping(pk,
 				team.getPrimaryKey());
 		}
 	}
@@ -5219,10 +5218,10 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 */
 	@Override
 	public void setTeams(long pk, long[] teamPKs) throws SystemException {
-		userGroupToTeamTableMapping.deleteLeftPrimaryKeyTableMappings(pk);
+		userGroupToTeamTableMapper.deleteLeftPrimaryKeyTableMappings(pk);
 
 		for (Long teamPK : teamPKs) {
-			userGroupToTeamTableMapping.addTableMapping(pk, teamPK);
+			userGroupToTeamTableMapper.addTableMapping(pk, teamPK);
 		}
 	}
 
@@ -5304,7 +5303,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	@Override
 	public List<com.liferay.portal.model.User> getUsers(long pk, int start,
 		int end, OrderByComparator orderByComparator) throws SystemException {
-		return userGroupToUserTableMapping.getRightBaseModels(pk, start, end,
+		return userGroupToUserTableMapper.getRightBaseModels(pk, start, end,
 			orderByComparator);
 	}
 
@@ -5317,7 +5316,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 */
 	@Override
 	public int getUsersSize(long pk) throws SystemException {
-		long[] pks = userGroupToUserTableMapping.getRightPrimaryKeys(pk);
+		long[] pks = userGroupToUserTableMapper.getRightPrimaryKeys(pk);
 
 		return pks.length;
 	}
@@ -5332,7 +5331,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 */
 	@Override
 	public boolean containsUser(long pk, long userPK) throws SystemException {
-		return userGroupToUserTableMapping.containsTableMapping(pk, userPK);
+		return userGroupToUserTableMapper.containsTableMapping(pk, userPK);
 	}
 
 	/**
@@ -5361,7 +5360,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 */
 	@Override
 	public void addUser(long pk, long userPK) throws SystemException {
-		userGroupToUserTableMapping.addTableMapping(pk, userPK);
+		userGroupToUserTableMapper.addTableMapping(pk, userPK);
 	}
 
 	/**
@@ -5374,7 +5373,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	@Override
 	public void addUser(long pk, com.liferay.portal.model.User user)
 		throws SystemException {
-		userGroupToUserTableMapping.addTableMapping(pk, user.getPrimaryKey());
+		userGroupToUserTableMapper.addTableMapping(pk, user.getPrimaryKey());
 	}
 
 	/**
@@ -5387,7 +5386,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	@Override
 	public void addUsers(long pk, long[] userPKs) throws SystemException {
 		for (long userPK : userPKs) {
-			userGroupToUserTableMapping.addTableMapping(pk, userPK);
+			userGroupToUserTableMapper.addTableMapping(pk, userPK);
 		}
 	}
 
@@ -5402,7 +5401,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	public void addUsers(long pk, List<com.liferay.portal.model.User> users)
 		throws SystemException {
 		for (com.liferay.portal.model.User user : users) {
-			userGroupToUserTableMapping.addTableMapping(pk, user.getPrimaryKey());
+			userGroupToUserTableMapper.addTableMapping(pk, user.getPrimaryKey());
 		}
 	}
 
@@ -5414,7 +5413,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 */
 	@Override
 	public void clearUsers(long pk) throws SystemException {
-		userGroupToUserTableMapping.deleteLeftPrimaryKeyTableMappings(pk);
+		userGroupToUserTableMapper.deleteLeftPrimaryKeyTableMappings(pk);
 	}
 
 	/**
@@ -5426,7 +5425,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 */
 	@Override
 	public void removeUser(long pk, long userPK) throws SystemException {
-		userGroupToUserTableMapping.deleteTableMapping(pk, userPK);
+		userGroupToUserTableMapper.deleteTableMapping(pk, userPK);
 	}
 
 	/**
@@ -5439,7 +5438,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	@Override
 	public void removeUser(long pk, com.liferay.portal.model.User user)
 		throws SystemException {
-		userGroupToUserTableMapping.deleteTableMapping(pk, user.getPrimaryKey());
+		userGroupToUserTableMapper.deleteTableMapping(pk, user.getPrimaryKey());
 	}
 
 	/**
@@ -5452,7 +5451,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	@Override
 	public void removeUsers(long pk, long[] userPKs) throws SystemException {
 		for (long userPK : userPKs) {
-			userGroupToUserTableMapping.deleteTableMapping(pk, userPK);
+			userGroupToUserTableMapper.deleteTableMapping(pk, userPK);
 		}
 	}
 
@@ -5467,7 +5466,7 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	public void removeUsers(long pk, List<com.liferay.portal.model.User> users)
 		throws SystemException {
 		for (com.liferay.portal.model.User user : users) {
-			userGroupToUserTableMapping.deleteTableMapping(pk,
+			userGroupToUserTableMapper.deleteTableMapping(pk,
 				user.getPrimaryKey());
 		}
 	}
@@ -5481,10 +5480,10 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 	 */
 	@Override
 	public void setUsers(long pk, long[] userPKs) throws SystemException {
-		userGroupToUserTableMapping.deleteLeftPrimaryKeyTableMappings(pk);
+		userGroupToUserTableMapper.deleteLeftPrimaryKeyTableMappings(pk);
 
 		for (Long userPK : userPKs) {
-			userGroupToUserTableMapping.addTableMapping(pk, userPK);
+			userGroupToUserTableMapper.addTableMapping(pk, userPK);
 		}
 	}
 
@@ -5546,13 +5545,13 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 			}
 		}
 
-		userGroupToGroupTableMapping = TableMappingFactory.getTableMapping("Groups_UserGroups",
+		userGroupToGroupTableMapper = TableMapperFactory.getTableMapper("Groups_UserGroups",
 				"userGroupId", "groupId", this, groupPersistence);
 
-		userGroupToTeamTableMapping = TableMappingFactory.getTableMapping("UserGroups_Teams",
+		userGroupToTeamTableMapper = TableMapperFactory.getTableMapper("UserGroups_Teams",
 				"userGroupId", "teamId", this, teamPersistence);
 
-		userGroupToUserTableMapping = TableMappingFactory.getTableMapping("Users_UserGroups",
+		userGroupToUserTableMapper = TableMapperFactory.getTableMapper("Users_UserGroups",
 				"userGroupId", "userId", this, userPersistence);
 	}
 
@@ -5565,13 +5564,13 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 
 	@BeanReference(type = GroupPersistence.class)
 	protected GroupPersistence groupPersistence;
-	protected TableMapping<UserGroup, com.liferay.portal.model.Group> userGroupToGroupTableMapping;
+	protected TableMapper<UserGroup, com.liferay.portal.model.Group> userGroupToGroupTableMapper;
 	@BeanReference(type = TeamPersistence.class)
 	protected TeamPersistence teamPersistence;
-	protected TableMapping<UserGroup, com.liferay.portal.model.Team> userGroupToTeamTableMapping;
+	protected TableMapper<UserGroup, com.liferay.portal.model.Team> userGroupToTeamTableMapper;
 	@BeanReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
-	protected TableMapping<UserGroup, com.liferay.portal.model.User> userGroupToUserTableMapping;
+	protected TableMapper<UserGroup, com.liferay.portal.model.User> userGroupToUserTableMapper;
 	private static final String _SQL_SELECT_USERGROUP = "SELECT userGroup FROM UserGroup userGroup";
 	private static final String _SQL_SELECT_USERGROUP_WHERE = "SELECT userGroup FROM UserGroup userGroup WHERE ";
 	private static final String _SQL_COUNT_USERGROUP = "SELECT COUNT(userGroup) FROM UserGroup userGroup";

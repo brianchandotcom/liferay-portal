@@ -87,7 +87,6 @@ import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
-import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.GroupLocalServiceBaseImpl;
 import com.liferay.portal.theme.ThemeLoader;
@@ -3479,24 +3478,14 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	protected void addDefaultGuestPublicLayoutByProperties(Group group)
 		throws PortalException, SystemException {
 
-		List<Portlet> portlets = PortletLocalServiceUtil.getPortlets(
+		List<Portlet> portlets = portletLocalService.getPortlets(
 			group.getCompanyId());
 
-		Map<String, String[]> portletIdsMap = new HashMap<String, String[]>();
+		if (portlets.isEmpty()) {
 
-		for (int i = 0; i < 10; i++) {
-			String portletIds = PropsUtil.get(
-				PropsKeys.DEFAULT_GUEST_PUBLIC_LAYOUT_COLUMN + i);
+			// LPS-38457
 
-			if (Validator.isNull(portletIds)) {
-				continue;
-			}
-
-			if (portlets.isEmpty()) {
-				return;
-			}
-
-			portletIdsMap.put("column-" + i, StringUtil.split(portletIds));
+			return;
 		}
 
 		long defaultUserId = userLocalService.getDefaultUserId(
@@ -3519,9 +3508,13 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		layoutTypePortlet.setLayoutTemplateId(
 			0, PropsValues.DEFAULT_GUEST_PUBLIC_LAYOUT_TEMPLATE_ID, false);
 
-		for (Map.Entry<String, String[]> entry : portletIdsMap.entrySet()) {
+		for (int i = 0; i < 10; i++) {
+			String columnId = "column-" + i;
+			String portletIds = PropsUtil.get(
+				PropsKeys.DEFAULT_GUEST_PUBLIC_LAYOUT_COLUMN + i);
+
 			layoutTypePortlet.addPortletIds(
-				0, entry.getValue(), entry.getKey(), false);
+				0, StringUtil.split(portletIds), columnId, false);
 		}
 
 		layoutLocalService.updateLayout(

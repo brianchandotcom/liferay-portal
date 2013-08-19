@@ -35,7 +35,7 @@
 		</execute>
 
 		<execute action="CPSpamModerationWikis#assertClick" locator-key1="SPAM_MODERATION_WIKIS" value1="Wikis" />
-		<execute action="CPSpamModerationWikis#check" locator-key1="CHECKBOX" value1="Checkbox" />
+		<execute action="CPSpamModerationWikis#check" locator-key1="WIKIS_CHECKBOX" value1="true" />
 		<execute action="CPSpamModerationWikis#assertClick" locator-key1="WIKIS_NOT_SPAM_BUTTON" value1="Not Spam" />
 		<execute action="CPSpamModerationWikis#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to mark the selected pages not spam?" />
 		<execute action="CPSpamModerationWikis#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />

@@ -50,6 +50,13 @@
 		<execute action="Home#click" locator1="//ul[@class='unstyled']/li/span/a[contains(.,'${portletName}')]" />
 	</command>
 
+	<command name="gotoMyDashboard">
+		<execute macro="Page#openURL" />
+
+		<execute action="Dockbar#click" locator-key1="USER_NAME" />
+		<execute action="Dockbar#assertClick" locator-key1="USER_MY_DASHBOARD" value1="My Dashboard" />
+	</command>
+
 	<command name="gotoMyAccount">
 		<execute macro="Page#openURL" />
 

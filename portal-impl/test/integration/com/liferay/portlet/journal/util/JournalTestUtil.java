@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.journal.util;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
@@ -477,6 +479,23 @@ public class JournalTestUtil {
 		return document.asXML();
 	}
 
+	public static void expireArticle(long groupId, JournalArticle article)
+		throws PortalException, SystemException {
+
+		JournalArticleLocalServiceUtil.expireArticle(
+			article.getUserId(), article.getGroupId(), article.getArticleId(),
+			null, ServiceTestUtil.getServiceContext(groupId));
+	}
+
+	public static JournalArticle expireArticle(
+			long groupId, JournalArticle article, double version)
+		throws PortalException, SystemException {
+
+		return JournalArticleLocalServiceUtil.expireArticle(
+			article.getUserId(), article.getGroupId(), article.getArticleId(),
+			version, null, ServiceTestUtil.getServiceContext(groupId));
+	}
+
 	public static String getSampleTemplateXSL() {
 		return "$name.getData()";
 	}
@@ -528,6 +547,15 @@ public class JournalTestUtil {
 		}
 
 		return map;
+	}
+
+	public static JournalArticle updateArticle(
+			JournalArticle article, String title)
+		throws Exception {
+
+		return updateArticle(
+			article, title, article.getContent(),
+			ServiceTestUtil.getServiceContext());
 	}
 
 	public static JournalArticle updateArticle(

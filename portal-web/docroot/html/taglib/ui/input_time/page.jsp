@@ -75,40 +75,42 @@ Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(simpleDateFormatPa
 	Liferay.component(
 		'<%= namespace + name %>TimePicker',
 		function() {
-			return new A.TimePicker<%= BrowserSnifferUtil.isMobile(request) ? "Native" : StringPool.BLANK %>({
-				container: '#<%= randomNamespace %>displayTime',
-				mask: '<%= DateUtil.isFormatAmPm(locale) ? "%I:%M %p" : "%H:%M" %>',
-				on: {
-					selectionChange: function(event) {
-						var date = event.newSelection[0];
+			return new A.TimePicker<%= BrowserSnifferUtil.isMobile(request) ? "Native" : StringPool.BLANK %>(
+				{
+					container: '#<%= randomNamespace %>displayTime',
+					mask: '<%= DateUtil.isFormatAmPm(locale) ? "%I:%M %p" : "%H:%M" %>',
+					on: {
+						selectionChange: function(event) {
+							var date = event.newSelection[0];
 
-						var hours = date.getHours();
+							var hours = date.getHours();
 
-						var amPm = 0;
+							var amPm = 0;
 
-						<c:if test="<%= DateUtil.isFormatAmPm(locale) %>">
-							if (hours > 11) {
-								amPm = 1;
+							<c:if test="<%= DateUtil.isFormatAmPm(locale) %>">
+								if (hours > 11) {
+									amPm = 1;
+								}
+
+								if (hours > 12) {
+									hours -= 12;
+								}
+							</c:if>
+
+							if (date) {
+								A.one('#<%= hourParam %>').val(hours);
+								A.one('#<%= minuteParam %>').val(date.getMinutes());
+								A.one('#<%= amPmParam %>').val(amPm);
 							}
-
-							if (hours > 12) {
-								hours -= 12;
-							}
-						</c:if>
-
-						if (date) {
-							A.one('#<%= hourParam %>').val(hours);
-							A.one('#<%= minuteParam %>').val(date.getMinutes());
-							A.one('#<%= amPmParam %>').val(amPm);
 						}
-					}
-				},
-				popover: {
-					zIndex: Liferay.zIndex.TOOLTIP
-				},
-				trigger: '#<%= namespace + name %>',
-				values: <%= _getHoursJSONArray(minuteInterval, locale) %>
-			});
+					},
+					popover: {
+						zIndex: Liferay.zIndex.TOOLTIP
+					},
+					trigger: '#<%= namespace + name %>',
+					values: <%= _getHoursJSONArray(minuteInterval, locale) %>
+				}
+			);
 		}
 	);
 

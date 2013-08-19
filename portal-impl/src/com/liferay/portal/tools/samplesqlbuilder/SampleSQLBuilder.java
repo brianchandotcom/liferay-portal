@@ -55,18 +55,38 @@ import java.util.Properties;
 public class SampleSQLBuilder {
 
 	public static void main(String[] args) {
+		InitUtil.initWithSpring();
+
+		Reader reader = null;
+
 		try {
-			new SampleSQLBuilder(args);
+			Properties properties = new SortedProperties();
+
+			reader = new FileReader(args[0]);
+
+			properties.load(reader);
+
+			DataFactory dataFactory = new DataFactory(properties);
+
+			new SampleSQLBuilder(properties, dataFactory);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
 		}
+		finally {
+			if (reader != null) {
+				try {
+					reader.close();
+				}
+				catch (IOException ioe) {
+					ioe.printStackTrace();
+				}
+			}
+		}
 	}
 
-	public SampleSQLBuilder(String[] args) throws Exception {
-		InitUtil.initWithSpring();
-
-		Properties properties = getProperties(args);
+	public SampleSQLBuilder(Properties properties, DataFactory dataFactory)
+		throws Exception {
 
 		_dbType = properties.getProperty("sample.sql.db.type");
 
@@ -77,7 +97,7 @@ public class SampleSQLBuilder {
 		_outputDir = properties.getProperty("sample.sql.output.dir");
 		_script = properties.getProperty("sample.sql.script");
 
-		_dataFactory = new DataFactory(properties);
+		_dataFactory = dataFactory;
 
 		// Generic
 

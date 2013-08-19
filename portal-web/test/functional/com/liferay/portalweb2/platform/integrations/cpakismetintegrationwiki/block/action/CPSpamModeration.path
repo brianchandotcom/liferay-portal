@@ -1,0 +1,62 @@
+<html>
+<head>
+<title>CPSpamModerationWiki</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPSpamModerationWiki</td></tr>
+</thead>
+<tbody>
+<!---->
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[@class='alert alert-success']</td>
+	<td>Your request completed succesfully.</td>
+</tr>
+<tr>
+	<td>CONFIRMATION</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>SPAM_MODERATION</td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SPAM_MODERATION_NAVIGATION-->
+<tr>
+	<td>SPAM_MODERATION_MESSAGE_BOARDS</td>
+</tr>
+<tr>
+	<td>SPAM_MODERATION_DISCUSSIONS</td>
+</tr>
+<tr>
+	<td>SPAM_MODERATION_WIKI</td>
+	<td>//li[@id='_2_WAR_akismetportlet_tabs1119105107105115TabsId']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>NOT_SPAM_BUTTON</td>
+	<td>//button[@class='btn']/</td>
+	<td>Not Spam</td>
+</tr>
+<tr>
+	<td>SPAM_BUTTON</td>
+	<td>//button[@class='btn']/</td>
+	<td>Spam</td>
+</tr>
+<tr>
+	<td>CHECKBOX</td>
+	<td>//input[@type='checkbox']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

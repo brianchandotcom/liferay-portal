@@ -1,0 +1,34 @@
+<html>
+<head>
+<title>CPAkismet</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPAkismet</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>AKISMET_API_KEY</td>
+	<td>//input[@id='_1_WAR_akismetportlet_apiKey']</td>
+	<td>a0a822b80b2b</td>
+</tr>
+<tr>
+	<td>AKISMET_REPORTABLE_TIME</td>
+	<td>//input[@id='_1_WAR_akismetportlet_reportableTime']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AKISMET_CHECK_THRESHOLD</td>
+	<td>//input[@id='_1_WAR_akismetportlet_checkThreshold']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AKISMET_SAVE_BUTTON</td>
+	<td>//button[contains(.,'Save')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

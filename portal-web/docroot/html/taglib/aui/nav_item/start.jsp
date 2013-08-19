@@ -29,8 +29,8 @@
 			</c:choose>
 
 			<c:if test="<%= useDialog %>">
-				<aui:script use="aui-base">
-					Liferay.delegateClick('<%= anchorId %>', A.bind('openInDialog', Liferay.Util));
+				<aui:script>
+					Liferay.delegateClick('<%= anchorId %>', AUI().bind('openInDialog', Liferay.Util));
 				</aui:script>
 			</c:if>
 		</c:if>

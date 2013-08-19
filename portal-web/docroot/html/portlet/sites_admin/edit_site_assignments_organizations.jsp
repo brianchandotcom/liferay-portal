@@ -195,8 +195,6 @@ searchContainer.setEmptyResultsMessage(emptyResultsMessage);
 					<a href="<%= viewOrganizationsURL %>"><liferay-ui:message key="view-more" /> &raquo;</a>
 				</c:if>
 			</liferay-ui:panel>
-
-			<div class="separator"><!-- --></div>
 		</c:when>
 		<c:when test='<%= !tabs1.equals("summary") %>'>
 			<c:if test="<%= total > searchContainer.getDelta() %>">

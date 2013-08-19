@@ -126,11 +126,12 @@ public class VelocityManager extends BaseTemplateManager {
 			PropsUtil.get(PropsKeys.VELOCITY_ENGINE_VELOCIMACRO_LIBRARY));
 
 		extendedProperties.setProperty(
-			VelocityEngine.VM_LIBRARY_AUTORELOAD, String.valueOf(cacheEnabled));
+			VelocityEngine.VM_LIBRARY_AUTORELOAD,
+			String.valueOf(!cacheEnabled));
 
 		extendedProperties.setProperty(
 			VelocityEngine.VM_PERM_ALLOW_INLINE_REPLACE_GLOBAL,
-			String.valueOf(cacheEnabled));
+			String.valueOf(!cacheEnabled));
 
 		_velocityEngine.setExtendedProperties(extendedProperties);
 

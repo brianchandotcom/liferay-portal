@@ -83,24 +83,26 @@ Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(simpleDateFormatPa
 	Liferay.component(
 		'<%= namespace + name %>DatePicker',
 		function() {
-			return new A.DatePicker<%= BrowserSnifferUtil.isMobile(request) ? "Native" : StringPool.BLANK %>({
-				container: '#<%= randomNamespace %>displayDate',
-				on: {
-					selectionChange: function(event) {
-						var date = event.newSelection[0];
+			return new A.DatePicker<%= BrowserSnifferUtil.isMobile(request) ? "Native" : StringPool.BLANK %>(
+				{
+					container: '#<%= randomNamespace %>displayDate',
+					on: {
+						selectionChange: function(event) {
+							var date = event.newSelection[0];
 
-						if (date) {
-							A.one('#<%= dayParamId %>').val(date.getDate());
-							A.one('#<%= monthParamId %>').val(date.getMonth());
-							A.one('#<%= yearParamId %>').val(date.getFullYear());
+							if (date) {
+								A.one('#<%= dayParamId %>').val(date.getDate());
+								A.one('#<%= monthParamId %>').val(date.getMonth());
+								A.one('#<%= yearParamId %>').val(date.getFullYear());
+							}
 						}
-					}
-				},
-				popover: {
-					zIndex: Liferay.zIndex.TOOLTIP
-				},
-				trigger: '#<%= namespace + name %>'
-			});
+					},
+					popover: {
+						zIndex: Liferay.zIndex.TOOLTIP
+					},
+					trigger: '#<%= namespace + name %>'
+				}
+			);
 		}
 	);
 

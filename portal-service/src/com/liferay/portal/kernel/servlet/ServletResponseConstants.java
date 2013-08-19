@@ -29,4 +29,6 @@ public interface ServletResponseConstants {
 
 	public static final int SC_FILE_SIZE_EXCEPTION = 493;
 
+	public static final int SC_VIDEO_PREVIEW_DISABLED_EXCEPTION = 210;
+
 }

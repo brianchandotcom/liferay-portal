@@ -755,6 +755,23 @@ public class DLAppServiceSoap {
 		}
 	}
 
+	public static com.liferay.portal.kernel.repository.model.FileEntrySoap[] getFileEntries(
+		long repositoryId, long folderId, java.lang.String[] mimeTypes)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> returnValue =
+				DLAppServiceUtil.getFileEntries(repositoryId, folderId,
+					mimeTypes);
+
+			return com.liferay.portal.kernel.repository.model.FileEntrySoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	/**
 	* Returns the number of file entries and shortcuts in the folder.
 	*

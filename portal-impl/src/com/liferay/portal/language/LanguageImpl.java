@@ -71,6 +71,7 @@ import javax.servlet.jsp.PageContext;
 /**
  * @author Brian Wing Shun Chan
  * @author Andrius Vitkauskas
+ * @author Eduardo Lundgren
  */
 @DoPrivileged
 public class LanguageImpl implements Language {
@@ -470,6 +471,23 @@ public class LanguageImpl implements Language {
 		_initGroupLocales(groupId);
 
 		return _groupLocalesMap.get(groupId);
+	}
+
+	public String getBCP47LanguageId(HttpServletRequest request) {
+		Locale locale = PortalUtil.getLocale(request);
+
+		return getBCP47LanguageId(locale);
+	}
+
+	public String getBCP47LanguageId(Locale locale) {
+		return LocaleUtil.toBCP47LanguageId(locale);
+	}
+
+	public String getBCP47LanguageId(PortletRequest portletRequest) {
+		HttpServletRequest request = PortalUtil.getHttpServletRequest(
+			portletRequest);
+
+		return getBCP47LanguageId(request);
 	}
 
 	@Override

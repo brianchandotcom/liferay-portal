@@ -1,0 +1,13 @@
+<definition>
+	<command name="assertClick">
+		<case locator-key1="PUBLISH_BUTTON">
+			<execute function="AssertClick#assertTextClickAt" />
+		</case>
+	</command>
+
+	<command name="assertTextEquals">
+		<case locator-key1="SUCCESS_MESSAGE">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+	</command>
+</definition>

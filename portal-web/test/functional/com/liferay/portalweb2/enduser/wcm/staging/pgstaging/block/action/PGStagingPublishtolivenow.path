@@ -1,0 +1,101 @@
+<html>
+<head>
+<title>PGStagingPublishtolivenow</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGStagingPublishtolivenow</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGStagingPublishtolivenow</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>PUBLISH_TO_LIVE_IFRAME</td>
+	<td>//iframe</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[@class='alert alert-success']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DATE_NOW_CHECKBOX</td>
+	<td>//input[@id='_88_publishingEventNow']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGES_CHANGE</td>
+	<td>//div/a[@id='_88_pagesLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ALL_APPLICATIONS_CHECKBOX</td>
+	<td>//input[@id='_88_allApplications']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ALL_CONTENT_CHECKBOX</td>
+	<td>//input[@id='_88_allContent']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PERMISSIONS_CHECKBOX</td>
+	<td>//input[@id='_88_PERMISSIONSCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PUBLISH_BUTTON</td>
+	<td>//button[@id='_88_publishButton']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIRMATION</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--PAGES-->
+<tr>
+	<td>PAGES_SELECT_PAGES_BUTTON</td>
+	<td>//button[contains(.,'Select Pages')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGES_DELETE_MISSING_PAGES_CHECKBOX</td>
+	<td>//input[@id='_88_DELETE_MISSING_LAYOUTSCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--CURRENT_AND_PREVIOUS_TABLE-->
+<tr>
+	<td>CURRENT_AND_PREVIOUS_TABLE_USER_NAME</td>
+	<td>//tbody/tr/td[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CURRENT_AND_PREVIOUS_TABLE_STATUS</td>
+	<td>//tbody/tr/td[2]/strong</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

@@ -45,8 +45,8 @@ import com.liferay.portal.model.impl.RoleImpl;
 import com.liferay.portal.model.impl.RoleModelImpl;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.service.persistence.impl.TableMapping;
-import com.liferay.portal.service.persistence.impl.TableMappingFactory;
+import com.liferay.portal.service.persistence.impl.TableMapper;
+import com.liferay.portal.service.persistence.impl.TableMapperFactory;
 
 import java.io.Serializable;
 
@@ -7310,9 +7310,9 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	protected Role removeImpl(Role role) throws SystemException {
 		role = toUnwrappedModel(role);
 
-		roleToGroupTableMapping.deleteLeftPrimaryKeyTableMappings(role.getPrimaryKey());
+		roleToGroupTableMapper.deleteLeftPrimaryKeyTableMappings(role.getPrimaryKey());
 
-		roleToUserTableMapping.deleteLeftPrimaryKeyTableMappings(role.getPrimaryKey());
+		roleToUserTableMapper.deleteLeftPrimaryKeyTableMappings(role.getPrimaryKey());
 
 		Session session = null;
 
@@ -7860,7 +7860,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	@Override
 	public List<com.liferay.portal.model.Group> getGroups(long pk, int start,
 		int end, OrderByComparator orderByComparator) throws SystemException {
-		return roleToGroupTableMapping.getRightBaseModels(pk, start, end,
+		return roleToGroupTableMapper.getRightBaseModels(pk, start, end,
 			orderByComparator);
 	}
 
@@ -7873,7 +7873,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public int getGroupsSize(long pk) throws SystemException {
-		long[] pks = roleToGroupTableMapping.getRightPrimaryKeys(pk);
+		long[] pks = roleToGroupTableMapper.getRightPrimaryKeys(pk);
 
 		return pks.length;
 	}
@@ -7889,7 +7889,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	@Override
 	public boolean containsGroup(long pk, long groupPK)
 		throws SystemException {
-		return roleToGroupTableMapping.containsTableMapping(pk, groupPK);
+		return roleToGroupTableMapper.containsTableMapping(pk, groupPK);
 	}
 
 	/**
@@ -7918,7 +7918,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public void addGroup(long pk, long groupPK) throws SystemException {
-		roleToGroupTableMapping.addTableMapping(pk, groupPK);
+		roleToGroupTableMapper.addTableMapping(pk, groupPK);
 	}
 
 	/**
@@ -7931,7 +7931,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	@Override
 	public void addGroup(long pk, com.liferay.portal.model.Group group)
 		throws SystemException {
-		roleToGroupTableMapping.addTableMapping(pk, group.getPrimaryKey());
+		roleToGroupTableMapper.addTableMapping(pk, group.getPrimaryKey());
 	}
 
 	/**
@@ -7944,7 +7944,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	@Override
 	public void addGroups(long pk, long[] groupPKs) throws SystemException {
 		for (long groupPK : groupPKs) {
-			roleToGroupTableMapping.addTableMapping(pk, groupPK);
+			roleToGroupTableMapper.addTableMapping(pk, groupPK);
 		}
 	}
 
@@ -7959,7 +7959,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	public void addGroups(long pk, List<com.liferay.portal.model.Group> groups)
 		throws SystemException {
 		for (com.liferay.portal.model.Group group : groups) {
-			roleToGroupTableMapping.addTableMapping(pk, group.getPrimaryKey());
+			roleToGroupTableMapper.addTableMapping(pk, group.getPrimaryKey());
 		}
 	}
 
@@ -7971,7 +7971,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public void clearGroups(long pk) throws SystemException {
-		roleToGroupTableMapping.deleteLeftPrimaryKeyTableMappings(pk);
+		roleToGroupTableMapper.deleteLeftPrimaryKeyTableMappings(pk);
 	}
 
 	/**
@@ -7983,7 +7983,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public void removeGroup(long pk, long groupPK) throws SystemException {
-		roleToGroupTableMapping.deleteTableMapping(pk, groupPK);
+		roleToGroupTableMapper.deleteTableMapping(pk, groupPK);
 	}
 
 	/**
@@ -7996,7 +7996,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	@Override
 	public void removeGroup(long pk, com.liferay.portal.model.Group group)
 		throws SystemException {
-		roleToGroupTableMapping.deleteTableMapping(pk, group.getPrimaryKey());
+		roleToGroupTableMapper.deleteTableMapping(pk, group.getPrimaryKey());
 	}
 
 	/**
@@ -8010,7 +8010,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	public void removeGroups(long pk, long[] groupPKs)
 		throws SystemException {
 		for (long groupPK : groupPKs) {
-			roleToGroupTableMapping.deleteTableMapping(pk, groupPK);
+			roleToGroupTableMapper.deleteTableMapping(pk, groupPK);
 		}
 	}
 
@@ -8025,7 +8025,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	public void removeGroups(long pk,
 		List<com.liferay.portal.model.Group> groups) throws SystemException {
 		for (com.liferay.portal.model.Group group : groups) {
-			roleToGroupTableMapping.deleteTableMapping(pk, group.getPrimaryKey());
+			roleToGroupTableMapper.deleteTableMapping(pk, group.getPrimaryKey());
 		}
 	}
 
@@ -8038,10 +8038,10 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public void setGroups(long pk, long[] groupPKs) throws SystemException {
-		roleToGroupTableMapping.deleteLeftPrimaryKeyTableMappings(pk);
+		roleToGroupTableMapper.deleteLeftPrimaryKeyTableMappings(pk);
 
 		for (Long groupPK : groupPKs) {
-			roleToGroupTableMapping.addTableMapping(pk, groupPK);
+			roleToGroupTableMapper.addTableMapping(pk, groupPK);
 		}
 	}
 
@@ -8123,7 +8123,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	@Override
 	public List<com.liferay.portal.model.User> getUsers(long pk, int start,
 		int end, OrderByComparator orderByComparator) throws SystemException {
-		return roleToUserTableMapping.getRightBaseModels(pk, start, end,
+		return roleToUserTableMapper.getRightBaseModels(pk, start, end,
 			orderByComparator);
 	}
 
@@ -8136,7 +8136,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public int getUsersSize(long pk) throws SystemException {
-		long[] pks = roleToUserTableMapping.getRightPrimaryKeys(pk);
+		long[] pks = roleToUserTableMapper.getRightPrimaryKeys(pk);
 
 		return pks.length;
 	}
@@ -8151,7 +8151,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public boolean containsUser(long pk, long userPK) throws SystemException {
-		return roleToUserTableMapping.containsTableMapping(pk, userPK);
+		return roleToUserTableMapper.containsTableMapping(pk, userPK);
 	}
 
 	/**
@@ -8180,7 +8180,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public void addUser(long pk, long userPK) throws SystemException {
-		roleToUserTableMapping.addTableMapping(pk, userPK);
+		roleToUserTableMapper.addTableMapping(pk, userPK);
 	}
 
 	/**
@@ -8193,7 +8193,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	@Override
 	public void addUser(long pk, com.liferay.portal.model.User user)
 		throws SystemException {
-		roleToUserTableMapping.addTableMapping(pk, user.getPrimaryKey());
+		roleToUserTableMapper.addTableMapping(pk, user.getPrimaryKey());
 	}
 
 	/**
@@ -8206,7 +8206,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	@Override
 	public void addUsers(long pk, long[] userPKs) throws SystemException {
 		for (long userPK : userPKs) {
-			roleToUserTableMapping.addTableMapping(pk, userPK);
+			roleToUserTableMapper.addTableMapping(pk, userPK);
 		}
 	}
 
@@ -8221,7 +8221,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	public void addUsers(long pk, List<com.liferay.portal.model.User> users)
 		throws SystemException {
 		for (com.liferay.portal.model.User user : users) {
-			roleToUserTableMapping.addTableMapping(pk, user.getPrimaryKey());
+			roleToUserTableMapper.addTableMapping(pk, user.getPrimaryKey());
 		}
 	}
 
@@ -8233,7 +8233,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public void clearUsers(long pk) throws SystemException {
-		roleToUserTableMapping.deleteLeftPrimaryKeyTableMappings(pk);
+		roleToUserTableMapper.deleteLeftPrimaryKeyTableMappings(pk);
 	}
 
 	/**
@@ -8245,7 +8245,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public void removeUser(long pk, long userPK) throws SystemException {
-		roleToUserTableMapping.deleteTableMapping(pk, userPK);
+		roleToUserTableMapper.deleteTableMapping(pk, userPK);
 	}
 
 	/**
@@ -8258,7 +8258,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	@Override
 	public void removeUser(long pk, com.liferay.portal.model.User user)
 		throws SystemException {
-		roleToUserTableMapping.deleteTableMapping(pk, user.getPrimaryKey());
+		roleToUserTableMapper.deleteTableMapping(pk, user.getPrimaryKey());
 	}
 
 	/**
@@ -8271,7 +8271,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	@Override
 	public void removeUsers(long pk, long[] userPKs) throws SystemException {
 		for (long userPK : userPKs) {
-			roleToUserTableMapping.deleteTableMapping(pk, userPK);
+			roleToUserTableMapper.deleteTableMapping(pk, userPK);
 		}
 	}
 
@@ -8286,7 +8286,7 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	public void removeUsers(long pk, List<com.liferay.portal.model.User> users)
 		throws SystemException {
 		for (com.liferay.portal.model.User user : users) {
-			roleToUserTableMapping.deleteTableMapping(pk, user.getPrimaryKey());
+			roleToUserTableMapper.deleteTableMapping(pk, user.getPrimaryKey());
 		}
 	}
 
@@ -8299,10 +8299,10 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 	 */
 	@Override
 	public void setUsers(long pk, long[] userPKs) throws SystemException {
-		roleToUserTableMapping.deleteLeftPrimaryKeyTableMappings(pk);
+		roleToUserTableMapper.deleteLeftPrimaryKeyTableMappings(pk);
 
 		for (Long userPK : userPKs) {
-			roleToUserTableMapping.addTableMapping(pk, userPK);
+			roleToUserTableMapper.addTableMapping(pk, userPK);
 		}
 	}
 
@@ -8364,10 +8364,10 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 			}
 		}
 
-		roleToGroupTableMapping = TableMappingFactory.getTableMapping("Groups_Roles",
+		roleToGroupTableMapper = TableMapperFactory.getTableMapper("Groups_Roles",
 				"roleId", "groupId", this, groupPersistence);
 
-		roleToUserTableMapping = TableMappingFactory.getTableMapping("Users_Roles",
+		roleToUserTableMapper = TableMapperFactory.getTableMapper("Users_Roles",
 				"roleId", "userId", this, userPersistence);
 	}
 
@@ -8380,10 +8380,10 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 
 	@BeanReference(type = GroupPersistence.class)
 	protected GroupPersistence groupPersistence;
-	protected TableMapping<Role, com.liferay.portal.model.Group> roleToGroupTableMapping;
+	protected TableMapper<Role, com.liferay.portal.model.Group> roleToGroupTableMapper;
 	@BeanReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
-	protected TableMapping<Role, com.liferay.portal.model.User> roleToUserTableMapping;
+	protected TableMapper<Role, com.liferay.portal.model.User> roleToUserTableMapper;
 	private static final String _SQL_SELECT_ROLE = "SELECT role FROM Role role";
 	private static final String _SQL_SELECT_ROLE_WHERE = "SELECT role FROM Role role WHERE ";
 	private static final String _SQL_COUNT_ROLE = "SELECT COUNT(role) FROM Role role";

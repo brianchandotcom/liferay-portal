@@ -23,38 +23,38 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * @author Shuyang Zhou
  */
-public class TableMappingFactory {
+public class TableMapperFactory {
 
 	public static
-		<L extends BaseModel<L>, R extends BaseModel<R>> TableMapping<L, R>
-			getTableMapping(
+		<L extends BaseModel<L>, R extends BaseModel<R>> TableMapper<L, R>
+			getTableMapper(
 				String tableName, String leftColumnName, String rightColumnName,
 				BasePersistence<L> leftPersistence,
 				BasePersistence<R> rightPersistence) {
 
-		TableMapping<?, ?> tableMapping = tableMappings.get(tableName);
+		TableMapper<?, ?> tableMapper = tableMappers.get(tableName);
 
-		if (tableMapping == null) {
-			TableMappingImpl<L, R> tableMappingImpl =
-				new TableMappingImpl<L, R>(
+		if (tableMapper == null) {
+			TableMapperImpl<L, R> tableMapperImpl =
+				new TableMapperImpl<L, R>(
 					tableName, leftColumnName, rightColumnName, leftPersistence,
 					rightPersistence);
 
-			tableMappingImpl.setReverseTableMapping(
-				new ReverseTableMapping<R, L>(tableMappingImpl));
+			tableMapperImpl.setReverseTableMapper(
+				new ReverseTableMapper<R, L>(tableMapperImpl));
 
-			tableMapping = tableMappingImpl;
+			tableMapper = tableMapperImpl;
 
-			tableMappings.put(tableName, tableMapping);
+			tableMappers.put(tableName, tableMapper);
 		}
-		else if (!tableMapping.matches(leftColumnName, rightColumnName)) {
-			tableMapping = tableMapping.getReverseTableMapping();
+		else if (!tableMapper.matches(leftColumnName, rightColumnName)) {
+			tableMapper = tableMapper.getReverseTableMapper();
 		}
 
-		return (TableMapping<L, R>)tableMapping;
+		return (TableMapper<L, R>)tableMapper;
 	}
 
-	protected static Map<String, TableMapping<?, ?>> tableMappings =
-		new ConcurrentHashMap<String, TableMapping<?, ?>>();
+	protected static Map<String, TableMapper<?, ?>> tableMappers =
+		new ConcurrentHashMap<String, TableMapper<?, ?>>();
 
 }

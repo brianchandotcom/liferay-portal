@@ -41,10 +41,10 @@ import javax.sql.DataSource;
 /**
  * @author Shuyang Zhou
  */
-public class TableMappingImpl<L extends BaseModel<L>, R extends BaseModel<R>>
-	implements TableMapping<L, R> {
+public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
+	implements TableMapper<L, R> {
 
-	public TableMappingImpl(
+	public TableMapperImpl(
 		String tableName, String leftColumnName, String rightColumnName,
 		BasePersistence<L> leftBasePersistence,
 		BasePersistence<R> rightBasePersistence) {
@@ -253,8 +253,8 @@ public class TableMappingImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 	}
 
 	@Override
-	public TableMapping<R, L> getReverseTableMapping() {
-		return reverseTableMapping;
+	public TableMapper<R, L> getReverseTableMapper() {
+		return reverseTableMapper;
 	}
 
 	@Override
@@ -287,8 +287,8 @@ public class TableMappingImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 		return false;
 	}
 
-	public void setReverseTableMapping(TableMapping<R, L> reverseTableMapping) {
-		this.reverseTableMapping = reverseTableMapping;
+	public void setReverseTableMapper(TableMapper<R, L> reverseTableMapper) {
+		this.reverseTableMapper = reverseTableMapper;
 	}
 
 	protected static <M extends BaseModel<M>, S extends BaseModel<S>> int
@@ -470,7 +470,7 @@ public class TableMappingImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 	protected BasePersistence<L> leftBasePersistence;
 	protected String leftColumnName;
 	protected PortalCache<Long, long[]> leftToRightPortalCache;
-	protected TableMapping<R, L> reverseTableMapping;
+	protected TableMapper<R, L> reverseTableMapper;
 	protected BasePersistence<R> rightBasePersistence;
 	protected String rightColumnName;
 	protected PortalCache<Long, long[]> rightToLeftPortalCache;

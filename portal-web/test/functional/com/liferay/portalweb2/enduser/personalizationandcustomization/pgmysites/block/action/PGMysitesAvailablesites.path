@@ -1,17 +1,17 @@
 <html>
 <head>
-<title>CPMydashboard</title>
+<title>PGMysitesAvailablesites</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">CPMydashboard</td></tr>
+<tr><td rowspan="1" colspan="3">PGMysitesAvailablesites</td></tr>
 </thead>
 <tbody>
 <tr>
 	<td>PAGE_NAME</td>
 	<td></td>
-	<td>Mydashboard</td>
+	<td>PGMysitesAvailablesites</td>
 </tr>
 <tr>
 	<td></td>
@@ -29,12 +29,12 @@
 	<td></td>
 </tr>
 <tr>
-	<td>MY_SITES</td>
+	<td>NAVIGATION_MY_SITES</td>
 	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'My Sites')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>AVAILABLE_SITES</td>
+	<td>NAVIGATION_AVAILABLE_SITES</td>
 	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Available Sites')]</td>
 	<td></td>
 </tr>
@@ -49,22 +49,27 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SITE_NAME</td>
-	<td>//tr[contains(.,'${key_siteName}')]/td/strong</td>
+	<td></td>
+	<td></td>
 	<td></td>
 </tr>
 <tr>
-	<td>SITE_NAME_MEMBERS</td>
+	<td>SITE_TABLE_SITE_NAME</td>
+	<td>//tr[contains(.,'${key_siteName}')]/td/a/strong</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_TABLE_SITE_NAME_MEMBERS</td>
 	<td>//tr[contains(.,'${key_siteName}')]/td[2]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>JOIN_SITE_NAME</td>
+	<td>SITE_TABLE_JOIN_SITE_NAME</td>
 	<td>//tr[contains(.,'${key_siteName}')]/td[4]/span/a/span</td>
 	<td></td>
 </tr>
 <tr>
-	<td>LEAVE_SITE_NAME</td>
+	<td>SITE_TABLE_LEAVE_SITE_NAME</td>
 	<td>//tr[contains(.,'${key_siteName}')]/td[4]/span/a/span</td>
 	<td></td>
 </tr>

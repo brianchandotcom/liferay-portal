@@ -116,6 +116,49 @@
 		<execute action="CPSites#assertTextNotPresent" value1="${siteName}" />
 	</command>
 
+	<command name="joinOpenViaMySitesPG">
+		<var name="key_siteName" value="${siteName}" />
+
+		<execute action="PGMysites#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No sites were found." />
+		<execute action="PGMysites#assertClick" locator-key1="NAVIGATION_AVAILABLE_SITES" value1="Available Sites" />
+		<execute action="PGMysitesAvailablesites#type" locator-key1="SEARCH_FIELD" value1="${siteName}" />
+		<execute action="PGMysitesAvailablesites#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
+		<execute action="PGMysitesAvailablesites#assertTextEquals" locator-key1="SITE_TABLE_SITE_NAME" value1="${siteName}" />
+		<execute action="PGMysitesAvailablesites#assertTextEquals" locator-key1="SITE_TABLE_SITE_NAME_MEMBERS" value1="1" />
+		<execute action="PGMysitesAvailablesites#assertClick" locator-key1="SITE_TABLE_JOIN_SITE_NAME" value1="Join" />
+		<execute action="PGMysitesAvailablesites#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="PGMysitesAvailablesites#assertTextEquals" locator-key1="SITE_TABLE_SITE_NAME" value1="${siteName}" />
+		<execute action="PGMysitesAvailablesites#assertTextEquals" locator-key1="SITE_TABLE_SITE_NAME_MEMBERS" value1="2" />
+		<execute action="PGMysitesAvailablesites#assertTextEquals" locator-key1="SITE_TABLE_LEAVE_SITE_NAME" value1="Leave" />
+	</command>
+
+	<command name="joinPrivateViaMySitesNoPG">
+		<var name="key_siteName" value="${siteName}" />
+
+		<execute action="PGMysites#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No sites were found." />
+		<execute action="PGMysites#assertClick" locator-key1="NAVIGATION_AVAILABLE_SITES" value1="Available Sites" />
+		<execute action="PGMysitesAvailablesites#type" locator-key1="SEARCH_FIELD" value1="${siteName}" />
+		<execute action="PGMysitesAvailablesites#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
+		<execute action="PGMysitesAvailablesites#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No sites were found." />
+	</command>
+
+	<command name="leaveViaMySitesPG">
+		<var name="key_siteName" value="${siteName}" />
+
+		<execute action="PGMysites#assertTextEquals" locator-key1="SITE_TABLE_SITE_NAME" value1="${siteName}" />
+		<execute action="PGMysites#assertTextEquals" locator-key1="SITE_TABLE_SITE_NAME_MEMBERS" value1="2" />
+		<execute action="PGMysites#assertClick" locator-key1="NAVIGATION_AVAILABLE_SITES" value1="Available Sites" />
+		<execute action="PGMysitesAvailablesites#type" locator-key1="SEARCH_FIELD" value1="${siteName}" />
+		<execute action="PGMysitesAvailablesites#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
+		<execute action="PGMysitesAvailablesites#assertTextEquals" locator-key1="SITE_TABLE_SITE_NAME" value1="${siteName}" />
+		<execute action="PGMysitesAvailablesites#assertTextEquals" locator-key1="SITE_TABLE_SITE_NAME_MEMBERS" value1="2" />
+		<execute action="PGMysitesAvailablesites#assertClick" locator-key1="SITE_TABLE_LEAVE_SITE_NAME" value1="Leave" />
+		<execute action="PGMysitesAvailablesites#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="PGMysitesAvailablesites#assertTextEquals" locator-key1="SITE_TABLE_SITE_NAME" value1="${siteName}" />
+		<execute action="PGMysitesAvailablesites#assertTextEquals" locator-key1="SITE_TABLE_SITE_NAME_MEMBERS" value1="1" />
+		<execute action="PGMysitesAvailablesites#assertTextEquals" locator-key1="SITE_TABLE_JOIN_SITE_NAME" value1="Join" />
+	</command>
+
 	<command name="removeMemberCP">
 		<var name="key_userScreenName" value="${userScreenName}" />
 

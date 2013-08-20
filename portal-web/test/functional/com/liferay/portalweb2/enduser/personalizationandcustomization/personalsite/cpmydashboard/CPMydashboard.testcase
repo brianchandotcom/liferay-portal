@@ -52,7 +52,7 @@
 
 		<execute macro="Page#gotoMyDashboard" />
 
-		<execute macro="Mydashboard#joinSiteOpenPG">
+		<execute macro="Site#joinOpenViaMySitesPG">
 			<var name="siteName" value="${siteName}" />
 		</execute>
 
@@ -70,7 +70,7 @@
 		<execute macro="User#tearDownCP" />
 	</command>
 
-	<command name="JoinSitePrivate">
+	<command name="JoinSitePrivateNo">
 		<var name="password" value="test" />
 		<var name="siteName" value="Site Name" />
 		<var name="userScreenName" value="usersn" />
@@ -116,7 +116,7 @@
 
 		<execute macro="Page#gotoMyDashboard" />
 
-		<execute macro="Mydashboard#joinSitePrivatePG">
+		<execute macro="Site#joinPrivateViaMySitesNoPG">
 			<var name="siteName" value="${siteName}" />
 		</execute>
 
@@ -179,13 +179,13 @@
 
 		<execute macro="Page#gotoMyDashboard" />
 
-		<execute macro="Mydashboard#joinSiteOpenPG">
+		<execute macro="Site#joinOpenViaMySitesPG">
 			<var name="siteName" value="${siteName}" />
 		</execute>
 
 		<execute macro="Page#gotoMyDashboard" />
 
-		<execute macro="Mydashboard#leaveSitePG">
+		<execute macro="Site#leaveViaMySitesPG">
 			<var name="siteName" value="${siteName}" />
 		</execute>
 

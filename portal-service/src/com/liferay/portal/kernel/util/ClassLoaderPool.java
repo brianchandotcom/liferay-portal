@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.util;
 
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+import com.liferay.portal.util.PortalUtil;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -65,7 +66,7 @@ public class ClassLoaderPool {
 	 * <p>
 	 * If the class loader is <code>null</code> or if no context name is
 	 * associated with the class loader, {@link
-	 * com.liferay.portal.kernel.util.StringPool#BLANK} is returned.
+	 * com.liferay.portal.util.PortalUtil#getServletContextName() } is returned.
 	 * </p>
 	 *
 	 * @param  classLoader the class loader
@@ -73,13 +74,13 @@ public class ClassLoaderPool {
 	 */
 	public static String getContextName(ClassLoader classLoader) {
 		if (classLoader == null) {
-			return StringPool.BLANK;
+			return PortalUtil.getServletContextName();
 		}
 
 		String contextName = _contextNames.get(classLoader);
 
 		if (contextName == null) {
-			contextName = StringPool.BLANK;
+			contextName = PortalUtil.getServletContextName();
 		}
 
 		return contextName;

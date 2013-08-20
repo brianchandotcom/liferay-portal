@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.WorkflowDefinitionLink;
 import com.liferay.portal.model.WorkflowInstanceLink;
 import com.liferay.portal.service.ServiceContext;
@@ -155,9 +156,15 @@ public class WorkflowHandlerRegistryUtil {
 			workflowHandler.getType(LocaleUtil.getDefault()));
 		workflowContext.put(
 			WorkflowConstants.CONTEXT_SERVICE_CONTEXT, serviceContext);
+
+		Serializable taskComments = serviceContext.getAttribute("comments");
+
+		if (taskComments == null) {
+			taskComments = StringPool.BLANK;
+		}
+
 		workflowContext.put(
-			WorkflowConstants.CONTEXT_TASK_COMMENTS,
-			serviceContext.getAttribute("comments"));
+			WorkflowConstants.CONTEXT_TASK_COMMENTS, taskComments);
 
 		workflowHandler.updateStatus(status, workflowContext);
 

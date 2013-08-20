@@ -97,7 +97,7 @@ if (Validator.isNotNull(historyKey)) {
 					%>
 
 							<c:if test="<%= Validator.isNotNull(category) %>">
-								<h1 class="nav-header"><liferay-ui:message key="<%= category %>" /></h1>
+								<li class="nav-header"><liferay-ui:message key="<%= category %>" /></li>
 							</c:if>
 
 							<%

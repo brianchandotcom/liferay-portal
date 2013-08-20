@@ -1093,75 +1093,39 @@ public class ArrayUtil {
 	}
 
 	public static boolean isNotEmpty(boolean[] array) {
-		if ((array == null) || (array.length == 0)) {
-			return false;
-		}
-
-		return true;
+		return !isEmpty(array);
 	}
 
 	public static boolean isNotEmpty(byte[] array) {
-		if ((array == null) || (array.length == 0)) {
-			return false;
-		}
-
-		return true;
+		return !isEmpty(array);
 	}
 
 	public static boolean isNotEmpty(char[] array) {
-		if ((array == null) || (array.length == 0)) {
-			return false;
-		}
-
-		return true;
+		return !isEmpty(array);
 	}
 
 	public static boolean isNotEmpty(double[] array) {
-		if ((array == null) || (array.length == 0)) {
-			return false;
-		}
-
-		return true;
+		return !isEmpty(array);
 	}
 
 	public static boolean isNotEmpty(float[] array) {
-		if ((array == null) || (array.length == 0)) {
-			return false;
-		}
-
-		return true;
+		return !isEmpty(array);
 	}
 
 	public static boolean isNotEmpty(int[] array) {
-		if ((array == null) || (array.length == 0)) {
-			return false;
-		}
-
-		return true;
+		return !isEmpty(array);
 	}
 
 	public static boolean isNotEmpty(long[] array) {
-		if ((array == null) || (array.length == 0)) {
-			return false;
-		}
-
-		return true;
+		return !isEmpty(array);
 	}
 
 	public static boolean isNotEmpty(Object[] array) {
-		if ((array == null) || (array.length == 0)) {
-			return false;
-		}
-
-		return true;
+		return !isEmpty(array);
 	}
 
 	public static boolean isNotEmpty(short[] array) {
-		if ((array == null) || (array.length == 0)) {
-			return false;
-		}
-
-		return true;
+		return !isEmpty(array);
 	}
 
 	public static boolean[] remove(boolean[] array, boolean value) {

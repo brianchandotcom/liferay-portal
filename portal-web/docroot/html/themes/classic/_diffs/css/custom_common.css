@@ -529,6 +529,10 @@
 
 	&.ie .dockbar .navbar-inner {
 		filter: none;
+
+		.nav-account-controls {
+			filter: none;
+		}
 	}
 
 	&.ie6, &.ie7 {

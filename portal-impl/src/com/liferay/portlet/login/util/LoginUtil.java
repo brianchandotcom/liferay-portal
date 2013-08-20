@@ -399,51 +399,50 @@ public class LoginUtil {
 			HttpServletRequest request, HttpSession session)
 		throws Exception {
 
-			// Invalidate the previous session to prevent phishing
+		// Invalidate the previous session to prevent phishing
 
-			String[] protectedAttributeNames =
-				PropsValues.SESSION_PHISHING_PROTECTED_ATTRIBUTES;
+		String[] protectedAttributeNames =
+			PropsValues.SESSION_PHISHING_PROTECTED_ATTRIBUTES;
 
-			Map<String, Object> protectedAttributes =
-				new HashMap<String, Object>();
+		Map<String, Object> protectedAttributes = new HashMap<String, Object>();
 
-			for (String protectedAttributeName : protectedAttributeNames) {
-				Object protectedAttributeValue = session.getAttribute(
-					protectedAttributeName);
+		for (String protectedAttributeName : protectedAttributeNames) {
+			Object protectedAttributeValue = session.getAttribute(
+				protectedAttributeName);
 
-				if (protectedAttributeValue == null) {
-					continue;
-				}
-
-				protectedAttributes.put(
-					protectedAttributeName, protectedAttributeValue);
+			if (protectedAttributeValue == null) {
+				continue;
 			}
 
-			try {
-				session.invalidate();
+			protectedAttributes.put(
+				protectedAttributeName, protectedAttributeValue);
+		}
+
+		try {
+			session.invalidate();
+		}
+		catch (IllegalStateException ise) {
+
+			// This only happens in Geronimo
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(ise.getMessage());
 			}
-			catch (IllegalStateException ise) {
+		}
 
-				// This only happens in Geronimo
+		session = request.getSession(true);
 
-				if (_log.isWarnEnabled()) {
-					_log.warn(ise.getMessage());
-				}
+		for (String protectedAttributeName : protectedAttributeNames) {
+			Object protectedAttributeValue = protectedAttributes.get(
+				protectedAttributeName);
+
+			if (protectedAttributeValue == null) {
+				continue;
 			}
 
-			session = request.getSession(true);
-
-			for (String protectedAttributeName : protectedAttributeNames) {
-				Object protectedAttributeValue = protectedAttributes.get(
-					protectedAttributeName);
-
-				if (protectedAttributeValue == null) {
-					continue;
-				}
-
-				session.setAttribute(
-					protectedAttributeName, protectedAttributeValue);
-			}
+			session.setAttribute(
+				protectedAttributeName, protectedAttributeValue);
+		}
 	}
 
 	public static void sendPassword(ActionRequest actionRequest)

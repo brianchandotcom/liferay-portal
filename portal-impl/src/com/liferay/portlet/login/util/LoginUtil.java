@@ -254,52 +254,7 @@ public class LoginUtil {
 		}
 
 		if (PropsValues.SESSION_ENABLE_PHISHING_PROTECTION) {
-
-			// Invalidate the previous session to prevent phishing
-
-			String[] protectedAttributeNames =
-				PropsValues.SESSION_PHISHING_PROTECTED_ATTRIBUTES;
-
-			Map<String, Object> protectedAttributes =
-				new HashMap<String, Object>();
-
-			for (String protectedAttributeName : protectedAttributeNames) {
-				Object protectedAttributeValue = session.getAttribute(
-					protectedAttributeName);
-
-				if (protectedAttributeValue == null) {
-					continue;
-				}
-
-				protectedAttributes.put(
-					protectedAttributeName, protectedAttributeValue);
-			}
-
-			try {
-				session.invalidate();
-			}
-			catch (IllegalStateException ise) {
-
-				// This only happens in Geronimo
-
-				if (_log.isWarnEnabled()) {
-					_log.warn(ise.getMessage());
-				}
-			}
-
-			session = request.getSession(true);
-
-			for (String protectedAttributeName : protectedAttributeNames) {
-				Object protectedAttributeValue = protectedAttributes.get(
-					protectedAttributeName);
-
-				if (protectedAttributeValue == null) {
-					continue;
-				}
-
-				session.setAttribute(
-					protectedAttributeName, protectedAttributeValue);
-			}
+			protectFishing(request, session);
 		}
 
 		// Set cookies
@@ -438,6 +393,57 @@ public class LoginUtil {
 		}
 
 		AuthenticatedUserUUIDStoreUtil.register(userUUID);
+	}
+
+	public static void protectFishing(
+			HttpServletRequest request, HttpSession session)
+		throws Exception {
+
+			// Invalidate the previous session to prevent phishing
+
+			String[] protectedAttributeNames =
+				PropsValues.SESSION_PHISHING_PROTECTED_ATTRIBUTES;
+
+			Map<String, Object> protectedAttributes =
+				new HashMap<String, Object>();
+
+			for (String protectedAttributeName : protectedAttributeNames) {
+				Object protectedAttributeValue = session.getAttribute(
+					protectedAttributeName);
+
+				if (protectedAttributeValue == null) {
+					continue;
+				}
+
+				protectedAttributes.put(
+					protectedAttributeName, protectedAttributeValue);
+			}
+
+			try {
+				session.invalidate();
+			}
+			catch (IllegalStateException ise) {
+
+				// This only happens in Geronimo
+
+				if (_log.isWarnEnabled()) {
+					_log.warn(ise.getMessage());
+				}
+			}
+
+			session = request.getSession(true);
+
+			for (String protectedAttributeName : protectedAttributeNames) {
+				Object protectedAttributeValue = protectedAttributes.get(
+					protectedAttributeName);
+
+				if (protectedAttributeValue == null) {
+					continue;
+				}
+
+				session.setAttribute(
+					protectedAttributeName, protectedAttributeValue);
+			}
 	}
 
 	public static void sendPassword(ActionRequest actionRequest)

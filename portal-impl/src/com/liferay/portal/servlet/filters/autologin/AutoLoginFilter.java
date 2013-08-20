@@ -32,6 +32,7 @@ import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.portlet.login.util.LoginUtil;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -91,6 +92,10 @@ public class AutoLoginFilter extends BasePortalFilter {
 
 		if ((user == null) || user.isLockout()) {
 			return null;
+		}
+
+		if (PropsValues.SESSION_ENABLE_PHISHING_PROTECTION) {
+			LoginUtil.protectFishing(request, session);
 		}
 
 		session.setAttribute("j_username", jUsername);

@@ -1098,6 +1098,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 			String trimmedLine = StringUtil.trimLeading(line);
 
+			checkStringBundler(trimmedLine, fileName, lineCount);
+
 			if (trimmedLine.startsWith("* @deprecated") &&
 				mainReleaseVersion.equals(MAIN_RELEASE_VERSION_6_2_0)) {
 

@@ -62,9 +62,11 @@ public abstract class BaseSandboxHandler implements SandboxHandler {
 	public void createPluginPackageProperties(File dir, String pluginName)
 		throws IOException {
 
-		StringBundler sb = new StringBundler(10);
+		StringBundler sb = new StringBundler(12);
 
-		sb.append("name=" + pluginName + "\n");
+		sb.append("name=");
+		sb.append(pluginName);
+		sb.append("\n");
 		sb.append("module-group-id=liferay\n");
 		sb.append("module-incremental-version=1\n");
 		sb.append("tags=\n");

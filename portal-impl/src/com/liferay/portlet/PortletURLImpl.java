@@ -1089,7 +1089,9 @@ public class PortletURLImpl
 		}
 
 		if (_encrypt) {
-			sb.append(StringPool.AMPERSAND + WebKeys.ENCRYPT + "=1");
+			sb.append(StringPool.AMPERSAND);
+			sb.append(WebKeys.ENCRYPT);
+			sb.append("=1");
 		}
 
 		if (PropsValues.PORTLET_URL_ANCHOR_ENABLE) {

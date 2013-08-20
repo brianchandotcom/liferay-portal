@@ -2097,10 +2097,12 @@ public class PortletDataContextImpl implements PortletDataContext {
 			return null;
 		}
 
-		StringBundler sb = new StringBundler(4);
+		StringBundler sb = new StringBundler(6);
 
 		sb.append("staged-model");
-		sb.append("[@" + attribute + "='");
+		sb.append("[@");
+		sb.append(attribute);
+		sb.append("='");
 		sb.append(value);
 		sb.append("']");
 

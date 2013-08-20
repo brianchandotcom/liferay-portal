@@ -291,6 +291,45 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 	}
 
+	protected void checkStringBundler(
+		String line, String fileName, int lineCount) {
+
+		if ((!line.startsWith("sb.append(") && !line.contains("SB.append(")) ||
+			!line.endsWith(");")) {
+
+			return;
+		}
+
+		int pos = line.indexOf(".append(");
+
+		line = line.substring(pos + 8, line.length() - 2);
+
+		line = stripQuotes(line, StringPool.QUOTE);
+
+		if (!line.contains(" + ")) {
+			return;
+		}
+
+		String[] lineParts = StringUtil.split(line, " + ");
+
+		for (String linePart : lineParts) {
+			int closeParenthesesCount = StringUtil.count(
+				linePart, StringPool.CLOSE_PARENTHESIS);
+			int openParenthesesCount = StringUtil.count(
+				linePart, StringPool.OPEN_PARENTHESIS);
+
+			if (closeParenthesesCount != openParenthesesCount) {
+				return;
+			}
+
+			if (Validator.isNumber(linePart)) {
+				return;
+			}
+		}
+
+		processErrorMessage(fileName, "plus: " + fileName + " " + lineCount);
+	}
+
 	protected String fixCompatClassImports(File file, String content)
 		throws IOException {
 

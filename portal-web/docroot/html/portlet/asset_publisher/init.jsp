@@ -149,10 +149,15 @@ String assetCategoryTitle = null;
 String assetVocabularyTitle = null;
 
 if (assetCategoryId > 0) {
-	allAssetCategoryIds = assetEntryQuery.getAllCategoryIds();
+	if (selectionStyle.equals("dynamic")) {
+		allAssetCategoryIds = assetEntryQuery.getAllCategoryIds();
 
-	if (!ArrayUtil.contains(allAssetCategoryIds, assetCategoryId)) {
-		assetEntryQuery.setAllCategoryIds(ArrayUtil.append(allAssetCategoryIds, assetCategoryId));
+		if (!ArrayUtil.contains(allAssetCategoryIds, assetCategoryId)) {
+			assetEntryQuery.setAllCategoryIds(ArrayUtil.append(allAssetCategoryIds, assetCategoryId));
+		}
+	}
+	else if (selectionStyle.equals("manual")) {
+		allAssetCategoryIds = ArrayUtil.append(allAssetCategoryIds, assetCategoryId);
 	}
 
 	AssetCategory assetCategory = AssetCategoryLocalServiceUtil.getCategory(assetCategoryId);

@@ -67,9 +67,11 @@ AUI.add(
 
 		var SELECTOR_SEARCH_CONTAINER = '.searchcontainer';
 
-		var SELECTOR_ENTRY_DISPLAY_STYLE = '.' + CSS_ENTRY_DISPLAY_STYLE;
+		var STR_DOT = '.';
 
-		var SELECTOR_TAGLIB_ICON = '.' + CSS_TAGLIB_ICON;
+		var SELECTOR_ENTRY_DISPLAY_STYLE = STR_DOT + CSS_ENTRY_DISPLAY_STYLE;
+
+		var SELECTOR_TAGLIB_ICON = STR_DOT + CSS_TAGLIB_ICON;
 
 		var SIZE_DENOMINATOR = 1024;
 
@@ -91,6 +93,8 @@ AUI.add(
 
 		var STR_SIZE_SUFFIX_GB = 'GB';
 
+		var STR_SPACE = ' ';
+
 		var STR_THUMBNAIL_EXTENSION = '.png';
 
 		var STR_THUMBNAIL_DEFAULT = 'default' + STR_THUMBNAIL_EXTENSION;
@@ -107,7 +111,7 @@ AUI.add(
 
 		var UPLOADER_TYPE = A.Uploader.TYPE || 'none';
 
-		var TPL_ENTRY_ROW_TITLE = '<span class="' + CSS_APP_VIEW_ENTRY + ' ' + CSS_ENTRY_DISPLAY_STYLE + '">' +
+		var TPL_ENTRY_ROW_TITLE = '<span class="' + CSS_APP_VIEW_ENTRY + STR_SPACE + CSS_ENTRY_DISPLAY_STYLE + '">' +
 			'<a class="' + CSS_TAGLIB_ICON + '">' +
 				'<img alt="" class="' + CSS_ICON + '" src="' + PATH_THEME_IMAGES + '/file_system/small/page.png" />' +
 				'<span class="' + CSS_TAGLIB_TEXT + '">{0}</span>' +
@@ -266,6 +270,14 @@ AUI.add(
 						parentElement.toggleClass(CSS_ACTIVE_AREA, event.type == 'dragover');
 					},
 					SELECTOR_DATA_FOLDER
+				);
+
+				entriesContainer.delegate(
+					'click',
+					function(event) {
+						event.preventDefault();
+					},
+					STR_DOT + CSS_UPLOAD_ERROR + STR_SPACE + SELECTOR_ENTRY_LINK
 				);
 			},
 
@@ -1131,7 +1143,7 @@ AUI.add(
 				var selector = SELECTOR_ENTRY_LINK;
 
 				if (displayStyleList) {
-					selector = SELECTOR_ENTRY_DISPLAY_STYLE + ' ' + SELECTOR_TAGLIB_ICON;
+					selector = SELECTOR_ENTRY_DISPLAY_STYLE + STR_SPACE + SELECTOR_TAGLIB_ICON;
 				}
 
 				var link = node.one(selector);

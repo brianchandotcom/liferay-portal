@@ -72,21 +72,21 @@ public class AssetEntryQueryTestUtil {
 
 		// Tags
 
-		if (Validator.isNotNull(notAllTags)) {
+		if (ArrayUtil.isNotEmpty(notAllTags)) {
 			assetEntryQuery.setNotAllTagIds(
 				getAssetTagsIds(groupId, notAllTags));
 		}
 
-		if (Validator.isNotNull(notAnyTags)) {
+		if (ArrayUtil.isNotEmpty(notAnyTags)) {
 			assetEntryQuery.setNotAnyTagIds(
 				getAssetTagsIds(groupId, notAnyTags));
 		}
 
-		if (Validator.isNotNull(anyTags)) {
+		if (ArrayUtil.isNotEmpty(anyTags)) {
 			assetEntryQuery.setAnyTagIds(getAssetTagsIds(groupId, anyTags));
 		}
 
-		if (Validator.isNotNull(allTags)) {
+		if (ArrayUtil.isNotEmpty(allTags)) {
 			assetEntryQuery.setAllTagIds(getAssetTagsIds(groupId, allTags));
 		}
 

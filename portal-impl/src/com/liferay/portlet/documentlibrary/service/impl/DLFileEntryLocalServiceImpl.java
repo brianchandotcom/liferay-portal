@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -1407,7 +1408,7 @@ public class DLFileEntryLocalServiceImpl
 				Field.USER_ID, String.valueOf(creatorUserId));
 		}
 
-		if (Validator.isNotNull(mimeTypes)) {
+		if (ArrayUtil.isNotEmpty(mimeTypes)) {
 			searchContext.setAttribute("mimeTypes", mimeTypes);
 		}
 

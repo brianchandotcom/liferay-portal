@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.lar;
 
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LongWrapper;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -189,7 +190,7 @@ public class ManifestSummary implements Serializable {
 	}
 
 	public long getModelDeletionCount(StagedModelType[] stagedModelTypes) {
-		if (Validator.isNull(stagedModelTypes)) {
+		if (ArrayUtil.isEmpty(stagedModelTypes)) {
 			return 0;
 		}
 

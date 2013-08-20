@@ -625,7 +625,7 @@ public class StringUtil {
 	public static String highlight(
 		String s, String[] queryTerms, String highlight1, String highlight2) {
 
-		if (Validator.isNull(s) || Validator.isNull(queryTerms)) {
+		if (Validator.isNull(s) || ArrayUtil.isEmpty(queryTerms)) {
 			return s;
 		}
 

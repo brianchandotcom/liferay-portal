@@ -204,7 +204,7 @@ public class Validator_IW {
 	}
 
 	public boolean isNotNull(java.lang.Object[] array) {
-		return Validator.isNotNull(array);
+		return !ArrayUtil.isEmpty(array);
 	}
 
 	public boolean isNotNull(java.lang.String s) {
@@ -220,7 +220,7 @@ public class Validator_IW {
 	}
 
 	public boolean isNull(java.lang.Object[] array) {
-		return Validator.isNull(array);
+		return ArrayUtil.isEmpty(array);
 	}
 
 	public boolean isNull(java.lang.String s) {

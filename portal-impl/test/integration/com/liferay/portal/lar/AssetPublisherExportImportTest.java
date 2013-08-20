@@ -17,6 +17,7 @@ package com.liferay.portal.lar;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -161,7 +162,7 @@ public class AssetPublisherExportImportTest
 		Assert.assertEquals(null, portletPreferences.getValue("scopeId", null));
 		Assert.assertTrue(
 			"The child group ID should have been filtered out on import",
-			Validator.isNull(portletPreferences.getValues("scopeIds", null)));
+			ArrayUtil.isEmpty(portletPreferences.getValues("scopeIds", null)));
 	}
 
 	@Test

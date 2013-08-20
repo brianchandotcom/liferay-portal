@@ -526,7 +526,7 @@ public class LuceneIndexSearcher extends BaseIndexSearcher {
 
 				values = doc.getValues(snippetField);
 
-				if (Validator.isNull(values)) {
+				if (ArrayUtil.isEmpty(values)) {
 					return StringPool.BLANK;
 				}
 

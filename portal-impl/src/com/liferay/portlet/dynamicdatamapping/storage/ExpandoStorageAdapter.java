@@ -399,7 +399,7 @@ public class ExpandoStorageAdapter extends BaseStorageAdapter {
 			for (Locale locale : stringArrayMap.keySet()) {
 				String[] value = stringArrayMap.get(locale);
 
-				if (Validator.isNull(value)) {
+				if (ArrayUtil.isEmpty(value)) {
 					continue;
 				}
 

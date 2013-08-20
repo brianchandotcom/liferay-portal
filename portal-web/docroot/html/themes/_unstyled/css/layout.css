@@ -20,9 +20,6 @@
 .portlet-column-content.empty {
 }
 
-#main-content.dragging .portlet-column {
-}
-
 .ie6, .ie7 {
 	div {
 		&.portlet-layout {

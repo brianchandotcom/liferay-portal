@@ -14,10 +14,14 @@
 
 package com.liferay.portal.kernel.servlet;
 
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 
 import java.io.IOException;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
 
@@ -42,6 +46,12 @@ public class SecureHttpServletResponseWrapper
 		else {
 			super.addHeader(name, value);
 		}
+	}
+
+	public void applySecurityHeaders(HttpServletRequest request) {
+		initConfiguration();
+
+		setXContentOptions(request);
 	}
 
 	@Override
@@ -88,6 +98,49 @@ public class SecureHttpServletResponseWrapper
 	public void setSanitizeHeaders(boolean sanitizeHeaders) {
 		this._sanitizeHeaders = sanitizeHeaders;
 	}
+
+	protected void setXContentOptions(HttpServletRequest request) {
+		if (!_X_CONTENT_TYPE_OPTIONS_ENABLED) {
+			return;
+		}
+
+		if (_X_CONTENT_TYPE_OPTIONS_WHITELIST.length > 0) {
+			String uri = request.getRequestURI();
+
+			for (String whitelistedURL : _X_CONTENT_TYPE_OPTIONS_WHITELIST) {
+				if (uri.startsWith(whitelistedURL)) {
+					return;
+				}
+			}
+		}
+
+		super.setHeader(HttpHeaders.X_CONTENT_TYPE_OPTIONS, "nosniff");
+	}
+
+	private static void initConfiguration() {
+		if (_X_CONTENT_TYPE_OPTIONS_WHITELIST != null) {
+			return;
+		}
+
+		synchronized (SecureHttpServletResponseWrapper.class) {
+			if (_X_CONTENT_TYPE_OPTIONS_WHITELIST != null) {
+				return;
+			}
+
+			_X_CONTENT_TYPE_OPTIONS_ENABLED = GetterUtil.getBoolean(
+					PropsUtil.get(
+						PropsKeys.HTTP_HEADER_X_CONTENT_TYPE_OPTIONS_ENABLED),
+					true);
+
+			_X_CONTENT_TYPE_OPTIONS_WHITELIST =
+				PropsUtil.getArray(
+					PropsKeys.HTTP_HEADER_X_CONTENT_TYPE_OPTIONS_WHITELIST);
+		}
+	}
+
+	private static boolean _X_CONTENT_TYPE_OPTIONS_ENABLED;
+
+	private static String[] _X_CONTENT_TYPE_OPTIONS_WHITELIST;
 
 	private boolean _sanitizeHeaders;
 

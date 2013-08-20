@@ -77,6 +77,9 @@ public interface HttpHeaders {
 
 	public static final String WWW_AUTHENTICATE = "WWW-Authenticate";
 
+	public static final String X_CONTENT_TYPE_OPTIONS =
+		"X-Content-Type-Options";
+
 	public static final String X_REQUESTED_WITH = "X-Requested-With";
 
 	// Values

@@ -205,6 +205,16 @@
 
 	/* ---------- Dockbar ---------- */
 
+	.dockbar-split {
+		.dockbar .navbar-inner {
+			visibility: hidden;
+		}
+
+		&.dockbar-ready .dockbar .navbar-inner {
+			visibility: visible;
+		}
+	}
+
 	.dockbar {
 		.navbar-inner {
 			background: #333;

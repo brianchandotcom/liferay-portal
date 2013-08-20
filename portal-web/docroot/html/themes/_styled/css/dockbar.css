@@ -227,6 +227,18 @@
 	&.controls-hidden .dockbar .navbar-inner .nav-add-controls > li.toggle-controls > .toggle-controls-link {
 		background: #F5AF45;
 	}
+
+	&.lfr-has-add-content .nav-add-controls {
+		left: 350px;
+	}
+
+	&.lfr-has-device-preview .nav-add-controls {
+		left: 220px;
+	}
+
+	&.lfr-has-edit-layout .nav-add-controls {
+		left: 460px;
+	}
 }
 
 .touch .dockbar-split, .controls-hidden.dockbar-split {

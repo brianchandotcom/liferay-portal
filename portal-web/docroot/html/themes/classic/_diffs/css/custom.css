@@ -81,7 +81,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 	/* ---------- Dockbar ---------- */
 
-	.dockbar {
+	.dockbar-split .dockbar {
 		.navbar-inner {
 			.nav {
 				background-color: $dockbarGradientEnd;
@@ -435,7 +435,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 		@include box-shadow(none);
 	}
 
-	.dockbar {
+	.dockbar-split .dockbar {
 		.navbar-inner {
 			@include box-shadow(none);
 			@include text-shadow(none);

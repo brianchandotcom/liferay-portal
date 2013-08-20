@@ -99,11 +99,13 @@ import net.fortuna.ical4j.model.Component;
 import net.fortuna.ical4j.model.DateTime;
 import net.fortuna.ical4j.model.Dur;
 import net.fortuna.ical4j.model.Parameter;
+import net.fortuna.ical4j.model.ParameterList;
 import net.fortuna.ical4j.model.Property;
 import net.fortuna.ical4j.model.PropertyList;
 import net.fortuna.ical4j.model.Recur;
 import net.fortuna.ical4j.model.WeekDay;
 import net.fortuna.ical4j.model.component.VEvent;
+import net.fortuna.ical4j.model.parameter.XParameter;
 import net.fortuna.ical4j.model.property.CalScale;
 import net.fortuna.ical4j.model.property.Comment;
 import net.fortuna.ical4j.model.property.DateProperty;
@@ -117,6 +119,7 @@ import net.fortuna.ical4j.model.property.RRule;
 import net.fortuna.ical4j.model.property.Summary;
 import net.fortuna.ical4j.model.property.Uid;
 import net.fortuna.ical4j.model.property.Version;
+import net.fortuna.ical4j.model.property.XProperty;
 
 /**
  * @author Brian Wing Shun Chan
@@ -1580,6 +1583,15 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 			HtmlUtil.render(event.getDescription()));
 
 		eventProps.add(description);
+
+		XProperty xProperty = new XProperty(
+			"X-ALT-DESC", event.getDescription());
+
+		ParameterList parameters = xProperty.getParameters();
+
+		parameters.add(new XParameter("FMTTYPE", "text/html"));
+
+		eventProps.add(xProperty);
 
 		// Location
 

@@ -1,11 +1,7 @@
-.taglib-icon {
-	text-decoration:none;
+.aui a.taglib-icon {
+	text-decoration: none;
 
-	.taglib-text {
+	.taglib-text:hover {
 		text-decoration: underline;
-
-		&:hover {
-			text-decoration: none;
-		}
 	}
 }

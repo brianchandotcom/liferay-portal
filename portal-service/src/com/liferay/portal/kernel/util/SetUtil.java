@@ -33,7 +33,7 @@ import java.util.Set;
 public class SetUtil {
 
 	public static Set<Boolean> fromArray(boolean[] array) {
-		if ((array == null) || (array.length == 0)) {
+		if (ArrayUtil.isEmpty(array)) {
 			return new HashSet<Boolean>();
 		}
 
@@ -47,7 +47,7 @@ public class SetUtil {
 	}
 
 	public static Set<Byte> fromArray(byte[] array) {
-		if ((array == null) || (array.length == 0)) {
+		if (ArrayUtil.isEmpty(array)) {
 			return new HashSet<Byte>();
 		}
 
@@ -61,7 +61,7 @@ public class SetUtil {
 	}
 
 	public static Set<Character> fromArray(char[] array) {
-		if ((array == null) || (array.length == 0)) {
+		if (ArrayUtil.isEmpty(array)) {
 			return new HashSet<Character>();
 		}
 
@@ -75,7 +75,7 @@ public class SetUtil {
 	}
 
 	public static Set<Double> fromArray(double[] array) {
-		if ((array == null) || (array.length == 0)) {
+		if (ArrayUtil.isEmpty(array)) {
 			return new HashSet<Double>();
 		}
 
@@ -89,7 +89,7 @@ public class SetUtil {
 	}
 
 	public static <E> Set<E> fromArray(E[] array) {
-		if ((array == null) || (array.length == 0)) {
+		if (ArrayUtil.isEmpty(array)) {
 			return new HashSet<E>();
 		}
 
@@ -103,7 +103,7 @@ public class SetUtil {
 	}
 
 	public static Set<Float> fromArray(float[] array) {
-		if ((array == null) || (array.length == 0)) {
+		if (ArrayUtil.isEmpty(array)) {
 			return new HashSet<Float>();
 		}
 
@@ -117,7 +117,7 @@ public class SetUtil {
 	}
 
 	public static Set<Integer> fromArray(int[] array) {
-		if ((array == null) || (array.length == 0)) {
+		if (ArrayUtil.isEmpty(array)) {
 			return new HashSet<Integer>();
 		}
 
@@ -131,7 +131,7 @@ public class SetUtil {
 	}
 
 	public static Set<Long> fromArray(long[] array) {
-		if ((array == null) || (array.length == 0)) {
+		if (ArrayUtil.isEmpty(array)) {
 			return new HashSet<Long>();
 		}
 
@@ -145,7 +145,7 @@ public class SetUtil {
 	}
 
 	public static Set<Short> fromArray(short[] array) {
-		if ((array == null) || (array.length == 0)) {
+		if (ArrayUtil.isEmpty(array)) {
 			return new HashSet<Short>();
 		}
 

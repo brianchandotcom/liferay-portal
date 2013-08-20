@@ -39,11 +39,11 @@ if (vocabulary != null) {
 	}
 }
 
-if ((selectedClassNameIds == null) || (selectedClassNameIds.length == 0)) {
+if (ArrayUtil.isEmpty(selectedClassNameIds)) {
 	selectedClassNameIds = new long[] {0};
 }
 
-if ((requiredClassNameIds == null) || (requiredClassNameIds.length == 0)) {
+if (ArrayUtil.isEmpty(requiredClassNameIds)) {
 	requiredClassNameIds = new long[] {0};
 }
 %>

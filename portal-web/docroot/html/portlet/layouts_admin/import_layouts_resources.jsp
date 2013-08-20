@@ -235,7 +235,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 
 									PortletDataHandlerControl[] portletDataHandlerControls = portletDataHandler.getImportConfigurationControls(portlet, manifestSummary);
 
-									if ((portletDataHandlerControls == null) || (portletDataHandlerControls.length == 0)) {
+									if (ArrayUtil.isEmpty(portletDataHandlerControls)) {
 										continue;
 									}
 
@@ -364,7 +364,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 												PortletDataHandlerControl[] importControls = portletDataHandler.getImportControls();
 												PortletDataHandlerControl[] importMetadataControls = portletDataHandler.getImportMetadataControls();
 
-												if (Validator.isNotNull(importControls) || Validator.isNotNull(importMetadataControls)) {
+												if (ArrayUtil.isNotEmpty(importControls) || ArrayUtil.isNotEmpty(importMetadataControls)) {
 												%>
 
 													<div class="hide" id="<portlet:namespace />content_<%= portlet.getRootPortletId() %>">
@@ -380,7 +380,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 																		request.setAttribute("render_controls.jsp-portletDisabled", !portletDataHandler.isPublishToLiveByDefault());
 																	%>
 
-																		<aui:field-wrapper label='<%= Validator.isNotNull(importMetadataControls) ? "content" : StringPool.BLANK %>'>
+																		<aui:field-wrapper label='<%= ArrayUtil.isNotEmpty(importMetadataControls) ? "content" : StringPool.BLANK %>'>
 																			<ul class="lfr-tree unstyled">
 																				<liferay-util:include page="/html/portlet/layouts_admin/render_controls.jsp" />
 																			</ul>

@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.search.TermQuery;
 import com.liferay.portal.kernel.search.TermQueryFactoryUtil;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.kernel.search.facet.util.FacetValueValidator;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -43,7 +44,7 @@ public class MultiValueFacet extends BaseFacet {
 	}
 
 	public void setValues(boolean[] values) {
-		if ((values == null) || (values.length == 0)) {
+		if (ArrayUtil.isEmpty(values)) {
 			return;
 		}
 
@@ -57,7 +58,7 @@ public class MultiValueFacet extends BaseFacet {
 	}
 
 	public void setValues(double[] values) {
-		if ((values == null) || (values.length == 0)) {
+		if (ArrayUtil.isEmpty(values)) {
 			return;
 		}
 
@@ -71,7 +72,7 @@ public class MultiValueFacet extends BaseFacet {
 	}
 
 	public void setValues(int[] values) {
-		if ((values == null) || (values.length == 0)) {
+		if (ArrayUtil.isEmpty(values)) {
 			return;
 		}
 
@@ -89,7 +90,7 @@ public class MultiValueFacet extends BaseFacet {
 	}
 
 	public void setValues(JSONObject[] values) {
-		if ((values == null) || (values.length == 0)) {
+		if (ArrayUtil.isEmpty(values)) {
 			return;
 		}
 
@@ -103,7 +104,7 @@ public class MultiValueFacet extends BaseFacet {
 	}
 
 	public void setValues(long[] values) {
-		if ((values == null) || (values.length == 0)) {
+		if (ArrayUtil.isEmpty(values)) {
 			return;
 		}
 
@@ -117,7 +118,7 @@ public class MultiValueFacet extends BaseFacet {
 	}
 
 	public void setValues(String[] values) {
-		if ((values == null) || (values.length == 0)) {
+		if (ArrayUtil.isEmpty(values)) {
 			return;
 		}
 
@@ -157,7 +158,7 @@ public class MultiValueFacet extends BaseFacet {
 			values = valuesParam;
 		}
 
-		if ((values == null) || (values.length == 0)) {
+		if (ArrayUtil.isEmpty(values)) {
 			return null;
 		}
 

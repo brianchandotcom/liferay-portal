@@ -427,7 +427,7 @@ public class DDMStructureFinderImpl
 	}
 
 	protected String getGroupIds(long[] groupIds) {
-		if ((groupIds == null) || (groupIds.length == 0)) {
+		if (ArrayUtil.isEmpty(groupIds)) {
 			return StringPool.BLANK;
 		}
 

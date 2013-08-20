@@ -539,7 +539,7 @@ public class MailEngine {
 
 				Address[] addresses = null;
 
-				if (Validator.isNotNull(bulkAddresses)) {
+				if (ArrayUtil.isNotEmpty(bulkAddresses)) {
 					addresses = bulkAddresses;
 				}
 				else {
@@ -562,13 +562,13 @@ public class MailEngine {
 				transport.close();
 			}
 			else {
-				if (Validator.isNotNull(bulkAddresses)) {
+				if (ArrayUtil.isNotEmpty(bulkAddresses)) {
 					int curBatch = 0;
 
 					Address[] portion = _getBatchAddresses(
 						bulkAddresses, curBatch, batchSize);
 
-					while (Validator.isNotNull(portion)) {
+					while (ArrayUtil.isNotEmpty(portion)) {
 						Transport.send(message, portion);
 
 						curBatch++;

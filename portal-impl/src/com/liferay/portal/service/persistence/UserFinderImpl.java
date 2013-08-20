@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -259,7 +260,7 @@ public class UserFinderImpl
 
 		boolean inherit = GetterUtil.getBoolean(params.get("inherit"));
 
-		boolean doUnionOnGroup = Validator.isNotNull(groupIds) && inherit;
+		boolean doUnionOnGroup = ArrayUtil.isNotEmpty(groupIds) && inherit;
 
 		if (doUnionOnGroup) {
 			params2 = new LinkedHashMap<String, Object>(params1);
@@ -303,7 +304,7 @@ public class UserFinderImpl
 				userGroupIds.toArray(new Long[userGroupIds.size()]));
 		}
 
-		boolean doUnionOnRole = Validator.isNotNull(roleIds) && inherit;
+		boolean doUnionOnRole = ArrayUtil.isNotEmpty(roleIds) && inherit;
 
 		if (doUnionOnRole) {
 			params2 = new LinkedHashMap<String, Object>(params1);
@@ -539,7 +540,7 @@ public class UserFinderImpl
 
 		boolean inherit = GetterUtil.getBoolean(params.get("inherit"));
 
-		boolean doUnionOnGroup = Validator.isNotNull(groupIds) && inherit;
+		boolean doUnionOnGroup = ArrayUtil.isNotEmpty(groupIds) && inherit;
 
 		if (doUnionOnGroup) {
 			params2 = new LinkedHashMap<String, Object>(params1);
@@ -583,7 +584,7 @@ public class UserFinderImpl
 				userGroupIds.toArray(new Long[userGroupIds.size()]));
 		}
 
-		boolean doUnionOnRole = Validator.isNotNull(roleIds) && inherit;
+		boolean doUnionOnRole = ArrayUtil.isNotEmpty(roleIds) && inherit;
 
 		if (doUnionOnRole) {
 			params2 = new LinkedHashMap<String, Object>(params1);

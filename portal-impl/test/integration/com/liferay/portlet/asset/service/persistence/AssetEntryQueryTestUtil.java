@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.asset.service.persistence;
 
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
@@ -71,21 +72,21 @@ public class AssetEntryQueryTestUtil {
 
 		// Tags
 
-		if (Validator.isNotNull(notAllTags)) {
+		if (ArrayUtil.isNotEmpty(notAllTags)) {
 			assetEntryQuery.setNotAllTagIds(
 				getAssetTagsIds(groupId, notAllTags));
 		}
 
-		if (Validator.isNotNull(notAnyTags)) {
+		if (ArrayUtil.isNotEmpty(notAnyTags)) {
 			assetEntryQuery.setNotAnyTagIds(
 				getAssetTagsIds(groupId, notAnyTags));
 		}
 
-		if (Validator.isNotNull(anyTags)) {
+		if (ArrayUtil.isNotEmpty(anyTags)) {
 			assetEntryQuery.setAnyTagIds(getAssetTagsIds(groupId, anyTags));
 		}
 
-		if (Validator.isNotNull(allTags)) {
+		if (ArrayUtil.isNotEmpty(allTags)) {
 			assetEntryQuery.setAllTagIds(getAssetTagsIds(groupId, allTags));
 		}
 
@@ -158,7 +159,7 @@ public class AssetEntryQueryTestUtil {
 			long groupId, String[] assetTagNames)
 		throws Exception {
 
-		if ((assetTagNames == null) || (assetTagNames.length == 0)) {
+		if (ArrayUtil.isEmpty(assetTagNames)) {
 			return new long[0];
 		}
 

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.security.auth;
 
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstancePool;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -214,7 +215,7 @@ public class AuthPipeline {
 
 		Authenticator[] authenticators = _authenticators.get(key);
 
-		if ((authenticators == null) || (authenticators.length == 0)) {
+		if (ArrayUtil.isEmpty(authenticators)) {
 			return Authenticator.SUCCESS;
 		}
 
@@ -266,7 +267,7 @@ public class AuthPipeline {
 
 		AuthFailure[] authFailures = _authFailures.get(key);
 
-		if ((authFailures == null) || (authFailures.length == 0)) {
+		if (ArrayUtil.isEmpty(authFailures)) {
 			return;
 		}
 

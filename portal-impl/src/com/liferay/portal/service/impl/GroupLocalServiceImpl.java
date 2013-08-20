@@ -4119,7 +4119,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 	}
 
 	protected boolean isUseComplexSQL(long[] classNameIds) {
-		if ((classNameIds == null) || (classNameIds.length == 0)) {
+		if (ArrayUtil.isEmpty(classNameIds)) {
 			return true;
 		}
 

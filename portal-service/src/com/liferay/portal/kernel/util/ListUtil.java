@@ -87,7 +87,7 @@ public class ListUtil {
 	}
 
 	public static <E> List<E> fromArray(E[] array) {
-		if ((array == null) || (array.length == 0)) {
+		if (ArrayUtil.isEmpty(array)) {
 			return new ArrayList<E>();
 		}
 
@@ -252,7 +252,7 @@ public class ListUtil {
 	}
 
 	public static List<Boolean> toList(boolean[] array) {
-		if ((array == null) || (array.length == 0)) {
+		if (ArrayUtil.isEmpty(array)) {
 			return new ArrayList<Boolean>();
 		}
 
@@ -266,7 +266,7 @@ public class ListUtil {
 	}
 
 	public static List<Character> toList(char[] array) {
-		if ((array == null) || (array.length == 0)) {
+		if (ArrayUtil.isEmpty(array)) {
 			return new ArrayList<Character>();
 		}
 
@@ -280,7 +280,7 @@ public class ListUtil {
 	}
 
 	public static List<Double> toList(double[] array) {
-		if ((array == null) || (array.length == 0)) {
+		if (ArrayUtil.isEmpty(array)) {
 			return new ArrayList<Double>();
 		}
 
@@ -294,7 +294,7 @@ public class ListUtil {
 	}
 
 	public static <E> List<E> toList(E[] array) {
-		if ((array == null) || (array.length == 0)) {
+		if (ArrayUtil.isEmpty(array)) {
 			return new ArrayList<E>();
 		}
 
@@ -302,7 +302,7 @@ public class ListUtil {
 	}
 
 	public static List<Float> toList(float[] array) {
-		if ((array == null) || (array.length == 0)) {
+		if (ArrayUtil.isEmpty(array)) {
 			return new ArrayList<Float>();
 		}
 
@@ -316,7 +316,7 @@ public class ListUtil {
 	}
 
 	public static List<Integer> toList(int[] array) {
-		if ((array == null) || (array.length == 0)) {
+		if (ArrayUtil.isEmpty(array)) {
 			return new ArrayList<Integer>();
 		}
 
@@ -330,7 +330,7 @@ public class ListUtil {
 	}
 
 	public static List<Long> toList(long[] array) {
-		if ((array == null) || (array.length == 0)) {
+		if (ArrayUtil.isEmpty(array)) {
 			return new ArrayList<Long>();
 		}
 
@@ -344,7 +344,7 @@ public class ListUtil {
 	}
 
 	public static List<Short> toList(short[] array) {
-		if ((array == null) || (array.length == 0)) {
+		if (ArrayUtil.isEmpty(array)) {
 			return new ArrayList<Short>();
 		}
 

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -298,7 +299,7 @@ public class CustomSQL {
 	}
 
 	public String[] keywords(String[] keywordsArray, boolean lowerCase) {
-		if ((keywordsArray == null) || (keywordsArray.length == 0)) {
+		if (ArrayUtil.isEmpty(keywordsArray)) {
 			return new String[] {null};
 		}
 
@@ -582,7 +583,7 @@ public class CustomSQL {
 			oldSql.append(" [$AND_OR_CONNECTOR$]");
 		}
 
-		if ((values == null) || (values.length == 0)) {
+		if (ArrayUtil.isEmpty(values)) {
 			return StringUtil.replace(sql, oldSql.toString(), StringPool.BLANK);
 		}
 
@@ -626,7 +627,7 @@ public class CustomSQL {
 			oldSql.append(" [$AND_OR_CONNECTOR$]");
 		}
 
-		if ((values == null) || (values.length == 0)) {
+		if (ArrayUtil.isEmpty(values)) {
 			return StringUtil.replace(sql, oldSql.toString(), StringPool.BLANK);
 		}
 

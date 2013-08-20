@@ -555,7 +555,7 @@ public class LocalizationImpl implements Localization {
 
 		String[] values = preferences.getValues(localizedKey, new String[0]);
 
-		if (useDefault && Validator.isNull(values)) {
+		if (useDefault && ArrayUtil.isEmpty(values)) {
 			values = preferences.getValues(key, new String[0]);
 		}
 

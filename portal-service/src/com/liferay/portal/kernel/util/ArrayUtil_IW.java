@@ -354,12 +354,48 @@ public class ArrayUtil_IW {
 		return ArrayUtil.isEmpty(array);
 	}
 
-	public boolean isEmpty(Object[] array) {
+	public boolean isEmpty(java.lang.Object[] array) {
 		return ArrayUtil.isEmpty(array);
 	}
 
-	public static boolean isEmpty(short[] array) {
+	public boolean isEmpty(short[] array) {
 		return ArrayUtil.isEmpty(array);
+	}
+
+	public boolean isNotEmpty(boolean[] array) {
+		return ArrayUtil.isNotEmpty(array);
+	}
+
+	public boolean isNotEmpty(byte[] array) {
+		return ArrayUtil.isNotEmpty(array);
+	}
+
+	public boolean isNotEmpty(char[] array) {
+		return ArrayUtil.isNotEmpty(array);
+	}
+
+	public boolean isNotEmpty(double[] array) {
+		return ArrayUtil.isNotEmpty(array);
+	}
+
+	public boolean isNotEmpty(float[] array) {
+		return ArrayUtil.isNotEmpty(array);
+	}
+
+	public boolean isNotEmpty(int[] array) {
+		return ArrayUtil.isNotEmpty(array);
+	}
+
+	public boolean isNotEmpty(long[] array) {
+		return ArrayUtil.isNotEmpty(array);
+	}
+
+	public boolean isNotEmpty(java.lang.Object[] array) {
+		return ArrayUtil.isNotEmpty(array);
+	}
+
+	public boolean isNotEmpty(short[] array) {
+		return ArrayUtil.isNotEmpty(array);
 	}
 
 	public boolean[] remove(boolean[] array, boolean value) {

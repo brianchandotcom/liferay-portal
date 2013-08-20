@@ -15,6 +15,7 @@
 package com.liferay.taglib.ui;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -88,7 +89,7 @@ public class LanguageTag extends IncludeTag {
 
 		Locale[] locales = null;
 
-		if ((_languageIds == null) || (_languageIds.length == 0)) {
+		if (ArrayUtil.isEmpty(_languageIds)) {
 			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 				WebKeys.THEME_DISPLAY);
 

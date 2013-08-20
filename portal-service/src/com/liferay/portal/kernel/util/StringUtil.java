@@ -625,7 +625,7 @@ public class StringUtil {
 	public static String highlight(
 		String s, String[] queryTerms, String highlight1, String highlight2) {
 
-		if (Validator.isNull(s) || Validator.isNull(queryTerms)) {
+		if (Validator.isNull(s) || ArrayUtil.isEmpty(queryTerms)) {
 			return s;
 		}
 
@@ -774,7 +774,7 @@ public class StringUtil {
 			return -1;
 		}
 
-		if ((chars == null) || (chars.length == 0)) {
+		if (ArrayUtil.isEmpty(chars)) {
 			return -1;
 		}
 
@@ -944,7 +944,7 @@ public class StringUtil {
 			return -1;
 		}
 
-		if ((texts == null) || (texts.length == 0)) {
+		if (ArrayUtil.isEmpty(texts)) {
 			return -1;
 		}
 
@@ -1134,7 +1134,7 @@ public class StringUtil {
 			return -1;
 		}
 
-		if ((chars == null) || (chars.length == 0)) {
+		if (ArrayUtil.isEmpty(chars)) {
 			return -1;
 		}
 
@@ -1303,7 +1303,7 @@ public class StringUtil {
 			return -1;
 		}
 
-		if ((texts == null) || (texts.length == 0)) {
+		if (ArrayUtil.isEmpty(texts)) {
 			return -1;
 		}
 
@@ -3701,7 +3701,7 @@ public class StringUtil {
 			return s;
 		}
 
-		if ((exceptions == null) || (exceptions.length == 0)) {
+		if (ArrayUtil.isEmpty(exceptions)) {
 			return trim(s);
 		}
 
@@ -3815,7 +3815,7 @@ public class StringUtil {
 			return s;
 		}
 
-		if ((exceptions == null) || (exceptions.length == 0)) {
+		if (ArrayUtil.isEmpty(exceptions)) {
 			return trimLeading(s);
 		}
 
@@ -3916,7 +3916,7 @@ public class StringUtil {
 			return s;
 		}
 
-		if ((exceptions == null) || (exceptions.length == 0)) {
+		if (ArrayUtil.isEmpty(exceptions)) {
 			return trimTrailing(s);
 		}
 

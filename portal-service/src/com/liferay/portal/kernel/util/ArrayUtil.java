@@ -554,7 +554,7 @@ public class ArrayUtil {
 	}
 
 	public static boolean contains(boolean[] array, boolean value) {
-		if ((array == null) || (array.length == 0)) {
+		if (isEmpty(array)) {
 			return false;
 		}
 
@@ -568,7 +568,7 @@ public class ArrayUtil {
 	}
 
 	public static boolean contains(byte[] array, byte value) {
-		if ((array == null) || (array.length == 0)) {
+		if (isEmpty(array)) {
 			return false;
 		}
 
@@ -582,7 +582,7 @@ public class ArrayUtil {
 	}
 
 	public static boolean contains(char[] array, char value) {
-		if ((array == null) || (array.length == 0)) {
+		if (isEmpty(array)) {
 			return false;
 		}
 
@@ -596,7 +596,7 @@ public class ArrayUtil {
 	}
 
 	public static boolean contains(double[] array, double value) {
-		if ((array == null) || (array.length == 0)) {
+		if (isEmpty(array)) {
 			return false;
 		}
 
@@ -610,7 +610,7 @@ public class ArrayUtil {
 	}
 
 	public static boolean contains(float[] array, float value) {
-		if ((array == null) || (array.length == 0)) {
+		if (isEmpty(array)) {
 			return false;
 		}
 
@@ -624,7 +624,7 @@ public class ArrayUtil {
 	}
 
 	public static boolean contains(int[] array, int value) {
-		if ((array == null) || (array.length == 0)) {
+		if (isEmpty(array)) {
 			return false;
 		}
 
@@ -638,7 +638,7 @@ public class ArrayUtil {
 	}
 
 	public static boolean contains(long[] array, long value) {
-		if ((array == null) || (array.length == 0)) {
+		if (isEmpty(array)) {
 			return false;
 		}
 
@@ -652,7 +652,7 @@ public class ArrayUtil {
 	}
 
 	public static boolean contains(Object[] array, Object value) {
-		if ((array == null) || (array.length == 0) || (value == null)) {
+		if (isEmpty(array) || (value == null)) {
 			return false;
 		}
 
@@ -666,7 +666,7 @@ public class ArrayUtil {
 	}
 
 	public static boolean contains(short[] array, short value) {
-		if ((array == null) || (array.length == 0)) {
+		if (isEmpty(array)) {
 			return false;
 		}
 
@@ -680,9 +680,7 @@ public class ArrayUtil {
 	}
 
 	public static boolean containsAll(boolean[] array1, boolean[] array2) {
-		if ((array1 == null) || (array1.length == 0) ||
-			(array2 == null) || (array2.length == 0)) {
-
+		if (isEmpty(array1) || isEmpty(array2)) {
 			return false;
 		}
 
@@ -696,9 +694,7 @@ public class ArrayUtil {
 	}
 
 	public static boolean containsAll(byte[] array1, byte[] array2) {
-		if ((array1 == null) || (array1.length == 0) ||
-			(array2 == null) || (array2.length == 0)) {
-
+		if (isEmpty(array1) || isEmpty(array2)) {
 			return false;
 		}
 
@@ -712,9 +708,7 @@ public class ArrayUtil {
 	}
 
 	public static boolean containsAll(char[] array1, char[] array2) {
-		if ((array1 == null) || (array1.length == 0) ||
-			(array2 == null) || (array2.length == 0)) {
-
+		if (isEmpty(array1) || isEmpty(array2)) {
 			return false;
 		}
 
@@ -728,9 +722,7 @@ public class ArrayUtil {
 	}
 
 	public static boolean containsAll(double[] array1, double[] array2) {
-		if ((array1 == null) || (array1.length == 0) ||
-			(array2 == null) || (array2.length == 0)) {
-
+		if (isEmpty(array1) ||isEmpty(array2)) {
 			return false;
 		}
 
@@ -744,9 +736,7 @@ public class ArrayUtil {
 	}
 
 	public static boolean containsAll(float[] array1, float[] array2) {
-		if ((array1 == null) || (array1.length == 0) ||
-			(array2 == null) || (array2.length == 0)) {
-
+		if (isEmpty(array1) ||isEmpty(array2)) {
 			return false;
 		}
 
@@ -760,9 +750,7 @@ public class ArrayUtil {
 	}
 
 	public static boolean containsAll(int[] array1, int[] array2) {
-		if ((array1 == null) || (array1.length == 0) ||
-			(array2 == null) || (array2.length == 0)) {
-
+		if (isEmpty(array1) ||isEmpty(array2)) {
 			return false;
 		}
 
@@ -776,9 +764,7 @@ public class ArrayUtil {
 	}
 
 	public static boolean containsAll(long[] array1, long[] array2) {
-		if ((array1 == null) || (array1.length == 0) ||
-			(array2 == null) || (array2.length == 0)) {
-
+		if (isEmpty(array1) ||isEmpty(array2)) {
 			return false;
 		}
 
@@ -792,9 +778,7 @@ public class ArrayUtil {
 	}
 
 	public static boolean containsAll(Object[] array1, Object[] array2) {
-		if ((array1 == null) || (array1.length == 0) ||
-			(array2 == null) || (array2.length == 0)) {
-
+		if (isEmpty(array1) ||isEmpty(array2)) {
 			return false;
 		}
 
@@ -808,9 +792,7 @@ public class ArrayUtil {
 	}
 
 	public static boolean containsAll(short[] array1, short[] array2) {
-		if ((array1 == null) || (array1.length == 0) ||
-			(array2 == null) || (array2.length == 0)) {
-
+		if (isEmpty(array1) ||isEmpty(array2)) {
 			return false;
 		}
 
@@ -830,7 +812,7 @@ public class ArrayUtil {
 	public static String[] distinct(
 		String[] array, Comparator<String> comparator) {
 
-		if ((array == null) || (array.length == 0)) {
+		if (isEmpty(array)) {
 			return array;
 		}
 
@@ -857,7 +839,7 @@ public class ArrayUtil {
 	public static boolean[] filter(
 		boolean[] array, PredicateFilter<Boolean> predicateFilter) {
 
-		if ((array == null) || (array.length == 0)) {
+		if (isEmpty(array)) {
 			return array;
 		}
 
@@ -875,7 +857,7 @@ public class ArrayUtil {
 	public static byte[] filter(
 		byte[] array, PredicateFilter<Byte> predicateFilter) {
 
-		if ((array == null) || (array.length == 0)) {
+		if (isEmpty(array)) {
 			return array;
 		}
 
@@ -893,7 +875,7 @@ public class ArrayUtil {
 	public static char[] filter(
 		char[] array, PredicateFilter<Character> predicateFilter) {
 
-		if ((array == null) || (array.length == 0)) {
+		if (isEmpty(array)) {
 			return array;
 		}
 
@@ -912,7 +894,7 @@ public class ArrayUtil {
 	public static double[] filter(
 		double[] array, PredicateFilter<Double> predicateFilter) {
 
-		if ((array == null) || (array.length == 0)) {
+		if (isEmpty(array)) {
 			return array;
 		}
 
@@ -930,7 +912,7 @@ public class ArrayUtil {
 	public static float[] filter(
 		float[] array, PredicateFilter<Float> predicateFilter) {
 
-		if ((array == null) || (array.length == 0)) {
+		if (isEmpty(array)) {
 			return array;
 		}
 
@@ -948,7 +930,7 @@ public class ArrayUtil {
 	public static int[] filter(
 		int[] array, PredicateFilter<Integer> predicateFilter) {
 
-		if ((array == null) || (array.length == 0)) {
+		if (isEmpty(array)) {
 			return array;
 		}
 
@@ -966,7 +948,7 @@ public class ArrayUtil {
 	public static long[] filter(
 		long[] array, PredicateFilter<Long> predicateFilter) {
 
-		if ((array == null) ||(array.length == 0)) {
+		if (isEmpty(array)) {
 			return array;
 		}
 
@@ -984,7 +966,7 @@ public class ArrayUtil {
 	public static short[] filter(
 		short[] array, PredicateFilter<Short> predicateFilter) {
 
-		if ((array == null) || (array.length == 0)) {
+		if (isEmpty(array)) {
 			return array;
 		}
 
@@ -1002,7 +984,7 @@ public class ArrayUtil {
 	public static <T> T[] filter(
 		T[] array, PredicateFilter<T> filterPredicate) {
 
-		if ((array == null) || (array.length == 0)) {
+		if (isEmpty(array)) {
 			return array;
 		}
 
@@ -1108,6 +1090,42 @@ public class ArrayUtil {
 		}
 
 		return false;
+	}
+
+	public static boolean isNotEmpty(boolean[] array) {
+		return !isEmpty(array);
+	}
+
+	public static boolean isNotEmpty(byte[] array) {
+		return !isEmpty(array);
+	}
+
+	public static boolean isNotEmpty(char[] array) {
+		return !isEmpty(array);
+	}
+
+	public static boolean isNotEmpty(double[] array) {
+		return !isEmpty(array);
+	}
+
+	public static boolean isNotEmpty(float[] array) {
+		return !isEmpty(array);
+	}
+
+	public static boolean isNotEmpty(int[] array) {
+		return !isEmpty(array);
+	}
+
+	public static boolean isNotEmpty(long[] array) {
+		return !isEmpty(array);
+	}
+
+	public static boolean isNotEmpty(Object[] array) {
+		return !isEmpty(array);
+	}
+
+	public static boolean isNotEmpty(short[] array) {
+		return !isEmpty(array);
 	}
 
 	public static boolean[] remove(boolean[] array, boolean value) {
@@ -1730,7 +1748,7 @@ public class ArrayUtil {
 	public static String toString(
 		Object[] array, String param, String delimiter, Locale locale) {
 
-		if ((array == null) || (array.length == 0)) {
+		if (isEmpty(array)) {
 			return StringPool.BLANK;
 		}
 
@@ -1777,7 +1795,7 @@ public class ArrayUtil {
 	public static <T, V> String toString(
 		T[] list, Accessor<T, V> accessor, String delimiter, Locale locale) {
 
-		if ((list == null) || (list.length == 0)) {
+		if (isEmpty(list)) {
 			return StringPool.BLANK;
 		}
 

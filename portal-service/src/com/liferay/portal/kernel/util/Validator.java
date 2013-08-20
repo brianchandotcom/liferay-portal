@@ -1008,15 +1008,11 @@ public class Validator {
 	}
 
 	/**
-	 * Returns <code>true</code> if the array is not <code>null</code>, meaning
-	 * it is neither a <code>null</code> reference or empty.
-	 *
-	 * @param  array the array to check
-	 * @return <code>true</code> if the array is not <code>null</code>;
-	 *         <code>false</code> otherwise
+	 * @deprecated As of 6.2.0, replaced by {@link ArrayUtil#isNotEmpty(
+	 *             Object[])}
 	 */
 	public static boolean isNotNull(Object[] array) {
-		return !isNull(array);
+		return ArrayUtil.isNotEmpty(array);
 	}
 
 	/**
@@ -1074,20 +1070,10 @@ public class Validator {
 	}
 
 	/**
-	 * Returns <code>true</code> if the array is <code>null</code>, meaning it
-	 * is either a <code>null</code> reference or empty.
-	 *
-	 * @param  array the array to check
-	 * @return <code>true</code> if the array is <code>null</code>;
-	 *         <code>false</code> otherwise
+	 * @deprecated As of 6.2.0, replaced by {@link ArrayUtil#isEmpty(Object[])}
 	 */
 	public static boolean isNull(Object[] array) {
-		if ((array == null) || (array.length == 0)) {
-			return true;
-		}
-		else {
-			return false;
-		}
+		return ArrayUtil.isEmpty(array);
 	}
 
 	/**

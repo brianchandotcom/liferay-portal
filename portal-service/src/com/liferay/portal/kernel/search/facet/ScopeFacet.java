@@ -102,7 +102,7 @@ public class ScopeFacet extends MultiValueFacet {
 			}
 		}
 
-		if ((groupIds == null) || (groupIds.length == 0)) {
+		if (ArrayUtil.isEmpty(groupIds)) {
 			groupIds = searchContext.getGroupIds();
 		}
 
@@ -115,7 +115,7 @@ public class ScopeFacet extends MultiValueFacet {
 			groupIds = addScopeGroup(groupId);
 		}
 
-		if ((groupIds == null) || (groupIds.length == 0) ||
+		if (ArrayUtil.isEmpty(groupIds) ||
 			((groupIds.length == 1) && (groupIds[0] == 0))) {
 
 			return null;

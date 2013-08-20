@@ -16,6 +16,7 @@ package com.liferay.portal.dao.shard.advice;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.model.Portlet;
 
 import java.lang.reflect.Method;
@@ -37,7 +38,7 @@ public class ShardPortletAdvice implements MethodInterceptor {
 
 		Object[] arguments = methodInvocation.getArguments();
 
-		if ((arguments == null) || (arguments.length == 0)) {
+		if (ArrayUtil.isEmpty(arguments)) {
 			return methodInvocation.proceed();
 		}
 

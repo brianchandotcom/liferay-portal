@@ -521,14 +521,12 @@ public class LuceneIndexSearcher extends BaseIndexSearcher {
 					termCollectingFormatter);
 			}
 
-			if ((values == null) || (values.length == 0) ||
-				Validator.isNull(snippet)) {
-
+			if (ArrayUtil.isEmpty(values) || Validator.isNull(snippet)) {
 				snippetField = field;
 
 				values = doc.getValues(snippetField);
 
-				if (Validator.isNull(values)) {
+				if (ArrayUtil.isEmpty(values)) {
 					return StringPool.BLANK;
 				}
 

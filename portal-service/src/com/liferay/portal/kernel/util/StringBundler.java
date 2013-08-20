@@ -129,7 +129,7 @@ public class StringBundler implements Serializable {
 	}
 
 	public StringBundler append(String[] stringArray) {
-		if ((stringArray == null) || (stringArray.length == 0)) {
+		if (ArrayUtil.isEmpty(stringArray)) {
 			return this;
 		}
 

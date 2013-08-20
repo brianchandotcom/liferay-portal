@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -1085,7 +1086,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		serviceContext.setAttribute(
 			"pingOldTrackbacks", String.valueOf(pingOldTrackbacks));
 
-		if (Validator.isNotNull(trackbacks)) {
+		if (ArrayUtil.isNotEmpty(trackbacks)) {
 			serviceContext.setAttribute("trackbacks", trackbacks);
 		}
 		else {
@@ -1568,7 +1569,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		Set<String> trackbacksSet = null;
 
-		if (Validator.isNotNull(trackbacks)) {
+		if (ArrayUtil.isNotEmpty(trackbacks)) {
 			trackbacksSet = SetUtil.fromArray(trackbacks);
 		}
 		else {

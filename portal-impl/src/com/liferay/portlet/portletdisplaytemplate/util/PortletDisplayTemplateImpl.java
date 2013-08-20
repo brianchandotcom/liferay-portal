@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.servlet.GenericServletWrapper;
 import com.liferay.portal.kernel.servlet.PipingServletResponse;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
@@ -386,7 +387,7 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 		for (Map.Entry<String, String[]> entry : map.entrySet()) {
 			String[] values = entry.getValue();
 
-			if ((values == null) || (values.length == 0)) {
+			if (ArrayUtil.isEmpty(values)) {
 				continue;
 			}
 

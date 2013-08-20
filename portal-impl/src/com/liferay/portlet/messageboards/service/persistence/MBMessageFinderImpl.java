@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -244,7 +245,7 @@ public class MBMessageFinderImpl
 				sql = StringUtil.replace(sql, _USER_ID_SQL, StringPool.BLANK);
 			}
 
-			if ((categoryIds == null) || (categoryIds.length == 0)) {
+			if (ArrayUtil.isEmpty(categoryIds)) {
 				sql = StringUtil.replace(
 					sql, "(currentMessage.categoryId = ?) AND",
 					StringPool.BLANK);
@@ -320,7 +321,7 @@ public class MBMessageFinderImpl
 				sql = StringUtil.replace(sql, _USER_ID_SQL, StringPool.BLANK);
 			}
 
-			if ((categoryIds == null) || (categoryIds.length == 0)) {
+			if (ArrayUtil.isEmpty(categoryIds)) {
 				sql = StringUtil.replace(
 					sql, "(currentMessage.categoryId = ?) AND",
 					StringPool.BLANK);
@@ -394,7 +395,7 @@ public class MBMessageFinderImpl
 
 			String sql = CustomSQLUtil.get(COUNT_BY_G_U_C_A_S);
 
-			if ((categoryIds == null) || (categoryIds.length == 0)) {
+			if (ArrayUtil.isEmpty(categoryIds)) {
 				sql = StringUtil.replace(
 					sql, "(currentMessage.categoryId = ?) AND",
 					StringPool.BLANK);
@@ -468,7 +469,7 @@ public class MBMessageFinderImpl
 				sql = StringUtil.replace(sql, _USER_ID_SQL, StringPool.BLANK);
 			}
 
-			if ((categoryIds == null) || (categoryIds.length == 0)) {
+			if (ArrayUtil.isEmpty(categoryIds)) {
 				sql = StringUtil.replace(
 					sql, "(currentMessage.categoryId = ?) AND",
 					StringPool.BLANK);
@@ -534,7 +535,7 @@ public class MBMessageFinderImpl
 				sql = StringUtil.replace(sql, _USER_ID_SQL, StringPool.BLANK);
 			}
 
-			if ((categoryIds == null) || (categoryIds.length == 0)) {
+			if (ArrayUtil.isEmpty(categoryIds)) {
 				sql = StringUtil.replace(
 					sql, "(currentMessage.categoryId = ?) AND",
 					StringPool.BLANK);
@@ -598,7 +599,7 @@ public class MBMessageFinderImpl
 
 			String sql = CustomSQLUtil.get(FIND_BY_G_U_C_A_S);
 
-			if ((categoryIds == null) || (categoryIds.length == 0)) {
+			if (ArrayUtil.isEmpty(categoryIds)) {
 				sql = StringUtil.replace(
 					sql, "(currentMessage.categoryId = ?) AND",
 					StringPool.BLANK);

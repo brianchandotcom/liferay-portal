@@ -37,4 +37,20 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem");
 			<aui:nav-item href="<%= addFileEntryTypeURL %>" iconClass="icon-plus" label="add" selected='<%= toolbarItem.equals("add") %>' />
 		</c:if>
 	</aui:nav>
+
+	<div class="navbar-search pull-right">
+		<div class="form-search">
+			<liferay-portlet:renderURL varImpl="searchURL">
+				<portlet:param name="struts_action" value="/document_library/view_file_entry_type" />
+			</liferay-portlet:renderURL>
+
+			<aui:form action="<%= searchURL.toString() %>" method="post" name="fm">
+				<div class="input-append">
+					<input class="search-query span9" id="<portlet:namespace/>keywords" name="<portlet:namespace/>keywords" placeholder="<liferay-ui:message key="keywords" />" type="text" />
+
+					<aui:button primary="<%= false %>" type="submit" value="search" />
+				</div>
+			</aui:form>
+		</div>
+	</div>
 </aui:nav-bar>

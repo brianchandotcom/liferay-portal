@@ -88,6 +88,8 @@ public class NavTag extends BaseNavTag {
 			return _namespacedId;
 		}
 
+		_namespacedId = getId();
+
 		HttpServletRequest request =
 			(HttpServletRequest)pageContext.getRequest();
 

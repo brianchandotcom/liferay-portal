@@ -48,5 +48,23 @@ if (Validator.isNotNull(inlineLabel)) {
 	controlGroupCss = controlGroupCss.concat(" form-inline");
 }
 
+boolean valueIsNumeric = false;
+
+if (Validator.isNull(listType) && showEmptyOption && (bean != null)) {
+	Class<?> clazz = bean.getClass();
+
+	Class<?>[] primitiveNumberClasses = new Class<?>[] {byte.class, double.class, float.class, int.class, long.class, short.class};
+
+	try {
+		java.lang.reflect.Method method = clazz.getMethod("get" + name.substring(0, 1).toUpperCase() + name.substring(1));
+
+		if (Number.class.isAssignableFrom(method.getReturnType()) || ArrayUtil.contains(primitiveNumberClasses, method.getReturnType())) {
+			valueIsNumeric = true;
+		}
+	}
+	catch (Exception e) {
+	}
+}
+
 String fieldCss = AUIUtil.buildCss("aui-field-select", disabled, first, last, cssClass);
 %>

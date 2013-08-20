@@ -15,7 +15,13 @@
 package com.liferay.portal.tools.samplesqlbuilder;
 
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.util.SortedProperties;
 import com.liferay.portal.tools.DBLoader;
+import com.liferay.portal.util.InitUtil;
+
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.Reader;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -30,10 +36,20 @@ import java.util.Properties;
 public class TestSampleSQLBuilder {
 
 	public static void main(String[] args) {
-		try {
-			SampleSQLBuilder sampleSQLBuilder = new SampleSQLBuilder(args);
+		InitUtil.initWithSpring();
 
-			Properties properties = sampleSQLBuilder.getProperties(args);
+		Reader reader = null;
+
+		try {
+			Properties properties = new SortedProperties();
+
+			reader = new FileReader(args[0]);
+
+			properties.load(reader);
+
+			DataFactory dataFactory = new DataFactory(properties);
+
+			new SampleSQLBuilder(properties, dataFactory);
 
 			String sqlDir = properties.getProperty("sql.dir");
 			String outputDir = properties.getProperty("sample.sql.output.dir");
@@ -42,6 +58,16 @@ public class TestSampleSQLBuilder {
 		}
 		catch (Exception e) {
 			e.printStackTrace();
+		}
+		finally {
+			if (reader != null) {
+				try {
+					reader.close();
+				}
+				catch (IOException ioe) {
+					ioe.printStackTrace();
+				}
+			}
 		}
 	}
 

@@ -623,10 +623,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 				font-size: 14px;
 				font-weight: lighter;
 				text-transform: capitalize;
-
-				&:first-child {
-					margin-top: 0;
-				}
 			}
 		}
 	}

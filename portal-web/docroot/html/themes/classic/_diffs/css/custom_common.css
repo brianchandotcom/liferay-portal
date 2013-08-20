@@ -205,6 +205,16 @@
 
 	/* ---------- Dockbar ---------- */
 
+	.dockbar-split {
+		.dockbar .navbar-inner {
+			visibility: hidden;
+		}
+
+		&.dockbar-ready .dockbar .navbar-inner {
+			visibility: visible;
+		}
+	}
+
 	.dockbar {
 		.navbar-inner {
 			background: #333;
@@ -306,13 +316,9 @@
 			}
 		}
 
-		.nav-account-controls {
-			float: right;
-
-			li ul li a:hover i {
-				background-image: none;
-				text-decoration: none;
-			}
+		.nav-account-controls li ul li a:hover i {
+			background-image: none;
+			text-decoration: none;
 		}
 
 		.divider-vertical {
@@ -338,18 +344,6 @@
 			color: #555;
 			text-decoration: none;
 		}
-	}
-
-	.lfr-has-add-content .nav-add-controls {
-		left: 350px;
-	}
-
-	.lfr-has-device-preview .nav-add-controls {
-		left: 220px;
-	}
-
-	.lfr-has-edit-layout .nav-add-controls {
-		left: 460px;
 	}
 
 	/* ---------- Nav#Navigation ---------- */

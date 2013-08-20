@@ -919,6 +919,10 @@ public interface PropsKeys {
 
 	public static final String HTTP_HEADER_X_CONTENT_TYPE_OPTIONS_WHITELIST = "http.header.x-content-type-options.whitelist";
 
+	public static final String HTTP_HEADER_X_FRAME_OPTIONS_ENABLED = "http.header.x-frame-options.enabled";
+
+	public static final String HTTP_HEADER_X_FRAME_OPTIONS_WHITELIST = "http.header.x-frame-options.whitelist.";
+
 	public static final String ICON_MENU_MAX_DISPLAY_ITEMS = "icon.menu.max.display.items";
 
 	public static final String ICQ_JAR = "icq.jar";

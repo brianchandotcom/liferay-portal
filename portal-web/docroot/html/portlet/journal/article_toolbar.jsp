@@ -72,8 +72,6 @@ if ((article != null) && article.isDraft()) {
 				':input'
 			);
 
-			var tooltip;
-
 			toolbarButtonGroup.push(
 				{
 					icon: 'icon-search',
@@ -108,13 +106,11 @@ if ((article != null) && article.isDraft()) {
 							}
 						},
 						render: function(event) {
-							if (!tooltip) {
-								tooltip = new A.Tooltip(
-									{
-										trigger: '#<portlet:namespace/>basicPreviewButton'
-									}
-								).render();
-							}
+							new A.Tooltip(
+								{
+									trigger: '#<portlet:namespace/>basicPreviewButton'
+								}
+							).render();
 						}
 					},
 					title: '<%= HtmlUtil.escape(LanguageUtil.get(pageContext, "this-preview-won't-include-the-theme-context")) %>'

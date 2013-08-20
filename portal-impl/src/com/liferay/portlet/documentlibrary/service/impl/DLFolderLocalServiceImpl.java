@@ -244,7 +244,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 			dlFolder.getGroupId(), dlFolder.getFolderId(),
 			includeTrashedEntries);
 
-		// Workflow definition links
+		// Workflow
 
 		List<Long> fileEntryTypeIds = new ArrayList<Long>();
 
@@ -261,7 +261,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		}
 
 		for (long fileEntryTypeId : fileEntryTypeIds) {
-			WorkflowDefinitionLink workflowDefinitionLink;
+			WorkflowDefinitionLink workflowDefinitionLink = null;
 
 			try {
 				workflowDefinitionLink =
@@ -271,7 +271,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 							DLFolder.class.getName(), dlFolder.getFolderId(),
 							fileEntryTypeId);
 			}
-			catch (NoSuchWorkflowDefinitionLinkException e) {
+			catch (NoSuchWorkflowDefinitionLinkException nswdle) {
 				continue;
 			}
 

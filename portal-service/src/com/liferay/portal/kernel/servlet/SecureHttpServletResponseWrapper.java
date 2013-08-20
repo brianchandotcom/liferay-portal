@@ -57,6 +57,7 @@ public class SecureHttpServletResponseWrapper
 
 		setXContentOptions(request);
 		setXFrameOptions(request);
+		setXXSSProtection(request);
 	}
 
 	@Override
@@ -158,6 +159,14 @@ public class SecureHttpServletResponseWrapper
 		super.setHeader(HttpHeaders.X_FRAME_OPTIONS, "DENY");
 	}
 
+	protected void setXXSSProtection(HttpServletRequest request) {
+		if (!_X_XSS_PROTECTION_ENABLED) {
+			return;
+		}
+
+		super.setHeader(HttpHeaders.X_XSS_PROTECTION, "1; mode=block");
+	}
+
 	private static void initConfiguration() {
 		if (_X_CONTENT_TYPE_OPTIONS_WHITELIST != null) {
 			return;
@@ -183,6 +192,11 @@ public class SecureHttpServletResponseWrapper
 
 			_X_FRAME_OPTIONS_WHITELIST = PropsUtil.getProperties(
 					PropsKeys.HTTP_HEADER_X_FRAME_OPTIONS_WHITELIST, true);
+
+			_X_XSS_PROTECTION_ENABLED = GetterUtil.getBoolean(
+					PropsUtil.get(
+						PropsKeys.HTTP_HEADER_X_XSS_PROTECTION_ENABLED),
+					true);
 		}
 	}
 
@@ -193,6 +207,8 @@ public class SecureHttpServletResponseWrapper
 	private static boolean _X_FRAME_OPTIONS_ENABLED;
 
 	private static Properties _X_FRAME_OPTIONS_WHITELIST;
+
+	private static boolean _X_XSS_PROTECTION_ENABLED;
 
 	private boolean _sanitizeHeaders;
 

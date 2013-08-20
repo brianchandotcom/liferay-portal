@@ -15,8 +15,12 @@
 package com.liferay.portal.kernel.util;
 
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
+import com.liferay.portal.util.Portal;
+import com.liferay.portal.util.PortalUtil;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
 
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -56,6 +60,14 @@ public class ClassLoaderPoolTest {
 		_contextNames = (Map<ClassLoader, String>)contextNamesField.get(null);
 
 		_contextNames.clear();
+
+		Portal portal = (Portal)ProxyUtil.newProxyInstance(
+			clazz.getClassLoader(), new Class<?>[] {Portal.class},
+			new PortalInvocationHandler());
+
+		PortalUtil portalUtil = new PortalUtil();
+
+		portalUtil.setPortal(portal);
 	}
 
 	@Test
@@ -208,5 +220,20 @@ public class ClassLoaderPoolTest {
 
 	private static Map<String, ClassLoader> _classLoaders;
 	private static Map<ClassLoader, String> _contextNames;
+
+	private static class PortalInvocationHandler implements InvocationHandler {
+
+		@Override
+		public Object invoke(Object proxy, Method method, Object[] args) {
+			String methodName = method.getName();
+
+			if (methodName.equals("getServletContextName")) {
+				return StringPool.BLANK;
+			}
+
+			throw new UnsupportedOperationException();
+		}
+
+	}
 
 }

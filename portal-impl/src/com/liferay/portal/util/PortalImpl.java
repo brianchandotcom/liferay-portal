@@ -467,6 +467,9 @@ public class PortalImpl implements Portal {
 
 		_reservedParams.add("saveLastPath");
 		_reservedParams.add("scroll");
+
+		_servletContextName =
+			PortalContextLoaderListener.getPortalServlerContextName();
 	}
 
 	@Override
@@ -4619,6 +4622,11 @@ public class PortalImpl implements Portal {
 	}
 
 	@Override
+	public String getServletContextName() {
+		return _servletContextName;
+	}
+
+	@Override
 	public Map<String, List<Portlet>> getSiteAdministrationCategoriesMap(
 			HttpServletRequest request)
 		throws SystemException {
@@ -7577,6 +7585,7 @@ public class PortalImpl implements Portal {
 		new ArrayList<PortalPortEventListener>();
 	private Set<String> _reservedParams;
 	private final AtomicInteger _securePortalPort = new AtomicInteger(-1);
+	private final String _servletContextName;
 	private String[] _sortedSystemGroups;
 	private String[] _sortedSystemOrganizationRoles;
 	private String[] _sortedSystemRoles;

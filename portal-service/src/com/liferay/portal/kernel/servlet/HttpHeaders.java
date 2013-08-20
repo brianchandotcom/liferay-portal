@@ -82,6 +82,8 @@ public interface HttpHeaders {
 
 	public static final String X_FRAME_OPTIONS = "X-Frame-Options";
 
+	public static final String X_XSS_PROTECTION = "X-XSS-Protection";
+
 	public static final String X_REQUESTED_WITH = "X-Requested-With";
 
 	// Values

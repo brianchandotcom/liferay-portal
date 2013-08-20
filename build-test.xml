@@ -636,7 +636,7 @@
 		</antcall>
 
 		<antcall target="build-test-ant-script">
-			<param name="test.ant.script.command" value="platform-infrastructure-acceptance" />
+			<param name="test.ant.script.command" value="platform-integrations-acceptance" />
 			<param name="test.ant.script.database.minimal" value="true" />
 			<param name="test.ant.script.plugin.portlets" value="akismet-portlet" />
 			<param name="test.ant.script.suite" value="PlatformIntegrationsAcceptanceTestSuite" />

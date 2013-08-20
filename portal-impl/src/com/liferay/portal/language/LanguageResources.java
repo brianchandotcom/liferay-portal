@@ -108,7 +108,7 @@ public class LanguageResources {
 					priorityLocale.getLanguage(), priorityLocale.getCountry());
 			}
 
-			return LocaleUtil.fromLanguageId(locale.getLanguage());
+			return LocaleUtil.fromLanguageId(locale.getLanguage(), false, true);
 		}
 
 		String language = locale.getLanguage();

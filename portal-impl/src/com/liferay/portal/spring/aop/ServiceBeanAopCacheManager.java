@@ -77,8 +77,9 @@ public class ServiceBeanAopCacheManager {
 		return _methodInterceptorBags.get(methodInvocation);
 	}
 
-	public Map<Class<? extends Annotation>, AnnotationChainableMethodAdvice<?>>
-		getRegisteredAnnotationChainableMethodAdvices() {
+	public Map
+		<Class<? extends Annotation>, AnnotationChainableMethodAdvice<?>[]>
+			getRegisteredAnnotationChainableMethodAdvices() {
 
 		return _annotationChainableMethodAdvices;
 	}
@@ -100,8 +101,24 @@ public class ServiceBeanAopCacheManager {
 		Class<? extends Annotation> annotationClass,
 		AnnotationChainableMethodAdvice<?> annotationChainableMethodAdvice) {
 
+		AnnotationChainableMethodAdvice<?>[] annotationChainableMethodAdvices =
+			_annotationChainableMethodAdvices.get(annotationClass);
+
+		if (annotationChainableMethodAdvices == null) {
+			annotationChainableMethodAdvices =
+				new AnnotationChainableMethodAdvice<?>[1];
+
+			annotationChainableMethodAdvices[0] =
+				annotationChainableMethodAdvice;
+		}
+		else {
+			annotationChainableMethodAdvices = ArrayUtil.append(
+				annotationChainableMethodAdvices,
+				annotationChainableMethodAdvice);
+		}
+
 		_annotationChainableMethodAdvices.put(
-			annotationClass, annotationChainableMethodAdvice);
+			annotationClass, annotationChainableMethodAdvices);
 	}
 
 	public void removeMethodInterceptor(
@@ -157,11 +174,15 @@ public class ServiceBeanAopCacheManager {
 
 	private static Map<MethodInvocation, Annotation[]> _annotations =
 		new ConcurrentHashMap<MethodInvocation, Annotation[]>();
+
 	private static Annotation[] _nullAnnotations = new Annotation[0];
 
-	private Map<Class<? extends Annotation>, AnnotationChainableMethodAdvice<?>>
-		_annotationChainableMethodAdvices = new HashMap
-			<Class<? extends Annotation>, AnnotationChainableMethodAdvice<?>>();
+	private
+		Map<Class<? extends Annotation>, AnnotationChainableMethodAdvice<?>[]>
+			_annotationChainableMethodAdvices = new HashMap
+				<Class<? extends Annotation>,
+					AnnotationChainableMethodAdvice<?>[]>();
+
 	private Map<MethodInvocation, MethodInterceptorsBag>
 		_methodInterceptorBags =
 			new ConcurrentHashMap<MethodInvocation, MethodInterceptorsBag>();

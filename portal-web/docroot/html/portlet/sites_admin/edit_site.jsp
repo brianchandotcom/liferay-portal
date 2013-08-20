@@ -233,7 +233,7 @@ String[][] categorySections = {mainSections, seoSections, advancedSections, misc
 		</c:if>
 
 		if (ok) {
-			<c:if test="<%= (group != null) %>">
+			<c:if test="<%= (group != null) && !group.isCompany() %>">
 				<portlet:namespace />saveLocales();
 			</c:if>
 

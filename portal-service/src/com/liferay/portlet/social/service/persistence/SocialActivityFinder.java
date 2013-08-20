@@ -45,6 +45,9 @@ public interface SocialActivityFinder {
 	public int countByUserOrganizations(long userId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	public int countU_ByActivitySetId(long activitySetId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	public java.util.List<com.liferay.portlet.social.model.SocialActivity> findByGroupId(
 		long groupId, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException;

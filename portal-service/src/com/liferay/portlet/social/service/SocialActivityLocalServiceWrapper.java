@@ -723,6 +723,12 @@ public class SocialActivityLocalServiceWrapper
 			start, end);
 	}
 
+	@Override
+	public int getActivitySetUsersCount(long activitySetId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _socialActivityLocalService.getActivitySetUsersCount(activitySetId);
+	}
+
 	/**
 	* Returns a range of all the activities done in the group.
 	*

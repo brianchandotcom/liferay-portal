@@ -64,6 +64,9 @@ public class SocialActivityFinderImpl
 	public static final String COUNT_BY_USER_ORGANIZATIONS =
 		SocialActivityFinder.class.getName() + ".countByUserOrganizations";
 
+	public static final String COUNT_U_BY_ACTIVITY_SET_ID =
+		SocialActivityFinder.class.getName() + ".countU_ByActivitySetId";
+
 	public static final String FIND_BY_GROUP_ID =
 		SocialActivityFinder.class.getName() + ".findByGroupId";
 
@@ -419,6 +422,44 @@ public class SocialActivityFinderImpl
 			QueryPos qPos = QueryPos.getInstance(q);
 
 			qPos.add(userId);
+
+			Iterator<Long> itr = q.iterate();
+
+			if (itr.hasNext()) {
+				Long count = itr.next();
+
+				if (count != null) {
+					return count.intValue();
+				}
+			}
+
+			return 0;
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	public int countU_ByActivitySetId(long activitySetId)
+		throws SystemException {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(COUNT_U_BY_ACTIVITY_SET_ID);
+
+			SQLQuery q = session.createSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(activitySetId);
 
 			Iterator<Long> itr = q.iterate();
 

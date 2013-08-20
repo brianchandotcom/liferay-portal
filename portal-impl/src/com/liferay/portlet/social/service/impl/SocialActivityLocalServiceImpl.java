@@ -730,6 +730,13 @@ public class SocialActivityLocalServiceImpl
 			activitySetId, start, end);
 	}
 
+	@Override
+	public int getActivitySetUsersCount(long activitySetId)
+		throws SystemException {
+
+		return socialActivityFinder.countU_ByActivitySetId(activitySetId);
+	}
+
 	/**
 	 * Returns a range of all the activities done in the group.
 	 *

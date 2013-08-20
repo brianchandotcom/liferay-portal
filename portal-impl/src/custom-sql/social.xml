@@ -100,6 +100,16 @@
 				SUM(currentValue) DESC
 		]]>
 	</sql>
+	<sql id="com.liferay.portlet.social.service.persistence.SocialActivityFinder.countU_ByActivitySetId">
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT SocialActivity.userId) AS COUNT_VALUE
+			FROM
+				SocialActivity
+			WHERE
+				(SocialActivity.activitySetId = ?)
+		]]>
+	</sql>
 	<sql id="com.liferay.portlet.social.service.persistence.SocialActivityFinder.countByGroupId">
 		<![CDATA[
 			SELECT

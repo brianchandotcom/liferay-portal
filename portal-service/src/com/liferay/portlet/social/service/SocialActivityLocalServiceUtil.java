@@ -693,6 +693,11 @@ public class SocialActivityLocalServiceUtil {
 		return getService().getActivitySetActivities(activitySetId, start, end);
 	}
 
+	public static int getActivitySetUsersCount(long activitySetId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getActivitySetUsersCount(activitySetId);
+	}
+
 	/**
 	* Returns a range of all the activities done in the group.
 	*

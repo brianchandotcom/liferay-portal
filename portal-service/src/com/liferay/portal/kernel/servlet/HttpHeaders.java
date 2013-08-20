@@ -80,6 +80,8 @@ public interface HttpHeaders {
 	public static final String X_CONTENT_TYPE_OPTIONS =
 		"X-Content-Type-Options";
 
+	public static final String X_FRAME_OPTIONS = "X-Frame-Options";
+
 	public static final String X_REQUESTED_WITH = "X-Requested-With";
 
 	// Values

@@ -86,6 +86,13 @@
 	<bean id="com.liferay.portal.kernel.search.SortFactoryUtil" class="com.liferay.portal.kernel.search.SortFactoryUtil">
 		<property name="sortFactory" ref="com.liferay.portal.kernel.search.SortFactory" />
 	</bean>
+	<bean id="com.liferay.portal.kernel.search.StringDistanceCalculatorUtil" class="com.liferay.portal.kernel.search.StringDistanceCalculatorUtil">
+		<property name="stringDistanceCalculator">
+			<bean class="com.liferay.portal.search.lucene.StringDistanceCalculatorImpl">
+				<property name="stringDistance" ref="org.apache.lucene.search.spell.StringDistance" />
+			</bean>
+		</property>
+	</bean>
 	<bean id="com.liferay.portal.kernel.search.StringQueryFactory" class="com.liferay.portal.kernel.search.StringQueryFactoryImpl" />
 	<bean id="com.liferay.portal.kernel.search.StringQueryFactoryUtil" class="com.liferay.portal.kernel.search.StringQueryFactoryUtil">
 		<property name="stringQueryFactory" ref="com.liferay.portal.kernel.search.StringQueryFactory" />
@@ -93,6 +100,7 @@
 	<bean id="com.liferay.portal.kernel.search.TokenizerUtil" class="com.liferay.portal.kernel.search.TokenizerUtil">
 		<property name="tokenizer" ref="com.liferay.portal.search.lucene.PerFieldAnalyzer" />
 	</bean>
+	<bean id="org.apache.lucene.search.spell.StringDistance" class="org.apache.lucene.search.spell.LevensteinDistance" />
 
 	<!-- Generic search engine -->
 
@@ -152,9 +160,7 @@
 		<property name="luceneHelper" ref="com.liferay.portal.search.lucene.LuceneHelperImpl" />
 	</bean>
 	<bean id="com.liferay.portal.search.lucene.LuceneQuerySuggester" class="com.liferay.portal.search.lucene.LuceneQuerySuggester">
-		<property name="stringDistance">
-			<bean class="org.apache.lucene.search.spell.LevensteinDistance" />
-		</property>
+		<property name="stringDistance" ref="org.apache.lucene.search.spell.StringDistance" />
 	</bean>
 	<bean id="com.liferay.portal.search.lucene.LuceneSpellCheckIndexWriter" class="com.liferay.portal.search.lucene.LuceneSpellCheckIndexWriter" />
 

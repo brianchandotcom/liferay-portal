@@ -115,6 +115,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -2039,38 +2040,47 @@ public class DLFileEntryLocalServiceImpl
 
 			// File entry type
 
-			List<DLFileEntryMetadata> lastFileEntryMetadatas =
-				dlFileEntryMetadataLocalService.
-					getFileVersionFileEntryMetadatas(
-						lastDLFileVersion.getFileVersionId());
-			List<DLFileEntryMetadata> latestFileEntryMetadatas =
-				dlFileEntryMetadataLocalService.
-					getFileVersionFileEntryMetadatas(
-						latestDLFileVersion.getFileVersionId());
+			DLFileEntryType dlFileEntryType =
+				dlFileEntryTypeLocalService.getFileEntryType(
+					lastDLFileVersion.getFileEntryTypeId());
 
-			for (DLFileEntryMetadata lastFileEntryMetadata :
-					lastFileEntryMetadatas) {
+			List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();
+
+			for (DDMStructure ddmStructure : ddmStructures) {
+				DLFileEntryMetadata lastFileEntryMetadata =
+					dlFileEntryMetadataLocalService.getFileEntryMetadata(
+						ddmStructure.getStructureId(),
+						lastDLFileVersion.getFileVersionId());
+				DLFileEntryMetadata latestFileEntryMetadata =
+					dlFileEntryMetadataLocalService.getFileEntryMetadata(
+						ddmStructure.getStructureId(),
+						latestDLFileVersion.getFileVersionId());
 
 				Fields lastFields = StorageEngineUtil.getFields(
 					lastFileEntryMetadata.getDDMStorageId());
+				Fields latestFields = StorageEngineUtil.getFields(
+					latestFileEntryMetadata.getDDMStorageId());
 
-				boolean found = false;
+				Iterator<com.liferay.portlet.dynamicdatamapping.storage.Field>
+					lastItr = lastFields.iterator();
+				Iterator<com.liferay.portlet.dynamicdatamapping.storage.Field>
+					latestItr = latestFields.iterator();
 
-				for (DLFileEntryMetadata latestEntryMetadata :
-						latestFileEntryMetadatas) {
+				while (lastItr.hasNext() && latestItr.hasNext()) {
+					com.liferay.portlet.dynamicdatamapping.storage.Field
+						lastField = lastItr.next();
+					com.liferay.portlet.dynamicdatamapping.storage.Field
+						latestField = latestItr.next();
 
-					Fields latestFields = StorageEngineUtil.getFields(
-						latestEntryMetadata.getDDMStorageId());
-
-					if (lastFields.equals(latestFields)) {
-						found = true;
-
-						break;
+					if (!lastField.equals(latestField)) {
+						return false;
 					}
-				}
 
-				if (!found) {
-					return false;
+					if (lastItr.hasNext() && !latestItr.hasNext() ||
+						!lastItr.hasNext() && latestItr.hasNext()) {
+
+						return false;
+					}
 				}
 			}
 

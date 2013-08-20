@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.search.TermQuery;
 import com.liferay.portal.kernel.search.TermRangeQuery;
 import com.liferay.portal.kernel.search.WildcardQuery;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -107,7 +108,7 @@ public class RepositorySearchQueryBuilderImpl
 
 		long[] folderIds = searchContext.getFolderIds();
 
-		if ((folderIds == null) || (folderIds.length == 0)) {
+		if (ArrayUtil.isEmpty(folderIds)) {
 			return;
 		}
 

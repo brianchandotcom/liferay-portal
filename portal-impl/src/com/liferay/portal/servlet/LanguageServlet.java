@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -96,7 +97,7 @@ public class LanguageServlet extends HttpServlet {
 		String value = key;
 
 		try {
-			if ((arguments == null) || (arguments.length == 0)) {
+			if (ArrayUtil.isEmpty(arguments)) {
 				value = LanguageUtil.get(locale, key);
 			}
 			else {

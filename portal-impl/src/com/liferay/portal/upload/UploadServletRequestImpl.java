@@ -207,7 +207,7 @@ public class UploadServletRequestImpl
 
 		FileItem[] liferayFileItems = _fileParameters.get(name);
 
-		if ((liferayFileItems == null) || (liferayFileItems.length == 0)) {
+		if (ArrayUtil.isEmpty(liferayFileItems)) {
 			return null;
 		}
 

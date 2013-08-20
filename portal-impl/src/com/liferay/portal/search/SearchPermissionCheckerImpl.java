@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchPermissionChecker;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UniqueList;
@@ -305,7 +306,7 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 
 		roles.addAll(permissionCheckerBag.getRoles());
 
-		if ((groupIds == null) || (groupIds.length == 0)) {
+		if (ArrayUtil.isEmpty(groupIds)) {
 			groups.addAll(GroupLocalServiceUtil.getUserGroups(userId, true));
 			groups.addAll(permissionCheckerBag.getGroups());
 

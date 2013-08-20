@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.search;
 
 import com.liferay.portal.kernel.json.JSON;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.ArrayList;
@@ -75,7 +76,7 @@ public class HitsImpl implements Hits {
 	@JSON
 	@Override
 	public String[] getQuerySuggestions() {
-		if ((_querySuggestions == null) || (_querySuggestions.length == 0)) {
+		if (ArrayUtil.isEmpty(_querySuggestions)) {
 			return StringPool.EMPTY_ARRAY;
 		}
 

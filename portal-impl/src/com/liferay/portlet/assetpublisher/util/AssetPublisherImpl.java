@@ -473,7 +473,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 			String[] queryValues = portletPreferences.getValues(
 				"queryValues" + i, null);
 
-			if ((queryValues == null) || (queryValues.length == 0)) {
+			if (ArrayUtil.isEmpty(queryValues)) {
 				break;
 			}
 
@@ -564,7 +564,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 			String[] queryValues = portletPreferences.getValues(
 				"queryValues" + i, null);
 
-			if ((queryValues == null) || (queryValues.length == 0)) {
+			if (ArrayUtil.isEmpty(queryValues)) {
 				break;
 			}
 

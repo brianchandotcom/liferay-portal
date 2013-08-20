@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -148,7 +149,7 @@ public class AssetEntriesFacet extends MultiValueFacet {
 			}
 		}
 
-		if ((entryClassNames == null) || (entryClassNames.length == 0)) {
+		if (ArrayUtil.isEmpty(entryClassNames)) {
 			entryClassNames = searchContext.getEntryClassNames();
 		}
 
@@ -164,7 +165,7 @@ public class AssetEntriesFacet extends MultiValueFacet {
 			}
 		}
 
-		if ((entryClassNames == null) || (entryClassNames.length == 0)) {
+		if (ArrayUtil.isEmpty(entryClassNames)) {
 			entryClassNames = SearchEngineUtil.getEntryClassNames();
 
 			if (!dataJSONObject.has("values")) {

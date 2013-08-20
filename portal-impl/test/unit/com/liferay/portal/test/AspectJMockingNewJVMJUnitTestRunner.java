@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.process.ClassPathUtil;
 import com.liferay.portal.kernel.process.ProcessCallable;
 import com.liferay.portal.kernel.process.ProcessException;
 import com.liferay.portal.kernel.test.NewJVMJUnitTestRunner;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -64,7 +65,7 @@ public class AspectJMockingNewJVMJUnitTestRunner extends NewJVMJUnitTestRunner {
 
 		Class<?>[] adviceClasses = adviseWith.adviceClasses();
 
-		if ((adviceClasses == null) || (adviceClasses.length == 0)) {
+		if (ArrayUtil.isEmpty(adviceClasses)) {
 			return Collections.emptyList();
 		}
 

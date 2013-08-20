@@ -14,6 +14,8 @@
 
 package com.liferay.portal.spring.aop;
 
+import com.liferay.portal.kernel.util.ArrayUtil;
+
 import java.lang.annotation.Annotation;
 
 import java.util.ArrayList;
@@ -55,7 +57,7 @@ public class ServiceBeanAopCacheManager {
 	public static void putAnnotations(
 		MethodInvocation methodInvocation, Annotation[] annotations) {
 
-		if ((annotations == null) || (annotations.length == 0)) {
+		if (ArrayUtil.isEmpty(annotations)) {
 			annotations = _nullAnnotations;
 		}
 

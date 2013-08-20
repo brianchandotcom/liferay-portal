@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -924,7 +925,7 @@ public class DDMTemplateFinderImpl
 	}
 
 	protected String getClassNameIds(long[] classNameIds) {
-		if ((classNameIds == null) || (classNameIds.length == 0)) {
+		if (ArrayUtil.isEmpty(classNameIds)) {
 			return StringPool.BLANK;
 		}
 
@@ -946,7 +947,7 @@ public class DDMTemplateFinderImpl
 	}
 
 	protected String getClassPKs(long[] classPKs) {
-		if ((classPKs == null) || (classPKs.length == 0)) {
+		if (ArrayUtil.isEmpty(classPKs)) {
 			return StringPool.BLANK;
 		}
 
@@ -968,7 +969,7 @@ public class DDMTemplateFinderImpl
 	}
 
 	protected String getGroupIds(long[] groupIds) {
-		if ((groupIds == null) || (groupIds.length == 0)) {
+		if (ArrayUtil.isEmpty(groupIds)) {
 			return StringPool.BLANK;
 		}
 

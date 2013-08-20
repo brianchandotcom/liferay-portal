@@ -42,7 +42,7 @@ public class AggregateClassLoader extends ClassLoader {
 	public static ClassLoader getAggregateClassLoader(
 		ClassLoader parentClassLoader, ClassLoader[] classLoaders) {
 
-		if ((classLoaders == null) || (classLoaders.length == 0)) {
+		if (ArrayUtil.isEmpty(classLoaders)) {
 			return null;
 		}
 
@@ -63,7 +63,7 @@ public class AggregateClassLoader extends ClassLoader {
 	public static ClassLoader getAggregateClassLoader(
 		ClassLoader[] classLoaders) {
 
-		if ((classLoaders == null) || (classLoaders.length == 0)) {
+		if (ArrayUtil.isEmpty(classLoaders)) {
 			return null;
 		}
 

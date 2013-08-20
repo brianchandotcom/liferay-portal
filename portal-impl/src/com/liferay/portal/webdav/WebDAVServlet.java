@@ -17,6 +17,7 @@ package com.liferay.portal.webdav;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.InstancePool;
@@ -193,7 +194,7 @@ public class WebDAVServlet extends HttpServlet {
 		String[] pathArray = WebDAVUtil.getPathArray(
 			request.getPathInfo(), true);
 
-		if ((pathArray == null) || (pathArray.length == 0)) {
+		if (ArrayUtil.isEmpty(pathArray)) {
 			return false;
 		}
 

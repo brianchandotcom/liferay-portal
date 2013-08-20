@@ -16,6 +16,7 @@ package com.liferay.portal.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.OrganizationConstants;
@@ -76,7 +77,7 @@ public class OrganizationPermissionImpl implements OrganizationPermission {
 			String actionId)
 		throws PortalException, SystemException {
 
-		if ((organizationIds == null) || (organizationIds.length == 0)) {
+		if (ArrayUtil.isEmpty(organizationIds)) {
 			return true;
 		}
 

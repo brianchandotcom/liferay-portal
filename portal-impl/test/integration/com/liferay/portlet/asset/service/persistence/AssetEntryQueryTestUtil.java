@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.asset.service.persistence;
 
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
@@ -158,7 +159,7 @@ public class AssetEntryQueryTestUtil {
 			long groupId, String[] assetTagNames)
 		throws Exception {
 
-		if ((assetTagNames == null) || (assetTagNames.length == 0)) {
+		if (ArrayUtil.isEmpty(assetTagNames)) {
 			return new long[0];
 		}
 

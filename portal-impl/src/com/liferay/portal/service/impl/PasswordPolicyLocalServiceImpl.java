@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.cache.ThreadLocalCachable;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
@@ -284,7 +285,7 @@ public class PasswordPolicyLocalServiceImpl
 			return null;
 		}
 
-		if ((organizationIds == null) || (organizationIds.length == 0)) {
+		if (ArrayUtil.isEmpty(organizationIds)) {
 			return getDefaultPasswordPolicy(companyId);
 		}
 

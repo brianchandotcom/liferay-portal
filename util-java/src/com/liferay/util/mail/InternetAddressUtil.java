@@ -14,6 +14,7 @@
 
 package com.liferay.util.mail;
 
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -98,7 +99,7 @@ public class InternetAddressUtil {
 	}
 
 	public static String toString(Address[] addresses) {
-		if ((addresses == null) || (addresses.length == 0)) {
+		if (ArrayUtil.isEmpty(addresses)) {
 			return StringPool.BLANK;
 		}
 

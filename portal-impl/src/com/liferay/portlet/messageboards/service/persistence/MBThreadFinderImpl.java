@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -162,7 +163,7 @@ public class MBThreadFinderImpl
 
 			String sql = CustomSQLUtil.get(COUNT_BY_G_U_C);
 
-			if ((categoryIds == null) || (categoryIds.length == 0)) {
+			if (ArrayUtil.isEmpty(categoryIds)) {
 				sql = StringUtil.replace(
 					sql, "(MBThread.categoryId = ?) AND", StringPool.BLANK);
 			}
@@ -345,7 +346,7 @@ public class MBThreadFinderImpl
 
 			String sql = CustomSQLUtil.get(COUNT_BY_G_U_C);
 
-			if ((categoryIds == null) || (categoryIds.length == 0)) {
+			if (ArrayUtil.isEmpty(categoryIds)) {
 				sql = StringUtil.replace(
 					sql, "(MBThread.categoryId = ?) AND", StringPool.BLANK);
 			}
@@ -609,7 +610,7 @@ public class MBThreadFinderImpl
 
 			String sql = CustomSQLUtil.get(FIND_BY_G_U_C);
 
-			if ((categoryIds == null) || (categoryIds.length == 0)) {
+			if (ArrayUtil.isEmpty(categoryIds)) {
 				sql = StringUtil.replace(
 					sql, "(MBThread.categoryId = ?) AND", StringPool.BLANK);
 			}
@@ -800,7 +801,7 @@ public class MBThreadFinderImpl
 
 			String sql = CustomSQLUtil.get(FIND_BY_G_U_C_A);
 
-			if ((categoryIds == null) || (categoryIds.length == 0)) {
+			if (ArrayUtil.isEmpty(categoryIds)) {
 				sql = StringUtil.replace(
 					sql, "(MBThread.categoryId = ?) AND", StringPool.BLANK);
 			}
@@ -886,7 +887,7 @@ public class MBThreadFinderImpl
 				sql, MBMessage.class.getName(), "MBThread.rootMessageId",
 				groupId);
 
-			if ((categoryIds == null) || (categoryIds.length == 0)) {
+			if (ArrayUtil.isEmpty(categoryIds)) {
 				sql = StringUtil.replace(
 					sql, "(MBThread.groupId = ?) AND",
 					"(MBThread.groupId = ?)");
@@ -993,7 +994,7 @@ public class MBThreadFinderImpl
 
 			String sql = CustomSQLUtil.get(COUNT_BY_S_G_U_C);
 
-			if ((categoryIds == null) || (categoryIds.length == 0)) {
+			if (ArrayUtil.isEmpty(categoryIds)) {
 				sql = StringUtil.replace(
 					sql, "(MBThread.categoryId = ?) AND", StringPool.BLANK);
 			}
@@ -1087,7 +1088,7 @@ public class MBThreadFinderImpl
 				sql, MBMessage.class.getName(), "MBThread.rootMessageId",
 				groupId);
 
-			if ((categoryIds == null) || (categoryIds.length == 0)) {
+			if (ArrayUtil.isEmpty(categoryIds)) {
 				sql = StringUtil.replace(
 					sql, "(MBThread.groupId = ?) AND",
 					"(MBThread.groupId = ?)");
@@ -1139,7 +1140,7 @@ public class MBThreadFinderImpl
 
 			String sql = CustomSQLUtil.get(FIND_BY_S_G_U_C);
 
-			if ((categoryIds == null) || (categoryIds.length == 0)) {
+			if (ArrayUtil.isEmpty(categoryIds)) {
 				sql = StringUtil.replace(
 					sql, "(MBThread.categoryId = ?) AND", StringPool.BLANK);
 			}

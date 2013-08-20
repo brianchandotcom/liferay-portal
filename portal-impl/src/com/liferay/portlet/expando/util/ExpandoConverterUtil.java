@@ -95,7 +95,7 @@ public class ExpandoConverterUtil {
 	public static Serializable getAttributeFromStringArray(
 		int type, String[] attribute) {
 
-		if ((attribute == null) || (attribute.length == 0)) {
+		if (ArrayUtil.isEmpty(attribute)) {
 			return null;
 		}
 

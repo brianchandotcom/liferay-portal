@@ -373,7 +373,7 @@ public class PortalInstances {
 			_log.error(e, e);
 		}
 
-		if ((_webIds == null) || (_webIds.length == 0)) {
+		if (ArrayUtil.isEmpty(_webIds)) {
 			_webIds = new String[] {PropsValues.COMPANY_DEFAULT_WEB_ID};
 		}
 

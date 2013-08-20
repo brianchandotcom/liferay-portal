@@ -879,15 +879,13 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 
 			String name = publicRenderParameter.getIdentifier();
 
-			if ((newValues == null) || (newValues.length == 0)) {
+			if (ArrayUtil.isEmpty(newValues)) {
 				QName qName = publicRenderParameter.getQName();
 
 				String[] values = _publicRenderParameters.get(
 					PortletQNameUtil.getPublicRenderParameterName(qName));
 
-				if ((values == null) || (values.length == 0) ||
-					Validator.isNull(values[0])) {
-
+				if (ArrayUtil.isEmpty(values) || Validator.isNull(values[0])) {
 					continue;
 				}
 

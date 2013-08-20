@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.servlet.DirectServletRegistryUtil;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.template.TemplateResourceLoaderUtil;
 import com.liferay.portal.kernel.util.CharBufferPool;
+import com.liferay.portal.kernel.util.ClassLoaderPool;
 import com.liferay.portal.kernel.util.ClearThreadLocalUtil;
 import com.liferay.portal.kernel.util.ClearTimerThreadUtil;
 import com.liferay.portal.kernel.util.InstancePool;
@@ -42,6 +43,7 @@ import com.liferay.portal.kernel.util.MethodCache;
 import com.liferay.portal.kernel.util.PortalLifecycleUtil;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 import com.liferay.portal.kernel.util.ReflectionUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.webcache.WebCachePoolUtil;
 import com.liferay.portal.module.framework.ModuleFrameworkUtilAdapter;
 import com.liferay.portal.security.lang.SecurityManagerUtil;
@@ -79,6 +81,10 @@ import org.springframework.web.context.ContextLoaderListener;
  * @author Raymond Augé
  */
 public class PortalContextLoaderListener extends ContextLoaderListener {
+
+	public static String getPortalServlerContextName() {
+		return _portalServlerContextName;
+	}
 
 	public static String getPortalServletContextPath() {
 		return _portalServletContextPath;
@@ -169,6 +175,12 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 
 		ServletContext servletContext = servletContextEvent.getServletContext();
 
+		_portalServlerContextName = servletContext.getServletContextName();
+
+		if (_portalServlerContextName == null) {
+			_portalServlerContextName = StringPool.BLANK;
+		}
+
 		_portalServletContextPath = servletContext.getContextPath();
 
 		ClassPathUtil.initializeClassPaths(servletContext);
@@ -228,7 +240,11 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 		SingleVMPoolUtil.clear();
 		WebCachePoolUtil.clear();
 
+		ServletContextPool.put(_portalServlerContextName, servletContext);
+
 		ClassLoader portalClassLoader = ClassLoaderUtil.getPortalClassLoader();
+
+		ClassLoaderPool.register(_portalServlerContextName, portalClassLoader);
 
 		BeanLocatorImpl beanLocatorImpl = new BeanLocatorImpl(
 			portalClassLoader, applicationContext);
@@ -280,6 +296,7 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 		PortalContextLoaderListener.class);
 
 	private static Field _filteredPropertyDescriptorsCacheField;
+	private static String _portalServlerContextName = StringPool.BLANK;
 	private static String _portalServletContextPath = "/";
 
 	static {

@@ -412,6 +412,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			String trimmedLine = StringUtil.trimLeading(line);
 			String trimmedPreviousLine = StringUtil.trimLeading(previousLine);
 
+			checkStringBundler(trimmedLine, fileName, lineCount);
+
 			if (trimmedLine.equals("<%") || trimmedLine.equals("<%!")) {
 				javaSource = true;
 			}

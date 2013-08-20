@@ -112,17 +112,17 @@ if (choiceName > 0) {
 				}
 			%>
 
-				<div class="choice <%= (i == choicesCount) ? "last-choice" : StringPool.BLANK %>">
+				<div class="choice <%= (i == choicesCount) ? "last-choice" : StringPool.BLANK %> control-group">
 					<aui:model-context bean="<%= choice %>" model="<%= PollsChoice.class %>" />
 
 					<aui:input name="<%= EditQuestionAction.CHOICE_NAME_PREFIX + c %>" type="hidden" value="<%= c %>" />
 
 					<aui:input fieldParam="<%= paramName %>" label="<%= c + StringPool.PERIOD %>" name="description" />
-
-					<c:if test="<%= (((question == null) && (choicesCount > 2)) || ((question != null) && (choicesCount > oldChoicesCount))) && (i == choicesCount) %>">
-						<aui:button cssClass="btn-delete" onClick='<%= renderResponse.getNamespace() + "deletePollChoice(" + i + ");" %>' value="delete" />
-					</c:if>
 				</div>
+
+				<c:if test="<%= (((question == null) && (choicesCount > 2)) || ((question != null) && (choicesCount > oldChoicesCount))) && (i == choicesCount) %>">
+					<aui:button cssClass="btn-delete" onClick='<%= renderResponse.getNamespace() + "deletePollChoice(" + i + ");" %>' value="delete" />
+				</c:if>
 
 			<%
 			}

@@ -4,13 +4,7 @@
 		display: block;
 	}
 
-	.last-choice {
-		.btn-delete {
-			margin-bottom: 10px;
-		}
-
-		.control-group {
-			margin-bottom: 0;
-		}
+	.btn-delete {
+		margin-bottom: 10px;
 	}
 }

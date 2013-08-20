@@ -78,17 +78,17 @@ CKEDITOR.dialog.add(
 					extraStyles.backgroundImage = 'url(' + value + ')';
 				}
 				else if (id === 'height' || id === 'width') {
-					var height;
-					var width;
+					var height = videoHeight;
+					var width = videoWidth;
 
 					if (id === 'height') {
 						height = value;
-						width = videoWidth;
 					}
 					else {
-						height = videoHeight;
 						width = value;
 					}
+
+					extraStyles[id] = value + 'px';
 
 					videoNode.setAttribute('data-' + id, value);
 

@@ -16,9 +16,7 @@ $editLayoutPanelWidth: 460px;
 		}
 
 		.alert-info {
-			@include border-radius(0);
-
-			border: none;
+			border-width: 0;
 			margin-bottom: 6px;
 		}
 	}

@@ -138,7 +138,7 @@ AUI.add(
 							constrain: true,
 							position: STR_RIGHT,
 							visible: false,
-							zIndex: 500
+							zIndex: Liferay.zIndex.TOOLTIP
 						}
 					);
 

@@ -61,8 +61,8 @@ if (Validator.isNotNull(className) && (classPK > 0)) {
 			portletAjaxable: <%= selPortlet.isAjaxable() %>,
 
 			<c:choose>
-				<c:when test="<%= redirect != null %>">
-					redirect: '<%= redirect %>'
+				<c:when test="<%= Validator.isNotNull(redirect) %>">
+					redirect: '<%= HtmlUtil.escapeJS(redirect) %>'
 				</c:when>
 				<c:otherwise>
 					refresh: '<%= portletDisplay.getId() %>'

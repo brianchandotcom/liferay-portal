@@ -21,6 +21,7 @@ CKEDITOR.plugins.add(
 									fakeElement = editor.createFakeParserElement(realElement, 'liferay_cke_video', 'video', false);
 
 									var fakeStyle = fakeElement.attributes.style || '';
+									var attributes = realElement.attributes;
 
 									var height = attributes['data-height'];
 									var poster = attributes['data-poster'];

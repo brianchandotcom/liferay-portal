@@ -84,10 +84,12 @@ CKEDITOR.dialog.add(
 					if (id === 'height') {
 						height = value;
 						width = videoWidth;
+						extraStyles.height = height + 'px';
 					}
 					else {
 						height = videoHeight;
 						width = value;
+						extraStyles.width = width + 'px';
 					}
 
 					videoNode.setAttribute('data-' + id, value);

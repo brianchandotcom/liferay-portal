@@ -271,6 +271,10 @@ public class WebServerServlet extends HttpServlet {
 			PortalUtil.sendError(
 				HttpServletResponse.SC_NOT_FOUND, nsfee, request, response);
 		}
+		catch (NoSuchFolderException nsfe) {
+			PortalUtil.sendError(
+				HttpServletResponse.SC_NOT_FOUND, nsfe, request, response);
+		}
 		catch (PrincipalException pe) {
 			processPrincipalException(pe, user, request, response);
 		}
@@ -690,9 +694,7 @@ public class WebServerServlet extends HttpServlet {
 			PropsValues.WEB_SERVER_SERVLET_DIRECTORY_INDEXING_ENABLED);
 
 		if (!directoryIndexingEnabled) {
-			response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-
-			return;
+			throw new NoSuchFolderException();
 		}
 
 		long folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;

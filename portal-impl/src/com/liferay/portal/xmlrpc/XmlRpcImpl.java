@@ -66,7 +66,9 @@ public class XmlRpcImpl implements XmlRpc {
 		if (_log.isDebugEnabled()) {
 			StringBundler sb = new StringBundler();
 
-			sb.append("XML-RPC invoking " + methodName + " ");
+			sb.append("XML-RPC invoking ");
+			sb.append(methodName);
+			sb.append(" ");
 
 			if (arguments != null) {
 				for (int i = 0; i < arguments.length; i++) {

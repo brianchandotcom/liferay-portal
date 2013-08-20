@@ -3552,7 +3552,9 @@ public class ServiceBuilder {
 				sb.append("\n");
 			}
 
-			sb.append(indexName + StringPool.EQUAL + finderName);
+			sb.append(indexName);
+			sb.append(StringPool.EQUAL);
+			sb.append(finderName);
 			sb.append("\n");
 
 			prevEntityName = entityName;
@@ -3608,7 +3610,8 @@ public class ServiceBuilder {
 					String tableName = line.substring(x, y);
 
 					if (tableName.compareTo(entityMapping.getTable()) > 0) {
-						sb.append(newCreateTableString + "\n\n");
+						sb.append(newCreateTableString);
+						sb.append("\n\n");
 
 						appendNewTable = false;
 					}
@@ -3619,7 +3622,8 @@ public class ServiceBuilder {
 			}
 
 			if (appendNewTable) {
-				sb.append("\n" + newCreateTableString);
+				sb.append("\n");
+				sb.append(newCreateTableString);
 			}
 
 			unsyncBufferedReader.close();
@@ -3683,7 +3687,9 @@ public class ServiceBuilder {
 						sequenceName = sequenceName.substring(0, 30);
 					}
 
-					sb.append("create sequence " + sequenceName + ";");
+					sb.append("create sequence ");
+					sb.append(sequenceName);
+					sb.append(";");
 
 					String sequenceSQL = sb.toString();
 
@@ -3801,7 +3807,8 @@ public class ServiceBuilder {
 					String tableName = line.substring(x, y);
 
 					if (tableName.compareTo(entity.getTable()) > 0) {
-						sb.append(newCreateTableString + "\n\n");
+						sb.append(newCreateTableString);
+						sb.append("\n\n");
 
 						appendNewTable = false;
 					}
@@ -3812,7 +3819,8 @@ public class ServiceBuilder {
 			}
 
 			if (appendNewTable) {
-				sb.append("\n" + newCreateTableString);
+				sb.append("\n");
+				sb.append(newCreateTableString);
 			}
 
 			unsyncBufferedReader.close();
@@ -4096,7 +4104,8 @@ public class ServiceBuilder {
 				String colName = col.getName();
 				String colType = col.getType();
 
-				sb.append("\t" + col.getDBName());
+				sb.append("\t");
+				sb.append(col.getDBName());
 				sb.append(" ");
 
 				if (colType.equalsIgnoreCase("boolean")) {
@@ -4132,7 +4141,9 @@ public class ServiceBuilder {
 					}
 
 					if (maxLength < 4000) {
-						sb.append("VARCHAR(" + maxLength + ")");
+						sb.append("VARCHAR(");
+						sb.append(maxLength);
+						sb.append(")");
 					}
 					else if (maxLength == 4000) {
 						sb.append("STRING");
@@ -4206,7 +4217,8 @@ public class ServiceBuilder {
 			String colType = col.getType();
 			String colIdType = col.getIdType();
 
-			sb.append("\t" + col.getDBName());
+			sb.append("\t");
+			sb.append(col.getDBName());
 			sb.append(" ");
 
 			if (colType.equalsIgnoreCase("boolean")) {
@@ -4248,7 +4260,9 @@ public class ServiceBuilder {
 				}
 
 				if (maxLength < 4000) {
-					sb.append("VARCHAR(" + maxLength + ")");
+					sb.append("VARCHAR(");
+					sb.append(maxLength);
+					sb.append(")");
 				}
 				else if (maxLength == 4000) {
 					sb.append("STRING");

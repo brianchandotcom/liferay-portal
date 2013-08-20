@@ -166,7 +166,7 @@ public class GeneratingPACLPolicy extends ActivePACLPolicy {
 
 				sb.setIndex(sb.index() - 1);
 
-				sb.append(StringPool.NEW_LINE + StringPool.NEW_LINE);
+				sb.append("\n\n");
 			}
 
 			if (sb.length() > 0) {

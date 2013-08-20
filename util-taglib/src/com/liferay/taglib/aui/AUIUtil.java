@@ -117,14 +117,15 @@ public class AUIUtil {
 		String baseType, boolean inlineField, boolean showForLabel,
 		String forLabel) {
 
-		StringBundler sb = new StringBundler(4);
+		StringBundler sb = new StringBundler(7);
 
 		if (baseType.equals("boolean")) {
 			baseType = "checkbox";
 		}
 
 		if (baseType.equals("checkbox") || baseType.equals("radio")) {
-			sb.append("class=\"" + baseType);
+			sb.append("class=\"");
+			sb.append(baseType);
 
 			if (inlineField) {
 				sb.append(" inline");
@@ -137,7 +138,9 @@ public class AUIUtil {
 		}
 
 		if (showForLabel) {
-			sb.append("for=\"" + forLabel + "\"");
+			sb.append("for=\"");
+			sb.append(forLabel);
+			sb.append("\"");
 		}
 
 		return sb.toString();

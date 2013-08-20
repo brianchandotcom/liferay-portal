@@ -200,7 +200,10 @@ public class InstanceWrapperBuilder {
 				sb.append("return ");
 			}
 
-			sb.append(javaClass.getName() + "." + javaMethod.getName() + "(");
+			sb.append(javaClass.getName());
+			sb.append(".");
+			sb.append(javaMethod.getName());
+			sb.append("(");
 
 			for (int j = 0; j < javaParameters.length; j++) {
 				JavaParameter javaParameter = javaParameters[j];

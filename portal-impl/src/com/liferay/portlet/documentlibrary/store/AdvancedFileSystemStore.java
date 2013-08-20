@@ -182,7 +182,7 @@ public class AdvancedFileSystemStore extends FileSystemStore {
 		if (fileNameFragment.startsWith("DLFE-")) {
 			fileNameFragment = fileNameFragment.substring(5);
 
-			sb.append("DLFE" + StringPool.SLASH);
+			sb.append("DLFE/");
 		}
 
 		buildPath(sb, fileNameFragment);
@@ -222,7 +222,7 @@ public class AdvancedFileSystemStore extends FileSystemStore {
 			if (fileNameFragment.startsWith("DLFE-")) {
 				fileNameFragment = fileNameFragment.substring(5);
 
-				sb.append("DLFE" + StringPool.SLASH);
+				sb.append("DLFE/");
 			}
 
 			buildPath(sb, fileNameFragment);

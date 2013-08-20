@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.ClassLoaderUtil;
+import com.liferay.portal.util.PortalUtil;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -81,7 +82,7 @@ public class AsyncRunnable implements Externalizable, Runnable {
 			ClassLoader contextClassLoader =
 				currentThread.getContextClassLoader();
 
-			String servletContextName = ClassLoaderPool.getContextName(
+			String contextServletContextName = ClassLoaderPool.getContextName(
 				contextClassLoader);
 
 			methodHandler = new MethodHandler(
@@ -92,11 +93,19 @@ public class AsyncRunnable implements Externalizable, Runnable {
 
 			IdentifiableBean identifiableBean = (IdentifiableBean)thisObject;
 
+			Class<?> identifiableBeanClass = identifiableBean.getClass();
+
+			ClassLoader identifiableBeanClassLoader =
+				identifiableBeanClass.getClassLoader();
+
+			String identifiableBeanServletContextName =
+				ClassLoaderPool.getContextName(identifiableBeanClassLoader);
+
 			String beanIdentifier = identifiableBean.getBeanIdentifier();
 
 			methodHandler = new MethodHandler(
-				_invokeMethodKey, methodHandler, servletContextName,
-				beanIdentifier);
+				_invokeMethodKey, methodHandler, contextServletContextName,
+				identifiableBeanServletContextName, beanIdentifier);
 		}
 
 		objectOutput.writeObject(methodHandler);
@@ -105,7 +114,7 @@ public class AsyncRunnable implements Externalizable, Runnable {
 	@SuppressWarnings("unused")
 	private static Object _invoke(
 			MethodHandler methodHandler, String servletContextName,
-			String beanIdentifier)
+			String identifiableBeanServletContextName, String beanIdentifier)
 		throws Exception {
 
 		if (Validator.isNull(servletContextName)) {
@@ -132,8 +141,17 @@ public class AsyncRunnable implements Externalizable, Runnable {
 				return methodHandler.invoke(true);
 			}
 			else {
-				Object bean = PortletBeanLocatorUtil.locate(
-					servletContextName, beanIdentifier);
+				Object bean = null;
+
+				if (identifiableBeanServletContextName.equals(
+						PortalUtil.getServletContextName())) {
+
+					bean = PortalBeanLocatorUtil.locate(beanIdentifier);
+				}
+				else {
+					bean = PortletBeanLocatorUtil.locate(
+						servletContextName, beanIdentifier);
+				}
 
 				return methodHandler.invoke(bean);
 			}
@@ -145,7 +163,7 @@ public class AsyncRunnable implements Externalizable, Runnable {
 
 	private static MethodKey _invokeMethodKey = new MethodKey(
 		AsyncRunnable.class, "_invoke", MethodHandler.class, String.class,
-		String.class);
+		String.class, String.class);
 
 	private MethodHandler _methodHandler;
 	private MethodInvocation _methodInvocation;

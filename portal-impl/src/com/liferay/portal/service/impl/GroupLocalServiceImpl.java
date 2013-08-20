@@ -21,6 +21,7 @@ import com.liferay.portal.GroupParentException;
 import com.liferay.portal.LocaleException;
 import com.liferay.portal.NoSuchGroupException;
 import com.liferay.portal.NoSuchLayoutSetException;
+import com.liferay.portal.NoSuchWorkflowDefinitionLinkException;
 import com.liferay.portal.PendingBackgroundTaskException;
 import com.liferay.portal.RequiredGroupException;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
@@ -60,6 +61,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UniqueList;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowHandler;
+import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.model.Account;
 import com.liferay.portal.model.BackgroundTask;
@@ -82,12 +85,14 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.model.UserGroupRole;
 import com.liferay.portal.model.UserPersonalSite;
+import com.liferay.portal.model.WorkflowDefinitionLink;
 import com.liferay.portal.model.impl.LayoutImpl;
 import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.service.base.GroupLocalServiceBaseImpl;
 import com.liferay.portal.theme.ThemeLoader;
 import com.liferay.portal.theme.ThemeLoaderFactory;
@@ -888,6 +893,39 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 				resourceLocalService.deleteResource(
 					group.getCompanyId(), Group.class.getName(),
 					ResourceConstants.SCOPE_INDIVIDUAL, group.getGroupId());
+			}
+
+			// Workflow definition links
+
+			List<String> classesWithVisibleWorkflowHandler =
+				new ArrayList<String>();
+
+			for (WorkflowHandler workflowHandler : WorkflowHandlerRegistryUtil.
+				getScopeableWorkflowHandlers()) {
+
+				if (workflowHandler.isVisible()) {
+					classesWithVisibleWorkflowHandler.add(
+						workflowHandler.getClassName());
+				}
+			}
+
+			for (String className : classesWithVisibleWorkflowHandler) {
+				WorkflowDefinitionLink workflowDefinitionLink = null;
+
+				try {
+					workflowDefinitionLink =
+						WorkflowDefinitionLinkLocalServiceUtil.
+							getWorkflowDefinitionLink(
+								group.getCompanyId(), group.getGroupId(),
+								className, 0, 0, true);
+				}
+				catch (NoSuchWorkflowDefinitionLinkException e) {
+				}
+
+				if (workflowDefinitionLink != null) {
+					WorkflowDefinitionLinkLocalServiceUtil.
+						deleteWorkflowDefinitionLink(workflowDefinitionLink);
+				}
 			}
 
 			// Group

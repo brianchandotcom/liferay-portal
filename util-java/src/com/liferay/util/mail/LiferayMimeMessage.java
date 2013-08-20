@@ -14,6 +14,8 @@
 
 package com.liferay.util.mail;
 
+import com.liferay.portal.kernel.util.ArrayUtil;
+
 import javax.mail.MessagingException;
 import javax.mail.Session;
 import javax.mail.internet.MimeMessage;
@@ -31,7 +33,7 @@ public class LiferayMimeMessage extends MimeMessage {
 	protected void updateMessageID() throws MessagingException {
 		String[] messageIds = getHeader("Message-ID");
 
-		if ((messageIds != null) && (messageIds.length > 0)) {
+		if (ArrayUtil.isNotEmpty(messageIds)) {
 
 			// Keep current value
 

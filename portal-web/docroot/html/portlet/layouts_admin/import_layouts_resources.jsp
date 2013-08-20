@@ -402,7 +402,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 
 																			PortletDataHandlerControl[] childrenControls = control.getChildren();
 
-																			if ((childrenControls != null) && (childrenControls.length > 0)) {
+																			if (ArrayUtil.isNotEmpty(childrenControls)) {
 																				request.setAttribute("render_controls.jsp-controls", childrenControls);
 																			%>
 

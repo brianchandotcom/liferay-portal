@@ -15,6 +15,7 @@
 package com.liferay.portal.servlet.filters.header;
 
 import com.liferay.portal.kernel.servlet.HttpHeaders;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -64,7 +65,7 @@ public class HeaderFilter extends BasePortalFilter {
 
 		String[] value = parameterMap.get("t");
 
-		if ((value != null) && (value.length > 0)) {
+		if (ArrayUtil.isNotEmpty(value)) {
 			lasModified = GetterUtil.getLong(value[0]);
 		}
 

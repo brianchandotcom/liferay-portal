@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
@@ -126,7 +127,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 		File file = null;
 
 		try {
-			if ((bytes != null) && (bytes.length > 0)) {
+			if (ArrayUtil.isNotEmpty(bytes)) {
 				file = FileUtil.createTempFile(bytes);
 			}
 
@@ -981,7 +982,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 		File file = null;
 
 		try {
-			if ((bytes != null) && (bytes.length > 0)) {
+			if (ArrayUtil.isNotEmpty(bytes)) {
 				file = FileUtil.createTempFile(bytes);
 			}
 

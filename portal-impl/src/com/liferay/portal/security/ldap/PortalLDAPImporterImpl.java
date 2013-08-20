@@ -533,7 +533,7 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 		if (ldapUser.isUpdatePortrait()) {
 			byte[] portraitBytes = ldapUser.getPortraitBytes();
 
-			if ((portraitBytes != null) && (portraitBytes.length > 0)) {
+			if (ArrayUtil.isNotEmpty(portraitBytes)) {
 				user = UserLocalServiceUtil.updatePortrait(
 					user.getUserId(), portraitBytes);
 			}
@@ -1289,7 +1289,7 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 		if (ldapUser.isUpdatePortrait()) {
 			byte[] portraitBytes = ldapUser.getPortraitBytes();
 
-			if ((portraitBytes != null) && (portraitBytes.length > 0)) {
+			if (ArrayUtil.isNotEmpty(portraitBytes)) {
 				UserLocalServiceUtil.updatePortrait(
 					user.getUserId(), portraitBytes);
 			}

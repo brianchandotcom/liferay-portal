@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -353,7 +354,7 @@ public class SocialActivityCounterFinderImpl
 	}
 
 	protected void setNames(QueryPos qPos, String[] names) {
-		if ((names != null) && (names.length > 0)) {
+		if (ArrayUtil.isNotEmpty(names)) {
 			for (String name : names) {
 				qPos.add(name);
 			}

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.language.LanguageWrapper;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -116,7 +117,7 @@ public class LanguageImpl implements Language {
 		try {
 			pattern = get(locale, pattern);
 
-			if ((arguments != null) && (arguments.length > 0)) {
+			if (ArrayUtil.isNotEmpty(arguments)) {
 				pattern = _escapePattern(pattern);
 
 				Object[] formattedArguments = new Object[arguments.length];
@@ -185,7 +186,7 @@ public class LanguageImpl implements Language {
 		try {
 			pattern = get(pageContext, pattern);
 
-			if ((arguments != null) && (arguments.length > 0)) {
+			if (ArrayUtil.isNotEmpty(arguments)) {
 				pattern = _escapePattern(pattern);
 
 				Object[] formattedArguments = new Object[arguments.length];
@@ -257,7 +258,7 @@ public class LanguageImpl implements Language {
 		try {
 			pattern = get(pageContext, pattern);
 
-			if ((arguments != null) && (arguments.length > 0)) {
+			if (ArrayUtil.isNotEmpty(arguments)) {
 				pattern = _escapePattern(pattern);
 
 				Object[] formattedArguments = new Object[arguments.length];
@@ -328,7 +329,7 @@ public class LanguageImpl implements Language {
 		try {
 			pattern = get(portletConfig, locale, pattern);
 
-			if ((arguments != null) && (arguments.length > 0)) {
+			if (ArrayUtil.isNotEmpty(arguments)) {
 				pattern = _escapePattern(pattern);
 
 				Object[] formattedArguments = new Object[arguments.length];

@@ -223,7 +223,7 @@ public class MBThreadFinderImpl
 
 			String sql = CustomSQLUtil.get(COUNT_BY_G_U_LPD);
 
-			if ((categoryIds != null) && (categoryIds.length > 0)) {
+			if (ArrayUtil.isNotEmpty(categoryIds)) {
 				sql = StringUtil.replace(
 					sql, "MBThread.categoryId != -1",
 					"MBThread.categoryId = " +
@@ -662,7 +662,7 @@ public class MBThreadFinderImpl
 
 			String sql = CustomSQLUtil.get(FIND_BY_G_U_LPD);
 
-			if ((categoryIds != null) && (categoryIds.length > 0)) {
+			if (ArrayUtil.isNotEmpty(categoryIds)) {
 				sql = StringUtil.replace(
 					sql, "MBThread.categoryId != -1",
 					"MBThread.categoryId = " +

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -530,7 +531,7 @@ public class DLFileEntryFinderImpl
 			sb.append(StringPool.CLOSE_PARENTHESIS);
 		}
 
-		if ((mimeTypes != null) && (mimeTypes.length > 0)) {
+		if (ArrayUtil.isNotEmpty(mimeTypes)) {
 			sb.append(WHERE_AND);
 			sb.append(StringPool.OPEN_PARENTHESIS);
 			sb.append(getMimeTypes(mimeTypes, tableName));

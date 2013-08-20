@@ -83,10 +83,8 @@ public class MailMessageListener extends BaseMessageListener {
 
 		mailMessage.setBulkAddresses(bulkAddresses);
 
-		if (((to != null) && (to.length > 0)) ||
-			((cc != null) && (cc.length > 0)) ||
-			((bcc != null) && (bcc.length > 0)) ||
-			((bulkAddresses != null) && (bulkAddresses.length > 0))) {
+		if (ArrayUtil.isNotEmpty(to) || ArrayUtil.isNotEmpty(cc) ||
+			ArrayUtil.isNotEmpty(bcc) || ArrayUtil.isNotEmpty(bulkAddresses)) {
 
 			MailEngine.send(mailMessage);
 		}

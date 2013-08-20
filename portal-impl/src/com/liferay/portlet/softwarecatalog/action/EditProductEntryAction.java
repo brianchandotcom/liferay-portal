@@ -16,6 +16,7 @@ package com.liferay.portlet.softwarecatalog.action;
 
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -205,7 +206,7 @@ public class EditProductEntryAction extends PortletAction {
 				}
 			}
 
-			if ((bytes != null) && (bytes.length > 0)) {
+			if (ArrayUtil.isNotEmpty(bytes)) {
 				images.add(bytes);
 			}
 			else {

@@ -680,7 +680,7 @@ public class PluginPackageUtil {
 				}
 			}
 
-			if ((bytes != null) && (bytes.length > 0)) {
+			if (ArrayUtil.isNotEmpty(bytes)) {
 				repository = _parseRepositoryXml(
 					new String(bytes), repositoryURL);
 

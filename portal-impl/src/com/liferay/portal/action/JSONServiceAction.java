@@ -220,7 +220,7 @@ public class JSONServiceAction extends JSONAction {
 		else if (typeNameOrClassDescriptor.equals("[[Z")) {
 			String[] values = request.getParameterValues(parameter);
 
-			if ((values != null) && (values.length > 0)) {
+			if (ArrayUtil.isNotEmpty(values)) {
 				String[] values0 = StringUtil.split(values[0]);
 
 				boolean[][] doubleArray =
@@ -243,7 +243,7 @@ public class JSONServiceAction extends JSONAction {
 		else if (typeNameOrClassDescriptor.equals("[[D")) {
 			String[] values = request.getParameterValues(parameter);
 
-			if ((values != null) && (values.length > 0)) {
+			if (ArrayUtil.isNotEmpty(values)) {
 				String[] values0 = StringUtil.split(values[0]);
 
 				double[][] doubleArray =
@@ -266,7 +266,7 @@ public class JSONServiceAction extends JSONAction {
 		else if (typeNameOrClassDescriptor.equals("[[F")) {
 			String[] values = request.getParameterValues(parameter);
 
-			if ((values != null) && (values.length > 0)) {
+			if (ArrayUtil.isNotEmpty(values)) {
 				String[] values0 = StringUtil.split(values[0]);
 
 				float[][] doubleArray =
@@ -289,7 +289,7 @@ public class JSONServiceAction extends JSONAction {
 		else if (typeNameOrClassDescriptor.equals("[[I")) {
 			String[] values = request.getParameterValues(parameter);
 
-			if ((values != null) && (values.length > 0)) {
+			if (ArrayUtil.isNotEmpty(values)) {
 				String[] values0 = StringUtil.split(values[0]);
 
 				int[][] doubleArray = new int[values.length][values0.length];
@@ -311,7 +311,7 @@ public class JSONServiceAction extends JSONAction {
 		else if (typeNameOrClassDescriptor.equals("[[J")) {
 			String[] values = request.getParameterValues(parameter);
 
-			if ((values != null) && (values.length > 0)) {
+			if (ArrayUtil.isNotEmpty(values)) {
 				String[] values0 = StringUtil.split(values[0]);
 
 				long[][] doubleArray = new long[values.length][values0.length];
@@ -333,7 +333,7 @@ public class JSONServiceAction extends JSONAction {
 		else if (typeNameOrClassDescriptor.equals("[[S")) {
 			String[] values = request.getParameterValues(parameter);
 
-			if ((values != null) && (values.length > 0)) {
+			if (ArrayUtil.isNotEmpty(values)) {
 				String[] values0 = StringUtil.split(values[0]);
 
 				short[][] doubleArray =
@@ -356,7 +356,7 @@ public class JSONServiceAction extends JSONAction {
 		else if (typeNameOrClassDescriptor.equals("[[Ljava.lang.String")) {
 			String[] values = request.getParameterValues(parameter);
 
-			if ((values != null) && (values.length > 0)) {
+			if (ArrayUtil.isNotEmpty(values)) {
 				String[] values0 = StringUtil.split(values[0]);
 
 				String[][] doubleArray =

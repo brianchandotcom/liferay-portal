@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.dao.db;
 
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -78,7 +79,7 @@ public class IndexMetadataFactoryUtil {
 		sb.append(StringPool.SPACE);
 		sb.append(StringPool.OPEN_PARENTHESIS);
 
-		if ((columnNames != null) && (columnNames.length > 0)) {
+		if (ArrayUtil.isNotEmpty(columnNames)) {
 			sb.append(
 				StringUtil.merge(columnNames, StringPool.COMMA_AND_SPACE));
 		}

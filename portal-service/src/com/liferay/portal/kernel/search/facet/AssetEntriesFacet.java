@@ -158,9 +158,7 @@ public class AssetEntriesFacet extends MultiValueFacet {
 				GetterUtil.getString(
 					searchContext.getAttribute(getFieldName())));
 
-			if ((entryClassNameParam != null) &&
-				(entryClassNameParam.length > 0)) {
-
+			if (ArrayUtil.isNotEmpty(entryClassNameParam)) {
 				entryClassNames = entryClassNameParam;
 			}
 		}

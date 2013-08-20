@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.scripting.BaseScriptingExecutor;
 import com.liferay.portal.kernel.scripting.ExecutionException;
 import com.liferay.portal.kernel.scripting.ScriptingException;
 import com.liferay.portal.kernel.util.AggregateClassLoader;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.NamedThreadFactory;
 import com.liferay.portal.kernel.util.ReflectionUtil;
@@ -160,7 +161,7 @@ public class RubyExecutor extends BaseScriptingExecutor {
 
 			rubyInstanceConfig.setCurrentDirectory(_basePath);
 
-			if ((classLoaders != null) && (classLoaders.length > 0)) {
+			if (ArrayUtil.isNotEmpty(classLoaders)) {
 				ClassLoader aggregateClassLoader =
 					AggregateClassLoader.getAggregateClassLoader(
 						ClassLoaderUtil.getPortalClassLoader(), classLoaders);

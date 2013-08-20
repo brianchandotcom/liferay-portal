@@ -14,6 +14,7 @@
 
 package com.liferay.portlet;
 
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.xml.simple.Element;
 import com.liferay.util.xml.XMLFormatter;
 
@@ -92,7 +93,7 @@ public abstract class BasePreferencesImpl implements Serializable {
 			values = preference.getValues();
 		}
 
-		if ((values != null) && (values.length > 0)) {
+		if (ArrayUtil.isNotEmpty(values)) {
 			return getActualValue(values[0]);
 		}
 		else {
@@ -115,7 +116,7 @@ public abstract class BasePreferencesImpl implements Serializable {
 			values = preference.getValues();
 		}
 
-		if ((values != null) && (values.length > 0)) {
+		if (ArrayUtil.isNotEmpty(values)) {
 			return getActualValues(values);
 		}
 		else {

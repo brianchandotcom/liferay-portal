@@ -41,7 +41,7 @@ public class ResourceBundleUtil {
 		// arguuments like {0}, {1}, {2}, etc. with the specified argument
 		// values.
 
-		if ((arguments != null) && (arguments.length > 0)) {
+		if (ArrayUtil.isNotEmpty(arguments)) {
 			MessageFormat messageFormat = new MessageFormat(value, locale);
 
 			value = messageFormat.format(arguments);

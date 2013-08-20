@@ -134,7 +134,7 @@ public class ServiceContextFactory {
 			String name = entry.getKey();
 			String[] values = entry.getValue();
 
-			if ((values != null) && (values.length > 0)) {
+			if (ArrayUtil.isNotEmpty(values)) {
 				if (values.length == 1) {
 					attributes.put(name, values[0]);
 				}
@@ -333,7 +333,7 @@ public class ServiceContextFactory {
 
 			String[] values = portletRequest.getParameterValues(param);
 
-			if ((values != null) && (values.length > 0)) {
+			if (ArrayUtil.isNotEmpty(values)) {
 				if (values.length == 1) {
 					attributes.put(param, values[0]);
 				}

@@ -78,7 +78,7 @@ public class SharepointRequest {
 	public String getParameterValue(String name) {
 		String[] values = _params.get(name);
 
-		if ((values != null) && (values.length > 0)) {
+		if (ArrayUtil.isNotEmpty(values)) {
 			return GetterUtil.getString(_params.get(name)[0]);
 		}
 		else {

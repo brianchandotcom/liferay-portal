@@ -849,7 +849,7 @@ public class LayoutStagedModelDataHandler
 		byte[] iconBytes = portletDataContext.getZipEntryAsByteArray(
 			iconImagePath);
 
-		if ((iconBytes != null) && (iconBytes.length > 0)) {
+		if (ArrayUtil.isNotEmpty(iconBytes)) {
 			importedLayout.setIconImage(true);
 
 			if (importedLayout.getIconImageId() == 0) {

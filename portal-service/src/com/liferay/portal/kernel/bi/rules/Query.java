@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.bi.rules;
 
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
@@ -67,7 +68,7 @@ public class Query implements Serializable {
 				"Standard queries cannot accept query arguments");
 		}
 
-		if ((arguments != null) && (arguments.length > 0)) {
+		if (ArrayUtil.isNotEmpty(arguments)) {
 			_arguments.addAll(Arrays.asList(arguments));
 		}
 	}

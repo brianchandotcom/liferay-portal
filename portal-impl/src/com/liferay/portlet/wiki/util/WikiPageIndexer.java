@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.Summary;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -132,7 +133,7 @@ public class WikiPageIndexer extends BaseIndexer {
 
 		long[] nodeIds = searchContext.getNodeIds();
 
-		if ((nodeIds != null) && (nodeIds.length > 0)) {
+		if (ArrayUtil.isNotEmpty(nodeIds)) {
 			BooleanQuery nodeIdsQuery = BooleanQueryFactoryUtil.create(
 				searchContext);
 

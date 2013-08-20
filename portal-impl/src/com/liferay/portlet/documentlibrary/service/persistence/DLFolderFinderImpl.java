@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -647,7 +648,7 @@ public class DLFolderFinderImpl
 					DLFolderFinderImpl.JOIN_FE_BY_DL_FILE_VERSION));
 		}
 
-		if ((mimeTypes != null) && (mimeTypes.length > 0)) {
+		if (ArrayUtil.isNotEmpty(mimeTypes)) {
 			StringBundler sb = new StringBundler(5);
 
 			sb.append(sql);
@@ -675,7 +676,7 @@ public class DLFolderFinderImpl
 				"DLFileShortcut.fileShortcutId", groupId);
 		}
 
-		if ((mimeTypes != null) && (mimeTypes.length > 0)) {
+		if (ArrayUtil.isNotEmpty(mimeTypes)) {
 			StringBundler sb = new StringBundler(5);
 
 			sb.append(
@@ -710,7 +711,7 @@ public class DLFolderFinderImpl
 				groupId);
 		}
 
-		if ((mimeTypes != null) && (mimeTypes.length > 0)) {
+		if (ArrayUtil.isNotEmpty(mimeTypes)) {
 			StringBundler sb = new StringBundler(5);
 
 			sb.append(sql);

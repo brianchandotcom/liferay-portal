@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.TermQuery;
 import com.liferay.portal.kernel.search.TermQueryFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
@@ -392,7 +393,7 @@ public class DLStoreImpl implements DLStore {
 				contextQuery.addRequiredTerm(Field.GROUP_ID, groupId);
 			}
 
-			if ((repositoryIds != null) && (repositoryIds.length > 0)) {
+			if (ArrayUtil.isNotEmpty(repositoryIds)) {
 				BooleanQuery repositoryIdsQuery =
 					BooleanQueryFactoryUtil.create(searchContext);
 

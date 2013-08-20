@@ -657,7 +657,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 		long[] classNameIds = GetterUtil.getLongValues(
 			portletPreferences.getValues("classNameIds", null));
 
-		if ((classNameIds != null) && (classNameIds.length > 0)) {
+		if (ArrayUtil.isNotEmpty(classNameIds)) {
 			return classNameIds;
 		}
 		else {

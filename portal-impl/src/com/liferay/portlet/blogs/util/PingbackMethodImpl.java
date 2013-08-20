@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapperThreadLocal;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -304,7 +305,7 @@ public class PingbackMethodImpl implements Method {
 			paramArray = params.get(namespace + name);
 		}
 
-		if ((paramArray != null) && (paramArray.length > 0)) {
+		if (ArrayUtil.isNotEmpty(paramArray)) {
 			return paramArray[0];
 		}
 		else {

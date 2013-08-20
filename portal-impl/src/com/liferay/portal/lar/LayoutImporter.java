@@ -436,7 +436,7 @@ public class LayoutImporter {
 			byte[] iconBytes = portletDataContext.getZipEntryAsByteArray(
 				logoPath);
 
-			if ((iconBytes != null) && (iconBytes.length > 0)) {
+			if (ArrayUtil.isNotEmpty(iconBytes)) {
 				File logo = null;
 
 				try {

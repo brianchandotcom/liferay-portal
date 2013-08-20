@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.search;
 
+import com.liferay.portal.kernel.util.ArrayUtil;
+
 import java.util.List;
 import java.util.Map;
 
@@ -44,9 +46,7 @@ public class AlternateKeywordQueryHitsProcessor implements HitsProcessor {
 		String[] additionalQuerySuggestions =
 			SearchEngineUtil.suggestKeywordQueries(searchContext, 5);
 
-		if ((additionalQuerySuggestions != null) &&
-			(additionalQuerySuggestions.length > 0)) {
-
+		if (ArrayUtil.isNotEmpty(additionalQuerySuggestions)) {
 			searchContext.setKeywords(additionalQuerySuggestions[0]);
 		}
 

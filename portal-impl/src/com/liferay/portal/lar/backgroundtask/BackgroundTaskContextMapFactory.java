@@ -14,6 +14,7 @@
 
 package com.liferay.portal.lar.backgroundtask;
 
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -47,7 +48,7 @@ public class BackgroundTaskContextMapFactory {
 		taskContextMap.put("fileName", fileName);
 		taskContextMap.put("groupId", groupId);
 
-		if ((layoutIds != null) && (layoutIds.length > 0)) {
+		if (ArrayUtil.isNotEmpty(layoutIds)) {
 			taskContextMap.put("layoutIds", layoutIds);
 		}
 

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
 import com.liferay.portal.kernel.scripting.BaseScriptingExecutor;
 import com.liferay.portal.kernel.scripting.ScriptingException;
 import com.liferay.portal.kernel.util.AggregateClassLoader;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.util.ClassLoaderUtil;
 
 import java.util.HashMap;
@@ -53,7 +54,7 @@ public class JavaScriptExecutor extends BaseScriptingExecutor {
 
 			Scriptable scriptable = context.initStandardObjects();
 
-			if ((classLoaders != null) && (classLoaders.length > 0)) {
+			if (ArrayUtil.isNotEmpty(classLoaders)) {
 				ClassLoader aggregateClassLoader =
 					AggregateClassLoader.getAggregateClassLoader(
 						ClassLoaderUtil.getPortalClassLoader(), classLoaders);
@@ -117,7 +118,7 @@ public class JavaScriptExecutor extends BaseScriptingExecutor {
 		try {
 			Context context = Context.enter();
 
-			if ((classLoaders != null) && (classLoaders.length > 0)) {
+			if (ArrayUtil.isNotEmpty(classLoaders)) {
 				ClassLoader aggregateClassLoader =
 					AggregateClassLoader.getAggregateClassLoader(
 						ClassLoaderUtil.getPortalClassLoader(), classLoaders);

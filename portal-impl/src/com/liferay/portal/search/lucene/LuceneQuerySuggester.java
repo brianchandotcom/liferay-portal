@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.search.NGramHolderBuilderUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.TokenizerUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.util.lucene.KeywordsUtil;
 
@@ -187,7 +188,7 @@ public class LuceneQuerySuggester extends BaseQuerySuggester {
 			booleanQuery, Field.GROUP_ID, String.valueOf(0), null,
 			BooleanClause.Occur.SHOULD);
 
-		if ((groupIds != null) && (groupIds.length > 0)) {
+		if (ArrayUtil.isNotEmpty(groupIds)) {
 			for (long groupId : groupIds) {
 				addTermQuery(
 					booleanQuery, Field.GROUP_ID, String.valueOf(groupId), null,

@@ -49,6 +49,7 @@ import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -759,7 +760,7 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 			searchContext.setKeywords(keywords);
 		}
 
-		if ((sorts != null) && (sorts.length > 0)) {
+		if (ArrayUtil.isNotEmpty(sorts)) {
 			searchContext.setSorts(sorts);
 		}
 

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.upload.ProgressInputStream;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -1341,7 +1342,7 @@ public class HttpImpl implements Http {
 
 			httpState = new HttpState();
 
-			if ((cookies != null) && (cookies.length > 0)) {
+			if (ArrayUtil.isNotEmpty(cookies)) {
 				org.apache.commons.httpclient.Cookie[] commonsCookies =
 					toCommonsCookies(cookies);
 

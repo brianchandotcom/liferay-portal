@@ -14,6 +14,7 @@
 
 package com.liferay.util.servlet;
 
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.util.Encryptor;
@@ -64,7 +65,7 @@ public class EncryptedServletRequest extends HttpServletRequestWrapper {
 	public String getParameter(String name) {
 		String[] values = _params.get(name);
 
-		if ((values != null) && (values.length > 0)) {
+		if (ArrayUtil.isNotEmpty(values)) {
 			return values[0];
 		}
 		else {

@@ -500,7 +500,7 @@ public class DDMImpl implements DDM {
 				try {
 					byte[] bytes = FileUtil.getBytes(file);
 
-					if ((bytes != null) && (bytes.length > 0)) {
+					if (ArrayUtil.isNotEmpty(bytes)) {
 						fieldValue = UnicodeFormatter.bytesToHex(bytes);
 					}
 					else {

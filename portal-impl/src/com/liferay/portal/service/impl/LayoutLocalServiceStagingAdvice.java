@@ -337,7 +337,7 @@ public class LayoutLocalServiceStagingAdvice implements MethodInterceptor {
 		// Icon
 
 		if (iconImage != null) {
-			if ((iconBytes != null) && (iconBytes.length > 0)) {
+			if (ArrayUtil.isNotEmpty(iconBytes)) {
 				ImageLocalServiceUtil.updateImage(
 					layoutRevision.getIconImageId(), iconBytes);
 			}

@@ -114,7 +114,7 @@ public class WikiTestUtil {
 
 		File file = null;
 
-		if ((fileBytes != null) && (fileBytes.length > 0)) {
+		if (ArrayUtil.isNotEmpty(fileBytes)) {
 			file = FileUtil.createTempFile(fileBytes);
 		}
 

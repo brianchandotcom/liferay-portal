@@ -222,7 +222,7 @@ public class DLFileEntryIndexer extends BaseIndexer {
 
 		String[] mimeTypes = (String[])searchContext.getAttribute("mimeTypes");
 
-		if ((mimeTypes != null) && (mimeTypes.length > 0)) {
+		if (ArrayUtil.isNotEmpty(mimeTypes)) {
 			BooleanQuery mimeTypesQuery = BooleanQueryFactoryUtil.create(
 				searchContext);
 
@@ -246,7 +246,7 @@ public class DLFileEntryIndexer extends BaseIndexer {
 
 		long[] groupIds = searchContext.getGroupIds();
 
-		if ((groupIds != null) && (groupIds.length > 0)) {
+		if (ArrayUtil.isNotEmpty(groupIds)) {
 			List<DLFileEntryType> dlFileEntryTypes =
 				DLFileEntryTypeLocalServiceUtil.getFileEntryTypes(groupIds);
 

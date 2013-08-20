@@ -14,6 +14,7 @@
 
 package com.liferay.portal.security.auth;
 
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
 import javax.naming.ldap.Control;
@@ -44,7 +45,7 @@ public class LDAPAuthResult {
 	}
 
 	public void setResponseControl(Control[] response) {
-		if ((response != null) && (response.length > 0)) {
+		if (ArrayUtil.isNotEmpty(response)) {
 			_responseControl = response[0].getID();
 		}
 	}

@@ -515,7 +515,7 @@ public class LuceneIndexSearcher extends BaseIndexSearcher {
 			TermCollectingFormatter termCollectingFormatter =
 				new TermCollectingFormatter();
 
-			if ((values != null) && (values.length > 0)) {
+			if (ArrayUtil.isNotEmpty(values)) {
 				snippet = LuceneHelperUtil.getSnippet(
 					luceneQuery, snippetField, StringUtil.merge(values),
 					termCollectingFormatter);

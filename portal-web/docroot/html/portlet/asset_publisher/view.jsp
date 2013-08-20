@@ -34,7 +34,7 @@ if (mergeUrlTags || mergeLayoutTags) {
 
 	String titleEntry = null;
 
-	if ((compilerTagNames != null) && (compilerTagNames.length > 0)) {
+	if (ArrayUtil.isNotEmpty(compilerTagNames)) {
 		String[] newAssetTagNames = ArrayUtil.append(allAssetTagNames, compilerTagNames);
 
 		allAssetTagNames = ArrayUtil.distinct(newAssetTagNames, new StringComparator());

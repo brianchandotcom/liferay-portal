@@ -189,7 +189,7 @@ portletURL.setParameter("rootNodeName", rootNodeName);
 
 												PortletDataHandlerControl[] configurationControls = portletDataHandler.getExportConfigurationControls(company.getCompanyId(), groupId, portlet, privateLayout);
 
-												if ((configurationControls != null) && (configurationControls.length > 0)) {
+												if (ArrayUtil.isNotEmpty(configurationControls)) {
 													String portletTitle = PortalUtil.getPortletTitle(portlet, application, locale);
 											%>
 
@@ -447,7 +447,7 @@ portletURL.setParameter("rootNodeName", rootNodeName);
 
 																						PortletDataHandlerControl[] childrenControls = control.getChildren();
 
-																						if ((childrenControls != null) && (childrenControls.length > 0)) {
+																						if (ArrayUtil.isNotEmpty(childrenControls)) {
 																							request.setAttribute("render_controls.jsp-controls", childrenControls);
 																						%>
 

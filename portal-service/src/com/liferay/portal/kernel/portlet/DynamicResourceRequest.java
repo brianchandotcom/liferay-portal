@@ -101,7 +101,7 @@ public class DynamicResourceRequest extends ResourceRequestWrapper {
 			return super.getParameter(name);
 		}
 
-		if ((values != null) && (values.length > 0)) {
+		if (ArrayUtil.isNotEmpty(values)) {
 			return values[0];
 		}
 		else {

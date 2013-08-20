@@ -171,9 +171,7 @@ public class LayoutExporter {
 						layout.getCompanyId(), layout.getGroupId(), portlet,
 						layout.getPrivateLayout());
 
-				if ((portletDataHandlerControls != null) &&
-					(portletDataHandlerControls.length > 0)) {
-
+				if (ArrayUtil.isNotEmpty(portletDataHandlerControls)) {
 					rootPortletIds.add(portlet.getRootPortletId());
 
 					portlets.add(portlet);

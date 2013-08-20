@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.lar.PortletDataException;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.systemevent.SystemEventHierarchyEntry;
 import com.liferay.portal.kernel.systemevent.SystemEventHierarchyEntryThreadLocal;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -2270,7 +2271,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 			if (!iconImage.booleanValue()) {
 				imageLocalService.deleteImage(layout.getIconImageId());
 			}
-			else if ((iconBytes != null) && (iconBytes.length > 0)) {
+			else if (ArrayUtil.isNotEmpty(iconBytes)) {
 				imageLocalService.updateImage(
 					layout.getIconImageId(), iconBytes);
 			}

@@ -22,6 +22,7 @@ import com.liferay.portal.configuration.easyconf.ClassLoaderComponentConfigurati
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
@@ -384,7 +385,7 @@ public class ConfigurationImpl
 
 		Object value = _nullValue;
 
-		if ((array != null) && (array.length > 0)) {
+		if (ArrayUtil.isNotEmpty(array)) {
 
 			// Commons Configuration parses an empty property into a String
 			// array with one String containing one space. It also leaves a

@@ -91,7 +91,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 			PortletDataHandlerControl[] configurationControls = portletDataHandler.getImportConfigurationControls(selPortlet, manifestSummary);
 			%>
 
-			<c:if test="<%= (configurationControls != null) && (configurationControls.length > 0) %>">
+			<c:if test="<%= ArrayUtil.isNotEmpty(configurationControls) %>">
 				<aui:fieldset cssClass="options-group" label="application">
 					<ul class="lfr-tree select-options unstyled">
 						<li class="options">
@@ -214,7 +214,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 
 																PortletDataHandlerControl[] childrenControls = control.getChildren();
 
-																if ((childrenControls != null) && (childrenControls.length > 0)) {
+																if (ArrayUtil.isNotEmpty(childrenControls)) {
 																	request.setAttribute("render_controls.jsp-controls", childrenControls);
 																%>
 

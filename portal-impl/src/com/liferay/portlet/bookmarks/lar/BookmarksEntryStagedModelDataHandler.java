@@ -71,8 +71,9 @@ public class BookmarksEntryStagedModelDataHandler
 		if (entry.getFolderId() !=
 				BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
-			StagedModelDataHandlerUtil.exportStagedModel(
-				portletDataContext, entry.getFolder());
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
+				portletDataContext, entry, entry.getFolder(),
+				PortletDataContext.REFERENCE_TYPE_PARENT);
 		}
 
 		Element entryElement = portletDataContext.getExportDataElement(entry);

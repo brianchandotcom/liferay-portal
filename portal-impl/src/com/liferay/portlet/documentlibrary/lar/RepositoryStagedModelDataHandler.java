@@ -98,12 +98,9 @@ public class RepositoryStagedModelDataHandler
 				repository.getRepositoryId());
 
 		for (RepositoryEntry repositoryEntry : repositoryEntries) {
-			StagedModelDataHandlerUtil.exportStagedModel(
-				portletDataContext, repositoryEntry);
-
-			portletDataContext.addReferenceElement(
-				repository, repositoryElement, repositoryEntry,
-				PortletDataContext.REFERENCE_TYPE_CHILD, false);
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
+				portletDataContext, repository, repositoryEntry,
+				PortletDataContext.REFERENCE_TYPE_CHILD);
 		}
 	}
 

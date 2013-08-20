@@ -128,12 +128,9 @@ public class DDMTemplateStagedModelDataHandler
 			template.getClassPK());
 
 		if (structure != null) {
-			StagedModelDataHandlerUtil.exportStagedModel(
-				portletDataContext, structure);
-
-			portletDataContext.addReferenceElement(
-				template, templateElement, structure,
-				PortletDataContext.REFERENCE_TYPE_STRONG, false);
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
+				portletDataContext, template, structure,
+				PortletDataContext.REFERENCE_TYPE_STRONG);
 		}
 
 		if (template.isSmallImage()) {

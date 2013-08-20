@@ -187,11 +187,9 @@ public class LayoutStagedModelDataHandler
 				layout.getGroupId(), layout.isPrivateLayout(), parentLayoutId);
 
 			if (parentLayout != null) {
-				exportStagedModel(portletDataContext, parentLayout);
-
-				portletDataContext.addReferenceElement(
-					layout, layoutElement, parentLayout,
-					PortletDataContext.REFERENCE_TYPE_PARENT, false);
+				StagedModelDataHandlerUtil.exportReferenceStagedModel(
+					portletDataContext, layout, parentLayout,
+					PortletDataContext.REFERENCE_TYPE_PARENT);
 
 				layoutElement.addAttribute(
 					"parent-layout-uuid", parentLayout.getUuid());
@@ -203,12 +201,9 @@ public class LayoutStagedModelDataHandler
 				layout.getPlid());
 
 		for (LayoutFriendlyURL layoutFriendlyURL : layoutFriendlyURLs) {
-			StagedModelDataHandlerUtil.exportStagedModel(
-				portletDataContext, layoutFriendlyURL);
-
-			portletDataContext.addReferenceElement(
-				layout, layoutElement, layoutFriendlyURL,
-				PortletDataContext.REFERENCE_TYPE_DEPENDENCY, false);
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
+				portletDataContext, layout, layoutFriendlyURL,
+				PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
 		}
 
 		if (layout.isIconImage()) {
@@ -611,12 +606,9 @@ public class LayoutStagedModelDataHandler
 			return;
 		}
 
-		StagedModelDataHandlerUtil.exportStagedModel(
-			portletDataContext, article);
-
-		portletDataContext.addReferenceElement(
-			layout, layoutElement, article,
-			PortletDataContext.REFERENCE_TYPE_EMBEDDED, false);
+		StagedModelDataHandlerUtil.exportReferenceStagedModel(
+			portletDataContext, layout, article,
+			PortletDataContext.REFERENCE_TYPE_EMBEDDED);
 	}
 
 	protected void exportLayoutIconImage(
@@ -658,11 +650,9 @@ public class LayoutStagedModelDataHandler
 					portletDataContext.getScopeGroupId(),
 					layout.isPrivateLayout(), linkToLayoutId);
 
-				exportStagedModel(portletDataContext, linkedToLayout);
-
-				portletDataContext.addReferenceElement(
-					layout, layoutElement, linkedToLayout,
-					PortletDataContext.REFERENCE_TYPE_STRONG, false);
+				StagedModelDataHandlerUtil.exportReferenceStagedModel(
+					portletDataContext, layout, linkedToLayout,
+					PortletDataContext.REFERENCE_TYPE_STRONG);
 
 				layoutElement.addAttribute(
 					"linked-to-layout-uuid", linkedToLayout.getUuid());

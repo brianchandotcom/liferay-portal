@@ -69,8 +69,9 @@ public class JournalFolderStagedModelDataHandler
 		if (folder.getParentFolderId() !=
 				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 
-			StagedModelDataHandlerUtil.exportStagedModel(
-				portletDataContext, folder.getParentFolder());
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
+				portletDataContext, folder, folder.getParentFolder(),
+				PortletDataContext.REFERENCE_TYPE_PARENT);
 		}
 
 		Element folderElement = portletDataContext.getExportDataElement(folder);

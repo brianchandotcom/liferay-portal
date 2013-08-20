@@ -217,12 +217,9 @@ public class OrganizationStagedModelDataHandler
 			organization.getOrganizationId());
 
 		for (Address address : addresses) {
-			portletDataContext.addReferenceElement(
-				organization, organizationElement, address,
-				PortletDataContext.REFERENCE_TYPE_EMBEDDED, false);
-
-			StagedModelDataHandlerUtil.exportStagedModel(
-				portletDataContext, address);
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
+				portletDataContext, organization, address,
+				PortletDataContext.REFERENCE_TYPE_EMBEDDED);
 		}
 	}
 
@@ -237,12 +234,9 @@ public class OrganizationStagedModelDataHandler
 				organization.getOrganizationId());
 
 		for (EmailAddress emailAddress : emailAddresses) {
-			portletDataContext.addReferenceElement(
-				organization, organizationElement, emailAddress,
-				PortletDataContext.REFERENCE_TYPE_EMBEDDED, false);
-
-			StagedModelDataHandlerUtil.exportStagedModel(
-				portletDataContext, emailAddress);
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
+				portletDataContext, organization, emailAddress,
+				PortletDataContext.REFERENCE_TYPE_EMBEDDED);
 		}
 	}
 
@@ -276,12 +270,9 @@ public class OrganizationStagedModelDataHandler
 			PasswordPolicyLocalServiceUtil.getPasswordPolicy(
 				passwordPolicyRel.getPasswordPolicyId());
 
-		portletDataContext.addReferenceElement(
-			organization, organizationElement, passwordPolicy,
-			PortletDataContext.REFERENCE_TYPE_STRONG, false);
-
-		StagedModelDataHandlerUtil.exportStagedModel(
-			portletDataContext, passwordPolicy);
+		StagedModelDataHandlerUtil.exportReferenceStagedModel(
+			portletDataContext, organization, passwordPolicy,
+			PortletDataContext.REFERENCE_TYPE_STRONG);
 	}
 
 	protected void exportPhones(
@@ -294,12 +285,9 @@ public class OrganizationStagedModelDataHandler
 			organization.getOrganizationId());
 
 		for (Phone phone : phones) {
-			portletDataContext.addReferenceElement(
-				organization, organizationElement, phone,
-				PortletDataContext.REFERENCE_TYPE_EMBEDDED, false);
-
-			StagedModelDataHandlerUtil.exportStagedModel(
-				portletDataContext, phone);
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
+				portletDataContext, organization, phone,
+				PortletDataContext.REFERENCE_TYPE_EMBEDDED);
 		}
 	}
 
@@ -313,12 +301,9 @@ public class OrganizationStagedModelDataHandler
 			organization.getOrganizationId());
 
 		for (Website website : websites) {
-			portletDataContext.addReferenceElement(
-				organization, organizationElement, website,
-				PortletDataContext.REFERENCE_TYPE_EMBEDDED, false);
-
-			StagedModelDataHandlerUtil.exportStagedModel(
-				portletDataContext, website);
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
+				portletDataContext, organization, website,
+				PortletDataContext.REFERENCE_TYPE_EMBEDDED);
 		}
 	}
 

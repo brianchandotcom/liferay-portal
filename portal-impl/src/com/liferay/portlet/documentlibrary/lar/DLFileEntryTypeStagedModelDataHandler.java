@@ -75,12 +75,10 @@ public class DLFileEntryTypeStagedModelDataHandler
 		List<DDMStructure> ddmStructures = fileEntryType.getDDMStructures();
 
 		for (DDMStructure ddmStructure : ddmStructures) {
-			StagedModelDataHandlerUtil.exportStagedModel(
-				portletDataContext, ddmStructure);
-
-			Element referenceElement = portletDataContext.addReferenceElement(
-				fileEntryType, fileEntryTypeElement, ddmStructure,
-				PortletDataContext.REFERENCE_TYPE_STRONG, false);
+			Element referenceElement =
+				StagedModelDataHandlerUtil.exportReferenceStagedModel(
+					portletDataContext, fileEntryType, ddmStructure,
+					PortletDataContext.REFERENCE_TYPE_STRONG);
 
 			referenceElement.addAttribute(
 				"structure-id",

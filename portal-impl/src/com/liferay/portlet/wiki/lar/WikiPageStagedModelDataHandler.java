@@ -71,8 +71,9 @@ public class WikiPageStagedModelDataHandler
 
 		Element pageElement = portletDataContext.getExportDataElement(page);
 
-		StagedModelDataHandlerUtil.exportStagedModel(
-			portletDataContext, page.getNode());
+		StagedModelDataHandlerUtil.exportReferenceStagedModel(
+			portletDataContext, page, page.getNode(),
+			PortletDataContext.REFERENCE_TYPE_PARENT);
 
 		String content = ExportImportHelperUtil.replaceExportContentReferences(
 			portletDataContext, page, pageElement, page.getContent(),
@@ -83,12 +84,9 @@ public class WikiPageStagedModelDataHandler
 
 		if (page.isHead()) {
 			for (FileEntry fileEntry : page.getAttachmentsFileEntries()) {
-				StagedModelDataHandlerUtil.exportStagedModel(
-					portletDataContext, fileEntry);
-
-				portletDataContext.addReferenceElement(
-					page, pageElement, fileEntry, FileEntry.class,
-					PortletDataContext.REFERENCE_TYPE_WEAK, false);
+				StagedModelDataHandlerUtil.exportReferenceStagedModel(
+					portletDataContext, page, WikiPage.class, fileEntry,
+					FileEntry.class, PortletDataContext.REFERENCE_TYPE_WEAK);
 			}
 		}
 

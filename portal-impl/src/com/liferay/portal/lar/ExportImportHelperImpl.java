@@ -600,15 +600,17 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 			try {
 				if (exportReferencedContent) {
-					StagedModelDataHandlerUtil.exportStagedModel(
-						portletDataContext, fileEntry);
+					StagedModelDataHandlerUtil.exportReferenceStagedModel(
+						portletDataContext, entityStagedModel, entityElement,
+						fileEntry, FileEntry.class,
+						PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
 				}
-
-				portletDataContext.addReferenceElement(
-					entityStagedModel, entityElement, fileEntry,
-					FileEntry.class,
-					PortletDataContext.REFERENCE_TYPE_DEPENDENCY,
-					!exportReferencedContent);
+				else {
+					portletDataContext.addReferenceElement(
+						entityStagedModel, entityElement, fileEntry,
+						FileEntry.class,
+						PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
+				}
 
 				String path = ExportImportPathUtil.getModelPath(
 					fileEntry.getGroupId(), FileEntry.class.getName(),
@@ -812,14 +814,15 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 				newLinksToLayout.add(newLinkToLayout);
 
 				if (exportReferencedContent) {
-					StagedModelDataHandlerUtil.exportStagedModel(
-						portletDataContext, layout);
+					StagedModelDataHandlerUtil.exportReferenceStagedModel(
+						portletDataContext, entityStagedModel, layout,
+						PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
 				}
-
-				portletDataContext.addReferenceElement(
-					entityStagedModel, entityElement, layout, Layout.class,
-					PortletDataContext.REFERENCE_TYPE_DEPENDENCY,
-					!exportReferencedContent);
+				else {
+					portletDataContext.addReferenceElement(
+						entityStagedModel, entityElement, layout,
+						PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
+				}
 			}
 			catch (Exception e) {
 				if (_log.isDebugEnabled() || _log.isWarnEnabled()) {

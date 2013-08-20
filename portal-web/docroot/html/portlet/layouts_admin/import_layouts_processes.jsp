@@ -61,7 +61,7 @@ OrderByComparator orderByComparator = BackgroundTaskUtil.getBackgroundTaskOrderB
 	>
 		<liferay-ui:search-container-column-text
 			name="user-name"
-			value="<%= backgroundTask.getUserName() %>"
+			value="<%= HtmlUtil.escape(backgroundTask.getUserName()) %>"
 		/>
 
 		<liferay-ui:search-container-column-jsp

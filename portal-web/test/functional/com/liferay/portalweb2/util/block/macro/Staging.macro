@@ -47,13 +47,13 @@
 		<execute action="PGStaging#click" locator-key1="STAGING_DROP_DOWN_BUTTON" />
 		<execute action="PGStaging#assertClick" locator-key1="STAGING_MENULIST_PUBLISH_TO_LIVE_NOW" value1="Publish to Live" />
 
-		<execute action="PGStagingPublishToLiveNow#selectFrame" locator-key1="PUBLISH_TO_LIVE_IFRAME" />
-		<execute action="PGStagingPublishToLiveNow#check" locator-key1="DATE_NOW" />
-		<execute action="PGStagingPublishToLiveNow#check" locator-key1="ALL_CONTENT" />
-		<execute action="PGStagingPublishToLiveNow#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
-		<execute action="PGStagingPublishToLiveNow#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to publish these pages?" />
-		<execute action="PGStagingPublishToLiveNow#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute action="PGStagingPublishToLiveNow#assertTextEquals" locator-key1="PUBLICATION_TABLE_USER_STATUS" value1="Successful" />
-		<execute action="PGStagingPublishToLiveNow#selectFrameTop" locator-key1="PUBLISH_TO_LIVE_IFRAME_TOP" value1="relative=top" />
+		<execute action="PGStagingPublishtolivenow#selectFrame" locator-key1="PUBLISH_TO_LIVE_IFRAME" />
+		<execute action="PGStagingPublishtolivenow#check" locator-key1="DATE_NOW_CHECKBOX" />
+		<execute action="PGStagingPublishtolivenow#check" locator-key1="ALL_CONTENT_CHECKBOX" />
+		<execute action="PGStagingPublishtolivenow#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+		<execute action="PGStagingPublishtolivenow#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to publish these pages?" />
+		<execute action="PGStagingPublishtolivenow#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="PGStagingPublishtolivenow#assertTextEquals" locator-key1="CURRENT_AND_PREVIOUS_TABLE_STATUS" value1="Successful" />
+		<execute action="PGStagingPublishtolivenow#selectFrameTop" value1="relative=top" />
 	</command>
 </definition>

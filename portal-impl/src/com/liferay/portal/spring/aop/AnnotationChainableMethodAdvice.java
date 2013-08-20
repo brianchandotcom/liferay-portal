@@ -95,24 +95,29 @@ public abstract class AnnotationChainableMethodAdvice<T extends Annotation>
 			annotationClasses.add(annotationClass);
 		}
 
-		Map<Class<? extends Annotation>, AnnotationChainableMethodAdvice<?>>
+		Map<Class<? extends Annotation>, AnnotationChainableMethodAdvice<?>[]>
 			annotationChainableMethodAdvices =
 				serviceBeanAopCacheManager.
 					getRegisteredAnnotationChainableMethodAdvices();
 
 		for (Map.Entry<Class<? extends Annotation>,
-				AnnotationChainableMethodAdvice<?>> entry :
+				AnnotationChainableMethodAdvice<?>[]> entry :
 					annotationChainableMethodAdvices.entrySet()) {
 
 			Class<? extends Annotation> annotationClass = entry.getKey();
-			AnnotationChainableMethodAdvice<?> annotationChainableMethodAdvice =
-				entry.getValue();
+			AnnotationChainableMethodAdvice<?>[]
+				annotationChainableMethodAdviceArray = entry.getValue();
 
 			if (!annotationClasses.contains(annotationClass) &&
-				(annotationChainableMethodAdvice != null)) {
+				(annotationChainableMethodAdviceArray != null)) {
 
-				serviceBeanAopCacheManager.removeMethodInterceptor(
-					methodInvocation, annotationChainableMethodAdvice);
+				for (AnnotationChainableMethodAdvice<?>
+						annotationChainableMethodAdvice :
+					annotationChainableMethodAdviceArray) {
+
+					serviceBeanAopCacheManager.removeMethodInterceptor(
+						methodInvocation, annotationChainableMethodAdvice);
+				}
 			}
 		}
 

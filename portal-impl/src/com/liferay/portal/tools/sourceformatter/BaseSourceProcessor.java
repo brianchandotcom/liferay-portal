@@ -269,6 +269,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			for (String languageKey : languageKeys) {
 				if (Validator.isNumber(languageKey) ||
 					languageKey.endsWith(StringPool.DASH) ||
+					languageKey.endsWith(StringPool.OPEN_BRACKET) ||
 					languageKey.endsWith(StringPool.PERIOD) ||
 					languageKey.endsWith(StringPool.UNDERLINE) ||
 					languageKey.startsWith(StringPool.DASH) ||

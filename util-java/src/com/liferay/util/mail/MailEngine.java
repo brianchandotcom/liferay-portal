@@ -550,9 +550,7 @@ public class MailEngine {
 					Address[] batchAddresses = _getBatchAddresses(
 						addresses, i, batchSize);
 
-					if ((batchAddresses == null) ||
-						(batchAddresses.length == 0)) {
-
+					if (ArrayUtil.isEmpty(batchAddresses)) {
 						break;
 					}
 

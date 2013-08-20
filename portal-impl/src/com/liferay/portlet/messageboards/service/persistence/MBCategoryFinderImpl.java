@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -107,9 +108,7 @@ public class MBCategoryFinderImpl
 
 			String sql = CustomSQLUtil.get(COUNT_BY_S_G_U_P);
 
-			if ((parentCategoryIds == null) ||
-				(parentCategoryIds.length == 0)) {
-
+			if (ArrayUtil.isEmpty(parentCategoryIds)) {
 				sql = StringUtil.replace(
 					sql, "(MBCategory.parentCategoryId = ?) AND",
 					StringPool.BLANK);
@@ -191,9 +190,7 @@ public class MBCategoryFinderImpl
 
 			String sql = CustomSQLUtil.get(FIND_BY_S_G_U_P);
 
-			if ((parentCategoryIds == null) ||
-				(parentCategoryIds.length == 0)) {
-
+			if (ArrayUtil.isEmpty(parentCategoryIds)) {
 				sql = StringUtil.replace(
 					sql, "(MBCategory.parentCategoryId = ?) AND",
 					StringPool.BLANK);

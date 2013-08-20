@@ -370,9 +370,7 @@ public class PortalImpl implements Portal {
 		String[] customSystemOrganizationRoles = PropsUtil.getArray(
 			PropsKeys.SYSTEM_ORGANIZATION_ROLES);
 
-		if ((customSystemOrganizationRoles == null) ||
-			(customSystemOrganizationRoles.length == 0)) {
-
+		if (ArrayUtil.isEmpty(customSystemOrganizationRoles)) {
 			_allSystemOrganizationRoles =
 				RoleConstants.SYSTEM_ORGANIZATION_ROLES;
 		}
@@ -396,9 +394,7 @@ public class PortalImpl implements Portal {
 		String[] customSystemSiteRoles = PropsUtil.getArray(
 			PropsKeys.SYSTEM_SITE_ROLES);
 
-		if ((customSystemSiteRoles == null) ||
-			(customSystemSiteRoles.length == 0)) {
-
+		if (ArrayUtil.isEmpty(customSystemSiteRoles)) {
 			_allSystemSiteRoles = RoleConstants.SYSTEM_SITE_ROLES;
 		}
 		else {

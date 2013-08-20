@@ -16,6 +16,7 @@ package com.liferay.portal.util;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ServiceBeanMethodInvocationFactory;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.spring.aop.ServiceBeanMethodInvocation;
@@ -43,9 +44,7 @@ public class ServiceBeanMethodInvocationFactoryImpl
 			Object[] arguments, String[] methodInterceptorBeanIds)
 		throws Exception {
 
-		if ((methodInterceptorBeanIds == null) ||
-			(methodInterceptorBeanIds.length == 0)) {
-
+		if (ArrayUtil.isEmpty(methodInterceptorBeanIds)) {
 			throw new IllegalArgumentException(
 				"Method interceptor bean IDs array is empty");
 		}

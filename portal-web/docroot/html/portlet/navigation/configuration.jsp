@@ -54,7 +54,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 					%>
 
 					<c:choose>
-						<c:when test="<%= (bulletStyleOptions == null) || (bulletStyleOptions.length == 0) %>">
+						<c:when test="<%= ArrayUtil.isEmpty(bulletStyleOptions) %>">
 							<aui:option label="default" value="" />
 						</c:when>
 						<c:otherwise>

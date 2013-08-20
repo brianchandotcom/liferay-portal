@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -283,9 +284,7 @@ public class PortletURLUtil {
 	protected static boolean isRefreshURLReservedParameter(
 		String parameter, String namespace) {
 
-		if ((_PORTLET_URL_REFRESH_URL_RESERVED_PARAMETERS == null) ||
-			(_PORTLET_URL_REFRESH_URL_RESERVED_PARAMETERS.length == 0)) {
-
+		if (ArrayUtil.isEmpty(_PORTLET_URL_REFRESH_URL_RESERVED_PARAMETERS)) {
 			return false;
 		}
 

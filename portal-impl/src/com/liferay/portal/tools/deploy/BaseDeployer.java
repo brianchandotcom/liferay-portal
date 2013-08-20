@@ -426,9 +426,7 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 			String[] commonsLoggingJars = pluginLibDir.list(
 				new GlobFilenameFilter("commons-logging*.jar"));
 
-			if ((commonsLoggingJars == null) ||
-				(commonsLoggingJars.length == 0)) {
-
+			if (ArrayUtil.isEmpty(commonsLoggingJars)) {
 				String portalJarPath =
 					PortalUtil.getPortalLibDir() + "commons-logging.jar";
 

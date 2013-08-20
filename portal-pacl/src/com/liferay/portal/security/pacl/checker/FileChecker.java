@@ -265,7 +265,7 @@ public class FileChecker extends BaseChecker {
 
 		File[] files = directory.listFiles();
 
-		if ((files == null) || (files.length == 0)) {
+		if (ArrayUtil.isEmpty(files)) {
 			return;
 		}
 

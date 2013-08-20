@@ -606,9 +606,7 @@ public abstract class BaseIndexer implements Indexer {
 		String[] relatedEntryClassNames = (String[])searchContext.getAttribute(
 			"relatedEntryClassNames");
 
-		if ((relatedEntryClassNames == null) ||
-			(relatedEntryClassNames.length == 0)) {
-
+		if (ArrayUtil.isEmpty(relatedEntryClassNames)) {
 			return;
 		}
 

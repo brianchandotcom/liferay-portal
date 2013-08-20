@@ -249,11 +249,11 @@ AUI.add(
 
 					var width = modalConfig.width;
 
-					if (height === 'auto' || height === '' || height === undefined) {
+					if (height === 'auto' || height === '' || height === undefined || height > A.DOM.winHeight()) {
 						modalConfig.autoHeight = true;
 					}
 
-					if (width === 'auto' || width === '' || width === undefined) {
+					if (width === 'auto' || width === '' || width === undefined || width > A.DOM.winWidth()) {
 						modalConfig.autoWidth = true;
 					}
 

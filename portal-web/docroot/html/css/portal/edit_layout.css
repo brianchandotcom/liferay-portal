@@ -8,10 +8,6 @@
 	width: 440px;
 	z-index: 1100;
 
-	h3 {
-		display: none;
-	}
-
 	.navbar {
 		margin-bottom: 0;
 		margin-top: 20px;
@@ -33,31 +29,19 @@
 		}
 
 		.accordion {
-			margin: 20px -10px 50px;
+			margin: 20px 0px 50px;
 
 			.accordion-group.lfr-panel-extended {
-				border: 0 solid transparent;
-				border-top-width: 1px;
-				margin-bottom: 0;
-
-				&:last-child {
-					.toggler-header-collapsed {
-						border-bottom: 1px solid transparent;
-					}
-				}
-
 				.accordion-heading {
 					cursor: pointer;
-
-					.accordion-toggle {
-						padding: 6px 10px;
-					}
 				}
 
 				.accordion-inner {
-					border: 0 solid transparent;
-					border-top-width: 1px;
 					padding: 15px;
+
+					h3 {
+						display: none;
+					}
 				}
 			}
 		}
@@ -86,32 +70,6 @@
 	.taglib-form-navigator {
 		.button-holder {
 			background-color: #FFF;
-		}
-
-		.accordion {
-			background: #FFF;
-
-			.accordion-group.lfr-panel-extended {
-				background: #FFF;
-				border-color: #D1D1D1;
-
-				&:last-child {
-					.toggler-header-collapsed {
-						border-bottom-color: #D1D1D1;
-					}
-				}
-
-				.accordion-heading .accordion-toggle {
-					font-size: 16px;
-					font-weight: 300;
-					text-transform: capitalize;
-				}
-
-				.accordion-inner {
-					background: #FCFCFC;
-					border-color: #D1D1D1;
-				}
-			}
 		}
 	}
 }

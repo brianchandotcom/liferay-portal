@@ -388,7 +388,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 		}
 	}
 
-	/* ---------- Panel Page Menu (Site Pages Side Navigation) ---------- */
+	/* ---------- Side Accordion Navigations ---------- */
 
 	.lfr-title-scope-selector {
 		padding: 0 15px 5px;
@@ -397,81 +397,35 @@ $dockbarOpenGradientStart: #0EA6F9;
 	.panel-page-menu {
 		.portlet-borderless-container {
 			background: #FCFCFC;
-			border-right: 1px solid #D1D1D1;
+			border-right: 1px solid #D3D3D3;
 			padding: 15px 0 0;
 
 			.accordion {
-				background: #FFF;
+				border-right-width: 0;
 				margin-bottom: 0;
 
-				.accordion-group {
-					background: #FFF;
-					border: solid #D1D1D1;
-					border-width: 1px 0 0;
-					margin-bottom: 0;
+				.accordion-group .category-portlets {
+					list-style: none;
+					margin: 0;
 
-					&:last-child {
-						.toggler-header-collapsed {
-							border-bottom: 1px solid #D1D1D1;
+					li {
+						a {
+							display: block;
+							font-size: 14px;
+							padding: 3px 15px;
+							text-decoration: none;
+
+							&:focus, &:hover {
+								background: #E5F5FC;
+								color: #009AE5;
+							}
 						}
-					}
 
-					.accordion-heading {
-						cursor: pointer;
-
-						.accordion-toggle {
-							font-size: 16px;
-							font-weight: 300;
-							padding: 0;
-							text-transform: capitalize;
-						}
-					}
-
-					.accordion-inner {
-						background: #FCFCFC;
-						border: solid #D1D1D1;
-						border-width: 1px 0 0;
-						padding: 6px 0 15px;
-					}
-
-					.category-portlets {
-						list-style: none;
-						margin: 0;
-
-						li {
+						&.selected-portlet {
 							a {
-								display: block;
-								font-size: 14px;
-								padding: 3px 15px;
-								text-decoration: none;
-
-								&:focus, &:hover {
-									background: #E5F5FC;
-									color: #009AE5;
-								}
+								background: #60BFEF;
+								color: #FFF;
 							}
-
-							&.selected-portlet {
-								a {
-									background: #60BFEF;
-									color: #FFF;
-								}
-							}
-						}
-					}
-
-					.toggler-header {
-						background: #F2F2F2;
-						padding: 6px 10px;
-
-						.accordion-toggle {
-							background: #F2F2F2 url(../images/custom/arrow_option.png) no-repeat 100% -20px;
-						}
-					}
-
-					.toggler-header-collapsed {
-						.accordion-toggle {
-							background-position: 100% 0;
 						}
 					}
 				}

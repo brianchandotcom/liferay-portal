@@ -57,7 +57,8 @@ public abstract class BaseSpellCheckIndexWriter
 				indexKeywords(
 					searchContext.getCompanyId(), languageId,
 					PropsKeys.INDEX_SEARCH_QUERY_SUGGESTION_DICTIONARY,
-					Field.KEYWORD_SEARCH, QUERY_SUGGESTION_TYPE, 0);
+					Field.KEYWORD_SEARCH,
+					SuggestionConstants.QUERY_SUGGESTION_TYPE, 0);
 			}
 		}
 		catch (Exception e) {
@@ -73,7 +74,8 @@ public abstract class BaseSpellCheckIndexWriter
 			indexKeywords(
 				searchContext.getCompanyId(), searchContext.getLanguageId(),
 				PropsKeys.INDEX_SEARCH_QUERY_SUGGESTION_DICTIONARY,
-				Field.KEYWORD_SEARCH, QUERY_SUGGESTION_TYPE, 0);
+				Field.KEYWORD_SEARCH, SuggestionConstants.QUERY_SUGGESTION_TYPE,
+				0);
 		}
 		catch (Exception e) {
 			throw new SearchException(e);
@@ -89,7 +91,8 @@ public abstract class BaseSpellCheckIndexWriter
 				indexKeywords(
 					searchContext.getCompanyId(), languageId,
 					PropsKeys.INDEX_SEARCH_SPELL_CHECKER_DICTIONARY,
-					Field.SPELL_CHECK_WORD, SPELL_CHECKER_TYPE, 0);
+					Field.SPELL_CHECK_WORD,
+					SuggestionConstants.SPELL_CHECKER_TYPE, 0);
 			}
 		}
 		catch (Exception e) {
@@ -105,7 +108,8 @@ public abstract class BaseSpellCheckIndexWriter
 			indexKeywords(
 				searchContext.getCompanyId(), searchContext.getLanguageId(),
 				PropsKeys.INDEX_SEARCH_SPELL_CHECKER_DICTIONARY,
-				Field.SPELL_CHECK_WORD, SPELL_CHECKER_TYPE, 0);
+				Field.SPELL_CHECK_WORD, SuggestionConstants.SPELL_CHECKER_TYPE,
+				0);
 		}
 		catch (Exception e) {
 			throw new SearchException(e);
@@ -262,10 +266,6 @@ public abstract class BaseSpellCheckIndexWriter
 				keywordFieldName, typeFieldValue, maxNGramLength);
 		}
 	}
-
-	protected static final String QUERY_SUGGESTION_TYPE = "querySuggestion";
-
-	protected static final String SPELL_CHECKER_TYPE = "spellChecker";
 
 	private static final String _PORTLET_SEPARATOR = "_PORTLET_";
 

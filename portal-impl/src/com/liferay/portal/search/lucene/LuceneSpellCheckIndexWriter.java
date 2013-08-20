@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.search.NGramHolder;
 import com.liferay.portal.kernel.search.NGramHolderBuilderUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.SuggestionConstants;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PortletKeys;
 
@@ -53,7 +54,8 @@ public class LuceneSpellCheckIndexWriter extends BaseSpellCheckIndexWriter {
 		throws SearchException {
 
 		Term term = new Term(
-			com.liferay.portal.kernel.search.Field.TYPE, QUERY_SUGGESTION_TYPE);
+			com.liferay.portal.kernel.search.Field.TYPE,
+			SuggestionConstants.QUERY_SUGGESTION_TYPE);
 
 		try {
 			LuceneHelperUtil.deleteDocuments(
@@ -69,7 +71,8 @@ public class LuceneSpellCheckIndexWriter extends BaseSpellCheckIndexWriter {
 		throws SearchException {
 
 		Term term = new Term(
-			com.liferay.portal.kernel.search.Field.TYPE, SPELL_CHECKER_TYPE);
+			com.liferay.portal.kernel.search.Field.TYPE,
+			SuggestionConstants.SPELL_CHECKER_TYPE);
 
 		try {
 			LuceneHelperUtil.deleteDocuments(

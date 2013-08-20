@@ -1,6 +1,10 @@
 @import "compass";
 @import "mixins";
 
+$addContentPanelWidth: 350px;
+$devicePreviewPanelWidth: 220px;
+$editLayoutPanelWidth: 460px;
+
 .dockbar {
 	left: 0;
 	right: 0;
@@ -229,15 +233,15 @@
 	}
 
 	&.lfr-has-add-content .nav-add-controls {
-		left: 350px;
+		left: $addContentPanelWidth;
 	}
 
 	&.lfr-has-device-preview .nav-add-controls {
-		left: 220px;
+		left: $devicePreviewPanelWidth;
 	}
 
 	&.lfr-has-edit-layout .nav-add-controls {
-		left: 460px;
+		left: $editLayoutPanelWidth;
 	}
 }
 
@@ -342,15 +346,15 @@
 /* ---------- Add Content ---------- */
 
 .lfr-has-add-content {
-	padding-left: 350px;
+	padding-left: $addContentPanelWidth;
 }
 
 .lfr-has-device-preview {
-	padding-left: 220px;
+	padding-left: $devicePreviewPanelWidth;
 }
 
 .lfr-has-edit-layout {
-	padding-left: 460px;
+	padding-left: $editLayoutPanelWidth;
 }
 
 /* ---------- Menus ---------- */

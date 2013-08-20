@@ -409,7 +409,7 @@ portletURL.setParameter("rootNodeName", rootNodeName);
 															PortletDataHandlerControl[] exportControls = portletDataHandler.getExportControls();
 															PortletDataHandlerControl[] metadataControls = portletDataHandler.getExportMetadataControls();
 
-															if (Validator.isNotNull(exportControls) || Validator.isNotNull(metadataControls)) {
+															if (ArrayUtil.isNotEmpty(exportControls) || ArrayUtil.isNotEmpty(metadataControls)) {
 															%>
 
 																<div class="hide" id="<portlet:namespace />content_<%= portlet.getPortletId() %>">
@@ -425,7 +425,7 @@ portletURL.setParameter("rootNodeName", rootNodeName);
 																					request.setAttribute("render_controls.jsp-portletDisabled", !portletDataHandler.isPublishToLiveByDefault());
 																				%>
 
-																					<aui:field-wrapper label='<%= Validator.isNotNull(metadataControls) ? "content" : StringPool.BLANK %>'>
+																					<aui:field-wrapper label='<%= ArrayUtil.isNotEmpty(metadataControls) ? "content" : StringPool.BLANK %>'>
 																						<ul class="lfr-tree unstyled">
 																							<liferay-util:include page="/html/portlet/layouts_admin/render_controls.jsp" />
 																						</ul>

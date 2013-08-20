@@ -167,7 +167,11 @@
 
 		img {
 			margin-left: 1em;
-			margin-top: 1.8em;
+			margin-top: 4em;
+		}
+
+		.control-group {
+			display: inline-block;
 		}
 
 		.field {

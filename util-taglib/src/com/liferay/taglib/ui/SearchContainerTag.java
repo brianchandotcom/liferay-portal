@@ -92,32 +92,36 @@ public class SearchContainerTag<R> extends ParamAndPropertyAncestorTagImpl {
 			}
 
 			_searchContainer.setDeltaConfigurable(_deltaConfigurable);
-			_searchContainer.setId(_id);
+
+			if (Validator.isNotNull(_emptyResultsMessage)) {
+				_searchContainer.setEmptyResultsMessage(_emptyResultsMessage);
+			}
 
 			if (_headerNames != null) {
 				_searchContainer.setHeaderNames(_headerNames);
 			}
 
 			_searchContainer.setHover(_hover);
-
-			if (Validator.isNotNull(_orderByColParam)) {
-				_searchContainer.setOrderByColParam(_orderByColParam);
-			}
+			_searchContainer.setId(_id);
 
 			if (Validator.isNotNull(_orderByCol)) {
 				_searchContainer.setOrderByCol(_orderByCol);
+			}
+
+			if (Validator.isNotNull(_orderByColParam)) {
+				_searchContainer.setOrderByColParam(_orderByColParam);
 			}
 
 			if (_orderByComparator != null) {
 				_searchContainer.setOrderByComparator(_orderByComparator);
 			}
 
-			if (Validator.isNotNull(_orderByTypeParam)) {
-				_searchContainer.setOrderByTypeParam(_orderByTypeParam);
-			}
-
 			if (Validator.isNotNull(_orderByType)) {
 				_searchContainer.setOrderByType(_orderByType);
+			}
+
+			if (Validator.isNotNull(_orderByTypeParam)) {
+				_searchContainer.setOrderByTypeParam(_orderByTypeParam);
 			}
 
 			if (_rowChecker != null) {

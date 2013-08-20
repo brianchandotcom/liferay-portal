@@ -214,26 +214,32 @@ AUI.add(
 					500
 				);
 
+				var dd = instance._appViewMove._ddHandler.dd;
+
+				dd.addInvalid(STR_DOT + CSS_UPLOAD_ERROR);
+
 				docElement.on(
 					'dragover',
 					function(event) {
-						var originalEvent = event._event;
+						var dataTransfer = event._event.dataTransfer;
 
-						var dataTransfer = originalEvent.dataTransfer;
+						if (dataTransfer && dataTransfer.types) {
+							var dataTransferTypes = dataTransfer.types || [];
 
-						if (dataTransfer && AArray.indexOf(dataTransfer.types, 'Files') > -1) {
-							event.halt();
+							if ((AArray.indexOf(dataTransferTypes, 'Files') > -1) && (AArray.indexOf(dataTransferTypes, 'text/html') < 0)) {
+								event.halt();
 
-							docElement.addClass('upload-drop-intent');
+								dataTransfer.dropEffect = 'copy';
 
-							var target = event.target;
+								docElement.addClass('upload-drop-intent');
 
-							docElement.toggleClass('upload-drop-active', (target.compareTo(entriesContainer) || entriesContainer.contains(target)));
+								var target = event.target;
 
-							dataTransfer.dropEffect = 'copy';
+								docElement.toggleClass('upload-drop-active', (target.compareTo(entriesContainer) || entriesContainer.contains(target)));
+
+								removeCssClassTask();
+							}
 						}
-
-						removeCssClassTask();
 					}
 				);
 
@@ -242,21 +248,25 @@ AUI.add(
 					function(event) {
 						var dataTransfer = event._event.dataTransfer;
 
-						var dragDropFiles = dataTransfer && AArray(dataTransfer.files);
+						if (dataTransfer) {
+							var dataTransferTypes = dataTransfer.types || [];
 
-						if (AArray.indexOf(dataTransfer.types, 'Files') > -1) {
-							event.halt();
+							if ((AArray.indexOf(dataTransferTypes, 'Files') > -1) && (AArray.indexOf(dataTransferTypes, 'text/html') < 0)) {
+								event.halt();
 
-							event.fileList = AArray.map(
-								dragDropFiles,
-								function(item, index, collection) {
-									return new A.FileHTML5(item);
-								}
-							);
+								var dragDropFiles = AArray(dataTransfer.files);
 
-							var uploader = instance._getUploader();
+								event.fileList = AArray.map(
+									dragDropFiles,
+									function(item, index, collection) {
+										return new A.FileHTML5(item);
+									}
+								);
 
-							uploader.fire('fileselect', event);
+								var uploader = instance._getUploader();
+
+								uploader.fire('fileselect', event);
+							}
 						}
 					},
 					'body, .document-container, .overlaymask, .progressbar, [data-folder="true"]'
@@ -265,9 +275,15 @@ AUI.add(
 				entriesContainer.delegate(
 					['dragleave', 'dragover'],
 					function(event) {
-						var parentElement = event.target.ancestor(SELECTOR_ENTRY_DISPLAY_STYLE);
+						var dataTransfer = event._event.dataTransfer;
 
-						parentElement.toggleClass(CSS_ACTIVE_AREA, event.type == 'dragover');
+						var validType = (AArray.indexOf(dataTransfer.types, 'Files') > -1) && (AArray.indexOf(dataTransfer.types, 'text/html') < 0);
+
+						if (validType) {
+							var parentElement = event.target.ancestor(SELECTOR_ENTRY_DISPLAY_STYLE);
+
+							parentElement.toggleClass(CSS_ACTIVE_AREA, event.type == 'dragover');
+						}
 					},
 					SELECTOR_DATA_FOLDER
 				);

@@ -69,7 +69,7 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 
 		HttpServletResponse response = (HttpServletResponse)servletResponse;
 
-		response = secureResponseHeaders(response);
+		response = secureResponseHeaders(request, response);
 
 		request.setAttribute(WebKeys.INVOKER_FILTER_URI, uri);
 
@@ -253,10 +253,24 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 	}
 
 	protected HttpServletResponse secureResponseHeaders(
-		HttpServletResponse response) {
+		HttpServletRequest request, HttpServletResponse response) {
 
-		return new SecureHttpServletResponseWrapper(response);
+		if (request.getAttribute(_SECURE_HEADERS_SET) != null) {
+			return response;
+		}
+
+		request.setAttribute(_SECURE_HEADERS_SET, Boolean.TRUE);
+
+		SecureHttpServletResponseWrapper wrapper =
+			new SecureHttpServletResponseWrapper(response);
+
+		wrapper.applySecurityHeaders(request);
+
+		return wrapper;
 	}
+
+	private static final String _SECURE_HEADERS_SET =
+		InvokerFilter.class.getName() + ".secureResponseHeadersSet";
 
 	private static Log _log = LogFactoryUtil.getLog(InvokerFilter.class);
 

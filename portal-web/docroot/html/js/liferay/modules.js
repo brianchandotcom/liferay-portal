@@ -349,8 +349,8 @@ window.YUI_config = {
 				'liferay-layout-freeform': {
 					path: 'layout_freeform.js',
 					requires: [
-						'resize',
-						'liferay-layout-column'
+						'liferay-layout-column',
+						'resize'
 					]
 				},
 				'liferay-list-view': {

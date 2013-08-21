@@ -43,6 +43,8 @@ if (panelCount != null) {
 	}
 }
 
+cssClass += " lfr-panel";
+
 if ((extended != null) && extended) {
 	cssClass += " lfr-panel-extended";
 }

@@ -86,6 +86,10 @@ $dockbarOpenGradientStart: #0EA6F9;
 			.nav {
 				background-color: $dockbarGradientEnd;
 				border-top: 1px solid #00AEFF;
+
+				li.dropdown.open > .dropdown-toggle {
+					background-color: $dockbarOpenGradientStart;
+				}
 			}
 
 			.nav-add-controls {
@@ -143,8 +147,13 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 				&.open {
 					> a {
+						background-color: $dockbarGradientStart;
 						color: #FFF;
 					}
+				}
+
+				&.active > a {
+					background-color: $dockbarGradientStart;
 				}
 			}
 

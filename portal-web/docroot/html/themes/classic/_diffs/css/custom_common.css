@@ -207,6 +207,7 @@
 
 	.dockbar-split {
 		.dockbar .navbar-inner {
+			background: none;
 			visibility: hidden;
 		}
 

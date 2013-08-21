@@ -889,54 +889,37 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 				continue;
 			}
 
-			StagedModelDataHandlerUtil.importStagedModel(
-				portletDataContext, referenceDataElement);
+			FileEntry fileEntry =
+				(FileEntry)portletDataContext.getZipEntryAsObject(path);
 
-			FileEntry fileEntry = null;
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, fileEntry);
+
+			Map<Long, Long> fileEntryIds =
+				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+					DLFileEntry.class);
+
+			long importedFileEntryId = MapUtil.getLong(
+				fileEntryIds, fileEntry.getFileEntryId(),
+				fileEntry.getFileEntryId());
+
+			FileEntry importedFileEntry = null;
 
 			try {
-				long groupId = portletDataContext.getScopeGroupId();
-
-				long fileEntryGroupId = GetterUtil.getLong(
-					referenceDataElement.attributeValue("group-id"));
-
-				if (fileEntryGroupId ==
-						portletDataContext.getSourceCompanyGroupId()) {
-
-					groupId = portletDataContext.getSourceCompanyGroupId();
-				}
-
-				fileEntry = DLAppLocalServiceUtil.getFileEntryByUuidAndGroupId(
-					fileEntryUUID, groupId);
+				importedFileEntry = DLAppLocalServiceUtil.getFileEntry(
+					importedFileEntryId);
 			}
 			catch (NoSuchFileEntryException nsfee) {
-				try {
-					FileEntry originalFileEntry =
-						(FileEntry)portletDataContext.getZipEntryAsObject(
-							referenceDataElement, path);
-
-					Map<Long, Long> fileEntryIds =
-						(Map<Long, Long>)portletDataContext.
-							getNewPrimaryKeysMap(DLFileEntry.class);
-
-					long originalFileEntryId = fileEntryIds.get(
-						originalFileEntry.getFileEntryId());
-
-					fileEntry = DLAppLocalServiceUtil.getFileEntry(
-						originalFileEntryId);
+				if (_log.isWarnEnabled()) {
+					_log.warn("Unable to reference " + path);
 				}
-				catch (NoSuchFileEntryException nsfee2) {
-					if (_log.isWarnEnabled()) {
-						_log.warn("Unable to reference " + path);
-					}
 
-					continue;
-				}
+				continue;
 			}
 
 			String url = DLUtil.getPreviewURL(
-				fileEntry, fileEntry.getFileVersion(), null, StringPool.BLANK,
-				false, false);
+				importedFileEntry, importedFileEntry.getFileVersion(), null,
+				StringPool.BLANK, false, false);
 
 			content = StringUtil.replace(
 				content, "[$dl-reference=" + path + "$]", url);

@@ -328,11 +328,15 @@ public class DLFileEntryLocalServiceImpl
 		DLFileVersion latestDLFileVersion =
 			dlFileVersionLocalService.getLatestFileVersion(fileEntryId, false);
 
-		if (!majorVersion &&
-			isKeepFileVersionLabel(
-				dlFileEntry, lastDLFileVersion, latestDLFileVersion,
-				serviceContext.getWorkflowAction())) {
+		boolean retainLabel = false;
 
+		if (!majorVersion) {
+			retainLabel = isKeepFileVersionLabel(
+				dlFileEntry, lastDLFileVersion, latestDLFileVersion,
+				serviceContext.getWorkflowAction());
+		}
+
+		if (retainLabel) {
 			if (lastDLFileVersion.getSize() != latestDLFileVersion.getSize()) {
 
 				// File version
@@ -403,8 +407,8 @@ public class DLFileEntryLocalServiceImpl
 
 		// Workflow
 
-		if (serviceContext.getWorkflowAction() ==
-				WorkflowConstants.ACTION_PUBLISH) {
+		if ((serviceContext.getWorkflowAction() ==
+				WorkflowConstants.ACTION_PUBLISH) && !retainLabel) {
 
 			startWorkflowInstance(
 				userId, serviceContext, latestDLFileVersion,

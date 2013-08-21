@@ -60,7 +60,8 @@ public class AssetPublisherServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_initalEntries = addManualAssetEntries(_NO_CATEGORIES, _NO_TAGS, 5);
+		_initialEntries = addManualAssetEntries(
+			_NO_CATEGORY_IDS, _NO_TAG_NAMES, 5);
 
 		_permissionChecker = PermissionCheckerFactoryUtil.create(
 			TestPropsValues.getUser());
@@ -71,14 +72,14 @@ public class AssetPublisherServiceTest {
 		_assetEntryXmls = null;
 		_categoryIds = null;
 		_expectedEntries = new ArrayList<AssetEntry>();
-		_initalEntries = new ArrayList<AssetEntry>();
+		_initialEntries = new ArrayList<AssetEntry>();
 		_permissionChecker = null;
 	}
 
 	@Test
 	@Transactional
 	public void testGetAssetEntries() throws Exception {
-		_expectedEntries = _initalEntries;
+		_expectedEntries = _initialEntries;
 
 		List<AssetEntry> entries = AssetPublisherUtil.getAssetEntries(
 			new MockPortletRequest(), new MockPortletPreferences(),
@@ -98,7 +99,7 @@ public class AssetPublisherServiceTest {
 			new long[] {_categoryIds[0], _categoryIds[1], _categoryIds[2]};
 
 		_expectedEntries = addManualAssetEntries(
-			allAssetCategoryIds, _NO_TAGS, 2);
+			allAssetCategoryIds, _NO_TAG_NAMES, 2);
 
 		List<AssetEntry> entries = AssetPublisherUtil.getAssetEntries(
 			new MockPortletRequest(), new MockPortletPreferences(),
@@ -110,7 +111,7 @@ public class AssetPublisherServiceTest {
 		List<AssetEntry> filteredEntries = AssetPublisherUtil.getAssetEntries(
 			new MockPortletRequest(), new MockPortletPreferences(),
 			_permissionChecker, new long[] {TestPropsValues.getGroupId()},
-			allAssetCategoryIds, _assetEntryXmls, _NO_TAGS, false, false);
+			allAssetCategoryIds, _assetEntryXmls, _NO_TAG_NAMES, false, false);
 
 		Assert.assertEquals(2, filteredEntries.size());
 		Assert.assertEquals(_expectedEntries, filteredEntries);
@@ -126,7 +127,7 @@ public class AssetPublisherServiceTest {
 		long[] allAssetCategoyIds = new long[] {
 			_categoryIds[0], _categoryIds[1], _categoryIds[2], _categoryIds[3]};
 
-		String[] allAssetTagNames = new String[] {_tagNames[0], _tagNames[1]};
+		String[] allAssetTagNames = new String[] {_TAG_NAMES[0], _TAG_NAMES[1]};
 
 		_expectedEntries = addManualAssetEntries(
 			allAssetCategoyIds, allAssetTagNames, 2);
@@ -151,10 +152,10 @@ public class AssetPublisherServiceTest {
 	@Test
 	@Transactional
 	public void testGetAssetEntriesFilteredByTags() throws Exception {
-		String[] allAssetTagNames = new String[] {_tagNames[0], _tagNames[1]};
+		String[] allAssetTagNames = new String[] {_TAG_NAMES[0], _TAG_NAMES[1]};
 
 		_expectedEntries = addManualAssetEntries(
-			_NO_CATEGORIES, allAssetTagNames, 2);
+			_NO_CATEGORY_IDS, allAssetTagNames, 2);
 
 		List<AssetEntry> entries = AssetPublisherUtil.getAssetEntries(
 			new MockPortletRequest(), new MockPortletPreferences(),
@@ -166,14 +167,14 @@ public class AssetPublisherServiceTest {
 		List<AssetEntry> filteredEntries = AssetPublisherUtil.getAssetEntries(
 			new MockPortletRequest(), new MockPortletPreferences(),
 			_permissionChecker, new long[] {TestPropsValues.getGroupId()},
-			_NO_CATEGORIES, _assetEntryXmls, allAssetTagNames, false, false);
+			_NO_CATEGORY_IDS, _assetEntryXmls, allAssetTagNames, false, false);
 
 		Assert.assertEquals(2, filteredEntries.size());
 		Assert.assertEquals(_expectedEntries, filteredEntries);
 	}
 
 	protected void addCategories(long vocabularyId) throws Exception {
-		for (String categoryName : _categoryNames) {
+		for (String categoryName : _CATEGORY_NAMES) {
 			AssetCategory category = AssetCategoryLocalServiceUtil.addCategory(
 				TestPropsValues.getUserId(), categoryName, vocabularyId,
 				ServiceTestUtil.getServiceContext());
@@ -228,7 +229,7 @@ public class AssetPublisherServiceTest {
 	private void _formatXml(AssetEntry assetEntry) {
 		StringBuilder sb = new StringBuilder(6);
 
-		sb .append("<?xml version=\"1.0\"?><asset-entry>");
+		sb.append("<?xml version=\"1.0\"?><asset-entry>");
 		sb.append("<asset-entry-type>");
 		sb.append(JournalArticle.class.getName());
 		sb.append("</asset-entry-type><asset-entry-uuid>");
@@ -238,17 +239,20 @@ public class AssetPublisherServiceTest {
 		_assetEntryXmls = ArrayUtil.append(_assetEntryXmls, sb.toString());
 	}
 
-	private static final long[] _NO_CATEGORIES = new long[] {};
-
-	private static final String[] _NO_TAGS = new String[] {};
-
-	private String[] _assetEntryXmls = new String[] {};
-	private long[] _categoryIds = new long[] {};
-	private String[] _categoryNames =
+	private static final String[] _CATEGORY_NAMES =
 		{"Athletic", "Barcelona", "RealMadrid", "Sevilla", "Sporting"};
+
+	private static final long[] _NO_CATEGORY_IDS = new long[0];
+
+	private static final String[] _NO_TAG_NAMES = new String[0];
+
+	private static final String[] _TAG_NAMES =
+		{"basketball", "football", "tennis"};
+
+	private String[] _assetEntryXmls = new String[0];
+	private long[] _categoryIds = new long[0];
 	private List<AssetEntry> _expectedEntries = new ArrayList<AssetEntry>();
-	private List<AssetEntry> _initalEntries = new ArrayList<AssetEntry>();
+	private List<AssetEntry> _initialEntries = new ArrayList<AssetEntry>();
 	private PermissionChecker _permissionChecker;
-	private String[] _tagNames = {"basketball", "football", "tennis"};
 
 }

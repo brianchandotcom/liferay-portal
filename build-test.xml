@@ -693,7 +693,7 @@
 					String appServerType = project.getProperty("app.server.type");
 
 					String appServerIdPropertyName =
-						"app.server." + appServerType + "-" + appServerVersionMajor + ".id";
+						"app.server." + appServerType + "." + appServerVersionMajor + ".id";
 
 					project.setProperty("app.server.id.property.name", appServerIdPropertyName);
 				</script>
@@ -794,7 +794,7 @@
 						String browserType = project.getProperty("browser.type");
 
 						String browserIdPropertyName =
-							"browser." + browserType + "-" + browserVersionMajor + ".id";
+							"browser." + browserType + "." + browserVersionMajor + ".id";
 
 						project.setProperty("browser.id.property.name", browserIdPropertyName);
 					]]>
@@ -813,7 +813,15 @@
 				<isset property="database.type" />
 			</not>
 			<then>
-				<property name="database.type" value="${database}" />
+				<if>
+					<equals arg1="${database}" arg2="sql-server" />
+					<then>
+						<property name="database.type" value="sqlserver" />
+					</then>
+					<else>
+						<property name="database.type" value="${database}" />
+					</else>
+				</if>
 			</then>
 		</if>
 
@@ -855,7 +863,7 @@
 					String databaseType = project.getProperty("database.type");
 
 					String databaseIdPropertyName =
-						"database." + databaseType + "-" + databaseVersionMajor + ".id";
+						"database." + databaseType + "." + databaseVersionMajor + ".id";
 
 					project.setProperty("database.id.property.name", databaseIdPropertyName);
 				</script>
@@ -883,22 +891,27 @@
 			String javaVersionMajor = "";
 
 			if (javaVersion.contains("1.5.0")) {
-				javaVersionMajor = "5.0";
+				javaVersionMajor = "5";
 			}
 			else if (javaVersion.contains("1.6.0")) {
-				javaVersionMajor = "6.0";
+				javaVersionMajor = "6";
 			}
 			else if (javaVersion.contains("1.7.0")) {
-				javaVersionMajor = "7.0";
+				javaVersionMajor = "7";
 			}
 
 			String javaName = project.getProperty("java.name");
 
+			String javaBit = "";
+
 			if (javaName.contains("64-Bit")) {
-				javaVersionMajor += "-64";
+				javaBit = "64bit";
+			}
+			else {
+				javaBit = "32bit";
 			}
 
-			String javaIdPropertyName = "java.jdk-" + javaVersionMajor + ".id";
+			String javaIdPropertyName = "java.jdk" + javaVersionMajor + "." + javaBit + ".id";
 
 			project.setProperty("java.id.property.name", javaIdPropertyName);
 		</script>
@@ -912,7 +925,7 @@
 		<if>
 			<equals arg1="${os.name}" arg2="Windows 7" />
 			<then>
-				<property name="os.id.property.name" value="os.windows-7.id" />
+				<property name="os.id.property.name" value="os.windows.7.id" />
 			</then>
 		</if>
 

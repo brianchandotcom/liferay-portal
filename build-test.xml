@@ -457,7 +457,7 @@
 	</target>
 
 	<target name="build-test-ant-scripts">
-		<property name="build-test-ant-scripts.version" value="2" />
+		<property name="build-test-ant-scripts.version" value="3" />
 
 		<if>
 			<available file="portal-web/test-ant-scripts/version" />
@@ -551,15 +551,15 @@
 		</antcall>
 
 		<antcall target="build-test-ant-script">
-			<param name="test.ant.script.command" value="end-user-personalizationandcusomization-acceptance" />
+			<param name="test.ant.script.command" value="end-user-personalization-and-customization-acceptance" />
 			<param name="test.ant.script.database.minimal" value="true" />
-			<param name="test.ant.script.suite" value="EndUserPersonalizationAndCustomizationAcceptance" />
+			<param name="test.ant.script.suite" value="EndUserPersonalizationandcustomizationAcceptanceTestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">
-			<param name="test.ant.script.command" value="end-user-personalizationandcusomization-p5" />
+			<param name="test.ant.script.command" value="end-user-personalization-and-customization-p5" />
 			<param name="test.ant.script.database.minimal" value="true" />
-			<param name="test.ant.script.suite" value="EndUserPersonalizationAndCustomizationP5" />
+			<param name="test.ant.script.suite" value="EndUserPersonalizationandcustomizationP5TestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">

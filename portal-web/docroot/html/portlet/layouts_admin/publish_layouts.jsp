@@ -464,7 +464,7 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 			namespace: '<portlet:namespace />',
 			pageTreeId: '<%= treeId %>',
 			processesNode: '#publishProcesses',
-			processesResourceURL: '<%= publishProcessesURL.toString() %>',
+			processesResourceURL: '<%= HtmlUtil.escapeJS(publishProcessesURL.toString()) %>',
 			rangeAllNode: '#rangeAll',
 			rangeDateRangeNode: '#rangeDateRange',
 			rangeLastNode: '#rangeLast',

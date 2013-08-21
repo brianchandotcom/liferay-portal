@@ -56,7 +56,6 @@ import com.liferay.portal.spring.aop.ServiceBeanAopProxy;
 import com.liferay.portal.spring.bean.BeanReferenceAnnotationBeanPostProcessor;
 import com.liferay.portal.spring.context.PortletApplicationContext;
 import com.liferay.portal.spring.util.FilterClassLoader;
-import com.liferay.portal.template.AbstractProcessingTemplate;
 import com.liferay.portal.template.BaseTemplateManager;
 import com.liferay.portal.template.TemplateContextHelper;
 import com.liferay.portal.template.TemplateControlContext;
@@ -295,7 +294,6 @@ public class PortalSecurityManagerImpl extends SecurityManager
 
 		// Other classes
 
-		initClass(AbstractProcessingTemplate.class);
 		initClass(ActivePACLPolicy.class);
 		initClass(BaseTemplateManager.class);
 		initClass(CentralizedThreadLocal.class);

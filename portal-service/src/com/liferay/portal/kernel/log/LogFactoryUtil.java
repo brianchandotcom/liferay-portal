@@ -41,7 +41,12 @@ public class LogFactoryUtil {
 		LogWrapper logWrapper = _logWrappers.get(name);
 
 		if (logWrapper == null) {
-			logWrapper = new SanitizerLogWrapper(_logFactory.getLog(name));
+			if (SanitizerLogWrapper.isEnabled()) {
+				logWrapper = new SanitizerLogWrapper(_logFactory.getLog(name));
+			}
+			else {
+				logWrapper = new LogWrapper(_logFactory.getLog(name));
+			}
 
 			LogWrapper previousLogWrapper = _logWrappers.putIfAbsent(
 				name, logWrapper);
@@ -78,9 +83,9 @@ public class LogFactoryUtil {
 		_logFactory = logFactory;
 	}
 
-	private static volatile LogFactory _logFactory = new Jdk14LogFactoryImpl();
-
 	private static final ConcurrentMap<String, LogWrapper> _logWrappers =
 		new ConcurrentHashMap<String, LogWrapper>();
+
+	private static volatile LogFactory _logFactory = new Jdk14LogFactoryImpl();
 
 }

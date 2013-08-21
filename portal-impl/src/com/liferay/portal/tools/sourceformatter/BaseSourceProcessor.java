@@ -157,9 +157,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			return;
 		}
 
-		ifClause = stripQuotes(ifClause, StringPool.QUOTE);
+		ifClause = stripQuotes(ifClause, CharPool.QUOTE);
 
-		ifClause = stripQuotes(ifClause, StringPool.APOSTROPHE);
+		ifClause = stripQuotes(ifClause, CharPool.APOSTROPHE);
 
 		if (ifClause.contains(StringPool.DOUBLE_SLASH) ||
 			ifClause.contains("/*") || ifClause.contains("*/")) {
@@ -304,7 +304,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		line = line.substring(pos + 8, line.length() - 2);
 
-		line = stripQuotes(line, StringPool.QUOTE);
+		line = stripQuotes(line, CharPool.QUOTE);
 
 		if (!line.contains(" + ")) {
 			return;
@@ -874,19 +874,34 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		return newLine;
 	}
 
-	protected String stripQuotes(String s, String delimeter) {
-		String[] parts = StringUtil.split(s, delimeter);
+	protected String stripQuotes(String s, char delimeter) {
+		boolean insideQuotes = false;
 
-		int i = 1;
+		StringBundler sb = new StringBundler();
 
-		while (i < parts.length) {
-			s = StringUtil.replaceFirst(
-				s, delimeter + parts[i] + delimeter, StringPool.BLANK);
+		for (int i = 0; i < s.length(); i++) {
+			char c = s.charAt(i);
 
-			i = i + 2;
+			if (insideQuotes) {
+				if (c == delimeter) {
+					if ((c > 1) && (s.charAt(i - 1) == CharPool.BACK_SLASH) &&
+						(s.charAt(i - 2) != CharPool.BACK_SLASH)) {
+
+						continue;
+					}
+
+					insideQuotes = false;
+				}
+			}
+			else if (c == delimeter) {
+				insideQuotes = true;
+			}
+			else {
+				sb.append(c);
+			}
 		}
 
-		return s;
+		return sb.toString();
 	}
 
 	protected String stripRedundantParentheses(String s) {

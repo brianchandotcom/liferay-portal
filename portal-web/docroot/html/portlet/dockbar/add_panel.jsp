@@ -62,6 +62,8 @@
 					}
 					%>
 
+					<h3><liferay-ui:message key="add" /></h3>
+
 					<liferay-ui:tabs
 						names="<%= StringUtil.merge(tabs1Names) %>"
 						refresh="<%= false %>"

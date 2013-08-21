@@ -66,6 +66,12 @@ $dockbarOpenGradientStart: #0EA6F9;
 		margin-bottom: 6px;
 	}
 
+	/* ---------- Admin Sidebar ---------- */
+
+	.lfr-admin-sidebar h3 {
+		color: #3EA9DB;
+	}
+
 	/* ---------- Dockbar ---------- */
 
 	.dockbar {

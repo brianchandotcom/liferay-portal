@@ -1,14 +1,7 @@
 @import "compass";
 
 .lfr-device-preview-panel {
-	bottom: 0;
-	left: 0;
-	overflow: auto;
-	padding: 10px;
-	position: fixed;
-	top: 0;
 	width: 200px;
-	z-index: 1100;
 
 	.nav-list {
 		margin: 20px -10px;
@@ -200,13 +193,7 @@
 }
 
 .lfr-device-preview-panel {
-	background-color: #FFF;
 	color: #3EA9DB;
-
-	h1 {
-		font-size: 22px;
-		line-height: 22px;
-	}
 
 	.lfr-device-item {
 		&:hover {

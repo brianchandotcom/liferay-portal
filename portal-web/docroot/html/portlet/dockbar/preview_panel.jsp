@@ -19,7 +19,7 @@
 <div id="<portlet:namespace />devicePreviewContainer">
 	<aui:button cssClass="close pull-right" name="closePanelPreview" value="&times;" />
 
-	<h1><liferay-ui:message key="preview" /></h1>
+	<h3><liferay-ui:message key="preview" /></h3>
 
 	<aui:nav cssClass="nav-list">
 		<aui:nav-item cssClass="autosize lfr-device-item" data-device="autosize">

@@ -172,6 +172,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-base', 'aui-component', 'aui-io-request', 'aui-modal', 'aui-parse-content', 'liferay-portlet-url', 'plugin']
+		requires: ['aui-base', 'aui-component', 'aui-io-request', 'aui-parse-content', 'liferay-portlet-url', 'liferay-util-window', 'plugin']
 	}
 );

@@ -181,6 +181,8 @@ public interface PropsKeys {
 
 	public static final String AUTH_TOKEN_IGNORE_ACTIONS = "auth.token.ignore.actions";
 
+	public static final String AUTH_TOKEN_IGNORE_CONTEXTS = "auth.token.ignore.contexts";
+
 	public static final String AUTH_TOKEN_IGNORE_PORTLETS = "auth.token.ignore.portlets";
 
 	public static final String AUTH_TOKEN_IMPL = "auth.token.impl";

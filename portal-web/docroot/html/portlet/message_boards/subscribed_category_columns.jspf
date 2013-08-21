@@ -71,7 +71,9 @@ private void _buildCategoryBreadcrumb(HttpServletRequest request, MBCategory cat
 		}
 
 		sb.append("<li");
-		sb.append(" class=\"" + cssClass + "\">");
+		sb.append(" class=\"");
+		sb.append(cssClass);
+		sb.append("\">");
 		sb.append("<a href=\"");
 		sb.append(HtmlUtil.escape(portletURL.toString()));
 		sb.append("\">");

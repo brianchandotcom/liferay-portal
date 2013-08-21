@@ -144,7 +144,9 @@ public class EncryptTag extends TagSupport {
 			// Target
 
 			if (Validator.isNotNull(_target)) {
-				sb.append("target=\"" + _target + "\"");
+				sb.append("target=\"");
+				sb.append(_target);
+				sb.append("\"");
 			}
 
 			// Close anchor

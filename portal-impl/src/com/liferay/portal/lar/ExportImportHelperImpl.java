@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.lar.MissingReferences;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataContextFactoryUtil;
 import com.liferay.portal.kernel.lar.PortletDataHandler;
+import com.liferay.portal.kernel.lar.PortletDataHandlerControl;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.kernel.lar.StagedModelDataHandler;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerRegistryUtil;
@@ -1637,13 +1638,20 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 					return;
 				}
 
-				_manifestSummary.addConfigurationPortlet(
-					portlet,
-					StringUtil.split(
-						element.attributeValue("portlet-configuration")));
-
 				PortletDataHandler portletDataHandler =
 					portlet.getPortletDataHandlerInstance();
+
+				String[] configurationOptions = StringUtil.split(
+					element.attributeValue("portlet-configuration"));
+
+				PortletDataHandlerControl[] portletDataHandlerControls =
+					portletDataHandler.getImportConfigurationControls(
+						configurationOptions);
+
+				if (ArrayUtil.isNotEmpty(portletDataHandlerControls)) {
+					_manifestSummary.addConfigurationPortlet(
+						portlet, configurationOptions);
+				}
 
 				if (!(portletDataHandler instanceof
 						DefaultConfigurationPortletDataHandler) &&

@@ -256,7 +256,11 @@ window.YUI_config = {
 				},
 				'liferay-history': {
 					path: 'history.js',
-					requires: [ 'history-hash', 'liferay-history-html5', 'querystring-parse-simple' ]
+					requires: [
+						'history-hash',
+						'liferay-history-html5',
+						'querystring-parse-simple'
+					]
 				},
 				'liferay-history-html5': {
 					path: 'history_html5.js',

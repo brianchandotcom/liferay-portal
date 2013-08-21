@@ -47,10 +47,6 @@
 
 				PortletDataHandlerControl[] configurationControls = portletDataHandler.getExportConfigurationControls(company.getCompanyId(), stagingGroupId, portlet, privateLayout);
 
-				if (ArrayUtil.isEmpty(configurationControls)) {
-					continue;
-				}
-
 				try {
 					String portletTitle = PortalUtil.getPortletTitle(portlet, application, locale);
 			%>

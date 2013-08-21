@@ -116,8 +116,10 @@ public interface PortletDataHandler {
 	public long getExportModelCount(ManifestSummary manifestSummary);
 
 	public PortletDataHandlerControl[] getImportConfigurationControls(
-			Portlet portlet, ManifestSummary manifestSummary)
-		throws PortletDataException;
+		Portlet portlet, ManifestSummary manifestSummary);
+
+	public PortletDataHandlerControl[] getImportConfigurationControls(
+		String[] configurationOptions);
 
 	/**
 	 * Returns an array of the controls defined for this data handler. These

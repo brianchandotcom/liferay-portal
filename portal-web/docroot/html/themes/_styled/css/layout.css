@@ -3,8 +3,3 @@
 .portlet-column-content.empty {
 	padding: 50px;
 }
-
-#main-content.dragging .portlet-column {
-	height: 100px;
-	min-height: 100px;
-}

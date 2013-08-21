@@ -1,40 +1,4 @@
-/* ---------- Wrapper ---------- */
-
-.portlet-layout {
-}
-
-.portlet-column {
-}
-
-.portlet-column-content {
-}
-
-.portlet-column-content-only, .ltr .portlet-column-content-first, .rtl .portlet-column-content-last {
-}
-
-.portlet-column-content-only, .ltr .portlet-column-content-last, .rtl .portlet-column-content-first {
-}
-
 /* ---------- Column widths ---------- */
 
 .portlet-column-content.empty {
-}
-
-#main-content.dragging .portlet-column {
-}
-
-.ie6, .ie7 {
-	div {
-		&.portlet-layout {
-		}
-
-		&.portlet-column {
-		}
-
-		&.column-last {
-		}
-	}
-
-	.portlet-column-content {
-	}
 }

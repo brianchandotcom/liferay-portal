@@ -91,6 +91,40 @@ if (row == null) {
 
 	<c:if test="<%= group.isCompany() && hasUpdatePermission %>">
 		<liferay-ui:staging extended="<%= true %>" groupId="<%= group.getGroupId() %>" onlyActions="<%= true %>" showManageBranches="<%= false %>" />
+
+		<liferay-portlet:renderURL portletName="<%= PortletKeys.LAYOUTS_ADMIN %>" var="exportURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+			<portlet:param name="struts_action" value="/layouts_admin/export_layouts" />
+			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EXPORT %>" />
+			<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
+			<portlet:param name="rootNodeName" value="<%= group.getDescriptiveName(locale) %>" />
+		</liferay-portlet:renderURL>
+
+		<%
+		String taglibExportURL = "javascript:Liferay.Util.openWindow({id: '" + renderResponse.getNamespace() + "exportDialog', title: '" + UnicodeLanguageUtil.get(pageContext, "export") + "', uri: '" + HtmlUtil.escapeURL(exportURL.toString()) + "'});";
+		%>
+
+		<liferay-ui:icon
+			image="export"
+			message="export"
+			url="<%= taglibExportURL %>"
+		/>
+
+		<liferay-portlet:renderURL portletName="<%= PortletKeys.LAYOUTS_ADMIN %>" var="importURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+			<portlet:param name="struts_action" value="/layouts_admin/import_layouts" />
+			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.VALIDATE %>" />
+			<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
+			<portlet:param name="rootNodeName" value="<%= group.getDescriptiveName(locale) %>" />
+		</liferay-portlet:renderURL>
+
+		<%
+		String taglibImportURL = "javascript:Liferay.Util.openWindow({id: '" + renderResponse.getNamespace() + "importDialog', title: '" + UnicodeLanguageUtil.get(pageContext, "import") + "', uri: '" + HtmlUtil.escapeURL(importURL.toString()) + "'});";
+		%>
+
+		<liferay-ui:icon
+			image="download"
+			message="import"
+			url="<%= taglibImportURL %>"
+		/>
 	</c:if>
 
 	<c:if test="<%= group.getPublicLayoutsPageCount() > 0 %>">

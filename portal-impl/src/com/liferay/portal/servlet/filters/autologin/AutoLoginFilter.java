@@ -95,7 +95,7 @@ public class AutoLoginFilter extends BasePortalFilter {
 		}
 
 		if (PropsValues.SESSION_ENABLE_PHISHING_PROTECTION) {
-			LoginUtil.renewSession(request, session);
+			session = LoginUtil.renewSession(request, session);
 		}
 
 		session.setAttribute("j_username", jUsername);

@@ -254,7 +254,7 @@ public class LoginUtil {
 		}
 
 		if (PropsValues.SESSION_ENABLE_PHISHING_PROTECTION) {
-			renewSession(request, session);
+			session = renewSession(request, session);
 		}
 
 		// Set cookies
@@ -395,7 +395,7 @@ public class LoginUtil {
 		AuthenticatedUserUUIDStoreUtil.register(userUUID);
 	}
 
-	public static void renewSession(
+	public static HttpSession renewSession(
 			HttpServletRequest request, HttpSession session)
 		throws Exception {
 
@@ -443,6 +443,8 @@ public class LoginUtil {
 			session.setAttribute(
 				protectedAttributeName, protectedAttributeValue);
 		}
+
+		return session;
 	}
 
 	public static void sendPassword(ActionRequest actionRequest)

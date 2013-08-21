@@ -527,11 +527,11 @@
 		background-color: #FFF;
 	}
 
-	&.ie .dockbar .navbar-inner {
-		filter: none;
-
-		.nav-account-controls {
-			filter: none;
+	&.ie {
+		.dockbar, #navigation {
+			.navbar-inner {
+				filter: none;
+			}
 		}
 	}
 

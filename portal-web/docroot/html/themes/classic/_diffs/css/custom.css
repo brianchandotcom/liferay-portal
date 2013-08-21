@@ -444,13 +444,11 @@ $dockbarOpenGradientStart: #0EA6F9;
 				li.dropdown.open > .dropdown-toggle {
 					@include background-image(linear-gradient($dockbarOpenGradientStart, $dockbarOpenGradientEnd));
 					@include box-shadow(none);
-					@include filter-gradient($dockbarOpenGradientStart, $dockbarOpenGradientEnd, vertical);
 				}
 			}
 
 			.nav-account-controls {
 				@include background-image(linear-gradient($dockbarGradientStart 0%, $dockbarGradientStart 47%, $dockbarGradientEnd 100%));
-				@include filter-gradient($dockbarGradientStart, $dockbarGradientEnd, vertical);
 			}
 		}
 	}

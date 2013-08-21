@@ -623,7 +623,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		directoryScanner.setBasedir(basedir);
 
 		excludes = ArrayUtil.append(
-			excludes, _excludes, new String[] {"**\\.git\\**"});
+			excludes, _excludes, new String[] {"**\\.git\\**", "**\\tmp\\**"});
 
 		directoryScanner.setExcludes(excludes);
 

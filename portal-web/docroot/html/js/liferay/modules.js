@@ -623,7 +623,7 @@ window.YUI_config = {
 					path: 'util_window.js',
 					requires: [
 						'aui-dialog-iframe-deprecated',
-						'aui-modal,
+						'aui-modal',
 						'event-resize',
 						'liferay-widget-zindex'
 					]

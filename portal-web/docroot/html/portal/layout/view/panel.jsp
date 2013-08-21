@@ -28,7 +28,7 @@
 					panelBodyCssClass += " panel-page-frontpage";
 				}
 				else {
-					panelBodyCssClass += "panel-page-application";
+					panelBodyCssClass += " panel-page-application";
 				}
 				%>
 

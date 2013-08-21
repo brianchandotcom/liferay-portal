@@ -2,6 +2,9 @@ AUI.add(
 	'liferay-util-window',
 	function(A) {
 		var Lang = A.Lang;
+
+		var ADOM = A.DOM;
+
 		var Util = Liferay.Util;
 		var Window = Util.Window;
 
@@ -249,11 +252,11 @@ AUI.add(
 
 					var width = modalConfig.width;
 
-					if (height === 'auto' || height === '' || height === undefined || height > A.DOM.winHeight()) {
+					if (height === 'auto' || height === '' || height === undefined || height > ADOM.winHeight()) {
 						modalConfig.autoHeight = true;
 					}
 
-					if (width === 'auto' || width === '' || width === undefined || width > A.DOM.winWidth()) {
+					if (width === 'auto' || width === '' || width === undefined || width > ADOM.winWidth()) {
 						modalConfig.autoWidth = true;
 					}
 
@@ -352,7 +355,7 @@ AUI.add(
 							height = autoSizeNode.get('offsetHeight');
 						}
 						else {
-							height = A.DOM.winHeight();
+							height = ADOM.winHeight();
 						}
 
 						height *= modal.get('autoHeightRatio');
@@ -367,7 +370,7 @@ AUI.add(
 							width = autoSizeNode.get('offsetWidth');
 						}
 						else {
-							width = A.DOM.winWidth();
+							width = ADOM.winWidth();
 						}
 
 						width *= modal.get('autoWidthRatio');

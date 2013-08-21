@@ -148,25 +148,20 @@ AUI.add(
 												}
 											}
 										},
+										bodyContent: content,
 										height: 390,
+										plugins: [A.Plugin.ParseContent],
 										width: 560
 									},
 									id: NAME,
 									title: Liferay.Language.get('sign-in')
-								},
-								function(dialogWindow) {
-									var bodyNode = dialogWindow.bodyNode;
-
-									bodyNode.plug(A.Plugin.ParseContent);
-
-									bodyNode.setContent(content);
 								}
 							);
 						}
 						else {
-							dialog.show();
-
 							dialog.bodyNode.setContent(content);
+
+							dialog.show();
 						}
 					}
 				}

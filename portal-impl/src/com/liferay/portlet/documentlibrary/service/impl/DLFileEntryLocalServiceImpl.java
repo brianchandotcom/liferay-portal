@@ -328,15 +328,15 @@ public class DLFileEntryLocalServiceImpl
 		DLFileVersion latestDLFileVersion =
 			dlFileVersionLocalService.getLatestFileVersion(fileEntryId, false);
 
-		boolean retainLabel = false;
+		boolean keepFileVersionLabel = false;
 
 		if (!majorVersion) {
-			retainLabel = isKeepFileVersionLabel(
+			keepFileVersionLabel = isKeepFileVersionLabel(
 				dlFileEntry, lastDLFileVersion, latestDLFileVersion,
 				serviceContext.getWorkflowAction());
 		}
 
-		if (retainLabel) {
+		if (keepFileVersionLabel) {
 			if (lastDLFileVersion.getSize() != latestDLFileVersion.getSize()) {
 
 				// File version
@@ -408,7 +408,7 @@ public class DLFileEntryLocalServiceImpl
 		// Workflow
 
 		if ((serviceContext.getWorkflowAction() ==
-				WorkflowConstants.ACTION_PUBLISH) && !retainLabel) {
+				WorkflowConstants.ACTION_PUBLISH) && !keepFileVersionLabel) {
 
 			startWorkflowInstance(
 				userId, serviceContext, latestDLFileVersion,
@@ -1991,33 +1991,30 @@ public class DLFileEntryLocalServiceImpl
 			return false;
 		}
 
-		String lastDescription = lastDLFileVersion.getDescription();
-		String latestDescription = latestDLFileVersion.getDescription();
+		if (!Validator.equals(
+				lastDLFileVersion.getDescription(),
+				latestDLFileVersion.getDescription())) {
 
-		if (!Validator.equals(lastDescription, latestDescription)) {
 			return false;
 		}
 
-		long lastFolderId = lastDLFileVersion.getFolderId();
-		long latestFolderId = latestDLFileVersion.getFolderId();
+		if (lastDLFileVersion.getFolderId() !=
+				latestDLFileVersion.getFolderId()) {
 
-		if (lastFolderId != latestFolderId) {
 			return false;
 		}
 
-		String lastTitle = lastDLFileVersion.getTitle();
-		String latestTitle = latestDLFileVersion.getTitle();
+		if (!Validator.equals(
+				lastDLFileVersion.getTitle(), latestDLFileVersion.getTitle())) {
 
-		if (!Validator.equals(lastTitle, latestTitle)) {
 			return false;
 		}
 
 		// File entry type
 
-		long lastFileEntryTypeId = lastDLFileVersion.getFileEntryTypeId();
-		long latestFileEntryTypeId = latestDLFileVersion.getFileEntryTypeId();
+		if (lastDLFileVersion.getFileEntryTypeId() !=
+				latestDLFileVersion.getFileEntryTypeId()) {
 
-		if (lastFileEntryTypeId != latestFileEntryTypeId) {
 			return false;
 		}
 

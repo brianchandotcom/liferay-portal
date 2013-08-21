@@ -82,7 +82,7 @@ public class LiferaySeleniumHelper {
 		throws Exception {
 
 		BaseTestCase.assertEquals(
-			liferaySelenium.getEmailContent(index), content);
+			content, liferaySelenium.getEmailContent(index));
 	}
 
 	public static void assertEmailSubject(
@@ -90,7 +90,7 @@ public class LiferaySeleniumHelper {
 		throws Exception {
 
 		BaseTestCase.assertEquals(
-			liferaySelenium.getEmailSubject(index), subject);
+			subject, liferaySelenium.getEmailSubject(index));
 	}
 
 	public static void assertLocation(

@@ -32,8 +32,8 @@ public class SeleniumEmailTestSuite extends BaseTestSuite {
 	public static Test suite() {
 		TestSuite testSuite = new TestSuite();
 
-		testSuite.addTestSuite(AssertEmailSubjectTestCase.class);
 		testSuite.addTestSuite(AssertEmailContentTestCase.class);
+		testSuite.addTestSuite(AssertEmailSubjectTestCase.class);
 		testSuite.addTestSuite(ConnectEmailTestCase.class);
 		testSuite.addTestSuite(DeleteEmailsTestCase.class);
 		testSuite.addTestSuite(ReplyEmailTestCase.class);

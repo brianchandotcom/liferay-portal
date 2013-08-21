@@ -713,8 +713,6 @@ public abstract class BaseSeleniumImpl
 
 	private String _clipBoard = "";
 	private CommandProcessor _commandProcessor;
-	private String _emailAddress = "";
-	private String _password = "";
 	private String _primaryTestSuiteName;
 	private String _projectDir;
 	private int _screenshotCount = 0;

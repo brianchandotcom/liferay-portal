@@ -118,7 +118,7 @@ portletURL.setParameter("rootNodeName", rootNodeName);
 
 					<aui:input name="layoutIds" type="hidden" />
 
-					<c:if test="<%= !group.isLayoutPrototype() %>">
+					<c:if test="<%= !group.isLayoutPrototype() && !group.isCompany() %>">
 						<aui:fieldset cssClass="options-group" label="pages">
 							<span class="selected-labels" id="<portlet:namespace />selectedPages"></span>
 

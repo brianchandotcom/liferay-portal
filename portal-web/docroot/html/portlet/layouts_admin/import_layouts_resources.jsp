@@ -172,7 +172,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 				</dl>
 			</aui:fieldset>
 
-			<c:if test="<%= !group.isLayoutPrototype() %>">
+			<c:if test="<%= !group.isLayoutPrototype() && !group.isCompany() %>">
 				<aui:fieldset cssClass="options-group" label="pages">
 					<span class="selected-labels" id="<portlet:namespace />selectedPages"></span>
 

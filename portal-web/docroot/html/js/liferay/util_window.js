@@ -3,7 +3,7 @@ AUI.add(
 	function(A) {
 		var Lang = A.Lang;
 
-		var ADOM = A.DOM;
+		var DOM = A.DOM;
 
 		var Util = Liferay.Util;
 		var Window = Util.Window;
@@ -252,11 +252,11 @@ AUI.add(
 
 					var width = modalConfig.width;
 
-					if (height === 'auto' || height === '' || height === undefined || height > ADOM.winHeight()) {
+					if (height === 'auto' || height === '' || height === undefined || height > DOM.winHeight()) {
 						modalConfig.autoHeight = true;
 					}
 
-					if (width === 'auto' || width === '' || width === undefined || width > ADOM.winWidth()) {
+					if (width === 'auto' || width === '' || width === undefined || width > DOM.winWidth()) {
 						modalConfig.autoWidth = true;
 					}
 
@@ -355,7 +355,7 @@ AUI.add(
 							height = autoSizeNode.get('offsetHeight');
 						}
 						else {
-							height = ADOM.winHeight();
+							height = DOM.winHeight();
 						}
 
 						height *= modal.get('autoHeightRatio');
@@ -370,7 +370,7 @@ AUI.add(
 							width = autoSizeNode.get('offsetWidth');
 						}
 						else {
-							width = ADOM.winWidth();
+							width = DOM.winWidth();
 						}
 
 						width *= modal.get('autoWidthRatio');

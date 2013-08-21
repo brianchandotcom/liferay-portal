@@ -1725,7 +1725,6 @@ AUI.add(
 						var hasTags = !!instance._getStagedTags().size();
 
 						instance._stagedTagsWrapper.toggle(hasTags);
-
 						instance._tagsActionsButton.toggle(hasTags);
 					},
 

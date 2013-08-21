@@ -89,9 +89,9 @@ window.YUI_config = {
 						'aui-data-set-deprecated',
 						'aui-io-request',
 						'aui-parse-content',
-						'sortable',
 						'base',
-						'liferay-undo-manager'
+						'liferay-undo-manager',
+						'sortable'
 					]
 				},
 				'liferay-browser-selectors': {
@@ -618,8 +618,8 @@ window.YUI_config = {
 				'liferay-util-window': {
 					path: 'util_window.js',
 					requires: [
-						'aui-modal',
 						'aui-dialog-iframe-deprecated',
+						'aui-modal,
 						'event-resize',
 						'liferay-widget-zindex'
 					]

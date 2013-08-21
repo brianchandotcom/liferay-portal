@@ -408,6 +408,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-modal', 'aui-dialog-iframe-deprecated', 'event-resize', 'liferay-widget-zindex']
+		requires: ['aui-dialog-iframe-deprecated', 'aui-modal', 'event-resize', 'liferay-widget-zindex']
 	}
 );

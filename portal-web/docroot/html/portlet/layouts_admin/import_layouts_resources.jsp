@@ -238,10 +238,6 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 
 										PortletDataHandlerControl[] portletDataHandlerControls = portletDataHandler.getImportConfigurationControls(portlet, manifestSummary);
 
-										if (ArrayUtil.isEmpty(portletDataHandlerControls)) {
-											continue;
-										}
-
 										String portletTitle = PortalUtil.getPortletTitle(portlet, application, locale);
 									%>
 

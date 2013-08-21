@@ -1175,8 +1175,11 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			String excluded = null;
 
 			if (line.startsWith(StringPool.TAB + "private ") ||
+				line.equals(StringPool.TAB + "private") ||
 				line.startsWith(StringPool.TAB + "protected ") ||
-				line.startsWith(StringPool.TAB + "public ")) {
+				line.equals(StringPool.TAB + "protected") ||
+				line.startsWith(StringPool.TAB + "public ") ||
+				line.equals(StringPool.TAB + "public")) {
 
 				Tuple tuple = getJavaTermTuple(line, content, index, 1, 3);
 
@@ -1254,6 +1257,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					!previousLine.endsWith("&&") &&
 					!previousLine.endsWith("||") &&
 					!previousLine.contains(StringPool.TAB + "((") &&
+					!previousLine.contains(
+						StringPool.TAB + StringPool.LESS_THAN) &&
 					!previousLine.contains(StringPool.TAB + StringPool.SPACE) &&
 					!previousLine.contains(StringPool.TAB + "implements ") &&
 					!previousLine.contains(StringPool.TAB + "throws ")) {

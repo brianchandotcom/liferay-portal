@@ -1722,11 +1722,11 @@ AUI.add(
 					_toggleStagedTagsWrapper: function() {
 						var instance = this;
 
-						instance._stagedTagsWrapper.toggle(!!instance._getStagedTags().size());
+						var hasTags = !!instance._getStagedTags().size();
 
-						var toggleFn = instance._getStagedTags().size() ? 'show' : 'hide';
+						instance._stagedTagsWrapper.toggle(hasTags);
 
-						instance._tagsActionsButton[toggleFn].apply(instance._tagsActionsButton);
+						instance._tagsActionsButton.toggle(hasTags);
 					},
 
 					_updateMergeItemsTarget: function() {

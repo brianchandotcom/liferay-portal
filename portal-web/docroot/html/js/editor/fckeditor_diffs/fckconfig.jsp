@@ -108,8 +108,8 @@ FCKConfig.CustomStyles = {};
 FCKConfig.StylesXmlPath = FCKConfig.EditorPath + 'fckstyles.xml' ;
 FCKConfig.EditorAreaCSS = '<%= HtmlUtil.escapeJS(cssPath) %>/main.css' ;
 
-FCKConfig.LinkBrowserURL = FCKConfig.BasePath + "filemanager/browser/liferay/browser.html?Connector=<%= connectorURL %>";
-FCKConfig.ImageBrowserURL = FCKConfig.BasePath + "filemanager/browser/liferay/browser.html?Type=Document&Connector=<%= connectorURL %>";
+FCKConfig.LinkBrowserURL = FCKConfig.BasePath + "filemanager/browser/liferay/browser.html?Connector=<%= HtmlUtil.escapeJS(connectorURL) %>";
+FCKConfig.ImageBrowserURL = FCKConfig.BasePath + "filemanager/browser/liferay/browser.html?Type=Document&Connector=<%= HtmlUtil.escapeJS(connectorURL) %>";
 FCKConfig.FlashBrowser = false ;
 FCKConfig.LinkUpload = false ;
 FCKConfig.ImageUpload = false ;

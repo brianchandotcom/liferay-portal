@@ -33,6 +33,18 @@ public class TestPropsValues extends com.liferay.portal.util.TestPropsValues {
 	public static final String CLUSTER_NODE_2 = TestPropsUtil.get(
 		"cluster.node2");
 
+	public static final String EMAIL_ADDRESS_1 = TestPropsUtil.get(
+		"email.address.1");
+
+	public static final String EMAIL_ADDRESS_2 = TestPropsUtil.get(
+		"email.address.2");
+
+	public static final String EMAIL_PASSWORD_1 = TestPropsUtil.get(
+		"email.password.1");
+
+	public static final String EMAIL_PASSWORD_2 = TestPropsUtil.get(
+		"email.password.2");
+
 	public static final String[] FIXED_ISSUES = StringUtil.split(
 		TestPropsUtil.get("fixed.issues"));
 

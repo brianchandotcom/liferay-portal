@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.SystemProperties;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,21 +30,20 @@ import java.util.List;
 public class SanitizerLogWrapper extends LogWrapper {
 
 	public static void init() {
-		_LOG_SANITIZER_ENABLED = GetterUtil.getBoolean(
-			PropsUtil.get(PropsKeys.LOG_SANITIZER_ENABLED));
-
 		if (!_LOG_SANITIZER_ENABLED) {
 			return;
 		}
 
 		_LOG_SANITIZER_ESCAPE_HTML_ENABLED = GetterUtil.getBoolean(
-			PropsUtil.get(PropsKeys.LOG_SANITIZER_ESCAPE_HTML_ENABLED));
+			SystemProperties.get(PropsKeys.LOG_SANITIZER_ESCAPE_HTML_ENABLED));
 
 		_LOG_SANITIZER_REPLACEMENT_CHARACTER = (char)GetterUtil.getInteger(
-			PropsUtil.get(PropsKeys.LOG_SANITIZER_REPLACEMENT_CHARACTER));
+			SystemProperties.get(
+				PropsKeys.LOG_SANITIZER_REPLACEMENT_CHARACTER));
 
 		int[] whitelistCharacters = GetterUtil.getIntegerValues(
-			PropsUtil.getArray(PropsKeys.LOG_SANITIZER_WHITELIST_CHARACTERS));
+			SystemProperties.getArray(
+				PropsKeys.LOG_SANITIZER_WHITELIST_CHARACTERS));
 
 		for (int whitelistCharacter : whitelistCharacters) {
 			if ((whitelistCharacter >= 0) &&
@@ -60,169 +59,101 @@ public class SanitizerLogWrapper extends LogWrapper {
 		}
 	}
 
+	public static boolean isEnabled() {
+		return _LOG_SANITIZER_ENABLED;
+	}
+
 	public SanitizerLogWrapper(Log log) {
 		super(log);
 	}
 
 	@Override
 	public void debug(Object msg) {
-		if (!isDebugEnabled()) {
-			return;
-		}
-
 		super.debug(sanitize(msg));
 	}
 
 	@Override
 	public void debug(Object msg, Throwable t) {
-		if (!isDebugEnabled()) {
-			return;
-		}
-
 		super.debug(sanitize(msg), sanitize(t));
 	}
 
 	@Override
 	public void debug(Throwable t) {
-		if (!isDebugEnabled()) {
-			return;
-		}
-
 		super.debug(sanitize(t));
 	}
 
 	@Override
 	public void error(Object msg) {
-		if (!isErrorEnabled()) {
-			return;
-		}
-
 		super.error(sanitize(msg));
 	}
 
 	@Override
 	public void error(Object msg, Throwable t) {
-		if (!isErrorEnabled()) {
-			return;
-		}
-
 		super.error(sanitize(msg), sanitize(t));
 	}
 
 	@Override
 	public void error(Throwable t) {
-		if (!isErrorEnabled()) {
-			return;
-		}
-
 		super.error(sanitize(t));
 	}
 
 	@Override
 	public void fatal(Object msg) {
-		if (!isFatalEnabled()) {
-			return;
-		}
-
 		super.fatal(sanitize(msg));
 	}
 
 	@Override
 	public void fatal(Object msg, Throwable t) {
-		if (!isFatalEnabled()) {
-			return;
-		}
-
 		super.fatal(sanitize(msg), sanitize(t));
 	}
 
 	@Override
 	public void fatal(Throwable t) {
-		if (!isFatalEnabled()) {
-			return;
-		}
-
 		super.fatal(sanitize(t));
 	}
 
 	@Override
 	public void info(Object msg) {
-		if (!isInfoEnabled()) {
-			return;
-		}
-
 		super.info(sanitize(msg));
 	}
 
 	@Override
 	public void info(Object msg, Throwable t) {
-		if (!isInfoEnabled()) {
-			return;
-		}
-
 		super.info(sanitize(msg), sanitize(t));
 	}
 
 	@Override
 	public void info(Throwable t) {
-		if (!isInfoEnabled()) {
-			return;
-		}
-
 		super.info(sanitize(t));
 	}
 
 	@Override
 	public void trace(Object msg) {
-		if (!isTraceEnabled()) {
-			return;
-		}
-
 		super.trace(sanitize(msg));
 	}
 
 	@Override
 	public void trace(Object msg, Throwable t) {
-		if (!isTraceEnabled()) {
-			return;
-		}
-
 		super.trace(sanitize(msg), sanitize(t));
 	}
 
 	@Override
 	public void trace(Throwable t) {
-		if (!isTraceEnabled()) {
-			return;
-		}
-
 		super.trace(sanitize(t));
 	}
 
 	@Override
 	public void warn(Object msg) {
-		if (!isWarnEnabled()) {
-			return;
-		}
-
 		super.warn(sanitize(msg));
 	}
 
 	@Override
 	public void warn(Object msg, Throwable t) {
-		if (!isWarnEnabled()) {
-			return;
-		}
-
 		super.warn(sanitize(msg), sanitize(t));
 	}
 
 	@Override
 	public void warn(Throwable t) {
-		if (!isWarnEnabled()) {
-			return;
-		}
-
 		super.warn(sanitize(t));
 	}
 
@@ -237,10 +168,6 @@ public class SanitizerLogWrapper extends LogWrapper {
 	}
 
 	protected String sanitize(String message, String defaultResult) {
-		if (!_LOG_SANITIZER_ENABLED) {
-			return message;
-		}
-
 		if (message == null) {
 			return null;
 		}
@@ -275,10 +202,6 @@ public class SanitizerLogWrapper extends LogWrapper {
 	}
 
 	protected Throwable sanitize(Throwable throwable) {
-		if (!_LOG_SANITIZER_ENABLED) {
-			return throwable;
-		}
-
 		List<Throwable> throwables = new ArrayList<Throwable>();
 
 		Throwable tempThrowable = throwable;
@@ -322,7 +245,9 @@ public class SanitizerLogWrapper extends LogWrapper {
 
 	private static final String _SANITIZED = " [Sanitized]";
 
-	private static boolean _LOG_SANITIZER_ENABLED = false;
+	private static Boolean _LOG_SANITIZER_ENABLED =
+		GetterUtil.getBoolean(
+			SystemProperties.get(PropsKeys.LOG_SANITIZER_ENABLED));
 
 	private static boolean _LOG_SANITIZER_ESCAPE_HTML_ENABLED = false;
 

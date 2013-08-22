@@ -30,6 +30,8 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class SystemProperties {
 
+	public static final String QUIET_LOADING = "QUIET_LOADING";
+
 	public static final String SYSTEM_PROPERTIES_FINAL =
 		"system.properties.final";
 
@@ -76,6 +78,8 @@ public class SystemProperties {
 
 		ClassLoader classLoader = currentThread.getContextClassLoader();
 
+		boolean quietLoading = Boolean.getBoolean(QUIET_LOADING);
+
 		// system.properties
 
 		try {
@@ -88,7 +92,9 @@ public class SystemProperties {
 
 				inputStream.close();
 
-				System.out.println("Loading " + url);
+				if (!quietLoading) {
+					System.out.println("Loading " + url);
+				}
 			}
 		}
 		catch (Exception e) {
@@ -107,7 +113,9 @@ public class SystemProperties {
 
 				inputStream.close();
 
-				System.out.println("Loading " + url);
+				if (!quietLoading) {
+					System.out.println("Loading " + url);
+				}
 			}
 		}
 		catch (Exception e) {

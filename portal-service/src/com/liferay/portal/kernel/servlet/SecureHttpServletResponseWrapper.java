@@ -53,8 +53,6 @@ public class SecureHttpServletResponseWrapper
 	}
 
 	public void applySecurityHeaders(HttpServletRequest request) {
-		initConfiguration();
-
 		setXContentOptions(request);
 		setXFrameOptions(request);
 		setXXSSProtection(request);
@@ -167,39 +165,6 @@ public class SecureHttpServletResponseWrapper
 		super.setHeader(HttpHeaders.X_XSS_PROTECTION, "1; mode=block");
 	}
 
-	private static void initConfiguration() {
-		if (_X_CONTENT_TYPE_OPTIONS_WHITELIST != null) {
-			return;
-		}
-
-		synchronized (SecureHttpServletResponseWrapper.class) {
-			if (_X_CONTENT_TYPE_OPTIONS_WHITELIST != null) {
-				return;
-			}
-
-			_X_CONTENT_TYPE_OPTIONS_ENABLED = GetterUtil.getBoolean(
-					PropsUtil.get(
-						PropsKeys.HTTP_HEADER_X_CONTENT_TYPE_OPTIONS_ENABLED),
-					true);
-
-			_X_CONTENT_TYPE_OPTIONS_WHITELIST =
-				PropsUtil.getArray(
-					PropsKeys.HTTP_HEADER_X_CONTENT_TYPE_OPTIONS_WHITELIST);
-
-			_X_FRAME_OPTIONS_ENABLED = GetterUtil.getBoolean(
-					PropsUtil.get(
-						PropsKeys.HTTP_HEADER_X_FRAME_OPTIONS_ENABLED), true);
-
-			_X_FRAME_OPTIONS_WHITELIST = PropsUtil.getProperties(
-					PropsKeys.HTTP_HEADER_X_FRAME_OPTIONS_WHITELIST, true);
-
-			_X_XSS_PROTECTION_ENABLED = GetterUtil.getBoolean(
-					PropsUtil.get(
-						PropsKeys.HTTP_HEADER_X_XSS_PROTECTION_ENABLED),
-					true);
-		}
-	}
-
 	private static boolean _X_CONTENT_TYPE_OPTIONS_ENABLED;
 
 	private static String[] _X_CONTENT_TYPE_OPTIONS_WHITELIST;
@@ -209,6 +174,26 @@ public class SecureHttpServletResponseWrapper
 	private static Properties _X_FRAME_OPTIONS_WHITELIST;
 
 	private static boolean _X_XSS_PROTECTION_ENABLED;
+
+	static {
+		_X_CONTENT_TYPE_OPTIONS_ENABLED = GetterUtil.getBoolean(
+			PropsUtil.get(
+				PropsKeys.HTTP_HEADER_X_CONTENT_TYPE_OPTIONS_ENABLED), true);
+
+		_X_CONTENT_TYPE_OPTIONS_WHITELIST =
+			PropsUtil.getArray(
+				PropsKeys.HTTP_HEADER_X_CONTENT_TYPE_OPTIONS_WHITELIST);
+
+		_X_FRAME_OPTIONS_ENABLED = GetterUtil.getBoolean(
+			PropsUtil.get(PropsKeys.HTTP_HEADER_X_FRAME_OPTIONS_ENABLED), true);
+
+		_X_FRAME_OPTIONS_WHITELIST = PropsUtil.getProperties(
+			PropsKeys.HTTP_HEADER_X_FRAME_OPTIONS_WHITELIST, true);
+
+		_X_XSS_PROTECTION_ENABLED = GetterUtil.getBoolean(
+			PropsUtil.get(
+				PropsKeys.HTTP_HEADER_X_XSS_PROTECTION_ENABLED), true);
+	}
 
 	private boolean _sanitizeHeaders;
 

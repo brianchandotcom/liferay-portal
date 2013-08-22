@@ -72,7 +72,7 @@ public abstract class BaseTemplateManager implements TemplateManager {
 				templateResource, errorTemplateResource, restricted,
 				helperUtilities));
 
-		return new PACLTemplateWrapper(accessControlContext, template);
+		return new PrivilegedTemplateWrapper(accessControlContext, template);
 	}
 
 	public void setTemplateContextHelper(

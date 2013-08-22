@@ -215,9 +215,7 @@ searchContainer.setEmptyResultsMessage(emptyResultsMessage);
 				viewUsersURL.setParameter("tabs2", "available");
 				%>
 
-				<aui:button-row>
-					<aui:button href="<%= viewUsersURL.toString() %>" value="assign-users" />
-				</aui:button-row>
+				<liferay-ui:icon image="../aui/user" label="<%= true %>" message="assign-users" url="<%= viewUsersURL.toString() %>" />
 
 				<%
 				viewUsersURL.setParameter("tabs2", "current");

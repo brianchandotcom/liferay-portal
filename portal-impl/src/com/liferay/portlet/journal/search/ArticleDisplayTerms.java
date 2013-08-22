@@ -178,12 +178,18 @@ public class ArticleDisplayTerms extends DisplayTerms {
 	public long setGroupId(PortletRequest portletRequest) {
 		groupId = ParamUtil.getLong(portletRequest, GROUP_ID);
 
-		if ((groupId == 0) && Validator.isNull(structureId) &&
-			Validator.isNull(templateId)) {
-
+		if (groupId == 0) {
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)portletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
+
+			if ((themeDisplay.getScopeGroupId() ==
+					themeDisplay.getCompanyGroupId()) &&
+				Validator.isNull(structureId) &&
+				Validator.isNull(templateId)) {
+
+				return 0;
+			}
 
 			groupId = themeDisplay.getScopeGroupId();
 		}

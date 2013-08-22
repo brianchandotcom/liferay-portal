@@ -160,11 +160,11 @@ int total = 0;
 	<c:when test="<%= Validator.isNotNull(displayTerms.getStructureId()) %>">
 
 		<%
-		total = JournalArticleServiceUtil.getArticlesCountByStructureId(scopeGroupId, searchTerms.getStructureId());
+		total = JournalArticleServiceUtil.getArticlesCountByStructureId(displayTerms.getGroupId(), searchTerms.getStructureId());
 
 		searchContainer.setTotal(total);
 
-		results = JournalArticleServiceUtil.getArticlesByStructureId(scopeGroupId, displayTerms.getStructureId(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+		results = JournalArticleServiceUtil.getArticlesByStructureId(displayTerms.getGroupId(), displayTerms.getStructureId(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 		%>
 
 	</c:when>

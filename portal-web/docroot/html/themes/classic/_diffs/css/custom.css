@@ -147,7 +147,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 				&.open {
 					> a {
-						background-color: $dockbarGradientStart;
+						background-color: #A3A3A3;
 						color: #FFF;
 					}
 				}
@@ -355,9 +355,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 			li {
 				&.open {
 					> a {
-						@include background-image(linear-gradient($dockbarGradientStart 0%, $dockbarGradientStart 47%, $dockbarGradientEnd 100%));
 						@include box-shadow(none);
-						@include filter-gradient($dockbarGradientStart, $dockbarGradientEnd, vertical);
 					}
 				}
 			}

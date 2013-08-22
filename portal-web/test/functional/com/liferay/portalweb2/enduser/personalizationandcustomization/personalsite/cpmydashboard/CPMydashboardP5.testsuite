@@ -1,0 +1,5 @@
+<definition>
+	<execute test-case-command="CPMydashboard#JoinSiteOpen" />
+	<execute test-case-command="CPMydashboard#JoinSitePrivateNo" />
+	<execute test-case-command="CPMydashboard#LeaveSite" />
+</definition>

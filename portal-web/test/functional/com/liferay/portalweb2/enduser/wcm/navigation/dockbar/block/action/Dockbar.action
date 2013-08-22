@@ -12,6 +12,9 @@
 		<case locator-key1="ADD_PAGE_LINK">
 			<execute function="AssertClick#assertTextClickAtAddApplication" />
 		</case>
+		<case locator-key1="USER_MY_DASHBOARD">
+			<execute function="AssertClick#assertTextClickAtAndWait" />
+		</case>
 		<case locator-key1="USER_MY_ACCOUNT">
 			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>

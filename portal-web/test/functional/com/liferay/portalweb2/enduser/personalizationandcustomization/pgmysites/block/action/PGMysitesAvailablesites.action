@@ -1,0 +1,15 @@
+<definition>
+	<command name="assertClick">
+		<case locator-key1="SITE_TABLE_JOIN_SITE_NAME">
+			<execute function="AssertClick#assertTextClickAtAndWait" />
+		</case>
+
+		<case locator-key1="SITE_TABLE_LEAVE_SITE_NAME">
+			<execute function="AssertClick#assertTextClickAtAndWait" />
+		</case>
+
+		<case locator-key1="SEARCH_BUTTON">
+			<execute function="AssertClick#assertTextClickAtAndWait" />
+		</case>
+	</command>
+</definition>

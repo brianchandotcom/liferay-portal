@@ -109,10 +109,10 @@ public class SecureHttpServletResponseWrapper
 		}
 
 		if (_X_CONTENT_TYPE_OPTIONS_WHITELIST.length > 0) {
-			String uri = request.getRequestURI();
+			String requestURI = request.getRequestURI();
 
 			for (String whitelistedURL : _X_CONTENT_TYPE_OPTIONS_WHITELIST) {
-				if (uri.startsWith(whitelistedURL)) {
+				if (requestURI.startsWith(whitelistedURL)) {
 					return;
 				}
 			}
@@ -126,7 +126,7 @@ public class SecureHttpServletResponseWrapper
 			return;
 		}
 
-		if (_X_FRAME_OPTIONS_WHITELIST.size()> 0) {
+		if (_X_FRAME_OPTIONS_WHITELIST.size() > 0) {
 			String requestURI = request.getRequestURI();
 
 			for (int i = 0; i < 256; i++) {

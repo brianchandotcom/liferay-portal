@@ -105,7 +105,7 @@ public class DynamicCSSFilter extends IgnoreModuleRequestFilter {
 
 		URLConnection urlConnection = resourceURL.openConnection();
 
-		String cacheCommonFileName = getCacheFileName(request);
+		String cacheCommonFileName = requestURI;
 
 		File cacheContentTypeFile = new File(
 			_tempDir, cacheCommonFileName + "_E_CONTENT_TYPE");

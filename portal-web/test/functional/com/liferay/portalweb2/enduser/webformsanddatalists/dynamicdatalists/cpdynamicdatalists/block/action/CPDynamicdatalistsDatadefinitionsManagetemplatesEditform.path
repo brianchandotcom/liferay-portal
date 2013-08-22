@@ -86,8 +86,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FIELD_NAME</td>
-	<td>//div[@class='tab-content']/div/ul/li[@title='${fieldName}']/div</td>
+	<td>FIELDS_NAME</td>
+	<td>//div[@class='tab-content']/div/ul/li[@title='${key_fieldName}']/div</td>
 	<td></td>
 </tr>
 <tr>

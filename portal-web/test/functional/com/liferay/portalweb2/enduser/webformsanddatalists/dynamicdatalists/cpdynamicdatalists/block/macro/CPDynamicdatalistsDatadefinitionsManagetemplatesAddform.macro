@@ -6,7 +6,7 @@
 				<execute action="CPDynamicdatalistsDatadefinitionsManagetemplatesAddform#assertClick" locator-key1="DETAILS" value1="Details" />
 			</then>
 		</if>
-		
+
 		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplatesAddform#assertElementPresent" locator-key1="DETAILS_LANGUAGE_SELECT" />
 	</command>
 </definition>

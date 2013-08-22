@@ -147,6 +147,9 @@
 		<var name="dataDefinitionDescription" value="Data Definition Description" />
 		<var name="dataDefinitionName" value="Data Definition" />
 		<var name="dataDefinitionFormTemplateName" value="Data Definition FreeMarker Form Template Name" />
+		<var name="fieldName" value="Text" />
+		<var name="fieldNameLabel" value="text" />
+		<var name="formFieldKey" value="FORM_TEXT_FIELD_1" />
 		<var name="formTemplateLanguageSelect" value="FreeMarker (.ftl)" />
 
 		<execute macro="Page#gotoContentCP">
@@ -166,9 +169,9 @@
 			<var name="dataDefinitionDescription" value="${dataDefinitionDescription}" />
 			<var name="dataDefinitionName" value="${dataDefinitionName}" />
 			<var name="dataDefinitionFormTemplateName" value="${dataDefinitionFormTemplateName}" />
-			<var name="fieldName" value="Text" />
-			<var name="fieldNameLabel" value="text" />
-			<var name="formFieldKey" value="FORM_TEXT_FIELD_1" />
+			<var name="fieldName" value="${fieldName}" />
+			<var name="fieldNameLabel" value="${fieldNameLabel}" />
+			<var name="formFieldKey" value="${formFieldKey}" />
 			<var name="formTemplateLanguageSelect" value="${formTemplateLanguageSelect}" />
 		</execute>
 	</command>
@@ -206,6 +209,9 @@
 		<var name="dataDefinitionDescription" value="Data Definition Description" />
 		<var name="dataDefinitionName" value="Data Definition" />
 		<var name="dataDefinitionFormTemplateName" value="Data Definition Velocity Form Template Name" />
+		<var name="fieldName" value="Text" />
+		<var name="fieldNameLabel" value="text" />
+		<var name="formFieldKey" value="FORM_TEXT_FIELD_1" />
 		<var name="formTemplateLanguageSelect" value="Velocity (.vm)" />
 
 		<execute macro="Page#gotoContentCP">
@@ -225,9 +231,9 @@
 			<var name="dataDefinitionDescription" value="${dataDefinitionDescription}" />
 			<var name="dataDefinitionName" value="${dataDefinitionName}" />
 			<var name="dataDefinitionFormTemplateName" value="${dataDefinitionFormTemplateName}" />
-			<var name="fieldName" value="Text" />
-			<var name="fieldNameLabel" value="text" />
-			<var name="formFieldKey" value="FORM_TEXT_FIELD_1" />
+			<var name="fieldName" value="${fieldName}" />
+			<var name="fieldNameLabel" value="${fieldNameLabel}" />
+			<var name="formFieldKey" value="${formFieldKey}" />
 			<var name="formTemplateLanguageSelect" value="${formTemplateLanguageSelect}" />
 		</execute>
 	</command>
@@ -364,9 +370,9 @@
 			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
-		<execute macro="DataDefinitionTemplate#deleteDisplayTemplateCP">
-			<var name="dataDefinitionFormTemplateName" value="${dataDefinitionDisplayTemplateName}" />
+		<execute macro="DataDefinitionTemplate#deleteTemplateCP">
 			<var name="dataDefinitionName" value="${dataDefinitionName}" />
+			<var name="dataDefinitionTemplateName" value="${dataDefinitionDisplayTemplateName}" />
 		</execute>
 	</command>
 
@@ -374,6 +380,9 @@
 		<var name="dataDefinitionDescription" value="Data Definition Description" />
 		<var name="dataDefinitionFormTemplateName" value="Data Definition FreeMarker Form Template Name" />
 		<var name="dataDefinitionName" value="Data Definition" />
+		<var name="fieldName" value="Text" />
+		<var name="fieldNameLabel" value="text" />
+		<var name="formFieldKey" value="FORM_TEXT_FIELD_1" />
 		<var name="formTemplateLanguageSelect" value="FreeMarker (.ftl)" />
 
 		<execute macro="Page#gotoContentCP">
@@ -391,11 +400,11 @@
 
 		<execute macro="DataDefinitionTemplate#addFormTemplateCP">
 			<var name="dataDefinitionDescription" value="${dataDefinitionDescription}" />
-			<var name="dataDefinitionName" value="${dataDefinitionName}" />
 			<var name="dataDefinitionFormTemplateName" value="${dataDefinitionFormTemplateName}" />
-			<var name="fieldName" value="Text" />
-			<var name="fieldNameLabel" value="text" />
-			<var name="formFieldKey" value="FORM_TEXT_FIELD_1" />
+			<var name="dataDefinitionName" value="${dataDefinitionName}" />
+			<var name="fieldName" value="${fieldName}" />
+			<var name="fieldNameLabel" value="${fieldNameLabel}" />
+			<var name="formFieldKey" value="${formFieldKey}" />
 			<var name="formTemplateLanguageSelect" value="${formTemplateLanguageSelect}" />
 		</execute>
 
@@ -403,9 +412,9 @@
 			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
-		<execute macro="DataDefinitionTemplate#deleteFormTemplateCP">
-			<var name="dataDefinitionFormTemplateName" value="${dataDefinitionFormTemplateName}" />
+		<execute macro="DataDefinitionTemplate#deleteTemplateCP">
 			<var name="dataDefinitionName" value="${dataDefinitionName}" />
+			<var name="dataDefinitionTemplateName" value="${dataDefinitionFormTemplateName}" />
 		</execute>
 	</command>
 
@@ -432,7 +441,6 @@
 		<execute macro="DataDefinitionTemplate#addDisplayTemplateCP">
 			<var name="dataDefinitionDescription" value="${dataDefinitionDescription}" />
 			<var name="dataDefinitionDisplayTemplateName" value="${dataDefinitionDisplayTemplateName}" />
-			<var name="dataDefinitionFormTemplateName" value="${dataDefinitionDisplayTemplateName}" />
 			<var name="dataDefinitionName" value="${dataDefinitionName}" />
 			<var name="displayTemplateLanguageSelect" value="${displayTemplateLanguageSelect}" />
 		</execute>
@@ -441,16 +449,19 @@
 			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
-		<execute macro="DataDefinitionTemplate#deleteDisplayTemplateCP">
+		<execute macro="DataDefinitionTemplate#deleteTemplateCP">
 			<var name="dataDefinitionName" value="${dataDefinitionName}" />
-			<var name="dataDefinitionFormTemplateName" value="${dataDefinitionDisplayTemplateName}" />
+			<var name="dataDefinitionTemplateName" value="${dataDefinitionDisplayTemplateName}" />
 		</execute>
 	</command>
 
 	<command name="DeleteVelocityFormTemplateCP">
 		<var name="dataDefinitionDescription" value="Data Definition Description" />
-		<var name="dataDefinitionName" value="Data Definition" />
 		<var name="dataDefinitionFormTemplateName" value="Data Definition Velocity Form Template Name" />
+		<var name="dataDefinitionName" value="Data Definition" />
+		<var name="fieldName" value="Text" />
+		<var name="fieldNameLabel" value="text" />
+		<var name="formFieldKey" value="FORM_TEXT_FIELD_1" />
 		<var name="formTemplateLanguageSelect" value="Velocity (.vm)" />
 
 		<execute macro="Page#gotoContentCP">
@@ -470,9 +481,9 @@
 			<var name="dataDefinitionDescription" value="${dataDefinitionDescription}" />
 			<var name="dataDefinitionFormTemplateName" value="${dataDefinitionFormTemplateName}" />
 			<var name="dataDefinitionName" value="${dataDefinitionName}" />
-			<var name="fieldName" value="Text" />
-			<var name="fieldNameLabel" value="text" />
-			<var name="formFieldKey" value="FORM_TEXT_FIELD_1" />
+			<var name="fieldName" value="${fieldName}" />
+			<var name="fieldNameLabel" value="${fieldNameLabel}" />
+			<var name="formFieldKey" value="${formFieldKey}" />
 			<var name="formTemplateLanguageSelect" value="${formTemplateLanguageSelect}" />
 		</execute>
 
@@ -480,9 +491,9 @@
 			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
-		<execute macro="DataDefinitionTemplate#deleteFormTemplateCP">
-			<var name="dataDefinitionFormTemplateName" value="${dataDefinitionFormTemplateName}" />
+		<execute macro="DataDefinitionTemplate#deleteTemplateCP">
 			<var name="dataDefinitionName" value="${dataDefinitionName}" />
+			<var name="dataDefinitionTemplateName" value="${dataDefinitionFormTemplateName}" />
 		</execute>
 	</command>
 
@@ -682,6 +693,9 @@
 			<var name="dataDefinitionFormTemplateName" value="Data Definition FreeMarker Form Template Name" />
 			<var name="dataDefinitionFormTemplateNameEdit" value="Data Definition FreeMarker Form Template Name Edit" />
 			<var name="dataDefinitionName" value="Data Definition" />
+			<var name="fieldName" value="Text" />
+			<var name="fieldNameLabel" value="text" />
+			<var name="formFieldKey" value="FORM_TEXT_FIELD_1" />
 			<var name="formTemplateLanguageSelect" value="FreeMarker (.ftl)" />
 
 		<execute macro="Page#gotoContentCP">
@@ -701,9 +715,9 @@
 			<var name="dataDefinitionDescription" value="${dataDefinitionDescription}" />
 			<var name="dataDefinitionFormTemplateName" value="${dataDefinitionFormTemplateName}" />
 			<var name="dataDefinitionName" value="${dataDefinitionName}" />
-			<var name="fieldName" value="Text" />
-			<var name="fieldNameLabel" value="text" />
-			<var name="formFieldKey" value="FORM_TEXT_FIELD_1" />
+			<var name="fieldName" value="${fieldName}" />
+			<var name="fieldNameLabel" value="${fieldNameLabel}" />
+			<var name="formFieldKey" value="${formFieldKey}" />
 			<var name="formTemplateLanguageSelect" value="${formTemplateLanguageSelect}" />
 		</execute>
 
@@ -716,9 +730,9 @@
 			<var name="dataDefinitionFormTemplateName" value="${dataDefinitionFormTemplateName}" />
 			<var name="dataDefinitionFormTemplateNameEdit" value="${dataDefinitionFormTemplateNameEdit}" />
 			<var name="dataDefinitionName" value="${dataDefinitionName}" />
-			<var name="fieldName" value="Text" />
-			<var name="fieldNameLabel" value="text" />
-			<var name="formFieldKey" value="FORM_TEXT_FIELD_1" />
+			<var name="fieldName" value="${fieldName}" />
+			<var name="fieldNameLabel" value="${fieldNameLabel}" />
+			<var name="formFieldKey" value="${formFieldKey}" />
 			<var name="formTemplateLanguageSelect" value="${formTemplateLanguageSelect}" />
 		</execute>
 
@@ -771,6 +785,7 @@
 			<var name="dataDefinitionDisplayTemplateName" value="${dataDefinitionDisplayTemplateName}" />
 			<var name="dataDefinitionDisplayTemplateNameEdit" value="${dataDefinitionDisplayTemplateNameEdit}" />
 			<var name="dataDefinitionName" value="${dataDefinitionName}" />
+			<var name="ddlDisplayTemplateTextFieldScriptEdit" value="${ddlDisplayTemplateTextFieldScriptEdit}" />
 			<var name="displayTemplateLanguageSelect" value="${displayTemplateLanguageSelect}" />
 		</execute>
 
@@ -789,6 +804,9 @@
 		<var name="dataDefinitionFormTemplateName" value="Data Definition Velocity Form Template Name" />
 		<var name="dataDefinitionFormTemplateNameEdit" value="Data Definition Velocity Form Template Name Edit" />
 		<var name="dataDefinitionName" value="Data Definition" />
+		<var name="fieldName" value="Text" />
+		<var name="fieldNameLabel" value="text" />
+		<var name="formFieldKey" value="FORM_TEXT_FIELD_1" />
 		<var name="formTemplateLanguageSelect" value="Velocity (.vm)" />
 
 		<execute macro="Page#gotoContentCP">
@@ -808,9 +826,9 @@
 			<var name="dataDefinitionDescription" value="${dataDefinitionDescription}" />
 			<var name="dataDefinitionFormTemplateName" value="${dataDefinitionFormTemplateName}" />
 			<var name="dataDefinitionName" value="${dataDefinitionName}" />
-			<var name="fieldName" value="Text" />
-			<var name="fieldNameLabel" value="text" />
-			<var name="formFieldKey" value="FORM_TEXT_FIELD_1" />
+			<var name="fieldName" value="${fieldName}" />
+			<var name="fieldNameLabel" value="${fieldNameLabel}" />
+			<var name="formFieldKey" value="${formFieldKey}" />
 			<var name="formTemplateLanguageSelect" value="${formTemplateLanguageSelect}" />
 		</execute>
 
@@ -823,9 +841,9 @@
 			<var name="dataDefinitionFormTemplateName" value="${dataDefinitionFormTemplateName}" />
 			<var name="dataDefinitionFormTemplateNameEdit" value="${dataDefinitionFormTemplateNameEdit}" />
 			<var name="dataDefinitionName" value="${dataDefinitionName}" />
-			<var name="fieldName" value="Text" />
-			<var name="fieldNameLabel" value="text" />
-			<var name="formFieldKey" value="FORM_TEXT_FIELD_1" />
+			<var name="fieldName" value="${fieldName}" />
+			<var name="fieldNameLabel" value="${fieldNameLabel}" />
+			<var name="formFieldKey" value="${formFieldKey}" />
 			<var name="formTemplateLanguageSelect" value="${formTemplateLanguageSelect}" />
 		</execute>
 

@@ -21,7 +21,6 @@
 		<execute function="Type#sendKeys" />
 	</command>
 
-
 	<command name="sendKeysNoWait">
 		<execute selenium="sendKeys" />
 	</command>

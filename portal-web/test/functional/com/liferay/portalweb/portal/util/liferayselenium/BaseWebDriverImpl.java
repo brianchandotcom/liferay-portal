@@ -83,6 +83,20 @@ public abstract class BaseWebDriverImpl
 	}
 
 	@Override
+	public void assertEmailContent(String index, String content)
+		throws Exception {
+
+		LiferaySeleniumHelper.assertEmailContent(this, index, content);
+	}
+
+	@Override
+	public void assertEmailSubject(String index, String subject)
+		throws Exception {
+
+		LiferaySeleniumHelper.assertEmailSubject(this, index, subject);
+	}
+
+	@Override
 	public void assertLocation(String pattern) {
 		LiferaySeleniumHelper.assertLocation(this, pattern);
 	}
@@ -186,6 +200,14 @@ public abstract class BaseWebDriverImpl
 	}
 
 	@Override
+	public void connectToEmailAccount(String emailAddress, String emailPassword)
+		throws Exception {
+
+		LiferaySeleniumHelper.connectToEmailAccount(
+			emailAddress, emailPassword);
+	}
+
+	@Override
 	public void copyText(String locator) {
 		_clipBoard = super.getText(locator);
 	}
@@ -193,6 +215,11 @@ public abstract class BaseWebDriverImpl
 	@Override
 	public void copyValue(String locator) {
 		_clipBoard = super.getValue(locator);
+	}
+
+	@Override
+	public void deleteAllEmails() throws Exception {
+		LiferaySeleniumHelper.deleteAllEmails();
 	}
 
 	@Override
@@ -224,6 +251,16 @@ public abstract class BaseWebDriverImpl
 		Calendar calendar = Calendar.getInstance();
 
 		return StringUtil.valueOf(calendar.get(Calendar.YEAR));
+	}
+
+	@Override
+	public String getEmailContent(String index) throws Exception {
+		return LiferaySeleniumHelper.getEmailContent(index);
+	}
+
+	@Override
+	public String getEmailSubject(String index) throws Exception {
+		return LiferaySeleniumHelper.getEmailSubject(index);
 	}
 
 	@Override
@@ -429,6 +466,11 @@ public abstract class BaseWebDriverImpl
 	}
 
 	@Override
+	public void replyToEmail(String to, String content) throws Exception {
+		LiferaySeleniumHelper.replyToEmail(this, to, content);
+	}
+
+	@Override
 	public void saveScreenshot(String fileName) throws Exception {
 		if (!TestPropsValues.SAVE_SCREENSHOT) {
 			return;
@@ -469,6 +511,13 @@ public abstract class BaseWebDriverImpl
 	public void selectAndWait(String selectLocator, String optionLocator) {
 		super.select(selectLocator, optionLocator);
 		super.waitForPageToLoad("30000");
+	}
+
+	@Override
+	public void sendEmail(String to, String subject, String content)
+		throws Exception {
+
+		LiferaySeleniumHelper.sendEmail(this, to, subject, content);
 	}
 
 	@Override

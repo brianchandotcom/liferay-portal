@@ -1688,6 +1688,52 @@ svn --username ${svn.username} --password ${svn.password} update -r ${svn.info.r
 			</else>
 		</if>
 
+
+		<if>
+			<isset property="email.address.1" />
+			<then>
+				<replace
+					file="portal-web/test/test-portal-web.properties"
+					token="#email.address.1="
+					value="email.address.1=${email.address.1}"
+				/>
+			</then>
+		</if>
+
+		<if>
+			<isset property="email.address.2" />
+			<then>
+				<replace
+					file="portal-web/test/test-portal-web.properties"
+					token="#email.address.2="
+					value="email.address.2=${email.address.2}"
+				/>
+			</then>
+		</if>
+
+		<if>
+			<isset property="email.password.1" />
+			<then>
+				<replace
+					file="portal-web/test/test-portal-web.properties"
+					token="#email.password.1="
+					value="email.password.1=${email.password.1}"
+				/>
+			</then>
+		</if>
+
+		<if>
+			<isset property="email.password.2" />
+			<then>
+				<replace
+					file="portal-web/test/test-portal-web.properties"
+					token="#email.password.2="
+					value="email.password.2=${email.password.2}"
+				/>
+			</then>
+		</if>
+
+
 		<if>
 			<not>
 				<isset property="skip.delete-selenium-output" />

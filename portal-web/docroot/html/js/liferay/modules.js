@@ -545,9 +545,9 @@ window.YUI_config = {
 						'aui-base',
 						'aui-component',
 						'aui-io-request',
-						'aui-modal',
 						'aui-parse-content',
 						'liferay-portlet-url',
+						'liferay-util-window',
 						'plugin'
 					]
 				},

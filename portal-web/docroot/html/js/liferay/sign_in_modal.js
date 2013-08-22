@@ -60,52 +60,6 @@ AUI.add(
 						instance._host.on('click', A.bind('_load', instance));
 					},
 
-					_getModal: function() {
-						var instance = this;
-
-						var modal = instance._modal;
-
-						if (!modal) {
-							modal = new A.Modal(
-								{
-									after: {
-										visibleChange: function(event) {
-											var signInPortletBody = instance._signInPortletBody;
-
-											var formValidator = instance._formValidator;
-
-											if (formValidator && instance.get('resetFormValidator')) {
-												formValidator.resetAllFields();
-											}
-
-											if (!event.newVal && signInPortletBody) {
-												var originalParentNode = instance._originalParentNode;
-
-												if (originalParentNode) {
-													originalParentNode.append(signInPortletBody);
-												}
-											}
-										}
-									},
-									centered: true,
-									constrain: true,
-									headerContent: '<h3>' + Liferay.Language.get('sign-in') + '</h3>',
-									modal: true,
-									visible: false,
-									zIndex: 400
-								}
-							).render();
-
-							var bodyNode = modal.bodyNode;
-
-							bodyNode.plug(A.Plugin.ParseContent);
-
-							instance._modal = modal;
-						}
-
-						return modal;
-					},
-
 					_load: function(event) {
 						var instance = this;
 
@@ -169,15 +123,46 @@ AUI.add(
 					_setModalContent: function(content) {
 						var instance = this;
 
-						var modal = instance._getModal();
+						var dialog = Liferay.Util.getWindow(NAME);
 
-						modal.show();
+						if (!dialog) {
+							Liferay.Util.openWindow(
+								{
+									dialog: {
+										after: {
+											visibleChange: function(event) {
+												var signInPortletBody = instance._signInPortletBody;
 
-						var bodyNode = modal.bodyNode;
+												var formValidator = instance._formValidator;
 
-						bodyNode.setContent(content);
+												if (formValidator && instance.get('resetFormValidator')) {
+													formValidator.resetAllFields();
+												}
 
-						modal.align();
+												if (!event.newVal && signInPortletBody) {
+													var originalParentNode = instance._originalParentNode;
+
+													if (originalParentNode) {
+														originalParentNode.append(signInPortletBody);
+													}
+												}
+											}
+										},
+										bodyContent: content,
+										height: 390,
+										plugins: [A.Plugin.ParseContent],
+										width: 560
+									},
+									id: NAME,
+									title: Liferay.Language.get('sign-in')
+								}
+							);
+						}
+						else {
+							dialog.bodyNode.setContent(content);
+
+							dialog.show();
+						}
 					}
 				}
 			}
@@ -187,6 +172,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-base', 'aui-component', 'aui-io-request', 'aui-modal', 'aui-parse-content', 'liferay-portlet-url', 'plugin']
+		requires: ['aui-base', 'aui-component', 'aui-io-request', 'aui-parse-content', 'liferay-portlet-url', 'liferay-util-window', 'plugin']
 	}
 );

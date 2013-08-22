@@ -37,6 +37,12 @@ public class XSLTBuilder {
 
 	public XSLTBuilder(String xml, String xsl, String html) {
 		try {
+			String systemSeparator = System.getProperty("line.separator");
+			
+			String tempSeparator = "\n";
+			
+			System.setProperty("line.separator", tempSeparator);
+			
 			TransformerFactory transformerFactory =
 				TransformerFactory.newInstance();
 
@@ -46,6 +52,8 @@ public class XSLTBuilder {
 			transformer.transform(
 				new StreamSource(xml),
 				new StreamResult(new FileOutputStream(html)));
+			
+			System.setProperty("line.separator", systemSeparator);
 		}
 		catch (Exception e) {
 			e.printStackTrace();

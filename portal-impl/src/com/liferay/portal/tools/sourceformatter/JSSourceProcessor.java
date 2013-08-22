@@ -68,7 +68,7 @@ public class JSSourceProcessor extends BaseSourceProcessor {
 
 		Pattern pattern = Pattern.compile("\t+var \\w+\\, ");
 
-		for (;;) {
+		while (true) {
 			Matcher matcher = pattern.matcher(newContent);
 
 			if (!matcher.find()) {

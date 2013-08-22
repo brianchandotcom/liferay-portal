@@ -835,7 +835,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		Pattern pattern = Pattern.compile(
 			"\t(catch |else |finally |for |if |try |while ).*\\{\n\n\t+\\w");
 
-		for (;;) {
+		while (true) {
 			Matcher matcher = pattern.matcher(newContent);
 
 			if (!matcher.find()) {
@@ -974,7 +974,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		String oldContent = newContent;
 
-		for (;;) {
+		while (true) {
 			newContent = formatJava(fileName, oldContent);
 
 			newContent = StringUtil.replace(newContent, "\n\n\n", "\n\n");
@@ -1011,7 +1011,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				checkTestAnnotations(javaTerm, fileName);
 			}
 
-			for (;;) {
+			while (true) {
 				String javaTermContent = javaTerm.getContent();
 
 				javaTerm.sortAnnotations();

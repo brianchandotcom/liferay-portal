@@ -14,7 +14,11 @@
 
 package com.liferay.portlet.social.service.impl;
 
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
@@ -728,6 +732,23 @@ public class SocialActivityLocalServiceImpl
 
 		return socialActivityPersistence.findByActivitySetId(
 			activitySetId, start, end);
+	}
+
+	@Override
+	public List<Long> getActivitySetUserIds(long activitySetId)
+		throws SystemException {
+
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(
+			SocialActivity.class, getClassLoader());
+
+		dynamicQuery.setProjection(
+			ProjectionFactoryUtil.distinct(
+				ProjectionFactoryUtil.property("userId")));
+
+		dynamicQuery.add(
+			RestrictionsFactoryUtil.eq("activitySetId", activitySetId));
+
+		return dynamicQuery(dynamicQuery);
 	}
 
 	/**

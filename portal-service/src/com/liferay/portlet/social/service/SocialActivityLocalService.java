@@ -621,6 +621,11 @@ public interface SocialActivityLocalService extends BaseLocalService,
 		long activitySetId, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<java.lang.Long> getActivitySetUserIds(
+		long activitySetId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	/**
 	* Returns a range of all the activities done in the group.
 	*

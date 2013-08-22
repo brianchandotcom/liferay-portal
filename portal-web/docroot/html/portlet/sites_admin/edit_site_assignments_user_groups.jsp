@@ -165,7 +165,7 @@ userGroupSearch.setEmptyResultsMessage(emptyResultsMessage);
 				%>
 
 				<aui:button-row>
-					<aui:button onClick="<%= taglibOnClick %>" value="save" />
+					<aui:button onClick="<%= taglibOnClick %>" primary="<%= true %>" value="save" />
 				</aui:button-row>
 			</c:otherwise>
 		</c:choose>

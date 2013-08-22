@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.template.BaseTemplateManager;
-import com.liferay.portal.template.TemplateContextHelper;
 
 import java.util.Map;
 
@@ -31,18 +30,18 @@ public class XSLManager extends BaseTemplateManager {
 
 	@Override
 	public void destroy() {
-		if (_templateContextHelper == null) {
+		if (templateContextHelper == null) {
 			return;
 		}
 
-		_templateContextHelper.removeAllHelperUtilities();
+		templateContextHelper.removeAllHelperUtilities();
 
-		_templateContextHelper = null;
+		templateContextHelper = null;
 	}
 
 	@Override
 	public void destroy(ClassLoader classLoader) {
-		_templateContextHelper.removeHelperUtilities(classLoader);
+		templateContextHelper.removeHelperUtilities(classLoader);
 	}
 
 	@Override
@@ -52,12 +51,6 @@ public class XSLManager extends BaseTemplateManager {
 
 	@Override
 	public void init() {
-	}
-
-	public void setTemplateContextHelper(
-		TemplateContextHelper templateContextHelper) {
-
-		_templateContextHelper = templateContextHelper;
 	}
 
 	@Override
@@ -70,14 +63,7 @@ public class XSLManager extends BaseTemplateManager {
 			(XSLTemplateResource)templateResource;
 
 		return new XSLTemplate(
-			xslTemplateResource, errorTemplateResource, _templateContextHelper);
+			xslTemplateResource, errorTemplateResource, templateContextHelper);
 	}
-
-	@Override
-	protected TemplateContextHelper getTemplateContextHelper() {
-		return _templateContextHelper;
-	}
-
-	private TemplateContextHelper _templateContextHelper;
 
 }

@@ -24,54 +24,74 @@ import java.security.AccessController;
 import java.security.PrivilegedActionException;
 import java.security.PrivilegedExceptionAction;
 
-/**
- * @author Raymond Augé
- */
-public abstract class AbstractProcessingTemplate implements Template {
+import javax.servlet.http.HttpServletRequest;
 
-	public abstract TemplateContextHelper getTemplateContextHelper();
+/**
+ * @author Tina Tian
+ * @author Shuyang Zhou
+ */
+public class PrivilegedTemplateWrapper implements Template {
+
+	public PrivilegedTemplateWrapper(
+		AccessControlContext accessControlContext, Template template) {
+
+		_accessControlContext = accessControlContext;
+		_template = template;
+	}
 
 	@Override
-	public final void processTemplate(Writer writer) throws TemplateException {
-		TemplateControlContext templateControlContext =
-			getTemplateContextHelper().getTemplateControlContext();
+	public Object get(String key) {
+		return _template.get(key);
+	}
 
-		AccessControlContext accessControlContext =
-			templateControlContext.getAccessControlContext();
+	@Override
+	public String[] getKeys() {
+		return _template.getKeys();
+	}
 
-		if (accessControlContext == null) {
-			doProcessTemplate(writer);
+	@Override
+	public void prepare(HttpServletRequest request) {
+		_template.prepare(request);
+	}
 
-			return;
-		}
-
+	@Override
+	public void processTemplate(Writer writer) throws TemplateException {
 		try {
 			AccessController.doPrivileged(
-				new DoProcessTemplatePrivilegedExceptionAction(writer),
-				accessControlContext);
+				new ProcessTemplatePrivilegedExceptionAction(_template, writer),
+				_accessControlContext);
 		}
 		catch (PrivilegedActionException pae) {
 			throw (TemplateException)pae.getException();
 		}
 	}
 
-	protected abstract void doProcessTemplate(Writer writer)
-		throws TemplateException;
+	@Override
+	public void put(String key, Object value) {
+		_template.put(key, value);
+	}
 
-	private class DoProcessTemplatePrivilegedExceptionAction
+	private AccessControlContext _accessControlContext;
+	private Template _template;
+
+	private static class ProcessTemplatePrivilegedExceptionAction
 		implements PrivilegedExceptionAction<Void> {
 
-		public DoProcessTemplatePrivilegedExceptionAction(Writer writer) {
+		public ProcessTemplatePrivilegedExceptionAction(
+			Template template, Writer writer) {
+
+			_template = template;
 			_writer = writer;
 		}
 
 		@Override
 		public Void run() throws Exception {
-			doProcessTemplate(_writer);
+			_template.processTemplate(_writer);
 
 			return null;
 		}
 
+		private Template _template;
 		private Writer _writer;
 
 	}

@@ -16,12 +16,12 @@ package com.liferay.portal.xsl;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.template.StringTemplateResource;
+import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.template.AbstractProcessingTemplate;
 import com.liferay.portal.template.TemplateContextHelper;
 
 import java.io.Writer;
@@ -45,7 +45,7 @@ import javax.xml.transform.stream.StreamSource;
 /**
  * @author Tina Tian
  */
-public class XSLTemplate extends AbstractProcessingTemplate {
+public class XSLTemplate implements Template {
 
 	public XSLTemplate(
 		XSLTemplateResource xslTemplateResource,
@@ -81,26 +81,12 @@ public class XSLTemplate extends AbstractProcessingTemplate {
 	}
 
 	@Override
-	public TemplateContextHelper getTemplateContextHelper() {
-		return _templateContextHelper;
-	}
-
-	@Override
 	public void prepare(HttpServletRequest request) {
 		_templateContextHelper.prepare(this, request);
 	}
 
 	@Override
-	public void put(String key, Object value) {
-		if (value == null) {
-			return;
-		}
-
-		_context.put(key, value);
-	}
-
-	@Override
-	protected void doProcessTemplate(Writer writer) throws TemplateException {
+	public void processTemplate(Writer writer) throws TemplateException {
 		TransformerFactory transformerFactory =
 			TransformerFactory.newInstance();
 
@@ -192,6 +178,15 @@ public class XSLTemplate extends AbstractProcessingTemplate {
 					e2);
 			}
 		}
+	}
+
+	@Override
+	public void put(String key, Object value) {
+		if (value == null) {
+			return;
+		}
+
+		_context.put(key, value);
 	}
 
 	private Transformer _getTransformer(

@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.template.BaseTemplateManager;
 import com.liferay.portal.template.RestrictedTemplate;
-import com.liferay.portal.template.TemplateContextHelper;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 
@@ -49,14 +48,14 @@ public class VelocityManager extends BaseTemplateManager {
 
 		_velocityEngine = null;
 
-		_templateContextHelper.removeAllHelperUtilities();
+		templateContextHelper.removeAllHelperUtilities();
 
-		_templateContextHelper = null;
+		templateContextHelper = null;
 	}
 
 	@Override
 	public void destroy(ClassLoader classLoader) {
-		_templateContextHelper.removeHelperUtilities(classLoader);
+		templateContextHelper.removeHelperUtilities(classLoader);
 	}
 
 	@Override
@@ -147,12 +146,6 @@ public class VelocityManager extends BaseTemplateManager {
 		}
 	}
 
-	public void setTemplateContextHelper(
-		TemplateContextHelper templateContextHelper) {
-
-		_templateContextHelper = templateContextHelper;
-	}
-
 	@Override
 	protected Template doGetTemplate(
 		TemplateResource templateResource,
@@ -163,19 +156,14 @@ public class VelocityManager extends BaseTemplateManager {
 
 		Template template = new VelocityTemplate(
 			templateResource, errorTemplateResource, velocityContext,
-			_velocityEngine, _templateContextHelper);
+			_velocityEngine, templateContextHelper);
 
 		if (restricted) {
 			template = new RestrictedTemplate(
-				template, _templateContextHelper.getRestrictedVariables());
+				template, templateContextHelper.getRestrictedVariables());
 		}
 
 		return template;
-	}
-
-	@Override
-	protected TemplateContextHelper getTemplateContextHelper() {
-		return _templateContextHelper;
 	}
 
 	protected VelocityContext getVelocityContext(
@@ -190,7 +178,6 @@ public class VelocityManager extends BaseTemplateManager {
 		return velocityContext;
 	}
 
-	private TemplateContextHelper _templateContextHelper;
 	private VelocityEngine _velocityEngine;
 
 }

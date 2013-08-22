@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.template.BaseTemplateManager;
 import com.liferay.portal.template.RestrictedTemplate;
-import com.liferay.portal.template.TemplateContextHelper;
 import com.liferay.portal.util.PropsValues;
 
 import freemarker.cache.TemplateCache;
@@ -55,9 +54,9 @@ public class FreeMarkerManager extends BaseTemplateManager {
 
 		_configuration = null;
 
-		_templateContextHelper.removeAllHelperUtilities();
+		templateContextHelper.removeAllHelperUtilities();
 
-		_templateContextHelper = null;
+		templateContextHelper = null;
 
 		if (isEnableDebuggerService()) {
 			DebuggerService.shutdown();
@@ -66,7 +65,7 @@ public class FreeMarkerManager extends BaseTemplateManager {
 
 	@Override
 	public void destroy(ClassLoader classLoader) {
-		_templateContextHelper.removeHelperUtilities(classLoader);
+		templateContextHelper.removeHelperUtilities(classLoader);
 	}
 
 	@Override
@@ -119,12 +118,6 @@ public class FreeMarkerManager extends BaseTemplateManager {
 		}
 	}
 
-	public void setTemplateContextHelper(
-		TemplateContextHelper templateContextHelper) {
-
-		_templateContextHelper = templateContextHelper;
-	}
-
 	@Override
 	protected Template doGetTemplate(
 		TemplateResource templateResource,
@@ -133,19 +126,14 @@ public class FreeMarkerManager extends BaseTemplateManager {
 
 		Template template = new FreeMarkerTemplate(
 			templateResource, errorTemplateResource, helperUtilities,
-			_configuration, _templateContextHelper);
+			_configuration, templateContextHelper);
 
 		if (restricted) {
 			template = new RestrictedTemplate(
-				template, _templateContextHelper.getRestrictedVariables());
+				template, templateContextHelper.getRestrictedVariables());
 		}
 
 		return template;
-	}
-
-	@Override
-	protected TemplateContextHelper getTemplateContextHelper() {
-		return _templateContextHelper;
 	}
 
 	protected boolean isEnableDebuggerService() {
@@ -159,6 +147,5 @@ public class FreeMarkerManager extends BaseTemplateManager {
 	}
 
 	private Configuration _configuration;
-	private TemplateContextHelper _templateContextHelper;
 
 }

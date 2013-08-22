@@ -263,13 +263,13 @@
 			<then>
 				<delete dir="docroot/html/js/editor/ckeditor" />
 
-				<unzip src="third-party/${ckeditor.file}" dest="docroot/html/js/editor" />
-
 				<if>
 					<not>
 						<available file="docroot/html/js/editor/ckeditor_diffs/ckeditor.js" />
 					</not>
 					<then>
+						<unzip src="third-party/${ckeditor.file}" dest="docroot/html/js/editor" />
+
 						<delete dir="docroot/html/js/editor/ckeditor/dev/builder/release" />
 
 						<replace file="docroot/html/js/editor/ckeditor/plugins/wysiwygarea/plugin.js">

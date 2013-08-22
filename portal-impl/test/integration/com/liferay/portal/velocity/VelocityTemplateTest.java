@@ -301,7 +301,9 @@ public class VelocityTemplateTest {
 	private class MockTemplateContextHelper extends TemplateContextHelper {
 
 		@Override
-		public Map<String, Object> getHelperUtilities(boolean restricted) {
+		public Map<String, Object> getHelperUtilities(
+			ClassLoader classLoader, boolean restricted) {
+
 			return Collections.emptyMap();
 		}
 

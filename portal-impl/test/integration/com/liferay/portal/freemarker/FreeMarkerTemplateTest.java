@@ -24,7 +24,6 @@ import com.liferay.portal.template.TemplateContextHelper;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 
 import freemarker.cache.TemplateCache;
-
 import freemarker.core.ParseException;
 
 import freemarker.template.Configuration;
@@ -303,7 +302,9 @@ public class FreeMarkerTemplateTest {
 	private class MockTemplateContextHelper extends TemplateContextHelper {
 
 		@Override
-		public Map<String, Object> getHelperUtilities(boolean restricted) {
+		public Map<String, Object> getHelperUtilities(
+			ClassLoader classLoader, boolean restricted) {
+
 			return Collections.emptyMap();
 		}
 

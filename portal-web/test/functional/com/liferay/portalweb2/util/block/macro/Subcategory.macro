@@ -24,7 +24,7 @@
 		<execute action="CPCategories#assertElementPresent" locator-key1="SUBCATEGORY_DETAILS_ADD_SUBCATEGORY_BUTTON" value1="Add Subcategory" />
 	</command>
 
-	<command name="deleteCPByActions">
+	<command name="deleteByActionsCP">
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 		<var name="key_categoryName" value="${categoryName}" />
 

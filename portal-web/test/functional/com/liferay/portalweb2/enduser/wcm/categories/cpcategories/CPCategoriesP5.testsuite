@@ -1,0 +1,9 @@
+<definition>
+	<execute test-case-command="CPCategories#AddVocabularyAssetTypeAllAssetTypes" />
+	<execute test-case-command="CPCategories#AddVocabularyAssetTypeBlogsEntry" />
+	<execute test-case-command="CPCategories#AddVocabularyAssetTypeBookmarksEntry" />
+	<execute test-case-command="CPCategories#AddVocabularyAssetTypeDocument" />
+	<execute test-case-command="CPCategories#AddVocabularyAssetTypeUser" />
+	<execute test-case-command="CPCategories#AddVocabularyAssetTypeWebContent" />
+	<execute test-case-command="CPCategories#AddVocabularyAssetTypeWikiPage" />
+</definition>

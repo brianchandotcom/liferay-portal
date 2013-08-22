@@ -229,7 +229,7 @@
 <!--EDIT_VOCABULARY-->
 <tr>
 	<td>EDIT_VOCABULARY_ICON</td>
-	<td>//span[@class='vocabulary-item-actions-trigger']</td>
+	<td>//li[@data-vocabulary='${key_vocabularyName}']/a/span[@class='vocabulary-item-actions-trigger']</td>
 	<td></td>
 </tr>
 <tr>

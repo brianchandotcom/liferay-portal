@@ -14,8 +14,6 @@
 
 package com.liferay.portal.servlet.filters.aggregate;
 
-import com.liferay.portal.kernel.cache.key.CacheKeyGenerator;
-import com.liferay.portal.kernel.cache.key.CacheKeyGeneratorUtil;
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -37,7 +35,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.servlet.filters.IgnoreModuleRequestFilter;
 import com.liferay.portal.servlet.filters.dynamiccss.DynamicCSSUtil;
 import com.liferay.portal.util.JavaScriptBundleUtil;
-import com.liferay.portal.util.LimitedFilesCache;
 import com.liferay.portal.util.MinifierUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
@@ -216,17 +213,6 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 		_tempDir = new File(tempDir, _TEMP_DIR);
 
 		_tempDir.mkdirs();
-
-		if (PropsValues.MINIFIER_FILES_LIMIT > 0) {
-			_limitedFilesCache = new LimitedFilesCache<String>(
-				PropsValues.MINIFIER_FILES_LIMIT);
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Aggregate files limit " +
-						PropsValues.MINIFIER_FILES_LIMIT);
-			}
-		}
 	}
 
 	protected static String getJavaScriptContent(String content) {
@@ -337,22 +323,6 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 		FileUtil.write(cacheFile, content);
 
 		return content;
-	}
-
-	protected String getCacheFileName(HttpServletRequest request) {
-		CacheKeyGenerator cacheKeyGenerator =
-			CacheKeyGeneratorUtil.getCacheKeyGenerator(
-				AggregateFilter.class.getName());
-
-		cacheKeyGenerator.append(request.getRequestURI());
-
-		String queryString = request.getQueryString();
-
-		if (queryString != null) {
-			cacheKeyGenerator.append(sterilizeQueryString(queryString));
-		}
-
-		return String.valueOf(cacheKeyGenerator.finish());
 	}
 
 	protected Object getContent(
@@ -558,12 +528,6 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 		}
 	}
 
-	protected String sterilizeQueryString(String queryString) {
-		return StringUtil.replace(
-			queryString, new String[] {StringPool.SLASH, StringPool.BACK_SLASH},
-			new String[] {StringPool.UNDERLINE, StringPool.UNDERLINE});
-	}
-
 	private static final String _CSS_COMMENT_BEGIN = "/*";
 
 	private static final String _CSS_COMMENT_END = "*/";
@@ -604,7 +568,6 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 	private static Pattern _pattern = Pattern.compile(
 		"^(\\.ie|\\.js\\.ie)([^}]*)}", Pattern.MULTILINE);
 
-	private LimitedFilesCache<String> _limitedFilesCache;
 	private ServletContext _servletContext;
 	private File _tempDir;
 

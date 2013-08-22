@@ -249,75 +249,53 @@
 
 	<target name="build-ckeditor">
 		<if>
-			<available file="docroot/html/js/editor/ckeditor/ckeditor.js" />
-			<then>
-				<checksum file="docroot/html/js/editor/ckeditor/ckeditor.js" property="ckeditorJS" />
-
-				<if>
-					<available file="docroot/html/js/editor/ckeditor_diffs/ckeditor.js" />
-					<then>
-						<checksum file="docroot/html/js/editor/ckeditor_diffs/ckeditor.js" property="${ckeditorJS}" verifyProperty="ckeditor.isEqual" />
-					</then>
-				</if>
-			</then>
-		</if>
-
-		<if>
-			<or>
-				<not>
-					<istrue value="${ckeditor.isEqual}" />
-				</not>
-				<not>
-					<uptodate
-						srcfile="third-party/${ckeditor.file}"
-						targetfile="docroot/html/js/editor/ckeditor"
-					/>
-				</not>
-			</or>
+			<not>
+				<uptodate
+					srcfile="third-party/${ckeditor.file}"
+					targetfile="docroot/html/js/editor/ckeditor"
+				/>
+			</not>
 			<then>
 				<delete dir="docroot/html/js/editor/ckeditor" />
 
 				<unzip src="third-party/${ckeditor.file}" dest="docroot/html/js/editor" />
 
-				<delete
-					dir="docroot/html/js/editor/ckeditor/dev/builder/release"
-				/>
-
-				<replace file="docroot/html/js/editor/ckeditor/plugins/wysiwygarea/plugin.js">
-					<replacetoken><![CDATA[var data = fullPage]]></replacetoken>
-					<replacevalue>
-						<![CDATA[
-							if (!doc) {
-								return null;
-							}
-
-							var data = fullPage
-						]]>
-					</replacevalue>
-				</replace>
-
 				<if>
 					<not>
-						<isset property="ckeditor.build.dev.unminified" />
+						<available file="docroot/html/js/editor/ckeditor_diffs/ckeditor.js" />
 					</not>
 					<then>
-						<property name="ckeditor.build.dev.unminified" value="" />
+						<delete
+							dir="docroot/html/js/editor/ckeditor/dev/builder/release"
+						/>
+
+						<replace file="docroot/html/js/editor/ckeditor/plugins/wysiwygarea/plugin.js">
+							<replacetoken><![CDATA[var data = fullPage]]></replacetoken>
+							<replacevalue>
+								<![CDATA[
+									if (!doc) {
+										return null;
+									}
+
+									var data = fullPage
+								]]>
+							</replacevalue>
+						</replace>
+
+						<java
+							classname="ckbuilder.ckbuilder"
+							classpathref="project.classpath"
+							dir="${basedir}/docroot/html/js/editor/ckeditor/dev/builder"
+							fork="true"
+							newenvironment="true"
+						>
+							<arg line="--build ../../" />
+							<arg line="release" />
+							<arg line="--version=&quot;4.0 STABLE&quot;" />
+							<arg line="--build-config ${basedir}/docroot/html/js/editor/ckeditor/dev/builder/build-config.js" />
+						</java>
 					</then>
 				</if>
-
-				<java
-					classname="ckbuilder.ckbuilder"
-					classpathref="project.classpath"
-					dir="${basedir}/docroot/html/js/editor/ckeditor/dev/builder"
-					fork="true"
-					newenvironment="true"
-				>
-					<arg line="--build ../../" />
-					<arg line="release" />
-					<arg line="--version=&quot;4.0 STABLE&quot;" />
-					<arg line="--build-config ${basedir}/docroot/html/js/editor/ckeditor/dev/builder/build-config.js" />
-					<arg line="${ckeditor.build.dev.unminified}" />
-				</java>
 
 				<move
 					file="docroot/html/js/editor/ckeditor/dev/builder/release/ckeditor"
@@ -365,26 +343,6 @@
 			<replacevalue><![CDATA[body = email.body || ''; body = encodeURIComponent(body).replace(/%/g, '%25');]]></replacevalue>
 		</replace>
 	</target>
-
-	<target name="build-ckeditor-dev">
-		<delete dir="docroot/html/js/editor/ckeditor" />
-
-		<move
-			failonerror="false"
-			file="docroot/html/js/editor/ckeditor_diffs/ckeditor.js"
-			tofile="docroot/html/js/editor/ckeditor_diffs/ckeditor.js.tmp"
-		/>
-
-		<antcall target="build-ckeditor">
-			<param name="ckeditor.build.dev.unminified" value="--leave-css-unminified --leave-js-unminified" />
-		</antcall>
-
-		<move
-			failonerror="false"
-			file="docroot/html/js/editor/ckeditor_diffs/ckeditor.js.tmp"
-			tofile="docroot/html/js/editor/ckeditor_diffs/ckeditor.js"
-		/>
- 	</target>
 
 	<target name="build-ckeditor-plugins-bbcode">
 		<concat destfile="docroot/html/js/editor/ckeditor_diffs/plugins/bbcode/bbcode_parser.js">

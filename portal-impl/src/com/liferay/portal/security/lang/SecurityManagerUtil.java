@@ -16,8 +16,8 @@ package com.liferay.portal.security.lang;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.ServiceLoader;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.List;
@@ -29,15 +29,7 @@ import java.util.List;
  */
 public class SecurityManagerUtil {
 
-	public static void applySmartStrategy() {
-		if ((_portalSecurityManagerStrategy ==
-				PortalSecurityManagerStrategy.SMART) &&
-			(_originalSecurityManager == null) &&
-			ServerDetector.isWebSphere()) {
-
-			System.setSecurityManager(null);
-		}
-	}
+	public static final boolean ENABLED = (System.getSecurityManager() != null);
 
 	public static PortalSecurityManager getPortalSecurityManager() {
 		return _portalSecurityManager;
@@ -48,7 +40,23 @@ public class SecurityManagerUtil {
 			return;
 		}
 
-		_originalSecurityManager = System.getSecurityManager();
+		if (!ENABLED) {
+			if (_log.isInfoEnabled()) {
+				StringBundler sb = new StringBundler(4);
+
+				sb.append("Plugin security management is not enabled. To ");
+				sb.append("enable plugin security management, set the ");
+				sb.append("property \"portal.security.manager.strategy\" in ");
+				sb.append("portal.properties to \"liferay\" or \"smart\" and ");
+				sb.append("make sure a security manager is enabled.");
+
+				_log.info(sb.toString());
+			}
+
+			_portalSecurityManagerStrategy = PortalSecurityManagerStrategy.NONE;
+
+			return;
+		}
 
 		if (PropsValues.TCK_URL) {
 			_portalSecurityManagerStrategy = PortalSecurityManagerStrategy.NONE;
@@ -138,7 +146,7 @@ public class SecurityManagerUtil {
 	}
 
 	public static boolean isPACLDisabled() {
-		if (isDefault() || isNone()) {
+		if (!ENABLED || isDefault() || isNone()) {
 			return true;
 		}
 
@@ -175,7 +183,6 @@ public class SecurityManagerUtil {
 
 	private static Log _log = LogFactoryUtil.getLog(SecurityManagerUtil.class);
 
-	private static SecurityManager _originalSecurityManager;
 	private static PortalSecurityManager _portalSecurityManager;
 	private static PortalSecurityManagerStrategy _portalSecurityManagerStrategy;
 

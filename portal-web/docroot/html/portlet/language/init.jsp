@@ -19,13 +19,20 @@
 <%@ page import="com.liferay.taglib.ui.LanguageTag" %>
 
 <%
-Locale[] availableLocales = LanguageUtil.getAvailableLocales(themeDisplay.getSiteGroupId());
+PortletPreferences preferences = renderRequest.getPreferences();
 
+String portletResource = ParamUtil.getString(request, "portletResource");
+
+if (Validator.isNotNull(portletResource)) {
+	preferences = PortletPreferencesFactoryUtil.getPortletSetup(request, portletResource);
+}
+
+Locale[] availableLocales = LanguageUtil.getAvailableLocales();
 String[] availableLanguageIds = LocaleUtil.toLanguageIds(availableLocales);
 
-String[] languageIds = StringUtil.split(portletPreferences.getValue("languageIds", StringUtil.merge(availableLanguageIds)));
-boolean displayCurrentLocale = GetterUtil.getBoolean(portletPreferences.getValue("displayCurrentLocale", null), true);
-int displayStyle = GetterUtil.getInteger(portletPreferences.getValue("displayStyle", StringPool.BLANK));
+String[] languageIds = StringUtil.split(preferences.getValue("languageIds", StringUtil.merge(availableLanguageIds)));
+boolean displayCurrentLocale = GetterUtil.getBoolean(preferences.getValue("displayCurrentLocale", null), true);
+int displayStyle = GetterUtil.getInteger(preferences.getValue("displayStyle", StringPool.BLANK));
 %>
 
 <%@ include file="/html/portlet/language/init-ext.jsp" %>

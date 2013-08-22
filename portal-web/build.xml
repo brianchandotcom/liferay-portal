@@ -7,6 +7,11 @@
 
 	<property name="alloy-font-awesome.file" value="alloy-font-awesome-1.0.0.zip" />
 
+	<!--
+	When upgrading CKEditor, make sure to delete
+	docroot/html/js/editor/ckeditor_diffs/ckeditor.js.
+	-->
+
 	<property name="ckeditor.file" value="ckeditor-4.0-stable.zip" />
 
 	<property name="fckeditor.file" value="FCKeditor_2.6.3.zip" />
@@ -244,9 +249,23 @@
 
 	<target name="build-ckeditor">
 		<if>
+			<available file="docroot/html/js/editor/ckeditor/ckeditor.js" />
+			<then>
+				<checksum file="docroot/html/js/editor/ckeditor/ckeditor.js" property="ckeditorJS" />
+
+				<if>
+					<available file="docroot/html/js/editor/ckeditor_diffs/ckeditor.js" />
+					<then>
+						<checksum file="docroot/html/js/editor/ckeditor_diffs/ckeditor.js" property="${ckeditorJS}" verifyProperty="ckeditor.isEqual" />
+					</then>
+				</if>
+			</then>
+		</if>
+
+		<if>
 			<or>
 				<not>
-					<filesmatch file1="docroot/html/js/editor/ckeditor/ckeditor.js" file2="docroot/html/js/editor/ckeditor_diffs/ckeditor.js" />
+					<istrue value="${ckeditor.isEqual}" />
 				</not>
 				<not>
 					<uptodate
@@ -277,7 +296,14 @@
 					</replacevalue>
 				</replace>
 
-				<property name="arg.line" value="" />
+				<if>
+					<not>
+						<isset property="ckeditor.build.dev.unminified" />
+					</not>
+					<then>
+						<property name="ckeditor.build.dev.unminified" value="" />
+					</then>
+				</if>
 
 				<java
 					classname="ckbuilder.ckbuilder"
@@ -290,7 +316,7 @@
 					<arg line="release" />
 					<arg line="--version=&quot;4.0 STABLE&quot;" />
 					<arg line="--build-config ${basedir}/docroot/html/js/editor/ckeditor/dev/builder/build-config.js" />
-					<arg line="${arg.line}" />
+					<arg line="${ckeditor.build.dev.unminified}" />
 				</java>
 
 				<move
@@ -341,6 +367,8 @@
 	</target>
 
 	<target name="build-ckeditor-dev">
+		<delete dir="docroot/html/js/editor/ckeditor" />
+
 		<move
 			failonerror="false"
 			file="docroot/html/js/editor/ckeditor_diffs/ckeditor.js"
@@ -348,10 +376,11 @@
 		/>
 
 		<antcall target="build-ckeditor">
-			<param name="arg.line" value="--leave-css-unminified --leave-js-unminified" />
+			<param name="ckeditor.build.dev.unminified" value="--leave-css-unminified --leave-js-unminified" />
 		</antcall>
 
 		<move
+			failonerror="false"
 			file="docroot/html/js/editor/ckeditor_diffs/ckeditor.js.tmp"
 			tofile="docroot/html/js/editor/ckeditor_diffs/ckeditor.js"
 		/>

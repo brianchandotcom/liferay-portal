@@ -1,0 +1,101 @@
+<html>
+<head>
+<title>CPWikiWikipage</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPWikiWikipage</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>CP_WIKI_WIKI_PAGE</td>
+	<td></td>
+	<td>CPWikiMainWikipage</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>PORTLET_TITLE_HEADER</td>
+	<td>//h2[@id='cpPortletTitle']/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PORLET_BODY_TITLE_HEADER</td>
+	<td>xpath=(//h3[@class='header-title']/span)[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[@class='alert alert-success']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INFO_MESSAGE</td>
+	<td>//div[@class='wiki-body']/div[@class='alert alert-info']/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--WIKI_PAGE-->
+<tr>
+	<td>WIKI_PAGE_TITLE_HEADER</td>
+	<td>xpath=(//h3[@class='header-title']/span)[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WIKI_PAGE_BODY</td>
+	<td>//div[@class='wiki-body']/p</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--WIKI_PAGE_ACTIONS-->
+<tr>
+	<td>WIKI_PAGE_ACTIONS_MARK_AS_SPAM</td>
+	<td>//div[@class='page-actions top-actions']/span/a[contains(.,'Mark as Spam')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WIKI_PAGE_ACTIONS_EDIT</td>
+	<td>//div[@class='page-actions top-actions']/span/a[contains(.,'Edit')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WIKI_PAGE_ACTIONS_DETAILS</td>
+	<td>//div[@class='page-actions top-actions']/span/a[contains(.,'Details')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WIKI_PAGE_ACTIONS_PRINT</td>
+	<td>//div[@class='page-actions top-actions']/span/a[contains(.,'Print')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

@@ -457,7 +457,7 @@
 	</target>
 
 	<target name="build-test-ant-scripts">
-		<property name="build-test-ant-scripts.version" value="3" />
+		<property name="build-test-ant-scripts.version" value="4" />
 
 		<if>
 			<available file="portal-web/test-ant-scripts/version" />
@@ -633,6 +633,13 @@
 			<param name="test.ant.script.command" value="platform-infrastructure-acceptance" />
 			<param name="test.ant.script.database.minimal" value="true" />
 			<param name="test.ant.script.suite" value="PlatformInfrastructureAcceptanceTestSuite" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="platform-integrations-acceptance" />
+			<param name="test.ant.script.database.minimal" value="true" />
+			<param name="test.ant.script.plugin.portlets" value="akismet-portlet" />
+			<param name="test.ant.script.suite" value="PlatformIntegrationsAcceptanceTestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">

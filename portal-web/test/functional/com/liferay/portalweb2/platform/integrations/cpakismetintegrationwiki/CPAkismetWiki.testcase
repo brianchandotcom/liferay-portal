@@ -1,0 +1,57 @@
+<definition>
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<tear-down>
+		<execute macro="WikiNode#tearDownCP" />
+
+		<execute macro="WikiPage#tearDownCP" />
+	</tear-down>
+
+	<command name="AkismetWikiIntegration">
+		<var name="wikiNodeName" value="Main" />
+		<var name="wikiPageTitle" value="Akismet this" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Akismet" />
+		</execute>
+
+		<execute action="CPAkismet#type" locator-key1="API_KEY_FIELD" value1="a0a822b80b2b" />
+		<execute action="CPAkismet#check" locator-key1="ENABLED_FOR_WIKI_CHECKBOX" value1="true" />
+		<execute action="CPAkismet#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPAkismet#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="CPAkismet#assertChecked" locator-key1="ENABLED_FOR_WIKI_CHECKBOX" value1="true" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Wiki" />
+		</execute>
+
+		<execute macro="WikiPage#addPageCP">
+			<var name="wikiNodeName" value="${wikiNodeName}" />
+			<var name="wikiPageTitle" value="${wikiPageTitle}" />
+		</execute>
+
+		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
+
+		<execute action="CPWikiAllpages#assertClick" locator-key1="WIKI_PAGE_TABLE_PAGE" value1="${wikiPageTitle}" />
+
+		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
+
+		<execute action="CPWikiPageHistory#assertClick" locator-key1="WIKI_PAGE_HISTORY_ACTIVITY" value1="${wikiPageTitle}" />
+
+		<execute action="CPWikiWikipage#assertClick" locator-key1="WIKI_PAGE_ACTIONS_MARK_AS_SPAM" value1="Mark as Spam" />
+		<execute action="CPWikiWikipage#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Version 1.0 was marked as spam." />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Spam Moderation" />
+		</execute>
+
+		<execute action="CPSpamModerationWikis#assertClick" locator-key1="SPAM_MODERATION_NAVIGATION_WIKIS" value1="Wikis" />
+		<execute action="CPSpamModerationWikis#check" locator-key1="WIKIS_CHECKBOX" value1="true" />
+		<execute action="CPSpamModerationWikis#assertClick" locator-key1="WIKIS_NOT_SPAM_BUTTON" value1="Not Spam" />
+		<execute action="CPSpamModerationWikis#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to mark the selected pages not spam?" />
+		<execute action="CPSpamModerationWikis#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="CPSpamModerationWikis#assertTextEquals" locator-key1="INFO_MESSAGE" value1="There are no pages." />
+	</command>
+</definition>

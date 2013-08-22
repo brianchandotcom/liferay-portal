@@ -1,0 +1,77 @@
+<html>
+<head>
+<title>CPSpamModerationWikis</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPSpamModerationWikis</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>CPSpammoderationWikis</td>
+</tr>
+<!---->
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[@class='alert alert-success']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INFO_MESSAGE</td>
+	<td>//div[@class='alert alert-info']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIRMATION</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SPAM_MODERATION_NAVIGATION-->
+<tr>
+	<td>SPAM_MODERATION_NAVIGATION_MESSAGE_BOARDS</td>
+	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Message Boards')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SPAM_MODERATION_NAVIGATION_DISCUSSIONS</td>
+	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Discussions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SPAM_MODERATION_NAVIGATION_WIKIS</td>
+	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Wikis')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--WIKIS-->
+<tr>
+	<td>WIKIS_NOT_SPAM_BUTTON</td>
+	<td>//div[@class='button-holder ']/button[contains(.,'Not Spam')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WIKIS_SPAM_BUTTON</td>
+	<td>//div[@class='button-holder ']/button[contains(.,'Spam')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WIKIS_CHECKBOX</td>
+	<td>//input[@type='checkbox']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

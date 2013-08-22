@@ -1,0 +1,13 @@
+diff --git a/pom.xml b/pom.xml
+index ec427eb..672f3d6 100644
+--- a/pom.xml
++++ b/pom.xml
+@@ -53,7 +53,7 @@
+         <version>2.1</version>
+         <configuration>
+           <source>1.6</source>
+-          <target>1.6</target>
++          <target>1.5</target>
+           <encoding>UTF-8</encoding>
+         </configuration>
+       </plugin>

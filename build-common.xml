@@ -1,6 +1,9 @@
 <?xml version="1.0"?>
 
-<project name="build-common" xmlns:antelope="antlib:ise.antelope.tasks">
+<project name="build-common"
+	xmlns:antelope="antlib:ise.antelope.tasks"
+	xmlns:artifact="antlib:org.apache.maven.artifact.ant"
+>
 	<dirname file="${ant.file.build-common}" property="project.dir" />
 
 	<property name="test.properties" value="com/liferay/portal/tools/dependencies/portal-tools.properties" />
@@ -73,6 +76,7 @@
 	<taskdef classpathref="lib.classpath" resource="ise/antelope/tasks/antlib.xml" uri="antlib:ise.antelope.tasks" />
 	<taskdef classpathref="lib.classpath" resource="aQute/bnd/ant/taskdef.properties" />
 	<taskdef classpathref="lib.classpath" resource="com/orangevolt/tools/ant/taskdefs.properties" />
+	<typedef classpathref="lib.classpath" resource="org/apache/maven/artifact/ant/antlib.xml" uri="antlib:org.apache.maven.artifact.ant" />
 	<taskdef classpathref="lib.classpath" resource="tasks.properties" />
 
 	<taskdef classname="com.tonicsystems.jarjar.JarJarTask" classpath="${project.dir}/lib/development/jarjar.jar" name="jarjar" />

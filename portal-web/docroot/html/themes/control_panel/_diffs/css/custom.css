@@ -679,7 +679,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 		.accordion .accordion-group {
 			@include border-radius(0);
-			@include box-shadow(-3px 0px 2px -2px #F5F5F5);
+			@include box-shadow(-3px 0 2px -2px #F5F5F5);
 
 			.accordion-heading {
 				&.toggler-header-collapsed, &.toggler-header-expanded {
@@ -731,7 +731,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 	}
 
 	.panel-page-menu .portlet-static.portlet-static-end {
-		@include box-shadow(3px 0px 2px -2px #F5F5F5);
+		@include box-shadow(3px 0 2px -2px #F5F5F5);
 	}
 
 	.panel-manage-frontpage {
@@ -741,7 +741,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 		.form-navigator.well {
 			@include border-radius(0);
-			@include box-shadow(-3px 0px 2px -2px #F5F5F5);
+			@include box-shadow(-3px 0 2px -2px #F5F5F5);
 		}
 	}
 

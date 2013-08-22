@@ -110,7 +110,7 @@ public class ScriptingPortlet extends GenericPortlet {
 		filePath = getInitParameter("file-path");
 
 		if (Validator.isNull(filePath)) {
-			throw new RuntimeException("file-path parameter must be declared");
+			throw new PortletException("file-path parameter must be declared");
 		}
 		else if (filePath.contains(StringPool.BACK_SLASH) ||
 				 filePath.contains(StringPool.DOUBLE_SLASH) ||

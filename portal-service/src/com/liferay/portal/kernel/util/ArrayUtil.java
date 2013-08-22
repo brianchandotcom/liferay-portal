@@ -722,7 +722,7 @@ public class ArrayUtil {
 	}
 
 	public static boolean containsAll(double[] array1, double[] array2) {
-		if (isEmpty(array1) ||isEmpty(array2)) {
+		if (isEmpty(array1) || isEmpty(array2)) {
 			return false;
 		}
 
@@ -736,7 +736,7 @@ public class ArrayUtil {
 	}
 
 	public static boolean containsAll(float[] array1, float[] array2) {
-		if (isEmpty(array1) ||isEmpty(array2)) {
+		if (isEmpty(array1) || isEmpty(array2)) {
 			return false;
 		}
 
@@ -750,7 +750,7 @@ public class ArrayUtil {
 	}
 
 	public static boolean containsAll(int[] array1, int[] array2) {
-		if (isEmpty(array1) ||isEmpty(array2)) {
+		if (isEmpty(array1) || isEmpty(array2)) {
 			return false;
 		}
 
@@ -764,7 +764,7 @@ public class ArrayUtil {
 	}
 
 	public static boolean containsAll(long[] array1, long[] array2) {
-		if (isEmpty(array1) ||isEmpty(array2)) {
+		if (isEmpty(array1) || isEmpty(array2)) {
 			return false;
 		}
 
@@ -778,7 +778,7 @@ public class ArrayUtil {
 	}
 
 	public static boolean containsAll(Object[] array1, Object[] array2) {
-		if (isEmpty(array1) ||isEmpty(array2)) {
+		if (isEmpty(array1) || isEmpty(array2)) {
 			return false;
 		}
 
@@ -792,7 +792,7 @@ public class ArrayUtil {
 	}
 
 	public static boolean containsAll(short[] array1, short[] array2) {
-		if (isEmpty(array1) ||isEmpty(array2)) {
+		if (isEmpty(array1) || isEmpty(array2)) {
 			return false;
 		}
 

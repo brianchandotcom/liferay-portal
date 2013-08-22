@@ -962,6 +962,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		checkLanguageKeys(fileName, newContent, languageKeyPattern);
 
+		newContent = StringUtil.replace(
+			newContent, StringPool.TAB + "for (;;) {",
+			StringPool.TAB + "while (true) {");
+
 		// LPS-36174
 
 		if (_checkUnprocessedExceptions && !fileName.contains("/test/")) {

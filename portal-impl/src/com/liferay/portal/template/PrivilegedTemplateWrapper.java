@@ -30,9 +30,9 @@ import javax.servlet.http.HttpServletRequest;
  * @author Tina Tian
  * @author Shuyang Zhou
  */
-public class PACLTemplateWrapper implements Template {
+public class PrivilegedTemplateWrapper implements Template {
 
-	public PACLTemplateWrapper(
+	public PrivilegedTemplateWrapper(
 		AccessControlContext accessControlContext, Template template) {
 
 		_accessControlContext = accessControlContext;

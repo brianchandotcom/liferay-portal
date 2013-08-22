@@ -1,8 +1,9 @@
 <?xml version="1.0"?>
 
-<project name="portal-impl" basedir="." default="compile" xmlns:antelope="antlib:ise.antelope.tasks"
-	xmlns:artifact="antlib:org.apache.maven.artifact.ant">
-
+<project name="portal-impl" basedir="." default="compile"
+	xmlns:antelope="antlib:ise.antelope.tasks"
+	xmlns:artifact="antlib:org.apache.maven.artifact.ant"
+>
 	<property name="test.properties" value="portal-test.properties" />
 
 	<import file="../build-common-java.xml" />
@@ -12,10 +13,6 @@
 	<property name="manifest.bundle.name" value="Liferay Portal Impl" />
 	<property name="manifest.bundle.symbolic.name" value="portal-impl;singleton:=true" />
 	<property name="service.file" value="service.xml" />
-
-	<path id="maven-ant-tasks.classpath" path="${project.dir}/lib/development/maven-ant-tasks.jar" />
-	<typedef resource="org/apache/maven/artifact/ant/antlib.xml" uri="antlib:org.apache.maven.artifact.ant"
-		classpathref="maven-ant-tasks.classpath" />
 
 	<target name="build-alloy-taglib-jar">
 		<if>

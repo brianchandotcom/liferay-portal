@@ -163,15 +163,15 @@
 
 	.instant-messenger, .social-network {
 		clear: both;
+		margin-bottom: 2em;
 		overflow: hidden;
 
 		img {
 			margin-left: 1em;
-			margin-top: 4em;
 		}
 
 		.control-group {
-			display: inline-block;
+			margin: 0;
 		}
 
 		.field {

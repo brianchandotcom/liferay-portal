@@ -10,7 +10,7 @@
 		<execute action="CPCategories#assertTextEquals" locator-key1="VOCABULARY_ENTRY" value1="${vocabularyName}" />
 	</command>
 
-	<command name="addCPWithAssociatedAssetType">
+	<command name="addWithAssociatedAssetTypeCP">
 		<execute action="CPCategories#assertClick" locator-key1="ADD_VOCABULARY_BUTTON" value1="Add Vocabulary" />
 		<execute action="CPCategories#type" locator-key1="ADD_VOCABULARY_NAME_FIELD" value1="${vocabularyName}" />
 
@@ -30,7 +30,7 @@
 		<execute action="CPCategories#assertTextEquals" locator-key1="VOCABULARY_ENTRY" value1="${vocabularyName}" />
 	</command>
 
-	<command name="deleteCPByActions">
+	<command name="deleteByActionsCP">
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 
 		<execute action="CPCategories#assertTextEquals" locator-key1="VOCABULARY_ENTRY" value1="${vocabularyName}" />
@@ -72,5 +72,21 @@
 				<execute action="CPCategories#assertTextEquals" locator-key1="INFO_MESSAGE" value1="There are no categories." />
 			</then>
 		</if>
+	</command>
+
+	<command name="viewWithAssociatedAssetTypeCP">
+		<var name="key_vocabularyName" value="${vocabularyName}" />
+
+		<execute action="CPCategories#assertTextEquals" locator-key1="VOCABULARY_ENTRY" value1="${vocabularyName}" />
+		<execute action="CPCategories#click" locator-key1="EDIT_VOCABULARY_ICON" />
+
+		<if>
+			<condition action="CPCategories#isElementNotPresent" locator-key1="ADD_VOCABULARY_CHOOSE_ASSET_TYPE_SELECT" />
+			<then>
+				<execute action="CPCategories#assertClick" locator-key1="ADD_VOCABULARY_ASSOCIATED_ASSET_TYPES" value1="Associated Asset Types" />
+			</then>
+		</if>
+
+		<execute action="CPCategories#assertSelectedLabel" locator-key1="ADD_VOCABULARY_CHOOSE_ASSET_TYPE_SELECT" value1="${vocabularyAssociatedAssetType}" />
 	</command>
 </definition>

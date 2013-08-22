@@ -104,7 +104,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_user_group_roles.
 	String taglibOnClick = renderResponse.getNamespace() + "updateUserGroupGroupRoleUsers('" + portletURL.toString() + StringPool.AMPERSAND + renderResponse.getNamespace() + "cur=" + cur + "');";
 	%>
 
-	<aui:button onClick="<%= taglibOnClick %>" value="update-associations" />
+	<aui:button onClick="<%= taglibOnClick %>" primary="<%= true %>" value="update-associations" />
 
 	<br /><br />
 

@@ -16,9 +16,11 @@ package com.liferay.portal.security.permission;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.model.User;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PropsValues;
@@ -97,7 +99,25 @@ public abstract class BasePermissionChecker implements PermissionChecker {
 	public boolean hasPermission(
 		long groupId, String name, long primKey, String actionId) {
 
-		return hasPermission(groupId, name, String.valueOf(primKey), actionId);
+		try {
+			if (groupId != 0) {
+				Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+				if ((group.getCompanyId() != user.getCompanyId()) &&
+					!isOmniadmin()) {
+
+					return false;
+				}
+			}
+
+			return hasPermission(
+				groupId, name, String.valueOf(primKey), actionId);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
+		return false;
 	}
 
 	@Override

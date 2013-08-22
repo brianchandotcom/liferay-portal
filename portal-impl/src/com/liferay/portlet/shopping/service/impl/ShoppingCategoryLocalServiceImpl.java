@@ -237,7 +237,7 @@ public class ShoppingCategoryLocalServiceImpl
 
 		ShoppingCategory tempCategory = category;
 
-		for (;;) {
+		while (true) {
 			parentCategories.add(tempCategory);
 
 			if (tempCategory.getParentCategoryId() ==

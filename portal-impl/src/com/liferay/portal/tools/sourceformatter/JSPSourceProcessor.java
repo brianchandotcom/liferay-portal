@@ -264,7 +264,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		String oldContent = content;
 		String newContent = StringPool.BLANK;
 
-		for (;;) {
+		while (true) {
 			newContent = formatJSP(fileName, oldContent);
 
 			if (oldContent.equals(newContent)) {
@@ -997,7 +997,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 			int y = -1;
 
-			for (;;) {
+			while (true) {
 				y = s.indexOf(delimeter, y + 1);
 
 				if ((y == -1) || (s.length() <= (y + 1))) {

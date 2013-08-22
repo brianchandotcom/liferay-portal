@@ -353,7 +353,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 			Pattern pattern = Pattern.compile(extendedClassName + "\\W");
 
-			for (;;) {
+			while (true) {
 				Matcher matcher = pattern.matcher(newContent);
 
 				if (!matcher.find()) {

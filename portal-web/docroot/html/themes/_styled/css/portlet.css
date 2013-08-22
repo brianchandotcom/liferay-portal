@@ -27,11 +27,11 @@ body.portlet {
 }
 
 .portlet-title-text {
-	display: inline-block;
+	display: block;
+	max-width: 95%;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
-	width: 95%;
 }
 
 .panel-page-content, .panel-page-body {

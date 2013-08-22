@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.SocketUtil;
 import com.liferay.portal.kernel.util.SocketUtil.ServerSocketConfigurator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.ByteArrayOutputStream;
@@ -1086,6 +1087,8 @@ public class ProcessExecutorTest {
 		if (fileName != null) {
 			arguments.add("-Dnet.sourceforge.cobertura.datafile=" + fileName);
 		}
+
+		arguments.add("-D" + SystemProperties.QUIET_LOADING + "=true");
 
 		return arguments;
 	}

@@ -2272,7 +2272,7 @@
 	</library>
 	<library>
 		<file-name>lib/portal/jgroups.jar</file-name>
-		<version>3.2.6</version>
+		<version>3.2.10</version>
 		<project-name>JGroups</project-name>
 		<project-url>http://www.jgroups.org/javagroupsnew/docs</project-url>
 		<licenses>

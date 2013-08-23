@@ -1,0 +1,100 @@
+diff --git a/bobo-browse/pom.xml b/bobo-browse/pom.xml
+index 4e7a227..6f23a99 100644
+--- a/bobo-browse/pom.xml
++++ b/bobo-browse/pom.xml
+@@ -67,27 +67,6 @@
+ 					</execution>
+ 				</executions>
+ 			</plugin>
+-			<plugin>
+-			                <groupId>pl.project13.maven</groupId>
+-			                <artifactId>git-commit-id-plugin</artifactId>
+-			                <version>1.9</version>
+-			                <executions>
+-			                    <execution>
+-			                        <goals>
+-			                            <goal>revision</goal>
+-			                         </goals>
+-			                    </execution>
+-			                </executions>
+-			                <configuration>
+-			                    <prefix>git</prefix>
+-			                    <dateFormat>dd.MM.yyyy '@' HH:mm:ss z</dateFormat>
+-			                    <verbose>true</verbose>
+-			                    <dotGitDirectory>${project.basedir}/../.git</dotGitDirectory>
+-			                    <generateGitPropertiesFile>true</generateGitPropertiesFile>
+-			                    <generateGitPropertiesFilename>src/main/resources/git.properties</generateGitPropertiesFilename>
+-			                </configuration>
+-			            </plugin>
+-
+ 		</plugins>
+ 	</build>
+ 
+diff --git a/bobo-browse/src/main/java/com/browseengine/bobo/sort/DocComparatorSource.java b/bobo-browse/src/main/java/com/browseengine/bobo/sort/DocComparatorSource.java
+index 2ad990b..80f4895 100644
+--- a/bobo-browse/src/main/java/com/browseengine/bobo/sort/DocComparatorSource.java
++++ b/bobo-browse/src/main/java/com/browseengine/bobo/sort/DocComparatorSource.java
+@@ -1,6 +1,7 @@
+ package com.browseengine.bobo.sort;
+ 
+ import java.io.IOException;
++import java.io.Serializable;
+ import java.text.Collator;
+ import java.util.Locale;
+ 
+@@ -83,8 +84,40 @@ public abstract class DocComparatorSource {
+ 				    return _collator.compare(values[doc1.doc], values[doc2.doc]);
+ 				}
+ 
+-				public String value(ScoreDoc doc) {
+-					return values[doc.doc];
++				public StringLocaleComparable value(ScoreDoc doc) {
++					return new StringLocaleComparable(values[doc.doc], _collator);
++				}
++				
++				class StringLocaleComparable implements Comparable, Serializable {
++					
++					private final String _value;
++					private final Collator _collator;
++					
++					private static final long serialVersionUID = 1L;
++					
++					public StringLocaleComparable(String value, Collator collator) {
++						_value = value;
++						_collator = collator;
++					}
++
++					@Override
++					public int compareTo(Object o) {
++						if (o instanceof StringLocaleComparable){
++							StringLocaleComparable other = (StringLocaleComparable) o;
++						    if (_value == null) {
++							      if (other._value == null) {
++							        return 0;
++							      }
++							      return -1;
++							    } else if (other._value == null) {
++							      return 1;
++							    }				   
++							    return _collator.compare(_value, other._value);
++						}
++						else{
++							throw new IllegalStateException("expected instance of " + StringLocaleComparable.class);
++						}
++					}
+ 				}
+ 			};
+ 		}
+diff --git a/pom.xml b/pom.xml
+index ec427eb..672f3d6 100644
+--- a/pom.xml
++++ b/pom.xml
+@@ -53,7 +53,7 @@
+         <version>2.1</version>
+         <configuration>
+           <source>1.6</source>
+-          <target>1.6</target>
++          <target>1.5</target>
+           <encoding>UTF-8</encoding>
+         </configuration>
+       </plugin>

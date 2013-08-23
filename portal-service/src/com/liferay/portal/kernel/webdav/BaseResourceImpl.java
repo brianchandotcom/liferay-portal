@@ -27,6 +27,7 @@ import java.io.InputStream;
 import java.text.Format;
 
 import java.util.Date;
+import java.util.TimeZone;
 
 /**
  * @author Brian Wing Shun Chan
@@ -169,10 +170,12 @@ public class BaseResourceImpl implements Resource {
 
 	private static Format _createDateFormatter =
 		FastDateFormatFactoryUtil.getSimpleDateFormat(
-			"yyyy-MM-dd'T'HH:mm:ss'Z'", LocaleUtil.US);
+			"yyyy-MM-dd'T'HH:mm:ss'Z'", LocaleUtil.US,
+				TimeZone.getTimeZone("GMT"));
 	private static Format _modifiedDateFormatter =
 		FastDateFormatFactoryUtil.getSimpleDateFormat(
-			"EEE, dd MMM yyyy HH:mm:ss zzz", LocaleUtil.US);
+			"EEE, dd MMM yyyy HH:mm:ss zzz", LocaleUtil.US,
+				TimeZone.getTimeZone("GMT"));
 
 	private String _className;
 	private Date _createDate;

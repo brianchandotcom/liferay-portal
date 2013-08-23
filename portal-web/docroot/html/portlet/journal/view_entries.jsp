@@ -96,7 +96,7 @@ boolean showAddArticleButton = JournalPermission.contains(permissionChecker, sco
 				DDMStructure ddmStructure = null;
 
 				try {
-					ddmStructure = DDMStructureLocalServiceUtil.getStructure(scopeGroupId, PortalUtil.getClassNameId(JournalArticle.class), displayTerms.getStructureId());
+					ddmStructure = DDMStructureLocalServiceUtil.getStructure(themeDisplay.getSiteGroupId(), PortalUtil.getClassNameId(JournalArticle.class), displayTerms.getStructureId());
 				}
 				catch (NoSuchStructureException nsse) {
 					ddmStructure = DDMStructureLocalServiceUtil.getStructure(themeDisplay.getCompanyGroupId(), PortalUtil.getClassNameId(JournalArticle.class), displayTerms.getStructureId());
@@ -127,7 +127,7 @@ boolean showAddArticleButton = JournalPermission.contains(permissionChecker, sco
 		<div class="alert alert-info">
 
 			<%
-			DDMTemplate ddmTemplate = DDMTemplateLocalServiceUtil.getTemplate(scopeGroupId, PortalUtil.getClassNameId(DDMStructure.class), displayTerms.getTemplateId());
+			DDMTemplate ddmTemplate = DDMTemplateLocalServiceUtil.getTemplate(themeDisplay.getSiteGroupId(), PortalUtil.getClassNameId(DDMStructure.class), displayTerms.getTemplateId());
 
 			DDMStructure ddmStructure = DDMStructureLocalServiceUtil.getStructure(ddmTemplate.getClassPK());
 			%>

@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
 import com.liferay.portal.kernel.util.AggregateClassLoader;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.lang.DoPrivilegedFactory;
 import com.liferay.portal.spring.util.FilterClassLoader;
 import com.liferay.portal.util.ClassLoaderUtil;
@@ -89,16 +90,25 @@ public class PortletApplicationContext extends XmlWebApplicationContext {
 	}
 
 	protected void injectExplicitBean(
-		Class<?> clazz, BeanDefinitionRegistry beanDefinitionRegistry) {
+		Class<?> clazz, String factoryMethodName,
+		BeanDefinitionRegistry beanDefinitionRegistry) {
+
+		RootBeanDefinition rootBeanDefinition = new RootBeanDefinition(clazz);
+
+		if (Validator.isNotNull(factoryMethodName)) {
+			rootBeanDefinition.setFactoryMethodName(factoryMethodName);
+		}
 
 		beanDefinitionRegistry.registerBeanDefinition(
-			clazz.getName(), new RootBeanDefinition(clazz));
+			clazz.getName(), rootBeanDefinition);
 	}
 
 	protected void injectExplicitBeans(
 		BeanDefinitionRegistry beanDefinitionRegistry) {
 
-		injectExplicitBean(DoPrivilegedFactory.class, beanDefinitionRegistry);
+			injectExplicitBean(
+				DoPrivilegedFactory.class, "getDoPrivilegedFactory",
+				beanDefinitionRegistry);
 	}
 
 	@Override

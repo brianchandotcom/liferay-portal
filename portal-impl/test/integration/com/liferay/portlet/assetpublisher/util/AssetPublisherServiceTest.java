@@ -69,14 +69,12 @@ public class AssetPublisherServiceTest {
 	@Test
 	@Transactional
 	public void testGetAssetEntries() throws Exception {
-		_expectedAssetEntries = _initialAssetEntries;
-
 		List<AssetEntry> assetEntries = AssetPublisherUtil.getAssetEntries(
 			new MockPortletRequest(), new MockPortletPreferences(),
 			_permissionChecker, new long[] {TestPropsValues.getGroupId()},
 			_assetEntryXmls, false, false);
 
-		Assert.assertEquals(_expectedAssetEntries, assetEntries);
+		Assert.assertEquals(_initialAssetEntries, assetEntries);
 	}
 
 	@Test

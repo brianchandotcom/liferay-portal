@@ -88,6 +88,10 @@ public class AppViewEntryTag extends IncludeTag {
 		_folder = folder;
 	}
 
+	public void setGroupId(long groupId) {
+		_groupId = groupId;
+	}
+
 	public void setLatestApprovedVersion(String latestApprovedVersion) {
 		_latestApprovedVersion = latestApprovedVersion;
 	}
@@ -174,6 +178,7 @@ public class AppViewEntryTag extends IncludeTag {
 		_displayStyle = null;
 		_expirationDate = null;
 		_folder = false;
+		_groupId = 0;
 		_latestApprovedVersion = null;
 		_latestApprovedVersionAuthor = null;
 		_locked = false;
@@ -230,6 +235,7 @@ public class AppViewEntryTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-ui:app-view-entry:expirationDate", _expirationDate);
 		request.setAttribute("liferay-ui:app-view-entry:folder", _folder);
+		request.setAttribute("liferay-ui:app-view-entry:groupId", _groupId);
 		request.setAttribute(
 			"liferay-ui:app-view-entry:latestApprovedVersion",
 			_latestApprovedVersion);
@@ -281,6 +287,7 @@ public class AppViewEntryTag extends IncludeTag {
 	private String _displayStyle;
 	private Date _expirationDate;
 	private boolean _folder;
+	private long _groupId;
 	private String _latestApprovedVersion;
 	private String _latestApprovedVersionAuthor;
 	private boolean _locked;

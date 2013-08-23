@@ -337,6 +337,17 @@
 	}
 
 	.journal-container {
+		.group-info {
+			dl {
+				margin: 0px 0px 0px 20px;
+
+				dt {
+					float: left;
+					margin-right: 3px;
+				}
+			}
+		}
+
 		.search-info {
 			background-color: #D3E8F1;
 			padding: 10px;

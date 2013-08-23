@@ -185,8 +185,10 @@ public class ArticleDisplayTerms extends DisplayTerms {
 
 			if ((themeDisplay.getScopeGroupId() ==
 					themeDisplay.getCompanyGroupId()) &&
-				Validator.isNull(structureId) &&
-				Validator.isNull(templateId)) {
+				((Validator.isNotNull(structureId) &&
+					!structureId.equals("0")) ||
+				(Validator.isNotNull(templateId) &&
+					!templateId.equals("0")))) {
 
 				return 0;
 			}

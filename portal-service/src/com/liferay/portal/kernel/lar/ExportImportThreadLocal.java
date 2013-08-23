@@ -30,8 +30,8 @@ public class ExportImportThreadLocal {
 	}
 
 	public static boolean isImportInProcess() {
-		if (isPortletImportInProcess() || isLayoutImportInProcess() ||
-			isPortletValidationInProcess() || isLayoutValidationInProcess()) {
+		if (isLayoutImportInProcess() || isLayoutValidationInProcess() ||
+			isPortletImportInProcess() || isPortletValidationInProcess()) {
 
 			return true;
 		}

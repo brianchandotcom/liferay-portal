@@ -21,7 +21,7 @@ import org.junit.Test;
 /**
  * @author Kwang Lee
  */
-public class AssertEmailContentTestCase extends BaseSeleniumTestCase {
+public class AssertEmailBodyTestCase extends BaseSeleniumTestCase {
 
 	@Test
 	public void testAssertEmailContent() throws Exception {
@@ -37,7 +37,7 @@ public class AssertEmailContentTestCase extends BaseSeleniumTestCase {
 		selenium.connectToEmailAccount(
 			TestPropsValues.EMAIL_ADDRESS_2, TestPropsValues.EMAIL_PASSWORD_2);
 
-		selenium.assertEmailContent("1", "This is a test message");
+		selenium.assertEmailBody("1", "This is a test message");
 
 		selenium.deleteAllEmails();
 	}

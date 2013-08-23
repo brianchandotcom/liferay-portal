@@ -68,10 +68,10 @@ public abstract class BaseSeleniumImpl
 	}
 
 	@Override
-	public void assertEmailContent(String index, String content)
+	public void assertEmailBody(String index, String body)
 		throws Exception {
 
-		LiferaySeleniumHelper.assertEmailContent(this, index, content);
+		LiferaySeleniumHelper.assertEmailBody(this, index, body);
 	}
 
 	@Override
@@ -237,8 +237,8 @@ public abstract class BaseSeleniumImpl
 	}
 
 	@Override
-	public String getEmailContent(String index) throws Exception {
-		return LiferaySeleniumHelper.getEmailContent(index);
+	public String getEmailBody(String index) throws Exception {
+		return LiferaySeleniumHelper.getEmailBody(index);
 	}
 
 	@Override
@@ -409,8 +409,8 @@ public abstract class BaseSeleniumImpl
 	}
 
 	@Override
-	public void replyToEmail(String to, String content) throws Exception {
-		LiferaySeleniumHelper.replyToEmail(this, to, content);
+	public void replyToEmail(String to, String body) throws Exception {
+		LiferaySeleniumHelper.replyToEmail(this, to, body);
 	}
 
 	@Override
@@ -473,10 +473,10 @@ public abstract class BaseSeleniumImpl
 	}
 
 	@Override
-	public void sendEmail(String to, String subject, String content)
+	public void sendEmail(String to, String subject, String body)
 		throws Exception {
 
-		LiferaySeleniumHelper.sendEmail(this, to, subject, content);
+		LiferaySeleniumHelper.sendEmail(this, to, subject, body);
 	}
 
 	@Override

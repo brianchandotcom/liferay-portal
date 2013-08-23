@@ -31,7 +31,7 @@ public interface LiferaySelenium extends Selenium {
 
 	public void assertElementPresent(String locator) throws Exception;
 
-	public void assertEmailContent(String index, String content)
+	public void assertEmailBody(String index, String body)
 		throws Exception;
 
 	public void assertEmailSubject(String index, String subject)
@@ -98,7 +98,7 @@ public interface LiferaySelenium extends Selenium {
 
 	public String getCurrentYear();
 
-	public String getEmailContent(String index) throws Exception;
+	public String getEmailBody(String index) throws Exception;
 
 	public String getEmailSubject(String index) throws Exception;
 
@@ -156,7 +156,7 @@ public interface LiferaySelenium extends Selenium {
 
 	public void refreshAndWait();
 
-	public void replyToEmail(String to, String content) throws Exception;
+	public void replyToEmail(String to, String body) throws Exception;
 
 	public void saveScreenshot(String fileName) throws Exception;
 
@@ -166,7 +166,7 @@ public interface LiferaySelenium extends Selenium {
 
 	public boolean sendActionLogger(String command, String[] params);
 
-	public void sendEmail(String to, String subject, String content)
+	public void sendEmail(String to, String subject, String body)
 		throws Exception;
 
 	public void sendKeys(String locator, String value);

@@ -1,0 +1,142 @@
+<html>
+<head>
+<title>Permissions</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Permissions</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>Permissions</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>PERMISSIONS_IFRAME</td>
+	<td>//iframe[@class='dialog-iframe-node ']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[@class='alert alert-success']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE_BUTTON</td>
+	<td>//button[contains(.,'Save')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--CONFIGURATION_PERMISSIONS-->
+<tr>
+	<td>CONFIGURATION_PERMISSIONS_ADD_DISPLAY_TEMPLATE_CHECKBOX</td>
+	<td>//input[@id='${key_roleName}_ACTION_ADD_PORTLET_DISPLAY_TEMPLATE']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIGURATION_PERMISSIONS_ADD_ENTRY</td>
+	<td>//input[@id='${key_roleName}_ACTION_ADD_ENTRY']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIGURATION_PERMISSIONS_ADD_TO_PAGE_CHECKBOX</td>
+	<td>//input[@id='${key_roleName}_ACTION_ADD_TO_PAGE']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIGURATION_PERMISSIONS_CONFIGURATION_CHECKBOX</td>
+	<td>//input[@id='${key_roleName}_ACTION_CONFIGURATION']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIGURATION_PERMISSIONS_VIEW_CHECKBOX</td>
+	<td>//input[@id='${key_roleName}_ACTION_VIEW']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIGURATION_PERMISSIONS_PERMISSIONS_CHECKBOX</td>
+	<td>//input[@id='${key_roleName}_ACTION_PERMISSIONS']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIGURATION_PERMISSIONS_ACCESS_IN_CONTROL_PANEL_CHECKBOX</td>
+	<td>//input[@id='${key_roleName}_ACTION_ACCESS_IN_CONTROL_PANEL']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--INLINE_PERMISSIONS-->
+<tr>
+	<td>INLINE_PERMISSIONS_ADD_ENTRY</td>
+	<td>//input[@id='${key_roleName}_ACTION_ADD_ENTRY']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INLINE_PERMISSIONS_PERMISSIONS_CHECKBOX</td>
+	<td>//input[@id='${key_roleName}_ACTION_PERMISSIONS']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INLINE_PERMISSIONS_SUBSCRIBE_CHECKBOX</td>
+	<td>//input[@id='${key_roleName}_ACTION_SUBSCRIBE']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--CONTENT_PERMISSIONS-->
+<tr>
+	<td>CONTENT_PERMISSIONS_ADD_DISCUSSION</td>
+	<td>//input[@id='${key_roleName}_ACTION_ADD_DISCUSSION']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_PERMISSIONS_DELETE</td>
+	<td>//input[@id='${key_roleName}_ACTION_DELETE']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_PERMISSIONS_DELETE_DISCUSSION</td>
+	<td>//input[@id='${key_roleName}_ACTION_DELETE_DISCUSSION']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_PERMISSIONS_PERMISSIONS</td>
+	<td>//input[@id='${key_roleName}_ACTION_PERMISSIONS']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_PERMISSIONS_UPDATE</td>
+	<td>//input[@id='${key_roleName}_ACTION_UPDATE']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_PERMISSIONS_UPDATE_DISCUSSION</td>
+	<td>//input[@id='${key_roleName}_ACTION_UPDATE_DISCUSSION']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_PERMISSIONS_VIEW</td>
+	<td>//input[@id='${key_roleName}_ACTION_VIEW']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

@@ -378,10 +378,11 @@ public class WikiPageServiceWrapper implements WikiPageService,
 	}
 
 	@Override
-	public void movePageToTrash(long nodeId, java.lang.String title)
+	public com.liferay.portlet.wiki.model.WikiPage movePageToTrash(
+		long nodeId, java.lang.String title)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_wikiPageService.movePageToTrash(nodeId, title);
+		return _wikiPageService.movePageToTrash(nodeId, title);
 	}
 
 	@Override

@@ -36,6 +36,7 @@ import com.liferay.portlet.PortletResponseImpl;
 import com.liferay.portlet.PortletURLImpl;
 import com.liferay.portlet.asset.AssetCategoryException;
 import com.liferay.portlet.asset.AssetTagException;
+import com.liferay.portlet.trash.util.TrashUtil;
 import com.liferay.portlet.wiki.DuplicatePageException;
 import com.liferay.portlet.wiki.NoSuchNodeException;
 import com.liferay.portlet.wiki.NoSuchPageException;
@@ -215,7 +216,7 @@ public class EditPageAction extends PortletAction {
 					nodeId, title, version);
 			}
 			else {
-				WikiPageServiceUtil.movePageToTrash(nodeId, title);
+				wikiPage = WikiPageServiceUtil.movePageToTrash(nodeId, title);
 			}
 		}
 		else {
@@ -233,7 +234,9 @@ public class EditPageAction extends PortletAction {
 			data.put(
 				"deleteEntryClassName",
 				new String[] {WikiPage.class.getName()});
-			data.put("deleteEntryTitle", new String[] {wikiPage.getTitle()});
+			data.put(
+				"deleteEntryTitle",
+				new String[] {TrashUtil.getOriginalTitle(wikiPage.getTitle())});
 			data.put(
 				"restoreEntryIds",
 				new String[] {String.valueOf(wikiPage.getResourcePrimKey())});

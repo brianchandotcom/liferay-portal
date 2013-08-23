@@ -78,7 +78,10 @@ public abstract class BaseStagedModelDataHandlerTestCase extends PowerMockito {
 		liveGroup = GroupTestUtil.addGroup();
 		stagingGroup = GroupTestUtil.addGroup();
 
-		ServiceContextThreadLocal.pushServiceContext(new ServiceContext());
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			stagingGroup.getGroupId());
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
 	}
 
 	@After
@@ -281,8 +284,8 @@ public abstract class BaseStagedModelDataHandlerTestCase extends PowerMockito {
 			return null;
 		}
 
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
-			stagingGroup.getGroupId());
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
 
 		AssetVocabulary assetVocabulary =
 			AssetVocabularyLocalServiceUtil.addVocabulary(

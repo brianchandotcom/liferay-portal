@@ -92,7 +92,6 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.service.base.GroupLocalServiceBaseImpl;
 import com.liferay.portal.theme.ThemeLoader;
 import com.liferay.portal.theme.ThemeLoaderFactory;
@@ -895,37 +894,34 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 					ResourceConstants.SCOPE_INDIVIDUAL, group.getGroupId());
 			}
 
-			// Workflow definition links
+			// Workflow
 
-			List<String> classesWithVisibleWorkflowHandler =
-				new ArrayList<String>();
+			List<WorkflowHandler> scopeableWorkflowHandlers =
+				WorkflowHandlerRegistryUtil.getScopeableWorkflowHandlers();
 
-			for (WorkflowHandler workflowHandler : WorkflowHandlerRegistryUtil.
-				getScopeableWorkflowHandlers()) {
+			for (WorkflowHandler scopeableWorkflowHandler :
+					scopeableWorkflowHandlers) {
 
-				if (workflowHandler.isVisible()) {
-					classesWithVisibleWorkflowHandler.add(
-						workflowHandler.getClassName());
+				if (!scopeableWorkflowHandler.isVisible()) {
+					continue;
 				}
-			}
 
-			for (String className : classesWithVisibleWorkflowHandler) {
 				WorkflowDefinitionLink workflowDefinitionLink = null;
 
 				try {
 					workflowDefinitionLink =
-						WorkflowDefinitionLinkLocalServiceUtil.
+						workflowDefinitionLinkLocalService.
 							getWorkflowDefinitionLink(
 								group.getCompanyId(), group.getGroupId(),
-								className, 0, 0, true);
+								scopeableWorkflowHandler.getClassName(), 0, 0,
+								true);
 				}
-				catch (NoSuchWorkflowDefinitionLinkException e) {
+				catch (NoSuchWorkflowDefinitionLinkException nswdle) {
+					continue;
 				}
 
-				if (workflowDefinitionLink != null) {
-					WorkflowDefinitionLinkLocalServiceUtil.
-						deleteWorkflowDefinitionLink(workflowDefinitionLink);
-				}
+				workflowDefinitionLinkLocalService.deleteWorkflowDefinitionLink(
+					workflowDefinitionLink);
 			}
 
 			// Group

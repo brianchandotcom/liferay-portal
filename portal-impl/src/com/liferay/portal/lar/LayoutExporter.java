@@ -166,6 +166,10 @@ public class LayoutExporter {
 				PortletDataHandler portletDataHandler =
 					portlet.getPortletDataHandlerInstance();
 
+				if (portletDataHandler == null) {
+					continue;
+				}
+
 				PortletDataHandlerControl[] portletDataHandlerControls =
 					portletDataHandler.getExportConfigurationControls(
 						layout.getCompanyId(), layout.getGroupId(), portlet,

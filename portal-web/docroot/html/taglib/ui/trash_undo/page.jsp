@@ -77,7 +77,7 @@ if (SessionMessages.contains(portletRequest, portletDisplay.getId() + SessionMes
 								<liferay-ui:message arguments="<%= new Object[] {trashedEntriesCount} %>" key="x-items-were-removed" />
 							</c:when>
 							<c:otherwise>
-								<liferay-ui:message arguments="<%= new Object[] {trashedEntriesCount, trashLink} %>" key="x-items-were-moved-to-x" />
+								<liferay-ui:message arguments="<%= new Object[] {trashedEntriesCount, trashLink.trim()} %>" key="x-items-were-moved-to-x" />
 							</c:otherwise>
 						</c:choose>
 					</c:when>

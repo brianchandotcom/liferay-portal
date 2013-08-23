@@ -486,7 +486,7 @@
 		<priority value="WARN" />
 	</category>
 
-	<category name="com.liferay.portal.security.lang.PortalSecurityManager">
+	<category name="com.liferay.portal.security.lang.SecurityManagerUtil">
 		<priority value="INFO" />
 	</category>
 
@@ -504,18 +504,6 @@
 
 	<category name="com.liferay.portal.security.pacl.GeneratingPACLPolicy">
 		<priority value="DEBUG" />
-	</category>
-
-	<category name="com.liferay.portal.security.pacl.PACLAdvice">
-		<priority value="ERROR" />
-	</category>
-
-	<category name="com.liferay.portal.security.pacl.PACLBeanHandler">
-		<priority value="ERROR" />
-	</category>
-
-	<category name="com.liferay.portal.security.pacl.PACLClassUtil">
-		<priority value="ERROR" />
 	</category>
 
 	<category name="com.liferay.portal.security.pacl.PACLPolicyManager">

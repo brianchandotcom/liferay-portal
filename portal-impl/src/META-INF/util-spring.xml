@@ -338,7 +338,6 @@
 				<entry key="com.liferay.portal.search.IndexableAdvice" value="nextMethodInterceptor" />
 				<entry key="com.liferay.portal.security.ac.AccessControlAdvice" value="accessControlAdvisor,nextMethodInterceptor" />
 				<entry key="com.liferay.portal.security.ac.AccessControlAdvisorImpl" value="" />
-				<entry key="com.liferay.portal.security.pacl.PACLAdvice" value="nextMethodInterceptor" />
 				<entry key="com.liferay.portal.spring.aop.ServiceBeanAutoProxyCreator" value="beanMatcher,methodInterceptor" />
 				<entry key="com.liferay.portal.spring.aop.ServiceBeanMatcher" value="" />
 				<entry key="com.liferay.portal.spring.bean.BeanReferenceAnnotationBeanPostProcessor" value="" />

@@ -194,8 +194,6 @@ if ((category != null) && layout.isTypeControlPanel()) {
 				<aui:form action="<%= portletURL.toString() %>" method="get" name="fm1">
 
 					<%
-					portletURL.setParameter("topLink", ParamUtil.getString(request, "topLink"));
-
 					int status = WorkflowConstants.STATUS_APPROVED;
 
 					if (permissionChecker.isCompanyAdmin() || permissionChecker.isGroupAdmin(scopeGroupId)) {

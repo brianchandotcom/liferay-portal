@@ -41,9 +41,31 @@ public class SelectTestCase extends BaseSeleniumTestCase {
 
 	@Test
 	public void testSelect() throws Exception {
-		selenium.select("//html/body/div[1]/select", "value=Test 1");
-		selenium.select("//html/body/div[1]/select", "value=Test 2");
-		selenium.select("//html/body/div[1]/select", "value=Test 3");
+		String locator = "//html/body/div[1]/select";
+
+		selenium.select(locator, "index=3");
+
+		selenium.assertSelectedLabel(locator, "Test 3");
+
+		selenium.select(locator, "Test 1");
+
+		selenium.assertSelectedLabel(locator, "Test 1");
+
+		selenium.select(locator, "label=regexp:.*2.*");
+
+		selenium.assertSelectedLabel(locator, "Test 2");
+
+		selenium.select(locator, "label=Test 3");
+
+		selenium.assertSelectedLabel(locator, "Test 3");
+
+		selenium.select(locator, "value=regexp:.*1.*");
+
+		selenium.assertSelectedLabel(locator, "Test 1");
+
+		selenium.select(locator, "value=Test 2");
+
+		selenium.assertSelectedLabel(locator, "Test 2");
 	}
 
 }

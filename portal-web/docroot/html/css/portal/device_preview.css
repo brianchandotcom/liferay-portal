@@ -193,8 +193,6 @@
 }
 
 .lfr-device-preview-panel {
-	color: #3EA9DB;
-
 	.lfr-device-item {
 		&:hover {
 			background-color: #E5F2FC;

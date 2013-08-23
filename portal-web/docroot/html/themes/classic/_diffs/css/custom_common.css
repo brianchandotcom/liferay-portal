@@ -146,10 +146,6 @@
 
 	/* ---------- Main ---------- */
 
-	#wrapper {
-		padding: 1em 3em 0;
-	}
-
 	.logo, .logo:hover {
 		color: #333;
 		line-height: 20px;

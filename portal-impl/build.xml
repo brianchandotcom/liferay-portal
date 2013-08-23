@@ -1,6 +1,8 @@
 <?xml version="1.0"?>
 
-<project name="portal-impl" basedir="." default="compile" xmlns:antelope="antlib:ise.antelope.tasks">
+<project name="portal-impl" basedir="." default="compile" xmlns:antelope="antlib:ise.antelope.tasks"
+	xmlns:artifact="antlib:org.apache.maven.artifact.ant">
+
 	<property name="test.properties" value="portal-test.properties" />
 
 	<import file="../build-common-java.xml" />
@@ -10,6 +12,10 @@
 	<property name="manifest.bundle.name" value="Liferay Portal Impl" />
 	<property name="manifest.bundle.symbolic.name" value="portal-impl;singleton:=true" />
 	<property name="service.file" value="service.xml" />
+
+	<path id="maven-ant-tasks.classpath" path="${project.dir}/lib/development/maven-ant-tasks.jar" />
+	<typedef resource="org/apache/maven/artifact/ant/antlib.xml" uri="antlib:org.apache.maven.artifact.ant"
+		classpathref="maven-ant-tasks.classpath" />
 
 	<target name="build-alloy-taglib-jar">
 		<if>
@@ -131,6 +137,33 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 			<arg value="javax/naming/directory/DirContext.java" />
 		</java>
 	</target>-->
+
+	<target name="build-bobo-browse">
+		<tempfile property="temp.file" />
+
+		<mkdir dir="${temp.file}" />
+
+		<get dest="${temp.file}/release-3.2.0.zip" src="https://github.com/senseidb/bobo/archive/release-3.2.0.zip" />
+
+		<unzip dest="${temp.file}" src="${temp.file}/release-3.2.0.zip" />
+
+		<patch patchfile="${project.dir}/lib/portal/bobo-browse/LPS-28980.patch"
+			dir="${temp.file}/bobo-release-3.2.0/"
+			strip="1" />
+
+		<patch patchfile="${project.dir}/lib/portal/bobo-browse/LPS-38192.patch"
+			dir="${temp.file}/bobo-release-3.2.0/"
+			strip="1" />
+
+		<artifact:mvn pom="${temp.file}/bobo-release-3.2.0/bobo-browse/pom.xml">
+			<arg value="package" />
+		</artifact:mvn>
+
+		<move file="${temp.file}/bobo-release-3.2.0/bobo-browse/target/bobo-browse-3.2.0.jar"
+			tofile="${project.dir}/lib/portal/bobo-browse.jar" />
+
+		<delete dir="${temp.file}" />
+	</target>
 
 	<target name="build-creole-parser">
 		<delete>

@@ -32,6 +32,10 @@ public class CacheResponseUtil {
 	public static void setHeaders(
 		HttpServletResponse response, Map<String, Set<Header>> headers) {
 
+		if (response.isCommitted()) {
+			return;
+		}
+
 		for (Map.Entry<String, Set<Header>> entry : headers.entrySet()) {
 			String key = entry.getKey();
 

@@ -30,7 +30,7 @@
 
 			<c:if test="<%= useDialog %>">
 				<aui:script>
-					Liferay.delegateClick('<%= anchorId %>', AUI().bind('openInDialog', Liferay.Util));
+					Liferay.delegateClick('<%= anchorId %>', Liferay.Util.openInDialog);
 				</aui:script>
 			</c:if>
 		</c:if>

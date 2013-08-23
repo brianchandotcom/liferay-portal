@@ -1237,7 +1237,7 @@ public class WebDriverToSeleniumBridge
 			if (value.startsWith("regexp:")) {
 				String regexp = value.substring(7);
 
-				selectByRegexpValue(selectLocator, regexp);
+				_selectByRegexpValue(selectLocator, regexp);
 			}
 			else {
 				for (WebElement option : options) {
@@ -1250,7 +1250,7 @@ public class WebDriverToSeleniumBridge
 					}
 				}
 
-				selectByLabel(selectLocator, label);
+				_selectByLabel(selectLocator, label);
 			}
 		}
 		else {
@@ -1261,10 +1261,10 @@ public class WebDriverToSeleniumBridge
 			if (label.startsWith("regexp:")) {
 				String regexp = label.substring(7);
 
-				selectByRegexpText(selectLocator, regexp);
+				_selectByRegexpText(selectLocator, regexp);
 			}
 			else {
-				selectByLabel(selectLocator, label);
+				_selectByLabel(selectLocator, label);
 			}
 		}
 	}
@@ -1756,7 +1756,7 @@ public class WebDriverToSeleniumBridge
 		_keysSpecialChars.put(")", "0");
 	}
 
-	protected void selectByLabel(String selectLocator, String label) {
+	private void _selectByLabel(String selectLocator, String label) {
 		WebElement webElement = getWebElement(selectLocator);
 
 		keyPress(selectLocator, "\\36");
@@ -1804,7 +1804,7 @@ public class WebDriverToSeleniumBridge
 		}
 	}
 
-	protected void selectByRegexpText(String selectLocator, String regexp) {
+	private void _selectByRegexpText(String selectLocator, String regexp) {
 		WebElement webElement = getWebElement(selectLocator);
 
 		Select select = new Select(webElement);
@@ -1830,7 +1830,7 @@ public class WebDriverToSeleniumBridge
 		select.selectByIndex(index);
 	}
 
-	protected void selectByRegexpValue(String selectLocator, String regexp) {
+	private void _selectByRegexpValue(String selectLocator, String regexp) {
 		WebElement webElement = getWebElement(selectLocator);
 
 		Select select = new Select(webElement);

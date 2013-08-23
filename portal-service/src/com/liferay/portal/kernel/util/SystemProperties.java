@@ -80,7 +80,7 @@ public class SystemProperties {
 		ClassLoader classLoader = currentThread.getContextClassLoader();
 
 		boolean systemPropertiesQuiet = GetterUtil.getBoolean(
-			System.getProperty(SYSTEM_PROPERTIES_QUIET), true);
+			System.getProperty(SYSTEM_PROPERTIES_QUIET));
 
 		// system.properties
 

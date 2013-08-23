@@ -86,78 +86,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FIELDS_BOOLEAN</td>
-	<td>//div[@class='tab-content']/div/ul/li[@title='Boolean']/div</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FIELDS_DATE</td>
-	<td>//div[@class='tab-content']/div/ul/li[@title='Date']/div</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FIELDS_DECIMAL</td>
-	<td>//div[@class='tab-content']/div/ul/li[@title='Decimal']/div</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FIELDS_DOCUMENTS_AND_MEDIA</td>
-	<td>//div[@class='tab-content']/div/ul/li[@title='Documents and Media']/div</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FIELDS_FIELDSET</td>
-	<td>//div[@class='tab-content']/div/ul/li[@title='Fieldset']/div</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FIELDS_HTML</td>
-	<td>//div[@class='tab-content']/div/ul/li[@title='HTML']/div</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FIELDS_INTEGER</td>
-	<td>//div[@class='tab-content']/div/ul/li[@title='Integer']/div</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FIELDS_LINK_TO_PAGE</td>
-	<td>//div[@class='tab-content']/div/ul/li[@title='Link to Page']/div</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FIELDS_NUMBER</td>
-	<td>//div[@class='tab-content']/div/ul/li[@title='Number']/div</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FIELDS_PARAGRAPH</td>
-	<td>//div[@class='tab-content']/div/ul/li[@title='Paragraph']/div</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FIELDS_RADIO</td>
-	<td>//div[@class='tab-content']/div/ul/li[@title='Radio']/div</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FIELDS_SELECT</td>
-	<td>//div[@class='tab-content']/div/ul/li[@title='Select']/div</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FIELDS_SEPARATOR</td>
-	<td>//div[@class='tab-content']/div/ul/li[@title='Separator']/div</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FIELDS_TEXT</td>
-	<td>//div[@class='tab-content']/div/ul/li[@title='Text']/div</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FIELDS_TEXT_BOX</td>
-	<td>//div[@class='tab-content']/div/ul/li[@title='Text Box']/div</td>
+	<td>FIELDS_NAME</td>
+	<td>//div[@class='tab-content']/div/ul/li[@title='${key_fieldName}']/div</td>
 	<td></td>
 </tr>
 <tr>
@@ -205,6 +135,11 @@
 <tr>
 	<td>FORM_FIELD_1</td>
 	<td>xpath=(//div[contains(@class,'component form-builder-field')])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_FIELD_2</td>
+	<td>xpath=(//div[contains(@class,'component form-builder-field')])[2]</td>
 	<td></td>
 </tr>
 <tr>
@@ -270,6 +205,11 @@
 <tr>
 	<td>FORM_TEXT_FIELD_1</td>
 	<td>xpath=(//div[@class='form-builder-field-content form-builder-text-field-content clearfix'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_TEXT_FIELD_2</td>
+	<td>xpath=(//div[@class='form-builder-field-content form-builder-text-field-content clearfix'])[2]</td>
 	<td></td>
 </tr>
 <tr>

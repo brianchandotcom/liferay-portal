@@ -1,10 +1,7 @@
 <definition>
-	<command name="click">
+	<command name="assertClick">
 		<case locator-key1="SAVE_BUTTON">
-			<execute function="Click#textClickAtAndWait" value1="Save" />
-		</case>
-		<case locator-key1="DATA_DEFINITION_SELECT_LINK">
-			<execute function="Click#textClickAt" value1="Select" />
+			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
 	</command>
 
@@ -12,6 +9,7 @@
 		<case locator-key1="DESCRIPTION_FIELD">
 			<execute function="Type#clickAtSendKeys" />
 		</case>
+
 		<case locator-key1="NAME_FIELD">
 			<execute function="Type#clickAtSendKeys" />
 		</case>

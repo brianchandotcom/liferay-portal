@@ -76,78 +76,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FIELDS_BOOLEAN</td>
-	<td>//div[@class='tab-content']/div/ul/li[@title='Boolean']/div</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FIELDS_DATE</td>
-	<td>//div[@class='tab-content']/div/ul/li[@title='Date']/div</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FIELDS_DECIMAL</td>
-	<td>//div[@class='tab-content']/div/ul/li[@title='Decimal']/div</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FIELDS_DOCUMENTS_AND_MEDIA</td>
-	<td>//div[@class='tab-content']/div/ul/li[@title='Documents and Media']/div</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FIELDS_FIELDSET</td>
-	<td>//div[@class='tab-content']/div/ul/li[@title='Fieldset']/div</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FIELDS_HTML</td>
-	<td>//div[@class='tab-content']/div/ul/li[@title='HTML']/div</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FIELDS_INTEGER</td>
-	<td>//div[@class='tab-content']/div/ul/li[@title='Integer']/div</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FIELDS_LINK_TO_PAGE</td>
-	<td>//div[@class='tab-content']/div/ul/li[@title='Link to Page']/div</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FIELDS_NUMBER</td>
-	<td>//div[@class='tab-content']/div/ul/li[@title='Number']/div</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FIELDS_PARAGRAPH</td>
-	<td>//div[@class='tab-content']/div/ul/li[@title='Paragraph']/div</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FIELDS_RADIO</td>
-	<td>//div[@class='tab-content']/div/ul/li[@title='Radio']/div</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FIELDS_SELECT</td>
-	<td>//div[@class='tab-content']/div/ul/li[@title='Select']/div</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FIELDS_SEPARATOR</td>
-	<td>//div[@class='tab-content']/div/ul/li[@title='Separator']/div</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FIELDS_TEXT</td>
-	<td>//div[@class='tab-content']/div/ul/li[@title='Text']/div</td>
-	<td></td>
-</tr>
-<tr>
-	<td>FIELDS_TEXT_BOX</td>
-	<td>//div[@class='tab-content']/div/ul/li[@title='Text Box']/div</td>
+	<td>FIELDS_NAME</td>
+	<td>//div[@class='tab-content']/div/ul/li[@title='${key_fieldName}']/div</td>
 	<td></td>
 </tr>
 <tr>
@@ -179,6 +109,11 @@
 <tr>
 	<td>SETTINGS_PREDEFINED_VALUE</td>
 	<td>//td[contains(@class,'table-col-name') and contains(.,'Predefined Value')]/following-sibling::td[contains(@class,'table-col-value')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETTINGS_TEXT</td>
+	<td>//td[contains(@class,'table-col-name') and contains(.,'Text')]/following-sibling::td[contains(@class,'table-col-value')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -228,6 +163,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FORM_FIELDSET_FIELD_1</td>
+	<td>xpath=(//fieldset[contains(@class,'form-builder-fieldset-field-content')])[1]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FORM_HTML_FIELD_1</td>
 	<td>xpath=(//div[contains(@class,'ddm-text-html-content')])[1]</td>
 	<td></td>
@@ -248,6 +188,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FORM_PARAGRAPH_FIELD_1</td>
+	<td>xpath=(//div[contains(@class,'ddm-paragraph')])[1]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FORM_RADIO_FIELD_1</td>
 	<td>xpath=(//div[contains(@class,'form-builder-radio-field-content')])[1]</td>
 	<td></td>
@@ -255,6 +200,11 @@
 <tr>
 	<td>FORM_SELECT_FIELD_1</td>
 	<td>xpath=(//div[contains(@class,'form-builder-select-field-content')])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FORM_SEPARATOR_FIELD_1</td>
+	<td>xpath=(//div[contains(@class,'ddm-separator')])[1]</td>
 	<td></td>
 </tr>
 <tr>

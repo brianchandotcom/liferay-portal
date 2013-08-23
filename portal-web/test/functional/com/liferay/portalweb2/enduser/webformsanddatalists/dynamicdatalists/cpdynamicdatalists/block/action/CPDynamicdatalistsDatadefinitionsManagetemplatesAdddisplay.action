@@ -1,0 +1,11 @@
+<definition>
+	<command name="assertClick">
+		<case locator-key1="SAVE_BUTTON">
+			<execute function="AssertClick#assertTextClickAtAndWait" />
+		</case>
+
+		<case locator-key1="DATA_LIST_RECORD_FIELDS_TEXT">
+			<execute function="AssertClick#assertTextClick" />
+		</case>
+	</command>
+</definition>

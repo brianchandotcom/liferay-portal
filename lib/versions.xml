@@ -1137,7 +1137,7 @@
 	</library>
 	<library>
 		<file-name>lib/portal/bobo-browse.jar</file-name>
-		<version>3.1.0</version>
+		<version>3.2.0</version>
 		<project-name>Bob Browse</project-name>
 		<project-url>http://code.google.com/p/bobo-browse</project-url>
 		<licenses>
@@ -1147,8 +1147,8 @@
 			</license>
 		</licenses>
 		<comments>
-			This was recompiled for compatibility with JDK 5 and includes a
-			public patch from LPS-28980.
+			This was recompiled for compatibility with JDK 5 and includes
+			public patches from LPS-28980 and LPS-38192.
 		</comments>
 	</library>
 	<library>

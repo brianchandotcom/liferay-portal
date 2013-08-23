@@ -1,0 +1,10 @@
+<definition>
+	<execute test-case-command="CPRoles#AddBlogsEntryNoGuestRole" />
+	<execute test-case-command="CPRoles#AddBlogsEntryOrgRoleInline" />
+	<execute test-case-command="CPRoles#AddBlogsEntryRegRoleInline" />
+	<execute test-case-command="CPRoles#AddBlogsEntrySiteRoleInline" />
+	<execute test-case-command="CPRoles#DeleteBlogsEntryNoGuestRole" />
+	<execute test-case-command="CPRoles#DeleteBlogsEntryOrgRoleInline" />
+	<execute test-case-command="CPRoles#DeleteBlogsEntryRegRoleInline" />
+	<execute test-case-command="CPRoles#DeleteBlogsEntrySiteRoleInline" />
+</definition>

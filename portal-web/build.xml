@@ -6,14 +6,7 @@
 	<property name="war.file" value="${ant.project.name}" />
 
 	<property name="alloy-font-awesome.file" value="alloy-font-awesome-1.0.0.zip" />
-
-	<!--
-	When upgrading CKEditor, make sure to delete
-	docroot/html/js/editor/ckeditor_diffs/ckeditor.js.
-	-->
-
-	<property name="ckeditor.file" value="ckeditor-4.0-stable.zip" />
-
+	<property name="ckeditor.file" value="ckeditor_4.0.3_liferay.zip" />
 	<property name="fckeditor.file" value="FCKeditor_2.6.3.zip" />
 	<property name="scayt.file" value="scayt_4.0.3.zip" />
 	<property name="tinymce.file" value="tinymce_3.5.6.zip" />
@@ -260,64 +253,6 @@
 
 				<unzip src="third-party/${ckeditor.file}" dest="docroot/html/js/editor" />
 
-				<if>
-					<not>
-						<available file="docroot/html/js/editor/ckeditor_diffs/ckeditor.js" />
-					</not>
-					<then>
-						<delete
-							dir="docroot/html/js/editor/ckeditor/dev/builder/release"
-						/>
-
-						<replace file="docroot/html/js/editor/ckeditor/plugins/wysiwygarea/plugin.js">
-							<replacetoken><![CDATA[var data = fullPage]]></replacetoken>
-							<replacevalue>
-								<![CDATA[
-									if (!doc) {
-										return null;
-									}
-
-									var data = fullPage
-								]]>
-							</replacevalue>
-						</replace>
-
-						<java
-							classname="ckbuilder.ckbuilder"
-							classpathref="project.classpath"
-							dir="${basedir}/docroot/html/js/editor/ckeditor/dev/builder"
-							fork="true"
-							newenvironment="true"
-						>
-							<arg line="--build ../../" />
-							<arg line="release" />
-							<arg line="--version=&quot;4.0 STABLE&quot;" />
-							<arg line="--build-config ${basedir}/docroot/html/js/editor/ckeditor/dev/builder/build-config.js" />
-						</java>
-					</then>
-				</if>
-
-				<move
-					file="docroot/html/js/editor/ckeditor/dev/builder/release/ckeditor"
-					preservelastmodified="true"
-					tofile="docroot/html/js/editor/ckeditor.tmp"
-				/>
-
-				<delete
-					dir="docroot/html/js/editor/ckeditor"
-				/>
-
-				<move
-					file="docroot/html/js/editor/ckeditor.tmp"
-					preservelastmodified="true"
-					tofile="docroot/html/js/editor/ckeditor"
-				/>
-
-				<copy
-					file="docroot/html/js/editor/ckeditor/ckeditor.js"
-					tofile="docroot/html/js/editor/ckeditor_diffs/ckeditor.js"
-				/>
-
 				<copy todir="docroot/html/js/editor/ckeditor" overwrite="true" preservelastmodified="true">
 					<fileset dir="docroot/html/js/editor/ckeditor_diffs" />
 				</copy>
@@ -332,16 +267,6 @@
 				</copy>
 			</else>
 		</if>
-
-		<replace file="docroot/html/js/editor/ckeditor/plugins/link/dialogs/link.js">
-			<replacetoken><![CDATA[return 'mailto:' +]]></replacetoken>
-			<replacevalue><![CDATA[rest = decodeURIComponent(rest); return "mailto:" + ]]></replacevalue>
-		</replace>
-
-		<replace file="docroot/html/js/editor/ckeditor/plugins/link/dialogs/link.js">
-			<replacetoken><![CDATA[body = encodeURIComponent( email.body || '' );]]></replacetoken>
-			<replacevalue><![CDATA[body = email.body || ''; body = encodeURIComponent(body).replace(/%/g, '%25');]]></replacevalue>
-		</replace>
 	</target>
 
 	<target name="build-ckeditor-plugins-bbcode">

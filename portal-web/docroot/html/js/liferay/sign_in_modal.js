@@ -90,12 +90,10 @@ AUI.add(
 					_loadIO: function() {
 						var instance = this;
 
-						var modalSignInURL = Liferay.PortletURL.createURL(instance._signInURL);
-
-						modalSignInURL.setWindowState('exclusive');
+						var modalSignInURL = Liferay.Util.addParams('windowState=exclusive', instance._signInURL);
 
 						A.io.request(
-							modalSignInURL.toString(),
+							modalSignInURL,
 							{
 								on: {
 									failure: A.bind('_redirectPage', instance),
@@ -148,13 +146,18 @@ AUI.add(
 												}
 											}
 										},
-										bodyContent: content,
 										height: 390,
-										plugins: [A.Plugin.ParseContent],
 										width: 560
 									},
 									id: NAME,
 									title: Liferay.Language.get('sign-in')
+								},
+								function(dialogWindow) {
+									var bodyNode = dialogWindow.bodyNode;
+
+									bodyNode.plug(A.Plugin.ParseContent);
+
+									bodyNode.setContent(content);
 								}
 							);
 						}

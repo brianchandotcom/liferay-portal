@@ -140,16 +140,6 @@
 		</aui:nav-item>
 	</c:when>
 	<c:otherwise>
-
-		<%
-		PortletURL signInURL = new PortletURLImpl(request, PortletKeys.LOGIN, plid, PortletRequest.RENDER_PHASE);
-
-		signInURL.setParameter("redirect", currentURL);
-		signInURL.setPortletMode(PortletMode.VIEW);
-		signInURL.setSecure(request.isSecure() || PropsValues.COMPANY_SECURITY_AUTH_REQUIRES_HTTPS);
-		signInURL.setWindowState(LiferayWindowState.MAXIMIZED);
-		%>
-
-		<aui:nav-item cssClass="sign-in" href="<%= signInURL.toString() %>" label="sign-in" />
+		<aui:nav-item cssClass="sign-in" href="<%= themeDisplay.getURLSignIn() %>" label="sign-in" />
 	</c:otherwise>
 </c:choose>

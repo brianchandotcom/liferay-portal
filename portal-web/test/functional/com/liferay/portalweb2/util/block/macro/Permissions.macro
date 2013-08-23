@@ -128,6 +128,11 @@
 			<var name="sitePageType" value="${sitePageType}" />
 		</execute>
 
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="pageType" value="Organization" />
+		</execute>
+
 		<execute macro="Portlet#addPG">
 			<var name="pageName" value="${pageName}" />
 			<var name="pageType" value="Organization" />
@@ -263,6 +268,11 @@
 			<var name="siteName" value="${siteName}" />
 			<var name="sitePageName" value="${pageName}" />
 			<var name="sitePageType" value="${sitePageType}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="pageType" value="Site" />
 		</execute>
 
 		<execute macro="Portlet#addPG">

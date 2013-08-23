@@ -352,10 +352,11 @@ public class WikiPageServiceUtil {
 		return getService().movePageAttachmentToTrash(nodeId, title, fileName);
 	}
 
-	public static void movePageToTrash(long nodeId, java.lang.String title)
+	public static com.liferay.portlet.wiki.model.WikiPage movePageToTrash(
+		long nodeId, java.lang.String title)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().movePageToTrash(nodeId, title);
+		return getService().movePageToTrash(nodeId, title);
 	}
 
 	public static com.liferay.portlet.wiki.model.WikiPage movePageToTrash(

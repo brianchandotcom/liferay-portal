@@ -580,10 +580,13 @@ public class WikiPageServiceSoap {
 		}
 	}
 
-	public static void movePageToTrash(long nodeId, java.lang.String title)
-		throws RemoteException {
+	public static com.liferay.portlet.wiki.model.WikiPageSoap movePageToTrash(
+		long nodeId, java.lang.String title) throws RemoteException {
 		try {
-			WikiPageServiceUtil.movePageToTrash(nodeId, title);
+			com.liferay.portlet.wiki.model.WikiPage returnValue = WikiPageServiceUtil.movePageToTrash(nodeId,
+					title);
+
+			return com.liferay.portlet.wiki.model.WikiPageSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

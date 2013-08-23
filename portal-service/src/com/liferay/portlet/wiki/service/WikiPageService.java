@@ -277,7 +277,8 @@ public interface WikiPageService extends BaseService {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
-	public void movePageToTrash(long nodeId, java.lang.String title)
+	public com.liferay.portlet.wiki.model.WikiPage movePageToTrash(
+		long nodeId, java.lang.String title)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

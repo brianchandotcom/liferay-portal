@@ -28,6 +28,7 @@ String articleImageURL = article.getArticleImageURL(themeDisplay);
 	actionJsp="/html/portlet/journal/article_action.jsp"
 	description="<%= article.getDescription(locale) %>"
 	displayStyle="icon"
+	groupId="<%= article.getGroupId() %>"
 	rowCheckerId="<%= String.valueOf(article.getArticleId()) %>"
 	rowCheckerName="<%= JournalArticle.class.getSimpleName() %>"
 	showCheckbox="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.DELETE) || JournalArticlePermission.contains(permissionChecker, article, ActionKeys.UPDATE) %>"

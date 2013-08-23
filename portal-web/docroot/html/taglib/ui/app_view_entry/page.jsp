@@ -31,6 +31,7 @@ String description = (String)request.getAttribute("liferay-ui:app-view-entry:des
 Date displayDate = GetterUtil.getDate(request.getAttribute("liferay-ui:app-view-entry:displayDate"), DateFormatFactoryUtil.getDate(locale), null);
 String displayStyle = (String)request.getAttribute("liferay-ui:app-view-entry:displayStyle");
 boolean folder = GetterUtil.getBoolean(request.getAttribute("liferay-ui:app-view-entry:folder"));
+long groupId = GetterUtil.getLong(request.getAttribute("liferay-ui:app-view-entry:groupId"));
 String latestApprovedVersion = GetterUtil.getString(request.getAttribute("liferay-ui:app-view-entry:latestApprovedVersion"));
 String latestApprovedVersionAuthor = GetterUtil.getString(request.getAttribute("liferay-ui:app-view-entry:latestApprovedVersionAuthor"));
 boolean locked = GetterUtil.getBoolean(request.getAttribute("liferay-ui:app-view-entry:locked"));
@@ -160,6 +161,47 @@ if (showLinkTitle) {
 					</c:if>
 
 					<dl>
+						<c:if test="<%= (groupId > 0) && (groupId != scopeGroupId) %>">
+
+							<%
+							Group group = GroupLocalServiceUtil.getGroup(groupId);
+							%>
+
+							<c:if test="<%= !group.isLayout() || (group.getParentGroupId() != scopeGroupId) %>">
+								<dt>
+									<liferay-ui:message key="site" />:
+								</dt>
+
+								<dd>
+
+									<%
+									String groupName = null;
+
+									if (group.isLayout()) {
+										Group parentGroup = group.getParentGroup();
+
+										groupName = parentGroup.getDescriptiveName(locale);
+									}
+									else {
+										groupName = group.getDescriptiveName(locale);
+									}
+									%>
+
+									<%= HtmlUtil.escape(groupName) %>
+								</dd>
+							</c:if>
+
+							<c:if test="<%= group.isLayout() %>">
+								<dt>
+									<liferay-ui:message key="scope" />:
+								</dt>
+
+								<dd>
+									<%= group.getDescriptiveName(locale) %>
+								</dd>
+							</c:if>
+						</c:if>
+
 						<c:if test="<%= Validator.isNotNull(version) || ((status != WorkflowConstants.STATUS_ANY) && (status != WorkflowConstants.STATUS_APPROVED)) %>">
 							<dt>
 								<liferay-ui:message key='<%= Validator.isNotNull(version) ? "version" : "status" %>' />:

@@ -50,6 +50,7 @@ String articleImageURL = article.getArticleImageURL(themeDisplay);
 	displayDate="<%= article.getDisplayDate() %>"
 	displayStyle="descriptive"
 	expirationDate="<%= article.getExpirationDate() %>"
+	groupId="<%= article.getGroupId() %>"
 	latestApprovedVersion="<%= (latestApprovedArticleVersion != null) ? String.valueOf(latestApprovedArticleVersion.getVersion()) : null %>"
 	latestApprovedVersionAuthor="<%= (latestApprovedArticleVersion != null) ? String.valueOf(latestApprovedArticleVersion.getUserName()) : null %>"
 	modifiedDate="<%= article.getModifiedDate() %>"

@@ -16,19 +16,28 @@ package com.liferay.portal.lar;
 
 import com.liferay.portal.LocaleException;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
+import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
-import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.Portlet;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
+import com.liferay.portal.test.Sync;
+import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
 import com.liferay.portal.test.TransactionalCallbackAwareExecutionTestListener;
 import com.liferay.portal.util.GroupTestUtil;
 import com.liferay.portal.util.LayoutTestUtil;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.TestPropsValues;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -42,10 +51,11 @@ import org.junit.runner.RunWith;
 @ExecutionTestListeners(
 	listeners = {
 		MainServletExecutionTestListener.class,
+		SynchronousDestinationExecutionTestListener.class,
 		TransactionalCallbackAwareExecutionTestListener.class
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
-@Transactional
+@Sync
 public class LayoutExportImportTest extends BaseExportImportTestCase {
 
 	@Test
@@ -183,6 +193,48 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 			layoutA.getPlid(), "/layoutB-de", "de");
 
 		exportImportLayouts(layoutIds, getImportParameterMap());
+	}
+
+	@Test
+	public void testGetPortletDataHandlerPortlets() throws Exception {
+		LayoutTestUtil.addPortletToLayout(layout, PortletKeys.BOOKMARKS);
+		LayoutTestUtil.addPortletToLayout(layout, PortletKeys.LOGIN);
+
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			group.getGroupId());
+
+		serviceContext.setAttribute("staged-portlet_28", true);
+
+		ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+		StagingUtil.enableLocalStaging(
+			TestPropsValues.getUserId(), group, group, false, false,
+			serviceContext);
+
+		Group stagingGroup = group.getStagingGroup();
+		Layout stagingLayout = LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
+			layout.getUuid(), stagingGroup.getGroupId(),
+			layout.isPrivateLayout());
+
+		List<Layout> layouts = new ArrayList<Layout>();
+		layouts.add(stagingLayout);
+
+		List<Portlet> portlets = LayoutExporter.getPortletDataHandlerPortlets(
+			layouts);
+
+		Assert.assertEquals(2, portlets.size());
+
+		for (Portlet portlet : portlets) {
+			String portletId = portlet.getPortletId();
+
+			if (!portletId.equals(PortletKeys.BOOKMARKS) &&
+				!portletId.equals(PortletKeys.LOGIN)) {
+
+				Assert.fail();
+			}
+		}
+
+		ServiceContextThreadLocal.popServiceContext();
 	}
 
 	protected void exportImportLayouts(

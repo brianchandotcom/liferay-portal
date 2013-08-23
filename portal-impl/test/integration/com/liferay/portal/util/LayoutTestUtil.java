@@ -150,6 +150,16 @@ public class LayoutTestUtil {
 	public static String addPortletToLayout(Layout layout, String portletId)
 		throws Exception {
 
+		Map<String, String[]> preferenceMap = null;
+
+		return addPortletToLayout(layout, portletId, preferenceMap);
+	}
+
+	public static String addPortletToLayout(
+			Layout layout, String portletId,
+			Map<String, String[]> preferenceMap)
+		throws Exception {
+
 		long userId = TestPropsValues.getUserId();
 
 		LayoutTypePortlet layoutTypePortlet =
@@ -161,10 +171,8 @@ public class LayoutTestUtil {
 
 		String columnId = columns.get(0);
 
-		Map<String, String[]> preferencesMap = null;
-
 		return addPortletToLayout(
-			userId, layout, portletId, columnId, preferencesMap);
+			userId, layout, portletId, columnId, preferenceMap);
 	}
 
 	public static String addPortletToLayout(

@@ -16,9 +16,11 @@ package com.liferay.portal.tools.seleniumbuilder;
 
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.tools.ArgumentsUtil;
 import com.liferay.portal.util.InitUtil;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -122,6 +124,27 @@ public class SeleniumBuilder {
 				testSuiteConverter.convert(testSuiteName);
 			}
 		}
+
+		SeleniumBuilderFileUtil seleniumBuilderFileUtil =
+			new SeleniumBuilderFileUtil(baseDir);
+
+		int testCaseCount = 0;
+
+		Set<String> testCaseNames = seleniumBuilderContext.getTestCaseNames();
+
+		for (String testCaseName : testCaseNames) {
+			Element rootElement = seleniumBuilderContext.getTestCaseRootElement(
+				testCaseName);
+
+			List<Element> commandElements =
+				seleniumBuilderFileUtil.getAllChildElements(
+					rootElement, "command");
+
+			testCaseCount += commandElements.size();
+		}
+
+		System.out.println(
+			"\nThere are currently " + testCaseCount + " test cases");
 	}
 
 }

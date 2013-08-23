@@ -545,6 +545,12 @@
 		</antcall>
 
 		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="end-user-collaboration-p5" />
+			<param name="test.ant.script.database.minimal" value="true" />
+			<param name="test.ant.script.suite" value="EndUserCollaborationP5TestSuite" />
+		</antcall>
+	
+		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="end-user-document-management-acceptance" />
 			<param name="test.ant.script.database.minimal" value="true" />
 			<param name="test.ant.script.suite" value="EndUserDocumentManagementAcceptanceTestSuite" />

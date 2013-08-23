@@ -47,7 +47,11 @@ boolean showAssetCount = dataJSONObject.getBoolean("showAssetCount", true);
 
 			long curGroupId = GetterUtil.getInteger(termCollector.getTerm());
 
-			Group group = GroupLocalServiceUtil.getGroup(curGroupId);
+			Group group = GroupLocalServiceUtil.fetchGroup(curGroupId);
+
+			if (group == null) {
+				continue;
+			}
 		%>
 
 			<c:if test="<%= groupId == curGroupId %>">

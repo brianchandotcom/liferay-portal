@@ -30,6 +30,6 @@
 
 <c:if test="<%= useDialog %>">
 	<aui:script>
-		Liferay.delegateClick('<%= namespace + name %>', AUI().bind('openInDialog', Liferay.Util));
+		Liferay.delegateClick('<%= namespace + name %>', Liferay.Util.openInDialog);
 	</aui:script>
 </c:if>

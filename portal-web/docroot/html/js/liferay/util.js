@@ -532,6 +532,24 @@
 			return value;
 		},
 
+		openInDialog: function(event) {
+			event.preventDefault();
+
+			var currentTarget = event.currentTarget;
+
+			var config = currentTarget.getData();
+
+			if (!config.uri) {
+				config.uri = currentTarget.getData('href') || currentTarget.attr('href');
+			}
+
+			if (!config.title) {
+				config.title = currentTarget.attr('title');
+			}
+
+			Liferay.Util.openWindow(config);
+		},
+
 		openWindow: function(config, callback) {
 			config.openingWindow = window;
 
@@ -1426,29 +1444,6 @@
 			}
 		},
 		['aui-base']
-	);
-
-	Liferay.provide(
-		Util,
-		'openInDialog',
-		function(event) {
-			event.preventDefault();
-
-			var currentTarget = event.currentTarget;
-
-			var config = currentTarget.getData();
-
-			if (!config.uri) {
-				config.uri = currentTarget.getData('href') || currentTarget.attr('href');
-			}
-
-			if (!config.title) {
-				config.title = currentTarget.attr('title');
-			}
-
-			Liferay.Util.openWindow(config);
-		},
-		['aui-base', 'liferay-util-window']
 	);
 
 	Liferay.provide(

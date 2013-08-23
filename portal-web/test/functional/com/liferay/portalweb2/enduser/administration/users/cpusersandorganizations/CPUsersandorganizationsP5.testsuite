@@ -1,0 +1,6 @@
+<definition>
+	<execute test-case-command="CPUsersandorganizations#AddOrganizations" />
+	<execute test-case-command="CPUsersandorganizations#EditOrganizationSite" />
+	<execute test-case-command="CPUsersandorganizations#LoginUser" />
+	<execute test-case-command="CPUsersandorganizations#RemoveMember" />
+</definition>

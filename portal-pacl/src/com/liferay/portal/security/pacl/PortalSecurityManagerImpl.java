@@ -54,6 +54,8 @@ import com.liferay.portal.security.pacl.servlet.PACLRequestDispatcherWrapper;
 import com.liferay.portal.servlet.DirectRequestDispatcherFactoryImpl;
 import com.liferay.portal.spring.aop.ServiceBeanAopProxy;
 import com.liferay.portal.spring.bean.BeanReferenceAnnotationBeanPostProcessor;
+import com.liferay.portal.spring.bean.BeanReferenceRefreshUtil;
+import com.liferay.portal.spring.bean.BeanReferenceRefreshUtil.PACL;
 import com.liferay.portal.spring.context.PortletApplicationContext;
 import com.liferay.portal.spring.util.FilterClassLoader;
 import com.liferay.portal.template.BaseTemplateManager;
@@ -85,6 +87,7 @@ import java.security.PrivilegedExceptionAction;
 import java.security.ProtectionDomain;
 
 import java.util.HashMap;
+import java.util.IdentityHashMap;
 import java.util.Map;
 import java.util.Properties;
 
@@ -99,6 +102,7 @@ import javax.servlet.ServletContext;
 import javax.sql.DataSource;
 
 import org.springframework.aop.framework.AdvisedSupport;
+import org.springframework.beans.factory.BeanFactory;
 
 import sun.security.util.SecurityConstants;
 
@@ -389,6 +393,9 @@ public class PortalSecurityManagerImpl extends SecurityManager
 
 	protected void initPACLImpls() throws Exception {
 		initPACLImpl(BeanLocatorImpl.class, new DoBeanLocatorImplPACL());
+		initPACLImpl(
+			BeanReferenceRefreshUtil.class,
+			new DoBeanReferenceRefreshUtilPACL());
 		initPACLImpl(ClassLoaderUtil.class, new DoClassLoaderUtilPACL());
 		initPACLImpl(
 			DataSourceFactoryImpl.class, new DoDataSourceFactoryImplPACL());
@@ -486,6 +493,35 @@ public class PortalSecurityManagerImpl extends SecurityManager
 			return ProxyUtil.newProxyInstance(
 				classLoader, interfaces, invocationHandler);
 		}
+
+	}
+
+	private static class DoBeanReferenceRefreshUtilPACL implements PACL {
+
+		public Object getNewReferencedBean(
+			String referencedBeanName, BeanFactory beanFactory) {
+
+			Object newReferencedBean = beanFactory.getBean(referencedBeanName);
+
+			Object doPrivilegedBean = _doPrivilegedBeans.get(newReferencedBean);
+
+			if ((doPrivilegedBean == null) &&
+				DoPrivilegedFactory.isEarlyBeanReference(referencedBeanName)) {
+
+				doPrivilegedBean = DoPrivilegedFactory.wrap(newReferencedBean);
+
+				_doPrivilegedBeans.put(newReferencedBean, doPrivilegedBean);
+			}
+
+			if (doPrivilegedBean != null) {
+				newReferencedBean = doPrivilegedBean;
+			}
+
+			return newReferencedBean;
+		}
+
+		private static Map<Object, Object> _doPrivilegedBeans =
+			new IdentityHashMap<Object, Object>();
 
 	}
 

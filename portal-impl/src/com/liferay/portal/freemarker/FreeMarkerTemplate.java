@@ -48,7 +48,7 @@ public class FreeMarkerTemplate extends AbstractTemplate {
 		TemplateResource templateResource,
 		TemplateResource errorTemplateResource, Map<String, Object> context,
 		Configuration configuration,
-		TemplateContextHelper templateContextHelper) {
+		TemplateContextHelper templateContextHelper, boolean privileged) {
 
 		super(
 			templateResource, errorTemplateResource, templateContextHelper,
@@ -64,6 +64,7 @@ public class FreeMarkerTemplate extends AbstractTemplate {
 		}
 
 		_configuration = configuration;
+		_privileged = privileged;
 	}
 
 	@Override
@@ -137,8 +138,17 @@ public class FreeMarkerTemplate extends AbstractTemplate {
 			TemplateConstants.LANG_TYPE_FTL, templateResource);
 
 		try {
-			Template template = AccessController.doPrivileged(
-				new TemplatePrivilegedExceptionAction(templateResource));
+			Template template = null;
+
+			if (_privileged) {
+				template = AccessController.doPrivileged(
+					new TemplatePrivilegedExceptionAction(templateResource));
+			}
+			else {
+				template = _configuration.getTemplate(
+					getTemplateResourceUUID(templateResource),
+					TemplateConstants.DEFAUT_ENCODING);
+			}
 
 			template.process(_context, writer);
 		}
@@ -153,6 +163,7 @@ public class FreeMarkerTemplate extends AbstractTemplate {
 
 	private Configuration _configuration;
 	private Map<String, Object> _context;
+	private boolean _privileged;
 
 	private class TemplatePrivilegedExceptionAction
 		implements PrivilegedExceptionAction<Template> {

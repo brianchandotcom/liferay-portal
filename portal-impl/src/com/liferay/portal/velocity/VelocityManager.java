@@ -151,13 +151,13 @@ public class VelocityManager extends BaseTemplateManager {
 	protected Template doGetTemplate(
 		TemplateResource templateResource,
 		TemplateResource errorTemplateResource, boolean restricted,
-		Map<String, Object> helperUtilities) {
+		Map<String, Object> helperUtilities, boolean privileged) {
 
 		VelocityContext velocityContext = getVelocityContext(helperUtilities);
 
 		Template template = new VelocityTemplate(
 			templateResource, errorTemplateResource, velocityContext,
-			_velocityEngine, templateContextHelper);
+			_velocityEngine, templateContextHelper, privileged);
 
 		if (restricted) {
 			template = new RestrictedTemplate(

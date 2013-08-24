@@ -100,7 +100,7 @@ public abstract class BasePermissionChecker implements PermissionChecker {
 		long groupId, String name, long primKey, String actionId) {
 
 		try {
-			if (groupId != 0) {
+			if (groupId > 0) {
 				Group group = GroupLocalServiceUtil.getGroup(groupId);
 
 				if ((group.getCompanyId() != user.getCompanyId()) &&

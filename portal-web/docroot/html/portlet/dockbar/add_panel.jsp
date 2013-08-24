@@ -63,6 +63,7 @@
 					%>
 
 					<liferay-ui:tabs
+						cssClass="nav-pills"
 						names="<%= StringUtil.merge(tabs1Names) %>"
 						refresh="<%= false %>"
 						value="<%= selectedTab %>"

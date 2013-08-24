@@ -100,8 +100,7 @@ String onClick = GetterUtil.getString((String)request.getAttribute("liferay-ui:t
 		</c:when>
 		<c:otherwise>
 			<input name="<%= namespace %><%= param %>TabsScroll" type="hidden" />
-
-			<ul class="nav nav-tabs">
+			<ul class="nav <%= cssClass %>">
 		</c:otherwise>
 	</c:choose>
 

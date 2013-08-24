@@ -16,14 +16,25 @@ package com.liferay.portal.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.Layout;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.LayoutLocalServiceUtil;
+import com.liferay.portal.util.PortletKeys;
+import com.liferay.portlet.asset.model.AssetEntry;
+import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.permission.BlogsPermission;
+import com.liferay.portlet.documentlibrary.model.DLFolder;
+import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
+import com.liferay.portlet.documentlibrary.service.permission.DLPermission;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.service.permission.JournalPermission;
 import com.liferay.portlet.messageboards.NoSuchDiscussionException;
@@ -32,6 +43,7 @@ import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.service.MBDiscussionLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.permission.MBCategoryPermission;
+import com.liferay.portlet.messageboards.service.permission.MBDiscussionPermission;
 import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
 import com.liferay.portlet.messageboards.service.permission.MBPermission;
 import com.liferay.portlet.wiki.model.WikiNode;
@@ -71,13 +83,37 @@ public class SubscriptionPermissionImpl implements SubscriptionPermission {
 			return false;
 		}
 
+		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+			subscriptionClassName, subscriptionClassPK);
+
+		if (assetEntry == null) {
+			return false;
+		}
+
 		try {
 			MBDiscussionLocalServiceUtil.getDiscussion(
 				subscriptionClassName, subscriptionClassPK);
 
-			return true;
+			return hasDiscussionPermission(
+				permissionChecker, subscriptionClassName, subscriptionClassPK,
+				assetEntry);
 		}
 		catch (NoSuchDiscussionException nsde) {
+		}
+
+		if (subscriptionClassName.equals(Folder.class.getName())) {
+			if (subscriptionClassPK != assetEntry.getGroupId()) {
+				DLFolder dlFolder = DLFolderLocalServiceUtil.getDLFolder(
+					subscriptionClassPK);
+
+				return DLFolderPermission.contains(
+					permissionChecker, dlFolder, ActionKeys.VIEW);
+			}
+			else {
+				return DLPermission.contains(
+					permissionChecker, assetEntry.getGroupId(),
+					ActionKeys.VIEW);
+			}
 		}
 
 		if (Validator.isNotNull(inferredClassName)) {
@@ -99,6 +135,33 @@ public class SubscriptionPermissionImpl implements SubscriptionPermission {
 		}
 
 		return true;
+	}
+
+	protected boolean hasDiscussionPermission(
+			PermissionChecker permissionChecker, String subscriptionClassName,
+			long subscriptionClassPK, AssetEntry assetEntry)
+		throws PortalException, SystemException {
+
+		if (subscriptionClassName.equals(Layout.class.getName())) {
+			Layout layout = LayoutLocalServiceUtil.getLayout(
+				subscriptionClassPK);
+
+			return LayoutPermissionUtil.contains(
+				permissionChecker, layout, ActionKeys.VIEW);
+		}
+		else if (subscriptionClassName.equals(
+					WorkflowInstance.class.getName())) {
+
+			return permissionChecker.hasPermission(
+				assetEntry.getGroupId(), PortletKeys.WORKFLOW_DEFINITIONS,
+				assetEntry.getGroupId(), ActionKeys.VIEW);
+		}
+		else {
+			return MBDiscussionPermission.contains(
+				permissionChecker, assetEntry.getCompanyId(),
+				assetEntry.getGroupId(), subscriptionClassName,
+				subscriptionClassPK, assetEntry.getUserId(), ActionKeys.VIEW);
+		}
 	}
 
 	protected Boolean hasPermission(

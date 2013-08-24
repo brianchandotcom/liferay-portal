@@ -69,28 +69,28 @@ public class InvokerFilterChain implements FilterChain {
 			ServletRequest servletRequest, ServletResponse servletResponse)
 		throws IOException, ServletException {
 
-		if ((_filters == null) || (_index >= _filters.size())) {
-			_filterChain.doFilter(servletRequest, servletResponse);
-		}
-		else {
+		if (_filters != null) {
 			HttpServletRequest request = (HttpServletRequest)servletRequest;
 			HttpServletResponse response = (HttpServletResponse)servletResponse;
 
-			Filter filter = _filters.get(_index++);
+			while (_index < _filters.size()) {
+				Filter filter = _filters.get(_index++);
 
-			boolean filterEnabled = true;
+				if (filter instanceof LiferayFilter) {
+					LiferayFilter liferayFilter = (LiferayFilter)filter;
 
-			if (filter instanceof LiferayFilter) {
-				LiferayFilter liferayFilter = (LiferayFilter)filter;
+					if (!liferayFilter.isFilterEnabled() ||
+						!liferayFilter.isFilterEnabled(request, response)) {
 
-				if (!liferayFilter.isFilterEnabled() ||
-					!liferayFilter.isFilterEnabled(request, response)) {
+						if (_log.isDebugEnabled()) {
+							_log.debug(
+								"Skip disabled filter " + filter.getClass());
+						}
 
-					filterEnabled = false;
+						continue;
+					}
 				}
-			}
 
-			if (filterEnabled) {
 				if (filter instanceof DirectCallFilter) {
 					try {
 						processDirectCallFilter(filter, request, response);
@@ -108,15 +108,12 @@ public class InvokerFilterChain implements FilterChain {
 				else {
 					processDoFilter(filter, request, response);
 				}
-			}
-			else {
-				if (_log.isDebugEnabled()) {
-					_log.debug("Skip disabled filter " + filter.getClass());
-				}
 
-				doFilter(request, response);
+				return;
 			}
 		}
+
+		_filterChain.doFilter(servletRequest, servletResponse);
 	}
 
 	public void setContextClassLoader(ClassLoader contextClassLoader) {

@@ -1303,6 +1303,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					if ((trimmedLine.startsWith("private ") ||
 						 trimmedLine.startsWith("protected ") ||
 						 trimmedLine.startsWith("public ")) &&
+						!line.contains(StringPool.EQUAL) &&
 						line.contains(" (")) {
 
 						line = StringUtil.replace(line, " (", "(");

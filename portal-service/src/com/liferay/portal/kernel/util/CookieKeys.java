@@ -44,7 +44,7 @@ public class CookieKeys {
 
 	public static final String LOGIN = "LOGIN";
 
-	public static final int MAX_AGE =(int)Time.YEAR;
+	public static final int MAX_AGE = (int)Time.YEAR;
 
 	public static final String PASSWORD = "PASSWORD";
 

@@ -47,8 +47,15 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Mika Koivisto
  * @author Brian Wing Shun Chan
+ * @author Shuyang Zhou
  */
 public class InvokerFilter extends BasePortalLifecycle implements Filter {
+
+	public InvokerFilter() {
+		if (ServerDetector.isTomcat()) {
+			_sanitizeHeader = false;
+		}
+	}
 
 	@Override
 	public void destroy() {
@@ -69,7 +76,9 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 
 		HttpServletResponse response = (HttpServletResponse)servletResponse;
 
-		response = secureResponseHeaders(response);
+		if (_sanitizeHeader) {
+			response = new SecureHttpServletResponseWrapper(response);
+		}
 
 		request.setAttribute(WebKeys.INVOKER_FILTER_URI, uri);
 
@@ -252,12 +261,6 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 		return request;
 	}
 
-	protected HttpServletResponse secureResponseHeaders(
-		HttpServletResponse response) {
-
-		return new SecureHttpServletResponseWrapper(response);
-	}
-
 	private static Log _log = LogFactoryUtil.getLog(InvokerFilter.class);
 
 	private String _contextPath;
@@ -266,5 +269,6 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 	private FilterConfig _filterConfig;
 	private int _invokerFilterChainSize;
 	private InvokerFilterHelper _invokerFilterHelper;
+	private boolean _sanitizeHeader = true;
 
 }

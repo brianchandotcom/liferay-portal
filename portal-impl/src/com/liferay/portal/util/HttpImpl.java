@@ -101,6 +101,7 @@ import org.apache.commons.httpclient.protocol.Protocol;
 /**
  * @author Brian Wing Shun Chan
  * @author Hugo Huijser
+ * @author Shuyang Zhou
  */
 @DoPrivileged
 public class HttpImpl implements Http {
@@ -944,17 +945,25 @@ public class HttpImpl implements Http {
 			return null;
 		}
 
-		char[] chars = header.toCharArray();
+		StringBuilder sb = null;
 
-		for (int i = 0; i < chars.length; i++) {
-			char c = chars[i];
+		for (int i = 0; i < header.length(); i++) {
+			char c = header.charAt(i);
 
 			if (((c <= 31) && (c != 9)) || (c == 127) || (c > 255)) {
-				chars[i] = CharPool.SPACE;
+				if (sb == null) {
+					sb = new StringBuilder(header);
+				}
+
+				sb.setCharAt(i, CharPool.SPACE);
 			}
 		}
 
-		return new String(chars);
+		if (sb != null) {
+			header = sb.toString();
+		}
+
+		return header;
 	}
 
 	@Override

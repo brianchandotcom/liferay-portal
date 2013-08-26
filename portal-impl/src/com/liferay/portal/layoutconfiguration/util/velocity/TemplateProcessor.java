@@ -64,16 +64,7 @@ public class TemplateProcessor implements ColumnProcessor {
 			request.getAttribute(WebKeys.PORTLET_AJAX_RENDER));
 
 		_portletRenderers = new TreeMap<Integer, List<PortletRenderer>>(
-			new Comparator<Integer>() {
-
-				@Override
-				public int compare(
-					Integer renderWeight1, Integer renderWeight2) {
-
-					return renderWeight2.compareTo(renderWeight1);
-				}
-
-			});
+			_RENDER_WEIGHT_COMPARATOR);
 	}
 
 	public Map<Integer, List<PortletRenderer>> getPortletRenderers() {
@@ -204,10 +195,22 @@ public class TemplateProcessor implements ColumnProcessor {
 		}
 	}
 
+	private static final RenderWeightComparator _RENDER_WEIGHT_COMPARATOR =
+		new RenderWeightComparator();
+
 	private Portlet _portlet;
 	private boolean _portletAjaxRender;
 	private Map<Integer, List<PortletRenderer>> _portletRenderers;
 	private HttpServletRequest _request;
 	private HttpServletResponse _response;
+
+	private static class RenderWeightComparator implements Comparator<Integer> {
+
+		@Override
+		public int compare(Integer renderWeight1, Integer renderWeight2) {
+			return renderWeight2.intValue() - renderWeight1.intValue();
+		}
+
+	}
 
 }

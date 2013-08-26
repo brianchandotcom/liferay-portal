@@ -41,6 +41,7 @@ import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.service.permission.LayoutPermissionUtil;
+import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
@@ -393,6 +394,14 @@ public class PortletPreferencesFactoryImpl
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		if ((portletDisplay != null) &&
+			(portletDisplay.getPortletSetup() != null)) {
+
+			return portletDisplay.getPortletSetup();
+		}
 
 		long scopeGroupId = PortalUtil.getScopeGroupId(
 			request, portletId, true);

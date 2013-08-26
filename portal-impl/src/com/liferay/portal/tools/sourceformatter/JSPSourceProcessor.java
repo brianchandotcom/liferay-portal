@@ -320,7 +320,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			}
 		}
 
-		if (fileName.endsWith("init.jsp")) {
+		if (fileName.endsWith("init.jsp") || fileName.endsWith("init.jspf")) {
 			int x = newContent.indexOf("<%@ page import=");
 
 			int y = newContent.lastIndexOf("<%@ page import=");
@@ -862,7 +862,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 		fileName = fileName.replaceFirst(docrootPath, StringPool.BLANK);
 
-		if (fileName.endsWith("init.jsp") ||
+		if (fileName.endsWith("init.jsp") || fileName.endsWith("init.jspf") ||
 			fileName.contains("init-ext.jsp")) {
 
 			addJSPReferenceFileNames(fileName, includeFileNames);

@@ -46,10 +46,13 @@ import java.io.ObjectOutputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.lang.reflect.ReflectPermission;
 
 import java.rmi.RemoteException;
 import java.rmi.server.ExportException;
 import java.rmi.server.UnicastRemoteObject;
+
+import java.security.Permission;
 
 import java.util.Arrays;
 import java.util.List;
@@ -284,11 +287,8 @@ public class RemoteSPITest {
 		System.clearProperty(PropsKeys.INTRABAND_WELDER_IMPL);
 		System.clearProperty(PropsKeys.LIFERAY_HOME);
 
-		UnsyncByteArrayInputStream unsyncByteArrayInputStream =
-			new UnsyncByteArrayInputStream(data);
-
 		ObjectInputStream objectInputStream = new ObjectInputStream(
-			unsyncByteArrayInputStream);
+			new UnsyncByteArrayInputStream(data));
 
 		Object object = objectInputStream.readObject();
 
@@ -315,6 +315,49 @@ public class RemoteSPITest {
 		Assert.assertEquals(
 			"false",
 			System.getProperty("portal:" + PropsKeys.CLUSTER_LINK_ENABLED));
+
+		// Unable to disable dependency management
+
+		objectInputStream = new ObjectInputStream(
+			new UnsyncByteArrayInputStream(data));
+
+		SecurityManager securityManager = System.getSecurityManager();
+
+		System.setSecurityManager(new SecurityManager() {
+
+			@Override
+			public void checkPermission(Permission permission) {
+				if ((permission instanceof RuntimePermission)) {
+					String name = permission.getName();
+
+					if (name.equals("setSecurityManager")) {
+						return;
+					}
+				}
+
+				if (permission instanceof ReflectPermission) {
+					throw new SecurityException();
+				}
+			}
+
+		});
+
+		try {
+			objectInputStream.readObject();
+
+			Assert.fail();
+		}
+		catch (IOException ioe) {
+			Assert.assertEquals(
+				"Unable to disable dependency management", ioe.getMessage());
+
+			Throwable cause = ioe.getCause();
+
+			Assert.assertSame(SecurityException.class, cause.getClass());
+		}
+		finally {
+			System.setSecurityManager(securityManager);
+		}
 	}
 
 	@Test

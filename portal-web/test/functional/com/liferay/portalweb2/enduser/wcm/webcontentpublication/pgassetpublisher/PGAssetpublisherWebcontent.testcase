@@ -32,7 +32,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="WebContent#addPGviaAP">
+		<execute macro="WebContent#addPGViaAP">
 			<var name="pageName" value="${pageName}" />
 			<var name="webContentTitle" value="${webContentTitle}" />
 			<var name="webContentContent" value="${webContentContent}" />

@@ -1,0 +1,31 @@
+<definition>
+	<command name="click">
+		<case locator-key1="LANGUAGE_MENU_CHINESE">
+			<execute function="Click#clickAtAndWait" />
+		</case>
+
+		<case locator-key1="LANGUAGE_MENU_ENGLISH">
+			<execute function="Click#clickAtAndWait" />
+		</case>
+
+		<case locator-key1="LANGUAGE_MENU_FRENCH">
+			<execute function="Click#clickAtAndWait" />
+		</case>
+
+		<case locator-key1="LANGUAGE_MENU_GERMAN">
+			<execute function="Click#clickAtAndWait" />
+		</case>
+
+		<case locator-key1="LANGUAGE_MENU_HUNGARIAN">
+			<execute function="Click#clickAtAndWait" />
+		</case>
+
+		<case locator-key1="LANGUAGE_MENU_PORTUGUESE">
+			<execute function="Click#clickAtAndWait" />
+		</case>
+
+		<case locator-key1="LANGUAGE_MENU_SPANISH">
+			<execute function="Click#clickAtAndWait" />
+		</case>
+	</command>
+</definition>

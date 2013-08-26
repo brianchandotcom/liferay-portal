@@ -1,0 +1,171 @@
+<html>
+<head>
+<title>PGWebcontentdisplayConfiguration</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGWebcontentdisplayConfiguration</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGWebcontentdisplayConfiguration</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIGURATION_IFRAME</td>
+	<td>//iframe[contains(@id,'configurationIframeDialog')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[@class='alert alert-success']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INFO_MESSAGE</td>
+	<td>//div[@class='alert alert-info']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INFO_MESSAGE_ARTICLE</td>
+	<td>//div[@class='alert alert-info']/span/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_FIELD</td>
+	<td>//input[@id='_86_keywords']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_BUTTON</td>
+	<td>//button[contains(.,'Search')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>SHOW_AVAILABLE_LOCALES_CHECKBOX</td>
+	<td>//input[@id='_86_showAvailableLocalesCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENABLE_PRINT_CHECKBOX</td>
+	<td>//input[@id='_86_enablePrintCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENABLE_RELATED_ASSETS_CHECKBOX</td>
+	<td>//input[@id='_86_enableRelatedAssetsCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENABLE_RATINGS_CHECKBOX</td>
+	<td>//input[@id='_86_enableRatingsCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENABLE_COMMENTS_CHECKBOX</td>
+	<td>//input[@id='_86_enableCommentsCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENABLE_COMMENT_RATINGS_CHECKBOX</td>
+	<td>//input[@id='_86_enableCommentRatingsCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENABLE_VIEW_COUNT_INCREMENT_CHECKBOX</td>
+	<td>//input[@id='_86_enableViewCountIncrementCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE_BUTTON</td>
+	<td>//button[contains(.,'Save')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--NAVIGATION-->
+<tr>
+	<td>NAVIGATION_SETUP</td>
+	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Setup')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_SUPPORTED_CLIENTS</td>
+	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Supported Clients')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_PERMISSIONS</td>
+	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Permissions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_SHARING</td>
+	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Sharing')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_SCOPE</td>
+	<td>//ul[@class='nav nav-tabs']/li/a[contains(.,'Scope')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--WEB_CONTENT_TABLE-->
+<tr>
+	<td>WEB_CONTENT_TABLE_ID</td>
+	<td>//tr[contains(.,'${key_webContentTitle}')]/td[1]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WEB_CONTENT_TABLE_TITLE</td>
+	<td>//tr[contains(.,'${key_webContentTitle}')]/td[2]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WEB_CONTENT_TABLE_MODIFIED_DATE</td>
+	<td>//tr[contains(.,'${key_webContentTitle}')]/td[3]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WEB_CONTENT_TABLE_DISPLAY_DATE</td>
+	<td>//tr[contains(.,'${key_webContentTitle}')]/td[4]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WEB_CONTENT_TABLE_AUTHOR</td>
+	<td>//tr[contains(.,'${key_webContentTitle}')]/td[5]/a</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

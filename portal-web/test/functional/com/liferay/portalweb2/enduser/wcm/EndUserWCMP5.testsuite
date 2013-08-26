@@ -2,4 +2,6 @@
 	<execute test-suite="CPCategoriesP5" />
 
 	<execute test-suite="PGStagingP5" />
+
+	<execute test-suite="PGWebcontentdisplayP5" />
 </definition>

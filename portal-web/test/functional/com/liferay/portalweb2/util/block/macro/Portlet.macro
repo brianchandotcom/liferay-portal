@@ -35,4 +35,30 @@
 
 		<execute action="Home#assertElementPresent" locator-key1="PORTLET_1" />
 	</command>
+
+	<command name="gotoPortletOptions">
+		<execute action="BasePortlet#click" locator-key1="OPTIONS_ICON" />
+
+		<if>
+			<equals arg1="${portletOption}" arg2="Look and Feel" />
+			<then>
+				<execute action="BasePortlet#assertClick" locator-key1="OPTIONS_MENULIST_LOOK_AND_FEEL" value1="Look and Feel" />
+			</then>
+			<elseif>
+				<equals arg1="${portletOption}" arg2="Configuration" />
+				<then>
+					<execute action="BasePortlet#assertClick" locator-key1="OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${portletOption}" arg2="Export / Import" />
+				<then>
+					<execute action="BasePortlet#assertClick" locator-key1="OPTIONS_MENULIST_EXPORT_IMPORT" value1="Export / Import" />
+				</then>
+			</elseif>
+			<else>
+				<fail message="Invalid var portletOption. Must be (Look and Feel|Configuration|Export / Import)." />
+			</else>
+		</if>
+	</command>
 </definition>

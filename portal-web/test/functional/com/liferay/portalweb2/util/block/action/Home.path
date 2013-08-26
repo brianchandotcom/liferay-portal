@@ -99,6 +99,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONTENT_SCOPE_SELECTOR</td>
+	<td>//div[contains(@class,'lfr-title-scope-selector')]/div/a</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -107,6 +112,17 @@
 <tr>
 	<td>SCOPE_SELECTOR_MENULIST_ITEM</td>
 	<td>//ul[@aria-labelledby='_145_controlPanelSiteSelector']/li/a[contains(.,'${key_siteScopeName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--CONTENT_SCOPE_SELECTOR_MENULIST-->
+<tr>
+	<td>CONTENT_SCOPE_SELECTOR_MENULIST_ITEM</td>
+	<td>//ul[contains(@class,'lfr-menu-list')]/li/a[contains(.,'${key_contentScopeName}')]</td>
 	<td></td>
 </tr>
 <tr>

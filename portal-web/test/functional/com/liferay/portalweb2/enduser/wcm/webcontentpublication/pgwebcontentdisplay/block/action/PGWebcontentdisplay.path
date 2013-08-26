@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EXTEND_ACTION_PATH</td>
+	<td>BasePortlet</td>
+	<td></td>
+</tr>
+<tr>
 	<td>INFO_MESSAGE</td>
 	<td>//div[@class='alert alert-info']</td>
 	<td></td>
@@ -52,6 +57,47 @@
 <tr>
 	<td>WEB_CONTENT_CONTENT</td>
 	<td>//div[@class='journal-content-article']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--LANGUAGE_MENU-->
+<tr>
+	<td>LANGUAGE_MENU_CHINESE</td>
+	<td>//img[@title='中文']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LANGUAGE_MENU_ENGLISH</td>
+	<td>//img[@title='English']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LANGUAGE_MENU_FRENCH</td>
+	<td>//img[@title='français']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LANGUAGE_MENU_GERMAN</td>
+	<td>//img[@title='Deutsch']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LANGUAGE_MENU_HUNGARIAN</td>
+	<td>//img[@title='magyar']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LANGUAGE_MENU_PORTUGUESE</td>
+	<td>//img[@title='português']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LANGUAGE_MENU_SPANISH</td>
+	<td>//img[@title='español']</td>
 	<td></td>
 </tr>
 </tbody>

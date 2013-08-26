@@ -35,7 +35,7 @@
 		<execute action="CPWebcontent#assertTextEquals" locator-key1="ENTRY_DESCRIPTIVE_TITLE" value1="${webContentTitle}" />
 	</command>
 
-	<command name="addPGviaAP">
+	<command name="addPGViaAP">
 		<execute action="PGAssetpublisher#assertClick" locator-key1="ADD_NEW_DROPDOWN" value1="Add New" />
 		<execute action="PGAssetpublisher#assertClick" locator-key1="ADD_NEW_MENULIST_WEB_CONTENT" value1="Web Content" />
 
@@ -50,7 +50,7 @@
 		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_SUMMARY_1" value1="${webContentContent}" />
 	</command>
 
-	<command name="addPGviaWCD">
+	<command name="addPGViaWCD">
 		<execute action="PGWebcontentdisplay#click" locator-key1="ADD_WEB_CONTENT" value1="Add" />
 
 		<execute action="PGWebcontentdisplayAddwebcontent#type" locator-key1="TITLE_FIELD" value1="${webContentTitle}" />
@@ -58,6 +58,22 @@
 		<execute action="PGWebcontentdisplayAddwebcontent#click" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 
 		<execute action="PGWebcontentdisplay#assertTextEquals" locator-key1="WEB_CONTENT_CONTENT" value1="${webContentContent}" />
+	</command>
+
+	<command name="addTranslationPGViaWCD">
+		<execute action="PGWebcontentdisplay#click" locator-key1="EDIT_WEB_CONTENT" value1="Edit" />
+
+		<var name="key_webContentTranslationLanguage" value="${webContentTranslationLanguage}" />
+
+		<execute action="PGWebcontentdisplayEditwebcontent#assertClick" locator-key1="ADD_TRANSLATION_MENULIST" value1="Add Translation" />
+		<execute action="PGWebcontentdisplayEditwebcontent#assertClick" locator-key1="ADD_TRANSLATION_MENULIST_LANGUAGE" value1="${webContentTranslationLanguage}" />
+		<execute action="PGWebcontentdisplayEditwebcontent#selectFrame" locator-key1="WEB_CONTENT_TRANSLATION_IFRAME" />
+		<execute action="PGWebcontentdisplayEditwebcontent#type" locator-key1="WEB_CONTENT_TRANSLATION_IFRAME_TITLE_FIELD" value1="${webContentTranslationTitle}" />
+		<execute action="PGWebcontentdisplayEditwebcontent#type" locator-key1="WEB_CONTENT_TRANSLATION_IFRAME_CONTENT_FIELD" value1="${webContentTranslationContent}" />
+		<execute action="PGWebcontentdisplayEditwebcontent#selectFrame" locator-key1="WEB_CONTENT_TRANSLATION_IFRAME" />
+		<execute action="PGWebcontentdisplayEditwebcontent#assertClick" locator-key1="WEB_CONTENT_TRANSLATION_IFRAME_SAVE_BUTTON" value1="Save" />
+		<execute action="PGWebcontentdisplayEditwebcontent#selectFrame" value1="relative=top" />
+		<execute action="PGWebcontentdisplayAddwebcontent#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 	</command>
 
 	<command name="addWithWorkflowCP">
@@ -102,7 +118,7 @@
 		<execute action="PGWebcontentdisplay#assertTextEquals" locator-key1="ALERT_MESSAGE" value1="${webContentTitle} is not approved." />
 	</command>
 
-	<command name="editPGviaWCD">
+	<command name="editPGViaWCD">
 		<execute action="PGWebcontentdisplay#click" locator-key1="EDIT_WEB_CONTENT" value1="Edit" />
 
 		<execute action="PGWebcontentdisplayEditwebcontent#type" locator-key1="TITLE_FIELD" value1="${webContentTitleEdit}" />
@@ -184,6 +200,10 @@
 		<execute action="CPWebcontent#assertElementNotPresent" locator-key1="ENTRY_DESCRIPTIVE_TITLE" />
 	</command>
 
+	<command name="viewDefaultPGViaWCD">
+		<execute action="PGWebcontentdisplay#assertTextEquals" locator-key1="INFO_MESSAGE" value1="Select existing web content or add some web content to be displayed in this portlet." />
+	</command>
+
 	<command name="viewPGViaAP">
 		<var name="key_webContentTitle" value="${webContentTitle}" />
 
@@ -197,6 +217,17 @@
 
 	<command name="viewPGViaWCD">
 		<execute action="PGWebcontentdisplay#assertTextEquals" locator-key1="WEB_CONTENT_CONTENT" value1="${webContentContent}" />
+	</command>
+
+	<command name="viewSelectNoPGViaWCD">
+		<execute action="PGWebcontentdisplay#assertClick" locator-key1="OPTIONS_ICON" value1="Options" />
+		<execute action="PGWebcontentdisplay#assertClick" locator-key1="OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
+
+		<execute action="PGWebcontentdisplayConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
+
+		<var name='key_webContentTitle' value="${webContentTitle}" />
+
+		<execute action="PGWebcontentdisplayConfiguration#assertElementNotPresent" locator-key1="WEB_CONTENT_TABLE_TITLE" />
 	</command>
 
 	<command name="viewWithWorkflowCP">

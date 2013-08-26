@@ -220,6 +220,7 @@ String emailBodyParam = emailParam + "Body_" + currentLanguageId;
 						siteBrowserURL.setParameter("selectedGroupIds", StringUtil.merge(groupIds));
 						siteBrowserURL.setParameter("types", StringUtil.merge(types));
 						siteBrowserURL.setParameter("eventName", eventName);
+						siteBrowserURL.setParameter("filter", "contentSharingWithChildrenEnabled");
 						siteBrowserURL.setPortletMode(PortletMode.VIEW);
 						siteBrowserURL.setWindowState(LiferayWindowState.POP_UP);
 

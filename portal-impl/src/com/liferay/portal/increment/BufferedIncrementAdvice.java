@@ -17,6 +17,7 @@ package com.liferay.portal.increment;
 import com.liferay.portal.kernel.cache.key.CacheKeyGenerator;
 import com.liferay.portal.kernel.cache.key.CacheKeyGeneratorUtil;
 import com.liferay.portal.kernel.increment.BufferedIncrement;
+import com.liferay.portal.kernel.increment.BufferedIncrementThreadLocal;
 import com.liferay.portal.kernel.increment.Increment;
 import com.liferay.portal.kernel.increment.IncrementFactory;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -45,7 +46,9 @@ public class BufferedIncrementAdvice
 	public Object before(MethodInvocation methodInvocation) throws Throwable {
 		BufferedIncrement bufferedIncrement = findAnnotation(methodInvocation);
 
-		if (bufferedIncrement == _nullBufferedIncrement) {
+		if (!BufferedIncrementThreadLocal.isEnabled() ||
+			(bufferedIncrement == _nullBufferedIncrement)) {
+
 			return null;
 		}
 

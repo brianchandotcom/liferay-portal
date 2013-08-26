@@ -17,6 +17,7 @@ package com.liferay.portal.service.impl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
+import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.lar.MissingReferences;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -88,15 +89,22 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 			Map<String, String[]> parameterMap)
 		throws PortalException, SystemException {
 
-		Folder folder = PortletFileRepositoryUtil.getPortletFolder(
-			stagingRequestId);
+		try {
+			ExportImportThreadLocal.setLayoutImportInProcess(true);
 
-		FileEntry stagingRequestFileEntry = getStagingRequestFileEntry(
-			userId, stagingRequestId, folder);
+			Folder folder = PortletFileRepositoryUtil.getPortletFolder(
+				stagingRequestId);
 
-		layoutLocalService.importLayouts(
-			userId, folder.getGroupId(), privateLayout, parameterMap,
-			stagingRequestFileEntry.getContentStream());
+			FileEntry stagingRequestFileEntry = getStagingRequestFileEntry(
+				userId, stagingRequestId, folder);
+
+			layoutLocalService.importLayouts(
+				userId, folder.getGroupId(), privateLayout, parameterMap,
+				stagingRequestFileEntry.getContentStream());
+		}
+		finally {
+			ExportImportThreadLocal.setLayoutImportInProcess(false);
+		}
 	}
 
 	@Override
@@ -123,15 +131,22 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 			Map<String, String[]> parameterMap)
 		throws PortalException, SystemException {
 
-		Folder folder = PortletFileRepositoryUtil.getPortletFolder(
-			stagingRequestId);
+		try {
+			ExportImportThreadLocal.setLayoutValidationInProcess(true);
 
-		FileEntry fileEntry = getStagingRequestFileEntry(
-			userId, stagingRequestId, folder);
+			Folder folder = PortletFileRepositoryUtil.getPortletFolder(
+				stagingRequestId);
 
-		return layoutLocalService.validateImportLayoutsFile(
-			userId, folder.getGroupId(), privateLayout, parameterMap,
-			fileEntry.getContentStream());
+			FileEntry fileEntry = getStagingRequestFileEntry(
+				userId, stagingRequestId, folder);
+
+			return layoutLocalService.validateImportLayoutsFile(
+				userId, folder.getGroupId(), privateLayout, parameterMap,
+				fileEntry.getContentStream());
+		}
+		finally {
+			ExportImportThreadLocal.setLayoutValidationInProcess(false);
+		}
 	}
 
 	protected FileEntry fetchStagingRequestFileEntry(

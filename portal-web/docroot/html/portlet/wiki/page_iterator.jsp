@@ -278,11 +278,11 @@ for (int i = 0; i < results.size(); i++) {
 	PortletURL rowURL = renderResponse.createRenderURL();
 
 	if (!curWikiPage.isNew() && !type.equals("draft_pages") && !type.equals("pending_pages")) {
-		if (portletName.equals(PortletKeys.WIKI)) {
-			rowURL.setParameter("struts_action", "/wiki/view");
+		if (portletName.equals(PortletKeys.WIKI_DISPLAY)) {
+			rowURL.setParameter("struts_action", "/wiki/view_page");
 		}
 		else {
-			rowURL.setParameter("struts_action", "/wiki/view_page_activities");
+			rowURL.setParameter("struts_action", "/wiki/view");
 		}
 
 		rowURL.setParameter("redirect", currentURL);

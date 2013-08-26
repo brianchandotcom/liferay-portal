@@ -23,6 +23,7 @@ import javax.servlet.http.HttpServletResponseWrapper;
 
 /**
  * @author László Csontos
+ * @author Shuyang Zhou
  */
 public class SecureHttpServletResponseWrapper
 	extends HttpServletResponseWrapper {
@@ -33,7 +34,8 @@ public class SecureHttpServletResponseWrapper
 
 	@Override
 	public void addHeader(String name, String value) {
-		super.addHeader(name, HttpUtil.sanitizeHeader(value));
+		super.addHeader(
+			HttpUtil.sanitizeHeader(name), HttpUtil.sanitizeHeader(value));
 	}
 
 	@Override
@@ -53,7 +55,8 @@ public class SecureHttpServletResponseWrapper
 
 	@Override
 	public void setHeader(String name, String value) {
-		super.setHeader(name, HttpUtil.sanitizeHeader(value));
+		super.setHeader(
+			HttpUtil.sanitizeHeader(name), HttpUtil.sanitizeHeader(value));
 	}
 
 }

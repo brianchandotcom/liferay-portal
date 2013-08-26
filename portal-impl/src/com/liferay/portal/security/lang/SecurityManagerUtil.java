@@ -16,6 +16,7 @@ package com.liferay.portal.security.lang;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.ServiceLoader;
 import com.liferay.portal.util.PropsValues;
 
@@ -28,7 +29,15 @@ import java.util.List;
  */
 public class SecurityManagerUtil {
 
-	public static final boolean ENABLED = (System.getSecurityManager() != null);
+	public static void applySmartStrategy() {
+		if ((_portalSecurityManagerStrategy ==
+				PortalSecurityManagerStrategy.SMART) &&
+			(_originalSecurityManager == null) &&
+			ServerDetector.isWebSphere()) {
+
+			System.setSecurityManager(null);
+		}
+	}
 
 	public static PortalSecurityManager getPortalSecurityManager() {
 		return _portalSecurityManager;
@@ -39,24 +48,21 @@ public class SecurityManagerUtil {
 			return;
 		}
 
-		_portalSecurityManagerStrategy = PortalSecurityManagerStrategy.parse(
-			PropsValues.PORTAL_SECURITY_MANAGER_STRATEGY);
+		_originalSecurityManager = System.getSecurityManager();
+
+		if (PropsValues.TCK_URL) {
+			_portalSecurityManagerStrategy = PortalSecurityManagerStrategy.NONE;
+		}
+		else {
+			_portalSecurityManagerStrategy =
+				PortalSecurityManagerStrategy.parse(
+					PropsValues.PORTAL_SECURITY_MANAGER_STRATEGY);
+		}
 
 		if ((_portalSecurityManagerStrategy ==
 				PortalSecurityManagerStrategy.LIFERAY) ||
 			(_portalSecurityManagerStrategy ==
 				PortalSecurityManagerStrategy.SMART)) {
-
-			if (!ENABLED) {
-				_log.error(
-					"Plugin security management is not enabled. Enable a " +
-						"security manager, then restart.");
-
-				_portalSecurityManagerStrategy =
-					PortalSecurityManagerStrategy.DEFAULT;
-
-				return;
-			}
 
 			loadPortalSecurityManager();
 
@@ -79,6 +85,11 @@ public class SecurityManagerUtil {
 				PortalSecurityManagerStrategy.LIFERAY) {
 
 			System.setSecurityManager((SecurityManager)_portalSecurityManager);
+		}
+		else if (_portalSecurityManagerStrategy ==
+					PortalSecurityManagerStrategy.NONE) {
+
+			System.setSecurityManager(null);
 		}
 	}
 
@@ -108,6 +119,26 @@ public class SecurityManagerUtil {
 		if (_portalSecurityManagerStrategy ==
 				PortalSecurityManagerStrategy.LIFERAY) {
 
+			return true;
+		}
+
+		return false;
+	}
+
+	public static boolean isNone() {
+		init();
+
+		if (_portalSecurityManagerStrategy ==
+				PortalSecurityManagerStrategy.NONE) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	public static boolean isPACLDisabled() {
+		if (isDefault() || isNone()) {
 			return true;
 		}
 
@@ -144,16 +175,17 @@ public class SecurityManagerUtil {
 
 	private static Log _log = LogFactoryUtil.getLog(SecurityManagerUtil.class);
 
+	private static SecurityManager _originalSecurityManager;
 	private static PortalSecurityManager _portalSecurityManager;
 	private static PortalSecurityManagerStrategy _portalSecurityManagerStrategy;
 
 	private enum PortalSecurityManagerStrategy {
 
-		DEFAULT, LIFERAY, SMART;
+		DEFAULT, LIFERAY, NONE, SMART;
 
 		public static PortalSecurityManagerStrategy parse(String value) {
-			if (PropsValues.TCK_URL) {
-				return PortalSecurityManagerStrategy.DEFAULT;
+			if (value.equals("default")) {
+				return DEFAULT;
 			}
 			else if (value.equals("liferay")) {
 				return LIFERAY;
@@ -162,7 +194,7 @@ public class SecurityManagerUtil {
 				return SMART;
 			}
 
-			return DEFAULT;
+			return NONE;
 		}
 
 	}

@@ -37,14 +37,6 @@ import org.springframework.beans.factory.config.InstantiationAwareBeanPostProces
 public class DoPrivilegedFactory
 	extends InstantiationAwareBeanPostProcessorAdapter {
 
-	public static Object getDoPrivilegedFactory() {
-		if (!SecurityManagerUtil.ENABLED) {
-			return new Object();
-		}
-
-		return new DoPrivilegedFactory();
-	}
-
 	public static boolean isEarlyBeanReference(String beanName) {
 		return _earlyBeanReferenceNames.contains(beanName);
 	}
@@ -93,6 +85,10 @@ public class DoPrivilegedFactory
 	@Override
 	public Object postProcessAfterInitialization(Object bean, String beanName)
 		throws BeansException {
+
+		if (SecurityManagerUtil.isPACLDisabled()) {
+			return bean;
+		}
 
 		if (!_isWrap(bean, beanName)) {
 			return bean;

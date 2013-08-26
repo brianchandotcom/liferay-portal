@@ -860,6 +860,8 @@ public class StagingImpl implements Staging {
 		}
 		else {
 			errorType = ServletResponseConstants.SC_FILE_CUSTOM_EXCEPTION;
+
+			errorMessage = e.getLocalizedMessage();
 		}
 
 		exceptionMessagesJSONObject.put("message", errorMessage);

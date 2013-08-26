@@ -192,10 +192,6 @@ public class EditGroupAction extends PortletAction {
 					 e instanceof SystemException) {
 
 				SessionErrors.add(actionRequest, e.getClass(), e);
-
-				sendRedirect(
-					portletConfig, actionRequest, actionResponse, redirect,
-					closeRedirect);
 			}
 			else {
 				throw e;

@@ -790,6 +790,11 @@ public class JournalArticleFinderImpl
 			String sql = CustomSQLUtil.get(
 				COUNT_BY_G_C_S, queryDefinition, "JournalArticle");
 
+			if (groupId <= 0) {
+				sql = StringUtil.replace(
+					sql, "(groupId = ?) AND", StringPool.BLANK);
+			}
+
 			if (ddmStructureKey.equals(
 					String.valueOf(
 						JournalArticleConstants.CLASSNAME_ID_DEFAULT))) {
@@ -812,7 +817,10 @@ public class JournalArticleFinderImpl
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
-			qPos.add(groupId);
+			if (groupId > 0) {
+				qPos.add(groupId);
+			}
+
 			qPos.add(classNameId);
 			qPos.add(ddmStructureKey);
 			qPos.add(queryDefinition.getStatus());
@@ -1133,6 +1141,11 @@ public class JournalArticleFinderImpl
 			sql = CustomSQLUtil.replaceOrderBy(
 				sql, queryDefinition.getOrderByComparator());
 
+			if (groupId <= 0) {
+				sql = StringUtil.replace(
+					sql, "(JournalArticle.groupId = ?) AND", StringPool.BLANK);
+			}
+
 			if (ddmStructureKey.equals(
 					String.valueOf(
 						JournalArticleConstants.CLASSNAME_ID_DEFAULT))) {
@@ -1157,7 +1170,10 @@ public class JournalArticleFinderImpl
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
-			qPos.add(groupId);
+			if (groupId > 0) {
+				qPos.add(groupId);
+			}
+
 			qPos.add(classNameId);
 			qPos.add(ddmStructureKey);
 			qPos.add(queryDefinition.getStatus());

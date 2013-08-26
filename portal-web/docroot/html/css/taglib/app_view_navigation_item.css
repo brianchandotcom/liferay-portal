@@ -25,6 +25,14 @@
 			text-decoration: none;
 		}
 
+		.browse-folder, .nav-item-label {
+			display: inline-block;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			width: 100%;
+		}
+
 		.overlay.entry-action {
 			bottom: 0;
 			display: block;

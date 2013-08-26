@@ -279,6 +279,10 @@
 		@include ellipsis;
 
 		margin-bottom: 5px;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		width: 100%;
 	}
 }
 

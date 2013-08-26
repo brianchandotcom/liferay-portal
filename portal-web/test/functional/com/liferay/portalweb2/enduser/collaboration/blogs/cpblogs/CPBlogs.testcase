@@ -94,9 +94,9 @@
 	</command>
 
 	<command name="AddBlogsEntryComment">
+		<var name="entryComment" value="Blogs Entry Comment Body" />
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
-		<var name="entryComment" value="Blogs Comment Content" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Blogs" />
@@ -107,8 +107,22 @@
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
 		<execute macro="BlogsEntryComment#addCP">
 			<var name="entryComment" value="${entryComment}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="BlogsEntryComment#viewCP">
+			<var name="entryComment" value="${entryComment}" />
+			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 	</command>
 
@@ -136,9 +150,9 @@
 	</command>
 
 	<command name="DeleteBlogsEntryComment">
+		<var name="entryComment" value="Blogs Entry Comment Body" />
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
-		<var name="entryComment" value="Blogs Comment Content" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Blogs" />
@@ -149,13 +163,32 @@
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
 		<execute macro="BlogsEntryComment#addCP">
 			<var name="entryComment" value="${entryComment}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Blogs" />
 		</execute>
 
 		<execute macro="BlogsEntryComment#deleteCP">
 			<var name="entryComment" value="${entryComment}" />
-		</execute>		
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="BlogsEntryComment#viewDefaultCP">
+			<var name="entryComment" value="${entryComment}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
 	</command>
 
 	<command name="EditBlogsEntryContent">
@@ -192,10 +225,10 @@
 	</command>
 
 	<command name="EditBlogsEntryComment">
+		<var name="entryComment" value="Blogs Entry Comment Body" />
+		<var name="entryCommentEdit" value="Blogs Entry Comment Body Edit" />
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
-		<var name="entryComment" value="Blogs Comment Content" />
-		<var name="editEntryComment" value="Edit Blogs Comment Content" />
 		
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Blogs" />
@@ -206,12 +239,32 @@
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
 		<execute macro="BlogsEntryComment#addCP">
 			<var name="entryComment" value="${entryComment}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Blogs" />
 		</execute>
 
 		<execute macro="BlogsEntryComment#editCP">
 			<var name="entryComment" value="${entryComment}" />
+			<var name="entryCommentEdit" value="${entryCommentEdit}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="BlogsEntryComment#viewCP">
+			<var name="entryComment" value="${entryCommentEdit}" />
+			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 	</command>
 

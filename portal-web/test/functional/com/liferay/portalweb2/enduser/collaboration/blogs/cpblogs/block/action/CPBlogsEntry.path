@@ -39,6 +39,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ENTRY_STATS_COMMENTS</td>
+	<td>//div[@class='stats']/span[@class='comments']/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIRMATION</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -47,6 +57,11 @@
 <tr>
 	<td>COMMENTS_SUCCESS</td>
 	<td>//div[@class='lfr-message-response alert alert-success']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENTS_NO_COMMENTS_YET</td>
+	<td>//fieldset[@class='fieldset add-comment']/div</td>
 	<td></td>
 </tr>
 <tr>
@@ -118,7 +133,7 @@
 <!--COMMENT_EDIT_COMMENT-->
 <tr>
 	<td>COMMENT_EDIT_SUCCESS</td>
-	<td>//div[@class='lfr-message-response alert alert alert alert-success']</td>
+	<td>//div[@class='lfr-message-response alert alert-success']</td>
 	<td></td>
 </tr>
 <tr>

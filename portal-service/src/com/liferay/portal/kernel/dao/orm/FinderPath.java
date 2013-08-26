@@ -71,11 +71,21 @@ public class FinderPath {
 		_initLocalCacheKeyPrefix();
 	}
 
-	public Serializable encodeCacheKey(Object[] arguments) {
-		StringBundler sb = new StringBundler(arguments.length * 2 + 3);
+	public Serializable encodeCacheKey(
+		boolean shardEnabled, Object[] arguments) {
 
-		sb.append(ShardUtil.getCurrentShardName());
-		sb.append(StringPool.PERIOD);
+		StringBundler sb = null;
+
+		if (shardEnabled) {
+			sb = new StringBundler(arguments.length * 2 + 3);
+
+			sb.append(ShardUtil.getCurrentShardName());
+			sb.append(StringPool.PERIOD);
+		}
+		else {
+			sb = new StringBundler(arguments.length * 2 + 1);
+		}
+
 		sb.append(_cacheKeyPrefix);
 
 		for (Object arg : arguments) {
@@ -86,11 +96,21 @@ public class FinderPath {
 		return _getCacheKey(sb);
 	}
 
-	public Serializable encodeLocalCacheKey(Object[] arguments) {
-		StringBundler sb = new StringBundler(arguments.length * 2 + 3);
+	public Serializable encodeLocalCacheKey(
+		boolean shardEnabled, Object[] arguments) {
 
-		sb.append(ShardUtil.getCurrentShardName());
-		sb.append(StringPool.PERIOD);
+		StringBundler sb = null;
+
+		if (shardEnabled) {
+			sb = new StringBundler(arguments.length * 2 + 3);
+
+			sb.append(ShardUtil.getCurrentShardName());
+			sb.append(StringPool.PERIOD);
+		}
+		else {
+			sb = new StringBundler(arguments.length * 2 + 1);
+		}
+
 		sb.append(_localCacheKeyPrefix);
 
 		for (Object arg : arguments) {

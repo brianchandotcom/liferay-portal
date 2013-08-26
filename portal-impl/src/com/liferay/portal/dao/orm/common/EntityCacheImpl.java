@@ -14,6 +14,7 @@
 
 package com.liferay.portal.dao.orm.common;
 
+import com.liferay.portal.dao.shard.advice.ShardAdvice;
 import com.liferay.portal.kernel.cache.CacheRegistryItem;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.cache.MultiVMPool;
@@ -44,12 +45,16 @@ import java.util.concurrent.ConcurrentMap;
 
 import org.apache.commons.collections.map.LRUMap;
 
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.beans.factory.BeanFactoryAware;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
  */
 @DoPrivileged
-public class EntityCacheImpl implements CacheRegistryItem, EntityCache {
+public class EntityCacheImpl
+	implements BeanFactoryAware, CacheRegistryItem, EntityCache {
 
 	public static final String CACHE_NAME = EntityCache.class.getName();
 
@@ -289,19 +294,36 @@ public class EntityCacheImpl implements CacheRegistryItem, EntityCache {
 		portalCache.remove(cacheKey);
 	}
 
+	@Override
+	public void setBeanFactory(BeanFactory beanFactory) {
+		if (beanFactory.containsBean(ShardAdvice.class.getName())) {
+			_shardEnabled = true;
+		}
+	}
+
 	public void setMultiVMPool(MultiVMPool multiVMPool) {
 		_multiVMPool = multiVMPool;
 	}
 
 	private Serializable _encodeCacheKey(Serializable primaryKey) {
-		return new CacheKey(ShardUtil.getCurrentShardName(), primaryKey);
+		if (_shardEnabled) {
+			return new CacheKey(ShardUtil.getCurrentShardName(), primaryKey);
+		}
+		else {
+			return primaryKey;
+		}
 	}
 
 	private Serializable _encodeLocalCacheKey(
 		Class<?> clazz, Serializable primaryKey) {
 
-		return new LocalCacheKey(
-			ShardUtil.getCurrentShardName(), clazz.getName(), primaryKey);
+		if (_shardEnabled) {
+			return new ShardLocalCacheKey(
+				ShardUtil.getCurrentShardName(), clazz.getName(), primaryKey);
+		}
+		else {
+			return new LocalCacheKey(clazz.getName(), primaryKey);
+		}
 	}
 
 	private PortalCache<Serializable, Serializable> _getPortalCache(
@@ -367,6 +389,7 @@ public class EntityCacheImpl implements CacheRegistryItem, EntityCache {
 		_portalCaches =
 			new ConcurrentHashMap
 				<String, PortalCache<Serializable, Serializable>>();
+	private boolean _shardEnabled;
 
 	private static class CacheKey implements Externalizable {
 
@@ -423,7 +446,40 @@ public class EntityCacheImpl implements CacheRegistryItem, EntityCache {
 
 	private static class LocalCacheKey implements Serializable {
 
-		public LocalCacheKey(
+		public LocalCacheKey(String className, Serializable primaryKey) {
+			_className = className;
+			_primaryKey = primaryKey;
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			LocalCacheKey localCacheKey = (LocalCacheKey)obj;
+
+			if (localCacheKey._className.equals(_className) &&
+				localCacheKey._primaryKey.equals(_primaryKey)) {
+
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+
+		@Override
+		public int hashCode() {
+			return _className.hashCode() * 11 + _primaryKey.hashCode();
+		}
+
+		private static final long serialVersionUID = 1L;
+
+		private final String _className;
+		private final Serializable _primaryKey;
+
+	}
+
+	private static class ShardLocalCacheKey implements Serializable {
+
+		public ShardLocalCacheKey(
 			String shardName, String className, Serializable primaryKey) {
 
 			_shardName = shardName;
@@ -433,11 +489,11 @@ public class EntityCacheImpl implements CacheRegistryItem, EntityCache {
 
 		@Override
 		public boolean equals(Object obj) {
-			LocalCacheKey localCacheKey = (LocalCacheKey)obj;
+			ShardLocalCacheKey shardLocalCacheKey = (ShardLocalCacheKey)obj;
 
-			if (localCacheKey._shardName.equals(_shardName) &&
-				localCacheKey._className.equals(_className) &&
-				localCacheKey._primaryKey.equals(_primaryKey)) {
+			if (shardLocalCacheKey._shardName.equals(_shardName) &&
+				shardLocalCacheKey._className.equals(_className) &&
+				shardLocalCacheKey._primaryKey.equals(_primaryKey)) {
 
 				return true;
 			}

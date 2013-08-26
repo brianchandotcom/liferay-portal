@@ -80,9 +80,9 @@ public abstract class FindAction extends Action {
 
 			plid = (Long)plidAndPortletId[0];
 
-			String portletId = (String)plidAndPortletId[1];
-
 			setSourceGroup(request, plid, primaryKey);
+
+			String portletId = (String)plidAndPortletId[1];
 
 			PortletURL portletURL = PortletURLFactoryUtil.create(
 				request, portletId, plid, PortletRequest.RENDER_PHASE);
@@ -281,25 +281,25 @@ public abstract class FindAction extends Action {
 			HttpServletRequest request, long plid, long primaryKey)
 		throws Exception {
 
-		Layout layout = LayoutLocalServiceUtil.getLayout(plid);
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		PermissionChecker permissionChecker =
 			themeDisplay.getPermissionChecker();
 
-		long sourceGroupId = getGroupId(primaryKey);
+		long entityGroupId = getGroupId(primaryKey);
 
-		if ((sourceGroupId == layout.getGroupId()) ||
-			(layout.getPrivateLayout() &&
-			 !SitesUtil.isUserGroupLayoutSetViewable(
-				permissionChecker, layout.getGroup()))) {
+		Layout layout = LayoutLocalServiceUtil.getLayout(plid);
+
+		if ((entityGroupId == layout.getGroupId()) ||
+			(layout.isPrivateLayout() &&
+				!SitesUtil.isUserGroupLayoutSetViewable(
+					permissionChecker, layout.getGroup()))) {
 
 			return;
 		}
 
-		Group sourceGroup = GroupLocalServiceUtil.getGroup(sourceGroupId);
+		Group sourceGroup = GroupLocalServiceUtil.getGroup(entityGroupId);
 
 		layout = new VirtualLayout(layout, sourceGroup);
 

@@ -91,16 +91,20 @@
 
 	.textboxlistentry-holder {
 		background: #FFF;
-		border: 1px solid;
-		border-color: #BFBFBF #DEDEDE #DEDEDE #BFBFBF;
+		border: 1px solid #CCC;
 		margin-bottom: 5px;
 		overflow: visible;
 		padding: 5px;
 		position: relative;
 
 		.lfr-tag-selector-input {
+			border-width: 0;
 			margin-bottom: 0;
 		}
+	}
+
+	.textboxlistentry-remove {
+		padding: 0 3px 1px;
 	}
 }
 
@@ -125,8 +129,8 @@
 }
 
 .tagselector-focused .textboxlistentry-holder {
-	background: #FFC none;
-	border: 1px solid #FC0;
+	background: #FFF none;
+	border: 1px solid #CCC;
 }
 
 .categoriesselector-content .textboxlistentry-holder {

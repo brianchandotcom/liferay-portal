@@ -40,6 +40,7 @@ import com.liferay.portlet.documentlibrary.util.DLAppTestUtil;
 import com.liferay.portlet.trash.BaseTrashHandlerTestCase;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -56,19 +57,22 @@ import org.junit.runner.RunWith;
 @Sync
 public class DLFileShortcutTrashHandlerTest extends BaseTrashHandlerTestCase {
 
+	@Ignore("This test does not apply")
 	@Override
+	@Test
 	public void testTrashAndDeleteDraft() throws Exception {
-		Assert.assertTrue("This test does not apply", true);
 	}
 
+	@Ignore("This test does not apply")
 	@Override
+	@Test
 	public void testTrashAndRestoreDraft() throws Exception {
-		Assert.assertTrue("This test does not apply", true);
 	}
 
+	@Ignore("This test does not apply")
 	@Override
+	@Test
 	public void testTrashDuplicate() throws Exception {
-		Assert.assertTrue("This test does not apply", true);
 	}
 
 	@Test
@@ -77,29 +81,34 @@ public class DLFileShortcutTrashHandlerTest extends BaseTrashHandlerTestCase {
 		trashFileEntry();
 	}
 
+	@Ignore("This test does not apply")
 	@Override
+	@Test
 	public void testTrashMyBaseModel() throws Exception {
-		Assert.assertTrue("This test does not apply", true);
 	}
 
+	@Ignore("This test does not apply")
 	@Override
+	@Test
 	public void testTrashRecentBaseModel() throws Exception {
-		Assert.assertTrue("This test does not apply", true);
 	}
 
+	@Ignore("This test does not apply")
 	@Override
+	@Test
 	public void testTrashVersionBaseModelAndDelete() throws Exception {
-		Assert.assertTrue("This test does not apply", true);
 	}
 
+	@Ignore("This test does not apply")
 	@Override
+	@Test
 	public void testTrashVersionBaseModelAndRestore() throws Exception {
-		Assert.assertTrue("This test does not apply", true);
 	}
 
+	@Ignore("This test does not apply")
 	@Override
+	@Test
 	public void testTrashVersionParentBaseModel() throws Exception {
-		Assert.assertTrue("This test does not apply", true);
 	}
 
 	@Override

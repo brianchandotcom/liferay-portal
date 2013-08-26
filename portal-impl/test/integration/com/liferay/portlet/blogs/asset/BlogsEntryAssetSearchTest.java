@@ -26,7 +26,8 @@ import com.liferay.portlet.asset.service.persistence.BaseAssetSearchTestCase;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.util.BlogsTestUtil;
 
-import org.junit.Assert;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -41,14 +42,16 @@ import org.junit.runner.RunWith;
 @Sync
 public class BlogsEntryAssetSearchTest extends BaseAssetSearchTestCase {
 
+	@Ignore("This test does not apply")
 	@Override
+	@Test
 	public void testClassTypeIds1() throws Exception {
-		Assert.assertTrue("This test does not apply", true);
 	}
 
+	@Ignore("This test does not apply")
 	@Override
+	@Test
 	public void testClassTypeIds2() throws Exception {
-		Assert.assertTrue("This test does not apply", true);
 	}
 
 	@Override

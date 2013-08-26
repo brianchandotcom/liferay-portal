@@ -47,7 +47,8 @@ import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import com.liferay.portlet.dynamicdatamapping.util.DDMIndexerUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMStructureTestUtil;
 
-import org.junit.Assert;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -62,9 +63,10 @@ import org.junit.runner.RunWith;
 @Sync
 public class DLFileEntrySearchTest extends BaseSearchTestCase {
 
+	@Ignore("This test does not apply")
 	@Override
+	@Test
 	public void testSearchAttachments() throws Exception {
-		Assert.assertTrue("This test does not apply", true);
 	}
 
 	@Override

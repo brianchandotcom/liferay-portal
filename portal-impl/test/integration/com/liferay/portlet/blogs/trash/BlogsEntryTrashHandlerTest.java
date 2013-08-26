@@ -31,7 +31,8 @@ import com.liferay.portlet.trash.BaseTrashHandlerTestCase;
 
 import java.io.InputStream;
 
-import org.junit.Assert;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -47,79 +48,94 @@ import org.junit.runner.RunWith;
 @Sync
 public class BlogsEntryTrashHandlerTest extends BaseTrashHandlerTestCase {
 
+	@Ignore("This test does not apply")
 	@Override
+	@Test
 	public void testTrashDuplicate() throws Exception {
-		Assert.assertTrue("This test does not apply", true);
 	}
 
+	@Ignore("This test does not apply")
 	@Override
+	@Test
 	public void testTrashIsRestorableBaseModel() throws Exception {
-		Assert.assertTrue("This test does not apply", true);
 	}
 
+	@Ignore("This test does not apply")
 	@Override
+	@Test
 	public void testTrashIsRestorableBaseModelWithParent1() throws Exception {
-		Assert.assertTrue("This test does not apply", true);
 	}
 
+	@Ignore("This test does not apply")
 	@Override
+	@Test
 	public void testTrashIsRestorableBaseModelWithParent2() throws Exception {
-		Assert.assertTrue("This test does not apply", true);
 	}
 
+	@Ignore("This test does not apply")
 	@Override
+	@Test
 	public void testTrashIsRestorableBaseModelWithParent3() throws Exception {
-		Assert.assertTrue("This test does not apply", true);
 	}
 
+	@Ignore("This test does not apply")
 	@Override
+	@Test
 	public void testTrashIsRestorableBaseModelWithParent4() throws Exception {
-		Assert.assertTrue("This test does not apply", true);
 	}
 
+	@Ignore("This test does not apply")
 	@Override
+	@Test
 	public void testTrashMoveBaseModel() throws Exception {
-		Assert.assertTrue("This test does not apply", true);
 	}
 
+	@Ignore("This test does not apply")
 	@Override
+	@Test
 	public void testTrashMyBaseModel() throws Exception {
-		Assert.assertTrue("This test does not apply", true);
 	}
 
+	@Ignore("This test does not apply")
 	@Override
+	@Test
 	public void testTrashParentAndDeleteParent() throws Exception {
-		Assert.assertTrue("This test does not apply", true);
 	}
 
+	@Ignore("This test does not apply")
 	@Override
+	@Test
 	public void testTrashParentAndDeleteTrashEntries() throws Exception {
-		Assert.assertTrue("This test does not apply", true);
 	}
 
+	@Ignore("This test does not apply")
 	@Override
+	@Test
 	public void testTrashParentAndRestoreModel() throws Exception {
-		Assert.assertTrue("This test does not apply", true);
 	}
 
+	@Ignore("This test does not apply")
 	@Override
+	@Test
 	public void testTrashRecentBaseModel() throws Exception {
-		Assert.assertTrue("This test does not apply", true);
 	}
 
+	@Ignore("This test does not apply")
 	@Override
+	@Test
 	public void testTrashVersionBaseModelAndDelete() throws Exception {
-		Assert.assertTrue("This test does not apply", true);
 	}
 
+	@Ignore("This test does not apply")
 	@Override
+	@Test
 	public void testTrashVersionBaseModelAndRestore() throws Exception {
-		Assert.assertTrue("This test does not apply", true);
 	}
 
+	@Ignore("This test does not apply")
 	@Override
+	@Test
 	public void testTrashVersionParentBaseModel() throws Exception {
-		Assert.assertTrue("This test does not apply", true);
 	}
 
 	@Override

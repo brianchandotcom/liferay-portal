@@ -177,8 +177,8 @@ public class QueryUtilTest {
 				"Verify result size", expectedResultSize, result.size());
 
 			if (expectedResultSize > 0) {
-				Object[] firstRow = (Object[])result.get(0);
-				Object[] lastRow = (Object[])result.get(result.size() - 1);
+				Object[] firstRow = result.get(0);
+				Object[] lastRow = result.get(result.size() - 1);
 
 				Number firstId = (Number)firstRow[0];
 				Number lastId  =  (Number)lastRow[0];

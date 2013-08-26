@@ -954,7 +954,9 @@ public class AssetPublisherImpl implements AssetPublisher {
 				return false;
 			}
 
-			if (SitesUtil.isContentSharingWithChildrenEnabled(siteGroup)) {
+			Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+			if (SitesUtil.isContentSharingWithChildrenEnabled(group)) {
 				return true;
 			}
 

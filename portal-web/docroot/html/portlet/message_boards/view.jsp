@@ -79,7 +79,6 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 	</c:when>
 	<c:when test='<%= topLink.equals("message-boards-home") %>'>
-		<%@ include file="/html/portlet/message_boards/category_subscriptions.jspf" %>
 
 		<%
 		boolean showAddCategoryButton = MBCategoryPermission.contains(permissionChecker, scopeGroupId, categoryId, ActionKeys.ADD_CATEGORY);
@@ -140,36 +139,13 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 					<aui:button href="<%= permissionsURL %>" useDialog="<%= true %>" value="permissions" />
 				</c:if>
 			</div>
+			<%@ include file="/html/portlet/message_boards/category_subscriptions.jspf" %>
 		</c:if>
 
 		<c:if test="<%= category != null %>">
 
-			<%
-			long parentCategoryId = category.getParentCategoryId();
-			String parentCategoryName = LanguageUtil.get(pageContext, "message-boards-home");
-
-			if (!category.isRoot()) {
-				MBCategory parentCategory = MBCategoryLocalServiceUtil.getCategory(parentCategoryId);
-
-				parentCategoryId = parentCategory.getCategoryId();
-				parentCategoryName = parentCategory.getName();
-			}
-			%>
-
-			<portlet:renderURL var="backURL">
-				<portlet:param name="struts_action" value="/message_boards/view" />
-				<portlet:param name="mbCategoryId" value="<%= String.valueOf(parentCategoryId) %>" />
-			</portlet:renderURL>
-
-			<liferay-ui:header
-				backLabel="<%= parentCategoryName %>"
-				backURL="<%= backURL.toString() %>"
-				localizeTitle="<%= false %>"
-				title="<%= category.getName() %>"
-			/>
-
-			<div class="thread-actions">
-				<liferay-ui:icon-list>
+			<div class="category-subscriptions-cat">
+				<div class="category-subscription-types">
 					<c:if test="<%= enableRSS %>">
 
 						<%
@@ -221,8 +197,32 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 							</c:otherwise>
 						</c:choose>
 					</c:if>
-				</liferay-ui:icon-list>
+				</div>
 			</div>
+
+			<%
+			long parentCategoryId = category.getParentCategoryId();
+			String parentCategoryName = LanguageUtil.get(pageContext, "message-boards-home");
+
+			if (!category.isRoot()) {
+				MBCategory parentCategory = MBCategoryLocalServiceUtil.getCategory(parentCategoryId);
+
+				parentCategoryId = parentCategory.getCategoryId();
+				parentCategoryName = parentCategory.getName();
+			}
+			%>
+
+			<portlet:renderURL var="backURL">
+				<portlet:param name="struts_action" value="/message_boards/view" />
+				<portlet:param name="mbCategoryId" value="<%= String.valueOf(parentCategoryId) %>" />
+			</portlet:renderURL>
+
+			<liferay-ui:header
+				backLabel="<%= parentCategoryName %>"
+				backURL="<%= backURL.toString() %>"
+				localizeTitle="<%= false %>"
+				title="<%= category.getName() %>"
+			/>
 		</c:if>
 
 		<div class="displayStyle-<%= displayStyle %>">

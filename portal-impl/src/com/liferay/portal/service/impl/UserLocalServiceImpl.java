@@ -900,7 +900,22 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		// Groups
 
 		if (groupIds != null) {
-			groupLocalService.addUserGroups(userId, groupIds);
+			List<Group> existingGroupList = new ArrayList<Group>();
+
+			for (long groupId : groupIds) {
+				Group group = groupLocalService.fetchGroup(groupId);
+
+				if (group == null) {
+					if (_log.isWarnEnabled()) {
+						_log.warn("Unable to find Group " + groupId);
+					}
+				}
+				else {
+					existingGroupList.add(group);
+				}
+			}
+
+			groupLocalService.addUserGroups(userId, existingGroupList);
 		}
 
 		addDefaultGroups(userId);

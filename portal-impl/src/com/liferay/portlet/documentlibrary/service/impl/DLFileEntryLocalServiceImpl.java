@@ -115,9 +115,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Provides the local service for accessing, adding, checking in/out, deleting,
@@ -2037,28 +2037,15 @@ public class DLFileEntryLocalServiceImpl
 			Fields latestFields = StorageEngineUtil.getFields(
 				latestFileEntryMetadata.getDDMStorageId());
 
-			Iterator<com.liferay.portlet.dynamicdatamapping.storage.Field>
-				lastFieldIterator = lastFields.iterator();
-			Iterator<com.liferay.portlet.dynamicdatamapping.storage.Field>
-				latestFieldIterator = latestFields.iterator();
+			Set<String> fieldNames = lastFields.getNames();
 
-			while (lastFieldIterator.hasNext() &&
-				  latestFieldIterator.hasNext()) {
-
+			for (String fieldName : fieldNames) {
 				com.liferay.portlet.dynamicdatamapping.storage.Field
-					lastField = lastFieldIterator.next();
+					lastField = lastFields.get(fieldName);
 				com.liferay.portlet.dynamicdatamapping.storage.Field
-					latestField = latestFieldIterator.next();
+					latestField = latestFields.get(fieldName);
 
-				if (!lastField.equals(latestField)) {
-					return false;
-				}
-
-				if ((lastFieldIterator.hasNext() &&
-					 !latestFieldIterator.hasNext()) ||
-					(!lastFieldIterator.hasNext() &&
-					 latestFieldIterator.hasNext())) {
-
+				if (!lastField.equals(latestField) && !lastField.isPrivate()) {
 					return false;
 				}
 			}

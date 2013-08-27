@@ -80,7 +80,7 @@ public abstract class FindAction extends Action {
 
 			plid = (Long)plidAndPortletId[0];
 
-			setSourceGroup(request, plid, primaryKey);
+			setTargetGroup(request, plid, primaryKey);
 
 			String portletId = (String)plidAndPortletId[1];
 
@@ -277,7 +277,7 @@ public abstract class FindAction extends Action {
 			getPrimaryKeyParameterName(), String.valueOf(primaryKey));
 	}
 
-	protected void setSourceGroup(
+	protected void setTargetGroup(
 			HttpServletRequest request, long plid, long primaryKey)
 		throws Exception {
 
@@ -299,9 +299,9 @@ public abstract class FindAction extends Action {
 			return;
 		}
 
-		Group sourceGroup = GroupLocalServiceUtil.getGroup(entityGroupId);
+		Group targetGroup = GroupLocalServiceUtil.getGroup(entityGroupId);
 
-		layout = new VirtualLayout(layout, sourceGroup);
+		layout = new VirtualLayout(layout, targetGroup);
 
 		request.setAttribute(WebKeys.LAYOUT, layout);
 	}

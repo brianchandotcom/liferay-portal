@@ -60,6 +60,7 @@ public class PortletPreferencesFinderTest {
 			_group.getGroupId(), ServiceTestUtil.randomString());
 
 		Map<String, String[]> preferenceMap = new HashMap<String, String[]>();
+
 		preferenceMap.put(
 			"displayStyleGroupId", new String[] {StringPool.BLANK});
 

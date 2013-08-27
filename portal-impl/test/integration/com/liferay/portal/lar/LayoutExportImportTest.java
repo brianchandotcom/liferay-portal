@@ -212,11 +212,13 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 			serviceContext);
 
 		Group stagingGroup = group.getStagingGroup();
+
 		Layout stagingLayout = LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
 			layout.getUuid(), stagingGroup.getGroupId(),
 			layout.isPrivateLayout());
 
 		List<Layout> layouts = new ArrayList<Layout>();
+
 		layouts.add(stagingLayout);
 
 		List<Portlet> portlets = LayoutExporter.getPortletDataHandlerPortlets(

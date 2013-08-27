@@ -40,6 +40,7 @@ import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.base.DLFileEntryTypeLocalServiceBaseImpl;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
+import com.liferay.portlet.dynamicdatamapping.RequiredStructureException;
 import com.liferay.portlet.dynamicdatamapping.StructureXsdException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants;
@@ -180,6 +181,14 @@ public class DLFileEntryTypeLocalServiceImpl
 		type = SystemEventConstants.TYPE_DELETE)
 	public void deleteFileEntryType(DLFileEntryType dlFileEntryType)
 		throws PortalException, SystemException {
+
+		int fileEntryCount = dlFileEntryPersistence.countByFileEntryTypeId(
+			dlFileEntryType.getFileEntryTypeId());
+
+		if (fileEntryCount > 0) {
+			throw new RequiredStructureException(
+				RequiredStructureException.REFERENCED_STRUCTURE);
+		}
 
 		DDMStructure ddmStructure = ddmStructureLocalService.fetchStructure(
 			dlFileEntryType.getGroupId(),

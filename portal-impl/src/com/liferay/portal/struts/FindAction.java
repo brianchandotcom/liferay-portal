@@ -134,6 +134,36 @@ public abstract class FindAction extends Action {
 		}
 	}
 
+	protected Object[] fetchPlidAndPortletId(
+			PermissionChecker permissionChecker, long groupId)
+		throws Exception {
+
+		for (String portletId : _portletIds) {
+			long plid = PortalUtil.getPlidFromPortletId(groupId, portletId);
+
+			if (plid == LayoutConstants.DEFAULT_PLID) {
+				continue;
+			}
+
+			Layout layout = LayoutLocalServiceUtil.getLayout(plid);
+
+			if (!LayoutPermissionUtil.contains(
+					permissionChecker, layout, ActionKeys.VIEW)) {
+
+				continue;
+			}
+
+			LayoutTypePortlet layoutTypePortlet =
+				(LayoutTypePortlet)layout.getLayoutType();
+
+			portletId = getPortletId(layoutTypePortlet, portletId);
+
+			return new Object[] {plid, portletId};
+		}
+
+		throw new NoSuchLayoutException();
+	}
+
 	protected abstract long getGroupId(long primaryKey) throws Exception;
 
 	protected Object[] getPlidAndPortletId(
@@ -186,30 +216,7 @@ public abstract class FindAction extends Action {
 			}
 		}
 
-		for (String portletId : _portletIds) {
-			plid = PortalUtil.getPlidFromPortletId(groupId, portletId);
-
-			if (plid == LayoutConstants.DEFAULT_PLID) {
-				continue;
-			}
-
-			Layout layout = LayoutLocalServiceUtil.getLayout(plid);
-
-			if (!LayoutPermissionUtil.contains(
-					permissionChecker, layout, ActionKeys.VIEW)) {
-
-				continue;
-			}
-
-			LayoutTypePortlet layoutTypePortlet =
-				(LayoutTypePortlet)layout.getLayoutType();
-
-			portletId = getPortletId(layoutTypePortlet, portletId);
-
-			return new Object[] {plid, portletId};
-		}
-
-		throw new NoSuchLayoutException();
+		return fetchPlidAndPortletId(permissionChecker, groupId);
 	}
 
 	protected String getPortletId(

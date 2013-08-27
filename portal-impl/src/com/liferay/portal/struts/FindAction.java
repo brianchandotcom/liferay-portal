@@ -15,10 +15,14 @@
 package com.liferay.portal.struts;
 
 import com.liferay.portal.NoSuchLayoutException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.PortletURLFactoryUtil;
 
@@ -54,17 +58,36 @@ public abstract class FindAction extends Action {
 			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		try {
 			long plid = ParamUtil.getLong(request, "p_l_id");
 			long primaryKey = ParamUtil.getLong(
 				request, getPrimaryKeyParameterName());
 
+			long groupId = ParamUtil.getLong(
+				request, "groupId", themeDisplay.getScopeGroupId());
+
+			if (primaryKey > 0) {
+				try {
+					groupId = getGroupId(primaryKey);
+				}
+				catch (Exception e) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(e, e);
+					}
+				}
+			}
+
 			Object[] plidAndPortletId = FindUtil.getPlidAndPortletId(
-				request, plid, primaryKey);
+				themeDisplay, groupId, plid, _portletIds);
 
 			plid = (Long)plidAndPortletId[0];
 
-			FindUtil.setTargetGroup(request, plid, primaryKey);
+			long entityGroupId = getGroupId(primaryKey);
+
+			FindUtil.setTargetGroup(request, entityGroupId, plid);
 
 			String portletId = (String)plidAndPortletId[1];
 
@@ -149,5 +172,7 @@ public abstract class FindAction extends Action {
 	}
 
 	private String[] _portletIds;
+
+	private static Log _log = LogFactoryUtil.getLog(FindAction.class);
 
 }

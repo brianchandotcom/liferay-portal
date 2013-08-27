@@ -2308,7 +2308,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			"**\\portal-web\\test\\**\\*Test.java",
 			"**\\portal-web\\test\\**\\*Tests.java",
 			"**\\portlet\\**\\service\\**", "**\\test\\*-generated\\**",
-			"**\\tmp\\**", "**\\tools\\tck\\**"
+			"**\\tmp\\**", "**\\tools\\tck\\**", "**\\webapps\\**"
 		};
 		String[] includes = new String[] {"**\\*.java"};
 

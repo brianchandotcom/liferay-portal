@@ -15,9 +15,6 @@
 package com.liferay.portal.struts;
 
 import com.liferay.portal.NoSuchLayoutException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
@@ -40,37 +37,6 @@ import javax.servlet.http.HttpServletRequest;
  * @author Julio Camarero
  */
 public class FindUtil {
-
-	protected static Object[] fetchPlidAndPortletId(
-			PermissionChecker permissionChecker, long groupId,
-			String[] portletIds)
-		throws Exception {
-
-		for (String portletId : portletIds) {
-			long plid = PortalUtil.getPlidFromPortletId(groupId, portletId);
-
-			if (plid == LayoutConstants.DEFAULT_PLID) {
-				continue;
-			}
-
-			Layout layout = LayoutLocalServiceUtil.getLayout(plid);
-
-			if (!LayoutPermissionUtil.contains(
-					permissionChecker, layout, ActionKeys.VIEW)) {
-
-				continue;
-			}
-
-			LayoutTypePortlet layoutTypePortlet =
-				(LayoutTypePortlet)layout.getLayoutType();
-
-			portletId = getPortletId(layoutTypePortlet, portletId);
-
-			return new Object[] {plid, portletId};
-		}
-
-		return null;
-	}
 
 	public static Object[] getPlidAndPortletId(
 			ThemeDisplay themeDisplay, long groupId, long plid,
@@ -153,7 +119,7 @@ public class FindUtil {
 
 		if ((groupId == layout.getGroupId()) ||
 			(layout.isPrivateLayout() &&
-				!SitesUtil.isUserGroupLayoutSetViewable(
+			 !SitesUtil.isUserGroupLayoutSetViewable(
 					permissionChecker, layout.getGroup()))) {
 
 			return;
@@ -164,6 +130,37 @@ public class FindUtil {
 		layout = new VirtualLayout(layout, targetGroup);
 
 		request.setAttribute(WebKeys.LAYOUT, layout);
+	}
+
+	protected static Object[] fetchPlidAndPortletId(
+			PermissionChecker permissionChecker, long groupId,
+			String[] portletIds)
+		throws Exception {
+
+		for (String portletId : portletIds) {
+			long plid = PortalUtil.getPlidFromPortletId(groupId, portletId);
+
+			if (plid == LayoutConstants.DEFAULT_PLID) {
+				continue;
+			}
+
+			Layout layout = LayoutLocalServiceUtil.getLayout(plid);
+
+			if (!LayoutPermissionUtil.contains(
+					permissionChecker, layout, ActionKeys.VIEW)) {
+
+				continue;
+			}
+
+			LayoutTypePortlet layoutTypePortlet =
+				(LayoutTypePortlet)layout.getLayoutType();
+
+			portletId = getPortletId(layoutTypePortlet, portletId);
+
+			return new Object[] {plid, portletId};
+		}
+
+		return null;
 	}
 
 }

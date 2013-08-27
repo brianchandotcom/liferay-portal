@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.util.ArrayUtil_IW;
+import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.DateUtil_IW;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -380,6 +381,16 @@ public class TemplateContextHelper {
 		try {
 			variables.put(
 				"browserSniffer", BrowserSnifferUtil.getBrowserSniffer());
+		}
+		catch (SecurityException se) {
+			_log.error(se, se);
+		}
+
+		// Calendar factory util
+
+		try {
+			variables.put(
+				"calendarFactory", CalendarFactoryUtil.getCalendarFactory());
 		}
 		catch (SecurityException se) {
 			_log.error(se, se);

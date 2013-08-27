@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.BodyContentWrapper;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -71,25 +70,24 @@ public class BaseBodyTagSupport extends TagSupport {
 
 			return bodyContentWrapper.getStringBundler();
 		}
-		else {
-			if (ServerDetector.isTomcat() && _log.isWarnEnabled()) {
-				_log.warn(
-					"BodyContent is not BodyContentWrapper. Check " +
-						"JspFactorySwapper.");
-			}
 
-			String bodyContentString = null;
-
-			if (bodyContent != null) {
-				bodyContentString = bodyContent.getString();
-			}
-
-			if (bodyContentString == null) {
-				bodyContentString = StringPool.BLANK;
-			}
-
-			return new StringBundler(bodyContentString);
+		if (bodyContent == null) {
+			return new StringBundler();
 		}
+
+		if (ServerDetector.isTomcat() && _log.isWarnEnabled()) {
+			_log.warn(
+				"BodyContent is not BodyContentWrapper. Check " +
+					"JspFactorySwapper.");
+		}
+
+		String bodyContentString = bodyContent.getString();
+
+		if (bodyContentString == null) {
+			return new StringBundler();
+		}
+
+		return new StringBundler(bodyContentString);
 	}
 
 	@Override

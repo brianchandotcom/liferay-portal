@@ -20,6 +20,7 @@ import java.util.TimeZone;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Marcellus Tavares
  */
 public interface CalendarFactory {
 
@@ -33,7 +34,19 @@ public interface CalendarFactory {
 	public Calendar getCalendar(
 		int year, int month, int date, int hour, int minute, int second);
 
+	public Calendar getCalendar(
+		int year, int month, int date, int hour, int minute, int second,
+		int millisecond);
+
+	public Calendar getCalendar(
+		int year, int month, int date, int hour, int minute, int second,
+		int millisecond, TimeZone timeZone);
+
 	public Calendar getCalendar(Locale locale);
+
+	public Calendar getCalendar(long time);
+
+	public Calendar getCalendar(long time, TimeZone timeZone);
 
 	public Calendar getCalendar(TimeZone timeZone);
 

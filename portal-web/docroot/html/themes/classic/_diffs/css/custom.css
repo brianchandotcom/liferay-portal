@@ -200,6 +200,10 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 	/* ---------- Breadcrumbs ---------- */
 
+	#breadcrumbs {
+		margin-bottom: 45px;
+	}
+
 	.breadcrumb {
 		background-color: #FAFAFA;
 	}

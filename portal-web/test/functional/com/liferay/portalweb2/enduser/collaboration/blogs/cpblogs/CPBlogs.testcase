@@ -93,7 +93,7 @@
 		</execute>
 	</command>
 
-	<command name="AddBlogsEntryTitleEscapeCharactersCP">
+	<command name="AddBlogsEntryTitleEscapeCharacters">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="&lt;!--Html Escape Character Test--&gt;" />
 
@@ -116,7 +116,73 @@
 		</execute>
 	</command>
 
-	<command name="PublishBlogsEntryDraftCP">
+	<command name="EditBlogsEntryContent">
+		<var name="entryContent" value="Blogs Entry Content" />
+		<var name="entryContentEdit" value="Blogs Entry Content Edit" />
+		<var name="entryTitle" value="Blogs Entry Title" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="BlogsEntry#addCP">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="BlogsEntry#editContentCP">
+			<var name="entryContentEdit" value="${entryContentEdit}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewCP">
+			<var name="entryContent" value="${entryContentEdit}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+	</command>
+
+	<command name="EditBlogsEntryTitle">
+		<var name="entryContent" value="Blogs Entry Content" />
+		<var name="entryTitle" value="Blogs Entry Title" />
+		<var name="entryTitleEdit" value="Blogs Entry Title Edit" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="BlogsEntry#addCP">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="BlogsEntry#editTitleCP">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitleEdit" value="${entryTitleEdit}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewCP">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitleEdit}" />
+		</execute>
+	</command>
+
+	<command name="PublishBlogsEntryDraft">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 

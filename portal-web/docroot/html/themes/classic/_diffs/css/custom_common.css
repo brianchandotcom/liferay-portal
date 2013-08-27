@@ -465,9 +465,12 @@
 				background-image: none;
 
 				.accordion-toggle:before {
-					content: '\25BA';
-					color: #333;
+					-webkit-font-smoothing: antialiased;
+					font-family: "FontAwesome";
+					content: '\F138';
+					color: #d4d4d4;
 					display: inline-block;
+					margin-right: 5px;
 				}
 			}
 
@@ -475,7 +478,6 @@
 				position: relative;
 
 				.accordion-toggle:after {
-					border-bottom: 1px solid #E5E5E5;
 					content: '';
 					margin-left: 10px;
 					position: absolute;
@@ -485,7 +487,16 @@
 			}
 
 			&.toggler-header-expanded .accordion-toggle:before {
-				content: '\25BC';
+				content: '\F13A';
+			}
+
+		}
+
+		.toggler-content-expanded {
+			border: 1px solid #e5e5e5;
+
+			.accordion-inner {
+				border: 0;
 			}
 		}
 

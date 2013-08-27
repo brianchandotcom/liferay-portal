@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.StagedModel;
+import com.liferay.portal.test.Sync;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
@@ -39,6 +40,7 @@ import org.junit.Assert;
 /**
  * @author Zsolt Berentey
  */
+@Sync
 public class ManifestSummaryTest
 	extends JournalArticleStagedModelDataHandlerTest {
 

@@ -87,6 +87,7 @@ public class SynchronousDestinationExecutionTestListener
 
 			replaceDestination(DestinationNames.ASYNC_SERVICE);
 			replaceDestination(DestinationNames.BACKGROUND_TASK);
+			replaceDestination(DestinationNames.SUBSCRIPTION_SENDER);
 		}
 
 		protected void replaceDestination(String destinationName) {

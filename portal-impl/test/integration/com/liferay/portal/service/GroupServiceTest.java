@@ -94,6 +94,9 @@ public class GroupServiceTest {
 		testGroup(
 			user, group, null, null, true, false, false, false, true, true,
 			true);
+
+		// rollback
+
 	}
 
 	@Test

@@ -101,16 +101,15 @@ public class SharedSessionServletRequest extends HttpServletRequestWrapper {
 	protected HttpSession getSharedSessionWrapper(
 		HttpSession portalSession, HttpSession portletSession) {
 
-		if (CompoundSessionIdSplitterUtil.hasSessionDelimiter() &&
-			!(portalSession instanceof CompoundSessionIdHttpSession)) {
+		if (CompoundSessionIdSplitterUtil.hasSessionDelimiter()) {
+			if (!(portalSession instanceof CompoundSessionIdHttpSession)) {
+				portalSession = new CompoundSessionIdHttpSession(portalSession);
+			}
 
-			portalSession = new CompoundSessionIdHttpSession(portalSession);
-		}
-
-		if (CompoundSessionIdSplitterUtil.hasSessionDelimiter() &&
-			!(portletSession instanceof CompoundSessionIdHttpSession)) {
-
-			portletSession = new CompoundSessionIdHttpSession(portletSession);
+			if (!(portletSession instanceof CompoundSessionIdHttpSession)) {
+				portletSession = new CompoundSessionIdHttpSession(
+					portletSession);
+			}
 		}
 
 		if (ServerDetector.isJetty()) {

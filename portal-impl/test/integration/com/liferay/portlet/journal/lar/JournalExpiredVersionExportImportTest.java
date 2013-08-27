@@ -29,6 +29,7 @@ import com.liferay.portlet.journal.service.JournalArticleServiceUtil;
 import com.liferay.portlet.journal.util.JournalTestUtil;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -47,10 +48,10 @@ import org.junit.runner.RunWith;
 public class JournalExpiredVersionExportImportTest
 	extends JournalExportImportTest {
 
+	@Ignore("This test does not apply")
 	@Override
 	@Test
 	public void testExportImportAssetLinks() throws Exception {
-		Assert.assertTrue("This test does not apply", true);
 	}
 
 	@Override
@@ -110,10 +111,10 @@ public class JournalExpiredVersionExportImportTest
 				importedGroup.getCompanyId(), importedGroup.getGroupId()));
 	}
 
+	@Ignore("This test does not apply")
 	@Override
 	@Test
 	public void testExportImportStructuredJournalArticle() throws Exception {
-		Assert.assertTrue("This test does not apply", true);
 	}
 
 }

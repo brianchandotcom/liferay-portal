@@ -55,6 +55,7 @@ import java.util.Map;
 import javax.portlet.PortletPreferences;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -184,9 +185,10 @@ public class AssetPublisherExportImportTest
 				portletPreferences.getValue("displayStyle", null)));
 	}
 
+	@Ignore("This test does not apply")
 	@Override
+	@Test
 	public void testExportImportAssetLinks() throws Exception {
-		Assert.assertTrue("This test does not apply", true);
 	}
 
 	@Test

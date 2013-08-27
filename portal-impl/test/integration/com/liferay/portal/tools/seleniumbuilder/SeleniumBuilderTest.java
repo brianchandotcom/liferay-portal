@@ -1027,7 +1027,7 @@ public class SeleniumBuilderTest {
 	public void testMacroElseifElement1001_1() throws Exception {
 		test(
 			"MacroElseifElement1001_1.macro",
-			"Error 1001: Missing (condition|contains|equals|isset) child " +
+			"Error 1001: Missing (condition|contains|equals|isset|not) child " +
 				"element in " + _DIR_NAME +
 				"/MacroElseifElement1001_1.macro:8");
 	}
@@ -1044,7 +1044,7 @@ public class SeleniumBuilderTest {
 	public void testMacroElseifElement1001_3() throws Exception {
 		test(
 			"MacroElseifElement1001_3.macro",
-			"Error 1001: Missing (condition|contains|equals|isset) child " +
+			"Error 1001: Missing (condition|contains|equals|isset|not) child " +
 				"element in " + _DIR_NAME +
 				"/MacroElseifElement1001_3.macro:8");
 	}
@@ -1237,7 +1237,7 @@ public class SeleniumBuilderTest {
 	public void testMacroIfElement1001_1() throws Exception {
 		test(
 			"MacroIfElement1001_1.macro",
-			"Error 1001: Missing (condition|contains|equals|isset) child " +
+			"Error 1001: Missing (condition|contains|equals|isset|not) child " +
 				"element in " + _DIR_NAME + "/MacroIfElement1001_1.macro:3");
 	}
 
@@ -1253,7 +1253,7 @@ public class SeleniumBuilderTest {
 	public void testMacroIfElement1001_3() throws Exception {
 		test(
 			"MacroIfElement1001_3.macro",
-			"Error 1001: Missing (condition|contains|equals|isset) child " +
+			"Error 1001: Missing (condition|contains|equals|isset|not) child " +
 				"element in " + _DIR_NAME + "/MacroIfElement1001_3.macro:3");
 	}
 

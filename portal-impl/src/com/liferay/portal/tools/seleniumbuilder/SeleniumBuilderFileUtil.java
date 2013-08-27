@@ -1107,11 +1107,13 @@ public class SeleniumBuilderFileUtil {
 				1001, fileName, ifElement, allowedIfConditionElementNames);
 		}
 
-		if (ifElement.getName() != "not") {
-			if (!elementNames.contains("then")) {
-				throwValidationException(
-					1001, fileName, ifElement, new String[] {"then"});
-			}
+		if (ifElement.getName() == "not") {
+			return;
+		}
+
+		if (!elementNames.contains("then")) {
+			throwValidationException(
+				1001, fileName, ifElement, new String[] {"then"});
 		}
 	}
 
@@ -1147,7 +1149,7 @@ public class SeleniumBuilderFileUtil {
 					},
 					new String[] {"action", "macro"}, new String[] {"var"},
 					new String[] {
-						"condition", "contains", "equals", "isset","not"});
+						"condition", "contains", "equals", "isset", "not"});
 			}
 			else if (elementName.equals("var")) {
 				validateVarElement(fileName, element);

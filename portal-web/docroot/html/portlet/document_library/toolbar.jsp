@@ -117,7 +117,6 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 					<aui:input name="searchFolderIds" type="hidden" value="<%= folderId %>" />
 
 					<liferay-ui:input-search />
-
 				</aui:form>
 			</div>
 		</div>

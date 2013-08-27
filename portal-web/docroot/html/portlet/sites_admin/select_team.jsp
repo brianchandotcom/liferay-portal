@@ -39,6 +39,7 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 	<liferay-ui:search-container
 		searchContainer="<%= new TeamSearch(renderRequest, portletURL) %>"
 	>
+
 		<%
 		TeamDisplayTerms searchTerms = (TeamDisplayTerms)searchContainer.getSearchTerms();
 

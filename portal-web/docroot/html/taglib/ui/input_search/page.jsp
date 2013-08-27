@@ -27,8 +27,8 @@ boolean showButton = GetterUtil.getBoolean(request.getAttribute("liferay-ui:inpu
 String value = ParamUtil.getString(request, name);
 %>
 
-<div class="<%= cssClass %>" >
-	<input class="search-query span9" id="<portlet:namespace /><%= id %>" name="<%= namespace + name %>" placeholder="<%= showButton ? StringPool.BLANK : buttonLabel %>" type="text" value="<%= HtmlUtil.escapeAttribute(value) %>" />
+<div class="<%= cssClass %>">
+	<input class="search-query span9" id="<portlet:namespace /><%= id %>" name="<portlet:namespace /><%= name %>" placeholder="<%= showButton ? StringPool.BLANK : buttonLabel %>" type="text" value="<%= HtmlUtil.escapeAttribute(value) %>" />
 
 	<c:if test="<%= showButton %>">
 		<button class="btn" type="submit">

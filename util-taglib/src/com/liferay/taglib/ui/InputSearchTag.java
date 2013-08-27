@@ -24,30 +24,6 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class InputSearchTag extends IncludeTag {
 
-	public String getButtonLabel() {
-		return _buttonLabel;
-	}
-
-	public String getCssClass() {
-		return _cssClass;
-	}
-
-	public DisplayTerms getDisplayTerms() {
-		return _displayTerms;
-	}
-
-	public String getId() {
-		return _id;
-	}
-
-	public String getName() {
-		return _name;
-	}
-
-	public boolean isShowButton() {
-		return _showButton;
-	}
-
 	public void setButtonLabel(String buttonLabel) {
 		_buttonLabel = buttonLabel;
 	}

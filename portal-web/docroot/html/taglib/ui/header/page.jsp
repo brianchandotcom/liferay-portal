@@ -31,7 +31,7 @@ String headerTitle = (localizeTitle) ? LanguageUtil.get(pageContext, title) : ti
 <div class="taglib-header <%= cssClass %>">
 	<c:if test="<%= showBackURL && Validator.isNotNull(backURL) %>">
 		<span class="header-back-to">
-			<a class="icon-chevron-sign-left" href="<%= backURL %>" id="<%= namespace %>TabsBack" title="<%= HtmlUtil.escapeAttribute(backLabel) %>">
+			<a class="back-one-level icon-circle-arrow-left" href="<%= backURL %>" id="<%= namespace %>TabsBack" title="<%= HtmlUtil.escapeAttribute(backLabel) %>">
 				<span class="helper-hidden-accessible">
 					<c:choose>
 						<c:when test="<%= escapeXml %>">

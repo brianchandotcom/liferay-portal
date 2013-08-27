@@ -153,6 +153,16 @@
 
 	/* ---------- Main ---------- */
 
+	.back-one-level {
+		&:focus {
+			color: #0A68CD;
+		}
+
+		&:hover {
+			color: #8CD3FC;
+		}
+	}
+
 	.logo, .logo:hover {
 		color: #333;
 		line-height: 20px;

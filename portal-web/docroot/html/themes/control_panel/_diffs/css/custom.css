@@ -496,6 +496,15 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 	/* ---------- Single site admin ---------- */
 
+	.back-one-level {
+		display: inline-block;
+		font-size: 21px;
+		line-height: 21px;
+		margin-right: 5px;
+		text-decoration: none;
+		vertical-align: middle;
+	}
+
 	.panel-manage-frontpage {
 		#controlPanelSiteHeading {
 			border-bottom: 1px solid #CFCFCF;
@@ -545,6 +554,8 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 					&.open {
 						.dropdown-toggle {
+							@include box-shadow(none);
+
 							i.caret {
 								background-position: 0 -20px;
 							}

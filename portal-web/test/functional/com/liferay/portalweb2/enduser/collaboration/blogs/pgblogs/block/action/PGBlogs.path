@@ -146,6 +146,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ENTRY_PERMISSIONS</td>
+	<td>//div[@class='entry approved' and contains(.,'${key_entryTitle}')]//span/a/span[.='Permissions']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ENTRY_PERMISSIONS_1</td>
 	<td>xpath=(//div[contains(@class,'edit-actions')]//span/a/span[.='Permissions'])[1]</td>
 	<td></td>

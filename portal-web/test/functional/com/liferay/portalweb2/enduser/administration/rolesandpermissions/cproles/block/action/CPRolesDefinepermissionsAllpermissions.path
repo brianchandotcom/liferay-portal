@@ -66,6 +66,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRIES_ADD_ENTRY_SITE_SCOPE</td>
+	<td>//span[@id='_128_groupHTMLcom.liferay.portlet.blogsADD_ENTRY']/span[contains(.,'${key_siteNameScope}')]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRIES_ADD_ENTRY_SITE_SCOPE_REMOVE</td>
+	<td>//span[@id='_128_groupHTMLcom.liferay.portlet.blogsADD_ENTRY']/span[contains(.,'${key_siteNameScope}')]/a</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRIES_PERMISSIONS_CHECKBOX</td>
 	<td>//input[@value='com.liferay.portlet.blogsPERMISSIONS']</td>
 	<td></td>

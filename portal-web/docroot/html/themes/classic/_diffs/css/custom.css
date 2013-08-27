@@ -204,6 +204,14 @@ $dockbarOpenGradientStart: #0EA6F9;
 		background-color: #FAFAFA;
 	}
 
+	#breadcrumbs {
+		margin-bottom: 45px;
+
+		.breadcrumb {
+			margin-bottom: 0;
+		}
+	}
+
 	/* ---------- Portlet wrapper and icons ---------- */
 
 	.portlet-content, .portlet-minimized .portlet-content-container {

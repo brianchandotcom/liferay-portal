@@ -17,10 +17,13 @@ package com.liferay.portal.test;
 import com.liferay.portal.kernel.test.AbstractIntegrationJUnitTestRunner;
 import com.liferay.portal.util.InitUtil;
 
+import org.junit.runner.notification.RunNotifier;
 import org.junit.runners.model.InitializationError;
+import org.junit.runners.model.Statement;
 
 /**
  * @author Miguel Pastor
+ * @author Carlos Sierra
  */
 public class LiferayIntegrationJUnitTestRunner
 	extends AbstractIntegrationJUnitTestRunner {
@@ -36,6 +39,43 @@ public class LiferayIntegrationJUnitTestRunner
 		System.setProperty("catalina.base", ".");
 
 		InitUtil.initWithSpring();
+	}
+
+	@Override
+	protected Statement classBlock(final RunNotifier notifier) {
+		return new Statement() {
+
+			@Override
+			public void evaluate() throws Throwable {
+				Thread thread = new Thread() {
+
+					@Override
+					public void run() {
+						try {
+							Statement classBlock =
+									LiferayIntegrationJUnitTestRunner.super.
+									classBlock(notifier);
+
+							classBlock.evaluate();
+						}
+						catch (Throwable e) {
+							error = e;
+						}
+					}
+
+				};
+
+				thread.start();
+
+				thread.join();
+
+				if (error != null) {
+					throw error;
+				}
+			}
+
+			Throwable error = null;
+		};
 	}
 
 }

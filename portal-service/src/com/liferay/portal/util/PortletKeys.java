@@ -108,6 +108,9 @@ public class PortletKeys {
 	public static final String KNOWLEDGE_BASE_ADMIN =
 		"1_WAR_knowledgebaseportlet";
 
+	public static final String KNOWLEDGE_BASE_DISPLAY =
+		"2_WAR_knowledgebaseportlet";
+
 	public static final String LANGUAGE = "82";
 
 	public static final String LAYOUT_PROTOTYPE = "146";

@@ -21,7 +21,19 @@
 						(AssetEntry.classNameId = ?) AND
 						(AssetEntry.visible = [$TRUE$])
 				)) AND
-				(AssetCategory.name LIKE ? OR ? IS NULL)
+				(lower(AssetCategory.name) LIKE ? OR ? IS NULL)
+		]]>
+	</sql>
+	<sql id="com.liferay.portlet.asset.service.persistence.AssetCategoryFinder.countByG_N_V">
+		<![CDATA[
+			SELECT
+				COUNT(*) AS COUNT_VALUE
+			FROM
+				AssetCategory
+			WHERE
+				(AssetCategory.groupId = ?) AND
+				(lower(AssetCategory.name) LIKE ? OR ? IS NULL) AND
+				(AssetCategory.vocabularyId = ?)
 		]]>
 	</sql>
 	<sql id="com.liferay.portlet.asset.service.persistence.AssetCategoryFinder.countByG_N_P">
@@ -33,7 +45,7 @@
 			[$JOIN$]
 			WHERE
 				(AssetCategory.groupId = ?) AND
-				(AssetCategory.name LIKE ? OR ? IS NULL)
+				(lower(AssetCategory.name) LIKE ? OR ? IS NULL)
 		]]>
 	</sql>
 	<sql id="com.liferay.portlet.asset.service.persistence.AssetCategoryFinder.findByG_L">
@@ -58,6 +70,20 @@
 				(lower(AssetCategory.name) = ?)
 		]]>
 	</sql>
+	<sql id="com.liferay.portlet.asset.service.persistence.AssetCategoryFinder.findByG_N_V">
+		<![CDATA[
+			SELECT
+				{AssetCategory.*}
+			FROM
+				AssetCategory
+			WHERE
+				(AssetCategory.groupId = ?) AND
+				(lower(AssetCategory.name) LIKE ? OR ? IS NULL) AND
+				(AssetCategory.vocabularyId = ?)
+			ORDER BY
+				AssetCategory.name ASC
+		]]>
+	</sql>
 	<sql id="com.liferay.portlet.asset.service.persistence.AssetCategoryFinder.findByG_N_P">
 		<![CDATA[
 			SELECT
@@ -67,7 +93,7 @@
 			[$JOIN$]
 			WHERE
 				(AssetCategory.groupId = ?) AND
-				(AssetCategory.name LIKE ? OR ? IS NULL)
+				(lower(AssetCategory.name) LIKE ? OR ? IS NULL)
 			ORDER BY
 				AssetCategory.name ASC
 		]]>
@@ -325,7 +351,7 @@
 				AssetVocabulary
 			WHERE
 				(AssetVocabulary.groupId = ?) AND
-				(AssetVocabulary.name LIKE ? OR ? IS NULL)
+				(lower(AssetVocabulary.name) LIKE ? OR ? IS NULL)
 		]]>
 	</sql>
 	<sql id="com.liferay.portlet.asset.service.persistence.AssetVocabularyFinder.findByG_N">

@@ -22,8 +22,21 @@ public interface AssetCategoryFinder {
 		java.lang.String name)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	public int countByG_N_V(long groupId, java.lang.String name,
+		long vocabularyId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	public int countByG_N_P(long groupId, java.lang.String name,
 		java.lang.String[] categoryProperties)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public int filterCountByG_N_V(long groupId, java.lang.String name,
+		long vocabularyId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public java.util.List<com.liferay.portlet.asset.model.AssetCategory> filterFindByG_N_V(
+		long groupId, java.lang.String name, long vocabularyId, int start,
+		int end, com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public java.util.List<java.lang.Long> findByG_L(
@@ -34,6 +47,11 @@ public interface AssetCategoryFinder {
 		long groupId, java.lang.String name)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			com.liferay.portlet.asset.NoSuchCategoryException;
+
+	public java.util.List<com.liferay.portlet.asset.model.AssetCategory> findByG_N_V(
+		long groupId, java.lang.String name, long vocabularyId, int start,
+		int end, com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public java.util.List<com.liferay.portlet.asset.model.AssetCategory> findByG_N_P(
 		long groupId, java.lang.String name,

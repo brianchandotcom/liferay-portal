@@ -77,6 +77,8 @@ public class AssetVocabularyFinderImpl
 			long groupId, String name, boolean inlineSQLHelper)
 		throws SystemException {
 
+		name = name.trim().toLowerCase();
+
 		Session session = null;
 
 		try {

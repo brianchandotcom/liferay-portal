@@ -93,7 +93,7 @@
 		</execute>
 	</command>
 
-	<command name="AddBlogsEntryTitleEscapeCharactersCP">
+	<command name="AddBlogsEntryTitleEscapeCharacters">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="&lt;!--Html Escape Character Test--&gt;" />
 
@@ -116,7 +116,7 @@
 		</execute>
 	</command>
 
-	<command name="EditBlogsEntryContentCP">
+	<command name="EditBlogsEntryContent">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryContentEdit" value="Blogs Entry Content Edit" />
 		<var name="entryTitle" value="Blogs Entry Title" />
@@ -149,7 +149,7 @@
 		</execute>
 	</command>
 
-	<command name="EditBlogsEntryTitleCP">
+	<command name="EditBlogsEntryTitle">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 		<var name="entryTitleEdit" value="Blogs Entry Title Edit" />

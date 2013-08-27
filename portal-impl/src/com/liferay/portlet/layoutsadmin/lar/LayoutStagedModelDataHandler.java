@@ -546,6 +546,8 @@ public class LayoutStagedModelDataHandler
 
 		LayoutLocalServiceUtil.updateLayout(importedLayout);
 
+		LayoutSetLocalServiceUtil.updatePageCount(groupId, privateLayout);
+
 		List<Layout> newLayouts = portletDataContext.getNewLayouts();
 
 		newLayouts.add(importedLayout);

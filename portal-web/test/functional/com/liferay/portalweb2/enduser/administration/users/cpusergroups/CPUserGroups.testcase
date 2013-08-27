@@ -141,6 +141,7 @@
 		<execute macro="UserGroup#addCP">
 			<var name="userGroupName" value="${userGroupName}" />
 		</execute>
+
 		<execute macro="UserGroup#editCP">
 			<var name="userGroupNameEdit" value="${userGroupNameEdit}" />
 		</execute>

@@ -1879,6 +1879,12 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	}
 
 	@Override
+	public java.lang.String getThemeSetting(java.lang.String key,
+		java.lang.String device) {
+		return _layoutRevision.getThemeSetting(key, device);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.util.UnicodeProperties getTypeSettingsProperties() {
 		return _layoutRevision.getTypeSettingsProperties();
 	}

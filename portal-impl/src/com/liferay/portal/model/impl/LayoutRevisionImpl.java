@@ -115,6 +115,38 @@ public class LayoutRevisionImpl extends LayoutRevisionBaseImpl {
 	}
 
 	@Override
+	public String getThemeSetting(String key, String device) {
+		UnicodeProperties typeSettingsProperties = getTypeSettingsProperties();
+
+		String value = typeSettingsProperties.getProperty(
+			ThemeSettingImpl.namespaceProperty(device, key));
+
+		if (value != null) {
+			return value;
+		}
+
+		if (!isInheritLookAndFeel()) {
+			try {
+				Theme theme = _getTheme(device);
+
+				return theme.getSetting(key);
+			}
+			catch (Exception e) {
+			}
+		}
+
+		try {
+			LayoutSet layoutSet = getLayoutSet();
+
+			value = layoutSet.getThemeSetting(key, device);
+		}
+		catch (Exception e) {
+		}
+
+		return value;
+	}
+
+	@Override
 	public String getTypeSettings() {
 		if (_typeSettingsProperties == null) {
 			return super.getTypeSettings();
@@ -223,6 +255,17 @@ public class LayoutRevisionImpl extends LayoutRevisionBaseImpl {
 		_typeSettingsProperties = typeSettingsProperties;
 
 		super.setTypeSettings(_typeSettingsProperties.toString());
+	}
+
+	private Theme _getTheme(String device)
+		throws PortalException, SystemException {
+
+		if (device.equals("regular")) {
+			return getTheme();
+		}
+		else {
+			return getWapTheme();
+		}
 	}
 
 	private UnicodeProperties _typeSettingsProperties;

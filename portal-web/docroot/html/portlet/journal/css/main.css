@@ -220,13 +220,13 @@
 		}
 	}
 
-	li {
+	.structure-tree {
 		list-style: none;
 		position: relative;
-	}
 
-	.structure-tree {
-		position: relative;
+		li {
+			position: relative;
+		}
 
 		li.structure-field {
 			&.repeatable-border {

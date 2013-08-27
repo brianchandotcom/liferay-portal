@@ -98,9 +98,9 @@ List<Organization> organizations = (List<Organization>)request.getAttribute("use
 	<br />
 
 	<liferay-ui:icon
-		cssClass="modify-link"
+		cssClass="btn modify-link"
+		iconClass="icon-search"
 		id="selectOrganizationLink"
-		image="add"
 		label="<%= true %>"
 		message="select"
 		method="get"

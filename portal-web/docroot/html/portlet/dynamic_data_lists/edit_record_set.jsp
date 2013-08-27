@@ -83,7 +83,8 @@ if (ddmStructureId > 0) {
 			<liferay-ui:input-resource id="ddmStructureNameDisplay" url="<%= ddmStructureName %>" />
 
 			<liferay-ui:icon
-				image="add"
+				cssClass="btn modify-link"
+				iconClass="icon-search"
 				label="<%= true %>"
 				message="select"
 				url='<%= "javascript:" + renderResponse.getNamespace() + "openDDMStructureSelector();" %>'

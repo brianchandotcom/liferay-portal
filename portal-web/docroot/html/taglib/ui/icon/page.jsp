@@ -116,6 +116,9 @@ boolean urlIsNotNull = Validator.isNotNull(url);
 		<c:otherwise>
 			<c:if test="<%= Validator.isNotNull(src) %>">
 				<c:choose>
+					<c:when test="<%= Validator.isNotNull(iconClass) %>">
+						<i class="<%= iconClass %>"></i>
+					</c:when>
 					<c:when test="<%= urlIsNotNull %>">
 						<img src="<%= src %>" <%= details %> />
 					</c:when>

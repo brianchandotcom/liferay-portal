@@ -9,3 +9,18 @@ a.taglib-icon {
 		}
 	}
 }
+
+.btn.modify-link {
+	a {
+		color: #333;
+		text-decoration: none;
+
+		&:hover {
+			color: #333;
+		}
+
+		i, .taglib-text {
+			text-decoration: none;
+		}
+	}
+}

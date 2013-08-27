@@ -83,9 +83,9 @@ userGroupRoles.addAll(siteRoles);
 
 <c:if test="<%= !portletName.equals(PortletKeys.MY_ACCOUNT) %>">
 	<liferay-ui:icon
-		cssClass="modify-link"
+		cssClass="btn modify-link"
+		iconClass="icon-search"
 		id="selectRegularRoleLink"
-		image="add"
 		label="<%= true %>"
 		message="select"
 		method="get"
@@ -252,9 +252,9 @@ userGroupRoles.addAll(siteRoles);
 
 <c:if test="<%= !organizations.isEmpty() && !portletName.equals(PortletKeys.MY_ACCOUNT) %>">
 	<liferay-ui:icon
-		cssClass="modify-link"
+		cssClass="btn modify-link"
+		iconClass="icon-search"
 		id="selectOrganizationRoleLink"
-		image="add"
 		label="<%= true %>"
 		message="select"
 		method="get"
@@ -346,9 +346,9 @@ userGroupRoles.addAll(siteRoles);
 
 		<c:if test="<%= !portletName.equals(PortletKeys.MY_ACCOUNT) %>">
 			<liferay-ui:icon
-				cssClass="modify-link"
+				cssClass="btn modify-link"
+				iconClass="icon-search"
 				id="selectSiteRoleLink"
-				image="add"
 				label="<%= true %>"
 				message="select"
 				method="get"

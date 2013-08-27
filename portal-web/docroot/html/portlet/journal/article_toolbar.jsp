@@ -113,7 +113,7 @@ if ((article != null) && article.isDraft()) {
 							).render();
 						}
 					},
-					title: '<%= HtmlUtil.escape(LanguageUtil.get(pageContext, "this-preview-won't-include-the-theme-context")) %>'
+					title: '<liferay-ui:message key="this-preview-won't-include-the-theme-context" />'
 				}
 			);
 		</c:if>

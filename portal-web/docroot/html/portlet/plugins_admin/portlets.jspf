@@ -86,9 +86,7 @@ for (int i = 0; i < results.size(); i++) {
 		sb.append("\">");
 	}
 
-	sb.append("<strong>");
 	sb.append(title);
-	sb.append("</strong>");
 
 	if (showEditPluginHREF) {
 		sb.append("</a>");

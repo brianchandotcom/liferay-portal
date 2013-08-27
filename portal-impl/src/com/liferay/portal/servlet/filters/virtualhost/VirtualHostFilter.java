@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.impl.LayoutImpl;
+import com.liferay.portal.portletfilerepository.PortletFileRepositoryServlet;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.servlet.I18nServlet;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
@@ -203,6 +204,14 @@ public class VirtualHostFilter extends BasePortalFilter {
 				return;
 			}
 		}
+		else if (friendlyURL.startsWith(_PATH_ATTACHMENTS)) {
+			if (PortletFileRepositoryServlet.hasAttachment(request)) {
+				processFilter(
+					VirtualHostFilter.class, request, response, filterChain);
+
+				return;
+			}
+		}
 
 		LayoutSet layoutSet = (LayoutSet)request.getAttribute(
 			WebKeys.VIRTUAL_HOST_LAYOUT_SET);
@@ -291,6 +300,8 @@ public class VirtualHostFilter extends BasePortalFilter {
 				VirtualHostFilter.class, request, response, filterChain);
 		}
 	}
+
+	private static final String _PATH_ATTACHMENTS = "/attachments/";
 
 	private static final String _PATH_DOCUMENTS = "/documents/";
 

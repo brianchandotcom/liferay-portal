@@ -258,6 +258,11 @@
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 	<servlet>
+		<servlet-name>Portlet File Repository Servlet</servlet-name>
+		<servlet-class>com.liferay.portal.portletfilerepository.PortletFileRepositoryServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet>
 		<servlet-name>Remoting Servlet</servlet-name>
 		<servlet-class>com.liferay.portal.spring.servlet.RemotingServlet</servlet-class>
 		<load-on-startup>1</load-on-startup>
@@ -733,6 +738,10 @@
 	<servlet-mapping>
 		<servlet-name>Portlet Bridge Servlet</servlet-name>
 		<url-pattern>/pbhs/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Portlet File Repository Servlet</servlet-name>
+		<url-pattern>/attachments/*</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>Robots Servlet</servlet-name>

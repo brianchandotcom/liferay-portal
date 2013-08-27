@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.Repository;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.theme.ThemeDisplay;
 
 import java.io.File;
 import java.io.InputStream;
@@ -83,6 +84,13 @@ public interface PortletFileRepository {
 
 	public Repository fetchPortletRepository(long groupId, String portletId)
 		throws SystemException;
+
+	public String getDownloadURL(
+		FileEntry fileEntry, ThemeDisplay themeDisplay, String queryString);
+
+	public String getDownloadURL(
+		FileEntry fileEntry, ThemeDisplay themeDisplay, String queryString,
+		boolean absoluteURL);
 
 	public List<FileEntry> getPortletFileEntries(long groupId, long folderId)
 		throws SystemException;

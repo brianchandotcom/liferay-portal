@@ -156,7 +156,12 @@ public class PortletPreferencesFinderImpl
 					sql, _PRIVATE_LAYOUT_SQL, StringPool.BLANK);
 			}
 
-			if (!excludeDefaultPreferences) {
+			if (excludeDefaultPreferences) {
+				sql = StringUtil.replace(
+					sql, "[$PORTLET_PREFERENCES_PREFERENCES_DEFAULT$]",
+					PortletConstants.DEFAULT_PREFERENCES);
+			}
+			else {
 				sql = StringUtil.replace(
 					sql, _PREFERENCES_SQL, StringPool.BLANK);
 			}
@@ -336,10 +341,10 @@ public class PortletPreferencesFinderImpl
 		"OR (PortletPreferences.portletId LIKE ?)";
 
 	private static final String _PREFERENCES_SQL =
-		"AND PortletPreferences.preferences != " +
-			"'[$PORTLET_PREFERENCES_PREFERENCES_DEFAULT$]'";
+		"AND (PortletPreferences.preferences != " +
+			"'[$PORTLET_PREFERENCES_PREFERENCES_DEFAULT$]')";
 
 	private static final String _PRIVATE_LAYOUT_SQL =
-		"(Layout.privateLayout = ?) AND";
+		"AND (Layout.privateLayout = ?)";
 
 }

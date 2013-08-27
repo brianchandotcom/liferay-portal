@@ -173,7 +173,7 @@ public class LayoutExporter {
 				PortletDataHandlerControl[] portletDataHandlerControls =
 					portletDataHandler.getExportConfigurationControls(
 						layout.getCompanyId(), layout.getGroupId(), portlet,
-						layout.getPrivateLayout());
+						layout.getPlid(), layout.getPrivateLayout());
 
 				if (ArrayUtil.isNotEmpty(portletDataHandlerControls)) {
 					rootPortletIds.add(portlet.getRootPortletId());

@@ -168,13 +168,13 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 		if ((PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
 				companyId, groupId, PortletKeys.PREFS_OWNER_ID_DEFAULT,
 				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, plid, portlet,
-				privateLayout, true) > 0) ||
+				privateLayout, false) > 0) ||
 			(PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
 				groupId, PortletKeys.PREFS_OWNER_TYPE_GROUP,
-				portlet.getRootPortletId(), true) > 0) ||
+				portlet.getRootPortletId(), false) > 0) ||
 			(PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
 				companyId, PortletKeys.PREFS_OWNER_TYPE_COMPANY,
-				portlet.getRootPortletId(), true) > 0)) {
+				portlet.getRootPortletId(), false) > 0)) {
 
 				configurationControls.add(
 					new PortletDataHandlerBoolean(
@@ -186,7 +186,7 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 
 		if (PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
 				-1, PortletKeys.PREFS_OWNER_TYPE_ARCHIVED,
-				portlet.getRootPortletId(), true) > 0) {
+				portlet.getRootPortletId(), false) > 0) {
 
 			configurationControls.add(
 				new PortletDataHandlerBoolean(
@@ -199,10 +199,10 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 
 		if ((PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
 				companyId, groupId, -1, PortletKeys.PREFS_OWNER_TYPE_USER, plid,
-				portlet, privateLayout, true) > 0) ||
+				portlet, privateLayout, false) > 0) ||
 			(PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
 				companyId, groupId, groupId, PortletKeys.PREFS_OWNER_TYPE_USER,
-				PortletKeys.PREFS_PLID_SHARED, portlet, privateLayout, true)
+				PortletKeys.PREFS_PLID_SHARED, portlet, privateLayout, false)
 				> 0)) {
 
 			configurationControls.add(

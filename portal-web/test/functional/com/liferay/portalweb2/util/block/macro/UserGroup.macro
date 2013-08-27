@@ -36,7 +36,7 @@
 	</command>
 
 	<command name="deleteCP">
-		<var name="key_vocabularyName" value="${userGroupName}" />
+		<var name="key_userGroupName" value="${userGroupName}" />
 
 		<execute action="CPUsergroups#assertClick" locator-key1="USER_GROUP_TABLE_ACTIONS" value1="Actions" />
 		<execute action="CPUsergroups#assertClick" locator-key1="USER_GROUP_MENULIST_DELETE" value1="Delete" />
@@ -46,7 +46,7 @@
 	</command>
 
 	<command name="editCP">
-		<var name="key_vocabularyName" value="${userGroupName}" />
+		<var name="key_userGroupName" value="${userGroupName}" />
 
 		<execute action="CPUsergroups#assertClick" locator-key1="USER_GROUP_TABLE_ACTIONS" value1="Actions" />
 		<execute action="CPUsergroups#assertClick" locator-key1="USER_GROUP_MENULIST_EDIT" value1="Edit" />

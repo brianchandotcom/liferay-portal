@@ -47,7 +47,7 @@ pageContext.setAttribute("portletURL", portletURL);
 	/>
 </c:if>
 
-<aui:form action="<%= portletURL.toString() %>" method="get" name="fm">
+<aui:form action="<%= portletURL.toString() %>" cssClass="form-search" method="get" name="fm">
 	<liferay-portlet:renderURLParams varImpl="portletURL" />
 
 	<%
@@ -56,14 +56,7 @@ pageContext.setAttribute("portletURL", portletURL);
 	List headerNames = searchContainer.getHeaderNames();
 
 	headerNames.add(StringPool.BLANK);
-	%>
 
-	<liferay-ui:search-form
-		page="/html/portlet/sites_admin/team_search.jsp"
-		searchContainer="<%= searchContainer %>"
-	/>
-
-	<%
 	TeamDisplayTerms searchTerms = (TeamDisplayTerms)searchContainer.getSearchTerms();
 
 	int total = TeamLocalServiceUtil.searchCount(groupId, searchTerms.getName(), searchTerms.getDescription(), new LinkedHashMap<String, Object>());
@@ -76,6 +69,8 @@ pageContext.setAttribute("portletURL", portletURL);
 
 	portletURL.setParameter(searchContainer.getCurParam(), String.valueOf(searchContainer.getCur()));
 	%>
+
+	<liferay-ui:input-search name="<%= searchTerms.NAME %>" />
 
 	<div class="separator"><!-- --></div>
 

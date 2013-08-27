@@ -33,17 +33,12 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 	<portlet:param name="eventName" value="<%= eventName %>" />
 </liferay-portlet:renderURL>
 
-<aui:form action="<%= portletURL.toString() %>" method="get" name="selectTeamFm">
+<aui:form action="<%= portletURL.toString() %>" cssClass="form-search" method="get" name="selectTeamFm">
 	<liferay-portlet:renderURLParams varImpl="portletURL" />
 
 	<liferay-ui:search-container
 		searchContainer="<%= new TeamSearch(renderRequest, portletURL) %>"
 	>
-		<liferay-ui:search-form
-			page="/html/portlet/sites_admin/team_search.jsp"
-		/>
-
-		<div class="separator"><!-- --></div>
 
 		<%
 		TeamDisplayTerms searchTerms = (TeamDisplayTerms)searchContainer.getSearchTerms();
@@ -54,6 +49,10 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 
 		searchContainer.setTotal(total);
 		%>
+
+		<liferay-ui:input-search name="<%= searchTerms.NAME %>" />
+
+		<div class="separator"><!-- --></div>
 
 		<liferay-ui:search-container-results
 			results="<%= TeamLocalServiceUtil.search(groupId, searchTerms.getName(), searchTerms.getDescription(), new LinkedHashMap<String, Object>(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>"

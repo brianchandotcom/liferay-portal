@@ -2008,6 +2008,41 @@
 		<body-content>JSP</body-content>
 	</tag>
 	<tag>
+		<name>input-search</name>
+		<tag-class>com.liferay.taglib.ui.InputSearchTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>buttonLabel</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>cssClass</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>displayTerms</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>id</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>name</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>showButton</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
 		<name>input-select</name>
 		<tag-class>com.liferay.taglib.ui.InputSelectTag</tag-class>
 		<body-content>JSP</body-content>

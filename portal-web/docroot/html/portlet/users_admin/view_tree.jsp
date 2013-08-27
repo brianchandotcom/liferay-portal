@@ -97,13 +97,7 @@ if (organization != null) {
 
 		<aui:nav-bar-search cssClass="pull-right">
 			<div class="form-search">
-				<div class="input-append">
-					<input class="search-query span9" name="<portlet:namespace />keywords" type="text" />
-
-					<button class="btn" onClick='<%= "javascript:" + renderResponse.getNamespace() + "search();" %>' type="submit">
-						<liferay-ui:message key="search" />
-					</button>
-				</div>
+				<liferay-ui:input-search />
 			</div>
 		</aui:nav-bar-search>
 	</aui:nav-bar>

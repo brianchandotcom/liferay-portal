@@ -160,11 +160,7 @@ if (categoryId > 0) {
 					<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 					<aui:input name="nodeId" type="hidden" value="<%= node.getNodeId() %>" />
 
-					<div class="input-append">
-						<input class="search-query span9" id="<portlet:namespace/>keywords1" name="<portlet:namespace/>keywords" placeholder="<liferay-ui:message key="keywords" />" type="text" value="<%= HtmlUtil.escapeAttribute(keywords) %>" />
-
-						<aui:button primary="<%= false %>" type="submit" value="search" />
-					</div>
+					<liferay-ui:input-search id="keywords1" />
 				</aui:form>
 			</div>
 		</div>

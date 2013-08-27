@@ -43,9 +43,7 @@
 		</aui:nav>
 
 		<div class="navbar-search pull-right">
-			<div class="form-search">
-				<input class="search-query span9" id="<portlet:namespace/>tagsAdminSearchInput" name="<portlet:namespace/>tagsAdminSearchInput" type="text" />
-			</div>
+			<liferay-ui:input-search cssClass="form-search" id="tagsAdminSearchInput" name="tagsAdminSearchInput" showButton="<%= false %>" />
 		</div>
 	</aui:nav-bar>
 

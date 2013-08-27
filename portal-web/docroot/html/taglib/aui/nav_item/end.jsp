@@ -21,7 +21,11 @@
 <%
 BodyContent bodyContent = (BodyContent)request.getAttribute("aui:nav-item:bodyContent");
 
-String bodyContentString = bodyContent.getString();
+String bodyContentString = null;
+
+if (bodyContent != null) {
+	bodyContentString = bodyContent.getString();
+}
 %>
 
 <c:if test="<%= !dropdown || Validator.isNotNull(bodyContentString) %>">

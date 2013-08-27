@@ -457,7 +457,7 @@
 	</target>
 
 	<target name="build-test-ant-scripts">
-		<property name="build-test-ant-scripts.version" value="6" />
+		<property name="build-test-ant-scripts.version" value="7" />
 
 		<if>
 			<available file="portal-web/test-ant-scripts/version" />
@@ -549,7 +549,7 @@
 			<param name="test.ant.script.database.minimal" value="true" />
 			<param name="test.ant.script.suite" value="EndUserCollaborationP5TestSuite" />
 		</antcall>
-	
+
 		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="end-user-document-management-acceptance" />
 			<param name="test.ant.script.database.minimal" value="true" />

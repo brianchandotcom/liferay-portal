@@ -163,6 +163,26 @@
 		</if>
 	</command>
 
+	<command name="loginUserPG">
+		<execute macro="Page#openURL" />
+
+		<execute action="PGLogin#type" locator-key1="EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
+		<execute action="PGLogin#type" locator-key1="PASSWORD_FIELD" value1="${password}" />
+		<execute action="PGLogin#click" locator-key1="SIGN_IN_BUTTON" />
+	</command>
+
+	<command name="logoutUserPG">
+		<execute macro="Page#openURL" />
+
+		<if>
+			<condition action="Dockbar#isElementPresent" locator-key1="USER_NAME" />
+			<then>
+				<execute action="Dockbar#click" locator-key1="USER_NAME" />
+				<execute action="Dockbar#click" locator-key1="USER_SIGN_OUT" />
+			</then>
+		</if>
+	</command>
+
 	<command name="tearDownCP">
 		<var name="userFirstName" value="userfn*" />
 
@@ -211,7 +231,7 @@
 		<execute action="CPUsersandorganizationsViewusers#assertClick" locator-key1="USER_TABLE_FIRST_NAME_1" value1="${userFirstName}" />
 
 		<var name="key_siteName" value="${siteName}" />
-		
+
 		<execute action="CPUsersandorganizationsUser#assertClick" locator-key1="MENU_USER_INFORMATION_SITES" value1="Sites" />
 		<execute action="CPUsersandorganizationsUser#assertTextEquals" locator-key1="SITES_TABLE_NAME" value1="${orgName}" />
 	</command>
@@ -227,7 +247,7 @@
 		<execute action="CPUsersandorganizationsViewusers#assertClick" locator-key1="USER_TABLE_FIRST_NAME_1" value1="${userFirstName}" />
 
 		<var name="key_roleName" value="${roleName}" />
-		
+
 		<execute action="CPUsersandorganizationsUser#assertClick" locator-key1="MENU_USER_INFORMATION_ROLES" value1="Roles" />
 		<execute action="CPUsersandorganizationsUser#assertTextEquals" locator-key1="ROLES_REGULAR_ROLES_TABLE_TITLE" value1="${roleName}" />
 	</command>
@@ -243,7 +263,7 @@
 		<execute action="CPUsersandorganizationsViewusers#assertClick" locator-key1="USER_TABLE_FIRST_NAME_1" value1="${userFirstName}" />
 
 		<var name="key_siteName" value="${siteName}" />
-		
+
 		<execute action="CPUsersandorganizationsUser#assertClick" locator-key1="MENU_USER_INFORMATION_SITES" value1="Sites" />
 		<execute action="CPUsersandorganizationsUser#assertTextEquals" locator-key1="SITES_TABLE_NAME" value1="${siteName}" />
 	</command>
@@ -259,7 +279,7 @@
 		<execute action="CPUsersandorganizationsViewusers#assertClick" locator-key1="USER_TABLE_FIRST_NAME_1" value1="${userFirstName}" />
 
 		<var name="key_userGroupName" value="${userGroupName}" />
-		
+
 		<execute action="CPUsersandorganizationsUser#assertClick" locator-key1="MENU_USER_INFORMATION_USER_GROUPS" value1="User Groups" />
 		<execute action="CPUsersandorganizationsUser#assertTextEquals" locator-key1="USER_GROUPS_TABLE_NAME" value1="${userGroupName}" />
 	</command>

@@ -1,5 +1,5 @@
 <definition>
-	<var name="orgName" value="Organization*" />
+	<var name="orgName" value="Organization Name" />
 
 	<command name="addCP">
 		<execute action="CPUsersandorganizations#assertClick" locator-key1="ADD" value1="Add" />
@@ -15,10 +15,12 @@
 	</command>
 
 	<command name="addMemberCP">
+		<var name="key_orgName" value="${orgName}" />
+
 		<execute action="CPUsersandorganizations#type" locator-key1="SEARCH_FIELD" value1="${orgName}" />
 		<execute action="CPUsersandorganizations#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
-		<execute action="CPUsersandorganizations#assertTextEquals" locator-key1="ORGANIZATION_TABLE_NAME_1" value1="${orgName}" />
-		<execute action="CPUsersandorganizations#assertClick" locator-key1="ORGANIZATION_TABLE_ACTIONS_1" value1="Actions" />
+		<execute action="CPUsersandorganizations#assertTextEquals" locator-key1="ORGANIZATION_TABLE_NAME" value1="${orgName}" />
+		<execute action="CPUsersandorganizations#assertClick" locator-key1="ORGANIZATION_TABLE_ACTIONS" value1="Actions" />
 		<execute action="CPUsersandorganizations#assertClick" locator-key1="ORGANIZATION_MENULIST_ASSIGN_USERS" value1="Assign Users" />
 
 		<execute action="CPUsersandorganizationsAssignmembers#assertClick" locator-key1="AVAILABLE" value1="Available" />
@@ -36,10 +38,12 @@
 	</command>
 
 	<command name="addSiteCP">
+		<var name="key_orgName" value="${orgName}" />
+
 		<execute action="CPUsersandorganizations#type" locator-key1="SEARCH_FIELD" value1="${orgName}" />
 		<execute action="CPUsersandorganizations#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
-		<execute action="CPUsersandorganizations#assertTextEquals" locator-key1="ORGANIZATION_TABLE_NAME_1" value1="${orgName}" />
-		<execute action="CPUsersandorganizations#assertClick" locator-key1="ORGANIZATION_TABLE_ACTIONS_1" value1="Actions" />
+		<execute action="CPUsersandorganizations#assertTextEquals" locator-key1="ORGANIZATION_TABLE_NAME" value1="${orgName}" />
+		<execute action="CPUsersandorganizations#assertClick" locator-key1="ORGANIZATION_TABLE_ACTIONS" value1="Actions" />
 		<execute action="CPUsersandorganizations#assertClick" locator-key1="ORGANIZATION_MENULIST_EDIT" value1="Edit" />
 
 		<execute action="CPUsersandorganizationsOrganizationEdit#assertClick" locator-key1="ORGANIZATION_INFORMATION_ORGANIZATION_SITE" value1="Organization Site" />
@@ -59,8 +63,8 @@
 	<command name="assignOrgRoleCP">
 		<execute action="CPUsersandorganizations#type" locator-key1="SEARCH_FIELD" value1="${orgName}" />
 		<execute action="CPUsersandorganizations#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
-		<execute action="CPUsersandorganizations#assertTextEquals" locator-key1="ORGANIZATION_TABLE_NAME_1" value1="${orgName}" />
-		<execute action="CPUsersandorganizations#assertClick" locator-key1="ORGANIZATION_TABLE_ACTIONS_1" value1="Actions" />
+		<execute action="CPUsersandorganizations#assertTextEquals" locator-key1="ORGANIZATION_TABLE_NAME" value1="${orgName}" />
+		<execute action="CPUsersandorganizations#assertClick" locator-key1="ORGANIZATION_TABLE_ACTIONS" value1="Actions" />
 		<execute action="CPUsersandorganizations#assertClick" locator-key1="ORGANIZATION_MENULIST_ASSIGN_ORGANIZATION_ROLES" value1="Assign Organization Roles" />
 
 		<execute action="CPUsersandorganizationsAssignuserroles#assertTextEquals" locator1="//tr[contains(.,'${roleName}')]/td[1]/a" value1="${roleName}" />
@@ -83,28 +87,45 @@
 	<command name="deleteCP">
 		<execute action="CPUsersandorganizations#type" locator-key1="SEARCH_FIELD" value1="${orgName}" />
 		<execute action="CPUsersandorganizations#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
-		<execute action="CPUsersandorganizations#assertClick" locator-key1="ORGANIZATION_TABLE_ACTIONS_1" value1="Actions" />
+		<execute action="CPUsersandorganizations#assertClick" locator-key1="ORGANIZATION_TABLE_ACTIONS" value1="Actions" />
 		<execute action="CPUsersandorganizations#assertClick" locator-key1="ORGANIZATION_MENULIST_DELETE" value1="Delete" />
 		<execute action="CPUsersandorganizations#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
 		<execute action="CPUsersandorganizations#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute action="CPUsersandorganizations#assertTextNotPresent" value1="${orgName}" />
 	</command>
 
-	<command name="removeMemberCP">
+	<command name="editSiteCP">
+		<var name="key_orgName" value="${orgName}" />
+
 		<execute action="CPUsersandorganizations#type" locator-key1="SEARCH_FIELD" value1="${orgName}" />
 		<execute action="CPUsersandorganizations#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
-		<execute action="CPUsersandorganizations#assertTextEquals" locator-key1="ORGANIZATION_TABLE_NAME_1" value1="${orgName}" />
-		<execute action="CPUsersandorganizations#assertClick" locator-key1="ORGANIZATION_TABLE_ACTIONS_1" value1="Actions" />
+		<execute action="CPUsersandorganizations#assertTextEquals" locator-key1="ORGANIZATION_TABLE_NAME" value1="${orgName}" />
+		<execute action="CPUsersandorganizations#assertClick" locator-key1="ORGANIZATION_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPUsersandorganizations#assertClick" locator-key1="ORGANIZATION_MENULIST_EDIT" value1="Edit" />
+
+		<execute action="CPUsersandorganizationsOrganizationEdit#type" locator-key1="DETAILS_NAME_FIELD" value1="${orgNameEdit}" />
+		<execute action="CPUsersandorganizationsOrganizationEdit#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPUsersandorganizationsOrganizationEdit#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="CPUsersandorganizationsOrganizationEdit#assertTextEquals" locator-key1="DETAILS_NAME_FIELD" value1="${orgNameEdit}" />
+	</command>
+
+	<command name="removeMemberCP">
+		<var name="key_orgName" value="${orgName}" />
+
+		<execute action="CPUsersandorganizations#type" locator-key1="SEARCH_FIELD" value1="${orgName}" />
+		<execute action="CPUsersandorganizations#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
+		<execute action="CPUsersandorganizations#assertTextEquals" locator-key1="ORGANIZATION_TABLE_NAME" value1="${orgName}" />
+		<execute action="CPUsersandorganizations#assertClick" locator-key1="ORGANIZATION_TABLE_ACTIONS" value1="Actions" />
 		<execute action="CPUsersandorganizations#assertClick" locator-key1="ORGANIZATION_MENULIST_ASSIGN_USERS" value1="Assign Users" />
 
-		<execute action="CPUsersandorganizationsAssignmembers#assertClick" locator-key1="AVAILABLE" value1="Available" />
+		<execute action="CPUsersandorganizationsAssignmembers#assertClick" locator-key1="CURRENT" value1="Current" />
 		<execute action="CPUsersandorganizationsAssignmembers#type" locator-key1="BASIC_SEARCH_FIELD" value1="${userScreenName}" />
 		<execute action="CPUsersandorganizationsAssignmembers#assertClick" locator-key1="BASIC_SEARCH_BUTTON" value1="Search" />
 		<execute action="CPUsersandorganizationsAssignmembers#assertTextEquals" locator-key1="USER_TABLE_SCREEN_NAME_1" value1="${userScreenName}" />
 		<execute action="CPUsersandorganizationsAssignmembers#uncheck" locator-key1="USER_TABLE_CHECKBOX_1" />
 		<execute action="CPUsersandorganizationsAssignmembers#assertClick" locator-key1="UPDATE_ASSOCIATIONS_BUTTON" value1="Update Associations" />
 		<execute action="CPUsersandorganizationsAssignmembers#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute action="CPUsersandorganizationsAssignmembers#assertNotChecked" locator-key1="USER_TABLE_CHECKBOX_1" />
+		<execute action="CPUsersandorganizationsAssignmembers#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No users were found." />
 	</command>
 
 	<command name="tearDownCP">
@@ -112,13 +133,15 @@
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
 
+		<var name="key_orgName" value="${orgName}" />
+
 		<execute action="CPUsersandorganizations#type" locator-key1="SEARCH_FIELD" value1="${orgName}" />
 		<execute action="CPUsersandorganizations#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
 
 		<while>
-			<condition action="CPUsersandorganizations#isElementPresent" locator-key1="ORGANIZATION_TABLE_NAME_1" />
+			<condition action="CPUsersandorganizations#isElementPresent" locator-key1="ORGANIZATION_TABLE_NAME" value1="${orgName}" />
 			<then>
-				<execute action="CPUsersandorganizations#click" locator-key1="ORGANIZATION_TABLE_NAME_1" />
+				<execute action="CPUsersandorganizations#click" locator-key1="ORGANIZATION_TABLE_NAME" value1="${orgName}" />
 
 				<execute action="CPUsersandorganizationsOrganization#assertClick" locator-key1="MENU_ASSIGN_USERS" value1="Assign Users" />
 
@@ -144,8 +167,8 @@
 	<command name="viewAssignMemberCP">
 		<execute action="CPUsersandorganizations#type" locator-key1="SEARCH_FIELD" value1="${searchToken}" />
 		<execute action="CPUsersandorganizations#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
-		<execute action="CPUsersandorganizations#assertTextEquals" locator-key1="ORGANIZATION_TABLE_NAME_1" value1="${orgName}" />
-		<execute action="CPUsersandorganizations#assertClick" locator-key1="ORGANIZATION_TABLE_NAME_1" value1="${orgName}" />
+		<execute action="CPUsersandorganizations#assertTextEquals" locator-key1="ORGANIZATION_TABLE_NAME" value1="${orgName}" />
+		<execute action="CPUsersandorganizations#assertClick" locator-key1="ORGANIZATION_TABLE_NAME" value1="${orgName}" />
 
 		<execute action="CPUsersandorganizationsOrganization#assertTextEquals" locator-key1="USER_TABLE_FIRST_NAME_1" value1="${userFirstName}" />
 		<execute action="CPUsersandorganizationsOrganization#assertTextEquals" locator-key1="USER_TABLE_LAST_NAME_1" value1="${userLastName}" />
@@ -153,11 +176,13 @@
 	</command>
 
 	<command name="viewCP">
-		<execute action="CPUsersandorganizations#type" locator-key1="SEARCH_FIELD" value1="${searchToken}" />
+		<var name="key_orgName" value="${orgName}" />
+
+		<execute action="CPUsersandorganizations#type" locator-key1="SEARCH_FIELD" value1="${orgName}" />
 		<execute action="CPUsersandorganizations#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
-		<execute action="CPUsersandorganizations#assertTextEquals" locator-key1="ORGANIZATION_TABLE_NAME_1" value1="${orgName}" />
-		<execute action="CPUsersandorganizations#assertTextEquals" locator-key1="ORGANIZATION_TABLE_TYPE_1" value1="${orgType}" />
-		<execute action="CPUsersandorganizations#assertClick" locator-key1="ORGANIZATION_TABLE_ACTIONS_1" value1="Actions" />
+		<execute action="CPUsersandorganizations#assertTextEquals" locator-key1="ORGANIZATION_TABLE_NAME" value1="${orgName}" />
+		<execute action="CPUsersandorganizations#assertTextEquals" locator-key1="ORGANIZATION_TABLE_TYPE" value1="${orgType}" />
+		<execute action="CPUsersandorganizations#assertClick" locator-key1="ORGANIZATION_TABLE_ACTIONS" value1="Actions" />
 		<execute action="CPUsersandorganizations#assertClick" locator-key1="ORGANIZATION_MENULIST_EDIT" value1="Edit" />
 
 		<execute action="CPUsersandorganizationsOrganizationEdit#assertTextEquals" locator-key1="TITLE" value1="Edit ${orgName}" />
@@ -166,11 +191,29 @@
 		<execute action="CPUsersandorganizationsOrganizationEdit#assertTextEquals" locator-key1="ORGANIZATION_NAME" value1="${orgName}" />
 	</command>
 
+	<command name="viewEditSiteCP">
+		<var name="key_orgName" value="${orgNameEdit}" />
+
+		<execute action="CPUsersandorganizations#type" locator-key1="SEARCH_FIELD" value1="${orgNameEdit}" />
+		<execute action="CPUsersandorganizations#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
+		<execute action="CPUsersandorganizations#assertTextEquals" locator-key1="ORGANIZATION_TABLE_NAME" value1="${orgNameEdit}" />
+		<execute action="CPUsersandorganizations#assertTextEquals" locator-key1="ORGANIZATION_TABLE_TYPE" value1="${orgType}" />
+		<execute action="CPUsersandorganizations#assertClick" locator-key1="ORGANIZATION_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPUsersandorganizations#assertClick" locator-key1="ORGANIZATION_MENULIST_EDIT" value1="Edit" />
+
+		<execute action="CPUsersandorganizationsOrganizationEdit#assertTextEquals" locator-key1="TITLE" value1="Edit ${orgNameEdit}" />
+		<execute action="CPUsersandorganizationsOrganizationEdit#assertTextEquals" locator-key1="DETAILS_NAME_FIELD" value1="${orgNameEdit}" />
+		<execute action="CPUsersandorganizationsOrganizationEdit#assertTextEquals" locator-key1="DETAILS_TYPE" value1="Type ${orgType}" />
+		<execute action="CPUsersandorganizationsOrganizationEdit#assertTextEquals" locator-key1="ORGANIZATION_NAME" value1="${orgNameEdit}" />
+	</command>
+
 	<command name="viewRemoveMemberCP">
+		<var name="key_orgName" value="${orgName}" />
+
 		<execute action="CPUsersandorganizations#type" locator-key1="SEARCH_FIELD" value1="${orgName}" />
 		<execute action="CPUsersandorganizations#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
-		<execute action="CPUsersandorganizations#assertTextEquals" locator-key1="ORGANIZATION_TABLE_NAME_1" value1="${orgName}" />
-		<execute action="CPUsersandorganizations#assertClick" locator-key1="ORGANIZATION_TABLE_NAME_1" value1="${orgName}" />
+		<execute action="CPUsersandorganizations#assertTextEquals" locator-key1="ORGANIZATION_TABLE_NAME" value1="${orgName}" />
+		<execute action="CPUsersandorganizations#assertClick" locator-key1="ORGANIZATION_TABLE_NAME" value1="${orgName}" />
 		<execute action="CPUsersandorganizationsOrganization#assertTextNotPresent" value1="${userFirstName}" />
 	</command>
 </definition>

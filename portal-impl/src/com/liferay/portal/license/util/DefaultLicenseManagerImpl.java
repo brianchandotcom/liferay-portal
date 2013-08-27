@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.license.LicenseInfo;
+import com.liferay.portal.util.PortalUtil;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -51,7 +52,7 @@ public class DefaultLicenseManagerImpl
 
 	@Override
 	public String getHostName() {
-		return LicenseUtil.getHostName();
+		return PortalUtil.getComputerName();
 	}
 
 	@Override

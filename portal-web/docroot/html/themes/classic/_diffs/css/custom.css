@@ -200,12 +200,16 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 	/* ---------- Breadcrumbs ---------- */
 
-	#breadcrumbs {
-		margin-bottom: 45px;
-	}
-
 	.breadcrumb {
 		background-color: #FAFAFA;
+	}
+
+	#breadcrumbs {
+		margin-bottom: 45px;
+
+		.breadcrumb {
+			margin-bottom: 0;
+		}
 	}
 
 	/* ---------- Portlet wrapper and icons ---------- */

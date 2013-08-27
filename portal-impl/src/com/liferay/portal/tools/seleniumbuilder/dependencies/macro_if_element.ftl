@@ -7,6 +7,11 @@
 </#if>
 
 ${ifType} (
+	<#if ifElement.element("not")??>
+		<#assign notElement = ifElement.element("not")>
+
+		!(<#include "macro_not_element.ftl">)
+	</#if>
 	<#if ifElement.element("condition")??>
 		<#assign conditionElement = ifElement.element("condition")>
 
@@ -73,6 +78,9 @@ ${ifType} (
 		commandScopeVariables.containsKey("${var}")
 	</#if>
 ) {
+	<#if ifElement.element("not")??>
+		<#assign conditionalElement = ifElement.element("not")>
+	</#if>
 	<#if ifElement.element("condition")??>
 		<#assign conditionalElement = ifElement.element("condition")>
 	<#elseif ifElement.element("contains")??>

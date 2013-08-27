@@ -1,3 +1,15 @@
+<#if ifElement.element("not")??>
+	<#assign notElement = ifElement.element("not")>
+
+	<#assign lineNumber = notElement.attributeValue("line-number")>
+
+	<li id="${macroNameStack.peek()?uncap_first}Macro${lineNumber}">
+		<#assign displayElement = notElement>
+
+		<#include "element_whole_html.ftl">
+	</li>
+</#if>
+
 <#if ifElement.element("condition")??>
 	<#assign conditionElement = ifElement.element("condition")>
 

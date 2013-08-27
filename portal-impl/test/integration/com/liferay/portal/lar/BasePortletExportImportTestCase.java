@@ -64,7 +64,7 @@ public class BasePortletExportImportTestCase extends BaseExportImportTestCase {
 		return null;
 	}
 
-	public String getPortletId() {
+	public String getPortletId() throws Exception {
 		return null;
 	}
 

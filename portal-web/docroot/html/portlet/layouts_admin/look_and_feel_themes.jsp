@@ -200,18 +200,15 @@ Map<String, ThemeSetting> configurableSettings = selTheme.getConfigurableSetting
 				<span class="header-title">
 					<%= LanguageUtil.format(pageContext, "available-themes-x", (themes.size() - 1)) %>
 				</span>
-
-				<c:if test="<%= permissionChecker.isOmniadmin() && PortletLocalServiceUtil.hasPortlet(themeDisplay.getCompanyId(), PortletKeys.MARKETPLACE_STORE) && PrefsPropsUtil.getBoolean(PropsKeys.AUTO_DEPLOY_ENABLED, PropsValues.AUTO_DEPLOY_ENABLED) %>">
-
-					<%
-					PortletURL marketplaceURL = PortletURLFactoryUtil.create(request, PortletKeys.MARKETPLACE_STORE, themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
-					%>
-
-					<span class="install-themes">
-						<a href="<%= HttpUtil.removeParameter(marketplaceURL.toString(), "controlPanelCategory") %>" id="<portlet:namespace />installMore"><liferay-ui:message key="install-more" /></a>
-					</span>
-				</c:if>
 			</legend>
+
+			<%
+			PortletURL marketplaceURL = PortletURLFactoryUtil.create(request, PortletKeys.MARKETPLACE_STORE, themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
+			%>
+			<a class="btn" href="<%= HttpUtil.removeParameter(marketplaceURL.toString(), "controlPanelCategory") %>" id="<portlet:namespace />installMore"><liferay-ui:message key="install-more" /></a>
+					
+			<c:if test="<%= permissionChecker.isOmniadmin() && PortletLocalServiceUtil.hasPortlet(themeDisplay.getCompanyId(), PortletKeys.MARKETPLACE_STORE) && PrefsPropsUtil.getBoolean(PropsKeys.AUTO_DEPLOY_ENABLED, PropsValues.AUTO_DEPLOY_ENABLED) %>">
+			</c:if>
 
 			<c:if test="<%= themes.size() > 1 %>">
 				<ul class="lfr-theme-list unstyled">

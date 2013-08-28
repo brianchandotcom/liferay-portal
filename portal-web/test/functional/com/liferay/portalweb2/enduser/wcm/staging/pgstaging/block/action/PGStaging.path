@@ -44,8 +44,23 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SITE_PAGES_VARIATION</td>
+	<td>//a[contains(.,'${key_sitePagesVariationName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PAGE_VARIATION</td>
 	<td>//ul[@class='nav nav-tabs variations-tabview-list']/li/span[contains(.,'${key_pageVariationName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MANAGE_SITE_PAGES_VARIATIONS</td>
+	<td>//a[@id='_170_manageLayoutSetBranches']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_PAGES_VARIATION</td>
+	<td>//ul[@class='nav nav-tabs site-variations-nav-tabs']/li/a[contains(.,'${key_sitePagesVariationName}')]</td>
 	<td></td>
 </tr>
 <tr>

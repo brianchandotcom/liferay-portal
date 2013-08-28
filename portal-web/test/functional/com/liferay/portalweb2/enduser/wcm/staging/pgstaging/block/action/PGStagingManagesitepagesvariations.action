@@ -1,0 +1,7 @@
+<definition>
+	<command name="assertClick">
+		<case locator-key1="ADD_SITE_PAGES_VARIATIONS_BUTTON">
+			<execute function="AssertClick#assertTextClickAndWait" />
+		</case>
+	</command>
+</definition>

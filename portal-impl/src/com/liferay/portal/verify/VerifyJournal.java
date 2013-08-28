@@ -31,6 +31,7 @@ import com.liferay.portal.service.ResourceLocalServiceUtil;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
+import com.liferay.portlet.journal.NoSuchStructureException;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalArticleConstants;
 import com.liferay.portlet.journal.model.JournalContentSearch;
@@ -310,8 +311,24 @@ public class VerifyJournal extends VerifyProcess {
 						groupId, articleId, version, newContent);
 				}
 
-				JournalArticleLocalServiceUtil.checkStructure(
-					groupId, articleId, version);
+				try {
+					JournalArticleLocalServiceUtil.checkStructure(
+						groupId, articleId, version);
+				}
+				catch (NoSuchStructureException nsse) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Removing reference to missing structure for " +
+								"article " + articleId + ": " +
+									nsse.getMessage());
+					}
+
+					article.setStructureId(null);
+					article.setTemplateId(null);
+
+					JournalArticleLocalServiceUtil.updateJournalArticle(
+						article);
+				}
 			}
 
 		};

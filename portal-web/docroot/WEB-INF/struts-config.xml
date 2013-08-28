@@ -1151,8 +1151,6 @@
 
 		<action path="/message_boards/find_thread" type="com.liferay.portlet.messageboards.action.FindThreadAction" />
 
-		<action path="/message_boards/get_message_attachment" type="com.liferay.portlet.messageboards.action.GetMessageAttachmentAction" />
-
 		<action path="/message_boards/move_category" type="com.liferay.portlet.messageboards.action.MoveCategoryAction">
 			<forward name="portlet.message_boards.error" path="portlet.message_boards.error" />
 			<forward name="portlet.message_boards.move_category" path="portlet.message_boards.move_category" />
@@ -1239,8 +1237,6 @@
 		<action path="/message_boards_admin/find_message" type="com.liferay.portlet.messageboards.action.FindMessageAction" />
 
 		<action path="/message_boards_admin/find_thread" type="com.liferay.portlet.messageboards.action.FindThreadAction" />
-
-		<action path="/message_boards_admin/get_message_attachment" type="com.liferay.portlet.messageboards.action.GetMessageAttachmentAction" />
 
 		<action path="/message_boards_admin/move_category" type="com.liferay.portlet.messageboards.action.MoveCategoryAction">
 			<forward name="portlet.message_boards.error" path="portlet.message_boards.error" />

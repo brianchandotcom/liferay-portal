@@ -122,10 +122,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 		}
 
 		.nav {
-			> li > a {
-				padding: 4px 15px 5px;
-			}
-
 			li {
 				&.dropdown {
 					> .dropdown-toggle {
@@ -146,6 +142,10 @@ $dockbarOpenGradientStart: #0EA6F9;
 				&.active > a {
 					background-color: $dockbarGradientStart;
 				}
+			}
+
+			> li > a {
+				padding: 4px 15px 5px;
 			}
 
 			.dropdown-menu {

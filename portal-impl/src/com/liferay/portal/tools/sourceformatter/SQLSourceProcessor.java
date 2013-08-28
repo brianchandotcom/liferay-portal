@@ -93,6 +93,13 @@ public class SQLSourceProcessor extends BaseSourceProcessor {
 				previousLineSqlCommand = StringPool.BLANK;
 			}
 
+			String strippedQuotesLine = stripQuotes(line, CharPool.APOSTROPHE);
+
+			if (strippedQuotesLine.contains(StringPool.QUOTE)) {
+				line = StringUtil.replace(
+					line, StringPool.QUOTE, StringPool.APOSTROPHE);
+			}
+
 			sb.append(line);
 			sb.append("\n");
 		}

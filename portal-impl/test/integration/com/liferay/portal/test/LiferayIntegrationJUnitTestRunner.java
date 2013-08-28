@@ -53,13 +53,13 @@ public class LiferayIntegrationJUnitTestRunner
 					public void run() {
 						try {
 							Statement classBlock =
-									LiferayIntegrationJUnitTestRunner.super.
+								LiferayIntegrationJUnitTestRunner.super.
 									classBlock(notifier);
 
 							classBlock.evaluate();
 						}
 						catch (Throwable e) {
-							error = e;
+							_error = e;
 						}
 					}
 
@@ -69,12 +69,12 @@ public class LiferayIntegrationJUnitTestRunner
 
 				thread.join();
 
-				if (error != null) {
-					throw error;
+				if (_error != null) {
+					throw _error;
 				}
 			}
 
-			Throwable error = null;
+			private Throwable _error = null;
 		};
 	}
 

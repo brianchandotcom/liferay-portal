@@ -363,7 +363,7 @@
 	/* ---------- Breadcrumbs ---------- */
 
 	.breadcrumb {
-		padding: 7px 15px 4px;
+		padding: 3px 15px 2px;
 
 		li {
 			span.divider {

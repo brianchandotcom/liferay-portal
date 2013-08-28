@@ -107,10 +107,6 @@
 			}
 		}
 
-		.lfr-install-more {
-			text-align: center;
-		}
-
 		.lfr-page-template {
 			cursor: pointer;
 			margin-bottom: 20px;
@@ -250,8 +246,8 @@
 			}
 		}
 
-		.lfr-install-more a {
-			font-weight: normal;
+		.lfr-install-more {
+			text-align: center;
 		}
 
 		.lfr-page-template {

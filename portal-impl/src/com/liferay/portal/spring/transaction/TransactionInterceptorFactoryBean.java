@@ -14,10 +14,7 @@
 
 package com.liferay.portal.spring.transaction;
 
-import com.liferay.portal.dao.jdbc.aop.DynamicDataSourceTargetSource;
-import com.liferay.portal.dao.jdbc.aop.DynamicDataSourceTransactionInterceptor;
 import com.liferay.portal.kernel.spring.util.FactoryBean;
-import com.liferay.portal.kernel.util.InfrastructureUtil;
 
 /**
  * @author Shuyang Zhou
@@ -27,22 +24,7 @@ public class TransactionInterceptorFactoryBean
 
 	@Override
 	public TransactionInterceptor create() {
-		DynamicDataSourceTargetSource dynamicDataSourceTargetSource =
-			(DynamicDataSourceTargetSource)
-				InfrastructureUtil.getDynamicDataSourceTargetSource();
-
-		if (dynamicDataSourceTargetSource == null) {
-			return new TransactionInterceptor();
-		}
-
-		DynamicDataSourceTransactionInterceptor
-			dynamicDataSourceTransactionInterceptor =
-				new DynamicDataSourceTransactionInterceptor();
-
-		dynamicDataSourceTransactionInterceptor.
-			setDynamicDataSourceTargetSource(dynamicDataSourceTargetSource);
-
-		return dynamicDataSourceTransactionInterceptor;
+		return new TransactionInterceptor();
 	}
 
 }

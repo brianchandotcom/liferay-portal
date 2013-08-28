@@ -15,6 +15,12 @@
 
 				<#include "test_case_element_html.ftl">
 			</ul>
+			<div id="summary">
+				<hr />
+				<b id="errorCount">0</b> total error(s).
+				<p id="errorList">
+				</p>
+			</div>
 		</div>
 	</body>
 </html>

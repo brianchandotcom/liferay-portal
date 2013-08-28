@@ -24,6 +24,7 @@ import javax.servlet.http.HttpServletResponseWrapper;
 /**
  * @author László Csontos
  * @author Shuyang Zhou
+ * @author Tomas Polesovsky
  */
 public class SecureHttpServletResponseWrapper
 	extends HttpServletResponseWrapper {
@@ -34,29 +35,60 @@ public class SecureHttpServletResponseWrapper
 
 	@Override
 	public void addHeader(String name, String value) {
-		super.addHeader(
-			HttpUtil.sanitizeHeader(name), HttpUtil.sanitizeHeader(value));
+		if (_sanitizeHeaders) {
+			super.addHeader(
+				HttpUtil.sanitizeHeader(name), HttpUtil.sanitizeHeader(value));
+		}
+		else {
+			super.addHeader(name, value);
+		}
 	}
 
 	@Override
 	public void sendRedirect(String location) throws IOException {
-		super.sendRedirect(HttpUtil.sanitizeHeader(location));
+		if (_sanitizeHeaders) {
+			super.sendRedirect(HttpUtil.sanitizeHeader(location));
+		}
+		else {
+			super.sendRedirect(location);
+		}
 	}
 
 	@Override
 	public void setCharacterEncoding(String charset) {
-		super.setCharacterEncoding(HttpUtil.sanitizeHeader(charset));
+		if (_sanitizeHeaders) {
+			super.setCharacterEncoding(HttpUtil.sanitizeHeader(charset));
+		}
+		else {
+			super.setCharacterEncoding(charset);
+		}
 	}
 
 	@Override
 	public void setContentType(String type) {
-		super.setContentType(HttpUtil.sanitizeHeader(type));
+		if (_sanitizeHeaders) {
+			super.setContentType(HttpUtil.sanitizeHeader(type));
+		}
+		else {
+			super.setContentType(type);
+		}
 	}
 
 	@Override
 	public void setHeader(String name, String value) {
-		super.setHeader(
-			HttpUtil.sanitizeHeader(name), HttpUtil.sanitizeHeader(value));
+		if (_sanitizeHeaders) {
+			super.setHeader(
+				HttpUtil.sanitizeHeader(name), HttpUtil.sanitizeHeader(value));
+		}
+		else {
+			super.setHeader(name, value);
+		}
 	}
+
+	public void setSanitizeHeaders(boolean sanitizeHeaders) {
+		this._sanitizeHeaders = sanitizeHeaders;
+	}
+
+	private boolean _sanitizeHeaders;
 
 }

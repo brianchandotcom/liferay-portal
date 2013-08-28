@@ -1,50 +1,16 @@
 <#if ifElement.element("condition")??>
-	<#assign conditionElement = ifElement.element("condition")>
-
-	<#assign lineNumber = conditionElement.attributeValue("line-number")>
-
-	<li id="${macroNameStack.peek()?uncap_first}Macro${lineNumber}">
-		<#if conditionElement.attributeValue("action")??>
-			<#assign displayElement = conditionElement>
-
-			<#include "element_whole_html.ftl">
-		<#elseif conditionElement.attributeValue("macro")??>
-			<#assign macroElement = conditionElement>
-
-			<#include "macro_element_html.ftl">
-		</#if>
-	</li>
+	<#assign ifConditionalElement = ifElement.element("condition")>
 <#elseif ifElement.element("contains")??>
-	<#assign containsElement = ifElement.element("contains")>
-
-	<#assign lineNumber = containsElement.attributeValue("line-number")>
-
-	<li id="${macroNameStack.peek()?uncap_first}Macro${lineNumber}">
-		<#assign displayElement = containsElement>
-
-		<#include "element_whole_html.ftl">
-	</li>
+	<#assign ifConditionalElement = ifElement.element("contains")>
 <#elseif ifElement.element("equals")??>
-	<#assign equalsElement = ifElement.element("equals")>
-
-	<#assign lineNumber = equalsElement.attributeValue("line-number")>
-
-	<li id="${macroNameStack.peek()?uncap_first}Macro${lineNumber}">
-		<#assign displayElement = equalsElement>
-
-		<#include "element_whole_html.ftl">
-	</li>
+	<#assign ifConditionalElement = ifElement.element("equals")>
 <#elseif ifElement.element("isset")??>
-	<#assign issetElement = ifElement.element("isset")>
-
-	<#assign lineNumber = issetElement.attributeValue("line-number")>
-
-	<li id="${macroNameStack.peek()?uncap_first}Macro${lineNumber}">
-		<#assign displayElement = issetElement>
-
-		<#include "element_whole_html.ftl">
-	</li>
+	<#assign ifConditionalElement = ifElement.element("isset")>
+<#elseif ifElement.element("not")??>
+	<#assign ifConditionalElement = ifElement.element("not")>
 </#if>
+
+<#include "macro_if_conditional_element_html.ftl">
 
 <#assign thenElement = ifElement.element("then")>
 

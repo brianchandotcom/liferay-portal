@@ -426,6 +426,22 @@ public class SeleniumBuilderContextTest {
 	}
 
 	@Test
+	public void testMacroNotElement1006() throws Exception {
+		test(
+			"MacroNotElement1006.macro",
+			"Error 1006: Invalid action attribute value in " +
+				_DIR_NAME + "/MacroNotElement1006.macro:5");
+	}
+
+	@Test
+	public void testMacroNotElement1010() throws Exception {
+		test(
+			"MacroNotElement1010.macro",
+			"Error 1010: Invalid locator-key PAGE_NAME_X at " + _DIR_NAME +
+				"/MacroNotElement1010.macro:5");
+	}
+
+	@Test
 	public void testMacroVarElement1010() throws Exception {
 		test(
 			"MacroVarElement1010.macro",

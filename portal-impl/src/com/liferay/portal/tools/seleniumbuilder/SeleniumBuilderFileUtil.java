@@ -1090,6 +1090,13 @@ public class SeleniumBuilderFileUtil {
 			else if (elementName.equals("isset")) {
 				validateSimpleElement(fileName, element, new String[] {"var"});
 			}
+			else if (elementName.equals("not")) {
+				validateIfElement(
+					fileName, element, allowedBlockChildElementNames,
+					allowedExecuteAttributeNames,
+					allowedExecuteChildElementNames,
+					allowedIfConditionElementNames);
+			}
 			else {
 				throwValidationException(1002, fileName, element, elementName);
 			}
@@ -1098,6 +1105,10 @@ public class SeleniumBuilderFileUtil {
 		if (!hasAllowedIfConditionElementNames) {
 			throwValidationException(
 				1001, fileName, ifElement, allowedIfConditionElementNames);
+		}
+
+		if (ifElement.getName() == "not") {
+			return;
 		}
 
 		if (!elementNames.contains("then")) {
@@ -1137,7 +1148,8 @@ public class SeleniumBuilderFileUtil {
 						"echo", "execute", "fail", "if", "var","while"
 					},
 					new String[] {"action", "macro"}, new String[] {"var"},
-					new String[] {"condition", "contains", "equals", "isset"});
+					new String[] {
+						"condition", "contains", "equals", "isset", "not"});
 			}
 			else if (elementName.equals("var")) {
 				validateVarElement(fileName, element);
@@ -1534,7 +1546,8 @@ public class SeleniumBuilderFileUtil {
 		new String[] {
 			"case", "command", "condition", "contains", "default", "definition",
 			"echo", "else", "elseif", "equals", "execute", "fail", "if",
-			"isset", "set-up", "td", "tear-down", "then", "tr", "while", "var"
+			"isset", "not", "set-up", "td", "tear-down", "then", "tr", "while",
+			"var"
 		});
 
 	private String _baseDir;

@@ -108,13 +108,6 @@ public class ATag extends BaseATag {
 			jspWriter.write("<span ");
 		}
 
-		if (Validator.isNotNull(id)) {
-			jspWriter.write("aria-labelledby=\"");
-			jspWriter.write(namespace);
-			jspWriter.write(id);
-			jspWriter.write("\" ");
-		}
-
 		if (Validator.isNotNull(cssClass)) {
 			jspWriter.write("class=\"");
 			jspWriter.write(cssClass);

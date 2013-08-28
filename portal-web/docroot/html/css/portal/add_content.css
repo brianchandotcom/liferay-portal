@@ -107,6 +107,10 @@
 			}
 		}
 
+		.lfr-install-more {
+			text-align: center;
+		}
+
 		.lfr-page-template {
 			cursor: pointer;
 			margin-bottom: 20px;
@@ -246,6 +250,10 @@
 			}
 		}
 
+		.lfr-install-more a {
+			font-weight: normal;
+		}
+
 		.lfr-page-template {
 			.toggler-header {
 				&.active {
@@ -264,15 +272,6 @@
 
 		.portal-add-content .portlet-msg-info {
 			color: #333;
-		}
-
-		.lfr-install-more {
-			border-top-color: #CCC;
-
-			a {
-				background: url(@theme_image_path@/common/install_more.png) no-repeat 0 50%;
-				font-weight: bold;
-			}
 		}
 	}
 }

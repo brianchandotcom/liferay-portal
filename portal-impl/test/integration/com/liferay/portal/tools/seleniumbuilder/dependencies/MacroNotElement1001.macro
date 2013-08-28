@@ -1,0 +1,8 @@
+<definition>
+	<command name="name">
+		<if>
+			<not>
+			</not>
+		</if>
+	</command>
+</definition>

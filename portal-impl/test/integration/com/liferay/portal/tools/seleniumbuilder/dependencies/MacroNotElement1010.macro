@@ -1,0 +1,12 @@
+<definition>
+	<command name="name">
+		<if>
+			<not>
+				<condition action="BaseLiferay#isElementPresent" locator-key1="PAGE_NAME_X" />
+			</not>
+			<then>
+				<execute action="BaseLiferay#click" />
+			</then>
+		</if>
+	</command>
+</definition>

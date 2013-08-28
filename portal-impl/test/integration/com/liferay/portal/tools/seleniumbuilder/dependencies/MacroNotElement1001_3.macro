@@ -1,0 +1,10 @@
+<definition>
+	<command name="name">
+		<if>
+			<not/>
+				<isset var="siteScopeName" />
+				<then>
+				</then>
+		</if>
+	</command>
+</definition>

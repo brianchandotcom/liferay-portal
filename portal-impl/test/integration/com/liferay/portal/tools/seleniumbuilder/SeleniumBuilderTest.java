@@ -1306,6 +1306,56 @@ public class SeleniumBuilderTest {
 	}
 
 	@Test
+	public void testMacroNotElement1001() throws Exception {
+		test(
+			"MacroNotElement1001.macro",
+			"Error 1001: Missing (condition|contains|equals|isset|not) child " +
+				"element in " + _DIR_NAME +
+				"/MacroNotElement1001.macro:4");
+	}
+
+	@Test
+	public void testMacroNotElement1001_1() throws Exception {
+		test(
+			"MacroNotElement1001_1.macro",
+			"Error 1001: Missing (then) child element in " + _DIR_NAME +
+				"/MacroNotElement1001_1.macro:3");
+	}
+
+	@Test
+	public void testMacroNotElement1001_2() throws Exception {
+		test(
+			"MacroNotElement1001_2.macro",
+			"Error 1001: Missing (echo|execute|fail|if|var|while) child " +
+				"element in " + _DIR_NAME + "/MacroNotElement1001_2.macro:7");
+	}
+
+	@Test
+	public void testMacroNotElement1001_3() throws Exception {
+		test(
+			"MacroNotElement1001_3.macro",
+			"Error 1001: Missing (condition|contains|equals|isset|not) child " +
+				"element in " + _DIR_NAME +
+				"/MacroNotElement1001_3.macro:4");
+	}
+
+	@Test
+	public void testMacroNotElement1002() throws Exception {
+		test(
+			"MacroNotElement1002.macro",
+			"Error 1002: Invalid fail element in " + _DIR_NAME +
+				"/MacroNotElement1002.macro:13");
+	}
+
+	@Test
+	public void testMacroNotElement1007() throws Exception {
+		test(
+			"MacroNotElement1007.macro",
+			"Error 1007: Poorly formed XML in " + _DIR_NAME +
+				"/MacroNotElement1007.macro");
+	}
+
+	@Test
 	public void testMacroThenElement1001() throws Exception {
 		test(
 			"MacroThenElement1001.macro",

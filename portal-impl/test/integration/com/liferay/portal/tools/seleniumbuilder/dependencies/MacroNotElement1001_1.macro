@@ -1,0 +1,9 @@
+<definition>
+	<command name="name">
+		<if>
+			<not>
+				<condition action="isAction" />
+			</not>
+		</if>
+	</command>
+</definition>

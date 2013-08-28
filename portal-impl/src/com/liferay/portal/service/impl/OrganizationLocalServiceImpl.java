@@ -531,6 +531,11 @@ public class OrganizationLocalServiceImpl
 		return organizationPersistence.fetchByC_N(companyId, name);
 	}
 
+	@Override
+	public List<Organization> getNoAssetEntries() throws SystemException {
+		return organizationFinder.findByNoAssets();
+	}
+
 	/**
 	 * Returns the organization with the name.
 	 *

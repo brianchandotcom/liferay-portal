@@ -34,6 +34,7 @@ import com.liferay.portal.model.PortletURLListener;
 import com.liferay.portal.security.lang.DoPrivilegedUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
+import com.liferay.portal.struts.StrutsActionPortletURL;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
@@ -631,29 +632,37 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 		if (portlet.getPortletId().equals(portletName) &&
 			Validator.isNotNull(portletURLClass)) {
 
-			try {
-				Constructor<? extends PortletURLImpl> constructor =
-					_constructors.get(portletURLClass);
+			if (portletURLClass.equals(
+					StrutsActionPortletURL.class.getName())) {
 
-				if (constructor == null) {
-					Class<?> portletURLClassObj = Class.forName(
-						portletURLClass);
-
-					constructor = (Constructor<? extends PortletURLImpl>)
-						portletURLClassObj.getConstructor(
-							new Class[] {
-								com.liferay.portlet.PortletResponseImpl.class,
-								long.class, String.class
-							});
-
-					_constructors.put(portletURLClass, constructor);
-				}
-
-				portletURLImpl = constructor.newInstance(
-					new Object[] {this, plid, lifecycle});
+				portletURLImpl = new StrutsActionPortletURL(
+					this, plid, lifecycle);
 			}
-			catch (Exception e) {
-				_log.error(e);
+			else {
+				try {
+					Constructor<? extends PortletURLImpl> constructor =
+						_constructors.get(portletURLClass);
+
+					if (constructor == null) {
+						Class<?> portletURLClassObj = Class.forName(
+							portletURLClass);
+
+						constructor = (Constructor<? extends PortletURLImpl>)
+							portletURLClassObj.getConstructor(
+								new Class[] {
+									PortletResponseImpl.class, long.class,
+									String.class
+								});
+
+						_constructors.put(portletURLClass, constructor);
+					}
+
+					portletURLImpl = constructor.newInstance(
+						new Object[] {this, plid, lifecycle});
+				}
+				catch (Exception e) {
+					_log.error(e);
+				}
 			}
 		}
 

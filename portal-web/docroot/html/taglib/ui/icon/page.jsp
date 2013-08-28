@@ -143,12 +143,7 @@ boolean urlIsNotNull = Validator.isNotNull(url);
 	<c:when test="<%= (iconListIconCount != null) && ((iconListSingleIcon == null) || iconListShowWhenSingleIcon) %>">
 		<li class="<%= cssClass %>" role="presentation">
 			<c:choose>
-				<c:when test="<%= urlIsNotNull && Validator.isNull(ariaRole) %>">
-					<aui:a cssClass='<%= linkCssClass + " taglib-icon" %>' data="<%= data %>" href="<%= url %>" id="<%= id %>" lang="<%= lang %>" target="<%= target %>">
-						<%= linkContent %>
-					</aui:a>
-				</c:when>
-				<c:when test="<%= urlIsNotNull && Validator.isNotNull(ariaRole) %>">
+				<c:when test="<%= urlIsNotNull %>">
 					<aui:a ariaRole="<%= ariaRole %>" cssClass='<%= linkCssClass + " taglib-icon" %>' data="<%= data %>" href="<%= url %>" id="<%= id %>" lang="<%= lang %>" target="<%= target %>">
 						<%= linkContent %>
 					</aui:a>
@@ -162,12 +157,7 @@ boolean urlIsNotNull = Validator.isNotNull(url);
 	<c:when test="<%= (iconMenuIconCount != null) && ((iconMenuSingleIcon == null) || iconMenuShowWhenSingleIcon) %>">
 		<li class="<%= cssClass %>" role="presentation">
 			<c:choose>
-				<c:when test="<%= urlIsNotNull && Validator.isNull(ariaRole) %>">
-					<aui:a cssClass='<%= linkCssClass + " taglib-icon" %>' data="<%= data %>" href="<%= url %>" id="<%= id %>" lang="<%= lang %>" onClick='<%= Validator.isNotNull(onClick) ? onClick : "" %>' target="<%= target %>">
-						<%= linkContent %>
-					</aui:a>
-				</c:when>
-				<c:when test="<%= urlIsNotNull && Validator.isNotNull(ariaRole) %>">
+				<c:when test="<%= urlIsNotNull %>">
 					<aui:a ariaRole="<%= ariaRole %>" cssClass='<%= linkCssClass + " taglib-icon" %>' data="<%= data %>" href="<%= url %>" id="<%= id %>" lang="<%= lang %>" onClick='<%= Validator.isNotNull(onClick) ? onClick : "" %>' target="<%= target %>">
 						<%= linkContent %>
 					</aui:a>
@@ -181,12 +171,7 @@ boolean urlIsNotNull = Validator.isNotNull(url);
 	<c:otherwise>
 		<span class="<%= cssClass %>">
 			<c:choose>
-				<c:when test="<%= urlIsNotNull && Validator.isNull(ariaRole) %>">
-					<aui:a cssClass='<%= linkCssClass + " taglib-icon" %>' data="<%= data %>" href="<%= url %>" id="<%= id %>" lang="<%= lang %>" onClick='<%= Validator.isNotNull(onClick) ? onClick : "" %>' target="<%= target %>">
-						<%= linkContent %>
-					</aui:a>
-				</c:when>
-				<c:when test="<%= urlIsNotNull && Validator.isNotNull(ariaRole) %>">
+				<c:when test="<%= urlIsNotNull %>">
 					<aui:a ariaRole="<%= ariaRole %>" cssClass='<%= linkCssClass + " taglib-icon" %>' data="<%= data %>" href="<%= url %>" id="<%= id %>" lang="<%= lang %>" onClick='<%= Validator.isNotNull(onClick) ? onClick : "" %>' target="<%= target %>">
 						<%= linkContent %>
 					</aui:a>

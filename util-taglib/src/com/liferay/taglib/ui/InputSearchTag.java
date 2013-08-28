@@ -15,6 +15,7 @@
 package com.liferay.taglib.ui;
 
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.util.IncludeTag;
 
@@ -31,10 +32,6 @@ public class InputSearchTag extends IncludeTag {
 
 	public void setCssClass(String cssClass) {
 		_cssClass = cssClass;
-	}
-
-	public void setDisplayTerms(DisplayTerms displayTerms) {
-		_displayTerms = displayTerms;
 	}
 
 	public void setId(String id) {
@@ -55,7 +52,6 @@ public class InputSearchTag extends IncludeTag {
 
 		_buttonLabel = null;
 		_cssClass = null;
-		_displayTerms = null;
 		_id = null;
 		_name = null;
 		_showButton = true;
@@ -68,19 +64,35 @@ public class InputSearchTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
+		String buttonLabel = _buttonLabel;
+
+		if (Validator.isNull(buttonLabel)) {
+			buttonLabel = LanguageUtil.get(pageContext, "search");
+		}
+
+		String cssClass = _cssClass;
+
+		if (Validator.isNull(cssClass)) {
+			cssClass = "input-append";
+		}
+
+		String name = _name;
+
+		if (Validator.isNull(name)) {
+			name = DisplayTerms.KEYWORDS;
+		}
+
 		String id = _id;
 
 		if (Validator.isNull(id)) {
-			id = _name;
+			id = name;
 		}
 
 		request.setAttribute(
-			"liferay-ui:input-search:buttonLabel", _buttonLabel);
-		request.setAttribute("liferay-ui:input-search:cssClass", _cssClass);
-		request.setAttribute(
-			"liferay-ui:input-search:displayTerms", _displayTerms);
-		request.setAttribute("liferay-ui:input-search:id", _id);
-		request.setAttribute("liferay-ui:input-search:name", _name);
+			"liferay-ui:input-search:buttonLabel", buttonLabel);
+		request.setAttribute("liferay-ui:input-search:cssClass", cssClass);
+		request.setAttribute("liferay-ui:input-search:id", id);
+		request.setAttribute("liferay-ui:input-search:name", name);
 		request.setAttribute("liferay-ui:input-search:showButton", _showButton);
 	}
 
@@ -88,7 +100,6 @@ public class InputSearchTag extends IncludeTag {
 
 	private String _buttonLabel;
 	private String _cssClass;
-	private DisplayTerms _displayTerms;
 	private String _id;
 	private String _name;
 	private boolean _showButton = true;

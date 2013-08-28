@@ -17,12 +17,11 @@
 <%@ include file="/html/taglib/init.jsp" %>
 
 <%
-String buttonLabel = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-search:buttonLabel"), LanguageUtil.get(pageContext, "search"));
-String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-search:cssClass"), "input-append");
-DisplayTerms displayTerms = (DisplayTerms)GetterUtil.getObject(request.getAttribute("liferay-ui:input-search:displayTerms"), new DisplayTerms(portletRequest));
+String buttonLabel = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-search:buttonLabel"));
+String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-search:cssClass"));
 String id = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-search:id"));
-String name = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-search:name"), DisplayTerms.KEYWORDS);
-boolean showButton = GetterUtil.getBoolean(request.getAttribute("liferay-ui:input-search:showButton"), true);
+String name = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-search:name"));
+boolean showButton = GetterUtil.getBoolean(request.getAttribute("liferay-ui:input-search:showButton"));
 
 String value = ParamUtil.getString(request, name);
 %>

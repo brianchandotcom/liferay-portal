@@ -144,6 +144,10 @@ $dockbarOpenGradientStart: #0EA6F9;
 				}
 			}
 
+			> li > a {
+				padding: 4px 15px 5px;
+			}
+
 			.dropdown-menu {
 				background: #00ACFF;
 				border-width: 0;
@@ -167,6 +171,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 		.navbar-inner {
 			background: #555;
 			border-width: 0;
+			min-height: 36px;
 
 			li a {
 				color: #FFF;

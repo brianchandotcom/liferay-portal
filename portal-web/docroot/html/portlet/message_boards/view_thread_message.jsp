@@ -332,12 +332,6 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 								for (FileEntry fileEntry : attachmentsFileEntries) {
 								%>
 
-									<portlet:resourceURL var="attachmentURL">
-										<portlet:param name="struts_action" value="/message_boards/get_message_attachment" />
-										<portlet:param name="messageId" value="<%= String.valueOf(message.getMessageId()) %>" />
-										<portlet:param name="attachment" value="<%= fileEntry.getTitle() %>" />
-									</portlet:resourceURL>
-
 									<li class="message-attachment">
 
 										<%
@@ -353,7 +347,7 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 											image='<%= "../file_system/small/" + DLUtil.getFileIcon(fileEntry.getExtension()) %>'
 											label="<%= true %>"
 											message="<%= sb.toString() %>"
-											url="<%= attachmentURL %>"
+											url="<%= PortletFileRepositoryUtil.getPortletFileEntryURL(fileEntry, themeDisplay, StringPool.BLANK) %>"
 										/>
 									</li>
 

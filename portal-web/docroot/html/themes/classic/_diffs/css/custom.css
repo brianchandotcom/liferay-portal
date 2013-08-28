@@ -74,8 +74,14 @@ $dockbarOpenGradientStart: #0EA6F9;
 				background-color: $dockbarGradientEnd;
 				border-top: 1px solid #00AEFF;
 
-				li.dropdown.open > .dropdown-toggle {
-					background-color: $dockbarOpenGradientStart;
+				li {
+					&.dropdown.open > .dropdown-toggle {
+						background-color: $dockbarOpenGradientStart;
+					}
+
+					a:hover {
+						background-color: #2FA4F5;
+					}
 				}
 			}
 

@@ -23,16 +23,17 @@
 		Map<String, List<Portlet>> categoriesMap = PortalUtil.getControlPanelCategoriesMap(request);
 
 		for (String category : categoriesMap.keySet()) {
+			String categoryHeaderId = "control-panel-home-category-header" + category;
 		%>
 
 			<aui:col width="<%= 25 %>">
-				<h3 class="control-panel-home-category-header" id='<%= "control-panel-home-category-header" + category %>'>
+				<h3 class="control-panel-home-category-header" id="<%= categoryHeaderId %>">
 					<aui:a href='<%= HttpUtil.setParameter(themeDisplay.getURLControlPanel(), "controlPanelCategory", category) %>'>
 						<%= LanguageUtil.get(pageContext, "category." + category) %>
 					</aui:a>
 				</h3>
 
-				<ul class="unstyled">
+				<ul aria-labelledby="<%= categoryHeaderId %>" class="unstyled" role="menu">
 
 					<%
 					List<Portlet> categoryPortlets = categoriesMap.get(category);
@@ -45,15 +46,16 @@
 						String portletDescription = PortalUtil.getPortletDescription(categoryPortlet, application, locale);
 					%>
 
-						<li>
-							<liferay-ui:icon
-								cssClass="control-panel-home-link"
-								id='<%= "controlPanelPortletLink_" + categoryPortletId %>'
-								label="<%= true %>"
-								message="<%= PortalUtil.getPortletTitle(categoryPortlet, application, locale) %>"
-								src='<%= Validator.isNull(categoryPortlet.getIcon())? themeDisplay.getPathContext() + "/html/icons/default.png" : categoryPortlet.getStaticResourcePath().concat(categoryPortlet.getIcon()) %>'
-								url="<%= urlCategoryPortlet %>"
-							/>
+							<li role="presentation">
+								<liferay-ui:icon
+									ariaRole="menuitem"
+									cssClass="control-panel-home-link"
+									id='<%= "controlPanelPortletLink_" + categoryPortletId %>'
+									label="<%= true %>"
+									message="<%= PortalUtil.getPortletTitle(categoryPortlet, application, locale) %>"
+									src='<%= Validator.isNull(categoryPortlet.getIcon())? themeDisplay.getPathContext() + "/html/icons/default.png" : categoryPortlet.getStaticResourcePath().concat(categoryPortlet.getIcon()) %>'
+									url="<%= urlCategoryPortlet %>"
+								/>
 
 							<c:if test='<%= Validator.isNotNull(portletDescription) && !portletDescription.startsWith("javax.portlet.description") %>'>
 								<liferay-ui:icon-help message="<%= portletDescription %>" />

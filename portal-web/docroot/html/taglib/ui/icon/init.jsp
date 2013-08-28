@@ -38,6 +38,7 @@ boolean iconMenuShowWhenSingleIcon = GetterUtil.getBoolean((String)request.getAt
 Boolean iconMenuSingleIcon = (Boolean)request.getAttribute("liferay-ui:icon-menu:single-icon");
 
 String alt = (String)request.getAttribute("liferay-ui:icon:alt");
+String ariaRole = (String)request.getAttribute("liferay-ui:icon:ariaRole");
 String id = (String)request.getAttribute("liferay-ui:icon:id");
 String image = (String)request.getAttribute("liferay-ui:icon:image");
 String imageHover = (String)request.getAttribute("liferay-ui:icon:imageHover");

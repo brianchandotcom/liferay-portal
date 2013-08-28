@@ -89,7 +89,6 @@
 		color: #555;
 		font-size: 15px;
 		font-weight: lighter;
-		margin-left: 6px;
 	}
 
 	select:focus {
@@ -130,10 +129,6 @@
 
 	.control-group {
 		margin-bottom: 30px;
-	}
-
-	.control-group label, .field-container label {
-		margin-left: 0;
 	}
 
 	.lfr-ddm-container .control-group {

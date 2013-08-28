@@ -165,16 +165,9 @@ iteratorURL.setParameter("viewTrashAttachments", String.valueOf(viewTrashAttachm
 		if (viewTrashAttachments) {
 			status = WorkflowConstants.STATUS_IN_TRASH;
 		}
-		%>
 
-		<liferay-portlet:resourceURL varImpl="rowURL">
-			<portlet:param name="struts_action" value="/wiki/get_page_attachment" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="nodeId" value="<%= String.valueOf(node.getNodeId()) %>" />
-			<portlet:param name="title" value="<%= wikiPage.getTitle() %>" />
-			<portlet:param name="fileName" value="<%= fileEntry.getTitle() %>" />
-			<portlet:param name="status" value="<%= String.valueOf(status) %>" />
-		</liferay-portlet:resourceURL>
+		String rowURL = PortletFileRepositoryUtil.getPortletFileEntryURL(fileEntry, themeDisplay, "?status=" + String.valueOf(status));
+		%>
 
 		<liferay-ui:search-container-column-text
 			href="<%= rowURL %>"

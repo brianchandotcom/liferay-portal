@@ -3,6 +3,9 @@
 		<if>
 			<not>
 			</not>
+			<then>
+				<execute macro="BlogsEntry#addPG" />
+			</then>
 		</if>
 	</command>
 </definition>

@@ -5,7 +5,7 @@
 				<condition action="BaseLiferay" />
 			</not>
 			<then>
-				<execute macro="BlogsEnry#cpAdd" />
+				<execute macro="BlogsEntry#addPG" />
 			</then>
 		</if>
 	</command>

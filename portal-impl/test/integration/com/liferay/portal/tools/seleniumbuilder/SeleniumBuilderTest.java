@@ -1306,15 +1306,6 @@ public class SeleniumBuilderTest {
 	}
 
 	@Test
-	public void testMacroNotElement1001() throws Exception {
-		test(
-			"MacroNotElement1001.macro",
-			"Error 1001: Missing (condition|contains|equals|isset|not) child " +
-				"element in " + _DIR_NAME +
-				"/MacroNotElement1001.macro:4");
-	}
-
-	@Test
 	public void testMacroNotElement1001_1() throws Exception {
 		test(
 			"MacroNotElement1001_1.macro",
@@ -1337,6 +1328,15 @@ public class SeleniumBuilderTest {
 			"Error 1001: Missing (condition|contains|equals|isset|not) child " +
 				"element in " + _DIR_NAME +
 				"/MacroNotElement1001_3.macro:4");
+	}
+
+	@Test
+	public void testMacroNotElement1001_4() throws Exception {
+		test(
+			"MacroNotElement1001_4.macro",
+			"Error 1001: Missing (condition|contains|equals|isset|not) child " +
+				"element in " + _DIR_NAME +
+				"/MacroNotElement1001_4.macro:4");
 	}
 
 	@Test

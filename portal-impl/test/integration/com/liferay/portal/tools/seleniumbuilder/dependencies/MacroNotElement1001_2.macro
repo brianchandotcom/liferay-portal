@@ -4,8 +4,8 @@
 			<not>
 				<isset var="siteScopeName" />
 			</not>
-				<then>
-				</then>
+			<then>
+			</then>
 		</if>
 	</command>
 </definition>

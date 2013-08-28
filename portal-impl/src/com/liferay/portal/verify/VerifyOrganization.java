@@ -53,13 +53,20 @@ public class VerifyOrganization extends VerifyProcess {
 				Organization organization = (Organization)object;
 
 				try {
-					AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
-						Organization.class.getName(),
-						organization.getOrganizationId());
+					AssetEntry assetEntry =
+						AssetEntryLocalServiceUtil.fetchEntry(
+							Organization.class.getName(),
+							organization.getOrganizationId());
 
-					assetEntry.setClassUuid(organization.getUuid());
+					if (assetEntry != null) {
+						assetEntry.setClassUuid(organization.getUuid());
 
-					AssetEntryLocalServiceUtil.updateAssetEntry(assetEntry);
+						AssetEntryLocalServiceUtil.updateAssetEntry(assetEntry);
+					}
+					else {
+						OrganizationLocalServiceUtil.updateAsset(
+							organization.getUserId(), organization, null, null);
+					}
 				}
 				catch (Exception e) {
 					if (_log.isWarnEnabled()) {

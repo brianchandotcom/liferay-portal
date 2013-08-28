@@ -1,4 +1,6 @@
 <definition>
+	<var name="assetType" value="Wiki Node" />
+
 	<command name="addCP">
 		<execute action="CPWiki#assertClick" locator-key1="ADD_WIKI_BUTTON" value1="Add Wiki" />
 
@@ -19,8 +21,8 @@
 		<execute action="CPWiki#assertTextEquals" locator-key1="WIKI_NODE_TABLE_WIKI" value1="${wikiNodeName}" />
 		<execute action="CPWiki#assertClick" locator-key1="WIKI_NODE_TABLE_ACTIONS" value1="Actions" />
 		<execute action="CPWiki#assertClick" locator-key1="WIKI_NODE_MENULIST_RECYCLE_BIN" value1="Move to the Recycle Bin" />
-		<execute action="CPWiki#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="The Selected Item was moved to the Recycle Bin. Undo" />
-		<execute action="CPWiki#assertTextNotPresent" value1="${wikiNodeName}" />
+		<execute action="CPWiki#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="The ${assetType} ${wikiNodeName} was moved to the Recycle Bin. Undo" />
+		<execute action="CPWiki#assertElementNotPresent" locator-key1="WIKI_NODE_TABLE_WIKI" />
 
 		<execute macro="RecycleBin#emptyCP" />
 	</command>
@@ -53,7 +55,8 @@
 			<then>
 				<execute action="CPWiki#assertClick" locator1="xpath=(//a[@title='Actions'])[2]" value1="Actions" />
 				<execute action="CPWiki#assertClick" locator-key1="WIKI_NODE_MENULIST_RECYCLE_BIN" value1="Move to the Recycle Bin" />
-				<execute action="CPWiki#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="The Selected Item was moved to the Recycle Bin. Undo" />
+				<execute action="CPWiki#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="The ${assetType}" />
+				<execute action="CPWiki#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="moved to the Recycle Bin. Undo" />
 			</then>
 		</while>
 

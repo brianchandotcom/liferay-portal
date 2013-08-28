@@ -1,4 +1,5 @@
 <definition>
+	<var name="assetType" value="Message Boards Thread" />
 	<var name="userName" value="Test Test" />
 
 	<command name="addCP">
@@ -18,7 +19,7 @@
 		<execute action="PGMessageboardsPostthread#type" locator-key1="BODY_FIELD" value1="${threadBody}" />
 		<execute action="PGMessageboardsPostthread#click" locator-key1="PUBLISH_BUTTON" />
 
-		<execute action="PGMessageboards#assertTextEquals" locator-key1="SUCCESS_MESSAGE" />
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="addWithWorkflowPG">
@@ -28,7 +29,7 @@
 		<execute action="PGMessageboardsPostthread#type" locator-key1="BODY_FIELD" value1="${threadBody}" />
 		<execute action="PGMessageboardsPostthread#click" locator-key1="SUBMIT_FOR_PUBLICATION_BUTTON" />
 
-		<execute action="PGMessageboards#assertTextEquals" locator-key1="SUCCESS_MESSAGE" />
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="deletePG">
@@ -37,8 +38,8 @@
 		<execute action="PGMessageboards#assertTextEquals" locator-key1="THREAD_TABLE_THREAD" value1="${threadSubject}" />
 		<execute action="PGMessageboards#assertClick" locator-key1="THREAD_TABLE_ACTIONS" value1="Actions"/>
 		<execute action="PGMessageboards#click" locator-key1="THREAD_MENULIST_RECYCLE_BIN" />
-		<execute action="PGMessageboards#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" />
-		<execute action="PGMessageboards#assertTextNotPresent" value1="${threadSubject}" />
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="The ${assetType} ${threadSubject} was moved to the Recycle Bin. Undo" />
+		<execute action="PGMessageboards#assertElementNotPresent" locator-key1="THREAD_TABLE_THREAD" />
 
 		<execute macro="RecycleBin#emptyCP" />
 	</command>
@@ -54,7 +55,7 @@
 		<execute action="PGMessageboardsPostthread#type" locator-key1="BODY_FIELD" value1="${threadBodyEdit}" />
 		<execute action="PGMessageboardsPostthread#click" locator-key1="PUBLISH_BUTTON" />
 
-		<execute action="PGMessageboards#assertTextEquals" locator-key1="SUCCESS_MESSAGE" />
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_BODY_1" value1="${threadBodyEdit}" />
 		<execute action="PGMessageboardsThread#assertTextNotEquals" locator-key1="MESSAGE_BODY_1" value1="${threadBody}" />
 	</command>
@@ -66,7 +67,7 @@
 		<execute action="CPMessageboards#assertClick" locator-key1="THREAD_TABLE_ACTIONS" value1="Actions"/>
 		<execute action="CPMessageboards#assertElementPresent" locator-key1="THREAD_MENULIST_MOVE_TO_THE_RECYCLE_BIN" />
 		<execute action="CPMessageboards#assertClick" locator-key1="THREAD_MENULIST_MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin"/>
-		<execute action="CPMessageboards#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="The Selected Item was moved to the Recycle Bin. Undo" />
+		<execute action="CPMessageboards#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="The ${assetType} ${threadSubject} was moved to the Recycle Bin. Undo" />
 		<execute action="CPMessageboards#assertTextEquals" locator-key1="INFO_MESSAGE_THREAD" value1="There are no threads in this category." />
 	</command>
 
@@ -81,7 +82,7 @@
 		<execute action="PGMessageboardsPostthread#type" locator-key1="BODY_FIELD" value1="${threadReplyBody}" />
 		<execute action="PGMessageboardsPostthread#click" locator-key1="PUBLISH_BUTTON" />
 
-		<execute action="PGMessageboards#assertTextEquals" locator-key1="SUCCESS_MESSAGE" />
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="tearDownCP">
@@ -94,7 +95,8 @@
 			<then>
 				<execute action="CPMessageboards#click" locator-key1="THREAD_TABLE_ALL_CHECKBOX" />
 				<execute action="CPMessageboards#click" locator-key1="THREADS_RECYCLE_BIN_BUTTON" />
-				<execute action="CPMessageboards#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to move the selected entries to the Recycle Bin?" />
+				<execute action="CPMessageboards#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="The ${assetType}" />
+				<execute action="CPMessageboards#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="moved to the Recycle Bin. Undo" />
 			</then>
 		</if>
 
@@ -168,7 +170,7 @@
 	<command name="viewNoPG">
 		<var name="key_threadSubject" value="${threadSubject}" />
 
-		<execute action="PGMessageboards#assertTextEquals" locator-key1="INFO_MESSAGE_THREAD" />
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="INFO_MESSAGE_THREAD" value1="There are no threads in this category." />
 		<execute action="CPMessageboards#assertTextNotPresent" value1="${threadSubject}" />
 		<execute action="PGMessageboards#assertElementNotPresent" locator-key1="THREAD_TABLE_THREAD"  />
 		<execute action="PGMessageboards#assertElementNotPresent" locator-key1="THREAD_TABLE_STARTED_BY" />

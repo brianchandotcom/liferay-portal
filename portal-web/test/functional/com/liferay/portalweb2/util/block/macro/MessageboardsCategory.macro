@@ -1,11 +1,13 @@
 <definition>
+	<var name="assetType" value="Message Boards Category" />
+
 	<command name="addCP">
 		<execute action="CPMessageboards#click" locator-key1="ADD_CATEGORY_BUTTON" />
 
 		<execute action="CPMessageboardsAddcategory#type" locator-key1="NAME_FIELD" value1="${categoryName}" />
 		<execute action="CPMessageboardsAddcategory#click" locator-key1="SAVE_BUTTON" />
 
-		<execute action="CPMessageboards#assertTextEquals" locator-key1="SUCCESS_MESSAGE" />
+		<execute action="CPMessageboards#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="addPG">
@@ -14,18 +16,17 @@
 		<execute action="PGMessageboardsAddcategory#type" locator-key1="NAME_FIELD" value1="${categoryName}" />
 		<execute action="PGMessageboardsAddcategory#click" locator-key1="SAVE_BUTTON" />
 
-		<execute action="PGMessageboards#assertTextEquals" locator-key1="SUCCESS_MESSAGE" />
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="deletePG">
 		<execute action="PGMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_CATEGORY_1" value1="${categoryName}" />
 		<execute action="PGMessageboards#click" locator-key1="CATEGORY_TABLE_ACTIONS_1" />
 		<execute action="PGMessageboards#click" locator-key1="CATEGORY_MENULIST_RECYCLE_BIN" />
-		<execute action="PGMessageboards#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" />
-		<execute action="PGMessageboards#assertTextNotPresent" value1="${categoryName}" />
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="The ${assetType} ${categoryName} was moved to the Recycle Bin. Undo" />
+		<execute action="PGMessageboards#assertElementNotPresent" locator-key1="CATEGORY_TABLE_CATEGORY_1" />
 
 		<execute macro="RecycleBin#emptyCP" />
-
 	</command>
 
 	<command name="editPG">
@@ -36,7 +37,7 @@
 		<execute action="PGMessageboardsAddcategory#type" locator-key1="NAME_FIELD" value1="${categoryNameEdit}" />
 		<execute action="PGMessageboardsAddcategory#click" locator-key1="SAVE_BUTTON" value1="Save" />
 
-		<execute action="PGMessageboards#assertTextEquals" locator-key1="SUCCESS_MESSAGE" />
+		<execute action="PGMessageboards#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute action="PGMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_CATEGORY_1" value1="${categoryNameEdit}" />
 	</command>
 
@@ -50,7 +51,8 @@
 			<then>
 				<execute action="CPMessageboards#click" locator-key1="CATEGORY_TABLE_ALL_CHECKBOX" />
 				<execute action="CPMessageboards#click" locator-key1="CATEGORIES_RECYCLE_BIN_BUTTON" />
-				<execute action="CPMessageboards#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to move the selected entries to the Recycle Bin?" />
+				<execute action="CPMessageboards#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="The ${assetType}" />
+				<execute action="CPMessageboards#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="moved to the Recycle Bin. Undo" />
 			</then>
 		</while>
 
@@ -65,7 +67,7 @@
 		<execute action="CPMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_CATEGORIES" value1="0" />
 		<execute action="CPMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_THREADS" value1="0" />
 		<execute action="CPMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_POSTS" value1="0" />
-		<execute action="CPMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_ACTIONS" />
+		<execute action="CPMessageboards#assertTextEquals" locator-key1="CATEGORY_TABLE_ACTIONS" value1="Actions"/>
 		<execute action="CPMessageboards#click" locator-key1="CATEGORY_TABLE_CATEGORY" value1="${categoryName}" />
 
 		<execute action="CPMessageboardsCategory#assertTextEquals" locator-key1="NAME_HEADER" value1="${categoryName}" />

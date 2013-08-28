@@ -69,6 +69,10 @@
 			<var name="threadSubject" value="${threadSubject}" />
 		</execute>
 
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Message Boards" />
+		</execute>
+
 		<execute macro="MessageboardsThread#viewDefaultCP">
 			<var name="threadSubject" value="${threadSubject}" />
 		</execute>

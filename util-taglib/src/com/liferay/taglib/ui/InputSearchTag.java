@@ -42,6 +42,10 @@ public class InputSearchTag extends IncludeTag {
 		_name = name;
 	}
 
+	public void setPlaceholder(String placeholder) {
+		_placeholder = placeholder;
+	}
+
 	public void setShowButton(boolean showButton) {
 		_showButton = showButton;
 	}
@@ -54,6 +58,7 @@ public class InputSearchTag extends IncludeTag {
 		_cssClass = null;
 		_id = null;
 		_name = null;
+		_placeholder = null;
 		_showButton = true;
 	}
 
@@ -88,11 +93,19 @@ public class InputSearchTag extends IncludeTag {
 			id = name;
 		}
 
+		String placeholder = _placeholder;
+
+		if (Validator.isNull(placeholder)) {
+			placeholder = buttonLabel;
+		}
+
 		request.setAttribute(
 			"liferay-ui:input-search:buttonLabel", buttonLabel);
 		request.setAttribute("liferay-ui:input-search:cssClass", cssClass);
 		request.setAttribute("liferay-ui:input-search:id", id);
 		request.setAttribute("liferay-ui:input-search:name", name);
+		request.setAttribute(
+			"liferay-ui:input-search:placeholder", placeholder);
 		request.setAttribute("liferay-ui:input-search:showButton", _showButton);
 	}
 
@@ -102,6 +115,7 @@ public class InputSearchTag extends IncludeTag {
 	private String _cssClass;
 	private String _id;
 	private String _name;
+	private String _placeholder;
 	private boolean _showButton = true;
 
 }

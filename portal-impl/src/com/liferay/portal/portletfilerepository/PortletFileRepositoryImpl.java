@@ -17,18 +17,25 @@ package com.liferay.portal.portletfilerepository;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Repository;
 import com.liferay.portal.model.User;
@@ -38,13 +45,17 @@ import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.theme.PortletDisplay;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.util.DLAppHelperThreadLocal;
+import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -365,6 +376,82 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 	}
 
 	@Override
+	public FileEntry getPortletFileEntry(String uuid, long groupId)
+		throws PortalException, SystemException {
+
+		return DLAppLocalServiceUtil.getFileEntryByUuidAndGroupId(
+			uuid, groupId);
+	}
+
+	@Override
+	public String getPortletFileEntryURL(
+			FileEntry fileEntry, ThemeDisplay themeDisplay, String queryString)
+		throws PortalException, SystemException {
+
+		return getPortletFileEntryURL(
+			fileEntry, themeDisplay, queryString, true);
+	}
+
+	@Override
+	public String getPortletFileEntryURL(
+			FileEntry fileEntry, ThemeDisplay themeDisplay, String queryString,
+			boolean absoluteURL)
+		throws PortalException, SystemException {
+
+		StringBundler sb = new StringBundler(17);
+
+		if (themeDisplay != null) {
+			if (absoluteURL) {
+				sb.append(themeDisplay.getPortalURL());
+			}
+		}
+
+		sb.append(PortalUtil.getPathContext());
+		sb.append("/documents/attachments/");
+		sb.append(fileEntry.getGroupId());
+		sb.append(StringPool.SLASH);
+
+		String title = fileEntry.getTitle();
+
+		FileVersion fileVersion = fileEntry.getFileVersion();
+
+		if (fileVersion.isInTrash()) {
+			title = TrashUtil.getOriginalTitle(fileEntry.getTitle());
+		}
+
+		sb.append(HttpUtil.encodeURL(HtmlUtil.unescape(title)));
+
+		sb.append(StringPool.SLASH);
+		sb.append(fileEntry.getUuid());
+
+		sb.append(queryString);
+
+		if (themeDisplay != null) {
+			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+			if (portletDisplay != null) {
+				String portletId = portletDisplay.getId();
+
+				if (portletId.equals(PortletKeys.TRASH) &&
+					!queryString.contains("&status=")) {
+
+					sb.append("&status=");
+					sb.append(WorkflowConstants.STATUS_IN_TRASH);
+				}
+			}
+		}
+
+		String downloadURL = sb.toString();
+
+		if ((themeDisplay != null) && themeDisplay.isAddSessionIdToURL()) {
+			return PortalUtil.getURLWithSessionId(
+				downloadURL, themeDisplay.getSessionId());
+		}
+
+		return downloadURL;
+	}
+
+	@Override
 	public Folder getPortletFolder(long folderId)
 		throws PortalException, SystemException {
 
@@ -463,5 +550,8 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 			return fileEntries;
 		}
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		PortletFileRepositoryImpl.class);
 
 }

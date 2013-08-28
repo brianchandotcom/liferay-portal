@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.Repository;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.theme.ThemeDisplay;
 
 import java.io.File;
 import java.io.InputStream;
@@ -185,6 +186,29 @@ public class PortletFileRepositoryUtil {
 
 		return getPortletFileRepository().getPortletFileEntry(
 			groupId, folderId, fileName);
+	}
+
+	public static FileEntry getPortletFileEntry(String uuid, long groupId)
+		throws PortalException, SystemException {
+
+		return getPortletFileRepository().getPortletFileEntry(uuid, groupId);
+	}
+
+	public static String getPortletFileEntryURL(
+			FileEntry fileEntry, ThemeDisplay themeDisplay, String queryString)
+		throws SystemException, PortalException {
+
+		return getPortletFileRepository().getPortletFileEntryURL(
+			fileEntry, themeDisplay, queryString);
+	}
+
+	public static String getPortletFileEntryURL(
+			FileEntry fileEntry, ThemeDisplay themeDisplay, String queryString,
+			boolean absoluteURL)
+		throws SystemException, PortalException {
+
+		return getPortletFileRepository().getPortletFileEntryURL(
+			fileEntry, themeDisplay, queryString, absoluteURL);
 	}
 
 	public static PortletFileRepository getPortletFileRepository() {

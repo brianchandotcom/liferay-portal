@@ -89,8 +89,10 @@ public class SassToCssBuilder {
 			}
 		}
 
+		String commonDirName = arguments.get("sass.common.dir");
+
 		try {
-			new SassToCssBuilder(docrootDirName, dirNames);
+			new SassToCssBuilder(docrootDirName, dirNames, commonDirName);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -114,7 +116,8 @@ public class SassToCssBuilder {
 			});
 	}
 
-	public SassToCssBuilder(String docrootDirName, List<String> dirNames)
+	public SassToCssBuilder(
+			String docrootDirName, List<String> dirNames, String commonDirName)
 		throws Exception {
 
 		Class<?> clazz = getClass();
@@ -138,7 +141,7 @@ public class SassToCssBuilder {
 
 			_rubyExecutor.setExecuteInSeparateThread(false);
 
-			_parseSassDirectory(docrootDirName, dirName);
+			_parseSassDirectory(docrootDirName, dirName, commonDirName);
 		}
 	}
 
@@ -212,7 +215,8 @@ public class SassToCssBuilder {
 		);
 	}
 
-	private void _parseSassDirectory(String docrootDirName, String dirName)
+	private void _parseSassDirectory(
+			String docrootDirName, String dirName, String commonDirName)
 		throws Exception {
 
 		DirectoryScanner directoryScanner = new DirectoryScanner();
@@ -243,7 +247,7 @@ public class SassToCssBuilder {
 			try {
 				long start = System.currentTimeMillis();
 
-				_parseSassFile(docrootDirName, fileName);
+				_parseSassFile(docrootDirName, fileName, commonDirName);
 
 				long end = System.currentTimeMillis();
 
@@ -259,8 +263,11 @@ public class SassToCssBuilder {
 		}
 	}
 
-	private void _parseSassFile(String docrootDirName, String resourcePath)
+	private void _parseSassFile(
+			String docrootDirName, String resourcePath, String commonDirName)
 		throws Exception {
+
+		String commonSassPath = docrootDirName.concat(commonDirName);
 
 		String filePath = docrootDirName.concat(resourcePath);
 
@@ -269,6 +276,7 @@ public class SassToCssBuilder {
 
 		Map<String, Object> inputObjects = new HashMap<String, Object>();
 
+		inputObjects.put("commonSassPath", commonSassPath);
 		inputObjects.put("content", _getContent(docrootDirName, resourcePath));
 		inputObjects.put("cssRealPath", filePath);
 		inputObjects.put("cssThemePath", _getCssThemePath(filePath));

@@ -1,5 +1,5 @@
-$phone: 768px !default;
-$tablet: 980px !default;
+$breakpoint_phone: 768px !default;
+$breakpoint_tablet: 980px !default;
 
 @mixin respond-to($types...) {
 	$maxWidth: -1;
@@ -7,19 +7,19 @@ $tablet: 980px !default;
 
 	@each $type in $types {
 		@if $type == phone {
-			$maxWidth: if($maxWidth == -1, $phone - 1, $maxWidth);
+			$maxWidth: if($maxWidth == -1, $breakpoint_phone - 1, $maxWidth);
 			$minWidth: 0;
 		}
 		@else if $type == tablet {
 			@if $maxWidth != 0 {
-				$maxWidth: if($maxWidth == -1, $tablet - 1, max($tablet - 1, $maxWidth));
+				$maxWidth: if($maxWidth == -1, $breakpoint_tablet - 1, max($breakpoint_tablet - 1, $maxWidth));
 			}
 
-			$minWidth: if($minWidth == -1, $phone, min($phone, $minWidth));
+			$minWidth: if($minWidth == -1, $breakpoint_phone, min($breakpoint_phone, $minWidth));
 		}
 		@else if $type == desktop {
 			$maxWidth: 0;
-			$minWidth: if($minWidth == -1, $tablet, $minWidth);
+			$minWidth: if($minWidth == -1, $breakpoint_tablet, $minWidth);
 		}
 	}
 

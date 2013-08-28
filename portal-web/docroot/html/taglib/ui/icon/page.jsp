@@ -129,11 +129,11 @@ boolean urlIsNotNull = Validator.isNotNull(url);
 
 	<c:choose>
 		<c:when test="<%= (iconMenuIconCount != null) && ((iconMenuSingleIcon == null) || iconMenuShowWhenSingleIcon) %>">
-			<span class="taglib-text-icon" role="presentation"><liferay-ui:message key="<%= message %>" localizeKey="<%= localizeMessage %>" /></span>
+			<span class="taglib-text-icon"><liferay-ui:message key="<%= message %>" localizeKey="<%= localizeMessage %>" /></span>
 		</c:when>
 		<c:otherwise>
 			<c:if test="<%= label %>">
-				<span class="taglib-text" role="presentation"><liferay-ui:message key="<%= message %>" localizeKey="<%= localizeMessage %>" /></span>
+				<span class="taglib-text"><liferay-ui:message key="<%= message %>" localizeKey="<%= localizeMessage %>" /></span>
 			</c:if>
 		</c:otherwise>
 	</c:choose>
@@ -179,7 +179,7 @@ boolean urlIsNotNull = Validator.isNotNull(url);
 		</li>
 	</c:when>
 	<c:otherwise>
-		<span class="<%= cssClass %>" role="presentation">
+		<span class="<%= cssClass %>">
 			<c:choose>
 				<c:when test="<%= urlIsNotNull && Validator.isNull(ariaRole) %>">
 					<aui:a cssClass='<%= linkCssClass + " taglib-icon" %>' data="<%= data %>" href="<%= url %>" id="<%= id %>" lang="<%= lang %>" onClick='<%= Validator.isNotNull(onClick) ? onClick : "" %>' target="<%= target %>">

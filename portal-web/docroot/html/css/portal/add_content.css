@@ -94,6 +94,10 @@
 			}
 		}
 
+		.lfr-add-apps-legend {
+			margin-bottom: 25px;
+		}
+
 		.lfr-content-item {
 			position: relative;
 
@@ -254,6 +258,10 @@
 	background-color: #FFF;
 
 	.add-content-menu {
+		.lfr-add-apps-legend {
+			color: #999;
+		}
+
 		.lfr-add-page-toolbar {
 			background-color: #FFF;
 		}

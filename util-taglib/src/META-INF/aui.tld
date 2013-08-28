@@ -888,6 +888,12 @@
 		<tag-class>com.liferay.taglib.aui.ATag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<name>ariaRole</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
 			<name>cssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

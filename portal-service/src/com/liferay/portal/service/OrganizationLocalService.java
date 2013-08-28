@@ -649,6 +649,10 @@ public interface OrganizationLocalService extends BaseLocalService,
 		long companyId, java.lang.String name)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.Organization> getNoAssetEntries()
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	/**
 	* Returns the organization with the name.
 	*

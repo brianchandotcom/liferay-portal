@@ -757,6 +757,11 @@ public class OrganizationLocalServiceUtil {
 		return getService().fetchOrganization(companyId, name);
 	}
 
+	public static java.util.List<com.liferay.portal.model.Organization> getNoAssetEntries()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getNoAssetEntries();
+	}
+
 	/**
 	* Returns the organization with the name.
 	*

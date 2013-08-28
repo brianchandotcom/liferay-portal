@@ -810,6 +810,12 @@ public class OrganizationLocalServiceWrapper implements OrganizationLocalService
 		return _organizationLocalService.fetchOrganization(companyId, name);
 	}
 
+	@Override
+	public java.util.List<com.liferay.portal.model.Organization> getNoAssetEntries()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _organizationLocalService.getNoAssetEntries();
+	}
+
 	/**
 	* Returns the organization with the name.
 	*

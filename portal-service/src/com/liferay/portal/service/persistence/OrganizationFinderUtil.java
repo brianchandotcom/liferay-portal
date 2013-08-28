@@ -92,6 +92,11 @@ public class OrganizationFinderUtil {
 			countryId, params, start, end, obc);
 	}
 
+	public static java.util.List<com.liferay.portal.model.Organization> findByNoAssets()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder().findByNoAssets();
+	}
+
 	public static java.util.List<com.liferay.portal.model.Organization> findByC_PO_N_T_S_C_Z_R_C(
 		long companyId, long parentOrganizationId,
 		java.lang.String parentOrganizationIdComparator, java.lang.String name,

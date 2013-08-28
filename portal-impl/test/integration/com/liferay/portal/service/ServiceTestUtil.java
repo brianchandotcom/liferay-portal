@@ -18,8 +18,11 @@ import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.NoSuchRoleException;
 import com.liferay.portal.jcr.JCRFactoryUtil;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseDestination;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBus;
@@ -30,10 +33,7 @@ import com.liferay.portal.kernel.messaging.sender.SynchronousMessageSender;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
-import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.*;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.User;
@@ -45,6 +45,8 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
+import com.liferay.portal.service.persistence.impl.TableMapper;
+import com.liferay.portal.service.persistence.impl.TableMapperFactory;
 import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.util.InitUtil;
 import com.liferay.portal.util.PortalInstances;
@@ -52,6 +54,8 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.TestPropsValues;
+
+import java.lang.reflect.Field;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -120,6 +124,33 @@ public class ServiceTestUtil {
 		addResourcePermission(role, resourceName, scope, primKey, actionId);
 
 		return role;
+	}
+
+	public static void clearTableMapperCaches() {
+		Field field = null;
+
+		try {
+			field = ReflectionUtil.getDeclaredField(
+				TableMapperFactory.class, "_tableMappers");
+
+			field.setAccessible(true);
+
+			Map<String, TableMapper<?, ?>> tableMappers =
+				(Map<String, TableMapper<?, ?>>)field.get(null);
+
+			for (TableMapper<?, ?> tableMapper : tableMappers.values()) {
+				_clearCache(tableMapper, "leftToRightPortalCache");
+				_clearCache(tableMapper, "rightToLeftPortalCache");
+			}
+		}
+		catch (Exception e) {
+			if (_log.isErrorEnabled()) {
+				_log.error("Unexpected error cleaning TableMapper caches");
+			}
+		}
+		finally {
+			field.setAccessible(false);
+		}
 	}
 
 	public static void destroyServices() {
@@ -439,6 +470,27 @@ public class ServiceTestUtil {
 		}
 	}
 
+	private static void _clearCache(TableMapper<?, ?> tableMapper, String name)
+		throws Exception {
+
+		Field field = null;
+
+		try {
+			field = ReflectionUtil.getDeclaredField(
+				tableMapper.getClass(), name);
+
+			field.setAccessible(true);
+
+			PortalCache<Long, long[]> portalCache =
+				(PortalCache<Long, long[]>)field.get(tableMapper);
+
+			portalCache.removeAll();
+		}
+		finally {
+			field.setAccessible(false);
+		}
+	}
+
 	private static void _deleteDLDirectories() {
 		FileUtil.deltree(PropsValues.DL_STORE_FILE_SYSTEM_ROOT_DIR);
 
@@ -463,6 +515,8 @@ public class ServiceTestUtil {
 
 		messageBus.replace(baseDestination);
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(ServiceTestUtil.class);
 
 	private static Random _random = new Random();
 

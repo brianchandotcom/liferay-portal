@@ -171,8 +171,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 
 		Group group = groupLocalService.getGroup(groupId);
 
-		List<DLFolder> dlFolders = dlFolderPersistence.findByG_P(
-			groupId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+		List<DLFolder> dlFolders = dlFolderPersistence.findByGroupId(groupId);
 
 		for (DLFolder dlFolder : dlFolders) {
 			dlFolderLocalService.deleteFolder(dlFolder);

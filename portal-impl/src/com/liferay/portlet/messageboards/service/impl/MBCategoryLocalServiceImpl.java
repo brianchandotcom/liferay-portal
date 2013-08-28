@@ -194,8 +194,8 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 	public void deleteCategories(long groupId)
 		throws PortalException, SystemException {
 
-		List<MBCategory> categories = mbCategoryPersistence.findByG_P(
-			groupId, MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
+		List<MBCategory> categories = mbCategoryPersistence.findByGroupId(
+			groupId);
 
 		for (MBCategory category : categories) {
 			mbCategoryLocalService.deleteCategory(category);

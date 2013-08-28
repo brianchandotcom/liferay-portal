@@ -24,17 +24,23 @@ import com.liferay.portal.kernel.util.LongWrapper;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.lar.BasePortletDataHandlerTestCase;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Repository;
 import com.liferay.portal.repository.liferayrepository.LiferayRepository;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
+import com.liferay.portal.util.GroupTestUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.PortletPreferencesImpl;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
+import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.persistence.DLFolderUtil;
 import com.liferay.portlet.documentlibrary.util.DLAppTestUtil;
 
 import java.util.Map;
@@ -98,6 +104,29 @@ public class DLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 		Assert.assertEquals(0, fileEntryModelAdditionCounter.getValue());
 	}
 
+	@Test
+	@Transactional
+	public void testDeleteAllFolders() throws Exception {
+		Group group = GroupTestUtil.addGroup();
+
+		Folder parentFolder = DLAppTestUtil.addFolder(
+			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			"parent");
+
+		Folder childFolder = DLAppTestUtil.addFolder(
+			group.getGroupId(), parentFolder.getFolderId(), "child");
+
+		DLAppServiceUtil.moveFolderToTrash(childFolder.getFolderId());
+
+		DLAppServiceUtil.moveFolderToTrash(parentFolder.getFolderId());
+
+		DLFolderLocalServiceUtil.deleteFolder(parentFolder.getFolderId());
+
+		GroupLocalServiceUtil.deleteGroup(group);
+
+		Assert.assertEquals(0, DLFolderUtil.countByGroupId(group.getGroupId()));
+	}
+
 	protected void addRepositoryEntries() throws Exception {
 		long classNameId = PortalUtil.getClassNameId(
 			LiferayRepository.class.getName());
@@ -106,7 +135,7 @@ public class DLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 			TestPropsValues.getUserId(), stagingGroup.getGroupId(), classNameId,
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			PortletKeys.BACKGROUND_TASK, StringPool.BLANK,
-			PortletKeys.BACKGROUND_TASK,  new UnicodeProperties(), true,
+			PortletKeys.BACKGROUND_TASK, new UnicodeProperties(), true,
 			ServiceTestUtil.getServiceContext());
 
 		Folder folder = DLAppTestUtil.addFolder(

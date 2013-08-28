@@ -41,6 +41,7 @@ import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalFeed;
 import com.liferay.portlet.journal.model.JournalFolder;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
+import com.liferay.portlet.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.portlet.journal.service.permission.JournalPermission;
 import com.liferay.portlet.journal.service.persistence.JournalArticleExportActionableDynamicQuery;
 import com.liferay.portlet.journal.service.persistence.JournalFeedExportActionableDynamicQuery;
@@ -129,6 +130,9 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 
 		JournalArticleLocalServiceUtil.deleteArticles(
 			portletDataContext.getScopeGroupId());
+
+		JournalFolderLocalServiceUtil.deleteFolders(
+			portletDataContext.getGroupId());
 
 		DDMTemplateLocalServiceUtil.deleteTemplates(
 			portletDataContext.getScopeGroupId());

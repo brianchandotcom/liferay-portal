@@ -193,8 +193,8 @@ public class JournalFolderLocalServiceImpl
 	public void deleteFolders(long groupId)
 		throws PortalException, SystemException {
 
-		List<JournalFolder> folders = journalFolderPersistence.findByG_P(
-			groupId, JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+		List<JournalFolder> folders = journalFolderPersistence.findByGroupId(
+			groupId);
 
 		for (JournalFolder folder : folders) {
 			journalFolderLocalService.deleteFolder(folder);

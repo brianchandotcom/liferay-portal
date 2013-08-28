@@ -17,17 +17,26 @@ package com.liferay.portlet.messageboards.lar;
 import com.liferay.portal.kernel.lar.PortletDataHandler;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.lar.BasePortletDataHandlerTestCase;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
+import com.liferay.portal.util.GroupTestUtil;
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBMessage;
+import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
 import com.liferay.portlet.messageboards.util.MBTestUtil;
 
+import java.util.List;
 import java.util.Map;
 
+import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.testng.Assert;
 
 /**
  * @author Zsolt Berentey
@@ -39,6 +48,31 @@ import org.junit.runner.RunWith;
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class MBPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
+
+	@Test
+	public void testDeleteAllFolders() throws Exception {
+		Group group = GroupTestUtil.addGroup();
+
+		MBCategory parentCategory = MBTestUtil.addCategory(group.getGroupId());
+
+		MBCategory childCategory = MBTestUtil.addCategory(
+			group.getGroupId(), parentCategory.getCategoryId());
+
+		MBCategoryLocalServiceUtil.moveCategoryToTrash(
+			TestPropsValues.getUserId(), childCategory.getCategoryId());
+
+		MBCategoryLocalServiceUtil.moveCategoryToTrash(
+			TestPropsValues.getUserId(), parentCategory.getCategoryId());
+
+		MBCategoryLocalServiceUtil.deleteCategory(parentCategory, false);
+
+		GroupLocalServiceUtil.deleteGroup(group);
+
+		List<MBCategory> categories = MBCategoryLocalServiceUtil.getCategories(
+			group.getGroupId());
+
+		Assert.assertEquals(0, categories.size());
+	}
 
 	@Override
 	protected void addParameters(Map<String, String[]> parameterMap) {

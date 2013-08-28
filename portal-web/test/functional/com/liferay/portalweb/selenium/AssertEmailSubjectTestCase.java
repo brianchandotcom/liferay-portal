@@ -42,4 +42,54 @@ public class AssertEmailSubjectTestCase extends BaseSeleniumTestCase {
 		selenium.deleteAllEmails();
 	}
 
+	@Test
+	public void testFailAssertEmailSubject1() throws Exception {
+		try {
+			selenium.connectToEmailAccount(
+				TestPropsValues.EMAIL_ADDRESS_1,
+				TestPropsValues.EMAIL_PASSWORD_1);
+
+			selenium.sendEmail(
+				TestPropsValues.EMAIL_ADDRESS_2, "Email Test",
+				"This is a test message");
+
+			selenium.deleteAllEmails();
+
+			selenium.connectToEmailAccount(
+				TestPropsValues.EMAIL_ADDRESS_2,
+				TestPropsValues.EMAIL_PASSWORD_2);
+
+			selenium.assertEmailSubject("A", "Email Test");
+		}
+		catch (Throwable t) {
+			assertEquals(t.getMessage(), "null");
+		}
+	}
+
+	@Test
+	public void testFailAssertEmailSubject2() throws Exception {
+		try {
+			selenium.connectToEmailAccount(
+				TestPropsValues.EMAIL_ADDRESS_1,
+				TestPropsValues.EMAIL_PASSWORD_1);
+
+			selenium.sendEmail(
+				TestPropsValues.EMAIL_ADDRESS_2, "Email Test",
+				"This is a test message");
+
+			selenium.deleteAllEmails();
+
+			selenium.connectToEmailAccount(
+				TestPropsValues.EMAIL_ADDRESS_2,
+				TestPropsValues.EMAIL_PASSWORD_2);
+
+			selenium.assertEmailSubject("1", "Wrong Subject");
+		}
+		catch (Throwable t) {
+			assertEquals(
+				t.getMessage(),
+				"Expected \"Wrong Subject\" but saw \"Email Test\" instead");
+		}
+	}
+
 }

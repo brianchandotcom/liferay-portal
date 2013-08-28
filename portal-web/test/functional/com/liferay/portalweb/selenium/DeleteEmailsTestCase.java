@@ -36,4 +36,16 @@ public class DeleteEmailsTestCase extends BaseSeleniumTestCase {
 		selenium.deleteAllEmails();
 	}
 
+	@Test
+	public void testFailDeleteMails() throws Exception {
+		String expectedException = "Command failure \"deleteAllEmails\": null";
+
+		try {
+			selenium.deleteAllEmails();
+		}
+		catch (Throwable t) {
+			assertEquals(t.getMessage(), expectedException);
+		}
+	}
+
 }

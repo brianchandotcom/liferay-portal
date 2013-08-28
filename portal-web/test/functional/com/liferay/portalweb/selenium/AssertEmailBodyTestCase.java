@@ -24,7 +24,7 @@ import org.junit.Test;
 public class AssertEmailBodyTestCase extends BaseSeleniumTestCase {
 
 	@Test
-	public void testAssertEmailContent() throws Exception {
+	public void testAssertEmailBody() throws Exception {
 		selenium.connectToEmailAccount(
 			TestPropsValues.EMAIL_ADDRESS_1, TestPropsValues.EMAIL_PASSWORD_1);
 
@@ -40,6 +40,57 @@ public class AssertEmailBodyTestCase extends BaseSeleniumTestCase {
 		selenium.assertEmailBody("1", "This is a test message");
 
 		selenium.deleteAllEmails();
+	}
+
+	@Test
+	public void testFailAssertEmailBody1() throws Exception {
+		try {
+			selenium.connectToEmailAccount(
+				TestPropsValues.EMAIL_ADDRESS_1,
+				TestPropsValues.EMAIL_PASSWORD_1);
+
+			selenium.sendEmail(
+				TestPropsValues.EMAIL_ADDRESS_2, "Email Test",
+				"This is a test message");
+
+			selenium.deleteAllEmails();
+
+			selenium.connectToEmailAccount(
+				TestPropsValues.EMAIL_ADDRESS_2,
+				TestPropsValues.EMAIL_PASSWORD_2);
+
+			selenium.assertEmailBody("A", "This is a test message");
+		}
+		catch (Throwable t) {
+			assertEquals(t.getMessage(), "null");
+		}
+	}
+
+	@Test
+	public void testFailAssertEmailBody2() throws Exception {
+		try {
+			selenium.connectToEmailAccount(
+				TestPropsValues.EMAIL_ADDRESS_1,
+				TestPropsValues.EMAIL_PASSWORD_1);
+
+			selenium.sendEmail(
+				TestPropsValues.EMAIL_ADDRESS_2, "Email Test",
+				"This is a test message");
+
+			selenium.deleteAllEmails();
+
+			selenium.connectToEmailAccount(
+				TestPropsValues.EMAIL_ADDRESS_2,
+				TestPropsValues.EMAIL_PASSWORD_2);
+
+			selenium.assertEmailBody("1", "Wrong Body");
+		}
+		catch (Throwable t) {
+			assertEquals(
+				t.getMessage(),
+				"Expected \"Wrong Body\" but saw \"This is a test message\" " +
+					"instead");
+		}
 	}
 
 }

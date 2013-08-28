@@ -364,6 +364,14 @@ public class DLFileEntryLocalServiceImpl
 					dlFileEntry.getName(),
 					DLFileEntryConstants.PRIVATE_WORKING_COPY_VERSION,
 					lastDLFileVersion.getVersion());
+
+				// File Entry
+
+				dlFileEntry.setExtension(latestDLFileVersion.getExtension());
+				dlFileEntry.setMimeType(latestDLFileVersion.getMimeType());
+				dlFileEntry.setSize(latestDLFileVersion.getSize());
+
+				dlFileEntryPersistence.update(dlFileEntry);
 			}
 
 			// Latest file version

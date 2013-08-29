@@ -35,6 +35,6 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="BlogsEntry#viewPortletAsGuestPG" />
+		<execute macro="BlogsEntry#viewPortletNoPermissionPG" />
 	</command>
 </definition>

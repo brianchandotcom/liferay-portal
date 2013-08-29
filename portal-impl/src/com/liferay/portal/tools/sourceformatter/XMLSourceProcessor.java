@@ -241,8 +241,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 			if (name.compareTo(previousName) < -1) {
 				processErrorMessage(
-					fileName,
-					fileName + " has an unordered target " + name);
+					fileName, fileName + " has an unordered target " + name);
 
 				break;
 			}
@@ -630,7 +629,9 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		for (String urlPattern : urlPatterns) {
 			sb.append("\t<servlet-mapping>\n");
 			sb.append("\t\t<servlet-name>I18n Servlet</servlet-name>\n");
-			sb.append("\t\t<url-pattern>/" + urlPattern +"/*</url-pattern>\n");
+			sb.append("\t\t<url-pattern>/");
+			sb.append(urlPattern);
+			sb.append("/*</url-pattern>\n");
 			sb.append("\t</servlet-mapping>\n");
 		}
 
@@ -664,9 +665,9 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		sb.append("\t\t\t<url-pattern>/c/portal/protected</url-pattern>\n");
 
 		for (String urlPattern : urlPatterns) {
-			sb.append(
-				"\t\t\t<url-pattern>/" + urlPattern +
-					"/c/portal/protected</url-pattern>\n");
+			sb.append("\t\t\t<url-pattern>/");
+			sb.append(urlPattern);
+			sb.append("/c/portal/protected</url-pattern>\n");
 		}
 
 		return newContent.substring(0, x) + sb.toString() +

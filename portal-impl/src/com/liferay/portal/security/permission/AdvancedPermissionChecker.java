@@ -995,6 +995,12 @@ public class AdvancedPermissionChecker extends BasePermissionChecker {
 
 		long companyId = user.getCompanyId();
 
+		if (groupId > 0) {
+			Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+			companyId = group.getCompanyId();
+		}
+
 		boolean hasLayoutManagerPermission = true;
 
 		// Check if the layout manager has permission to do this action for the

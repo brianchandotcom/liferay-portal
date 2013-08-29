@@ -27,10 +27,11 @@ body.portlet {
 }
 
 .portlet-title-text {
-	display: block;
+	display: inline-block;
 	max-width: 95%;
 	overflow: hidden;
 	text-overflow: ellipsis;
+	vertical-align: top;
 	white-space: nowrap;
 }
 

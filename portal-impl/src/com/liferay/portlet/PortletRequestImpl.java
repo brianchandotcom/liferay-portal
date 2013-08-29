@@ -43,6 +43,7 @@ import com.liferay.portal.model.PublicRenderParameter;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.lang.DoPrivilegedBean;
 import com.liferay.portal.security.lang.DoPrivilegedUtil;
+import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.servlet.NamespaceServletRequest;
 import com.liferay.portal.servlet.SharedSessionServletRequest;
@@ -670,7 +671,34 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 
 		PortletApp portletApp = portlet.getPortletApp();
 
-		if (portletApp.isWARFile() && !portlet.isPrivateSessionAttributes()) {
+		boolean isWARFile = portletApp.isWARFile();
+
+		if (!isWARFile) {
+			String portletResource = ParamUtil.getString(
+				request, portletNamespace.concat("portletResource"));
+
+			if (Validator.isNotNull(portletResource)) {
+				Portlet resourcePortlet = null;
+
+				try {
+					resourcePortlet = PortletLocalServiceUtil.getPortletById(
+						themeDisplay.getCompanyId(), portletResource);
+				}
+				catch (Exception e) {
+				}
+
+				if (resourcePortlet != null) {
+					PortletApp resourcePortletApp =
+						resourcePortlet.getPortletApp();
+
+					if (resourcePortletApp.isWARFile()) {
+						isWARFile = true;
+					}
+				}
+			}
+		}
+
+		if (isWARFile && !portlet.isPrivateSessionAttributes()) {
 			portalSessionShared = true;
 		}
 

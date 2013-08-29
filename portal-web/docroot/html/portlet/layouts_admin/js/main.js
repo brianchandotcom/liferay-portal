@@ -894,7 +894,7 @@ AUI.add(
 							}
 						);
 
-						if (selectedConfiguration.length == 0) {
+						if (selectedConfiguration.length === 0) {
 							instance.byId('PORTLET_CONFIGURATION_' + portletId + 'Checkbox').set('checked', false);
 
 							instance.byId('showChangeConfiguration_' + portletId).hide();
@@ -922,7 +922,7 @@ AUI.add(
 							}
 						);
 
-						if (selectedContent.length == 0) {
+						if (selectedContent.length === 0) {
 							instance.byId('PORTLET_DATA_' + portletId + 'Checkbox').set('checked', false);
 
 							instance.byId('showChangeContent_' + portletId).hide();
@@ -1005,10 +1005,10 @@ AUI.add(
 
 						if (linkNode) {
 							if (label !== STR_EMPTY) {
-								linkNode.html(Liferay.Language.get('change'))
+								linkNode.html(Liferay.Language.get('change'));
 							}
 							else {
-								linkNode.html(Liferay.Language.get('select'))
+								linkNode.html(Liferay.Language.get('select'));
 							}
 						}
 

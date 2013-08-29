@@ -38,7 +38,7 @@ import org.junit.runner.RunWith;
  *
  * @author Alexander Chow
  */
-@ExecutionTestListeners(listeners = {WebDAVEnviornmentConfigTestListener.class})
+@ExecutionTestListeners(listeners = {WebDAVEnvironmentConfigTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class WebDAVLitmusBasicTest extends BaseWebDAVTestCase {
 

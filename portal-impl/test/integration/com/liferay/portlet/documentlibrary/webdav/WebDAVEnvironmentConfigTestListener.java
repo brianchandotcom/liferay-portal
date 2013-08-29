@@ -26,7 +26,7 @@ import org.junit.Assert;
 /**
  * @author Miguel Pastor
  */
-public class WebDAVEnviornmentConfigTestListener
+public class WebDAVEnvironmentConfigTestListener
 	extends EnvironmentExecutionTestListener {
 
 	@Override

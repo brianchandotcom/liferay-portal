@@ -21,6 +21,10 @@ Compass.configuration.project_path ||= $cssThemePath
 
 load_paths = []
 
+if $commonSassPath
+	load_paths += [$commonSassPath]
+end
+
 if $cssThemePath
 	load_paths += [$cssThemePath]
 end

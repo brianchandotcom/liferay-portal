@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.service.ResourceLocalServiceUtil;
@@ -323,8 +324,8 @@ public class VerifyJournal extends VerifyProcess {
 									nsse.getMessage());
 					}
 
-					article.setStructureId(null);
-					article.setTemplateId(null);
+					article.setStructureId(StringPool.BLANK);
+					article.setTemplateId(StringPool.BLANK);
 
 					JournalArticleLocalServiceUtil.updateJournalArticle(
 						article);

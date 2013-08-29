@@ -2337,12 +2337,6 @@ public class StagingImpl implements Staging {
 			remoteAddress, remotePort, remotePathContext, secureConnection,
 			remoteGroupId);
 
-		if (group.isCompany()) {
-			updateGroupTypeSettingsProperties(
-				group, remoteAddress, remotePort, remotePathContext,
-				secureConnection, remoteGroupId);
-		}
-
 		DateRange dateRange = ExportImportHelperUtil.getDateRange(
 			portletRequest, groupId, privateLayout, 0, null);
 

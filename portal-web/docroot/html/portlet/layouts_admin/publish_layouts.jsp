@@ -34,11 +34,7 @@ Group stagingGroup = null;
 
 int pagesCount = 0;
 
-if (selGroup.isCompany()) {
-	stagingGroup = selGroup;
-	liveGroup = selGroup;
-}
-else if (selGroup.isStagingGroup()) {
+if (selGroup.isStagingGroup()) {
 	liveGroup = selGroup.getLiveGroup();
 	stagingGroup = selGroup;
 }
@@ -77,7 +73,7 @@ if (liveGroup.isStaged()) {
 		localPublishing = false;
 	}
 }
-else if (cmd.equals("publish_to_remote") || selGroup.isCompany()) {
+else if (cmd.equals("publish_to_remote")) {
 	localPublishing = false;
 }
 
@@ -99,7 +95,7 @@ String publishActionKey = "copy";
 if (liveGroup.isStaged()) {
 	publishActionKey = "publish";
 }
-else if (cmd.equals("publish_to_remote") || selGroup.isCompany()) {
+else if (cmd.equals("publish_to_remote")) {
 	publishActionKey = "publish";
 }
 

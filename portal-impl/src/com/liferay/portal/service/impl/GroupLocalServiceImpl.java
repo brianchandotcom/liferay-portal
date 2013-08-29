@@ -263,7 +263,9 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 		long groupClassNameId = PortalUtil.getClassNameId(Group.class);
 
-		if ((classNameId <= 0) || className.equals(Group.class.getName())) {
+		if (((classNameId <= 0) || className.equals(Group.class.getName())) ||
+			(className.equals(Company.class.getName()) && staging)) {
+
 			className = Group.class.getName();
 			classNameId = groupClassNameId;
 			classPK = groupId;
@@ -711,7 +713,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		try {
 			GroupThreadLocal.setDeleteInProcess(true);
 
-			if ((group.isCompany() ||
+			if (((group.isCompany() && !group.isCompanyStaging()) ||
 				 PortalUtil.isSystemGroup(group.getName())) &&
 				!CompanyThreadLocal.isDeleteInProcess()) {
 
@@ -1192,7 +1194,7 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 		String name = group.getName();
 
-		if (group.isCompany()) {
+		if (group.isCompany() && !group.isCompanyStaging()) {
 			name = LanguageUtil.get(locale, "global");
 		}
 		else if (group.isControlPanel()) {

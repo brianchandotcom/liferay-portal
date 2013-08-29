@@ -123,6 +123,8 @@ public interface Group extends GroupModel, PersistedModel {
 
 	public boolean isCompany();
 
+	public boolean isCompanyStaging();
+
 	public boolean isControlPanel();
 
 	public boolean isGuest();

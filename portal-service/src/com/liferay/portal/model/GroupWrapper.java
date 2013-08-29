@@ -957,6 +957,11 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	}
 
 	@Override
+	public boolean isCompanyStaging() {
+		return _group.isCompanyStaging();
+	}
+
+	@Override
 	public boolean isControlPanel() {
 		return _group.isControlPanel();
 	}

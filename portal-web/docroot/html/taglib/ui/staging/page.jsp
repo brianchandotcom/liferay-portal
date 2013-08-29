@@ -51,10 +51,7 @@ else {
 Group liveGroup = null;
 Group stagingGroup = null;
 
-if (group.isCompany()) {
-	stagingGroup = group;
-}
-else if (group.isStagingGroup()) {
+if (group.isStagingGroup()) {
 	liveGroup = group.getLiveGroup();
 	stagingGroup = group;
 }
@@ -75,27 +72,24 @@ if (groupId <= 0) {
 
 String publishDialogTitle = null;
 
-if (group.isCompany()) {
-	publishDialogTitle = "publish-to-remote-live";
-}
-else {
+if (!group.isCompany()) {
 	layoutSetBranches = LayoutSetBranchLocalServiceUtil.getLayoutSetBranches(stagingGroup.getGroupId(), privateLayout);
+}
 
-	if (group.isStaged() && group.isStagedRemotely()) {
-		if ((layoutSetBranchId > 0) && (layoutSetBranches.size() > 1)) {
-			publishDialogTitle = "publish-x-to-remote-live";
-		}
-		else {
-			publishDialogTitle = "publish-to-remote-live";
-		}
+if (group.isStaged() && group.isStagedRemotely()) {
+	if ((layoutSetBranchId > 0) && (layoutSetBranches.size() > 1)) {
+		publishDialogTitle = "publish-x-to-remote-live";
 	}
 	else {
-		if ((layoutSetBranchId > 0) && (layoutSetBranches.size() > 1)) {
-			publishDialogTitle = "publish-x-to-live";
-		}
-		else {
-			publishDialogTitle = "publish-to-live";
-		}
+		publishDialogTitle = "publish-to-remote-live";
+	}
+}
+else {
+	if ((layoutSetBranchId > 0) && (layoutSetBranches.size() > 1)) {
+		publishDialogTitle = "publish-x-to-live";
+	}
+	else {
+		publishDialogTitle = "publish-to-live";
 	}
 }
 
@@ -104,7 +98,7 @@ String publishMessage = LanguageUtil.get(pageContext, publishDialogTitle);
 
 <liferay-portlet:renderURL plid="<%= plid %>" portletMode="<%= PortletMode.VIEW.toString() %>" portletName="<%= PortletKeys.LAYOUTS_ADMIN %>" varImpl="publishRenderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 	<liferay-portlet:param name="struts_action" value="/layouts_admin/publish_layouts" />
-	<liferay-portlet:param name="<%= Constants.CMD %>" value='<%= (group.isCompany()) ? "publish_to_remote" : "publish_to_live" %>' />
+	<liferay-portlet:param name="<%= Constants.CMD %>" value="publish_to_live" />
 	<liferay-portlet:param name="tabs1" value='<%= (privateLayout) ? "private-pages" : "public-pages" %>' />
 	<liferay-portlet:param name="closeRedirect" value="<%= currentURL %>" />
 	<liferay-portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />

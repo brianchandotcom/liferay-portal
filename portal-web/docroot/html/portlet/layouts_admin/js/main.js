@@ -783,9 +783,13 @@ AUI.add(
 					_reloadForm: function() {
 						var instance = this;
 
-						instance.byId('cmd').val(STR_EMPTY);
+						var cmdNode = instance.byId('cmd');
 
-						submitForm(instance.get('form'));
+						if (cmdNode) {
+							cmdNode.val(STR_EMPTY);
+
+							submitForm(instance.get('form'));
+						}
 					},
 
 					_renderProcesses: function() {

@@ -160,11 +160,6 @@
 		padding: 0 10px;
 	}
 
-	.portlet-title-text {
-		display: inline-block;
-		vertical-align: top;
-	}
-
 	.portlet-nested-portlets .portlet-body .portlet {
 		border: 1px solid #E5E5E5;
 	}

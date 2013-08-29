@@ -38,14 +38,13 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.ClassLoaderUtil;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.util.Encryptor;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
 
 import java.net.Inet4Address;
@@ -139,32 +138,11 @@ public class LicenseUtil {
 		}
 	}
 
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link PortalUtil#getComputerName()}
+	 */
 	public static String getHostName() {
-		if (_hostName != null) {
-			return _hostName;
-		}
-
-		_hostName = StringPool.BLANK;
-
-		try {
-			Runtime runtime = Runtime.getRuntime();
-
-			Process process = runtime.exec("hostname");
-
-			BufferedReader bufferedReader = new BufferedReader(
-				new InputStreamReader(process.getInputStream()), 128);
-
-			_hostName = bufferedReader.readLine();
-
-			bufferedReader.close();
-		}
-		catch (Exception e) {
-			_log.error("Unable to read local server's host name");
-
-			_log.error(e, e);
-		}
-
-		return _hostName;
+		return PortalUtil.getComputerName();
 	}
 
 	public static Set<String> getIpAddresses() {
@@ -326,7 +304,7 @@ public class LicenseUtil {
 	public static Map<String, String> getServerInfo() {
 		Map<String, String> serverInfo = new HashMap<String, String>();
 
-		serverInfo.put("hostName", getHostName());
+		serverInfo.put("hostName", PortalUtil.getComputerName());
 		serverInfo.put("ipAddresses", StringUtil.merge(getIpAddresses()));
 		serverInfo.put("macAddresses", StringUtil.merge(getMacAddresses()));
 
@@ -566,7 +544,7 @@ public class LicenseUtil {
 				jsonObject.put("productEntryName", productEntryName);
 			}
 
-			jsonObject.put("hostName", getHostName());
+			jsonObject.put("hostName", PortalUtil.getComputerName());
 			jsonObject.put("ipAddresses", StringUtil.merge(getIpAddresses()));
 			jsonObject.put("macAddresses", StringUtil.merge(getMacAddresses()));
 			jsonObject.put("serverId", Arrays.toString(getServerIdBytes()));

@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.Randomizer;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.util.ContentUtil;
@@ -31,6 +30,8 @@ import com.swabunga.spell.event.SpellChecker;
 import com.swabunga.spell.event.StringWordTokenizer;
 
 import java.io.IOException;
+
+import java.security.SecureRandom;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -121,7 +122,11 @@ public class WordsUtil {
 	}
 
 	private String _getRandomWord() {
-		int pos = Randomizer.getInstance().nextInt(_dictionaryList.size());
+		if (_secureRandom == null) {
+			_secureRandom = new SecureRandom();
+		}
+
+		int pos = _secureRandom.nextInt(_dictionaryList.size());
 
 		return _dictionaryList.get(pos);
 	}
@@ -136,6 +141,7 @@ public class WordsUtil {
 
 	private List<String> _dictionaryList;
 	private Set<String> _dictionarySet;
+	private SecureRandom _secureRandom;
 	private SpellDictionaryHashMap _spellDictionaryHashMap;
 
 }

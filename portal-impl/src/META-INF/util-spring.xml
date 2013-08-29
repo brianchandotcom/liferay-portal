@@ -82,12 +82,6 @@
 				<entry key="com.liferay.portal.kernel.servlet.filters.invoker.InvokerFilter">
 					<bean class="com.liferay.portal.cache.key.SimpleCacheKeyGenerator" />
 				</entry>
-				<entry key="com.liferay.portal.servlet.filters.aggregate.AggregateFilter">
-					<bean class="com.liferay.portal.cache.key.SimpleCacheKeyGenerator" />
-				</entry>
-				<entry key="com.liferay.portal.servlet.filters.dynamiccss.DynamicCSSFilter">
-					<bean class="com.liferay.portal.cache.key.SimpleCacheKeyGenerator" />
-				</entry>
 				<entry key="com.liferay.portal.servlet.filters.strip.StripFilter">
 					<bean class="com.liferay.portal.cache.key.SimpleCacheKeyGenerator" />
 				</entry>

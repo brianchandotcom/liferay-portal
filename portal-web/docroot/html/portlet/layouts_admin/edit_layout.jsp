@@ -117,7 +117,7 @@ boolean showAddAction = ParamUtil.getBoolean(request, "showAddAction", true);
 
 <aui:nav-bar>
 	<aui:nav id="layoutsNav">
-		<c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, selPlid, ActionKeys.ADD_LAYOUT) && PortalUtil.isLayoutParentable(selLayout.getType()) && SitesUtil.isLayoutSortable(selLayout) && (!selGroup.hasStagingGroup() || selGroup.isStagingGroup()) && showAddAction %>">
+		<c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, selPlid, ActionKeys.ADD_LAYOUT) && (!selGroup.hasStagingGroup() || selGroup.isStagingGroup()) && showAddAction %>">
 			<aui:nav-item data-value="add-child-page" iconClass="icon-plus" label="add-child-page" />
 		</c:if>
 		<c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, selPlid, ActionKeys.PERMISSIONS) && (!selGroup.hasStagingGroup() || selGroup.isStagingGroup()) %>">

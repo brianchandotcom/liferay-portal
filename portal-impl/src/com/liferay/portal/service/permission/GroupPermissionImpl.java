@@ -98,6 +98,7 @@ public class GroupPermissionImpl implements GroupPermission {
 			return true;
 		}
 		else if (actionId.equals(ActionKeys.ADD_LAYOUT) &&
+				 !group.isLayoutPrototype() &&
 				 permissionChecker.hasPermission(
 					groupId, Group.class.getName(), groupId,
 					ActionKeys.MANAGE_LAYOUTS)) {

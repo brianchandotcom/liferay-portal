@@ -33,6 +33,7 @@ import com.liferay.portal.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.service.ResourceLocalServiceUtil;
 import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.sites.util.SitesUtil;
 
@@ -234,16 +235,24 @@ public class LayoutPermissionImpl implements LayoutPermission {
 			}
 		}
 
+		if (actionId.equals(ActionKeys.ADD_LAYOUT)) {
+			if (!PortalUtil.isLayoutParentable(layout.getType()) ||
+				!SitesUtil.isLayoutSortable(layout)) {
+
+				return false;
+			}
+
+			if (GroupPermissionUtil.contains(
+					permissionChecker, layout.getGroupId(),
+					ActionKeys.ADD_LAYOUT)) {
+
+				return true;
+			}
+		}
+
 		if (GroupPermissionUtil.contains(
 				permissionChecker, layout.getGroupId(),
 				ActionKeys.MANAGE_LAYOUTS)) {
-
-			return true;
-		}
-		else if (actionId.equals(ActionKeys.ADD_LAYOUT) &&
-				 GroupPermissionUtil.contains(
-					 permissionChecker, layout.getGroupId(),
-					 ActionKeys.ADD_LAYOUT)) {
 
 			return true;
 		}

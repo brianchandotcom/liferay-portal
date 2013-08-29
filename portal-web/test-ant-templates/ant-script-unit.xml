@@ -192,9 +192,9 @@
 		</antcall>
 	</target>
 
-	<target name="test-${test.ant.script.command}-tomcat-sybase-firefox">
+	<target name="test-${test.ant.script.command}-tomcat-sybase-15.0-firefox">
 		<antcall target="generate-test-properties">
-			<param name="database" value="sybase" />
+			<param name="database" value="sybase-15.0" />
 		</antcall>
 
 		<antcall target="print-scm-revision" />
@@ -209,7 +209,32 @@
 		</antcall>
 
 		<ant antfile="build-test-unit.xml" target="run-${test.ant.script.command}-test" inheritAll="false">
-			<property name="database" value="sybase" />
+			<property name="database" value="sybase-15.0" />
+		</ant>
+
+		<antcall target="stop-vm">
+			<param name="vm.host" value="${vm.db.host}" />
+		</antcall>
+	</target>
+
+	<target name="test-${test.ant.script.command}-tomcat-sybase-15.7-firefox">
+		<antcall target="generate-test-properties">
+			<param name="database" value="sybase-15.7" />
+		</antcall>
+
+		<antcall target="print-scm-revision" />
+
+		<antcall target="clean-up-test-properties" />
+
+		<antcall target="prepare-vm-server">
+			<param name="build.war" value="false" />
+			<param name="skip.prepare-bundle" value="true" />
+			<param name="vm.vmdk.suffix" value="sybase-15.7" />
+			<param name="vm.host" value="${vm.db.host}" />
+		</antcall>
+
+		<ant antfile="build-test-unit.xml" target="run-${test.ant.script.command}-test" inheritAll="false">
+			<property name="database" value="sybase-15.7" />
 		</ant>
 
 		<antcall target="stop-vm">

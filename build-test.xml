@@ -457,7 +457,7 @@
 	</target>
 
 	<target name="build-test-ant-scripts">
-		<property name="build-test-ant-scripts.version" value="7" />
+		<property name="build-test-ant-scripts.version" value="8" />
 
 		<if>
 			<available file="portal-web/test-ant-scripts/version" />
@@ -781,11 +781,12 @@
 					<equals arg1="${database}" arg2="postgresql-9.0" />
 					<equals arg1="${database}" arg2="sql-server-2005" />
 					<equals arg1="${database}" arg2="sql-server-2008" />
-					<equals arg1="${database}" arg2="sybase" />
+					<equals arg1="${database}" arg2="sybase-15.0" />
+					<equals arg1="${database}" arg2="sybase-15.7" />
 				</or>
 			</not>
 			<then>
-				<fail>Please set "database" to one of the following:${line.separator}db2, hsql, mysql, oracle-10, oracle-11, postgresql-8.4, postgresql-9.0, sql-server-2005, sql-server-2008, sybase</fail>
+				<fail>Please set "database" to one of the following:${line.separator}db2, hsql, mysql, oracle-10, oracle-11, postgresql-8.4, postgresql-9.0, sql-server-2005, sql-server-2008, sybase-15.0, sybase-15.7</fail>
 			</then>
 		</if>
 	</target>
@@ -2018,8 +2019,14 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 		<antcall target="prepare-versioned-common" inheritAll="false" />
 	</target>
 
-	<target name="prepare-versioned-sybase">
-		<echo file="test.${user.name}.properties">database=sybase</echo>
+	<target name="prepare-versioned-sybase-15.0">
+		<echo file="test.${user.name}.properties">database=sybase-15.0</echo>
+
+		<antcall target="prepare-versioned-common" inheritAll="false" />
+	</target>
+
+	<target name="prepare-versioned-sybase-15.7">
+		<echo file="test.${user.name}.properties">database=sybase-15.7</echo>
 
 		<antcall target="prepare-versioned-common" inheritAll="false" />
 	</target>
@@ -2147,6 +2154,27 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 	</target>
 
 	<target name="rebuild-database" depends="generate-test-properties,build-sql-file">
+		<if>
+			<equals arg1="${database}" arg2="sybase-15.7" />
+			<then>
+				<parallel>
+					<daemons>
+						<exec executable="${plink.executable}">
+							<arg line="-pw ${vm.password} ${vm.username}@${database.host} cmd.exe /c C:/Sybase/ASE-15_0/install/RUN_LIFERAYEAD7385.bat" />
+						</exec>
+					</daemons>
+
+					<sequential>
+						<waitfor>
+							<socket server="${database.host}" port="5000" />
+						</waitfor>
+
+						<sleep seconds="5" />
+					</sequential>
+				</parallel>
+			</then>
+		</if>
+
 		<if>
 			<not>
 				<isset property="skip.rebuild-database" />

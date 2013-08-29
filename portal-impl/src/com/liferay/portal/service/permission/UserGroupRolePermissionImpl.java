@@ -17,10 +17,13 @@ package com.liferay.portal.service.permission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.Role;
+import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.RoleLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
@@ -44,6 +47,17 @@ public class UserGroupRolePermissionImpl implements UserGroupRolePermission {
 		throws PortalException, SystemException {
 
 		Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+		Role role = RoleLocalServiceUtil.getRole(roleId);
+
+		if (role.getType() == RoleConstants.TYPE_REGULAR) {
+			return false;
+		}
+		else if ((role.getType() == RoleConstants.TYPE_ORGANIZATION) &&
+				 !group.isOrganization()) {
+
+			return false;
+		}
 
 		if (permissionChecker.isGroupOwner(groupId) ||
 			GroupPermissionUtil.contains(

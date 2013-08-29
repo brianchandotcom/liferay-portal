@@ -338,7 +338,8 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 
 		if (Validator.isNull(minifierType) ||
 			Validator.isNotNull(minifierBundleId) ||
-			Validator.isNotNull(minifierBundleDirName)) {
+			Validator.isNotNull(minifierBundleDirName) ||
+			(!minifierType.equals("js") && !minifierType.equals("css"))) {
 
 			return null;
 		}
@@ -356,10 +357,6 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 		URL resourceURL = _servletContext.getResource(resourcePath);
 
 		if (resourceURL == null) {
-			return null;
-		}
-
-		if (!minifierType.equals("js") && !minifierType.equals("css")) {
 			return null;
 		}
 

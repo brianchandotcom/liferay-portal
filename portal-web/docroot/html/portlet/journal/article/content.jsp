@@ -243,7 +243,8 @@ if (Validator.isNotNull(content)) {
 
 									<c:if test="<%= classNameId == JournalArticleConstants.CLASSNAME_ID_DEFAULT %>">
 										<liferay-ui:icon
-											image="add"
+											cssClass="btn"
+											iconClass="icon-search"
 											label="<%= true %>"
 											message="select"
 											url='<%= "javascript:" + renderResponse.getNamespace() + "openDDMStructureSelector();" %>'
@@ -262,6 +263,7 @@ if (Validator.isNotNull(content)) {
 
 							<aui:fieldset cssClass="article-template-toolbar">
 								<div class="journal-form-presentation-label">
+<<<<<<< HEAD
 									<aui:input name="templateId" type="hidden" value="<%= templateId %>" />
 
 									<span class="template-name-label" id="<portlet:namespace />templateNameLabel">
@@ -291,7 +293,8 @@ if (Validator.isNotNull(content)) {
 										%>
 
 										<liferay-ui:icon
-											image="add"
+											cssClass="btn"
+											iconClass="icon-search"
 											label="<%= true %>"
 											message="select"
 											url="<%= sb.toString() %>"

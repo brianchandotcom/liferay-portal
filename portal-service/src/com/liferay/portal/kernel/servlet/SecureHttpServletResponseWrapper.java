@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.servlet;
 
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -26,6 +27,7 @@ import java.io.IOException;
 
 import java.util.Properties;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
@@ -50,6 +52,17 @@ public class SecureHttpServletResponseWrapper
 		setXContentOptions(request);
 		setXFrameOptions(request);
 		setXXSSProtection(request);
+	}
+
+	@Override
+	public void addCookie(Cookie cookie) {
+		if (!ArrayUtil.contains(
+				_COOKIE_HTTPONLY_IGNORE_NAMES, cookie.getName())) {
+
+			cookie.setHttpOnly(true);
+		}
+
+		super.addCookie(cookie);
 	}
 
 	@Override
@@ -165,6 +178,9 @@ public class SecureHttpServletResponseWrapper
 
 		super.setHeader(HttpHeaders.X_XSS_PROTECTION, "1; mode=block");
 	}
+
+	private static final String[] _COOKIE_HTTPONLY_IGNORE_NAMES =
+		PropsUtil.getArray(PropsKeys.COOKIE_HTTPONLY_IGNORE_NAMES);
 
 	private static final boolean _X_CONTENT_TYPE_OPTIONS =
 		GetterUtil.getBoolean(

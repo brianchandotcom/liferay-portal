@@ -303,7 +303,7 @@
 		<device-name>master</device-name>
 		<driver>net.sourceforge.jtds.jdbc.Driver</driver>
 		<family>sybase</family>
-		<password></password>
+		<password>password</password>
 		<remote-schema-command>isql -U ${database.username} -P ${database.password} -i C:\temporary\create.sql</remote-schema-command>
 		<schema>lportal</schema>
 		<sql-replacement>
@@ -330,6 +330,6 @@
 		</sql-replacement>
 		<url>jdbc:jtds:sybase://${database.host}:5000/${database.schema}</url>
 		<username>sa</username>
-		<vm-vmdk-suffix>sybase-15.0.2</vm-vmdk-suffix>
+		<vm-vmdk-suffix>sybase-15.7</vm-vmdk-suffix>
 	</sybase>
 </database>

@@ -2148,6 +2148,27 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 
 	<target name="rebuild-database" depends="generate-test-properties,build-sql-file">
 		<if>
+			<equals arg1="${database}" arg2="sybase" />
+			<then>
+				<parallel>
+					<daemons>
+						<exec executable="${plink.executable}">
+							<arg line="-pw ${vm.password} ${vm.username}@${database.host} cmd.exe /c C:/Sybase/ASE-15_0/install/RUN_LIFERAYEAD7385.bat" />
+						</exec>
+					</daemons>
+
+					<sequential>
+						<waitfor>
+							<socket server="${database.host}" port="5000" />
+						</waitfor>
+
+						<sleep seconds="5" />
+					</sequential>
+				</parallel>
+			</then>
+		</if>
+
+		<if>
 			<not>
 				<isset property="skip.rebuild-database" />
 			</not>

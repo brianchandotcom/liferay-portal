@@ -748,7 +748,7 @@
 		<antcall target="prepare-vm-server">
 			<param name="build.war" value="false" />
 			<param name="skip.prepare-bundle" value="true" />
-			<param name="vm.vmdk.suffix" value="sybase-15.0.2" />
+			<param name="vm.vmdk.suffix" value="sybase-15.7" />
 			<param name="vm.host" value="${vm.db.host}" />
 		</antcall>
 

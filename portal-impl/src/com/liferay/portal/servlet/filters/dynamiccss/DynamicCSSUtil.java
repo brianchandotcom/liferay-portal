@@ -363,13 +363,13 @@ public class DynamicCSSUtil {
 			String content)
 		throws Exception {
 
-		String portalWebDir = PortalUtil.getPortalWebDir();
-
-		String commonSassPath = portalWebDir.concat(_SASS_COMMON_DIR);
-
 		Map<String, Object> inputObjects = new HashMap<String, Object>();
 
-		inputObjects.put("commonSassPath", commonSassPath);
+		String portalWebDir = PortalUtil.getPortalWebDir();
+
+		inputObjects.put(
+			"commonSassPath", portalWebDir.concat(_SASS_COMMON_DIR));
+
 		inputObjects.put("content", content);
 		inputObjects.put("cssRealPath", resourcePath);
 		inputObjects.put(

@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public class RequiredStructureException extends PortalException {
 
-	public static final int REFERENCED_STRUCTURE= 1;
+	public static final int REFERENCED_STRUCTURE = 1;
 
 	public static final int REFERENCED_STRUCTURE_LINK = 2;
 

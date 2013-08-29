@@ -63,7 +63,7 @@ AUI.add(
 
 						instance._bindUI();
 
-						instance._pageTreeId = config.pageTreeId;
+						instance._layoutsExportTreeOutput = instance.byId(config.pageTreeId + 'Output');
 
 						instance._initLabels();
 
@@ -545,7 +545,9 @@ AUI.add(
 														click: function(event) {
 															event.domEvent.preventDefault();
 
-															instance._reloadForm();
+															if (instance._layoutsExportTreeOutput) {
+																instance._reloadForm();
+															}
 
 															pagesDialog.hide();
 														}
@@ -1035,12 +1037,10 @@ AUI.add(
 
 						var selectedPages = [];
 
-						var layoutsExportTreeOutput = instance.byId(instance._pageTreeId + 'Output');
-
-						if (layoutsExportTreeOutput) {
+						if (instance._layoutsExportTreeOutput) {
 							var layoutIdsInput = instance.byId('layoutIds');
 
-							var treeView = layoutsExportTreeOutput.getData('treeInstance');
+							var treeView = instance._layoutsExportTreeOutput.getData('treeInstance');
 
 							var rootNode = treeView.item(0);
 

@@ -56,6 +56,14 @@
 	TrashUtil.addBaseModelBreadcrumbEntries(request, className, classPK, containerModelURL);
 	%>
 
+	<liferay-ui:breadcrumb
+		showCurrentGroup="<%= false %>"
+		showCurrentPortlet="<%= true %>"
+		showGuestGroup="<%= false %>"
+		showLayout="<%= false %>"
+		showParentGroups="<%= false %>"
+	/>
+
 	<liferay-ui:header
 		backURL="<%= redirect %>"
 		localizeTitle="<%= false %>"

@@ -283,6 +283,14 @@ if (Validator.isNotNull(keywords)) {
 		</aui:button-row>
 	</aui:form>
 
+	<liferay-ui:breadcrumb
+		showCurrentGroup="<%= false %>"
+		showCurrentPortlet="<%= true %>"
+		showGuestGroup="<%= false %>"
+		showLayout="<%= false %>"
+		showParentGroups="<%= false %>"
+	/>
+
 	<div class="separator"><!-- --></div>
 
 	<liferay-ui:search-iterator type='<%= approximate ? "more" : "regular" %>' />

@@ -63,7 +63,7 @@ AUI.add(
 
 						instance._bindUI();
 
-						instance._pageTreeId = config.pageTreeId;
+						instance._layoutsExportTreeOutput = instance.byId(config.pageTreeId + 'Output');
 
 						instance._initLabels();
 
@@ -545,7 +545,9 @@ AUI.add(
 														click: function(event) {
 															event.domEvent.preventDefault();
 
-															instance._reloadForm();
+															if (instance._layoutsExportTreeOutput) {
+																instance._reloadForm();
+															}
 
 															pagesDialog.hide();
 														}
@@ -783,9 +785,13 @@ AUI.add(
 					_reloadForm: function() {
 						var instance = this;
 
-						instance.byId('cmd').val(STR_EMPTY);
+						var cmdNode = instance.byId('cmd');
 
-						submitForm(instance.get('form'));
+						if (cmdNode) {
+							cmdNode.val(STR_EMPTY);
+
+							submitForm(instance.get('form'));
+						}
 					},
 
 					_renderProcesses: function() {
@@ -888,7 +894,7 @@ AUI.add(
 							}
 						);
 
-						if (selectedConfiguration.length == 0) {
+						if (selectedConfiguration.length === 0) {
 							instance.byId('PORTLET_CONFIGURATION_' + portletId + 'Checkbox').set('checked', false);
 
 							instance.byId('showChangeConfiguration_' + portletId).hide();
@@ -916,7 +922,7 @@ AUI.add(
 							}
 						);
 
-						if (selectedContent.length == 0) {
+						if (selectedContent.length === 0) {
 							instance.byId('PORTLET_DATA_' + portletId + 'Checkbox').set('checked', false);
 
 							instance.byId('showChangeContent_' + portletId).hide();
@@ -999,10 +1005,10 @@ AUI.add(
 
 						if (linkNode) {
 							if (label !== STR_EMPTY) {
-								linkNode.html(Liferay.Language.get('change'))
+								linkNode.html(Liferay.Language.get('change'));
 							}
 							else {
-								linkNode.html(Liferay.Language.get('select'))
+								linkNode.html(Liferay.Language.get('select'));
 							}
 						}
 
@@ -1031,12 +1037,10 @@ AUI.add(
 
 						var selectedPages = [];
 
-						var layoutsExportTreeOutput = instance.byId(instance._pageTreeId + 'Output');
-
-						if (layoutsExportTreeOutput) {
+						if (instance._layoutsExportTreeOutput) {
 							var layoutIdsInput = instance.byId('layoutIds');
 
-							var treeView = layoutsExportTreeOutput.getData('treeInstance');
+							var treeView = instance._layoutsExportTreeOutput.getData('treeInstance');
 
 							var rootNode = treeView.item(0);
 

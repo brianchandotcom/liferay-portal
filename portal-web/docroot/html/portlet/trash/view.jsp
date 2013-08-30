@@ -35,6 +35,12 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/trash/view");
 portletURL.setParameter("tabs1", tabs1);
+
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "recycle-bin"), portletURL.toString());
+
+if (Validator.isNotNull(keywords)) {
+	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "search") + ": " + keywords, currentURL);
+}
 %>
 
 <liferay-util:include page="/html/portlet/trash/restore_path.jsp" />
@@ -288,9 +294,3 @@ portletURL.setParameter("tabs1", tabs1);
 
 	<liferay-ui:search-iterator type='<%= approximate ? "more" : "regular" %>' />
 </liferay-ui:search-container>
-
-<%
-if (Validator.isNotNull(keywords)) {
-	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "search") + ": " + keywords, currentURL);
-}
-%>

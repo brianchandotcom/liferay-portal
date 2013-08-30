@@ -421,6 +421,12 @@ public class TrashImpl implements Trash {
 
 		Collections.reverse(containerModels);
 
+		containerModelURL.setParameter("struts_action", "/trash/view");
+
+		PortalUtil.addPortletBreadcrumbEntry(
+			request, LanguageUtil.get(themeDisplay.getLocale(), "recycle-bin"),
+			containerModelURL.toString());
+
 		for (ContainerModel containerModel : containerModels) {
 			TrashHandler containerTrashHandler =
 				TrashHandlerRegistryUtil.getTrashHandler(
@@ -433,6 +439,9 @@ public class TrashImpl implements Trash {
 
 				continue;
 			}
+
+			containerModelURL.setParameter(
+				"struts_action", "/trash/view_content");
 
 			containerModelURL.setParameter(
 				paramName,

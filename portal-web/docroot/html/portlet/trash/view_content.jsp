@@ -50,7 +50,6 @@
 
 	PortletURL containerModelURL = renderResponse.createRenderURL();
 
-	containerModelURL.setParameter("struts_action", "/trash/view_content");
 	containerModelURL.setParameter("redirect", redirect);
 	containerModelURL.setParameter("className", trashHandler.getContainerModelClassName());
 

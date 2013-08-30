@@ -79,28 +79,32 @@ public class SpringFactoryImpl implements SpringFactory {
 		Object bean = InstanceFactory.newInstance(
 			ClassLoaderUtil.getPortalClassLoader(), className);
 
+		FactoryBean<Object> factoryBean = null;
+
 		if (bean instanceof FactoryBean) {
-			FactoryBean<Object> factoryBean = (FactoryBean<Object>)bean;
+			factoryBean = (FactoryBean<Object>)bean;
 
 			bean = factoryBean.create();
 		}
 
-		if (properties == null) {
-			return bean;
+		if (properties != null) {
+			for (Map.Entry<String, Object> entry : properties.entrySet()) {
+				String name = entry.getKey();
+
+				if (!allowedProperties.contains(name)) {
+					throw new SpringFactoryException(
+						"Undefined property " + name + " for class " +
+							className);
+				}
+
+				Object value = entry.getValue();
+
+				BeanPropertiesUtil.setProperty(bean, name, value);
+			}
 		}
 
-		for (Map.Entry<String, Object> entry : properties.entrySet()) {
-			String name = entry.getKey();
-
-			if (!allowedProperties.contains(name)) {
-				throw new SpringFactoryException(
-					"Undefined property " + name + " for class " +
-						className);
-			}
-
-			Object value = entry.getValue();
-
-			BeanPropertiesUtil.setProperty(bean, name, value);
+		if (factoryBean != null) {
+			bean = factoryBean.postProcessing(bean);
 		}
 
 		return bean;

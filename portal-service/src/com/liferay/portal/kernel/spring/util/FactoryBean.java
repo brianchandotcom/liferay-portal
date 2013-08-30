@@ -21,4 +21,6 @@ public interface FactoryBean<T> {
 
 	public T create() throws Exception;
 
+	public T postProcessing(T t);
+
 }

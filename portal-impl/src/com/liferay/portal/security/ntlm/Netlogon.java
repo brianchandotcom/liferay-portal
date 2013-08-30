@@ -25,7 +25,6 @@ import com.liferay.portal.security.ntlm.msrpc.NetrLogonSamLogon;
 import java.io.IOException;
 
 import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
 
 import jcifs.dcerpc.DcerpcBinding;
 import jcifs.dcerpc.DcerpcHandle;
@@ -48,8 +47,7 @@ public class Netlogon {
 
 		try {
 			netlogonConnection.connect(
-				_domainController, _domainControllerName, _ntlmServiceAccount,
-				_secureRandom);
+				_domainController, _domainControllerName, _ntlmServiceAccount);
 
 			NetlogonAuthenticator netlogonAuthenticator =
 				netlogonConnection.computeNetlogonAuthenticator();
@@ -122,7 +120,6 @@ public class Netlogon {
 	private String _domainController;
 	private String _domainControllerName;
 	private NtlmServiceAccount _ntlmServiceAccount;
-	private SecureRandom _secureRandom = new SecureRandom();
 
 	static {
 		DcerpcBinding.addInterface(

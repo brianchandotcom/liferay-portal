@@ -16,6 +16,8 @@ package com.liferay.portal.spring.aop;
 
 import com.liferay.portal.kernel.spring.aop.Skip;
 
+import java.util.Map;
+
 import org.aopalliance.intercept.MethodInterceptor;
 
 import org.springframework.aop.TargetSource;
@@ -25,6 +27,7 @@ import org.springframework.aop.framework.AopProxy;
 import org.springframework.aop.framework.AopProxyFactory;
 import org.springframework.aop.framework.ProxyFactory;
 import org.springframework.aop.framework.autoproxy.AbstractAdvisorAutoProxyCreator;
+import org.springframework.beans.factory.ListableBeanFactory;
 
 /**
  * @author Shuyang Zhou
@@ -47,6 +50,20 @@ public class ServiceBeanAutoProxyCreator
 
 		if (_beanMatcher == null) {
 			_beanMatcher = new ServiceBeanMatcher();
+		}
+
+		ListableBeanFactory listableBeanFactory =
+			(ListableBeanFactory)getBeanFactory();
+
+		Map<String, ChainableMethodAdviceInjector>
+			chainableMethodAdviceInjectors =
+				listableBeanFactory.getBeansOfType(
+					ChainableMethodAdviceInjector.class);
+
+		for (ChainableMethodAdviceInjector chainableMethodAdviceInjector :
+				chainableMethodAdviceInjectors.values()) {
+
+			chainableMethodAdviceInjector.inject();
 		}
 	}
 

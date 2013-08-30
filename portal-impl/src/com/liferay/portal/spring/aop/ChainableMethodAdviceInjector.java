@@ -19,31 +19,27 @@ package com.liferay.portal.spring.aop;
  */
 public class ChainableMethodAdviceInjector {
 
-	public void afterPropertiesSet() {
-		if (!isInjectCondition()) {
+	public void inject() {
+		if (!_injectCondition) {
 			return;
 		}
 
-		ChainableMethodAdvice newChainableMethodAdvice =
-			getNewChainableMethodAdvice();
+		_injectCondition = false;
 
-		if (newChainableMethodAdvice == null) {
+		if (_newChainableMethodAdvice == null) {
 			throw new IllegalArgumentException(
 				"New Chainable method advice is null");
 		}
 
-		ChainableMethodAdvice parentChainableMethodAdvice =
-			getParentChainableMethodAdvice();
-
-		if (parentChainableMethodAdvice == null) {
+		if (_parentChainableMethodAdvice == null) {
 			throw new IllegalArgumentException(
 				"Parent chainable method advice is null");
 		}
 
-		newChainableMethodAdvice.nextMethodInterceptor =
-			parentChainableMethodAdvice.nextMethodInterceptor;
-		parentChainableMethodAdvice.nextMethodInterceptor =
-			newChainableMethodAdvice;
+		_newChainableMethodAdvice.nextMethodInterceptor =
+			_parentChainableMethodAdvice.nextMethodInterceptor;
+		_parentChainableMethodAdvice.nextMethodInterceptor =
+			_newChainableMethodAdvice;
 	}
 
 	public void setInjectCondition(boolean injectCondition) {
@@ -60,18 +56,6 @@ public class ChainableMethodAdviceInjector {
 		ChainableMethodAdvice parentChainableMethodAdvice) {
 
 		_parentChainableMethodAdvice = parentChainableMethodAdvice;
-	}
-
-	protected ChainableMethodAdvice getNewChainableMethodAdvice() {
-		return _newChainableMethodAdvice;
-	}
-
-	protected ChainableMethodAdvice getParentChainableMethodAdvice() {
-		return _parentChainableMethodAdvice;
-	}
-
-	protected boolean isInjectCondition() {
-		return _injectCondition;
 	}
 
 	private boolean _injectCondition;

@@ -82,6 +82,9 @@ public class ServiceMonitorAdvice extends ChainableMethodAdvice {
 	@Override
 	public Object before(MethodInvocation methodInvocation) throws Throwable {
 		if (!_active) {
+			serviceBeanAopCacheManager.removeMethodInterceptor(
+				methodInvocation, this);
+
 			return null;
 		}
 
@@ -147,6 +150,10 @@ public class ServiceMonitorAdvice extends ChainableMethodAdvice {
 	}
 
 	public void setActive(boolean active) {
+		if (active && !_active) {
+			serviceBeanAopCacheManager.reset();
+		}
+
 		_active = active;
 	}
 

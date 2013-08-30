@@ -7,12 +7,12 @@
 .aui {
 	body {
 		color: #555;
-		font-weight: lighter;
+		font-weight: 200;
 	}
 
 	a {
 		color: #009AE5;
-		font-weight: lighter;
+		font-weight: 200;
 
 		&:hover {
 			color: #009AE5;
@@ -71,7 +71,7 @@
 	input[type="color"], input[type="date"], input[type="datetime"], input[type="datetime-local"], input[type="email"], input[type="month"], input[type="number"], input[type="password"], input[type="search"], input[type="tel"], input[type="text"], input[type="time"], input[type="url"], input[type="week"], select, textarea, .uneditable-input {
 		border: 1px solid #DDD;
 		color: #8D8D8D;
-		font-weight: lighter;
+		font-weight: 200;
 		margin-bottom: 7px;
 
 		&:focus {
@@ -91,7 +91,7 @@
 	label {
 		color: #555;
 		font-size: 15px;
-		font-weight: lighter;
+		font-weight: 200;
 	}
 
 	select:focus {
@@ -276,7 +276,6 @@
 					li a {
 						color: #FFF;
 						font-size: 0.9em;
-						font-weight: lighter;
 
 						&:hover {
 							background: #2FA4F5;

@@ -22,6 +22,16 @@
 		<execute action="PGMessageboards#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
+	<command name="addWithWorkflowCP">
+		<execute action="CPMessageboards#click" locator-key1="POST_NEW_THREAD_BUTTON" />
+
+		<execute action="CPMessageboardsPostthread#type" locator-key1="SUBJECT_FIELD" value1="${threadSubject}" />
+		<execute action="CPMessageboardsPostthread#type" locator-key1="BODY_FIELD" value1="${threadBody}" />
+		<execute action="CPMessageboardsPostthread#click" locator-key1="SUBMIT_FOR_PUBLICATION_BUTTON" />
+
+		<execute action="CPMessageboardsThread#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
 	<command name="addWithWorkflowPG">
 		<execute action="PGMessageboards#click" locator-key1="POST_NEW_THREAD_BUTTON" />
 
@@ -201,6 +211,18 @@
 		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_BODY_1" value1="${threadBody}" />
 	</command>
 
+	<command name="viewPGViaAP">
+		<var name="key_assetTitle" value="${threadSubject}" />
+
+		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_TITLE" value1="${threadSubject}" />
+		<execute action="PGAssetpublisher#assertTextEquals" locator-key1="ASSET_SUMMARY" value1="${threadBody}" />
+		<execute action="PGAssetpublisher#assertClick" locator-key1="ASSET_TITLE" value1="${threadSubject}" />
+
+		<execute action="PGAssetpublisherAsset#assertTextEquals" locator-key1="ASSET_TITLE" value1="${threadSubject}" />
+		<execute action="PGAssetpublisherAsset#assertTextEquals" locator-key1="ASSET_MESSAGE_BOARDS_THREAD_SUBJECT" value1="${threadSubject}" />
+		<execute action="PGAssetpublisherAsset#assertTextEquals" locator-key1="ASSET_MESSAGE_BOARDS_THREAD_BODY" value1="${threadBody}" />
+	</command>
+
 	<command name="viewReplyPG">
 		<var name="key_threadSubject" value="${threadSubject}" />
 
@@ -242,5 +264,11 @@
 		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_SUBJECT_1" value1="${threadSubject}" />
 		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_WORKFLOW_STATUS_1" value1="Pending (${workflowTask})" />
 		<execute action="PGMessageboardsThread#assertTextEquals" locator-key1="MESSAGE_BODY_1" value1="${threadBody}" />
+	</command>
+
+	<command name="viewWithWorkflowPGViaAP">
+		<var name="key_assetTitle" value="${threadSubject}" />
+
+		<execute action="PGAssetpublisher#assertElementNotPresent" locator-key1="ASSET_TITLE" value1="${threadSubject}" />
 	</command>
 </definition>

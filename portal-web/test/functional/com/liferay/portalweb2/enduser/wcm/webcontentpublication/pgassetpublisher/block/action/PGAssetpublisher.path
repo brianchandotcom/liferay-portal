@@ -128,32 +128,32 @@
 <!--ASSET_1-->
 <tr>
 	<td>ASSET_TITLE</td>
-	<td>//div[@class='asset-abstract ' and contains(.,'${key_webContentTitle}')]//h3[@class='asset-title']/a</td>
+	<td>//div[@class='asset-abstract ' and contains(.,'${key_assetTitle}')]//h3[@class='asset-title']/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ASSET_EDIT</td>
-	<td>//div[@class='asset-abstract ' and contains(.,'${key_webContentTitle}')]//span[@class='taglib-text' and contains(.,'Edit')]</td>
+	<td>//div[@class='asset-abstract ' and contains(.,'${key_assetTitle}')]//span[@class='taglib-text' and contains(.,'Edit')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ASSET_THUMBNAIL</td>
-	<td>//div[@class='asset-abstract ' and contains(.,'${key_webContentTitle}')]//div[@class='asset-resource-info']/div/img</td>
+	<td>//div[@class='asset-abstract ' and contains(.,'${key_assetTitle}')]//div[@class='asset-resource-info']/div/img</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ASSET_DESCRIPTION</td>
-	<td>//div[@class='asset-abstract ' and contains(.,'${key_webContentTitle}')]//p[@class='asset-description']</td>
+	<td>//div[@class='asset-abstract ' and contains(.,'${key_assetTitle}')]//p[@class='asset-description']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ASSET_SUMMARY</td>
-	<td>//div[@class='asset-abstract ' and contains(.,'${key_webContentTitle}')]//div[@class='asset-summary']</td>
+	<td>//div[@class='asset-abstract ' and contains(.,'${key_assetTitle}')]//div[@class='asset-summary']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ASSET_READ_MORE</td>
-	<td>//div[@class='asset-abstract ' and contains(.,'${key_webContentTitle}')]//div[@class='asset-more']/a</td>
+	<td>//div[@class='asset-abstract ' and contains(.,'${key_assetTitle}')]//div[@class='asset-more']/a</td>
 	<td></td>
 </tr>
 <tr>

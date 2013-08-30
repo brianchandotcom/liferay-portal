@@ -28,6 +28,16 @@
 	<td>//div[@class='asset-content']</td>
 	<td></td>
 </tr>
+<tr>
+	<td>ASSET_MESSAGE_BOARDS_THREAD_SUBJECT</td>
+	<td>//div[@class='subject']/strong</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_MESSAGE_BOARDS_THREAD_BODY</td>
+	<td>//div[@class='thread-body']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

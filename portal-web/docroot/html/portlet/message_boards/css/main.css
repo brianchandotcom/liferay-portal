@@ -10,13 +10,9 @@
 		overflow: hidden;
 	}
 
-	.category-subscriptions-cat {
-		float: right;
-		margin-bottom: 0;
-	}
-
 	.category-subscription-types {
 		float: right;
+		margin-bottom: 0;
 	}
 
 	.quote {

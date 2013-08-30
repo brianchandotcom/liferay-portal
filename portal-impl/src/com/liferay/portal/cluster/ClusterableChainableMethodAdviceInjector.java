@@ -14,7 +14,6 @@
 
 package com.liferay.portal.cluster;
 
-import com.liferay.portal.spring.aop.ChainableMethodAdvice;
 import com.liferay.portal.spring.aop.ChainableMethodAdviceInjector;
 import com.liferay.portal.util.PropsValues;
 
@@ -24,20 +23,16 @@ import com.liferay.portal.util.PropsValues;
 public class ClusterableChainableMethodAdviceInjector
 	extends ChainableMethodAdviceInjector {
 
+	@Override
+	public void inject() {
+		setInjectCondition(PropsValues.CLUSTER_LINK_ENABLED);
+		setNewChainableMethodAdvice(new ClusterableAdvice());
+	}
+
 	/**
 	 * @deprecated As of 6.2.0
 	 */
 	public void setServletContextName(String servletContextName) {
-	}
-
-	@Override
-	protected ChainableMethodAdvice getNewChainableMethodAdvice() {
-		return new ClusterableAdvice();
-	}
-
-	@Override
-	protected boolean isInjectCondition() {
-		return PropsValues.CLUSTER_LINK_ENABLED;
 	}
 
 }

@@ -196,7 +196,7 @@ public class PortletFileRepositoryUtil {
 
 	public static String getPortletFileEntryURL(
 			FileEntry fileEntry, ThemeDisplay themeDisplay, String queryString)
-		throws SystemException, PortalException {
+		throws PortalException, SystemException {
 
 		return getPortletFileRepository().getPortletFileEntryURL(
 			fileEntry, themeDisplay, queryString);
@@ -205,7 +205,7 @@ public class PortletFileRepositoryUtil {
 	public static String getPortletFileEntryURL(
 			FileEntry fileEntry, ThemeDisplay themeDisplay, String queryString,
 			boolean absoluteURL)
-		throws SystemException, PortalException {
+		throws PortalException, SystemException {
 
 		return getPortletFileRepository().getPortletFileEntryURL(
 			fileEntry, themeDisplay, queryString, absoluteURL);

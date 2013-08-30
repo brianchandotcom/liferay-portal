@@ -115,7 +115,8 @@ public interface PortletFileRepository {
 		throws PortalException, SystemException;
 
 	public String getPortletFileEntryURL(
-		FileEntry fileEntry, ThemeDisplay themeDisplay, String queryString) throws PortalException, SystemException;
+			FileEntry fileEntry, ThemeDisplay themeDisplay, String queryString)
+		throws PortalException, SystemException;
 
 	public String getPortletFileEntryURL(
 		FileEntry fileEntry, ThemeDisplay themeDisplay, String queryString,

@@ -365,6 +365,11 @@ public class DynamicCSSUtil {
 
 		Map<String, Object> inputObjects = new HashMap<String, Object>();
 
+		String portalWebDir = PortalUtil.getPortalWebDir();
+
+		inputObjects.put(
+			"commonSassPath", portalWebDir.concat(_SASS_COMMON_DIR));
+
 		inputObjects.put("content", content);
 		inputObjects.put("cssRealPath", resourcePath);
 		inputObjects.put(
@@ -425,6 +430,8 @@ public class DynamicCSSUtil {
 	private static final String _CSS_IMPORT_BEGIN = "@import url(";
 
 	private static final String _CSS_IMPORT_END = ");";
+
+	private static final String _SASS_COMMON_DIR = "/html/css/common";
 
 	private static final String _SASS_DIR = "sass";
 

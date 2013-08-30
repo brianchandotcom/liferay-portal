@@ -67,8 +67,6 @@ public class SassToCssBuilder {
 	public static void main(String[] args) {
 		Map<String, String> arguments = ArgumentsUtil.parseArguments(args);
 
-		String docrootDirName = arguments.get("saas.docroot.dir");
-
 		List<String> dirNames = new ArrayList<String>();
 
 		String dirName = arguments.get("sass.dir");
@@ -89,8 +87,11 @@ public class SassToCssBuilder {
 			}
 		}
 
+		String docrootDirName = arguments.get("saas.docroot.dir");
+		String portalCommonDirName = arguments.get("sass.portal.common.dir");
+
 		try {
-			new SassToCssBuilder(docrootDirName, dirNames);
+			new SassToCssBuilder(dirNames, docrootDirName, portalCommonDirName);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -114,7 +115,9 @@ public class SassToCssBuilder {
 			});
 	}
 
-	public SassToCssBuilder(String docrootDirName, List<String> dirNames)
+	public SassToCssBuilder(
+			List<String> dirNames, String docrootDirName,
+			String portalCommonDirName)
 		throws Exception {
 
 		Class<?> clazz = getClass();
@@ -138,21 +141,19 @@ public class SassToCssBuilder {
 
 			_rubyExecutor.setExecuteInSeparateThread(false);
 
-			_parseSassDirectory(docrootDirName, dirName);
+			_parseSassDirectory(dirName, docrootDirName, portalCommonDirName);
 		}
 	}
 
-	private String _getContent(String docrootDirName, String resourcePath)
+	private String _getContent(String docrootDirName, String fileName)
 		throws Exception {
 
-		String filePath = docrootDirName.concat(resourcePath);
-
-		File file = new File(filePath);
+		File file = new File(docrootDirName.concat(fileName));
 
 		String content = FileUtil.read(file);
 
 		content = AggregateFilter.aggregateCss(
-			new FileAggregateContext(docrootDirName, resourcePath), content);
+			new FileAggregateContext(docrootDirName, fileName), content);
 
 		return parseStaticTokens(content);
 	}
@@ -212,7 +213,8 @@ public class SassToCssBuilder {
 		);
 	}
 
-	private void _parseSassDirectory(String docrootDirName, String dirName)
+	private void _parseSassDirectory(
+			String dirName, String docrootDirName, String portalCommonDirName)
 		throws Exception {
 
 		DirectoryScanner directoryScanner = new DirectoryScanner();
@@ -243,7 +245,7 @@ public class SassToCssBuilder {
 			try {
 				long start = System.currentTimeMillis();
 
-				_parseSassFile(docrootDirName, fileName);
+				_parseSassFile(docrootDirName, portalCommonDirName, fileName);
 
 				long end = System.currentTimeMillis();
 
@@ -259,17 +261,19 @@ public class SassToCssBuilder {
 		}
 	}
 
-	private void _parseSassFile(String docrootDirName, String resourcePath)
+	private void _parseSassFile(
+			String docrootDirName, String portalCommonDirName, String fileName)
 		throws Exception {
 
-		String filePath = docrootDirName.concat(resourcePath);
+		String filePath = docrootDirName.concat(fileName);
 
 		File file = new File(filePath);
 		File cacheFile = getCacheFile(filePath);
 
 		Map<String, Object> inputObjects = new HashMap<String, Object>();
 
-		inputObjects.put("content", _getContent(docrootDirName, resourcePath));
+		inputObjects.put("commonSassPath", portalCommonDirName);
+		inputObjects.put("content", _getContent(docrootDirName, fileName));
 		inputObjects.put("cssRealPath", filePath);
 		inputObjects.put("cssThemePath", _getCssThemePath(filePath));
 		inputObjects.put("sassCachePath", _tempDir);

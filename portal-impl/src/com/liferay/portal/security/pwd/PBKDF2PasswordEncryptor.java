@@ -15,14 +15,14 @@
 package com.liferay.portal.security.pwd;
 
 import com.liferay.portal.PwdEncryptorException;
+import com.liferay.portal.kernel.io.BigEndianCodec;
+import com.liferay.portal.kernel.security.SecureRandomUtil;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.nio.ByteBuffer;
-
-import java.security.SecureRandom;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -117,9 +117,8 @@ public class PBKDF2PasswordEncryptor
 					_rounds = GetterUtil.getInteger(matcher.group(2), _ROUNDS);
 				}
 
-				SecureRandom random = new SecureRandom();
-
-				random.nextBytes(_saltBytes);
+				BigEndianCodec.putLong(
+					_saltBytes, 0, SecureRandomUtil.nextLong());
 			}
 			else {
 				byte[] bytes = new byte[16];

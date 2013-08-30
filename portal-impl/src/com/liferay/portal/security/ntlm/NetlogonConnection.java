@@ -14,6 +14,8 @@
 
 package com.liferay.portal.security.ntlm;
 
+import com.liferay.portal.kernel.io.BigEndianCodec;
+import com.liferay.portal.kernel.security.SecureRandomUtil;
 import com.liferay.portal.security.ntlm.msrpc.NetlogonAuthenticator;
 import com.liferay.portal.security.ntlm.msrpc.NetrServerAuthenticate3;
 import com.liferay.portal.security.ntlm.msrpc.NetrServerReqChallenge;
@@ -23,7 +25,6 @@ import java.io.IOException;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
 
 import java.util.Arrays;
 
@@ -70,7 +71,7 @@ public class NetlogonConnection {
 
 	public void connect(
 			String domainController, String domainControllerName,
-			NtlmServiceAccount ntlmServiceAccount, SecureRandom secureRandom)
+			NtlmServiceAccount ntlmServiceAccount)
 		throws IOException, NoSuchAlgorithmException, NtlmLogonException {
 
 		NtlmPasswordAuthentication ntlmPasswordAuthentication =
@@ -89,7 +90,7 @@ public class NetlogonConnection {
 
 		byte[] clientChallenge = new byte[8];
 
-		secureRandom.nextBytes(clientChallenge);
+		BigEndianCodec.putLong(clientChallenge, 0, SecureRandomUtil.nextLong());
 
 		NetrServerReqChallenge netrServerReqChallenge =
 			new NetrServerReqChallenge(

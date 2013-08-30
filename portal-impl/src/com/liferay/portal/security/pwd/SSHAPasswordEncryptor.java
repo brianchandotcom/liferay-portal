@@ -15,6 +15,8 @@
 package com.liferay.portal.security.pwd;
 
 import com.liferay.portal.PwdEncryptorException;
+import com.liferay.portal.kernel.io.BigEndianCodec;
+import com.liferay.portal.kernel.security.SecureRandomUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.Digester;
@@ -24,9 +26,6 @@ import java.io.UnsupportedEncodingException;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
-
-import java.util.Random;
 
 /**
  * @author Michael C. Han
@@ -74,9 +73,7 @@ public class SSHAPasswordEncryptor
 		byte[] saltBytes = new byte[8];
 
 		if (Validator.isNull(encryptedPassword)) {
-			Random random = new SecureRandom();
-
-			random.nextBytes(saltBytes);
+			BigEndianCodec.putLong(saltBytes, 0, SecureRandomUtil.nextLong());
 		}
 		else {
 			try {

@@ -17,8 +17,10 @@ package com.liferay.portal.servlet.filters.sso.ntlm;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.io.BigEndianCodec;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.SecureRandomUtil;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -33,8 +35,6 @@ import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
-
-import java.security.SecureRandom;
 
 import java.util.Map;
 import java.util.Properties;
@@ -189,7 +189,8 @@ public class NtlmFilter extends BasePortalFilter {
 			if (src[8] == 1) {
 				byte[] serverChallenge = new byte[8];
 
-				_secureRandom.nextBytes(serverChallenge);
+				BigEndianCodec.putLong(
+					serverChallenge, 0, SecureRandomUtil.nextLong());
 
 				byte[] challengeMessage = ntlmManager.negotiate(
 					src, serverChallenge);
@@ -295,6 +296,5 @@ public class NtlmFilter extends BasePortalFilter {
 		new ConcurrentHashMap<Long, NtlmManager>();
 	private PortalCache<String, byte[]> _portalCache =
 		SingleVMPoolUtil.getCache(NtlmFilter.class.getName());
-	private SecureRandom _secureRandom = new SecureRandom();
 
 }

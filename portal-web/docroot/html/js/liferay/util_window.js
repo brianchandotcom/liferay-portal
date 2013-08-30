@@ -54,7 +54,7 @@ AUI.add(
 
 				IFRAME_SUFFIX: '_iframe_',
 
-				TITLE_TEMPLATE: '<h3>&nbsp;</h3>',
+				TITLE_TEMPLATE: '<h3 />',
 
 				_winResizeHandler: null,
 
@@ -239,6 +239,8 @@ AUI.add(
 					}
 
 					modal.titleNode.html(config.title);
+
+					modal.fillHeight(modal.bodyNode);
 
 					return modal;
 				},

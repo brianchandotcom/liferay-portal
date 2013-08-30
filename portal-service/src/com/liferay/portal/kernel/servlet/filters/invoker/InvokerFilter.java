@@ -264,8 +264,7 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 
 		request.setAttribute(_SECURE_RESPONSE, Boolean.FALSE);
 
-		return SanitizedServletResponse.getSanitizedServletResponse(
-			request, response);
+		return new SanitizedServletResponse(request, response);
 	}
 
 	private static final String _SECURE_RESPONSE =

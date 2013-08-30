@@ -70,15 +70,6 @@ public class MBMessageTrashHandler extends BaseTrashHandler {
 	}
 
 	@Override
-	public ContainerModel getTrashContainer(long classPK)
-		throws PortalException, SystemException {
-
-		MBMessage message = MBMessageLocalServiceUtil.getMessage(classPK);
-
-		return message.getTrashContainer();
-	}
-
-	@Override
 	public TrashEntry getTrashEntry(long classPK)
 		throws PortalException, SystemException {
 

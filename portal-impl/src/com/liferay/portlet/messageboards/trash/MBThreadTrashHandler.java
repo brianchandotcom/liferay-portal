@@ -153,15 +153,6 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 	}
 
 	@Override
-	public ContainerModel getTrashContainer(long classPK)
-		throws PortalException, SystemException {
-
-		MBThread thread = MBThreadLocalServiceUtil.getThread(classPK);
-
-		return thread.getTrashContainer();
-	}
-
-	@Override
 	public TrashEntry getTrashEntry(long classPK)
 		throws PortalException, SystemException {
 

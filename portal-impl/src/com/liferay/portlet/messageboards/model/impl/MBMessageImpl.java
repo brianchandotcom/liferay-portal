@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.parsers.bbcode.BBCodeTranslatorUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.model.ContainerModel;
 import com.liferay.portal.model.Repository;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.service.ServiceContext;
@@ -246,19 +245,6 @@ public class MBMessageImpl extends MBMessageBaseImpl {
 	}
 
 	@Override
-	public ContainerModel getTrashContainer()
-		throws PortalException, SystemException {
-
-		MBThread thread = getThread();
-
-		if (thread.isInTrash()) {
-			return thread;
-		}
-
-		return thread.getTrashContainer();
-	}
-
-	@Override
 	public String getWorkflowClassName() {
 		if (isDiscussion()) {
 			return MBDiscussion.class.getName();
@@ -283,18 +269,6 @@ public class MBMessageImpl extends MBMessageBaseImpl {
 		String format = getFormat();
 
 		if (format.equals("bbcode")) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-
-	@Override
-	public boolean isInTrashThread() throws PortalException, SystemException {
-		MBThread thread = getThread();
-
-		if (thread.isInTrash() || thread.isInTrashContainer()) {
 			return true;
 		}
 		else {

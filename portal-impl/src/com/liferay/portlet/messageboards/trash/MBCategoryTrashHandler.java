@@ -229,15 +229,6 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 	}
 
 	@Override
-	public ContainerModel getTrashContainer(long classPK)
-		throws PortalException, SystemException {
-
-		MBCategory category = MBCategoryLocalServiceUtil.getCategory(classPK);
-
-		return category.getTrashContainer();
-	}
-
-	@Override
 	public String getTrashContainerModelName() {
 		return "categories";
 	}

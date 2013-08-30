@@ -1,6 +1,9 @@
 @import "compass";
 @import "mixins";
 
+@import "aui/font-awesome/scss/mixins";
+@import "aui/font-awesome/scss/variables";
+
 .aui {
 	body {
 		color: #555;
@@ -465,9 +468,14 @@
 				background-image: none;
 
 				.accordion-toggle:before {
-					content: '\25BA';
-					color: #333;
+					content: $chevron-sign-right;
+
+					@include icon-FontAwesome();
+
 					display: inline-block;
+					margin-right: 5px;
+
+					@include opacity(0.5);
 				}
 			}
 
@@ -475,7 +483,6 @@
 				position: relative;
 
 				.accordion-toggle:after {
-					border-bottom: 1px solid #E5E5E5;
 					content: '';
 					margin-left: 10px;
 					position: absolute;
@@ -485,7 +492,15 @@
 			}
 
 			&.toggler-header-expanded .accordion-toggle:before {
-				content: '\25BC';
+				content: $chevron-sign-down;
+			}
+		}
+
+		.toggler-content-expanded {
+			border: 1px solid $borderColor;
+
+			.accordion-inner {
+				border-width: 0;
 			}
 		}
 

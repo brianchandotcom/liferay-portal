@@ -35,6 +35,12 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/trash/view");
 portletURL.setParameter("tabs1", tabs1);
+
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "recycle-bin"), portletURL.toString());
+
+if (Validator.isNotNull(keywords)) {
+	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "search") + ": " + keywords, currentURL);
+}
 %>
 
 <liferay-util:include page="/html/portlet/trash/restore_path.jsp" />
@@ -79,13 +85,6 @@ portletURL.setParameter("tabs1", tabs1);
 	<liferay-ui:tabs
 		names="staging,live"
 		url="<%= portletURL.toString() %>"
-	/>
-</c:if>
-
-<c:if test="<%= Validator.isNotNull(keywords) %>">
-	<liferay-ui:header
-		backURL="<%= redirect %>"
-		title="search"
 	/>
 </c:if>
 
@@ -284,13 +283,15 @@ portletURL.setParameter("tabs1", tabs1);
 		</aui:button-row>
 	</aui:form>
 
+	<liferay-ui:breadcrumb
+		showCurrentGroup="<%= false %>"
+		showCurrentPortlet="<%= true %>"
+		showGuestGroup="<%= false %>"
+		showLayout="<%= false %>"
+		showParentGroups="<%= false %>"
+	/>
+
 	<div class="separator"><!-- --></div>
 
 	<liferay-ui:search-iterator type='<%= approximate ? "more" : "regular" %>' />
 </liferay-ui:search-container>
-
-<%
-if (Validator.isNotNull(keywords)) {
-	PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "search") + ": " + keywords, currentURL);
-}
-%>

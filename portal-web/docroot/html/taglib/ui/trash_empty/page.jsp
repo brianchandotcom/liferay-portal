@@ -24,8 +24,9 @@ String portletURL = (String)request.getAttribute("liferay-ui:trash-empty:portlet
 int totalEntries = GetterUtil.getInteger(request.getAttribute("liferay-ui:trash-empty:totalEntries"));
 %>
 
-<div class="alert alert-info taglib-trash-empty">
-	<aui:form action="<%= portletURL %>" name="emptyForm">
+<c:if test="<%= totalEntries > 0 %>">
+	<div class="alert alert-info taglib-trash-empty">
+		<aui:form action="<%= portletURL %>" name="emptyForm">
 
 		<%
 		String trashEntriesMaxAgeTimeDescription = LanguageUtil.getTimeDescription(locale, TrashUtil.getMaxAge(themeDisplay.getScopeGroup()) * Time.MINUTE, true);
@@ -33,16 +34,15 @@ int totalEntries = GetterUtil.getInteger(request.getAttribute("liferay-ui:trash-
 
 		<liferay-ui:message arguments="<%= trashEntriesMaxAgeTimeDescription.toLowerCase() %>" key="<%= infoMessage %>" />
 
-		<c:if test="<%= totalEntries > 0 %>">
 			<a class="trash-empty-link" href="javascript:;" id="<%= namespace %>empty"><liferay-ui:message key="<%= emptyMessage %>" /></a>
 
 			<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.EMPTY_TRASH %>" />
 			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 
 			<aui:button cssClass="trash-empty-button" type="submit" value="<%= emptyMessage %>" />
-		</c:if>
-	</aui:form>
-</div>
+		</aui:form>
+	</div>
+</c:if>
 
 <aui:script use="aui-base">
 	var emptyLink = A.one('#<%= namespace %>empty');

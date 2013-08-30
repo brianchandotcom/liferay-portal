@@ -1,5 +1,0 @@
-<definition>
-	<execute test-case-command="CPUserGroups#AddUserGroup" />
-	<execute test-case-command="CPUserGroups#DeleteUserGroup" />
-	<execute test-case-command="CPUserGroups#EditUserGroup" />
-</definition>

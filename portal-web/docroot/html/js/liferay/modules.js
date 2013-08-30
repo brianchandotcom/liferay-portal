@@ -686,4 +686,5 @@ window.YUI_config = {
 	useBrowserConsole: false
 };
 
+YUI.Env.core.push('aui-base-html5-shiv');
 YUI.Env.core.push('liferay-browser-selectors');

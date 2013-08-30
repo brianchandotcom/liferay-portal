@@ -72,6 +72,27 @@
 		padding: 15px 0 5px;
 	}
 
+	.org-labor-day {
+		float: left;
+		padding: 10px;
+
+		select {
+			width: 75px;
+		}
+
+		> .control-group {
+			margin-bottom: 0;
+
+			.control-label {
+				font-size: 14px;
+			}
+		}
+
+		.labor-day {
+			font-weight: normal;
+		}
+	}
+
 	.organization-information {
 		overflow: hidden;
 	}

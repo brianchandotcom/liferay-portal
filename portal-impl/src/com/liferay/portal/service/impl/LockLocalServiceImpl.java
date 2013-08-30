@@ -17,7 +17,6 @@ package com.liferay.portal.service.impl;
 import com.liferay.portal.DuplicateLockException;
 import com.liferay.portal.ExpiredLockException;
 import com.liferay.portal.NoSuchLockException;
-import com.liferay.portal.kernel.dao.jdbc.UseDefaultDataSource;
 import com.liferay.portal.kernel.dao.orm.LockMode;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -183,7 +182,6 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	@UseDefaultDataSource
 	public Lock lock(String className, String key, String owner)
 		throws SystemException {
 
@@ -196,7 +194,6 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 	 */
 	@Override
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	@UseDefaultDataSource
 	public Lock lock(
 			String className, String key, String owner,
 			boolean retrieveFromCache)
@@ -207,7 +204,6 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	@UseDefaultDataSource
 	public Lock lock(
 			String className, String key, String expectedOwner,
 			String updatedOwner)
@@ -253,7 +249,6 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 	 */
 	@Override
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	@UseDefaultDataSource
 	public Lock lock(
 			String className, String key, String expectedOwner,
 			String updatedOwner, boolean retrieveFromCache)
@@ -323,7 +318,6 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	@UseDefaultDataSource
 	public void unlock(String className, String key, String owner)
 		throws SystemException {
 
@@ -345,7 +339,6 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 	 */
 	@Override
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	@UseDefaultDataSource
 	public void unlock(
 			String className, String key, String owner,
 			boolean retrieveFromCache)

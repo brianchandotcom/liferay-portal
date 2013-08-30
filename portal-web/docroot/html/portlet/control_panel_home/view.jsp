@@ -24,12 +24,17 @@
 
 		for (String category : categoriesMap.keySet()) {
 			String title = LanguageUtil.get(pageContext, "category." + category);
+			String urlControlPanelCategory = HttpUtil.setParameter(themeDisplay.getURLControlPanel(), "controlPanelCategory", category);
 
 			List<Portlet> categoryPortlets = categoriesMap.get(category);
 		%>
 
 			<aui:col width="<%= 25 %>">
-				<h3 class="control-panel-home-category-header" id='<%= "control-panel-home-category-header" + category %>'><%= title %></h3>
+				<aui:a href="<%= urlControlPanelCategory %>">
+					<h3 class="control-panel-home-category-header" id='<%= "control-panel-home-category-header" + category %>'>
+						<%= title %>
+					</h3>
+				</aui:a>
 
 					<ul class="unstyled">
 

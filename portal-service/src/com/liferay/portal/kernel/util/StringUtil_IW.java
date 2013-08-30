@@ -397,6 +397,11 @@ public class StringUtil_IW {
 	}
 
 	public java.lang.String replaceFirst(java.lang.String s,
+		java.lang.String oldSub, java.lang.String newSub, int fromIndex) {
+		return StringUtil.replaceFirst(s, oldSub, newSub, fromIndex);
+	}
+
+	public java.lang.String replaceFirst(java.lang.String s,
 		java.lang.String[] oldSubs, java.lang.String[] newSubs) {
 		return StringUtil.replaceFirst(s, oldSubs, newSubs);
 	}

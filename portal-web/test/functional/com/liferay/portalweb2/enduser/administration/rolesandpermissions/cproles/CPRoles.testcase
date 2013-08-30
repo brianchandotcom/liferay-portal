@@ -19,7 +19,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
- 	<command name="AddBlogsEntryOrgRole">
+	<command name="AddBlogsEntryOrgRole">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 		<var name="orgName" value="Organization Name" />

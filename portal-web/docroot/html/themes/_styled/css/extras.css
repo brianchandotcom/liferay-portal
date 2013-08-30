@@ -1,4 +1,5 @@
 @import "compass";
+@import "mixins";
 
 @mixin keyframes($name) {
 	@-webkit-keyframes #{$name} {

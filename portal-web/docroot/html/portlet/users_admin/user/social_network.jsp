@@ -34,13 +34,6 @@ Contact selContact = (Contact)request.getAttribute("user.selContact");
 			</div>
 
 			<div class="social-network">
-				<aui:input label="myspace" name="mySpaceSn" />
-
-				<img alt="<liferay-ui:message key="myspace" />" src="<%= themeDisplay.getPathThemeImages() %>/users_admin/myspace.png" />
-
-			</div>
-
-			<div class="social-network">
 				<aui:input label="twitter" name="twitterSn" />
 
 				<img alt="<liferay-ui:message key="twitter" />" class="social-network-logo" src="<%= themeDisplay.getPathThemeImages() %>/users_admin/twitter.png" />

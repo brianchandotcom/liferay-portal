@@ -97,7 +97,7 @@ public class SecureRandomUtilTest {
 		System.setProperty(_KEY_BUFFER_SIZE, "10");
 
 		Field bufferSizeField = ReflectionUtil.getDeclaredField(
-			SecureRandomUtil.class, "_bufferSize");
+			SecureRandomUtil.class, "_BUFFER_SIZE");
 
 		Assert.assertEquals(1024, bufferSizeField.get(null));
 

@@ -469,10 +469,12 @@
 
 				.accordion-toggle:before {
 					content: $chevron-sign-right;
+
+					@include icon-FontAwesome();
+
 					display: inline-block;
 					margin-right: 5px;
 
-					@include icon-FontAwesome();
 					@include opacity(0.5);
 				}
 			}

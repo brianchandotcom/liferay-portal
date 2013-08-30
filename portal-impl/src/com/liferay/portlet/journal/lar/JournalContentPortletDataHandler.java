@@ -186,8 +186,8 @@ public class JournalContentPortletDataHandler
 			return getExportDataRootElementString(rootElement);
 		}
 
-		StagedModelDataHandlerUtil.exportStagedModel(
-			portletDataContext, article);
+		StagedModelDataHandlerUtil.exportReferenceStagedModel(
+			portletDataContext, portletId, article);
 
 		String defaultTemplateId = article.getTemplateId();
 		String preferenceTemplateId = portletPreferences.getValue(
@@ -202,15 +202,9 @@ public class JournalContentPortletDataHandler
 				PortalUtil.getClassNameId(DDMStructure.class),
 				preferenceTemplateId, true);
 
-			StagedModelDataHandlerUtil.exportStagedModel(
-				portletDataContext, ddmTemplate);
-
-			Element articleElement = portletDataContext.getExportDataElement(
-				article);
-
-			portletDataContext.addReferenceElement(
-				article, articleElement, ddmTemplate,
-				PortletDataContext.REFERENCE_TYPE_STRONG, false);
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
+				portletDataContext, article, ddmTemplate,
+				PortletDataContext.REFERENCE_TYPE_STRONG);
 		}
 
 		portletDataContext.setScopeGroupId(previousScopeGroupId);

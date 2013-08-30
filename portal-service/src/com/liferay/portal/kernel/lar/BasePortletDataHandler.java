@@ -417,8 +417,8 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 					portletDataContext.getGroupId(), displayStyle);
 
 			if (ddmTemplate != null) {
-				StagedModelDataHandlerUtil.exportStagedModel(
-					portletDataContext, ddmTemplate);
+				StagedModelDataHandlerUtil.exportReferenceStagedModel(
+					portletDataContext, portletId, ddmTemplate);
 			}
 
 			portletDataContext.setScopeGroupId(previousScopeGroupId);

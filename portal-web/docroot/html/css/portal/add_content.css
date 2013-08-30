@@ -21,6 +21,23 @@
 
 .lfr-add-dialog, .lfr-add-panel {
 	.add-content-menu {
+		.accordion {
+			margin-bottom: 20px;
+
+			.accordion-group .accordion-inner {
+				padding: 6px 0;
+			}
+
+			.nav-list {
+				padding-left: 0;
+				padding-right: 0;
+
+				.lfr-content-item {
+					padding-left: 15px;
+				}
+			}
+		}
+
 		.btn-toolbar {
 			.control-group-inline {
 				display: inline;
@@ -32,6 +49,14 @@
 
 			.control-group-inline, .btn-group {
 				margin-right: 5px;
+			}
+		}
+
+		.lfr-page-template .toggler-header {
+			&.active {
+				&.lfr-page-template-title label{
+					padding: 2px;
+				}
 			}
 		}
 
@@ -233,19 +258,6 @@
 			background-color: #FFF;
 		}
 
-		.lfr-content-item {
-			color: #3EA9DB;
-
-			&:hover {
-				background-color: #EEE;
-				color: #006076;
-			}
-
-			&.lfr-portlet-used {
-				color: #BBB;
-			}
-		}
-
 		.lfr-install-more {
 			text-align: center;
 		}
@@ -256,7 +268,6 @@
 					&.lfr-page-template-title label{
 						background-color: #0DB5E7;
 						color: #FFFFFF;
-						padding: 2px;
 					}
 				}
 			}

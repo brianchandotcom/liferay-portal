@@ -306,7 +306,7 @@ public class AssetTagFinderTest {
 		String assetTagName = ServiceTestUtil.randomString();
 		String[] assetTagProperties = new String[] {"key:value"};
 
-		List<AssetTag> initialScopeGroupAssetTags=
+		List<AssetTag> initialScopeGroupAssetTags =
 			AssetTagFinderUtil.filterFindByG_N_P(
 				new long[] {scopeGroup.getGroupId()}, assetTagName,
 				assetTagProperties, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);

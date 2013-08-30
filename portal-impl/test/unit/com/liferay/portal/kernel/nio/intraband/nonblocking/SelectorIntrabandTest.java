@@ -1100,7 +1100,7 @@ public class SelectorIntrabandTest {
 
 		Assert.assertEquals(_type, receiveDatagram1.getType());
 
-		dataByteBuffer= receiveDatagram1.getDataByteBuffer();
+		dataByteBuffer = receiveDatagram1.getDataByteBuffer();
 
 		Assert.assertArrayEquals(_data, dataByteBuffer.array());
 

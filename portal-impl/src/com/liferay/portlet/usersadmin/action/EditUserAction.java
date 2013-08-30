@@ -671,7 +671,7 @@ public class EditUserAction extends PortletAction {
 
 			HttpServletRequest request = PortalUtil.getHttpServletRequest(
 				actionRequest);
-			HttpServletResponse response= PortalUtil.getHttpServletResponse(
+			HttpServletResponse response = PortalUtil.getHttpServletResponse(
 				actionResponse);
 			HttpSession session = request.getSession();
 

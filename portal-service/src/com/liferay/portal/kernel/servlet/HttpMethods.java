@@ -25,7 +25,7 @@ public interface HttpMethods {
 
 	public static final String GET = "GET";
 
-	public static final String HEAD= "HEAD";
+	public static final String HEAD = "HEAD";
 
 	public static final String OPTIONS = "OPTIONS";
 

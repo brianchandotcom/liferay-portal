@@ -96,7 +96,7 @@ public class LayoutFriendlyURLStagedModelDataHandler
 				getExistingLayoutFriendlyURL(
 					portletDataContext, layoutFriendlyURL, plid);
 
-			layoutFriendlyURL= getUniqueLayoutFriendlyURL(
+			layoutFriendlyURL = getUniqueLayoutFriendlyURL(
 				portletDataContext, layoutFriendlyURL,
 				existingLayoutFriendlyURL);
 

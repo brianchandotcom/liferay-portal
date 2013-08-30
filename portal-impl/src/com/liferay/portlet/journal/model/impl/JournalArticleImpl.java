@@ -98,7 +98,7 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 		Set<String> availableLanguageIds = SetUtil.fromArray(
 			super.getAvailableLanguageIds());
 
-		String[] contentAvailableLanguageIds=
+		String[] contentAvailableLanguageIds =
 			LocalizationUtil.getAvailableLanguageIds(getContent());
 
 		for (String availableLanguageId : contentAvailableLanguageIds) {

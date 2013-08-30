@@ -1,7 +1,7 @@
 ;(function() {
 	var ALLOY = YUI();
 
-	if (ALLOY.UA.ie && ALLOY.UA.ie < 9) {
+	if (ALLOY.html5shiv) {
 		ALLOY.html5shiv();
 	}
 

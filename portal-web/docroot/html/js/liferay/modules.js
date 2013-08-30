@@ -1,7 +1,10 @@
 ;(function() {
 	var LiferayAUI = Liferay.AUI;
+	var Browser = Liferay.Browser;
 
 	var COMBINE = LiferayAUI.getCombine();
+
+	var CORE_MODULES = YUI.Env.core;
 
 	var PATH_JAVASCRIPT = LiferayAUI.getJavaScriptRootPath();
 
@@ -687,6 +690,9 @@
 		useBrowserConsole: false
 	};
 
-	YUI.Env.core.push('aui-base-html5-shiv');
-	YUI.Env.core.push('liferay-browser-selectors');
+	if (Browser.isIe() && Browser.getMajorVersion() < 9) {
+		CORE_MODULES.push('aui-base-html5-shiv');
+	}
+
+	CORE_MODULES.push('liferay-browser-selectors');
 })();

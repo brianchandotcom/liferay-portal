@@ -1,0 +1,29 @@
+@import "compass";
+@import "mixins";
+
+@include respond-to(phone, tablet) {
+	.navbar {
+		.container {
+			position: relative;
+
+			.btn-navbar {
+				margin-bottom: 5px;
+			}
+
+			.navbar-search {
+				position: absolute;
+				top: 0;
+
+				@include respond-to(phone) {
+					.btn, .btn-link {
+						display: none;
+					}
+
+					.search-query {
+						max-width: 150px;
+					}
+				}
+			}
+		}
+	}
+}

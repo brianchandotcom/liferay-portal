@@ -98,7 +98,9 @@ public class SecureRandomUtil {
 			_reloadingFlag.set(false);
 		}
 
-		long l = BigEndianCodec.getLong(_bytes, 0) ^ _gapSeed;
+		int offset = _index.get() % (_BUFFER_SIZE - 7);
+
+		long l = BigEndianCodec.getLong(_bytes, offset) ^ _gapSeed;
 
 		_gapSeed = l;
 

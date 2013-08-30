@@ -147,7 +147,7 @@ public class PortalPolicy extends Policy {
 		String type = null;
 
 		if (_policy != null) {
-			type= _policy.getType();
+			type = _policy.getType();
 		}
 
 		return type;

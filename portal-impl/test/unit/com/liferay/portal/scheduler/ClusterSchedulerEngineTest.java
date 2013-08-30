@@ -1174,7 +1174,8 @@ public class ClusterSchedulerEngineTest {
 			long timestamp = System.currentTimeMillis();
 
 			_localAddress = new AddressImpl(new MockAddress(timestamp));
-			_anotherAddress= new AddressImpl(new MockAddress(timestamp + 1000));
+			_anotherAddress = new AddressImpl(
+				new MockAddress(timestamp + 1000));
 
 			_addresses.add(_localAddress);
 			_addresses.add(_anotherAddress);

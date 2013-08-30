@@ -468,7 +468,7 @@ public class JournalArticleStagedModelDataHandler
 
 			String ddmTemplatePath = templateElement.attributeValue("path");
 
-			DDMTemplate ddmTemplate=
+			DDMTemplate ddmTemplate =
 				(DDMTemplate)portletDataContext.getZipEntryAsObject(
 					ddmTemplatePath);
 

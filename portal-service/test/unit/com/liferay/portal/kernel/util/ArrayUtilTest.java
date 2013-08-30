@@ -40,7 +40,7 @@ public class ArrayUtilTest {
 	@Test
 	public void testContainsAllByteArray() throws Exception {
 		byte[] array1 = {1, 2};
-		byte[] array2= {1, 2, 3};
+		byte[] array2 = {1, 2, 3};
 
 		Assert.assertFalse(ArrayUtil.containsAll(array1, array2));
 		Assert.assertTrue(ArrayUtil.containsAll(array2, array1));

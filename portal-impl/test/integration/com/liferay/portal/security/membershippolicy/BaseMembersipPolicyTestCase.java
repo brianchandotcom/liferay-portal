@@ -88,7 +88,7 @@ public abstract class BaseMembersipPolicyTestCase {
 	}
 
 	protected long[] addUsers() throws Exception {
-		User user1= UserTestUtil.addUser(
+		User user1 = UserTestUtil.addUser(
 			ServiceTestUtil.randomString(), group.getGroupId());
 
 		_userIds[0] = user1.getUserId();

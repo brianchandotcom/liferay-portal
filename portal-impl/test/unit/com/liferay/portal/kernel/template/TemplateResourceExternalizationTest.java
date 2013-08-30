@@ -201,7 +201,7 @@ public class TemplateResourceExternalizationTest {
 
 	@Test
 	public void testStringTemplateResourceExternalization() throws Exception {
-		String templateId= "testId";
+		String templateId = "testId";
 		String templateContent = "testContent";
 
 		StringTemplateResource stringTemplateResource =

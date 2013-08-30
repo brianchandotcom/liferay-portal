@@ -151,7 +151,7 @@ public class PortletRenderer {
 				ParallelRenderThreadLocalBinderUtil.getThreadLocalBinder(),
 				false, true);
 
-			_request= request;
+			_request = request;
 			_response = response;
 		}
 

@@ -37,7 +37,7 @@ public class AssetCategoriesSelectorTag extends IncludeTag {
 	}
 
 	public void setCurCategoryIds(String curCategoryIds) {
-		_curCategoryIds= curCategoryIds;
+		_curCategoryIds = curCategoryIds;
 	}
 
 	public void setHiddenInput(String hiddenInput) {

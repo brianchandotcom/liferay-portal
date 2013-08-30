@@ -835,7 +835,7 @@ public class TableMapperTest {
 
 				@Override
 				public int compare(Object obj1, Object obj2) {
-					Left left1= (Left)obj1;
+					Left left1 = (Left)obj1;
 					Left left2 = (Left)obj2;
 
 					Long leftPrimaryKey1 = (Long)left1.getPrimaryKeyObj();

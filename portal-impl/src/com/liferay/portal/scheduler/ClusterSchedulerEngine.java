@@ -889,7 +889,7 @@ public class ClusterSchedulerEngine
 	}
 
 	@BeanReference(
-		name="com.liferay.portal.scheduler.ClusterSchedulerEngineService")
+		name = "com.liferay.portal.scheduler.ClusterSchedulerEngineService")
 	protected SchedulerEngine schedulerEngine;
 
 	private void _doMasterToSlave(List<SchedulerResponse> schedulerResponses)

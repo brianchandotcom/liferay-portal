@@ -29,7 +29,7 @@ public class NetlogonIdentityInfo extends NdrObject {
 		int reservedHigh, String userName, String workstation) {
 
 		_logonDomainName = new UnicodeString(logonDomainName, false);
-		_parameterControl= parameterControl;
+		_parameterControl = parameterControl;
 		_reservedLow = reservedLow;
 		_reservedHigh = reservedHigh;
 		_userName = new UnicodeString(userName, false);

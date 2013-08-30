@@ -339,7 +339,7 @@ public class HttpImpl implements Http {
 		}
 
 		if (trailing) {
-			for (int i = path.length() - 1; i >=0; i--) {
+			for (int i = path.length() - 1; i >= 0; i--) {
 				if (path.charAt(i) == CharPool.SLASH) {
 					trailingSlashCount++;
 				}

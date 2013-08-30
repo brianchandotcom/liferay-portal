@@ -106,6 +106,12 @@
 	}
 }
 
+@include respond-to(phone) {
+	.navbar .navbar-search .search-query {
+		@include border-radius(14px);
+	}
+}
+
 .portlet-document-library, .portlet-dynamic-data-mapping {
 	.lfr-ddm-small-image-preview {
 		@include box-shadow(0 1px 3px #ccc);

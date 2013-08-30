@@ -786,7 +786,7 @@
 				</or>
 			</not>
 			<then>
-				<fail>Please set "database" to one of the following:${line.separator}db2-9.7,db2-10.1, hsql, mysql, oracle-10, oracle-11, postgresql-8.4, postgresql-9.0, sql-server-2005, sql-server-2008, sybase</fail>
+				<fail>Please set "database" to one of the following:${line.separator}db2-9.7, db2-10.1, hsql, mysql, oracle-10, oracle-11, postgresql-8.4, postgresql-9.0, sql-server-2005, sql-server-2008, sybase</fail>
 			</then>
 		</if>
 	</target>
@@ -958,7 +958,10 @@
 
 	<target name="copy-optional-jars">
 		<if>
-			<equals arg1="${database}" arg2="db2-9.7" />
+			<or>
+				<equals arg1="${database}" arg2="db2-9.7" />
+				<equals arg1="${database}" arg2="db2-10.1" />
+			</or>
 			<then>
 				<delete includeemptydirs="true" failonerror="false">
 					<fileset
@@ -968,30 +971,12 @@
 				</delete>
 
 				<copy todir="${todir}">
-						<fileset
-							dir="${jdbc.drivers.optional.dir}/db2/8.1.18"
-							includes="${jdbc.db2.driver}"
+					<fileset
+						dir="${jdbc.drivers.optional.dir}/db2/8.1.18"
+						includes="${jdbc.db2.driver}"
 					/>
 				</copy>
 			</then>
-			<elseif>
-				<equals arg1="${database}" arg2="db2-10.1" />
-				<then>
-					<delete includeemptydirs="true" failonerror="false">
-						<fileset
-							dir="${simple.server.lib.global.dir}"
-							includes="${jdbc.db2.driver}"
-						/>
-					</delete>
-
-					<copy todir="${todir}">
-							<fileset
-								dir="${jdbc.drivers.optional.dir}/db2/8.1.18"
-								includes="${jdbc.db2.driver}"
-						/>
-					</copy>
-				</then>
-			</elseif>
 			<elseif>
 				<and>
 					<equals arg1="${database}" arg2="mysql" />
@@ -1994,11 +1979,13 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 
 		<antcall target="prepare-versioned-common" inheritAll="false" />
 	</target>
+
 	<target name="prepare-versioned-db2-10.1">
 		<echo file="test.${user.name}.properties">database=db2-10.1</echo>
 
 		<antcall target="prepare-versioned-common" inheritAll="false" />
 	</target>
+
 	<target name="prepare-versioned-mysql">
 		<echo file="test.${user.name}.properties">database=mysql</echo>
 
@@ -2170,7 +2157,6 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 	</target>
 
 	<target name="rebuild-database" depends="generate-test-properties,build-sql-file">
-
 		<if>
 			<equals arg1="${database}" arg2="sybase" />
 			<then>

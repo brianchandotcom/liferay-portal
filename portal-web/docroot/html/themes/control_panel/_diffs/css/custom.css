@@ -27,7 +27,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 	legend {
 		color: #8D8D8D;
 		font-size: 18px;
-		font-weight: lighter;
+		font-weight: 200;
 	}
 
 	#banner {
@@ -161,7 +161,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 			color: #009AE5;
 			display: block;
 			font-size: 24px;
-			font-weight: 200;
+			font-weight: 100;
 			margin-bottom: 30px;
 			padding-left: 47px;
 		}
@@ -187,9 +187,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 	.dockbar {
 		border-top: 1px solid #00AEFF;
-		font-size: 13px;
-		font-weight: lighter;
-		letter-spacing: 1px;
 		position: relative;
 
 		.nav > li > a {
@@ -204,9 +201,11 @@ $dockbarOpenGradientStart: #0EA6F9;
 			padding-right: 0;
 
 			.brand {
+				letter-spacing: 1px;
+
 				&, h1, a {
 					color: #FFF;
-					font-weight: lighter;
+					font-weight: 100;
 					text-shadow: none;
 				}
 
@@ -244,6 +243,8 @@ $dockbarOpenGradientStart: #0EA6F9;
 				}
 			}
 			.nav-add-controls {
+				letter-spacing: 1px;
+
 				> li {
 					&.active a {
 						border-radius: 4px;
@@ -382,7 +383,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 	.portlet-title {
 		font-size: 25px;
-		font-weight: lighter;
+		font-weight: 100;
 
 		.taglib-icon-help {
 			margin-left: -7px;
@@ -604,20 +605,10 @@ $dockbarOpenGradientStart: #0EA6F9;
 					display: inline-block;
 					margin-left: 0;
 					margin-right: 5px;
-				}
 
-				ul {
-					color: #8D8D8D;
-					list-style: none;
-					margin: 0;
-
-					li {
-						float: left;
-
-						&.divider:before {
-							content: '/';
-							margin: 0 5px;
-						}
+					&.divider:before {
+						content: '|';
+						margin: 0 5px;
 					}
 				}
 			}
@@ -632,7 +623,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 			.nav-header {
 				background: #F3F3F3;
 				font-size: 14px;
-				font-weight: lighter;
+				font-weight: 200;
 				text-transform: capitalize;
 			}
 		}

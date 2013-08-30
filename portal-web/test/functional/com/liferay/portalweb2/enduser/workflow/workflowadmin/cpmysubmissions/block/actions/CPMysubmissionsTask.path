@@ -62,7 +62,7 @@
 <!--PREVIEW-->
 <tr>
 	<td>PREVIEW</td>
-	<td>//div[@class='accordion-group lfr-panel-extended']/div/div[@class='accordion-toggle' and contains(.,'Preview')]</td>
+	<td>//div[@class='accordion-group lfr-panel lfr-panel-extended']/div/div[@class='accordion-toggle' and contains(.,'Preview')]</td>
 	<td></td>
 </tr>
 <tr>

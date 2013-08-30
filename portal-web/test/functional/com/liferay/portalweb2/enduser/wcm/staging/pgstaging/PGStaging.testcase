@@ -39,6 +39,133 @@
 		</execute>
 	</command>
 
+	<command name="ActivateDeactivateStagingLocalLiveDM">
+		<var name="dmDocumentFile" value="Document_1.docx" />
+		<var name="dmDocumentTitle" value="${dmDocumentFile}" />
+		<var name="pageName" value="Page Name" />
+		<var name="pageType" value="Site" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="pageType" value="${pageType}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="pageType" value="${pageType}" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="portletName" value="Documents and Media" />
+		</execute>
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="pageType" value="Site" />
+			<var name="pageTypeURL" value="${siteName}" />
+			<var name="portletName" value="Site Settings" />
+		</execute>
+
+		<execute macro="Staging#activateStagingCP">
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="pageStaging" value="true" />
+			<var name="pageType" value="${pageType}" />
+		</execute>
+
+		<execute macro="DMDocument#addPG">
+			<var name="dmDocumentFile" value="${dmDocumentFile}" />
+			<var name="pageName" value="${pageName}" />
+			<var name="pageStaging" value="true" />
+		</execute>
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="pageType" value="Site" />
+			<var name="pageTypeURL" value="${siteName}" />
+			<var name="portletName" value="Site Settings" />
+		</execute>
+
+		<execute macro="Staging#deactivateStagingCP">
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="pageType" value="Site" />
+			<var name="pageTypeURL" value="${siteName}" />
+			<var name="portletName" value="Site Settings" />
+		</execute>
+
+		<execute macro="Staging#activateStagingCP">
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="pageStaging" value="true" />
+			<var name="pageType" value="${pageType}" />
+		</execute>
+
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="EMPTY_MESSAGE" value1="There are no documents or media files in this folder." />
+	</command>
+
+	<command name="AddDMDocumentStagingLocalLive">
+		<var name="dmDocumentFile" value="Document_1.docx" />
+		<var name="dmDocumentTitle" value="${dmDocumentFile}" />
+		<var name="pageName" value="Page Name" />
+		<var name="pageType" value="Site" />
+		<var name="siteName" value="${siteName}" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="pageType" value="${pageType}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="pageType" value="${pageType}" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="portletName" value="Documents and Media" />
+		</execute>
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="pageType" value="Site" />
+			<var name="pageTypeURL" value="${siteName}" />
+			<var name="portletName" value="Site Settings" />
+		</execute>
+
+		<execute macro="Staging#activateStagingCP">
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="pageStaging" value="true" />
+			<var name="pageType" value="${pageType}" />
+		</execute>
+
+		<execute macro="DMDocument#addPG">
+			<var name="dmDocumentFile" value="${dmDocumentFile}" />
+			<var name="pageName" value="${pageName}" />
+			<var name="pageStaging" value="true" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="pageStaging" value="true" />
+			<var name="pageType" value="${pageType}" />
+		</execute>
+
+		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
+
+		<execute action="CPDocumentsandmedia#assertTextEquals" locator-key1="DOCUMENT_CONTAINER_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
+	</command>
+
 	<command name="AddPageVariation">
 		<var name="pageName" value="Staging Page Variation Test Page" />
 		<var name="pageVariationName" value="Page Variation Name" />

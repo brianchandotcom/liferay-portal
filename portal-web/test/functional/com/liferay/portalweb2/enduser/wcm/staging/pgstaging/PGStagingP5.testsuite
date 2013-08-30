@@ -1,4 +1,6 @@
 <definition>
+	<execute test-case-command="PGStaging#ActivateDeactivateStagingLocalLiveDM" />
+	<execute test-case-command="PGStaging#AddDMDocumentStagingLocalLive" />
 	<execute test-case-command="PGStaging#AddPageVariation" />
 	<execute test-case-command="PGStaging#AddSitePagesVariation" />
 </definition>

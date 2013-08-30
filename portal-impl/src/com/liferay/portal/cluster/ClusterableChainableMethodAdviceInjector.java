@@ -27,6 +27,8 @@ public class ClusterableChainableMethodAdviceInjector
 	public void inject() {
 		setInjectCondition(PropsValues.CLUSTER_LINK_ENABLED);
 		setNewChainableMethodAdvice(new ClusterableAdvice());
+
+		super.inject();
 	}
 
 	/**

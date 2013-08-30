@@ -22,14 +22,6 @@ import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.model.Layout;
-import com.liferay.portal.model.LayoutConstants;
-import com.liferay.portal.model.LayoutTypePortlet;
-import com.liferay.portal.model.PortletConstants;
-import com.liferay.portal.security.permission.ActionKeys;
-import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.service.LayoutLocalServiceUtil;
-import com.liferay.portal.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.PortletURLFactoryUtil;
@@ -66,15 +58,36 @@ public abstract class FindAction extends Action {
 			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		try {
 			long plid = ParamUtil.getLong(request, "p_l_id");
 			long primaryKey = ParamUtil.getLong(
 				request, getPrimaryKeyParameterName());
 
-			Object[] plidAndPortletId = getPlidAndPortletId(
-				request, plid, primaryKey);
+			long groupId = ParamUtil.getLong(
+				request, "groupId", themeDisplay.getScopeGroupId());
+
+			if (primaryKey > 0) {
+				try {
+					groupId = getGroupId(primaryKey);
+				}
+				catch (Exception e) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(e, e);
+					}
+				}
+			}
+
+			Object[] plidAndPortletId = FindUtil.getPlidAndPortletId(
+				themeDisplay, groupId, plid, _portletIds);
 
 			plid = (Long)plidAndPortletId[0];
+
+			long entityGroupId = getGroupId(primaryKey);
+
+			FindUtil.setTargetGroup(request, entityGroupId, plid);
 
 			String portletId = (String)plidAndPortletId[1];
 
@@ -135,97 +148,6 @@ public abstract class FindAction extends Action {
 	}
 
 	protected abstract long getGroupId(long primaryKey) throws Exception;
-
-	protected Object[] getPlidAndPortletId(
-			HttpServletRequest request, long plid, long primaryKey)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		PermissionChecker permissionChecker =
-			themeDisplay.getPermissionChecker();
-
-		long groupId = ParamUtil.getLong(
-			request, "groupId", themeDisplay.getScopeGroupId());
-
-		if (primaryKey > 0) {
-			try {
-				groupId = getGroupId(primaryKey);
-			}
-			catch (Exception e) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(e, e);
-				}
-			}
-		}
-
-		if ((plid != LayoutConstants.DEFAULT_PLID) &&
-			(groupId == themeDisplay.getScopeGroupId())) {
-
-			try {
-				Layout layout = LayoutLocalServiceUtil.getLayout(plid);
-
-				LayoutTypePortlet layoutTypePortlet =
-					(LayoutTypePortlet)layout.getLayoutType();
-
-				for (String portletId : _portletIds) {
-					if (!layoutTypePortlet.hasPortletId(portletId) ||
-						!LayoutPermissionUtil.contains(
-							permissionChecker, layout, ActionKeys.VIEW)) {
-
-						continue;
-					}
-
-					portletId = getPortletId(layoutTypePortlet, portletId);
-
-					return new Object[] {plid, portletId};
-				}
-			}
-			catch (NoSuchLayoutException nsle) {
-			}
-		}
-
-		for (String portletId : _portletIds) {
-			plid = PortalUtil.getPlidFromPortletId(groupId, portletId);
-
-			if (plid == LayoutConstants.DEFAULT_PLID) {
-				continue;
-			}
-
-			Layout layout = LayoutLocalServiceUtil.getLayout(plid);
-
-			if (!LayoutPermissionUtil.contains(
-					permissionChecker, layout, ActionKeys.VIEW)) {
-
-				continue;
-			}
-
-			LayoutTypePortlet layoutTypePortlet =
-				(LayoutTypePortlet)layout.getLayoutType();
-
-			portletId = getPortletId(layoutTypePortlet, portletId);
-
-			return new Object[] {plid, portletId};
-		}
-
-		throw new NoSuchLayoutException();
-	}
-
-	protected String getPortletId(
-		LayoutTypePortlet layoutTypePortlet, String portletId) {
-
-		for (String curPortletId : layoutTypePortlet.getPortletIds()) {
-			String curRootPortletId = PortletConstants.getRootPortletId(
-				curPortletId);
-
-			if (portletId.equals(curRootPortletId)) {
-				return curPortletId;
-			}
-		}
-
-		return portletId;
-	}
 
 	protected abstract String getPrimaryKeyParameterName();
 

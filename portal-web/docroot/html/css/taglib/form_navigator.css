@@ -8,7 +8,7 @@
 	}
 
 	.form-navigator-content{
-		padding-left: 2px;
+		overflow: visible;
 
 		&[class*="span"] {
 			margin-left: 0;

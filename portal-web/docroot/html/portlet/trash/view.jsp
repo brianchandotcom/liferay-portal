@@ -276,11 +276,9 @@ if (Validator.isNotNull(keywords)) {
 		<aui:input name="deleteTrashEntryIds" type="hidden" />
 		<aui:input name="restoreTrashEntryIds" type="hidden" />
 
-		<aui:button-row>
-			<liferay-ui:search-form
-				page="/html/portlet/trash/entry_search.jsp"
-			/>
-		</aui:button-row>
+		<liferay-ui:search-form
+			page="/html/portlet/trash/entry_search.jsp"
+		/>
 	</aui:form>
 
 	<liferay-ui:breadcrumb

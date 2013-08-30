@@ -16,8 +16,10 @@
 
 <%@ include file="/html/portlet/trash/init.jsp" %>
 
-<aui:field-wrapper cssClass="form-search">
-	<aui:input inlineField="<%= true %>" label="" name="keywords" size="30" title="search-entries" type="text" />
-
-	<aui:button type="submit" value="search" />
-</aui:field-wrapper>
+<aui:nav-bar>
+	<div class="navbar-search pull-right">
+		<div class="form-search">
+			<liferay-ui:input-search id="keywords" placeholder='<%= LanguageUtil.get(locale, "keywords") %>' />
+		</div>
+	</div>
+</aui:nav-bar>

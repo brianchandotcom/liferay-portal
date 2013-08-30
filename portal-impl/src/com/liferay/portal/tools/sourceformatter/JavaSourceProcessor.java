@@ -972,6 +972,18 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			checkUnprocessedExceptions(newContent, file, packagePath, fileName);
 		}
 
+		// LPS-39508
+
+		if (!fileName.contains("SecureRandomUtil") &&
+			content.contains("java.security.SecureRandom") &&
+			!content.contains("javax.crypto.KeyGenerator")) {
+
+			processErrorMessage(
+				fileName,
+				"Use SecureRandomUtil instead of java.security.SecureRandom: " +
+					fileName);
+		}
+
 		String oldContent = newContent;
 
 		while (true) {

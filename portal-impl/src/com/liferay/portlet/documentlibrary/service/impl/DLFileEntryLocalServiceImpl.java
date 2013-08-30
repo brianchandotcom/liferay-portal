@@ -2024,6 +2024,8 @@ public class DLFileEntryLocalServiceImpl
 			return false;
 		}
 
+		// File entry type
+
 		DLFileEntryType dlFileEntryType =
 			dlFileEntryTypeLocalService.getFileEntryType(
 				lastDLFileVersion.getFileEntryTypeId());

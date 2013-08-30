@@ -36,6 +36,11 @@
 		<property name="dynamicDataSourceTargetSource" ref="dynamicDataSourceTargetSource" />
 		<property name="transactionAttributeSource" ref="transactionAttributeSource" />
 	</bean>
+	<bean id="transactionAdvice" class="com.liferay.portal.dao.jdbc.aop.DynamicDataSourceTransactionInterceptor">
+		<property name="dynamicDataSourceTargetSource" ref="dynamicDataSourceTargetSource" />
+		<property name="transactionAttributeSource" ref="transactionAttributeSource" />
+		<property name="transactionManager" ref="liferayTransactionManager" />
+	</bean>
 	<bean id="com.liferay.portal.kernel.util.InfrastructureUtil" class="com.liferay.portal.kernel.util.InfrastructureUtil">
 		<property name="dataSource" ref="liferayDataSource" />
 		<property name="dynamicDataSourceTargetSource" ref="dynamicDataSourceTargetSource" />

@@ -17,6 +17,7 @@ package com.liferay.portal.service.impl;
 import com.liferay.portal.DuplicateLockException;
 import com.liferay.portal.ExpiredLockException;
 import com.liferay.portal.NoSuchLockException;
+import com.liferay.portal.kernel.dao.jdbc.aop.MasterDataSource;
 import com.liferay.portal.kernel.dao.orm.LockMode;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -180,6 +181,7 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 		return lock;
 	}
 
+	@MasterDataSource
 	@Override
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public Lock lock(String className, String key, String owner)
@@ -192,6 +194,7 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 	 * @deprecated As of 6.2.0, replaced by {@link #lock(String, String,
 	 *             String)}
 	 */
+	@MasterDataSource
 	@Override
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public Lock lock(
@@ -202,6 +205,7 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 		return lock(className, key, null, owner);
 	}
 
+	@MasterDataSource
 	@Override
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public Lock lock(
@@ -247,6 +251,7 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 	 * @deprecated As of 6.2.0, replaced by {@link #lock(String, String, String,
 	 *             String)}
 	 */
+	@MasterDataSource
 	@Override
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public Lock lock(
@@ -316,6 +321,7 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 		}
 	}
 
+	@MasterDataSource
 	@Override
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public void unlock(String className, String key, String owner)
@@ -337,6 +343,7 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 	 * @deprecated As of 6.2.0, replaced by {@link #unlock(String, String,
 	 *             String)}
 	 */
+	@MasterDataSource
 	@Override
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public void unlock(

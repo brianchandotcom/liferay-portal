@@ -217,7 +217,7 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 		sb.append(SystemProperties.get(SystemProperties.TMP_DIR));
 		sb.append(StringPool.SLASH);
 		sb.append(Time.getTimestamp());
-		sb.append(PwdGenerator.getPassword(PwdGenerator.KEY2, 8));
+		sb.append(PwdGenerator.getPassword(8, PwdGenerator.KEY2));
 
 		if (Validator.isFileExtension(extension)) {
 			sb.append(StringPool.PERIOD);

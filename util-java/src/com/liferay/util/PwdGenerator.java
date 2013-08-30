@@ -25,6 +25,7 @@ import java.util.Random;
 /**
  * @author Brian Wing Shun Chan
  * @author Amos Fong
+ * @author Shuyang Zhou
  */
 public class PwdGenerator {
 
@@ -35,30 +36,71 @@ public class PwdGenerator {
 	public static final String KEY3 = "abcdefghijklmnopqrstuvwxyz";
 
 	public static String getPassword() {
-		return _generate(KEY1 + KEY2 + KEY3, 8, true);
+		return getPassword(8, KEYS);
 	}
 
 	public static String getPassword(int length) {
-		return _generate(KEY1 + KEY2 + KEY3, length, true);
+		return getPassword(length, KEYS);
+	}
+
+	public static String getPassword(int length, String... keys) {
+		if (length < keys.length) {
+			length = keys.length;
+		}
+
+		StringBuilder sb = new StringBuilder(length);
+
+		// It is safe to use the regular Random class because each generated
+		// password only consumes one secure random long
+
+		Random random = new Random(SecureRandomUtil.nextLong());
+
+		int fullKeyLength = 0;
+
+		for (String key : keys) {
+			fullKeyLength += key.length();
+		}
+
+		// Ensure every key contributes to the output by an even distribution
+
+		for (String key : keys) {
+			int count = key.length() * length / fullKeyLength;
+
+			if (count == 0) {
+				count = 1;
+			}
+
+			for (int i = 0; i < count; i++) {
+				sb.append(key.charAt(random.nextInt(key.length())));
+			}
+		}
+
+		// Round up the tail
+
+		for (int i = sb.length(); i < length; i++) {
+			String key = keys[random.nextInt(keys.length)];
+
+			sb.append(key.charAt(random.nextInt(key.length())));
+		}
+
+		// shuffle
+
+		for (int i = length; i > 1; i--) {
+			int position = random.nextInt(i);
+
+			if (position != (i -1)) {
+				char c = sb.charAt(position);
+
+				sb.setCharAt(position, sb.charAt(i - 1));
+
+				sb.setCharAt(i - 1, c);
+			}
+		}
+
+		return sb.toString();
 	}
 
 	public static String getPassword(String key, int length) {
-		return _generate(key, length, true);
-	}
-
-	public static String getPassword(
-		String key, int length, boolean useAllKeys) {
-
-		return _generate(key, length, useAllKeys);
-	}
-
-	public static String getPinNumber() {
-		return _generate(KEY1, 4, false);
-	}
-
-	private static String _generate(
-		String key, int length, boolean useAllKeys) {
-
 		int keysCount = 0;
 
 		if (key.contains(KEY1)) {
@@ -81,49 +123,46 @@ public class PwdGenerator {
 			length = keysCount;
 		}
 
-		StringBuilder sb = new StringBuilder(length);
+		while (true) {
+			String password = getPassword(length, key);
 
-		// It is safe to use the regular Random class because each generated
-		// password only consumes one secure random long
+			if (key.contains(KEY1)) {
+				if (Validator.isNull(StringUtil.extractDigits(password))) {
+					continue;
+				}
+			}
 
-		Random random = new Random(SecureRandomUtil.nextLong());
+			if (key.contains(KEY2)) {
+				if (password.equals(password.toLowerCase())) {
+					continue;
+				}
+			}
 
-		for (int i = 0; i < length; i++) {
-			sb.append(key.charAt(random.nextInt(key.length())));
-		}
+			if (key.contains(KEY3)) {
+				if (password.equals(password.toUpperCase())) {
+					continue;
+				}
+			}
 
-		String password = sb.toString();
-
-		if (!useAllKeys) {
 			return password;
 		}
-
-		boolean invalidPassword = false;
-
-		if (key.contains(KEY1)) {
-			if (Validator.isNull(StringUtil.extractDigits(password))) {
-				invalidPassword = true;
-			}
-		}
-
-		if (key.contains(KEY2)) {
-			if (password.equals(password.toLowerCase())) {
-				invalidPassword = true;
-			}
-		}
-
-		if (key.contains(KEY3)) {
-			if (password.equals(password.toUpperCase())) {
-				invalidPassword = true;
-			}
-		}
-
-		if (invalidPassword) {
-			return _generate(key, length, useAllKeys);
-		}
-
-		return password;
 	}
+
+	public static String getPassword(
+		String key, int length, boolean useAllKeys) {
+
+		if (useAllKeys) {
+			return getPassword(key, length);
+		}
+
+		return getPassword(length, key);
+	}
+
+	public static String getPinNumber() {
+		return getPassword(4, KEY1);
+	}
+
+	private static final String[] KEYS = {KEY1, KEY2, KEY3};
 
 	private static Log _log = LogFactoryUtil.getLog(PwdGenerator.class);
 

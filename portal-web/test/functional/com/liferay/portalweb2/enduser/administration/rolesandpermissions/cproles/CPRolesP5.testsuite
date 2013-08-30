@@ -7,4 +7,13 @@
 	<execute test-case-command="CPRoles#DeleteBlogsEntryOrgRoleInline" />
 	<execute test-case-command="CPRoles#DeleteBlogsEntryRegRoleInline" />
 	<execute test-case-command="CPRoles#DeleteBlogsEntrySiteRoleInline" />
+	<execute test-case-command="CPRoles#SubcribeBlogsRegRole" />
+	<execute test-case-command="CPRoles#SubcribeBlogsRegRoleInline" />
+	<execute test-case-command="CPRoles#SubcribeBlogsSiteRole" />
+	<execute test-case-command="CPRoles#SubcribeBlogsSiteRoleInline" />
+	<execute test-case-command="CPRoles#ViewBlogsPortletNoGuestRole" />
+	<execute test-case-command="CPRoles#ViewBlogsPermissionsRegRole" />
+	<execute test-case-command="CPRoles#ViewBlogsPermissionsRegRoleInline" />
+	<execute test-case-command="CPRoles#ViewBlogsPermissionsSiteRole" />
+	<execute test-case-command="CPRoles#ViewBlogsPermissionsSiteRoleInline" />
 </definition>

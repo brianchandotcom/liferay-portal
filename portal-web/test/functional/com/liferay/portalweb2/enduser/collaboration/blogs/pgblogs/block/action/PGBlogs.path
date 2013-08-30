@@ -49,6 +49,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>UNSUBSCRIBE_LINK</td>
+	<td>//div[@class='subscribe']/span/a[contains(.,'Unsubscribe')]/span</td>
+	<td></td>
+</tr>
+<tr>
 	<td>RSS_LINK</td>
 	<td>//div[@class='subscribe']/span/a[contains(.,'RSS')]/span</td>
 	<td></td>

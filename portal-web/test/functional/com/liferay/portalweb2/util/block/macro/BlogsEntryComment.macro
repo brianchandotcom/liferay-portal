@@ -1,11 +1,87 @@
 <definition>
+	<command name="addCP">
+		<var name="key_entryTitle" value="${entryTitle}" />
+
+		<execute action="CPBlogs#assertClick" locator-key1="ENTRY_TABLE_TITLE" value1="${entryTitle}" />
+
+		<var name="key_entryComment" value="${entryComment}" />
+
+		<execute action="CPBlogsEntry#assertTextEquals" locator-key1="ENTRY_TITLE_LINK" value1="${entryTitle}" />
+		<execute action="CPBlogsEntry#assertClick" locator-key1="COMMENTS_BE_THE_FIRST" value1="Be the first." />
+		<execute action="CPBlogsEntry#type" locator-key1="COMMENTS_BODY_FIELD" value1="${entryComment}" />
+		<execute action="CPBlogsEntry#assertClick" locator-key1="COMMENTS_REPLY_BUTTON" value1="Reply" />
+
+		<execute action="CPBlogsEntry#assertTextEquals" locator-key1="COMMENTS_SUCCESS" value1="Your request processed successfully." />
+		<execute action="CPBlogsEntry#assertTextEquals" locator-key1="COMMENT" value1="${entryComment}" />
+	</command>
+
 	<command name="addPG">
 		<execute action="PGBlogs#assertClick" locator-key1="ENTRY_TITLE_1" value1="${entryTitle}" />
 
 		<execute action="PGBlogsEntry#assertClick" locator-key1="COMMENTS_ADD" value1="Be the first." />
 		<execute action="PGBlogsEntry#type" locator-key1="COMMENTS_BODY_FIELD" value1="${entryComment}" />
 		<execute action="PGBlogsEntry#assertClick" locator-key1="COMMENTS_REPLY_BUTTON" value1="Reply" />
+
 		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="COMMENTS_SUCCESS" value1="Your request processed successfully." />
 		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="COMMENT_1" value1="${entryComment}" />
+	</command>
+
+	<command name="deleteCP">
+		<var name="key_entryTitle" value="${entryTitle}" />
+
+		<execute action="CPBlogs#assertClick" locator-key1="ENTRY_TABLE_TITLE" value1="${entryTitle}" />
+
+		<var name="key_entryComment" value="${entryComment}" />
+
+		<execute action="CPBlogsEntry#assertTextEquals" locator-key1="ENTRY_TITLE_LINK" value1="${entryTitle}" />
+		<execute action="CPBlogsEntry#mouseOver" locator-key1="COMMENT" />
+		<execute action="CPBlogsEntry#assertClick" locator-key1="COMMENT_DELETE_1" value1="Delete" />
+		<execute action="CPBlogsEntry#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+		<execute action="CPBlogsEntry#assertTextEquals" locator-key1="COMMENTS_SUCCESS" value1="Your request processed successfully." />
+		<execute action="CPBlogsEntry#assertTextNotPresent" value1="${entryComment}" />
+	</command>
+
+	<command name="editCP">
+		<var name="key_entryTitle" value="${entryTitle}" />
+
+		<execute action="CPBlogs#assertClick" locator-key1="ENTRY_TABLE_TITLE" value1="${entryTitle}" />
+
+		<var name="key_entryComment" value="${entryComment}" />
+
+		<execute action="CPBlogsEntry#assertTextEquals" locator-key1="ENTRY_TITLE_LINK" value1="${entryTitle}" />
+		<execute action="CPBlogsEntry#mouseOver" locator-key1="COMMENT" />
+		<execute action="CPBlogsEntry#assertClick" locator-key1="COMMENT_EDIT_1" value1="Edit" />
+		<execute action="CPBlogsEntry#type" locator-key1="COMMENT_EDIT_COMMENT_BODY_FIELD_1" value1="${entryCommentEdit}" />
+		<execute action="CPBlogsEntry#assertClick" locator-key1="COMMENT_EDIT_COMMENT_PUBLISH" value1="Publish" />
+
+		<execute action="CPBlogsEntry#assertTextEquals" locator-key1="COMMENT_EDIT_SUCCESS" value1="Your request processed successfully." />
+		<execute action="CPBlogsEntry#assertTextEquals" locator-key1="COMMENT" value1="${entryCommentEdit}" />
+	</command>
+
+	<command name="viewCP">
+		<var name="key_entryTitle" value="${entryTitle}" />
+
+		<execute action="CPBlogs#assertClick" locator-key1="ENTRY_TABLE_TITLE" value1="${entryTitle}" />
+
+		<var name="key_entryComment" value="${entryComment}" />
+
+		<execute action="CPBlogsEntry#assertTextEquals" locator-key1="ENTRY_TITLE_LINK" value1="${entryTitle}" />
+		<execute action="CPBlogsEntry#assertTextEquals" locator-key1="ENTRY_STATS_COMMENTS" value1="1 Comment" />
+		<execute action="CPBlogsEntry#assertElementNotPresent" locator-key1="COMMENTS_BE_THE_FIRST" />
+		<execute action="CPBlogsEntry#assertTextEquals" locator-key1="COMMENT" value1="${entryComment}" />
+	</command>
+
+	<command name="viewDefaultCP">
+		<var name="key_entryTitle" value="${entryTitle}" />
+
+		<execute action="CPBlogs#assertClick" locator-key1="ENTRY_TABLE_TITLE" value1="${entryTitle}" />
+
+		<var name="key_entryComment" value="${entryComment}" />
+
+		<execute action="CPBlogsEntry#assertTextEquals" locator-key1="ENTRY_TITLE_LINK" value1="${entryTitle}" />
+		<execute action="CPBlogsEntry#assertTextEquals" locator-key1="ENTRY_STATS_COMMENTS" value1="0 Comments" />
+		<execute action="CPBlogsEntry#assertTextEquals" locator-key1="COMMENTS_NO_COMMENTS_YET" value1="No comments yet." />
+		<execute action="CPBlogsEntry#assertTextEquals" locator-key1="COMMENTS_BE_THE_FIRST" value1="Be the first." />
+		<execute action="CPBlogsEntry#assertTextNotPresent" value1="${entryComment}" />
 	</command>
 </definition>

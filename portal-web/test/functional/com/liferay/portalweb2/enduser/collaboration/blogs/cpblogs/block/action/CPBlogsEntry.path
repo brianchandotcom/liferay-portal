@@ -38,6 +38,124 @@
 	<td>//div[@class='entry-body']/div</td>
 	<td></td>
 </tr>
+<tr>
+	<td>ENTRY_STATS_COMMENTS</td>
+	<td>//div[@class='stats']/span[@class='comments']/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIRMATION</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--COMMENTS-->
+<tr>
+	<td>COMMENTS_SUCCESS</td>
+	<td>//div[@class='lfr-message-response alert alert-success']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENTS_NO_COMMENTS_YET</td>
+	<td>//fieldset[@class='fieldset add-comment']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENTS_BE_THE_FIRST</td>
+	<td>//fieldset[@class='fieldset add-comment']/div/a[contains(.,'Be the first')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENTS_ADD_COMMENT</td>
+	<td>//fieldset[@class='fieldset add-comment']/div/span/a[contains(.,'Add Comment')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENTS_BODY_FIELD</td>
+	<td>//textarea[@name='_161_postReplyBody0']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENTS_REPLY_BUTTON</td>
+	<td>//button[contains(@id,'postReplyButton0')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--COMMENT-->
+<tr>
+	<td>COMMENT</td>
+	<td>//div[contains(@class,'lfr-discussion-body')]/div[contains(.,'${key_entryComment}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENT_EDIT_1</td>
+	<td>xpath=(//ul[@class='lfr-discussion-actions']/li/span/a[contains(.,'Edit')])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENT_EDIT_2</td>
+	<td>xpath=(//ul[@class='lfr-discussion-actions']/li/span/a[contains(.,'Edit')])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENT_EDIT_3</td>
+	<td>xpath=(//ul[@class='lfr-discussion-actions']/li/span/a[contains(.,'Edit')])[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENT_DELETE_1</td>
+	<td>xpath=(//ul[@class='lfr-discussion-actions']/li/span/a[contains(.,'Delete')])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENT_DELETE_2</td>
+	<td>xpath=(//ul[@class='lfr-discussion-actions']/li/span/a[contains(.,'Delete')])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENT_DELETE_3</td>
+	<td>xpath=(//ul[@class='lfr-discussion-actions']/li/span/a[contains(.,'Delete')])[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--COMMENT_EDIT_COMMENT-->
+<tr>
+	<td>COMMENT_EDIT_SUCCESS</td>
+	<td>//div[@class='lfr-message-response alert alert-success']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENT_EDIT_COMMENT_BODY_FIELD_1</td>
+	<td>//textarea[contains(@id,'editReplyBody1')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENT_EDIT_COMMENT_BODY_FIELD_2</td>
+	<td>//textarea[contains(@id,'editReplyBody2')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENT_EDIT_COMMENT_BODY_FIELD_3</td>
+	<td>//textarea[contains(@id,'editReplyBody3')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENT_EDIT_COMMENT_PUBLISH</td>
+	<td>//button[contains(.,'Publish')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

@@ -326,14 +326,9 @@ if (Validator.isNull(redirect)) {
 							<%
 							for (int i = 0; i < attachmentsFileEntries.size(); i++) {
 								FileEntry attachmentsFileEntry = attachmentsFileEntries.get(i);
-							%>
 
-								<portlet:resourceURL var="getPageAttachmentURL">
-									<portlet:param name="struts_action" value="/wiki/get_page_attachment" />
-									<portlet:param name="nodeId" value="<%= String.valueOf(node.getNodeId()) %>" />
-									<portlet:param name="title" value="<%= wikiPage.getTitle() %>" />
-									<portlet:param name="fileName" value="<%= attachmentsFileEntry.getTitle() %>" />
-								</portlet:resourceURL>
+								String getPageAttachmentURL = PortletFileRepositoryUtil.getPortletFileEntryURL(attachmentsFileEntry, themeDisplay, StringPool.BLANK);
+							%>
 
 								<aui:a href="<%= (templatePage != null) && (templatePage.getAttachmentsFileEntriesCount() > 0) ? getPageAttachmentURL : null %>"><%= attachmentsFileEntry.getTitle() %></aui:a> (<%= TextFormatter.formatStorageSize(attachmentsFileEntry.getSize(), locale) %>)<%= (i < (attachmentsFileEntries.size() - 1)) ? ", " : "" %>
 

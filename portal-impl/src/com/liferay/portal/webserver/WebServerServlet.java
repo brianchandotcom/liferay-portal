@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -56,6 +57,7 @@ import com.liferay.portal.model.Image;
 import com.liferay.portal.model.ImageConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.impl.ImageImpl;
+import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
 import com.liferay.portal.security.auth.PrincipalException;
@@ -92,6 +94,7 @@ import com.liferay.portlet.documentlibrary.util.PDFProcessor;
 import com.liferay.portlet.documentlibrary.util.PDFProcessorUtil;
 import com.liferay.portlet.documentlibrary.util.VideoProcessor;
 import com.liferay.portlet.documentlibrary.util.VideoProcessorUtil;
+import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.awt.image.RenderedImage;
 
@@ -142,6 +145,14 @@ public class WebServerServlet extends HttpServlet {
 			}
 			else if (Validator.isNumber(pathArray[0])) {
 				_checkFileEntry(pathArray);
+			}
+			else if (_PATH_ATTACHMENTS.equals(pathArray[0])) {
+				DLFileEntry dlFileEntry = getAttachmentFileEntry(
+					request, pathArray);
+
+				if (dlFileEntry != null) {
+					return true;
+				}
 			}
 			else {
 				long groupId = _getGroupId(user.getCompanyId(), pathArray[0]);
@@ -248,6 +259,9 @@ public class WebServerServlet extends HttpServlet {
 				if (Validator.isNumber(pathArray[0])) {
 					sendFile(request, response, user, pathArray);
 				}
+				else if (_PATH_ATTACHMENTS.equals(pathArray[0])) {
+					sendAttachment(request, response, pathArray);
+				}
 				else {
 					if (isLegacyImageGalleryImageId(request, response)) {
 						return;
@@ -281,6 +295,38 @@ public class WebServerServlet extends HttpServlet {
 		catch (Exception e) {
 			PortalUtil.sendError(e, request, response);
 		}
+	}
+
+	protected static DLFileEntry getAttachmentFileEntry(
+			HttpServletRequest request, String[] pathArray)
+		throws Exception {
+
+		long groupId = GetterUtil.getLong(pathArray[1], -1);
+		String uuid = pathArray[3];
+
+		if ((groupId == -1) || Validator.isNull(uuid)) {
+			throw new NoSuchFileEntryException(
+				"Unable to find attachment with groupId " + groupId + " uuid " +
+					uuid);
+		}
+
+		FileEntry fileEntry = PortletFileRepositoryUtil.getPortletFileEntry(
+			uuid, groupId);
+
+		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
+
+		DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
+
+		int status = ParamUtil.getInteger(
+			request, "status", WorkflowConstants.STATUS_APPROVED);
+
+		if ((status != WorkflowConstants.STATUS_IN_TRASH) &&
+			(dlFileVersion.isInTrash() || dlFileEntry.isInTrashContainer())) {
+
+			return null;
+		}
+
+		return dlFileEntry;
 	}
 
 	protected Image convertFileEntry(boolean smallImage, FileEntry fileEntry)
@@ -675,6 +721,31 @@ public class WebServerServlet extends HttpServlet {
 		redirect = HttpUtil.addParameter(redirect, "redirect", currentURL);
 
 		response.sendRedirect(redirect);
+	}
+
+	protected void sendAttachment(
+			HttpServletRequest request, HttpServletResponse response,
+			String[] pathArray)
+		throws Exception {
+
+		DLFileEntry dlFileEntry = getAttachmentFileEntry(request, pathArray);
+
+		if (dlFileEntry == null) {
+			return;
+		}
+
+		DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
+
+		String fileName = HttpUtil.decodeURL(
+			HtmlUtil.escape(pathArray[2]), true);
+
+		if (dlFileVersion.isInTrash()) {
+			fileName = TrashUtil.getOriginalTitle(fileName);
+		}
+
+		ServletResponseUtil.sendFile(
+			request, response, fileName, dlFileEntry.getContentStream(),
+			dlFileEntry.getSize(), dlFileEntry.getMimeType());
 	}
 
 	protected void sendDocumentLibrary(
@@ -1249,6 +1320,8 @@ public class WebServerServlet extends HttpServlet {
 	}
 
 	private static final String _DATE_FORMAT_PATTERN = "d MMM yyyy HH:mm z";
+
+	private static final String _PATH_ATTACHMENTS = "attachments";
 
 	private static final boolean _WEB_SERVER_SERVLET_VERSION_VERBOSITY_DEFAULT =
 		PropsValues.WEB_SERVER_SERVLET_VERSION_VERBOSITY.equalsIgnoreCase(

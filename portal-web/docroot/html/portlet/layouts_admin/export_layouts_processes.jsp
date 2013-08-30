@@ -95,12 +95,6 @@ OrderByComparator orderByComparator = BackgroundTaskUtil.getBackgroundTaskOrderB
 					for (FileEntry fileEntry : attachmentsFileEntries) {
 					%>
 
-						<portlet:resourceURL var="attachmentURL">
-							<portlet:param name="struts_action" value="/group_pages/get_background_task_attachment" />
-							<portlet:param name="backgroundTaskId" value="<%= String.valueOf(backgroundTask.getBackgroundTaskId()) %>" />
-							<portlet:param name="attachment" value="<%= fileEntry.getTitle() %>" />
-						</portlet:resourceURL>
-
 						<%
 						StringBundler sb = new StringBundler(4);
 
@@ -114,7 +108,7 @@ OrderByComparator orderByComparator = BackgroundTaskUtil.getBackgroundTaskOrderB
 							image="download"
 							label="<%= true %>"
 							message="<%= sb.toString() %>"
-							url="<%= attachmentURL %>"
+							url="<%= PortletFileRepositoryUtil.getPortletFileEntryURL(fileEntry, themeDisplay, StringPool.BLANK) %>"
 						/>
 
 					<%

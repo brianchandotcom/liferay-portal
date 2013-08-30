@@ -17,6 +17,7 @@
 <%@ include file="/html/taglib/init.jsp" %>
 
 <%
+boolean autoFocus = GetterUtil.getBoolean(request.getAttribute("liferay-ui:input-search:autoFocus"));
 String buttonLabel = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-search:buttonLabel"));
 String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-search:cssClass"));
 String id = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-search:id"));
@@ -36,3 +37,9 @@ String value = ParamUtil.getString(request, name);
 		</button>
 	</c:if>
 </div>
+
+<c:if test="<%= autoFocus %>">
+	<aui:script>
+		Liferay.Util.focusFormField('#<%= namespace %><%= id %>');
+	</aui:script>
+</c:if>

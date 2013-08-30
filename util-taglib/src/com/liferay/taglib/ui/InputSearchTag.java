@@ -26,6 +26,10 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class InputSearchTag extends IncludeTag {
 
+	public void setAutoFocus(boolean autoFocus) {
+		_autoFocus = autoFocus;
+	}
+
 	public void setButtonLabel(String buttonLabel) {
 		_buttonLabel = buttonLabel;
 	}
@@ -54,6 +58,7 @@ public class InputSearchTag extends IncludeTag {
 	protected void cleanUp() {
 		super.cleanUp();
 
+		_autoFocus = false;
 		_buttonLabel = null;
 		_cssClass = null;
 		_id = null;
@@ -99,6 +104,7 @@ public class InputSearchTag extends IncludeTag {
 			placeholder = buttonLabel;
 		}
 
+		request.setAttribute("liferay-ui:input-search:autoFocus", _autoFocus);
 		request.setAttribute(
 			"liferay-ui:input-search:buttonLabel", buttonLabel);
 		request.setAttribute("liferay-ui:input-search:cssClass", cssClass);
@@ -111,6 +117,7 @@ public class InputSearchTag extends IncludeTag {
 
 	private static final String _PAGE = "/html/taglib/ui/input_search/page.jsp";
 
+	private boolean _autoFocus = false;
 	private String _buttonLabel;
 	private String _cssClass;
 	private String _id;

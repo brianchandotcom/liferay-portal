@@ -444,8 +444,8 @@
 
 					&.second-to-last {
 						&:before {
-							content: " ... / ";
 							color: #999;
+							content: " ... / ";
 							font-weight: bold;
 						}
 					}

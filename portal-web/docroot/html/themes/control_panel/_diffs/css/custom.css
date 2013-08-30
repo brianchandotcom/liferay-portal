@@ -390,6 +390,10 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 	/* ---------- Panel Page Menu (Site Pages Side Navigation) ---------- */
 
+	.lfr-title-scope-selector {
+		padding: 0 15px 5px;
+	}
+
 	.panel-page-menu {
 		.portlet-borderless-container {
 			background: #FCFCFC;

@@ -92,6 +92,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ORGANIZATION_TABLE_NAME_GENERIC</td>
+	<td>//div[@id='usersAdminOrganizationsPanelContent']//tr/td[2]/a[2]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ORGANIZATION_TABLE_TYPE</td>
 	<td>//tr[contains(.,'${key_orgName}')]/td[3]/a</td>
 	<td></td>

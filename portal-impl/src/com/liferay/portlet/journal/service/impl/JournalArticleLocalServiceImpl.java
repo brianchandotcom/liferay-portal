@@ -2548,7 +2548,6 @@ public class JournalArticleLocalServiceImpl
 			throw new NoSuchArticleException(
 				"No approved JournalArticle exists with the key {groupId=" +
 					groupId + ", " + "articleId=" + articleId + "}");
-
 		}
 
 		Date now = new Date();

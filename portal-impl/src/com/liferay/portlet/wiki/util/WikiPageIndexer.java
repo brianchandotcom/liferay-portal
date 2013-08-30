@@ -171,7 +171,6 @@ public class WikiPageIndexer extends BaseIndexer {
 
 			SearchEngineUtil.deleteDocument(
 				getSearchEngineId(), companyId, document.get(Field.UID));
-
 		}
 		else if (obj instanceof WikiNode) {
 			WikiNode node = (WikiNode)obj;

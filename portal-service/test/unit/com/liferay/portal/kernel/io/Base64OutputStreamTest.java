@@ -187,7 +187,6 @@ public class Base64OutputStreamTest {
 		Assert.assertEquals(8, byteArrayInputStream.read(new byte[8]));
 
 		byteArrayInputStream.close();
-
 	}
 
 	@Test

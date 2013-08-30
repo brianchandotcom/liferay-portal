@@ -813,7 +813,6 @@ public class MBUtil {
 					rank[0] = curRank;
 					maxPosts = posts;
 				}
-
 			}
 			else {
 				String entityType = curRankValueKvp[0];

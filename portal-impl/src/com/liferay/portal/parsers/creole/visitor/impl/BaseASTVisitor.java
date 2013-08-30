@@ -163,7 +163,6 @@ public abstract class BaseASTVisitor implements ASTVisitor {
 
 	@Override
 	public void visit(MoinMoinInterwikiLinkNode moinMoinInterwikiLinkNode) {
-
 	}
 
 	@Override

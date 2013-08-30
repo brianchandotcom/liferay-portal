@@ -133,7 +133,6 @@ public class PerFieldAnalyzer extends Analyzer implements Tokenizer {
 					}
 				}
 			}
-
 		}
 
 		return tokens;

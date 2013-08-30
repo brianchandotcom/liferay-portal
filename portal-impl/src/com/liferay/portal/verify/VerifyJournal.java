@@ -237,7 +237,6 @@ public class VerifyJournal extends VerifyProcess {
 				_log.info("Fix oracle new line");
 			}
 		}
-
 	}
 
 	protected void verifyPermissionsAndAssets() throws Exception {

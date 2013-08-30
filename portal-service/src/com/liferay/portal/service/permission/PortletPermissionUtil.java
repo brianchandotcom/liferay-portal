@@ -197,7 +197,6 @@ public class PortletPermissionUtil {
 		try {
 			return hasControlPanelAccessPermission(
 				permissionChecker, groupId, portlets);
-
 		}
 		catch (Exception e) {
 			_log.error(e, e);

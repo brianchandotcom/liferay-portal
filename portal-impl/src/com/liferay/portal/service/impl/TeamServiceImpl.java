@@ -61,7 +61,6 @@ public class TeamServiceImpl extends TeamServiceBaseImpl {
 			getPermissionChecker(), groupId, ActionKeys.MANAGE_TEAMS);
 
 		return teamLocalService.getGroupTeams(groupId);
-
 	}
 
 	@Override

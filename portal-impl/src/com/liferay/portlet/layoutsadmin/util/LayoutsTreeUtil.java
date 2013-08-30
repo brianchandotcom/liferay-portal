@@ -131,7 +131,6 @@ public class LayoutsTreeUtil {
 						virtualLayout.isPrivateLayout(),
 						virtualLayout.getLayoutId(), expandedLayoutIds,
 						incomplete);
-
 				}
 				else {
 					childrenJSON = getLayoutsJSON(

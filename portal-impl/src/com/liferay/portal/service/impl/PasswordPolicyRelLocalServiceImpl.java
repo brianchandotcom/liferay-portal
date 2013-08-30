@@ -90,7 +90,6 @@ public class PasswordPolicyRelLocalServiceImpl
 
 			passwordPolicyRelPersistence.remove(passwordPolicyRel);
 		}
-
 	}
 
 	@Override

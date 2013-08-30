@@ -108,7 +108,6 @@ public class ResultRow {
 	public void addDate(Date date, PortletURL portletURL) {
 		if (portletURL != null) {
 			addDate(_searchEntries.size(), date, portletURL.toString());
-
 		}
 		else {
 			addDate(_searchEntries.size(), date, null);
@@ -298,7 +297,6 @@ public class ResultRow {
 		if (portletURL != null) {
 			addStatus(
 				_searchEntries.size(), status, 0, null, portletURL.toString());
-
 		}
 		else {
 			addStatus(_searchEntries.size(), status, 0, null, null);

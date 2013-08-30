@@ -176,7 +176,6 @@ public class ChannelHubManagerImpl implements ChannelHubManager {
 		}
 
 		return channelHub.fetchNotificationEvents(userId, flush);
-
 	}
 
 	@Override

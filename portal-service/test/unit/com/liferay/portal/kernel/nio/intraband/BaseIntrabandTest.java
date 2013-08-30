@@ -179,7 +179,6 @@ public class BaseIntrabandTest {
 
 			private final int _end;
 			private final int _start;
-
 		}
 
 		List<RegisterJob> registerJobs = new ArrayList<RegisterJob>(

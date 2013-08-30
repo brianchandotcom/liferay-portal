@@ -600,7 +600,6 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
 			if (showPortal &&
 				portlet.getPortletId().equals(PortletKeys.PORTAL)) {
-
 			}
 			else if (!showPortal &&
 					 portlet.getPortletId().equals(PortletKeys.PORTAL)) {

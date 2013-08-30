@@ -1486,7 +1486,6 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 						userId, folder.getFolderId(),
 						destinationFolder.getFolderId(), sourceLocalRepository,
 						destinationLocalRepository, serviceContext);
-
 				}
 				else if (folderAndFileEntryAndFileShortcut
 							instanceof DLFileShortcut) {

@@ -111,7 +111,6 @@ public class DefaultThreadLocalBinder implements ThreadLocalBinder {
 
 			_threadLocals.add(threadLocal);
 		}
-
 	}
 
 	@Override

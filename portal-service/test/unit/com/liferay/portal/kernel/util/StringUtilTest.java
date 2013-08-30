@@ -162,6 +162,10 @@ public class StringUtilTest {
 			"Aloha World HELLO WORLD Hello World",
 			StringUtil.replaceFirst(
 				"Hello World HELLO WORLD Hello World", "Hello", "Aloha"));
+		Assert.assertEquals(
+			"Hello World HELLO WORLD Aloha World",
+			StringUtil.replaceFirst(
+				"Hello World HELLO WORLD Hello World", "Hello", "Aloha", 10));
 	}
 
 	@Test

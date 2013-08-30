@@ -2394,6 +2394,12 @@ public class StringUtil {
 	 *         string <code>newSub</code>
 	 */
 	public static String replaceFirst(String s, String oldSub, String newSub) {
+		return replaceFirst(s, oldSub, newSub, 0);
+	}
+
+	public static String replaceFirst(
+		String s, String oldSub, String newSub, int fromIndex) {
+
 		if ((s == null) || (oldSub == null) || (newSub == null)) {
 			return null;
 		}
@@ -2402,7 +2408,7 @@ public class StringUtil {
 			return s;
 		}
 
-		int y = s.indexOf(oldSub);
+		int y = s.indexOf(oldSub, fromIndex);
 
 		if (y >= 0) {
 			return s.substring(0, y).concat(newSub).concat(

@@ -98,7 +98,6 @@ public class PortalResiliencyActionTest {
 		HttpSession session = _mockHttpServletRequest.getSession();
 
 		session.setAttribute(WebKeys.USER_PASSWORD, "password");
-
 	}
 
 	@After

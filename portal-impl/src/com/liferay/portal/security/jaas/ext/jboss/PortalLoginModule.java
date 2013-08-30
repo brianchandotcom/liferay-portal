@@ -51,7 +51,6 @@ public class PortalLoginModule extends BasicLoginModule {
 			callerPrincipalGroup.addMember(getPrincipal());
 
 			principals.add(callerPrincipalGroup);
-
 		}
 
 		return commitValue;

@@ -223,7 +223,6 @@ public class LuceneIndexWriter extends BaseIndexWriter {
 						tokenized, boost, value);
 				}
 			}
-
 		}
 
 		return luceneDocument;

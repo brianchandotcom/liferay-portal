@@ -252,7 +252,6 @@ public class BlogsEntryAtomCollectionAdapter
 		finally {
 			StreamUtil.cleanUp(smallImageInputStream);
 		}
-
 	}
 
 	private static final String _COLLECTION_NAME = "blogs";

@@ -222,7 +222,6 @@ public class EditWorkflowDefinitionAction extends PortletAction {
 		finally {
 			StreamUtil.cleanUp(inputStream);
 		}
-
 	}
 
 	private static final boolean _CHECK_METHOD_ON_PROCESS_ACTION = false;

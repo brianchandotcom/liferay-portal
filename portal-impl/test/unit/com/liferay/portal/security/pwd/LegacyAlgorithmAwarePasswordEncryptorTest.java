@@ -282,7 +282,6 @@ public class LegacyAlgorithmAwarePasswordEncryptorTest {
 				encryptedPassword,
 				PasswordEncryptorUtil.encrypt(
 					algorithm, "password", encryptedPassword));
-
 		}
 		finally {
 			PropsValues.PASSWORDS_ENCRYPTION_ALGORITHM_LEGACY =

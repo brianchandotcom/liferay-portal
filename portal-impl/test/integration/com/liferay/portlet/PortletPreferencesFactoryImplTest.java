@@ -149,7 +149,6 @@ public class PortletPreferencesFactoryImplTest {
 		Assert.assertEquals("value2", values[0]);
 		Assert.assertEquals("value3", values[1]);
 		Assert.assertTrue(preference.isReadOnly());
-
 	}
 
 	@Test

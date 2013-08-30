@@ -489,7 +489,6 @@ public class PortalImpl implements Portal {
 		}
 
 		descriptionListMergeable.add(description);
-
 	}
 
 	@Override

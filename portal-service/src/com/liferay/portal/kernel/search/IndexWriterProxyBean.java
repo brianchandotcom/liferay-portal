@@ -85,13 +85,11 @@ public class IndexWriterProxyBean extends BaseMultiDestinationProxyBean
 	@Override
 	public void indexQuerySuggestionDictionaries(SearchContext searchContext) {
 		throw new UnsupportedOperationException();
-
 	}
 
 	@Override
 	public void indexQuerySuggestionDictionary(SearchContext searchContext) {
 		throw new UnsupportedOperationException();
-
 	}
 
 	@Override

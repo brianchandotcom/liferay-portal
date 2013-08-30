@@ -123,7 +123,6 @@ public class UpgradeAsset extends UpgradeProcess {
 
 			updateIGImageClassNameWithClassTypeId(
 				dlFileEntryClassNameId, igImageClassNameId);
-
 		}
 		else {
 			updateIGImageClassNameWithoutClassTypeId(

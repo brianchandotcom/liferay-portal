@@ -947,7 +947,6 @@ public class HookHotDeployListener
 			String localeKey = languagePropertiesLocation.substring(x + 1, y);
 
 			locale = LocaleUtil.fromLanguageId(localeKey);
-
 		}
 
 		return locale;

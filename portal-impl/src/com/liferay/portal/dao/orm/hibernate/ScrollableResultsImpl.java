@@ -96,7 +96,6 @@ public class ScrollableResultsImpl implements ScrollableResults {
 		catch (Exception e) {
 			throw ExceptionTranslator.translate(e);
 		}
-
 	}
 
 	private org.hibernate.ScrollableResults _scrollableResults;

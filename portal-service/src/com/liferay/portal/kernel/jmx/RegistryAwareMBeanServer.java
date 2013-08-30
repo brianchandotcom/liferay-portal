@@ -71,7 +71,6 @@ public class RegistryAwareMBeanServer implements MBeanServer {
 		_mBeanServer.addNotificationListener(
 			platformObjectName, platformListenerObjectName, notificationFilter,
 			handback);
-
 	}
 
 	@Override
@@ -359,7 +358,6 @@ public class RegistryAwareMBeanServer implements MBeanServer {
 		_mBeanServer.removeNotificationListener(
 			platformObjectName, platformListenerObjectName, notificationFilter,
 			handback);
-
 	}
 
 	@Override

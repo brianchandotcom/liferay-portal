@@ -902,7 +902,6 @@ public class CharPipeTest {
 					_failed = true;
 				}
 			}
-
 		}
 
 		private int _dataSize;

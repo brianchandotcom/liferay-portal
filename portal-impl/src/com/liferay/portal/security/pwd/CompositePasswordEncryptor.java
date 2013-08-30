@@ -63,7 +63,6 @@ public class CompositePasswordEncryptor
 				_passwordEncryptors.put(
 					supportedAlgorithmType, passwordEncryptor);
 			}
-
 		}
 	}
 

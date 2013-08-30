@@ -379,7 +379,6 @@ public class RepositorySearchQueryBuilderImpl
 				translateQuery(
 					subbooleanQuery, searchContext, booleanClause.getQuery(),
 					booleanClause.getOccur());
-
 			}
 
 			if (conjunctionQuery.hasClauses()) {

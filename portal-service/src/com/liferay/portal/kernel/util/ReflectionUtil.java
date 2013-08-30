@@ -261,7 +261,6 @@ public class ReflectionUtil {
 			System.arraycopy(
 				constructorParameters, 0, parameters, 2,
 				constructorParameters.length);
-
 		}
 		else {
 			parameters = new Object[2];

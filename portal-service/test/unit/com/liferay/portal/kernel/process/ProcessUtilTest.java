@@ -300,7 +300,6 @@ public class ProcessUtilTest {
 			Assert.assertEquals(
 				RejectedExecutionException.class, throwable.getClass());
 		}
-
 	}
 
 	@Test

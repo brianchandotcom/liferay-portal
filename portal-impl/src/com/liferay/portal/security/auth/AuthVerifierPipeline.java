@@ -242,7 +242,6 @@ public class AuthVerifierPipeline {
 					mergedProperties.setProperty(
 						propertiesKey, (String)settingsValue);
 				}
-
 			}
 		}
 

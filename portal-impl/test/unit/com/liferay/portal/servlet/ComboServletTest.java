@@ -144,7 +144,6 @@ public class ComboServletTest extends PowerMockito {
 		else {
 			Assert.assertEquals(servletContext.getResource(path), resourceURL);
 		}
-
 	}
 
 	private static final String _JAVASCRIPT_DIR = "html/js";

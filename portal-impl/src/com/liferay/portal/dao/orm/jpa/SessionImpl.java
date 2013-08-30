@@ -237,7 +237,6 @@ public class SessionImpl implements Session {
 			entityClass);
 
 		return query.getSingleResult();
-
 	}
 
 	@PersistenceContext

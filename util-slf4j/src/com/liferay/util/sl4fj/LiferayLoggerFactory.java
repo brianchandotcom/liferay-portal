@@ -64,7 +64,6 @@ public class LiferayLoggerFactory implements ILoggerFactory {
 			finally {
 				_writeLock.unlock();
 			}
-
 		}
 
 		return logger;

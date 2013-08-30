@@ -253,7 +253,6 @@ public class ServletContextUtil {
 				}
 
 				jarFile.close();
-
 			}
 			else if (path.endsWith(StringPool.SLASH)) {
 				_getClassNames(

@@ -88,13 +88,6 @@ if (Validator.isNotNull(keywords)) {
 	/>
 </c:if>
 
-<c:if test="<%= Validator.isNotNull(keywords) %>">
-	<liferay-ui:header
-		backURL="<%= redirect %>"
-		title="search"
-	/>
-</c:if>
-
 <liferay-portlet:renderURL varImpl="searchURL">
 	<portlet:param name="struts_action" value="/trash/view" />
 </liferay-portlet:renderURL>

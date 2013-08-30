@@ -6,11 +6,13 @@
 
 	.category-subscriptions {
 		clear: both;
+		margin-bottom: 1em;
 		overflow: hidden;
 	}
 
 	.category-subscription-types {
 		float: right;
+		margin-bottom: 0;
 	}
 
 	.quote {

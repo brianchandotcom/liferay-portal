@@ -155,29 +155,30 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 		/* ---------- Control Panel Home Category Header ---------- */
 
-		.control-panel-home-category-header {
+		.control-panel-home-category-header a {
 			background: none no-repeat 0 50%;
 			border-bottom: 1px solid #D4D4D4;
 			color: #009AE5;
+			display: block;
 			font-size: 24px;
 			font-weight: 200;
 			margin-bottom: 30px;
 			padding-left: 47px;
 		}
 
-		#control-panel-home-category-headerapps {
+		#control-panel-home-category-headerapps a {
 			background-image: url(../images/custom/home_apps.png);
 		}
 
-		#control-panel-home-category-headerconfiguration {
+		#control-panel-home-category-headerconfiguration a {
 			background-image: url(../images/custom/home_configuration.png);
 		}
 
-		#control-panel-home-category-headersites {
+		#control-panel-home-category-headersites a {
 			background-image: url(../images/custom/home_sites.png);
 		}
 
-		#control-panel-home-category-headerusers {
+		#control-panel-home-category-headerusers a {
 			background-image: url(../images/custom/home_users.png);
 		}
 	}

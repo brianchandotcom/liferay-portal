@@ -30,11 +30,11 @@
 		%>
 
 			<aui:col width="<%= 25 %>">
-				<aui:a href="<%= urlControlPanelCategory %>">
 					<h3 class="control-panel-home-category-header" id='<%= "control-panel-home-category-header" + category %>'>
-						<%= title %>
+						<aui:a href="<%= urlControlPanelCategory %>">
+							<%= title %>
+						</aui:a>
 					</h3>
-				</aui:a>
 
 					<ul class="unstyled">
 

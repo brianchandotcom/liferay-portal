@@ -528,7 +528,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 					.dropdown-toggle {
 						i.caret {
-							background: url(../images/custom/arrow_option_down.png) no-repeat 0 0;
+							background: url(../images/arrows/13_down.png) no-repeat 0 0;
 							border-width: 0;
 							height: 20px;
 							margin: 0;

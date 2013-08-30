@@ -578,26 +578,23 @@
 
 				.toggler-header {
 					background: #F2F2F2;
+					border: solid #D3D3D3;
+					border-width: 1px 0;
 					padding: 6px 10px;
 
 					@include user-select(none);
 
 					.accordion-toggle {
-						background: #F2F2F2 url(../../control_panel/images/custom/arrow_option.png) no-repeat 100% -20px;
+						background: #F2F2F2 url(../images/arrows/13_left.png) no-repeat 100% -20px;
 					}
 				}
 
 				.toggler-header-collapsed {
-					border-top: 1px solid #D3D3D3;
+					border-bottom-width: 0;
 
 					.accordion-toggle {
 						background-position: 100% 0;
 					}
-				}
-
-				.toggler-header-expanded {
-					border-top: 1px solid #D3D3D3;
-					border-bottom: 1px solid #D3D3D3;
 				}
 			}
 		}

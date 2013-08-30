@@ -2017,7 +2017,7 @@
 
 			if (searchContainer) {
 				searchContainer.delegate(
-					'change',
+					EVENT_CLICK,
 					function() {
 						Liferay.Util.toggleDisabled(buttonId, !Liferay.Util.listCheckedExcept(form, ignoreFieldName));
 					},

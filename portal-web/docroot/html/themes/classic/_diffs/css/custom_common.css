@@ -115,6 +115,10 @@
 		margin-top: 0;
 	}
 
+	.btn.disabled, .btn[disabled] {
+		opacity: 0.4;
+	}
+
 	.btn-link {
 		color: #555;
 		text-decoration: none;

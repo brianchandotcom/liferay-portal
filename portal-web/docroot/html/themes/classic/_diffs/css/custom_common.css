@@ -421,6 +421,37 @@
 		.only .divider {
 			display: none;
 		}
+
+		@include respond-to(phone) {
+			padding-left: 5px;
+			padding-right: 5px;
+
+			li {
+				display: none;
+
+				&.only, &.first, &.last, &.second-to-last {
+					display: inline-block;
+				}
+
+				&.show-ellipsis {
+					&.only, &.first a, &.last a, &.active, &.second-to-last a {
+						display: inline-block;
+						max-width: 65px;
+						overflow: hidden;
+						text-overflow: ellipsis;
+						white-space: nowrap;
+					}
+
+					&.second-to-last {
+						&:before {
+							content: " ... / ";
+							color: #999;
+							font-weight: bold;
+						}
+					}
+				}
+			}
+		}
 	}
 
 	/* ---------- Form navigator ---------- */

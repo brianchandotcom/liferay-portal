@@ -421,18 +421,30 @@ public class BreadcrumbTag extends IncludeTag {
 			return StringPool.BLANK;
 		}
 
+		boolean showEllipsis = breadcrumbString.split("<li", -1).length > 3;
+		String showEllipsisClass = showEllipsis ? " show-ellipsis" : StringPool.BLANK;
+
 		int x = breadcrumbString.indexOf("<li") + 3;
 		int y = breadcrumbString.lastIndexOf("<li") + 3;
 
 		if (x == y) {
 			breadcrumbString = StringUtil.insert(
-				breadcrumbString, " class=\"active only\"", x);
+				breadcrumbString, " class=\"active only" + showEllipsisClass + "\"", x);
 		}
 		else {
 			breadcrumbString = StringUtil.insert(
-				breadcrumbString, " class=\"active last\"", y);
+				breadcrumbString, " class=\"active last" + showEllipsisClass + "\"", y);
 			breadcrumbString = StringUtil.insert(
-				breadcrumbString, " class=\"first\"", x);
+				breadcrumbString, " class=\"first" + showEllipsisClass + "\"", x);
+		}
+
+		if (showEllipsis) {
+			y = breadcrumbString.lastIndexOf("<li");
+
+			int z = breadcrumbString.lastIndexOf("<li", y - 1) + 3;
+
+			breadcrumbString = StringUtil.insert(
+				breadcrumbString, " class=\"second-to-last" + showEllipsisClass + "\"", z);
 		}
 
 		return breadcrumbString;

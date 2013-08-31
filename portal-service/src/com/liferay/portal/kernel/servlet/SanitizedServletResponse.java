@@ -14,16 +14,24 @@
 
 package com.liferay.portal.kernel.servlet;
 
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
@@ -105,29 +113,14 @@ public class SanitizedServletResponse extends HttpServletResponseWrapper {
 			return;
 		}
 
-		if (_xFrameOptionsProperties.size() > 0) {
-			String requestURI = request.getRequestURI();
+		String requestURI = request.getRequestURI();
 
-			for (int i = 0; i < 256; i++) {
-				String key = "url." + i;
+		for (KeyValuePair keyValuePair : _xFrameOptions) {
+			String url = keyValuePair.getKey();
 
-				if (!_xFrameOptionsProperties.containsKey(key)) {
-					continue;
-				}
-
-				String url = StringUtil.trim(
-					_xFrameOptionsProperties.getProperty(key));
-
-				if (!requestURI.startsWith(url)) {
-					continue;
-				}
-
-				String value = StringUtil.trim(
-					_xFrameOptionsProperties.getProperty("value." + i));
-
-				if (Validator.isNotNull(value)) {
-					response.setHeader(HttpHeaders.X_FRAME_OPTIONS, value);
-				}
+			if (requestURI.startsWith(url)) {
+				response.setHeader(
+					HttpHeaders.X_FRAME_OPTIONS, keyValuePair.getValue());
 
 				return;
 			}
@@ -159,14 +152,84 @@ public class SanitizedServletResponse extends HttpServletResponseWrapper {
 		PropsUtil.getArray(
 			PropsKeys.HTTP_HEADER_SECURE_X_CONTENT_TYPE_OPTIONS_URLS_EXCLUDES);
 
-	private static final boolean _X_FRAME_OPTIONS = GetterUtil.getBoolean(
-		PropsUtil.get(PropsKeys.HTTP_HEADER_SECURE_X_FRAME_OPTIONS), true);
+	private static final boolean _X_FRAME_OPTIONS;
 
 	private static final boolean _X_XSS_PROTECTION = GetterUtil.getBoolean(
 		PropsUtil.get(PropsKeys.HTTP_HEADER_SECURE_X_XSS_PROTECTION), true);
 
-	private static Properties _xFrameOptionsProperties =
-		PropsUtil.getProperties(
-			PropsKeys.HTTP_HEADER_SECURE_X_FRAME_OPTIONS + ".", true);
+	private static final KeyValuePair[] _xFrameOptions;
+
+	static {
+		Properties properties =
+			PropsUtil.getProperties(
+				PropsKeys.HTTP_HEADER_SECURE_X_FRAME_OPTIONS +
+					StringPool.PERIOD, true);
+
+		List<KeyValuePair> keyValuePairs = new ArrayList<KeyValuePair>(
+			properties.size());
+
+		for (Map.Entry<Object, Object> entry : properties.entrySet()) {
+			String key = (String)entry.getKey();
+
+			String value = (String)entry.getValue();
+
+			keyValuePairs.add(new KeyValuePair(key, value));
+		}
+
+		Collections.sort(keyValuePairs, new Comparator<KeyValuePair>() {
+
+			@Override
+			public int compare(
+				KeyValuePair keyValuePair1, KeyValuePair keyValuePair2) {
+
+				int key1 = GetterUtil.getIntegerStrict(keyValuePair1.getKey());
+
+				int key2 = GetterUtil.getIntegerStrict(keyValuePair2.getKey());
+
+				return key1 - key2;
+			}
+
+		});
+
+		List<KeyValuePair> xFrameOptions = new ArrayList<KeyValuePair>(
+			keyValuePairs.size());
+
+		for (KeyValuePair keyValuePair : keyValuePairs) {
+			String xFrameOptionLine = keyValuePair.getValue();
+
+			String[] xFrameOption = StringUtil.split(
+				xFrameOptionLine, CharPool.COMMA);
+
+			if (xFrameOption.length != 2) {
+				continue;
+			}
+
+			String url = StringUtil.trim(xFrameOption[0]);
+
+			if (Validator.isNull(url)) {
+				continue;
+			}
+
+			String value = StringUtil.trim(xFrameOption[1]);
+
+			if (Validator.isNull(value)) {
+				continue;
+			}
+
+			xFrameOptions.add(new KeyValuePair(url, value));
+		}
+
+		_xFrameOptions = xFrameOptions.toArray(
+			new KeyValuePair[xFrameOptions.size()]);
+
+		if (_xFrameOptions.length == 0) {
+			_X_FRAME_OPTIONS = false;
+		}
+		else {
+			_X_FRAME_OPTIONS = GetterUtil.getBoolean(
+				PropsUtil.get(PropsKeys.HTTP_HEADER_SECURE_X_FRAME_OPTIONS),
+				true);
+		}
+	}
 
 }

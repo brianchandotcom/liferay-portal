@@ -52,7 +52,7 @@
 
 		<execute macro="Page#gotoMyDashboard" />
 
-		<execute macro="Site#joinOpenViaMySitesPG">
+		<execute macro="Site#joinViaMySitesPG">
 			<var name="siteName" value="${siteName}" />
 		</execute>
 
@@ -71,6 +71,7 @@
 	</command>
 
 	<command name="JoinSitePrivateNo">
+		<var name="membershipType" value="Private" />
 		<var name="password" value="test" />
 		<var name="siteName" value="Site Name" />
 		<var name="userScreenName" value="usersn" />
@@ -116,9 +117,126 @@
 
 		<execute macro="Page#gotoMyDashboard" />
 
-		<execute macro="Site#joinPrivateViaMySitesNoPG">
+		<execute macro="Site#joinViaMySitesPG">
+			<var name="membershipType" value="${membershipType}" />
 			<var name="siteName" value="${siteName}" />
 		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginPG">
+			<var name="userEmailAddress" value="test@liferay.com" />
+			<var name="password" value="${password}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#tearDownCP" />
+	</command>
+
+	<command name="JoinSiteRestricted">
+		<var name="membershipType" value="Restricted" />
+		<var name="password" value="test" />
+		<var name="siteName" value="Site Name" />
+		<var name="userScreenName" value="usersn" />
+		<var name="userEmailAddress" value="userea@liferay.com" />
+		<var name="userFirstName" value="userfn" />
+		<var name="userLastName" value="userln" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="${siteName}" />
+			<var name="membershipType" value="${membershipType}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userScreenName" value="${userScreenName}" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordCP">
+			<var name="userScreenName" value="${userScreenName}" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginPG" >
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="password" value="${password}" />
+		</execute>
+
+		<execute macro="Page#gotoMyDashboard" />
+
+		<execute macro="Site#joinViaMySitesPG">
+			<var name="membershipType" value="${membershipType}" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginPG">
+			<var name="userEmailAddress" value="test@liferay.com" />
+			<var name="password" value="${password}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="siteScopeName" value="${siteName}" />
+			<var name="portletName" value="Site Memberships" />
+		</execute>
+
+		<execute action="CPSitememberships#assertTextEquals" locator-key1="MEMBERSHIP_TYPE" value1="Membership Type: Restricted"/>
+		<execute action="CPSitememberships#assertTextEquals" locator-key1="REQUEST_MESSAGE" value1="There are 1 membership requests pending." />
+		<execute action="CPSitememberships#assertClick" locator-key1="TOOLBAR_VIEW_MEMBERSHIP_REQUESTS" value1="View Membership Requests" />
+
+		<execute action="CPSitemembershipsViewmembershiprequestsPending#assertTextEquals" locator-key1="REQUESTS_TABLE_USER_NAME" value1="${userFirstName} ${userLastName} (${userEmailAddress})" />
+		<execute action="CPSitemembershipsViewmembershiprequestsPending#assertTextEquals" locator-key1="REQUESTS_TABLE_USER_COMMENTS" value1="Please allow me to join the Restricted Site." />
+		<execute action="CPSitemembershipsViewmembershiprequestsPending#assertClick" locator-key1="REQUESTS_TABLE_REPLY" value1="Reply" />
+
+		<execute action="CPSitemembershipsViewmembershiprequestsPendingReply#select" locator-key1="STATUS" value1="Approve" />
+		<execute action="CPSitemembershipsViewmembershiprequestsPendingReply#type" locator-key1="REPLY_COMMENTS" value1="You may join the Restricted Site." />
+		<execute action="CPSitemembershipsViewmembershiprequestsPendingReply#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+
+		<execute action="CPSitemembershipsViewmembershiprequestsPending#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="CPSitemembershipsViewmembershiprequestsPending#assertTextEquals" locator-key1="SUCCESS_MESSAGE_2" value1="Your reply will be sent to the user by email." />
+		<execute action="CPSitemembershipsViewmembershiprequestsPending#assertClick" locator-key1="VIEW_MEMBERSHIP_NAVIGATION_APPROVED" value1="Approved" />
+
+		<execute action="CPSitemembershipsViewmembershiprequestsApproved#assertTextEquals" locator-key1="APPROVED_TABLE_USER_NAME" value1="${userFirstName} ${userLastName} (${userEmailAddress})" />
+		<execute action="CPSitemembershipsViewmembershiprequestsApproved#assertTextEquals" locator-key1="APPROVED_TABLE_USER_COMMENTS" value1="Please allow me to join the Restricted Site." />
+		<execute action="CPSitemembershipsViewmembershiprequestsApproved#assertTextEquals" locator-key1="APPROVED_TABLE_REPLIER_NAME" value1="Test Test" />
+		<execute action="CPSitemembershipsViewmembershiprequestsApproved#assertTextEquals" locator-key1="APPROVED_TABLE_REPLY_COMMENTS" value1="You may join the Restricted Site." />
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginPG" >
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="password" value="${password}" />
+		</execute>
+
+		<execute macro="Page#gotoMyDashboard" />
+
+		<execute action="Mydashboard#assertTextEquals" locator-key1="MY_SITES" value1="My Sites" />
+		<execute action="Mydashboard#assertTextEquals" locator-key1="SITE_NAME" value1="${siteName}" />
+		<execute action="Mydashboard#assertTextEquals" locator-key1="SITE_NAME_MEMBERS" value1="2" />
 
 		<execute macro="User#logoutPG" />
 
@@ -179,7 +297,7 @@
 
 		<execute macro="Page#gotoMyDashboard" />
 
-		<execute macro="Site#joinOpenViaMySitesPG">
+		<execute macro="Site#joinViaMySitesPG">
 			<var name="siteName" value="${siteName}" />
 		</execute>
 

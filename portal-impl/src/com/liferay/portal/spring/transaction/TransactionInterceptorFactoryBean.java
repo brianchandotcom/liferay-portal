@@ -14,35 +14,51 @@
 
 package com.liferay.portal.spring.transaction;
 
+import com.liferay.portal.dao.jdbc.aop.DynamicDataSourceAdvice;
 import com.liferay.portal.dao.jdbc.aop.DynamicDataSourceTargetSource;
-import com.liferay.portal.dao.jdbc.aop.DynamicDataSourceTransactionInterceptor;
 import com.liferay.portal.kernel.spring.util.FactoryBean;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
+
+import org.aopalliance.intercept.MethodInterceptor;
 
 /**
  * @author Shuyang Zhou
  */
 public class TransactionInterceptorFactoryBean
-	implements FactoryBean<TransactionInterceptor> {
+	implements FactoryBean<MethodInterceptor> {
 
 	@Override
-	public TransactionInterceptor create() {
+	public MethodInterceptor create() {
+		return new TransactionInterceptor();
+	}
+
+	@Override
+	public MethodInterceptor postProcessing(
+		MethodInterceptor methodInterceptor) {
+
 		DynamicDataSourceTargetSource dynamicDataSourceTargetSource =
 			(DynamicDataSourceTargetSource)
 				InfrastructureUtil.getDynamicDataSourceTargetSource();
 
 		if (dynamicDataSourceTargetSource == null) {
-			return new TransactionInterceptor();
+			return methodInterceptor;
 		}
 
-		DynamicDataSourceTransactionInterceptor
-			dynamicDataSourceTransactionInterceptor =
-				new DynamicDataSourceTransactionInterceptor();
+		DynamicDataSourceAdvice dynamicDataSourceAdvice =
+			new DynamicDataSourceAdvice();
 
-		dynamicDataSourceTransactionInterceptor.
-			setDynamicDataSourceTargetSource(dynamicDataSourceTargetSource);
+		dynamicDataSourceAdvice.setDynamicDataSourceTargetSource(
+			dynamicDataSourceTargetSource);
 
-		return dynamicDataSourceTransactionInterceptor;
+		TransactionInterceptor transactionInterceptor =
+			(TransactionInterceptor)methodInterceptor;
+
+		dynamicDataSourceAdvice.setTransactionAttributeSource(
+			transactionInterceptor.transactionAttributeSource);
+
+		dynamicDataSourceAdvice.setNextMethodInterceptor(methodInterceptor);
+
+		return dynamicDataSourceAdvice;
 	}
 
 }

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.spring.aop;
 
+import org.aopalliance.intercept.MethodInterceptor;
+
 /**
  * @author Shuyang Zhou
  */
@@ -36,10 +38,51 @@ public class ChainableMethodAdviceInjector {
 				"Parent chainable method advice is null");
 		}
 
+		if (_childMethodInterceptor == null) {
+			_newChainableMethodAdvice.nextMethodInterceptor =
+				_parentChainableMethodAdvice.nextMethodInterceptor;
+			_parentChainableMethodAdvice.nextMethodInterceptor =
+				_newChainableMethodAdvice;
+
+			return;
+		}
+
+		ChainableMethodAdvice parentChainableMethodAdvice =
+			_parentChainableMethodAdvice;
+
+		while ((parentChainableMethodAdvice != null) &&
+			   (parentChainableMethodAdvice.nextMethodInterceptor !=
+				_childMethodInterceptor)) {
+
+			MethodInterceptor methodInterceptor =
+				parentChainableMethodAdvice.nextMethodInterceptor;
+
+			if (!(methodInterceptor instanceof ChainableMethodAdvice)) {
+				break;
+			}
+
+			parentChainableMethodAdvice =
+				(ChainableMethodAdvice)methodInterceptor;
+		}
+
+		if (parentChainableMethodAdvice.nextMethodInterceptor !=
+				_childMethodInterceptor) {
+
+			throw new IllegalArgumentException(
+				"Start from " + _parentChainableMethodAdvice +
+					" can not find " + _childMethodInterceptor);
+		}
+
 		_newChainableMethodAdvice.nextMethodInterceptor =
-			_parentChainableMethodAdvice.nextMethodInterceptor;
-		_parentChainableMethodAdvice.nextMethodInterceptor =
+			parentChainableMethodAdvice.nextMethodInterceptor;
+		parentChainableMethodAdvice.nextMethodInterceptor =
 			_newChainableMethodAdvice;
+	}
+
+	public void setChildMethodInterceptor(
+		MethodInterceptor childMethodInterceptor) {
+
+		_childMethodInterceptor = childMethodInterceptor;
 	}
 
 	public void setInjectCondition(boolean injectCondition) {
@@ -58,6 +101,7 @@ public class ChainableMethodAdviceInjector {
 		_parentChainableMethodAdvice = parentChainableMethodAdvice;
 	}
 
+	private MethodInterceptor _childMethodInterceptor;
 	private boolean _injectCondition;
 	private ChainableMethodAdvice _newChainableMethodAdvice;
 	private ChainableMethodAdvice _parentChainableMethodAdvice;

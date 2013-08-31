@@ -253,7 +253,6 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 			else {
 				ehcachePortalCache.setEhcache(ehcache);
 			}
-
 		}
 
 		return ehcachePortalCache;

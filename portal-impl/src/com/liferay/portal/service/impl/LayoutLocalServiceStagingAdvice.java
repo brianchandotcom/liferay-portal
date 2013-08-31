@@ -634,7 +634,6 @@ public class LayoutLocalServiceStagingAdvice implements MethodInterceptor {
 					returnValue = wrapLayouts(
 						(List<Layout>)returnValue, showIncomplete);
 				}
-
 			}
 		}
 

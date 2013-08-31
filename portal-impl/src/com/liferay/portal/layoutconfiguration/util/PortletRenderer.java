@@ -129,7 +129,6 @@ public class PortletRenderer {
 			request.setAttribute(
 				WebKeys.PORTLET_PARALLEL_RENDER, portletParallelRender);
 		}
-
 	}
 
 	private static final String _RENDER_PATH =

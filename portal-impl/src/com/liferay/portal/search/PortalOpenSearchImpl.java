@@ -164,7 +164,6 @@ public class PortalOpenSearchImpl extends BaseOpenSearchImpl {
 			}
 
 			return doc.asXML();
-
 		}
 		catch (Exception e) {
 			throw new SearchException(e);

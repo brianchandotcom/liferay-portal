@@ -149,7 +149,6 @@ public class MBCategoryAssetRenderer extends BaseAssetRenderer {
 
 		return MBCategoryPermission.contains(
 			permissionChecker, _category, ActionKeys.VIEW);
-
 	}
 
 	@Override

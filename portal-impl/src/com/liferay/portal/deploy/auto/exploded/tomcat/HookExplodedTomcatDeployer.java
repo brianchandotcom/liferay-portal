@@ -38,7 +38,6 @@ public class HookExplodedTomcatDeployer
 		catch (Exception e) {
 			throw new AutoDeployException(e);
 		}
-
 	}
 
 }

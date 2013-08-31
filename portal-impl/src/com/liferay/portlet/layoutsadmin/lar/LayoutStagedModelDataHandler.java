@@ -1113,7 +1113,6 @@ public class LayoutStagedModelDataHandler
 			}
 
 			importedLayout.setTypeSettings(layout.getTypeSettings());
-
 		}
 		finally {
 			layout.setGroupId(groupId);

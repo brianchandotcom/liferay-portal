@@ -40,7 +40,6 @@ public class ImageNode extends URLNode {
 		super(tokenType, uri);
 
 		_altCollectionNode = altCollectionNode;
-
 	}
 
 	@Override

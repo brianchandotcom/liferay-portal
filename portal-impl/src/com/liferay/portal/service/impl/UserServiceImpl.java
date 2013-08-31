@@ -175,7 +175,6 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 
 		OrganizationMembershipPolicyUtil.propagateMembership(
 			userIds, new long[] {organizationId}, null);
-
 	}
 
 	/**

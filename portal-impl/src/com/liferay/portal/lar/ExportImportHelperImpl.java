@@ -413,7 +413,6 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 			manifestSummary = getManifestSummary(
 				userId, groupId, parameterMap, newFile);
-
 		}
 		finally {
 			if (rename) {

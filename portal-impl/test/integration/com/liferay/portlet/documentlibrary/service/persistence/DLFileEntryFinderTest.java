@@ -186,7 +186,6 @@ public class DLFileEntryFinderTest {
 			0,
 			doCountBy_G_U_F_M(
 				_folder.getUserId(), ContentTypes.TEXT_PLAIN, queryDefinition));
-
 	}
 
 	@Test

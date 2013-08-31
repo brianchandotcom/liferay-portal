@@ -120,7 +120,6 @@ public class BaseTestCase extends LiferaySeleneseTestCase {
 
 			selenium.getEval("window.Liferay.fire(\'initDockbar\');");
 		}
-
 	}
 
 	protected static int testCaseCount;

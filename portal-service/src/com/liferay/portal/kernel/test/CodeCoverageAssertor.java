@@ -173,7 +173,6 @@ public class CodeCoverageAssertor implements TestRule {
 		catch (Exception e) {
 			throw new ExceptionInInitializerError(e);
 		}
-
 	}
 
 }

@@ -806,7 +806,6 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 				throw new NoSuchPageException();
 			}
 		}
-
 	}
 
 	@Override

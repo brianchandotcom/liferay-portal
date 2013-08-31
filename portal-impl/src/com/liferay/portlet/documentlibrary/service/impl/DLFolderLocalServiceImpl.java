@@ -368,7 +368,6 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 				unlockFolder(folderId, lock.getUuid());
 			}
 		}
-
 	}
 
 	@Override

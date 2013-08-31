@@ -236,7 +236,6 @@ public class MPIHelperUtilTest {
 		Assert.assertFalse(spiKey1.equals(spiKey2));
 		Assert.assertEquals("name1#id1", spiKey1.toString());
 		Assert.assertEquals("name1#id2", spiKey2.toString());
-
 	}
 
 	@AdviseWith(adviceClasses = {PropsUtilAdvice.class})

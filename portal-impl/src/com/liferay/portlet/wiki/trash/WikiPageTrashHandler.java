@@ -258,7 +258,6 @@ public class WikiPageTrashHandler extends BaseTrashHandler {
 
 		WikiPageServiceUtil.restorePageAttachmentFromTrash(
 			page.getNodeId(), page.getTitle(), fileEntry.getTitle());
-
 	}
 
 	@Override

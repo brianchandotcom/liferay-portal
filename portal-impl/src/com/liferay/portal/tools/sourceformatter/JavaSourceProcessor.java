@@ -588,6 +588,52 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return StringUtil.replace(ifClause, line, newLine);
 	}
 
+	protected String fixIncorrectEmptyLineBeforeCloseCurlyBrace(
+		String content) {
+
+		Pattern pattern = Pattern.compile("\n\n(\t+)}\n");
+
+		Matcher matcher = pattern.matcher(content);
+
+		int x = 0;
+
+		while (matcher.find(x)) {
+			String tabs = matcher.group(1);
+			int tabCount = tabs.length();
+
+			int y = matcher.start();
+
+			while (true) {
+				y = content.lastIndexOf("\n" + tabs, y - 1);
+
+				if (content.charAt(y + tabCount + 1) == CharPool.TAB) {
+					continue;
+				}
+
+				String codeBlock = content.substring(y + tabCount + 1);
+
+				String firstLine = codeBlock.substring(
+					0, codeBlock.indexOf("\n"));
+
+				if (firstLine.contains(" class ") ||
+					firstLine.contains(" enum ") ||
+					firstLine.contains(" interface ") ||
+					firstLine.startsWith("new ") ||
+					firstLine.contains(" new ")) {
+
+					break;
+				}
+
+				return StringUtil.replaceFirst(
+					content, "\n\n" + tabs + "}\n", "\n" + tabs + "}\n", y);
+			}
+
+			x = matcher.end();
+		}
+
+		return content;
+	}
+
 	protected String fixJavaTermsDividers(
 		String fileName, String content, Set<JavaTerm> javaTerms) {
 
@@ -776,6 +822,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 
 		String newContent = content;
+
+		if (!fileName.endsWith("AnnotationLocatorTest.java")) {
+			newContent = fixIncorrectEmptyLineBeforeCloseCurlyBrace(newContent);
+		}
 
 		if (newContent.contains("$\n */")) {
 			processErrorMessage(fileName, "*: " + fileName);

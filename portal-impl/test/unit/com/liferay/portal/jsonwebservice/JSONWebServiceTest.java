@@ -215,7 +215,6 @@ public class JSONWebServiceTest extends BaseJSONWebServiceTestCase {
 		}
 		catch (Exception e) {
 		}
-
 	}
 
 	@Test

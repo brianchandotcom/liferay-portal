@@ -434,7 +434,6 @@ public class DeepNamedValueScanner {
 					_scan(element);
 				}
 			}
-
 		}
 		else if (_visitLists && (target instanceof List)) {
 			_scanCollection((List<Object>)target);

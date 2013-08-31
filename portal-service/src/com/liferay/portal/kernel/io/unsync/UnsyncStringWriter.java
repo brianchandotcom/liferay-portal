@@ -124,7 +124,6 @@ public class UnsyncStringWriter extends Writer {
 	@Override
 	public void write(char[] chars) {
 		write(chars, 0, chars.length);
-
 	}
 
 	@Override

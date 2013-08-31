@@ -33,7 +33,6 @@ public abstract class BasePasswordEncryptor implements PasswordEncryptor {
 		}
 
 		return doEncrypt(algorithm, plainTextPassword, encryptedPassword);
-
 	}
 
 	protected abstract String doEncrypt(

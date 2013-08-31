@@ -614,7 +614,6 @@ public class SQLTest {
 		finally {
 			DataAccess.cleanUp(connection, statement);
 		}
-
 	}
 
 	protected boolean isMySQL() {

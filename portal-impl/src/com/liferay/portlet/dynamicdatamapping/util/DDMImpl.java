@@ -356,7 +356,6 @@ public class DDMImpl implements DDM {
 
 				existingField.setDefaultLocale(newField.getDefaultLocale());
 			}
-
 		}
 
 		return existingFields;

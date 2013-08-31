@@ -283,7 +283,6 @@ public class JavadocBuilder {
 		Element commentElement = throwsElement.addElement("comment");
 
 		commentElement.addCDATA(_getCDATA(value));
-
 	}
 
 	private void _addThrowsElements(

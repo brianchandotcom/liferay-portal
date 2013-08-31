@@ -37,22 +37,21 @@ import javax.servlet.http.HttpServletResponseWrapper;
  * @author László Csontos
  * @author Shuyang Zhou
  * @author Tomas Polesovsky
- * @author Samuel Kong
  */
 public class SanitizedServletResponse extends HttpServletResponseWrapper {
 
-	public SanitizedServletResponse(
+	public static HttpServletResponse getSanitizedServletResponse(
 		HttpServletRequest request, HttpServletResponse response) {
 
-		super(response);
+		setXContentOptions(request, response);
+		setXFrameOptions(request, response);
+		setXXSSProtection(request, response);
 
 		if (ServerDetector.isTomcat()) {
-			_sanitizeHeaders = false;
+			return response;
 		}
 
-		setXContentOptions(request);
-		setXFrameOptions(request);
-		setXXSSProtection(request);
+		return new SanitizedServletResponse(response);
 	}
 
 	@Override
@@ -66,57 +65,33 @@ public class SanitizedServletResponse extends HttpServletResponseWrapper {
 
 	@Override
 	public void addHeader(String name, String value) {
-		if (_sanitizeHeaders) {
-			super.addHeader(
-				HttpUtil.sanitizeHeader(name), HttpUtil.sanitizeHeader(value));
-		}
-		else {
-			super.addHeader(name, value);
-		}
+		super.addHeader(
+			HttpUtil.sanitizeHeader(name), HttpUtil.sanitizeHeader(value));
 	}
 
 	@Override
 	public void sendRedirect(String location) throws IOException {
-		if (_sanitizeHeaders) {
-			super.sendRedirect(HttpUtil.sanitizeHeader(location));
-		}
-		else {
-			super.sendRedirect(location);
-		}
+		super.sendRedirect(HttpUtil.sanitizeHeader(location));
 	}
 
 	@Override
 	public void setCharacterEncoding(String charset) {
-		if (_sanitizeHeaders) {
-			super.setCharacterEncoding(HttpUtil.sanitizeHeader(charset));
-		}
-		else {
-			super.setCharacterEncoding(charset);
-		}
+		super.setCharacterEncoding(HttpUtil.sanitizeHeader(charset));
 	}
 
 	@Override
 	public void setContentType(String type) {
-		if (_sanitizeHeaders) {
-			super.setContentType(HttpUtil.sanitizeHeader(type));
-		}
-		else {
-			super.setContentType(type);
-		}
+		super.setContentType(HttpUtil.sanitizeHeader(type));
 	}
 
 	@Override
 	public void setHeader(String name, String value) {
-		if (_sanitizeHeaders) {
-			super.setHeader(
-				HttpUtil.sanitizeHeader(name), HttpUtil.sanitizeHeader(value));
-		}
-		else {
-			super.setHeader(name, value);
-		}
+		super.setHeader(
+			HttpUtil.sanitizeHeader(name), HttpUtil.sanitizeHeader(value));
 	}
 
-	protected void setXContentOptions(HttpServletRequest request) {
+	protected static void setXContentOptions(
+		HttpServletRequest request, HttpServletResponse response) {
 
 		if (!_X_CONTENT_TYPE_OPTIONS) {
 			return;
@@ -132,10 +107,11 @@ public class SanitizedServletResponse extends HttpServletResponseWrapper {
 			}
 		}
 
-		super.setHeader(HttpHeaders.X_CONTENT_TYPE_OPTIONS, "nosniff");
+		response.setHeader(HttpHeaders.X_CONTENT_TYPE_OPTIONS, "nosniff");
 	}
 
-	protected void setXFrameOptions(HttpServletRequest request) {
+	protected static void setXFrameOptions(
+		HttpServletRequest request, HttpServletResponse response) {
 
 		if (!_X_FRAME_OPTIONS) {
 			return;
@@ -162,23 +138,28 @@ public class SanitizedServletResponse extends HttpServletResponseWrapper {
 					_xFrameOptionsProperties.getProperty("value." + i));
 
 				if (Validator.isNotNull(value)) {
-					super.setHeader(HttpHeaders.X_FRAME_OPTIONS, value);
+					response.setHeader(HttpHeaders.X_FRAME_OPTIONS, value);
 				}
 
 				return;
 			}
 		}
 
-		super.setHeader(HttpHeaders.X_FRAME_OPTIONS, "DENY");
+		response.setHeader(HttpHeaders.X_FRAME_OPTIONS, "DENY");
 	}
 
-	protected void setXXSSProtection(HttpServletRequest request) {
+	protected static void setXXSSProtection(
+		HttpServletRequest request, HttpServletResponse response) {
 
 		if (!_X_XSS_PROTECTION) {
 			return;
 		}
 
-		super.setHeader(HttpHeaders.X_XSS_PROTECTION, "1; mode=block");
+		response.setHeader(HttpHeaders.X_XSS_PROTECTION, "1; mode=block");
+	}
+
+	private SanitizedServletResponse(HttpServletResponse response) {
+		super(response);
 	}
 
 	private static final boolean _X_CONTENT_TYPE_OPTIONS =
@@ -202,7 +183,5 @@ public class SanitizedServletResponse extends HttpServletResponseWrapper {
 	private static Properties _xFrameOptionsProperties =
 		PropsUtil.getProperties(
 			PropsKeys.HTTP_HEADER_SECURE_X_FRAME_OPTIONS + ".", true);
-
-	private boolean _sanitizeHeaders = true;
 
 }

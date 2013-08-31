@@ -44,11 +44,11 @@ public class SanitizedServletResponse extends HttpServletResponseWrapper {
 		setXFrameOptions(request, response);
 		setXXSSProtection(request, response);
 
-		if (ServerDetector.isTomcat()) {
-			return response;
+		if (ServerDetector.isResin()) {
+			response = new SanitizedServletResponse(response);
 		}
 
-		return new SanitizedServletResponse(response);
+		return response;
 	}
 
 	@Override

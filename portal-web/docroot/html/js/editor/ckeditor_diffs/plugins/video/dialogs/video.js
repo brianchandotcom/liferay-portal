@@ -4,17 +4,22 @@ CKEDITOR.dialog.add(
 		var TPL_SCRIPT_PREFIX = 'AUI().use(' +
 								'	"aui-base", "aui-video",' +
 								'	function(A) {' +
-								'		new A.Video(' +
-								'			{';
+								'		var videoId = A.guid();' +
+								'		var videoDivNode = A.one(".ckvideo-no-id");' +
+								'		videoDivNode.attr("id", videoId);' +
+								'		videoDivNode.removeClass("ckvideo-no-id");' +
+								'		var videoConfig = {';
 
-		var TPL_SCRIPT =		'				boundingBox: "#{videoBoxId}",' +
+		var TPL_SCRIPT =		'				boundingBox: "#" + videoId,' +
 								'				height: {height},' +
 								'				ogvUrl: "{ogvUrl}",' +
 								'				poster: "{poster}",' +
 								'				url: "{url}",' +
 								'				width: {width}';
 
-		var TPL_SCRIPT_SUFFIX = '			}' +
+		var TPL_SCRIPT_SUFFIX = '			};' +
+								'		new A.Video(' +
+								'				videoConfig' +
 								'		).render();' +
 								'	}' +
 								');';
@@ -25,22 +30,16 @@ CKEDITOR.dialog.add(
 			var id = instance.id;
 			var value = instance.getValue();
 
-			var scriptNode = videoNode.getChild(1);
-			var videoDivNode = videoNode.getChild(0);
+			var scriptNode = videoNode.getChild(1);			
 
 			var scriptTPL = null;
 			var textScript = null;
 
 			var videoHeight = videoNode.getAttribute('data-height');
-			var videoId = videoDivNode.getAttribute('id');
 			var videoOgvUrl = videoNode.getAttribute('data-video-ogv-url');
 			var videoPoster = videoNode.getAttribute('data-poster');
 			var videoUrl = videoNode.getAttribute('data-video-url');
 			var videoWidth = videoNode.getAttribute('data-width');
-
-			if (!value && id === 'id') {
-				value = generateId();
-			}
 
 			if (id === 'poster') {
 				videoNode.setAttribute('data-document-url', value);
@@ -65,7 +64,6 @@ CKEDITOR.dialog.add(
 						ogvUrl: videoOgvUrl,
 						poster: value,
 						url: videoUrl,
-						videoBoxId: videoId,
 						width: videoWidth
 					}
 				);
@@ -101,7 +99,6 @@ CKEDITOR.dialog.add(
 								ogvUrl: videoOgvUrl,
 								poster: videoPoster,
 								url: videoUrl,
-								videoBoxId: videoId,
 								width: width
 							}
 						);
@@ -112,10 +109,6 @@ CKEDITOR.dialog.add(
 			}
 		}
 
-		function generateId() {
-			return 'video' + new Date().getTime();
-		}
-
 		function loadValue(videoNode) {
 			var instance = this;
 
@@ -124,10 +117,7 @@ CKEDITOR.dialog.add(
 			if (videoNode) {
 				var value = null;
 
-				if (id === 'id') {
-					value = videoNode.getChild(0).getAttribute('id');
-				}
-				else if (id === 'poster') {
+				if (id === 'poster') {
 					value = videoNode.getAttribute('data-document-url');
 				}
 				else if (id === 'height') {
@@ -140,9 +130,6 @@ CKEDITOR.dialog.add(
 				if (value !== null) {
 					instance.setValue(value);
 				}
-			}
-			else if (id === 'id') {
-				instance.setValue(generateId());
 			}
 		}
 
@@ -199,17 +186,10 @@ CKEDITOR.dialog.add(
 									setup: loadValue,
 									type: 'text',
 									validate: CKEDITOR.dialog.validate.notEmpty(Liferay.Language.get('height-field-cannot-be-empty'))
-								},
-								{
-									commit: commitValue,
-									id: 'id',
-									label: 'Id',
-									setup: loadValue,
-									type: 'text'
 								}
 							],
 							type: 'hbox',
-							widths: [ '33%', '33%', '33%']
+							widths: [ '50%', '50%']
 						}
 					],
 					id: 'info'
@@ -244,8 +224,6 @@ CKEDITOR.dialog.add(
 
 				var STR_DIV = 'div';
 
-				var tmpid = generateId();
-
 				var extraStyles = {};
 
 				var divNode = editor.document.createElement(STR_DIV);
@@ -254,7 +232,7 @@ CKEDITOR.dialog.add(
 
 				var boundingBoxTmp = editor.document.createElement(STR_DIV);
 
-				boundingBoxTmp.setAttribute('id', tmpid);
+				boundingBoxTmp.setAttribute('class', 'ckvideo-no-id');
 
 				var scriptTmp = editor.document.createElement('script');
 

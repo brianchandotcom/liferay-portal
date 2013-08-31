@@ -7,17 +7,6 @@
 		<implicit-parameter name="struts_action">/wiki/view</implicit-parameter>
 	</route>
 	<route>
-		<pattern>/attachment/{nodeId:\d+}/{title:[^/]+}/{fileName:[^/]+}</pattern>
-		<implicit-parameter name="p_p_state">normal</implicit-parameter>
-		<implicit-parameter name="status">0</implicit-parameter>
-		<implicit-parameter name="struts_action">/wiki/get_page_attachment</implicit-parameter>
-	</route>
-	<route>
-		<pattern>/attachment/{nodeId:\d+}/{title:[^/]+}/{status}/{fileName:[^/]+}</pattern>
-		<implicit-parameter name="p_p_state">normal</implicit-parameter>
-		<implicit-parameter name="struts_action">/wiki/get_page_attachment</implicit-parameter>
-	</route>
-	<route>
 		<pattern>/tag/{tag}</pattern>
 		<ignored-parameter name="nodeId" />
 		<ignored-parameter name="nodeName" />

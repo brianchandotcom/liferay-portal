@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.cache.key.CacheKeyGeneratorUtil;
 import com.liferay.portal.kernel.concurrent.ConcurrentLFUCache;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.servlet.HttpOnlyCookieServletResponse;
 import com.liferay.portal.kernel.servlet.NonSerializableObjectRequestWrapper;
 import com.liferay.portal.kernel.servlet.SanitizedServletResponse;
 import com.liferay.portal.kernel.util.BasePortalLifecycle;
@@ -69,6 +70,8 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 		request = handleNonSerializableRequest(request);
 
 		HttpServletResponse response = (HttpServletResponse)servletResponse;
+
+		response = new HttpOnlyCookieServletResponse(response);
 
 		response = secureResponseHeaders(request, response);
 

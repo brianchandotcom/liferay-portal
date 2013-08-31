@@ -46,8 +46,8 @@ public class SanitizedServletResponse extends HttpServletResponseWrapper {
 
 		super(response);
 
-		if (ServerDetector.isResin()) {
-			_sanitizeHeaders = true;
+		if (ServerDetector.isTomcat()) {
+			_sanitizeHeaders = false;
 		}
 
 		setXContentOptions(request);
@@ -203,6 +203,6 @@ public class SanitizedServletResponse extends HttpServletResponseWrapper {
 		PropsUtil.getProperties(
 			PropsKeys.HTTP_HEADER_SECURE_X_FRAME_OPTIONS + ".", true);
 
-	private boolean _sanitizeHeaders = false;
+	private boolean _sanitizeHeaders = true;
 
 }

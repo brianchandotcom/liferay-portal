@@ -14,21 +14,26 @@
 
 package com.liferay.portal.kernel.servlet;
 
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
-import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
 import java.util.Properties;
-import java.util.Set;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
@@ -37,86 +42,52 @@ import javax.servlet.http.HttpServletResponseWrapper;
  * @author László Csontos
  * @author Shuyang Zhou
  * @author Tomas Polesovsky
- * @author Samuel Kong
  */
 public class SanitizedServletResponse extends HttpServletResponseWrapper {
 
-	public SanitizedServletResponse(
+	public static HttpServletResponse getSanitizedServletResponse(
 		HttpServletRequest request, HttpServletResponse response) {
 
-		super(response);
+		setXContentOptions(request, response);
+		setXFrameOptions(request, response);
+		setXXSSProtection(request, response);
 
 		if (ServerDetector.isResin()) {
-			_sanitizeHeaders = true;
+			response = new SanitizedServletResponse(response);
 		}
 
-		setXContentOptions(request);
-		setXFrameOptions(request);
-		setXXSSProtection(request);
-	}
-
-	@Override
-	public void addCookie(Cookie cookie) {
-		if (!_cookieHttpOnlyCookieNamesExcludes.contains(cookie.getName())) {
-			cookie.setHttpOnly(true);
-		}
-
-		super.addCookie(cookie);
+		return response;
 	}
 
 	@Override
 	public void addHeader(String name, String value) {
-		if (_sanitizeHeaders) {
-			super.addHeader(
-				HttpUtil.sanitizeHeader(name), HttpUtil.sanitizeHeader(value));
-		}
-		else {
-			super.addHeader(name, value);
-		}
+		super.addHeader(
+			HttpUtil.sanitizeHeader(name), HttpUtil.sanitizeHeader(value));
 	}
 
 	@Override
 	public void sendRedirect(String location) throws IOException {
-		if (_sanitizeHeaders) {
-			super.sendRedirect(HttpUtil.sanitizeHeader(location));
-		}
-		else {
-			super.sendRedirect(location);
-		}
+		super.sendRedirect(HttpUtil.sanitizeHeader(location));
 	}
 
 	@Override
 	public void setCharacterEncoding(String charset) {
-		if (_sanitizeHeaders) {
-			super.setCharacterEncoding(HttpUtil.sanitizeHeader(charset));
-		}
-		else {
-			super.setCharacterEncoding(charset);
-		}
+		super.setCharacterEncoding(HttpUtil.sanitizeHeader(charset));
 	}
 
 	@Override
 	public void setContentType(String type) {
-		if (_sanitizeHeaders) {
-			super.setContentType(HttpUtil.sanitizeHeader(type));
-		}
-		else {
-			super.setContentType(type);
-		}
+		super.setContentType(HttpUtil.sanitizeHeader(type));
 	}
 
 	@Override
 	public void setHeader(String name, String value) {
-		if (_sanitizeHeaders) {
-			super.setHeader(
-				HttpUtil.sanitizeHeader(name), HttpUtil.sanitizeHeader(value));
-		}
-		else {
-			super.setHeader(name, value);
-		}
+		super.setHeader(
+			HttpUtil.sanitizeHeader(name), HttpUtil.sanitizeHeader(value));
 	}
 
-	protected void setXContentOptions(HttpServletRequest request) {
+	protected static void setXContentOptions(
+		HttpServletRequest request, HttpServletResponse response) {
 
 		if (!_X_CONTENT_TYPE_OPTIONS) {
 			return;
@@ -132,53 +103,44 @@ public class SanitizedServletResponse extends HttpServletResponseWrapper {
 			}
 		}
 
-		super.setHeader(HttpHeaders.X_CONTENT_TYPE_OPTIONS, "nosniff");
+		response.setHeader(HttpHeaders.X_CONTENT_TYPE_OPTIONS, "nosniff");
 	}
 
-	protected void setXFrameOptions(HttpServletRequest request) {
+	protected static void setXFrameOptions(
+		HttpServletRequest request, HttpServletResponse response) {
 
 		if (!_X_FRAME_OPTIONS) {
 			return;
 		}
 
-		if (_xFrameOptionsProperties.size() > 0) {
-			String requestURI = request.getRequestURI();
+		String requestURI = request.getRequestURI();
 
-			for (int i = 0; i < 256; i++) {
-				String key = "url." + i;
+		for (KeyValuePair keyValuePair : _xFrameOptions) {
+			String url = keyValuePair.getKey();
 
-				if (!_xFrameOptionsProperties.containsKey(key)) {
-					continue;
-				}
-
-				String url = StringUtil.trim(
-					_xFrameOptionsProperties.getProperty(key));
-
-				if (!requestURI.startsWith(url)) {
-					continue;
-				}
-
-				String value = StringUtil.trim(
-					_xFrameOptionsProperties.getProperty("value." + i));
-
-				if (Validator.isNotNull(value)) {
-					super.setHeader(HttpHeaders.X_FRAME_OPTIONS, value);
-				}
+			if (requestURI.startsWith(url)) {
+				response.setHeader(
+					HttpHeaders.X_FRAME_OPTIONS, keyValuePair.getValue());
 
 				return;
 			}
 		}
 
-		super.setHeader(HttpHeaders.X_FRAME_OPTIONS, "DENY");
+		response.setHeader(HttpHeaders.X_FRAME_OPTIONS, "DENY");
 	}
 
-	protected void setXXSSProtection(HttpServletRequest request) {
+	protected static void setXXSSProtection(
+		HttpServletRequest request, HttpServletResponse response) {
 
 		if (!_X_XSS_PROTECTION) {
 			return;
 		}
 
-		super.setHeader(HttpHeaders.X_XSS_PROTECTION, "1; mode=block");
+		response.setHeader(HttpHeaders.X_XSS_PROTECTION, "1; mode=block");
+	}
+
+	private SanitizedServletResponse(HttpServletResponse response) {
+		super(response);
 	}
 
 	private static final boolean _X_CONTENT_TYPE_OPTIONS =
@@ -190,19 +152,84 @@ public class SanitizedServletResponse extends HttpServletResponseWrapper {
 		PropsUtil.getArray(
 			PropsKeys.HTTP_HEADER_SECURE_X_CONTENT_TYPE_OPTIONS_URLS_EXCLUDES);
 
-	private static final boolean _X_FRAME_OPTIONS = GetterUtil.getBoolean(
-		PropsUtil.get(PropsKeys.HTTP_HEADER_SECURE_X_FRAME_OPTIONS), true);
+	private static final boolean _X_FRAME_OPTIONS;
 
 	private static final boolean _X_XSS_PROTECTION = GetterUtil.getBoolean(
 		PropsUtil.get(PropsKeys.HTTP_HEADER_SECURE_X_XSS_PROTECTION), true);
 
-	private static Set<String> _cookieHttpOnlyCookieNamesExcludes =
-		SetUtil.fromArray(
-			PropsUtil.getArray(PropsKeys.COOKIE_HTTP_ONLY_NAMES_EXCLUDES));
-	private static Properties _xFrameOptionsProperties =
-		PropsUtil.getProperties(
-			PropsKeys.HTTP_HEADER_SECURE_X_FRAME_OPTIONS + ".", true);
+	private static final KeyValuePair[] _xFrameOptions;
 
-	private boolean _sanitizeHeaders = false;
+	static {
+		Properties properties =
+			PropsUtil.getProperties(
+				PropsKeys.HTTP_HEADER_SECURE_X_FRAME_OPTIONS +
+					StringPool.PERIOD, true);
+
+		List<KeyValuePair> keyValuePairs = new ArrayList<KeyValuePair>(
+			properties.size());
+
+		for (Map.Entry<Object, Object> entry : properties.entrySet()) {
+			String key = (String)entry.getKey();
+
+			String value = (String)entry.getValue();
+
+			keyValuePairs.add(new KeyValuePair(key, value));
+		}
+
+		Collections.sort(keyValuePairs, new Comparator<KeyValuePair>() {
+
+			@Override
+			public int compare(
+				KeyValuePair keyValuePair1, KeyValuePair keyValuePair2) {
+
+				int key1 = GetterUtil.getIntegerStrict(keyValuePair1.getKey());
+
+				int key2 = GetterUtil.getIntegerStrict(keyValuePair2.getKey());
+
+				return key1 - key2;
+			}
+
+		});
+
+		List<KeyValuePair> xFrameOptions = new ArrayList<KeyValuePair>(
+			keyValuePairs.size());
+
+		for (KeyValuePair keyValuePair : keyValuePairs) {
+			String xFrameOptionLine = keyValuePair.getValue();
+
+			String[] xFrameOption = StringUtil.split(
+				xFrameOptionLine, CharPool.COMMA);
+
+			if (xFrameOption.length != 2) {
+				continue;
+			}
+
+			String url = StringUtil.trim(xFrameOption[0]);
+
+			if (Validator.isNull(url)) {
+				continue;
+			}
+
+			String value = StringUtil.trim(xFrameOption[1]);
+
+			if (Validator.isNull(value)) {
+				continue;
+			}
+
+			xFrameOptions.add(new KeyValuePair(url, value));
+		}
+
+		_xFrameOptions = xFrameOptions.toArray(
+			new KeyValuePair[xFrameOptions.size()]);
+
+		if (_xFrameOptions.length == 0) {
+			_X_FRAME_OPTIONS = false;
+		}
+		else {
+			_X_FRAME_OPTIONS = GetterUtil.getBoolean(
+				PropsUtil.get(PropsKeys.HTTP_HEADER_SECURE_X_FRAME_OPTIONS),
+				true);
+		}
+	}
 
 }

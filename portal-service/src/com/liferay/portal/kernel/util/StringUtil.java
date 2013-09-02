@@ -42,6 +42,7 @@ import java.util.regex.Pattern;
  * @author Sandeep Soni
  * @author Ganesh Ram
  * @author Shuyang Zhou
+ * @author Hugo Huijser
  */
 public class StringUtil {
 
@@ -1006,6 +1007,34 @@ public class StringUtil {
 
 			return prefix.concat(insert).concat(postfix);
 		}
+	}
+
+	public static boolean isLowerCase(String s) {
+		if (s == null) {
+			return false;
+		}
+
+		for (char c : s.toCharArray()) {
+			if (Character.isLetter(c) && Character.isUpperCase(c)) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	public static boolean isUpperCase(String s) {
+		if (s == null) {
+			return false;
+		}
+
+		for (char c : s.toCharArray()) {
+			if (Character.isLetter(c) && Character.isLowerCase(c)) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	/**

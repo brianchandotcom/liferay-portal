@@ -37,8 +37,13 @@ if (selGroup.isStagingGroup()) {
 else {
 	liveGroup = selGroup;
 
-	if (selGroup.hasStagingGroup()) {
-		stagingGroup = selGroup.getStagingGroup();
+	if (selGroup.isStaged()) {
+		if (selGroup.isStagedRemotely()) {
+			stagingGroup = selGroup;
+		}
+		else {
+			stagingGroup = selGroup.getStagingGroup();
+		}
 	}
 }
 

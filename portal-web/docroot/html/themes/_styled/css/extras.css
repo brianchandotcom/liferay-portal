@@ -74,6 +74,13 @@
 }
 
 .dockbar {
+	@include respond-to(phone, tablet) {
+		.navbar-inner .btn-navbar {
+			@include box-shadow(none);
+			@include text-shadow(none);
+		}
+	}
+
 	.menu-button-active .menu-button {
 		@include box-shadow(inset 0 1px 5px rgba(0, 0, 0, 0.7));
 	}
@@ -108,7 +115,7 @@
 }
 
 @include respond-to(phone) {
-	.navbar .navbar-search .search-query {
+	.navbar .navbar-search .form-search .search-query {
 		@include border-radius(14px);
 	}
 }

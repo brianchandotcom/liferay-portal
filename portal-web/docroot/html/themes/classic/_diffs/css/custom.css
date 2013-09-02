@@ -94,12 +94,20 @@ $dockbarOpenGradientStart: #0EA6F9;
 						background: #45CBF5;
 						line-height: inherit;
 
+						@include respond-to(phone, tablet) {
+							background: transparent;
+						}
+
 						&:hover {
 							background: #5BBAE8;
 						}
 
 						&.toggle-controls-link {
 							background: #92F545;
+
+							@include respond-to(phone, tablet) {
+								background: transparent;
+							}
 						}
 					}
 				}
@@ -458,6 +466,10 @@ $dockbarOpenGradientStart: #0EA6F9;
 		.navbar-inner {
 			@include box-shadow(none);
 			@include text-shadow(none);
+
+			@include respond-to(phone, tablet) {
+				@include background-image(linear-gradient($dockbarGradientStart 0%, $dockbarGradientStart 47%, $dockbarGradientEnd 100%));
+			}
 
 			.nav {
 				li.dropdown.open > .dropdown-toggle {

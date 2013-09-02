@@ -14,7 +14,7 @@
  */
 --%>
 
-<aui:nav cssClass="nav-account-controls">
+<aui:nav collapsible="<%= true %>" cssClass="nav-account-controls" icon="user" id="navAccountControls" useNamespace="<%= false %>">
 	<%@ include file="/html/portlet/dockbar/view_admin_links.jspf" %>
 
 	<%@ include file="/html/portlet/dockbar/view_my_sites.jspf" %>

@@ -1014,7 +1014,21 @@ public class StringUtil {
 			return false;
 		}
 
-		for (char c : s.toCharArray()) {
+		for (int i = 0; i < s.length(); i++) {
+			char c = s.charAt(i);
+
+			// Fast path for ascii code, fallback to the slow unicode detection
+
+			if (c <= 255) {
+				if ((c >= CharPool.UPPER_CASE_A) &&
+					(c <= CharPool.UPPER_CASE_Z)) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Character.isLetter(c) && Character.isUpperCase(c)) {
 				return false;
 			}
@@ -1028,7 +1042,21 @@ public class StringUtil {
 			return false;
 		}
 
-		for (char c : s.toCharArray()) {
+		for (int i = 0; i < s.length(); i++) {
+			char c = s.charAt(i);
+
+			// Fast path for ascii code, fallback to the slow unicode detection
+
+			if (c <= 255) {
+				if ((c >= CharPool.LOWER_CASE_A) &&
+					(c <= CharPool.LOWER_CASE_Z)) {
+
+					return false;
+				}
+
+				continue;
+			}
+
 			if (Character.isLetter(c) && Character.isLowerCase(c)) {
 				return false;
 			}

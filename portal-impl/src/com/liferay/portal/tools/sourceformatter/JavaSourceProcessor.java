@@ -2125,6 +2125,13 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				getVariableName(line), TYPE_VARIABLE_PUBLIC_STATIC_FINAL);
 		}
 		else if (line.startsWith(StringPool.TAB + "public static ")) {
+			if (line.startsWith(StringPool.TAB + "public static class ") ||
+				line.startsWith(StringPool.TAB + "public static enum") ||
+				line.startsWith(StringPool.TAB + "public static interface")) {
+
+				return new Tuple(getClassName(line), TYPE_CLASS_PUBLIC_STATIC);
+			}
+
 			if (line.contains(StringPool.EQUAL) ||
 				(line.endsWith(StringPool.SEMICOLON) && (pos == -1))) {
 
@@ -2137,14 +2144,16 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					getConstructorOrMethodName(line, pos),
 					TYPE_METHOD_PUBLIC_STATIC);
 			}
-
-			if (line.startsWith(StringPool.TAB + "public static class ") ||
-				line.startsWith(StringPool.TAB + "public static enum")) {
-
-				return new Tuple(getClassName(line), TYPE_CLASS_PUBLIC_STATIC);
-			}
 		}
 		else if (line.startsWith(StringPool.TAB + "public ")) {
+			if (line.startsWith(StringPool.TAB + "public abstract class ") ||
+				line.startsWith(StringPool.TAB + "public class ") ||
+				line.startsWith(StringPool.TAB + "public enum ") ||
+				line.startsWith(StringPool.TAB + "public interface ")) {
+
+				return new Tuple(getClassName(line), TYPE_CLASS_PUBLIC);
+			}
+
 			if (line.contains(StringPool.EQUAL) ||
 				(line.endsWith(StringPool.SEMICOLON) && (pos == -1))) {
 
@@ -2167,13 +2176,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 						TYPE_METHOD_PUBLIC);
 				}
 			}
-			else if (line.startsWith(
-						StringPool.TAB + "public abstract class ") ||
-					 line.startsWith(StringPool.TAB + "public class ") ||
-					 line.startsWith(StringPool.TAB + "public enum ")) {
-
-				return new Tuple(getClassName(line), TYPE_CLASS_PUBLIC);
-			}
 		}
 		else if (line.startsWith(StringPool.TAB + "protected static final ")) {
 			if (line.contains(StringPool.EQUAL) ||
@@ -2185,6 +2187,15 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			}
 		}
 		else if (line.startsWith(StringPool.TAB + "protected static ")) {
+			if (line.startsWith(StringPool.TAB + "protected static class ") ||
+				line.startsWith(StringPool.TAB + "protected static enum ") ||
+				line.startsWith(
+					StringPool.TAB + "protected static interface ")) {
+
+				return new Tuple(
+					getClassName(line), TYPE_CLASS_PROTECTED_STATIC);
+			}
+
 			if (line.contains(StringPool.EQUAL) ||
 				(line.endsWith(StringPool.SEMICOLON) && (pos == -1))) {
 
@@ -2197,15 +2208,16 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					getConstructorOrMethodName(line, pos),
 					TYPE_METHOD_PROTECTED_STATIC);
 			}
-
-			if (line.startsWith(StringPool.TAB + "protected static class ") ||
-				line.startsWith(StringPool.TAB + "protected static enum ")) {
-
-				return new Tuple(
-					getClassName(line), TYPE_CLASS_PROTECTED_STATIC);
-			}
 		}
 		else if (line.startsWith(StringPool.TAB + "protected ")) {
+			if (line.startsWith(StringPool.TAB + "protected abstract class ") ||
+				line.startsWith(StringPool.TAB + "protected class ") ||
+				line.startsWith(StringPool.TAB + "protected enum ") ||
+				line.startsWith(StringPool.TAB + "protected interface ")) {
+
+				return new Tuple(getClassName(line), TYPE_CLASS_PROTECTED);
+			}
+
 			if (pos != -1) {
 				if (!line.contains(StringPool.EQUAL)) {
 					int spaceCount = StringUtil.count(
@@ -2224,13 +2236,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					}
 				}
 			}
-			else if (line.startsWith(
-						StringPool.TAB + "protected abstract class ") ||
-					 line.startsWith(StringPool.TAB + "protected class ") ||
-					 line.startsWith(StringPool.TAB + "protected enum ")) {
-
-				return new Tuple(getClassName(line), TYPE_CLASS_PROTECTED);
-			}
 
 			return new Tuple(getVariableName(line), TYPE_VARIABLE_PROTECTED);
 		}
@@ -2243,6 +2248,13 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			}
 		}
 		else if (line.startsWith(StringPool.TAB + "private static ")) {
+			if (line.startsWith(StringPool.TAB + "private static class ") ||
+				line.startsWith(StringPool.TAB + "private static enum ") ||
+				line.startsWith(StringPool.TAB + "private static interface ")) {
+
+				return new Tuple(getClassName(line), TYPE_CLASS_PRIVATE_STATIC);
+			}
+
 			if (line.contains(StringPool.EQUAL) ||
 				(line.endsWith(StringPool.SEMICOLON) && (pos == -1))) {
 
@@ -2255,14 +2267,16 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					getConstructorOrMethodName(line, pos),
 					TYPE_METHOD_PRIVATE_STATIC);
 			}
-
-			if (line.startsWith(StringPool.TAB + "private static class ") ||
-				line.startsWith(StringPool.TAB + "private static enum ")) {
-
-				return new Tuple(getClassName(line), TYPE_CLASS_PRIVATE_STATIC);
-			}
 		}
 		else if (line.startsWith(StringPool.TAB + "private ")) {
+			if (line.startsWith(StringPool.TAB + "private abstract class ") ||
+				line.startsWith(StringPool.TAB + "private class ") ||
+				line.startsWith(StringPool.TAB + "private enum ") ||
+				line.startsWith(StringPool.TAB + "private interface ")) {
+
+				return new Tuple(getClassName(line), TYPE_CLASS_PRIVATE);
+			}
+
 			if (line.contains(StringPool.EQUAL) ||
 				(line.endsWith(StringPool.SEMICOLON) && (pos == -1))) {
 
@@ -2284,13 +2298,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 						getConstructorOrMethodName(line, pos),
 						TYPE_METHOD_PRIVATE);
 				}
-			}
-			else if (line.startsWith(
-						StringPool.TAB + "private abstract class ") ||
-					 line.startsWith(StringPool.TAB + "private class ") ||
-					 line.startsWith(StringPool.TAB + "private enum ")) {
-
-				return new Tuple(getClassName(line), TYPE_CLASS_PRIVATE);
 			}
 		}
 

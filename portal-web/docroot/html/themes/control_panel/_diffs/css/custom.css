@@ -2,6 +2,7 @@
 @import "mixins";
 
 @import url(../../classic/css/custom_common.css);
+@import url(../../classic/css/responsive.css);
 
 $dockbarGradientEnd: #1273C7;
 $dockbarGradientStart: #118ADE;

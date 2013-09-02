@@ -3,6 +3,11 @@
 
 @include respond-to(phone, tablet) {
 	.navbar {
+		&.open .navbar-inner .nav-collapse {
+			height: auto;
+			overflow: visible;
+		}
+
 		.container {
 			position: relative;
 

@@ -892,13 +892,9 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				break;
 			}
 
-			String match = matcher.group();
-
-			String replacement = StringUtil.replaceFirst(
-				match, StringPool.NEW_LINE, StringPool.BLANK);
-
 			newContent = StringUtil.replaceFirst(
-				newContent, match, replacement);
+				newContent, StringPool.NEW_LINE, StringPool.BLANK,
+				matcher.start());
 		}
 
 		pattern = Pattern.compile(

@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -372,7 +373,10 @@ public class LoginUtil {
 
 		boolean secure = request.isSecure();
 
-		if (secure) {
+		if (secure &&
+			!PropsValues.COMPANY_SECURITY_AUTH_REQUIRES_HTTPS &&
+			!Http.HTTPS.equalsIgnoreCase(PropsValues.WEB_SERVER_PROTOCOL)) {
+
 			Boolean httpsInitial = (Boolean)session.getAttribute(
 				WebKeys.HTTPS_INITIAL);
 

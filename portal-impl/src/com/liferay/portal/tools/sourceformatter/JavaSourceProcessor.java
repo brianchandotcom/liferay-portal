@@ -706,9 +706,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 				requiresEmptyLine = true;
 			}
-			else if (previousJavaTermName.equals(
-						previousJavaTermName.toUpperCase()) ||
-					 javaTermName.equals(javaTermName.toUpperCase())) {
+			else if (StringUtil.isUpperCase(javaTermName) ||
+					 StringUtil.isUpperCase(previousJavaTermName)) {
 
 				requiresEmptyLine = true;
 			}

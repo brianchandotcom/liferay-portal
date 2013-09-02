@@ -54,7 +54,7 @@
 							);
 						},
 						icon: CKEDITOR.config.imagesPath + 'code.png',
-						label : 'Code'
+						label: Liferay.Language.get('code')
 					}
 				);
 			}

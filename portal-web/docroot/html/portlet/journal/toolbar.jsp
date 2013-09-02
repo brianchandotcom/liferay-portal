@@ -121,8 +121,8 @@ String strutsAction = ParamUtil.getString(request, "struts_action");
 				},
 				refererPortletName: '<%= PortletKeys.JOURNAL %>',
 				refererWebDAVToken: '<%= portlet.getWebDAVStorageToken() %>',
-				showGlobalScope: 'false',
-				showManageTemplates: 'true',
+				showGlobalScope: false,
+				showManageTemplates: true,
 				title: '<%= UnicodeLanguageUtil.get(pageContext, "structures") %>'
 			}
 		);

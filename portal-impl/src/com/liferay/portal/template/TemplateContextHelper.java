@@ -349,6 +349,12 @@ public class TemplateContextHelper {
 		_helperUtilitiesMaps.remove(classLoader);
 	}
 
+	public static interface PACL {
+
+		public TemplateControlContext getTemplateControlContext();
+
+	}
+
 	protected void populateCommonHelperUtilities(
 		Map<String, Object> variables) {
 
@@ -873,12 +879,6 @@ public class TemplateContextHelper {
 
 			return new TemplateControlContext(null, contextClassLoader);
 		}
-
-	}
-
-	public static interface PACL {
-
-		public TemplateControlContext getTemplateControlContext();
 
 	}
 

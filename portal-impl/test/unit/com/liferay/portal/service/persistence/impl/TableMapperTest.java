@@ -1288,14 +1288,6 @@ public class TableMapperTest {
 	private TableMapperImpl<Left, Right> _tableMapperImpl;
 	private String _tableName = "Lefts_Rights";
 
-	private interface LeftModel extends BaseModel<Left> {};
-
-	private interface Left extends LeftModel {};
-
-	private interface Right extends RightModel {};
-
-	private interface RightModel extends BaseModel<Right> {};
-
 	private class GetPrimaryKeyObjInvocationHandler
 		implements InvocationHandler {
 
@@ -1317,6 +1309,10 @@ public class TableMapperTest {
 		private Serializable _primaryKey;
 
 	}
+
+	private interface Left extends LeftModel {};
+
+	private interface LeftModel extends BaseModel<Left> {};
 
 	private class MockAddMappingSqlUpdate implements SqlUpdate {
 
@@ -1889,5 +1885,9 @@ public class TableMapperTest {
 		private TableMapper<?, ?> _tableMapper;
 
 	}
+
+	private interface Right extends RightModel {};
+
+	private interface RightModel extends BaseModel<Right> {};
 
 }

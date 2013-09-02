@@ -56,6 +56,13 @@ public class BeanReferenceRefreshUtil {
 		refreshPoints.add(new RefreshPoint(field, referencedBeanName));
 	}
 
+	public static interface PACL {
+
+		public Object getNewReferencedBean(
+			String referencedBeanName, BeanFactory beanFactory);
+
+	}
+
 	private static void _refresh(
 			BeanFactory beanFactory, Object targetBean,
 			List<RefreshPoint> refreshPoints)
@@ -121,13 +128,6 @@ public class BeanReferenceRefreshUtil {
 
 		private Field _field;
 		private String _referencedBeanName;
-
-	}
-
-	public static interface PACL {
-
-		public Object getNewReferencedBean(
-			String referencedBeanName, BeanFactory beanFactory);
 
 	}
 

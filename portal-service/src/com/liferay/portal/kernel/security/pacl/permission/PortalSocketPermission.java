@@ -61,6 +61,12 @@ public class PortalSocketPermission {
 		checkConnect(domain, port, protocol);
 	}
 
+	public static interface PACL {
+
+		public void checkPermission(String host, String action);
+
+	}
+
 	private static void checkConnect(String domain, int port, String protocol) {
 		if (Validator.isNull(domain) ||
 			(!protocol.startsWith(Http.HTTPS) &&
@@ -93,12 +99,6 @@ public class PortalSocketPermission {
 		@Override
 		public void checkPermission(String host, String action) {
 		}
-
-	}
-
-	public static interface PACL {
-
-		public void checkPermission(String host, String action);
 
 	}
 

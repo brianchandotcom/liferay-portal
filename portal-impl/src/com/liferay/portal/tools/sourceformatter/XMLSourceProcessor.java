@@ -55,12 +55,8 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			Matcher matcher = pattern1.matcher(newContent);
 
 			if (matcher.find()) {
-				String match = matcher.group();
-
-				String replacement = StringUtil.replaceFirst(
-					match, ">\n", ">\n\n");
-
-				newContent = StringUtil.replace(newContent, match, replacement);
+				newContent = StringUtil.replaceFirst(
+					newContent, ">\n", ">\n\n", matcher.start());
 
 				continue;
 			}
@@ -71,12 +67,8 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 				break;
 			}
 
-			String match = matcher.group();
-
-			String replacement = StringUtil.replaceFirst(
-				match, "-->\n", "-->\n\n");
-
-			newContent = StringUtil.replace(newContent, match, replacement);
+			newContent = StringUtil.replaceFirst(
+				newContent, "-->\n", "-->\n\n", matcher.start());
 		}
 
 		return newContent;

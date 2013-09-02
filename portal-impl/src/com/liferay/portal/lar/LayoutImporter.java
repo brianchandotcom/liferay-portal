@@ -413,12 +413,6 @@ public class LayoutImporter {
 
 		// Look and feel
 
-		if (importTheme) {
-			themeZip = portletDataContext.getZipEntryAsInputStream("theme.zip");
-		}
-
-		// Look and feel
-
 		String themeId = layoutSet.getThemeId();
 		String colorSchemeId = layoutSet.getColorSchemeId();
 
@@ -470,10 +464,14 @@ public class LayoutImporter {
 				groupId, privateLayout, settings);
 		}
 
-		String css = GetterUtil.getString(_headerElement.elementText("css"));
+		if (importTheme) {
+			themeZip = portletDataContext.getZipEntryAsInputStream("theme.zip");
+		}
 
 		if (themeZip != null) {
-			String importThemeId = importTheme(layoutSet, themeZip);
+			String importThemeId = importTheme(
+				layoutSet.getGroupId(), layoutSet.isPrivateLayout(), 0,
+				themeZip);
 
 			if (importThemeId != null) {
 				themeId = importThemeId;
@@ -487,10 +485,10 @@ public class LayoutImporter {
 			}
 		}
 
-		boolean wapTheme = false;
+		String css = GetterUtil.getString(_headerElement.elementText("css"));
 
 		LayoutSetLocalServiceUtil.updateLookAndFeel(
-			groupId, privateLayout, themeId, colorSchemeId, css, wapTheme);
+			groupId, privateLayout, themeId, colorSchemeId, css, false);
 
 		// Read asset categories, asset tags, comments, locks, permissions, and
 		// ratings entries to make them available to the data handlers through
@@ -553,7 +551,7 @@ public class LayoutImporter {
 		for (Element layoutElement : _layoutElements) {
 			importLayout(
 				portletDataContext, sourceLayoutsUuids, newLayouts,
-				layoutElement);
+				layoutElement, importTheme);
 		}
 
 		Element portletsElement = _rootElement.element("portlets");
@@ -894,7 +892,7 @@ public class LayoutImporter {
 	protected void importLayout(
 			PortletDataContext portletDataContext,
 			List<String> sourceLayoutsUuids, List<Layout> newLayouts,
-			Element layoutElement)
+			Element layoutElement, boolean importTheme)
 		throws Exception {
 
 		String action = layoutElement.attributeValue("action");
@@ -908,6 +906,42 @@ public class LayoutImporter {
 
 			newLayouts.addAll(portletDataContextNewLayouts);
 
+			if (importTheme) {
+				for (Layout layout : portletDataContextNewLayouts) {
+					if (layout.isInheritLookAndFeel()) {
+						continue;
+					}
+
+					String oldLayoutId = GetterUtil.getString(
+						layoutElement.attributeValue("layout-id"));
+
+					InputStream themeZip =
+						portletDataContext.getZipEntryAsInputStream(
+							"theme" + StringPool.DASH + oldLayoutId + ".zip");
+
+					if (themeZip != null) {
+						String themeId = layout.getThemeId();
+						String colorSchemeId = layout.getColorSchemeId();
+
+						String importThemeId = importTheme(
+							layout.getGroupId(), layout.isPrivateLayout(),
+							layout.getLayoutId(), themeZip);
+
+						if (importThemeId != null) {
+							themeId = importThemeId;
+							colorSchemeId =
+								ColorSchemeFactoryUtil.
+									getDefaultRegularColorSchemeId();
+						}
+
+						LayoutLocalServiceUtil.updateLookAndFeel(
+							layout.getGroupId(), layout.isPrivateLayout(),
+							layout.getLayoutId(), themeId, colorSchemeId,
+							layout.getCss(), false);
+					}
+				}
+			}
+
 			portletDataContextNewLayouts.clear();
 		}
 
@@ -916,7 +950,9 @@ public class LayoutImporter {
 		}
 	}
 
-	protected String importTheme(LayoutSet layoutSet, InputStream themeZip)
+	protected String importTheme(
+			long groupId, boolean privateLayout, long layoutId,
+			InputStream themeZip)
 		throws Exception {
 
 		ThemeLoader themeLoader = ThemeLoaderFactory.getDefaultThemeLoader();
@@ -932,13 +968,17 @@ public class LayoutImporter {
 		String lookAndFeelXML = zipReader.getEntryAsString(
 			"liferay-look-and-feel.xml");
 
-		String themeId = String.valueOf(layoutSet.getGroupId());
+		String themeId = String.valueOf(groupId);
 
-		if (layoutSet.isPrivateLayout()) {
+		if (privateLayout) {
 			themeId += "-private";
 		}
 		else {
 			themeId += "-public";
+		}
+
+		if (Validator.isNotNull(layoutId)) {
+			themeId += StringPool.DASH + String.valueOf(layoutId);
 		}
 
 		if (PropsValues.THEME_LOADER_NEW_THEME_ID_ON_IMPORT) {
@@ -955,7 +995,7 @@ public class LayoutImporter {
 				"[$GROUP_ID$]", "[$THEME_ID$]", "[$THEME_NAME$]"
 			},
 			new String[] {
-				String.valueOf(layoutSet.getGroupId()), themeId, themeName
+				String.valueOf(groupId), themeId, themeName
 			}
 		);
 

@@ -315,7 +315,7 @@ public class FileEntryStagedModelDataHandler
 		String titleWithExtension = DLUtil.getTitleWithExtension(fileEntry);
 		String extension = fileEntry.getExtension();
 
-		String dotExtension = StringPool.PERIOD + extension;
+		String periodAndExtension = StringPool.PERIOD.concat(extension);
 
 		if (portletDataContext.isDataStrategyMirror()) {
 			FileEntry existingFileEntry = FileEntryUtil.fetchByUUID_R(
@@ -342,7 +342,7 @@ public class FileEntryStagedModelDataHandler
 					else {
 						boolean titleHasExtension = false;
 
-						if (fileEntryTitle.endsWith(dotExtension)) {
+						if (fileEntryTitle.endsWith(periodAndExtension)) {
 							fileEntryTitle = FileUtil.stripExtension(
 								fileEntryTitle);
 
@@ -352,7 +352,8 @@ public class FileEntryStagedModelDataHandler
 						for (int i = 1;; i++) {
 							fileEntryTitle += StringPool.SPACE + i;
 
-							titleWithExtension = fileEntryTitle + dotExtension;
+							titleWithExtension =
+								fileEntryTitle + periodAndExtension;
 
 							existingTitleFileEntry = FileEntryUtil.fetchByR_F_T(
 								portletDataContext.getScopeGroupId(), folderId,
@@ -360,7 +361,7 @@ public class FileEntryStagedModelDataHandler
 
 							if (existingTitleFileEntry == null) {
 								if (titleHasExtension) {
-									fileEntryTitle += dotExtension;
+									fileEntryTitle += periodAndExtension;
 								}
 
 								break;
@@ -467,8 +468,8 @@ public class FileEntryStagedModelDataHandler
 					title += StringPool.PERIOD + titleParts[1];
 				}
 
-				if (!title.endsWith(dotExtension)) {
-					title += dotExtension;
+				if (!title.endsWith(periodAndExtension)) {
+					title += periodAndExtension;
 				}
 
 				importedFileEntry = DLAppLocalServiceUtil.addFileEntry(

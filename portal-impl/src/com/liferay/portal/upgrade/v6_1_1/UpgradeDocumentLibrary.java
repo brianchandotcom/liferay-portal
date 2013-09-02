@@ -90,7 +90,7 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 				String extension = rs.getString("extension");
 				String version = rs.getString("version");
 
-				String periodAndExtension = StringPool.PERIOD + extension;
+				String periodAndExtension = StringPool.PERIOD.concat(extension);
 
 				if (!title.endsWith(periodAndExtension)) {
 					continue;

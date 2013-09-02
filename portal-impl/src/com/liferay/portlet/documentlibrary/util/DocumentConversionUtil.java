@@ -87,11 +87,11 @@ public class DocumentConversionUtil {
 	public static boolean isComparableVersion(String extension) {
 		boolean enabled = false;
 
-		String dotExtension = StringPool.PERIOD + extension;
+		String periodAndExtension = StringPool.PERIOD.concat(extension);
 
 		for (int i = 0; i < _COMPARABLE_FILE_EXTENSIONS.length; i++) {
 			if (StringPool.STAR.equals(_COMPARABLE_FILE_EXTENSIONS[i]) ||
-				dotExtension.equals(_COMPARABLE_FILE_EXTENSIONS[i])) {
+				periodAndExtension.equals(_COMPARABLE_FILE_EXTENSIONS[i])) {
 
 				enabled = true;
 

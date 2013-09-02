@@ -945,7 +945,7 @@ public class DLImpl implements DL {
 	@Override
 	public String getTitleWithExtension(String title, String extension) {
 		if (Validator.isNotNull(extension)) {
-			String periodAndExtension = StringPool.PERIOD + extension;
+			String periodAndExtension = StringPool.PERIOD.concat(extension);
 
 			if (!title.endsWith(periodAndExtension)) {
 				title += periodAndExtension;

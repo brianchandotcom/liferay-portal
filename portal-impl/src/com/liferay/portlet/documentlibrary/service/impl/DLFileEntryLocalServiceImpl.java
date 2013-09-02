@@ -2499,7 +2499,7 @@ public class DLFileEntryLocalServiceImpl
 			throw new DuplicateFileException(title);
 		}
 
-		String periodAndExtension = StringPool.PERIOD + extension;
+		String periodAndExtension = StringPool.PERIOD.concat(extension);
 
 		if (!title.endsWith(periodAndExtension)) {
 			title += periodAndExtension;

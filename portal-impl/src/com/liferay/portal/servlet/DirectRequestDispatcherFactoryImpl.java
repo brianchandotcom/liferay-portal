@@ -62,6 +62,13 @@ public class DirectRequestDispatcherFactoryImpl
 		return getRequestDispatcher(servletContext, path);
 	}
 
+	public static interface PACL {
+
+		public RequestDispatcher getRequestDispatcher(
+			ServletContext servletContext, RequestDispatcher requestDispatcher);
+
+	}
+
 	protected RequestDispatcher doGetRequestDispatcher(
 		ServletContext servletContext, String path) {
 
@@ -131,13 +138,6 @@ public class DirectRequestDispatcherFactoryImpl
 
 			return requestDispatcher;
 		}
-
-	}
-
-	public static interface PACL {
-
-		public RequestDispatcher getRequestDispatcher(
-			ServletContext servletContext, RequestDispatcher requestDispatcher);
 
 	}
 

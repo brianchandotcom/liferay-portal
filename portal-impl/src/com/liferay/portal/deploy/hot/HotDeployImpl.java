@@ -157,6 +157,16 @@ public class HotDeployImpl implements HotDeploy {
 		_hotDeployListeners.clear();
 	}
 
+	public static interface PACL {
+
+		public void initPolicy(
+			String servletContextName, ClassLoader classLoader,
+			Properties properties);
+
+		public void unregister(ClassLoader classLoader);
+
+	}
+
 	protected void doFireDeployEvent(HotDeployEvent hotDeployEvent) {
 		String servletContextName = hotDeployEvent.getServletContextName();
 
@@ -307,16 +317,6 @@ public class HotDeployImpl implements HotDeploy {
 		@Override
 		public void unregister(ClassLoader classLoader) {
 		}
-
-	}
-
-	public static interface PACL {
-
-		public void initPolicy(
-			String servletContextName, ClassLoader classLoader,
-			Properties properties);
-
-		public void unregister(ClassLoader classLoader);
 
 	}
 

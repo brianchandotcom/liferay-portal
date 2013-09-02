@@ -175,6 +175,12 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 		return initDataSource(properties);
 	}
 
+	public static interface PACL {
+
+		public DataSource getDataSource(DataSource dataSource);
+
+	}
+
 	protected DataSource initDataSourceC3PO(Properties properties)
 		throws Exception {
 
@@ -409,12 +415,6 @@ public class DataSourceFactoryImpl implements DataSourceFactory {
 		public DataSource getDataSource(DataSource dataSource) {
 			return dataSource;
 		}
-
-	}
-
-	public static interface PACL {
-
-		public DataSource getDataSource(DataSource dataSource);
 
 	}
 

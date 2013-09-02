@@ -50,6 +50,12 @@ public class PortletApplicationContext extends XmlWebApplicationContext {
 		return _pacl.getBeanClassLoader();
 	}
 
+	public static interface PACL {
+
+		public ClassLoader getBeanClassLoader();
+
+	}
+
 	@Override
 	protected String[] getDefaultConfigLocations() {
 		return new String[0];
@@ -153,12 +159,6 @@ public class PortletApplicationContext extends XmlWebApplicationContext {
 
 			return new FilterClassLoader(beanClassLoader);
 		}
-
-	}
-
-	public static interface PACL {
-
-		public ClassLoader getBeanClassLoader();
 
 	}
 

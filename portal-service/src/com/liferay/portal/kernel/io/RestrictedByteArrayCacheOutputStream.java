@@ -173,6 +173,12 @@ public class RestrictedByteArrayCacheOutputStream extends OutputStream {
 		index = newIndex;
 	}
 
+	public static interface FlushPreAction {
+
+		public void beforeFlush() throws IOException;
+
+	}
+
 	protected void ensureCacheSize(int newIndex) {
 		if (newIndex <= cache.length) {
 			return;
@@ -196,13 +202,6 @@ public class RestrictedByteArrayCacheOutputStream extends OutputStream {
 	protected FlushPreAction flushPreAction;
 	protected int index;
 	protected OutputStream outputStream;
-
 	protected boolean overflowed;
-
-	public static interface FlushPreAction {
-
-		public void beforeFlush() throws IOException;
-
-	}
 
 }

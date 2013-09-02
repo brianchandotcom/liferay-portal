@@ -14,7 +14,7 @@
  */
 --%>
 
-<div class="selected-labels" id="<portlet:namespace />selectedRemote"></div>
+<span class="selected-labels" id="<portlet:namespace />selectedRemote"></span>
 
 <aui:a cssClass="modify-link" href="javascript:;" id="remoteLink" label="change" method="get" />
 

@@ -153,8 +153,8 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 					destroyOnHide: true
 				},
 				refererPortletName: '<%= PortletKeys.DOCUMENT_LIBRARY %>',
-				showGlobalScope: 'true',
-				showManageTemplates: 'false',
+				showGlobalScope: true,
+				showManageTemplates: false,
 				title: '<%= UnicodeLanguageUtil.get(pageContext, "metadata-sets") %>'
 			}
 		);

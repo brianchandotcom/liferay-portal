@@ -165,6 +165,14 @@ public class StringUtil_IW {
 		return StringUtil.insert(s, insert, offset);
 	}
 
+	public boolean isLowerCase(java.lang.String s) {
+		return StringUtil.isLowerCase(s);
+	}
+
+	public boolean isUpperCase(java.lang.String s) {
+		return StringUtil.isUpperCase(s);
+	}
+
 	public int lastIndexOfAny(java.lang.String s, char[] chars) {
 		return StringUtil.lastIndexOfAny(s, chars);
 	}

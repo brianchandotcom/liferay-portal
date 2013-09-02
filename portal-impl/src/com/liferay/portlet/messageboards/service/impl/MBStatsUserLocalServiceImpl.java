@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.util.ClassLoaderUtil;
-import com.liferay.portlet.messageboards.model.MBCategoryConstants;
 import com.liferay.portlet.messageboards.model.MBStatsUser;
 import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.model.impl.MBStatsUserImpl;
@@ -252,21 +251,8 @@ public class MBStatsUserLocalServiceImpl
 			long groupId, long userId, Date lastPostDate)
 		throws SystemException {
 
-		long[] categoryIds = mbCategoryService.getCategoryIds(
-			groupId, MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID);
-
-		int messageCount = mbMessagePersistence.countByG_U_C_S(
-			groupId, userId, categoryIds, WorkflowConstants.STATUS_APPROVED);
-
-		QueryDefinition queryDefinition = new QueryDefinition(
-			WorkflowConstants.STATUS_IN_TRASH);
-
-		List<MBThread> threads = mbThreadLocalService.getGroupThreads(
-			groupId, queryDefinition);
-
-		for (MBThread thread : threads) {
-			messageCount = messageCount - thread.getMessageCount();
-		}
+		int messageCount = mbMessagePersistence.countByG_U_S(
+			groupId, userId, WorkflowConstants.STATUS_APPROVED);
 
 		return updateStatsUser(groupId, userId, messageCount, lastPostDate);
 	}

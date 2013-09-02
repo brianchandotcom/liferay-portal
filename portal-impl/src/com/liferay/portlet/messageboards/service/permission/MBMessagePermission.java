@@ -116,7 +116,7 @@ public class MBMessagePermission {
 					}
 				}
 				catch (NoSuchCategoryException nsce) {
-					if (!message.isInTrashThread()) {
+					if (!message.isInTrash()) {
 						throw nsce;
 					}
 				}

@@ -95,9 +95,7 @@ public class ActionUtil {
 			message = MBMessageServiceUtil.getMessage(messageId);
 		}
 
-		if ((message != null) &&
-			(message.isInTrash() || message.isInTrashThread())) {
-
+		if ((message != null) && message.isInTrash()) {
 			throw new NoSuchMessageException();
 		}
 
@@ -127,9 +125,7 @@ public class ActionUtil {
 				thread.getRootMessageId());
 		}
 
-		if ((message != null) &&
-			(message.isInTrash() || message.isInTrashThread())) {
-
+		if ((message != null) && message.isInTrash()) {
 			throw new NoSuchMessageException();
 		}
 

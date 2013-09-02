@@ -107,7 +107,7 @@ public class MBMessageTrashHandler extends BaseTrashHandler {
 
 		MBMessage message = MBMessageLocalServiceUtil.getMessage(classPK);
 
-		return message.isInTrashThread();
+		return message.isInTrashContainer();
 	}
 
 	@Override

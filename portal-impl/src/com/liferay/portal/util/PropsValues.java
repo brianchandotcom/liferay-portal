@@ -1488,6 +1488,8 @@ public class PropsValues {
 
 	public static final String PORTAL_JAAS_IMPL = PropsUtil.get(PropsKeys.PORTAL_JAAS_IMPL);
 
+	public static final boolean PORTAL_JAAS_PLAIN_PASSWORD = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.PORTAL_JAAS_PLAIN_PASSWORD));
+
 	public static final boolean PORTAL_JAAS_STRICT_PASSWORD = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.PORTAL_JAAS_STRICT_PASSWORD));
 
 	public static final String PORTAL_PROXY_PATH = PropsUtil.get(PropsKeys.PORTAL_PROXY_PATH);

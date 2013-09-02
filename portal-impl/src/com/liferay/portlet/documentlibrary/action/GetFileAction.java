@@ -259,13 +259,10 @@ public class GetFileAction extends PortletAction {
 
 		String sourceExtension = fileVersion.getExtension();
 
-		if (Validator.isNotNull(sourceExtension)) {
-			String periodAndExtension = StringPool.PERIOD.concat(
-				sourceExtension);
+		if (Validator.isNotNull(sourceExtension) &&
+			!fileName.endsWith(StringPool.PERIOD + sourceExtension)) {
 
-			if (!fileName.endsWith(periodAndExtension)) {
-				fileName = fileName.concat(periodAndExtension);
-			}
+			fileName += StringPool.PERIOD + sourceExtension;
 		}
 
 		long contentLength = fileVersion.getSize();

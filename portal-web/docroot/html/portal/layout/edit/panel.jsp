@@ -17,6 +17,8 @@
 <%@ include file="/html/portal/layout/edit/init.jsp" %>
 
 <%
+String idPrefix = ParamUtil.getString(request, "idPrefix", StringPool.BLANK);
+
 String description = StringPool.BLANK;
 String panelSelectedPortlets = StringPool.BLANK;
 
@@ -34,16 +36,16 @@ if (selLayout != null) {
 	<liferay-ui:message key="select-the-applications-that-will-be-available-in-the-panel" />
 </div>
 
-<aui:input id="panelSelectedPortlets" name="TypeSettingsProperties--panelSelectedPortlets--" type="hidden" value="<%= panelSelectedPortlets %>" />
+<aui:input id='<%= idPrefix + "panelSelectedPortlets" %>' name="TypeSettingsProperties--panelSelectedPortlets--" type="hidden" value="<%= panelSelectedPortlets %>" />
 
-<div class="lfr-tree-loading" id="<portlet:namespace />selectPortletsTreeLoading">
+<div class="lfr-tree-loading" id='<portlet:namespace /><%= idPrefix + "selectPortletsTreeLoading" %>'>
 	<span class="icon icon-loading lfr-tree-loading-icon"></span>
 </div>
 
-<div id="<portlet:namespace />selectPortletsTree" style="margin: 4px;"></div>
+<div id='<portlet:namespace /><%= idPrefix + "selectPortletsTree" %>' style="margin: 4px;"></div>
 
 <aui:script use="aui-tree-view">
-	var panelSelectedPortletsEl = A.one('#<portlet:namespace />panelSelectedPortlets');
+	var panelSelectedPortletsEl = A.one('#<portlet:namespace /><%= idPrefix %>panelSelectedPortlets');
 
 	var selectedPortlets = A.Array.hash(panelSelectedPortletsEl.val().split(','));
 
@@ -123,26 +125,25 @@ if (selLayout != null) {
 
 		var portletList = <%= portletsJSON %>.serializable.list.list[0];
 
-		var rootNode = new A.TreeNodeTask(
-			{
-				alwaysShowHitArea: true,
-				children: TreeUtil.formatJSONResults(portletList),
-				draggable: false,
-				expanded: true,
-				id: '<portlet:namespace />selectPortletsRootNode',
-				label: portletList.name,
-				leaf: false
-			}
-		);
+		var rootNode = {
+			alwaysShowHitArea: true,
+			children: TreeUtil.formatJSONResults(portletList),
+			draggable: false,
+			expanded: true,
+			id: '<portlet:namespace /><%= idPrefix %>selectPortletsRootNode',
+			label: portletList.name,
+			leaf: false,
+			type: 'task'
+		};
 
 		var treeview = new A.TreeView(
 			{
 				after: {
 					render: function() {
-						A.one('#<portlet:namespace />selectPortletsTreeLoading').hide();
+						A.one('#<portlet:namespace /><%= idPrefix %>selectPortletsTreeLoading').hide();
 					}
 				},
-				boundingBox: '#<portlet:namespace />selectPortletsTree',
+				boundingBox: '#<portlet:namespace /><%= idPrefix %>selectPortletsTree',
 				children: [rootNode],
 				type: 'file'
 			}

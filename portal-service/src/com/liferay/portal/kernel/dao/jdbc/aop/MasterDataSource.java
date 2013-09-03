@@ -12,15 +12,23 @@
  * details.
  */
 
-package com.liferay.portal.kernel.spring.util;
+package com.liferay.portal.kernel.dao.jdbc.aop;
+
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Inherited;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
+ * @author László Csontos
  * @author Shuyang Zhou
  */
-public interface FactoryBean<T> {
-
-	public T create() throws Exception;
-
-	public T postProcessing(T t);
+@Documented
+@Inherited
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ElementType.METHOD, ElementType.TYPE})
+public @interface MasterDataSource {
 
 }

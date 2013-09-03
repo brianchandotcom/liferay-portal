@@ -2160,6 +2160,22 @@ public class PortletDataContextImpl implements PortletDataContext {
 		return groupElement;
 	}
 
+	protected Element getMissingReferenceElement(ClassedModel classedModel) {
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("missing-reference[@class-name='");
+		sb.append(classedModel.getModelClassName());
+		sb.append("' and @class-pk='");
+		sb.append(String.valueOf(classedModel.getPrimaryKeyObj()));
+		sb.append("']");
+
+		XPath xPath = SAXReaderUtil.createXPath(sb.toString());
+
+		Node node = xPath.selectSingleNode(_missingReferencesElement);
+
+		return (Element)node;
+	}
+
 	protected String getPrimaryKeyString(Class<?> clazz, long classPK) {
 		return getPrimaryKeyString(clazz.getName(), String.valueOf(classPK));
 	}
@@ -2283,6 +2299,13 @@ public class PortletDataContextImpl implements PortletDataContext {
 			stagedModelElement, clazz, 0, null, 0, referenceType);
 	}
 
+	protected String getReferenceKey(ClassedModel classedModel) {
+		String referenceKey = classedModel.getModelClassName();
+
+		return referenceKey.concat(StringPool.POUND).concat(
+			String.valueOf(classedModel.getPrimaryKeyObj()));
+	}
+
 	protected long getUserId(AuditedModel auditedModel) {
 		try {
 			String userUuid = auditedModel.getUserUuid();
@@ -2332,29 +2355,6 @@ public class PortletDataContextImpl implements PortletDataContext {
 		}
 
 		return true;
-	}
-
-	private Element getMissingReferenceElement(ClassedModel classedModel) {
-		StringBundler sb = new StringBundler(5);
-
-		sb.append("missing-reference[@class-name='");
-		sb.append(classedModel.getModelClassName());
-		sb.append("' and @class-pk='");
-		sb.append(String.valueOf(classedModel.getPrimaryKeyObj()));
-		sb.append("']");
-
-		XPath xPath = SAXReaderUtil.createXPath(sb.toString());
-
-		Node node = xPath.selectSingleNode(_missingReferencesElement);
-
-		return (Element)node;
-	}
-
-	private String getReferenceKey(ClassedModel classedModel) {
-		String referenceKey = classedModel.getModelClassName();
-
-		return referenceKey.concat(StringPool.POUND).concat(
-			String.valueOf(classedModel.getPrimaryKeyObj()));
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

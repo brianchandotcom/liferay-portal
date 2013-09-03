@@ -23,6 +23,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
+import com.liferay.portlet.wiki.model.WikiPageConstants;
 import com.liferay.portlet.wiki.service.WikiNodeLocalServiceUtil;
 import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
 
@@ -82,6 +83,39 @@ public class WikiTestUtil {
 			WikiPage page = WikiPageLocalServiceUtil.addPage(
 				userId, nodeId, title, content, "Summary", true,
 				serviceContext);
+
+			if (approved) {
+				page = WikiPageLocalServiceUtil.updateStatus(
+					userId, page.getResourcePrimKey(),
+					WorkflowConstants.STATUS_APPROVED, serviceContext);
+			}
+
+			return page;
+		}
+		finally {
+			WorkflowThreadLocal.setEnabled(workflowEnabled);
+		}
+	}
+
+	public static WikiPage addPage(
+			long userId, long nodeId, String title, String content,
+			String parentTitle, boolean approved, ServiceContext serviceContext)
+		throws Exception {
+
+		boolean workflowEnabled = WorkflowThreadLocal.isEnabled();
+
+		try {
+			WorkflowThreadLocal.setEnabled(true);
+
+			serviceContext = (ServiceContext)serviceContext.clone();
+
+			serviceContext.setWorkflowAction(
+				WorkflowConstants.ACTION_SAVE_DRAFT);
+
+			WikiPage page = WikiPageLocalServiceUtil.addPage(
+			userId, nodeId, title, WikiPageConstants.VERSION_DEFAULT, content,
+			"Summary", true, WikiPageConstants.DEFAULT_FORMAT, false,
+			parentTitle, null, serviceContext);
 
 			if (approved) {
 				page = WikiPageLocalServiceUtil.updateStatus(

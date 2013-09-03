@@ -29,7 +29,6 @@ import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletURLImpl;
 import com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
@@ -96,6 +95,9 @@ public class EditStructureAction extends PortletAction {
 				}
 
 				if (SessionErrors.isEmpty(actionRequest)) {
+					String refererPortletName = ParamUtil.getString(
+						actionRequest, "refererPortletName");
+
 					LiferayPortletConfig liferayPortletConfig =
 						(LiferayPortletConfig)portletConfig;
 
@@ -103,7 +105,7 @@ public class EditStructureAction extends PortletAction {
 						actionRequest,
 						liferayPortletConfig.getPortletId() +
 							SessionMessages.KEY_SUFFIX_REFRESH_PORTLET,
-						PortletKeys.JOURNAL);
+						refererPortletName);
 				}
 
 				sendRedirect(actionRequest, actionResponse, redirect);

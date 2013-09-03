@@ -2636,9 +2636,11 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				}
 				else {
 					content = StringUtil.replaceFirst(
-						content, javaTermContent, previousJavaTermContent);
+						content, "\n" + javaTermContent,
+						"\n" + previousJavaTermContent);
 					content = StringUtil.replaceLast(
-						content, previousJavaTermContent, javaTermContent);
+						content, "\n" + previousJavaTermContent,
+						"\n" + javaTermContent);
 
 					return content;
 				}

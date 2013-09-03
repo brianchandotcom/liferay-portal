@@ -241,7 +241,7 @@ if (defaultAssetPublisherPortletId.equals(portletDisplay.getId()) || (Validator.
 	defaultAssetPublisher = true;
 }
 
-boolean enablePermissions = PropsValues.ASSET_PUBLISHER_SEARCH_WITH_INDEX ? true : GetterUtil.getBoolean(portletPreferences.getValue("enablePermissions", null));
+boolean enablePermissions = (!portletName.equals(PortletKeys.HIGHEST_RATED_ASSETS) && !portletName.equals(PortletKeys.MOST_VIEWED_ASSETS) && PropsValues.ASSET_PUBLISHER_SEARCH_WITH_INDEX) ? true : GetterUtil.getBoolean(portletPreferences.getValue("enablePermissions", null));
 
 assetEntryQuery.setEnablePermissions(enablePermissions);
 

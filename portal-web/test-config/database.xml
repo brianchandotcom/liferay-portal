@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <database>
-	<db2>
+	<db2-9.7>
 		<device-name></device-name>
 		<driver>com.ibm.db2.jcc.DB2Driver</driver>
 		<family>db2</family>
@@ -33,7 +33,40 @@
 		<url>jdbc:db2://${database.host}:50000/${database.schema}:deferPrepares=false;fullyMaterializeInputStreams=true;fullyMaterializeLobData=true;progresssiveLocators=2;progressiveStreaming=2;</url>
 		<username>db2admin</username>
 		<vm-vmdk-suffix>db2-9.7</vm-vmdk-suffix>
-	</db2>
+	</db2-9.7>
+	<db2-10.1>
+		<device-name></device-name>
+		<driver>com.ibm.db2.jcc.DB2Driver</driver>
+		<family>db2</family>
+		<password>password</password>
+		<remote-schema-command>cmd.exe /c db2cmd /c /w /i /t db2 -f C:\temporary\create.sql -td;</remote-schema-command>
+		<schema>lportal</schema>
+		<sql-replacement>
+			<create-schema>
+				<token>create database lportal;</token>
+				<value>create database ${database.schema} pagesize 8192;</value>
+			</create-schema>
+			<create-schema-collate>
+				<token></token>
+				<value></value>
+			</create-schema-collate>
+			<create-schema-secondary>
+				<token>create database lportal pagesize 8192;</token>
+				<value>create database ${database.schema} pagesize 8192;</value>
+			</create-schema-secondary>
+			<drop-schema>
+				<token>drop database lportal;</token>
+				<value>drop database ${database.schema};</value>
+			</drop-schema>
+			<use-schema>
+				<token>connect to lportal;</token>
+				<value>connect to ${database.schema} USER ${database.username} USING ${database.password};</value>
+			</use-schema>
+		</sql-replacement>
+		<url>jdbc:db2://${database.host}:50000/${database.schema}:deferPrepares=false;fullyMaterializeInputStreams=true;fullyMaterializeLobData=true;progresssiveLocators=2;progressiveStreaming=2;</url>
+		<username>db2admin</username>
+		<vm-vmdk-suffix>db2-10.1</vm-vmdk-suffix>
+	</db2-10.1>
 	<hsql>
 		<device-name></device-name>
 		<driver>org.hsqldb.jdbcDriver</driver>
@@ -233,6 +266,39 @@
 		<username>postgres</username>
 		<vm-vmdk-suffix>postgresql-9.0.4-1</vm-vmdk-suffix>
 	</postgresql-9.0>
+	<postgresql-9.2>
+		<device-name></device-name>
+		<driver>org.postgresql.Driver</driver>
+		<family>postgresql</family>
+		<password></password>
+		<remote-schema-command>C:\Progra~1\PostgreSQL\9.2\bin\psql.exe -U ${database.username} -f C:\temporary\create.sql</remote-schema-command>
+		<schema>lportal</schema>
+		<sql-replacement>
+			<create-schema>
+				<token>create database lportal encoding = 'UNICODE';</token>
+				<value>create database ${database.schema} encoding = 'UNICODE';</value>
+			</create-schema>
+			<create-schema-collate>
+				<token></token>
+				<value></value>
+			</create-schema-collate>
+			<create-schema-secondary>
+				<token></token>
+				<value></value>
+			</create-schema-secondary>
+			<drop-schema>
+				<token>drop database lportal;</token>
+				<value>drop database ${database.schema};</value>
+			</drop-schema>
+			<use-schema>
+				<token>\c lportal;</token>
+				<value>\c ${database.schema};</value>
+			</use-schema>
+		</sql-replacement>
+		<url>jdbc:postgresql://${database.host}:5432/${database.schema}</url>
+		<username>postgres</username>
+		<vm-vmdk-suffix>postgresql-9.2.4-1</vm-vmdk-suffix>
+	</postgresql-9.2>
 	<sql-server-2005>
 		<device-name></device-name>
 		<driver>net.sourceforge.jtds.jdbc.Driver</driver>

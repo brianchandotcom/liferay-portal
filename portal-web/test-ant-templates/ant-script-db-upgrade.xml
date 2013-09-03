@@ -7,9 +7,9 @@
 	<propertycopy name="db-upgrade.bundled.tomcat.dir.name" from="db-upgrade.${test.ant.script.version}.bundled.tomcat.dir.name" silent="true" />
 	<propertycopy name="db-upgrade.bundled.tomcat.file.name" from="db-upgrade.${test.ant.script.version}.bundled.tomcat.file.name" silent="true" />
 
-	<target name="test-${test.ant.script.command}-${test.ant.script.version}-tomcat-db2-firefox">
+	<target name="test-${test.ant.script.command}-${test.ant.script.version}-tomcat-db2-9.7-firefox">
 		<antcall target="generate-test-properties">
-			<param name="database" value="db2" />
+			<param name="database" value="db2-9.7" />
 		</antcall>
 
 		<antcall target="print-scm-revision" />
@@ -25,7 +25,7 @@
 			<param name="vm.host" value="${vm.db.host}" />
 		</antcall>
 
-		<antcall target="prepare-versioned-db2">
+		<antcall target="prepare-versioned-db2-9.7">
 			<param name="skip.prepare-bundle" value="true" />
 			<param name="sql.version" value="${test.ant.script.version}" />
 		</antcall>
@@ -42,7 +42,61 @@
 			<param name="test.name" value="DBUpgrade${test.ant.script.suite}${db-upgrade.build}TestSuite" />
 		</antcall>
 
-		<antcall target="prepare-versioned-db2">
+		<antcall target="prepare-versioned-db2-9.7">
+			<param name="skip.prepare-bundle" value="true" />
+			<param name="skip.rebuild-database" value="true" />
+			<param name="sql.version" value="${test.ant.script.version}" />
+		</antcall>
+
+		<antcall target="run-latest-upgrade-test">
+			${test.ant.script.file.evaluate.logs}
+			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.selenium.implementation}
+			${test.ant.script.file.selenium.logger.enabled}
+			<param name="test.name" value="DBUpgrade${test.ant.script.suite}${db-upgrade.build}LatestTestSuite" />
+		</antcall>
+
+		<antcall target="stop-vm">
+			<param name="vm.host" value="${vm.db.host}" />
+		</antcall>
+	</target>
+
+	<target name="test-${test.ant.script.command}-${test.ant.script.version}-tomcat-db2-10.1-firefox">
+		<antcall target="generate-test-properties">
+			<param name="database" value="db2-10.1" />
+		</antcall>
+
+		<antcall target="print-scm-revision" />
+
+		<antcall target="clean-up-test-properties" />
+
+		<ant antfile="build-dist.xml" target="build-dist-tomcat" />
+
+		<antcall target="prepare-vm-server">
+			<param name="build.war" value="false" />
+			<param name="skip.prepare-bundle" value="true" />
+			<param name="vm.vmdk.suffix" value="db2-10.1" />
+			<param name="vm.host" value="${vm.db.host}" />
+		</antcall>
+
+		<antcall target="prepare-versioned-db2-10.1">
+			<param name="skip.prepare-bundle" value="true" />
+			<param name="sql.version" value="${test.ant.script.version}" />
+		</antcall>
+
+		<antcall target="run-versioned-upgrade-test">
+			${test.ant.script.file.evaluate.logs}
+			${test.ant.script.file.plugin.portlets.ee}
+			${test.ant.script.file.selenium.implementation}
+			${test.ant.script.file.selenium.logger.enabled}
+			<param name="bundled.dir.name" value="${db-upgrade.bundled.tomcat.dir.name}" />
+			<param name="bundled.file.name" value="${db-upgrade.bundled.tomcat.file.name}" />
+			<param name="legacy.theme.ids" value="classic,controlpanel" />
+			<param name="lp.version" value="${test.ant.script.version}" />
+			<param name="test.name" value="DBUpgrade${test.ant.script.suite}${db-upgrade.build}TestSuite" />
+		</antcall>
+
+		<antcall target="prepare-versioned-db2-10.1">
 			<param name="skip.prepare-bundle" value="true" />
 			<param name="skip.rebuild-database" value="true" />
 			<param name="sql.version" value="${test.ant.script.version}" />
@@ -302,6 +356,60 @@
 		</antcall>
 
 		<antcall target="prepare-versioned-postgresql-9.0">
+			<param name="skip.prepare-bundle" value="true" />
+			<param name="skip.rebuild-database" value="true" />
+			<param name="sql.version" value="${test.ant.script.version}" />
+		</antcall>
+
+		<antcall target="run-latest-upgrade-test">
+			${test.ant.script.file.evaluate.logs}
+			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.selenium.implementation}
+			${test.ant.script.file.selenium.logger.enabled}
+			<param name="test.name" value="DBUpgrade${test.ant.script.suite}${db-upgrade.build}LatestTestSuite" />
+		</antcall>
+
+		<antcall target="stop-vm">
+			<param name="vm.host" value="${vm.db.host}" />
+		</antcall>
+	</target>
+
+	<target name="test-${test.ant.script.command}-${test.ant.script.version}-tomcat-postgresql-9.2-firefox">
+		<antcall target="generate-test-properties">
+			<param name="database" value="postgresql-9.2" />
+		</antcall>
+
+		<antcall target="print-scm-revision" />
+
+		<antcall target="clean-up-test-properties" />
+
+		<ant antfile="build-dist.xml" target="build-dist-tomcat" />
+
+		<antcall target="prepare-vm-server">
+			<param name="build.war" value="false" />
+			<param name="skip.prepare-bundle" value="true" />
+			<param name="vm.vmdk.suffix" value="postgresql-9.2.4-1" />
+			<param name="vm.host" value="${vm.db.host}" />
+		</antcall>
+
+		<antcall target="prepare-versioned-postgresql-9.2">
+			<param name="skip.prepare-bundle" value="true" />
+			<param name="sql.version" value="${test.ant.script.version}" />
+		</antcall>
+
+		<antcall target="run-versioned-upgrade-test">
+			${test.ant.script.file.evaluate.logs}
+			${test.ant.script.file.plugin.portlets.ee}
+			${test.ant.script.file.selenium.implementation}
+			${test.ant.script.file.selenium.logger.enabled}
+			<param name="bundled.dir.name" value="${db-upgrade.bundled.tomcat.dir.name}" />
+			<param name="bundled.file.name" value="${db-upgrade.bundled.tomcat.file.name}" />
+			<param name="legacy.theme.ids" value="classic,controlpanel" />
+			<param name="lp.version" value="${test.ant.script.version}" />
+			<param name="test.name" value="DBUpgrade${test.ant.script.suite}${db-upgrade.build}TestSuite" />
+		</antcall>
+
+		<antcall target="prepare-versioned-postgresql-9.2">
 			<param name="skip.prepare-bundle" value="true" />
 			<param name="skip.rebuild-database" value="true" />
 			<param name="sql.version" value="${test.ant.script.version}" />

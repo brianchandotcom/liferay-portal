@@ -457,7 +457,7 @@
 	</target>
 
 	<target name="build-test-ant-scripts">
-		<property name="build-test-ant-scripts.version" value="7" />
+		<property name="build-test-ant-scripts.version" value="9" />
 
 		<if>
 			<available file="portal-web/test-ant-scripts/version" />
@@ -772,20 +772,22 @@
 		<if>
 			<not>
 				<or>
-					<equals arg1="${database}" arg2="db2" />
+					<equals arg1="${database}" arg2="db2-9.7" />
+					<equals arg1="${database}" arg2="db2-10.1" />
 					<equals arg1="${database}" arg2="hsql" />
 					<equals arg1="${database}" arg2="mysql" />
 					<equals arg1="${database}" arg2="oracle-10" />
 					<equals arg1="${database}" arg2="oracle-11" />
 					<equals arg1="${database}" arg2="postgresql-8.4" />
 					<equals arg1="${database}" arg2="postgresql-9.0" />
+					<equals arg1="${database}" arg2="postgresql-9.2" />
 					<equals arg1="${database}" arg2="sql-server-2005" />
 					<equals arg1="${database}" arg2="sql-server-2008" />
 					<equals arg1="${database}" arg2="sybase" />
 				</or>
 			</not>
 			<then>
-				<fail>Please set "database" to one of the following:${line.separator}db2, hsql, mysql, oracle-10, oracle-11, postgresql-8.4, postgresql-9.0, sql-server-2005, sql-server-2008, sybase</fail>
+				<fail>Please set "database" to one of the following:${line.separator}db2-9.7, db2-10.1, hsql, mysql, oracle-10, oracle-11, postgresql-8.4, postgresql-9.0, postgresql-9.2, sql-server-2005, sql-server-2008, sybase</fail>
 			</then>
 		</if>
 	</target>
@@ -957,7 +959,10 @@
 
 	<target name="copy-optional-jars">
 		<if>
-			<equals arg1="${database}" arg2="db2" />
+			<or>
+				<equals arg1="${database}" arg2="db2-9.7" />
+				<equals arg1="${database}" arg2="db2-10.1" />
+			</or>
 			<then>
 				<delete includeemptydirs="true" failonerror="false">
 					<fileset
@@ -967,9 +972,9 @@
 				</delete>
 
 				<copy todir="${todir}">
-						<fileset
-							dir="${jdbc.drivers.optional.dir}/db2/8.1.18"
-							includes="${jdbc.db2.driver}"
+					<fileset
+						dir="${jdbc.drivers.optional.dir}/db2/8.1.18"
+						includes="${jdbc.db2.driver}"
 					/>
 				</copy>
 			</then>
@@ -1970,8 +1975,14 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 		</antcall>
 	</target>
 
-	<target name="prepare-versioned-db2">
-		<echo file="test.${user.name}.properties">database=db2</echo>
+	<target name="prepare-versioned-db2-9.7">
+		<echo file="test.${user.name}.properties">database=db2-9.7</echo>
+
+		<antcall target="prepare-versioned-common" inheritAll="false" />
+	</target>
+
+	<target name="prepare-versioned-db2-10.1">
+		<echo file="test.${user.name}.properties">database=db2-10.1</echo>
 
 		<antcall target="prepare-versioned-common" inheritAll="false" />
 	</target>
@@ -2002,6 +2013,12 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 
 	<target name="prepare-versioned-postgresql-9.0">
 		<echo file="test.${user.name}.properties">database=postgresql-9.0</echo>
+
+		<antcall target="prepare-versioned-common" inheritAll="false" />
+	</target>
+
+	<target name="prepare-versioned-postgresql-9.2">
+		<echo file="test.${user.name}.properties">database=postgresql-9.2</echo>
 
 		<antcall target="prepare-versioned-common" inheritAll="false" />
 	</target>

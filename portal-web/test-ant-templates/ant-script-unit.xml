@@ -3,9 +3,9 @@
 <project name="portal-test-${test.ant.script.command}" basedir="../../." default="test" xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="../../build-test.xml" />
 
-	<target name="test-${test.ant.script.command}-tomcat-db2-firefox">
+	<target name="test-${test.ant.script.command}-tomcat-db2-9.7-firefox">
 		<antcall target="generate-test-properties">
-			<param name="database" value="db2" />
+			<param name="database" value="db2-9.7" />
 		</antcall>
 
 		<antcall target="print-scm-revision" />
@@ -20,7 +20,32 @@
 		</antcall>
 
 		<ant antfile="build-test-unit.xml" target="run-${test.ant.script.command}-test" inheritAll="false">
-			<property name="database" value="db2" />
+			<property name="database" value="db2-9.7" />
+		</ant>
+
+		<antcall target="stop-vm">
+			<param name="vm.host" value="${vm.db.host}" />
+		</antcall>
+	</target>
+
+	<target name="test-${test.ant.script.command}-tomcat-db2-10.1-firefox">
+		<antcall target="generate-test-properties">
+			<param name="database" value="db2-10.1" />
+		</antcall>
+
+		<antcall target="print-scm-revision" />
+
+		<antcall target="clean-up-test-properties" />
+
+		<antcall target="prepare-vm-server">
+			<param name="build.war" value="false" />
+			<param name="skip.prepare-bundle" value="true" />
+			<param name="vm.vmdk.suffix" value="db2-10.1" />
+			<param name="vm.host" value="${vm.db.host}" />
+		</antcall>
+
+		<ant antfile="build-test-unit.xml" target="run-${test.ant.script.command}-test" inheritAll="false">
+			<property name="database" value="db2-10.1" />
 		</ant>
 
 		<antcall target="stop-vm">
@@ -135,6 +160,31 @@
 
 		<ant antfile="build-test-unit.xml" target="run-${test.ant.script.command}-test" inheritAll="false">
 			<property name="database" value="postgresql-9.0" />
+		</ant>
+
+		<antcall target="stop-vm">
+			<param name="vm.host" value="${vm.db.host}" />
+		</antcall>
+	</target>
+
+	<target name="test-${test.ant.script.command}-tomcat-postgresql-9.2-firefox">
+		<antcall target="generate-test-properties">
+			<param name="database" value="postgresql-9.2" />
+		</antcall>
+
+		<antcall target="print-scm-revision" />
+
+		<antcall target="clean-up-test-properties" />
+
+		<antcall target="prepare-vm-server">
+			<param name="build.war" value="false" />
+			<param name="skip.prepare-bundle" value="true" />
+			<param name="vm.vmdk.suffix" value="postgresql-9.2.4-1" />
+			<param name="vm.host" value="${vm.db.host}" />
+		</antcall>
+
+		<ant antfile="build-test-unit.xml" target="run-${test.ant.script.command}-test" inheritAll="false">
+			<property name="database" value="postgresql-9.2" />
 		</ant>
 
 		<antcall target="stop-vm">

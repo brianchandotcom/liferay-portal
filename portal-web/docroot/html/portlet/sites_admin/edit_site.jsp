@@ -137,6 +137,8 @@ String[][] categorySections = {mainSections, seoSections, advancedSections, misc
 <c:if test="<%= (group == null) || !layout.isTypeControlPanel() %>">
 
 	<%
+	long parentGroupId = ParamUtil.getLong(request, "parentGroupSearchContainerPrimaryKeys", GroupConstants.DEFAULT_PARENT_GROUP_ID);
+
 	boolean localizeTitle = true;
 	String title = "new-site";
 
@@ -147,6 +149,9 @@ String[][] categorySections = {mainSections, seoSections, advancedSections, misc
 	else if (layoutSetPrototype != null) {
 		localizeTitle= false;
 		title = layoutSetPrototype.getName(locale);
+	}
+	else if (parentGroupId != GroupConstants.DEFAULT_PARENT_GROUP_ID) {
+		title = "new-child-site";
 	}
 	%>
 

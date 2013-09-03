@@ -196,6 +196,8 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 	<aui:fieldset>
 		<c:choose>
 			<c:when test="<%= showPrototypes && ((group != null) || (!layoutSetPrototypes.isEmpty() && (layoutSetPrototype == null))) %>">
+				<h3><liferay-ui:message key="pages" /></h3>
+
 				<liferay-ui:panel-container extended="<%= false %>">
 					<liferay-ui:panel collapsible="<%= true %>" defaultState='<%= ((group != null) && (group.getPublicLayoutsPageCount() > 0)) ? "open" : "closed" %>' title="public-pages">
 						<c:choose>

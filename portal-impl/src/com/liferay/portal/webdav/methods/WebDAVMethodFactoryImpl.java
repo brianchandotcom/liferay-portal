@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstancePool;
 import com.liferay.portal.kernel.webdav.WebDAVException;
 import com.liferay.portal.kernel.webdav.methods.Method;
+import com.liferay.portal.kernel.webdav.methods.MethodFactory;
 import com.liferay.portal.util.PropsUtil;
 
 import java.util.HashMap;
@@ -28,32 +29,27 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Brian Wing Shun Chan
  */
-public class WebDAVMethodFactoryImpl {
+public class WebDAVMethodFactoryImpl implements MethodFactory {
 
-	public static Method create(HttpServletRequest request)
-		throws WebDAVException {
-
-		return _instance._create(request);
-	}
-
-	private WebDAVMethodFactoryImpl() {
+	public WebDAVMethodFactoryImpl() {
 		_methods = new HashMap<String, Object>();
 
-		_methods.put("COPY", InstancePool.get(_COPY_METHOD_IMPL));
-		_methods.put("DELETE", InstancePool.get(_DELETE_METHOD_IMPL));
-		_methods.put("GET", InstancePool.get(_GET_METHOD_IMPL));
-		_methods.put("HEAD", InstancePool.get(_HEAD_METHOD_IMPL));
-		_methods.put("LOCK", InstancePool.get(_LOCK_METHOD_IMPL));
-		_methods.put("MKCOL", InstancePool.get(_MKCOL_METHOD_IMPL));
-		_methods.put("MOVE", InstancePool.get(_MOVE_METHOD_IMPL));
-		_methods.put("OPTIONS", InstancePool.get(_OPTIONS_METHOD_IMPL));
-		_methods.put("PROPFIND", InstancePool.get(_PROPFIND_METHOD_IMPL));
-		_methods.put("PROPPATCH", InstancePool.get(_PROPPATCH_METHOD_IMPL));
-		_methods.put("PUT", InstancePool.get(_PUT_METHOD_IMPL));
-		_methods.put("UNLOCK", InstancePool.get(_UNLOCK_METHOD_IMPL));
+		_methods.put(Method.COPY, InstancePool.get(_COPY_METHOD_IMPL));
+		_methods.put(Method.DELETE, InstancePool.get(_DELETE_METHOD_IMPL));
+		_methods.put(Method.GET, InstancePool.get(_GET_METHOD_IMPL));
+		_methods.put(Method.HEAD, InstancePool.get(_HEAD_METHOD_IMPL));
+		_methods.put(Method.LOCK, InstancePool.get(_LOCK_METHOD_IMPL));
+		_methods.put(Method.MKCOL, InstancePool.get(_MKCOL_METHOD_IMPL));
+		_methods.put(Method.MOVE, InstancePool.get(_MOVE_METHOD_IMPL));
+		_methods.put(Method.OPTIONS, InstancePool.get(_OPTIONS_METHOD_IMPL));
+		_methods.put(Method.PROPFIND, InstancePool.get(_PROPFIND_METHOD_IMPL));
+		_methods.put(
+			Method.PROPPATCH, InstancePool.get(_PROPPATCH_METHOD_IMPL));
+		_methods.put(Method.PUT, InstancePool.get(_PUT_METHOD_IMPL));
+		_methods.put(Method.UNLOCK, InstancePool.get(_UNLOCK_METHOD_IMPL));
 	}
 
-	private Method _create(HttpServletRequest request) throws WebDAVException {
+	public Method create(HttpServletRequest request) throws WebDAVException {
 		String method = request.getMethod();
 
 		Method methodImpl = (Method)_methods.get(method.toUpperCase());
@@ -113,8 +109,6 @@ public class WebDAVMethodFactoryImpl {
 	private static final String _UNLOCK_METHOD_IMPL = GetterUtil.getString(
 		PropsUtil.get(WebDAVMethodFactoryImpl.class.getName() + ".UNLOCK"),
 		UnlockMethodImpl.class.getName());
-
-	private static WebDAVMethodFactoryImpl _instance = new WebDAVMethodFactoryImpl();
 
 	private Map<String, Object> _methods;
 

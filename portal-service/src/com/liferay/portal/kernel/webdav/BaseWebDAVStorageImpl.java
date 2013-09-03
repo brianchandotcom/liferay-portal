@@ -15,6 +15,8 @@
 package com.liferay.portal.kernel.webdav;
 
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.webdav.methods.MethodFactory;
+import com.liferay.portal.kernel.webdav.methods.MethodFactoryUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Lock;
 import com.liferay.portal.service.GroupLocalServiceUtil;
@@ -24,6 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Fabio Pezzutto
  */
 public abstract class BaseWebDAVStorageImpl implements WebDAVStorage {
 
@@ -53,6 +56,11 @@ public abstract class BaseWebDAVStorageImpl implements WebDAVStorage {
 		throws WebDAVException {
 
 		return HttpServletResponse.SC_FORBIDDEN;
+	}
+
+	@Override
+	public MethodFactory getMethodFactory() {
+		return MethodFactoryUtil.getMethodFactory("webdav");
 	}
 
 	@Override

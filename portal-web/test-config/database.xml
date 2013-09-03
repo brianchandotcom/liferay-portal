@@ -266,6 +266,39 @@
 		<username>postgres</username>
 		<vm-vmdk-suffix>postgresql-9.0.4-1</vm-vmdk-suffix>
 	</postgresql-9.0>
+	<postgresql-9.2>
+		<device-name></device-name>
+		<driver>org.postgresql.Driver</driver>
+		<family>postgresql</family>
+		<password></password>
+		<remote-schema-command>C:\Progra~1\PostgreSQL\9.2\bin\psql.exe -U ${database.username} -f C:\temporary\create.sql</remote-schema-command>
+		<schema>lportal</schema>
+		<sql-replacement>
+			<create-schema>
+				<token>create database lportal encoding = 'UNICODE';</token>
+				<value>create database ${database.schema} encoding = 'UNICODE';</value>
+			</create-schema>
+			<create-schema-collate>
+				<token></token>
+				<value></value>
+			</create-schema-collate>
+			<create-schema-secondary>
+				<token></token>
+				<value></value>
+			</create-schema-secondary>
+			<drop-schema>
+				<token>drop database lportal;</token>
+				<value>drop database ${database.schema};</value>
+			</drop-schema>
+			<use-schema>
+				<token>\c lportal;</token>
+				<value>\c ${database.schema};</value>
+			</use-schema>
+		</sql-replacement>
+		<url>jdbc:postgresql://${database.host}:5432/${database.schema}</url>
+		<username>postgres</username>
+		<vm-vmdk-suffix>postgresql-9.2.4-1</vm-vmdk-suffix>
+	</postgresql-9.2>
 	<sql-server-2005>
 		<device-name></device-name>
 		<driver>net.sourceforge.jtds.jdbc.Driver</driver>

@@ -2480,7 +2480,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
-	protected boolean isInJavaTermTypeGroup(
+	protected static boolean isInJavaTermTypeGroup(
 		int javaTermType, int[] javaTermTypeGroup) {
 
 		for (int type : javaTermTypeGroup) {

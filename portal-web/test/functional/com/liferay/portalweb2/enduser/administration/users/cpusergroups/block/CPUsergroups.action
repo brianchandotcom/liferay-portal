@@ -1,0 +1,7 @@
+<definition>
+	<command name="isElementPresent">
+		<default>
+			<execute function="IsElementPresent#isVisible" />
+		</default>
+	</command>
+</definition>

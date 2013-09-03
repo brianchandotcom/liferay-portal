@@ -3,7 +3,7 @@
 
 	<execute test-suite="CPRolesP5" />
 
-	<execute test-suite="CPUserGroupsP5" />
+	<execute test-suite="CPUsergroupsP5" />
 
 	<execute test-suite="CPUsersandorganizationsP5" />
 </definition>

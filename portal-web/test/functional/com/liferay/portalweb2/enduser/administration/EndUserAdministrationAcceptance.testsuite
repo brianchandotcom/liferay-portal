@@ -1,7 +1,7 @@
 <definition>
 	<execute test-suite="CPRolesAcceptance" />
 
-	<execute test-suite="CPUserGroupsAcceptance" />
+	<execute test-suite="CPUsergroupsAcceptance" />
 
 	<execute test-suite="CPUsersandorganizationsAcceptance" />
 </definition>

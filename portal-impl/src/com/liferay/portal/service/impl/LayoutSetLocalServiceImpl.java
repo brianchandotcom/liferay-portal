@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ColorSchemeFactoryUtil;
-import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.ThemeFactoryUtil;
@@ -488,9 +487,7 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 
 		virtualHostname = virtualHostname.trim().toLowerCase();
 
-		if (virtualHostname.startsWith(Http.HTTP_WITH_SLASH) ||
-			virtualHostname.startsWith(Http.HTTPS_WITH_SLASH)) {
-
+		if (!Validator.isDomain(virtualHostname)) {
 			throw new LayoutSetVirtualHostException();
 		}
 

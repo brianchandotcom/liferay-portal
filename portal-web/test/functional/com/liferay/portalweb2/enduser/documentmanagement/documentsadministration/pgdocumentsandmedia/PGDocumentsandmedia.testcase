@@ -31,7 +31,6 @@
 	</tear-down>
 
 	<command name="AddDocument">
-
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -141,12 +140,9 @@
 		<var name="dmDocumentDescription1" value="DM Document1 Description" />
 		<var name="dmDocumentDescription2" value="DM Document2 Description" />
 		<var name="dmDocumentDescription3" value="DM Document3 Description" />
-
 		<var name="dmDocumentFile1" value="Document_1.doc" />
 		<var name="dmDocumentFile2" value="Document_2.doc" />
 		<var name="dmDocumentFile3" value="Document_3.doc" />
-
-		<var name="dmDocType" value="doc" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -290,10 +286,8 @@
 		<var name="dmDocumentDescription" value="DM Document Description" />
 		<var name="dmDocumentFile" value="Document_1.doc" />
 		<var name="dmDocumentTitle" value="DM Document Title" />
-
 		<var name="dmFolderDescription1" value="DM Folder1 Description" />
 		<var name="dmFolderDescription2" value="DM Folder2 Description" />
-
 		<var name="dmFolderName1" value="DM Folder1 Name" />
 		<var name="dmFolderName2" value="DM Folder2 Name" />
 

@@ -144,8 +144,8 @@ Format timeFormat = FastDateFormatFactoryUtil.getSimpleDateFormat("HH:mm", local
 					int curOpen = openArray[j];
 					int curClose = closeArray[j];
 				%>
-					<div class="org-labor-day">
-						<h5 class="labor-day"><%= day %></h5>
+					<div class="org-labor-entry">
+						<h5 class="org-labor-entry-title"><%= day %></h5>
 
 						<aui:select label="Open" name='<%= curParam + "Open" + orgLaborsIndex %>'>
 							<aui:option value="-1" />

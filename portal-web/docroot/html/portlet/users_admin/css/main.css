@@ -1,3 +1,5 @@
+@import "mixins";
+
 .portlet-users-admin {
 	.form {
 		fieldset {
@@ -8,11 +10,6 @@
 		.fieldset {
 			textarea {
 				width: 90%;
-			}
-
-			table.org-labor-table td .field {
-				margin-bottom: 0;
-				padding: 3px 1px;
 			}
 
 			.field {
@@ -72,24 +69,22 @@
 		padding: 15px 0 5px;
 	}
 
-	.org-labor-day {
+	.org-labor-entry {
 		float: left;
-		padding: 10px;
+		margin-right: 2%;
+		width: 12%;
+
+		@include respond-to(phone) {
+			float: none;
+			width: auto;
+		}
 
 		select {
-			width: 75px;
+			width: 100%;
 		}
 
 		> .control-group {
 			margin-bottom: 0;
-
-			.control-label {
-				font-size: 14px;
-			}
-		}
-
-		.labor-day {
-			font-weight: normal;
 		}
 	}
 
@@ -198,10 +193,6 @@
 		.field {
 			float: left;
 		}
-	}
-
-	table.org-labor-table {
-		margin-bottom: 30px;
 	}
 
 	.addresses .field {

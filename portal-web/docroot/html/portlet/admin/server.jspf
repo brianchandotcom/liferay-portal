@@ -814,7 +814,8 @@ serverURL.setParameter("tabs3", tabs3);
 						<c:otherwise>
 							<aui:fieldset>
 								<aui:input label="number-of-minutes" name="minutes" size="3" type="text">
-									<aui:validator name="min">0</aui:validator>
+									<aui:validator name="min">1</aui:validator>
+									<aui:validator name="digits" />
 									<aui:validator name="required" />
 								</aui:input>
 

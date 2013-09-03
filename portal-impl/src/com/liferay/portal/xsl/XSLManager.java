@@ -57,7 +57,7 @@ public class XSLManager extends BaseTemplateManager {
 	protected Template doGetTemplate(
 		TemplateResource templateResource,
 		TemplateResource errorTemplateResource, boolean restricted,
-		Map<String, Object> helperUtilities) {
+		Map<String, Object> helperUtilities, boolean privileged) {
 
 		XSLTemplateResource xslTemplateResource =
 			(XSLTemplateResource)templateResource;

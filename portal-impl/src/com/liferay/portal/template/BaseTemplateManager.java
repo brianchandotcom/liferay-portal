@@ -59,7 +59,7 @@ public abstract class BaseTemplateManager implements TemplateManager {
 
 			return doGetTemplate(
 				templateResource, errorTemplateResource, restricted,
-				helperUtilities);
+				helperUtilities, false);
 		}
 
 		Map<String, Object> helperUtilities = AccessController.doPrivileged(
@@ -84,7 +84,7 @@ public abstract class BaseTemplateManager implements TemplateManager {
 	protected abstract Template doGetTemplate(
 		TemplateResource templateResource,
 		TemplateResource errorTemplateResource, boolean restricted,
-		Map<String, Object> helperUtilities);
+		Map<String, Object> helperUtilities, boolean privileged);
 
 	protected TemplateContextHelper templateContextHelper;
 
@@ -130,7 +130,7 @@ public abstract class BaseTemplateManager implements TemplateManager {
 		public Template run() {
 			return doGetTemplate(
 				_templateResource, _errorTemplateResource, _restricted,
-				_helperUtilities);
+				_helperUtilities, true);
 		}
 
 		private TemplateResource _errorTemplateResource;

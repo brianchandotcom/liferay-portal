@@ -16,16 +16,13 @@
 
 <%@ include file="/html/portlet/layouts_admin/init.jsp" %>
 
-<%
-Layout selLayout = null;
+<%@ include file="/html/portlet/layouts_admin/init_attributes.jspf" %>
 
-boolean privateLayout = false;
+<%
 long parentPlid = LayoutConstants.DEFAULT_PLID;
 long parentLayoutId = LayoutConstants.DEFAULT_PARENT_LAYOUT_ID;
 
 if (layout.isTypeControlPanel()) {
-	long selPlid = ParamUtil.getLong(liferayPortletRequest, "selPlid");
-
 	if (selPlid != 0) {
 		selLayout = LayoutLocalServiceUtil.getLayout(selPlid);
 
@@ -44,14 +41,6 @@ else {
 	parentPlid = layout.getParentPlid();
 	parentLayoutId = layout.getParentLayoutId();
 }
-
-Group liveGroup = GroupLocalServiceUtil.getGroup(scopeGroupId);
-
-if (liveGroup.isStagingGroup()) {
-	liveGroup = liveGroup.getLiveGroup();
-}
-
-String rootNodeName = liveGroup.getLayoutRootNodeName(privateLayout, locale);
 %>
 
 <aui:model-context model="<%= Layout.class %>" />
@@ -67,7 +56,7 @@ String rootNodeName = liveGroup.getLayoutRootNodeName(privateLayout, locale);
 <aui:form action="<%= editLayoutActionURL %>" enctype="multipart/form-data" method="post" name="addPageFm" onSubmit="event.preventDefault()">
 	<aui:input id="addLayoutCMD" name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD %>" />
 	<aui:input id="addLayoutRedirect" name="redirect" type="hidden" value="<%= layout.isTypeControlPanel() ? currentURL : editLayoutRenderURL.toString() %>" />
-	<aui:input id="addLayoutGroupId" name="groupId" type="hidden" value="<%= scopeGroupId %>" />
+	<aui:input id="addLayoutGroupId" name="groupId" type="hidden" value="<%= groupId %>" />
 	<aui:input id="addLayoutPrivateLayout" name="privateLayout" type="hidden" value="<%= privateLayout %>" />
 	<aui:input id="addLayoutParentPlid" name="parentPlid" type="hidden" value="<%= parentPlid %>" />
 	<aui:input id="addLayoutParentLayoutId" name="parentLayoutId" type="hidden" value="<%= parentLayoutId %>" />
@@ -140,10 +129,6 @@ String rootNodeName = liveGroup.getLayoutRootNodeName(privateLayout, locale);
 						%>
 
 						<%
-						LayoutLister layoutLister = new LayoutLister();
-
-						LayoutView layoutView = layoutLister.getLayoutView(scopeGroupId, privateLayout, rootNodeName, locale);
-
 						liferayPortletRequest.setAttribute(WebKeys.LAYOUT_LISTER_LIST, layoutView.getList());
 
 						for (int i = 0; i < PropsValues.LAYOUT_TYPES.length; i++) {

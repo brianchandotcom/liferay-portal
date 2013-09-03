@@ -607,22 +607,20 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		Matcher matcher = pattern.matcher(content);
 
-		int x = 0;
-
-		while (matcher.find(x)) {
+		while (matcher.find()) {
 			String tabs = matcher.group(1);
 			int tabCount = tabs.length();
 
-			int y = matcher.start();
+			int pos = matcher.start();
 
 			while (true) {
-				y = content.lastIndexOf("\n" + tabs, y - 1);
+				pos = content.lastIndexOf("\n" + tabs, pos - 1);
 
-				if (content.charAt(y + tabCount + 1) == CharPool.TAB) {
+				if (content.charAt(pos + tabCount + 1) == CharPool.TAB) {
 					continue;
 				}
 
-				String codeBlock = content.substring(y + tabCount + 1);
+				String codeBlock = content.substring(pos + tabCount + 1);
 
 				String firstLine = codeBlock.substring(
 					0, codeBlock.indexOf("\n"));
@@ -637,10 +635,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				}
 
 				return StringUtil.replaceFirst(
-					content, "\n\n" + tabs + "}\n", "\n" + tabs + "}\n", y);
+					content, "\n\n" + tabs + "}\n", "\n" + tabs + "}\n", pos);
 			}
-
-			x = matcher.end();
 		}
 
 		return content;

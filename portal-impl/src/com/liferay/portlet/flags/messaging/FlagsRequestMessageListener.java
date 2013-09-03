@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
@@ -81,7 +80,7 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 
 		Group group = layout.getGroup();
 
-		String groupName = HtmlUtil.escape(group.getDescriptiveName());
+		String groupName = group.getDescriptiveName();
 
 		// Reporter user
 
@@ -111,10 +110,10 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 			flagsRequest.getReportedUserId());
 
 		if (reportedUser.isDefaultUser()) {
-			reportedUserName = HtmlUtil.escape(group.getDescriptiveName());
+			reportedUserName = group.getDescriptiveName();
 		}
 		else {
-			reportedUserName = HtmlUtil.escape(reportedUser.getFullName());
+			reportedUserName = reportedUser.getFullName();
 			reportedEmailAddress = reportedUser.getEmailAddress();
 			reportedURL = reportedUser.getDisplayURL(
 				serviceContext.getPortalURL(), serviceContext.getPathMain());
@@ -153,10 +152,10 @@ public class FlagsRequestMessageListener extends BaseMessageListener {
 				notify(
 					company, groupName, reporterEmailAddress, reporterUserName,
 					reportedEmailAddress, reportedUserName, reportedURL,
-					flagsRequest.getClassPK(), flagsRequest.getContentTitle(),
-					contentType, flagsRequest.getContentURL(), reason, fromName,
-					fromAddress, recipient.getFullName(),
-					recipient.getEmailAddress(), subject, body, serviceContext);
+					flagsRequest.getClassPK(), flagsRequest.getContentTitle(), contentType,
+					flagsRequest.getContentURL(), reason, fromName, fromAddress,
+					recipient.getFullName(), recipient.getEmailAddress(),
+					subject, body, serviceContext);
 			}
 			catch (IOException ioe) {
 				if (_log.isWarnEnabled()) {

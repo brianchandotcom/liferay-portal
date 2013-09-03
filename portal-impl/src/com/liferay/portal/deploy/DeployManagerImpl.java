@@ -22,10 +22,12 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.plugin.PluginPackage;
 import com.liferay.portal.kernel.plugin.RequiredPluginPackageException;
+import com.liferay.portal.kernel.plugin.Version;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.ServerDetector;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.plugin.PluginPackageUtil;
@@ -89,7 +91,16 @@ public class DeployManagerImpl implements DeployManager {
 
 				String warFileName = levelRequiredDeploymentWARFileNames[j];
 
-				int index = warFileName.indexOf("-" + ReleaseInfo.getVersion());
+				Version version = Version.getInstance(ReleaseInfo.getVersion());
+
+				StringBundler sb = new StringBundler(4);
+
+				sb.append(StringPool.DASH);
+				sb.append(version.getMajor());
+				sb.append(StringPool.PERIOD);
+				sb.append(version.getMinor());
+
+				int index = warFileName.indexOf(sb.toString());
 
 				levelRequiredDeploymentContexts[j] = warFileName.substring(
 					0, index);

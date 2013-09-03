@@ -13,6 +13,8 @@
 
 	<execute test-suite="WorkflowadminPGPagecommentsAcceptance" />
 
+	<execute test-suite="WorkflowadminPGPagerevisionAcceptance" />
+
 	<execute test-suite="WorkflowadminPGWebcontentdisplayAcceptance" />
 
 	<execute test-suite="WorkflowadminPGWikiAcceptance" />

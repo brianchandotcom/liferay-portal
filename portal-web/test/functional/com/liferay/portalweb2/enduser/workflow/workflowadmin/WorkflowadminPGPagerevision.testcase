@@ -1,0 +1,231 @@
+<definition>
+	<var name="siteName" value="Site Name" />
+	<var name="sitePageName" value="Site Page Name" />
+	<var name="sitePageType" value="Public" />
+	<var name="workflowAssetType" value="Page Revision" />
+
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addCP">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteType" value="Blank" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="SitePage#addCP">
+			<var name="siteName" value="${siteName}" />
+			<var name="sitePageName" value="${sitePageName}" />
+			<var name="sitePageType" value="${sitePageType}" />
+		</execute>
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Site Settings" />
+			<var name="siteScopeName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Staging#activateStagingCP">
+			<var name="pageVersioningEnabled" value="true" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Workflow Configuration" />
+			<var name="siteScopeName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Workflow#configureSiteWorkflow">
+			<var name="workflowDefinition" value="Single Approver (Version 1)" />
+			<var name="workflowResourceKey" value="RESOURCE_TABLE_PAGE_REVISION_SELECT" />
+		</execute>
+	</set-up>
+
+	<command name="ApprovePageRevisionPG">
+		<var name="pageName" value="Page Revision Page" />
+
+		<execute macro="Page#addWithWorkflowPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="pageStaging" value="true" />
+			<var name="pageType" value="Site" />
+			<var name="workflowStatus" value="Pending (Review)" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="pageStaging" value="true" />
+			<var name="pageType" value="Site" />
+		</execute>
+
+		<execute macro="Page#viewWithWorkflowPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="workflowStatus" value="Pending (Review)" />
+		</execute>
+
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
+		</execute>
+
+		<execute macro="Workflow#assignToMeTaskByActions">
+			<var name="workflowAssetTitle" value="${pageName}" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowTask" value="Review" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="pageStaging" value="true" />
+			<var name="pageType" value="Site" />
+		</execute>
+
+		<execute macro="Page#viewWithWorkflowPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="workflowStatus" value="Pending (Review)" />
+		</execute>
+
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
+		</execute>
+
+		<execute macro="Workflow#approveTaskByActions">
+			<var name="workflowAssetTitle" value="${pageName}" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowTask" value="Review" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="pageStaging" value="true" />
+			<var name="pageType" value="Site" />
+		</execute>
+
+		<execute macro="Page#viewWithWorkflowPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="workflowStatus" value="Ready for Publication" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="pageStaging" value="true" />
+			<var name="pageType" value="Site" />
+		</execute>
+
+		<execute macro="Staging#publishToLiveNowPG" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="pageType" value="Site" />
+		</execute>
+
+		<execute macro="Page#viewPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="pageType" value="Site" />
+		</execute>
+	</command>
+
+	<command name="RejectPageRevisionPG">
+		<var name="pageName" value="Page Revision Page" />
+
+		<execute macro="Page#addWithWorkflowPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="pageStaging" value="true" />
+			<var name="pageType" value="Site" />
+			<var name="workflowStatus" value="Pending (Review)" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="pageStaging" value="true" />
+			<var name="pageType" value="Site" />
+		</execute>
+
+		<execute macro="Page#viewWithWorkflowPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="workflowStatus" value="Pending (Review)" />
+		</execute>
+
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
+		</execute>
+
+		<execute macro="Workflow#assignToMeTaskByActions">
+			<var name="workflowAssetTitle" value="${pageName}" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowTask" value="Review" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="pageStaging" value="true" />
+			<var name="pageType" value="Site" />
+		</execute>
+
+		<execute macro="Page#viewWithWorkflowPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="workflowStatus" value="Pending (Review)" />
+		</execute>
+
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
+		</execute>
+
+		<execute macro="Workflow#rejectTaskByActions">
+			<var name="workflowAssetTitle" value="${pageName}" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+			<var name="workflowTask" value="Review" />
+		</execute>
+
+		<execute macro="Page#gotoMyAccount">
+			<var name="portletName" value="My Workflow Tasks" />
+		</execute>
+
+		<execute macro="Workflow#viewRejectTask">
+			<var name="workflowAssetTitle" value="${pageName}" />
+			<var name="workflowAssetType" value="${workflowAssetType}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="pageStaging" value="true" />
+			<var name="pageType" value="Site" />
+		</execute>
+
+		<execute macro="Page#viewWithWorkflowPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="workflowStatus" value="Pending (Update)" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="pageStaging" value="true" />
+			<var name="pageType" value="Site" />
+		</execute>
+
+		<execute macro="Staging#publishToLiveNowPG" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="pageStaging" value="true" />
+			<var name="pageType" value="Site" />
+		</execute>
+
+		<execute macro="Page#viewWithWorkflowPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="workflowStatus" value="Pending (Update)" />
+		</execute>
+	</command>
+
+	<tear-down>
+		<execute macro="Site#tearDownCP" />
+
+		<execute macro="Workflow#tearDownPortalWorkflow" />
+
+		<execute macro="Workflow#tearDownSiteWorkflow" />
+	</tear-down>
+</definition>

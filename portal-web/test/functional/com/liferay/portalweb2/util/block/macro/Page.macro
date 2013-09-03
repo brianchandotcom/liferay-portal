@@ -12,6 +12,22 @@
 		<execute action="Home#assertClick" locator-key1="PAGE" value1="${pageName}" />
 	</command>
 
+	<command name="addWithWorkflowPG">
+		<execute macro="Page#openURL" />
+
+		<execute action="Dockbar#click" locator-key1="ADD" value1="Add" />
+		<execute action="Dockbar#assertClick" locator-key1="ADD_PAGE_LINK" value1="Page" />
+		<execute action="Dockbar#type" locator-key1="ADD_PAGE_NAME_FIELD" value1="${pageName}" />
+		<execute action="Dockbar#assertClick" locator-key1="ADD_PAGE_BUTTON" value1="Add Page" />
+
+		<var name="key_pageName" value="${pageName}" />
+
+		<execute action="Home#assertClick" locator-key1="PAGE" value1="${pageName}" />
+
+		<execute action="PGStaging#assertClick" locator-key1="STAGING_MENU_SUBMIT_FOR_PUBLICATION_BUTTON" value1="Submit for Publication" />
+		<execute action="PGStaging#assertTextEquals" locator-key1="STAGING_MENU_STATUS" value1="${workflowStatus}" />
+	</command>
+
 	<command name="gotoConfigurationCP">
 		<execute macro="Page#openURL" />
 
@@ -179,5 +195,20 @@
 				<execute action="Home#assertElementNotPresent" locator-key1="PAGE_DELETE" />
 			</then>
 		</while>
+	</command>
+
+	<command name="viewPG">
+		<execute action="Home#assertTextEquals" locator-key1="BREADCRUMB_2" value1="${pageName}" />
+	</command>
+
+	<command name="viewWithWorkflowPG">
+		<execute action="Home#assertTextEquals" locator-key1="BREADCRUMB_2" value1="${pageName}" />
+
+		<execute action="PGStaging#assertTextEquals" locator-key1="STAGING_MENU_STATUS" value1="${workflowStatus}" />
+		<execute action="PGStaging#assertClick" locator-key1="LIVE_BUTTON" value1="Live" />
+
+		<var name="key_pageName" value="${pageName}" />
+
+		<execute action="Home#assertElementNotPresent" locator-key1="PAGE" />
 	</command>
 </definition>

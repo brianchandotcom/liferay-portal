@@ -15,6 +15,7 @@
 package com.liferay.portal.tools.sourceformatter;
 
 import com.liferay.portal.kernel.util.NumericalStringComparator;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Comparator;
 import java.util.List;
@@ -46,6 +47,24 @@ public class JavaTermComparator implements Comparator<JavaTerm> {
 			}
 
 			if (name2.equals("_instance")) {
+				return 1;
+			}
+		}
+
+		if (JavaSourceProcessor.isInJavaTermTypeGroup(
+				type1, JavaSourceProcessor.TYPE_VARIABLE)) {
+
+			if (StringUtil.isUpperCase(name1) &&
+				!StringUtil.isLowerCase(name1) &&
+				!StringUtil.isUpperCase(name2)) {
+
+				return -1;
+			}
+
+			if (!StringUtil.isUpperCase(name1) &&
+				StringUtil.isUpperCase(name2) &&
+				!StringUtil.isLowerCase(name2)) {
+
 				return 1;
 			}
 		}

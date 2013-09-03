@@ -23,9 +23,9 @@ import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.webdav.WebDAVStorage;
 import com.liferay.portal.kernel.webdav.WebDAVUtil;
+import com.liferay.portal.kernel.webdav.methods.Method;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portal.webdav.WebDAVServlet;
-import com.liferay.portal.webdav.methods.Method;
 
 import java.util.HashMap;
 import java.util.Map;

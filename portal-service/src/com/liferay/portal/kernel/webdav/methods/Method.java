@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.webdav.methods;
+package com.liferay.portal.kernel.webdav.methods;
 
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.webdav.WebDAVException;
@@ -51,7 +51,7 @@ public interface Method {
 		PROPPATCH, PUT, Method.UNLOCK
 	};
 
-	public static final String SUPPORTED_METHODS = StringUtil.merge(
+	public static final String SUPPORTED_METHODS_STRING = StringUtil.merge(
 		SUPPORTED_METHODS_ARRAY);
 
 	public static final String UNLOCK = "UNLOCK";
@@ -65,7 +65,7 @@ public interface Method {
 	 * @return -1 or a supported HTTP status code. If it is -1, then the status
 	 *         code has already been set. Otherwise, the status code needs to be
 	 *         set by the caller.
-	 * @throws WebDAVException if a WebDAV exception occurred
+	 * @throws com.liferay.portal.kernel.webdav.WebDAVException if a WebDAV exception occurred
 	 */
 	public int process(WebDAVRequest webDAVRequest) throws WebDAVException;
 

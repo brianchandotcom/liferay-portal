@@ -17,6 +17,7 @@ package com.liferay.portal.webdav.methods;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstancePool;
 import com.liferay.portal.kernel.webdav.WebDAVException;
+import com.liferay.portal.kernel.webdav.methods.Method;
 import com.liferay.portal.util.PropsUtil;
 
 import java.util.HashMap;
@@ -27,7 +28,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Brian Wing Shun Chan
  */
-public class MethodFactory {
+public class WebDAVMethodFactoryImpl {
 
 	public static Method create(HttpServletRequest request)
 		throws WebDAVException {
@@ -35,7 +36,7 @@ public class MethodFactory {
 		return _instance._create(request);
 	}
 
-	private MethodFactory() {
+	private WebDAVMethodFactoryImpl() {
 		_methods = new HashMap<String, Object>();
 
 		_methods.put("COPY", InstancePool.get(_COPY_METHOD_IMPL));
@@ -66,54 +67,54 @@ public class MethodFactory {
 	}
 
 	private static final String _COPY_METHOD_IMPL = GetterUtil.getString(
-		PropsUtil.get(MethodFactory.class.getName() + ".COPY"),
+		PropsUtil.get(WebDAVMethodFactoryImpl.class.getName() + ".COPY"),
 		CopyMethodImpl.class.getName());
 
 	private static final String _DELETE_METHOD_IMPL = GetterUtil.getString(
-		PropsUtil.get(MethodFactory.class.getName() + ".DELETE"),
+		PropsUtil.get(WebDAVMethodFactoryImpl.class.getName() + ".DELETE"),
 		DeleteMethodImpl.class.getName());
 
 	private static final String _GET_METHOD_IMPL = GetterUtil.getString(
-		PropsUtil.get(MethodFactory.class.getName() + ".GET"),
+		PropsUtil.get(WebDAVMethodFactoryImpl.class.getName() + ".GET"),
 		GetMethodImpl.class.getName());
 
 	private static final String _HEAD_METHOD_IMPL = GetterUtil.getString(
-		PropsUtil.get(MethodFactory.class.getName() + ".HEAD"),
+		PropsUtil.get(WebDAVMethodFactoryImpl.class.getName() + ".HEAD"),
 		HeadMethodImpl.class.getName());
 
 	private static final String _LOCK_METHOD_IMPL = GetterUtil.getString(
-		PropsUtil.get(MethodFactory.class.getName() + ".LOCK"),
+		PropsUtil.get(WebDAVMethodFactoryImpl.class.getName() + ".LOCK"),
 		LockMethodImpl.class.getName());
 
 	private static final String _MKCOL_METHOD_IMPL = GetterUtil.getString(
-		PropsUtil.get(MethodFactory.class.getName() + ".MKCOL"),
+		PropsUtil.get(WebDAVMethodFactoryImpl.class.getName() + ".MKCOL"),
 		MkcolMethodImpl.class.getName());
 
 	private static final String _MOVE_METHOD_IMPL = GetterUtil.getString(
-		PropsUtil.get(MethodFactory.class.getName() + ".MOVE"),
+		PropsUtil.get(WebDAVMethodFactoryImpl.class.getName() + ".MOVE"),
 		MoveMethodImpl.class.getName());
 
 	private static final String _OPTIONS_METHOD_IMPL = GetterUtil.getString(
-		PropsUtil.get(MethodFactory.class.getName() + ".OPTIONS"),
+		PropsUtil.get(WebDAVMethodFactoryImpl.class.getName() + ".OPTIONS"),
 		OptionsMethodImpl.class.getName());
 
 	private static final String _PROPFIND_METHOD_IMPL = GetterUtil.getString(
-		PropsUtil.get(MethodFactory.class.getName() + ".PROPFIND"),
+		PropsUtil.get(WebDAVMethodFactoryImpl.class.getName() + ".PROPFIND"),
 		PropfindMethodImpl.class.getName());
 
 	private static final String _PROPPATCH_METHOD_IMPL = GetterUtil.getString(
-		PropsUtil.get(MethodFactory.class.getName() + ".PROPPATCH"),
+		PropsUtil.get(WebDAVMethodFactoryImpl.class.getName() + ".PROPPATCH"),
 		ProppatchMethodImpl.class.getName());
 
 	private static final String _PUT_METHOD_IMPL = GetterUtil.getString(
-		PropsUtil.get(MethodFactory.class.getName() + ".PUT"),
+		PropsUtil.get(WebDAVMethodFactoryImpl.class.getName() + ".PUT"),
 		PutMethodImpl.class.getName());
 
 	private static final String _UNLOCK_METHOD_IMPL = GetterUtil.getString(
-		PropsUtil.get(MethodFactory.class.getName() + ".UNLOCK"),
+		PropsUtil.get(WebDAVMethodFactoryImpl.class.getName() + ".UNLOCK"),
 		UnlockMethodImpl.class.getName());
 
-	private static MethodFactory _instance = new MethodFactory();
+	private static WebDAVMethodFactoryImpl _instance = new WebDAVMethodFactoryImpl();
 
 	private Map<String, Object> _methods;
 

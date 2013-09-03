@@ -1,18 +1,10 @@
 a.taglib-icon {
-	text-decoration: none;
-
-	&:hover {
+	&, &:focus, &:hover {
 		text-decoration: none;
-
-		.taglib-text {
-			text-decoration: underline;
-		}
 	}
 
-	.taglib-text {
-		text-decoration: none;
-
-		&:hover {
+	&:focus, &:hover {
+		.taglib-text {
 			text-decoration: underline;
 		}
 	}

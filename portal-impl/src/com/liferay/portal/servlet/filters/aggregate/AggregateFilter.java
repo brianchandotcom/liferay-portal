@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.servlet.filters.IgnoreModuleRequestFilter;
 import com.liferay.portal.servlet.filters.dynamiccss.DynamicCSSUtil;
 import com.liferay.portal.util.JavaScriptBundleUtil;
-import com.liferay.portal.util.LimitedFilesCache;
 import com.liferay.portal.util.MinifierUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
@@ -216,17 +215,6 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 		_tempDir = new File(tempDir, _TEMP_DIR);
 
 		_tempDir.mkdirs();
-
-		if (PropsValues.MINIFIER_FILES_LIMIT > 0) {
-			_limitedFilesCache = new LimitedFilesCache<String>(
-				PropsValues.MINIFIER_FILES_LIMIT);
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Aggregate files limit " +
-						PropsValues.MINIFIER_FILES_LIMIT);
-			}
-		}
 	}
 
 	protected static String getJavaScriptContent(String content) {
@@ -599,7 +587,6 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 	private static Pattern _pattern = Pattern.compile(
 		"^(\\.ie|\\.js\\.ie)([^}]*)}", Pattern.MULTILINE);
 
-	private LimitedFilesCache<String> _limitedFilesCache;
 	private ServletContext _servletContext;
 	private File _tempDir;
 

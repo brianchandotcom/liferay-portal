@@ -9,6 +9,16 @@
 </thead>
 <tbody>
 <tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGDocumentsandmediaMovefiles</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
 	<td>SELECT_BUTTON</td>
 	<td>//button[contains(.,'Select')]</td>
 	<td>Select</td>
@@ -40,9 +50,19 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SELECT_POP_UP_HOME</td>
+	<td>//a[contains(.,'Home')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SELECT_POP_UP_ADD_FOLDER</td>
 	<td>//button[contains(.,'Add Folder')]</td>
 	<td>Add Folder</td>
+</tr>
+<tr>
+	<td>SELECT_POP_UP_ADD_SUBFOLDER</td>
+	<td>//button[contains(.,'Add Subfolder')]</td>
+	<td>Add Subfolder</td>
 </tr>
 <tr>
 	<td>SELECT_POP_UP_CHOOSE_THIS_FOLDER</td>
@@ -50,14 +70,9 @@
 	<td>Choose This Folder</td>
 </tr>
 <tr>
-	<td>SELECT_POP_UP_CHOOSE_1</td>
-	<td>xpath=(//button[contains(.,'Choose')])[2]</td>
+	<td>SELECT_POP_UP_CHOOSE</td>
+	<td>//button[@data-foldername='${key_dmFolderName}' and contains(.,'Choose')]</td>
 	<td>Choose 1</td>
-</tr>
-<tr>
-	<td>SELECT_POP_UP_CHOOSE_2</td>
-	<td>xpath=(//button[contains(.,'Choose')])[3]</td>
-	<td>Choose 2</td>
 </tr>
 </tbody>
 </table>

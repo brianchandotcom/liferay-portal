@@ -304,8 +304,18 @@
 	<td>Document Entry</td>
 </tr>
 <tr>
+	<td>ENTRIES_DOCUMENT_STATUS</td>
+	<td>//span[@class='workflow-status']/strong</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRIES_DOCUMENT_LOCKED</td>
+	<td>//div[@class='entry-thumbnail']/img[@alt='Locked']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ENTRIES_DOCUMENT_TITLE</td>
-	<td>//a[@data-folder='false']/span[@class='entry-title']/span</td>
+	<td>//a[@data-folder='false']/span[@class='entry-title']/span[contains(.,'${key_dmDocumentTitle}')]</td>
 	<td>Document Title</td>
 </tr>
 <tr>
@@ -324,8 +334,8 @@
 	<td>Folder Entry</td>
 </tr>
 <tr>
-	<td>ENTRIES_FOLDER_TITLE</td>
-	<td>//a[@data-folder='true']/span[@class='entry-title']/span</td>
+	<td>ENTRIES_FOLDER_NAME</td>
+	<td>//a[@data-folder='true']/span[@class='entry-title']/span[contains(.,'${key_dmFolderName}')]</td>
 	<td></td>
 </tr>
 <tr>

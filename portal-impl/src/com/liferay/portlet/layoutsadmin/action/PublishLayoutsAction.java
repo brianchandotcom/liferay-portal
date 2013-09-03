@@ -108,7 +108,8 @@ public class PublishLayoutsAction extends EditLayoutsAction {
 					closeRedirect);
 			}
 			else {
-				long groupId = ParamUtil.getLong(actionRequest, "groupId");
+				long groupId = ParamUtil.getLong(
+					actionRequest, "stagingGroupId");
 				boolean privateLayout = ParamUtil.getBoolean(
 					actionRequest, "privateLayout");
 

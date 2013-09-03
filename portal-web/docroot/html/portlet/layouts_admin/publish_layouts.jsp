@@ -168,6 +168,7 @@ portletURL.setParameter("struts_action", "/layouts_admin/publish_layouts");
 portletURL.setParameter("closeRedirect", closeRedirect);
 portletURL.setParameter("groupId", String.valueOf(liveGroupId));
 portletURL.setParameter("privateLayout", String.valueOf(privateLayout));
+portletURL.setParameter("stagingGroupId", String.valueOf(stagingGroupId));
 
 PortletURL renderURL = renderResponse.createRenderURL();
 

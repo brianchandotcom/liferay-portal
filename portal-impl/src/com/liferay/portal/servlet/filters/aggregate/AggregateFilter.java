@@ -279,15 +279,11 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 			return null;
 		}
 
-		String cacheFileName = getCacheFileName(request);
+		String cacheFileName = bundleId;
 
 		String[] fileNames = JavaScriptBundleUtil.getFileNames(bundleId);
 
 		File cacheFile = new File(_tempDir, cacheFileName);
-
-		if (_limitedFilesCache != null) {
-			_limitedFilesCache.put(cacheFileName);
-		}
 
 		if (cacheFile.exists()) {
 			boolean staleCache = false;

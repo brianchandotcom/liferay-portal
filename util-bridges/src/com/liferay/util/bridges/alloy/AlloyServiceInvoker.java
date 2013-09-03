@@ -15,8 +15,6 @@
 package com.liferay.util.bridges.alloy;
 
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
-import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -31,66 +29,6 @@ import java.util.List;
  * @author Brian Wing Shun Chan
  */
 public class AlloyServiceInvoker {
-
-	@SuppressWarnings("rawtypes")
-	public static List dynamicQuery(
-			Class<?> clazz, int start, int end, Object... properties)
-		throws Exception {
-
-		return dynamicQuery(clazz, null, start, end, properties);
-	}
-
-	@SuppressWarnings("rawtypes")
-	public static List dynamicQuery(
-			Class<?> clazz, OrderByComparator obc, int start, int end,
-			Object... properties)
-		throws Exception {
-
-		DynamicQuery dynamicQuery = getDynamicQuery(clazz, properties);
-
-		OrderFactoryUtil.addOrderByComparator(dynamicQuery, obc);
-
-		dynamicQuery.setLimit(start, end);
-
-		AlloyServiceInvoker alloyServiceInvoker = new AlloyServiceInvoker(
-			clazz.getName());
-
-		return alloyServiceInvoker.dynamicQuery(dynamicQuery);
-	}
-
-	public static long dynamicQueryCount(Class<?> clazz, Object... properties)
-		throws Exception {
-
-		AlloyServiceInvoker alloyServiceInvoker = new AlloyServiceInvoker(
-			clazz.getName());
-
-		return alloyServiceInvoker.dynamicQueryCount(
-			getDynamicQuery(clazz, properties));
-	}
-
-	public static DynamicQuery getDynamicQuery(
-			Class<?> clazz, Object... properties)
-		throws Exception {
-
-		if ((properties.length == 0) || ((properties.length % 2) != 0)) {
-			throw new IllegalArgumentException(
-				"Columns length is not an even number");
-		}
-
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(clazz);
-
-		for (int i = 0; i < properties.length; i += 2) {
-			String propertyName = String.valueOf(properties[i]);
-
-			Property property = PropertyFactoryUtil.forName(propertyName);
-
-			Object propertyValue = (properties[i + 1]);
-
-			dynamicQuery.add(property.eq(propertyValue));
-		}
-
-		return dynamicQuery;
-	}
 
 	public AlloyServiceInvoker(String className) {
 		Class<?> clazz = getClass();
@@ -110,8 +48,17 @@ public class AlloyServiceInvoker {
 
 			dynamicQueryCountMethod = serviceClass.getMethod(
 				"dynamicQueryCount", new Class[] {DynamicQuery.class});
-			dynamicQueryMethod = serviceClass.getMethod(
+			dynamicQueryMethod1 = serviceClass.getMethod(
+				"dynamicQuery", new Class[0]);
+			dynamicQueryMethod2 = serviceClass.getMethod(
 				"dynamicQuery", new Class[] {DynamicQuery.class});
+			dynamicQueryMethod3 = serviceClass.getMethod(
+				"dynamicQuery",
+				new Class[] {DynamicQuery.class, int.class, int.class});
+			dynamicQueryMethod4 = serviceClass.getMethod(
+				"dynamicQuery",
+				new Class[] {DynamicQuery.class, int.class, int.class,
+					OrderByComparator.class});
 			fetchModelMethod = serviceClass.getMethod(
 				"fetch" + simpleClassName, new Class[] {long.class});
 			getModelsCountMethod = serviceClass.getMethod(
@@ -126,13 +73,85 @@ public class AlloyServiceInvoker {
 		}
 	}
 
+	public DynamicQuery buildDynamicQueryVarArgs(Object... properties)
+		throws Exception {
+
+		if ((properties.length == 0) || ((properties.length % 2) != 0)) {
+			throw new IllegalArgumentException(
+				"Columns length is not an even number");
+		}
+
+		DynamicQuery dynamicQuery = dynamicQuery();
+
+		for (int i = 0; i < properties.length; i += 2) {
+			String propertyName = String.valueOf(properties[i]);
+
+			Property property = PropertyFactoryUtil.forName(propertyName);
+
+			Object propertyValue = (properties[i + 1]);
+
+			dynamicQuery.add(property.eq(propertyValue));
+		}
+
+		return dynamicQuery;
+	}
+
+	public DynamicQuery dynamicQuery() throws Exception {
+		return (DynamicQuery)dynamicQueryMethod1.invoke(false);
+	}
+
 	@SuppressWarnings("rawtypes")
 	public List dynamicQuery(DynamicQuery dynamicQuery) throws Exception {
-		return (List)dynamicQueryMethod.invoke(false, dynamicQuery);
+		return (List)dynamicQueryMethod2.invoke(false, dynamicQuery);
+	}
+
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end)
+		throws Exception {
+
+		return (List)dynamicQueryMethod3.invoke(
+			false, dynamicQuery, start, end);
+	}
+
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(
+			DynamicQuery dynamicQuery, int start, int end,
+			OrderByComparator obc)
+		throws Exception {
+
+		return (List)dynamicQueryMethod4.invoke(
+			false, dynamicQuery, start, end, obc);
 	}
 
 	public long dynamicQueryCount(DynamicQuery dynamicQuery) throws Exception {
 		return (Long)dynamicQueryCountMethod.invoke(false, dynamicQuery);
+	}
+
+	public long dynamicQueryCountVarArgs(Object... properties)
+		throws Exception {
+
+		return dynamicQueryCount(buildDynamicQueryVarArgs(properties));
+	}
+
+	@SuppressWarnings("rawtypes")
+	public List dynamicQueryVarArgs(int start, int end, Object... properties)
+		throws Exception {
+
+		return dynamicQuery(buildDynamicQueryVarArgs(properties), start, end);
+	}
+
+	@SuppressWarnings("rawtypes")
+	public List dynamicQueryVarArgs(Object... properties) throws Exception {
+		return dynamicQuery(buildDynamicQueryVarArgs(properties));
+	}
+
+	@SuppressWarnings("rawtypes")
+	public List dynamicQueryVarArgs(
+			OrderByComparator obc, int start, int end, Object... properties)
+		throws Exception {
+
+		return dynamicQuery(
+			buildDynamicQueryVarArgs(properties), start, end, obc);
 	}
 
 	public BaseModel<?> fetchModel(long classPK) throws Exception {
@@ -149,7 +168,10 @@ public class AlloyServiceInvoker {
 	}
 
 	protected Method dynamicQueryCountMethod;
-	protected Method dynamicQueryMethod;
+	protected Method dynamicQueryMethod1;
+	protected Method dynamicQueryMethod2;
+	protected Method dynamicQueryMethod3;
+	protected Method dynamicQueryMethod4;
 	protected Method fetchModelMethod;
 	protected Method getModelsCountMethod;
 	protected Method getModelsMethod;

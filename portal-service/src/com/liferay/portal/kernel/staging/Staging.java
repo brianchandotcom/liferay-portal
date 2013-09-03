@@ -251,6 +251,10 @@ public interface Staging {
 			PortletDataContext portletDataContext)
 		throws Exception;
 
+	void updateLastPublishDate(
+			long sourceGroupId, boolean privateLayout, long lastPublishDate)
+		throws Exception;
+
 	public void updateStaging(PortletRequest PortletRequest, Group liveGroup)
 		throws Exception;
 

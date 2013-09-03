@@ -45,6 +45,8 @@ request.setAttribute("view.jsp-folder", folder);
 request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
 
 request.setAttribute("view.jsp-repositoryId", String.valueOf(repositoryId));
+
+String navigation = ParamUtil.getString(request, "navigation", "home");
 %>
 
 <div>
@@ -73,10 +75,12 @@ request.setAttribute("view.jsp-repositoryId", String.valueOf(repositoryId));
 
 		<span id="<portlet:namespace />breadcrumb">
 			<div class="portlet-breadcrumb">
-				<liferay-util:include page="/html/portlet/document_library/breadcrumb.jsp" />
+				<c:if test='<%= !navigation.equals("recent") && !navigation.equals("mine") %>'>
+					<liferay-util:include page="/html/portlet/document_library/breadcrumb.jsp" />
+				</c:if>
 			</div>
 
-			<c:if test="<%= layout.isTypeControlPanel() %>">
+			<c:if test='<%= layout.isTypeControlPanel() && (!navigation.equals("recent") && !navigation.equals("mine")) %>'>
 				<div class="portal-breadcrumb">
 					<liferay-ui:breadcrumb showCurrentGroup="<%= true %>" showCurrentPortlet="<%= true %>" showGuestGroup="<%= false %>" showLayout="<%= true %>" showParentGroups="<%= false %>" showPortletBreadcrumb="<%= true %>" />
 				</div>

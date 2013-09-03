@@ -527,12 +527,12 @@ AUI.add(
 						if (breadcrumb) {
 							var breadcrumbContainer;
 
-							var journalBreadcrumb = breadcrumb.one('.portlet-breadcrumb ul');
+							var journalBreadcrumb = breadcrumb.one('.portlet-breadcrumb');
 
 							if (journalBreadcrumb) {
 								breadcrumbContainer = instance.byId('breadcrumbContainer');
 
-								breadcrumbContainer.setContent(journalBreadcrumb);
+								breadcrumbContainer.setContent(journalBreadcrumb.html());
 							}
 
 							var portalBreadcrumb = breadcrumb.one('.portal-breadcrumb ul');

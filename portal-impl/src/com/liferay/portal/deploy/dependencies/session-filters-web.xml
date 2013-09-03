@@ -21,4 +21,8 @@
 <filter-mapping>
 	<filter-name>Compound Session Id Filter</filter-name>
 	<url-pattern>/*</url-pattern>
+	<dispatcher>ERROR</dispatcher>
+	<dispatcher>FORWARD</dispatcher>
+	<dispatcher>INCLUDE</dispatcher>
+	<dispatcher>REQUEST</dispatcher>
 </filter-mapping>

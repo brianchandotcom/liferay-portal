@@ -80,12 +80,6 @@ String browseBy = ParamUtil.getString(request, "browseBy");
 					<liferay-util:include page="/html/portlet/document_library/breadcrumb.jsp" />
 				</c:if>
 			</div>
-
-			<c:if test='<%= layout.isTypeControlPanel() && (!navigation.equals("recent") && !navigation.equals("mine") && Validator.isNull(browseBy)) %>'>
-				<div class="portal-breadcrumb">
-					<liferay-ui:breadcrumb showCurrentGroup="<%= true %>" showCurrentPortlet="<%= true %>" showGuestGroup="<%= false %>" showLayout="<%= true %>" showParentGroups="<%= false %>" showPortletBreadcrumb="<%= true %>" />
-				</div>
-			</c:if>
 		</span>
 	</c:if>
 

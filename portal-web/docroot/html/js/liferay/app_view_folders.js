@@ -534,16 +534,6 @@ AUI.add(
 
 								breadcrumbContainer.setContent(portletBreadcrumb.html());
 							}
-
-							var portalBreadcrumb = breadcrumb.one('.portal-breadcrumb ul');
-
-							if (portalBreadcrumb) {
-								breadcrumbContainer = A.one('#breadcrumbs ul');
-
-								if (breadcrumbContainer) {
-									breadcrumbContainer.setContent(portalBreadcrumb.html());
-								}
-							}
 						}
 					},
 

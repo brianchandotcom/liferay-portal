@@ -306,8 +306,7 @@ boolean showAddAction = ParamUtil.getBoolean(request, "showAddAction", true);
 							popUp = Liferay.Util.Window.getWindow(
 								{
 									dialog: {
-										bodyContent: content.show(),
-										destroyOnHide: true
+										bodyContent: content.show()
 									},
 									title: '<%= UnicodeLanguageUtil.get(pageContext, "copy-applications") %>'
 								}

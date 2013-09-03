@@ -37,6 +37,9 @@ boolean viewFolders = ParamUtil.getBoolean(request, "viewFolders");
 request.setAttribute("view.jsp-folder", folder);
 
 request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
+
+String navigation = ParamUtil.getString(request, "navigation", "home");
+String browseBy = ParamUtil.getString(request, "browseBy");
 %>
 
 <div>
@@ -65,14 +68,10 @@ request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
 
 		<span id="<portlet:namespace />breadcrumb">
 			<div class="portlet-breadcrumb">
-				<liferay-util:include page="/html/portlet/journal/breadcrumb.jsp" />
+				<c:if test='<%= !navigation.equals("recent") && !navigation.equals("mine") && Validator.isNull(browseBy) %>'>
+					<liferay-util:include page="/html/portlet/journal/breadcrumb.jsp" />
+				</c:if>
 			</div>
-
-			<c:if test="<%= layout.isTypeControlPanel() %>">
-				<div class="portal-breadcrumb">
-					<liferay-ui:breadcrumb showCurrentGroup="<%= true %>" showCurrentPortlet="<%= layout.isTypeControlPanel() %>" showGuestGroup="<%= !layout.isTypeControlPanel() %>" showLayout="<%= true %>" showParentGroups="<%= false %>" showPortletBreadcrumb="<%= true %>" />
-				</div>
-			</c:if>
 		</span>
 	</c:if>
 

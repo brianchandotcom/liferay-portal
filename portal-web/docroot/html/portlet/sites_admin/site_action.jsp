@@ -60,8 +60,8 @@ if (row == null) {
 
 	<c:if test="<%= siteAdministrationURL != null %>">
 		<liferay-ui:icon
-			image="edit"
-			message="manage"
+			image="configuration"
+			message="site-administration"
 			method="get"
 			url="<%= siteAdministrationURL.toString() %>"
 		/>

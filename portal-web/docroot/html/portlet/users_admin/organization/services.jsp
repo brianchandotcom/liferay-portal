@@ -136,112 +136,75 @@ Format timeFormat = FastDateFormatFactoryUtil.getSimpleDateFormat("HH:mm", local
 
 				<aui:select label="type" listType="<%= ListTypeConstants.ORGANIZATION_SERVICE %>" name='<%= "orgLaborTypeId" + orgLaborsIndex %>' />
 
-				<table class="org-labor-table">
-				<tr>
-					<td></td>
+				<%
+				int j = 0;
 
-					<%
-					for (String day : days) {
-					%>
+				for (String day : days) {
+					String curParam = paramPrefixes[j];
+					int curOpen = openArray[j];
+					int curClose = closeArray[j];
+				%>
+					<div class="org-labor-entry">
+						<h5 class="org-labor-entry-title"><%= day %></h5>
 
-						<th>
-							<label><%= day %></label>
-						</th>
+						<aui:select label="Open" name='<%= curParam + "Open" + orgLaborsIndex %>'>
+							<aui:option value="-1" />
 
-					<%
-					}
-					%>
+							<%
+							cal.set(Calendar.HOUR_OF_DAY, 0);
+							cal.set(Calendar.MINUTE, 0);
+							cal.set(Calendar.SECOND, 0);
+							cal.set(Calendar.MILLISECOND, 0);
 
-				</tr>
-				<tr>
-					<td>
-						<label><liferay-ui:message key="open" /></label>
-					</td>
+							int today = cal.get(Calendar.DATE);
 
-					<%
-					for (int j = 0; j < days.length; j++) {
-						String curParam = paramPrefixes[j];
-						int curOpen = openArray[j];
-					%>
+							while (cal.get(Calendar.DATE) == today) {
+								String timeOfDayDisplay = timeFormat.format(cal.getTime());
+								int timeOfDayValue = GetterUtil.getInteger(StringUtil.replace(timeOfDayDisplay, StringPool.COLON, StringPool.BLANK));
 
-						<td>
-							<aui:select label="" name='<%= curParam + "Open" + orgLaborsIndex %>'>
-								<aui:option value="-1" />
+								cal.add(Calendar.MINUTE, 30);
+							%>
 
-								<%
-								cal.set(Calendar.HOUR_OF_DAY, 0);
-								cal.set(Calendar.MINUTE, 0);
-								cal.set(Calendar.SECOND, 0);
-								cal.set(Calendar.MILLISECOND, 0);
+								<aui:option label="<%= timeOfDayDisplay %>" selected="<%= (curOpen == timeOfDayValue) %>" value="<%= timeOfDayValue %>" />
 
-								int today = cal.get(Calendar.DATE);
+							<%
+							}
+							%>
 
-								while (cal.get(Calendar.DATE) == today) {
-									String timeOfDayDisplay = timeFormat.format(cal.getTime());
-									int timeOfDayValue = GetterUtil.getInteger(StringUtil.replace(timeOfDayDisplay, StringPool.COLON, StringPool.BLANK));
+						</aui:select>
 
-									cal.add(Calendar.MINUTE, 30);
-								%>
+						<aui:select label="Close" name='<%= curParam + "Close" + orgLaborsIndex %>'>
+							<aui:option value="-1" />
 
-									<aui:option label="<%= timeOfDayDisplay %>" selected="<%= (curOpen == timeOfDayValue) %>" value="<%= timeOfDayValue %>" />
+							<%
+							cal.set(Calendar.HOUR_OF_DAY, 0);
+							cal.set(Calendar.MINUTE, 0);
+							cal.set(Calendar.SECOND, 0);
+							cal.set(Calendar.MILLISECOND, 0);
 
-								<%
-								}
-								%>
+							int today = cal.get(Calendar.DATE);
 
-							</aui:select>
-						</td>
+							while (cal.get(Calendar.DATE) == today) {
+								String timeOfDayDisplay = timeFormat.format(cal.getTime());
+								int timeOfDayValue = GetterUtil.getInteger(StringUtil.replace(timeOfDayDisplay, StringPool.COLON, StringPool.BLANK));
 
-					<%
-					}
-					%>
+								cal.add(Calendar.MINUTE, 30);
+							%>
 
-				</tr>
-				<tr>
-					<td>
-						<label><liferay-ui:message key="close" /></label>
-					</td>
+								<aui:option label="<%= timeOfDayDisplay %>" selected="<%= (curClose == timeOfDayValue) %>" value="<%= timeOfDayValue %>" />
 
-					<%
-					for (int j = 0; j < days.length; j++) {
-						String curParam = paramPrefixes[j];
-						int curClose = closeArray[j];
-					%>
+							<%
+							}
+							%>
 
-						<td>
-							<aui:select label="" name='<%= curParam + "Close" + orgLaborsIndex %>'>
-								<aui:option value="-1" />
+						</aui:select>
+					</div>
 
-								<%
-								cal.set(Calendar.HOUR_OF_DAY, 0);
-								cal.set(Calendar.MINUTE, 0);
-								cal.set(Calendar.SECOND, 0);
-								cal.set(Calendar.MILLISECOND, 0);
+				<%
+					j++;
+				}
+				%>
 
-								int today = cal.get(Calendar.DATE);
-
-								while (cal.get(Calendar.DATE) == today) {
-									String timeOfDayDisplay = timeFormat.format(cal.getTime());
-									int timeOfDayValue = GetterUtil.getInteger(StringUtil.replace(timeOfDayDisplay, StringPool.COLON, StringPool.BLANK));
-
-									cal.add(Calendar.MINUTE, 30);
-								%>
-
-									<aui:option label="<%= timeOfDayDisplay %>" selected="<%= (curClose == timeOfDayValue) %>" value="<%= timeOfDayValue %>" />
-
-								<%
-								}
-								%>
-
-							</aui:select>
-						</td>
-
-					<%
-					}
-					%>
-
-				</tr>
-				</table>
 			</div>
 		</div>
 

@@ -25,6 +25,7 @@ import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
 import com.liferay.portlet.bookmarks.model.BookmarksFolder;
@@ -48,7 +49,7 @@ import org.junit.runner.RunWith;
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 @Transactional
-public class PortletDataContextAddReferenceElementTest {
+public class PortletDataContextReferencesTest {
 
 	@Before
 	public void setUp() throws Exception {
@@ -72,6 +73,49 @@ public class PortletDataContextAddReferenceElementTest {
 		_bookmarksEntry = BookmarksTestUtil.addEntry(true);
 		_bookmarksFolder = BookmarksTestUtil.addFolder(
 			TestPropsValues.getGroupId(), ServiceTestUtil.randomString());
+	}
+
+	@Test
+	public void testAddMissingReferencesElementExisting() throws Exception {
+		Element missingReferenceElement1 =
+			_portletDataContext.addMissingReferenceElement(
+				PortletKeys.BOOKMARKS, _bookmarksEntry);
+
+		Element missingReferenceElement2 =
+			_portletDataContext.addMissingReferenceElement(
+				PortletKeys.BOOKMARKS, _bookmarksEntry);
+
+		Assert.assertNotNull(missingReferenceElement1);
+		Assert.assertNotNull(missingReferenceElement2);
+
+		Assert.assertEquals(missingReferenceElement1, missingReferenceElement2);
+
+		Element missingReferencesElement =
+			_portletDataContext.getMissingReferencesElement();
+
+		List<Element> missingReferenceElements =
+			missingReferencesElement.elements("missing-reference");
+
+		Assert.assertEquals(1, missingReferenceElements.size());
+	}
+
+	@Test
+	public void testAddMissingReferencesElementNew() throws Exception {
+		Element missingReferenceElement =
+			_portletDataContext.addMissingReferenceElement(
+				PortletKeys.BOOKMARKS, _bookmarksEntry);
+
+		Assert.assertNotNull(missingReferenceElement);
+
+		Element missingReferencesElement =
+			_portletDataContext.getMissingReferencesElement();
+
+		List<Element> missingReferenceElements =
+			missingReferencesElement.elements("missing-reference");
+
+		Assert.assertEquals(1, missingReferenceElements.size());
+		Assert.assertEquals(
+			missingReferenceElement, missingReferenceElements.get(0));
 	}
 
 	@Test

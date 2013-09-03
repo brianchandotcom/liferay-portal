@@ -116,20 +116,20 @@ public class PollsDisplayPortletDataHandler extends PollsPortletDataHandler {
 		rootElement.addAttribute(
 			"group-id", String.valueOf(portletDataContext.getScopeGroupId()));
 
-		StagedModelDataHandlerUtil.exportStagedModel(
-			portletDataContext, question);
+		StagedModelDataHandlerUtil.exportReferenceStagedModel(
+			portletDataContext, portletId, question);
 
 		for (PollsChoice choice : question.getChoices()) {
-			StagedModelDataHandlerUtil.exportStagedModel(
-				portletDataContext, choice);
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
+				portletDataContext, portletId, choice);
 		}
 
 		if (portletDataContext.getBooleanParameter(
 				PollsPortletDataHandler.NAMESPACE, "votes")) {
 
 			for (PollsVote vote : question.getVotes()) {
-				StagedModelDataHandlerUtil.exportStagedModel(
-					portletDataContext, vote);
+				StagedModelDataHandlerUtil.exportReferenceStagedModel(
+					portletDataContext, portletId, vote);
 			}
 		}
 

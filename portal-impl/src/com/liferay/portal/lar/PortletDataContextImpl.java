@@ -69,6 +69,7 @@ import com.liferay.portal.model.impl.LockImpl;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LockLocalServiceUtil;
+import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.ResourceBlockLocalServiceUtil;
 import com.liferay.portal.service.ResourceBlockPermissionLocalServiceUtil;
 import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
@@ -436,6 +437,31 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	@Override
+	public Element addMissingReferenceElement(
+		String referrerPortletId, ClassedModel classedModel) {
+
+		Portlet referrerPortlet = PortletLocalServiceUtil.getPortletById(
+			referrerPortletId);
+
+		if (referrerPortlet == null) {
+			return null;
+		}
+
+		String referenceKey = getReferenceKey(classedModel);
+
+		if (_missingReferences.contains(referenceKey)) {
+			return getMissingReferenceElement(classedModel);
+		}
+
+		_missingReferences.add(referenceKey);
+
+		return doAddReferenceElement(
+			referrerPortlet, null, classedModel,
+			classedModel.getModelClassName(), null, REFERENCE_TYPE_EMBEDDED,
+			true);
+	}
+
+	@Override
 	public void addPermissions(Class<?> clazz, long classPK)
 		throws PortalException, SystemException {
 
@@ -601,10 +627,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 			referrerClassedModel, element, classedModel, className, binPath,
 			referenceType, false);
 
-		String referenceKey = classedModel.getModelClassName();
-
-		referenceKey = referenceKey.concat(StringPool.POUND).concat(
-			String.valueOf(classedModel.getPrimaryKeyObj()));
+		String referenceKey = getReferenceKey(classedModel);
 
 		if (missing) {
 			if (_references.contains(referenceKey)) {
@@ -623,22 +646,10 @@ public class PortletDataContextImpl implements PortletDataContext {
 			if (_missingReferences.contains(referenceKey)) {
 				_missingReferences.remove(referenceKey);
 
-				StringBundler sb = new StringBundler(5);
+				Element missingReferenceElement = getMissingReferenceElement(
+					classedModel);
 
-				sb.append("missing-reference[@class-name='");
-				sb.append(classedModel.getModelClassName());
-				sb.append("' and @class-pk='");
-				sb.append(String.valueOf(classedModel.getPrimaryKeyObj()));
-				sb.append("']");
-
-				XPath xPath = SAXReaderUtil.createXPath(sb.toString());
-
-				List<Node> missingReferenceNodes = xPath.selectNodes(
-					_missingReferencesElement);
-
-				for (Node missingReferenceNode : missingReferenceNodes) {
-					_missingReferencesElement.remove(missingReferenceNode);
-				}
+				_missingReferencesElement.remove(missingReferenceElement);
 			}
 		}
 
@@ -2149,6 +2160,22 @@ public class PortletDataContextImpl implements PortletDataContext {
 		return groupElement;
 	}
 
+	protected Element getMissingReferenceElement(ClassedModel classedModel) {
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("missing-reference[@class-name='");
+		sb.append(classedModel.getModelClassName());
+		sb.append("' and @class-pk='");
+		sb.append(String.valueOf(classedModel.getPrimaryKeyObj()));
+		sb.append("']");
+
+		XPath xPath = SAXReaderUtil.createXPath(sb.toString());
+
+		Node node = xPath.selectSingleNode(_missingReferencesElement);
+
+		return (Element)node;
+	}
+
 	protected String getPrimaryKeyString(Class<?> clazz, long classPK) {
 		return getPrimaryKeyString(clazz.getName(), String.valueOf(classPK));
 	}
@@ -2270,6 +2297,13 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 		return getReferenceElements(
 			stagedModelElement, clazz, 0, null, 0, referenceType);
+	}
+
+	protected String getReferenceKey(ClassedModel classedModel) {
+		String referenceKey = classedModel.getModelClassName();
+
+		return referenceKey.concat(StringPool.POUND).concat(
+			String.valueOf(classedModel.getPrimaryKeyObj()));
 	}
 
 	protected long getUserId(AuditedModel auditedModel) {

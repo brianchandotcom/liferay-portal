@@ -15,6 +15,7 @@
 package com.liferay.portal.webdav.methods;
 
 import com.liferay.portal.kernel.webdav.WebDAVRequest;
+import com.liferay.portal.kernel.webdav.methods.Method;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -35,7 +36,7 @@ public class OptionsMethodImpl implements Method {
 			response.addHeader("DAV", "1");
 		}
 
-		response.addHeader("Allow", Method.SUPPORTED_METHODS);
+		response.addHeader("Allow", Method.SUPPORTED_METHODS_STRING);
 		response.addHeader("MS-Author-Via", "DAV");
 
 		return HttpServletResponse.SC_OK;

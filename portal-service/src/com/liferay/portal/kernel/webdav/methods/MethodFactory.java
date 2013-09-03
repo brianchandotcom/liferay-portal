@@ -12,24 +12,18 @@
  * details.
  */
 
-package com.liferay.portal.webdav.methods;
+package com.liferay.portal.kernel.webdav.methods;
 
 import com.liferay.portal.kernel.webdav.WebDAVException;
-import com.liferay.portal.kernel.webdav.WebDAVRequest;
-import com.liferay.portal.kernel.webdav.WebDAVStorage;
-import com.liferay.portal.kernel.webdav.methods.Method;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
- * @author Brian Wing Shun Chan
- * @author Alexander Chow
+ * @author Fabio Pezzutto
  */
-public class DeleteMethodImpl implements Method {
+public interface MethodFactory {
 
-	@Override
-	public int process(WebDAVRequest webDAVRequest) throws WebDAVException {
-		WebDAVStorage storage = webDAVRequest.getWebDAVStorage();
-
-		return storage.deleteResource(webDAVRequest);
-	}
+	public Method create(HttpServletRequest request)
+		throws WebDAVException;
 
 }

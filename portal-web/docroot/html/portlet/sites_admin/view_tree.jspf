@@ -41,7 +41,11 @@ if (group != null) {
 %>
 
 <c:if test="<%= (group != null) %>">
-	<liferay-util:include page="/html/portlet/sites_admin/toolbar.jsp" />
+	<c:if test="<%= layout.isTypeControlPanel() %>">
+		<div id="breadcrumb">
+			<liferay-ui:breadcrumb showCurrentGroup="<%= false %>" showCurrentPortlet="<%= false %>" showGuestGroup="<%= false %>" showLayout="<%= false %>" showPortletBreadcrumb="<%= true %>" />
+		</div>
+	</c:if>
 
 	<%
 	long parentGroupId = GroupConstants.DEFAULT_PARENT_GROUP_ID;

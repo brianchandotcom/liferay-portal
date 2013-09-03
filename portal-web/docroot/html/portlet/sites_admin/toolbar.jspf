@@ -14,24 +14,6 @@
  */
 --%>
 
-<aui:nav cssClass="nav-tabs">
-	<portlet:renderURL var="viewSitesTreeURL">
-		<portlet:param name="struts_action" value="/sites_admin/view" />
-		<portlet:param name="toolbarItem" value="browse" />
-		<portlet:param name="sitesListView" value="<%= SiteConstants.LIST_VIEW_TREE %>" />
-	</portlet:renderURL>
-
-	<aui:nav-item href="<%= viewSitesTreeURL %>" label="browse" selected='<%= toolbarItem.equals("browse") %>' />
-
-	<portlet:renderURL var="viewSitesFlatURL">
-		<portlet:param name="struts_action" value="/sites_admin/view" />
-		<portlet:param name="toolbarItem" value="view-all-sites" />
-		<portlet:param name="sitesListView" value="<%= SiteConstants.LIST_VIEW_FLAT_SITES %>" />
-	</portlet:renderURL>
-
-	<aui:nav-item href="<%= viewSitesFlatURL %>" label="all-sites" selected='<%= toolbarItem.equals("view-all-sites") %>' />
-</aui:nav>
-
 <aui:nav-bar>
 	<aui:nav>
 		<%@ include file="/html/portlet/sites_admin/toolbar_content.jspf" %>

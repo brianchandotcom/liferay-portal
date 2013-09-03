@@ -667,8 +667,6 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 
 		String portletNamespace = PortalUtil.getPortletNamespace(_portletName);
 
-		boolean portalSessionShared = false;
-
 		PortletApp portletApp = portlet.getPortletApp();
 
 		boolean warFile = portletApp.isWARFile();
@@ -698,11 +696,10 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 			}
 		}
 
-		if (warFile && !portlet.isPrivateSessionAttributes()) {
-			portalSessionShared = true;
+		if (warFile) {
+			request = new SharedSessionServletRequest(
+				request, !portlet.isPrivateSessionAttributes());
 		}
-
-		request = new SharedSessionServletRequest(request, portalSessionShared);
 
 		String dynamicQueryString = (String)request.getAttribute(
 			DynamicServletRequest.DYNAMIC_QUERY_STRING);

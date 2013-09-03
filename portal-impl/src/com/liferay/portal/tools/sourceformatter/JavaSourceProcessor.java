@@ -601,7 +601,11 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	}
 
 	protected String fixIncorrectEmptyLineBeforeCloseCurlyBrace(
-		String content) {
+		String content, String fileName) {
+
+		if (fileName.endsWith("AnnotationLocatorTest.java")) {
+			return content;
+		}
 
 		Pattern pattern = Pattern.compile("\n\n(\t+)}\n");
 
@@ -830,10 +834,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		String newContent = content;
 
-		if (!fileName.endsWith("AnnotationLocatorTest.java")) {
-			newContent = fixIncorrectEmptyLineBeforeCloseCurlyBrace(newContent);
-		}
-
 		if (newContent.contains("$\n */")) {
 			processErrorMessage(fileName, "*: " + fileName);
 
@@ -1040,7 +1040,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		String oldContent = newContent;
 
 		while (true) {
-			newContent = formatJava(fileName, oldContent);
+			newContent = fixIncorrectEmptyLineBeforeCloseCurlyBrace(
+				oldContent, fileName);
+
+			newContent = formatJava(fileName, newContent);
 
 			newContent = StringUtil.replace(newContent, "\n\n\n", "\n\n");
 

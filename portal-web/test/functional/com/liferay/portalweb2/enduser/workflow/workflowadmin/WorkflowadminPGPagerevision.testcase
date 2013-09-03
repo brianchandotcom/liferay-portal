@@ -50,7 +50,7 @@
 	<command name="ApprovePageRevisionPG">
 		<var name="pageName" value="Page Revision Page" />
 
-		<execute macro="Page#addPGWithWorkflow">
+		<execute macro="Page#addWithWorkflowPG">
 			<var name="pageName" value="${pageName}" />
 			<var name="pageStaging" value="true" />
 			<var name="pageType" value="Site" />
@@ -63,7 +63,7 @@
 			<var name="pageType" value="Site" />
 		</execute>
 
-		<execute macro="Page#viewPGWithWorkflow">
+		<execute macro="Page#viewWithWorkflowPG">
 			<var name="pageName" value="${pageName}" />
 			<var name="workflowStatus" value="Pending (Review)" />
 		</execute>
@@ -84,7 +84,7 @@
 			<var name="pageType" value="Site" />
 		</execute>
 
-		<execute macro="Page#viewPGWithWorkflow">
+		<execute macro="Page#viewWithWorkflowPG">
 			<var name="pageName" value="${pageName}" />
 			<var name="workflowStatus" value="Pending (Review)" />
 		</execute>
@@ -105,7 +105,7 @@
 			<var name="pageType" value="Site" />
 		</execute>
 
-		<execute macro="Page#viewPGWithWorkflow">
+		<execute macro="Page#viewWithWorkflowPG">
 			<var name="pageName" value="${pageName}" />
 			<var name="workflowStatus" value="Ready for Publication" />
 		</execute>
@@ -132,7 +132,7 @@
 	<command name="RejectPageRevisionPG">
 		<var name="pageName" value="Page Revision Page" />
 
-		<execute macro="Page#addPGWithWorkflow">
+		<execute macro="Page#addWithWorkflowPG">
 			<var name="pageName" value="${pageName}" />
 			<var name="pageStaging" value="true" />
 			<var name="pageType" value="Site" />
@@ -145,7 +145,7 @@
 			<var name="pageType" value="Site" />
 		</execute>
 
-		<execute macro="Page#viewPGWithWorkflow">
+		<execute macro="Page#viewWithWorkflowPG">
 			<var name="pageName" value="${pageName}" />
 			<var name="workflowStatus" value="Pending (Review)" />
 		</execute>
@@ -166,7 +166,7 @@
 			<var name="pageType" value="Site" />
 		</execute>
 
-		<execute macro="Page#viewPGWithWorkflow">
+		<execute macro="Page#viewWithWorkflowPG">
 			<var name="pageName" value="${pageName}" />
 			<var name="workflowStatus" value="Pending (Review)" />
 		</execute>
@@ -196,7 +196,7 @@
 			<var name="pageType" value="Site" />
 		</execute>
 
-		<execute macro="Page#viewPGWithWorkflow">
+		<execute macro="Page#viewWithWorkflowPG">
 			<var name="pageName" value="${pageName}" />
 			<var name="workflowStatus" value="Pending (Update)" />
 		</execute>
@@ -215,7 +215,7 @@
 			<var name="pageType" value="Site" />
 		</execute>
 
-		<execute macro="Page#viewPGWithWorkflow">
+		<execute macro="Page#viewWithWorkflowPG">
 			<var name="pageName" value="${pageName}" />
 			<var name="workflowStatus" value="Pending (Update)" />
 		</execute>

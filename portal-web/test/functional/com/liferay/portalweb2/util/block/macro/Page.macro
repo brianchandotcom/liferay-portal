@@ -12,7 +12,7 @@
 		<execute action="Home#assertClick" locator-key1="PAGE" value1="${pageName}" />
 	</command>
 
-	<command name="addPGWithWorkflow">
+	<command name="addWithWorkflowPG">
 		<execute macro="Page#openURL" />
 
 		<execute action="Dockbar#click" locator-key1="ADD" value1="Add" />
@@ -201,7 +201,7 @@
 		<execute action="Home#assertTextEquals" locator-key1="BREADCRUMB_2" value1="${pageName}" />
 	</command>
 
-	<command name="viewPGWithWorkflow">
+	<command name="viewWithWorkflowPG">
 		<execute action="Home#assertTextEquals" locator-key1="BREADCRUMB_2" value1="${pageName}" />
 
 		<execute action="PGStaging#assertTextEquals" locator-key1="STAGING_MENU_STATUS" value1="${workflowStatus}" />

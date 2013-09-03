@@ -22,6 +22,7 @@ String redirect = ParamUtil.getString(request, "redirect", viewOrganizationsRedi
 String closeRedirect = ParamUtil.getString(request, "closeRedirect");
 String backURL = ParamUtil.getString(request, "backURL", redirect);
 boolean showBackURL = ParamUtil.getBoolean(request, "showBackURL", true);
+long parentGroupId = ParamUtil.getLong(request, "parentGroupSearchContainerPrimaryKeys", GroupConstants.DEFAULT_PARENT_GROUP_ID);
 
 Group group = (Group)request.getAttribute(WebKeys.GROUP);
 
@@ -127,8 +128,10 @@ String[][] categorySections = {mainSections, seoSections, advancedSections, misc
 		PortalUtil.addPortletBreadcrumbEntry(request, group.getDescriptiveName(locale), null);
 		PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "edit"), currentURL);
 	}
-	else {
-		PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "add-site"), currentURL);
+	else if (parentGroupId != GroupConstants.DEFAULT_PARENT_GROUP_ID) {
+		Group parentGroup = GroupLocalServiceUtil.getGroup(parentGroupId);
+
+		PortalUtil.addPortletBreadcrumbEntry(request, parentGroup.getDescriptiveName(locale), null);
 	}
 	%>
 
@@ -137,8 +140,6 @@ String[][] categorySections = {mainSections, seoSections, advancedSections, misc
 <c:if test="<%= (group == null) || !layout.isTypeControlPanel() %>">
 
 	<%
-	long parentGroupId = ParamUtil.getLong(request, "parentGroupSearchContainerPrimaryKeys", GroupConstants.DEFAULT_PARENT_GROUP_ID);
-
 	boolean localizeTitle = true;
 	String title = "new-site";
 
@@ -152,6 +153,13 @@ String[][] categorySections = {mainSections, seoSections, advancedSections, misc
 	}
 	else if (parentGroupId != GroupConstants.DEFAULT_PARENT_GROUP_ID) {
 		title = "new-child-site";
+	%>
+
+		<div id="breadcrumb">
+			<liferay-ui:breadcrumb showCurrentGroup="<%= false %>" showCurrentPortlet="<%= false %>" showGuestGroup="<%= false %>" showLayout="<%= false %>" showPortletBreadcrumb="<%= true %>" />
+		</div>
+
+	<%
 	}
 	%>
 

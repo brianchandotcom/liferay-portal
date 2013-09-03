@@ -192,6 +192,18 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return content;
 	}
 
+	protected static boolean isInJavaTermTypeGroup(
+		int javaTermType, int[] javaTermTypeGroup) {
+
+		for (int type : javaTermTypeGroup) {
+			if (javaTermType == type) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	protected List<String> addParameterTypes(
 		String line, List<String> parameterTypes) {
 
@@ -2478,18 +2490,6 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		else {
 			return false;
 		}
-	}
-
-	protected static boolean isInJavaTermTypeGroup(
-		int javaTermType, int[] javaTermTypeGroup) {
-
-		for (int type : javaTermTypeGroup) {
-			if (javaTermType == type) {
-				return true;
-			}
-		}
-
-		return false;
 	}
 
 	protected boolean isValidJavaParameter(String javaParameter) {

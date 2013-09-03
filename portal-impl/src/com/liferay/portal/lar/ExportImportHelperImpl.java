@@ -785,18 +785,18 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 						continue;
 					}
 
-					boolean isPrivateLayout = layoutSet.isPrivateLayout();
+					boolean privateLayout = layoutSet.isPrivateLayout();
 
 					LayoutFriendlyURL layoutFriendlyUrl =
 						LayoutFriendlyURLLocalServiceUtil.
 							fetchFirstLayoutFriendlyURL(
-								group.getGroupId(), isPrivateLayout, url);
+								group.getGroupId(), privateLayout, url);
 
 					if (layoutFriendlyUrl == null) {
 						continue;
 					}
 
-					if (isPrivateLayout) {
+					if (privateLayout) {
 						if (group.isUser()) {
 							urlSB.append(
 								_DATA_HANDLER_PRIVATE_USER_SERVLET_MAPPING);
@@ -1695,9 +1695,9 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			return url;
 		}
 
-		boolean isSecureUrl = HttpUtil.isSecure(url);
+		boolean secureUrl = HttpUtil.isSecure(url);
 
-		int portalPort = PortalUtil.getPortalPort(isSecureUrl);
+		int portalPort = PortalUtil.getPortalPort(secureUrl);
 
 		if (portalPort == -1) {
 			return url;
@@ -1712,10 +1712,10 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 		if (Validator.isNotNull(publicLayoutSetVirtualHostname)) {
 			portalUrl = PortalUtil.getPortalURL(
-				publicLayoutSetVirtualHostname, portalPort, isSecureUrl);
+				publicLayoutSetVirtualHostname, portalPort, secureUrl);
 
 			if (url.startsWith(portalUrl)) {
-				if (isSecureUrl) {
+				if (secureUrl) {
 					urlSB.append(_DATA_HANDLER_PUBLIC_LAYOUT_SET_SECURE_URL);
 				}
 				else {
@@ -1733,10 +1733,10 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 		if (Validator.isNotNull(privateLayoutSetVirtualHostname)) {
 			portalUrl = PortalUtil.getPortalURL(
-				privateLayoutSetVirtualHostname, portalPort, isSecureUrl);
+				privateLayoutSetVirtualHostname, portalPort, secureUrl);
 
 			if (url.startsWith(portalUrl)) {
-				if (isSecureUrl) {
+				if (secureUrl) {
 					urlSB.append(_DATA_HANDLER_PRIVATE_LAYOUT_SET_SECURE_URL);
 				}
 				else {
@@ -1754,10 +1754,10 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 		if (Validator.isNotNull(companyVirtualHostname)) {
 			portalUrl = PortalUtil.getPortalURL(
-				companyVirtualHostname, portalPort, isSecureUrl);
+				companyVirtualHostname, portalPort, secureUrl);
 
 			if (url.startsWith(portalUrl)) {
-				if (isSecureUrl) {
+				if (secureUrl) {
 					urlSB.append(_DATA_HANDLER_COMPANY_SECURE_URL);
 				}
 				else {
@@ -1768,8 +1768,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			}
 		}
 
-		portalUrl = PortalUtil.getPortalURL(
-			"localhost", portalPort, isSecureUrl);
+		portalUrl = PortalUtil.getPortalURL("localhost", portalPort, secureUrl);
 
 		if (url.startsWith(portalUrl)) {
 			return url.substring(portalUrl.length());

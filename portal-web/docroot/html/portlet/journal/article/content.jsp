@@ -670,7 +670,7 @@ if (Validator.isNotNull(content)) {
 				},
 				eventName: '<portlet:namespace />selectStructure',
 				groupId: <%= groupId %>,
-				refererPortletName: '<%= PortletKeys.JOURNAL %>',
+				refererPortletName: '<%= PortletKeys.JOURNAL_CONTENT %>',
 				showGlobalScope: true,
 				struts_action: '/dynamic_data_mapping/select_structure',
 				title: '<%= UnicodeLanguageUtil.get(pageContext, "structures") %>'
@@ -697,7 +697,7 @@ if (Validator.isNotNull(content)) {
 				},
 				eventName: '<portlet:namespace />selectTemplate',
 				groupId: <%= groupId %>,
-				refererPortletName: '<%= PortletKeys.JOURNAL %>',
+				refererPortletName: '<%= PortletKeys.JOURNAL_CONTENT %>',
 				struts_action: '/dynamic_data_mapping/select_template',
 				title: '<%= UnicodeLanguageUtil.get(pageContext, "templates") %>'
 			},

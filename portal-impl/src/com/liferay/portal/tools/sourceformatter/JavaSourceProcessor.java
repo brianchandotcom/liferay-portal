@@ -718,8 +718,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 				requiresEmptyLine = true;
 			}
-			else if (StringUtil.isUpperCase(javaTermName) ||
-					 StringUtil.isUpperCase(previousJavaTermName)) {
+			else if ((StringUtil.isUpperCase(javaTermName) &&
+					  !StringUtil.isLowerCase(javaTermName)) ||
+					 (StringUtil.isUpperCase(previousJavaTermName) &&
+					  !StringUtil.isLowerCase(previousJavaTermName))) {
 
 				requiresEmptyLine = true;
 			}

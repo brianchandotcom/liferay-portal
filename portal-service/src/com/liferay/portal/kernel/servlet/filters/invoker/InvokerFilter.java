@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.HttpOnlyCookieServletResponse;
 import com.liferay.portal.kernel.servlet.NonSerializableObjectRequestWrapper;
 import com.liferay.portal.kernel.servlet.SanitizedServletResponse;
+import com.liferay.portal.kernel.servlet.ServletVersionDetector;
 import com.liferay.portal.kernel.util.BasePortalLifecycle;
 import com.liferay.portal.kernel.util.ContextPathUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -71,7 +72,9 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 
 		HttpServletResponse response = (HttpServletResponse)servletResponse;
 
-		response = new HttpOnlyCookieServletResponse(response);
+		if (ServletVersionDetector.is3_0()) {
+			response = new HttpOnlyCookieServletResponse(response);
+		}
 
 		response = secureResponseHeaders(request, response);
 

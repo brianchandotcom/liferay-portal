@@ -14,14 +14,16 @@
 
 package com.liferay.portal.kernel.servlet.filters.compoundsessionid;
 
+import com.liferay.portal.kernel.servlet.PersistentHttpServletRequestWrapper;
+
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpSession;
 
 /**
  * @author Michael C. Han
  */
-public class CompoundSessionIdServletRequest extends HttpServletRequestWrapper {
+public class CompoundSessionIdServletRequest
+	extends PersistentHttpServletRequestWrapper {
 
 	public CompoundSessionIdServletRequest(HttpServletRequest request) {
 		super(request);

@@ -704,7 +704,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 						continue;
 					}
 
-					urlSB.append(_DATA_HANDLER_PATH_CONTEXT);
+					urlSB.append(DATA_HANDLER_PATH_CONTEXT);
 
 					url = url.substring(pathContext.length());
 				}
@@ -744,19 +744,19 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 				}
 
 				if (url.startsWith(_PRIVATE_GROUP_SERVLET_MAPPING)) {
-					urlSB.append(_DATA_HANDLER_PRIVATE_GROUP_SERVLET_MAPPING);
+					urlSB.append(DATA_HANDLER_PRIVATE_GROUP_SERVLET_MAPPING);
 
 					url = url.substring(
 						_PRIVATE_GROUP_SERVLET_MAPPING.length() - 1);
 				}
 				else if (url.startsWith(_PRIVATE_USER_SERVLET_MAPPING)) {
-					urlSB.append(_DATA_HANDLER_PRIVATE_USER_SERVLET_MAPPING);
+					urlSB.append(DATA_HANDLER_PRIVATE_USER_SERVLET_MAPPING);
 
 					url = url.substring(
 						_PRIVATE_USER_SERVLET_MAPPING.length() - 1);
 				}
 				else if (url.startsWith(_PUBLIC_GROUP_SERVLET_MAPPING)) {
-					urlSB.append(_DATA_HANDLER_PUBLIC_SERVLET_MAPPING);
+					urlSB.append(DATA_HANDLER_PUBLIC_SERVLET_MAPPING);
 
 					url = url.substring(
 						_PUBLIC_GROUP_SERVLET_MAPPING.length() - 1);
@@ -767,16 +767,16 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 					LayoutSet layoutSet = null;
 
 					if (urlSBString.contains(
-							_DATA_HANDLER_PUBLIC_LAYOUT_SET_SECURE_URL) ||
+							DATA_HANDLER_PUBLIC_LAYOUT_SET_SECURE_URL) ||
 						urlSBString.contains(
-							_DATA_HANDLER_PUBLIC_LAYOUT_SET_URL)) {
+							DATA_HANDLER_PUBLIC_LAYOUT_SET_URL)) {
 
 						layoutSet = group.getPublicLayoutSet();
 					}
 					else if (urlSBString.contains(
-							_DATA_HANDLER_PRIVATE_LAYOUT_SET_SECURE_URL) ||
-						urlSBString.contains(
-							_DATA_HANDLER_PRIVATE_LAYOUT_SET_URL)) {
+								DATA_HANDLER_PRIVATE_LAYOUT_SET_SECURE_URL) ||
+							 urlSBString.contains(
+								DATA_HANDLER_PRIVATE_LAYOUT_SET_URL)) {
 
 						layoutSet = group.getPrivateLayoutSet();
 					}
@@ -799,18 +799,18 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 					if (privateLayout) {
 						if (group.isUser()) {
 							urlSB.append(
-								_DATA_HANDLER_PRIVATE_USER_SERVLET_MAPPING);
+								DATA_HANDLER_PRIVATE_USER_SERVLET_MAPPING);
 						}
 						else {
 							urlSB.append(
-								_DATA_HANDLER_PRIVATE_GROUP_SERVLET_MAPPING);
+								DATA_HANDLER_PRIVATE_GROUP_SERVLET_MAPPING);
 						}
 					}
 					else {
-						urlSB.append(_DATA_HANDLER_PUBLIC_SERVLET_MAPPING);
+						urlSB.append(DATA_HANDLER_PUBLIC_SERVLET_MAPPING);
 					}
 
-					urlSB.append(_DATA_HANDLER_GROUP_FRIENDLY_URL);
+					urlSB.append(DATA_HANDLER_GROUP_FRIENDLY_URL);
 
 					continue;
 				}
@@ -820,11 +820,10 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 				if (url.equals(groupFriendlyURL) ||
 					url.startsWith(groupFriendlyURL + StringPool.SLASH)) {
 
-					urlSB.append(_DATA_HANDLER_GROUP_FRIENDLY_URL);
+					urlSB.append(DATA_HANDLER_GROUP_FRIENDLY_URL);
 
 					url = url.substring(groupFriendlyURL.length());
 				}
-
 			}
 			finally {
 				if (urlSB.length() > 0) {
@@ -1064,33 +1063,33 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		}
 
 		content = StringUtil.replace(
-			content, _DATA_HANDLER_PUBLIC_LAYOUT_SET_SECURE_URL,
+			content, DATA_HANDLER_PUBLIC_LAYOUT_SET_SECURE_URL,
 			publicLayoutSetSecurePortalUrl);
 		content = StringUtil.replace(
-			content, _DATA_HANDLER_PUBLIC_LAYOUT_SET_URL,
+			content, DATA_HANDLER_PUBLIC_LAYOUT_SET_URL,
 			publicLayoutSetPortalUrl);
 		content = StringUtil.replace(
-			content, _DATA_HANDLER_PRIVATE_LAYOUT_SET_SECURE_URL,
+			content, DATA_HANDLER_PRIVATE_LAYOUT_SET_SECURE_URL,
 			privateLayoutSetSecurePortalUrl);
 		content = StringUtil.replace(
-			content, _DATA_HANDLER_PRIVATE_LAYOUT_SET_URL,
+			content, DATA_HANDLER_PRIVATE_LAYOUT_SET_URL,
 			privateLayoutSetPortalUrl);
 		content = StringUtil.replace(
-			content, _DATA_HANDLER_COMPANY_SECURE_URL, companySecurePortalUrl);
+			content, DATA_HANDLER_COMPANY_SECURE_URL, companySecurePortalUrl);
 		content = StringUtil.replace(
-			content, _DATA_HANDLER_COMPANY_URL, companyPortalUrl);
+			content, DATA_HANDLER_COMPANY_URL, companyPortalUrl);
 		content = StringUtil.replace(
-			content, _DATA_HANDLER_GROUP_FRIENDLY_URL, group.getFriendlyURL());
+			content, DATA_HANDLER_GROUP_FRIENDLY_URL, group.getFriendlyURL());
 		content = StringUtil.replace(
-			content, _DATA_HANDLER_PATH_CONTEXT, PortalUtil.getPathContext());
+			content, DATA_HANDLER_PATH_CONTEXT, PortalUtil.getPathContext());
 		content = StringUtil.replace(
-			content, _DATA_HANDLER_PRIVATE_GROUP_SERVLET_MAPPING,
+			content, DATA_HANDLER_PRIVATE_GROUP_SERVLET_MAPPING,
 			PropsValues.LAYOUT_FRIENDLY_URL_PRIVATE_GROUP_SERVLET_MAPPING);
 		content = StringUtil.replace(
-			content, _DATA_HANDLER_PRIVATE_USER_SERVLET_MAPPING,
+			content, DATA_HANDLER_PRIVATE_USER_SERVLET_MAPPING,
 			PropsValues.LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING);
 		content = StringUtil.replace(
-			content, _DATA_HANDLER_PUBLIC_SERVLET_MAPPING,
+			content, DATA_HANDLER_PUBLIC_SERVLET_MAPPING,
 			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING);
 
 		return content;
@@ -1716,10 +1715,10 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 			if (url.startsWith(portalUrl)) {
 				if (secureUrl) {
-					urlSB.append(_DATA_HANDLER_PUBLIC_LAYOUT_SET_SECURE_URL);
+					urlSB.append(DATA_HANDLER_PUBLIC_LAYOUT_SET_SECURE_URL);
 				}
 				else {
-					urlSB.append(_DATA_HANDLER_PUBLIC_LAYOUT_SET_URL);
+					urlSB.append(DATA_HANDLER_PUBLIC_LAYOUT_SET_URL);
 				}
 
 				return url.substring(portalUrl.length());
@@ -1737,10 +1736,10 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 			if (url.startsWith(portalUrl)) {
 				if (secureUrl) {
-					urlSB.append(_DATA_HANDLER_PRIVATE_LAYOUT_SET_SECURE_URL);
+					urlSB.append(DATA_HANDLER_PRIVATE_LAYOUT_SET_SECURE_URL);
 				}
 				else {
-					urlSB.append(_DATA_HANDLER_PRIVATE_LAYOUT_SET_URL);
+					urlSB.append(DATA_HANDLER_PRIVATE_LAYOUT_SET_URL);
 				}
 
 				return url.substring(portalUrl.length());
@@ -1758,10 +1757,10 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 			if (url.startsWith(portalUrl)) {
 				if (secureUrl) {
-					urlSB.append(_DATA_HANDLER_COMPANY_SECURE_URL);
+					urlSB.append(DATA_HANDLER_COMPANY_SECURE_URL);
 				}
 				else {
-					urlSB.append(_DATA_HANDLER_COMPANY_URL);
+					urlSB.append(DATA_HANDLER_COMPANY_URL);
 				}
 
 				return url.substring(portalUrl.length());
@@ -1794,39 +1793,6 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 		return null;
 	}
-
-	private static final String _DATA_HANDLER_COMPANY_SECURE_URL =
-		"@data_handler_company_secure_url@";
-
-	private static final String _DATA_HANDLER_COMPANY_URL =
-		"@data_handler_company_url@";
-
-	private static final String _DATA_HANDLER_GROUP_FRIENDLY_URL =
-		"@data_handler_group_friendly_url@";
-
-	private static final String _DATA_HANDLER_PATH_CONTEXT =
-		"@data_handler_path_context@";
-
-	private static final String _DATA_HANDLER_PRIVATE_GROUP_SERVLET_MAPPING =
-		"@data_handler_private_group_servlet_mapping@";
-
-	private static final String _DATA_HANDLER_PRIVATE_LAYOUT_SET_SECURE_URL =
-		"@data_handler_private_layout_set_secure_url@";
-
-	private static final String _DATA_HANDLER_PRIVATE_LAYOUT_SET_URL =
-		"@data_handler_private_layout_set_url@";
-
-	private static final String _DATA_HANDLER_PRIVATE_USER_SERVLET_MAPPING =
-		"@data_handler_private_user_servlet_mapping@";
-
-	private static final String _DATA_HANDLER_PUBLIC_LAYOUT_SET_SECURE_URL =
-		"@data_handler_public_layout_set_secure_url@";
-
-	private static final String _DATA_HANDLER_PUBLIC_LAYOUT_SET_URL =
-		"@data_handler_public_layout_set_url@";
-
-	private static final String _DATA_HANDLER_PUBLIC_SERVLET_MAPPING =
-		"@data_handler_public_servlet_mapping@";
 
 	private static final char[] _DL_REFERENCE_LEGACY_STOP_CHARS = {
 		CharPool.APOSTROPHE, CharPool.CLOSE_BRACKET, CharPool.CLOSE_CURLY_BRACE,

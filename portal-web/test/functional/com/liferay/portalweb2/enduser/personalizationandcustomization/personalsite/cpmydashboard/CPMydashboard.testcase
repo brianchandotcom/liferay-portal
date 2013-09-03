@@ -204,26 +204,9 @@
 			<var name="portletName" value="Site Memberships" />
 		</execute>
 
-		<execute action="CPSitememberships#assertTextEquals" locator-key1="MEMBERSHIP_TYPE" value1="Membership Type: Restricted"/>
-		<execute action="CPSitememberships#assertTextEquals" locator-key1="REQUEST_MESSAGE" value1="There are 1 membership requests pending." />
-		<execute action="CPSitememberships#assertClick" locator-key1="TOOLBAR_VIEW_MEMBERSHIP_REQUESTS" value1="View Membership Requests" />
-
-		<execute action="CPSitemembershipsViewmembershiprequestsPending#assertTextEquals" locator-key1="REQUESTS_TABLE_USER_NAME" value1="${userFirstName} ${userLastName} (${userEmailAddress})" />
-		<execute action="CPSitemembershipsViewmembershiprequestsPending#assertTextEquals" locator-key1="REQUESTS_TABLE_USER_COMMENTS" value1="Please allow me to join the Restricted Site." />
-		<execute action="CPSitemembershipsViewmembershiprequestsPending#assertClick" locator-key1="REQUESTS_TABLE_REPLY" value1="Reply" />
-
-		<execute action="CPSitemembershipsViewmembershiprequestsPendingReply#select" locator-key1="STATUS" value1="Approve" />
-		<execute action="CPSitemembershipsViewmembershiprequestsPendingReply#type" locator-key1="REPLY_COMMENTS" value1="You may join the Restricted Site." />
-		<execute action="CPSitemembershipsViewmembershiprequestsPendingReply#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
-
-		<execute action="CPSitemembershipsViewmembershiprequestsPending#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute action="CPSitemembershipsViewmembershiprequestsPending#assertTextEquals" locator-key1="SUCCESS_MESSAGE_2" value1="Your reply will be sent to the user by email." />
-		<execute action="CPSitemembershipsViewmembershiprequestsPending#assertClick" locator-key1="VIEW_MEMBERSHIP_NAVIGATION_APPROVED" value1="Approved" />
-
-		<execute action="CPSitemembershipsViewmembershiprequestsApproved#assertTextEquals" locator-key1="APPROVED_TABLE_USER_NAME" value1="${userFirstName} ${userLastName} (${userEmailAddress})" />
-		<execute action="CPSitemembershipsViewmembershiprequestsApproved#assertTextEquals" locator-key1="APPROVED_TABLE_USER_COMMENTS" value1="Please allow me to join the Restricted Site." />
-		<execute action="CPSitemembershipsViewmembershiprequestsApproved#assertTextEquals" locator-key1="APPROVED_TABLE_REPLIER_NAME" value1="Test Test" />
-		<execute action="CPSitemembershipsViewmembershiprequestsApproved#assertTextEquals" locator-key1="APPROVED_TABLE_REPLY_COMMENTS" value1="You may join the Restricted Site." />
+		<execute macro="Site#approveJoinSiteRestrictedViaMySitesPG">
+			<var name="userScreenName" value="usersn" />
+		</execute>
 
 		<execute macro="User#logoutPG" />
 
@@ -234,9 +217,9 @@
 
 		<execute macro="Page#gotoMyDashboard" />
 
-		<execute action="Mydashboard#assertTextEquals" locator-key1="MY_SITES" value1="My Sites" />
-		<execute action="Mydashboard#assertTextEquals" locator-key1="SITE_NAME" value1="${siteName}" />
-		<execute action="Mydashboard#assertTextEquals" locator-key1="SITE_NAME_MEMBERS" value1="2" />
+		<execute macro="Site#viewMySitesViaMySitesPG">
+			<var name="siteName" value="Site Name" />
+		</execute>
 
 		<execute macro="User#logoutPG" />
 

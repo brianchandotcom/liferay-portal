@@ -1,0 +1,34 @@
+<html>
+<head>
+<title>PGMysitesAvailablesitesRequestmembership</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGMysitesAvailablesitesRequestmembership</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>Mydashboard</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENTS_FIELD</td>
+	<td>//textarea[@id='_29_comments']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE_BUTTON</td>
+	<td>//button[contains(.,'Save')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

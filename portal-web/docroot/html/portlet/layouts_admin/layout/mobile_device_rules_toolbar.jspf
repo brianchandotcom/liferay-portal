@@ -14,17 +14,15 @@
  */
 --%>
 
-<aui:nav-bar>
-	<aui:nav>
-		<c:if test="<%= MDRPermissionUtil.contains(permissionChecker, groupId, ActionKeys.ADD_RULE_GROUP_INSTANCE) %>">
-			<aui:nav-item anchorId="saveInstance" label="select-device-family" />
+<c:if test="<%= MDRPermissionUtil.contains(permissionChecker, groupId, ActionKeys.ADD_RULE_GROUP_INSTANCE) %>">
+	<div class="control-group">
+		<aui:button name="saveInstance" value="select-device-family" />
 
-			<c:if test="<%= MDRRuleGroupInstanceServiceUtil.getRuleGroupInstancesCount(className, classPK) > 1 %>">
-				<aui:nav-item anchorId="managePriorities" label="manage-rule-priorities" />
-			</c:if>
+		<c:if test="<%= MDRRuleGroupInstanceServiceUtil.getRuleGroupInstancesCount(className, classPK) > 1 %>">
+			<aui:button name="managePriorities" value="manage-rule-priorities" />
 		</c:if>
-	</aui:nav>
-</aui:nav-bar>
+	</div>
+</c:if>
 
 <liferay-portlet:renderURL portletName="<%= PortletKeys.MOBILE_DEVICE_SITE_ADMIN %>" varImpl="selectRuleGroupURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 	<portlet:param name="struts_action" value="/mobile_device_rules/view" />

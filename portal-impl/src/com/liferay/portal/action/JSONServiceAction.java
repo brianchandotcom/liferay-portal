@@ -395,7 +395,7 @@ public class JSONServiceAction extends JSONAction {
 	}
 
 	@Override
-	protected String getCSRFContext(HttpServletRequest request) {
+	protected String getCSRFOrigin(HttpServletRequest request) {
 		String className = ParamUtil.getString(request, "serviceClassName");
 		String methodName = ParamUtil.getString(request, "serviceMethodName");
 

@@ -34,10 +34,10 @@ public class AuthTokenWrapper implements AuthToken {
 	}
 
 	@Override
-	public void checkCSRFToken(HttpServletRequest request, String context)
+	public void checkCSRFToken(HttpServletRequest request, String origin)
 		throws PrincipalException {
 
-		_authToken.checkCSRFToken(request, context);
+		_authToken.checkCSRFToken(request, origin);
 	}
 
 	@Override

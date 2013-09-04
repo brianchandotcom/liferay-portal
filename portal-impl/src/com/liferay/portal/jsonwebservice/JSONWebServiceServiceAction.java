@@ -142,7 +142,7 @@ public class JSONWebServiceServiceAction extends JSONServiceAction {
 	}
 
 	@Override
-	protected String getCSRFContext(HttpServletRequest request) {
+	protected String getCSRFOrigin(HttpServletRequest request) {
 		String uri = request.getRequestURI();
 
 		int x = uri.indexOf("jsonws/");

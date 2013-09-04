@@ -30,7 +30,7 @@ public interface AuthToken {
 	@Deprecated
 	public void check(HttpServletRequest request) throws PortalException;
 
-	public void checkCSRFToken(HttpServletRequest request, String context)
+	public void checkCSRFToken(HttpServletRequest request, String origin)
 		throws PrincipalException;
 
 	public String getToken(HttpServletRequest request);

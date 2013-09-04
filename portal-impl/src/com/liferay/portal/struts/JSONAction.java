@@ -159,12 +159,12 @@ public abstract class JSONAction extends Action {
 
 		if (PropsValues.JSON_SERVICE_AUTH_TOKEN_ENABLED) {
 			if (!AuthSettingsUtil.isAccessAllowed(request, _hostsAllowed)) {
-				AuthTokenUtil.checkCSRFToken(request, getCSRFContext(request));
+				AuthTokenUtil.checkCSRFToken(request, getCSRFOrigin(request));
 			}
 		}
 	}
 
-	protected String getCSRFContext(HttpServletRequest request) {
+	protected String getCSRFOrigin(HttpServletRequest request) {
 		return getClass().getName();
 	}
 

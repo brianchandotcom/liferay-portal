@@ -35,11 +35,10 @@ public class AuthTokenUtil {
 		getAuthToken().check(request);
 	}
 
-	public static void checkCSRFToken(
-			HttpServletRequest request, String context)
+	public static void checkCSRFToken(HttpServletRequest request, String origin)
 		throws PrincipalException {
 
-		getAuthToken().checkCSRFToken(request, context);
+		getAuthToken().checkCSRFToken(request, origin);
 	}
 
 	public static AuthToken getAuthToken() {

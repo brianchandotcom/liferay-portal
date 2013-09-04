@@ -48,6 +48,17 @@ String newTitle = ParamUtil.get(request, "newTitle", StringPool.BLANK);
 		names="rename,change-parent"
 		refresh="<%= false %>"
 	>
+
+		<%
+		boolean pending = false;
+
+		if (WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, WikiPage.class.getName())) {
+			WikiPage lastWikiPage = WikiPageServiceUtil.getPage(wikiPage.getNodeId(), wikiPage.getTitle(), null);
+
+			pending = lastWikiPage.isPending();
+		}
+		%>
+
 		<liferay-ui:section>
 			<div class="alert alert-info">
 				<liferay-ui:message key="use-the-form-below-to-rename-a-page,-moving-all-of-its-history-to-the-new-name" />
@@ -60,8 +71,14 @@ String newTitle = ParamUtil.get(request, "newTitle", StringPool.BLANK);
 
 				<aui:input name="newTitle" value="<%= newTitle %>" />
 
+				<c:if test="<%= pending %>">
+					<div class="alert alert-info">
+						<liferay-ui:message key="there-is-a-publication-workflow-in-process" />
+					</div>
+				</c:if>
+
 				<aui:button-row>
-					<aui:button onClick='<%= renderResponse.getNamespace() + "renamePage();" %>' value="rename" />
+					<aui:button disabled="<%= pending %>" onClick='<%= renderResponse.getNamespace() + "renamePage();" %>' value="rename" />
 
 					<aui:button href="<%= redirect %>" type="cancel" />
 				</aui:button-row>
@@ -141,14 +158,6 @@ String newTitle = ParamUtil.get(request, "newTitle", StringPool.BLANK);
 					</aui:select>
 
 				<%
-				}
-
-				boolean pending = false;
-
-				if (WorkflowDefinitionLinkLocalServiceUtil.hasWorkflowDefinitionLink(themeDisplay.getCompanyId(), scopeGroupId, WikiPage.class.getName())) {
-					WikiPage lastWikiPage = WikiPageServiceUtil.getPage(wikiPage.getNodeId(), wikiPage.getTitle(), null);
-
-					pending = lastWikiPage.isPending();
 				}
 				%>
 

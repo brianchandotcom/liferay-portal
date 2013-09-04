@@ -57,7 +57,7 @@
 </tr>
 <tr>
 	<td>DRAFT_PAGES_TABLE_STATUS</td>
-	<td>//div[@id='_36_ocerSearchContainerSearchContainer']//tr[contains(.,'${key_wikiPageTitle}')]/td[2]/a</td>
+	<td>//div[@id='_36_ocerSearchContainerSearchContainer']//tr[contains(.,'${key_wikiPageTitle}')]/td[2]/span/span/span/strong</td>
 	<td></td>
 </tr>
 <tr>
@@ -140,7 +140,7 @@
 </tr>
 <tr>
 	<td>PENDING_APPROVAL_TABLE_STATUS</td>
-	<td>//div[@id='_36_ircfSearchContainer']//tr[contains(.,'${key_wikiPageTitle}')]/td[2]/a</td>
+	<td>//div[@id='_36_ircfSearchContainer']//tr[contains(.,'${key_wikiPageTitle}')]/td[2]/span/span/span/strong</td>
 	<td></td>
 </tr>
 <tr>

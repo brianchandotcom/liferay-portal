@@ -695,8 +695,17 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 		}
 
 		if (warFile) {
+			boolean portalSessionShared = !portlet.isPrivateSessionAttributes();
+
+			Portlet spiAgentPortlet = (Portlet)request.getAttribute(
+				WebKeys.SPI_AGENT_PORTLET);
+
+			if (spiAgentPortlet != null) {
+				portalSessionShared = true;
+			}
+
 			request = new SharedSessionServletRequest(
-				request, !portlet.isPrivateSessionAttributes());
+				request, portalSessionShared);
 		}
 
 		String dynamicQueryString = (String)request.getAttribute(

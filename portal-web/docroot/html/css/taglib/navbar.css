@@ -3,16 +3,16 @@
 
 @include respond-to(phone, tablet) {
 	.navbar {
-		&.open .navbar-inner .nav-collapse {
-			height: auto;
-			overflow: visible;
-		}
-
 		.container {
 			position: relative;
 
 			.btn-navbar {
 				margin-bottom: 5px;
+			}
+
+			.nav-collapse.open {
+				height: auto;
+				overflow: visible;
 			}
 
 			.navbar-search {

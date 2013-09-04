@@ -147,31 +147,12 @@ public class WikiPageTrashHandler extends BaseTrashHandler {
 			PortletRequest portletRequest, long classPK)
 		throws PortalException, SystemException {
 
-		String portletId = PortletKeys.WIKI;
-
 		WikiPage page = WikiPageLocalServiceUtil.getLatestPage(
 			classPK, WorkflowConstants.STATUS_ANY, false);
 
-		long plid = PortalUtil.getPlidFromPortletId(
-			page.getGroupId(), PortletKeys.WIKI);
-
-		if (plid == LayoutConstants.DEFAULT_PLID) {
-			portletId = PortletKeys.WIKI_ADMIN;
-
-			plid = PortalUtil.getControlPanelPlid(portletRequest);
-		}
-
-		PortletURL portletURL = PortletURLFactoryUtil.create(
-			portletRequest, portletId, plid, PortletRequest.RENDER_PHASE);
-
 		WikiNode node = page.getNode();
 
-		if (portletId.equals(PortletKeys.WIKI)) {
-			portletURL.setParameter("struts_action", "/wiki/view");
-		}
-		else {
-			portletURL.setParameter("struts_action", "/wiki_admin/view");
-		}
+		PortletURL portletURL = getRestoreURL(portletRequest, classPK, false);
 
 		portletURL.setParameter("nodeName", node.getName());
 		portletURL.setParameter("title", HtmlUtil.unescape(page.getTitle()));
@@ -184,32 +165,12 @@ public class WikiPageTrashHandler extends BaseTrashHandler {
 			PortletRequest portletRequest, long classPK)
 		throws PortalException, SystemException {
 
-		String portletId = PortletKeys.WIKI;
-
 		WikiPage page = WikiPageLocalServiceUtil.getLatestPage(
 			classPK, WorkflowConstants.STATUS_ANY, false);
 
-		long plid = PortalUtil.getPlidFromPortletId(
-			page.getGroupId(), PortletKeys.WIKI);
-
-		if (plid == LayoutConstants.DEFAULT_PLID) {
-			portletId = PortletKeys.WIKI_ADMIN;
-
-			plid = PortalUtil.getControlPanelPlid(portletRequest);
-		}
-
-		PortletURL portletURL = PortletURLFactoryUtil.create(
-			portletRequest, portletId, plid, PortletRequest.RENDER_PHASE);
-
 		WikiNode node = page.getNode();
 
-		if (portletId.equals(PortletKeys.WIKI)) {
-			portletURL.setParameter("struts_action", "/wiki/view_all_pages");
-		}
-		else {
-			portletURL.setParameter(
-				"struts_action", "/wiki_admin/view_all_pages");
-		}
+		PortletURL portletURL = getRestoreURL(portletRequest, classPK, true);
 
 		portletURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
 
@@ -328,6 +289,50 @@ public class WikiPageTrashHandler extends BaseTrashHandler {
 		pageResource.setTitle(name);
 
 		WikiPageResourceLocalServiceUtil.updateWikiPageResource(pageResource);
+	}
+
+	protected PortletURL getRestoreURL(
+			PortletRequest portletRequest, long classPK,
+			boolean isContainerModel)
+		throws PortalException, SystemException {
+
+		String portletId = PortletKeys.WIKI;
+
+		WikiPage page = WikiPageLocalServiceUtil.getLatestPage(
+			classPK, WorkflowConstants.STATUS_ANY, false);
+
+		long plid = PortalUtil.getPlidFromPortletId(
+			page.getGroupId(), PortletKeys.WIKI);
+
+		if (plid == LayoutConstants.DEFAULT_PLID) {
+			portletId = PortletKeys.WIKI_ADMIN;
+
+			plid = PortalUtil.getControlPanelPlid(portletRequest);
+		}
+
+		PortletURL portletURL = PortletURLFactoryUtil.create(
+			portletRequest, portletId, plid, PortletRequest.RENDER_PHASE);
+
+		if (isContainerModel) {
+			if (portletId.equals(PortletKeys.WIKI)) {
+				portletURL.setParameter(
+					"struts_action", "/wiki/view_all_pages");
+			}
+			else {
+				portletURL.setParameter(
+					"struts_action", "/wiki_admin/view_all_pages");
+			}
+		}
+		else {
+			if (portletId.equals(PortletKeys.WIKI)) {
+				portletURL.setParameter("struts_action", "/wiki/view");
+			}
+			else {
+				portletURL.setParameter("struts_action", "/wiki_admin/view");
+			}
+		}
+
+		return portletURL;
 	}
 
 	@Override

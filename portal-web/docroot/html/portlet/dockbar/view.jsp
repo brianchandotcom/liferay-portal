@@ -117,7 +117,11 @@ String toggleControlsState = GetterUtil.getString(SessionClicks.get(request, "li
 		</c:if>
 	</c:if>
 
-	<aui:nav ariaLabel='<%= LanguageUtil.get(pageContext, "layout-controls") %>' cssClass="nav-add-controls">
+	<aui:nav collapsible="<%= true %>" cssClass="nav-navigation" icon="reorder" id="navSiteNavigation">
+		<aui:nav-item />
+	</aui:nav>
+
+	<aui:nav ariaLabel='<%= LanguageUtil.get(pageContext, "layout-controls") %>' collapsible="<%= true %>" cssClass="nav-add-controls" icon="pencil" id="navAddControls">
 		<c:if test="<%= group.isControlPanel() %>">
 
 			<%

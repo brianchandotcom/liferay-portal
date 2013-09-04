@@ -208,7 +208,7 @@ AUI.add(
 
 				var btnNavigation = A.one('#navNavigationNavbarBtn');
 
-				var navigation = A.one('#navigation');
+				var navigation = A.one(Liferay.Data.NAV_SELECTOR);
 
 				if (btnNavigation && navigation) {
 					btnNavigation.on(

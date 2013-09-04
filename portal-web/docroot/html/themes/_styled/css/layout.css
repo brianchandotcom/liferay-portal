@@ -12,12 +12,12 @@
 	padding: 2em 5em 0;
 
 	@include respond-to(phone) {
-		padding-left: 3em;
+		padding-left: 0.5em;
 		padding-right: 0.5em;
 	}
 
 	@include respond-to(tablet) {
-		padding-left: 5em;
-		padding-right: 3em;
+		padding-left: 2em;
+		padding-right: 2em;
 	}
 }

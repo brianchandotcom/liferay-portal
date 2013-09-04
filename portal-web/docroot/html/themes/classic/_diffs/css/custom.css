@@ -468,7 +468,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 			@include text-shadow(none);
 
 			@include respond-to(phone, tablet) {
-				@include background-image(linear-gradient($dockbarGradientStart 0%, $dockbarGradientStart 47%, $dockbarGradientEnd 100%));
+				@include background-image(linear-gradient($dockbarGradientStart, $dockbarGradientEnd));
 			}
 
 			.nav {

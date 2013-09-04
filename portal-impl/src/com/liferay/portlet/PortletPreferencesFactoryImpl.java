@@ -14,6 +14,8 @@
 
 package com.liferay.portlet;
 
+import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
@@ -49,6 +51,7 @@ import com.liferay.portal.xml.StAXReaderUtil;
 import com.liferay.portlet.portletconfiguration.util.ConfigurationPortletRequest;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -78,14 +81,14 @@ import javax.xml.stream.events.XMLEvent;
 public class PortletPreferencesFactoryImpl
 	implements PortletPreferencesFactory {
 
+	public static final String PREFERENCES_MAP_CACHE_NAME =
+		PortletPreferencesFactoryImpl.class + "_PREFERENCES_MAP";
+
 	@Override
 	public PortletPreferences fromDefaultXML(String xml)
 		throws SystemException {
 
-		Map<String, Preference> preferencesMap =
-			new HashMap<String, Preference>();
-
-		populateMap(xml, preferencesMap);
+		Map<String, Preference> preferencesMap = toPreferencesMap(xml);
 
 		return new PortletPreferencesImpl(xml, preferencesMap);
 	}
@@ -97,10 +100,7 @@ public class PortletPreferencesFactoryImpl
 		throws SystemException {
 
 		try {
-			Map<String, Preference> preferencesMap =
-				new HashMap<String, Preference>();
-
-			populateMap(xml, preferencesMap);
+			Map<String, Preference> preferencesMap = toPreferencesMap(xml);
 
 			return new PortletPreferencesImpl(
 				companyId, ownerId, ownerType, plid, portletId, xml,
@@ -117,10 +117,7 @@ public class PortletPreferencesFactoryImpl
 		throws SystemException {
 
 		try {
-			Map<String, Preference> preferencesMap =
-				new HashMap<String, Preference>();
-
-			populateMap(xml, preferencesMap);
+			Map<String, Preference> preferencesMap = toPreferencesMap(xml);
 
 			return new PortalPreferencesImpl(
 				companyId, ownerId, ownerType, xml, preferencesMap, false);
@@ -620,53 +617,6 @@ public class PortletPreferencesFactoryImpl
 			defaultPreferences);
 	}
 
-	protected void populateMap(
-			String xml, Map<String, Preference> preferencesMap)
-		throws SystemException {
-
-		if (Validator.isNull(xml)) {
-			return;
-		}
-
-		XMLEventReader xmlEventReader = null;
-
-		try {
-			XMLInputFactory xmlInputFactory =
-				StAXReaderUtil.getXMLInputFactory();
-
-			xmlEventReader = xmlInputFactory.createXMLEventReader(
-				new UnsyncStringReader(xml));
-
-			while (xmlEventReader.hasNext()) {
-				XMLEvent xmlEvent = xmlEventReader.nextEvent();
-
-				if (xmlEvent.isStartElement()) {
-					StartElement startElement = xmlEvent.asStartElement();
-
-					String elementName = startElement.getName().getLocalPart();
-
-					if (elementName.equals("preference")) {
-						Preference preference = readPreference(xmlEventReader);
-
-						preferencesMap.put(preference.getName(), preference);
-					}
-				}
-			}
-		}
-		catch (XMLStreamException xse) {
-			throw new SystemException(xse);
-		}
-		finally {
-			if (xmlEventReader != null) {
-				try {
-					xmlEventReader.close();
-				}
-				catch (XMLStreamException xse) {
-				}
-			}
-		}
-	}
-
 	protected Preference readPreference(XMLEventReader xmlEventReader)
 		throws XMLStreamException {
 
@@ -710,5 +660,74 @@ public class PortletPreferencesFactoryImpl
 		return new Preference(
 			name, values.toArray(new String[values.size()]), readOnly);
 	}
+
+	protected Map<String, Preference> toPreferencesMap(String xml)
+		throws SystemException {
+
+		if (Validator.isNull(xml)) {
+			return Collections.emptyMap();
+		}
+
+		Map<String, Preference> preferencesMap = _preferencesMapPortalCache.get(
+			xml);
+
+		if (preferencesMap != null) {
+			return preferencesMap;
+		}
+
+		XMLEventReader xmlEventReader = null;
+
+		try {
+			XMLInputFactory xmlInputFactory =
+				StAXReaderUtil.getXMLInputFactory();
+
+			xmlEventReader = xmlInputFactory.createXMLEventReader(
+				new UnsyncStringReader(xml));
+
+			while (xmlEventReader.hasNext()) {
+				XMLEvent xmlEvent = xmlEventReader.nextEvent();
+
+				if (xmlEvent.isStartElement()) {
+					StartElement startElement = xmlEvent.asStartElement();
+
+					String elementName = startElement.getName().getLocalPart();
+
+					if (elementName.equals("preference")) {
+						Preference preference = readPreference(xmlEventReader);
+
+						if (preferencesMap == null) {
+							preferencesMap = new HashMap<String, Preference>();
+						}
+
+						preferencesMap.put(preference.getName(), preference);
+					}
+				}
+			}
+		}
+		catch (XMLStreamException xse) {
+			throw new SystemException(xse);
+		}
+		finally {
+			if (xmlEventReader != null) {
+				try {
+					xmlEventReader.close();
+				}
+				catch (XMLStreamException xse) {
+				}
+			}
+		}
+
+		if (preferencesMap == null) {
+			preferencesMap = Collections.emptyMap();
+		}
+
+		_preferencesMapPortalCache.put(xml, preferencesMap);
+
+		return preferencesMap;
+	}
+
+	private PortalCache<String, Map<String, Preference>>
+		_preferencesMapPortalCache = SingleVMPoolUtil.getCache(
+			PREFERENCES_MAP_CACHE_NAME);
 
 }

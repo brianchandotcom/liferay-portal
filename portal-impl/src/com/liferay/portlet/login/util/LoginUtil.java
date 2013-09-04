@@ -373,8 +373,7 @@ public class LoginUtil {
 
 		boolean secure = request.isSecure();
 
-		if (secure &&
-			!PropsValues.COMPANY_SECURITY_AUTH_REQUIRES_HTTPS &&
+		if (secure && !PropsValues.COMPANY_SECURITY_AUTH_REQUIRES_HTTPS &&
 			!Http.HTTPS.equalsIgnoreCase(PropsValues.WEB_SERVER_PROTOCOL)) {
 
 			Boolean httpsInitial = (Boolean)session.getAttribute(

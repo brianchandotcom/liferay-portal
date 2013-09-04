@@ -17,17 +17,13 @@ package com.liferay.portal.kernel.nio.intraband.welder.fifo;
 import com.liferay.portal.kernel.nio.intraband.MockIntraband;
 import com.liferay.portal.kernel.nio.intraband.MockRegistrationReference;
 import com.liferay.portal.kernel.nio.intraband.welder.WelderTestUtil;
-import com.liferay.portal.kernel.nio.intraband.welder.fifo.FIFOWelder.AutoRemoveFileInputStream;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 
 import java.io.File;
 import java.io.IOException;
 
-import java.security.Permission;
-
 import java.util.concurrent.Callable;
 import java.util.concurrent.FutureTask;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
 import org.junit.After;
@@ -63,65 +59,6 @@ public class FIFOWelderTest {
 				file.delete();
 			}
 		}
-	}
-
-	@Test
-	public void testAutoRemoveFileInputStream() throws Exception {
-		File tempFile = new File("tempFile");
-
-		Assert.assertTrue(tempFile.createNewFile());
-
-		AutoRemoveFileInputStream autoRemoveFileInputStream =
-			new AutoRemoveFileInputStream(tempFile);
-
-		final AtomicInteger checkDeleteCount = new AtomicInteger();
-
-		SecurityManager securityManager = new SecurityManager() {
-
-			@Override
-			public void checkDelete(String file) {
-				if (file.contains("tempFile")) {
-					checkDeleteCount.getAndIncrement();
-				}
-			}
-
-			@Override
-			public void checkPermission(Permission permission) {
-			}
-
-		};
-
-		System.setSecurityManager(securityManager);
-
-		try {
-			autoRemoveFileInputStream.close();
-		}
-		finally {
-			System.setSecurityManager(null);
-		}
-
-		Assert.assertFalse(tempFile.exists());
-		Assert.assertEquals(1, checkDeleteCount.get());
-
-		checkDeleteCount.set(0);
-
-		Assert.assertTrue(tempFile.createNewFile());
-
-		autoRemoveFileInputStream = new AutoRemoveFileInputStream(tempFile);
-
-		Assert.assertTrue(tempFile.delete());
-
-		System.setSecurityManager(securityManager);
-
-		try {
-			autoRemoveFileInputStream.close();
-		}
-		finally {
-			System.setSecurityManager(null);
-		}
-
-		Assert.assertFalse(tempFile.exists());
-		Assert.assertEquals(2, checkDeleteCount.get());
 	}
 
 	@Test

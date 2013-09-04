@@ -40,11 +40,7 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem");
 	<c:if test="<%= showBlogEntriesSearch %>">
 		<div class="navbar-search pull-right">
 			<div class="form-search">
-				<div class="input-append">
-					<input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" class="search-query span9" id="<portlet:namespace/>keywords1" name="<portlet:namespace/>keywords" placeholder="<liferay-ui:message key="keywords" />" type="text" />
-
-					<aui:button primary="<%= false %>" type="submit" value="search" />
-				</div>
+				<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" id="keywords" placeholder='<%= LanguageUtil.get(locale, "keywords") %>' />
 			</div>
 		</div>
 	</c:if>

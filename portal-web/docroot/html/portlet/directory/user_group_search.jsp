@@ -23,5 +23,5 @@ UserGroupDisplayTerms displayTerms = (UserGroupDisplayTerms)searchContainer.getD
 %>
 
 <div class="form-search">
-	<liferay-ui:input-search id="keywords" placeholder='<%= LanguageUtil.get(locale, "keywords") %>' />
+	<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" id="keywords" placeholder='<%= LanguageUtil.get(locale, "keywords") %>' />
 </div>

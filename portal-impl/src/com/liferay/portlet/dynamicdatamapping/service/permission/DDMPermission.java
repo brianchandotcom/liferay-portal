@@ -15,6 +15,7 @@
 package com.liferay.portlet.dynamicdatamapping.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.PermissionChecker;
 
@@ -22,6 +23,9 @@ import com.liferay.portal.security.permission.PermissionChecker;
  * @author Bruno Basto
  */
 public class DDMPermission {
+
+	public static final String RESOURCE_NAME =
+		"com.liferay.portlet.dynamicdatamapping";
 
 	public static void check(
 			PermissionChecker permissionChecker, long groupId, String name,
@@ -36,6 +40,13 @@ public class DDMPermission {
 	public static boolean contains(
 		PermissionChecker permissionChecker, long groupId, String name,
 		String actionId) {
+
+		Boolean hasPermission = StagingPermissionUtil.hasPermission(
+			permissionChecker, groupId, RESOURCE_NAME, groupId, name, actionId);
+
+		if (hasPermission != null) {
+			return hasPermission.booleanValue();
+		}
 
 		return permissionChecker.hasPermission(
 			groupId, name, groupId, actionId);

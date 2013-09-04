@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
+import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -143,10 +144,16 @@ public class EditEntryAction extends PortletAction {
 			List<ObjectValuePair<String, Long>> entryOVPs)
 		throws Exception {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		if ((entryOVPs == null) || (entryOVPs.size() <= 0)) {
 			return;
 		}
 
+		List<String> restoreClassNames = new ArrayList<String>();
+		List<String> restoreEntryLinks = new ArrayList<String>();
+		List<String> restoreEntryMessages = new ArrayList<String>();
 		List<String> restoreLinks = new ArrayList<String>();
 		List<String> restoreMessages = new ArrayList<String>();
 
@@ -156,7 +163,10 @@ public class EditEntryAction extends PortletAction {
 			TrashHandler trashHandler =
 				TrashHandlerRegistryUtil.getTrashHandler(entryOVP.getKey());
 
-			String restoreLink = trashHandler.getRestoreLink(
+			String restoreEntryLink = trashHandler.getRestoreContainedModelLink(
+				actionRequest, entryOVP.getValue());
+
+			String restoreLink = trashHandler.getRestoreContainerModelLink(
 				actionRequest, entryOVP.getValue());
 
 			String restoreMessage = trashHandler.getRestoreMessage(
@@ -168,12 +178,24 @@ public class EditEntryAction extends PortletAction {
 				continue;
 			}
 
+			TrashRenderer trashRenderer = trashHandler.getTrashRenderer(
+				entryOVP.getValue());
+
+			String restoreEntryTitle = trashRenderer.getTitle(
+				themeDisplay.getLocale());
+
+			restoreClassNames.add(trashHandler.getClassName());
+			restoreEntryLinks.add(restoreEntryLink);
+			restoreEntryMessages.add(restoreEntryTitle);
 			restoreLinks.add(restoreLink);
 			restoreMessages.add(restoreMessage);
 		}
 
 		Map<String, List<String>> data = new HashMap<String, List<String>>();
 
+		data.put("restoreClassNames", restoreClassNames);
+		data.put("restoreEntryLinks", restoreEntryLinks);
+		data.put("restoreEntryMessages", restoreEntryMessages);
 		data.put("restoreLinks", restoreLinks);
 		data.put("restoreMessages", restoreMessages);
 

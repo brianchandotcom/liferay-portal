@@ -103,7 +103,11 @@ public interface DL {
 
 	public String getDividedPath(long id);
 
-	public String getDLControlPanelLink(
+	public String getDLFileEntryControlPanelLink(
+			PortletRequest portletRequest, long fileEntryId)
+		throws PortalException, SystemException;
+
+	public String getDLFolderControlPanelLink(
 			PortletRequest portletRequest, long folderId)
 		throws PortalException, SystemException;
 

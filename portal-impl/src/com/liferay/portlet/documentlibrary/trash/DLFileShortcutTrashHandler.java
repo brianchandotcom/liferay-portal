@@ -72,12 +72,24 @@ public class DLFileShortcutTrashHandler extends DLBaseTrashHandler {
 	}
 
 	@Override
-	public String getRestoreLink(PortletRequest portletRequest, long classPK)
+	public String getRestoreContainedModelLink(
+			PortletRequest portletRequest, long classPK)
+		throws PortalException, SystemException {
+
+		DLFileShortcut dlFileShortcut = getDLFileShortcut(classPK);
+
+		return DLUtil.getDLFileEntryControlPanelLink(
+			portletRequest, dlFileShortcut.getToFileEntryId());
+	}
+
+	@Override
+	public String getRestoreContainerModelLink(
+			PortletRequest portletRequest, long classPK)
 		throws PortalException, SystemException {
 
 		DLFileShortcut fileShortcut = getDLFileShortcut(classPK);
 
-		return DLUtil.getDLControlPanelLink(
+		return DLUtil.getDLFolderControlPanelLink(
 			portletRequest, fileShortcut.getFolderId());
 	}
 

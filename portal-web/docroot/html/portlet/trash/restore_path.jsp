@@ -22,6 +22,9 @@
 		<%
 		Map<String, List<String>> data = (HashMap<String, List<String>>)SessionMessages.get(renderRequest, portletDisplay.getId() + SessionMessages.KEY_SUFFIX_DELETE_SUCCESS_DATA);
 
+		List<String> restoreClassNames = data.get("restoreClassNames");
+		List<String> restoreEntryMessages = data.get("restoreEntryMessages");
+		List<String> restoreEntryLinks = data.get("restoreEntryLinks");
 		List<String> restoreLinks = data.get("restoreLinks");
 		List<String> restoreMessages = data.get("restoreMessages");
 		%>
@@ -30,21 +33,31 @@
 			<c:when test="<%= (data != null) && (restoreLinks != null) && (restoreMessages != null) && (restoreLinks.size() > 0) && (restoreMessages.size() > 0) %>">
 
 				<%
-				StringBundler sb = new StringBundler(5 * restoreMessages.size());
-
 				for (int i = 0; i < restoreLinks.size(); i++) {
-					sb.append("<a href=\"");
-					sb.append(restoreLinks.get(i));
-					sb.append("\">");
-					sb.append(restoreMessages.get(i));
-					sb.append("</a> ");
+					String type = "selected-item";
+
+					if (Validator.isNotNull(restoreClassNames.get(i))) {
+						type = ResourceActionsUtil.getModelResource(pageContext, restoreClassNames.get(i));
+					}
+				%>
+
+					<liferay-util:buffer var="entityLink">
+						<em class="restore-entry-title"><aui:a href="<%= restoreEntryLinks.get(i) %>" label="<%= restoreEntryMessages.get(i) %>" /></em>
+					</liferay-util:buffer>
+
+					<liferay-util:buffer var="link">
+						<em class="restore-entry-title"><aui:a href="<%= restoreLinks.get(i) %>" label="<%= restoreMessages.get(i) %>" /></em>
+					</liferay-util:buffer>
+
+					<liferay-ui:message arguments="<%= new Object[] {type, entityLink.trim(), link.trim()} %>" key="the-x-x-was-restored-to-x" />
+
+				<%
 				}
 				%>
 
-				<liferay-ui:message arguments="<%= sb.toString() %>" key="the-item-has-been-restored-to-x" />
 			</c:when>
 			<c:otherwise>
-				<liferay-ui:message key="the-item-has-been-restored" />
+				<liferay-ui:message key="the-item-was-restored" />
 			</c:otherwise>
 		</c:choose>
 	</div>

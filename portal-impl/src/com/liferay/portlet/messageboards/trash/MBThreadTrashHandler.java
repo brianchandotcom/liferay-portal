@@ -104,32 +104,30 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 	}
 
 	@Override
-	public String getRestoreLink(PortletRequest portletRequest, long classPK)
+	public String getRestoreContainedModelLink(
+			PortletRequest portletRequest, long classPK)
 		throws PortalException, SystemException {
-
-		String portletId = PortletKeys.MESSAGE_BOARDS;
 
 		MBThread thread = MBThreadLocalServiceUtil.getThread(classPK);
 
-		long plid = PortalUtil.getPlidFromPortletId(
-			thread.getGroupId(), PortletKeys.MESSAGE_BOARDS);
+		PortletURL portletURL = getRestoreURL(portletRequest, classPK, false);
 
-		if (plid == LayoutConstants.DEFAULT_PLID) {
-			portletId = PortletKeys.MESSAGE_BOARDS_ADMIN;
+		portletURL.setParameter(
+			"mbCategoryId", String.valueOf(thread.getCategoryId()));
+		portletURL.setParameter(
+			"messageId", String.valueOf(thread.getRootMessageId()));
 
-			plid = PortalUtil.getControlPanelPlid(portletRequest);
-		}
+		return portletURL.toString();
+	}
 
-		PortletURL portletURL = PortletURLFactoryUtil.create(
-			portletRequest, portletId, plid, PortletRequest.RENDER_PHASE);
+	@Override
+	public String getRestoreContainerModelLink(
+			PortletRequest portletRequest, long classPK)
+		throws PortalException, SystemException {
 
-		if (portletId.equals(PortletKeys.MESSAGE_BOARDS)) {
-			portletURL.setParameter("struts_action", "/message_boards/view");
-		}
-		else {
-			portletURL.setParameter(
-				"struts_action", "/message_boards_admin/view");
-		}
+		MBThread thread = MBThreadLocalServiceUtil.getThread(classPK);
+
+		PortletURL portletURL = getRestoreURL(portletRequest, classPK, true);
 
 		portletURL.setParameter(
 			"mbCategoryId", String.valueOf(thread.getCategoryId()));
@@ -242,6 +240,51 @@ public class MBThreadTrashHandler extends BaseTrashHandler {
 		throws PortalException, SystemException {
 
 		MBThreadLocalServiceUtil.restoreThreadFromTrash(userId, classPK);
+	}
+
+	protected PortletURL getRestoreURL(
+			PortletRequest portletRequest, long classPK,
+			boolean isContainerModel)
+		throws PortalException, SystemException {
+
+		String portletId = PortletKeys.MESSAGE_BOARDS;
+
+		MBThread thread = MBThreadLocalServiceUtil.getThread(classPK);
+
+		long plid = PortalUtil.getPlidFromPortletId(
+			thread.getGroupId(), PortletKeys.MESSAGE_BOARDS);
+
+		if (plid == LayoutConstants.DEFAULT_PLID) {
+			portletId = PortletKeys.MESSAGE_BOARDS_ADMIN;
+
+			plid = PortalUtil.getControlPanelPlid(portletRequest);
+		}
+
+		PortletURL portletURL = PortletURLFactoryUtil.create(
+			portletRequest, portletId, plid, PortletRequest.RENDER_PHASE);
+
+		if (isContainerModel) {
+			if (portletId.equals(PortletKeys.MESSAGE_BOARDS)) {
+				portletURL.setParameter(
+					"struts_action", "/message_boards/view");
+			}
+			else {
+				portletURL.setParameter(
+					"struts_action", "/message_boards_admin/view");
+			}
+		}
+		else {
+			if (portletId.equals(PortletKeys.MESSAGE_BOARDS)) {
+				portletURL.setParameter(
+					"struts_action", "/message_boards/view_message");
+			}
+			else {
+				portletURL.setParameter(
+					"struts_action", "/message_boards_admin/view_message");
+			}
+		}
+
+		return portletURL;
 	}
 
 	@Override

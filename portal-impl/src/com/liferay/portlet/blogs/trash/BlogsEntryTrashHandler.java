@@ -51,24 +51,26 @@ public class BlogsEntryTrashHandler extends BaseTrashHandler {
 	}
 
 	@Override
-	public String getRestoreLink(PortletRequest portletRequest, long classPK)
+	public String getRestoreContainedModelLink(
+			PortletRequest portletRequest, long classPK)
 		throws PortalException, SystemException {
-
-		String portletId = PortletKeys.BLOGS;
 
 		BlogsEntry entry = BlogsEntryLocalServiceUtil.getEntry(classPK);
 
-		long plid = PortalUtil.getPlidFromPortletId(
-			entry.getGroupId(), PortletKeys.BLOGS);
+		PortletURL portletURL = getRestoreURL(portletRequest, classPK, false);
 
-		if (plid == LayoutConstants.DEFAULT_PLID) {
-			portletId = PortletKeys.BLOGS_ADMIN;
+		portletURL.setParameter("entryId", String.valueOf(entry.getEntryId()));
+		portletURL.setParameter("urlTitle", entry.getUrlTitle());
 
-			plid = PortalUtil.getControlPanelPlid(portletRequest);
-		}
+		return portletURL.toString();
+	}
 
-		PortletURL portletURL = PortletURLFactoryUtil.create(
-			portletRequest, portletId, plid, PortletRequest.RENDER_PHASE);
+	@Override
+	public String getRestoreContainerModelLink(
+			PortletRequest portletRequest, long classPK)
+		throws PortalException, SystemException {
+
+		PortletURL portletURL = getRestoreURL(portletRequest, classPK, true);
 
 		return portletURL.toString();
 	}
@@ -97,6 +99,40 @@ public class BlogsEntryTrashHandler extends BaseTrashHandler {
 		throws PortalException, SystemException {
 
 		BlogsEntryLocalServiceUtil.restoreEntryFromTrash(userId, classPK);
+	}
+
+	protected PortletURL getRestoreURL(
+			PortletRequest portletRequest, long classPK,
+			boolean isContainerModel)
+		throws PortalException, SystemException {
+
+		String portletId = PortletKeys.BLOGS;
+
+		BlogsEntry entry = BlogsEntryLocalServiceUtil.getEntry(classPK);
+
+		long plid = PortalUtil.getPlidFromPortletId(
+			entry.getGroupId(), PortletKeys.BLOGS);
+
+		if (plid == LayoutConstants.DEFAULT_PLID) {
+			portletId = PortletKeys.BLOGS_ADMIN;
+
+			plid = PortalUtil.getControlPanelPlid(portletRequest);
+		}
+
+		PortletURL portletURL = PortletURLFactoryUtil.create(
+			portletRequest, portletId, plid, PortletRequest.RENDER_PHASE);
+
+		if (!isContainerModel) {
+			if (portletId.equals(PortletKeys.BLOGS)) {
+				portletURL.setParameter("struts_action", "/blogs/view_entry");
+			}
+			else {
+				portletURL.setParameter(
+					"struts_action", "/blogs_admin/view_entry");
+			}
+		}
+
+		return portletURL;
 	}
 
 	@Override

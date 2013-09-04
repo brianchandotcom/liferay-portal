@@ -38,7 +38,7 @@ public class SessionAuthToken implements AuthToken {
 	}
 
 	@Override
-	public void checkCSRFToken(HttpServletRequest request, String context)
+	public void checkCSRFToken(HttpServletRequest request, String origin)
 		throws PrincipalException {
 
 		if (!PropsValues.AUTH_TOKEN_CHECK_ENABLED) {
@@ -53,13 +53,13 @@ public class SessionAuthToken implements AuthToken {
 
 		long companyId = PortalUtil.getCompanyId(request);
 
-		if (AuthTokenWhitelistUtil.isCSRFContextWhitelisted(
-				companyId, context)) {
+		if (AuthTokenWhitelistUtil.isCSRFOrigintWhitelisted(
+				companyId, origin)) {
 
 			return;
 		}
 
-		if (context.equals(SecurityPortletContainerWrapper.class.getName())) {
+		if (origin.equals(SecurityPortletContainerWrapper.class.getName())) {
 			String ppid = ParamUtil.getString(request, "p_p_id");
 
 			String portletNamespace = PortalUtil.getPortletNamespace(ppid);

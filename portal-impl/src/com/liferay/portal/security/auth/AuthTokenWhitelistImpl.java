@@ -35,7 +35,7 @@ import java.util.Set;
 public class AuthTokenWhitelistImpl implements AuthTokenWhitelist {
 
 	public AuthTokenWhitelistImpl() {
-		resetContextCSRFWhitelist();
+		resetOriginCSRFWhitelist();
 		resetPortletCSRFWhitelist();
 		resetPortletCSRFWhitelistActions();
 		resetPortletInvocationWhitelist();
@@ -43,8 +43,8 @@ public class AuthTokenWhitelistImpl implements AuthTokenWhitelist {
 	}
 
 	@Override
-	public Set<String> getContextCSRFWhitelist() {
-		return _contextCSRFWhitelist;
+	public Set<String> getOriginCSRFWhitelist() {
+		return _originCSRFWhitelist;
 	}
 
 	@Override
@@ -68,11 +68,11 @@ public class AuthTokenWhitelistImpl implements AuthTokenWhitelist {
 	}
 
 	@Override
-	public boolean isCSRFContextWhitelisted(long companyId, String context) {
-		Set<String> whitelist = getContextCSRFWhitelist();
+	public boolean isCSRFOriginWhitelisted(long companyId, String origin) {
+		Set<String> whitelist = getOriginCSRFWhitelist();
 
-		for (String whitelistedContext : whitelist) {
-			if (context.startsWith(whitelistedContext)) {
+		for (String whitelistedCSRFOrigins : whitelist) {
+			if (origin.startsWith(whitelistedCSRFOrigins)) {
 				return true;
 			}
 		}
@@ -148,13 +148,13 @@ public class AuthTokenWhitelistImpl implements AuthTokenWhitelist {
 	}
 
 	@Override
-	public Set<String> resetContextCSRFWhitelist() {
-		_contextCSRFWhitelist = SetUtil.fromArray(
-			PropsValues.AUTH_TOKEN_IGNORE_CONTEXTS);
-		_contextCSRFWhitelist = Collections.unmodifiableSet(
-			_contextCSRFWhitelist);
+	public Set<String> resetOriginCSRFWhitelist() {
+		_originCSRFWhitelist = SetUtil.fromArray(
+			PropsValues.AUTH_TOKEN_IGNORE_ORIGINS);
+		_originCSRFWhitelist = Collections.unmodifiableSet(
+			_originCSRFWhitelist);
 
-		return _contextCSRFWhitelist;
+		return _originCSRFWhitelist;
 	}
 
 	@Override
@@ -223,7 +223,7 @@ public class AuthTokenWhitelistImpl implements AuthTokenWhitelist {
 		return false;
 	}
 
-	private Set<String> _contextCSRFWhitelist;
+	private Set<String> _originCSRFWhitelist;
 	private Set<String> _portletCSRFWhitelist;
 	private Set<String> _portletCSRFWhitelistActions;
 	private Set<String> _portletInvocationWhitelist;

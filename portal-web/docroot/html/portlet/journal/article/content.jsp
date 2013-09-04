@@ -591,7 +591,6 @@ if (Validator.isNotNull(content)) {
 			versionNode.html(newVersion);
 
 			var availableTranslationContainer = A.one('#<portlet:namespace />availableTranslationContainer');
-
 			var translationLink = availableTranslationContainer.one('.journal-article-translation-' + newLanguageId);
 
 			if (cmd == '<%= Constants.DELETE_TRANSLATION %>') {

@@ -2524,6 +2524,13 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 		<antcall target="prepare-selenium" />
 
 		<if>
+			<equals arg1="${app.server.type}-${app.server.jboss.eap.version}" arg2="jboss-eap-6.0" />
+			<then>
+				<echo file="${app.server.jboss.eap.dir}/standalone/deployments/ROOT.war.deployed"></echo>
+			</then>
+		</if>
+
+		<if>
 			<equals arg1="${test.browser}" arg2="googlechrome" />
 			<then>
 				<antcall target="start-chrome-driver" />

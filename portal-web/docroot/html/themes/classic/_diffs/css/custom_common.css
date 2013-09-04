@@ -5,6 +5,8 @@
 @import "aui/font-awesome/scss/mixins";
 @import "aui/font-awesome/scss/variables";
 
+@import url(custom_responsive.css);
+
 .aui {
 	body {
 		color: #555;

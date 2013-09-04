@@ -141,7 +141,7 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 	}
 
 	@Override
-	public String getRestoreEntityLink(
+	public String getRestoreContainedModelLink(
 			PortletRequest portletRequest, long classPK)
 		throws PortalException, SystemException {
 
@@ -156,7 +156,8 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 	}
 
 	@Override
-	public String getRestoreLink(PortletRequest portletRequest, long classPK)
+	public String getRestoreContainerModelLink(
+			PortletRequest portletRequest, long classPK)
 		throws PortalException, SystemException {
 
 		MBCategory category = MBCategoryLocalServiceUtil.getCategory(classPK);

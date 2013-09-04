@@ -259,7 +259,7 @@ public interface TrashHandler {
 	public List<ContainerModel> getParentContainerModels(long classPK)
 		throws PortalException, SystemException;
 
-	public String getRestoreEntityLink(
+	public String getRestoreContainedModelLink(
 			PortletRequest portletRequest, long classPK)
 		throws PortalException, SystemException;
 
@@ -273,7 +273,8 @@ public interface TrashHandler {
 	 *         be found
 	 * @throws SystemException if a system exception occurred
 	 */
-	public String getRestoreLink(PortletRequest portletRequest, long classPK)
+	public String getRestoreContainerModelLink(
+			PortletRequest portletRequest, long classPK)
 		throws PortalException, SystemException;
 
 	/**

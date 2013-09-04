@@ -163,10 +163,10 @@ public class EditEntryAction extends PortletAction {
 			TrashHandler trashHandler =
 				TrashHandlerRegistryUtil.getTrashHandler(entryOVP.getKey());
 
-			String restoreEntryLink = trashHandler.getRestoreEntityLink(
+			String restoreEntryLink = trashHandler.getRestoreContainedModelLink(
 				actionRequest, entryOVP.getValue());
 
-			String restoreLink = trashHandler.getRestoreLink(
+			String restoreLink = trashHandler.getRestoreContainerModelLink(
 				actionRequest, entryOVP.getValue());
 
 			String restoreMessage = trashHandler.getRestoreMessage(

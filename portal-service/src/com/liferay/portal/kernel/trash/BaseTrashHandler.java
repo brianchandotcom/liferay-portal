@@ -114,7 +114,7 @@ public abstract class BaseTrashHandler implements TrashHandler {
 
 	@Override
 	@SuppressWarnings("unused")
-	public String getRestoreEntityLink(
+	public String getRestoreContainedModelLink(
 			PortletRequest portletRequest, long classPK)
 		throws PortalException, SystemException {
 
@@ -123,7 +123,8 @@ public abstract class BaseTrashHandler implements TrashHandler {
 
 	@Override
 	@SuppressWarnings("unused")
-	public String getRestoreLink(PortletRequest portletRequest, long classPK)
+	public String getRestoreContainerModelLink(
+			PortletRequest portletRequest, long classPK)
 		throws PortalException, SystemException {
 
 		return StringPool.BLANK;

@@ -130,7 +130,7 @@
 </tr>
 <tr>
 	<td>USER_SEARCH_BUTTON</td>
-	<td>//input[@id='_174_keywords_users']/../following-sibling::button[contains(.,'Search')]</td>
+	<td>//span[@class='form-search']/div/button[contains(.,'Search')]</td>
 	<td></td>
 </tr>
 <tr>

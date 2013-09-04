@@ -15,6 +15,9 @@
 package com.liferay.util.bridges.alloy;
 
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.model.BaseModel;
 
@@ -45,8 +48,17 @@ public class AlloyServiceInvoker {
 
 			dynamicQueryCountMethod = serviceClass.getMethod(
 				"dynamicQueryCount", new Class[] {DynamicQuery.class});
-			dynamicQueryMethod = serviceClass.getMethod(
+			dynamicQueryMethod1 = serviceClass.getMethod(
+				"dynamicQuery", new Class[0]);
+			dynamicQueryMethod2 = serviceClass.getMethod(
 				"dynamicQuery", new Class[] {DynamicQuery.class});
+			dynamicQueryMethod3 = serviceClass.getMethod(
+				"dynamicQuery",
+				new Class[] {DynamicQuery.class, int.class, int.class});
+			dynamicQueryMethod4 = serviceClass.getMethod(
+				"dynamicQuery",
+				new Class[] {DynamicQuery.class, int.class, int.class,
+					OrderByComparator.class});
 			fetchModelMethod = serviceClass.getMethod(
 				"fetch" + simpleClassName, new Class[] {long.class});
 			getModelsCountMethod = serviceClass.getMethod(
@@ -61,13 +73,82 @@ public class AlloyServiceInvoker {
 		}
 	}
 
+	public DynamicQuery buildDynamicQuery() throws Exception {
+		return (DynamicQuery)dynamicQueryMethod1.invoke(false);
+	}
+
+	public DynamicQuery buildDynamicQuery(Object[] properties)
+		throws Exception {
+
+		if ((properties.length == 0) || ((properties.length % 2) != 0)) {
+			throw new IllegalArgumentException(
+				"Columns length is not an even number");
+		}
+
+		DynamicQuery dynamicQuery = buildDynamicQuery();
+
+		for (int i = 0; i < properties.length; i += 2) {
+			String propertyName = String.valueOf(properties[i]);
+
+			Property property = PropertyFactoryUtil.forName(propertyName);
+
+			Object propertyValue = (properties[i + 1]);
+
+			dynamicQuery.add(property.eq(propertyValue));
+		}
+
+		return dynamicQuery;
+	}
+
 	@SuppressWarnings("rawtypes")
 	public List dynamicQuery(DynamicQuery dynamicQuery) throws Exception {
-		return (List)dynamicQueryMethod.invoke(false, dynamicQuery);
+		return (List)dynamicQueryMethod2.invoke(false, dynamicQuery);
+	}
+
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end)
+		throws Exception {
+
+		return (List)dynamicQueryMethod3.invoke(
+			false, dynamicQuery, start, end);
+	}
+
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(
+			DynamicQuery dynamicQuery, int start, int end,
+			OrderByComparator obc)
+		throws Exception {
+
+		return (List)dynamicQueryMethod4.invoke(
+			false, dynamicQuery, start, end, obc);
+	}
+
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(Object[] properties) throws Exception {
+		return dynamicQuery(buildDynamicQuery(properties));
+	}
+
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(Object[] properties, int start, int end)
+		throws Exception {
+
+		return dynamicQuery(buildDynamicQuery(properties), start, end);
+	}
+
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(
+			Object[] properties, int start, int end, OrderByComparator obc)
+		throws Exception {
+
+		return dynamicQuery(buildDynamicQuery(properties), start, end, obc);
 	}
 
 	public long dynamicQueryCount(DynamicQuery dynamicQuery) throws Exception {
 		return (Long)dynamicQueryCountMethod.invoke(false, dynamicQuery);
+	}
+
+	public long dynamicQueryCount(Object[] properties) throws Exception {
+		return dynamicQueryCount(buildDynamicQuery(properties));
 	}
 
 	public BaseModel<?> fetchModel(long classPK) throws Exception {
@@ -84,7 +165,10 @@ public class AlloyServiceInvoker {
 	}
 
 	protected Method dynamicQueryCountMethod;
-	protected Method dynamicQueryMethod;
+	protected Method dynamicQueryMethod1;
+	protected Method dynamicQueryMethod2;
+	protected Method dynamicQueryMethod3;
+	protected Method dynamicQueryMethod4;
 	protected Method fetchModelMethod;
 	protected Method getModelsCountMethod;
 	protected Method getModelsMethod;

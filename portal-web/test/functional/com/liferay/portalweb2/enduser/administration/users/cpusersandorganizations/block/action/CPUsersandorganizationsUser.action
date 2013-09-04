@@ -1,5 +1,8 @@
 <definition>
 	<command name="assertClick">
+		<case locator-key1="MENU_USER_INFORMATION_PASSWORD">
+			<execute function="AssertClick#assertPartialTextClickAtAndWait" />
+		</case>
 		<case locator-key1="SAVE_BUTTON">
 			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>

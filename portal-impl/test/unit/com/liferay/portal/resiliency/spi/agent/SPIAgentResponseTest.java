@@ -84,7 +84,7 @@ public class SPIAgentResponseTest {
 	}
 
 	@Before
-	public void setUp() {
+	public void setUp() throws IOException {
 		MockHttpServletRequest originalRequest = new MockHttpServletRequest();
 
 		HttpSession session = originalRequest.getSession();

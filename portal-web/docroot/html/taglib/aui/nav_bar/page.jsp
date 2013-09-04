@@ -40,8 +40,6 @@
 							handle.detach();
 
 							handle = null;
-
-							navbarCollapse.setStyle('height', '0');
 						}
 						else {
 							handle = navbarCollapse.on(
@@ -53,13 +51,9 @@
 										handle.detach();
 
 										navbarCollapse.removeClass('open');
-
-										navbarCollapse.setStyle('height', '0');
 									}
 								}
 							);
-
-							navbarCollapse.setStyle('height', 'auto');
 						}
 
 						navbarCollapse.toggleClass('open');

@@ -32,6 +32,11 @@
 					@include border-radius(3px);
 
 					padding: 10px;
+
+					.nav-collapse {
+						height: auto;
+						overflow: visible;
+					}
 				}
 			}
 

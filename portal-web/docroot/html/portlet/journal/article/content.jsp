@@ -579,12 +579,7 @@ if (Validator.isNotNull(content)) {
 			var A = AUI();
 
 			document.<portlet:namespace />fm1.<portlet:namespace />formDate.value = formDate;
-
-			var availableTranslationContainer = A.one('#<portlet:namespace />availableTranslationContainer');
-			var availableTranslationsLinks = A.one('#<portlet:namespace />availableTranslationsLinks');
-
-			var chooseLanguageText = A.one('#<portlet:namespace />chooseLanguageText');
-			var translationsMessage = A.one('#<portlet:namespace />translationsMessage');
+			document.<portlet:namespace />fm1.<portlet:namespace />version.value = newVersion;
 
 			var taglibWorkflowStatus = A.one('#<portlet:namespace />journalArticleWrapper .taglib-workflow-status');
 			var statusNode = taglibWorkflowStatus.one('.workflow-status strong');
@@ -593,9 +588,9 @@ if (Validator.isNotNull(content)) {
 
 			var versionNode = taglibWorkflowStatus.one('.workflow-version strong');
 
-			document.<portlet:namespace />fm1.<portlet:namespace />version.value = newVersion;
-
 			versionNode.html(newVersion);
+
+			var availableTranslationContainer = A.one('#<portlet:namespace />availableTranslationContainer');
 
 			var translationLink = availableTranslationContainer.one('.journal-article-translation-' + newLanguageId);
 
@@ -611,17 +606,20 @@ if (Validator.isNotNull(content)) {
 				}
 			}
 			else if (!translationLink) {
-				statusNode.removeClass('workflow-status-approved');
-				statusNode.addClass('workflow-status-draft');
-				statusNode.html('<%= UnicodeLanguageUtil.get(pageContext, "draft") %>');
+				var availableTranslationsLinks = A.one('#<portlet:namespace />availableTranslationsLinks');
+				var translationsMessage = A.one('#<portlet:namespace />translationsMessage');
 
 				availableTranslationContainer.addClass('contains-translations');
 				availableTranslationsLinks.show();
 				translationsMessage.show();
 
+				statusNode.removeClass('workflow-status-approved');
+				statusNode.addClass('workflow-status-draft');
+				statusNode.html('<%= UnicodeLanguageUtil.get(pageContext, "draft") %>');
+
 				var TPL_TRANSLATION = '<a class="lfr-token journal-article-translation-{newLanguageId}" href="javascript:;"><img alt="" src="<%= themeDisplay.getPathThemeImages() %>/language/{newLanguageId}.png" />{newLanguage}</a>';
 
-				translationLinkTpl = A.Lang.sub(
+				var translationLinkTpl = A.Lang.sub(
 					TPL_TRANSLATION,
 					{
 						newLanguageId: newLanguageId,

@@ -319,6 +319,370 @@ public class StringUtilTest {
 	}
 
 	@Test
+	public void testTrim() {
+
+		// Null String
+
+		Assert.assertNull(StringUtil.trim(null));
+
+		// Blank String
+
+		Assert.assertSame(StringPool.BLANK, StringUtil.trim(StringPool.BLANK));
+
+		// Spaces String
+
+		String spacesString = " \t\r\n";
+
+		Assert.assertSame(StringPool.BLANK, StringUtil.trim(spacesString));
+
+		// Not trimable
+
+		String testString = "a";
+
+		Assert.assertSame(testString, StringUtil.trim(testString));
+
+		testString = "ab";
+
+		Assert.assertSame(testString, StringUtil.trim(testString));
+
+		// Leading spaces
+
+		String leadingSpacesString = " \t\r\n" + testString;
+
+		Assert.assertEquals(testString, StringUtil.trim(leadingSpacesString));
+
+		// Trailing spaces
+
+		String trailingSpacesString = testString + " \t\r\n";
+
+		Assert.assertEquals(testString, StringUtil.trim(trailingSpacesString));
+
+		// Surrounding spaces
+
+		String surroundingSpacesString = " \t\r\n" + testString + " \t\r\n";
+
+		Assert.assertEquals(
+			testString, StringUtil.trim(surroundingSpacesString));
+	}
+
+	@Test
+	public void testTrimLeading() {
+
+		// Null String
+
+		Assert.assertNull(StringUtil.trimLeading(null));
+
+		// Blank String
+
+		Assert.assertSame(
+			StringPool.BLANK, StringUtil.trimLeading(StringPool.BLANK));
+
+		// Spaces String
+
+		String spacesString = " \t\r\n";
+
+		Assert.assertSame(
+			StringPool.BLANK, StringUtil.trimLeading(spacesString));
+
+		// Not trimable
+
+		String testString = "a";
+
+		Assert.assertSame(testString, StringUtil.trimLeading(testString));
+
+		testString = "ab";
+
+		Assert.assertSame(testString, StringUtil.trimLeading(testString));
+
+		// Leading spaces
+
+		String leadingSpacesString = " \t\r\n" + testString;
+
+		Assert.assertEquals(
+			testString, StringUtil.trimLeading(leadingSpacesString));
+
+		// Trailing spaces
+
+		String trailingSpacesString = testString + " \t\r\n";
+
+		Assert.assertSame(
+			trailingSpacesString, StringUtil.trimLeading(trailingSpacesString));
+
+		// Surrounding spaces
+
+		String surroundingSpacesString = " \t\r\n" + testString + " \t\r\n";
+
+		Assert.assertEquals(
+			testString + " \t\r\n",
+			StringUtil.trimLeading(surroundingSpacesString));
+	}
+
+	@Test
+	public void testTrimLeadingWithExceptions() {
+
+		// Null String
+
+		Assert.assertNull(StringUtil.trimLeading(null, null));
+
+		// Null exceptions
+
+		Assert.assertSame(StringPool.BLANK, StringUtil.trimLeading(" ", null));
+
+		// Zero exceptions
+
+		Assert.assertSame(
+			StringPool.BLANK, StringUtil.trimLeading(" ", new char[0]));
+
+		char[] exceptions = {'\t', '\r'};
+
+		// Blank String
+
+		Assert.assertSame(
+			StringPool.BLANK,
+			StringUtil.trimLeading(StringPool.BLANK, exceptions));
+
+		// Spaces String
+
+		String spacesString = " \t\r\n";
+
+		Assert.assertEquals(
+			"\t\r\n", StringUtil.trimLeading(spacesString, exceptions));
+
+		// Not trimable
+
+		String testString = "\t";
+
+		Assert.assertSame(
+			testString, StringUtil.trimLeading(testString, exceptions));
+
+		testString = "\t\r";
+
+		Assert.assertSame(
+			testString, StringUtil.trimLeading(testString, exceptions));
+
+		// All trimable
+
+		Assert.assertSame(
+			StringPool.BLANK, StringUtil.trimLeading(" \n", exceptions));
+
+		// Leading spaces
+
+		String leadingSpacesString = " \t\r\n" + testString;
+
+		Assert.assertEquals(
+			"\t\r\n" + testString,
+			StringUtil.trimLeading(leadingSpacesString, exceptions));
+
+		// Trailing spaces
+
+		String trailingSpacesString = testString + " \t\r\n";
+
+		Assert.assertSame(
+			trailingSpacesString,
+			StringUtil.trimLeading(trailingSpacesString, exceptions));
+
+		// Surrounding spaces
+
+		String surroundingSpacesString = " \t\r\n" + testString + " \t\r\n";
+
+		Assert.assertEquals(
+			"\t\r\n" + testString + " \t\r\n",
+			StringUtil.trimLeading(surroundingSpacesString, exceptions));
+	}
+
+	@Test
+	public void testTrimTrailing() {
+
+		// Null String
+
+		Assert.assertNull(StringUtil.trimTrailing(null));
+
+		// Blank String
+
+		Assert.assertSame(
+			StringPool.BLANK, StringUtil.trimTrailing(StringPool.BLANK));
+
+		// Spaces String
+
+		String spacesString = " \t\r\n";
+
+		Assert.assertSame(
+			StringPool.BLANK, StringUtil.trimTrailing(spacesString));
+
+		// Not trimable
+
+		String testString = "a";
+
+		Assert.assertSame(testString, StringUtil.trimTrailing(testString));
+
+		testString = "ab";
+
+		Assert.assertSame(testString, StringUtil.trimTrailing(testString));
+
+		// Leading spaces
+
+		String leadingSpacesString = " \t\r\n" + testString;
+
+		Assert.assertSame(
+			leadingSpacesString, StringUtil.trimTrailing(leadingSpacesString));
+
+		// Trailing spaces
+
+		String trailingSpacesString = testString + " \t\r\n";
+
+		Assert.assertEquals(
+			testString, StringUtil.trimTrailing(trailingSpacesString));
+
+		// Surrounding spaces
+
+		String surroundingSpacesString = " \t\r\n" + testString + " \t\r\n";
+
+		Assert.assertEquals(
+			" \t\r\n" + testString,
+			StringUtil.trimTrailing(surroundingSpacesString));
+	}
+
+	@Test
+	public void testTrimTrailingWithExceptions() {
+
+		// Null String
+
+		Assert.assertNull(StringUtil.trimTrailing(null, null));
+
+		// Null exceptions
+
+		Assert.assertSame(StringPool.BLANK, StringUtil.trimTrailing(" ", null));
+
+		// Zero exceptions
+
+		Assert.assertSame(
+			StringPool.BLANK, StringUtil.trimTrailing(" ", new char[0]));
+
+		char[] exceptions = {'\t', '\r'};
+
+		// Blank String
+
+		Assert.assertSame(
+			StringPool.BLANK,
+			StringUtil.trimTrailing(StringPool.BLANK, exceptions));
+
+		// Spaces String
+
+		String spacesString = " \t\r\n";
+
+		Assert.assertEquals(
+			" \t\r", StringUtil.trimTrailing(spacesString, exceptions));
+
+		// Not trimable
+
+		String testString = "\t";
+
+		Assert.assertSame(
+			testString, StringUtil.trimTrailing(testString, exceptions));
+
+		testString = "\t\r";
+
+		Assert.assertSame(
+			testString, StringUtil.trimTrailing(testString, exceptions));
+
+		// All trimable
+
+		Assert.assertSame(
+			StringPool.BLANK, StringUtil.trimTrailing(" \n", exceptions));
+
+		// Leading spaces
+
+		String leadingSpacesString = " \t\r\n" + testString;
+
+		Assert.assertSame(
+			leadingSpacesString,
+			StringUtil.trimTrailing(leadingSpacesString, exceptions));
+
+		// Trailing spaces
+
+		String trailingSpacesString = testString + " \t\r\n";
+
+		Assert.assertEquals(
+			testString + " \t\r",
+			StringUtil.trimTrailing(trailingSpacesString, exceptions));
+
+		// Surrounding spaces
+
+		String surroundingSpacesString = " \t\r\n" + testString + " \t\r\n";
+
+		Assert.assertEquals(
+			" \t\r\n" + testString + " \t\r",
+			StringUtil.trimTrailing(surroundingSpacesString, exceptions));
+	}
+
+	@Test
+	public void testTrimWithExceptions() {
+
+		// Null String
+
+		Assert.assertNull(StringUtil.trim(null, null));
+
+		// Null exceptions
+
+		Assert.assertSame(StringPool.BLANK, StringUtil.trim(" ", null));
+
+		// Zero exceptions
+
+		Assert.assertSame(StringPool.BLANK, StringUtil.trim(" ", new char[0]));
+
+		char[] exceptions = {'\t', '\r'};
+
+		// Blank String
+
+		Assert.assertSame(
+			StringPool.BLANK, StringUtil.trim(StringPool.BLANK, exceptions));
+
+		// Spaces String
+
+		String spacesString = " \t\r\n";
+
+		Assert.assertEquals("\t\r", StringUtil.trim(spacesString, exceptions));
+
+		// Not trimable
+
+		String testString = "\t";
+
+		Assert.assertSame(testString, StringUtil.trim(testString, exceptions));
+
+		testString = "\t\r";
+
+		Assert.assertSame(testString, StringUtil.trim(testString, exceptions));
+
+		// All trimable
+
+		Assert.assertSame(StringPool.BLANK, StringUtil.trim(" \n", exceptions));
+
+		// Leading spaces
+
+		String leadingSpacesString = " \t\r\n" + testString;
+
+		Assert.assertEquals(
+			"\t\r\n" + testString,
+			StringUtil.trim(leadingSpacesString, exceptions));
+
+		// Trailing spaces
+
+		String trailingSpacesString = testString + " \t\r\n";
+
+		Assert.assertEquals(
+			testString + " \t\r",
+			StringUtil.trim(trailingSpacesString, exceptions));
+
+		// Surrounding spaces
+
+		String surroundingSpacesString = " \t\r\n" + testString + " \t\r\n";
+
+		Assert.assertEquals(
+			"\t\r\n" + testString + " \t\r",
+			StringUtil.trim(surroundingSpacesString, exceptions));
+	}
+
+	@Test
 	public void testWildcardMatches() {
 
 		// Exact match in a case sensitive manner

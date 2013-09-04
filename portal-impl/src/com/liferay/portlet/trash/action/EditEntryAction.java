@@ -266,23 +266,21 @@ public class EditEntryAction extends PortletAction {
 
 			return getEntryOVPs(entry.getClassName(), entry.getClassPK());
 		}
-		else {
-			long[] restoreEntryIds = StringUtil.split(
-				ParamUtil.getString(actionRequest, "restoreTrashEntryIds"), 0L);
 
-			List<ObjectValuePair<String, Long>> entryOVPs =
-				new ArrayList<ObjectValuePair<String, Long>>();
+		long[] restoreEntryIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "restoreTrashEntryIds"), 0L);
 
-			for (int i = 0; i < restoreEntryIds.length; i++) {
-				TrashEntry entry = TrashEntryServiceUtil.restoreEntry(
-					trashEntryId);
+		List<ObjectValuePair<String, Long>> entryOVPs =
+			new ArrayList<ObjectValuePair<String, Long>>();
 
-				entryOVPs.addAll(
-					getEntryOVPs(entry.getClassName(), entry.getClassPK()));
-			}
+		for (int i = 0; i < restoreEntryIds.length; i++) {
+			TrashEntry entry = TrashEntryServiceUtil.restoreEntry(trashEntryId);
 
-			return entryOVPs;
+			entryOVPs.addAll(
+				getEntryOVPs(entry.getClassName(), entry.getClassPK()));
 		}
+
+		return entryOVPs;
 	}
 
 	protected List<ObjectValuePair<String, Long>> restoreOverride(

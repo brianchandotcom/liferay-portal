@@ -906,24 +906,22 @@ public class DLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 		if (pathArray.length <= 1) {
 			return folderId;
 		}
-		else {
-			long groupId = WebDAVUtil.getGroupId(companyId, pathArray);
 
-			int x = pathArray.length;
+		long groupId = WebDAVUtil.getGroupId(companyId, pathArray);
 
-			if (parent) {
-				x--;
-			}
+		int x = pathArray.length;
 
-			for (int i = 2; i < x; i++) {
-				String name = pathArray[i];
+		if (parent) {
+			x--;
+		}
 
-				Folder folder = DLAppServiceUtil.getFolder(
-					groupId, folderId, name);
+		for (int i = 2; i < x; i++) {
+			String name = pathArray[i];
 
-				if (groupId == folder.getRepositoryId()) {
-					folderId = folder.getFolderId();
-				}
+			Folder folder = DLAppServiceUtil.getFolder(groupId, folderId, name);
+
+			if (groupId == folder.getRepositoryId()) {
+				folderId = folder.getFolderId();
 			}
 		}
 

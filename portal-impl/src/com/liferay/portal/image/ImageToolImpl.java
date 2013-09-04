@@ -294,12 +294,10 @@ public class ImageToolImpl implements ImageTool {
 		if (renderedImage instanceof BufferedImage) {
 			return (BufferedImage)renderedImage;
 		}
-		else {
-			RenderedImageAdapter adapter = new RenderedImageAdapter(
-				renderedImage);
 
-			return adapter.getAsBufferedImage();
-		}
+		RenderedImageAdapter adapter = new RenderedImageAdapter(renderedImage);
+
+		return adapter.getAsBufferedImage();
 	}
 
 	@Override

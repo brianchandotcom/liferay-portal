@@ -470,15 +470,14 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 		if (_session != null) {
 			return _session.getId();
 		}
-		else {
-			HttpSession session = _request.getSession(false);
 
-			if (session == null) {
-				return StringPool.BLANK;
-			}
-			else {
-				return session.getId();
-			}
+		HttpSession session = _request.getSession(false);
+
+		if (session == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return session.getId();
 		}
 	}
 
@@ -589,27 +588,26 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 		if (_remoteUserId <= 0) {
 			return false;
 		}
-		else {
-			try {
-				long companyId = PortalUtil.getCompanyId(_request);
 
-				String roleLink = _portlet.getRoleMappers().get(role);
+		try {
+			long companyId = PortalUtil.getCompanyId(_request);
 
-				if (Validator.isNotNull(roleLink)) {
-					return RoleLocalServiceUtil.hasUserRole(
-						_remoteUserId, companyId, roleLink, true);
-				}
-				else {
-					return RoleLocalServiceUtil.hasUserRole(
-						_remoteUserId, companyId, role, true);
-				}
+			String roleLink = _portlet.getRoleMappers().get(role);
+
+			if (Validator.isNotNull(roleLink)) {
+				return RoleLocalServiceUtil.hasUserRole(
+					_remoteUserId, companyId, roleLink, true);
 			}
-			catch (Exception e) {
-				_log.error(e);
+			else {
+				return RoleLocalServiceUtil.hasUserRole(
+					_remoteUserId, companyId, role, true);
 			}
-
-			return _request.isUserInRole(role);
 		}
+		catch (Exception e) {
+			_log.error(e);
+		}
+
+		return _request.isUserInRole(role);
 	}
 
 	@Override

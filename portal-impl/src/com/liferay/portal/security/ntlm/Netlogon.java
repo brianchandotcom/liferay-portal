@@ -77,13 +77,12 @@ public class Netlogon {
 
 				return new NtlmUserAccount(name.toString());
 			}
-			else {
-				SmbException smbe = new SmbException(
-					netrLogonSamLogon.getStatus(), false);
 
-				throw new NtlmLogonException(
-					"Unable to authenticate user: " + smbe.getMessage());
-			}
+			SmbException smbe = new SmbException(
+				netrLogonSamLogon.getStatus(), false);
+
+			throw new NtlmLogonException(
+				"Unable to authenticate user: " + smbe.getMessage());
 		}
 		catch (NoSuchAlgorithmException nsae) {
 			throw new NtlmLogonException(

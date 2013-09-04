@@ -1333,49 +1333,47 @@ public class DLAppHelperLocalServiceImpl
 
 			return fileEntry;
 		}
-		else {
-			dlFileEntryLocalService.updateStatus(
-				userId, fileVersion.getFileVersionId(), fileVersion.getStatus(),
-				new HashMap<String, Serializable>(), serviceContext);
 
-			if (DLAppHelperThreadLocal.isEnabled()) {
+		dlFileEntryLocalService.updateStatus(
+			userId, fileVersion.getFileVersionId(), fileVersion.getStatus(),
+			new HashMap<String, Serializable>(), serviceContext);
 
-				// File rank
+		if (DLAppHelperThreadLocal.isEnabled()) {
 
-				dlFileRankLocalService.enableFileRanks(
-					fileEntry.getFileEntryId());
+			// File rank
 
-				// File shortcut
+			dlFileRankLocalService.enableFileRanks(fileEntry.getFileEntryId());
 
-				dlFileShortcutLocalService.enableFileShortcuts(
-					fileEntry.getFileEntryId());
-			}
+			// File shortcut
 
-			// App helper
-
-			fileEntry = dlAppService.moveFileEntry(
-				fileEntry.getFileEntryId(), newFolderId, serviceContext);
-
-			// Sync
-
-			registerDLSyncEventCallback(
-				DLSyncConstants.EVENT_RESTORE, DLSyncConstants.TYPE_FILE,
+			dlFileShortcutLocalService.enableFileShortcuts(
 				fileEntry.getFileEntryId());
-
-			// Social
-
-			JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
-
-			extraDataJSONObject.put("title", fileEntry.getTitle());
-
-			socialActivityLocalService.addActivity(
-				userId, fileEntry.getGroupId(),
-				DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId(),
-				SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
-				extraDataJSONObject.toString(), 0);
-
-			return fileEntry;
 		}
+
+		// App helper
+
+		fileEntry = dlAppService.moveFileEntry(
+			fileEntry.getFileEntryId(), newFolderId, serviceContext);
+
+		// Sync
+
+		registerDLSyncEventCallback(
+			DLSyncConstants.EVENT_RESTORE, DLSyncConstants.TYPE_FILE,
+			fileEntry.getFileEntryId());
+
+		// Social
+
+		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
+
+		extraDataJSONObject.put("title", fileEntry.getTitle());
+
+		socialActivityLocalService.addActivity(
+			userId, fileEntry.getGroupId(), DLFileEntryConstants.getClassName(),
+			fileEntry.getFileEntryId(),
+			SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
+			extraDataJSONObject.toString(), 0);
+
+		return fileEntry;
 	}
 
 	protected FileEntry doMoveFileEntryToTrash(long userId, FileEntry fileEntry)

@@ -35,19 +35,18 @@ public class DefaultPKMapper extends ValueMapperWrapper {
 
 			return new Long(0);
 		}
-		else {
-			try {
-				ValueMapper valueMapper = getValueMapper();
 
-				if (oldValue instanceof String) {
-					oldValue = oldValueString.toLowerCase();
-				}
+		try {
+			ValueMapper valueMapper = getValueMapper();
 
-				return valueMapper.getNewValue(oldValue);
+			if (oldValue instanceof String) {
+				oldValue = oldValueString.toLowerCase();
 			}
-			catch (StagnantRowException sre) {
-				return new Long(0);
-			}
+
+			return valueMapper.getNewValue(oldValue);
+		}
+		catch (StagnantRowException sre) {
+			return new Long(0);
 		}
 	}
 

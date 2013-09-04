@@ -492,12 +492,11 @@ public class ProcessExecutor {
 				if (processCallable instanceof ReturnProcessCallable<?>) {
 					return (T)processCallable.call();
 				}
-				else {
-					ExceptionProcessCallable exceptionProcessCallable =
-						(ExceptionProcessCallable)processCallable;
 
-					throw exceptionProcessCallable.call();
-				}
+				ExceptionProcessCallable exceptionProcessCallable =
+					(ExceptionProcessCallable)processCallable;
+
+				throw exceptionProcessCallable.call();
 			}
 			catch (ProcessException pe) {
 				throw new ExecutionException(pe);

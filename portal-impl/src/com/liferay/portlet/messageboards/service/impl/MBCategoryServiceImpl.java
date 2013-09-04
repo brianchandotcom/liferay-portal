@@ -259,13 +259,12 @@ public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 		if (categoryIds.length == 0) {
 			return Collections.emptyList();
 		}
-		else {
-			QueryDefinition queryDefinition = new QueryDefinition(
-				WorkflowConstants.STATUS_ANY, start, end, null);
 
-			return mbCategoryFinder.filterFindByS_G_U_P(
-				groupId, userId, categoryIds, queryDefinition);
-		}
+		QueryDefinition queryDefinition = new QueryDefinition(
+			WorkflowConstants.STATUS_ANY, start, end, null);
+
+		return mbCategoryFinder.filterFindByS_G_U_P(
+			groupId, userId, categoryIds, queryDefinition);
 	}
 
 	@Override
@@ -278,13 +277,12 @@ public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 		if (categoryIds.length == 0) {
 			return 0;
 		}
-		else {
-			QueryDefinition queryDefinition = new QueryDefinition(
-				WorkflowConstants.STATUS_ANY);
 
-			return mbCategoryFinder.filterCountByS_G_U_P(
-				groupId, userId, categoryIds, queryDefinition);
-		}
+		QueryDefinition queryDefinition = new QueryDefinition(
+			WorkflowConstants.STATUS_ANY);
+
+		return mbCategoryFinder.filterCountByS_G_U_P(
+			groupId, userId, categoryIds, queryDefinition);
 	}
 
 	@Override

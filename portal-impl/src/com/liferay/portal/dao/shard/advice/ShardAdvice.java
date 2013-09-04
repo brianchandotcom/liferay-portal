@@ -148,13 +148,12 @@ public class ShardAdvice {
 
 			return _setShardNameByCompanyId(companyId);
 		}
-		else {
-			String shardName = companyServiceStack.peek();
 
-			_setShardName(shardName);
+		String shardName = companyServiceStack.peek();
 
-			return shardName;
-		}
+		_setShardName(shardName);
+
+		return shardName;
 	}
 
 	public void setShardSessionFactoryTargetSource(

@@ -38,13 +38,12 @@ public class RepositoryFactoryImpl implements RepositoryFactory {
 		if (_classLoader == null) {
 			return (BaseRepository)InstanceFactory.newInstance(_className);
 		}
-		else {
-			BaseRepository baseRepository =
-				(BaseRepository)ProxyFactory.newInstance(
-					_classLoader, BaseRepository.class, _className);
 
-			return new BaseRepositoryProxyBean(baseRepository, _classLoader);
-		}
+		BaseRepository baseRepository =
+			(BaseRepository)ProxyFactory.newInstance(
+				_classLoader, BaseRepository.class, _className);
+
+		return new BaseRepositoryProxyBean(baseRepository, _classLoader);
 	}
 
 	private ClassLoader _classLoader;

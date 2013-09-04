@@ -109,13 +109,12 @@ public class EventTimeComparator implements Comparator<CalEvent> {
 
 			return Time.getDate(calendar);
 		}
+
+		if (event.isTimeZoneSensitive()) {
+			return Time.getDate(event.getStartDate(), timeZone);
+		}
 		else {
-			if (event.isTimeZoneSensitive()) {
-				return Time.getDate(event.getStartDate(), timeZone);
-			}
-			else {
-				return event.getStartDate();
-			}
+			return event.getStartDate();
 		}
 	}
 

@@ -513,23 +513,22 @@ public class AssetTagFinderImpl
 		if (tagProperties.length == 0) {
 			return StringPool.BLANK;
 		}
-		else {
-			StringBundler sb = new StringBundler(tagProperties.length * 3 + 1);
 
-			sb.append(" INNER JOIN AssetTagProperty ON ");
-			sb.append(" (AssetTagProperty.tagId = AssetTag.tagId) AND ");
+		StringBundler sb = new StringBundler(tagProperties.length * 3 + 1);
 
-			for (int i = 0; i < tagProperties.length; i++) {
-				sb.append("(AssetTagProperty.key_ = ? AND ");
-				sb.append("AssetTagProperty.value = ?) ");
+		sb.append(" INNER JOIN AssetTagProperty ON ");
+		sb.append(" (AssetTagProperty.tagId = AssetTag.tagId) AND ");
 
-				if ((i + 1) < tagProperties.length) {
-					sb.append(" AND ");
-				}
+		for (int i = 0; i < tagProperties.length; i++) {
+			sb.append("(AssetTagProperty.key_ = ? AND ");
+			sb.append("AssetTagProperty.value = ?) ");
+
+			if ((i + 1) < tagProperties.length) {
+				sb.append(" AND ");
 			}
-
-			return sb.toString();
 		}
+
+		return sb.toString();
 	}
 
 	protected void setJoin(QueryPos qPos, String[] tagProperties) {

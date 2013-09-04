@@ -155,10 +155,9 @@ public class CoalescedPipe<E> {
 
 							return true;
 						}
-						else {
-							currentElementLink =
-								currentElementLink._nextElementLink;
-						}
+
+						currentElementLink =
+							currentElementLink._nextElementLink;
 					}
 				}
 				else {
@@ -168,10 +167,9 @@ public class CoalescedPipe<E> {
 
 							return true;
 						}
-						else {
-							currentElementLink =
-								currentElementLink._nextElementLink;
-						}
+
+						currentElementLink =
+							currentElementLink._nextElementLink;
 					}
 				}
 			}

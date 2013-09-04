@@ -70,11 +70,10 @@ public class TrashVersionLocalServiceImpl
 		if (Validator.isNull(className)) {
 			return trashVersionPersistence.findByEntryId(entryId);
 		}
-		else {
-			long classNameId = PortalUtil.getClassNameId(className);
 
-			return trashVersionPersistence.findByE_C(entryId, classNameId);
-		}
+		long classNameId = PortalUtil.getClassNameId(className);
+
+		return trashVersionPersistence.findByE_C(entryId, classNameId);
 	}
 
 	/**

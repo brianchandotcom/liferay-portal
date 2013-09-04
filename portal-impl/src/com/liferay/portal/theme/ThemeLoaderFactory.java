@@ -32,13 +32,12 @@ public class ThemeLoaderFactory {
 		if (themeLoader == null) {
 			return false;
 		}
-		else {
-			ServletContextPool.remove(servletContextName);
 
-			themeLoader.destroy();
+		ServletContextPool.remove(servletContextName);
 
-			return true;
-		}
+		themeLoader.destroy();
+
+		return true;
 	}
 
 	public static ThemeLoader getDefaultThemeLoader() {

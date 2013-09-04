@@ -48,16 +48,14 @@ public class SafeProperties extends Properties {
 		if (key == null) {
 			return null;
 		}
-		else {
-			if (value == null) {
-				return super.remove(key);
-			}
-			else {
-				value = _encode((String)value);
 
-				return super.put(key, value);
-			}
+		if (value == null) {
+			return super.remove(key);
 		}
+
+		value = _encode((String)value);
+
+		return super.put(key, value);
 	}
 
 	@Override

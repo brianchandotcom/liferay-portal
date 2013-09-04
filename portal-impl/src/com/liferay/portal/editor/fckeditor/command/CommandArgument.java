@@ -81,11 +81,10 @@ public class CommandArgument {
 		if (_currentFolder.equals("/")) {
 			return StringPool.BLANK;
 		}
-		else {
-			StringTokenizer st = new StringTokenizer(_currentFolder, "/");
 
-			return st.nextToken();
-		}
+		StringTokenizer st = new StringTokenizer(_currentFolder, "/");
+
+		return st.nextToken();
 	}
 
 	public HttpServletRequest getHttpServletRequest() {

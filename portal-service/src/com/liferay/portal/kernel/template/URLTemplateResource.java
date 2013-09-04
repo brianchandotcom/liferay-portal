@@ -93,9 +93,8 @@ public class URLTemplateResource implements TemplateResource {
 				if (protocol.equals("file")) {
 					return new File(url.getFile()).lastModified();
 				}
-				else {
-					urlConnection = url.openConnection();
-				}
+
+				urlConnection = url.openConnection();
 			}
 
 			return urlConnection.getLastModified();

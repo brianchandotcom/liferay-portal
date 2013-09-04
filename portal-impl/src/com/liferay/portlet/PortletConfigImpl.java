@@ -156,41 +156,39 @@ public class PortletConfigImpl implements LiferayPortletConfig {
 
 			return resourceBundle;
 		}
-		else {
-			StringBundler sb = new StringBundler(4);
 
-			sb.append(_portlet.getPortletId());
-			sb.append(locale.getLanguage());
-			sb.append(locale.getCountry());
-			sb.append(locale.getVariant());
+		StringBundler sb = new StringBundler(4);
 
-			String resourceBundleId = sb.toString();
+		sb.append(_portlet.getPortletId());
+		sb.append(locale.getLanguage());
+		sb.append(locale.getCountry());
+		sb.append(locale.getVariant());
 
-			resourceBundle = _resourceBundles.get(resourceBundleId);
+		String resourceBundleId = sb.toString();
 
-			if (resourceBundle == null) {
-				if (!_portletApp.isWARFile() &&
-					resourceBundleClassName.equals(
-						StrutsResourceBundle.class.getName())) {
+		resourceBundle = _resourceBundles.get(resourceBundleId);
 
-					resourceBundle = new StrutsResourceBundle(
-						_portletName, locale);
-				}
-				else {
-					PortletBag portletBag = PortletBagPool.get(
-						_portlet.getRootPortletId());
+		if (resourceBundle == null) {
+			if (!_portletApp.isWARFile() &&
+				resourceBundleClassName.equals(
+					StrutsResourceBundle.class.getName())) {
 
-					resourceBundle = portletBag.getResourceBundle(locale);
-				}
+				resourceBundle = new StrutsResourceBundle(_portletName, locale);
+			}
+			else {
+				PortletBag portletBag = PortletBagPool.get(
+					_portlet.getRootPortletId());
 
-				resourceBundle = new PortletResourceBundle(
-					resourceBundle, _portlet.getPortletInfo());
-
-				_resourceBundles.put(resourceBundleId, resourceBundle);
+				resourceBundle = portletBag.getResourceBundle(locale);
 			}
 
-			return resourceBundle;
+			resourceBundle = new PortletResourceBundle(
+				resourceBundle, _portlet.getPortletInfo());
+
+			_resourceBundles.put(resourceBundleId, resourceBundle);
 		}
+
+		return resourceBundle;
 	}
 
 	@Override

@@ -86,12 +86,10 @@ public class UpdateLicenseAction extends Action {
 
 			return actionMapping.findForward("portal.license");
 		}
-		else {
-			response.sendRedirect(
-				PortalUtil.getPathContext() + "/c/portal/layout");
 
-			return null;
-		}
+		response.sendRedirect(PortalUtil.getPathContext() + "/c/portal/layout");
+
+		return null;
 	}
 
 	private String _getLicenseProperties(String clusterNodeId) {

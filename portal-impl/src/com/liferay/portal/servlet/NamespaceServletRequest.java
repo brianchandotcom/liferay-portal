@@ -154,13 +154,12 @@ public class NamespaceServletRequest extends DynamicServletRequest {
 		if (reservedAttrs.contains(name)) {
 			return true;
 		}
-		else {
-			for (String requestSharedAttribute :
-					PropsValues.REQUEST_SHARED_ATTRIBUTES) {
 
-				if (name.startsWith(requestSharedAttribute)) {
-					return true;
-				}
+		for (String requestSharedAttribute :
+				PropsValues.REQUEST_SHARED_ATTRIBUTES) {
+
+			if (name.startsWith(requestSharedAttribute)) {
+				return true;
 			}
 		}
 

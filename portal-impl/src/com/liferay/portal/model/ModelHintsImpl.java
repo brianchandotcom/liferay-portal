@@ -117,15 +117,14 @@ public class ModelHintsImpl implements ModelHints {
 		if (fields == null) {
 			return null;
 		}
-		else {
-			Element fieldsEl = (Element)fields.get(field + _ELEMENTS_SUFFIX);
 
-			if (fieldsEl == null) {
-				return null;
-			}
-			else {
-				return fieldsEl;
-			}
+		Element fieldsEl = (Element)fields.get(field + _ELEMENTS_SUFFIX);
+
+		if (fieldsEl == null) {
+			return null;
+		}
+		else {
+			return fieldsEl;
 		}
 	}
 
@@ -184,21 +183,20 @@ public class ModelHintsImpl implements ModelHints {
 		if (fields == null) {
 			return Collections.emptyList();
 		}
-		else {
-			List<Tuple> sanitizeTuples = new ArrayList<Tuple>();
 
-			for (Map.Entry<String, Object> entry : fields.entrySet()) {
-				String key = entry.getKey();
+		List<Tuple> sanitizeTuples = new ArrayList<Tuple>();
 
-				if (key.endsWith(_SANITIZE_SUFFIX)) {
-					Tuple sanitizeTuple = (Tuple)entry.getValue();
+		for (Map.Entry<String, Object> entry : fields.entrySet()) {
+			String key = entry.getKey();
 
-					sanitizeTuples.add(sanitizeTuple);
-				}
+			if (key.endsWith(_SANITIZE_SUFFIX)) {
+				Tuple sanitizeTuple = (Tuple)entry.getValue();
+
+				sanitizeTuples.add(sanitizeTuple);
 			}
-
-			return sanitizeTuples;
 		}
+
+		return sanitizeTuples;
 	}
 
 	@Override
@@ -271,16 +269,14 @@ public class ModelHintsImpl implements ModelHints {
 		if (fields == null) {
 			return false;
 		}
-		else {
-			Boolean localized = (Boolean)fields.get(
-				field + _LOCALIZATION_SUFFIX);
 
-			if (localized != null) {
-				return localized;
-			}
-			else {
-				return false;
-			}
+		Boolean localized = (Boolean)fields.get(field + _LOCALIZATION_SUFFIX);
+
+		if (localized != null) {
+			return localized;
+		}
+		else {
+			return false;
 		}
 	}
 

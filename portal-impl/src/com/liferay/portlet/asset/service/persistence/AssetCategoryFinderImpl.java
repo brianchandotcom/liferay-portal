@@ -310,25 +310,23 @@ public class AssetCategoryFinderImpl
 		if (categoryProperties.length == 0) {
 			return StringPool.BLANK;
 		}
-		else {
-			StringBundler sb = new StringBundler(
-				categoryProperties.length * 3 + 2);
 
-			sb.append(" INNER JOIN AssetCategoryProperty ON ");
-			sb.append(" (AssetCategoryProperty.categoryId = ");
-			sb.append(" AssetCategory.categoryId) AND ");
+		StringBundler sb = new StringBundler(categoryProperties.length * 3 + 2);
 
-			for (int i = 0; i < categoryProperties.length; i++) {
-				sb.append("(AssetCategoryProperty.key_ = ? AND ");
-				sb.append("AssetCategoryProperty.value = ?) ");
+		sb.append(" INNER JOIN AssetCategoryProperty ON ");
+		sb.append(" (AssetCategoryProperty.categoryId = ");
+		sb.append(" AssetCategory.categoryId) AND ");
 
-				if ((i + 1) < categoryProperties.length) {
-					sb.append(" AND ");
-				}
+		for (int i = 0; i < categoryProperties.length; i++) {
+			sb.append("(AssetCategoryProperty.key_ = ? AND ");
+			sb.append("AssetCategoryProperty.value = ?) ");
+
+			if ((i + 1) < categoryProperties.length) {
+				sb.append(" AND ");
 			}
-
-			return sb.toString();
 		}
+
+		return sb.toString();
 	}
 
 	protected void setJoin(QueryPos qPos, String[] categoryProperties) {

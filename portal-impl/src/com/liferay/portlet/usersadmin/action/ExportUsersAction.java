@@ -220,22 +220,20 @@ public class ExportUsersAction extends PortletAction {
 
 			return (List<User>)tuple.getObject(0);
 		}
+
+		if (searchTerms.isAdvancedSearch()) {
+			return UserLocalServiceUtil.search(
+				themeDisplay.getCompanyId(), searchTerms.getFirstName(),
+				searchTerms.getMiddleName(), searchTerms.getLastName(),
+				searchTerms.getScreenName(), searchTerms.getEmailAddress(),
+				searchTerms.getStatus(), params, searchTerms.isAndOperator(),
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, (OrderByComparator)null);
+		}
 		else {
-			if (searchTerms.isAdvancedSearch()) {
-				return UserLocalServiceUtil.search(
-					themeDisplay.getCompanyId(), searchTerms.getFirstName(),
-					searchTerms.getMiddleName(), searchTerms.getLastName(),
-					searchTerms.getScreenName(), searchTerms.getEmailAddress(),
-					searchTerms.getStatus(), params,
-					searchTerms.isAndOperator(), QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, (OrderByComparator)null);
-			}
-			else {
-				return UserLocalServiceUtil.search(
-					themeDisplay.getCompanyId(), searchTerms.getKeywords(),
-					searchTerms.getStatus(), params, QueryUtil.ALL_POS,
-					QueryUtil.ALL_POS, (OrderByComparator)null);
-			}
+			return UserLocalServiceUtil.search(
+				themeDisplay.getCompanyId(), searchTerms.getKeywords(),
+				searchTerms.getStatus(), params, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, (OrderByComparator)null);
 		}
 	}
 

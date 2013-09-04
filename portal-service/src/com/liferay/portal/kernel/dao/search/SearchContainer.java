@@ -256,14 +256,13 @@ public class SearchContainer<R> {
 
 			return _id;
 		}
-		else {
-			id = DeterminateKeyGenerator.generate("taglib_search_container");
 
-			_id = id.concat("SearchContainer");
-			_uniqueId = true;
+		id = DeterminateKeyGenerator.generate("taglib_search_container");
 
-			return _id;
-		}
+		_id = id.concat("SearchContainer");
+		_uniqueId = true;
+
+		return _id;
 	}
 
 	public PortletURL getIteratorURL() {

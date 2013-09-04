@@ -56,15 +56,14 @@ public class SharedSessionServletRequest extends HttpServletRequestWrapper {
 		if (_shared) {
 			return _portalSession;
 		}
-		else {
-			HttpSession portletSession = super.getSession(create);
 
-			if (portletSession != null) {
-				return getSharedSessionWrapper(_portalSession, portletSession);
-			}
+		HttpSession portletSession = super.getSession(create);
 
-			return null;
+		if (portletSession != null) {
+			return getSharedSessionWrapper(_portalSession, portletSession);
 		}
+
+		return null;
 	}
 
 	public HttpSession getSharedSession() {

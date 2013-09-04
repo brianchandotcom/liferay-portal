@@ -481,15 +481,14 @@ public class StringUtil {
 		if (s == null) {
 			return null;
 		}
-		else {
-			int index = s.indexOf(delimiter);
 
-			if (index < 0) {
-				return null;
-			}
-			else {
-				return s.substring(0, index);
-			}
+		int index = s.indexOf(delimiter);
+
+		if (index < 0) {
+			return null;
+		}
+		else {
+			return s.substring(0, index);
 		}
 	}
 
@@ -508,15 +507,14 @@ public class StringUtil {
 		if (s == null) {
 			return null;
 		}
-		else {
-			int index = s.indexOf(delimiter);
 
-			if (index < 0) {
-				return null;
-			}
-			else {
-				return s.substring(0, index);
-			}
+		int index = s.indexOf(delimiter);
+
+		if (index < 0) {
+			return null;
+		}
+		else {
+			return s.substring(0, index);
 		}
 	}
 
@@ -535,15 +533,14 @@ public class StringUtil {
 		if (s == null) {
 			return null;
 		}
-		else {
-			int index = s.lastIndexOf(delimiter);
 
-			if (index < 0) {
-				return null;
-			}
-			else {
-				return s.substring(index + 1);
-			}
+		int index = s.lastIndexOf(delimiter);
+
+		if (index < 0) {
+			return null;
+		}
+		else {
+			return s.substring(index + 1);
 		}
 	}
 
@@ -562,15 +559,14 @@ public class StringUtil {
 		if (s == null) {
 			return null;
 		}
-		else {
-			int index = s.lastIndexOf(delimiter);
 
-			if (index < 0) {
-				return null;
-			}
-			else {
-				return s.substring(index + delimiter.length());
-			}
+		int index = s.lastIndexOf(delimiter);
+
+		if (index < 0) {
+			return null;
+		}
+		else {
+			return s.substring(index + delimiter.length());
 		}
 	}
 
@@ -1001,12 +997,11 @@ public class StringUtil {
 		if (offset > s.length()) {
 			return s.concat(insert);
 		}
-		else {
-			String prefix = s.substring(0, offset);
-			String postfix = s.substring(offset);
 
-			return prefix.concat(insert).concat(postfix);
-		}
+		String prefix = s.substring(0, offset);
+		String postfix = s.substring(offset);
+
+		return prefix.concat(insert).concat(postfix);
 	}
 
 	public static boolean isLowerCase(String s) {
@@ -2009,22 +2004,21 @@ public class StringUtil {
 
 			return sb.toString().trim();
 		}
-		else {
-			InputStream is = classLoader.getResourceAsStream(name);
 
-			if (is == null) {
-				throw new IOException(
-					"Unable to open resource in class loader " + name);
-			}
+		InputStream is = classLoader.getResourceAsStream(name);
 
-			try {
-				String s = read(is);
+		if (is == null) {
+			throw new IOException(
+				"Unable to open resource in class loader " + name);
+		}
 
-				return s;
-			}
-			finally {
-				StreamUtil.cleanUp(is);
-			}
+		try {
+			String s = read(is);
+
+			return s;
+		}
+		finally {
+			StreamUtil.cleanUp(is);
 		}
 	}
 

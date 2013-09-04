@@ -681,18 +681,17 @@ public class ShoppingUtil {
 
 			return cart;
 		}
-		else {
-			ShoppingCart cart = (ShoppingCart)portletSession.getAttribute(
-				sessionCartId);
 
-			if (cart == null) {
-				cart = getCart(themeDisplay);
+		ShoppingCart cart = (ShoppingCart)portletSession.getAttribute(
+			sessionCartId);
 
-				portletSession.setAttribute(sessionCartId, cart);
-			}
+		if (cart == null) {
+			cart = getCart(themeDisplay);
 
-			return cart;
+			portletSession.setAttribute(sessionCartId, cart);
 		}
+
+		return cart;
 	}
 
 	public static ShoppingCart getCart(ThemeDisplay themeDisplay) {

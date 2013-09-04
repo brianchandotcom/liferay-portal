@@ -149,34 +149,32 @@ public class RowChecker {
 		if (Validator.isNull(name)) {
 			return StringPool.BLANK;
 		}
-		else {
-			StringBuilder sb = new StringBuilder(9);
 
-			sb.append("<input name=\"");
-			sb.append(name);
-			sb.append("\" type=\"checkbox\" ");
-			sb.append("onClick=\"Liferay.Util.checkAll(");
-			sb.append("AUI().one(this).ancestor('");
-			sb.append(".table'), ");
-			sb.append(checkBoxRowIds);
-			sb.append(", this, 'tr:not(.lfr-template)'");
-			sb.append(");\">");
+		StringBuilder sb = new StringBuilder(9);
 
-			return sb.toString();
-		}
+		sb.append("<input name=\"");
+		sb.append(name);
+		sb.append("\" type=\"checkbox\" ");
+		sb.append("onClick=\"Liferay.Util.checkAll(");
+		sb.append("AUI().one(this).ancestor('");
+		sb.append(".table'), ");
+		sb.append(checkBoxRowIds);
+		sb.append(", this, 'tr:not(.lfr-template)'");
+		sb.append(");\">");
+
+		return sb.toString();
 	}
 
 	protected String getNamespacedValue(String value) {
 		if (Validator.isNull(value)) {
 			return StringPool.BLANK;
 		}
-		else {
-			if (!value.startsWith(_portletResponse.getNamespace())) {
-				value = _portletResponse.getNamespace() + value;
-			}
 
-			return value;
+		if (!value.startsWith(_portletResponse.getNamespace())) {
+			value = _portletResponse.getNamespace() + value;
 		}
+
+		return value;
 	}
 
 	protected String getRowCheckBox(

@@ -195,32 +195,31 @@ public class PortletContainerUtil {
 
 			return restrictPortletServletRequest;
 		}
-		else {
-			TempAttributesServletRequest tempAttributesServletRequest =
-				new TempAttributesServletRequest(request);
 
-			if (renderPath != null) {
-				tempAttributesServletRequest.setTempAttribute(
-					WebKeys.RENDER_PATH, renderPath);
-			}
+		TempAttributesServletRequest tempAttributesServletRequest =
+			new TempAttributesServletRequest(request);
 
-			if (columnId != null) {
-				tempAttributesServletRequest.setTempAttribute(
-					WebKeys.RENDER_PORTLET_COLUMN_ID, columnId);
-			}
-
-			if (columnPos != null) {
-				tempAttributesServletRequest.setTempAttribute(
-					WebKeys.RENDER_PORTLET_COLUMN_POS, columnPos);
-			}
-
-			if (columnCount != null) {
-				tempAttributesServletRequest.setTempAttribute(
-					WebKeys.RENDER_PORTLET_COLUMN_COUNT, columnCount);
-			}
-
-			return tempAttributesServletRequest;
+		if (renderPath != null) {
+			tempAttributesServletRequest.setTempAttribute(
+				WebKeys.RENDER_PATH, renderPath);
 		}
+
+		if (columnId != null) {
+			tempAttributesServletRequest.setTempAttribute(
+				WebKeys.RENDER_PORTLET_COLUMN_ID, columnId);
+		}
+
+		if (columnPos != null) {
+			tempAttributesServletRequest.setTempAttribute(
+				WebKeys.RENDER_PORTLET_COLUMN_POS, columnPos);
+		}
+
+		if (columnCount != null) {
+			tempAttributesServletRequest.setTempAttribute(
+				WebKeys.RENDER_PORTLET_COLUMN_COUNT, columnCount);
+		}
+
+		return tempAttributesServletRequest;
 	}
 
 	public void setPortletContainer(PortletContainer portletContainer) {

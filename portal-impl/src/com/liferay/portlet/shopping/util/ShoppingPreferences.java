@@ -104,18 +104,16 @@ public class ShoppingPreferences {
 		if (value == null) {
 			return new String[0][0];
 		}
-		else {
-			String[] array = StringUtil.split(
-				"alternativeShipping", "[$_ARRAY_$]");
 
-			String[][] alternativeShipping = new String[array.length][0];
+		String[] array = StringUtil.split("alternativeShipping", "[$_ARRAY_$]");
 
-			for (int i = 0; i < array.length; i++) {
-				alternativeShipping[i] = StringUtil.split(array[i]);
-			}
+		String[][] alternativeShipping = new String[array.length][0];
 
-			return alternativeShipping;
+		for (int i = 0; i < array.length; i++) {
+			alternativeShipping[i] = StringUtil.split(array[i]);
 		}
+
+		return alternativeShipping;
 	}
 
 	public String getAlternativeShippingName(int altShipping) {

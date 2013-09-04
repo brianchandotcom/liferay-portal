@@ -560,17 +560,16 @@ public class LicenseUtil {
 		if (serverURL.startsWith(Http.HTTPS)) {
 			return StringUtil.read(inputStream);
 		}
-		else {
-			byte[] bytes = IOUtils.toByteArray(inputStream);
 
-			if ((bytes == null) || (bytes.length <= 0)) {
-				return null;
-			}
+		byte[] bytes = IOUtils.toByteArray(inputStream);
 
-			bytes = Encryptor.decryptUnencodedAsBytes(_symmetricKey, bytes);
-
-			return new String(bytes, StringPool.UTF8);
+		if ((bytes == null) || (bytes.length <= 0)) {
+			return null;
 		}
+
+		bytes = Encryptor.decryptUnencodedAsBytes(_symmetricKey, bytes);
+
+		return new String(bytes, StringPool.UTF8);
 	}
 
 	private static byte[] _encryptRequest(String serverURL, String request)
@@ -581,16 +580,15 @@ public class LicenseUtil {
 		if (serverURL.startsWith(Http.HTTPS)) {
 			return bytes;
 		}
-		else {
-			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-			bytes = Encryptor.encryptUnencoded(_symmetricKey, bytes);
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-			jsonObject.put("content", Base64.objectToString(bytes));
-			jsonObject.put("key", _encryptedSymmetricKey);
+		bytes = Encryptor.encryptUnencoded(_symmetricKey, bytes);
 
-			return jsonObject.toString().getBytes(StringPool.UTF8);
-		}
+		jsonObject.put("content", Base64.objectToString(bytes));
+		jsonObject.put("key", _encryptedSymmetricKey);
+
+		return jsonObject.toString().getBytes(StringPool.UTF8);
 	}
 
 	private static Map<String, String> _getOrderProducts(

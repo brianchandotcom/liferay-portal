@@ -432,20 +432,19 @@ public class AssetUtil {
 		if (Validator.isNull(word)) {
 			return false;
 		}
-		else {
-			char[] wordCharArray = word.toCharArray();
 
-			for (char c : wordCharArray) {
-				for (char invalidChar : INVALID_CHARACTERS) {
-					if (c == invalidChar) {
-						if (_log.isDebugEnabled()) {
-							_log.debug(
-								"Word " + word + " is not valid because " + c +
-									" is not allowed");
-						}
+		char[] wordCharArray = word.toCharArray();
 
-						return false;
+		for (char c : wordCharArray) {
+			for (char invalidChar : INVALID_CHARACTERS) {
+				if (c == invalidChar) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(
+							"Word " + word + " is not valid because " + c +
+								" is not allowed");
 					}
+
+					return false;
 				}
 			}
 		}
@@ -580,23 +579,22 @@ public class AssetUtil {
 		if (Validator.isNull(text)) {
 			return text;
 		}
-		else {
-			char[] textCharArray = text.toCharArray();
 
-			for (int i = 0; i < textCharArray.length; i++) {
-				char c = textCharArray[i];
+		char[] textCharArray = text.toCharArray();
 
-				for (char invalidChar : INVALID_CHARACTERS) {
-					if (c == invalidChar) {
-						textCharArray[i] = CharPool.SPACE;
+		for (int i = 0; i < textCharArray.length; i++) {
+			char c = textCharArray[i];
 
-						break;
-					}
+			for (char invalidChar : INVALID_CHARACTERS) {
+				if (c == invalidChar) {
+					textCharArray[i] = CharPool.SPACE;
+
+					break;
 				}
 			}
-
-			return new String(textCharArray);
 		}
+
+		return new String(textCharArray);
 	}
 
 	protected static Sort getSort(

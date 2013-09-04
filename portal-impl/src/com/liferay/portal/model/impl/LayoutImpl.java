@@ -524,12 +524,11 @@ public class LayoutImpl extends LayoutBaseImpl {
 			if (parentLayoutId == layoutId) {
 				return true;
 			}
-			else {
-				Layout parentLayout = LayoutLocalServiceUtil.getLayout(
-					getGroupId(), isPrivateLayout(), parentLayoutId);
 
-				parentLayoutId = parentLayout.getParentLayoutId();
-			}
+			Layout parentLayout = LayoutLocalServiceUtil.getLayout(
+				getGroupId(), isPrivateLayout(), parentLayoutId);
+
+			parentLayoutId = parentLayout.getParentLayoutId();
 		}
 
 		return false;

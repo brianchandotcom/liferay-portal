@@ -92,13 +92,12 @@ public abstract class BaseSPIProvider implements SPIProvider {
 
 				return remoteSPIProxy;
 			}
-			else {
-				cancelHandlerFuture.cancel(true);
 
-				throw new PortalResiliencyException(
-					"SPI synchronous queue waiting timeout. Forcibly " +
-						"cancelled SPI process launch.");
-			}
+			cancelHandlerFuture.cancel(true);
+
+			throw new PortalResiliencyException(
+				"SPI synchronous queue waiting timeout. Forcibly " +
+					"cancelled SPI process launch.");
 		}
 		catch (InterruptedException ie) {
 			throw new PortalResiliencyException(

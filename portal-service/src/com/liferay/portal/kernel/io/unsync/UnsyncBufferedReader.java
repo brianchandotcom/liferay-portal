@@ -218,11 +218,10 @@ public class UnsyncBufferedReader extends Reader {
 				if (sb == null) {
 					return line;
 				}
-				else {
-					sb.append(line);
 
-					return sb.toString();
-				}
+				sb.append(line);
+
+				return sb.toString();
 			}
 
 			if (sb == null) {

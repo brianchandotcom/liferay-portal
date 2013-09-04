@@ -137,14 +137,12 @@ public abstract class BaseExplodedTomcatListener implements AutoDeployListener {
 
 			return true;
 		}
-		else {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					file.getPath() + " does not have a matching extension");
-			}
 
-			return false;
+		if (_log.isDebugEnabled()) {
+			_log.debug(file.getPath() + " does not have a matching extension");
 		}
+
+		return false;
 	}
 
 	protected abstract int deploy(File file) throws AutoDeployException;

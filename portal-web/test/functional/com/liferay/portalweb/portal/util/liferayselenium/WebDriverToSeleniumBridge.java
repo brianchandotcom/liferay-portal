@@ -727,15 +727,14 @@ public class WebDriverToSeleniumBridge
 		if (locator.contains("x:")) {
 			return getHtmlNodeText(locator);
 		}
-		else {
-			WebElement webElement = getWebElement(locator, timeout);
 
-			String text = webElement.getText();
+		WebElement webElement = getWebElement(locator, timeout);
 
-			text = text.trim();
+		String text = webElement.getText();
 
-			return text.replace("\n", " ");
-		}
+		text = text.trim();
+
+		return text.replace("\n", " ");
 	}
 
 	@Override

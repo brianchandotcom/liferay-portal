@@ -1379,13 +1379,12 @@ public class PortletURLImpl
 		if (key == null) {
 			return HttpUtil.encodeURL(value);
 		}
-		else {
-			try {
-				return HttpUtil.encodeURL(Encryptor.encrypt(key, value));
-			}
-			catch (EncryptorException ee) {
-				return value;
-			}
+
+		try {
+			return HttpUtil.encodeURL(Encryptor.encrypt(key, value));
+		}
+		catch (EncryptorException ee) {
+			return value;
 		}
 	}
 

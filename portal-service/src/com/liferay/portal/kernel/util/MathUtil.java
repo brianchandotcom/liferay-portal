@@ -77,43 +77,42 @@ public class MathUtil {
 		if (max < 2) {
 			return new int[0];
 		}
-		else {
-			boolean[] crossedOut = new boolean[max + 1];
 
-			for (int i = 2; i < crossedOut.length; i++) {
-				crossedOut[i] = false;
-			}
+		boolean[] crossedOut = new boolean[max + 1];
 
-			int limit = (int)Math.sqrt(crossedOut.length);
-
-			for (int i = 2; i <= limit; i++) {
-				if (!crossedOut[i]) {
-					for (int multiple = 2 * i; multiple < crossedOut.length;
-							multiple += i) {
-
-						crossedOut[multiple] = true;
-					}
-				}
-			}
-
-			int uncrossedCount = 0;
-
-			for (int i = 2; i < crossedOut.length; i++) {
-				if (!crossedOut[i]) {
-					uncrossedCount++;
-				}
-			}
-
-			int[] result = new int[uncrossedCount];
-
-			for (int i = 2, j = 0; i < crossedOut.length; i++) {
-				if (!crossedOut[i]) {
-					result[j++] = i;
-				}
-			}
-
-			return result;
+		for (int i = 2; i < crossedOut.length; i++) {
+			crossedOut[i] = false;
 		}
+
+		int limit = (int)Math.sqrt(crossedOut.length);
+
+		for (int i = 2; i <= limit; i++) {
+			if (!crossedOut[i]) {
+				for (int multiple = 2 * i; multiple < crossedOut.length;
+						multiple += i) {
+
+					crossedOut[multiple] = true;
+				}
+			}
+		}
+
+		int uncrossedCount = 0;
+
+		for (int i = 2; i < crossedOut.length; i++) {
+			if (!crossedOut[i]) {
+				uncrossedCount++;
+			}
+		}
+
+		int[] result = new int[uncrossedCount];
+
+		for (int i = 2, j = 0; i < crossedOut.length; i++) {
+			if (!crossedOut[i]) {
+				result[j++] = i;
+			}
+		}
+
+		return result;
 	}
 
 	public static boolean isEven(int x) {

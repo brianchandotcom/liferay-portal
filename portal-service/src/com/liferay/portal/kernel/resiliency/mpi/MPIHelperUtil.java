@@ -156,31 +156,30 @@ public class MPIHelperUtil {
 
 				return false;
 			}
-			else {
-				SPIRegistryUtil.registerSPI(spi);
 
-				for (String servletContextName :
-						spiConfiguration.getServletContextNames()) {
+			SPIRegistryUtil.registerSPI(spi);
 
-					List<MessagingConfigurator> messagingConfigurators =
-						MessagingConfiguratorRegistry.getMessagingConfigurators(
-							servletContextName);
+			for (String servletContextName :
+					spiConfiguration.getServletContextNames()) {
 
-					if (messagingConfigurators != null) {
-						for (MessagingConfigurator messagingConfigurator :
-								messagingConfigurators) {
+				List<MessagingConfigurator> messagingConfigurators =
+					MessagingConfiguratorRegistry.getMessagingConfigurators(
+						servletContextName);
 
-							messagingConfigurator.disconnect();
-						}
+				if (messagingConfigurators != null) {
+					for (MessagingConfigurator messagingConfigurator :
+							messagingConfigurators) {
+
+						messagingConfigurator.disconnect();
 					}
 				}
-
-				if (_log.isInfoEnabled()) {
-					_log.info("Registered SPI " + spi);
-				}
-
-				return true;
 			}
+
+			if (_log.isInfoEnabled()) {
+				_log.info("Registered SPI " + spi);
+			}
+
+			return true;
 		}
 		catch (RemoteException re) {
 			throw new RuntimeException(re);
@@ -214,13 +213,12 @@ public class MPIHelperUtil {
 
 			return false;
 		}
-		else {
-			if (_log.isInfoEnabled()) {
-				_log.info("Registered SPI provider " + spiProvider);
-			}
 
-			return true;
+		if (_log.isInfoEnabled()) {
+			_log.info("Registered SPI provider " + spiProvider);
 		}
+
+		return true;
 	}
 
 	public static void shutdown() {
@@ -295,13 +293,12 @@ public class MPIHelperUtil {
 
 				return true;
 			}
-			else {
-				if (_log.isWarnEnabled()) {
-					_log.warn("Not unregistering unregistered SPI " + spi);
-				}
 
-				return false;
+			if (_log.isWarnEnabled()) {
+				_log.warn("Not unregistering unregistered SPI " + spi);
 			}
+
+			return false;
 		}
 		catch (RemoteException re) {
 			throw new RuntimeException(re);
@@ -352,15 +349,14 @@ public class MPIHelperUtil {
 
 				return true;
 			}
-			else {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Not unregistering unregistered SPI provider " +
-							spiProvider);
-				}
 
-				return false;
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Not unregistering unregistered SPI provider " +
+						spiProvider);
 			}
+
+			return false;
 		}
 		finally {
 			_lock.unlock();

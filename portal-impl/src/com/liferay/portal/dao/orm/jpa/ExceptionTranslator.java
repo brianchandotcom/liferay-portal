@@ -29,18 +29,17 @@ public class ExceptionTranslator {
 		if (e instanceof EntityNotFoundException) {
 			return new ObjectNotFoundException(e.getMessage());
 		}
-		else {
-			String message = null;
 
-			if (e.getCause() != null) {
-				message = e.getMessage() + " - " + e.getCause().getMessage();
-			}
-			else {
-				message = e.getMessage();
-			}
+		String message = null;
 
-			return new ORMException(message);
+		if (e.getCause() != null) {
+			message = e.getMessage() + " - " + e.getCause().getMessage();
 		}
+		else {
+			message = e.getMessage();
+		}
+
+		return new ORMException(message);
 	}
 
 }

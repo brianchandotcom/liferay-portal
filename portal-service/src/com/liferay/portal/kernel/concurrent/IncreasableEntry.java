@@ -96,14 +96,13 @@ public abstract class IncreasableEntry<K, V> {
 			if (marked[0]) {
 				return false;
 			}
-			else {
-				V newValue = doIncrease(originalValue, deltaValue);
 
-				if (_markedValue.compareAndSet(
-						originalValue, newValue, false, false)) {
+			V newValue = doIncrease(originalValue, deltaValue);
 
-					return true;
-				}
+			if (_markedValue.compareAndSet(
+					originalValue, newValue, false, false)) {
+
+				return true;
 			}
 		}
 	}

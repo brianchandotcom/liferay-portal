@@ -339,20 +339,19 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		if (userId <= 0) {
 			return getGroupThreads(groupId, queryDefinition);
 		}
+
+		if (subscribed) {
+			return mbThreadFinder.findByS_G_U_C(
+				groupId, userId, null, queryDefinition);
+		}
 		else {
-			if (subscribed) {
-				return mbThreadFinder.findByS_G_U_C(
+			if (includeAnonymous) {
+				return mbThreadFinder.findByG_U_C(
 					groupId, userId, null, queryDefinition);
 			}
 			else {
-				if (includeAnonymous) {
-					return mbThreadFinder.findByG_U_C(
-						groupId, userId, null, queryDefinition);
-				}
-				else {
-					return mbThreadFinder.findByG_U_C_A(
-						groupId, userId, null, false, queryDefinition);
-				}
+				return mbThreadFinder.findByG_U_C_A(
+					groupId, userId, null, false, queryDefinition);
 			}
 		}
 	}
@@ -464,20 +463,19 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		if (userId <= 0) {
 			return getGroupThreadsCount(groupId, queryDefinition);
 		}
+
+		if (subscribed) {
+			return mbThreadFinder.countByS_G_U_C(
+				groupId, userId, null, queryDefinition);
+		}
 		else {
-			if (subscribed) {
-				return mbThreadFinder.countByS_G_U_C(
+			if (includeAnonymous) {
+				return mbThreadFinder.countByG_U_C(
 					groupId, userId, null, queryDefinition);
 			}
 			else {
-				if (includeAnonymous) {
-					return mbThreadFinder.countByG_U_C(
-						groupId, userId, null, queryDefinition);
-				}
-				else {
-					return mbThreadFinder.countByG_U_C_A(
-						groupId, userId, null, false, queryDefinition);
-				}
+				return mbThreadFinder.countByG_U_C_A(
+					groupId, userId, null, false, queryDefinition);
 			}
 		}
 	}

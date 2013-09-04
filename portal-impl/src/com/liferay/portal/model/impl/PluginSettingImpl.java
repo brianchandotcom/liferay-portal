@@ -70,25 +70,24 @@ public class PluginSettingImpl extends PluginSettingBaseImpl {
 			if (_rolesArray.length == 0) {
 				return true;
 			}
-			else if (RoleLocalServiceUtil.hasUserRoles(
-						userId, getCompanyId(), _rolesArray, true)) {
+
+			if (RoleLocalServiceUtil.hasUserRoles(
+					userId, getCompanyId(), _rolesArray, true)) {
 
 				return true;
 			}
-			else if (RoleLocalServiceUtil.hasUserRole(
-						userId, getCompanyId(), RoleConstants.ADMINISTRATOR,
-						true)) {
+
+			if (RoleLocalServiceUtil.hasUserRole(
+					userId, getCompanyId(), RoleConstants.ADMINISTRATOR,
+					true)) {
 
 				return true;
 			}
-			else {
-				User user = UserLocalServiceUtil.getUserById(userId);
 
-				if (user.isDefaultUser() &&
-					hasRoleWithName(RoleConstants.GUEST)) {
+			User user = UserLocalServiceUtil.getUserById(userId);
 
-					return true;
-				}
+			if (user.isDefaultUser() && hasRoleWithName(RoleConstants.GUEST)) {
+				return true;
 			}
 		}
 		catch (Exception e) {

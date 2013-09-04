@@ -268,14 +268,14 @@ public class PortletServletRequest extends HttpServletRequestWrapper {
 
 			return clientDataRequest.getMethod();
 		}
-		else if (_lifecycle.equals(PortletRequest.RENDER_PHASE)) {
+
+		if (_lifecycle.equals(PortletRequest.RENDER_PHASE)) {
 			return HttpMethods.GET;
 		}
-		else {
-			EventRequest eventRequest = _getEventRequest();
 
-			return eventRequest.getMethod();
-		}
+		EventRequest eventRequest = _getEventRequest();
+
+		return eventRequest.getMethod();
 	}
 
 	@Override

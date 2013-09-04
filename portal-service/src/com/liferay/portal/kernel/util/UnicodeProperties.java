@@ -148,16 +148,14 @@ public class UnicodeProperties extends HashMap<String, String> {
 		if (key == null) {
 			return null;
 		}
-		else {
-			if (value == null) {
-				return remove(key);
-			}
-			else {
-				_length += key.length() + value.length() + 2;
 
-				return super.put(key, value);
-			}
+		if (value == null) {
+			return remove(key);
 		}
+
+		_length += key.length() + value.length() + 2;
+
+		return super.put(key, value);
 	}
 
 	@Override
@@ -165,15 +163,14 @@ public class UnicodeProperties extends HashMap<String, String> {
 		if ((key == null) || !containsKey(key)) {
 			return null;
 		}
-		else {
-			String keyString = (String)key;
 
-			String value = super.remove(key);
+		String keyString = (String)key;
 
-			_length -= keyString.length() + value.length() + 2;
+		String value = super.remove(key);
 
-			return value;
-		}
+		_length -= keyString.length() + value.length() + 2;
+
+		return value;
 	}
 
 	public String setProperty(String key, String value) {

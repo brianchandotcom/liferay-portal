@@ -77,13 +77,12 @@ public class ShutdownUtil {
 		if (_date == null) {
 			return false;
 		}
+
+		if (_date.after(new Date())) {
+			return true;
+		}
 		else {
-			if (_date.after(new Date())) {
-				return true;
-			}
-			else {
-				return false;
-			}
+			return false;
 		}
 	}
 
@@ -91,13 +90,12 @@ public class ShutdownUtil {
 		if (_date == null) {
 			return false;
 		}
+
+		if (_date.before(new Date())) {
+			return true;
+		}
 		else {
-			if (_date.before(new Date())) {
-				return true;
-			}
-			else {
-				return false;
-			}
+			return false;
 		}
 	}
 

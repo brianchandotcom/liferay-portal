@@ -482,15 +482,14 @@ public class JSONServiceAction extends JSONAction {
 
 			return methodAndParameterTypes;
 		}
-		else {
-			String parametersString = StringUtil.merge(parameters);
 
-			_log.error(
-				"No method found for class " + clazz + ", method " +
-					methodName + ", and parameters " + parametersString);
+		String parametersString = StringUtil.merge(parameters);
 
-			return null;
-		}
+		_log.error(
+			"No method found for class " + clazz + ", method " + methodName +
+				", and parameters " + parametersString);
+
+		return null;
 	}
 
 	@Override

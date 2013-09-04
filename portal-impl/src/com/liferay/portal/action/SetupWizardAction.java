@@ -90,11 +90,10 @@ public class SetupWizardAction extends Action {
 
 				return actionMapping.findForward("portal.setup_wizard");
 			}
-			else {
-				PortalUtil.sendError(e, request, response);
 
-				return null;
-			}
+			PortalUtil.sendError(e, request, response);
+
+			return null;
 		}
 	}
 

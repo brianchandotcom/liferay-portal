@@ -121,11 +121,10 @@ public class AsyncRunnable implements Externalizable, Runnable {
 			if (Validator.isNull(beanIdentifier)) {
 				return methodHandler.invoke(true);
 			}
-			else {
-				Object bean = PortalBeanLocatorUtil.locate(beanIdentifier);
 
-				return methodHandler.invoke(bean);
-			}
+			Object bean = PortalBeanLocatorUtil.locate(beanIdentifier);
+
+			return methodHandler.invoke(bean);
 		}
 
 		ClassLoader contextClassLoader =
@@ -140,21 +139,20 @@ public class AsyncRunnable implements Externalizable, Runnable {
 			if (Validator.isNull(beanIdentifier)) {
 				return methodHandler.invoke(true);
 			}
-			else {
-				Object bean = null;
 
-				if (identifiableBeanServletContextName.equals(
-						PortalUtil.getServletContextName())) {
+			Object bean = null;
 
-					bean = PortalBeanLocatorUtil.locate(beanIdentifier);
-				}
-				else {
-					bean = PortletBeanLocatorUtil.locate(
-						servletContextName, beanIdentifier);
-				}
+			if (identifiableBeanServletContextName.equals(
+					PortalUtil.getServletContextName())) {
 
-				return methodHandler.invoke(bean);
+				bean = PortalBeanLocatorUtil.locate(beanIdentifier);
 			}
+			else {
+				bean = PortletBeanLocatorUtil.locate(
+					servletContextName, beanIdentifier);
+			}
+
+			return methodHandler.invoke(bean);
 		}
 		finally {
 			ClassLoaderUtil.setContextClassLoader(contextClassLoader);

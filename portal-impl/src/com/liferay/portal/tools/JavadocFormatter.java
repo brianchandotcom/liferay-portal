@@ -1516,16 +1516,16 @@ public class JavadocFormatter {
 			if (samePackage) {
 				return !ancestorJavaMethod.isPrivate();
 			}
-			else {
-				if (ancestorJavaMethod.isProtected() ||
-					ancestorJavaMethod.isPublic()) {
 
-					return true;
-				}
-				else {
-					return false;
-				}
+			if (ancestorJavaMethod.isProtected() ||
+				ancestorJavaMethod.isPublic()) {
+
+				return true;
 			}
+			else {
+				return false;
+			}
+
 		}
 
 		return false;

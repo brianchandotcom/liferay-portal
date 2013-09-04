@@ -583,27 +583,26 @@ public class BookmarksFolderLocalServiceImpl
 		if (folder.getFolderId() == parentFolderId) {
 			return folder.getParentFolderId();
 		}
-		else {
-			BookmarksFolder parentFolder =
-				bookmarksFolderPersistence.fetchByPrimaryKey(parentFolderId);
 
-			if ((parentFolder == null) ||
-				(folder.getGroupId() != parentFolder.getGroupId())) {
+		BookmarksFolder parentFolder =
+			bookmarksFolderPersistence.fetchByPrimaryKey(parentFolderId);
 
-				return folder.getParentFolderId();
-			}
+		if ((parentFolder == null) ||
+			(folder.getGroupId() != parentFolder.getGroupId())) {
 
-			List<Long> subfolderIds = new ArrayList<Long>();
-
-			getSubfolderIds(
-				subfolderIds, folder.getGroupId(), folder.getFolderId());
-
-			if (subfolderIds.contains(parentFolderId)) {
-				return folder.getParentFolderId();
-			}
-
-			return parentFolderId;
+			return folder.getParentFolderId();
 		}
+
+		List<Long> subfolderIds = new ArrayList<Long>();
+
+		getSubfolderIds(
+			subfolderIds, folder.getGroupId(), folder.getFolderId());
+
+		if (subfolderIds.contains(parentFolderId)) {
+			return folder.getParentFolderId();
+		}
+
+		return parentFolderId;
 	}
 
 	protected long getParentFolderId(long groupId, long parentFolderId)

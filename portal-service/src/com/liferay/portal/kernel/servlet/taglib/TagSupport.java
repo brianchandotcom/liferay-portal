@@ -49,9 +49,8 @@ public class TagSupport implements Tag {
 
 				return parentTag;
 			}
-			else {
-				fromTag = parentTag;
-			}
+
+			fromTag = parentTag;
 		}
 	}
 

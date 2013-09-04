@@ -153,21 +153,20 @@ public class WebXMLBuilder {
 
 			return x;
 		}
-		else {
-			x = content.lastIndexOf("<filter-name", x);
-			x = content.indexOf(">", x) + 1;
 
-			int y = content.indexOf("</filter-name>", x);
+		x = content.lastIndexOf("<filter-name", x);
+		x = content.indexOf(">", x) + 1;
 
-			String filterName = content.substring(x, y);
+		int y = content.indexOf("</filter-name>", x);
 
-			x = content.lastIndexOf(filterName);
+		String filterName = content.substring(x, y);
 
-			y = content.indexOf("</filter-mapping>", x);
-			y = content.indexOf(">", y) + 1;
+		x = content.lastIndexOf(filterName);
 
-			return y;
-		}
+		y = content.indexOf("</filter-mapping>", x);
+		y = content.indexOf(">", y) + 1;
+
+		return y;
 	}
 
 }

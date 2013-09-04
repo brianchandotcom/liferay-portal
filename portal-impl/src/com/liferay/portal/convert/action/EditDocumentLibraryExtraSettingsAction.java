@@ -79,13 +79,12 @@ public class EditDocumentLibraryExtraSettingsAction extends EditExpandoAction {
 		if (preset.startsWith("Preset")) {
 			return addPresetExpando(expandoBridge, preset, name);
 		}
-		else {
-			int type = GetterUtil.getInteger(preset);
 
-			expandoBridge.addAttribute(name, type);
+		int type = GetterUtil.getInteger(preset);
 
-			return type;
-		}
+		expandoBridge.addAttribute(name, type);
+
+		return type;
 	}
 
 	protected void convert(

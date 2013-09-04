@@ -266,21 +266,20 @@ public class CounterFinderImpl
 		if (counterRegister != null) {
 			return counterRegister;
 		}
-		else {
-			synchronized (_counterRegisterMap) {
 
-				// Double check
+		synchronized (_counterRegisterMap) {
 
-				counterRegister = _counterRegisterMap.get(name);
+			// Double check
 
-				if (counterRegister == null) {
-					counterRegister = createCounterRegister(name);
+			counterRegister = _counterRegisterMap.get(name);
 
-					_counterRegisterMap.put(name, counterRegister);
-				}
+			if (counterRegister == null) {
+				counterRegister = createCounterRegister(name);
 
-				return counterRegister;
+				_counterRegisterMap.put(name, counterRegister);
 			}
+
+			return counterRegister;
 		}
 	}
 

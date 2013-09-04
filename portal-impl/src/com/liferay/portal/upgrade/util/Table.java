@@ -205,11 +205,10 @@ public class Table {
 		if (!empty) {
 			return tempFileName;
 		}
-		else {
-			FileUtil.delete(tempFileName);
 
-			return null;
-		}
+		FileUtil.delete(tempFileName);
+
+		return null;
 	}
 
 	public Object[][] getColumns() {

@@ -116,27 +116,25 @@ public class GUserManagerImpl extends GBaseManagerImpl implements GUserManager {
 
 			return getGUser(userId);
 		}
-		else {
-			try {
-				User user = UserLocalServiceUtil.getUserByEmailAddress(
-					getCompanyId(), emailAddress);
 
-				return getGUser(user.getUserId());
-			}
-			catch (Exception e) {
-			}
+		try {
+			User user = UserLocalServiceUtil.getUserByEmailAddress(
+				getCompanyId(), emailAddress);
 
-			GNicknameManager gNicknameManager =
-				googleApps.getGNicknameManager();
-
-			GNickname gNickname = gNicknameManager.getGNickname(nickname);
-
-			if (gNickname != null) {
-				return getGUser(gNickname.getUserId());
-			}
-
-			return null;
+			return getGUser(user.getUserId());
 		}
+		catch (Exception e) {
+		}
+
+		GNicknameManager gNicknameManager = googleApps.getGNicknameManager();
+
+		GNickname gNickname = gNicknameManager.getGNickname(nickname);
+
+		if (gNickname != null) {
+			return getGUser(gNickname.getUserId());
+		}
+
+		return null;
 	}
 
 	@Override

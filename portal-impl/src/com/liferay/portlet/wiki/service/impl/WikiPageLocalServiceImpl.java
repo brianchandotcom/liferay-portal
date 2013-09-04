@@ -795,16 +795,15 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		if (!pages.isEmpty()) {
 			return pages.get(0);
 		}
-		else {
-			pages = wikiPagePersistence.findByN_T_S(
-				nodeId, title, WorkflowConstants.STATUS_PENDING, 0, 1);
 
-			if (!pages.isEmpty()) {
-				return pages.get(0);
-			}
-			else {
-				throw new NoSuchPageException();
-			}
+		pages = wikiPagePersistence.findByN_T_S(
+			nodeId, title, WorkflowConstants.STATUS_PENDING, 0, 1);
+
+		if (!pages.isEmpty()) {
+			return pages.get(0);
+		}
+		else {
+			throw new NoSuchPageException();
 		}
 	}
 

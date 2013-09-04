@@ -226,19 +226,17 @@ public class Datagram {
 			if (_headerByteBuffer.hasRemaining()) {
 				return false;
 			}
-			else {
-				int dataSize = BigEndianCodec.getInt(
-					_headerBufferArray, _INDEX_DATA_SIZE);
 
-				if (dataSize == 0) {
-					_dataByteBuffer = _EMPTY_BUFFER;
+			int dataSize = BigEndianCodec.getInt(
+				_headerBufferArray, _INDEX_DATA_SIZE);
 
-					return true;
-				}
-				else {
-					_dataByteBuffer = ByteBuffer.allocate(dataSize);
-				}
+			if (dataSize == 0) {
+				_dataByteBuffer = _EMPTY_BUFFER;
+
+				return true;
 			}
+
+			_dataByteBuffer = ByteBuffer.allocate(dataSize);
 		}
 
 		if (scatteringByteChannel.read(_dataByteBuffer) == -1) {
@@ -248,11 +246,10 @@ public class Datagram {
 		if (_dataByteBuffer.hasRemaining()) {
 			return false;
 		}
-		else {
-			_dataByteBuffer.flip();
 
-			return true;
-		}
+		_dataByteBuffer.flip();
+
+		return true;
 	}
 
 	protected void setAckRequest(boolean ackRequest) {
@@ -291,11 +288,10 @@ public class Datagram {
 		if (_dataByteBuffer.hasRemaining()) {
 			return false;
 		}
-		else {
-			_dataByteBuffer = null;
 
-			return true;
-		}
+		_dataByteBuffer = null;
+
+		return true;
 	}
 
 	protected Object attachment;

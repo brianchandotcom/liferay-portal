@@ -585,18 +585,16 @@ public class WebServerServlet extends HttpServlet {
 				if (fileEntry == null) {
 					return -1;
 				}
+
+				String version = ParamUtil.getString(request, "version");
+
+				if (Validator.isNotNull(version)) {
+					FileVersion fileVersion = fileEntry.getFileVersion(version);
+
+					modifiedDate = fileVersion.getModifiedDate();
+				}
 				else {
-					String version = ParamUtil.getString(request, "version");
-
-					if (Validator.isNotNull(version)) {
-						FileVersion fileVersion = fileEntry.getFileVersion(
-							version);
-
-						modifiedDate = fileVersion.getModifiedDate();
-					}
-					else {
-						modifiedDate = fileEntry.getModifiedDate();
-					}
+					modifiedDate = fileEntry.getModifiedDate();
 				}
 			}
 

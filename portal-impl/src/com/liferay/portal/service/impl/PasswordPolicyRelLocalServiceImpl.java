@@ -46,9 +46,8 @@ public class PasswordPolicyRelLocalServiceImpl
 			if (passwordPolicyRel.getPasswordPolicyId() == passwordPolicyId) {
 				return null;
 			}
-			else {
-				passwordPolicyRelPersistence.remove(passwordPolicyRel);
-			}
+
+			passwordPolicyRelPersistence.remove(passwordPolicyRel);
 		}
 
 		long passwordPolicyRelId = counterLocalService.increment();

@@ -789,28 +789,26 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 		if (category.getCategoryId() == parentCategoryId) {
 			return category.getParentCategoryId();
 		}
-		else {
-			MBCategory parentCategory = mbCategoryPersistence.fetchByPrimaryKey(
-				parentCategoryId);
 
-			if ((parentCategory == null) ||
-				(category.getGroupId() != parentCategory.getGroupId())) {
+		MBCategory parentCategory = mbCategoryPersistence.fetchByPrimaryKey(
+			parentCategoryId);
 
-				return category.getParentCategoryId();
-			}
+		if ((parentCategory == null) ||
+			(category.getGroupId() != parentCategory.getGroupId())) {
 
-			List<Long> subcategoryIds = new ArrayList<Long>();
-
-			getSubcategoryIds(
-				subcategoryIds, category.getGroupId(),
-				category.getCategoryId());
-
-			if (subcategoryIds.contains(parentCategoryId)) {
-				return category.getParentCategoryId();
-			}
-
-			return parentCategoryId;
+			return category.getParentCategoryId();
 		}
+
+		List<Long> subcategoryIds = new ArrayList<Long>();
+
+		getSubcategoryIds(
+			subcategoryIds, category.getGroupId(), category.getCategoryId());
+
+		if (subcategoryIds.contains(parentCategoryId)) {
+			return category.getParentCategoryId();
+		}
+
+		return parentCategoryId;
 	}
 
 	protected void mergeCategories(MBCategory fromCategory, long toCategoryId)

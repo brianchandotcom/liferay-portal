@@ -1104,27 +1104,26 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		if (dlFolder.getFolderId() == parentFolderId) {
 			return dlFolder.getParentFolderId();
 		}
-		else {
-			DLFolder parentDLFolder = dlFolderPersistence.fetchByPrimaryKey(
-				parentFolderId);
 
-			if ((parentDLFolder == null) ||
-				(dlFolder.getGroupId() != parentDLFolder.getGroupId())) {
+		DLFolder parentDLFolder = dlFolderPersistence.fetchByPrimaryKey(
+			parentFolderId);
 
-				return dlFolder.getParentFolderId();
-			}
+		if ((parentDLFolder == null) ||
+			(dlFolder.getGroupId() != parentDLFolder.getGroupId())) {
 
-			List<Long> subfolderIds = new ArrayList<Long>();
-
-			getSubfolderIds(
-				subfolderIds, dlFolder.getGroupId(), dlFolder.getFolderId());
-
-			if (subfolderIds.contains(parentFolderId)) {
-				return dlFolder.getParentFolderId();
-			}
-
-			return parentFolderId;
+			return dlFolder.getParentFolderId();
 		}
+
+		List<Long> subfolderIds = new ArrayList<Long>();
+
+		getSubfolderIds(
+			subfolderIds, dlFolder.getGroupId(), dlFolder.getFolderId());
+
+		if (subfolderIds.contains(parentFolderId)) {
+			return dlFolder.getParentFolderId();
+		}
+
+		return parentFolderId;
 	}
 
 	protected long getParentFolderId(long groupId, long parentFolderId)

@@ -83,9 +83,8 @@ public class BatchablePipe<K, V> {
 
 					return currentEntry._increasableEntry;
 				}
-				else {
-					continue take;
-				}
+
+				continue take;
 			}
 
 			return null;

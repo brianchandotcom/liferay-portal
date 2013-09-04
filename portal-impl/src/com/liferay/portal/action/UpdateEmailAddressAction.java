@@ -79,11 +79,10 @@ public class UpdateEmailAddressAction extends Action {
 
 				return actionMapping.findForward("portal.error");
 			}
-			else {
-				PortalUtil.sendError(e, request, response);
 
-				return null;
-			}
+			PortalUtil.sendError(e, request, response);
+
+			return null;
 		}
 	}
 

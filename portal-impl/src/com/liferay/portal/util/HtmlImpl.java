@@ -134,13 +134,12 @@ public class HtmlImpl implements Html {
 		if (sb == null) {
 			return text;
 		}
-		else {
-			if (lastReplacementIndex < text.length()) {
-				sb.append(text.substring(lastReplacementIndex));
-			}
 
-			return sb.toString();
+		if (lastReplacementIndex < text.length()) {
+			sb.append(text.substring(lastReplacementIndex));
 		}
+
+		return sb.toString();
 	}
 
 	@Override

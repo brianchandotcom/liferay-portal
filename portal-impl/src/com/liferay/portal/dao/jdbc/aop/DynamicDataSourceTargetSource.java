@@ -63,13 +63,12 @@ public class DynamicDataSourceTargetSource implements TargetSource {
 
 			return _readDataSource;
 		}
-		else {
-			if (_log.isTraceEnabled()) {
-				_log.trace("Returning write data source");
-			}
 
-			return _writeDataSource;
+		if (_log.isTraceEnabled()) {
+			_log.trace("Returning write data source");
 		}
+
+		return _writeDataSource;
 	}
 
 	@Override

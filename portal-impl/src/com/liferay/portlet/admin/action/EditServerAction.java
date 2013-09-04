@@ -307,14 +307,12 @@ public class EditServerAction extends PortletAction {
 
 			return portletURL.toString();
 		}
-		else {
-			MaintenanceUtil.maintain(portletSession.getId(), className);
 
-			MessageBusUtil.sendMessage(
-				DestinationNames.CONVERT_PROCESS, className);
+		MaintenanceUtil.maintain(portletSession.getId(), className);
 
-			return null;
-		}
+		MessageBusUtil.sendMessage(DestinationNames.CONVERT_PROCESS, className);
+
+		return null;
 	}
 
 	protected void gc() throws Exception {

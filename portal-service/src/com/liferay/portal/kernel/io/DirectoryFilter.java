@@ -39,11 +39,10 @@ public class DirectoryFilter implements FileFilter {
 			if (_pattern == null) {
 				return true;
 			}
-			else {
-				Matcher matcher = _pattern.matcher(file.getName());
 
-				return matcher.matches();
-			}
+			Matcher matcher = _pattern.matcher(file.getName());
+
+			return matcher.matches();
 		}
 		else {
 			return false;

@@ -32,11 +32,10 @@ public class OrgGroupRoleImpl extends OrgGroupRoleBaseImpl {
 		if (groups == null) {
 			return false;
 		}
-		else {
-			for (Group group : groups) {
-				if (group.getGroupId() == getGroupId()) {
-					return true;
-				}
+
+		for (Group group : groups) {
+			if (group.getGroupId() == getGroupId()) {
+				return true;
 			}
 		}
 
@@ -48,11 +47,10 @@ public class OrgGroupRoleImpl extends OrgGroupRoleBaseImpl {
 		if (organizations == null) {
 			return false;
 		}
-		else {
-			for (Organization organization : organizations) {
-				if (organization.getOrganizationId() == getOrganizationId()) {
-					return true;
-				}
+
+		for (Organization organization : organizations) {
+			if (organization.getOrganizationId() == getOrganizationId()) {
+				return true;
 			}
 		}
 

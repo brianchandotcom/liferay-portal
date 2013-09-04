@@ -137,11 +137,10 @@ public class ByteArrayFileInputStream extends InputStream {
 
 			return read;
 		}
-		else {
-			initFileInputStream();
 
-			return fileInputStream.read(bytes, offset, length);
-		}
+		initFileInputStream();
+
+		return fileInputStream.read(bytes, offset, length);
 	}
 
 	@Override
@@ -173,11 +172,10 @@ public class ByteArrayFileInputStream extends InputStream {
 
 			return skip;
 		}
-		else {
-			initFileInputStream();
 
-			return fileInputStream.skip(skip);
-		}
+		initFileInputStream();
+
+		return fileInputStream.skip(skip);
 	}
 
 	protected void initData() throws IOException {

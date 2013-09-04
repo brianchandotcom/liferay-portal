@@ -353,28 +353,26 @@ public class ShoppingCategoryLocalServiceImpl
 		if (category.getCategoryId() == parentCategoryId) {
 			return category.getParentCategoryId();
 		}
-		else {
-			ShoppingCategory parentCategory =
-				shoppingCategoryPersistence.fetchByPrimaryKey(parentCategoryId);
 
-			if ((parentCategory == null) ||
-				(category.getGroupId() != parentCategory.getGroupId())) {
+		ShoppingCategory parentCategory =
+			shoppingCategoryPersistence.fetchByPrimaryKey(parentCategoryId);
 
-				return category.getParentCategoryId();
-			}
+		if ((parentCategory == null) ||
+			(category.getGroupId() != parentCategory.getGroupId())) {
 
-			List<Long> subcategoryIds = new ArrayList<Long>();
-
-			getSubcategoryIds(
-				subcategoryIds, category.getGroupId(),
-				category.getCategoryId());
-
-			if (subcategoryIds.contains(parentCategoryId)) {
-				return category.getParentCategoryId();
-			}
-
-			return parentCategoryId;
+			return category.getParentCategoryId();
 		}
+
+		List<Long> subcategoryIds = new ArrayList<Long>();
+
+		getSubcategoryIds(
+			subcategoryIds, category.getGroupId(), category.getCategoryId());
+
+		if (subcategoryIds.contains(parentCategoryId)) {
+			return category.getParentCategoryId();
+		}
+
+		return parentCategoryId;
 	}
 
 	protected void mergeCategories(

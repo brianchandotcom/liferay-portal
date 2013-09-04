@@ -248,18 +248,18 @@ public class CentralizedThreadLocal<T> extends ThreadLocal<T> {
 			if (entry == null) {
 				return null;
 			}
-			else if (entry._key == key) {
+
+			if (entry._key == key) {
 				return entry;
 			}
-			else {
-				while ((entry = entry._next) != null) {
-					if (entry._key == key) {
-						return entry;
-					}
-				}
 
-				return null;
+			while ((entry = entry._next) != null) {
+				if (entry._key == key) {
+					return entry;
+				}
 			}
+
+			return null;
 		}
 
 		public void putEntry(CentralizedThreadLocal<?> key, Object value) {

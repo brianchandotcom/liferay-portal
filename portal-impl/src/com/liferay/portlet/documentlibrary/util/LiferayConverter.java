@@ -273,9 +273,8 @@ public abstract class LiferayConverter {
 				if (stopDecoding) {
 					return 1;
 				}
-				else {
-					continue;
-				}
+
+				continue;
 			}
 
 			if (thumbnailFile != null) {

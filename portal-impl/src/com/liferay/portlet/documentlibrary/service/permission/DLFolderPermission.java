@@ -138,11 +138,10 @@ public class DLFolderPermission {
 
 			return DLPermission.contains(permissionChecker, groupId, actionId);
 		}
-		else {
-			Folder folder = DLAppLocalServiceUtil.getFolder(folderId);
 
-			return folder.containsPermission(permissionChecker, actionId);
-		}
+		Folder folder = DLAppLocalServiceUtil.getFolder(folderId);
+
+		return folder.containsPermission(permissionChecker, actionId);
 	}
 
 	private static boolean _hasPermission(

@@ -92,11 +92,10 @@ public class VerifyEmailAddressAction extends Action {
 
 				return actionMapping.findForward("portal.verify_email_address");
 			}
-			else {
-				PortalUtil.sendError(e, request, response);
 
-				return null;
-			}
+			PortalUtil.sendError(e, request, response);
+
+			return null;
 		}
 	}
 

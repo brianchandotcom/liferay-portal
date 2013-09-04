@@ -66,18 +66,17 @@ public class ShoppingOrderPermission {
 
 			return true;
 		}
-		else {
-			if (permissionChecker.hasOwnerPermission(
-					order.getCompanyId(), ShoppingOrder.class.getName(),
-					order.getOrderId(), order.getUserId(), actionId)) {
 
-				return true;
-			}
+		if (permissionChecker.hasOwnerPermission(
+				order.getCompanyId(), ShoppingOrder.class.getName(),
+				order.getOrderId(), order.getUserId(), actionId)) {
 
-			return permissionChecker.hasPermission(
-				order.getGroupId(), ShoppingOrder.class.getName(),
-				order.getOrderId(), actionId);
+			return true;
 		}
+
+		return permissionChecker.hasPermission(
+			order.getGroupId(), ShoppingOrder.class.getName(),
+			order.getOrderId(), actionId);
 	}
 
 }

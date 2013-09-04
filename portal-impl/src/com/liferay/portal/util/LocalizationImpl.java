@@ -187,9 +187,8 @@ public class LocalizationImpl implements Localization {
 		if (value != null) {
 			return value;
 		}
-		else {
-			value = StringPool.BLANK;
-		}
+
+		value = StringPool.BLANK;
 
 		String priorityLanguageId = null;
 

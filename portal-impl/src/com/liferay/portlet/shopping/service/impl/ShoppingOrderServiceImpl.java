@@ -65,12 +65,11 @@ public class ShoppingOrderServiceImpl extends ShoppingOrderServiceBaseImpl {
 		if (order.getUserId() == getUserId()) {
 			return order;
 		}
-		else {
-			ShoppingPermission.check(
-				getPermissionChecker(), groupId, ActionKeys.MANAGE_ORDERS);
 
-			return order;
-		}
+		ShoppingPermission.check(
+			getPermissionChecker(), groupId, ActionKeys.MANAGE_ORDERS);
+
+		return order;
 	}
 
 	@Override

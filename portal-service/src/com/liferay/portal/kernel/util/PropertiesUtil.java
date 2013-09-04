@@ -199,15 +199,13 @@ public class PropertiesUtil {
 		if (JavaDetector.isJDK6()) {
 			return loadJDK6(new UnsyncStringReader(s));
 		}
-		else {
-			ByteBuffer byteBuffer = CharsetEncoderUtil.encode(charsetName, s);
 
-			InputStream is = new UnsyncByteArrayInputStream(
-				byteBuffer.array(), byteBuffer.arrayOffset(),
-				byteBuffer.limit());
+		ByteBuffer byteBuffer = CharsetEncoderUtil.encode(charsetName, s);
 
-			return loadJDK5(is, charsetName);
-		}
+		InputStream is = new UnsyncByteArrayInputStream(
+			byteBuffer.array(), byteBuffer.arrayOffset(), byteBuffer.limit());
+
+		return loadJDK5(is, charsetName);
 	}
 
 	public static Properties loadJDK5(InputStream is, String charsetName)

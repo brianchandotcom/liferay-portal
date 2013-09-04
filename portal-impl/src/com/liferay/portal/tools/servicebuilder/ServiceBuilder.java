@@ -966,72 +966,71 @@ public class ServiceBuilder {
 
 			return entity;
 		}
-		else {
-			String refPackage = name.substring(0, pos);
-			String refEntity = name.substring(pos + 1);
 
-			if (refPackage.equals(_packagePath)) {
-				pos = _ejbList.indexOf(new Entity(refEntity));
+		String refPackage = name.substring(0, pos);
+		String refEntity = name.substring(pos + 1);
 
-				if (pos == -1) {
-					throw new RuntimeException(
-						"Cannot find " + refEntity + " in " +
-							ListUtil.toString(_ejbList, Entity.NAME_ACCESSOR));
-				}
+		if (refPackage.equals(_packagePath)) {
+			pos = _ejbList.indexOf(new Entity(refEntity));
 
-				entity = _ejbList.get(pos);
-
-				_entityPool.put(name, entity);
-
-				return entity;
+			if (pos == -1) {
+				throw new RuntimeException(
+					"Cannot find " + refEntity + " in " +
+						ListUtil.toString(_ejbList, Entity.NAME_ACCESSOR));
 			}
 
-			String refPackageDir = StringUtil.replace(refPackage, ".", "/");
-
-			String refFileName =
-				_implDir + "/" + refPackageDir + "/service.xml";
-
-			File refFile = new File(refFileName);
-
-			boolean useTempFile = false;
-
-			if (!refFile.exists()) {
-				refFileName = Time.getTimestamp();
-				refFile = new File(refFileName);
-
-				ClassLoader classLoader = getClass().getClassLoader();
-
-				FileUtil.write(
-					refFileName,
-					StringUtil.read(
-						classLoader, refPackageDir + "/service.xml"));
-
-				useTempFile = true;
-			}
-
-			ServiceBuilder serviceBuilder = new ServiceBuilder(
-				refFileName, _hbmFileName, _ormFileName, _modelHintsFileName,
-				_springFileName, _springBaseFileName, _springClusterFileName,
-				_springDynamicDataSourceFileName, _springHibernateFileName,
-				_springInfrastructureFileName, _springShardDataSourceFileName,
-				_apiDir, _implDir, _remotingFileName, _sqlDir, _sqlFileName,
-				_sqlIndexesFileName, _sqlIndexesPropertiesFileName,
-				_sqlSequencesFileName, _autoNamespaceTables, _beanLocatorUtil,
-				_propsUtil, _pluginName, _targetEntityName, _testDir, false,
-				_buildNumber, _buildNumberIncrement);
-
-			entity = serviceBuilder.getEntity(refEntity);
-
-			entity.setPortalReference(useTempFile);
+			entity = _ejbList.get(pos);
 
 			_entityPool.put(name, entity);
 
-			if (useTempFile) {
-				refFile.deleteOnExit();
-			}
-
 			return entity;
 		}
+
+		String refPackageDir = StringUtil.replace(refPackage, ".", "/");
+
+		String refFileName =
+			_implDir + "/" + refPackageDir + "/service.xml";
+
+		File refFile = new File(refFileName);
+
+		boolean useTempFile = false;
+
+		if (!refFile.exists()) {
+			refFileName = Time.getTimestamp();
+			refFile = new File(refFileName);
+
+			ClassLoader classLoader = getClass().getClassLoader();
+
+			FileUtil.write(
+				refFileName,
+				StringUtil.read(
+					classLoader, refPackageDir + "/service.xml"));
+
+			useTempFile = true;
+		}
+
+		ServiceBuilder serviceBuilder = new ServiceBuilder(
+			refFileName, _hbmFileName, _ormFileName, _modelHintsFileName,
+			_springFileName, _springBaseFileName, _springClusterFileName,
+			_springDynamicDataSourceFileName, _springHibernateFileName,
+			_springInfrastructureFileName, _springShardDataSourceFileName,
+			_apiDir, _implDir, _remotingFileName, _sqlDir, _sqlFileName,
+			_sqlIndexesFileName, _sqlIndexesPropertiesFileName,
+			_sqlSequencesFileName, _autoNamespaceTables, _beanLocatorUtil,
+			_propsUtil, _pluginName, _targetEntityName, _testDir, false,
+			_buildNumber, _buildNumberIncrement);
+
+		entity = serviceBuilder.getEntity(refEntity);
+
+		entity.setPortalReference(useTempFile);
+
+		_entityPool.put(name, entity);
+
+		if (useTempFile) {
+			refFile.deleteOnExit();
+		}
+
+		return entity;
 	}
 
 	public Entity getEntityByGenericsName(String genericsName) {

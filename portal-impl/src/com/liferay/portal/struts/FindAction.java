@@ -22,17 +22,21 @@ import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.PortletConstants;
+import com.liferay.portal.model.impl.VirtualLayout;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.PortletURLFactoryUtil;
+import com.liferay.portlet.sites.util.SitesUtil;
 
 import javax.portlet.PortletMode;
 import javax.portlet.PortletRequest;
@@ -66,15 +70,34 @@ public abstract class FindAction extends Action {
 			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		try {
 			long plid = ParamUtil.getLong(request, "p_l_id");
 			long primaryKey = ParamUtil.getLong(
 				request, getPrimaryKeyParameterName());
 
+			long groupId = ParamUtil.getLong(
+				request, "groupId", themeDisplay.getScopeGroupId());
+
+			if (primaryKey > 0) {
+				try {
+					groupId = getGroupId(primaryKey);
+				}
+				catch (Exception e) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(e, e);
+					}
+				}
+			}
+
 			Object[] plidAndPortletId = getPlidAndPortletId(
-				request, plid, primaryKey);
+				themeDisplay, groupId, plid, _portletIds);
 
 			plid = (Long)plidAndPortletId[0];
+
+			setTargetGroup(request, groupId, plid);
 
 			String portletId = (String)plidAndPortletId[1];
 
@@ -134,60 +157,13 @@ public abstract class FindAction extends Action {
 		}
 	}
 
-	protected abstract long getGroupId(long primaryKey) throws Exception;
-
-	protected Object[] getPlidAndPortletId(
-			HttpServletRequest request, long plid, long primaryKey)
+	protected static Object[] fetchPlidAndPortletId(
+			PermissionChecker permissionChecker, long groupId,
+			String[] portletIds)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		PermissionChecker permissionChecker =
-			themeDisplay.getPermissionChecker();
-
-		long groupId = ParamUtil.getLong(
-			request, "groupId", themeDisplay.getScopeGroupId());
-
-		if (primaryKey > 0) {
-			try {
-				groupId = getGroupId(primaryKey);
-			}
-			catch (Exception e) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(e, e);
-				}
-			}
-		}
-
-		if ((plid != LayoutConstants.DEFAULT_PLID) &&
-			(groupId == themeDisplay.getScopeGroupId())) {
-
-			try {
-				Layout layout = LayoutLocalServiceUtil.getLayout(plid);
-
-				LayoutTypePortlet layoutTypePortlet =
-					(LayoutTypePortlet)layout.getLayoutType();
-
-				for (String portletId : _portletIds) {
-					if (!layoutTypePortlet.hasPortletId(portletId) ||
-						!LayoutPermissionUtil.contains(
-							permissionChecker, layout, ActionKeys.VIEW)) {
-
-						continue;
-					}
-
-					portletId = getPortletId(layoutTypePortlet, portletId);
-
-					return new Object[] {plid, portletId};
-				}
-			}
-			catch (NoSuchLayoutException nsle) {
-			}
-		}
-
-		for (String portletId : _portletIds) {
-			plid = PortalUtil.getPlidFromPortletId(groupId, portletId);
+		for (String portletId : portletIds) {
+			long plid = PortalUtil.getPlidFromPortletId(groupId, portletId);
 
 			if (plid == LayoutConstants.DEFAULT_PLID) {
 				continue;
@@ -209,10 +185,62 @@ public abstract class FindAction extends Action {
 			return new Object[] {plid, portletId};
 		}
 
+		return null;
+	}
+
+	protected static Object[] getPlidAndPortletId(
+			ThemeDisplay themeDisplay, long groupId, long plid,
+			String[] portletIds)
+		throws Exception {
+
+		if ((plid != LayoutConstants.DEFAULT_PLID) &&
+			(groupId == themeDisplay.getScopeGroupId())) {
+
+			try {
+				Layout layout = LayoutLocalServiceUtil.getLayout(plid);
+
+				LayoutTypePortlet layoutTypePortlet =
+					(LayoutTypePortlet)layout.getLayoutType();
+
+				for (String portletId : portletIds) {
+					if (!layoutTypePortlet.hasPortletId(portletId) ||
+						!LayoutPermissionUtil.contains(
+							themeDisplay.getPermissionChecker(), layout,
+							ActionKeys.VIEW)) {
+
+						continue;
+					}
+
+					portletId = getPortletId(layoutTypePortlet, portletId);
+
+					return new Object[] {plid, portletId};
+				}
+			}
+			catch (NoSuchLayoutException nsle) {
+			}
+		}
+
+		Object[] plidAndPortletId = fetchPlidAndPortletId(
+			themeDisplay.getPermissionChecker(), groupId, portletIds);
+
+		if ((plidAndPortletId == null) &&
+			SitesUtil.isUserGroupLayoutSetViewable(
+				themeDisplay.getPermissionChecker(),
+				themeDisplay.getScopeGroup())) {
+
+			plidAndPortletId = fetchPlidAndPortletId(
+				themeDisplay.getPermissionChecker(),
+				themeDisplay.getScopeGroupId(), portletIds);
+		}
+
+		if (plidAndPortletId != null) {
+			return plidAndPortletId;
+		}
+
 		throw new NoSuchLayoutException();
 	}
 
-	protected String getPortletId(
+	protected static String getPortletId(
 		LayoutTypePortlet layoutTypePortlet, String portletId) {
 
 		for (String curPortletId : layoutTypePortlet.getPortletIds()) {
@@ -226,6 +254,8 @@ public abstract class FindAction extends Action {
 
 		return portletId;
 	}
+
+	protected abstract long getGroupId(long primaryKey) throws Exception;
 
 	protected abstract String getPrimaryKeyParameterName();
 
@@ -247,6 +277,33 @@ public abstract class FindAction extends Action {
 
 		portletURL.setParameter(
 			getPrimaryKeyParameterName(), String.valueOf(primaryKey));
+	}
+
+	protected void setTargetGroup(
+			HttpServletRequest request, long groupId, long plid)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PermissionChecker permissionChecker =
+			themeDisplay.getPermissionChecker();
+
+		Layout layout = LayoutLocalServiceUtil.getLayout(plid);
+
+		if ((groupId == layout.getGroupId()) ||
+			(layout.isPrivateLayout() &&
+			 !SitesUtil.isUserGroupLayoutSetViewable(
+				permissionChecker, layout.getGroup()))) {
+
+			return;
+		}
+
+		Group targetGroup = GroupLocalServiceUtil.getGroup(groupId);
+
+		layout = new VirtualLayout(layout, targetGroup);
+
+		request.setAttribute(WebKeys.LAYOUT, layout);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(FindAction.class);

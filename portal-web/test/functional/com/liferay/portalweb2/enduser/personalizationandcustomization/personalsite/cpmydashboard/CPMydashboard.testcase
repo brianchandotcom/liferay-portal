@@ -52,7 +52,7 @@
 
 		<execute macro="Page#gotoMyDashboard" />
 
-		<execute macro="Site#joinOpenViaMySitesPG">
+		<execute macro="Site#joinViaMySitesPG">
 			<var name="siteName" value="${siteName}" />
 		</execute>
 
@@ -71,6 +71,7 @@
 	</command>
 
 	<command name="JoinSitePrivateNo">
+		<var name="membershipType" value="Private" />
 		<var name="password" value="test" />
 		<var name="siteName" value="Site Name" />
 		<var name="userScreenName" value="usersn" />
@@ -116,8 +117,108 @@
 
 		<execute macro="Page#gotoMyDashboard" />
 
-		<execute macro="Site#joinPrivateViaMySitesNoPG">
+		<execute macro="Site#joinViaMySitesPG">
+			<var name="membershipType" value="${membershipType}" />
 			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginPG">
+			<var name="userEmailAddress" value="test@liferay.com" />
+			<var name="password" value="${password}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#tearDownCP" />
+	</command>
+
+	<command name="JoinSiteRestricted">
+		<var name="membershipType" value="Restricted" />
+		<var name="password" value="test" />
+		<var name="siteName" value="Site Name" />
+		<var name="userScreenName" value="usersn" />
+		<var name="userEmailAddress" value="userea@liferay.com" />
+		<var name="userFirstName" value="userfn" />
+		<var name="userLastName" value="userln" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="${siteName}" />
+			<var name="membershipType" value="${membershipType}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userScreenName" value="${userScreenName}" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordCP">
+			<var name="userScreenName" value="${userScreenName}" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginPG" >
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="password" value="${password}" />
+		</execute>
+
+		<execute macro="Page#gotoMyDashboard" />
+
+		<execute macro="Site#joinViaMySitesPG">
+			<var name="membershipType" value="${membershipType}" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginPG">
+			<var name="userEmailAddress" value="test@liferay.com" />
+			<var name="password" value="${password}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="siteScopeName" value="${siteName}" />
+			<var name="portletName" value="Site Memberships" />
+		</execute>
+
+		<execute macro="Site#approveJoinSiteRestrictedViaMySitesPG">
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginPG" >
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="password" value="${password}" />
+		</execute>
+
+		<execute macro="Page#gotoMyDashboard" />
+
+		<execute macro="Site#viewMySitesViaMySitesPG">
+			<var name="siteName" value="Site Name" />
 		</execute>
 
 		<execute macro="User#logoutPG" />
@@ -179,7 +280,7 @@
 
 		<execute macro="Page#gotoMyDashboard" />
 
-		<execute macro="Site#joinOpenViaMySitesPG">
+		<execute macro="Site#joinViaMySitesPG">
 			<var name="siteName" value="${siteName}" />
 		</execute>
 

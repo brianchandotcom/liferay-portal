@@ -20,7 +20,12 @@
 </tr>
 <tr>
 	<td>SUCCESS_MESSAGE</td>
-	<td>//div[@class='alert alert-success']</td>
+	<td>xpath=(//div[@class='alert alert-success'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE_2</td>
+	<td>xpath=(//div[@class='alert alert-success'])[2]</td>
 	<td></td>
 </tr>
 <tr>
@@ -53,9 +58,10 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--SITE_TABLE-->
 <tr>
 	<td>SITE_TABLE_SITE_NAME</td>
-	<td>//tr[contains(.,'${key_siteName}')]/td/a/strong</td>
+	<td>//tr[contains(.,'${key_siteName}')]/td[1]/strong</td>
 	<td></td>
 </tr>
 <tr>
@@ -71,6 +77,11 @@
 <tr>
 	<td>SITE_TABLE_LEAVE_SITE_NAME</td>
 	<td>//tr[contains(.,'${key_siteName}')]/td[4]/span/a/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_TABLE_REQUEST_MEMBERSHIP</td>
+	<td>//tr[contains(.,'${key_siteName}')]/td[4]</td>
 	<td></td>
 </tr>
 </tbody>

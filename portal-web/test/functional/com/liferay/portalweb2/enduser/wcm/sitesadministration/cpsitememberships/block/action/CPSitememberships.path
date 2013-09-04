@@ -24,6 +24,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MEMBERSHIP_TYPE</td>
+	<td>//div[@class='site-membership-type']/span/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REQUEST_MESSAGE</td>
+	<td>//div[@class='site-membership-type']/span[3]/a/span</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -37,6 +47,11 @@
 <tr>
 	<td>TOOLBAR_ADD_SITE_ROLES_TO</td>
 	<td>//div[@class='navbar ']//a[contains(.,'Add Site Roles to')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TOOLBAR_VIEW_MEMBERSHIP_REQUESTS</td>
+	<td>//div[@class='navbar ']//a[contains(.,'View Members')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -171,12 +186,6 @@
 	<td>//input[@id='_174_keywords_organizations']/../following-sibling::button[contains(.,'Search')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--ORGANIZATION_TABLE-->
 <tr>
 	<td></td>
 	<td></td>

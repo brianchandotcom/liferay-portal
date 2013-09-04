@@ -81,6 +81,31 @@
 		<execute action="CPSitemembershipsAddmembers#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
+	<command name="approveJoinSiteRestrictedViaMySitesPG">
+		<var name="key_userScreenName" value="${userScreenName}" />
+
+		<execute action="CPSitememberships#assertTextEquals" locator-key1="MEMBERSHIP_TYPE" value1="Membership Type: Restricted"/>
+		<execute action="CPSitememberships#assertTextEquals" locator-key1="REQUEST_MESSAGE" value1="There are 1 membership requests pending." />
+		<execute action="CPSitememberships#assertClick" locator-key1="TOOLBAR_VIEW_MEMBERSHIP_REQUESTS" value1="View Membership Requests" />
+
+		<execute action="CPSitemembershipsViewmembershiprequestsPending#assertTextEquals" locator-key1="REQUESTS_TABLE_USER_NAME" value1="${userFirstName} ${userLastName} (${userEmailAddress})" />
+		<execute action="CPSitemembershipsViewmembershiprequestsPending#assertTextEquals" locator-key1="REQUESTS_TABLE_USER_COMMENTS" value1="Please allow me to join the Restricted Site." />
+		<execute action="CPSitemembershipsViewmembershiprequestsPending#assertClick" locator-key1="REQUESTS_TABLE_REPLY" value1="Reply" />
+
+		<execute action="CPSitemembershipsViewmembershiprequestsPendingReply#select" locator-key1="STATUS" value1="Approve" />
+		<execute action="CPSitemembershipsViewmembershiprequestsPendingReply#type" locator-key1="REPLY_COMMENTS" value1="You may join the Restricted Site." />
+		<execute action="CPSitemembershipsViewmembershiprequestsPendingReply#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+
+		<execute action="CPSitemembershipsViewmembershiprequestsPending#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="CPSitemembershipsViewmembershiprequestsPending#assertTextEquals" locator-key1="SUCCESS_MESSAGE_2" value1="Your reply will be sent to the user by email." />
+		<execute action="CPSitemembershipsViewmembershiprequestsPending#assertClick" locator-key1="VIEW_MEMBERSHIP_NAVIGATION_APPROVED" value1="Approved" />
+
+		<execute action="CPSitemembershipsViewmembershiprequestsApproved#assertTextEquals" locator-key1="APPROVED_TABLE_USER_NAME" value1="${userFirstName} ${userLastName} (${userEmailAddress})" />
+		<execute action="CPSitemembershipsViewmembershiprequestsApproved#assertTextEquals" locator-key1="APPROVED_TABLE_USER_COMMENTS" value1="Please allow me to join the Restricted Site." />
+		<execute action="CPSitemembershipsViewmembershiprequestsApproved#assertTextEquals" locator-key1="APPROVED_TABLE_REPLIER_NAME" value1="Test Test" />
+		<execute action="CPSitemembershipsViewmembershiprequestsApproved#assertTextEquals" locator-key1="APPROVED_TABLE_REPLY_COMMENTS" value1="You may join the Restricted Site." />
+	</command>
+
 	<command name="assignRoleCP">
 		<execute action="CPSitememberships#assertClick" locator-key1="TOOLBAR_ADD_SITE_ROLES_TO" value1="Add Site Roles to" />
 		<execute action="CPSitememberships#assertClick" locator-key1="ADD_SITE_ROLES_TO_MENULIST_USERS" value1="Users"/>
@@ -116,30 +141,42 @@
 		<execute action="CPSites#assertTextNotPresent" value1="${siteName}" />
 	</command>
 
-	<command name="joinOpenViaMySitesPG">
+	<command name="joinViaMySitesPG">
 		<var name="key_siteName" value="${siteName}" />
 
 		<execute action="PGMysites#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No sites were found." />
 		<execute action="PGMysites#assertClick" locator-key1="NAVIGATION_AVAILABLE_SITES" value1="Available Sites" />
 		<execute action="PGMysitesAvailablesites#type" locator-key1="SEARCH_FIELD" value1="${siteName}" />
 		<execute action="PGMysitesAvailablesites#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
-		<execute action="PGMysitesAvailablesites#assertTextEquals" locator-key1="SITE_TABLE_SITE_NAME" value1="${siteName}" />
-		<execute action="PGMysitesAvailablesites#assertTextEquals" locator-key1="SITE_TABLE_SITE_NAME_MEMBERS" value1="1" />
-		<execute action="PGMysitesAvailablesites#assertClick" locator-key1="SITE_TABLE_JOIN_SITE_NAME" value1="Join" />
-		<execute action="PGMysitesAvailablesites#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute action="PGMysitesAvailablesites#assertTextEquals" locator-key1="SITE_TABLE_SITE_NAME" value1="${siteName}" />
-		<execute action="PGMysitesAvailablesites#assertTextEquals" locator-key1="SITE_TABLE_SITE_NAME_MEMBERS" value1="2" />
-		<execute action="PGMysitesAvailablesites#assertTextEquals" locator-key1="SITE_TABLE_LEAVE_SITE_NAME" value1="Leave" />
-	</command>
 
-	<command name="joinPrivateViaMySitesNoPG">
-		<var name="key_siteName" value="${siteName}" />
-
-		<execute action="PGMysites#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No sites were found." />
-		<execute action="PGMysites#assertClick" locator-key1="NAVIGATION_AVAILABLE_SITES" value1="Available Sites" />
-		<execute action="PGMysitesAvailablesites#type" locator-key1="SEARCH_FIELD" value1="${siteName}" />
-		<execute action="PGMysitesAvailablesites#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
-		<execute action="PGMysitesAvailablesites#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No sites were found." />
+		<if>
+			<equals arg1="${membershipType}" arg2="Private" />
+			<then>
+				<execute action="PGMysitesAvailablesites#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No sites were found." />
+			</then>
+			<elseif>
+				<equals arg1="${membershipType}" arg2="Restricted" />
+				<then>
+					<execute action="PGMysitesAvailablesites#assertTextEquals" locator-key1="SITE_TABLE_SITE_NAME" value1="${siteName}" />
+					<execute action="PGMysitesAvailablesites#assertTextEquals" locator-key1="SITE_TABLE_SITE_NAME_MEMBERS" value1="1" />
+					<execute action="PGMysitesAvailablesites#assertClick" locator-key1="SITE_TABLE_REQUEST_MEMBERSHIP" value1="Request Membership" />
+					<execute action="PGMysitesAvailablesitesRequestmembership#type" locator-key1="COMMENTS_FIELD" value1="Please allow me to join the Restricted Site." />
+					<execute action="PGMysitesAvailablesitesRequestmembership#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+					<execute action="PGMysitesAvailablesites#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+					<execute action="PGMysitesAvailablesites#assertTextEquals" locator-key1="SUCCESS_MESSAGE_2" value1="Your request was sent. You will receive a reply by email." />
+					<execute action="PGMysitesAvailablesites#assertTextEquals" locator-key1="SITE_TABLE_REQUEST_MEMBERSHIP" value1="Membership Requested" />
+				</then>
+			</elseif>
+			<else>
+				<execute action="PGMysitesAvailablesites#assertTextEquals" locator-key1="SITE_TABLE_SITE_NAME" value1="${siteName}" />
+				<execute action="PGMysitesAvailablesites#assertTextEquals" locator-key1="SITE_TABLE_SITE_NAME_MEMBERS" value1="1" />
+				<execute action="PGMysitesAvailablesites#assertClick" locator-key1="SITE_TABLE_JOIN_SITE_NAME" value1="Join" />
+				<execute action="PGMysitesAvailablesites#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+				<execute action="PGMysitesAvailablesites#assertTextEquals" locator-key1="SITE_TABLE_SITE_NAME" value1="${siteName}" />
+				<execute action="PGMysitesAvailablesites#assertTextEquals" locator-key1="SITE_TABLE_SITE_NAME_MEMBERS" value1="2" />
+				<execute action="PGMysitesAvailablesites#assertTextEquals" locator-key1="SITE_TABLE_LEAVE_SITE_NAME" value1="Leave" />
+			</else>
+		</if>
 	</command>
 
 	<command name="leaveViaMySitesPG">
@@ -217,5 +254,14 @@
 		<execute action="CPSites#assertTextEquals" locator-key1="SITE_TABLE_PENDING_REQUESTS" value1="" />
 		<execute action="CPSites#assertTextEquals" locator-key1="SITE_TABLE_TAGS" value1="" />
 		<execute action="CPSites#assertTextEquals" locator-key1="SITE_TABLE_ACTIONS" value1="Actions" />
+	</command>
+
+	<command name="viewMySitesViaMySitesPG">
+		<var name="key_siteName" value="${siteName}" />
+
+		<execute action="PGMysites#assertTextEquals" locator-key1="NAVIGATION_MY_SITES" value1="My Sites" />
+		<execute action="PGMysites#assertTextEquals" locator-key1="SITE_TABLE_SITE_NAME" value1="${siteName}" />
+		<execute action="PGMysites#assertTextEquals" locator-key1="SITE_TABLE_SITE_NAME_MEMBERS" value1="2" />
+		<execute action="PGMysites#assertTextEquals" locator-key1="SITE_TABLE_SITE_ACTIONS" value1="Actions" />
 	</command>
 </definition>

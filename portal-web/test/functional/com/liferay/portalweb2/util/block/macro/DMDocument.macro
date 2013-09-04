@@ -19,8 +19,8 @@
 		<execute action="PGDocumentsandmedia#assertClick" locator-key1="ADD_MENULIST_BASIC_DOCUMENT" value1="Basic Document" />
 
 		<execute action="PGDocumentsandmediaAdddocument#uploadCommonFile" locator-key1="FILE_FIELD" value1="${dmDocumentFile}" />
-		<execute action="PGDocumentsandmediaAdddocument#type" locator-key1="TITLE_FIELD" value1="DM Document .${dmDocType} Title" />
-		<execute action="PGDocumentsandmediaAdddocument#type" locator-key1="DESCRIPTION_FIELD" value1="DM Document .${dmDocType} Description" />
+		<execute action="PGDocumentsandmediaAdddocument#type" locator-key1="TITLE_FIELD" value1="${dmDocumentTitle}" />
+		<execute action="PGDocumentsandmediaAdddocument#type" locator-key1="DESCRIPTION_FIELD" value1="${dmDocumentTitle}" />
 		<execute action="PGDocumentsandmediaAdddocument#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 
 		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
@@ -33,7 +33,9 @@
 	</command>
 
 	<command name="deletePG">
-		<execute action="PGDocumentsandmedia#click" locator-key1="ENTRIES_DOCUMENT" />
+		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
+
+		<execute action="PGDocumentsandmedia#click" locator-key1="ENTRIES_DOCUMENT_TITLE" />
 
 		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_INFO_TITLE" value1="${dmDocumentTitle}" />
 		<execute action="PGDocumentsandmediaDocument#assertClick" locator-key1="TOOLBAR_MOVE_TO_RECYCLE_BIN_BUTTON" value1="Move to the Recycle Bin" />
@@ -62,7 +64,9 @@
 	</command>
 
 	<command name="editPG">
-		<execute action="PGDocumentsandmedia#click" locator-key1="ENTRIES_DOCUMENT" />
+		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
+
+		<execute action="PGDocumentsandmedia#click" locator-key1="ENTRIES_DOCUMENT_TITLE" />
 
 		<execute action="PGDocumentsandmediaDocument#assertTextEquals" locator-key1="DOCUMENT_INFO_TITLE" value1="${dmDocumentTitle}"/>
 		<execute action="PGDocumentsandmediaDocument#assertClick" locator-key1="TOOLBAR_EDIT_BUTTON" value1="Edit" />
@@ -228,8 +232,10 @@
 	</command>
 
 	<command name="viewPG">
-		<execute action="PGDocumentsandmedia#type" locator-key1="TOOLBAR_SEARCH_FIELD" value1="${dmDocType}" />
+		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
+
+		<execute action="PGDocumentsandmedia#type" locator-key1="TOOLBAR_SEARCH_FIELD" value1="${dmDocumentTitle}" />
 		<execute action="PGDocumentsandmedia#assertClick" locator-key1="TOOLBAR_SEARCH_BUTTON" value1="Search" />
-		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ENTRIES_SEARCH_DOCUMENT_TITLE" value1="DM Document .${dmDocType} Title" />
+		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ENTRIES_SEARCH_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
 	</command>
 </definition>

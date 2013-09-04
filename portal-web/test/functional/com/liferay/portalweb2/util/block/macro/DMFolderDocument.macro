@@ -1,6 +1,8 @@
 <definition>
 	<command name="addPG">
-		<execute action="PGDocumentsandmedia#click" locator-key1="ENTRIES_FOLDER" />
+		<var name="key_dmFolderName" value="${dmFolderName}" />
+
+		<execute action="PGDocumentsandmedia#assertClick" locator-key1="ENTRIES_FOLDER_NAME" value1="${dmFolderName}"/>
 
 		<execute action="PGDocumentsandmediaFolder#assertClick" locator-key1="TOOLBAR_ADD" value1="Add" />
 		<execute action="PGDocumentsandmediaFolder#assertClick" locator-key1="ADD_MENULIST_BASIC_DOCUMENT" value1="Basic Document" />
@@ -58,7 +60,7 @@
 	</command>
 
 	<command name="moveToFolderPG">
-		<execute action="PGDocumentsandmedia#click" locator-key1="ENTRIES_FOLDER" />
+		<var name="key_dmFolderName" value="${dmFolderName}" />
 
 		<execute action="PGDocumentsandmediaFolder#check" locator-key1="FOLDER_ENTRIES_DOCUMENT_CHECKBOX" />
 		<execute action="PGDocumentsandmediaFolder#assertClick" locator-key1="TOOLBAR_ACTIONS" value1="Actions" />
@@ -66,10 +68,9 @@
 
 		<execute action="PGDocumentsandmediaMovefiles#assertClick" locator-key1="SELECT_BUTTON" value1="Select" />
 		<execute action="PGDocumentsandmediaMovefiles#selectFrame" locator-key1="SELECT_POP_UP_IFRAME" />
-		<execute action="PGDocumentsandmediaMovefiles#assertClick" locator-key1="SELECT_POP_UP_CHOOSE_2" value1="Choose" />
+		<execute action="PGDocumentsandmediaMovefiles#assertClick" locator-key1="SELECT_POP_UP_CHOOSE" value1="Choose" />
 		<execute action="PGDocumentsandmediaMovefiles#selectFrameTop" />
 		<execute action="PGDocumentsandmediaMovefiles#assertClick" locator-key1="MOVE_BUTTON" value1="Move" />
-
 		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 </definition>

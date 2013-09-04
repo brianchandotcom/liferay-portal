@@ -237,9 +237,24 @@
 </tr>
 <!--FOLDER_ENTRIES-->
 <tr>
+	<td>FOLDER_ENTRIES_DOCUMENT_TITLE</td>
+	<td>//span[@class='entry-title']/span[contains(.,'${key_dmDocumentTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FOLDER_ENTRIES_DOCUMENT_CHECKBOX</td>
 	<td>//input[@id='_20_rowIdsFileEntryCheckbox']</td>
 	<td>Select Document</td>
+</tr>
+<tr>
+	<td>FOLDER_ENTRIES_DOCUMENT_STATUS</td>
+	<td>//span[@class='workflow-status']/strong</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FOLDER_ENTRIES_DOCUMENT_LOCKED</td>
+	<td>//div[@class='entry-thumbnail']/img[@alt='Locked']</td>
+	<td></td>
 </tr>
 <tr>
 	<td></td>

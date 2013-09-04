@@ -373,7 +373,11 @@ public class UploadServletRequestImpl
 
 	@Override
 	public ServletInputStream getInputStream() throws IOException {
-		return _liferayServletRequest.getInputStream();
+		if (_liferayServletRequest != null) {
+			return _liferayServletRequest.getInputStream();
+		}
+
+		return super.getInputStream();
 	}
 
 	@Override

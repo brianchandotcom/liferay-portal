@@ -30,6 +30,25 @@
 		word-wrap: break-word;
 	}
 
+	.btn-toolbar {
+		input[type="submit"].btn {
+			margin-bottom: 0;
+			margin-top: 0;
+		}
+
+		.btn {
+			margin-right: 5px;
+
+			&:last-child {
+				margin-right: 0;
+			}
+		}
+
+		> .btn + .btn {
+			margin-left: 0;
+		}
+	}
+
 	.table {
 		font-size: 15px;
 		overflow: hidden;

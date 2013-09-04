@@ -261,15 +261,13 @@ portletURL.setParameter("tabs1", tabs1);
 
 			</select>
 
-			<input type="submit" value="<liferay-ui:message key="search" />" />
+			<input class="btn" type="submit" value="<liferay-ui:message key="search" />" />
 		</div>
 
-		<br />
-
 		<c:if test="<%= showAddProductEntryButton && showPermissionsButton %>">
-			<div>
+			<div class="btn-toolbar">
 				<c:if test="<%= showAddProductEntryButton %>">
-					<input onClick="<portlet:namespace />addProduct();" type="button" value="<liferay-ui:message key="add-product" />" />
+					<input class="btn" onClick="<portlet:namespace />addProduct();" type="button" value="<liferay-ui:message key="add-product" />" />
 				</c:if>
 
 				<c:if test="<%= showPermissionsButton %>">
@@ -280,11 +278,9 @@ portletURL.setParameter("tabs1", tabs1);
 						var="permissionsURL"
 					/>
 
-					<input onClick="location.href = '<%= permissionsURL %>';" type="button" value="<liferay-ui:message key="permissions" />" />
+					<input class="btn" onClick="location.href = '<%= permissionsURL %>';" type="button" value="<liferay-ui:message key="permissions" />" />
 				</c:if>
 			</div>
-
-			<br />
 		</c:if>
 
 		<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" />
@@ -442,11 +438,9 @@ portletURL.setParameter("tabs1", tabs1);
 		%>
 
 		<c:if test="<%= showAddProductEntryButton %>">
-			<div>
-				<input onClick="location.href = '<portlet:renderURL><portlet:param name="struts_action" value="/software_catalog/edit_product_entry" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>';" type="button" value="<liferay-ui:message key="add-product" />" />
+			<div class="btn-toolbar">
+				<input class="btn" onClick="location.href = '<portlet:renderURL><portlet:param name="struts_action" value="/software_catalog/edit_product_entry" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>';" type="button" value="<liferay-ui:message key="add-product" />" />
 			</div>
-
-			<br />
 		</c:if>
 
 		<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" />
@@ -525,9 +519,9 @@ portletURL.setParameter("tabs1", tabs1);
 		%>
 
 		<c:if test="<%= showAddFrameworkVersionButton || showPermissionsButton %>">
-			<div>
+			<div class="btn-toolbar">
 				<c:if test="<%= showAddFrameworkVersionButton %>">
-					<input onClick="location.href = '<portlet:renderURL><portlet:param name="struts_action" value="/software_catalog/edit_framework_version" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>';" type="button" value="<liferay-ui:message key="add-framework-version" />" />
+					<input class="btn" onClick="location.href = '<portlet:renderURL><portlet:param name="struts_action" value="/software_catalog/edit_framework_version" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>';" type="button" value="<liferay-ui:message key="add-framework-version" />" />
 				</c:if>
 
 				<c:if test="<%= showPermissionsButton %>">
@@ -538,11 +532,9 @@ portletURL.setParameter("tabs1", tabs1);
 						var="permissionsURL"
 					/>
 
-					<input onClick="location.href = '<%= permissionsURL %>';" type="button" value="<liferay-ui:message key="permissions" />" />
+					<input class="btn" onClick="location.href = '<%= permissionsURL %>';" type="button" value="<liferay-ui:message key="permissions" />" />
 				</c:if>
 			</div>
-
-			<br />
 		</c:if>
 
 		<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" />
@@ -634,11 +626,9 @@ portletURL.setParameter("tabs1", tabs1);
 		%>
 
 		<c:if test="<%= hasAddLicensePermission %>">
-			<div>
-				<input onClick="location.href = '<portlet:renderURL><portlet:param name="struts_action" value="/software_catalog/edit_license" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>';" type="button" value="<liferay-ui:message key="add-license" />" />
+			<div class="btn-toolbar">
+				<input class="btn" onClick="location.href = '<portlet:renderURL><portlet:param name="struts_action" value="/software_catalog/edit_license" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>';" type="button" value="<liferay-ui:message key="add-license" />" />
 			</div>
-
-			<br />
 		</c:if>
 
 		<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" />

@@ -275,19 +275,22 @@ int screenshotsCount = ParamUtil.getInteger(request, "screenshotsCount", product
 
 			</table>
 
-			<input onClick="<portlet:namespace />addScreenShot();" type="button" value="<liferay-ui:message key="add-screenshot" />" />
+			<div class="btn-toolbar">
+				<input class="btn" onClick="<portlet:namespace />addScreenShot();" type="button" value="<liferay-ui:message key="add-screenshot" />" />
 
-			<c:if test="<%= screenshotsCount > 0 %>">
-				<input onClick="<portlet:namespace />removeScreenShot();" type="button" value="<liferay-ui:message key="remove-screenshot" />" />
-			</c:if>
+				<c:if test="<%= screenshotsCount > 0 %>">
+					<input class="btn" onClick="<portlet:namespace />removeScreenShot();" type="button" value="<liferay-ui:message key="remove-screenshot" />" />
+				</c:if>
+			</div>
 		</liferay-ui:panel>
 	</liferay-ui:panel-container>
 </div>
 
-<input type="submit" value="<liferay-ui:message key="save" />" />
+<div class="btn-toolbar">
+	<input class="btn btn-primary" type="submit" value="<liferay-ui:message key="save" />" />
 
-<input onClick="location.href = '<%= HtmlUtil.escape(PortalUtil.escapeRedirect(redirect)) %>';" type="button" value="<liferay-ui:message key="cancel" />" />
-
+	<input class="btn" onClick="location.href = '<%= HtmlUtil.escape(PortalUtil.escapeRedirect(redirect)) %>';" type="button" value="<liferay-ui:message key="cancel" />" />
+</div>
 </form>
 
 <aui:script>

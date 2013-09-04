@@ -29,8 +29,8 @@ try {
 				</div>
 
 				<c:if test="<%= WikiPagePermission.contains(permissionChecker, wikiPage, ActionKeys.UPDATE) %>">
-					<div>
-						<input onClick="location.href = '<portlet:renderURL><portlet:param name="struts_action" value="/wiki/edit_page" /><portlet:param name="nodeId" value="<%= String.valueOf(node.getNodeId()) %>" /><portlet:param name="title" value="<%= title %>" /><portlet:param name="removeRedirect" value="true" /></portlet:renderURL>'" type="button" value="<liferay-ui:message key="remove-redirect" />" />
+					<div class="btn-toolbar">
+						<input class="btn" onClick="location.href = '<portlet:renderURL><portlet:param name="struts_action" value="/wiki/edit_page" /><portlet:param name="nodeId" value="<%= String.valueOf(node.getNodeId()) %>" /><portlet:param name="title" value="<%= title %>" /><portlet:param name="removeRedirect" value="true" /></portlet:renderURL>'" type="button" value="<liferay-ui:message key="remove-redirect" />" />
 					</div>
 				</c:if>
 			</c:when>

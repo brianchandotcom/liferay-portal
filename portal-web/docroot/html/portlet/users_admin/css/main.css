@@ -1,3 +1,5 @@
+@import "mixins";
+
 .portlet-users-admin {
 	.form {
 		fieldset {
@@ -8,11 +10,6 @@
 		.fieldset {
 			textarea {
 				width: 90%;
-			}
-
-			table.org-labor-table td .field {
-				margin-bottom: 0;
-				padding: 3px 1px;
 			}
 
 			.field {
@@ -72,6 +69,25 @@
 		padding: 15px 0 5px;
 	}
 
+	.org-labor-entry {
+		float: left;
+		margin-right: 2%;
+		width: 12%;
+
+		@include respond-to(phone) {
+			float: none;
+			width: auto;
+		}
+
+		select {
+			width: 100%;
+		}
+
+		> .control-group {
+			margin-bottom: 0;
+		}
+	}
+
 	.organization-information {
 		overflow: hidden;
 	}
@@ -81,9 +97,9 @@
 		margin: 0 0 0.5em 0.5em;
 	}
 
-    .password-policy-options {
-        margin-left: 2em;
-    }
+	.password-policy-options {
+		margin-left: 2em;
+	}
 
 	.section {
 		float: left;
@@ -179,10 +195,6 @@
 		}
 	}
 
-	table.org-labor-table {
-		margin-bottom: 30px;
-	}
-
 	.addresses .field {
 		float: none;
 		width: auto;
@@ -248,13 +260,13 @@
 				white-space: nowrap;
 			}
 
- 			.permission-navigation-item-summary {
+			.permission-navigation-item-summary {
 				margin: 0.5em 0em 1.5em .5em;
 			}
 
-            .permission-navigation-section .permission-navigation-section {
-	            margin-left: 1em;
-            }
+			.permission-navigation-section .permission-navigation-section {
+				margin-left: 1em;
+			}
 		}
 	}
 

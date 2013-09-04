@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.lar.MissingReference;
 import com.liferay.portal.kernel.lar.MissingReferences;
 import com.liferay.portal.kernel.staging.StagingUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.BackgroundTask;
 import com.liferay.portal.service.BackgroundTaskLocalServiceUtil;
 
@@ -62,14 +63,18 @@ public abstract class BaseStagingBackgroundTaskExecutor
 		backgroundTaskStatus.clearAttributes();
 	}
 
-	protected BackgroundTask markValidatedBackgroundTask(
-			BackgroundTask backgroundTask)
+	protected BackgroundTask markBackgroundTask(
+			BackgroundTask backgroundTask, String backgroundTaskState)
 		throws SystemException {
 
 		Map<String, Serializable> taskContextMap =
 			backgroundTask.getTaskContextMap();
 
-		taskContextMap.put("validated", Boolean.TRUE);
+		if (Validator.isNull(backgroundTaskState)) {
+			return backgroundTask;
+		}
+
+		taskContextMap.put(backgroundTaskState, Boolean.TRUE);
 
 		backgroundTask.setTaskContext(
 			JSONFactoryUtil.serialize(taskContextMap));

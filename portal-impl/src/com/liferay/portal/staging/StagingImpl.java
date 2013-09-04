@@ -2662,7 +2662,7 @@ public class StagingImpl implements Staging {
 		}
 		catch (SystemException se) {
 			RemoteExportException ree = new RemoteExportException(
-				RemoteExportException.BAD_CONNECTION);
+				RemoteExportException.BAD_CONNECTION, se.getMessage());
 
 			ree.setURL(remoteURL);
 

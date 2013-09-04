@@ -33,6 +33,12 @@ public class RemoteExportException extends PortalException {
 		_type = type;
 	}
 
+	public RemoteExportException(int type, String msg) {
+		super(msg);
+
+		_type = type;
+	}
+
 	public long getGroupId() {
 		return _groupId;
 	}

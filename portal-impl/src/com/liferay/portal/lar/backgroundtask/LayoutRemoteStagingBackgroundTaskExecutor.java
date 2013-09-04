@@ -110,10 +110,12 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 					new byte[PropsValues.STAGING_REMOTE_TRANSFER_BUFFER_SIZE];
 			}
 
+			backgroundTask = markBackgroundTask(backgroundTask, "exported");
+
 			missingReferences = StagingServiceHttp.validateStagingRequest(
 				httpPrincipal, stagingRequestId, privateLayout, parameterMap);
 
-			backgroundTask = markValidatedBackgroundTask(backgroundTask);
+			backgroundTask = markBackgroundTask(backgroundTask, "validated");
 
 			StagingServiceHttp.publishStagingRequest(
 				httpPrincipal, stagingRequestId, privateLayout, parameterMap);

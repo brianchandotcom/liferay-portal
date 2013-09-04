@@ -67,11 +67,13 @@ public class LayoutStagingBackgroundTaskExecutor
 				sourceGroupId, privateLayout, layoutIds, parameterMap,
 				startDate, endDate);
 
+			backgroundTask = markBackgroundTask(backgroundTask, "exported");
+
 			missingReferences =
 				LayoutLocalServiceUtil.validateImportLayoutsFile(
 					userId, targetGroupId, privateLayout, parameterMap, file);
 
-			backgroundTask = markValidatedBackgroundTask(backgroundTask);
+			backgroundTask = markBackgroundTask(backgroundTask, "validated");
 
 			LayoutLocalServiceUtil.importLayouts(
 				userId, targetGroupId, privateLayout, parameterMap, file);

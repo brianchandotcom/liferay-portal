@@ -14,12 +14,8 @@
 
 package com.liferay.portal.lar.backgroundtask;
 
-import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
-import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.lar.MissingReference;
 import com.liferay.portal.kernel.lar.MissingReferences;
-import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.model.BackgroundTask;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
@@ -59,6 +55,8 @@ public class PortletStagingBackgroundTaskExecutor
 			sourcePlid, sourceGroupId, portletId, parameterMap, startDate,
 			endDate);
 
+		backgroundTask = markBackgroundTask(backgroundTask, "exported");
+
 		MissingReferences missingReferences = null;
 
 		try {
@@ -67,7 +65,7 @@ public class PortletStagingBackgroundTaskExecutor
 					userId, targetGroupId, targetPlid, portletId, parameterMap,
 					larFile);
 
-			backgroundTask = markValidatedBackgroundTask(backgroundTask);
+			backgroundTask = markBackgroundTask(backgroundTask, "validated");
 
 			LayoutLocalServiceUtil.importPortletInfo(
 				userId, targetPlid, targetGroupId, portletId, parameterMap,
@@ -77,23 +75,7 @@ public class PortletStagingBackgroundTaskExecutor
 			larFile.delete();
 		}
 
-		BackgroundTaskResult backgroundTaskResult = new BackgroundTaskResult(
-			BackgroundTaskConstants.STATUS_SUCCESSFUL);
-
-		Map<String, MissingReference> weakMissingReferences =
-			missingReferences.getWeakMissingReferences();
-
-		if ((weakMissingReferences != null) &&
-			!weakMissingReferences.isEmpty()) {
-
-			JSONArray jsonArray = StagingUtil.getWarningMessagesJSONArray(
-				getLocale(backgroundTask), weakMissingReferences,
-				backgroundTask.getTaskContextMap());
-
-			backgroundTaskResult.setStatusMessage(jsonArray.toString());
-		}
-
-		return backgroundTaskResult;
+		return processMissingReferences(backgroundTask, missingReferences);
 	}
 
 }

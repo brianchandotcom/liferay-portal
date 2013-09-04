@@ -163,6 +163,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SETTINGS_SHOW_LABEL</td>
+	<td>//td[contains(@class,'table-col-name') and contains(.,'Show Label')]/following-sibling::td[contains(@class,'table-col-value')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETTINGS_TIP</td>
+	<td>//td[contains(@class,'table-col-name') and contains(.,'Tip')]/following-sibling::td[contains(@class,'table-col-value')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -175,7 +185,7 @@
 </tr>
 <tr>
 	<td>FORM_FIELD_1</td>
-	<td>xpath=(//div[@class='form-builder-field-content form-builder-text-field-content clearfix'])[1]</td>
+	<td>xpath=(//div[contains(@class,'component form-builder-field')])[1]</td>
 	<td></td>
 </tr>
 <tr>
@@ -267,6 +277,31 @@
 <tr>
 	<td>SETTINGS_CELL_EDITOR_FIELD</td>
 	<td>//input[@name='value']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETTINGS_CELL_EDITOR_TEXT_AREA</td>
+	<td>//textarea[@name='value']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETTINGS_CELL_EDITOR_YES_RADIO</td>
+	<td>//input[(@name='value') and (@value='true') ]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETTINGS_CELL_EDITOR_NO_RADIO</td>
+	<td>//input[(@name='value') and (@value='false') ]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETTINGS_CELL_EDITOR_OPTION</td>
+	<td>//div[contains(@class,'celleditor-edit-option') and input/@value='${key_option}']/input[@title='Name']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETTINGS_CELL_EDITOR_VALUE</td>
+	<td>//div[contains(@class,'celleditor-edit-option') and input/@value='${key_value}']/input[@title='Value']</td>
 	<td></td>
 </tr>
 <tr>

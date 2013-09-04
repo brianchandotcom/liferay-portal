@@ -1,0 +1,7 @@
+<definition>
+	<command name="assertClick">
+		<case locator-key1="STAGING_MENULIST_MANAGE_SITE_PAGES_VARIATIONS">
+			<execute function="AssertClick#assertTextClickAndWait" />
+		</case>
+	</command>
+</definition>

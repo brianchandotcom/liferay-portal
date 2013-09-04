@@ -487,7 +487,9 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 
 		virtualHostname = virtualHostname.trim().toLowerCase();
 
-		if (!Validator.isDomain(virtualHostname)) {
+		if (Validator.isNotNull(virtualHostname) &&
+			!Validator.isDomain(virtualHostname)) {
+
 			throw new LayoutSetVirtualHostException();
 		}
 

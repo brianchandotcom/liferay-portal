@@ -206,7 +206,7 @@ AUI.add(
 
 				instance._registerPanels();
 
-				var btnNavigation = A.one('#navNavigationNavbarBtn');
+				var btnNavigation = A.oneNS(namespace, '#navSiteNavigationNavbarBtn');
 
 				var navigation = A.one(Liferay.Data.NAV_SELECTOR);
 

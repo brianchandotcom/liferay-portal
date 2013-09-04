@@ -5,7 +5,7 @@
 	.aui {
 		.dockbar .navbar-inner .container {
 
-			#navAddControlsNavbarBtn, #navNavigationNavbarBtn {
+			#_145_navAddControlsNavbarBtn, #_145_navSiteNavigationNavbarBtn {
 				display: none;
 			}
 

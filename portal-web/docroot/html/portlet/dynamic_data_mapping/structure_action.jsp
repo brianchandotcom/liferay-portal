@@ -23,7 +23,7 @@ DDMStructure structure = (DDMStructure)row.getObject();
 %>
 
 <liferay-ui:icon-menu showExpanded="<%= false %>" showWhenSingleIcon="<%= false %>">
-	<c:if test="<%= DDMStructurePermission.contains(permissionChecker, structure, ActionKeys.UPDATE) %>">
+	<c:if test="<%= DDMStructurePermission.contains(permissionChecker, structure, refererPortletName, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editURL">
 			<portlet:param name="struts_action" value="/dynamic_data_mapping/edit_structure" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -41,7 +41,7 @@ DDMStructure structure = (DDMStructure)row.getObject();
 	String editStructureDefaultValuesURL = ddmDisplay.getEditStructureDefaultValuesURL(liferayPortletRequest, liferayPortletResponse, structure, currentURL, currentURL);
 	%>
 
-	<c:if test="<%= Validator.isNotNull(editStructureDefaultValuesURL) && DDMStructurePermission.contains(permissionChecker, structure, ActionKeys.UPDATE) %>">
+	<c:if test="<%= Validator.isNotNull(editStructureDefaultValuesURL) && DDMStructurePermission.contains(permissionChecker, structure, refererPortletName, ActionKeys.UPDATE) %>">
 		<liferay-ui:icon
 			image="edit"
 			message="edit-default-values"
@@ -49,7 +49,7 @@ DDMStructure structure = (DDMStructure)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= DDMStructurePermission.contains(permissionChecker, structure, ActionKeys.VIEW) && showManageTemplates %>">
+	<c:if test="<%= DDMStructurePermission.contains(permissionChecker, structure, refererPortletName, ActionKeys.VIEW) && showManageTemplates %>">
 		<portlet:renderURL var="manageViewURL">
 			<portlet:param name="struts_action" value="/dynamic_data_mapping/view_template" />
 			<portlet:param name="classNameId" value="<%= String.valueOf(PortalUtil.getClassNameId(DDMStructure.class)) %>" />
@@ -63,7 +63,7 @@ DDMStructure structure = (DDMStructure)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= DDMStructurePermission.contains(permissionChecker, structure, ActionKeys.PERMISSIONS) %>">
+	<c:if test="<%= DDMStructurePermission.contains(permissionChecker, structure, refererPortletName, ActionKeys.PERMISSIONS) %>">
 		<liferay-security:permissionsURL
 			modelResource="<%= DDMStructure.class.getName() %>"
 			modelResourceDescription="<%= structure.getName(locale) %>"
@@ -102,7 +102,7 @@ DDMStructure structure = (DDMStructure)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= DDMStructurePermission.contains(permissionChecker, structure, ActionKeys.DELETE) %>">
+	<c:if test="<%= DDMStructurePermission.contains(permissionChecker, structure, refererPortletName, ActionKeys.DELETE) %>">
 		<portlet:actionURL var="deleteURL">
 			<portlet:param name="struts_action" value="/dynamic_data_mapping/edit_structure" />
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />

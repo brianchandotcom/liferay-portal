@@ -32,7 +32,7 @@ String eventName = ParamUtil.getString(request, "eventName", "selectStructure");
 			<portlet:param name="eventName" value="<%= eventName %>" />
 		</portlet:renderURL>
 
-		<c:if test="<%= ddmDisplay.isShowAddStructureButton(permissionChecker, scopeGroupId) %>">
+		<c:if test="<%= ddmDisplay.isShowAddStructureButton() && DDMPermission.contains(permissionChecker, groupId, ddmDisplay.getResourceName(), ddmDisplay.getAddStructureActionId()) %>">
 			<portlet:renderURL var="addStructureURL">
 				<portlet:param name="struts_action" value="/dynamic_data_mapping/edit_structure" />
 				<portlet:param name="redirect" value="<%= viewStructureURL %>" />

@@ -15,9 +15,9 @@
 			<param name="simple.server.lib.global.dir" value="${app.server.tcserver.lib.global.dir}" />
 			<param name="simple.server.portal.dir" value="${app.server.tcserver.portal.dir}" />
 			<param name="simple.server.start.executable" value="tcruntime-ctl${file.suffix.bat}" />
-			<param name="simple.server.start.executable.arg.line" value="run" />
-			<param name="simple.server.stop.executable" value="shutdown${file.suffix.bat}" />
-			<param name="simple.server.stop.executable.arg.line" value="" />
+			<param name="simple.server.start.executable.arg.line" value="start" />
+			<param name="simple.server.stop.executable" value="tcruntime-ctl${file.suffix.bat}" />
+			<param name="simple.server.stop.executable.arg.line" value="stop" />
 		</antcall>
 
 		<record action="stop" name="log" />

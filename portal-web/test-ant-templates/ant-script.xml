@@ -425,10 +425,6 @@ app.server.jboss.zip.name=jboss-eap-$$$${app.server.jboss.version}.zip</echo>
 			<property name="test.name" value="${test.ant.script.suite}" />
 			<property name="test.pacl" value="$${test.pacl}" />
 		</ant>
-
-		<antcall target="stop-vm">
-			<param name="vm.host" value="${vm.db.host}" />
-		</antcall>
 	</target>
 
 	<target name="test-${test.ant.script.command}-tomcat-db2-9.7-firefox">

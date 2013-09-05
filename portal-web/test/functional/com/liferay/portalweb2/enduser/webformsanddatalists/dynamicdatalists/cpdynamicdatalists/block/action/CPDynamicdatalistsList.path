@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>ADD_RECORD_BUTTON</td>
-	<td>//button[contains(.,'Add')]</td>
+	<td>//span[contains(.,'Add')]</td>
 	<td></td>
 </tr>
 <tr>

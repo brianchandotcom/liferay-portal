@@ -457,7 +457,7 @@
 	</target>
 
 	<target name="build-test-ant-scripts">
-		<property name="build-test-ant-scripts.version" value="9" />
+		<property name="build-test-ant-scripts.version" value="0" />
 
 		<if>
 			<available file="portal-web/test-ant-scripts/version" />
@@ -2544,6 +2544,13 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 			<exec dir="${simple.server.bin.dir}" executable="${simple.server.start.executable}" resolveexecutable="true">
 				<arg line="${simple.server.start.executable.arg.line}" />
 			</exec>
+
+			<if>
+				<equals arg1="${simple.server.type}" arg2="jboss-eap" />
+				<then>
+					<echo file="${simple.server.deploy.dir}/ROOT.war.dodeploy"></echo>
+				</then>
+			</if>
 
 			<sequential>
 				<waitfor>

@@ -67,10 +67,6 @@
 		min-width: 100%;
 	}
 
-	form .accordion-heading .accordion-toggle {
-		padding-left: 0;
-	}
-
 	input[type="color"], input[type="date"], input[type="datetime"], input[type="datetime-local"], input[type="email"], input[type="month"], input[type="number"], input[type="password"], input[type="search"], input[type="tel"], input[type="text"], input[type="time"], input[type="url"], input[type="week"], select, textarea, .uneditable-input {
 		border: 1px solid #DDD;
 		color: #8D8D8D;
@@ -471,6 +467,16 @@
 		border-width: 1px 0;
 	}
 
+	.accordion .accordion-group {
+		.accordion-heading .accordion-toggle {
+			padding-left: 15px;
+		}
+
+		.toggler-content-expanded {
+			border-width: 1px 0 0 0;
+		}
+	}
+
 	.accordion-group {
 		border-width: 0;
 
@@ -536,18 +542,22 @@
 
 					.accordion-toggle {
 						color: #999;
-						font-size: 11px;
-						font-weight: bold;
+						font-size: 14px;
 						padding-left: 8px;
-						text-transform: uppercase;
+						text-transform: capitalize;
 
 						&:after, &:before {
-							display: none;
+							float: right;
+							font-size: 22px;
 						}
 					}
 				}
 			}
 		}
+	}
+
+	.accordion-heading .accordion-toggle {
+		padding-left: 0;
 	}
 
 	.toggler-content-collapsed {
@@ -627,8 +637,20 @@
 
 					.accordion-toggle {
 						background-position: 100% 0;
+
+						&:before {
+							display: none;
+						}
 					}
 				}
+
+				.toggler-header-expanded .accordion-toggle:before {
+					display: none;
+				}
+			}
+
+			.toggler-content-expanded {
+				border-width: 0;
 			}
 		}
 	}

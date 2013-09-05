@@ -2,8 +2,24 @@
 	.choice {
 		margin-bottom: 30px;
 
+		&:after {
+			clear: both;
+			content: ".";
+			display: block;
+			height: 0;
+			visibility: hidden;
+		}
+
 		&.last-choice {
 			margin-bottom: 10px;
+		}
+
+		.btn-delete, .input-localized {
+			float: left;
+		}
+
+		.btn-delete {
+			margin-left: 10px;
 		}
 	}
 }

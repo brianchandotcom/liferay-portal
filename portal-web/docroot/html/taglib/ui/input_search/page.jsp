@@ -24,12 +24,13 @@ String id = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-
 String name = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-search:name"));
 String placeholder = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-search:placeholder"));
 boolean showButton = GetterUtil.getBoolean(request.getAttribute("liferay-ui:input-search:showButton"));
+String title = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-search:title"));
 
 String value = ParamUtil.getString(request, name);
 %>
 
 <div class="<%= cssClass %>">
-	<input class="search-query span9" id="<portlet:namespace /><%= id %>" name="<portlet:namespace /><%= name %>" placeholder="<%= placeholder %>" type="text" value="<%= HtmlUtil.escapeAttribute(value) %>" />
+	<input class="search-query span9" id="<portlet:namespace /><%= id %>" name="<portlet:namespace /><%= name %>" placeholder="<%= placeholder %>" title="<%= title %>" type="text" value="<%= HtmlUtil.escapeAttribute(value) %>" />
 
 	<c:if test="<%= showButton %>">
 		<button class="btn" type="submit">

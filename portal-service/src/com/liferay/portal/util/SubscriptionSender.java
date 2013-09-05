@@ -388,6 +388,26 @@ public class SubscriptionSender implements Serializable {
 			subscription.getClassPK(), inferredClassName, inferredClassPK);
 	}
 
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link
+	 *             #hasPermission(Subscription, String, long, User)}
+	 */
+	protected boolean hasPermission(Subscription subscription, User user)
+		throws Exception {
+
+		return hasPermission(subscription, null, 0, user);
+	}
+
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link
+	 *             #notifySubscriber(Subscription, String, long)}
+	 */
+	protected void notifySubscriber(Subscription subscription)
+			throws Exception {
+
+		notifySubscriber(subscription, null, 0);
+	}
+
 	protected void notifySubscriber(
 			Subscription subscription, String inferredClassName,
 			long inferredClassPK)

@@ -153,6 +153,8 @@ import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.ControlPanelEntry;
 import com.liferay.portlet.DefaultControlPanelEntryFactory;
+import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
+import com.liferay.portlet.assetpublisher.util.AssetQueryProcessor;
 import com.liferay.portlet.documentlibrary.antivirus.AntivirusScanner;
 import com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerUtil;
 import com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerWrapper;
@@ -406,6 +408,19 @@ public class HookHotDeployListener
 		}
 
 		resetPortalProperties(servletContextName, portalProperties, false);
+
+		if (portalProperties.containsKey(
+				PropsKeys.ASSET_PUBLISHER_QUERY_PROCESSORS)) {
+
+			String[] assetQueryProcessors = StringUtil.split(
+					portalProperties.getProperty(
+						PropsKeys.ASSET_PUBLISHER_QUERY_PROCESSORS));
+
+			for (String assetQueryProcessorClassName : assetQueryProcessors) {
+				AssetPublisherUtil.unregisterAssetQueryProcessor(
+					assetQueryProcessorClassName);
+			}
+		}
 
 		if (portalProperties.containsKey(PropsKeys.AUTH_TOKEN_IMPL)) {
 			AuthTokenWrapper authTokenWrapper =
@@ -1693,6 +1708,24 @@ public class HookHotDeployListener
 		}
 
 		resetPortalProperties(servletContextName, portalProperties, true);
+
+		if (portalProperties.containsKey(
+				PropsKeys.ASSET_PUBLISHER_QUERY_PROCESSORS)) {
+
+			String[] assetQueryProcessors = StringUtil.split(
+				portalProperties.getProperty(
+					PropsKeys.ASSET_PUBLISHER_QUERY_PROCESSORS));
+
+			for (String assetQueryProcessorClassName : assetQueryProcessors) {
+				AssetQueryProcessor assetQueryProcessor =
+					(AssetQueryProcessor)newInstance(
+						portletClassLoader, AssetQueryProcessor.class,
+						assetQueryProcessorClassName);
+
+				AssetPublisherUtil.registerAssetQueryProcessor(
+					assetQueryProcessorClassName, assetQueryProcessor);
+			}
+		}
 
 		if (portalProperties.containsKey(PropsKeys.AUTH_PUBLIC_PATHS)) {
 			initAuthPublicPaths(servletContextName, portalProperties);

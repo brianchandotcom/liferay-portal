@@ -101,7 +101,8 @@ public class BookmarksFolderStagedModelDataHandler
 				(BookmarksFolder)portletDataContext.getZipEntryAsObject(
 					parentFolderPath);
 
-			importStagedModel(portletDataContext, parentFolder);
+			StagedModelDataHandlerUtil.importReferenceStagedModel(
+				portletDataContext, parentFolder);
 		}
 
 		Map<Long, Long> folderIds =

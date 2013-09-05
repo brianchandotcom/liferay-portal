@@ -449,7 +449,7 @@ public class LayoutStagedModelDataHandler
 				(Layout)portletDataContext.getZipEntryAsObject(
 					parentLayoutPath);
 
-			StagedModelDataHandlerUtil.importStagedModel(
+			StagedModelDataHandlerUtil.importReferenceStagedModel(
 				portletDataContext, parentLayout);
 
 			Layout importedParentLayout = newLayoutsMap.get(parentLayoutId);
@@ -803,7 +803,7 @@ public class LayoutStagedModelDataHandler
 				layoutElement, JournalArticle.class);
 
 		if (!referenceDataElements.isEmpty()) {
-			StagedModelDataHandlerUtil.importStagedModel(
+			StagedModelDataHandlerUtil.importReferenceStagedModel(
 				portletDataContext, referenceDataElements.get(0));
 		}
 
@@ -836,7 +836,7 @@ public class LayoutStagedModelDataHandler
 				(LayoutFriendlyURL)portletDataContext.getZipEntryAsObject(
 					layoutFriendlyURLPath);
 
-			StagedModelDataHandlerUtil.importStagedModel(
+			StagedModelDataHandlerUtil.importReferenceStagedModel(
 				portletDataContext, layoutFriendlyURL);
 		}
 	}
@@ -899,7 +899,7 @@ public class LayoutStagedModelDataHandler
 				(Layout)portletDataContext.getZipEntryAsObject(
 					linkedToLayoutPath);
 
-			StagedModelDataHandlerUtil.importStagedModel(
+			StagedModelDataHandlerUtil.importReferenceStagedModel(
 				portletDataContext, linkedToLayout);
 
 			Layout importedLinkedLayout = newLayoutsMap.get(linkToLayoutId);

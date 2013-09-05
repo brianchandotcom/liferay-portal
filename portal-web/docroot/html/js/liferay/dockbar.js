@@ -206,6 +206,20 @@ AUI.add(
 
 				instance._registerPanels();
 
+				var btnNavigation = A.oneNS(namespace, '#navSiteNavigationNavbarBtn');
+
+				var navigation = A.one(Liferay.Data.NAV_SELECTOR);
+
+				if (btnNavigation && navigation) {
+					btnNavigation.on(
+						EVENT_CLICK,
+						function(event) {
+							btnNavigation.toggleClass('open');
+							navigation.toggleClass('open');
+						}
+					);
+				}
+
 				Liferay.fire('dockbarLoaded');
 			},
 			['aui-io-request', 'liferay-node', 'liferay-store', 'node-focusmanager']

@@ -219,12 +219,18 @@ public class RuntimeTag extends TagSupport {
 			HttpServletResponse response, JSONObject jsonObject)
 		throws IOException {
 
-		PrintWriter printWriter = response.getWriter();
-
-		boolean dataWritten = false;
-
 		JSONArray footerCssPathsJSONArray = jsonObject.getJSONArray(
 			"footerCssPaths");
+		JSONArray footerJavaScriptPathsJSONArray = jsonObject.getJSONArray(
+			"footerJavaScriptPaths");
+
+		if ((footerCssPathsJSONArray.length() == 0) &&
+			(footerJavaScriptPathsJSONArray.length() == 0)) {
+
+			return;
+		}
+
+		PrintWriter printWriter = response.getWriter();
 
 		for (int i = 0; i < footerCssPathsJSONArray.length(); i++) {
 			String value = footerCssPathsJSONArray.getString(i);
@@ -232,12 +238,7 @@ public class RuntimeTag extends TagSupport {
 			printWriter.print("<link href=\"");
 			printWriter.print(HtmlUtil.escape(value));
 			printWriter.println("\" rel=\"stylesheet\" type=\"text/css\" />");
-
-			dataWritten = true;
 		}
-
-		JSONArray footerJavaScriptPathsJSONArray = jsonObject.getJSONArray(
-			"footerJavaScriptPaths");
 
 		for (int i = 0; i < footerJavaScriptPathsJSONArray.length(); i++) {
 			String value = footerJavaScriptPathsJSONArray.getString(i);
@@ -245,25 +246,27 @@ public class RuntimeTag extends TagSupport {
 			printWriter.print("<script src=\"");
 			printWriter.print(HtmlUtil.escape(value));
 			printWriter.println("\" type=\"text/javascript\"></script>");
-
-			dataWritten = true;
 		}
 
-		if (dataWritten) {
-			printWriter.flush();
-		}
+		printWriter.flush();
 	}
 
 	protected static void writeHeaderPaths(
 			HttpServletResponse response, JSONObject jsonObject)
 		throws IOException {
 
-		PrintWriter printWriter = response.getWriter();
-
-		boolean dataWritten = false;
-
 		JSONArray headerCssPathsJSONArray = jsonObject.getJSONArray(
 			"headerCssPaths");
+		JSONArray headerJavaScriptPathsJSONArray = jsonObject.getJSONArray(
+			"headerJavaScriptPaths");
+
+		if ((headerCssPathsJSONArray.length() == 0) &&
+			(headerJavaScriptPathsJSONArray.length() == 0)) {
+
+			return;
+		}
+
+		PrintWriter printWriter = response.getWriter();
 
 		for (int i = 0; i < headerCssPathsJSONArray.length(); i++) {
 			String value = headerCssPathsJSONArray.getString(i);
@@ -271,12 +274,7 @@ public class RuntimeTag extends TagSupport {
 			printWriter.print("<link href=\"");
 			printWriter.print(HtmlUtil.escape(value));
 			printWriter.println("\" rel=\"stylesheet\" type=\"text/css\" />");
-
-			dataWritten = true;
 		}
-
-		JSONArray headerJavaScriptPathsJSONArray = jsonObject.getJSONArray(
-			"headerJavaScriptPaths");
 
 		for (int i = 0; i < headerJavaScriptPathsJSONArray.length(); i++) {
 			String value = headerJavaScriptPathsJSONArray.getString(i);
@@ -284,13 +282,9 @@ public class RuntimeTag extends TagSupport {
 			printWriter.print("<script src=\"");
 			printWriter.print(HtmlUtil.escape(value));
 			printWriter.println("\" type=\"text/javascript\"></script>");
-
-			dataWritten = true;
 		}
 
-		if (dataWritten) {
-			printWriter.flush();
-		}
+		printWriter.flush();
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(RuntimeTag.class);

@@ -32,6 +32,7 @@ import com.liferay.portal.util.PropsValues;
 
 import java.io.DataInput;
 import java.io.DataInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -199,7 +200,18 @@ public class HttpClientSPIAgent implements SPIAgent {
 			Exception exception)
 		throws IOException {
 
+		SPIAgentRequest spiAgentRequest = (SPIAgentRequest)request.getAttribute(
+			WebKeys.SPI_AGENT_REQUEST);
+
 		request.removeAttribute(WebKeys.SPI_AGENT_REQUEST);
+
+		File requestBodyFile = spiAgentRequest.requestBodyFile;
+
+		if (requestBodyFile != null) {
+			if (!requestBodyFile.delete()) {
+				requestBodyFile.deleteOnExit();
+			}
+		}
 
 		SPIAgentResponse spiAgentResponse =
 			(SPIAgentResponse)request.getAttribute(WebKeys.SPI_AGENT_RESPONSE);

@@ -14,13 +14,13 @@
 
 package com.liferay.portal.kernel.nio.intraband.welder.fifo;
 
+import com.liferay.portal.kernel.io.AutoRemoveFileInputStream;
 import com.liferay.portal.kernel.nio.intraband.Intraband;
 import com.liferay.portal.kernel.nio.intraband.RegistrationReference;
 import com.liferay.portal.kernel.nio.intraband.welder.BaseWelder;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
@@ -100,28 +100,5 @@ public class FIFOWelder extends BaseWelder {
 	protected final File outputFIFOFile;
 	protected transient FileChannel readFileChannel;
 	protected transient FileChannel writeFileChannel;
-
-	protected static class AutoRemoveFileInputStream extends FileInputStream {
-
-		public AutoRemoveFileInputStream(File file)
-			throws FileNotFoundException {
-
-			super(file);
-
-			_file = file;
-		}
-
-		@Override
-		public void close() throws IOException {
-			super.close();
-
-			if (!_file.delete()) {
-				_file.deleteOnExit();
-			}
-		}
-
-		private final File _file;
-
-	}
 
 }

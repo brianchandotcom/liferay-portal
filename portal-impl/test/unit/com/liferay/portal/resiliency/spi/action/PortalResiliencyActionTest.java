@@ -33,6 +33,8 @@ import com.liferay.portal.util.PropsImpl;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.EventImpl;
 
+import java.io.IOException;
+
 import javax.portlet.Event;
 
 import javax.servlet.http.HttpServletResponse;
@@ -63,7 +65,7 @@ public class PortalResiliencyActionTest {
 		new CodeCoverageAssertor();
 
 	@Before
-	public void setUp() {
+	public void setUp() throws IOException {
 		PropsUtil.setProps(new PropsImpl());
 
 		PortletContainerUtil portletContainerUtil = new PortletContainerUtil();

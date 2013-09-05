@@ -14,11 +14,11 @@
 
 package com.liferay.portal.resiliency.spi.agent;
 
-import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.upload.FileItem;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.CookieUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -27,10 +27,13 @@ import com.liferay.portal.kernel.util.ThreadLocalDistributor;
 import com.liferay.portal.resiliency.spi.agent.SPIAgentRequest.AgentHttpServletRequestWrapper;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.upload.UploadServletRequestImpl;
+import com.liferay.portal.util.FileImpl;
 import com.liferay.portal.util.PortalImpl;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -41,9 +44,12 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
+import javax.servlet.ServletInputStream;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpSession;
 
 import org.junit.Assert;
@@ -66,6 +72,23 @@ public class SPIAgentRequestTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
+		FileUtil fileUtil = new FileUtil();
+
+		fileUtil.setFile(new FileImpl() {
+
+			@Override
+			public File createTempFile() {
+				try {
+					return File.createTempFile(
+						SPIAgentRequestTest.class.getName(), null);
+				}
+				catch (IOException ioe) {
+					throw new RuntimeException(ioe);
+				}
+			}
+
+		});
+
 		PortalUtil portalUtil = new PortalUtil();
 
 		portalUtil.setPortal(new PortalImpl());
@@ -144,12 +167,12 @@ public class SPIAgentRequestTest {
 	}
 
 	@Test
-	public void testContentTypeIsMultipart() {
+	public void testContentTypeIsMultipart() throws IOException {
 
 		// Upload servlet request with null data
 
-		_mockHttpServletRequest.addHeader(
-			HttpHeaders.CONTENT_TYPE, ContentTypes.MULTIPART_FORM_DATA);
+		_mockHttpServletRequest.setContentType(
+			ContentTypes.MULTIPART_FORM_DATA);
 
 		SPIAgentRequest spiAgentRequest = new SPIAgentRequest(
 			new UploadServletRequestImpl(_mockHttpServletRequest, null, null));
@@ -160,6 +183,9 @@ public class SPIAgentRequestTest {
 		Assert.assertSame(
 			AgentHttpServletRequestWrapper.class,
 			populateHttpServletRequest.getClass());
+		Assert.assertEquals(-1, populateHttpServletRequest.getContentLength());
+		Assert.assertNull(populateHttpServletRequest.getContentType());
+		Assert.assertNull(populateHttpServletRequest.getInputStream());
 
 		// Upload servlet request with empty data
 
@@ -174,6 +200,9 @@ public class SPIAgentRequestTest {
 		Assert.assertSame(
 			AgentHttpServletRequestWrapper.class,
 			populateHttpServletRequest.getClass());
+		Assert.assertEquals(-1, populateHttpServletRequest.getContentLength());
+		Assert.assertNull(populateHttpServletRequest.getContentType());
+		Assert.assertNull(populateHttpServletRequest.getInputStream());
 
 		// Upload servlet request with multipart data
 
@@ -210,6 +239,9 @@ public class SPIAgentRequestTest {
 		Assert.assertSame(
 			fileItems, populatedFileParameters.get(fileParameter));
 		Assert.assertTrue(populatedRegularParameters.isEmpty());
+		Assert.assertEquals(-1, populateHttpServletRequest.getContentLength());
+		Assert.assertNull(populateHttpServletRequest.getContentType());
+		Assert.assertNull(populateHttpServletRequest.getInputStream());
 
 		// Upload servlet request with multipart and regular data
 
@@ -247,6 +279,9 @@ public class SPIAgentRequestTest {
 		Assert.assertEquals(1, populatedRegularParameters.size());
 		Assert.assertSame(
 			parameters, populatedRegularParameters.get(regularParameter));
+		Assert.assertEquals(-1, populateHttpServletRequest.getContentLength());
+		Assert.assertNull(populateHttpServletRequest.getContentType());
+		Assert.assertNull(populateHttpServletRequest.getInputStream());
 
 		// Upload servlet request with regular data
 
@@ -274,12 +309,64 @@ public class SPIAgentRequestTest {
 		Assert.assertEquals(1, populatedRegularParameters.size());
 		Assert.assertSame(
 			parameters, populatedRegularParameters.get(regularParameter));
+		Assert.assertEquals(-1, populateHttpServletRequest.getContentLength());
+		Assert.assertNull(populateHttpServletRequest.getContentType());
+		Assert.assertNull(populateHttpServletRequest.getInputStream());
+
+		// Not an upload servlet request
+
+		byte[] content = new byte[1024];
+
+		Random random = new Random();
+
+		random.nextBytes(content);
+
+		_mockHttpServletRequest.setContent(content);
+
+		spiAgentRequest = new SPIAgentRequest(
+			new HttpServletRequestWrapper(_mockHttpServletRequest));
+
+		Assert.assertEquals(
+			ContentTypes.MULTIPART_FORM_DATA, spiAgentRequest.contentType);
+		Assert.assertNotNull(spiAgentRequest.requestBodyFile);
+		Assert.assertArrayEquals(
+			content, FileUtil.getBytes(spiAgentRequest.requestBodyFile));
+
+		populateHttpServletRequest = spiAgentRequest.populateRequest(
+			new MockHttpServletRequest());
+
+		Assert.assertEquals(
+			content.length, populateHttpServletRequest.getContentLength());
+		Assert.assertEquals(
+			ContentTypes.MULTIPART_FORM_DATA,
+			populateHttpServletRequest.getContentType());
+
+		ServletInputStream servletInputStream =
+			populateHttpServletRequest.getInputStream();
+
+		Assert.assertNotNull(servletInputStream);
+		Assert.assertArrayEquals(
+			content, FileUtil.getBytes(servletInputStream));
+
+		// Not an upload servlet request, unable to read
+
+		_mockHttpServletRequest.setContent(null);
+
+		try {
+			new SPIAgentRequest(
+				new HttpServletRequestWrapper(_mockHttpServletRequest));
+
+			Assert.fail();
+		}
+		catch (IllegalArgumentException iae) {
+			Assert.assertEquals(
+				"Input stream cannot be null", iae.getMessage());
+		}
 	}
 
 	@Test
 	public void testContentTypeIsNotMultipart() throws Exception {
-		_mockHttpServletRequest.addHeader(
-			HttpHeaders.CONTENT_TYPE, ContentTypes.APPLICATION_GZIP);
+		_mockHttpServletRequest.setContentType(ContentTypes.APPLICATION_GZIP);
 
 		UploadServletRequestImpl uploadServletRequestImpl =
 			new UploadServletRequestImpl(_mockHttpServletRequest, null, null) {
@@ -481,7 +568,7 @@ public class SPIAgentRequestTest {
 		StringBundler sb = new StringBundler(
 			13 + cookies.length * 2 + parameterMap.size() * 4);
 
-		sb.append("{cookies=[");
+		sb.append("{contentType=null, cookies=[");
 
 		for (Cookie cookie : cookies) {
 			sb.append(CookieUtil.toString(cookie));
@@ -492,9 +579,9 @@ public class SPIAgentRequestTest {
 
 		sb.append("], distributedRequestAttributes=");
 		sb.append(spiAgentRequest.distributedRequestAttributes);
-		sb.append(", _headerMap=");
+		sb.append(", headerMap=");
 		sb.append(spiAgentRequest.headerMap);
-		sb.append(", _multipartParameterMap=null");
+		sb.append(", multipartParameterMap=null");
 		sb.append(", originalSessionAttributes=");
 		sb.append(spiAgentRequest.getOriginalSessionAttributes());
 		sb.append(", parameterMap={");
@@ -508,10 +595,10 @@ public class SPIAgentRequestTest {
 
 		sb.setIndex(sb.index() - 1);
 
-		sb.append("}, _regularParameterMap=null");
-		sb.append(", _serverName=");
+		sb.append("}, regularParameterMap=null, requestBodyFile=null");
+		sb.append(", serverName=");
 		sb.append(_SERVER_NAME);
-		sb.append(", _serverPort=");
+		sb.append(", serverPort=");
 		sb.append(_SERVER_PORT);
 		sb.append("}");
 
@@ -523,11 +610,12 @@ public class SPIAgentRequestTest {
 
 		sb = new StringBundler(13 + parameterMap.size() * 4);
 
-		sb.append("{cookies=[], distributedRequestAttributes=");
+		sb.append(
+			"{contentType=null, cookies=[], distributedRequestAttributes=");
 		sb.append(spiAgentRequest.distributedRequestAttributes);
-		sb.append(", _headerMap=");
+		sb.append(", headerMap=");
 		sb.append(spiAgentRequest.headerMap);
-		sb.append(", _multipartParameterMap=null");
+		sb.append(", multipartParameterMap=null");
 		sb.append(", originalSessionAttributes=");
 		sb.append(spiAgentRequest.getOriginalSessionAttributes());
 		sb.append(", parameterMap={");
@@ -541,10 +629,10 @@ public class SPIAgentRequestTest {
 
 		sb.setIndex(sb.index() - 1);
 
-		sb.append("}, _regularParameterMap=null");
-		sb.append(", _serverName=");
+		sb.append("}, regularParameterMap=null, requestBodyFile=null");
+		sb.append(", serverName=");
 		sb.append(_SERVER_NAME);
-		sb.append(", _serverPort=");
+		sb.append(", serverPort=");
 		sb.append(_SERVER_PORT);
 		sb.append("}");
 
@@ -552,7 +640,7 @@ public class SPIAgentRequestTest {
 	}
 
 	@Test
-	public void testShowFooter() {
+	public void testShowFooter() throws IOException {
 
 		// No theme display
 

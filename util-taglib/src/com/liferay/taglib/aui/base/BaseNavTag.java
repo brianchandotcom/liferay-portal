@@ -41,12 +41,12 @@ public class BaseNavTag extends com.liferay.taglib.util.IncludeTag {
 		return _ariaRole;
 	}
 
-	public java.lang.String getCssClass() {
-		return _cssClass;
-	}
-
 	public boolean getCollapsible() {
 		return _collapsible;
+	}
+
+	public java.lang.String getCssClass() {
+		return _cssClass;
 	}
 
 	public java.lang.String getIcon() {
@@ -73,16 +73,16 @@ public class BaseNavTag extends com.liferay.taglib.util.IncludeTag {
 		setScopedAttribute("ariaRole", ariaRole);
 	}
 
-	public void setCssClass(java.lang.String cssClass) {
-		_cssClass = cssClass;
-
-		setScopedAttribute("cssClass", cssClass);
-	}
-
 	public void setCollapsible(boolean collapsible) {
 		_collapsible = collapsible;
 
 		setScopedAttribute("collapsible", collapsible);
+	}
+
+	public void setCssClass(java.lang.String cssClass) {
+		_cssClass = cssClass;
+
+		setScopedAttribute("cssClass", cssClass);
 	}
 
 	public void setIcon(java.lang.String icon) {
@@ -107,8 +107,8 @@ public class BaseNavTag extends com.liferay.taglib.util.IncludeTag {
 	protected void cleanUp() {
 		_ariaLabel = null;
 		_ariaRole = null;
-		_cssClass = null;
 		_collapsible = true;
+		_cssClass = null;
 		_icon = null;
 		_id = null;
 		_useNamespace = true;
@@ -128,8 +128,8 @@ public class BaseNavTag extends com.liferay.taglib.util.IncludeTag {
 	protected void setAttributes(HttpServletRequest request) {
 		setNamespacedAttribute(request, "ariaLabel", _ariaLabel);
 		setNamespacedAttribute(request, "ariaRole", _ariaRole);
-		setNamespacedAttribute(request, "cssClass", _cssClass);
 		setNamespacedAttribute(request, "collapsible", _collapsible);
+		setNamespacedAttribute(request, "cssClass", _cssClass);
 		setNamespacedAttribute(request, "icon", _icon);
 		setNamespacedAttribute(request, "id", _id);
 		setNamespacedAttribute(request, "useNamespace", _useNamespace);
@@ -145,8 +145,8 @@ public class BaseNavTag extends com.liferay.taglib.util.IncludeTag {
 
 	private java.lang.String _ariaLabel = null;
 	private java.lang.String _ariaRole = null;
-	private java.lang.String _cssClass = null;
 	private boolean _collapsible = true;
+	private java.lang.String _cssClass = null;
 	private java.lang.String _icon = null;
 	private java.lang.String _id = null;
 	private boolean _useNamespace = true;

@@ -1450,6 +1450,9 @@
 		<field name="classPK" type="long" />
 		<field name="repositoryId" type="long" />
 		<field name="folderId" type="long" />
+		<field name="treePath" type="String">
+			<hint name="max-length">4000</hint>
+		</field>
 		<field name="name" type="String">
 			<hint name="max-length">255</hint>
 		</field>
@@ -1521,6 +1524,9 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="repositoryId" type="long" />
 		<field name="folderId" type="long" />
+		<field name="treePath" type="String">
+			<hint name="max-length">4000</hint>
+		</field>
 		<field name="toFileEntryId" type="long" />
 		<field name="active" type="boolean" />
 		<field name="status" type="int" />
@@ -1539,6 +1545,9 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="repositoryId" type="long" />
 		<field name="folderId" type="long" />
+		<field name="treePath" type="String">
+			<hint name="max-length">4000</hint>
+		</field>
 		<field name="fileEntryId" type="long" />
 		<field name="extension" type="String" />
 		<field name="mimeType" type="String" />
@@ -1573,6 +1582,9 @@
 		<field name="repositoryId" type="long" />
 		<field name="mountPoint" type="boolean" />
 		<field name="parentFolderId" type="long" />
+		<field name="treePath" type="String">
+			<hint name="max-length">4000</hint>
+		</field>
 		<field name="name" type="String">
 			<hint name="max-length">100</hint>
 			<validator name="required" />

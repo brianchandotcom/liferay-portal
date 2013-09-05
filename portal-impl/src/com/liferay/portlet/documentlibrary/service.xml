@@ -116,6 +116,7 @@
 		<column name="classPK" type="long" />
 		<column name="repositoryId" type="long" />
 		<column name="folderId" type="long" />
+		<column name="treePath" type="String" />
 		<column name="name" type="String" />
 		<column name="extension" type="String" />
 		<column name="mimeType" type="String" />
@@ -362,6 +363,7 @@
 
 		<column name="repositoryId" type="long" />
 		<column name="folderId" type="long" />
+		<column name="treePath" type="String" />
 		<column name="toFileEntryId" type="long" />
 		<column name="active" type="boolean" />
 		<column name="status" type="int" />
@@ -418,6 +420,7 @@
 
 		<column name="repositoryId" type="long" />
 		<column name="folderId" type="long" />
+		<column name="treePath" type="String" />
 		<column name="fileEntryId" type="long" />
 		<column name="extension" type="String" />
 		<column name="mimeType" type="String" />
@@ -492,6 +495,7 @@
 		<column name="repositoryId" type="long" />
 		<column name="mountPoint" type="boolean" />
 		<column name="parentFolderId" type="long" parent-container-model="true" />
+		<column name="treePath" type="String" />
 		<column name="name" type="String" />
 		<column name="description" type="String" />
 		<column name="lastPostDate" type="Date" />

@@ -115,7 +115,7 @@ public class DLFileShortcutStagedModelDataHandler
 			Folder folder = (Folder)portletDataContext.getZipEntryAsObject(
 				folderPath);
 
-			StagedModelDataHandlerUtil.importStagedModel(
+			StagedModelDataHandlerUtil.importReferenceStagedModel(
 				portletDataContext, folder);
 		}
 
@@ -141,7 +141,7 @@ public class DLFileShortcutStagedModelDataHandler
 		FileEntry fileEntry = (FileEntry)portletDataContext.getZipEntryAsObject(
 			fileEntryPath);
 
-		StagedModelDataHandlerUtil.importStagedModel(
+		StagedModelDataHandlerUtil.importReferenceStagedModel(
 			portletDataContext, fileEntry);
 
 		Element fileShortcutElement =

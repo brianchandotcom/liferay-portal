@@ -182,7 +182,7 @@ public class LayoutPrototypeStagedModelDataHandler
 					layoutPrototype, Layout.class);
 
 			for (Element layoutElement : layoutElements) {
-				StagedModelDataHandlerUtil.importStagedModel(
+				StagedModelDataHandlerUtil.importReferenceStagedModel(
 					portletDataContext, layoutElement);
 			}
 		}

@@ -16,6 +16,8 @@ package com.liferay.portlet.dynamicdatamapping.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.staging.permission.StagingPermissionUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
@@ -63,6 +65,24 @@ public class DDMStructurePermission {
 		PermissionChecker permissionChecker, DDMStructure structure,
 		String actionId) {
 
+		return contains(permissionChecker, structure, null, actionId);
+	}
+
+	public static boolean contains(
+		PermissionChecker permissionChecker, DDMStructure structure,
+		String portletId, String actionId) {
+
+		if (Validator.isNotNull(portletId)) {
+			Boolean hasPermission = StagingPermissionUtil.hasPermission(
+				permissionChecker, structure.getGroupId(),
+				DDMStructure.class.getName(), structure.getStructureId(),
+				portletId, actionId);
+
+			if (hasPermission != null) {
+				return hasPermission.booleanValue();
+			}
+		}
+
 		if (permissionChecker.hasOwnerPermission(
 				structure.getCompanyId(), DDMStructure.class.getName(),
 				structure.getStructureId(), structure.getUserId(), actionId)) {
@@ -91,10 +111,18 @@ public class DDMStructurePermission {
 			String actionId)
 		throws PortalException, SystemException {
 
+		return contains(permissionChecker, structureId, null, actionId);
+	}
+
+	public static boolean contains(
+			PermissionChecker permissionChecker, long structureId,
+			String portletId, String actionId)
+		throws PortalException, SystemException {
+
 		DDMStructure structure = DDMStructureLocalServiceUtil.getStructure(
 			structureId);
 
-		return contains(permissionChecker, structure, actionId);
+		return contains(permissionChecker, structure, portletId, actionId);
 	}
 
 }

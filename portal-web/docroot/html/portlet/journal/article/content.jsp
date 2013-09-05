@@ -231,7 +231,7 @@ if (Validator.isNotNull(content)) {
 										<%= HtmlUtil.escape(ddmStructureName) %>
 									</span>
 
-									<c:if test="<%= (ddmStructure != null) && DDMStructurePermission.contains(permissionChecker, ddmStructure, ActionKeys.UPDATE) %>">
+									<c:if test="<%= (ddmStructure != null) && DDMStructurePermission.contains(permissionChecker, ddmStructure, PortletKeys.JOURNAL, ActionKeys.UPDATE) %>">
 										<liferay-ui:icon id="editDDMStructure" image="edit" url="javascript:;" />
 									</c:if>
 
@@ -300,7 +300,7 @@ if (Validator.isNotNull(content)) {
 												<%= HtmlUtil.escape(curDDMTemplate.getName(locale)) %>
 											</span>
 
-											<c:if test="<%= DDMTemplatePermission.contains(permissionChecker, curDDMTemplate, ActionKeys.UPDATE) %>">
+											<c:if test="<%= DDMTemplatePermission.contains(permissionChecker, curDDMTemplate, PortletKeys.JOURNAL, ActionKeys.UPDATE) %>">
 												<c:if test="<%= curDDMTemplate.isSmallImage() %>">
 													<img class="article-template-image" id="<portlet:namespace />templateImage" src="<%= _getTemplateImage(themeDisplay, curDDMTemplate) %>" />
 												</c:if>
@@ -786,7 +786,7 @@ if (Validator.isNotNull(content)) {
 		);
 	}
 
-	<c:if test="<%= (ddmStructure != null) && DDMStructurePermission.contains(permissionChecker, ddmStructure, ActionKeys.UPDATE) %>">
+	<c:if test="<%= (ddmStructure != null) && DDMStructurePermission.contains(permissionChecker, ddmStructure, PortletKeys.JOURNAL, ActionKeys.UPDATE) %>">
 		var editDDMStructure = A.one('#<portlet:namespace />editDDMStructure');
 
 		if (editDDMStructure) {

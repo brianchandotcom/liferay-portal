@@ -16,6 +16,8 @@ package com.liferay.portlet.dynamicdatamapping.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.staging.permission.StagingPermissionUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
@@ -50,6 +52,24 @@ public class DDMTemplatePermission {
 		PermissionChecker permissionChecker, DDMTemplate template,
 		String actionId) {
 
+		return contains(permissionChecker, template, null, actionId);
+	}
+
+	public static boolean contains(
+			PermissionChecker permissionChecker, DDMTemplate template,
+			String portletId, String actionId) {
+
+		if (Validator.isNotNull(portletId)) {
+			Boolean hasPermission = StagingPermissionUtil.hasPermission(
+				permissionChecker, template.getGroupId(),
+				DDMTemplate.class.getName(), template.getTemplateId(),
+				portletId, actionId);
+
+			if (hasPermission != null) {
+				return hasPermission.booleanValue();
+			}
+		}
+
 		if (permissionChecker.hasOwnerPermission(
 				template.getCompanyId(), DDMTemplate.class.getName(),
 				template.getTemplateId(), template.getUserId(), actionId)) {
@@ -67,10 +87,18 @@ public class DDMTemplatePermission {
 			String actionId)
 		throws PortalException, SystemException {
 
+		return contains(permissionChecker, templateId, null, actionId);
+	}
+
+	public static boolean contains(
+			PermissionChecker permissionChecker, long templateId,
+			String portletId, String actionId)
+		throws PortalException, SystemException {
+
 		DDMTemplate template = DDMTemplateLocalServiceUtil.getTemplate(
 			templateId);
 
-		return contains(permissionChecker, template, actionId);
+		return contains(permissionChecker, template, portletId, actionId);
 	}
 
 }

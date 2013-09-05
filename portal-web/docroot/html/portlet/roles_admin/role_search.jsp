@@ -23,5 +23,5 @@ RoleDisplayTerms displayTerms = (RoleDisplayTerms)searchContainer.getDisplayTerm
 %>
 
 <div class="form-search">
-	<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" id="keywords" placeholder='<%= LanguageUtil.get(locale, "keywords") %>' />
+	<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" id="<%= displayTerms.KEYWORDS %>" placeholder='<%= LanguageUtil.get(locale, "keywords") %>' />
 </div>

@@ -115,7 +115,7 @@ boolean useAssetEntryQuery = false;
 
 	<div id="<portlet:namespace />imageGalleryAssetInfo">
 			<div class="form-search">
-				<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" id="keywords" placeholder='<%= LanguageUtil.get(locale, "keywords") %>' />
+				<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" id="keywords" placeholder='<%= LanguageUtil.get(locale, "keywords") %>' title='<%= LanguageUtil.get(locale, "search-images") %>' />
 			</div>
 
 		<br /><br />

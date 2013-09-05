@@ -36,8 +36,8 @@ String keywords = ParamUtil.getString(request, "keywords");
 	/>
 
 	<div class="form-search">
-		<div class="input-append pull-right">
-			<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" id="keywords" placeholder='<%= LanguageUtil.get(locale, "keywords") %>' />
+		<div class="pull-right">
+			<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" id="keywords1" name="keywords" placeholder='<%= LanguageUtil.get(locale, "keywords") %>' />
 		</div>
 	</div>
 

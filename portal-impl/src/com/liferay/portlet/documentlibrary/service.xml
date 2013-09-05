@@ -373,6 +373,9 @@
 
 		<!-- Finder methods -->
 
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId" />
+		</finder>
 		<finder name="ToFileEntryId" return-type="Collection">
 			<finder-column name="toFileEntryId" />
 		</finder>
@@ -446,6 +449,9 @@
 
 		<!-- Finders -->
 
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId" />
+		</finder>
 		<finder name="FileEntryId" return-type="Collection">
 			<finder-column name="fileEntryId" />
 		</finder>

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.nio.charset.CharsetDecoderUtil;
 import com.liferay.portal.kernel.nio.charset.CharsetEncoderUtil;
+import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
@@ -309,7 +310,7 @@ public class BufferCacheServletResponse extends MetaInfoCacheServletResponse {
 
 	@Override
 	public void setBufferSize(int bufferSize) {
-		if (isCommitted()) {
+		if (isCommitted() && !ServerDetector.isWebLogic()) {
 			throw new IllegalStateException("Set buffer size after commit");
 		}
 

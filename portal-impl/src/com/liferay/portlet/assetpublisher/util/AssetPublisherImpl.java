@@ -88,6 +88,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
@@ -111,7 +112,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 					(AssetQueryProcessor)InstanceFactory.newInstance(
 						queryProcessorClassName);
 
-				_queryProcessors.add(queryProcessor);
+				_queryProcessors.put(queryProcessorClassName, queryProcessor);
 			}
 			catch (Exception e) {
 				_log.error(e, e);
@@ -1061,9 +1062,20 @@ public class AssetPublisherImpl implements AssetPublisher {
 			AssetEntryQuery assetEntryQuery)
 		throws Exception {
 
-		for (AssetQueryProcessor queryProcessor : _queryProcessors) {
+		for (AssetQueryProcessor queryProcessor : _queryProcessors.values()) {
 			queryProcessor.adaptQuery(user, preferences, assetEntryQuery);
 		}
+	}
+
+	@Override
+	public void registerAssetQueryProcessor(
+		String name, AssetQueryProcessor assetQueryProcessor) {
+
+		if (assetQueryProcessor == null) {
+			return;
+		}
+
+		_queryProcessors.put(name, assetQueryProcessor);
 	}
 
 	@Override
@@ -1125,6 +1137,13 @@ public class AssetPublisherImpl implements AssetPublisher {
 			permissionChecker.getUserId(), groupId,
 			com.liferay.portal.model.PortletPreferences.class.getName(),
 			_getPortletPreferencesId(plid, portletId));
+	}
+
+	@Override
+	public void unregisterAssetQueryProcessor(
+		String assetQueryProcessorClassName) {
+
+		_queryProcessors.remove(assetQueryProcessorClassName);
 	}
 
 	@Override
@@ -1314,8 +1333,8 @@ public class AssetPublisherImpl implements AssetPublisher {
 
 	private static Log _log = LogFactoryUtil.getLog(AssetPublisherImpl.class);
 
-	private final List<AssetQueryProcessor> _queryProcessors =
-		new ArrayList<AssetQueryProcessor>();
+	private final Map<String, AssetQueryProcessor> _queryProcessors =
+		new ConcurrentHashMap<String, AssetQueryProcessor>();
 
 	private Accessor<AssetEntry, String> _titleAccessor =
 		new Accessor<AssetEntry, String>() {

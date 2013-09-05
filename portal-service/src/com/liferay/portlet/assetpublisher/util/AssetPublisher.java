@@ -162,6 +162,9 @@ public interface AssetPublisher {
 			AssetEntryQuery assetEntryQuery)
 		throws Exception;
 
+	public void registerAssetQueryProcessor(
+		String name, AssetQueryProcessor assetQueryProcessor);
+
 	public void removeAndStoreSelection(
 			List<String> assetEntryUuids, PortletPreferences portletPreferences)
 		throws Exception;
@@ -173,6 +176,9 @@ public interface AssetPublisher {
 			PermissionChecker permissionChecker, long groupId, long plid,
 			String portletId)
 		throws PortalException, SystemException;
+
+	public void unregisterAssetQueryProcessor(
+		String assetQueryProcessorClassName);
 
 	public void unsubscribe(
 			PermissionChecker permissionChecker, long plid, String portletId)

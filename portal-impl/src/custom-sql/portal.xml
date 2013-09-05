@@ -416,12 +416,12 @@
 		<![CDATA[
 			INNER JOIN
 				ResourceTypePermission ON
-					(ResourceTypePermission.groupId = Group_.groupId) AND
-					(ResourceTypePermission.name = ?) AND
-					(ResourceTypePermission.roleId = ?) AND
-					(BITAND(CAST_LONG(ResourceTypePermission.actionIds), ?) != 0)
+					(ResourceTypePermission.groupId = Group_.groupId)
 			WHERE
-				(Group_.liveGroupId = 0)
+				(Group_.liveGroupId = 0) AND
+				(ResourceTypePermission.name = ?) AND
+				(ResourceTypePermission.roleId = ?) AND
+				(BITAND(CAST_LONG(ResourceTypePermission.actionIds), ?) != 0)
 		]]>
 	</sql>
 	<sql id="com.liferay.portal.service.persistence.GroupFinder.joinBySite">

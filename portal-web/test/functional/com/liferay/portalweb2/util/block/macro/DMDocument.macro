@@ -15,6 +15,13 @@
 	</command>
 
 	<command name="addPG">
+		<if>
+			<equals arg1="${stagingActivated}" arg2="true" />
+			<then>
+				<execute action="PGDocumentsandmedia#assertElementNotPresent" locator-key1="STAGING_MESSAGE" value1="The data of this portlet is not staged. Any data changes are immediately available to the Local Live site. The portlet's own workflow is still honored. Portlet setup is still managed from staging." />
+			</then>
+		</if>
+
 		<execute action="PGDocumentsandmedia#assertClick" locator-key1="TOOLBAR_ADD" value1="Add" />
 		<execute action="PGDocumentsandmedia#assertClick" locator-key1="ADD_MENULIST_BASIC_DOCUMENT" value1="Basic Document" />
 
@@ -237,5 +244,29 @@
 		<execute action="PGDocumentsandmedia#type" locator-key1="TOOLBAR_SEARCH_FIELD" value1="${dmDocumentTitle}" />
 		<execute action="PGDocumentsandmedia#assertClick" locator-key1="TOOLBAR_SEARCH_BUTTON" value1="Search" />
 		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="ENTRIES_SEARCH_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
+	</command>
+
+	<command name="viewPGviaStagingLocalLive">
+		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
+
+		<if>
+			<equals arg1="${documentAdded}" arg2="true" />
+			<then>
+				<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="DOCUMENT_CONTAINER_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
+				<execute action="PGDocumentsandmedia#assertClick" locator-key1="LIVE_BUTTON" value1="Live" />
+
+				<execute action="PGDocumentsandmedia#assertTextNotPresent" locator-key1="DOCUMENT_CONTAINER_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
+				<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="INFO_MESSAGE" value1="There are no documents or media files in this folder." />
+			</then>
+			<elseif>
+				<equals arg1="${documentAdded}" arg2="false" />
+				<then>
+					<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="INFO_MESSAGE" value1="There are no documents or media files in this folder." />
+
+					<execute action="PGDocumentsandmedia#assertClick" locator-key1="LIVE_BUTTON" value1="Live" />
+					<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="INFO_MESSAGE" value1="There are no documents or media files in this folder." />
+				</then>
+			</elseif>
+		</if>
 	</command>
 </definition>

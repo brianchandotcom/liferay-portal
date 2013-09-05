@@ -42,7 +42,7 @@
 	<command name="ActivateDeactivateStagingLocalLiveDM">
 		<var name="dmDocumentFile" value="Document_1.docx" />
 		<var name="dmDocumentTitle" value="${dmDocumentFile}" />
-		<var name="pageName" value="Page Name" />
+		<var name="pageName" value="Documents and Media Test Page" />
 		<var name="pageType" value="Site" />
 
 		<execute macro="Page#addPG">
@@ -80,6 +80,7 @@
 			<var name="dmDocumentFile" value="${dmDocumentFile}" />
 			<var name="pageName" value="${pageName}" />
 			<var name="pageStaging" value="true" />
+			<var name="stagingActivated" value="true" />
 		</execute>
 
 		<execute macro="Page#gotoConfigurationCP">
@@ -108,13 +109,17 @@
 			<var name="pageType" value="${pageType}" />
 		</execute>
 
-		<execute action="PGDocumentsandmedia#assertTextEquals" locator-key1="EMPTY_MESSAGE" value1="There are no documents or media files in this folder." />
+		<execute macro="DMDocument#viewPGviaStagingLocalLive">
+			<var name="documentAdded" value="false" />
+			<var name="pageName" value="${pageName}" />
+			<var name="pageStaging" value="true" />
+		</execute>
 	</command>
 
 	<command name="AddDMDocumentStagingLocalLive">
 		<var name="dmDocumentFile" value="Document_1.docx" />
 		<var name="dmDocumentTitle" value="${dmDocumentFile}" />
-		<var name="pageName" value="Page Name" />
+		<var name="pageName" value="Documents and Media Test Page" />
 		<var name="pageType" value="Site" />
 		<var name="siteName" value="${siteName}" />
 
@@ -153,6 +158,7 @@
 			<var name="dmDocumentFile" value="${dmDocumentFile}" />
 			<var name="pageName" value="${pageName}" />
 			<var name="pageStaging" value="true" />
+			<var name="stagingActivated" value="true" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -161,9 +167,11 @@
 			<var name="pageType" value="${pageType}" />
 		</execute>
 
-		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
-
-		<execute action="CPDocumentsandmedia#assertTextEquals" locator-key1="DOCUMENT_CONTAINER_DOCUMENT_TITLE" value1="${dmDocumentTitle}" />
+		<execute macro="DMDocument#viewPGviaStagingLocalLive">
+			<var name="documentAdded" value="true" />
+			<var name="pageName" value="${pageName}" />
+			<var name="pageStaging" value="true" />
+		</execute>
 	</command>
 
 	<command name="AddPageVariation">

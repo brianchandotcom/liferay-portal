@@ -28,6 +28,7 @@ import com.liferay.portal.util.PortalUtil;
 
 /**
  * @author Brian Wing Shun Chan
+ * @author Mate Thurzo
  */
 public class StagedModelDataHandlerUtil {
 
@@ -155,9 +156,63 @@ public class StagedModelDataHandlerUtil {
 		return stagedModelDataHandler.getDisplayName(stagedModel);
 	}
 
+	public static void importReferenceStagedModel(
+			PortletDataContext portletDataContext, Element element)
+		throws PortletDataException {
+
+		StagedModel stagedModel = _extractStagedModel(
+			portletDataContext, element);
+
+		importReferenceStagedModel(portletDataContext, stagedModel);
+	}
+
+	public static <T extends StagedModel> void importReferenceStagedModel(
+			PortletDataContext portletDataContext, T stagedModel)
+		throws PortletDataException {
+
+		StagedModelDataHandler<T> stagedModelDataHandler =
+			_getStagedModelDataHandler(stagedModel);
+
+		if (stagedModel instanceof StagedGroupedModel) {
+			StagedGroupedModel stagedGroupedModel =
+				(StagedGroupedModel)stagedModel;
+
+			if (portletDataContext.isCompanyStagedGroupedModel(
+					stagedGroupedModel)) {
+
+				stagedModelDataHandler.importCompanyStagedModel(
+					portletDataContext, stagedModel);
+
+				return;
+			}
+		}
+
+		importStagedModel(portletDataContext, stagedModel);
+	}
+
 	public static void importStagedModel(
 			PortletDataContext portletDataContext, Element element)
 		throws PortletDataException {
+
+		StagedModel stagedModel = _extractStagedModel(
+			portletDataContext, element);
+
+		importStagedModel(portletDataContext, stagedModel);
+	}
+
+	public static <T extends StagedModel> void importStagedModel(
+			PortletDataContext portletDataContext, T stagedModel)
+		throws PortletDataException {
+
+		StagedModelDataHandler<T> stagedModelDataHandler =
+			_getStagedModelDataHandler(stagedModel);
+
+		stagedModelDataHandler.importStagedModel(
+			portletDataContext, stagedModel);
+	}
+
+	private static StagedModel _extractStagedModel(
+		PortletDataContext portletDataContext, Element element) {
 
 		String path = element.attributeValue("path");
 
@@ -180,18 +235,7 @@ public class StagedModelDataHandlerUtil {
 			}
 		}
 
-		importStagedModel(portletDataContext, stagedModel);
-	}
-
-	public static <T extends StagedModel> void importStagedModel(
-			PortletDataContext portletDataContext, T stagedModel)
-		throws PortletDataException {
-
-		StagedModelDataHandler<T> stagedModelDataHandler =
-			_getStagedModelDataHandler(stagedModel);
-
-		stagedModelDataHandler.importStagedModel(
-			portletDataContext, stagedModel);
+		return stagedModel;
 	}
 
 	private static <T extends StagedModel> StagedModelDataHandler<T>

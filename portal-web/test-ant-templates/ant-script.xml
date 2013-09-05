@@ -574,6 +574,39 @@
 		</ant>
 	</target>
 
+	<target name="test-${test.ant.script.command}-tomcat-mysql-safari">
+		<antcall target="generate-test-properties">
+			<param name="database" value="mysql" />
+		</antcall>
+
+		<antcall target="print-scm-revision" />
+
+		<antcall target="clean-up-test-properties" />
+
+		<antcall target="prepare-common">
+			<param name="database" value="mysql" />
+			<param name="setup.wizard.enabled" value="${test.ant.script.setup.wizard.enabled}" />
+			${test.ant.script.file.properties}
+		</antcall>
+
+		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
+			${test.ant.script.file.database.collate}
+			${test.ant.script.file.database.minimal}
+			${test.ant.script.file.evaluate.logs}
+			${test.ant.script.file.plugin.hooks}
+			${test.ant.script.file.plugin.layouttpls}
+			${test.ant.script.file.plugin.portlets}
+			${test.ant.script.file.plugin.portlets.properties}
+			${test.ant.script.file.plugin.themes}
+			${test.ant.script.file.plugin.webs}
+			${test.ant.script.file.selenium.implementation}
+			${test.ant.script.file.selenium.logger.enabled}
+			<property name="test.browser" value="safari" />
+			<property name="test.name" value="${test.ant.script.suite}" />
+			<property name="test.pacl" value="$${test.pacl}" />
+		</ant>
+	</target>
+
 	<target name="test-${test.ant.script.command}-tomcat-oracle-10-firefox">
 		<antcall target="generate-test-properties">
 			<param name="database" value="oracle-10" />

@@ -378,6 +378,21 @@ public class BookmarksEntryLocalServiceImpl
 		return openEntry(userId, entry);
 	}
 
+	@Override
+	public void rebuildTree(long companyId)
+		throws PortalException, SystemException {
+
+		List<Group> groups = groupPersistence.findByCompanyId(companyId);
+
+		for (Group group : groups) {
+			String treePath = group.buildTreePath();
+
+			group.setTreePath(treePath);
+
+			groupPersistence.update(group);
+		}
+	}
+
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public BookmarksEntry restoreEntryFromTrash(long userId, long entryId)

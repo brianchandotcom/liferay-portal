@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
@@ -282,6 +283,21 @@ public class DLFileShortcutLocalServiceImpl
 
 		return dlFileShortcutPersistence.countByG_F_A_S(
 			groupId, folderId, active, status);
+	}
+
+	@Override
+	public void rebuildTree(long companyId)
+		throws PortalException, SystemException {
+
+		List<Group> groups = groupPersistence.findByCompanyId(companyId);
+
+		for (Group group : groups) {
+			String treePath = group.buildTreePath();
+
+			group.setTreePath(treePath);
+
+			groupPersistence.update(group);
+		}
 	}
 
 	@Override

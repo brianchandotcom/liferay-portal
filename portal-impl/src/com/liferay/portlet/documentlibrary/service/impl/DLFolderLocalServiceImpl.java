@@ -762,6 +762,21 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	}
 
 	@Override
+	public void rebuildTree(long companyId)
+		throws PortalException, SystemException {
+
+		List<Group> groups = groupPersistence.findByCompanyId(companyId);
+
+		for (Group group : groups) {
+			String treePath = group.buildTreePath();
+
+			group.setTreePath(treePath);
+
+			groupPersistence.update(group);
+		}
+	}
+
+	@Override
 	public void unlockFolder(
 			long groupId, long parentFolderId, String name, String lockUuid)
 		throws PortalException, SystemException {

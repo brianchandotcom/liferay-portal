@@ -20,6 +20,9 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Repository;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
 import com.liferay.portal.service.RepositoryLocalServiceUtil;
@@ -34,6 +37,15 @@ import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 public class DLFileShortcutImpl extends DLFileShortcutBaseImpl {
 
 	public DLFileShortcutImpl() {
+	}
+
+	@Override
+	public String buildTreePath() throws PortalException, SystemException {
+		StringBundler sb = new StringBundler();
+
+		buildTreePath(sb, this);
+
+		return sb.toString();
 	}
 
 	@Override
@@ -113,6 +125,20 @@ public class DLFileShortcutImpl extends DLFileShortcutBaseImpl {
 		}
 		else {
 			return false;
+		}
+	}
+
+	protected void buildTreePath(StringBundler sb, Group group)
+		throws PortalException, SystemException {
+
+		if (group == null) {
+			sb.append(StringPool.SLASH);
+		}
+		else {
+			buildTreePath(sb, group.getParentGroup());
+
+			sb.append(group.getGroupId());
+			sb.append(StringPool.SLASH);
 		}
 	}
 

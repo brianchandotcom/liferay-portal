@@ -23,8 +23,11 @@ import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Image;
 import com.liferay.portal.service.ImageLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -58,6 +61,15 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 	}
 
 	public JournalArticleImpl() {
+	}
+
+	@Override
+	public String buildTreePath() throws PortalException, SystemException {
+		StringBundler sb = new StringBundler();
+
+		buildTreePath(sb, this);
+
+		return sb.toString();
 	}
 
 	@Override
@@ -253,6 +265,20 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 	@Override
 	public void setSmallImageType(String smallImageType) {
 		_smallImageType = smallImageType;
+	}
+
+	protected void buildTreePath(StringBundler sb, Group group)
+		throws PortalException, SystemException {
+
+		if (group == null) {
+			sb.append(StringPool.SLASH);
+		}
+		else {
+			buildTreePath(sb, group.getParentGroup());
+
+			sb.append(group.getGroupId());
+			sb.append(StringPool.SLASH);
+		}
 	}
 
 	private String _smallImageType;

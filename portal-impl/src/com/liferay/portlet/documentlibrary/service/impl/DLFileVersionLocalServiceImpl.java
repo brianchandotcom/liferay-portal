@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.model.Group;
 import com.liferay.portlet.documentlibrary.NoSuchFileVersionException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
@@ -126,6 +127,21 @@ public class DLFileVersionLocalServiceImpl
 		}
 
 		return getLatestFileVersion(fileEntryId, excludeWorkingCopy);
+	}
+
+	@Override
+	public void rebuildTree(long companyId)
+		throws PortalException, SystemException {
+
+		List<Group> groups = groupPersistence.findByCompanyId(companyId);
+
+		for (Group group : groups) {
+			String treePath = group.buildTreePath();
+
+			group.setTreePath(treePath);
+
+			groupPersistence.update(group);
+		}
 	}
 
 }

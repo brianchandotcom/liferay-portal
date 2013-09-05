@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Lock;
 import com.liferay.portal.model.Repository;
 import com.liferay.portal.service.LockLocalServiceUtil;
@@ -62,6 +63,15 @@ import java.util.Map;
 public class DLFileEntryImpl extends DLFileEntryBaseImpl {
 
 	public DLFileEntryImpl() {
+	}
+
+	@Override
+	public String buildTreePath() throws PortalException, SystemException {
+		StringBundler sb = new StringBundler();
+
+		buildTreePath(sb, this);
+
+		return sb.toString();
 	}
 
 	@Override
@@ -400,6 +410,20 @@ public class DLFileEntryImpl extends DLFileEntryBaseImpl {
 		_extraSettingsProperties = extraSettingsProperties;
 
 		super.setExtraSettings(_extraSettingsProperties.toString());
+	}
+
+	protected void buildTreePath(StringBundler sb, Group group)
+		throws PortalException, SystemException {
+
+		if (group == null) {
+			sb.append(StringPool.SLASH);
+		}
+		else {
+			buildTreePath(sb, group.getParentGroup());
+
+			sb.append(group.getGroupId());
+			sb.append(StringPool.SLASH);
+		}
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(DLFileEntryImpl.class);

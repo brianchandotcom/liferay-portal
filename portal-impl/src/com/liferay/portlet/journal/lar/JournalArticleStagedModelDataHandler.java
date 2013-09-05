@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -67,6 +66,7 @@ import java.util.Map;
 
 /**
  * @author Daniel Kocsis
+ * @author Mate Thurzo
  */
 public class JournalArticleStagedModelDataHandler
 	extends BaseStagedModelDataHandler<JournalArticle> {
@@ -228,6 +228,36 @@ public class JournalArticleStagedModelDataHandler
 		portletDataContext.addClassedModel(
 			articleElement, ExportImportPathUtil.getModelPath(article), article,
 			JournalPortletDataHandler.NAMESPACE);
+	}
+
+	@Override
+	protected void doImportCompanyStagedModel(
+			PortletDataContext portletDataContext, JournalArticle article)
+		throws Exception {
+
+		JournalArticleResource existingArticleResource =
+			JournalArticleResourceLocalServiceUtil.
+				fetchJournalArticleResourceByUuidAndGroupId(
+					article.getArticleResourceUuid(),
+					portletDataContext.getCompanyGroupId());
+
+		JournalArticle existingArticle =
+			JournalArticleLocalServiceUtil.getLatestArticle(
+				existingArticleResource.getResourcePrimKey(),
+				WorkflowConstants.STATUS_ANY, false);
+
+		Map<String, String> articleArticleIds =
+			(Map<String, String>)portletDataContext.getNewPrimaryKeysMap(
+				JournalArticle.class + ".articleId");
+
+		articleArticleIds.put(
+			article.getArticleId(), existingArticle.getArticleId());
+
+		Map<Long, Long> articleIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				JournalArticle.class);
+
+		articleIds.put(article.getId(), existingArticle.getId());
 	}
 
 	@Override
@@ -408,53 +438,16 @@ public class JournalArticleStagedModelDataHandler
 				(DDMStructure)portletDataContext.getZipEntryAsObject(
 					structurePath);
 
-			DDMStructure existingDDMStructure =
-				DDMStructureLocalServiceUtil.fetchDDMStructureByUuidAndGroupId(
-					ddmStructure.getUuid(),
-					portletDataContext.getScopeGroupId());
+			StagedModelDataHandlerUtil.importReferenceStagedModel(
+				portletDataContext, ddmStructure);
 
-			if (existingDDMStructure == null) {
-				existingDDMStructure =
-					DDMStructureLocalServiceUtil.
-						fetchDDMStructureByUuidAndGroupId(
-							ddmStructure.getUuid(),
-							portletDataContext.getCompanyGroupId());
-			}
+			Map<String, String> structureKeys =
+				(Map<String, String>)portletDataContext.getNewPrimaryKeysMap(
+					DDMStructure.class + ".ddmStructureKey");
 
-			if (existingDDMStructure == null) {
-				StagedModelDataHandlerUtil.importStagedModel(
-					portletDataContext, ddmStructure);
-
-				Map<Long, Long> ddmStructureIds =
-					(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-						DDMStructure.class);
-
-				ddmStructureId = MapUtil.getLong(
-					ddmStructureIds, ddmStructure.getStructureId(),
-					ddmStructure.getStructureId());
-
-				existingDDMStructure =
-					DDMStructureLocalServiceUtil.getDDMStructure(
-						ddmStructureId);
-			}
-
-			if (existingDDMStructure == null) {
-				if (_log.isWarnEnabled()) {
-					StringBundler sb = new StringBundler();
-
-					sb.append("Structure ");
-					sb.append(article.getStructureId());
-					sb.append(" is missing for article ");
-					sb.append(article.getArticleId());
-					sb.append(", skipping this article.");
-
-					_log.warn(sb.toString());
-				}
-
-				return;
-			}
-
-			parentDDMStructureKey = existingDDMStructure.getStructureKey();
+			parentDDMStructureKey = MapUtil.getString(
+				structureKeys, ddmStructure.getStructureKey(),
+				ddmStructure.getStructureKey());
 		}
 
 		String parentDDMTemplateKey = StringPool.BLANK;
@@ -472,52 +465,16 @@ public class JournalArticleStagedModelDataHandler
 				(DDMTemplate)portletDataContext.getZipEntryAsObject(
 					ddmTemplatePath);
 
-			DDMTemplate existingDDMTemplate =
-				DDMTemplateLocalServiceUtil.fetchDDMTemplateByUuidAndGroupId(
-					ddmTemplate.getUuid(),
-					portletDataContext.getScopeGroupId());
+			StagedModelDataHandlerUtil.importReferenceStagedModel(
+				portletDataContext, ddmTemplate);
 
-			if (existingDDMTemplate == null) {
-				existingDDMTemplate =
-					DDMTemplateLocalServiceUtil.
-						fetchDDMTemplateByUuidAndGroupId(
-							ddmTemplate.getUuid(),
-							portletDataContext.getCompanyGroupId());
-			}
+			Map<String, String> ddmTemplateKeys =
+				(Map<String, String>)portletDataContext.getNewPrimaryKeysMap(
+					DDMTemplate.class + ".ddmTemplateKey");
 
-			if (existingDDMTemplate == null) {
-				StagedModelDataHandlerUtil.importStagedModel(
-					portletDataContext, ddmTemplate);
-
-				Map<Long, Long> ddmTemplateIds =
-					(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-						DDMTemplate.class);
-
-				long ddmTemplateId = MapUtil.getLong(
-					ddmTemplateIds, ddmTemplate.getTemplateId(),
-					ddmTemplate.getTemplateId());
-
-				existingDDMTemplate =
-					DDMTemplateLocalServiceUtil.getDDMTemplate(ddmTemplateId);
-			}
-
-			if (existingDDMTemplate == null) {
-				if (_log.isWarnEnabled()) {
-					StringBundler sb = new StringBundler();
-
-					sb.append("Template ");
-					sb.append(article.getTemplateId());
-					sb.append(" is missing for article ");
-					sb.append(article.getArticleId());
-					sb.append(", skipping this article.");
-
-					_log.warn(sb.toString());
-				}
-
-				return;
-			}
-
-			parentDDMTemplateKey = existingDDMTemplate.getTemplateKey();
+			parentDDMTemplateKey = MapUtil.getString(
+				ddmTemplateKeys, ddmTemplate.getTemplateKey(),
+				ddmTemplate.getTemplateKey());
 		}
 
 		File smallFile = null;
@@ -595,14 +552,6 @@ public class JournalArticleStagedModelDataHandler
 							articleResourceUuid,
 							portletDataContext.getScopeGroupId());
 
-				if (articleResource == null) {
-					articleResource =
-						JournalArticleResourceLocalServiceUtil.
-							fetchJournalArticleResourceByUuidAndGroupId(
-								articleResourceUuid,
-								portletDataContext.getCompanyGroupId());
-				}
-
 				serviceContext.setUuid(articleResourceUuid);
 				serviceContext.setAttribute("urlTitle", article.getUrlTitle());
 
@@ -645,11 +594,6 @@ public class JournalArticleStagedModelDataHandler
 							neverReview, article.isIndexable(),
 							article.isSmallImage(), article.getSmallImageURL(),
 							smallFile, images, articleURL, serviceContext);
-				}
-				else if (portletDataContext.isCompanyStagedGroupedModel(
-							existingArticle)) {
-
-					return;
 				}
 				else {
 					importedArticle =

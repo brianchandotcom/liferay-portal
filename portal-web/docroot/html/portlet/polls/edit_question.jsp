@@ -128,7 +128,9 @@ if (choiceName > 0) {
 			}
 			%>
 
-			<aui:button cssClass="add-choice" onClick='<%= renderResponse.getNamespace() + "addPollChoice();" %>' value="add-choice" />
+			<aui:button-row>
+				<aui:button cssClass="add-choice" onClick='<%= renderResponse.getNamespace() + "addPollChoice();" %>' value="add-choice" />
+			</aui:button-row>
 		</aui:field-wrapper>
 
 		<c:if test="<%= question == null %>">

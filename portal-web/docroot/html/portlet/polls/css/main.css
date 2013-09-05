@@ -1,16 +1,25 @@
 .portlet-polls {
-	.choice, .add-choice{
-		clear: both;
-		display: block;
-	}
+	.choice {
+		margin-bottom: 30px;
 
-	.last-choice {
-		.btn-delete {
+		&:after {
+			clear: both;
+			content: ".";
+			display: block;
+			height: 0;
+			visibility: hidden;
+		}
+
+		&.last-choice {
 			margin-bottom: 10px;
 		}
 
-		.control-group {
-			margin-bottom: 0;
+		.btn-delete, .input-localized {
+			float: left;
+		}
+
+		.btn-delete {
+			margin-left: 10px;
 		}
 	}
 }

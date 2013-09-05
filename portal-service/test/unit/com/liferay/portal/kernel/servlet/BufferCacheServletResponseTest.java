@@ -1001,41 +1001,13 @@ public class BufferCacheServletResponseTest {
 
 	@Test
 	public void testSetBufferSize() throws IOException {
-		StubHttpServletResponse stubHttpServletResponse =
-			new StubHttpServletResponse() {
-
-				@Override
-				public boolean isCommitted() {
-					return false;
-				}
-
-			};
-
-		BufferCacheServletResponse bufferCacheServletResponse =
-			new BufferCacheServletResponse(stubHttpServletResponse);
-
-		// Normal
-
-		bufferCacheServletResponse.setBufferSize(1024);
-
-		// Set after commit
-
-		bufferCacheServletResponse.flushBuffer();
-
-		try {
-			bufferCacheServletResponse.setBufferSize(2048);
-
-			Assert.fail();
-		}
-		catch (IllegalStateException ise) {
-		}
+		_testSetBufferSize(true);
 	}
 
 	@Test
 	public void testSetBufferSizeOnWeblogic() throws Exception {
-
-		Field weblogicField =
-			ServerDetector.class.getDeclaredField("_webLogic");
+		Field weblogicField = ServerDetector.class.getDeclaredField(
+			"_webLogic");
 
 		weblogicField.setAccessible(true);
 
@@ -1043,33 +1015,7 @@ public class BufferCacheServletResponseTest {
 
 		weblogicField.set(serverDetector, Boolean.TRUE);
 
-		StubHttpServletResponse stubHttpServletResponse =
-			new StubHttpServletResponse() {
-
-				@Override
-				public boolean isCommitted() {
-					return false;
-				}
-
-			};
-
-		BufferCacheServletResponse bufferCacheServletResponse =
-			new BufferCacheServletResponse(stubHttpServletResponse);
-
-		// Normal
-
-		bufferCacheServletResponse.setBufferSize(1024);
-
-		// Set after commit
-
-		bufferCacheServletResponse.flushBuffer();
-
-		try {
-			bufferCacheServletResponse.setBufferSize(2048);
-		}
-		catch (IllegalStateException ise) {
-			Assert.fail();
-		}
+		_testSetBufferSize(false);
 
 		weblogicField.set(serverDetector, Boolean.FALSE);
 	}
@@ -1097,6 +1043,44 @@ public class BufferCacheServletResponseTest {
 
 		Assert.assertEquals(
 			_TEST_STRING, bufferCacheServletResponse.getString());
+	}
+
+	private void _testSetBufferSize(boolean expectIllegalStateException)
+		throws IOException {
+
+		StubHttpServletResponse stubHttpServletResponse =
+			new StubHttpServletResponse() {
+
+				@Override
+				public boolean isCommitted() {
+					return false;
+				}
+
+			};
+
+		BufferCacheServletResponse bufferCacheServletResponse =
+			new BufferCacheServletResponse(stubHttpServletResponse);
+
+		// Normal
+
+		bufferCacheServletResponse.setBufferSize(1024);
+
+		// Set after commit
+
+		bufferCacheServletResponse.flushBuffer();
+
+		try {
+			bufferCacheServletResponse.setBufferSize(2048);
+
+			if (expectIllegalStateException) {
+				Assert.fail();
+			}
+		}
+		catch (IllegalStateException ise) {
+			if (!expectIllegalStateException) {
+				Assert.fail();
+			}
+		}
 	}
 
 	private static final byte[] _TEST_BYTES = {'a', 'b', 'c'};

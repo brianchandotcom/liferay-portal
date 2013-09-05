@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.ClassedModel;
 import com.liferay.portal.model.ContainerModel;
 import com.liferay.portal.model.SystemEvent;
 import com.liferay.portal.model.SystemEventConstants;
@@ -32,6 +33,8 @@ import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.trash.model.TrashEntry;
+
+import java.io.Serializable;
 
 import java.util.Collections;
 import java.util.List;
@@ -227,6 +230,13 @@ public abstract class BaseTrashHandler implements TrashHandler {
 	}
 
 	@Override
+	public TrashEntry getTrashEntry(long classPK)
+		throws PortalException, SystemException {
+
+		return null;
+	}
+
+	@Override
 	public TrashRenderer getTrashRenderer(long classPK)
 		throws PortalException, SystemException {
 
@@ -300,6 +310,33 @@ public abstract class BaseTrashHandler implements TrashHandler {
 		throws PortalException, SystemException {
 
 		return true;
+	}
+
+	@Override
+	public boolean isTrashEntry(
+		TrashEntry trashEntry, ClassedModel classedModel) {
+
+		if ((trashEntry == null) || (classedModel == null)) {
+			return false;
+		}
+
+		String className = getClassName();
+
+		if (!className.equals(trashEntry.getClassName())) {
+			return false;
+		}
+
+		Serializable primaryKeyObj = classedModel.getPrimaryKeyObj();
+
+		if (!(primaryKeyObj instanceof Long)) {
+			return false;
+		}
+
+		if (trashEntry.getClassPK() == (Long)primaryKeyObj) {
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override

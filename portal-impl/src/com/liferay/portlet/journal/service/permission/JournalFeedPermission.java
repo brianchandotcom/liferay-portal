@@ -16,8 +16,10 @@ package com.liferay.portlet.journal.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.journal.model.JournalFeed;
 import com.liferay.portlet.journal.service.JournalFeedLocalServiceUtil;
 
@@ -58,6 +60,14 @@ public class JournalFeedPermission {
 	public static boolean contains(
 		PermissionChecker permissionChecker, JournalFeed feed,
 		String actionId) {
+
+		Boolean hasPermission = StagingPermissionUtil.hasPermission(
+			permissionChecker, feed.getGroupId(), JournalFeed.class.getName(),
+			feed.getPrimaryKey(), PortletKeys.JOURNAL, actionId);
+
+		if (hasPermission != null) {
+			return hasPermission.booleanValue();
+		}
 
 		if (permissionChecker.hasOwnerPermission(
 				feed.getCompanyId(), JournalFeed.class.getName(), feed.getId(),

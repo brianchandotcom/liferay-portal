@@ -117,16 +117,16 @@ boolean showAddAction = ParamUtil.getBoolean(request, "showAddAction", true);
 
 <aui:nav-bar>
 	<aui:nav id="layoutsNav">
-		<c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, selPlid, ActionKeys.ADD_LAYOUT) && (!selGroup.hasStagingGroup() || selGroup.isStagingGroup()) && showAddAction %>">
+		<c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, selPlid, ActionKeys.ADD_LAYOUT) && showAddAction %>">
 			<aui:nav-item data-value="add-child-page" iconClass="icon-plus" label="add-child-page" />
 		</c:if>
-		<c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, selPlid, ActionKeys.PERMISSIONS) && (!selGroup.hasStagingGroup() || selGroup.isStagingGroup()) %>">
+		<c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, selPlid, ActionKeys.PERMISSIONS) %>">
 			<aui:nav-item data-value="permissions" iconClass="icon-lock" label="permissions" />
 		</c:if>
 		<c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, selPlid, ActionKeys.DELETE) %>">
 			<aui:nav-item data-value="delete" iconClass="icon-remove" label="delete" />
 		</c:if>
-		<c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, selLayout, ActionKeys.UPDATE) && (!selGroup.hasStagingGroup() || selGroup.isStagingGroup()) %>">
+		<c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, selLayout, ActionKeys.UPDATE) %>">
 			<aui:nav-item data-value="copy-applications" iconClass="icon-list-alt" label="copy-applications" />
 		</c:if>
 	</aui:nav>
@@ -197,7 +197,7 @@ boolean showAddAction = ParamUtil.getBoolean(request, "showAddAction", true);
 					</div>
 				</c:if>
 
-				<c:if test="<%= selGroup.hasStagingGroup() && !selGroup.isStagingGroup() %>">
+				<c:if test="<%= selGroup.hasLocalOrRemoteStagingGroup() && !selGroup.isStagingGroup() %>">
 					<div class="alert alert-block">
 						<liferay-ui:message key="changes-are-immediately-available-to-end-users" />
 					</div>
@@ -340,15 +340,13 @@ boolean showAddAction = ParamUtil.getBoolean(request, "showAddAction", true);
 				</aui:script>
 			</c:if>
 
-			<c:if test="<%= !selGroup.hasStagingGroup() || selGroup.isStagingGroup() %>">
-				<liferay-ui:form-navigator
-					categoryNames="<%= _CATEGORY_NAMES %>"
-					categorySections="<%= categorySections %>"
-					displayStyle="<%= displayStyle %>"
-					jspPath="/html/portlet/layouts_admin/layout/"
-					showButtons="<%= (selLayout.getGroupId() == groupId) && SitesUtil.isLayoutUpdateable(selLayout) && LayoutPermissionUtil.contains(permissionChecker, selPlid, ActionKeys.UPDATE) %>"
-				/>
-			</c:if>
+			<liferay-ui:form-navigator
+				categoryNames="<%= _CATEGORY_NAMES %>"
+				categorySections="<%= categorySections %>"
+				displayStyle="<%= displayStyle %>"
+				jspPath="/html/portlet/layouts_admin/layout/"
+				showButtons="<%= (selLayout.getGroupId() == groupId) && SitesUtil.isLayoutUpdateable(selLayout) && LayoutPermissionUtil.contains(permissionChecker, selPlid, ActionKeys.UPDATE) %>"
+			/>
 		</c:otherwise>
 	</c:choose>
 </aui:form>

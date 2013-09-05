@@ -88,6 +88,13 @@ public class GroupPermissionImpl implements GroupPermission {
 			}
 		}
 
+		if ((actionId.equals(ActionKeys.ADD_LAYOUT) ||
+			 actionId.equals(ActionKeys.MANAGE_LAYOUTS)) &&
+			group.hasLocalOrRemoteStagingGroup()) {
+
+			return false;
+		}
+
 		if (actionId.equals(ActionKeys.ADD_COMMUNITY) &&
 			permissionChecker.hasPermission(
 				groupId, Group.class.getName(), groupId,

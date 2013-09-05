@@ -119,6 +119,10 @@ if ((group != null) && group.isCompany()) {
 	miscellaneousSections = new String[0];
 }
 
+if (group.hasLocalOrRemoteStagingGroup()) {
+	advancedSections = ArrayUtil.remove(advancedSections, "staging");
+}
+
 String[][] categorySections = {mainSections, seoSections, advancedSections, miscellaneousSections};
 %>
 

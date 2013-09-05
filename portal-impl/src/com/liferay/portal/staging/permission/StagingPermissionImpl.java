@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.staging.permission.StagingPermission;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -73,7 +74,7 @@ public class StagingPermissionImpl implements StagingPermission {
 		if (!actionId.equals(ActionKeys.VIEW) &&
 			!actionId.equals(ActionKeys.DELETE) &&
 			group.hasLocalOrRemoteStagingGroup() &&
-			group.isStagedPortlet(portletId)) {
+			(Validator.isNull(portletId) || group.isStagedPortlet(portletId))) {
 
 			return false;
 		}

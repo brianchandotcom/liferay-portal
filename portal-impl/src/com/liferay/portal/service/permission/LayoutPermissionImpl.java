@@ -16,6 +16,7 @@ package com.liferay.portal.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
@@ -85,6 +86,14 @@ public class LayoutPermissionImpl implements LayoutPermission {
 			PermissionChecker permissionChecker, Layout layout,
 			boolean checkViewableGroup, String actionId)
 		throws PortalException, SystemException {
+
+		Boolean hasPermission = StagingPermissionUtil.hasPermission(
+			permissionChecker, layout.getGroup(), Layout.class.getName(),
+			layout.getGroupId(), null, actionId);
+
+		if (hasPermission != null) {
+			return hasPermission.booleanValue();
+		}
 
 		return containsWithViewableGroup(
 			permissionChecker, layout, checkViewableGroup, actionId);

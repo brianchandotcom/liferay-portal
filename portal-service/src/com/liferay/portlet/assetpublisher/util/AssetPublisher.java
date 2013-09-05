@@ -157,6 +157,11 @@ public interface AssetPublisher {
 			List<AssetEntry> assetEntries)
 		throws PortalException, SystemException;
 
+	public void processQuery(
+			User user, PortletPreferences preferences,
+			AssetEntryQuery assetEntryQuery)
+		throws Exception;
+
 	public void removeAndStoreSelection(
 			List<String> assetEntryUuids, PortletPreferences portletPreferences)
 		throws Exception;

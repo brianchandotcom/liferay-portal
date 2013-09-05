@@ -138,7 +138,7 @@ if (selectionStyle.equals("dynamic")) {
 		}
 	}
 
-	AssetPublisherUtil.addUserAttributes(user, StringUtil.split(customUserAttributes), assetEntryQuery);
+	AssetPublisherUtil.processQuery(user, portletPreferences, assetEntryQuery);
 }
 
 long assetVocabularyId = GetterUtil.getLong(portletPreferences.getValue("assetVocabularyId", StringPool.BLANK));

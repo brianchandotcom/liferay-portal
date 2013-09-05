@@ -1038,6 +1038,20 @@ public class AssetPublisherImpl implements AssetPublisher {
 	}
 
 	@Override
+	public void processQuery(
+			User user, PortletPreferences preferences,
+			AssetEntryQuery assetEntryQuery)
+		throws Exception {
+
+		String customUserAttributes = GetterUtil.getString(
+			preferences.getValue(
+				"customUserAttributes", StringPool.BLANK));
+
+		AssetPublisherUtil.addUserAttributes(
+			user, StringUtil.split(customUserAttributes), assetEntryQuery);
+	}
+
+	@Override
 	public void removeAndStoreSelection(
 			List<String> assetEntryUuids, PortletPreferences portletPreferences)
 		throws Exception {

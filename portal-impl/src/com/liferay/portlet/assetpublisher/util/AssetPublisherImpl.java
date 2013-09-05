@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -100,6 +101,23 @@ import javax.servlet.http.HttpSession;
  * @author Julio Camarero
  */
 public class AssetPublisherImpl implements AssetPublisher {
+
+	public AssetPublisherImpl() {
+		for (String queryProcessorClassName :
+				PropsValues.ASSET_PUBLISHER_QUERY_PROCESSORS) {
+
+			try {
+				AssetQueryProcessor queryProcessor =
+					(AssetQueryProcessor)InstanceFactory.newInstance(
+						queryProcessorClassName);
+
+				_queryProcessors.add(queryProcessor);
+			}
+			catch (Exception e) {
+				_log.error(e, e);
+			}
+		}
+	}
 
 	@Override
 	public void addAndStoreSelection(
@@ -1043,12 +1061,9 @@ public class AssetPublisherImpl implements AssetPublisher {
 			AssetEntryQuery assetEntryQuery)
 		throws Exception {
 
-		String customUserAttributes = GetterUtil.getString(
-			preferences.getValue(
-				"customUserAttributes", StringPool.BLANK));
-
-		AssetPublisherUtil.addUserAttributes(
-			user, StringUtil.split(customUserAttributes), assetEntryQuery);
+		for (AssetQueryProcessor queryProcessor : _queryProcessors) {
+			queryProcessor.adaptQuery(user, preferences, assetEntryQuery);
+		}
 	}
 
 	@Override
@@ -1298,6 +1313,9 @@ public class AssetPublisherImpl implements AssetPublisher {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(AssetPublisherImpl.class);
+
+	private final List<AssetQueryProcessor> _queryProcessors =
+		new ArrayList<AssetQueryProcessor>();
 
 	private Accessor<AssetEntry, String> _titleAccessor =
 		new Accessor<AssetEntry, String>() {

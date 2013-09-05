@@ -5036,6 +5036,7 @@ public class JournalArticleLocalServiceImpl
 	 * @throws PortalException if a portal exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public JournalArticle updateStatus(
 			long userId, JournalArticle article, int status, String articleURL,
@@ -5334,7 +5335,7 @@ public class JournalArticleLocalServiceImpl
 
 		JournalArticle article = getArticle(classPK);
 
-		return updateStatus(
+		return journalArticleLocalService.updateStatus(
 			userId, article, status, null, workflowContext, serviceContext);
 	}
 
@@ -5371,7 +5372,7 @@ public class JournalArticleLocalServiceImpl
 		JournalArticle article = journalArticlePersistence.findByG_A_V(
 			groupId, articleId, version);
 
-		return updateStatus(
+		return journalArticleLocalService.updateStatus(
 			userId, article, status, articleURL, workflowContext,
 			serviceContext);
 	}

@@ -685,40 +685,6 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 	}
 
 	@Override
-	public void updateDependentStatus(
-			User user, List<Object> categoriesAndThreads, int status)
-		throws PortalException, SystemException {
-
-		for (Object object : categoriesAndThreads) {
-			if (object instanceof MBThread) {
-				MBThread thread = (MBThread)object;
-
-				if ((status == WorkflowConstants.STATUS_APPROVED) &&
-					(thread.getStatus() == WorkflowConstants.STATUS_IN_TRASH)) {
-
-					continue;
-				}
-
-				mbThreadLocalService.updateStatus(
-					user.getUserId(), thread.getThreadId(), status, status);
-			}
-			else if (object instanceof MBCategory) {
-				MBCategory category = (MBCategory)object;
-
-				if (category.isInTrash()) {
-					continue;
-				}
-
-				updateDependentStatus(
-					user,
-					getCategoriesAndThreads(
-						category.getGroupId(), category.getCategoryId()),
-					status);
-			}
-		}
-	}
-
-	@Override
 	public MBCategory updateStatus(long userId, long categoryId, int status)
 		throws PortalException, SystemException {
 

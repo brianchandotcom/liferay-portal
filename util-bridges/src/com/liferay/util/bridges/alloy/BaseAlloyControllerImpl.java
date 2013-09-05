@@ -111,6 +111,10 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 	public static final String TOUCH =
 		BaseAlloyControllerImpl.class.getName() + "#TOUCH#";
 
+	public BaseAlloyControllerImpl() {
+		setPermissioned(false);
+	}
+
 	@Override
 	public void afterPropertiesSet() {
 		initClass();
@@ -125,6 +129,16 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 
 	@Override
 	public void execute() throws Exception {
+		if (permissioned &&
+			!AlloyPermission.contains(
+				themeDisplay.getPermissionChecker(),
+				themeDisplay.getScopeGroupId(), portlet.getRootPortletId(),
+				controllerPath, actionPath)) {
+
+			renderError(
+				"you-do-not-have-permission-to-access-the-requested-resource");
+		}
+
 		Method method = getMethod(actionPath);
 
 		if (method == null) {
@@ -174,6 +188,11 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 	@Override
 	public void setPageContext(PageContext pageContext) {
 		this.pageContext = pageContext;
+	}
+
+	@Override
+	public void setPermissioned(boolean permissioned) {
+		this.permissioned = permissioned;
 	}
 
 	@Override
@@ -900,6 +919,7 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 	protected Map<String, Method> methodsMap;
 	protected MimeResponse mimeResponse;
 	protected PageContext pageContext;
+	protected boolean permissioned;
 	protected Portlet portlet;
 	protected PortletContext portletContext;
 	protected PortletRequest portletRequest;

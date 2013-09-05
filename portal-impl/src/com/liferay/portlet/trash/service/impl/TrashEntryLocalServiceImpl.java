@@ -203,6 +203,9 @@ public class TrashEntryLocalServiceImpl extends TrashEntryLocalServiceBaseImpl {
 			trashVersionPersistence.removeByEntryId(trashEntry.getEntryId());
 
 			trashEntry = trashEntryPersistence.remove(trashEntry);
+
+			systemEventLocalService.deleteSystemEvents(
+				trashEntry.getGroupId(), trashEntry.getSystemEventSetKey());
 		}
 
 		return trashEntry;

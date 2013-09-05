@@ -58,6 +58,7 @@
 		<!-- References -->
 
 		<reference package-path="com.liferay.portal" entity="Group" />
+		<reference package-path="com.liferay.portal" entity="SystemEvent" />
 	</entity>
 	<entity name="TrashVersion" local-service="true" remote-service="false">
 

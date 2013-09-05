@@ -16,9 +16,11 @@ package com.liferay.portlet.messageboards.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.messageboards.NoSuchCategoryException;
 import com.liferay.portlet.messageboards.model.MBCategory;
@@ -97,6 +99,15 @@ public class MBCategoryPermission {
 
 		if (actionId.equals(ActionKeys.ADD_CATEGORY)) {
 			actionId = ActionKeys.ADD_SUBCATEGORY;
+		}
+
+		Boolean hasPermission = StagingPermissionUtil.hasPermission(
+			permissionChecker, category.getGroupId(),
+			MBCategory.class.getName(), category.getCategoryId(),
+			PortletKeys.MESSAGE_BOARDS, actionId);
+
+		if (hasPermission != null) {
+			return hasPermission.booleanValue();
 		}
 
 		if (MBBanLocalServiceUtil.hasBan(

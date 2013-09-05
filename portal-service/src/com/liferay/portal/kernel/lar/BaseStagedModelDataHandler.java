@@ -109,6 +109,19 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 	}
 
 	@Override
+	public void processGlobalStagedModel(
+			PortletDataContext portletDataContext, T stagedModel)
+		throws PortletDataException {
+
+		try {
+			doProcessGlobalStagedModel(portletDataContext, stagedModel);
+		}
+		catch (Exception e) {
+			throw new PortletDataException(e);
+		}
+	}
+
+	@Override
 	public boolean validateReference(
 		PortletDataContext portletDataContext, Element rootElement,
 		Element referenceElement) {
@@ -152,6 +165,15 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 	protected abstract void doImportStagedModel(
 			PortletDataContext portletDataContext, T stagedModel)
 		throws Exception;
+
+	protected void doProcessGlobalStagedModel(
+			PortletDataContext portletDataContext, T stagedModel)
+		throws Exception {
+
+		throw new Exception(
+			"No implementation found for processing a referenced global " +
+				"entity");
+	}
 
 	protected boolean isExportable(
 		PortletDataContext portletDataContext, T stagedModel) {

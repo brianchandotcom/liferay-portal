@@ -582,6 +582,7 @@ if (Validator.isNotNull(content)) {
 			document.<portlet:namespace />fm1.<portlet:namespace />version.value = newVersion;
 
 			var taglibWorkflowStatus = A.one('#<portlet:namespace />journalArticleWrapper .taglib-workflow-status');
+
 			var statusNode = taglibWorkflowStatus.one('.workflow-status strong');
 
 			statusNode.html(newStatusMessage);
@@ -609,13 +610,14 @@ if (Validator.isNotNull(content)) {
 				var availableTranslationsLinks = A.one('#<portlet:namespace />availableTranslationsLinks');
 				var translationsMessage = A.one('#<portlet:namespace />translationsMessage');
 
+				statusNode.replaceClass('workflow-status-approved', 'workflow-status-draft');
+
+				statusNode.html('<%= UnicodeLanguageUtil.get(pageContext, "draft") %>');
+
 				availableTranslationContainer.addClass('contains-translations');
+
 				availableTranslationsLinks.show();
 				translationsMessage.show();
-
-				statusNode.removeClass('workflow-status-approved');
-				statusNode.addClass('workflow-status-draft');
-				statusNode.html('<%= UnicodeLanguageUtil.get(pageContext, "draft") %>');
 
 				var TPL_TRANSLATION = '<a class="lfr-token journal-article-translation-{newLanguageId}" href="javascript:;"><img alt="" src="<%= themeDisplay.getPathThemeImages() %>/language/{newLanguageId}.png" />{newLanguage}</a>';
 

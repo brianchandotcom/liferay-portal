@@ -57,6 +57,7 @@ public class TrashEntryWrapper implements TrashEntry, ModelWrapper<TrashEntry> {
 		attributes.put("createDate", getCreateDate());
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
+		attributes.put("systemEventSetKey", getSystemEventSetKey());
 		attributes.put("typeSettings", getTypeSettings());
 		attributes.put("status", getStatus());
 
@@ -111,6 +112,12 @@ public class TrashEntryWrapper implements TrashEntry, ModelWrapper<TrashEntry> {
 
 		if (classPK != null) {
 			setClassPK(classPK);
+		}
+
+		Long systemEventSetKey = (Long)attributes.get("systemEventSetKey");
+
+		if (systemEventSetKey != null) {
+			setSystemEventSetKey(systemEventSetKey);
 		}
 
 		String typeSettings = (String)attributes.get("typeSettings");
@@ -341,6 +348,26 @@ public class TrashEntryWrapper implements TrashEntry, ModelWrapper<TrashEntry> {
 	@Override
 	public void setClassPK(long classPK) {
 		_trashEntry.setClassPK(classPK);
+	}
+
+	/**
+	* Returns the system event set key of this trash entry.
+	*
+	* @return the system event set key of this trash entry
+	*/
+	@Override
+	public long getSystemEventSetKey() {
+		return _trashEntry.getSystemEventSetKey();
+	}
+
+	/**
+	* Sets the system event set key of this trash entry.
+	*
+	* @param systemEventSetKey the system event set key of this trash entry
+	*/
+	@Override
+	public void setSystemEventSetKey(long systemEventSetKey) {
+		_trashEntry.setSystemEventSetKey(systemEventSetKey);
 	}
 
 	/**

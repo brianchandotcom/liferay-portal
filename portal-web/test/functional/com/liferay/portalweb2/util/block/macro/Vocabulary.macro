@@ -30,6 +30,19 @@
 		<execute action="CPCategories#assertTextEquals" locator-key1="VOCABULARY_ENTRY" value1="${vocabularyName}" />
 	</command>
 
+	<command name="addViewableByCP">
+		<execute action="CPCategories#assertClick" locator-key1="ADD_VOCABULARY_BUTTON" value1="Add Vocabulary" />
+		<execute action="CPCategories#type" locator-key1="ADD_VOCABULARY_NAME_FIELD" value1="${vocabularyName}" />
+
+		<execute action="CPCategories#select" locator-key1="ADD_VOCABULARY_CHOOSE_VIEWABLE_BY_SELECT" value1="${viewableBy}" />
+		<execute action="CPCategories#assertClick" locator-key1="ADD_VOCABULARY_SAVE_BUTTON" value1="Save" />
+		<!--<execute action="CPCategories#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request processed successfully." />-->
+
+		<var name="key_vocabularyName" value="${vocabularyName}" />
+
+		<execute action="CPCategories#assertTextEquals" locator-key1="VOCABULARY_ENTRY" value1="${vocabularyName}" />
+	</command>
+
 	<command name="deleteByActionsCP">
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 
@@ -72,6 +85,27 @@
 				<execute action="CPCategories#assertTextEquals" locator-key1="INFO_MESSAGE" value1="There are no categories." />
 			</then>
 		</if>
+	</command>
+
+	<command name="viewVocabularyPermissionsCP">
+		<var name="key_vocabularyName" value="${vocabularyName}" />
+
+		<execute action="CPCategories#assertTextEquals" locator-key1="VOCABULARY_ENTRY" value1="${vocabularyName}" />
+		<execute action="CPCategories#click" locator-key1="EDIT_VOCABULARY_ICON" />
+
+		<execute action="CPCategories#assertClick" locator-key1="EDIT_VOCABULARY_PERMISSIONS_BUTTON" value1="Permissions" />
+		<execute action="CPCategories#selectFrame" locator-key1="EDIT_VOCABULARY_PERMISSIONS_IFRAME" />
+
+		<if>
+			<equals arg1="${viewableBy}" arg2="Anyone (Guest Role)" />
+			<then>
+				<execute action="CPCategories#assertChecked" locator-key1="EDIT_VOCABULARY_PERMISSIONS_GUEST_VIEW_CHECKBOX" />
+				<execute action="CPCategories#assertChecked" locator-key1="EDIT_VOCABULARY_PERMISSIONS_OWNER_VIEW_CHECKBOX" />
+				<execute action="CPCategories#assertChecked" locator-key1="EDIT_VOCABULARY_PERMISSIONS_SITE_MEMBER_VIEW_CHECKBOX" />
+			</then>
+		</if>
+
+		<execute action="CPCategories#selectFrameTop" value1="relative=top" />
 	</command>
 
 	<command name="viewWithAssociatedAssetTypeCP">

@@ -6,4 +6,6 @@
 	<execute test-case-command="CPCategories#AddVocabularyAssetTypeUser" />
 	<execute test-case-command="CPCategories#AddVocabularyAssetTypeWebContent" />
 	<execute test-case-command="CPCategories#AddVocabularyAssetTypeWikiPage" />
+	<execute test-case-command="CPCategories#AddVocabularyViewableByGuest" />
+	<execute test-case-command="CPCategories#ValidateClickingCloseButtonDoesNotSaveVocabulary" />
 </definition>

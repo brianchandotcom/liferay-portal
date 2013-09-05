@@ -212,6 +212,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADD_VOCABULARY_CLOSE_BUTTON</td>
+	<td>//button[contains(.,'Close')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADD_VOCABULARY_ASSOCIATED_ASSET_TYPES</td>
 	<td>//div[@id='vocabularyExtraFieldsPanelContainer']//div[@class='accordion-toggle']</td>
 	<td></td>
@@ -219,6 +224,11 @@
 <tr>
 	<td>ADD_VOCABULARY_CHOOSE_ASSET_TYPE_SELECT</td>
 	<td>//select[contains(@id,'_147_classNameId')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_VOCABULARY_CHOOSE_VIEWABLE_BY_SELECT</td>
+	<td>//select[@name='_147_inputPermissionsViewRole']</td>
 	<td></td>
 </tr>
 <tr>
@@ -240,6 +250,47 @@
 <tr>
 	<td>EDIT_VOCABULARY_SAVE_BUTTON</td>
 	<td>//button[contains(.,'Save')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EDIT_VOCABULARY_DELETE_BUTTON</td>
+	<td>//button[contains(.,'Delete')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EDIT_VOCABULARY_PERMISSIONS_BUTTON</td>
+	<td>//button[contains(.,'Permissions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EDIT_VOCABULARY_CLOSE_BUTTON</td>
+	<td>//button[contains(.,'Close')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--EDIT_VOCABULARY_PERMISSIONS-->
+<tr>
+	<td>EDIT_VOCABULARY_PERMISSIONS_IFRAME</td>
+	<td>//iframe</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EDIT_VOCABULARY_PERMISSIONS_GUEST_VIEW_CHECKBOX</td>
+	<td>//input[@id='guest_ACTION_VIEW']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EDIT_VOCABULARY_PERMISSIONS_OWNER_VIEW_CHECKBOX</td>
+	<td>//input[@id='owner_ACTION_VIEW']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EDIT_VOCABULARY_PERMISSIONS_SITE_MEMBER_VIEW_CHECKBOX</td>
+	<td>//input[@id='site-member_ACTION_VIEW']</td>
 	<td></td>
 </tr>
 <tr>

@@ -65,7 +65,7 @@ public class JournalContentUtil {
 
 		return getJournalContent().getContent(
 			groupId, articleId, ddmTemplateKey, viewMode, languageId,
-			themeDisplay);
+			themeDisplay, xmlRequest);
 	}
 
 	public static String getContent(

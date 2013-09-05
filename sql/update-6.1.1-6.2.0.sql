@@ -388,6 +388,7 @@ drop table Groups_Permissions;
 alter table Image drop column text_;
 
 alter table JournalArticle add folderId LONG;
+alter table JournalArticle add treePath STRING null;
 
 COMMIT_TRANSACTION;
 

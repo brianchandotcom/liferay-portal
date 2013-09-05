@@ -3383,14 +3383,15 @@ public class JournalArticleLocalServiceImpl
 	public void rebuildTree(long companyId)
 		throws PortalException, SystemException {
 
-		List<Group> groups = groupPersistence.findByCompanyId(companyId);
+		List<JournalArticle> articles =
+			journalArticlePersistence.findByCompanyId(companyId);
 
-		for (Group group : groups) {
-			String treePath = group.buildTreePath();
+		for (JournalArticle article : articles) {
+			String treePath = article.buildTreePath();
 
-			group.setTreePath(treePath);
+			article.setTreePath(treePath);
 
-			groupPersistence.update(group);
+			journalArticlePersistence.update(article);
 		}
 	}
 

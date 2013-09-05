@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Image;
 import com.liferay.portal.service.ImageLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -67,7 +66,7 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 	public String buildTreePath() throws PortalException, SystemException {
 		StringBundler sb = new StringBundler();
 
-		buildTreePath(sb, this);
+		buildTreePath(sb, getFolder());
 
 		return sb.toString();
 	}
@@ -267,16 +266,16 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 		_smallImageType = smallImageType;
 	}
 
-	protected void buildTreePath(StringBundler sb, Group group)
+	protected void buildTreePath(StringBundler sb, JournalFolder folder)
 		throws PortalException, SystemException {
 
-		if (group == null) {
+		if (folder == null) {
 			sb.append(StringPool.SLASH);
 		}
 		else {
-			buildTreePath(sb, group.getParentGroup());
+			buildTreePath(sb, folder.getParentFolder());
 
-			sb.append(group.getGroupId());
+			sb.append(folder.getFolderId());
 			sb.append(StringPool.SLASH);
 		}
 	}

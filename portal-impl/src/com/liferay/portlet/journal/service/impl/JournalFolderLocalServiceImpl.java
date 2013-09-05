@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.model.Group;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
@@ -462,14 +461,15 @@ public class JournalFolderLocalServiceImpl
 	public void rebuildTree(long companyId)
 		throws PortalException, SystemException {
 
-		List<Group> groups = groupPersistence.findByCompanyId(companyId);
+		List<JournalFolder> folders = journalFolderPersistence.findByCompanyId(
+			companyId);
 
-		for (Group group : groups) {
-			String treePath = group.buildTreePath();
+		for (JournalFolder folder : folders) {
+			String treePath = folder.buildTreePath();
 
-			group.setTreePath(treePath);
+			folder.setTreePath(treePath);
 
-			groupPersistence.update(group);
+			journalFolderPersistence.update(folder);
 		}
 	}
 

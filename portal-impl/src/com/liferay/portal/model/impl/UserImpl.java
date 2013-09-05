@@ -70,8 +70,10 @@ import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
 import java.util.TimeZone;
 import java.util.TreeSet;
@@ -84,6 +86,11 @@ import java.util.TreeSet;
 public class UserImpl extends UserBaseImpl {
 
 	public UserImpl() {
+	}
+
+	@Override
+	public void addRemotePreference(String name, String value) {
+		_remotePreferences.put(name, value);
 	}
 
 	@Override
@@ -544,6 +551,16 @@ public class UserImpl extends UserBaseImpl {
 	}
 
 	@Override
+	public String getRemotePreference(String name) {
+		return _remotePreferences.get(name);
+	}
+
+	@Override
+	public Map<String, String> getRemotePreferences() {
+		return _remotePreferences;
+	}
+
+	@Override
 	public long[] getRoleIds() throws SystemException {
 		List<Role> roles = getRoles();
 
@@ -766,6 +783,8 @@ public class UserImpl extends UserBaseImpl {
 	private boolean _passwordModified;
 	private PasswordPolicy _passwordPolicy;
 	private String _passwordUnencrypted;
+	private Map<String, String> _remotePreferences =
+		new HashMap<String, String>();
 	private TimeZone _timeZone;
 
 }

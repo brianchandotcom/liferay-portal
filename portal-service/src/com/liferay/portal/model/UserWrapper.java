@@ -1348,6 +1348,12 @@ public class UserWrapper implements User, ModelWrapper<User> {
 	}
 
 	@Override
+	public void addRemotePreference(java.lang.String name,
+		java.lang.String value) {
+		_user.addRemotePreference(name, value);
+	}
+
+	@Override
 	public java.util.List<com.liferay.portal.model.Address> getAddresses()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _user.getAddresses();
@@ -1654,6 +1660,16 @@ public class UserWrapper implements User, ModelWrapper<User> {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _user.getReminderQueryQuestions();
+	}
+
+	@Override
+	public java.util.Map<java.lang.String, java.lang.String> getRemotePreferences() {
+		return _user.getRemotePreferences();
+	}
+
+	@Override
+	public java.lang.String getRemotePreference(java.lang.String name) {
+		return _user.getRemotePreference(name);
 	}
 
 	@Override

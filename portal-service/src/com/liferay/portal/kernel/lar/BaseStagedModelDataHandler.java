@@ -81,6 +81,19 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 	}
 
 	@Override
+	public void importCompanyStagedModel(
+			PortletDataContext portletDataContext, T stagedModel)
+		throws PortletDataException {
+
+		try {
+			doImportCompanyStagedModel(portletDataContext, stagedModel);
+		}
+		catch (Exception e) {
+			throw new PortletDataException(e);
+		}
+	}
+
+	@Override
 	public void importStagedModel(
 			PortletDataContext portletDataContext, T stagedModel)
 		throws PortletDataException {
@@ -148,6 +161,13 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 	protected abstract void doExportStagedModel(
 			PortletDataContext portletDataContext, T stagedModel)
 		throws Exception;
+
+	protected void doImportCompanyStagedModel(
+			PortletDataContext portletDataContext, T stagedModel)
+		throws Exception {
+
+		throw new UnsupportedOperationException();
+	}
 
 	protected abstract void doImportStagedModel(
 			PortletDataContext portletDataContext, T stagedModel)

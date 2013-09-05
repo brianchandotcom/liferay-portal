@@ -421,11 +421,12 @@ public class BreadcrumbTag extends IncludeTag {
 			return StringPool.BLANK;
 		}
 
-		boolean showEllipsis = breadcrumbString.split("<li", -1).length > 3;
-		String showEllipsisClass = StringPool.BLANK;
+		boolean breadcrumbTruncate = breadcrumbString.split(
+			"<li", -1).length > 3;
+		String breadcrumbTruncateClass = StringPool.BLANK;
 
-		if (showEllipsis) {
-			showEllipsisClass = " show-ellipsis";
+		if (breadcrumbTruncate) {
+			breadcrumbTruncateClass = " breadcrumb-truncate";
 		}
 
 		int x = breadcrumbString.indexOf("<li") + 3;
@@ -434,26 +435,26 @@ public class BreadcrumbTag extends IncludeTag {
 		if (x == y) {
 			breadcrumbString = StringUtil.insert(
 				breadcrumbString,
-				" class=\"active only" + showEllipsisClass + "\"", x);
+				" class=\"active only" + breadcrumbTruncateClass + "\"", x);
 		}
 		else {
 			breadcrumbString = StringUtil.insert(
 				breadcrumbString,
-				" class=\"active last" + showEllipsisClass + "\"", y);
+				" class=\"active last" + breadcrumbTruncateClass + "\"", y);
 
 			breadcrumbString = StringUtil.insert(
-				breadcrumbString, " class=\"first" + showEllipsisClass + "\"",
-				x);
+				breadcrumbString,
+				" class=\"first" + breadcrumbTruncateClass + "\"", x);
 		}
 
-		if (showEllipsis) {
+		if (breadcrumbTruncate) {
 			y = breadcrumbString.lastIndexOf("<li");
 
 			int z = breadcrumbString.lastIndexOf("<li", y - 1) + 3;
 
 			breadcrumbString = StringUtil.insert(
 				breadcrumbString,
-				" class=\"second-to-last" + showEllipsisClass + "\"", z);
+				" class=\"second-to-last" + breadcrumbTruncateClass + "\"", z);
 		}
 
 		return breadcrumbString;

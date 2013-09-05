@@ -343,9 +343,22 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 				</aui:script>
 			</liferay-ui:panel>
 
-			<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="assetPublisherCustomUserAttributesQueryRulesPanelContainer" persistState="<%= true %>" title="custom-user-attributes">
-				<aui:input helpMessage="custom-user-attributes-help" label="displayed-assets-must-match-these-custom-user-profile-attributes" name="preferences--customUserAttributes--" value="<%= customUserAttributes %>" />
-			</liferay-ui:panel>
+			<%
+			String[] sections = PropsValues.ASSET_PUBLISHER_QUERY_FORM;
+			String jspPath = "/html/portlet/asset_publisher/query/";
+
+			for (String section : sections) {
+				String sectionId = renderResponse.getNamespace() + _getSectionId(section);
+				String sectionJsp = jspPath + _getSectionJsp(section) + ".jsp";
+			%>
+
+				<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id='<%= "assetPublisherPanelContainerSection_" + sectionId %>' persistState="<%= true %>" title="<%= section %>">
+					<liferay-util:include page="<%= sectionJsp %>" />
+				</liferay-ui:panel>
+
+			<%
+			}
+			%>
 
 			<c:if test="<%= !rootPortletId.equals(PortletKeys.HIGHEST_RATED_ASSETS) && !rootPortletId.equals(PortletKeys.MOST_VIEWED_ASSETS) %>">
 				<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="assetPublisherOrderingAndGroupingPanel" persistState="<%= true %>" title="ordering-and-grouping">
@@ -766,5 +779,13 @@ private long[] _getCategorizableGroupIds(long[] groupIds) throws Exception {
 	}
 
 	return ArrayUtil.toLongArray(categorizableGroupIds);
+}
+
+private String _getSectionId(String name) {
+	return TextFormatter.format(name, TextFormatter.M);
+}
+
+private String _getSectionJsp(String name) {
+	return TextFormatter.format(name, TextFormatter.N);
 }
 %>

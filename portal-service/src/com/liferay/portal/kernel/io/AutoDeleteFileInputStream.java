@@ -39,6 +39,6 @@ public class AutoDeleteFileInputStream extends FileInputStream {
 		}
 	}
 
-	private File _file;
+	private final File _file;
 
 }

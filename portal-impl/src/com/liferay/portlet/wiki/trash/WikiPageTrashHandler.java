@@ -103,7 +103,7 @@ public class WikiPageTrashHandler extends BaseTrashHandler {
 		WikiPage page = WikiPageLocalServiceUtil.getLatestPage(
 			classPK, WorkflowConstants.STATUS_ANY, false);
 
-		WikiPageLocalServiceUtil.deletePage(page.getNodeId(), page.getTitle());
+		WikiPageLocalServiceUtil.deletePage(page);
 	}
 
 	@Override

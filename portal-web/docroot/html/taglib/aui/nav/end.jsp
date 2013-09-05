@@ -17,3 +17,7 @@
 <%@ include file="/html/taglib/aui/nav/init.jsp" %>
 
 </ul>
+
+<c:if test="<%= collapsible %>">
+	</div>
+</c:if >

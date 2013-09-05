@@ -35,12 +35,18 @@ if ((dynamicAttributes != null) && !dynamicAttributes.isEmpty()) {
 java.lang.String ariaLabel = GetterUtil.getString((java.lang.String)request.getAttribute("aui:nav:ariaLabel"));
 java.lang.String ariaRole = GetterUtil.getString((java.lang.String)request.getAttribute("aui:nav:ariaRole"));
 java.lang.String cssClass = GetterUtil.getString((java.lang.String)request.getAttribute("aui:nav:cssClass"));
+boolean collapsible = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:nav:collapsible")), true);
+java.lang.String icon = GetterUtil.getString((java.lang.String)request.getAttribute("aui:nav:icon"));
 java.lang.String id = GetterUtil.getString((java.lang.String)request.getAttribute("aui:nav:id"));
+boolean useNamespace = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:nav:useNamespace")), true);
 
 _updateOptions(_options, "ariaLabel", ariaLabel);
 _updateOptions(_options, "ariaRole", ariaRole);
 _updateOptions(_options, "cssClass", cssClass);
+_updateOptions(_options, "collapsible", collapsible);
+_updateOptions(_options, "icon", icon);
 _updateOptions(_options, "id", id);
+_updateOptions(_options, "useNamespace", useNamespace);
 %>
 
 <%@ include file="/html/taglib/aui/nav/init-ext.jspf" %>

@@ -25,8 +25,7 @@ public interface AuthToken {
 
 	/**
 	 * @deprecated As of 6.2.0, please use {@link
-	 *             #checkCSRFToken(javax.servlet.http.HttpServletRequest,
-	 *             String)}
+	 *             #checkCSRFToken(HttpServletRequest, String)}
 	 */
 	@Deprecated
 	public void check(HttpServletRequest request) throws PortalException;

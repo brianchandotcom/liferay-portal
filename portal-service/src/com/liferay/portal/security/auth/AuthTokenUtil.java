@@ -26,8 +26,7 @@ public class AuthTokenUtil {
 
 	/**
 	 * @deprecated As of 6.2.0, please use {@link
-	 *             #checkCSRFToken(javax.servlet.http.HttpServletRequest,
-	 *             String)}
+	 *             #checkCSRFToken(HttpServletRequest, String)}
 	 */
 	@Deprecated
 	public static void check(HttpServletRequest request)

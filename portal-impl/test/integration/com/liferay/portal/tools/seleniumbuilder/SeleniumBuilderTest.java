@@ -1642,6 +1642,14 @@ public class SeleniumBuilderTest {
 	}
 
 	@Test
+	public void testPathExtendPath1007() throws Exception {
+		test(
+			"PathExtendPath1007.action",
+			"Error 1007: Poorly formed XML in " + _DIR_NAME +
+				"/PathExtendPath1007.action");
+	}
+
+	@Test
 	public void testPathTbodyElement1002_1() throws Exception {
 		test(
 			"PathTbodyElement1002_1.path",

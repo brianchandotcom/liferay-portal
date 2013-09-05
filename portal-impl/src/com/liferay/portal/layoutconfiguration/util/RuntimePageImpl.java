@@ -133,18 +133,19 @@ public class RuntimePageImpl implements RuntimePage {
 		PortletResponse portletResponse = (PortletResponse)request.getAttribute(
 			JavaConstants.JAVAX_PORTLET_RESPONSE);
 
-		if (!(portletResponse instanceof RenderResponse)) {
+		if ((portletResponse != null) && !(portletResponse instanceof RenderResponse)) {
 			throw new IllegalArgumentException(
 				"processXML can only be invoked in the render phase");
 		}
 
+		RuntimeLogic portletLogic = new PortletLogic(request, response);
+		content = processXML(request, content, portletLogic);
+
 		RenderResponse renderResponse = (RenderResponse)portletResponse;
 
-		RuntimeLogic portletLogic = new PortletLogic(request, response);
 		RuntimeLogic actionURLLogic = new ActionURLLogic(renderResponse);
 		RuntimeLogic renderURLLogic = new RenderURLLogic(renderResponse);
 
-		content = processXML(request, content, portletLogic);
 		content = processXML(request, content, actionURLLogic);
 		content = processXML(request, content, renderURLLogic);
 

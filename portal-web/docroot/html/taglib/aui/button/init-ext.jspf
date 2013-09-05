@@ -73,4 +73,8 @@ else {
 if (primary == Boolean.TRUE) {
 	cssClass += " btn-primary";
 }
+
+if (BrowserSnifferUtil.isMobile(request)) {
+	cssClass += " btn-large";
+}
 %>

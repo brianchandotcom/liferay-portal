@@ -1,0 +1,10 @@
+@import "compass";
+@import "mixins";
+
+@include respond-to(phone) {
+	.button-holder .btn-large {
+		display: block;
+		margin-top: 5px;
+		width: 100%;
+	}
+}

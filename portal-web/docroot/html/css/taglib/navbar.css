@@ -10,6 +10,11 @@
 				margin-bottom: 5px;
 			}
 
+			.nav-collapse.open {
+				height: auto;
+				overflow: visible;
+			}
+
 			.navbar-search {
 				position: absolute;
 				top: 0;

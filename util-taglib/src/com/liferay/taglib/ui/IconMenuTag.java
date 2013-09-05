@@ -15,6 +15,7 @@
 package com.liferay.taglib.ui;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.servlet.PortalIncludeUtil;
 import com.liferay.portal.kernel.servlet.taglib.BaseBodyTagSupport;
 import com.liferay.portal.kernel.servlet.taglib.FileAvailabilityUtil;
@@ -294,6 +295,10 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 
 					if (_extended) {
 						jspWriter.write(" btn");
+
+						if (BrowserSnifferUtil.isMobile(request)) {
+							jspWriter.write(" btn-large");
+						}
 					}
 
 					String message = _message;

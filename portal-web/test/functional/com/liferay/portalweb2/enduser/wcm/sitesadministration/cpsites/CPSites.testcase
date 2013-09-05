@@ -28,9 +28,9 @@
 	</command>
 
 	<command name="AddSitesMultiple">
-		<var name="siteName1" value="Site1Name" />
-		<var name="siteName2" value="Site2Name" />
-		<var name="siteName3" value="Site3Name" />
+		<var name="siteName1" value="Site1 Name" />
+		<var name="siteName2" value="Site2 Name" />
+		<var name="siteName3" value="Site3 Name" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
@@ -103,7 +103,7 @@
 
 	<command name="EditSite">
 		<var name="siteName" value="Site Name" />
-		<var name="siteName1" value="Site Name Edit" />
+		<var name="siteNameEdit" value="Site Name Edit" />
 		<var name="siteScopeName" value="Site Name" />
 
 
@@ -115,21 +115,14 @@
 			<var name="siteName" value="${siteName}" />
 		</execute>
 
-		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Sites" />
-		</execute>
-
-		<execute macro="Site#viewCP">
-			<var name="siteName" value="${siteName}" />
-		</execute>
-
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="siteName" value="${siteScopeName}" />
 			<var name="portletName" value="Site Settings" />
 		</execute>
 
-		<execute macro="Site#editSiteCP">
-			<var name="siteName" value="${siteName1}" />
+		<execute macro="Site#editCP">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteNameEdit" value="${siteNameEdit}" />
 		</execute>
 
 		<execute macro="Page#gotoCP">
@@ -137,7 +130,7 @@
 		</execute>
 
 		<execute macro="Site#viewCP">
-			<var name="siteName" value="${siteName1}" />
+			<var name="siteName" value="${siteNameEdit}" />
 		</execute>
 	</command>
 
@@ -156,7 +149,7 @@
 			<var name="portletName" value="Sites" />
 		</execute>
 
-		<execute macro="Site#searchSiteCP">
+		<execute macro="Site#searchCP">
 			<var name="siteName" value="${siteName}" />
 		</execute>
 	</command>	

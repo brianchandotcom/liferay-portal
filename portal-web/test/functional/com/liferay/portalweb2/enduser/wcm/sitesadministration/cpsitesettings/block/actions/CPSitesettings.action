@@ -12,7 +12,7 @@
 	</command>
 
 	<command name="type">
-		<case locator-key1="DETAILS_NAME_FIELD">
+		<case locator-key1="NAME_FIELD">
 			<execute function="Type#type" />
 		</case>
 	</command>

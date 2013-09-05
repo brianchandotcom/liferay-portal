@@ -78,7 +78,7 @@ public class PollsVoteStagedModelDataHandler
 		PollsChoice choice =
 			(PollsChoice)portletDataContext.getZipEntryAsObject(choicePath);
 
-		StagedModelDataHandlerUtil.importStagedModel(
+		StagedModelDataHandlerUtil.importReferenceStagedModel(
 			portletDataContext, choice);
 
 		Map<Long, Long> questionIds =

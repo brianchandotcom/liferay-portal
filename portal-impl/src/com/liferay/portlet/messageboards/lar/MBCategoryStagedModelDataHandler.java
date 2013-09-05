@@ -136,7 +136,7 @@ public class MBCategoryStagedModelDataHandler
 				(MBCategory)portletDataContext.getZipEntryAsObject(
 					parentCategoryPath);
 
-			StagedModelDataHandlerUtil.importStagedModel(
+			StagedModelDataHandlerUtil.importReferenceStagedModel(
 				portletDataContext, parentCategory);
 
 			parentCategoryId = MapUtil.getLong(

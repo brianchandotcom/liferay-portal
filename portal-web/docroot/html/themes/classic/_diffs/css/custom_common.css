@@ -542,9 +542,7 @@
 
 					.accordion-toggle {
 						color: #999;
-						font-size: 14px;
 						padding-left: 8px;
-						text-transform: capitalize;
 
 						&:after, &:before {
 							float: right;

@@ -97,7 +97,7 @@
 </tr>
 <tr>
 	<td>THREAD_TABLE_STATUS</td>
-	<td>//tr[contains(.,'${key_threadSubject}')]/td[6]/a</td>
+	<td>//tr[contains(.,'${key_threadSubject}')]/td[6]/span/span/span/strong</td>
 	<td></td>
 </tr>
 <tr>

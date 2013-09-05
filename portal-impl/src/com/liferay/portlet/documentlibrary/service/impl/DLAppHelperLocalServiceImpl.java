@@ -548,7 +548,8 @@ public class DLAppHelperLocalServiceImpl
 
 		trashEntryLocalService.addTrashEntry(
 			userId, dlFileShortcut.getGroupId(), DLFileShortcut.class.getName(),
-			dlFileShortcut.getFileShortcutId(), oldStatus, null, null);
+			dlFileShortcut.getFileShortcutId(), dlFileShortcut.getUuid(), null,
+			oldStatus, null, null);
 
 		return dlFileShortcut;
 	}

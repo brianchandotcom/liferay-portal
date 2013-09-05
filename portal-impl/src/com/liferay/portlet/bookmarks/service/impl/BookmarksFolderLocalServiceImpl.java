@@ -557,7 +557,8 @@ public class BookmarksFolderLocalServiceImpl
 		else if (status == WorkflowConstants.STATUS_IN_TRASH) {
 			trashEntryLocalService.addTrashEntry(
 				userId, folder.getGroupId(), BookmarksFolder.class.getName(),
-				folder.getFolderId(), oldStatus, null, null);
+				folder.getFolderId(), folder.getUuid(), null, oldStatus, null,
+				null);
 		}
 
 		// Index

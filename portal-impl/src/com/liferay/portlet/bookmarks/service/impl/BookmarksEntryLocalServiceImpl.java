@@ -577,7 +577,8 @@ public class BookmarksEntryLocalServiceImpl
 		else if (status == WorkflowConstants.STATUS_IN_TRASH) {
 			trashEntryLocalService.addTrashEntry(
 				userId, entry.getGroupId(), BookmarksEntry.class.getName(),
-				entry.getEntryId(), oldStatus, null, null);
+				entry.getEntryId(), entry.getUuid(), null, oldStatus, null,
+				null);
 		}
 
 		return entry;

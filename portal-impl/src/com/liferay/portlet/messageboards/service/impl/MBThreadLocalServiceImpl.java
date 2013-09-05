@@ -1069,7 +1069,8 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 				trashEntryLocalService.addTrashEntry(
 					userId, thread.getGroupId(), MBThread.class.getName(),
-					thread.getThreadId(), oldStatus, null, null);
+					thread.getThreadId(), thread.getUuid(), null, oldStatus,
+					null, null);
 			}
 			else {
 

@@ -2048,8 +2048,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 			trashEntryLocalService.addTrashEntry(
 				userId, page.getGroupId(), WikiPage.class.getName(),
-				page.getResourcePrimKey(), oldStatus, null,
-				typeSettingsProperties);
+				page.getResourcePrimKey(), page.getUuid(), null, oldStatus,
+				null, typeSettingsProperties);
 
 			// Indexer
 

@@ -600,7 +600,8 @@ public class JournalFolderLocalServiceImpl
 
 			trashEntryLocalService.addTrashEntry(
 				userId, folder.getGroupId(), JournalFolder.class.getName(),
-				folder.getFolderId(), oldStatus, null, typeSettingsProperties);
+				folder.getFolderId(), folder.getUuid(), null, oldStatus, null,
+				typeSettingsProperties);
 		}
 
 		// Index

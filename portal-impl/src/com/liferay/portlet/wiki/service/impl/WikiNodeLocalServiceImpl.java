@@ -507,7 +507,8 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 
 			trashEntryLocalService.addTrashEntry(
 				userId, node.getGroupId(), WikiNode.class.getName(),
-				node.getNodeId(), oldStatus, null, typeSettingsProperties);
+				node.getNodeId(), node.getUuid(), null, oldStatus, null,
+				typeSettingsProperties);
 		}
 
 		// Indexer

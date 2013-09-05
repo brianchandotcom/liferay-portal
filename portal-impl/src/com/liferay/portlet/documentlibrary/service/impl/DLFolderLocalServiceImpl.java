@@ -1028,7 +1028,8 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 
 			trashEntryLocalService.addTrashEntry(
 				userId, dlFolder.getGroupId(), DLFolderConstants.getClassName(),
-				dlFolder.getFolderId(), WorkflowConstants.STATUS_APPROVED, null,
+				dlFolder.getFolderId(), dlFolder.getUuid(), null,
+				WorkflowConstants.STATUS_APPROVED, null,
 				typeSettingsProperties);
 		}
 		else {

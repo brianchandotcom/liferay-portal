@@ -49,4 +49,40 @@ if (Validator.isNotNull(inlineLabel)) {
 }
 
 String fieldCss = AUIUtil.buildCss("aui-field-select", disabled, first, last, cssClass);
+
+boolean numericValue = false;
+
+if ((bean != null) && Validator.isNull(listType) && showEmptyOption) {
+	Object propertyInstance = null;
+
+	Class<?> propertyTypeClass = BeanPropertiesUtil.getObjectTypeSilent(bean, name);
+
+	if (propertyTypeClass.isPrimitive()) {
+		propertyInstance = _primitiveObjects.get(propertyTypeClass);
+	}
+	else {
+		try {
+			propertyInstance = propertyTypeClass.newInstance();
+		}
+		catch (Exception e) {
+		}
+	}
+
+	if (propertyInstance instanceof Number) {
+		numericValue = true;
+	}
+}
+%>
+
+<%!
+private static Map<Class<?>, Object> _primitiveObjects = new HashMap<Class<?>, Object>();
+
+static {
+	_primitiveObjects.put(byte.class, new Byte("0"));
+	_primitiveObjects.put(double.class, new Double(0));
+	_primitiveObjects.put(float.class, new Float(0));
+	_primitiveObjects.put(int.class, new Integer(0));
+	_primitiveObjects.put(long.class, new Long(0));
+	_primitiveObjects.put(short.class, new Short("0"));
+}
 %>

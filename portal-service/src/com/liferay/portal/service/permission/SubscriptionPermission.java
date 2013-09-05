@@ -27,6 +27,14 @@ import com.liferay.portal.security.permission.PermissionChecker;
 public interface SubscriptionPermission {
 
 	/**
+	 * @deprecated As of 6.2.0, replaced by {@link #check(PermissionChecker,
+	 *             String, long, String, long)}
+	 */
+	public void check(
+			PermissionChecker permissionChecker, String className, long classPK)
+		throws PortalException, SystemException;
+
+	/**
 	 * Checks if the user has permission to subscribe to the subscription entity
 	 * and receive notifications about the inferred entity.
 	 *
@@ -47,6 +55,14 @@ public interface SubscriptionPermission {
 			PermissionChecker permissionChecker, String subscriptionClassName,
 			long subscriptionClassPK, String inferredClassName,
 			long inferredClassPK)
+		throws PortalException, SystemException;
+
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link #contains(PermissionChecker,
+	 *             String, long, String, long)}
+	 */
+	public boolean contains(
+			PermissionChecker permissionChecker, String className, long classPK)
 		throws PortalException, SystemException;
 
 	/**

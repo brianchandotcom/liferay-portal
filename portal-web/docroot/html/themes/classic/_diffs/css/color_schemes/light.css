@@ -1,6 +1,8 @@
 @import "compass";
 
 .aui .light {
+	background: #FAFAFA;
+
 	#navigation {
 		.navbar-inner {
 			background: #F6F6F6;
@@ -12,6 +14,10 @@
 	}
 
 	/* ---------- Portlet ---------- */
+
+	.portlet {
+		background: transparent;
+	}
 
 	.portlet-title {
 		color: #29B23E;

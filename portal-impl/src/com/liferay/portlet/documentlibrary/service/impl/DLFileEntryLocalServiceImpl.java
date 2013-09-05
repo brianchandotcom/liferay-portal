@@ -796,7 +796,7 @@ public class DLFileEntryLocalServiceImpl
 
 		DLFileEntry dlFileEntry = getFileEntry(fileEntryId);
 
-		return deleteFileEntry(dlFileEntry);
+		return dlFileEntryLocalService.deleteFileEntry(dlFileEntry);
 	}
 
 	@Indexable(type = IndexableType.DELETE)
@@ -809,7 +809,7 @@ public class DLFileEntryLocalServiceImpl
 		}
 
 		try {
-			return deleteFileEntry(fileEntryId);
+			return dlFileEntryLocalService.deleteFileEntry(fileEntryId);
 		}
 		finally {
 			unlockFileEntry(fileEntryId);

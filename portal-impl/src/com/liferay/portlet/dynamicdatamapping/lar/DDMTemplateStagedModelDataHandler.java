@@ -247,24 +247,11 @@ public class DDMTemplateStagedModelDataHandler
 							portletDataContext.getScopeGroupId());
 
 				if (existingTemplate == null) {
-					existingTemplate =
-						DDMTemplateLocalServiceUtil.
-							fetchDDMTemplateByUuidAndGroupId(
-								template.getUuid(),
-								portletDataContext.getCompanyGroupId());
-				}
-
-				if (existingTemplate == null) {
 					serviceContext.setUuid(template.getUuid());
 
 					importedTemplate = addTemplate(
 						userId, portletDataContext.getScopeGroupId(), template,
 						classPK, smallFile, serviceContext);
-				}
-				else if (portletDataContext.isCompanyStagedGroupedModel(
-							existingTemplate)) {
-
-					return;
 				}
 				else {
 					importedTemplate =
@@ -300,6 +287,30 @@ public class DDMTemplateStagedModelDataHandler
 				smallFile.delete();
 			}
 		}
+	}
+
+	@Override
+	protected void doProcessGlobalStagedModel(
+			PortletDataContext portletDataContext, DDMTemplate template)
+		throws Exception {
+
+		DDMTemplate existingTemplate =
+			DDMTemplateLocalServiceUtil.fetchDDMTemplateByUuidAndGroupId(
+				template.getUuid(), portletDataContext.getCompanyGroupId());
+
+		Map<Long, Long> templateIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				DDMTemplate.class);
+
+		templateIds.put(
+			template.getTemplateId(), existingTemplate.getTemplateId());
+
+		Map<String, String> templateKeys =
+			(Map<String, String>)portletDataContext.getNewPrimaryKeysMap(
+				DDMTemplate.class + ".ddmTemplateKey");
+
+		templateKeys.put(
+			template.getTemplateKey(), existingTemplate.getTemplateKey());
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

@@ -249,6 +249,7 @@ public class RuntimeTag extends TagSupport {
 		}
 
 		printWriter.flush();
+		printWriter.close();
 	}
 
 	protected static void writeHeaderPaths(
@@ -285,6 +286,7 @@ public class RuntimeTag extends TagSupport {
 		}
 
 		printWriter.flush();
+		printWriter.close();
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(RuntimeTag.class);

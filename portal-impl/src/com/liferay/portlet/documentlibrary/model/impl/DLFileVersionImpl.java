@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.model.Group;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
@@ -48,7 +47,7 @@ public class DLFileVersionImpl extends DLFileVersionBaseImpl {
 	public String buildTreePath() throws PortalException, SystemException {
 		StringBundler sb = new StringBundler();
 
-		buildTreePath(sb, this);
+		buildTreePath(sb, getFolder());
 
 		return sb.toString();
 	}
@@ -165,16 +164,16 @@ public class DLFileVersionImpl extends DLFileVersionBaseImpl {
 		super.setExtraSettings(_extraSettingsProperties.toString());
 	}
 
-	protected void buildTreePath(StringBundler sb, Group group)
+	protected void buildTreePath(StringBundler sb, DLFolder folder)
 		throws PortalException, SystemException {
 
-		if (group == null) {
+		if (folder == null) {
 			sb.append(StringPool.SLASH);
 		}
 		else {
-			buildTreePath(sb, group.getParentGroup());
+			buildTreePath(sb, folder.getParentFolder());
 
-			sb.append(group.getGroupId());
+			sb.append(folder.getFolderId());
 			sb.append(StringPool.SLASH);
 		}
 	}

@@ -765,14 +765,14 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	public void rebuildTree(long companyId)
 		throws PortalException, SystemException {
 
-		List<Group> groups = groupPersistence.findByCompanyId(companyId);
+		List<DLFolder> folders = dlFolderPersistence.findByCompanyId(companyId);
 
-		for (Group group : groups) {
-			String treePath = group.buildTreePath();
+		for (DLFolder folder : folders) {
+			String treePath = folder.buildTreePath();
 
-			group.setTreePath(treePath);
+			folder.setTreePath(treePath);
 
-			groupPersistence.update(group);
+			dlFolderPersistence.update(folder);
 		}
 	}
 

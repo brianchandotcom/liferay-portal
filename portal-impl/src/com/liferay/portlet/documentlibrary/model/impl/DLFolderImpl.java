@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Repository;
 import com.liferay.portal.service.RepositoryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
@@ -241,16 +240,16 @@ public class DLFolderImpl extends DLFolderBaseImpl {
 		return false;
 	}
 
-	protected void buildTreePath(StringBundler sb, Group group)
+	protected void buildTreePath(StringBundler sb, DLFolder folder)
 		throws PortalException, SystemException {
 
-		if (group == null) {
+		if (folder == null) {
 			sb.append(StringPool.SLASH);
 		}
 		else {
-			buildTreePath(sb, group.getParentGroup());
+			buildTreePath(sb, folder.getParentFolder());
 
-			sb.append(group.getGroupId());
+			sb.append(folder.getFolderId());
 			sb.append(StringPool.SLASH);
 		}
 	}

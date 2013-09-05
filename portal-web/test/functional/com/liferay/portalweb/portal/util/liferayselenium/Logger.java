@@ -17,14 +17,12 @@ package com.liferay.portalweb.portal.util.liferayselenium;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portalweb.portal.BaseTestCase;
 
 import java.io.File;
 
 import java.lang.reflect.Method;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
@@ -46,14 +44,14 @@ public class Logger {
 	public Logger(LiferaySelenium liferaySelenium) {
 		_liferaySelenium = liferaySelenium;
 
-		_javascriptExecutor = (JavascriptExecutor)_webDriver;
-
 		WebDriver.Options options = _webDriver.manage();
 
 		WebDriver.Window window = options.window();
 
 		window.setPosition(new Point(1000, 50));
 		window.setSize(new Dimension(650, 850));
+
+		_javascriptExecutor = (JavascriptExecutor)_webDriver;
 
 		_javascriptExecutor.executeScript("window.name = 'Log Window';");
 	}
@@ -83,14 +81,14 @@ public class Logger {
 		log(sb.toString());
 	}
 
-	public void logError(Method method, Object[] arguments, String message) {
-		StringBundler display = new StringBundler();
+	public void logError(
+		Method method, Object[] arguments, Throwable throwable) {
 
-		display.append("<p>");
-
-		display.append(generateStackTrace());
+		send("", "fail");
 
 		_errorCount++;
+
+		String thowableMessage = throwable.getMessage();
 
 		StringBundler sb = new StringBundler();
 
@@ -101,18 +99,11 @@ public class Logger {
 		sb.append("errorList = window.document.getElementById('errorList');");
 		sb.append("var newLine = window.document.createElement('div');");
 		sb.append("newLine.innerHTML = '");
-
-		String formattedMessage = display.toString();
-
-		formattedMessage = formattedMessage.replace("'", "\\'");
-
-		sb.append(formattedMessage);
+		sb.append(generateStackTrace(throwable));
 		sb.append("';");
 		sb.append("errorList.appendChild(newLine);");
 
 		_javascriptExecutor.executeScript(sb.toString());
-
-		send("", "fail");
 
 		sb = new StringBundler();
 
@@ -137,7 +128,7 @@ public class Logger {
 		}
 
 		sb.append(": ");
-		sb.append(message);
+		sb.append(thowableMessage);
 
 		log(sb.toString());
 
@@ -163,7 +154,7 @@ public class Logger {
 		}
 
 		sb.append(": ");
-		sb.append(message);
+		sb.append(thowableMessage);
 
 		BaseTestCase.fail(sb.toString());
 	}
@@ -257,133 +248,97 @@ public class Logger {
 		_webDriver.quit();
 	}
 
-	protected String generateStackTrace() {
-		List<String> xpaths = new ArrayList<String>();
-
+	protected String generateStackTrace(Throwable throwable) {
 		Stack<String> ids = (Stack)_xpathIdStack.clone();
 
-		String failedLineXpath = generateXpath(ids);
-
-		xpaths.add(failedLineXpath);
-
-		ids.pop();
-
-		int numIds = _xpathIdStack.size() - 1;
-
-		for (int i = 2; i < numIds; i++) {
-			Stack<String> parentIds = (Stack)ids.clone();
-
-			for (int j = 2; j < i; j++) {
-				parentIds.pop();
-			}
-
-			xpaths.add(generateXpath(parentIds) + "/div");
-		}
-
-		List<String[]> lineNumbers = new ArrayList<String[]>();
-
-		for (String xpath : xpaths) {
-			String failedLine = getLineNumber(xpath);
-
-			String failedCommand = getCommandName(xpath);
-
-			if (Validator.isNotNull(failedLine) &&
-				Validator.isNotNull(failedCommand)) {
-
-				failedCommand = failedCommand.replace("\"", "");
-
-				lineNumbers.add(new String[] {failedCommand, failedLine});
-			}
-		}
+		String currentCommand = null;
+		String currentLine = null;
+		String parentCommand = null;
+		String parentLine = null;
+		String testCaseCommand = null;
 
 		StringBundler sb = new StringBundler();
 
-		for (int i = 0; i < (lineNumbers.size() - 1); i++) {
-			String[] currentLine = lineNumbers.get(i);
-
-			String[] parentLine = lineNumbers.get(i + 1);
-
-			String currentCommand = currentLine[0];
-
-			String currentLineNumber = currentLine[1];
-
-			String parentCommand = parentLine[0];
-
-			int x = parentCommand.indexOf("#");
-
-			String parentFile = parentCommand.substring(0, x) + ".macro";
-
-			sb.append("Failed Line: <b>");
-			sb.append(currentCommand);
-			sb.append("</b> (");
-			sb.append(parentFile);
-			sb.append(":");
-			sb.append(currentLineNumber);
-			sb.append(")<br />");
-		}
-
-		int length = lineNumbers.size();
-
-		String[] finalLine = lineNumbers.get(length - 1);
-
-		String finalCommand = finalLine[0];
-
-		String finalLineNumber = finalLine[1];
-
-		sb.append("Failed Line: <b>");
-		sb.append(finalCommand);
-		sb.append("</b> (");
+		sb.append("<p>");
 
 		while (ids.size() > 1) {
+			String xpath = generateXpath(ids);
+
+			String command = getLogElementText(
+				xpath + "/div/span[@class='quote'][1]");
+			String line = getLogElementText(
+				xpath + "/div/div[@class='line-number']");
+
+			command = StringUtil.replace(command, "\"", "");
+
+			if ((parentCommand == null) || (parentLine == null)) {
+				parentCommand = command;
+				parentLine = line;
+			}
+			else {
+				currentCommand = parentCommand;
+				currentLine = parentLine;
+
+				parentCommand = command;
+				parentLine = line;
+
+				String parentFile = "";
+
+				if (ids.size() > 2) {
+					int x = parentCommand.indexOf("#");
+
+					parentFile = parentCommand.substring(0, x) + ".macro";
+				}
+				else {
+					ids.pop();
+
+					String testCaseXpath = generateXpath(ids);
+
+					testCaseCommand = getLogElementText(
+						testCaseXpath + "/div/h3");
+
+					int x = testCaseCommand.lastIndexOf("#");
+
+					parentFile = testCaseCommand.substring(0, x) + ".testcase";
+				}
+
+				sb.append("Failed Line: <b>");
+				sb.append(currentCommand);
+				sb.append("</b> (");
+				sb.append(parentFile);
+				sb.append(":");
+				sb.append(currentLine);
+				sb.append(")<br />");
+			}
+
 			ids.pop();
 		}
 
-		String testCaseCommandXpath = generateXpath(ids) + "/div/h3";
-
-		String testCaseCommand = getLogElementText(testCaseCommandXpath);;
-
-		String testClassName = getLogElementText("//h2");
-
-		int x = testClassName.lastIndexOf(".");
-
-		String testName = testClassName.substring(x + 1);
-
-		if (testName.endsWith("TestCase")) {
-			sb.append(testName.replace("TestCase", "") + ".testcase");
-		}
-		else if (testName.endsWith("TestSuite")) {
-			sb.append(testName.replace("TestSuite", "") + ".testsuite");
-		}
-
-		sb.append(":");
-		sb.append(finalLineNumber);
-		sb.append(")<br />");
-		sb.append("in command ");
+		sb.append("in test case command <b>");
 		sb.append(testCaseCommand.trim());
+		sb.append("</b><br />");
 
-		Throwable throwable = new Throwable();
+		sb.append("<textarea cols='85' rows='7' wrap='off'>");
+		sb.append(throwable.getMessage());
 
 		StackTraceElement[] stackTraceElements = throwable.getStackTrace();
-
-		StringBundler exception = new StringBundler();
-
-		exception.append("<br /><textarea cols='85' rows='7'>");
 
 		for (StackTraceElement stackTraceElement : stackTraceElements) {
 			String className = stackTraceElement.getClassName();
 
 			if (className.startsWith("com.liferay")) {
-				exception.append(stackTraceElement.toString() + "\\n");
+				sb.append("\\n\\t");
+				sb.append(stackTraceElement.toString());
 			}
 		}
 
-		exception.append("</textarea>");
-
-		sb.append(exception.toString());
+		sb.append("</textarea>");
 
 		sb.append("</p>");
 
-		return sb.toString();
+		String stackTrace = sb.toString();
+
+		return stackTrace.replace("'", "\\'");
 	}
 
 	protected String generateXpath(Stack<String> ids) {
@@ -402,26 +357,6 @@ public class Logger {
 		return sb.toString();
 	}
 
-	protected String getCommandName(String xpath) {
-		return getLogElementText(xpath + "/span[@class='quote'][1]");
-	}
-
-	protected String getCurrentCommandName() {
-		String xpath = generateXpath(_xpathIdStack);
-
-		return getCommandName(xpath);
-	}
-
-	protected String getCurrentLineNumber() {
-		String xpath = generateXpath(_xpathIdStack);
-
-		return getLineNumber(xpath);
-	}
-
-	protected String getLineNumber(String xpath) {
-		return getLogElementText(xpath + "/div[@class='line-number']");
-	}
-
 	protected String getLogElementText(String xpath) {
 		try {
 			WebElement webElement = _webDriver.findElement(By.xpath(xpath));
@@ -437,30 +372,6 @@ public class Logger {
 		catch (Exception e) {
 			return null;
 		}
-	}
-
-	protected String getParentCommandName() {
-		Stack<String> ids = (Stack)_xpathIdStack.clone();
-
-		while (ids.size() > 3) {
-			ids.pop();
-		}
-
-		String xpath = generateXpath(ids);
-
-		return getCommandName(xpath);
-	}
-
-	protected String getParentLineNumber() {
-		Stack<String> ids = (Stack)_xpathIdStack.clone();
-
-		while (ids.size() > 3) {
-			ids.pop();
-		}
-
-		String xpath = generateXpath(ids);
-
-		return getLineNumber(xpath);
 	}
 
 	protected void log(String message) {

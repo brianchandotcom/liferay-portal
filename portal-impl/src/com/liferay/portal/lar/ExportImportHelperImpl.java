@@ -410,6 +410,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		}
 		finally {
 			StreamUtil.cleanUp(inputStream);
+
 			FileUtil.delete(file);
 		}
 

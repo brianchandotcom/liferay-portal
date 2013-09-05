@@ -38,7 +38,7 @@ public class BookmarksEntryCacheModel implements CacheModel<BookmarksEntry>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(39);
+		StringBundler sb = new StringBundler(41);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -60,6 +60,8 @@ public class BookmarksEntryCacheModel implements CacheModel<BookmarksEntry>,
 		sb.append(resourceBlockId);
 		sb.append(", folderId=");
 		sb.append(folderId);
+		sb.append(", treePath=");
+		sb.append(treePath);
 		sb.append(", name=");
 		sb.append(name);
 		sb.append(", url=");
@@ -123,6 +125,13 @@ public class BookmarksEntryCacheModel implements CacheModel<BookmarksEntry>,
 		bookmarksEntryImpl.setResourceBlockId(resourceBlockId);
 		bookmarksEntryImpl.setFolderId(folderId);
 
+		if (treePath == null) {
+			bookmarksEntryImpl.setTreePath(StringPool.BLANK);
+		}
+		else {
+			bookmarksEntryImpl.setTreePath(treePath);
+		}
+
 		if (name == null) {
 			bookmarksEntryImpl.setName(StringPool.BLANK);
 		}
@@ -180,6 +189,7 @@ public class BookmarksEntryCacheModel implements CacheModel<BookmarksEntry>,
 		modifiedDate = objectInput.readLong();
 		resourceBlockId = objectInput.readLong();
 		folderId = objectInput.readLong();
+		treePath = objectInput.readUTF();
 		name = objectInput.readUTF();
 		url = objectInput.readUTF();
 		description = objectInput.readUTF();
@@ -217,6 +227,13 @@ public class BookmarksEntryCacheModel implements CacheModel<BookmarksEntry>,
 		objectOutput.writeLong(modifiedDate);
 		objectOutput.writeLong(resourceBlockId);
 		objectOutput.writeLong(folderId);
+
+		if (treePath == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(treePath);
+		}
 
 		if (name == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
@@ -264,6 +281,7 @@ public class BookmarksEntryCacheModel implements CacheModel<BookmarksEntry>,
 	public long modifiedDate;
 	public long resourceBlockId;
 	public long folderId;
+	public String treePath;
 	public String name;
 	public String url;
 	public String description;

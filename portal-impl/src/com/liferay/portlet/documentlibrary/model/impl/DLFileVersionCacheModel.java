@@ -38,7 +38,7 @@ public class DLFileVersionCacheModel implements CacheModel<DLFileVersion>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(51);
+		StringBundler sb = new StringBundler(53);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -60,6 +60,8 @@ public class DLFileVersionCacheModel implements CacheModel<DLFileVersion>,
 		sb.append(repositoryId);
 		sb.append(", folderId=");
 		sb.append(folderId);
+		sb.append(", treePath=");
+		sb.append(treePath);
 		sb.append(", fileEntryId=");
 		sb.append(fileEntryId);
 		sb.append(", extension=");
@@ -134,6 +136,14 @@ public class DLFileVersionCacheModel implements CacheModel<DLFileVersion>,
 
 		dlFileVersionImpl.setRepositoryId(repositoryId);
 		dlFileVersionImpl.setFolderId(folderId);
+
+		if (treePath == null) {
+			dlFileVersionImpl.setTreePath(StringPool.BLANK);
+		}
+		else {
+			dlFileVersionImpl.setTreePath(treePath);
+		}
+
 		dlFileVersionImpl.setFileEntryId(fileEntryId);
 
 		if (extension == null) {
@@ -230,6 +240,7 @@ public class DLFileVersionCacheModel implements CacheModel<DLFileVersion>,
 		modifiedDate = objectInput.readLong();
 		repositoryId = objectInput.readLong();
 		folderId = objectInput.readLong();
+		treePath = objectInput.readUTF();
 		fileEntryId = objectInput.readLong();
 		extension = objectInput.readUTF();
 		mimeType = objectInput.readUTF();
@@ -273,6 +284,14 @@ public class DLFileVersionCacheModel implements CacheModel<DLFileVersion>,
 		objectOutput.writeLong(modifiedDate);
 		objectOutput.writeLong(repositoryId);
 		objectOutput.writeLong(folderId);
+
+		if (treePath == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(treePath);
+		}
+
 		objectOutput.writeLong(fileEntryId);
 
 		if (extension == null) {
@@ -358,6 +377,7 @@ public class DLFileVersionCacheModel implements CacheModel<DLFileVersion>,
 	public long modifiedDate;
 	public long repositoryId;
 	public long folderId;
+	public String treePath;
 	public long fileEntryId;
 	public String extension;
 	public String mimeType;

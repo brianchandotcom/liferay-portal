@@ -8550,6 +8550,7 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 		dlFolderImpl.setRepositoryId(dlFolder.getRepositoryId());
 		dlFolderImpl.setMountPoint(dlFolder.isMountPoint());
 		dlFolderImpl.setParentFolderId(dlFolder.getParentFolderId());
+		dlFolderImpl.setTreePath(dlFolder.getTreePath());
 		dlFolderImpl.setName(dlFolder.getName());
 		dlFolderImpl.setDescription(dlFolder.getDescription());
 		dlFolderImpl.setLastPostDate(dlFolder.getLastPostDate());

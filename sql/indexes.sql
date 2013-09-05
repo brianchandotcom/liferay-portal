@@ -118,6 +118,7 @@ create unique index IX_82254C25 on BlogsStatsUser (groupId, userId);
 create index IX_BB51F1D9 on BlogsStatsUser (userId);
 create index IX_507BA031 on BlogsStatsUser (userId, lastPostDate);
 
+create index IX_1F90CA2D on BookmarksEntry (companyId);
 create index IX_5200100C on BookmarksEntry (groupId, folderId);
 create index IX_146382F2 on BookmarksEntry (groupId, folderId, status);
 create index IX_416AD7D5 on BookmarksEntry (groupId, status);
@@ -269,6 +270,7 @@ create index IX_BAFB116E on DLFileRank (groupId, userId);
 create index IX_4E96195B on DLFileRank (groupId, userId, active_);
 create index IX_EED06670 on DLFileRank (userId);
 
+create index IX_A4BB2E58 on DLFileShortcut (companyId);
 create index IX_B0051937 on DLFileShortcut (groupId, folderId);
 create index IX_348DC3B2 on DLFileShortcut (groupId, folderId, active_);
 create index IX_17EE3098 on DLFileShortcut (groupId, folderId, active_, status);
@@ -277,6 +279,7 @@ create index IX_4831EBE4 on DLFileShortcut (uuid_);
 create index IX_29AE81C4 on DLFileShortcut (uuid_, companyId);
 create unique index IX_FDB4A946 on DLFileShortcut (uuid_, groupId);
 
+create index IX_F389330E on DLFileVersion (companyId);
 create index IX_C68DC967 on DLFileVersion (fileEntryId);
 create index IX_D47BB14D on DLFileVersion (fileEntryId, status);
 create unique index IX_E2815081 on DLFileVersion (fileEntryId, version);

@@ -38,7 +38,7 @@ public class JournalArticleCacheModel implements CacheModel<JournalArticle>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(67);
+		StringBundler sb = new StringBundler(69);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -60,6 +60,8 @@ public class JournalArticleCacheModel implements CacheModel<JournalArticle>,
 		sb.append(modifiedDate);
 		sb.append(", folderId=");
 		sb.append(folderId);
+		sb.append(", treePath=");
+		sb.append(treePath);
 		sb.append(", classNameId=");
 		sb.append(classNameId);
 		sb.append(", classPK=");
@@ -150,6 +152,14 @@ public class JournalArticleCacheModel implements CacheModel<JournalArticle>,
 		}
 
 		journalArticleImpl.setFolderId(folderId);
+
+		if (treePath == null) {
+			journalArticleImpl.setTreePath(StringPool.BLANK);
+		}
+		else {
+			journalArticleImpl.setTreePath(treePath);
+		}
+
 		journalArticleImpl.setClassNameId(classNameId);
 		journalArticleImpl.setClassPK(classPK);
 
@@ -284,6 +294,7 @@ public class JournalArticleCacheModel implements CacheModel<JournalArticle>,
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 		folderId = objectInput.readLong();
+		treePath = objectInput.readUTF();
 		classNameId = objectInput.readLong();
 		classPK = objectInput.readLong();
 		articleId = objectInput.readUTF();
@@ -335,6 +346,14 @@ public class JournalArticleCacheModel implements CacheModel<JournalArticle>,
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 		objectOutput.writeLong(folderId);
+
+		if (treePath == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(treePath);
+		}
+
 		objectOutput.writeLong(classNameId);
 		objectOutput.writeLong(classPK);
 
@@ -440,6 +459,7 @@ public class JournalArticleCacheModel implements CacheModel<JournalArticle>,
 	public long createDate;
 	public long modifiedDate;
 	public long folderId;
+	public String treePath;
 	public long classNameId;
 	public long classPK;
 	public String articleId;

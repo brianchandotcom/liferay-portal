@@ -513,6 +513,12 @@ public class JournalFolderLocalServiceUtil {
 		return getService().moveFolderToTrash(userId, folderId);
 	}
 
+	public static void rebuildTree(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().rebuildTree(companyId);
+	}
+
 	public static void restoreFolderFromTrash(long userId, long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

@@ -133,6 +133,8 @@ public class BookmarksEntryPersistenceTest {
 
 		newBookmarksEntry.setFolderId(ServiceTestUtil.nextLong());
 
+		newBookmarksEntry.setTreePath(ServiceTestUtil.randomString());
+
 		newBookmarksEntry.setName(ServiceTestUtil.randomString());
 
 		newBookmarksEntry.setUrl(ServiceTestUtil.randomString());
@@ -177,6 +179,8 @@ public class BookmarksEntryPersistenceTest {
 			newBookmarksEntry.getResourceBlockId());
 		Assert.assertEquals(existingBookmarksEntry.getFolderId(),
 			newBookmarksEntry.getFolderId());
+		Assert.assertEquals(existingBookmarksEntry.getTreePath(),
+			newBookmarksEntry.getTreePath());
 		Assert.assertEquals(existingBookmarksEntry.getName(),
 			newBookmarksEntry.getName());
 		Assert.assertEquals(existingBookmarksEntry.getUrl(),
@@ -236,9 +240,9 @@ public class BookmarksEntryPersistenceTest {
 			true, "entryId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "resourceBlockId", true, "folderId", true,
-			"name", true, "url", true, "description", true, "visits", true,
-			"priority", true, "status", true, "statusByUserId", true,
-			"statusByUserName", true, "statusDate", true);
+			"treePath", true, "name", true, "url", true, "description", true,
+			"visits", true, "priority", true, "status", true, "statusByUserId",
+			true, "statusByUserName", true, "statusDate", true);
 	}
 
 	@Test
@@ -392,6 +396,8 @@ public class BookmarksEntryPersistenceTest {
 		bookmarksEntry.setResourceBlockId(ServiceTestUtil.nextLong());
 
 		bookmarksEntry.setFolderId(ServiceTestUtil.nextLong());
+
+		bookmarksEntry.setTreePath(ServiceTestUtil.randomString());
 
 		bookmarksEntry.setName(ServiceTestUtil.randomString());
 

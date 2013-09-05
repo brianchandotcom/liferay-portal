@@ -224,6 +224,21 @@ public interface JournalFolderModel extends BaseModel<JournalFolder>,
 	public void setParentFolderId(long parentFolderId);
 
 	/**
+	 * Returns the tree path of this journal folder.
+	 *
+	 * @return the tree path of this journal folder
+	 */
+	@AutoEscape
+	public String getTreePath();
+
+	/**
+	 * Sets the tree path of this journal folder.
+	 *
+	 * @param treePath the tree path of this journal folder
+	 */
+	public void setTreePath(String treePath);
+
+	/**
 	 * Returns the name of this journal folder.
 	 *
 	 * @return the name of this journal folder

@@ -2364,6 +2364,13 @@ public class JournalArticleLocalServiceWrapper
 			articleId);
 	}
 
+	@Override
+	public void rebuildTree(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_journalArticleLocalService.rebuildTree(companyId);
+	}
+
 	/**
 	* Removes the web content of the web content article matching the group,
 	* article ID, and version, and language.

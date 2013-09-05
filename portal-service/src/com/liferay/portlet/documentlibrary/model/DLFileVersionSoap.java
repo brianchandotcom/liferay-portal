@@ -41,6 +41,7 @@ public class DLFileVersionSoap implements Serializable {
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setRepositoryId(model.getRepositoryId());
 		soapModel.setFolderId(model.getFolderId());
+		soapModel.setTreePath(model.getTreePath());
 		soapModel.setFileEntryId(model.getFileEntryId());
 		soapModel.setExtension(model.getExtension());
 		soapModel.setMimeType(model.getMimeType());
@@ -188,6 +189,14 @@ public class DLFileVersionSoap implements Serializable {
 		_folderId = folderId;
 	}
 
+	public String getTreePath() {
+		return _treePath;
+	}
+
+	public void setTreePath(String treePath) {
+		_treePath = treePath;
+	}
+
 	public long getFileEntryId() {
 		return _fileEntryId;
 	}
@@ -318,6 +327,7 @@ public class DLFileVersionSoap implements Serializable {
 	private Date _modifiedDate;
 	private long _repositoryId;
 	private long _folderId;
+	private String _treePath;
 	private long _fileEntryId;
 	private String _extension;
 	private String _mimeType;

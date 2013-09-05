@@ -84,6 +84,7 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "folderId", Types.BIGINT },
+			{ "treePath", Types.VARCHAR },
 			{ "classNameId", Types.BIGINT },
 			{ "classPK", Types.BIGINT },
 			{ "articleId", Types.VARCHAR },
@@ -108,7 +109,7 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 			{ "statusByUserName", Types.VARCHAR },
 			{ "statusDate", Types.TIMESTAMP }
 		};
-	public static final String TABLE_SQL_CREATE = "create table JournalArticle (uuid_ VARCHAR(75) null,id_ LONG not null primary key,resourcePrimKey LONG,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,folderId LONG,classNameId LONG,classPK LONG,articleId VARCHAR(75) null,version DOUBLE,title STRING null,urlTitle VARCHAR(150) null,description STRING null,content TEXT null,type_ VARCHAR(75) null,structureId VARCHAR(75) null,templateId VARCHAR(75) null,layoutUuid VARCHAR(75) null,displayDate DATE null,expirationDate DATE null,reviewDate DATE null,indexable BOOLEAN,smallImage BOOLEAN,smallImageId LONG,smallImageURL STRING null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table JournalArticle (uuid_ VARCHAR(75) null,id_ LONG not null primary key,resourcePrimKey LONG,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,folderId LONG,treePath STRING null,classNameId LONG,classPK LONG,articleId VARCHAR(75) null,version DOUBLE,title STRING null,urlTitle VARCHAR(150) null,description STRING null,content TEXT null,type_ VARCHAR(75) null,structureId VARCHAR(75) null,templateId VARCHAR(75) null,layoutUuid VARCHAR(75) null,displayDate DATE null,expirationDate DATE null,reviewDate DATE null,indexable BOOLEAN,smallImage BOOLEAN,smallImageId LONG,smallImageURL STRING null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table JournalArticle";
 	public static final String ORDER_BY_JPQL = " ORDER BY journalArticle.articleId ASC, journalArticle.version DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY JournalArticle.articleId ASC, JournalArticle.version DESC";
@@ -166,6 +167,7 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setFolderId(soapModel.getFolderId());
+		model.setTreePath(soapModel.getTreePath());
 		model.setClassNameId(soapModel.getClassNameId());
 		model.setClassPK(soapModel.getClassPK());
 		model.setArticleId(soapModel.getArticleId());
@@ -263,6 +265,7 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("folderId", getFolderId());
+		attributes.put("treePath", getTreePath());
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
 		attributes.put("articleId", getArticleId());
@@ -350,6 +353,12 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 
 		if (folderId != null) {
 			setFolderId(folderId);
+		}
+
+		String treePath = (String)attributes.get("treePath");
+
+		if (treePath != null) {
+			setTreePath(treePath);
 		}
 
 		Long classNameId = (Long)attributes.get("classNameId");
@@ -692,6 +701,22 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 
 	public long getOriginalFolderId() {
 		return _originalFolderId;
+	}
+
+	@JSON
+	@Override
+	public String getTreePath() {
+		if (_treePath == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _treePath;
+		}
+	}
+
+	@Override
+	public void setTreePath(String treePath) {
+		_treePath = treePath;
 	}
 
 	@Override
@@ -1563,6 +1588,7 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 		journalArticleImpl.setCreateDate(getCreateDate());
 		journalArticleImpl.setModifiedDate(getModifiedDate());
 		journalArticleImpl.setFolderId(getFolderId());
+		journalArticleImpl.setTreePath(getTreePath());
 		journalArticleImpl.setClassNameId(getClassNameId());
 		journalArticleImpl.setClassPK(getClassPK());
 		journalArticleImpl.setArticleId(getArticleId());
@@ -1763,6 +1789,14 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 
 		journalArticleCacheModel.folderId = getFolderId();
 
+		journalArticleCacheModel.treePath = getTreePath();
+
+		String treePath = journalArticleCacheModel.treePath;
+
+		if ((treePath != null) && (treePath.length() == 0)) {
+			journalArticleCacheModel.treePath = null;
+		}
+
 		journalArticleCacheModel.classNameId = getClassNameId();
 
 		journalArticleCacheModel.classPK = getClassPK();
@@ -1908,7 +1942,7 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(67);
+		StringBundler sb = new StringBundler(69);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -1930,6 +1964,8 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 		sb.append(getModifiedDate());
 		sb.append(", folderId=");
 		sb.append(getFolderId());
+		sb.append(", treePath=");
+		sb.append(getTreePath());
 		sb.append(", classNameId=");
 		sb.append(getClassNameId());
 		sb.append(", classPK=");
@@ -1983,7 +2019,7 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(103);
+		StringBundler sb = new StringBundler(106);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portlet.journal.model.JournalArticle");
@@ -2028,6 +2064,10 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 		sb.append(
 			"<column><column-name>folderId</column-name><column-value><![CDATA[");
 		sb.append(getFolderId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>treePath</column-name><column-value><![CDATA[");
+		sb.append(getTreePath());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>classNameId</column-name><column-value><![CDATA[");
@@ -2153,6 +2193,7 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 	private long _folderId;
 	private long _originalFolderId;
 	private boolean _setOriginalFolderId;
+	private String _treePath;
 	private long _classNameId;
 	private long _originalClassNameId;
 	private boolean _setOriginalClassNameId;

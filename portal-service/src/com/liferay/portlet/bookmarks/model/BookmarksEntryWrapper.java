@@ -61,6 +61,7 @@ public class BookmarksEntryWrapper implements BookmarksEntry,
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("resourceBlockId", getResourceBlockId());
 		attributes.put("folderId", getFolderId());
+		attributes.put("treePath", getTreePath());
 		attributes.put("name", getName());
 		attributes.put("url", getUrl());
 		attributes.put("description", getDescription());
@@ -134,6 +135,12 @@ public class BookmarksEntryWrapper implements BookmarksEntry,
 
 		if (folderId != null) {
 			setFolderId(folderId);
+		}
+
+		String treePath = (String)attributes.get("treePath");
+
+		if (treePath != null) {
+			setTreePath(treePath);
 		}
 
 		String name = (String)attributes.get("name");
@@ -431,6 +438,26 @@ public class BookmarksEntryWrapper implements BookmarksEntry,
 	@Override
 	public void setFolderId(long folderId) {
 		_bookmarksEntry.setFolderId(folderId);
+	}
+
+	/**
+	* Returns the tree path of this bookmarks entry.
+	*
+	* @return the tree path of this bookmarks entry
+	*/
+	@Override
+	public java.lang.String getTreePath() {
+		return _bookmarksEntry.getTreePath();
+	}
+
+	/**
+	* Sets the tree path of this bookmarks entry.
+	*
+	* @param treePath the tree path of this bookmarks entry
+	*/
+	@Override
+	public void setTreePath(java.lang.String treePath) {
+		_bookmarksEntry.setTreePath(treePath);
 	}
 
 	/**
@@ -836,6 +863,13 @@ public class BookmarksEntryWrapper implements BookmarksEntry,
 	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_bookmarksEntry.persist();
+	}
+
+	@Override
+	public java.lang.String buildTreePath()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _bookmarksEntry.buildTreePath();
 	}
 
 	@Override

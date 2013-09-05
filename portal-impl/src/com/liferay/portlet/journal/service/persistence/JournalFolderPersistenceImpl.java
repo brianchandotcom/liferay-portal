@@ -6754,6 +6754,7 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 		journalFolderImpl.setCreateDate(journalFolder.getCreateDate());
 		journalFolderImpl.setModifiedDate(journalFolder.getModifiedDate());
 		journalFolderImpl.setParentFolderId(journalFolder.getParentFolderId());
+		journalFolderImpl.setTreePath(journalFolder.getTreePath());
 		journalFolderImpl.setName(journalFolder.getName());
 		journalFolderImpl.setDescription(journalFolder.getDescription());
 		journalFolderImpl.setStatus(journalFolder.getStatus());

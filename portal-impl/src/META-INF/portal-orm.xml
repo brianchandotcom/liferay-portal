@@ -1908,6 +1908,7 @@
 			</basic>
 			<basic name="resourceBlockId" />
 			<basic name="folderId" />
+			<basic name="treePath" />
 			<basic name="name" />
 			<basic name="url" />
 			<basic name="description" />
@@ -1944,6 +1945,7 @@
 			</basic>
 			<basic name="resourceBlockId" />
 			<basic name="parentFolderId" />
+			<basic name="treePath" />
 			<basic name="name" />
 			<basic name="description" />
 			<basic name="status" />
@@ -2045,6 +2047,7 @@
 			<basic name="classPK" />
 			<basic name="repositoryId" />
 			<basic name="folderId" />
+			<basic name="treePath" />
 			<basic name="name" />
 			<basic name="extension" />
 			<basic name="mimeType" />
@@ -2151,6 +2154,7 @@
 			</basic>
 			<basic name="repositoryId" />
 			<basic name="folderId" />
+			<basic name="treePath" />
 			<basic name="toFileEntryId" />
 			<basic name="active">
 				<column name="ACTIVE_" />
@@ -2186,6 +2190,7 @@
 			</basic>
 			<basic name="repositoryId" />
 			<basic name="folderId" />
+			<basic name="treePath" />
 			<basic name="fileEntryId" />
 			<basic name="extension" />
 			<basic name="mimeType" />
@@ -2231,6 +2236,7 @@
 			<basic name="repositoryId" />
 			<basic name="mountPoint" />
 			<basic name="parentFolderId" />
+			<basic name="treePath" />
 			<basic name="name" />
 			<basic name="description" />
 			<basic name="lastPostDate">
@@ -2581,6 +2587,7 @@
 				<temporal>TIMESTAMP</temporal>
 			</basic>
 			<basic name="folderId" />
+			<basic name="treePath" />
 			<basic name="classNameId" />
 			<basic name="classPK" />
 			<basic name="articleId" />
@@ -2726,6 +2733,7 @@
 				<temporal>TIMESTAMP</temporal>
 			</basic>
 			<basic name="parentFolderId" />
+			<basic name="treePath" />
 			<basic name="name" />
 			<basic name="description" />
 			<basic name="status" />

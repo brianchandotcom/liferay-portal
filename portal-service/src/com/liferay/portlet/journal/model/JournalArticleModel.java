@@ -248,6 +248,21 @@ public interface JournalArticleModel extends AttachedModel,
 	public void setFolderId(long folderId);
 
 	/**
+	 * Returns the tree path of this journal article.
+	 *
+	 * @return the tree path of this journal article
+	 */
+	@AutoEscape
+	public String getTreePath();
+
+	/**
+	 * Sets the tree path of this journal article.
+	 *
+	 * @param treePath the tree path of this journal article
+	 */
+	public void setTreePath(String treePath);
+
+	/**
 	 * Returns the fully qualified class name of this journal article.
 	 *
 	 * @return the fully qualified class name of this journal article

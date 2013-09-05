@@ -38,7 +38,7 @@ public class JournalFolderCacheModel implements CacheModel<JournalFolder>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -58,6 +58,8 @@ public class JournalFolderCacheModel implements CacheModel<JournalFolder>,
 		sb.append(modifiedDate);
 		sb.append(", parentFolderId=");
 		sb.append(parentFolderId);
+		sb.append(", treePath=");
+		sb.append(treePath);
 		sb.append(", name=");
 		sb.append(name);
 		sb.append(", description=");
@@ -114,6 +116,13 @@ public class JournalFolderCacheModel implements CacheModel<JournalFolder>,
 
 		journalFolderImpl.setParentFolderId(parentFolderId);
 
+		if (treePath == null) {
+			journalFolderImpl.setTreePath(StringPool.BLANK);
+		}
+		else {
+			journalFolderImpl.setTreePath(treePath);
+		}
+
 		if (name == null) {
 			journalFolderImpl.setName(StringPool.BLANK);
 		}
@@ -161,6 +170,7 @@ public class JournalFolderCacheModel implements CacheModel<JournalFolder>,
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 		parentFolderId = objectInput.readLong();
+		treePath = objectInput.readUTF();
 		name = objectInput.readUTF();
 		description = objectInput.readUTF();
 		status = objectInput.readInt();
@@ -194,6 +204,13 @@ public class JournalFolderCacheModel implements CacheModel<JournalFolder>,
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 		objectOutput.writeLong(parentFolderId);
+
+		if (treePath == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(treePath);
+		}
 
 		if (name == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
@@ -231,6 +248,7 @@ public class JournalFolderCacheModel implements CacheModel<JournalFolder>,
 	public long createDate;
 	public long modifiedDate;
 	public long parentFolderId;
+	public String treePath;
 	public String name;
 	public String description;
 	public int status;

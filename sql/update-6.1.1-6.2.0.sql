@@ -406,6 +406,7 @@ create table JournalFolder (
 	createDate DATE null,
 	modifiedDate DATE null,
 	parentFolderId LONG,
+	treePath STRING null,
 	name VARCHAR(100) null,
 	description STRING null,
 	status INTEGER,

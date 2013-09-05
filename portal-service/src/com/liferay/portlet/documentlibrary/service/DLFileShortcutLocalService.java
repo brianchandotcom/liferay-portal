@@ -371,6 +371,10 @@ public interface DLFileShortcutLocalService extends BaseLocalService,
 		boolean active, int status)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	public void rebuildTree(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	public void updateAsset(long userId,
 		com.liferay.portlet.documentlibrary.model.DLFileShortcut fileShortcut,
 		long[] assetCategoryIds, java.lang.String[] assetTagNames)

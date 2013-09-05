@@ -134,6 +134,8 @@ public class JournalArticlePersistenceTest {
 
 		newJournalArticle.setFolderId(ServiceTestUtil.nextLong());
 
+		newJournalArticle.setTreePath(ServiceTestUtil.randomString());
+
 		newJournalArticle.setClassNameId(ServiceTestUtil.nextLong());
 
 		newJournalArticle.setClassPK(ServiceTestUtil.nextLong());
@@ -206,6 +208,8 @@ public class JournalArticlePersistenceTest {
 			Time.getShortTimestamp(newJournalArticle.getModifiedDate()));
 		Assert.assertEquals(existingJournalArticle.getFolderId(),
 			newJournalArticle.getFolderId());
+		Assert.assertEquals(existingJournalArticle.getTreePath(),
+			newJournalArticle.getTreePath());
 		Assert.assertEquals(existingJournalArticle.getClassNameId(),
 			newJournalArticle.getClassNameId());
 		Assert.assertEquals(existingJournalArticle.getClassPK(),
@@ -306,14 +310,14 @@ public class JournalArticlePersistenceTest {
 		return OrderByComparatorFactoryUtil.create("JournalArticle", "uuid",
 			true, "id", true, "resourcePrimKey", true, "groupId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",
-			true, "modifiedDate", true, "folderId", true, "classNameId", true,
-			"classPK", true, "articleId", true, "version", true, "title", true,
-			"urlTitle", true, "description", true, "content", true, "type",
-			true, "structureId", true, "templateId", true, "layoutUuid", true,
-			"displayDate", true, "expirationDate", true, "reviewDate", true,
-			"indexable", true, "smallImage", true, "smallImageId", true,
-			"smallImageURL", true, "status", true, "statusByUserId", true,
-			"statusByUserName", true, "statusDate", true);
+			true, "modifiedDate", true, "folderId", true, "treePath", true,
+			"classNameId", true, "classPK", true, "articleId", true, "version",
+			true, "title", true, "urlTitle", true, "description", true,
+			"content", true, "type", true, "structureId", true, "templateId",
+			true, "layoutUuid", true, "displayDate", true, "expirationDate",
+			true, "reviewDate", true, "indexable", true, "smallImage", true,
+			"smallImageId", true, "smallImageURL", true, "status", true,
+			"statusByUserId", true, "statusByUserName", true, "statusDate", true);
 	}
 
 	@Test
@@ -482,6 +486,8 @@ public class JournalArticlePersistenceTest {
 		journalArticle.setModifiedDate(ServiceTestUtil.nextDate());
 
 		journalArticle.setFolderId(ServiceTestUtil.nextLong());
+
+		journalArticle.setTreePath(ServiceTestUtil.randomString());
 
 		journalArticle.setClassNameId(ServiceTestUtil.nextLong());
 

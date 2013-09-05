@@ -61,6 +61,7 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("resourceBlockId", getResourceBlockId());
 		attributes.put("parentFolderId", getParentFolderId());
+		attributes.put("treePath", getTreePath());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
 		attributes.put("status", getStatus());
@@ -131,6 +132,12 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 
 		if (parentFolderId != null) {
 			setParentFolderId(parentFolderId);
+		}
+
+		String treePath = (String)attributes.get("treePath");
+
+		if (treePath != null) {
+			setTreePath(treePath);
 		}
 
 		String name = (String)attributes.get("name");
@@ -410,6 +417,26 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	@Override
 	public void setParentFolderId(long parentFolderId) {
 		_bookmarksFolder.setParentFolderId(parentFolderId);
+	}
+
+	/**
+	* Returns the tree path of this bookmarks folder.
+	*
+	* @return the tree path of this bookmarks folder
+	*/
+	@Override
+	public java.lang.String getTreePath() {
+		return _bookmarksFolder.getTreePath();
+	}
+
+	/**
+	* Sets the tree path of this bookmarks folder.
+	*
+	* @param treePath the tree path of this bookmarks folder
+	*/
+	@Override
+	public void setTreePath(java.lang.String treePath) {
+		_bookmarksFolder.setTreePath(treePath);
 	}
 
 	/**
@@ -805,6 +832,13 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_bookmarksFolder.persist();
+	}
+
+	@Override
+	public java.lang.String buildTreePath()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _bookmarksFolder.buildTreePath();
 	}
 
 	@Override

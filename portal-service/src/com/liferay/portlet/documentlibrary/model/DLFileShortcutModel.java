@@ -237,6 +237,21 @@ public interface DLFileShortcutModel extends BaseModel<DLFileShortcut>,
 	public void setFolderId(long folderId);
 
 	/**
+	 * Returns the tree path of this document library file shortcut.
+	 *
+	 * @return the tree path of this document library file shortcut
+	 */
+	@AutoEscape
+	public String getTreePath();
+
+	/**
+	 * Sets the tree path of this document library file shortcut.
+	 *
+	 * @param treePath the tree path of this document library file shortcut
+	 */
+	public void setTreePath(String treePath);
+
+	/**
 	 * Returns the to file entry ID of this document library file shortcut.
 	 *
 	 * @return the to file entry ID of this document library file shortcut

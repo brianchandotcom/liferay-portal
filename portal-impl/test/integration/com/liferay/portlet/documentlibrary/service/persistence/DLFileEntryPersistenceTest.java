@@ -137,6 +137,8 @@ public class DLFileEntryPersistenceTest {
 
 		newDLFileEntry.setFolderId(ServiceTestUtil.nextLong());
 
+		newDLFileEntry.setTreePath(ServiceTestUtil.randomString());
+
 		newDLFileEntry.setName(ServiceTestUtil.randomString());
 
 		newDLFileEntry.setExtension(ServiceTestUtil.randomString());
@@ -197,6 +199,8 @@ public class DLFileEntryPersistenceTest {
 			newDLFileEntry.getRepositoryId());
 		Assert.assertEquals(existingDLFileEntry.getFolderId(),
 			newDLFileEntry.getFolderId());
+		Assert.assertEquals(existingDLFileEntry.getTreePath(),
+			newDLFileEntry.getTreePath());
 		Assert.assertEquals(existingDLFileEntry.getName(),
 			newDLFileEntry.getName());
 		Assert.assertEquals(existingDLFileEntry.getExtension(),
@@ -278,12 +282,12 @@ public class DLFileEntryPersistenceTest {
 			"fileEntryId", true, "groupId", true, "companyId", true, "userId",
 			true, "userName", true, "createDate", true, "modifiedDate", true,
 			"classNameId", true, "classPK", true, "repositoryId", true,
-			"folderId", true, "name", true, "extension", true, "mimeType",
-			true, "title", true, "description", true, "extraSettings", true,
-			"fileEntryTypeId", true, "version", true, "size", true,
-			"readCount", true, "smallImageId", true, "largeImageId", true,
-			"custom1ImageId", true, "custom2ImageId", true,
-			"manualCheckInRequired", true);
+			"folderId", true, "treePath", true, "name", true, "extension",
+			true, "mimeType", true, "title", true, "description", true,
+			"extraSettings", true, "fileEntryTypeId", true, "version", true,
+			"size", true, "readCount", true, "smallImageId", true,
+			"largeImageId", true, "custom1ImageId", true, "custom2ImageId",
+			true, "manualCheckInRequired", true);
 	}
 
 	@Test
@@ -457,6 +461,8 @@ public class DLFileEntryPersistenceTest {
 		dlFileEntry.setRepositoryId(ServiceTestUtil.nextLong());
 
 		dlFileEntry.setFolderId(ServiceTestUtil.nextLong());
+
+		dlFileEntry.setTreePath(ServiceTestUtil.randomString());
 
 		dlFileEntry.setName(ServiceTestUtil.randomString());
 

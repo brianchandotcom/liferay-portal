@@ -77,6 +77,7 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "repositoryId", Types.BIGINT },
 			{ "folderId", Types.BIGINT },
+			{ "treePath", Types.VARCHAR },
 			{ "toFileEntryId", Types.BIGINT },
 			{ "active_", Types.BOOLEAN },
 			{ "status", Types.INTEGER },
@@ -84,7 +85,7 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 			{ "statusByUserName", Types.VARCHAR },
 			{ "statusDate", Types.TIMESTAMP }
 		};
-	public static final String TABLE_SQL_CREATE = "create table DLFileShortcut (uuid_ VARCHAR(75) null,fileShortcutId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,repositoryId LONG,folderId LONG,toFileEntryId LONG,active_ BOOLEAN,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table DLFileShortcut (uuid_ VARCHAR(75) null,fileShortcutId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,repositoryId LONG,folderId LONG,treePath STRING null,toFileEntryId LONG,active_ BOOLEAN,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table DLFileShortcut";
 	public static final String ORDER_BY_JPQL = " ORDER BY dlFileShortcut.fileShortcutId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY DLFileShortcut.fileShortcutId ASC";
@@ -132,6 +133,7 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setRepositoryId(soapModel.getRepositoryId());
 		model.setFolderId(soapModel.getFolderId());
+		model.setTreePath(soapModel.getTreePath());
 		model.setToFileEntryId(soapModel.getToFileEntryId());
 		model.setActive(soapModel.getActive());
 		model.setStatus(soapModel.getStatus());
@@ -212,6 +214,7 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("repositoryId", getRepositoryId());
 		attributes.put("folderId", getFolderId());
+		attributes.put("treePath", getTreePath());
 		attributes.put("toFileEntryId", getToFileEntryId());
 		attributes.put("active", getActive());
 		attributes.put("status", getStatus());
@@ -282,6 +285,12 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 
 		if (folderId != null) {
 			setFolderId(folderId);
+		}
+
+		String treePath = (String)attributes.get("treePath");
+
+		if (treePath != null) {
+			setTreePath(treePath);
 		}
 
 		Long toFileEntryId = (Long)attributes.get("toFileEntryId");
@@ -493,6 +502,22 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 
 	public long getOriginalFolderId() {
 		return _originalFolderId;
+	}
+
+	@JSON
+	@Override
+	public String getTreePath() {
+		if (_treePath == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _treePath;
+		}
+	}
+
+	@Override
+	public void setTreePath(String treePath) {
+		_treePath = treePath;
 	}
 
 	@JSON
@@ -763,6 +788,7 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 		dlFileShortcutImpl.setModifiedDate(getModifiedDate());
 		dlFileShortcutImpl.setRepositoryId(getRepositoryId());
 		dlFileShortcutImpl.setFolderId(getFolderId());
+		dlFileShortcutImpl.setTreePath(getTreePath());
 		dlFileShortcutImpl.setToFileEntryId(getToFileEntryId());
 		dlFileShortcutImpl.setActive(getActive());
 		dlFileShortcutImpl.setStatus(getStatus());
@@ -900,6 +926,14 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 
 		dlFileShortcutCacheModel.folderId = getFolderId();
 
+		dlFileShortcutCacheModel.treePath = getTreePath();
+
+		String treePath = dlFileShortcutCacheModel.treePath;
+
+		if ((treePath != null) && (treePath.length() == 0)) {
+			dlFileShortcutCacheModel.treePath = null;
+		}
+
 		dlFileShortcutCacheModel.toFileEntryId = getToFileEntryId();
 
 		dlFileShortcutCacheModel.active = getActive();
@@ -930,7 +964,7 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(35);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -952,6 +986,8 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 		sb.append(getRepositoryId());
 		sb.append(", folderId=");
 		sb.append(getFolderId());
+		sb.append(", treePath=");
+		sb.append(getTreePath());
 		sb.append(", toFileEntryId=");
 		sb.append(getToFileEntryId());
 		sb.append(", active=");
@@ -971,7 +1007,7 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(52);
+		StringBundler sb = new StringBundler(55);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portlet.documentlibrary.model.DLFileShortcut");
@@ -1016,6 +1052,10 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 		sb.append(
 			"<column><column-name>folderId</column-name><column-value><![CDATA[");
 		sb.append(getFolderId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>treePath</column-name><column-value><![CDATA[");
+		sb.append(getTreePath());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>toFileEntryId</column-name><column-value><![CDATA[");
@@ -1069,6 +1109,7 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 	private long _folderId;
 	private long _originalFolderId;
 	private boolean _setOriginalFolderId;
+	private String _treePath;
 	private long _toFileEntryId;
 	private long _originalToFileEntryId;
 	private boolean _setOriginalToFileEntryId;

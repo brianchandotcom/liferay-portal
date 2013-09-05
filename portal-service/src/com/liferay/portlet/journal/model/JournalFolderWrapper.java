@@ -60,6 +60,7 @@ public class JournalFolderWrapper implements JournalFolder,
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("parentFolderId", getParentFolderId());
+		attributes.put("treePath", getTreePath());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
 		attributes.put("status", getStatus());
@@ -124,6 +125,12 @@ public class JournalFolderWrapper implements JournalFolder,
 
 		if (parentFolderId != null) {
 			setParentFolderId(parentFolderId);
+		}
+
+		String treePath = (String)attributes.get("treePath");
+
+		if (treePath != null) {
+			setTreePath(treePath);
 		}
 
 		String name = (String)attributes.get("name");
@@ -383,6 +390,26 @@ public class JournalFolderWrapper implements JournalFolder,
 	@Override
 	public void setParentFolderId(long parentFolderId) {
 		_journalFolder.setParentFolderId(parentFolderId);
+	}
+
+	/**
+	* Returns the tree path of this journal folder.
+	*
+	* @return the tree path of this journal folder
+	*/
+	@Override
+	public java.lang.String getTreePath() {
+		return _journalFolder.getTreePath();
+	}
+
+	/**
+	* Sets the tree path of this journal folder.
+	*
+	* @param treePath the tree path of this journal folder
+	*/
+	@Override
+	public void setTreePath(java.lang.String treePath) {
+		_journalFolder.setTreePath(treePath);
 	}
 
 	/**
@@ -778,6 +805,13 @@ public class JournalFolderWrapper implements JournalFolder,
 	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_journalFolder.persist();
+	}
+
+	@Override
+	public java.lang.String buildTreePath()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _journalFolder.buildTreePath();
 	}
 
 	@Override

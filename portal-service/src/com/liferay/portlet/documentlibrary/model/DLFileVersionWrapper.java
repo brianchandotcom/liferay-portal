@@ -61,6 +61,7 @@ public class DLFileVersionWrapper implements DLFileVersion,
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("repositoryId", getRepositoryId());
 		attributes.put("folderId", getFolderId());
+		attributes.put("treePath", getTreePath());
 		attributes.put("fileEntryId", getFileEntryId());
 		attributes.put("extension", getExtension());
 		attributes.put("mimeType", getMimeType());
@@ -140,6 +141,12 @@ public class DLFileVersionWrapper implements DLFileVersion,
 
 		if (folderId != null) {
 			setFolderId(folderId);
+		}
+
+		String treePath = (String)attributes.get("treePath");
+
+		if (treePath != null) {
+			setTreePath(treePath);
 		}
 
 		Long fileEntryId = (Long)attributes.get("fileEntryId");
@@ -473,6 +480,26 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	@Override
 	public void setFolderId(long folderId) {
 		_dlFileVersion.setFolderId(folderId);
+	}
+
+	/**
+	* Returns the tree path of this document library file version.
+	*
+	* @return the tree path of this document library file version
+	*/
+	@Override
+	public java.lang.String getTreePath() {
+		return _dlFileVersion.getTreePath();
+	}
+
+	/**
+	* Sets the tree path of this document library file version.
+	*
+	* @param treePath the tree path of this document library file version
+	*/
+	@Override
+	public void setTreePath(java.lang.String treePath) {
+		_dlFileVersion.setTreePath(treePath);
 	}
 
 	/**
@@ -998,6 +1025,13 @@ public class DLFileVersionWrapper implements DLFileVersion,
 	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_dlFileVersion.persist();
+	}
+
+	@Override
+	public java.lang.String buildTreePath()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dlFileVersion.buildTreePath();
 	}
 
 	@Override

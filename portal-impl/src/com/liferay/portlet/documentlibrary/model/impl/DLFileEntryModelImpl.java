@@ -79,6 +79,7 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 			{ "classPK", Types.BIGINT },
 			{ "repositoryId", Types.BIGINT },
 			{ "folderId", Types.BIGINT },
+			{ "treePath", Types.VARCHAR },
 			{ "name", Types.VARCHAR },
 			{ "extension", Types.VARCHAR },
 			{ "mimeType", Types.VARCHAR },
@@ -95,7 +96,7 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 			{ "custom2ImageId", Types.BIGINT },
 			{ "manualCheckInRequired", Types.BOOLEAN }
 		};
-	public static final String TABLE_SQL_CREATE = "create table DLFileEntry (uuid_ VARCHAR(75) null,fileEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,repositoryId LONG,folderId LONG,name VARCHAR(255) null,extension VARCHAR(75) null,mimeType VARCHAR(75) null,title VARCHAR(255) null,description STRING null,extraSettings TEXT null,fileEntryTypeId LONG,version VARCHAR(75) null,size_ LONG,readCount INTEGER,smallImageId LONG,largeImageId LONG,custom1ImageId LONG,custom2ImageId LONG,manualCheckInRequired BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table DLFileEntry (uuid_ VARCHAR(75) null,fileEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,repositoryId LONG,folderId LONG,treePath STRING null,name VARCHAR(255) null,extension VARCHAR(75) null,mimeType VARCHAR(75) null,title VARCHAR(255) null,description STRING null,extraSettings TEXT null,fileEntryTypeId LONG,version VARCHAR(75) null,size_ LONG,readCount INTEGER,smallImageId LONG,largeImageId LONG,custom1ImageId LONG,custom2ImageId LONG,manualCheckInRequired BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table DLFileEntry";
 	public static final String ORDER_BY_JPQL = " ORDER BY dlFileEntry.folderId ASC, dlFileEntry.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY DLFileEntry.folderId ASC, DLFileEntry.name ASC";
@@ -146,6 +147,7 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		model.setClassPK(soapModel.getClassPK());
 		model.setRepositoryId(soapModel.getRepositoryId());
 		model.setFolderId(soapModel.getFolderId());
+		model.setTreePath(soapModel.getTreePath());
 		model.setName(soapModel.getName());
 		model.setExtension(soapModel.getExtension());
 		model.setMimeType(soapModel.getMimeType());
@@ -237,6 +239,7 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		attributes.put("classPK", getClassPK());
 		attributes.put("repositoryId", getRepositoryId());
 		attributes.put("folderId", getFolderId());
+		attributes.put("treePath", getTreePath());
 		attributes.put("name", getName());
 		attributes.put("extension", getExtension());
 		attributes.put("mimeType", getMimeType());
@@ -328,6 +331,12 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 
 		if (folderId != null) {
 			setFolderId(folderId);
+		}
+
+		String treePath = (String)attributes.get("treePath");
+
+		if (treePath != null) {
+			setTreePath(treePath);
 		}
 
 		String name = (String)attributes.get("name");
@@ -652,6 +661,22 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 
 	@JSON
 	@Override
+	public String getTreePath() {
+		if (_treePath == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _treePath;
+		}
+	}
+
+	@Override
+	public void setTreePath(String treePath) {
+		_treePath = treePath;
+	}
+
+	@JSON
+	@Override
 	public String getName() {
 		if (_name == null) {
 			return StringPool.BLANK;
@@ -946,6 +971,7 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		dlFileEntryImpl.setClassPK(getClassPK());
 		dlFileEntryImpl.setRepositoryId(getRepositoryId());
 		dlFileEntryImpl.setFolderId(getFolderId());
+		dlFileEntryImpl.setTreePath(getTreePath());
 		dlFileEntryImpl.setName(getName());
 		dlFileEntryImpl.setExtension(getExtension());
 		dlFileEntryImpl.setMimeType(getMimeType());
@@ -1110,6 +1136,14 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 
 		dlFileEntryCacheModel.folderId = getFolderId();
 
+		dlFileEntryCacheModel.treePath = getTreePath();
+
+		String treePath = dlFileEntryCacheModel.treePath;
+
+		if ((treePath != null) && (treePath.length() == 0)) {
+			dlFileEntryCacheModel.treePath = null;
+		}
+
 		dlFileEntryCacheModel.name = getName();
 
 		String name = dlFileEntryCacheModel.name;
@@ -1187,7 +1221,7 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(55);
+		StringBundler sb = new StringBundler(57);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -1213,6 +1247,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		sb.append(getRepositoryId());
 		sb.append(", folderId=");
 		sb.append(getFolderId());
+		sb.append(", treePath=");
+		sb.append(getTreePath());
 		sb.append(", name=");
 		sb.append(getName());
 		sb.append(", extension=");
@@ -1250,7 +1286,7 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(85);
+		StringBundler sb = new StringBundler(88);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portlet.documentlibrary.model.DLFileEntry");
@@ -1303,6 +1339,10 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		sb.append(
 			"<column><column-name>folderId</column-name><column-value><![CDATA[");
 		sb.append(getFolderId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>treePath</column-name><column-value><![CDATA[");
+		sb.append(getTreePath());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>name</column-name><column-value><![CDATA[");
@@ -1396,6 +1436,7 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 	private long _folderId;
 	private long _originalFolderId;
 	private boolean _setOriginalFolderId;
+	private String _treePath;
 	private String _name;
 	private String _originalName;
 	private String _extension;

@@ -133,6 +133,8 @@ public class DLFileShortcutPersistenceTest {
 
 		newDLFileShortcut.setFolderId(ServiceTestUtil.nextLong());
 
+		newDLFileShortcut.setTreePath(ServiceTestUtil.randomString());
+
 		newDLFileShortcut.setToFileEntryId(ServiceTestUtil.nextLong());
 
 		newDLFileShortcut.setActive(ServiceTestUtil.randomBoolean());
@@ -171,6 +173,8 @@ public class DLFileShortcutPersistenceTest {
 			newDLFileShortcut.getRepositoryId());
 		Assert.assertEquals(existingDLFileShortcut.getFolderId(),
 			newDLFileShortcut.getFolderId());
+		Assert.assertEquals(existingDLFileShortcut.getTreePath(),
+			newDLFileShortcut.getTreePath());
 		Assert.assertEquals(existingDLFileShortcut.getToFileEntryId(),
 			newDLFileShortcut.getToFileEntryId());
 		Assert.assertEquals(existingDLFileShortcut.getActive(),
@@ -225,8 +229,9 @@ public class DLFileShortcutPersistenceTest {
 			true, "fileShortcutId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "repositoryId", true, "folderId", true,
-			"toFileEntryId", true, "active", true, "status", true,
-			"statusByUserId", true, "statusByUserName", true, "statusDate", true);
+			"treePath", true, "toFileEntryId", true, "active", true, "status",
+			true, "statusByUserId", true, "statusByUserName", true,
+			"statusDate", true);
 	}
 
 	@Test
@@ -382,6 +387,8 @@ public class DLFileShortcutPersistenceTest {
 		dlFileShortcut.setRepositoryId(ServiceTestUtil.nextLong());
 
 		dlFileShortcut.setFolderId(ServiceTestUtil.nextLong());
+
+		dlFileShortcut.setTreePath(ServiceTestUtil.randomString());
 
 		dlFileShortcut.setToFileEntryId(ServiceTestUtil.nextLong());
 

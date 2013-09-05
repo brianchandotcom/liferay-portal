@@ -131,6 +131,8 @@ public class JournalFolderPersistenceTest {
 
 		newJournalFolder.setParentFolderId(ServiceTestUtil.nextLong());
 
+		newJournalFolder.setTreePath(ServiceTestUtil.randomString());
+
 		newJournalFolder.setName(ServiceTestUtil.randomString());
 
 		newJournalFolder.setDescription(ServiceTestUtil.randomString());
@@ -167,6 +169,8 @@ public class JournalFolderPersistenceTest {
 			Time.getShortTimestamp(newJournalFolder.getModifiedDate()));
 		Assert.assertEquals(existingJournalFolder.getParentFolderId(),
 			newJournalFolder.getParentFolderId());
+		Assert.assertEquals(existingJournalFolder.getTreePath(),
+			newJournalFolder.getTreePath());
 		Assert.assertEquals(existingJournalFolder.getName(),
 			newJournalFolder.getName());
 		Assert.assertEquals(existingJournalFolder.getDescription(),
@@ -230,9 +234,9 @@ public class JournalFolderPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("JournalFolder", "uuid",
 			true, "folderId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "parentFolderId", true, "name", true,
-			"description", true, "status", true, "statusByUserId", true,
-			"statusByUserName", true, "statusDate", true);
+			"modifiedDate", true, "parentFolderId", true, "treePath", true,
+			"name", true, "description", true, "status", true,
+			"statusByUserId", true, "statusByUserName", true, "statusDate", true);
 	}
 
 	@Test
@@ -398,6 +402,8 @@ public class JournalFolderPersistenceTest {
 		journalFolder.setModifiedDate(ServiceTestUtil.nextDate());
 
 		journalFolder.setParentFolderId(ServiceTestUtil.nextLong());
+
+		journalFolder.setTreePath(ServiceTestUtil.randomString());
 
 		journalFolder.setName(ServiceTestUtil.randomString());
 

@@ -1,0 +1,9 @@
+.portlet-polls {
+	.choice {
+		margin-bottom: 30px;
+
+		&.last-choice {
+			margin-bottom: 10px;
+		}
+	}
+}

@@ -57,6 +57,7 @@ import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -394,37 +395,23 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			FileEntry fileEntry)
 		throws Exception {
 
-		File file = DLFileEntryLocalServiceUtil.getFile(
+		InputStream inputStream = DLFileEntryLocalServiceUtil.getFileAsStream(
 			userId, fileEntry.getFileEntryId(), fileEntry.getVersion(), false);
-		File newFile = null;
-		boolean rename = false;
+
+		File file = FileUtil.createTempFile("lar");
 
 		ManifestSummary manifestSummary = null;
 
 		try {
-			String newFileName = StringUtil.replace(
-				file.getPath(), file.getName(), fileEntry.getTitle());
-
-			newFile = new File(newFileName);
-
-			rename = file.renameTo(newFile);
-
-			if (!rename) {
-				newFile = FileUtil.createTempFile(fileEntry.getExtension());
-
-				FileUtil.copyFile(file, newFile);
-			}
+			FileUtil.write(file, inputStream);
 
 			manifestSummary = getManifestSummary(
-				userId, groupId, parameterMap, newFile);
+				userId, groupId, parameterMap, file);
 		}
 		finally {
-			if (rename) {
-				newFile.renameTo(file);
-			}
-			else {
-				FileUtil.delete(newFile);
-			}
+			StreamUtil.cleanUp(inputStream);
+
+			FileUtil.delete(file);
 		}
 
 		return manifestSummary;

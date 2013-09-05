@@ -40,7 +40,7 @@ import com.liferay.portlet.dynamicdatalists.RecordSetDuplicateRecordSetKeyExcept
 import com.liferay.portlet.dynamicdatamapping.StructureDuplicateStructureKeyException;
 import com.liferay.portlet.layoutsadmin.action.ImportLayoutsAction;
 
-import java.io.File;
+import java.io.InputStream;
 
 import java.util.Date;
 
@@ -294,7 +294,9 @@ public class ExportImportAction extends ImportLayoutsAction {
 	}
 
 	@Override
-	protected void importData(ActionRequest actionRequest, File file)
+	protected void importData(
+			ActionRequest actionRequest, InputStream inputStream,
+			String fileName)
 		throws Exception {
 
 		long plid = ParamUtil.getLong(actionRequest, "plid");
@@ -304,12 +306,12 @@ public class ExportImportAction extends ImportLayoutsAction {
 
 		LayoutServiceUtil.importPortletInfoInBackground(
 			portlet.getPortletId(), plid, groupId, portlet.getPortletId(),
-			actionRequest.getParameterMap(), file);
+			actionRequest.getParameterMap(), inputStream);
 	}
 
 	@Override
 	protected MissingReferences validateFile(
-			ActionRequest actionRequest, File file)
+			ActionRequest actionRequest, InputStream inputStream)
 		throws Exception {
 
 		long plid = ParamUtil.getLong(actionRequest, "plid");
@@ -319,7 +321,7 @@ public class ExportImportAction extends ImportLayoutsAction {
 
 		return LayoutServiceUtil.validateImportPortletInfo(
 			plid, groupId, portlet.getPortletId(),
-			actionRequest.getParameterMap(), file);
+			actionRequest.getParameterMap(), inputStream);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(ExportImportAction.class);

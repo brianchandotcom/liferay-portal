@@ -723,6 +723,17 @@ public class LayoutServiceWrapper implements LayoutService,
 			privateLayout, parameterMap, file);
 	}
 
+	@Override
+	public long importLayoutsInBackground(java.lang.String taskName,
+		long groupId, boolean privateLayout,
+		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
+		java.io.InputStream inputStream)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _layoutService.importLayoutsInBackground(taskName, groupId,
+			privateLayout, parameterMap, inputStream);
+	}
+
 	/**
 	* Imports the portlet information (categories, permissions, ... etc.) from
 	* the file.
@@ -1269,6 +1280,17 @@ public class LayoutServiceWrapper implements LayoutService,
 	}
 
 	@Override
+	public com.liferay.portal.kernel.lar.MissingReferences validateImportLayoutsFile(
+		long groupId, boolean privateLayout,
+		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
+		java.io.InputStream inputStream)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _layoutService.validateImportLayoutsFile(groupId, privateLayout,
+			parameterMap, inputStream);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.lar.MissingReferences validateImportPortletInfo(
 		long plid, long groupId, java.lang.String portletId,
 		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
@@ -1277,6 +1299,17 @@ public class LayoutServiceWrapper implements LayoutService,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _layoutService.validateImportPortletInfo(plid, groupId,
 			portletId, parameterMap, file);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.lar.MissingReferences validateImportPortletInfo(
+		long plid, long groupId, java.lang.String portletId,
+		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
+		java.io.InputStream inputStream)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _layoutService.validateImportPortletInfo(plid, groupId,
+			portletId, parameterMap, inputStream);
 	}
 
 	/**

@@ -721,6 +721,17 @@ public class LayoutServiceUtil {
 			parameterMap, file);
 	}
 
+	public static long importLayoutsInBackground(java.lang.String taskName,
+		long groupId, boolean privateLayout,
+		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
+		java.io.InputStream inputStream)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .importLayoutsInBackground(taskName, groupId, privateLayout,
+			parameterMap, inputStream);
+	}
+
 	/**
 	* Imports the portlet information (categories, permissions, ... etc.) from
 	* the file.
@@ -1259,6 +1270,17 @@ public class LayoutServiceUtil {
 			parameterMap, file);
 	}
 
+	public static com.liferay.portal.kernel.lar.MissingReferences validateImportLayoutsFile(
+		long groupId, boolean privateLayout,
+		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
+		java.io.InputStream inputStream)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .validateImportLayoutsFile(groupId, privateLayout,
+			parameterMap, inputStream);
+	}
+
 	public static com.liferay.portal.kernel.lar.MissingReferences validateImportPortletInfo(
 		long plid, long groupId, java.lang.String portletId,
 		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
@@ -1268,6 +1290,17 @@ public class LayoutServiceUtil {
 		return getService()
 				   .validateImportPortletInfo(plid, groupId, portletId,
 			parameterMap, file);
+	}
+
+	public static com.liferay.portal.kernel.lar.MissingReferences validateImportPortletInfo(
+		long plid, long groupId, java.lang.String portletId,
+		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
+		java.io.InputStream inputStream)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .validateImportPortletInfo(plid, groupId, portletId,
+			parameterMap, inputStream);
 	}
 
 	public static LayoutService getService() {

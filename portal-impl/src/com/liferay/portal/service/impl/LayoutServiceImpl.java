@@ -963,6 +963,20 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			getUserId(), taskName, groupId, privateLayout, parameterMap, file);
 	}
 
+	@Override
+	public long importLayoutsInBackground(
+			String taskName, long groupId, boolean privateLayout,
+			Map<String, String[]> parameterMap, InputStream inputStream)
+		throws PortalException, SystemException {
+
+		GroupPermissionUtil.check(
+			getPermissionChecker(), groupId, ActionKeys.EXPORT_IMPORT_LAYOUTS);
+
+		return layoutLocalService.importLayoutsInBackground(
+			getUserId(), taskName, groupId, privateLayout, parameterMap,
+			inputStream);
+	}
+
 	/**
 	 * Imports the portlet information (categories, permissions, ... etc.) from
 	 * the file.
@@ -1601,6 +1615,19 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	}
 
 	@Override
+	public MissingReferences validateImportLayoutsFile(
+			long groupId, boolean privateLayout,
+			Map<String, String[]> parameterMap, InputStream inputStream)
+		throws PortalException, SystemException {
+
+		GroupPermissionUtil.check(
+			getPermissionChecker(), groupId, ActionKeys.EXPORT_IMPORT_LAYOUTS);
+
+		return layoutLocalService.validateImportLayoutsFile(
+			getUserId(), groupId, privateLayout, parameterMap, inputStream);
+	}
+
+	@Override
 	public MissingReferences validateImportPortletInfo(
 			long plid, long groupId, String portletId,
 			Map<String, String[]> parameterMap, File file)
@@ -1611,6 +1638,19 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 
 		return layoutLocalService.validateImportPortletInfo(
 			getUserId(), plid, groupId, portletId, parameterMap, file);
+	}
+
+	@Override
+	public MissingReferences validateImportPortletInfo(
+			long plid, long groupId, String portletId,
+			Map<String, String[]> parameterMap, InputStream inputStream)
+		throws PortalException, SystemException {
+
+		PortletPermissionUtil.check(
+			getPermissionChecker(), plid, portletId, ActionKeys.CONFIGURATION);
+
+		return layoutLocalService.validateImportPortletInfo(
+			getUserId(), plid, groupId, portletId, parameterMap, inputStream);
 	}
 
 	protected List<Layout> filterLayouts(List<Layout> layouts)

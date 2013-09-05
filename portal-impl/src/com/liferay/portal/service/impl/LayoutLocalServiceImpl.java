@@ -2878,6 +2878,30 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 		}
 	}
 
+	@Override
+	public MissingReferences validateImportPortletInfo(
+			long userId, long plid, long groupId, String portletId,
+			Map<String, String[]> parameterMap, InputStream inputStream)
+		throws PortalException, SystemException {
+
+		File file = null;
+
+		try {
+			file = FileUtil.createTempFile("lar");
+
+			FileUtil.write(file, inputStream);
+
+			return validateImportPortletInfo(
+				userId, plid, groupId, portletId, parameterMap, file);
+		}
+		catch (IOException ioe) {
+			throw new SystemException(ioe);
+		}
+		finally {
+			FileUtil.delete(file);
+		}
+	}
+
 	protected void validateTypeSettingsProperties(
 			UnicodeProperties typeSettingsProperties)
 		throws PortalException {

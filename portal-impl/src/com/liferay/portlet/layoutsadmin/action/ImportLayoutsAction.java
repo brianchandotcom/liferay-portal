@@ -39,10 +39,8 @@ import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.LayoutServiceUtil;
 import com.liferay.portal.struts.PortletAction;
@@ -53,7 +51,6 @@ import com.liferay.portlet.documentlibrary.FileSizeException;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.sites.action.ActionUtil;
 
-import java.io.File;
 import java.io.InputStream;
 
 import java.util.Map;
@@ -345,55 +342,27 @@ public class ImportLayoutsAction extends PortletAction {
 		FileEntry fileEntry = ExportImportHelperUtil.getTempFileEntry(
 			groupId, themeDisplay.getUserId(), folderName);
 
-		File file = DLFileEntryLocalServiceUtil.getFile(
-			themeDisplay.getUserId(), fileEntry.getFileEntryId(),
-			fileEntry.getVersion(), false);
-
-		if ((file == null) || !file.exists()) {
-			throw new LARFileException("Import file does not exist");
-		}
-
-		boolean successfulRename = false;
-
-		File newFile = null;
+		InputStream inputStream = null;
 
 		try {
-			String newFileName = StringUtil.replace(
-				file.getPath(), file.getName(), fileEntry.getTitle());
+			inputStream = DLFileEntryLocalServiceUtil.getFileAsStream(
+				themeDisplay.getUserId(), fileEntry.getFileEntryId(),
+				fileEntry.getVersion(), false);
 
-			newFile = new File(newFileName);
-
-			successfulRename = file.renameTo(newFile);
-
-			if (!successfulRename) {
-				newFile = FileUtil.createTempFile(fileEntry.getExtension());
-
-				FileUtil.copyFile(file, newFile);
-			}
-
-			importData(actionRequest, newFile);
+			importData(actionRequest, inputStream, fileEntry.getTitle());
 
 			deleteTempFileEntry(groupId, folderName);
 
 			addSuccessMessage(actionRequest, actionResponse);
 		}
 		finally {
-			if (successfulRename) {
-				successfulRename = newFile.renameTo(file);
-
-				if (!successfulRename) {
-					FileUtil.copyFile(newFile, file);
-
-					FileUtil.delete(newFile);
-				}
-			}
-			else {
-				FileUtil.delete(newFile);
-			}
+			StreamUtil.cleanUp(inputStream);
 		}
 	}
 
-	protected void importData(ActionRequest actionRequest, File file)
+	protected void importData(
+			ActionRequest actionRequest, InputStream inputStream,
+			String fileName)
 		throws Exception {
 
 		long groupId = ParamUtil.getLong(actionRequest, "groupId");
@@ -401,8 +370,8 @@ public class ImportLayoutsAction extends PortletAction {
 			actionRequest, "privateLayout");
 
 		LayoutServiceUtil.importLayoutsInBackground(
-			file.getName(), groupId, privateLayout,
-			actionRequest.getParameterMap(), file);
+			fileName, groupId, privateLayout, actionRequest.getParameterMap(),
+			inputStream);
 	}
 
 	protected void validateFile(
@@ -418,34 +387,18 @@ public class ImportLayoutsAction extends PortletAction {
 		FileEntry fileEntry = ExportImportHelperUtil.getTempFileEntry(
 			groupId, themeDisplay.getUserId(), folderName);
 
-		File file = DLFileEntryLocalServiceUtil.getFile(
-			themeDisplay.getUserId(), fileEntry.getFileEntryId(),
-			fileEntry.getVersion(), false);
-
-		if ((file == null) || !file.exists()) {
-			throw new LARFileException("Import file does not exist");
-		}
-
-		boolean successfulRename = false;
-
-		File newFile = null;
+		InputStream inputStream = null;
 
 		try {
-			String newFileName = StringUtil.replace(
-				file.getPath(), file.getName(), fileEntry.getTitle());
+			inputStream = DLFileEntryLocalServiceUtil.getFileAsStream(
+				themeDisplay.getUserId(), fileEntry.getFileEntryId(),
+				fileEntry.getVersion(), false);
 
-			newFile = new File(newFileName);
-
-			successfulRename = file.renameTo(newFile);
-
-			if (!successfulRename) {
-				newFile = FileUtil.createTempFile(fileEntry.getExtension());
-
-				FileUtil.copyFile(file, newFile);
-			}
+			boolean privateLayout = ParamUtil.getBoolean(
+				actionRequest, "privateLayout");
 
 			MissingReferences missingReferences = validateFile(
-				actionRequest, newFile);
+				actionRequest, inputStream);
 
 			Map<String, MissingReference> weakMissingReferences =
 				missingReferences.getWeakMissingReferences();
@@ -468,23 +421,12 @@ public class ImportLayoutsAction extends PortletAction {
 			writeJSON(actionRequest, actionResponse, jsonObject);
 		}
 		finally {
-			if (successfulRename) {
-				successfulRename = newFile.renameTo(file);
-
-				if (!successfulRename) {
-					FileUtil.copyFile(newFile, file);
-
-					FileUtil.delete(newFile);
-				}
-			}
-			else {
-				FileUtil.delete(newFile);
-			}
+			StreamUtil.cleanUp(inputStream);
 		}
 	}
 
 	protected MissingReferences validateFile(
-			ActionRequest actionRequest, File file)
+			ActionRequest actionRequest, InputStream inputStream)
 		throws Exception {
 
 		long groupId = ParamUtil.getLong(actionRequest, "groupId");
@@ -492,7 +434,8 @@ public class ImportLayoutsAction extends PortletAction {
 			actionRequest, "privateLayout");
 
 		return LayoutServiceUtil.validateImportLayoutsFile(
-			groupId, privateLayout, actionRequest.getParameterMap(), file);
+			groupId, privateLayout, actionRequest.getParameterMap(),
+			inputStream);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(ImportLayoutsAction.class);

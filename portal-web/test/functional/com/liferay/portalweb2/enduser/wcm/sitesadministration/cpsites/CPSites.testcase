@@ -27,6 +27,60 @@
 		</execute>
 	</command>
 
+	<command name="AddSitesMultiple">
+		<var name="siteName1" value="Site1Name" />
+		<var name="siteName2" value="Site2Name" />
+		<var name="siteName3" value="Site3Name" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="${siteName1}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#viewCP">
+			<var name="siteName" value="${siteName1}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addCommunityCP">
+			<var name="siteName" value="${siteName2}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#viewCP">
+			<var name="siteName" value="${siteName2}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addIntranetCP">
+			<var name="siteName" value="${siteName3}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#viewCP">
+			<var name="siteName" value="${siteName3}" />
+		</execute>
+	</command>
+
 	<command name="DeleteSite">
 		<var name="siteName" value="Site Name" />
 
@@ -46,4 +100,64 @@
 			<var name="siteName" value="${siteName}" />
 		</execute>
 	</command>
+
+	<command name="EditSite">
+		<var name="siteName" value="Site Name" />
+		<var name="siteName1" value="Site Name Edit" />
+		<var name="siteScopeName" value="Site Name" />
+
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#viewCP">
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="siteName" value="${siteScopeName}" />
+			<var name="portletName" value="Site Settings" />
+		</execute>
+
+		<execute macro="Site#editSiteCP">
+			<var name="siteName" value="${siteName1}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#viewCP">
+			<var name="siteName" value="${siteName1}" />
+		</execute>
+	</command>
+
+	<command name="SearchSite">
+		<var name="siteName" value="Site Name" />
+		
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#searchSiteCP">
+			<var name="siteName" value="${siteName}" />
+		</execute>
+	</command>	
 </definition>

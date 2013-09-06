@@ -22,8 +22,6 @@ PasswordPolicySearch searchContainer = (PasswordPolicySearch)request.getAttribut
 PasswordPolicyDisplayTerms displayTerms = (PasswordPolicyDisplayTerms)searchContainer.getDisplayTerms();
 %>
 
-<span class="form-search lfr-display-terms-search">
-	<aui:input inlineField="<%= true %>" label="" name="<%= displayTerms.NAME %>" size="30" type="text" value="<%= displayTerms.getName() %>" />
-
-	<aui:button type="submit" value="search" />
-</span>
+<div class="form-search">
+	<liferay-ui:input-search id="<%= displayTerms.NAME %>" placeholder='<%= LanguageUtil.get(locale, "keywords") %>' />
+</div>

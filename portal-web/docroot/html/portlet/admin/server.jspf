@@ -97,11 +97,9 @@ serverURL.setParameter("tabs3", tabs3);
 						</aui:button-row>
 					</c:when>
 					<c:otherwise>
-						<span class="form-search">
-							<aui:input inlineField="<%= true %>" label="" name="keywords" title="search-categories" type="text" value="<%= keywords %>" />
-
-							<aui:button type="submit" value="search" />
-						</span>
+						<div class="form-search">
+							<liferay-ui:input-search id="keywords" placeholder='<%= LanguageUtil.get(locale, "keywords") %>' title='<%= LanguageUtil.get(locale, "search-categories") %>' />
+						</div>
 
 						<br /><br />
 
@@ -220,11 +218,9 @@ serverURL.setParameter("tabs3", tabs3);
 					portletURL="<%= serverURL %>"
 				/>
 
-				<span class="form-search">
-					<aui:input inlineField="<%= true %>" label="" name="keywords" title="search-properties" type="text" value="<%= keywords %>" />
-
-					<aui:button type="submit" value="search" />
-				</span>
+				<div class="form-search">
+					<liferay-ui:input-search id="keywords" placeholder='<%= LanguageUtil.get(locale, "keywords") %>' />
+				</div>
 
 				<br /><br />
 

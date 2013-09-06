@@ -16,10 +16,6 @@
 
 <%@ include file="/html/portlet/document_library/init.jsp" %>
 
-<div class="search-form">
-	<span class="form-search">
-		<aui:input inlineField="<%= true %>" label="" name="keywords" size="30" title="search-entries" type="text" />
-
-		<aui:button type="submit" value="search" />
-	</span>
+<div class="form-search">
+	<liferay-ui:input-search id="keywords" placeholder='<%= LanguageUtil.get(locale, "keywords") %>' title='<%= LanguageUtil.get(locale, "search-documents") %>' />
 </div>

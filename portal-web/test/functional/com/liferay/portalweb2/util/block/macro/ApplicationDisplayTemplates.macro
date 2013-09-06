@@ -49,6 +49,7 @@
 
 		<execute action="PGApplicationdisplaytemplates#selectFrameTop" locator-key1="ADT_IFRAME_TOP" value1="relative=top" />
 		<execute action="PGApplicationdisplaytemplates#selectFrame" locator-key1="ADT_IFRAME" />
+		<execute action="PGApplicationdisplaytemplates#click" locator-key1="EXPAND_BUTTON" />
 		<execute action="PGApplicationdisplaytemplates#assertClick" locator-key1="ADD" value1="Add" />
 		<execute action="PGApplicationdisplaytemplates#assertClick" locator-key1="ADD_MENULIST_ADT_TEMPLATE" value1="${adtType} Template" />
 

@@ -118,7 +118,7 @@ public class SubscriptionSender implements Serializable {
 			String inferredClassName = null;
 			long inferredClassPK = 0;
 
-			if (!_persistestedSubscribersOVPs.isEmpty()) {
+			if (_persistestedSubscribersOVPs.size() > 1) {
 				ObjectValuePair<String, Long> objectValuePair =
 					_persistestedSubscribersOVPs.get(
 						_persistestedSubscribersOVPs.size() - 1);

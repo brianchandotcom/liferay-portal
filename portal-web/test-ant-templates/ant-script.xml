@@ -262,7 +262,7 @@
 		</ant>
 	</target>
 
-	<target name="test-${test.ant.script.command}-jboss-mysql-firefox">
+	<target name="test-${test.ant.script.command}-jboss-eap-mysql-firefox">
 		<antcall target="generate-test-properties">
 			<param name="database" value="mysql" />
 		</antcall>
@@ -277,7 +277,12 @@
 			${test.ant.script.file.properties}
 		</antcall>
 
-		<ant antfile="build-test-jboss.xml" target="run-selenium-jboss">
+		<echo file="app.server.${user.name}.properties">app.server.type=jboss
+app.server.jboss.version=6.0.1
+app.server.jboss.dir=$${app.server.parent.dir}/jboss-eap-6.0
+app.server.jboss.zip.name=jboss-eap-$$$${app.server.jboss.version}.zip</echo>
+
+		<ant antfile="build-test-jboss-eap.xml" target="run-selenium-jboss-eap" inheritAll="false">
 			${test.ant.script.file.database.collate}
 			${test.ant.script.file.database.minimal}
 			${test.ant.script.file.evaluate.logs}
@@ -294,8 +299,7 @@
 		</ant>
 	</target>
 
-	<target name="test-${test.ant.script.command}-jboss-eap-mysql-firefox">
-		<echo file=""
+	<target name="test-${test.ant.script.command}-jboss-mysql-firefox">
 		<antcall target="generate-test-properties">
 			<param name="database" value="mysql" />
 		</antcall>
@@ -310,7 +314,7 @@
 			${test.ant.script.file.properties}
 		</antcall>
 
-		<ant antfile="build-test-jboss-eap.xml" target="run-selenium-jboss-eap">
+		<ant antfile="build-test-jboss.xml" target="run-selenium-jboss">
 			${test.ant.script.file.database.collate}
 			${test.ant.script.file.database.minimal}
 			${test.ant.script.file.evaluate.logs}

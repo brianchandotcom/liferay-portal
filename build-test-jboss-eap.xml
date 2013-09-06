@@ -9,11 +9,12 @@
 		<record action="start" name="log" />
 
 		<antcall target="run-simple-server">
-			<param name="simple.server.dir" value="${app.server.jboss.eap.dir}" />
-			<param name="simple.server.bin.dir" value="${app.server.jboss.eap.bin.dir}" />
-			<param name="simple.server.deploy.dir" value="${app.server.jboss.eap.deploy.dir}" />
-			<param name="simple.server.lib.global.dir" value="${app.server.jboss.eap.lib.global.dir}" />
-			<param name="simple.server.portal.dir" value="${app.server.jboss.eap.portal.dir}" />
+			<param name="simple.server.type" value="jboss" />
+			<param name="simple.server.dir" value="${app.server.jboss.dir}" />
+			<param name="simple.server.bin.dir" value="${app.server.jboss.bin.dir}" />
+			<param name="simple.server.deploy.dir" value="${app.server.jboss.deploy.dir}" />
+			<param name="simple.server.lib.global.dir" value="${app.server.jboss.lib.global.dir}" />
+			<param name="simple.server.portal.dir" value="${app.server.jboss.portal.dir}" />
 			<param name="simple.server.start.executable" value="standalone${file.suffix.bat}" />
 			<param name="simple.server.start.executable.arg.line" value="" />
 			<param name="simple.server.stop.executable" value="jboss-cli${file.suffix.bat}" />

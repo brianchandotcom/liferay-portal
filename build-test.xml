@@ -2524,13 +2524,6 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 		<antcall target="prepare-selenium" />
 
 		<if>
-			<equals arg1="${app.server.type}-${app.server.jboss.eap.version}" arg2="jboss-eap-6.0" />
-			<then>
-				<echo file="${app.server.jboss.eap.dir}/standalone/deployments/ROOT.war.deployed"></echo>
-			</then>
-		</if>
-
-		<if>
 			<equals arg1="${test.browser}" arg2="googlechrome" />
 			<then>
 				<antcall target="start-chrome-driver" />
@@ -2551,6 +2544,13 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 			<exec dir="${simple.server.bin.dir}" executable="${simple.server.start.executable}" resolveexecutable="true">
 				<arg line="${simple.server.start.executable.arg.line}" />
 			</exec>
+
+			<if>
+				<equals arg1="${simple.server.type}" arg2="jboss" />
+				<then>
+					<echo file="${simple.server.deploy.dir}/ROOT.war.dodeploy"></echo>
+				</then>
+			</if>
 
 			<sequential>
 				<waitfor>

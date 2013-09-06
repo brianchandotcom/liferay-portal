@@ -57,7 +57,7 @@ public class LoggerHandler implements InvocationHandler {
 		catch (InvocationTargetException ite) {
 			Throwable throwable = ite.getTargetException();
 
-			_logger.logError(method, arguments, throwable.getMessage());
+			_logger.logError(method, arguments, throwable);
 
 			throw throwable;
 		}

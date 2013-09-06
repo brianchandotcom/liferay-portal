@@ -51,9 +51,9 @@ public class Logger {
 		window.setPosition(new Point(1000, 50));
 		window.setSize(new Dimension(650, 850));
 
-		JavascriptExecutor javascriptExecutor = (JavascriptExecutor)_webDriver;
+		_javascriptExecutor = (JavascriptExecutor)_webDriver;
 
-		javascriptExecutor.executeScript("window.name = 'Log Window';");
+		_javascriptExecutor.executeScript("window.name = 'Log Window';");
 	}
 
 	public void logCommand(Method method, Object[] arguments) {
@@ -81,10 +81,31 @@ public class Logger {
 		log(sb.toString());
 	}
 
-	public void logError(Method method, Object[] arguments, String message) {
+	public void logError(
+		Method method, Object[] arguments, Throwable throwable) {
+
 		send("", "fail");
 
+		_errorCount++;
+
+		String thowableMessage = throwable.getMessage();
+
 		StringBundler sb = new StringBundler();
+
+		sb.append("errorCount = window.document.getElementById('errorCount');");
+		sb.append("errorCount.innerHTML = '");
+		sb.append(_errorCount);
+		sb.append("';");
+		sb.append("errorList = window.document.getElementById('errorList');");
+		sb.append("var newLine = window.document.createElement('div');");
+		sb.append("newLine.innerHTML = '");
+		sb.append(generateStackTrace(throwable));
+		sb.append("';");
+		sb.append("errorList.appendChild(newLine);");
+
+		_javascriptExecutor.executeScript(sb.toString());
+
+		sb = new StringBundler();
 
 		sb.append("<font color=\"red\">");
 		sb.append("Command failure <b>");
@@ -107,7 +128,7 @@ public class Logger {
 		}
 
 		sb.append(": ");
-		sb.append(message);
+		sb.append(thowableMessage);
 
 		log(sb.toString());
 
@@ -133,7 +154,7 @@ public class Logger {
 		}
 
 		sb.append(": ");
-		sb.append(message);
+		sb.append(thowableMessage);
 
 		BaseTestCase.fail(sb.toString());
 	}
@@ -155,36 +176,23 @@ public class Logger {
 			return;
 		}
 
-		StringBundler sb = new StringBundler();
+		String xpath = generateXpath(_xpathIdStack);
 
-		sb.append("/");
-
-		for (String xpathId : _xpathIdStack) {
-			sb.append("/ul/li[@id='");
-			sb.append(xpathId);
-			sb.append("']");
-		}
-
-		sb.append("/div");
-
-		List<WebElement> webElements = _webDriver.findElements(
-			By.xpath(sb.toString()));
+		List<WebElement> webElements = _webDriver.findElements(By.xpath(xpath));
 
 		if (status.equals("pass")) {
 			_xpathIdStack.pop();
 		}
 
-		sb = new StringBundler();
+		StringBundler sb = new StringBundler();
 
 		sb.append("var element = arguments[0];");
 		sb.append("element.className = \"");
 		sb.append(status);
 		sb.append("\";");
 
-		JavascriptExecutor javascriptExecutor = (JavascriptExecutor)_webDriver;
-
 		for (WebElement webElement : webElements) {
-			javascriptExecutor.executeScript(sb.toString(), webElement);
+			_javascriptExecutor.executeScript(sb.toString(), webElement);
 		}
 	}
 
@@ -219,10 +227,7 @@ public class Logger {
 			_liferaySelenium.getPrimaryTestSuiteName();
 
 		if (primaryTestSuiteName != null) {
-			JavascriptExecutor javascriptExecutor =
-				(JavascriptExecutor)_webDriver;
-
-			String content = (String)javascriptExecutor.executeScript(
+			String content = (String)_javascriptExecutor.executeScript(
 				"return window.document.getElementsByTagName('html')[0]." +
 					"outerHTML;");
 
@@ -243,9 +248,133 @@ public class Logger {
 		_webDriver.quit();
 	}
 
-	protected void log(String message) {
-		JavascriptExecutor javascriptExecutor = (JavascriptExecutor)_webDriver;
+	protected String generateStackTrace(Throwable throwable) {
+		Stack<String> ids = (Stack)_xpathIdStack.clone();
 
+		String currentCommand = null;
+		String currentLine = null;
+		String parentCommand = null;
+		String parentLine = null;
+		String testCaseCommand = null;
+
+		StringBundler sb = new StringBundler();
+
+		sb.append("<p>");
+
+		while (ids.size() > 1) {
+			String xpath = generateXpath(ids);
+
+			String command = getLogElementText(
+				xpath + "/div/span[@class='quote'][1]");
+			String line = getLogElementText(
+				xpath + "/div/div[@class='line-number']");
+
+			command = StringUtil.replace(command, "\"", "");
+
+			if ((parentCommand == null) || (parentLine == null)) {
+				parentCommand = command;
+				parentLine = line;
+			}
+			else {
+				currentCommand = parentCommand;
+				currentLine = parentLine;
+
+				parentCommand = command;
+				parentLine = line;
+
+				String parentFile = "";
+
+				if (ids.size() > 2) {
+					int x = parentCommand.indexOf("#");
+
+					parentFile = parentCommand.substring(0, x) + ".macro";
+				}
+				else {
+					ids.pop();
+
+					String testCaseXpath = generateXpath(ids);
+
+					testCaseCommand = getLogElementText(
+						testCaseXpath + "/div/h3");
+
+					int x = testCaseCommand.lastIndexOf("#");
+
+					parentFile = testCaseCommand.substring(0, x) + ".testcase";
+				}
+
+				sb.append("Failed Line: <b>");
+				sb.append(currentCommand);
+				sb.append("</b> (");
+				sb.append(parentFile);
+				sb.append(":");
+				sb.append(currentLine);
+				sb.append(")<br />");
+			}
+
+			ids.pop();
+		}
+
+		sb.append("in test case command <b>");
+		sb.append(testCaseCommand.trim());
+		sb.append("</b><br />");
+
+		sb.append("<textarea cols='85' rows='7' wrap='off'>");
+		sb.append(throwable.getMessage());
+
+		StackTraceElement[] stackTraceElements = throwable.getStackTrace();
+
+		for (StackTraceElement stackTraceElement : stackTraceElements) {
+			String className = stackTraceElement.getClassName();
+
+			if (className.startsWith("com.liferay")) {
+				sb.append("\\n\\t");
+				sb.append(stackTraceElement.toString());
+			}
+		}
+
+		sb.append("</textarea>");
+
+		sb.append("</p>");
+
+		String stackTrace = sb.toString();
+
+		return stackTrace.replace("'", "\\'");
+	}
+
+	protected String generateXpath(Stack<String> ids) {
+		StringBundler sb = new StringBundler();
+
+		sb.append("/");
+
+		for (String id : ids) {
+			sb.append("/ul/li[@id='");
+			sb.append(id);
+			sb.append("']");
+		}
+
+		sb.append("/div");
+
+		return sb.toString();
+	}
+
+	protected String getLogElementText(String xpath) {
+		try {
+			WebElement webElement = _webDriver.findElement(By.xpath(xpath));
+
+			StringBundler sb = new StringBundler();
+
+			sb.append("var element = arguments[0];");
+			sb.append("return element.innerHTML;");
+
+			return (String)_javascriptExecutor.executeScript(
+				sb.toString(), webElement);
+		}
+		catch (Exception e) {
+			return null;
+		}
+	}
+
+	protected void log(String message) {
 		StringBundler sb = new StringBundler();
 
 		String formattedMessage = StringEscapeUtils.escapeJava(message);
@@ -261,9 +390,11 @@ public class Logger {
 		sb.append("logger.appendChild(newLine);");
 		sb.append("logger.scrollTop = logger.scrollHeight;");
 
-		javascriptExecutor.executeScript(sb.toString());
+		_javascriptExecutor.executeScript(sb.toString());
 	}
 
+	private int _errorCount = 0;
+	private JavascriptExecutor _javascriptExecutor;
 	private LiferaySelenium _liferaySelenium;
 	private boolean _loggerStarted;
 	private WebDriver _webDriver = new FirefoxDriver();

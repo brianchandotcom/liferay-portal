@@ -84,4 +84,14 @@ if (Validator.isNotNull(inlineLabel)) {
 String baseTypeCss = TextFormatter.format(baseType.toLowerCase(), TextFormatter.K);
 String fieldCss = AUIUtil.buildCss(AUIUtil.FIELD_PREFIX, disabled, first, last, cssClass);
 String labelTag = AUIUtil.buildLabel(baseTypeCss, inlineField, showForLabel, forLabel);
+
+if (request.getAttribute("aui:input:max") == null) {
+	max = null;
+	_updateOptions(_options, "max", max);
+}
+
+if (request.getAttribute("aui:input:min") == null) {
+	min = null;
+	_updateOptions(_options, "min", min);
+}
 %>

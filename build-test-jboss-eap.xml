@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+
+<project name="portal-test-jboss-eap" basedir="." default="test" xmlns:antelope="antlib:ise.antelope.tasks">
+	<import file="build-test.xml" />
+
+	<target name="run-jboss-eap">
+		<antcall target="clean-up-logs" />
+
+		<record action="start" name="log" />
+
+		<antcall target="run-simple-server">
+			<param name="simple.server.type" value="jboss" />
+			<param name="simple.server.dir" value="${app.server.jboss.dir}" />
+			<param name="simple.server.bin.dir" value="${app.server.jboss.bin.dir}" />
+			<param name="simple.server.deploy.dir" value="${app.server.jboss.deploy.dir}" />
+			<param name="simple.server.lib.global.dir" value="${app.server.jboss.lib.global.dir}" />
+			<param name="simple.server.portal.dir" value="${app.server.jboss.portal.dir}" />
+			<param name="simple.server.start.executable" value="standalone${file.suffix.bat}" />
+			<param name="simple.server.start.executable.arg.line" value="" />
+			<param name="simple.server.stop.executable" value="jboss-cli${file.suffix.bat}" />
+			<param name="simple.server.stop.executable.arg.line" value="--connect command=:shutdown" />
+		</antcall>
+
+		<record action="stop" name="log" />
+
+		<antcall target="evaluate-logs" />
+	</target>
+
+	<target name="run-selenium-jboss-eap">
+		<if>
+			<not>
+				<isset property="build.app.server" />
+			</not>
+			<then>
+				<ant antfile="build-dist.xml" target="build-dist-jboss-eap" />
+			</then>
+		</if>
+
+		<antcall target="revert-test-properties" />
+
+		<antcall target="prepare-virtual-host-name-properties" />
+
+		<antcall target="start-selenium" />
+
+		<antcall target="run-jboss-eap">
+			<param name="test.class" value="${test.name}" />
+		</antcall>
+
+		<antcall target="stop-selenium" />
+	</target>
+</project>

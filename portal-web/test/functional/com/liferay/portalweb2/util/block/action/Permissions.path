@@ -24,6 +24,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PERMISSIONS_TITLE</td>
+	<td>//h3[contains(.,'Permissions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>HEADER_TITLE</td>
+	<td>//h3[@class='header-title']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SUCCESS_MESSAGE</td>
 	<td>//div[@class='alert alert-success']</td>
 	<td></td>

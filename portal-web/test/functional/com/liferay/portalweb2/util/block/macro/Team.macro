@@ -1,7 +1,7 @@
 <definition>
 	<command name="addCP">
 		<var name="key_teamName" value="${teamName}" />
-		
+
 		<execute action="CPSiteteams#assertClick" locator-key1="ADD_TEAM_BUTTON" value1="Add Team" />
 
 		<execute action="CPSiteteamsAddteam#type" locator-key1="NAME_FIELD" value1="${teamName}" />
@@ -29,8 +29,22 @@
 		<execute action="CPSiteteamsAssignmembers#assertTextEquals" locator-key1="USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 		<execute action="CPSiteteamsAssignmembers#check" locator-key1="USER_TABLE_CHECKBOX" />
 		<execute action="CPSiteteamsAssignmembers#assertClick" locator-key1="UPDATE_ASSOCIATIONS_BUTTON" value1="Update Associations" />
-		
+
 		<execute action="CPSiteteamsAssignmembers#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute action="CPSiteteamsAssignmembers#assertChecked" locator-key1="USER_TABLE_CHECKBOX" />
+	</command>
+
+	<command name="definePermissionPG">
+		<execute action="Permissions#check" locator1="//tr[contains(.,'${teamName}')]/td/input[contains(@id,'${permissionDefinitionKey}')]" />
+		<execute action="Permissions#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="Permissions#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="Permissions#assertChecked" locator1="//tr[contains(.,'${teamName}')]/td/input[contains(@id,'${permissionDefinitionKey}')]" />
+	</command>
+
+	<command name="removePermissionPG">
+		<execute action="Permissions#uncheck" locator1="//tr[contains(.,'${teamName}')]/td/input[contains(@id,'${permissionDefinitionKey}')]" />
+		<execute action="Permissions#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="Permissions#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="Permissions#assertNotChecked" locator1="//tr[contains(.,'${teamName}')]/td/input[contains(@id,'${permissionDefinitionKey}')]" />
 	</command>
 </definition>

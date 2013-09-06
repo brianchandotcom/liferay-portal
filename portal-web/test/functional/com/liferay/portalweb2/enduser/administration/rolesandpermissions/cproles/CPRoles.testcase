@@ -150,7 +150,6 @@
 		</execute>
 
 		<execute macro="PermissionsInline#gotoBlogs">
-			<var name="entryContent" value="${entryContent}" />
 			<var name="pageName" value="${pageName}" />
 			<var name="pageTypeSite" value="${pageTypeSite}" />
 		</execute>
@@ -181,7 +180,6 @@
 		</execute>
 
 		<execute macro="PermissionsInline#gotoBlogs">
-			<var name="entryContent" value="${entryContent}" />
 			<var name="pageName" value="${pageName}" />
 			<var name="pageTypeSite" value="${pageTypeSite}" />
 		</execute>
@@ -342,7 +340,6 @@
 		</execute>
 
 		<execute macro="PermissionsInline#gotoBlogs">
-			<var name="entryContent" value="${entryContent}" />
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
@@ -372,7 +369,6 @@
 		</execute>
 
 		<execute macro="PermissionsInline#gotoBlogs">
-			<var name="entryContent" value="${entryContent}" />
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
@@ -388,6 +384,108 @@
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BlogsEntry#addNoPermissionPG" />
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="test@liferay.com" />
+			<var name="userLoginFullName" value="Test Test" />
+		</execute>
+	</command>
+
+	<command name="AddBlogsEntrySiteTeamRoleInline">
+		<var name="entryContent" value="Blogs Entry Content" />
+		<var name="entryTitle" value="Blogs Entry Title" />
+		<var name="pageName" value="Blogs Page" />
+		<var name="pageTypeSite" value="Site" />
+		<var name="permissionDefinitionKey" value="_ACTION_ADD_ENTRY" />
+		<var name="portletName" value="Blogs" />
+		<var name="siteName" value="Site Name" />
+		<var name="sitePageType" value="Public" />
+		<var name="teamDescription" value="Site Team Description" />
+		<var name="teamName" value="Site Team Name" />
+		<var name="userEmailAddress" value="userea@liferay.com" />
+		<var name="userFirstName" value="userfn" />
+		<var name="userLastName" value="userln" />
+		<var name="userScreenName" value="usersn" />
+
+		<execute macro="Permissions#setUpSiteTeamRoleLoginUserPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="portletName" value="${portletName}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="sitePageName" value="${pageName}" />
+			<var name="sitePageType" value="${sitePageType}" />
+			<var name="teamDescription" value="${teamDescription}" />
+			<var name="teamName" value="${teamName}" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="pageType" value="Site" />
+		</execute>
+
+		<execute macro="BlogsEntry#addNoPermissionPG" />
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="test@liferay.com" />
+			<var name="userLoginFullName" value="Test Test" />
+		</execute>
+
+		<execute macro="PermissionsInline#gotoBlogs">
+			<var name="pageName" value="${pageName}" />
+			<var name="pageTypeSite" value="${pageTypeSite}" />
+		</execute>
+
+		<execute macro="Team#definePermissionPG">
+			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
+			<var name="teamName" value="${teamName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="pageType" value="Site" />
+		</execute>
+
+		<execute macro="BlogsEntry#addPG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="test@liferay.com" />
+			<var name="userLoginFullName" value="Test Test" />
+		</execute>
+
+		<execute macro="PermissionsInline#gotoBlogs">
+			<var name="pageName" value="${pageName}" />
+			<var name="pageTypeSite" value="${pageTypeSite}" />
+		</execute>
+
+		<execute macro="Team#removePermissionPG">
+			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
+			<var name="teamName" value="${teamName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="pageType" value="Site" />
 		</execute>
 
 		<execute macro="BlogsEntry#addNoPermissionPG" />
@@ -527,7 +625,6 @@
 		</execute>
 
 		<execute macro="PermissionsInline#gotoBlogs">
-			<var name="entryContent" value="${entryContent}" />
 			<var name="pageName" value="${pageName}" />
 			<var name="pageTypeSite" value="${pageTypeSite}" />
 		</execute>
@@ -558,7 +655,6 @@
 		</execute>
 
 		<execute macro="PermissionsInline#gotoBlogs">
-			<var name="entryContent" value="${entryContent}" />
 			<var name="pageName" value="${pageName}" />
 			<var name="pageTypeSite" value="${pageTypeSite}" />
 		</execute>
@@ -652,6 +748,115 @@
 		</execute>
 	</command>
 
+	<command name="DeleteBlogsEntryOwnerRoleInline">
+		<var name="entryContent" value="Blogs Entry Content" />
+		<var name="entryTitle" value="Blogs Entry Title" />
+		<var name="pageName" value="Blogs Page" />
+		<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_DELETE" />
+		<var name="permissionDefinitionKeyAdd" value="SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRIES_ADD_ENTRY_CHECKBOX" />
+		<var name="permissionDefinitionValue" value="Add Entry" />
+		<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_BLOGS" />
+		<var name="permissionNavigationValue" value="Blogs" />
+		<var name="portletName" value="Blogs" />
+		<var name="roleName" value="Regrole Name" />
+		<var name="userEmailAddress" value="userea@liferay.com" />
+		<var name="userFirstName" value="userfn" />
+		<var name="userLastName" value="userln" />
+		<var name="userScreenName" value="usersn" />
+
+		<execute macro="Permissions#setUpRegRoleLoginUserPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="portletName" value="${portletName}" />
+			<var name="roleName" value="${roleName}" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userLoginEmailAddress" value="test@liferay.com" />
+			<var name="userLoginFullName" value="Test Test" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Permissions#definePermissionLoginUserCP">
+			<var name="permissionDefinitionKey" value="${permissionDefinitionKeyAdd}" />
+			<var name="permissionDefinitionValue" value="${permissionDefinitionValue}" />
+			<var name="permissionNavigationKey" value="${permissionNavigationKey}" />
+			<var name="permissionNavigationValue" value="${permissionNavigationValue}" />
+			<var name="roleName" value="${roleName}" />
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BlogsEntry#addPG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="test@liferay.com" />
+			<var name="userLoginFullName" value="Test Test" />
+		</execute>
+
+		<execute macro="PermissionsInline#gotoBlogsEntry">
+			<var name="entryTitle" value="${entryTitle}" />
+			<var name="pageName" value="${pageName}" />
+			<var name="pageTypeSite" value="${pageTypeSite}" />
+		</execute>
+
+		<execute macro="Role#removePermissionPG">
+			<var name="roleName" value="Owner" />
+			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BlogsEntry#moveToRecycleBinNoPermissionPG">
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="test@liferay.com" />
+			<var name="userLoginFullName" value="Test Test" />
+		</execute>
+
+		<execute macro="PermissionsInline#gotoBlogsEntry">
+			<var name="entryTitle" value="${entryTitle}" />
+			<var name="pageName" value="${pageName}" />
+			<var name="pageTypeSite" value="${pageTypeSite}" />
+		</execute>
+
+		<execute macro="Role#definePermissionPG">
+			<var name="roleName" value="Owner" />
+			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BlogsEntry#moveToRecycleBinPG">
+			<var name="assetType" value="Blogs Entry" />
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+	</command>
+
 	<command name="DeleteBlogsEntryOrgRole">
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
@@ -702,7 +907,9 @@
 			<var name="pageType" value="Organization" />
 		</execute>
 
-		<execute macro="BlogsEntry#moveToRecycleBinNoPermissionPG" />
+		<execute macro="BlogsEntry#moveToRecycleBinNoPermissionPG">
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
 
 		<execute macro="Permissions#definePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
@@ -749,7 +956,9 @@
 			<var name="pageType" value="Organization" />
 		</execute>
 
-		<execute macro="BlogsEntry#moveToRecycleBinNoPermissionPG" />
+		<execute macro="BlogsEntry#moveToRecycleBinNoPermissionPG">
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="test@liferay.com" />
@@ -804,7 +1013,9 @@
 			<var name="pageType" value="Organization" />
 		</execute>
 
-		<execute macro="BlogsEntry#moveToRecycleBinNoPermissionPG" />
+		<execute macro="BlogsEntry#moveToRecycleBinNoPermissionPG">
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="test@liferay.com" />
@@ -812,7 +1023,7 @@
 		</execute>
 
 		<execute macro="PermissionsInline#gotoBlogsEntry">
-			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
 			<var name="pageName" value="${pageName}" />
 			<var name="pageTypeSite" value="${pageTypeSite}" />
 		</execute>
@@ -853,7 +1064,7 @@
 		</execute>
 
 		<execute macro="PermissionsInline#gotoBlogsEntry">
-			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
 			<var name="pageName" value="${pageName}" />
 			<var name="pageTypeSite" value="${pageTypeSite}" />
 		</execute>
@@ -873,7 +1084,9 @@
 			<var name="pageType" value="Organization" />
 		</execute>
 
-		<execute macro="BlogsEntry#moveToRecycleBinNoPermissionPG" />
+		<execute macro="BlogsEntry#moveToRecycleBinNoPermissionPG">
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="test@liferay.com" />
@@ -905,7 +1118,9 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="BlogsEntry#moveToRecycleBinNoPermissionPG" />
+		<execute macro="BlogsEntry#moveToRecycleBinNoPermissionPG">
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
 	</command>
 
 	<command name="DeleteBlogsEntryRegRole">
@@ -948,7 +1163,9 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="BlogsEntry#moveToRecycleBinNoPermissionPG" />
+		<execute macro="BlogsEntry#moveToRecycleBinNoPermissionPG">
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
 
 		<execute macro="Permissions#definePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
@@ -993,7 +1210,9 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="BlogsEntry#moveToRecycleBinNoPermissionPG" />
+		<execute macro="BlogsEntry#moveToRecycleBinNoPermissionPG">
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="test@liferay.com" />
@@ -1038,7 +1257,9 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="BlogsEntry#moveToRecycleBinNoPermissionPG" />
+		<execute macro="BlogsEntry#moveToRecycleBinNoPermissionPG">
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="test@liferay.com" />
@@ -1046,7 +1267,7 @@
 		</execute>
 
 		<execute macro="PermissionsInline#gotoBlogsEntry">
-			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
 			<var name="pageName" value="${pageName}" />
 			<var name="pageTypeSite" value="${pageTypeSite}" />
 		</execute>
@@ -1081,7 +1302,7 @@
 		</execute>
 
 		<execute macro="PermissionsInline#gotoBlogsEntry">
-			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
 			<var name="pageName" value="${pageName}" />
 			<var name="pageTypeSite" value="${pageTypeSite}" />
 		</execute>
@@ -1100,7 +1321,9 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="BlogsEntry#moveToRecycleBinNoPermissionPG" />
+		<execute macro="BlogsEntry#moveToRecycleBinNoPermissionPG">
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="test@liferay.com" />
@@ -1157,7 +1380,9 @@
 			<var name="pageType" value="Site" />
 		</execute>
 
-		<execute macro="BlogsEntry#moveToRecycleBinNoPermissionPG" />
+		<execute macro="BlogsEntry#moveToRecycleBinNoPermissionPG">
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
 
 		<execute macro="Permissions#definePermissionLoginUserCP">
 			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
@@ -1204,7 +1429,9 @@
 			<var name="pageType" value="Site" />
 		</execute>
 
-		<execute macro="BlogsEntry#moveToRecycleBinNoPermissionPG" />
+		<execute macro="BlogsEntry#moveToRecycleBinNoPermissionPG">
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="test@liferay.com" />
@@ -1258,7 +1485,9 @@
 			<var name="pageType" value="Site" />
 		</execute>
 
-		<execute macro="BlogsEntry#moveToRecycleBinNoPermissionPG" />
+		<execute macro="BlogsEntry#moveToRecycleBinNoPermissionPG">
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="test@liferay.com" />
@@ -1266,7 +1495,7 @@
 		</execute>
 
 		<execute macro="PermissionsInline#gotoBlogsEntry">
-			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
 			<var name="pageName" value="${pageName}" />
 			<var name="pageTypeSite" value="${pageTypeSite}" />
 		</execute>
@@ -1302,7 +1531,7 @@
 		</execute>
 
 		<execute macro="PermissionsInline#gotoBlogsEntry">
-			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
 			<var name="pageName" value="${pageName}" />
 			<var name="pageTypeSite" value="${pageTypeSite}" />
 		</execute>
@@ -1322,11 +1551,247 @@
 			<var name="pageType" value="Site" />
 		</execute>
 
-		<execute macro="BlogsEntry#moveToRecycleBinNoPermissionPG" />
+		<execute macro="BlogsEntry#moveToRecycleBinNoPermissionPG">
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="test@liferay.com" />
 			<var name="userLoginFullName" value="Test Test" />
+		</execute>
+	</command>
+
+	<command name="DeleteBlogsEntrySiteTeamRoleInline">
+		<var name="entryContent" value="Blogs Entry Content" />
+		<var name="entryTitle" value="Blogs Entry Title" />
+		<var name="pageName" value="Blogs Page" />
+		<var name="pageTypeSite" value="Site" />
+		<var name="permissionDefinitionKey" value="_ACTION_DELETE" />
+		<var name="portletName" value="Blogs" />
+		<var name="siteName" value="Site Name" />
+		<var name="sitePageType" value="Public" />
+		<var name="teamDescription" value="Site Team Description" />
+		<var name="teamName" value="Site Team Name" />
+		<var name="userEmailAddress" value="userea@liferay.com" />
+		<var name="userFirstName" value="userfn" />
+		<var name="userLastName" value="userln" />
+		<var name="userScreenName" value="usersn" />
+
+		<execute macro="Permissions#setUpSiteTeamRoleLoginUserPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="portletName" value="${portletName}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="sitePageName" value="${pageName}" />
+			<var name="sitePageType" value="${sitePageType}" />
+			<var name="teamDescription" value="${teamDescription}" />
+			<var name="teamName" value="${teamName}" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userLoginEmailAddress" value="test@liferay.com" />
+			<var name="userLoginFullName" value="Test Test" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Permissions#addBlogsEntryLoginUserPG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+			<var name="pageName" value="${pageName}" />
+			<var name="pageTypeSite" value="${pageTypeSite}" />
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="pageType" value="Site" />
+		</execute>
+
+		<execute macro="BlogsEntry#moveToRecycleBinNoPermissionPG">
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="test@liferay.com" />
+			<var name="userLoginFullName" value="Test Test" />
+		</execute>
+
+		<execute macro="PermissionsInline#gotoBlogsEntry">
+			<var name="entryTitle" value="${entryTitle}" />
+			<var name="pageName" value="${pageName}" />
+			<var name="pageTypeSite" value="${pageTypeSite}" />
+		</execute>
+
+		<execute macro="Team#definePermissionPG">
+			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
+			<var name="teamName" value="${teamName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="pageType" value="Site" />
+		</execute>
+
+		<execute macro="BlogsEntry#moveToRecycleBinPG">
+			<var name="assetType" value="Blogs Entry" />
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="Permissions#addBlogsEntryLoginUserPG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+			<var name="pageName" value="${pageName}" />
+			<var name="pageTypeSite" value="${pageTypeSite}" />
+			<var name="userLoginEmailAddress" value="test@liferay.com" />
+			<var name="userLoginFullName" value="Test Test" />
+		</execute>
+
+		<execute macro="PermissionsInline#gotoBlogsEntry">
+			<var name="entryTitle" value="${entryTitle}" />
+			<var name="pageName" value="${pageName}" />
+			<var name="pageTypeSite" value="${pageTypeSite}" />
+		</execute>
+
+		<execute macro="Team#removePermissionPG">
+			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
+			<var name="teamName" value="${teamName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="pageType" value="Site" />
+		</execute>
+
+		<execute macro="BlogsEntry#moveToRecycleBinNoPermissionPG">
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="test@liferay.com" />
+			<var name="userLoginFullName" value="Test Test" />
+		</execute>
+	</command>
+
+	<command name="EditBlogsEntryOwnerRoleInline">
+		<var name="entryContent" value="Blogs Entry Content" />
+		<var name="entryContentEdit" value="Blogs Entry Content Edit" />
+		<var name="entryTitle" value="Blogs Entry Title" />
+		<var name="entryTitleEdit" value="Blogs Entry Title Edit" />
+		<var name="pageName" value="Blogs Page" />
+		<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_UPDATE" />
+		<var name="permissionDefinitionKeyAdd" value="SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRIES_ADD_ENTRY_CHECKBOX" />
+		<var name="permissionDefinitionValue" value="Add Entry" />
+		<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_BLOGS" />
+		<var name="permissionNavigationValue" value="Blogs" />
+		<var name="portletName" value="Blogs" />
+		<var name="roleName" value="Regrole Name" />
+		<var name="userEmailAddress" value="userea@liferay.com" />
+		<var name="userFirstName" value="userfn" />
+		<var name="userLastName" value="userln" />
+		<var name="userScreenName" value="usersn" />
+
+		<execute macro="Permissions#setUpRegRoleLoginUserPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="portletName" value="${portletName}" />
+			<var name="roleName" value="${roleName}" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userLoginEmailAddress" value="test@liferay.com" />
+			<var name="userLoginFullName" value="Test Test" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Permissions#definePermissionLoginUserCP">
+			<var name="permissionDefinitionKey" value="${permissionDefinitionKeyAdd}" />
+			<var name="permissionDefinitionValue" value="${permissionDefinitionValue}" />
+			<var name="permissionNavigationKey" value="${permissionNavigationKey}" />
+			<var name="permissionNavigationValue" value="${permissionNavigationValue}" />
+			<var name="roleName" value="${roleName}" />
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BlogsEntry#addPG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="test@liferay.com" />
+			<var name="userLoginFullName" value="Test Test" />
+		</execute>
+
+		<execute macro="PermissionsInline#gotoBlogsEntry">
+			<var name="entryTitle" value="${entryTitle}" />
+			<var name="pageName" value="${pageName}" />
+			<var name="pageTypeSite" value="${pageTypeSite}" />
+		</execute>
+
+		<execute macro="Role#removePermissionPG">
+			<var name="roleName" value="Owner" />
+			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BlogsEntry#editNoPermissionPG">
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="test@liferay.com" />
+			<var name="userLoginFullName" value="Test Test" />
+		</execute>
+
+		<execute macro="PermissionsInline#gotoBlogsEntry">
+			<var name="entryTitle" value="${entryTitle}" />
+			<var name="pageName" value="${pageName}" />
+			<var name="pageTypeSite" value="${pageTypeSite}" />
+		</execute>
+
+		<execute macro="Role#definePermissionPG">
+			<var name="roleName" value="Owner" />
+			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BlogsEntry#editPG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryContentEdit" value="${entryContentEdit}" />
+			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryTitleEdit" value="${entryTitleEdit}" />
 		</execute>
 	</command>
 
@@ -1433,7 +1898,6 @@
 		</execute>
 
 		<execute macro="PermissionsInline#gotoBlogs">
-			<var name="entryContent" value="${entryContent}" />
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
@@ -1459,7 +1923,6 @@
 		</execute>
 
 		<execute macro="PermissionsInline#gotoBlogs">
-			<var name="entryContent" value="${entryContent}" />
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
@@ -1607,7 +2070,6 @@
 		</execute>
 
 		<execute macro="PermissionsInline#gotoBlogs">
-			<var name="entryContent" value="${entryContent}" />
 			<var name="pageName" value="${pageName}" />
 			<var name="pageTypeSite" value="${pageTypeSite}" />
 		</execute>
@@ -1635,7 +2097,6 @@
 		</execute>
 
 		<execute macro="PermissionsInline#gotoBlogs">
-			<var name="entryContent" value="${entryContent}" />
 			<var name="pageName" value="${pageName}" />
 			<var name="pageTypeSite" value="${pageTypeSite}" />
 		</execute>
@@ -1660,6 +2121,113 @@
 		<execute macro="User#logoutAndLoginPG">
 			<var name="userLoginEmailAddress" value="test@liferay.com" />
 			<var name="userLoginFullName" value="Test Test" />
+		</execute>
+	</command>
+
+	<command name="ViewBlogsEntryPermissionsOwnerRoleInline">
+		<var name="entryContent" value="Blogs Entry Content" />
+		<var name="entryTitle" value="Blogs Entry Title" />
+		<var name="pageName" value="Blogs Page" />
+		<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_PERMISSIONS" />
+		<var name="permissionDefinitionKeyAdd" value="SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRIES_ADD_ENTRY_CHECKBOX" />
+		<var name="permissionDefinitionValue" value="Add Entry" />
+		<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_BLOGS" />
+		<var name="permissionNavigationValue" value="Blogs" />
+		<var name="portletName" value="Blogs" />
+		<var name="roleName" value="Regrole Name" />
+		<var name="userEmailAddress" value="userea@liferay.com" />
+		<var name="userFirstName" value="userfn" />
+		<var name="userLastName" value="userln" />
+		<var name="userScreenName" value="usersn" />
+
+		<execute macro="Permissions#setUpRegRoleLoginUserPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="portletName" value="${portletName}" />
+			<var name="roleName" value="${roleName}" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userLoginEmailAddress" value="test@liferay.com" />
+			<var name="userLoginFullName" value="Test Test" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Permissions#definePermissionLoginUserCP">
+			<var name="permissionDefinitionKey" value="${permissionDefinitionKeyAdd}" />
+			<var name="permissionDefinitionValue" value="${permissionDefinitionValue}" />
+			<var name="permissionNavigationKey" value="${permissionNavigationKey}" />
+			<var name="permissionNavigationValue" value="${permissionNavigationValue}" />
+			<var name="roleName" value="${roleName}" />
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BlogsEntry#addPG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="test@liferay.com" />
+			<var name="userLoginFullName" value="Test Test" />
+		</execute>
+
+		<execute macro="PermissionsInline#gotoBlogsEntry">
+			<var name="entryTitle" value="${entryTitle}" />
+			<var name="pageName" value="${pageName}" />
+			<var name="pageTypeSite" value="${pageTypeSite}" />
+		</execute>
+
+		<execute macro="Role#removePermissionPG">
+			<var name="roleName" value="Owner" />
+			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewPermissionsNoPermissionPG">
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="test@liferay.com" />
+			<var name="userLoginFullName" value="Test Test" />
+		</execute>
+
+		<execute macro="PermissionsInline#gotoBlogsEntry">
+			<var name="entryTitle" value="${entryTitle}" />
+			<var name="pageName" value="${pageName}" />
+			<var name="pageTypeSite" value="${pageTypeSite}" />
+		</execute>
+
+		<execute macro="Role#definePermissionPG">
+			<var name="roleName" value="Owner" />
+			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewPermissionsPG">
+			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 	</command>
 
@@ -1788,7 +2356,6 @@
 		</execute>
 
 		<execute macro="PermissionsInline#gotoBlogs">
-			<var name="entryContent" value="${entryContent}" />
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
@@ -1814,7 +2381,6 @@
 		</execute>
 
 		<execute macro="PermissionsInline#gotoBlogs">
-			<var name="entryContent" value="${entryContent}" />
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
@@ -1962,7 +2528,6 @@
 		</execute>
 
 		<execute macro="PermissionsInline#gotoBlogs">
-			<var name="entryContent" value="${entryContent}" />
 			<var name="pageName" value="${pageName}" />
 			<var name="pageTypeSite" value="${pageTypeSite}" />
 		</execute>
@@ -1990,7 +2555,6 @@
 		</execute>
 
 		<execute macro="PermissionsInline#gotoBlogs">
-			<var name="entryContent" value="${entryContent}" />
 			<var name="pageName" value="${pageName}" />
 			<var name="pageTypeSite" value="${pageTypeSite}" />
 		</execute>

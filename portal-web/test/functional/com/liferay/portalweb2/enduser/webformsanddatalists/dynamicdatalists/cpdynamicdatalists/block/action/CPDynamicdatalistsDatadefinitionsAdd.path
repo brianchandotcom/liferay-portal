@@ -72,6 +72,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FIELDS_NAME</td>
+	<td>//div[@class='tab-content']/div/ul/li[@title='${key_fieldName}']/div</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FIELDS_BOOLEAN</td>
 	<td>//div[@class='tab-content']/div/ul/li[@title='Boolean']/div</td>
 	<td></td>

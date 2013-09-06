@@ -1,0 +1,13 @@
+<definition>
+	<execute test-case-command="CPDynamicdatalists#AddDataDefinitionBooleanCP" />
+	<execute test-case-command="CPDynamicdatalists#AddDataDefinitionDateCP" />
+	<execute test-case-command="CPDynamicdatalists#AddDataDefinitionDecimalCP" />
+	<execute test-case-command="CPDynamicdatalists#AddDataDefinitionDocumentsAndMediaCP" />
+	<execute test-case-command="CPDynamicdatalists#AddDataDefinitionHtmlCP" />
+	<execute test-case-command="CPDynamicdatalists#AddDataDefinitionIntegerCP" />
+	<execute test-case-command="CPDynamicdatalists#AddDataDefinitionLinkToPageCP" />
+	<execute test-case-command="CPDynamicdatalists#AddDataDefinitionNumberCP" />
+	<execute test-case-command="CPDynamicdatalists#AddDataDefinitionRadioCP" />
+	<execute test-case-command="CPDynamicdatalists#AddDataDefinitionSelectCP" />
+	<execute test-case-command="CPDynamicdatalists#AddDataDefinitionTextBoxCP" />
+</definition>

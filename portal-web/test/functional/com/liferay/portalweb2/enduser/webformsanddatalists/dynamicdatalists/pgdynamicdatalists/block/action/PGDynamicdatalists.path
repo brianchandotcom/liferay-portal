@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>ADD_RECORD_BUTTON</td>
-	<td>//button[contains(.,'Add')]</td>
+	<td>//section[contains(@id,'portlet_169_')]//span[contains(.,'Add')]</td>
 	<td></td>
 </tr>
 <tr>

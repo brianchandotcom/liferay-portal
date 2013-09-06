@@ -23,11 +23,11 @@ AUI.add(
 
 		var STR_PREVIEW_PANEL = 'previewPanel';
 
-		var TPL_ADD_CONTENT = '<div class="lfr-add-panel lfr-admin-sidebar" id="{0}" />';
+		var TPL_ADD_CONTENT = '<div class="lfr-add-panel lfr-admin-panel" id="{0}" />';
 
-		var TPL_EDIT_LAYOUT_PANEL = '<div class="lfr-edit-layout-panel lfr-admin-sidebar" id="{0}" />';
+		var TPL_EDIT_LAYOUT_PANEL = '<div class="lfr-admin-panel lfr-edit-layout-panel" id="{0}" />';
 
-		var TPL_PREVIEW_PANEL = '<div class="lfr-device-preview-panel lfr-admin-sidebar" id="{0}" />';
+		var TPL_PREVIEW_PANEL = '<div class="lfr-admin-panel lfr-device-preview-panel" id="{0}" />';
 
 		var TPL_LOADING = '<div class="loading-animation" />';
 

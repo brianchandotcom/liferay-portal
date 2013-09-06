@@ -192,93 +192,91 @@
 	background-color: rgba(255, 255, 255, 0.95);
 }
 
-.lfr-device-preview-panel {
-	.lfr-device-item {
-		&:hover {
-			background-color: #E5F2FC;
-			background-position: 10px center;
-			background-repeat: no-repeat;
-			color: #006076;
+.lfr-device-preview-panel .lfr-device-item {
+	&:hover {
+		background-color: #E5F2FC;
+		background-position: 10px center;
+		background-repeat: no-repeat;
+		color: #006076;
+	}
+
+	&.selected {
+		background-color: #3EA9DB;
+		color: #FFFFFF;
+	}
+
+	.device-info {
+		background-position: 0 center;
+		background-repeat: no-repeat;
+	}
+
+	&.autosize {
+		.device-info {
+			background-image: url(@theme_image_path@/device_preview/full_size_off.png);
+		}
+
+		&.selected .device-info {
+			background-image: url(@theme_image_path@/device_preview/full_size_active.png);
+		}
+	}
+
+	&.desktop {
+		.device-info {
+			background-image: url(@theme_image_path@/device_preview/desktop_off.png);
+		}
+
+		&.selected .device-info {
+			background-image: url(@theme_image_path@/device_preview/desktop_active.png);
+		}
+	}
+
+	&.smartphone {
+		.device-info {
+			background-image: url(@theme_image_path@/device_preview/mobile_off.png);
 		}
 
 		&.selected {
-			background-color: #3EA9DB;
-			color: #FFFFFF;
-		}
+			&:hover {
+				background-image: url(@theme_image_path@/device_preview/mobile_horizontal_opacity.png);
+			}
 
+			.device-info {
+				background-image: url(@theme_image_path@/device_preview/mobile_vertical_with_arrow.png);
+			}
+
+			&.rotated {
+				.device-info {
+					background-image: url(@theme_image_path@/device_preview/mobile_horizontal_with_arrow.png);
+				}
+
+				&:hover {
+					background-image: url(@theme_image_path@/device_preview/mobile_vertical_opacity.png);
+				}
+			}
+		}
+	}
+
+	&.tablet {
 		.device-info {
-			background-position: 0 center;
-			background-repeat: no-repeat;
+			background-image: url(@theme_image_path@/device_preview/tablet_off.png);
 		}
 
-		&.autosize {
+		&.selected {
+			&:hover {
+				background-image: url(@theme_image_path@/device_preview/tablet_horizontal_opacity.png);
+			}
+
 			.device-info {
-				background-image: url(@theme_image_path@/device_preview/full_size_off.png);
+				background-image: url(@theme_image_path@/device_preview/tablet_vertical_with_arrow.png);
 			}
 
-			&.selected .device-info {
-				background-image: url(@theme_image_path@/device_preview/full_size_active.png);
-			}
-		}
-
-		&.desktop {
-			.device-info {
-				background-image: url(@theme_image_path@/device_preview/desktop_off.png);
-			}
-
-			&.selected .device-info {
-				background-image: url(@theme_image_path@/device_preview/desktop_active.png);
-			}
-		}
-
-		&.smartphone {
-			.device-info {
-				background-image: url(@theme_image_path@/device_preview/mobile_off.png);
-			}
-
-			&.selected {
-				&:hover {
-					background-image: url(@theme_image_path@/device_preview/mobile_horizontal_opacity.png);
-				}
-
+			&.rotated {
 				.device-info {
-					background-image: url(@theme_image_path@/device_preview/mobile_vertical_with_arrow.png);
+					background-image: url(@theme_image_path@/device_preview/tablet_horizontal_with_arrow.png);
 				}
 
-				&.rotated {
-					.device-info {
-						background-image: url(@theme_image_path@/device_preview/mobile_horizontal_with_arrow.png);
-					}
-
-					&:hover {
-						background-image: url(@theme_image_path@/device_preview/mobile_vertical_opacity.png);
-					}
-				}
-			}
-		}
-
-		&.tablet {
-			.device-info {
-				background-image: url(@theme_image_path@/device_preview/tablet_off.png);
-			}
-
-			&.selected {
 				&:hover {
-					background-image: url(@theme_image_path@/device_preview/tablet_horizontal_opacity.png);
-				}
-
-				.device-info {
-					background-image: url(@theme_image_path@/device_preview/tablet_vertical_with_arrow.png);
-				}
-
-				&.rotated {
-					.device-info {
-						background-image: url(@theme_image_path@/device_preview/tablet_horizontal_with_arrow.png);
-					}
-
-					&:hover {
-						background-image: url(@theme_image_path@/device_preview/tablet_vertical_opacity.png);
-					}
+					background-image: url(@theme_image_path@/device_preview/tablet_vertical_opacity.png);
 				}
 			}
 		}

@@ -52,10 +52,6 @@
 
 /* Skin */
 
-.lfr-edit-layout-panel {
-	.taglib-form-navigator {
-		.button-holder {
-			background-color: #FFF;
-		}
-	}
+.lfr-edit-layout-panel .taglib-form-navigator .button-holder {
+	background-color: #FFF;
 }

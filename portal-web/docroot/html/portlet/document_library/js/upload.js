@@ -277,9 +277,9 @@ AUI.add(
 					function(event) {
 						var dataTransfer = event._event.dataTransfer;
 
-						var validType = (AArray.indexOf(dataTransfer.types, 'Files') > -1) && (AArray.indexOf(dataTransfer.types, 'text/html') < 0);
+						var dataTransferTypes = dataTransfer.types;
 
-						if (validType) {
+						if ((AArray.indexOf(dataTransferTypes, 'Files') > -1) && (AArray.indexOf(dataTransferTypes, 'text/html') < 0)) {
 							var parentElement = event.target.ancestor(SELECTOR_ENTRY_DISPLAY_STYLE);
 
 							parentElement.toggleClass(CSS_ACTIVE_AREA, event.type == 'dragover');

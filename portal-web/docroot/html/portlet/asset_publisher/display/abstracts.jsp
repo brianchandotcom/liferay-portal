@@ -121,8 +121,4 @@ viewURL = _checkViewURL(assetEntry, viewInContext, viewURL, currentURL, themeDis
 			<%@ include file="/html/portlet/asset_publisher/asset_metadata.jspf" %>
 		</div>
 	</div>
-
-	<c:if test="<%= (assetEntryIndex + 1) == results.size() %>">
-		<div class="final-separator"><!-- --></div>
-	</c:if>
 </c:if>

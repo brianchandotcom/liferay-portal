@@ -102,6 +102,7 @@ public class BookmarksEntryLocalServiceImpl
 		entry.setCreateDate(serviceContext.getCreateDate(now));
 		entry.setModifiedDate(serviceContext.getModifiedDate(now));
 		entry.setFolderId(folderId);
+		entry.setTreePath(entry.buildTreePath());
 		entry.setName(name);
 		entry.setUrl(url);
 		entry.setDescription(description);
@@ -313,6 +314,7 @@ public class BookmarksEntryLocalServiceImpl
 		BookmarksEntry entry = getBookmarksEntry(entryId);
 
 		entry.setFolderId(parentFolderId);
+		entry.setTreePath(entry.buildTreePath());
 
 		bookmarksEntryPersistence.update(entry);
 
@@ -498,6 +500,7 @@ public class BookmarksEntryLocalServiceImpl
 
 		entry.setModifiedDate(serviceContext.getModifiedDate(null));
 		entry.setFolderId(folderId);
+		entry.setTreePath(entry.buildTreePath());
 		entry.setName(name);
 		entry.setUrl(url);
 		entry.setDescription(description);

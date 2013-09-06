@@ -79,6 +79,7 @@ public class BookmarksFolderLocalServiceImpl
 		folder.setCreateDate(serviceContext.getCreateDate(now));
 		folder.setModifiedDate(serviceContext.getModifiedDate(now));
 		folder.setParentFolderId(parentFolderId);
+		folder.setTreePath(folder.buildTreePath());
 		folder.setName(name);
 		folder.setDescription(description);
 		folder.setExpandoBridgeAttributes(serviceContext);
@@ -343,6 +344,7 @@ public class BookmarksFolderLocalServiceImpl
 			folderId);
 
 		folder.setParentFolderId(parentFolderId);
+		folder.setTreePath(folder.buildTreePath());
 
 		bookmarksFolderPersistence.update(folder);
 
@@ -505,6 +507,7 @@ public class BookmarksFolderLocalServiceImpl
 
 		folder.setModifiedDate(serviceContext.getModifiedDate(null));
 		folder.setParentFolderId(parentFolderId);
+		folder.setTreePath(folder.buildTreePath());
 		folder.setName(name);
 		folder.setDescription(description);
 		folder.setExpandoBridgeAttributes(serviceContext);

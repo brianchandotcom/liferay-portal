@@ -283,23 +283,19 @@ public class GetterUtil {
 			return defaultValue;
 		}
 
-		try {
-			value = value.trim().toLowerCase();
+		value = value.trim();
 
-			if (value.equals(BOOLEANS[0]) || value.equals(BOOLEANS[1]) ||
-				value.equals(BOOLEANS[2]) || value.equals(BOOLEANS[3]) ||
-				value.equals(BOOLEANS[4])) {
+		value = StringUtil.toLowerCase(value);
 
-				return true;
-			}
-			else {
-				return false;
-			}
+		if (value.equals(BOOLEANS[0]) || value.equals(BOOLEANS[1]) ||
+			value.equals(BOOLEANS[2]) || value.equals(BOOLEANS[3]) ||
+			value.equals(BOOLEANS[4])) {
+
+			return true;
 		}
-		catch (Exception e) {
+		else {
+			return false;
 		}
-
-		return defaultValue;
 	}
 
 	public static Date get(

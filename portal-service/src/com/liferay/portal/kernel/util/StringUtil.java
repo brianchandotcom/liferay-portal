@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 import java.util.StringTokenizer;
@@ -1401,14 +1402,14 @@ public class StringUtil {
 			return null;
 		}
 		else {
-			return s.toLowerCase();
+			return toLowerCase(s);
 		}
 	}
 
 	public static void lowerCase(String... array) {
 		if (array != null) {
 			for (int i = 0; i < array.length; i++) {
-				array[i] = array[i].toLowerCase();
+				array[i] = toLowerCase(array[i]);
 			}
 		}
 	}
@@ -3659,6 +3660,80 @@ public class StringUtil {
 		}
 	}
 
+	public static String toLowerCase(String s) {
+		return toLowerCase(s, null);
+	}
+
+	public static String toLowerCase(String s, Locale locale) {
+		StringBuilder sb = null;
+
+		for (int i = 0; i < s.length(); i++) {
+			char c = s.charAt(i);
+
+			if (c > 255) {
+
+				// Found non-ascii char, fallback to the slow unicode detection
+
+				if (locale == null) {
+					locale = Locale.getDefault();
+				}
+
+				return s.toLowerCase(locale);
+			}
+
+			if ((c >= 'A') && (c <= 'Z')) {
+				if (sb == null) {
+					sb = new StringBuilder(s);
+				}
+
+				sb.setCharAt(i, (char)(c + 32));
+			}
+		}
+
+		if (sb == null) {
+			return s;
+		}
+
+		return sb.toString();
+	}
+
+	public static String toUpperCase(String s) {
+		return toUpperCase(s, null);
+	}
+
+	public static String toUpperCase(String s, Locale locale) {
+		StringBuilder sb = null;
+
+		for (int i = 0; i < s.length(); i++) {
+			char c = s.charAt(i);
+
+			if (c > 255) {
+
+				// Found non-ascii char, fallback to the slow unicode detection
+
+				if (locale == null) {
+					locale = Locale.getDefault();
+				}
+
+				return s.toLowerCase(locale);
+			}
+
+			if ((c >= 'a') && (c <= 'z')) {
+				if (sb == null) {
+					sb = new StringBuilder(s);
+				}
+
+				sb.setCharAt(i, (char)(c - 32));
+			}
+		}
+
+		if (sb == null) {
+			return s;
+		}
+
+		return sb.toString();
+	}
+
 	/**
 	 * Trims all leading and trailing whitespace from the string.
 	 *
@@ -4080,8 +4155,8 @@ public class StringUtil {
 		boolean caseSensitive) {
 
 		if (!caseSensitive) {
-			s = s.toLowerCase();
-			wildcard = wildcard.toLowerCase();
+			s = toLowerCase(s);
+			wildcard = toLowerCase(wildcard);
 		}
 
 		// Update the wildcard, single whildcard character, and multiple

@@ -31,7 +31,7 @@ AUI.add(
 
 					var namespace = instance._namespace;
 
-					var cssClass = "btn-link";
+					var cssClass = 'btn-link';
 
 					instance._destroyToolbarContent();
 
@@ -148,9 +148,9 @@ AUI.add(
 
 					if (!graphDialog) {
 						graphDialog = Liferay.Util.Window.getWindow(
-						    {
+							{
 								title: Liferay.Language.get('history')
-						    }
+							}
 						);
 
 						graphDialog.plug(

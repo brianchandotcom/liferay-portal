@@ -46,18 +46,6 @@ $editLayoutPanelWidth: 460px;
 				}
 			}
 
-			.nav li.staging-toggle {
-				a, span {
-					@include border-radius(4px);
-
-					padding: 0 7px;
-				}
-
-				&.active span {
-					background-color: #008000;
-				}
-			}
-
 			.site-administration-menu li {
 				list-style: none;
 
@@ -97,16 +85,11 @@ $editLayoutPanelWidth: 460px;
 			}
 		}
 
-		.staging-toggle {
-			background-color: #0ECD27;
-			padding: 10px 8px;
-		}
-
 		.user-avatar img {
 			margin-top: -2px;
 			text-decoration: none;
 			vertical-align: middle;
-			width: 20px;
+			width: 27px;
 		}
 	}
 
@@ -148,14 +131,34 @@ $editLayoutPanelWidth: 460px;
 						}
 					}
 
-					li.dropdown {
-						&.active > .dropdown-toggle {
-							color: #FFF;
+					li {
+						&.dropdown {
+							&.active > .dropdown-toggle {
+								color: #FFF;
+							}
+
+							&.open > .dropdown-toggle {
+								background-color: #555;
+								color: #FFF;
+							}
 						}
 
-						&.open > .dropdown-toggle {
-							background-color: #555;
-							color: #FFF;
+						&.staging-toggle {
+							background-color: #0ECD27;
+
+							> a {
+								&, &:hover {
+									background-color: transparent;
+								}
+							}
+
+							span {
+								padding: 5px 10px;
+							}
+
+							&.active span {
+								background-color: #080;
+							}
 						}
 					}
 				}
@@ -259,6 +262,39 @@ $editLayoutPanelWidth: 460px;
 					display: block;
 					padding: 10px 15px;
 					line-height: 31px;
+				}
+			}
+		}
+
+		.staging-controls {
+			select {
+				width: 100%;
+			}
+
+			.staging-bar {
+				margin-right: 0;
+
+				.dropdown-menu {
+					font-size: 13px;
+					width: 100%;
+
+					.btn-link {
+						float: left;
+						font-size: 11px;
+						margin: 0 5px 0 0;
+						padding: 0;
+						text-decoration: underline;
+
+						@include text-shadow(none);
+
+						&:hover {
+							text-decoration: none;
+						}
+
+						&.history {
+							float: right;
+						}
+					}
 				}
 			}
 		}

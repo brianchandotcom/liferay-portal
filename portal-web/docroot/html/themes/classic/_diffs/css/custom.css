@@ -87,7 +87,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 							}
 						}
 
-						.site-variations {
+						&.site-variations .dropdown-menu {
 							background-color: #026ED2;
 						}
 					}
@@ -101,30 +101,11 @@ $dockbarOpenGradientStart: #0EA6F9;
 							background-color: #2FA4F5;
 						}
 					}
-
-					&.staging-toggle {
-						> a {
-							&:hover {
-								background-color: transparent;
-							}
-						}
-					}
-				}
-			}
-
-			.staging-bar .staging-nav-items li.active {
-				> span {
-					color: #FFF;
-					line-height: 31px;
-				}
-
-				&.staging-link > span {
-					padding: 6px 15px;
 				}
 			}
 		}
 
-		.staging-nav-items {
+		.staging-bar {
 			.site-variations {
 				color: #FFF;
 
@@ -136,18 +117,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 				.btn-link {
 					color: #FFF;
 					font-size: 12px;
-				}
-			}
-		}
-
-		.staging-toggle {
-			color: #FFF;
-			line-height: 31px;
-			padding: 6px 8px;
-
-			&.active {
-				a, span {
-					padding: 0 7px;
 				}
 			}
 		}
@@ -396,7 +365,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 	/* ---------- Staging Bar ---------- */
 
-	.navbar-inner .nav.staging-nav-items {
+	.navbar-inner .nav.staging-bar {
 		border-top-width: 0;
 		position: static;
 
@@ -419,16 +388,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 		li.dropdown {
 			position: static;
-
-			.dropdown-menu li {
-				.publish-link-container a:hover {
-					background-color: #C4D72C;
-				}
-
-				a:hover {
-					background-color: transparent;
-				}
-			}
 		}
 	}
 
@@ -562,13 +521,8 @@ $dockbarOpenGradientStart: #0EA6F9;
 		}
 	}
 
-	.staging-bar {
-		@include box-shadow(none);
-	}
-
-	.dockbar {
+	.dockbar-split .dockbar {
 		.navbar-inner {
-			@include background-image(linear-gradient($dockbarGradientStart 0%, $dockbarGradientStart 47%, $dockbarGradientEnd 100%));
 			@include box-shadow(none);
 			@include text-shadow(none);
 
@@ -583,13 +537,13 @@ $dockbarOpenGradientStart: #0EA6F9;
 						@include box-shadow(none);
 					}
 
-					&.staging-link > .dropdown-toggle {
+					> .staging-link.dropdown-toggle {
 						@include background-image(linear-gradient(#0279E1, #0264CC));
 					}
 				}
 			}
 
-			.nav-account-controls, .staging-nav-items {
+			.nav-account-controls, .staging-bar {
 				@include background-image(linear-gradient($dockbarGradientStart 0%, $dockbarGradientStart 47%, $dockbarGradientEnd 100%));
 			}
 		}

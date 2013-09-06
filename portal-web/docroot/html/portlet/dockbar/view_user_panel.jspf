@@ -15,7 +15,7 @@
 --%>
 
 <aui:nav collapsible="<%= true %>" cssClass="nav-account-controls" icon="user" id="navAccountControls">
-	<aui:nav-item cssClass="staging-bar">
+	<aui:nav-item cssClass="staging-controls">
 		<liferay-portlet:runtime portletName="<%= PortletKeys.STAGING_BAR %>" />
 	</aui:nav-item>
 

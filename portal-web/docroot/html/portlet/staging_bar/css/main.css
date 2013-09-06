@@ -14,6 +14,19 @@
 		margin: 20px 0 10px;
 	}
 
+	.layout-actions .taglib-workflow-status {
+		margin: 0;
+
+		.workflow-id, .workflow-version {
+			display: none;
+		}
+
+		.workflow-status {
+			color: inherit;
+			padding: 0;
+		}
+	}
+
 	.page-variation-label, .site-pages-variation-label {
 		font-weight: 300;
 	}
@@ -24,8 +37,12 @@
 
 	.publish-link-container {
 		clear: both;
-		margin-bottom: 15px;
+		padding: 15px 0 5px;
 		text-align: center;
+
+		.publish-link {
+			margin: 0;
+		}
 	}
 
 	.site-pages-variation-options {
@@ -50,51 +67,5 @@
 
 	.variations-content {
 		clear: both;
-	}
-}
-
-.staging-bar {
-	select {
-		width: 100%;
-	}
-
-	span.dropdown-toggle {
-		cursor: pointer;
-
-		@include user-select(none);
-	}
-
-	.dropdown-menu.site-variations {
-		font-size: 13px;
-		width: 100%;
-
-		.btn-link {
-			float: left;
-			font-size: 11px;
-			margin: 0 5px 0 0;
-			padding: 0;
-			text-decoration: underline;
-
-			@include text-shadow(none);
-
-			&:hover {
-				text-decoration: none;
-			}
-
-			&.history {
-				float: right;
-			}
-		}
-	}
-
-	.staging-nav-items {
-		li {
-			&.active {
-				> a, > span {
-					display: block;
-					padding: 10px 15px;
-				}
-			}
-		}
 	}
 }

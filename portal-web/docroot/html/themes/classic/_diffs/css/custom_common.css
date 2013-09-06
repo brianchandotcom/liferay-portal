@@ -137,8 +137,10 @@
 		margin-bottom: 30px;
 	}
 
-	.lfr-ddm-container .control-group {
-		margin-bottom: 15px;
+	.lfr-ddm-container, .portlet-staging-bar {
+		.control-group {
+			margin-bottom: 15px;
+		}
 	}
 
 	.input-append {
@@ -330,10 +332,6 @@
 				.dropdown-menu {
 					right: 0;
 					left: auto;
-				}
-
-				.user-avatar-image {
-					width: 27px;
 				}
 			}
 		}

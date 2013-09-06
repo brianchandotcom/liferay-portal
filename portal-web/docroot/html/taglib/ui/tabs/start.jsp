@@ -84,10 +84,10 @@ boolean refresh = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui
 String onClick = GetterUtil.getString((String)request.getAttribute("liferay-ui:tabs:onClick"));
 
 // Type
+//
+String tabsType = GetterUtil.getString((String)request.getAttribute("liferay-ui:tabs:type"));
 
 String cssClass = "nav-tabs";
-
-String tabsType = GetterUtil.getString((String)request.getAttribute("liferay-ui:tabs:type"));
 
 if (Validator.isNotNull(tabsType) && tabsType.equals("pills")) {
 	cssClass = "nav-" + tabsType;

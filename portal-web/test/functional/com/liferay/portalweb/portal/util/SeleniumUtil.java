@@ -104,6 +104,12 @@ public class SeleniumUtil extends TestPropsValues {
 				}
 			}
 			else if (BROWSER_TYPE.equals("*googlechrome")) {
+				String chromeDriverPath =
+					TestPropsValues.SELENIUM_EXECUTABLE_DIR +
+					"\\chromedriver.exe";
+
+				System.setProperty("webdriver.chrome.driver", chromeDriverPath);
+
 				if (SELENIUM_LOGGER_ENABLED) {
 					_selenium = _wrapWithLoggerHandler(
 						new ChromeWebDriverImpl(projectDir, PORTAL_URL));
@@ -114,6 +120,12 @@ public class SeleniumUtil extends TestPropsValues {
 			}
 			else if (BROWSER_TYPE.equals("*iehta") ||
 					 BROWSER_TYPE.equals("*iexplore")) {
+
+				String ieDriverPath =
+					TestPropsValues.SELENIUM_EXECUTABLE_DIR +
+					"\\IEDriverServer.exe";
+
+				System.setProperty("webdriver.ie.driver", ieDriverPath);
 
 				if (SELENIUM_LOGGER_ENABLED) {
 					_selenium = _wrapWithLoggerHandler(

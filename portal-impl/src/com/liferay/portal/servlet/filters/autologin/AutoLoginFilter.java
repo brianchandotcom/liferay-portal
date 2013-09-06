@@ -119,7 +119,7 @@ public class AutoLoginFilter extends BasePortalFilter {
 
 		if (PropsValues.PORTAL_JAAS_ENABLE) {
 			response.sendRedirect(
-				PortalUtil.getPathMain() + "/portal/touch_protected");
+				PortalUtil.getPathMain() + "/portal/protected");
 		}
 
 		return jUsername;

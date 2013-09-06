@@ -24,3 +24,11 @@
 		}
 	}
 }
+
+@include respond-to(phone) {
+	.aui{
+		.control-panel-home-actions {
+			display: none;
+		}
+	}
+}

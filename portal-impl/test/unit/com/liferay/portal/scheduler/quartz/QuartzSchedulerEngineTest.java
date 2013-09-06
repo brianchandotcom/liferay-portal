@@ -761,8 +761,11 @@ public class QuartzSchedulerEngineTest {
 
 			JobKey jobKey = new JobKey(jobName, groupName);
 
-			JobDetail jobDetail = JobBuilder.newJob(
-				MessageSenderJob.class).withIdentity(jobKey).build();
+			JobBuilder jobBuilder = JobBuilder.newJob(MessageSenderJob.class);
+
+			jobBuilder = jobBuilder.withIdentity(jobKey);
+
+			JobDetail jobDetail = jobBuilder.build();
 
 			JobDataMap jobDataMap = jobDetail.getJobDataMap();
 

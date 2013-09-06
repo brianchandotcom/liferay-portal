@@ -90,8 +90,9 @@ public class UpgradeProcessUtil {
 		UpgradeProcess upgradeProcess = null;
 
 		try {
-			upgradeProcess = (UpgradeProcess)classLoader.loadClass(
-				upgradeProcessClassName).newInstance();
+			Class<?> clazz = classLoader.loadClass(upgradeProcessClassName);
+
+			upgradeProcess = (UpgradeProcess)clazz.newInstance();
 		}
 		catch (Exception e) {
 			_log.error(e, e);

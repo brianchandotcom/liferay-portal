@@ -825,8 +825,10 @@ public class PortalLDAPUtil {
 			NamingEnumeration<? extends Attribute> enu = null;
 
 			try {
-				enu = ldapContext.getAttributes(
-					fullDN, auditAttributeIds).getAll();
+				Attributes auditAttributes = ldapContext.getAttributes(
+					fullDN, auditAttributeIds);
+
+				enu = auditAttributes.getAll();
 
 				while (enu.hasMoreElements()) {
 					attributes.put(enu.nextElement());

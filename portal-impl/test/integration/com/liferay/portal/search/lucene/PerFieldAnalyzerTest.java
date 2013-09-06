@@ -53,17 +53,23 @@ public class PerFieldAnalyzerTest extends PowerMockito {
 
 			when(
 				analyzer.getPositionIncrementGap(fieldName)
-			).thenReturn(1);
+			).thenReturn(
+				1
+			);
 
 			when(
 				analyzer.getOffsetGap(Mockito.any(Fieldable.class))
-			).thenReturn(1);
+			).thenReturn(
+				1
+			);
 
 			Fieldable fieldable = mock(Fieldable.class);
 
 			when(
 				fieldable.name()
-			).thenReturn(fieldName);
+			).thenReturn(
+				fieldName
+			);
 
 			_perFieldAnalyzer.addAnalyzer(fieldName, analyzer);
 

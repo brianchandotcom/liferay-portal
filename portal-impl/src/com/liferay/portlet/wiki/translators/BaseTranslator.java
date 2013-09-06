@@ -55,8 +55,10 @@ public abstract class BaseTranslator {
 	}
 
 	protected String protectText(String content, String markupRegex) {
-		Matcher matcher = Pattern.compile(
-			markupRegex, Pattern.MULTILINE | Pattern.DOTALL).matcher(content);
+		Pattern pattern = Pattern.compile(
+			markupRegex, Pattern.MULTILINE | Pattern.DOTALL);
+
+		Matcher matcher = pattern.matcher(content);
 
 		StringBuffer sb = new StringBuffer();
 
@@ -78,8 +80,9 @@ public abstract class BaseTranslator {
 	protected String runRegexp(
 		String content, String regexp, String replacement) {
 
-		Matcher matcher = Pattern.compile(
-			regexp, Pattern.MULTILINE).matcher(content);
+		Pattern pattern = Pattern.compile(regexp, Pattern.MULTILINE);
+
+		Matcher matcher = pattern.matcher(content);
 
 		StringBuffer sb = new StringBuffer();
 

@@ -34,8 +34,10 @@ public class LayoutCloneFactory {
 					ClassLoaderUtil.getPortalClassLoader();
 
 				try {
-					_layoutClone = (LayoutClone)classLoader.loadClass(
-						PropsValues.LAYOUT_CLONE_IMPL).newInstance();
+					Class<?> clazz = classLoader.loadClass(
+						PropsValues.LAYOUT_CLONE_IMPL);
+
+					_layoutClone = (LayoutClone)clazz.newInstance();
 				}
 				catch (Exception e) {
 					_log.error(e, e);

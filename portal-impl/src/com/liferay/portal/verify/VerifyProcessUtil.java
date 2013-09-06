@@ -100,8 +100,9 @@ public class VerifyProcessUtil {
 		}
 
 		try {
-			VerifyProcess verifyProcess = (VerifyProcess)Class.forName(
-				verifyProcessClassName).newInstance();
+			Class<?> clazz = Class.forName(verifyProcessClassName);
+
+			VerifyProcess verifyProcess = (VerifyProcess)clazz.newInstance();
 
 			if (_log.isDebugEnabled()) {
 				_log.debug("Running verification " + verifyProcessClassName);

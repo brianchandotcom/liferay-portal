@@ -717,10 +717,9 @@ public class ShoppingUtil {
 		for (String fields : fieldsArray) {
 			int pos = fields.indexOf("=");
 
-			String fieldValue = fields.substring(
-				pos + 1, fields.length()).trim();
+			String fieldValue = fields.substring(pos + 1, fields.length());
 
-			fieldsValues.add(fieldValue);
+			fieldsValues.add(fieldValue.trim());
 		}
 
 		List<String> names = new ArrayList<String>();

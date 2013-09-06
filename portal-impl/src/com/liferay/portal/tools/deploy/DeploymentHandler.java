@@ -42,9 +42,10 @@ public class DeploymentHandler {
 			DeploymentFactoryManager deploymentFactoryManager =
 				DeploymentFactoryManager.getInstance();
 
+			Class<?> clazz = classLoader.loadClass(dfClassName);
+
 			DeploymentFactory deploymentFactory =
-				(DeploymentFactory)classLoader.loadClass(
-					dfClassName).newInstance();
+				(DeploymentFactory)clazz.newInstance();
 
 			deploymentFactoryManager.registerDeploymentFactory(
 				deploymentFactory);

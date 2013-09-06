@@ -44,8 +44,9 @@ public class PermissionCheckerUtil {
 				PermissionThreadLocal.getPermissionChecker();
 
 			if (permissionChecker == null) {
-				permissionChecker = (PermissionChecker)Class.forName(
-					PropsValues.PERMISSIONS_CHECKER).newInstance();
+				Class<?> clazz = Class.forName(PropsValues.PERMISSIONS_CHECKER);
+
+				permissionChecker = (PermissionChecker)clazz.newInstance();
 			}
 
 			permissionChecker.init(user);

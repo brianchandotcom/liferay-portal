@@ -665,7 +665,9 @@ public class ServletResponseUtil {
 
 		if (Validator.isNull(contentDispositionType)) {
 			String extension = GetterUtil.getString(
-				FileUtil.getExtension(fileName)).toLowerCase();
+				FileUtil.getExtension(fileName));
+
+			extension = extension.toLowerCase();
 
 			String[] mimeTypesContentDispositionInline = null;
 

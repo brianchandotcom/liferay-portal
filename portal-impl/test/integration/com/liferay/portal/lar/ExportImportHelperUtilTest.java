@@ -204,7 +204,9 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 
 		when(
 			portalImpl.getPathContext()
-		).thenReturn("/de");
+		).thenReturn(
+			"/de"
+		);
 
 		PortalUtil portalUtil = new PortalUtil();
 

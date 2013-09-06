@@ -71,8 +71,9 @@ public class UpgradeImageGallery extends UpgradeProcess {
 			_sourceHookClassName = PropsValues.IMAGE_HOOK_IMPL;
 		}
 
-		_sourceHook = (Hook)classLoader.loadClass(
-			_sourceHookClassName).newInstance();
+		Class<?> clazz = classLoader.loadClass(_sourceHookClassName);
+
+		_sourceHook = (Hook)clazz.newInstance();
 	}
 
 	protected void addDLFileEntry(

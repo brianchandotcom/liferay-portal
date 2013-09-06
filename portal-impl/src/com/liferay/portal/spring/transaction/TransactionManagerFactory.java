@@ -44,9 +44,11 @@ public class TransactionManagerFactory {
 
 		ClassLoader classLoader = ClassLoaderUtil.getPortalClassLoader();
 
+		Class<?> clazz = classLoader.loadClass(
+			PropsValues.TRANSACTION_MANAGER_IMPL);
+
 		AbstractPlatformTransactionManager abstractPlatformTransactionManager =
-			(AbstractPlatformTransactionManager)classLoader.loadClass(
-				PropsValues.TRANSACTION_MANAGER_IMPL).newInstance();
+			(AbstractPlatformTransactionManager)clazz.newInstance();
 
 		Properties properties = PropsUtil.getProperties(
 			"transaction.manager.property.", true);

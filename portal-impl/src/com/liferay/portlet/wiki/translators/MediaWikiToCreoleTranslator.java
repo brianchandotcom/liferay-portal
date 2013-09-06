@@ -154,8 +154,9 @@ public class MediaWikiToCreoleTranslator extends BaseTranslator {
 
 		// LEP-6118
 
-		Matcher matcher = Pattern.compile(
-			"^=([^=]+)=", Pattern.MULTILINE).matcher(content);
+		Pattern pattern = Pattern.compile("^=([^=]+)=", Pattern.MULTILINE);
+
+		Matcher matcher = pattern.matcher(content);
 
 		if (matcher.find()) {
 			content = runRegexp(content, "^===([^=]+)===", "====$1====");
@@ -171,8 +172,9 @@ public class MediaWikiToCreoleTranslator extends BaseTranslator {
 
 		// Images
 
-		matcher = Pattern.compile(
-			"(\\[{2})(Image|File)(:)", Pattern.DOTALL).matcher(content);
+		pattern = Pattern.compile("(\\[{2})(Image|File)(:)", Pattern.DOTALL);
+
+		matcher = pattern.matcher(content);
 
 		StringBuffer sb = new StringBuffer(content);
 
@@ -226,8 +228,9 @@ public class MediaWikiToCreoleTranslator extends BaseTranslator {
 
 		// Tables
 
-		matcher = Pattern.compile(
-			"\\{\\|(.*?)\\|\\}", Pattern.DOTALL).matcher(content);
+		pattern = Pattern.compile("\\{\\|(.*?)\\|\\}", Pattern.DOTALL);
+
+		matcher = pattern.matcher(content);
 
 		sb = new StringBuffer(content);
 
@@ -269,8 +272,9 @@ public class MediaWikiToCreoleTranslator extends BaseTranslator {
 
 		// Remove underscores from links
 
-		matcher = Pattern.compile(
-			"\\[{2}([^\\]]*)\\]{2}", Pattern.DOTALL).matcher(content);
+		pattern = Pattern.compile("\\[{2}([^\\]]*)\\]{2}", Pattern.DOTALL);
+
+		matcher = pattern.matcher(content);
 
 		sb = new StringBuffer(content);
 

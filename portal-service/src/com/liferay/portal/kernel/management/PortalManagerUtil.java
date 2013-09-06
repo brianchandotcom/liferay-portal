@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.management;
 
 import com.liferay.portal.kernel.cluster.ClusterNode;
+import com.liferay.portal.kernel.cluster.ClusterNodeResponse;
 import com.liferay.portal.kernel.cluster.ClusterNodeResponses;
 import com.liferay.portal.kernel.cluster.FutureClusterResponses;
 import com.liferay.portal.kernel.log.Log;
@@ -87,8 +88,10 @@ public class PortalManagerUtil {
 		ClusterNodeResponses clusterNodeResponses =
 			futureClusterResponses.get();
 
-		return (T)clusterNodeResponses.getClusterResponse(
-			clusterNode).getResult();
+		ClusterNodeResponse clusterNodeResponse =
+			clusterNodeResponses.getClusterResponse(clusterNode);
+
+		return (T)clusterNodeResponse.getResult();
 	}
 
 	public void setPortalManager(PortalManager portalManager) {

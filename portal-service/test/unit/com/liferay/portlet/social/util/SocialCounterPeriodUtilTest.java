@@ -42,7 +42,9 @@ public class SocialCounterPeriodUtilTest extends PowerMockito {
 
 		when(
 			PropsUtil.get(PropsKeys.SOCIAL_ACTIVITY_COUNTER_PERIOD_LENGTH)
-		).thenReturn("1");
+		).thenReturn(
+			"1"
+		);
 	}
 
 	@Test

@@ -98,7 +98,9 @@ public class TCKtoJUnitConverter {
 		}
 
 		String hostname = GetterUtil.getString(
-			System.getProperty("env.USERDOMAIN")).toLowerCase();
+			System.getProperty("env.USERDOMAIN"));
+
+		hostname = hostname.toLowerCase();
 
 		StringBundler sb = new StringBundler();
 

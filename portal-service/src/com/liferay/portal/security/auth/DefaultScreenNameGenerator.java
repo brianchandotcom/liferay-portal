@@ -40,8 +40,9 @@ public class DefaultScreenNameGenerator implements ScreenNameGenerator {
 		String screenName = null;
 
 		if (Validator.isNotNull(emailAddress)) {
-			screenName = StringUtil.extractFirst(
-				emailAddress, CharPool.AT).toLowerCase();
+			screenName = StringUtil.extractFirst(emailAddress, CharPool.AT);
+
+			screenName = screenName.toLowerCase();
 
 			for (char c : screenName.toCharArray()) {
 				if (!Validator.isChar(c) && !Validator.isDigit(c) &&

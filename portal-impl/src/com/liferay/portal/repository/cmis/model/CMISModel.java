@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.repository.RepositoryException;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.Company;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.repository.cmis.CMISRepository;
@@ -101,8 +102,10 @@ public abstract class CMISModel {
 		User user = null;
 
 		try {
-			String authType = CompanyLocalServiceUtil.getCompany(
-				getCompanyId()).getAuthType();
+			Company company = CompanyLocalServiceUtil.getCompany(
+				getCompanyId());
+
+			String authType = company.getAuthType();
 
 			if (authType.equals(CompanyConstants.AUTH_TYPE_ID)) {
 				user = UserLocalServiceUtil.getUser(

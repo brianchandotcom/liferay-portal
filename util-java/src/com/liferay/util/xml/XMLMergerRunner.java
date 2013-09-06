@@ -133,8 +133,9 @@ public class XMLMergerRunner {
 			descriptor = XMLTypeDetector.determineType(doctype, masterDoc);
 		}
 		else {
-			descriptor = (XMLDescriptor)Class.forName(
-				_descriptorClassName).newInstance();
+			Class<?> clazz = Class.forName(_descriptorClassName);
+
+			descriptor = (XMLDescriptor)clazz.newInstance();
 		}
 
 		XMLMerger merger = new XMLMerger(descriptor);

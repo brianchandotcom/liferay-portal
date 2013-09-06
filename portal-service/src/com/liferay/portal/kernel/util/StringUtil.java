@@ -229,8 +229,9 @@ public class StringUtil {
 		StringBundler sb = new StringBundler(bytes.length * 2);
 
 		for (byte b : bytes) {
-			String hex = Integer.toHexString(
-				0x0100 + (b & 0x00FF)).substring(1);
+			String hex = Integer.toHexString(0x0100 + (b & 0x00FF));
+
+			hex = hex.substring(1);
 
 			if (hex.length() < 2) {
 				sb.append("0");

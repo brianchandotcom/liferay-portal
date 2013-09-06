@@ -135,10 +135,12 @@ public class MBBanLocalServiceImpl extends MBBanLocalServiceBaseImpl {
 		List<MBBan> bans = mbBanPersistence.findAll();
 
 		for (MBBan ban : bans) {
-			long unbanDate = MBUtil.getUnbanDate(
-				ban, PropsValues.MESSAGE_BOARDS_EXPIRE_BAN_INTERVAL).getTime();
+			Date unbanDate = MBUtil.getUnbanDate(
+				ban, PropsValues.MESSAGE_BOARDS_EXPIRE_BAN_INTERVAL);
 
-			if (now >= unbanDate) {
+			long unbanTime = unbanDate.getTime();
+
+			if (now >= unbanTime) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
 						"Auto expiring ban " + ban.getBanId() + " on user " +

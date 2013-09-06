@@ -227,12 +227,13 @@ public class PropertiesUtil {
 			String key = (String)entry.getKey();
 			String value = (String)entry.getValue();
 
-			key = charsetDecoder.decode(
-				charsetEncoder.encode(CharBuffer.wrap(key))).toString();
-			value = charsetDecoder.decode(
-				charsetEncoder.encode(CharBuffer.wrap(value))).toString();
+			CharBuffer keyCharBuffer = charsetDecoder.decode(
+				charsetEncoder.encode(CharBuffer.wrap(key)));
+			CharBuffer valueCharBuffer = charsetDecoder.decode(
+				charsetEncoder.encode(CharBuffer.wrap(value)));
 
-			properties.put(key, value);
+			properties.put(
+				keyCharBuffer.toString(), valueCharBuffer.toString());
 		}
 
 		return properties;

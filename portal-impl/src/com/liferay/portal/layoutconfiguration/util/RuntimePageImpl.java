@@ -141,6 +141,10 @@ public class RuntimePageImpl implements RuntimePage {
 		RuntimeLogic portletLogic = new PortletLogic(request, response);
 		content = processXML(request, content, portletLogic);
 
+		if (portletResponse == null) {
+			return content;
+		}
+
 		RenderResponse renderResponse = (RenderResponse)portletResponse;
 
 		RuntimeLogic actionURLLogic = new ActionURLLogic(renderResponse);

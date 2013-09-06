@@ -24,6 +24,25 @@ String referer = ParamUtil.getString(request, WebKeys.REFERER, currentURL);
 if (referer.equals(themeDisplay.getPathMain() + "/portal/update_terms_of_use")) {
 	referer = themeDisplay.getPathMain() + "?doAsUserId=" + themeDisplay.getDoAsUserId();
 }
+
+long companyId = themeDisplay.getCompanyId();
+
+long termsArticleGroupId = PrefsPropsUtil.getLong(companyId, PropsKeys.TERMS_OF_USE_JOURNAL_ARTICLE_GROUP_ID, PropsValues.TERMS_OF_USE_JOURNAL_ARTICLE_GROUP_ID);
+String termsArticleId = PrefsPropsUtil.getString(companyId, PropsKeys.TERMS_OF_USE_JOURNAL_ARTICLE_ID, PropsValues.TERMS_OF_USE_JOURNAL_ARTICLE_ID);
+
+boolean doesTermsArticleExist = false;
+
+if (JournalArticleLocalServiceUtil.hasArticle(termsArticleGroupId, termsArticleId)) {
+	doesTermsArticleExist = true;
+}
+else {
+	if (termsArticleGroupId != 0 || Validator.isNotNull(termsArticleId)) {
+		if (_log.isErrorEnabled()) {
+			_log.error("groupId: " + termsArticleGroupId + ", articleId: " + termsArticleId);
+			_log.error(LanguageUtil.get(pageContext, "no-such-article-exists"));
+		}
+	}
+}
 %>
 
 <aui:form action='<%= themeDisplay.getPathMain() + "/portal/update_terms_of_use" %>' name="fm">
@@ -31,8 +50,8 @@ if (referer.equals(themeDisplay.getPathMain() + "/portal/update_terms_of_use")) 
 	<aui:input name="<%= WebKeys.REFERER %>" type="hidden" value="<%= referer %>" />
 
 	<c:choose>
-		<c:when test="<%= (PropsValues.TERMS_OF_USE_JOURNAL_ARTICLE_GROUP_ID > 0) && Validator.isNotNull(PropsValues.TERMS_OF_USE_JOURNAL_ARTICLE_ID) %>">
-			<liferay-ui:journal-article articleId="<%= PropsValues.TERMS_OF_USE_JOURNAL_ARTICLE_ID %>" groupId="<%= PropsValues.TERMS_OF_USE_JOURNAL_ARTICLE_GROUP_ID %>" />
+		<c:when test="<%= doesTermsArticleExist %>">
+			<liferay-ui:journal-article articleId="<%= termsArticleId %>" groupId="<%= termsArticleGroupId %>" />
 		</c:when>
 		<c:otherwise>
 			Welcome to our site. We maintain this web site as a service to our members. By using our site, you are agreeing to comply with and be bound by the following terms of use. Please review the following terms carefully. If you do not agree to these terms, you should not use this site.
@@ -214,3 +233,7 @@ if (referer.equals(themeDisplay.getPathMain() + "/portal/update_terms_of_use")) 
 		</aui:button-row>
 	</c:if>
 </aui:form>
+
+<%!
+	private static Log _log = LogFactoryUtil.getLog("portal-web.docroot.html.portal.terms_of-use_jsp");
+%>

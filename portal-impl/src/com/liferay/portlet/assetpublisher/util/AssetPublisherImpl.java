@@ -112,7 +112,8 @@ public class AssetPublisherImpl implements AssetPublisher {
 					(AssetQueryProcessor)InstanceFactory.newInstance(
 						queryProcessorClassName);
 
-				_queryProcessors.put(queryProcessorClassName, queryProcessor);
+				registerAssetQueryProcessor(
+					queryProcessorClassName, queryProcessor);
 			}
 			catch (Exception e) {
 				_log.error(e, e);

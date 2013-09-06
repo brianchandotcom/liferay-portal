@@ -308,6 +308,12 @@ if (Validator.isNotNull(structureAvailableFields)) {
 					window.<portlet:namespace />formBuilder.get('fields').each(A.rbind('<portlet:namespace />setFieldsHiddenAttributes', window, mode));
 
 					A.Array.each(window.<portlet:namespace />formBuilder.get('availableFields'), A.rbind('<portlet:namespace />setFieldsHiddenAttributes', window, mode));
+
+					var editingField = window.<portlet:namespace />formBuilder.editingField;
+
+					if (editingField) {
+						window.<portlet:namespace />formBuilder.propertyList.set('data', window.<portlet:namespace />formBuilder.getFieldProperties(editingField));
+					}
 				},
 				['aui-base']
 			);

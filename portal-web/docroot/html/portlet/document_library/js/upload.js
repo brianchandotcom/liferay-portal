@@ -139,7 +139,7 @@ AUI.add(
 			initializer: function() {
 				var instance = this;
 
-				if (themeDisplay.isSignedIn() && (UPLOADER_TYPE === 'html5') && (!UA.touch || UA.ie >= 10) && instance.one('#addButtonContainer')) {
+				if (themeDisplay.isSignedIn() && (UPLOADER_TYPE === 'html5') && !UA.touch && instance.one('#addButtonContainer')) {
 					instance._initDLUpload();
 				}
 			},

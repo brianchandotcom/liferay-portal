@@ -102,8 +102,6 @@ public class FacebookConnectAction extends PortletAction {
 			themeDisplay.getCompanyId(), redirect, code);
 
 		if (Validator.isNotNull(token)) {
-			session.setAttribute(WebKeys.FACEBOOK_ACCESS_TOKEN, token);
-
 			User user = setFacebookCredentials(
 				session, themeDisplay.getCompanyId(), token);
 
@@ -238,6 +236,8 @@ public class FacebookConnectAction extends PortletAction {
 		long facebookId = jsonObject.getLong("id");
 
 		if (facebookId > 0) {
+			session.setAttribute(WebKeys.FACEBOOK_ACCESS_TOKEN, token);
+
 			user = UserLocalServiceUtil.fetchUserByFacebookId(
 				companyId, facebookId);
 

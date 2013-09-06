@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.model.Group;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
@@ -398,14 +397,15 @@ public class BookmarksFolderLocalServiceImpl
 	public void rebuildTree(long companyId)
 		throws PortalException, SystemException {
 
-		List<Group> groups = groupPersistence.findByCompanyId(companyId);
+		List<BookmarksFolder> folders =
+			bookmarksFolderPersistence.findByCompanyId(companyId);
 
-		for (Group group : groups) {
-			String treePath = group.buildTreePath();
+		for (BookmarksFolder folder : folders) {
+			String treePath = folder.buildTreePath();
 
-			group.setTreePath(treePath);
+			folder.setTreePath(treePath);
 
-			groupPersistence.update(group);
+			bookmarksFolderPersistence.update(folder);
 		}
 	}
 

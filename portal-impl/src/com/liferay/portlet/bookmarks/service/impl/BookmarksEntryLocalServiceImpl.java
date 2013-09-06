@@ -382,14 +382,15 @@ public class BookmarksEntryLocalServiceImpl
 	public void rebuildTree(long companyId)
 		throws PortalException, SystemException {
 
-		List<Group> groups = groupPersistence.findByCompanyId(companyId);
+		List<BookmarksEntry> entries =
+			bookmarksEntryPersistence.findByCompanyId(companyId);
 
-		for (Group group : groups) {
-			String treePath = group.buildTreePath();
+		for (BookmarksEntry entry : entries) {
+			String treePath = entry.buildTreePath();
 
-			group.setTreePath(treePath);
+			entry.setTreePath(treePath);
 
-			groupPersistence.update(group);
+			bookmarksEntryPersistence.update(entry);
 		}
 	}
 

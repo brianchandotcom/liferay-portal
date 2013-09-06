@@ -2,6 +2,7 @@ alter table Address add uuid_ VARCHAR(75) null;
 
 update BlogsEntry set status = 2 where status = 9;
 
+alter table BookmarksEntry add treePath STRING null;
 alter table BookmarksEntry add status INTEGER;
 alter table BookmarksEntry add statusByUserId LONG;
 alter table BookmarksEntry add statusByUserName VARCHAR(75) null;
@@ -14,6 +15,7 @@ update BookmarksEntry set statusByUserId = userId;
 update BookmarksEntry set statusByUserName = userName;
 update BookmarksEntry set statusDate = modifiedDate;
 
+alter table BookmarksFolder add treePath STRING null;
 alter table BookmarksFolder add status INTEGER;
 alter table BookmarksFolder add statusByUserId LONG;
 alter table BookmarksFolder add statusByUserName VARCHAR(75) null;

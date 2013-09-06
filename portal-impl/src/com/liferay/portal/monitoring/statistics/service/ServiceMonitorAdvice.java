@@ -21,6 +21,9 @@ import com.liferay.portal.kernel.monitoring.statistics.DataSampleThreadLocal;
 import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 import com.liferay.portal.monitoring.jmx.MethodSignature;
 import com.liferay.portal.spring.aop.ChainableMethodAdvice;
+import com.liferay.portlet.InvokerPortletFactory;
+import com.liferay.portlet.PortletInstanceFactoryImpl;
+import com.liferay.portlet.PortletInstanceFactoryUtil;
 
 import java.lang.reflect.Method;
 
@@ -150,11 +153,35 @@ public class ServiceMonitorAdvice extends ChainableMethodAdvice {
 	}
 
 	public void setActive(boolean active) {
-		if (active && !_active) {
-			serviceBeanAopCacheManager.reset();
-		}
+		if (active != _active) {
+			PortletInstanceFactoryImpl portletInstanceFactoryImpl =
+				new PortletInstanceFactoryImpl();
 
-		_active = active;
+			if (active) {
+				serviceBeanAopCacheManager.reset();
+
+				portletInstanceFactoryImpl.setInvokerPortletFactory(
+					_monitoringPortletFactoryImpl);
+			}
+			else {
+				portletInstanceFactoryImpl.setInvokerPortletFactory(
+					_invokerPortletFactory);
+			}
+
+			PortletInstanceFactoryUtil portletInstanceFactoryUtil =
+				new PortletInstanceFactoryUtil();
+
+			portletInstanceFactoryUtil.setPortletInstanceFactory(
+				portletInstanceFactoryImpl);
+
+			_active = active;
+		}
+	}
+
+	public void setInvokerPortletFactory(
+		InvokerPortletFactory invokerPortletFactory) {
+
+		_invokerPortletFactory = invokerPortletFactory;
 	}
 
 	public void setMonitoredClasses(Set<String> monitoredClasses) {
@@ -167,6 +194,12 @@ public class ServiceMonitorAdvice extends ChainableMethodAdvice {
 
 	public void setMonitoringDestinationName(String monitoringDestinationName) {
 		_monitoringDestinationName = monitoringDestinationName;
+	}
+
+	public void setMonitoringPortletFactoryImpl(
+		InvokerPortletFactory monitoringPortletFactoryImpl) {
+
+		_monitoringPortletFactoryImpl = monitoringPortletFactoryImpl;
 	}
 
 	public void setPermissiveMode(boolean permissiveMode) {
@@ -194,10 +227,12 @@ public class ServiceMonitorAdvice extends ChainableMethodAdvice {
 	}
 
 	private static boolean _active;
+	private static InvokerPortletFactory _invokerPortletFactory;
 	private static Set<String> _monitoredClasses = new HashSet<String>();
 	private static Set<MethodSignature> _monitoredMethods =
 		new HashSet<MethodSignature>();
 	private static String _monitoringDestinationName;
+	private static InvokerPortletFactory _monitoringPortletFactoryImpl;
 	private static boolean _permissiveMode;
 	private static ThreadLocal<ServiceRequestDataSample>
 		_serviceRequestDataSampleThreadLocal =

@@ -21,6 +21,8 @@
 	</bean>
 	<bean id="serviceMonitorAdvice" class="com.liferay.portal.monitoring.statistics.service.ServiceMonitorAdvice">
 		<property name="monitoringDestinationName" value="liferay/monitoring" />
+		<property name="invokerPortletFactory" ref="com.liferay.portlet.InvokerPortletFactoryImpl" />
+		<property name="monitoringPortletFactoryImpl" ref="com.liferay.portlet.MonitoringPortletFactoryImpl" />
 	</bean>
 	<bean id="serviceStatistics" class="com.liferay.portal.monitoring.statistics.service.ServerStatistics" />
 	<bean id="com.liferay.portal.monitoring.MonitoringProcessor" class="com.liferay.portal.kernel.monitoring.DefaultMonitoringProcessor">
@@ -161,12 +163,5 @@
 	</bean>
 	<bean id="com.liferay.portlet.MonitoringPortletFactoryImpl" class="com.liferay.portlet.MonitoringPortletFactoryImpl">
 		<property name="singleDestinationMessageSender" ref="messageSender.monitoring" />
-	</bean>
-	<bean id="com.liferay.portlet.PortletInstanceFactoryUtil" class="com.liferay.portlet.PortletInstanceFactoryUtil">
-		<property name="portletInstanceFactory">
-			<bean class="com.liferay.portlet.PortletInstanceFactoryImpl">
-				<property name="invokerPortletFactory" ref="com.liferay.portlet.MonitoringPortletFactoryImpl" />
-			</bean>
-		</property>
 	</bean>
 </beans>

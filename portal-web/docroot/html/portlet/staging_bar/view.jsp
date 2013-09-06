@@ -311,12 +311,13 @@ if (layout != null) {
 													request.setAttribute("view.jsp-layoutRevision", layoutRevision);
 													request.setAttribute("view.jsp-layoutSetBranch", layoutSetBranch);
 													%>
+
 												</div>
 											</div>
 										</aui:form>
 									</div>
 
-									<liferay-ui:staging cssClass="publish-link" extended="<%= false %>" onlyActions="<%= true %>" layoutSetBranchId="<%= layoutRevision.getLayoutSetBranchId() %>" />
+									<liferay-ui:staging cssClass="publish-link" extended="<%= false %>" layoutSetBranchId="<%= layoutRevision.getLayoutSetBranchId() %>" onlyActions="<%= true %>" />
 
 									<aui:script use="aui-base">
 										var layoutRevisionsLink = A.one('#<portlet:namespace />manageLayoutRevisions');
@@ -351,6 +352,7 @@ if (layout != null) {
 												</span>
 											</c:when>
 											<c:otherwise>
+
 												<%
 												typeSettingsProperties = liveLayout.getTypeSettingsProperties();
 
@@ -533,6 +535,7 @@ if (layout != null) {
 		</aui:nav-item>
 
 		<c:if test="<%= group.isStagedRemotely() %>">
+
 			<%
 			UnicodeProperties typeSettingsProperties = group.getTypeSettingsProperties();
 

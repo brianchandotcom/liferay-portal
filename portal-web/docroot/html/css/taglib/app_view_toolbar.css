@@ -8,8 +8,6 @@
 	}
 
 	.form-search {
-		margin-top: 9px;
-
 		@include respond-to(phone, tablet) {
 			margin-top: 5px;
 		}
@@ -29,8 +27,6 @@
 
 	.navbar {
 		.navbar-search {
-			margin-top: 0;
-
 			@include respond-to(phone, tablet) {
 				margin-left: 5px;
 			}
@@ -38,7 +34,6 @@
 
 		.nav-display-style-buttons {
 			margin-left: 15px;
-			margin-top: 4px;
 		}
 	}
 

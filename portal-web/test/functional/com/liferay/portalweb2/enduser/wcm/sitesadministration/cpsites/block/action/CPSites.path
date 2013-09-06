@@ -159,8 +159,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SITE_MENULIST_MANAGE</td>
-	<td>//a[@role='menuitem' and contains(.,'Manage')]</td>
+	<td>SITE_MENULIST_SITE_ADMINISTRATION</td>
+	<td>//a[@role='menuitem' and contains(.,'Site Administration')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -57,7 +57,5 @@ public interface JournalFolder extends JournalFolderModel, PersistedModel {
 
 	public com.liferay.portlet.journal.model.JournalFolder getTrashContainer();
 
-	public boolean isInTrashContainer();
-
 	public boolean isRoot();
 }

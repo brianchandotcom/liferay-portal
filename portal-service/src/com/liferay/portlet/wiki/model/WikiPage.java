@@ -79,7 +79,5 @@ public interface WikiPage extends WikiPageModel, PersistedModel {
 
 	public java.util.List<com.liferay.portlet.wiki.model.WikiPage> getViewableParentPages();
 
-	public boolean isInTrashContainer();
-
 	public void setAttachmentsFolderId(long attachmentsFolderId);
 }

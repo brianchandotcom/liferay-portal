@@ -1671,16 +1671,6 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	}
 
 	/**
-	* Returns <code>true</code> if this layout revision is in the Recycle Bin.
-	*
-	* @return <code>true</code> if this layout revision is in the Recycle Bin; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isInTrash() {
-		return _layoutRevision.isInTrash();
-	}
-
-	/**
 	* Returns <code>true</code> if this layout revision is pending.
 	*
 	* @return <code>true</code> if this layout revision is pending; <code>false</code> otherwise

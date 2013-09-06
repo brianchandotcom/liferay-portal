@@ -81,10 +81,6 @@ public interface JournalArticle extends JournalArticleModel, PersistedModel {
 	public boolean hasApprovedVersion()
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	public boolean isInTrashContainer()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
-
 	public boolean isTemplateDriven();
 
 	public void setSmallImageType(java.lang.String smallImageType);

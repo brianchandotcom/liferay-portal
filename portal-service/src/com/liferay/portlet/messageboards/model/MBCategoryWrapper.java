@@ -635,6 +635,50 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	}
 
 	/**
+	* Returns the trash entry created when this message boards category was moved to the Recycle Bin. The trash entry may belong to one of the ancestors of this message boards category.
+	*
+	* @return the trash entry created when this message boards category was moved to the Recycle Bin
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public com.liferay.portlet.trash.model.TrashEntry getTrashEntry()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _mbCategory.getTrashEntry();
+	}
+
+	/**
+	* Returns the trash handler for this message boards category.
+	*
+	* @return the trash handler for this message boards category
+	*/
+	@Override
+	public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler() {
+		return _mbCategory.getTrashHandler();
+	}
+
+	/**
+	* Returns <code>true</code> if this message boards category is in the Recycle Bin.
+	*
+	* @return <code>true</code> if this message boards category is in the Recycle Bin; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isInTrash() {
+		return _mbCategory.isInTrash();
+	}
+
+	/**
+	* Returns <code>true</code> if the parent of this message boards category is in the Recycle Bin.
+	*
+	* @return <code>true</code> if the parent of this message boards category is in the Recycle Bin; <code>false</code> otherwise
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public boolean isInTrashContainer() {
+		return _mbCategory.isInTrashContainer();
+	}
+
+	/**
 	* @deprecated As of 6.1.0, replaced by {@link #isApproved()}
 	*/
 	@Override
@@ -700,16 +744,6 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	@Override
 	public boolean isIncomplete() {
 		return _mbCategory.isIncomplete();
-	}
-
-	/**
-	* Returns <code>true</code> if this message boards category is in the Recycle Bin.
-	*
-	* @return <code>true</code> if this message boards category is in the Recycle Bin; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isInTrash() {
-		return _mbCategory.isInTrash();
 	}
 
 	/**
@@ -911,11 +945,6 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	@Override
 	public com.liferay.portlet.messageboards.model.MBCategory getTrashContainer() {
 		return _mbCategory.getTrashContainer();
-	}
-
-	@Override
-	public boolean isInTrashContainer() {
-		return _mbCategory.isInTrashContainer();
 	}
 
 	@Override

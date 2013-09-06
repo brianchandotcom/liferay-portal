@@ -82,6 +82,7 @@ public class JournalFolderLocalServiceImpl
 		folder.setCreateDate(serviceContext.getCreateDate(now));
 		folder.setModifiedDate(serviceContext.getModifiedDate(now));
 		folder.setParentFolderId(parentFolderId);
+		folder.setTreePath(folder.buildTreePath());
 		folder.setName(name);
 		folder.setDescription(description);
 		folder.setExpandoBridgeAttributes(serviceContext);
@@ -397,6 +398,7 @@ public class JournalFolderLocalServiceImpl
 
 		folder.setModifiedDate(serviceContext.getModifiedDate(null));
 		folder.setParentFolderId(parentFolderId);
+		folder.setTreePath(folder.buildTreePath());
 		folder.setExpandoBridgeAttributes(serviceContext);
 
 		journalFolderPersistence.update(folder);
@@ -546,6 +548,7 @@ public class JournalFolderLocalServiceImpl
 
 		folder.setModifiedDate(serviceContext.getModifiedDate(null));
 		folder.setParentFolderId(parentFolderId);
+		folder.setTreePath(folder.buildTreePath());
 		folder.setName(name);
 		folder.setDescription(description);
 		folder.setExpandoBridgeAttributes(serviceContext);

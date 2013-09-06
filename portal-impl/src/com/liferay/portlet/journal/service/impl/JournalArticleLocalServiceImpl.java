@@ -360,6 +360,7 @@ public class JournalArticleLocalServiceImpl
 		article.setCreateDate(serviceContext.getCreateDate(now));
 		article.setModifiedDate(serviceContext.getModifiedDate(now));
 		article.setFolderId(folderId);
+		article.setTreePath(article.buildTreePath());
 		article.setClassNameId(classNameId);
 		article.setClassPK(classPK);
 		article.setArticleId(articleId);
@@ -780,6 +781,7 @@ public class JournalArticleLocalServiceImpl
 		newArticle.setCreateDate(now);
 		newArticle.setModifiedDate(now);
 		newArticle.setFolderId(oldArticle.getFolderId());
+		newArticle.setTreePath(oldArticle.getTreePath());
 		newArticle.setArticleId(newArticleId);
 		newArticle.setVersion(JournalArticleConstants.VERSION_DEFAULT);
 		newArticle.setTitle(oldArticle.getTitle());
@@ -3203,6 +3205,7 @@ public class JournalArticleLocalServiceImpl
 
 		for (JournalArticle article : articles) {
 			article.setFolderId(newFolderId);
+			article.setTreePath(article.buildTreePath());
 
 			journalArticlePersistence.update(article);
 		}
@@ -4641,6 +4644,7 @@ public class JournalArticleLocalServiceImpl
 
 		article.setModifiedDate(serviceContext.getModifiedDate(now));
 		article.setFolderId(folderId);
+		article.setTreePath(article.buildTreePath());
 		article.setTitleMap(titleMap, locale);
 		article.setUrlTitle(
 			getUniqueUrlTitle(

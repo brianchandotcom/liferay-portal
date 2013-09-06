@@ -57,6 +57,8 @@ java.lang.String label = GetterUtil.getString((java.lang.String)request.getAttri
 java.lang.String languageId = GetterUtil.getString((java.lang.String)request.getAttribute("aui:input:languageId"));
 boolean last = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:input:last")));
 java.lang.Class<?> model = (java.lang.Class<?>)request.getAttribute("aui:input:model");
+int max = GetterUtil.getInteger(String.valueOf(request.getAttribute("aui:input:max")));
+int min = GetterUtil.getInteger(String.valueOf(request.getAttribute("aui:input:min")));
 boolean multiple = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:input:multiple")));
 java.lang.String name = GetterUtil.getString((java.lang.String)request.getAttribute("aui:input:name"));
 java.lang.String onChange = GetterUtil.getString((java.lang.String)request.getAttribute("aui:input:onChange"));
@@ -97,6 +99,8 @@ _updateOptions(_options, "label", label);
 _updateOptions(_options, "languageId", languageId);
 _updateOptions(_options, "last", last);
 _updateOptions(_options, "model", model);
+_updateOptions(_options, "max", max);
+_updateOptions(_options, "min", min);
 _updateOptions(_options, "multiple", multiple);
 _updateOptions(_options, "name", name);
 _updateOptions(_options, "onChange", onChange);

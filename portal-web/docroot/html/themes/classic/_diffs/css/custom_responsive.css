@@ -19,6 +19,12 @@
 				img {
 					width: 35px;
 				}
+
+				@include respond-to(phone) {
+					.site-name {
+						display: none;
+					}
+				}
 			}
 		}
 
@@ -103,6 +109,7 @@
 						> a {
 							background: transparent;
 							text-align: left;
+							white-space: nowrap;
 
 							&:hover {
 								background: #F3f3f3;
@@ -163,6 +170,7 @@
 							&.dropdown {
 								.dropdown-menu li a {
 									font-size: 16px;
+									line-height: 32px;
 								}
 
 								&.open {

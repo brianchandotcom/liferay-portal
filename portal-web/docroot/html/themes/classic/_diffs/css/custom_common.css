@@ -773,10 +773,8 @@
 		}
 	}
 
-	.dockbar-split {
-		.dockbar .container .btn-navbar {
-			@include box-shadow(none);
-		}
+	.dockbar .container .btn-navbar {
+		@include box-shadow(none);
 	}
 
 	body.yui3-skin-sam .yui3-widget-mask {

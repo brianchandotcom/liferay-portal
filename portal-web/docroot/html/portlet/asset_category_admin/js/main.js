@@ -1872,6 +1872,10 @@ AUI.add(
 								}
 							);
 
+							if (action === ACTION_EDIT) {
+								instance._showCategoryViewContainer(response.categoryId);
+							}
+
 							instance._hidePanels();
 						}
 						else {

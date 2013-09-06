@@ -369,6 +369,7 @@ public class JournalArticleIndexer extends BaseIndexer {
 		document.addKeyword("ddmTemplateKey", article.getTemplateId());
 		document.addDate("displayDate", article.getDisplayDate());
 		document.addKeyword("head", false);
+		document.addKeyword("treePath", article.getTreePath());
 
 		addDDMStructureAttributes(document, article);
 

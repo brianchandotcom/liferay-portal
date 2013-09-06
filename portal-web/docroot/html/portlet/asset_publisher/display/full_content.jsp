@@ -247,14 +247,9 @@ request.setAttribute("view.jsp-showIconLabel", true);
 	</c:if>
 </div>
 
-<c:choose>
-	<c:when test="<%= !showAssetTitle && ((assetEntryIndex + 1) < results.size()) %>">
-		<div class="separator"><!-- --></div>
-	</c:when>
-	<c:when test="<%= (assetEntryIndex + 1) == results.size() %>">
-		<div class="final-separator"><!-- --></div>
-	</c:when>
-</c:choose>
+<c:if test="<%= !showAssetTitle && ((assetEntryIndex + 1) < results.size()) %>">
+	<div class="separator"><!-- --></div>
+</c:if>
 
 <%!
 private static Log _log = LogFactoryUtil.getLog("portal-web.docroot.html.portlet.asset_publisher.display_full_content_jsp");

@@ -1,5 +1,7 @@
 .portlet-asset-publisher {
 	.asset-abstract {
+		margin-bottom: 2em;
+
 		.asset-content p {
 			margin-bottom: 0;
 		}
@@ -82,9 +84,7 @@
 
 	.asset-title {
 		border-bottom: 1px solid #DDD;
-		margin-bottom: 0.7em;
 		margin-right: 8px;
-		margin-top: 2em;
 		padding-bottom: 1px;
 
 		.asset-actions img {
@@ -119,11 +119,6 @@
 
 	.edit-controls {
 		margin-bottom: 20px;
-	}
-
-	.final-separator {
-		border: 0;
-		margin-bottom: 30px;
 	}
 
 	.lfr-meta-actions {

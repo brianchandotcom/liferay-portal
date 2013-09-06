@@ -193,7 +193,7 @@ request.setAttribute("record_set_action.jsp-selRecordSet", selRecordSet);
 
 	<aui:fieldset>
 		<aui:field-wrapper label="portlet-id">
-			<liferay-ui:input-resource url="<%= HtmlUtil.escape(portletResource) %>" />
+			<liferay-ui:input-resource url="<%= portletResource %>" />
 		</aui:field-wrapper>
 	</aui:fieldset>
 

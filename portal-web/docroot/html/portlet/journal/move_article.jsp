@@ -72,24 +72,16 @@ portletURL.setParameter("articleId", String.valueOf(articleId));
 		}
 		%>
 
-		<portlet:renderURL var="viewFolderURL">
-			<portlet:param name="struts_action" value="/journal/view" />
-			<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
-		</portlet:renderURL>
-
 		<aui:field-wrapper label="current-folder">
-			<liferay-ui:icon
-				image="folder"
-				label="true"
-				message="<%= folderName %>"
-				url="<%= viewFolderURL %>"
-			/>
+			<liferay-ui:input-resource url="<%= folderName %>" />
 		</aui:field-wrapper>
 
 		<aui:field-wrapper label="new-folder">
-			<aui:a href="<%= viewFolderURL %>" id="folderName"><%= folderName %></aui:a>
+			<div class="input-append">
+				<liferay-ui:input-resource id="folderName" url="<%= folderName %>" />
 
-			<aui:button name="selectFolderButton" value="select" />
+				<aui:button name="selectFolderButton" value="select" />
+			</div>
 		</aui:field-wrapper>
 
 		<aui:button-row>
@@ -128,7 +120,7 @@ portletURL.setParameter("articleId", String.valueOf(articleId));
 						nameValue: event.foldername
 					};
 
-					Liferay.Util.selectFolder(folderData, '<portlet:renderURL><portlet:param name="struts_action" value="/journal/view" /></portlet:renderURL>', '<portlet:namespace />');
+					Liferay.Util.selectFolder(folderData, '<portlet:namespace />');
 				}
 			);
 		}

@@ -104,10 +104,10 @@ request.setAttribute(WebKeys.WORKFLOW_ASSET_PREVIEW, Boolean.TRUE);
 					<aui:field-wrapper label="assigned-to">
 						<c:choose>
 							<c:when test="<%= workflowTask.isAssignedToSingleUser() %>">
-								<liferay-ui:input-resource url="<%= HtmlUtil.escape(PortalUtil.getUserName(workflowTask.getAssigneeUserId(), StringPool.BLANK)) %>" />
+								<liferay-ui:input-resource url="<%= PortalUtil.getUserName(workflowTask.getAssigneeUserId(), StringPool.BLANK) %>" />
 							</c:when>
 							<c:otherwise>
-								<liferay-ui:message key="nobody" />
+								<liferay-ui:input-resource url='<%= LanguageUtil.get(pageContext, "nobody") %>' />
 							</c:otherwise>
 						</c:choose>
 
@@ -163,7 +163,7 @@ request.setAttribute(WebKeys.WORKFLOW_ASSET_PREVIEW, Boolean.TRUE);
 				<div class="lfr-asset-due-date">
 					<aui:field-wrapper label="due-date">
 						<liferay-ui:input-resource url="<%= (workflowTask.getDueDate() == null) ? LanguageUtil.get(pageContext, "never") : dateFormatDateTime.format(workflowTask.getDueDate()) %>" />
-						
+
 						<c:if test="<%= !workflowTask.isCompleted() %>">
 							<portlet:actionURL var="updateDueDateURL">
 								<portlet:param name="struts_action" value="/workflow_tasks/edit_workflow_task" />

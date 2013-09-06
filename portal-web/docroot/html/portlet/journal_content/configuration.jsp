@@ -244,7 +244,7 @@ catch (NoSuchArticleException nsae) {
 
 	<aui:fieldset>
 		<aui:field-wrapper label="portlet-id">
-			<liferay-ui:input-resource url="<%= HtmlUtil.escape(portletResource) %>" />
+			<liferay-ui:input-resource url="<%= portletResource %>" />
 		</aui:field-wrapper>
 	</aui:fieldset>
 

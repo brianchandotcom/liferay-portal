@@ -165,7 +165,7 @@ configurationRenderURL.setParameter("portletResource", portletResource);
 										JournalArticle headerArticle = JournalArticleLocalServiceUtil.getArticle(headerArticleGroupId, headerArticleId);
 										%>
 
-										<liferay-ui:input-resource url="<%= HtmlUtil.escape(headerArticle.getTitle(locale)) %>" />
+										<liferay-ui:input-resource url="<%= headerArticle.getTitle(locale) %>" />
 									</c:when>
 									<c:otherwise>
 										<liferay-ui:input-resource url="" />
@@ -186,7 +186,7 @@ configurationRenderURL.setParameter("portletResource", portletResource);
 										JournalArticle footerArticle = JournalArticleLocalServiceUtil.getArticle(footerArticleGroupId, footerArticleId);
 										%>
 
-										<liferay-ui:input-resource url="<%= HtmlUtil.escape(footerArticle.getTitle(locale)) %>" />
+										<liferay-ui:input-resource url="<%= footerArticle.getTitle(locale) %>" />
 									</c:when>
 									<c:otherwise>
 										<liferay-ui:input-resource url="" />

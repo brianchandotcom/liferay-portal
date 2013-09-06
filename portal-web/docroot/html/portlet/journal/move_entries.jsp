@@ -215,15 +215,12 @@ for (JournalArticle curArticle : articles) {
 		}
 		%>
 
-		<portlet:renderURL var="viewFolderURL">
-			<portlet:param name="struts_action" value="/journal/view" />
-			<portlet:param name="folderId" value="<%= String.valueOf(newFolderId) %>" />
-		</portlet:renderURL>
-
 		<aui:field-wrapper label="new-folder">
-			<aui:a href="<%= viewFolderURL %>" id="folderName"><%= folderName %></aui:a>
+			<div class="input-append">
+				<liferay-ui:input-resource id="folderName" url="<%= folderName %>" />
 
-			<aui:button name="selectFolderButton" value="select" />
+				<aui:button name="selectFolderButton" value="select" />
+			</div>
 		</aui:field-wrapper>
 
 		<aui:button-row>
@@ -262,7 +259,7 @@ for (JournalArticle curArticle : articles) {
 						nameValue: event.foldername
 					};
 
-					Liferay.Util.selectFolder(folderData, '<portlet:renderURL><portlet:param name="struts_action" value="/journal/view" /></portlet:renderURL>', '<portlet:namespace />');
+					Liferay.Util.selectFolder(folderData, '<portlet:namespace />');
 				}
 			);
 		}

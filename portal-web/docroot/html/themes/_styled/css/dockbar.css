@@ -67,6 +67,24 @@ $editLayoutPanelWidth: 460px;
 			}
 		}
 
+		.nav.staging-nav-items {
+			margin: 0;
+			position: static;
+
+			li.dropdown.active > .dropdown-toggle {
+				background-color: transparent;
+				display: block;
+
+				&:hover {
+					color: #0077B3;
+				}
+			}
+
+			.staging-link {
+				position: static;
+			}
+		}
+
 		.user-avatar img {
 			margin-top: -2px;
 			text-decoration: none;
@@ -87,14 +105,12 @@ $editLayoutPanelWidth: 460px;
 			.navbar-inner {
 				background-color: transparent;
 				border-width: 0;
-				color: #FFF;
 				padding: 0;
 				width: 0;
 
 				.nav {
 					background-color: #333;
 					border-bottom-width: 0;
-					color: #FFF;
 
 					> li {
 						> a {
@@ -112,18 +128,36 @@ $editLayoutPanelWidth: 460px;
 
 						&.active > a {
 							color: #FFF;
-
-							&, &:hover, &:focus {
-								background: #333;
-							}
 						}
 					}
 
-					li.dropdown {
-						&.open, &.active, &.open.active {
-							> .dropdown-toggle {
+					li {
+						&.dropdown {
+							&.active > .dropdown-toggle {
+								color: #FFF;
+							}
+
+							&.open > .dropdown-toggle {
 								background-color: #555;
 								color: #FFF;
+							}
+						}
+
+						&.staging-toggle {
+							background-color: #0ECD27;
+
+							> a {
+								&, &:hover {
+									background-color: transparent;
+								}
+							}
+
+							span {
+								padding: 5px 10px;
+							}
+
+							&.active span {
+								background-color: #080;
 							}
 						}
 					}
@@ -136,10 +170,6 @@ $editLayoutPanelWidth: 460px;
 					position: fixed;
 					right: 5em;
 					z-index: 325;
-
-					> li > a {
-						padding: 6px 15px;
-					}
 				}
 
 				.nav-add-controls {
@@ -222,6 +252,48 @@ $editLayoutPanelWidth: 460px;
 					&:hover > li.toggle-controls a {
 						clip: rect(auto auto auto auto);
 						position: static;
+					}
+				}
+			}
+
+			.staging-nav-items {
+				li > span {
+					color: #FFF;
+					display: block;
+					padding: 10px 15px;
+					line-height: 31px;
+				}
+			}
+		}
+
+		.staging-controls {
+			select {
+				width: 100%;
+			}
+
+			.staging-bar {
+				margin-right: 0;
+
+				.dropdown-menu {
+					font-size: 13px;
+					width: 100%;
+
+					.btn-link {
+						float: left;
+						font-size: 11px;
+						margin: 0 5px 0 0;
+						padding: 0;
+						text-decoration: underline;
+
+						@include text-shadow(none);
+
+						&:hover {
+							text-decoration: none;
+						}
+
+						&.history {
+							float: right;
+						}
 					}
 				}
 			}
@@ -314,32 +386,6 @@ $editLayoutPanelWidth: 460px;
 
 	.layout-revision-container-root {
 		margin: 0;
-	}
-
-	.staging-details {
-		background: url() no-repeat 0 0;
-		min-height: 50px;
-		padding-left: 65px;
-	}
-
-	.staging {
-		.staging-details {
-			background-image: url(../images/staging_bar/staging.png);
-		}
-
-		.staging-tabview-list {
-			background-color: #FFDBA6;
-		}
-	}
-
-	.live-view {
-		.staging-details {
-			background-image: url(../images/staging_bar/live.png);
-		}
-
-		.staging-tabview-list {
-			background-color: #C4F0BC;
-		}
 	}
 
 	/* ---------- Add Content ---------- */

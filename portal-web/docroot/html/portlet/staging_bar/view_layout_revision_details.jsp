@@ -58,7 +58,7 @@ else {
 		<c:otherwise>
 			<aui:model-context bean="<%= layoutRevision %>" model="<%= LayoutRevision.class %>" />
 
-			<aui:workflow-status helpMessage="<%= taglibHelpMessage %>" status="<%= layoutRevision.getStatus() %>" statusMessage='<%= layoutRevision.isHead() ? "ready-for-publication" : null %>' version="<%= String.valueOf(layoutRevision.getLayoutRevisionId()) %>" />
+			<aui:workflow-status helpMessage="<%= taglibHelpMessage %>" showIcon="<%= false %>" status="<%= layoutRevision.getStatus() %>" statusMessage='<%= layoutRevision.isHead() ? "ready-for-publication" : null %>' version="<%= String.valueOf(layoutRevision.getLayoutRevisionId()) %>" />
 		</c:otherwise>
 	</c:choose>
 </div>
@@ -89,7 +89,6 @@ else {
 
 			stagingBar.layoutRevisionToolbar.add(
 				{
-					icon: 'shuffle',
 					label: '<%= UnicodeLanguageUtil.get(pageContext, "workflow") %>',
 					on: {
 						click: function(event) {
@@ -143,6 +142,8 @@ else {
 
 					stagingBar.layoutRevisionToolbar.add(redoButton, 0);
 
+					redoButton.render();
+
 					redoButton.get('contentBox').attr(
 						{
 							'data-layoutRevisionId': '<%= firstChildLayoutRevision.getLayoutRevisionId() %>',
@@ -161,6 +162,8 @@ else {
 
 				stagingBar.layoutRevisionToolbar.add(undoButton, 0);
 
+				undoButton.render();
+
 				undoButton.get('contentBox').attr(
 					{
 						'data-layoutRevisionId': '<%= layoutRevision.getLayoutRevisionId() %>',
@@ -170,12 +173,6 @@ else {
 			</c:if>
 
 			<c:if test="<%= !layoutRevision.isHead() && LayoutPermissionUtil.contains(permissionChecker, layoutRevision.getPlid(), ActionKeys.UPDATE) %>">
-				stagingBar.layoutRevisionToolbar.add(
-					{
-						type: 'ToolbarSpacer'
-					}
-				);
-
 				stagingBar.layoutRevisionToolbar.add(
 					{
 
@@ -235,7 +232,6 @@ else {
 						</c:choose>
 
 						<%
-						String icon = "circle-check";
 						String label = null;
 
 						if (layoutRevision.getStatus() == WorkflowConstants.STATUS_INCOMPLETE) {
@@ -243,7 +239,6 @@ else {
 						}
 						else {
 							if (workflowEnabled) {
-								icon = "shuffle";
 								label = "submit-for-publication";
 							}
 							else {
@@ -252,7 +247,7 @@ else {
 						}
 						%>
 
-						icon: '<%= icon %>',
+						cssClass: 'btn-link',
 						label: '<%= UnicodeLanguageUtil.get(pageContext, label) %>'
 					}
 				);

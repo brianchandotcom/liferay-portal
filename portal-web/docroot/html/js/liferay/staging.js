@@ -7,7 +7,13 @@ AUI.add(
 			init: function(config) {
 				var instance = this;
 
-				instance._namespace = config.namespace;
+				var namespace = config.namespace;
+
+				instance._namespace = namespace;
+
+				instance._stagingBar = A.oneNS(namespace, '#stagingBar');
+
+				instance._bindUI();
 
 				Liferay.publish(
 					{
@@ -23,6 +29,22 @@ AUI.add(
 				);
 
 				Liferay.fire('initStagingBar', config);
+			},
+
+			_bindUI: function() {
+				var instance = this;
+
+				var stagingBar = instance._stagingBar;
+
+				if (stagingBar) {
+					stagingBar.delegate(
+						'change',
+						function(event) {
+							A.config.win.location.href = event.currentTarget.val();
+						},
+						'select.variation-options'
+					);
+				}
 			}
 		};
 
@@ -30,6 +52,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-io-plugin-deprecated', 'liferay-util-window']
+		requires: ['aui-io-plugin-deprecated', 'liferay-node', 'liferay-util-window']
 	}
 );

@@ -559,7 +559,8 @@
 						path: 'staging.js',
 						requires: [
 							'aui-io-plugin-deprecated',
-							'aui-modal'
+							'aui-modal',
+							'liferay-node'
 						]
 					},
 					'liferay-staging-branch': {

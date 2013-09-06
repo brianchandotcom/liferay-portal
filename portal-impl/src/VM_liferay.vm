@@ -82,10 +82,6 @@ img, .png {
 
 #macro (dockbar)
 	$theme.runtime("145")
-
-	#if ($themeDisplay.isShowStagingIcon())
-		$theme.runtime("170")
-	#end
 #end
 
 #macro (silently $foo)

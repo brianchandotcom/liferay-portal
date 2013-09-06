@@ -100,6 +100,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		dlFolder.setRepositoryId(repositoryId);
 		dlFolder.setMountPoint(mountPoint);
 		dlFolder.setParentFolderId(parentFolderId);
+		dlFolder.setTreePath(dlFolder.buildTreePath());
 		dlFolder.setName(name);
 		dlFolder.setDescription(description);
 		dlFolder.setLastPostDate(now);
@@ -743,6 +744,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 
 			dlFolder.setModifiedDate(serviceContext.getModifiedDate(null));
 			dlFolder.setParentFolderId(parentFolderId);
+			dlFolder.setTreePath(dlFolder.buildTreePath());
 			dlFolder.setExpandoBridgeAttributes(serviceContext);
 
 			dlFolderPersistence.update(dlFolder);
@@ -940,6 +942,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 
 			dlFolder.setModifiedDate(serviceContext.getModifiedDate(null));
 			dlFolder.setParentFolderId(parentFolderId);
+			dlFolder.setTreePath(dlFolder.buildTreePath());
 			dlFolder.setName(name);
 			dlFolder.setDescription(description);
 			dlFolder.setExpandoBridgeAttributes(serviceContext);

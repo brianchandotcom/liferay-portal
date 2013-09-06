@@ -63,6 +63,7 @@ public class DLFileShortcutLocalServiceImpl
 		fileShortcut.setCreateDate(serviceContext.getCreateDate(now));
 		fileShortcut.setModifiedDate(serviceContext.getModifiedDate(now));
 		fileShortcut.setFolderId(folderId);
+		fileShortcut.setTreePath(fileShortcut.buildTreePath());
 		fileShortcut.setToFileEntryId(toFileEntryId);
 		fileShortcut.setActive(true);
 		fileShortcut.setStatus(WorkflowConstants.STATUS_APPROVED);
@@ -334,6 +335,7 @@ public class DLFileShortcutLocalServiceImpl
 		fileShortcut.setModifiedDate(
 			serviceContext.getModifiedDate(new Date()));
 		fileShortcut.setFolderId(folderId);
+		fileShortcut.setTreePath(fileShortcut.buildTreePath());
 		fileShortcut.setToFileEntryId(toFileEntryId);
 
 		dlFileShortcutPersistence.update(fileShortcut);

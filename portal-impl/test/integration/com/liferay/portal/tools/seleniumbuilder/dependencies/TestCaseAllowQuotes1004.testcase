@@ -1,0 +1,9 @@
+<definition>
+	<command name="name">
+	<var name="pageName" />
+
+		<execute macro="BlogsEntry#addPG">
+			<var name="pageName" value="\&quot;${pageName}\&quot;" />
+		</execute>
+	</command>
+</definition>

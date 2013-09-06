@@ -1,0 +1,7 @@
+<definition>
+	<command name="name">
+		<execute macro="">
+			<var name="pageName" value="\&quot;${pageName}\&quot;" />
+		</execute>
+	</command>
+</definition>

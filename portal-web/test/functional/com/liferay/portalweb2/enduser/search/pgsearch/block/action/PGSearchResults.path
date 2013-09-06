@@ -25,12 +25,12 @@
 </tr>
 <tr>
 	<td>SEARCH_ICON</td>
-	<td>//input[@type='image' and @title='search']</td>
+	<td>//input[@type='image' and @title='Search']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CLEAR_SEARCH_ICON</td>
-	<td>//input[@type='image' and @title='clear-search']</td>
+	<td>//input[@type='image' and @title='Clear Search']</td>
 	<td></td>
 </tr>
 <tr>
@@ -52,17 +52,17 @@
 <!--ASSET_ENTRY_TABLE-->
 <tr>
 	<td>ASSET_ENTRY_TABLE_TITLE_1</td>
-	<td>//td[@id='_3_documentsSearchContainer_col-1_row-1']//span[@class='asset-entry-title']/a</td>
+	<td>//span[@class='asset-entry-title']/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ASSET_ENTRY_TABLE_TYPE_1</td>
-	<td>//td[@id='_3_documentsSearchContainer_col-1_row-1']//span[@class='asset-entry-type']</td>
+	<td>//span[@class='asset-entry-type']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ASSET_ENTRY_TABLE_SUMMARY_1</td>
-	<td>//td[@id='_3_documentsSearchContainer_col-1_row-1']//span[@class='asset-entry-summary']</td>
+	<td>//span[@class='asset-entry-summary']</td>
 	<td></td>
 </tr>
 </tbody>

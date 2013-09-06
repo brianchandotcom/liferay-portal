@@ -1568,7 +1568,7 @@
 			<name>max</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>int</type>
+			<type>java.lang.Integer</type>
 		</attribute>
 		<attribute>
 			<name>model</name>
@@ -1580,7 +1580,7 @@
 			<name>min</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
-			<type>int</type>
+			<type>java.lang.Integer</type>
 		</attribute>
 		<attribute>
 			<name>multiple</name>

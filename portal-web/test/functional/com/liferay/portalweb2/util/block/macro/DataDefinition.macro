@@ -4,21 +4,29 @@
 		<execute action="CPDynamicdatalistsDatadefinitions#selectFrame" locator-key1="DATA_DEFINITIONS_IFRAME" />
 		<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="TOOLBAR_ADD" value1="Add" />
 		<execute action="CPDynamicdatalistsDatadefinitionsAdd#type" locator-key1="NAME_FIELD" value1="${dataDefinitionName}" />
+
 		<execute macro="CPDynamicdatalistsDatadefinitionsAdd#showDetails" />
+
 		<execute action="CPDynamicdatalistsDatadefinitionsAdd#type" locator-key1="DETAILS_DESCRIPTION_FIELD" value1="${dataDefinitionDescription}" />
 
-		<execute macro="DataDefinition#addFieldCmdCP" />
+		<execute macro="DataDefinition#addFieldCmdCP">
+			<var name="fieldname" value="${fieldName}" />
+			<var name="fieldNameLabel" value="${fieldNameLabel}" />
+			<var name="formFieldKey" value="${formFieldKey}" />
+		</execute>
 
 		<execute action="CPDynamicdatalistsDatadefinitionsAdd#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 		<execute action="CPDynamicdatalistsDatadefinitions#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute action="CPDynamicdatalists#selectFrameTop" />
+		<execute action="CPDynamicdatalists#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="addFieldCmdCP">
+ 		<var name="fieldNameLabel" value="${fieldName?replace(' ', '_')}" />
+		<var name="fieldNameLabel" value="${fieldNameLabel?lowercase()}" />
   		<var name="key_fieldName" value="${fieldName}" />
 
 		<execute action="CPDynamicdatalistsDatadefinitionsAdd#dragAndDrop" locator-key1="FIELDS_NAME" locator-key2="FORM_BUILDER" value1="${fieldName}" />
-    	<execute action="CPDynamicdatalistsDatadefinitionsAdd#click" locator-key1="FORM_FIELD_1" />
+    	<execute action="CPDynamicdatalistsDatadefinitionsAdd#click" locator-key1="${formFieldKey}" />
 		<execute action="CPDynamicdatalistsDatadefinitionsAdd#doubleClick" locator-key1="SETTINGS_NAME" />
 		<execute action="CPDynamicdatalistsDatadefinitionsAdd#type" locator-key1="SETTINGS_CELL_EDITOR_FIELD" value1="${fieldNameLabel}" />
 		<execute action="CPDynamicdatalistsDatadefinitionsAdd#assertClick" locator-key1="SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
@@ -49,7 +57,7 @@
 		<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="TOOLBAR_SEARCH_BUTTON" value1="Search" />
 		<execute action="CPDynamicdatalistsDatadefinitions#assertTextNotPresent" value1="${dataDefinitionName}" />
 
-		<execute action="CPDynamicdatalists#selectFrameTop" />
+		<execute action="CPDynamicdatalists#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="editCP">
@@ -67,7 +75,7 @@
 
 		<execute action="CPDynamicdatalistsDatadefinitions#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
-		<execute action="CPDynamicdatalists#selectFrameTop" />
+		<execute action="CPDynamicdatalists#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="saveDataDefinition">
@@ -75,7 +83,7 @@
 
 		<execute action="CPDynamicdatalistsDatadefinitions#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
-		<execute action="CPDynamicdatalists#selectFrameTop" />
+		<execute action="CPDynamicdatalists#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="tearDownCP">
@@ -115,7 +123,7 @@
 		<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertTextEquals" locator-key1="DETAILS_DESCRIPTION_FIELD" value1="${dataDefinitionDescription}" />
 		<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertTextEquals" locator-key1="FORM_FIELD_1" value1="${fieldName}" />
 
-		<execute action="CPDynamicdatalists#selectFrameTop" />
+		<execute action="CPDynamicdatalists#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="viewDataDefinition">
@@ -130,6 +138,6 @@
 		<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertTextEquals" locator-key1="DETAILS_DESCRIPTION_FIELD" value1="${dataDefinitionDescription}" />
 		<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertTextEquals" locator-key1="${formName}" value1="${fieldName}" />
 
-		<execute action="CPDynamicdatalists#selectFrameTop" />
+		<execute action="CPDynamicdatalists#selectFrame" value1="relative=top" />
 	</command>
 </definition>

@@ -1,7 +1,7 @@
 <definition>
-	<execute test-case-command="CPDynamicdatalists#AddDataDefinitionCP" />
 	<execute test-case-command="CPDynamicdatalists#AddDataDefinitionListCP" />
 	<execute test-case-command="CPDynamicdatalists#AddDataDefinitionListRecordCP" />
+	<execute test-case-command="CPDynamicdatalists#AddDataDefinitionTextCP" />
 	<execute test-case-command="CPDynamicdatalists#AddDataDefinitionWithFreeMarkerDisplayTemplateCP" />
 	<execute test-case-command="CPDynamicdatalists#AddDataDefinitionWithFreeMarkerFormTemplateCP" />
 	<execute test-case-command="CPDynamicdatalists#AddDataDefinitionWithVelocityDisplayTemplateCP" />

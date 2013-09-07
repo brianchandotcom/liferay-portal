@@ -124,7 +124,7 @@ if (Validator.isNotNull(structureAvailableFields)) {
 		backURL="<%= ddmDisplay.getEditTemplateBackURL(liferayPortletRequest, liferayPortletResponse, classNameId, classPK, portletResource) %>"
 		localizeTitle="<%= false %>"
 		showBackURL="<%= showBackURL %>"
-		title="<%= HtmlUtil.escape(title) %>"
+		title="<%= title %>"
 	/>
 
 	<aui:model-context bean="<%= template %>" model="<%= DDMTemplate.class %>" />

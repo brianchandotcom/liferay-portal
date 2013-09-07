@@ -14,40 +14,69 @@
 
 package com.liferay.portal.kernel.messaging.proxy;
 
+import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.sender.SingleDestinationMessageSender;
 import com.liferay.portal.kernel.messaging.sender.SingleDestinationSynchronousMessageSender;
+
+import java.util.Map;
 
 /**
  * @author Micha Kiener
  * @author Michael C. Han
  * @author Brian Wing Shun Chan
+ * @author Shuyang Zhou
  */
 public abstract class BaseProxyBean {
 
-	public final SingleDestinationMessageSender
-		getSingleDestinationMessageSender() {
-
-		return _singleDestinationMessageSender;
+	public void send(ProxyRequest proxyRequest) {
+		_singleDestinationMessageSender.send(createMessage(proxyRequest));
 	}
 
-	public final SingleDestinationSynchronousMessageSender
-		getSingleDestinationSynchronousMessageSender() {
-
-		return _singleDestinationSynchronousMessageSender;
-	}
-
-	public final void setSingleDestinationMessageSender(
+	public void setSingleDestinationMessageSender(
 		SingleDestinationMessageSender singleDestinationMessageSender) {
 
 		_singleDestinationMessageSender = singleDestinationMessageSender;
 	}
 
-	public final void setSingleDestinationSynchronousMessageSender(
+	public void setSingleDestinationSynchronousMessageSender(
 		SingleDestinationSynchronousMessageSender
 		singleDestinationSynchronousMessageSender) {
 
 		_singleDestinationSynchronousMessageSender =
 			singleDestinationSynchronousMessageSender;
+	}
+
+	public Object synchronousSend(ProxyRequest proxyRequest) throws Exception {
+		ProxyResponse proxyResponse =
+			(ProxyResponse)_singleDestinationSynchronousMessageSender.send(
+				createMessage(proxyRequest));
+
+		if (proxyResponse == null) {
+			return proxyRequest.execute(this);
+		}
+		else if (proxyResponse.hasError()) {
+			throw proxyResponse.getException();
+		}
+		else {
+			return proxyResponse.getResult();
+		}
+	}
+
+	protected Message createMessage(ProxyRequest proxyRequest) {
+		Message message = new Message();
+
+		message.setPayload(proxyRequest);
+
+		Map<String, Object> messageValues =
+			MessageValuesThreadLocal.getValues();
+
+		if (!messageValues.isEmpty()) {
+			for (String key : messageValues.keySet()) {
+				message.put(key, messageValues.get(key));
+			}
+		}
+
+		return message;
 	}
 
 	private SingleDestinationMessageSender _singleDestinationMessageSender;

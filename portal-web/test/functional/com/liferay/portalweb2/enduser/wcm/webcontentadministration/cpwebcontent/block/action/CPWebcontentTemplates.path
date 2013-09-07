@@ -36,7 +36,7 @@
 </tr>
 <tr>
 	<td>ADD</td>
-	<td>//div[@class='container']/ul[contains(@class,'nav')]/li/a[contains(.,'Add')]</td>
+	<td>//div[@class='navbar-inner']//span[@class='nav-item-label' and contains(.,'Add')]</td>
 	<td></td>
 </tr>
 <tr>

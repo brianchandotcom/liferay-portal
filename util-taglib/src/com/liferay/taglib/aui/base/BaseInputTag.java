@@ -129,7 +129,7 @@ public class BaseInputTag extends com.liferay.taglib.util.IncludeTag {
 		return _last;
 	}
 
-	public int getMax() {
+	public java.lang.Integer getMax() {
 		return _max;
 	}
 
@@ -137,7 +137,7 @@ public class BaseInputTag extends com.liferay.taglib.util.IncludeTag {
 		return _model;
 	}
 
-	public int getMin() {
+	public java.lang.Integer getMin() {
 		return _min;
 	}
 
@@ -341,7 +341,7 @@ public class BaseInputTag extends com.liferay.taglib.util.IncludeTag {
 		setScopedAttribute("last", last);
 	}
 
-	public void setMax(int max) {
+	public void setMax(java.lang.Integer max) {
 		_max = max;
 
 		setScopedAttribute("max", max);
@@ -353,7 +353,7 @@ public class BaseInputTag extends com.liferay.taglib.util.IncludeTag {
 		setScopedAttribute("model", model);
 	}
 
-	public void setMin(int min) {
+	public void setMin(java.lang.Integer min) {
 		_min = min;
 
 		setScopedAttribute("min", min);
@@ -469,9 +469,9 @@ public class BaseInputTag extends com.liferay.taglib.util.IncludeTag {
 		_label = null;
 		_languageId = null;
 		_last = false;
-		_max = 0;
+		_max = null;
 		_model = null;
-		_min = 0;
+		_min = null;
 		_multiple = false;
 		_name = null;
 		_onChange = null;
@@ -567,9 +567,9 @@ public class BaseInputTag extends com.liferay.taglib.util.IncludeTag {
 	private java.lang.String _label = null;
 	private java.lang.String _languageId = null;
 	private boolean _last = false;
-	private int _max = 0;
+	private java.lang.Integer _max = null;
 	private java.lang.Class<?> _model = null;
-	private int _min = 0;
+	private java.lang.Integer _min = null;
 	private boolean _multiple = false;
 	private java.lang.String _name = null;
 	private java.lang.String _onChange = null;

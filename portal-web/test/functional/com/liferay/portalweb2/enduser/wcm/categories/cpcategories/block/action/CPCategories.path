@@ -82,7 +82,7 @@
 <!--ADD_CATEGORY-->
 <tr>
 	<td>ADD_CATEGORY_NAME_FIELD</td>
-	<td>//input[@id='_147_title']</td>
+	<td>//input[@id='_147_categoryName']</td>
 	<td></td>
 </tr>
 <tr>
@@ -98,7 +98,7 @@
 <!--EDIT_CATEGORY-->
 <tr>
 	<td>EDIT_CATEGORY_NAME_FIELD</td>
-	<td>//input[@id='_147_title']</td>
+	<td>//input[@id='_147_categoryNameEdit']</td>
 	<td></td>
 </tr>
 <tr>
@@ -145,7 +145,7 @@
 <!--ADD_SUBCATEGORY-->
 <tr>
 	<td>ADD_SUBCATEGORY_NAME_FIELD</td>
-	<td>//input[@id='_147_title']</td>
+	<td>//input[@id='_147_categoryName']</td>
 	<td></td>
 </tr>
 <tr>
@@ -161,7 +161,7 @@
 <!--EDIT_SUBCATEGORY-->
 <tr>
 	<td>EDIT_SUBCATEGORY_NAME_FIELD</td>
-	<td>//input[@id='_147_title']</td>
+	<td>//input[@id='_147_categoryNameEdit']</td>
 	<td></td>
 </tr>
 <tr>

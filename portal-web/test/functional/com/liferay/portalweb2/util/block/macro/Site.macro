@@ -34,8 +34,16 @@
 					<execute action="CPSites#click" locator-key1="ADD_INTRANET_SITE" />
 				</then>
 			</elseif>
+			<elseif>
+				<equals arg1="${siteType}" arg2="Site Template" />
+				<then>
+					<var name="key_siteTemplateName" value="${siteTemplateName}" />
+
+					<execute action="CPSites#click" locator-key1="ADD_SITE_TEMPLATE_SITE" />
+				</then>
+			</elseif>
 			<else>
-				<fail message="Invalid var siteType. Must be (Blank|Community|Intranet)." />
+				<fail message="Invalid var siteType. Must be (Blank|Community|Intranet|Site Template)." />
 			</else>
 		</if>
 
@@ -79,6 +87,12 @@
 		<execute action="CPSitemembershipsAddmembers#check" locator-key1="USER_TABLE_CHECKBOX" />
 		<execute action="CPSitemembershipsAddmembers#click" locator-key1="SAVE_BUTTON" />
 		<execute action="CPSitemembershipsAddmembers#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
+	<command name="addSiteTemplateCP">
+		<execute macro="Site#addCP">
+			<var name="siteType" value="Site Template" />
+		</execute>
 	</command>
 
 	<command name="approveJoinSiteRestrictedViaMySitesPG">

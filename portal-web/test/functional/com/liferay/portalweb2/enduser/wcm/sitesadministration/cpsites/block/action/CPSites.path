@@ -60,6 +60,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADD_SITE_TEMPLATE_SITE</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'${key_siteTemplateName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

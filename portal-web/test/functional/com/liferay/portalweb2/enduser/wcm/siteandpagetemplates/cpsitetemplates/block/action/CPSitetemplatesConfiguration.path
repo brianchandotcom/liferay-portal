@@ -1,0 +1,55 @@
+<html>
+<head>
+<title>CPSitetemplatesConfiguration</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPSitetemplatesConfiguration</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>CPSitetemplatesConfiguration</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_TEMPLATE_NAME</td>
+	<td>//h1[contains(.,'${key_siteTemplateName}')]/div/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--CONFIGURATION-->
+<tr>
+	<td>CONFIGURATION</td>
+	<td>//div[@data-persist-id='panel-manage-site_administration.configuration']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIGURATION_SITE_TEMPLATE_SETTINGS</td>
+	<td>//li[contains(.,'Site Template Settings')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIGURATION_APPLICATION_DISPLAY_TEMPLATES</td>
+	<td>//li[contains(.,'Application Display Templates')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIGURATION_MOBILE_DEVICE_FAMILIES</td>
+	<td>//li[contains(.,'Mobile Device Families')]/a</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

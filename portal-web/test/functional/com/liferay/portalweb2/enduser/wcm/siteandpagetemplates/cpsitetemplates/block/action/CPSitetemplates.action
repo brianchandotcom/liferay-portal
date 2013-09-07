@@ -1,19 +1,13 @@
 <definition>
 	<command name="assertClick">
-		<case locator-key1="VIEW_ALL">
-			<execute function="AssertClick#assertTextClickAtAndWait" />
-		</case>
 		<case locator-key1="ADD">
 			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
-		<case locator-key1="SITE_TEMPLATE_TABLE_ACTIONS_1">
+		<case locator-key1="SITE_TEMPLATE_TABLE_ACTIONS">
 			<execute function="AssertClick#assertTextClickAt" />
 		</case>
-		<case locator-key1="SITE_TEMPLATE_TABLE_ACTIONS_3">
-			<execute function="AssertClick#assertTextClickAt" />
-		</case>
-		<case locator-key1="SITE_TEMPLATE_MENULIST_EDIT">
-			<execute function="AssertClick#assertTextClickAt" />
+		<case locator-key1="SITE_TEMPLATE_MENULIST_MANAGE">
+			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
 	</command>
 </definition>

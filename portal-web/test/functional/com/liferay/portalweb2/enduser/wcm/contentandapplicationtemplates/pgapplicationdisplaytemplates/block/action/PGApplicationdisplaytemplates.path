@@ -39,8 +39,13 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EXPAND_BUTTON</td>
+	<td>//div[@class='navbar ']/div/div/a</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADD</td>
-	<td>//div[@class='container']/ul/li/a[contains(@class,'dropdown')]/span[contains(.,'Add')]</td>
+	<td>//a[@class=' dropdown-toggle']/span[contains(.,'Add')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -76,7 +81,7 @@
 <!--ADD_MENULIST-->
 <tr>
 	<td>ADD_MENULIST_ADT_TEMPLATE</td>
-	<td>//div[@class='container']/ul/li/ul/li/a[contains(.,'${key_adtTitle} Template')]</td>
+	<td>//ul/li/a/span[contains(.,'${key_adtTitle} Template')]</td>
 	<td></td>
 </tr>
 <tr>

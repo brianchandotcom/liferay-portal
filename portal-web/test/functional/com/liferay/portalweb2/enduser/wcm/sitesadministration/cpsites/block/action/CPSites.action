@@ -1,25 +1,42 @@
 <definition>
 	<command name="assertTextEquals">
 		<case locator-key1="INFO_MESSAGE">
-			<execute function="AssertTextEquals#assertText" value1="No sites were found." />
+			<execute function="AssertTextEquals#assertText" />
 		</case>
+
+		<case locator-key1="SITE_TABLE_ACTIONS">
+			<execute function="AssertTextEquals#assertText" />
+		</case>
+
 		<case locator-key1="SUCCESS_MESSAGE">
-			<execute function="AssertTextEquals#assertText" value1="Your request completed successfully." />
+			<execute function="AssertTextEquals#assertText" />
 		</case>
 	</command>
 
 	<command name="click">
 		<case locator-key1="ADD">
-			<execute function="Click#textClickAt" value1="Add" />
+			<execute function="Click#textClickAt" />
 		</case>
+
 		<case locator-key1="ADD_BLANK_SITE">
-			<execute function="Click#textClickAtAndWait" value1="Blank Site" />
+			<execute function="Click#textClickAtAndWait" />
 		</case>
+
+		<case locator-key1="ADD_COMMUNITY_SITE">
+			<execute function="Click#textClickAtAndWait" />
+		</case>
+
+		<case locator-key1="ADD_INTRANET_SITE">
+			<execute function="Click#textClickAtAndWait" />
+		</case>
+
 		<case locator-key1="BASIC_SEARCH_BUTTON">
-			<execute function="Click#textClickAtAndWait" value1="Search" />
+			<execute function="Click#textClickAtAndWait" />
 		</case>
+
 		<case locator-key1="SITE_MENULIST_DELETE">
-			<execute function="Click#textClickAtAndWait" value1="Delete" />
+			<execute function="Click#textClickAtAndWait" />
 		</case>
 	</command>
 </definition>
+

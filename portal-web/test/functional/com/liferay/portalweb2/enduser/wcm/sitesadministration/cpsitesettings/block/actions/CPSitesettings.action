@@ -1,0 +1,19 @@
+<definition>
+	<command name="assertClick">
+		<case locator-key1="SAVE_BUTTON">
+			<execute function="AssertClick#assertTextClickAtAndWait" />
+		</case>
+	</command>
+
+	<command name="assertTextEquals">
+		<case locator-key1="SUCCESS_MESSAGE">
+			<execute function="AssertTextEquals#assertText" />
+		</case>
+	</command>
+
+	<command name="type">
+		<case locator-key1="NAME_FIELD">
+			<execute function="Type#type" />
+		</case>
+	</command>
+</definition>

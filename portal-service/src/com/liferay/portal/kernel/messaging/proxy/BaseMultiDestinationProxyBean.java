@@ -14,22 +14,23 @@
 
 package com.liferay.portal.kernel.messaging.proxy;
 
+import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.sender.MessageSender;
 import com.liferay.portal.kernel.messaging.sender.SynchronousMessageSender;
 
+import java.util.Map;
+
 /**
  * @author Michael C. Han
+ * @author Shuyang Zhou
  */
 public abstract class BaseMultiDestinationProxyBean {
 
 	public abstract String getDestinationName(ProxyRequest proxyRequest);
 
-	public MessageSender getMessageSender() {
-		return _messageSender;
-	}
-
-	public SynchronousMessageSender getSynchronousMessageSender() {
-		return _synchronousMessageSender;
+	public void send(ProxyRequest proxyRequest) {
+		_messageSender.send(
+			getDestinationName(proxyRequest), createMessage(proxyRequest));
 	}
 
 	public void setMessageSender(MessageSender messageSender) {
@@ -40,6 +41,39 @@ public abstract class BaseMultiDestinationProxyBean {
 		SynchronousMessageSender synchronousMessageSender) {
 
 		_synchronousMessageSender = synchronousMessageSender;
+	}
+
+	public Object synchronousSend(ProxyRequest proxyRequest) throws Exception {
+		ProxyResponse proxyResponse =
+			(ProxyResponse)_synchronousMessageSender.send(
+				getDestinationName(proxyRequest), createMessage(proxyRequest));
+
+		if (proxyResponse == null) {
+			return proxyRequest.execute(this);
+		}
+		else if (proxyResponse.hasError()) {
+			throw proxyResponse.getException();
+		}
+		else {
+			return proxyResponse.getResult();
+		}
+	}
+
+	protected Message createMessage(ProxyRequest proxyRequest) {
+		Message message = new Message();
+
+		message.setPayload(proxyRequest);
+
+		Map<String, Object> messageValues =
+			MessageValuesThreadLocal.getValues();
+
+		if (!messageValues.isEmpty()) {
+			for (String key : messageValues.keySet()) {
+				message.put(key, messageValues.get(key));
+			}
+		}
+
+		return message;
 	}
 
 	private MessageSender _messageSender;

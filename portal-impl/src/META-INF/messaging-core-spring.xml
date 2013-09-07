@@ -88,9 +88,4 @@
 			<ref bean="com.liferay.portal.kernel.messaging.MessageBus" />
 		</property>
 	</bean>
-
-	<!-- Advice -->
-
-	<bean id="messagingProxyAdvice" class="com.liferay.portal.messaging.proxy.MessagingProxyAdvice" />
-	<bean id="multiDestinationMessagingProxyAdvice" class="com.liferay.portal.messaging.proxy.MultiDestinationMessagingProxyAdvice" />
 </beans>

@@ -73,7 +73,9 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 		HttpServletResponse response = (HttpServletResponse)servletResponse;
 
 		if (ServletVersionDetector.is3_0()) {
-			response = new HttpOnlyCookieServletResponse(response);
+			response =
+				HttpOnlyCookieServletResponse.getHttpOnlyCookieServletResponse(
+					response);
 		}
 
 		response = secureResponseHeaders(request, response);

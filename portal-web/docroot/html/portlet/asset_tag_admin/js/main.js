@@ -429,6 +429,7 @@ AUI.add(
 						};
 
 						var tagPanelMessageTpl = Lang.sub(TPL_TAG_PANEL_MESSAGES, tplValues);
+
 						var tagPanelMessage = Node.create(tagPanelMessageTpl);
 
 						return tagPanelMessage;
@@ -1629,10 +1630,13 @@ AUI.add(
 						var instance = this;
 
 						var output = A.one(container || instance._portletMessageContainer);
+
 						var typeClass = 'alert-' + type;
 
 						output.removeClass(CSS_MESSAGE_ERROR).removeClass(CSS_MESSAGE_SUCCESS);
+
 						output.addClass(typeClass);
+
 						output.html(message);
 
 						output.show();

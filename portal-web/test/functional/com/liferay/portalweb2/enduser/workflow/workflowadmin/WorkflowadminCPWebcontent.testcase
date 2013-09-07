@@ -1,5 +1,5 @@
 <definition>
-	<var name="workflowAssetType" value="Web Content" />
+	<var name="workflowAssetType" value="Web Content Article" />
 
 	<set-up>
 		<execute macro="User#firstLoginPG" />

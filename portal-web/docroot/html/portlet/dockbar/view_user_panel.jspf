@@ -15,9 +15,12 @@
 --%>
 
 <aui:nav collapsible="<%= true %>" cssClass="nav-account-controls" icon="user" id="navAccountControls">
-	<aui:nav-item cssClass="staging-controls">
-		<liferay-portlet:runtime portletName="<%= PortletKeys.STAGING_BAR %>" />
-	</aui:nav-item>
+
+	<c:if test="<%themeDisplay.isShowStagingIcon()%>">
+		<aui:nav-item cssClass="staging-controls">
+			<liferay-portlet:runtime portletName="<%= PortletKeys.STAGING_BAR %>" />
+		</aui:nav-item>
+	</c:if>
 
 	<%@ include file="/html/portlet/dockbar/view_admin_links.jspf" %>
 

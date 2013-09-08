@@ -43,8 +43,27 @@ public class MapUtil {
 	public static boolean getBoolean(
 		Map<String, ?> map, String key, boolean defaultValue) {
 
-		return GetterUtil.getBoolean(
-			getString(map, key, String.valueOf(defaultValue)), defaultValue);
+		Object value = map.get(key);
+
+		if (value == null) {
+			return defaultValue;
+		}
+
+		if (value instanceof Boolean) {
+			return (Boolean)value;
+		}
+
+		if (value instanceof String[]) {
+			String[] array = (String[])value;
+
+			if (array.length == 0) {
+				return defaultValue;
+			}
+
+			return GetterUtil.getBoolean((String)array[0], defaultValue);
+		}
+
+		return GetterUtil.getBoolean(String.valueOf(value), defaultValue);
 	}
 
 	public static double getDouble(Map<String, ?> map, String key) {
@@ -54,8 +73,27 @@ public class MapUtil {
 	public static double getDouble(
 		Map<String, ?> map, String key, double defaultValue) {
 
-		return GetterUtil.getDouble(
-			getString(map, key, String.valueOf(defaultValue)), defaultValue);
+		Object value = map.get(key);
+
+		if (value == null) {
+			return defaultValue;
+		}
+
+		if (value instanceof Double) {
+			return (Double)value;
+		}
+
+		if (value instanceof String[]) {
+			String[] array = (String[])value;
+
+			if (array.length == 0) {
+				return defaultValue;
+			}
+
+			return GetterUtil.getDouble((String)array[0], defaultValue);
+		}
+
+		return GetterUtil.getDouble(String.valueOf(value), defaultValue);
 	}
 
 	public static int getInteger(Map<String, ?> map, String key) {
@@ -65,8 +103,27 @@ public class MapUtil {
 	public static int getInteger(
 		Map<String, ?> map, String key, int defaultValue) {
 
-		return GetterUtil.getInteger(
-			getString(map, key, String.valueOf(defaultValue)), defaultValue);
+		Object value = map.get(key);
+
+		if (value == null) {
+			return defaultValue;
+		}
+
+		if (value instanceof Integer) {
+			return (Integer)value;
+		}
+
+		if (value instanceof String[]) {
+			String[] array = (String[])value;
+
+			if (array.length == 0) {
+				return defaultValue;
+			}
+
+			return GetterUtil.getInteger((String)array[0], defaultValue);
+		}
+
+		return GetterUtil.getInteger(String.valueOf(value), defaultValue);
 	}
 
 	public static long getLong(Map<Long, Long> map, long key) {
@@ -93,8 +150,27 @@ public class MapUtil {
 	public static long getLong(
 		Map<String, ?> map, String key, long defaultValue) {
 
-		return GetterUtil.getLong(
-			getString(map, key, String.valueOf(defaultValue)), defaultValue);
+		Object value = map.get(key);
+
+		if (value == null) {
+			return defaultValue;
+		}
+
+		if (value instanceof Long) {
+			return (Long)value;
+		}
+
+		if (value instanceof String[]) {
+			String[] array = (String[])value;
+
+			if (array.length == 0) {
+				return defaultValue;
+			}
+
+			return GetterUtil.getLong((String)array[0], defaultValue);
+		}
+
+		return GetterUtil.getLong(String.valueOf(value), defaultValue);
 	}
 
 	public static short getShort(Map<String, ?> map, String key) {
@@ -104,8 +180,27 @@ public class MapUtil {
 	public static short getShort(
 		Map<String, ?> map, String key, short defaultValue) {
 
-		return GetterUtil.getShort(
-			getString(map, key, String.valueOf(defaultValue)), defaultValue);
+		Object value = map.get(key);
+
+		if (value == null) {
+			return defaultValue;
+		}
+
+		if (value instanceof Short) {
+			return (Short)value;
+		}
+
+		if (value instanceof String[]) {
+			String[] array = (String[])value;
+
+			if (array.length == 0) {
+				return defaultValue;
+			}
+
+			return GetterUtil.getShort((String)array[0], defaultValue);
+		}
+
+		return GetterUtil.getShort(String.valueOf(value), defaultValue);
 	}
 
 	public static String getString(Map<String, ?> map, String key) {
@@ -117,24 +212,25 @@ public class MapUtil {
 
 		Object value = map.get(key);
 
-		if (value != null) {
-			if (value instanceof String[]) {
-				String[] array = (String[])value;
-
-				if (array.length > 0) {
-					return GetterUtil.getString(array[0], defaultValue);
-				}
-			}
-			else if (value instanceof String) {
-				return GetterUtil.getString((String)value, defaultValue);
-			}
-			else {
-				return GetterUtil.getString(
-					String.valueOf(value), defaultValue);
-			}
+		if (value == null) {
+			return defaultValue;
 		}
 
-		return defaultValue;
+		if (value instanceof String) {
+			return GetterUtil.getString((String)value, defaultValue);
+		}
+
+		if (value instanceof String[]) {
+			String[] array = (String[])value;
+
+			if (array.length == 0 ) {
+				return defaultValue;
+			}
+
+			return GetterUtil.getString(array[0], defaultValue);
+		}
+
+		return GetterUtil.getString(String.valueOf(value), defaultValue);
 	}
 
 	public static <K, V> void merge(

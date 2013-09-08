@@ -14,15 +14,19 @@
 
 package com.liferay.portal.kernel.staging;
 
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.AutoResetThreadLocal;
-import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.HashUtil;
+import com.liferay.portal.kernel.util.Validator;
 
+import java.lang.reflect.Method;
+
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
 /**
  * @author Raymond Augé
+ * @author Shuyang Zhou
  */
 public class MergeLayoutPrototypesThreadLocal {
 
@@ -34,60 +38,74 @@ public class MergeLayoutPrototypesThreadLocal {
 		return _inProgress.get();
 	}
 
-	public static boolean isMergeComplete(
-		String methodName, Object[] arguments, Class<?>[] parameterTypes) {
+	public static boolean isMergeComplete(Method method, Object[] arguments) {
+		Set<MethodKey> methodKeys = _mergeComplete.get();
 
-		Set<String> methodKeys = _mergeComplete.get();
-
-		String methodKey = _buildMethodKey(
-			methodName, arguments, parameterTypes);
-
-		return methodKeys.contains(methodKey);
+		return methodKeys.contains(new MethodKey(method, arguments));
 	}
 
 	public static void setInProgress(boolean inProgress) {
 		_inProgress.set(inProgress);
 	}
 
-	public static void setMergeComplete(
-		String methodName, Object[] arguments, Class<?>[] parameterTypes) {
+	public static void setMergeComplete(Method method, Object[] arguments) {
+		Set<MethodKey> methodKeys = _mergeComplete.get();
 
-		Set<String> methodKeys = _mergeComplete.get();
-
-		String methodKey = _buildMethodKey(
-			methodName, arguments, parameterTypes);
-
-		methodKeys.add(methodKey);
+		methodKeys.add(new MethodKey(method, arguments));
 
 		setInProgress(false);
-	}
-
-	private static String _buildMethodKey(
-		String methodName, Object[] arguments, Class<?>[] parameterTypes) {
-
-		if (ArrayUtil.isEmpty(arguments)) {
-			return methodName;
-		}
-
-		StringBundler sb = new StringBundler(arguments.length * 2 + 1);
-
-		sb.append(methodName);
-
-		for (int i = 0; i < arguments.length; i++) {
-			sb.append(parameterTypes[i].getName());
-
-			sb.append(arguments[i]);
-		}
-
-		return sb.toString();
 	}
 
 	private static ThreadLocal<Boolean> _inProgress =
 		new AutoResetThreadLocal<Boolean>(
 			MergeLayoutPrototypesThreadLocal.class + "._inProgress", false);
-	private static ThreadLocal<Set<String>> _mergeComplete =
-		new AutoResetThreadLocal<Set<String>>(
+	private static ThreadLocal<Set<MethodKey>> _mergeComplete =
+		new AutoResetThreadLocal<Set<MethodKey>>(
 			MergeLayoutPrototypesThreadLocal.class + "._mergeComplete",
-			new HashSet<String>());
+			new HashSet<MethodKey>());
+
+	private static class MethodKey {
+
+		public MethodKey(Method method, Object[] arguments) {
+			_method = method;
+			_arguments = arguments;
+		}
+
+		@Override
+		public int hashCode() {
+			int hashCode = _method.hashCode();
+
+			if (_arguments != null) {
+				for (Object obj : _arguments) {
+					if (obj == null) {
+						hashCode = HashUtil.hash(hashCode, 0);
+					}
+					else {
+						hashCode = HashUtil.hash(hashCode, obj.hashCode());
+					}
+				}
+			}
+
+			return hashCode;
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			MethodKey methodKey = (MethodKey)obj;
+
+			if (((_method == methodKey._method) ||
+				 Validator.equals(_method, methodKey._method)) &&
+				Arrays.equals(_arguments, methodKey._arguments)) {
+
+				return true;
+			}
+
+			return false;
+		}
+
+		private final Method _method;
+		private final Object[] _arguments;
+
+	}
 
 }

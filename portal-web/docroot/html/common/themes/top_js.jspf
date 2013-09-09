@@ -360,7 +360,24 @@
 			%>
 
 			<c:if test="<%= !allPortlets.isEmpty() && !layoutTypePortlet.hasStateMax() %>">
-				Liferay.Portlet.list = ['<%= ListUtil.toString(allPortlets, Portlet.PORTLET_ID_ACCESSOR, "','") %>'];
+
+				<%
+				StringBundler escapedPortletIds = new StringBundler(allPortlets.size() * 2 - 1);
+
+				itr = allPortlets.iterator();
+
+				while (itr.hasNext()) {
+					Portlet portlet = itr.next();
+
+					escapedPortletIds.append(HtmlUtil.escapeJS(portlet.getPortletId()));
+
+					if (itr.hasNext()) {
+						escapedPortletIds.append("','");
+					}
+				}
+				%>
+
+				Liferay.Portlet.list = ['<%= escapedPortletIds.toString() %>'];
 			</c:if>
 		</c:if>
 

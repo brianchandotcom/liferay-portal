@@ -36,6 +36,8 @@ if ((folder != null) && (folder.getModel() instanceof DLFolder)) {
 if ((folder == null) || folder.isSupportsMetadata()) {
 	fileEntryTypes = DLFileEntryTypeServiceUtil.getFolderFileEntryTypes(PortalUtil.getSiteAndCompanyGroupIds(themeDisplay), folderId, inherited);
 }
+
+boolean showAddDocument = DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_DOCUMENT);
 %>
 
 <aui:nav-item dropdown="<%= true %>" id="addButtonContainer" label="add">
@@ -70,7 +72,7 @@ if ((folder == null) || folder.isSupportsMetadata()) {
 		<aui:nav-item href="<%= addRepositoryURL %>" iconClass="icon-hdd" label="repository" />
 	</c:if>
 
-	<c:if test="<%= ((folder == null) || folder.isSupportsMultipleUpload()) && DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_DOCUMENT) %>">
+	<c:if test="<%= ((folder == null) || folder.isSupportsMultipleUpload()) && showAddDocument && !fileEntryTypes.isEmpty() %>">
 		<portlet:renderURL var="editFileEntryURL">
 			<portlet:param name="struts_action" value="/document_library/upload_multiple_file_entries" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -82,8 +84,8 @@ if ((folder == null) || folder.isSupportsMetadata()) {
 		<aui:nav-item href="<%= editFileEntryURL %>" label="multiple-documents" />
 	</c:if>
 
-	<c:if test="<%= DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_DOCUMENT) %>">
-		<c:if test="<%= fileEntryTypes.isEmpty() %>">
+	<c:choose>
+		<c:when test="<%= showAddDocument && (repositoryId != scopeGroupId) %>">
 			<portlet:renderURL var="editFileEntryURL">
 				<portlet:param name="struts_action" value="/document_library/edit_file_entry" />
 				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD %>" />
@@ -94,9 +96,8 @@ if ((folder == null) || folder.isSupportsMetadata()) {
 			</portlet:renderURL>
 
 			<aui:nav-item href="<%= editFileEntryURL %>" iconClass="icon-file" label="basic-document" />
-		</c:if>
-
-		<c:if test="<%= (folder == null) || folder.isSupportsMetadata() %>">
+		</c:when>
+		<c:when test="<%= !fileEntryTypes.isEmpty() && showAddDocument %>">
 
 			<%
 			for (DLFileEntryType fileEntryType : fileEntryTypes) {
@@ -117,8 +118,8 @@ if ((folder == null) || folder.isSupportsMetadata()) {
 			}
 			%>
 
-		</c:if>
-	</c:if>
+		</c:when>
+	</c:choose>
 </aui:nav-item>
 
 <aui:script use="aui-base,uploader">

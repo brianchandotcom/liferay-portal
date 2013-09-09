@@ -214,9 +214,11 @@ AUI.add(
 					500
 				);
 
-				var dd = instance._appViewMove._ddHandler.dd;
+				if (instance._appViewMove.get('updateable')) {
+					var dd = instance._appViewMove._ddHandler.dd;
 
-				dd.addInvalid(STR_DOT + CSS_UPLOAD_ERROR);
+					dd.addInvalid(STR_DOT + CSS_UPLOAD_ERROR);
+				}
 
 				docElement.on(
 					'dragover',

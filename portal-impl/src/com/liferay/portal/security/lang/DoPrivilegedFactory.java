@@ -86,7 +86,7 @@ public class DoPrivilegedFactory
 	public Object postProcessAfterInitialization(Object bean, String beanName)
 		throws BeansException {
 
-		if (SecurityManagerUtil.isPACLDisabled()) {
+		if (!SecurityManagerUtil.ENABLED) {
 			return bean;
 		}
 

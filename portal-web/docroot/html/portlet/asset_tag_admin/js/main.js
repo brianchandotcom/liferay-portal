@@ -430,9 +430,7 @@ AUI.add(
 
 						var tagPanelMessageTpl = Lang.sub(TPL_TAG_PANEL_MESSAGES, tplValues);
 
-						var tagPanelMessage = Node.create(tagPanelMessageTpl);
-
-						return tagPanelMessage;
+						return Node.create(tagPanelMessageTpl);
 					},
 
 					_createTagPanelPermissions: function() {

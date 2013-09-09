@@ -7,6 +7,7 @@ CKEDITOR.plugins.add(
 			var dataProcessor = editor.dataProcessor;
 
 			var	dataFilter = dataProcessor && dataProcessor.dataFilter;
+			var	htmlFilter = dataProcessor && dataProcessor.htmlFilter;
 
 			if (dataFilter) {
 				dataFilter.addRules(
@@ -18,6 +19,15 @@ CKEDITOR.plugins.add(
 								var fakeElement;
 
 								if (attributeClass && attributeClass.indexOf('liferayckevideo') >= 0) {
+									var realChild = realElement.children && realElement.children[0];
+
+									if (realChild &&
+										realChild.attributes['class'].indexOf('ckvideo-no-id') != -1 &&
+										realChild.children && realChild.children.length) {
+
+										realChild.children[0].value = '';
+									}
+
 									fakeElement = editor.createFakeParserElement(realElement, 'liferay_cke_video', 'video', false);
 
 									var fakeStyle = fakeElement.attributes.style || '';
@@ -52,14 +62,34 @@ CKEDITOR.plugins.add(
 					}
 				);
 			}
+			if (htmlFilter) {
+				htmlFilter.addRules(
+					{
+						elements: {
+							'div': function(realElement) {
+								var attributeClass = realElement.attributes['class'];
+
+								if (attributeClass && attributeClass.indexOf('ckvideo-no-id') >= 0 &&
+									realElement.children && realElement.children.length) {
+
+									realElement.children[0].value = '';
+								}
+
+								return realElement;
+							}
+						}
+					}
+				);
+			}
 		},
 
 		getPlaceholderCss: function() {
 			var instance = this;
 
-			return 'img.cke_video {' +
+			return 'img.liferay_cke_video {' +
 				'background: #CCC url(' + CKEDITOR.getUrl(instance.path + 'icons/placeholder.png') + ') no-repeat 50% 50%;' +
 				'border: 1px solid #A9A9A9;' +
+				'display: block;' +
 				'height: 80px;' +
 				'width: 80px;' +
 			'}';

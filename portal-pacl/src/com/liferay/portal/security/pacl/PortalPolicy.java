@@ -95,6 +95,13 @@ public class PortalPolicy extends Policy {
 	public boolean implies(
 		ProtectionDomain protectionDomain, Permission permission) {
 
+		if (_started.get().booleanValue()) {
+			return true;
+		}
+
+		try {
+			_started.set(true);
+
 		if (!(permission instanceof PACLUtil.Permission) &&
 			((protectionDomain.getClassLoader() == null) ||
 			 !_paclPolicy.isCheckablePermission(permission))) {
@@ -115,6 +122,10 @@ public class PortalPolicy extends Policy {
 		}
 
 		return false;
+		}
+		finally {
+			_started.set(false);
+		}
 	}
 
 	@Override
@@ -177,6 +188,14 @@ public class PortalPolicy extends Policy {
 	}
 
 	private static AllPermission _allPermission = new AllPermission();
+	private static ThreadLocal<Boolean> _started = new ThreadLocal<Boolean>() {
+
+		@Override
+		protected Boolean initialValue() {
+			return Boolean.FALSE;
+		}
+
+	};
 
 	private PACLPolicy _paclPolicy = PACLPolicyManager.getDefaultPACLPolicy();
 	private Policy _policy;

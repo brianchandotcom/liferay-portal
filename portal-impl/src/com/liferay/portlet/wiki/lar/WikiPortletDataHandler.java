@@ -152,7 +152,7 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 		List<Element> nodeElements = nodesElement.elements();
 
 		for (Element nodeElement : nodeElements) {
-			StagedModelDataHandlerUtil.importStagedModel(
+			StagedModelDataHandlerUtil.importReferenceStagedModel(
 				portletDataContext, nodeElement);
 		}
 
@@ -162,7 +162,7 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 		List<Element> pageElements = pagesElement.elements();
 
 		for (Element pageElement : pageElements) {
-			StagedModelDataHandlerUtil.importStagedModel(
+			StagedModelDataHandlerUtil.importReferenceStagedModel(
 				portletDataContext, pageElement);
 		}
 

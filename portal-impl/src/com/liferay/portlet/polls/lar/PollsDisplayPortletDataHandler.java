@@ -149,7 +149,7 @@ public class PollsDisplayPortletDataHandler extends PollsPortletDataHandler {
 		List<Element> questionElements = questionsElement.elements();
 
 		for (Element questionElement : questionElements) {
-			StagedModelDataHandlerUtil.importStagedModel(
+			StagedModelDataHandlerUtil.importReferenceStagedModel(
 				portletDataContext, questionElement);
 		}
 
@@ -159,7 +159,7 @@ public class PollsDisplayPortletDataHandler extends PollsPortletDataHandler {
 		List<Element> choiceElements = choicesElement.elements();
 
 		for (Element choiceElement : choiceElements) {
-			StagedModelDataHandlerUtil.importStagedModel(
+			StagedModelDataHandlerUtil.importReferenceStagedModel(
 				portletDataContext, choiceElement);
 		}
 
@@ -172,7 +172,7 @@ public class PollsDisplayPortletDataHandler extends PollsPortletDataHandler {
 			List<Element> voteElements = votesElement.elements();
 
 			for (Element voteElement : voteElements) {
-				StagedModelDataHandlerUtil.importStagedModel(
+				StagedModelDataHandlerUtil.importReferenceStagedModel(
 					portletDataContext, voteElement);
 			}
 		}

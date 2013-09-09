@@ -58,10 +58,6 @@ public class PACLInvocationHandler implements InvocationHandler {
 	protected Object doInvoke(Object proxy, Method method, Object[] arguments)
 		throws Throwable {
 
-		if (!PACLPolicyManager.isActive()) {
-			return _invocationHandler.invoke(proxy, method, arguments);
-		}
-
 		if (method.getDeclaringClass() == Object.class) {
 			String methodName = method.getName();
 

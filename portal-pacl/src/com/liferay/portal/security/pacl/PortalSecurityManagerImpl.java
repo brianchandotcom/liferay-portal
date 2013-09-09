@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermissio
 import com.liferay.portal.kernel.security.pacl.permission.PortalServicePermission;
 import com.liferay.portal.kernel.security.pacl.permission.PortalSocketPermission;
 import com.liferay.portal.kernel.servlet.taglib.FileAvailabilityUtil;
-import com.liferay.portal.kernel.util.AggregateClassLoader;
 import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 import com.liferay.portal.kernel.util.CentralizedThreadLocal;
 import com.liferay.portal.kernel.util.JavaDetector;
@@ -57,7 +56,6 @@ import com.liferay.portal.spring.bean.BeanReferenceAnnotationBeanPostProcessor;
 import com.liferay.portal.spring.bean.BeanReferenceRefreshUtil;
 import com.liferay.portal.spring.bean.BeanReferenceRefreshUtil.PACL;
 import com.liferay.portal.spring.context.PortletApplicationContext;
-import com.liferay.portal.spring.util.FilterClassLoader;
 import com.liferay.portal.template.BaseTemplateManager;
 import com.liferay.portal.template.TemplateContextHelper;
 import com.liferay.portal.template.TemplateControlContext;
@@ -122,16 +120,10 @@ public class PortalSecurityManagerImpl extends SecurityManager
 	implements PortalSecurityManager {
 
 	public PortalSecurityManagerImpl() {
-		SecurityManager securityManager = System.getSecurityManager();
-
 		initClasses();
 
 		try {
-			Policy policy = null;
-
-			if (securityManager != null) {
-				policy = Policy.getPolicy();
-			}
+			Policy policy = Policy.getPolicy();
 
 			_policy = new PortalPolicy(policy);
 
@@ -275,11 +267,6 @@ public class PortalSecurityManagerImpl extends SecurityManager
 	@Override
 	public Policy getPolicy() {
 		return _policy;
-	}
-
-	@Override
-	public boolean isActive() {
-		return PACLPolicyManager.isActive();
 	}
 
 	protected void initClass(Class<?> clazz) {
@@ -642,12 +629,8 @@ public class PortalSecurityManagerImpl extends SecurityManager
 			ServletContext servletContext,
 			RequestDispatcher requestDispatcher) {
 
-			if (PACLPolicyManager.isActive()) {
-				requestDispatcher = new PACLRequestDispatcherWrapper(
-					servletContext, requestDispatcher);
-			}
-
-			return requestDispatcher;
+			return new PACLRequestDispatcherWrapper(
+				servletContext, requestDispatcher);
 		}
 
 	}
@@ -656,10 +639,6 @@ public class PortalSecurityManagerImpl extends SecurityManager
 
 		@Override
 		public <T> T wrap(PrivilegedAction<T> privilegedAction) {
-			if (!PACLPolicyManager.isActive()) {
-				return privilegedAction.run();
-			}
-
 			return DoPrivilegedFactory.wrap(
 				AccessController.doPrivileged(privilegedAction));
 		}
@@ -668,10 +647,6 @@ public class PortalSecurityManagerImpl extends SecurityManager
 		public <T> T wrap(
 				PrivilegedExceptionAction<T> privilegedExceptionAction)
 			throws Exception {
-
-			if (!PACLPolicyManager.isActive()) {
-				return privilegedExceptionAction.run();
-			}
 
 			return DoPrivilegedFactory.wrap(
 				AccessController.doPrivileged(privilegedExceptionAction));
@@ -684,10 +659,6 @@ public class PortalSecurityManagerImpl extends SecurityManager
 
 		@Override
 		public <T> T wrapWhenActive(T t) {
-			if (!PACLPolicyManager.isActive()) {
-				return t;
-			}
-
 			return DoPrivilegedFactory.wrap(t);
 		}
 
@@ -1097,20 +1068,9 @@ public class PortalSecurityManagerImpl extends SecurityManager
 
 		@Override
 		public ClassLoader getBeanClassLoader() {
-			if (PACLPolicyManager.isActive()) {
-				return DoPrivilegedFactory.wrap(
-					new PreloadClassLoader(
-						PortletClassLoaderUtil.getClassLoader(), _classes));
-			}
-
-			ClassLoader beanClassLoader =
-				AggregateClassLoader.getAggregateClassLoader(
-					new ClassLoader[] {
-						PortletClassLoaderUtil.getClassLoader(),
-						ClassLoaderUtil.getPortalClassLoader()
-					});
-
-			return new FilterClassLoader(beanClassLoader);
+			return DoPrivilegedFactory.wrap(
+				new PreloadClassLoader(
+					PortletClassLoaderUtil.getClassLoader(), _classes));
 		}
 
 		private static Map<String, Class<?>> _classes =

@@ -56,10 +56,6 @@ public class PACLUtil {
 	}
 
 	public static PACLPolicy getPACLPolicy() {
-		if (!PACLPolicyManager.isActive()) {
-			return null;
-		}
-
 		SecurityManager securityManager = System.getSecurityManager();
 
 		if (securityManager == null) {

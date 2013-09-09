@@ -159,7 +159,6 @@ public class PortalPolicy extends Policy {
 
 		if (!(permission instanceof PACLUtil.Permission) &&
 			((protectionDomain.getClassLoader() == null) ||
-			 !PACLPolicyManager.isActive() ||
 			 !_paclPolicy.isCheckablePermission(permission))) {
 
 			return _checkWithParentPolicy(protectionDomain, permission);

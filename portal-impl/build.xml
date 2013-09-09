@@ -525,6 +525,18 @@ public class Creole10Parser]]></replacevalue>
 			<arg line="-S gem install -i ./${tstamp.value}/output ${tstamp.value}/compass/compass-0.12.2.gem --no-rdoc --no-ri" />
 		</java>
 
+		<if>
+			<os family="windows" />
+			<then>
+				<echo>Replacing shebangs in *nix executables on Windows to fix jRuby issues.</echo>
+
+				<replace dir="${tstamp.value}/output/bin/">
+					<replacetoken><![CDATA[#! jruby]]></replacetoken>
+					<replacevalue><![CDATA[#!/usr/bin/env jruby]]></replacevalue>
+				</replace>
+			</then>
+		</if>
+
 		<jar
 			basedir="${tstamp.value}/output"
 			jarfile="${project.dir}/lib/portal/ruby-gems.jar"

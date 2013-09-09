@@ -1214,8 +1214,6 @@ public class PropsValues {
 
 	public static final boolean MINIFIER_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.MINIFIER_ENABLED));
 
-	public static final int MINIFIER_FILES_LIMIT = GetterUtil.getInteger(PropsUtil.get(PropsKeys.MINIFIER_FILES_LIMIT));
-
 	public static final int MINIFIER_INLINE_CONTENT_CACHE_SIZE = GetterUtil.getInteger(PropsUtil.get(PropsKeys.MINIFIER_INLINE_CONTENT_CACHE_SIZE));
 
 	public static final String[] MINIFIER_INLINE_CONTENT_CACHE_SKIP_CSS = PropsUtil.getArray(PropsKeys.MINIFIER_INLINE_CONTENT_CACHE_SKIP_CSS);

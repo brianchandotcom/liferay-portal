@@ -194,7 +194,11 @@ public class LiferayLocalRepository
 	public void deleteFolder(long folderId)
 		throws PortalException, SystemException {
 
-		dlFolderLocalService.deleteFolder(folderId);
+		DLFolder dlFolder = dlFolderLocalService.fetchFolder(folderId);
+
+		if (dlFolder != null) {
+			dlFolderLocalService.deleteFolder(folderId);
+		}
 	}
 
 	@Override

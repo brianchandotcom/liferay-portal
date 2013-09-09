@@ -22,7 +22,6 @@ import org.aopalliance.intercept.MethodInvocation;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.interceptor.TransactionAttribute;
 import org.springframework.transaction.interceptor.TransactionAttributeSource;
-import org.springframework.transaction.support.CallbackPreferringPlatformTransactionManager;
 
 /**
  * @author Shuyang Zhou
@@ -56,15 +55,6 @@ public class TransactionInterceptor implements MethodInterceptor {
 	public void setPlatformTransactionManager(
 		PlatformTransactionManager platformTransactionManager) {
 
-		if (platformTransactionManager instanceof
-				CallbackPreferringPlatformTransactionManager) {
-
-			transactionExecutor = new CallbackPreferringTransactionExecutor();
-		}
-		else {
-			transactionExecutor = new DefaultTransactionExecutor();
-		}
-
 		this.platformTransactionManager = platformTransactionManager;
 	}
 
@@ -72,6 +62,12 @@ public class TransactionInterceptor implements MethodInterceptor {
 		TransactionAttributeSource transactionAttributeSource) {
 
 		this.transactionAttributeSource = transactionAttributeSource;
+	}
+
+	public void setTransactionExecutor(
+		TransactionExecutor transactionExecutor) {
+
+		this.transactionExecutor = transactionExecutor;
 	}
 
 	/**

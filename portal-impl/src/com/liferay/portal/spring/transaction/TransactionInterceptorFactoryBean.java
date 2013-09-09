@@ -36,6 +36,15 @@ public class TransactionInterceptorFactoryBean
 	public MethodInterceptor postProcessing(
 		MethodInterceptor methodInterceptor) {
 
+		TransactionInterceptor transactionInterceptor =
+			(TransactionInterceptor)methodInterceptor;
+
+		TransactionExecutor transactionExecutor =
+			TransactionExecutorFactory.createTransactionExecutor(
+				transactionInterceptor.platformTransactionManager, false);
+
+		transactionInterceptor.setTransactionExecutor(transactionExecutor);
+
 		DynamicDataSourceTargetSource dynamicDataSourceTargetSource =
 			(DynamicDataSourceTargetSource)
 				InfrastructureUtil.getDynamicDataSourceTargetSource();
@@ -50,9 +59,6 @@ public class TransactionInterceptorFactoryBean
 		dynamicDataSourceAdvice.setDynamicDataSourceTargetSource(
 			dynamicDataSourceTargetSource);
 		dynamicDataSourceAdvice.setNextMethodInterceptor(methodInterceptor);
-
-		TransactionInterceptor transactionInterceptor =
-			(TransactionInterceptor)methodInterceptor;
 
 		dynamicDataSourceAdvice.setTransactionAttributeSource(
 			transactionInterceptor.transactionAttributeSource);

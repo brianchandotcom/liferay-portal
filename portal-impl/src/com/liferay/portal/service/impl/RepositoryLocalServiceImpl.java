@@ -45,7 +45,6 @@ import com.liferay.portal.repository.util.RepositoryFactoryUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.RepositoryLocalServiceBaseImpl;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.RepositoryNameException;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 
@@ -171,11 +170,11 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 				expandoValueLocalService.deleteValues(
 					Repository.class.getName(), repositoryId);
 
-				try {
-					dlFolderLocalService.deleteFolder(
-						repository.getDlFolderId());
-				}
-				catch (NoSuchFolderException nsfe) {
+				DLFolder dlFolder = dlFolderLocalService.fetchDLFolder(
+					repository.getDlFolderId());
+
+				if (dlFolder != null) {
+					dlFolderLocalService.deleteDLFolder(dlFolder);
 				}
 
 				repositoryPersistence.remove(repository);

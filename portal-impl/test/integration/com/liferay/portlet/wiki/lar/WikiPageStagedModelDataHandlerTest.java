@@ -27,6 +27,8 @@ import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.persistence.RepositoryUtil;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
+import com.liferay.portal.test.Sync;
+import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.wiki.attachments.WikiAttachmentsTest;
@@ -50,8 +52,10 @@ import org.junit.runner.RunWith;
 @ExecutionTestListeners(
 	listeners = {
 		MainServletExecutionTestListener.class,
+		SynchronousDestinationExecutionTestListener.class,
 		TransactionalExecutionTestListener.class
 	})
+@Sync
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class WikiPageStagedModelDataHandlerTest
 	extends BaseWorkflowedStagedModelDataHandlerTestCase {

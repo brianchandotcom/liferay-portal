@@ -67,6 +67,8 @@ public class EditPermissionsAction extends PortletAction {
 		throws Exception {
 
 		try {
+			ActionUtil.getPortlet(actionRequest);
+
 			actionRequest = ActionUtil.getWrappedActionRequest(
 				actionRequest, null);
 
@@ -114,6 +116,8 @@ public class EditPermissionsAction extends PortletAction {
 		}
 
 		try {
+			ActionUtil.getPortlet(renderRequest);
+
 			PermissionServiceUtil.checkPermission(
 				groupId, selResource, resourcePrimKey);
 		}
@@ -121,7 +125,8 @@ public class EditPermissionsAction extends PortletAction {
 			SessionErrors.add(
 				renderRequest, PrincipalException.class.getName());
 
-			setForward(renderRequest, "portlet.portlet_configuration.error");
+			return actionMapping.findForward(
+				"portlet.portlet_configuration.error");
 		}
 
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(

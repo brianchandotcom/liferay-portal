@@ -28,6 +28,7 @@ import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.service.base.PortalPreferencesLocalServiceBaseImpl;
 import com.liferay.portlet.PortalPreferencesImpl;
 import com.liferay.portlet.PortalPreferencesWrapper;
+import com.liferay.portlet.PortalPreferencesWrapperCacheUtil;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.PortletPreferencesThreadLocal;
 
@@ -45,6 +46,8 @@ public class PortalPreferencesLocalServiceImpl
 	public PortalPreferences addPortalPreferences(
 			long ownerId, int ownerType, String defaultPreferences)
 		throws SystemException {
+
+		PortalPreferencesWrapperCacheUtil.remove(ownerId, ownerType);
 
 		long portalPreferencesId = counterLocalService.increment();
 
@@ -178,6 +181,8 @@ public class PortalPreferencesLocalServiceImpl
 			long ownerId, int ownerType, String xml)
 		throws SystemException {
 
+		PortalPreferencesWrapperCacheUtil.remove(ownerId, ownerType);
+
 		PortalPreferences portalPreferences =
 			portalPreferencesPersistence.fetchByO_O(ownerId, ownerType);
 
@@ -202,6 +207,13 @@ public class PortalPreferencesLocalServiceImpl
 			long ownerId, int ownerType, String defaultPreferences)
 		throws SystemException {
 
+		PortalPreferencesWrapper portalPreferencesWrapper =
+			PortalPreferencesWrapperCacheUtil.get(ownerId, ownerType);
+
+		if (portalPreferencesWrapper != null) {
+			return portalPreferencesWrapper.clone();
+		}
+
 		PortalPreferences portalPreferences =
 			portalPreferencesPersistence.fetchByO_O(ownerId, ownerType);
 
@@ -222,7 +234,13 @@ public class PortalPreferencesLocalServiceImpl
 			(PortalPreferencesImpl)PortletPreferencesFactoryUtil.fromXML(
 				ownerId, ownerType, portalPreferences.getPreferences());
 
-		return new PortalPreferencesWrapper(portalPreferencesImpl);
+		portalPreferencesWrapper = new PortalPreferencesWrapper(
+			portalPreferencesImpl);
+
+		PortalPreferencesWrapperCacheUtil.put(
+			ownerId, ownerType, portalPreferencesWrapper);
+
+		return portalPreferencesWrapper.clone();
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

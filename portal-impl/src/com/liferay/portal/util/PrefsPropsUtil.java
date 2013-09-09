@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.PortalPreferencesLocalService;
+import com.liferay.portlet.PortalPreferencesWrapper;
+import com.liferay.portlet.PortalPreferencesWrapperCacheUtil;
 import com.liferay.util.ContentUtil;
 
 import java.util.Enumeration;
@@ -239,7 +241,18 @@ public class PrefsPropsUtil {
 	}
 
 	public static PortletPreferences getPreferences() throws SystemException {
-		return getPreferences(PortletKeys.PREFS_OWNER_ID_DEFAULT);
+		PortalPreferencesWrapper portalPreferencesWrapper =
+			PortalPreferencesWrapperCacheUtil.get(
+				PortletKeys.PREFS_OWNER_ID_DEFAULT,
+				PortletKeys.PREFS_OWNER_TYPE_COMPANY);
+
+		if (portalPreferencesWrapper != null) {
+			return portalPreferencesWrapper;
+		}
+
+		return _portalPreferencesLocalService.getPreferences(
+			PortletKeys.PREFS_OWNER_ID_DEFAULT,
+			PortletKeys.PREFS_OWNER_TYPE_COMPANY);
 	}
 
 	public static PortletPreferences getPreferences(long companyId)
@@ -247,6 +260,13 @@ public class PrefsPropsUtil {
 
 		long ownerId = companyId;
 		int ownerType = PortletKeys.PREFS_OWNER_TYPE_COMPANY;
+
+		PortalPreferencesWrapper portalPreferencesWrapper =
+			PortalPreferencesWrapperCacheUtil.get(ownerId, ownerType);
+
+		if (portalPreferencesWrapper != null) {
+			return portalPreferencesWrapper;
+		}
 
 		return _portalPreferencesLocalService.getPreferences(
 			ownerId, ownerType);

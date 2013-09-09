@@ -42,9 +42,16 @@ public class DLFileShortcutImpl extends DLFileShortcutBaseImpl {
 	public String buildTreePath() throws PortalException, SystemException {
 		StringBundler sb = new StringBundler();
 
-		buildTreePath(sb, getFolder());
+		buildTreePath(sb, getDLFolder());
 
 		return sb.toString();
+	}
+
+	@Override
+	public DLFolder getDLFolder() throws PortalException, SystemException {
+		Folder folder = getFolder();
+
+		return (DLFolder)folder.getModel();
 	}
 
 	@Override
@@ -77,16 +84,14 @@ public class DLFileShortcutImpl extends DLFileShortcutBaseImpl {
 	public DLFolder getTrashContainer()
 		throws PortalException, SystemException {
 
-		Folder folder = null;
+		DLFolder dlFolder = null;
 
 		try {
-			folder = getFolder();
+			dlFolder = getDLFolder();
 		}
 		catch (NoSuchFolderException nsfe) {
 			return null;
 		}
-
-		DLFolder dlFolder = (DLFolder)folder.getModel();
 
 		if (dlFolder.isInTrash()) {
 			return dlFolder;
@@ -127,16 +132,16 @@ public class DLFileShortcutImpl extends DLFileShortcutBaseImpl {
 		}
 	}
 
-	protected void buildTreePath(StringBundler sb, Folder folder)
+	protected void buildTreePath(StringBundler sb, DLFolder dlFolder)
 		throws PortalException, SystemException {
 
-		if (folder == null) {
+		if (dlFolder == null) {
 			sb.append(StringPool.SLASH);
 		}
 		else {
-			buildTreePath(sb, folder.getParentFolder());
+			buildTreePath(sb, dlFolder.getParentFolder());
 
-			sb.append(folder.getFolderId());
+			sb.append(dlFolder.getFolderId());
 			sb.append(StringPool.SLASH);
 		}
 	}

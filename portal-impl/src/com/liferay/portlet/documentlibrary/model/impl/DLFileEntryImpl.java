@@ -411,16 +411,16 @@ public class DLFileEntryImpl extends DLFileEntryBaseImpl {
 		super.setExtraSettings(_extraSettingsProperties.toString());
 	}
 
-	protected void buildTreePath(StringBundler sb, DLFolder folder)
+	protected void buildTreePath(StringBundler sb, DLFolder dlFolder)
 		throws PortalException, SystemException {
 
-		if (folder == null) {
+		if (dlFolder == null) {
 			sb.append(StringPool.SLASH);
 		}
 		else {
-			buildTreePath(sb, folder.getParentFolder());
+			buildTreePath(sb, dlFolder.getParentFolder());
 
-			sb.append(folder.getFolderId());
+			sb.append(dlFolder.getFolderId());
 			sb.append(StringPool.SLASH);
 		}
 	}

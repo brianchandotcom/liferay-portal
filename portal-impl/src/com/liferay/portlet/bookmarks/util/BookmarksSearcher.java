@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.bookmarks.util;
 
-import com.liferay.portal.kernel.search.BaseIndexer;
+import com.liferay.portal.kernel.search.BaseSearcher;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerPostProcessor;
@@ -31,7 +31,7 @@ import javax.portlet.PortletURL;
  * @author Julio Camarero
  * @author Eudaldo Alonso
  */
-public class BookmarksSearcher extends BaseIndexer {
+public class BookmarksSearcher extends BaseSearcher {
 
 	public static final String[] CLASS_NAMES = {
 		BookmarksEntry.class.getName(), BookmarksFolder.class.getName()

@@ -11,6 +11,34 @@
 		<execute macro="DataDefinition#tearDownCP" />
 	</tear-down>
 
+	<command name="AddDataDefinitionCP">
+		<var name="fieldName" value="Text" />
+		<var name="fieldNameLabel" value="text" />
+		<var name="dataDefinitionDescription" value="Data Definition Description ${fieldName}" />
+		<var name="dataDefinitionName" value="Data Definition ${fieldName}" />
+		
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DataDefinition#addCP">
+			<var name="dataDefinitionDescription" value="${dataDefinitionDescription}" />
+			<var name="dataDefinitionName" value="${dataDefinitionName}" />
+			<var name="fieldName" value="${fieldName}" />
+			<var name="fieldNameLabel" value="${fieldNameLabel}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DataDefinition#viewCP">
+			<var name="dataDefinitionDescription" value="${dataDefinitionDescription}" />
+			<var name="dataDefinitionName" value="${dataDefinitionName}" />
+			<var name="fieldName" value="${fieldName}" />
+		</execute>
+	</command>
+
 	<command name="AddDataDefinitionBooleanCP">
 		<var name="fieldName" value="Boolean" />
 		<var name="formFieldKey" value="FORM_BOOLEAN_FIELD_1" />
@@ -777,6 +805,171 @@
 		<execute macro="DataDefinition#viewCP">
 			<var name="dataDefinitionDescription" value="${dataDefinitionDescriptionEdit}" />
 			<var name="dataDefinitionName" value="${dataDefinitionNameEdit}" />
+		</execute>
+	</command>
+
+	<command name="EditDataDefinitionBooleanFieldLabelCP">
+		<var name="fieldName" value="Boolean" />
+		<var name="formFieldKey" value="FORM_BOOLEAN_FIELD_1" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DataDefinition#addCP">
+			<var name="dataDefinitionDescription" value="Data Definition Description ${fieldName}" />
+			<var name="dataDefinitionName" value="Data Definition ${fieldName}" />
+			<var name="fieldName" value="${fieldName}" />
+			<var name="formFieldKey" value="${formFieldKey}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DataDefinition#editFieldBooleanFieldLabelCP">
+			<var name="dataDefinitionName" value="Data Definition ${fieldName}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DataDefinition#viewEditFieldBooleanFieldLabelCP">
+			<var name="dataDefinitionDescription" value="Data Definition Description ${fieldName}" />
+			<var name="dataDefinitionName" value="Data Definition ${fieldName}" />
+		</execute>
+	</command>
+
+	<command name="EditDataDefinitionBooleanNameCP">
+		<var name="fieldName" value="Boolean" />
+		<var name="formFieldKey" value="FORM_BOOLEAN_FIELD_1" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DataDefinition#addCP">
+			<var name="dataDefinitionDescription" value="Data Definition Description ${fieldName}" />
+			<var name="dataDefinitionName" value="Data Definition ${fieldName}" />
+			<var name="fieldName" value="${fieldName}" />
+			<var name="formFieldKey" value="${formFieldKey}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DataDefinition#editFieldBooleanNameCP">
+			<var name="dataDefinitionName" value="Data Definition ${fieldName}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DataDefinition#viewEditFieldBooleanNameCP">
+			<var name="dataDefinitionDescription" value="Data Definition Description ${fieldName}" />
+			<var name="dataDefinitionName" value="Data Definition ${fieldName}" />
+		</execute>
+	</command>
+
+	<command name="EditDataDefinitionBooleanPredefinedValueCP">
+		<var name="fieldName" value="Boolean" />
+		<var name="formFieldKey" value="FORM_BOOLEAN_FIELD_1" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DataDefinition#addCP">
+			<var name="dataDefinitionDescription" value="Data Definition Description ${fieldName}" />
+			<var name="dataDefinitionName" value="Data Definition ${fieldName}" />
+			<var name="fieldName" value="${fieldName}" />
+			<var name="formFieldKey" value="${formFieldKey}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DataDefinition#editFieldBooleanPredefinedValueCP">
+			<var name="dataDefinitionName" value="Data Definition ${fieldName}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DataDefinition#viewEditFieldBooleanPredefinedValueCP">
+			<var name="dataDefinitionDescription" value="Data Definition Description ${fieldName}" />
+			<var name="dataDefinitionName" value="Data Definition ${fieldName}" />
+		</execute>
+	</command>
+
+	<command name="EditDataDefinitionBooleanShowLabelCP">
+		<var name="fieldName" value="Boolean" />
+		<var name="formFieldKey" value="FORM_BOOLEAN_FIELD_1" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DataDefinition#addCP">
+			<var name="dataDefinitionDescription" value="Data Definition Description ${fieldName}" />
+			<var name="dataDefinitionName" value="Data Definition ${fieldName}" />
+			<var name="fieldName" value="${fieldName}" />
+			<var name="formFieldKey" value="${formFieldKey}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DataDefinition#editFieldBooleanShowLabelCP">
+			<var name="dataDefinitionName" value="Data Definition ${fieldName}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DataDefinition#viewEditFieldBooleanShowLabelCP">
+			<var name="dataDefinitionDescription" value="Data Definition Description ${fieldName}" />
+			<var name="dataDefinitionName" value="Data Definition ${fieldName}" />
+		</execute>
+	</command>
+
+	<command name="EditDataDefinitionBooleanTipCP">
+		<var name="fieldName" value="Boolean" />
+		<var name="formFieldKey" value="FORM_BOOLEAN_FIELD_1" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DataDefinition#addCP">
+			<var name="dataDefinitionDescription" value="Data Definition Description ${fieldName}" />
+			<var name="dataDefinitionName" value="Data Definition ${fieldName}" />
+			<var name="fieldName" value="${fieldName}" />
+			<var name="formFieldKey" value="${formFieldKey}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DataDefinition#editFieldBooleanTipCP">
+			<var name="dataDefinitionName" value="Data Definition ${fieldName}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Dynamic Data Lists" />
+		</execute>
+
+		<execute macro="DataDefinition#viewEditFieldBooleanTipCP">
+			<var name="dataDefinitionDescription" value="Data Definition Description ${fieldName}" />
+			<var name="dataDefinitionName" value="Data Definition ${fieldName}" />
 		</execute>
 	</command>
 

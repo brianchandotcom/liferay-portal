@@ -65,6 +65,36 @@ import java.util.Map;
 public class JournalTestUtil {
 
 	public static JournalArticle addArticle(
+			long groupId, long folderId, long classNameId,
+			Map<Locale, String> titleMap, Map<Locale, String> descriptionMap,
+			Map<Locale, String> contentMap, Locale defaultLocale,
+			boolean workflowEnabled, boolean approved,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		if (workflowEnabled) {
+			serviceContext = (ServiceContext)serviceContext.clone();
+
+			serviceContext.setWorkflowAction(
+				WorkflowConstants.ACTION_SAVE_DRAFT);
+
+			if (approved) {
+				serviceContext.setWorkflowAction(
+					WorkflowConstants.ACTION_PUBLISH);
+			}
+		}
+
+		String content = createLocalizedContent(contentMap, defaultLocale);
+
+		return JournalArticleLocalServiceUtil.addArticle(
+			serviceContext.getUserId(), groupId, folderId, classNameId, 0,
+			StringPool.BLANK, true, JournalArticleConstants.VERSION_DEFAULT,
+			titleMap, descriptionMap, content, "general", null, null, null, 1,
+			1, 1965, 0, 0, 0, 0, 0, 0, 0, true, 0, 0, 0, 0, 0, true, true,
+			false, null, null, null, null, serviceContext);
+	}
+
+	public static JournalArticle addArticle(
 			long groupId, long folderId, long classNameId, String title,
 			String description, String content, Locale defaultLocale,
 			boolean workflowEnabled, boolean approved,
@@ -83,25 +113,16 @@ public class JournalTestUtil {
 			descriptionMap.put(locale, description);
 		}
 
-		if (workflowEnabled) {
-			serviceContext = (ServiceContext)serviceContext.clone();
+		Map<Locale, String> contentMap = new HashMap<Locale, String>();
 
-			serviceContext.setWorkflowAction(
-				WorkflowConstants.ACTION_SAVE_DRAFT);
-
-			if (approved) {
-				serviceContext.setWorkflowAction(
-					WorkflowConstants.ACTION_PUBLISH);
-			}
+		for (Locale locale : _locales) {
+			contentMap.put(locale, content);
 		}
 
-		return JournalArticleLocalServiceUtil.addArticle(
-			serviceContext.getUserId(), groupId, folderId, classNameId, 0,
-			StringPool.BLANK, true, JournalArticleConstants.VERSION_DEFAULT,
-			titleMap, descriptionMap,
-			createLocalizedContent(content, defaultLocale), "general", null,
-			null, null, 1, 1, 1965, 0, 0, 0, 0, 0, 0, 0, true, 0, 0, 0, 0, 0,
-			true, true, false, null, null, null, null, serviceContext);
+		return addArticle(
+			groupId, folderId, classNameId, titleMap, descriptionMap,
+			contentMap, defaultLocale, workflowEnabled, approved,
+			serviceContext);
 	}
 
 	public static JournalArticle addArticle(
@@ -189,6 +210,21 @@ public class JournalTestUtil {
 		return addArticle(
 			groupId, folderId, title, content, LocaleUtil.getSiteDefault(),
 			true, approved);
+	}
+
+	public static JournalArticle addArticleWithWorkflow(
+			long groupId, Map<Locale, String> titleMap,
+			Map<Locale, String> descriptionMap, Map<Locale, String> contentMap,
+			boolean approved)
+		throws Exception {
+
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
+
+		return addArticle(
+			groupId, JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			JournalArticleConstants.CLASSNAME_ID_DEFAULT, titleMap,
+			descriptionMap, contentMap, LocaleUtil.getSiteDefault(), true,
+			approved, serviceContext);
 	}
 
 	public static JournalArticle addArticleWithWorkflow(
@@ -453,7 +489,7 @@ public class JournalTestUtil {
 	}
 
 	public static String createLocalizedContent(
-		String content, Locale defaultLocale) {
+		Map<Locale, String> content, Locale defaultLocale) {
 
 		StringBundler sb = new StringBundler((2 * _locales.length) - 1);
 
@@ -473,10 +509,22 @@ public class JournalTestUtil {
 		for (Locale locale : _locales) {
 			addLanguageIdElement(
 				document.getRootElement(), LocaleUtil.toLanguageId(locale),
-				content);
+				content.get(locale));
 		}
 
 		return document.asXML();
+	}
+
+	public static String createLocalizedContent(
+		String content, Locale defaultLocale) {
+
+		Map<Locale, String> contentMap = new HashMap<Locale, String>();
+
+		for (Locale locale : _locales) {
+			contentMap.put(locale, content);
+		}
+
+		return createLocalizedContent(contentMap, defaultLocale);
 	}
 
 	public static void expireArticle(long groupId, JournalArticle article)

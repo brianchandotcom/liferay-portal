@@ -102,6 +102,12 @@ public class UserTestUtil {
 			ServiceTestUtil.randomString(), TestPropsValues.getGroupId());
 	}
 
+	public static User addUser(long groupId, Locale locale) throws Exception {
+		return addUser(
+			ServiceTestUtil.randomString(), false, locale, "ServiceTestSuite",
+			"ServiceTestSuite", new long[] {groupId});
+	}
+
 	public static User addUser(
 			String screenName, boolean autoScreenName, Locale locale,
 			String firstName, String lastName, long[] groupIds)

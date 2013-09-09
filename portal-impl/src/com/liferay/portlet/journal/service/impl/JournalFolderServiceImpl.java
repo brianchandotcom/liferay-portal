@@ -144,7 +144,7 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 	public List<Object> getFoldersAndArticles(
 			long groupId, long folderId, int status, int start, int end,
 			OrderByComparator obc)
-		throws PortalException, SystemException {
+		throws SystemException {
 
 		QueryDefinition queryDefinition = new QueryDefinition(
 			status, start, end, obc);
@@ -157,7 +157,7 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 	public List<Object> getFoldersAndArticles(
 			long groupId, long folderId, int start, int end,
 			OrderByComparator obc)
-		throws PortalException, SystemException {
+		throws SystemException {
 
 		return getFoldersAndArticles(
 			groupId, folderId, WorkflowConstants.STATUS_ANY, start, end, obc);

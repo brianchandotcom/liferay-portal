@@ -208,15 +208,13 @@ if (inlineEdit && (inlineEditSaveURL != null)) {
 
 <aui:script use="<%= modules %>">
 	(function() {
-		var BREAKPOINTS = Liferay.BREAKPOINTS;
+		var Util = Liferay.Util;
 
 		function getToolbarSet(toolbarSet) {
-			var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
-
-			if (width < BREAKPOINTS.PHONE) {
+			if (Util.isPhone()) {
 				toolbarSet = 'phone';
 			}
-			else if (width < BREAKPOINTS.TABLET) {
+			else if (Util.isTablet()) {
 				toolbarSet = 'tablet';
 			}
 

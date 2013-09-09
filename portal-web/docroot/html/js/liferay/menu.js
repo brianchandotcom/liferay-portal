@@ -2,12 +2,10 @@ AUI.add(
 	'liferay-menu',
 	function(A) {
 		var Browser = Liferay.Browser;
-
 		var Lang = A.Lang;
+		var Util = Liferay.Util;
 
 		var trim = Lang.trim;
-
-		var Util = Liferay.Util;
 
 		var ARIA_ATTR_ROLE = 'role';
 
@@ -24,8 +22,6 @@ AUI.add(
 		var DEFAULT_ALIGN_POINTS = ['tl', 'bl'];
 
 		var EVENT_CLICK = 'click';
-
-		var EVENT_TOUCH_END = 'touchend';
 
 		var PARENT_NODE = 'parentNode';
 

@@ -312,10 +312,22 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 						jspWriter.write("<i class=\"caret\"></i>&nbsp;");
 					}
 
+					boolean auiImage = false;
+
 					if (Validator.isNotNull(_icon)) {
-						jspWriter.write("<img alt=\"\" src=\"");
-						jspWriter.write(_icon);
-						jspWriter.write("\" />&nbsp;");
+						auiImage = _icon.startsWith(_AUI_PATH);
+
+						if (auiImage) {
+							jspWriter.write("&nbsp;<i class=\"icon-");
+							jspWriter.write(
+								_icon.substring(_AUI_PATH.length()));
+							jspWriter.write("\"></i>");
+						}
+						else {
+							jspWriter.write("<img alt=\"\" src=\"");
+							jspWriter.write(_icon);
+							jspWriter.write("\" />&nbsp;");
+						}
 					}
 
 					jspWriter.write(message);
@@ -371,6 +383,8 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 
 		return EVAL_PAGE;
 	}
+
+	private static final String _AUI_PATH = "../aui/";
 
 	private static final int _DEFAULT_MAX_DISPLAY_ITEMS = GetterUtil.getInteger(
 		PropsUtil.get(PropsKeys.ICON_MENU_MAX_DISPLAY_ITEMS));

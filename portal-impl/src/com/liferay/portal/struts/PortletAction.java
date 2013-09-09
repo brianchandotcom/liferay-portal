@@ -256,28 +256,35 @@ public class PortletAction extends Action {
 	}
 
 	protected PortletPreferences getStrictPortletSetup(
-			PortletRequest portletRequest)
+			Layout layout, String portletId)
 		throws PortalException, SystemException {
 
-		String portletResource = ParamUtil.getString(
-			portletRequest, "portletResource");
-
-		if (Validator.isNull(portletResource)) {
+		if (Validator.isNull(portletId)) {
 			return null;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		PortletPreferences portletPreferences =
 			PortletPreferencesFactoryUtil.getStrictPortletSetup(
-				themeDisplay.getLayout(), portletResource);
+				layout, portletId);
 
 		if (portletPreferences instanceof StrictPortletPreferencesImpl) {
 			throw new PrincipalException();
 		}
 
 		return portletPreferences;
+	}
+
+	protected PortletPreferences getStrictPortletSetup(
+			PortletRequest portletRequest)
+		throws PortalException, SystemException {
+
+		String portletResource = ParamUtil.getString(
+			portletRequest, "portletResource");
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		return getStrictPortletSetup(themeDisplay.getLayout(), portletResource);
 	}
 
 	/**

@@ -45,6 +45,8 @@ import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang3.StringEscapeUtils;
+
 /**
  * @author Michael Hashimoto
  */
@@ -317,6 +319,10 @@ public class SeleniumBuilderFileUtil {
 
 	public String getVariableName(String name) {
 		return TextFormatter.format(name, TextFormatter.I);
+	}
+
+	public String getVariableTranslated(String name) {
+		return StringEscapeUtils.escapeJava(name);
 	}
 
 	public String normalizeFileName(String fileName) {

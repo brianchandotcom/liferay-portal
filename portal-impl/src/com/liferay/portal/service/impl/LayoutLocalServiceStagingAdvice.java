@@ -518,7 +518,8 @@ public class LayoutLocalServiceStagingAdvice implements MethodInterceptor {
 					systemEventHierarchyEntry.getExtraData());
 			}
 			finally {
-				SystemEventHierarchyEntryThreadLocal.pop();
+				SystemEventHierarchyEntryThreadLocal.pop(
+					Layout.class, layout.getPlid());
 			}
 		}
 	}

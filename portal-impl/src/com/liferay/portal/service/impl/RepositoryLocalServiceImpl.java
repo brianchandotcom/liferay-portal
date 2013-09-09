@@ -165,8 +165,7 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 			repositoryId);
 
 		if (repository != null) {
-			SystemEventHierarchyEntryThreadLocal.push(
-				Repository.class, repositoryId);
+			SystemEventHierarchyEntryThreadLocal.push(Repository.class);
 
 			try {
 				expandoValueLocalService.deleteValues(
@@ -189,7 +188,7 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 					SystemEventConstants.TYPE_DELETE, StringPool.BLANK);
 			}
 			finally {
-				SystemEventHierarchyEntryThreadLocal.pop();
+				SystemEventHierarchyEntryThreadLocal.pop(Repository.class);
 			}
 		}
 

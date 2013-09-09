@@ -46,6 +46,20 @@ public class SystemEventHierarchyEntryThreadLocal {
 	}
 
 	public static SystemEventHierarchyEntry pop() {
+		return pop(-1, -1);
+	}
+
+	public static SystemEventHierarchyEntry pop(Class<?> clazz) {
+		return pop(PortalUtil.getClassNameId(clazz), 0);
+	}
+
+	public static SystemEventHierarchyEntry pop(Class<?> clazz, long classPK) {
+		return pop(PortalUtil.getClassNameId(clazz), classPK);
+	}
+
+	public static SystemEventHierarchyEntry pop(
+		long classNameId, long classPK) {
+
 		Stack<SystemEventHierarchyEntry> systemEventHierarchyEntries =
 			_systemEventHierarchyEntries.get();
 
@@ -53,11 +67,34 @@ public class SystemEventHierarchyEntryThreadLocal {
 			return null;
 		}
 
-		return systemEventHierarchyEntries.pop();
+		SystemEventHierarchyEntry systemEventHierarchyEntry =
+			systemEventHierarchyEntries.peek();
+
+		if (((classNameId < 0) && (classPK < 0)) ||
+			systemEventHierarchyEntry.hasTypedModel(classNameId, classPK)) {
+
+			return systemEventHierarchyEntries.pop();
+		}
+
+		return null;
+	}
+
+	public static SystemEventHierarchyEntry pop(
+		String className, long classPK) {
+
+		return pop(PortalUtil.getClassNameId(className), classPK);
 	}
 
 	public static SystemEventHierarchyEntry push() throws SystemException {
 		return push(SystemEventConstants.ACTION_SKIP);
+	}
+
+	public static SystemEventHierarchyEntry push(Class<?> clazz)
+		throws SystemException {
+
+		return push(
+			PortalUtil.getClassNameId(clazz), 0,
+			SystemEventConstants.ACTION_SKIP);
 	}
 
 	public static SystemEventHierarchyEntry push(Class<?> clazz, long classPK)

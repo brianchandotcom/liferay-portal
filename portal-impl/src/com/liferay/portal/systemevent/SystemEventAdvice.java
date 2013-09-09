@@ -157,13 +157,6 @@ public class SystemEventAdvice
 			return;
 		}
 
-		SystemEventHierarchyEntry systemEventHierarchyEntry =
-			SystemEventHierarchyEntryThreadLocal.peek();
-
-		if (systemEventHierarchyEntry == null) {
-			return;
-		}
-
 		Object[] arguments = methodInvocation.getArguments();
 
 		ClassedModel classedModel = (ClassedModel)arguments[0];
@@ -174,11 +167,8 @@ public class SystemEventAdvice
 			return;
 		}
 
-		if (systemEventHierarchyEntry.hasTypedModel(
-				getClassName(classedModel), classPK)) {
-
-			SystemEventHierarchyEntryThreadLocal.pop();
-		}
+		SystemEventHierarchyEntryThreadLocal.pop(
+			getClassName(classedModel), classPK);
 	}
 
 	@Override

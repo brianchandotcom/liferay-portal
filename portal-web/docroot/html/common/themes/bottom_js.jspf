@@ -52,7 +52,7 @@
 	</c:choose>
 </aui:script>
 
-<aui:script use="aui-base,aui-button-search-cancel">
+<aui:script use="aui-base">
 	Liferay.Util.addInputType();
 
 	Liferay.Portlet.ready(
@@ -62,11 +62,7 @@
 	);
 
 	if (A.UA.mobile) {
-		new A.ButtonSearchCancel(
-			{
-				trigger: 'input[type=password],input[type=search],input.clearable,input.search-query'
-			}
-		);
+		Liferay.Util.addInputCancel();
 	}
 </aui:script>
 

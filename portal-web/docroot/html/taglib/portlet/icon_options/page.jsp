@@ -20,7 +20,7 @@
 	cssClass="portlet-options"
 	direction="down"
 	extended="<%= false %>"
-	icon=""
+	icon="../aui/gear"
 	message="options"
 	showArrow="<%= true %>"
 	showWhenSingleIcon="<%= true %>"
@@ -42,6 +42,12 @@
 	<liferay-portlet:icon-help />
 
 	<liferay-portlet:icon-print />
+
+	<liferay-portlet:icon-maximize />
+
+	<liferay-portlet:icon-minimize />
+
+	<liferay-portlet:icon-close />
 
 	<%
 	Portlet portlet = (Portlet)request.getAttribute(WebKeys.RENDER_PORTLET);
@@ -78,7 +84,7 @@
 
 				<liferay-ui:icon
 					cssClass='<%= portletDisplay.getNamespace() + "expose-as-widget" %>'
-					image="../common/add"
+					image="../aui/plus-sign"
 					label="<%= true %>"
 					message="add-to-any-website"
 					url="<%= widgetHREF %>"
@@ -87,7 +93,7 @@
 
 			<c:if test="<%= facebookShowAddAppLink %>">
 				<liferay-ui:icon
-					image="../social_bookmarks/facebook"
+					image="../aui/facebook"
 					label="<%= true %>"
 					message="add-to-facebook"
 					method="get"
@@ -103,7 +109,7 @@
 
 				<liferay-ui:icon
 					cssClass='<%= portletDisplay.getNamespace() + "expose-as-widget" %>'
-					image="../common/add"
+					image="../aui/plus-sign"
 					label="<%= true %>"
 					message="add-to-igoogle"
 					url="<%= googleGadgetHREF %>"
@@ -117,7 +123,7 @@
 				%>
 
 				<liferay-ui:icon
-					image="../common/add"
+					image="../aui/plus-sign"
 					label="<%= true %>"
 					message="add-to-netvibes"
 					method="get"
@@ -127,7 +133,7 @@
 
 			<c:if test="<%= appShowShareWithFriendsLink %>">
 				<liferay-ui:icon
-					image="share"
+					image="../aui/share"
 					label="<%= true %>"
 					message="share-this-application-with-friends"
 					method="get"

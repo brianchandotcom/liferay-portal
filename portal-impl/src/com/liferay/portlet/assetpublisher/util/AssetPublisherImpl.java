@@ -47,6 +47,7 @@ import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.User;
+import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -64,6 +65,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.SubscriptionSender;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portlet.StrictPortletPreferencesImpl;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetEntry;
@@ -142,15 +144,18 @@ public class AssetPublisherImpl implements AssetPublisher {
 			themeDisplay.getRefererPlid());
 
 		PortletPreferences portletPreferences =
-			PortletPreferencesFactoryUtil.getPortletSetup(
-				themeDisplay.getScopeGroupId(), layout,
-				referringPortletResource, null);
+			PortletPreferencesFactoryUtil.getStrictPortletSetup(
+				layout, referringPortletResource);
 
 		String selectionStyle = portletPreferences.getValue(
 			"selectionStyle", "dynamic");
 
 		if (selectionStyle.equals("dynamic")) {
 			return;
+		}
+
+		if (portletPreferences instanceof StrictPortletPreferencesImpl) {
+			throw new PrincipalException();
 		}
 
 		AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(

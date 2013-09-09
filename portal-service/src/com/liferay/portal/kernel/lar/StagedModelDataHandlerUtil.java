@@ -107,7 +107,8 @@ public class StagedModelDataHandlerUtil {
 
 				referenceElement = portletDataContext.addReferenceElement(
 					referrerStagedModel, referrerStagedModelElement,
-					stagedModel, stagedModelClass, referenceType, true);
+					stagedModel, stagedModelClass,
+					PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
 
 				return referenceElement;
 			}

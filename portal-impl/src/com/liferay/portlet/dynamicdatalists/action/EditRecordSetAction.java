@@ -24,7 +24,10 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.struts.PortletAction;
+import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
+import com.liferay.portlet.StrictPortletPreferencesImpl;
 import com.liferay.portlet.dynamicdatalists.NoSuchRecordSetException;
 import com.liferay.portlet.dynamicdatalists.RecordSetDDMStructureIdException;
 import com.liferay.portlet.dynamicdatalists.RecordSetNameException;
@@ -139,6 +142,24 @@ public class EditRecordSetAction extends PortletAction {
 	protected DDLRecordSet updateRecordSet(ActionRequest actionRequest)
 		throws Exception {
 
+		String portletResource = ParamUtil.getString(
+			actionRequest, "portletResource");
+
+		PortletPreferences portletPreferences = null;
+
+		if (Validator.isNotNull(portletResource)) {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
+			portletPreferences =
+				PortletPreferencesFactoryUtil.getStrictPortletSetup(
+					themeDisplay.getLayout(), portletResource);
+
+			if (portletPreferences instanceof StrictPortletPreferencesImpl) {
+				throw new PrincipalException();
+			}
+		}
+
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		long recordSetId = ParamUtil.getLong(actionRequest, "recordSetId");
@@ -177,14 +198,7 @@ public class EditRecordSetAction extends PortletAction {
 			DDLRecordSet.class.getName(), recordSet.getRecordSetId(), 0,
 			workflowDefinition);
 
-		String portletResource = ParamUtil.getString(
-			actionRequest, "portletResource");
-
-		if (Validator.isNotNull(portletResource)) {
-			PortletPreferences portletPreferences =
-				PortletPreferencesFactoryUtil.getPortletSetup(
-					actionRequest, portletResource);
-
+		if (portletPreferences != null) {
 			portletPreferences.reset("displayDDMTemplateId");
 			portletPreferences.reset("editable");
 			portletPreferences.reset("formDDMTemplateId");

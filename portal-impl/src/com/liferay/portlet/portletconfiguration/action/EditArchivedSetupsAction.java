@@ -54,8 +54,6 @@ public class EditArchivedSetupsAction extends PortletAction {
 			ActionResponse actionResponse)
 		throws Exception {
 
-		actionRequest = ActionUtil.getWrappedActionRequest(actionRequest, null);
-
 		Portlet portlet = null;
 
 		try {
@@ -71,6 +69,9 @@ public class EditArchivedSetupsAction extends PortletAction {
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		try {
+			actionRequest = ActionUtil.getWrappedActionRequest(
+				actionRequest, null);
+
 			if (cmd.equals(Constants.SAVE)) {
 				updateSetup(actionRequest, portlet);
 			}
@@ -136,8 +137,6 @@ public class EditArchivedSetupsAction extends PortletAction {
 			RenderResponse renderResponse)
 		throws Exception {
 
-		renderRequest = ActionUtil.getWrappedRenderRequest(renderRequest, null);
-
 		Portlet portlet = null;
 
 		try {
@@ -152,6 +151,8 @@ public class EditArchivedSetupsAction extends PortletAction {
 		}
 
 		renderResponse.setTitle(ActionUtil.getTitle(portlet, renderRequest));
+
+		renderRequest = ActionUtil.getWrappedRenderRequest(renderRequest, null);
 
 		return actionMapping.findForward(
 			getForward(

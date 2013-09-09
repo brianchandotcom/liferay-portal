@@ -66,9 +66,10 @@ public class EditPermissionsAction extends PortletAction {
 			ActionResponse actionResponse)
 		throws Exception {
 
-		actionRequest = ActionUtil.getWrappedActionRequest(actionRequest, null);
-
 		try {
+			actionRequest = ActionUtil.getWrappedActionRequest(
+				actionRequest, null);
+
 			updateRolePermissions(actionRequest);
 
 			addSuccessMessage(actionRequest, actionResponse);
@@ -92,8 +93,6 @@ public class EditPermissionsAction extends PortletAction {
 			PortletConfig portletConfig, RenderRequest renderRequest,
 			RenderResponse renderResponse)
 		throws Exception {
-
-		renderRequest = ActionUtil.getWrappedRenderRequest(renderRequest, null);
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -132,6 +131,8 @@ public class EditPermissionsAction extends PortletAction {
 			renderResponse.setTitle(
 				ActionUtil.getTitle(portlet, renderRequest));
 		}
+
+		renderRequest = ActionUtil.getWrappedRenderRequest(renderRequest, null);
 
 		return actionMapping.findForward(
 			getForward(

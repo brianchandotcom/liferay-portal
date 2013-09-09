@@ -47,9 +47,6 @@ public class EditSharingAction extends PortletAction {
 			ActionResponse actionResponse)
 		throws Exception {
 
-		actionRequest = ActionUtil.getWrappedActionRequest(
-			actionRequest, portletPreferences);
-
 		Portlet portlet = null;
 
 		try {
@@ -62,10 +59,13 @@ public class EditSharingAction extends PortletAction {
 			setForward(actionRequest, "portlet.portlet_configuration.error");
 		}
 
+		String tabs2 = ParamUtil.getString(actionRequest, "tabs2");
+
 		PortletPreferences portletPreferences =
 			ActionUtil.getLayoutPortletSetup(actionRequest, portlet);
 
-		String tabs2 = ParamUtil.getString(actionRequest, "tabs2");
+		actionRequest = ActionUtil.getWrappedActionRequest(
+			actionRequest, portletPreferences);
 
 		if (tabs2.equals("any-website")) {
 			updateAnyWebsite(actionRequest, portletPreferences);
@@ -121,9 +121,6 @@ public class EditSharingAction extends PortletAction {
 			RenderResponse renderResponse)
 		throws Exception {
 
-		renderRequest = ActionUtil.getWrappedRenderRequest(
-			renderRequest, portletPreferences);
-
 		Portlet portlet = null;
 
 		try {
@@ -141,6 +138,9 @@ public class EditSharingAction extends PortletAction {
 
 		PortletPreferences portletPreferences =
 			ActionUtil.getLayoutPortletSetup(renderRequest, portlet);
+
+		renderRequest = ActionUtil.getWrappedRenderRequest(
+			renderRequest, portletPreferences);
 
 		return actionMapping.findForward(
 			getForward(

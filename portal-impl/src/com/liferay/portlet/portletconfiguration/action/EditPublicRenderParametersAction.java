@@ -51,9 +51,6 @@ public class EditPublicRenderParametersAction extends PortletAction {
 			ActionResponse actionResponse)
 		throws Exception {
 
-		actionRequest = ActionUtil.getWrappedActionRequest(
-			actionRequest, portletPreferences);
-
 		Portlet portlet = null;
 
 		try {
@@ -68,6 +65,9 @@ public class EditPublicRenderParametersAction extends PortletAction {
 
 		PortletPreferences portletPreferences =
 			ActionUtil.getLayoutPortletSetup(actionRequest, portlet);
+
+		actionRequest = ActionUtil.getWrappedActionRequest(
+			actionRequest, portletPreferences);
 
 		updatePreferences(actionRequest, portlet);
 
@@ -107,9 +107,6 @@ public class EditPublicRenderParametersAction extends PortletAction {
 			RenderResponse renderResponse)
 		throws Exception {
 
-		renderRequest = ActionUtil.getWrappedRenderRequest(
-			renderRequest, portletPreferences);
-
 		Portlet portlet = null;
 
 		try {
@@ -132,6 +129,9 @@ public class EditPublicRenderParametersAction extends PortletAction {
 
 		PortletPreferences portletPreferences =
 			ActionUtil.getLayoutPortletSetup(renderRequest, portlet);
+
+		renderRequest = ActionUtil.getWrappedRenderRequest(
+			renderRequest, portletPreferences);
 
 		return actionMapping.findForward(
 			getForward(

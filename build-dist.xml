@@ -443,6 +443,8 @@ app.server.jboss.zip.name=jboss-eap-$${app.server.jboss.version}.zip</echo>
 	<target name="build-dist-tcserver">
 		<antcall target="unzip-tcserver" />
 
+		<echo file="app.server.${user.name}.properties">app.server.type=tcserver</echo>
+
 		<antcall target="all" />
 
 		<copy
@@ -1594,7 +1596,8 @@ release was successful.</echo>
 
 	<target name="unzip-tcserver">
 		<antcall target="zip-portal-dependencies" />
-		<delete dir="${ app.server.tcserver.dir}" />
+
+		<delete dir="${app.server.tcserver.dir}" />
 
 		<if>
 			<not>
@@ -1623,18 +1626,18 @@ release was successful.</echo>
 
 		<replace file="${app.server.tcserver.dir}/liferay/conf/wrapper.conf">
 			<replacetoken><![CDATA[wrapper.java.additional.8="-Xmx512M"]]></replacetoken>
-				<replacevalue><![CDATA[wrapper.java.additional.8="-Xmx1024M"]]></replacevalue>
+			<replacevalue><![CDATA[wrapper.java.additional.8="-Xmx1024M"]]></replacevalue>
 		</replace>
 
 		<replace file="${app.server.tcserver.dir}/liferay/conf/wrapper.conf">
 			<replacetoken><![CDATA[wrapper.java.additional.9="-Xss256K"]]></replacetoken>
-				<replacevalue><![CDATA[wrapper.java.additional.9="-Xss512K"
+			<replacevalue><![CDATA[wrapper.java.additional.9="-Xss512K"
 				wrapper.java.additional.10="-XX:MaxPermSize=256m"]]></replacevalue>
 		</replace>
 
 		<replace file="${app.server.tcserver.dir}/liferay/bin/setenv.bat">
 			<replacetoken><![CDATA[set JVM_OPTS=-Xmx512M -Xss256K]]></replacetoken>
-				<replacevalue><![CDATA[set JVM_OPTS=-Xmx1024M -Xss512K -XX:MaxPermSize=256m]]></replacevalue>
+			<replacevalue><![CDATA[set JVM_OPTS=-Xmx1024M -Xss512K -XX:MaxPermSize=256m]]></replacevalue>
 		</replace>
 	</target>
 

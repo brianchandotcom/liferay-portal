@@ -419,6 +419,12 @@ public class HookHotDeployListener
 			for (String assetQueryProcessorClassName : assetQueryProcessors) {
 				AssetPublisherUtil.unregisterAssetQueryProcessor(
 					assetQueryProcessorClassName);
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Unregistered asset query processor " +
+							assetQueryProcessorClassName);
+				}
 			}
 		}
 
@@ -1724,6 +1730,12 @@ public class HookHotDeployListener
 
 				AssetPublisherUtil.registerAssetQueryProcessor(
 					assetQueryProcessorClassName, assetQueryProcessor);
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Registered asset query processor " +
+							assetQueryProcessorClassName);
+				}
 			}
 		}
 

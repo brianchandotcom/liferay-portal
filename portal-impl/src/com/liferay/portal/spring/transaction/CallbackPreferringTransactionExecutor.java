@@ -50,7 +50,7 @@ public class CallbackPreferringTransactionExecutor
 			Object result =
 				callbackPreferringPlatformTransactionManager.execute(
 					transactionAttribute,
-					new CallbackPreferringTransactionCallback(
+					createTransactionCallback(
 						transactionAttribute, methodInvocation));
 
 			if (result instanceof ThrowableHolder) {
@@ -64,6 +64,14 @@ public class CallbackPreferringTransactionExecutor
 		catch (ThrowableHolderException the) {
 			throw the.getCause();
 		}
+	}
+
+	protected TransactionCallback<Object> createTransactionCallback(
+		TransactionAttribute transactionAttribute,
+		MethodInvocation methodInvocation) {
+
+		return new CallbackPreferringTransactionCallback(
+			transactionAttribute, methodInvocation);
 	}
 
 	protected static class ThrowableHolder {

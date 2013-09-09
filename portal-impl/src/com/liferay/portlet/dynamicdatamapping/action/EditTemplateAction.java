@@ -35,6 +35,7 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.PortletURLImpl;
+import com.liferay.portlet.StrictPortletPreferencesImpl;
 import com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
 import com.liferay.portlet.dynamicdatamapping.RequiredTemplateException;
 import com.liferay.portlet.dynamicdatamapping.TemplateNameException;
@@ -249,6 +250,24 @@ public class EditTemplateAction extends PortletAction {
 		UploadPortletRequest uploadPortletRequest =
 			PortalUtil.getUploadPortletRequest(actionRequest);
 
+		String portletResource = ParamUtil.getString(
+			actionRequest, "portletResource");
+
+		PortletPreferences portletPreferences = null;
+
+		if (Validator.isNotNull(portletResource)) {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
+			portletPreferences =
+				PortletPreferencesFactoryUtil.getStrictPortletSetup(
+					themeDisplay.getLayout(), portletResource);
+
+			if (portletPreferences instanceof StrictPortletPreferencesImpl) {
+				throw new PrincipalException();
+			}
+		}
+
 		long templateId = ParamUtil.getLong(uploadPortletRequest, "templateId");
 
 		long groupId = ParamUtil.getLong(uploadPortletRequest, "groupId");
@@ -298,14 +317,7 @@ public class EditTemplateAction extends PortletAction {
 				smallImageFile, serviceContext);
 		}
 
-		String portletResource = ParamUtil.getString(
-			actionRequest, "portletResource");
-
-		if (Validator.isNotNull(portletResource)) {
-			PortletPreferences portletPreferences =
-				PortletPreferencesFactoryUtil.getPortletSetup(
-					actionRequest, portletResource);
-
+		if (portletPreferences != null) {
 			if (type.equals(DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY)) {
 				portletPreferences.setValue(
 					"displayDDMTemplateId",

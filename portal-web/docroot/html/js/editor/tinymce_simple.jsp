@@ -76,9 +76,9 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 			if (typeof value == 'string') {
 				value = value;
 			}
-			 else {
-				 value = '';
-			 }
+			else {
+				value = '';
+			}
 
 			window['<%= name %>'].setHTML(value);
 		},

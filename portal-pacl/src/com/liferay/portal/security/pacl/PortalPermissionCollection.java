@@ -20,9 +20,6 @@ import java.security.Permission;
 import java.security.Policy;
 import java.security.ProtectionDomain;
 
-import sun.reflect.CallerSensitive;
-import sun.reflect.Reflection;
-
 /**
  * @author Raymond Augé
  */
@@ -45,9 +42,8 @@ public class PortalPermissionCollection extends ForgetfulPermissionCollection {
 	}
 
 	@Override
-	@CallerSensitive
 	public boolean implies(Permission permission) {
-		if (Reflection.getCallerClass() == ProtectionDomain.class) {
+		if (Reflection.getCallerClass(1) == ProtectionDomain.class) {
 			return false;
 		}
 

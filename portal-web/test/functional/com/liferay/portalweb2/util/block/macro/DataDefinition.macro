@@ -78,11 +78,112 @@
 		<execute action="CPDynamicdatalists#selectFrame" value1="relative=top" />
 	</command>
 
-	<command name="saveDataDefinition">
-		<execute action="CPDynamicdatalistsDatadefinitionsAdd#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+	<command name="editFieldBooleanFieldLabelCP">
+		<execute action="CPDynamicdatalists#assertClick" locator-key1="TOOLBAR_MANAGE_DATA_DEFINITIONS" value1="Manage Data Definitions" />
 
+		<execute action="CPDynamicdatalistsDatadefinitions#selectFrame" locator-key1="DATA_DEFINITIONS_IFRAME" />
+		<execute action="CPDynamicdatalistsDatadefinitions#type" locator-key1="TOOLBAR_SEARCH_FIELD" value1="${dataDefinitionName}" />
+		<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="TOOLBAR_SEARCH_BUTTON" value1="Search" />
+		<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="DATA_DEFINITION_TABLE_ACTIONS_1" value1="Actions" />
+		<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="DATA_DEFINITION_MENULIST_EDIT" value1="Edit" />
+
+		<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertClick" locator-key1="FORM_BOOLEAN_FIELD_1" value1="Boolean"/>
+		<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertTextEquals" locator-key1="SETTINGS_FIELD_LABEL" value1="Boolean"/>
+		<execute action="CPDynamicdatalistsDatadefinitionsEdit#doubleClick" locator-key1="SETTINGS_FIELD_LABEL" value1="Boolean"/>
+		<execute action="CPDynamicdatalistsDatadefinitionsEdit#type" locator-key1="SETTINGS_CELL_EDITOR_FIELD" value1="Boolean Field Label Edited" />
+		<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertClick" locator-key1="SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
+
+		<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertTextEquals" locator-key1="FORM_BOOLEAN_FIELD_1" value1="Boolean Field Label Edited" />
+		<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 		<execute action="CPDynamicdatalistsDatadefinitions#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="CPDynamicdatalists#selectFrame" value1="relative=top" />
+	</command>
+	
+	<command name="editFieldBooleanNameCP">
+		<execute action="CPDynamicdatalists#assertClick" locator-key1="TOOLBAR_MANAGE_DATA_DEFINITIONS" value1="Manage Data Definitions" />
 
+		<execute action="CPDynamicdatalistsDatadefinitions#selectFrame" locator-key1="DATA_DEFINITIONS_IFRAME" />
+		<execute action="CPDynamicdatalistsDatadefinitions#type" locator-key1="TOOLBAR_SEARCH_FIELD" value1="${dataDefinitionName}" />
+		<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="TOOLBAR_SEARCH_BUTTON" value1="Search" />
+		<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="DATA_DEFINITION_TABLE_ACTIONS_1" value1="Actions" />
+		<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="DATA_DEFINITION_MENULIST_EDIT" value1="Edit" />
+
+		<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertClick" locator-key1="FORM_BOOLEAN_FIELD_1" value1="Boolean"/>
+		<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertTextEquals" locator-key1="SETTINGS_NAME" value1="boolean"/>
+		<execute action="CPDynamicdatalistsDatadefinitionsEdit#doubleClick" locator-key1="SETTINGS_NAME" value1="boolean"/>
+		<execute action="CPDynamicdatalistsDatadefinitionsEdit#type" locator-key1="SETTINGS_CELL_EDITOR_FIELD" value1="booleannameedited" />
+		<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertClick" locator-key1="SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
+
+		<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertTextEquals" locator-key1="SETTINGS_NAME" value1="booleannameedited" />
+		<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPDynamicdatalistsDatadefinitions#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="CPDynamicdatalists#selectFrame" value1="relative=top" />
+	</command>
+
+	<command name="editFieldBooleanPredefinedValueCP">
+		<execute action="CPDynamicdatalists#assertClick" locator-key1="TOOLBAR_MANAGE_DATA_DEFINITIONS" value1="Manage Data Definitions" />
+
+		<execute action="CPDynamicdatalistsDatadefinitions#selectFrame" locator-key1="DATA_DEFINITIONS_IFRAME" />
+		<execute action="CPDynamicdatalistsDatadefinitions#type" locator-key1="TOOLBAR_SEARCH_FIELD" value1="${dataDefinitionName}" />
+		<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="TOOLBAR_SEARCH_BUTTON" value1="Search" />
+		<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="DATA_DEFINITION_TABLE_ACTIONS_1" value1="Actions" />
+		<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="DATA_DEFINITION_MENULIST_EDIT" value1="Edit" />
+
+		<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertClick" locator-key1="FORM_BOOLEAN_FIELD_1" value1="Boolean"/>
+		<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertTextEquals" locator-key1="SETTINGS_PREDEFINED_VALUE" value1="No"/>
+		<execute action="CPDynamicdatalistsDatadefinitionsEdit#doubleClick" locator-key1="SETTINGS_PREDEFINED_VALUE" value1="No"/>
+		<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertNotChecked" locator-key1="SETTINGS_CELL_EDITOR_YES_RADIO" value1="checkbox" />
+		<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertChecked" locator-key1="SETTINGS_CELL_EDITOR_NO_RADIO" value1="checkbox" />
+		<execute action="CPDynamicdatalistsDatadefinitionsEdit#click" locator-key1="SETTINGS_CELL_EDITOR_YES_RADIO" value1="checkbox" />
+		<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertClick" locator-key1="SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
+
+		<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertTextEquals" locator-key1="SETTINGS_PREDEFINED_VALUE" value1="Yes"/>
+		<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPDynamicdatalistsDatadefinitions#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="CPDynamicdatalists#selectFrame" value1="relative=top" />
+	</command>
+
+	<command name="editFieldBooleanShowLabelCP">
+		<execute action="CPDynamicdatalists#assertClick" locator-key1="TOOLBAR_MANAGE_DATA_DEFINITIONS" value1="Manage Data Definitions" />
+
+		<execute action="CPDynamicdatalistsDatadefinitions#selectFrame" locator-key1="DATA_DEFINITIONS_IFRAME" />
+		<execute action="CPDynamicdatalistsDatadefinitions#type" locator-key1="TOOLBAR_SEARCH_FIELD" value1="${dataDefinitionName}" />
+		<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="TOOLBAR_SEARCH_BUTTON" value1="Search" />
+		<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="DATA_DEFINITION_TABLE_ACTIONS_1" value1="Actions" />
+		<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="DATA_DEFINITION_MENULIST_EDIT" value1="Edit" />
+
+		<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertClick" locator-key1="FORM_BOOLEAN_FIELD_1" value1="Boolean"/>
+		<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertTextEquals" locator-key1="SETTINGS_SHOW_LABEL" value1="Yes"/>
+		<execute action="CPDynamicdatalistsDatadefinitionsEdit#doubleClick" locator-key1="SETTINGS_SHOW_LABEL" value1="Yes"/>
+		<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertChecked" locator-key1="SETTINGS_CELL_EDITOR_YES_RADIO" value1="checkbox" />
+		<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertNotChecked" locator-key1="SETTINGS_CELL_EDITOR_NO_RADIO" value1="checkbox" />
+		<execute action="CPDynamicdatalistsDatadefinitionsEdit#click" locator-key1="SETTINGS_CELL_EDITOR_NO_RADIO" value1="checkbox" />
+		<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertClick" locator-key1="SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
+
+		<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertTextEquals" locator-key1="SETTINGS_SHOW_LABEL" value1="No"/>
+		<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPDynamicdatalistsDatadefinitions#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="CPDynamicdatalists#selectFrame" value1="relative=top" />
+	</command>
+
+	<command name="editFieldBooleanTipCP">
+		<execute action="CPDynamicdatalists#assertClick" locator-key1="TOOLBAR_MANAGE_DATA_DEFINITIONS" value1="Manage Data Definitions" />
+
+		<execute action="CPDynamicdatalistsDatadefinitions#selectFrame" locator-key1="DATA_DEFINITIONS_IFRAME" />
+		<execute action="CPDynamicdatalistsDatadefinitions#type" locator-key1="TOOLBAR_SEARCH_FIELD" value1="${dataDefinitionName}" />
+		<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="TOOLBAR_SEARCH_BUTTON" value1="Search" />
+		<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="DATA_DEFINITION_TABLE_ACTIONS_1" value1="Actions" />
+		<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="DATA_DEFINITION_MENULIST_EDIT" value1="Edit" />
+
+		<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertClick" locator-key1="FORM_BOOLEAN_FIELD_1" value1="Boolean"/>
+		<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertTextEquals" locator-key1="SETTINGS_TIP" />
+		<execute action="CPDynamicdatalistsDatadefinitionsEdit#doubleClick" locator-key1="SETTINGS_TIP" />
+		<execute action="CPDynamicdatalistsDatadefinitionsEdit#type" locator-key1="SETTINGS_CELL_EDITOR_TEXT_AREA" value1="Boolean Field Tip Edited" />
+		<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertClick" locator-key1="SETTINGS_CELL_EDITOR_SAVE_BUTTON" value1="Save" />
+
+		<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertTextEquals" locator-key1="SETTINGS_TIP" value1="Boolean Field Tip Edited" />
+		<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPDynamicdatalistsDatadefinitions#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute action="CPDynamicdatalists#selectFrame" value1="relative=top" />
 	</command>
 
@@ -126,18 +227,73 @@
 		<execute action="CPDynamicdatalists#selectFrame" value1="relative=top" />
 	</command>
 
-	<command name="viewDataDefinition">
+	<command name="viewEditFieldBooleanFieldLabelCP">
 		<execute action="CPDynamicdatalists#assertClick" locator-key1="TOOLBAR_MANAGE_DATA_DEFINITIONS" value1="Manage Data Definitions" />
+
 		<execute action="CPDynamicdatalistsDatadefinitions#selectFrame" locator-key1="DATA_DEFINITIONS_IFRAME" />
 		<execute action="CPDynamicdatalistsDatadefinitions#type" locator-key1="TOOLBAR_SEARCH_FIELD" value1="${dataDefinitionName}" />
 		<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="TOOLBAR_SEARCH_BUTTON" value1="Search" />
-		<execute action="CPDynamicdatalistsDatadefinitions#click" locator-key1="DATA_DEFINITION_TABLE_NAME" value1="${dataDefinitionName}" />
+		<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="DATA_DEFINITION_TABLE_ACTIONS_1" value1="Actions" />
+		<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="DATA_DEFINITION_MENULIST_EDIT" value1="Edit" />
 
-		<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertTextEquals" locator-key1="HEADER_TITLE" value1="${dataDefinitionName}" />
-		<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertTextEquals" locator-key1="NAME_FIELD" value1="${dataDefinitionName}" />
-		<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertTextEquals" locator-key1="DETAILS_DESCRIPTION_FIELD" value1="${dataDefinitionDescription}" />
-		<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertTextEquals" locator-key1="${formName}" value1="${fieldName}" />
+		<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertClick" locator-key1="FORM_BOOLEAN_FIELD_1" value1="Boolean Field Label Edited" />
+		<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertTextEquals" locator-key1="FORM_BOOLEAN_FIELD_1" value1="Boolean Field Label Edited" />
+		<execute action="CPDynamicdatalists#selectFrame" value1="relative=top" />
+	</command>
+	
+	<command name="viewEditFieldBooleanNameCP">
+		<execute action="CPDynamicdatalists#assertClick" locator-key1="TOOLBAR_MANAGE_DATA_DEFINITIONS" value1="Manage Data Definitions" />
 
+		<execute action="CPDynamicdatalistsDatadefinitions#selectFrame" locator-key1="DATA_DEFINITIONS_IFRAME" />
+		<execute action="CPDynamicdatalistsDatadefinitions#type" locator-key1="TOOLBAR_SEARCH_FIELD" value1="${dataDefinitionName}" />
+		<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="TOOLBAR_SEARCH_BUTTON" value1="Search" />
+		<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="DATA_DEFINITION_TABLE_ACTIONS_1" value1="Actions" />
+		<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="DATA_DEFINITION_MENULIST_EDIT" value1="Edit" />
+
+		<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertClick" locator-key1="FORM_BOOLEAN_FIELD_1" value1="Boolean" />
+		<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertTextEquals" locator-key1="SETTINGS_NAME" value1="booleannameedited" />
+		<execute action="CPDynamicdatalists#selectFrame" value1="relative=top" />
+	</command>
+
+	<command name="viewEditFieldBooleanPredefinedValueCP">
+		<execute action="CPDynamicdatalists#assertClick" locator-key1="TOOLBAR_MANAGE_DATA_DEFINITIONS" value1="Manage Data Definitions" />
+
+		<execute action="CPDynamicdatalistsDatadefinitions#selectFrame" locator-key1="DATA_DEFINITIONS_IFRAME" />
+		<execute action="CPDynamicdatalistsDatadefinitions#type" locator-key1="TOOLBAR_SEARCH_FIELD" value1="${dataDefinitionName}" />
+		<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="TOOLBAR_SEARCH_BUTTON" value1="Search" />
+		<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="DATA_DEFINITION_TABLE_ACTIONS_1" value1="Actions" />
+		<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="DATA_DEFINITION_MENULIST_EDIT" value1="Edit" />
+
+		<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertClick" locator-key1="FORM_BOOLEAN_FIELD_1" value1="Boolean" />
+		<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertTextEquals" locator-key1="SETTINGS_PREDEFINED_VALUE" value1="Yes"/>
+		<execute action="CPDynamicdatalists#selectFrame" value1="relative=top" />
+	</command>
+
+	<command name="viewEditFieldBooleanShowLabelCP">
+		<execute action="CPDynamicdatalists#assertClick" locator-key1="TOOLBAR_MANAGE_DATA_DEFINITIONS" value1="Manage Data Definitions" />
+
+		<execute action="CPDynamicdatalistsDatadefinitions#selectFrame" locator-key1="DATA_DEFINITIONS_IFRAME" />
+		<execute action="CPDynamicdatalistsDatadefinitions#type" locator-key1="TOOLBAR_SEARCH_FIELD" value1="${dataDefinitionName}" />
+		<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="TOOLBAR_SEARCH_BUTTON" value1="Search" />
+		<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="DATA_DEFINITION_TABLE_ACTIONS_1" value1="Actions" />
+		<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="DATA_DEFINITION_MENULIST_EDIT" value1="Edit" />
+
+		<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertClick" locator-key1="FORM_BOOLEAN_FIELD_1" />
+		<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertTextEquals" locator-key1="SETTINGS_SHOW_LABEL" value1="No"/>
+		<execute action="CPDynamicdatalists#selectFrame" value1="relative=top" />
+	</command>
+
+	<command name="viewEditFieldBooleanTipCP">
+		<execute action="CPDynamicdatalists#assertClick" locator-key1="TOOLBAR_MANAGE_DATA_DEFINITIONS" value1="Manage Data Definitions" />
+
+		<execute action="CPDynamicdatalistsDatadefinitions#selectFrame" locator-key1="DATA_DEFINITIONS_IFRAME" />
+		<execute action="CPDynamicdatalistsDatadefinitions#type" locator-key1="TOOLBAR_SEARCH_FIELD" value1="${dataDefinitionName}" />
+		<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="TOOLBAR_SEARCH_BUTTON" value1="Search" />
+		<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="DATA_DEFINITION_TABLE_ACTIONS_1" value1="Actions" />
+		<execute action="CPDynamicdatalistsDatadefinitions#assertClick" locator-key1="DATA_DEFINITION_MENULIST_EDIT" value1="Edit" />
+		
+		<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertClick" locator-key1="FORM_BOOLEAN_FIELD_1" value1="Boolean"/>
+		<execute action="CPDynamicdatalistsDatadefinitionsEdit#assertTextEquals" locator-key1="SETTINGS_TIP" value1="Boolean Field Tip Edited" />
 		<execute action="CPDynamicdatalists#selectFrame" value1="relative=top" />
 	</command>
 </definition>

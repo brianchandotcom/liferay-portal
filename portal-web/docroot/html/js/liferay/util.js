@@ -98,6 +98,22 @@
 			};
 		},
 
+		addInputCancel: function() {
+			A.use(
+				'aui-button-search-cancel',
+				function(A) {
+					new A.ButtonSearchCancel(
+						{
+							trigger: 'input[type=password], input[type=search], input.clearable, input.search-query',
+							zIndex: Liferay.zIndex.WINDOW + 100
+						}
+					);
+				}
+			);
+
+			Util.addInputCancel = function(){};
+		},
+
 		addInputFocus: function() {
 			A.use(
 				'aui-base',

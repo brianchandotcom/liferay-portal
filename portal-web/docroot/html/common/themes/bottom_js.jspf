@@ -60,6 +60,10 @@
 			Liferay.Util.addInputType(node);
 		}
 	);
+
+	if (A.UA.mobile) {
+		Liferay.Util.addInputCancel();
+	}
 </aui:script>
 
 <%

@@ -101,13 +101,20 @@ LayoutSet selLayoutSet = ((LayoutSet)request.getAttribute("edit_pages.jsp-selLay
 	var changeLogo = function(event) {
 		var changeLogo = (event.type == 'change');
 
-		useLogoInput.val(changeLogo);
-		logoContainer.hide();
+		if (useLogoInput) {
+			useLogoInput.val(changeLogo);
+		}
+
+		if (logoContainer) {
+			logoContainer.hide();
+		}
 	};
 
 	if (deleteLogoLink) {
 		deleteLogoLink.on('click', changeLogo);
 	}
 
-	logoFileNameInput.on('change', changeLogo);
+	if (logoFileNameInput) {
+		logoFileNameInput.on('change', changeLogo);
+	}
 </aui:script>

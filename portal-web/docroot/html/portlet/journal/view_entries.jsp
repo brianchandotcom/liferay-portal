@@ -182,11 +182,17 @@ int total = 0;
 	<c:otherwise>
 
 		<%
-		total = JournalFolderServiceUtil.getFoldersAndArticlesCount(scopeGroupId, folderId);
+		int status = WorkflowConstants.STATUS_APPROVED;
+
+		if (permissionChecker.isCompanyAdmin() || permissionChecker.isGroupAdmin(scopeGroupId)) {
+			status = WorkflowConstants.STATUS_ANY;
+		}
+
+		total = JournalFolderServiceUtil.getFoldersAndArticlesCount(scopeGroupId, folderId, status);
 
 		searchContainer.setTotal(total);
 
-		results = JournalFolderServiceUtil.getFoldersAndArticles(scopeGroupId, folderId, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+		results = JournalFolderServiceUtil.getFoldersAndArticles(scopeGroupId, folderId, status, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
 		%>
 
 	</c:otherwise>

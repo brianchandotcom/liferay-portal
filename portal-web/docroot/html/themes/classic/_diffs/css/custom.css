@@ -305,7 +305,8 @@ $dockbarOpenGradientStart: #0EA6F9;
 				text-decoration: none;
 
 				i {
-					color: #FFF;
+					color: #fff;
+					font-size: 19px;
 				}
 			}
 		}

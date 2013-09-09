@@ -179,7 +179,6 @@
 	.portlet-options {
 		&, &.open {
 			.dropdown-toggle {
-				background: url(../images/portlet/options.png) no-repeat;
 				display: inline-block;
 				height: 16px;
 				vertical-align: middle;

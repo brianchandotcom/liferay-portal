@@ -199,8 +199,12 @@ public class TrackbackAction extends PortletAction {
 			actionRequest, "portletResource");
 
 		if (Validator.isNotNull(portletResource)) {
-			portletPreferences = PortletPreferencesFactoryUtil.getPortletSetup(
-				actionRequest, portletResource);
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
+			portletPreferences =
+				PortletPreferencesFactoryUtil.getStrictPortletSetup(
+				themeDisplay.getLayout(), portletResource);
 		}
 
 		return GetterUtil.getBoolean(

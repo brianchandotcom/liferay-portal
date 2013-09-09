@@ -150,27 +150,29 @@ if (Validator.isNotNull(structureAvailableFields)) {
 					</aui:field-wrapper>
 				</c:if>
 
-				<aui:select changesContext="<%= true %>" helpMessage='<%= (template == null) ? StringPool.BLANK : "changing-the-language-will-not-automatically-translate-the-existing-template-script" %>' label="language" name="language">
+				<c:if test="<%= type.equals(DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY) %>">
+					<aui:select changesContext="<%= true %>" helpMessage='<%= (template == null) ? StringPool.BLANK : "changing-the-language-will-not-automatically-translate-the-existing-template-script" %>' label="language" name="language">
 
-					<%
-					for (String curLangType : ddmDisplay.getTemplateLanguageTypes()) {
-						StringBundler sb = new StringBundler(6);
+						<%
+						for (String curLangType : ddmDisplay.getTemplateLanguageTypes()) {
+							StringBundler sb = new StringBundler(6);
 
-						sb.append(LanguageUtil.get(pageContext, curLangType + "[stands-for]"));
-						sb.append(StringPool.SPACE);
-						sb.append(StringPool.OPEN_PARENTHESIS);
-						sb.append(StringPool.PERIOD);
-						sb.append(curLangType);
-						sb.append(StringPool.CLOSE_PARENTHESIS);
-					%>
+							sb.append(LanguageUtil.get(pageContext, curLangType + "[stands-for]"));
+							sb.append(StringPool.SPACE);
+							sb.append(StringPool.OPEN_PARENTHESIS);
+							sb.append(StringPool.PERIOD);
+							sb.append(curLangType);
+							sb.append(StringPool.CLOSE_PARENTHESIS);
+						%>
 
-						<aui:option label="<%= sb.toString() %>" selected="<%= language.equals(curLangType) %>" value="<%= curLangType %>" />
+							<aui:option label="<%= sb.toString() %>" selected="<%= language.equals(curLangType) %>" value="<%= curLangType %>" />
 
-					<%
-					}
-					%>
+						<%
+						}
+						%>
 
-				</aui:select>
+					</aui:select>
+				</c:if>
 
 				<aui:input name="description" />
 

@@ -78,8 +78,6 @@ boolean useAssetEntryQuery = false;
 	SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, portletURL, null, LanguageUtil.format(pageContext, "no-entries-were-found-that-matched-the-keywords-x", "<strong>" + HtmlUtil.escape(keywords) + "</strong>"));
 
 	try {
-		Indexer indexer = IndexerRegistryUtil.getIndexer(DLFileEntryConstants.getClassName());
-
 		SearchContext searchContext = SearchContextFactory.getInstance(request);
 
 		searchContext.setAttribute("mimeTypes", mediaGalleryMimeTypes);
@@ -89,7 +87,7 @@ boolean useAssetEntryQuery = false;
 		searchContext.setKeywords(keywords);
 		searchContext.setStart(searchContainer.getStart());
 
-		Hits hits = indexer.search(searchContext);
+		Hits hits = DLAppServiceUtil.search(repositoryId, searchContext);
 
 		searchContainer.setTotal(hits.getLength());
 
@@ -98,19 +96,18 @@ boolean useAssetEntryQuery = false;
 		for (int i = 0; i < hits.getDocs().length; i++) {
 			Document doc = hits.doc(i);
 
-			long fileEntryId = GetterUtil.getLong(doc.get(Field.ENTRY_CLASS_PK));
+			String entryClassName = GetterUtil.getString(doc.get(Field.ENTRY_CLASS_NAME));
 
-			try {
-				results.add(DLAppLocalServiceUtil.getFileEntry(fileEntryId));
-			}
-			catch (Exception e) {
-				if (_log.isWarnEnabled()) {
-					_log.warn("Documents and Media search index is stale and contains document " + fileEntryId);
-				}
-			}
+			long entryClassPK = GetterUtil.getLong(doc.get(Field.ENTRY_CLASS_PK));
 
-			searchContainer.setResults(results);
+			if (entryClassName.equals(DLFileEntry.class.getName())) {
+				results.add(DLAppLocalServiceUtil.getFileEntry(entryClassPK));
+			}
+			else if (entryClassName.equals(DLFolder.class.getName())) {
+				results.add(DLAppLocalServiceUtil.getFolder(entryClassPK));
+			}
 		}
+		searchContainer.setResults(results);
 	%>
 
 	<div id="<portlet:namespace />imageGalleryAssetInfo">

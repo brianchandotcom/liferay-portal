@@ -313,6 +313,22 @@ public class DDMTemplateStagedModelDataHandler
 		}
 	}
 
+	@Override
+	protected boolean validateMissingReference(
+			String uuid, long companyId, long groupId)
+		throws Exception {
+
+		DDMTemplate template =
+			DDMTemplateLocalServiceUtil.fetchDDMTemplateByUuidAndGroupId(
+				uuid, groupId);
+
+		if (template == null) {
+			return false;
+		}
+
+		return true;
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(
 		DDMTemplateStagedModelDataHandler.class);
 

@@ -223,4 +223,20 @@ public class DLFileEntryTypeStagedModelDataHandler
 		}
 	}
 
+	@Override
+	protected boolean validateMissingReference(
+			String uuid, long companyId, long groupId)
+		throws Exception {
+
+		DLFileEntryType fileEntryType =
+			DLFileEntryTypeLocalServiceUtil.
+				fetchDLFileEntryTypeByUuidAndGroupId(uuid, groupId);
+
+		if (fileEntryType == null) {
+			return false;
+		}
+
+		return true;
+	}
+
 }

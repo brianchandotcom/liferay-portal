@@ -54,7 +54,6 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.PortletURLImpl;
 import com.liferay.portlet.asset.AssetCategoryException;
 import com.liferay.portlet.asset.AssetTagException;
@@ -730,16 +729,11 @@ public class EditFileEntryAction extends PortletAction {
 				PropsKeys.DL_FILE_EXTENSIONS, StringPool.COMMA);
 		}
 		else {
-			PortletPreferences portletPreferences =
-				portletRequest.getPreferences();
+			PortletPreferences portletPreferences = getStrictPortletSetup(
+				portletRequest);
 
-			String portletResource = ParamUtil.getString(
-				portletRequest, "portletResource");
-
-			if (Validator.isNotNull(portletResource)) {
-				portletPreferences =
-					PortletPreferencesFactoryUtil.getPortletSetup(
-						portletRequest, portletResource);
+			if (portletPreferences == null) {
+				portletPreferences = portletRequest.getPreferences();
 			}
 
 			Set<String> extensions = new HashSet<String>();
@@ -1008,17 +1002,10 @@ public class EditFileEntryAction extends PortletAction {
 				String portletName = portletConfig.getPortletName();
 
 				if (portletName.equals(PortletKeys.MEDIA_GALLERY_DISPLAY)) {
-					String portletResource = ParamUtil.getString(
-						actionRequest, "portletResource");
+					PortletPreferences portletPreferences =
+						getStrictPortletSetup(actionRequest);
 
-					PortletPreferences portletPreferences = null;
-
-					if (Validator.isNotNull(portletResource)) {
-						portletPreferences =
-							PortletPreferencesFactoryUtil.getPortletSetup(
-								actionRequest, portletResource);
-					}
-					else {
+					if (portletPreferences == null) {
 						portletPreferences = actionRequest.getPreferences();
 					}
 

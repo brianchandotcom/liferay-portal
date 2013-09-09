@@ -707,10 +707,6 @@ public class PortalSecurityManagerImpl extends SecurityManager
 		public void checkCopy(String source, String destination) {
 			SecurityManager securityManager = System.getSecurityManager();
 
-			if (securityManager == null) {
-				return;
-			}
-
 			if (Validator.isNotNull(source)) {
 				securityManager.checkRead(source);
 			}
@@ -726,10 +722,6 @@ public class PortalSecurityManagerImpl extends SecurityManager
 		public void checkDelete(String path) {
 			SecurityManager securityManager = System.getSecurityManager();
 
-			if (securityManager == null) {
-				return;
-			}
-
 			if (Validator.isNull(path)) {
 				return;
 			}
@@ -740,10 +732,6 @@ public class PortalSecurityManagerImpl extends SecurityManager
 		@Override
 		public void checkMove(String source, String destination) {
 			SecurityManager securityManager = System.getSecurityManager();
-
-			if (securityManager == null) {
-				return;
-			}
 
 			if (Validator.isNotNull(source)) {
 				securityManager.checkRead(source);
@@ -762,10 +750,6 @@ public class PortalSecurityManagerImpl extends SecurityManager
 		public void checkRead(String path) {
 			SecurityManager securityManager = System.getSecurityManager();
 
-			if (securityManager == null) {
-				return;
-			}
-
 			if (Validator.isNull(path)) {
 				return;
 			}
@@ -776,10 +760,6 @@ public class PortalSecurityManagerImpl extends SecurityManager
 		@Override
 		public void checkWrite(String path) {
 			SecurityManager securityManager = System.getSecurityManager();
-
-			if (securityManager == null) {
-				return;
-			}
 
 			if (Validator.isNull(path)) {
 				return;
@@ -821,10 +801,6 @@ public class PortalSecurityManagerImpl extends SecurityManager
 		public void checkListen(String destinationName) {
 			SecurityManager securityManager = System.getSecurityManager();
 
-			if (securityManager == null) {
-				return;
-			}
-
 			Permission permission = new PortalMessageBusPermission(
 				PACLConstants.PORTAL_MESSAGE_BUS_PERMISSION_LISTEN,
 				destinationName);
@@ -835,10 +811,6 @@ public class PortalSecurityManagerImpl extends SecurityManager
 		@Override
 		public void checkSend(String destinationName) {
 			SecurityManager securityManager = System.getSecurityManager();
-
-			if (securityManager == null) {
-				return;
-			}
 
 			Permission permission = new PortalMessageBusPermission(
 				PACLConstants.PORTAL_MESSAGE_BUS_PERMISSION_SEND,
@@ -855,10 +827,6 @@ public class PortalSecurityManagerImpl extends SecurityManager
 		@Override
 		public void checkDynamicQuery(Class<?> implClass) {
 			SecurityManager securityManager = System.getSecurityManager();
-
-			if (securityManager == null) {
-				return;
-			}
 
 			ClassLoader classLoader = ClassLoaderUtil.getClassLoader(implClass);
 
@@ -886,10 +854,6 @@ public class PortalSecurityManagerImpl extends SecurityManager
 		public void checkExpandoBridge(String className) {
 			SecurityManager securityManager = System.getSecurityManager();
 
-			if (securityManager == null) {
-				return;
-			}
-
 			Permission permission = new PortalRuntimePermission(
 				PACLConstants.PORTAL_RUNTIME_PERMISSION_EXPANDO_BRIDGE, null,
 				className);
@@ -902,10 +866,6 @@ public class PortalSecurityManagerImpl extends SecurityManager
 			String servletContextName, Class<?> clazz, String property) {
 
 			SecurityManager securityManager = System.getSecurityManager();
-
-			if (securityManager == null) {
-				return;
-			}
 
 			int stackIndex = Reflection.getStackIndex(5, 5);
 
@@ -931,10 +891,6 @@ public class PortalSecurityManagerImpl extends SecurityManager
 		public void checkGetClassLoader(String classLoaderReferenceId) {
 			SecurityManager securityManager = System.getSecurityManager();
 
-			if (securityManager == null) {
-				return;
-			}
-
 			if (Validator.isNull(classLoaderReferenceId)) {
 				classLoaderReferenceId = "portal";
 			}
@@ -950,10 +906,6 @@ public class PortalSecurityManagerImpl extends SecurityManager
 		public void checkPortletBagPool(String portletId) {
 			SecurityManager securityManager = System.getSecurityManager();
 
-			if (securityManager == null) {
-				return;
-			}
-
 			Permission permission = new PortalRuntimePermission(
 				PACLConstants.PORTAL_RUNTIME_PERMISSION_PORTLET_BAG_POOL, null,
 				portletId);
@@ -964,10 +916,6 @@ public class PortalSecurityManagerImpl extends SecurityManager
 		@Override
 		public void checkSearchEngine(String searchEngineId) {
 			SecurityManager securityManager = System.getSecurityManager();
-
-			if (securityManager == null) {
-				return;
-			}
 
 			Permission permission = new PortalRuntimePermission(
 				PACLConstants.PORTAL_RUNTIME_PERMISSION_SEARCH_ENGINE, null,
@@ -982,10 +930,6 @@ public class PortalSecurityManagerImpl extends SecurityManager
 
 			SecurityManager securityManager = System.getSecurityManager();
 
-			if (securityManager == null) {
-				return;
-			}
-
 			clazz = PACLUtil.getClass(clazz);
 
 			Permission permission = new PortalRuntimePermission(
@@ -998,10 +942,6 @@ public class PortalSecurityManagerImpl extends SecurityManager
 		@Override
 		public void checkThreadPoolExecutor(String name) {
 			SecurityManager securityManager = System.getSecurityManager();
-
-			if (securityManager == null) {
-				return;
-			}
 
 			Permission permission = new PortalRuntimePermission(
 				PACLConstants.PORTAL_RUNTIME_PERMISSION_THREAD_POOL_EXECUTOR,
@@ -1020,10 +960,6 @@ public class PortalSecurityManagerImpl extends SecurityManager
 			Object object, Method method, Object[] arguments) {
 
 			SecurityManager securityManager = System.getSecurityManager();
-
-			if (securityManager == null) {
-				return;
-			}
 
 			String methodName = method.getName();
 
@@ -1067,10 +1003,6 @@ public class PortalSecurityManagerImpl extends SecurityManager
 		@Override
 		public void checkPermission(String host, String action) {
 			SecurityManager securityManager = System.getSecurityManager();
-
-			if (securityManager == null) {
-				return;
-			}
 
 			Permission permission = new SocketPermission(host, action);
 

@@ -107,7 +107,13 @@ public interface PrefsProps {
 
 	public PortletPreferences getPreferences() throws SystemException;
 
+	public PortletPreferences getPreferences(boolean readOnly)
+		throws SystemException;
+
 	public PortletPreferences getPreferences(long companyId)
+		throws SystemException;
+
+	public PortletPreferences getPreferences(long companyId, boolean readOnly)
 		throws SystemException;
 
 	public Properties getProperties(

@@ -177,12 +177,23 @@ public class PortletPreferencesFactoryImpl
 
 		if (signedIn) {
 			PortalPreferencesWrapper portalPreferencesWrapper =
-				(PortalPreferencesWrapper)
-					PortalPreferencesLocalServiceUtil.getPreferences(
-						ownerId, ownerType);
+				PortalPreferencesWrapperCacheUtil.get(ownerId, ownerType);
 
-			portalPreferences =
-				portalPreferencesWrapper.getPortalPreferencesImpl();
+			if (portalPreferencesWrapper == null) {
+				portalPreferencesWrapper =
+					(PortalPreferencesWrapper)
+						PortalPreferencesLocalServiceUtil.getPreferences(
+							ownerId, ownerType);
+
+				portalPreferences =
+					portalPreferencesWrapper.getPortalPreferencesImpl();
+			}
+			else {
+				PortalPreferencesImpl portalPreferencesImpl =
+					portalPreferencesWrapper.getPortalPreferencesImpl();
+
+				portalPreferences = portalPreferencesImpl.clone();
+			}
 		}
 		else {
 			if (session != null) {
@@ -192,15 +203,23 @@ public class PortletPreferencesFactoryImpl
 
 			if (portalPreferences == null) {
 				PortalPreferencesWrapper portalPreferencesWrapper =
-					(PortalPreferencesWrapper)
-						PortalPreferencesLocalServiceUtil.getPreferences(
-							ownerId, ownerType);
+					PortalPreferencesWrapperCacheUtil.get(ownerId, ownerType);
 
-				PortalPreferencesImpl portalPreferencesImpl =
-					portalPreferencesWrapper.getPortalPreferencesImpl();
+				if (portalPreferencesWrapper == null) {
+					portalPreferencesWrapper =
+						(PortalPreferencesWrapper)
+							PortalPreferencesLocalServiceUtil.getPreferences(
+								ownerId, ownerType);
 
-				portalPreferences =
-					(PortalPreferences)portalPreferencesImpl.clone();
+					portalPreferences =
+						portalPreferencesWrapper.getPortalPreferencesImpl();
+				}
+				else {
+					PortalPreferencesImpl portalPreferencesImpl =
+						portalPreferencesWrapper.getPortalPreferencesImpl();
+
+					portalPreferences = portalPreferencesImpl.clone();
+				}
 
 				if (session != null) {
 					session.setAttribute(

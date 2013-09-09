@@ -192,10 +192,23 @@ public class PrefsPropsUtil {
 		return getPrefsProps().getPreferences();
 	}
 
+	public static PortletPreferences getPreferences(boolean readOnly)
+		throws SystemException {
+
+		return getPrefsProps().getPreferences(readOnly);
+	}
+
 	public static PortletPreferences getPreferences(long companyId)
 		throws SystemException {
 
 		return getPrefsProps().getPreferences(companyId);
+	}
+
+	public static PortletPreferences getPreferences(
+			long companyId, boolean readOnly)
+		throws SystemException {
+
+		return getPrefsProps().getPreferences(companyId, readOnly);
 	}
 
 	public static PrefsProps getPrefsProps() {

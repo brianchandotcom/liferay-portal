@@ -687,9 +687,13 @@ public class EditFileEntryAction extends PortletAction {
 				portletRequest, "portletResource");
 
 			if (Validator.isNotNull(portletResource)) {
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)portletRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
+
 				portletPreferences =
-					PortletPreferencesFactoryUtil.getPortletSetup(
-						portletRequest, portletResource);
+					PortletPreferencesFactoryUtil.getStrictPortletSetup(
+						themeDisplay.getLayout(), portletResource);
 			}
 
 			Set<String> extensions = new HashSet<String>();

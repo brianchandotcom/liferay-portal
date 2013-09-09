@@ -10,17 +10,15 @@ CKEDITOR.dialog.add(
 								'		videoDivNode.removeClass("ckvideo-no-id");' +
 								'		var videoConfig = {';
 
-		var TPL_SCRIPT =		'				boundingBox: "#" + videoId,' +
-								'				height: {height},' +
-								'				ogvUrl: "{ogvUrl}",' +
-								'				poster: "{poster}",' +
-								'				url: "{url}",' +
-								'				width: {width}';
+		var TPL_SCRIPT =		'			boundingBox: "#" + videoId,' +
+								'			height: {height},' +
+								'			ogvUrl: "{ogvUrl}",' +
+								'			poster: "{poster}",' +
+								'			url: "{url}",' +
+								'			width: {width}';
 
-		var TPL_SCRIPT_SUFFIX = '			};' +
-								'		new A.Video(' +
-								'				videoConfig' +
-								'		).render();' +
+		var TPL_SCRIPT_SUFFIX = '		};' +
+								'		new A.Video(videoConfig).render();' +
 								'	}' +
 								');';
 

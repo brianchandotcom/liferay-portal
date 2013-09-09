@@ -19,11 +19,13 @@ CKEDITOR.plugins.add(
 								var fakeElement;
 
 								if (attributeClass && attributeClass.indexOf('liferayckevideo') >= 0) {
-									if (realElement.children &&
-										realElement.children[0].attributes['class'].indexOf('ckvideo-no-id') >=0 &&
-										realElement.children[0].children && realElement.children[0].children.length  > 0) {
+									var realChild = realElement.children && realElement.children[0];
 
-										realElement.children[0].children[0].value = '';
+									if (realChild &&
+										realChild.attributes['class'].indexOf('ckvideo-no-id') != -1 &&
+										realChild.children && realChild.children.length) {
+
+										realChild.children[0].value = '';
 									}
 
 									fakeElement = editor.createFakeParserElement(realElement, 'liferay_cke_video', 'video', false);

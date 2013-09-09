@@ -26,6 +26,10 @@ public class PortalPreferencesWrapperCacheUtil {
 	public static final String PORTAL_PREFERENCES_WRAPPER_CACHE_NAME =
 		"PORTAL_PREFERENCES_WRAPPER_CACHE_NAME";
 
+	public static void clear() {
+		_portalPreferencesWrapperPortalCache.removeAll();
+	}
+
 	public static PortalPreferencesWrapper get(long ownerId, int ownerType) {
 		String cacheKey = StringUtil.toHexString(ownerId).concat(
 			StringUtil.toHexString(ownerType));

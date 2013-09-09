@@ -49,6 +49,7 @@ import com.liferay.portal.util.LayoutTestUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portal.util.UserTestUtil;
+import com.liferay.portlet.PortalPreferencesWrapperCacheUtil;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
@@ -81,6 +82,7 @@ public class GroupServiceTest {
 	@Before
 	public void setUp() {
 		FinderCacheUtil.clearCache();
+		PortalPreferencesWrapperCacheUtil.clear();
 	}
 
 	@Test

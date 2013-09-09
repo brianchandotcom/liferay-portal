@@ -37,7 +37,7 @@ public class IconEditTag extends IconTag {
 			return null;
 		}
 
-		setImage("../portlet/edit");
+		setImage("../aui/edit");
 		setMessage("preferences");
 		setToolTip(false);
 		setUrl(portletDisplay.getURLEdit());

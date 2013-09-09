@@ -40,7 +40,7 @@ public class IconConfigurationTag extends IconTag {
 		}
 
 		setCssClass("portlet-configuration portlet-configuration-icon");
-		setImage("../portlet/configuration");
+		setImage("../aui/wrench");
 		setMessage("configuration");
 		setMethod("get");
 

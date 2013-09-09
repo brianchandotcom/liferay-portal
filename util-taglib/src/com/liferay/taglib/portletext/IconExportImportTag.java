@@ -40,7 +40,7 @@ public class IconExportImportTag extends IconTag {
 		}
 
 		setCssClass("portlet-export-import portlet-export-import-icon");
-		setImage("download");
+		setImage("../aui/download-alt");
 		setMessage("export-import");
 		setMethod("get");
 

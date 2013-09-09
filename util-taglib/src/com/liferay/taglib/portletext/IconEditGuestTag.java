@@ -37,7 +37,7 @@ public class IconEditGuestTag extends IconTag {
 			return null;
 		}
 
-		setImage("../portlet/edit_guest");
+		setImage("../aui/edit-sign");
 		setMessage("guest-preferences");
 		setToolTip(false);
 		setUrl(portletDisplay.getURLEditGuest());

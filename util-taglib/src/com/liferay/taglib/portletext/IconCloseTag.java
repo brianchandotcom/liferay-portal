@@ -38,7 +38,7 @@ public class IconCloseTag extends IconTag {
 		}
 
 		setCssClass("portlet-close portlet-close-icon");
-		setImage("../portlet/close");
+		setImage("../aui/remove");
 		setMessage("remove");
 
 		String onClick =

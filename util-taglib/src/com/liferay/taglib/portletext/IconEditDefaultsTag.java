@@ -37,7 +37,7 @@ public class IconEditDefaultsTag extends IconTag {
 			return null;
 		}
 
-		setImage("../portlet/edit_defaults");
+		setImage("../aui/edit-sign");
 		setMessage("default-preferences");
 		setToolTip(false);
 		setUrl(portletDisplay.getURLEditDefaults());

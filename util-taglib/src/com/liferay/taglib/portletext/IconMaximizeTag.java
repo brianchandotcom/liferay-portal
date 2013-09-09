@@ -38,7 +38,7 @@ public class IconMaximizeTag extends IconTag {
 		}
 
 		setCssClass("portlet-maximize portlet-maximize-icon");
-		setImage("../portlet/maximize");
+		setImage("../aui/plus");
 		setMessage("maximize");
 		setMethod("get");
 

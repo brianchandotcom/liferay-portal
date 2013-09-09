@@ -38,7 +38,7 @@ public class IconPortletCssTag extends IconTag {
 		}
 
 		setCssClass("portlet-css portlet-css-icon lfr-js-required");
-		setImage("../portlet/portlet_css");
+		setImage("../aui/picture");
 		setMessage("look-and-feel");
 
 		String onClick =

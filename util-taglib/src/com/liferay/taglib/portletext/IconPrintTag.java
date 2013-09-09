@@ -38,7 +38,7 @@ public class IconPrintTag extends IconTag {
 		}
 
 		setCssClass("portlet-print portlet-print-icon");
-		setImage("../portlet/print");
+		setImage("../aui/print");
 		setMessage("print");
 
 		String onClick = "location.href = '".concat(

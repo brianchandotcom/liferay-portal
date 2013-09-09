@@ -38,7 +38,7 @@ public class IconHelpTag extends IconTag {
 		}
 
 		setCssClass("portlet-help portlet-help-icon");
-		setImage("../portlet/help");
+		setImage("../aui/question-sign");
 		setMessage("help");
 		setToolTip(false);
 		setUrl(portletDisplay.getURLHelp());

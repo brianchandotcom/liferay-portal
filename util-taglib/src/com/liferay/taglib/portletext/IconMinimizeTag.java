@@ -40,16 +40,19 @@ public class IconMinimizeTag extends IconTag {
 		setCssClass("portlet-minimize portlet-minimize-icon");
 
 		String image = null;
+		String message = null;
 
 		if (portletDisplay.isStateMin()) {
-			image = "restore";
+			image = "resize-vertical";
+			message = "restore";
 		}
 		else {
-			image = "minimize";
+			image = "minus";
+			message = "minimize";
 		}
 
-		setImage("../portlet/".concat(image));
-		setMessage(image);
+		setImage("../aui/".concat(image));
+		setMessage(message);
 
 		String onClick =
 			"Liferay.Portlet.minimize('#p_p_id_".concat(

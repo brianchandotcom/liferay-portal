@@ -38,7 +38,7 @@ public class IconRefreshTag extends IconTag {
 		}
 
 		setCssClass("portlet-refresh portlet-refresh-icon");
-		setImage("../portlet/refresh");
+		setImage("../aui/refresh");
 		setMessage("refresh");
 
 		String onClick =

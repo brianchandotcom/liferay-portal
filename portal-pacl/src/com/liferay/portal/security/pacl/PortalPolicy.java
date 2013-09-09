@@ -102,26 +102,26 @@ public class PortalPolicy extends Policy {
 		try {
 			_started.set(true);
 
-		if (!(permission instanceof PACLUtil.Permission) &&
-			((protectionDomain.getClassLoader() == null) ||
-			 !_paclPolicy.isCheckablePermission(permission))) {
+			if (!(permission instanceof PACLUtil.Permission) &&
+				((protectionDomain.getClassLoader() == null) ||
+				 !_paclPolicy.isCheckablePermission(permission))) {
 
-			return _checkWithParentPolicy(protectionDomain, permission);
-		}
+				return _checkWithParentPolicy(protectionDomain, permission);
+			}
 
-		PermissionCollection permissionCollection = getPermissions(
-			protectionDomain);
+			PermissionCollection permissionCollection = getPermissions(
+				protectionDomain);
 
-		if (permissionCollection.implies(permission)) {
-			return _checkWithParentPolicy(protectionDomain, permission);
-		}
-		else if (_checkWithPACLPolicyPolicy(
-					protectionDomain, permission, permissionCollection)) {
+			if (permissionCollection.implies(permission)) {
+				return _checkWithParentPolicy(protectionDomain, permission);
+			}
+			else if (_checkWithPACLPolicyPolicy(
+						protectionDomain, permission, permissionCollection)) {
 
-			return _checkWithParentPolicy(protectionDomain, permission);
-		}
+				return _checkWithParentPolicy(protectionDomain, permission);
+			}
 
-		return false;
+			return false;
 		}
 		finally {
 			_started.set(false);

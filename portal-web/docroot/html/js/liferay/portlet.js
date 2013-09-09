@@ -405,33 +405,28 @@
 					var link = A.one(el);
 
 					if (link) {
-						var img = link.one('img');
+						var title = (restore) ? Liferay.Language.get('minimize') : Liferay.Language.get('restore');
 
-						if (img) {
-							var title = (restore) ? Liferay.Language.get('minimize') : Liferay.Language.get('restore');
+						link.attr('alt', title);
+						link.attr('title', title);
 
-							var imgSrc = themeDisplay.getPathThemeImages() + '/portlet/';
+						var linkText = link.one('.taglib-text-icon');
+
+						if (linkText) {
+							linkText.html(title);
+						}
+
+						var icon = link.one('i');
+
+						if (icon) {
+							icon.removeClass('icon-minus icon-resize-vertical');
 
 							if (restore) {
-								imgSrc += 'minimize.png';
+								icon.addClass('icon-minus');
 							}
 							else {
-								imgSrc += 'restore.png';
+								icon.addClass('icon-resize-vertical');
 							}
-
-							img.attr('alt', title);
-							img.attr('title', title);
-
-							link.attr('title', title);
-							img.attr('src', imgSrc);
-
-							img.setStyles(
-								{
-									backgroundImage: 'none',
-									height: 16,
-									width: 16
-								}
-							);
 						}
 					}
 

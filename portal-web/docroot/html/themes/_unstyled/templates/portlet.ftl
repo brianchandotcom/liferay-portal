@@ -15,9 +15,6 @@
 				<a href="${portlet_back_url}" class="portlet-icon-back"><@liferay.language key="return-to-full-page" /></a>
 			<#else>
 				${theme.portletIconOptions()}
-				${theme.portletIconMinimize()}
-				${theme.portletIconMaximize()}
-				${theme.portletIconClose()}
 			</#if>
 		</menu>
 	</header>

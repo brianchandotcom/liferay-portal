@@ -19,13 +19,13 @@ CKEDITOR.plugins.add(
 								var fakeElement;
 
 								if (attributeClass && attributeClass.indexOf('liferayckevideo') >= 0) {
-									if (realElement.children && 
+									if (realElement.children &&
 										realElement.children[0].attributes['class'].indexOf('ckvideo-no-id') >=0 &&
 										realElement.children[0].children && realElement.children[0].children.length  > 0) {
-											
-											realElement.children[0].children[0].value = '';
+
+										realElement.children[0].children[0].value = '';
 									}
-									
+
 									fakeElement = editor.createFakeParserElement(realElement, 'liferay_cke_video', 'video', false);
 
 									var fakeStyle = fakeElement.attributes.style || '';
@@ -69,7 +69,7 @@ CKEDITOR.plugins.add(
 
 								if (attributeClass && attributeClass.indexOf('ckvideo-no-id') >= 0 &&
 									realElement.children && realElement.children.length) {
-									
+
 									realElement.children[0].value = '';
 								}
 

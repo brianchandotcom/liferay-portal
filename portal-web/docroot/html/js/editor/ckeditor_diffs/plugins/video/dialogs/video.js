@@ -30,7 +30,7 @@ CKEDITOR.dialog.add(
 			var id = instance.id;
 			var value = instance.getValue();
 
-			var scriptNode = videoNode.getChild(1);			
+			var scriptNode = videoNode.getChild(1);
 
 			var scriptTPL = null;
 			var textScript = null;

@@ -68,6 +68,9 @@ public class EditScopeAction extends PortletAction {
 			ActionResponse actionResponse)
 		throws Exception {
 
+		actionRequest = ActionUtil.getWrappedActionRequest(
+			actionRequest, portletPreferences);
+
 		Portlet portlet = null;
 
 		try {
@@ -80,13 +83,10 @@ public class EditScopeAction extends PortletAction {
 			setForward(actionRequest, "portlet.portlet_configuration.error");
 		}
 
+		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
+
 		PortletPreferences portletPreferences =
 			ActionUtil.getLayoutPortletSetup(actionRequest, portlet);
-
-		actionRequest = ActionUtil.getWrappedActionRequest(
-			actionRequest, portletPreferences);
-
-		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		if (cmd.equals(Constants.SAVE)) {
 			updateScope(actionRequest, portlet);
@@ -126,6 +126,9 @@ public class EditScopeAction extends PortletAction {
 			RenderResponse renderResponse)
 		throws Exception {
 
+		renderRequest = ActionUtil.getWrappedRenderRequest(
+			renderRequest, portletPreferences);
+
 		Portlet portlet = null;
 
 		try {
@@ -139,13 +142,10 @@ public class EditScopeAction extends PortletAction {
 				"portlet.portlet_configuration.error");
 		}
 
+		renderResponse.setTitle(ActionUtil.getTitle(portlet, renderRequest));
+
 		PortletPreferences portletPreferences =
 			ActionUtil.getLayoutPortletSetup(renderRequest, portlet);
-
-		renderRequest = ActionUtil.getWrappedRenderRequest(
-			renderRequest, portletPreferences);
-
-		renderResponse.setTitle(ActionUtil.getTitle(portlet, renderRequest));
 
 		return actionMapping.findForward(
 			getForward(

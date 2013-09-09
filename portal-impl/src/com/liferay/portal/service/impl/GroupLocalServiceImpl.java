@@ -4082,7 +4082,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 			String[] searchNames = CustomSQLUtil.keywords(name);
 
 			String guestName = StringUtil.quote(
-				GroupConstants.GUEST.toLowerCase(), StringPool.PERCENT);
+				StringUtil.toLowerCase(GroupConstants.GUEST),
+				StringPool.PERCENT);
 
 			return ArrayUtil.append(searchNames, guestName);
 		}

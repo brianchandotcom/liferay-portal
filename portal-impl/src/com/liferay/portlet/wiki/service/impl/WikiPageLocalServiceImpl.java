@@ -2253,7 +2253,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		Map<String, Boolean> links = WikiCacheUtil.getOutgoingLinks(page);
 
-		Boolean link = links.get(targetTitle.toLowerCase());
+		Boolean link = links.get(StringUtil.toLowerCase(targetTitle));
 
 		if (link != null) {
 			return true;

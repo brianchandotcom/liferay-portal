@@ -2296,7 +2296,7 @@ public class HookHotDeployListener
 			for (Element dispatcherElement : dispatcherElements) {
 				String dispatcher = dispatcherElement.getTextTrim();
 
-				dispatcher = dispatcher.toUpperCase();
+				dispatcher = StringUtil.toUpperCase(dispatcher);
 
 				dispatchers.add(dispatcher);
 			}
@@ -2374,7 +2374,8 @@ public class HookHotDeployListener
 
 		for (String key : _PROPS_VALUES_BOOLEAN) {
 			String fieldName = StringUtil.replace(
-				key.toUpperCase(), CharPool.PERIOD, CharPool.UNDERLINE);
+				StringUtil.toUpperCase(key), CharPool.PERIOD,
+				CharPool.UNDERLINE);
 
 			if (!containsKey(portalProperties, key)) {
 				continue;
@@ -2396,7 +2397,8 @@ public class HookHotDeployListener
 
 		for (String key : _PROPS_VALUES_INTEGER) {
 			String fieldName = StringUtil.replace(
-				key.toUpperCase(), CharPool.PERIOD, CharPool.UNDERLINE);
+				StringUtil.toUpperCase(key), CharPool.PERIOD,
+				CharPool.UNDERLINE);
 
 			if (!containsKey(portalProperties, key)) {
 				continue;
@@ -2418,7 +2420,8 @@ public class HookHotDeployListener
 
 		for (String key : _PROPS_VALUES_LONG) {
 			String fieldName = StringUtil.replace(
-				key.toUpperCase(), CharPool.PERIOD, CharPool.UNDERLINE);
+				StringUtil.toUpperCase(key), CharPool.PERIOD,
+				CharPool.UNDERLINE);
 
 			if (!containsKey(portalProperties, key)) {
 				continue;
@@ -2440,7 +2443,8 @@ public class HookHotDeployListener
 
 		for (String key : _PROPS_VALUES_STRING) {
 			String fieldName = StringUtil.replace(
-				key.toUpperCase(), CharPool.PERIOD, CharPool.UNDERLINE);
+				StringUtil.toUpperCase(key), CharPool.PERIOD,
+				CharPool.UNDERLINE);
 
 			if (!containsKey(portalProperties, key)) {
 				continue;
@@ -2516,7 +2520,8 @@ public class HookHotDeployListener
 
 		for (String key : propsValuesStringArray) {
 			String fieldName = StringUtil.replace(
-				key.toUpperCase(), CharPool.PERIOD, CharPool.UNDERLINE);
+				StringUtil.toUpperCase(key), CharPool.PERIOD,
+				CharPool.UNDERLINE);
 
 			if (!containsKey(portalProperties, key)) {
 				continue;

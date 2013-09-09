@@ -140,7 +140,7 @@ public class MediaWikiImporter implements WikiImporter {
 		}
 		else {
 			user = UserLocalServiceUtil.fetchUserByScreenName(
-				node.getCompanyId(), author.toLowerCase());
+				node.getCompanyId(), StringUtil.toLowerCase(author));
 		}
 
 		if (user != null) {
@@ -356,7 +356,8 @@ public class MediaWikiImporter implements WikiImporter {
 					continue;
 				}
 
-				String fileName = paths[paths.length - 1].toLowerCase();
+				String fileName = StringUtil.toLowerCase(
+					paths[paths.length - 1]);
 
 				ObjectValuePair<String, InputStream> inputStreamOVP =
 					new ObjectValuePair<String, InputStream>(

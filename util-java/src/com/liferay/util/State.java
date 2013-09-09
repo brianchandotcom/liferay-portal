@@ -16,6 +16,7 @@ package com.liferay.util;
 
 import com.liferay.portal.kernel.util.HashCode;
 import com.liferay.portal.kernel.util.HashCodeFactoryUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 /**
  * @author Brian Wing Shun Chan
@@ -31,11 +32,12 @@ public class State {
 		State state = (State)obj;
 
 		if ((getId() != null) && (state.getId() != null)) {
-			return getId().toLowerCase().compareTo(state.getId().toLowerCase());
+			return StringUtil.toLowerCase(getId()).compareTo(
+				StringUtil.toLowerCase(state.getId()));
 		}
 		else if ((getName() != null) && (state.getName() != null)) {
-			return getName().toLowerCase().compareTo(
-				state.getName().toLowerCase());
+			return StringUtil.toLowerCase(getName()).compareTo(
+				StringUtil.toLowerCase(state.getName()));
 		}
 		else {
 			return -1;

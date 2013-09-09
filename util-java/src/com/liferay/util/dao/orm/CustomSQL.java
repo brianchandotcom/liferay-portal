@@ -240,7 +240,7 @@ public class CustomSQL {
 		}
 
 		if (lowerCase) {
-			keywords = keywords.toLowerCase();
+			keywords = StringUtil.toLowerCase(keywords);
 		}
 
 		keywords = keywords.trim();

@@ -221,7 +221,7 @@ public class MBUtil {
 
 		Object partContent = part.getContent();
 
-		String contentType = part.getContentType().toLowerCase();
+		String contentType = StringUtil.toLowerCase(part.getContentType());
 
 		if ((part.getDisposition() != null) &&
 			part.getDisposition().equalsIgnoreCase(MimeMessage.ATTACHMENT)) {

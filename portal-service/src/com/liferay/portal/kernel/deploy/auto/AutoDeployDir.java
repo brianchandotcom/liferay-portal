@@ -261,7 +261,7 @@ public class AutoDeployDir {
 		for (File file : files) {
 			String fileName = file.getName();
 
-			fileName = fileName.toLowerCase();
+			fileName = StringUtil.toLowerCase(fileName);
 
 			if (file.isFile() &&
 				(fileName.endsWith(".jar") || fileName.endsWith(".lpkg") ||

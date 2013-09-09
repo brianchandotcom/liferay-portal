@@ -367,13 +367,14 @@ public class LocaleUtil {
 
 		if (language.length() > 3) {
 			language = locale.getLanguage();
-			language = language.toUpperCase();
+			language = StringUtil.toUpperCase(language);
 		}
 
 		String country = locale.getCountry();
 
 		return _getDisplayName(
-			language, country.toUpperCase(), locale, duplicateLanguages);
+			language, StringUtil.toUpperCase(country), locale,
+			duplicateLanguages);
 	}
 
 	private Locale _getSiteDefault() {

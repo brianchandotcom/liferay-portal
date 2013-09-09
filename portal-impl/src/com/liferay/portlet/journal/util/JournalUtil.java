@@ -1092,7 +1092,7 @@ public class JournalUtil {
 			return String.valueOf(id);
 		}
 
-		title = title.trim().toLowerCase();
+		title = StringUtil.toLowerCase(title.trim());
 
 		if (Validator.isNull(title) || Validator.isNumber(title) ||
 			title.equals("rss")) {

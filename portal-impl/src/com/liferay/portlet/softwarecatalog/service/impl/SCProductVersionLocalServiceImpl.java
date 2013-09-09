@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
@@ -58,7 +59,7 @@ public class SCProductVersionLocalServiceImpl
 		User user = userPersistence.findByPrimaryKey(userId);
 		SCProductEntry productEntry =
 			scProductEntryPersistence.findByPrimaryKey(productEntryId);
-		directDownloadURL = directDownloadURL.trim().toLowerCase();
+		directDownloadURL = StringUtil.toLowerCase(directDownloadURL.trim());
 		Date now = new Date();
 
 		validate(
@@ -177,7 +178,7 @@ public class SCProductVersionLocalServiceImpl
 
 		// Product version
 
-		directDownloadURL = directDownloadURL.trim().toLowerCase();
+		directDownloadURL = StringUtil.toLowerCase(directDownloadURL.trim());
 		Date now = new Date();
 
 		validate(

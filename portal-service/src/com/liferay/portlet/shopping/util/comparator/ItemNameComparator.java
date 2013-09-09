@@ -15,6 +15,7 @@
 package com.liferay.portlet.shopping.util.comparator;
 
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portlet.shopping.model.ShoppingItem;
 
 /**
@@ -49,8 +50,8 @@ public class ItemNameComparator extends OrderByComparator {
 		int value = categoryId1.compareTo(categoryId2);
 
 		if (value == 0) {
-			value = item1.getName().toLowerCase().compareTo(
-				item2.getName().toLowerCase());
+			value = StringUtil.toLowerCase(item1.getName()).compareTo(
+				StringUtil.toLowerCase(item2.getName()));
 		}
 
 		if (_ascending) {

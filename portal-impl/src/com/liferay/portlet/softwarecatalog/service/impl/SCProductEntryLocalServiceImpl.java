@@ -78,8 +78,8 @@ public class SCProductEntryLocalServiceImpl
 		User user = userPersistence.findByPrimaryKey(userId);
 		long groupId = serviceContext.getScopeGroupId();
 		tags = getTags(tags);
-		repoGroupId = repoGroupId.trim().toLowerCase();
-		repoArtifactId = repoArtifactId.trim().toLowerCase();
+		repoGroupId = StringUtil.toLowerCase(repoGroupId.trim());
+		repoArtifactId = StringUtil.toLowerCase(repoArtifactId.trim());
 		Date now = new Date();
 
 		validate(
@@ -420,8 +420,8 @@ public class SCProductEntryLocalServiceImpl
 		// Product entry
 
 		tags = getTags(tags);
-		repoGroupId = repoGroupId.trim().toLowerCase();
-		repoArtifactId = repoArtifactId.trim().toLowerCase();
+		repoGroupId = StringUtil.toLowerCase(repoGroupId.trim());
+		repoArtifactId = StringUtil.toLowerCase(repoArtifactId.trim());
 		Date now = new Date();
 
 		validate(
@@ -462,7 +462,7 @@ public class SCProductEntryLocalServiceImpl
 	}
 
 	protected String getTags(String tags) {
-		tags = tags.trim().toLowerCase();
+		tags = StringUtil.toLowerCase(tags.trim());
 
 		return StringUtil.merge(StringUtil.split(tags), ", ");
 	}

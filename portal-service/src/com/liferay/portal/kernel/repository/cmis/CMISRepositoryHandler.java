@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.CompanyConstants;
@@ -405,7 +406,7 @@ public abstract class CMISRepositoryHandler extends BaseRepositoryImpl {
 
 		// LPS-20509
 
-		productName = productName.toLowerCase();
+		productName = StringUtil.toLowerCase(productName);
 
 		if (productName.contains("filenet") && productName.contains("p8")) {
 			return false;

@@ -242,7 +242,7 @@ public class CookieKeys {
 		Map<String, Cookie> cookieMap = _getCookieMap(request);
 
 		if (toUpperCase) {
-			name = name.toUpperCase();
+			name = StringUtil.toUpperCase(name);
 		}
 
 		Cookie cookie = cookieMap.get(name);
@@ -277,7 +277,7 @@ public class CookieKeys {
 			for (Cookie cookie : cookies) {
 				String cookieName = GetterUtil.getString(cookie.getName());
 
-				cookieName = cookieName.toUpperCase();
+				cookieName = StringUtil.toUpperCase(cookieName);
 
 				cookieMap.put(cookieName, cookie);
 			}

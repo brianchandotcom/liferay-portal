@@ -728,7 +728,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			emailAddress = StringPool.BLANK;
 		}
 		else {
-			emailAddress = emailAddress.trim().toLowerCase();
+			emailAddress = StringUtil.toLowerCase(emailAddress.trim());
 		}
 
 		if (!PrefsPropsUtil.getBoolean(
@@ -2806,7 +2806,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	public long getUserIdByEmailAddress(long companyId, String emailAddress)
 		throws PortalException, SystemException {
 
-		emailAddress = emailAddress.trim().toLowerCase();
+		emailAddress = StringUtil.toLowerCase(emailAddress.trim());
 
 		User user = userPersistence.findByC_EA(companyId, emailAddress);
 
@@ -3365,7 +3365,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			return;
 		}
 
-		emailAddress = emailAddress.trim().toLowerCase();
+		emailAddress = StringUtil.toLowerCase(emailAddress.trim());
 
 		if (Validator.isNull(emailAddress)) {
 			throw new UserEmailAddressException();
@@ -3852,8 +3852,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			String emailAddress2)
 		throws PortalException, SystemException {
 
-		emailAddress1 = emailAddress1.trim().toLowerCase();
-		emailAddress2 = emailAddress2.trim().toLowerCase();
+		emailAddress1 = StringUtil.toLowerCase(emailAddress1.trim());
+		emailAddress2 = StringUtil.toLowerCase(emailAddress2.trim());
 
 		User user = userPersistence.findByPrimaryKey(userId);
 
@@ -3894,8 +3894,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			String emailAddress2, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		emailAddress1 = emailAddress1.trim().toLowerCase();
-		emailAddress2 = emailAddress2.trim().toLowerCase();
+		emailAddress1 = StringUtil.toLowerCase(emailAddress1.trim());
+		emailAddress2 = StringUtil.toLowerCase(emailAddress2.trim());
 
 		User user = userPersistence.findByPrimaryKey(userId);
 
@@ -4816,18 +4816,18 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			user.getCompanyId());
 		String password = oldPassword;
 		screenName = getLogin(screenName);
-		emailAddress = emailAddress.trim().toLowerCase();
+		emailAddress = StringUtil.toLowerCase(emailAddress.trim());
 		openId = openId.trim();
 		String oldFullName = user.getFullName();
-		aimSn = aimSn.trim().toLowerCase();
-		facebookSn = facebookSn.trim().toLowerCase();
-		icqSn = icqSn.trim().toLowerCase();
-		jabberSn = jabberSn.trim().toLowerCase();
-		msnSn = msnSn.trim().toLowerCase();
-		mySpaceSn = mySpaceSn.trim().toLowerCase();
-		skypeSn = skypeSn.trim().toLowerCase();
-		twitterSn = twitterSn.trim().toLowerCase();
-		ymSn = ymSn.trim().toLowerCase();
+		aimSn = StringUtil.toLowerCase(aimSn.trim());
+		facebookSn = StringUtil.toLowerCase(facebookSn.trim());
+		icqSn = StringUtil.toLowerCase(icqSn.trim());
+		jabberSn = StringUtil.toLowerCase(jabberSn.trim());
+		msnSn = StringUtil.toLowerCase(msnSn.trim());
+		mySpaceSn = StringUtil.toLowerCase(mySpaceSn.trim());
+		skypeSn = StringUtil.toLowerCase(skypeSn.trim());
+		twitterSn = StringUtil.toLowerCase(twitterSn.trim());
+		ymSn = StringUtil.toLowerCase(ymSn.trim());
 		Date now = new Date();
 
 		EmailAddressGenerator emailAddressGenerator =
@@ -5077,7 +5077,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		String emailAddress = ticket.getExtraInfo();
 
-		emailAddress = emailAddress.toLowerCase().trim();
+		emailAddress = StringUtil.toLowerCase(emailAddress).trim();
 
 		if (!emailAddress.equals(user.getEmailAddress())) {
 			if (userPersistence.fetchByC_EA(
@@ -5237,7 +5237,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			return Authenticator.FAILURE;
 		}
 
-		login = login.trim().toLowerCase();
+		login = StringUtil.toLowerCase(login.trim());
 
 		long userId = GetterUtil.getLong(login);
 

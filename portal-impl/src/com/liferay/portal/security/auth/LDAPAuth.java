@@ -242,7 +242,8 @@ public class LDAPAuth implements Authenticator {
 			String userMappingsScreenName = GetterUtil.getString(
 				userMappings.getProperty("screenName"));
 
-			userMappingsScreenName = userMappingsScreenName.toLowerCase();
+			userMappingsScreenName = StringUtil.toLowerCase(
+				userMappingsScreenName);
 
 			SearchControls searchControls = new SearchControls(
 				SearchControls.SUBTREE_SCOPE, 1, 0,

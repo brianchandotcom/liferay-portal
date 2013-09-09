@@ -17,6 +17,7 @@ package com.liferay.portal.atom;
 import com.liferay.portal.kernel.atom.AtomCollectionAdapter;
 import com.liferay.portal.kernel.atom.AtomEntryContent;
 import com.liferay.portal.kernel.atom.AtomException;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.InputStream;
 
@@ -44,7 +45,8 @@ public class AtomCollectionAdapterWrapper<E>
 	public AtomCollectionAdapterWrapper(
 		AtomCollectionAdapter<E> atomCollectionAdapter) {
 
-		super(atomCollectionAdapter.getCollectionName().toLowerCase());
+		super(
+			StringUtil.toLowerCase(atomCollectionAdapter.getCollectionName()));
 
 		_atomCollectionAdapter = atomCollectionAdapter;
 	}

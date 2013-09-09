@@ -131,8 +131,9 @@ public class JournalContentImpl implements JournalContent {
 			stopWatch.start();
 		}
 
-		articleId = GetterUtil.getString(articleId).toUpperCase();
-		ddmTemplateKey = GetterUtil.getString(ddmTemplateKey).toUpperCase();
+		articleId = StringUtil.toUpperCase(GetterUtil.getString(articleId));
+		ddmTemplateKey = StringUtil.toUpperCase(
+			GetterUtil.getString(ddmTemplateKey));
 
 		long layoutSetId = 0;
 		boolean secure = false;

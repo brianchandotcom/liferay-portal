@@ -120,7 +120,7 @@ public abstract class VerifyProcess extends BaseDBProcess {
 		while (matcher.find()) {
 			String match = matcher.group(1);
 
-			tableNames.add(match.toLowerCase());
+			tableNames.add(StringUtil.toLowerCase(match));
 		}
 
 		_portalTableNames = tableNames;
@@ -131,7 +131,7 @@ public abstract class VerifyProcess extends BaseDBProcess {
 	protected boolean isPortalTableName(String tableName) throws Exception {
 		Set<String> portalTableNames = getPortalTableNames();
 
-		return portalTableNames.contains(tableName.toLowerCase());
+		return portalTableNames.contains(StringUtil.toLowerCase(tableName));
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(VerifyProcess.class);

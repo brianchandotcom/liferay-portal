@@ -65,7 +65,7 @@ public class IndexMetadataFactoryUtil {
 		String specificationHash = StringUtil.toHexString(
 			specification.hashCode());
 
-		specificationHash = specificationHash.toUpperCase();
+		specificationHash = StringUtil.toUpperCase(specificationHash);
 
 		return _INDEX_NAME_PREFIX.concat(specificationHash);
 	}

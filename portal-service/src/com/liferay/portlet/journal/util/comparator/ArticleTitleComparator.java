@@ -15,6 +15,7 @@
 package com.liferay.portlet.journal.util.comparator;
 
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
 
 /**
@@ -41,8 +42,8 @@ public class ArticleTitleComparator extends OrderByComparator {
 		JournalArticle article1 = (JournalArticle)obj1;
 		JournalArticle article2 = (JournalArticle)obj2;
 
-		int value = article1.getTitle().toLowerCase().compareTo(
-			article2.getTitle().toLowerCase());
+		int value = StringUtil.toLowerCase(article1.getTitle()).compareTo(
+			StringUtil.toLowerCase(article2.getTitle()));
 
 		if (_ascending) {
 			return value;

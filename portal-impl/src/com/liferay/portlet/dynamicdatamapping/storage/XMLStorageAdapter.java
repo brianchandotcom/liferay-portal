@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.XPath;
@@ -337,7 +338,7 @@ public class XMLStorageAdapter extends BaseStorageAdapter {
 
 			if (itr.hasNext()) {
 				sb.append(StringPool.SPACE);
-				sb.append(logicalOperatorString.toLowerCase());
+				sb.append(StringUtil.toLowerCase(logicalOperatorString));
 				sb.append(StringPool.SPACE);
 			}
 		}

@@ -85,7 +85,7 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 		tag.setModifiedDate(now);
 
 		name = name.trim();
-		name = name.toLowerCase();
+		name = StringUtil.toLowerCase(name);
 
 		if (hasTag(groupId, name)) {
 			throw new DuplicateTagException(
@@ -543,7 +543,7 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 		tag.setModifiedDate(new Date());
 
 		name = name.trim();
-		name = name.toLowerCase();
+		name = StringUtil.toLowerCase(name);
 
 		if (tagProperties == null) {
 			tagProperties = new String[0];

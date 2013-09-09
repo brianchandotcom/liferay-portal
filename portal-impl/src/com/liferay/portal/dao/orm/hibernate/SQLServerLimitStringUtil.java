@@ -30,7 +30,7 @@ import java.util.regex.Pattern;
 public class SQLServerLimitStringUtil {
 
 	public static String getLimitString(String sql, int offset, int limit) {
-		String sqlLowerCase = sql.toLowerCase();
+		String sqlLowerCase = StringUtil.toLowerCase(sql);
 
 		int fromPos = sqlLowerCase.indexOf(" from ");
 

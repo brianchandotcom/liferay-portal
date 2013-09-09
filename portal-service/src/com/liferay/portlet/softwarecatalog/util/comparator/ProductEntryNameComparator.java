@@ -15,6 +15,7 @@
 package com.liferay.portlet.softwarecatalog.util.comparator;
 
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portlet.softwarecatalog.model.SCProductEntry;
 
 /**
@@ -41,8 +42,8 @@ public class ProductEntryNameComparator extends OrderByComparator {
 		SCProductEntry productEntry1 = (SCProductEntry)obj1;
 		SCProductEntry productEntry2 = (SCProductEntry)obj2;
 
-		int value = productEntry1.getName().toLowerCase().compareTo(
-			productEntry2.getName().toLowerCase());
+		int value = StringUtil.toLowerCase(productEntry1.getName()).compareTo(
+			StringUtil.toLowerCase(productEntry2.getName()));
 
 		if (_ascending) {
 			return value;

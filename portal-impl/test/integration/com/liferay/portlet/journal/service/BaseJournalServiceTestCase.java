@@ -96,7 +96,7 @@ public class BaseJournalServiceTestCase {
 	protected String generateId() throws Exception {
 		String id = ServiceTestUtil.randomString();
 
-		return id.toUpperCase();
+		return StringUtil.toUpperCase(id);
 	}
 
 	protected long getCompanyGroupId() throws Exception {

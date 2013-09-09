@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.ServiceBeanMethodInvocationFactoryUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Portlet;
@@ -142,7 +143,7 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 	protected String getArticleId(PortletRequest portletRequest) {
 		String articleId = getParameter(portletRequest, "articleId");
 
-		return articleId.toUpperCase();
+		return StringUtil.toUpperCase(articleId);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

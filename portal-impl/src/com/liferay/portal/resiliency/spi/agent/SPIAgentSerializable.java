@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.nio.intraband.mailbox.MailboxUtil;
 import com.liferay.portal.kernel.resiliency.spi.agent.annotation.Direction;
 import com.liferay.portal.kernel.resiliency.spi.agent.annotation.DistributedRegistry;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.ThreadLocalDistributor;
 import com.liferay.portal.kernel.util.ThreadLocalDistributorRegistry;
 
@@ -121,7 +122,7 @@ public class SPIAgentSerializable implements Serializable {
 					values = Collections.emptyList();
 				}
 
-				headers.put(headerName.toLowerCase(), values);
+				headers.put(StringUtil.toLowerCase(headerName), values);
 			}
 		}
 

@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.SortedArrayList;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.SystemEventConstants;
@@ -75,7 +76,7 @@ public class DLFileEntryTypeLocalServiceImpl
 			fileEntryTypeKey = String.valueOf(counterLocalService.increment());
 		}
 		else {
-			fileEntryTypeKey = fileEntryTypeKey.trim().toUpperCase();
+			fileEntryTypeKey = StringUtil.toUpperCase(fileEntryTypeKey.trim());
 		}
 
 		String fileEntryTypeUuid = serviceContext.getUuid();
@@ -266,7 +267,7 @@ public class DLFileEntryTypeLocalServiceImpl
 			long groupId, String fileEntryTypeKey)
 		throws PortalException, SystemException {
 
-		fileEntryTypeKey = fileEntryTypeKey.trim().toUpperCase();
+		fileEntryTypeKey = StringUtil.toUpperCase(fileEntryTypeKey.trim());
 
 		return dlFileEntryTypePersistence.findByG_F(groupId, fileEntryTypeKey);
 	}

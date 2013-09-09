@@ -798,7 +798,7 @@ public class ResourceActionsImpl implements ResourceActions {
 						actions.add(ActionKeys.GUEST_PREFERENCES);
 					}
 					else {
-						actions.add(actionId.toUpperCase());
+						actions.add(StringUtil.toUpperCase(actionId));
 					}
 				}
 			}

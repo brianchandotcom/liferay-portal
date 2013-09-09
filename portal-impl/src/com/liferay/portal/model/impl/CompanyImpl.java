@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Account;
 import com.liferay.portal.model.CacheField;
@@ -219,7 +220,7 @@ public class CompanyImpl extends CompanyBaseImpl {
 
 	@Override
 	public boolean hasCompanyMx(String emailAddress) throws SystemException {
-		emailAddress = emailAddress.trim().toLowerCase();
+		emailAddress = StringUtil.toLowerCase(emailAddress.trim());
 
 		int pos = emailAddress.indexOf(CharPool.AT);
 

@@ -88,7 +88,7 @@ public class RuntimeVariables {
 					result = String.valueOf(operandValue.length());
 				}
 				else if (method.startsWith("lowercase")) {
-					result = operandValue.toLowerCase();
+					result = StringUtil.toLowerCase(operandValue);
 				}
 				else if (method.startsWith("replace")) {
 					result = operandValue.replace(

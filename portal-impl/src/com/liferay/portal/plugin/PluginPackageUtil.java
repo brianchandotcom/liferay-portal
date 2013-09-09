@@ -840,7 +840,7 @@ public class PluginPackageUtil {
 		}
 
 		for (Element element : parentElement.elements(name)) {
-			String text = element.getText().trim().toLowerCase();
+			String text = StringUtil.toLowerCase(element.getText().trim());
 
 			list.add(text);
 		}

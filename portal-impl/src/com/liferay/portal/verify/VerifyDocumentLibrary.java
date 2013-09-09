@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
@@ -125,7 +126,8 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 		dlFileEntryType.setCreateDate(now);
 		dlFileEntryType.setModifiedDate(now);
 		dlFileEntryType.setFileEntryTypeKey(
-			DLFileEntryTypeConstants.NAME_BASIC_DOCUMENT.toUpperCase());
+			StringUtil.toUpperCase(
+				DLFileEntryTypeConstants.NAME_BASIC_DOCUMENT));
 		dlFileEntryType.setName(
 			DLFileEntryTypeConstants.NAME_BASIC_DOCUMENT,
 			LocaleUtil.getDefault());

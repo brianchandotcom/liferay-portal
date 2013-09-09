@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Release;
 import com.liferay.portal.model.ReleaseConstants;
@@ -258,7 +259,7 @@ public class ReleaseLocalServiceImpl extends ReleaseLocalServiceBaseImpl {
 		}
 
 		count = testSupportsStringCaseSensitiveQuery(
-			ReleaseConstants.TEST_STRING.toUpperCase());
+			StringUtil.toUpperCase(ReleaseConstants.TEST_STRING));
 
 		if (count == 0) {
 			db.setSupportsStringCaseSensitiveQuery(true);

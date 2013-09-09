@@ -1199,6 +1199,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				}
 			}
 
+			checkIsLowerCaseIsAndIsUpperCase(line, fileName, lineCount);
+
 			if (trimmedLine.startsWith(StringPool.EQUAL)) {
 				processErrorMessage(
 					fileName, "equal: " + fileName + " " + lineCount);

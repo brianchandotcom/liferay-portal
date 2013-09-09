@@ -161,7 +161,7 @@ public class BaseSocialAchievement implements SocialAchievement {
 	@Override
 	public void setName(String name) {
 		name = StringUtil.replace(name, StringPool.SPACE, StringPool.UNDERLINE);
-		name = name.toLowerCase();
+		name = StringUtil.toLowerCase(name);
 
 		_name = StringUtil.extract(name, _NAME_SUPPORTED_CHARS);
 	}

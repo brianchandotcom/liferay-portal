@@ -17,6 +17,7 @@ package com.liferay.util.bridges.alloy;
 import com.liferay.portal.NoSuchResourceActionException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
@@ -54,8 +55,8 @@ public class AlloyPermission {
 		String controller, String actionId) {
 
 		actionId =
-			actionId.toUpperCase() + StringPool.UNDERLINE +
-				controller.toUpperCase();
+			StringUtil.toUpperCase(actionId) + StringPool.UNDERLINE +
+				StringUtil.toUpperCase(controller);
 
 		try {
 			ResourceActionsUtil.checkAction(portletId, actionId);

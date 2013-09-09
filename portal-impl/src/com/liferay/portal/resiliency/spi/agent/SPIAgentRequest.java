@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.upload.UploadServletRequestImpl;
 import com.liferay.portal.util.WebKeys;
@@ -264,7 +265,7 @@ public class SPIAgentRequest extends SPIAgentSerializable {
 
 		@Override
 		public String getHeader(String name) {
-			List<String> values = headerMap.get(name.toLowerCase());
+			List<String> values = headerMap.get(StringUtil.toLowerCase(name));
 
 			if ((values == null) || values.isEmpty()) {
 				return null;
@@ -280,7 +281,7 @@ public class SPIAgentRequest extends SPIAgentSerializable {
 
 		@Override
 		public Enumeration<String> getHeaders(String name) {
-			List<String> values = headerMap.get(name.toLowerCase());
+			List<String> values = headerMap.get(StringUtil.toLowerCase(name));
 
 			if (values == null) {
 				values = Collections.emptyList();

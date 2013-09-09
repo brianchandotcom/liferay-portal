@@ -64,7 +64,8 @@ public class ExpandoBridgeIndexerImpl implements ExpandoBridgeIndexer {
 
 		sb.append(FIELD_NAMESPACE);
 		sb.append(StringPool.FORWARD_SLASH);
-		sb.append(ExpandoTableConstants.DEFAULT_TABLE_NAME.toLowerCase());
+		sb.append(
+			StringUtil.toLowerCase(ExpandoTableConstants.DEFAULT_TABLE_NAME));
 		sb.append(StringPool.FORWARD_SLASH);
 		sb.append(columnName);
 

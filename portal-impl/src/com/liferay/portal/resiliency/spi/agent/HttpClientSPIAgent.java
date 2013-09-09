@@ -289,12 +289,12 @@ public class HttpClientSPIAgent implements SPIAgent {
 
 			String headerName = headerKeyValuePair[0].trim();
 
-			headerName = headerName.toLowerCase();
+			headerName = StringUtil.toLowerCase(headerName);
 
 			if (headerName.equals("connection")) {
 				String headerValue = headerKeyValuePair[1].trim();
 
-				headerValue = headerValue.toLowerCase();
+				headerValue = StringUtil.toLowerCase(headerValue);
 
 				if (headerValue.equals("close")) {
 					forceCloseSocket = true;

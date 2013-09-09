@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.KMPSearch;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
 import com.liferay.portal.servlet.filters.dynamiccss.DynamicCSSUtil;
@@ -362,7 +363,7 @@ public class StripFilter extends BasePortalFilter {
 		String contentType = GetterUtil.getString(
 			bufferCacheServletResponse.getContentType());
 
-		contentType = contentType.toLowerCase();
+		contentType = StringUtil.toLowerCase(contentType);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Stripping content of type " + contentType);

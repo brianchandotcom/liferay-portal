@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PropsUtil;
 
 /**
@@ -30,9 +31,9 @@ import com.liferay.portal.util.PropsUtil;
 public class PasswordEncryptorUtil {
 
 	public static final String PASSWORDS_ENCRYPTION_ALGORITHM =
-		GetterUtil.getString(
-			PropsUtil.get(
-				PropsKeys.PASSWORDS_ENCRYPTION_ALGORITHM)).toUpperCase();
+		StringUtil.toUpperCase(
+			GetterUtil.getString(
+				PropsUtil.get(PropsKeys.PASSWORDS_ENCRYPTION_ALGORITHM)));
 
 	public static final String TYPE_BCRYPT = "BCRYPT";
 

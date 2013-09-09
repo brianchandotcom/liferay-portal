@@ -178,7 +178,7 @@ public class DDMTemplateLocalServiceImpl
 			templateKey = String.valueOf(counterLocalService.increment());
 		}
 		else {
-			templateKey = templateKey.trim().toUpperCase();
+			templateKey = StringUtil.toUpperCase(templateKey.trim());
 		}
 
 		script = formatScript(type, language, script);
@@ -487,7 +487,7 @@ public class DDMTemplateLocalServiceImpl
 			long groupId, long classNameId, String templateKey)
 		throws SystemException {
 
-		templateKey = templateKey.trim().toUpperCase();
+		templateKey = StringUtil.toUpperCase(templateKey.trim());
 
 		return ddmTemplatePersistence.fetchByG_C_T(
 			groupId, classNameId, templateKey);
@@ -520,7 +520,7 @@ public class DDMTemplateLocalServiceImpl
 			boolean includeGlobalTemplates)
 		throws PortalException, SystemException {
 
-		templateKey = templateKey.trim().toUpperCase();
+		templateKey = StringUtil.toUpperCase(templateKey.trim());
 
 		DDMTemplate template = ddmTemplatePersistence.fetchByG_C_T(
 			groupId, classNameId, templateKey);
@@ -569,7 +569,7 @@ public class DDMTemplateLocalServiceImpl
 			long groupId, long classNameId, String templateKey)
 		throws PortalException, SystemException {
 
-		templateKey = templateKey.trim().toUpperCase();
+		templateKey = StringUtil.toUpperCase(templateKey.trim());
 
 		return ddmTemplatePersistence.findByG_C_T(
 			groupId, classNameId, templateKey);
@@ -601,7 +601,7 @@ public class DDMTemplateLocalServiceImpl
 			boolean includeGlobalTemplates)
 		throws PortalException, SystemException {
 
-		templateKey = templateKey.trim().toUpperCase();
+		templateKey = StringUtil.toUpperCase(templateKey.trim());
 
 		DDMTemplate template = ddmTemplatePersistence.fetchByG_C_T(
 			groupId, classNameId, templateKey);
@@ -1354,7 +1354,7 @@ public class DDMTemplateLocalServiceImpl
 			String smallImageURL, File smallImageFile, byte[] smallImageBytes)
 		throws PortalException, SystemException {
 
-		templateKey = templateKey.trim().toUpperCase();
+		templateKey = StringUtil.toUpperCase(templateKey.trim());
 
 		DDMTemplate template = ddmTemplatePersistence.fetchByG_C_T(
 			groupId, classNameId, templateKey);

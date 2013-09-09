@@ -772,7 +772,7 @@ public class DDMXSDImpl implements DDMXSD {
 		StringBundler resourcePath = new StringBundler(5);
 
 		resourcePath.append(_TPL_PATH);
-		resourcePath.append(fieldNamespace.toLowerCase());
+		resourcePath.append(StringUtil.toLowerCase(fieldNamespace));
 		resourcePath.append(CharPool.SLASH);
 		resourcePath.append(templateName);
 		resourcePath.append(_TPL_EXT);

@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.upgrade.dao.orm;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -54,7 +55,7 @@ public class UpgradeOptimizedResultSetHandler implements InvocationHandler {
 
 			_columnNames.add(columnName);
 
-			String lowerCaseColumnName = columnName.toLowerCase();
+			String lowerCaseColumnName = StringUtil.toLowerCase(columnName);
 
 			_columnTypes.put(lowerCaseColumnName, columnType);
 		}
@@ -93,7 +94,7 @@ public class UpgradeOptimizedResultSetHandler implements InvocationHandler {
 		if (column instanceof String) {
 			String columnString = (String)column;
 
-			column = columnString.toLowerCase();
+			column = StringUtil.toLowerCase(columnString);
 		}
 
 		Object returnValue = _columnValues.get(column);
@@ -187,7 +188,7 @@ public class UpgradeOptimizedResultSetHandler implements InvocationHandler {
 		for (int i = 1; i < _columnNames.size(); ++i) {
 			String columnName = _columnNames.get(i);
 
-			String lowerCaseColumnName = columnName.toLowerCase();
+			String lowerCaseColumnName = StringUtil.toLowerCase(columnName);
 
 			Integer columnType = _columnTypes.get(lowerCaseColumnName);
 

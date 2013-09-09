@@ -378,7 +378,8 @@ public class DLImpl implements DL {
 
 	@Override
 	public String getDDMStructureKey(String fileEntryTypeUuid) {
-		return _STRUCTURE_KEY_PREFIX + fileEntryTypeUuid.toUpperCase();
+		return _STRUCTURE_KEY_PREFIX +
+			StringUtil.toUpperCase(fileEntryTypeUuid);
 	}
 
 	@Override

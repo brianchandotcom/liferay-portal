@@ -4119,7 +4119,7 @@ public class StringUtil {
 			return null;
 		}
 		else {
-			return s.toUpperCase();
+			return StringUtil.toUpperCase(s);
 		}
 	}
 

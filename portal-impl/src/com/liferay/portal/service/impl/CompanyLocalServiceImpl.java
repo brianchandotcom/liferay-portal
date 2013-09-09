@@ -114,7 +114,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 		// Company
 
-		virtualHostname = virtualHostname.trim().toLowerCase();
+		virtualHostname = StringUtil.toLowerCase(virtualHostname.trim());
 
 		if (Validator.isNull(webId) ||
 			webId.equals(PropsValues.COMPANY_DEFAULT_WEB_ID) ||
@@ -509,7 +509,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 	public Company fetchCompanyByVirtualHost(String virtualHostname)
 		throws SystemException {
 
-		virtualHostname = virtualHostname.trim().toLowerCase();
+		virtualHostname = StringUtil.toLowerCase(virtualHostname.trim());
 
 		VirtualHost virtualHost = virtualHostPersistence.fetchByHostname(
 			virtualHostname);
@@ -620,7 +620,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		try {
-			virtualHostname = virtualHostname.trim().toLowerCase();
+			virtualHostname = StringUtil.toLowerCase(virtualHostname.trim());
 
 			VirtualHost virtualHost = virtualHostPersistence.findByHostname(
 				virtualHostname);
@@ -843,7 +843,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 		// Company
 
-		virtualHostname = virtualHostname.trim().toLowerCase();
+		virtualHostname = StringUtil.toLowerCase(virtualHostname.trim());
 
 		if (!active) {
 			if (companyId == PortalInstances.getDefaultCompanyId()) {
@@ -908,7 +908,7 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 
 		// Company
 
-		virtualHostname = virtualHostname.trim().toLowerCase();
+		virtualHostname = StringUtil.toLowerCase(virtualHostname.trim());
 
 		Company company = companyPersistence.findByPrimaryKey(companyId);
 

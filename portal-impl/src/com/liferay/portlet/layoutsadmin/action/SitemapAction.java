@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
@@ -77,7 +78,7 @@ public class SitemapAction extends Action {
 			else {
 				String host = PortalUtil.getHost(request);
 
-				host = host.toLowerCase();
+				host = StringUtil.toLowerCase(host);
 				host = host.trim();
 
 				VirtualHost virtualHost =

@@ -700,7 +700,8 @@ public class EditServerAction extends PortletAction {
 			String name = enu.nextElement();
 
 			if (name.startsWith("imageMagickLimit")) {
-				String key = name.substring(16, name.length()).toLowerCase();
+				String key = StringUtil.toLowerCase(
+					name.substring(16, name.length()));
 				String value = ParamUtil.getString(actionRequest, name);
 
 				portletPreferences.setValue(

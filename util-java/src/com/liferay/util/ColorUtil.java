@@ -16,6 +16,7 @@ package com.liferay.util;
 
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.awt.Color;
 
@@ -82,10 +83,10 @@ public class ColorUtil {
 
 	public static int[] getRGB(String hex) {
 		if (hex.startsWith("#")) {
-			hex = hex.substring(1, hex.length()).toUpperCase();
+			hex = StringUtil.toUpperCase(hex.substring(1, hex.length()));
 		}
 		else {
-			hex = hex.toUpperCase();
+			hex = StringUtil.toUpperCase(hex);
 		}
 
 		int[] hexArray = new int[6];

@@ -214,7 +214,7 @@ public class AssetCategoryFinderImpl
 	public AssetCategory findByG_N(long groupId, String name)
 		throws NoSuchCategoryException, SystemException {
 
-		name = name.trim().toLowerCase();
+		name = StringUtil.toLowerCase(name.trim());
 
 		Session session = null;
 

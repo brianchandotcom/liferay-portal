@@ -16,6 +16,7 @@ package com.liferay.portal.webdav.methods;
 
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.webdav.WebDAVException;
 import com.liferay.portal.kernel.webdav.methods.Method;
 import com.liferay.portal.kernel.webdav.methods.MethodFactory;
@@ -41,7 +42,8 @@ public class MethodFactoryImpl implements MethodFactory {
 	public Method create(HttpServletRequest request) throws WebDAVException {
 		String method = request.getMethod();
 
-		Method methodImpl = (Method)_methods.get(method.toUpperCase());
+		Method methodImpl = (Method)_methods.get(
+			StringUtil.toUpperCase(method));
 
 		if (methodImpl == null) {
 			throw new WebDAVException(
@@ -54,7 +56,7 @@ public class MethodFactoryImpl implements MethodFactory {
 	protected void addMethod(String methodName) throws Exception {
 		String defaultClassName = methodName.substring(1);
 
-		defaultClassName = defaultClassName.toLowerCase();
+		defaultClassName = StringUtil.toLowerCase(defaultClassName);
 		defaultClassName = methodName.substring(0, 1) + defaultClassName;
 		defaultClassName =
 			"com.liferay.portal.webdav.methods." + defaultClassName +

@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.mobile.device;
 
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
@@ -67,8 +68,8 @@ public class VersionableName
 
 	@Override
 	public int compareTo(VersionableName versionableName) {
-		return _name.toUpperCase().compareTo(
-			versionableName.getName().toUpperCase());
+		return StringUtil.toUpperCase(_name).compareTo(
+			StringUtil.toUpperCase(versionableName.getName()));
 	}
 
 	@Override

@@ -256,7 +256,7 @@ public class LicenseUtil {
 
 			String macAddress = matcher.group(1);
 
-			macAddress = macAddress.toLowerCase();
+			macAddress = StringUtil.toLowerCase(macAddress);
 			macAddress = macAddress.replace(CharPool.DASH, CharPool.COLON);
 			macAddress = macAddress.replace(CharPool.PERIOD, CharPool.COLON);
 

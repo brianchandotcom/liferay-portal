@@ -234,4 +234,20 @@ public class DDMStructureStagedModelDataHandler
 		structure.prepareLocalizedFieldsForImport(defaultImportLocale);
 	}
 
+	@Override
+	protected boolean validateMissingReference(
+			String uuid, long companyId, long groupId)
+		throws Exception {
+
+		DDMStructure structure =
+			DDMStructureLocalServiceUtil.fetchDDMStructureByUuidAndGroupId(
+				uuid, groupId);
+
+		if (structure == null) {
+			return false;
+		}
+
+		return true;
+	}
+
 }

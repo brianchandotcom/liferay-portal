@@ -638,8 +638,8 @@ public class JournalArticleIndexer extends BaseIndexer {
 		for (JournalArticle curArticle : articles) {
 			if (!curArticle.isIndexable() ||
 				((latestIndexableArticle != null) &&
-				 (curArticle.getArticleId() ==
-					latestIndexableArticle.getArticleId()))) {
+				 (curArticle.getResourcePrimKey() ==
+					latestIndexableArticle.getResourcePrimKey()))) {
 
 				continue;
 			}

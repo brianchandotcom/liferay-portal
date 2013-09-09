@@ -445,56 +445,11 @@ app.server.jboss.zip.name=jboss-eap-$${app.server.jboss.version}.zip</echo>
 
 		<echo file="app.server.${user.name}.properties">app.server.type=tcserver</echo>
 
-		<antcall target="all" />
+		<delete dir="${project.dir}/portal-web/classes" />
 
-		<copy
-			file="dist/liferay-portal-dependencies-6.2.0/hsql.jar"
-			tofile="${app.server.tcserver.dir}/liferay/lib/hsql.jar"
-		/>
-		<copy
-			file="dist/liferay-portal-dependencies-6.2.0/portlet.jar"
-			tofile="${app.server.tcserver.dir}/liferay/lib/portlet.jar"
-		/>
-		<copy
-			file="dist/liferay-portal-dependencies-6.2.0/portal-service.jar"
-			tofile="${app.server.tcserver.dir}/liferay/lib/portal-service.jar"
-		/>
-		<copy
-			file="lib/development/activation.jar"
-			tofile="${app.server.tcserver.dir}/liferay/lib/activation.jar"
-		/>
-		<copy
-			file="lib/development/mysql.jar"
-			tofile="${app.server.tcserver.dir}/liferay/lib/mysql.jar"
-		/>
-		<copy
-			file="lib/development/jms.jar"
-			tofile="${app.server.tcserver.dir}/liferay/lib/jms.jar"
-		/>
-		<copy
-			file="lib/development/jta.jar"
-			tofile="${app.server.tcserver.dir}/liferay/lib/jta.jar"
-		/>
-		<copy
-			file="lib/development/jutf7.jar"
-			tofile="${app.server.tcserver.dir}/liferay/lib/jutf7.jar"
-		/>
-		<copy
-			file="lib/development/mail.jar"
-			tofile="${app.server.tcserver.dir}/liferay/lib/mail.jar"
-		/>
-		<copy
-			file="lib/development/persistence.jar"
-			tofile="${app.server.tcserver.dir}/liferay/lib/persistence.jar"
-		/>
-		<copy
-			file="lib/development/script-10.jar"
-			tofile="${app.server.tcserver.dir}/liferay/lib/script-10.jar"
-		/>
-		<copy
-			file="lib/portal/ccpp.jar"
-			tofile="${app.server.tcserver.dir}/liferay/lib/ccpp.jar"
-		/>
+		<antcall target="all" inheritAll="false" />
+
+		<delete file="app.server.${user.name}.properties" />
 	</target>
 
 	<target name="build-dist-tomcat">
@@ -1595,8 +1550,6 @@ release was successful.</echo>
 	</target>
 
 	<target name="unzip-tcserver">
-		<antcall target="zip-portal-dependencies" />
-
 		<delete dir="${app.server.tcserver.dir}" />
 
 		<if>
@@ -1618,10 +1571,8 @@ release was successful.</echo>
 			<mapper type="glob" from="${app.server.tcserver.zip.name}" to="tcserver-${app.server.tcserver.version}/*" />
 		</unzip>
 
-		<unzip src="dist/liferay-portal-dependencies-6.2.0.zip" dest="dist/"/>
-
 		<exec dir="${app.server.tcserver.dir}" executable="cmd">
-			<arg line="/c tcruntime-instance.bat create liferay" />
+			<arg line="/c set JAVA_OPTS= &amp; tcruntime-instance.bat create liferay" />
 		</exec>
 
 		<replace file="${app.server.tcserver.dir}/liferay/conf/wrapper.conf">

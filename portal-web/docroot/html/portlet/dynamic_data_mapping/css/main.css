@@ -8,6 +8,10 @@
 	.diagram-builder-drop-container {
 		overflow: auto;
 	}
+	
+	.diagram-builder-field-icon {
+		font-size: 24px;
+	}
 
 	.field-labels-inline {
 		clear: both;
@@ -30,10 +34,6 @@
 
 	.lfr-translation-manager {
 		margin-bottom: 15px;
-	}
-
-	.lfr-ddm-link-icon {
-		background-image: url(@theme_image_path@/dynamic_data_mapping/hyperlink.png);
 	}
 
 	.lfr-ddm-link-to-page a {
@@ -67,15 +67,6 @@
 
 	.lfr-ddm-small-image-content img {
 		margin-right: 1em;
-	}
-
-	.lfr-ddm-text-html, .lfr-ddm-text-html-icon {
-		background-image: url(@theme_image_path@/dynamic_data_mapping/textarea.png);
-	}
-
-	.lfr-ddm-text-html {
-		background-position: 4px;
-		background-repeat: no-repeat;
 	}
 
 	.lfr-ddm-types-form-column .column-content-first {
@@ -145,11 +136,6 @@
 		.lfr-editor-container-full {
 			margin-left: 0;
 		}
-	}
-
-	.lfr-wcm-image {
-		background: url(@theme_image_path@/dynamic_data_mapping/image.png) no-repeat 0 20px;
-		padding-top: 35px;
 	}
 
 	.lfr-wcm-image-icon {

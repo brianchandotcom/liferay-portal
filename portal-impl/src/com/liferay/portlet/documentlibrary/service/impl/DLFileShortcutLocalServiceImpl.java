@@ -292,9 +292,7 @@ public class DLFileShortcutLocalServiceImpl
 			dlFileShortcutPersistence.findByCompanyId(companyId);
 
 		for (DLFileShortcut fileShortcut : fileShortcuts) {
-			String treePath = fileShortcut.buildTreePath();
-
-			fileShortcut.setTreePath(treePath);
+			fileShortcut.setTreePath(fileShortcut.buildTreePath());
 
 			dlFileShortcutPersistence.update(fileShortcut);
 		}

@@ -465,9 +465,7 @@ public class JournalFolderLocalServiceImpl
 			companyId);
 
 		for (JournalFolder folder : folders) {
-			String treePath = folder.buildTreePath();
-
-			folder.setTreePath(treePath);
+			folder.setTreePath(folder.buildTreePath());
 
 			journalFolderPersistence.update(folder);
 		}

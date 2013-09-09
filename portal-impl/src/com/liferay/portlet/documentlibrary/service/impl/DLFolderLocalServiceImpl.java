@@ -768,9 +768,7 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 		List<DLFolder> folders = dlFolderPersistence.findByCompanyId(companyId);
 
 		for (DLFolder folder : folders) {
-			String treePath = folder.buildTreePath();
-
-			folder.setTreePath(treePath);
+			folder.setTreePath(folder.buildTreePath());
 
 			dlFolderPersistence.update(folder);
 		}

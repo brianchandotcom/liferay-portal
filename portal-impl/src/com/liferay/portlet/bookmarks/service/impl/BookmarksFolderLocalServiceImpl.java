@@ -401,9 +401,7 @@ public class BookmarksFolderLocalServiceImpl
 			bookmarksFolderPersistence.findByCompanyId(companyId);
 
 		for (BookmarksFolder folder : folders) {
-			String treePath = folder.buildTreePath();
-
-			folder.setTreePath(treePath);
+			folder.setTreePath(folder.buildTreePath());
 
 			bookmarksFolderPersistence.update(folder);
 		}

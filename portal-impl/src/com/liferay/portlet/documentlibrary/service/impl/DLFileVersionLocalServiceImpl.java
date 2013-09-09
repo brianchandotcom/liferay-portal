@@ -136,9 +136,7 @@ public class DLFileVersionLocalServiceImpl
 			dlFileVersionPersistence.findByCompanyId(companyId);
 
 		for (DLFileVersion fileVersion : fileVersions) {
-			String treePath = fileVersion.buildTreePath();
-
-			fileVersion.setTreePath(treePath);
+			fileVersion.setTreePath(fileVersion.buildTreePath());
 
 			dlFileVersionPersistence.update(fileVersion);
 		}

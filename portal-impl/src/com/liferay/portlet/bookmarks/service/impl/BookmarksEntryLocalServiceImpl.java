@@ -386,9 +386,7 @@ public class BookmarksEntryLocalServiceImpl
 			bookmarksEntryPersistence.findByCompanyId(companyId);
 
 		for (BookmarksEntry entry : entries) {
-			String treePath = entry.buildTreePath();
-
-			entry.setTreePath(treePath);
+			entry.setTreePath(entry.buildTreePath());
 
 			bookmarksEntryPersistence.update(entry);
 		}

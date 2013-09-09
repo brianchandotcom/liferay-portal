@@ -1345,9 +1345,7 @@ public class DLFileEntryLocalServiceImpl
 			companyId);
 
 		for (DLFileEntry fileEntry : fileEntries) {
-			String treePath = fileEntry.buildTreePath();
-
-			fileEntry.setTreePath(treePath);
+			fileEntry.setTreePath(fileEntry.buildTreePath());
 
 			dlFileEntryPersistence.update(fileEntry);
 		}

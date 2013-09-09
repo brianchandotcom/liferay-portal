@@ -3387,9 +3387,7 @@ public class JournalArticleLocalServiceImpl
 			journalArticlePersistence.findByCompanyId(companyId);
 
 		for (JournalArticle article : articles) {
-			String treePath = article.buildTreePath();
-
-			article.setTreePath(treePath);
+			article.setTreePath(article.buildTreePath());
 
 			journalArticlePersistence.update(article);
 		}

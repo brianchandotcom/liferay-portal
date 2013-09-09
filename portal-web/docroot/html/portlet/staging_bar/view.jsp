@@ -90,10 +90,9 @@ if (layout != null) {
 		</c:if>
 
 		<aui:nav-item anchorCssClass="staging-link" cssClass="site-variations" dropdown="<%= true %>" iconClass="icon-cog" label="staging">
-			<c:if test="<%= stagingGroup != null %>">
-				<c:if test="<%= (layoutSetBranches != null) && ((layoutSetBranches.size() > 1) || (layoutSetBranches.size() <= 1)) %>">
-					<aui:nav-item cssClass="row-fluid">
-						<c:if test="<%= layoutSetBranches.size() >= 1 %>">
+			<c:if test="<%= stagingGroup != null %>">				
+				<aui:nav-item cssClass="row-fluid">
+						<c:if test="<%= (layoutSetBranches != null) && (layoutSetBranches.size() >= 1) %>">
 							<div class="site-pages-variation-options span6">
 								<c:if test="<%= group.isStagingGroup() || layoutSetBranches.size() <= _MAX_INLINE_BRANCHES %>">
 									<h5>
@@ -175,8 +174,7 @@ if (layout != null) {
 						UnicodeProperties typeSettingsProperties = null;
 						%>
 
-						<c:if test="<%= !group.isStagedRemotely() || branchingEnabled %>">
-							<c:choose>
+						<c:choose>
 								<c:when test="<%= (group.isStagingGroup() || group.isStagedRemotely()) && branchingEnabled %>">
 									<div class="page-variations-options span6">
 										<h5>
@@ -469,12 +467,13 @@ if (layout != null) {
 										</c:choose>
 									</div>
 
-									<liferay-ui:staging cssClass="publish-link" extended="<%= false %>" onlyActions="<%= true %>" />
+									<c:if test="<%= group.isStagingGroup() || group.isStagedRemotely() %>">
+										<liferay-ui:staging cssClass="publish-link" extended="<%= false %>" onlyActions="<%= true %>" />
+									</c:if>
 								</c:otherwise>
-							</c:choose>
-						</c:if>
+						</c:choose>
 
-						<c:if test="<%= layoutSetBranches.size() > _MAX_INLINE_BRANCHES %>">
+						<c:if test="<%= (layoutSetBranches != null) && (layoutSetBranches.size() > _MAX_INLINE_BRANCHES) %>">
 							<div class="">
 								<liferay-ui:icon-menu cssClass="layoutset-branches-menu" direction="down" extended="<%= false %>" icon='<%= themeDisplay.getPathThemeImages() + "/common/staging.png" %>' message='<%= LanguageUtil.format(pageContext, "site-pages-variations-x", layoutSetBranches.size()) %>'>
 
@@ -506,8 +505,7 @@ if (layout != null) {
 								</liferay-ui:icon-menu>
 							</div>
 						</c:if>
-					</aui:nav-item>
-				</c:if>
+				</aui:nav-item>
 
 				<aui:script use="aui-base">
 					var layoutSetBranchesLink = A.one('#<portlet:namespace />manageLayoutSetBranches');

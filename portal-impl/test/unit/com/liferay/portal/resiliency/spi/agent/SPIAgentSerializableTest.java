@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtilAdvice;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.ThreadLocalDistributor;
 import com.liferay.portal.test.AdviseWith;
 import com.liferay.portal.test.AspectJMockingNewClassLoaderJUnitTestRunner;
@@ -221,12 +222,14 @@ public class SPIAgentSerializableTest {
 
 		Assert.assertEquals(2, headers.size());
 
-		List<String> emptyHeaders = headers.get(emptyHeaderName.toLowerCase());
+		List<String> emptyHeaders = headers.get(
+			StringUtil.toLowerCase(emptyHeaderName));
 
 		Assert.assertNotNull(emptyHeaders);
 		Assert.assertTrue(emptyHeaders.isEmpty());
 
-		List<String> actualHeaderValues = headers.get(headerName.toLowerCase());
+		List<String> actualHeaderValues = headers.get(
+			StringUtil.toLowerCase(headerName));
 
 		Assert.assertNotNull(actualHeaderValues);
 		Assert.assertTrue(headerValues.equals(actualHeaderValues));

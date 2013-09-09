@@ -76,7 +76,8 @@ public class PostgreSQLDB extends BaseDB {
 			while (rs.next()) {
 				String indexName = rs.getString("indexname");
 				String tableName = rs.getString("tablename");
-				String indexSQL = rs.getString("indexdef").toLowerCase().trim();
+				String indexSQL = StringUtil.toLowerCase(
+					rs.getString("indexdef").trim());
 
 				boolean unique = true;
 

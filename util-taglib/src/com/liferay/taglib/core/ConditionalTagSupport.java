@@ -15,6 +15,7 @@
 package com.liferay.taglib.core;
 
 import com.liferay.portal.kernel.servlet.taglib.TagSupport;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import javax.servlet.jsp.JspTagException;
 import javax.servlet.jsp.PageContext;
@@ -51,7 +52,7 @@ public abstract class ConditionalTagSupport extends TagSupport {
 	}
 
 	public void setScope(String scope) {
-		String scopeLowerCase = scope.toLowerCase();
+		String scopeLowerCase = StringUtil.toLowerCase(scope);
 
 		if (scopeLowerCase.equals("application")) {
 			_scope = PageContext.APPLICATION_SCOPE;

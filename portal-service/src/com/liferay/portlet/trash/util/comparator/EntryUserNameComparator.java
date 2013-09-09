@@ -15,6 +15,7 @@
 package com.liferay.portlet.trash.util.comparator;
 
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portlet.trash.model.TrashEntry;
 
 /**
@@ -41,8 +42,8 @@ public class EntryUserNameComparator extends OrderByComparator {
 		TrashEntry entry1 = (TrashEntry)obj1;
 		TrashEntry entry2 = (TrashEntry)obj2;
 
-		int value = entry1.getUserName().toLowerCase().compareTo(
-			entry2.getUserName().toLowerCase());
+		int value = StringUtil.toLowerCase(entry1.getUserName()).compareTo(
+			StringUtil.toLowerCase(entry2.getUserName()));
 
 		if (_ascending) {
 			return value;

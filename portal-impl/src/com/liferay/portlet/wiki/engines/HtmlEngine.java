@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
 import com.liferay.portal.kernel.portlet.Router;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.service.PortletLocalServiceUtil;
@@ -146,7 +147,7 @@ public class HtmlEngine implements WikiEngine {
 			try {
 				WikiNodeLocalServiceUtil.getNode(page.getGroupId(), nodeName);
 
-				links.put(title.toLowerCase(), Boolean.TRUE);
+				links.put(StringUtil.toLowerCase(title), Boolean.TRUE);
 			}
 			catch (NoSuchNodeException nsne) {
 				if (_log.isWarnEnabled()) {

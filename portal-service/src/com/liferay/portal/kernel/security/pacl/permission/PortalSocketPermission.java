@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.net.URL;
@@ -76,7 +77,7 @@ public class PortalSocketPermission {
 		}
 
 		if (port == -1) {
-			protocol = protocol.toLowerCase();
+			protocol = StringUtil.toLowerCase(protocol);
 
 			if (protocol.startsWith(Http.HTTPS)) {
 				port = Http.HTTPS_PORT;

@@ -278,7 +278,7 @@ public class JournalArticleLocalServiceImpl
 		// Article
 
 		User user = userPersistence.findByPrimaryKey(userId);
-		articleId = articleId.trim().toUpperCase();
+		articleId = StringUtil.toUpperCase(articleId.trim());
 
 		Date displayDate = null;
 		Date expirationDate = null;
@@ -744,8 +744,8 @@ public class JournalArticleLocalServiceImpl
 		// Article
 
 		User user = userPersistence.findByPrimaryKey(userId);
-		oldArticleId = oldArticleId.trim().toUpperCase();
-		newArticleId = newArticleId.trim().toUpperCase();
+		oldArticleId = StringUtil.toUpperCase(oldArticleId.trim());
+		newArticleId = StringUtil.toUpperCase(newArticleId.trim());
 		Date now = new Date();
 
 		JournalArticle oldArticle = journalArticlePersistence.findByG_A_V(
@@ -4492,7 +4492,7 @@ public class JournalArticleLocalServiceImpl
 		// Article
 
 		User user = userPersistence.findByPrimaryKey(userId);
-		articleId = articleId.trim().toUpperCase();
+		articleId = StringUtil.toUpperCase(articleId.trim());
 
 		byte[] smallImageBytes = null;
 

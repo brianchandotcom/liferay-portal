@@ -148,14 +148,14 @@ public class CacheFilter extends BasePortalFilter {
 			request.getHeader(HttpHeaders.USER_AGENT));
 
 		sb.append(StringPool.POUND);
-		sb.append(userAgent.toLowerCase().hashCode());
+		sb.append(StringUtil.toLowerCase(userAgent).hashCode());
 
 		// Gzip compression
 
 		sb.append(StringPool.POUND);
 		sb.append(BrowserSnifferUtil.acceptsGzip(request));
 
-		return sb.toString().trim().toUpperCase();
+		return StringUtil.toUpperCase(sb.toString().trim());
 	}
 
 	protected long getPlid(
@@ -442,7 +442,7 @@ public class CacheFilter extends BasePortalFilter {
 				return;
 			}
 
-			key = key.replace(pAuth.toUpperCase(), "VALID");
+			key = key.replace(StringUtil.toUpperCase(pAuth), "VALID");
 		}
 
 		long companyId = PortalInstances.getCompanyId(request);

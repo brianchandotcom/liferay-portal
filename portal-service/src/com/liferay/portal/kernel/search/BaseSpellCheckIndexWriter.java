@@ -159,7 +159,7 @@ public abstract class BaseSpellCheckIndexWriter
 			keySB.append(word);
 			keySB.append(StringPool.UNDERLINE);
 
-			keySB.append(word.toLowerCase());
+			keySB.append(StringUtil.toLowerCase(word));
 
 			if (parameters != null) {
 				for (String parameter : parameters) {

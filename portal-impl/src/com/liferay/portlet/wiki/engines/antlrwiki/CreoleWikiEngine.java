@@ -17,6 +17,7 @@ package com.liferay.portlet.wiki.engines.antlrwiki;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.parsers.creole.ast.ASTNode;
 import com.liferay.portal.parsers.creole.ast.WikiPageNode;
 import com.liferay.portal.parsers.creole.ast.link.LinkNode;
@@ -83,7 +84,7 @@ public class CreoleWikiEngine implements WikiEngine {
 				}
 
 				if (existingLink) {
-					title = title.toLowerCase();
+					title = StringUtil.toLowerCase(title);
 				}
 
 				outgoingLinks.put(title, existingLink);

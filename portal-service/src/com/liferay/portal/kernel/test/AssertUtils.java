@@ -83,11 +83,11 @@ public class AssertUtils {
 		String expectedString, String actualString) {
 
 		if (expectedString != null) {
-			expectedString = expectedString.toLowerCase();
+			expectedString = StringUtil.toLowerCase(expectedString);
 		}
 
 		if (actualString != null) {
-			actualString = actualString.toLowerCase();
+			actualString = StringUtil.toLowerCase(actualString);
 		}
 
 		Assert.assertEquals(expectedString, actualString);

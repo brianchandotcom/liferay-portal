@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.upgrade.util;
 
 import com.liferay.portal.kernel.upgrade.StagnantRowException;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 /**
  * @author Brian Wing Shun Chan
@@ -40,7 +41,7 @@ public class DefaultPKMapper extends ValueMapperWrapper {
 			ValueMapper valueMapper = getValueMapper();
 
 			if (oldValue instanceof String) {
-				oldValue = oldValueString.toLowerCase();
+				oldValue = StringUtil.toLowerCase(oldValueString);
 			}
 
 			return valueMapper.getNewValue(oldValue);

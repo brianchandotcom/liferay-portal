@@ -17,6 +17,7 @@ package com.liferay.portal.upgrade.v6_2_0;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
@@ -127,7 +128,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 				String xsd = rs.getString("xsd");
 
 				updateStructure(
-					structureId, structureKey.trim().toUpperCase(),
+					structureId, StringUtil.toUpperCase(structureKey.trim()),
 					updateXSD(xsd));
 			}
 		}

@@ -15,6 +15,7 @@
 package com.liferay.portlet.wiki.translators;
 
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portlet.wiki.importers.mediawiki.MediaWikiImporter;
 
 import java.util.regex.Matcher;
@@ -207,8 +208,9 @@ public class MediaWikiToCreoleTranslator extends BaseTranslator {
 
 			String image =
 				"{{" + MediaWikiImporter.SHARED_IMAGES_TITLE + "/" +
-					sb.substring(imageStartPos, imageEndPos).toLowerCase() +
-						"}}";
+					StringUtil.toLowerCase(
+						sb.substring(imageStartPos, imageEndPos)) +
+							"}}";
 
 			int imageLength = image.length();
 

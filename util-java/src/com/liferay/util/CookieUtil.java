@@ -15,6 +15,7 @@
 package com.liferay.util;
 
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -41,7 +42,7 @@ public class CookieUtil {
 		Map<String, Cookie> cookieMap = _getCookieMap(request);
 
 		if (toUpperCase) {
-			name = name.toUpperCase();
+			name = StringUtil.toUpperCase(name);
 		}
 
 		Cookie cookie = cookieMap.get(name);
@@ -76,7 +77,7 @@ public class CookieUtil {
 			for (Cookie cookie : cookies) {
 				String cookieName = GetterUtil.getString(cookie.getName());
 
-				cookieName = cookieName.toUpperCase();
+				cookieName = StringUtil.toUpperCase(cookieName);
 
 				cookieMap.put(cookieName, cookie);
 			}

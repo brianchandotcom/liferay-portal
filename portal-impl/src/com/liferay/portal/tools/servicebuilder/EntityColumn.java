@@ -15,6 +15,7 @@
 package com.liferay.portal.tools.servicebuilder;
 
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -348,7 +349,7 @@ public class EntityColumn implements Cloneable, Comparable<EntityColumn> {
 	}
 
 	public void setArrayableOperator(String arrayableOperator) {
-		_arrayableOperator = arrayableOperator.toUpperCase();
+		_arrayableOperator = StringUtil.toUpperCase(arrayableOperator);
 	}
 
 	public void setCaseSensitive(boolean caseSensitive) {

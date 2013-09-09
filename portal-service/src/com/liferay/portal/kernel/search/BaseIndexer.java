@@ -1522,7 +1522,7 @@ public abstract class BaseIndexer implements Indexer {
 		for (Locale locale : locales) {
 			String countryName = country.getName(locale);
 
-			countryName = countryName.toLowerCase();
+			countryName = StringUtil.toLowerCase(countryName);
 
 			countryNames.add(countryName);
 		}
@@ -1607,7 +1607,7 @@ public abstract class BaseIndexer implements Indexer {
 			try {
 				Region region = RegionServiceUtil.getRegion(regionId);
 
-				regions.add(region.getName().toLowerCase());
+				regions.add(StringUtil.toLowerCase(region.getName()));
 			}
 			catch (NoSuchRegionException nsre) {
 				if (_log.isWarnEnabled()) {
@@ -1620,13 +1620,13 @@ public abstract class BaseIndexer implements Indexer {
 		List<String> zips = new ArrayList<String>();
 
 		for (Address address : addresses) {
-			cities.add(address.getCity().toLowerCase());
+			cities.add(StringUtil.toLowerCase(address.getCity()));
 			countries.addAll(getLocalizedCountryNames(address.getCountry()));
-			regions.add(address.getRegion().getName().toLowerCase());
-			streets.add(address.getStreet1().toLowerCase());
-			streets.add(address.getStreet2().toLowerCase());
-			streets.add(address.getStreet3().toLowerCase());
-			zips.add(address.getZip().toLowerCase());
+			regions.add(StringUtil.toLowerCase(address.getRegion().getName()));
+			streets.add(StringUtil.toLowerCase(address.getStreet1()));
+			streets.add(StringUtil.toLowerCase(address.getStreet2()));
+			streets.add(StringUtil.toLowerCase(address.getStreet3()));
+			zips.add(StringUtil.toLowerCase(address.getZip()));
 		}
 
 		document.addText("city", cities.toArray(new String[cities.size()]));

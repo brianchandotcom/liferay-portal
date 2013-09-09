@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstancePool;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.AutoLogin;
@@ -148,7 +149,7 @@ public class AutoLoginFilter extends BasePortalFilter {
 
 		String contextPath = PortalUtil.getPathContext();
 
-		String path = request.getRequestURI().toLowerCase();
+		String path = StringUtil.toLowerCase(request.getRequestURI());
 
 		if (!contextPath.equals(StringPool.SLASH) &&
 			path.contains(contextPath)) {

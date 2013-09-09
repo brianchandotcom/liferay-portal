@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.mobile.device;
 
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.HashSet;
@@ -41,7 +42,7 @@ public class DefaultDeviceCapabilityFilter implements DeviceCapabilityFilter {
 			return false;
 		}
 
-		capabilityValue = capabilityValue.toLowerCase();
+		capabilityValue = StringUtil.toLowerCase(capabilityValue);
 
 		if (capabilityValue.equals("false")) {
 			return false;

@@ -222,7 +222,7 @@ public class VerifySQLServer extends VerifyProcess {
 					_log.info("Dropping index " + tableName + "." + indexName);
 				}
 
-				String indexNameUpperCase = indexName.toUpperCase();
+				String indexNameUpperCase = StringUtil.toUpperCase(indexName);
 
 				if (indexNameUpperCase.startsWith("PK")) {
 					String primaryKeyColumnNames = StringUtil.merge(

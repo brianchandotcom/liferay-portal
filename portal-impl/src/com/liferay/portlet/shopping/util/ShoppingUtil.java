@@ -917,7 +917,7 @@ public class ShoppingUtil {
 			ppPaymentStatus = "checkout";
 		}
 		else {
-			ppPaymentStatus = ppPaymentStatus.toLowerCase();
+			ppPaymentStatus = StringUtil.toLowerCase(ppPaymentStatus);
 		}
 
 		return LanguageUtil.get(pageContext, ppPaymentStatus);

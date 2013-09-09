@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Country;
 import com.liferay.portal.model.Region;
@@ -66,7 +67,7 @@ public class OrganizationSearchTerms extends OrganizationDisplayTerms {
 			try {
 				Country country = CountryServiceUtil.getCountry(countryId);
 
-				countryName = country.getName().toLowerCase();
+				countryName = StringUtil.toLowerCase(country.getName());
 			}
 			catch (NoSuchCountryException nsce) {
 				if (_log.isWarnEnabled()) {
@@ -94,7 +95,7 @@ public class OrganizationSearchTerms extends OrganizationDisplayTerms {
 			try {
 				Region region = RegionServiceUtil.getRegion(regionId);
 
-				regionName = region.getName().toLowerCase();
+				regionName = StringUtil.toLowerCase(region.getName());
 			}
 			catch (NoSuchRegionException nsre) {
 				if (_log.isWarnEnabled()) {

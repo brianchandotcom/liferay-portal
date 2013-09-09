@@ -17,6 +17,7 @@ package com.liferay.portal.search;
 import com.liferay.portal.kernel.search.Collator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.List;
 import java.util.Map;
@@ -40,8 +41,9 @@ public class DefaultCollatorImpl implements Collator {
 				String suggestion = suggestions.get(0);
 
 				if (Character.isUpperCase(token.charAt(0))) {
-					suggestion = suggestion.substring(
-						0, 1).toUpperCase().concat(suggestion.substring(1));
+					suggestion = StringUtil.toUpperCase(
+						suggestion.substring(0, 1)).concat(
+							suggestion.substring(1));
 				}
 
 				sb.append(suggestion);

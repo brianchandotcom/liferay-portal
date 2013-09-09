@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
@@ -142,7 +143,7 @@ public class DDMStructureLocalServiceImpl
 			structureKey = String.valueOf(counterLocalService.increment());
 		}
 		else {
-			structureKey = structureKey.trim().toUpperCase();
+			structureKey = StringUtil.toUpperCase(structureKey.trim());
 		}
 
 		try {
@@ -1523,7 +1524,7 @@ public class DDMStructureLocalServiceImpl
 		if (structureKey != null) {
 			structureKey = structureKey.trim();
 
-			return structureKey.toUpperCase();
+			return StringUtil.toUpperCase(structureKey);
 		}
 
 		return StringPool.BLANK;
@@ -1664,7 +1665,7 @@ public class DDMStructureLocalServiceImpl
 				parentElement = parentElement.getParent();
 			}
 
-			path = path.toLowerCase();
+			path = StringUtil.toLowerCase(path);
 
 			if (names.contains(path)) {
 				throw new StructureDuplicateElementException();

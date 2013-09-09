@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.model.Address;
@@ -1811,7 +1812,7 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 				prefixId, suffixId, birthdayMonth, birthdayDay, birthdayYear,
 				male, jobTitle);
 
-			emailAddress = emailAddress.trim().toLowerCase();
+			emailAddress = StringUtil.toLowerCase(emailAddress.trim());
 
 			if (!emailAddress.equalsIgnoreCase(user.getEmailAddress())) {
 				validateEmailAddress(user, emailAddress);

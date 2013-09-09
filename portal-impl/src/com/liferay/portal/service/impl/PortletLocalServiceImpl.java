@@ -518,7 +518,8 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
 			Set<String> mimeTypePortletModes = new HashSet<String>();
 
-			mimeTypePortletModes.add(PortletMode.VIEW.toString().toLowerCase());
+			mimeTypePortletModes.add(
+				StringUtil.toLowerCase(PortletMode.VIEW.toString()));
 
 			Map<String, Set<String>> portletModes = portlet.getPortletModes();
 
@@ -527,7 +528,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 			Set<String> mimeTypeWindowStates = new HashSet<String>();
 
 			mimeTypeWindowStates.add(
-				WindowState.NORMAL.toString().toLowerCase());
+				StringUtil.toLowerCase(WindowState.NORMAL.toString()));
 
 			Map<String, Set<String>> windowStates = portlet.getWindowStates();
 
@@ -1326,7 +1327,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 					TimeUnit.SECOND.getValue());
 
 				schedulerEntry.setTimeUnit(
-					TimeUnit.parse(timeUnit.toLowerCase()));
+					TimeUnit.parse(StringUtil.toLowerCase(timeUnit)));
 			}
 
 			portletModel.addSchedulerEntry(schedulerEntry);
@@ -1927,13 +1928,14 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
 			Set<String> mimeTypePortletModes = new HashSet<String>();
 
-			mimeTypePortletModes.add(PortletMode.VIEW.toString().toLowerCase());
+			mimeTypePortletModes.add(
+				StringUtil.toLowerCase(PortletMode.VIEW.toString()));
 
 			for (Element portletModeElement :
 					supportsElement.elements("portlet-mode")) {
 
 				mimeTypePortletModes.add(
-					portletModeElement.getTextTrim().toLowerCase());
+					StringUtil.toLowerCase(portletModeElement.getTextTrim()));
 			}
 
 			portletModes.put(mimeType, mimeTypePortletModes);
@@ -1941,25 +1943,27 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 			Set<String> mimeTypeWindowStates = new HashSet<String>();
 
 			mimeTypeWindowStates.add(
-				WindowState.NORMAL.toString().toLowerCase());
+				StringUtil.toLowerCase(WindowState.NORMAL.toString()));
 
 			List<Element> windowStateElements = supportsElement.elements(
 				"window-state");
 
 			if (windowStateElements.isEmpty()) {
 				mimeTypeWindowStates.add(
-					WindowState.MAXIMIZED.toString().toLowerCase());
+					StringUtil.toLowerCase(WindowState.MAXIMIZED.toString()));
 				mimeTypeWindowStates.add(
-					WindowState.MINIMIZED.toString().toLowerCase());
+					StringUtil.toLowerCase(WindowState.MINIMIZED.toString()));
 				mimeTypeWindowStates.add(
-					LiferayWindowState.EXCLUSIVE.toString().toLowerCase());
+					StringUtil.toLowerCase(
+						LiferayWindowState.EXCLUSIVE.toString()));
 				mimeTypeWindowStates.add(
-					LiferayWindowState.POP_UP.toString().toLowerCase());
+					StringUtil.toLowerCase(
+						LiferayWindowState.POP_UP.toString()));
 			}
 
 			for (Element windowStateElement : windowStateElements) {
 				mimeTypeWindowStates.add(
-					windowStateElement.getTextTrim().toLowerCase());
+					StringUtil.toLowerCase(windowStateElement.getTextTrim()));
 			}
 
 			windowStates.put(mimeType, mimeTypeWindowStates);

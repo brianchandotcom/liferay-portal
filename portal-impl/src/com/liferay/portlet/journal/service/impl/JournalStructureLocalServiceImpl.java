@@ -167,8 +167,8 @@ public class JournalStructureLocalServiceImpl
 		// Structure
 
 		User user = userPersistence.findByPrimaryKey(userId);
-		oldStructureId = oldStructureId.trim().toUpperCase();
-		newStructureId = newStructureId.trim().toUpperCase();
+		oldStructureId = StringUtil.toUpperCase(oldStructureId.trim());
+		newStructureId = StringUtil.toUpperCase(newStructureId.trim());
 		Date now = new Date();
 
 		JournalStructure oldStructure = doGetStructure(groupId, oldStructureId);
@@ -280,7 +280,7 @@ public class JournalStructureLocalServiceImpl
 			long groupId, String structureId, boolean includeGlobalStructures)
 		throws PortalException, SystemException {
 
-		structureId = structureId.trim().toUpperCase();
+		structureId = StringUtil.toUpperCase(structureId.trim());
 
 		JournalStructure structure = fetchStructure(groupId, structureId);
 

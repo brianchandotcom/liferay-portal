@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.File;
@@ -299,7 +300,7 @@ public class DocumentImpl implements Document {
 	@Override
 	public void addKeyword(String name, String value, boolean lowerCase) {
 		if (lowerCase && Validator.isNotNull(value)) {
-			value = value.toLowerCase();
+			value = StringUtil.toLowerCase(value);
 		}
 
 		Field field = new Field(name, value);
@@ -344,7 +345,8 @@ public class DocumentImpl implements Document {
 			for (Map.Entry<Locale, String> entry : values.entrySet()) {
 				String value = GetterUtil.getString(entry.getValue());
 
-				lowerCaseValues.put(entry.getKey(), value.toLowerCase());
+				lowerCaseValues.put(
+					entry.getKey(), StringUtil.toLowerCase(value));
 			}
 
 			values = lowerCaseValues;

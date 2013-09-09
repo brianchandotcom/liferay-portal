@@ -132,13 +132,13 @@ public class PwdGenerator {
 			}
 
 			if (key.contains(KEY2)) {
-				if (password.equals(password.toLowerCase())) {
+				if (password.equals(StringUtil.toLowerCase(password))) {
 					continue;
 				}
 			}
 
 			if (key.contains(KEY3)) {
-				if (password.equals(password.toUpperCase())) {
+				if (password.equals(StringUtil.toUpperCase(password))) {
 					continue;
 				}
 			}

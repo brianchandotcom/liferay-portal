@@ -15,6 +15,7 @@
 package com.liferay.portlet.bookmarks.util.comparator;
 
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
 
 /**
@@ -41,8 +42,8 @@ public class EntryNameComparator extends OrderByComparator {
 		BookmarksEntry entry1 = (BookmarksEntry)obj1;
 		BookmarksEntry entry2 = (BookmarksEntry)obj2;
 
-		int value = entry1.getName().toLowerCase().compareTo(
-			entry2.getName().toLowerCase());
+		int value = StringUtil.toLowerCase(entry1.getName()).compareTo(
+			StringUtil.toLowerCase(entry2.getName()));
 
 		if (_ascending) {
 			return value;

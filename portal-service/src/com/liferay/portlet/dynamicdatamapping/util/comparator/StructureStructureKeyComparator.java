@@ -15,6 +15,7 @@
 package com.liferay.portlet.dynamicdatamapping.util.comparator;
 
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 
 /**
@@ -42,13 +43,13 @@ public class StructureStructureKeyComparator extends OrderByComparator {
 
 		String structureKey1 = structure1.getStructureKey();
 
-		structureKey1 = structureKey1.toLowerCase();
+		structureKey1 = StringUtil.toLowerCase(structureKey1);
 
 		DDMStructure structure2 = (DDMStructure)obj2;
 
 		String structureKey2 = structure2.getStructureKey();
 
-		structureKey2 = structureKey2.toLowerCase();
+		structureKey2 = StringUtil.toLowerCase(structureKey2);
 
 		int value = structureKey1.compareTo(structureKey2);
 

@@ -667,7 +667,7 @@ public class ServletResponseUtil {
 			String extension = GetterUtil.getString(
 				FileUtil.getExtension(fileName));
 
-			extension = extension.toLowerCase();
+			extension = StringUtil.toLowerCase(extension);
 
 			String[] mimeTypesContentDispositionInline = null;
 

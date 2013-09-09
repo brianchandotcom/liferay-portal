@@ -49,7 +49,7 @@ public class FriendlyURLNormalizerImpl implements FriendlyURLNormalizer {
 		}
 
 		friendlyURL = GetterUtil.getString(friendlyURL);
-		friendlyURL = friendlyURL.toLowerCase();
+		friendlyURL = StringUtil.toLowerCase(friendlyURL);
 		friendlyURL = Normalizer.normalizeToAscii(friendlyURL);
 
 		StringBuilder sb = null;
@@ -107,7 +107,7 @@ public class FriendlyURLNormalizerImpl implements FriendlyURLNormalizer {
 			return friendlyURL;
 		}
 
-		friendlyURL = friendlyURL.toLowerCase();
+		friendlyURL = StringUtil.toLowerCase(friendlyURL);
 		friendlyURL = Normalizer.normalizeToAscii(friendlyURL);
 		friendlyURL = friendlyURL.replaceAll(
 			friendlyURLPattern.pattern(), StringPool.DASH);

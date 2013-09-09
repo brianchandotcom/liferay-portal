@@ -64,7 +64,7 @@ public class ShoppingCouponLocalServiceImpl
 		User user = userPersistence.findByPrimaryKey(userId);
 		long groupId = serviceContext.getScopeGroupId();
 
-		code = code.trim().toUpperCase();
+		code = StringUtil.toUpperCase(code.trim());
 
 		if (autoCode) {
 			code = getCode();
@@ -157,7 +157,7 @@ public class ShoppingCouponLocalServiceImpl
 	public ShoppingCoupon getCoupon(String code)
 		throws PortalException, SystemException {
 
-		code = code.trim().toUpperCase();
+		code = StringUtil.toUpperCase(code.trim());
 
 		return shoppingCouponPersistence.findByCode(code);
 	}

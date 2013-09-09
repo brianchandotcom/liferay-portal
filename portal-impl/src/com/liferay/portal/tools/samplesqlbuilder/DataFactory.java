@@ -765,7 +765,8 @@ public class DataFactory {
 		_defaultDLFileEntryTypeModel.setCreateDate(nextFutureDate());
 		_defaultDLFileEntryTypeModel.setModifiedDate(nextFutureDate());
 		_defaultDLFileEntryTypeModel.setFileEntryTypeKey(
-			DLFileEntryTypeConstants.NAME_BASIC_DOCUMENT.toUpperCase());
+			StringUtil.toUpperCase(
+				DLFileEntryTypeConstants.NAME_BASIC_DOCUMENT));
 
 		StringBundler sb = new StringBundler(5);
 

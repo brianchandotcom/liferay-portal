@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.ThreadLocalDistributor;
 import com.liferay.portal.resiliency.spi.agent.SPIAgentRequest.AgentHttpServletRequestWrapper;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -444,9 +445,12 @@ public class SPIAgentRequestTest {
 			populatedHttpServletRequest.getHeaderNames());
 
 		Assert.assertEquals(3, headerNames.size());
-		Assert.assertTrue(headerNames.contains(_HEADER_NAME_1.toLowerCase()));
-		Assert.assertTrue(headerNames.contains(_HEADER_NAME_2.toLowerCase()));
-		Assert.assertTrue(headerNames.contains(_HEADER_NAME_3.toLowerCase()));
+		Assert.assertTrue(
+			headerNames.contains(StringUtil.toLowerCase(_HEADER_NAME_1)));
+		Assert.assertTrue(
+			headerNames.contains(StringUtil.toLowerCase(_HEADER_NAME_2)));
+		Assert.assertTrue(
+			headerNames.contains(StringUtil.toLowerCase(_HEADER_NAME_3)));
 
 		List<String> headers = ListUtil.fromEnumeration(
 			populatedHttpServletRequest.getHeaders(_HEADER_NAME_1));

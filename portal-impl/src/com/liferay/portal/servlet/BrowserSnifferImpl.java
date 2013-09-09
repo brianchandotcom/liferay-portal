@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.servlet.BrowserSniffer;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.regex.Matcher;
@@ -402,7 +403,7 @@ public class BrowserSnifferImpl implements BrowserSniffer {
 		accept = request.getHeader(HttpHeaders.ACCEPT);
 
 		if (accept != null) {
-			accept = accept.toLowerCase();
+			accept = StringUtil.toLowerCase(accept);
 		}
 		else {
 			accept = StringPool.BLANK;
@@ -430,7 +431,7 @@ public class BrowserSnifferImpl implements BrowserSniffer {
 		userAgent = request.getHeader(HttpHeaders.USER_AGENT);
 
 		if (userAgent != null) {
-			userAgent = userAgent.toLowerCase();
+			userAgent = StringUtil.toLowerCase(userAgent);
 		}
 		else {
 			userAgent = StringPool.BLANK;

@@ -14,6 +14,7 @@
 
 package com.liferay.taglib.aui;
 
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.aui.base.BaseButtonTag;
 
@@ -29,7 +30,7 @@ public class ButtonTag extends BaseButtonTag {
 	@Override
 	public void setIconAlign(String iconAlign) {
 		if (iconAlign != null) {
-			super.setIconAlign(iconAlign.toLowerCase());
+			super.setIconAlign(StringUtil.toLowerCase(iconAlign));
 		}
 	}
 

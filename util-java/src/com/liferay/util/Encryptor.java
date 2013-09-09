@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 
 import java.security.Key;
@@ -48,8 +49,9 @@ public class Encryptor {
 	public static final String IBM_PROVIDER_CLASS =
 		"com.ibm.crypto.provider.IBMJCE";
 
-	public static final String KEY_ALGORITHM = GetterUtil.getString(
-		PropsUtil.get(PropsKeys.COMPANY_ENCRYPTION_ALGORITHM)).toUpperCase();
+	public static final String KEY_ALGORITHM = StringUtil.toUpperCase(
+		GetterUtil.getString(
+			PropsUtil.get(PropsKeys.COMPANY_ENCRYPTION_ALGORITHM)));
 
 	public static final int KEY_SIZE = GetterUtil.getInteger(
 		PropsUtil.get(PropsKeys.COMPANY_ENCRYPTION_KEY_SIZE));

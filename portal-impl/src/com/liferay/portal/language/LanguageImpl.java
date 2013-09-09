@@ -569,8 +569,8 @@ public class LanguageImpl implements Language {
 			value = x.concat(StringPool.SPACE).concat(
 				get(
 					locale,
-					description.substring(
-						pos + 1, description.length()).toLowerCase()));
+					StringUtil.toLowerCase(
+						description.substring(pos + 1, description.length()))));
 		}
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {
@@ -609,8 +609,8 @@ public class LanguageImpl implements Language {
 			value = x.concat(StringPool.SPACE).concat(
 				get(
 					pageContext,
-					description.substring(
-						pos + 1, description.length()).toLowerCase()));
+					StringUtil.toLowerCase(
+						description.substring(pos + 1, description.length()))));
 		}
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {

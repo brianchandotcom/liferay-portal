@@ -37,7 +37,7 @@ public class JSONWebServiceNaming {
 		className = StringUtil.replace(className, "Impl", StringPool.BLANK);
 		className = StringUtil.replace(className, "Service", StringPool.BLANK);
 
-		return className.toLowerCase();
+		return StringUtil.toLowerCase(className);
 	}
 
 	public String convertImplClassNameToUtilClassName(

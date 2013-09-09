@@ -99,7 +99,7 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 		List<String> jars = new ArrayList<String>();
 
 		for (String arg : args) {
-			String fileName = arg.toLowerCase();
+			String fileName = StringUtil.toLowerCase(arg);
 
 			if (fileName.endsWith(".war")) {
 				wars.add(arg);
@@ -607,7 +607,7 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 			files = FileUtil.sortFiles(files);
 
 			for (File srcFile : files) {
-				String fileName = srcFile.getName().toLowerCase();
+				String fileName = StringUtil.toLowerCase(srcFile.getName());
 
 				boolean deploy = false;
 

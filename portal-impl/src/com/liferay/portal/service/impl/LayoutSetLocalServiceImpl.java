@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ColorSchemeFactoryUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.ThemeFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
@@ -186,7 +187,7 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 	public LayoutSet fetchLayoutSet(String virtualHostname)
 		throws SystemException {
 
-		virtualHostname = virtualHostname.trim().toLowerCase();
+		virtualHostname = StringUtil.toLowerCase(virtualHostname.trim());
 
 		VirtualHost virtualHost = virtualHostPersistence.fetchByHostname(
 			virtualHostname);
@@ -210,7 +211,7 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 	public LayoutSet getLayoutSet(String virtualHostname)
 		throws PortalException, SystemException {
 
-		virtualHostname = virtualHostname.trim().toLowerCase();
+		virtualHostname = StringUtil.toLowerCase(virtualHostname.trim());
 
 		VirtualHost virtualHost = virtualHostPersistence.findByHostname(
 			virtualHostname);
@@ -485,7 +486,7 @@ public class LayoutSetLocalServiceImpl extends LayoutSetLocalServiceBaseImpl {
 			long groupId, boolean privateLayout, String virtualHostname)
 		throws PortalException, SystemException {
 
-		virtualHostname = virtualHostname.trim().toLowerCase();
+		virtualHostname = StringUtil.toLowerCase(virtualHostname.trim());
 
 		if (Validator.isNotNull(virtualHostname) &&
 			!Validator.isDomain(virtualHostname)) {

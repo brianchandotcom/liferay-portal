@@ -171,8 +171,8 @@ public class JournalTemplateLocalServiceImpl
 		// Template
 
 		User user = userPersistence.findByPrimaryKey(userId);
-		oldTemplateId = oldTemplateId.trim().toUpperCase();
-		newTemplateId = newTemplateId.trim().toUpperCase();
+		oldTemplateId = StringUtil.toUpperCase(oldTemplateId.trim());
+		newTemplateId = StringUtil.toUpperCase(newTemplateId.trim());
 		Date now = new Date();
 
 		JournalTemplate oldTemplate = doGetTemplate(groupId, oldTemplateId);
@@ -333,7 +333,7 @@ public class JournalTemplateLocalServiceImpl
 			long groupId, String templateId, boolean includeGlobalTemplates)
 		throws PortalException, SystemException {
 
-		templateId = GetterUtil.getString(templateId).toUpperCase();
+		templateId = StringUtil.toUpperCase(GetterUtil.getString(templateId));
 
 		JournalTemplate template = fetchTemplate(groupId, templateId);
 

@@ -40,7 +40,7 @@ import java.util.Set;
 public class DeepNamedValueScanner {
 
 	public DeepNamedValueScanner(String value) {
-		_value = value.toLowerCase();
+		_value = StringUtil.toLowerCase(value);
 	}
 
 	public DeepNamedValueScanner(String value, boolean visit) {
@@ -238,7 +238,7 @@ public class DeepNamedValueScanner {
 	private boolean _isAcceptClass(Class<?> targetClass) {
 		String targetClassName = targetClass.getName();
 
-		targetClassName = targetClassName.toLowerCase();
+		targetClassName = StringUtil.toLowerCase(targetClassName);
 
 		if (targetClassName.startsWith("java.")) {
 			return false;
@@ -288,7 +288,7 @@ public class DeepNamedValueScanner {
 			return true;
 		}
 
-		name = name.toLowerCase();
+		name = StringUtil.toLowerCase(name);
 
 		if (_excludedNames != null) {
 			for (String excludedNames : _excludedNames) {
@@ -314,7 +314,7 @@ public class DeepNamedValueScanner {
 
 		_matchingCount++;
 
-		name = name.toLowerCase();
+		name = StringUtil.toLowerCase(name);
 
 		if (name.contains(_value)) {
 			if (_skipFirstCount > 0) {
@@ -338,7 +338,7 @@ public class DeepNamedValueScanner {
 
 		_matchingCount++;
 
-		name = name.toLowerCase();
+		name = StringUtil.toLowerCase(name);
 
 		if (name.contains(_value)) {
 			if (_skipFirstCount > 0) {

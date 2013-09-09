@@ -153,7 +153,7 @@ public class DB2DB extends BaseDB {
 
 			sb.append("select num_reorg_rec_alters from table(");
 			sb.append("sysproc.admin_get_tab_info(current_schema, '");
-			sb.append(tableName.toUpperCase());
+			sb.append(StringUtil.toUpperCase(tableName));
 			sb.append("')) where reorg_pending = 'Y'");
 
 			ps = con.prepareStatement(sb.toString());

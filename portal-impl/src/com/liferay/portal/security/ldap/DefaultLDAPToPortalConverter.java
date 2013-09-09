@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Contact;
 import com.liferay.portal.model.ContactConstants;
@@ -163,7 +164,7 @@ public class DefaultLDAPToPortalConverter implements LDAPToPortalConverter {
 		String gender = LDAPUtil.getAttributeString(
 			attributes, contactMappings, ContactConverterKeys.GENDER);
 
-		gender = gender.toLowerCase();
+		gender = StringUtil.toLowerCase(gender);
 
 		if (GetterUtil.getBoolean(gender) || gender.equals("female")) {
 			contact.setMale(false);

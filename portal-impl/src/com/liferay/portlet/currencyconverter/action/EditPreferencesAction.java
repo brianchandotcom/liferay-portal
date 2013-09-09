@@ -55,7 +55,8 @@ public class EditPreferencesAction extends PortletAction {
 		PortletPreferences portletPreferences = actionRequest.getPreferences();
 
 		String[] symbols = StringUtil.split(
-			ParamUtil.getString(actionRequest, "symbols").toUpperCase());
+			StringUtil.toUpperCase(
+				ParamUtil.getString(actionRequest, "symbols")));
 
 		portletPreferences.setValues("symbols", symbols);
 

@@ -81,7 +81,7 @@ public abstract class OrderByComparator implements Comparator, Serializable {
 		String orderBy = getOrderBy();
 
 		if ((orderBy == null) ||
-			orderBy.toUpperCase().endsWith(_ORDER_BY_DESC)) {
+			StringUtil.toUpperCase(orderBy).endsWith(_ORDER_BY_DESC)) {
 
 			return false;
 		}

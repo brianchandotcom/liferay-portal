@@ -215,10 +215,24 @@ public class PrefsPropsImpl implements PrefsProps {
 	}
 
 	@Override
+	public PortletPreferences getPreferences(boolean readOnly)
+		throws SystemException {
+
+		return PrefsPropsUtil.getPreferences(readOnly);
+	}
+
+	@Override
 	public PortletPreferences getPreferences(long companyId)
 		throws SystemException {
 
 		return PrefsPropsUtil.getPreferences(companyId);
+	}
+
+	@Override
+	public PortletPreferences getPreferences(long companyId, boolean readOnly)
+		throws SystemException {
+
+		return PrefsPropsUtil.getPreferences(companyId, readOnly);
 	}
 
 	@Override

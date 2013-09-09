@@ -36,11 +36,17 @@ public interface PortletPreferencesFactory {
 
 	public PortletPreferences fromDefaultXML(String xml) throws SystemException;
 
+	public PortalPreferences fromXML(long ownerId, int ownerType, String xml)
+		throws SystemException;
+
 	public PortletPreferences fromXML(
 			long companyId, long ownerId, int ownerType, long plid,
 			String portletId, String xml)
 		throws SystemException;
 
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link #fromXML(long, int, String)}
+	 */
 	public PortalPreferences fromXML(
 			long companyId, long ownerId, int ownerType, String xml)
 		throws SystemException;
@@ -53,9 +59,24 @@ public interface PortletPreferencesFactory {
 		throws SystemException;
 
 	public PortalPreferences getPortalPreferences(
+			HttpSession session, long userId, boolean signedIn)
+		throws SystemException;
+
+	/**
+	 * @deprecated As of 6.2.0, replaced by
+	 *	{@link #getPortalPreferences(HttpSession, long, boolean)}
+	 */
+	public PortalPreferences getPortalPreferences(
 			HttpSession session, long companyId, long userId, boolean signedIn)
 		throws SystemException;
 
+	public PortalPreferences getPortalPreferences(long userId, boolean signedIn)
+		throws SystemException;
+
+	/**
+	 * @deprecated As of 6.2.0, replaced by
+	 *	{@link #getPortalPreferences(long, boolean)}
+	 */
 	public PortalPreferences getPortalPreferences(
 			long companyId, long userId, boolean signedIn)
 		throws SystemException;

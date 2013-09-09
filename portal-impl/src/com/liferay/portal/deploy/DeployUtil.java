@@ -90,7 +90,7 @@ public class DeployUtil {
 			String name = "auto.deploy." + serverId + ".dest.dir";
 
 			PortletPreferences portletPreferences =
-				PrefsPropsUtil.getPreferences();
+				PrefsPropsUtil.getPreferences(true);
 
 			String value = PropsUtil.get(name, new Filter("5"));
 

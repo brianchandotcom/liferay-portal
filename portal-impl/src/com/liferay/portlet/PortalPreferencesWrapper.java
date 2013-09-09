@@ -15,6 +15,7 @@
 package com.liferay.portlet;
 
 import java.io.IOException;
+import java.io.Serializable;
 
 import java.util.Enumeration;
 import java.util.Map;
@@ -25,12 +26,18 @@ import javax.portlet.ReadOnlyException;
 /**
  * @author Alexander Chow
  */
-public class PortalPreferencesWrapper implements PortletPreferences {
+public class PortalPreferencesWrapper
+	implements Cloneable, PortletPreferences, Serializable {
 
 	public PortalPreferencesWrapper(
 		PortalPreferencesImpl portalPreferencesImpl) {
 
 		_portalPreferencesImpl = portalPreferencesImpl;
+	}
+
+	@Override
+	public PortalPreferencesWrapper clone() {
+		return new PortalPreferencesWrapper(_portalPreferencesImpl.clone());
 	}
 
 	@Override

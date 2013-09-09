@@ -592,7 +592,7 @@ public class ServicePreAction extends Action {
 
 				PortalPreferences portalPreferences =
 					PortletPreferencesFactoryUtil.getPortalPreferences(
-						companyId, user.getUserId(), true);
+						user.getUserId(), true);
 
 				layoutTypePortlet.setPortalPreferences(portalPreferences);
 			}

@@ -169,7 +169,7 @@ public class PACLUtil {
 		}
 		else {
 			callerPACLPolicy = PACLPolicyManager.getPACLPolicy(
-				protectionDomain.getClassLoader());
+				protectionDomain);
 		}
 
 		if (paclPolicy == callerPACLPolicy) {
@@ -182,10 +182,6 @@ public class PACLUtil {
 	private static boolean _isTrustedCaller(
 		ProtectionDomain protectionDomain, java.security.Permission permission,
 		PACLPolicy paclPolicy) {
-
-		if (protectionDomain.getClassLoader() == null) {
-			return true;
-		}
 
 		PortalSecurityManager portalSecurityManager =
 			SecurityManagerUtil.getPortalSecurityManager();

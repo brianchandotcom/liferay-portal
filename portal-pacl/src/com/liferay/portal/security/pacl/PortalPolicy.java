@@ -21,6 +21,9 @@ import com.liferay.portal.kernel.security.pacl.permission.PortalHookPermission;
 import com.liferay.portal.kernel.security.pacl.permission.PortalMessageBusPermission;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.security.pacl.permission.PortalServicePermission;
+import com.liferay.portal.kernel.util.WeakValueConcurrentHashMap;
+
+import java.net.URL;
 
 import java.security.AllPermission;
 import java.security.CodeSource;
@@ -30,7 +33,7 @@ import java.security.Permissions;
 import java.security.Policy;
 import java.security.ProtectionDomain;
 
-import java.util.Enumeration;
+import java.util.concurrent.ConcurrentMap;
 
 /**
  * @author Raymond Augé
@@ -48,15 +51,29 @@ public class PortalPolicy extends Policy {
 
 	@Override
 	public PermissionCollection getPermissions(CodeSource codeSource) {
-		PermissionCollection permissionCollection = null;
+		PermissionCollection permissionCollection =
+			new ForgetfulPermissionCollection();
 
-		if (_policy != null) {
-			permissionCollection = _policy.getPermissions(codeSource);
+		if ((codeSource == null) || (codeSource.getLocation() == null)) {
+			return permissionCollection;
 		}
 
-		if (permissionCollection == null) {
-			permissionCollection = new Permissions();
+		URL location = codeSource.getLocation();
+
+		PermissionCollection cachedPermissionCollection =
+			_permissionCollections.get(location);
+
+		if (cachedPermissionCollection != null) {
+			return cachedPermissionCollection;
 		}
+
+		PACLPolicy paclPolicy = PACLPolicyManager.getPACLPolicy(location);
+
+		if (paclPolicy != null) {
+			permissionCollection = new PortalPermissionCollection(paclPolicy);
+		}
+
+		_permissionCollections.put(location, permissionCollection);
 
 		return permissionCollection;
 	}
@@ -65,36 +82,33 @@ public class PortalPolicy extends Policy {
 	public PermissionCollection getPermissions(
 		ProtectionDomain protectionDomain) {
 
+		PermissionCollection permissionCollection =
+			new ForgetfulPermissionCollection();
+
 		if (protectionDomain == null) {
-			return new Permissions();
-		}
-
-		PermissionCollection permissionCollection = getPermissions(
-			protectionDomain.getCodeSource());
-
-		if (permissionCollection != null) {
 			return permissionCollection;
 		}
 
-		permissionCollection = new Permissions();
+		PermissionCollection cachedPermissionCollection =
+			_permissionCollections.get(protectionDomain);
 
-		if (_policy != null) {
-			_addExtraPermissions(
-				permissionCollection, _policy.getPermissions(protectionDomain));
+		if (cachedPermissionCollection != null) {
+			return cachedPermissionCollection;
 		}
-
-		_addExtraPermissions(
-			permissionCollection, protectionDomain.getPermissions());
 
 		PACLPolicy paclPolicy = PACLPolicyManager.getPACLPolicy(
-			protectionDomain.getClassLoader());
+			protectionDomain);
 
 		if (paclPolicy != null) {
-			return new PortalPermissionCollection(
-				paclPolicy, permissionCollection);
+			permissionCollection = new PortalPermissionCollection(paclPolicy);
+		}
+		else {
+			permissionCollection = new Permissions();
+
+			permissionCollection.add(_allPermission);
 		}
 
-		permissionCollection.add(_allPermission);
+		_permissionCollections.put(protectionDomain, permissionCollection);
 
 		return permissionCollection;
 	}
@@ -111,8 +125,7 @@ public class PortalPolicy extends Policy {
 			_started.set(true);
 
 			if (!(permission instanceof PACLUtil.Permission) &&
-				((protectionDomain.getClassLoader() == null) ||
-				 !_paclPolicy.isCheckablePermission(permission))) {
+				!_paclPolicy.isCheckablePermission(permission)) {
 
 				return _checkWithParentPolicy(protectionDomain, permission);
 			}
@@ -120,12 +133,15 @@ public class PortalPolicy extends Policy {
 			PermissionCollection permissionCollection = getPermissions(
 				protectionDomain);
 
-			if (permissionCollection.implies(permission)) {
-				return _checkWithParentPolicy(protectionDomain, permission);
-			}
-			else if (_checkWithPACLPolicyPolicy(
+			if (permissionCollection instanceof PortalPermissionCollection) {
+				if (permissionCollection.implies(permission) ||
+					_checkWithPACLPolicyPolicy(
 						protectionDomain, permission, permissionCollection)) {
 
+					return true;
+				}
+			}
+			else {
 				return _checkWithParentPolicy(protectionDomain, permission);
 			}
 
@@ -147,33 +163,13 @@ public class PortalPolicy extends Policy {
 		if (_policy != null) {
 			_policy.refresh();
 		}
-	}
 
-	private void _addExtraPermissions(
-		PermissionCollection permissionCollection,
-		PermissionCollection staticPermissionCollection) {
-
-		if (staticPermissionCollection == null) {
-			return;
-		}
-
-		synchronized (staticPermissionCollection) {
-			Enumeration<Permission> enumeration =
-				staticPermissionCollection.elements();
-
-			while (enumeration.hasMoreElements()) {
-				permissionCollection.add(enumeration.nextElement());
-			}
-		}
+		_permissionCollections.clear();
 	}
 
 	private boolean _checkWithPACLPolicyPolicy(
 		ProtectionDomain protectionDomain, Permission permission,
 		PermissionCollection permissionCollection) {
-
-		if (!(permissionCollection instanceof PortalPermissionCollection)) {
-			return false;
-		}
 
 		PortalPermissionCollection portalPermissionCollection =
 			(PortalPermissionCollection)permissionCollection;
@@ -228,6 +224,8 @@ public class PortalPolicy extends Policy {
 	};
 
 	private PACLPolicy _paclPolicy = PACLPolicyManager.getDefaultPACLPolicy();
+	private ConcurrentMap<Object, PermissionCollection> _permissionCollections =
+		new WeakValueConcurrentHashMap<Object, PermissionCollection>();
 	private Policy _policy;
 
 }

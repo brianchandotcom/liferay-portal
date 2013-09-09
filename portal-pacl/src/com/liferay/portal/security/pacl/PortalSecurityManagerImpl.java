@@ -22,6 +22,8 @@ import com.liferay.portal.freemarker.FreeMarkerTemplate;
 import com.liferay.portal.freemarker.LiferayTemplateCache;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.memory.EqualityWeakReference;
+import com.liferay.portal.kernel.memory.FinalizeManager;
 import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
 import com.liferay.portal.kernel.security.pacl.PACLConstants;
 import com.liferay.portal.kernel.security.pacl.permission.CheckMemberAccessPermission;
@@ -39,6 +41,7 @@ import com.liferay.portal.kernel.util.PreloadClassLoader;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WeakValueConcurrentHashMap;
 import com.liferay.portal.security.lang.DoPrivilegedBean;
 import com.liferay.portal.security.lang.DoPrivilegedFactory;
 import com.liferay.portal.security.lang.DoPrivilegedHandler;
@@ -294,7 +297,9 @@ public class PortalSecurityManagerImpl extends SecurityManager
 		initClass(DoPrivilegedFactory.class);
 		initClass(DoPrivilegedHandler.class);
 		initClass(DynamicQueryFactoryImpl.class);
+		initClass(EqualityWeakReference.class);
 		initClass(FileAvailabilityUtil.class);
+		initClass(FinalizeManager.class);
 		initClass(FreeMarkerTemplate.class);
 		initClass(GeneratingPACLPolicy.class);
 		initClass(InactivePACLPolicy.class);
@@ -322,6 +327,7 @@ public class PortalSecurityManagerImpl extends SecurityManager
 		initClass(Profile.class);
 		initClass(TemplateContextHelper.class);
 		initClass(VelocityTemplate.class);
+		initClass(WeakValueConcurrentHashMap.class);
 		initClass(XSLTemplate.class);
 	}
 

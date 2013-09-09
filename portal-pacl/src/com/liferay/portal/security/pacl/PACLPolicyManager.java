@@ -14,17 +14,25 @@
 
 package com.liferay.portal.security.pacl;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
-import java.security.AccessController;
-import java.security.PrivilegedAction;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLClassLoader;
 
-import java.util.HashMap;
+import java.security.AccessController;
+import java.security.CodeSource;
+import java.security.PrivilegedAction;
+import java.security.ProtectionDomain;
+
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.concurrent.ConcurrentHashMap;
+
+import javax.servlet.ServletContext;
 
 /**
  * @author Brian Wing Shun Chan
@@ -59,27 +67,80 @@ public class PACLPolicyManager {
 	}
 
 	public static PACLPolicy getPACLPolicy(ClassLoader classLoader) {
+		if (classLoader == null) {
+			return null;
+		}
+
 		return AccessController.doPrivileged(
 			new PACLPolicyPrivilegedAction(classLoader));
 	}
 
-	public static void register(
+	public static PACLPolicy getPACLPolicy(URL location) {
+		if (location == null) {
+			return null;
+		}
+
+		return AccessController.doPrivileged(
+			new PACLPolicyPrivilegedAction(location));
+	}
+
+	public static PACLPolicy getPACLPolicy(ProtectionDomain protectionDomain) {
+		if (protectionDomain == null) {
+			return null;
+		}
+
+		return AccessController.doPrivileged(
+			new PACLPolicyPrivilegedAction(protectionDomain));
+	}
+
+	public static synchronized void register(
 		ClassLoader classLoader, PACLPolicy paclPolicy) {
 
-		_paclPolicies.put(classLoader, paclPolicy);
+		List<URL> urLs = paclPolicy.getURLs();
+
+		if (classLoader instanceof URLClassLoader) {
+			URLClassLoader urlClassLoader = (URLClassLoader)classLoader;
+
+			for (URL url : urlClassLoader.getURLs()) {
+				urLs.add(url);
+
+				_urlPACLPolicies.put(url, paclPolicy);
+			}
+		}
+
+		ServletContext servletContext = ServletContextPool.get(
+			paclPolicy.getServletContextName());
+
+		String realPath = servletContext.getRealPath(StringPool.SLASH);
+
+		try {
+			URL url = new URL("file", "", -1, realPath);
+
+			urLs.add(url);
+
+			_urlPACLPolicies.put(url, paclPolicy);
+		}
+		catch (MalformedURLException e) {
+		}
+
+		_classLoaderPACLPolicies.put(classLoader, paclPolicy);
 	}
 
-	public static void unregister(ClassLoader classLoader) {
-		_paclPolicies.remove(classLoader);
-	}
+	public static synchronized void unregister(ClassLoader classLoader) {
+		PACLPolicy paclPolicy = _classLoaderPACLPolicies.remove(classLoader);
 
-	private static Log _log = LogFactoryUtil.getLog(PACLPolicyManager.class);
+		for (URL url : paclPolicy.getURLs()) {
+			_urlPACLPolicies.remove(url);
+		}
+	}
 
 	private static PACLPolicy _defaultPACLPolicy = new InactivePACLPolicy(
 		StringPool.BLANK, PACLPolicyManager.class.getClassLoader(),
 		new Properties());
-	private static Map<ClassLoader, PACLPolicy> _paclPolicies =
-		new HashMap<ClassLoader, PACLPolicy>();
+	private static Map<ClassLoader, PACLPolicy> _classLoaderPACLPolicies =
+		new ConcurrentHashMap<ClassLoader, PACLPolicy>();
+	private static Map<URL, PACLPolicy> _urlPACLPolicies =
+		new ConcurrentHashMap<URL, PACLPolicy>();
 
 	private static class PACLPolicyPrivilegedAction
 		implements PrivilegedAction<PACLPolicy> {
@@ -88,20 +149,74 @@ public class PACLPolicyManager {
 			_classLoader = classLoader;
 		}
 
+		public PACLPolicyPrivilegedAction(URL location) {
+			_location = location;
+		}
+
+		public PACLPolicyPrivilegedAction(ProtectionDomain protectionDomain) {
+			_protectionDomain = protectionDomain;
+
+			_classLoader = _protectionDomain.getClassLoader();
+		}
+
 		@Override
 		public PACLPolicy run() {
-			PACLPolicy paclPolicy = _paclPolicies.get(_classLoader);
+			PACLPolicy paclPolicy = getFromClassLoader();
 
-			while ((paclPolicy == null) && (_classLoader.getParent() != null)) {
-				_classLoader = _classLoader.getParent();
+			if (paclPolicy == null) {
+				paclPolicy = getFromProtectionDomain();
+			}
 
-				paclPolicy = _paclPolicies.get(_classLoader);
+			if (paclPolicy == null) {
+				paclPolicy = getFromLocation(_location);
 			}
 
 			return paclPolicy;
 		}
 
+		private PACLPolicy getFromClassLoader() {
+			if (_classLoader == null) {
+				return null;
+			}
+
+			PACLPolicy paclPolicy = _classLoaderPACLPolicies.get(_classLoader);
+
+			while ((paclPolicy == null) && (_classLoader.getParent() != null)) {
+				_classLoader = _classLoader.getParent();
+
+				paclPolicy = _classLoaderPACLPolicies.get(_classLoader);
+			}
+
+			return paclPolicy;
+		}
+
+		private PACLPolicy getFromLocation(URL location) {
+			if (location == null) {
+				return null;
+			}
+
+			return _urlPACLPolicies.get(location);
+		}
+
+		private PACLPolicy getFromProtectionDomain() {
+			if ((_protectionDomain == null) || (_classLoader != null)) {
+				return null;
+			}
+
+			CodeSource codeSource = _protectionDomain.getCodeSource();
+
+			if (codeSource == null) {
+				return null;
+			}
+
+			URL location = codeSource.getLocation();
+
+			return getFromLocation(location);
+		}
+
 		private ClassLoader _classLoader;
+		private URL _location;
+		private ProtectionDomain _protectionDomain;
 
 	}
 

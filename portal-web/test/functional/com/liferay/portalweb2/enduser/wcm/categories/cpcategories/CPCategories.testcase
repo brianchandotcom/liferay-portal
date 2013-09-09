@@ -160,12 +160,12 @@
 		</execute>
 
 		<execute macro="Vocabulary#addWithAssociatedAssetTypeCP">
-			<var name="vocabularyAssociatedAssetType" value="Web Content" />
+			<var name="vocabularyAssociatedAssetType" value="Web Content Article" />
 			<var name="vocabularyName" value="${vocabularyName}" />
 		</execute>
 
 		<execute macro="Vocabulary#viewWithAssociatedAssetTypeCP">
-			<var name="vocabularyAssociatedAssetType" value="Web Content" />
+			<var name="vocabularyAssociatedAssetType" value="Web Content Article" />
 			<var name="vocabularyName" value="${vocabularyName}" />
 		</execute>
 	</command>

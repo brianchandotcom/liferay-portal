@@ -223,7 +223,7 @@
 </tr>
 <tr>
 	<td>ADD_VOCABULARY_CHOOSE_ASSET_TYPE_SELECT</td>
-	<td>//select[contains(@id,'_147_classNameId')]</td>
+	<td>//select[contains(@id,'_147_classNameId0')]</td>
 	<td></td>
 </tr>
 <tr>

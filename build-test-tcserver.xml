@@ -1,29 +1,7 @@
 <?xml version="1.0"?>
 
-<project name="portal-test-jboss-eap" basedir="." default="test" xmlns:antelope="antlib:ise.antelope.tasks">
+<project name="portal-test-tcserver" basedir="." default="test" xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="build-test.xml" />
-
-	<target name="run-tcserver">
-		<antcall target="clean-up-logs" />
-
-		<record action="start" name="log" />
-
-		<antcall target="run-simple-server">
-			<param name="simple.server.dir" value="${app.server.tcserver.dir}" />
-			<param name="simple.server.bin.dir" value="${app.server.tcserver.bin.dir}" />
-			<param name="simple.server.deploy.dir" value="${app.server.jtcserver.deploy.dir}" />
-			<param name="simple.server.lib.global.dir" value="${app.server.tcserver.lib.global.dir}" />
-			<param name="simple.server.portal.dir" value="${app.server.tcserver.portal.dir}" />
-			<param name="simple.server.start.executable" value="tcruntime-ctl${file.suffix.bat}" />
-			<param name="simple.server.start.executable.arg.line" value="start" />
-			<param name="simple.server.stop.executable" value="tcruntime-ctl${file.suffix.bat}" />
-			<param name="simple.server.stop.executable.arg.line" value="stop" />
-		</antcall>
-
-		<record action="stop" name="log" />
-
-		<antcall target="evaluate-logs" />
-	</target>
 
 	<target name="run-selenium-tcserver">
 		<if>
@@ -46,5 +24,28 @@
 		</antcall>
 
 		<antcall target="stop-selenium" />
+	</target>
+
+	<target name="run-tcserver">
+		<antcall target="clean-up-logs" />
+
+		<record action="start" name="log" />
+
+		<antcall target="run-simple-server">
+			<param name="simple.server.type" value="tcserver" />
+			<param name="simple.server.dir" value="${app.server.tcserver.dir}" />
+			<param name="simple.server.bin.dir" value="${app.server.tcserver.bin.dir}" />
+			<param name="simple.server.deploy.dir" value="${app.server.tcserver.deploy.dir}" />
+			<param name="simple.server.lib.global.dir" value="${app.server.tcserver.lib.global.dir}" />
+			<param name="simple.server.portal.dir" value="${app.server.tcserver.portal.dir}" />
+			<param name="simple.server.start.executable" value="tcruntime-ctl${file.suffix.bat}" />
+			<param name="simple.server.start.executable.arg.line" value="start" />
+			<param name="simple.server.stop.executable" value="tcruntime-ctl${file.suffix.bat}" />
+			<param name="simple.server.stop.executable.arg.line" value="stop" />
+		</antcall>
+
+		<record action="stop" name="log" />
+
+		<antcall target="evaluate-logs" />
 	</target>
 </project>

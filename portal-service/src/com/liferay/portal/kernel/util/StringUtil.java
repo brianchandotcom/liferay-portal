@@ -1016,7 +1016,7 @@ public class StringUtil {
 
 			// Fast path for ascii code, fallback to the slow unicode detection
 
-			if (c <= 255) {
+			if (c <= 127) {
 				if ((c >= CharPool.UPPER_CASE_A) &&
 					(c <= CharPool.UPPER_CASE_Z)) {
 
@@ -1044,7 +1044,7 @@ public class StringUtil {
 
 			// Fast path for ascii code, fallback to the slow unicode detection
 
-			if (c <= 255) {
+			if (c <= 127) {
 				if ((c >= CharPool.LOWER_CASE_A) &&
 					(c <= CharPool.LOWER_CASE_Z)) {
 
@@ -3671,7 +3671,7 @@ public class StringUtil {
 		for (int i = 0; i < s.length(); i++) {
 			char c = s.charAt(i);
 
-			if (c > 255) {
+			if (c > 127) {
 
 				// Found non-ascii char, fallback to the slow unicode detection
 
@@ -3708,7 +3708,7 @@ public class StringUtil {
 		for (int i = 0; i < s.length(); i++) {
 			char c = s.charAt(i);
 
-			if (c > 255) {
+			if (c > 127) {
 
 				// Found non-ascii char, fallback to the slow unicode detection
 

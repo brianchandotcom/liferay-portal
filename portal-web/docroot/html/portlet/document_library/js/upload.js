@@ -139,7 +139,7 @@ AUI.add(
 			initializer: function() {
 				var instance = this;
 
-				if (themeDisplay.isSignedIn()) {
+				if (themeDisplay.isSignedIn() && (UPLOADER_TYPE === 'html5') && !UA.touch && instance.one('#addButtonContainer')) {
 					instance._initDLUpload();
 				}
 			},
@@ -885,42 +885,40 @@ AUI.add(
 			_initDLUpload: function() {
 				var instance = this;
 
-				if (UPLOADER_TYPE == 'html5' && !UA.touch) {
-					var config = instance._config;
+				var config = instance._config;
 
-					var maxFileSize = config.maxFileSize;
+				var maxFileSize = config.maxFileSize;
 
-					var foldersConfig = config.folders;
+				var foldersConfig = config.folders;
 
-					instance._folderId = foldersConfig.defaultParentFolderId;
+				instance._folderId = foldersConfig.defaultParentFolderId;
 
-					instance._attachEventHandlers();
+				instance._attachEventHandlers();
 
-					var columnNames = config.columnNames;
+				var columnNames = config.columnNames;
 
-					columnNames.push('');
-					columnNames.unshift('');
+				columnNames.push('');
+				columnNames.unshift('');
 
-					instance._columnNames = columnNames;
+				instance._columnNames = columnNames;
 
-					instance._dimensions = foldersConfig.dimensions;
+				instance._dimensions = foldersConfig.dimensions;
 
-					instance._handles = [];
-					instance._tooltipDelegates = [];
+				instance._handles = [];
+				instance._tooltipDelegates = [];
 
-					var appViewEntryTemplates = instance.byId('appViewEntryTemplates');
+				var appViewEntryTemplates = instance.byId('appViewEntryTemplates');
 
-					instance._invisibleDescriptiveEntry = appViewEntryTemplates.one(SELECTOR_ENTRY_DISPLAY_STYLE + SELECTOR_DISPLAY_DESCRIPTIVE);
-					instance._invisibleIconEntry = appViewEntryTemplates.one(SELECTOR_ENTRY_DISPLAY_STYLE + SELECTOR_DISPLAY_ICON);
+				instance._invisibleDescriptiveEntry = appViewEntryTemplates.one(SELECTOR_ENTRY_DISPLAY_STYLE + SELECTOR_DISPLAY_DESCRIPTIVE);
+				instance._invisibleIconEntry = appViewEntryTemplates.one(SELECTOR_ENTRY_DISPLAY_STYLE + SELECTOR_DISPLAY_ICON);
 
-					instance._maxFileSize = maxFileSize;
+				instance._maxFileSize = maxFileSize;
 
-					instance._viewFileEntryURL = config.viewFileEntryURL;
+				instance._viewFileEntryURL = config.viewFileEntryURL;
 
-					instance._invalidFileSizeText = Liferay.Language.get('please-enter-a-file-with-a-valid-file-size-no-larger-than-x');
-					instance._invalidFileType = Liferay.Language.get('please-enter-a-file-with-a-valid-file-type');
-					instance._zeroByteFileText = Liferay.Language.get('the-file-contains-no-data-and-cannot-be-uploaded.-please-use-the-classic-uploader');
-				}
+				instance._invalidFileSizeText = Liferay.Language.get('please-enter-a-file-with-a-valid-file-size-no-larger-than-x');
+				instance._invalidFileType = Liferay.Language.get('please-enter-a-file-with-a-valid-file-type');
+				instance._zeroByteFileText = Liferay.Language.get('the-file-contains-no-data-and-cannot-be-uploaded.-please-use-the-classic-uploader');
 			},
 
 			_isUploading: function() {

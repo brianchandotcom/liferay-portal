@@ -1,9 +1,11 @@
 <definition>
 	<command name="addChildCP">
+		<var name="key_siteName" value="${siteName}" />
+
 		<execute action="CPSites#type" locator-key1="BASIC_SEARCH_FIELD" value1="${siteName}" />
-		<execute action="CPSites#click" locator-key1="BASIC_SEARCH_BUTTON" />
-		<execute action="CPSites#click" locator-key1="SITE_TABLE_ACTIONS" />
-		<execute action="CPSites#click" locator-key1="SITE_MENULIST_SITE_ADMINISTRATION" />
+		<execute action="CPSites#assertClick" locator-key1="BASIC_SEARCH_BUTTON" value1="Search" />
+		<execute action="CPSites#assertClick" locator-key1="SITE_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPSites#click" locator-key1="SITE_MENULIST_SITE_ADMINISTRATION" value1="Site Administration" />
 
 		<if>
 			<equals arg1="${sitePageType}" arg2="Private" />
@@ -37,10 +39,12 @@
 	</command>
 
 	<command name="addCP">
+		<var name="key_siteName" value="${siteName}" />
+
 		<execute action="CPSites#type" locator-key1="BASIC_SEARCH_FIELD" value1="${siteName}" />
-		<execute action="CPSites#click" locator-key1="BASIC_SEARCH_BUTTON" />
-		<execute action="CPSites#click" locator-key1="SITE_TABLE_ACTIONS" />
-		<execute action="CPSites#click" locator-key1="SITE_MENULIST_SITE_ADMINISTRATION" />
+		<execute action="CPSites#assertClick" locator-key1="BASIC_SEARCH_BUTTON" value1="Search" />
+		<execute action="CPSites#assertClick" locator-key1="SITE_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPSites#assertClick" locator-key1="SITE_MENULIST_SITE_ADMINISTRATION" value1="Site Administration" />
 
 		<if>
 			<equals arg1="${sitePageType}" arg2="Private" />

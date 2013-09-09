@@ -82,7 +82,7 @@ public class BookmarksEntryImpl extends BookmarksEntryBaseImpl {
 	}
 
 	protected void buildTreePath(StringBundler sb, Group group)
-			throws PortalException, SystemException {
+		throws PortalException, SystemException {
 
 		if (group == null) {
 			sb.append(StringPool.SLASH);

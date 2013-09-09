@@ -382,9 +382,7 @@ public class ServicePreAction extends Action {
 
 				controlPanelCategory = PortletCategoryKeys.PORTLET;
 			}
-			else if (Validator.isNotNull(controlPanelCategory) &&
-					 Validator.isNotNull(ppid)) {
-
+			else if (Validator.isNotNull(ppid)) {
 				Portlet portlet = PortletLocalServiceUtil.getPortletById(
 					companyId, ppid);
 

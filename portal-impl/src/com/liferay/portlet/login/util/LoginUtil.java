@@ -267,7 +267,14 @@ public class LoginUtil {
 		String userIdString = String.valueOf(userId);
 
 		session.setAttribute("j_username", userIdString);
-		session.setAttribute("j_password", user.getPassword());
+
+		if (PropsValues.PORTAL_JAAS_PLAIN_PASSWORD) {
+			session.setAttribute("j_password", password);
+		}
+		else {
+			session.setAttribute("j_password", user.getPassword());
+		}
+
 		session.setAttribute("j_remoteuser", userIdString);
 
 		if (PropsValues.SESSION_STORE_PASSWORD) {

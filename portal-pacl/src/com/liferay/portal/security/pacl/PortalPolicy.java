@@ -14,6 +14,9 @@
 
 package com.liferay.portal.security.pacl;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
 import java.security.AllPermission;
 import java.security.CodeSource;
 import java.security.Permission;
@@ -121,6 +124,12 @@ public class PortalPolicy extends Policy {
 				return _checkWithParentPolicy(protectionDomain, permission);
 			}
 
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"FAILED for {Permission " + permission +
+						"} on { " + protectionDomain + "}");
+			}
+
 			return false;
 		}
 		finally {
@@ -181,13 +190,22 @@ public class PortalPolicy extends Policy {
 		ProtectionDomain protectionDomain, Permission permission) {
 
 		if (_policy != null) {
-			return _policy.implies(protectionDomain, permission);
+			boolean result = _policy.implies(protectionDomain, permission);
+
+			if (_log.isDebugEnabled() && !result) {
+				_log.debug(
+					"FAILED for {Permission " + permission +
+						"} on { " + protectionDomain + "}");
+			}
+
+			return result;
 		}
 
 		return true;
 	}
 
 	private static AllPermission _allPermission = new AllPermission();
+	private static Log _log = LogFactoryUtil.getLog(PortalPolicy.class);
 	private static ThreadLocal<Boolean> _started = new ThreadLocal<Boolean>() {
 
 		@Override

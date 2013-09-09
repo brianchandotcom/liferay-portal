@@ -37,10 +37,9 @@ import javax.portlet.ValidatorException;
 public abstract class BasePreferencesImpl implements Serializable {
 
 	public BasePreferencesImpl(
-		long companyId, long ownerId, int ownerType, String xml,
+		long ownerId, int ownerType, String xml,
 		Map<String, Preference> preferences) {
 
-		_companyId = companyId;
 		_ownerId = ownerId;
 		_ownerType = ownerType;
 		_originalXML = xml;
@@ -249,10 +248,6 @@ public abstract class BasePreferencesImpl implements Serializable {
 		return actualValues;
 	}
 
-	protected long getCompanyId() {
-		return _companyId;
-	}
-
 	protected Map<String, Preference> getModifiedPreferences() {
 		if (_modifiedPreferences == null) {
 			_modifiedPreferences = new ConcurrentHashMap<String, Preference>(
@@ -333,7 +328,6 @@ public abstract class BasePreferencesImpl implements Serializable {
 
 	private static final String _NULL_VALUE = "NULL_VALUE";
 
-	private long _companyId;
 	private Map<String, Preference> _modifiedPreferences;
 	private Map<String, Preference> _originalPreferences;
 	private String _originalXML;

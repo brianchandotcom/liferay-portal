@@ -231,12 +231,11 @@ public class OrganizationImpl extends OrganizationBaseImpl {
 
 	@Override
 	public PortletPreferences getPreferences() throws SystemException {
-		long companyId = getCompanyId();
 		long ownerId = getOrganizationId();
 		int ownerType = PortletKeys.PREFS_OWNER_TYPE_ORGANIZATION;
 
 		return PortalPreferencesLocalServiceUtil.getPreferences(
-			companyId, ownerId, ownerType);
+			ownerId, ownerType);
 	}
 
 	@Override

@@ -41,6 +41,13 @@ public class PortletPreferencesFactoryUtil {
 		return getPortletPreferencesFactory().fromDefaultXML(xml);
 	}
 
+	public static PortalPreferences fromXML(
+			long ownerId, int ownerType, String xml)
+		throws SystemException {
+
+		return getPortletPreferencesFactory().fromXML(ownerId, ownerType, xml);
+	}
+
 	public static PortletPreferences fromXML(
 			long companyId, long ownerId, int ownerType, long plid,
 			String portletId, String xml)
@@ -50,6 +57,9 @@ public class PortletPreferencesFactoryUtil {
 			companyId, ownerId, ownerType, plid, portletId, xml);
 	}
 
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link #fromXML(long, int, String)}
+	 */
 	public static PortalPreferences fromXML(
 			long companyId, long ownerId, int ownerType, String xml)
 		throws SystemException {
@@ -74,6 +84,18 @@ public class PortletPreferencesFactoryUtil {
 	}
 
 	public static PortalPreferences getPortalPreferences(
+			HttpSession session, long userId, boolean signedIn)
+		throws SystemException {
+
+		return getPortletPreferencesFactory().getPortalPreferences(
+			session, userId, signedIn);
+	}
+
+	/**
+	 * @deprecated As of 6.2.0, replaced by
+	 *	{@link #getPortalPreferences(HttpSession, long, boolean)}
+	 */
+	public static PortalPreferences getPortalPreferences(
 			HttpSession session, long companyId, long userId, boolean signedIn)
 		throws SystemException {
 
@@ -81,6 +103,18 @@ public class PortletPreferencesFactoryUtil {
 			session, companyId, userId, signedIn);
 	}
 
+	public static PortalPreferences getPortalPreferences(
+			long userId, boolean signedIn)
+		throws SystemException {
+
+		return getPortletPreferencesFactory().getPortalPreferences(
+			userId, signedIn);
+	}
+
+	/**
+	 * @deprecated As of 6.2.0, replaced by
+	 *	{@link #getPortalPreferences(long, boolean)}
+	 */
 	public static PortalPreferences getPortalPreferences(
 			long companyId, long userId, boolean signedIn)
 		throws SystemException {

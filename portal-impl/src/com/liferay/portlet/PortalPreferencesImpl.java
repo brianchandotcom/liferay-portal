@@ -17,8 +17,7 @@ package com.liferay.portlet;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.HashCode;
-import com.liferay.portal.kernel.util.HashCodeFactoryUtil;
+import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.PortalPreferencesLocalServiceUtil;
@@ -40,22 +39,22 @@ public class PortalPreferencesImpl
 	implements Cloneable, PortalPreferences, Serializable {
 
 	public PortalPreferencesImpl() {
-		this(0, 0, 0, null, Collections.<String, Preference>emptyMap(), false);
+		this(0, 0, null, Collections.<String, Preference>emptyMap(), false);
 	}
 
 	public PortalPreferencesImpl(
-		long companyId, long ownerId, int ownerType, String xml,
+		long ownerId, int ownerType, String xml,
 		Map<String, Preference> preferences, boolean signedIn) {
 
-		super(companyId, ownerId, ownerType, xml, preferences);
+		super(ownerId, ownerType, xml, preferences);
 
 		_signedIn = signedIn;
 	}
 
 	@Override
-	public Object clone() {
+	public PortalPreferencesImpl clone() {
 		return new PortalPreferencesImpl(
-			getCompanyId(), getOwnerId(), getOwnerType(), getOriginalXML(),
+			getOwnerId(), getOwnerType(), getOriginalXML(),
 			getOriginalPreferences(), isSignedIn());
 	}
 
@@ -71,8 +70,7 @@ public class PortalPreferencesImpl
 
 		PortalPreferencesImpl portalPreferences = (PortalPreferencesImpl)obj;
 
-		if ((getCompanyId() == portalPreferences.getCompanyId()) &&
-			(getOwnerId() == portalPreferences.getOwnerId()) &&
+		if ((getOwnerId() == portalPreferences.getOwnerId()) &&
 			(getOwnerType() == portalPreferences.getOwnerType()) &&
 			getPreferences().equals(portalPreferences.getPreferences())) {
 
@@ -116,14 +114,12 @@ public class PortalPreferencesImpl
 
 	@Override
 	public int hashCode() {
-		HashCode hashCode = HashCodeFactoryUtil.getHashCode();
+		int hashCode = HashUtil.hash(0, getOwnerId());
 
-		hashCode.append(getCompanyId());
-		hashCode.append(getOwnerId());
-		hashCode.append(getOwnerType());
-		hashCode.append(getPreferences());
+		hashCode = HashUtil.hash(hashCode, getOwnerType());
+		hashCode = HashUtil.hash(hashCode, getPreferences());
 
-		return hashCode.toHashCode();
+		return hashCode;
 	}
 
 	@Override

@@ -84,7 +84,7 @@ public class UpgradeCustomizablePortlets extends UpgradeProcess {
 
 		PortalPreferencesImpl portalPreferencesImpl =
 			(PortalPreferencesImpl)PortletPreferencesFactoryUtil.fromXML(
-				0, ownerId, ownerType, xml);
+				ownerId, ownerType, xml);
 
 		return new PortalPreferencesWrapper(portalPreferencesImpl);
 	}

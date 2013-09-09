@@ -145,8 +145,8 @@ public class PortalPolicy extends Policy {
 				return _checkWithParentPolicy(protectionDomain, permission);
 			}
 
-			if (_log.isDebugEnabled()) {
-				_log.debug(
+			if (_log.isTraceEnabled()) {
+				_log.trace(
 					"FAILED for {Permission " + permission +
 						"} on { " + protectionDomain + "}");
 			}
@@ -198,15 +198,20 @@ public class PortalPolicy extends Policy {
 			!(permission instanceof PortalServicePermission) &&
 			!(permission instanceof PACLUtil.Permission)) {
 
-			boolean result = _policy.implies(protectionDomain, permission);
+			if (_log.isTraceEnabled()) {
+				boolean result = _policy.implies(protectionDomain, permission);
 
-			if (_log.isDebugEnabled() && !result) {
-				_log.debug(
-					"FAILED for {Permission " + permission +
-						"} on { " + protectionDomain + "}");
+				if (!result) {
+					_log.trace(
+						"FAILED for {Permission " + permission +
+							"} on { " + protectionDomain + "}");
+				}
+
+				return result;
 			}
-
-			return result;
+			else {
+				return _policy.implies(protectionDomain, permission);
+			}
 		}
 
 		return true;

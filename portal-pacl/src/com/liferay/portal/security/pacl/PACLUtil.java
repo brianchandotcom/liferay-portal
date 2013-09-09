@@ -15,6 +15,8 @@
 package com.liferay.portal.security.pacl;
 
 import com.liferay.portal.kernel.cache.CacheRegistryItem;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.security.lang.PortalSecurityManager;
 import com.liferay.portal.security.lang.SecurityManagerUtil;
@@ -195,6 +197,17 @@ public class PACLUtil {
 				protectionDomain, permissionCollection, paclPolicy) &&
 			permissionCollection.implies(permission)) {
 
+			if (_log.isTraceEnabled()) {
+
+				// Inspecting cases where PACLPolicy succeeds on trusted caller.
+				// If there is a way to identify these cases ahead of time, we
+				// might be able to eliminate stack lookups completely.
+
+				_log.trace(
+					"TRUSTED CALL for {Permission " + permission +
+						"} on { " + protectionDomain + "}");
+			}
+
 			return true;
 		}
 
@@ -216,5 +229,7 @@ public class PACLUtil {
 		private Class<?> _clazz;
 
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(PACLUtil.class);
 
 }

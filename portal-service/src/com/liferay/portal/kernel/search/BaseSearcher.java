@@ -24,8 +24,8 @@ public abstract class BaseSearcher extends BaseIndexer {
 			BooleanQuery searchQuery, SearchContext searchContext)
 		throws Exception {
 
-		for (String entryClassName : getClassNames()) {
-			Indexer indexer = IndexerRegistryUtil.getIndexer(entryClassName);
+		for (String className : getClassNames()) {
+			Indexer indexer = IndexerRegistryUtil.getIndexer(className);
 
 			if (indexer == null) {
 				continue;

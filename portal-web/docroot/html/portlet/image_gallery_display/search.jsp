@@ -107,6 +107,7 @@ boolean useAssetEntryQuery = false;
 				results.add(DLAppLocalServiceUtil.getFolder(entryClassPK));
 			}
 		}
+
 		searchContainer.setResults(results);
 	%>
 

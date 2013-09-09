@@ -102,6 +102,7 @@ LayoutSet selLayoutSet = ((LayoutSet)request.getAttribute("edit_pages.jsp-selLay
 		var changeLogo = (event.type == 'change');
 
 		useLogoInput.val(changeLogo);
+
 		if (logoContainer) {
 			logoContainer.hide();
 		}

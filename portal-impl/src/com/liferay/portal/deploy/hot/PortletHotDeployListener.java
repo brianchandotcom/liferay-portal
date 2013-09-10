@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.deploy.hot.BaseHotDeployListener;
 import com.liferay.portal.kernel.deploy.hot.HotDeployEvent;
 import com.liferay.portal.kernel.deploy.hot.HotDeployException;
 import com.liferay.portal.kernel.javadoc.JavadocManagerUtil;
+import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.lar.StagedModelDataHandler;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerRegistryUtil;
@@ -470,6 +471,8 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 		}
 
 		registerClpMessageListeners(servletContext, classLoader);
+
+		JSONWebServiceActionsManagerUtil.registerServletContext(servletContext);
 
 		JavadocManagerUtil.load(servletContextName, classLoader);
 

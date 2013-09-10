@@ -80,13 +80,13 @@ public class EditScopeAction extends PortletAction {
 			setForward(actionRequest, "portlet.portlet_configuration.error");
 		}
 
-		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
-
 		PortletPreferences portletPreferences =
 			ActionUtil.getLayoutPortletSetup(actionRequest, portlet);
 
 		actionRequest = ActionUtil.getWrappedActionRequest(
 			actionRequest, portletPreferences);
+
+		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		if (cmd.equals(Constants.SAVE)) {
 			updateScope(actionRequest, portlet);

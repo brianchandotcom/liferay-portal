@@ -233,6 +233,14 @@
 
 	.page-actions {
 		margin-top: 1.5em;
+
+		&:after {
+			clear: both;
+			content: ".";
+			display: block;
+			height: 0;
+			visibility: hidden;
+		}
 	}
 
 	.page-actions .article-actions {

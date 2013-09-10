@@ -3,6 +3,9 @@
 		<case locator-key1="ADD_ENTRY">
 			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
+		<case locator-key1="ENTRY_MENULIST_EDIT">
+			<execute function="AssertClick#assertTextClickAtAndWait" />
+		</case>
 		<case locator-key1="ENTRY_MENULIST_MOVE_TO_THE_RECYCLE_BIN">
 			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>

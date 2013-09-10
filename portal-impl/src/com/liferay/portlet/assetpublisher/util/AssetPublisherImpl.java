@@ -147,15 +147,15 @@ public class AssetPublisherImpl implements AssetPublisher {
 			PortletPreferencesFactoryUtil.getStrictPortletSetup(
 				layout, referringPortletResource);
 
+		if (portletPreferences instanceof StrictPortletPreferencesImpl) {
+			throw new PrincipalException();
+		}
+
 		String selectionStyle = portletPreferences.getValue(
 			"selectionStyle", "dynamic");
 
 		if (selectionStyle.equals("dynamic")) {
 			return;
-		}
-
-		if (portletPreferences instanceof StrictPortletPreferencesImpl) {
-			throw new PrincipalException();
 		}
 
 		AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(

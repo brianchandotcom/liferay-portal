@@ -126,12 +126,13 @@ public class AutoLoginFilter extends BasePortalFilter {
 				String autoLoginRedirect = (String)request.getAttribute(
 					AutoLogin.AUTO_LOGIN_REDIRECT_AND_CONTINUE);
 
+				redirect = redirect.concat("?redirect=");
+				
 				if (Validator.isNotNull(autoLoginRedirect)) {
-					redirect = redirect.concat("?redirect=").concat(
-						autoLoginRedirect);
+					redirect = redirect.concat(autoLoginRedirect);
 				}
 				else {
-					redirect = redirect.concat("?redirect=").concat(
+					redirect = redirect.concat(
 						PortalUtil.getCurrentCompleteURL(request));
 				}
 			}

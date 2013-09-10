@@ -14,9 +14,9 @@
  */
 --%>
 
-<%@ page import="com.liferay.portal.kernel.servlet.HttpHeaders" %>
-
 <%@ include file="/html/common/init.jsp" %>
+
+<%@ page import="com.liferay.portal.kernel.servlet.HttpHeaders" %>
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
@@ -29,8 +29,8 @@ else {
 }
 
 response.setHeader(HttpHeaders.CACHE_CONTROL, HttpHeaders.CACHE_CONTROL_NO_CACHE_VALUE);
-response.setHeader(HttpHeaders.PRAGMA, HttpHeaders.PRAGMA_NO_CACHE_VALUE);
 response.setHeader(HttpHeaders.LOCATION, redirect);
+response.setHeader(HttpHeaders.PRAGMA, HttpHeaders.PRAGMA_NO_CACHE_VALUE);
 
 response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
 %>

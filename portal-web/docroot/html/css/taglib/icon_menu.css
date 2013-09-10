@@ -1,3 +1,6 @@
+@import "compass";
+@import "mixins";
+
 .lfr-menu-list-overflow {
 	overflow: auto;
 	overflow-x: hidden;
@@ -21,6 +24,17 @@
 	&.dropdown-menu {
 		position: relative;
 		float: none;
+
+		@include respond-to(phone, tablet) {
+			> li > a {
+				font-size: 22px;
+				line-height: 40px;
+
+				img {
+					margin-bottom: 3px;
+				}
+			}
+		}
 	}
 }
 

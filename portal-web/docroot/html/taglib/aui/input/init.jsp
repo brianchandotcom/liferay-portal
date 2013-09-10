@@ -73,6 +73,7 @@ java.lang.String title = GetterUtil.getString((java.lang.String)request.getAttri
 java.lang.String type = GetterUtil.getString((java.lang.String)request.getAttribute("aui:input:type"));
 boolean useNamespace = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:input:useNamespace")), true);
 java.lang.Object value = (java.lang.Object)request.getAttribute("aui:input:value");
+java.lang.String wrapperCssClass = GetterUtil.getString((java.lang.String)request.getAttribute("aui:input:wrapperCssClass"));
 
 _updateOptions(_options, "autoFocus", autoFocus);
 _updateOptions(_options, "autoSize", autoSize);
@@ -115,6 +116,7 @@ _updateOptions(_options, "title", title);
 _updateOptions(_options, "type", type);
 _updateOptions(_options, "useNamespace", useNamespace);
 _updateOptions(_options, "value", value);
+_updateOptions(_options, "wrapperCssClass", wrapperCssClass);
 %>
 
 <%@ include file="/html/taglib/aui/input/init-ext.jspf" %>

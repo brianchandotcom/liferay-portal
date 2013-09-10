@@ -668,6 +668,12 @@
 				<inputType>java.lang.Object</inputType>
 				<outputType>java.lang.Object</outputType>
 			</attribute>
+			<attribute>
+				<name>wrapperCssClass</name>
+				<required>false</required>
+				<rtexprvalue>true</rtexprvalue>
+				<type>java.lang.String</type>
+			</attribute>
 		</attributes>
 	</component>
 	<component name="Layout" bodyContent="true">

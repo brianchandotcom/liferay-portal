@@ -12,7 +12,7 @@
 	</command>
 
 	<command name="assertTextEquals">
-		<case locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN">
+		<case locator-key1="SUCCESS_MESSAGE_CONTENT">
 			<execute function="AssertTextEquals#assertPartialText" />
 		</case>
 	</command>

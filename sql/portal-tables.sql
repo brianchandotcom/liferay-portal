@@ -60,7 +60,7 @@ create table AnnouncementsEntry (
 	classNameId LONG,
 	classPK LONG,
 	title VARCHAR(75) null,
-	content STRING null,
+	content TEXT null,
 	url STRING null,
 	type_ VARCHAR(75) null,
 	displayDate DATE null,

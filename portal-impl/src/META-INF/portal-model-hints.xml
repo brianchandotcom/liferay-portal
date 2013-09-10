@@ -1130,7 +1130,7 @@
 		<field name="classPK" type="long" />
 		<field name="title" type="String" />
 		<field name="content" type="String">
-			<hint-collection name="TEXTAREA" />
+			<hint-collection name="CLOB" />
 		</field>
 		<field name="url" type="String">
 			<hint-collection name="URL" />

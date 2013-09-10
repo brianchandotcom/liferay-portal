@@ -44,6 +44,7 @@ import com.liferay.portal.model.Role;
 import com.liferay.portal.model.Team;
 import com.liferay.portal.model.UserConstants;
 import com.liferay.portal.model.UserGroup;
+import com.liferay.portal.model.UserRemotePreference;
 import com.liferay.portal.model.Website;
 import com.liferay.portal.security.auth.EmailAddressGenerator;
 import com.liferay.portal.security.auth.EmailAddressGeneratorFactory;
@@ -69,6 +70,8 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -89,8 +92,9 @@ public class UserImpl extends UserBaseImpl {
 	}
 
 	@Override
-	public void addRemotePreference(String name, String value) {
-		_remotePreferences.put(name, value);
+	public void addRemotePreference(UserRemotePreference userRemotePreference) {
+		_remotePreferences.put(
+			userRemotePreference.getName(), userRemotePreference);
 	}
 
 	@Override
@@ -551,13 +555,15 @@ public class UserImpl extends UserBaseImpl {
 	}
 
 	@Override
-	public String getRemotePreference(String name) {
+	public UserRemotePreference getRemotePreference(String name) {
 		return _remotePreferences.get(name);
 	}
 
 	@Override
-	public Map<String, String> getRemotePreferences() {
-		return _remotePreferences;
+	public Iterable<UserRemotePreference> getRemotePreferences() {
+		Collection<UserRemotePreference> values = _remotePreferences.values();
+
+		return Collections.unmodifiableCollection(values);
 	}
 
 	@Override
@@ -783,8 +789,8 @@ public class UserImpl extends UserBaseImpl {
 	private boolean _passwordModified;
 	private PasswordPolicy _passwordPolicy;
 	private String _passwordUnencrypted;
-	private Map<String, String> _remotePreferences =
-		new HashMap<String, String>();
+	private transient Map<String, UserRemotePreference> _remotePreferences =
+		new HashMap<String, UserRemotePreference>();
 	private TimeZone _timeZone;
 
 }

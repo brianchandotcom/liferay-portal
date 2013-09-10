@@ -1348,9 +1348,9 @@ public class UserWrapper implements User, ModelWrapper<User> {
 	}
 
 	@Override
-	public void addRemotePreference(java.lang.String name,
-		java.lang.String value) {
-		_user.addRemotePreference(name, value);
+	public void addRemotePreference(
+		com.liferay.portal.model.UserRemotePreference userRemotePreference) {
+		_user.addRemotePreference(userRemotePreference);
 	}
 
 	@Override
@@ -1663,13 +1663,14 @@ public class UserWrapper implements User, ModelWrapper<User> {
 	}
 
 	@Override
-	public java.util.Map<java.lang.String, java.lang.String> getRemotePreferences() {
-		return _user.getRemotePreferences();
+	public com.liferay.portal.model.UserRemotePreference getRemotePreference(
+		java.lang.String name) {
+		return _user.getRemotePreference(name);
 	}
 
 	@Override
-	public java.lang.String getRemotePreference(java.lang.String name) {
-		return _user.getRemotePreference(name);
+	public java.lang.Iterable<com.liferay.portal.model.UserRemotePreference> getRemotePreferences() {
+		return _user.getRemotePreferences();
 	}
 
 	@Override

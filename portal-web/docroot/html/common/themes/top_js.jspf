@@ -348,36 +348,22 @@
 			<%
 			List<Portlet> allPortlets = layoutTypePortlet.getAllPortlets(false);
 
-			Iterator<Portlet> itr = allPortlets.iterator();
+			StringBundler sb = new StringBundler(allPortlets.size() * 2);
 
-			while (itr.hasNext()) {
-				Portlet portlet = itr.next();
-
-				if (!portlet.isActive() || !portlet.isReady() || portlet.isUndeployedPortlet()) {
-					itr.remove();
+			for (Portlet portlet : allPortlets) {
+				if (portlet.isActive() && portlet.isReady() && !portlet.isUndeployedPortlet()) {
+					sb.append(HtmlUtil.escapeJS(portlet.getPortletId()));
+					sb.append("','");
 				}
+			}
+
+			if (sb.index() > 0) {
+				sb.setIndex(sb.index() - 1);
 			}
 			%>
 
-			<c:if test="<%= !allPortlets.isEmpty() && !layoutTypePortlet.hasStateMax() %>">
-
-				<%
-				StringBundler escapedPortletIds = new StringBundler(allPortlets.size() * 2 - 1);
-
-				itr = allPortlets.iterator();
-
-				while (itr.hasNext()) {
-					Portlet portlet = itr.next();
-
-					escapedPortletIds.append(HtmlUtil.escapeJS(portlet.getPortletId()));
-
-					if (itr.hasNext()) {
-						escapedPortletIds.append("','");
-					}
-				}
-				%>
-
-				Liferay.Portlet.list = ['<%= escapedPortletIds.toString() %>'];
+			<c:if test="<%= (sb.index() > 0) && !layoutTypePortlet.hasStateMax() %>">
+				Liferay.Portlet.list = ['<%= sb.toString() %>'];
 			</c:if>
 		</c:if>
 

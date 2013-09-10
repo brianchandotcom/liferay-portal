@@ -139,6 +139,9 @@ public interface PortletDataContext extends Serializable {
 	public void addPermissions(
 		String resourceName, long resourcePK, List<KeyValuePair> permissions);
 
+	public void addPortalPermissions()
+		throws PortalException, SystemException;
+
 	public void addPortletPermissions(String resourceName)
 		throws PortalException, SystemException;
 
@@ -422,6 +425,12 @@ public interface PortletDataContext extends Serializable {
 
 	public void importPermissions(
 			String resourceName, long resourcePK, long newResourcePK)
+		throws PortalException, SystemException;
+
+	public void importPortalPermissions()
+		throws PortalException, SystemException;
+
+	public void importPortletPermissions(String resourceName)
 		throws PortalException, SystemException;
 
 	public void importRatingsEntries(

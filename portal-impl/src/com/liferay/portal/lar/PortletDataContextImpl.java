@@ -77,6 +77,7 @@ import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.TeamLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetLink;
@@ -551,6 +552,10 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	@Override
+	public void addPortalPermissions() throws PortalException, SystemException {
+		addPermissions(PortletKeys.PORTAL, getCompanyId());
+	}
+
 	@Override
 	public void addPortletPermissions(String resourceName)
 		throws PortalException, SystemException {
@@ -578,6 +583,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 		addPermissions(resourceName, groupId);
 	}
+
+	@Override
 	public boolean addPrimaryKey(Class<?> clazz, String primaryKey) {
 		boolean value = hasPrimaryKey(clazz, primaryKey);
 
@@ -1671,6 +1678,21 @@ public class PortletDataContextImpl implements PortletDataContext {
 				_companyId, resourceName, ResourceConstants.SCOPE_INDIVIDUAL,
 				String.valueOf(newResourcePK), roleIdsToActionIds);
 		}
+	}
+
+	@Override
+	public void importPortalPermissions()
+		throws PortalException, SystemException {
+
+		importPermissions(
+			PortletKeys.PORTAL, getSourceCompanyId(), getCompanyId());
+	}
+
+	@Override
+	public void importPortletPermissions(String resourceName)
+		throws PortalException, SystemException {
+
+		importPermissions(resourceName, getSourceGroupId(), getScopeGroupId());
 	}
 
 	@Override

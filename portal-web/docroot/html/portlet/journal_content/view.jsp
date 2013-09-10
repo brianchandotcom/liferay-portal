@@ -170,7 +170,7 @@ boolean expired = true;
 												<liferay-ui:icon
 													image='<%= "../file_system/small/" + extension %>'
 													label="<%= true %>"
-													message='<%= LanguageUtil.format(pageContext, "x-convert-x-to-x", new Object[] {"hide-accessible", articleDisplay.getTitle(), extension.toUpperCase()}) %>'
+													message='<%= LanguageUtil.format(pageContext, "x-convert-x-to-x", new Object[] {"hide-accessible", articleDisplay.getTitle(), StringUtil.toUpperCase(extension)}) %>'
 													method="get"
 													url="<%= exportArticleURL.toString() %>"
 												/>

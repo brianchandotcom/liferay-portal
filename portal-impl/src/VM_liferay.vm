@@ -31,13 +31,13 @@ img, .png {
 	behavior: expression(
 		(this.runtimeStyle.behavior = "none") &&
 		(
-			this.pngSet || (this.src && this.src.toLowerCase().indexOf('spacer.png') > -1) ?
+			this.pngSet || (this.src && $stringUtil.toLowerCase(this.src).indexOf('spacer.png') > -1) ?
 				this.pngSet = true :
 					(
 						this.nodeName == "IMG" &&
 						(
 							(
-								(this.src.toLowerCase().indexOf('.png') > -1) ||
+								($stringUtil.toLowerCase(this.src).indexOf('.png') > -1) ||
 								(this.className && ([''].concat(this.className.split(' ')).concat(['']).join('|').indexOf('|png|')) > -1)
 							) &&
 							(this.className.indexOf('no-png-fix') == -1)
@@ -49,7 +49,7 @@ img, .png {
 							) :
 								(
 									(
-										(this.currentStyle.backgroundImage.toLowerCase().indexOf('.png') > -1) ||
+										($stringUtil.toLowerCase(this.currentStyle.backgroundImage).indexOf('.png') > -1) ||
 										(this.className && ([''].concat(this.className.split(' ')).concat(['']).join('|').indexOf('|png|')) > -1)
 									) ?
 										(

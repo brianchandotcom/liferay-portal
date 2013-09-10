@@ -484,7 +484,7 @@ int priceId = ParamUtil.getInteger(request, "priceId", -1);
 			<aui:fieldset>
 				<aui:input label="small-image-url" name="smallImageURL" />
 
-				<span style="font-size: xx-small;">-- <%= LanguageUtil.get(pageContext, "or").toUpperCase() %> --</span> <liferay-ui:message key="small-image" />
+				<span style="font-size: xx-small;">-- <%= StringUtil.toUpperCase(LanguageUtil.get(pageContext, "or")) %> --</span> <liferay-ui:message key="small-image" />
 
 				<aui:input label="" name="smallFile" type="file" />
 
@@ -492,7 +492,7 @@ int priceId = ParamUtil.getInteger(request, "priceId", -1);
 
 				<aui:input label="medium-image-url" name="mediumImageURL" />
 
-				<span style="font-size: xx-small;">-- <%= LanguageUtil.get(pageContext, "or").toUpperCase() %> --</span> <liferay-ui:message key="medium-image" />
+				<span style="font-size: xx-small;">-- <%= StringUtil.toUpperCase(LanguageUtil.get(pageContext, "or")) %> --</span> <liferay-ui:message key="medium-image" />
 
 				<aui:input label="" name="mediumFile" type="file" />
 
@@ -500,7 +500,7 @@ int priceId = ParamUtil.getInteger(request, "priceId", -1);
 
 				<aui:input label="large-image-url" name="largeImageURL" />
 
-				<span style="font-size: xx-small;">-- <%= LanguageUtil.get(pageContext, "or").toUpperCase() %> --</span> <liferay-ui:message key="large-image" />
+				<span style="font-size: xx-small;">-- <%= StringUtil.toUpperCase(LanguageUtil.get(pageContext, "or")) %> --</span> <liferay-ui:message key="large-image" />
 
 				<aui:input label="" name="largeFile" type="file" />
 

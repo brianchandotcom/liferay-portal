@@ -66,7 +66,7 @@ try {
 								variablePropertyValue = assetTagProperty.getValue();
 							}
 
-							xmlUrl = StringUtil.replace(xmlUrl, "[" + variablePropertyKey + "]", variablePropertyValue.toUpperCase());
+							xmlUrl = StringUtil.replace(xmlUrl, "[" + variablePropertyKey + "]", StringUtil.toUpperCase(variablePropertyValue));
 
 							break;
 						}

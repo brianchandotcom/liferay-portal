@@ -51,7 +51,7 @@ MBThread thread = (MBThread)request.getAttribute("edit_message.jsp-thread");
 						%>
 
 						<c:if test="<%= Validator.isNotNull(ranks[1]) %>">
-							<div class="thread-user-role thread-user-role-<%= ranks[1].toLowerCase() %>"><%= ranks[1] %></div>
+							<div class="thread-user-role thread-user-role-<%= StringUtil.toLowerCase(ranks[1]) %>"><%= ranks[1] %></div>
 						</c:if>
 
 						<c:if test="<%= Validator.isNotNull(ranks[0]) %>">

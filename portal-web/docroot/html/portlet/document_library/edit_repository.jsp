@@ -100,7 +100,7 @@ long folderId = ParamUtil.getLong(request, "folderId");
 					%>
 
 							<dt>
-								<%= LanguageUtil.get(pageContext, StringUtil.replace(supportedParameter.toLowerCase(), CharPool.UNDERLINE, CharPool.DASH)) %>
+								<%= LanguageUtil.get(pageContext, StringUtil.replace(StringUtil.toLowerCase(supportedParameter), CharPool.UNDERLINE, CharPool.DASH)) %>
 							</dt>
 							<dd>
 								<%= supportedParameterValue %>
@@ -145,7 +145,7 @@ long folderId = ParamUtil.getLong(request, "folderId");
 
 			<div class="settings-configuration <%= ((supportedConfigurations.length == 1) ? "hide" : "") %>" id="<portlet:namespace />repository-<%= className %>-wrapper">
 				<aui:select cssClass="repository-configuration" id='<%= "repository-" + className %>' label="repository-configuration" name="settings--configuration-type--">
-					<aui:option label="<%= LanguageUtil.get(pageContext, StringUtil.replace(supportedConfiguration.toLowerCase(), CharPool.UNDERLINE, CharPool.DASH)) %>" selected="<%= supportedConfiguration.equals(supportedConfigurations[0]) %>" value="<%= supportedConfiguration %>" />
+					<aui:option label="<%= LanguageUtil.get(pageContext, StringUtil.replace(StringUtil.toLowerCase(supportedConfiguration), CharPool.UNDERLINE, CharPool.DASH)) %>" selected="<%= supportedConfiguration.equals(supportedConfigurations[0]) %>" value="<%= supportedConfiguration %>" />
 				</aui:select>
 			</div>
 			<div class="settings-parameters" id="<portlet:namespace />repository-<%= className %>-configuration-<%= supportedConfiguration %>">
@@ -156,7 +156,7 @@ long folderId = ParamUtil.getLong(request, "folderId");
 				for (String supportedParameter : supportedParameters) {
 				%>
 
-					<aui:input label="<%= LanguageUtil.get(pageContext, StringUtil.replace(supportedParameter.toLowerCase(), CharPool.UNDERLINE, CharPool.DASH)) %>" name='<%= "settings--" + supportedParameter + "--" %>' type="text" value="" />
+					<aui:input label="<%= LanguageUtil.get(pageContext, StringUtil.replace(StringUtil.toLowerCase(supportedParameter), CharPool.UNDERLINE, CharPool.DASH)) %>" name='<%= "settings--" + supportedParameter + "--" %>' type="text" value="" />
 
 				<%
 				}

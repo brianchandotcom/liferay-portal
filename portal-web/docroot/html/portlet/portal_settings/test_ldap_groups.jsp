@@ -86,7 +86,7 @@ int counter = 0;
 for (SearchResult searchResult : searchResults) {
 	Attributes attributes = searchResult.getAttributes();
 
-	String name = LDAPUtil.getAttributeString(attributes, groupMappings.getProperty("groupName")).toLowerCase();
+	String name = StringUtil.toLowerCase(LDAPUtil.getAttributeString(attributes, groupMappings.getProperty("groupName")));
 	String description = LDAPUtil.getAttributeString(attributes, groupMappings.getProperty("description"));
 	Attribute attribute = attributes.get(groupMappings.getProperty("user"));
 

@@ -135,7 +135,7 @@
 		<execute action="CPWebcontent#assertTextEquals" locator-key1="ENTRY_DESCRIPTIVE_TITLE" value1="${webContentTitle}" />
 		<execute action="CPWebcontent#click" locator-key1="ENTRY_DESCRIPTIVE_MENULIST_ARROW" />
 		<execute action="CPWebcontent#assertClick" locator-key1="ENTRY_MENULIST_MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
-		<execute action="CPWebcontent#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="The Selected Item was moved to the Recycle Bin. Undo" />
+		<execute action="CPWebcontent#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="The Web Content Article ${webContentTitle} was moved to the Recycle Bin. Undo" />
 	</command>
 
 	<command name="tearDownCP">

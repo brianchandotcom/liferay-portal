@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
-import com.liferay.portal.kernel.util.SortedProperties;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -29,6 +28,7 @@ import com.liferay.portal.kernel.util.Validator;
 import java.io.IOException;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -115,12 +115,12 @@ public class SanitizedServletResponse extends HttpServletResponseWrapper {
 
 		String requestURI = request.getRequestURI();
 
-		for (KeyValuePair _xFrameOptionKVP : _xFrameOptionKVPs) {
-			String url = _xFrameOptionKVP.getKey();
+		for (KeyValuePair keyValuePair : _xFrameOptions) {
+			String url = keyValuePair.getKey();
 
 			if (requestURI.startsWith(url)) {
 				response.setHeader(
-					HttpHeaders.X_FRAME_OPTIONS, _xFrameOptionKVP.getValue());
+					HttpHeaders.X_FRAME_OPTIONS, keyValuePair.getValue());
 
 				return;
 			}
@@ -157,58 +157,72 @@ public class SanitizedServletResponse extends HttpServletResponseWrapper {
 	private static final boolean _X_XSS_PROTECTION = GetterUtil.getBoolean(
 		PropsUtil.get(PropsKeys.HTTP_HEADER_SECURE_X_XSS_PROTECTION), true);
 
-	private static final KeyValuePair[] _xFrameOptionKVPs;
+	private static final KeyValuePair[] _xFrameOptions;
 
 	static {
-		Properties properties = new SortedProperties(
-			new Comparator<String>() {
-
-				@Override
-				public int compare(String key1, String key2) {
-					return GetterUtil.getIntegerStrict(key1) -
-						GetterUtil.getIntegerStrict(key2);
-				}
-
-			},
+		Properties properties =
 			PropsUtil.getProperties(
 				PropsKeys.HTTP_HEADER_SECURE_X_FRAME_OPTIONS +
-					StringPool.PERIOD,
-				true));
+					StringPool.PERIOD, true);
 
-		List<KeyValuePair> xFrameOptionKVPs = new ArrayList<KeyValuePair>(
+		List<KeyValuePair> keyValuePairs = new ArrayList<KeyValuePair>(
 			properties.size());
 
 		for (Map.Entry<Object, Object> entry : properties.entrySet()) {
-			String propertyValue = (String)entry.getValue();
+			String key = (String)entry.getKey();
 
-			String[] propertyValueParts = StringUtil.split(
-				propertyValue, CharPool.COMMA);
+			String value = (String)entry.getValue();
 
-			if (propertyValueParts.length != 2) {
+			keyValuePairs.add(new KeyValuePair(key, value));
+		}
+
+		Collections.sort(keyValuePairs, new Comparator<KeyValuePair>() {
+
+			@Override
+			public int compare(
+				KeyValuePair keyValuePair1, KeyValuePair keyValuePair2) {
+
+				int key1 = GetterUtil.getIntegerStrict(keyValuePair1.getKey());
+
+				int key2 = GetterUtil.getIntegerStrict(keyValuePair2.getKey());
+
+				return key1 - key2;
+			}
+
+		});
+
+		List<KeyValuePair> xFrameOptions = new ArrayList<KeyValuePair>(
+			keyValuePairs.size());
+
+		for (KeyValuePair keyValuePair : keyValuePairs) {
+			String xFrameOptionLine = keyValuePair.getValue();
+
+			String[] xFrameOption = StringUtil.split(
+				xFrameOptionLine, CharPool.COMMA);
+
+			if (xFrameOption.length != 2) {
 				continue;
 			}
 
-			String url = StringUtil.trim(propertyValueParts[0]);
+			String url = StringUtil.trim(xFrameOption[0]);
 
 			if (Validator.isNull(url)) {
 				continue;
 			}
 
-			String value = StringUtil.trim(propertyValueParts[1]);
+			String value = StringUtil.trim(xFrameOption[1]);
 
 			if (Validator.isNull(value)) {
 				continue;
 			}
 
-			KeyValuePair x = new KeyValuePair(url, value);
-
-			xFrameOptionKVPs.add(x);
+			xFrameOptions.add(new KeyValuePair(url, value));
 		}
 
-		_xFrameOptionKVPs = xFrameOptionKVPs.toArray(
-			new KeyValuePair[xFrameOptionKVPs.size()]);
+		_xFrameOptions = xFrameOptions.toArray(
+			new KeyValuePair[xFrameOptions.size()]);
 
-		if (_xFrameOptionKVPs.length == 0) {
+		if (_xFrameOptions.length == 0) {
 			_X_FRAME_OPTIONS = false;
 		}
 		else {

@@ -756,8 +756,9 @@ public class DDMXSDImpl implements DDMXSD {
 			fieldStructure.get("readOnly"));
 
 		if ((fieldReadOnly && Validator.isNotNull(mode) &&
-			 mode.equalsIgnoreCase(
-				DDMTemplateConstants.TEMPLATE_MODE_EDIT)) || readOnly) {
+			 StringUtil.equalsIgnoreCase(
+				mode, DDMTemplateConstants.TEMPLATE_MODE_EDIT)) ||
+			readOnly) {
 
 			fieldNamespace = _DEFAULT_READ_ONLY_NAMESPACE;
 

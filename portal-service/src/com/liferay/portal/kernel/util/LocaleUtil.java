@@ -203,7 +203,7 @@ public class LocaleUtil {
 		String languageId1 = _toLanguageId(locale1);
 		String languageId2 = _toLanguageId(locale2);
 
-		return languageId1.equalsIgnoreCase(languageId2);
+		return StringUtil.equalsIgnoreCase(languageId1, languageId2);
 	}
 
 	private Locale _fromLanguageId(String languageId, boolean validate) {

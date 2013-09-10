@@ -108,7 +108,7 @@ portletURL.setParameter("keywords", keywords);
 
 			String title = wikiPage.getTitle();
 
-			if (title.equalsIgnoreCase(keywords)) {
+			if (StringUtil.equalsIgnoreCase(title, keywords)) {
 				createNewPage = false;
 			}
 

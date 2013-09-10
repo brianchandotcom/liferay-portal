@@ -148,7 +148,7 @@ if (fileEntryTypeId >= 0) {
 		orderByCol = "modified";
 	}
 
-	Sort sort = new Sort(orderByCol, !orderByType.equalsIgnoreCase("asc"));
+	Sort sort = new Sort(orderByCol, !StringUtil.equalsIgnoreCase(orderByType, "asc"));
 
 	searchContext.setSorts(sort);
 

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.bean.BeanLocator;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.spring.context.ArrayApplicationContext;
 import com.liferay.portal.util.ClassLoaderUtil;
 import com.liferay.portal.util.PropsUtil;
@@ -60,7 +61,9 @@ public class SpringUtil {
 	}
 
 	private static void _loadContext(List<String> configLocations) {
-		if (PropsValues.PERSISTENCE_PROVIDER.equalsIgnoreCase("jpa")) {
+		if (StringUtil.equalsIgnoreCase(
+				PropsValues.PERSISTENCE_PROVIDER, "jpa")) {
+
 			configLocations.remove("META-INF/hibernate-spring.xml");
 		}
 		else {

@@ -180,7 +180,7 @@ public class AssetPublisherPortletDataHandler
 					AssetVocabulary.class.getName(), rootElement);
 			}
 			else if (name.startsWith("queryName") &&
-					 value.equalsIgnoreCase("assetCategories")) {
+					 StringUtil.equalsIgnoreCase(value, "assetCategories")) {
 
 				String index = name.substring(9);
 
@@ -346,7 +346,7 @@ public class AssetPublisherPortletDataHandler
 					AssetVocabulary.class, companyGroup.getGroupId());
 			}
 			else if (name.startsWith("queryName") &&
-					 value.equalsIgnoreCase("assetCategories")) {
+					 StringUtil.equalsIgnoreCase(value, "assetCategories")) {
 
 				String index = name.substring(9, name.length());
 

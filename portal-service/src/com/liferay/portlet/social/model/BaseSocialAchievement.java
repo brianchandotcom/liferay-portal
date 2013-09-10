@@ -134,13 +134,13 @@ public class BaseSocialAchievement implements SocialAchievement {
 	public void setCounterOwner(String counterOwner) {
 		_counterOwner = counterOwner;
 
-		if (counterOwner.equalsIgnoreCase("actor")) {
+		if (StringUtil.equalsIgnoreCase(counterOwner, "actor")) {
 			_ownerType = SocialActivityCounterConstants.TYPE_ACTOR;
 		}
-		else if (counterOwner.equalsIgnoreCase("asset")) {
+		else if (StringUtil.equalsIgnoreCase(counterOwner, "asset")) {
 			_ownerType = SocialActivityCounterConstants.TYPE_ASSET;
 		}
-		else if (counterOwner.equalsIgnoreCase("creator")) {
+		else if (StringUtil.equalsIgnoreCase(counterOwner, "creator")) {
 			_ownerType = SocialActivityCounterConstants.TYPE_CREATOR;
 		}
 	}

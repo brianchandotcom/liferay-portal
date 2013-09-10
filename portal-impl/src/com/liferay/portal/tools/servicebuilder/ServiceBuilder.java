@@ -4108,21 +4108,21 @@ public class ServiceBuilder {
 				sb.append(col.getDBName());
 				sb.append(" ");
 
-				if (colType.equalsIgnoreCase("boolean")) {
+				if (StringUtil.equalsIgnoreCase(colType, "boolean")) {
 					sb.append("BOOLEAN");
 				}
-				else if (colType.equalsIgnoreCase("double") ||
-						 colType.equalsIgnoreCase("float")) {
+				else if (StringUtil.equalsIgnoreCase(colType, "double") ||
+						 StringUtil.equalsIgnoreCase(colType, "float")) {
 
 					sb.append("DOUBLE");
 				}
 				else if (colType.equals("int") ||
 						 colType.equals("Integer") ||
-						 colType.equalsIgnoreCase("short")) {
+						 StringUtil.equalsIgnoreCase(colType, "short")) {
 
 					sb.append("INTEGER");
 				}
-				else if (colType.equalsIgnoreCase("long")) {
+				else if (StringUtil.equalsIgnoreCase(colType, "long")) {
 					sb.append("LONG");
 				}
 				else if (colType.equals("String")) {
@@ -4221,21 +4221,21 @@ public class ServiceBuilder {
 			sb.append(col.getDBName());
 			sb.append(" ");
 
-			if (colType.equalsIgnoreCase("boolean")) {
+			if (StringUtil.equalsIgnoreCase(colType, "boolean")) {
 				sb.append("BOOLEAN");
 			}
-			else if (colType.equalsIgnoreCase("double") ||
-					 colType.equalsIgnoreCase("float")) {
+			else if (StringUtil.equalsIgnoreCase(colType, "double") ||
+					 StringUtil.equalsIgnoreCase(colType, "float")) {
 
 				sb.append("DOUBLE");
 			}
 			else if (colType.equals("int") ||
 					 colType.equals("Integer") ||
-					 colType.equalsIgnoreCase("short")) {
+					 StringUtil.equalsIgnoreCase(colType, "short")) {
 
 				sb.append("INTEGER");
 			}
-			else if (colType.equalsIgnoreCase("long")) {
+			else if (StringUtil.equalsIgnoreCase(colType, "long")) {
 				sb.append("LONG");
 			}
 			else if (colType.equals("Blob")) {

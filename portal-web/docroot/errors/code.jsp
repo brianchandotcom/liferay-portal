@@ -24,6 +24,7 @@
 <%@ page import="com.liferay.portal.kernel.log.LogFactoryUtil" %>
 <%@ page import="com.liferay.portal.kernel.servlet.HttpHeaders" %>
 <%@ page import="com.liferay.portal.kernel.util.JavaConstants" %>
+<%@ page import="com.liferay.portal.kernel.util.StringUtil" %>
 <%@ page import="com.liferay.portal.model.LayoutSet" %>
 <%@ page import="com.liferay.portal.util.PortalUtil" %>
 <%@ page import="com.liferay.portal.util.WebKeys" %>
@@ -55,7 +56,7 @@ String xRequestWith = request.getHeader(HttpHeaders.X_REQUESTED_WITH);
 <html>
 
 <c:choose>
-	<c:when test="<%= !HttpHeaders.XML_HTTP_REQUEST.equalsIgnoreCase(xRequestWith) %>">
+	<c:when test="<%= !StringUtil.equalsIgnoreCase(HttpHeaders.XML_HTTP_REQUEST, xRequestWith) %>">
 
 		<%
 		String redirect = null;

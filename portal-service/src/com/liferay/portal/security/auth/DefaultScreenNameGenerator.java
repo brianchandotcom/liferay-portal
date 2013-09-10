@@ -74,7 +74,7 @@ public class DefaultScreenNameGenerator implements ScreenNameGenerator {
 			StringPool.NEW_LINE, _ADMIN_RESERVED_SCREEN_NAMES);
 
 		for (String reservedScreenName : reservedScreenNames) {
-			if (screenName.equalsIgnoreCase(reservedScreenName)) {
+			if (StringUtil.equalsIgnoreCase(screenName, reservedScreenName)) {
 				return getUnusedScreenName(companyId, screenName);
 			}
 		}

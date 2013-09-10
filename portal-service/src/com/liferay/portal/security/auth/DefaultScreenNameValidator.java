@@ -15,6 +15,7 @@
 package com.liferay.portal.security.auth;
 
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 /**
@@ -29,8 +30,8 @@ public class DefaultScreenNameValidator implements ScreenNameValidator {
 	@Override
 	public boolean validate(long companyId, String screenName) {
 		if (Validator.isEmailAddress(screenName) ||
-			screenName.equalsIgnoreCase(CYRUS) ||
-			screenName.equalsIgnoreCase(POSTFIX) ||
+			StringUtil.equalsIgnoreCase(screenName, CYRUS) ||
+			StringUtil.equalsIgnoreCase(screenName, POSTFIX) ||
 			(screenName.indexOf(CharPool.SLASH) != -1) ||
 			(screenName.indexOf(CharPool.UNDERLINE) != -1)) {
 

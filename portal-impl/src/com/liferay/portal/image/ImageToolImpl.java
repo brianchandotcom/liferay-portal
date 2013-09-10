@@ -178,7 +178,9 @@ public class ImageToolImpl implements ImageTool {
 
 			String[] output = imageMagick.identify(imOperation.getCmdArgs());
 
-			if ((output.length == 1) && output[0].equalsIgnoreCase("CMYK")) {
+			if ((output.length == 1) &&
+				StringUtil.equalsIgnoreCase(output[0], "CMYK")) {
+
 				if (_log.isInfoEnabled()) {
 					_log.info("The image is in the CMYK colorspace");
 				}

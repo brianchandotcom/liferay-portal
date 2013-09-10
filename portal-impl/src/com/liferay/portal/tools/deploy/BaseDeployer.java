@@ -1970,13 +1970,13 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 
 			// LEP-6415
 
-			if (shortFileName.equalsIgnoreCase("mule-config.xml")) {
+			if (StringUtil.equalsIgnoreCase(shortFileName, "mule-config.xml")) {
 				continue;
 			}
 
 			String ext = GetterUtil.getString(FileUtil.getExtension(fileName));
 
-			if (!ext.equalsIgnoreCase("xml")) {
+			if (!StringUtil.equalsIgnoreCase(ext, "xml")) {
 				continue;
 			}
 

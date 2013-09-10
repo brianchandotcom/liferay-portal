@@ -70,7 +70,9 @@ public class AssetEntryQuery {
 	}
 
 	public static String checkOrderByType(String orderByType) {
-		if ((orderByType == null) || orderByType.equalsIgnoreCase("DESC")) {
+		if ((orderByType == null) ||
+			StringUtil.equalsIgnoreCase(orderByType, "DESC")) {
+
 			return "DESC";
 		}
 		else {

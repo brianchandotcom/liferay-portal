@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.dao.jdbc;
 
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.sql.Date;
 import java.sql.ResultSet;
@@ -50,7 +51,7 @@ public class SmartResultSet {
 		for (int i = 1; i <= _columnCount; ++i) {
 			String availableName = _metaData.getColumnName(i);
 
-			if (availableName.equalsIgnoreCase(columnName)) {
+			if (StringUtil.equalsIgnoreCase(availableName, columnName)) {
 				_columnIndexCache.put(columnName, i);
 
 				return i;
@@ -67,7 +68,7 @@ public class SmartResultSet {
 			for (int i = 1; i <= _columnCount; ++i) {
 				String availableName = _metaData.getColumnName(i);
 
-				if (availableName.equalsIgnoreCase(shortName)) {
+				if (StringUtil.equalsIgnoreCase(availableName, shortName)) {
 					_columnIndexCache.put(columnName, i);
 
 					return i;

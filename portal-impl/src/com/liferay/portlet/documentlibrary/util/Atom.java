@@ -15,6 +15,7 @@
 package com.liferay.portlet.documentlibrary.util;
 
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
 import java.io.RandomAccessFile;
@@ -98,20 +99,20 @@ public class Atom {
 	}
 
 	public boolean isFTYP() {
-		return _type.equalsIgnoreCase(FTYP);
+		return StringUtil.equalsIgnoreCase(_type, FTYP);
 	}
 
 	public boolean isMDAT() {
-		return _type.equalsIgnoreCase(MDAT);
+		return StringUtil.equalsIgnoreCase(_type, MDAT);
 	}
 
 	public boolean isMOOV() {
-		return _type.equalsIgnoreCase(MOOV);
+		return StringUtil.equalsIgnoreCase(_type, MOOV);
 	}
 
 	public boolean isTopLevelAtom() {
 		for (String topLevelAtom : TOP_LEVEL_ATOMS) {
-			if (_type.equalsIgnoreCase(topLevelAtom)) {
+			if (StringUtil.equalsIgnoreCase(_type, topLevelAtom)) {
 				return true;
 			}
 		}
@@ -124,10 +125,10 @@ public class Atom {
 			String type = new String(
 				ArrayUtil.clone(_buffer, index, index + 4));
 
-			if (type.equalsIgnoreCase(Atom.STCO)) {
+			if (StringUtil.equalsIgnoreCase(type, Atom.STCO)) {
 				index += patchStcoAtom(index) - 4;
 			}
-			else if (type.equalsIgnoreCase(Atom.CO64)) {
+			else if (StringUtil.equalsIgnoreCase(type, Atom.CO64)) {
 				index += patchCo64Atom(index) - 4;
 			}
 		}
@@ -162,7 +163,7 @@ public class Atom {
 	protected boolean hasCompressedMoovAtom() {
 		String type = new String(ArrayUtil.clone(_buffer, 12, 15));
 
-		if (type.equalsIgnoreCase(Atom.CMOV)) {
+		if (StringUtil.equalsIgnoreCase(type, Atom.CMOV)) {
 			return true;
 		}
 		else {

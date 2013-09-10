@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.xml.QName;
@@ -276,8 +277,8 @@ public class PortletContainerUtil {
 			PropsUtil.get(PropsKeys.PORTLET_CONTAINER_RESTRICT));
 
 	private static final boolean _PORTLET_EVENT_DISTRIBUTION_LAYOUT_SET =
-		!PropsUtil.get(PropsKeys.PORTLET_EVENT_DISTRIBUTION).equalsIgnoreCase(
-			"layout");
+		!StringUtil.equalsIgnoreCase(
+			PropsUtil.get(PropsKeys.PORTLET_EVENT_DISTRIBUTION), "layout");
 
 	private static PortletContainer _portletContainer;
 

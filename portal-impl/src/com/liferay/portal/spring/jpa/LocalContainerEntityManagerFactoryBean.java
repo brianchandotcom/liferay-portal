@@ -16,6 +16,7 @@ package com.liferay.portal.spring.jpa;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
 
@@ -89,8 +90,8 @@ public class LocalContainerEntityManagerFactoryBean
 
 		String databasePlatform = PropsValues.JPA_DATABASE_PLATFORM;
 
-		if (provider.equalsIgnoreCase("eclipselink") ||
-			provider.equalsIgnoreCase("toplink")) {
+		if (StringUtil.equalsIgnoreCase(provider, "eclipselink") ||
+			StringUtil.equalsIgnoreCase(provider, "toplink")) {
 
 			if (databasePlatform == null) {
 				databasePlatform = getDatabasePlatform(database);
@@ -132,7 +133,9 @@ public class LocalContainerEntityManagerFactoryBean
 
 		boolean eclipseLink = false;
 
-		if (PropsValues.JPA_PROVIDER.equalsIgnoreCase("eclipselink")) {
+		if (StringUtil.equalsIgnoreCase(
+				PropsValues.JPA_PROVIDER, "eclipselink")) {
+
 			packageName = "org.eclipse.persistence.platform.database.";
 
 			eclipseLink = true;
@@ -189,16 +192,16 @@ public class LocalContainerEntityManagerFactoryBean
 	}
 
 	protected Class<?> getProviderClass(String provider) throws Exception {
-		if (provider.equalsIgnoreCase("eclipselink")) {
+		if (StringUtil.equalsIgnoreCase(provider, "eclipselink")) {
 			return EclipseLinkJpaVendorAdapter.class;
 		}
-		else if (provider.equalsIgnoreCase("hibernate")) {
+		else if (StringUtil.equalsIgnoreCase(provider, "hibernate")) {
 			return HibernateJpaVendorAdapter.class;
 		}
-		else if (provider.equalsIgnoreCase("openjpa")) {
+		else if (StringUtil.equalsIgnoreCase(provider, "openjpa")) {
 			return OpenJpaVendorAdapter.class;
 		}
-		else if (provider.equalsIgnoreCase("toplink")) {
+		else if (StringUtil.equalsIgnoreCase(provider, "toplink")) {
 			return TopLinkJpaVendorAdapter.class;
 		}
 

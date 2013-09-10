@@ -259,27 +259,27 @@ public class MapUtil {
 			else if (kvp.length == 3) {
 				String type = kvp[2];
 
-				if (type.equalsIgnoreCase("boolean") ||
+				if (StringUtil.equalsIgnoreCase(type, "boolean") ||
 					type.equals(Boolean.class.getName())) {
 
 					map.put(kvp[0], Boolean.valueOf(kvp[1]));
 				}
-				else if (type.equalsIgnoreCase("double") ||
+				else if (StringUtil.equalsIgnoreCase(type, "double") ||
 						 type.equals(Double.class.getName())) {
 
 					map.put(kvp[0], new Double(kvp[1]));
 				}
-				else if (type.equalsIgnoreCase("int") ||
+				else if (StringUtil.equalsIgnoreCase(type, "int") ||
 						 type.equals(Integer.class.getName())) {
 
 					map.put(kvp[0], new Integer(kvp[1]));
 				}
-				else if (type.equalsIgnoreCase("long") ||
+				else if (StringUtil.equalsIgnoreCase(type, "long") ||
 						 type.equals(Long.class.getName())) {
 
 					map.put(kvp[0], new Long(kvp[1]));
 				}
-				else if (type.equalsIgnoreCase("short") ||
+				else if (StringUtil.equalsIgnoreCase(type, "short") ||
 						 type.equals(Short.class.getName())) {
 
 					map.put(kvp[0], new Short(kvp[1]));

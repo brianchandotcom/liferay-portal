@@ -2226,7 +2226,7 @@ public class PortletImpl extends PortletBaseImpl {
 		}
 
 		for (int i = 0; i < _rolesArray.length; i++) {
-			if (_rolesArray[i].equalsIgnoreCase(roleName)) {
+			if (StringUtil.equalsIgnoreCase(_rolesArray[i], roleName)) {
 				return true;
 			}
 		}

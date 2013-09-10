@@ -170,9 +170,7 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 			PortletDataContext portletDataContext, T stagedModel)
 		throws Exception {
 
-		throw new Exception(
-			"No implementation found for processing a referenced global " +
-				"entity");
+		throw new UnsupportedOperationException();
 	}
 
 	protected boolean isExportable(

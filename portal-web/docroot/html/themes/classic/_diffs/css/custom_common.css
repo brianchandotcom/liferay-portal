@@ -2,8 +2,8 @@
 @import "compass/css3/user-interface";
 @import "mixins";
 
-@import "aui/font-awesome/scss/mixins";
-@import "aui/font-awesome/scss/variables";
+@import "aui/alloy-font-awesome/scss/variables";
+@import "aui/alloy-font-awesome/scss/mixins-alloy";
 
 @import url(custom_responsive.css);
 

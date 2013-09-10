@@ -65,10 +65,12 @@ portletURL.setParameter("recordSetId", String.valueOf(recordSet.getRecordSetId()
 		headerNames.add("author");
 		headerNames.add(StringPool.BLANK);
 	}
+
+	String name = HtmlUtil.escape(ddmStructure.getName(locale));
 	%>
 
 	<liferay-ui:search-container
-		searchContainer='<%= new SearchContainer(renderRequest, new DisplayTerms(request), null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, portletURL, headerNames, LanguageUtil.format(pageContext, "no-x-records-were-found", ddmStructure.getName(locale))) %>'
+		searchContainer='<%= new SearchContainer(renderRequest, new DisplayTerms(request), null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, portletURL, headerNames, LanguageUtil.format(pageContext, "no-x-records-were-found", name)) %>'
 	>
 
 		<aui:nav-bar>
@@ -81,7 +83,7 @@ portletURL.setParameter("recordSetId", String.valueOf(recordSet.getRecordSetId()
 						<portlet:param name="formDDMTemplateId" value="<%= String.valueOf(formDDMTemplateId) %>" />
 					</portlet:renderURL>
 
-					<aui:nav-item href="<%= addRecordURL %>" iconClass="icon-plus" label='<%= LanguageUtil.format(pageContext, "add-x", ddmStructure.getName(locale)) %>' />
+					<aui:nav-item href="<%= addRecordURL %>" iconClass="icon-plus" label='<%= LanguageUtil.format(pageContext, "add-x", name) %>' />
 				</c:if>
 			</aui:nav>
 

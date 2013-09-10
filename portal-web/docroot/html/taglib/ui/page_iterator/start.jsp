@@ -232,7 +232,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 
 		<ul class="pager lfr-pagination-buttons">
 			<c:if test='<%= type.equals("approximate") || type.equals("more") || type.equals("regular") %>'>
-				<li class="<%= (cur != 1) ? "" : "disabled" %>">
+				<li class="<%= (cur != 1) ? "" : "disabled" %> first">
 					<a href="<%= (cur != 1) ? _getHREF(formName, namespace + curParam, 1, jsCall, url, urlAnchor) : "javascript:;" %>" target="<%= target %>">
 						&larr; <liferay-ui:message key="first" />
 					</a>
@@ -259,7 +259,7 @@ NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
 			</li>
 
 			<c:if test='<%= type.equals("regular") %>'>
-				<li class="<%= (cur != pages) ? "" : "disabled" %>">
+				<li class="<%= (cur != pages) ? "" : "disabled" %> last">
 					<a href="<%= (cur != pages) ? _getHREF(formName, namespace + curParam, pages, jsCall, url, urlAnchor) : "javascript:;" %>" target="<%= target %>">
 						<liferay-ui:message key="last" /> &rarr;
 					</a>

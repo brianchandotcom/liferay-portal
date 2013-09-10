@@ -1,3 +1,6 @@
+@import "compass";
+@import "mixins";
+
 .taglib-search-iterator {
 	border-collapse: collapse;
 	width: 100%;
@@ -44,19 +47,70 @@
 	.lfr-pagination-buttons {
 		float: right;
 		margin: 0;
+
+		@include respond-to(phone, tablet) {
+			@include respond-to(phone) {
+				float: none;
+				margin-top: 20px;
+				width: 100%;
+			}
+
+			@include respond-to(tablet) {
+				width: 50%;
+			}
+
+			> li {
+				display: inline-block;
+				float: left;
+				width: 50%;
+
+				&.first, &.last {
+					display: none;
+				}
+
+				> a {
+					line-height: 20px;
+					padding: 11px 19px;
+					width: 65%;
+				}
+			}
+		}
 	}
 
 	.lfr-pagination-config {
 		float: left;
-		line-height: 32px;
+		line-height: 46px;
+
+		@include respond-to(phone) {
+			float: none;
+
+			.current-page-menu {
+				display: block;
+
+				.btn {
+					display: block;
+				}
+			}
+		}
 
 		.lfr-pagination-delta-selector, .lfr-pagination-page-selector {
 			display: inline;
 		}
+
+		@include respond-to(phone, tablet) {
+			.lfr-pagination-delta-selector {
+				display: none;
+			}
+		}
 	}
 
 	.search-results {
-		line-height: 32px;
+		float: left;
+		line-height: 46px;
 		margin-left: 10px;
+
+		@include respond-to(phone, tablet) {
+			display: none;
+		}
 	}
 }

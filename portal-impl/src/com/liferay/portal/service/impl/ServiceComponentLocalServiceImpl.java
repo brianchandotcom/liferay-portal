@@ -293,10 +293,7 @@ public class ServiceComponentLocalServiceImpl
 						" database to build number " + buildNumber);
 			}
 
-			boolean tablesSQLChanged = !tablesSQL.equals(
-				previousServiceComponent.getTablesSQL());
-
-			if (tablesSQLChanged) {
+			if (!tablesSQL.equals(previousServiceComponent.getTablesSQL())) {
 				if (_log.isInfoEnabled()) {
 					_log.info("Upgrading database with tables.sql");
 				}
@@ -316,8 +313,8 @@ public class ServiceComponentLocalServiceImpl
 				db.runSQLTemplateString(sequencesSQL, true, false);
 			}
 
-			if (tablesSQLChanged ||
-				!indexesSQL.equals(previousServiceComponent.getIndexesSQL())) {
+			if (!indexesSQL.equals(previousServiceComponent.getIndexesSQL()) ||
+				!tablesSQL.equals(previousServiceComponent.getTablesSQL())) {
 
 				if (_log.isInfoEnabled()) {
 					_log.info("Upgrading database with indexes.sql");

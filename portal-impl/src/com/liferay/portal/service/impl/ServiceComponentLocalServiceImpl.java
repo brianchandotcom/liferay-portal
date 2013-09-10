@@ -313,7 +313,9 @@ public class ServiceComponentLocalServiceImpl
 				db.runSQLTemplateString(sequencesSQL, true, false);
 			}
 
-			if (!indexesSQL.equals(previousServiceComponent.getIndexesSQL())) {
+			if (!indexesSQL.equals(previousServiceComponent.getIndexesSQL()) ||
+				!tablesSQL.equals(previousServiceComponent.getTablesSQL())) {
+
 				if (_log.isInfoEnabled()) {
 					_log.info("Upgrading database with indexes.sql");
 				}

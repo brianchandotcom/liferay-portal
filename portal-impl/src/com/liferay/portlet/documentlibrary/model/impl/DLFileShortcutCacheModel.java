@@ -38,7 +38,7 @@ public class DLFileShortcutCacheModel implements CacheModel<DLFileShortcut>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(35);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -60,6 +60,8 @@ public class DLFileShortcutCacheModel implements CacheModel<DLFileShortcut>,
 		sb.append(repositoryId);
 		sb.append(", folderId=");
 		sb.append(folderId);
+		sb.append(", treePath=");
+		sb.append(treePath);
 		sb.append(", toFileEntryId=");
 		sb.append(toFileEntryId);
 		sb.append(", active=");
@@ -116,6 +118,14 @@ public class DLFileShortcutCacheModel implements CacheModel<DLFileShortcut>,
 
 		dlFileShortcutImpl.setRepositoryId(repositoryId);
 		dlFileShortcutImpl.setFolderId(folderId);
+
+		if (treePath == null) {
+			dlFileShortcutImpl.setTreePath(StringPool.BLANK);
+		}
+		else {
+			dlFileShortcutImpl.setTreePath(treePath);
+		}
+
 		dlFileShortcutImpl.setToFileEntryId(toFileEntryId);
 		dlFileShortcutImpl.setActive(active);
 		dlFileShortcutImpl.setStatus(status);
@@ -152,6 +162,7 @@ public class DLFileShortcutCacheModel implements CacheModel<DLFileShortcut>,
 		modifiedDate = objectInput.readLong();
 		repositoryId = objectInput.readLong();
 		folderId = objectInput.readLong();
+		treePath = objectInput.readUTF();
 		toFileEntryId = objectInput.readLong();
 		active = objectInput.readBoolean();
 		status = objectInput.readInt();
@@ -186,6 +197,14 @@ public class DLFileShortcutCacheModel implements CacheModel<DLFileShortcut>,
 		objectOutput.writeLong(modifiedDate);
 		objectOutput.writeLong(repositoryId);
 		objectOutput.writeLong(folderId);
+
+		if (treePath == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(treePath);
+		}
+
 		objectOutput.writeLong(toFileEntryId);
 		objectOutput.writeBoolean(active);
 		objectOutput.writeInt(status);
@@ -211,6 +230,7 @@ public class DLFileShortcutCacheModel implements CacheModel<DLFileShortcut>,
 	public long modifiedDate;
 	public long repositoryId;
 	public long folderId;
+	public String treePath;
 	public long toFileEntryId;
 	public boolean active;
 	public int status;

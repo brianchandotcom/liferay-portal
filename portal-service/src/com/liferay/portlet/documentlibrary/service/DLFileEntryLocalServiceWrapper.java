@@ -801,6 +801,13 @@ public class DLFileEntryLocalServiceWrapper implements DLFileEntryLocalService,
 	}
 
 	@Override
+	public void rebuildTree(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_dlFileEntryLocalService.rebuildTree(companyId);
+	}
+
+	@Override
 	public void revertFileEntry(long userId, long fileEntryId,
 		java.lang.String version,
 		com.liferay.portal.service.ServiceContext serviceContext)

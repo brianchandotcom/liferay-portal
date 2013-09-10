@@ -133,6 +133,8 @@ public class BookmarksFolderPersistenceTest {
 
 		newBookmarksFolder.setParentFolderId(ServiceTestUtil.nextLong());
 
+		newBookmarksFolder.setTreePath(ServiceTestUtil.randomString());
+
 		newBookmarksFolder.setName(ServiceTestUtil.randomString());
 
 		newBookmarksFolder.setDescription(ServiceTestUtil.randomString());
@@ -171,6 +173,8 @@ public class BookmarksFolderPersistenceTest {
 			newBookmarksFolder.getResourceBlockId());
 		Assert.assertEquals(existingBookmarksFolder.getParentFolderId(),
 			newBookmarksFolder.getParentFolderId());
+		Assert.assertEquals(existingBookmarksFolder.getTreePath(),
+			newBookmarksFolder.getTreePath());
 		Assert.assertEquals(existingBookmarksFolder.getName(),
 			newBookmarksFolder.getName());
 		Assert.assertEquals(existingBookmarksFolder.getDescription(),
@@ -235,8 +239,9 @@ public class BookmarksFolderPersistenceTest {
 			true, "folderId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "resourceBlockId", true, "parentFolderId",
-			true, "name", true, "description", true, "status", true,
-			"statusByUserId", true, "statusByUserName", true, "statusDate", true);
+			true, "treePath", true, "name", true, "description", true,
+			"status", true, "statusByUserId", true, "statusByUserName", true,
+			"statusDate", true);
 	}
 
 	@Test
@@ -390,6 +395,8 @@ public class BookmarksFolderPersistenceTest {
 		bookmarksFolder.setResourceBlockId(ServiceTestUtil.nextLong());
 
 		bookmarksFolder.setParentFolderId(ServiceTestUtil.nextLong());
+
+		bookmarksFolder.setTreePath(ServiceTestUtil.randomString());
 
 		bookmarksFolder.setName(ServiceTestUtil.randomString());
 

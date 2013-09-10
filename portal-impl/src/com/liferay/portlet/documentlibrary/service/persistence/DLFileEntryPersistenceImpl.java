@@ -11069,6 +11069,7 @@ public class DLFileEntryPersistenceImpl extends BasePersistenceImpl<DLFileEntry>
 		dlFileEntryImpl.setClassPK(dlFileEntry.getClassPK());
 		dlFileEntryImpl.setRepositoryId(dlFileEntry.getRepositoryId());
 		dlFileEntryImpl.setFolderId(dlFileEntry.getFolderId());
+		dlFileEntryImpl.setTreePath(dlFileEntry.getTreePath());
 		dlFileEntryImpl.setName(dlFileEntry.getName());
 		dlFileEntryImpl.setExtension(dlFileEntry.getExtension());
 		dlFileEntryImpl.setMimeType(dlFileEntry.getMimeType());

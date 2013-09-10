@@ -38,7 +38,7 @@ public class BookmarksFolderCacheModel implements CacheModel<BookmarksFolder>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(35);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -60,6 +60,8 @@ public class BookmarksFolderCacheModel implements CacheModel<BookmarksFolder>,
 		sb.append(resourceBlockId);
 		sb.append(", parentFolderId=");
 		sb.append(parentFolderId);
+		sb.append(", treePath=");
+		sb.append(treePath);
 		sb.append(", name=");
 		sb.append(name);
 		sb.append(", description=");
@@ -117,6 +119,13 @@ public class BookmarksFolderCacheModel implements CacheModel<BookmarksFolder>,
 		bookmarksFolderImpl.setResourceBlockId(resourceBlockId);
 		bookmarksFolderImpl.setParentFolderId(parentFolderId);
 
+		if (treePath == null) {
+			bookmarksFolderImpl.setTreePath(StringPool.BLANK);
+		}
+		else {
+			bookmarksFolderImpl.setTreePath(treePath);
+		}
+
 		if (name == null) {
 			bookmarksFolderImpl.setName(StringPool.BLANK);
 		}
@@ -165,6 +174,7 @@ public class BookmarksFolderCacheModel implements CacheModel<BookmarksFolder>,
 		modifiedDate = objectInput.readLong();
 		resourceBlockId = objectInput.readLong();
 		parentFolderId = objectInput.readLong();
+		treePath = objectInput.readUTF();
 		name = objectInput.readUTF();
 		description = objectInput.readUTF();
 		status = objectInput.readInt();
@@ -199,6 +209,13 @@ public class BookmarksFolderCacheModel implements CacheModel<BookmarksFolder>,
 		objectOutput.writeLong(modifiedDate);
 		objectOutput.writeLong(resourceBlockId);
 		objectOutput.writeLong(parentFolderId);
+
+		if (treePath == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(treePath);
+		}
 
 		if (name == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
@@ -237,6 +254,7 @@ public class BookmarksFolderCacheModel implements CacheModel<BookmarksFolder>,
 	public long modifiedDate;
 	public long resourceBlockId;
 	public long parentFolderId;
+	public String treePath;
 	public String name;
 	public String description;
 	public int status;

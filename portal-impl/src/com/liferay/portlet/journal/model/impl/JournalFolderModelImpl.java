@@ -76,6 +76,7 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "parentFolderId", Types.BIGINT },
+			{ "treePath", Types.VARCHAR },
 			{ "name", Types.VARCHAR },
 			{ "description", Types.VARCHAR },
 			{ "status", Types.INTEGER },
@@ -83,7 +84,7 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 			{ "statusByUserName", Types.VARCHAR },
 			{ "statusDate", Types.TIMESTAMP }
 		};
-	public static final String TABLE_SQL_CREATE = "create table JournalFolder (uuid_ VARCHAR(75) null,folderId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentFolderId LONG,name VARCHAR(100) null,description STRING null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table JournalFolder (uuid_ VARCHAR(75) null,folderId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentFolderId LONG,treePath STRING null,name VARCHAR(100) null,description STRING null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table JournalFolder";
 	public static final String ORDER_BY_JPQL = " ORDER BY journalFolder.parentFolderId ASC, journalFolder.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY JournalFolder.parentFolderId ASC, JournalFolder.name ASC";
@@ -128,6 +129,7 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setParentFolderId(soapModel.getParentFolderId());
+		model.setTreePath(soapModel.getTreePath());
 		model.setName(soapModel.getName());
 		model.setDescription(soapModel.getDescription());
 		model.setStatus(soapModel.getStatus());
@@ -207,6 +209,7 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("parentFolderId", getParentFolderId());
+		attributes.put("treePath", getTreePath());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
 		attributes.put("status", getStatus());
@@ -271,6 +274,12 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 
 		if (parentFolderId != null) {
 			setParentFolderId(parentFolderId);
+		}
+
+		String treePath = (String)attributes.get("treePath");
+
+		if (treePath != null) {
+			setTreePath(treePath);
 		}
 
 		String name = (String)attributes.get("name");
@@ -471,6 +480,22 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 
 	public long getOriginalParentFolderId() {
 		return _originalParentFolderId;
+	}
+
+	@JSON
+	@Override
+	public String getTreePath() {
+		if (_treePath == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _treePath;
+		}
+	}
+
+	@Override
+	public void setTreePath(String treePath) {
+		_treePath = treePath;
 	}
 
 	@JSON
@@ -755,6 +780,7 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 		journalFolderImpl.setCreateDate(getCreateDate());
 		journalFolderImpl.setModifiedDate(getModifiedDate());
 		journalFolderImpl.setParentFolderId(getParentFolderId());
+		journalFolderImpl.setTreePath(getTreePath());
 		journalFolderImpl.setName(getName());
 		journalFolderImpl.setDescription(getDescription());
 		journalFolderImpl.setStatus(getStatus());
@@ -896,6 +922,14 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 
 		journalFolderCacheModel.parentFolderId = getParentFolderId();
 
+		journalFolderCacheModel.treePath = getTreePath();
+
+		String treePath = journalFolderCacheModel.treePath;
+
+		if ((treePath != null) && (treePath.length() == 0)) {
+			journalFolderCacheModel.treePath = null;
+		}
+
 		journalFolderCacheModel.name = getName();
 
 		String name = journalFolderCacheModel.name;
@@ -938,7 +972,7 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -958,6 +992,8 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 		sb.append(getModifiedDate());
 		sb.append(", parentFolderId=");
 		sb.append(getParentFolderId());
+		sb.append(", treePath=");
+		sb.append(getTreePath());
 		sb.append(", name=");
 		sb.append(getName());
 		sb.append(", description=");
@@ -977,7 +1013,7 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(49);
+		StringBundler sb = new StringBundler(52);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portlet.journal.model.JournalFolder");
@@ -1018,6 +1054,10 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 		sb.append(
 			"<column><column-name>parentFolderId</column-name><column-value><![CDATA[");
 		sb.append(getParentFolderId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>treePath</column-name><column-value><![CDATA[");
+		sb.append(getTreePath());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>name</column-name><column-value><![CDATA[");
@@ -1070,6 +1110,7 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 	private long _parentFolderId;
 	private long _originalParentFolderId;
 	private boolean _setOriginalParentFolderId;
+	private String _treePath;
 	private String _name;
 	private String _originalName;
 	private String _description;

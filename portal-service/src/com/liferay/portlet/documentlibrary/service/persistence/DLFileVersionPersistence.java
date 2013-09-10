@@ -387,6 +387,144 @@ public interface DLFileVersionPersistence extends BasePersistence<DLFileVersion>
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Returns all the document library file versions where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @return the matching document library file versions
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileVersion> findByCompanyId(
+		long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns a range of all the document library file versions where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLFileVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param start the lower bound of the range of document library file versions
+	* @param end the upper bound of the range of document library file versions (not inclusive)
+	* @return the range of matching document library file versions
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileVersion> findByCompanyId(
+		long companyId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns an ordered range of all the document library file versions where companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.documentlibrary.model.impl.DLFileVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param start the lower bound of the range of document library file versions
+	* @param end the upper bound of the range of document library file versions (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching document library file versions
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileVersion> findByCompanyId(
+		long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first document library file version in the ordered set where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching document library file version
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException if a matching document library file version could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.documentlibrary.model.DLFileVersion findByCompanyId_First(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.documentlibrary.NoSuchFileVersionException;
+
+	/**
+	* Returns the first document library file version in the ordered set where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching document library file version, or <code>null</code> if a matching document library file version could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.documentlibrary.model.DLFileVersion fetchByCompanyId_First(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last document library file version in the ordered set where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching document library file version
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException if a matching document library file version could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.documentlibrary.model.DLFileVersion findByCompanyId_Last(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.documentlibrary.NoSuchFileVersionException;
+
+	/**
+	* Returns the last document library file version in the ordered set where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching document library file version, or <code>null</code> if a matching document library file version could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.documentlibrary.model.DLFileVersion fetchByCompanyId_Last(
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the document library file versions before and after the current document library file version in the ordered set where companyId = &#63;.
+	*
+	* @param fileVersionId the primary key of the current document library file version
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next document library file version
+	* @throws com.liferay.portlet.documentlibrary.NoSuchFileVersionException if a document library file version with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.portlet.documentlibrary.model.DLFileVersion[] findByCompanyId_PrevAndNext(
+		long fileVersionId, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portlet.documentlibrary.NoSuchFileVersionException;
+
+	/**
+	* Removes all the document library file versions where companyId = &#63; from the database.
+	*
+	* @param companyId the company ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeByCompanyId(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of document library file versions where companyId = &#63;.
+	*
+	* @param companyId the company ID
+	* @return the number of matching document library file versions
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByCompanyId(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Returns all the document library file versions where fileEntryId = &#63;.
 	*
 	* @param fileEntryId the file entry ID

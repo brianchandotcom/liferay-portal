@@ -63,6 +63,7 @@ public class DLFileShortcutLocalServiceImpl
 		fileShortcut.setCreateDate(serviceContext.getCreateDate(now));
 		fileShortcut.setModifiedDate(serviceContext.getModifiedDate(now));
 		fileShortcut.setFolderId(folderId);
+		fileShortcut.setTreePath(fileShortcut.buildTreePath());
 		fileShortcut.setToFileEntryId(toFileEntryId);
 		fileShortcut.setActive(true);
 		fileShortcut.setStatus(WorkflowConstants.STATUS_APPROVED);
@@ -285,6 +286,20 @@ public class DLFileShortcutLocalServiceImpl
 	}
 
 	@Override
+	public void rebuildTree(long companyId)
+		throws PortalException, SystemException {
+
+		List<DLFileShortcut> fileShortcuts =
+			dlFileShortcutPersistence.findByCompanyId(companyId);
+
+		for (DLFileShortcut fileShortcut : fileShortcuts) {
+			fileShortcut.setTreePath(fileShortcut.buildTreePath());
+
+			dlFileShortcutPersistence.update(fileShortcut);
+		}
+	}
+
+	@Override
 	public void updateAsset(
 			long userId, DLFileShortcut fileShortcut, long[] assetCategoryIds,
 			String[] assetTagNames)
@@ -320,6 +335,7 @@ public class DLFileShortcutLocalServiceImpl
 		fileShortcut.setModifiedDate(
 			serviceContext.getModifiedDate(new Date()));
 		fileShortcut.setFolderId(folderId);
+		fileShortcut.setTreePath(fileShortcut.buildTreePath());
 		fileShortcut.setToFileEntryId(toFileEntryId);
 
 		dlFileShortcutPersistence.update(fileShortcut);

@@ -40,6 +40,7 @@ public class JournalFolderSoap implements Serializable {
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setParentFolderId(model.getParentFolderId());
+		soapModel.setTreePath(model.getTreePath());
 		soapModel.setName(model.getName());
 		soapModel.setDescription(model.getDescription());
 		soapModel.setStatus(model.getStatus());
@@ -170,6 +171,14 @@ public class JournalFolderSoap implements Serializable {
 		_parentFolderId = parentFolderId;
 	}
 
+	public String getTreePath() {
+		return _treePath;
+	}
+
+	public void setTreePath(String treePath) {
+		_treePath = treePath;
+	}
+
 	public String getName() {
 		return _name;
 	}
@@ -227,6 +236,7 @@ public class JournalFolderSoap implements Serializable {
 	private Date _createDate;
 	private Date _modifiedDate;
 	private long _parentFolderId;
+	private String _treePath;
 	private String _name;
 	private String _description;
 	private int _status;

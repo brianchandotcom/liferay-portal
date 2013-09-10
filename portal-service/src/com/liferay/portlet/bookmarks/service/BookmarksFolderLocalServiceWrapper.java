@@ -539,6 +539,13 @@ public class BookmarksFolderLocalServiceWrapper
 	}
 
 	@Override
+	public void rebuildTree(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_bookmarksFolderLocalService.rebuildTree(companyId);
+	}
+
+	@Override
 	public void restoreFolderFromTrash(long userId, long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

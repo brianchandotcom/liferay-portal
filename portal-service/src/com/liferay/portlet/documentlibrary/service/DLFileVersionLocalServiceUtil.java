@@ -373,6 +373,12 @@ public class DLFileVersionLocalServiceUtil {
 		return getService().getLatestFileVersion(userId, fileEntryId);
 	}
 
+	public static void rebuildTree(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().rebuildTree(companyId);
+	}
+
 	public static DLFileVersionLocalService getService() {
 		if (_service == null) {
 			_service = (DLFileVersionLocalService)PortalBeanLocatorUtil.locate(DLFileVersionLocalService.class.getName());

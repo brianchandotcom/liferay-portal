@@ -78,6 +78,7 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 			{ "repositoryId", Types.BIGINT },
 			{ "mountPoint", Types.BOOLEAN },
 			{ "parentFolderId", Types.BIGINT },
+			{ "treePath", Types.VARCHAR },
 			{ "name", Types.VARCHAR },
 			{ "description", Types.VARCHAR },
 			{ "lastPostDate", Types.TIMESTAMP },
@@ -89,7 +90,7 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 			{ "statusByUserName", Types.VARCHAR },
 			{ "statusDate", Types.TIMESTAMP }
 		};
-	public static final String TABLE_SQL_CREATE = "create table DLFolder (uuid_ VARCHAR(75) null,folderId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,repositoryId LONG,mountPoint BOOLEAN,parentFolderId LONG,name VARCHAR(100) null,description STRING null,lastPostDate DATE null,defaultFileEntryTypeId LONG,hidden_ BOOLEAN,overrideFileEntryTypes BOOLEAN,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table DLFolder (uuid_ VARCHAR(75) null,folderId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,repositoryId LONG,mountPoint BOOLEAN,parentFolderId LONG,treePath STRING null,name VARCHAR(100) null,description STRING null,lastPostDate DATE null,defaultFileEntryTypeId LONG,hidden_ BOOLEAN,overrideFileEntryTypes BOOLEAN,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table DLFolder";
 	public static final String ORDER_BY_JPQL = " ORDER BY dlFolder.parentFolderId ASC, dlFolder.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY DLFolder.parentFolderId ASC, DLFolder.name ASC";
@@ -139,6 +140,7 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 		model.setRepositoryId(soapModel.getRepositoryId());
 		model.setMountPoint(soapModel.getMountPoint());
 		model.setParentFolderId(soapModel.getParentFolderId());
+		model.setTreePath(soapModel.getTreePath());
 		model.setName(soapModel.getName());
 		model.setDescription(soapModel.getDescription());
 		model.setLastPostDate(soapModel.getLastPostDate());
@@ -235,6 +237,7 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 		attributes.put("repositoryId", getRepositoryId());
 		attributes.put("mountPoint", getMountPoint());
 		attributes.put("parentFolderId", getParentFolderId());
+		attributes.put("treePath", getTreePath());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
 		attributes.put("lastPostDate", getLastPostDate());
@@ -315,6 +318,12 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 
 		if (parentFolderId != null) {
 			setParentFolderId(parentFolderId);
+		}
+
+		String treePath = (String)attributes.get("treePath");
+
+		if (treePath != null) {
+			setTreePath(treePath);
 		}
 
 		String name = (String)attributes.get("name");
@@ -592,6 +601,22 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 
 	public long getOriginalParentFolderId() {
 		return _originalParentFolderId;
+	}
+
+	@JSON
+	@Override
+	public String getTreePath() {
+		if (_treePath == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _treePath;
+		}
+	}
+
+	@Override
+	public void setTreePath(String treePath) {
+		_treePath = treePath;
 	}
 
 	@JSON
@@ -945,6 +970,7 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 		dlFolderImpl.setRepositoryId(getRepositoryId());
 		dlFolderImpl.setMountPoint(getMountPoint());
 		dlFolderImpl.setParentFolderId(getParentFolderId());
+		dlFolderImpl.setTreePath(getTreePath());
 		dlFolderImpl.setName(getName());
 		dlFolderImpl.setDescription(getDescription());
 		dlFolderImpl.setLastPostDate(getLastPostDate());
@@ -1106,6 +1132,14 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 
 		dlFolderCacheModel.parentFolderId = getParentFolderId();
 
+		dlFolderCacheModel.treePath = getTreePath();
+
+		String treePath = dlFolderCacheModel.treePath;
+
+		if ((treePath != null) && (treePath.length() == 0)) {
+			dlFolderCacheModel.treePath = null;
+		}
+
 		dlFolderCacheModel.name = getName();
 
 		String name = dlFolderCacheModel.name;
@@ -1163,7 +1197,7 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(43);
+		StringBundler sb = new StringBundler(45);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -1187,6 +1221,8 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 		sb.append(getMountPoint());
 		sb.append(", parentFolderId=");
 		sb.append(getParentFolderId());
+		sb.append(", treePath=");
+		sb.append(getTreePath());
 		sb.append(", name=");
 		sb.append(getName());
 		sb.append(", description=");
@@ -1214,7 +1250,7 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(67);
+		StringBundler sb = new StringBundler(70);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portlet.documentlibrary.model.DLFolder");
@@ -1263,6 +1299,10 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 		sb.append(
 			"<column><column-name>parentFolderId</column-name><column-value><![CDATA[");
 		sb.append(getParentFolderId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>treePath</column-name><column-value><![CDATA[");
+		sb.append(getTreePath());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>name</column-name><column-value><![CDATA[");
@@ -1337,6 +1377,7 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 	private long _parentFolderId;
 	private long _originalParentFolderId;
 	private boolean _setOriginalParentFolderId;
+	private String _treePath;
 	private String _name;
 	private String _originalName;
 	private String _description;

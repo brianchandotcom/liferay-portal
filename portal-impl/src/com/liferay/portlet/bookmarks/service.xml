@@ -28,6 +28,7 @@
 		<!-- Other fields -->
 
 		<column name="folderId" type="long" />
+		<column name="treePath" type="String" />
 		<column name="name" type="String" />
 		<column name="url" type="String" />
 		<column name="description" type="String" />
@@ -47,6 +48,9 @@
 
 		<!-- Finder methods -->
 
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId" />
+		</finder>
 		<finder name="G_F" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="folderId" arrayable-operator="OR" />
@@ -114,6 +118,7 @@
 		<!-- Other fields -->
 
 		<column name="parentFolderId" type="long" parent-container-model="true" />
+		<column name="treePath" type="String" />
 		<column name="name" type="String" />
 		<column name="description" type="String" />
 		<column name="status" type="int" />

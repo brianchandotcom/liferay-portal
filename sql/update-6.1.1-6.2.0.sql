@@ -2,6 +2,7 @@ alter table Address add uuid_ VARCHAR(75) null;
 
 update BlogsEntry set status = 2 where status = 9;
 
+alter table BookmarksEntry add treePath STRING null;
 alter table BookmarksEntry add status INTEGER;
 alter table BookmarksEntry add statusByUserId LONG;
 alter table BookmarksEntry add statusByUserName VARCHAR(75) null;
@@ -14,6 +15,7 @@ update BookmarksEntry set statusByUserId = userId;
 update BookmarksEntry set statusByUserName = userName;
 update BookmarksEntry set statusDate = modifiedDate;
 
+alter table BookmarksFolder add treePath STRING null;
 alter table BookmarksFolder add status INTEGER;
 alter table BookmarksFolder add statusByUserId LONG;
 alter table BookmarksFolder add statusByUserName VARCHAR(75) null;
@@ -318,6 +320,7 @@ alter table DLFileEntry drop column versionUserName;
 
 alter table DLFileEntry add classNameId LONG;
 alter table DLFileEntry add classPK LONG;
+alter table DLFileEntry add treePath STRING null;
 alter table DLFileEntry add manualCheckInRequired BOOLEAN;
 
 alter table DLFileRank add active_ BOOLEAN;
@@ -326,14 +329,17 @@ COMMIT_TRANSACTION;
 
 update DLFileRank set active_ = TRUE;
 
+alter table DLFileShortcut add treePath STRING null;
 alter table DLFileShortcut add active_ BOOLEAN;
 
 COMMIT_TRANSACTION;
 
 update DLFileShortcut set active_ = TRUE;
 
+alter table DLFileVersion add treePath STRING null;
 alter table DLFileVersion add checksum VARCHAR(75) null;
 
+alter table DLFolder add treePath STRING null;
 alter table DLFolder add hidden_ BOOLEAN;
 alter table DLFolder add status INTEGER;
 alter table DLFolder add statusByUserId LONG;
@@ -384,6 +390,7 @@ drop table Groups_Permissions;
 alter table Image drop column text_;
 
 alter table JournalArticle add folderId LONG;
+alter table JournalArticle add treePath STRING null;
 
 COMMIT_TRANSACTION;
 
@@ -399,6 +406,7 @@ create table JournalFolder (
 	createDate DATE null,
 	modifiedDate DATE null,
 	parentFolderId LONG,
+	treePath STRING null,
 	name VARCHAR(100) null,
 	description STRING null,
 	status INTEGER,

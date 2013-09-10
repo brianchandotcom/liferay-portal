@@ -471,6 +471,13 @@ public class DLFileShortcutLocalServiceWrapper
 	}
 
 	@Override
+	public void rebuildTree(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_dlFileShortcutLocalService.rebuildTree(companyId);
+	}
+
+	@Override
 	public void updateAsset(long userId,
 		com.liferay.portlet.documentlibrary.model.DLFileShortcut fileShortcut,
 		long[] assetCategoryIds, java.lang.String[] assetTagNames)

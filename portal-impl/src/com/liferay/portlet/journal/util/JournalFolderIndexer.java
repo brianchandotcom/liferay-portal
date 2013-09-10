@@ -120,6 +120,8 @@ public class JournalFolderIndexer extends BaseIndexer {
 		document.addKeyword(Field.FOLDER_ID, folder.getParentFolderId());
 		document.addText(Field.TITLE, folder.getName());
 
+		document.addKeyword("treePath", folder.getTreePath());
+
 		if (!folder.isInTrash() && folder.isInTrashContainer()) {
 			JournalFolder trashedFolder = folder.getTrashContainer();
 

@@ -77,6 +77,7 @@ public class BookmarksFolderModelImpl extends BaseModelImpl<BookmarksFolder>
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "resourceBlockId", Types.BIGINT },
 			{ "parentFolderId", Types.BIGINT },
+			{ "treePath", Types.VARCHAR },
 			{ "name", Types.VARCHAR },
 			{ "description", Types.VARCHAR },
 			{ "status", Types.INTEGER },
@@ -84,7 +85,7 @@ public class BookmarksFolderModelImpl extends BaseModelImpl<BookmarksFolder>
 			{ "statusByUserName", Types.VARCHAR },
 			{ "statusDate", Types.TIMESTAMP }
 		};
-	public static final String TABLE_SQL_CREATE = "create table BookmarksFolder (uuid_ VARCHAR(75) null,folderId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,resourceBlockId LONG,parentFolderId LONG,name VARCHAR(75) null,description STRING null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table BookmarksFolder (uuid_ VARCHAR(75) null,folderId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,resourceBlockId LONG,parentFolderId LONG,treePath STRING null,name VARCHAR(75) null,description STRING null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table BookmarksFolder";
 	public static final String ORDER_BY_JPQL = " ORDER BY bookmarksFolder.parentFolderId ASC, bookmarksFolder.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY BookmarksFolder.parentFolderId ASC, BookmarksFolder.name ASC";
@@ -131,6 +132,7 @@ public class BookmarksFolderModelImpl extends BaseModelImpl<BookmarksFolder>
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setResourceBlockId(soapModel.getResourceBlockId());
 		model.setParentFolderId(soapModel.getParentFolderId());
+		model.setTreePath(soapModel.getTreePath());
 		model.setName(soapModel.getName());
 		model.setDescription(soapModel.getDescription());
 		model.setStatus(soapModel.getStatus());
@@ -212,6 +214,7 @@ public class BookmarksFolderModelImpl extends BaseModelImpl<BookmarksFolder>
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("resourceBlockId", getResourceBlockId());
 		attributes.put("parentFolderId", getParentFolderId());
+		attributes.put("treePath", getTreePath());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
 		attributes.put("status", getStatus());
@@ -282,6 +285,12 @@ public class BookmarksFolderModelImpl extends BaseModelImpl<BookmarksFolder>
 
 		if (parentFolderId != null) {
 			setParentFolderId(parentFolderId);
+		}
+
+		String treePath = (String)attributes.get("treePath");
+
+		if (treePath != null) {
+			setTreePath(treePath);
 		}
 
 		String name = (String)attributes.get("name");
@@ -505,6 +514,22 @@ public class BookmarksFolderModelImpl extends BaseModelImpl<BookmarksFolder>
 
 	public long getOriginalParentFolderId() {
 		return _originalParentFolderId;
+	}
+
+	@JSON
+	@Override
+	public String getTreePath() {
+		if (_treePath == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _treePath;
+		}
+	}
+
+	@Override
+	public void setTreePath(String treePath) {
+		_treePath = treePath;
 	}
 
 	@JSON
@@ -783,6 +808,7 @@ public class BookmarksFolderModelImpl extends BaseModelImpl<BookmarksFolder>
 		bookmarksFolderImpl.setModifiedDate(getModifiedDate());
 		bookmarksFolderImpl.setResourceBlockId(getResourceBlockId());
 		bookmarksFolderImpl.setParentFolderId(getParentFolderId());
+		bookmarksFolderImpl.setTreePath(getTreePath());
 		bookmarksFolderImpl.setName(getName());
 		bookmarksFolderImpl.setDescription(getDescription());
 		bookmarksFolderImpl.setStatus(getStatus());
@@ -928,6 +954,14 @@ public class BookmarksFolderModelImpl extends BaseModelImpl<BookmarksFolder>
 
 		bookmarksFolderCacheModel.parentFolderId = getParentFolderId();
 
+		bookmarksFolderCacheModel.treePath = getTreePath();
+
+		String treePath = bookmarksFolderCacheModel.treePath;
+
+		if ((treePath != null) && (treePath.length() == 0)) {
+			bookmarksFolderCacheModel.treePath = null;
+		}
+
 		bookmarksFolderCacheModel.name = getName();
 
 		String name = bookmarksFolderCacheModel.name;
@@ -970,7 +1004,7 @@ public class BookmarksFolderModelImpl extends BaseModelImpl<BookmarksFolder>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(35);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -992,6 +1026,8 @@ public class BookmarksFolderModelImpl extends BaseModelImpl<BookmarksFolder>
 		sb.append(getResourceBlockId());
 		sb.append(", parentFolderId=");
 		sb.append(getParentFolderId());
+		sb.append(", treePath=");
+		sb.append(getTreePath());
 		sb.append(", name=");
 		sb.append(getName());
 		sb.append(", description=");
@@ -1011,7 +1047,7 @@ public class BookmarksFolderModelImpl extends BaseModelImpl<BookmarksFolder>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(52);
+		StringBundler sb = new StringBundler(55);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portlet.bookmarks.model.BookmarksFolder");
@@ -1056,6 +1092,10 @@ public class BookmarksFolderModelImpl extends BaseModelImpl<BookmarksFolder>
 		sb.append(
 			"<column><column-name>parentFolderId</column-name><column-value><![CDATA[");
 		sb.append(getParentFolderId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>treePath</column-name><column-value><![CDATA[");
+		sb.append(getTreePath());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>name</column-name><column-value><![CDATA[");
@@ -1111,6 +1151,7 @@ public class BookmarksFolderModelImpl extends BaseModelImpl<BookmarksFolder>
 	private long _parentFolderId;
 	private long _originalParentFolderId;
 	private boolean _setOriginalParentFolderId;
+	private String _treePath;
 	private String _name;
 	private String _description;
 	private int _status;

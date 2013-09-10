@@ -404,6 +404,13 @@ public class DLFileVersionLocalServiceWrapper
 			fileEntryId);
 	}
 
+	@Override
+	public void rebuildTree(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_dlFileVersionLocalService.rebuildTree(companyId);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

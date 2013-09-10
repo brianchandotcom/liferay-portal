@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.Repository;
@@ -38,6 +39,15 @@ import java.util.List;
 public class DLFolderImpl extends DLFolderBaseImpl {
 
 	public DLFolderImpl() {
+	}
+
+	@Override
+	public String buildTreePath() throws PortalException, SystemException {
+		StringBundler sb = new StringBundler();
+
+		buildTreePath(sb, this);
+
+		return sb.toString();
 	}
 
 	@Override
@@ -228,6 +238,20 @@ public class DLFolderImpl extends DLFolderBaseImpl {
 		}
 
 		return false;
+	}
+
+	protected void buildTreePath(StringBundler sb, DLFolder dlFolder)
+		throws PortalException, SystemException {
+
+		if (dlFolder == null) {
+			sb.append(StringPool.SLASH);
+		}
+		else {
+			buildTreePath(sb, dlFolder.getParentFolder());
+
+			sb.append(dlFolder.getFolderId());
+			sb.append(StringPool.SLASH);
+		}
 	}
 
 }

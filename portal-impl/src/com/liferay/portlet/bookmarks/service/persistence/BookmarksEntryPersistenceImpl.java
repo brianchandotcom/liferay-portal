@@ -1968,6 +1968,502 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "bookmarksEntry.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(bookmarksEntry.uuid IS NULL OR bookmarksEntry.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "bookmarksEntry.companyId = ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_COMPANYID =
+		new FinderPath(BookmarksEntryModelImpl.ENTITY_CACHE_ENABLED,
+			BookmarksEntryModelImpl.FINDER_CACHE_ENABLED,
+			BookmarksEntryImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByCompanyId",
+			new String[] {
+				Long.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID =
+		new FinderPath(BookmarksEntryModelImpl.ENTITY_CACHE_ENABLED,
+			BookmarksEntryModelImpl.FINDER_CACHE_ENABLED,
+			BookmarksEntryImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCompanyId",
+			new String[] { Long.class.getName() },
+			BookmarksEntryModelImpl.COMPANYID_COLUMN_BITMASK |
+			BookmarksEntryModelImpl.FOLDERID_COLUMN_BITMASK |
+			BookmarksEntryModelImpl.NAME_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_COMPANYID = new FinderPath(BookmarksEntryModelImpl.ENTITY_CACHE_ENABLED,
+			BookmarksEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCompanyId",
+			new String[] { Long.class.getName() });
+
+	/**
+	 * Returns all the bookmarks entries where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @return the matching bookmarks entries
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<BookmarksEntry> findByCompanyId(long companyId)
+		throws SystemException {
+		return findByCompanyId(companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			null);
+	}
+
+	/**
+	 * Returns a range of all the bookmarks entries where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.bookmarks.model.impl.BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of bookmarks entries
+	 * @param end the upper bound of the range of bookmarks entries (not inclusive)
+	 * @return the range of matching bookmarks entries
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<BookmarksEntry> findByCompanyId(long companyId, int start,
+		int end) throws SystemException {
+		return findByCompanyId(companyId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the bookmarks entries where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.bookmarks.model.impl.BookmarksEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of bookmarks entries
+	 * @param end the upper bound of the range of bookmarks entries (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching bookmarks entries
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<BookmarksEntry> findByCompanyId(long companyId, int start,
+		int end, OrderByComparator orderByComparator) throws SystemException {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID;
+			finderArgs = new Object[] { companyId };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_COMPANYID;
+			finderArgs = new Object[] { companyId, start, end, orderByComparator };
+		}
+
+		List<BookmarksEntry> list = (List<BookmarksEntry>)FinderCacheUtil.getResult(finderPath,
+				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (BookmarksEntry bookmarksEntry : list) {
+				if ((companyId != bookmarksEntry.getCompanyId())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(3 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_BOOKMARKSENTRY_WHERE);
+
+			query.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(BookmarksEntryModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(companyId);
+
+				if (!pagination) {
+					list = (List<BookmarksEntry>)QueryUtil.list(q,
+							getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = new UnmodifiableList<BookmarksEntry>(list);
+				}
+				else {
+					list = (List<BookmarksEntry>)QueryUtil.list(q,
+							getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first bookmarks entry in the ordered set where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching bookmarks entry
+	 * @throws com.liferay.portlet.bookmarks.NoSuchEntryException if a matching bookmarks entry could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public BookmarksEntry findByCompanyId_First(long companyId,
+		OrderByComparator orderByComparator)
+		throws NoSuchEntryException, SystemException {
+		BookmarksEntry bookmarksEntry = fetchByCompanyId_First(companyId,
+				orderByComparator);
+
+		if (bookmarksEntry != null) {
+			return bookmarksEntry;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("companyId=");
+		msg.append(companyId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchEntryException(msg.toString());
+	}
+
+	/**
+	 * Returns the first bookmarks entry in the ordered set where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching bookmarks entry, or <code>null</code> if a matching bookmarks entry could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public BookmarksEntry fetchByCompanyId_First(long companyId,
+		OrderByComparator orderByComparator) throws SystemException {
+		List<BookmarksEntry> list = findByCompanyId(companyId, 0, 1,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last bookmarks entry in the ordered set where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching bookmarks entry
+	 * @throws com.liferay.portlet.bookmarks.NoSuchEntryException if a matching bookmarks entry could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public BookmarksEntry findByCompanyId_Last(long companyId,
+		OrderByComparator orderByComparator)
+		throws NoSuchEntryException, SystemException {
+		BookmarksEntry bookmarksEntry = fetchByCompanyId_Last(companyId,
+				orderByComparator);
+
+		if (bookmarksEntry != null) {
+			return bookmarksEntry;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("companyId=");
+		msg.append(companyId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchEntryException(msg.toString());
+	}
+
+	/**
+	 * Returns the last bookmarks entry in the ordered set where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching bookmarks entry, or <code>null</code> if a matching bookmarks entry could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public BookmarksEntry fetchByCompanyId_Last(long companyId,
+		OrderByComparator orderByComparator) throws SystemException {
+		int count = countByCompanyId(companyId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<BookmarksEntry> list = findByCompanyId(companyId, count - 1,
+				count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the bookmarks entries before and after the current bookmarks entry in the ordered set where companyId = &#63;.
+	 *
+	 * @param entryId the primary key of the current bookmarks entry
+	 * @param companyId the company ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next bookmarks entry
+	 * @throws com.liferay.portlet.bookmarks.NoSuchEntryException if a bookmarks entry with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public BookmarksEntry[] findByCompanyId_PrevAndNext(long entryId,
+		long companyId, OrderByComparator orderByComparator)
+		throws NoSuchEntryException, SystemException {
+		BookmarksEntry bookmarksEntry = findByPrimaryKey(entryId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			BookmarksEntry[] array = new BookmarksEntryImpl[3];
+
+			array[0] = getByCompanyId_PrevAndNext(session, bookmarksEntry,
+					companyId, orderByComparator, true);
+
+			array[1] = bookmarksEntry;
+
+			array[2] = getByCompanyId_PrevAndNext(session, bookmarksEntry,
+					companyId, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected BookmarksEntry getByCompanyId_PrevAndNext(Session session,
+		BookmarksEntry bookmarksEntry, long companyId,
+		OrderByComparator orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_BOOKMARKSENTRY_WHERE);
+
+		query.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(BookmarksEntryModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(companyId);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(bookmarksEntry);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<BookmarksEntry> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the bookmarks entries where companyId = &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void removeByCompanyId(long companyId) throws SystemException {
+		for (BookmarksEntry bookmarksEntry : findByCompanyId(companyId,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(bookmarksEntry);
+		}
+	}
+
+	/**
+	 * Returns the number of bookmarks entries where companyId = &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @return the number of matching bookmarks entries
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public int countByCompanyId(long companyId) throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_COMPANYID;
+
+		Object[] finderArgs = new Object[] { companyId };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_BOOKMARKSENTRY_WHERE);
+
+			query.append(_FINDER_COLUMN_COMPANYID_COMPANYID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(companyId);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_COMPANYID_COMPANYID_2 = "bookmarksEntry.companyId = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_F = new FinderPath(BookmarksEntryModelImpl.ENTITY_CACHE_ENABLED,
 			BookmarksEntryModelImpl.FINDER_CACHE_ENABLED,
 			BookmarksEntryImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
@@ -9921,6 +10417,25 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 			}
 
 			if ((bookmarksEntryModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						bookmarksEntryModelImpl.getOriginalCompanyId()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
+					args);
+
+				args = new Object[] { bookmarksEntryModelImpl.getCompanyId() };
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
+					args);
+			}
+
+			if ((bookmarksEntryModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_F.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						bookmarksEntryModelImpl.getOriginalGroupId(),
@@ -10064,6 +10579,7 @@ public class BookmarksEntryPersistenceImpl extends BasePersistenceImpl<Bookmarks
 		bookmarksEntryImpl.setModifiedDate(bookmarksEntry.getModifiedDate());
 		bookmarksEntryImpl.setResourceBlockId(bookmarksEntry.getResourceBlockId());
 		bookmarksEntryImpl.setFolderId(bookmarksEntry.getFolderId());
+		bookmarksEntryImpl.setTreePath(bookmarksEntry.getTreePath());
 		bookmarksEntryImpl.setName(bookmarksEntry.getName());
 		bookmarksEntryImpl.setUrl(bookmarksEntry.getUrl());
 		bookmarksEntryImpl.setDescription(bookmarksEntry.getDescription());

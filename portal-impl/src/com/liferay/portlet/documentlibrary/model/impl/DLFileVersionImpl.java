@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
@@ -39,6 +41,15 @@ import java.io.InputStream;
 public class DLFileVersionImpl extends DLFileVersionBaseImpl {
 
 	public DLFileVersionImpl() {
+	}
+
+	@Override
+	public String buildTreePath() throws PortalException, SystemException {
+		StringBundler sb = new StringBundler();
+
+		buildTreePath(sb, getFolder());
+
+		return sb.toString();
 	}
 
 	@Override
@@ -151,6 +162,20 @@ public class DLFileVersionImpl extends DLFileVersionBaseImpl {
 		_extraSettingsProperties = extraSettingsProperties;
 
 		super.setExtraSettings(_extraSettingsProperties.toString());
+	}
+
+	protected void buildTreePath(StringBundler sb, DLFolder dlFolder)
+		throws PortalException, SystemException {
+
+		if (dlFolder == null) {
+			sb.append(StringPool.SLASH);
+		}
+		else {
+			buildTreePath(sb, dlFolder.getParentFolder());
+
+			sb.append(dlFolder.getFolderId());
+			sb.append(StringPool.SLASH);
+		}
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(DLFileVersionImpl.class);

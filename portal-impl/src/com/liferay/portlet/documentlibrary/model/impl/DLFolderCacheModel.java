@@ -37,7 +37,7 @@ import java.util.Date;
 public class DLFolderCacheModel implements CacheModel<DLFolder>, Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(43);
+		StringBundler sb = new StringBundler(45);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -61,6 +61,8 @@ public class DLFolderCacheModel implements CacheModel<DLFolder>, Externalizable 
 		sb.append(mountPoint);
 		sb.append(", parentFolderId=");
 		sb.append(parentFolderId);
+		sb.append(", treePath=");
+		sb.append(treePath);
 		sb.append(", name=");
 		sb.append(name);
 		sb.append(", description=");
@@ -127,6 +129,13 @@ public class DLFolderCacheModel implements CacheModel<DLFolder>, Externalizable 
 		dlFolderImpl.setMountPoint(mountPoint);
 		dlFolderImpl.setParentFolderId(parentFolderId);
 
+		if (treePath == null) {
+			dlFolderImpl.setTreePath(StringPool.BLANK);
+		}
+		else {
+			dlFolderImpl.setTreePath(treePath);
+		}
+
 		if (name == null) {
 			dlFolderImpl.setName(StringPool.BLANK);
 		}
@@ -186,6 +195,7 @@ public class DLFolderCacheModel implements CacheModel<DLFolder>, Externalizable 
 		repositoryId = objectInput.readLong();
 		mountPoint = objectInput.readBoolean();
 		parentFolderId = objectInput.readLong();
+		treePath = objectInput.readUTF();
 		name = objectInput.readUTF();
 		description = objectInput.readUTF();
 		lastPostDate = objectInput.readLong();
@@ -225,6 +235,13 @@ public class DLFolderCacheModel implements CacheModel<DLFolder>, Externalizable 
 		objectOutput.writeLong(repositoryId);
 		objectOutput.writeBoolean(mountPoint);
 		objectOutput.writeLong(parentFolderId);
+
+		if (treePath == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(treePath);
+		}
 
 		if (name == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
@@ -268,6 +285,7 @@ public class DLFolderCacheModel implements CacheModel<DLFolder>, Externalizable 
 	public long repositoryId;
 	public boolean mountPoint;
 	public long parentFolderId;
+	public String treePath;
 	public String name;
 	public String description;
 	public long lastPostDate;

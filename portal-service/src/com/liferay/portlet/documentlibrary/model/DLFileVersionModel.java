@@ -237,6 +237,21 @@ public interface DLFileVersionModel extends BaseModel<DLFileVersion>,
 	public void setFolderId(long folderId);
 
 	/**
+	 * Returns the tree path of this document library file version.
+	 *
+	 * @return the tree path of this document library file version
+	 */
+	@AutoEscape
+	public String getTreePath();
+
+	/**
+	 * Sets the tree path of this document library file version.
+	 *
+	 * @param treePath the tree path of this document library file version
+	 */
+	public void setTreePath(String treePath);
+
+	/**
 	 * Returns the file entry ID of this document library file version.
 	 *
 	 * @return the file entry ID of this document library file version

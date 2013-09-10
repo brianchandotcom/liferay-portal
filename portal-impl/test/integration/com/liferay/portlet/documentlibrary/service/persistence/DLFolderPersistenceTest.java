@@ -135,6 +135,8 @@ public class DLFolderPersistenceTest {
 
 		newDLFolder.setParentFolderId(ServiceTestUtil.nextLong());
 
+		newDLFolder.setTreePath(ServiceTestUtil.randomString());
+
 		newDLFolder.setName(ServiceTestUtil.randomString());
 
 		newDLFolder.setDescription(ServiceTestUtil.randomString());
@@ -182,6 +184,8 @@ public class DLFolderPersistenceTest {
 			newDLFolder.getMountPoint());
 		Assert.assertEquals(existingDLFolder.getParentFolderId(),
 			newDLFolder.getParentFolderId());
+		Assert.assertEquals(existingDLFolder.getTreePath(),
+			newDLFolder.getTreePath());
 		Assert.assertEquals(existingDLFolder.getName(), newDLFolder.getName());
 		Assert.assertEquals(existingDLFolder.getDescription(),
 			newDLFolder.getDescription());
@@ -254,10 +258,10 @@ public class DLFolderPersistenceTest {
 			"folderId", true, "groupId", true, "companyId", true, "userId",
 			true, "userName", true, "createDate", true, "modifiedDate", true,
 			"repositoryId", true, "mountPoint", true, "parentFolderId", true,
-			"name", true, "description", true, "lastPostDate", true,
-			"defaultFileEntryTypeId", true, "hidden", true,
-			"overrideFileEntryTypes", true, "status", true, "statusByUserId",
-			true, "statusByUserName", true, "statusDate", true);
+			"treePath", true, "name", true, "description", true,
+			"lastPostDate", true, "defaultFileEntryTypeId", true, "hidden",
+			true, "overrideFileEntryTypes", true, "status", true,
+			"statusByUserId", true, "statusByUserName", true, "statusDate", true);
 	}
 
 	@Test
@@ -424,6 +428,8 @@ public class DLFolderPersistenceTest {
 		dlFolder.setMountPoint(ServiceTestUtil.randomBoolean());
 
 		dlFolder.setParentFolderId(ServiceTestUtil.nextLong());
+
+		dlFolder.setTreePath(ServiceTestUtil.randomString());
 
 		dlFolder.setName(ServiceTestUtil.randomString());
 

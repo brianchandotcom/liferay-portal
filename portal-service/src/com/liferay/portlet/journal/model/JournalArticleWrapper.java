@@ -61,6 +61,7 @@ public class JournalArticleWrapper implements JournalArticle,
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("folderId", getFolderId());
+		attributes.put("treePath", getTreePath());
 		attributes.put("classNameId", getClassNameId());
 		attributes.put("classPK", getClassPK());
 		attributes.put("articleId", getArticleId());
@@ -148,6 +149,12 @@ public class JournalArticleWrapper implements JournalArticle,
 
 		if (folderId != null) {
 			setFolderId(folderId);
+		}
+
+		String treePath = (String)attributes.get("treePath");
+
+		if (treePath != null) {
+			setTreePath(treePath);
 		}
 
 		Long classNameId = (Long)attributes.get("classNameId");
@@ -534,6 +541,26 @@ public class JournalArticleWrapper implements JournalArticle,
 	@Override
 	public void setFolderId(long folderId) {
 		_journalArticle.setFolderId(folderId);
+	}
+
+	/**
+	* Returns the tree path of this journal article.
+	*
+	* @return the tree path of this journal article
+	*/
+	@Override
+	public java.lang.String getTreePath() {
+		return _journalArticle.getTreePath();
+	}
+
+	/**
+	* Sets the tree path of this journal article.
+	*
+	* @param treePath the tree path of this journal article
+	*/
+	@Override
+	public void setTreePath(java.lang.String treePath) {
+		_journalArticle.setTreePath(treePath);
 	}
 
 	/**
@@ -1519,6 +1546,13 @@ public class JournalArticleWrapper implements JournalArticle,
 	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_journalArticle.persist();
+	}
+
+	@Override
+	public java.lang.String buildTreePath()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _journalArticle.buildTreePath();
 	}
 
 	@Override

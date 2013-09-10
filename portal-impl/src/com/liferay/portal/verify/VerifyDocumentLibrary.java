@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
+import com.liferay.portal.util.PortalInstances;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
@@ -45,6 +46,7 @@ import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.service.DLAppHelperLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFileShortcutLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryActionableDynamicQuery;
@@ -379,6 +381,7 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 		removeOrphanedDLFileEntries();
 		updateFileEntryAssets();
 		updateFolderAssets();
+		verifyTree();
 	}
 
 	protected void removeOrphanedDLFileEntries() throws Exception {
@@ -472,6 +475,17 @@ public class VerifyDocumentLibrary extends VerifyProcess {
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Assets verified for folders");
+		}
+	}
+
+	protected void verifyTree() throws Exception {
+		long[] companyIds = PortalInstances.getCompanyIdsBySQL();
+
+		for (long companyId : companyIds) {
+			DLFileEntryLocalServiceUtil.rebuildTree(companyId);
+			DLFileShortcutLocalServiceUtil.rebuildTree(companyId);
+			DLFileVersionLocalServiceUtil.rebuildTree(companyId);
+			DLFolderLocalServiceUtil.rebuildTree(companyId);
 		}
 	}
 

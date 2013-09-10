@@ -402,6 +402,10 @@ public interface BookmarksEntryLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	public void rebuildTree(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	public com.liferay.portlet.bookmarks.model.BookmarksEntry restoreEntryFromTrash(
 		long userId, long entryId)
 		throws com.liferay.portal.kernel.exception.PortalException,

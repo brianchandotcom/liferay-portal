@@ -237,6 +237,21 @@ public interface BookmarksEntryModel extends BaseModel<BookmarksEntry>,
 	public void setFolderId(long folderId);
 
 	/**
+	 * Returns the tree path of this bookmarks entry.
+	 *
+	 * @return the tree path of this bookmarks entry
+	 */
+	@AutoEscape
+	public String getTreePath();
+
+	/**
+	 * Sets the tree path of this bookmarks entry.
+	 *
+	 * @param treePath the tree path of this bookmarks entry
+	 */
+	public void setTreePath(String treePath);
+
+	/**
 	 * Returns the name of this bookmarks entry.
 	 *
 	 * @return the name of this bookmarks entry

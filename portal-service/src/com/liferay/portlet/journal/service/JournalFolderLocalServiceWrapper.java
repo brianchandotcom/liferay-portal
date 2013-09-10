@@ -571,6 +571,13 @@ public class JournalFolderLocalServiceWrapper
 	}
 
 	@Override
+	public void rebuildTree(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_journalFolderLocalService.rebuildTree(companyId);
+	}
+
+	@Override
 	public void restoreFolderFromTrash(long userId, long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

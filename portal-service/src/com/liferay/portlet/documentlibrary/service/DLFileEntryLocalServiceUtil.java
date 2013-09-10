@@ -724,6 +724,12 @@ public class DLFileEntryLocalServiceUtil {
 			serviceContext);
 	}
 
+	public static void rebuildTree(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().rebuildTree(companyId);
+	}
+
 	public static void revertFileEntry(long userId, long fileEntryId,
 		java.lang.String version,
 		com.liferay.portal.service.ServiceContext serviceContext)

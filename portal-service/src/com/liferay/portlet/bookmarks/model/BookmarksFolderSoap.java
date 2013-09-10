@@ -41,6 +41,7 @@ public class BookmarksFolderSoap implements Serializable {
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setResourceBlockId(model.getResourceBlockId());
 		soapModel.setParentFolderId(model.getParentFolderId());
+		soapModel.setTreePath(model.getTreePath());
 		soapModel.setName(model.getName());
 		soapModel.setDescription(model.getDescription());
 		soapModel.setStatus(model.getStatus());
@@ -181,6 +182,14 @@ public class BookmarksFolderSoap implements Serializable {
 		_parentFolderId = parentFolderId;
 	}
 
+	public String getTreePath() {
+		return _treePath;
+	}
+
+	public void setTreePath(String treePath) {
+		_treePath = treePath;
+	}
+
 	public String getName() {
 		return _name;
 	}
@@ -239,6 +248,7 @@ public class BookmarksFolderSoap implements Serializable {
 	private Date _modifiedDate;
 	private long _resourceBlockId;
 	private long _parentFolderId;
+	private String _treePath;
 	private String _name;
 	private String _description;
 	private int _status;

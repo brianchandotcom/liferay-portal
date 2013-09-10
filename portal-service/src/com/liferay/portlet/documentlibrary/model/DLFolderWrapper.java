@@ -61,6 +61,7 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 		attributes.put("repositoryId", getRepositoryId());
 		attributes.put("mountPoint", getMountPoint());
 		attributes.put("parentFolderId", getParentFolderId());
+		attributes.put("treePath", getTreePath());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
 		attributes.put("lastPostDate", getLastPostDate());
@@ -141,6 +142,12 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 
 		if (parentFolderId != null) {
 			setParentFolderId(parentFolderId);
+		}
+
+		String treePath = (String)attributes.get("treePath");
+
+		if (treePath != null) {
+			setTreePath(treePath);
 		}
 
 		String name = (String)attributes.get("name");
@@ -476,6 +483,26 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	@Override
 	public void setParentFolderId(long parentFolderId) {
 		_dlFolder.setParentFolderId(parentFolderId);
+	}
+
+	/**
+	* Returns the tree path of this document library folder.
+	*
+	* @return the tree path of this document library folder
+	*/
+	@Override
+	public java.lang.String getTreePath() {
+		return _dlFolder.getTreePath();
+	}
+
+	/**
+	* Sets the tree path of this document library folder.
+	*
+	* @param treePath the tree path of this document library folder
+	*/
+	@Override
+	public void setTreePath(java.lang.String treePath) {
+		_dlFolder.setTreePath(treePath);
 	}
 
 	/**
@@ -971,6 +998,13 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_dlFolder.persist();
+	}
+
+	@Override
+	public java.lang.String buildTreePath()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dlFolder.buildTreePath();
 	}
 
 	@Override

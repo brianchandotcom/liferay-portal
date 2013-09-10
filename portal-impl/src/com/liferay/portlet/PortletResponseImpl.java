@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.servlet.URLEncoder;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
@@ -185,7 +186,9 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 			throw new IllegalArgumentException();
 		}
 
-		if (key.equalsIgnoreCase(MimeResponse.MARKUP_HEAD_ELEMENT)) {
+		if (StringUtil.equalsIgnoreCase(
+				key, MimeResponse.MARKUP_HEAD_ELEMENT)) {
+
 			List<Element> values = _markupHeadElements.get(key);
 
 			if (values != null) {

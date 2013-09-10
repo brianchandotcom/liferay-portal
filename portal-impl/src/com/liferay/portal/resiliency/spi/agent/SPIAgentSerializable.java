@@ -98,13 +98,15 @@ public class SPIAgentSerializable implements Serializable {
 
 			// Remove Accept-Encoding header, to prevent content modification
 
-			if (HttpHeaders.ACCEPT_ENCODING.equalsIgnoreCase(headerName)) {
+			if (StringUtil.equalsIgnoreCase(
+					HttpHeaders.ACCEPT_ENCODING, headerName)) {
+
 				continue;
 			}
 
 			// Directly passing around cookie
 
-			if (HttpHeaders.COOKIE.equalsIgnoreCase(headerName)) {
+			if (StringUtil.equalsIgnoreCase(HttpHeaders.COOKIE, headerName)) {
 				continue;
 			}
 

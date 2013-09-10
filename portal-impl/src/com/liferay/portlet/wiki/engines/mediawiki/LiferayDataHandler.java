@@ -15,6 +15,7 @@
 package com.liferay.portlet.wiki.engines.mediawiki;
 
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
 
@@ -35,7 +36,7 @@ public class LiferayDataHandler extends DummyDataHandler {
 
 		String label = _fileNamespace.getLabel(virtualWiki);
 
-		if (label.equalsIgnoreCase(namespaceString)) {
+		if (StringUtil.equalsIgnoreCase(label, namespaceString)) {
 			return _fileNamespace;
 		}
 		else {

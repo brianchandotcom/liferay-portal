@@ -55,7 +55,7 @@ String xRequestWith = request.getHeader(HttpHeaders.X_REQUESTED_WITH);
 <html>
 
 <c:choose>
-	<c:when test="<%= !HttpHeaders.XML_HTTP_REQUEST.equalsIgnoreCase(xRequestWith) %>">
+	<c:when test="<%= !StringUtil.equalsIgnoreCase(HttpHeaders.XML_HTTP_REQUEST, xRequestWith) %>">
 
 		<%
 		String redirect = null;

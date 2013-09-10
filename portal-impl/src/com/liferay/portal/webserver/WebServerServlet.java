@@ -1313,12 +1313,13 @@ public class WebServerServlet extends HttpServlet {
 	}
 
 	private static final boolean _WEB_SERVER_SERVLET_VERSION_VERBOSITY_DEFAULT =
-		PropsValues.WEB_SERVER_SERVLET_VERSION_VERBOSITY.equalsIgnoreCase(
+		StringUtil.equalsIgnoreCase(
+			PropsValues.WEB_SERVER_SERVLET_VERSION_VERBOSITY,
 			ReleaseInfo.getName());
 
 	private static final boolean _WEB_SERVER_SERVLET_VERSION_VERBOSITY_PARTIAL =
-		PropsValues.WEB_SERVER_SERVLET_VERSION_VERBOSITY.equalsIgnoreCase(
-			"partial");
+		StringUtil.equalsIgnoreCase(
+			PropsValues.WEB_SERVER_SERVLET_VERSION_VERBOSITY, "partial");
 
 	private static Log _log = LogFactoryUtil.getLog(WebServerServlet.class);
 

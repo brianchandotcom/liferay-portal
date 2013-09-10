@@ -226,13 +226,15 @@ public class Log4JUtil {
 	}
 
 	private static java.util.logging.Level _getJdkLevel(String priority) {
-		if (priority.equalsIgnoreCase(Level.DEBUG.toString())) {
+		if (StringUtil.equalsIgnoreCase(priority, Level.DEBUG.toString())) {
 			return java.util.logging.Level.FINE;
 		}
-		else if (priority.equalsIgnoreCase(Level.ERROR.toString())) {
+		else if (StringUtil.equalsIgnoreCase(
+					priority, Level.ERROR.toString())) {
+
 			return java.util.logging.Level.SEVERE;
 		}
-		else if (priority.equalsIgnoreCase(Level.WARN.toString())) {
+		else if (StringUtil.equalsIgnoreCase(priority, Level.WARN.toString())) {
 			return java.util.logging.Level.WARNING;
 		}
 		else {

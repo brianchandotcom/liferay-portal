@@ -306,7 +306,7 @@ public class DocumentImpl implements Document {
 		Field field = new Field(name, value);
 
 		for (String fieldName : Field.UNSCORED_FIELD_NAMES) {
-			if (name.equalsIgnoreCase(fieldName)) {
+			if (StringUtil.equalsIgnoreCase(name, fieldName)) {
 				field.setBoost(0);
 			}
 		}

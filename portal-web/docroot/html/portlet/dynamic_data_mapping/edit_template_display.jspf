@@ -452,7 +452,7 @@ if (Validator.isNotNull(scriptContent)) {
 
 <%!
 private String _getAccessor(String accessor, String language) {
-	if (language.equalsIgnoreCase("vm")) {
+	if (StringUtil.equalsIgnoreCase(language, "vm")) {
 		if (!accessor.contains(StringPool.OPEN_PARENTHESIS)) {
 			return accessor;
 		}
@@ -515,11 +515,11 @@ private String[] _getListCodeArray(
 	String variableName, String itemName, String accessor, String language) {
 	String[] listCodeArray = new String[2];
 
-	if (language.equalsIgnoreCase("ftl")) {
+	if (StringUtil.equalsIgnoreCase(language, "ftl")) {
 		listCodeArray[0] = "<#if " + variableName + "?has_content>\n\t<#list " + variableName + " as " + itemName + ">\n\t\t" + _getVariableReferenceCode(itemName, accessor, language);
 		listCodeArray[1] = "\n\t</#list>\n</#if>";
 	}
-	else if (language.equalsIgnoreCase("vm")) {
+	else if (StringUtil.equalsIgnoreCase(language, "vm")) {
 		listCodeArray[0] = "#if (!$"+ variableName + ".isEmpty())\n\t#foreach ($" + itemName + " in $" + variableName + ")\n\t\t" + _getVariableReferenceCode(itemName, accessor, language);
 		listCodeArray[1] = "#end\n#end";
 	}
@@ -604,10 +604,10 @@ private String _getPaletteItemTitle(PageContext pageContext, TemplateVariableDef
 }
 
 private String _getVariableAssignmentCode(String variableName, String variableValue, String language) {
-	if (language.equalsIgnoreCase("ftl")) {
+	if (StringUtil.equalsIgnoreCase(language, "ftl")) {
 		return "<#assign " + variableName + " = " + variableValue + ")>";
 	}
-	else if (language.equalsIgnoreCase("vm")) {
+	else if (StringUtil.equalsIgnoreCase(language, "vm")) {
 		return "#set ($" + variableName + " = " + variableValue + ")";
 	}
 
@@ -621,10 +621,10 @@ private String _getVariableReferenceCode(String variableName, String accessor, S
 		methodInvocation = StringPool.PERIOD + _getAccessor(accessor, language);
 	}
 
-	if (language.equalsIgnoreCase("ftl")) {
+	if (StringUtil.equalsIgnoreCase(language, "ftl")) {
 		return "${" + variableName + methodInvocation + "}";
 	}
-	else if (language.equalsIgnoreCase("vm")) {
+	else if (StringUtil.equalsIgnoreCase(language, "vm")) {
 		return "$" + variableName + methodInvocation;
 	}
 

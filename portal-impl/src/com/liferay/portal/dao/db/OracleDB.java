@@ -150,7 +150,7 @@ public class OracleDB extends BaseDB {
 
 				boolean unique = true;
 
-				if (uniqueness.equalsIgnoreCase("NONUNIQUE")) {
+				if (StringUtil.equalsIgnoreCase(uniqueness, "NONUNIQUE")) {
 					unique = false;
 				}
 

@@ -635,7 +635,8 @@ public class AssetUtil {
 		}
 
 		return new Sort(
-			sortField, sortType, !orderByType.equalsIgnoreCase("asc"));
+			sortField, sortType,
+			!StringUtil.equalsIgnoreCase(orderByType, "asc"));
 	}
 
 	protected static Sort[] getSorts(

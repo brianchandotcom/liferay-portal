@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.liveusers.LiveUsers;
 import com.liferay.portal.model.Company;
@@ -381,7 +382,8 @@ public class LoginUtil {
 		boolean secure = request.isSecure();
 
 		if (secure && !PropsValues.COMPANY_SECURITY_AUTH_REQUIRES_HTTPS &&
-			!Http.HTTPS.equalsIgnoreCase(PropsValues.WEB_SERVER_PROTOCOL)) {
+			!StringUtil.equalsIgnoreCase(
+				Http.HTTPS, PropsValues.WEB_SERVER_PROTOCOL)) {
 
 			Boolean httpsInitial = (Boolean)session.getAttribute(
 				WebKeys.HTTPS_INITIAL);

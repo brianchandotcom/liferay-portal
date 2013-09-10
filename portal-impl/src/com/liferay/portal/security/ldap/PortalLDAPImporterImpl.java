@@ -503,8 +503,8 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 				String defaultPassword =
 					PropsValues.LDAP_IMPORT_USER_PASSWORD_DEFAULT;
 
-				if (defaultPassword.equalsIgnoreCase(
-						_USER_PASSWORD_SCREEN_NAME)) {
+				if (StringUtil.equalsIgnoreCase(
+						defaultPassword, _USER_PASSWORD_SCREEN_NAME)) {
 
 					defaultPassword = ldapUser.getScreenName();
 				}
@@ -1241,7 +1241,9 @@ public class PortalLDAPImporterImpl implements PortalLDAPImporter {
 		if (!PropsValues.LDAP_IMPORT_USER_PASSWORD_ENABLED) {
 			password = PropsValues.LDAP_IMPORT_USER_PASSWORD_DEFAULT;
 
-			if (password.equalsIgnoreCase(_USER_PASSWORD_SCREEN_NAME)) {
+			if (StringUtil.equalsIgnoreCase(
+					password, _USER_PASSWORD_SCREEN_NAME)) {
+
 				password = ldapUser.getScreenName();
 			}
 		}

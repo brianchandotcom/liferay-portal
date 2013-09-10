@@ -15,6 +15,7 @@
 package com.liferay.portlet.social.model;
 
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
@@ -151,10 +152,10 @@ public class SocialActivityCounterDefinition implements Serializable {
 	}
 
 	public void setLimitPeriod(String limitPeriod) {
-		if (limitPeriod.equalsIgnoreCase("day")) {
+		if (StringUtil.equalsIgnoreCase(limitPeriod, "day")) {
 			setLimitPeriod(LIMIT_PERIOD_DAY);
 		}
-		else if (limitPeriod.equalsIgnoreCase("lifetime")) {
+		else if (StringUtil.equalsIgnoreCase(limitPeriod, "lifetime")) {
 			setLimitPeriod(LIMIT_PERIOD_LIFETIME);
 		}
 		else {
@@ -175,13 +176,13 @@ public class SocialActivityCounterDefinition implements Serializable {
 	}
 
 	public void setOwnerType(String ownerType) {
-		if (ownerType.equalsIgnoreCase("actor")) {
+		if (StringUtil.equalsIgnoreCase(ownerType, "actor")) {
 			setOwnerType(SocialActivityCounterConstants.TYPE_ACTOR);
 		}
-		else if (ownerType.equalsIgnoreCase("asset")) {
+		else if (StringUtil.equalsIgnoreCase(ownerType, "asset")) {
 			setOwnerType(SocialActivityCounterConstants.TYPE_ASSET);
 		}
-		else if (ownerType.equalsIgnoreCase("creator")) {
+		else if (StringUtil.equalsIgnoreCase(ownerType, "creator")) {
 			setOwnerType(SocialActivityCounterConstants.TYPE_CREATOR);
 		}
 	}

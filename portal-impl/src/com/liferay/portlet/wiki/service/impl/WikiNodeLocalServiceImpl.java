@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.InstancePool;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -633,7 +634,7 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 	protected void validate(long nodeId, long groupId, String name)
 		throws PortalException, SystemException {
 
-		if (name.equalsIgnoreCase("tag")) {
+		if (StringUtil.equalsIgnoreCase(name, "tag")) {
 			throw new NodeNameException(name + " is reserved");
 		}
 

@@ -129,7 +129,7 @@ public class ComboServlet extends HttpServlet {
 			if (Validator.isNull(minifierType)) {
 				minifierType = "js";
 
-				if (extension.equalsIgnoreCase(_CSS_EXTENSION)) {
+				if (StringUtil.equalsIgnoreCase(extension, _CSS_EXTENSION)) {
 					minifierType = "css";
 				}
 			}
@@ -187,7 +187,7 @@ public class ComboServlet extends HttpServlet {
 
 		String contentType = ContentTypes.TEXT_JAVASCRIPT;
 
-		if (extension.equalsIgnoreCase(_CSS_EXTENSION)) {
+		if (StringUtil.equalsIgnoreCase(extension, _CSS_EXTENSION)) {
 			contentType = ContentTypes.TEXT_CSS;
 		}
 

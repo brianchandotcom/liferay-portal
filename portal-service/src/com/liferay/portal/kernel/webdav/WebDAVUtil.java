@@ -365,7 +365,9 @@ public class WebDAVUtil {
 	private boolean _isOverwrite(HttpServletRequest request) {
 		String value = GetterUtil.getString(request.getHeader("Overwrite"));
 
-		if (value.equalsIgnoreCase("F") || !GetterUtil.getBoolean(value)) {
+		if (StringUtil.equalsIgnoreCase(value, "F") ||
+			!GetterUtil.getBoolean(value)) {
+
 			return false;
 		}
 		else {

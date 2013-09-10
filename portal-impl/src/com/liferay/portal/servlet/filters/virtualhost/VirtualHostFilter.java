@@ -160,7 +160,7 @@ public class VirtualHostFilter extends BasePortalFilter {
 
 				if (((pos != -1) && (pos != languageId.length())) ||
 					((pos == -1) &&
-					 !friendlyURL.equalsIgnoreCase(languageId))) {
+					 !StringUtil.equalsIgnoreCase(friendlyURL, languageId))) {
 
 					continue;
 				}

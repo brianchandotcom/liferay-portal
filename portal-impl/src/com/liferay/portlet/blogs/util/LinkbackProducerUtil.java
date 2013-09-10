@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xmlrpc.Response;
@@ -226,7 +227,7 @@ public class LinkbackProducerUtil {
 			for (StartTag startTag : startTags) {
 				String rel = startTag.getAttributeValue("rel");
 
-				if (rel.equalsIgnoreCase("pingback")) {
+				if (StringUtil.equalsIgnoreCase(rel, "pingback")) {
 					String href = startTag.getAttributeValue("href");
 
 					serverUri = HtmlUtil.escape(href);
@@ -243,11 +244,12 @@ public class LinkbackProducerUtil {
 	}
 
 	private static final boolean _HTTP_HEADER_VERSION_VERBOSITY_DEFAULT =
-		PropsValues.HTTP_HEADER_VERSION_VERBOSITY.equalsIgnoreCase(
-			ReleaseInfo.getName());
+		StringUtil.equalsIgnoreCase(
+			PropsValues.HTTP_HEADER_VERSION_VERBOSITY, ReleaseInfo.getName());
 
 	private static final boolean _HTTP_HEADER_VERSION_VERBOSITY_PARTIAL =
-		PropsValues.HTTP_HEADER_VERSION_VERBOSITY.equalsIgnoreCase("partial");
+		StringUtil.equalsIgnoreCase(
+			PropsValues.HTTP_HEADER_VERSION_VERBOSITY, "partial");
 
 	private static Log _log = LogFactoryUtil.getLog(LinkbackProducerUtil.class);
 

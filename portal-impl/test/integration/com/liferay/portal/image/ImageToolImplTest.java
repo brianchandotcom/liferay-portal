@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.image.ImageTool;
 import com.liferay.portal.kernel.image.ImageToolUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 
@@ -110,7 +111,8 @@ public class ImageToolImplTest {
 
 		String resultType = imageBag.getType();
 
-		Assert.assertTrue(expectedType.equalsIgnoreCase(resultType));
+		Assert.assertTrue(
+			StringUtil.equalsIgnoreCase(expectedType, resultType));
 		Assert.assertTrue(Arrays.deepEquals(expectedData, resultData));
 	}
 

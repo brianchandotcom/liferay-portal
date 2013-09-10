@@ -378,7 +378,7 @@ public class StringUtil {
 
 		String temp = s.substring(s.length() - end.length());
 
-		if (temp.equalsIgnoreCase(end)) {
+		if (StringUtil.equalsIgnoreCase(temp, end)) {
 			return true;
 		}
 		else {
@@ -3450,7 +3450,7 @@ public class StringUtil {
 
 		String temp = s.substring(0, start.length());
 
-		if (temp.equalsIgnoreCase(start)) {
+		if (StringUtil.equalsIgnoreCase(temp, start)) {
 			return true;
 		}
 		else {

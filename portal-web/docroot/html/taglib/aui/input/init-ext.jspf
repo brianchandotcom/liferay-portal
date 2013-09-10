@@ -82,7 +82,7 @@ if (Validator.isNotNull(inlineLabel)) {
 }
 
 if (Validator.isNotNull(wrapperCssClass)) {
-	controlGroupCss = controlGroupCss.concat(StringPool.SPACE + wrapperCssClass);
+	controlGroupCss = controlGroupCss.concat(StringPool.SPACE).concat(wrapperCssClass);
 }
 
 String baseTypeCss = TextFormatter.format(StringUtil.toLowerCase(baseType), TextFormatter.K);

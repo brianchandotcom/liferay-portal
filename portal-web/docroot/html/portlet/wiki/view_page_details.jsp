@@ -136,7 +136,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "det
 				<liferay-ui:icon
 					image='<%= "../file_system/small/" + conversion %>'
 					label="<%= true %>"
-					message="<%= conversion.toUpperCase() %>"
+					message="<%= StringUtil.toUpperCase(conversion) %>"
 					method="get"
 					url="<%= exportPageURL.toString() %>"
 				/>

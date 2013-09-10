@@ -81,7 +81,7 @@ if (Validator.isNotNull(inlineLabel)) {
 	controlGroupCss = controlGroupCss.concat(" form-inline");
 }
 
-String baseTypeCss = TextFormatter.format(baseType.toLowerCase(), TextFormatter.K);
+String baseTypeCss = TextFormatter.format(StringUtil.toLowerCase(baseType), TextFormatter.K);
 String fieldCss = AUIUtil.buildCss(AUIUtil.FIELD_PREFIX, disabled, first, last, cssClass);
 String labelTag = AUIUtil.buildLabel(baseTypeCss, inlineField, showForLabel, forLabel);
 %>

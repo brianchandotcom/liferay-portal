@@ -102,6 +102,7 @@ import org.apache.lucene.util.Version;
  * @author Shuyang Zhou
  * @author Tina Tian
  * @author Hugo Huijser
+ * @author Andrea Di Giorgi
  */
 public class LuceneHelperImpl implements LuceneHelper {
 
@@ -123,14 +124,35 @@ public class LuceneHelperImpl implements LuceneHelper {
 
 	@Override
 	public void addNumericRangeTerm(
+		BooleanQuery booleanQuery, String field, Integer startValue,
+		Integer endValue) {
+
+		NumericRangeQuery<?> numericRangeQuery = NumericRangeQuery.newIntRange(
+			field, startValue, endValue, true, true);
+
+		booleanQuery.add(numericRangeQuery, BooleanClause.Occur.SHOULD);
+	}
+
+	@Override
+	public void addNumericRangeTerm(
+		BooleanQuery booleanQuery, String field, Long startValue,
+		Long endValue) {
+
+		NumericRangeQuery<?> numericRangeQuery = NumericRangeQuery.newLongRange(
+			field, startValue, endValue, true, true);
+
+		booleanQuery.add(numericRangeQuery, BooleanClause.Occur.SHOULD);
+	}
+
+	@Deprecated
+	@Override
+	public void addNumericRangeTerm(
 		BooleanQuery booleanQuery, String field, String startValue,
 		String endValue) {
 
-		NumericRangeQuery<?> numericRangeQuery = NumericRangeQuery.newLongRange(
-			field, GetterUtil.getLong(startValue), GetterUtil.getLong(endValue),
-			true, true);
-
-		booleanQuery.add(numericRangeQuery, BooleanClause.Occur.SHOULD);
+		addNumericRangeTerm(
+			booleanQuery, field, GetterUtil.getLong(startValue),
+			GetterUtil.getLong(endValue));
 	}
 
 	@Override

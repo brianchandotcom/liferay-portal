@@ -36,6 +36,7 @@ import org.apache.lucene.util.Version;
 /**
  * @author Bruno Farache
  * @author Shuyang Zhou
+ * @author Andrea Di Giorgi
  */
 public interface LuceneHelper {
 
@@ -45,6 +46,15 @@ public interface LuceneHelper {
 	public void addExactTerm(
 		BooleanQuery booleanQuery, String field, String value);
 
+	public void addNumericRangeTerm(
+		BooleanQuery booleanQuery, String field, Integer startValue,
+		Integer endValue);
+
+	public void addNumericRangeTerm(
+		BooleanQuery booleanQuery, String field, Long startValue,
+		Long endValue);
+
+	@Deprecated
 	public void addNumericRangeTerm(
 		BooleanQuery booleanQuery, String field, String startValue,
 		String endValue);

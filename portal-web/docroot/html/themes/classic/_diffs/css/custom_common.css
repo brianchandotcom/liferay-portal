@@ -429,12 +429,12 @@
 			li {
 				display: none;
 
-				&.only, &.first, &.last, &.second-to-last {
+				&.only, &.first, &.last, &.current-parent {
 					display: inline-block;
 				}
 
 				&.breadcrumb-truncate {
-					&.only, &.first a, &.last a, &.active, &.second-to-last a {
+					&.only, &.first a, &.last a, &.active, &.current-parent a {
 						display: inline-block;
 						max-width: 65px;
 						overflow: hidden;
@@ -443,12 +443,10 @@
 						white-space: nowrap;
 					}
 
-					&.second-to-last {
-						&:before {
-							color: #999;
-							content: " ... / ";
-							font-weight: bold;
-						}
+					&.current-parent:before {
+						color: #999;
+						content: " ... / ";
+						font-weight: bold;
 					}
 				}
 			}

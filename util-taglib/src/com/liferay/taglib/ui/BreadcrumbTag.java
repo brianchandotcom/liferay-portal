@@ -454,7 +454,7 @@ public class BreadcrumbTag extends IncludeTag {
 
 			breadcrumbString = StringUtil.insert(
 				breadcrumbString,
-				" class=\"second-to-last" + breadcrumbTruncateClass + "\"", z);
+				" class=\"current-parent" + breadcrumbTruncateClass + "\"", z);
 		}
 
 		return breadcrumbString;

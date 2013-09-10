@@ -300,22 +300,24 @@ else {
 						catch (Exception e) {
 						%>
 
-							<li class="app-view-navigation-entry folder error" title="<%= LanguageUtil.get(pageContext, "an-unexpected-error-occurred-while-connecting-to-the-repository") %>">
+							<c:if test="<%= permissionChecker.isCompanyAdmin() || permissionChecker.isGroupAdmin(scopeGroupId) %>">
+								<li class="app-view-navigation-entry folder error" title="<%= LanguageUtil.get(pageContext, "an-unexpected-error-occurred-while-connecting-to-the-repository") %>">
 
-								<%
-								request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
-								%>
+									<%
+									request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
+									%>
 
-								<liferay-util:include page="/html/portlet/document_library/folder_action.jsp" />
+									<liferay-util:include page="/html/portlet/document_library/folder_action.jsp" />
 
-								<span class="browse-folder">
-									<liferay-ui:icon image="drive_error" />
+									<span class="browse-folder">
+										<liferay-ui:icon image="drive_error" />
 
-									<span class="entry-title">
-										<%= mountFolder.getName() %>
+										<span class="entry-title">
+											<%= mountFolder.getName() %>
+										</span>
 									</span>
-								</span>
-							</li>
+								</li>
+							</c:if>
 
 					<%
 						}

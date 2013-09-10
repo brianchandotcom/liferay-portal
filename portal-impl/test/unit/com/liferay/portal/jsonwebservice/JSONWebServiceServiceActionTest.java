@@ -71,7 +71,7 @@ public class JSONWebServiceServiceActionTest
 		ServletContext servletContext = new MockServletContext();
 
 		_jsonWebServiceServiceAction = new JSONWebServiceServiceAction(
-			servletContext, null);
+			servletContext);
 	}
 
 	@AfterClass

@@ -59,13 +59,13 @@ public class EditSharingAction extends PortletAction {
 			setForward(actionRequest, "portlet.portlet_configuration.error");
 		}
 
-		String tabs2 = ParamUtil.getString(actionRequest, "tabs2");
-
 		PortletPreferences portletPreferences =
 			ActionUtil.getLayoutPortletSetup(actionRequest, portlet);
 
 		actionRequest = ActionUtil.getWrappedActionRequest(
 			actionRequest, portletPreferences);
+
+		String tabs2 = ParamUtil.getString(actionRequest, "tabs2");
 
 		if (tabs2.equals("any-website")) {
 			updateAnyWebsite(actionRequest, portletPreferences);

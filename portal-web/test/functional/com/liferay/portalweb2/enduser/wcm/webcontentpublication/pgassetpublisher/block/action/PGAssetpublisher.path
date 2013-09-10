@@ -40,7 +40,7 @@
 </tr>
 <tr>
 	<td>ADD_NEW_DROPDOWN</td>
-	<td>//div[contains(@class,'add-asset-selector')]/div/div/div/ul/li/a[contains(@class,'dropdown-toggle')]</td>
+	<td>//div[contains(@class,'lfr-meta-actions add-asset-selector')]//ul/li/a[contains(@class,'dropdown-toggle')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -97,7 +97,7 @@
 </tr>
 <tr>
 	<td>ADD_NEW_MENULIST_WEB_CONTENT</td>
-	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(@href,'asset_publisher')]/span[contains(.,'Web Content')]</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(@href,'asset_publisher')]/span[contains(.,'Web Content Article')]</td>
 	<td></td>
 </tr>
 <tr>

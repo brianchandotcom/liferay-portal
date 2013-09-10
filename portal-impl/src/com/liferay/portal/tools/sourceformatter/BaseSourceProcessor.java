@@ -349,6 +349,12 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			pos = line.indexOf(".toUpperCase()");
 		}
 
+		if ((pos == -1) && !line.contains("StringUtil.equalsIgnoreCase(")) {
+			methodName = "equalsIgnoreCase";
+
+			pos = line.indexOf(".equalsIgnoreCase(");
+		}
+
 		if (pos != -1) {
 			processErrorMessage(
 				fileName,

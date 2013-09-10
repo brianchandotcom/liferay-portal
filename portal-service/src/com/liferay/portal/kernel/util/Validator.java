@@ -163,9 +163,6 @@ public class Validator {
 		if (obj1 == obj2) {
 			return true;
 		}
-		else if ((obj1 == null) && (obj2 == null)) {
-			return true;
-		}
 		else if ((obj1 == null) || (obj2 == null)) {
 			return false;
 		}

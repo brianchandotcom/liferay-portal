@@ -76,6 +76,19 @@ long folderId = ParamUtil.getLong(request, "folderId");
 				<div id="<portlet:namespace />settingsConfiguration"></div>
 
 				<div id="<portlet:namespace />settingsParameters"></div>
+
+				<aui:script use="aui-base">
+					var selectRepositoryTypes = A.one('#<portlet:namespace />repositoryTypes');
+
+					selectRepositoryTypes.on(
+						'change',
+						function(event) {
+							showConfiguration(event.currentTarget);
+						}
+					);
+
+					showConfiguration(selectRepositoryTypes);
+				</aui:script>
 			</c:when>
 			<c:otherwise>
 				<div class="repository-settings-display">
@@ -177,8 +190,13 @@ long folderId = ParamUtil.getLong(request, "folderId");
 	var settingsParameters = A.one('#<portlet:namespace />settingsParameters');
 
 	var showConfiguration = function(select) {
-		settingsSupported.append(settingsConfiguration.all('.settings-configuration'));
-		settingsSupported.append(settingsParameters.all('.settings-parameters'));
+		if (settingsConfiguration) {
+			settingsSupported.append(settingsConfiguration.all('.settings-configuration'));
+		}
+
+		if (settingsParameters) {
+			settingsSupported.append(settingsParameters.all('.settings-parameters'));
+		}
 
 		var value = select.val();
 		var className = value.split('.').pop();
@@ -189,8 +207,13 @@ long folderId = ParamUtil.getLong(request, "folderId");
 		if (selectRepositoryConfiguration) {
 			var repositoryParameters = A.one('#<portlet:namespace />repository-' + className + '-configuration-' + selectRepositoryConfiguration.val());
 
-			settingsConfiguration.append(repositoryConfiguration);
-			settingsParameters.append(repositoryParameters);
+			if (settingsConfiguration) {
+				settingsConfiguration.append(repositoryConfiguration);
+			}
+
+			if (settingsParameters) {
+				settingsParameters.append(repositoryParameters);
+			}
 		}
 	};
 
@@ -204,17 +227,6 @@ long folderId = ParamUtil.getLong(request, "folderId");
 		settingsSupported.append(settingsParametersChildren);
 		settingsParameters.append(repositoryParameters);
 	}
-
-	var selectRepositoryTypes = A.one('#<portlet:namespace />repositoryTypes');
-
-	selectRepositoryTypes.on(
-		'change',
-		function(event) {
-			showConfiguration(event.currentTarget);
-		}
-	);
-
-	showConfiguration(selectRepositoryTypes);
 
 	var selectConfiguration = A.all('.repository-configuration')
 

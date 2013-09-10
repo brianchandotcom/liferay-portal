@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.LayoutSetPrototype;
 import com.liferay.portal.service.LayoutSetPrototypeLocalServiceUtil;
 import com.liferay.portal.service.persistence.LayoutSetPrototypeExportActionableDynamicQuery;
-import com.liferay.portal.util.PortletKeys;
 
 import java.util.List;
 
@@ -79,8 +78,7 @@ public class LayoutSetPrototypePortletDataHandler
 			PortletPreferences portletPreferences)
 		throws Exception {
 
-		portletDataContext.addPermissions(
-			PortletKeys.PORTAL, portletDataContext.getCompanyId());
+		portletDataContext.addPortalPermissions();
 
 		Element rootElement = addExportDataRootElement(portletDataContext);
 
@@ -102,9 +100,7 @@ public class LayoutSetPrototypePortletDataHandler
 			PortletPreferences portletPreferences, String data)
 		throws Exception {
 
-		portletDataContext.importPermissions(
-			PortletKeys.PORTAL, portletDataContext.getSourceCompanyId(),
-			portletDataContext.getCompanyId());
+		portletDataContext.importPortalPermissions();
 
 		Element layoutSetPrototypesElement =
 			portletDataContext.getImportDataGroupElement(

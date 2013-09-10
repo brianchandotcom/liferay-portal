@@ -84,9 +84,7 @@ public class PollsPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
-		portletDataContext.addPermissions(
-			PollsPermission.RESOURCE_NAME,
-			portletDataContext.getScopeGroupId());
+		portletDataContext.addPortletPermissions(PollsPermission.RESOURCE_NAME);
 
 		Element rootElement = addExportDataRootElement(portletDataContext);
 
@@ -127,10 +125,8 @@ public class PollsPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences, String data)
 		throws Exception {
 
-		portletDataContext.importPermissions(
-			PollsPermission.RESOURCE_NAME,
-			portletDataContext.getSourceGroupId(),
-			portletDataContext.getScopeGroupId());
+		portletDataContext.importPortletPermissions(
+			PollsPermission.RESOURCE_NAME);
 
 		Element questionsElement = portletDataContext.getImportDataGroupElement(
 			PollsQuestion.class);

@@ -78,8 +78,7 @@ public class DDLPortletDataHandler extends BasePortletDataHandler {
 			return getExportDataRootElementString(rootElement);
 		}
 
-		portletDataContext.addPermissions(
-			DDLPermission.RESOURCE_NAME, portletDataContext.getScopeGroupId());
+		portletDataContext.addPortletPermissions(DDLPermission.RESOURCE_NAME);
 
 		ActionableDynamicQuery actionableDynamicQuery =
 			new DDLRecordSetExportActionableDynamicQuery(portletDataContext);
@@ -99,9 +98,8 @@ public class DDLPortletDataHandler extends BasePortletDataHandler {
 			return null;
 		}
 
-		portletDataContext.importPermissions(
-			DDLPermission.RESOURCE_NAME, portletDataContext.getSourceGroupId(),
-			portletDataContext.getScopeGroupId());
+		portletDataContext.importPortletPermissions(
+			DDLPermission.RESOURCE_NAME);
 
 		Element recordSetsElement =
 			portletDataContext.getImportDataGroupElement(DDLRecordSet.class);

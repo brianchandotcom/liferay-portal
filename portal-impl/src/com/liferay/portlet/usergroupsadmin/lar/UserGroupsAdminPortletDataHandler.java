@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.service.persistence.UserGroupExportActionableDynamicQuery;
-import com.liferay.portal.util.PortletKeys;
 
 import java.util.List;
 
@@ -71,8 +70,7 @@ public class UserGroupsAdminPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
-		portletDataContext.addPermissions(
-			PortletKeys.PORTAL, portletDataContext.getCompanyId());
+		portletDataContext.addPortalPermissions();
 
 		Element rootElement = addExportDataRootElement(portletDataContext);
 
@@ -93,9 +91,7 @@ public class UserGroupsAdminPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences, String data)
 		throws Exception {
 
-		portletDataContext.importPermissions(
-			PortletKeys.PORTAL, portletDataContext.getSourceCompanyId(),
-			portletDataContext.getCompanyId());
+		portletDataContext.importPortalPermissions();
 
 		Element userGroupsElement =
 			portletDataContext.getImportDataGroupElement(UserGroup.class);

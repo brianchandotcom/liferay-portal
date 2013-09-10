@@ -955,6 +955,8 @@
 
 		<!-- Layout Prototypes -->
 
+		<action path="/layout_prototypes/delete_background_task" type="com.liferay.portlet.backgroundtask.action.DeleteBackgroundTaskAction" />
+
 		<action path="/layout_prototypes/edit_layout_prototype" type="com.liferay.portlet.layoutprototypes.action.EditLayoutPrototypeAction">
 			<forward name="portlet.layout_prototypes.edit_layout_prototype" path="portlet.layout_prototypes.edit_layout_prototype" />
 			<forward name="portlet.layout_prototypes.error" path="portlet.layout_prototypes.error" />

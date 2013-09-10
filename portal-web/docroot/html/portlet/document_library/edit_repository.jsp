@@ -190,8 +190,13 @@ long folderId = ParamUtil.getLong(request, "folderId");
 	var settingsParameters = A.one('#<portlet:namespace />settingsParameters');
 
 	var showConfiguration = function(select) {
-		settingsSupported.append(settingsConfiguration.all('.settings-configuration'));
-		settingsSupported.append(settingsParameters.all('.settings-parameters'));
+		if (settingsConfiguration) {
+			settingsSupported.append(settingsConfiguration.all('.settings-configuration'));
+		}
+
+		if (settingsParameters) {
+			settingsSupported.append(settingsParameters.all('.settings-parameters'));
+		}
 
 		var value = select.val();
 		var className = value.split('.').pop();
@@ -202,8 +207,13 @@ long folderId = ParamUtil.getLong(request, "folderId");
 		if (selectRepositoryConfiguration) {
 			var repositoryParameters = A.one('#<portlet:namespace />repository-' + className + '-configuration-' + selectRepositoryConfiguration.val());
 
-			settingsConfiguration.append(repositoryConfiguration);
-			settingsParameters.append(repositoryParameters);
+			if (settingsConfiguration) {
+				settingsConfiguration.append(repositoryConfiguration);
+			}
+
+			if (settingsParameters) {
+				settingsParameters.append(repositoryParameters);
+			}
 		}
 	};
 

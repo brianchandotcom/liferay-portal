@@ -295,13 +295,10 @@ else {
 								viewURL="<%= viewURL.toString() %>"
 							/>
 
-					<%
+						<%
 						}
 						catch (Exception e) {
-							if (_log.isWarnEnabled()) {
-								_log.warn("Unable to access repository", e);
-							}
-					%>
+						%>
 
 							<li class="app-view-navigation-entry folder error" title="<%= LanguageUtil.get(pageContext, "an-unexpected-error-occurred-while-connecting-to-the-repository") %>">
 

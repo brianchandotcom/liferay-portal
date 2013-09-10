@@ -122,10 +122,10 @@ if (SessionMessages.contains(portletRequest, portletDisplay.getId() + SessionMes
 									}
 									%>
 
-									<em class="delete-entry-title"><aui:a href="<%= trashURLString %>" label="<%= title %>" /></em>
+									<em class="delete-entry-title"><aui:a href="<%= trashURLString %>" label="<%= HtmlUtil.escape(title) %>" /></em>
 								</c:when>
 								<c:when test="<%= Validator.isNotNull(title) %>">
-									<em class="delete-entry-title"><%= title %></em>
+									<em class="delete-entry-title"><%= HtmlUtil.escape(title) %></em>
 								</c:when>
 							</c:choose>
 						</liferay-util:buffer>

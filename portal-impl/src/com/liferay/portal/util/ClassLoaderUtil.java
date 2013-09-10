@@ -70,6 +70,9 @@ public class ClassLoaderUtil {
 
 				offset = 1;
 			}
+			else {
+				classLoaders = new ClassLoader[servletContextNames.length];
+			}
 
 			for (int i = 0; i < servletContextNames.length; i++) {
 				classLoaders[offset + i] = ClassLoaderPool.getClassLoader(

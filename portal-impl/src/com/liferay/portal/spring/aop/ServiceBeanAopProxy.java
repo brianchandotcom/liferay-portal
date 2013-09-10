@@ -16,7 +16,6 @@ package com.liferay.portal.spring.aop;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.spring.aop.Skip;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
@@ -28,7 +27,6 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -172,16 +170,7 @@ public class ServiceBeanAopProxy implements AopProxy, InvocationHandler {
 				new ServiceBeanMethodInvocation(
 					target, targetClass, method, arguments);
 
-			Skip skip = ServiceBeanAopCacheManager.getAnnotation(
-				serviceBeanMethodInvocation, Skip.class, null);
-
-			if (skip != null) {
-				serviceBeanMethodInvocation.setMethodInterceptors(
-					Collections.<MethodInterceptor>emptyList());
-			}
-			else {
-				_setMethodInterceptors(serviceBeanMethodInvocation);
-			}
+			_setMethodInterceptors(serviceBeanMethodInvocation);
 
 			return serviceBeanMethodInvocation.proceed();
 		}

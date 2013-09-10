@@ -14,8 +14,6 @@
 
 package com.liferay.portal.spring.aop;
 
-import com.liferay.portal.kernel.spring.aop.Skip;
-
 import java.util.Map;
 
 import org.aopalliance.intercept.MethodInterceptor;
@@ -37,9 +35,6 @@ public class ServiceBeanAutoProxyCreator
 
 	public ServiceBeanAutoProxyCreator() {
 		_serviceBeanAopCacheManager = new ServiceBeanAopCacheManager();
-
-		_serviceBeanAopCacheManager.registerAnnotationChainableMethodAdvice(
-			Skip.class, null);
 	}
 
 	public void afterPropertiesSet() {

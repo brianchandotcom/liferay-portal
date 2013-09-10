@@ -32,7 +32,7 @@
 	<c:otherwise>
 
 		<%
-		String redirect = ParamUtil.getString(request, "redirect", currentURL);
+		String redirect = ParamUtil.getString(request, "redirect");
 
 		String login = LoginUtil.getLogin(request, "login", company);
 		String password = StringPool.BLANK;

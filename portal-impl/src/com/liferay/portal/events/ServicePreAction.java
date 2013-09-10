@@ -1269,8 +1269,6 @@ public class ServicePreAction extends Action {
 				urlSignIn, "p_l_id", layout.getPlid());
 		}
 
-		urlSignIn = HttpUtil.addParameter(urlSignIn, "redirect", currentURL);
-
 		themeDisplay.setURLSignIn(urlSignIn);
 
 		themeDisplay.setURLSignOut(mainPath.concat(_PATH_PORTAL_LOGOUT));

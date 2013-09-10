@@ -266,14 +266,14 @@ public class JournalArticleAssetRenderer
 
 		List<Long> hitLayoutIds =
 			JournalContentSearchLocalServiceUtil.getLayoutIds(
-				layout.getGroupId(), layout.isPrivateLayout(),
+				_article.getGroupId(), layout.isPrivateLayout(),
 				_article.getArticleId());
 
 		if (!hitLayoutIds.isEmpty()) {
 			Long hitLayoutId = hitLayoutIds.get(0);
 
 			Layout hitLayout = LayoutLocalServiceUtil.getLayout(
-				layout.getGroupId(), layout.isPrivateLayout(),
+				_article.getGroupId(), layout.isPrivateLayout(),
 				hitLayoutId.longValue());
 
 			return PortalUtil.getLayoutURL(hitLayout, themeDisplay);

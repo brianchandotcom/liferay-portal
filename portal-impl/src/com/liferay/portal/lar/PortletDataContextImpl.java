@@ -551,6 +551,33 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	@Override
+	@Override
+	public void addPortletPermissions(String resourceName)
+		throws PortalException, SystemException {
+
+		long groupId = getGroupId();
+
+		Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+		if (group.isStagingGroup()) {
+			if (group.isStagedRemotely()) {
+
+				// Since we add all the basic permissions with liveGroupId no
+				// matter staging is remote or local we have to collect these
+				// with liveGroupId
+
+				groupId = group.getLiveGroupId();
+			}
+			else {
+
+				// Do not publish portlet permission when local staging publish
+
+				return;
+			}
+		}
+
+		addPermissions(resourceName, groupId);
+	}
 	public boolean addPrimaryKey(Class<?> clazz, String primaryKey) {
 		boolean value = hasPrimaryKey(clazz, primaryKey);
 

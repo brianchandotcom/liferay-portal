@@ -165,11 +165,11 @@
 
 		<propertyfile file="test-sample-sql.properties">
 			<entry key="sql.dir" value="${basedir}" />
+			<entry key="sample.sql.asset.publisher.category.filter" value="true" />
 			<entry key="sample.sql.db.type" value="hypersonic" />
 			<entry key="sample.sql.max.asset.category.count" value="1" />
 			<entry key="sample.sql.max.asset.entry.to.asset.category.count" value="1" />
 			<entry key="sample.sql.max.asset.entry.to.asset.tag.count" value="1" />
-			<entry key="sample.sql.max.asset.publisher.filter.rule.count" value="1" />
 			<entry key="sample.sql.max.asset.publisher.page.count" value="2" />
 			<entry key="sample.sql.max.asset.tag.count" value="1" />
 			<entry key="sample.sql.max.asset.vocabulary.count" value="1" />

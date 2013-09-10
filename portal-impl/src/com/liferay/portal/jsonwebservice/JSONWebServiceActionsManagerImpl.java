@@ -291,7 +291,6 @@ public class JSONWebServiceActionsManagerImpl
 	}
 
 	public int registerServletContext(String contextPath) {
-
 		BeanLocator beanLocator = null;
 
 		if (contextPath.equals(
@@ -318,10 +317,10 @@ public class JSONWebServiceActionsManagerImpl
 			return -1;
 		}
 
-		JSONWebServiceRegistrator jsonWebServiceRegitrator =
+		JSONWebServiceRegistrator jsonWebServiceRegistrator =
 			new JSONWebServiceRegistrator();
 
-		jsonWebServiceRegitrator.processAllBeans(contextPath, beanLocator);
+		jsonWebServiceRegistrator.processAllBeans(contextPath, beanLocator);
 
 		int count = getJSONWebServiceActionsCount(contextPath);
 

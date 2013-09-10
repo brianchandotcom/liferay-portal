@@ -777,7 +777,7 @@ public class DLImpl implements DL {
 
 		String title = fileEntry.getTitle();
 
-		if (fileVersion.isInTrash()) {
+		if (fileEntry.isInTrash()) {
 			title = TrashUtil.getOriginalTitle(fileEntry.getTitle());
 		}
 

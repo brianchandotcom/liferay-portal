@@ -366,6 +366,16 @@ public class FileEntryProxyBean
 	}
 
 	@Override
+	public boolean isInTrash() {
+		return _fileEntry.isInTrash();
+	}
+
+	@Override
+	public boolean isInTrashContainer() {
+		return _fileEntry.isInTrashContainer();
+	}
+
+	@Override
 	public boolean isManualCheckInRequired() {
 		return _fileEntry.isManualCheckInRequired();
 	}

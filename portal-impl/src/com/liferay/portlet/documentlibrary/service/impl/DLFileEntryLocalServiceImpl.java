@@ -709,10 +709,7 @@ public class DLFileEntryLocalServiceImpl
 				groupId, folderId, start, end);
 
 			for (DLFileEntry dlFileEntry : dlFileEntries) {
-				DLFileVersion dlFileVersion = dlFileEntry.getLatestFileVersion(
-					true);
-
-				if (includeTrashedEntries || !dlFileVersion.isInTrash()) {
+				if (includeTrashedEntries || !dlFileEntry.isInTrash()) {
 					dlAppHelperLocalService.deleteFileEntry(
 						new LiferayFileEntry(dlFileEntry));
 

@@ -116,7 +116,7 @@ public class ActionUtil {
 
 		String cmd = ParamUtil.getString(request, Constants.CMD);
 
-		if ((fileVersion.isInTrash() || fileVersion.isInTrashContainer()) &&
+		if ((fileEntry.isInTrash() || fileEntry.isInTrashContainer()) &&
 			!cmd.equals(Constants.MOVE_FROM_TRASH)) {
 
 			throw new NoSuchFileEntryException();

@@ -1249,7 +1249,7 @@ public class DLAppHelperLocalServiceImpl
 			}
 
 			if ((oldStatus != WorkflowConstants.STATUS_IN_TRASH) &&
-				!latestFileVersion.isInTrashContainer()) {
+				!fileEntry.isInTrashContainer()) {
 
 				// Social
 
@@ -1317,9 +1317,7 @@ public class DLAppHelperLocalServiceImpl
 		dlFileVersions = ListUtil.sort(
 			dlFileVersions, new FileVersionVersionComparator());
 
-		FileVersion fileVersion = new LiferayFileVersion(dlFileVersions.get(0));
-
-		if (fileVersion.isInTrash()) {
+		if (fileEntry.isInTrash()) {
 			restoreFileEntryFromTrash(userId, fileEntry);
 
 			fileEntry = dlAppLocalService.moveFileEntry(
@@ -1333,6 +1331,8 @@ public class DLAppHelperLocalServiceImpl
 
 			return fileEntry;
 		}
+
+		FileVersion fileVersion = new LiferayFileVersion(dlFileVersions.get(0));
 
 		dlFileEntryLocalService.updateStatus(
 			userId, fileVersion.getFileVersionId(), fileVersion.getStatus(),

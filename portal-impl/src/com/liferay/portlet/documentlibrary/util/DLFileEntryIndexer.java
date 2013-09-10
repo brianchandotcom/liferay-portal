@@ -459,10 +459,8 @@ public class DLFileEntryIndexer extends BaseIndexer {
 				}
 			}
 
-			if (!dlFileVersion.isInTrash() &&
-				dlFileVersion.isInTrashContainer()) {
-
-				DLFolder folder = dlFileVersion.getTrashContainer();
+			if (!dlFileEntry.isInTrash() && dlFileEntry.isInTrashContainer()) {
+				DLFolder folder = (DLFolder)dlFileEntry.getTrashContainer();
 
 				addTrashFields(
 					document, DLFolder.class.getName(), folder.getFolderId(),
@@ -527,7 +525,7 @@ public class DLFileEntryIndexer extends BaseIndexer {
 
 		DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
 
-		if (!dlFileVersion.isApproved() && !dlFileVersion.isInTrash()) {
+		if (!dlFileVersion.isApproved() && !dlFileEntry.isInTrash()) {
 			return;
 		}
 

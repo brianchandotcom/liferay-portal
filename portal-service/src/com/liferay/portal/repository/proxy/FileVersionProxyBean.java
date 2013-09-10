@@ -273,16 +273,6 @@ public class FileVersionProxyBean
 	}
 
 	@Override
-	public boolean isInTrash() {
-		return _fileVersion.isInTrash();
-	}
-
-	@Override
-	public boolean isInTrashContainer() {
-		return _fileVersion.isInTrashContainer();
-	}
-
-	@Override
 	public boolean isPending() {
 		return _fileVersion.isPending();
 	}

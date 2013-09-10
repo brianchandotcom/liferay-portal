@@ -113,6 +113,11 @@ public class JSONWebServiceActionsManagerUtil {
 			unregisterJSONWebServiceActions(contextPath);
 	}
 
+	public static int unregisterServletContext(ServletContext servletContext) {
+		return getJSONWebServiceActionsManager().unregisterServletContext(
+			servletContext);
+	}
+
 	public void setJSONWebServiceActionsManager(
 		JSONWebServiceActionsManager jsonWebServiceActionsManager) {
 

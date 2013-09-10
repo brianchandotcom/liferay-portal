@@ -386,6 +386,13 @@ public class StringUtil {
 		}
 	}
 
+	public static boolean equalsIgnoreCase(String s1, String s2) {
+		s1 = toUpperCase(s1);
+		s2 = toUpperCase(s2);
+
+		return s1.equals(s2);
+	}
+
 	/**
 	 * Returns the substring of each character instance in string <code>s</code>
 	 * that is found in the character array <code>chars</code>. The substring of

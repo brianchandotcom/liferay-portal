@@ -101,13 +101,13 @@
 			valueString = ParamUtil.getString(request, name, valueString);
 		}
 
-		if (valueString.equalsIgnoreCase("false") || valueString.equalsIgnoreCase("true")) {
+		if (StringUtil.equalsIgnoreCase(valueString, "false") || StringUtil.equalsIgnoreCase(valueString, "true")) {
 			checked = GetterUtil.getBoolean(valueString);
 		}
 
 		String defaultValueString = String.valueOf(checked);
 
-		if (Validator.isNotNull(valueString) && !valueString.equalsIgnoreCase("false") && !valueString.equalsIgnoreCase("true")) {
+		if (Validator.isNotNull(valueString) && !StringUtil.equalsIgnoreCase(valueString, "false") && !StringUtil.equalsIgnoreCase(valueString, "true")) {
 			defaultValueString = valueString;
 		}
 		%>

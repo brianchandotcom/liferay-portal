@@ -238,7 +238,7 @@ public class JournalContentPortletDataHandler
 		List<Element> ddmStructureElements = ddmStructuresElement.elements();
 
 		for (Element ddmStructureElement : ddmStructureElements) {
-			StagedModelDataHandlerUtil.importStagedModel(
+			StagedModelDataHandlerUtil.importReferenceStagedModel(
 				portletDataContext, ddmStructureElement);
 		}
 
@@ -248,7 +248,7 @@ public class JournalContentPortletDataHandler
 		List<Element> ddmTemplateElements = ddmTemplatesElement.elements();
 
 		for (Element ddmTemplateElement : ddmTemplateElements) {
-			StagedModelDataHandlerUtil.importStagedModel(
+			StagedModelDataHandlerUtil.importReferenceStagedModel(
 				portletDataContext, ddmTemplateElement);
 		}
 
@@ -258,7 +258,7 @@ public class JournalContentPortletDataHandler
 		List<Element> articleElements = articlesElement.elements();
 
 		if (!articleElements.isEmpty()) {
-			StagedModelDataHandlerUtil.importStagedModel(
+			StagedModelDataHandlerUtil.importReferenceStagedModel(
 				portletDataContext, articleElements.get(0));
 		}
 

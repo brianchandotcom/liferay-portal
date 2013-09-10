@@ -153,7 +153,7 @@ public class FolderStagedModelDataHandler
 				folderElement, Repository.class, folder.getRepositoryId());
 
 		if (referenceDataElement != null) {
-			StagedModelDataHandlerUtil.importStagedModel(
+			StagedModelDataHandlerUtil.importReferenceStagedModel(
 				portletDataContext, referenceDataElement);
 
 			return;
@@ -170,7 +170,7 @@ public class FolderStagedModelDataHandler
 				(Folder)portletDataContext.getZipEntryAsObject(
 					parentFolderPath);
 
-			StagedModelDataHandlerUtil.importStagedModel(
+			StagedModelDataHandlerUtil.importReferenceStagedModel(
 				portletDataContext, parentFolder);
 		}
 
@@ -314,10 +314,6 @@ public class FolderStagedModelDataHandler
 
 		List<Long> currentFolderFileEntryTypeIds = new ArrayList<Long>();
 
-		Map<Long, Long> fileEntryTypeIds =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				DLFileEntryType.class);
-
 		String defaultFileEntryTypeUuid = GetterUtil.getString(
 			folderElement.attributeValue("defaultFileEntryTypeUuid"));
 
@@ -334,35 +330,20 @@ public class FolderStagedModelDataHandler
 				(DLFileEntryType)portletDataContext.getZipEntryAsObject(
 					referencePath);
 
-			String fileEntryTypeUuid = referenceDLFileEntryType.getUuid();
+			StagedModelDataHandlerUtil.importReferenceStagedModel(
+				portletDataContext, referenceDLFileEntryType);
+
+			Map<Long, Long> fileEntryTypeIds =
+				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+					DLFileEntryType.class);
+
+			long dlFileEntryTypeId = MapUtil.getLong(
+				fileEntryTypeIds, referenceDLFileEntryType.getFileEntryTypeId(),
+				referenceDLFileEntryType.getFileEntryTypeId());
 
 			DLFileEntryType existingDLFileEntryType =
-				DLFileEntryTypeLocalServiceUtil.
-					fetchDLFileEntryTypeByUuidAndGroupId(
-						fileEntryTypeUuid,
-						portletDataContext.getScopeGroupId());
-
-			if (existingDLFileEntryType == null) {
-				existingDLFileEntryType =
-					DLFileEntryTypeLocalServiceUtil.
-						fetchDLFileEntryTypeByUuidAndGroupId(
-							fileEntryTypeUuid,
-							portletDataContext.getCompanyGroupId());
-			}
-
-			if (existingDLFileEntryType == null) {
-				StagedModelDataHandlerUtil.importStagedModel(
-					portletDataContext, referenceDLFileEntryType);
-
-				long dlFileEntryTypeId = MapUtil.getLong(
-					fileEntryTypeIds,
-					referenceDLFileEntryType.getFileEntryTypeId(),
-					referenceDLFileEntryType.getFileEntryTypeId());
-
-				existingDLFileEntryType =
-					DLFileEntryTypeLocalServiceUtil.fetchDLFileEntryType(
-						dlFileEntryTypeId);
-			}
+				DLFileEntryTypeLocalServiceUtil.fetchDLFileEntryType(
+					dlFileEntryTypeId);
 
 			if (existingDLFileEntryType == null) {
 				continue;
@@ -371,7 +352,9 @@ public class FolderStagedModelDataHandler
 			currentFolderFileEntryTypeIds.add(
 				existingDLFileEntryType.getFileEntryTypeId());
 
-			if (defaultFileEntryTypeUuid.equals(fileEntryTypeUuid)) {
+			if (defaultFileEntryTypeUuid.equals(
+					referenceDLFileEntryType.getUuid())) {
+
 				defaultFileEntryTypeId =
 					existingDLFileEntryType.getFileEntryTypeId();
 			}

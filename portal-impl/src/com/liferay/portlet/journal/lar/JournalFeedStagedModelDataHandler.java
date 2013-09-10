@@ -227,7 +227,7 @@ public class JournalFeedStagedModelDataHandler
 				(DDMStructure)portletDataContext.getZipEntryAsObject(
 					ddmStructurePath);
 
-			StagedModelDataHandlerUtil.importStagedModel(
+			StagedModelDataHandlerUtil.importReferenceStagedModel(
 				portletDataContext, ddmStructure);
 
 			Map<String, String> ddmStructureKeys =
@@ -253,7 +253,7 @@ public class JournalFeedStagedModelDataHandler
 				(DDMTemplate)portletDataContext.getZipEntryAsObject(
 					ddmTemplatePath);
 
-			StagedModelDataHandlerUtil.importStagedModel(
+			StagedModelDataHandlerUtil.importReferenceStagedModel(
 				portletDataContext, ddmTemplate);
 
 			Map<String, String> ddmTemplateKeys =

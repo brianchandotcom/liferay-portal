@@ -327,7 +327,7 @@ public class OrganizationStagedModelDataHandler
 
 			address.setClassPK(importedOrganization.getOrganizationId());
 
-			StagedModelDataHandlerUtil.importStagedModel(
+			StagedModelDataHandlerUtil.importReferenceStagedModel(
 				portletDataContext, address);
 
 			Map<Long, Long> addressIds =
@@ -368,7 +368,7 @@ public class OrganizationStagedModelDataHandler
 
 			emailAddress.setClassPK(importedOrganization.getOrganizationId());
 
-			StagedModelDataHandlerUtil.importStagedModel(
+			StagedModelDataHandlerUtil.importReferenceStagedModel(
 				portletDataContext, emailAddress);
 
 			Map<Long, Long> emailAddressIds =
@@ -429,7 +429,7 @@ public class OrganizationStagedModelDataHandler
 			(PasswordPolicy)portletDataContext.getZipEntryAsObject(
 				passwordPolicyPath);
 
-		StagedModelDataHandlerUtil.importStagedModel(
+		StagedModelDataHandlerUtil.importReferenceStagedModel(
 			portletDataContext, passwordPolicy);
 
 		Map<Long, Long> passwordPolicyIds =
@@ -463,7 +463,7 @@ public class OrganizationStagedModelDataHandler
 
 			phone.setClassPK(importedOrganization.getOrganizationId());
 
-			StagedModelDataHandlerUtil.importStagedModel(
+			StagedModelDataHandlerUtil.importReferenceStagedModel(
 				portletDataContext, phone);
 
 			Map<Long, Long> phoneIds =
@@ -501,7 +501,7 @@ public class OrganizationStagedModelDataHandler
 
 			website.setClassPK(importedOrganization.getOrganizationId());
 
-			StagedModelDataHandlerUtil.importStagedModel(
+			StagedModelDataHandlerUtil.importReferenceStagedModel(
 				portletDataContext, website);
 
 			Map<Long, Long> websiteIds =

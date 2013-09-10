@@ -127,7 +127,7 @@ public class MDRActionStagedModelDataHandler
 			(MDRRuleGroupInstance)portletDataContext.getZipEntryAsObject(
 				ruleGroupInstancePath);
 
-		StagedModelDataHandlerUtil.importStagedModel(
+		StagedModelDataHandlerUtil.importReferenceStagedModel(
 			portletDataContext, ruleGroupInstance);
 
 		Map<Long, Long> ruleGroupInstanceIds =

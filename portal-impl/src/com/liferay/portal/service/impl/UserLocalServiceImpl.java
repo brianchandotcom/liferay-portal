@@ -280,7 +280,9 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 			Account account = company.getAccount();
 
-			if (defaultGroupName.equalsIgnoreCase(account.getName())) {
+			if (StringUtil.equalsIgnoreCase(
+					defaultGroupName, account.getName())) {
+
 				defaultGroupName = GroupConstants.GUEST;
 			}
 
@@ -3275,7 +3277,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		if (user.isEmailAddressVerified() &&
-			emailAddress.equalsIgnoreCase(user.getEmailAddress())) {
+			StringUtil.equalsIgnoreCase(emailAddress, user.getEmailAddress())) {
 
 			return;
 		}
@@ -4684,7 +4686,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		validateScreenName(user.getCompanyId(), userId, screenName);
 
-		if (!user.getScreenName().equalsIgnoreCase(screenName)) {
+		if (!StringUtil.equalsIgnoreCase(user.getScreenName(), screenName)) {
 			user.setDigest(StringPool.BLANK);
 		}
 
@@ -4874,7 +4876,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			user.setReminderQueryAnswer(reminderQueryAnswer);
 		}
 
-		if (!user.getScreenName().equalsIgnoreCase(screenName)) {
+		if (!StringUtil.equalsIgnoreCase(user.getScreenName(), screenName)) {
 			user.setScreenName(screenName);
 
 			user.setDigest(StringPool.BLANK);
@@ -5645,7 +5647,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			String lastName, String emailAddress)
 		throws PortalException, SystemException {
 
-		if (emailAddress.equalsIgnoreCase(user.getEmailAddress())) {
+		if (StringUtil.equalsIgnoreCase(emailAddress, user.getEmailAddress())) {
 			return;
 		}
 
@@ -5890,7 +5892,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		User user = userPersistence.findByPrimaryKey(userId);
 
-		if (!user.getScreenName().equalsIgnoreCase(screenName)) {
+		if (!StringUtil.equalsIgnoreCase(user.getScreenName(), screenName)) {
 			validateScreenName(user.getCompanyId(), userId, screenName);
 		}
 
@@ -5900,7 +5902,8 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		if (!user.isDefaultUser()) {
 			if (Validator.isNotNull(emailAddress) &&
-				!user.getEmailAddress().equalsIgnoreCase(emailAddress)) {
+				!StringUtil.equalsIgnoreCase(
+					user.getEmailAddress(), emailAddress)) {
 
 				if (userPersistence.fetchByC_EA(
 						user.getCompanyId(), emailAddress) != null) {
@@ -5955,7 +5958,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			PropsKeys.MAIL_SESSION_MAIL_POP3_USER,
 			PropsValues.MAIL_SESSION_MAIL_POP3_USER);
 
-		if (emailAddress.equalsIgnoreCase(pop3User)) {
+		if (StringUtil.equalsIgnoreCase(emailAddress, pop3User)) {
 			throw new ReservedUserEmailAddressException();
 		}
 
@@ -5964,7 +5967,9 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			StringPool.NEW_LINE, PropsValues.ADMIN_RESERVED_EMAIL_ADDRESSES);
 
 		for (String reservedEmailAddress : reservedEmailAddresses) {
-			if (emailAddress.equalsIgnoreCase(reservedEmailAddress)) {
+			if (StringUtil.equalsIgnoreCase(
+					emailAddress, reservedEmailAddress)) {
+
 				throw new ReservedUserEmailAddressException();
 			}
 		}
@@ -5981,7 +5986,9 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		validateEmailAddress(user.getCompanyId(), emailAddress1);
 		validateEmailAddress(user.getCompanyId(), emailAddress2);
 
-		if (!emailAddress1.equalsIgnoreCase(user.getEmailAddress())) {
+		if (!StringUtil.equalsIgnoreCase(
+				emailAddress1, user.getEmailAddress())) {
+
 			if (userPersistence.fetchByC_EA(
 					user.getCompanyId(), emailAddress1) != null) {
 
@@ -6109,7 +6116,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		String[] anonymousNames = BaseServiceImpl.ANONYMOUS_NAMES;
 
 		for (String anonymousName : anonymousNames) {
-			if (screenName.equalsIgnoreCase(anonymousName)) {
+			if (StringUtil.equalsIgnoreCase(screenName, anonymousName)) {
 				throw new UserScreenNameException();
 			}
 		}
@@ -6141,7 +6148,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			StringPool.NEW_LINE, PropsValues.ADMIN_RESERVED_SCREEN_NAMES);
 
 		for (String reservedScreenName : reservedScreenNames) {
-			if (screenName.equalsIgnoreCase(reservedScreenName)) {
+			if (StringUtil.equalsIgnoreCase(screenName, reservedScreenName)) {
 				throw new ReservedUserScreenNameException();
 			}
 		}

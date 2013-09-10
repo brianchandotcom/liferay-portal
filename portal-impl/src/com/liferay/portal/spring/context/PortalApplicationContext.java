@@ -17,6 +17,7 @@ package com.liferay.portal.spring.context;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.FileNotFoundException;
@@ -63,7 +64,9 @@ public class PortalApplicationContext extends XmlWebApplicationContext {
 		List<String> configLocations = ListUtil.fromArray(
 			PropsValues.SPRING_CONFIGS);
 
-		if (PropsValues.PERSISTENCE_PROVIDER.equalsIgnoreCase("jpa")) {
+		if (StringUtil.equalsIgnoreCase(
+				PropsValues.PERSISTENCE_PROVIDER, "jpa")) {
+
 			configLocations.remove("META-INF/hibernate-spring.xml");
 		}
 		else {

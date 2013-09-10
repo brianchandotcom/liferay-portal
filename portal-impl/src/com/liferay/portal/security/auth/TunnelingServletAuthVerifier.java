@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.UserLocalServiceUtil;
@@ -79,7 +80,9 @@ public class TunnelingServletAuthVerifier implements AuthVerifier {
 
 		String basic = st.nextToken();
 
-		if (!basic.equalsIgnoreCase(HttpServletRequest.BASIC_AUTH)) {
+		if (!StringUtil.equalsIgnoreCase(
+				basic, HttpServletRequest.BASIC_AUTH)) {
+
 			return null;
 		}
 

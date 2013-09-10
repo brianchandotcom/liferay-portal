@@ -722,7 +722,7 @@ public class EditUserAction extends PortletAction {
 		Company company = PortalUtil.getCompany(actionRequest);
 
 		if (company.isStrangersVerify() &&
-			!oldEmailAddress.equalsIgnoreCase(emailAddress)) {
+			!StringUtil.equalsIgnoreCase(oldEmailAddress, emailAddress)) {
 
 			SessionMessages.add(actionRequest, "verificationEmailSent");
 		}

@@ -239,7 +239,7 @@ public class CompanyImpl extends CompanyBaseImpl {
 			StringPool.NEW_LINE, PropsValues.ADMIN_MAIL_HOST_NAMES);
 
 		for (int i = 0; i < mailHostNames.length; i++) {
-			if (mx.equalsIgnoreCase(mailHostNames[i])) {
+			if (StringUtil.equalsIgnoreCase(mx, mailHostNames[i])) {
 				return true;
 			}
 		}

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.sql.Connection;
@@ -86,12 +87,12 @@ public class VerifyMySQL extends VerifyProcess {
 				String engine = GetterUtil.getString(rs.getString("Engine"));
 				String comment = GetterUtil.getString(rs.getString("Comment"));
 
-				if (comment.equalsIgnoreCase("VIEW")) {
+				if (StringUtil.equalsIgnoreCase(comment, "VIEW")) {
 					continue;
 				}
 
-				if (engine.equalsIgnoreCase(
-						PropsValues.DATABASE_MYSQL_ENGINE)) {
+				if (StringUtil.equalsIgnoreCase(
+						engine, PropsValues.DATABASE_MYSQL_ENGINE)) {
 
 					continue;
 				}

@@ -242,7 +242,9 @@ public class AutoDeployDir {
 			boolean blacklistedFileExists = false;
 
 			for (File file : files) {
-				if (blacklistedFileName.equalsIgnoreCase(file.getName())) {
+				if (StringUtil.equalsIgnoreCase(
+						blacklistedFileName, file.getName())) {
+
 					blacklistedFileExists = true;
 				}
 			}

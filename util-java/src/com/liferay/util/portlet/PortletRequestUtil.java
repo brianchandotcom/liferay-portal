@@ -290,11 +290,11 @@ public class PortletRequestUtil {
 	}
 
 	private static boolean _isValidAttributeName(String name) {
-		if (name.equalsIgnoreCase("j_password") ||
-			name.equalsIgnoreCase("LAYOUT_CONTENT") ||
-			name.equalsIgnoreCase("LAYOUTS") ||
-			name.equalsIgnoreCase("PORTLET_RENDER_PARAMETERS") ||
-			name.equalsIgnoreCase("USER_PASSWORD") ||
+		if (StringUtil.equalsIgnoreCase(name, "j_password") ||
+			StringUtil.equalsIgnoreCase(name, "LAYOUT_CONTENT") ||
+			StringUtil.equalsIgnoreCase(name, "LAYOUTS") ||
+			StringUtil.equalsIgnoreCase(name, "PORTLET_RENDER_PARAMETERS") ||
+			StringUtil.equalsIgnoreCase(name, "USER_PASSWORD") ||
 			name.startsWith("javax.") ||
 			name.startsWith("liferay-ui:")) {
 

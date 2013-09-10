@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
@@ -103,8 +104,8 @@ public class HeaderFilter extends BasePortalFilter {
 
 			boolean addHeader = true;
 
-			if (name.equalsIgnoreCase(HttpHeaders.CACHE_CONTROL) ||
-				name.equalsIgnoreCase(HttpHeaders.EXPIRES)) {
+			if (StringUtil.equalsIgnoreCase(name, HttpHeaders.CACHE_CONTROL) ||
+				StringUtil.equalsIgnoreCase(name, HttpHeaders.EXPIRES)) {
 
 				boolean newSession = false;
 
@@ -116,7 +117,9 @@ public class HeaderFilter extends BasePortalFilter {
 
 				String contextPath = request.getContextPath();
 
-				if (name.equalsIgnoreCase(HttpHeaders.EXPIRES) && newSession) {
+				if (StringUtil.equalsIgnoreCase(name, HttpHeaders.EXPIRES) &&
+					newSession) {
+
 					addHeader = false;
 				}
 				else if (PropsValues.WEB_SERVER_PROXY_LEGACY_MODE &&

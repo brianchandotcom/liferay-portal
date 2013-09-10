@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.Portal;
 import com.liferay.portlet.login.util.LoginUtil;
 
@@ -139,7 +140,9 @@ public class BasicAuthHeaderAutoLogin
 
 		// We only handle HTTP Basic authentication
 
-		if (!basic.equalsIgnoreCase(HttpServletRequest.BASIC_AUTH)) {
+		if (!StringUtil.equalsIgnoreCase(
+				basic, HttpServletRequest.BASIC_AUTH)) {
+
 			return null;
 		}
 

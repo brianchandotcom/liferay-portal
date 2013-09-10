@@ -66,7 +66,7 @@ public class LocaleTransformerListener extends BaseTransformerListener {
 			String tempLanguageId = element.attributeValue(
 				"language-id", languageId);
 
-			if (!tempLanguageId.equalsIgnoreCase(languageId)) {
+			if (!StringUtil.equalsIgnoreCase(tempLanguageId, languageId)) {
 				root.remove(element);
 			}
 			else {
@@ -100,7 +100,7 @@ public class LocaleTransformerListener extends BaseTransformerListener {
 			boolean supportedLocale = false;
 
 			for (String availableLocale : availableLocales) {
-				if (availableLocale.equalsIgnoreCase(languageId)) {
+				if (StringUtil.equalsIgnoreCase(availableLocale, languageId)) {
 					supportedLocale = true;
 
 					break;

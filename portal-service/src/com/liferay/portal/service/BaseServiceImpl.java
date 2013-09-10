@@ -17,6 +17,7 @@ package com.liferay.portal.service;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.CompanyThreadLocal;
@@ -100,7 +101,7 @@ public abstract class BaseServiceImpl implements BaseService {
 		}
 		else {
 			for (int i = 0; i < ANONYMOUS_NAMES.length; i++) {
-				if (name.equalsIgnoreCase(ANONYMOUS_NAMES[i])) {
+				if (StringUtil.equalsIgnoreCase(name, ANONYMOUS_NAMES[i])) {
 					throw new PrincipalException(
 						"Principal cannot be " + ANONYMOUS_NAMES[i]);
 				}

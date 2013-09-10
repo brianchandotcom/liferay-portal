@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.dao.jdbc.DataSourceFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.spring.hibernate.PortalHibernateConfiguration;
 import com.liferay.portal.spring.hibernate.PortletHibernateConfiguration;
 import com.liferay.portal.spring.jpa.LocalContainerEntityManagerFactoryBean;
@@ -69,7 +70,9 @@ public class DataSourceSwapper {
 
 		DataSourceFactoryUtil.destroyDataSource(oldDataSource);
 
-		if (PropsValues.PERSISTENCE_PROVIDER.equalsIgnoreCase("jpa")) {
+		if (StringUtil.equalsIgnoreCase(
+				PropsValues.PERSISTENCE_PROVIDER, "jpa")) {
+
 			if (_log.isInfoEnabled()) {
 				_log.info("Reinitialize Hibernate for new counter data source");
 			}
@@ -110,7 +113,9 @@ public class DataSourceSwapper {
 
 		DataSourceFactoryUtil.destroyDataSource(oldDataSource);
 
-		if (PropsValues.PERSISTENCE_PROVIDER.equalsIgnoreCase("jpa")) {
+		if (StringUtil.equalsIgnoreCase(
+				PropsValues.PERSISTENCE_PROVIDER, "jpa")) {
+
 			if (_log.isInfoEnabled()) {
 				_log.info("Reinitialize Hibernate for new liferay data source");
 			}

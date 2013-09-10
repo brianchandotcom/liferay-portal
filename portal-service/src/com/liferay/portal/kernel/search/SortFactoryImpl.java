@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.search;
 
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
@@ -51,7 +52,8 @@ public class SortFactoryImpl implements SortFactory {
 		}
 
 		return new Sort(
-			sortField, Sort.STRING_TYPE, !orderByType.equalsIgnoreCase("asc"));
+			sortField, Sort.STRING_TYPE,
+			!StringUtil.equalsIgnoreCase(orderByType, "asc"));
 	}
 
 	@Override

@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.liveusers.LiveUsers;
 import com.liferay.portal.model.Company;
@@ -640,7 +641,8 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 			if (themeDisplay.isLifecycleResource() ||
 				themeDisplay.isStateExclusive() ||
 				themeDisplay.isStatePopUp() ||
-				!request.getMethod().equalsIgnoreCase(HttpMethods.GET)) {
+				!StringUtil.equalsIgnoreCase(
+					request.getMethod(), HttpMethods.GET)) {
 
 				saveLastPath = false;
 			}

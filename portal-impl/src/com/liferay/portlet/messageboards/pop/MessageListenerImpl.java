@@ -99,7 +99,7 @@ public class MessageListenerImpl implements MessageListener {
 				PropsKeys.MAIL_SESSION_MAIL_POP3_USER,
 				PropsValues.MAIL_SESSION_MAIL_POP3_USER);
 
-			if (from.equalsIgnoreCase(pop3User)) {
+			if (StringUtil.equalsIgnoreCase(from, pop3User)) {
 				return false;
 			}
 

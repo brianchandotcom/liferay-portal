@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Company;
@@ -2010,7 +2011,7 @@ public class OrganizationLocalServiceImpl
 				companyId, name);
 
 			if ((organization != null) &&
-				organization.getName().equalsIgnoreCase(name)) {
+				StringUtil.equalsIgnoreCase(organization.getName(), name)) {
 
 				if ((organizationId <= 0) ||
 					(organization.getOrganizationId() != organizationId)) {

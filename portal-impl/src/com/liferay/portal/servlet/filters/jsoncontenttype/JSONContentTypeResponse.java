@@ -15,6 +15,7 @@
 package com.liferay.portal.servlet.filters.jsoncontenttype;
 
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
@@ -31,7 +32,9 @@ public class JSONContentTypeResponse extends HttpServletResponseWrapper {
 
 	@Override
 	public void setContentType(String contentType) {
-		if (contentType.equalsIgnoreCase(ContentTypes.APPLICATION_JSON)) {
+		if (StringUtil.equalsIgnoreCase(
+				contentType, ContentTypes.APPLICATION_JSON)) {
+
 			contentType = ContentTypes.TEXT_JAVASCRIPT;
 		}
 

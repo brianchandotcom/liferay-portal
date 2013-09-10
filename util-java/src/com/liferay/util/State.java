@@ -57,10 +57,10 @@ public class State {
 		State state = (State)obj;
 
 		if ((getId() != null) && (state.getId() != null)) {
-			return getId().equalsIgnoreCase(state.getId());
+			return StringUtil.equalsIgnoreCase(getId(), state.getId());
 		}
 		else if ((getName() != null) && (state.getName() != null)) {
-			return getName().equalsIgnoreCase(state.getName());
+			return StringUtil.equalsIgnoreCase(getName(), state.getName());
 		}
 		else {
 			return false;

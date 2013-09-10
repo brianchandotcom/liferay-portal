@@ -46,12 +46,14 @@ public class URLCodecTest {
 			String result = URLCodec.encodeURL(
 				_RAW_URLS[i], StringPool.UTF8, false);
 
-			Assert.assertTrue(_ENCODED_URLS[i].equalsIgnoreCase(result));
+			Assert.assertTrue(
+				StringUtil.equalsIgnoreCase(_ENCODED_URLS[i], result));
 
 			result = URLCodec.encodeURL(_RAW_URLS[i], StringPool.UTF8, true);
 
 			Assert.assertTrue(
-				_ESCAPE_SPACES_ENCODED_URLS[i].equalsIgnoreCase(result));
+				StringUtil.equalsIgnoreCase(
+					_ESCAPE_SPACES_ENCODED_URLS[i], result));
 		}
 	}
 

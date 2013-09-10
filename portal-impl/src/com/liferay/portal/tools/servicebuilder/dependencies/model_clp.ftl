@@ -12,9 +12,12 @@ import ${packagePath}.service.ClpSerializer;
 
 import com.liferay.portal.LocaleException;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.lar.StagedModelType;
+import com.liferay.portal.kernel.trash.TrashHandler;
+import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -26,8 +29,12 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.BaseModel;
+import com.liferay.portal.model.ContainerModel;
+import com.liferay.portal.model.TrashedModel;
 import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.trash.model.TrashEntry;
+import com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil;
 
 import java.io.Serializable;
 
@@ -463,6 +470,90 @@ public class ${entity.name}Clp extends BaseModelImpl<${entity.name}> implements 
 		}
 	</#if>
 
+	<#if entity.isTrashedModel()>
+		<#if !entity.isWorkflowEnabled()>
+			@Override
+			public int getStatus() {
+				return 0;
+			}
+		</#if>
+
+		@Override
+		public TrashedModel getTrashContainer() {
+			TrashHandler trashHandler = getTrashHandler();
+
+			if ((trashHandler == null) || Validator.isNull(trashHandler.getContainerModelClassName())) {
+				return null;
+			}
+
+			try {
+				ContainerModel containerModel = trashHandler.getParentContainerModel(this);
+
+				if ((containerModel == null) || !(containerModel instanceof TrashedModel)) {
+					return null;
+				}
+
+				TrashedModel trashModel = (TrashedModel)containerModel;
+
+				if (trashModel.isInTrash()) {
+					return trashModel;
+				}
+
+				return trashModel.getTrashContainer();
+			}
+			catch (Exception e) {
+			}
+
+			return null;
+		}
+
+		@Override
+		public TrashEntry getTrashEntry() throws PortalException, SystemException {
+			if (!isInTrash() && !isInTrashContainer()) {
+				return null;
+			}
+
+			TrashEntry trashEntry = TrashEntryLocalServiceUtil.fetchEntry(getModelClassName(), getPrimaryKey());
+
+			if (trashEntry != null) {
+				return trashEntry;
+			}
+
+			TrashedModel trashedModel = getTrashContainer();
+
+			if (trashedModel != null) {
+				return trashedModel.getTrashEntry();
+			}
+
+			return null;
+		}
+
+		@Override
+		public TrashHandler getTrashHandler() {
+			return TrashHandlerRegistryUtil.getTrashHandler(getModelClassName());
+		}
+
+		@Override
+		public boolean isInTrash() {
+			if (getStatus() == WorkflowConstants.STATUS_IN_TRASH) {
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+
+		@Override
+		public boolean isInTrashContainer() {
+			if (getTrashContainer() != null) {
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+	</#if>
+
 	<#if entity.isWorkflowEnabled()>
 		/**
 		 * @deprecated As of 6.1.0, replaced by {@link #isApproved}
@@ -525,16 +616,6 @@ public class ${entity.name}Clp extends BaseModelImpl<${entity.name}> implements 
 		@Override
 		public boolean isIncomplete() {
 			if (getStatus() == WorkflowConstants.STATUS_INCOMPLETE) {
-				return true;
-			}
-			else {
-				return false;
-			}
-		}
-
-		@Override
-		public boolean isInTrash() {
-			if (getStatus() == WorkflowConstants.STATUS_IN_TRASH) {
 				return true;
 			}
 			else {

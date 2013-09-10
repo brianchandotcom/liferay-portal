@@ -1932,6 +1932,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		page.setStatusByUserName(user.getFullName());
 		page.setStatusDate(now);
 
+		wikiPagePersistence.update(page);
+
 		if (status == WorkflowConstants.STATUS_APPROVED) {
 
 			// Asset

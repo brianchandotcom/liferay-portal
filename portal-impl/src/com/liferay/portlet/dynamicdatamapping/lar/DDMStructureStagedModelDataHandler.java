@@ -58,7 +58,7 @@ public class DDMStructureStagedModelDataHandler
 	}
 
 	@Override
-	public void doProcessGlobalStagedModel(
+	public void doImportGlobalStagedModel(
 			PortletDataContext portletDataContext, DDMStructure structure)
 		throws Exception {
 

@@ -92,6 +92,27 @@ public class DLFileEntryTypeStagedModelDataHandler
 	}
 
 	@Override
+	protected void doImportGlobalStagedModel(
+			PortletDataContext portletDataContext,
+			DLFileEntryType fileEntryType)
+		throws Exception {
+
+		DLFileEntryType existingFileEntryType =
+			DLFileEntryTypeLocalServiceUtil.
+				fetchDLFileEntryTypeByUuidAndGroupId(
+					fileEntryType.getUuid(),
+					portletDataContext.getCompanyGroupId());
+
+		Map<Long, Long> fileEntryTypeIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				DLFileEntryType.class);
+
+		fileEntryTypeIds.put(
+			fileEntryType.getFileEntryTypeId(),
+			existingFileEntryType.getFileEntryTypeId());
+	}
+
+	@Override
 	protected void doImportStagedModel(
 			PortletDataContext portletDataContext,
 			DLFileEntryType fileEntryType)
@@ -200,27 +221,6 @@ public class DLFileEntryTypeStagedModelDataHandler
 			DDMStructureLocalServiceUtil.updateDDMStructure(
 				importedDDMStructure);
 		}
-	}
-
-	@Override
-	protected void doProcessGlobalStagedModel(
-			PortletDataContext portletDataContext,
-			DLFileEntryType fileEntryType)
-		throws Exception {
-
-		DLFileEntryType existingFileEntryType =
-			DLFileEntryTypeLocalServiceUtil.
-				fetchDLFileEntryTypeByUuidAndGroupId(
-					fileEntryType.getUuid(),
-					portletDataContext.getCompanyGroupId());
-
-		Map<Long, Long> fileEntryTypeIds =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				DLFileEntryType.class);
-
-		fileEntryTypeIds.put(
-			fileEntryType.getFileEntryTypeId(),
-			existingFileEntryType.getFileEntryTypeId());
 	}
 
 	@Override

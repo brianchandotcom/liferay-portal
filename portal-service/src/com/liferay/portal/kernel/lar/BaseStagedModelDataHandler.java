@@ -81,6 +81,19 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 	}
 
 	@Override
+	public void importGlobalStagedModel(
+			PortletDataContext portletDataContext, T stagedModel)
+		throws PortletDataException {
+
+		try {
+			doImportGlobalStagedModel(portletDataContext, stagedModel);
+		}
+		catch (Exception e) {
+			throw new PortletDataException(e);
+		}
+	}
+
+	@Override
 	public void importStagedModel(
 			PortletDataContext portletDataContext, T stagedModel)
 		throws PortletDataException {
@@ -102,19 +115,6 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 
 			manifestSummary.incrementModelAdditionCount(
 				stagedModel.getStagedModelType());
-		}
-		catch (Exception e) {
-			throw new PortletDataException(e);
-		}
-	}
-
-	@Override
-	public void processGlobalStagedModel(
-			PortletDataContext portletDataContext, T stagedModel)
-		throws PortletDataException {
-
-		try {
-			doProcessGlobalStagedModel(portletDataContext, stagedModel);
 		}
 		catch (Exception e) {
 			throw new PortletDataException(e);
@@ -162,16 +162,16 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 			PortletDataContext portletDataContext, T stagedModel)
 		throws Exception;
 
-	protected abstract void doImportStagedModel(
-			PortletDataContext portletDataContext, T stagedModel)
-		throws Exception;
-
-	protected void doProcessGlobalStagedModel(
+	protected void doImportGlobalStagedModel(
 			PortletDataContext portletDataContext, T stagedModel)
 		throws Exception {
 
 		throw new UnsupportedOperationException();
 	}
+
+	protected abstract void doImportStagedModel(
+			PortletDataContext portletDataContext, T stagedModel)
+		throws Exception;
 
 	protected boolean isExportable(
 		PortletDataContext portletDataContext, T stagedModel) {

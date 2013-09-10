@@ -40,11 +40,11 @@ public interface StagedModelDataHandler<T extends StagedModel> {
 
 	public int[] getExportableStatuses();
 
-	public void importStagedModel(
-			PortletDataContext portletDataContext, T stagedModel)
-		throws PortletDataException;
+	public void importGlobalStagedModel(
+		PortletDataContext portletDataContext, T stagedModel)
+	throws PortletDataException;
 
-	public void processGlobalStagedModel(
+	public void importStagedModel(
 			PortletDataContext portletDataContext, T stagedModel)
 		throws PortletDataException;
 

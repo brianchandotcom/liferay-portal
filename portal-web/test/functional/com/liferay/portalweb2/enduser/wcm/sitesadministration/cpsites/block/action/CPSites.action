@@ -1,4 +1,30 @@
 <definition>
+	<command name="assertClick">
+		<case locator-key1="ADD">
+			<execute function="AssertClick#assertTextClickAt" />
+		</case>
+
+		<case locator-key1="ADD_BLANK_SITE">
+			<execute function="AssertClick#assertTextClickAtAndWait" />
+		</case>
+
+		<case locator-key1="ADD_COMMUNITY_SITE">
+			<execute function="AssertClick#assertTextClickAtAndWait" />
+		</case>
+
+		<case locator-key1="ADD_INTRANET_SITE">
+			<execute function="AssertClick#assertTextClickAtAndWait" />
+		</case>
+
+		<case locator-key1="BASIC_SEARCH_BUTTON">
+			<execute function="AssertClick#assertTextClickAtAndWait" />
+		</case>
+
+		<case locator-key1="SITE_MENULIST_DELETE">
+			<execute function="AssertClick#assertTextClickAtAndWait" />
+		</case>
+	</command>
+	
 	<command name="assertTextEquals">
 		<case locator-key1="INFO_MESSAGE">
 			<execute function="AssertTextEquals#assertText" />
@@ -10,32 +36,6 @@
 
 		<case locator-key1="SUCCESS_MESSAGE">
 			<execute function="AssertTextEquals#assertText" />
-		</case>
-	</command>
-
-	<command name="click">
-		<case locator-key1="ADD">
-			<execute function="Click#textClickAt" />
-		</case>
-
-		<case locator-key1="ADD_BLANK_SITE">
-			<execute function="Click#textClickAtAndWait" />
-		</case>
-
-		<case locator-key1="ADD_COMMUNITY_SITE">
-			<execute function="Click#textClickAtAndWait" />
-		</case>
-
-		<case locator-key1="ADD_INTRANET_SITE">
-			<execute function="Click#textClickAtAndWait" />
-		</case>
-
-		<case locator-key1="BASIC_SEARCH_BUTTON">
-			<execute function="Click#textClickAtAndWait" />
-		</case>
-
-		<case locator-key1="SITE_MENULIST_DELETE">
-			<execute function="Click#textClickAtAndWait" />
 		</case>
 	</command>
 </definition>

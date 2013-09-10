@@ -409,7 +409,17 @@ public class StringUtil {
 			}
 
 			if ((c1 > 127) || (c2 > 127)) {
-				return s1.equalsIgnoreCase(s2);
+
+				// Georgian alphabet needs to check both upper and lower case
+
+				if ((Character.toUpperCase(c1) == Character.toUpperCase(c2)) ||
+					(Character.toLowerCase(c1) ==
+							Character.toLowerCase(c2))) {
+
+					continue;
+				}
+
+				return false;
 			}
 
 			int delta = c1 - c2;

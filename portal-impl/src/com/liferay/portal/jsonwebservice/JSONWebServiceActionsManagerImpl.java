@@ -14,6 +14,9 @@
 
 package com.liferay.portal.jsonwebservice;
 
+import com.liferay.portal.kernel.bean.BeanLocator;
+import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceAction;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionMapping;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManager;
@@ -30,6 +33,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MethodParameter;
 import com.liferay.portal.kernel.util.SortedArrayList;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.spring.context.PortalContextLoaderListener;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 
@@ -277,6 +281,55 @@ public class JSONWebServiceActionsManagerImpl
 		}
 
 		_jsonWebServiceActionConfigs.add(jsonWebServiceActionConfig);
+	}
+
+	@Override
+	public int registerServletContext(ServletContext servletContext) {
+		String contextPath = ContextPathUtil.getContextPath(servletContext);
+
+		return registerServletContext(contextPath);
+	}
+
+	public int registerServletContext(String contextPath) {
+
+		BeanLocator beanLocator = null;
+
+		if (contextPath.equals(
+				PortalContextLoaderListener.getPortalServletContextPath()) ||
+			contextPath.isEmpty()) {
+
+			beanLocator = PortalBeanLocatorUtil.getBeanLocator();
+		}
+		else {
+			String contextName = contextPath;
+
+			if (contextName.startsWith(StringPool.SLASH)) {
+				contextName = contextName.substring(1);
+			}
+
+			beanLocator = PortletBeanLocatorUtil.getBeanLocator(contextName);
+		}
+
+		if (beanLocator == null) {
+			if (_log.isInfoEnabled()) {
+				_log.info("Bean locator not available for " + contextPath);
+			}
+
+			return -1;
+		}
+
+		JSONWebServiceRegistrator jsonWebServiceRegitrator =
+			new JSONWebServiceRegistrator();
+
+		jsonWebServiceRegitrator.processAllBeans(contextPath, beanLocator);
+
+		int count = getJSONWebServiceActionsCount(contextPath);
+
+		if (_log.isInfoEnabled()) {
+			_log.info("Configured " + count + " actions for " + contextPath);
+		}
+
+		return count;
 	}
 
 	@Override

@@ -266,9 +266,9 @@ else {
 							</liferay-portlet:renderURL>
 
 							<%
-							expandViewURL = PortletURLUtil.clone(viewURL, liferayPortletResponse);
+							expandViewDocumentsHomeURL = PortletURLUtil.clone(viewURL, liferayPortletResponse);
 
-							expandViewURL.setParameter("expandFolder", Boolean.TRUE.toString());
+							expandViewDocumentsHomeURL.setParameter("expandFolder", Boolean.TRUE.toString());
 
 							dataExpand = new HashMap<String, Object>();
 
@@ -288,7 +288,7 @@ else {
 								dataExpand="<%= dataExpand %>"
 								dataView="<%= dataView %>"
 								entryTitle="<%= mountFolder.getName() %>"
-								expandURL="<%= expandViewURL.toString() %>"
+								expandURL="<%= expandViewDocumentsHomeURL.toString() %>"
 								iconImage="icon-hdd"
 								selected="<%= (mountFolder.getFolderId() == folderId) %>"
 								showExpand="<%= mountFoldersCount > 0 %>"

@@ -153,10 +153,9 @@ AUI.add(
 						var value = true;
 
 						var fieldName = rule.fieldName;
-						var ruleBodyType = typeof rule.body;
 						var validatorName = rule.validatorName;
 
-						if ((ruleBodyType === "number") && !rule.custom) {
+						if (rule.body && !rule.custom) {
 							value = rule.body;
 						}
 

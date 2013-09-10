@@ -86,14 +86,16 @@ public class JournalArticleStagedModelDataHandler
 			return;
 		}
 
-		if (Validator.isNull(extraData)) {
+		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject(
+			extraData);
+
+		if (Validator.isNull(extraData) ||
+			extraDataJSONObject.getBoolean("inTrash")) {
+
 			JournalArticleLocalServiceUtil.deleteArticle(
 				groupId, articleResource.getArticleId(), null);
 		}
 		else {
-			JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject(
-				extraData);
-
 			double version = extraDataJSONObject.getDouble("version");
 
 			JournalArticle article = JournalArticleLocalServiceUtil.getArticle(

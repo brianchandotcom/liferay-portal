@@ -2108,6 +2108,7 @@ create table TrashEntry (
 	createDate DATE null,
 	classNameId LONG,
 	classPK LONG,
+	systemEventSetKey LONG,
 	typeSettings TEXT null,
 	status INTEGER
 );

@@ -95,8 +95,9 @@ public class SystemEventModelImpl extends BaseModelImpl<SystemEvent>
 	public static long CLASSNAMEID_COLUMN_BITMASK = 1L;
 	public static long CLASSPK_COLUMN_BITMASK = 2L;
 	public static long GROUPID_COLUMN_BITMASK = 4L;
-	public static long TYPE_COLUMN_BITMASK = 8L;
-	public static long CREATEDATE_COLUMN_BITMASK = 16L;
+	public static long SYSTEMEVENTSETKEY_COLUMN_BITMASK = 8L;
+	public static long TYPE_COLUMN_BITMASK = 16L;
+	public static long CREATEDATE_COLUMN_BITMASK = 32L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
 				"lock.expiration.time.com.liferay.portal.model.SystemEvent"));
 
@@ -437,7 +438,19 @@ public class SystemEventModelImpl extends BaseModelImpl<SystemEvent>
 
 	@Override
 	public void setSystemEventSetKey(long systemEventSetKey) {
+		_columnBitmask |= SYSTEMEVENTSETKEY_COLUMN_BITMASK;
+
+		if (!_setOriginalSystemEventSetKey) {
+			_setOriginalSystemEventSetKey = true;
+
+			_originalSystemEventSetKey = _systemEventSetKey;
+		}
+
 		_systemEventSetKey = systemEventSetKey;
+	}
+
+	public long getOriginalSystemEventSetKey() {
+		return _originalSystemEventSetKey;
 	}
 
 	@Override
@@ -585,6 +598,10 @@ public class SystemEventModelImpl extends BaseModelImpl<SystemEvent>
 		systemEventModelImpl._originalClassPK = systemEventModelImpl._classPK;
 
 		systemEventModelImpl._setOriginalClassPK = false;
+
+		systemEventModelImpl._originalSystemEventSetKey = systemEventModelImpl._systemEventSetKey;
+
+		systemEventModelImpl._setOriginalSystemEventSetKey = false;
 
 		systemEventModelImpl._originalType = systemEventModelImpl._type;
 
@@ -783,6 +800,8 @@ public class SystemEventModelImpl extends BaseModelImpl<SystemEvent>
 	private long _referrerClassNameId;
 	private long _parentSystemEventId;
 	private long _systemEventSetKey;
+	private long _originalSystemEventSetKey;
+	private boolean _setOriginalSystemEventSetKey;
 	private int _type;
 	private int _originalType;
 	private boolean _setOriginalType;

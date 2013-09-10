@@ -128,6 +128,8 @@ public class TrashEntryPersistenceTest {
 
 		newTrashEntry.setClassPK(ServiceTestUtil.nextLong());
 
+		newTrashEntry.setSystemEventSetKey(ServiceTestUtil.nextLong());
+
 		newTrashEntry.setTypeSettings(ServiceTestUtil.randomString());
 
 		newTrashEntry.setStatus(ServiceTestUtil.nextInt());
@@ -153,6 +155,8 @@ public class TrashEntryPersistenceTest {
 			newTrashEntry.getClassNameId());
 		Assert.assertEquals(existingTrashEntry.getClassPK(),
 			newTrashEntry.getClassPK());
+		Assert.assertEquals(existingTrashEntry.getSystemEventSetKey(),
+			newTrashEntry.getSystemEventSetKey());
 		Assert.assertEquals(existingTrashEntry.getTypeSettings(),
 			newTrashEntry.getTypeSettings());
 		Assert.assertEquals(existingTrashEntry.getStatus(),
@@ -196,7 +200,8 @@ public class TrashEntryPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("TrashEntry", "entryId",
 			true, "groupId", true, "companyId", true, "userId", true,
 			"userName", true, "createDate", true, "classNameId", true,
-			"classPK", true, "typeSettings", true, "status", true);
+			"classPK", true, "systemEventSetKey", true, "typeSettings", true,
+			"status", true);
 	}
 
 	@Test
@@ -345,6 +350,8 @@ public class TrashEntryPersistenceTest {
 		trashEntry.setClassNameId(ServiceTestUtil.nextLong());
 
 		trashEntry.setClassPK(ServiceTestUtil.nextLong());
+
+		trashEntry.setSystemEventSetKey(ServiceTestUtil.nextLong());
 
 		trashEntry.setTypeSettings(ServiceTestUtil.randomString());
 

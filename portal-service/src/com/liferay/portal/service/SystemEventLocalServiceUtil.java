@@ -295,6 +295,11 @@ public class SystemEventLocalServiceUtil {
 		getService().deleteSystemEvents(groupId);
 	}
 
+	public static void deleteSystemEvents(long groupId, long systemEventSetKey)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteSystemEvents(groupId, systemEventSetKey);
+	}
+
 	public static com.liferay.portal.model.SystemEvent fetchSystemEvent(
 		long groupId, long classNameId, long classPK, int type)
 		throws com.liferay.portal.kernel.exception.SystemException {

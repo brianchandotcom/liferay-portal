@@ -137,6 +137,11 @@ public class DLFileEntryTrashHandler extends DLBaseTrashHandler {
 	}
 
 	@Override
+	public String getSystemEventClassName() {
+		return FileEntry.class.getName();
+	}
+
+	@Override
 	public ContainerModel getTrashContainer(long classPK)
 		throws PortalException, SystemException {
 

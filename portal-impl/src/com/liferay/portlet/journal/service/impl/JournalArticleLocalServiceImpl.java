@@ -5272,14 +5272,19 @@ public class JournalArticleLocalServiceImpl
 				journalArticlePersistence.update(articleVersion);
 			}
 
+			JournalArticleResource articleResource =
+				journalArticleResourceLocalService.getArticleResource(
+					article.getResourcePrimKey());
+
 			UnicodeProperties typeSettingsProperties = new UnicodeProperties();
 
 			typeSettingsProperties.put("title", article.getArticleId());
 
 			trashEntryLocalService.addTrashEntry(
 				userId, article.getGroupId(), JournalArticle.class.getName(),
-				article.getResourcePrimKey(), oldArticleVersionStatus,
-				articleVersionStatusOVPs, typeSettingsProperties);
+				article.getResourcePrimKey(), articleResource.getUuid(), null,
+				oldArticleVersionStatus, articleVersionStatusOVPs,
+				typeSettingsProperties);
 		}
 
 		if ((article.getClassNameId() ==

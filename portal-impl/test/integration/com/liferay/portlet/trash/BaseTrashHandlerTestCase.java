@@ -14,8 +14,14 @@
 
 package com.liferay.portlet.trash;
 
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
@@ -31,11 +37,14 @@ import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.ClassedModel;
 import com.liferay.portal.model.ContainerModel;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.WorkflowedModel;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceTestUtil;
+import com.liferay.portal.service.persistence.SystemEventActionableDynamicQuery;
 import com.liferay.portal.util.GroupTestUtil;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
@@ -253,6 +262,49 @@ public abstract class BaseTrashHandlerTestCase {
 
 	protected String getBaseModelName(ClassedModel classedModel) {
 		return StringPool.BLANK;
+	}
+
+	protected long getDeletionSystemEventCount(
+			TrashHandler trashHandler, final long systemEventSetKey)
+		throws Exception {
+
+		final long systemEventClassNameId = PortalUtil.getClassNameId(
+			trashHandler.getSystemEventClassName());
+
+		ActionableDynamicQuery actionableDynamicQuery =
+			new SystemEventActionableDynamicQuery() {
+
+			@Override
+			protected void addCriteria(DynamicQuery dynamicQuery) {
+				Property classNameIdProperty = PropertyFactoryUtil.forName(
+					"classNameId");
+
+				dynamicQuery.add(
+					classNameIdProperty.eq(systemEventClassNameId));
+
+				if (systemEventSetKey != -1) {
+					Property systemEventSetKeyProperty =
+						PropertyFactoryUtil.forName("systemEventSetKey");
+
+					dynamicQuery.add(
+						systemEventSetKeyProperty.eq(systemEventSetKey));
+				}
+
+				Property typeProperty = PropertyFactoryUtil.forName("type");
+
+				dynamicQuery.add(
+					typeProperty.eq(SystemEventConstants.TYPE_DELETE));
+			}
+
+			@Override
+			protected void performAction(Object object)
+				throws PortalException, SystemException {
+			}
+		};
+
+		actionableDynamicQuery.setGroupId(group.getGroupId());
+
+		return actionableDynamicQuery.performCount();
 	}
 
 	protected int getMineBaseModelsCount(long groupId, long userId)
@@ -499,6 +551,11 @@ public abstract class BaseTrashHandlerTestCase {
 		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
 			getBaseModelClassName());
 
+		Assert.assertEquals(
+			1,
+			getDeletionSystemEventCount(
+				trashHandler, trashEntry.getSystemEventSetKey()));
+
 		if (delete) {
 			trashHandler.deleteTrashEntry(getTrashEntryClassPK(baseModel));
 
@@ -520,6 +577,9 @@ public abstract class BaseTrashHandlerTestCase {
 			if (isAssetableModel()) {
 				Assert.assertNull(fetchAssetEntry(baseModel));
 			}
+
+			Assert.assertEquals(
+				1, getDeletionSystemEventCount(trashHandler, -1));
 		}
 		else {
 			trashHandler.restoreTrashEntry(
@@ -562,6 +622,9 @@ public abstract class BaseTrashHandlerTestCase {
 			if (uniqueTitle != null) {
 				Assert.assertEquals(uniqueTitle, getUniqueTitle(baseModel));
 			}
+
+			Assert.assertEquals(
+				0, getDeletionSystemEventCount(trashHandler, -1));
 		}
 	}
 
@@ -779,6 +842,8 @@ public abstract class BaseTrashHandlerTestCase {
 			initialTrashEntriesCount, getTrashEntriesCount(group.getGroupId()));
 
 		moveBaseModelToTrash((Long)baseModel.getPrimaryKeyObj());
+
+		FinderCacheUtil.clearCache();
 
 		Assert.assertEquals(
 			initialBaseModelsCount,

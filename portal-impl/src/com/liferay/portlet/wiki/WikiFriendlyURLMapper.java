@@ -43,6 +43,15 @@ public class WikiFriendlyURLMapper extends DefaultFriendlyURLMapper {
 			routeParameters.put("title", title);
 		}
 
+		if (routeParameters.containsKey("nodeName")) {
+			String nodeName = routeParameters.get("nodeName");
+
+			nodeName = StringUtil.replace(
+				nodeName, _UNESCAPED_CHARS, _ESCAPED_CHARS);
+
+			routeParameters.put("nodeName", nodeName);
+		}
+
 		String friendlyURLPath = router.parametersToUrl(routeParameters);
 
 		if (Validator.isNull(friendlyURLPath)) {
@@ -68,6 +77,15 @@ public class WikiFriendlyURLMapper extends DefaultFriendlyURLMapper {
 			title = StringUtil.replace(title, _ESCAPED_CHARS, _UNESCAPED_CHARS);
 
 			routeParameters.put("title", title);
+		}
+
+		if (routeParameters.containsKey("nodeName")) {
+			String nodeName = routeParameters.get("nodeName");
+
+			nodeName = StringUtil.replace(
+				nodeName, _ESCAPED_CHARS, _UNESCAPED_CHARS);
+
+			routeParameters.put("nodeName", nodeName);
 		}
 
 		super.populateParams(parameterMap, namespace, routeParameters);

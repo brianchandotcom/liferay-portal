@@ -231,6 +231,36 @@ public class JournalArticleStagedModelDataHandler
 	}
 
 	@Override
+	protected void doImportGlobalStagedModel(
+			PortletDataContext portletDataContext, JournalArticle article)
+		throws Exception {
+
+		JournalArticleResource existingArticleResource =
+			JournalArticleResourceLocalServiceUtil.
+				fetchJournalArticleResourceByUuidAndGroupId(
+					article.getArticleResourceUuid(),
+					portletDataContext.getCompanyGroupId());
+
+		JournalArticle existingArticle =
+			JournalArticleLocalServiceUtil.getLatestArticle(
+				existingArticleResource.getResourcePrimKey(),
+				WorkflowConstants.STATUS_ANY, false);
+
+		Map<String, String> articleArticleIds =
+			(Map<String, String>)portletDataContext.getNewPrimaryKeysMap(
+				JournalArticle.class + ".articleId");
+
+		articleArticleIds.put(
+			article.getArticleId(), existingArticle.getArticleId());
+
+		Map<Long, Long> articleIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				JournalArticle.class);
+
+		articleIds.put(article.getId(), existingArticle.getId());
+	}
+
+	@Override
 	protected void doImportStagedModel(
 			PortletDataContext portletDataContext, JournalArticle article)
 		throws Exception {
@@ -617,36 +647,6 @@ public class JournalArticleStagedModelDataHandler
 				smallFile.delete();
 			}
 		}
-	}
-
-	@Override
-	protected void doProcessGlobalStagedModel(
-			PortletDataContext portletDataContext, JournalArticle article)
-		throws Exception {
-
-		JournalArticleResource existingArticleResource =
-			JournalArticleResourceLocalServiceUtil.
-				fetchJournalArticleResourceByUuidAndGroupId(
-					article.getArticleResourceUuid(),
-					portletDataContext.getCompanyGroupId());
-
-		JournalArticle existingArticle =
-			JournalArticleLocalServiceUtil.getLatestArticle(
-				existingArticleResource.getResourcePrimKey(),
-				WorkflowConstants.STATUS_ANY, false);
-
-		Map<String, String> articleArticleIds =
-			(Map<String, String>)portletDataContext.getNewPrimaryKeysMap(
-				JournalArticle.class + ".articleId");
-
-		articleArticleIds.put(
-			article.getArticleId(), existingArticle.getArticleId());
-
-		Map<Long, Long> articleIds =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				JournalArticle.class);
-
-		articleIds.put(article.getId(), existingArticle.getId());
 	}
 
 	protected void exportArticleImage(

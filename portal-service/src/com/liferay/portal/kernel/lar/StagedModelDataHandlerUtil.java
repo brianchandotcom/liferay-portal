@@ -181,7 +181,7 @@ public class StagedModelDataHandlerUtil {
 			if (portletDataContext.isCompanyStagedGroupedModel(
 					stagedGroupedModel)) {
 
-				stagedModelDataHandler.processGlobalStagedModel(
+				stagedModelDataHandler.importGlobalStagedModel(
 					portletDataContext, stagedModel);
 
 				return;

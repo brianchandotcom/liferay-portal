@@ -179,6 +179,30 @@ public class DDMTemplateStagedModelDataHandler
 	}
 
 	@Override
+	protected void doImportGlobalStagedModel(
+			PortletDataContext portletDataContext, DDMTemplate template)
+		throws Exception {
+
+		DDMTemplate existingTemplate =
+			DDMTemplateLocalServiceUtil.fetchDDMTemplateByUuidAndGroupId(
+				template.getUuid(), portletDataContext.getCompanyGroupId());
+
+		Map<Long, Long> templateIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				DDMTemplate.class);
+
+		templateIds.put(
+			template.getTemplateId(), existingTemplate.getTemplateId());
+
+		Map<String, String> templateKeys =
+			(Map<String, String>)portletDataContext.getNewPrimaryKeysMap(
+				DDMTemplate.class + ".ddmTemplateKey");
+
+		templateKeys.put(
+			template.getTemplateKey(), existingTemplate.getTemplateKey());
+	}
+
+	@Override
 	protected void doImportStagedModel(
 			PortletDataContext portletDataContext, DDMTemplate template)
 		throws Exception {
@@ -287,30 +311,6 @@ public class DDMTemplateStagedModelDataHandler
 				smallFile.delete();
 			}
 		}
-	}
-
-	@Override
-	protected void doProcessGlobalStagedModel(
-			PortletDataContext portletDataContext, DDMTemplate template)
-		throws Exception {
-
-		DDMTemplate existingTemplate =
-			DDMTemplateLocalServiceUtil.fetchDDMTemplateByUuidAndGroupId(
-				template.getUuid(), portletDataContext.getCompanyGroupId());
-
-		Map<Long, Long> templateIds =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				DDMTemplate.class);
-
-		templateIds.put(
-			template.getTemplateId(), existingTemplate.getTemplateId());
-
-		Map<String, String> templateKeys =
-			(Map<String, String>)portletDataContext.getNewPrimaryKeysMap(
-				DDMTemplate.class + ".ddmTemplateKey");
-
-		templateKeys.put(
-			template.getTemplateKey(), existingTemplate.getTemplateKey());
 	}
 
 	@Override

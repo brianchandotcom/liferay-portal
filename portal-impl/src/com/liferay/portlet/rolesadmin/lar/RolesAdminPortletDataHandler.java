@@ -34,7 +34,6 @@ import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.service.persistence.RoleExportActionableDynamicQuery;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
 
 import java.util.List;
 
@@ -93,8 +92,7 @@ public class RolesAdminPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
-		portletDataContext.addPermissions(
-			PortletKeys.PORTAL, portletDataContext.getCompanyId());
+		portletDataContext.addPortalPermissions();
 
 		Element rootElement = addExportDataRootElement(portletDataContext);
 
@@ -115,9 +113,7 @@ public class RolesAdminPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences, String data)
 		throws Exception {
 
-		portletDataContext.importPermissions(
-			PortletKeys.PORTAL, portletDataContext.getSourceCompanyId(),
-			portletDataContext.getCompanyId());
+		portletDataContext.importPortalPermissions();
 
 		Element rolesElement = portletDataContext.getImportDataGroupElement(
 			Role.class);

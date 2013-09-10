@@ -69,8 +69,7 @@ public class DDLDisplayPortletDataHandler extends DDLPortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
-		portletDataContext.addPermissions(
-			DDLPermission.RESOURCE_NAME, portletDataContext.getScopeGroupId());
+		portletDataContext.addPortletPermissions(DDLPermission.RESOURCE_NAME);
 
 		long recordSetId = GetterUtil.getLong(
 			portletPreferences.getValue("recordSetId", null), 0);
@@ -104,9 +103,8 @@ public class DDLDisplayPortletDataHandler extends DDLPortletDataHandler {
 			PortletPreferences portletPreferences, String data)
 		throws Exception {
 
-		portletDataContext.importPermissions(
-			DDLPermission.RESOURCE_NAME, portletDataContext.getSourceGroupId(),
-			portletDataContext.getScopeGroupId());
+		portletDataContext.importPortletPermissions(
+			DDLPermission.RESOURCE_NAME);
 
 		Element recordSetsElement =
 			portletDataContext.getImportDataGroupElement(DDLRecordSet.class);

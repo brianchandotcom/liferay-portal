@@ -77,6 +77,7 @@ import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.TeamLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetLink;
@@ -548,6 +549,39 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 		_permissionsMap.put(
 			getPrimaryKeyString(resourceName, resourcePK), permissions);
+	}
+
+	@Override
+	public void addPortalPermissions() throws PortalException, SystemException {
+		addPermissions(PortletKeys.PORTAL, getCompanyId());
+	}
+
+	@Override
+	public void addPortletPermissions(String resourceName)
+		throws PortalException, SystemException {
+
+		long groupId = getGroupId();
+
+		Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+		if (group.isStagingGroup()) {
+			if (group.isStagedRemotely()) {
+
+				// Since we add all the basic permissions with liveGroupId no
+				// matter staging is remote or local we have to collect these
+				// with liveGroupId
+
+				groupId = group.getLiveGroupId();
+			}
+			else {
+
+				// Do not publish portlet permission when local staging publish
+
+				return;
+			}
+		}
+
+		addPermissions(resourceName, groupId);
 	}
 
 	@Override
@@ -1644,6 +1678,21 @@ public class PortletDataContextImpl implements PortletDataContext {
 				_companyId, resourceName, ResourceConstants.SCOPE_INDIVIDUAL,
 				String.valueOf(newResourcePK), roleIdsToActionIds);
 		}
+	}
+
+	@Override
+	public void importPortalPermissions()
+		throws PortalException, SystemException {
+
+		importPermissions(
+			PortletKeys.PORTAL, getSourceCompanyId(), getCompanyId());
+	}
+
+	@Override
+	public void importPortletPermissions(String resourceName)
+		throws PortalException, SystemException {
+
+		importPermissions(resourceName, getSourceGroupId(), getScopeGroupId());
 	}
 
 	@Override

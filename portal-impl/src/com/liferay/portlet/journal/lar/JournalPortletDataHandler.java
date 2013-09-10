@@ -149,9 +149,8 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
-		portletDataContext.addPermissions(
-			JournalPermission.RESOURCE_NAME,
-			portletDataContext.getScopeGroupId());
+		portletDataContext.addPortletPermissions(
+			JournalPermission.RESOURCE_NAME);
 
 		Element rootElement = addExportDataRootElement(portletDataContext);
 
@@ -211,10 +210,8 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences, String data)
 		throws Exception {
 
-		portletDataContext.importPermissions(
-			JournalPermission.RESOURCE_NAME,
-			portletDataContext.getSourceGroupId(),
-			portletDataContext.getScopeGroupId());
+		portletDataContext.importPortletPermissions(
+			JournalPermission.RESOURCE_NAME);
 
 		if (portletDataContext.getBooleanParameter(NAMESPACE, "feeds")) {
 			Element feedsElement = portletDataContext.getImportDataGroupElement(

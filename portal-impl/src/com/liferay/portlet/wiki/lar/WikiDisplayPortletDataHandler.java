@@ -113,8 +113,7 @@ public class WikiDisplayPortletDataHandler extends WikiPortletDataHandler {
 			return StringPool.BLANK;
 		}
 
-		portletDataContext.addPermissions(
-			WikiPermission.RESOURCE_NAME, portletDataContext.getScopeGroupId());
+		portletDataContext.addPortletPermissions(WikiPermission.RESOURCE_NAME);
 
 		Element rootElement = addExportDataRootElement(portletDataContext);
 
@@ -141,9 +140,8 @@ public class WikiDisplayPortletDataHandler extends WikiPortletDataHandler {
 			PortletPreferences portletPreferences, String data)
 		throws Exception {
 
-		portletDataContext.importPermissions(
-			WikiPermission.RESOURCE_NAME, portletDataContext.getSourceGroupId(),
-			portletDataContext.getScopeGroupId());
+		portletDataContext.importPortletPermissions(
+			WikiPermission.RESOURCE_NAME);
 
 		super.importData(
 			portletDataContext, portletId, portletPreferences, data);

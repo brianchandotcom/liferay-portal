@@ -301,7 +301,8 @@ else {
 						%>
 
 							<c:if test="<%= permissionChecker.isCompanyAdmin() || permissionChecker.isGroupAdmin(scopeGroupId) %>">
-								<li class="app-view-navigation-entry folder error" title="<%= LanguageUtil.get(pageContext, "an-unexpected-error-occurred-while-connecting-to-the-repository") %>">
+
+								<li class="app-view-navigation-entry folder error" title="<%= LanguageUtil.get(pageContext, (e instanceof PrincipalException) ? "an-authentication-error-occurred-while-connecting-to-the-repository" : "an-unexpected-error-occurred-while-connecting-to-the-repository") %>">
 
 									<%
 									request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);

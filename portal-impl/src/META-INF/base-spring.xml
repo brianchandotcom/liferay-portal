@@ -29,7 +29,10 @@
 		<property name="dataSource" ref="liferayDataSource" />
 		<property name="sessionFactory" ref="liferaySessionFactory" />
 	</bean>
-	<bean id="serviceAdvice" class="com.liferay.portal.security.ac.AccessControlAdvice">
+	<bean id="serviceAdvice" class="com.liferay.portal.spring.aop.SkipAdvice">
+		<property name="nextMethodInterceptor" ref="accessControlAdvice" />
+	</bean>
+	<bean id="accessControlAdvice" class="com.liferay.portal.security.ac.AccessControlAdvice">
 		<property name="accessControlAdvisor">
 			<bean class="com.liferay.portal.security.ac.AccessControlAdvisorImpl" />
 		</property>

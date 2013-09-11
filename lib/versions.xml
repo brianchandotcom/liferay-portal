@@ -1809,30 +1809,6 @@
 		</licenses>
 	</library>
 	<library>
-		<file-name>lib/portal/gt-coverage.jar</file-name>
-		<version>2.6.1</version>
-		<project-name>Geo Tools</project-name>
-		<project-url>http://geotools.codehaus.org</project-url>
-		<licenses>
-			<license>
-				<license-name>LGPL 2.1</license-name>
-				<license-url>http://www.gnu.org/licenses/lgpl-2.1.html</license-url>
-			</license>
-		</licenses>
-	</library>
-	<library>
-		<file-name>lib/portal/gt-metadata.jar</file-name>
-		<version>2.6.1</version>
-		<project-name>Geo Tools</project-name>
-		<project-url>http://geotools.codehaus.org</project-url>
-		<licenses>
-			<license>
-				<license-name>LGPL 2.1</license-name>
-				<license-url>http://www.gnu.org/licenses/lgpl-2.1.html</license-url>
-			</license>
-		</licenses>
-	</library>
-	<library>
 		<file-name>lib/portal/hessian.jar</file-name>
 		<version>4.0.3</version>
 		<project-name>Hessian</project-name>

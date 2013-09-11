@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.SortedProperties;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.util.PropertyComparator;
 
@@ -42,7 +41,6 @@ import java.awt.image.RenderedImage;
 import java.awt.image.SampleModel;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 
 import java.net.URL;
@@ -64,8 +62,6 @@ import javax.media.jai.operator.MosaicDescriptor;
 import javax.media.jai.operator.TranslateDescriptor;
 
 import javax.servlet.ServletContext;
-
-import org.geotools.image.ImageWorker;
 
 /**
  * @author Brian Wing Shun Chan
@@ -226,34 +222,11 @@ public class SpriteProcessorImpl implements SpriteProcessor {
 
 			File spriteFile = new File(spriteRootDir, spriteFileName);
 
-			spriteFile.mkdirs();
+			File spriteDir = spriteFile.getParentFile();
+
+			spriteDir.mkdirs();
 
 			ImageIO.write(renderedImage, "png", spriteFile);
-
-			if (lastModified > 0) {
-				spriteFile.setLastModified(lastModified);
-			}
-
-			ImageWorker imageWorker = new ImageWorker(renderedImage);
-
-			imageWorker.forceIndexColorModelForGIF(true);
-
-			// GIF
-
-			renderedImage = imageWorker.getPlanarImage();
-
-			spriteFile = new File(
-				spriteRootDir,
-				StringUtil.replace(spriteFileName, ".png", ".gif"));
-
-			FileOutputStream fos = new FileOutputStream(spriteFile);
-
-			try {
-				ImageToolUtil.encodeGIF(renderedImage, fos);
-			}
-			finally {
-				fos.close();
-			}
 
 			if (lastModified > 0) {
 				spriteFile.setLastModified(lastModified);

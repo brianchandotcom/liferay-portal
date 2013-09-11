@@ -2541,19 +2541,9 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 		</if>
 
 		<parallel>
-			<if>
-				<equals arg1="${simple.server.type}" arg2="tcserver" />
-				<then>
-					<exec dir="${simple.server.bin.dir}" executable="cmd" resolveexecutable="true">
-						<arg line="/c set JAVA_OPTS= &amp; ${simple.server.start.executable} ${simple.server.start.executable.arg.line}" />
-					</exec>
-				</then>
-				<else>
-					<exec dir="${simple.server.bin.dir}" executable="${simple.server.start.executable}" resolveexecutable="true">
-						<arg line="${simple.server.start.executable.arg.line}" />
-					</exec>
-				</else>
-			</if>
+			<exec dir="${simple.server.bin.dir}" executable="${simple.server.start.executable}" resolveexecutable="true">
+				<arg line="${simple.server.start.executable.arg.line}" />
+			</exec>
 
 			<if>
 				<equals arg1="${simple.server.type}" arg2="jboss" />
@@ -2595,19 +2585,9 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 
 				<antcall target="run-selenium-test" />
 
-				<if>
-					<equals arg1="${simple.server.type}" arg2="tcserver" />
-					<then>
-						<exec dir="${simple.server.bin.dir}" executable="cmd" resolveexecutable="true">
-							<arg line="/c set JAVA_OPTS= &amp; ${simple.server.stop.executable} ${simple.server.stop.executable.arg.line}" />
-						</exec>
-					</then>
-					<else>
-						<exec dir="${simple.server.bin.dir}" executable="${simple.server.stop.executable}" resolveexecutable="true">
-							<arg line="${simple.server.stop.executable.arg.line}" />
-						</exec>
-					</else>
-				</if>
+				<exec dir="${simple.server.bin.dir}" executable="${simple.server.stop.executable}" resolveexecutable="true">
+					<arg line="${simple.server.stop.executable.arg.line}" />
+				</exec>
 			</sequential>
 		</parallel>
 

@@ -330,7 +330,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		processErrorMessage(fileName, "plus: " + fileName + " " + lineCount);
 	}
 
-	protected void checkIsLowerCaseIsAndIsUpperCase(
+	protected void checkInefficientStringMethods(
 		String line, String fileName, int lineCount) {
 
 		if (mainReleaseVersion.equals(MAIN_RELEASE_VERSION_6_1_0)) {

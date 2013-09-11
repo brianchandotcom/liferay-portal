@@ -421,18 +421,40 @@ public class BreadcrumbTag extends IncludeTag {
 			return StringPool.BLANK;
 		}
 
+		boolean breadcrumbTruncate = breadcrumbString.split(
+			"<li", -1).length > 3;
+		String breadcrumbTruncateClass = StringPool.BLANK;
+
+		if (breadcrumbTruncate) {
+			breadcrumbTruncateClass = " breadcrumb-truncate";
+		}
+
 		int x = breadcrumbString.indexOf("<li") + 3;
 		int y = breadcrumbString.lastIndexOf("<li") + 3;
 
 		if (x == y) {
 			breadcrumbString = StringUtil.insert(
-				breadcrumbString, " class=\"active only\"", x);
+				breadcrumbString,
+				" class=\"active only" + breadcrumbTruncateClass + "\"", x);
 		}
 		else {
 			breadcrumbString = StringUtil.insert(
-				breadcrumbString, " class=\"active last\"", y);
+				breadcrumbString,
+				" class=\"active last" + breadcrumbTruncateClass + "\"", y);
+
 			breadcrumbString = StringUtil.insert(
-				breadcrumbString, " class=\"first\"", x);
+				breadcrumbString,
+				" class=\"first" + breadcrumbTruncateClass + "\"", x);
+		}
+
+		if (breadcrumbTruncate) {
+			y = breadcrumbString.lastIndexOf("<li");
+
+			int z = breadcrumbString.lastIndexOf("<li", y - 1) + 3;
+
+			breadcrumbString = StringUtil.insert(
+				breadcrumbString,
+				" class=\"current-parent" + breadcrumbTruncateClass + "\"", z);
 		}
 
 		return breadcrumbString;

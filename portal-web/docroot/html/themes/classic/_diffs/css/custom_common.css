@@ -421,6 +421,36 @@
 		.only .divider {
 			display: none;
 		}
+
+		@include respond-to(phone) {
+			padding-left: 5px;
+			padding-right: 5px;
+
+			li {
+				display: none;
+
+				&.only, &.first, &.last, &.current-parent {
+					display: inline-block;
+				}
+
+				&.breadcrumb-truncate {
+					&.only, &.first a, &.last a, &.active, &.current-parent a {
+						display: inline-block;
+						max-width: 65px;
+						overflow: hidden;
+						text-overflow: ellipsis;
+						vertical-align: bottom;
+						white-space: nowrap;
+					}
+
+					&.current-parent:before {
+						color: #999;
+						content: " ... / ";
+						font-weight: bold;
+					}
+				}
+			}
+		}
 	}
 
 	/* ---------- Form navigator ---------- */

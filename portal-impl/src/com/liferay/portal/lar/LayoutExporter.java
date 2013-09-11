@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
@@ -54,7 +53,6 @@ import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.LayoutSetPrototype;
 import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.Portlet;
-import com.liferay.portal.model.Theme;
 import com.liferay.portal.model.impl.LayoutImpl;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ImageLocalServiceUtil;
@@ -255,10 +253,6 @@ public class LayoutExporter {
 			parameterMap, PortletDataHandlerKeys.PERMISSIONS);
 		boolean exportPortletDataAll = MapUtil.getBoolean(
 			parameterMap, PortletDataHandlerKeys.PORTLET_DATA_ALL);
-		boolean exportTheme = MapUtil.getBoolean(
-			parameterMap, PortletDataHandlerKeys.THEME);
-		boolean exportThemeSettings = MapUtil.getBoolean(
-			parameterMap, PortletDataHandlerKeys.THEME_REFERENCE);
 		boolean exportLogo = MapUtil.getBoolean(
 			parameterMap, PortletDataHandlerKeys.LOGO);
 		boolean exportLayoutSetSettings = MapUtil.getBoolean(
@@ -268,7 +262,6 @@ public class LayoutExporter {
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Export permissions " + exportPermissions);
-			_log.debug("Export theme " + exportTheme);
 		}
 
 		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
@@ -391,12 +384,6 @@ public class LayoutExporter {
 
 		headerElement.addAttribute("type", type);
 
-		if (exportTheme || exportThemeSettings) {
-			headerElement.addAttribute("theme-id", layoutSet.getThemeId());
-			headerElement.addAttribute(
-				"color-scheme-id", layoutSet.getColorSchemeId());
-		}
-
 		if (exportLogo) {
 			Image image = ImageLocalServiceUtil.getImage(layoutSet.getLogoId());
 
@@ -412,15 +399,13 @@ public class LayoutExporter {
 			}
 		}
 
+		_themeExporter.exportTheme(portletDataContext, layoutSet);
+
 		if (exportLayoutSetSettings) {
 			Element settingsElement = headerElement.addElement("settings");
 
 			settingsElement.addCDATA(layoutSet.getSettings());
 		}
-
-		Element cssElement = headerElement.addElement("css");
-
-		cssElement.addCDATA(layoutSet.getCss());
 
 		Map<String, Object[]> portletIds =
 			new LinkedHashMap<String, Object[]>();
@@ -492,7 +477,7 @@ public class LayoutExporter {
 		for (Layout layout : layouts) {
 			exportLayout(
 				portletDataContext, portlets, layoutIds, portletIds, layout,
-				exportTheme, zipWriter);
+				zipWriter);
 		}
 
 		long previousScopeGroupId = portletDataContext.getScopeGroupId();
@@ -582,14 +567,6 @@ public class LayoutExporter {
 
 		_portletExporter.exportRatingsEntries(portletDataContext, rootElement);
 
-		if (exportTheme && !portletDataContext.isPerformDirectBinaryImport()) {
-			Theme theme = layoutSet.getTheme();
-
-			File themeZip = new File(zipWriter.getPath() + "/theme.zip");
-
-			exportTheme(theme, themeZip);
-		}
-
 		ExportImportHelperUtil.writeManifestSummary(
 			document, portletDataContext.getManifestSummary());
 
@@ -667,7 +644,7 @@ public class LayoutExporter {
 	protected void exportLayout(
 			PortletDataContext portletDataContext, List<Portlet> portlets,
 			long[] layoutIds, Map<String, Object[]> portletIds, Layout layout,
-			boolean exportTheme, ZipWriter zipWriter)
+			ZipWriter zipWriter)
 		throws Exception {
 
 		if (!ArrayUtil.contains(layoutIds, layout.getLayoutId()) &&
@@ -689,18 +666,6 @@ public class LayoutExporter {
 			// Only portlet type layouts support page scoping
 
 			return;
-		}
-
-		if (exportTheme && !portletDataContext.isPerformDirectBinaryImport() &&
-			!layout.isInheritLookAndFeel()) {
-
-			Theme theme = layout.getTheme();
-
-			File themeZip = new File(
-				zipWriter.getPath() + "/theme" + StringPool.DASH +
-					String.valueOf(layout.getLayoutId()) + ".zip");
-
-			exportTheme(theme, themeZip);
 		}
 
 		if (layout.isTypePortlet()) {
@@ -882,39 +847,12 @@ public class LayoutExporter {
 			exportCurPortletSetup, exportCurPortletUserPreferences};
 	}
 
-	protected String getLayoutIconPath(
-		PortletDataContext portletDataContext, Layout layout, Image image) {
-
-		StringBundler sb = new StringBundler(5);
-
-		sb.append(
-			ExportImportPathUtil.getLayoutPath(
-				portletDataContext, layout.getPlid()));
-		sb.append("/icons/");
-		sb.append(image.getImageId());
-		sb.append(StringPool.PERIOD);
-		sb.append(image.getType());
-
-		return sb.toString();
-	}
-
-	protected String getLayoutSetPrototype(
-		PortletDataContext portletDataContext, String layoutSetPrototypeUuid) {
-
-		StringBundler sb = new StringBundler(3);
-
-		sb.append(ExportImportPathUtil.getRootPath(portletDataContext));
-		sb.append("/layout-set-prototype/");
-		sb.append(layoutSetPrototypeUuid);
-
-		return sb.toString();
-	}
-
 	private static Log _log = LogFactoryUtil.getLog(LayoutExporter.class);
 
 	private DeletionSystemEventExporter _deletionSystemEventExporter =
 		new DeletionSystemEventExporter();
 	private PermissionExporter _permissionExporter = new PermissionExporter();
 	private PortletExporter _portletExporter = new PortletExporter();
+	private ThemeExporter _themeExporter = new ThemeExporter();
 
 }

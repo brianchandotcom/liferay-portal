@@ -14,12 +14,21 @@
 
 package com.liferay.portal.lar;
 
+import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
+import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.Theme;
 import com.liferay.portal.theme.ThemeLoader;
 import com.liferay.portal.theme.ThemeLoaderFactory;
@@ -33,6 +42,77 @@ import javax.servlet.ServletContext;
  * @author Mate Thurzo
  */
 public class ThemeExporter {
+
+	public void exportTheme(
+			PortletDataContext portletDataContext, Layout layout)
+		throws Exception {
+
+		boolean exportTheme = MapUtil.getBoolean(
+			portletDataContext.getParameterMap(), PortletDataHandlerKeys.THEME);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Export theme " + exportTheme);
+		}
+
+		if (exportTheme && !portletDataContext.isPerformDirectBinaryImport() &&
+			!layout.isInheritLookAndFeel()) {
+
+			Theme theme = layout.getTheme();
+
+			StringBundler sb = new StringBundler(6);
+
+			sb.append(portletDataContext.getZipWriter().getPath());
+			sb.append(StringPool.SLASH);
+			sb.append("theme");
+			sb.append(StringPool.DASH);
+			sb.append(String.valueOf(layout.getLayoutId()));
+			sb.append(".zip");
+
+			File themeZip = new File(sb.toString());
+
+			exportTheme(theme, themeZip);
+		}
+	}
+
+	public void exportTheme(
+			PortletDataContext portletDataContext, LayoutSet layoutSet)
+		throws Exception {
+
+		boolean exportTheme = MapUtil.getBoolean(
+			portletDataContext.getParameterMap(), PortletDataHandlerKeys.THEME);
+		boolean exportThemeSettings = MapUtil.getBoolean(
+			portletDataContext.getParameterMap(),
+			PortletDataHandlerKeys.THEME_REFERENCE);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Export theme " + exportTheme);
+			_log.debug("Export theme settings " + exportThemeSettings);
+		}
+
+		Element exportDataRootElement =
+			portletDataContext.getExportDataRootElement();
+		Element headerElement = exportDataRootElement.element("header");
+
+		if (exportTheme || exportThemeSettings) {
+			headerElement.addAttribute("theme-id", layoutSet.getThemeId());
+			headerElement.addAttribute(
+				"color-scheme-id", layoutSet.getColorSchemeId());
+		}
+
+		if (exportTheme && !portletDataContext.isPerformDirectBinaryImport()) {
+			Theme theme = layoutSet.getTheme();
+
+			String zipWriterPath = portletDataContext.getZipWriter().getPath();
+
+			File themeZip = new File(zipWriterPath + "/theme.zip");
+
+			exportTheme(theme, themeZip);
+		}
+
+		Element cssElement = headerElement.addElement("css");
+
+		cssElement.addCDATA(layoutSet.getCss());
+	}
 
 	protected void exportTheme(Theme theme, File themeZip) throws Exception {
 		String lookAndFeelXML = ContentUtil.get(
@@ -129,5 +209,7 @@ public class ThemeExporter {
 			}
 		}
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(ThemeExporter.class);
 
 }

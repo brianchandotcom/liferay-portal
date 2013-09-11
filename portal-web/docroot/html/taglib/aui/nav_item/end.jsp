@@ -28,7 +28,7 @@ if (bodyContent != null) {
 }
 %>
 
-<c:if test="<%= !dropdown || Validator.isNotNull(bodyContentString) %>">
+<c:if test="<%= !dropdown || Validator.isNotNull(bodyContentString.trim()) %>">
 	<li class="<%= cssClass %><%= selected ? " active" : StringPool.BLANK %>" id="<%= id %>" role="presentation" <%= AUIUtil.buildData(data) %> <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>>
 		<c:if test="<%= Validator.isNotNull(iconClass) || Validator.isNotNull(label) %>">
 			<c:if test="<%= Validator.isNotNull(href) %>">

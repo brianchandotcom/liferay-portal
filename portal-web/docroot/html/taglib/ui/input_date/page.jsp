@@ -96,10 +96,12 @@ Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(simpleDateFormatPa
 
 							var container = instance.get('container');
 
-							container.one('#<%= dayParamId %>').set('disabled', event.newVal);
-							container.one('#<%= monthParamId %>').set('disabled', event.newVal);
-							container.one('#<%= namespace + name %>').set('disabled', event.newVal);
-							container.one('#<%= yearParamId %>').set('disabled', event.newVal);
+							var newVal = event.newVal;
+
+							container.one('#<%= dayParamId %>').attr('disabled', newVal);
+							container.one('#<%= monthParamId %>').attr('disabled', newVal);
+							container.one('#<%= namespace + name %>').attr('disabled', newVal);
+							container.one('#<%= yearParamId %>').attr('disabled', newVal);
 						},
 						selectionChange: function(event) {
 							var date = event.newSelection[0];

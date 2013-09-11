@@ -66,9 +66,12 @@ public class EditPermissionsAction extends PortletAction {
 			ActionResponse actionResponse)
 		throws Exception {
 
-		actionRequest = ActionUtil.getWrappedActionRequest(actionRequest, null);
-
 		try {
+			ActionUtil.getPortlet(actionRequest);
+
+			actionRequest = ActionUtil.getWrappedActionRequest(
+				actionRequest, null);
+
 			updateRolePermissions(actionRequest);
 
 			addSuccessMessage(actionRequest, actionResponse);
@@ -93,8 +96,6 @@ public class EditPermissionsAction extends PortletAction {
 			RenderResponse renderResponse)
 		throws Exception {
 
-		renderRequest = ActionUtil.getWrappedRenderRequest(renderRequest, null);
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -115,6 +116,8 @@ public class EditPermissionsAction extends PortletAction {
 		}
 
 		try {
+			ActionUtil.getPortlet(renderRequest);
+
 			PermissionServiceUtil.checkPermission(
 				groupId, selResource, resourcePrimKey);
 		}
@@ -122,7 +125,8 @@ public class EditPermissionsAction extends PortletAction {
 			SessionErrors.add(
 				renderRequest, PrincipalException.class.getName());
 
-			setForward(renderRequest, "portlet.portlet_configuration.error");
+			return actionMapping.findForward(
+				"portlet.portlet_configuration.error");
 		}
 
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(
@@ -132,6 +136,8 @@ public class EditPermissionsAction extends PortletAction {
 			renderResponse.setTitle(
 				ActionUtil.getTitle(portlet, renderRequest));
 		}
+
+		renderRequest = ActionUtil.getWrappedRenderRequest(renderRequest, null);
 
 		return actionMapping.findForward(
 			getForward(

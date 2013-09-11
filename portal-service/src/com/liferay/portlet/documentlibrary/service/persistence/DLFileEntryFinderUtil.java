@@ -62,6 +62,13 @@ public class DLFileEntryFinderUtil {
 		return getFinder().filterFindByG_F(groupId, folderIds, queryDefinition);
 	}
 
+	public static java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> findByCompanyId(
+		long companyId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder().findByCompanyId(companyId, queryDefinition);
+	}
+
 	public static com.liferay.portlet.documentlibrary.model.DLFileEntry findByAnyImageId(
 		long imageId)
 		throws com.liferay.portal.kernel.exception.SystemException,

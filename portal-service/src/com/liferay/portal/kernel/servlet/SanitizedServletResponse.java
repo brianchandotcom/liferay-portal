@@ -115,12 +115,16 @@ public class SanitizedServletResponse extends HttpServletResponseWrapper {
 
 		String requestURI = request.getRequestURI();
 
-		for (KeyValuePair _xFrameOptionKVP : _xFrameOptionKVPs) {
-			String url = _xFrameOptionKVP.getKey();
+		for (KeyValuePair xFrameOptionKVP : _xFrameOptionKVPs) {
+			String url = xFrameOptionKVP.getKey();
+			String value = xFrameOptionKVP.getValue();
 
 			if (requestURI.startsWith(url)) {
-				response.setHeader(
-					HttpHeaders.X_FRAME_OPTIONS, _xFrameOptionKVP.getValue());
+				if (value != null) {
+					response.setHeader(
+						HttpHeaders.X_FRAME_OPTIONS,
+						xFrameOptionKVP.getValue());
+				}
 
 				return;
 			}
@@ -184,9 +188,13 @@ public class SanitizedServletResponse extends HttpServletResponseWrapper {
 			String[] propertyValueParts = StringUtil.split(
 				propertyValue, CharPool.PIPE);
 
-			if (propertyValueParts.length != 2) {
+			// Illegal formatting
+
+			if (propertyValueParts.length > 2) {
 				continue;
 			}
+
+			// Empty URL
 
 			String url = StringUtil.trim(propertyValueParts[0]);
 
@@ -194,15 +202,23 @@ public class SanitizedServletResponse extends HttpServletResponseWrapper {
 				continue;
 			}
 
-			String value = StringUtil.trim(propertyValueParts[1]);
+			// Empty value
 
-			if (Validator.isNull(value)) {
+			if (propertyValueParts.length == 1) {
+				xFrameOptionKVPs.add(new KeyValuePair(url, null));
+
 				continue;
 			}
 
-			KeyValuePair x = new KeyValuePair(url, value);
+			// Normal setting
 
-			xFrameOptionKVPs.add(x);
+			String value = StringUtil.trim(propertyValueParts[1]);
+
+			if (Validator.isNull(value)) {
+				value = null;
+			}
+
+			xFrameOptionKVPs.add(new KeyValuePair(url, value));
 		}
 
 		_xFrameOptionKVPs = xFrameOptionKVPs.toArray(

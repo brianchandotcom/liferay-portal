@@ -123,6 +123,10 @@
 			<finder-column name="companyId" />
 			<finder-column name="version" />
 		</finder>
+		<finder name="C_NotS" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="status" comparator="!=" />
+		</finder>
 		<finder name="C_ST" return-type="Collection">
 			<finder-column name="companyId" />
 			<finder-column name="status" />
@@ -453,6 +457,10 @@
 		<finder name="G_N" return-type="JournalFolder">
 			<finder-column name="groupId" />
 			<finder-column name="name" />
+		</finder>
+		<finder name="C_NotS" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="status" comparator="!=" />
 		</finder>
 		<finder name="G_P_N" return-type="JournalFolder" unique="true">
 			<finder-column name="groupId" />

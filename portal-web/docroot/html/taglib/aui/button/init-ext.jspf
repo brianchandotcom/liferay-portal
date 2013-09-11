@@ -73,4 +73,8 @@ else {
 if (primary == Boolean.TRUE) {
 	cssClass += " btn-primary";
 }
+
+if (type.equals("cancel")) {
+	cssClass += " btn-cancel";
+}
 %>

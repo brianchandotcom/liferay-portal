@@ -256,12 +256,7 @@ public class LoginAction extends PortletAction {
 			actionRequest, PortletKeys.LOGIN, layout.getPlid(),
 			PortletRequest.RENDER_PHASE);
 
-		String redirect = ParamUtil.getString(actionRequest, "redirect");
-
-		if (Validator.isNotNull(redirect)) {
-			portletURL.setParameter(
-				"redirect", PortalUtil.escapeRedirect(redirect));
-		}
+		portletURL.setParameter("saveLastPath", Boolean.FALSE.toString());
 
 		portletURL.setWindowState(WindowState.MAXIMIZED);
 

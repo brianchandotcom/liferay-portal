@@ -41,6 +41,7 @@ if (viewResults && !PollsQuestionPermission.contains(permissionChecker, question
 <aui:form action="<%= viewQuestionActionURL %>" method="post" name="fm">
 	<portlet:renderURL var="viewQuestionRenderURL">
 		<portlet:param name="struts_action" value="/polls/view_question" />
+		<portlet:param name="redirect" value="<%= redirect %>" />
 		<portlet:param name="questionId" value="<%= String.valueOf(question.getQuestionId()) %>" />
 	</portlet:renderURL>
 

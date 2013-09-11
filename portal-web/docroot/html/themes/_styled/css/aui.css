@@ -1,8 +1,8 @@
-$FontAwesomePath: "aui/font-awesome/font" !default;
+$FontAwesomePath: "aui/alloy-font-awesome/font" !default;
 
-@import "aui/font-awesome/scss/variables";
-@import "aui/font-awesome/scss/mixins";
-@import "aui/font-awesome/scss/path";
+@import "aui/alloy-font-awesome/scss/variables";
+@import "aui/alloy-font-awesome/scss/mixins-alloy";
+@import "aui/alloy-font-awesome/scss/path-alloy";
 
 .aui {
 	@import "aui_variables";
@@ -14,10 +14,10 @@ $FontAwesomePath: "aui/font-awesome/font" !default;
 	@import "aui_custom";
 	@import "aui/responsive";
 
-	@import "aui/font-awesome/scss/core";
-	@import "aui/font-awesome/scss/bootstrap";
-	@import "aui/font-awesome/scss/extras";
-	@import "aui/font-awesome/scss/icons";
+	@import "aui/alloy-font-awesome/scss/core";
+	@import "aui/alloy-font-awesome/scss/bootstrap";
+	@import "aui/alloy-font-awesome/scss/extras";
+	@import "aui/alloy-font-awesome/scss/icons-alloy";
 
 	background-color: $bodyBackground;
 	color: $textColor;

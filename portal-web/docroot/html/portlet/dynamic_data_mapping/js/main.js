@@ -689,7 +689,7 @@ AUI.add(
 				},
 				{
 					fieldLabel: Liferay.Language.get('checkbox'),
-					iconClass: 'form-builder-field-icon form-builder-field-icon-checkbox',
+					iconClass: 'icon-fb-boolean',
 					label: Liferay.Language.get('checkbox'),
 					type: 'checkbox'
 				},
@@ -701,25 +701,25 @@ AUI.add(
 				},
 				{
 					fieldLabel: Liferay.Language.get('text-box'),
-					iconClass: 'form-builder-field-icon form-builder-field-icon-text',
+					iconClass: 'icon-fb-text',
 					label: Liferay.Language.get('text-box'),
 					type: 'text'
 				},
 				{
 					fieldLabel: Liferay.Language.get('text-area'),
-					iconClass: 'form-builder-field-icon form-builder-field-icon-textarea',
+					iconClass: 'icon-fb-text-box',
 					label: Liferay.Language.get('text-area'),
 					type: 'textarea'
 				},
 				{
 					fieldLabel: Liferay.Language.get('radio-buttons'),
-					iconClass: 'form-builder-field-icon form-builder-field-icon-radio',
+					iconClass: 'icon-fb-radio',
 					label: Liferay.Language.get('radio-buttons'),
 					type: 'radio'
 				},
 				{
 					fieldLabel: Liferay.Language.get('select-option'),
-					iconClass: 'form-builder-field-icon form-builder-field-icon-select',
+					iconClass: 'icon-fb-select',
 					label: Liferay.Language.get('select-option'),
 					type: 'select'
 				}
@@ -728,73 +728,73 @@ AUI.add(
 			DDM_STRUCTURE: [
 				{
 					hiddenAttributes: MAP_HIDDEN_FIELD_ATTRS.checkbox,
-					iconClass: 'form-builder-field-icon form-builder-field-icon-checkbox',
+					iconClass: 'icon-fb-boolean',
 					label: Liferay.Language.get('boolean'),
 					type: 'checkbox'
 				},
 				{
 					hiddenAttributes: MAP_HIDDEN_FIELD_ATTRS.DEFAULT,
-					iconClass: 'form-builder-field-icon form-builder-field-icon-date',
+					iconClass: 'icon-calendar',
 					label: Liferay.Language.get('date'),
 					type: 'ddm-date'
 				},
 				{
 					hiddenAttributes: MAP_HIDDEN_FIELD_ATTRS.DEFAULT,
-					iconClass: 'form-builder-field-icon form-builder-field-icon-decimal',
+					iconClass: 'icon-fb-decimal',
 					label: Liferay.Language.get('decimal'),
 					type: 'ddm-decimal'
 				},
 				{
 					hiddenAttributes: MAP_HIDDEN_FIELD_ATTRS.DEFAULT,
-					iconClass: 'form-builder-field-icon form-builder-field-icon-document',
+					iconClass: 'icon-file-text',
 					label: Liferay.Language.get('documents-and-media'),
 					type: 'ddm-documentlibrary'
 				},
 				{
 					hiddenAttributes: MAP_HIDDEN_FIELD_ATTRS.DEFAULT,
-					iconClass: 'form-builder-field-icon lfr-ddm-text-html-icon',
+					iconClass: 'icon-align-justify',
 					label: Liferay.Language.get('html'),
 					type: 'ddm-text-html'
 				},
 				{
 					hiddenAttributes: MAP_HIDDEN_FIELD_ATTRS.DEFAULT,
-					iconClass: 'form-builder-field-icon form-builder-field-icon-integer',
+					iconClass: 'icon-fb-integer',
 					label: Liferay.Language.get('integer'),
 					type: 'ddm-integer'
 				},
 				{
 					hiddenAttributes: MAP_HIDDEN_FIELD_ATTRS.DEFAULT,
-					iconClass: 'form-builder-field-icon lfr-ddm-link-icon',
+					iconClass: 'icon-link',
 					label: Liferay.Language.get('link-to-page'),
 					type: 'ddm-link-to-page'
 				},
 				{
 					hiddenAttributes: MAP_HIDDEN_FIELD_ATTRS.DEFAULT,
-					iconClass: 'form-builder-field-icon form-builder-field-icon-number',
+					iconClass: 'icon-fb-number',
 					label: Liferay.Language.get('number'),
 					type: 'ddm-number'
 				},
 				{
 					hiddenAttributes: MAP_HIDDEN_FIELD_ATTRS.DEFAULT,
-					iconClass: 'form-builder-field-icon form-builder-field-icon-radio',
+					iconClass: 'icon-fb-radio',
 					label: Liferay.Language.get('radio'),
 					type: 'radio'
 				},
 				{
 					hiddenAttributes: MAP_HIDDEN_FIELD_ATTRS.DEFAULT,
-					iconClass: 'form-builder-field-icon form-builder-field-icon-select',
+					iconClass: 'icon-fb-select',
 					label: Liferay.Language.get('select'),
 					type: 'select'
 				},
 				{
 					hiddenAttributes: MAP_HIDDEN_FIELD_ATTRS.DEFAULT,
-					iconClass: 'form-builder-field-icon form-builder-field-icon-text',
+					iconClass: 'icon-fb-text',
 					label: Liferay.Language.get('text'),
 					type: 'text'
 				},
 				{
 					hiddenAttributes: MAP_HIDDEN_FIELD_ATTRS.DEFAULT,
-					iconClass: 'form-builder-field-icon form-builder-field-icon-textarea',
+					iconClass: 'icon-fb-text-box',
 					label: Liferay.Language.get('text-box'),
 					type: 'textarea'
 				}
@@ -824,7 +824,7 @@ AUI.add(
 			WCM_STRUCTURE: [
 				{
 					hiddenAttributes: MAP_HIDDEN_FIELD_ATTRS.DEFAULT,
-					iconClass: 'form-builder-field-icon lfr-wcm-image lfr-wcm-image-icon',
+					iconClass: 'icon-picture',
 					label: Liferay.Language.get('image'),
 					type: 'wcm-image'
 				}

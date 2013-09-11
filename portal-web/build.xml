@@ -13,7 +13,7 @@
 	<property name="ckeditor.file" value="ckeditor-4.0-stable.zip" />
 
 	<property name="fckeditor.file" value="FCKeditor_2.6.3.zip" />
-	<property name="font-awesome.file" value="font-awesome-3.2.1.zip" />
+	<property name="alloy-font-awesome.file" value="alloy-font-awesome-1.0.0.zip" />
 	<property name="scayt.file" value="scayt_4.0.3.zip" />
 	<property name="tinymce.file" value="tinymce_3.5.6.zip" />
 	<property name="vaadin.file" value="vaadin-6.8.12-liferay.zip" />
@@ -863,17 +863,17 @@
 		<if>
 			<not>
 				<uptodate
-					srcfile="third-party/${font-awesome.file}"
-					targetfile="${alloy.bootstrap.deploy}/font-awesome"
+					srcfile="third-party/${alloy-font-awesome.file}"
+					targetfile="${alloy.bootstrap.deploy}/alloy-font-awesome"
 				/>
 			</not>
 			<then>
-				<delete dir="${alloy.bootstrap.deploy}/font-awesome" />
+				<delete dir="${alloy.bootstrap.deploy}/alloy-font-awesome" />
 
-				<unzip src="third-party/${font-awesome.file}" dest="${alloy.bootstrap.deploy}" />
+				<unzip src="third-party/${alloy-font-awesome.file}" dest="${alloy.bootstrap.deploy}" />
 
-				<delete dir="${alloy.bootstrap.deploy}/font-awesome/css" />
-				<delete dir="${alloy.bootstrap.deploy}/font-awesome/less" />
+				<delete dir="${alloy.bootstrap.deploy}/alloy-font-awesome/css" />
+				<delete dir="${alloy.bootstrap.deploy}/alloy-font-awesome/less" />
 			</then>
 		</if>
 	</target>

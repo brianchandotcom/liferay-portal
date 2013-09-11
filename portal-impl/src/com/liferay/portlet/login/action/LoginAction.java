@@ -256,7 +256,7 @@ public class LoginAction extends PortletAction {
 			actionRequest, PortletKeys.LOGIN, layout.getPlid(),
 			PortletRequest.RENDER_PHASE);
 
-		portletURL.setParameter("saveLastPath", "false");
+		portletURL.setParameter("saveLastPath", Boolean.FALSE.toString());
 
 		portletURL.setWindowState(WindowState.MAXIMIZED);
 

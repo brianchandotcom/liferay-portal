@@ -83,7 +83,8 @@ public class UpdateReminderQueryAction extends Action {
 			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
-		AuthTokenUtil.check(request);
+		AuthTokenUtil.checkCSRFToken(
+			request, UpdateReminderQueryAction.class.getName());
 
 		long userId = PortalUtil.getUserId(request);
 		String question = ParamUtil.getString(request, "reminderQueryQuestion");

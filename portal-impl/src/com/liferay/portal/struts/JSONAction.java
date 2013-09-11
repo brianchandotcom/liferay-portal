@@ -157,13 +157,15 @@ public abstract class JSONAction extends Action {
 			}
 		}
 
-		if (PropsValues.AUTH_TOKEN_CHECK_ENABLED &&
-			PropsValues.JSON_SERVICE_AUTH_TOKEN_ENABLED) {
-
+		if (PropsValues.JSON_SERVICE_AUTH_TOKEN_ENABLED) {
 			if (!AuthSettingsUtil.isAccessAllowed(request, _hostsAllowed)) {
-				AuthTokenUtil.check(request);
+				AuthTokenUtil.checkCSRFToken(request, getCSRFOrigin(request));
 			}
 		}
+	}
+
+	protected String getCSRFOrigin(HttpServletRequest request) {
+		return getClass().getName();
 	}
 
 	protected String getReroutePath() {

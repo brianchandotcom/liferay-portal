@@ -43,6 +43,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.lar.LayoutExporter;
+import com.liferay.portal.lar.ThemeExporter;
+import com.liferay.portal.lar.ThemeImporter;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Image;
 import com.liferay.portal.model.Layout;
@@ -216,6 +218,8 @@ public class LayoutStagedModelDataHandler
 		else if (layout.isTypeLinkToLayout()) {
 			exportLinkedLayout(portletDataContext, layout, layoutElement);
 		}
+
+		exportTheme(portletDataContext, layout);
 
 		fixExportTypeSettings(layout);
 
@@ -560,6 +564,8 @@ public class LayoutStagedModelDataHandler
 
 		importLayoutFriendlyURLs(portletDataContext, layout);
 
+		importTheme(portletDataContext, layout);
+
 		portletDataContext.importClassedModel(
 			layout, importedLayout, LayoutPortletDataHandler.NAMESPACE);
 	}
@@ -662,6 +668,15 @@ public class LayoutStagedModelDataHandler
 			catch (NoSuchLayoutException nsle) {
 			}
 		}
+	}
+
+	protected void exportTheme(
+			PortletDataContext portletDataContext, Layout layout)
+		throws Exception {
+
+		ThemeExporter themeExporter = new ThemeExporter();
+
+		themeExporter.exportTheme(portletDataContext, layout);
 	}
 
 	protected Object[] extractFriendlyURLInfo(Layout layout) {
@@ -927,6 +942,15 @@ public class LayoutStagedModelDataHandler
 		}
 
 		updateTypeSettings(importedLayout, layout);
+	}
+
+	protected void importTheme(
+			PortletDataContext portletDataContext, Layout layout)
+		throws Exception {
+
+		ThemeImporter themeImporter = new ThemeImporter();
+
+		themeImporter.importTheme(portletDataContext, layout);
 	}
 
 	protected void initNewLayoutPermissions(

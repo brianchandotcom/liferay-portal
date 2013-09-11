@@ -99,11 +99,9 @@ public class ClusterableAdvice
 
 		IdentifiableBean identifiableBean = (IdentifiableBean)thisObject;
 
-		String beanIdentifier = identifiableBean.getBeanIdentifier();
+		Class<?> identifiableBeanClass = identifiableBean.getClass();
 
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+		ClassLoader contextClassLoader = identifiableBeanClass.getClassLoader();
 
 		String servletContextName = ClassLoaderPool.getContextName(
 			contextClassLoader);
@@ -112,8 +110,9 @@ public class ClusterableAdvice
 			ClusterableContextThreadLocal.collectThreadLocalContext();
 
 		return new MethodHandler(
-			_invokeMethodKey, methodHandler, beanIdentifier, servletContextName,
-			clusterInvokeAcceptorClass, context);
+			_invokeMethodKey, methodHandler, servletContextName,
+			identifiableBean.getBeanIdentifier(), clusterInvokeAcceptorClass,
+			context);
 	}
 
 	@SuppressWarnings("unused")

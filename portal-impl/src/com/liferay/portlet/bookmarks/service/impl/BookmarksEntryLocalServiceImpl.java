@@ -384,8 +384,8 @@ public class BookmarksEntryLocalServiceImpl
 	public void rebuildTree(long companyId)
 		throws PortalException, SystemException {
 
-		List<BookmarksEntry> entries =
-			bookmarksEntryPersistence.findByCompanyId(companyId);
+		List<BookmarksEntry> entries = bookmarksEntryPersistence.findByC_NotS(
+			companyId, WorkflowConstants.STATUS_IN_TRASH);
 
 		for (BookmarksEntry entry : entries) {
 			entry.setTreePath(entry.buildTreePath());

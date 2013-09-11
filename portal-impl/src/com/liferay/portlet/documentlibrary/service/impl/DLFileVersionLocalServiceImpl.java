@@ -133,7 +133,8 @@ public class DLFileVersionLocalServiceImpl
 		throws PortalException, SystemException {
 
 		List<DLFileVersion> dlFileVersions =
-			dlFileVersionPersistence.findByCompanyId(companyId);
+			dlFileVersionPersistence.findByC_NotS(
+				companyId, WorkflowConstants.STATUS_IN_TRASH);
 
 		for (DLFileVersion dlFileVersion : dlFileVersions) {
 			dlFileVersion.setTreePath(dlFileVersion.buildTreePath());

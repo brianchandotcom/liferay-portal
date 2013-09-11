@@ -767,8 +767,8 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 	public void rebuildTree(long companyId)
 		throws PortalException, SystemException {
 
-		List<DLFolder> dlFolders = dlFolderPersistence.findByCompanyId(
-			companyId);
+		List<DLFolder> dlFolders = dlFolderPersistence.findByC_NotS(
+			companyId, WorkflowConstants.STATUS_IN_TRASH);
 
 		for (DLFolder dlFolder : dlFolders) {
 			dlFolder.setTreePath(dlFolder.buildTreePath());

@@ -182,7 +182,7 @@ public class SanitizedServletResponse extends HttpServletResponseWrapper {
 			String propertyValue = (String)entry.getValue();
 
 			String[] propertyValueParts = StringUtil.split(
-				propertyValue, CharPool.COMMA);
+				propertyValue, CharPool.PIPE);
 
 			if (propertyValueParts.length != 2) {
 				continue;

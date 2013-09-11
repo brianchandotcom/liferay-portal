@@ -177,17 +177,8 @@
 	}
 
 	.portlet-options {
-		&, &.open {
-			.dropdown-toggle {
-				display: inline-block;
-				height: 16px;
-				vertical-align: middle;
-				width: 16px;
-
-				.caret {
-					display: none;
-				}
-			}
+		.dropdown-toggle .caret {
+			display: none;
 		}
 	}
 

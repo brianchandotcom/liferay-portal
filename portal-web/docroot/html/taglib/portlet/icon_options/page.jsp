@@ -20,7 +20,7 @@
 	cssClass="portlet-options"
 	direction="down"
 	extended="<%= false %>"
-	icon="../aui/gear"
+	icon="../aui/cog"
 	message="options"
 	showArrow="<%= true %>"
 	showWhenSingleIcon="<%= true %>"

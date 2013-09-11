@@ -12,6 +12,44 @@ body.portlet {
 
 .portlet-topper {
 	position: relative;
+
+	.portlet-topper-toolbar {
+		margin: 0;
+		padding: 2px;
+		position: absolute;
+		right: 3px;
+		text-align: right;
+		top: 3px;
+
+		a {
+			color: inherit;
+
+			&, &:hover {
+				text-decoration: none;
+			}
+
+			i {
+				font-size: 19px;
+			}
+		}
+
+		.nobr {
+			display: block;
+			float: left;
+			padding: 1px;
+		}
+
+		.portlet-icon-back {
+			background: url(../images/arrows/12_left.png) no-repeat 0 50%;
+			color: #FFF;
+			font-weight: bold;
+			padding: 5px 5px 5px 18px;
+
+			&:hover {
+				color: #FFF;
+			}
+		}
+	}
 }
 
 .portlet-title {
@@ -38,32 +76,6 @@ body.portlet {
 .panel-page-content, .panel-page-body {
 	.portlet-title-text {
 		cursor: auto;
-	}
-}
-
-.portlet-topper-toolbar {
-	margin: 0;
-	padding: 2px;
-	position: absolute;
-	right: 3px;
-	text-align: right;
-	top: 3px;
-
-	.nobr {
-		display: block;
-		float: left;
-		padding: 1px;
-	}
-
-	.portlet-icon-back {
-		background: url(../images/arrows/12_left.png) no-repeat 0 50%;
-		color: #FFF;
-		font-weight: bold;
-		padding: 5px 5px 5px 18px;
-
-		&:hover {
-			color: #FFF;
-		}
 	}
 }
 

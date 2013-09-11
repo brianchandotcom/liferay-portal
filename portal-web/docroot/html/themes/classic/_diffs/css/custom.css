@@ -300,15 +300,6 @@ $dockbarOpenGradientStart: #0EA6F9;
 			padding: 0;
 			right: 10px;
 			top: 50%;
-
-			a {
-				text-decoration: none;
-
-				i {
-					color: #fff;
-					font-size: 19px;
-				}
-			}
 		}
 	}
 
@@ -337,14 +328,21 @@ $dockbarOpenGradientStart: #0EA6F9;
 
 	.portlet-icons {
 		float: none;
-
-		.portlet-close-icon {
-			border-width: 0;
-		}
 	}
 
 	.page-maximized .portlet-icons {
 		font-size: 11px;
+	}
+
+	.dropdown-menu > li.portlet-close > a {
+		color: #C00;
+		font-weight: bold;
+
+		&:focus, &:hover {
+			background-color: #C00;
+			background-image: none;
+			color: #FFF;
+		}
 	}
 
 	/* ---------- Set Password Reminder Portlet ---------- */

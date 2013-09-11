@@ -318,7 +318,7 @@ else {
 									<liferay-util:include page="/html/portlet/document_library/folder_action.jsp" />
 
 									<span class="browse-folder">
-										<liferay-ui:icon image="drive_error" />
+										<liferay-ui:icon alt="drive-error" image="drive_error" />
 
 										<span class="entry-title">
 											<%= mountFolder.getName() %>

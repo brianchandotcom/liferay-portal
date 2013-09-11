@@ -457,33 +457,25 @@ AUI.add(
 							}
 							else if (type === 'ddm-date') {
 								config.inputFormatter = function(val) {
-									var values = [];
-
-									AArray.each(
+									return AArray.map(
 										val,
 										function(item, index, collection) {
-											values.push(item.getTime());
+											return item.getTime();
 										}
 									);
-
-									return values;
 								};
 
 								config.outputFormatter = function(val) {
-									var values = [];
-
-									AArray.each(
+									return AArray.map(
 										val,
 										function(item, index, collection) {
 											var date = new Date(Lang.toInt(item));
 
 											date = DateMath.add(date, DateMath.MINUTES, date.getTimezoneOffset());
 
-											values.push(date);
+											return date;
 										}
 									);
-
-									return values;
 								};
 
 								item.formatter = function(obj) {

@@ -1586,10 +1586,40 @@ release was successful.</echo>
 				wrapper.java.additional.10="-XX:MaxPermSize=256m"]]></replacevalue>
 		</replace>
 
-		<replace file="${app.server.tcserver.dir}/liferay/bin/setenv.bat">
+		<replace file="${app.server.tcserver.bin.dir}/setenv.bat">
 			<replacetoken><![CDATA[set JVM_OPTS=-Xmx512M -Xss256K]]></replacetoken>
 			<replacevalue><![CDATA[set JVM_OPTS=-Xmx1024M -Xss512K -XX:MaxPermSize=256m]]></replacevalue>
 		</replace>
+
+		<echo file="${app.server.tcserver.bin.dir}/shutdown.bat">
+			@echo off
+
+			set JAVA_OPTS_TEMP=%JAVA_OPTS%
+
+			set JAVA_OPTS=
+
+			call tcruntime-ctl stop
+			call tcruntime-ctl uninstall
+
+			set JAVA_OPTS=%JAVA_OPTS_TEMP%
+
+			set JAVA_OPTS_TEMP=
+		</echo>
+
+		<echo file="${app.server.tcserver.bin.dir}/startup.bat">
+			@echo off
+
+			set JAVA_OPTS_TEMP=%JAVA_OPTS%
+
+			set JAVA_OPTS=
+
+			call tcruntime-ctl install
+			call tcruntime-ctl start
+
+			set JAVA_OPTS=%JAVA_OPTS_TEMP%
+
+			set JAVA_OPTS_TEMP=
+		</echo>
 	</target>
 
 	<target name="unzip-tomcat">

@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.process.log.ProcessOutputStream;
 import com.liferay.portal.kernel.util.ClassLoaderObjectInputStream;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.NamedThreadFactory;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
@@ -588,9 +589,8 @@ public class ProcessExecutor {
 				}
 			}
 			catch (StreamCorruptedException sce) {
-				File file = File.createTempFile(
-					"corrupted-stream-dump-" + System.currentTimeMillis(),
-					".log");
+				File file = FileUtil.createTempFile(
+					"corrupted-stream-dump-", "log");
 
 				_log.error(
 					"Dumping content of corrupted object input stream to " +

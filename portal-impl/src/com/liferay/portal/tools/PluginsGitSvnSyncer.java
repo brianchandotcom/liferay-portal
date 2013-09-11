@@ -292,7 +292,7 @@ public class PluginsGitSvnSyncer {
 			return;
 		}
 
-		File tempFile = File.createTempFile("svn-ignores-", null, null);
+		File tempFile = _fileUtil.createTempFile("svn-ignores-", "tmp");
 
 		try {
 			String[] ignoresArray = ignores.toArray(new String[ignores.size()]);

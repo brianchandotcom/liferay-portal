@@ -109,6 +109,13 @@ public class FileUtil {
 		return getFile().createTempFile(extension);
 	}
 
+	public static File createTempFile(String prefix, String extension) {
+		PortalFilePermission.checkWrite(
+			SystemProperties.get(SystemProperties.TMP_DIR));
+
+		return getFile().createTempFile(prefix, extension);
+	}
+
 	public static String createTempFileName() {
 		PortalFilePermission.checkWrite(
 			SystemProperties.get(SystemProperties.TMP_DIR));
@@ -121,6 +128,13 @@ public class FileUtil {
 			SystemProperties.get(SystemProperties.TMP_DIR));
 
 		return getFile().createTempFileName(extension);
+	}
+
+	public static String createTempFileName(String prefix, String extension) {
+		PortalFilePermission.checkWrite(
+			SystemProperties.get(SystemProperties.TMP_DIR));
+
+		return getFile().createTempFileName(prefix, extension);
 	}
 
 	public static File createTempFolder() {

@@ -893,7 +893,7 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 		OutputStream os = null;
 
 		try {
-			String extension = ".ics";
+			String extension = "ics";
 
 			if (Validator.isNull(fileName)) {
 				fileName = "liferay_calendar.";
@@ -902,14 +902,14 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 				int pos = fileName.lastIndexOf(CharPool.PERIOD);
 
 				if (pos != -1) {
-					extension = fileName.substring(pos);
+					extension = fileName.substring(pos + 1);
 					fileName = fileName.substring(0, pos);
 				}
 			}
 
 			fileName = FileUtil.getShortFileName(fileName);
 
-			File file = File.createTempFile(fileName, extension);
+			File file = FileUtil.createTempFile(fileName, extension);
 
 			os = new UnsyncBufferedOutputStream(
 				new FileOutputStream(file.getPath()));

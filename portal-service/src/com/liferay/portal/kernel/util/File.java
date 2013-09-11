@@ -53,9 +53,13 @@ public interface File {
 
 	public java.io.File createTempFile(String extension);
 
+	public java.io.File createTempFile(String prefix, String extension);
+
 	public String createTempFileName();
 
 	public String createTempFileName(String extension);
+
+	public String createTempFileName(String prefix, String extension);
 
 	public java.io.File createTempFolder();
 

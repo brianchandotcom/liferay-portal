@@ -206,16 +206,31 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 	}
 
 	@Override
+	public File createTempFile(String prefix, String extension) {
+		return new File(createTempFileName(prefix, extension));
+	}
+
+	@Override
 	public String createTempFileName() {
-		return createTempFileName(null);
+		return createTempFileName(null, null);
 	}
 
 	@Override
 	public String createTempFileName(String extension) {
+		return createTempFileName(null, extension);
+	}
+
+	@Override
+	public String createTempFileName(String prefix, String extension) {
 		StringBundler sb = new StringBundler();
 
 		sb.append(SystemProperties.get(SystemProperties.TMP_DIR));
 		sb.append(StringPool.SLASH);
+
+		if (Validator.isNotNull(prefix)) {
+			sb.append(prefix);
+		}
+
 		sb.append(Time.getTimestamp());
 		sb.append(PwdGenerator.getPassword(8, PwdGenerator.KEY2));
 

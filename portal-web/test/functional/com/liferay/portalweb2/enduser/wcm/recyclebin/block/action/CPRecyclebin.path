@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>SUCCESS_MESSAGE_RESTORE_LOCATION</td>
-	<td>//div[@class='portlet-body']/div/em[2]/a[contains(.,'${key_restoreLocation}')] </td>
+	<td>//div[@class='portlet-body']/div/em[2]/a[contains(.,'${key_assetRestoreLocation}')] </td>
 	<td></td>
 </tr>
 <tr>

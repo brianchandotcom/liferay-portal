@@ -34,7 +34,7 @@
 
 		<execute action="CPRecyclebin#assertTextEquals" locator-key1="SUCCESS_MESSAGE_CONTENT" value1="${assetType}" />
 
-		<var name="key_restoreLocation" value="${assetRestoreLocation}" />
+		<var name="key_assetRestoreLocation" value="${assetRestoreLocation}" />
 
 		<execute action="CPRecyclebin#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RESTORE_LOCATION" value1="${assetRestoreLocation}" />
 		<execute action="CPRecyclebin#assertTextEquals" locator-key1="INFO_MESSAGE" value1="The Recycle Bin is empty." />

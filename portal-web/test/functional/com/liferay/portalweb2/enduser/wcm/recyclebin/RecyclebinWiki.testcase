@@ -90,7 +90,6 @@
 
 		<execute macro="RecycleBin#restoreCP">
 			<var name="assetName" value="${wikiPageTitle}" />
-			<var name="assetType" value="${assetType}" />
 			<var name="assetRestoreLocation" value="${assetRestoreLocation}" />
 			<var name="assetType" value="${assetType}" />
 		</execute>

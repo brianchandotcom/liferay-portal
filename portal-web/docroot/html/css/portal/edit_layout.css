@@ -1,12 +1,5 @@
 .lfr-edit-layout-panel {
-	bottom: 0;
-	left: 0;
-	overflow: auto;
-	padding: 10px;
-	position: fixed;
-	top: 0;
 	width: 440px;
-	z-index: 1100;
 
 	.navbar {
 		margin-bottom: 0;
@@ -59,17 +52,6 @@
 
 /* Skin */
 
-.lfr-edit-layout-panel {
+.lfr-edit-layout-panel .taglib-form-navigator .button-holder {
 	background-color: #FFF;
-
-	h1 {
-		font-size: 22px;
-		line-height: 22px;
-	}
-
-	.taglib-form-navigator {
-		.button-holder {
-			background-color: #FFF;
-		}
-	}
 }

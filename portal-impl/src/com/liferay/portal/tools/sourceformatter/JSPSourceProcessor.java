@@ -422,7 +422,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			}
 
 			if (javaSource || trimmedLine.contains("<%= ")) {
-				checkIsLowerCaseIsAndIsUpperCase(line, fileName, lineCount);
+				checkInefficientStringMethods(line, fileName, lineCount);
 			}
 
 			if (javaSource && portalSource && !_jspContents.isEmpty() &&

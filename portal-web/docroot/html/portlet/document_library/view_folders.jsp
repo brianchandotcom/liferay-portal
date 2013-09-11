@@ -298,11 +298,18 @@ else {
 						<%
 						}
 						catch (Exception e) {
+							if (permissionChecker.isCompanyAdmin() || permissionChecker.isGroupAdmin(scopeGroupId)) {
+								String errorMessage = null;
+
+								if (e instanceof PrincipalException) {
+									errorMessage = "an-authentication-error-occurred-while-connecting-to-the-repository";
+								}
+								else {
+									errorMessage = "an-unexpected-error-occurred-while-connecting-to-the-repository";
+								}
 						%>
 
-							<c:if test="<%= permissionChecker.isCompanyAdmin() || permissionChecker.isGroupAdmin(scopeGroupId) %>">
-
-								<li class="app-view-navigation-entry folder error" title="<%= LanguageUtil.get(pageContext, (e instanceof PrincipalException) ? "an-authentication-error-occurred-while-connecting-to-the-repository" : "an-unexpected-error-occurred-while-connecting-to-the-repository") %>">
+								<li class="app-view-navigation-entry folder error" title="<%= LanguageUtil.get(pageContext, errorMessage) %>">
 
 									<%
 									request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
@@ -318,9 +325,9 @@ else {
 										</span>
 									</span>
 								</li>
-							</c:if>
 
 					<%
+							}
 						}
 					}
 					%>

@@ -217,7 +217,7 @@ long folderId = ParamUtil.getLong(request, "folderId");
 
 	var selectRepositoryTypes = A.one('#<portlet:namespace />repositoryTypes');
 
-	if ( selectRepositoryTypes) {
+	if (selectRepositoryTypes) {
 		selectRepositoryTypes.on(
 			'change',
 			function(event) {
@@ -228,7 +228,7 @@ long folderId = ParamUtil.getLong(request, "folderId");
 		showConfiguration(selectRepositoryTypes);
 	}
 
-	var selectConfiguration = A.all('.repository-configuration')
+	var selectConfiguration = A.all('.repository-configuration');
 
 	selectConfiguration.on('change', showParameters);
 </aui:script>

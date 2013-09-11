@@ -41,21 +41,17 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.ColorSchemeFactoryUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.MethodHandler;
-import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.xml.Attribute;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
@@ -81,13 +77,11 @@ import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.LayoutUtil;
 import com.liferay.portal.service.persistence.UserUtil;
 import com.liferay.portal.servlet.filters.cache.CacheUtil;
-import com.liferay.portal.theme.ThemeLoaderFactory;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journalcontent.util.JournalContentUtil;
 import com.liferay.portlet.sites.util.Sites;
 
 import java.io.File;
-import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -203,10 +197,7 @@ public class LayoutImporter {
 			parameterMap, PortletDataHandlerKeys.CATEGORIES);
 		boolean importPermissions = MapUtil.getBoolean(
 			parameterMap, PortletDataHandlerKeys.PERMISSIONS);
-		boolean importTheme = MapUtil.getBoolean(
-			parameterMap, PortletDataHandlerKeys.THEME);
-		boolean importThemeSettings = MapUtil.getBoolean(
-			parameterMap, PortletDataHandlerKeys.THEME_REFERENCE);
+
 		boolean importLogo = MapUtil.getBoolean(
 			parameterMap, PortletDataHandlerKeys.LOGO);
 		boolean importLayoutSetSettings = MapUtil.getBoolean(
@@ -232,7 +223,6 @@ public class LayoutImporter {
 			_log.debug("Delete portlet data " + deletePortletData);
 			_log.debug("Import categories " + importCategories);
 			_log.debug("Import permissions " + importPermissions);
-			_log.debug("Import theme " + importTheme);
 		}
 
 		StopWatch stopWatch = null;
@@ -276,8 +266,6 @@ public class LayoutImporter {
 		portletDataContext.setPrivateLayout(privateLayout);
 
 		// Zip
-
-		InputStream themeZip = null;
 
 		validateFile(portletDataContext);
 
@@ -405,24 +393,6 @@ public class LayoutImporter {
 
 		// Look and feel
 
-		String themeId = layoutSet.getThemeId();
-		String colorSchemeId = layoutSet.getColorSchemeId();
-
-		if (importThemeSettings) {
-			Attribute themeIdAttribute = _headerElement.attribute("theme-id");
-
-			if (themeIdAttribute != null) {
-				themeId = themeIdAttribute.getValue();
-			}
-
-			Attribute colorSchemeIdAttribute = _headerElement.attribute(
-				"color-scheme-id");
-
-			if (colorSchemeIdAttribute != null) {
-				colorSchemeId = colorSchemeIdAttribute.getValue();
-			}
-		}
-
 		if (importLogo) {
 			String logoPath = _headerElement.attributeValue("logo-path");
 
@@ -448,6 +418,8 @@ public class LayoutImporter {
 			}
 		}
 
+		_themeImporter.importTheme(portletDataContext, layoutSet);
+
 		if (importLayoutSetSettings) {
 			String settings = GetterUtil.getString(
 				_headerElement.elementText("settings"));
@@ -455,32 +427,6 @@ public class LayoutImporter {
 			LayoutSetLocalServiceUtil.updateSettings(
 				groupId, privateLayout, settings);
 		}
-
-		if (importTheme) {
-			themeZip = portletDataContext.getZipEntryAsInputStream("theme.zip");
-		}
-
-		if (themeZip != null) {
-			String importThemeId = importTheme(
-				layoutSet.getGroupId(), layoutSet.isPrivateLayout(), 0,
-				themeZip);
-
-			if (importThemeId != null) {
-				themeId = importThemeId;
-				colorSchemeId =
-					ColorSchemeFactoryUtil.getDefaultRegularColorSchemeId();
-			}
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Importing theme takes " + stopWatch.getTime() + " ms");
-			}
-		}
-
-		String css = GetterUtil.getString(_headerElement.elementText("css"));
-
-		LayoutSetLocalServiceUtil.updateLookAndFeel(
-			groupId, privateLayout, themeId, colorSchemeId, css, false);
 
 		// Read asset categories, asset tags, comments, locks, permissions, and
 		// ratings entries to make them available to the data handlers through
@@ -543,7 +489,7 @@ public class LayoutImporter {
 		for (Element layoutElement : _layoutElements) {
 			importLayout(
 				portletDataContext, sourceLayoutsUuids, newLayouts,
-				layoutElement, importTheme);
+				layoutElement);
 		}
 
 		Element portletsElement = _rootElement.element("portlets");
@@ -884,7 +830,7 @@ public class LayoutImporter {
 	protected void importLayout(
 			PortletDataContext portletDataContext,
 			List<String> sourceLayoutsUuids, List<Layout> newLayouts,
-			Element layoutElement, boolean importTheme)
+			Element layoutElement)
 		throws Exception {
 
 		String action = layoutElement.attributeValue("action");
@@ -897,42 +843,6 @@ public class LayoutImporter {
 				portletDataContext.getNewLayouts();
 
 			newLayouts.addAll(portletDataContextNewLayouts);
-
-			if (importTheme) {
-				for (Layout layout : portletDataContextNewLayouts) {
-					if (layout.isInheritLookAndFeel()) {
-						continue;
-					}
-
-					String oldLayoutId = GetterUtil.getString(
-						layoutElement.attributeValue("layout-id"));
-
-					InputStream themeZip =
-						portletDataContext.getZipEntryAsInputStream(
-							"theme" + StringPool.DASH + oldLayoutId + ".zip");
-
-					if (themeZip != null) {
-						String themeId = layout.getThemeId();
-						String colorSchemeId = layout.getColorSchemeId();
-
-						String importThemeId = importTheme(
-							layout.getGroupId(), layout.isPrivateLayout(),
-							layout.getLayoutId(), themeZip);
-
-						if (importThemeId != null) {
-							themeId = importThemeId;
-							colorSchemeId =
-								ColorSchemeFactoryUtil.
-									getDefaultRegularColorSchemeId();
-						}
-
-						LayoutLocalServiceUtil.updateLookAndFeel(
-							layout.getGroupId(), layout.isPrivateLayout(),
-							layout.getLayoutId(), themeId, colorSchemeId,
-							layout.getCss(), false);
-					}
-				}
-			}
 
 			portletDataContextNewLayouts.clear();
 		}
@@ -1097,9 +1007,6 @@ public class LayoutImporter {
 
 	private static Log _log = LogFactoryUtil.getLog(LayoutImporter.class);
 
-	private static MethodHandler _loadThemesMethodHandler = new MethodHandler(
-		new MethodKey(ThemeLoaderFactory.class, "loadThemes"));
-
 	private DeletionSystemEventImporter _deletionSystemEventImporter =
 		new DeletionSystemEventImporter();
 	private Element _headerElement;
@@ -1108,5 +1015,6 @@ public class LayoutImporter {
 	private PermissionImporter _permissionImporter = new PermissionImporter();
 	private PortletImporter _portletImporter = new PortletImporter();
 	private Element _rootElement;
+	private ThemeImporter _themeImporter = new ThemeImporter();
 
 }

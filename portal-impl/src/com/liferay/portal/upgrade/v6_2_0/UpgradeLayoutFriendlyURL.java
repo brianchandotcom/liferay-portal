@@ -21,9 +21,9 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Timestamp;
 
 /**
  * @author Sergio González
@@ -32,7 +32,7 @@ public class UpgradeLayoutFriendlyURL extends UpgradeProcess {
 
 	protected void addLayoutFriendlyURL(
 			long groupId, long companyId, long userId, String userName,
-			Date createDate, Date modifiedDate, long plid,
+			Timestamp createDate, Timestamp modifiedDate, long plid,
 			boolean privateLayout, String friendlyURL)
 		throws Exception {
 
@@ -58,8 +58,8 @@ public class UpgradeLayoutFriendlyURL extends UpgradeProcess {
 			ps.setLong(4, companyId);
 			ps.setLong(5, userId);
 			ps.setString(6, userName);
-			ps.setDate(7, createDate);
-			ps.setDate(8, modifiedDate);
+			ps.setTimestamp(7, createDate);
+			ps.setTimestamp(8, modifiedDate);
 			ps.setLong(9, plid);
 			ps.setBoolean(10, privateLayout);
 			ps.setString(11, friendlyURL);
@@ -94,8 +94,8 @@ public class UpgradeLayoutFriendlyURL extends UpgradeProcess {
 				long companyId = rs.getLong("companyId");
 				long userId = rs.getLong("userId");
 				String userName = rs.getString("userName");
-				Date createDate = rs.getDate("createDate");
-				Date modifiedDate = rs.getDate("modifiedDate");
+				Timestamp createDate = rs.getTimestamp("createDate");
+				Timestamp modifiedDate = rs.getTimestamp("modifiedDate");
 				boolean privateLayout = rs.getBoolean("privateLayout");
 				String friendlyURL = rs.getString("friendlyURL");
 

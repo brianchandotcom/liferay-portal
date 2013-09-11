@@ -63,6 +63,8 @@
 
 		<action path="/portal/progress_poller" forward="portal.progress_poller" />
 
+		<action path="/portal/protected" forward="/portal/protected.jsp" />
+
 		<action path="/portal/render_portlet" type="com.liferay.portal.action.RenderPortletAction">
 			<forward name="/portal/render_portlet" path="/portal/render_portlet.jsp" />
 		</action>

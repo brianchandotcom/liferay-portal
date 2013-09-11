@@ -333,9 +333,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	protected void checkIsLowerCaseIsAndIsUpperCase(
 		String line, String fileName, int lineCount) {
 
-		if (!portalSource ||
-			mainReleaseVersion.equals(MAIN_RELEASE_VERSION_6_1_0)) {
-
+		if (mainReleaseVersion.equals(MAIN_RELEASE_VERSION_6_1_0)) {
 			return;
 		}
 

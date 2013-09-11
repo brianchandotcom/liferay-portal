@@ -144,7 +144,10 @@ public class LuceneHelperImpl implements LuceneHelper {
 		booleanQuery.add(numericRangeQuery, BooleanClause.Occur.SHOULD);
 	}
 
-	@Deprecated
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link
+	 *             #addNumericRangeTerm(BooleanQuery, String, Long, Long)}
+	 */
 	@Override
 	public void addNumericRangeTerm(
 		BooleanQuery booleanQuery, String field, String startValue,

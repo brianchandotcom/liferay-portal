@@ -24,8 +24,6 @@ import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.NoSuchLayoutPrototypeException;
 import com.liferay.portal.NoSuchLayoutSetPrototypeException;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
-import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
-import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
 import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
@@ -54,7 +52,6 @@ import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
@@ -71,7 +68,6 @@ import com.liferay.portal.model.LayoutPrototype;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.LayoutSetPrototype;
 import com.liferay.portal.model.Portlet;
-import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
@@ -85,10 +81,7 @@ import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.LayoutUtil;
 import com.liferay.portal.service.persistence.UserUtil;
 import com.liferay.portal.servlet.filters.cache.CacheUtil;
-import com.liferay.portal.theme.ThemeLoader;
 import com.liferay.portal.theme.ThemeLoaderFactory;
-import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journalcontent.util.JournalContentUtil;
 import com.liferay.portlet.sites.util.Sites;
@@ -97,7 +90,6 @@ import java.io.File;
 import java.io.InputStream;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -948,95 +940,6 @@ public class LayoutImporter {
 		if (!action.equals(Constants.DELETE)) {
 			sourceLayoutsUuids.add(layoutElement.attributeValue("uuid"));
 		}
-	}
-
-	protected String importTheme(
-			long groupId, boolean privateLayout, long layoutId,
-			InputStream themeZip)
-		throws Exception {
-
-		ThemeLoader themeLoader = ThemeLoaderFactory.getDefaultThemeLoader();
-
-		if (themeLoader == null) {
-			_log.error("No theme loaders are deployed");
-
-			return null;
-		}
-
-		ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(themeZip);
-
-		String lookAndFeelXML = zipReader.getEntryAsString(
-			"liferay-look-and-feel.xml");
-
-		String themeId = String.valueOf(groupId);
-
-		if (privateLayout) {
-			themeId += "-private";
-		}
-		else {
-			themeId += "-public";
-		}
-
-		if (Validator.isNotNull(layoutId)) {
-			themeId += StringPool.DASH + String.valueOf(layoutId);
-		}
-
-		if (PropsValues.THEME_LOADER_NEW_THEME_ID_ON_IMPORT) {
-			Date now = new Date();
-
-			themeId += "-" + Time.getShortTimestamp(now);
-		}
-
-		String themeName = themeId;
-
-		lookAndFeelXML = StringUtil.replace(
-			lookAndFeelXML,
-			new String[] {
-				"[$GROUP_ID$]", "[$THEME_ID$]", "[$THEME_NAME$]"
-			},
-			new String[] {
-				String.valueOf(groupId), themeId, themeName
-			}
-		);
-
-		FileUtil.deltree(
-			themeLoader.getFileStorage() + StringPool.SLASH + themeId);
-
-		List<String> zipEntries = zipReader.getEntries();
-
-		for (String zipEntry : zipEntries) {
-			String key = zipEntry;
-
-			if (key.equals("liferay-look-and-feel.xml")) {
-				FileUtil.write(
-					themeLoader.getFileStorage() + StringPool.SLASH + themeId +
-						StringPool.SLASH + key,
-					lookAndFeelXML.getBytes());
-			}
-			else {
-				InputStream is = zipReader.getEntryAsInputStream(zipEntry);
-
-				FileUtil.write(
-					themeLoader.getFileStorage() + StringPool.SLASH + themeId +
-						StringPool.SLASH + key,
-					is);
-			}
-		}
-
-		themeLoader.loadThemes();
-
-		ClusterRequest clusterRequest = ClusterRequest.createMulticastRequest(
-			_loadThemesMethodHandler, true);
-
-		clusterRequest.setFireAndForget(true);
-
-		ClusterExecutorUtil.execute(clusterRequest);
-
-		themeId +=
-			PortletConstants.WAR_SEPARATOR +
-				themeLoader.getServletContextName();
-
-		return PortalUtil.getJsSafePortletId(themeId);
 	}
 
 	protected void readXML(PortletDataContext portletDataContext)

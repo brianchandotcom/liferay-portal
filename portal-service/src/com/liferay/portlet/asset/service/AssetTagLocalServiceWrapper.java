@@ -471,6 +471,32 @@ public class AssetTagLocalServiceWrapper implements AssetTagLocalService,
 		_assetTagLocalService.checkTags(userId, groupId, names);
 	}
 
+	/**
+	* Checks whether the given tag <code>names</code> exists or not with the
+	* specified <code>groupId</code>.
+	*
+	* If a tag name does not exist in the group, adds a new tag with the
+	* specified name. If a tag with the same name exists in the company group
+	* it copies the associated properties to the new tag.
+	*
+	* Returns the tags, including the ones created automatically.
+	*
+	* @param userId the primary key of the user
+	* @param groupId the primary key of the group where the method checks the
+	names
+	* @param names the names of tags that the method looks for
+	* @throws PortalException if a portal exception occurred
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public java.util.List<com.liferay.portlet.asset.model.AssetTag> checkTagsWithProperties(
+		long userId, long groupId, java.lang.String[] names)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _assetTagLocalService.checkTagsWithProperties(userId, groupId,
+			names);
+	}
+
 	@Override
 	public com.liferay.portlet.asset.model.AssetTag decrementAssetCount(
 		long tagId, long classNameId)

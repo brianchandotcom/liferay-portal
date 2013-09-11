@@ -165,7 +165,7 @@ long assetClassPK = 0;
 					%>
 
 					<aui:script use="aui-base">
-						var groupSelectorMenu = A.one('#<portlet:namespace />groupSelector').get('parentNode');
+						var groupSelectorMenu = A.one('#<portlet:namespace />groupSelector').get('parentNode').one('.lfr-menu-list');
 
 						groupSelectorMenu.delegate(
 							'click',

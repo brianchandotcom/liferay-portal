@@ -440,6 +440,18 @@ app.server.jboss.zip.name=jboss-eap-$${app.server.jboss.version}.zip</echo>
 		</copy>
 	</target>
 
+	<target name="build-dist-tcserver">
+		<antcall target="unzip-tcserver" />
+
+		<echo file="app.server.${user.name}.properties">app.server.type=tcserver</echo>
+
+		<delete dir="${project.dir}/portal-web/classes" />
+
+		<antcall target="all" inheritAll="false" />
+
+		<delete file="app.server.${user.name}.properties" />
+	</target>
+
 	<target name="build-dist-tomcat">
 		<if>
 			<equals arg1="${tomcat.keep.app.server.properties}" arg2="true" />
@@ -1535,6 +1547,79 @@ release was successful.</echo>
 				<include name="*.sh" />
 			</fileset>
 		</chmod>
+	</target>
+
+	<target name="unzip-tcserver">
+		<delete dir="${app.server.tcserver.dir}" />
+
+		<if>
+			<not>
+				<available file="${app.server.parent.dir}/${app.server.tcserver.zip.name}" />
+			</not>
+			<then>
+				<mkdir dir="${app.server.parent.dir}" />
+
+				<get
+					dest="${app.server.parent.dir}/${app.server.tcserver.zip.name}"
+					src="${app.server.tcserver.zip.url}"
+					verbose="true"
+				/>
+			</then>
+		</if>
+
+		<unzip dest="${app.server.parent.dir}" src="${app.server.parent.dir}/${app.server.tcserver.zip.name}">
+			<mapper type="glob" from="${app.server.tcserver.zip.name}" to="tcserver-${app.server.tcserver.version}/*" />
+		</unzip>
+
+		<exec dir="${app.server.tcserver.dir}" executable="cmd">
+			<arg line="/c set JAVA_OPTS= &amp; tcruntime-instance.bat create liferay" />
+		</exec>
+
+		<replace file="${app.server.tcserver.dir}/liferay/conf/wrapper.conf">
+			<replacetoken><![CDATA[wrapper.java.additional.8="-Xmx512M"]]></replacetoken>
+			<replacevalue><![CDATA[wrapper.java.additional.8="-Xmx1024M"]]></replacevalue>
+		</replace>
+
+		<replace file="${app.server.tcserver.dir}/liferay/conf/wrapper.conf">
+			<replacetoken><![CDATA[wrapper.java.additional.9="-Xss256K"]]></replacetoken>
+			<replacevalue><![CDATA[wrapper.java.additional.9="-Xss512K"
+				wrapper.java.additional.10="-XX:MaxPermSize=256m"]]></replacevalue>
+		</replace>
+
+		<replace file="${app.server.tcserver.bin.dir}/setenv.bat">
+			<replacetoken><![CDATA[set JVM_OPTS=-Xmx512M -Xss256K]]></replacetoken>
+			<replacevalue><![CDATA[set JVM_OPTS=-Xmx1024M -Xss512K -XX:MaxPermSize=256m]]></replacevalue>
+		</replace>
+
+		<echo file="${app.server.tcserver.bin.dir}/shutdown.bat">
+			@echo off
+
+			set JAVA_OPTS_TEMP=%JAVA_OPTS%
+
+			set JAVA_OPTS=
+
+			call tcruntime-ctl stop
+			call tcruntime-ctl uninstall
+
+			set JAVA_OPTS=%JAVA_OPTS_TEMP%
+
+			set JAVA_OPTS_TEMP=
+		</echo>
+
+		<echo file="${app.server.tcserver.bin.dir}/startup.bat">
+			@echo off
+
+			set JAVA_OPTS_TEMP=%JAVA_OPTS%
+
+			set JAVA_OPTS=
+
+			call tcruntime-ctl install
+			call tcruntime-ctl start
+
+			set JAVA_OPTS=%JAVA_OPTS_TEMP%
+
+			set JAVA_OPTS_TEMP=
+		</echo>
 	</target>
 
 	<target name="unzip-tomcat">

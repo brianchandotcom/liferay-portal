@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
@@ -592,10 +591,11 @@ public class JournalArticleIndexer extends BaseIndexer {
 		return PORTLET_ID;
 	}
 
-	protected void reindexArticles(long companyId)
-		throws PortalException, SystemException {
-
+	protected void reindexArticles(long companyId) throws Exception {
 		final Collection<Document> documents = new ArrayList<Document>();
+
+		final Collection<JournalArticle> articles =
+			new ArrayList<JournalArticle>();
 
 		ActionableDynamicQuery actionableDynamicQuery =
 			new JournalArticleActionableDynamicQuery() {
@@ -612,6 +612,8 @@ public class JournalArticleIndexer extends BaseIndexer {
 			protected void performAction(Object object) throws PortalException {
 				JournalArticle article = (JournalArticle)object;
 
+				articles.add(article);
+
 				Document document = getDocument(article);
 
 				documents.add(document);
@@ -625,6 +627,16 @@ public class JournalArticleIndexer extends BaseIndexer {
 
 		SearchEngineUtil.updateDocuments(
 			getSearchEngineId(), companyId, documents);
+
+		updateArticles(articles);
+	}
+
+	protected void updateArticles(Collection<JournalArticle> articles)
+		throws Exception {
+
+		for (JournalArticle article : articles) {
+			updateArticles(article);
+		}
 	}
 
 	protected void updateArticles(JournalArticle article) throws Exception {

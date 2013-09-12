@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateResource;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.template.AbstractTemplate;
 import com.liferay.portal.template.TemplateContextHelper;
 import com.liferay.portal.template.TemplateResourceThreadLocal;
@@ -30,10 +29,11 @@ import java.security.AccessController;
 import java.security.PrivilegedActionException;
 import java.security.PrivilegedExceptionAction;
 
+import java.util.Map;
+
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
-import org.apache.velocity.context.Context;
 import org.apache.velocity.exception.ParseErrorException;
 
 /**
@@ -43,53 +43,18 @@ public class VelocityTemplate extends AbstractTemplate {
 
 	public VelocityTemplate(
 		TemplateResource templateResource,
-		TemplateResource errorTemplateResource, VelocityContext velocityContext,
+		TemplateResource errorTemplateResource, Map<String, Object> context,
 		VelocityEngine velocityEngine,
 		TemplateContextHelper templateContextHelper, boolean privileged) {
 
 		super(
-			templateResource, errorTemplateResource, templateContextHelper,
-			TemplateConstants.LANG_TYPE_VM,
+			templateResource, errorTemplateResource, context,
+			templateContextHelper, TemplateConstants.LANG_TYPE_VM,
 			PropsValues.VELOCITY_ENGINE_RESOURCE_MODIFICATION_CHECK_INTERVAL);
 
-		if (velocityContext == null) {
-			_velocityContext = new VelocityContext();
-		}
-		else {
-			_velocityContext = new VelocityContext(velocityContext);
-		}
-
+		_velocityContext = new VelocityContext(super.context);
 		_velocityEngine = velocityEngine;
 		_privileged = privileged;
-	}
-
-	@Override
-	public Object get(String key) {
-		return _velocityContext.get(key);
-	}
-
-	@Override
-	public String[] getKeys() {
-		Object[] keyObjects = _velocityContext.getKeys();
-
-		Context context = _velocityContext.getChainedContext();
-
-		Object[] innerKeyObjects = context.getKeys();
-
-		String[] keys = new String[keyObjects.length + innerKeyObjects.length];
-
-		ArrayUtil.combine(keyObjects, innerKeyObjects, keys);
-
-		return keys;
-	}
-
-	@Override
-	public void put(String key, Object value) {
-		if (value == null) {
-			return;
-		}
-
-		_velocityContext.put(key, value);
 	}
 
 	@Override

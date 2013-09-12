@@ -30,6 +30,10 @@ import com.liferay.portal.kernel.util.StringPool;
 import java.io.Serializable;
 import java.io.Writer;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -39,7 +43,7 @@ public abstract class AbstractTemplate implements Template {
 
 	public AbstractTemplate(
 		TemplateResource templateResource,
-		TemplateResource errorTemplateResource,
+		TemplateResource errorTemplateResource, Map<String, Object> context,
 		TemplateContextHelper templateContextHelper, String templateManagerName,
 		long interval) {
 
@@ -59,11 +63,35 @@ public abstract class AbstractTemplate implements Template {
 		this.templateResource = templateResource;
 		this.errorTemplateResource = errorTemplateResource;
 
+		this.context = new HashMap<String, Object>();
+
+		if (context != null) {
+			for (Map.Entry<String, Object> entry : context.entrySet()) {
+				put(entry.getKey(), entry.getValue());
+			}
+		}
+
 		_templateContextHelper = templateContextHelper;
 
 		if (interval != 0) {
 			_cacheTemplateResource(templateManagerName);
 		}
+	}
+
+	@Override
+	public Object get(String key) {
+		if (key == null) {
+			return null;
+		}
+
+		return context.get(key);
+	}
+
+	@Override
+	public String[] getKeys() {
+		Set<String> keys = context.keySet();
+
+		return keys.toArray(new String[keys.size()]);
 	}
 
 	@Override
@@ -110,6 +138,15 @@ public abstract class AbstractTemplate implements Template {
 		}
 	}
 
+	@Override
+	public void put(String key, Object value) {
+		if ((key == null) || (value == null)) {
+			return;
+		}
+
+		context.put(key, value);
+	}
+
 	protected String getTemplateResourceUUID(
 		TemplateResource templateResource) {
 
@@ -124,6 +161,7 @@ public abstract class AbstractTemplate implements Template {
 			TemplateResource templateResource, Writer writer)
 		throws Exception;
 
+	protected Map<String, Object> context;
 	protected TemplateResource errorTemplateResource;
 	protected TemplateResource templateResource;
 

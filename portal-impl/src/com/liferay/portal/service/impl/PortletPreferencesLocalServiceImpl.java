@@ -34,6 +34,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.PortletPreferencesImpl;
 import com.liferay.portlet.PortletPreferencesThreadLocal;
+import com.liferay.portlet.StrictPortletPreferencesImpl;
 
 import java.util.List;
 import java.util.concurrent.locks.Lock;
@@ -393,7 +394,7 @@ public class PortletPreferencesLocalServiceImpl
 				(Validator.isNull(defaultPreferences) ||
 				 ((portlet != null) && portlet.isUndeployedPortlet()))) {
 
-				return new PortletPreferencesImpl();
+				return new StrictPortletPreferencesImpl();
 			}
 
 			portletPreferences =

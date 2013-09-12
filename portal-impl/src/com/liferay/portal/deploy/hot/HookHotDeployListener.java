@@ -153,6 +153,8 @@ import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.ControlPanelEntry;
 import com.liferay.portlet.DefaultControlPanelEntryFactory;
+import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
+import com.liferay.portlet.assetpublisher.util.AssetQueryProcessor;
 import com.liferay.portlet.documentlibrary.antivirus.AntivirusScanner;
 import com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerUtil;
 import com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerWrapper;
@@ -406,6 +408,25 @@ public class HookHotDeployListener
 		}
 
 		resetPortalProperties(servletContextName, portalProperties, false);
+
+		if (portalProperties.containsKey(
+				PropsKeys.ASSET_PUBLISHER_QUERY_PROCESSORS)) {
+
+			String[] assetQueryProcessors = StringUtil.split(
+					portalProperties.getProperty(
+						PropsKeys.ASSET_PUBLISHER_QUERY_PROCESSORS));
+
+			for (String assetQueryProcessorClassName : assetQueryProcessors) {
+				AssetPublisherUtil.unregisterAssetQueryProcessor(
+					assetQueryProcessorClassName);
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Unregistered asset query processor " +
+							assetQueryProcessorClassName);
+				}
+			}
+		}
 
 		if (portalProperties.containsKey(PropsKeys.AUTH_TOKEN_IMPL)) {
 			AuthTokenWrapper authTokenWrapper =
@@ -1694,6 +1715,30 @@ public class HookHotDeployListener
 
 		resetPortalProperties(servletContextName, portalProperties, true);
 
+		if (portalProperties.containsKey(
+				PropsKeys.ASSET_PUBLISHER_QUERY_PROCESSORS)) {
+
+			String[] assetQueryProcessors = StringUtil.split(
+				portalProperties.getProperty(
+					PropsKeys.ASSET_PUBLISHER_QUERY_PROCESSORS));
+
+			for (String assetQueryProcessorClassName : assetQueryProcessors) {
+				AssetQueryProcessor assetQueryProcessor =
+					(AssetQueryProcessor)newInstance(
+						portletClassLoader, AssetQueryProcessor.class,
+						assetQueryProcessorClassName);
+
+				AssetPublisherUtil.registerAssetQueryProcessor(
+					assetQueryProcessorClassName, assetQueryProcessor);
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Registered asset query processor " +
+							assetQueryProcessorClassName);
+				}
+			}
+		}
+
 		if (portalProperties.containsKey(PropsKeys.AUTH_PUBLIC_PATHS)) {
 			initAuthPublicPaths(servletContextName, portalProperties);
 		}
@@ -2690,9 +2735,10 @@ public class HookHotDeployListener
 	};
 
 	private static final String[] _PROPS_VALUES_MERGE_STRING_ARRAY = {
-		"auth.token.ignore.actions", "auth.token.ignore.portlets",
-		"admin.default.group.names", "admin.default.role.names",
-		"admin.default.user.group.names", "asset.publisher.display.styles",
+		"asset.publisher.query.form", "auth.token.ignore.actions",
+		"auth.token.ignore.portlets", "admin.default.group.names",
+		"admin.default.role.names", "admin.default.user.group.names",
+		"asset.publisher.display.styles",
 		"company.settings.form.authentication",
 		"company.settings.form.configuration",
 		"company.settings.form.identification",

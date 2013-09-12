@@ -114,6 +114,7 @@ import com.liferay.portal.model.TicketConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.model.VirtualLayoutConstants;
+import com.liferay.portal.model.impl.CookieRemotePreference;
 import com.liferay.portal.model.impl.LayoutTypePortletImpl;
 import com.liferay.portal.model.impl.VirtualLayout;
 import com.liferay.portal.plugin.PluginPackageUtil;
@@ -250,6 +251,7 @@ import javax.portlet.WindowState;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
@@ -5222,6 +5224,14 @@ public class PortalImpl implements Portal {
 			user = UserLocalServiceUtil.getUserById(userId);
 
 			request.setAttribute(WebKeys.USER, user);
+		}
+
+		for (Cookie cookie : request.getCookies()) {
+			String cookieName = cookie.getName();
+
+			if (cookieName.startsWith(CookieKeys.REMOTE_PREFERENCES_PREFIX)) {
+				user.addRemotePreference(new CookieRemotePreference(cookie));
+			}
 		}
 
 		return user;

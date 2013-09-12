@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -87,6 +88,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
@@ -100,6 +102,24 @@ import javax.servlet.http.HttpSession;
  * @author Julio Camarero
  */
 public class AssetPublisherImpl implements AssetPublisher {
+
+	public AssetPublisherImpl() {
+		for (String queryProcessorClassName :
+				PropsValues.ASSET_PUBLISHER_QUERY_PROCESSORS) {
+
+			try {
+				AssetQueryProcessor queryProcessor =
+					(AssetQueryProcessor)InstanceFactory.newInstance(
+						queryProcessorClassName);
+
+				registerAssetQueryProcessor(
+					queryProcessorClassName, queryProcessor);
+			}
+			catch (Exception e) {
+				_log.error(e, e);
+			}
+		}
+	}
 
 	@Override
 	public void addAndStoreSelection(
@@ -1038,6 +1058,28 @@ public class AssetPublisherImpl implements AssetPublisher {
 	}
 
 	@Override
+	public void processQuery(
+			User user, PortletPreferences preferences,
+			AssetEntryQuery assetEntryQuery)
+		throws Exception {
+
+		for (AssetQueryProcessor queryProcessor : _queryProcessors.values()) {
+			queryProcessor.adaptQuery(user, preferences, assetEntryQuery);
+		}
+	}
+
+	@Override
+	public void registerAssetQueryProcessor(
+		String name, AssetQueryProcessor assetQueryProcessor) {
+
+		if (assetQueryProcessor == null) {
+			return;
+		}
+
+		_queryProcessors.put(name, assetQueryProcessor);
+	}
+
+	@Override
 	public void removeAndStoreSelection(
 			List<String> assetEntryUuids, PortletPreferences portletPreferences)
 		throws Exception {
@@ -1096,6 +1138,13 @@ public class AssetPublisherImpl implements AssetPublisher {
 			permissionChecker.getUserId(), groupId,
 			com.liferay.portal.model.PortletPreferences.class.getName(),
 			_getPortletPreferencesId(plid, portletId));
+	}
+
+	@Override
+	public void unregisterAssetQueryProcessor(
+		String assetQueryProcessorClassName) {
+
+		_queryProcessors.remove(assetQueryProcessorClassName);
 	}
 
 	@Override
@@ -1284,6 +1333,9 @@ public class AssetPublisherImpl implements AssetPublisher {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(AssetPublisherImpl.class);
+
+	private final Map<String, AssetQueryProcessor> _queryProcessors =
+		new ConcurrentHashMap<String, AssetQueryProcessor>();
 
 	private Accessor<AssetEntry, String> _titleAccessor =
 		new Accessor<AssetEntry, String>() {

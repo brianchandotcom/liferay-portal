@@ -355,6 +355,7 @@ public class JournalArticleIndexer extends BaseIndexer {
 
 		document.addKeyword(Field.FOLDER_ID, article.getFolderId());
 		document.addKeyword(Field.LAYOUT_UUID, article.getLayoutUuid());
+		document.addKeyword(Field.TREE_PATH, article.getTreePath());
 		document.addKeyword(Field.TYPE, article.getType());
 		document.addKeyword(Field.VERSION, article.getVersion());
 
@@ -369,7 +370,6 @@ public class JournalArticleIndexer extends BaseIndexer {
 		document.addKeyword("ddmTemplateKey", article.getTemplateId());
 		document.addDate("displayDate", article.getDisplayDate());
 		document.addKeyword("head", false);
-		document.addKeyword("treePath", article.getTreePath());
 
 		addDDMStructureAttributes(document, article);
 

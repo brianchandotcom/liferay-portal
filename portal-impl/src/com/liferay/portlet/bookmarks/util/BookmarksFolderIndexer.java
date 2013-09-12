@@ -120,8 +120,7 @@ public class BookmarksFolderIndexer extends BaseIndexer {
 		document.addText(Field.DESCRIPTION, folder.getDescription());
 		document.addKeyword(Field.FOLDER_ID, folder.getParentFolderId());
 		document.addText(Field.TITLE, folder.getName());
-
-		document.addKeyword("treePath", folder.getTreePath());
+		document.addKeyword(Field.TREE_PATH, folder.getTreePath());
 
 		if (!folder.isInTrash() && folder.isInTrashContainer()) {
 			BookmarksFolder trashedFolder = folder.getTrashContainer();

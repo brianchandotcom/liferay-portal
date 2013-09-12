@@ -50,10 +50,6 @@
 		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplates#assertClick" locator-key1="TOOLBAR_ADD_FORM_TEMPLATE" value1="Add Form Template" />
 		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplatesAddform#type" locator-key1="NAME_FIELD" value1="${dataDefinitionFormTemplateName}" />
 
-		<execute macro="CPDynamicdatalistsDatadefinitionsManagetemplatesAddform#showDetails" />
-
-		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplatesAddform#select" locator-key1="DETAILS_LANGUAGE_SELECT" value1="${formTemplateLanguageSelect}" />
-
 		<execute macro="DataDefinitionTemplate#addFormFieldCmdCP">
 			<var name="fieldName" value="${fieldName}" />
 			<var name="formFieldKey" value="${formFieldKey}" />
@@ -152,10 +148,6 @@
 		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplates#assertClick" locator-key1="TEMPLATE_MENULIST_EDIT" value1="Edit" />
 
 		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplatesEditform#type" locator-key1="NAME_FIELD" value1="${dataDefinitionFormTemplateNameEdit}" />
-
-		<execute macro="CPDynamicdatalistsDatadefinitionsManagetemplatesAddform#showDetails" />
-
-		<execute action="CPDynamicdatalistsDatadefinitionsManagetemplatesEditform#select" locator-key1="DETAILS_LANGUAGE_SELECT" value1="${formTemplateLanguageSelect}" />
 
 		<execute macro="DataDefinitionTemplate#addFormFieldCmdCP">
 			<var name="fieldName" value="${fieldName}" />

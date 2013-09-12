@@ -1,5 +1,7 @@
 (function() {
 
+var STR_DIV = 'div';
+
 CKEDITOR.plugins.add(
 	'media',
 	{
@@ -34,8 +36,13 @@ CKEDITOR.plugins.add(
 										realChild.children[0].value = '';
 									}
 
-									var cssClass = (video ? 'liferay_cke_video' : 'liferay_cke_audio');
-									var element = (video ? 'video' : 'audio');
+									var cssClass = 'liferay_cke_audio';
+									var element = 'audio';
+
+									if (video) {
+										cssClass = 'liferay_cke_video';
+										element = 'video';
+									}
 
 									fakeElement = editor.createFakeParserElement(realElement, cssClass, element, false);
 
@@ -100,39 +107,30 @@ CKEDITOR.plugins.add(
 		getPlaceholderCss: function() {
 			var instance = this;
 
-			return 'img.liferay_cke_video {' +
-				'background: #CCC url(' + CKEDITOR.getUrl(instance.path + 'icons/placeholder_video.png') + ') no-repeat 50% 50%;' +
-				'border: 1px solid #A9A9A9;' +
-				'display: block;' +
-				'height: 80px;' +
-				'width: 80px;' +
-			'}' +
-			'img.liferay_cke_audio {' +
+			return 'img.liferay_cke_audio {' +
 				'background: #CCC url(' + CKEDITOR.getUrl(instance.path + 'icons/placeholder_audio.png') + ') no-repeat 50% 50%;' +
 				'border: 1px solid #A9A9A9;' +
 				'display: block;' +
 				'height: 30px;' +
 				'width: 100%;' +
+			'}' +
+			'img.liferay_cke_video {' +
+				'background: #CCC url(' + CKEDITOR.getUrl(instance.path + 'icons/placeholder_video.png') + ') no-repeat 50% 50%;' +
+				'border: 1px solid #A9A9A9;' +
+				'display: block;' +
+				'height: 80px;' +
+				'width: 80px;' +
 			'}';
 		},
 
 		init: function(editor) {
 			var instance = this;
 
-			CKEDITOR.dialog.add('video', instance.path + 'dialogs/video.js');
 			CKEDITOR.dialog.add('audio', instance.path + 'dialogs/audio.js');
+			CKEDITOR.dialog.add('video', instance.path + 'dialogs/video.js');
 
-			editor.addCommand('Video', new CKEDITOR.dialogCommand('video'));
 			editor.addCommand('Audio', new CKEDITOR.dialogCommand('audio'));
-
-			editor.ui.addButton(
-				'Video',
-				{
-					command: 'Video',
-					icon: instance.path + 'icons/icon_video.png',
-					label: Liferay.Language.get('video')
-				}
-			);
+			editor.addCommand('Video', new CKEDITOR.dialogCommand('video'));
 
 			editor.ui.addButton(
 				'Audio',
@@ -143,18 +141,27 @@ CKEDITOR.plugins.add(
 				}
 			);
 
+			editor.ui.addButton(
+				'Video',
+				{
+					command: 'Video',
+					icon: instance.path + 'icons/icon_video.png',
+					label: Liferay.Language.get('video')
+				}
+			);
+
 			if (editor.addMenuItems) {
 				editor.addMenuItems(
 					{
-						video: {
-							command: 'Video',
-							group: 'flash',
-							label: Liferay.Language.get('edit-video')
-						},
 						audio: {
 							command: 'Audio',
 							group: 'flash',
 							label: Liferay.Language.get('edit-audio')
+						},
+						video: {
+							command: 'Video',
+							group: 'flash',
+							label: Liferay.Language.get('edit-video')
 						}
 					}
 				);
@@ -165,11 +172,17 @@ CKEDITOR.plugins.add(
 				function(event) {
 					var element = event.data.element;
 
-					if (instance.isElementType(element, 'video')) {
-						event.data.dialog = 'video';
+					var type;
+
+					if (instance.isElementType(element, 'audio')) {
+						type = 'audio';
 					}
-					else if (instance.isElementType(element, 'audio')) {
-						event.data.dialog = 'audio';
+					else if (instance.isElementType(element, 'video')) {
+						type = 'video';
+					}
+
+					if (type) {
+						event.data.dialog = type;
 					}
 				}
 			);
@@ -180,11 +193,17 @@ CKEDITOR.plugins.add(
 						var value = {};
 
 						if (!element.isReadOnly()) {
-							if (instance.isElementType(element, 'video')) {
-								value.video = CKEDITOR.TRISTATE_OFF;
+							var type;
+
+							if (instance.isElementType(element, 'audio')) {
+								type = 'audio';
 							}
-							else if (instance.isElementType(element, 'audio')) {
-								value.audio = CKEDITOR.TRISTATE_OFF;
+							else if (instance.isElementType(element, 'video')) {
+								type = 'video';
+							}
+
+							if (type) {
+								value[type] = CKEDITOR.TRISTATE_OFF;
 							}
 						}
 
@@ -193,8 +212,8 @@ CKEDITOR.plugins.add(
 				);
 			}
 
-			editor.lang.fakeobjects.video = Liferay.Language.get('video');
 			editor.lang.fakeobjects.audio = Liferay.Language.get('audio');
+			editor.lang.fakeobjects.video = Liferay.Language.get('video');
 		},
 
 		isElementType: function(el, type) {
@@ -204,8 +223,6 @@ CKEDITOR.plugins.add(
 		},
 
 		createDivStructure: function(editor, containerClass, boundingBoxClass) {
-			var STR_DIV = 'div';
-
 			var divNode = editor.document.createElement(STR_DIV);
 
 			divNode.setAttribute('class', containerClass);
@@ -229,16 +246,15 @@ CKEDITOR.plugins.add(
 		},
 
 		restoreElement: function(editor, instance, fakeImage, type) {
+			var content = null;
+
 			if (fakeImage && fakeImage.data('cke-real-element-type') && fakeImage.data('cke-real-element-type') === type) {
 				instance.fakeImage = fakeImage;
 
-				var node = editor.restoreRealElement(fakeImage);
+				content = editor.restoreRealElement(fakeImage);
+			}
 
-				instance.setupContent(node);
-			}
-			else {
-				instance.setupContent(null);
-			}
+			instance.setupContent(content);
 		},
 
 		onLoad: function() {

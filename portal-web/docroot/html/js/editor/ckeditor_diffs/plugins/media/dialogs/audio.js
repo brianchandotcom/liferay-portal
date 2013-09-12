@@ -123,13 +123,11 @@ CKEDITOR.dialog.add(
 
 				var fakeImage = instance.getSelectedElement();
 
-				editor.plugins.media.restoreElement (editor, instance, fakeImage, 'audio');
+				editor.plugins.media.restoreElement(editor, instance, fakeImage, 'audio');
 			},
 
 			onOk: function() {
 				var instance = this;
-
-				var STR_DIV = 'div';
 
 				var divNode = editor.plugins.media.createDivStructure(editor, 'liferayckeaudio audio-container', 'ckaudio-no-id');
 

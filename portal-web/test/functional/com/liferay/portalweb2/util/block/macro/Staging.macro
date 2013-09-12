@@ -25,7 +25,7 @@
 		<execute action="CPSitesEdit#assertClick" locator-key1="MENU_SAVE" value1="Save" />
 		<execute action="CPSitesEdit#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to activate local staging for ${siteName}?" />
 		<execute action="CPSitesEdit#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute action="CPSitesEdit#assertTextEquals" locator-key1="SITE_TITLE" value1="${siteName} (Staging)" />
+		<execute action="CPSitesEdit#assertTextEquals" locator-key1="SITE_TITLE" value1="${siteName}" />
 	</command>
 
 	<command name="addSitePagesVariationPG">
@@ -65,7 +65,7 @@
 		<execute action="PGStagingPublishtolivenow#check" locator-key1="ALL_CONTENT_CHECKBOX" />
 		<execute action="PGStagingPublishtolivenow#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 		<execute action="PGStagingPublishtolivenow#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to publish these pages?" />
-		<execute action="PGStagingPublishtolivenow#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="PGStagingPublishtolivenow#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully. The page will be refreshed when you close this dialog. Alternatively you can hide this dialog. " />
 		<execute action="PGStagingPublishtolivenow#assertTextEquals" locator-key1="CURRENT_AND_PREVIOUS_TABLE_STATUS" value1="Successful" />
 		<execute action="PGStagingPublishtolivenow#selectFrameTop" value1="relative=top" />
 	</command>

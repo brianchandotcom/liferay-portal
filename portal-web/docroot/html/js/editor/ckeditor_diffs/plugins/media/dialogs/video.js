@@ -203,13 +203,11 @@ CKEDITOR.dialog.add(
 
 				var fakeImage = instance.getSelectedElement();
 
-				editor.plugins.media.restoreElement (editor, instance, fakeImage, 'video');
+				editor.plugins.media.restoreElement(editor, instance, fakeImage, 'video');
 			},
 
 			onOk: function() {
 				var instance = this;
-
-				var STR_DIV = 'div';
 
 				var extraStyles = {};
 

@@ -220,6 +220,10 @@ public class PermissionCheckerBagImpl implements PermissionCheckerBag {
 			PermissionChecker permissionChecker, Group group)
 		throws PortalException, SystemException {
 
+		if (group.isLayout()) {
+			group = group.getParentGroup();
+		}
+
 		if (group.isSite()) {
 			if (UserGroupRoleLocalServiceUtil.hasUserGroupRole(
 					_userId, group.getGroupId(),

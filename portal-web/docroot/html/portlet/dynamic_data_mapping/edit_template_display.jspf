@@ -113,6 +113,16 @@ if (Validator.isNotNull(scriptContent)) {
 
 	var editorContainer = panelScriptContainer.one('#<portlet:namespace />editorContainer');
 
+	var dialog = Liferay.Util.getWindow();
+
+	if (dialog && A.Lang.isFunction(dialog._detachUIHandlesAutohide)) {
+		dialog._detachUIHandlesAutohide();
+
+		if (dialog.iframe) {
+			dialog.iframe.set('closeOnEscape', false);
+		}
+	}
+
 	var prevEditorContent;
 	var richEditor;
 

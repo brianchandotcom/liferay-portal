@@ -69,15 +69,16 @@ public class BookmarksEntryImpl extends BookmarksEntryBaseImpl {
 	}
 
 	@Override
-	public boolean isInTrashContainer()
-		throws PortalException, SystemException {
+	public boolean isInTrashContainer() {
+		try {
+			if (getTrashContainer() != null) {
+				return true;
+			}
+		}
+		catch (Exception e) {
+		}
 
-		if (getTrashContainer() != null) {
-			return true;
-		}
-		else {
-			return false;
-		}
+		return false;
 	}
 
 	protected void buildTreePath(StringBundler sb, BookmarksFolder folder)

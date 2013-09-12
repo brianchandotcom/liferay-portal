@@ -87,7 +87,7 @@ public class SassToCssBuilder {
 			}
 		}
 
-		String docrootDirName = arguments.get("saas.docroot.dir");
+		String docrootDirName = arguments.get("sass.docroot.dir");
 		String portalCommonDirName = arguments.get("sass.portal.common.dir");
 
 		try {

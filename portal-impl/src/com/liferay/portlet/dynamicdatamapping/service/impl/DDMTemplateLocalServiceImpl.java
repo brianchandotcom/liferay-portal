@@ -1323,6 +1323,7 @@ public class DDMTemplateLocalServiceImpl
 			language.equals(TemplateConstants.LANG_TYPE_XSL)) {
 
 			try {
+				script = DDMXMLUtil.validateXML(script);
 				script = DDMXMLUtil.formatXML(script);
 			}
 			catch (Exception e) {

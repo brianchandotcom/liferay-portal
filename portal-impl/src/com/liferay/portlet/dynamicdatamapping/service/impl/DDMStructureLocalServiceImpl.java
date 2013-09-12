@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -1623,62 +1622,39 @@ public class DDMStructureLocalServiceImpl
 		}
 	}
 
-	protected void validate(List<Element> elements, Set<String> names)
-		throws PortalException {
+	protected void validate(Document document) throws PortalException {
+		XPath xPathSelector = SAXReaderUtil.createXPath("//dynamic-element");
 
-		for (Element element : elements) {
-			String elementName = element.getName();
+		List<Node> nodes = xPathSelector.selectNodes(document);
 
-			if (elementName.equals("meta-data")) {
-				continue;
-			}
+		Set<String> elementNames = new HashSet<String>();
 
-			String name = element.attributeValue("name", StringPool.BLANK);
-			String type = element.attributeValue("type", StringPool.BLANK);
+		for (Node node : nodes) {
+			Element element = (Element)node;
 
-			if (Validator.isNull(name) ||
-				name.startsWith(DDMStructureConstants.XSD_NAME_RESERVED)) {
+			String name = element.attributeValue("name");
 
+			if (name.startsWith(DDMStructureConstants.XSD_NAME_RESERVED)) {
 				throw new StructureXsdException();
 			}
-
-			char[] charArray = name.toCharArray();
-
-			for (int i = 0; i < charArray.length; i++) {
-				if (!Character.isLetterOrDigit(charArray[i]) &&
-					(charArray[i] != CharPool.DASH) &&
-					(charArray[i] != CharPool.UNDERLINE)) {
-
-					throw new StructureXsdException();
-				}
-			}
-
-			String path = name;
 
 			Element parentElement = element.getParent();
 
 			while (!parentElement.isRootElement()) {
-				path =
-					parentElement.attributeValue("name", StringPool.BLANK) +
-						StringPool.SLASH + path;
+				name =
+					parentElement.attributeValue("name") + StringPool.SLASH +
+						name;
 
 				parentElement = parentElement.getParent();
 			}
 
-			path = StringUtil.toLowerCase(path);
+			name = StringUtil.toLowerCase(name);
 
-			if (names.contains(path)) {
+			if (elementNames.contains(name)) {
 				throw new StructureDuplicateElementException();
 			}
-			else {
-				names.add(path);
-			}
 
-			if (Validator.isNull(type)) {
-				throw new StructureXsdException();
-			}
-
-			validate(element.elements(), names);
+			elementNames.add(name);
 		}
 	}
 
@@ -1704,56 +1680,7 @@ public class DDMStructureLocalServiceImpl
 		validate(nameMap, xsd);
 	}
 
-	protected void validate(Map<Locale, String> nameMap, String xsd)
-		throws PortalException {
-
-		if (Validator.isNull(xsd)) {
-			throw new StructureXsdException();
-		}
-		else {
-			try {
-				List<Element> elements = new ArrayList<Element>();
-
-				Document document = SAXReaderUtil.read(xsd);
-
-				Element rootElement = document.getRootElement();
-
-				List<Element> rootElementElements = rootElement.elements();
-
-				if (rootElementElements.isEmpty()) {
-					throw new StructureXsdException();
-				}
-
-				Locale contentDefaultLocale = LocaleUtil.fromLanguageId(
-					rootElement.attributeValue("default-locale"));
-
-				validateLanguages(nameMap, contentDefaultLocale);
-
-				elements.addAll(rootElement.elements());
-
-				Set<String> elNames = new HashSet<String>();
-
-				validate(elements, elNames);
-			}
-			catch (LocaleException le) {
-				throw le;
-			}
-			catch (StructureDuplicateElementException sdee) {
-				throw sdee;
-			}
-			catch (StructureNameException sne) {
-				throw sne;
-			}
-			catch (StructureXsdException sxe) {
-				throw sxe;
-			}
-			catch (Exception e) {
-				throw new StructureXsdException();
-			}
-		}
-	}
-
-	protected void validateLanguages(
+	protected void validate(
 			Map<Locale, String> nameMap, Locale contentDefaultLocale)
 		throws PortalException {
 
@@ -1777,6 +1704,38 @@ public class DDMStructureLocalServiceImpl
 			le.setTargetAvailableLocales(availableLocales);
 
 			throw le;
+		}
+	}
+
+	protected void validate(Map<Locale, String> nameMap, String xsd)
+		throws PortalException {
+
+		try {
+			Document document = SAXReaderUtil.read(xsd);
+
+			Element rootElement = document.getRootElement();
+
+			Locale contentDefaultLocale = LocaleUtil.fromLanguageId(
+				rootElement.attributeValue("default-locale"));
+
+			validate(nameMap, contentDefaultLocale);
+
+			validate(document);
+		}
+		catch (LocaleException le) {
+			throw le;
+		}
+		catch (StructureDuplicateElementException sdee) {
+			throw sdee;
+		}
+		catch (StructureNameException sne) {
+			throw sne;
+		}
+		catch (StructureXsdException sxe) {
+			throw sxe;
+		}
+		catch (Exception e) {
+			throw new StructureXsdException();
 		}
 	}
 

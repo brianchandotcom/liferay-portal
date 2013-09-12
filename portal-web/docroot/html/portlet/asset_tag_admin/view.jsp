@@ -23,7 +23,7 @@
 				<aui:nav-item id="addTagButton" label="add-tag" />
 			</c:if>
 
-			<c:if test="<%= AssetPermission.contains(permissionChecker, themeDisplay.getSiteGroupId(), ActionKeys.PERMISSIONS) && GroupPermissionUtil.contains(permissionChecker, themeDisplay.getSiteGroupId(), ActionKeys.PERMISSIONS) %>">
+			<c:if test="<%= PropsValues.ASSET_TAG_PERMISSIONS_ENABLED && AssetPermission.contains(permissionChecker, themeDisplay.getSiteGroupId(), ActionKeys.PERMISSIONS) && GroupPermissionUtil.contains(permissionChecker, themeDisplay.getSiteGroupId(), ActionKeys.PERMISSIONS) %>">
 				<liferay-security:permissionsURL
 					modelResource="com.liferay.portlet.asset"
 					modelResourceDescription="<%= themeDisplay.getScopeGroupName() %>"

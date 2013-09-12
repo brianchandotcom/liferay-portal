@@ -38,13 +38,11 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
-import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.NoSuchEntryException;
-import com.liferay.portlet.asset.NoSuchTagException;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetLink;
 import com.liferay.portlet.asset.model.AssetLinkConstants;
@@ -657,31 +655,8 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 		if (tagNames != null) {
 			long siteGroupId = PortalUtil.getSiteGroupId(groupId);
 
-			List<AssetTag> tags = new ArrayList<AssetTag>(tagNames.length);
-
-			for (String tagName : tagNames) {
-				AssetTag tag = null;
-
-				try {
-					tag = assetTagLocalService.getTag(siteGroupId, tagName);
-				}
-				catch (NoSuchTagException nste) {
-					ServiceContext serviceContext = new ServiceContext();
-
-					serviceContext.setAddGroupPermissions(true);
-					serviceContext.setAddGuestPermissions(true);
-					serviceContext.setScopeGroupId(siteGroupId);
-
-					tag = assetTagLocalService.addTag(
-						user.getUserId(), tagName,
-						PropsValues.ASSET_TAG_PROPERTIES_DEFAULT,
-						serviceContext);
-				}
-
-				if (tag != null) {
-					tags.add(tag);
-				}
-			}
+			List<AssetTag> tags = assetTagLocalService.checkTagsWithProperties(
+				userId, siteGroupId, tagNames);
 
 			List<AssetTag> oldTags = assetEntryPersistence.getAssetTags(
 				entry.getEntryId());

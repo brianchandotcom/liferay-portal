@@ -25,8 +25,10 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
+import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
@@ -167,9 +169,38 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 	public void checkTags(long userId, long groupId, String[] names)
 		throws PortalException, SystemException {
 
+		checkTagsWithProperties(userId, groupId, names);
+	}
+
+	/**
+	 * Checks whether the given tag <code>names</code> exists or not with the
+	 * specified <code>groupId</code>.
+	 *
+	 * If a tag name does not exist in the group, adds a new tag with the
+	 * specified name. If a tag with the same name exists in the company group
+	 * it copies the associated properties to the new tag.
+	 *
+	 * Returns the tags, including the ones created automatically.
+	 *
+	 * @param  userId the primary key of the user
+	 * @param  groupId the primary key of the group where the method checks the
+	 *         names
+	 * @param  names the names of tags that the method looks for
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<AssetTag> checkTagsWithProperties(
+			long userId, long groupId, String[] names)
+		throws PortalException, SystemException {
+
+		List<AssetTag> tags = new ArrayList<AssetTag>();
+
 		for (String name : names) {
+			AssetTag tag = null;
+
 			try {
-				getTag(groupId, name);
+				tag = getTag(groupId, name);
 			}
 			catch (NoSuchTagException nste) {
 				ServiceContext serviceContext = new ServiceContext();
@@ -178,11 +209,40 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 				serviceContext.setAddGuestPermissions(true);
 				serviceContext.setScopeGroupId(groupId);
 
-				addTag(
+				tag = addTag(
 					userId, name, PropsValues.ASSET_TAG_PROPERTIES_DEFAULT,
 					serviceContext);
+
+				// Properties
+
+				Group companyGroup =
+					groupLocalService.getCompanyGroup(
+						CompanyThreadLocal.getCompanyId());
+
+				try {
+					AssetTag globalTag = getTag(
+						companyGroup.getGroupId(), name);
+
+					List<AssetTagProperty> tagProperties =
+						assetTagPropertyLocalService.getTagProperties(
+							globalTag.getTagId());
+
+					for (AssetTagProperty tagProperty : tagProperties) {
+						assetTagPropertyLocalService.addTagProperty(
+							userId, tag.getTagId(), tagProperty.getKey(),
+							tagProperty.getValue());
+					}
+				}
+				catch (NoSuchTagException nste2) {
+				}
+			}
+
+			if (tag != null) {
+				tags.add(tag);
 			}
 		}
+
+		return tags;
 	}
 
 	@Override

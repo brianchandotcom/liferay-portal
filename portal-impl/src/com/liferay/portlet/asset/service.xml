@@ -317,6 +317,10 @@
 			<finder-column name="groupId" />
 			<finder-column name="name" />
 		</finder>
+
+		<!-- References -->
+
+		<reference package-path="com.liferay.portal" entity="Group" />
 	</entity>
 	<entity name="AssetTagProperty" local-service="true" remote-service="true">
 

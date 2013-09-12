@@ -1592,9 +1592,11 @@ AUI.add(
 
 						var propertiesTrigger = boundingBox.one('#' + instance._prefixedPortletId + 'tagProperties');
 
-						var autoFieldsInstance = propertiesTrigger.getData('autoFieldsInstance');
+						if (propertiesTrigger) {
+							var autoFieldsInstance = propertiesTrigger.getData('autoFieldsInstance');
 
-						autoFieldsInstance.reset();
+							autoFieldsInstance.reset();
+						}
 					},
 
 					_selectTag: function(tagId) {

@@ -39,7 +39,7 @@ List<AssetTagProperty> tagProperties = AssetTagPropertyServiceUtil.getTagPropert
 			<aui:button id="deleteTagButton" value="delete" />
 		</c:if>
 
-		<c:if test="<%= AssetTagPermission.contains(permissionChecker, tag, ActionKeys.PERMISSIONS) %>">
+		<c:if test="<%= PropsValues.ASSET_TAG_PERMISSIONS_ENABLED && AssetTagPermission.contains(permissionChecker, tag, ActionKeys.PERMISSIONS) %>">
 			<liferay-security:permissionsURL
 				modelResource="<%= AssetTag.class.getName() %>"
 				modelResourceDescription="<%= tag.getName() %>"

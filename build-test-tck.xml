@@ -33,6 +33,16 @@ work.dir=${basedir.unix}/tools/tck/work</echo>
 
 		<delete dir="${user.home}/liferay" />
 
+		<ant antfile="build-test-plugins.xml" target="deploy-simple-server-plugins">
+			<property name="plugin.types" value="portlets" />
+			<property name="plugins.includes" value="marketplace-portlet" />
+			<property name="simple.server.dir" value="${app.server.tomcat.dir}" />
+			<property name="simple.server.bin.dir" value="${app.server.tomcat.bin.dir}" />
+			<property name="simple.server.deploy.dir" value="${app.server.tomcat.deploy.dir}" />
+			<property name="simple.server.lib.global.dir" value="${app.server.tomcat.lib.global.dir}" />
+			<property name="simple.server.portal.dir" value="${app.server.tomcat.portal.dir}" />
+		</ant>
+
 		<copy todir="${user.home}/liferay/deploy" flatten="true">
 			<fileset
 				dir="tools/tck"

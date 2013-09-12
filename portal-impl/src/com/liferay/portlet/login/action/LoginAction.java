@@ -89,12 +89,7 @@ public class LoginAction extends PortletAction {
 		}*/
 
 		try {
-			PortletPreferences portletPreferences =
-				PortletPreferencesFactoryUtil.getPortletSetup(actionRequest);
-
-			login(
-				themeDisplay, actionRequest, actionResponse,
-				portletPreferences);
+			login(themeDisplay, actionRequest, actionResponse);
 
 			boolean doActionAfterLogin = ParamUtil.getBoolean(
 				actionRequest, "doActionAfterLogin");
@@ -185,8 +180,7 @@ public class LoginAction extends PortletAction {
 
 	protected void login(
 			ThemeDisplay themeDisplay, ActionRequest actionRequest,
-			ActionResponse actionResponse,
-			PortletPreferences portletPreferences)
+			ActionResponse actionResponse)
 		throws Exception {
 
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
@@ -198,9 +192,12 @@ public class LoginAction extends PortletAction {
 		String password = actionRequest.getParameter("password");
 		boolean rememberMe = ParamUtil.getBoolean(actionRequest, "rememberMe");
 
-		String authType = portletPreferences.getValue("authType", null);
-
 		if (!themeDisplay.isSignedIn()) {
+			PortletPreferences portletPreferences =
+				PortletPreferencesFactoryUtil.getPortletSetup(actionRequest);
+
+			String authType = portletPreferences.getValue("authType", null);
+
 			LoginUtil.login(
 				request, response, login, password, rememberMe, authType);
 		}

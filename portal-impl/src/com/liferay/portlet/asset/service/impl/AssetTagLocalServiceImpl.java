@@ -188,8 +188,9 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 					userId, name, PropsValues.ASSET_TAG_PROPERTIES_DEFAULT,
 					serviceContext);
 
+				Group group = groupLocalService.getGroup(groupId);
 				Group companyGroup = groupLocalService.getCompanyGroup(
-					CompanyThreadLocal.getCompanyId());
+					group.getCompanyId());
 
 				try {
 					AssetTag companyGroupTag = getTag(

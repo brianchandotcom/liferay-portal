@@ -18,11 +18,11 @@ CKEDITOR.plugins.add(
 
 								var fakeElement;
 
-								if (attributeClass && attributeClass.indexOf('liferayckevideo') >= 0) {
+								if (editor.plugins.video.hasClass(attributeClass, 'liferayckevideo')) {
 									var realChild = realElement.children && realElement.children[0];
 
 									if (realChild &&
-										realChild.attributes['class'].indexOf('ckvideo-no-id') != -1 &&
+										editor.plugins.video.hasClass(realChild.attributes['class'], 'ckvideo-no-id') &&
 										realChild.children && realChild.children.length) {
 
 										realChild.children[0].value = '';
@@ -69,7 +69,7 @@ CKEDITOR.plugins.add(
 							'div': function(realElement) {
 								var attributeClass = realElement.attributes['class'];
 
-								if (attributeClass && attributeClass.indexOf('ckvideo-no-id') >= 0 &&
+								if (editor.plugins.video.hasClass(attributeClass, 'ckvideo-no-id') &&
 									realElement.children && realElement.children.length) {
 
 									realElement.children[0].value = '';
@@ -157,6 +157,45 @@ CKEDITOR.plugins.add(
 			return (el && el.is('img') && el.data('cke-real-element-type') === 'video');
 		},
 
+		createDivStructure: function(editor, containerClass, boundingBoxClass) {
+			var STR_DIV = 'div';
+			
+			var divNode = editor.document.createElement(STR_DIV);
+
+			divNode.setAttribute('class', containerClass);
+
+			var boundingBoxTmp = editor.document.createElement(STR_DIV);
+
+			boundingBoxTmp.setAttribute('class', boundingBoxClass);
+
+			var scriptTmp = editor.document.createElement('script');
+
+			scriptTmp.setAttribute('type', 'text/javascript');
+
+			divNode.append(boundingBoxTmp);
+			divNode.append(scriptTmp);
+			
+			return divNode;
+		},
+		
+		hasClass: function(attributeClass, target) {
+			return (attributeClass && attributeClass.indexOf(target) != -1);
+		},
+		
+		restoreElement: function(editor, instance, fakeImage, type) {			
+			if (fakeImage && fakeImage.data('cke-real-element-type') && fakeImage.data('cke-real-element-type') === type) {
+				
+				instance.fakeImage = fakeImage;
+
+				var node = editor.restoreRealElement(fakeImage);				
+
+				instance.setupContent(node);
+			}
+			else {
+				instance.setupContent(null);
+			}			
+		},
+		
 		onLoad: function() {
 			var instance = this;
 

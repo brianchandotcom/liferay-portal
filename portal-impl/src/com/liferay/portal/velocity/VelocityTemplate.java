@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateResource;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.template.AbstractTemplate;
 import com.liferay.portal.template.TemplateContextHelper;
 import com.liferay.portal.template.TemplateResourceThreadLocal;
@@ -30,10 +29,13 @@ import java.security.AccessController;
 import java.security.PrivilegedActionException;
 import java.security.PrivilegedExceptionAction;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
-import org.apache.velocity.context.Context;
 import org.apache.velocity.exception.ParseErrorException;
 
 /**
@@ -43,7 +45,7 @@ public class VelocityTemplate extends AbstractTemplate {
 
 	public VelocityTemplate(
 		TemplateResource templateResource,
-		TemplateResource errorTemplateResource, VelocityContext velocityContext,
+		TemplateResource errorTemplateResource, Map<String, Object> context,
 		VelocityEngine velocityEngine,
 		TemplateContextHelper templateContextHelper, boolean privileged) {
 
@@ -52,35 +54,29 @@ public class VelocityTemplate extends AbstractTemplate {
 			TemplateConstants.LANG_TYPE_VM,
 			PropsValues.VELOCITY_ENGINE_RESOURCE_MODIFICATION_CHECK_INTERVAL);
 
-		if (velocityContext == null) {
-			_velocityContext = new VelocityContext();
-		}
-		else {
-			_velocityContext = new VelocityContext(velocityContext);
+		_context = new HashMap<String, Object>();
+
+		if (context != null) {
+			for (Map.Entry<String, Object> entry : context.entrySet()) {
+				put(entry.getKey(), entry.getValue());
+			}
 		}
 
+		_velocityContext = new VelocityContext(_context);
 		_velocityEngine = velocityEngine;
 		_privileged = privileged;
 	}
 
 	@Override
 	public Object get(String key) {
-		return _velocityContext.get(key);
+		return _context.get(key);
 	}
 
 	@Override
 	public String[] getKeys() {
-		Object[] keyObjects = _velocityContext.getKeys();
+		Set<String> keys = _context.keySet();
 
-		Context context = _velocityContext.getChainedContext();
-
-		Object[] innerKeyObjects = context.getKeys();
-
-		String[] keys = new String[keyObjects.length + innerKeyObjects.length];
-
-		ArrayUtil.combine(keyObjects, innerKeyObjects, keys);
-
-		return keys;
+		return keys.toArray(new String[keys.size()]);
 	}
 
 	@Override
@@ -89,7 +85,7 @@ public class VelocityTemplate extends AbstractTemplate {
 			return;
 		}
 
-		_velocityContext.put(key, value);
+		_context.put(key, value);
 	}
 
 	@Override
@@ -155,6 +151,7 @@ public class VelocityTemplate extends AbstractTemplate {
 		}
 	}
 
+	private Map<String, Object> _context;
 	private boolean _privileged;
 	private VelocityContext _velocityContext;
 	private VelocityEngine _velocityEngine;

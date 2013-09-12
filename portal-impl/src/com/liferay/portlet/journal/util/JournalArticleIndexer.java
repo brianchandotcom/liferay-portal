@@ -156,29 +156,6 @@ public class JournalArticleIndexer extends BaseIndexer {
 				StringPool.QUOTE + ddmStructureFieldValue + StringPool.QUOTE);
 		}
 
-		long[] folderIds = searchContext.getFolderIds();
-
-		if ((folderIds != null) && (folderIds.length > 0) &&
-			(folderIds[0] !=
-				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
-
-			BooleanQuery folderIdsQuery = BooleanQueryFactoryUtil.create(
-				searchContext);
-
-			for (long folderId : folderIds) {
-				try {
-					JournalFolderServiceUtil.getFolder(folderId);
-				}
-				catch (Exception e) {
-					continue;
-				}
-
-				folderIdsQuery.addTerm(Field.FOLDER_ID, folderId);
-			}
-
-			contextQuery.add(folderIdsQuery, BooleanClauseOccur.MUST);
-		}
-
 		String articleType = (String)searchContext.getAttribute("articleType");
 
 		if (Validator.isNotNull(articleType)) {

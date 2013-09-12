@@ -35,7 +35,7 @@
 </tr>
 <tr>
 	<td>STAGING_DROP_DOWN_BUTTON</td>
-	<td>//li[@class=' dropdown']/a[contains(.,'Staging')]</td>
+	<td>//a[@class='staging-link dropdown-toggle']/span[contains(.,'Staging')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -123,7 +123,7 @@
 <!--STAGING_MENULIST-->
 <tr>
 	<td>STAGING_MENULIST_PUBLISH_TO_LIVE_NOW</td>
-	<td>//a[@id='_170_0publishLink']</td>
+	<td>//a[contains(@id,'publishLink')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -165,8 +165,28 @@ if (!selectableTree) {
 					var childLayouts = [];
 					var total = 0;
 
+					var iconClassName = 'icon-file';
+
 					var hasChildren = node.hasChildren;
 					var nodeChildren = node.children;
+					var nodeType = node.type;
+
+					if ((nodeType === "link_to_layout") || (nodeType === "url") || (nodeType === "embedded")) {
+						iconClassName = 'icon-link';
+					}
+
+					TREE_CSS_CLASSES = {
+						pages: {
+							iconCheck: 'tree-icon icon-check',
+							iconCollapsed: iconClassName,
+							iconExpanded: iconClassName,
+							iconHitAreaCollapsed: 'tree-hitarea icon-plus',
+							iconHitAreaExpanded: 'tree-hitarea icon-minus',
+							iconLeaf: iconClassName,
+							iconLoading: 'icon-refresh',
+							iconUncheck: 'icon-check'
+						}
+					};
 
 					if (nodeChildren) {
 						childLayouts = nodeChildren.layouts;

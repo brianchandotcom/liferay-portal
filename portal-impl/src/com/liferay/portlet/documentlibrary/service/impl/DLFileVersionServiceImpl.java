@@ -21,6 +21,8 @@ import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.service.base.DLFileVersionServiceBaseImpl;
 import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
 
+import java.util.List;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -38,6 +40,26 @@ public class DLFileVersionServiceImpl extends DLFileVersionServiceBaseImpl {
 			ActionKeys.VIEW);
 
 		return fileVersion;
+	}
+
+	@Override
+	public List<DLFileVersion> getFileVersions(long fileEntryId, int status)
+		throws PortalException, SystemException {
+
+		DLFileEntryPermission.check(
+			getPermissionChecker(), fileEntryId, ActionKeys.VIEW);
+
+		return dlFileVersionLocalService.getFileVersions(fileEntryId, status);
+	}
+
+	@Override
+	public int getFileVersionsCount(long fileEntryId, int status)
+		throws PortalException, SystemException {
+
+		DLFileEntryPermission.check(
+			getPermissionChecker(), fileEntryId, ActionKeys.VIEW);
+
+		return dlFileVersionPersistence.countByF_S(fileEntryId, status);
 	}
 
 	@Override

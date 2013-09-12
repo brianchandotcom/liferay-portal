@@ -16,6 +16,7 @@ package com.liferay.portlet.asset.service;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
+import com.liferay.portal.model.Group;
 
 /**
  * Provides the local service utility for AssetTag. This utility wraps
@@ -430,11 +431,18 @@ public class AssetTagLocalServiceUtil {
 		getService().addTagResources(tag, groupPermissions, guestPermissions);
 	}
 
-	public static java.util.List<com.liferay.portlet.asset.model.AssetTag> checkTags(
-		long userId, long groupId, java.lang.String[] names)
+	public static void checkTags(long userId, long groupId,
+		java.lang.String[] names)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getService().checkTags(userId, groupId, names);
+		getService().checkTags(userId, groupId, names);
+	}
+
+	public static java.util.List<com.liferay.portlet.asset.model.AssetTag> checkTags(
+		long userId, Group group, java.lang.String[] names)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().checkTags(userId, group, names);
 	}
 
 	public static com.liferay.portlet.asset.model.AssetTag decrementAssetCount(

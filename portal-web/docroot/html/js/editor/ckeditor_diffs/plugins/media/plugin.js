@@ -163,7 +163,8 @@ CKEDITOR.plugins.add(
 
 					if (instance.isElementType(element, 'video')) {
 						event.data.dialog = 'video';
-					}else if (instance.isElementType(element, 'audio')) {
+					}
+					else if (instance.isElementType(element, 'audio')) {
 						event.data.dialog = 'audio';
 					}
 				}
@@ -177,7 +178,8 @@ CKEDITOR.plugins.add(
 						if (!element.isReadOnly()) {
 							if (instance.isElementType(element, 'video')) {
 								value.video = CKEDITOR.TRISTATE_OFF;
-							} else if (instance.isElementType(element, 'audio')) {
+							}
+							else if (instance.isElementType(element, 'audio')) {
 								value.audio = CKEDITOR.TRISTATE_OFF;
 							}
 						}

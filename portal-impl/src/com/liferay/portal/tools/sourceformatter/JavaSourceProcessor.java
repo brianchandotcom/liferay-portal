@@ -1219,6 +1219,14 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 						lineCount);
 			}
 
+			if (fileName.contains("/upgrade/") &&
+				line.contains("rs.getDate(")) {
+
+				processErrorMessage(
+					fileName,
+					"Use rs.getTimeStamp: " + fileName + " " + lineCount);
+			}
+
 			if (!trimmedLine.equals("{") && line.endsWith("{") &&
 				!line.endsWith(" {")) {
 

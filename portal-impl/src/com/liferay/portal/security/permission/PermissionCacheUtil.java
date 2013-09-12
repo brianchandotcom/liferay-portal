@@ -86,13 +86,13 @@ public class PermissionCacheUtil {
 	}
 
 	public static Boolean getPermission(
-		long userId, boolean signedIn, boolean checkGuest, long groupId,
-		String name, String primKey, String actionId) {
+		long userId, boolean signedIn, long groupId, String name,
+		String primKey, String actionId) {
 
 		Boolean value = null;
 
 		PermissionKey permissionKey = new PermissionKey(
-			userId, signedIn, checkGuest, groupId, name, primKey, actionId);
+			userId, signedIn, groupId, name, primKey, actionId);
 
 		if (_localCacheAvailable) {
 			Map<String, Object> localCache = _localCache.get();
@@ -108,14 +108,12 @@ public class PermissionCacheUtil {
 	}
 
 	public static ResourceBlockIdsBag getResourceBlockIdsBag(
-		long companyId, long groupId, long userId, String name,
-		boolean checkGuest) {
+		long companyId, long groupId, long userId, String name) {
 
 		ResourceBlockIdsBag resourceBlockIdsBag = null;
 
 		ResourceBlockIdsBagKey resourceBlockIdsBagKey =
-			new ResourceBlockIdsBagKey(
-				companyId, groupId, userId, name, checkGuest);
+			new ResourceBlockIdsBagKey(companyId, groupId, userId, name);
 
 		if (_localCacheAvailable) {
 			Map<String, Object> localCache = _localCache.get();
@@ -152,16 +150,12 @@ public class PermissionCacheUtil {
 		return bag;
 	}
 
-	public static Boolean putPermission(
-		long userId, boolean signedIn, boolean checkGuest, long groupId,
-		String name, String primKey, String actionId, Boolean value) {
-
-		if (value == null) {
-			return null;
-		}
+	public static void putPermission(
+		long userId, boolean signedIn, long groupId, String name,
+		String primKey, String actionId, Boolean value) {
 
 		PermissionKey permissionKey = new PermissionKey(
-			userId, signedIn, checkGuest, groupId, name, primKey, actionId);
+			userId, signedIn, groupId, name, primKey, actionId);
 
 		if (_localCacheAvailable) {
 			Map<Serializable, Object> localCache = _localCache.get();
@@ -170,21 +164,18 @@ public class PermissionCacheUtil {
 		}
 
 		_permissionPortalCache.put(permissionKey, value);
-
-		return value;
 	}
 
 	public static ResourceBlockIdsBag putResourceBlockIdsBag(
 		long companyId, long groupId, long userId, String name,
-		boolean checkGuest, ResourceBlockIdsBag resourceBlockIdsBag) {
+		ResourceBlockIdsBag resourceBlockIdsBag) {
 
 		if (resourceBlockIdsBag == null) {
 			return null;
 		}
 
 		ResourceBlockIdsBagKey resourceBlockIdsBagKey =
-			new ResourceBlockIdsBagKey(
-				companyId, groupId, userId, name, checkGuest);
+			new ResourceBlockIdsBagKey(companyId, groupId, userId, name);
 
 		if (_localCacheAvailable) {
 			Map<Serializable, Object> localCache = _localCache.get();
@@ -247,12 +238,11 @@ public class PermissionCacheUtil {
 	private static class PermissionKey implements Serializable {
 
 		public PermissionKey(
-			long userId, boolean signedIn, boolean checkGuest, long groupId,
-			String name, String primKey, String actionId) {
+			long userId, boolean signedIn, long groupId, String name,
+			String primKey, String actionId) {
 
 			_userId = userId;
 			_signedIn = signedIn;
-			_checkGuest = checkGuest;
 			_groupId = groupId;
 			_name = name;
 			_primKey = primKey;
@@ -265,7 +255,6 @@ public class PermissionCacheUtil {
 
 			if ((permissionKey._userId == _userId) &&
 				(permissionKey._signedIn == _signedIn) &&
-				(permissionKey._checkGuest == _checkGuest) &&
 				(permissionKey._groupId == _groupId) &&
 				Validator.equals(permissionKey._name, _name) &&
 				Validator.equals(permissionKey._primKey, _primKey) &&
@@ -283,7 +272,6 @@ public class PermissionCacheUtil {
 			int hashCode = HashUtil.hash(0, _userId);
 
 			hashCode = HashUtil.hash(hashCode, _signedIn);
-			hashCode = HashUtil.hash(hashCode, _checkGuest);
 			hashCode = HashUtil.hash(hashCode, _groupId);
 			hashCode = HashUtil.hash(hashCode, _name);
 			hashCode = HashUtil.hash(hashCode, _primKey);
@@ -295,7 +283,6 @@ public class PermissionCacheUtil {
 		private static final long serialVersionUID = 1L;
 
 		private final String _actionId;
-		private final boolean _checkGuest;
 		private final long _groupId;
 		private final String _name;
 		private final String _primKey;
@@ -307,14 +294,12 @@ public class PermissionCacheUtil {
 	private static class ResourceBlockIdsBagKey implements Serializable {
 
 		public ResourceBlockIdsBagKey(
-			long companyId, long groupId, long userId, String name,
-			boolean checkGuest) {
+			long companyId, long groupId, long userId, String name) {
 
 			_companyId = companyId;
 			_groupId = groupId;
 			_userId = userId;
 			_name = name;
-			_checkGuest = checkGuest;
 		}
 
 		@Override
@@ -325,7 +310,6 @@ public class PermissionCacheUtil {
 			if ((resourceBlockIdsKey._companyId == _companyId) &&
 				(resourceBlockIdsKey._groupId == _groupId) &&
 				(resourceBlockIdsKey._userId == _userId) &&
-				(resourceBlockIdsKey._checkGuest == _checkGuest) &&
 				Validator.equals(resourceBlockIdsKey._name, _name)) {
 
 				return true;
@@ -342,14 +326,12 @@ public class PermissionCacheUtil {
 			hashCode = HashUtil.hash(hashCode, _groupId);
 			hashCode = HashUtil.hash(hashCode, _userId);
 			hashCode = HashUtil.hash(hashCode, _name);
-			hashCode = HashUtil.hash(hashCode, _checkGuest);
 
 			return hashCode;
 		}
 
 		private static final long serialVersionUID = 1L;
 
-		private final boolean _checkGuest;
 		private final long _companyId;
 		private final long _groupId;
 		private final String _name;

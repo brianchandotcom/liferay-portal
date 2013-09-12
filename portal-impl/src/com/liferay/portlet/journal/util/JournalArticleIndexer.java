@@ -218,7 +218,7 @@ public class JournalArticleIndexer extends BaseIndexer {
 		addSearchLocalizedTerm(
 			searchQuery, searchContext, Field.CONTENT, false);
 		addSearchLocalizedTerm(
-				searchQuery, searchContext, Field.DESCRIPTION, false);
+			searchQuery, searchContext, Field.DESCRIPTION, false);
 		addSearchTerm(searchQuery, searchContext, Field.ENTRY_CLASS_PK, false);
 		addSearchLocalizedTerm(searchQuery, searchContext, Field.TITLE, false);
 		addSearchTerm(searchQuery, searchContext, Field.TYPE, false);
@@ -572,7 +572,7 @@ public class JournalArticleIndexer extends BaseIndexer {
 		}
 
 		return DDMIndexerUtil.extractAttributes(
-				ddmStructure, fields, LocaleUtil.fromLanguageId(languageId));
+			ddmStructure, fields, LocaleUtil.fromLanguageId(languageId));
 	}
 
 	protected String[] getLanguageIds(

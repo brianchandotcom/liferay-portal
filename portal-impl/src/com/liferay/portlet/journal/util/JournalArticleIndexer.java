@@ -61,9 +61,11 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.portlet.PortletURL;
 
@@ -216,7 +218,7 @@ public class JournalArticleIndexer extends BaseIndexer {
 		addSearchLocalizedTerm(
 			searchQuery, searchContext, Field.CONTENT, false);
 		addSearchLocalizedTerm(
-			searchQuery, searchContext, Field.DESCRIPTION, false);
+				searchQuery, searchContext, Field.DESCRIPTION, false);
 		addSearchTerm(searchQuery, searchContext, Field.ENTRY_CLASS_PK, false);
 		addSearchLocalizedTerm(searchQuery, searchContext, Field.TITLE, false);
 		addSearchTerm(searchQuery, searchContext, Field.TYPE, false);
@@ -570,7 +572,7 @@ public class JournalArticleIndexer extends BaseIndexer {
 		}
 
 		return DDMIndexerUtil.extractAttributes(
-			ddmStructure, fields, LocaleUtil.fromLanguageId(languageId));
+				ddmStructure, fields, LocaleUtil.fromLanguageId(languageId));
 	}
 
 	protected String[] getLanguageIds(
@@ -594,8 +596,8 @@ public class JournalArticleIndexer extends BaseIndexer {
 	protected void reindexArticles(long companyId) throws Exception {
 		final Collection<Document> documents = new ArrayList<Document>();
 
-		final Collection<JournalArticle> articles =
-			new ArrayList<JournalArticle>();
+		final Map<Long, JournalArticle> articles =
+			new HashMap<Long, JournalArticle>();
 
 		ActionableDynamicQuery actionableDynamicQuery =
 			new JournalArticleActionableDynamicQuery() {
@@ -612,7 +614,7 @@ public class JournalArticleIndexer extends BaseIndexer {
 			protected void performAction(Object object) throws PortalException {
 				JournalArticle article = (JournalArticle)object;
 
-				articles.add(article);
+				articles.put(article.getResourcePrimKey(), article);
 
 				Document document = getDocument(article);
 
@@ -628,7 +630,7 @@ public class JournalArticleIndexer extends BaseIndexer {
 		SearchEngineUtil.updateDocuments(
 			getSearchEngineId(), companyId, documents);
 
-		updateArticles(articles);
+		updateArticles(articles.values());
 	}
 
 	protected void updateArticles(Collection<JournalArticle> articles)

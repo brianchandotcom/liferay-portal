@@ -16,4 +16,5 @@
 
 <%@ include file="/html/taglib/aui/nav_bar_search/init.jsp" %>
 
+	</div>
 </div>

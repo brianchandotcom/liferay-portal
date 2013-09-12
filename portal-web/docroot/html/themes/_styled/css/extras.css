@@ -124,7 +124,7 @@
 	}
 }
 
-@include respond-to(phone) {
+@include respond-to(phone, tablet) {
 	.navbar .navbar-search .form-search .search-query {
 		@include border-radius(14px);
 	}

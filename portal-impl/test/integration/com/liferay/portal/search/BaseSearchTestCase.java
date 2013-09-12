@@ -409,7 +409,7 @@ public abstract class BaseSearchTestCase {
 
 		searchContext.setKeywords(getSearchKeywords());
 		searchContext.setFolderIds(
-			new long[]{(Long)parentBaseModel.getPrimaryKeyObj()});
+			new long[] {(Long)parentBaseModel.getPrimaryKeyObj()});
 
 		int initialBaseModelsSearchCount = searchBaseModelsCount(
 			getBaseModelClass(), group.getGroupId(), searchContext);

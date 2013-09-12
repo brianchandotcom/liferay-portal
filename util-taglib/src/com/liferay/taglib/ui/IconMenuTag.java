@@ -95,6 +95,7 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 				_localizeMessage = true;
 				_maxDisplayItems = _DEFAULT_MAX_DISPLAY_ITEMS;
 				_message = "actions";
+				_select = false;
 				_showArrow = true;
 				_showExpanded = false;
 				_showWhenSingleIcon = false;
@@ -201,6 +202,10 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 		}
 	}
 
+	public void setSelect(boolean select) {
+		_select = select;
+	}
+
 	public void setShowArrow(boolean showArrow) {
 		_showArrow = showArrow;
 	}
@@ -296,6 +301,10 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 						jspWriter.write(" btn");
 					}
 
+					if (_select) {
+						jspWriter.write(" select");
+					}
+
 					String message = _message;
 
 					if (_localizeMessage) {
@@ -330,9 +339,11 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 						}
 					}
 
-					jspWriter.write("<span class=\"lfr-icon-menu-text\">");
-					jspWriter.write(message);
-					jspWriter.write("</span>");
+					if (Validator.isNotNull(message)) {
+						jspWriter.write("<span class=\"lfr-icon-menu-text\">");
+						jspWriter.write(message);
+						jspWriter.write("</span>");
+					}
 
 					if (_showArrow && !_direction.equals("left")) {
 						jspWriter.write(" <i class=\"caret\"></i>");
@@ -406,6 +417,7 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 	private boolean _localizeMessage = true;
 	private int _maxDisplayItems = _DEFAULT_MAX_DISPLAY_ITEMS;
 	private String _message = "actions";
+	private boolean _select = false;
 	private boolean _showArrow = true;
 	private boolean _showExpanded;
 	private boolean _showWhenSingleIcon;

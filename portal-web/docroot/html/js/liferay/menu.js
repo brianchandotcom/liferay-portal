@@ -249,6 +249,34 @@ AUI.add(
 							container: listContainer.getDOM()
 						}
 					);
+
+					if (trigger.hasClass('select')) {
+						listContainer.delegate(
+							'click',
+							function(event) {
+								var selectedListItem = event.currentTarget;
+
+								var selectedListItemIcon = selectedListItem.one('i');
+
+								var triggerIcon = trigger.one('i');
+
+								if (selectedListItemIcon && triggerIcon) {
+									var selectedListItemIconClass = selectedListItemIcon.attr('class');
+
+									triggerIcon.attr('class', selectedListItemIconClass);
+								}
+
+								var selectedListItemMessage = selectedListItem.one('.taglib-text-icon');
+
+								var triggerMessage = trigger.one('.taglib-text-icon');
+
+								if (selectedListItemMessage && triggerMessage) {
+									triggerMessage.setContent(selectedListItemMessage.text());
+								}
+							},
+							SELECTOR_LIST_ITEM
+						);
+					}
 				}
 
 				overlay.setStdModContent(A.WidgetStdMod.BODY, menu);

@@ -12,6 +12,10 @@
 	width: 215px;
 }
 
+.taglib-text-icon {
+	margin-left: 5px;
+}
+
 .lfr-menu-list {
 	float: none;
 	overflow-y: auto;

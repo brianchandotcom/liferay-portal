@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
-import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
@@ -188,8 +187,9 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 					userId, name, PropsValues.ASSET_TAG_PROPERTIES_DEFAULT,
 					serviceContext);
 
+				Group group = groupLocalService.getGroup(groupId);
 				Group companyGroup = groupLocalService.getCompanyGroup(
-					CompanyThreadLocal.getCompanyId());
+					group.getCompanyId());
 
 				try {
 					AssetTag companyGroupTag = getTag(

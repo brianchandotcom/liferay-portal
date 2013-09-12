@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import java.security.Permission;
 import java.security.PermissionCollection;
 import java.security.Policy;
+import java.security.ProtectionDomain;
 
 import java.util.Collections;
 import java.util.Enumeration;
@@ -59,6 +60,10 @@ public class PortalPermissionCollection extends PermissionCollection {
 
 	@Override
 	public boolean implies(Permission permission) {
+		if (Reflection.getCallerClass(1) == ProtectionDomain.class) {
+			return false;
+		}
+
 		if (!_paclPolicy.isActive()) {
 			return true;
 		}

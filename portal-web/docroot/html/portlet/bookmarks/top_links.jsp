@@ -72,11 +72,11 @@ portletURL.setParameter("tag", StringPool.BLANK);
 			<aui:input name="breadcrumbsFolderId" type="hidden" value="<%= folderId %>" />
 			<aui:input name="searchFolderIds" type="hidden" value="<%= folderId %>" />
 
-			<div class="navbar-search pull-right">
+			<aui:nav-bar-search cssClass="pull-right">
 				<div class="form-search">
 					<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" id="keywords1" name="keywords" placeholder='<%= LanguageUtil.get(locale, "keywords") %>' />
 				</div>
-			</div>
+			</aui:nav-bar-search>
 		</aui:form>
 	</c:if>
 </aui:nav-bar>

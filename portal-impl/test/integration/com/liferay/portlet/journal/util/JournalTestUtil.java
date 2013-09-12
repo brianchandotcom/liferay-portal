@@ -454,7 +454,7 @@ public class JournalTestUtil {
 		throws Exception {
 
 		JournalFolder folder = JournalFolderLocalServiceUtil.fetchFolder(
-			serviceContext.getScopeGroupId(), name);
+			serviceContext.getScopeGroupId(), parentFolderId, name);
 
 		if (folder != null) {
 			return folder;

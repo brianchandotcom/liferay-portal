@@ -594,8 +594,6 @@ public class JournalArticleIndexer extends BaseIndexer {
 	}
 
 	protected void reindexArticles(long companyId) throws Exception {
-		final Collection<Document> documents = new ArrayList<Document>();
-
 		final Map<Long, JournalArticle> articles =
 			new HashMap<Long, JournalArticle>();
 
@@ -615,10 +613,6 @@ public class JournalArticleIndexer extends BaseIndexer {
 				JournalArticle article = (JournalArticle)object;
 
 				articles.put(article.getResourcePrimKey(), article);
-
-				Document document = getDocument(article);
-
-				documents.add(document);
 			}
 
 		};
@@ -626,9 +620,6 @@ public class JournalArticleIndexer extends BaseIndexer {
 		actionableDynamicQuery.setCompanyId(companyId);
 
 		actionableDynamicQuery.performActions();
-
-		SearchEngineUtil.updateDocuments(
-			getSearchEngineId(), companyId, documents);
 
 		updateArticles(articles.values());
 	}

@@ -34,9 +34,7 @@ import java.security.AccessController;
 import java.security.PrivilegedActionException;
 import java.security.PrivilegedExceptionAction;
 
-import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * @author Mika Koivisto
@@ -51,41 +49,12 @@ public class FreeMarkerTemplate extends AbstractTemplate {
 		TemplateContextHelper templateContextHelper, boolean privileged) {
 
 		super(
-			templateResource, errorTemplateResource, templateContextHelper,
-			TemplateConstants.LANG_TYPE_FTL,
+			templateResource, errorTemplateResource, context,
+			templateContextHelper, TemplateConstants.LANG_TYPE_FTL,
 			PropsValues.FREEMARKER_ENGINE_RESOURCE_MODIFICATION_CHECK_INTERVAL);
-
-		_context = new HashMap<String, Object>();
-
-		if (context != null) {
-			for (Map.Entry<String, Object> entry : context.entrySet()) {
-				put(entry.getKey(), entry.getValue());
-			}
-		}
 
 		_configuration = configuration;
 		_privileged = privileged;
-	}
-
-	@Override
-	public Object get(String key) {
-		return _context.get(key);
-	}
-
-	@Override
-	public String[] getKeys() {
-		Set<String> keys = _context.keySet();
-
-		return keys.toArray(new String[keys.size()]);
-	}
-
-	@Override
-	public void put(String key, Object value) {
-		if (value == null) {
-			return;
-		}
-
-		_context.put(key, value);
 	}
 
 	@Override
@@ -150,7 +119,7 @@ public class FreeMarkerTemplate extends AbstractTemplate {
 					TemplateConstants.DEFAUT_ENCODING);
 			}
 
-			template.process(_context, writer);
+			template.process(context, writer);
 		}
 		catch (PrivilegedActionException pae) {
 			throw pae.getException();
@@ -162,7 +131,6 @@ public class FreeMarkerTemplate extends AbstractTemplate {
 	}
 
 	private Configuration _configuration;
-	private Map<String, Object> _context;
 	private boolean _privileged;
 
 	private class TemplatePrivilegedExceptionAction

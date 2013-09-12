@@ -21,6 +21,7 @@ import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.util.GroupTestUtil;
 import com.liferay.portal.util.TestPropsValues;
+import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalFolder;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
@@ -39,7 +40,9 @@ public class VerifyJournalTest extends BaseVerifyTestCase {
 
 	@Test
 	@Transactional
-	public void testTreePathWithJournalArticleInTrash() throws Exception {
+	public void testJournalArticleTreePathWithJournalArticleInTrash()
+		throws Exception {
+
 		Group group = GroupTestUtil.addGroup();
 
 		JournalFolder parentFolder = JournalTestUtil.addFolder(
@@ -60,20 +63,73 @@ public class VerifyJournalTest extends BaseVerifyTestCase {
 
 	@Test
 	@Transactional
-	public void testTreePathWithJournalFolderInTrash() throws Exception {
+	public void testJournalArticleTreePathWithParentJournalFolderInTrash()
+		throws Exception {
+
+		Group group = GroupTestUtil.addGroup();
+
+		JournalFolder grandParentFolder = JournalTestUtil.addFolder(
+			group.getGroupId(), "grandParentFolder");
+
+		JournalFolder parentFolder = JournalTestUtil.addFolder(
+			group.getGroupId(), grandParentFolder.getFolderId(),
+			"parentFolder");
+
+		JournalTestUtil.addArticle(
+			group.getGroupId(), parentFolder.getFolderId(), "title", "content");
+
+		JournalFolderLocalServiceUtil.moveFolderToTrash(
+			TestPropsValues.getUserId(), parentFolder.getFolderId());
+
+		JournalFolderLocalServiceUtil.deleteFolder(
+			grandParentFolder.getFolderId(), false);
+
+		doVerify();
+	}
+
+	@Test
+	@Transactional
+	public void testJournalFolderTreePathWithJournalFolderInTrash()
+		throws Exception {
+
 		Group group = GroupTestUtil.addGroup();
 
 		JournalFolder parentFolder = JournalTestUtil.addFolder(
 			group.getGroupId(), "parentFolder");
 
-		JournalFolder childFolder = JournalTestUtil.addFolder(
-			group.getGroupId(), parentFolder.getFolderId(), "childFolder");
+		JournalFolder folder = JournalTestUtil.addFolder(
+			group.getGroupId(), parentFolder.getFolderId(), "folder");
 
 		JournalFolderLocalServiceUtil.moveFolderToTrash(
-			TestPropsValues.getUserId(), childFolder.getFolderId());
+			TestPropsValues.getUserId(), folder.getFolderId());
 
 		JournalFolderLocalServiceUtil.deleteFolder(
 			parentFolder.getFolderId(), false);
+
+		doVerify();
+	}
+
+	@Test
+	@Transactional
+	public void testJournalFolderTreePathWithParentJournalFolderInTrash()
+		throws Exception {
+
+		Group group = GroupTestUtil.addGroup();
+
+		JournalFolder grandParentFolder = JournalTestUtil.addFolder(
+			group.getGroupId(), "grandParentFolder");
+
+		JournalFolder parentFolder = JournalTestUtil.addFolder(
+			group.getGroupId(), grandParentFolder.getFolderId(),
+			"parentFolder");
+
+		JournalTestUtil.addFolder(
+			group.getGroupId(), parentFolder.getFolderId(), "folder");
+
+		DLAppServiceUtil.moveFolderToTrash(parentFolder.getFolderId());
+
+		JournalFolderLocalServiceUtil.deleteFolder(
+			grandParentFolder.getFolderId(), false);
 
 		doVerify();
 	}

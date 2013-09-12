@@ -33,6 +33,8 @@ import org.junit.runner.RunWith;
 
 /**
  * @author Manuel de la Peña
+ * @author Eudaldo Alonso
+ * @author Sergio González
  */
 @ExecutionTestListeners(listeners = {MainServletExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
@@ -40,7 +42,9 @@ public class VerifyDocumentLibraryTest extends BaseVerifyTestCase {
 
 	@Test
 	@Transactional
-	public void testTreePathWithDLFileEntryInTrash() throws Exception {
+	public void testDLFileEntryTreePathWithDLFileEntryInTrash()
+		throws Exception {
+
 		Group group = GroupTestUtil.addGroup();
 
 		Folder parentFolder = DLAppTestUtil.addFolder(
@@ -60,7 +64,35 @@ public class VerifyDocumentLibraryTest extends BaseVerifyTestCase {
 
 	@Test
 	@Transactional
-	public void testTreePathWithDLFileShortcutInTrash() throws Exception {
+	public void testDLFileEntryTreePathWithParentDLFolderInTrash()
+		throws Exception {
+
+		Group group = GroupTestUtil.addGroup();
+
+		Folder grandParentFolder = DLAppTestUtil.addFolder(
+			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			"grandParentFolder");
+
+		Folder parentFolder = DLAppTestUtil.addFolder(
+			group.getGroupId(), grandParentFolder.getFolderId(),
+			"parentFolder");
+
+		DLAppTestUtil.addFileEntry(
+			group.getGroupId(), parentFolder.getFolderId(), false, "fileName");
+
+		DLAppServiceUtil.moveFolderToTrash(parentFolder.getFolderId());
+
+		DLFolderLocalServiceUtil.deleteFolder(
+			grandParentFolder.getFolderId(), false);
+
+		doVerify();
+	}
+
+	@Test
+	@Transactional
+	public void testDLFileShortcutTreePathWithDLFileShortcutInTrash()
+		throws Exception {
+
 		Group group = GroupTestUtil.addGroup();
 
 		Folder parentFolder = DLAppTestUtil.addFolder(
@@ -84,20 +116,72 @@ public class VerifyDocumentLibraryTest extends BaseVerifyTestCase {
 
 	@Test
 	@Transactional
-	public void testTreePathWithDLFolderInTrash() throws Exception {
+	public void testDLFileShortcutTreePathWithParentDLFolderInTrash()
+		throws Exception {
+
+		Group group = GroupTestUtil.addGroup();
+
+		Folder grandParentFolder = DLAppTestUtil.addFolder(
+			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			"grandParentFolder");
+
+		Folder parentFolder = DLAppTestUtil.addFolder(
+			group.getGroupId(), grandParentFolder.getFolderId(),
+			"parentFolder");
+
+		DLAppTestUtil.addFileEntry(
+			group.getGroupId(), parentFolder.getFolderId(), false, "fileName");
+
+		DLAppServiceUtil.moveFolderToTrash(parentFolder.getFolderId());
+
+		DLFolderLocalServiceUtil.deleteFolder(
+			grandParentFolder.getFolderId(), false);
+
+		doVerify();
+	}
+
+	@Test
+	@Transactional
+	public void testDLFolderTreePathWithDLFolderInTrash() throws Exception {
 		Group group = GroupTestUtil.addGroup();
 
 		Folder parentFolder = DLAppTestUtil.addFolder(
 			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			"parentFolder");
 
-		Folder childFolder = DLAppTestUtil.addFolder(
-			group.getGroupId(), parentFolder.getFolderId(), "parentFolder");
+		Folder folder = DLAppTestUtil.addFolder(
+			group.getGroupId(), parentFolder.getFolderId(), "folder");
 
-		DLAppServiceUtil.moveFolderToTrash(childFolder.getFolderId());
+		DLAppServiceUtil.moveFolderToTrash(folder.getFolderId());
 
 		DLFolderLocalServiceUtil.deleteFolder(
 			parentFolder.getFolderId(), false);
+
+		doVerify();
+	}
+
+	@Test
+	@Transactional
+	public void testDLFolderTreePathWithParentDLFolderInTrash()
+		throws Exception {
+
+		Group group = GroupTestUtil.addGroup();
+
+		Folder grandParentFolder = DLAppTestUtil.addFolder(
+			group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			"grandParentFolder");
+
+		Folder parentFolder = DLAppTestUtil.addFolder(
+			group.getGroupId(), grandParentFolder.getFolderId(),
+			"parentFolder");
+
+		DLAppTestUtil.addFolder(
+			group.getGroupId(), parentFolder.getFolderId(), "folder");
+
+		DLAppServiceUtil.moveFolderToTrash(parentFolder.getFolderId());
+
+		DLFolderLocalServiceUtil.deleteFolder(
+			grandParentFolder.getFolderId(), false);
 
 		doVerify();
 	}

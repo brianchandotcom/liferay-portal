@@ -34,6 +34,8 @@ import org.junit.runner.RunWith;
 
 /**
  * @author Manuel de la Peña
+ * @author Eudaldo Alonso
+ * @author Sergio González
  */
 @ExecutionTestListeners(listeners = {MainServletExecutionTestListener.class})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
@@ -41,7 +43,9 @@ public class VerifyBookmarksTest extends BaseVerifyTestCase {
 
 	@Test
 	@Transactional
-	public void testTreePathWithBookmarksEntryInTrash() throws Exception {
+	public void testBookmarksEntryTreePathWithBookmarksEntryInTrash()
+		throws Exception {
+
 		Group group = GroupTestUtil.addGroup();
 
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
@@ -64,20 +68,77 @@ public class VerifyBookmarksTest extends BaseVerifyTestCase {
 
 	@Test
 	@Transactional
-	public void testTreePathWithBookmarksFolderInTrash() throws Exception {
+	public void testBookmarksEntryTreePathWithBookmarksParentFolderInTrash()
+		throws Exception {
+
+		Group group = GroupTestUtil.addGroup();
+
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			group.getGroupId());
+
+		BookmarksFolder grandParentFolder = BookmarksTestUtil.addFolder(
+			group.getGroupId(), "grandParentFolder");
+
+		BookmarksFolder parentFolder = BookmarksTestUtil.addFolder(
+			group.getGroupId(), grandParentFolder.getFolderId(),
+			"parentFolder");
+
+		BookmarksTestUtil.addEntry(
+			parentFolder.getFolderId(), true, serviceContext);
+
+		BookmarksFolderLocalServiceUtil.moveFolderToTrash(
+			TestPropsValues.getUserId(), parentFolder.getFolderId());
+
+		BookmarksFolderLocalServiceUtil.deleteFolder(
+			grandParentFolder.getFolderId(), false);
+
+		doVerify();
+	}
+
+	@Test
+	@Transactional
+	public void testBookmarksFolderTreePathWithBookmarksFolderInTrash()
+		throws Exception {
+
 		Group group = GroupTestUtil.addGroup();
 
 		BookmarksFolder parentFolder = BookmarksTestUtil.addFolder(
 			group.getGroupId(), "parentFolder");
 
-		BookmarksFolder childFolder = BookmarksTestUtil.addFolder(
-			group.getGroupId(), parentFolder.getFolderId(), "childFolder");
+		BookmarksFolder folder = BookmarksTestUtil.addFolder(
+			group.getGroupId(), parentFolder.getFolderId(), "folder");
 
 		BookmarksFolderLocalServiceUtil.moveFolderToTrash(
-			TestPropsValues.getUserId(), childFolder.getFolderId());
+			TestPropsValues.getUserId(), folder.getFolderId());
 
 		BookmarksFolderLocalServiceUtil.deleteFolder(
 			parentFolder.getFolderId(), false);
+
+		doVerify();
+	}
+
+	@Test
+	@Transactional
+	public void testBookmarksFolderTreePathWithBookmarksParentFolderInTrash()
+		throws Exception {
+
+		Group group = GroupTestUtil.addGroup();
+
+		BookmarksFolder grandParentFolder = BookmarksTestUtil.addFolder(
+			group.getGroupId(), "grandParentFolder");
+
+		BookmarksFolder parentFolder = BookmarksTestUtil.addFolder(
+			group.getGroupId(), grandParentFolder.getFolderId(),
+			"parentFolder");
+
+		BookmarksTestUtil.addFolder(
+			group.getGroupId(), parentFolder.getFolderId(), "folder");
+
+		BookmarksFolderLocalServiceUtil.moveFolderToTrash(
+			TestPropsValues.getUserId(), parentFolder.getFolderId());
+
+		BookmarksFolderLocalServiceUtil.deleteFolder(
+			grandParentFolder.getFolderId(), false);
 
 		doVerify();
 	}

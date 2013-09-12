@@ -25,9 +25,16 @@ if (Validator.isNotNull(src) && themeDisplay.isThemeImagesFastLoad() && !auiImag
 	String imageFileName = StringUtil.replace(src, "common/../", "");
 
 	if (imageFileName.contains(Http.PROTOCOL_DELIMITER)) {
-		URL imageURL = new URL(imageFileName);
+		String portalURL = PortalUtil.getPortalURL(request);
 
-		imageFileName = imageURL.getPath();
+		if (imageFileName.startsWith(portalURL)) {
+			imageFileName = imageFileName.substring(portalURL.length());
+		}
+		else {
+			URL imageURL = new URL(imageFileName);
+
+			imageFileName = imageURL.getPath();
+		}
 	}
 
 	String contextPath = theme.getContextPath();

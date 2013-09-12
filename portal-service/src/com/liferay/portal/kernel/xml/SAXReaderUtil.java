@@ -161,6 +161,12 @@ public class SAXReaderUtil {
 		return getSAXReader().read(xml, validate);
 	}
 
+	public static Document read(String xml, XMLSchema xmlSchema)
+		throws DocumentException {
+
+		return getSAXReader().read(xml, xmlSchema);
+	}
+
 	public static Document read(URL url) throws DocumentException {
 		return getSAXReader().read(url);
 	}

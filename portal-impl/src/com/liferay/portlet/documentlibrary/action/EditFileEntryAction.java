@@ -964,8 +964,9 @@ public class EditFileEntryAction extends PortletAction {
 					PortletPreferences portletPreferences = null;
 
 					if (Validator.isNotNull(portletResource)) {
-						PortletPreferencesFactoryUtil.getPortletSetup(
-							actionRequest, portletResource);
+						portletPreferences =
+							PortletPreferencesFactoryUtil.getPortletSetup(
+								actionRequest, portletResource);
 					}
 					else {
 						portletPreferences = actionRequest.getPreferences();

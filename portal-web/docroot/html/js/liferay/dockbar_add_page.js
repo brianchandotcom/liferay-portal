@@ -37,7 +37,7 @@ AUI.add(
 
 		var AddPage = A.Component.create(
 			{
-				AUGMENTS: [Dockbar.AddPageSearch, Liferay.PortletBase],
+				AUGMENTS: [Liferay.PortletBase],
 
 				EXTENDS: Dockbar.AddBase,
 

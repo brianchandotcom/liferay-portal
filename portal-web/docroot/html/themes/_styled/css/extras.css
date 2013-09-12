@@ -225,6 +225,12 @@ body > .lfr-menu-list ul, .active-area-proxy, .entry-display-style .entry-thumbn
 	}
 }
 
+.lfr-add-dialog, .lfr-add-panel {
+	.add-content-menu .search-query {
+		@include border-radius(15px);
+	}
+}
+
 .lfr-content-preview-popup .lfr-content-preview-popup-content {
 	@include border-radius(0);
 	@include box-shadow(8px 3px 7px rgba(0, 0, 0, 0.25));

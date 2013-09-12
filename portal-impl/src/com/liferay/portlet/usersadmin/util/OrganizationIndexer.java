@@ -110,7 +110,7 @@ public class OrganizationIndexer extends BaseIndexer {
 			for (Organization organization : organizationsTree) {
 				String treePath = organization.buildTreePath();
 
-				booleanQuery.addTerm("treePath", treePath, true);
+				booleanQuery.addTerm(Field.TREE_PATH, treePath, true);
 			}
 
 			contextQuery.add(booleanQuery, BooleanClauseOccur.MUST);
@@ -171,14 +171,11 @@ public class OrganizationIndexer extends BaseIndexer {
 		document.addText(Field.NAME, organization.getName());
 		document.addKeyword(
 			Field.ORGANIZATION_ID, organization.getOrganizationId());
+		document.addKeyword(Field.TREE_PATH, organization.buildTreePath());
 		document.addKeyword(Field.TYPE, organization.getType());
 
 		document.addKeyword(
 			"parentOrganizationId", organization.getParentOrganizationId());
-
-		String treePath = organization.buildTreePath();
-
-		document.addKeyword("treePath", treePath);
 
 		populateAddresses(
 			document, organization.getAddresses(), organization.getRegionId(),

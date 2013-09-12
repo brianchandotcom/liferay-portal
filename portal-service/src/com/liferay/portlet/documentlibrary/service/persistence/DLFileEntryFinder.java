@@ -45,6 +45,11 @@ public interface DLFileEntryFinder {
 		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	public java.util.List<com.liferay.portlet.documentlibrary.model.DLFileEntry> findByCompanyId(
+		long companyId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	public com.liferay.portlet.documentlibrary.model.DLFileEntry findByAnyImageId(
 		long imageId)
 		throws com.liferay.portal.kernel.exception.SystemException,

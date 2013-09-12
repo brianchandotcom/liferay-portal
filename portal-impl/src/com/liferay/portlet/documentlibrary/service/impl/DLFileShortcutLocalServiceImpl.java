@@ -290,9 +290,14 @@ public class DLFileShortcutLocalServiceImpl
 		throws PortalException, SystemException {
 
 		List<DLFileShortcut> fileShortcuts =
-			dlFileShortcutPersistence.findByCompanyId(companyId);
+			dlFileShortcutPersistence.findByC_NotS(
+				companyId, WorkflowConstants.STATUS_IN_TRASH);
 
 		for (DLFileShortcut fileShortcut : fileShortcuts) {
+			if (fileShortcut.isInTrashContainer()) {
+				continue;
+			}
+
 			fileShortcut.setTreePath(fileShortcut.buildTreePath());
 
 			dlFileShortcutPersistence.update(fileShortcut);

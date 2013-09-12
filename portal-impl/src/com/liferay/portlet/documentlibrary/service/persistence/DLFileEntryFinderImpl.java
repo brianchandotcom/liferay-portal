@@ -54,6 +54,9 @@ public class DLFileEntryFinderImpl
 	public static final String COUNT_BY_G_U_F =
 		DLFileEntryFinder.class.getName() + ".countByG_U_F";
 
+	public static final String FIND_BY_COMPANY_ID =
+		DLFileEntryFinder.class.getName() + ".findByCompanyId";
+
 	public static final String FIND_BY_ANY_IMAGE_ID =
 		DLFileEntryFinder.class.getName() + ".findByAnyImageId";
 
@@ -182,6 +185,45 @@ public class DLFileEntryFinderImpl
 
 		return doFindByG_U_F_M(
 			groupId, 0, folderIds, null, queryDefinition, true);
+	}
+
+	@Override
+	public List<DLFileEntry> findByCompanyId(
+			long companyId, QueryDefinition queryDefinition)
+		throws SystemException {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(
+				FIND_BY_COMPANY_ID, queryDefinition,
+				DLFileVersionImpl.TABLE_NAME);
+
+			sql = CustomSQLUtil.replaceOrderBy(
+				sql, queryDefinition.getOrderByComparator());
+
+			SQLQuery q = session.createSQLQuery(sql);
+
+			q.addEntity(DLFileEntryImpl.TABLE_NAME, DLFileEntryImpl.class);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(companyId);
+
+			qPos.add(queryDefinition.getStatus());
+
+			return (List<DLFileEntry>)QueryUtil.list(
+				q, getDialect(), queryDefinition.getStart(),
+				queryDefinition.getEnd());
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
 	}
 
 	@Override

@@ -463,10 +463,14 @@ public class JournalFolderLocalServiceImpl
 	public void rebuildTree(long companyId)
 		throws PortalException, SystemException {
 
-		List<JournalFolder> folders = journalFolderPersistence.findByCompanyId(
-			companyId);
+		List<JournalFolder> folders = journalFolderPersistence.findByC_NotS(
+			companyId, WorkflowConstants.STATUS_IN_TRASH);
 
 		for (JournalFolder folder : folders) {
+			if (folder.isInTrashContainer()) {
+				continue;
+			}
+
 			folder.setTreePath(folder.buildTreePath());
 
 			journalFolderPersistence.update(folder);

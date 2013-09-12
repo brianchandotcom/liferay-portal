@@ -133,6 +133,8 @@ public class Field implements Serializable {
 
 	public static final String TITLE = "title";
 
+	public static final String TREE_PATH = "treePath";
+
 	public static final String TYPE = "type";
 
 	public static final String UID = "uid";

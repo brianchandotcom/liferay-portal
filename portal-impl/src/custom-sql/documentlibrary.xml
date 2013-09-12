@@ -44,6 +44,27 @@
 				[$FOLDER_ID$]
 		]]>
 	</sql>
+	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryFinder.findByCompanyId">
+		<![CDATA[
+			SELECT
+				{DLFileEntry.*}
+			FROM
+				(
+					SELECT
+						DISTINCT DLFileEntry.fileEntryId
+					FROM
+						DLFileEntry
+					INNER JOIN
+						DLFileVersion ON
+							(DLFileVersion.fileEntryId = DLFileEntry.fileEntryId)
+					WHERE
+						(DLFileVersion.companyId = ?) AND
+						([$STATUS$])
+				) TEMP_TABLE
+				INNER JOIN
+					DLFileEntry ON TEMP_TABLE.fileEntryId = DLFileEntry.fileEntryId
+		]]>
+	</sql>
 	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryFinder.findByAnyImageId">
 		<![CDATA[
 			SELECT

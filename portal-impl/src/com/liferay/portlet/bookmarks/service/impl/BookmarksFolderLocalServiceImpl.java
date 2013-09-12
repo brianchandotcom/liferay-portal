@@ -399,10 +399,14 @@ public class BookmarksFolderLocalServiceImpl
 	public void rebuildTree(long companyId)
 		throws PortalException, SystemException {
 
-		List<BookmarksFolder> folders =
-			bookmarksFolderPersistence.findByCompanyId(companyId);
+		List<BookmarksFolder> folders = bookmarksFolderPersistence.findByC_NotS(
+			companyId, WorkflowConstants.STATUS_IN_TRASH);
 
 		for (BookmarksFolder folder : folders) {
+			if (folder.isInTrashContainer()) {
+				continue;
+			}
+
 			folder.setTreePath(folder.buildTreePath());
 
 			bookmarksFolderPersistence.update(folder);

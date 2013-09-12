@@ -63,6 +63,12 @@ public class BlogsEntrySearchTest extends BaseSearchTestCase {
 	@Ignore()
 	@Override
 	@Test
+	public void testSearchByKeywordsInsideParentBaseModel() throws Exception {
+	}
+
+	@Ignore()
+	@Override
+	@Test
 	public void testSearchExpireAllVersions() throws Exception {
 	}
 

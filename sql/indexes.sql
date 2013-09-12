@@ -119,6 +119,7 @@ create index IX_BB51F1D9 on BlogsStatsUser (userId);
 create index IX_507BA031 on BlogsStatsUser (userId, lastPostDate);
 
 create index IX_1F90CA2D on BookmarksEntry (companyId);
+create index IX_276C8C13 on BookmarksEntry (companyId, status);
 create index IX_5200100C on BookmarksEntry (groupId, folderId);
 create index IX_146382F2 on BookmarksEntry (groupId, folderId, status);
 create index IX_416AD7D5 on BookmarksEntry (groupId, status);
@@ -130,6 +131,7 @@ create index IX_89BEDC4F on BookmarksEntry (uuid_, companyId);
 create unique index IX_EAA02A91 on BookmarksEntry (uuid_, groupId);
 
 create index IX_2ABA25D7 on BookmarksFolder (companyId);
+create index IX_C27C9DBD on BookmarksFolder (companyId, status);
 create index IX_7F703619 on BookmarksFolder (groupId);
 create index IX_967799C0 on BookmarksFolder (groupId, parentFolderId);
 create index IX_D16018A6 on BookmarksFolder (groupId, parentFolderId, status);
@@ -271,6 +273,7 @@ create index IX_4E96195B on DLFileRank (groupId, userId, active_);
 create index IX_EED06670 on DLFileRank (userId);
 
 create index IX_A4BB2E58 on DLFileShortcut (companyId);
+create index IX_8571953E on DLFileShortcut (companyId, status);
 create index IX_B0051937 on DLFileShortcut (groupId, folderId);
 create index IX_348DC3B2 on DLFileShortcut (groupId, folderId, active_);
 create index IX_17EE3098 on DLFileShortcut (groupId, folderId, active_, status);
@@ -280,6 +283,7 @@ create index IX_29AE81C4 on DLFileShortcut (uuid_, companyId);
 create unique index IX_FDB4A946 on DLFileShortcut (uuid_, groupId);
 
 create index IX_F389330E on DLFileVersion (companyId);
+create index IX_A0A283F4 on DLFileVersion (companyId, status);
 create index IX_C68DC967 on DLFileVersion (fileEntryId);
 create index IX_D47BB14D on DLFileVersion (fileEntryId, status);
 create unique index IX_E2815081 on DLFileVersion (fileEntryId, version);
@@ -291,6 +295,7 @@ create index IX_95E9E44E on DLFileVersion (uuid_, companyId);
 create unique index IX_C99B2650 on DLFileVersion (uuid_, groupId);
 
 create index IX_A74DB14C on DLFolder (companyId);
+create index IX_E79BE432 on DLFolder (companyId, status);
 create index IX_F2EA1ACE on DLFolder (groupId);
 create index IX_F78286C5 on DLFolder (groupId, mountPoint, parentFolderId, hidden_);
 create index IX_C88430AB on DLFolder (groupId, mountPoint, parentFolderId, hidden_, status);
@@ -422,6 +427,7 @@ create index IX_CB37A10F on JournalFeed (uuid_, companyId);
 create unique index IX_39031F51 on JournalFeed (uuid_, groupId);
 
 create index IX_E6E2725D on JournalFolder (companyId);
+create index IX_C36B0443 on JournalFolder (companyId, status);
 create index IX_742DEC1F on JournalFolder (groupId);
 create index IX_E988689E on JournalFolder (groupId, name);
 create index IX_190483C6 on JournalFolder (groupId, parentFolderId);

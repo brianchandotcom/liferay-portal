@@ -21,15 +21,14 @@ import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.BaseIndexer;
-import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
-import com.liferay.portal.kernel.search.BooleanQueryFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.Summary;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -51,9 +50,7 @@ import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
 import com.liferay.portlet.journal.asset.JournalArticleAssetRendererFactory;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalFolder;
-import com.liferay.portlet.journal.model.JournalFolderConstants;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
-import com.liferay.portlet.journal.service.JournalFolderServiceUtil;
 import com.liferay.portlet.journal.service.permission.JournalArticlePermission;
 import com.liferay.portlet.journal.service.persistence.JournalArticleActionableDynamicQuery;
 import com.liferay.portlet.trash.util.TrashUtil;
@@ -153,29 +150,6 @@ public class JournalArticleIndexer extends BaseIndexer {
 			contextQuery.addRequiredTerm(
 				ddmStructureFieldName,
 				StringPool.QUOTE + ddmStructureFieldValue + StringPool.QUOTE);
-		}
-
-		long[] folderIds = searchContext.getFolderIds();
-
-		if ((folderIds != null) && (folderIds.length > 0) &&
-			(folderIds[0] !=
-				JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
-
-			BooleanQuery folderIdsQuery = BooleanQueryFactoryUtil.create(
-				searchContext);
-
-			for (long folderId : folderIds) {
-				try {
-					JournalFolderServiceUtil.getFolder(folderId);
-				}
-				catch (Exception e) {
-					continue;
-				}
-
-				folderIdsQuery.addTerm(Field.FOLDER_ID, folderId);
-			}
-
-			contextQuery.add(folderIdsQuery, BooleanClauseOccur.MUST);
 		}
 
 		String articleType = (String)searchContext.getAttribute("articleType");
@@ -355,6 +329,9 @@ public class JournalArticleIndexer extends BaseIndexer {
 
 		document.addKeyword(Field.FOLDER_ID, article.getFolderId());
 		document.addKeyword(Field.LAYOUT_UUID, article.getLayoutUuid());
+		document.addKeyword(
+			Field.TREE_PATH,
+			StringUtil.split(article.getTreePath(), CharPool.SLASH));
 		document.addKeyword(Field.TYPE, article.getType());
 		document.addKeyword(Field.VERSION, article.getVersion());
 
@@ -369,7 +346,6 @@ public class JournalArticleIndexer extends BaseIndexer {
 		document.addKeyword("ddmTemplateKey", article.getTemplateId());
 		document.addDate("displayDate", article.getDisplayDate());
 		document.addKeyword("head", false);
-		document.addKeyword("treePath", article.getTreePath());
 
 		addDDMStructureAttributes(document, article);
 

@@ -112,13 +112,28 @@ public class BookmarksFolderSearchTest extends BaseSearchTestCase {
 
 		BookmarksFolder parentFolder = (BookmarksFolder)parentBaseModel;
 
-		return BookmarksTestUtil.addFolder(
-			parentFolder.getFolderId(), keywords, serviceContext);
+		long folderId = BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+
+		if (parentFolder != null) {
+			folderId = parentFolder.getFolderId();
+		}
+
+		return BookmarksTestUtil.addFolder(folderId, keywords, serviceContext);
 	}
 
 	@Override
 	protected Class<?> getBaseModelClass() {
 		return BookmarksFolder.class;
+	}
+
+	@Override
+	protected BaseModel<?> getParentBaseModel(
+			BaseModel<?> parentBaseModel, ServiceContext serviceContext)
+		throws Exception {
+
+		return BookmarksTestUtil.addFolder(
+			(Long)parentBaseModel.getPrimaryKeyObj(),
+			ServiceTestUtil.randomString(), serviceContext);
 	}
 
 	@Override

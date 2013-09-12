@@ -918,7 +918,7 @@ public abstract class BaseIndexer implements Indexer {
 
 		MultiValueFacet multiValueFacet = new MultiValueFacet(searchContext);
 
-		multiValueFacet.setFieldName(Field.FOLDER_ID);
+		multiValueFacet.setFieldName(Field.TREE_PATH);
 		multiValueFacet.setStatic(true);
 		multiValueFacet.setValues(searchContext.getFolderIds());
 

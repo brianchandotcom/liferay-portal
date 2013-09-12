@@ -33,13 +33,13 @@ import java.io.Reader;
 import java.io.StringReader;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.collections.ExtendedProperties;
-import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
 
 import org.junit.Assert;
@@ -265,13 +265,13 @@ public class VelocityTemplateTest {
 
 	@Test
 	public void testProcessTemplate8() throws Exception {
-		VelocityContext velocityContext = new VelocityContext();
+		Map<String, Object> context = new HashMap<String, Object>();
 
-		velocityContext.put(_TEST_KEY, _TEST_VALUE);
+		context.put(_TEST_KEY, _TEST_VALUE);
 
 		Template template = new VelocityTemplate(
-			new MockTemplateResource(_TEMPLATE_FILE_NAME), null,
-			velocityContext, _velocityEngine, _templateContextHelper, false);
+			new MockTemplateResource(_TEMPLATE_FILE_NAME), null, context,
+			_velocityEngine, _templateContextHelper, false);
 
 		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 

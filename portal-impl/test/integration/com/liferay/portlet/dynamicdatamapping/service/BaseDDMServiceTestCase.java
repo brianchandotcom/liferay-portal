@@ -171,8 +171,10 @@ public class BaseDDMServiceTestCase {
 	protected String readText(String fileName) throws Exception {
 		Class<?> clazz = getClass();
 
-		InputStream inputStream = clazz.getResourceAsStream(
-			"dependencies/" + fileName);
+		ClassLoader classLoader = clazz.getClassLoader();
+
+		InputStream inputStream = classLoader.getResourceAsStream(
+			"com/liferay/portlet/dynamicdatamapping/dependencies/" + fileName);
 
 		return StringUtil.read(inputStream);
 	}

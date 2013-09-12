@@ -31,4 +31,5 @@ public interface ServletResponseConstants {
 
 	public static final int SC_VIDEO_PREVIEW_DISABLED_EXCEPTION = 210;
 
+	public static final int SC_AUDIO_PREVIEW_DISABLED_EXCEPTION = 211;
 }

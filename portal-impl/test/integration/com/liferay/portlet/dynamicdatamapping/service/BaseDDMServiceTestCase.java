@@ -137,6 +137,10 @@ public class BaseDDMServiceTestCase {
 			ServiceTestUtil.getServiceContext());
 	}
 
+	protected String getBasePath() {
+		return "com/liferay/portlet/dynamicdatamapping/dependencies/";
+	}
+
 	protected Map<Locale, String> getDefaultLocaleMap(String defaultValue) {
 		Map<Locale, String> map = new HashMap<Locale, String>();
 
@@ -174,7 +178,7 @@ public class BaseDDMServiceTestCase {
 		ClassLoader classLoader = clazz.getClassLoader();
 
 		InputStream inputStream = classLoader.getResourceAsStream(
-			"com/liferay/portlet/dynamicdatamapping/dependencies/" + fileName);
+			getBasePath() + fileName);
 
 		return StringUtil.read(inputStream);
 	}

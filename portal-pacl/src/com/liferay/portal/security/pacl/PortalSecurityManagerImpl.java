@@ -104,8 +104,6 @@ import javax.sql.DataSource;
 import org.springframework.aop.framework.AdvisedSupport;
 import org.springframework.beans.factory.BeanFactory;
 
-import sun.security.util.SecurityConstants;
-
 /**
  * This is the portal's implementation of a security manager. The goal is to
  * protect portal resources from plugins and prevent security issues by forcing
@@ -216,7 +214,7 @@ public class PortalSecurityManagerImpl extends SecurityManager
 
 			_checkMemberAccessClassLoader.set(null);
 
-			checkPermission(SecurityConstants.CHECK_MEMBER_ACCESS_PERMISSION);
+			checkPermission(_checkMemberAccessPermission);
 		}
 		else {
 			_checkMemberAccessClassLoader.set(clazzClassLoader);
@@ -433,6 +431,9 @@ public class PortalSecurityManagerImpl extends SecurityManager
 		new AutoResetThreadLocal<ClassLoader>(
 			PortalSecurityManagerImpl.class +
 				"._checkMembersAccessClassLoader");
+
+	private static final RuntimePermission _checkMemberAccessPermission =
+		new RuntimePermission("accessDeclaredMembers");
 
 	private Policy _policy;
 

@@ -300,7 +300,8 @@ AUI.add(
 									data: data,
 									record: record,
 									recordsetId: recordsetId,
-									structure: structure
+									structure: structure,
+									zIndex: Liferay.zIndex.OVERLAY
 								}
 							);
 						}
@@ -455,16 +456,26 @@ AUI.add(
 								};
 							}
 							else if (type === 'ddm-date') {
-								config.inputFormatter = function(value) {
-									var date = A.DataType.Date.parse(value);
+								config.inputFormatter = function(val) {
+									return AArray.map(
+										val,
+										function(item, index, collection) {
+											return item.getTime();
+										}
+									);
+								};
 
-									var dateValue = STR_EMPTY;
+								config.outputFormatter = function(val) {
+									return AArray.map(
+										val,
+										function(item, index, collection) {
+											var date = new Date(Lang.toInt(item));
 
-									if (date) {
-										dateValue = date.getTime();
-									}
+											date = DateMath.add(date, DateMath.MINUTES, date.getTimezoneOffset());
 
-									return dateValue;
+											return date;
+										}
+									);
 								};
 
 								item.formatter = function(obj) {

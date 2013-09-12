@@ -931,6 +931,7 @@ release was successful.</echo>
 			<replacetoken><![CDATA[<jvm-options>-Xmx512m</jvm-options>]]></replacetoken>
 			<replacevalue>
 				<![CDATA[
+					@java.security.manager.option@
 					<jvm-options>-Dfile.encoding=UTF8</jvm-options>
 					<jvm-options>-Djava.net.preferIPv4Stack=true</jvm-options>
 					<jvm-options>-Dorg.apache.catalina.loader.WebappClassLoader.ENABLE_CLEAR_REFERENCES=false</jvm-options>
@@ -940,15 +941,53 @@ release was successful.</echo>
 			</replacevalue>
 		</replace>
 
+		<if>
+			<isset property="java.security" />
+			<then>
+				<replace file="${app.server.glassfish.instance.dir}/config/domain.xml">
+					<replacetoken><![CDATA[@java.security.manager.option@]]></replacetoken>
+					<replacevalue><![CDATA[<jvm-options>-Djava.security.manager</jvm-options>]]></replacevalue>
+				</replace>
+			</then>
+			<else>
+				<replace file="${app.server.glassfish.instance.dir}/config/domain.xml">
+					<replacetoken><![CDATA[@java.security.manager.option@]]></replacetoken>
+					<replacevalue><![CDATA[]]></replacevalue>
+				</replace>
+			</else>
+		</if>
+
 		<replace file="${app.server.glassfish.instance.dir}/config/domain.xml">
 			<replacetoken><![CDATA[<jvm-options>-XX:MaxPermSize=192m</jvm-options>]]></replacetoken>
 			<replacevalue><![CDATA[<jvm-options>-XX:MaxPermSize=512m</jvm-options>]]></replacevalue>
 		</replace>
 
 		<echo file="${app.server.glassfish.instance.dir}/config/server.policy" append="true">
-			grant {
-				permission java.lang.reflect.ReflectPermission  "suppressAccessChecks";
-				permission javax.security.auth.AuthPermission "doAsPrivileged";
+			// Tune for specific apps (these are generally required by Liferay plugins not using PACL)
+			grant codeBase "file:${com.sun.aas.instanceRoot}${/}applications${/}-" {
+				permission java.util.PropertyPermission "base.path", "write";
+				permission java.util.PropertyPermission "*", "read";
+				permission java.lang.reflect.ReflectPermission "suppressAccessChecks";
+			};
+			// represents each webapp's ${javax.servlet.context.tempdir} directory
+			grant codeBase "file:${com.sun.aas.instanceRoot}${/}generated${/}jsp${/}-" {
+				permission java.util.PropertyPermission "base.path", "write";
+				permission java.util.PropertyPermission "*", "read";
+				permission java.lang.reflect.ReflectPermission "suppressAccessChecks";
+			};
+
+			// Since Liferay portal is a security provider it needs AllPermissions
+			grant codeBase "file:${com.sun.aas.instanceRoot}${/}applications${/}liferay-portal${/}-" {
+				permission java.security.AllPermission;
+			};
+			grant codeBase "file:${com.sun.aas.instanceRoot}${/}generated${/}jsp${/}liferay-portal${/}-" {
+				permission java.security.AllPermission;
+			};
+			grant codeBase "file:${com.sun.aas.instanceRoot}${/}lib${/}portal-service.jar" {
+				permission java.security.AllPermission;
+			};
+			grant codeBase "file:${com.sun.aas.instanceRoot}${/}lib${/}portlet.jar" {
+				permission org.osgi.framework.AdminPermission "*";
 			};
 		</echo>
 
@@ -1588,6 +1627,39 @@ release was successful.</echo>
 			<replacevalue><![CDATA[xmlValidation="false" xmlNamespaceAware="false" deployXML="false">]]></replacevalue>
 		</replace>-->
 
+		<replace file="${app.server.tomcat.dir}/conf/catalina.policy">
+			<replacetoken>grant codeBase "file:${catalina.home}/bin/tomcat-juli.jar" {</replacetoken>
+			<replacevalue>grant codeBase "file:${catalina.home}/bin/tomcat-juli.jar" {
+				permission java.io.FilePermission "${catalina.base}${/}webapps${/}-", "read";</replacevalue>
+			<replacefilter token="@app.server.tomcat.portal.context@" value="${app.server.tomcat.portal.context}" />
+		</replace>
+
+		<echo file="${app.server.tomcat.dir}/conf/catalina.policy" append="true">
+			// Tune for specific apps (these are generally required by Liferay plugins not using PACL)
+			grant codeBase "file:${catalina.home}${/}webapps${/}-" {
+				permission java.util.PropertyPermission "base.path", "write";
+				permission java.util.PropertyPermission "*", "read";
+				permission java.lang.reflect.ReflectPermission "suppressAccessChecks";
+			};
+			// represents each webapp's ${javax.servlet.context.tempdir} directory
+			grant codeBase "file:${catalina.home}${/}work${/}Catalina${/}localhost${/}-" {
+				permission java.util.PropertyPermission "base.path", "write";
+				permission java.util.PropertyPermission "*", "read";
+				permission java.lang.reflect.ReflectPermission "suppressAccessChecks";
+			};
+
+			// Since Liferay portal is a security provider it needs AllPermissions
+			grant codeBase "file:${catalina.home}${/}webapps${/}ROOT${/}-" {
+				permission java.security.AllPermission;
+			};
+			grant codeBase "file:${catalina.home}${/}work${/}Catalina${/}localhost${/}_${/}-" {
+				permission java.security.AllPermission;
+			};
+			grant codeBase "file:${catalina.home}${/}work${/}Catalina${/}localhost${/}ROOT${/}-" {
+				permission java.security.AllPermission;
+			};
+		</echo>
+
 		<if>
 			<available file="${jdk.windows.home}/jre/bin/java.exe" />
 			<then>
@@ -1597,19 +1669,34 @@ release was successful.</echo>
 			</then>
 		</if>
 
+		<if>
+			<isset property="java.security" />
+			<then>
+				<property name="java.security.manager.option" value="-Djava.security.manager"/>
+			</then>
+			<else>
+				<property name="java.security.manager.option" value=""/>
+			</else>
+		</if>
+
 		<copy
 			file="tools/servers/tomcat/bin/setenv.bat"
 			tofile="${app.server.tomcat.bin.dir}/setenv.bat"
 		>
 			<filterset>
 				<filter token="java.version" value="${jdk.windows.version}" />
+				<filter token="java.security.manager.option" value="${java.security.manager.option}" />
 			</filterset>
 		</copy>
 
 		<copy
 			file="tools/servers/tomcat/bin/setenv.sh"
 			tofile="${app.server.tomcat.bin.dir}/setenv.sh"
-		/>
+		>
+			<filterset>
+				<filter token="java.security.manager.option" value="${java.security.manager.option}" />
+			</filterset>
+		</copy>
 
 		<chmod perm="a+x">
 			<fileset dir="${app.server.tomcat.bin.dir}">

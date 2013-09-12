@@ -22,8 +22,11 @@ import com.liferay.portal.freemarker.FreeMarkerTemplate;
 import com.liferay.portal.freemarker.LiferayTemplateCache;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.memory.EqualityWeakReference;
+import com.liferay.portal.kernel.memory.FinalizeManager;
 import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
 import com.liferay.portal.kernel.security.pacl.PACLConstants;
+import com.liferay.portal.kernel.security.pacl.permission.CheckMemberAccessPermission;
 import com.liferay.portal.kernel.security.pacl.permission.PortalFilePermission;
 import com.liferay.portal.kernel.security.pacl.permission.PortalHookPermission;
 import com.liferay.portal.kernel.security.pacl.permission.PortalMessageBusPermission;
@@ -31,14 +34,16 @@ import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermissio
 import com.liferay.portal.kernel.security.pacl.permission.PortalServicePermission;
 import com.liferay.portal.kernel.security.pacl.permission.PortalSocketPermission;
 import com.liferay.portal.kernel.servlet.taglib.FileAvailabilityUtil;
-import com.liferay.portal.kernel.util.AggregateClassLoader;
 import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 import com.liferay.portal.kernel.util.CentralizedThreadLocal;
 import com.liferay.portal.kernel.util.JavaDetector;
 import com.liferay.portal.kernel.util.PreloadClassLoader;
 import com.liferay.portal.kernel.util.ProxyUtil;
+import com.liferay.portal.kernel.util.ReferenceEntry;
+import com.liferay.portal.kernel.util.ReferenceRegistry;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WeakValueConcurrentHashMap;
 import com.liferay.portal.security.lang.DoPrivilegedBean;
 import com.liferay.portal.security.lang.DoPrivilegedFactory;
 import com.liferay.portal.security.lang.DoPrivilegedHandler;
@@ -57,7 +62,6 @@ import com.liferay.portal.spring.bean.BeanReferenceAnnotationBeanPostProcessor;
 import com.liferay.portal.spring.bean.BeanReferenceRefreshUtil;
 import com.liferay.portal.spring.bean.BeanReferenceRefreshUtil.PACL;
 import com.liferay.portal.spring.context.PortletApplicationContext;
-import com.liferay.portal.spring.util.FilterClassLoader;
 import com.liferay.portal.template.BaseTemplateManager;
 import com.liferay.portal.template.TemplateContextHelper;
 import com.liferay.portal.template.TemplateControlContext;
@@ -83,6 +87,7 @@ import java.security.AccessController;
 import java.security.Permission;
 import java.security.Policy;
 import java.security.PrivilegedAction;
+import java.security.PrivilegedActionException;
 import java.security.PrivilegedExceptionAction;
 import java.security.ProtectionDomain;
 
@@ -122,16 +127,10 @@ public class PortalSecurityManagerImpl extends SecurityManager
 	implements PortalSecurityManager {
 
 	public PortalSecurityManagerImpl() {
-		SecurityManager securityManager = System.getSecurityManager();
-
 		initClasses();
 
 		try {
-			Policy policy = null;
-
-			if (securityManager != null) {
-				policy = Policy.getPolicy();
-			}
+			Policy policy = Policy.getPolicy();
 
 			_policy = new PortalPolicy(policy);
 
@@ -277,11 +276,6 @@ public class PortalSecurityManagerImpl extends SecurityManager
 		return _policy;
 	}
 
-	@Override
-	public boolean isActive() {
-		return PACLPolicyManager.isActive();
-	}
-
 	protected void initClass(Class<?> clazz) {
 		_log.debug(
 			"Loading " + clazz.getName() + " and " +
@@ -301,11 +295,14 @@ public class PortalSecurityManagerImpl extends SecurityManager
 		initClass(ActivePACLPolicy.class);
 		initClass(BaseTemplateManager.class);
 		initClass(CentralizedThreadLocal.class);
+		initClass(CheckMemberAccessPermission.class);
 		initClass(DoPrivilegedBean.class);
 		initClass(DoPrivilegedFactory.class);
 		initClass(DoPrivilegedHandler.class);
 		initClass(DynamicQueryFactoryImpl.class);
+		initClass(EqualityWeakReference.class);
 		initClass(FileAvailabilityUtil.class);
+		initClass(FinalizeManager.class);
 		initClass(FreeMarkerTemplate.class);
 		initClass(GeneratingPACLPolicy.class);
 		initClass(InactivePACLPolicy.class);
@@ -321,7 +318,11 @@ public class PortalSecurityManagerImpl extends SecurityManager
 		initClass(PACLRequestDispatcherWrapper.class);
 		initClass(PACLStatementHandler.class);
 		initClass(PACLUtil.class);
+		initClass(PortalHookPermission.class);
+		initClass(PortalMessageBusPermission.class);
 		initClass(PortalPermissionCollection.class);
+		initClass(PortalRuntimePermission.class);
+		initClass(PortalServicePermission.class);
 		initClass(PortalPolicy.class);
 		initClass(PortletRequestImpl.class);
 		initClass(PortletResponseImpl.class);
@@ -329,6 +330,7 @@ public class PortalSecurityManagerImpl extends SecurityManager
 		initClass(Profile.class);
 		initClass(TemplateContextHelper.class);
 		initClass(VelocityTemplate.class);
+		initClass(WeakValueConcurrentHashMap.class);
 		initClass(XSLTemplate.class);
 	}
 
@@ -420,6 +422,7 @@ public class PortalSecurityManagerImpl extends SecurityManager
 		initPACLImpl(
 			PortletApplicationContext.class,
 			new DoPortletApplicationContextPACL());
+		initPACLImpl(ReferenceRegistry.class, new DoReferenceRegistryPACL());
 		initPACLImpl(
 			ServiceBeanAopProxy.class, new DoServiceBeanAopProxyPACL());
 		initPACLImpl(
@@ -642,12 +645,8 @@ public class PortalSecurityManagerImpl extends SecurityManager
 			ServletContext servletContext,
 			RequestDispatcher requestDispatcher) {
 
-			if (PACLPolicyManager.isActive()) {
-				requestDispatcher = new PACLRequestDispatcherWrapper(
-					servletContext, requestDispatcher);
-			}
-
-			return requestDispatcher;
+			return new PACLRequestDispatcherWrapper(
+				servletContext, requestDispatcher);
 		}
 
 	}
@@ -656,10 +655,6 @@ public class PortalSecurityManagerImpl extends SecurityManager
 
 		@Override
 		public <T> T wrap(PrivilegedAction<T> privilegedAction) {
-			if (!PACLPolicyManager.isActive()) {
-				return privilegedAction.run();
-			}
-
 			return DoPrivilegedFactory.wrap(
 				AccessController.doPrivileged(privilegedAction));
 		}
@@ -668,10 +663,6 @@ public class PortalSecurityManagerImpl extends SecurityManager
 		public <T> T wrap(
 				PrivilegedExceptionAction<T> privilegedExceptionAction)
 			throws Exception {
-
-			if (!PACLPolicyManager.isActive()) {
-				return privilegedExceptionAction.run();
-			}
 
 			return DoPrivilegedFactory.wrap(
 				AccessController.doPrivileged(privilegedExceptionAction));
@@ -684,10 +675,6 @@ public class PortalSecurityManagerImpl extends SecurityManager
 
 		@Override
 		public <T> T wrapWhenActive(T t) {
-			if (!PACLPolicyManager.isActive()) {
-				return t;
-			}
-
 			return DoPrivilegedFactory.wrap(t);
 		}
 
@@ -720,10 +707,6 @@ public class PortalSecurityManagerImpl extends SecurityManager
 		public void checkCopy(String source, String destination) {
 			SecurityManager securityManager = System.getSecurityManager();
 
-			if (securityManager == null) {
-				return;
-			}
-
 			if (Validator.isNotNull(source)) {
 				securityManager.checkRead(source);
 			}
@@ -739,10 +722,6 @@ public class PortalSecurityManagerImpl extends SecurityManager
 		public void checkDelete(String path) {
 			SecurityManager securityManager = System.getSecurityManager();
 
-			if (securityManager == null) {
-				return;
-			}
-
 			if (Validator.isNull(path)) {
 				return;
 			}
@@ -753,10 +732,6 @@ public class PortalSecurityManagerImpl extends SecurityManager
 		@Override
 		public void checkMove(String source, String destination) {
 			SecurityManager securityManager = System.getSecurityManager();
-
-			if (securityManager == null) {
-				return;
-			}
 
 			if (Validator.isNotNull(source)) {
 				securityManager.checkRead(source);
@@ -775,10 +750,6 @@ public class PortalSecurityManagerImpl extends SecurityManager
 		public void checkRead(String path) {
 			SecurityManager securityManager = System.getSecurityManager();
 
-			if (securityManager == null) {
-				return;
-			}
-
 			if (Validator.isNull(path)) {
 				return;
 			}
@@ -789,10 +760,6 @@ public class PortalSecurityManagerImpl extends SecurityManager
 		@Override
 		public void checkWrite(String path) {
 			SecurityManager securityManager = System.getSecurityManager();
-
-			if (securityManager == null) {
-				return;
-			}
 
 			if (Validator.isNull(path)) {
 				return;
@@ -834,10 +801,6 @@ public class PortalSecurityManagerImpl extends SecurityManager
 		public void checkListen(String destinationName) {
 			SecurityManager securityManager = System.getSecurityManager();
 
-			if (securityManager == null) {
-				return;
-			}
-
 			Permission permission = new PortalMessageBusPermission(
 				PACLConstants.PORTAL_MESSAGE_BUS_PERMISSION_LISTEN,
 				destinationName);
@@ -848,10 +811,6 @@ public class PortalSecurityManagerImpl extends SecurityManager
 		@Override
 		public void checkSend(String destinationName) {
 			SecurityManager securityManager = System.getSecurityManager();
-
-			if (securityManager == null) {
-				return;
-			}
 
 			Permission permission = new PortalMessageBusPermission(
 				PACLConstants.PORTAL_MESSAGE_BUS_PERMISSION_SEND,
@@ -868,10 +827,6 @@ public class PortalSecurityManagerImpl extends SecurityManager
 		@Override
 		public void checkDynamicQuery(Class<?> implClass) {
 			SecurityManager securityManager = System.getSecurityManager();
-
-			if (securityManager == null) {
-				return;
-			}
 
 			ClassLoader classLoader = ClassLoaderUtil.getClassLoader(implClass);
 
@@ -899,10 +854,6 @@ public class PortalSecurityManagerImpl extends SecurityManager
 		public void checkExpandoBridge(String className) {
 			SecurityManager securityManager = System.getSecurityManager();
 
-			if (securityManager == null) {
-				return;
-			}
-
 			Permission permission = new PortalRuntimePermission(
 				PACLConstants.PORTAL_RUNTIME_PERMISSION_EXPANDO_BRIDGE, null,
 				className);
@@ -915,10 +866,6 @@ public class PortalSecurityManagerImpl extends SecurityManager
 			String servletContextName, Class<?> clazz, String property) {
 
 			SecurityManager securityManager = System.getSecurityManager();
-
-			if (securityManager == null) {
-				return;
-			}
 
 			int stackIndex = Reflection.getStackIndex(5, 5);
 
@@ -944,10 +891,6 @@ public class PortalSecurityManagerImpl extends SecurityManager
 		public void checkGetClassLoader(String classLoaderReferenceId) {
 			SecurityManager securityManager = System.getSecurityManager();
 
-			if (securityManager == null) {
-				return;
-			}
-
 			if (Validator.isNull(classLoaderReferenceId)) {
 				classLoaderReferenceId = "portal";
 			}
@@ -963,10 +906,6 @@ public class PortalSecurityManagerImpl extends SecurityManager
 		public void checkPortletBagPool(String portletId) {
 			SecurityManager securityManager = System.getSecurityManager();
 
-			if (securityManager == null) {
-				return;
-			}
-
 			Permission permission = new PortalRuntimePermission(
 				PACLConstants.PORTAL_RUNTIME_PERMISSION_PORTLET_BAG_POOL, null,
 				portletId);
@@ -977,10 +916,6 @@ public class PortalSecurityManagerImpl extends SecurityManager
 		@Override
 		public void checkSearchEngine(String searchEngineId) {
 			SecurityManager securityManager = System.getSecurityManager();
-
-			if (securityManager == null) {
-				return;
-			}
 
 			Permission permission = new PortalRuntimePermission(
 				PACLConstants.PORTAL_RUNTIME_PERMISSION_SEARCH_ENGINE, null,
@@ -995,10 +930,6 @@ public class PortalSecurityManagerImpl extends SecurityManager
 
 			SecurityManager securityManager = System.getSecurityManager();
 
-			if (securityManager == null) {
-				return;
-			}
-
 			clazz = PACLUtil.getClass(clazz);
 
 			Permission permission = new PortalRuntimePermission(
@@ -1011,10 +942,6 @@ public class PortalSecurityManagerImpl extends SecurityManager
 		@Override
 		public void checkThreadPoolExecutor(String name) {
 			SecurityManager securityManager = System.getSecurityManager();
-
-			if (securityManager == null) {
-				return;
-			}
 
 			Permission permission = new PortalRuntimePermission(
 				PACLConstants.PORTAL_RUNTIME_PERMISSION_THREAD_POOL_EXECUTOR,
@@ -1033,10 +960,6 @@ public class PortalSecurityManagerImpl extends SecurityManager
 			Object object, Method method, Object[] arguments) {
 
 			SecurityManager securityManager = System.getSecurityManager();
-
-			if (securityManager == null) {
-				return;
-			}
 
 			String methodName = method.getName();
 
@@ -1081,10 +1004,6 @@ public class PortalSecurityManagerImpl extends SecurityManager
 		public void checkPermission(String host, String action) {
 			SecurityManager securityManager = System.getSecurityManager();
 
-			if (securityManager == null) {
-				return;
-			}
-
 			Permission permission = new SocketPermission(host, action);
 
 			securityManager.checkPermission(permission);
@@ -1097,20 +1016,9 @@ public class PortalSecurityManagerImpl extends SecurityManager
 
 		@Override
 		public ClassLoader getBeanClassLoader() {
-			if (PACLPolicyManager.isActive()) {
-				return DoPrivilegedFactory.wrap(
-					new PreloadClassLoader(
-						PortletClassLoaderUtil.getClassLoader(), _classes));
-			}
-
-			ClassLoader beanClassLoader =
-				AggregateClassLoader.getAggregateClassLoader(
-					new ClassLoader[] {
-						PortletClassLoaderUtil.getClassLoader(),
-						ClassLoaderUtil.getPortalClassLoader()
-					});
-
-			return new FilterClassLoader(beanClassLoader);
+			return DoPrivilegedFactory.wrap(
+				new PreloadClassLoader(
+					PortletClassLoaderUtil.getClassLoader(), _classes));
 		}
 
 		private static Map<String, Class<?>> _classes =
@@ -1131,6 +1039,41 @@ public class PortalSecurityManagerImpl extends SecurityManager
 				}
 
 				_classes.put(clazz.getName(), clazz);
+			}
+		}
+
+	}
+
+	private static class DoReferenceRegistryPACL
+		implements ReferenceRegistry.PACL {
+
+		public ReferenceEntry getReferenceEntry(
+				final Class<?> clazz, final Object object,
+				final String fieldName)
+			throws NoSuchFieldException, SecurityException {
+
+			try {
+				return AccessController.doPrivileged(
+					new PrivilegedExceptionAction<ReferenceEntry> () {
+
+						@Override
+						public ReferenceEntry run() throws Exception {
+							Field field = clazz.getDeclaredField(fieldName);
+
+							return new ReferenceEntry(object, field);
+						}
+
+					}
+				);
+			}
+			catch (PrivilegedActionException pae) {
+				Exception exception = pae.getException();
+
+				if (exception instanceof NoSuchFieldException) {
+					throw (NoSuchFieldException)exception;
+				}
+
+				throw (SecurityException)exception;
 			}
 		}
 

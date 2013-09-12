@@ -14,21 +14,25 @@
 
 package com.liferay.portal.security.pacl;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.security.lang.PortalSecurityManager;
-import com.liferay.portal.security.lang.SecurityManagerUtil;
-import com.liferay.portal.spring.aop.ServiceBeanAopCacheManagerUtil;
+
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLClassLoader;
 
 import java.security.AccessController;
+import java.security.CodeSource;
 import java.security.PrivilegedAction;
+import java.security.ProtectionDomain;
 
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.concurrent.ConcurrentHashMap;
+
+import javax.servlet.ServletContext;
 
 /**
  * @author Brian Wing Shun Chan
@@ -58,144 +62,85 @@ public class PACLPolicyManager {
 		}
 	}
 
-	public static int getActiveCount() {
-		return _activeCount;
-	}
-
 	public static PACLPolicy getDefaultPACLPolicy() {
 		return _defaultPACLPolicy;
 	}
 
 	public static PACLPolicy getPACLPolicy(ClassLoader classLoader) {
+		if (classLoader == null) {
+			return null;
+		}
+
 		return AccessController.doPrivileged(
 			new PACLPolicyPrivilegedAction(classLoader));
 	}
 
-	public static boolean isActive() {
-		if (_activeCount > 0) {
-			return true;
+	public static PACLPolicy getPACLPolicy(URL location) {
+		if (location == null) {
+			return null;
 		}
 
-		return false;
+		return AccessController.doPrivileged(
+			new PACLPolicyPrivilegedAction(location));
 	}
 
-	public static void register(
+	public static PACLPolicy getPACLPolicy(ProtectionDomain protectionDomain) {
+		if (protectionDomain == null) {
+			return null;
+		}
+
+		return AccessController.doPrivileged(
+			new PACLPolicyPrivilegedAction(protectionDomain));
+	}
+
+	public static synchronized void register(
 		ClassLoader classLoader, PACLPolicy paclPolicy) {
 
-		_paclPolicies.put(classLoader, paclPolicy);
+		List<URL> urLs = paclPolicy.getURLs();
 
-		if (!paclPolicy.isActive()) {
-			return;
-		}
+		if (classLoader instanceof URLClassLoader) {
+			URLClassLoader urlClassLoader = (URLClassLoader)classLoader;
 
-		_activeCount++;
+			for (URL url : urlClassLoader.getURLs()) {
+				urLs.add(url);
 
-		if (_activeCount == 1) {
-			if (_log.isInfoEnabled()) {
-				_log.info("Activating PACL policy manager");
+				_urlPACLPolicies.put(url, paclPolicy);
 			}
-
-			_overridePortalSecurityManager();
-
-			ServiceBeanAopCacheManagerUtil.reset();
-		}
-	}
-
-	public static void unregister(ClassLoader classLoader) {
-		PACLPolicy paclPolicy = _paclPolicies.remove(classLoader);
-
-		if ((paclPolicy == null) || !paclPolicy.isActive()) {
-			return;
 		}
 
-		_activeCount--;
+		ServletContext servletContext = ServletContextPool.get(
+			paclPolicy.getServletContextName());
 
-		if (_activeCount == 0) {
-			if (_log.isInfoEnabled()) {
-				_log.info("Disabling PACL policy manager");
-			}
-
-			_resetPortalSecurityManager();
-
-			ServiceBeanAopCacheManagerUtil.reset();
-		}
-	}
-
-	private static void _overridePortalSecurityManager() {
-		_originalSecurityManager = System.getSecurityManager();
-
-		if (_originalSecurityManager instanceof PortalSecurityManager) {
-			return;
-		}
-
-		if (!SecurityManagerUtil.isSmart()) {
-			if (_log.isInfoEnabled()) {
-				StringBundler sb = new StringBundler(4);
-
-				sb.append("Plugin security management is not enabled. To ");
-				sb.append("enable plugin security management, set the ");
-				sb.append("property \"portal.security.manager.strategy\" in ");
-				sb.append("portal.properties to \"liferay\" or \"smart\".");
-
-				_log.info(sb.toString());
-			}
-
-			return;
-		}
+		String realPath = servletContext.getRealPath(StringPool.SLASH);
 
 		try {
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					"Overriding the current security manager to enable " +
-						"plugin security management");
-			}
+			URL url = new URL("file", "", -1, realPath);
 
-			SecurityManager securityManager =
-				(SecurityManager)SecurityManagerUtil.getPortalSecurityManager();
+			urLs.add(url);
 
-			System.setSecurityManager(securityManager);
+			_urlPACLPolicies.put(url, paclPolicy);
 		}
-		catch (SecurityException se) {
-			_log.error(
-				"Unable to override the current security manager. Plugin " +
-					"security management is not enabled.");
+		catch (MalformedURLException e) {
+		}
 
-			throw se;
+		_classLoaderPACLPolicies.put(classLoader, paclPolicy);
+	}
+
+	public static synchronized void unregister(ClassLoader classLoader) {
+		PACLPolicy paclPolicy = _classLoaderPACLPolicies.remove(classLoader);
+
+		for (URL url : paclPolicy.getURLs()) {
+			_urlPACLPolicies.remove(url);
 		}
 	}
 
-	private static void _resetPortalSecurityManager() {
-		if (_originalSecurityManager instanceof PortalSecurityManager) {
-			return;
-		}
-
-		if (!SecurityManagerUtil.isSmart()) {
-			return;
-		}
-
-		try {
-			if (_log.isInfoEnabled()) {
-				_log.info("Resetting to the original security manager");
-			}
-
-			System.setSecurityManager(_originalSecurityManager);
-		}
-		catch (SecurityException se) {
-			_log.error("Unable to reset to the original security manager");
-
-			throw se;
-		}
-	}
-
-	private static Log _log = LogFactoryUtil.getLog(PACLPolicyManager.class);
-
-	private static int _activeCount;
 	private static PACLPolicy _defaultPACLPolicy = new InactivePACLPolicy(
 		StringPool.BLANK, PACLPolicyManager.class.getClassLoader(),
 		new Properties());
-	private static SecurityManager _originalSecurityManager;
-	private static Map<ClassLoader, PACLPolicy> _paclPolicies =
-		new HashMap<ClassLoader, PACLPolicy>();
+	private static Map<ClassLoader, PACLPolicy> _classLoaderPACLPolicies =
+		new ConcurrentHashMap<ClassLoader, PACLPolicy>();
+	private static Map<URL, PACLPolicy> _urlPACLPolicies =
+		new ConcurrentHashMap<URL, PACLPolicy>();
 
 	private static class PACLPolicyPrivilegedAction
 		implements PrivilegedAction<PACLPolicy> {
@@ -204,20 +149,74 @@ public class PACLPolicyManager {
 			_classLoader = classLoader;
 		}
 
+		public PACLPolicyPrivilegedAction(URL location) {
+			_location = location;
+		}
+
+		public PACLPolicyPrivilegedAction(ProtectionDomain protectionDomain) {
+			_protectionDomain = protectionDomain;
+
+			_classLoader = _protectionDomain.getClassLoader();
+		}
+
 		@Override
 		public PACLPolicy run() {
-			PACLPolicy paclPolicy = _paclPolicies.get(_classLoader);
+			PACLPolicy paclPolicy = getFromClassLoader();
 
-			while ((paclPolicy == null) && (_classLoader.getParent() != null)) {
-				_classLoader = _classLoader.getParent();
+			if (paclPolicy == null) {
+				paclPolicy = getFromProtectionDomain();
+			}
 
-				paclPolicy = _paclPolicies.get(_classLoader);
+			if (paclPolicy == null) {
+				paclPolicy = getFromLocation(_location);
 			}
 
 			return paclPolicy;
 		}
 
+		private PACLPolicy getFromClassLoader() {
+			if (_classLoader == null) {
+				return null;
+			}
+
+			PACLPolicy paclPolicy = _classLoaderPACLPolicies.get(_classLoader);
+
+			while ((paclPolicy == null) && (_classLoader.getParent() != null)) {
+				_classLoader = _classLoader.getParent();
+
+				paclPolicy = _classLoaderPACLPolicies.get(_classLoader);
+			}
+
+			return paclPolicy;
+		}
+
+		private PACLPolicy getFromLocation(URL location) {
+			if (location == null) {
+				return null;
+			}
+
+			return _urlPACLPolicies.get(location);
+		}
+
+		private PACLPolicy getFromProtectionDomain() {
+			if ((_protectionDomain == null) || (_classLoader != null)) {
+				return null;
+			}
+
+			CodeSource codeSource = _protectionDomain.getCodeSource();
+
+			if (codeSource == null) {
+				return null;
+			}
+
+			URL location = codeSource.getLocation();
+
+			return getFromLocation(location);
+		}
+
 		private ClassLoader _classLoader;
+		private URL _location;
+		private ProtectionDomain _protectionDomain;
 
 	}
 

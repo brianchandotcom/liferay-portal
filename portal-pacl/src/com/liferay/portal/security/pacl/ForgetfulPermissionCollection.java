@@ -12,15 +12,38 @@
  * details.
  */
 
-package com.liferay.portal.security.lang;
+package com.liferay.portal.security.pacl;
 
-import java.security.Policy;
+import java.security.Permission;
+import java.security.PermissionCollection;
+
+import java.util.Collections;
+import java.util.Enumeration;
 
 /**
  * @author Raymond Augé
  */
-public interface PortalSecurityManager {
+public class ForgetfulPermissionCollection extends PermissionCollection {
 
-	public Policy getPolicy();
+	@Override
+	public void add(Permission permission) {
+		// Ignore
+	}
+
+	@Override
+	public Enumeration<Permission> elements() {
+		return Collections.enumeration(
+			Collections.<Permission>emptyList());
+	}
+
+	@Override
+	public boolean implies(Permission permission) {
+		return false;
+	}
+
+	@Override
+	public boolean isReadOnly() {
+		return true;
+	}
 
 }

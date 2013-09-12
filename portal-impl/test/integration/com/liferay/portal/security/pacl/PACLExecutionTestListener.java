@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.deploy.hot.HotDeployEvent;
 import com.liferay.portal.kernel.deploy.hot.HotDeployUtil;
 import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
+import com.liferay.portal.kernel.servlet.filters.invoker.InvokerFilterHelper;
 import com.liferay.portal.kernel.test.TestContext;
 import com.liferay.portal.kernel.util.PortalLifecycleUtil;
 import com.liferay.portal.spring.context.PortletContextLoaderListener;
@@ -81,6 +82,9 @@ public class PACLExecutionTestListener
 		if (servletContext == null) {
 			servletContext = new AutoDeployMockServletContext(
 				getResourceBasePath(), new FileSystemResourceLoader());
+
+			servletContext.setAttribute(
+				InvokerFilterHelper.class.getName(), new InvokerFilterHelper());
 
 			ServletContextPool.put(PortalUtil.getPathContext(), servletContext);
 		}

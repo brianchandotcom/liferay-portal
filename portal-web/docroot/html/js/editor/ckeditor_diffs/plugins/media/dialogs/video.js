@@ -203,7 +203,7 @@ CKEDITOR.dialog.add(
 
 				var fakeImage = instance.getSelectedElement();
 
-				editor.plugins.video.restoreElement (editor, instance, fakeImage, 'video');				
+				editor.plugins.media.restoreElement (editor, instance, fakeImage, 'video');				
 			},
 			
 			onOk: function() {
@@ -213,7 +213,7 @@ CKEDITOR.dialog.add(
 
 				var extraStyles = {};
 
-				var divNode = editor.plugins.video.createDivStructure(editor, 'liferayckevideo video-container', 'ckvideo-no-id');
+				var divNode = editor.plugins.media.createDivStructure(editor, 'liferayckevideo video-container', 'ckvideo-no-id');
 				
 				instance.commitContent(divNode, extraStyles);
 

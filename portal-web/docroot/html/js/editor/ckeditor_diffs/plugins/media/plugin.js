@@ -1,7 +1,7 @@
 (function() {
 
 CKEDITOR.plugins.add(
-	'video',
+	'media',
 	{
 		afterInit: function(editor) {
 			var dataProcessor = editor.dataProcessor;
@@ -18,11 +18,11 @@ CKEDITOR.plugins.add(
 
 								var fakeElement;
 
-								if (editor.plugins.video.hasClass(attributeClass, 'liferayckevideo')) {
+								if (editor.plugins.media.hasClass(attributeClass, 'liferayckevideo')) {
 									var realChild = realElement.children && realElement.children[0];
 
 									if (realChild &&
-										editor.plugins.video.hasClass(realChild.attributes['class'], 'ckvideo-no-id') &&
+										editor.plugins.media.hasClass(realChild.attributes['class'], 'ckvideo-no-id') &&
 										realChild.children && realChild.children.length) {
 
 										realChild.children[0].value = '';
@@ -69,7 +69,7 @@ CKEDITOR.plugins.add(
 							'div': function(realElement) {
 								var attributeClass = realElement.attributes['class'];
 
-								if (editor.plugins.video.hasClass(attributeClass, 'ckvideo-no-id') &&
+								if (editor.plugins.media.hasClass(attributeClass, 'ckvideo-no-id') &&
 									realElement.children && realElement.children.length) {
 
 									realElement.children[0].value = '';

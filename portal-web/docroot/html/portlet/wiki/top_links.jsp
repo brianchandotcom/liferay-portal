@@ -51,7 +51,7 @@ if (categoryId > 0) {
 }
 %>
 
-<c:if test='<%= Validator.isNull(strutsAction) || !strutsAction.contains("view_page_attachments") %>'>
+<c:if test='<%= !strutsAction.contains("view_page_attachments") %>'>
 	<portlet:actionURL var="undoTrashURL">
 		<portlet:param name="struts_action" value="/wiki/edit_page" />
 		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />

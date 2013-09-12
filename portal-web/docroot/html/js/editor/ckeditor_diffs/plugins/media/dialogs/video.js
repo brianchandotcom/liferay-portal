@@ -200,44 +200,18 @@ CKEDITOR.dialog.add(
 				var instance = this;
 
 				instance.fakeImage = null;
-				instance.videoNode = null;
 
 				var fakeImage = instance.getSelectedElement();
 
-				if (fakeImage && fakeImage.data('cke-real-element-type') && fakeImage.data('cke-real-element-type') === 'video') {
-					instance.fakeImage = fakeImage;
-
-					var videoNode = editor.restoreRealElement(fakeImage);
-
-					instance.videoNode = videoNode;
-
-					instance.setupContent(videoNode);
-				}
-				else {
-					instance.setupContent(null);
-				}
+				editor.plugins.media.restoreElement(editor, instance, fakeImage, 'video');
 			},
+
 			onOk: function() {
 				var instance = this;
 
-				var STR_DIV = 'div';
-
 				var extraStyles = {};
 
-				var divNode = editor.document.createElement(STR_DIV);
-
-				divNode.setAttribute('class', 'liferayckevideo video-container');
-
-				var boundingBoxTmp = editor.document.createElement(STR_DIV);
-
-				boundingBoxTmp.setAttribute('class', 'ckvideo-no-id');
-
-				var scriptTmp = editor.document.createElement('script');
-
-				scriptTmp.setAttribute('type', 'text/javascript');
-
-				divNode.append(boundingBoxTmp);
-				divNode.append(scriptTmp);
+				var divNode = editor.plugins.media.createDivStructure(editor, 'liferayckevideo video-container', 'ckvideo-no-id');
 
 				instance.commitContent(divNode, extraStyles);
 

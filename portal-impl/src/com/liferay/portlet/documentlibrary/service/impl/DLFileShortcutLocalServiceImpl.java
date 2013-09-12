@@ -404,7 +404,7 @@ public class DLFileShortcutLocalServiceImpl
 		String[] assetTagNames = assetTagLocalService.getTagNames(
 			FileEntry.class.getName(), fileEntry.getFileEntryId());
 
-		assetTagLocalService.checkTagsWithProperties(
+		assetTagLocalService.checkTags(
 			serviceContext.getUserId(), serviceContext.getScopeGroupId(),
 			assetTagNames);
 

@@ -46,7 +46,7 @@ response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
 	<script src="<%= themeDisplay.getCDNHost() + themeDisplay.getPathJavaScript() %>/misc/xp_progress.js" type="text/javascript"></script>
 </head>
 
-<body onLoad="javascript:location.replace('<%= redirect %>')">
+<body onLoad="javascript:location.replace('<%= HtmlUtil.escapeJS(redirect) %>')">
 
 <center>
 

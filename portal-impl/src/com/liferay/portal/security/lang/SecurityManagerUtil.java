@@ -50,14 +50,8 @@ public class SecurityManagerUtil {
 
 		_originalSecurityManager = System.getSecurityManager();
 
-		if (PropsValues.TCK_URL) {
-			_portalSecurityManagerStrategy = PortalSecurityManagerStrategy.NONE;
-		}
-		else {
-			_portalSecurityManagerStrategy =
-				PortalSecurityManagerStrategy.parse(
-					PropsValues.PORTAL_SECURITY_MANAGER_STRATEGY);
-		}
+		_portalSecurityManagerStrategy = PortalSecurityManagerStrategy.parse(
+			PropsValues.PORTAL_SECURITY_MANAGER_STRATEGY);
 
 		if ((_portalSecurityManagerStrategy ==
 				PortalSecurityManagerStrategy.LIFERAY) ||
@@ -184,7 +178,10 @@ public class SecurityManagerUtil {
 		DEFAULT, LIFERAY, NONE, SMART;
 
 		public static PortalSecurityManagerStrategy parse(String value) {
-			if (value.equals("default")) {
+			if (PropsValues.TCK_URL) {
+				return NONE;
+			}
+			else if (value.equals("default")) {
 				return DEFAULT;
 			}
 			else if (value.equals("liferay")) {

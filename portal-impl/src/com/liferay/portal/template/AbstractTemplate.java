@@ -80,6 +80,10 @@ public abstract class AbstractTemplate implements Template {
 
 	@Override
 	public Object get(String key) {
+		if (key == null) {
+			return null;
+		}
+
 		return context.get(key);
 	}
 
@@ -136,7 +140,7 @@ public abstract class AbstractTemplate implements Template {
 
 	@Override
 	public void put(String key, Object value) {
-		if (value == null) {
+		if ((key == null) || (value == null)) {
 			return;
 		}
 

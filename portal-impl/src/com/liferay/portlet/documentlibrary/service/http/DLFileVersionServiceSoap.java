@@ -76,6 +76,36 @@ public class DLFileVersionServiceSoap {
 		}
 	}
 
+	public static com.liferay.portlet.documentlibrary.model.DLFileVersionSoap[] getFileVersions(
+		long fileEntryId, int status) throws RemoteException {
+		try {
+			java.util.List<com.liferay.portlet.documentlibrary.model.DLFileVersion> returnValue =
+				DLFileVersionServiceUtil.getFileVersions(fileEntryId, status);
+
+			return com.liferay.portlet.documentlibrary.model.DLFileVersionSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getFileVersionsCount(long fileEntryId, int status)
+		throws RemoteException {
+		try {
+			int returnValue = DLFileVersionServiceUtil.getFileVersionsCount(fileEntryId,
+					status);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.portlet.documentlibrary.model.DLFileVersionSoap getLatestFileVersion(
 		long fileEntryId) throws RemoteException {
 		try {

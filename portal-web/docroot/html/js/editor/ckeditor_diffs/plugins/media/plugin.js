@@ -17,22 +17,24 @@ CKEDITOR.plugins.add(
 								var attributeClass = realElement.attributes['class'];
 
 								var fakeElement;
-								
-								var audio = editor.plugins.media.hasClass(attributeClass, 'liferayckeaudio');
-								var video = editor.plugins.media.hasClass(attributeClass, 'liferayckevideo');
+
+								var mediaPlugin = editor.plugins.media;
+
+								var audio = mediaPlugin.hasClass(attributeClass, 'liferayckeaudio');
+								var video = mediaPlugin.hasClass(attributeClass, 'liferayckevideo');
 
 								if (video || audio) {
 									var realChild = realElement.children && realElement.children[0];
 
 									if (realChild &&
-										(editor.plugins.media.hasClass(realChild.attributes['class'], 'ckvideo-no-id') ||
-										editor.plugins.media.hasClass(realChild.attributes['class'], 'ckaudio-no-id')) &&
+										(mediaPlugin.hasClass(realChild.attributes['class'], 'ckvideo-no-id') ||
+										mediaPlugin.hasClass(realChild.attributes['class'], 'ckaudio-no-id')) &&
 										realChild.children && realChild.children.length) {
 
 										realChild.children[0].value = '';
 									}
-									
-									var cssClass = (video ? 'liferay_cke_video' : 'liferay_cke_audio'); 
+
+									var cssClass = (video ? 'liferay_cke_video' : 'liferay_cke_audio');
 									var element = (video ? 'video' : 'audio');
 
 									fakeElement = editor.createFakeParserElement(realElement, cssClass, element, false);
@@ -40,26 +42,26 @@ CKEDITOR.plugins.add(
 									if (video) {
 										var fakeStyle = fakeElement.attributes.style || '';
 										var attributes = realElement.attributes;
-	
+
 										var height = attributes['data-height'];
 										var poster = attributes['data-poster'];
 										var width = attributes['data-width'];
-	
+
 										if (poster) {
 											fakeStyle += 'background-image:url(' + poster + ');';
-	
+
 											fakeElement.attributes.style = fakeStyle;
 										}
-	
+
 										if (typeof height != 'undefined') {
 											fakeStyle += 'height:' + CKEDITOR.tools.cssLength(height) + ';';
-	
+
 											fakeElement.attributes.style = fakeStyle;
 										}
-	
+
 										if (typeof width != 'undefined') {
 											fakeStyle += 'width:' + CKEDITOR.tools.cssLength(width) + ';';
-	
+
 											fakeElement.attributes.style = fakeStyle;
 										}
 									}
@@ -78,8 +80,10 @@ CKEDITOR.plugins.add(
 							'div': function(realElement) {
 								var attributeClass = realElement.attributes['class'];
 
-								if ((editor.plugins.media.hasClass(attributeClass, 'ckvideo-no-id') ||
-									editor.plugins.media.hasClass(attributeClass, 'ckaudio-no-id')) &&
+								var mediaPlugin = editor.plugins.media;
+
+								if ((mediaPlugin.hasClass(attributeClass, 'ckvideo-no-id') ||
+									mediaPlugin.hasClass(attributeClass, 'ckaudio-no-id')) &&
 									realElement.children && realElement.children.length) {
 
 									realElement.children[0].value = '';
@@ -102,7 +106,7 @@ CKEDITOR.plugins.add(
 				'display: block;' +
 				'height: 80px;' +
 				'width: 80px;' +
-			'}'+
+			'}' +
 			'img.liferay_cke_audio {' +
 				'background: #CCC url(' + CKEDITOR.getUrl(instance.path + 'icons/placeholder_audio.png') + ') no-repeat 50% 50%;' +
 				'border: 1px solid #A9A9A9;' +
@@ -129,7 +133,7 @@ CKEDITOR.plugins.add(
 					label: Liferay.Language.get('video')
 				}
 			);
-			
+
 			editor.ui.addButton(
 				'Audio',
 				{
@@ -201,7 +205,7 @@ CKEDITOR.plugins.add(
 
 		createDivStructure: function(editor, containerClass, boundingBoxClass) {
 			var STR_DIV = 'div';
-			
+
 			var divNode = editor.document.createElement(STR_DIV);
 
 			divNode.setAttribute('class', containerClass);
@@ -216,28 +220,27 @@ CKEDITOR.plugins.add(
 
 			divNode.append(boundingBoxTmp);
 			divNode.append(scriptTmp);
-			
+
 			return divNode;
 		},
-		
+
 		hasClass: function(attributeClass, target) {
 			return (attributeClass && attributeClass.indexOf(target) != -1);
 		},
-		
-		restoreElement: function(editor, instance, fakeImage, type) {			
+
+		restoreElement: function(editor, instance, fakeImage, type) {
 			if (fakeImage && fakeImage.data('cke-real-element-type') && fakeImage.data('cke-real-element-type') === type) {
-				
 				instance.fakeImage = fakeImage;
 
-				var node = editor.restoreRealElement(fakeImage);				
+				var node = editor.restoreRealElement(fakeImage);
 
 				instance.setupContent(node);
 			}
 			else {
 				instance.setupContent(null);
-			}			
+			}
 		},
-		
+
 		onLoad: function() {
 			var instance = this;
 

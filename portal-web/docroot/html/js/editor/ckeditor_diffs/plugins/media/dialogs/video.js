@@ -203,9 +203,9 @@ CKEDITOR.dialog.add(
 
 				var fakeImage = instance.getSelectedElement();
 
-				editor.plugins.media.restoreElement (editor, instance, fakeImage, 'video');				
+				editor.plugins.media.restoreElement (editor, instance, fakeImage, 'video');
 			},
-			
+
 			onOk: function() {
 				var instance = this;
 
@@ -214,7 +214,7 @@ CKEDITOR.dialog.add(
 				var extraStyles = {};
 
 				var divNode = editor.plugins.media.createDivStructure(editor, 'liferayckevideo video-container', 'ckvideo-no-id');
-				
+
 				instance.commitContent(divNode, extraStyles);
 
 				var newFakeImage = editor.createFakeElement(divNode, 'liferay_cke_video', 'video', false);

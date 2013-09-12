@@ -29,6 +29,16 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 %>
 
 <aui:nav-bar>
+	<aui:nav collapsible="<%= false %>" cssClass="nav-display-style-buttons pull-right" id="displayStyleButtons">
+		<aui:nav-item>
+			<span class="pull-left display-style-buttons-container" id="<portlet:namespace />displayStyleButtonsContainer">
+				<c:if test='<%= !strutsAction.equals("/document_library/search") %>'>
+					<liferay-util:include page="/html/portlet/document_library/display_style_buttons.jsp" />
+				</c:if>
+			</span>
+		</aui:nav-item>
+	</aui:nav>
+
 	<aui:nav id="toolbarContainer">
 		<aui:nav-item cssClass="hide" dropdown="<%= true %>" id="actionsButtonContainer" label="actions">
 			<c:if test="<%= !scopeGroup.isStaged() || scopeGroup.isStagingGroup() || !scopeGroup.isStagedPortlet(PortletKeys.DOCUMENT_LIBRARY) %>">
@@ -93,34 +103,26 @@ Group scopeGroup = themeDisplay.getScopeGroup();
 		</c:if>
 	</aui:nav>
 
-	<div class="pull-right">
-		<span class="pull-left display-style-buttons-container" id="<portlet:namespace />displayStyleButtonsContainer">
-			<c:if test='<%= !strutsAction.equals("/document_library/search") %>'>
-				<liferay-util:include page="/html/portlet/document_library/display_style_buttons.jsp" />
-			</c:if>
-		</span>
+	<aui:nav-bar-search cssClass="pull-right">
+		<div class="form-search">
+			<liferay-portlet:resourceURL varImpl="searchURL">
+				<portlet:param name="struts_action" value="/document_library/search" />
+				<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
+				<portlet:param name="searchRepositoryId" value="<%= String.valueOf(folderId) %>" />
+				<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
+				<portlet:param name="searchFolderId" value="<%= String.valueOf(folderId) %>" />
+			</liferay-portlet:resourceURL>
 
-		<div class="navbar-search pull-left">
-			<div class="form-search">
-				<liferay-portlet:resourceURL varImpl="searchURL">
-					<portlet:param name="struts_action" value="/document_library/search" />
-					<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
-					<portlet:param name="searchRepositoryId" value="<%= String.valueOf(folderId) %>" />
-					<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
-					<portlet:param name="searchFolderId" value="<%= String.valueOf(folderId) %>" />
-				</liferay-portlet:resourceURL>
+			<aui:form action="<%= searchURL.toString() %>" method="get" name="fm1" onSubmit="event.preventDefault();">
+				<liferay-portlet:renderURLParams varImpl="searchURL" />
+				<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+				<aui:input name="breadcrumbsFolderId" type="hidden" value="<%= folderId %>" />
+				<aui:input name="searchFolderIds" type="hidden" value="<%= folderId %>" />
 
-				<aui:form action="<%= searchURL.toString() %>" method="get" name="fm1" onSubmit="event.preventDefault();">
-					<liferay-portlet:renderURLParams varImpl="searchURL" />
-					<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-					<aui:input name="breadcrumbsFolderId" type="hidden" value="<%= folderId %>" />
-					<aui:input name="searchFolderIds" type="hidden" value="<%= folderId %>" />
-
-					<liferay-ui:input-search />
-				</aui:form>
-			</div>
+				<liferay-ui:input-search />
+			</aui:form>
 		</div>
-	</div>
+	</aui:nav-bar-search>
 </aui:nav-bar>
 
 <aui:script>

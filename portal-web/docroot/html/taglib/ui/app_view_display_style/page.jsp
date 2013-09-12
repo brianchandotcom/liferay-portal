@@ -17,46 +17,40 @@
 <%@ include file="/html/taglib/init.jsp" %>
 
 <%
+String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_app_view_display_style") + StringPool.UNDERLINE;
+
 String displayStyle = (String)request.getAttribute("liferay-ui:app-view-display-style:displayStyle");
 String[] displayStyles = (String[])request.getAttribute("liferay-ui:app-view-display-style:displayStyles");
 Map<String, String> requestParams = (Map<String, String>)request.getAttribute("liferay-ui:app-view-display-style:requestParams");
 %>
 
 <c:if test="<%= displayStyles.length > 1 %>">
-	<div class="toolbar" id="<portlet:namespace />displayStyleButtons">
-		<div class="btn-group btn-group-radio">
+	<div id="<portlet:namespace />displayStyleButtons">
+		<liferay-ui:icon-menu direction="down" icon='<%= "../aui/" + _getDisplayStyleIcon(displayStyle) %>' message="" select="<%= true %>" showArrow="<%= false %>">
 
 			<%
 			for (int i = 0; i < displayStyles.length; i++) {
 				String dataStyle = displayStyles[i];
 
-				String iconClass = displayStyles[i];
+				String iconClass = _getDisplayStyleIcon(dataStyle);
 
-				if (iconClass.equals("icon")) {
-					iconClass = "icon-th-large";
-				}
-				else if (iconClass.equals("descriptive")) {
-					iconClass = "icon-th-list";
-				}
-				else if (iconClass.equals("list")) {
-					iconClass ="icon-align-justify";
-				}
+				Map<String, Object> data = new HashMap<String, Object>();
+
+				data.put("displayStyle", dataStyle);
 			%>
 
-				<button class='btn <%= displayStyle.equals(displayStyles[i]) ? "active" : StringPool.BLANK %>' data-displayStyle="<%= dataStyle %>"><i class="<%= iconClass %>"></i></button>
+				<liferay-ui:icon data="<%= data %>" image='<%= "../aui/" + iconClass %>' message="<%= dataStyle %>" onClick='<%= randomNamespace + "onClickDisplayStyle(event);" %>' url="javascript:;" />
 
 			<%
 			}
 			%>
 
-		</div>
+		</liferay-ui:icon-menu>
 	</div>
 </c:if>
 
 <c:if test="<%= displayStyles.length > 1 %>">
-	<aui:script use="aui-base,aui-toolbar">
-		var buttonRow = A.one('#<portlet:namespace />displayStyleButtons');
-
+	<aui:script use="aui-base">
 		function changeDisplayStyle(displayStyle) {
 			var config = {};
 
@@ -85,25 +79,33 @@ Map<String, String> requestParams = (Map<String, String>)request.getAttribute("l
 			);
 		}
 
-		var displayStyleToolbar = buttonRow.getData('displayStyleToolbar');
+		Liferay.provide(
+			window,
+			'<%= randomNamespace %>onClickDisplayStyle',
+			function(event) {
+				var displayStyleItem = A.one(event.currentTarget);
 
-		if (displayStyleToolbar) {
-			displayStyleToolbar.clear();
-		}
-
-		displayStyleToolbar = new A.Toolbar(
-			{
-				boundingBox: buttonRow,
-				on: {
-					click: function(event) {
-						var btnNode = this.getEnclosingWidget(event).getSelectedButtons()[0];
-
-						changeDisplayStyle(btnNode.attr('data-displayStyle'));
-					}
-				}
-			}
-		).render();
-
-		buttonRow.setData('displayStyleToolbar', displayStyleToolbar);
+				changeDisplayStyle(displayStyleItem.attr('data-displayStyle'));
+			},
+			['aui-node']
+		);
 	</aui:script>
 </c:if>
+
+<%!
+private String _getDisplayStyleIcon(String displayStyle) {
+	String iconClass = displayStyle;
+
+	if (displayStyle.equals("icon")) {
+		iconClass = "th-large";
+	}
+	else if (displayStyle.equals("descriptive")) {
+		iconClass = "th-list";
+	}
+	else if (displayStyle.equals("list")) {
+		iconClass ="align-justify";
+	}
+
+	return iconClass;
+}
+%>

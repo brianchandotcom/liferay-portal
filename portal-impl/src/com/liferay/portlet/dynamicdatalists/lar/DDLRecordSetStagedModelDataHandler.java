@@ -103,7 +103,7 @@ public class DDLRecordSetStagedModelDataHandler
 		DDMStructure ddmStructure =
 			(DDMStructure)portletDataContext.getZipEntryAsObject(structurePath);
 
-		StagedModelDataHandlerUtil.importStagedModel(
+		StagedModelDataHandlerUtil.importReferenceStagedModel(
 			portletDataContext, ddmStructure);
 
 		Map<Long, Long> ddmStructureIds =
@@ -119,7 +119,7 @@ public class DDLRecordSetStagedModelDataHandler
 				recordSet, DDMTemplate.class);
 
 		for (Element ddmTemplateElement : ddmTemplateElements) {
-			StagedModelDataHandlerUtil.importStagedModel(
+			StagedModelDataHandlerUtil.importReferenceStagedModel(
 				portletDataContext, ddmTemplateElement);
 		}
 

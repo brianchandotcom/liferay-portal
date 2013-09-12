@@ -195,7 +195,7 @@ public class RepositoryStagedModelDataHandler
 				repository, RepositoryEntry.class);
 
 		for (Element repositoryEntryElement : repositoryEntryElements) {
-			StagedModelDataHandlerUtil.importStagedModel(
+			StagedModelDataHandlerUtil.importReferenceStagedModel(
 				portletDataContext, repositoryEntryElement);
 		}
 	}

@@ -3390,6 +3390,10 @@ public class JournalArticleLocalServiceImpl
 			companyId, WorkflowConstants.STATUS_IN_TRASH);
 
 		for (JournalArticle article : articles) {
+			if (article.isInTrashContainer()) {
+				continue;
+			}
+
 			article.setTreePath(article.buildTreePath());
 
 			journalArticlePersistence.update(article);

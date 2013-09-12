@@ -1349,6 +1349,10 @@ public class DLFileEntryLocalServiceImpl
 			companyId, queryDefinition);
 
 		for (DLFileEntry dlFileEntry : dlFileEntries) {
+			if (dlFileEntry.isInTrashContainer()) {
+				continue;
+			}
+
 			dlFileEntry.setTreePath(dlFileEntry.buildTreePath());
 
 			dlFileEntryPersistence.update(dlFileEntry);

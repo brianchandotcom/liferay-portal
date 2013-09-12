@@ -294,6 +294,10 @@ public class DLFileShortcutLocalServiceImpl
 				companyId, WorkflowConstants.STATUS_IN_TRASH);
 
 		for (DLFileShortcut fileShortcut : fileShortcuts) {
+			if (fileShortcut.isInTrashContainer()) {
+				continue;
+			}
+
 			fileShortcut.setTreePath(fileShortcut.buildTreePath());
 
 			dlFileShortcutPersistence.update(fileShortcut);

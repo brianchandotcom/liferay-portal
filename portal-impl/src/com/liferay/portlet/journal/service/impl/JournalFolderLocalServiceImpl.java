@@ -467,6 +467,10 @@ public class JournalFolderLocalServiceImpl
 			companyId, WorkflowConstants.STATUS_IN_TRASH);
 
 		for (JournalFolder folder : folders) {
+			if (folder.isInTrashContainer()) {
+				continue;
+			}
+
 			folder.setTreePath(folder.buildTreePath());
 
 			journalFolderPersistence.update(folder);

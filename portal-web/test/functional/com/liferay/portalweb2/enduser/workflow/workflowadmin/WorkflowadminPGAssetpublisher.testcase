@@ -158,7 +158,7 @@
 	<command name="ApproveWebContentPG">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
-		<var name="workflowAssetType" value="Web Content" />
+		<var name="workflowAssetType" value="Web Content Article" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -330,7 +330,7 @@
 	<command name="RejectWebContentPG">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
-		<var name="workflowAssetType" value="Web Content" />
+		<var name="workflowAssetType" value="Web Content Article" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />

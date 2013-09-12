@@ -9,11 +9,11 @@ CKEDITOR.dialog.add(
 								'		audioDivNode.attr("id", audioId);' +
 								'		audioDivNode.removeClass("ckaudio-no-id");' +
 								'		var audioConfig = {';
-		
+
 		var TPL_SCRIPT =		'			boundingBox: "#" + audioId,' +
 								'			oggUrl: "{oggUrl}",' +
 								'			url: "{url}"';
-		
+
 		var TPL_SCRIPT_SUFFIX = '		};' +
 								'		new A.Audio(audioConfig).render();' +
 								'	}' +
@@ -30,8 +30,8 @@ CKEDITOR.dialog.add(
 			var scriptTPL = null;
 			var textScript = null;
 
-			var audioOggUrl = audioNode.getAttribute('data-audio-ogg-url');			
-			var audioUrl = audioNode.getAttribute('data-audio-url');			
+			var audioOggUrl = audioNode.getAttribute('data-audio-ogg-url');
+			var audioUrl = audioNode.getAttribute('data-audio-url');
 
 			if (id === 'url') {
 				audioNode.setAttribute('data-document-url', value);
@@ -43,18 +43,18 @@ CKEDITOR.dialog.add(
 				audioOggUrl = Liferay.Util.addParams('audioPreview=1&type=ogg', value);
 
 				audioNode.setAttribute('data-audio-ogg-url', audioOggUrl);
-				
+
 				scriptTPL = new CKEDITOR.template(TPL_SCRIPT);
 
 				textScript = scriptTPL.output(
 					{
-						oggUrl: audioOggUrl,						
+						oggUrl: audioOggUrl,
 						url: audioUrl
 					}
 				);
 
 				scriptNode.setText(TPL_SCRIPT_PREFIX + textScript + TPL_SCRIPT_SUFFIX);
-			}			
+			}
 		}
 
 		function loadValue(audioNode) {
@@ -123,19 +123,19 @@ CKEDITOR.dialog.add(
 
 				var fakeImage = instance.getSelectedElement();
 
-				editor.plugins.media.restoreElement (editor, instance, fakeImage, 'audio');				
+				editor.plugins.media.restoreElement (editor, instance, fakeImage, 'audio');
 			},
-			
+
 			onOk: function() {
 				var instance = this;
 
-				var STR_DIV = 'div';				
+				var STR_DIV = 'div';
 
 				var divNode = editor.plugins.media.createDivStructure(editor, 'liferayckeaudio audio-container', 'ckaudio-no-id');
-				
+
 				instance.commitContent(divNode);
 
-				var newFakeImage = editor.createFakeElement(divNode, 'liferay_cke_audio', 'audio', false);				
+				var newFakeImage = editor.createFakeElement(divNode, 'liferay_cke_audio', 'audio', false);
 
 				if (instance.fakeImage) {
 					newFakeImage.replace(instance.fakeImage);

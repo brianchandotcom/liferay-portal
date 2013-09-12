@@ -61,7 +61,9 @@ public class ThemeExporter {
 
 			StringBundler sb = new StringBundler(6);
 
-			sb.append(portletDataContext.getZipWriter().getPath());
+			ZipWriter zipWriter = portletDataContext.getZipWriter();
+
+			sb.append(zipWriter.getPath());
 			sb.append(StringPool.SLASH);
 			sb.append("theme");
 			sb.append(StringPool.DASH);
@@ -102,9 +104,9 @@ public class ThemeExporter {
 		if (exportTheme && !portletDataContext.isPerformDirectBinaryImport()) {
 			Theme theme = layoutSet.getTheme();
 
-			String zipWriterPath = portletDataContext.getZipWriter().getPath();
+			ZipWriter zipWriter = portletDataContext.getZipWriter();
 
-			File themeZip = new File(zipWriterPath + "/theme.zip");
+			File themeZip = new File(zipWriter.getPath() + "/theme.zip");
 
 			exportTheme(theme, themeZip);
 		}

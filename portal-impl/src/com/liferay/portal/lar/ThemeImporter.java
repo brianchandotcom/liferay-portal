@@ -47,7 +47,6 @@ import com.liferay.portal.util.PropsValues;
 
 import java.io.InputStream;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -103,8 +102,9 @@ public class ThemeImporter {
 
 			if (importThemeId != null) {
 				themeId = importThemeId;
+
 				colorSchemeId =
-					ColorSchemeFactoryUtil. getDefaultRegularColorSchemeId();
+					ColorSchemeFactoryUtil.getDefaultRegularColorSchemeId();
 			}
 
 			LayoutLocalServiceUtil.updateLookAndFeel(
@@ -125,6 +125,7 @@ public class ThemeImporter {
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Import theme " + importTheme);
+			_log.debug("Import theme settings " + importThemeSettings);
 		}
 
 		Element importDataRootElement =
@@ -205,26 +206,28 @@ public class ThemeImporter {
 		String lookAndFeelXML = zipReader.getEntryAsString(
 			"liferay-look-and-feel.xml");
 
-		String themeId = String.valueOf(groupId);
+		StringBundler sb = new StringBundler();
+
+		sb.append(String.valueOf(groupId));
 
 		if (privateLayout) {
-			themeId += "-private";
+			sb.append("-private");
 		}
 		else {
-			themeId += "-public";
+			sb.append("-public");
 		}
 
 		if (Validator.isNotNull(layoutId)) {
-			themeId += StringPool.DASH + String.valueOf(layoutId);
+			sb.append(StringPool.DASH);
+			sb.append(String.valueOf(layoutId));
 		}
 
 		if (PropsValues.THEME_LOADER_NEW_THEME_ID_ON_IMPORT) {
-			Date now = new Date();
-
-			themeId += "-" + Time.getShortTimestamp(now);
+			sb.append(StringPool.DASH);
+			sb.append(Time.getShortTimestamp());
 		}
 
-		String themeName = themeId;
+		String themeId = sb.toString();
 
 		lookAndFeelXML = StringUtil.replace(
 			lookAndFeelXML,
@@ -232,7 +235,7 @@ public class ThemeImporter {
 				"[$GROUP_ID$]", "[$THEME_ID$]", "[$THEME_NAME$]"
 			},
 			new String[] {
-				String.valueOf(groupId), themeId, themeName
+				String.valueOf(groupId), themeId, themeId
 			}
 		);
 
@@ -244,19 +247,23 @@ public class ThemeImporter {
 		for (String zipEntry : zipEntries) {
 			String key = zipEntry;
 
+			sb = new StringBundler(5);
+
+			sb.append(themeLoader.getFileStorage());
+			sb.append(StringPool.SLASH);
+			sb.append(themeId);
+			sb.append(StringPool.SLASH);
+			sb.append(key);
+
+			String fileName = sb.toString();
+
 			if (key.equals("liferay-look-and-feel.xml")) {
-				FileUtil.write(
-					themeLoader.getFileStorage() + StringPool.SLASH + themeId +
-						StringPool.SLASH + key,
-					lookAndFeelXML.getBytes());
+				FileUtil.write(fileName, lookAndFeelXML.getBytes());
 			}
 			else {
 				InputStream is = zipReader.getEntryAsInputStream(zipEntry);
 
-				FileUtil.write(
-					themeLoader.getFileStorage() + StringPool.SLASH + themeId +
-						StringPool.SLASH + key,
-					is);
+				FileUtil.write(fileName, is);
 			}
 		}
 

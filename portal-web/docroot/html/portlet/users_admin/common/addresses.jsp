@@ -151,14 +151,14 @@ else {
 										selectDesc: 'nameCurrentValue',
 										selectSort: '<%= true %>',
 										selectId: 'countryId',
-										selectVal: ''
+										selectVal: '0'
 									},
 									{
 										select: '<portlet:namespace />addressRegionId' + guid,
 										selectData: Liferay.Address.getRegions,
 										selectDesc: 'name',
 										selectId: 'regionId',
-										selectVal: ''
+										selectVal: '0'
 									}
 								]
 							);

@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.servlet.taglib.aui;
 
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.util.Mergeable;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -25,8 +26,8 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.io.Writer;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
@@ -54,13 +55,8 @@ public class ScriptData implements Mergeable<ScriptData>, Serializable {
 
 	public void mark() {
 		for (PortletData portletData : _portletDataMap.values()) {
-			StringBundler callbackSB = portletData._callbackSB;
-
-			_sbIndexMap.put(callbackSB, callbackSB.index());
-
-			StringBundler rawSB = portletData._rawSB;
-
-			_sbIndexMap.put(rawSB, rawSB.index());
+			_addToIndexList(portletData._callbackSB);
+			_addToIndexList(portletData._rawSB);
 		}
 	}
 
@@ -74,10 +70,10 @@ public class ScriptData implements Mergeable<ScriptData>, Serializable {
 	}
 
 	public void reset() {
-		for (Map.Entry<StringBundler, Integer> entry : _sbIndexMap.entrySet()) {
-			StringBundler sb = entry.getKey();
+		for (ObjectValuePair<StringBundler, Integer> ovp : _sbIndexList) {
+			StringBundler sb = ovp.getKey();
 
-			sb.setIndex(entry.getValue());
+			sb.setIndex(ovp.getValue());
 		}
 	}
 
@@ -134,6 +130,22 @@ public class ScriptData implements Mergeable<ScriptData>, Serializable {
 		writer.write("\n// ]]>\n</script>");
 	}
 
+	private void _addToIndexList(StringBundler sb) {
+		ObjectValuePair<StringBundler, Integer> ovp =
+			new ObjectValuePair<StringBundler, Integer>(sb, sb.index());
+
+		int index = _sbIndexList.indexOf(ovp);
+
+		if (index == -1) {
+			_sbIndexList.add(ovp);
+		}
+		else {
+			ovp = _sbIndexList.get(index);
+
+			ovp.setValue(sb.index());
+		}
+	}
+
 	private PortletData _getPortletData(String portletId) {
 		if (Validator.isNull(portletId)) {
 			portletId = StringPool.BLANK;
@@ -159,8 +171,8 @@ public class ScriptData implements Mergeable<ScriptData>, Serializable {
 
 	private ConcurrentMap<String, PortletData> _portletDataMap =
 		new ConcurrentHashMap<String, PortletData>();
-	private Map<StringBundler, Integer> _sbIndexMap =
-		new HashMap<StringBundler, Integer>();
+	private List<ObjectValuePair<StringBundler, Integer>> _sbIndexList =
+		new ArrayList<ObjectValuePair<StringBundler, Integer>>();
 
 	private class PortletData implements Serializable {
 

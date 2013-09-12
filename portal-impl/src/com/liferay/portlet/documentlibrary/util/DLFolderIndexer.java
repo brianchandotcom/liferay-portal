@@ -32,7 +32,9 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.Summary;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -126,6 +128,9 @@ public class DLFolderIndexer extends BaseIndexer {
 			Field.HIDDEN, (dlFolder.isHidden() || dlFolder.isInHiddenFolder()));
 		document.addText(Field.TITLE, dlFolder.getName());
 		document.addKeyword(Field.TREE_PATH, dlFolder.getTreePath());
+		document.addKeyword(
+			Field.TREE_PATH,
+			StringUtil.split(dlFolder.getTreePath(), CharPool.SLASH));
 
 		if (!dlFolder.isInTrash() && dlFolder.isInTrashContainer()) {
 			DLFolder trashedFolder = dlFolder.getTrashContainer();

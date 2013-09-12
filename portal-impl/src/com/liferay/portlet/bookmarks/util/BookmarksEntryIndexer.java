@@ -29,7 +29,9 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.Summary;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.persistence.GroupActionableDynamicQuery;
@@ -121,7 +123,9 @@ public class BookmarksEntryIndexer extends BaseIndexer {
 		document.addText(Field.DESCRIPTION, entry.getDescription());
 		document.addKeyword(Field.FOLDER_ID, entry.getFolderId());
 		document.addText(Field.TITLE, entry.getName());
-		document.addKeyword(Field.TREE_PATH, entry.getTreePath());
+		document.addKeyword(
+			Field.TREE_PATH,
+			StringUtil.split(entry.getTreePath(), CharPool.SLASH));
 		document.addText(Field.URL, entry.getUrl());
 
 		if (!entry.isInTrash() && entry.isInTrashContainer()) {

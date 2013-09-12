@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.Summary;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -355,7 +356,9 @@ public class JournalArticleIndexer extends BaseIndexer {
 
 		document.addKeyword(Field.FOLDER_ID, article.getFolderId());
 		document.addKeyword(Field.LAYOUT_UUID, article.getLayoutUuid());
-		document.addKeyword(Field.TREE_PATH, article.getTreePath());
+		document.addKeyword(
+			Field.TREE_PATH,
+			StringUtil.split(article.getTreePath(), CharPool.SLASH));
 		document.addKeyword(Field.TYPE, article.getType());
 		document.addKeyword(Field.VERSION, article.getVersion());
 

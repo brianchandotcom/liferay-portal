@@ -691,6 +691,11 @@ public class EntityResolver implements org.xml.sax.EntityResolver {
 		),
 
 		new KeyValuePair(
+			"http://www.liferay.com/dtd/liferay-ddm-structure_6_2_0.xsd",
+			"liferay-ddm-structure_6_2_0.xsd"
+		),
+
+		new KeyValuePair(
 			"http://www.liferay.com/dtd/liferay-workflow-definition_6_0_0.xsd",
 			"liferay-workflow-definition_6_0_0.xsd"
 		),
@@ -698,6 +703,11 @@ public class EntityResolver implements org.xml.sax.EntityResolver {
 		new KeyValuePair(
 			"http://www.liferay.com/dtd/liferay-workflow-definition_6_1_0.xsd",
 			"liferay-workflow-definition_6_1_0.xsd"
+		),
+
+		new KeyValuePair(
+			"http://www.liferay.com/dtd/liferay-workflow-definition_6_2_0.xsd",
+			"liferay-workflow-definition_6_2_0.xsd"
 		),
 
 		new KeyValuePair(

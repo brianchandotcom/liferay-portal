@@ -474,6 +474,22 @@ public class JournalTestUtil {
 		staticContentElement.setText(value);
 	}
 
+	public static Element addMetadataElement(
+		Element element, String locale, String label) {
+
+		Element metadataElement = element.addElement("meta-data");
+
+		metadataElement.addAttribute("locale", locale);
+
+		Element entryElement = metadataElement.addElement("entry");
+
+		entryElement.addAttribute("name", "label");
+
+		entryElement.addCDATA(label);
+
+		return entryElement;
+	}
+
 	public static Document createDocument(
 		String availableLocales, String defaultLocale) {
 

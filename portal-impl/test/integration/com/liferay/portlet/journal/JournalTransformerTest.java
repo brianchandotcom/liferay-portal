@@ -58,8 +58,18 @@ public class JournalTransformerTest {
 
 		Element rootElement = document.addElement("root");
 
-		JournalTestUtil.addDynamicElementElement(rootElement, "text", "name");
-		JournalTestUtil.addDynamicElementElement(rootElement, "text", "link");
+		rootElement.addAttribute("available-locales", "en_US");
+		rootElement.addAttribute("default-locale", "en_US");
+
+		Element nameElement = JournalTestUtil.addDynamicElementElement(
+			rootElement, "text", "name");
+
+		JournalTestUtil.addMetadataElement(nameElement, "en_US", "name");
+
+		Element linkElement = JournalTestUtil.addDynamicElementElement(
+			rootElement, "text", "link");
+
+		JournalTestUtil.addMetadataElement(linkElement, "en_US", "link");
 
 		String xsd = document.asXML();
 

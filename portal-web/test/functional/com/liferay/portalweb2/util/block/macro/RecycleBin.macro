@@ -29,7 +29,14 @@
 		<execute action="CPRecyclebin#assertTextEquals" locator-key1="RECYCLE_BIN_TABLE_TYPE" value1="${assetType}" />
 		<execute action="CPRecyclebin#assertClick" locator-key1="RECYCLE_BIN_TABLE_ACTIONS" value1="Actions" />
 		<execute action="CPRecyclebin#assertClick" locator-key1="RECYCLE_BIN_MENULIST_RESTORE" value1="Restore" />
-		<execute action="CPRecyclebin#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="The item has been restored to ${assetRestoreLocation}" />
+
+		<var name="key_assetType" value="${assetType}" />
+
+		<execute action="CPRecyclebin#assertTextEquals" locator-key1="SUCCESS_MESSAGE_CONTENT" value1="${assetType}" />
+
+		<var name="key_assetRestoreLocation" value="${assetRestoreLocation}" />
+
+		<execute action="CPRecyclebin#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RESTORE_LOCATION" value1="${assetRestoreLocation}" />
 		<execute action="CPRecyclebin#assertTextEquals" locator-key1="INFO_MESSAGE" value1="The Recycle Bin is empty." />
 		<execute action="CPRecyclebin#assertElementNotPresent" locator-key1="RECYCLE_BIN_TABLE_NAME" />
 	</command>
@@ -46,7 +53,6 @@
 	</command>
 
 	<command name="viewDefaultCP">
-		<execute action="CPRecyclebin#assertTextEquals" locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN" value1="Entries that have been in the Recycle Bin for more than 1 month will be automatically deleted." />
 		<execute action="CPRecyclebin#assertTextEquals" locator-key1="INFO_MESSAGE" value1="The Recycle Bin is empty." />
 		<execute action="CPRecyclebin#assertTextNotPresent" value1="${assetName}" />
 	</command>

@@ -60,7 +60,7 @@
 
 	<command name="RestoreDeleteWikiFrontpage">
 		<var name="assetName" value="${wikiPageTitle}" />
-		<var name="assetRestoreLocation" value="FrontPage" />
+		<var name="assetRestoreLocation" value="Main" />
 		<var name="assetType" value="Wiki Page" />
 		<var name="wikiFrontPageContent" value="Wiki FrontPage Content" />
 		<var name="wikiNodeName" value="Main" />

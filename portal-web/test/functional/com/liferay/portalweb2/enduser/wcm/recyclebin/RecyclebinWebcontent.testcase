@@ -9,7 +9,7 @@
 
 	<command name="DeleteWebcontent">
 		<var name="assetName" value="${webContentTitle}" />
-		<var name="assetType" value="Web Content" />
+		<var name="assetType" value="Web Content Article" />
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
 
@@ -60,7 +60,7 @@
 	<command name="RestoreWebcontent">
 		<var name="assetName" value="${webContentTitle}" />
 		<var name="assetRestoreLocation" value="Home" />
-		<var name="assetType" value="Web Content" />
+		<var name="assetType" value="Web Content Article" />
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
 
@@ -88,6 +88,7 @@
 
 		<execute macro="RecycleBin#restoreCP">
 			<var name="assetName" value="${webContentTitle}" />
+			<var name="assetType" value="${assetType}" />
 			<var name="assetRestoreLocation" value="${assetRestoreLocation}" />
 			<var name="assetRestoreType" value="${assetRestoreType}" />
 		</execute>

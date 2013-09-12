@@ -117,9 +117,14 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 
 		DLFolder dlFolder = (DLFolder)parentBaseModel;
 
+		long folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+
+		if (dlFolder != null) {
+			folderId = dlFolder.getFolderId();
+		}
+
 		FileEntry fileEntry = DLAppTestUtil.addFileEntry(
-			dlFolder.getFolderId(), keywords + ".txt", keywords, approved,
-			serviceContext);
+			folderId, keywords + ".txt", keywords, approved, serviceContext);
 
 		return (DLFileEntry)fileEntry.getModel();
 	}
@@ -151,6 +156,19 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 		return DDMIndexerUtil.encodeName(
 			_ddmStructure.getStructureId(), "name",
 			LocaleUtil.getSiteDefault());
+	}
+
+	@Override
+	protected BaseModel<?> getParentBaseModel(
+			BaseModel<?> parentBaseModel, ServiceContext serviceContext)
+		throws Exception {
+
+		Folder folder = DLAppTestUtil.addFolder(
+			(Long)parentBaseModel.getPrimaryKeyObj(),
+			ServiceTestUtil.randomString(_FOLDER_NAME_MAX_LENGTH),
+			serviceContext);
+
+		return (DLFolder)folder.getModel();
 	}
 
 	@Override

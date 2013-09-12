@@ -100,6 +100,12 @@ public abstract class BaseSearchTestCase {
 
 	@Test
 	@Transactional
+	public void testSearchByKeywordsInsideParentBaseModel() throws Exception {
+		searchByKeywordsInsideParentBaseModel();
+	}
+
+	@Test
+	@Transactional
 	public void testSearchComments() throws Exception {
 		searchComments();
 	}
@@ -222,6 +228,13 @@ public abstract class BaseSearchTestCase {
 
 	protected String getDDMStructureFieldName() {
 		return StringPool.BLANK;
+	}
+
+	protected BaseModel<?> getParentBaseModel(
+			BaseModel<?> parentBaseModel, ServiceContext serviceContext)
+		throws Exception {
+
+		return parentBaseModel;
 	}
 
 	protected BaseModel<?> getParentBaseModel(
@@ -377,6 +390,46 @@ public abstract class BaseSearchTestCase {
 
 		Assert.assertEquals(
 			initialBaseModelsSearchCount + 1,
+			searchBaseModelsCount(
+				getBaseModelClass(), group.getGroupId(), searchContext));
+	}
+
+	protected void searchByKeywordsInsideParentBaseModel() throws Exception {
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			group.getGroupId());
+
+		SearchContext searchContext = ServiceTestUtil.getSearchContext(
+			group.getGroupId());
+
+		baseModel = addBaseModel(
+			null, true, getSearchKeywords(), serviceContext);
+
+		BaseModel<?> parentBaseModel = getParentBaseModel(
+			group, serviceContext);
+
+		searchContext.setKeywords(getSearchKeywords());
+		searchContext.setFolderIds(
+			new long[]{(Long)parentBaseModel.getPrimaryKeyObj()});
+
+		int initialBaseModelsSearchCount = searchBaseModelsCount(
+			getBaseModelClass(), group.getGroupId(), searchContext);
+
+		baseModel = addBaseModel(
+			parentBaseModel, true, getSearchKeywords(), serviceContext);
+
+		Assert.assertEquals(
+			initialBaseModelsSearchCount + 1,
+			searchBaseModelsCount(
+				getBaseModelClass(), group.getGroupId(), searchContext));
+
+		BaseModel<?> parentBaseModel2 = getParentBaseModel(
+			parentBaseModel, serviceContext);
+
+		baseModel = addBaseModel(
+			parentBaseModel2, true, getSearchKeywords(), serviceContext);
+
+		Assert.assertEquals(
+			initialBaseModelsSearchCount + 2,
 			searchBaseModelsCount(
 				getBaseModelClass(), group.getGroupId(), searchContext));
 	}

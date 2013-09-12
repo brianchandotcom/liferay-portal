@@ -112,13 +112,28 @@ public class JournalFolderSearchTest extends BaseSearchTestCase {
 
 		JournalFolder parentFolder = (JournalFolder)parentBaseModel;
 
-		return JournalTestUtil.addFolder(
-			parentFolder.getFolderId(), keywords, serviceContext);
+		long folderId = JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+
+		if (parentFolder != null) {
+			folderId = parentFolder.getFolderId();
+		}
+
+		return JournalTestUtil.addFolder(folderId, keywords, serviceContext);
 	}
 
 	@Override
 	protected Class<?> getBaseModelClass() {
 		return JournalFolder.class;
+	}
+
+	@Override
+	protected BaseModel<?> getParentBaseModel(
+			BaseModel<?> parentBaseModel, ServiceContext serviceContext)
+		throws Exception {
+
+		return JournalTestUtil.addFolder(
+			(Long)parentBaseModel.getPrimaryKeyObj(),
+			ServiceTestUtil.randomString(), serviceContext);
 	}
 
 	@Override

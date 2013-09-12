@@ -61,6 +61,12 @@ public class WikiPageSearchTest extends BaseSearchTestCase {
 	@Ignore()
 	@Override
 	@Test
+	public void testSearchByKeywordsInsideParentBaseModel() throws Exception {
+	}
+
+	@Ignore()
+	@Override
+	@Test
 	public void testSearchMyEntries() throws Exception {
 	}
 

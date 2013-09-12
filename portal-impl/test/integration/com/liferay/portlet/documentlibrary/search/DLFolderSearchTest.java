@@ -113,8 +113,14 @@ public class DLFolderSearchTest extends BaseSearchTestCase {
 
 		DLFolder parentDLFolder = (DLFolder)parentBaseModel;
 
+		long folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+
+		if (parentDLFolder != null) {
+			folderId = parentDLFolder.getFolderId();
+		}
+
 		Folder folder = DLAppTestUtil.addFolder(
-			parentDLFolder.getFolderId(), keywords, serviceContext);
+			folderId, keywords, serviceContext);
 
 		return (DLFolder)folder.getModel();
 	}
@@ -122,6 +128,19 @@ public class DLFolderSearchTest extends BaseSearchTestCase {
 	@Override
 	protected Class<?> getBaseModelClass() {
 		return DLFolder.class;
+	}
+
+	@Override
+	protected BaseModel<?> getParentBaseModel(
+			BaseModel<?> parentBaseModel, ServiceContext serviceContext)
+		throws Exception {
+
+		Folder folder = DLAppTestUtil.addFolder(
+			(Long)parentBaseModel.getPrimaryKeyObj(),
+			ServiceTestUtil.randomString(_FOLDER_NAME_MAX_LENGTH),
+			serviceContext);
+
+		return (DLFolder)folder.getModel();
 	}
 
 	@Override

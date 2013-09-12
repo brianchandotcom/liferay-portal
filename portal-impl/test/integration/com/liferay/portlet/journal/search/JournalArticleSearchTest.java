@@ -100,8 +100,14 @@ public class JournalArticleSearchTest extends BaseSearchTestCase {
 
 		JournalFolder folder = (JournalFolder)parentBaseModel;
 
+		long folderId = JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+
+		if (folder != null) {
+			folderId = folder.getFolderId();
+		}
+
 		return JournalTestUtil.addArticleWithWorkflow(
-			folder.getFolderId(), keywords, approved, serviceContext);
+			folderId, keywords, approved, serviceContext);
 	}
 
 	@Override
@@ -141,6 +147,16 @@ public class JournalArticleSearchTest extends BaseSearchTestCase {
 		return DDMIndexerUtil.encodeName(
 			_ddmStructure.getStructureId(), "name",
 			LocaleUtil.getSiteDefault());
+	}
+
+	@Override
+	protected BaseModel<?> getParentBaseModel(
+			BaseModel<?> parentBaseModel, ServiceContext serviceContext)
+		throws Exception {
+
+		return JournalTestUtil.addFolder(
+			(Long)parentBaseModel.getPrimaryKeyObj(),
+			ServiceTestUtil.randomString(), serviceContext);
 	}
 
 	@Override

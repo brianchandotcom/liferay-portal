@@ -31,6 +31,7 @@ import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
 import com.liferay.portal.test.TransactionalExecutionTestListener;
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
 import com.liferay.portlet.bookmarks.model.BookmarksFolder;
+import com.liferay.portlet.bookmarks.model.BookmarksFolderConstants;
 import com.liferay.portlet.bookmarks.service.BookmarksEntryServiceUtil;
 import com.liferay.portlet.bookmarks.service.BookmarksFolderServiceUtil;
 import com.liferay.portlet.bookmarks.util.BookmarksTestUtil;
@@ -109,13 +110,28 @@ public class BookmarksEntrySearchTest extends BaseSearchTestCase {
 
 		BookmarksFolder folder = (BookmarksFolder)parentBaseModel;
 
-		return BookmarksTestUtil.addEntry(
-			folder.getFolderId(), true, serviceContext);
+		long folderId = BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID;
+
+		if (folder != null) {
+			folderId = folder.getFolderId();
+		}
+
+		return BookmarksTestUtil.addEntry(folderId, true, serviceContext);
 	}
 
 	@Override
 	protected Class<?> getBaseModelClass() {
 		return BookmarksEntry.class;
+	}
+
+	@Override
+	protected BaseModel<?> getParentBaseModel(
+			BaseModel<?> parentBaseModel, ServiceContext serviceContext)
+		throws Exception {
+
+		return BookmarksTestUtil.addFolder(
+			(Long)parentBaseModel.getPrimaryKeyObj(),
+			ServiceTestUtil.randomString(), serviceContext);
 	}
 
 	@Override

@@ -16,6 +16,8 @@ package com.liferay.portlet.dynamicdatamapping.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -28,6 +30,7 @@ import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.kernel.xml.XMLSchema;
 import com.liferay.portal.kernel.xml.XPath;
 import com.liferay.portlet.dynamicdatamapping.StructureXsdException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
@@ -212,6 +215,10 @@ public class DDMXMLImpl implements DDMXML {
 		return getXML(null, fields);
 	}
 
+	public void setXMLSchema(XMLSchema xmlSchema) {
+		_xmlSchema = xmlSchema;
+	}
+
 	@Override
 	public String updateXMLDefaultLocale(
 			String xml, Locale contentDefaultLocale,
@@ -271,11 +278,15 @@ public class DDMXMLImpl implements DDMXML {
 	@Override
 	public String validateXML(String xml) throws PortalException {
 		try {
-			Document document = SAXReaderUtil.read(xml);
+			Document document = SAXReaderUtil.read(xml, _xmlSchema);
 
 			return document.asXML();
 		}
 		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Invalid XML content " + e.getMessage(), e);
+			}
+
 			throw new StructureXsdException();
 		}
 	}
@@ -374,5 +385,9 @@ public class DDMXMLImpl implements DDMXML {
 	private static final String _LOCALE = "locale";
 
 	private static final String _XML_INDENT = "  ";
+
+	private static Log _log = LogFactoryUtil.getLog(DDMXMLImpl.class);
+
+	private XMLSchema _xmlSchema;
 
 }

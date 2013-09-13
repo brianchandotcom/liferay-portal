@@ -38,6 +38,14 @@ public class LayoutSettings {
 		return _layoutSettingsMap.get(type);
 	}
 
+	public static Map<String, LayoutSettings> getCurrentLayoutSettings(){
+		return _layoutSettingsMap;
+	}
+
+	public static void setLayoutSetting(String type) {
+		new LayoutSettings(type);
+	}
+
 	public String[] getConfigurationActionDelete() {
 		return _configurationActionDelete;
 	}

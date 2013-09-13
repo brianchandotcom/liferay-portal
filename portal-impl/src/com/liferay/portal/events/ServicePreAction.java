@@ -1262,11 +1262,12 @@ public class ServicePreAction extends Action {
 
 		themeDisplay.setURLPortal(portalURL.concat(contextPath));
 
-		String authenticationPortalURL = PortalUtil.getPortalURL(
-			request, PropsValues.COMPANY_SECURITY_AUTH_REQUIRES_HTTPS ||
-			request.isSecure());
+		boolean secure = PropsValues.COMPANY_SECURITY_AUTH_REQUIRES_HTTPS ||
+			request.isSecure();
 
-		String urlSignIn = authenticationPortalURL.concat(mainPath).concat(
+		String securePortalURL = PortalUtil.getPortalURL(request, secure);
+
+		String urlSignIn = securePortalURL.concat(mainPath).concat(
 			_PATH_PORTAL_LOGIN);
 
 		if (layout != null) {

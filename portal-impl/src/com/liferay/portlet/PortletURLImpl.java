@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.QName;
 import com.liferay.portal.model.Company;
@@ -849,9 +850,40 @@ public class PortletURLImpl
 					_layoutFriendlyURL = GetterUtil.getString(
 						PortalUtil.getLayoutFriendlyURL(layout, themeDisplay));
 
-					if (_secure) {
+					boolean isSecureURL = HttpUtil.isSecure(_layoutFriendlyURL);
+
+					if (isSecureURL != _secure) {
 						_layoutFriendlyURL = HttpUtil.protocolize(
-							_layoutFriendlyURL, true);
+							_layoutFriendlyURL, _secure);
+
+						String port = HttpUtil.getNonstandardPort(
+							_layoutFriendlyURL);
+
+						if (!port.equals(StringPool.BLANK)) {
+							int httpPort = PropsValues.WEB_SERVER_HTTP_PORT;
+							int httpsPort = PropsValues.WEB_SERVER_HTTPS_PORT;
+
+							if ((httpPort == -1) || (httpsPort == -1)) {
+								throw new SystemException(
+									"Cannot redirect to nonstandard port: " +
+									"Please configure web.server.http.port " +
+									"and web.server.https.port in " +
+									"portal-ext.properties.");
+							}
+
+							if (_secure) {
+								_layoutFriendlyURL =
+									StringUtil.replaceFirst(
+										_layoutFriendlyURL, port,
+										String.valueOf(httpsPort));
+							}
+							else {
+								_layoutFriendlyURL =
+									StringUtil.replaceFirst(
+										_layoutFriendlyURL, port,
+										String.valueOf(httpPort));
+							}
+						}
 					}
 				}
 			}

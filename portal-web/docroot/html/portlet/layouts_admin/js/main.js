@@ -604,9 +604,33 @@ AUI.add(
 														click: function(event) {
 															event.domEvent.preventDefault();
 
-															instance._reloadForm();
+															var startDatePicker = Liferay.component(instance.NS + 'startDateDatePicker');
+															var startTimePicker = Liferay.component(instance.NS + 'startTimeTimePicker');
 
-															rangeDialog.hide();
+															var endDatePicker = Liferay.component(instance.NS + 'endDateDatePicker');
+															var endTimePicker = Liferay.component(instance.NS + 'endTimeTimePicker');
+
+															var startDateTime = startTimePicker.getTime();
+															var startDate = startDatePicker.getDate();
+															startDate.setHours(startDateTime.getHours());
+															startDate.setMinutes(startDateTime.getMinutes());
+															startDate.setSeconds(0);
+															startDate.setMilliseconds(0);
+
+															var endDateTime = endTimePicker.getTime();
+															var endDate = endDatePicker.getDate();
+															endDate.setHours(endDateTime.getHours());
+															endDate.setMinutes(endDateTime.getMinutes());
+															endDate.setSeconds(0);
+															endDate.setMilliseconds(0);
+
+															var isGreater = A.Date.isGreater(endDate, startDate);
+
+															if (isGreater) {
+																instance._reloadForm();
+
+																rangeDialog.hide();
+															}
 														}
 													},
 													label: Liferay.Language.get('ok'),

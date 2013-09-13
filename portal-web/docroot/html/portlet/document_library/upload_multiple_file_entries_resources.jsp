@@ -165,55 +165,51 @@ long assetClassPK = 0;
 					%>
 
 					<aui:script use="aui-base">
-						var groupSelector = A.one('#<portlet:namespace />groupSelector').get('parentNode');
+						var groupSelectorMenu = A.one('#<portlet:namespace />groupSelector').ancestor().one('.lfr-menu-list');
 
-						if (groupSelector) {
-							var groupSelectorMenu = groupSelector.one('.lfr-menu-list');
+						if (groupSelectorMenu) {
+							groupSelectorMenu.delegate(
+								'click',
+								function(event) {
+									event.preventDefault();
 
-							if (groupSelectorMenu) {
-								groupSelectorMenu.delegate(
-									'click',
-									function(event) {
-										event.preventDefault();
+									var documentTypeForm = A.one('#<portlet:namespace />fm2');
 
-										var documentTypeForm = A.one('#<portlet:namespace />fm2');
+									documentTypeForm.load(
+										event.currentTarget.attr('href'),
+										{
+											where: 'outer'
+										},
+										function() {
+											var selectedFilesCountContainer = A.one('.selected-files-count');
 
-										documentTypeForm.load(
-											event.currentTarget.attr('href'),
-											{
-												where: 'outer'
-											},
-											function() {
-												var selectedFilesCountContainer = A.one('.selected-files-count');
+											var totalFiles = A.all('input[name=<portlet:namespace />selectUploadedFileCheckbox]');
 
-												var totalFiles = A.all('input[name=<portlet:namespace />selectUploadedFileCheckbox]');
+											var totalFilesCount = totalFiles.size();
 
-												var totalFilesCount = totalFiles.size();
+											var selectedFiles = totalFiles.filter(':checked');
 
-												var selectedFiles = totalFiles.filter(':checked');
+											var selectedFilesCount = selectedFiles.size();
 
-												var selectedFilesCount = selectedFiles.size();
+											var selectedFilesText = selectedFiles.item(0).attr('data-fileName');
 
-												var selectedFilesText = selectedFiles.item(0).attr('data-fileName');
-
-												if (selectedFilesCount > 1) {
-													if (selectedFilesCount == totalFilesCount) {
-														selectedFilesText = '<%= UnicodeLanguageUtil.get(pageContext, "all-files-selected") %>';
-													}
-													else {
-														selectedFilesText = A.Lang.sub('<%= UnicodeLanguageUtil.get(pageContext, "x-files-selected") %>', [selectedFilesCount]);
-													}
+											if (selectedFilesCount > 1) {
+												if (selectedFilesCount == totalFilesCount) {
+													selectedFilesText = '<%= UnicodeLanguageUtil.get(pageContext, "all-files-selected") %>';
 												}
-
-												selectedFilesCountContainer.setContent(selectedFilesText);
-
-												selectedFilesCountContainer.attr('title', selectedFilesText);
+												else {
+													selectedFilesText = A.Lang.sub('<%= UnicodeLanguageUtil.get(pageContext, "x-files-selected") %>', [selectedFilesCount]);
+												}
 											}
-										);
-									},
-									'li a'
-								);
-							}
+
+											selectedFilesCountContainer.setContent(selectedFilesText);
+
+											selectedFilesCountContainer.attr('title', selectedFilesText);
+										}
+									);
+								},
+								'li a'
+							);
 						}
 					</aui:script>
 				</liferay-ui:panel>

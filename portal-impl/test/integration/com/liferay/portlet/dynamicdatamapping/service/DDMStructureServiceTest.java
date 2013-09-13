@@ -25,6 +25,7 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
 import com.liferay.portlet.dynamicdatamapping.RequiredStructureException;
+import com.liferay.portlet.dynamicdatamapping.StructureDuplicateElementException;
 import com.liferay.portlet.dynamicdatamapping.StructureDuplicateStructureKeyException;
 import com.liferay.portlet.dynamicdatamapping.StructureNameException;
 import com.liferay.portlet.dynamicdatamapping.StructureXsdException;
@@ -95,6 +96,60 @@ public class DDMStructureServiceTest extends BaseDDMServiceTestCase {
 			addStructure(
 				_classNameId, null, "Test Structure", StringPool.BLANK,
 				StorageType.XML.getValue(), DDMStructureConstants.TYPE_DEFAULT);
+
+			Assert.fail();
+		}
+		catch (StructureXsdException sxe) {
+		}
+	}
+
+	@Test
+	public void testAddStructureWithXsdContainingDuplicateElementName()
+		throws Exception {
+
+		String storageType = StorageType.XML.getValue();
+
+		try {
+			addStructure(
+				_classNameId, null, "Test Structure",
+				readText("ddm-structure-duplicate-element-name.xsd"),
+				storageType, DDMStructureConstants.TYPE_DEFAULT);
+
+			Assert.fail();
+		}
+		catch (StructureDuplicateElementException sdee) {
+		}
+	}
+
+	@Test
+	public void testAddStructureWithXsdContainingInvalidElementAttribute()
+		throws Exception {
+
+		String storageType = StorageType.XML.getValue();
+
+		try {
+			addStructure(
+				_classNameId, null, "Test Structure",
+				readText("ddm-structure-invalid-element-attribute.xsd"),
+				storageType, DDMStructureConstants.TYPE_DEFAULT);
+
+			Assert.fail();
+		}
+		catch (StructureXsdException sxe) {
+		}
+	}
+
+	@Test
+	public void testAddStructureWithXsdMissingRequiredElementAttribute()
+		throws Exception {
+
+		String storageType = StorageType.XML.getValue();
+
+		try {
+			addStructure(
+				_classNameId, null, "Test Structure",
+				readText("ddm-structure-required-element-attribute.xsd"),
+				storageType, DDMStructureConstants.TYPE_DEFAULT);
 
 			Assert.fail();
 		}

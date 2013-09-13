@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US">
+    <dynamic-element dataType="boolean" indexType="" name="boolean" repeatable="true" required="false" type="checkbox">
+        <meta-data locale="en_US">
+            <entry name="label"><![CDATA[Boolean 1 Field]]></entry>
+        </meta-data>
+    </dynamic-element>
+    <dynamic-element dataType="boolean" indexType="" name="boolean" repeatable="true" required="false" type="checkbox">
+        <meta-data locale="en_US">
+            <entry name="label"><![CDATA[Boolean 2 Field]]></entry>
+        </meta-data>
+    </dynamic-element>
+</root>

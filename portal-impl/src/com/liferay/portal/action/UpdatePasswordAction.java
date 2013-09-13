@@ -100,12 +100,12 @@ public class UpdatePasswordAction extends Action {
 
 			String redirect = ParamUtil.getString(request, WebKeys.REFERER);
 
-			if (Validator.isNull(redirect)) {
-				PortletURL portletURL = new PortletURLImpl(
-					request, PortletKeys.LOGIN, themeDisplay.getPlid(),
-					PortletRequest.RENDER_PHASE);
+			if (Validator.isNotNull(redirect)) {
+				redirect = PortalUtil.escapeRedirect(redirect);
+			}
 
-				redirect = portletURL.toString();
+			if (Validator.isNull(redirect)) {
+				redirect = themeDisplay.getPathMain();
 			}
 
 			response.sendRedirect(redirect);

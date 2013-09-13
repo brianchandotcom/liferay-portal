@@ -24,7 +24,7 @@ String referer = ParamUtil.getString(request, WebKeys.REFERER, currentURL);
 String ticketKey = ParamUtil.getString(request, "ticketKey");
 
 if (referer.startsWith(themeDisplay.getPathMain() + "/portal/update_password") && Validator.isNotNull(ticketKey)) {
-	referer = StringPool.BLANK;
+	referer = themeDisplay.getPathMain();
 }
 
 PasswordPolicy passwordPolicy = user.getPasswordPolicy();

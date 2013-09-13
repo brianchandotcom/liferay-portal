@@ -16,6 +16,8 @@ package com.liferay.taglib.ui;
 
 import com.liferay.taglib.util.IncludeTag;
 
+import java.util.Date;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -33,6 +35,14 @@ public class InputTimeTag extends IncludeTag {
 
 	public void setCssClass(String cssClass) {
 		_cssClass = cssClass;
+	}
+
+	public void setDateParam(String dateParam) {
+		_dateParam = dateParam;
+	}
+
+	public void setDateValue(Date dateValue) {
+		_dateValue = dateValue;
 	}
 
 	public void setDisabled(boolean disabled) {
@@ -68,6 +78,8 @@ public class InputTimeTag extends IncludeTag {
 		_amPmParam = null;
 		_amPmValue = 0;
 		_cssClass = null;
+		_dateParam = null;
+		_dateValue = null;
 		_disabled = false;
 		_hourParam = null;
 		_hourValue = 0;
@@ -89,6 +101,9 @@ public class InputTimeTag extends IncludeTag {
 			"liferay-ui:input-time:amPmValue", String.valueOf(_amPmValue));
 		request.setAttribute("liferay-ui:input-time:cssClass", _cssClass);
 		request.setAttribute(
+			"liferay-ui:input-time:dateParam", String.valueOf(_dateParam));
+		request.setAttribute("liferay-ui:input-time:dateValue", _dateValue);
+		request.setAttribute(
 			"liferay-ui:input-time:disabled", String.valueOf(_disabled));
 		request.setAttribute("liferay-ui:input-time:hourParam", _hourParam);
 		request.setAttribute(
@@ -107,6 +122,8 @@ public class InputTimeTag extends IncludeTag {
 	private String _amPmParam;
 	private int _amPmValue;
 	private String _cssClass;
+	private String _dateParam;
+	private Date _dateValue;
 	private boolean _disabled;
 	private String _hourParam;
 	private int _hourValue;

@@ -104,12 +104,16 @@ Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(simpleDateFormatPa
 							container.one('#<%= yearParamId %>').attr('disabled', newVal);
 						},
 						selectionChange: function(event) {
+							var instance = this;
+
+							var container = instance.get('container');
+
 							var date = event.newSelection[0];
 
 							if (date) {
-								A.one('#<%= dayParamId %>').val(date.getDate());
-								A.one('#<%= monthParamId %>').val(date.getMonth());
-								A.one('#<%= yearParamId %>').val(date.getFullYear());
+								container.one('#<%= dayParamId %>').val(date.getDate());
+								container.one('#<%= monthParamId %>').val(date.getMonth());
+								container.one('#<%= yearParamId %>').val(date.getFullYear());
 							}
 						}
 					},
@@ -121,7 +125,11 @@ Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(simpleDateFormatPa
 			);
 
 			datePicker.getDate = function() {
-				return new Date(A.one('#<%= yearParamId %>').val(), A.one('#<%= monthParamId %>').val(), A.one('#<%= dayParamId %>').val());
+				var instance = this;
+
+				var container = instance.get('container');
+
+				return new Date(container.one('#<%= yearParamId %>').val(), container.one('#<%= monthParamId %>').val(), container.one('#<%= dayParamId %>').val());
 			};
 
 			return datePicker;

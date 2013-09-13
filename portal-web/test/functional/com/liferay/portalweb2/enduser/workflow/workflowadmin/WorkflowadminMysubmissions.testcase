@@ -98,7 +98,6 @@
 			<var name="workflowAssetContent" value="${webContentContent}" />
 			<var name="workflowAssetTitle" value="${webContentTitle}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
-			<var name="workflowAssetTypeCAPS" value="WEB CONTENT ARTICLE" />
 			<var name="workflowDefinition" value="Single Approver" />
 			<var name="workflowTask" value="Review" />
 		</execute>
@@ -168,7 +167,6 @@
 			<var name="workflowAssetContent" value="${webContentContent}" />
 			<var name="workflowAssetTitle" value="${webContentTitle}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
-			<var name="workflowAssetTypeCAPS" value="WEB CONTENT ARTICLE" />
 			<var name="workflowDefinition" value="Single Approver" />
 			<var name="workflowTask" value="Review" />
 		</execute>
@@ -271,7 +269,6 @@
 			<var name="workflowAssetContent" value="${webContentContent}" />
 			<var name="workflowAssetTitle" value="${webContentTitle}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
-			<var name="workflowAssetTypeCAPS" value="WEB CONTENT ARTICLE" />
 			<var name="workflowDefinition" value="Single Approver" />
 			<var name="workflowTask" value="Approved" />
 		</execute>

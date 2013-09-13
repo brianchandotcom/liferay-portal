@@ -111,10 +111,10 @@ long reportedUserId = ParamUtil.getLong(request, "reportedUserId");
 			'<liferay-portlet:actionURL portletName="<%= PortletKeys.FLAGS %>" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="struts_action" value="/flags/edit_entry" /></liferay-portlet:actionURL>',
 			{
 				data: {
-					className: '<%= className %>',
+					className: '<%= HtmlUtil.escape(className) %>',
 					classPK: '<%= classPK %>',
-					contentTitle: '<%= contentTitle %>',
-					contentURL: '<%= contentURL %>',
+					contentTitle: '<%= HtmlUtil.escape(contentTitle) %>',
+					contentURL: '<%= HtmlUtil.escape(contentURL) %>',
 					reason: reason,
 					reportedUserId: '<%= reportedUserId %>',
 					reporterEmailAddress: reporterEmailAddress

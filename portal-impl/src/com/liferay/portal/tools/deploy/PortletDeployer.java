@@ -211,22 +211,31 @@ public class PortletDeployer extends BaseDeployer {
 	}
 
 	public void setupAlloy(File srcFile, File portletXML) throws Exception {
-		String content = FileUtil.read(portletXML);
+		Document document = SAXReaderUtil.read(portletXML);
 
-		if (!content.contains(AlloyPortlet.class.getName())) {
-			return;
-		}
+		Element rootElement = document.getRootElement();
 
-		String[] dirNames = FileUtil.listDirs(srcFile + "/WEB-INF/jsp");
+		List<Element> portletElements = rootElement.elements("portlet");
 
-		for (String dirName : dirNames) {
-			File dir = new File(srcFile + "/WEB-INF/jsp/" + dirName + "/views");
+		for (Element portletElement : portletElements) {
+			String portletClass = portletElement.elementText("portlet-class");
 
-			if (!dir.exists() || !dir.isDirectory()) {
-				continue;
+			if (portletClass.contains(AlloyPortlet.class.getSimpleName())) {
+				String[] dirNames = FileUtil.listDirs(srcFile + "/WEB-INF/jsp");
+
+				for (String dirName : dirNames) {
+					File dir = new File(
+						srcFile + "/WEB-INF/jsp/" + dirName + "/views");
+
+					if (!dir.exists() || !dir.isDirectory()) {
+						continue;
+					}
+
+					copyDependencyXml("touch.jsp", dir.toString());
+				}
+
+				break;
 			}
-
-			copyDependencyXml("touch.jsp", dir.toString());
 		}
 	}
 

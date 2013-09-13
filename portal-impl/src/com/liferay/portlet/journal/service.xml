@@ -3,7 +3,7 @@
 
 <service-builder package-path="com.liferay.portlet.journal">
 	<namespace>Journal</namespace>
-	<entity name="JournalArticle" uuid="true" local-service="true" remote-service="true">
+	<entity name="JournalArticle" uuid="true" local-service="true" remote-service="true" trashed-model="true">
 
 		<!-- PK fields -->
 
@@ -406,7 +406,7 @@
 		<reference package-path="com.liferay.portlet.dynamicdatamapping" entity="DDMStructure" />
 		<reference package-path="com.liferay.portlet.expando" entity="ExpandoValue" />
 	</entity>
-	<entity name="JournalFolder" uuid="true" local-service="true" remote-service="true">
+	<entity name="JournalFolder" uuid="true" local-service="true" remote-service="true" trashed-model="true">
 
 		<!-- PK fields -->
 

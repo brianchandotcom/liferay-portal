@@ -63,7 +63,7 @@ if (Validator.isNotNull(portletResource)) {
 	<aui:input name="modelResources" type="hidden" value='<%= (modelResources == null) ? "" : StringUtil.merge(modelResources) %>' />
 	<aui:input name="selectedTargets" type="hidden" />
 
-	<h3><%= portletResourceLabel %></h3>
+	<h3><%= HtmlUtil.escape(portletResourceLabel) %></h3>
 
 	<%
 	request.setAttribute("edit_role_permissions.jsp-curPortletResource", portletResource);

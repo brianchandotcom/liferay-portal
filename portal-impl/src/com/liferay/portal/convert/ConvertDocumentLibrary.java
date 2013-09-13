@@ -141,6 +141,14 @@ public class ConvertDocumentLibrary extends ConvertProcess {
 			new DLFileEntryActionableDynamicQuery() {
 
 			@Override
+			protected void addCriteria(DynamicQuery dynamicQuery) {
+				Property classNameIdProperty = PropertyFactoryUtil.forName(
+					"classNameId");
+
+				dynamicQuery.add(classNameIdProperty.eq(0L));
+			}
+
+			@Override
 			protected void performAction(Object object) throws SystemException {
 				DLFileEntry dlFileEntry = (DLFileEntry)object;
 

@@ -3,7 +3,7 @@
 
 <service-builder package-path="com.liferay.portlet.bookmarks">
 	<namespace>Bookmarks</namespace>
-	<entity name="BookmarksEntry" uuid="true" local-service="true" remote-service="true">
+	<entity name="BookmarksEntry" uuid="true" local-service="true" remote-service="true" trashed-model="true">
 
 		<!-- PK fields -->
 
@@ -97,7 +97,7 @@
 		<reference package-path="com.liferay.portlet.social" entity="SocialActivity" />
 		<reference package-path="com.liferay.portlet.trash" entity="TrashEntry" />
 	</entity>
-	<entity name="BookmarksFolder" uuid="true" local-service="true" remote-service="true">
+	<entity name="BookmarksFolder" uuid="true" local-service="true" remote-service="true" trashed-model="true">
 
 		<!-- PK fields -->
 

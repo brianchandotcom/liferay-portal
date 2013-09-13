@@ -45,7 +45,7 @@
 
 		<reference package-path="com.liferay.portal" entity="SystemEvent" />
 	</entity>
-	<entity name="MBCategory" human-name="message boards category" uuid="true" local-service="true" remote-service="true">
+	<entity name="MBCategory" human-name="message boards category" uuid="true" local-service="true" remote-service="true" trashed-model="true">
 
 		<!-- PK fields -->
 
@@ -206,7 +206,7 @@
 			<finder-column name="categoryId" />
 		</finder>
 	</entity>
-	<entity name="MBMessage" human-name="message-boards message" uuid="true" local-service="true" remote-service="true">
+	<entity name="MBMessage" human-name="message-boards message" uuid="true" local-service="true" remote-service="true" trashed-model="true">
 
 		<!-- PK fields -->
 
@@ -428,7 +428,7 @@
 
 		<reference package-path="com.liferay.portal" entity="Group" />
 	</entity>
-	<entity name="MBThread" human-name="message boards thread" uuid="true" local-service="true" remote-service="true">
+	<entity name="MBThread" human-name="message boards thread" uuid="true" local-service="true" remote-service="true" trashed-model="true">
 
 		<!-- PK fields -->
 

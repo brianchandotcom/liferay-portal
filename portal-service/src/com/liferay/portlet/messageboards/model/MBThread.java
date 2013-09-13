@@ -51,7 +51,5 @@ public interface MBThread extends MBThreadModel, PersistedModel {
 
 	public boolean hasLock(long userId);
 
-	public boolean isInTrashContainer();
-
 	public boolean isLocked();
 }

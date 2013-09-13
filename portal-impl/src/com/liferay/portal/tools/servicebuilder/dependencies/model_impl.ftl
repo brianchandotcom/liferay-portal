@@ -887,16 +887,6 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 		}
 
 		@Override
-		public boolean isInTrash() {
-			if (getStatus() == WorkflowConstants.STATUS_IN_TRASH) {
-				return true;
-			}
-			else {
-				return false;
-			}
-		}
-
-		@Override
 		public boolean isPending() {
 			if (getStatus() == WorkflowConstants.STATUS_PENDING) {
 				return true;

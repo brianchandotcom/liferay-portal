@@ -3,7 +3,7 @@
 
 <service-builder package-path="com.liferay.portlet.blogs">
 	<namespace>Blogs</namespace>
-	<entity name="BlogsEntry" uuid="true" local-service="true" remote-service="true">
+	<entity name="BlogsEntry" uuid="true" local-service="true" remote-service="true" trashed-model="true">
 
 		<!-- PK fields -->
 

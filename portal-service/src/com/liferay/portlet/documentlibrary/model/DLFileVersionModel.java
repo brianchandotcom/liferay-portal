@@ -550,14 +550,6 @@ public interface DLFileVersionModel extends BaseModel<DLFileVersion>,
 	public boolean isIncomplete();
 
 	/**
-	 * Returns <code>true</code> if this document library file version is in the Recycle Bin.
-	 *
-	 * @return <code>true</code> if this document library file version is in the Recycle Bin; <code>false</code> otherwise
-	 */
-	@Override
-	public boolean isInTrash();
-
-	/**
 	 * Returns <code>true</code> if this document library file version is pending.
 	 *
 	 * @return <code>true</code> if this document library file version is pending; <code>false</code> otherwise

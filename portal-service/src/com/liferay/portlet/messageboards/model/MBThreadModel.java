@@ -15,15 +15,19 @@
 package com.liferay.portlet.messageboards.model;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ContainerModel;
 import com.liferay.portal.model.StagedGroupedModel;
+import com.liferay.portal.model.TrashedModel;
 import com.liferay.portal.model.WorkflowedModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
+import com.liferay.portlet.trash.model.TrashEntry;
 
 import java.io.Serializable;
 
@@ -43,7 +47,7 @@ import java.util.Date;
  * @generated
  */
 public interface MBThreadModel extends BaseModel<MBThread>, ContainerModel,
-	StagedGroupedModel, WorkflowedModel {
+	StagedGroupedModel, TrashedModel, WorkflowedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -455,6 +459,36 @@ public interface MBThreadModel extends BaseModel<MBThread>, ContainerModel,
 	public void setStatusDate(Date statusDate);
 
 	/**
+	 * Returns the trash entry created when this message boards thread was moved to the Recycle Bin. The trash entry may belong to one of the ancestors of this message boards thread.
+	 *
+	 * @return the trash entry created when this message boards thread was moved to the Recycle Bin
+	 * @throws SystemException if a system exception occurred
+	 */
+	public TrashEntry getTrashEntry() throws PortalException, SystemException;
+
+	/**
+	 * Returns the trash handler for this message boards thread.
+	 *
+	 * @return the trash handler for this message boards thread
+	 */
+	public TrashHandler getTrashHandler();
+
+	/**
+	 * Returns <code>true</code> if this message boards thread is in the Recycle Bin.
+	 *
+	 * @return <code>true</code> if this message boards thread is in the Recycle Bin; <code>false</code> otherwise
+	 */
+	public boolean isInTrash();
+
+	/**
+	 * Returns <code>true</code> if the parent of this message boards thread is in the Recycle Bin.
+	 *
+	 * @return <code>true</code> if the parent of this message boards thread is in the Recycle Bin; <code>false</code> otherwise
+	 * @throws SystemException if a system exception occurred
+	 */
+	public boolean isInTrashContainer();
+
+	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #isApproved()}
 	 */
 	@Override
@@ -507,14 +541,6 @@ public interface MBThreadModel extends BaseModel<MBThread>, ContainerModel,
 	 */
 	@Override
 	public boolean isIncomplete();
-
-	/**
-	 * Returns <code>true</code> if this message boards thread is in the Recycle Bin.
-	 *
-	 * @return <code>true</code> if this message boards thread is in the Recycle Bin; <code>false</code> otherwise
-	 */
-	@Override
-	public boolean isInTrash();
 
 	/**
 	 * Returns <code>true</code> if this message boards thread is pending.

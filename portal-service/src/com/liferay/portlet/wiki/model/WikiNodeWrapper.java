@@ -527,6 +527,50 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	}
 
 	/**
+	* Returns the trash entry created when this wiki node was moved to the Recycle Bin. The trash entry may belong to one of the ancestors of this wiki node.
+	*
+	* @return the trash entry created when this wiki node was moved to the Recycle Bin
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public com.liferay.portlet.trash.model.TrashEntry getTrashEntry()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _wikiNode.getTrashEntry();
+	}
+
+	/**
+	* Returns the trash handler for this wiki node.
+	*
+	* @return the trash handler for this wiki node
+	*/
+	@Override
+	public com.liferay.portal.kernel.trash.TrashHandler getTrashHandler() {
+		return _wikiNode.getTrashHandler();
+	}
+
+	/**
+	* Returns <code>true</code> if this wiki node is in the Recycle Bin.
+	*
+	* @return <code>true</code> if this wiki node is in the Recycle Bin; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isInTrash() {
+		return _wikiNode.isInTrash();
+	}
+
+	/**
+	* Returns <code>true</code> if the parent of this wiki node is in the Recycle Bin.
+	*
+	* @return <code>true</code> if the parent of this wiki node is in the Recycle Bin; <code>false</code> otherwise
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public boolean isInTrashContainer() {
+		return _wikiNode.isInTrashContainer();
+	}
+
+	/**
 	* @deprecated As of 6.1.0, replaced by {@link #isApproved()}
 	*/
 	@Override
@@ -592,16 +636,6 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	@Override
 	public boolean isIncomplete() {
 		return _wikiNode.isIncomplete();
-	}
-
-	/**
-	* Returns <code>true</code> if this wiki node is in the Recycle Bin.
-	*
-	* @return <code>true</code> if this wiki node is in the Recycle Bin; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isInTrash() {
-		return _wikiNode.isInTrash();
 	}
 
 	/**

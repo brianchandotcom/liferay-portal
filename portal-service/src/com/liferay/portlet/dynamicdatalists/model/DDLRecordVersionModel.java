@@ -370,14 +370,6 @@ public interface DDLRecordVersionModel extends BaseModel<DDLRecordVersion>,
 	public boolean isIncomplete();
 
 	/**
-	 * Returns <code>true</code> if this d d l record version is in the Recycle Bin.
-	 *
-	 * @return <code>true</code> if this d d l record version is in the Recycle Bin; <code>false</code> otherwise
-	 */
-	@Override
-	public boolean isInTrash();
-
-	/**
 	 * Returns <code>true</code> if this d d l record version is pending.
 	 *
 	 * @return <code>true</code> if this d d l record version is pending; <code>false</code> otherwise

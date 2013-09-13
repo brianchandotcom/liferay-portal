@@ -40,6 +40,11 @@ public interface TrashEntry extends TrashEntryModel, PersistedModel {
 	public java.lang.String getTypeSettingsProperty(java.lang.String key,
 		java.lang.String defaultValue);
 
+	public boolean isTrashEntry(java.lang.Class<?> clazz, long classPK);
+
+	public boolean isTrashEntry(
+		com.liferay.portal.model.TrashedModel trashedModel);
+
 	public void setRootEntry(
 		com.liferay.portlet.trash.model.TrashEntry rootEntry);
 

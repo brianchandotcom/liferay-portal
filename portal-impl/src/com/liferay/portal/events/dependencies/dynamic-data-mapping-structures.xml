@@ -88,7 +88,6 @@
 		<root available-locales="[$LOCALE_DEFAULT$]" default-locale="[$LOCALE_DEFAULT$]">
 			<dynamic-element dataType="document-library" fieldNamespace="ddm" name="attachment" required="false" showLabel="true" type="ddm-documentlibrary">
 				<meta-data locale="[$LOCALE_DEFAULT$]">
-					<entry name="folder"><![CDATA[{"folderId":0,"folderName":"Documents Home"}]]></entry>
 					<entry name="label"><![CDATA[Attachment]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>
 					<entry name="tip"><![CDATA[Upload documents no larger than 3,000k.]]></entry>
@@ -202,7 +201,6 @@
 			</dynamic-element>
 			<dynamic-element dataType="document-library" fieldNamespace="ddm" name="attachment" required="false" showLabel="true" type="ddm-documentlibrary">
 				<meta-data locale="[$LOCALE_DEFAULT$]">
-					<entry name="folder"><![CDATA[{"folderId":0,"folderName":"Documents Home"}]]></entry>
 					<entry name="label"><![CDATA[Attachment]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>
 					<entry name="tip"><![CDATA[Upload documents no larger than 3,000k.]]></entry>
@@ -293,7 +291,6 @@
 		<root available-locales="[$LOCALE_DEFAULT$]" default-locale="[$LOCALE_DEFAULT$]">
 			<dynamic-element dataType="document-library" fieldNamespace="ddm" name="attachment" required="false" showLabel="true" type="ddm-documentlibrary">
 				<meta-data locale="[$LOCALE_DEFAULT$]">
-					<entry name="folder"><![CDATA[{"folderId":0,"folderName":"Documents Home"}]]></entry>
 					<entry name="label"><![CDATA[Attachment]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>
 					<entry name="tip"><![CDATA[Upload documents no larger than 3,000k.]]></entry>
@@ -349,7 +346,6 @@
 			</dynamic-element>
 			<dynamic-element dataType="document-library" fieldNamespace="ddm" name="attachment" required="false" showLabel="true" type="ddm-documentlibrary">
 				<meta-data locale="[$LOCALE_DEFAULT$]">
-					<entry name="folder"><![CDATA[{"folderId":0,"folderName":"Documents Home"}]]></entry>
 					<entry name="label"><![CDATA[Attachment]]></entry>
 					<entry name="predefinedValue"><![CDATA[]]></entry>
 					<entry name="tip"><![CDATA[Upload documents no larger than 3,000k.]]></entry>

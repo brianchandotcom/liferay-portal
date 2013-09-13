@@ -209,7 +209,7 @@ public class AddDefaultDocumentLibraryStructuresAction
 	}
 
 	protected String buildDLRawMetadataElementXML(Field field, Locale locale) {
-		StringBundler sb = new StringBundler(16);
+		StringBundler sb = new StringBundler(14);
 
 		sb.append("<dynamic-element dataType=\"string\" name=\"");
 
@@ -218,7 +218,7 @@ public class AddDefaultDocumentLibraryStructuresAction
 		sb.append(fieldClass.getSimpleName());
 		sb.append(StringPool.UNDERLINE);
 		sb.append(field.getName());
-		sb.append("\" type=\"text\">");
+		sb.append("\" required=\"false\" showLabel=\"true\" type=\"text\">");
 		sb.append("<meta-data locale=\"");
 		sb.append(locale);
 		sb.append("\">");
@@ -227,9 +227,7 @@ public class AddDefaultDocumentLibraryStructuresAction
 		sb.append(StringPool.PERIOD);
 		sb.append(field.getName());
 		sb.append("]]></entry><entry name=\"predefinedValue\">");
-		sb.append("<![CDATA[]]></entry><entry name=\"required\">");
-		sb.append("<![CDATA[false]]></entry><entry name=\"showLabel\">");
-		sb.append("<![CDATA[true]]></entry></meta-data></dynamic-element>");
+		sb.append("<![CDATA[]]></entry></meta-data></dynamic-element>");
 
 		return sb.toString();
 	}

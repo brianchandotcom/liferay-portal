@@ -128,6 +128,13 @@ public class UserNotificationManagerImpl implements UserNotificationManager {
 	}
 
 	@Override
+	public Map<String, List<UserNotificationDefinition>>
+		getUserNotificationDefinitions() {
+
+		return Collections.unmodifiableMap(_userNotificationDefinitions);
+	}
+
+	@Override
 	public Map<String, Map<String, UserNotificationHandler>>
 		getUserNotificationHandlers() {
 

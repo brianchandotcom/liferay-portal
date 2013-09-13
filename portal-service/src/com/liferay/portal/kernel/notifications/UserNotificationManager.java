@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.UserNotificationEvent;
 import com.liferay.portal.service.ServiceContext;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -40,6 +41,9 @@ public interface UserNotificationManager {
 
 	public UserNotificationDefinition fetchUserNotificationDefinition(
 		String portletId, long classNameId, int notificationType);
+
+	public Map<String, List<UserNotificationDefinition>>
+		getUserNotificationDefinitions();
 
 	public Map<String, Map<String, UserNotificationHandler>>
 		getUserNotificationHandlers();

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermissio
 import com.liferay.portal.model.UserNotificationEvent;
 import com.liferay.portal.service.ServiceContext;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -59,6 +60,12 @@ public class UserNotificationManagerUtil {
 
 		return getUserNotificationManager().fetchUserNotificationDefinition(
 			portletId, classNameId, notificationType);
+	}
+
+	public static Map<String, List<UserNotificationDefinition>>
+		getUserNotificationDefinitions() {
+
+		return getUserNotificationManager().getUserNotificationDefinitions();
 	}
 
 	public static Map<String, Map<String, UserNotificationHandler>>

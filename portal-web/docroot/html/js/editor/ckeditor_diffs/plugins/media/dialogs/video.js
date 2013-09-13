@@ -66,7 +66,7 @@ CKEDITOR.dialog.add(
 					}
 				);
 
-				scriptNode.setText(TPL_SCRIPT_PREFIX + textScript + TPL_SCRIPT_SUFFIX);
+				editor.plugins.media.replaceScriptContent(videoNode, TPL_SCRIPT_PREFIX + textScript + TPL_SCRIPT_SUFFIX);
 			}
 
 			if (value) {
@@ -87,22 +87,21 @@ CKEDITOR.dialog.add(
 					extraStyles[id] = value + 'px';
 
 					videoNode.setAttribute('data-' + id, value);
+					
+					scriptTPL = new CKEDITOR.template(TPL_SCRIPT);
 
-					if (scriptNode && scriptNode.getText()) {
-						scriptTPL = new CKEDITOR.template(TPL_SCRIPT);
+					textScript = scriptTPL.output(
+						{
+							height: height,
+							ogvUrl: videoOgvUrl,
+							poster: videoPoster,
+							url: videoUrl,
+							width: width
+						}
+					);
 
-						textScript = scriptTPL.output(
-							{
-								height: height,
-								ogvUrl: videoOgvUrl,
-								poster: videoPoster,
-								url: videoUrl,
-								width: width
-							}
-						);
-
-						scriptNode.setText(TPL_SCRIPT_PREFIX + textScript + TPL_SCRIPT_SUFFIX);
-					}
+					editor.plugins.media.replaceScriptContent(videoNode, TPL_SCRIPT_PREFIX + textScript + TPL_SCRIPT_SUFFIX);						
+					
 				}
 			}
 		}

@@ -149,7 +149,7 @@ Group ddmTemplateGroup = GroupLocalServiceUtil.getGroup(ddmTemplateGroupId);
 						basePortletURL: '<%= basePortletURL %>',
 						classNameId: '<%= classNameId %>',
 						dialog: {
-							width: 820
+							width: 1024
 						},
 						groupId: <%= ddmTemplateGroupId %>,
 						refererPortletName: '<%= PortletKeys.PORTLET_DISPLAY_TEMPLATES %>',

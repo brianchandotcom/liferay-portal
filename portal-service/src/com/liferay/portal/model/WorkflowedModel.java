@@ -50,8 +50,6 @@ public interface WorkflowedModel {
 
 	public boolean isIncomplete();
 
-	public boolean isInTrash();
-
 	public boolean isPending();
 
 	public boolean isScheduled();

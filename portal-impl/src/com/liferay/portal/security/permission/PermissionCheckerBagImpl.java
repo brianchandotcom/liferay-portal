@@ -17,6 +17,7 @@ package com.liferay.portal.security.permission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.OrganizationConstants;
 import com.liferay.portal.model.Role;
@@ -224,9 +225,11 @@ public class PermissionCheckerBagImpl implements PermissionCheckerBag {
 		if (group.isLayout()) {
 			long parentGroupId = group.getParentGroupId();
 
-			if (parentGroupId > 0) {
-				group = GroupLocalServiceUtil.getGroup(parentGroupId);
+			if (parentGroupId == GroupConstants.DEFAULT_PARENT_GROUP_ID) {
+				return false;
 			}
+
+			group = GroupLocalServiceUtil.getGroup(parentGroupId);
 		}
 
 		if (group.isSite()) {

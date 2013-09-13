@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -414,9 +413,7 @@ public class PortletFileRepositoryImpl implements PortletFileRepository {
 
 		String title = fileEntry.getTitle();
 
-		FileVersion fileVersion = fileEntry.getFileVersion();
-
-		if (fileVersion.isInTrash()) {
+		if (fileEntry.isInTrash()) {
 			title = TrashUtil.getOriginalTitle(fileEntry.getTitle());
 		}
 

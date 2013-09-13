@@ -339,16 +339,6 @@ public class CMISFileVersion extends CMISModel implements FileVersion {
 	}
 
 	@Override
-	public boolean isInTrash() {
-		return false;
-	}
-
-	@Override
-	public boolean isInTrashContainer() {
-		return false;
-	}
-
-	@Override
 	public boolean isPending() {
 		return false;
 	}

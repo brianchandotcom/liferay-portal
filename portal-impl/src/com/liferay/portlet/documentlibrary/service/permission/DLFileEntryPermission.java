@@ -115,7 +115,7 @@ public class DLFileEntryPermission {
 					}
 				}
 				catch (NoSuchFolderException nsfe) {
-					if (!latestDLFileVersion.isInTrash()) {
+					if (!dlFileEntry.isInTrash()) {
 						throw nsfe;
 					}
 				}

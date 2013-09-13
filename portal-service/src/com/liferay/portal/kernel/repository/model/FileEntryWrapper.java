@@ -309,6 +309,16 @@ public class FileEntryWrapper implements FileEntry, ModelWrapper<FileEntry> {
 	}
 
 	@Override
+	public boolean isInTrash() {
+		return _fileEntry.isInTrash();
+	}
+
+	@Override
+	public boolean isInTrashContainer() {
+		return _fileEntry.isInTrashContainer();
+	}
+
+	@Override
 	public boolean isManualCheckInRequired() {
 		return _fileEntry.isManualCheckInRequired();
 	}

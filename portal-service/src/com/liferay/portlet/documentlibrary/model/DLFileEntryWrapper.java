@@ -1084,6 +1084,11 @@ public class DLFileEntryWrapper implements DLFileEntry,
 	}
 
 	@Override
+	public int getStatus() {
+		return _dlFileEntry.getStatus();
+	}
+
+	@Override
 	public com.liferay.portlet.documentlibrary.model.DLFolder getTrashContainer()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -1127,6 +1132,11 @@ public class DLFileEntryWrapper implements DLFileEntry,
 	@Override
 	public boolean isInHiddenFolder() {
 		return _dlFileEntry.isInHiddenFolder();
+	}
+
+	@Override
+	public boolean isInTrash() {
+		return _dlFileEntry.isInTrash();
 	}
 
 	@Override

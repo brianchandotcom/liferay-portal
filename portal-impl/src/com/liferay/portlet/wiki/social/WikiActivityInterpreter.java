@@ -16,7 +16,6 @@ package com.liferay.portlet.wiki.social;
 
 import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -74,16 +73,10 @@ public class WikiActivityInterpreter extends BaseSocialActivityInterpreter {
 			catch (NoSuchModelException nsme) {
 			}
 
-			FileVersion fileVersion = null;
-
-			if (fileEntry != null) {
-				fileVersion = fileEntry.getFileVersion();
-			}
-
 			String fileEntryTitle = activity.getExtraDataValue(
 				"fileEntryTitle");
 
-			if ((fileVersion != null) && !fileVersion.isInTrash()) {
+			if ((fileEntry != null) && !fileEntry.isInTrash()) {
 				StringBundler sb = new StringBundler(9);
 
 				sb.append(serviceContext.getPathMain());

@@ -88,8 +88,8 @@ public class Entity {
 	public Entity(String name) {
 		this(
 			null, null, null, name, null, null, null, false, false, false, true,
-			null, null, null, null, null, true, false, false, null, null, null,
-			null, null, null, null, null, null);
+			null, null, null, null, null, true, false, false, false, null, null,
+			null, null, null, null, null, null, null);
 	}
 
 	public Entity(
@@ -98,11 +98,12 @@ public class Entity {
 		boolean uuidAccessor, boolean localService, boolean remoteService,
 		String persistenceClass, String finderClass, String dataSource,
 		String sessionFactory, String txManager, boolean cacheEnabled,
-		boolean jsonEnabled, boolean deprecated, List<EntityColumn> pkList,
-		List<EntityColumn> regularColList, List<EntityColumn> blobList,
-		List<EntityColumn> collectionList, List<EntityColumn> columnList,
-		EntityOrder order, List<EntityFinder> finderList,
-		List<Entity> referenceList, List<String> txRequiredList) {
+		boolean jsonEnabled, boolean deprecated, boolean trashedModel,
+		List<EntityColumn> pkList, List<EntityColumn> regularColList,
+		List<EntityColumn> blobList, List<EntityColumn> collectionList,
+		List<EntityColumn> columnList, EntityOrder order,
+		List<EntityFinder> finderList, List<Entity> referenceList,
+		List<String> txRequiredList) {
 
 		_packagePath = packagePath;
 		_portletName = portletName;
@@ -125,6 +126,7 @@ public class Entity {
 		_cacheEnabled = cacheEnabled;
 		_jsonEnabled = jsonEnabled;
 		_deprecated = deprecated;
+		_trashedModel = trashedModel;
 		_pkList = pkList;
 		_regularColList = regularColList;
 		_blobList = blobList;
@@ -767,6 +769,10 @@ public class Entity {
 		return false;
 	}
 
+	public boolean isTrashedModel() {
+		return _trashedModel;
+	}
+
 	public boolean isTypedModel() {
 		if (hasColumn("classNameId")) {
 			EntityColumn classNameIdCol = getColumn("classNameId");
@@ -842,6 +848,7 @@ public class Entity {
 	private String _sessionFactory;
 	private String _table;
 	private List<String> _transients;
+	private boolean _trashedModel;
 	private String _txManager;
 	private List<String> _txRequiredList;
 	private boolean _uuid;

@@ -111,6 +111,9 @@ for JSON serialization. By default, if the remote-service value is true, then
 the json-enabled value is true.
 
 The deprecated value specifies whether the entity's services are deprecated.
+
+The trashed-model value specifies whether trash related methods should be
+generated or not.
 -->
 <!ATTLIST entity
 	name CDATA #REQUIRED
@@ -127,6 +130,7 @@ The deprecated value specifies whether the entity's services are deprecated.
 	cache-enabled CDATA #IMPLIED
 	json-enabled CDATA #IMPLIED
 	deprecated CDATA #IMPLIED
+	trashed-model CDATA #IMPLIED
 >
 
 <!--

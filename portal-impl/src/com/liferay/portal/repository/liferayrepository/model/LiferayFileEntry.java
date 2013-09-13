@@ -431,6 +431,21 @@ public class LiferayFileEntry extends LiferayModel implements FileEntry {
 	}
 
 	@Override
+	public boolean isInTrash() {
+		return _dlFileEntry.isInTrash();
+	}
+
+	@Override
+	public boolean isInTrashContainer() {
+		try {
+			return _dlFileEntry.isInTrashContainer();
+		}
+		catch (Exception e) {
+			return false;
+		}
+	}
+
+	@Override
 	public boolean isManualCheckInRequired() {
 		return _dlFileEntry.isManualCheckInRequired();
 	}

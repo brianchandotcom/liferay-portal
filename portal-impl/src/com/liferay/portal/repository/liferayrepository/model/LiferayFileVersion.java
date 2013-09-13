@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
-import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 
@@ -255,19 +254,6 @@ public class LiferayFileVersion extends LiferayModel implements FileVersion {
 		return _dlFileVersion.getTitle();
 	}
 
-	public DLFolder getTrashContainer() {
-		DLFolder dlFolder = null;
-
-		try {
-			dlFolder = _dlFileVersion.getTrashContainer();
-		}
-		catch (Exception e) {
-			return null;
-		}
-
-		return dlFolder;
-	}
-
 	@Override
 	public long getUserId() {
 		return _dlFileVersion.getUserId();
@@ -321,21 +307,6 @@ public class LiferayFileVersion extends LiferayModel implements FileVersion {
 	@Override
 	public boolean isExpired() {
 		return _dlFileVersion.isExpired();
-	}
-
-	@Override
-	public boolean isInTrash() {
-		return _dlFileVersion.isInTrash();
-	}
-
-	@Override
-	public boolean isInTrashContainer() {
-		try {
-			return _dlFileVersion.isInTrashContainer();
-		}
-		catch (Exception e) {
-			return false;
-		}
 	}
 
 	@Override

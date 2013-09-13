@@ -152,7 +152,7 @@ public class FileEntryStagedModelDataHandler
 
 		FileVersion fileVersion = fileEntry.getFileVersion();
 
-		if (!fileVersion.isApproved() && !fileVersion.isInTrash()) {
+		if (!fileVersion.isApproved() && !fileEntry.isInTrash()) {
 			return;
 		}
 
@@ -380,7 +380,7 @@ public class FileEntryStagedModelDataHandler
 					fileEntry.getDescription(), null, is, fileEntry.getSize(),
 					serviceContext);
 
-				if (fileVersion.isInTrash()) {
+				if (fileEntry.isInTrash()) {
 					importedFileEntry = DLAppServiceUtil.moveFileEntryToTrash(
 						importedFileEntry.getFileEntryId());
 				}

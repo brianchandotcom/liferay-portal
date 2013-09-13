@@ -26,7 +26,6 @@ import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.NoSuchFileException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
-import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.trash.util.TrashUtil;
 import com.liferay.portlet.wiki.NoSuchPageException;
 import com.liferay.portlet.wiki.model.WikiPage;
@@ -121,15 +120,13 @@ public class GetPageAttachmentAction extends PortletAction {
 
 		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
 
-		DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
-
 		if ((status != WorkflowConstants.STATUS_IN_TRASH) &&
-			(dlFileVersion.isInTrash() || dlFileEntry.isInTrashContainer())) {
+			(dlFileEntry.isInTrash() || dlFileEntry.isInTrashContainer())) {
 
 			return;
 		}
 
-		if (dlFileVersion.isInTrash()) {
+		if (dlFileEntry.isInTrash()) {
 			fileName = TrashUtil.getOriginalTitle(dlFileEntry.getTitle());
 		}
 

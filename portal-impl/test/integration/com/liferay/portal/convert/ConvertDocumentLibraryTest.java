@@ -16,6 +16,7 @@ package com.liferay.portal.convert;
 
 import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
@@ -38,8 +39,12 @@ import com.liferay.portal.util.ClassLoaderUtil;
 import com.liferay.portal.util.GroupTestUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.TestPropsValues;
+import com.liferay.portlet.documentlibrary.model.DLContent;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLContentLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.store.Store;
 import com.liferay.portlet.documentlibrary.store.StoreFactory;
 import com.liferay.portlet.documentlibrary.util.DLAppTestUtil;
@@ -110,14 +115,28 @@ public class ConvertDocumentLibraryTest {
 			TestPropsValues.getGroupId(), folder.getFolderId(),
 			ServiceTestUtil.randomString() + ".txt");
 
+		DLFileEntry dlFileEntry = getDLFileEntry(initialFileEntry);
+
 		_convertProcess.convert();
 
+		List<DLFileEntry> dlFileEntries =
+			DLFileEntryLocalServiceUtil.getDLFileEntries(
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
 		FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
-			initialFileEntry.getFileEntryId());
+			dlFileEntries.get(0).getFileEntryId());
 
 		String fileEntryTitle = fileEntry.getTitle();
 
 		Assert.assertTrue(fileEntryTitle.endsWith(".txt"));
+
+		DLContent dlContent = DLContentLocalServiceUtil.getContent(
+			fileEntry.getCompanyId(),
+			DLFolderConstants.getDataRepositoryId(
+				fileEntry.getRepositoryId(), fileEntry.getFolderId()),
+			dlFileEntry.getName());
+
+		Assert.assertNotNull(dlContent);
 	}
 
 	@Test
@@ -125,6 +144,7 @@ public class ConvertDocumentLibraryTest {
 		Image initialImage = addImage();
 
 		long imageId = initialImage.getImageId();
+
 		_convertProcess.convert();
 
 		Image image = ImageLocalServiceUtil.getImage(imageId);
@@ -132,11 +152,18 @@ public class ConvertDocumentLibraryTest {
 		String expectedImageType = image.getType();
 
 		Assert.assertEquals(expectedImageType, "jpg");
+
+		DLContent dlContent = DLContentLocalServiceUtil.getContent(
+			0, 0, imageId + ".jpg");
+
+		Assert.assertNotNull(dlContent);
 	}
 
 	@Test
 	public void testMigrateMB() throws Exception {
 		MBMessage mbMessage = addMBMessageAttachement();
+
+		DLFileEntry dlFileEntry = getDLFileEntry(mbMessage);
 
 		_convertProcess.convert();
 
@@ -152,16 +179,14 @@ public class ConvertDocumentLibraryTest {
 		String fileEntryTitle = fileEntry.getTitle();
 
 		Assert.assertTrue(fileEntryTitle.endsWith(".docx"));
-	}
 
-	@Test
-	public void testMigratePortlets() throws Exception {
-		_convertProcess.convert();
+		DLContent dlContent = DLContentLocalServiceUtil.getContent(
+			fileEntry.getCompanyId(),
+			DLFolderConstants.getDataRepositoryId(
+				fileEntry.getRepositoryId(), fileEntry.getFolderId()),
+			dlFileEntry.getName());
 
-		Store sourceStore = StoreFactory.getInstance();
-
-		Assert.assertEquals(
-			_DB_STORE_CLASSNAME, sourceStore.getClass().getCanonicalName());
+		Assert.assertNotNull(dlContent);
 	}
 
 	@Test
@@ -169,6 +194,8 @@ public class ConvertDocumentLibraryTest {
 		WikiPage wikiPage = addWikiPage();
 
 		addWikiPageAttachment(wikiPage);
+
+		DLFileEntry dlFileEntry = getDLFileEntry(wikiPage);
 
 		_convertProcess.convert();
 
@@ -180,6 +207,24 @@ public class ConvertDocumentLibraryTest {
 		String fileEntryTitle = fileEntry.getTitle();
 
 		Assert.assertTrue(fileEntryTitle.endsWith(".docx"));
+
+		DLContent dlContent = DLContentLocalServiceUtil.getContent(
+			fileEntry.getCompanyId(),
+			DLFolderConstants.getDataRepositoryId(
+				fileEntry.getRepositoryId(), fileEntry.getFolderId()),
+			dlFileEntry.getName());
+
+		Assert.assertNotNull(dlContent);
+	}
+
+	@Test
+	public void testStoreUpdatedInAfterMigration() throws Exception {
+		_convertProcess.convert();
+
+		Store sourceStore = StoreFactory.getInstance();
+
+		Assert.assertEquals(
+			_DB_STORE_CLASSNAME, sourceStore.getClass().getCanonicalName());
 	}
 
 	protected Image addImage() throws Exception {
@@ -224,6 +269,29 @@ public class ConvertDocumentLibraryTest {
 		WikiTestUtil.addWikiAttachment(
 			wikiPage.getUserId(), wikiPage.getNodeId(), wikiPage.getTitle(),
 			getClass());
+	}
+
+	protected DLFileEntry getDLFileEntry(Object o) throws Exception {
+		FileEntry fileEntry = null;
+
+		if (o instanceof WikiPage) {
+			List<FileEntry> initialFileEntries =
+				((WikiPage)o).getAttachmentsFileEntries();
+
+			fileEntry = initialFileEntries.get(0);
+		}
+		else if (o instanceof MBMessage) {
+			List<FileEntry> initialFileEntries =
+				((MBMessage)o).getAttachmentsFileEntries();
+
+			fileEntry = initialFileEntries.get(0);
+		}
+		else {
+			fileEntry = (FileEntry)o;
+		}
+
+		return DLFileEntryLocalServiceUtil.getDLFileEntry(
+			fileEntry.getFileEntryId());
 	}
 
 	private static final String _CONVERT_DOCUMENT_LIBRARY_CLASSNAME =

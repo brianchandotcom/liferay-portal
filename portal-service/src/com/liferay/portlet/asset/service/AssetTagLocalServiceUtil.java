@@ -430,6 +430,27 @@ public class AssetTagLocalServiceUtil {
 		getService().addTagResources(tag, groupPermissions, guestPermissions);
 	}
 
+	/**
+	* Returns the tags matching the group and names, creating new tags with the
+	* names if the group doesn't already have them.
+	*
+	* <p>
+	* For each name, if a tag with that name doesn't already exist for the
+	* group, this method creates a new tag with that name for the group. If a
+	* tag with that name already exists in the company group, this method
+	* copies that company group's tag's properties to the group's new tag.
+	* </p>
+	*
+	* @param userId the primary key of the user
+	* @param groupId the primary key of the tag's group
+	* @param names the tag names
+	* @return the tags matching the group and names and new tags matching the
+	names that don't already exist for the group
+	* @throws PortalException if a matching group could not be found, if the
+	tag's key or value were invalid, or if a portal exception
+	occurred
+	* @throws SystemException if a system exception occurred
+	*/
 	public static java.util.List<com.liferay.portlet.asset.model.AssetTag> checkTags(
 		long userId, com.liferay.portal.model.Group group,
 		java.lang.String[] names)

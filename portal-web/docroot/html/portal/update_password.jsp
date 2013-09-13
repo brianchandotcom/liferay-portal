@@ -21,13 +21,13 @@ String currentURL = PortalUtil.getCurrentURL(request);
 
 String referer = ParamUtil.getString(request, WebKeys.REFERER, currentURL);
 
-if (referer.equals(themeDisplay.getPathMain() + "/portal/update_password")) {
-	referer = themeDisplay.getPathMain() + "?doAsUserId=" + themeDisplay.getDoAsUserId();
+String ticketKey = ParamUtil.getString(request, "ticketKey");
+
+if (referer.startsWith(themeDisplay.getPathMain() + "/portal/update_password") && Validator.isNotNull(ticketKey)) {
+	referer = StringPool.BLANK;
 }
 
 PasswordPolicy passwordPolicy = user.getPasswordPolicy();
-
-String ticketKey = ParamUtil.getString(request, "ticketKey");
 %>
 
 <c:choose>

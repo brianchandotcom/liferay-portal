@@ -66,7 +66,7 @@ CKEDITOR.dialog.add(
 					}
 				);
 
-				scriptNode.setText(TPL_SCRIPT_PREFIX + textScript + TPL_SCRIPT_SUFFIX);
+				editor.plugins.media.replaceScriptContent(videoNode, TPL_SCRIPT_PREFIX + textScript + TPL_SCRIPT_SUFFIX);
 			}
 
 			if (value) {
@@ -87,22 +87,21 @@ CKEDITOR.dialog.add(
 					extraStyles[id] = value + 'px';
 
 					videoNode.setAttribute('data-' + id, value);
+					
+					scriptTPL = new CKEDITOR.template(TPL_SCRIPT);
 
-					if (scriptNode && scriptNode.getText()) {
-						scriptTPL = new CKEDITOR.template(TPL_SCRIPT);
+					textScript = scriptTPL.output(
+						{
+							height: height,
+							ogvUrl: videoOgvUrl,
+							poster: videoPoster,
+							url: videoUrl,
+							width: width
+						}
+					);
 
-						textScript = scriptTPL.output(
-							{
-								height: height,
-								ogvUrl: videoOgvUrl,
-								poster: videoPoster,
-								url: videoUrl,
-								width: width
-							}
-						);
-
-						scriptNode.setText(TPL_SCRIPT_PREFIX + textScript + TPL_SCRIPT_SUFFIX);
-					}
+					editor.plugins.media.replaceScriptContent(videoNode, TPL_SCRIPT_PREFIX + textScript + TPL_SCRIPT_SUFFIX);						
+					
 				}
 			}
 		}
@@ -200,44 +199,18 @@ CKEDITOR.dialog.add(
 				var instance = this;
 
 				instance.fakeImage = null;
-				instance.videoNode = null;
 
 				var fakeImage = instance.getSelectedElement();
 
-				if (fakeImage && fakeImage.data('cke-real-element-type') && fakeImage.data('cke-real-element-type') === 'video') {
-					instance.fakeImage = fakeImage;
-
-					var videoNode = editor.restoreRealElement(fakeImage);
-
-					instance.videoNode = videoNode;
-
-					instance.setupContent(videoNode);
-				}
-				else {
-					instance.setupContent(null);
-				}
+				editor.plugins.media.restoreElement(editor, instance, fakeImage, 'video');
 			},
+
 			onOk: function() {
 				var instance = this;
 
-				var STR_DIV = 'div';
-
 				var extraStyles = {};
 
-				var divNode = editor.document.createElement(STR_DIV);
-
-				divNode.setAttribute('class', 'liferayckevideo video-container');
-
-				var boundingBoxTmp = editor.document.createElement(STR_DIV);
-
-				boundingBoxTmp.setAttribute('class', 'ckvideo-no-id');
-
-				var scriptTmp = editor.document.createElement('script');
-
-				scriptTmp.setAttribute('type', 'text/javascript');
-
-				divNode.append(boundingBoxTmp);
-				divNode.append(scriptTmp);
+				var divNode = editor.plugins.media.createDivStructure(editor, 'liferayckevideo video-container', 'ckvideo-no-id');
 
 				instance.commitContent(divNode, extraStyles);
 

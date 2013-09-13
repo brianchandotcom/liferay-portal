@@ -748,7 +748,8 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 		if (status == WorkflowConstants.STATUS_IN_TRASH) {
 			trashEntryLocalService.addTrashEntry(
 				userId, category.getGroupId(), MBCategory.class.getName(),
-				categoryId, WorkflowConstants.STATUS_APPROVED, null, null);
+				categoryId, category.getUuid(), null,
+				WorkflowConstants.STATUS_APPROVED, null, null);
 		}
 
 		return category;

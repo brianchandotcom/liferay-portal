@@ -3791,6 +3791,7 @@
 			</basic>
 			<basic name="classNameId" />
 			<basic name="classPK" />
+			<basic name="systemEventSetKey" />
 			<basic name="typeSettings" />
 			<basic name="status" />
 			<transient name="className" />

@@ -204,6 +204,20 @@ public interface TrashEntryModel extends AttachedModel, BaseModel<TrashEntry> {
 	public void setClassPK(long classPK);
 
 	/**
+	 * Returns the system event set key of this trash entry.
+	 *
+	 * @return the system event set key of this trash entry
+	 */
+	public long getSystemEventSetKey();
+
+	/**
+	 * Sets the system event set key of this trash entry.
+	 *
+	 * @param systemEventSetKey the system event set key of this trash entry
+	 */
+	public void setSystemEventSetKey(long systemEventSetKey);
+
+	/**
 	 * Returns the type settings of this trash entry.
 	 *
 	 * @return the type settings of this trash entry

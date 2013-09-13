@@ -16,13 +16,18 @@ package com.liferay.portal.kernel.trash;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.ContainerModel;
+import com.liferay.portal.model.SystemEvent;
+import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.SystemEventLocalServiceUtil;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
@@ -41,6 +46,22 @@ import javax.portlet.PortletRequest;
  * @see    TrashHandler
  */
 public abstract class BaseTrashHandler implements TrashHandler {
+
+	@Override
+	public SystemEvent addDeletionSystemEvent(
+			long userId, long groupId, long classPK, String classUuid,
+			String referrerClassName)
+		throws PortalException, SystemException {
+
+		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
+
+		extraDataJSONObject.put("inTrash", true);
+
+		return SystemEventLocalServiceUtil.addSystemEvent(
+			userId, groupId, getSystemEventClassName(), classPK, classUuid,
+			referrerClassName, SystemEventConstants.TYPE_DELETE,
+			extraDataJSONObject.toString());
+	}
 
 	@Override
 	@SuppressWarnings("unused")
@@ -146,6 +167,11 @@ public abstract class BaseTrashHandler implements TrashHandler {
 	@Override
 	public String getSubcontainerModelName() {
 		return StringPool.BLANK;
+	}
+
+	@Override
+	public String getSystemEventClassName() {
+		return getClassName();
 	}
 
 	@Override

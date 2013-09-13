@@ -257,6 +257,9 @@ public interface SystemEventLocalService extends BaseLocalService,
 	public void deleteSystemEvents(long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	public void deleteSystemEvents(long groupId, long systemEventSetKey)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.SystemEvent fetchSystemEvent(long groupId,
 		long classNameId, long classPK, int type)

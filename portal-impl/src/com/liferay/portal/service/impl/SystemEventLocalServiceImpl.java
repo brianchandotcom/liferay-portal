@@ -85,6 +85,13 @@ public class SystemEventLocalServiceImpl
 	}
 
 	@Override
+	public void deleteSystemEvents(long groupId, long systemEventSetKey)
+		throws SystemException {
+
+		systemEventPersistence.removeByG_S(groupId, systemEventSetKey);
+	}
+
+	@Override
 	public SystemEvent fetchSystemEvent(
 			long groupId, long classNameId, long classPK, int type)
 		throws SystemException {

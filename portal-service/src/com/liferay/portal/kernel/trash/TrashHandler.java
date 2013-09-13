@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.trash;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.ContainerModel;
+import com.liferay.portal.model.SystemEvent;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.trash.model.TrashEntry;
@@ -84,6 +85,11 @@ import javax.portlet.PortletRequest;
  * @author Zsolt Berentey
  */
 public interface TrashHandler {
+
+	public SystemEvent addDeletionSystemEvent(
+			long userId, long groupId, long classPK, String classUuid,
+			String referrerClassName)
+		throws PortalException, SystemException;
 
 	public void checkDuplicateEntry(
 			long classPK, long containerModelId, String newName)
@@ -305,6 +311,8 @@ public interface TrashHandler {
 	 * @return the name of the subcontainer model
 	 */
 	public String getSubcontainerModelName();
+
+	public String getSystemEventClassName();
 
 	/**
 	 * Returns the name of the contained model.

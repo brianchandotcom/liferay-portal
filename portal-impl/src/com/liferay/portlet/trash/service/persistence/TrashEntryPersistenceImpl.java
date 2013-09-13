@@ -2741,6 +2741,7 @@ public class TrashEntryPersistenceImpl extends BasePersistenceImpl<TrashEntry>
 		trashEntryImpl.setCreateDate(trashEntry.getCreateDate());
 		trashEntryImpl.setClassNameId(trashEntry.getClassNameId());
 		trashEntryImpl.setClassPK(trashEntry.getClassPK());
+		trashEntryImpl.setSystemEventSetKey(trashEntry.getSystemEventSetKey());
 		trashEntryImpl.setTypeSettings(trashEntry.getTypeSettings());
 		trashEntryImpl.setStatus(trashEntry.getStatus());
 

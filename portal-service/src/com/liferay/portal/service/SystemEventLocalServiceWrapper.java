@@ -305,6 +305,12 @@ public class SystemEventLocalServiceWrapper implements SystemEventLocalService,
 	}
 
 	@Override
+	public void deleteSystemEvents(long groupId, long systemEventSetKey)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_systemEventLocalService.deleteSystemEvents(groupId, systemEventSetKey);
+	}
+
+	@Override
 	public com.liferay.portal.model.SystemEvent fetchSystemEvent(long groupId,
 		long classNameId, long classPK, int type)
 		throws com.liferay.portal.kernel.exception.SystemException {

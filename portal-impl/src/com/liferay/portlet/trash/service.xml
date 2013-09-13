@@ -24,6 +24,7 @@
 
 		<column name="classNameId" type="long" />
 		<column name="classPK" type="long" />
+		<column name="systemEventSetKey" type="long" />
 		<column name="typeSettings" type="String" />
 		<column name="status" type="int" />
 
@@ -57,6 +58,7 @@
 		<!-- References -->
 
 		<reference package-path="com.liferay.portal" entity="Group" />
+		<reference package-path="com.liferay.portal" entity="SystemEvent" />
 	</entity>
 	<entity name="TrashVersion" local-service="true" remote-service="false">
 

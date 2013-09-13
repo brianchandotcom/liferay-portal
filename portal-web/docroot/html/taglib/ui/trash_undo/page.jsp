@@ -53,7 +53,7 @@ if (SessionMessages.contains(portletRequest, portletDisplay.getId() + SessionMes
 							<%
 							String trashURLString = HttpUtil.setParameter(trashURL.toString(), "doAsGroupId", String.valueOf(themeDisplay.getScopeGroupId()));
 
-							if (Validator.isNull(themeDisplay.getControlPanelCategory())) {
+							if (!layout.isTypeControlPanel() || Validator.isNull(themeDisplay.getControlPanelCategory())) {
 								trashURLString = HttpUtil.setParameter(trashURLString, "controlPanelCategory", "current_site");
 							}
 							%>

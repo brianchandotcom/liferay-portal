@@ -53,7 +53,7 @@ CKEDITOR.dialog.add(
 					}
 				);
 
-				scriptNode.setText(TPL_SCRIPT_PREFIX + textScript + TPL_SCRIPT_SUFFIX);
+				editor.plugins.media.replaceScriptContent(audioNode, TPL_SCRIPT_PREFIX + textScript + TPL_SCRIPT_SUFFIX);
 			}
 		}
 

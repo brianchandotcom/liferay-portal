@@ -795,8 +795,7 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 				if ((invokerPortlet != null) &&
 					invokerPortlet.isFacesPortlet()) {
 
-					if ((portlet.isRequiresNamespacedParameters() &&
-						name.startsWith(portletNamespace)) ||
+					if (name.startsWith(portletNamespace) ||
 						!portlet.isRequiresNamespacedParameters()) {
 
 						dynamicRequest.setParameterValues(name, values);
@@ -812,7 +811,6 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 						dynamicRequest.setParameterValues(realName, values);
 					}
 				}
-
 			}
 		}
 		else {
@@ -951,7 +949,6 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 		String portletNamespace, String name) {
 
 		if (name.startsWith(portletNamespace)) {
-
 			name = name.substring(portletNamespace.length());
 		}
 

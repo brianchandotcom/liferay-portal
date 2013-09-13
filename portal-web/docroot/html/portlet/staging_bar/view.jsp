@@ -94,7 +94,7 @@ if (layout != null) {
 				<aui:nav-item cssClass="row-fluid">
 					<c:if test="<%= (layoutSetBranches != null) && (layoutSetBranches.size() >= 1) %>">
 						<div class="site-pages-variation-options span6">
-							<c:if test="<%= group.isStagingGroup() || layoutSetBranches.size() <= _MAX_INLINE_BRANCHES %>">
+							<c:if test="<%= group.isStagingGroup() %>">
 								<h5>
 									<span class="site-pages-variation-label"><liferay-ui:message key="site-variations-for" /></span>
 
@@ -107,12 +107,7 @@ if (layout != null) {
 									for (int i = 0; i < layoutSetBranches.size(); i++) {
 										LayoutSetBranch curLayoutSetBranch = null;
 
-										if (layoutSetBranches.size() > _MAX_INLINE_BRANCHES) {
-											curLayoutSetBranch = layoutSetBranch;
-										}
-										else {
-											curLayoutSetBranch = layoutSetBranches.get(i);
-										}
+										curLayoutSetBranch = layoutSetBranches.get(i);
 
 										boolean selected = (group.isStagingGroup() || group.isStagedRemotely()) && (curLayoutSetBranch.getLayoutSetBranchId() == layoutRevision.getLayoutSetBranchId());
 
@@ -143,9 +138,6 @@ if (layout != null) {
 										</aui:option>
 
 									<%
-										if (layoutSetBranches.size() > _MAX_INLINE_BRANCHES) {
-											break;
-										}
 									}
 									%>
 
@@ -215,14 +207,9 @@ if (layout != null) {
 												for (int i = 0; i < layoutRevisions.size(); i ++) {
 													LayoutBranch curLayoutBranch = null;
 
-													if (layoutRevisions.size() > _MAX_INLINE_BRANCHES) {
-														curLayoutBranch = layoutBranch;
-													}
-													else {
-														LayoutRevision rootLayoutRevision = layoutRevisions.get(i);
+													LayoutRevision rootLayoutRevision = layoutRevisions.get(i);
 
-														curLayoutBranch = rootLayoutRevision.getLayoutBranch();
-													}
+													curLayoutBranch = rootLayoutRevision.getLayoutBranch();
 
 													boolean selected = (curLayoutBranch.getLayoutBranchId() == layoutRevision.getLayoutBranchId());
 												%>
@@ -239,9 +226,6 @@ if (layout != null) {
 													<aui:option label="<%= HtmlUtil.escape(curLayoutBranch.getName()) %>" selected="<%= selected %>" value="<%= layoutBranchURL %>" />
 
 												<%
-													if (layoutRevisions.size() > _MAX_INLINE_BRANCHES) {
-														break;
-													}
 												}
 												%>
 
@@ -260,43 +244,6 @@ if (layout != null) {
 												<div class="layout-revision-details" id="<portlet:namespace />layoutRevisionDetails">
 													<liferay-util:include page="/html/portlet/staging_bar/view_layout_revision_details.jsp" />
 												</div>
-
-												<c:if test="<%= layoutRevisions.size() > _MAX_INLINE_BRANCHES %>">
-													<p class="go-to-layout-branches-tab">
-														<liferay-ui:icon-menu cssClass="layoutset-branches-menu" direction="down" extended="<%= false %>" icon='<%= themeDisplay.getPathThemeImages() + "/common/signal_instance.png" %>' message="page-variations">
-
-															<%
-															for (int i = 0; i < layoutRevisions.size(); i ++) {
-																LayoutRevision rootLayoutRevision = layoutRevisions.get(i);
-
-																LayoutBranch curLayoutBranch = rootLayoutRevision.getLayoutBranch();
-
-																boolean selected = (rootLayoutRevision.getLayoutBranchId() == layoutRevision.getLayoutBranchId());
-															%>
-
-																<portlet:actionURL var="rootLayoutRevisionURL">
-																	<portlet:param name="struts_action" value="/dockbar/edit_layouts" />
-																	<portlet:param name="<%= Constants.CMD %>" value="select_layout_branch" />
-																	<portlet:param name="redirect" value="<%= stagingFriendlyURL %>" />
-																	<portlet:param name="groupId" value="<%= String.valueOf(rootLayoutRevision.getGroupId()) %>" />
-																	<portlet:param name="layoutSetBranchId" value="<%= String.valueOf(rootLayoutRevision.getLayoutSetBranchId()) %>" />
-																	<portlet:param name="layoutBranchId" value="<%= String.valueOf(rootLayoutRevision.getLayoutBranchId()) %>" />
-																</portlet:actionURL>
-
-																<liferay-ui:icon
-																	cssClass='<%= selected ? "disabled" : StringPool.BLANK %>'
-																	image='<%= selected ? "../arrows/01_right" : "copy"  %>'
-																	message="<%= HtmlUtil.escape(curLayoutBranch.getName()) %>"
-																	url="<%= selected ? null : rootLayoutRevisionURL %>"
-																/>
-
-															<%
-															}
-															%>
-
-														</liferay-ui:icon-menu>
-													</p>
-												</c:if>
 											</div>
 										</c:if>
 
@@ -472,39 +419,6 @@ if (layout != null) {
 							</c:if>
 						</c:otherwise>
 					</c:choose>
-
-					<c:if test="<%= (layoutSetBranches != null) && (layoutSetBranches.size() > _MAX_INLINE_BRANCHES) %>">
-						<div class="">
-							<liferay-ui:icon-menu cssClass="layoutset-branches-menu" direction="down" extended="<%= false %>" icon='<%= themeDisplay.getPathThemeImages() + "/common/staging.png" %>' message='<%= LanguageUtil.format(pageContext, "site-pages-variations-x", layoutSetBranches.size()) %>'>
-
-								<%
-								for (LayoutSetBranch curLayoutSetBranch : layoutSetBranches) {
-									boolean selected = group.isStagingGroup() && (layoutRevision != null) && (curLayoutSetBranch.getLayoutSetBranchId() == layoutRevision.getLayoutSetBranchId());
-								%>
-
-									<portlet:actionURL var="layoutSetBranchURL">
-										<portlet:param name="struts_action" value="/dockbar/edit_layouts" />
-										<portlet:param name="<%= Constants.CMD %>" value="select_layout_set_branch" />
-										<portlet:param name="redirect" value="<%= stagingFriendlyURL %>" />
-										<portlet:param name="groupId" value="<%= String.valueOf(curLayoutSetBranch.getGroupId()) %>" />
-										<portlet:param name="privateLayout" value="<%= String.valueOf(layout.isPrivateLayout()) %>" />
-										<portlet:param name="layoutSetBranchId" value="<%= String.valueOf(curLayoutSetBranch.getLayoutSetBranchId()) %>" />
-									</portlet:actionURL>
-
-									<liferay-ui:icon
-										cssClass='<%= selected ? "disabled" : StringPool.BLANK %>'
-										image='<%= selected ? "../arrows/01_right" : "copy"  %>'
-										message="<%= HtmlUtil.escape(curLayoutSetBranch.getName()) %>"
-										url="<%= selected ? null : layoutSetBranchURL %>"
-									/>
-
-								<%
-								}
-								%>
-
-							</liferay-ui:icon-menu>
-						</div>
-					</c:if>
 				</aui:nav-item>
 
 				<aui:script use="aui-base">
@@ -561,7 +475,3 @@ if (layout != null) {
 		</aui:script>
 	</c:if>
 </c:if>
-
-<%!
-private static final int _MAX_INLINE_BRANCHES = 8;
-%>

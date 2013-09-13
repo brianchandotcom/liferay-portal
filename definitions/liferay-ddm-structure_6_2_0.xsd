@@ -53,7 +53,7 @@
 	<xs:group name="dynamic-element-group">
 		<xs:sequence>
 			<xs:element ref="dynamic-element" minOccurs="0" maxOccurs="unbounded" />
-			<xs:element ref="meta-data" />
+			<xs:element ref="meta-data" maxOccurs="unbounded" />
 		</xs:sequence>
 	</xs:group>
 	<xs:simpleType name="data-type">

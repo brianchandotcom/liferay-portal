@@ -22,7 +22,6 @@ import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.util.GroupTestUtil;
 import com.liferay.portal.util.TestPropsValues;
-import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalFolder;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
@@ -129,7 +128,8 @@ public class VerifyJournalTest extends BaseVerifyTestCase {
 			group.getGroupId(), parentFolder.getFolderId(),
 			ServiceTestUtil.randomString());
 
-		DLAppServiceUtil.moveFolderToTrash(parentFolder.getFolderId());
+		JournalFolderLocalServiceUtil.moveFolderToTrash(
+			TestPropsValues.getUserId(), parentFolder.getFolderId());
 
 		JournalFolderLocalServiceUtil.deleteFolder(
 			grandparentFolder.getFolderId(), false);

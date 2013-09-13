@@ -267,4 +267,8 @@ public interface UserNotificationDeliveryLocalService extends BaseLocalService,
 		int notificationType, int deliveryType, boolean deliver)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
+
+	public com.liferay.portal.model.UserNotificationDelivery updateUserNotificationDelivery(
+		long userNotificationDeliveryId, boolean isDeliver)
+		throws com.liferay.portal.kernel.exception.SystemException;
 }

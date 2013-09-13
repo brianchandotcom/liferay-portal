@@ -324,6 +324,14 @@ public class UserNotificationDeliveryLocalServiceWrapper
 			portletId, classNameId, notificationType, deliveryType, deliver);
 	}
 
+	@Override
+	public com.liferay.portal.model.UserNotificationDelivery updateUserNotificationDelivery(
+		long userNotificationDeliveryId, boolean isDeliver)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _userNotificationDeliveryLocalService.updateUserNotificationDelivery(userNotificationDeliveryId,
+			isDeliver);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

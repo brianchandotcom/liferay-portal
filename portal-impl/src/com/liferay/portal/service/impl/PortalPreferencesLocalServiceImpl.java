@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.PortalPreferences;
 import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.service.base.PortalPreferencesLocalServiceBaseImpl;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.PortalPreferencesImpl;
 import com.liferay.portlet.PortalPreferencesWrapper;
 import com.liferay.portlet.PortalPreferencesWrapperCacheUtil;
@@ -114,8 +113,7 @@ public class PortalPreferencesLocalServiceImpl
 		String dbType = db.getType();
 
 		if (!dbType.equals(DB.TYPE_HYPERSONIC)) {
-			return doGetPreferences(
-				ownerId, ownerType, defaultPreferences, PropsValues.TCK_URL);
+			return doGetPreferences(ownerId, ownerType, defaultPreferences);
 		}
 
 		StringBundler sb = new StringBundler(4);
@@ -133,8 +131,7 @@ public class PortalPreferencesLocalServiceImpl
 		lock.lock();
 
 		try {
-			return doGetPreferences(
-				ownerId, ownerType, defaultPreferences, PropsValues.TCK_URL);
+			return doGetPreferences(ownerId, ownerType, defaultPreferences);
 		}
 		finally {
 			lock.unlock();
@@ -206,8 +203,7 @@ public class PortalPreferencesLocalServiceImpl
 	}
 
 	protected PortletPreferences doGetPreferences(
-			long ownerId, int ownerType, String defaultPreferences,
-			boolean strict)
+			long ownerId, int ownerType, String defaultPreferences)
 		throws SystemException {
 
 		PortalPreferencesWrapper portalPreferencesWrapper =
@@ -221,7 +217,7 @@ public class PortalPreferencesLocalServiceImpl
 			portalPreferencesPersistence.fetchByO_O(ownerId, ownerType);
 
 		if (portalPreferences == null) {
-			if (strict && Validator.isNull(defaultPreferences)) {
+			if (Validator.isNull(defaultPreferences)) {
 				return new PortalPreferencesWrapper(
 					new PortalPreferencesImpl());
 			}

@@ -24,6 +24,7 @@
 
 		<execute action="Home#assertClick" locator-key1="PAGE" value1="${pageName}" />
 
+		<execute action="PGStaging#assertClick" locator-key1="STAGING_DROP_DOWN_BUTTON" value1="Staging" />
 		<execute action="PGStaging#assertClick" locator-key1="STAGING_MENU_SUBMIT_FOR_PUBLICATION_BUTTON" value1="Submit for Publication" />
 		<execute action="PGStaging#assertTextEquals" locator-key1="STAGING_MENU_STATUS" value1="${workflowStatus}" />
 	</command>

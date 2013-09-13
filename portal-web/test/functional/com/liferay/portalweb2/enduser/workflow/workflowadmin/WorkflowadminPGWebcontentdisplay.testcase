@@ -1,7 +1,7 @@
 <definition>
 	<var name="pageName" value="Web Content Display Page" />
 	<var name="portletName" value="Web Content Display" />
-	<var name="workflowAssetType" value="Web Content" />
+	<var name="workflowAssetType" value="Web Content Article" />
 
 	<set-up>
 		<execute macro="User#firstLoginPG" />

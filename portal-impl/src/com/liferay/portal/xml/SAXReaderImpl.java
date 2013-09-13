@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.xml.ProcessingInstruction;
 import com.liferay.portal.kernel.xml.QName;
 import com.liferay.portal.kernel.xml.SAXReader;
 import com.liferay.portal.kernel.xml.Text;
+import com.liferay.portal.kernel.xml.XMLSchema;
 import com.liferay.portal.kernel.xml.XPath;
 import com.liferay.portal.util.ClassLoaderUtil;
 import com.liferay.portal.util.EntityResolver;
@@ -444,6 +445,36 @@ public class SAXReaderImpl implements SAXReader {
 	}
 
 	@Override
+	public Document read(String xml, XMLSchema xmlSchema)
+		throws DocumentException {
+
+		ClassLoader classLoader = getClass().getClassLoader();
+
+		ClassLoader contextClassLoader =
+			ClassLoaderUtil.getContextClassLoader();
+
+		try {
+			if (contextClassLoader != classLoader) {
+				ClassLoaderUtil.setContextClassLoader(classLoader);
+			}
+
+			org.dom4j.io.SAXReader saxReader = getSAXReader(xmlSchema);
+
+			Reader reader = new XMLSafeReader(xml);
+
+			return new DocumentImpl(saxReader.read(reader));
+		}
+		catch (org.dom4j.DocumentException de) {
+			throw new DocumentException(de.getMessage(), de);
+		}
+		finally {
+			if (contextClassLoader != classLoader) {
+				ClassLoaderUtil.setContextClassLoader(contextClassLoader);
+			}
+		}
+	}
+
+	@Override
 	public Document read(URL url) throws DocumentException {
 		return read(url, false);
 	}
@@ -553,6 +584,35 @@ public class SAXReaderImpl implements SAXReader {
 		return reader;
 	}
 
+	protected org.dom4j.io.SAXReader getSAXReader(XMLSchema xmlSchema) {
+		boolean validate = true;
+
+		if (!PropsValues.XML_VALIDATION_ENABLED) {
+			validate = false;
+		}
+
+		org.dom4j.io.SAXReader saxReader = getSAXReader(validate);
+
+		if ((xmlSchema == null) || (validate == false)) {
+			return saxReader;
+		}
+
+		try {
+			saxReader.setProperty(
+				_PROPERTY_SCHEMA_LANGUAGE, xmlSchema.getSchemaLanguage());
+			saxReader.setProperty(
+				_PROPERTY_SCHEMA_SOURCE, xmlSchema.getSchemaSource());
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"XSD validation is disabled because " + e.getMessage());
+			}
+		}
+
+		return saxReader;
+	}
+
 	private static final String _FEATURES_DYNAMIC =
 		"http://apache.org/xml/features/validation/dynamic";
 
@@ -573,6 +633,12 @@ public class SAXReaderImpl implements SAXReader {
 
 	private static final String _FEATURES_VALIDATION_SCHEMA_FULL_CHECKING =
 		"http://apache.org/xml/features/validation/schema-full-checking";
+
+	private static final String _PROPERTY_SCHEMA_LANGUAGE =
+		"http://java.sun.com/xml/jaxp/properties/schemaLanguage";
+
+	private static final String _PROPERTY_SCHEMA_SOURCE =
+		"http://java.sun.com/xml/jaxp/properties/schemaSource";
 
 	private static Log _log = LogFactoryUtil.getLog(SAXReaderImpl.class);
 

@@ -63,4 +63,9 @@ public class BaseDDLServiceTestCase  extends BaseDDMServiceTestCase {
 			DDLRecordSetConstants.SCOPE_DYNAMIC_DATA_LISTS, serviceContext);
 	}
 
+	@Override
+	protected String getBasePath() {
+		return "com/liferay/portlet/dynamicdatalists/dependencies/";
+	}
+
 }

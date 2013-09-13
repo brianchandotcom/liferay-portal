@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+
+<root available-locales="en_US" default-locale="en_US">
+    <dynamic-element dataType="link-to-page" fieldNamespace="ddm" indexType="" name="link_to_page" repeatable="true" required="false" type="ddm-link-to-page">
+        <meta-data locale="en_US">
+            <entry name="label"><![CDATA[Link to Page Field]]></entry>
+        </meta-data>
+    </dynamic-element>
+</root>

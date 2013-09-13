@@ -91,6 +91,9 @@ public interface SAXReader {
 	public Document read(String xml, boolean validate)
 		throws DocumentException;
 
+	public Document read(String xml, XMLSchema xmlSchema)
+		throws DocumentException;
+
 	public Document read(URL url) throws DocumentException;
 
 	public Document read(URL url, boolean validate) throws DocumentException;

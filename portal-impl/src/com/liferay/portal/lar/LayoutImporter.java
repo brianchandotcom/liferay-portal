@@ -24,8 +24,6 @@ import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.NoSuchLayoutPrototypeException;
 import com.liferay.portal.NoSuchLayoutSetPrototypeException;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocal;
-import com.liferay.portal.kernel.cluster.ClusterExecutorUtil;
-import com.liferay.portal.kernel.cluster.ClusterRequest;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
 import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
@@ -43,22 +41,17 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.ColorSchemeFactoryUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.MethodHandler;
-import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.xml.Attribute;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
@@ -71,7 +64,6 @@ import com.liferay.portal.model.LayoutPrototype;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.LayoutSetPrototype;
 import com.liferay.portal.model.Portlet;
-import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
@@ -85,19 +77,13 @@ import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.LayoutUtil;
 import com.liferay.portal.service.persistence.UserUtil;
 import com.liferay.portal.servlet.filters.cache.CacheUtil;
-import com.liferay.portal.theme.ThemeLoader;
-import com.liferay.portal.theme.ThemeLoaderFactory;
-import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journalcontent.util.JournalContentUtil;
 import com.liferay.portlet.sites.util.Sites;
 
 import java.io.File;
-import java.io.InputStream;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -211,10 +197,7 @@ public class LayoutImporter {
 			parameterMap, PortletDataHandlerKeys.CATEGORIES);
 		boolean importPermissions = MapUtil.getBoolean(
 			parameterMap, PortletDataHandlerKeys.PERMISSIONS);
-		boolean importTheme = MapUtil.getBoolean(
-			parameterMap, PortletDataHandlerKeys.THEME);
-		boolean importThemeSettings = MapUtil.getBoolean(
-			parameterMap, PortletDataHandlerKeys.THEME_REFERENCE);
+
 		boolean importLogo = MapUtil.getBoolean(
 			parameterMap, PortletDataHandlerKeys.LOGO);
 		boolean importLayoutSetSettings = MapUtil.getBoolean(
@@ -240,7 +223,6 @@ public class LayoutImporter {
 			_log.debug("Delete portlet data " + deletePortletData);
 			_log.debug("Import categories " + importCategories);
 			_log.debug("Import permissions " + importPermissions);
-			_log.debug("Import theme " + importTheme);
 		}
 
 		StopWatch stopWatch = null;
@@ -284,8 +266,6 @@ public class LayoutImporter {
 		portletDataContext.setPrivateLayout(privateLayout);
 
 		// Zip
-
-		InputStream themeZip = null;
 
 		validateFile(portletDataContext);
 
@@ -413,30 +393,6 @@ public class LayoutImporter {
 
 		// Look and feel
 
-		if (importTheme) {
-			themeZip = portletDataContext.getZipEntryAsInputStream("theme.zip");
-		}
-
-		// Look and feel
-
-		String themeId = layoutSet.getThemeId();
-		String colorSchemeId = layoutSet.getColorSchemeId();
-
-		if (importThemeSettings) {
-			Attribute themeIdAttribute = _headerElement.attribute("theme-id");
-
-			if (themeIdAttribute != null) {
-				themeId = themeIdAttribute.getValue();
-			}
-
-			Attribute colorSchemeIdAttribute = _headerElement.attribute(
-				"color-scheme-id");
-
-			if (colorSchemeIdAttribute != null) {
-				colorSchemeId = colorSchemeIdAttribute.getValue();
-			}
-		}
-
 		if (importLogo) {
 			String logoPath = _headerElement.attributeValue("logo-path");
 
@@ -462,6 +418,8 @@ public class LayoutImporter {
 			}
 		}
 
+		_themeImporter.importTheme(portletDataContext, layoutSet);
+
 		if (importLayoutSetSettings) {
 			String settings = GetterUtil.getString(
 				_headerElement.elementText("settings"));
@@ -469,28 +427,6 @@ public class LayoutImporter {
 			LayoutSetLocalServiceUtil.updateSettings(
 				groupId, privateLayout, settings);
 		}
-
-		String css = GetterUtil.getString(_headerElement.elementText("css"));
-
-		if (themeZip != null) {
-			String importThemeId = importTheme(layoutSet, themeZip);
-
-			if (importThemeId != null) {
-				themeId = importThemeId;
-				colorSchemeId =
-					ColorSchemeFactoryUtil.getDefaultRegularColorSchemeId();
-			}
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Importing theme takes " + stopWatch.getTime() + " ms");
-			}
-		}
-
-		boolean wapTheme = false;
-
-		LayoutSetLocalServiceUtil.updateLookAndFeel(
-			groupId, privateLayout, themeId, colorSchemeId, css, wapTheme);
 
 		// Read asset categories, asset tags, comments, locks, permissions, and
 		// ratings entries to make them available to the data handlers through
@@ -916,89 +852,6 @@ public class LayoutImporter {
 		}
 	}
 
-	protected String importTheme(LayoutSet layoutSet, InputStream themeZip)
-		throws Exception {
-
-		ThemeLoader themeLoader = ThemeLoaderFactory.getDefaultThemeLoader();
-
-		if (themeLoader == null) {
-			_log.error("No theme loaders are deployed");
-
-			return null;
-		}
-
-		ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(themeZip);
-
-		String lookAndFeelXML = zipReader.getEntryAsString(
-			"liferay-look-and-feel.xml");
-
-		String themeId = String.valueOf(layoutSet.getGroupId());
-
-		if (layoutSet.isPrivateLayout()) {
-			themeId += "-private";
-		}
-		else {
-			themeId += "-public";
-		}
-
-		if (PropsValues.THEME_LOADER_NEW_THEME_ID_ON_IMPORT) {
-			Date now = new Date();
-
-			themeId += "-" + Time.getShortTimestamp(now);
-		}
-
-		String themeName = themeId;
-
-		lookAndFeelXML = StringUtil.replace(
-			lookAndFeelXML,
-			new String[] {
-				"[$GROUP_ID$]", "[$THEME_ID$]", "[$THEME_NAME$]"
-			},
-			new String[] {
-				String.valueOf(layoutSet.getGroupId()), themeId, themeName
-			}
-		);
-
-		FileUtil.deltree(
-			themeLoader.getFileStorage() + StringPool.SLASH + themeId);
-
-		List<String> zipEntries = zipReader.getEntries();
-
-		for (String zipEntry : zipEntries) {
-			String key = zipEntry;
-
-			if (key.equals("liferay-look-and-feel.xml")) {
-				FileUtil.write(
-					themeLoader.getFileStorage() + StringPool.SLASH + themeId +
-						StringPool.SLASH + key,
-					lookAndFeelXML.getBytes());
-			}
-			else {
-				InputStream is = zipReader.getEntryAsInputStream(zipEntry);
-
-				FileUtil.write(
-					themeLoader.getFileStorage() + StringPool.SLASH + themeId +
-						StringPool.SLASH + key,
-					is);
-			}
-		}
-
-		themeLoader.loadThemes();
-
-		ClusterRequest clusterRequest = ClusterRequest.createMulticastRequest(
-			_loadThemesMethodHandler, true);
-
-		clusterRequest.setFireAndForget(true);
-
-		ClusterExecutorUtil.execute(clusterRequest);
-
-		themeId +=
-			PortletConstants.WAR_SEPARATOR +
-				themeLoader.getServletContextName();
-
-		return PortalUtil.getJsSafePortletId(themeId);
-	}
-
 	protected void readXML(PortletDataContext portletDataContext)
 		throws Exception {
 
@@ -1154,9 +1007,6 @@ public class LayoutImporter {
 
 	private static Log _log = LogFactoryUtil.getLog(LayoutImporter.class);
 
-	private static MethodHandler _loadThemesMethodHandler = new MethodHandler(
-		new MethodKey(ThemeLoaderFactory.class, "loadThemes"));
-
 	private DeletionSystemEventImporter _deletionSystemEventImporter =
 		new DeletionSystemEventImporter();
 	private Element _headerElement;
@@ -1165,5 +1015,6 @@ public class LayoutImporter {
 	private PermissionImporter _permissionImporter = new PermissionImporter();
 	private PortletImporter _portletImporter = new PortletImporter();
 	private Element _rootElement;
+	private ThemeImporter _themeImporter = new ThemeImporter();
 
 }

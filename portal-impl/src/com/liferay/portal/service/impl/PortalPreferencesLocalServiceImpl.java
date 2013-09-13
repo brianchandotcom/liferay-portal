@@ -217,11 +217,6 @@ public class PortalPreferencesLocalServiceImpl
 			portalPreferencesPersistence.fetchByO_O(ownerId, ownerType);
 
 		if (portalPreferences == null) {
-			if (Validator.isNull(defaultPreferences)) {
-				return new PortalPreferencesWrapper(
-					new PortalPreferencesImpl());
-			}
-
 			portalPreferences =
 				portalPreferencesLocalService.addPortalPreferences(
 					ownerId, ownerType, defaultPreferences);

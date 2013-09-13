@@ -162,10 +162,8 @@ public class LDAPAuth implements Authenticator {
 				if (_log.isDebugEnabled()) {
 					_log.debug(
 						"Failed to bind to the LDAP server with userDN " +
-							userDN + " and password " + password);
+							userDN + " and password " + password, e);
 				}
-
-				_log.error("Failed to bind to the LDAP server", e);
 
 				ldapAuthResult.setAuthenticated(false);
 				ldapAuthResult.setErrorMessage(e.getMessage());
@@ -199,8 +197,8 @@ public class LDAPAuth implements Authenticator {
 				else {
 					ldapAuthResult.setAuthenticated(false);
 
-					if (_log.isWarnEnabled()) {
-						_log.warn(
+					if (_log.isDebugEnabled()) {
+						_log.debug(
 							"Passwords do not match for userDN " + userDN);
 					}
 				}

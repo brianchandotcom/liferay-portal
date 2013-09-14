@@ -46,7 +46,7 @@ if (!themeDisplay.isSignedIn() && layout.isPublicLayout()) {
 	%>
 
 			<c:if test="<%= availableLocale.equals(defaultLocale) %>">
-				<link href="<%= PortalUtil.getCanonicalURL(completeURL, themeDisplay, layout) %>" hreflang="x-default" rel="alternate" />
+				<link href="<%= canonicalURL %>" hreflang="x-default" rel="alternate" />
 			</c:if>
 
 			<link href="<%= HtmlUtil.escapeAttribute(PortalUtil.getAlternateURL(canonicalURL, themeDisplay, availableLocale, layout)) %>" hreflang="<%= LocaleUtil.toW3cLanguageId(availableLocale) %>" rel="alternate" />

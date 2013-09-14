@@ -321,7 +321,7 @@ public class GetterUtil {
 	public static double get(String value, double defaultValue) {
 		if (value != null) {
 			try {
-				return Double.parseDouble(_trim(value));
+				return Double.parseDouble(value.trim());
 			}
 			catch (Exception e) {
 			}
@@ -336,7 +336,7 @@ public class GetterUtil {
 		}
 
 		try {
-			return Float.parseFloat(_trim(value));
+			return Float.parseFloat(value.trim());
 		}
 		catch (Exception e) {
 		}
@@ -349,7 +349,7 @@ public class GetterUtil {
 			return defaultValue;
 		}
 
-		return _parseInt(_trim(value), defaultValue);
+		return _parseInt(value.trim(), defaultValue);
 	}
 
 	public static long get(String value, long defaultValue) {
@@ -357,7 +357,7 @@ public class GetterUtil {
 			return defaultValue;
 		}
 
-		return _parseLong(_trim(value), defaultValue);
+		return _parseLong(value.trim(), defaultValue);
 	}
 
 	public static short get(String value, short defaultValue) {
@@ -365,7 +365,7 @@ public class GetterUtil {
 			return defaultValue;
 		}
 
-		return _parseShort(_trim(value), defaultValue);
+		return _parseShort(value.trim(), defaultValue);
 	}
 
 	public static String get(String value, String defaultValue) {
@@ -1234,30 +1234,6 @@ public class GetterUtil {
 		}
 
 		return (short)i;
-	}
-
-	private static String _trim(String value) {
-		value = value.trim();
-
-		int length = value.length();
-
-		StringBuilder sb = new StringBuilder(length);
-
-		for (int i = 0; i < length; i++) {
-			char c = value.charAt(i);
-
-			if (Character.isDigit(c) ||
-				((c == CharPool.DASH) &&
-				 ((i == 0) || (value.charAt(i - 1) == CharPool.UPPER_CASE_E) ||
-				  (value.charAt(i - 1) == CharPool.LOWER_CASE_E))) ||
-				(c == CharPool.PERIOD) || (c == CharPool.UPPER_CASE_E) ||
-				(c == CharPool.LOWER_CASE_E)) {
-
-				sb.append(c);
-			}
-		}
-
-		return sb.toString();
 	}
 
 }

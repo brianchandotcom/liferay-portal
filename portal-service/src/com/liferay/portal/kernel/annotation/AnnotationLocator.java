@@ -174,13 +174,13 @@ public class AnnotationLocator {
 	private static void _mergeAnnotations(
 		Annotation[] sourceAnnotations, List<Annotation> targetAnnotationList) {
 
-		merge:
+		Merge :
 		for (Annotation sourceAnnotation : sourceAnnotations) {
 			for (Annotation targetAnnotation : targetAnnotationList) {
 				if (sourceAnnotation.annotationType() ==
 						targetAnnotation.annotationType()) {
 
-					continue merge;
+					continue Merge;
 				}
 			}
 

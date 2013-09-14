@@ -254,6 +254,21 @@ public class AssetPublisherUtil {
 			preferences, plid, portletId, assetEntries);
 	}
 
+	public static void processQuery(
+			User user, PortletPreferences preferences,
+			AssetEntryQuery assetEntryQuery)
+		throws Exception {
+
+		getAssetPublisher().processQuery(user, preferences, assetEntryQuery);
+	}
+
+	public static void registerAssetQueryProcessor(
+		String name, AssetQueryProcessor assetQueryProcessor) {
+
+		getAssetPublisher().registerAssetQueryProcessor(
+				name, assetQueryProcessor);
+	}
+
 	public static void removeAndStoreSelection(
 			List<String> assetEntryUuids, PortletPreferences portletPreferences)
 		throws Exception {
@@ -276,6 +291,13 @@ public class AssetPublisherUtil {
 
 		getAssetPublisher().subscribe(
 			permissionChecker, groupId, plid, portletId);
+	}
+
+	public static void unregisterAssetQueryProcessor(
+		String assetQueryProcessorClassName) {
+
+		getAssetPublisher().unregisterAssetQueryProcessor(
+			assetQueryProcessorClassName);
 	}
 
 	public static void unsubscribe(

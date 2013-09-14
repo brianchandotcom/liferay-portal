@@ -32,7 +32,7 @@ if (themeDisplay.isStatePopUp() || layoutTypePortlet.hasStateMax()) {
 		velocityTemplateContent = LayoutTemplateLocalServiceUtil.getContent("max", true, theme.getThemeId());
 	}
 
-	if (Validator.isNotNull(velocityTemplateId) && Validator.isNotNull(velocityTemplateContent)) {
+	if (Validator.isNotNull(velocityTemplateContent)) {
 		RuntimePageUtil.processTemplate(pageContext, ppid, new StringTemplateResource(velocityTemplateId, velocityTemplateContent));
 	}
 }

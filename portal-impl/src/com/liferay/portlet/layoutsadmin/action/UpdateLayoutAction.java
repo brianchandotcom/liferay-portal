@@ -288,11 +288,14 @@ public class UpdateLayoutAction extends JSONAction {
 		long groupId = ParamUtil.getLong(request, "groupId");
 		boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 		long layoutId = ParamUtil.getLong(request, "layoutId");
+		long nextLayoutId = ParamUtil.getLong(request, "nextLayoutId");
+		long previousLayoutId = ParamUtil.getLong(request, "previousLayoutId");
 		int priority = ParamUtil.getInteger(request, "priority");
 
 		if (plid <= 0) {
 			LayoutServiceUtil.updatePriority(
-				groupId, privateLayout, layoutId, priority);
+				groupId, privateLayout, layoutId, nextLayoutId,
+				previousLayoutId);
 		}
 		else {
 			LayoutServiceUtil.updatePriority(plid, priority);

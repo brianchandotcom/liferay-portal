@@ -32,7 +32,7 @@ String controlPanelCategory = themeDisplay.getControlPanelCategory();
 				Map<String, List<Portlet>> categoriesMap = PortalUtil.getSiteAdministrationCategoriesMap(request);
 
 				if (!categoriesMap.isEmpty()) {
-					String currentSite = PortletCategoryKeys.CURRENT_SITE + StringPool.PERIOD;
+					String currentSite = PortletCategoryKeys.CURRENT_SITE.concat(StringPool.PERIOD);
 				%>
 
 					<ul class="unstyled site-administration-menu">

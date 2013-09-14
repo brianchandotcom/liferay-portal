@@ -329,7 +329,7 @@
 			javaScriptFiles = JavaScriptBundleUtil.getFileNames(PropsKeys.JAVASCRIPT_EVERYTHING_FILES);
 		}
 
-		String path = themeDisplay.getCDNHost() + themeDisplay.getPathJavaScript();
+		String path = themeDisplay.getCDNHost().concat(themeDisplay.getPathJavaScript());
 
 		for (String javaScriptFile : javaScriptFiles) {
 		%>

@@ -49,6 +49,7 @@ public class OutputData implements Mergeable<OutputData>, Serializable {
 
 	public StringBundler getData(String outputKey, String webKey) {
 		DataKey dataKey = new DataKey(outputKey, webKey);
+
 		return _dataMap.get(dataKey);
 	}
 
@@ -111,6 +112,7 @@ public class OutputData implements Mergeable<OutputData>, Serializable {
 
 	public void setData(String outputKey, String webKey, StringBundler sb) {
 		DataKey dataKey = new DataKey(outputKey, webKey);
+
 		_dataMap.put(dataKey, sb);
 	}
 

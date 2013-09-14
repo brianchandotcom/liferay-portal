@@ -57,7 +57,7 @@ public class RMISignatureTest {
 
 		Method[] methods = rmiClass.getDeclaredMethods();
 
-		Method:
+		Method :
 		for (Method method : methods) {
 			Class<?>[] exceptionTypes = method.getExceptionTypes();
 

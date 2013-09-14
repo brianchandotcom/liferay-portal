@@ -1581,6 +1581,20 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			groupId, privateLayout, layoutId, priority);
 	}
 
+	@Override
+	public Layout updatePriority(
+			long groupId, boolean privateLayout, long layoutId,
+			long nextLayoutId, long previousLayoutId)
+		throws PortalException, SystemException {
+
+		LayoutPermissionUtil.check(
+			getPermissionChecker(), groupId, privateLayout, layoutId,
+			ActionKeys.UPDATE);
+
+		return layoutLocalService.updatePriority(
+			groupId, privateLayout, layoutId, nextLayoutId, previousLayoutId);
+	}
+
 	/**
 	 * Updates the priority of the layout matching the primary key.
 	 *

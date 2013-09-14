@@ -117,6 +117,10 @@ public class LayoutStagingImpl implements LayoutStaging {
 		UnicodeProperties typeSettingsProperties =
 			group.getTypeSettingsProperties();
 
+		if (typeSettingsProperties.isEmpty()) {
+			return false;
+		}
+
 		boolean branchingEnabled = false;
 
 		if (privateLayout) {
@@ -128,8 +132,8 @@ public class LayoutStagingImpl implements LayoutStaging {
 				typeSettingsProperties.getProperty("branchingPublic"));
 		}
 
-		if (group.isStaged() && branchingEnabled) {
-			if (!group.isStagedRemotely() && !isStagingGroup) {
+		if (branchingEnabled && group.isStaged()) {
+			if (!isStagingGroup && !group.isStagedRemotely()) {
 				return false;
 			}
 

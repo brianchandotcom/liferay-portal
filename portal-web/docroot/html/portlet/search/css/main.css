@@ -232,6 +232,19 @@
 		padding: 5px 0;
 	}
 
+	.search-suggested-spelling {
+		margin: 0;
+
+		.suggested-keywords a {
+			font-size: 1.3em;
+		}
+
+		.changed-keyword {
+			font-weight: bold;
+			font-style: italic;
+		}
+	}
+
 	.section-title {
 		font-size: 1.3em;
 		font-weight: bold;
@@ -247,6 +260,10 @@
 .portlet-search.portlet-configuration {
 	.fieldset-content {
 		padding-top: 0.5em;
+	}
+
+	.options-container {
+		margin-left: 1.8em;
 	}
 
 	.search-configuration-text {

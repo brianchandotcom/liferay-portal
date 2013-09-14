@@ -329,10 +329,12 @@
 			javaScriptFiles = JavaScriptBundleUtil.getFileNames(PropsKeys.JAVASCRIPT_EVERYTHING_FILES);
 		}
 
+		String path = themeDisplay.getCDNHost() + themeDisplay.getPathJavaScript();
+
 		for (String javaScriptFile : javaScriptFiles) {
 		%>
 
-			<script src="<%= themeDisplay.getCDNHost() + themeDisplay.getPathJavaScript() %>/<%= javaScriptFile %>?t=<%= javaScriptLastModified %>" type="text/javascript"></script>
+			<script src="<%= path %>/<%= javaScriptFile %>?t=<%= javaScriptLastModified %>" type="text/javascript"></script>
 
 		<%
 		}

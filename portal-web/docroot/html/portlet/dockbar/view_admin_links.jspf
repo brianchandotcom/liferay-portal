@@ -21,19 +21,25 @@ String controlPanelCategory = themeDisplay.getControlPanelCategory();
 <c:if test="<%= (themeDisplay.isShowControlPanelIcon() || themeDisplay.isShowSiteAdministrationIcon()) && (!layout.getGroup().isControlPanel() || (Validator.isNotNull(controlPanelCategory) && controlPanelCategory.startsWith(PortletCategoryKeys.CURRENT_SITE))) %>">
 	<aui:nav-item cssClass="admin-links" dropdown="<%= true %>" id="adminLinks" label="admin">
 		<c:if test="<%= themeDisplay.isShowSiteAdministrationIcon() %>">
-			<aui:nav-item anchorId="siteAdministrationLink" href="<%= themeDisplay.getURLSiteAdministration() %>" iconClass="icon-cog" label="site-administration">
+
+			<%
+			String urlSiteAdministration = themeDisplay.getURLSiteAdministration();
+			%>
+
+			<aui:nav-item anchorId="siteAdministrationLink" href="<%= urlSiteAdministration %>" iconClass="icon-cog" label="site-administration">
 
 				<%
 				Map<String, List<Portlet>> categoriesMap = PortalUtil.getSiteAdministrationCategoriesMap(request);
 
 				if (!categoriesMap.isEmpty()) {
+					String currentSite = PortletCategoryKeys.CURRENT_SITE + StringPool.PERIOD;
 				%>
 
 					<ul class="unstyled site-administration-menu">
 
 						<%
 						for (String category : categoriesMap.keySet()) {
-							String url = HttpUtil.setParameter(themeDisplay.getURLSiteAdministration(), "controlPanelCategory", StringUtil.replace(category, PortletCategoryKeys.SITE_ADMINISTRATION, PortletCategoryKeys.CURRENT_SITE + StringPool.PERIOD));
+							String url = HttpUtil.setParameter(urlSiteAdministration, "controlPanelCategory", StringUtil.replace(category, PortletCategoryKeys.SITE_ADMINISTRATION, currentSite));
 						%>
 
 							<aui:nav-item anchorId="siteAdministrationLink" href="<%= url %>" iconClass="icon-chevron-right" label='<%= "category." + category %>'/>

@@ -40,11 +40,13 @@ if (!themeDisplay.isSignedIn() && layout.isPublicLayout()) {
 	Locale[] availableLocales = LanguageUtil.getAvailableLocales(themeDisplay.getSiteGroupId());
 
 	if (availableLocales.length > 1) {
+		Locale defaultLocale = LocaleUtil.getDefault();
+
 		for (Locale availableLocale : availableLocales) {
 	%>
 
-			<c:if test="<%= availableLocale.equals(LocaleUtil.getDefault()) %>">
-				<link href="<%= PortalUtil.getCanonicalURL(completeURL, themeDisplay, layout) %>" hreflang="x-default" rel="alternate" />
+			<c:if test="<%= availableLocale.equals(defaultLocale) %>">
+				<link href="<%= canonicalURL %>" hreflang="x-default" rel="alternate" />
 			</c:if>
 
 			<link href="<%= HtmlUtil.escapeAttribute(PortalUtil.getAlternateURL(canonicalURL, themeDisplay, availableLocale, layout)) %>" hreflang="<%= LocaleUtil.toW3cLanguageId(availableLocale) %>" rel="alternate" />

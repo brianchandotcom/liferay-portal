@@ -664,6 +664,77 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 	}
 
 	@Override
+	public void moveDependentsToTrash(long groupId, long threadId, int status)
+		throws PortalException, SystemException {
+
+		Set<Long> userIds = new HashSet<Long>();
+
+		List<MBMessage> messages = mbMessageLocalService.getThreadMessages(
+			threadId, WorkflowConstants.STATUS_ANY);
+
+		for (MBMessage message : messages) {
+			if (message.isDiscussion()) {
+				continue;
+			}
+
+			userIds.add(message.getUserId());
+
+			if (status == WorkflowConstants.STATUS_IN_TRASH) {
+
+				// Asset
+
+				if (message.getStatus() == WorkflowConstants.STATUS_APPROVED) {
+					assetEntryLocalService.updateVisible(
+						MBMessage.class.getName(), message.getMessageId(),
+						false);
+				}
+
+				// Indexer
+
+				Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+					MBMessage.class);
+
+				indexer.reindex(message);
+
+				// Workflow
+
+				if (message.getStatus() == WorkflowConstants.STATUS_PENDING) {
+					message.setStatus(WorkflowConstants.STATUS_DRAFT);
+
+					mbMessagePersistence.update(message);
+
+					workflowInstanceLinkLocalService.deleteWorkflowInstanceLink(
+						message.getCompanyId(), message.getGroupId(),
+						MBMessage.class.getName(), message.getMessageId());
+				}
+			}
+			else {
+
+				// Asset
+
+				if (message.getStatus() == WorkflowConstants.STATUS_APPROVED) {
+					assetEntryLocalService.updateVisible(
+						MBMessage.class.getName(), message.getMessageId(),
+						true);
+				}
+
+				// Indexer
+
+				Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+					MBMessage.class);
+
+				indexer.reindex(message);
+			}
+		}
+
+		// Statistics
+
+		for (long userId : userIds) {
+			mbStatsUserLocalService.updateStatsUser(groupId, userId);
+		}
+	}
+
+	@Override
 	public MBThread moveThread(long groupId, long categoryId, long threadId)
 		throws PortalException, SystemException {
 
@@ -793,6 +864,78 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		return updateStatus(
 			userId, thread.getThreadId(), WorkflowConstants.STATUS_IN_TRASH,
 			WorkflowConstants.STATUS_ANY);
+	}
+
+	@Override
+	public void restoreDependentsFromTrash(
+			long groupId, long threadId, int status)
+		throws PortalException, SystemException {
+
+		Set<Long> userIds = new HashSet<Long>();
+
+		List<MBMessage> messages = mbMessageLocalService.getThreadMessages(
+			threadId, WorkflowConstants.STATUS_ANY);
+
+		for (MBMessage message : messages) {
+			if (message.isDiscussion()) {
+				continue;
+			}
+
+			userIds.add(message.getUserId());
+
+			if (status == WorkflowConstants.STATUS_IN_TRASH) {
+
+				// Asset
+
+				if (message.getStatus() == WorkflowConstants.STATUS_APPROVED) {
+					assetEntryLocalService.updateVisible(
+						MBMessage.class.getName(), message.getMessageId(),
+						false);
+				}
+
+				// Indexer
+
+				Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+					MBMessage.class);
+
+				indexer.reindex(message);
+
+				// Workflow
+
+				if (message.getStatus() == WorkflowConstants.STATUS_PENDING) {
+					message.setStatus(WorkflowConstants.STATUS_DRAFT);
+
+					mbMessagePersistence.update(message);
+
+					workflowInstanceLinkLocalService.deleteWorkflowInstanceLink(
+						message.getCompanyId(), message.getGroupId(),
+						MBMessage.class.getName(), message.getMessageId());
+				}
+			}
+			else {
+
+				// Asset
+
+				if (message.getStatus() == WorkflowConstants.STATUS_APPROVED) {
+					assetEntryLocalService.updateVisible(
+						MBMessage.class.getName(), message.getMessageId(),
+						true);
+				}
+
+				// Indexer
+
+				Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+					MBMessage.class);
+
+				indexer.reindex(message);
+			}
+		}
+
+		// Statistics
+
+		for (long userId : userIds) {
+			mbStatsUserLocalService.updateStatsUser(groupId, userId);
+		}
 	}
 
 	@Override
@@ -1141,77 +1284,6 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			}
 
 			moveChildrenMessages(message, category, oldThreadId);
-		}
-	}
-
-	protected void updateDependentStatus(
-			long groupId, long threadId, int status)
-		throws PortalException, SystemException {
-
-		Set<Long> userIds = new HashSet<Long>();
-
-		List<MBMessage> messages = mbMessageLocalService.getThreadMessages(
-			threadId, WorkflowConstants.STATUS_ANY);
-
-		for (MBMessage message : messages) {
-			if (message.isDiscussion()) {
-				continue;
-			}
-
-			userIds.add(message.getUserId());
-
-			if (status == WorkflowConstants.STATUS_IN_TRASH) {
-
-				// Asset
-
-				if (message.getStatus() == WorkflowConstants.STATUS_APPROVED) {
-					assetEntryLocalService.updateVisible(
-						MBMessage.class.getName(), message.getMessageId(),
-						false);
-				}
-
-				// Indexer
-
-				Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-					MBMessage.class);
-
-				indexer.reindex(message);
-
-				// Workflow
-
-				if (message.getStatus() == WorkflowConstants.STATUS_PENDING) {
-					message.setStatus(WorkflowConstants.STATUS_DRAFT);
-
-					mbMessagePersistence.update(message);
-
-					workflowInstanceLinkLocalService.deleteWorkflowInstanceLink(
-						message.getCompanyId(), message.getGroupId(),
-						MBMessage.class.getName(), message.getMessageId());
-				}
-			}
-			else {
-
-				// Asset
-
-				if (message.getStatus() == WorkflowConstants.STATUS_APPROVED) {
-					assetEntryLocalService.updateVisible(
-						MBMessage.class.getName(), message.getMessageId(),
-						true);
-				}
-
-				// Indexer
-
-				Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-					MBMessage.class);
-
-				indexer.reindex(message);
-			}
-		}
-
-		// Statistics
-
-		for (long userId : userIds) {
-			mbStatsUserLocalService.updateStatsUser(groupId, userId);
 		}
 	}
 

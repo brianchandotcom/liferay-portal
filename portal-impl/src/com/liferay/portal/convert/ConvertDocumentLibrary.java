@@ -244,8 +244,8 @@ public class ConvertDocumentLibrary extends ConvertProcess {
 					migrateDLFileEntry(
 						mbMessage.getCompanyId(),
 						DLFolderConstants.getDataRepositoryId(
-							fileEntry.getRepositoryId(),
-							fileEntry.getFolderId()),
+							dlFileEntry.getRepositoryId(),
+							dlFileEntry.getFolderId()),
 						dlFileEntry);
 				}
 			}
@@ -290,8 +290,8 @@ public class ConvertDocumentLibrary extends ConvertProcess {
 					migrateDLFileEntry(
 						wikiPage.getCompanyId(),
 						DLFolderConstants.getDataRepositoryId(
-							fileEntry.getRepositoryId(),
-							fileEntry.getFolderId()),
+							dlFileEntry.getRepositoryId(),
+							dlFileEntry.getFolderId()),
 						dlFileEntry);
 				}
 			}

@@ -624,10 +624,27 @@ public class MBCategoryLocalServiceWrapper implements MBCategoryLocalService,
 	}
 
 	@Override
+	public void moveDependentsToTrash(com.liferay.portal.model.User user,
+		java.util.List<java.lang.Object> categoriesAndThreads)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_mbCategoryLocalService.moveDependentsToTrash(user, categoriesAndThreads);
+	}
+
+	@Override
 	public void restoreCategoryFromTrash(long userId, long categoryId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		_mbCategoryLocalService.restoreCategoryFromTrash(userId, categoryId);
+	}
+
+	@Override
+	public void restoreDependentFromTrash(com.liferay.portal.model.User user,
+		java.util.List<java.lang.Object> categoriesAndThreads)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_mbCategoryLocalService.restoreDependentFromTrash(user,
+			categoriesAndThreads);
 	}
 
 	@Override
@@ -666,15 +683,6 @@ public class MBCategoryLocalServiceWrapper implements MBCategoryLocalService,
 			outServerName, outServerPort, outUseSSL, outUserName, outPassword,
 			allowAnonymous, mailingListActive, mergeWithParentCategory,
 			serviceContext);
-	}
-
-	@Override
-	public void updateDependentStatus(com.liferay.portal.model.User user,
-		java.util.List<java.lang.Object> categoriesAndThreads, int status)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		_mbCategoryLocalService.updateDependentStatus(user,
-			categoriesAndThreads, status);
 	}
 
 	@Override

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.messaging.SynchronousDestination;
+import com.liferay.portal.kernel.messaging.proxy.MessagingProxy;
 import com.liferay.portal.kernel.nio.intraband.Datagram;
 import com.liferay.portal.kernel.nio.intraband.MockIntraband;
 import com.liferay.portal.kernel.nio.intraband.MockRegistrationReference;
@@ -120,7 +121,7 @@ public class IntrabandBridgeDestinationTest {
 	@Test
 	public void testSendMessage() throws ClassNotFoundException {
 
-		// Automatically create message routing bag
+		// Local message
 
 		final AtomicBoolean throwRuntimeException = new AtomicBoolean();
 
@@ -143,6 +144,18 @@ public class IntrabandBridgeDestinationTest {
 		_baseDestination.register(messageListener);
 
 		Message message = new Message();
+
+		message.put(MessagingProxy.LOCAL_MESSAGE, Boolean.TRUE);
+
+		_intrabandBridgeDestination.send(message);
+
+		Assert.assertNull(message.get(MessageRoutingBag.MESSAGE_ROUTING_BAG));
+
+		Assert.assertSame(message, messageReference.get());
+
+		// Automatically create message routing bag
+
+		message = new Message();
 
 		_intrabandBridgeDestination.send(message);
 

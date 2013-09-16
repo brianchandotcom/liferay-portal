@@ -97,7 +97,9 @@ public class ComboServlet extends HttpServlet {
 		}
 
 		if (modulePathsSet.size() == 0) {
-			response.sendError(HttpServletResponse.SC_BAD_REQUEST);
+			response.sendError(
+				HttpServletResponse.SC_BAD_REQUEST,
+				"Combo URL requires path sets");
 
 			return;
 		}

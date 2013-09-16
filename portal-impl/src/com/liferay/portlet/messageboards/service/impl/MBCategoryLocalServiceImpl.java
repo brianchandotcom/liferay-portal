@@ -589,7 +589,7 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 			if (object instanceof MBThread) {
 				MBThread thread = (MBThread)object;
 
-				if ((thread.getStatus() == WorkflowConstants.STATUS_IN_TRASH)) {
+				if (thread.getStatus() == WorkflowConstants.STATUS_IN_TRASH) {
 					continue;
 				}
 
@@ -653,7 +653,7 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 			if (object instanceof MBThread) {
 				MBThread thread = (MBThread)object;
 
-				if ((thread.getStatus() == WorkflowConstants.STATUS_IN_TRASH)) {
+				if (thread.getStatus() == WorkflowConstants.STATUS_IN_TRASH) {
 					continue;
 				}
 

@@ -113,21 +113,21 @@ List<LayoutRevision> rootLayoutRevisions = LayoutRevisionLocalServiceUtil.getChi
 						</liferay-ui:search-container-column-text>
 
 						<liferay-ui:search-container-column-text
-							buffer="buffer"
 							name="status"
 						>
 
+							<aui:model-context bean="<%= curLayoutRevision %>" model="<%= LayoutRevision.class %>" />
+
+							<%
+							int status = curLayoutRevision.getStatus();
+							%>
+
 							<c:choose>
 								<c:when test="<%= curLayoutRevision.isHead() %>">
-									<aui:workflow-status statusMessage="ready-for-publication" />
+									<aui:workflow-status showLabel="<%= false %>" status="<%= status %>" statusMessage="ready-for-publication" />
 								</c:when>
 								<c:otherwise>
-
-									<%
-									int status = curLayoutRevision.getStatus();
-									%>
-
-									<aui:workflow-status bean="<%= curLayoutRevision %>" status="<%= status %>" />
+									<aui:workflow-status showLabel="<%= false %>" status="<%= status %>" />
 								</c:otherwise>
 							</c:choose>
 

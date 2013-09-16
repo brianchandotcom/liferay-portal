@@ -244,23 +244,24 @@ CKEDITOR.plugins.add(
 		hasClass: function(attributeClass, target) {
 			return (attributeClass && attributeClass.indexOf(target) != -1);
 		},
-		
+
 		replaceScriptContent: function(divNode, scriptContent) {
-			
 			if (divNode.getChildCount() == 2) {
 				var scriptTmp = null;
-				
+
 				divNode.getChild(1).remove();
-				
-				AUI().use('aui-node',
-							function(A) {
-								var scriptNode = A.Node.create("<script type='text/javascript'>" + scriptContent + "</script>");
-								scriptTmp = new CKEDITOR.dom.element(scriptNode.getDOMNode());
-							}
+
+				AUI().use(
+					'aui-node',
+					function(A) {
+						var scriptNode = A.Node.create('<script type="text/javascript">' + scriptContent + '</script>');
+
+						scriptTmp = new CKEDITOR.dom.element(scriptNode.getDOM());
+					}
 				);
-				
+
 				divNode.append(scriptTmp);
-			}			
+			}
 		},
 
 		restoreElement: function(editor, instance, fakeImage, type) {

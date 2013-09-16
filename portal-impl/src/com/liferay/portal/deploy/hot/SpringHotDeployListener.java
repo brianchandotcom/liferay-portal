@@ -17,6 +17,7 @@ package com.liferay.portal.deploy.hot;
 import com.liferay.portal.kernel.deploy.hot.BaseHotDeployListener;
 import com.liferay.portal.kernel.deploy.hot.HotDeployEvent;
 import com.liferay.portal.kernel.deploy.hot.HotDeployException;
+import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil;
 import com.liferay.portal.spring.context.PortletContextLoaderListener;
 import com.liferay.portal.util.ClassLoaderUtil;
 
@@ -84,6 +85,8 @@ public class SpringHotDeployListener extends BaseHotDeployListener {
 		}
 
 		_contextLoaderListeners.put(servletContextName, contextLoaderListener);
+
+		JSONWebServiceActionsManagerUtil.registerServletContext(servletContext);
 	}
 
 	protected void doInvokeUndeploy(HotDeployEvent hotDeployEvent)
@@ -113,6 +116,9 @@ public class SpringHotDeployListener extends BaseHotDeployListener {
 		finally {
 			ClassLoaderUtil.setContextClassLoader(contextClassLoader);
 		}
+
+		JSONWebServiceActionsManagerUtil.unregisterServletContext(
+			servletContext);
 	}
 
 	private static Map<String, ContextLoaderListener> _contextLoaderListeners =

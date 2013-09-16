@@ -153,8 +153,8 @@ import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.ControlPanelEntry;
 import com.liferay.portlet.DefaultControlPanelEntryFactory;
+import com.liferay.portlet.assetpublisher.util.AssetEntryQueryProcessor;
 import com.liferay.portlet.assetpublisher.util.AssetPublisherUtil;
-import com.liferay.portlet.assetpublisher.util.AssetQueryProcessor;
 import com.liferay.portlet.documentlibrary.antivirus.AntivirusScanner;
 import com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerUtil;
 import com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerWrapper;
@@ -1723,9 +1723,9 @@ public class HookHotDeployListener
 					PropsKeys.ASSET_PUBLISHER_QUERY_PROCESSORS));
 
 			for (String assetQueryProcessorClassName : assetQueryProcessors) {
-				AssetQueryProcessor assetQueryProcessor =
-					(AssetQueryProcessor)newInstance(
-						portletClassLoader, AssetQueryProcessor.class,
+				AssetEntryQueryProcessor assetQueryProcessor =
+					(AssetEntryQueryProcessor)newInstance(
+						portletClassLoader, AssetEntryQueryProcessor.class,
 						assetQueryProcessorClassName);
 
 				AssetPublisherUtil.registerAssetQueryProcessor(

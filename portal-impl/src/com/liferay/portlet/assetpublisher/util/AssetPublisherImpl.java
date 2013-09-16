@@ -108,8 +108,8 @@ public class AssetPublisherImpl implements AssetPublisher {
 				PropsValues.ASSET_PUBLISHER_QUERY_PROCESSORS) {
 
 			try {
-				AssetQueryProcessor queryProcessor =
-					(AssetQueryProcessor)InstanceFactory.newInstance(
+				AssetEntryQueryProcessor queryProcessor =
+					(AssetEntryQueryProcessor)InstanceFactory.newInstance(
 						queryProcessorClassName);
 
 				registerAssetQueryProcessor(
@@ -1063,14 +1063,17 @@ public class AssetPublisherImpl implements AssetPublisher {
 			AssetEntryQuery assetEntryQuery)
 		throws Exception {
 
-		for (AssetQueryProcessor queryProcessor : _queryProcessors.values()) {
-			queryProcessor.adaptQuery(user, preferences, assetEntryQuery);
+		for (AssetEntryQueryProcessor queryProcessor :
+				_queryProcessors.values()) {
+
+			queryProcessor.adaptAssetEntryQuery(
+				user, preferences, assetEntryQuery);
 		}
 	}
 
 	@Override
 	public void registerAssetQueryProcessor(
-		String name, AssetQueryProcessor assetQueryProcessor) {
+		String name, AssetEntryQueryProcessor assetQueryProcessor) {
 
 		if (assetQueryProcessor == null) {
 			return;
@@ -1334,8 +1337,8 @@ public class AssetPublisherImpl implements AssetPublisher {
 
 	private static Log _log = LogFactoryUtil.getLog(AssetPublisherImpl.class);
 
-	private final Map<String, AssetQueryProcessor> _queryProcessors =
-		new ConcurrentHashMap<String, AssetQueryProcessor>();
+	private final Map<String, AssetEntryQueryProcessor> _queryProcessors =
+		new ConcurrentHashMap<String, AssetEntryQueryProcessor>();
 
 	private Accessor<AssetEntry, String> _titleAccessor =
 		new Accessor<AssetEntry, String>() {

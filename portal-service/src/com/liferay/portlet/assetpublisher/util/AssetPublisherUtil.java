@@ -263,7 +263,7 @@ public class AssetPublisherUtil {
 	}
 
 	public static void registerAssetQueryProcessor(
-		String name, AssetQueryProcessor assetQueryProcessor) {
+		String name, AssetEntryQueryProcessor assetQueryProcessor) {
 
 		getAssetPublisher().registerAssetQueryProcessor(
 				name, assetQueryProcessor);

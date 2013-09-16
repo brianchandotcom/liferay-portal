@@ -163,7 +163,7 @@ public interface AssetPublisher {
 		throws Exception;
 
 	public void registerAssetQueryProcessor(
-		String name, AssetQueryProcessor assetQueryProcessor);
+		String name, AssetEntryQueryProcessor assetQueryProcessor);
 
 	public void removeAndStoreSelection(
 			List<String> assetEntryUuids, PortletPreferences portletPreferences)

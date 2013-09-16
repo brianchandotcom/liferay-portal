@@ -25,9 +25,10 @@ import javax.portlet.PortletPreferences;
 /**
  * @author Jorge Ferrer
  */
-public class CustomUserAttributesQueryProcessor implements AssetQueryProcessor {
+public class CustomUserAttributesQueryProcessor
+	implements AssetEntryQueryProcessor {
 
-	public void adaptQuery(
+	public void adaptAssetEntryQuery(
 			User user, PortletPreferences preferences,
 			AssetEntryQuery assetEntryQuery)
 		throws Exception {

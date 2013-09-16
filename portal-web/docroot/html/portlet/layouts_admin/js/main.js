@@ -604,31 +604,31 @@ AUI.add(
 														click: function(event) {
 															event.domEvent.preventDefault();
 
-															var startDatePicker = Liferay.component(instance.NS + 'startDateDatePicker');
-															var startTimePicker = Liferay.component(instance.NS + 'startTimeTimePicker');
+															var startDatePicker = Liferay.component(instance.ns('startDateDatePicker'));
+															var startTimePicker = Liferay.component(instance.ns('startTimeTimePicker'));
 
-															var endDatePicker = Liferay.component(instance.NS + 'endDateDatePicker');
-															var endTimePicker = Liferay.component(instance.NS + 'endTimeTimePicker');
+															var endDatePicker = Liferay.component(instance.ns('endDateDatePicker'));
+															var endTimePicker = Liferay.component(instance.ns('endTimeTimePicker'));
 
-															var startTime = startTimePicker.getTime();
 															var startDate = startDatePicker.getDate();
+															var startTime = startTimePicker.getTime();
 
 															startDate.setHours(startTime.getHours());
 															startDate.setMinutes(startTime.getMinutes());
 															startDate.setSeconds(0);
 															startDate.setMilliseconds(0);
 
-															var endTime = endTimePicker.getTime();
 															var endDate = endDatePicker.getDate();
+															var endTime = endTimePicker.getTime();
 
 															endDate.setHours(endTime.getHours());
 															endDate.setMinutes(endTime.getMinutes());
 															endDate.setSeconds(0);
 															endDate.setMilliseconds(0);
 
-															var isGreater = A.Date.isGreater(endDate, startDate);
+															var endsLater = A.Date.isGreater(endDate, startDate);
 
-															if (isGreater) {
+															if (endsLater) {
 																instance._reloadForm();
 
 																rangeDialog.hide();
@@ -639,12 +639,11 @@ AUI.add(
 																		{
 																			closeText: false,
 																			content: Liferay.Language.get('end-date-must-be-greater-than-start-date') + '<button type="button" class="close">&times;</button>',
-																			toggleText: false,
 																			timeout: 10000,
-																			type: 'warning',
-																			useAnimation: true
+																			toggleText: false,
+																			type: 'warning'
 																		}
-																	)
+																	);
 																}
 
 																instance._notice.show();

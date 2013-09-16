@@ -1169,13 +1169,6 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	}
 
 	@Override
-	public com.liferay.portal.model.ContainerModel getTrashContainer()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _mbMessage.getTrashContainer();
-	}
-
-	@Override
 	public java.lang.String getWorkflowClassName() {
 		return _mbMessage.getWorkflowClassName();
 	}
@@ -1188,13 +1181,6 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	@Override
 	public boolean isFormatBBCode() {
 		return _mbMessage.isFormatBBCode();
-	}
-
-	@Override
-	public boolean isInTrashThread()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _mbMessage.isInTrashThread();
 	}
 
 	@Override

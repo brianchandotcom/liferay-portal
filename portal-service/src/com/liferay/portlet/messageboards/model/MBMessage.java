@@ -82,19 +82,11 @@ public interface MBMessage extends MBMessageModel, PersistedModel {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
-	public com.liferay.portal.model.ContainerModel getTrashContainer()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
-
 	public java.lang.String getWorkflowClassName();
 
 	public boolean isDiscussion();
 
 	public boolean isFormatBBCode();
-
-	public boolean isInTrashThread()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
 
 	public boolean isReply();
 

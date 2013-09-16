@@ -75,6 +75,10 @@ public abstract class BaseProxyBean {
 			}
 		}
 
+		if (proxyRequest.isLocal()) {
+			message.put(MessagingProxy.LOCAL_MESSAGE, Boolean.TRUE);
+		}
+
 		return message;
 	}
 

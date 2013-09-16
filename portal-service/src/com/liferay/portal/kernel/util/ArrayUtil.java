@@ -1176,6 +1176,18 @@ public class ArrayUtil {
 		return toArray(list.toArray(new Double[list.size()]));
 	}
 
+	public static float[] remove(float[] array, float value) {
+		List<Float> list = new ArrayList<Float>();
+
+		for (int i = 0; i < array.length; i++) {
+			if (value != array[i]) {
+				list.add(new Float(array[i]));
+			}
+		}
+
+		return toArray(list.toArray(new Float[list.size()]));
+	}
+
 	public static int[] remove(int[] array, int value) {
 		List<Integer> list = new ArrayList<Integer>();
 

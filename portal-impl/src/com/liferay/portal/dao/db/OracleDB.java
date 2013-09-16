@@ -219,7 +219,7 @@ public class OracleDB extends BaseDB {
 		StringBuffer sb = new StringBuffer();
 
 		while (matcher.find()) {
-			int size = GetterUtil.getInteger(matcher.group());
+			int size = GetterUtil.getInteger(matcher.group(1));
 
 			if (size > 4000) {
 				size = 4000;
@@ -328,6 +328,6 @@ public class OracleDB extends BaseDB {
 	private static OracleDB _instance = new OracleDB();
 
 	private static Pattern _varcharPattern = Pattern.compile(
-		"VARCHAR(\\(\\d+\\))");
+		"VARCHAR\\((\\d+)\\)");
 
 }

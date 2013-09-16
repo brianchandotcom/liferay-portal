@@ -1900,8 +1900,8 @@ public class LayoutRevisionWrapper implements LayoutRevision,
 	}
 
 	@Override
-	public boolean hasDefaultAssetPublisherPortletId() {
-		return _layoutRevision.hasDefaultAssetPublisherPortletId();
+	public boolean isContentDisplayPage() {
+		return _layoutRevision.isContentDisplayPage();
 	}
 
 	@Override

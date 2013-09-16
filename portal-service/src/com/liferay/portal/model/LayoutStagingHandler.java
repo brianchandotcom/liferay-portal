@@ -302,7 +302,7 @@ public class LayoutStagingHandler implements InvocationHandler, Serializable {
 		_layoutRevisionMethodNames.add("getWapColorSchemeId");
 		_layoutRevisionMethodNames.add("getWapTheme");
 		_layoutRevisionMethodNames.add("getWapThemeId");
-		_layoutRevisionMethodNames.add("hasDefaultAssetPublisherPortletId");
+		_layoutRevisionMethodNames.add("isContentDisplayPage");
 		_layoutRevisionMethodNames.add("isEscapedModel");
 		_layoutRevisionMethodNames.add("isIconImage");
 		_layoutRevisionMethodNames.add("isInheritLookAndFeel");

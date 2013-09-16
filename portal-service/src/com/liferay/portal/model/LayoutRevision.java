@@ -72,7 +72,7 @@ public interface LayoutRevision extends LayoutRevisionModel, PersistedModel {
 	public boolean hasChildren()
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	public boolean hasDefaultAssetPublisherPortletId();
+	public boolean isContentDisplayPage();
 
 	public boolean isInheritLookAndFeel();
 

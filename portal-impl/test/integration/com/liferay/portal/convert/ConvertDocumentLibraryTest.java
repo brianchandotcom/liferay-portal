@@ -34,7 +34,6 @@ import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
-import com.liferay.portal.test.TransactionalExecutionTestListener;
 import com.liferay.portal.util.ClassLoaderUtil;
 import com.liferay.portal.util.GroupTestUtil;
 import com.liferay.portal.util.PropsValues;
@@ -73,8 +72,7 @@ import org.junit.runner.RunWith;
 @ExecutionTestListeners(
 	listeners = {
 		MainServletExecutionTestListener.class,
-		EnvironmentExecutionTestListener.class,
-		TransactionalExecutionTestListener.class
+		EnvironmentExecutionTestListener.class
 	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
 public class ConvertDocumentLibraryTest {

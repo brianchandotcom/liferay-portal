@@ -26,6 +26,7 @@ String eventName = ParamUtil.getString(request, "eventName", liferayPortletRespo
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/asset_browser/view");
+portletURL.setParameter("eventName", eventName);
 portletURL.setParameter("groupId", String.valueOf(groupId));
 portletURL.setParameter("selectedGroupIds", StringUtil.merge(selectedGroupIds));
 portletURL.setParameter("refererAssetEntryId", String.valueOf(refererAssetEntryId));
@@ -114,8 +115,8 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 					value="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>"
 				/>
 
-				<c:if test="<%= assetEntry.getEntryId() != refererAssetEntryId %>">
-					<liferay-ui:search-container-column-text>
+				<liferay-ui:search-container-column-text>
+					<c:if test="<%= assetEntry.getEntryId() != refererAssetEntryId %>">
 
 						<%
 						Map<String, Object> data = new HashMap<String, Object>();
@@ -128,8 +129,8 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 						%>
 
 						<aui:button cssClass="selector-button" data="<%= data %>" value="choose" />
-					</liferay-ui:search-container-column-text>
-				</c:if>
+					</c:if>
+				</liferay-ui:search-container-column-text>
 
 			</liferay-ui:search-container-row>
 

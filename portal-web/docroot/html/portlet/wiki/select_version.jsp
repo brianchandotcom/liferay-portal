@@ -34,6 +34,7 @@ portletURL.setParameter("sourceVersion", String.valueOf(sourceVersion));
 <aui:form action="<%= portletURL.toString() %>" method="post" name="selectVersionFm">
 	<liferay-ui:search-container
 		id="wikiPageVersionSearchContainer"
+		iteratorURL="<%= portletURL %>"
 		total="<%= WikiPageLocalServiceUtil.getPagesCount(wikiPage.getNodeId(), wikiPage.getTitle()) %>"
 	>
 		<liferay-ui:search-container-results

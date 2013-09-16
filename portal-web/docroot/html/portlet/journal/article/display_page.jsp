@@ -259,7 +259,7 @@ Group parentGroup = themeDisplay.getSiteGroup();
 					<c:if test="<%= parentGroup.getPrivateLayoutsPageCount() > 0 %>">
 						tabs.push(
 							{
-								label: '<%= UnicodeLanguageUtil.get(pageContext, "private-pages") %>sssssss',
+								label: '<%= UnicodeLanguageUtil.get(pageContext, "private-pages") %>',
 								content: Lang.sub(
 									TPL_TAB_CONTENT,
 									{

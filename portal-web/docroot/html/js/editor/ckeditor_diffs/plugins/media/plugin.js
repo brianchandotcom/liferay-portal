@@ -257,10 +257,10 @@ CKEDITOR.plugins.add(
 						var scriptNode = A.Node.create('<script type="text/javascript">' + scriptContent + '</script>');
 
 						scriptTmp = new CKEDITOR.dom.element(scriptNode.getDOM());
+
+						divNode.append(scriptTmp);
 					}
 				);
-
-				divNode.append(scriptTmp);
 			}
 		},
 

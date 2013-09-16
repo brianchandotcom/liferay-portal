@@ -42,7 +42,7 @@ public class SystemProperties {
 	public static final String TMP_DIR = "java.io.tmpdir";
 
 	public static String get(String key) {
-		String value = _instance._properties.get(key);
+		String value = _properties.get(key);
 
 		if (value == null) {
 			value = System.getProperty(key);
@@ -63,16 +63,14 @@ public class SystemProperties {
 	}
 
 	public static Properties getProperties() {
-		return PropertiesUtil.fromMap(_instance._properties);
+		return PropertiesUtil.fromMap(_properties);
 	}
 
-	public static void set(String key, String value) {
-		System.setProperty(key, value);
+	public static void reload() {
+		if (_loaded) {
+			return;
+		}
 
-		_instance._properties.put(key, value);
-	}
-
-	private SystemProperties() {
 		Properties properties = new Properties();
 
 		Thread currentThread = Thread.currentThread();
@@ -109,6 +107,8 @@ public class SystemProperties {
 			URL url = classLoader.getResource("system-ext.properties");
 
 			if (url != null) {
+				_loaded = true;
+
 				InputStream inputStream = url.openStream();
 
 				properties.load(inputStream);
@@ -159,8 +159,17 @@ public class SystemProperties {
 		PropertiesUtil.fromProperties(properties, _properties);
 	}
 
-	private static SystemProperties _instance = new SystemProperties();
+	public static void set(String key, String value) {
+		System.setProperty(key, value);
 
-	private Map<String, String> _properties;
+		_properties.put(key, value);
+	}
+
+	private static boolean _loaded;
+	private static Map<String, String> _properties;
+
+	static {
+		reload();
+	}
 
 }

@@ -80,7 +80,7 @@ DDLRecordVersion latestRecordVersion = record.getLatestRecordVersion();
 			<portlet:renderURL var="editRecordURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
 				<portlet:param name="struts_action" value="/dynamic_data_lists/edit_record" />
 				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UPDATE %>" />
-				<portlet:param name="redirect" value="<%= currentURL %>" />
+				<portlet:param name="redirect" value="<%= redirect %>" />
 				<portlet:param name="recordId" value="<%= String.valueOf(record.getRecordId()) %>" />
 				<portlet:param name="formDDMTemplateId" value="<%= String.valueOf(formDDMTemplateId) %>" />
 			</portlet:renderURL>

@@ -664,7 +664,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 	}
 
 	@Override
-	public void moveDependentsToTrash(long groupId, long threadId, int status)
+	public void moveDependentsToTrash(long groupId, long threadId)
 		throws PortalException, SystemException {
 
 		Set<Long> userIds = new HashSet<Long>();
@@ -679,51 +679,30 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 			userIds.add(message.getUserId());
 
-			if (status == WorkflowConstants.STATUS_IN_TRASH) {
+			// Asset
 
-				// Asset
-
-				if (message.getStatus() == WorkflowConstants.STATUS_APPROVED) {
-					assetEntryLocalService.updateVisible(
-						MBMessage.class.getName(), message.getMessageId(),
-						false);
-				}
-
-				// Indexer
-
-				Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-					MBMessage.class);
-
-				indexer.reindex(message);
-
-				// Workflow
-
-				if (message.getStatus() == WorkflowConstants.STATUS_PENDING) {
-					message.setStatus(WorkflowConstants.STATUS_DRAFT);
-
-					mbMessagePersistence.update(message);
-
-					workflowInstanceLinkLocalService.deleteWorkflowInstanceLink(
-						message.getCompanyId(), message.getGroupId(),
-						MBMessage.class.getName(), message.getMessageId());
-				}
+			if (message.getStatus() == WorkflowConstants.STATUS_APPROVED) {
+				assetEntryLocalService.updateVisible(
+					MBMessage.class.getName(), message.getMessageId(), false);
 			}
-			else {
 
-				// Asset
+			// Indexer
 
-				if (message.getStatus() == WorkflowConstants.STATUS_APPROVED) {
-					assetEntryLocalService.updateVisible(
-						MBMessage.class.getName(), message.getMessageId(),
-						true);
-				}
+			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+				MBMessage.class);
 
-				// Indexer
+			indexer.reindex(message);
 
-				Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-					MBMessage.class);
+			// Workflow
 
-				indexer.reindex(message);
+			if (message.getStatus() == WorkflowConstants.STATUS_PENDING) {
+				message.setStatus(WorkflowConstants.STATUS_DRAFT);
+
+				mbMessagePersistence.update(message);
+
+				workflowInstanceLinkLocalService.deleteWorkflowInstanceLink(
+					message.getCompanyId(), message.getGroupId(),
+					MBMessage.class.getName(), message.getMessageId());
 			}
 		}
 
@@ -867,8 +846,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 	}
 
 	@Override
-	public void restoreDependentsFromTrash(
-			long groupId, long threadId, int status)
+	public void restoreDependentsFromTrash(long groupId, long threadId)
 		throws PortalException, SystemException {
 
 		Set<Long> userIds = new HashSet<Long>();
@@ -883,52 +861,19 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 			userIds.add(message.getUserId());
 
-			if (status == WorkflowConstants.STATUS_IN_TRASH) {
+			// Asset
 
-				// Asset
-
-				if (message.getStatus() == WorkflowConstants.STATUS_APPROVED) {
-					assetEntryLocalService.updateVisible(
-						MBMessage.class.getName(), message.getMessageId(),
-						false);
-				}
-
-				// Indexer
-
-				Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-					MBMessage.class);
-
-				indexer.reindex(message);
-
-				// Workflow
-
-				if (message.getStatus() == WorkflowConstants.STATUS_PENDING) {
-					message.setStatus(WorkflowConstants.STATUS_DRAFT);
-
-					mbMessagePersistence.update(message);
-
-					workflowInstanceLinkLocalService.deleteWorkflowInstanceLink(
-						message.getCompanyId(), message.getGroupId(),
-						MBMessage.class.getName(), message.getMessageId());
-				}
+			if (message.getStatus() == WorkflowConstants.STATUS_APPROVED) {
+				assetEntryLocalService.updateVisible(
+					MBMessage.class.getName(), message.getMessageId(), true);
 			}
-			else {
 
-				// Asset
+			// Indexer
 
-				if (message.getStatus() == WorkflowConstants.STATUS_APPROVED) {
-					assetEntryLocalService.updateVisible(
-						MBMessage.class.getName(), message.getMessageId(),
-						true);
-				}
+			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+				MBMessage.class);
 
-				// Indexer
-
-				Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-					MBMessage.class);
-
-				indexer.reindex(message);
-			}
+			indexer.reindex(message);
 		}
 
 		// Statistics

@@ -33,6 +33,15 @@ import org.powermock.modules.junit4.PowerMockRunner;
 public class ValidatorTest extends PowerMockito {
 
 	@Test
+	public void testIsDomain() throws Exception {
+		String[] validDomains = new String[] {
+			"localhost", "liferay.com", "来锐.com", "животзрак.рс"
+		};
+
+		testIsValidByMethodName("isDomain", validDomains, true);
+	}
+
+	@Test
 	public void testIsFileExtension() throws Exception {
 		String[] validFileExtensions = {
 			"abc", ".abc", "."

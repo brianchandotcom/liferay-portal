@@ -565,6 +565,7 @@ public class Validator {
 	 * @return <code>true</code> if the string is a valid domain name;
 	 *         <code>false</code> otherwise
 	 */
+
 	public static boolean isDomain(String domainName) {
 
 		// See RFC-1034 (section 3), RFC-1123 (section 2.1), and RFC-952
@@ -601,7 +602,9 @@ public class Validator {
 					return false;
 				}
 
-				if (!isChar(c) && !isDigit(c) && (c != CharPool.DASH)) {
+				if (!Character.isLetter(c) && !isDigit(c) &&
+					(c != CharPool.DASH)) {
+
 					return false;
 				}
 			}

@@ -119,12 +119,11 @@ public class ConvertDocumentLibraryTest {
 	@Test
 	public void testMigrateDL() throws Exception {
 		Folder folder = DLAppTestUtil.addFolder(
-			TestPropsValues.getGroupId(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			ServiceTestUtil.randomString());
 
 		FileEntry initialFileEntry = DLAppTestUtil.addFileEntry(
-			TestPropsValues.getGroupId(), folder.getFolderId(),
+			_group.getGroupId(), folder.getFolderId(),
 			ServiceTestUtil.randomString() + ".txt");
 
 		DLFileEntry dlFileEntry = getDLFileEntry(initialFileEntry);
@@ -269,7 +268,7 @@ public class ConvertDocumentLibraryTest {
 
 	protected WikiPage addWikiPage() throws Exception {
 		WikiNode wikiNode = WikiTestUtil.addNode(
-			TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
+			TestPropsValues.getUserId(), _group.getGroupId(),
 			ServiceTestUtil.randomString(), ServiceTestUtil.randomString(50));
 
 		return WikiTestUtil.addPage(

@@ -2735,7 +2735,7 @@ public class HookHotDeployListener
 	};
 
 	private static final String[] _PROPS_VALUES_MERGE_STRING_ARRAY = {
-		"asset.publisher.query.form", "auth.token.ignore.actions",
+		"asset.publisher.query.form.configuration", "auth.token.ignore.actions",
 		"auth.token.ignore.portlets", "admin.default.group.names",
 		"admin.default.role.names", "admin.default.user.group.names",
 		"asset.publisher.display.styles",

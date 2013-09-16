@@ -114,7 +114,7 @@ public class PropsValues {
 
 	public static final String ASSET_PUBLISHER_EMAIL_FROM_NAME = PropsUtil.get(PropsKeys.ASSET_PUBLISHER_EMAIL_FROM_NAME);
 
-	public static String[] ASSET_PUBLISHER_QUERY_FORM = PropsUtil.getArray(PropsKeys.ASSET_PUBLISHER_QUERY_FORM);
+	public static String[] ASSET_PUBLISHER_QUERY_FORM_CONFIGURATION = PropsUtil.getArray(PropsKeys.ASSET_PUBLISHER_QUERY_FORM_CONFIGURATION);
 
 	public static final String[] ASSET_PUBLISHER_QUERY_PROCESSORS = PropsUtil.getArray(PropsKeys.ASSET_PUBLISHER_QUERY_PROCESSORS);
 

@@ -344,7 +344,7 @@ String selectStyle = (String)request.getAttribute("configuration.jsp-selectStyle
 			</liferay-ui:panel>
 
 			<%
-			String[] sections = PropsValues.ASSET_PUBLISHER_QUERY_FORM;
+			String[] sections = PropsValues.ASSET_PUBLISHER_QUERY_FORM_CONFIGURATION;
 			String jspPath = "/html/portlet/asset_publisher/query/";
 
 			for (String section : sections) {

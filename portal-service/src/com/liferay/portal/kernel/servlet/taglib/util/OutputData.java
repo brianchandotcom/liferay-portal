@@ -47,6 +47,12 @@ public class OutputData implements Mergeable<OutputData>, Serializable {
 		return _outputKeys.add(outputKey);
 	}
 
+	public StringBundler getData(String outputKey, String webKey) {
+		DataKey dataKey = new DataKey(outputKey, webKey);
+
+		return _dataMap.get(dataKey);
+	}
+
 	public StringBundler getMergedData(String webKey) {
 		StringBundler mergedSB = null;
 
@@ -64,6 +70,10 @@ public class OutputData implements Mergeable<OutputData>, Serializable {
 		}
 
 		return mergedSB;
+	}
+
+	public Set<String> getOutputKeys() {
+		return _outputKeys;
 	}
 
 	@Override
@@ -98,6 +108,12 @@ public class OutputData implements Mergeable<OutputData>, Serializable {
 		}
 
 		return this;
+	}
+
+	public void setData(String outputKey, String webKey, StringBundler sb) {
+		DataKey dataKey = new DataKey(outputKey, webKey);
+
+		_dataMap.put(dataKey, sb);
 	}
 
 	private static final long serialVersionUID = 1L;

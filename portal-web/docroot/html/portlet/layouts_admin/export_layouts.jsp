@@ -554,6 +554,8 @@ portletURL.setParameter("rootNodeName", rootNodeName);
 
 				<aui:button-row>
 					<aui:button type="submit" value="export" />
+
+					<aui:button href="<%= currentURL %>" type="cancel" />
 				</aui:button-row>
 			</aui:form>
 		</div>

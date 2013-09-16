@@ -18,6 +18,7 @@ $FontAwesomePath: "aui/alloy-font-awesome/font" !default;
 	@import "aui/alloy-font-awesome/scss/bootstrap";
 	@import "aui/alloy-font-awesome/scss/extras";
 	@import "aui/alloy-font-awesome/scss/icons-alloy";
+	@import "aui/alloy-font-awesome/scss/icons-alloy-extra";
 
 	background-color: $bodyBackground;
 	color: $textColor;

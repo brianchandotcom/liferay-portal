@@ -713,7 +713,7 @@
 
 				<replaceregexp file="docroot/html/js/editor/fckeditor/editor/filemanager/browser/liferay/frmresourcetype.html"
 					match="var aTypes = \[\r?(\n)(\t*)(.)+\] ;"
-					replace="var aTypes = [\1\2['Document','Document'],\1\2['Page','Page'],\1\2['Attachment', 'Attachment'],\1\2['Video', 'Video'],\1\2['Audio', 'Audio']\1] ;"
+					replace="var aTypes = [\1\2['Document','Document'],\1\2['Page','Page'],\1\2['Attachment', 'Attachment'],\1\2['Audio', 'Audio'],\1\2['Video', 'Video']\1] ;"
 					flags="s"
 				/>
 

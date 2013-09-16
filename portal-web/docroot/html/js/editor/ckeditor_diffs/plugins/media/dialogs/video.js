@@ -28,8 +28,6 @@ CKEDITOR.dialog.add(
 			var id = instance.id;
 			var value = instance.getValue();
 
-			var scriptNode = videoNode.getChild(1);
-
 			var scriptTPL = null;
 			var textScript = null;
 
@@ -87,7 +85,7 @@ CKEDITOR.dialog.add(
 					extraStyles[id] = value + 'px';
 
 					videoNode.setAttribute('data-' + id, value);
-					
+
 					scriptTPL = new CKEDITOR.template(TPL_SCRIPT);
 
 					textScript = scriptTPL.output(
@@ -100,8 +98,7 @@ CKEDITOR.dialog.add(
 						}
 					);
 
-					editor.plugins.media.replaceScriptContent(videoNode, TPL_SCRIPT_PREFIX + textScript + TPL_SCRIPT_SUFFIX);						
-					
+					editor.plugins.media.replaceScriptContent(videoNode, TPL_SCRIPT_PREFIX + textScript + TPL_SCRIPT_SUFFIX);
 				}
 			}
 		}

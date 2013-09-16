@@ -1713,6 +1713,9 @@ public class DLAppHelperLocalServiceImpl
 				dlFileEntryType.getFileEntryTypeId());
 		}
 
+		subscriptionSender.addPersistedSubscribers(
+			DLFileEntry.class.getName(), fileEntry.getFileEntryId());
+
 		subscriptionSender.flushNotificationsAsync();
 	}
 

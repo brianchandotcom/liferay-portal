@@ -24,6 +24,8 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.permission.BlogsPermission;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.service.permission.JournalPermission;
 import com.liferay.portlet.messageboards.NoSuchDiscussionException;
@@ -132,6 +134,10 @@ public class SubscriptionPermissionImpl implements SubscriptionPermission {
 
 		if (className.equals(BlogsEntry.class.getName())) {
 			return BlogsPermission.contains(
+				permissionChecker, classPK, actionId);
+		}
+		else if (className.equals(DLFileEntry.class.getName())) {
+			return DLFileEntryPermission.contains(
 				permissionChecker, classPK, actionId);
 		}
 		else if (className.equals(JournalArticle.class.getName())) {

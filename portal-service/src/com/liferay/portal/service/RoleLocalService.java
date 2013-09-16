@@ -799,6 +799,52 @@ public interface RoleLocalService extends BaseLocalService,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Returns a team to team role mapping for the group
+	*
+	* @param groupId the primary key of the group
+	* @return team to team role mapping for the group
+	* @throws PortalException if a role could not be found for one of the teams
+	within the given group
+	* @throws SystemException if a system exception occurred
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.Map<com.liferay.portal.model.Team, com.liferay.portal.model.Role> getTeamRoleMap(
+		long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the team roles in the group
+	*
+	* @param groupId the primary key of the group
+	* @return the team roles in the given groupId
+	* @throws PortalException if a role could not be found for one of the teams
+	within the given group
+	* @throws SystemException if a system exception occurred
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.Role> getTeamRoles(
+		long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the team roles in the group
+	*
+	* @param groupId the primary key of the group
+	* @param skipRoleIds array of roleIds to be skipped (optional)
+	* @return the team roles in the given groupId
+	* @throws PortalException if a role could not be found for one of the teams
+	within the given group
+	* @throws SystemException if a system exception occurred
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.Role> getTeamRoles(
+		long groupId, long[] skipRoleIds)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Returns all the roles of the type.
 	*
 	* @param type the role's type (optionally <code>0</code>)

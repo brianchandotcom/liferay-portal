@@ -610,17 +610,19 @@ AUI.add(
 															var endDatePicker = Liferay.component(instance.NS + 'endDateDatePicker');
 															var endTimePicker = Liferay.component(instance.NS + 'endTimeTimePicker');
 
-															var startDateTime = startTimePicker.getTime();
+															var startTime = startTimePicker.getTime();
 															var startDate = startDatePicker.getDate();
-															startDate.setHours(startDateTime.getHours());
-															startDate.setMinutes(startDateTime.getMinutes());
+
+															startDate.setHours(startTime.getHours());
+															startDate.setMinutes(startTime.getMinutes());
 															startDate.setSeconds(0);
 															startDate.setMilliseconds(0);
 
-															var endDateTime = endTimePicker.getTime();
+															var endTime = endTimePicker.getTime();
 															var endDate = endDatePicker.getDate();
-															endDate.setHours(endDateTime.getHours());
-															endDate.setMinutes(endDateTime.getMinutes());
+
+															endDate.setHours(endTime.getHours());
+															endDate.setMinutes(endTime.getMinutes());
 															endDate.setSeconds(0);
 															endDate.setMilliseconds(0);
 
@@ -630,6 +632,22 @@ AUI.add(
 																instance._reloadForm();
 
 																rangeDialog.hide();
+															}
+															else {
+																if (!instance._notice) {
+																	instance._notice = new Liferay.Notice(
+																		{
+																			closeText: false,
+																			content: Liferay.Language.get('end-date-must-be-greater-than-start-date') + '<button type="button" class="close">&times;</button>',
+																			toggleText: false,
+																			timeout: 10000,
+																			type: 'warning',
+																			useAnimation: true
+																		}
+																	)
+																}
+
+																instance._notice.show();
 															}
 														}
 													},

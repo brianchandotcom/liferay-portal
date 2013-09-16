@@ -72,6 +72,7 @@ import org.junit.runner.RunWith;
 
 /**
  * @author Roberto Díaz
+ * @author Sergio González
  */
 @ExecutionTestListeners(
 	listeners = {
@@ -117,26 +118,17 @@ public class ConvertDocumentLibraryTest {
 	}
 
 	@Test
-	public void testMigrateDL() throws Exception {
+	public void testMigrateDLWhenFileEntryInFolder() throws Exception {
 		Folder folder = DLAppTestUtil.addFolder(
 			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			ServiceTestUtil.randomString());
 
-		FileEntry fileEntry = DLAppTestUtil.addFileEntry(
-			_group.getGroupId(), folder.getFolderId(),
-			ServiceTestUtil.randomString() + ".txt");
+		testMigrateDL(folder.getFolderId());
+	}
 
-		_convertProcess.convert();
-
-		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
-
-		DLContent dlContent = DLContentLocalServiceUtil.getContent(
-			dlFileEntry.getCompanyId(),
-			DLFolderConstants.getDataRepositoryId(
-				dlFileEntry.getRepositoryId(), dlFileEntry.getFolderId()),
-			dlFileEntry.getName());
-
-		Assert.assertNotNull(dlContent);
+	@Test
+	public void testMigrateDLWhenFileEntryInRootFolder() throws Exception {
+		testMigrateDL(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 	}
 
 	@Test
@@ -263,6 +255,24 @@ public class ConvertDocumentLibraryTest {
 
 		return DLFileEntryLocalServiceUtil.getDLFileEntry(
 			fileEntry.getFileEntryId());
+	}
+
+	protected void testMigrateDL(long folderId) throws Exception {
+		FileEntry fileEntry = DLAppTestUtil.addFileEntry(
+			_group.getGroupId(), folderId,
+			ServiceTestUtil.randomString() + ".txt");
+
+		_convertProcess.convert();
+
+		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
+
+		DLContent dlContent = DLContentLocalServiceUtil.getContent(
+			dlFileEntry.getCompanyId(),
+			DLFolderConstants.getDataRepositoryId(
+				dlFileEntry.getRepositoryId(), dlFileEntry.getFolderId()),
+			dlFileEntry.getName());
+
+		Assert.assertNotNull(dlContent);
 	}
 
 	private ConvertProcess _convertProcess;

@@ -1,3 +1,5 @@
+<%@ page
+		import="com.liferay.portlet.backgroundtask.util.comparator.BackgroundTaskComparatorUtil" %>
 <%--
 /**
  * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
@@ -35,7 +37,7 @@ else {
 	orderByType = portalPreferences.getValue(PortletKeys.BACKGROUND_TASK, "entries-order-by-type", "desc");
 }
 
-OrderByComparator orderByComparator = BackgroundTaskUtil.getBackgroundTaskOrderByComparator(orderByCol, orderByType);
+OrderByComparator orderByComparator = BackgroundTaskComparatorUtil.getBackgroundTaskOrderByComparator(orderByCol, orderByType);
 %>
 
 <liferay-ui:search-container

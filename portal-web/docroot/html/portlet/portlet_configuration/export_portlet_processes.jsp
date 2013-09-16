@@ -35,7 +35,7 @@ else {
 	orderByType = portalPreferences.getValue(PortletKeys.BACKGROUND_TASK, "entries-order-by-type", "desc");
 }
 
-OrderByComparator orderByComparator = BackgroundTaskUtil.getBackgroundTaskOrderByComparator(orderByCol, orderByType);
+OrderByComparator orderByComparator = BackgroundTaskComparatorUtil.getBackgroundTaskOrderByComparator(orderByCol, orderByType);
 %>
 
 <liferay-ui:search-container

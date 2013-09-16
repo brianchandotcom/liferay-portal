@@ -98,7 +98,7 @@ if (layout != null) {
 								<h5>
 									<span class="site-pages-variation-label"><liferay-ui:message key="site-variations-for" /></span>
 
-									<span class="company-name"><%= company.getName() %></span>
+									<span class="site-name"><%= HtmlUtil.escape(liveGroup.getDescriptiveName(locale)) %></span>
 								</h5>
 
 								<aui:select cssClass="variation-options" label="" name="sitePageVariations">

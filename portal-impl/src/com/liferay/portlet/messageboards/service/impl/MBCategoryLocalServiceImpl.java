@@ -558,27 +558,50 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 	public MBCategory moveCategoryToTrash(long userId, long categoryId)
 		throws PortalException, SystemException {
 
-		return updateStatus(
+		MBCategory category = updateStatus(
 			userId, categoryId, WorkflowConstants.STATUS_IN_TRASH);
+
+		// Trash
+
+		trashEntryLocalService.addTrashEntry(
+			userId, category.getGroupId(), MBCategory.class.getName(),
+			categoryId, category.getUuid(), null,
+			WorkflowConstants.STATUS_APPROVED, null, null);
+
+		// Categories and threads
+
+		User user = userPersistence.findByPrimaryKey(userId);
+
+		List<Object> categoriesAndThreads = getCategoriesAndThreads(
+			category.getGroupId(), categoryId);
+
+		moveDependentsToTrash(user, categoriesAndThreads);
+
+		return category;
 	}
 
 	@Override
 	public void moveDependentsToTrash(
-			User user, List<Object> categoriesAndThreads, int status)
+			User user, List<Object> categoriesAndThreads)
 		throws PortalException, SystemException {
 
 		for (Object object : categoriesAndThreads) {
 			if (object instanceof MBThread) {
 				MBThread thread = (MBThread)object;
 
-				if ((status == WorkflowConstants.STATUS_APPROVED) &&
-					(thread.getStatus() == WorkflowConstants.STATUS_IN_TRASH)) {
-
+				if (thread.getStatus() == WorkflowConstants.STATUS_IN_TRASH) {
 					continue;
 				}
 
-				mbThreadLocalService.updateStatus(
-					user.getUserId(), thread.getThreadId(), status, status);
+				mbThreadLocalService.moveDependentsToTrash(
+					user.getUserId(), thread.getThreadId());
+
+				// Indexer
+
+				Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+					MBThread.class);
+
+				indexer.reindex(thread);
 			}
 			else if (object instanceof MBCategory) {
 				MBCategory category = (MBCategory)object;
@@ -590,8 +613,7 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 				moveDependentsToTrash(
 					user,
 					getCategoriesAndThreads(
-						category.getGroupId(), category.getCategoryId()),
-					status);
+						category.getGroupId(), category.getCategoryId()));
 			}
 		}
 	}
@@ -605,7 +627,17 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 		TrashEntry trashEntry = trashEntryLocalService.getEntry(
 			MBCategory.class.getName(), categoryId);
 
-		updateStatus(userId, categoryId, WorkflowConstants.STATUS_APPROVED);
+		MBCategory category = updateStatus(
+			userId, categoryId, WorkflowConstants.STATUS_APPROVED);
+
+		// Categories and threads
+
+		User user = userPersistence.findByPrimaryKey(userId);
+
+		List<Object> categoriesAndThreads = getCategoriesAndThreads(
+			category.getGroupId(), categoryId);
+
+		restoreDependentFromTrash(user, categoriesAndThreads);
 
 		// Trash
 
@@ -614,21 +646,26 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 
 	@Override
 	public void restoreDependentFromTrash(
-			User user, List<Object> categoriesAndThreads, int status)
+			User user, List<Object> categoriesAndThreads)
 		throws PortalException, SystemException {
 
 		for (Object object : categoriesAndThreads) {
 			if (object instanceof MBThread) {
 				MBThread thread = (MBThread)object;
 
-				if ((status == WorkflowConstants.STATUS_APPROVED) &&
-					(thread.getStatus() == WorkflowConstants.STATUS_IN_TRASH)) {
-
+				if (thread.getStatus() == WorkflowConstants.STATUS_IN_TRASH) {
 					continue;
 				}
 
-				mbThreadLocalService.updateStatus(
-					user.getUserId(), thread.getThreadId(), status, status);
+				mbThreadLocalService.restoreDependentsFromTrash(
+					user.getUserId(), thread.getThreadId());
+
+				// Indexer
+
+				Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+					MBThread.class);
+
+				indexer.reindex(thread);
 			}
 			else if (object instanceof MBCategory) {
 				MBCategory category = (MBCategory)object;
@@ -640,8 +677,7 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 				restoreDependentFromTrash(
 					user,
 					getCategoriesAndThreads(
-						category.getGroupId(), category.getCategoryId()),
-					status);
+						category.getGroupId(), category.getCategoryId()));
 			}
 		}
 	}
@@ -769,22 +805,6 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 		category.setStatusDate(new Date());
 
 		mbCategoryPersistence.update(category);
-
-		// Categories and threads
-
-		List<Object> categoriesAndThreads = getCategoriesAndThreads(
-			category.getGroupId(), categoryId);
-
-		updateDependentStatus(user, categoriesAndThreads, status);
-
-		// Trash
-
-		if (status == WorkflowConstants.STATUS_IN_TRASH) {
-			trashEntryLocalService.addTrashEntry(
-				userId, category.getGroupId(), MBCategory.class.getName(),
-				categoryId, category.getUuid(), null,
-				WorkflowConstants.STATUS_APPROVED, null, null);
-		}
 
 		return category;
 	}

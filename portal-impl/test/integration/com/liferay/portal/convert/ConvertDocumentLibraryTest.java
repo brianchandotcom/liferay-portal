@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.InstancePool;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Image;
@@ -37,10 +38,9 @@ import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.util.ClassLoaderUtil;
 import com.liferay.portal.util.GroupTestUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.TestPropsValues;
-import com.liferay.portlet.documentlibrary.model.DLContent;
+import com.liferay.portlet.documentlibrary.NoSuchContentException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLContentLocalServiceUtil;
@@ -137,10 +137,13 @@ public class ConvertDocumentLibraryTest {
 
 		_convertProcess.convert();
 
-		DLContent dlContent = DLContentLocalServiceUtil.getContent(
-			0, 0, image.getImageId() + ".jpg");
-
-		Assert.assertNotNull(dlContent);
+		try {
+			DLContentLocalServiceUtil.getContent(
+				0, 0, image.getImageId() + ".jpg");
+		}
+		catch (NoSuchContentException nsce) {
+			Assert.fail();
+		}
 	}
 
 	@Test
@@ -155,13 +158,16 @@ public class ConvertDocumentLibraryTest {
 
 		Assert.assertTrue(fileEntryTitle.endsWith(".docx"));
 
-		DLContent dlContent = DLContentLocalServiceUtil.getContent(
-			dlFileEntry.getCompanyId(),
-			DLFolderConstants.getDataRepositoryId(
-				dlFileEntry.getRepositoryId(), dlFileEntry.getFolderId()),
-			dlFileEntry.getName());
-
-		Assert.assertNotNull(dlContent);
+		try {
+			DLContentLocalServiceUtil.getContent(
+				dlFileEntry.getCompanyId(),
+				DLFolderConstants.getDataRepositoryId(
+					dlFileEntry.getRepositoryId(), dlFileEntry.getFolderId()),
+				dlFileEntry.getName());
+		}
+		catch (NoSuchContentException nsce) {
+			Assert.fail();
+		}
 	}
 
 	@Test
@@ -178,13 +184,16 @@ public class ConvertDocumentLibraryTest {
 
 		Assert.assertTrue(fileEntryTitle.endsWith(".docx"));
 
-		DLContent dlContent = DLContentLocalServiceUtil.getContent(
-			dlFileEntry.getCompanyId(),
-			DLFolderConstants.getDataRepositoryId(
-				dlFileEntry.getRepositoryId(), dlFileEntry.getFolderId()),
-			dlFileEntry.getName());
-
-		Assert.assertNotNull(dlContent);
+		try {
+			DLContentLocalServiceUtil.getContent(
+				dlFileEntry.getCompanyId(),
+				DLFolderConstants.getDataRepositoryId(
+					dlFileEntry.getRepositoryId(), dlFileEntry.getFolderId()),
+				dlFileEntry.getName());
+		}
+		catch (NoSuchContentException nsce) {
+			Assert.fail();
+		}
 	}
 
 	@Test
@@ -266,13 +275,16 @@ public class ConvertDocumentLibraryTest {
 
 		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
 
-		DLContent dlContent = DLContentLocalServiceUtil.getContent(
-			dlFileEntry.getCompanyId(),
-			DLFolderConstants.getDataRepositoryId(
-				dlFileEntry.getRepositoryId(), dlFileEntry.getFolderId()),
-			dlFileEntry.getName());
-
-		Assert.assertNotNull(dlContent);
+		try {
+			DLContentLocalServiceUtil.getContent(
+				dlFileEntry.getCompanyId(),
+				DLFolderConstants.getDataRepositoryId(
+					dlFileEntry.getRepositoryId(), dlFileEntry.getFolderId()),
+				dlFileEntry.getName());
+		}
+		catch (NoSuchContentException nsce) {
+			Assert.fail();
+		}
 	}
 
 	private ConvertProcess _convertProcess;

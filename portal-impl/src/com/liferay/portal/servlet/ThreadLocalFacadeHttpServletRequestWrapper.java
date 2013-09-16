@@ -25,6 +25,7 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.Locale;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletRequestWrapper;
 import javax.servlet.http.HttpServletRequest;
@@ -87,6 +88,14 @@ public class ThreadLocalFacadeHttpServletRequestWrapper
 	@Override
 	public ServletRequest getRequest() {
 		return _nextHttpServletRequestThreadLocal.get();
+	}
+
+	@Override
+	public RequestDispatcher getRequestDispatcher(String uri) {
+		HttpServletRequest httpServletRequest =
+			_nextHttpServletRequestThreadLocal.get();
+
+		return httpServletRequest.getRequestDispatcher(uri);
 	}
 
 	@Override

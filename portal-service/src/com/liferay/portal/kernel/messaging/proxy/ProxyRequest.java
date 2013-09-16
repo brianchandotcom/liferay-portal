@@ -53,25 +53,29 @@ public class ProxyRequest implements Externalizable {
 			_hasReturnValue = true;
 		}
 
-		Boolean synchronous = _synchronousMap.get(method);
+		boolean[] synchronousAndLocal = _synchronousAndLocalMap.get(method);
 
-		if (synchronous == null) {
+		if (synchronousAndLocal == null) {
+			synchronousAndLocal = new boolean[2];
+
 			MessagingProxy messagingProxy = AnnotationLocator.locate(
 				method, method.getDeclaringClass(), MessagingProxy.class);
 
-			if ((messagingProxy != null) &&
-				messagingProxy.mode().equals(ProxyMode.SYNC)) {
+			if (messagingProxy != null) {
+				if (messagingProxy.mode().equals(ProxyMode.SYNC)) {
+					synchronousAndLocal[0] = true;
+				}
 
-				synchronous = Boolean.TRUE;
-			}
-			else {
-				synchronous = Boolean.FALSE;
+				if (messagingProxy.local()) {
+					synchronousAndLocal[1] = true;
+				}
 			}
 
-			_synchronousMap.put(method, synchronous);
+			_synchronousAndLocalMap.put(method, synchronousAndLocal);
 		}
 
-		_synchronous = synchronous.booleanValue();
+		_synchronous = synchronousAndLocal[0];
+		_local = synchronousAndLocal[1];
 	}
 
 	public Object execute(Object object) throws Exception {
@@ -96,6 +100,10 @@ public class ProxyRequest implements Externalizable {
 
 	public boolean hasReturnValue() {
 		return _hasReturnValue;
+	}
+
+	public boolean isLocal() {
+		return _local;
 	}
 
 	public boolean isSynchronous() {
@@ -146,11 +154,12 @@ public class ProxyRequest implements Externalizable {
 		objectOutput.writeBoolean(_synchronous);
 	}
 
-	private static Map<Method, Boolean> _synchronousMap =
-		new ConcurrentHashMap<Method, Boolean>();
+	private static Map<Method, boolean[]> _synchronousAndLocalMap =
+		new ConcurrentHashMap<Method, boolean[]>();
 
 	private Object[] _arguments;
 	private boolean _hasReturnValue;
+	private boolean _local;
 	private Method _method;
 	private boolean _synchronous;
 

@@ -83,12 +83,10 @@ public class SchedulerEngineProxyBean
 
 	@Override
 	public void shutdown() {
-		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public void start() {
-		throw new UnsupportedOperationException();
 	}
 
 	@Override

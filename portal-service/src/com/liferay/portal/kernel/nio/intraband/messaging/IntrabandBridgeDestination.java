@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.messaging.DestinationWrapper;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.messaging.MessageListener;
+import com.liferay.portal.kernel.messaging.proxy.MessagingProxy;
 import com.liferay.portal.kernel.nio.intraband.Datagram;
 import com.liferay.portal.kernel.nio.intraband.Intraband;
 import com.liferay.portal.kernel.nio.intraband.RegistrationReference;
@@ -47,6 +48,12 @@ public class IntrabandBridgeDestination extends DestinationWrapper {
 
 	@Override
 	public void send(Message message) {
+		if (message.getBoolean(MessagingProxy.LOCAL_MESSAGE)) {
+			destination.send(message);
+
+			return;
+		}
+
 		message.setDestinationName(getName());
 
 		MessageRoutingBag messageRoutingBag =

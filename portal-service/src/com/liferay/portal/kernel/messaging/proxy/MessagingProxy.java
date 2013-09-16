@@ -30,6 +30,10 @@ import java.lang.annotation.Target;
 @Target({ElementType.METHOD, ElementType.TYPE})
 public @interface MessagingProxy {
 
+	public static final String LOCAL_MESSAGE = "LOCAL_MESSAGE";
+
+	public boolean local() default false;
+
 	public ProxyMode mode();
 
 }

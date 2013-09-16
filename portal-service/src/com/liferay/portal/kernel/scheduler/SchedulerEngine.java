@@ -116,10 +116,10 @@ public interface SchedulerEngine {
 			Message message)
 		throws SchedulerException;
 
-	@MessagingProxy(mode = ProxyMode.SYNC)
+	@MessagingProxy(local = true, mode = ProxyMode.SYNC)
 	public void shutdown() throws SchedulerException;
 
-	@MessagingProxy(mode = ProxyMode.SYNC)
+	@MessagingProxy(local = true, mode = ProxyMode.SYNC)
 	public void start() throws SchedulerException;
 
 	public void suppressError(String jobName, String groupName)

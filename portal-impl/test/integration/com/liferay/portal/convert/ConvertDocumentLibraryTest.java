@@ -44,6 +44,8 @@ import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLContentLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.store.DBStore;
+import com.liferay.portlet.documentlibrary.store.FileSystemStore;
 import com.liferay.portlet.documentlibrary.store.Store;
 import com.liferay.portlet.documentlibrary.store.StoreFactory;
 import com.liferay.portlet.documentlibrary.util.DLAppTestUtil;
@@ -84,20 +86,21 @@ public class ConvertDocumentLibraryTest {
 		_group = GroupTestUtil.addGroup();
 
 		_convertProcess = (ConvertProcess)InstancePool.get(
-			_CONVERT_DOCUMENT_LIBRARY_CLASSNAME);
+			ConvertDocumentLibrary.class.getName());
 
-		_convertProcess.setParameterValues(new String[] {_DB_STORE_CLASSNAME});
+		_convertProcess.setParameterValues(
+			new String[] {DBStore.class.getName()});
 	}
 
 	@After
 	public void tearDown() throws Exception {
 		Store store = (Store)InstanceFactory.newInstance(
 			ClassLoaderUtil.getPortalClassLoader(),
-			_FILE_SYSTEM_STORE_CLASSNAME);
+			FileSystemStore.class.getName());
 
 		StoreFactory.setInstance(store);
 
-		PropsValues.DL_STORE_IMPL = _FILE_SYSTEM_STORE_CLASSNAME;
+		PropsValues.DL_STORE_IMPL = FileSystemStore.class.getName();
 
 		GroupLocalServiceUtil.deleteGroup(_group);
 	}
@@ -222,7 +225,7 @@ public class ConvertDocumentLibraryTest {
 		Store sourceStore = StoreFactory.getInstance();
 
 		Assert.assertEquals(
-			_DB_STORE_CLASSNAME, sourceStore.getClass().getCanonicalName());
+			DBStore.class.getName(), sourceStore.getClass().getName());
 	}
 
 	protected Image addImage() throws Exception {
@@ -291,15 +294,6 @@ public class ConvertDocumentLibraryTest {
 		return DLFileEntryLocalServiceUtil.getDLFileEntry(
 			fileEntry.getFileEntryId());
 	}
-
-	private static final String _CONVERT_DOCUMENT_LIBRARY_CLASSNAME =
-		"com.liferay.portal.convert.ConvertDocumentLibrary";
-
-	private static final String _DB_STORE_CLASSNAME =
-		"com.liferay.portlet.documentlibrary.store.DBStore";
-
-	private static final String _FILE_SYSTEM_STORE_CLASSNAME =
-		"com.liferay.portlet.documentlibrary.store.FileSystemStore";
 
 	private ConvertProcess _convertProcess;
 	private Group _group;

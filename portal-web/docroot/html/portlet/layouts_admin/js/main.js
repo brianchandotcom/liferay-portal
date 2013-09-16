@@ -604,9 +604,50 @@ AUI.add(
 														click: function(event) {
 															event.domEvent.preventDefault();
 
-															instance._reloadForm();
+															var startDatePicker = Liferay.component(instance.ns('startDateDatePicker'));
+															var startTimePicker = Liferay.component(instance.ns('startTimeTimePicker'));
 
-															rangeDialog.hide();
+															var endDatePicker = Liferay.component(instance.ns('endDateDatePicker'));
+															var endTimePicker = Liferay.component(instance.ns('endTimeTimePicker'));
+
+															var startDate = startDatePicker.getDate();
+															var startTime = startTimePicker.getTime();
+
+															startDate.setHours(startTime.getHours());
+															startDate.setMinutes(startTime.getMinutes());
+															startDate.setSeconds(0);
+															startDate.setMilliseconds(0);
+
+															var endDate = endDatePicker.getDate();
+															var endTime = endTimePicker.getTime();
+
+															endDate.setHours(endTime.getHours());
+															endDate.setMinutes(endTime.getMinutes());
+															endDate.setSeconds(0);
+															endDate.setMilliseconds(0);
+
+															var endsLater = A.Date.isGreater(endDate, startDate);
+
+															if (endsLater) {
+																instance._reloadForm();
+
+																rangeDialog.hide();
+															}
+															else {
+																if (!instance._notice) {
+																	instance._notice = new Liferay.Notice(
+																		{
+																			closeText: false,
+																			content: Liferay.Language.get('end-date-must-be-greater-than-start-date') + '<button type="button" class="close">&times;</button>',
+																			timeout: 10000,
+																			toggleText: false,
+																			type: 'warning'
+																		}
+																	);
+																}
+
+																instance._notice.show();
+															}
 														}
 													},
 													label: Liferay.Language.get('ok'),

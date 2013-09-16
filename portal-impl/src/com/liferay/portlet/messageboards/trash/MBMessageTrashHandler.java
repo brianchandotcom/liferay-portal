@@ -19,14 +19,18 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.trash.BaseTrashHandler;
 import com.liferay.portal.model.ContainerModel;
+import com.liferay.portal.model.TrashedModel;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.messageboards.model.MBMessage;
+import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBMessageServiceUtil;
+import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.permission.MBMessagePermission;
 import com.liferay.portlet.messageboards.util.MBMessageAttachmentsUtil;
+import com.liferay.portlet.trash.model.TrashEntry;
 
 /**
  * Implements trash handling for message boards message entity.
@@ -45,12 +49,42 @@ public class MBMessageTrashHandler extends BaseTrashHandler {
 	}
 
 	@Override
+	public ContainerModel getContainerModel(long containerModelId)
+		throws PortalException, SystemException {
+
+		return MBThreadLocalServiceUtil.getThread(containerModelId);
+	}
+
+	@Override
+	public String getContainerModelClassName() {
+		return MBThread.class.getName();
+	}
+
+	@Override
+	public ContainerModel getParentContainerModel(TrashedModel trashedModel)
+		throws PortalException, SystemException {
+
+		MBMessage message = (MBMessage)trashedModel;
+
+		return getContainerModel(message.getThreadId());
+	}
+
+	@Override
 	public ContainerModel getTrashContainer(long classPK)
 		throws PortalException, SystemException {
 
 		MBMessage message = MBMessageLocalServiceUtil.getMBMessage(classPK);
 
 		return message.getTrashContainer();
+	}
+
+	@Override
+	public TrashEntry getTrashEntry(long classPK)
+		throws PortalException, SystemException {
+
+		MBMessage message = MBMessageLocalServiceUtil.getMBMessage(classPK);
+
+		return message.getTrashEntry();
 	}
 
 	@Override

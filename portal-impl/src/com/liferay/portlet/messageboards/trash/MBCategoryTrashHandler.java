@@ -36,6 +36,7 @@ import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.permission.MBCategoryPermission;
 import com.liferay.portlet.messageboards.util.MBUtil;
+import com.liferay.portlet.trash.model.TrashEntry;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -276,6 +277,15 @@ public class MBCategoryTrashHandler extends BaseTrashHandler {
 		}
 
 		return trashRenderers;
+	}
+
+	@Override
+	public TrashEntry getTrashEntry(long classPK)
+		throws PortalException, SystemException {
+
+		MBCategory category = MBCategoryLocalServiceUtil.getCategory(classPK);
+
+		return category.getTrashEntry();
 	}
 
 	@Override

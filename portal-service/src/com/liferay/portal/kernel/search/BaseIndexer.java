@@ -1155,6 +1155,75 @@ public abstract class BaseIndexer implements Indexer {
 		}
 	}
 
+	protected void addTrashFields(Document document, TrashedModel trashedModel)
+		throws SystemException {
+
+		TrashEntry trashEntry = null;
+
+		try {
+			trashEntry = trashedModel.getTrashEntry();
+		}
+		catch (PortalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to get trash entry for " + trashedModel);
+			}
+		}
+
+		if (trashEntry == null) {
+			document.addDate(Field.REMOVED_DATE, new Date());
+
+			ServiceContext serviceContext =
+				ServiceContextThreadLocal.getServiceContext();
+
+			if (serviceContext != null) {
+				try {
+					User user = UserLocalServiceUtil.getUser(
+						serviceContext.getUserId());
+
+					document.addKeyword(
+						Field.REMOVED_BY_USER_NAME, user.getFullName(), true);
+				}
+				catch (PortalException pe) {
+				}
+			}
+		}
+		else {
+			document.addDate(Field.REMOVED_DATE, trashEntry.getCreateDate());
+			document.addKeyword(
+				Field.REMOVED_BY_USER_NAME, trashEntry.getUserName(), true);
+
+			if (trashedModel.isInTrash() &&
+				!trashEntry.isTrashEntry(trashedModel)) {
+
+				document.addKeyword(
+					Field.ROOT_ENTRY_CLASS_NAME, trashEntry.getClassName());
+				document.addKeyword(
+					Field.ROOT_ENTRY_CLASS_PK, trashEntry.getClassPK());
+			}
+		}
+
+		TrashHandler trashHandler = trashedModel.getTrashHandler();
+		TrashRenderer trashRenderer = null;
+
+		try {
+			if ((trashHandler != null) && (trashEntry != null)) {
+				trashRenderer = trashHandler.getTrashRenderer(
+					trashEntry.getClassPK());
+			}
+
+			if (trashRenderer != null) {
+				document.addKeyword(Field.TYPE, trashRenderer.getType(), true);
+			}
+		}
+		catch (PortalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Unable to get trash renderer for " +
+						trashEntry.getClassName());
+			}
+		}
+	}
+
 	protected BooleanQuery createFullQuery(
 			BooleanQuery contextQuery, SearchContext searchContext)
 		throws Exception {
@@ -1501,7 +1570,7 @@ public abstract class BaseIndexer implements Indexer {
 			TrashedModel trashedModel = (TrashedModel)baseModel;
 
 			if (trashedModel.isInTrash()) {
-				addTrashFields(document, className, classPK, null, null, null);
+				addTrashFields(document, trashedModel);
 			}
 		}
 

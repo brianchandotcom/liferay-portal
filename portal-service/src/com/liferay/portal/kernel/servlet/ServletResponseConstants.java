@@ -19,9 +19,11 @@ package com.liferay.portal.kernel.servlet;
  */
 public interface ServletResponseConstants {
 
-	public static final int SC_DUPLICATE_FILE_EXCEPTION = 490;
+	public static final int SC_AUDIO_PREVIEW_DISABLED_EXCEPTION = 211; 
 
 	public static final int SC_FILE_CUSTOM_EXCEPTION = 499;
+
+	public static final int SC_DUPLICATE_FILE_EXCEPTION = 490;
 
 	public static final int SC_FILE_EXTENSION_EXCEPTION = 491;
 

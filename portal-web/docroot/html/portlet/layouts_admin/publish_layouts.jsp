@@ -121,22 +121,20 @@ long[] selectedLayoutIds = GetterUtil.getLongValues(StringUtil.split(SessionTree
 
 List<Layout> selectedLayouts = new ArrayList<Layout>();
 
+long selectedLayoutsGroupId = 0;
+
 if (stagingGroupId > 0) {
-	for (int i = 0; i < selectedLayoutIds.length; i++) {
-		try {
-			selectedLayouts.add(LayoutLocalServiceUtil.getLayout(stagingGroupId, privateLayout, selectedLayoutIds[i]));
-		}
-		catch (NoSuchLayoutException nsle) {
-		}
-	}
+	selectedLayoutsGroupId = stagingGroupId;
 }
 else {
-	for (int i = 0; i < selectedLayoutIds.length; i++) {
-		try {
-			selectedLayouts.add(LayoutLocalServiceUtil.getLayout(selGroupId, privateLayout, selectedLayoutIds[i]));
-		}
-		catch (NoSuchLayoutException nsle) {
-		}
+	selectedLayoutsGroupId = selGroupId;
+}
+
+for (int i = 0; i < selectedLayoutIds.length; i++) {
+	try {
+		selectedLayouts.add(LayoutLocalServiceUtil.getLayout(selectedLayoutsGroupId, privateLayout, selectedLayoutIds[i]));
+	}
+	catch (NoSuchLayoutException nsle) {
 	}
 }
 

@@ -816,6 +816,15 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 		return rolePersistence.findByC_C_C(companyId, classNameId, teamId);
 	}
 
+	/**
+	 * Returns a team to team role mapping for the group
+	 *
+	 * @param  groupId the primary key of the group
+	 * @return team to team role mapping for the group
+	 * @throws PortalException if a role could not be found for one of the teams
+	 *         within the given group
+	 * @throws SystemException if a system exception occurred
+	 */
 	@Override
 	public Map<Team, Role> getTeamRoleMap(long groupId)
 		throws PortalException, SystemException {
@@ -823,6 +832,15 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 		return getTeamRoleMap(groupId, null);
 	}
 
+	/**
+	 * Returns the team roles in the group
+	 *
+	 * @param  groupId the primary key of the group
+	 * @return the team roles in the given groupId
+	 * @throws PortalException if a role could not be found for one of the teams
+	 *         within the given group
+	 * @throws SystemException if a system exception occurred
+	 */
 	@Override
 	public List<Role> getTeamRoles(long groupId)
 		throws PortalException, SystemException {
@@ -830,6 +848,16 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 		return getTeamRoles(groupId, null);
 	}
 
+	/**
+	 * Returns the team roles in the group
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  skipRoleIds array of roleIds to be skipped (optional)
+	 * @return the team roles in the given groupId
+	 * @throws PortalException if a role could not be found for one of the teams
+	 *         within the given group
+	 * @throws SystemException if a system exception occurred
+	 */
 	@Override
 	public List<Role> getTeamRoles(long groupId, long[] excludedRoleIds)
 		throws PortalException, SystemException {

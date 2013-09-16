@@ -338,7 +338,7 @@ AUI.add(
 			_confirmUnload: function() {
 				var instance = this;
 
-				return instance._isUploading() ? Liferay.Language.get('uploads-are-in-progress-confirmation') : null;
+				return instance._isUploading() ? Liferay.Language.get('uploads-are-in-progress-confirmation') : undefined;
 			},
 
 			_createEntryNode: function(name, size, displayStyle) {

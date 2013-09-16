@@ -23,8 +23,17 @@ long[] selectedGroupIds = StringUtil.split(ParamUtil.getString(request, "selecte
 String type = ParamUtil.getString(request, "type");
 String[] types = ParamUtil.getParameterValues(request, "types");
 
-if (Validator.isNull(type) && (types.length > 0)) {
-	type = types[0];
+if (Validator.isNull(type)) {
+	if (types.length > 0) {
+		type = types[0];
+	}
+	else {
+		type = "sites-that-i-administer";
+	}
+}
+
+if (types.length == 0) {
+	types = new String[] {type};
 }
 
 String filter = ParamUtil.getString(request, "filter");

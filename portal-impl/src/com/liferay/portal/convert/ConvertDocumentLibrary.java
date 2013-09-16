@@ -37,6 +37,7 @@ import com.liferay.portal.util.MaintenanceUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
+import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryActionableDynamicQuery;
 import com.liferay.portlet.documentlibrary.store.AdvancedFileSystemStore;
@@ -140,6 +141,14 @@ public class ConvertDocumentLibrary extends ConvertProcess {
 			new DLFileEntryActionableDynamicQuery() {
 
 			@Override
+			protected void addCriteria(DynamicQuery dynamicQuery) {
+				Property classNameIdProperty = PropertyFactoryUtil.forName(
+					"classNameId");
+
+				dynamicQuery.add(classNameIdProperty.eq(0L));
+			}
+
+			@Override
 			protected void performAction(Object object) throws SystemException {
 				DLFileEntry dlFileEntry = (DLFileEntry)object;
 
@@ -241,7 +250,10 @@ public class ConvertDocumentLibrary extends ConvertProcess {
 					DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
 
 					migrateDLFileEntry(
-						mbMessage.getCompanyId(), dlFileEntry.getRepositoryId(),
+						mbMessage.getCompanyId(),
+						DLFolderConstants.getDataRepositoryId(
+							dlFileEntry.getRepositoryId(),
+							dlFileEntry.getFolderId()),
 						dlFileEntry);
 				}
 			}
@@ -284,7 +296,10 @@ public class ConvertDocumentLibrary extends ConvertProcess {
 					DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
 
 					migrateDLFileEntry(
-						wikiPage.getCompanyId(), dlFileEntry.getRepositoryId(),
+						wikiPage.getCompanyId(),
+						DLFolderConstants.getDataRepositoryId(
+							dlFileEntry.getRepositoryId(),
+							dlFileEntry.getFolderId()),
 						dlFileEntry);
 				}
 			}

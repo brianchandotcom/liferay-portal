@@ -35,16 +35,16 @@ public class DLFolderConstants {
 	}
 
 	/**
-	 * Determine the data repository ID from the group ID and folder ID. The
-	 * folder ID may be zero, implying that it is the root folder for the given
-	 * group.
+	 * Determine the data repository ID from the repository ID and folder ID.
+	 * The folder ID may be zero, implying that it is the root folder for the
+	 * given repository.
 	 */
-	public static long getDataRepositoryId(long groupId, long folderId) {
+	public static long getDataRepositoryId(long repositoryId, long folderId) {
 		if (folderId != DEFAULT_PARENT_FOLDER_ID) {
 			return folderId;
 		}
 		else {
-			return groupId;
+			return repositoryId;
 		}
 	}
 

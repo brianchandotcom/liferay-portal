@@ -30,16 +30,16 @@ import java.util.Map;
  */
 public class LayoutSettings {
 
+	public static Map<String, LayoutSettings> getCurrentLayoutSettings() {
+		return _layoutSettingsMap;
+	}
+
 	public static LayoutSettings getInstance(Layout layout) {
 		return getInstance(layout.getType());
 	}
 
 	public static LayoutSettings getInstance(String type) {
 		return _layoutSettingsMap.get(type);
-	}
-
-	public static Map<String, LayoutSettings> getCurrentLayoutSettings(){
-		return _layoutSettingsMap;
 	}
 
 	public static void setLayoutSetting(String type) {

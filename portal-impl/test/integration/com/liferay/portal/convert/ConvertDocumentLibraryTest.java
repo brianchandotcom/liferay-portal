@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.InstancePool;
 import com.liferay.portal.kernel.util.ObjectValuePair;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Image;
@@ -36,6 +37,7 @@ import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
 import com.liferay.portal.test.MainServletExecutionTestListener;
 import com.liferay.portal.util.ClassLoaderUtil;
 import com.liferay.portal.util.GroupTestUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.TestPropsValues;
 import com.liferay.portlet.documentlibrary.model.DLContent;
@@ -83,6 +85,16 @@ public class ConvertDocumentLibraryTest {
 	public void setUp() throws Exception {
 		FinderCacheUtil.clearCache();
 
+		_originalDLStoreImpl = PropsUtil.get(PropsKeys.DL_STORE_IMPL);
+
+		PropsValues.DL_STORE_IMPL = FileSystemStore.class.getName();
+
+		Store store = (Store)InstanceFactory.newInstance(
+			ClassLoaderUtil.getPortalClassLoader(),
+			FileSystemStore.class.getName());
+
+		StoreFactory.setInstance(store);
+
 		_group = GroupTestUtil.addGroup();
 
 		_convertProcess = (ConvertProcess)InstancePool.get(
@@ -94,13 +106,12 @@ public class ConvertDocumentLibraryTest {
 
 	@After
 	public void tearDown() throws Exception {
+		PropsValues.DL_STORE_IMPL = _originalDLStoreImpl;
+
 		Store store = (Store)InstanceFactory.newInstance(
-			ClassLoaderUtil.getPortalClassLoader(),
-			FileSystemStore.class.getName());
+			ClassLoaderUtil.getPortalClassLoader(), _originalDLStoreImpl);
 
 		StoreFactory.setInstance(store);
-
-		PropsValues.DL_STORE_IMPL = FileSystemStore.class.getName();
 
 		GroupLocalServiceUtil.deleteGroup(_group);
 	}
@@ -297,5 +308,6 @@ public class ConvertDocumentLibraryTest {
 
 	private ConvertProcess _convertProcess;
 	private Group _group;
+	private String _originalDLStoreImpl;
 
 }

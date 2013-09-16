@@ -587,7 +587,7 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 					continue;
 				}
 
-				updateDependentStatus(
+				moveDependentsToTrash(
 					user,
 					getCategoriesAndThreads(
 						category.getGroupId(), category.getCategoryId()),
@@ -637,7 +637,7 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 					continue;
 				}
 
-				updateDependentStatus(
+				restoreDependentFromTrash(
 					user,
 					getCategoriesAndThreads(
 						category.getGroupId(), category.getCategoryId()),

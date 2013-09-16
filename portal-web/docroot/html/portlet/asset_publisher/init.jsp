@@ -83,8 +83,6 @@ long[] classNameIds = AssetPublisherUtil.getClassNameIds(portletPreferences, ava
 
 long[] classTypeIds = GetterUtil.getLongValues(portletPreferences.getValues("classTypeIds", null));
 
-String customUserAttributes = GetterUtil.getString(portletPreferences.getValue("customUserAttributes", StringPool.BLANK));
-
 AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
 
 long[] allAssetCategoryIds = new long[0];
@@ -138,7 +136,7 @@ if (selectionStyle.equals("dynamic")) {
 		}
 	}
 
-	AssetPublisherUtil.addUserAttributes(user, StringUtil.split(customUserAttributes), assetEntryQuery);
+	AssetPublisherUtil.processQuery(user, portletPreferences, assetEntryQuery);
 }
 
 long assetVocabularyId = GetterUtil.getLong(portletPreferences.getValue("assetVocabularyId", StringPool.BLANK));

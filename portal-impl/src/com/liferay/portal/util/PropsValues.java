@@ -1086,6 +1086,8 @@ public class PropsValues {
 
 	public static boolean LOGIN_CREATE_ACCOUNT_ALLOW_CUSTOM_PASSWORD = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.LOGIN_CREATE_ACCOUNT_ALLOW_CUSTOM_PASSWORD));
 
+	public static boolean LOGIN_DIALOG_DISABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.LOGIN_DIALOG_DISABLED));
+
 	public static final String LOGIN_EMAIL_FROM_ADDRESS = PropsUtil.get(PropsKeys.LOGIN_EMAIL_FROM_ADDRESS);
 
 	public static final String LOGIN_EMAIL_FROM_NAME = PropsUtil.get(PropsKeys.LOGIN_EMAIL_FROM_NAME);

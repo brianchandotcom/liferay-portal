@@ -49,8 +49,6 @@ else if (selGroup.isStaged()) {
 	}
 }
 
-long selGroupId = selGroup.getGroupId();
-
 long liveGroupId = 0;
 
 if (liveGroup != null) {
@@ -88,7 +86,7 @@ if (liveGroup.isStaged()) {
 	}
 }
 
-treeId = treeId + selGroupId;
+treeId = treeId + selGroup.getGroupId();
 
 String publishActionKey = "copy";
 
@@ -121,13 +119,10 @@ long[] selectedLayoutIds = GetterUtil.getLongValues(StringUtil.split(SessionTree
 
 List<Layout> selectedLayouts = new ArrayList<Layout>();
 
-long selectedLayoutsGroupId = 0;
+long selectedLayoutsGroupId = selGroup.getGroupId();
 
 if (stagingGroupId > 0) {
 	selectedLayoutsGroupId = stagingGroupId;
-}
-else {
-	selectedLayoutsGroupId = selGroupId;
 }
 
 for (int i = 0; i < selectedLayoutIds.length; i++) {

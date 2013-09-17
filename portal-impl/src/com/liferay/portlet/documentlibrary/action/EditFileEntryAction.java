@@ -375,6 +375,9 @@ public class EditFileEntryAction extends PortletAction {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				DLFileEntry.class.getName(), actionRequest);
 
+			serviceContext.setAttribute(
+				"defaultLanguageId", themeDisplay.getLanguageId());
+
 			FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
 				repositoryId, folderId, selectedFileName, mimeType,
 				selectedFileName, description, changeLog, inputStream, size,
@@ -985,6 +988,9 @@ public class EditFileEntryAction extends PortletAction {
 
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				DLFileEntry.class.getName(), uploadPortletRequest);
+
+			serviceContext.setAttribute(
+				"defaultLanguageId", themeDisplay.getLanguageId());
 
 			FileEntry fileEntry = null;
 

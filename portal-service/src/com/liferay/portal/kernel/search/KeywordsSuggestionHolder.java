@@ -29,7 +29,9 @@ public class KeywordsSuggestionHolder {
 	public KeywordsSuggestionHolder(
 		String suggestedKeywords, String originalKeywords) {
 
-		this(suggestedKeywords, originalKeywords, "[ ]+");
+		this(
+			suggestedKeywords, originalKeywords,
+			_DEAFULT_KEYWORDS_DELIMETER_REGEXP);
 	}
 
 	public KeywordsSuggestionHolder(
@@ -64,9 +66,12 @@ public class KeywordsSuggestionHolder {
 		if (_originalKeywords.contains(suggestedKeyword)) {
 			return false;
 		}
-
-		return true;
+		else {
+			return true;
+		}
 	}
+
+	private static final String _DEAFULT_KEYWORDS_DELIMETER_REGEXP = "[ ]+";
 
 	private List<String> _originalKeywords;
 	private List<String> _suggestedKeywords;

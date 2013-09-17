@@ -31,7 +31,7 @@
 			</aui:field-wrapper>
 		</div>
 
-		<div class="basic-configuration <%= (advancedConfiguration ? "hide" : "") %>" id="<portlet:namespace />basicConfiguration">
+		<div class="basic-configuration <%= (advancedConfiguration ? "hide" : StringPool.BLANK) %>" id="<portlet:namespace />basicConfiguration">
 			<aui:input name="preferences--displayScopeFacet--" type="checkbox" value="<%= displayScopeFacet %>" />
 
 			<aui:input name="preferences--displayAssetTypeFacet--" type="checkbox" value="<%= displayAssetTypeFacet %>" />
@@ -47,7 +47,7 @@
 			<aui:input name="preferences--displayModifiedRangeFacet--" type="checkbox" value="<%= displayModifiedRangeFacet %>" />
 		</div>
 
-		<div class="advanced-configuration <%= (!advancedConfiguration ? "hide" : "") %>" id="<portlet:namespace />advancedConfiguration">
+		<div class="advanced-configuration <%= (!advancedConfiguration ? "hide" : StringPool.BLANK) %>" id="<portlet:namespace />advancedConfiguration">
 
 			<%
 			JSONObject searchConfigurationJSONObject = JSONFactoryUtil.createJSONObject(searchConfiguration);
@@ -59,24 +59,19 @@
 
 	<br />
 
-	<%
-	String showOptionsMessage = LanguageUtil.get(pageContext, "show-options");
-	String hideOptionsMessage = LanguageUtil.get(pageContext, "hide-options");
-	%>
-
 	<aui:fieldset label="spell-check-settings">
 		<aui:input helpMessage="collated-spell-check-result-enabled-help" id="collatedSpellCheckResultEnabled" name="preferences--collatedSpellCheckResultEnabled--" type="checkbox" value="<%= collatedSpellCheckResultEnabled %>" />
 
-		<div class="options-container <%= !collatedSpellCheckResultEnabled ? "hide" : "" %>" id="<portlet:namespace />collatedSpellCheckResultOptionsContainer">
-			<liferay-ui:toggle-area align="none" defaultShowContent="<%= collatedSpellCheckResultEnabled %>" hideMessage='<%= "&laquo; " + hideOptionsMessage %>' id="toggle_id_search_configuration_collated_spell_check_result" showMessage='<%= showOptionsMessage + " &raquo;" %>'>
+		<div class="options-container <%= !collatedSpellCheckResultEnabled ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />collatedSpellCheckResultOptionsContainer">
+			<liferay-ui:toggle-area align="none" defaultShowContent="<%= collatedSpellCheckResultEnabled %>" hideMessage='<%= "&laquo; " + LanguageUtil.get(pageContext, "hide-options") %>' id="toggle_id_search_configuration_collated_spell_check_result" showMessage='<%= LanguageUtil.get(pageContext, "show-options") + " &raquo;" %>'>
 				<aui:input disabled="<%= !collatedSpellCheckResultEnabled %>" helpMessage="collated-spell-check-result-display-threshold-help" name="preferences--collatedSpellCheckResultDisplayThreshold--" size="10" type="text" value="<%= collatedSpellCheckResultDisplayThreshold %>" />
 			</liferay-ui:toggle-area>
 		</div>
 
 		<aui:input helpMessage="query-suggestions-enabled-help" id="querySuggestionsEnabled" name="preferences--querySuggestionsEnabled--" type="checkbox" value="<%= querySuggestionsEnabled %>" />
 
-		<div class="options-container <%= !querySuggestionsEnabled ? "hide" : "" %>" id="<portlet:namespace />querySuggestionsOptionsContainer">
-			<liferay-ui:toggle-area align="none" defaultShowContent="<%= querySuggestionsEnabled %>" hideMessage='<%= "&laquo; " + hideOptionsMessage %>' id="toggle_id_search_configuration_query_suggestions" showMessage='<%= showOptionsMessage + " &raquo;" %>'>
+		<div class="options-container <%= !querySuggestionsEnabled ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />querySuggestionsOptionsContainer">
+			<liferay-ui:toggle-area align="none" defaultShowContent="<%= querySuggestionsEnabled %>" hideMessage='<%= "&laquo; " + LanguageUtil.get(pageContext, "hide-options") %>' id="toggle_id_search_configuration_query_suggestions" showMessage='<%= LanguageUtil.get(pageContext, "show-options") + " &raquo;" %>'>
 				<aui:input disabled="<%= !querySuggestionsEnabled %>" name="preferences--querySuggestionsMax--" size="10" type="text" value="<%= querySuggestionsMax %>" />
 
 				<aui:input disabled="<%= !querySuggestionsEnabled %>" helpMessage="query-suggestions-display-threshold-help" name="preferences--querySuggestionsDisplayThreshold--" size="10" type="text" value="<%= querySuggestionsDisplayThreshold %>" />
@@ -85,8 +80,8 @@
 
 		<aui:input helpMessage="query-indexing-enabled-help" id="queryIndexingEnabled" name="preferences--queryIndexingEnabled--" type="checkbox" value="<%= queryIndexingEnabled %>" />
 
-		<div class="options-container <%= !queryIndexingEnabled ? "hide" : "" %>" id="<portlet:namespace />queryIndexingOptionsContainer">
-			<liferay-ui:toggle-area align="none" defaultShowContent="<%= queryIndexingEnabled %>" hideMessage='<%= "&laquo; " + hideOptionsMessage %>' id="toggle_id_search_configuration_query_indexing" showMessage='<%= showOptionsMessage + " &raquo;" %>'>
+		<div class="options-container <%= !queryIndexingEnabled ? "hide" : StringPool.BLANK %>" id="<portlet:namespace />queryIndexingOptionsContainer">
+			<liferay-ui:toggle-area align="none" defaultShowContent="<%= queryIndexingEnabled %>" hideMessage='<%= "&laquo; " + LanguageUtil.get(pageContext, "hide-options") %>' id="toggle_id_search_configuration_query_indexing" showMessage='<%= LanguageUtil.get(pageContext, "show-options") + " &raquo;" %>'>
 				<aui:input disabled="<%= !queryIndexingEnabled %>" helpMessage="query-indexing-threshold-help" name="preferences--queryIndexingThreshold--" size="10" type="text" value="<%= queryIndexingThreshold %>" />
 			</liferay-ui:toggle-area>
 		</div>

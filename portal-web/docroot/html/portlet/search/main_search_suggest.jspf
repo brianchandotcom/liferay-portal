@@ -16,17 +16,16 @@
 
 <div class="search-suggested-spelling">
 	<c:if test="<%= collatedSpellCheckResultEnabled && Validator.isNotNull(hits.getCollatedSpellCheckResult()) && !Validator.equals(hits.getCollatedSpellCheckResult(), searchContext.getKeywords()) %>">
-
 		<ul class="inline suggested-keywords">
 			<li class="label">
 				<liferay-ui:message key="did-you-mean" />:
 			</li>
-
-			<%
-			String taglibSearchCollatedKeywords = renderResponse.getNamespace() + "searchKeywords('" + HtmlUtil.escapeJS(hits.getCollatedSpellCheckResult()) + "')";
-			%>
-
 			<li>
+
+				<%
+				String taglibSearchCollatedKeywords = renderResponse.getNamespace() + "searchKeywords('" + HtmlUtil.escapeJS(hits.getCollatedSpellCheckResult()) + "')";
+				%>
+
 				<aui:a href="javascript:;" onclick="<%= taglibSearchCollatedKeywords %>">
 
 					<%
@@ -56,11 +55,15 @@
 
 			<%
 			for (String querySuggestion : hits.getQuerySuggestions()) {
-				String taglibSearchRelatedQuery = renderResponse.getNamespace() + "searchKeywords('" + HtmlUtil.escapeJS(querySuggestion) + "')";
 			%>
 
 				<c:if test="<%= Validator.isNotNull(querySuggestion) && !querySuggestion.equals(searchContext.getKeywords()) %>">
 					<li>
+
+						<%
+						String taglibSearchRelatedQuery = renderResponse.getNamespace() + "searchKeywords('" + HtmlUtil.escapeJS(querySuggestion) + "')";
+						%>
+
 						<aui:a href="javascript:;" onclick="<%= taglibSearchRelatedQuery %>">
 
 							<%

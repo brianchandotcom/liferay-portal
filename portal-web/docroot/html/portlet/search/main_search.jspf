@@ -30,8 +30,8 @@ queryConfig.setCollatedSpellCheckResultEnabled(collatedSpellCheckResultEnabled);
 queryConfig.setCollatedSpellCheckResultScoresThreshold(collatedSpellCheckResultDisplayThreshold);
 
 queryConfig.setQuerySuggestionEnabled(querySuggestionsEnabled);
-queryConfig.setQuerySuggestionsMax(querySuggestionsMax);
 queryConfig.setQuerySuggestionScoresThreshold(querySuggestionsDisplayThreshold);
+queryConfig.setQuerySuggestionsMax(querySuggestionsMax);
 
 searchContext.setQueryConfig(queryConfig);
 
@@ -142,8 +142,7 @@ boolean showMenu = advancedConfiguration || displayScopeFacet || displayAssetTyp
 	</c:if>
 
 	<aui:col cssClass="result" first="<%= !showMenu %>" span="10">
-
-		<%@include file="/html/portlet/search/main_search_suggest.jspf" %>
+		<%@ include file="/html/portlet/search/main_search_suggest.jspf" %>
 
 		<liferay-ui:search-container
 			searchContainer="<%= mainSearchSearchContainer %>"

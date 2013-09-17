@@ -37,13 +37,12 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.LayoutTypePortletConstants;
 import com.liferay.portal.model.Portlet;
-import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.security.auth.AuthTokenUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
-import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PortalUtil;
@@ -280,18 +279,14 @@ public class CacheFilter extends BasePortalFilter {
 		}
 	}
 
-	protected boolean isCacheableColumn(long companyId, String columnSettings)
-		throws SystemException {
+	protected boolean isCacheableColumn(
+			String columnId, LayoutTypePortlet layoutTypePortlet)
+		throws PortalException, SystemException {
 
-		String[] portletIds = StringUtil.split(columnSettings);
+		for (Portlet portlet : layoutTypePortlet.getAllPortlets(columnId)) {
+			Portlet rootPortlet = portlet.getRootPortlet();
 
-		for (String portletId : portletIds) {
-			portletId = PortletConstants.getRootPortletId(portletId);
-
-			Portlet portlet = PortletLocalServiceUtil.getPortletById(
-				companyId, portletId);
-
-			if (!portlet.isLayoutCacheable()) {
+			if (!rootPortlet.isLayoutCacheable()) {
 				return false;
 			}
 		}
@@ -321,15 +316,15 @@ public class CacheFilter extends BasePortalFilter {
 				return false;
 			}
 
+			LayoutTypePortlet layoutTypePortlet =
+				(LayoutTypePortlet)layout.getLayoutType();
+
 			UnicodeProperties properties = layout.getTypeSettingsProperties();
 
 			for (int i = 0; i < 10; i++) {
 				String columnId = "column-" + i;
 
-				String settings = properties.getProperty(
-					columnId, StringPool.BLANK);
-
-				if (!isCacheableColumn(companyId, settings)) {
+				if (!isCacheableColumn(columnId, layoutTypePortlet)) {
 					return false;
 				}
 			}
@@ -341,10 +336,7 @@ public class CacheFilter extends BasePortalFilter {
 				String[] columnIds = StringUtil.split(columnIdsString);
 
 				for (String columnId : columnIds) {
-					String settings = properties.getProperty(
-						columnId, StringPool.BLANK);
-
-					if (!isCacheableColumn(companyId, settings)) {
+					if (!isCacheableColumn(columnId, layoutTypePortlet)) {
 						return false;
 					}
 				}

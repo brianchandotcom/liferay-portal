@@ -53,7 +53,6 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 	<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
 	<aui:input name="referringPortletResource" type="hidden" value="<%= referringPortletResource %>" />
 	<aui:input name="entryId" type="hidden" value="<%= entryId %>" />
-	<aui:input name="attachments" type="hidden" />
 	<aui:input name="preview" type="hidden" value="<%= false %>" />
 	<aui:input name="workflowAction" type="hidden" value="<%= WorkflowConstants.ACTION_PUBLISH %>" />
 
@@ -291,11 +290,6 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 
 	function <portlet:namespace />initEditor() {
 		return "<%= UnicodeFormatter.toString(content) %>";
-	}
-
-	function <portlet:namespace />manageAttachments() {
-		document.<portlet:namespace />fm.encoding = "multipart/form-data";
-		document.<portlet:namespace />fm.<portlet:namespace />attachments.value = "true";
 	}
 
 	function <portlet:namespace />previewEntry() {

@@ -44,7 +44,7 @@ public class NavTag extends BaseNavTag {
 
 				sb.append("<a class=\"btn btn-navbar\" id=\"");
 				sb.append(_getNamespacedId());
-				sb.append("NavbarBtn\"");
+				sb.append("NavbarBtn\" ");
 				sb.append("data-navId=\"");
 				sb.append(_getNamespacedId());
 				sb.append("\">");

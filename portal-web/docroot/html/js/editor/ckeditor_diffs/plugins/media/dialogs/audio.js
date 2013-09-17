@@ -1,23 +1,10 @@
 CKEDITOR.dialog.add(
 	'audio',
 	function(editor) {
-		var TPL_SCRIPT_PREFIX = 'AUI().use(' +
-								'	"aui-base", "aui-audio",' +
-								'	function(A) {' +
-								'		var audioId = A.guid();' +
-								'		var audioDivNode = A.one(".ckaudio-no-id");' +
-								'		audioDivNode.attr("id", audioId);' +
-								'		audioDivNode.removeClass("ckaudio-no-id");' +
-								'		var audioConfig = {';
 
-		var TPL_SCRIPT =		'			boundingBox: "#" + audioId,' +
+		var TPL_SCRIPT =		'			boundingBox: "#" + mediaId,' +
 								'			oggUrl: "{oggUrl}",' +
 								'			url: "{url}"';
-
-		var TPL_SCRIPT_SUFFIX = '		};' +
-								'		new A.Audio(audioConfig).render();' +
-								'	}' +
-								');';
 
 		function commitValue(audioNode) {
 			var instance = this;
@@ -53,7 +40,7 @@ CKEDITOR.dialog.add(
 					}
 				);
 
-				editor.plugins.media.replaceScriptContent(audioNode, TPL_SCRIPT_PREFIX + textScript + TPL_SCRIPT_SUFFIX);
+				editor.plugins.media.applyMediaScript(audioNode, 'audio', textScript);
 			}
 		}
 
@@ -117,32 +104,15 @@ CKEDITOR.dialog.add(
 			title: Liferay.Language.get('audio-properties'),
 
 			onShow: function() {
-				var instance = this;
+				var instance = this;				
 
-				instance.fakeImage = null;
-
-				var fakeImage = instance.getSelectedElement();
-
-				editor.plugins.media.restoreElement(editor, instance, fakeImage, 'audio');
+				editor.plugins.media.onShowCallback(instance, editor, 'audio');
 			},
 
 			onOk: function() {
 				var instance = this;
 
-				var divNode = editor.plugins.media.createDivStructure(editor, 'liferayckeaudio audio-container', 'ckaudio-no-id');
-
-				instance.commitContent(divNode);
-
-				var newFakeImage = editor.createFakeElement(divNode, 'liferay_cke_audio', 'audio', false);
-
-				if (instance.fakeImage) {
-					newFakeImage.replace(instance.fakeImage);
-
-					editor.getSelection().selectElement(newFakeImage);
-				}
-				else {
-					editor.insertElement(newFakeImage);
-				}
+				editor.plugins.media.onOkCallback(instance, editor, 'audio');
 			}
 		};
 	}

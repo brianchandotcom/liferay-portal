@@ -1,26 +1,12 @@
 CKEDITOR.dialog.add(
 	'video',
 	function(editor) {
-		var TPL_SCRIPT_PREFIX = 'AUI().use(' +
-								'	"aui-base", "aui-video",' +
-								'	function(A) {' +
-								'		var videoId = A.guid();' +
-								'		var videoDivNode = A.one(".ckvideo-no-id");' +
-								'		videoDivNode.attr("id", videoId);' +
-								'		videoDivNode.removeClass("ckvideo-no-id");' +
-								'		var videoConfig = {';
-
-		var TPL_SCRIPT =		'			boundingBox: "#" + videoId,' +
+		var TPL_SCRIPT =		'			boundingBox: "#" + mediaId,' +
 								'			height: {height},' +
 								'			ogvUrl: "{ogvUrl}",' +
 								'			poster: "{poster}",' +
 								'			url: "{url}",' +
 								'			width: {width}';
-
-		var TPL_SCRIPT_SUFFIX = '		};' +
-								'		new A.Video(videoConfig).render();' +
-								'	}' +
-								');';
 
 		function commitValue(videoNode, extraStyles) {
 			var instance = this;
@@ -64,7 +50,7 @@ CKEDITOR.dialog.add(
 					}
 				);
 
-				editor.plugins.media.replaceScriptContent(videoNode, TPL_SCRIPT_PREFIX + textScript + TPL_SCRIPT_SUFFIX);
+				editor.plugins.media.applyMediaScript(videoNode, 'video', textScript);
 			}
 
 			if (value) {
@@ -98,7 +84,7 @@ CKEDITOR.dialog.add(
 						}
 					);
 
-					editor.plugins.media.replaceScriptContent(videoNode, TPL_SCRIPT_PREFIX + textScript + TPL_SCRIPT_SUFFIX);
+					editor.plugins.media.applyMediaScript(videoNode, 'video', textScript);
 				}
 			}
 		}
@@ -195,34 +181,13 @@ CKEDITOR.dialog.add(
 			onShow: function() {
 				var instance = this;
 
-				instance.fakeImage = null;
-
-				var fakeImage = instance.getSelectedElement();
-
-				editor.plugins.media.restoreElement(editor, instance, fakeImage, 'video');
+				editor.plugins.media.onShowCallback(instance, editor, 'video');
 			},
 
 			onOk: function() {
 				var instance = this;
 
-				var extraStyles = {};
-
-				var divNode = editor.plugins.media.createDivStructure(editor, 'liferayckevideo video-container', 'ckvideo-no-id');
-
-				instance.commitContent(divNode, extraStyles);
-
-				var newFakeImage = editor.createFakeElement(divNode, 'liferay_cke_video', 'video', false);
-
-				newFakeImage.setStyles(extraStyles);
-
-				if (instance.fakeImage) {
-					newFakeImage.replace(instance.fakeImage);
-
-					editor.getSelection().selectElement(newFakeImage);
-				}
-				else {
-					editor.insertElement(newFakeImage);
-				}
+				editor.plugins.media.onOkCallback(instance, editor, 'video');
 			}
 		};
 	}

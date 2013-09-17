@@ -53,7 +53,9 @@ import com.liferay.portlet.messageboards.model.MBTreeWalker;
 import com.liferay.portlet.messageboards.service.base.MBThreadLocalServiceBaseImpl;
 import com.liferay.portlet.messageboards.util.MBUtil;
 import com.liferay.portlet.social.model.SocialActivityConstants;
+import com.liferay.portlet.trash.NoSuchEntryException;
 import com.liferay.portlet.trash.model.TrashEntry;
+import com.liferay.portlet.trash.model.TrashVersion;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -664,7 +666,8 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 	}
 
 	@Override
-	public void moveDependentsToTrash(long groupId, long threadId)
+	public void moveDependentsToTrash(
+			long groupId, long threadId, long trashEntryId)
 		throws PortalException, SystemException {
 
 		Set<Long> userIds = new HashSet<Long>();
@@ -677,14 +680,32 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 				continue;
 			}
 
+			int oldStatus = message.getStatus();
+
+			message.setStatus(WorkflowConstants.STATUS_IN_TRASH);
+
+			mbMessagePersistence.update(message);
+
 			userIds.add(message.getUserId());
 
 			// Asset
 
-			if (message.getStatus() == WorkflowConstants.STATUS_APPROVED) {
+			if (oldStatus == WorkflowConstants.STATUS_APPROVED) {
 				assetEntryLocalService.updateVisible(
 					MBMessage.class.getName(), message.getMessageId(), false);
 			}
+
+			// Trash
+
+			int status = oldStatus;
+
+			if (oldStatus == WorkflowConstants.STATUS_PENDING) {
+				status = WorkflowConstants.STATUS_DRAFT;
+			}
+
+			trashVersionLocalService.addTrashVersion(
+				trashEntryId, MBMessage.class.getName(), message.getMessageId(),
+				status);
 
 			// Indexer
 
@@ -695,11 +716,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 			// Workflow
 
-			if (message.getStatus() == WorkflowConstants.STATUS_PENDING) {
-				message.setStatus(WorkflowConstants.STATUS_DRAFT);
-
-				mbMessagePersistence.update(message);
-
+			if (oldStatus == WorkflowConstants.STATUS_PENDING) {
 				workflowInstanceLinkLocalService.deleteWorkflowInstanceLink(
 					message.getCompanyId(), message.getGroupId(),
 					MBMessage.class.getName(), message.getMessageId());
@@ -790,13 +807,18 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 		MBThread thread = mbThreadPersistence.findByPrimaryKey(threadId);
 
-		if (thread.isInTrash()) {
+		try {
+			trashEntryLocalService.getEntry(MBThread.class.getName(), threadId);
+
 			restoreThreadFromTrash(userId, threadId);
 		}
-		else {
+		catch (NoSuchEntryException nsee) {
 			updateStatus(userId, threadId, thread.getStatus());
 
-			restoreDependentsFromTrash(thread.getGroupId(), threadId);
+			TrashEntry trashEntry = thread.getTrashEntry();
+
+			restoreDependentsFromTrash(
+				thread.getGroupId(), threadId, trashEntry.getEntryId());
 		}
 
 		return moveThread(thread.getGroupId(), categoryId, threadId);
@@ -843,8 +865,6 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		thread = updateStatus(
 			userId, thread.getThreadId(), WorkflowConstants.STATUS_IN_TRASH);
 
-		moveDependentsToTrash(thread.getGroupId(), thread.getThreadId());
-
 		// Social
 
 		MBMessage message = mbMessageLocalService.getMBMessage(
@@ -862,16 +882,20 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 		// Trash
 
-		trashEntryLocalService.addTrashEntry(
+		TrashEntry trashEntry = trashEntryLocalService.addTrashEntry(
 			userId, thread.getGroupId(), MBThread.class.getName(),
 			thread.getThreadId(), thread.getUuid(), null, oldStatus, null,
 			null);
+
+		moveDependentsToTrash(
+			thread.getGroupId(), thread.getThreadId(), trashEntry.getEntryId());
 
 		return thread;
 	}
 
 	@Override
-	public void restoreDependentsFromTrash(long groupId, long threadId)
+	public void restoreDependentsFromTrash(
+			long groupId, long threadId, long trashEntryId)
 		throws PortalException, SystemException {
 
 		Set<Long> userIds = new HashSet<Long>();
@@ -884,14 +908,28 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 				continue;
 			}
 
+			TrashVersion trashVersion = trashVersionLocalService.fetchVersion(
+				trashEntryId, MBMessage.class.getName(),
+				message.getMessageId());
+
+			int oldStatus = trashVersion.getStatus();
+
+			message.setStatus(oldStatus);
+
+			mbMessagePersistence.update(message);
+
 			userIds.add(message.getUserId());
 
 			// Asset
 
-			if (message.getStatus() == WorkflowConstants.STATUS_APPROVED) {
+			if (oldStatus == WorkflowConstants.STATUS_APPROVED) {
 				assetEntryLocalService.updateVisible(
 					MBMessage.class.getName(), message.getMessageId(), true);
 			}
+
+			// Trash
+
+			trashVersionLocalService.deleteTrashVersion(trashVersion);
 
 			// Indexer
 
@@ -925,7 +963,8 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 		updateStatus(userId, threadId, trashEntry.getStatus());
 
-		restoreDependentsFromTrash(thread.getGroupId(), threadId);
+		restoreDependentsFromTrash(
+			thread.getGroupId(), threadId, trashEntry.getEntryId());
 
 		// Social
 

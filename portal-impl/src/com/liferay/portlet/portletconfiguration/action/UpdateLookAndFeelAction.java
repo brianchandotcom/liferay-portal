@@ -29,6 +29,7 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.struts.JSONAction;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.InvokerPortletImpl;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
@@ -143,14 +144,21 @@ public class UpdateLookAndFeelAction extends JSONAction {
 
 		portletSetup.setValue("portletSetupCss", css);
 
-		JSONObject wapData = jsonObj.getJSONObject("wapData");
+		if (PropsValues.MOBILE_DEVICE_STYLING_WAP_ENABLED) {
+			JSONObject wapData = jsonObj.getJSONObject("wapData");
 
-		String wapTitle = wapData.getString("title");
-		String wapInitialWindowState = wapData.getString("initialWindowState");
+			String wapTitle = wapData.getString("title");
+			String wapInitialWindowState = wapData.getString(
+				"initialWindowState");
 
-		portletSetup.setValue("lfrWapTitle", wapTitle);
-		portletSetup.setValue(
-			"lfrWapInitialWindowState", wapInitialWindowState);
+			portletSetup.setValue("lfrWapTitle", wapTitle);
+			portletSetup.setValue(
+				"lfrWapInitialWindowState", wapInitialWindowState);
+		}
+		else {
+			portletSetup.reset("lfrWapTitle");
+			portletSetup.reset("lfrWapInitialWindowState");
+		}
 
 		portletSetup.store();
 

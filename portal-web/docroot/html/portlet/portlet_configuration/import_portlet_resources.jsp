@@ -346,7 +346,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 </aui:script>
 
 <aui:script use="aui-base">
-	A.one(<portlet:namespace />continue).on(
+	A.one('#<portlet:namespace />continue').on(
 		'click',
 		function() {
 			A.one('#<portlet:namespace />importConfiguration').hide()
@@ -354,8 +354,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 		}
 	);
 
-	A.one(<portlet:namespace />back).on(
-		'click',
+	A.one('#<portlet:namespace />back').on(
 		'click',
 		function() {
 			A.one('#<portlet:namespace />importConfiguration').show()

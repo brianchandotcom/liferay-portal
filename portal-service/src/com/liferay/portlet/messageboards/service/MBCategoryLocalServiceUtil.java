@@ -566,10 +566,26 @@ public class MBCategoryLocalServiceUtil {
 		return getService().moveCategoryToTrash(userId, categoryId);
 	}
 
+	public static void moveDependentsToTrash(
+		com.liferay.portal.model.User user,
+		java.util.List<java.lang.Object> categoriesAndThreads)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().moveDependentsToTrash(user, categoriesAndThreads);
+	}
+
 	public static void restoreCategoryFromTrash(long userId, long categoryId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		getService().restoreCategoryFromTrash(userId, categoryId);
+	}
+
+	public static void restoreDependentFromTrash(
+		com.liferay.portal.model.User user,
+		java.util.List<java.lang.Object> categoriesAndThreads)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().restoreDependentFromTrash(user, categoriesAndThreads);
 	}
 
 	public static void subscribeCategory(long userId, long groupId,
@@ -607,14 +623,6 @@ public class MBCategoryLocalServiceUtil {
 			outEmailAddress, outCustom, outServerName, outServerPort,
 			outUseSSL, outUserName, outPassword, allowAnonymous,
 			mailingListActive, mergeWithParentCategory, serviceContext);
-	}
-
-	public static void updateDependentStatus(
-		com.liferay.portal.model.User user,
-		java.util.List<java.lang.Object> categoriesAndThreads, int status)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		getService().updateDependentStatus(user, categoriesAndThreads, status);
 	}
 
 	public static com.liferay.portlet.messageboards.model.MBCategory updateStatus(

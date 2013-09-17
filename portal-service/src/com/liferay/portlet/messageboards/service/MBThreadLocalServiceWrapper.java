@@ -623,6 +623,13 @@ public class MBThreadLocalServiceWrapper implements MBThreadLocalService,
 	}
 
 	@Override
+	public void moveDependentsToTrash(long groupId, long threadId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_mbThreadLocalService.moveDependentsToTrash(groupId, threadId);
+	}
+
+	@Override
 	public com.liferay.portlet.messageboards.model.MBThread moveThread(
 		long groupId, long categoryId, long threadId)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -660,6 +667,13 @@ public class MBThreadLocalServiceWrapper implements MBThreadLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _mbThreadLocalService.moveThreadToTrash(userId, thread);
+	}
+
+	@Override
+	public void restoreDependentsFromTrash(long groupId, long threadId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_mbThreadLocalService.restoreDependentsFromTrash(groupId, threadId);
 	}
 
 	@Override
@@ -707,11 +721,10 @@ public class MBThreadLocalServiceWrapper implements MBThreadLocalService,
 
 	@Override
 	public com.liferay.portlet.messageboards.model.MBThread updateStatus(
-		long userId, long threadId, int status, int categoryStatus)
+		long userId, long threadId, int status)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _mbThreadLocalService.updateStatus(userId, threadId, status,
-			categoryStatus);
+		return _mbThreadLocalService.updateStatus(userId, threadId, status);
 	}
 
 	/**

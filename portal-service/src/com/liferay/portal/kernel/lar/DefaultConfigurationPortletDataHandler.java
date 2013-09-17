@@ -43,6 +43,11 @@ public class DefaultConfigurationPortletDataHandler
 	}
 
 	@Override
+	public long getExportModelCount(ManifestSummary manifestSummary) {
+		return 0;
+	}
+
+	@Override
 	public PortletPreferences importData(
 		PortletDataContext portletDataContext, String portletId,
 		PortletPreferences portletPreferences, String data) {

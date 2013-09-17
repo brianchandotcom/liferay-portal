@@ -301,12 +301,6 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			return null;
 		}
 
-		String portletDataHandlerClass = portlet.getPortletDataHandlerClass();
-
-		if (portletDataHandlerClass == null) {
-			return null;
-		}
-
 		return PortletConstants.getRootPortletId(portletId);
 	}
 

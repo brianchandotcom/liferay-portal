@@ -808,10 +808,6 @@ public class GroupImpl extends GroupBaseImpl {
 			String portletDataHandlerClass =
 				portlet.getPortletDataHandlerClass();
 
-			if (Validator.isNull(portletDataHandlerClass)) {
-				return true;
-			}
-
 			for (Map.Entry<String, String> entry :
 					typeSettingsProperties.entrySet()) {
 

@@ -51,7 +51,7 @@ String orderByCol = ParamUtil.getString(request, "orderByCol");
 String orderByType = ParamUtil.getString(request, "orderByType");
 
 if (Validator.isNull(orderByCol)) {
-	orderByCol = portalPreferences.getValue(PortletKeys.JOURNAL, "order-by-col", StringPool.BLANK);
+	orderByCol = portalPreferences.getValue(PortletKeys.JOURNAL, "order-by-col", "modified-date");
 	orderByType = portalPreferences.getValue(PortletKeys.JOURNAL, "order-by-type", "asc");
 }
 else {

@@ -516,18 +516,13 @@ public class EditEntryAction extends PortletAction {
 					actionRequest, "smallImageURL");
 
 				if (smallImage && Validator.isNull(smallImageURL)) {
-					boolean attachments = ParamUtil.getBoolean(
-						actionRequest, "attachments");
+					UploadPortletRequest uploadPortletRequest =
+						PortalUtil.getUploadPortletRequest(actionRequest);
 
-					if (attachments) {
-						UploadPortletRequest uploadPortletRequest =
-							PortalUtil.getUploadPortletRequest(actionRequest);
-
-						smallImageFileName = uploadPortletRequest.getFileName(
-							"smallFile");
-						smallImageInputStream =
-							uploadPortletRequest.getFileAsStream("smallFile");
-					}
+					smallImageFileName = uploadPortletRequest.getFileName(
+						"smallFile");
+					smallImageInputStream =
+						uploadPortletRequest.getFileAsStream("smallFile");
 				}
 			}
 

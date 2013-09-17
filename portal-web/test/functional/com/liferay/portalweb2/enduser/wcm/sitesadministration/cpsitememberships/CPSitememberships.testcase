@@ -50,6 +50,61 @@
 		</execute>
 	</command>
 
+	<command name="AddMembersSiteUser">
+		<var name="siteName" value="Site Name" />
+		<var name="teamName" value="Site Team Name" />
+		<var name="teamDescription" value="Site Team Description" />
+		<var name="userEmailAddress" value="userea@liferay.com" />
+		<var name="userFirstName" value="userfn" />
+		<var name="userLastName" value="userln" />
+		<var name="userScreenName" value="usersn" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="siteScopeName" value="Site Name" />
+			<var name="portletName" value="Site Memberships" />
+		</execute>
+
+		<execute macro="Site#addMemberCP">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteScopeName" value="${siteName}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="siteScopeName" value="Site Name" />
+			<var name="portletName" value="Site Memberships" />
+		</execute>
+
+		<execute macro="Site#viewMemberCP">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteScopeName" value="${siteName}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+	</command>
+
 	<command name="AddSiteTeam">
 		<var name="siteName" value="Site Name" />
 		<var name="siteScopeName" value="Site Name" />
@@ -72,6 +127,65 @@
 		<execute macro="Team#addCP">
 			<var name="teamName" value="${teamName}" />
 			<var name="teamDescription" value="${teamDescription}" />
+		</execute>
+
+		<execute macro="Team#viewCP">
+			<var name="teamName" value="${teamName}" />
+			<var name="teamDescription" value="${teamDescription}" />
+		</execute>
+	</command>
+
+	<command name="AddSiteTeams">
+		<var name="siteName" value="Site Name" />
+		<var name="siteScopeName" value="Site Name" />
+		<var name="teamDescription1" value="Site Team1 Description" />
+		<var name="teamDescription2" value="Site Team2 Description" />
+		<var name="teamDescription3" value="Site Team3 Description" />
+		<var name="teamName1" value="Site Team1 Name" />
+		<var name="teamName2" value="Site Team2 Name" />
+		<var name="teamName3" value="Site Team3 Name" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="siteScopeName" value="Site Name" />
+			<var name="portletName" value="Site Teams" />
+		</execute>
+
+		<execute macro="Team#addCP">
+			<var name="teamName" value="${teamName1}" />
+			<var name="teamDescription" value="${teamDescription1}" />
+		</execute>
+
+		<execute macro="Team#addCP">
+			<var name="teamName" value="${teamName2}" />
+			<var name="teamDescription" value="${teamDescription2}" />
+		</execute>
+
+		<execute macro="Team#addCP">
+			<var name="teamName" value="${teamName3}" />
+			<var name="teamDescription" value="${teamDescription3}" />
+		</execute>
+
+		<execute macro="Team#viewCP">
+			<var name="teamName" value="${teamName1}" />
+			<var name="teamDescription" value="${teamDescription1}" />
+		</execute>
+
+		<execute macro="Team#viewCP">
+			<var name="teamName" value="${teamName2}" />
+			<var name="teamDescription" value="${teamDescription2}" />
+		</execute>
+
+		<execute macro="Team#viewCP">
+			<var name="teamName" value="${teamName3}" />
+			<var name="teamDescription" value="${teamDescription3}" />
 		</execute>
 	</command>
 
@@ -131,6 +245,100 @@
 			<var name="userFirstName" value="${userFirstName}" />
 			<var name="userLastName" value="${userLastName}" />
 			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+	</command>
+
+	<command name="DeleteNoLiferaySite">
+		<var name="siteName" value="Liferay" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<var name="key_siteName" value="${siteName}" />
+
+		<execute action="CPSites#type" locator-key1="BASIC_SEARCH_FIELD" value1="Liferay" />
+		<execute action="CPSites#assertClick" locator-key1="BASIC_SEARCH_BUTTON" value1="Search"/>
+
+		<execute action="CPSites#assertTextEquals" locator-key1="SITE_TABLE_NAME" value1="${siteName}" />
+		<execute action="CPSites#assertElementPresent" locator-key1="SITE_TABLE_CHECKBOX_DISABLED" />
+		<execute action="CPSites#assertClick" locator-key1="SITE_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPSites#assertElementNotPresent" locator-key1="SITE_MENULIST_DELETE" value1="Delete" />
+		<execute action="CPSites#assertClick" locator-key1="SITE_MENULIST_DEACTIVATE" value1="Deactivate" />
+		<execute action="CPSites#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to deactivate this?" />
+
+		<execute action="CPSites#assertTextEquals" locator-key1="ERROR_MESSAGE_1" value1="Your request failed to complete." />
+		<execute action="CPSites#assertTextEquals" locator-key1="ERROR_MESSAGE_2" value1="The site cannot be deleted or deactivated because you are accessing the site." />
+	</command>
+
+	<command name="DeleteSiteTeam">
+		<var name="siteName" value="Site Name" />
+		<var name="siteScopeName" value="Site Name" />
+		<var name="teamName" value="Site Team Name" />
+		<var name="teamDescription" value="Site Team Description" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="siteScopeName" value="Site Name" />
+			<var name="portletName" value="Site Teams" />
+		</execute>
+
+		<execute macro="Team#addCP">
+			<var name="teamName" value="${teamName}" />
+			<var name="teamDescription" value="${teamDescription}" />
+		</execute>
+
+		<execute macro="Team#deleteCP">
+			<var name="teamName" value="${teamName}" />
+			<var name="teamDescription" value="${teamDescription}" />
+		</execute>
+
+		<execute macro="Team#viewDeleteCP">
+			<var name="teamName" value="${teamName}" />
+		</execute>
+	</command>
+
+	<command name="EditSiteTeam">
+		<var name="siteName" value="Site Name" />
+		<var name="siteScopeName" value="Site Name" />
+		<var name="teamName" value="Site Team Name" />
+		<var name="teamNameEdit" value="Site Team Name Edit" />
+		<var name="teamDescription" value="Site Team Description" />
+		<var name="teamDescriptionEdit" value="Site Team Description Edit" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="siteScopeName" value="Site Name" />
+			<var name="portletName" value="Site Teams" />
+		</execute>
+
+		<execute macro="Team#addCP">
+			<var name="teamName" value="${teamName}" />
+			<var name="teamDescription" value="${teamDescription}" />
+		</execute>
+
+		<execute macro="Team#editCP">
+			<var name="teamDescriptionEdit" value="${teamDescriptionEdit}" />
+			<var name="teamNameEdit" value="${teamNameEdit}" />
+		</execute>
+
+		<execute macro="Team#viewCP">
+			<var name="teamName" value="${teamNameEdit}" />
+			<var name="teamDescription" value="${teamDescriptionEdit}" />
 		</execute>
 	</command>
 

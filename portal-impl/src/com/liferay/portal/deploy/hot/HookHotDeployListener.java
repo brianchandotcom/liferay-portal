@@ -2640,29 +2640,24 @@ public class HookHotDeployListener
 
 		field.set(null, value);
 
-		if (key.equals(PropsKeys.LAYOUT_TYPES)) {
-			Map<String, LayoutSettings> layoutSettingsMap =
-				LayoutSettings.getCurrentLayoutSettings();
+		if (!key.equals(PropsKeys.LAYOUT_TYPES)) {
+			return;
+		}
 
-			Map<String, LayoutSettings> layoutSettingsMapCopy =
-				new HashMap<String, LayoutSettings>();
+		Map<String, LayoutSettings> layoutSettingsMap =
+			LayoutSettings.getCurrentLayoutSettings();
 
-			layoutSettingsMapCopy.putAll(layoutSettingsMap);
+		for (String layoutType : layoutSettingsMap.keySet()) {
+			if (!layoutType.equals(LayoutConstants.TYPE_CONTROL_PANEL) &&
+				!ArrayUtil.contains(value, layoutType)) {
 
-			for (String key1 : layoutSettingsMapCopy.keySet()) {
-				if (key1.equals(LayoutConstants.TYPE_CONTROL_PANEL)) {
-					continue;
-				}
-
-				if (!ArrayUtil.contains(value, key1)) {
-					layoutSettingsMap.remove(key1);
-				}
+				LayoutSettings.removeLayoutSetting(layoutType);
 			}
+		}
 
-			for (String type : value) {
-				if (!layoutSettingsMap.containsKey(type)) {
-					LayoutSettings.setLayoutSetting(type);
-				}
+		for (String type : value) {
+			if (!layoutSettingsMap.containsKey(type)) {
+				LayoutSettings.setLayoutSetting(type);
 			}
 		}
 	}

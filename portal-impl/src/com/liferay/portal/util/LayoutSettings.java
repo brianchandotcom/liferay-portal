@@ -42,6 +42,12 @@ public class LayoutSettings {
 		return _layoutSettingsMap.get(type);
 	}
 
+	public static void removeLayoutSetting(String type) {
+		if (_layoutSettingsMap.containsKey(type)) {
+			_layoutSettingsMap.remove(type);
+		}
+	}
+
 	public static void setLayoutSetting(String type) {
 		new LayoutSettings(type);
 	}

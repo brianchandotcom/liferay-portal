@@ -107,41 +107,45 @@ AUI.add(
 					_bindUI: function() {
 						var instance = this;
 
-						instance.get('form').delegate(
-							STR_CLICK,
-							function(event) {
-								var portletId = event.currentTarget.attr('data-portletid');
+						var form = instance.get('form');
 
-								var portletTitle = event.currentTarget.attr('data-portlettitle');
+						if (form) {
+							form.delegate(
+								STR_CLICK,
+								function(event) {
+									var portletId = event.currentTarget.attr('data-portletid');
 
-								if (!portletTitle) {
-									portletTitle = Liferay.Language.get('configuration');
-								}
+									var portletTitle = event.currentTarget.attr('data-portlettitle');
 
-								var configurationDialog = instance._getConfigurationDialog(portletId, portletTitle);
+									if (!portletTitle) {
+										portletTitle = Liferay.Language.get('configuration');
+									}
 
-								configurationDialog.show();
-							},
-							'.configuration-link'
-						);
+									var configurationDialog = instance._getConfigurationDialog(portletId, portletTitle);
 
-						instance.get('form').delegate(
-							STR_CLICK,
-							function(event) {
-								var portletId = event.currentTarget.attr('data-portletid');
+									configurationDialog.show();
+								},
+								'.configuration-link'
+							);
 
-								var portletTitle = event.currentTarget.attr('data-portlettitle');
+							form.delegate(
+								STR_CLICK,
+								function(event) {
+									var portletId = event.currentTarget.attr('data-portletid');
 
-								if (!portletTitle) {
-									portletTitle = Liferay.Language.get('content');
-								}
+									var portletTitle = event.currentTarget.attr('data-portlettitle');
 
-								var contentDialog = instance._getContentDialog(portletId, portletTitle);
+									if (!portletTitle) {
+										portletTitle = Liferay.Language.get('content');
+									}
 
-								contentDialog.show();
-							},
-							'.content-link'
-						);
+									var contentDialog = instance._getContentDialog(portletId, portletTitle);
+
+									contentDialog.show();
+								},
+								'.content-link'
+							);
+						}
 
 						var contentOptionsLink = instance.byId('contentOptionsLink');
 

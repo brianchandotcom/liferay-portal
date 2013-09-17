@@ -2090,8 +2090,8 @@ public class DLFileEntryLocalServiceImpl
 			}
 
 			for (String fieldName : lastFieldNames) {
-				com.liferay.portlet.dynamicdatamapping.storage.Field lastField =
-					lastFields.get(fieldName);
+				com.liferay.portlet.dynamicdatamapping.storage.Field
+					lastField = lastFields.get(fieldName);
 				com.liferay.portlet.dynamicdatamapping.storage.Field
 					latestField = latestFields.get(fieldName);
 

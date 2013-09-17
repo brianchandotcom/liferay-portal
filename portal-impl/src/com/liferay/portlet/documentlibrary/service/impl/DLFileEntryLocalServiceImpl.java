@@ -77,6 +77,7 @@ import com.liferay.portlet.documentlibrary.ImageSizeException;
 import com.liferay.portlet.documentlibrary.InvalidFileEntryTypeException;
 import com.liferay.portlet.documentlibrary.InvalidFileVersionException;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
+import com.liferay.portlet.documentlibrary.NoSuchFileEntryMetadataException;
 import com.liferay.portlet.documentlibrary.NoSuchFileVersionException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
@@ -2054,10 +2055,18 @@ public class DLFileEntryLocalServiceImpl
 		List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();
 
 		for (DDMStructure ddmStructure : ddmStructures) {
-			DLFileEntryMetadata lastFileEntryMetadata =
-				dlFileEntryMetadataLocalService.getFileEntryMetadata(
-					ddmStructure.getStructureId(),
-					lastDLFileVersion.getFileVersionId());
+			DLFileEntryMetadata lastFileEntryMetadata = null;
+
+			try {
+				lastFileEntryMetadata =
+					dlFileEntryMetadataLocalService.getFileEntryMetadata(
+						ddmStructure.getStructureId(),
+						lastDLFileVersion.getFileVersionId());
+			}
+			catch (NoSuchFileEntryMetadataException nsfem) {
+				return false;
+			}
+
 			DLFileEntryMetadata latestFileEntryMetadata =
 				dlFileEntryMetadataLocalService.getFileEntryMetadata(
 					ddmStructure.getStructureId(),
@@ -2068,15 +2077,23 @@ public class DLFileEntryLocalServiceImpl
 			Fields latestFields = StorageEngineUtil.getFields(
 				latestFileEntryMetadata.getDDMStorageId());
 
-			Set<String> fieldNames = lastFields.getNames();
+			Set<String> lastFieldNames = lastFields.getNames();
+			Set<String> latestFieldNames = latestFields.getNames();
 
-			for (String fieldName : fieldNames) {
+			if (lastFieldNames.size() != latestFieldNames.size()) {
+				return false;
+			}
+
+			for (String fieldName : lastFieldNames) {
 				com.liferay.portlet.dynamicdatamapping.storage.Field
 					lastField = lastFields.get(fieldName);
 				com.liferay.portlet.dynamicdatamapping.storage.Field
 					latestField = latestFields.get(fieldName);
 
-				if (!lastField.equals(latestField) && !lastField.isPrivate()) {
+				if ((latestFieldNames == null) ||
+					(!lastField.equals(latestField) &&
+					 !lastField.isPrivate())) {
+
 					return false;
 				}
 			}

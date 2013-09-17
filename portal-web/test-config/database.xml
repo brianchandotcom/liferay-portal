@@ -5,7 +5,6 @@
 		<device-name></device-name>
 		<driver>com.ibm.db2.jcc.DB2Driver</driver>
 		<family>db2</family>
-		<password>password</password>
 		<remote-schema-command>cmd.exe /c db2cmd /c /w /i /t db2 -f C:\temporary\create.sql -td;</remote-schema-command>
 		<schema>lportal</schema>
 		<sql-replacement>
@@ -31,14 +30,12 @@
 			</use-schema>
 		</sql-replacement>
 		<url>jdbc:db2://${database.host}:50000/${database.schema}:deferPrepares=false;fullyMaterializeInputStreams=true;fullyMaterializeLobData=true;progresssiveLocators=2;progressiveStreaming=2;</url>
-		<username>db2admin</username>
 		<vm-vmdk-suffix>db2-9.7</vm-vmdk-suffix>
 	</db2-9.7>
 	<db2-10.1>
 		<device-name></device-name>
 		<driver>com.ibm.db2.jcc.DB2Driver</driver>
 		<family>db2</family>
-		<password>password</password>
 		<remote-schema-command>cmd.exe /c db2cmd /c /w /i /t db2 -f C:\temporary\create.sql -td;</remote-schema-command>
 		<schema>lportal</schema>
 		<sql-replacement>
@@ -64,14 +61,12 @@
 			</use-schema>
 		</sql-replacement>
 		<url>jdbc:db2://${database.host}:50000/${database.schema}:deferPrepares=false;fullyMaterializeInputStreams=true;fullyMaterializeLobData=true;progresssiveLocators=2;progressiveStreaming=2;</url>
-		<username>db2admin</username>
 		<vm-vmdk-suffix>db2-10.1</vm-vmdk-suffix>
 	</db2-10.1>
 	<hsql>
 		<device-name></device-name>
 		<driver>org.hsqldb.jdbcDriver</driver>
 		<family>hsql</family>
-		<password></password>
 		<remote-schema-command></remote-schema-command>
 		<schema>lportal</schema>
 		<sql-replacement>
@@ -97,14 +92,12 @@
 			</use-schema>
 		</sql-replacement>
 		<url>jdbc:hsqldb:${liferay.home}/data/hsql/lportal</url>
-		<username>sa</username>
 		<vm-vmdk-suffix></vm-vmdk-suffix>
 	</hsql>
 	<mysql>
 		<device-name></device-name>
 		<driver>com.mysql.jdbc.Driver</driver>
 		<family>mysql</family>
-		<password></password>
 		<remote-schema-command></remote-schema-command>
 		<schema>lportal</schema>
 		<sql-replacement>
@@ -130,14 +123,12 @@
 			</use-schema>
 		</sql-replacement>
 		<url><![CDATA[jdbc:mysql://${database.host}/${database.schema}?useUnicode=true&characterEncoding=UTF-8&useFastDateParsing=false]]></url>
-		<username></username>
 		<vm-vmdk-suffix></vm-vmdk-suffix>
 	</mysql>
 	<oracle-10>
 		<device-name></device-name>
 		<driver>oracle.jdbc.driver.OracleDriver</driver>
 		<family>oracle</family>
-		<password>lportal</password>
 		<remote-schema-command>sqlplus system/password @C:\temporary\create.sql ${database.username} ${database.password}</remote-schema-command>
 		<schema>lportal</schema>
 		<sql-replacement>
@@ -163,14 +154,12 @@
 			</use-schema>
 		</sql-replacement>
 		<url>jdbc:oracle:thin:@${database.host}:1521:xe</url>
-		<username>lportal</username>
 		<vm-vmdk-suffix>oracle-10.2.0.1.0</vm-vmdk-suffix>
 	</oracle-10>
 	<oracle-11>
 		<device-name></device-name>
 		<driver>oracle.jdbc.driver.OracleDriver</driver>
 		<family>oracle</family>
-		<password>lportal</password>
 		<remote-schema-command>sqlplus system/password @C:\temporary\create.sql ${database.username} ${database.password}</remote-schema-command>
 		<schema>lportal</schema>
 		<sql-replacement>
@@ -197,14 +186,12 @@
 			</use-schema>
 		</sql-replacement>
 		<url>jdbc:oracle:thin:@${database.host}:1521:orcl</url>
-		<username>lportal</username>
 		<vm-vmdk-suffix>oracle-11.2.0.1.0</vm-vmdk-suffix>
 	</oracle-11>
 	<postgresql-8.4>
 		<device-name></device-name>
 		<driver>org.postgresql.Driver</driver>
 		<family>postgresql</family>
-		<password></password>
 		<remote-schema-command>C:\Progra~1\PostgreSQL\8.4\bin\psql.exe -U ${database.username} -f C:\temporary\create.sql</remote-schema-command>
 		<schema>lportal</schema>
 		<sql-replacement>
@@ -230,14 +217,12 @@
 			</use-schema>
 		</sql-replacement>
 		<url>jdbc:postgresql://${database.host}:5432/${database.schema}</url>
-		<username>postgres</username>
 		<vm-vmdk-suffix>postgresql-8.4.2-1</vm-vmdk-suffix>
 	</postgresql-8.4>
 	<postgresql-9.0>
 		<device-name></device-name>
 		<driver>org.postgresql.Driver</driver>
 		<family>postgresql</family>
-		<password></password>
 		<remote-schema-command>C:\Progra~1\PostgreSQL\9.0\bin\psql.exe -U ${database.username} -f C:\temporary\create.sql</remote-schema-command>
 		<schema>lportal</schema>
 		<sql-replacement>
@@ -263,14 +248,12 @@
 			</use-schema>
 		</sql-replacement>
 		<url>jdbc:postgresql://${database.host}:5432/${database.schema}</url>
-		<username>postgres</username>
 		<vm-vmdk-suffix>postgresql-9.0.4-1</vm-vmdk-suffix>
 	</postgresql-9.0>
 	<postgresql-9.2>
 		<device-name></device-name>
 		<driver>org.postgresql.Driver</driver>
 		<family>postgresql</family>
-		<password></password>
 		<remote-schema-command>C:\Progra~1\PostgreSQL\9.2\bin\psql.exe -U ${database.username} -f C:\temporary\create.sql</remote-schema-command>
 		<schema>lportal</schema>
 		<sql-replacement>
@@ -296,14 +279,12 @@
 			</use-schema>
 		</sql-replacement>
 		<url>jdbc:postgresql://${database.host}:5432/${database.schema}</url>
-		<username>postgres</username>
 		<vm-vmdk-suffix>postgresql-9.2.4-1</vm-vmdk-suffix>
 	</postgresql-9.2>
 	<sql-server-2005>
 		<device-name></device-name>
 		<driver>net.sourceforge.jtds.jdbc.Driver</driver>
 		<family>sql-server</family>
-		<password>password</password>
 		<remote-schema-command>osql -n -U ${database.username} -P ${database.password} -i C:\temporary\create.sql</remote-schema-command>
 		<schema>lportal</schema>
 		<sql-replacement>
@@ -329,14 +310,12 @@
 			</use-schema>
 		</sql-replacement>
 		<url>jdbc:jtds:sqlserver://${database.host}/${database.schema}</url>
-		<username>sa</username>
 		<vm-vmdk-suffix>sql-server-2005-sp2</vm-vmdk-suffix>
 	</sql-server-2005>
 	<sql-server-2008>
 		<device-name></device-name>
 		<driver>net.sourceforge.jtds.jdbc.Driver</driver>
 		<family>sql-server</family>
-		<password>password1</password>
 		<remote-schema-command>osql -n -U ${database.username} -P ${database.password} -i C:\temporary\create.sql</remote-schema-command>
 		<schema>lportal</schema>
 		<sql-replacement>
@@ -362,14 +341,12 @@
 			</use-schema>
 		</sql-replacement>
 		<url>jdbc:jtds:sqlserver://${database.host}/${database.schema}</url>
-		<username>sa</username>
 		<vm-vmdk-suffix>sql-server-2008-r2</vm-vmdk-suffix>
 	</sql-server-2008>
 	<sybase>
 		<device-name>master</device-name>
 		<driver>net.sourceforge.jtds.jdbc.Driver</driver>
 		<family>sybase</family>
-		<password>password</password>
 		<remote-schema-command>isql -U ${database.username} -P ${database.password} -i C:\temporary\create.sql</remote-schema-command>
 		<schema>lportal</schema>
 		<sql-replacement>
@@ -395,7 +372,6 @@
 			</use-schema>
 		</sql-replacement>
 		<url>jdbc:jtds:sybase://${database.host}:5000/${database.schema}</url>
-		<username>sa</username>
 		<vm-vmdk-suffix>sybase-15.7</vm-vmdk-suffix>
 	</sybase>
 </database>

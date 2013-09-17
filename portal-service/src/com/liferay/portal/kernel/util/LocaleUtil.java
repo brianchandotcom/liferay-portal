@@ -67,6 +67,8 @@ public class LocaleUtil {
 
 	public static final Locale KOREAN = Locale.KOREAN;
 
+	public static final Locale NETHERLANDS = new Locale("nl", "NL");
+
 	public static final Locale PORTUGAL = new Locale("pt", "PT");
 
 	public static final Locale PRC = Locale.PRC;

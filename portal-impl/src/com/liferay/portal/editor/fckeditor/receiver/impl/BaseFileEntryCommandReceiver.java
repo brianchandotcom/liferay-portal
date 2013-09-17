@@ -17,6 +17,7 @@ package com.liferay.portal.editor.fckeditor.receiver.impl;
 import com.liferay.portal.editor.fckeditor.command.CommandArgument;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.xuggler.XugglerUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
@@ -60,7 +61,7 @@ public abstract class BaseFileEntryCommandReceiver
 		fileElement = super.getFileElement(
 			commandArgument, fileElement, fileEntry);
 
-		if (!VideoProcessorUtil.hasVideo(fileEntry.getFileVersion())) {
+		if (!hasFileEntryPreview(fileEntry.getFileVersion())) {
 			fileElement.setAttribute(
 				"errorMessage",
 				LanguageUtil.get(
@@ -109,5 +110,9 @@ public abstract class BaseFileEntryCommandReceiver
 	protected abstract String getUnavaiablePreviewErrorMessage();
 
 	protected abstract int getXugglerDisabledFileUploadReturnValue();
+
+	protected boolean hasFileEntryPreview(FileVersion fileVersion) {
+		return VideoProcessorUtil.hasVideo(fileVersion);
+	}
 
 }

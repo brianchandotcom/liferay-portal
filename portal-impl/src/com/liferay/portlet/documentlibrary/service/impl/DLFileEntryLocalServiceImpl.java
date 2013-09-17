@@ -2082,15 +2082,22 @@ public class DLFileEntryLocalServiceImpl
 			Fields latestFields = StorageEngineUtil.getFields(
 				latestFileEntryMetadata.getDDMStorageId());
 
-			Set<String> fieldNames = lastFields.getNames();
+			Set<String> lastFieldNames = lastFields.getNames();
+			Set<String> latestFieldNames = latestFields.getNames();
 
-			for (String fieldName : fieldNames) {
+			if (lastFieldNames.size() != latestFieldNames.size()) {
+				return false;
+			}
+
+			for (String fieldName : lastFieldNames) {
 				com.liferay.portlet.dynamicdatamapping.storage.Field lastField =
 					lastFields.get(fieldName);
 				com.liferay.portlet.dynamicdatamapping.storage.Field
 					latestField = latestFields.get(fieldName);
 
-				if (!lastField.equals(latestField) && !lastField.isPrivate()) {
+				if ((lastField == null) ||
+					!lastField.equals(latestField) && !lastField.isPrivate()) {
+
 					return false;
 				}
 			}

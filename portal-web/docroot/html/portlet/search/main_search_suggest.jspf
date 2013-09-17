@@ -15,7 +15,7 @@
 --%>
 
 <div class="search-suggested-spelling">
-	<c:if test="<%= collatedSpellCheckResultEnabled && Validator.isNotNull(hits.getCollatedSpellCheckResult()) && !hits.getCollatedSpellCheckResult().equals(searchContext.getKeywords()) %>">
+	<c:if test="<%= collatedSpellCheckResultEnabled && Validator.isNotNull(hits.getCollatedSpellCheckResult()) && !Validator.equals(hits.getCollatedSpellCheckResult(), searchContext.getKeywords()) %>">
 
 		<ul class="inline suggested-keywords">
 			<li class="label">

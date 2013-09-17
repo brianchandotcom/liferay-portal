@@ -117,7 +117,14 @@ String strutsAction = ParamUtil.getString(request, "struts_action");
 			{
 				basePortletURL: '<%= PortletURLFactoryUtil.create(request, PortletKeys.DYNAMIC_DATA_MAPPING, themeDisplay.getPlid(), PortletRequest.RENDER_PHASE) %>',
 				dialog: {
-					destroyOnHide: true
+					destroyOnHide: true,
+					on: {
+						visibleChange: function(event) {
+							if (!event.newVal) {
+								Liferay.Portlet.refresh('#p_p_id_' + <%= portletDisplay.getId() %> + '_');
+							}
+						}
+					}
 				},
 				refererPortletName: '<%= PortletKeys.JOURNAL %>',
 				refererWebDAVToken: '<%= portlet.getWebDAVStorageToken() %>',

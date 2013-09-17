@@ -15,9 +15,7 @@
 package com.liferay.portlet.dynamicdatamapping.action;
 
 import com.liferay.portal.LocaleException;
-import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -92,20 +90,6 @@ public class EditStructureAction extends PortletAction {
 						redirect = getSaveAndContinueRedirect(
 							portletConfig, actionRequest, structure, redirect);
 					}
-				}
-
-				if (SessionErrors.isEmpty(actionRequest)) {
-					LiferayPortletConfig liferayPortletConfig =
-						(LiferayPortletConfig)portletConfig;
-
-					String refererPortletName = ParamUtil.getString(
-						actionRequest, "refererPortletName");
-
-					SessionMessages.add(
-						actionRequest,
-						liferayPortletConfig.getPortletId() +
-							SessionMessages.KEY_SUFFIX_REFRESH_PORTLET,
-						refererPortletName);
 				}
 
 				sendRedirect(actionRequest, actionResponse, redirect);

@@ -49,8 +49,6 @@ else if (selGroup.isStaged()) {
 	}
 }
 
-long selGroupId = selGroup.getGroupId();
-
 long liveGroupId = 0;
 
 if (liveGroup != null) {
@@ -88,7 +86,7 @@ if (liveGroup.isStaged()) {
 	}
 }
 
-treeId = treeId + selGroupId;
+treeId = treeId + selGroup.getGroupId();
 
 String publishActionKey = "copy";
 
@@ -121,9 +119,15 @@ long[] selectedLayoutIds = GetterUtil.getLongValues(StringUtil.split(SessionTree
 
 List<Layout> selectedLayouts = new ArrayList<Layout>();
 
+long selectedLayoutsGroupId = selGroup.getGroupId();
+
+if (stagingGroupId > 0) {
+	selectedLayoutsGroupId = stagingGroupId;
+}
+
 for (int i = 0; i < selectedLayoutIds.length; i++) {
 	try {
-		selectedLayouts.add(LayoutLocalServiceUtil.getLayout(selGroupId, privateLayout, selectedLayoutIds[i]));
+		selectedLayouts.add(LayoutLocalServiceUtil.getLayout(selectedLayoutsGroupId, privateLayout, selectedLayoutIds[i]));
 	}
 	catch (NoSuchLayoutException nsle) {
 	}

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.LayoutConstants;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -133,7 +134,7 @@ public class LayoutSettings {
 		new HashMap<String, LayoutSettings>();
 
 	static {
-		new LayoutSettings("control_panel");
+		new LayoutSettings(LayoutConstants.TYPE_CONTROL_PANEL);
 
 		for (String type : PropsValues.LAYOUT_TYPES) {
 			new LayoutSettings(type);

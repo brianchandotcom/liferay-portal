@@ -581,44 +581,6 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 	}
 
 	@Override
-	public void moveDependentsToTrash(
-			User user, List<Object> categoriesAndThreads)
-		throws PortalException, SystemException {
-
-		for (Object object : categoriesAndThreads) {
-			if (object instanceof MBThread) {
-				MBThread thread = (MBThread)object;
-
-				if (thread.getStatus() == WorkflowConstants.STATUS_IN_TRASH) {
-					continue;
-				}
-
-				mbThreadLocalService.moveDependentsToTrash(
-					user.getUserId(), thread.getThreadId());
-
-				// Indexer
-
-				Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-					MBThread.class);
-
-				indexer.reindex(thread);
-			}
-			else if (object instanceof MBCategory) {
-				MBCategory category = (MBCategory)object;
-
-				if (category.isInTrash()) {
-					continue;
-				}
-
-				moveDependentsToTrash(
-					user,
-					getCategoriesAndThreads(
-						category.getGroupId(), category.getCategoryId()));
-			}
-		}
-	}
-
-	@Override
 	public void restoreCategoryFromTrash(long userId, long categoryId)
 		throws PortalException, SystemException {
 
@@ -642,44 +604,6 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 		// Trash
 
 		trashEntryLocalService.deleteEntry(trashEntry.getEntryId());
-	}
-
-	@Override
-	public void restoreDependentFromTrash(
-			User user, List<Object> categoriesAndThreads)
-		throws PortalException, SystemException {
-
-		for (Object object : categoriesAndThreads) {
-			if (object instanceof MBThread) {
-				MBThread thread = (MBThread)object;
-
-				if (thread.getStatus() == WorkflowConstants.STATUS_IN_TRASH) {
-					continue;
-				}
-
-				mbThreadLocalService.restoreDependentsFromTrash(
-					user.getUserId(), thread.getThreadId());
-
-				// Indexer
-
-				Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-					MBThread.class);
-
-				indexer.reindex(thread);
-			}
-			else if (object instanceof MBCategory) {
-				MBCategory category = (MBCategory)object;
-
-				if (category.isInTrash()) {
-					continue;
-				}
-
-				restoreDependentFromTrash(
-					user,
-					getCategoriesAndThreads(
-						category.getGroupId(), category.getCategoryId()));
-			}
-		}
 	}
 
 	@Override
@@ -924,6 +848,80 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 		mbCategoryPersistence.update(toCategory);
 
 		deleteCategory(fromCategory);
+	}
+
+	protected void moveDependentsToTrash(
+			User user, List<Object> categoriesAndThreads)
+		throws PortalException, SystemException {
+
+		for (Object object : categoriesAndThreads) {
+			if (object instanceof MBThread) {
+				MBThread thread = (MBThread)object;
+
+				if (thread.getStatus() == WorkflowConstants.STATUS_IN_TRASH) {
+					continue;
+				}
+
+				mbThreadLocalService.moveDependentsToTrash(
+					user.getUserId(), thread.getThreadId());
+
+				// Indexer
+
+				Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+					MBThread.class);
+
+				indexer.reindex(thread);
+			}
+			else if (object instanceof MBCategory) {
+				MBCategory category = (MBCategory)object;
+
+				if (category.isInTrash()) {
+					continue;
+				}
+
+				moveDependentsToTrash(
+					user,
+					getCategoriesAndThreads(
+						category.getGroupId(), category.getCategoryId()));
+			}
+		}
+	}
+
+	protected void restoreDependentFromTrash(
+			User user, List<Object> categoriesAndThreads)
+		throws PortalException, SystemException {
+
+		for (Object object : categoriesAndThreads) {
+			if (object instanceof MBThread) {
+				MBThread thread = (MBThread)object;
+
+				if (thread.getStatus() == WorkflowConstants.STATUS_IN_TRASH) {
+					continue;
+				}
+
+				mbThreadLocalService.restoreDependentsFromTrash(
+					user.getUserId(), thread.getThreadId());
+
+				// Indexer
+
+				Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+					MBThread.class);
+
+				indexer.reindex(thread);
+			}
+			else if (object instanceof MBCategory) {
+				MBCategory category = (MBCategory)object;
+
+				if (category.isInTrash()) {
+					continue;
+				}
+
+				restoreDependentFromTrash(
+					user,
+					getCategoriesAndThreads(
+						category.getGroupId(), category.getCategoryId()));
+			}
+		}
 	}
 
 	protected void updateChildCategoriesDisplayStyle(

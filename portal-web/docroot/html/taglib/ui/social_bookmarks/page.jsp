@@ -39,6 +39,10 @@
 	</div>
 
 	<aui:script use="liferay-social-bookmarks">
-		new Liferay.SocialBookmarks();
+		var socialBookmarks = new Liferay.SocialBookmarks(
+			{
+				contentBox: '#<%= randomNamespace %>socialBookmarks'
+			}
+		).render();
 	</aui:script>
 </c:if>

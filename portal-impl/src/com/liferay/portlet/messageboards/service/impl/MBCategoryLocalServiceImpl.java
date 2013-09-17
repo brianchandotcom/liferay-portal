@@ -885,9 +885,11 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 
 				mbThreadPersistence.update(thread);
 
-				trashVersionLocalService.addTrashVersion(
-					trashEntryId, MBThread.class.getName(),
-					thread.getThreadId(), oldStatus);
+				if (oldStatus != WorkflowConstants.STATUS_APPROVED) {
+					trashVersionLocalService.addTrashVersion(
+						trashEntryId, MBThread.class.getName(),
+						thread.getThreadId(), oldStatus);
+				}
 
 				mbThreadLocalService.moveDependentsToTrash(
 					user.getUserId(), thread.getThreadId(), trashEntryId);
@@ -912,9 +914,11 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 
 				mbCategoryPersistence.update(category);
 
-				trashVersionLocalService.addTrashVersion(
-					trashEntryId, MBCategory.class.getName(),
-					category.getCategoryId(), oldStatus);
+				if (oldStatus != WorkflowConstants.STATUS_APPROVED) {
+					trashVersionLocalService.addTrashVersion(
+						trashEntryId, MBCategory.class.getName(),
+						category.getCategoryId(), oldStatus);
+				}
 
 				moveDependentsToTrash(
 					user,
@@ -945,11 +949,19 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 						trashEntryId, MBThread.class.getName(),
 						thread.getThreadId());
 
-				thread.setStatus(trashVersion.getStatus());
+				int oldStatus = WorkflowConstants.STATUS_APPROVED;
+
+				if (trashVersion != null) {
+					oldStatus = trashVersion.getStatus();
+				}
+
+				thread.setStatus(oldStatus);
 
 				mbThreadPersistence.update(thread);
 
-				trashVersionLocalService.deleteTrashVersion(trashVersion);
+				if (trashVersion != null) {
+					trashVersionLocalService.deleteTrashVersion(trashVersion);
+				}
 
 				mbThreadLocalService.restoreDependentsFromTrash(
 					user.getUserId(), thread.getThreadId(), trashEntryId);
@@ -976,11 +988,19 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 						trashEntryId, MBCategory.class.getName(),
 						category.getCategoryId());
 
-				category.setStatus(trashVersion.getStatus());
+				int oldStatus = WorkflowConstants.STATUS_APPROVED;
+
+				if (trashVersion != null) {
+					oldStatus = trashVersion.getStatus();
+				}
+
+				category.setStatus(oldStatus);
 
 				mbCategoryPersistence.update(category);
 
-				trashVersionLocalService.deleteTrashVersion(trashVersion);
+				if (trashVersion != null) {
+					trashVersionLocalService.deleteTrashVersion(trashVersion);
+				}
 
 				restoreDependentFromTrash(
 					user,

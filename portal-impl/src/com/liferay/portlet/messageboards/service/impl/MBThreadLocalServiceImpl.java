@@ -703,9 +703,11 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 				status = WorkflowConstants.STATUS_DRAFT;
 			}
 
-			trashVersionLocalService.addTrashVersion(
-				trashEntryId, MBMessage.class.getName(), message.getMessageId(),
-				status);
+			if (oldStatus != WorkflowConstants.STATUS_APPROVED) {
+				trashVersionLocalService.addTrashVersion(
+					trashEntryId, MBMessage.class.getName(),
+					message.getMessageId(), status);
+			}
 
 			// Indexer
 
@@ -912,7 +914,11 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 				trashEntryId, MBMessage.class.getName(),
 				message.getMessageId());
 
-			int oldStatus = trashVersion.getStatus();
+			int oldStatus = WorkflowConstants.STATUS_APPROVED;
+
+			if (trashVersion != null) {
+				oldStatus = trashVersion.getStatus();
+			}
 
 			message.setStatus(oldStatus);
 
@@ -929,7 +935,9 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 			// Trash
 
-			trashVersionLocalService.deleteTrashVersion(trashVersion);
+			if (trashVersion != null) {
+				trashVersionLocalService.deleteTrashVersion(trashVersion);
+			}
 
 			// Indexer
 

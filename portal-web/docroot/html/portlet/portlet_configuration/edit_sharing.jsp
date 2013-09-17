@@ -48,6 +48,21 @@ String widgetURL = PortalUtil.getWidgetURL(portlet, themeDisplay);
 	<portlet:param name="struts_action" value="/portlet_configuration/edit_sharing" />
 </portlet:actionURL>
 
+<div class="alert alert-info">
+	<liferay-ui:message key="share-this-application-on-any-website" />
+</div>
+
+<c:if test='<%= tabs2.equals("any-website") %>'>
+	<liferay-util:buffer var="textAreaContent">
+		<script src="<%= themeDisplay.getPortalURL() %><%= themeDisplay.getPathContext() %>/html/js/liferay/widget.js" type="text/javascript"></script>
+
+		<script type="text/javascript">
+		Liferay.Widget({ url: '<%= widgetURL %>'});
+	</script></liferay-util:buffer>
+
+	<aui:input cssClass="lfr-textarea-container" label="" name="example" onClick="Liferay.Util.selectAndCopy(this);" type="textarea" value="<%= textAreaContent %>" />
+</c:if>
+
 <aui:form action="<%= editSharingURL %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.SAVE %>" />
 	<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
@@ -62,18 +77,6 @@ String widgetURL = PortalUtil.getWidgetURL(portlet, themeDisplay);
 				<%
 				boolean widgetShowAddAppLink = GetterUtil.getBoolean(portletPreferences.getValue("lfrWidgetShowAddAppLink", null), PropsValues.THEME_PORTLET_SHARING_DEFAULT);
 				%>
-
-				<div class="alert alert-info">
-					<liferay-ui:message key="share-this-application-on-any-website" />
-				</div>
-
-				<liferay-util:buffer var="textAreaContent">
-<script src="<%= themeDisplay.getPortalURL() %><%= themeDisplay.getPathContext() %>/html/js/liferay/widget.js" type="text/javascript"></script>
-<script type="text/javascript">
-	Liferay.Widget({ url: '<%= widgetURL %>'});
-</script></liferay-util:buffer>
-
-				<aui:input cssClass="lfr-textarea-container" label="" name="example" onClick="Liferay.Util.selectAndCopy(this);" type="textarea" value="<%= textAreaContent %>" />
 
 				<aui:input label='<%= LanguageUtil.format(pageContext, "allow-users-to-add-x-to-any-website", portletDisplay.getTitle()) %>' name="widgetShowAddAppLink" type="checkbox" value="<%= widgetShowAddAppLink %>" />
 			</c:when>

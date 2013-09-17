@@ -97,6 +97,10 @@
 		line-height: 27px;
 	}
 
+	select {
+		width: auto;
+	}
+
 	select:focus {
 		border: 1px solid rgba(0, 172, 255, 0.8);
 		outline: 5px auto rgba(82, 168, 236, 0.6);

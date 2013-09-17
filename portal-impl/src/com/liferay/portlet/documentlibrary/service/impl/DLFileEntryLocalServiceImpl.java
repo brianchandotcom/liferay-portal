@@ -2055,20 +2055,13 @@ public class DLFileEntryLocalServiceImpl
 		List<DDMStructure> ddmStructures = dlFileEntryType.getDDMStructures();
 
 		for (DDMStructure ddmStructure : ddmStructures) {
-			Fields lastFields = null;
+			DLFileEntryMetadata lastFileEntryMetadata = null;
 
 			try {
-				DLFileEntryMetadata lastFileEntryMetadata =
+				lastFileEntryMetadata =
 					dlFileEntryMetadataLocalService.getFileEntryMetadata(
 						ddmStructure.getStructureId(),
 						lastDLFileVersion.getFileVersionId());
-
-				lastFields = StorageEngineUtil.getFields(
-					lastFileEntryMetadata.getDDMStorageId());
-
-				if (lastFields == null) {
-					return false;
-				}
 			}
 			catch (NoSuchFileEntryMetadataException nsfem) {
 				return false;
@@ -2079,6 +2072,8 @@ public class DLFileEntryLocalServiceImpl
 					ddmStructure.getStructureId(),
 					latestDLFileVersion.getFileVersionId());
 
+			Fields lastFields = StorageEngineUtil.getFields(
+				lastFileEntryMetadata.getDDMStorageId());
 			Fields latestFields = StorageEngineUtil.getFields(
 				latestFileEntryMetadata.getDDMStorageId());
 

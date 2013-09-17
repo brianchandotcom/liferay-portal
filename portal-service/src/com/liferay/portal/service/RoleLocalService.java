@@ -741,6 +741,21 @@ public interface RoleLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Returns all the roles in the company which belong to either of the given
+	* types.
+	*
+	* @param companyId the primary key of the company
+	* @param types the role types (optionally <code>null</code>)
+	* @return the roles in the company which belong to either of the given
+	types
+	* @throws SystemException if a system exception occurred
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.Role> getRoles(
+		long companyId, int[] types)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Returns all the roles with the primary keys.
 	*
 	* @param roleIds the primary keys of the roles

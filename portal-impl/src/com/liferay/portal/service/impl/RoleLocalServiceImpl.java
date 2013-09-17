@@ -705,6 +705,23 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	}
 
 	/**
+	 * Returns all the roles in the company which belong to either of the given
+	 * types.
+	 *
+	 * @param  companyId the primary key of the company
+	 * @param  types the role types (optionally <code>null</code>)
+	 * @return the roles in the company which belong to either of the given
+	 *         types
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<Role> getRoles(long companyId, int[] types)
+		throws SystemException {
+
+		return rolePersistence.findByC_T(companyId, types);
+	}
+
+	/**
 	 * Returns all the roles with the primary keys.
 	 *
 	 * @param  roleIds the primary keys of the roles

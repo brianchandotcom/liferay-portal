@@ -1963,6 +1963,10 @@
 			<finder-column name="companyId" />
 			<finder-column name="name" case-sensitive="false" />
 		</finder>
+		<finder name="C_T" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="type" arrayable-operator="OR" />
+		</finder>
 		<finder name="T_S" return-type="Collection">
 			<finder-column name="type" />
 			<finder-column name="subtype" />

@@ -556,23 +556,11 @@ public class ResourceActionsImpl implements ResourceActions {
 			long companyId, Group group, String modelResource, int[] roleTypes)
 		throws SystemException {
 
-		List<Role> allRoles = roleLocalService.getRoles(companyId);
-
 		if (roleTypes == null) {
 			roleTypes = getRoleTypes(companyId, group, modelResource);
 		}
 
-		List<Role> roles = new ArrayList<Role>();
-
-		for (int roleType : roleTypes) {
-			for (Role role : allRoles) {
-				if (role.getType() == roleType) {
-					roles.add(role);
-				}
-			}
-		}
-
-		return roles;
+		return roleLocalService.getRoles(companyId, roleTypes);
 	}
 
 	@Override

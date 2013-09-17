@@ -31,18 +31,18 @@
 
 					<%
 					KeywordsSuggestionHolder keywordsSuggestionHolder = new KeywordsSuggestionHolder(hits.getCollatedSpellCheckResult(), searchContext.getKeywords());
+
+					for (String suggestedKeyword : keywordsSuggestionHolder.getSuggestedKeywords()) {
 					%>
-
-					<c:forEach items="<%= keywordsSuggestionHolder.getSuggestedKeywords() %>" var="suggestedKeyword">
-
-						<%
-						String suggestedKeyword = (String)pageContext.getAttribute("suggestedKeyword");
-						%>
 
 						<span class="<%= keywordsSuggestionHolder.hasChanged(suggestedKeyword) ? "changed-keyword" : "unchanged-keyword" %>">
 							<%= HtmlUtil.escape(suggestedKeyword) %>
 						</span>
-					</c:forEach>
+
+					<%
+					}
+					%>
+
 				</aui:a>
 			</li>
 		</ul>
@@ -54,36 +54,37 @@
 				<liferay-ui:message key="related-queries" />:
 			</li>
 
-			<c:forEach items="<%= hits.getQuerySuggestions() %>" var="relatedQueryKeywords">
+			<%
+			for (String querySuggestion : hits.getQuerySuggestions()) {
+				String taglibSearchRelatedQuery = renderResponse.getNamespace() + "searchKeywords('" + HtmlUtil.escapeJS(querySuggestion) + "')";
+			%>
 
-				<%
-				String relatedQueryKeywords = (String)pageContext.getAttribute("relatedQueryKeywords");
-
-				String taglibSearchRelatedQuery = renderResponse.getNamespace() + "searchKeywords('" + HtmlUtil.escapeJS(relatedQueryKeywords) + "')";
-				%>
-
-				<c:if test="<%= Validator.isNotNull(relatedQueryKeywords) && !relatedQueryKeywords.equals(searchContext.getKeywords()) %>">
+				<c:if test="<%= Validator.isNotNull(querySuggestion) && !querySuggestion.equals(searchContext.getKeywords()) %>">
 					<li>
 						<aui:a href="javascript:;" onclick="<%= taglibSearchRelatedQuery %>">
 
 							<%
-							KeywordsSuggestionHolder keywordsSuggestionHolder = new KeywordsSuggestionHolder(relatedQueryKeywords, searchContext.getKeywords());
+							KeywordsSuggestionHolder keywordsSuggestionHolder = new KeywordsSuggestionHolder(querySuggestion, searchContext.getKeywords());
+
+							for (String suggestedKeyword : keywordsSuggestionHolder.getSuggestedKeywords()) {
 							%>
 
-							<c:forEach items="<%= keywordsSuggestionHolder.getSuggestedKeywords() %>" var="relatedQueryKeyword">
-
-								<%
-								String relatedQueryKeyword = (String)pageContext.getAttribute("relatedQueryKeyword");
-								%>
-
-								<span class="<%= keywordsSuggestionHolder.hasChanged(relatedQueryKeyword) ? "changed-keyword" : "unchanged-keyword" %>">
-									<%= HtmlUtil.escape(relatedQueryKeyword) %>
+								<span class="<%= keywordsSuggestionHolder.hasChanged(suggestedKeyword) ? "changed-keyword" : "unchanged-keyword" %>">
+									<%= HtmlUtil.escape(suggestedKeyword) %>
 								</span>
-							</c:forEach>
+
+							<%
+							}
+							%>
+
 						</aui:a>
 					</li>
 				</c:if>
-			</c:forEach>
+
+			<%
+			}
+			%>
+
 		</ul>
 	</c:if>
 </div>

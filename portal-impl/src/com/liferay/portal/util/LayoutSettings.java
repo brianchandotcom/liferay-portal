@@ -31,8 +31,8 @@ import java.util.Map;
  */
 public class LayoutSettings {
 
-	public static Map<String, LayoutSettings> getLayoutSettingsMap() {
-		return _layoutSettingsMap;
+	public static void addLayoutSetting(String type) {
+		new LayoutSettings(type);
 	}
 
 	public static LayoutSettings getInstance(Layout layout) {
@@ -43,14 +43,14 @@ public class LayoutSettings {
 		return _layoutSettingsMap.get(type);
 	}
 
+	public static Map<String, LayoutSettings> getLayoutSettingsMap() {
+		return _layoutSettingsMap;
+	}
+
 	public static void removeLayoutSetting(String type) {
 		if (_layoutSettingsMap.containsKey(type)) {
 			_layoutSettingsMap.remove(type);
 		}
-	}
-
-	public static void addLayoutSetting(String type) {
-		new LayoutSettings(type);
 	}
 
 	public String[] getConfigurationActionDelete() {

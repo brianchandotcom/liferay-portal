@@ -284,6 +284,14 @@
 		</while>
 	</command>
 
+	<command name="viewMemberCP">
+		<var name="key_userScreenName" value="${userScreenName}" />
+
+		<execute action="CPSitememberships#assertTextEquals" locator-key1="USER_TABLE_NAME" value1="${userFirstName} ${userLastName}" />
+		<execute action="CPSitememberships#assertTextEquals" locator-key1="USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
+		<execute action="CPSitememberships#assertTextEquals" locator-key1="USER_TABLE_ACTIONS" value1="Actions" />
+	</command>
+
 	<command name="viewCP">
 		<var name="key_siteName" value="${siteName}" />
 

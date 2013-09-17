@@ -16,7 +16,6 @@ package com.liferay.portal.servlet.filters.cache;
 
 import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -33,17 +32,13 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
-import com.liferay.portal.model.LayoutTypePortletConstants;
-import com.liferay.portal.model.Portlet;
-import com.liferay.portal.model.PortletConstants;
+import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.security.auth.AuthTokenUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
-import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PortalUtil;
@@ -280,25 +275,6 @@ public class CacheFilter extends BasePortalFilter {
 		}
 	}
 
-	protected boolean isCacheableColumn(long companyId, String columnSettings)
-		throws SystemException {
-
-		String[] portletIds = StringUtil.split(columnSettings);
-
-		for (String portletId : portletIds) {
-			portletId = PortletConstants.getRootPortletId(portletId);
-
-			Portlet portlet = PortletLocalServiceUtil.getPortletById(
-				companyId, portletId);
-
-			if (!portlet.isLayoutCacheable()) {
-				return false;
-			}
-		}
-
-		return true;
-	}
-
 	protected boolean isCacheableData(
 		long companyId, HttpServletRequest request) {
 
@@ -321,36 +297,10 @@ public class CacheFilter extends BasePortalFilter {
 				return false;
 			}
 
-			UnicodeProperties properties = layout.getTypeSettingsProperties();
+			LayoutTypePortlet layoutTypePortlet =
+				(LayoutTypePortlet)layout.getLayoutType();
 
-			for (int i = 0; i < 10; i++) {
-				String columnId = "column-" + i;
-
-				String settings = properties.getProperty(
-					columnId, StringPool.BLANK);
-
-				if (!isCacheableColumn(companyId, settings)) {
-					return false;
-				}
-			}
-
-			String columnIdsString = properties.get(
-				LayoutTypePortletConstants.NESTED_COLUMN_IDS);
-
-			if (columnIdsString != null) {
-				String[] columnIds = StringUtil.split(columnIdsString);
-
-				for (String columnId : columnIds) {
-					String settings = properties.getProperty(
-						columnId, StringPool.BLANK);
-
-					if (!isCacheableColumn(companyId, settings)) {
-						return false;
-					}
-				}
-			}
-
-			return true;
+			return layoutTypePortlet.isCacheable();
 		}
 		catch (Exception e) {
 			return false;

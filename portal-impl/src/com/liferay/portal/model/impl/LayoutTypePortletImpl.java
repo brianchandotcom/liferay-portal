@@ -631,6 +631,21 @@ public class LayoutTypePortletImpl
 	}
 
 	@Override
+	public boolean isCacheable() throws PortalException, SystemException {
+		for (String columnId : getColumns()) {
+			for (Portlet portlet : getAllPortlets(columnId)) {
+				Portlet rootPortlet = portlet.getRootPortlet();
+
+				if (!rootPortlet.isLayoutCacheable()) {
+					return false;
+				}
+			}
+		}
+
+		return true;
+	}
+
+	@Override
 	public boolean isColumnCustomizable(String columnId) {
 		if (!isLayoutSetPrototype()) {
 			String customizableString = getTypeSettingsProperty(

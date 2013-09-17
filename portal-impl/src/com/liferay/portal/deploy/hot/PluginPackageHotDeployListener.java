@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.deploy.hot.BaseHotDeployListener;
 import com.liferay.portal.kernel.deploy.hot.HotDeployEvent;
 import com.liferay.portal.kernel.deploy.hot.HotDeployException;
-import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.plugin.PluginPackage;
@@ -130,8 +129,6 @@ public class PluginPackageHotDeployListener extends BaseHotDeployListener {
 
 		reconfigureCaches(classLoader);
 
-		JSONWebServiceActionsManagerUtil.registerServletContext(servletContext);
-
 		if (_log.isInfoEnabled()) {
 			_log.info(
 				"Plugin package " + pluginPackage.getModuleId() +
@@ -167,9 +164,6 @@ public class PluginPackageHotDeployListener extends BaseHotDeployListener {
 			servletContext, hotDeployEvent.getContextClassLoader());
 
 		unregisterClpMessageListeners(servletContext);
-
-		JSONWebServiceActionsManagerUtil.unregisterServletContext(
-			servletContext);
 
 		if (_log.isInfoEnabled()) {
 			_log.info(

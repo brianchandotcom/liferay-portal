@@ -93,6 +93,43 @@
 		</execute>
 	</command>
 
+	<command name="AddWebContentDraft">
+		<var name="webContentContent" value="WC WebContent Content" />
+		<var name="webContentTitle" value="WC WebContent Title" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#addDraftCP">
+			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#viewCPDraft">
+			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+	</command>
+
+	<command name="AddWebContentTitleEscapeCharacter">
+		<var name="webContentContent" value="WC WebContent Content" />
+		<var name="webContentTitle"><![CDATA[<!-- -->]]></var>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+	</command>
+
 	<command name="AddWebContentWithStructure">
 		<var name="structureDescription" value="WC Structure Description" />
 		<var name="structureName" value="WC Structure Name" />
@@ -129,6 +166,81 @@
 			<var name="templateName" value="${templateName}" />
 			<var name="webContentText" value="${webContentText}" />
 			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+	</command>
+
+	<command name="DeleteWebContent">
+		<var name="webContentContent" value="WC WebContent Content" />
+		<var name="webContentTitle" value="WC WebContent Title" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#deleteCP">
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+	</command>
+
+	<command name="DeleteWebContentTitleEscapeCharacter">
+		<var name="webContentContent" value="WC WebContent Content" />
+		<var name="webContentTitle"><![CDATA[<!-- -->]]></var>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#deleteCP">
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+	</command>
+
+	<command name="EditWebContent">
+		<var name="webContentContent" value="WC WebContent Content" />
+		<var name="webContentContentEdit" value="WC WebContent Content Edit" />
+		<var name="webContentTitle" value="WC WebContent Title" />
+		<var name="webContentTitleEdit" value="WC WebContent Title Edit" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#editCP">
+			<var name="webContentContentEdit" value="${webContentContentEdit}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+			<var name="webContentTitleEdit" value="${webContentTitleEdit}" />
+		</execute>
+
+		<execute macro="WebContent#viewCP">
+			<var name="webContentContent" value="${webContentContentEdit}" />
+			<var name="webContentTitle" value="${webContentTitleEdit}" />
 		</execute>
 	</command>
 </definition>

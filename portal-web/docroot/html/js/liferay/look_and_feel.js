@@ -908,13 +908,11 @@ AUI.add(
 
 					// WAP styling
 
-					if (instance._getNodeById('wap-styling')) {
-						instance._wapEnabled = true;
+					instance._wapStyling = instance._getNodeById('wap-styling');
 
+					if (instance._wapStyling) {
 						instance._wapTitleInput = instance._getNodeById('lfr-wap-title');
 						instance._wapInitialWindowStateSelect = instance._getNodeById('lfr-wap-initial-window-state');
-					} else {
-						instance._wapEnabled = false;
 					}
 				}
 
@@ -1187,7 +1185,7 @@ AUI.add(
 
 							updatePortletCSSClassName(previousCSSClass, newCSSClass);
 
-							if (instance._wapEnabled) {
+							if (instance._wapStyling) {
 								instance._objData.wapData.title = instance._wapTitleInput.val();
 								instance._objData.wapData.initialWindowState = instance._wapInitialWindowStateSelect.val();
 							}
@@ -1587,7 +1585,7 @@ AUI.add(
 
 				// WAP styling
 
-				if (instance._wapEnabled) {
+				if (instance._wapStyling) {
 					instance._setInput(instance._wapTitleInput, wapData.title);
 					instance._setSelect(instance._wapInitialWindowStateSelect, wapData.initialWindowState);
 				}

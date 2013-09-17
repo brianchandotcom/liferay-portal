@@ -463,7 +463,7 @@ if (PropsValues.MOBILE_DEVICE_STYLING_WAP_ENABLED) {
 					<aui:input cssClass="lfr-textarea-container" label="enter-your-custom-css" name="lfr-custom-css" type="textarea" />
 				</aui:fieldset>
 
-				<c:if test="PropsValues.MOBILE_DEVICE_STYLING_WAP_ENABLED">
+				<c:if test="<%= PropsValues.MOBILE_DEVICE_STYLING_WAP_ENABLED %>">
 					<aui:fieldset id="wap-styling">
 						<aui:input label="title" name="lfr-wap-title" />
 

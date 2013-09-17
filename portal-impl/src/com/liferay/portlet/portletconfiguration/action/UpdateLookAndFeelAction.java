@@ -154,7 +154,8 @@ public class UpdateLookAndFeelAction extends JSONAction {
 			portletSetup.setValue("lfrWapTitle", wapTitle);
 			portletSetup.setValue(
 				"lfrWapInitialWindowState", wapInitialWindowState);
-		} else {
+		}
+		else {
 			portletSetup.reset("lfrWapTitle");
 			portletSetup.reset("lfrWapInitialWindowState");
 		}

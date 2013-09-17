@@ -2090,8 +2090,9 @@ public class DLFileEntryLocalServiceImpl
 				com.liferay.portlet.dynamicdatamapping.storage.Field
 					latestField = latestFields.get(fieldName);
 
-				if ((lastField == null) ||
-					!lastField.equals(latestField) && !lastField.isPrivate()) {
+				if ((latestFieldNames == null) ||
+					(!lastField.equals(latestField) &&
+					 !lastField.isPrivate())) {
 
 					return false;
 				}

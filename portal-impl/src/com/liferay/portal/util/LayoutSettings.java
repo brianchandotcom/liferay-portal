@@ -31,7 +31,7 @@ import java.util.Map;
  */
 public class LayoutSettings {
 
-	public static Map<String, LayoutSettings> getCurrentLayoutSettings() {
+	public static Map<String, LayoutSettings> getLayoutSettingsMap() {
 		return _layoutSettingsMap;
 	}
 
@@ -49,7 +49,7 @@ public class LayoutSettings {
 		}
 	}
 
-	public static void setLayoutSetting(String type) {
+	public static void addLayoutSetting(String type) {
 		new LayoutSettings(type);
 	}
 

@@ -50,7 +50,6 @@ import com.liferay.portal.service.GroupServiceUtil;
 import com.liferay.portal.service.PortletLocalService;
 import com.liferay.portal.service.ResourceActionLocalService;
 import com.liferay.portal.service.RoleLocalService;
-import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.PortletResourceBundles;
@@ -561,9 +560,7 @@ public class ResourceActionsImpl implements ResourceActions {
 			roleTypes = getRoleTypes(companyId, group, modelResource);
 		}
 
-		List<Role> roles = RoleLocalServiceUtil.getRoles(companyId, roleTypes);
-
-		return ListUtil.copy(roles);
+		return roleLocalService.getRoles(companyId, roleTypes);
 	}
 
 	@Override

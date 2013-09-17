@@ -44,7 +44,9 @@ public class LayoutTemplateAutoDeployListener extends BaseAutoDeployListener {
 			_log.debug("Invoking deploy for " + file.getPath());
 		}
 
-		if (!isMatchingFile(file, "WEB-INF/liferay-layout-templates.xml")) {
+		if (!isMatchingFile(file, "WEB-INF/liferay-layout-templates.xml") ||
+			isThemePlugin(file)) {
+
 			return AutoDeployer.CODE_NOT_APPLICABLE;
 		}
 

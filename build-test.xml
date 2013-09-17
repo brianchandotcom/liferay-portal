@@ -2220,12 +2220,27 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 							<var name="mysql.arg.line" unset="true" />
 
 							<if>
-								<equals arg1="${database.password}" arg2="" />
+								<and>
+									<equals arg1="${database.password}" arg2="" />
+									<equals arg1="${database.username}" arg2="" />
+								</and>
 								<then>
-									<var name="mysql.arg.line" value="-u ${database.username}" />
+									<var name="mysql.arg.line" value="" />
 								</then>
+								<elseif>
+									<equals arg1="${database.password}" arg2="" />
+									<then>
+										<var name="mysql.arg.line" value="-u ${database.username}" />
+									</then>
+								</elseif>
+								<elseif>
+									<equals arg1="${database.username}" arg2="" />
+									<then>
+										<var name="mysql.arg.line" value="-p${database.password}" />
+									</then>
+								</elseif>
 								<else>
-									<var name="mysql.arg.line" value="-p ${database.password} -u ${database.username}" />
+									<var name="mysql.arg.line" value="-p${database.password} -u ${database.username}" />
 								</else>
 							</if>
 

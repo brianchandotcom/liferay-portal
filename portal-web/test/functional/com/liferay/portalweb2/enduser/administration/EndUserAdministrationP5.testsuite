@@ -1,7 +1,7 @@
 <definition>
 	<execute test-suite="CPPortalSettingsP5" />
 
-	<execute test-suite="CPRolesP5" />
+	<execute test-suite="CPRolesPGBlogsP5" />
 
 	<execute test-suite="CPUsergroupsP5" />
 

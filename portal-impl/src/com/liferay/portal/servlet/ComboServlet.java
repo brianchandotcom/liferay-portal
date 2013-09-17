@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.ServletContextUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -31,6 +32,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.servlet.filters.dynamiccss.DynamicCSSUtil;
+import com.liferay.portal.util.AggregateUtil;
 import com.liferay.portal.util.MinifierUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
@@ -264,6 +266,17 @@ public class ComboServlet extends HttpServlet {
 							HttpHeaders.CACHE_CONTROL,
 							HttpHeaders.CACHE_CONTROL_NO_CACHE_VALUE);
 					}
+
+					String baseURL = StringPool.BLANK;
+
+					int slashPos = resourcePath.lastIndexOf(CharPool.SLASH);
+
+					if (slashPos != -1) {
+						baseURL = resourcePath.substring(0, slashPos + 1);
+					}
+
+					stringFileContent = AggregateUtil.updateRelativeUrls(
+						stringFileContent, baseURL);
 
 					stringFileContent = MinifierUtil.minifyCss(
 						stringFileContent);

@@ -159,6 +159,8 @@ public interface LayoutTypePortlet extends LayoutType {
 
 	public boolean hasUpdatePermission();
 
+	public boolean isCacheable() throws PortalException, SystemException;
+
 	public boolean isColumnCustomizable(String columnId);
 
 	public boolean isColumnDisabled(String columnId);

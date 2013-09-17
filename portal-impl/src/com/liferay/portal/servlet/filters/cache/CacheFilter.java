@@ -16,7 +16,6 @@ package com.liferay.portal.servlet.filters.cache;
 
 import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -33,13 +32,10 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutTypePortlet;
-import com.liferay.portal.model.LayoutTypePortletConstants;
-import com.liferay.portal.model.Portlet;
 import com.liferay.portal.security.auth.AuthTokenUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
@@ -279,21 +275,6 @@ public class CacheFilter extends BasePortalFilter {
 		}
 	}
 
-	protected boolean isCacheableColumn(
-			String columnId, LayoutTypePortlet layoutTypePortlet)
-		throws PortalException, SystemException {
-
-		for (Portlet portlet : layoutTypePortlet.getAllPortlets(columnId)) {
-			Portlet rootPortlet = portlet.getRootPortlet();
-
-			if (!rootPortlet.isLayoutCacheable()) {
-				return false;
-			}
-		}
-
-		return true;
-	}
-
 	protected boolean isCacheableData(
 		long companyId, HttpServletRequest request) {
 
@@ -319,30 +300,7 @@ public class CacheFilter extends BasePortalFilter {
 			LayoutTypePortlet layoutTypePortlet =
 				(LayoutTypePortlet)layout.getLayoutType();
 
-			UnicodeProperties properties = layout.getTypeSettingsProperties();
-
-			for (int i = 0; i < 10; i++) {
-				String columnId = "column-" + i;
-
-				if (!isCacheableColumn(columnId, layoutTypePortlet)) {
-					return false;
-				}
-			}
-
-			String columnIdsString = properties.get(
-				LayoutTypePortletConstants.NESTED_COLUMN_IDS);
-
-			if (columnIdsString != null) {
-				String[] columnIds = StringUtil.split(columnIdsString);
-
-				for (String columnId : columnIds) {
-					if (!isCacheableColumn(columnId, layoutTypePortlet)) {
-						return false;
-					}
-				}
-			}
-
-			return true;
+			return layoutTypePortlet.isCacheable();
 		}
 		catch (Exception e) {
 			return false;

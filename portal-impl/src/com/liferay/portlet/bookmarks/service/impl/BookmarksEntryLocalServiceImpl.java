@@ -712,9 +712,6 @@ public class BookmarksEntryLocalServiceImpl
 		subscriptionSender.setServiceContext(serviceContext);
 		subscriptionSender.setUserId(entry.getUserId());
 
-		subscriptionSender.addPersistedSubscribers(
-			BookmarksEntry.class.getName(), entry.getEntryId());
-
 		BookmarksFolder folder = entry.getFolder();
 
 		List<Long> folderIds = new ArrayList<Long>();
@@ -732,6 +729,9 @@ public class BookmarksEntryLocalServiceImpl
 
 		subscriptionSender.addPersistedSubscribers(
 			BookmarksFolder.class.getName(), entry.getGroupId());
+
+		subscriptionSender.addPersistedSubscribers(
+			BookmarksEntry.class.getName(), entry.getEntryId());
 
 		subscriptionSender.flushNotificationsAsync();
 	}

@@ -94,7 +94,7 @@ public class DataAccess {
 	}
 
 	public static Connection getConnection() throws SQLException {
-		DataSource dataSource = InfrastructureUtil.getDataSource();
+		DataSource dataSource = _pacl.getDataSource();
 
 		return dataSource.getConnection();
 	}
@@ -102,12 +102,7 @@ public class DataAccess {
 	public static Connection getConnection(String location)
 		throws NamingException, SQLException {
 
-		Properties properties = PropsUtil.getProperties(
-			PropsKeys.JNDI_ENVIRONMENT, true);
-
-		Context context = new InitialContext(properties);
-
-		DataSource dataSource = (DataSource)JNDIUtil.lookup(context, location);
+		DataSource dataSource = _pacl.getDataSource(location);
 
 		return dataSource.getConnection();
 	}
@@ -126,6 +121,33 @@ public class DataAccess {
 			new UpgradeOptimizedConnectionHandler(con));
 	}
 
+	public static interface PACL {
+
+		public DataSource getDataSource();
+
+		public DataSource getDataSource(String location) throws NamingException;
+
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(DataAccess.class);
+
+	private static PACL _pacl = new NoPACL();
+
+	private static class NoPACL implements PACL {
+
+		public DataSource getDataSource() {
+			return InfrastructureUtil.getDataSource();
+		}
+
+		public DataSource getDataSource(String location) throws NamingException {
+			Properties properties = PropsUtil.getProperties(
+				PropsKeys.JNDI_ENVIRONMENT, true);
+
+			Context context = new InitialContext(properties);
+
+			return (DataSource)JNDIUtil.lookup(context, location);
+		}
+
+	}
 
 }

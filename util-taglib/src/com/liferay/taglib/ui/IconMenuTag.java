@@ -272,7 +272,7 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 					jspWriter.write("\">");
 				}
 				else {
-					jspWriter.write("<div class=\"btn-group");
+					jspWriter.write("<div class=\"btn-group lfr-icon-menu");
 
 					if (Validator.isNotNull(_cssClass)) {
 						jspWriter.write(StringPool.SPACE);
@@ -309,7 +309,7 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 					jspWriter.write("\">");
 
 					if (_showArrow && _direction.equals("left")) {
-						jspWriter.write("<i class=\"caret\"></i>&nbsp;");
+						jspWriter.write("<i class=\"caret\"></i> ");
 					}
 
 					boolean auiImage = false;
@@ -318,7 +318,7 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 						auiImage = _icon.startsWith(_AUI_PATH);
 
 						if (auiImage) {
-							jspWriter.write("&nbsp;<i class=\"icon-");
+							jspWriter.write(" <i class=\"icon-");
 							jspWriter.write(
 								_icon.substring(_AUI_PATH.length()));
 							jspWriter.write("\"></i>");
@@ -326,14 +326,16 @@ public class IconMenuTag extends BaseBodyTagSupport implements BodyTag {
 						else {
 							jspWriter.write("<img alt=\"\" src=\"");
 							jspWriter.write(_icon);
-							jspWriter.write("\" />&nbsp;");
+							jspWriter.write("\" /> ");
 						}
 					}
 
+					jspWriter.write("<span class=\"lfr-icon-menu-text\">");
 					jspWriter.write(message);
+					jspWriter.write("</span>");
 
 					if (_showArrow && !_direction.equals("left")) {
-						jspWriter.write("&nbsp;<i class=\"caret\"></i>");
+						jspWriter.write(" <i class=\"caret\"></i>");
 					}
 
 					jspWriter.write("</a>");

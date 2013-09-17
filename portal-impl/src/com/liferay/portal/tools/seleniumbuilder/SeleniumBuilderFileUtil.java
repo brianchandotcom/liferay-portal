@@ -45,7 +45,7 @@ import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.commons.lang.StringEscapeUtils;
 
 /**
  * @author Michael Hashimoto
@@ -154,6 +154,10 @@ public class SeleniumBuilderFileUtil {
 		String javaFileName = getJavaFileName(fileName);
 
 		return StringUtil.replace(javaFileName, ".java", ".html");
+	}
+
+	public String getHtmlVariableTranslated(String name) {
+		return StringEscapeUtils.escapeHtml(name);
 	}
 
 	public String getJavaFileName(String fileName) {

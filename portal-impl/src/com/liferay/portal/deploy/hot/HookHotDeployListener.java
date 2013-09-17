@@ -971,7 +971,7 @@ public class HookHotDeployListener
 		if ((x != -1) && (y != 1)) {
 			String localeKey = languagePropertiesLocation.substring(x + 1, y);
 
-			locale = LocaleUtil.fromLanguageId(localeKey);
+			locale = LocaleUtil.fromLanguageId(localeKey, true, false);
 		}
 
 		return locale;

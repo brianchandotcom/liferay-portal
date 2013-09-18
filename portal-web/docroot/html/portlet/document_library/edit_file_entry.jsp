@@ -374,6 +374,8 @@ editFileEntryURL.setParameter("workflowAction", String.valueOf(WorkflowConstants
 					</c:otherwise>
 				</c:choose>
 
+				<aui:input name="defaultLanguageId" type="hidden" value="<%= themeDisplay.getLanguageId() %>" />
+
 				<%
 				if (fileEntryTypeId > 0) {
 					try {

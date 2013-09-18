@@ -908,9 +908,12 @@ AUI.add(
 
 					// WAP styling
 
-					instance._wapTitleInput = instance._getNodeById('lfr-wap-title');
-					instance._wapInitialWindowStateSelect = instance._getNodeById('lfr-wap-initial-window-state');
+					instance._wapStyling = instance._getNodeById('wap-styling');
 
+					if (instance._wapStyling) {
+						instance._wapTitleInput = instance._getNodeById('lfr-wap-title');
+						instance._wapInitialWindowStateSelect = instance._getNodeById('lfr-wap-initial-window-state');
+					}
 				}
 
 				instance._tabs = new A.TabView(
@@ -1182,8 +1185,10 @@ AUI.add(
 
 							updatePortletCSSClassName(previousCSSClass, newCSSClass);
 
-							instance._objData.wapData.title = instance._wapTitleInput.val();
-							instance._objData.wapData.initialWindowState = instance._wapInitialWindowStateSelect.val();
+							if (instance._wapStyling) {
+								instance._objData.wapData.title = instance._wapTitleInput.val();
+								instance._objData.wapData.initialWindowState = instance._wapInitialWindowStateSelect.val();
+							}
 
 							A.io.request(
 								themeDisplay.getPathMain() + '/portlet_configuration/update_look_and_feel',
@@ -1580,8 +1585,10 @@ AUI.add(
 
 				// WAP styling
 
-				instance._setInput(instance._wapTitleInput, wapData.title);
-				instance._setSelect(instance._wapInitialWindowStateSelect, wapData.initialWindowState);
+				if (instance._wapStyling) {
+					instance._setInput(instance._wapTitleInput, wapData.title);
+					instance._setSelect(instance._wapInitialWindowStateSelect, wapData.initialWindowState);
+				}
 			},
 
 			_setInput: function(obj, value) {

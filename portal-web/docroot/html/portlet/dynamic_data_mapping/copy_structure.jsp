@@ -49,9 +49,13 @@ boolean copyDisplayTemplates = ParamUtil.getBoolean(request, "copyDisplayTemplat
 
 		<aui:input name="description" />
 
-		<aui:input checked="<%= copyFormTemplates %>" label="copy-form-templates" name="copyFormTemplates" type="checkbox" />
+		<c:if test="<%= Validator.isNull(templateTypeValue) || templateTypeValue.equals(DDMTemplateConstants.TEMPLATE_TYPE_FORM) %>">
+			<aui:input checked="<%= copyFormTemplates %>" label='<%= Validator.isNull(templateTypeValue) ? "copy-form-templates" : "copy-templates" %>' name="copyFormTemplates" type="checkbox" />
+		</c:if>
 
-		<aui:input checked="<%= copyDisplayTemplates %>" label="copy-display-templates" name="copyDisplayTemplates" type="checkbox" />
+		<c:if test="<%= Validator.isNull(templateTypeValue) || templateTypeValue.equals(DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY) %>">
+			<aui:input checked="<%= copyDisplayTemplates %>" label='<%= Validator.isNull(templateTypeValue) ? "copy-display-templates" : "copy-templates" %>' name="copyDisplayTemplates" type="checkbox" />
+		</c:if>
 	</aui:fieldset>
 
 	<aui:button-row>

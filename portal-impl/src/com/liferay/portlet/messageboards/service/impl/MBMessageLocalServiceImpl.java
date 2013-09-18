@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.transaction.TransactionCommitCallbackRegistryUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -99,6 +100,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
@@ -1863,6 +1865,42 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		return subject;
 	}
 
+	protected void notify(
+		final long groupId, final SubscriptionSender subscriptionSender,
+		final SubscriptionSender subscriptionSenderPrototype,
+		final List<Long> categoryIds) {
+
+		TransactionCommitCallbackRegistryUtil.registerCallback(
+			new Callable<Void>() {
+
+				@Override
+				public Void call() throws Exception {
+					subscriptionSender.flushNotificationsAsync();
+
+					if (!MailingListThreadLocal.isSourceMailingList()) {
+						return null;
+					}
+
+					for (long categoryId : categoryIds) {
+						MBSubscriptionSender
+							sourceMailingListSubscriptionSender =
+								(MBSubscriptionSender)SerializableUtil.clone(
+									subscriptionSenderPrototype);
+
+						sourceMailingListSubscriptionSender.setBulk(false);
+
+						sourceMailingListSubscriptionSender.
+							addMailingListSubscriber(groupId, categoryId);
+
+						sourceMailingListSubscriptionSender.
+							flushNotificationsAsync();
+					}
+
+					return null;
+				}
+			});
+	}
+
 	protected void notifyDiscussionSubscribers(
 			MBMessage message, ServiceContext serviceContext)
 		throws SystemException {
@@ -2127,22 +2165,9 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		subscriptionSender.addPersistedSubscribers(
 			MBThread.class.getName(), message.getThreadId());
 
-		subscriptionSender.flushNotificationsAsync();
-
-		if (!MailingListThreadLocal.isSourceMailingList()) {
-			for (long categoryId : categoryIds) {
-				MBSubscriptionSender sourceMailingListSubscriptionSender =
-					(MBSubscriptionSender)SerializableUtil.clone(
-						subscriptionSenderPrototype);
-
-				sourceMailingListSubscriptionSender.setBulk(false);
-
-				sourceMailingListSubscriptionSender.addMailingListSubscriber(
-					message.getGroupId(), categoryId);
-
-				sourceMailingListSubscriptionSender.flushNotificationsAsync();
-			}
-		}
+		notify(
+			message.getGroupId(), subscriptionSender,
+			subscriptionSenderPrototype, categoryIds);
 	}
 
 	protected void pingPingback(

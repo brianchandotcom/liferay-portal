@@ -50,6 +50,7 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutPrototype;
 import com.liferay.portal.model.LayoutSet;
+import com.liferay.portal.model.LayoutSetBranch;
 import com.liferay.portal.model.LayoutSetPrototype;
 import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.Portlet;
@@ -58,6 +59,7 @@ import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ImageLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutPrototypeLocalServiceUtil;
+import com.liferay.portal.service.LayoutSetBranchLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetPrototypeLocalServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
@@ -384,8 +386,20 @@ public class LayoutExporter {
 
 		headerElement.addAttribute("type", type);
 
+		LayoutSetBranch layoutSetBranch =
+			LayoutSetBranchLocalServiceUtil.fetchLayoutSetBranch(
+				layoutSetBranchId);
+
 		if (exportLogo) {
-			Image image = ImageLocalServiceUtil.getImage(layoutSet.getLogoId());
+			Image image = null;
+
+			if (layoutSetBranch != null) {
+				image = ImageLocalServiceUtil.getImage(
+					layoutSetBranch.getLogoId());
+			}
+			else {
+				image = ImageLocalServiceUtil.getImage(layoutSet.getLogoId());
+			}
 
 			if ((image != null) && (image.getTextObj() != null)) {
 				String logoPath = ExportImportPathUtil.getRootPath(
@@ -399,12 +413,22 @@ public class LayoutExporter {
 			}
 		}
 
-		_themeExporter.exportTheme(portletDataContext, layoutSet);
+		if (layoutSetBranch != null) {
+			_themeExporter.exportTheme(portletDataContext, layoutSetBranch);
+		}
+		else {
+			_themeExporter.exportTheme(portletDataContext, layoutSet);
+		}
 
 		if (exportLayoutSetSettings) {
 			Element settingsElement = headerElement.addElement("settings");
 
-			settingsElement.addCDATA(layoutSet.getSettings());
+			if (layoutSetBranch != null) {
+				settingsElement.addCDATA(layoutSetBranch.getSettings());
+			}
+			else {
+				settingsElement.addCDATA(layoutSet.getSettings());
+			}
 		}
 
 		Map<String, Object[]> portletIds =

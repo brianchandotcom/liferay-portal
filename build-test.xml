@@ -928,6 +928,13 @@
 				<delete file="test.${user.name}.properties" />
 			</then>
 		</if>
+
+		<if>
+			<available file="test.run.properties" />
+			<then>
+				<delete file="test.run.properties" />
+			</then>
+		</if>
 	</target>
 
 	<target name="clean-up-vms">
@@ -2652,11 +2659,13 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 				</waitfor>
 
 				<if>
-					<or>
-						<contains string="${simple.server.dir}" substring="glassfish" />
-						<contains string="${simple.server.dir}" substring="jonas" />
+					<and>
+						<or>
+							<contains string="${simple.server.dir}" substring="glassfish" />
+							<contains string="${simple.server.dir}" substring="jonas" />
+						</or>
 						<isset property="plugins.deployed" />
-					</or>
+					</and>
 					<then>
 						<sleep seconds="60" />
 					</then>
@@ -2867,6 +2876,35 @@ Please set "ie.driver.zip" in test.properties to point to "IEDriverServer_x64_2.
 		<ant antfile="build-test-plugins.xml" target="test-build-plugins-release" inheritAll="false" />
 		<ant antfile="build-test-plugins.xml" target="test-create" inheritAll="false" />
 		<ant antfile="build-test-plugins.xml" target="test-service-builder" inheritAll="false" />
+	</target>
+
+	<target name="test-functional">
+		<antcall target="print-scm-revision" />
+
+		<antcall target="generate-test-properties">
+			<param name="database" value="mysql" />
+		</antcall>
+
+		<antcall target="clean-up-bundles" />
+
+		<antcall target="clean-up-plugins" />
+
+		<antcall target="clean-up-test-properties" />
+
+		<antcall target="prepare-portal-properties" inheritAll="false" />
+
+		<antcall target="prepare-portal-ext-properties" inheritAll="false" />
+
+		<antcall target="clean" inheritAll="false" />
+
+		<antcall target="start" inheritAll="false" />
+
+		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat" inheritAll="false">
+			<property name="test.database.minimal" value="true" />
+			<property name="test.evaluate.logs" value="true" />
+			<property name="test.selenium.logger.enabled" value="true" />
+			<property name="test.name" value="${test}" />
+		</ant>
 	</target>
 
 	<target name="test-integration">

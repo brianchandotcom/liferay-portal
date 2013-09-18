@@ -65,6 +65,7 @@
 		<execute action="CPRolesDefinepermissions#type" locator-key1="SEARCH_FIELD" value1="${permissionNavigationValue}" />
 		<execute action="CPRolesDefinepermissions#assertClick" locator-key1="${permissionNavigationKey}" value1="${permissionNavigationValue}" />
 
+		<execute action="CPRolesDefinepermissionsAllpermissions#assertTextEquals" locator-key1="PERMISSION_HEADER" value1="${permissionNavigationValue}" />
 		<execute action="CPRolesDefinepermissionsAllpermissions#check" locator-key1="${permissionDefinitionKey}" />
 		<execute action="CPRolesDefinepermissionsAllpermissions#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 

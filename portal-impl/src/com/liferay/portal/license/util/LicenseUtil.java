@@ -702,7 +702,7 @@ public class LicenseUtil {
 	private static Set<String> _ipAddresses;
 	private static Set<String> _macAddresses;
 	private static Pattern _macAddressPattern1 = Pattern.compile(
-		"\\s((\\p{XDigit}{2}(-|:)){5}(\\p{XDigit}{2}))(?:\\s|$)");
+		"\\s((\\p{XDigit}{1,2}(-|:)){5}(\\p{XDigit}{1,2}))(?:\\s|$)");
 	private static Pattern _macAddressPattern2 = Pattern.compile(
 		"\\s((\\p{XDigit}{1,2}(\\.)){5}(\\p{XDigit}{1,2}))(?:\\s|$)");
 	private static MethodKey _registerOrderMethodKey = new MethodKey(

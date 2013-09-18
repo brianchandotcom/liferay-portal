@@ -114,13 +114,13 @@
 
 	.lfr-panel-basic {
 		.lfr-panel-title {
-			border-bottom: 1px solid #ccc;
+			border-bottom: 1px solid #CCC;
 			float: none;
 			position: relative;
 			top: -0.5em;
 
 			span {
-				background: #fff;
+				background: #FFF;
 				padding: 0 8px 0 4px;
 				position: relative;
 				top: 0.55em;
@@ -144,11 +144,11 @@
 	.journal-article-container {
 		.lfr-ddm-container .field-wrapper {
 			&[data-repeatable="true"], .field-wrapper {
-				border: 1px solid #D0D0D0;
-				border-left-width: 10px;
-				margin: 7px 0 0 5px;
-				padding: 7px 10px 10px;
-			}
+			border: 1px solid #D0D0D0;
+			border-left-width: 10px;
+			margin: 7px 0 0 5px;
+			padding: 7px 10px 10px;
+		}
 
 			&[data-repeatable="true"]:nth-of-type(even) {
 				background-color: #F5F5F5;
@@ -656,8 +656,8 @@
 		}
 
 		.placeholder, .tree-placeholder, .tree-sub-placeholder {
-			background: #fff;
-			border: 1px #cdcdcd dashed;
+			background: #FFF;
+			border: 1px #CDCDCD dashed;
 			height: 100px;
 
 			@include opacity(0.75);
@@ -817,12 +817,12 @@
 	}
 
 	.component-dragging {
-		background-color: #fff !important;
+		background-color: #FFF !important;
 	}
 }
 
 .journal-article-helper {
-	background: #dedede;
+	background: #DEDEDE;
 	border: 1px #555 dashed;
 	cursor: move;
 
@@ -955,7 +955,7 @@
 		}
 
 		.error-line {
-			background: #fdd;
+			background: #FDD;
 		}
 
 		pre {

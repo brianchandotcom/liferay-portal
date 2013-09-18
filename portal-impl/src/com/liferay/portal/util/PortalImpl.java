@@ -6113,6 +6113,38 @@ public class PortalImpl implements Portal {
 	}
 
 	@Override
+	public boolean isLoginNeedsRedirect(HttpServletRequest request) {
+		long companyId = PortalUtil.getCompanyId(request);
+
+		if (PropsValues.COMPANY_SECURITY_AUTH_REQUIRES_HTTPS &&
+			!request.isSecure()) {
+
+			return true;
+		}
+
+		boolean isCasAuthEnabled = _safePrefPropsUtilGetBoolean(
+			companyId, PropsKeys.CAS_AUTH_ENABLED,
+			PropsValues.CAS_AUTH_ENABLED);
+		boolean isLoginDialogDisabled = _safePrefPropsUtilGetBoolean(
+			companyId, PropsKeys.LOGIN_DIALOG_DISABLED,
+			PropsValues.LOGIN_DIALOG_DISABLED);
+		boolean isNtlmAuthEnabled = _safePrefPropsUtilGetBoolean(
+			companyId, PropsKeys.NTLM_AUTH_ENABLED,
+			PropsValues.NTLM_AUTH_ENABLED);
+		boolean isOpenSSOAuthEnabled = _safePrefPropsUtilGetBoolean(
+			companyId, PropsKeys.OPEN_SSO_AUTH_ENABLED,
+			PropsValues.OPEN_SSO_AUTH_ENABLED);
+
+		if (isCasAuthEnabled || isLoginDialogDisabled || isNtlmAuthEnabled ||
+			isOpenSSOAuthEnabled) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	public boolean isMethodGet(PortletRequest portletRequest) {
 		HttpServletRequest request = getHttpServletRequest(portletRequest);
 
@@ -7533,6 +7565,17 @@ public class PortalImpl implements Portal {
 
 		themeDisplay.setI18nLanguageId(i18nLanguageId);
 		themeDisplay.setI18nPath(i18nPath);
+	}
+
+	private boolean _safePrefPropsUtilGetBoolean(
+		long companyId, String key, boolean defaultValue) {
+
+		try {
+			return PrefsPropsUtil.getBoolean(companyId, key, defaultValue);
+		}
+		catch (Exception e) {
+			return defaultValue;
+		}
 	}
 
 	private static final String _J_SECURITY_CHECK = "j_security_check";

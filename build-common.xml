@@ -891,6 +891,15 @@ Please set the environment variable ANT_OPTS to the recommended value of
 	</target>
 
 	<target name="test-method" depends="compile,compile-test">
+		<if>
+			<not>
+				<isset property="test.type" />
+			</not>
+			<then>
+				<var name="test.type" value="" />
+			</then>
+		</if>
+
 		<junit dir="${project.dir}" fork="on" forkmode="once" haltonfailure="${junit.halt.on.failure}" outputtoformatters="false" printsummary="on" showoutput="true">
 			<sysproperty key="junit.aspectj.dump" file="woven-classes" />
 			<sysproperty key="junit.cobertura.agent" value="${junit.cobertura.agent}" />
@@ -907,7 +916,9 @@ Please set the environment variable ANT_OPTS to the recommended value of
 			<jvmarg value="-Duser.timezone=GMT" />
 			<classpath location="test-coverage" />
 			<classpath refid="test.classpath" />
-			<test name="${class}" methods="${methods}" />
+			<formatter type="brief" usefile="false" />
+			<formatter type="xml" />
+			<test name="${class}" methods="${methods}" todir="test-results/${test.type}" />
 		</junit>
 	</target>
 

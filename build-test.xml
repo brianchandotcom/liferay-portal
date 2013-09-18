@@ -2396,15 +2396,73 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 			</else>
 		</if>
 
-		<antcall target="generate-tests" inheritAll="false">
-			<param name="test.class" value="${test.class}" />
-		</antcall>
-
 		<ant dir="portal-impl" target="compile-test" inheritAll="false" />
 
-		<ant dir="portal-web" target="test-class" inheritAll="false">
-			<property name="class" value="${test.class}" />
-		</ant>
+		<if>
+			<contains string="${test.class}" substring="#" />
+			<then>
+				<replace
+					file="portal-web/test/test-portal-web.properties"
+					token="testing.class.method=false"
+					value="testing.class.method=true"
+				/>
+
+				<script classpathref="project.classpath" language="beanshell">
+					String testClass = project.getProperty("test.class");
+
+					int x = testClass.indexOf("#");
+
+					String testMethodName = testClass.substring(x + 1);
+
+					project.setProperty("test.method.name", testMethodName);
+
+					String testSimpleClassName =  testClass.substring(0, x);
+
+					project.setProperty("test.simple.class.name", testSimpleClassName);
+				</script>
+
+				<antcall target="generate-tests" inheritAll="false">
+					<param name="test.class" value="${test.simple.class.name}" />
+				</antcall>
+
+				<for param="file">
+					<path>
+						<fileset dir="portal-web/test/functional-generated">
+							<include name="**/${test.simple.class.name}.java" />
+						</fileset>
+					</path>
+					<sequential>
+						<var name="file" value="@{file}" />
+
+						<script classpathref="project.classpath" language="beanshell">
+							String file = project.getProperty("file");
+
+							int x = file.lastIndexOf("\\com\\") + 1;
+							int y = file.lastIndexOf(".");
+
+							file = file.substring(x, y);
+
+							project.setProperty("test.class.name", file.replaceAll("\\\\", "."));
+						</script>
+					</sequential>
+				</for>
+
+				<ant dir="portal-web" target="test-method">
+					<property name="class" value="${test.class.name}" />
+					<property name="methods" value="${test.method.name}" />
+					<property name="test.type" value="functional" />
+				</ant>
+			</then>
+			<else>
+				<antcall target="generate-tests" inheritAll="false">
+					<param name="test.class" value="${test.class}" />
+				</antcall>
+
+				<ant dir="portal-web" target="test-class" inheritAll="false">
+					<property name="class" value="${test.class}" />
+				</ant>
+			</else>
+		</if>
 	</target>
 
 	<target name="run-simple-server">

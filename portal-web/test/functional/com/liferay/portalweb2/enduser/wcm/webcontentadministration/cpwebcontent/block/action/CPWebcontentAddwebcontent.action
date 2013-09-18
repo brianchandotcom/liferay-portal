@@ -3,9 +3,11 @@
 		<case locator-key1="PUBLISH_BUTTON">
 			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
+
 		<case locator-key1="SAVE_AS_DRAFT_BUTTON">
 			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
+
 		<case locator-key1="SUBMIT_FOR_PUBLICATION_BUTTON">
 			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>

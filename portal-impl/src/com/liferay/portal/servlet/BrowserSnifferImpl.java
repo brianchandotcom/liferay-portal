@@ -91,8 +91,14 @@ public class BrowserSnifferImpl implements BrowserSniffer {
 			return version;
 		}
 
-		version = parseVersion(
-			getUserAgent(request), _versionLeadings, _versionSeparators);
+		String userAgent = getUserAgent(request);
+
+		version = parseVersion(userAgent, _versionLeadings, _versionSeparators);
+
+		if (version.isEmpty()) {
+			version = parseVersion(
+				userAgent, _revisionLeadings, _revisionSeparators);
+		}
 
 		request.setAttribute(WebKeys.BROWSER_SNIFFER_VERSION, version);
 
@@ -444,7 +450,7 @@ public class BrowserSnifferImpl implements BrowserSniffer {
 				char c1 = userAgent.charAt(index);
 				char c2 = userAgent.charAt(++index);
 
-				if (((c2 > '0') && (c2 < '9')) || (c2 == '.')) {
+				if (((c2 >= '0') && (c2 <= '9')) || (c2 == '.')) {
 					for (char separator : separators) {
 						if (c1 == separator) {
 							break version;
@@ -510,7 +516,7 @@ public class BrowserSnifferImpl implements BrowserSniffer {
 
 	private static String[] _revisionLeadings = {"rv", "it", "ra", "ie"};
 	private static char[] _revisionSeparators =
-		{CharPool.COLON, CharPool.SLASH, CharPool.BACK_SLASH};
+		{CharPool.COLON, CharPool.SLASH, CharPool.SPACE, CharPool.BACK_SLASH};
 	private static String[] _versionLeadings =
 		{"version", "firefox", "minefield", "chrome"};
 	private static char[] _versionSeparators =

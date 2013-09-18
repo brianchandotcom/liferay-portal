@@ -42,7 +42,38 @@
 </tr>
 <tr>
 	<td>ADD_CONTENT_SEARCH_FIELD</td>
-	<td>//input[@id='_145_searchContentInput']</td>
+	<td>//input[@id='_145_searchContent']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_CONTENT_ADD_NEW</td>
+	<td>//a[contains(.,'Add New')]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_CONTENT_POPOVER_ADD_BUTTON</td>
+	<td>//button[contains(.,'Add')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_CONTENT_POPOVER_CONTENT_TITLE</td>
+	<td>//div[contains(@class,'popover-content')]/div/div/div[contains(.,'${key_assetTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_CONTENT_CONTENT_TITLE</td>
+	<td>//div[@class='add-content-details span8']/div[contains(.,'${key_assetTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ADD_CONTENT_ADD_NEW_MENULIST-->
+<tr>
+	<td>ADD_CONTENT_ADD_NEW_MENULIST</td>
+	<td>//ul[@class='dropdown-menu ']/li/a[contains(.,'${key_assetType}')]/span</td>
 	<td></td>
 </tr>
 <tr>

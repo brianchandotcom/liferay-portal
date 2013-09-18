@@ -59,6 +59,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NEW_WEB_CONTENT_ARTICLE_IFRAME</td>
+	<td>//iframe[@id='_145_editAsset_iframe_']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CANCEL_BUTTON</td>
 	<td>//button[contains(.,'Cancel')]</td>
 	<td></td>

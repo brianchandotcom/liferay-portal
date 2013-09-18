@@ -220,8 +220,6 @@
 
 /* Extras */
 
-.taglib-discussion {
-	.lfr-discussion-message {
-		@include word-break(break-all);
-	}
+.taglib-discussion .lfr-discussion-message {
+	@include word-break(break-all);
 }

@@ -29,6 +29,9 @@ public interface User extends UserModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portal.model.impl.UserImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public void addRemotePreference(
+		com.liferay.portal.model.UserRemotePreference userRemotePreference);
+
 	public java.util.List<com.liferay.portal.model.Address> getAddresses()
 		throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -212,6 +215,11 @@ public interface User extends UserModel, PersistedModel {
 	public java.util.Set<java.lang.String> getReminderQueryQuestions()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
+
+	public com.liferay.portal.model.UserRemotePreference getRemotePreference(
+		java.lang.String name);
+
+	public java.lang.Iterable<com.liferay.portal.model.UserRemotePreference> getRemotePreferences();
 
 	public long[] getRoleIds()
 		throws com.liferay.portal.kernel.exception.SystemException;

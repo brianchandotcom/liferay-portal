@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutSet;
+import com.liferay.portal.model.LayoutSetBranch;
 import com.liferay.portal.model.Theme;
 import com.liferay.portal.theme.ThemeLoader;
 import com.liferay.portal.theme.ThemeLoaderFactory;
@@ -80,6 +81,26 @@ public class ThemeExporter {
 			PortletDataContext portletDataContext, LayoutSet layoutSet)
 		throws Exception {
 
+		exportTheme(
+			portletDataContext, layoutSet.getTheme(),
+			layoutSet.getColorSchemeId(), layoutSet.getCss());
+	}
+
+	public void exportTheme(
+			PortletDataContext portletDataContext,
+			LayoutSetBranch layoutSetBranch)
+		throws Exception {
+
+		exportTheme(
+			portletDataContext, layoutSetBranch.getTheme(),
+			layoutSetBranch.getColorSchemeId(), layoutSetBranch.getCss());
+	}
+
+	protected void exportTheme(
+			PortletDataContext portletDataContext, Theme theme,
+			String colorSchemeId, String css)
+		throws Exception {
+
 		boolean exportTheme = MapUtil.getBoolean(
 			portletDataContext.getParameterMap(), PortletDataHandlerKeys.THEME);
 		boolean exportThemeSettings = MapUtil.getBoolean(
@@ -96,14 +117,11 @@ public class ThemeExporter {
 		Element headerElement = exportDataRootElement.element("header");
 
 		if (exportTheme || exportThemeSettings) {
-			headerElement.addAttribute("theme-id", layoutSet.getThemeId());
-			headerElement.addAttribute(
-				"color-scheme-id", layoutSet.getColorSchemeId());
+			headerElement.addAttribute("theme-id", theme.getThemeId());
+			headerElement.addAttribute("color-scheme-id", colorSchemeId);
 		}
 
 		if (exportTheme && !portletDataContext.isPerformDirectBinaryImport()) {
-			Theme theme = layoutSet.getTheme();
-
 			ZipWriter zipWriter = portletDataContext.getZipWriter();
 
 			File themeZipFile = new File(zipWriter.getPath() + "/theme.zip");
@@ -113,7 +131,7 @@ public class ThemeExporter {
 
 		Element cssElement = headerElement.addElement("css");
 
-		cssElement.addCDATA(layoutSet.getCss());
+		cssElement.addCDATA(css);
 	}
 
 	protected void exportTheme(Theme theme, File themeZipFile)

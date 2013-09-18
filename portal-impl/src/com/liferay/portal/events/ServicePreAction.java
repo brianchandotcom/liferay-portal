@@ -1292,7 +1292,17 @@ public class ServicePreAction extends Action {
 
 		// Control Panel redirects
 
-		if (group.isControlPanel() && Validator.isNull(ppid)) {
+		if (group.isControlPanel() && Validator.isNotNull(ppid)) {
+			if (!PortletPermissionUtil.hasControlPanelAccessPermission(
+					permissionChecker, scopeGroupId, ppid)) {
+
+				String redirect = HttpUtil.removeParameter(
+					currentURL, "p_p_id");
+
+				response.sendRedirect(redirect);
+			}
+		}
+		else if (group.isControlPanel() && Validator.isNull(ppid)) {
 			if (controlPanelCategory.startsWith(
 					PortletCategoryKeys.CURRENT_SITE)) {
 
@@ -1309,7 +1319,7 @@ public class ServicePreAction extends Action {
 				}
 			}
 
-			if (controlPanelCategory.equals(
+			if (controlPanelCategory.startsWith(
 					PortletCategoryKeys.SITE_ADMINISTRATION)) {
 
 				Portlet firstPortlet =

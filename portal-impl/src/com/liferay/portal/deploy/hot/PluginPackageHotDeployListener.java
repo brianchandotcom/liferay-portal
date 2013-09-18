@@ -130,8 +130,6 @@ public class PluginPackageHotDeployListener extends BaseHotDeployListener {
 
 		reconfigureCaches(classLoader);
 
-		JSONWebServiceActionsManagerUtil.registerServletContext(servletContext);
-
 		if (_log.isInfoEnabled()) {
 			_log.info(
 				"Plugin package " + pluginPackage.getModuleId() +
@@ -167,9 +165,6 @@ public class PluginPackageHotDeployListener extends BaseHotDeployListener {
 			servletContext, hotDeployEvent.getContextClassLoader());
 
 		unregisterClpMessageListeners(servletContext);
-
-		JSONWebServiceActionsManagerUtil.unregisterServletContext(
-			servletContext);
 
 		if (_log.isInfoEnabled()) {
 			_log.info(

@@ -14,6 +14,9 @@
 
 package com.liferay.portal.resiliency.spi.agent;
 
+import com.liferay.portal.cache.MultiVMPoolImpl;
+import com.liferay.portal.cache.memory.MemoryPortalCacheManager;
+import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
 import com.liferay.portal.kernel.upload.FileItem;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -105,6 +108,20 @@ public class SPIAgentRequestTest {
 					SPIAgentRequestTest.class.getName(), "_threadLocal")));
 
 		threadLocalDistributor.afterPropertiesSet();
+
+		MemoryPortalCacheManager<Serializable, Serializable>
+			memoryPortalCacheManager =
+				new MemoryPortalCacheManager<Serializable, Serializable>();
+
+		memoryPortalCacheManager.afterPropertiesSet();
+
+		MultiVMPoolImpl multiVMPoolImpl = new MultiVMPoolImpl();
+
+		multiVMPoolImpl.setPortalCacheManager(memoryPortalCacheManager);
+
+		MultiVMPoolUtil multiVMPoolUtil = new MultiVMPoolUtil();
+
+		multiVMPoolUtil.setMultiVMPool(multiVMPoolImpl);
 	}
 
 	@Before

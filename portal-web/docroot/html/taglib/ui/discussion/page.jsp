@@ -336,7 +336,6 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 										String msgBody = BBCodeTranslatorUtil.getHTML(message.getBody());
 
 										msgBody = StringUtil.replace(msgBody, "@theme_images_path@/emoticons", themeDisplay.getPathThemeImages() + "/emoticons");
-										msgBody = HtmlUtil.wordBreak(msgBody, 80);
 										%>
 
 										<%= msgBody %>

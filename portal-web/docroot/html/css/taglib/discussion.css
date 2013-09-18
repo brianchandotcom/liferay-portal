@@ -217,3 +217,11 @@
 		border-radius: 4px;
 	}
 }
+
+/* Extras */
+
+.taglib-discussion {
+	.lfr-discussion-message {
+		@include word-break(break-all);
+	}
+}

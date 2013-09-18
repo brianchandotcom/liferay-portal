@@ -555,12 +555,6 @@ public class LayoutImporter {
 				plid = layout.getPlid();
 			}
 
-			layout = LayoutUtil.fetchByPrimaryKey(plid);
-
-			if ((layout == null) && !group.isCompany()) {
-				continue;
-			}
-
 			portletDataContext.setPlid(plid);
 			portletDataContext.setOldPlid(oldPlid);
 
@@ -585,7 +579,7 @@ public class LayoutImporter {
 				companyId, portletId, parameterMap, portletDataElement);
 
 			try {
-				if ((layout != null) && !group.isCompany()) {
+				if (layout != null) {
 					portletPreferencesGroupId = layout.getGroupId();
 				}
 

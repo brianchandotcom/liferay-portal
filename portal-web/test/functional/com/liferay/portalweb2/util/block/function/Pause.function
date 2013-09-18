@@ -1,0 +1,5 @@
+<definition>
+	<command name="pause">
+		<execute selenium="pause" />
+	</command>
+</definition>

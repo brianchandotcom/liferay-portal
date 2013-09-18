@@ -1,0 +1,4 @@
+<definition>
+	<execute test-case-command="CPRolesCPMessageboards#ViewMessageBoardsPortletRegRole" />
+	<execute test-case-command="CPRolesCPMessageboards#ViewMessageBoardsPortletSiteRole" />
+</definition>

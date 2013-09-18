@@ -1,6 +1,16 @@
 <definition>
 	<execute test-suite="CPPortalSettingsP5" />
 
+	<execute test-suite="CPRolesCPBlogsP5" />
+
+	<execute test-suite="CPRolesCPDocumentsandmediaP5" />
+
+	<execute test-suite="CPRolesCPMessageboardsP5" />
+
+	<execute test-suite="CPRolesCPWebcontentP5" />
+
+	<execute test-suite="CPRolesCPWikiP5" />
+
 	<execute test-suite="CPRolesPGBlogsP5" />
 
 	<execute test-suite="CPUsergroupsP5" />

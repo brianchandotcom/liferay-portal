@@ -1,0 +1,4 @@
+<definition>
+	<execute test-case-command="CPRolesCPBlogs#ViewBlogsPortletRegRole" />
+	<execute test-case-command="CPRolesCPBlogs#ViewBlogsPortletSiteRole" />
+</definition>

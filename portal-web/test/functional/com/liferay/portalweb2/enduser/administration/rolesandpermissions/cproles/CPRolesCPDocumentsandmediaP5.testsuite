@@ -1,0 +1,4 @@
+<definition>
+	<execute test-case-command="CPRolesCPDocumentsandmedia#ViewDocumentsAndMediaPortletRegRole" />
+	<execute test-case-command="CPRolesCPDocumentsandmedia#ViewDocumentsAndMediaPortletSiteRole" />
+</definition>

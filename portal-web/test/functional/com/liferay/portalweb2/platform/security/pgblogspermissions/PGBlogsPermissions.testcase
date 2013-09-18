@@ -25,7 +25,7 @@
 	</tear-down>
 
 	<command name="ViewBlogsPortletAsGuestPG">
-		<execute macro="BlogsEntry#viewPortletPG">
+		<execute macro="BlogsPortlet#viewPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
@@ -35,6 +35,6 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="BlogsEntry#viewPortletNoPermissionPG" />
+		<execute macro="BlogsPortlet#viewNoPermissionPG" />
 	</command>
 </definition>

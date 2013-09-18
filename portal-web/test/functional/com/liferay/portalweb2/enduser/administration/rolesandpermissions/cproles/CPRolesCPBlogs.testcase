@@ -1,0 +1,170 @@
+<definition>
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<tear-down>
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="PortalSettings#tearDownCP" />
+
+		<execute macro="User#tearDownCP" />
+
+		<execute macro="Role#tearDownCP" />
+
+		<execute macro="Organization#tearDownCP" />
+
+		<execute macro="Site#tearDownCP" />
+
+		<execute macro="Page#tearDownPG" />
+	</tear-down>
+
+	<command name="ViewBlogsPortletRegRole">
+		<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_BLOGS_GENERAL_ACCESS_IN_SITE_ADMINISTRATION" />
+		<var name="permissionDefinitionValue" value="Access in Site Administration" />
+		<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_BLOGS" />
+		<var name="permissionNavigationValue" value="Blogs" />
+		<var name="portletName" value="Blogs" />
+		<var name="roleName" value="Regrole Name" />
+		<var name="userEmailAddress" value="userea@liferay.com" />
+		<var name="userFirstName" value="userfn" />
+		<var name="userLastName" value="userln" />
+		<var name="userScreenName" value="usersn" />
+
+		<execute macro="Permissions#setUpRegRoleLoginUserCP">
+			<var name="portletName" value="${portletName}" />
+			<var name="roleName" value="${roleName}" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#openURL" />
+		<execute action="Dockbar#assertElementNotPresent" locator-key1="ADMIN" />
+
+		<execute macro="Permissions#definePermissionLoginUserCP">
+			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
+			<var name="permissionDefinitionValue" value="${permissionDefinitionValue}" />
+			<var name="permissionNavigationKey" value="${permissionNavigationKey}" />
+			<var name="permissionNavigationValue" value="${permissionNavigationValue}" />
+			<var name="roleName" value="${roleName}" />
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="${portletName}" />
+		</execute>
+
+		<execute macro="BlogsPortlet#viewNoPermissionCP" />
+
+		<execute macro="Permissions#removePermissionLoginUserCP">
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_PAGES_SITE_PAGES_SITE_GO_TO_SITE_ADMINISTRATION" />
+			<var name="permissionDefinitionValue" value="Go to Site Administration" />
+			<var name="permissionNavigationKey" value="SITE_ADMIN_PAGES_SITE_PAGES" />
+			<var name="permissionNavigationValue" value="Site Pages" />
+			<var name="roleName" value="${roleName}" />
+			<var name="userLoginEmailAddress" value="test@liferay.com" />
+			<var name="userLoginFullName" value="Test Test" />
+		</execute>
+
+		<execute macro="Permissions#removePermissionLoginUserCP">
+			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
+			<var name="permissionDefinitionValue" value="${permissionDefinitionValue}" />
+			<var name="permissionNavigationKey" value="${permissionNavigationKey}" />
+			<var name="permissionNavigationValue" value="${permissionNavigationValue}" />
+			<var name="roleName" value="${roleName}" />
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
+		</execute>
+
+		<execute macro="Page#openURL" />
+		<execute action="Dockbar#assertElementNotPresent" locator-key1="ADMIN" />
+	</command>
+
+	<command name="ViewBlogsPortletSiteRole">
+		<var name="pageName" value="Blogs Page" />
+		<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_BLOGS_GENERAL_ACCESS_IN_SITE_ADMINISTRATION" />
+		<var name="permissionDefinitionValue" value="Access in Site Administration" />
+		<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_BLOGS" />
+		<var name="permissionNavigationValue" value="Blogs" />
+		<var name="portletName" value="Blogs" />
+		<var name="roleName" value="Roles Siterole Name" />
+		<var name="roleType" value="Site" />
+		<var name="siteName" value="Site Name" />
+		<var name="sitePageType" value="Public" />
+		<var name="userEmailAddress" value="userea@liferay.com" />
+		<var name="userFirstName" value="userfn" />
+		<var name="userLastName" value="userln" />
+		<var name="userScreenName" value="usersn" />
+
+		<execute macro="Permissions#setUpSiteRoleLoginUserCP">
+			<var name="pageName" value="${pageName}" />
+			<var name="portletName" value="${portletName}" />
+			<var name="roleName" value="${roleName}" />
+			<var name="roleType" value="${roleType}" />
+			<var name="siteName" value="${siteName}" />
+			<var name="sitePageType" value="${sitePageType}" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="pageType" value="Site" />
+		</execute>
+
+		<execute action="Dockbar#assertElementNotPresent" locator-key1="ADMIN" />
+
+		<execute macro="Permissions#definePermissionLoginUserCP">
+			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
+			<var name="permissionDefinitionValue" value="${permissionDefinitionValue}" />
+			<var name="permissionNavigationKey" value="${permissionNavigationKey}" />
+			<var name="permissionNavigationValue" value="${permissionNavigationValue}" />
+			<var name="roleName" value="${roleName}" />
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="pageType" value="Site" />
+			<var name="portletName" value="${portletName}" />
+		</execute>
+
+		<execute macro="BlogsPortlet#viewNoPermissionCP" />
+
+		<execute macro="Permissions#removePermissionLoginUserCP">
+			<var name="permissionDefinitionKey" value="SITE_ADMIN_PAGES_SITE_PAGES_SITE_GO_TO_SITE_ADMINISTRATION" />
+			<var name="permissionDefinitionValue" value="Go to Site Administration" />
+			<var name="permissionNavigationKey" value="SITE_ADMIN_PAGES_SITE_PAGES" />
+			<var name="permissionNavigationValue" value="Site Pages" />
+			<var name="roleName" value="${roleName}" />
+			<var name="userLoginEmailAddress" value="test@liferay.com" />
+			<var name="userLoginFullName" value="Test Test" />
+		</execute>
+
+		<execute macro="Permissions#removePermissionLoginUserCP">
+			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
+			<var name="permissionDefinitionValue" value="${permissionDefinitionValue}" />
+			<var name="permissionNavigationKey" value="${permissionNavigationKey}" />
+			<var name="permissionNavigationValue" value="${permissionNavigationValue}" />
+			<var name="roleName" value="${roleName}" />
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="pageType" value="Site" />
+		</execute>
+
+		<execute action="Dockbar#assertElementNotPresent" locator-key1="ADMIN" />
+	</command>
+</definition>

@@ -88,6 +88,8 @@
 
 <#assign group_id = theme_display.getScopeGroupId() />
 
+<#assign redirect_login = portalUtil.isLoginRedirectRequired(request) />
+
 <#-- ---------- URLs ---------- -->
 
 <#assign show_add_content = theme_display.isShowAddContentIcon() />

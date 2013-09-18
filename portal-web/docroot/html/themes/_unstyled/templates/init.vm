@@ -88,6 +88,8 @@
 
 #set ($group_id = $theme_display.getScopeGroupId())
 
+#set ($redirect_login = $portalUtil.isLoginRedirectRequired($request))
+
 ## ---------- URLs ---------- ##
 
 #set ($show_add_content = $theme_display.isShowAddContentIcon())

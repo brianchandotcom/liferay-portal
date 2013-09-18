@@ -1,0 +1,24 @@
+<definition>
+	<execute test-case-command="CPRolesPGBlogs#AddBlogsEntryNoGuestRole" />
+	<execute test-case-command="CPRolesPGBlogs#AddBlogsEntryOrgRoleInline" />
+	<execute test-case-command="CPRolesPGBlogs#AddBlogsEntryRegRoleInline" />
+	<execute test-case-command="CPRolesPGBlogs#AddBlogsEntrySiteRoleInline" />
+	<execute test-case-command="CPRolesPGBlogs#AddBlogsEntrySiteTeamRoleInline" />
+ 	<execute test-case-command="CPRolesPGBlogs#DeleteBlogsEntryNoGuestRole" />
+ 	<execute test-case-command="CPRolesPGBlogs#DeleteBlogsEntryOwnerRoleInline" />
+	<execute test-case-command="CPRolesPGBlogs#DeleteBlogsEntryOrgRoleInline" />
+	<execute test-case-command="CPRolesPGBlogs#DeleteBlogsEntryRegRoleInline" />
+	<execute test-case-command="CPRolesPGBlogs#DeleteBlogsEntrySiteRoleInline" />
+	<execute test-case-command="CPRolesPGBlogs#DeleteBlogsEntrySiteTeamRoleInline" />
+	<execute test-case-command="CPRolesPGBlogs#EditBlogsEntryOwnerRoleInline" />
+	<execute test-case-command="CPRolesPGBlogs#SubcribeBlogsRegRole" />
+	<execute test-case-command="CPRolesPGBlogs#SubcribeBlogsRegRoleInline" />
+	<execute test-case-command="CPRolesPGBlogs#SubcribeBlogsSiteRole" />
+	<execute test-case-command="CPRolesPGBlogs#SubcribeBlogsSiteRoleInline" />
+	<execute test-case-command="CPRolesPGBlogs#ViewBlogsEntryPermissionsOwnerRoleInline" />
+	<execute test-case-command="CPRolesPGBlogs#ViewBlogsPortletNoGuestRole" />
+	<execute test-case-command="CPRolesPGBlogs#ViewBlogsPermissionsRegRole" />
+	<execute test-case-command="CPRolesPGBlogs#ViewBlogsPermissionsRegRoleInline" />
+	<execute test-case-command="CPRolesPGBlogs#ViewBlogsPermissionsSiteRole" />
+	<execute test-case-command="CPRolesPGBlogs#ViewBlogsPermissionsSiteRoleInline" />
+</definition>

@@ -69,19 +69,21 @@ public class SPIAgentRequest extends SPIAgentSerializable {
 		if ((contentType != null) &&
 			contentType.startsWith(ContentTypes.MULTIPART)) {
 
+			HttpServletRequest currentRequest = request;
+
 			UploadServletRequest uploadServletRequest = null;
 
-			while (request instanceof HttpServletRequestWrapper) {
-				if (request instanceof UploadServletRequest) {
-					uploadServletRequest = (UploadServletRequest)request;
+			while (currentRequest instanceof HttpServletRequestWrapper) {
+				if (currentRequest instanceof UploadServletRequest) {
+					uploadServletRequest = (UploadServletRequest)currentRequest;
 
 					break;
 				}
 
 				HttpServletRequestWrapper httpServletRequestWrapper =
-					(HttpServletRequestWrapper)request;
+					(HttpServletRequestWrapper)currentRequest;
 
-				request =
+				currentRequest =
 					(HttpServletRequest)httpServletRequestWrapper.getRequest();
 			}
 
@@ -95,25 +97,28 @@ public class SPIAgentRequest extends SPIAgentSerializable {
 
 				try {
 					StreamUtil.transfer(
-						request.getInputStream(), fileOutputStream, false);
+						currentRequest.getInputStream(), fileOutputStream,
+						false);
 				}
 				finally {
 					fileOutputStream.close();
 				}
+
+				uploadServletRequest = new UploadServletRequestImpl(
+					new AgentHttpServletRequestWrapper(currentRequest));
 			}
-			else {
-				Map<String, FileItem[]> multipartParameterMap =
-					uploadServletRequest.getMultipartParameterMap();
-				Map<String, List<String>> regularParameterMap =
-					uploadServletRequest.getRegularParameterMap();
 
-				if (!multipartParameterMap.isEmpty()) {
-					this.multipartParameterMap = multipartParameterMap;
-				}
+			Map<String, FileItem[]> multipartParameterMap =
+				uploadServletRequest.getMultipartParameterMap();
+			Map<String, List<String>> regularParameterMap =
+				uploadServletRequest.getRegularParameterMap();
 
-				if (!regularParameterMap.isEmpty()) {
-					this.regularParameterMap = regularParameterMap;
-				}
+			if (!multipartParameterMap.isEmpty()) {
+				this.multipartParameterMap = multipartParameterMap;
+			}
+
+			if (!regularParameterMap.isEmpty()) {
+				this.regularParameterMap = regularParameterMap;
 			}
 		}
 

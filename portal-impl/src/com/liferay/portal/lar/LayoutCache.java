@@ -18,6 +18,7 @@ import com.liferay.portal.NoSuchRoleException;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Organization;
@@ -159,8 +160,9 @@ public class LayoutCache {
 
 		Group group = GroupLocalServiceUtil.getGroup(groupId);
 
-		roles = ResourceActionsUtil.getRoles(
-			group.getCompanyId(), group, resourceName, null);
+		roles = ListUtil.copy(
+			ResourceActionsUtil.getRoles(
+				group.getCompanyId(), group, resourceName, null));
 
 		List<Team> teams = TeamLocalServiceUtil.getGroupTeams(groupId);
 

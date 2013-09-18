@@ -295,8 +295,8 @@ portletURL.setParameter("rootNodeName", rootNodeName);
 																			disabled="<%= false %>"
 																			firstDayOfWeek="<%= startCalendar.getFirstDayOfWeek() - 1 %>"
 																			monthParam="startDateMonth"
-																			monthValue="<%= startCalendar.get(Calendar.MONTH) %>"
-																			name="startDate"
+																			monthValue="<%= yesterday.get(Calendar.MONTH) %>"
+																			name="startDateInput"
 																			yearParam="startDateYear"
 																			yearValue="<%= startCalendar.get(Calendar.YEAR) %>"
 																		/>
@@ -312,8 +312,8 @@ portletURL.setParameter("rootNodeName", rootNodeName);
 																			hourParam='<%= "startDateHour" %>'
 																			hourValue="<%= startCalendar.get(Calendar.HOUR) %>"
 																			minuteParam='<%= "startDateMinute" %>'
-																			minuteValue="<%= startCalendar.get(Calendar.MINUTE) %>"
-																			name="startTime"
+																			minuteValue="<%= yesterday.get(Calendar.MINUTE) %>"
+																			name="startTimeInput"
 																		/>
 																	</aui:fieldset>
 																</li>
@@ -326,8 +326,8 @@ portletURL.setParameter("rootNodeName", rootNodeName);
 																			disabled="<%= false %>"
 																			firstDayOfWeek="<%= endCalendar.getFirstDayOfWeek() - 1 %>"
 																			monthParam="endDateMonth"
-																			monthValue="<%= endCalendar.get(Calendar.MONTH) %>"
-																			name="endDate"
+																			monthValue="<%= today.get(Calendar.MONTH) %>"
+																			name="endDateInput"
 																			yearParam="endDateYear"
 																			yearValue="<%= endCalendar.get(Calendar.YEAR) %>"
 																		/>
@@ -343,8 +343,8 @@ portletURL.setParameter("rootNodeName", rootNodeName);
 																			hourParam='<%= "endDateHour" %>'
 																			hourValue="<%= endCalendar.get(Calendar.HOUR) %>"
 																			minuteParam='<%= "endDateMinute" %>'
-																			minuteValue="<%= endCalendar.get(Calendar.MINUTE) %>"
-																			name="endTime"
+																			minuteValue="<%= today.get(Calendar.MINUTE) %>"
+																			name="endTimeInput"
 																		/>
 																	</aui:fieldset>
 																</li>

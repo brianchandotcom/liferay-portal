@@ -19,14 +19,12 @@ import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.security.SecureRandom;
 
-import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author Shuyang Zhou
- * @author Samuel Kong
  */
 public class SecureRandomUtil {
 
@@ -81,20 +79,6 @@ public class SecureRandomUtil {
 		return (int)_reload();
 	}
 
-	public static int nextInt(int n) throws IllegalArgumentException {
-		if (n <= 0) {
-			throw new IllegalArgumentException("n must be positive");
-		}
-
-		int x = nextInt() % n;
-
-		if (x >= 0) {
-			return x;
-		}
-
-		return x + n;
-	}
-
 	public static long nextLong() {
 		int index = _index.getAndAdd(8);
 
@@ -103,75 +87,6 @@ public class SecureRandomUtil {
 		}
 
 		return _reload();
-	}
-
-	public static void randomize(char[] array) {
-		int length = array.length;
-
-		for (int i = 0; i < length - 1; i++) {
-			int x = nextInt(length);
-			char y = array[i];
-
-			array[i] = array[i + x];
-			array[i + x] = y;
-
-			length--;
-		}
-	}
-
-	public static void randomize(int[] array) {
-		int length = array.length;
-
-		for (int i = 0; i < length - 1; i++) {
-			int x = nextInt(length);
-			int y = array[i];
-
-			array[i] = array[i + x];
-			array[i + x] = y;
-
-			length--;
-		}
-	}
-
-	public static void randomize(List<Object> list) {
-		int size = list.size();
-
-		for (int i = 0; i <= size; i++) {
-			Object obj = list.get(i);
-
-			int j = nextInt(size);
-
-			list.set(i, list.get(i + j));
-			list.set(i + j, obj);
-
-			size--;
-		}
-	}
-
-	public static void randomize(Object[] array) {
-		int length = array.length;
-
-		for (int i = 0; i < length - 1; i++) {
-			int x = nextInt(length);
-			Object y = array[i];
-
-			array[i] = array[i + x];
-			array[i + x] = y;
-
-			length--;
-		}
-	}
-
-	public static String randomize(String s) {
-		if (s == null) {
-			return null;
-		}
-
-		char[] array = s.toCharArray();
-
-		randomize(array);
-
-		return new String(array);
 	}
 
 	private static long _reload() {

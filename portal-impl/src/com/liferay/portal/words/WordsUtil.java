@@ -121,7 +121,7 @@ public class WordsUtil {
 	}
 
 	private String _getRandomWord() {
-		int pos = SecureRandomUtil.nextInt(_dictionaryList.size());
+		int pos = Math.abs(SecureRandomUtil.nextInt()) % _dictionaryList.size();
 
 		return _dictionaryList.get(pos);
 	}

@@ -185,6 +185,12 @@
 		</default>
 	</command>
 
+	<command name="pause">
+		<default>
+			<execute function="Pause#pause" />
+		</default>
+	</command>
+
 	<command name="select">
 		<default>
 			<execute function="Select#select" />

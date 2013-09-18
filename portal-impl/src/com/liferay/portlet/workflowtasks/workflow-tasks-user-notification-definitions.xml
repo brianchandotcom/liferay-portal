@@ -4,7 +4,7 @@
 <user-notification-definitions>
 	<definition>
 		<notification-type>${com.liferay.portal.kernel.workflow.WorkflowConstants.TYPE_ASSIGN}</notification-type>
-		<description>when-a-workflow-task-is-assigned-to-you</description>
+		<description>a-workflow-task-is-assigned-to-you</description>
 		<delivery-type>
 			<name>email</name>
 			<type>${com.liferay.portal.model.UserNotificationDeliveryConstants.TYPE_EMAIL}</type>
@@ -20,7 +20,7 @@
 	</definition>
 	<definition>
 		<notification-type>${com.liferay.portal.kernel.workflow.WorkflowConstants.TYPE_COMPLETE}</notification-type>
-		<description>when-a-workflow-task-is-completed</description>
+		<description>a-workflow-task-is-completed</description>
 		<delivery-type>
 			<name>email</name>
 			<type>${com.liferay.portal.model.UserNotificationDeliveryConstants.TYPE_EMAIL}</type>

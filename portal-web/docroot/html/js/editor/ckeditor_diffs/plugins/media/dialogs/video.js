@@ -1,34 +1,18 @@
 CKEDITOR.dialog.add(
 	'video',
 	function(editor) {
-		var TPL_SCRIPT_PREFIX = 'AUI().use(' +
-								'	"aui-base", "aui-video",' +
-								'	function(A) {' +
-								'		var videoId = A.guid();' +
-								'		var videoDivNode = A.one(".ckvideo-no-id");' +
-								'		videoDivNode.attr("id", videoId);' +
-								'		videoDivNode.removeClass("ckvideo-no-id");' +
-								'		var videoConfig = {';
-
-		var TPL_SCRIPT =		'			boundingBox: "#" + videoId,' +
-								'			height: {height},' +
-								'			ogvUrl: "{ogvUrl}",' +
-								'			poster: "{poster}",' +
-								'			url: "{url}",' +
-								'			width: {width}';
-
-		var TPL_SCRIPT_SUFFIX = '		};' +
-								'		new A.Video(videoConfig).render();' +
-								'	}' +
-								');';
+		var TPL_SCRIPT = 'boundingBox: "#" + mediaId,' +
+						'height: {height},' +
+						'ogvUrl: "{ogvUrl}",' +
+						'poster: "{poster}",' +
+						'url: "{url}",' +
+						'width: {width}';
 
 		function commitValue(videoNode, extraStyles) {
 			var instance = this;
 
 			var id = instance.id;
 			var value = instance.getValue();
-
-			var scriptNode = videoNode.getChild(1);
 
 			var scriptTPL = null;
 			var textScript = null;
@@ -66,7 +50,7 @@ CKEDITOR.dialog.add(
 					}
 				);
 
-				scriptNode.setText(TPL_SCRIPT_PREFIX + textScript + TPL_SCRIPT_SUFFIX);
+				editor.plugins.media.applyMediaScript(videoNode, 'video', textScript);
 			}
 
 			if (value) {
@@ -88,21 +72,19 @@ CKEDITOR.dialog.add(
 
 					videoNode.setAttribute('data-' + id, value);
 
-					if (scriptNode && scriptNode.getText()) {
-						scriptTPL = new CKEDITOR.template(TPL_SCRIPT);
+					scriptTPL = new CKEDITOR.template(TPL_SCRIPT);
 
-						textScript = scriptTPL.output(
-							{
-								height: height,
-								ogvUrl: videoOgvUrl,
-								poster: videoPoster,
-								url: videoUrl,
-								width: width
-							}
-						);
+					textScript = scriptTPL.output(
+						{
+							height: height,
+							ogvUrl: videoOgvUrl,
+							poster: videoPoster,
+							url: videoUrl,
+							width: width
+						}
+					);
 
-						scriptNode.setText(TPL_SCRIPT_PREFIX + textScript + TPL_SCRIPT_SUFFIX);
-					}
+					editor.plugins.media.applyMediaScript(videoNode, 'video', textScript);
 				}
 			}
 		}
@@ -199,60 +181,13 @@ CKEDITOR.dialog.add(
 			onShow: function() {
 				var instance = this;
 
-				instance.fakeImage = null;
-				instance.videoNode = null;
-
-				var fakeImage = instance.getSelectedElement();
-
-				if (fakeImage && fakeImage.data('cke-real-element-type') && fakeImage.data('cke-real-element-type') === 'video') {
-					instance.fakeImage = fakeImage;
-
-					var videoNode = editor.restoreRealElement(fakeImage);
-
-					instance.videoNode = videoNode;
-
-					instance.setupContent(videoNode);
-				}
-				else {
-					instance.setupContent(null);
-				}
+				editor.plugins.media.onShowCallback(instance, editor, 'video');
 			},
+
 			onOk: function() {
 				var instance = this;
 
-				var STR_DIV = 'div';
-
-				var extraStyles = {};
-
-				var divNode = editor.document.createElement(STR_DIV);
-
-				divNode.setAttribute('class', 'liferayckevideo video-container');
-
-				var boundingBoxTmp = editor.document.createElement(STR_DIV);
-
-				boundingBoxTmp.setAttribute('class', 'ckvideo-no-id');
-
-				var scriptTmp = editor.document.createElement('script');
-
-				scriptTmp.setAttribute('type', 'text/javascript');
-
-				divNode.append(boundingBoxTmp);
-				divNode.append(scriptTmp);
-
-				instance.commitContent(divNode, extraStyles);
-
-				var newFakeImage = editor.createFakeElement(divNode, 'liferay_cke_video', 'video', false);
-
-				newFakeImage.setStyles(extraStyles);
-
-				if (instance.fakeImage) {
-					newFakeImage.replace(instance.fakeImage);
-
-					editor.getSelection().selectElement(newFakeImage);
-				}
-				else {
-					editor.insertElement(newFakeImage);
-				}
+				editor.plugins.media.onOkCallback(instance, editor, 'video');
 			}
 		};
 	}

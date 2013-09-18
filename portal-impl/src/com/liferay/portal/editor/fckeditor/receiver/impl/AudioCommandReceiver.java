@@ -14,27 +14,27 @@
 
 package com.liferay.portal.editor.fckeditor.receiver.impl;
 
+import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.servlet.ServletResponseConstants;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portlet.documentlibrary.util.VideoProcessorUtil;
+import com.liferay.portlet.documentlibrary.util.AudioProcessorUtil;
 
 import java.util.Set;
 
 /**
  * @author Juan Gonzalez
- * @author Roberto Díaz
  */
-public class VideoCommandReceiver extends BaseFileEntryCommandReceiver {
+public class AudioCommandReceiver extends BaseFileEntryCommandReceiver {
 
 	@Override
 	protected String[] getFileEntryMimeTypes() {
-		Set<String> videoMimeTypes = VideoProcessorUtil.getVideoMimeTypes();
+		Set<String> audioMimeTypes = AudioProcessorUtil.getAudioMimeTypes();
 
-		if (videoMimeTypes == null) {
+		if (audioMimeTypes == null) {
 			return null;
 		}
 
-		return ArrayUtil.toStringArray(videoMimeTypes.toArray());
+		return ArrayUtil.toStringArray(audioMimeTypes.toArray());
 	}
 
 	@Override
@@ -44,10 +44,15 @@ public class VideoCommandReceiver extends BaseFileEntryCommandReceiver {
 
 	@Override
 	protected int getXugglerDisabledFileUploadReturnValue() {
-		return ServletResponseConstants.SC_VIDEO_PREVIEW_DISABLED_EXCEPTION;
+		return ServletResponseConstants.SC_AUDIO_PREVIEW_DISABLED_EXCEPTION;
+	}
+
+	@Override
+	protected boolean hasFileEntryPreview(FileVersion fileVersion) {
+		return AudioProcessorUtil.hasAudio(fileVersion);
 	}
 
 	private static final String _UNAVAIABLE_PREVIEW_ERROR_MESSAGE =
-		"the-video-preview-is-not-yet-ready.-please-try-again-later";
+		"the-audio-preview-is-not-yet-ready.-please-try-again-later";
 
 }

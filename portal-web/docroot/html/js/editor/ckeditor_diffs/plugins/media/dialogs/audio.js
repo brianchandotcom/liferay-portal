@@ -1,10 +1,9 @@
 CKEDITOR.dialog.add(
 	'audio',
 	function(editor) {
-
-		var TPL_SCRIPT =		'			boundingBox: "#" + mediaId,' +
-								'			oggUrl: "{oggUrl}",' +
-								'			url: "{url}"';
+		var TPL_SCRIPT = 'boundingBox: "#" + mediaId,' +
+						'oggUrl: "{oggUrl}",' +
+						'url: "{url}"';
 
 		function commitValue(audioNode) {
 			var instance = this;
@@ -104,7 +103,7 @@ CKEDITOR.dialog.add(
 			title: Liferay.Language.get('audio-properties'),
 
 			onShow: function() {
-				var instance = this;				
+				var instance = this;
 
 				editor.plugins.media.onShowCallback(instance, editor, 'audio');
 			},

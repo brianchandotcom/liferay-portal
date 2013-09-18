@@ -1,12 +1,12 @@
 CKEDITOR.dialog.add(
 	'video',
 	function(editor) {
-		var TPL_SCRIPT =		'			boundingBox: "#" + mediaId,' +
-								'			height: {height},' +
-								'			ogvUrl: "{ogvUrl}",' +
-								'			poster: "{poster}",' +
-								'			url: "{url}",' +
-								'			width: {width}';
+		var TPL_SCRIPT = 'boundingBox: "#" + mediaId,' +
+						'height: {height},' +
+						'ogvUrl: "{ogvUrl}",' +
+						'poster: "{poster}",' +
+						'url: "{url}",' +
+						'width: {width}';
 
 		function commitValue(videoNode, extraStyles) {
 			var instance = this;

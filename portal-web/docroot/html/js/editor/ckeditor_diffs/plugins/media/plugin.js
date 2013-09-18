@@ -6,24 +6,24 @@ CKEDITOR.plugins.add(
 	'media',
 	{
 		TPL_SCRIPT_PREFIX_USE: 'AUI().use(' +
-								'	"aui-base", "aui-{dialog}",',
-								
-		TPL_SCRIPT_PREFIX_FUNCTION: '	function(A) {',
-		
-		TPL_SCRIPT_PREFIX_LOGIC: 	'		var mediaId = A.guid();' +
-									'		var mediaDivNode = A.one(".ck{dialog}-no-id");' +
-									'		mediaDivNode.attr("id", mediaId);' +
-									'		mediaDivNode.removeClass("ck{dialog}-no-id");',
-										
-		TPL_SCRIPT_PREFIX_CONFIG:	'		var mediaConfig = {',
-		
-		TPL_SCRIPT_SUFFIX_CONFIG:	'		};',
-		
-		TPL_SCRIPT_SUFFIX_RENDER:	'		new A.{mediaAUI}(mediaConfig).render();',
-		
-		TPL_SCRIPT_SUFFIX_END:		'	}' +
-									');',
-		
+								'"aui-base", "aui-{dialog}",',
+
+		TPL_SCRIPT_PREFIX_FUNCTION: 'function(A) {',
+
+		TPL_SCRIPT_PREFIX_LOGIC: 'var mediaId = A.guid();' +
+								'var mediaDivNode = A.one(".ck{dialog}-no-id");' +
+								'mediaDivNode.attr("id", mediaId);' +
+								'mediaDivNode.removeClass("ck{dialog}-no-id");',
+
+		TPL_SCRIPT_PREFIX_CONFIG: 'var mediaConfig = {',
+
+		TPL_SCRIPT_SUFFIX_CONFIG: '};',
+
+		TPL_SCRIPT_SUFFIX_RENDER: 'new A.{mediaAUI}(mediaConfig).render();',
+
+		TPL_SCRIPT_SUFFIX_END: '}' +
+								');',
+
 		afterInit: function(editor) {
 			var dataProcessor = editor.dataProcessor;
 
@@ -127,21 +127,21 @@ CKEDITOR.plugins.add(
 			var instance = this;
 
 			var dialogReplace = { dialog:dialog	};
-			
+
 			var mediaAUI = 'Audio';
-			
+
 			if (dialog === 'video') {
 				mediaAUI = 'Video';
 			}
-			
+
 			var scriptUse = new CKEDITOR.template(instance.TPL_SCRIPT_PREFIX_USE);
 
 			var textScriptUse = scriptUse.output(dialogReplace);
-			
+
 			var scriptLogic = new CKEDITOR.template(instance.TPL_SCRIPT_PREFIX_LOGIC);
 
 			var textScriptLogic = scriptLogic.output(dialogReplace);
-			
+
 			var scriptRender = new CKEDITOR.template(instance.TPL_SCRIPT_SUFFIX_RENDER);
 
 			var textScriptRender = scriptRender.output(
@@ -149,10 +149,10 @@ CKEDITOR.plugins.add(
 						mediaAUI:  mediaAUI
 					}
 			);
-			
-			instance.replaceScriptContent(mediaNode, textScriptUse + instance.TPL_SCRIPT_PREFIX_FUNCTION + textScriptLogic + instance.TPL_SCRIPT_PREFIX_CONFIG + configText + instance.TPL_SCRIPT_SUFFIX_CONFIG + textScriptRender + instance.TPL_SCRIPT_SUFFIX_END);			
+
+			instance.replaceScriptContent(mediaNode, textScriptUse + instance.TPL_SCRIPT_PREFIX_FUNCTION + textScriptLogic + instance.TPL_SCRIPT_PREFIX_CONFIG + configText + instance.TPL_SCRIPT_SUFFIX_CONFIG + textScriptRender + instance.TPL_SCRIPT_SUFFIX_END);
 		},
-		
+
 		getPlaceholderCss: function() {
 			var instance = this;
 
@@ -337,24 +337,20 @@ CKEDITOR.plugins.add(
 			var instance = this;
 
 			var extraStyles = {};
-			
-			var video = false;
-			
-			if (dialog === 'video') {
-				video = true;
-			}
+
+			var video = (dialog === 'video');
 
 			var containerCss = 'liferayckeaudio audio-container';
 			var nonProcessedClass = 'ckaudio-no-id';
-			
+
 			if (video) {
 				containerCss = 'liferayckevideo video-container';
 				nonProcessedClass = 'ckvideo-no-id';
 			}
-			
+
 			var divNode = instance.createDivStructure(editor, containerCss, nonProcessedClass);
 
-			if (video) {				
+			if (video) {
 				callerInstance.commitContent(divNode, extraStyles);
 			}
 			else {
@@ -362,11 +358,11 @@ CKEDITOR.plugins.add(
 			}
 
 			var fakeClass = 'liferay_cke_audio';
-			
+
 			if (video) {
 				fakeClass = 'liferay_cke_video';
 			}
-			
+
 			var newFakeImage = editor.createFakeElement(divNode, fakeClass, dialog, false);
 
 			if (video) {
@@ -382,7 +378,7 @@ CKEDITOR.plugins.add(
 				editor.insertElement(newFakeImage);
 			}
 		},
-		
+
 		onShowCallback: function(instance, editor, dialog) {
 			instance.fakeImage = null;
 

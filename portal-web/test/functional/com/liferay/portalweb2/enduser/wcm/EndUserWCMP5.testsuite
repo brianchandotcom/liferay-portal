@@ -3,6 +3,8 @@
 
 	<execute test-suite="CPSitesP5" />
 
+	<execute test-suite="CPWebcontentP5" />
+
 	<execute test-suite="PGStagingP5" />
 
 	<execute test-suite="PGWebcontentdisplayP5" />

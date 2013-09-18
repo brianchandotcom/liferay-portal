@@ -1,0 +1,7 @@
+<definition>
+	<execute test-case-command="CPWebcontent#AddWebContentDraft" />
+	<execute test-case-command="CPWebcontent#AddWebContentTitleEscapeCharacter" />
+	<execute test-case-command="CPWebcontent#DeleteWebContent" />
+	<execute test-case-command="CPWebcontent#DeleteWebContentTitleEscapeCharacter" />
+	<execute test-case-command="CPWebcontent#EditWebContent" />
+</definition>

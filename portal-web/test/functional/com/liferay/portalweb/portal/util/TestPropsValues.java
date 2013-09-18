@@ -76,6 +76,9 @@ public class TestPropsValues extends com.liferay.portal.util.TestPropsValues {
 	public static final boolean TEST_DATABASE_MINIMAL = GetterUtil.getBoolean(
 		TestPropsUtil.get("test.database.minimal"));
 
+	public static final boolean TESTING_CLASS_METHOD = GetterUtil.getBoolean(
+		TestPropsUtil.get("testing.class.method"));
+
 	public static final String[] THEME_IDS = StringUtil.split(
 		TestPropsUtil.get("theme.ids"));
 

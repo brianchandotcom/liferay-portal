@@ -1239,6 +1239,9 @@ public interface Portal {
 
 	public boolean isLayoutSitemapable(Layout layout);
 
+	public boolean isLoginRedirectNeeded(HttpServletRequest request)
+		throws SystemException;
+
 	public boolean isMethodGet(PortletRequest portletRequest);
 
 	public boolean isMethodPost(PortletRequest portletRequest);

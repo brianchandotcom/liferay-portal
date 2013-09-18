@@ -13,7 +13,7 @@ AUI().ready(
 			siteBreadcrumbs.plug(A.Hudcrumbs);
 		}
 
-		var signIn = A.one('li.sign-in a');
+		var signIn = A.one('li.sign-in:not([data-redirect="true"]) a');
 
 		if (signIn) {
 			signIn.plug(Liferay.SignInModal);

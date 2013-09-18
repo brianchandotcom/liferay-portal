@@ -25,6 +25,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author Shuyang Zhou
+ * @author Samuel Kong
  */
 public class SecureRandomUtil {
 
@@ -77,6 +78,20 @@ public class SecureRandomUtil {
 		}
 
 		return (int)_reload();
+	}
+
+	public static int nextInt(int n) throws IllegalArgumentException {
+		if (n <= 0) {
+			throw new IllegalArgumentException("n must be positive");
+		}
+
+		int x = nextInt() % n;
+
+		if (x >= 0) {
+			return x;
+		}
+
+		return x + n;
 	}
 
 	public static long nextLong() {

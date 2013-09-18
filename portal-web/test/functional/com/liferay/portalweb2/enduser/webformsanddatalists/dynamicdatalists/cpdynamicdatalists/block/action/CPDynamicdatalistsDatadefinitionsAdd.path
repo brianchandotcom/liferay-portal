@@ -264,7 +264,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FORM_FIELD_DELETE_ICON</td>
+	<td>FORM_FIELD_DELETE_ICON_1</td>
 	<td>xpath=(//button/i[@class='icon-trash'])[1]</td>
 	<td></td>
 </tr>

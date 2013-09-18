@@ -105,6 +105,7 @@ long assetClassPK = 0;
 			<c:if test="<%= !fileEntryTypes.isEmpty() %>">
 				<liferay-ui:panel collapsible="<%= true %>" cssClass="document-type" persistState="<%= true %>" title="document-type">
 					<aui:input name="fileEntryTypeId" type="hidden" value="<%= (fileEntryTypeId > 0) ? fileEntryTypeId : 0 %>" />
+					<aui:input name="defaultLanguageId" type="hidden" value="<%= themeDisplay.getLanguageId() %>" />
 
 					<div class="document-type-selector">
 

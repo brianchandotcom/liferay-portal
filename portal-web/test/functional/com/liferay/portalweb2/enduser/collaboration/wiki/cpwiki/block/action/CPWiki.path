@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PORTLET_TITLE</td>
+	<td>//h2[@id='cpPortletTitle']/span[@class='portlet-title-text']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADD_WIKI_BUTTON</td>
 	<td>//button[@id='_154_addNodeButton']</td>
 	<td></td>
@@ -44,6 +49,11 @@
 	<td></td>
 </tr>
 <!--WIKI_NODE_TABLE-->
+<tr>
+	<td>WIKI_NODE_TABLE</td>
+	<td>//div[@id='_154_ocerSearchContainer']//table</td>
+	<td></td>
+</tr>
 <tr>
 	<td>WIKI_NODE_TABLE_WIKI</td>
 	<td>//tr[contains(.,'${key_wikiNodeName}')]/td[1]/a</td>

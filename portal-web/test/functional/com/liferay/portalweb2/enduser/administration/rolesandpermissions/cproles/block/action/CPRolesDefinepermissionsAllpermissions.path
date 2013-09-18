@@ -48,10 +48,58 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--SITE_ADMIN_PAGES_SITE_PAGES_SITE-->
+<tr>
+	<td>SITE_ADMIN_PAGES_SITE_PAGES_SITE_GO_TO_SITE_ADMINISTRATION</td>
+	<td>//input[@value='com.liferay.portal.model.GroupVIEW_SITE_ADMINISTRATION']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SITE_ADMIN_CONTENT_WEB_CONTENT_GENERAL-->
+<tr>
+	<td>SITE_ADMIN_CONTENT_WEB_CONTENT_GENERAL</td>
+	<td>xpath=(//input[@name='_128_allRowIds'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_ADMIN_CONTENT_WEB_CONTENT_GENERAL_ACCESS_IN_SITE_ADMINISTRATION</td>
+	<td>//input[@value='15ACCESS_IN_CONTROL_PANEL']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_GENERAL-->
+<tr>
+	<td>SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_GENERAL</td>
+	<td>xpath=(//input[@name='_128_allRowIds'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_ADMIN_CONTENT_DOCUMENTS_AND_MEDIA_GENERAL_ACCESS_IN_SITE_ADMINISTRATION</td>
+	<td>//input[@value='20ACCESS_IN_CONTROL_PANEL']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--SITE_ADMIN_CONTENT_BLOGS_GENERAL-->
 <tr>
-	<td>SITE_ADMIN_CONTENT_BLOGS_GENERAL_CHECKBOX</td>
+	<td>SITE_ADMIN_CONTENT_BLOGS_GENERAL_ALL_CHECKBOX</td>
 	<td>xpath=(//input[@name='_128_allRowIds'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_ADMIN_CONTENT_BLOGS_GENERAL_ACCESS_IN_SITE_ADMINISTRATION</td>
+	<td>//input[@value='161ACCESS_IN_CONTROL_PANEL']</td>
 	<td></td>
 </tr>
 <tr>
@@ -134,6 +182,43 @@
 <tr>
 	<td>SITE_ADMIN_CONTENT_BLOGS_BLOGS_ENTRY_VIEW_CHECKBOX</td>
 	<td>//input[@value='com.liferay.portlet.blogs.model.BlogsEntryVIEW']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SITE_ADMIN_CONTENT_MESSAGE_BOARDS_GENERAL-->
+<tr>
+	<td>SITE_ADMIN_CONTENT_MESSAGE_BOARDS_GENERAL</td>
+	<td>xpath=(//input[@name='_128_allRowIds'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_ADMIN_CONTENT_MESSAGE_BOARDS_GENERAL_ACCESS_IN_SITE_ADMINISTRATION</td>
+	<td>//input[@value='162ACCESS_IN_CONTROL_PANEL']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SITE_ADMIN_CONTENT_WIKI_GENERAL-->
+<tr>
+	<td>SITE_ADMIN_CONTENT_WIKI_GENERAL</td>
+	<td>xpath=(//input[@name='_128_allRowIds'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_ADMIN_CONTENT_WIKI_GENERAL_ACCESS_IN_SITE_ADMINISTRATION</td>
+	<td>//input[@value='154ACCESS_IN_CONTROL_PANEL']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
 	<td></td>
 </tr>
 </tbody>

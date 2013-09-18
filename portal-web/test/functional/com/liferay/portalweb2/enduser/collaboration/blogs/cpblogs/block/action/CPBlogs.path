@@ -29,6 +29,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NAVBAR_CONTAINER</td>
+	<td>//div[@class='navbar ']//div[@class='container']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SUCCESS_MESSAGE</td>
 	<td>//div[@class='alert alert-success']</td>
 	<td></td>

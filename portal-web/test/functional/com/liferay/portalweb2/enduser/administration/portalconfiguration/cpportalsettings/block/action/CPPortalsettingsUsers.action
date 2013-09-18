@@ -6,6 +6,9 @@
 		<case locator-key1="DEFAULT_USER_ASSOCIATIONS_ORGANIZATION_SITES_HEADER">
 			<execute function="AssertTextEquals#assertPartialText" />
 		</case>
+		<case locator-key1="DEFAULT_USER_ASSOCIATIONS_ROLES_FIELD">
+			<execute function="Type#clickAtSendKeys" />
+		</case>
 		<case locator-key1="DEFAULT_USER_ASSOCIATIONS_ROLES_HEADER">
 			<execute function="AssertTextEquals#assertPartialText" />
 		</case>

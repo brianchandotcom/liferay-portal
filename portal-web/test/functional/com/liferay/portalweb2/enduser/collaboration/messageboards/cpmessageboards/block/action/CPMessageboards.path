@@ -19,6 +19,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PORTLET_TITLE</td>
+	<td>//h2[@id='cpPortletTitle']/span[@class='portlet-title-text']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVBAR_CONTAINER</td>
+	<td>//div[@class='navbar ']//div[@class='container']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADD_CATEGORY_BUTTON</td>
 	<td>//div[@class='category-buttons']/button[contains(.,'Add Category')]</td>
 	<td></td>

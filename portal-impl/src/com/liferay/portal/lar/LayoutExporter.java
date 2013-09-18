@@ -512,17 +512,6 @@ public class LayoutExporter {
 			Layout layout = LayoutLocalServiceUtil.fetchLayout(plid);
 
 			if (layout == null) {
-				if (!group.isCompany() &&
-					(plid <= LayoutConstants.DEFAULT_PLID)) {
-
-					continue;
-				}
-
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Assuming global scope because no layout was found");
-				}
-
 				layout = new LayoutImpl();
 
 				layout.setGroupId(groupId);

@@ -56,7 +56,7 @@
 
 		<execute action="CPPortalsettingsUsers#assertClick" locator-key1="DEFAULT_USER_ASSOCIATIONS_TAB" value1="Default User Associations" />
 		<execute action="CPPortalsettingsUsers#type" locator-key1="DEFAULT_USER_ASSOCIATIONS_ORGANIZATION_SITES_FIELD" value1="" />
-		<execute action="CPPortalsettingsUsers#type" locator-key1="DEFAULT_USER_ASSOCIATIONS_ROLES_FIELD" value1="Power User User" />
+		<execute action="CPPortalsettingsUsers#type" locator-key1="DEFAULT_USER_ASSOCIATIONS_ROLES_FIELD" value1="Power User\nUser" />
 		<execute action="CPPortalsettingsUsers#type" locator-key1="DEFAULT_USER_ASSOCIATIONS_SITES_FIELD" value1="" />
 		<execute action="CPPortalsettingsUsers#type" locator-key1="DEFAULT_USER_ASSOCIATIONS_USER_GROUPS_FIELD" value1="" />
 		<execute action="CPPortalsettingsUsers#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />

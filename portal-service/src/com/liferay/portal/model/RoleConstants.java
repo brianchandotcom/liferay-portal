@@ -69,6 +69,16 @@ public class RoleConstants {
 
 	public static final String TYPE_SITE_LABEL = "site";
 
+	public static final int[] TYPES_R = {TYPE_REGULAR};
+
+	public static final int[] TYPES_R_O = {TYPE_REGULAR, TYPE_ORGANIZATION};
+
+	public static final int[] TYPES_R_O_S = {
+		TYPE_REGULAR, TYPE_ORGANIZATION, TYPE_SITE
+	};
+
+	public static final int[] TYPES_R_S = {TYPE_REGULAR, TYPE_SITE};
+
 	public static final String USER = "User";
 
 	public static String getTypeLabel(int type) {

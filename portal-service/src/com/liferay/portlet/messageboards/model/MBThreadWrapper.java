@@ -1061,11 +1061,6 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	}
 
 	@Override
-	public com.liferay.portlet.messageboards.model.MBCategory getTrashContainer() {
-		return _mbThread.getTrashContainer();
-	}
-
-	@Override
 	public boolean hasLock(long userId) {
 		return _mbThread.hasLock(userId);
 	}

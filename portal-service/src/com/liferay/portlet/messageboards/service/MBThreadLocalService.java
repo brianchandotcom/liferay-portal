@@ -491,6 +491,11 @@ public interface MBThreadLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	public void moveDependentsToTrash(long groupId, long threadId,
+		long trashEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	public com.liferay.portlet.messageboards.model.MBThread moveThread(
 		long groupId, long categoryId, long threadId)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -512,6 +517,11 @@ public interface MBThreadLocalService extends BaseLocalService,
 
 	public com.liferay.portlet.messageboards.model.MBThread moveThreadToTrash(
 		long userId, com.liferay.portlet.messageboards.model.MBThread thread)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public void restoreDependentsFromTrash(long groupId, long threadId,
+		long trashEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -543,7 +553,7 @@ public interface MBThreadLocalService extends BaseLocalService,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portlet.messageboards.model.MBThread updateStatus(
-		long userId, long threadId, int status, int categoryStatus)
+		long userId, long threadId, int status)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

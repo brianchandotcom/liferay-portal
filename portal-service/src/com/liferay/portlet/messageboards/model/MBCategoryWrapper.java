@@ -943,11 +943,6 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	}
 
 	@Override
-	public com.liferay.portlet.messageboards.model.MBCategory getTrashContainer() {
-		return _mbCategory.getTrashContainer();
-	}
-
-	@Override
 	public boolean isRoot() {
 		return _mbCategory.isRoot();
 	}

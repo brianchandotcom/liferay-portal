@@ -235,7 +235,7 @@ public class MBCategoryServiceImpl extends MBCategoryServiceBaseImpl {
 			groupId, categoryId);
 
 		for (MBCategory category : categories) {
-			if (category.isInTrash() || category.isInTrashContainer()) {
+			if (category.isInTrash()) {
 				continue;
 			}
 

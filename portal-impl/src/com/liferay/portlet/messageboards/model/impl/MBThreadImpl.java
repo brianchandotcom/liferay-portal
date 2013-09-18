@@ -154,23 +154,6 @@ public class MBThreadImpl extends MBThreadBaseImpl {
 	}
 
 	@Override
-	public MBCategory getTrashContainer() {
-		try {
-			MBCategory category = MBCategoryLocalServiceUtil.getCategory(
-				getCategoryId());
-
-			if (category.isInTrash()) {
-				return category;
-			}
-
-			return category.getTrashContainer();
-		}
-		catch (Exception e) {
-			return null;
-		}
-	}
-
-	@Override
 	public boolean hasLock(long userId) {
 		try {
 			return LockLocalServiceUtil.hasLock(
@@ -180,16 +163,6 @@ public class MBThreadImpl extends MBThreadBaseImpl {
 		}
 
 		return false;
-	}
-
-	@Override
-	public boolean isInTrashContainer() {
-		if (getTrashContainer() != null) {
-			return true;
-		}
-		else {
-			return false;
-		}
 	}
 
 	@Override

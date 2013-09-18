@@ -42,7 +42,6 @@ import com.liferay.portlet.messageboards.service.MBDiscussionLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.persistence.MBCategoryActionableDynamicQuery;
 import com.liferay.portlet.messageboards.service.persistence.MBThreadActionableDynamicQuery;
-import com.liferay.portlet.messageboards.trash.MBThreadTrashRenderer;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -149,27 +148,6 @@ public class MBThreadIndexer extends BaseIndexer {
 		document.addKeyword("lastPostDate", thread.getLastPostDate().getTime());
 		document.addKeyword(
 			"participantUserIds", thread.getParticipantUserIds());
-
-		if (!thread.isInTrash() && thread.isInTrashContainer()) {
-			addTrashFields(
-				document, MBThread.class.getName(), thread.getThreadId(), null,
-				null, MBThreadTrashRenderer.TYPE);
-
-			String className = MBCategory.class.getName();
-			long classPK = thread.getCategoryId();
-
-			if (thread.isInTrashContainer()) {
-				MBCategory category = thread.getTrashContainer();
-
-				classPK = category.getCategoryId();
-			}
-
-			document.addKeyword(Field.ROOT_ENTRY_CLASS_NAME, className);
-			document.addKeyword(Field.ROOT_ENTRY_CLASS_PK, classPK);
-
-			document.addKeyword(
-				Field.STATUS, WorkflowConstants.STATUS_IN_TRASH);
-		}
 
 		return document;
 	}

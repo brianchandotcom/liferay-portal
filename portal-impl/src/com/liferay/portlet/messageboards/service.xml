@@ -119,6 +119,7 @@
 		<reference package-path="com.liferay.portlet.asset" entity="AssetTag" />
 		<reference package-path="com.liferay.portlet.expando" entity="ExpandoRow" />
 		<reference package-path="com.liferay.portlet.trash" entity="TrashEntry" />
+		<reference package-path="com.liferay.portlet.trash" entity="TrashVersion" />
 	</entity>
 	<entity name="MBDiscussion" human-name="message boards discussion" uuid="true" local-service="true" remote-service="false">
 
@@ -338,12 +339,6 @@
 			<finder-column name="classPK" />
 			<finder-column name="status" />
 		</finder>
-		<finder name="G_U_C_S" return-type="Collection">
-			<finder-column name="groupId" />
-			<finder-column name="userId" />
-			<finder-column name="categoryId" arrayable-operator="OR" />
-			<finder-column name="status" />
-		</finder>
 		<finder name="G_C_T_A" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="categoryId" />
@@ -533,6 +528,7 @@
 		<reference package-path="com.liferay.portlet.ratings" entity="RatingsStats" />
 		<reference package-path="com.liferay.portlet.social" entity="SocialActivity" />
 		<reference package-path="com.liferay.portlet.trash" entity="TrashEntry" />
+		<reference package-path="com.liferay.portlet.trash" entity="TrashVersion" />
 	</entity>
 	<entity name="MBThreadFlag" human-name="message boards thread flag" uuid="true" local-service="true" remote-service="false">
 

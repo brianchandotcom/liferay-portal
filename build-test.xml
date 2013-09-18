@@ -1133,30 +1133,30 @@
 
 	<target name="generate-tests">
 		<script classpathref="project.classpath" language="beanshell">
-			String testCase = "";
-			String testSuite = "";
+			String testCaseName = "";
+			String testSuiteName = "";
 
-			String testClass = project.getProperty("test.class");
+			String testSimpleClassName = project.getProperty("test.simple.class.name");
 
-			if (testClass.endsWith("TestCase")) {
-				testCase = testClass.replaceAll("TestCase", "");
+			if (testSimpleClassName.endsWith("TestCase")) {
+				testCaseName = testSimpleClassName.replaceAll("TestCase", "");
 			}
-			else if (testClass.endsWith("TestSuite")) {
-				testSuite = testClass.replaceAll("TestSuite", "");
+			else if (testSimpleClassName.endsWith("TestSuite")) {
+				testSuiteName = testSimpleClassName.replaceAll("TestSuite", "");
 			}
 
-			project.setProperty("test-case", testCase);
-			project.setProperty("test-suite", testSuite);
+			project.setProperty("test.case.name", testCaseName);
+			project.setProperty("test.suite.name", testSuiteName);
 		</script>
 
 		<if>
 			<available file="portal-web/test/functional" type="dir" />
 			<then>
-				<resourcecount property="test-case.count">
-					<fileset dir="portal-web/test/functional" includes="**/${test-case}.testcase" />
+				<resourcecount property="test.case.name.count">
+					<fileset dir="portal-web/test/functional" includes="**/${test.case.name}.testcase" />
 				</resourcecount>
-				<resourcecount property="test-suite.count">
-					<fileset dir="portal-web/test/functional" includes="**/${test-suite}.testsuite" />
+				<resourcecount property="test.suite.name.count">
+					<fileset dir="portal-web/test/functional" includes="**/${test.suite.name}.testsuite" />
 				</resourcecount>
 			</then>
 		</if>
@@ -1166,15 +1166,15 @@
 		<if>
 			<or>
 				<and>
-					<isset property="test-case.count" />
+					<isset property="test.case.name.count" />
 					<not>
-						<equals arg1="${test-case.count}" arg2="0" />
+						<equals arg1="${test.case.name.count}" arg2="0" />
 					</not>
 				</and>
 				<and>
-					<isset property="test-suite.count" />
+					<isset property="test.suite.name.count" />
 					<not>
-						<equals arg1="${test-suite.count}" arg2="0" />
+						<equals arg1="${test.suite.name.count}" arg2="0" />
 					</not>
 				</and>
 			</or>
@@ -2369,7 +2369,7 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 	<target name="run-selenium-test">
 		<if>
 			<and>
-				<equals arg1="${test.class}" arg2="PortalWebTestSuite" />
+				<equals arg1="${test.name}" arg2="PortalWebTestSuite" />
 				<not>
 					<equals arg1="${database}" arg2="hsql" />
 				</not>
@@ -2406,7 +2406,7 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 		<ant dir="portal-impl" target="compile-test" inheritAll="false" />
 
 		<if>
-			<contains string="${test.class}" substring="#" />
+			<contains string="${test.name}" substring="#" />
 			<then>
 				<replace
 					file="portal-web/test/test-portal-web.properties"
@@ -2415,41 +2415,56 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 				/>
 
 				<script classpathref="project.classpath" language="beanshell">
-					String testClass = project.getProperty("test.class");
+					String testName = project.getProperty("test.name");
 
-					int x = testClass.indexOf("#");
+					int x = testName.indexOf("#");
 
-					String testMethodName = testClass.substring(x + 1);
+					String testMethodName = testName.substring(x + 1);
 
 					project.setProperty("test.method.name", testMethodName);
 
-					String testSimpleClassName =  testClass.substring(0, x);
+					String testSimpleClassName = testName.substring(0, x);
 
 					project.setProperty("test.simple.class.name", testSimpleClassName);
 				</script>
 
 				<antcall target="generate-tests" inheritAll="false">
-					<param name="test.class" value="${test.simple.class.name}" />
+					<param name="test.simple.class.name" value="${test.simple.class.name}" />
 				</antcall>
 
-				<for param="file">
+				<for param="test.java.file">
 					<path>
 						<fileset dir="portal-web/test/functional-generated">
 							<include name="**/${test.simple.class.name}.java" />
 						</fileset>
 					</path>
 					<sequential>
-						<var name="file" value="@{file}" />
+						<var name="test.java.file" value="@{test.java.file}" />
 
 						<script classpathref="project.classpath" language="beanshell">
-							String file = project.getProperty("file");
+							import com.liferay.portal.kernel.util.OSDetector;
 
-							int x = file.lastIndexOf("\\com\\") + 1;
-							int y = file.lastIndexOf(".");
+							String testJavaFile = project.getProperty("test.java.file");
 
-							file = file.substring(x, y);
+							int x;
 
-							project.setProperty("test.class.name", file.replaceAll("\\\\", "."));
+							if (OSDetector.isWindows()) {
+								x = testJavaFile.indexOf("\\com\\") + 1;
+							}
+							else {
+								x = testJavaFile.indexOf("/com/") + 1;
+							}
+
+							int y = testJavaFile.lastIndexOf(".");
+
+							testJavaFile = testJavaFile.substring(x, y);
+
+							if (OSDetector.isWindows()) {
+								project.setProperty("test.class.name", testJavaFile.replaceAll("\\\\", "."));
+							}
+							else {
+								project.setProperty("test.class.name", testJavaFile.replaceAll("/", "."));
+							}
 						</script>
 					</sequential>
 				</for>
@@ -2462,11 +2477,11 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 			</then>
 			<else>
 				<antcall target="generate-tests" inheritAll="false">
-					<param name="test.class" value="${test.class}" />
+					<param name="test.simple.class.name" value="${test.name}" />
 				</antcall>
 
 				<ant dir="portal-web" target="test-class" inheritAll="false">
-					<property name="class" value="${test.class}" />
+					<property name="class" value="${test.name}" />
 				</ant>
 			</else>
 		</if>
@@ -2878,7 +2893,7 @@ Please set "ie.driver.zip" in test.properties to point to "IEDriverServer_x64_2.
 		<ant antfile="build-test-plugins.xml" target="test-service-builder" inheritAll="false" />
 	</target>
 
-	<target name="test-functional">
+	<target name="test-selenium-test">
 		<antcall target="print-scm-revision" />
 
 		<antcall target="generate-test-properties">
@@ -2902,8 +2917,8 @@ Please set "ie.driver.zip" in test.properties to point to "IEDriverServer_x64_2.
 		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat" inheritAll="false">
 			<property name="test.database.minimal" value="true" />
 			<property name="test.evaluate.logs" value="true" />
+			<property name="test.name" value="${test.name}" />
 			<property name="test.selenium.logger.enabled" value="true" />
-			<property name="test.name" value="${test}" />
 		</ant>
 	</target>
 

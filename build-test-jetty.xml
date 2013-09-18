@@ -57,7 +57,7 @@
 		<antcall target="start-selenium" />
 
 		<antcall target="run-jetty">
-			<param name="test.class" value="${test.name}" />
+			<param name="test.name" value="${test.name}" />
 		</antcall>
 
 		<antcall target="stop-selenium" />

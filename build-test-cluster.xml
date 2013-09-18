@@ -213,7 +213,7 @@ JkShmFile logs/jk-runtime-status</echo>
 		<antcall target="start-selenium" />
 
 		<antcall target="run-selenium-test">
-			<param name="test.class" value="${test.ant.script.suite.1}" />
+			<param name="test.name" value="${test.ant.script.suite.1}" />
 		</antcall>
 
 		<antcall target="stop-selenium" />
@@ -229,7 +229,7 @@ JkShmFile logs/jk-runtime-status</echo>
 		<antcall target="start-selenium" />
 
 		<antcall target="run-selenium-test">
-			<param name="test.class" value="${test.ant.script.suite.2}" />
+			<param name="test.name" value="${test.ant.script.suite.2}" />
 		</antcall>
 
 		<antcall target="stop-selenium" />
@@ -249,7 +249,7 @@ JkShmFile logs/jk-runtime-status</echo>
 		<antcall target="start-selenium" />
 
 		<antcall target="run-selenium-test">
-			<param name="test.class" value="${test.ant.script.suite.3}" />
+			<param name="test.name" value="${test.ant.script.suite.3}" />
 		</antcall>
 
 		<antcall target="stop-selenium" />

@@ -8,6 +8,10 @@
 		}
 
 		.fieldset {
+			select {
+				width: auto;
+			}
+
 			textarea {
 				width: 90%;
 			}

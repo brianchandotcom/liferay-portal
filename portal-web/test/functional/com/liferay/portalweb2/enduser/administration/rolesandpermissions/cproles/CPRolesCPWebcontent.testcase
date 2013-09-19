@@ -43,6 +43,7 @@
 		</execute>
 
 		<execute macro="Page#openURL" />
+
 		<execute action="Dockbar#assertElementNotPresent" locator-key1="ADMIN" />
 
 		<execute macro="Permissions#definePermissionLoginUserCP">
@@ -82,6 +83,7 @@
 		</execute>
 
 		<execute macro="Page#openURL" />
+
 		<execute action="Dockbar#assertElementNotPresent" locator-key1="ADMIN" />
 	</command>
 

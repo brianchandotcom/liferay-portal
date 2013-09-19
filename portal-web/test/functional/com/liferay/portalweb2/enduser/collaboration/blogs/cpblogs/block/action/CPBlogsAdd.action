@@ -1,13 +1,19 @@
 <definition>
 	<command name="assertClick">
 		<case locator-key1="PUBLISH_BUTTON">
-			<execute function="AssertClick#assertTextClickAtAndWaitCKEditor" />
+			<execute function="AssertClick#assertTextClickAtCKEditor" />
 		</case>
 		<case locator-key1="SAVE_AS_DRAFT_BUTTON">
 			<execute function="AssertClick#assertTextClickAtAndWaitCKEditor" />
 		</case>
 		<case locator-key1="SUBMIT_FOR_PUBLICATION_BUTTON">
 			<execute function="AssertClick#assertTextClickAtAndWaitCKEditor" />
+		</case>
+	</command>
+
+	<command name="assertTextEquals">
+		<case locator-key1="SAVE_STATUS">
+			<execute function="AssertTextEquals#assertPartialText" />
 		</case>
 	</command>
 

@@ -1,8 +1,16 @@
 <definition>
+	<execute test-case-command="CPBlogs#AddBlogsEntryContentNull" />
 	<execute test-case-command="CPBlogs#AddBlogsEntries" />
 	<execute test-case-command="CPBlogs#AddBlogsEntryComment" />
 	<execute test-case-command="CPBlogs#AddBlogsEntryTitleEscapeCharacters" />
+	<execute test-case-command="CPBlogs#AddBlogsEntryTitleNull" />
 	<execute test-case-command="CPBlogs#DeleteBlogsEntryComment" />
 	<execute test-case-command="CPBlogs#EditBlogsEntryComment" />
 	<execute test-case-command="CPBlogs#PublishBlogsEntryDraft" />
+	<execute test-case-command="CPBlogs#RateBlogsEntry" />
+	<execute test-case-command="CPBlogs#SaveBlogsEntryDraft" />
+	<execute test-case-command="CPBlogs#SaveBlogsEntryDraftAuto" />
+	<execute test-case-command="CPBlogs#SearchBlogsEntryContent" />
+	<execute test-case-command="CPBlogs#SearchBlogsEntryTitle" />
+	<execute test-case-command="CPBlogs#ViewBlogsEntryViewCount" />
 </definition>

@@ -8,11 +8,40 @@
 
 		<var name="key_entryTitle" value="${entryTitle}" />
 
-		<execute action="CPBlogs#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute action="CPBlogs#assertClick" locator-key1="ENTRY_TABLE_TITLE" value1="${entryTitle}" />
+		<if>
+			<equals arg1="${entryInvalidTitle}" arg2="true" />
+			<then>
+				<execute action="CPBlogsAdd#assertTextEquals" locator-key1="FIELD_REQUIRED" value1="This field is required." />
+			</then>
+			<elseif>
+				<equals arg1="${entryInvalidContent}" arg2="true" />
+				<then>
+					<execute action="CPBlogsEdit#assertTextEquals" locator-key1="ERROR_MESSAGE_1" value1="Your request failed to complete." />
+					<execute action="CPBlogsEdit#assertTextEquals" locator-key1="ERROR_MESSAGE_2" value1="Please enter valid content." />
+					<execute action="CPBlogsEdit#assertElementNotPresent" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+				</then>
+			</elseif>
+			<else>
+				<execute action="CPBlogs#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+				<execute action="CPBlogs#assertClick" locator-key1="ENTRY_TABLE_TITLE" value1="${entryTitle}" />
 
-		<execute action="CPBlogsEntry#assertTextEquals" locator-key1="ENTRY_TITLE_HEADER" value1="${entryTitle}" />
-		<execute action="CPBlogsEntry#assertTextEquals" locator-key1="ENTRY_CONTENT" value1="${entryContent}" />
+				<execute action="CPBlogsEntry#assertTextEquals" locator-key1="ENTRY_TITLE_HEADER" value1="${entryTitle}" />
+				<execute action="CPBlogsEntry#assertTextEquals" locator-key1="ENTRY_CONTENT" value1="${entryContent}" />
+			</else>
+		</if>
+	</command>
+
+	<command name="addDraftAutoCP">
+		<execute action="CPBlogs#assertClick" locator-key1="ADD_ENTRY" value1="Add" />
+
+		<execute action="CPBlogsAdd#type" locator-key1="TITLE_FIELD" value1="${entryTitle}" />
+		<execute action="CPBlogsAdd#type" locator-key1="CONTENT_FIELD" value1="${entryContent}" />
+		<execute action="CPBlogsAdd#pause" locator1="25000" />
+		<execute action="CPBlogsAdd#assertTextEquals" locator-key1="SAVE_STATUS" value1="Draft saved at" />
+
+		<execute action="CPBlogsEdit#assertTextEquals" locator-key1="TITLE_FIELD" value1="${entryTitle}" />
+		<execute action="CPBlogsEdit#selectFrame" locator-key1="CONTENT_FIELD" />
+		<execute action="CPBlogsEdit#assertTextPresent" locator-key1="CONTENT_FIELD" value1="${entryContent}" />
 	</command>
 
 	<command name="addDraftCP">
@@ -206,6 +235,35 @@
 		<execute action="CPBlogsEntry#assertTextEquals" locator-key1="ENTRY_CONTENT" value1="${entryContent}" />
 	</command>
 
+	<command name="rate4StarsCP">
+		<var name="key_entryTitle" value="${entryTitle}" />
+
+		<execute action="CPBlogs#assertClick" locator-key1="ENTRY_TABLE_TITLE" value1="${entryTitle}" />
+
+		<execute action="CPBlogsEntry#click" locator-key1="YOUR_RATING_STAR_EMPTY_4" />
+	</command>
+
+	<command name="searchCP">
+		<var name="key_entryContent" value="${entryContent}" />
+		<var name="key_entryTitle" value="${entryTitle}" />
+
+		<execute action="CPBlogsSearch#type" locator-key1="SEARCH_FIELD" value1="${entrySearchTerm}" />
+		<execute action="CPBlogsSearch#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
+		<execute action="CPBlogsSearch#assertTextEquals" locator-key1="SEARCH_RESULTS_ENTRY_TITLE" value1="${entryTitle}" />
+		<execute action="CPBlogsSearch#assertTextEquals" locator-key1="SEARCH_RESULTS_ENTRY_DESCRIPTION" value1="${entryContent}" />
+	</command>
+
+	<command name="searchNoCP">
+		<var name="key_entryContent" value="${entryContent}" />
+		<var name="key_entryTitle" value="${entryTitle}" />
+
+		<execute action="CPBlogsSearch#type" locator-key1="SEARCH_FIELD" value1="${entrySearchTerm}" />
+		<execute action="CPBlogsSearch#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
+		<execute action="CPBlogsSearch#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No entries were found that matched the keywords: ${entrySearchTerm}." />
+		<execute action="CPBlogsSearch#assertElementNotPresent" locator-key1="SEARCH_RESULTS_ENTRY_TITLE" value1="${entryTitle}" />
+		<execute action="CPBlogsSearch#assertElementNotPresent" locator-key1="SEARCH_RESULTS_ENTRY_DESCRIPTION" value1="${entryContent}" />
+	</command>
+
 	<command name="subscribePG">
 		<execute action="PGBlogs#assertClick" locator-key1="SUBSCRIBE_LINK" value1="Subscribe" />
 		<execute action="PGBlogs#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
@@ -252,6 +310,21 @@
 	<command name="viewDefaultCP">
 		<execute action="CPBlogs#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No entries were found." />
 		<execute action="CPBlogs#assertTextNotPresent" value1="${entryTitle}" />
+	</command>
+
+	<command name="viewDraftCP">
+		<var name="key_entryTitle" value="${entryTitle}" />
+
+		<execute action="CPBlogs#assertTextEquals" locator-key1="ENTRY_TABLE_TITLE" value1="${entryTitle}" />
+		<execute action="CPBlogs#assertTextEquals" locator-key1="ENTRY_TABLE_AUTHOR" value1="${entryAuthor}" />
+		<execute action="CPBlogs#assertElementPresent" locator-key1="ENTRY_TABLE_CREATE_DATE" />
+		<execute action="CPBlogs#assertTextEquals" locator-key1="ENTRY_TABLE_STATUS" value1="Draft" />
+		<execute action="CPBlogs#assertClick" locator-key1="ENTRY_TABLE_TITLE" value1="${entryTitle}" />
+
+		<execute action="CPBlogsEntry#assertTextEquals" locator-key1="ENTRY_TITLE_HEADER" value1="${entryTitle}" />
+		<execute action="CPBlogsEntry#assertTextEquals" locator-key1="ENTRY_DRAFT_STATUS" value1="Draft" />
+		<execute action="CPBlogsEntry#assertTextEquals" locator-key1="ENTRY_TITLE_LINK" value1="${entryTitle}" />
+		<execute action="CPBlogsEntry#assertTextEquals" locator-key1="ENTRY_CONTENT" value1="${entryContent}" />
 	</command>
 
 	<command name="viewPermissionsPG">
@@ -302,6 +375,39 @@
 
 		<execute action="PGAssetpublisherAsset#assertTextEquals" locator-key1="ASSET_TITLE" value1="${entryTitle}" />
 		<execute action="PGAssetpublisherAsset#assertTextEquals" locator-key1="ASSET_CONTENT" value1="${entryContent}" />
+	</command>
+
+	<command name="viewRate4StarsCP">
+		<execute action="CPBlogsEntry#assertTextEquals" locator-key1="AVERAGE" value1="Average (1 Vote)" />
+
+		<execute action="CPBlogsEntry#assertElementPresent" locator-key1="YOUR_RATING_STAR_1" />
+		<execute action="CPBlogsEntry#assertElementPresent" locator-key1="YOUR_RATING_STAR_2" />
+		<execute action="CPBlogsEntry#assertElementPresent" locator-key1="YOUR_RATING_STAR_3" />
+		<execute action="CPBlogsEntry#assertElementPresent" locator-key1="YOUR_RATING_STAR_4" />
+		<execute action="CPBlogsEntry#assertElementNotPresent" locator-key1="YOUR_RATING_STAR_5" />
+		<execute action="CPBlogsEntry#assertElementPresent" locator-key1="YOUR_RATING_STAR_EMPTY_1" />
+		<execute action="CPBlogsEntry#assertElementNotPresent" locator-key1="YOUR_RATING_STAR_EMPTY_2" />
+
+		<execute action="CPBlogsEntry#assertElementPresent" locator-key1="AVERAGE_STAR_1" />
+		<execute action="CPBlogsEntry#assertElementPresent" locator-key1="AVERAGE_STAR_2" />
+		<execute action="CPBlogsEntry#assertElementPresent" locator-key1="AVERAGE_STAR_3" />
+		<execute action="CPBlogsEntry#assertElementPresent" locator-key1="AVERAGE_STAR_4" />
+		<execute action="CPBlogsEntry#assertElementPresent" locator-key1="AVERAGE_STAR_4" />
+		<execute action="CPBlogsEntry#assertElementNotPresent" locator-key1="AVERAGE_STAR_5" />
+		<execute action="CPBlogsEntry#assertElementPresent" locator-key1="AVERAGE_STAR_EMPTY_1" />
+		<execute action="CPBlogsEntry#assertElementNotPresent" locator-key1="AVERAGE_STAR_EMPTY_2" />
+	</command>
+
+	<command name="viewViewCountCP">
+		<if>
+			<equals arg1="${entryViewCount}" arg2="1" />\
+			<then>
+				<execute action="CPBlogsEntry#assertTextEquals" locator-key1="ENTRY_STATS_VIEW_COUNT" value1="${entryViewCount} View," />
+			</then>
+			<else>
+				<execute action="CPBlogsEntry#assertTextEquals" locator-key1="ENTRY_STATS_VIEW_COUNT" value1="${entryViewCount} Views," />
+			</else>
+		</if>
 	</command>
 
 	<command name="viewWithWorkflowCP">

@@ -32,7 +32,11 @@ import com.liferay.portal.test.TransactionalCallbackAwareExecutionTestListener;
 import com.liferay.portal.util.GroupTestUtil;
 import com.liferay.portal.util.LayoutTestUtil;
 import com.liferay.portal.util.TestPropsValues;
+import com.liferay.portal.util.comparator.RoleRoleIdComparator;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -57,6 +61,55 @@ public class RoleLocalServiceTest {
 	@BeforeClass
 	public static void setUpClass() {
 		IndexerRegistryUtil.unregister(Organization.class.getName());
+	}
+
+	@SuppressWarnings({"rawtypes", "unchecked"})
+	@Test
+	public void testGetGroupRelatedRoles() throws Exception {
+		Object[] objects = getOrganizationAndTeam();
+
+		Organization organization = (Organization)objects[0];
+
+		long companyId = organization.getCompanyId();
+
+		long groupId = organization.getGroupId();
+
+		Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+		List<Role> actualRoles = RoleLocalServiceUtil.getGroupRelatedRoles(
+			groupId);
+
+		List<Role> allRoles = RoleLocalServiceUtil.getRoles(companyId);
+
+		List<Role> expectedRoles = new ArrayList<Role>();
+
+		for (Role role : allRoles) {
+			int type = role.getType();
+
+			if ((type == RoleConstants.TYPE_REGULAR) ||
+				((type == RoleConstants.TYPE_ORGANIZATION) &&
+				 group.isOrganization()) ||
+				((type == RoleConstants.TYPE_SITE) &&
+				 (group.isLayout() || group.isLayoutSetPrototype() ||
+				  group.isSite()))) {
+
+				expectedRoles.add(role);
+			}
+			else if ((type == RoleConstants.TYPE_PROVIDER) && role.isTeam()) {
+				Team team = TeamLocalServiceUtil.getTeam(role.getClassPK());
+
+				if (team.getGroupId() == groupId) {
+					expectedRoles.add(role);
+				}
+			}
+		}
+
+		Comparator roleIdComparator = new RoleRoleIdComparator();
+
+		Collections.sort(actualRoles, roleIdComparator);
+		Collections.sort(expectedRoles, roleIdComparator);
+
+		Assert.assertEquals(actualRoles, expectedRoles);
 	}
 
 	@Test

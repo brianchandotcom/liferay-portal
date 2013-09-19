@@ -49,6 +49,26 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
 
 			var TPL_WCM_IMAGE = '<div class="lfr-wcm-image"></div>';
 
+			var applyStyles = function(node, styleContent) {
+				var styles = styleContent.replace(/\n/g, STR_BLANK).split(';');
+
+				node.setStyle(STR_BLANK);
+
+				A.Array.each(
+					styles,
+					function(item, index, collection) {
+						var rule = item.split(':');
+
+						if (rule.length == 2) {
+							var key = camelize(rule[0]);
+							var value = trim(rule[1]);
+
+							node.setStyle(key, value);
+						}
+					}
+				);
+			};
+
 			var LiferayFormBuilderField = function() {
 			};
 
@@ -403,25 +423,9 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
 						_uiSetStyle: function(val) {
 							var instance = this;
 
-							var styles = val.replace(/\n/g, STR_BLANK).split(';');
-
 							var templateNode = instance.get('templateNode');
 
-							templateNode.setStyle(STR_BLANK);
-
-							A.Array.each(
-								styles,
-								function(item, index, collection) {
-									var rule = item.split(':');
-
-									if (rule.length == 2) {
-										var key = camelize(rule[0]);
-										var value = trim(rule[1]);
-
-										templateNode.setStyle(key, value);
-									}
-								}
-							);
+							applyStyles(templateNode, val);
 						}
 					}
 				}
@@ -441,12 +445,18 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
 						showLabel: {
 							readOnly: true,
 							value: false
+						},
+
+						style: {
+							value: STR_BLANK
 						}
 					},
 
 					EXTENDS: A.FormBuilderField,
 
 					NAME: 'ddm-separator',
+
+					UI_ATTRS: ['style'],
 
 					prototype: {
 						getHTML: function() {
@@ -459,8 +469,21 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
 									attributeName: 'type',
 									editor: false,
 									name: '<%= UnicodeLanguageUtil.get(pageContext, "type") %>'
+								},
+								{
+									attributeName: 'style',
+									editor: new A.TextAreaCellEditor(),
+									name: '<%= UnicodeLanguageUtil.get(pageContext, "style") %>'
 								}
 							];
+						},
+
+						_uiSetStyle: function(val) {
+							var instance = this;
+
+							var templateNode = instance.get('templateNode');
+
+							applyStyles(templateNode, val);
 						}
 					}
 				}

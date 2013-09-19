@@ -1,5 +1,7 @@
 <#include "../init.ftl">
 
-<div class="separator"></div>
+<#assign style = fieldStructure.style!"">
+
+<div class="separator" style="${escapeAttribute(style)}"></div>
 
 ${fieldStructure.children}

@@ -29,6 +29,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>BASIC_PREVIEW_BUTTON</td>
+	<td>//button[@id='_15_basicPreviewButton']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SELECT_STRUCTURE</td>
 	<td>//a[contains(.,'Select')]/span</td>
 	<td></td>

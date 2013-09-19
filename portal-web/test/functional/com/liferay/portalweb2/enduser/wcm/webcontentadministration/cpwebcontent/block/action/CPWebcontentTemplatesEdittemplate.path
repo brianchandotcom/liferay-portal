@@ -1,17 +1,17 @@
 <html>
 <head>
-<title>CPWebcontentTemplatesAddtemplate</title>
+<title>CPWebcontentTemplatesEdittemplate</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">CPWebcontentTemplatesAddtemplate</td></tr>
+<tr><td rowspan="1" colspan="3">CPWebcontentTemplatesEdittemplate</td></tr>
 </thead>
 <tbody>
 <tr>
 	<td>PAGE_NAME</td>
 	<td></td>
-	<td>CPWebcontentTemplatesAddtemplate</td>
+	<td>CPWebcontentTemplatesEdittemplate</td>
 </tr>
 <!---->
 <tr>

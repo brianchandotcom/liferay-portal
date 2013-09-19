@@ -35,15 +35,33 @@
 			</then>
 		</if>
 
+		<if>
+			<equals arg1="${templateLanguage}" arg2="ftl" />
+			<then>
+				<execute action="CPWebcontentTemplatesAddtemplate#select" locator-key1="LANGUAGE_SELECT" value1="FreeMarker (.ftl)" />
+			</then>
+			<elseif>
+				<equals arg1="${templateLanguage}" arg2="xsl" />
+				<then>
+					<execute action="CPWebcontentTemplatesAddtemplate#select" locator-key1="LANGUAGE_SELECT" value1="Extensible Stylesheet Language (.xsl)" />
+				</then>
+			</elseif>
+			<else>
+				<execute action="CPWebcontentTemplatesAddtemplate#select" locator-key1="LANGUAGE_SELECT" value1="Velocity (.vm)" />
+			</else>
+		</if>
+
+		<if>
+			<isset var="templateFile" />
+			<then>
+				<execute action="CPWebcontentTemplatesAddtemplate#uploadCommonFile" locator-key1="SCRIPT_CHOOSE_FILE" value1="${templateFile}" />
+			</then>
+		</if>
+
 		<execute action="CPWebcontentTemplatesAddtemplate#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
 		<execute action="CPWebcontentTemplatesAddtemplate#selectFrame" />
 		<execute action="CPWebcontentTemplatesAddtemplate#selectFrame" locator-key1="TEMPLATES_IFRAME" />
 		<execute action="CPWebcontentTemplates#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
-
-		<var name="key_templateName" value="${templateName}" />
-
-		<execute action="CPWebcontentTemplates#assertTextEquals" locator-key1="TEMPLATE_TABLE_NAME" value1="${templateName}" />
-		<execute action="CPWebcontentTemplates#assertTextEquals" locator-key1="TEMPLATE_TABLE_DESCRIPTION" value1="${templateDescription}" />
 	</command>
 
 	<command name="tearDownCP">
@@ -67,5 +85,80 @@
 		</while>
 
 		<execute action="CPWebcontentTemplates#assertTextEquals" locator-key1="INFO_MESSAGE" value1="There are no templates." />
+	</command>
+
+	<command name="viewCP">
+		<execute action="CPWebcontent#assertClick" locator-key1="TOOLBAR_MANAGE" value1="Manage" />
+		<execute action="CPWebcontent#assertClick" locator-key1="MANAGE_MENULIST_TEMPLATES" value1="Templates" />
+
+		<execute action="CPWebcontentTemplates#selectFrame" locator-key1="TEMPLATES_IFRAME" />
+
+		<var name="key_templateName" value="${templateName}" />
+
+		<execute action="CPWebcontentTemplates#assertTextEquals" locator-key1="TEMPLATE_TABLE_NAME" value1="${templateName}" />
+		<execute action="CPWebcontentTemplates#assertTextEquals" locator-key1="TEMPLATE_TABLE_DESCRIPTION" value1="${templateDescription}" />
+
+		<if>
+			<isset var="structureName" />
+			<then>
+				<execute action="CPWebcontentTemplates#assertTextEquals" locator-key1="TEMPLATE_TABLE_STRUCTURE" value1="${structureName}" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${templateLanguage}" arg2="ftl" />
+			<then>
+				<execute action="CPWebcontentTemplates#assertTextEquals" locator-key1="TEMPLATE_TABLE_LANGUAGE" value1="FreeMarker" />
+			</then>
+			<elseif>
+				<equals arg1="${templateLanguage}" arg2="xsl" />
+				<then>
+					<execute action="CPWebcontentTemplates#assertTextEquals" locator-key1="TEMPLATE_TABLE_LANGUAGE" value1="Extensible Stylesheet Language" />
+				</then>
+			</elseif>
+			<else>
+				<execute action="CPWebcontentTemplates#assertTextEquals" locator-key1="TEMPLATE_TABLE_LANGUAGE" value1="Velocity" />
+			</else>
+		</if>
+
+		<execute action="CPWebcontentTemplates#assertClick" locator-key1="TEMPLATE_TABLE_NAME" value1="${templateName}" />
+		<execute action="CPWebcontentTemplates#selectFrame" />
+
+		<execute action="CPWebcontentTemplatesEdittemplate#selectFrame" locator-key1="TEMPLATES_IFRAME" />
+		<execute action="CPWebcontentTemplatesEdittemplate#assertTextEquals" locator-key1="NAME_FIELD" value1="${templateName}" />
+
+		<execute macro="CPWebcontentTemplatesAddtemplate#showDetails" />
+
+		<execute action="CPWebcontentTemplatesEdittemplate#assertTextEquals" locator-key1="DESCRIPTION_FIELD" value1="${templateDescription}" />
+
+		<if>
+			<isset var="structureName" />
+			<then>
+				<execute action="CPWebcontentTemplatesEdittemplate#assertTextEquals" locator-key1="STRUCTURE" value1="${structureName}" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${templateLanguage}" arg2="ftl" />
+			<then>
+				<execute action="CPWebcontentTemplatesEdittemplate#assertSelectedLabel" locator-key1="LANGUAGE_SELECT" value1="FreeMarker (.ftl)" />
+			</then>
+			<elseif>
+				<equals arg1="${templateLanguage}" arg2="xsl" />
+				<then>
+					<execute action="CPWebcontentTemplatesEdittemplate#assertSelectedLabel" locator-key1="LANGUAGE_SELECT" value1="Extensible Stylesheet Language (.xsl)" />
+				</then>
+			</elseif>
+			<else>
+				<execute action="CPWebcontentTemplatesEdittemplate#assertSelectedLabel" locator-key1="LANGUAGE_SELECT" value1="Velocity (.vm)" />
+			</else>
+		</if>
+
+		<if>
+			<isset var="templateScript" />
+			<then>
+				<execute action="CPWebcontentTemplatesEdittemplate#assertTextEquals" locator-key1="SCRIPT_CONTENT_FIELD" value1="${templateScript}" />
+			</then>
+		</if>
 	</command>
 </definition>

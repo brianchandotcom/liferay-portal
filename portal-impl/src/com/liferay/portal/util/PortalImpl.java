@@ -3564,6 +3564,21 @@ public class PortalImpl implements Portal {
 	}
 
 	@Override
+	public String getPathContext(HttpServletRequest request) {
+		return getPathContext(request.getContextPath());
+	}
+
+	@Override
+	public String getPathContext(PortletRequest request) {
+		return getPathContext(request.getContextPath());
+	}
+
+	@Override
+	public String getPathContext(String contextPath) {
+		return _pathProxy.concat(ContextPathUtil.getContextPath(contextPath));
+	}
+
+	@Override
 	public String getPathFriendlyURLPrivateGroup() {
 		return _pathFriendlyURLPrivateGroup;
 	}

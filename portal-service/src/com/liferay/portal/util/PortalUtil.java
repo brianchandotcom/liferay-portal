@@ -955,6 +955,18 @@ public class PortalUtil {
 		return getPortal().getPathContext();
 	}
 
+	public static String getPathContext(HttpServletRequest request) {
+		return getPortal().getPathContext(request);
+	}
+
+	public static String getPathContext(PortletRequest request) {
+		return getPortal().getPathContext(request);
+	}
+
+	public static String getPathContext(String contextPath) {
+		return getPortal().getPathContext(contextPath);
+	}
+
 	public static String getPathFriendlyURLPrivateGroup() {
 		return getPortal().getPathFriendlyURLPrivateGroup();
 	}

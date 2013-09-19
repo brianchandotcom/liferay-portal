@@ -52,6 +52,12 @@ public class FreeMarkerServletResourceParser extends URLResourceParser {
 
 		String contextPath = PortalUtil.getPathContext();
 
+		String proxyPath = PortalUtil.getPathProxy();
+
+		if (Validator.isNotNull(proxyPath)) {
+			contextPath = contextPath.substring(proxyPath.length());
+		}
+
 		if (Validator.isNull(servletContextName) ||
 			servletContextPath.equals(contextPath)) {
 

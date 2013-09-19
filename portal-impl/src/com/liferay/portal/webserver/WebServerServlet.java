@@ -704,7 +704,7 @@ public class WebServerServlet extends HttpServlet {
 		}
 
 		String redirect =
-			request.getContextPath() + Portal.PATH_MAIN + "/portal/login";
+			PortalUtil.getPathMain() + "/portal/login";
 
 		String currentURL = PortalUtil.getCurrentURL(request);
 

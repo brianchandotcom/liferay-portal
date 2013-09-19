@@ -36,6 +36,7 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 
 import javax.servlet.http.HttpServlet;
@@ -161,7 +162,7 @@ public class WebDAVServlet extends HttpServlet {
 
 	protected String getRootPath(HttpServletRequest request) {
 		String contextPath = HttpUtil.fixPath(
-			request.getContextPath(), false, true);
+			PortalUtil.getPathContext(request), false, true);
 		String ServletPath = HttpUtil.fixPath(
 			request.getServletPath(), false, true);
 

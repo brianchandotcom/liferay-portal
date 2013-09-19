@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.ac.AccessControlThreadLocal;
 import com.liferay.portal.servlet.JSONServlet;
 import com.liferay.portal.spring.context.PortalContextLoaderListener;
@@ -94,7 +95,15 @@ public class JSONWebServiceServlet extends JSONServlet {
 				contextPath = StringPool.SLASH;
 			}
 
+			String proxyPath = PortalUtil.getPathProxy();
+
 			if (servletContext.getContext(contextPath) != null) {
+				if (Validator.isNotNull(proxyPath) &&
+					apiPath.startsWith(proxyPath)) {
+
+					apiPath = apiPath.substring(proxyPath.length());
+				}
+
 				if (!contextPath.equals(StringPool.SLASH) &&
 					apiPath.startsWith(contextPath)) {
 
@@ -111,7 +120,7 @@ public class JSONWebServiceServlet extends JSONServlet {
 					servletContext);
 
 				String redirectPath =
-					"/api/jsonws?contextPath=" +
+					PortalUtil.getPathContext() + "/api/jsonws?contextPath=" +
 						HttpUtil.encodeURL(servletContextPath);
 
 				response.sendRedirect(redirectPath);

@@ -852,6 +852,12 @@ public interface Portal {
 
 	public String getPathContext();
 
+	public String getPathContext(HttpServletRequest request);
+
+	public String getPathContext(PortletRequest request);
+
+	public String getPathContext(String contextPath);
+
 	public String getPathFriendlyURLPrivateGroup();
 
 	public String getPathFriendlyURLPrivateUser();

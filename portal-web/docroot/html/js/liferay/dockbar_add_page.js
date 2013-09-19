@@ -2,6 +2,7 @@ AUI.add(
 	'liferay-dockbar-add-page',
 	function(A) {
 		var Lang = A.Lang;
+		var AObject = A.Object;
 
 		var Dockbar = Liferay.Dockbar;
 
@@ -121,50 +122,68 @@ AUI.add(
 
 						var addForm = instance._addForm;
 
-						if (instance.get('refresh')) {
-							submitForm(addForm);
-						}
-						else {
-							event.preventDefault();
+						var formValidator = instance._getFormValidator(addForm);
 
-							var nodes = instance.get(STR_NODES);
+						if (!formValidator.hasErrors()) {
+							if (instance.get('refresh')) {
+								submitForm(addForm);
+							}
+							else {
+								event.preventDefault();
 
-							nodes.each(
-								function(item, index, collection) {
-									var header = item.one(SELECTOR_TOGGLER_HEADER);
+								var nodes = instance.get(STR_NODES);
 
-									var active = header.hasClass(CSS_ACTIVE);
+								nodes.each(
+									function(item, index, collection) {
+										var header = item.one(SELECTOR_TOGGLER_HEADER);
 
-									item.all('input, select, textarea').set('disabled', !active);
-								}
-							);
+										var active = header.hasClass(CSS_ACTIVE);
 
-							A.io.request(
-								addForm.get('action'),
-								{
-									dataType: 'json',
-									form: {
-										id: addForm.get('id')
-									},
-									after: {
-										success: function(event, id, obj) {
-											var response = this.get(STR_RESPONSE_DATA);
+										item.all('input, select, textarea').set('disabled', !active);
+									}
+								);
 
-											instance._loadingMask.hide();
+								A.io.request(
+									addForm.get('action'),
+									{
+										dataType: 'json',
+										form: {
+											id: addForm.get('id')
+										},
+										after: {
+											success: function(event, id, obj) {
+												var response = this.get(STR_RESPONSE_DATA);
 
-											var panel = addForm.ancestor();
+												instance._loadingMask.hide();
 
-											panel.empty();
+												var panel = addForm.ancestor();
 
-											panel.plug(A.Plugin.ParseContent);
+												panel.empty();
 
-											panel.setContent(response);
+												panel.plug(A.Plugin.ParseContent);
+
+												panel.setContent(response);
+											}
 										}
 									}
+								);
+
+								instance._loadingMask.show();
+							}
+						}
+						else {
+							AObject.some(
+								formValidator.errors,
+								function(item, index, collection) {
+									var field = formValidator.getField(index);
+
+									field.scrollIntoView();
+
+									field.focus();
+
+									return true;
 								}
 							);
-
-							instance._loadingMask.show();
 						}
 					},
 
@@ -176,6 +195,16 @@ AUI.add(
 
 							Dockbar.toggleAddPanel();
 						}
+					},
+
+					_getFormValidator: function(formNode) {
+						var instance = this;
+
+						if (!instance._formValidator) {
+							instance._formValidator = Liferay.Form.get(formNode.attr('id')).formValidator;
+						}
+
+						return instance._formValidator;
 					},
 
 					_updateActivePage: function(event) {

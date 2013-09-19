@@ -73,7 +73,9 @@ import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutPrototype;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.LayoutSetPrototype;
+import com.liferay.portal.model.LayoutTemplate;
 import com.liferay.portal.model.LayoutTypePortlet;
+import com.liferay.portal.model.LayoutTypePortletConstants;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.ResourceAction;
@@ -3546,13 +3548,15 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 		layoutTypePortlet.setLayoutTemplateId(
 			0, PropsValues.DEFAULT_GUEST_PUBLIC_LAYOUT_TEMPLATE_ID, false);
 
-		for (int i = 0; i < 10; i++) {
-			String columnId = "column-" + i;
-			String portletIds = PropsUtil.get(
-				PropsKeys.DEFAULT_GUEST_PUBLIC_LAYOUT_COLUMN + i);
+		LayoutTemplate layoutTemplate = layoutTypePortlet.getLayoutTemplate();
+
+		for (String column : layoutTemplate.getColumns()) {
+			String keyPrefix = PropsKeys.DEFAULT_GUEST_PUBLIC_LAYOUT_PREFIX;
+
+			String portletIds = PropsUtil.get(keyPrefix.concat(column));
 
 			layoutTypePortlet.addPortletIds(
-				0, StringUtil.split(portletIds), columnId, false);
+				0, StringUtil.split(portletIds), column, false);
 		}
 
 		layoutLocalService.updateLayout(

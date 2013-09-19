@@ -531,11 +531,11 @@ public interface PropsKeys {
 
 	public static final String DEFAULT_ADMIN_SCREEN_NAME = "default.admin.screen.name";
 
-	public static final String DEFAULT_GUEST_PUBLIC_LAYOUT_COLUMN = "default.guest.public.layout.column-";
-
 	public static final String DEFAULT_GUEST_PUBLIC_LAYOUT_FRIENDLY_URL = "default.guest.public.layout.friendly.url";
 
 	public static final String DEFAULT_GUEST_PUBLIC_LAYOUT_NAME = "default.guest.public.layout.name";
+
+	public static final String DEFAULT_GUEST_PUBLIC_LAYOUT_PREFIX = "default.guest.public.layout.";
 
 	public static final String DEFAULT_GUEST_PUBLIC_LAYOUT_REGULAR_COLOR_SCHEME_ID = "default.guest.public.layout.regular.color.scheme.id";
 
@@ -561,11 +561,11 @@ public interface PropsKeys {
 
 	public static final String DEFAULT_REGULAR_THEME_ID = "default.regular.theme.id";
 
-	public static final String DEFAULT_USER_PRIVATE_LAYOUT_COLUMN = "default.user.private.layout.column-";
-
 	public static final String DEFAULT_USER_PRIVATE_LAYOUT_FRIENDLY_URL = "default.user.private.layout.friendly.url";
 
 	public static final String DEFAULT_USER_PRIVATE_LAYOUT_NAME = "default.user.private.layout.name";
+
+	public static final String DEFAULT_USER_PRIVATE_LAYOUT_PREFIX = "default.user.private.layout.";
 
 	public static final String DEFAULT_USER_PRIVATE_LAYOUT_REGULAR_COLOR_SCHEME_ID = "default.user.private.layout.regular.color.scheme.id";
 
@@ -579,11 +579,11 @@ public interface PropsKeys {
 
 	public static final String DEFAULT_USER_PRIVATE_LAYOUTS_LAR = "default.user.private.layouts.lar";
 
-	public static final String DEFAULT_USER_PUBLIC_LAYOUT_COLUMN = "default.user.public.layout.column-";
-
 	public static final String DEFAULT_USER_PUBLIC_LAYOUT_FRIENDLY_URL = "default.user.public.layout.friendly.url";
 
 	public static final String DEFAULT_USER_PUBLIC_LAYOUT_NAME = "default.user.public.layout.name";
+
+	public static final String DEFAULT_USER_PUBLIC_LAYOUT_PREFIX = "default.user.public.layout.";
 
 	public static final String DEFAULT_USER_PUBLIC_LAYOUT_REGULAR_COLOR_SCHEME_ID = "default.user.public.layout.regular.color.scheme.id";
 

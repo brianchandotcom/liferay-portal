@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.nio.intraband.MockRegistrationReference;
 import com.liferay.portal.kernel.nio.intraband.RegistrationReference;
 import com.liferay.portal.kernel.nio.intraband.mailbox.MailboxException;
 import com.liferay.portal.kernel.nio.intraband.mailbox.MailboxUtil;
+import com.liferay.portal.kernel.portlet.LiferayPortletSession;
 import com.liferay.portal.kernel.resiliency.spi.agent.annotation.Direction;
 import com.liferay.portal.kernel.resiliency.spi.agent.annotation.DistributedRegistry;
 import com.liferay.portal.kernel.resiliency.spi.agent.annotation.MatchType;
@@ -37,8 +38,11 @@ import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.ThreadLocalDistributor;
+import com.liferay.portal.model.Portlet;
+import com.liferay.portal.model.impl.PortletImpl;
 import com.liferay.portal.test.AdviseWith;
 import com.liferay.portal.test.AspectJMockingNewClassLoaderJUnitTestRunner;
+import com.liferay.portal.util.WebKeys;
 
 import java.io.EOFException;
 import java.io.IOException;
@@ -46,6 +50,9 @@ import java.io.Serializable;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+
+import java.net.URL;
+import java.net.URLClassLoader;
 
 import java.nio.ByteBuffer;
 
@@ -59,7 +66,12 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
+
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -76,6 +88,16 @@ public class SPIAgentSerializableTest {
 	@ClassRule
 	public static CodeCoverageAssertor codeCoverageAssertor =
 		new CodeCoverageAssertor();
+
+	@Before
+	public void setUp() {
+		Thread currentThread = Thread.currentThread();
+
+		_classLoader = new URLClassLoader(
+			new URL[0], currentThread.getContextClassLoader());
+
+		ClassLoaderPool.register(_SERVLET_CONTEXT_NAME, _classLoader);
+	}
 
 	@Test
 	public void testExtractDistributedRequestAttributes() {
@@ -243,7 +265,24 @@ public class SPIAgentSerializableTest {
 		List<LogRecord> logRecords = JDKLoggerTestUtil.configureJDKLogger(
 			SPIAgentSerializable.class.getName(), Level.OFF);
 
-		MockHttpSession mockHttpSession = new MockHttpSession();
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		final String portletId = "portletId";
+
+		Portlet portlet = new PortletImpl() {
+
+			@Override
+			public String getPortletId() {
+				return portletId;
+			}
+
+		};
+
+		mockHttpServletRequest.setAttribute(WebKeys.SPI_AGENT_PORTLET, portlet);
+
+		MockHttpSession mockHttpSession =
+			(MockHttpSession)mockHttpServletRequest.getSession();
 
 		String serializeableAttribute = "serializeableAttribute";
 
@@ -263,14 +302,29 @@ public class SPIAgentSerializableTest {
 
 			});
 
+		String autoRemoveAttribute =
+			LiferayPortletSession.PORTLET_SCOPE_NAMESPACE.concat(
+				"some-other-id").concat(LiferayPortletSession.LAYOUT_SEPARATOR);
+
+		mockHttpSession.setAttribute(autoRemoveAttribute, autoRemoveAttribute);
+
+		String matchAttribute =
+			LiferayPortletSession.PORTLET_SCOPE_NAMESPACE.concat(
+				portletId).concat(LiferayPortletSession.LAYOUT_SEPARATOR);
+
+		mockHttpSession.setAttribute(matchAttribute, matchAttribute);
+
 		Map<String, Serializable> sessionAttributes =
-			SPIAgentSerializable.extractSessionAttributes(mockHttpSession);
+			SPIAgentSerializable.extractSessionAttributes(
+				mockHttpServletRequest);
 
 		Assert.assertTrue(logRecords.isEmpty());
-		Assert.assertEquals(1, sessionAttributes.size());
+		Assert.assertEquals(2, sessionAttributes.size());
 		Assert.assertEquals(
 			serializeableAttribute,
 			sessionAttributes.get(serializeableAttribute));
+		Assert.assertEquals(
+			matchAttribute, sessionAttributes.get(matchAttribute));
 
 		// With log
 
@@ -278,7 +332,7 @@ public class SPIAgentSerializableTest {
 			SPIAgentSerializable.class.getName(), Level.WARNING);
 
 		sessionAttributes = SPIAgentSerializable.extractSessionAttributes(
-			mockHttpSession);
+			mockHttpServletRequest);
 
 		Assert.assertEquals(1, logRecords.size());
 
@@ -289,14 +343,16 @@ public class SPIAgentSerializableTest {
 				nonserializableAttribute + " with value " +
 					nonserializableAttribute, logRecord.getMessage());
 
-		Assert.assertEquals(1, sessionAttributes.size());
+		Assert.assertEquals(2, sessionAttributes.size());
 		Assert.assertEquals(
 			serializeableAttribute,
 			sessionAttributes.get(serializeableAttribute));
+		Assert.assertEquals(
+			matchAttribute, sessionAttributes.get(matchAttribute));
 	}
 
 	@AdviseWith(
-		adviceClasses = {PropsUtilAdvice.class}
+		adviceClasses = {DeserializerAdvice.class, PropsUtilAdvice.class}
 	)
 	@Test
 	public void testSerialization() throws IOException {
@@ -348,7 +404,8 @@ public class SPIAgentSerializableTest {
 
 		};
 
-		SPIAgentSerializable agentSerializable = new SPIAgentSerializable();
+		SPIAgentSerializable agentSerializable = new SPIAgentSerializable(
+			_SERVLET_CONTEXT_NAME);
 
 		try {
 			agentSerializable.writeTo(
@@ -475,6 +532,9 @@ public class SPIAgentSerializableTest {
 				new UnsyncByteArrayInputStream(receiptData));
 
 		Assert.assertNotNull(receivedAgentSerializable);
+
+		Assert.assertSame(
+			_classLoader, DeserializerAdvice.getContextClassLoader());
 	}
 
 	@Test
@@ -503,7 +563,8 @@ public class SPIAgentSerializableTest {
 
 		_threadLocal.set(threadLocalValue);
 
-		SPIAgentSerializable agentSerializable = new SPIAgentSerializable();
+		SPIAgentSerializable agentSerializable = new SPIAgentSerializable(
+			_SERVLET_CONTEXT_NAME);
 
 		Assert.assertNull(agentSerializable.threadLocalDistributors);
 
@@ -532,6 +593,34 @@ public class SPIAgentSerializableTest {
 		_threadLocal.remove();
 	}
 
+	@Aspect
+	public static class DeserializerAdvice {
+
+		public static ClassLoader getContextClassLoader() {
+			return _contextClassLoader;
+		}
+
+		@Around(
+			"execution(public * " +
+				"com.liferay.portal.kernel.io.Deserializer.readObject())")
+		public Object readObject(ProceedingJoinPoint proceedingJoinPoint)
+			throws Throwable {
+
+			Thread currentThread = Thread.currentThread();
+
+			_contextClassLoader = currentThread.getContextClassLoader();
+
+			return proceedingJoinPoint.proceed();
+		}
+
+		private static ClassLoader _contextClassLoader;
+
+	}
+
+	private static final String _SERVLET_CONTEXT_NAME = "SERVLET_CONTEXT_NAME";
+
 	private static ThreadLocal<String> _threadLocal = new ThreadLocal<String>();
+
+	private ClassLoader _classLoader;
 
 }

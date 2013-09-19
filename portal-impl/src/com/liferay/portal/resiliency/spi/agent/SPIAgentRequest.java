@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.model.Portlet;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.upload.UploadServletRequestImpl;
 import com.liferay.portal.util.WebKeys;
@@ -56,6 +57,10 @@ import javax.servlet.http.HttpSession;
 public class SPIAgentRequest extends SPIAgentSerializable {
 
 	public SPIAgentRequest(HttpServletRequest request) throws IOException {
+		super(
+			((Portlet)request.getAttribute(
+				WebKeys.SPI_AGENT_PORTLET)).getContextName());
+
 		cookies = request.getCookies();
 		distributedRequestAttributes = extractDistributedRequestAttributes(
 			request, Direction.REQUEST);
@@ -133,9 +138,7 @@ public class SPIAgentRequest extends SPIAgentSerializable {
 				new String[] {StringPool.FALSE});
 		}
 
-		HttpSession session = request.getSession();
-
-		originalSessionAttributes = extractSessionAttributes(session);
+		originalSessionAttributes = extractSessionAttributes(request);
 
 		captureThreadLocals();
 	}

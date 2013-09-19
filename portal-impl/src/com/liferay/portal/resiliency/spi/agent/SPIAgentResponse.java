@@ -46,6 +46,10 @@ import javax.servlet.http.HttpSession;
  */
 public class SPIAgentResponse extends SPIAgentSerializable {
 
+	public SPIAgentResponse(String servletContextName) {
+		super(servletContextName);
+	}
+
 	public void captureRequestSessionAttributes(HttpServletRequest request) {
 		distributedRequestAttributes = extractDistributedRequestAttributes(
 			request, Direction.RESPONSE);
@@ -57,7 +61,7 @@ public class SPIAgentResponse extends SPIAgentSerializable {
 			spiAgentRequest.getOriginalSessionAttributes();
 
 		Map<String, Serializable> newSessionAttributes =
-			extractSessionAttributes(request.getSession());
+			extractSessionAttributes(request);
 
 		Set<String> removedSessionAttributeNames =
 			originalSessionAttributes.keySet();

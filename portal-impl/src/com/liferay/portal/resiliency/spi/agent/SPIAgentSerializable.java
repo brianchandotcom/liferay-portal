@@ -22,12 +22,17 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.nio.intraband.RegistrationReference;
 import com.liferay.portal.kernel.nio.intraband.mailbox.MailboxException;
 import com.liferay.portal.kernel.nio.intraband.mailbox.MailboxUtil;
+import com.liferay.portal.kernel.portlet.LiferayPortletSession;
 import com.liferay.portal.kernel.resiliency.spi.agent.annotation.Direction;
 import com.liferay.portal.kernel.resiliency.spi.agent.annotation.DistributedRegistry;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
+import com.liferay.portal.kernel.util.ClassLoaderPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.ThreadLocalDistributor;
 import com.liferay.portal.kernel.util.ThreadLocalDistributorRegistry;
+import com.liferay.portal.model.Portlet;
+import com.liferay.portal.util.ClassLoaderUtil;
+import com.liferay.portal.util.WebKeys;
 
 import java.io.EOFException;
 import java.io.IOException;
@@ -136,7 +141,16 @@ public class SPIAgentSerializable implements Serializable {
 	}
 
 	public static Map<String, Serializable> extractSessionAttributes(
-		HttpSession session) {
+		HttpServletRequest request) {
+
+		HttpSession session = request.getSession();
+
+		Portlet portlet = (Portlet)request.getAttribute(
+			WebKeys.SPI_AGENT_PORTLET);
+
+		String namespace = LiferayPortletSession.PORTLET_SCOPE_NAMESPACE.concat(
+			portlet.getPortletId()).concat(
+				LiferayPortletSession.LAYOUT_SEPARATOR);
 
 		Map<String, Serializable> sessionAttributes =
 			new HashMap<String, Serializable>();
@@ -145,6 +159,14 @@ public class SPIAgentSerializable implements Serializable {
 
 		while (enumeration.hasMoreElements()) {
 			String name = enumeration.nextElement();
+
+			if (name.startsWith(
+					LiferayPortletSession.PORTLET_SCOPE_NAMESPACE) &&
+				!name.startsWith(namespace)) {
+
+				continue;
+			}
+
 			Object value = session.getAttribute(name);
 
 			if (value instanceof Serializable) {
@@ -188,12 +210,29 @@ public class SPIAgentSerializable implements Serializable {
 
 		Deserializer deserializer = new Deserializer(byteBuffer);
 
+		ClassLoader contextClassLoader =
+			ClassLoaderUtil.getContextClassLoader();
+
 		try {
+			String servletContextName = deserializer.readString();
+
+			ClassLoader classLoader = ClassLoaderPool.getClassLoader(
+				servletContextName);
+
+			ClassLoaderUtil.setContextClassLoader(classLoader);
+
 			return deserializer.readObject();
 		}
 		catch (ClassNotFoundException cnfe) {
 			throw new IOException(cnfe);
 		}
+		finally {
+			ClassLoaderUtil.setContextClassLoader(contextClassLoader);
+		}
+	}
+
+	public SPIAgentSerializable(String servletContextName) {
+		this.servletContextName = servletContextName;
 	}
 
 	public void writeTo(
@@ -203,6 +242,7 @@ public class SPIAgentSerializable implements Serializable {
 
 		Serializer serializer = new Serializer();
 
+		serializer.writeString(servletContextName);
 		serializer.writeObject(this);
 
 		try {
@@ -243,6 +283,7 @@ public class SPIAgentSerializable implements Serializable {
 		}
 	}
 
+	protected transient final String servletContextName;
 	protected ThreadLocalDistributor[] threadLocalDistributors;
 
 	private static Log _log = LogFactoryUtil.getLog(SPIAgentSerializable.class);

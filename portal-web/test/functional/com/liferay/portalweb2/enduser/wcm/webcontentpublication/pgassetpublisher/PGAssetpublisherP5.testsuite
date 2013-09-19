@@ -1,0 +1,4 @@
+<definition>
+	<execute test-case-command="PGAssetpublisher#ConfigureAPPortletDisplayPage" />
+	<execute test-case-command="PGAssetpublisher#ConfigureAPPortletSelectedWebContent" />
+</definition>

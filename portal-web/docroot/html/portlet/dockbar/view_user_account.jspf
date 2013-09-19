@@ -140,6 +140,10 @@
 		</aui:nav-item>
 	</c:when>
 	<c:otherwise>
-		<aui:nav-item cssClass="sign-in" data-redirect="<%= PortalUtil.isLoginRedirectRequired(request) %>" href="<%= themeDisplay.getURLSignIn() %>" label="sign-in" />
+		<%
+			Map<String, String> anchorData = new HashMap<String, String>();
+			anchorData.put("redirect", String.valueOf(PortalUtil.isLoginRedirectRequired(request)));
+		%>
+		<aui:nav-item cssClass="sign-in" anchorData="<%= anchorData %>" href="<%= themeDisplay.getURLSignIn() %>" label="sign-in" />
 	</c:otherwise>
 </c:choose>

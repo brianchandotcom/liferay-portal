@@ -1,0 +1,44 @@
+<definition>
+	<var name="pageName" value="Asset Publisher Page" />
+	<var name="portletName" value="Asset Publisher" />
+
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="${portletName}" />
+		</execute>
+	</set-up>
+
+	<tear-down>
+		<execute macro="Page#tearDownPG" />
+	</tear-down>
+
+	<command name="ConfigureAPPortletSelectedWebContent">
+		<var name="selectedAsset" value="Web Content Article" />
+
+		<execute macro="AssetPublisher#configureSelectedPG">
+				<var name="selectedAsset" value="${selectedAsset}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="AssetPublisher#viewSelectedPG">
+			<var name="selectedAsset" value="${selectedAsset}" />
+		</execute>
+	</command>
+
+	<command name="ConfigureAPPortletDisplayPage">
+		<execute macro="AssetPublisher#configureDisplayPagePG" />
+	</command>
+</definition>

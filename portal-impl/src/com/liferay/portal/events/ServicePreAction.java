@@ -55,6 +55,7 @@ import com.liferay.portal.model.Image;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutSet;
+import com.liferay.portal.model.LayoutTemplate;
 import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.LayoutTypePortletConstants;
 import com.liferay.portal.model.Portlet;
@@ -1425,15 +1426,15 @@ public class ServicePreAction extends Action {
 		layoutTypePortlet.setLayoutTemplateId(
 			0, PropsValues.DEFAULT_USER_PRIVATE_LAYOUT_TEMPLATE_ID, false);
 
-		for (int i = 0; i < 10; i++) {
-			String columnId = "column-" + i;
-			String portletIds = PropsUtil.get(
-				PropsKeys.DEFAULT_USER_PRIVATE_LAYOUT_COLUMN + i);
+		LayoutTemplate layoutTemplate = layoutTypePortlet.getLayoutTemplate();
 
-			String[] portletIdsArray = StringUtil.split(portletIds);
+		for (String column : layoutTemplate.getColumns()) {
+			String keyPrefix = PropsKeys.DEFAULT_USER_PRIVATE_LAYOUT_PREFIX;
+
+			String portletIds = PropsUtil.get(keyPrefix.concat(column));
 
 			layoutTypePortlet.addPortletIds(
-				0, portletIdsArray, columnId, false);
+				0, StringUtil.split(portletIds), column, false);
 		}
 
 		LayoutLocalServiceUtil.updateLayout(
@@ -1523,15 +1524,15 @@ public class ServicePreAction extends Action {
 		layoutTypePortlet.setLayoutTemplateId(
 			0, PropsValues.DEFAULT_USER_PUBLIC_LAYOUT_TEMPLATE_ID, false);
 
-		for (int i = 0; i < 10; i++) {
-			String columnId = "column-" + i;
-			String portletIds = PropsUtil.get(
-				PropsKeys.DEFAULT_USER_PUBLIC_LAYOUT_COLUMN + i);
+		LayoutTemplate layoutTemplate = layoutTypePortlet.getLayoutTemplate();
 
-			String[] portletIdsArray = StringUtil.split(portletIds);
+		for (String column : layoutTemplate.getColumns()) {
+			String keyPrefix = PropsKeys.DEFAULT_USER_PUBLIC_LAYOUT_PREFIX;
+
+			String portletIds = PropsUtil.get(keyPrefix.concat(column));
 
 			layoutTypePortlet.addPortletIds(
-				0, portletIdsArray, columnId, false);
+				0, StringUtil.split(portletIds), column, false);
 		}
 
 		LayoutLocalServiceUtil.updateLayout(

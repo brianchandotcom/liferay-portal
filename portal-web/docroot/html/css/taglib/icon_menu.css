@@ -12,10 +12,6 @@
 	width: 215px;
 }
 
-.taglib-text-icon {
-	margin-left: 5px;
-}
-
 .lfr-menu-list {
 	float: none;
 	overflow-y: auto;
@@ -43,7 +39,7 @@
 }
 
 @include respond-to(phone) {
-	.lfr-icon-menu .dropdown-toggle {
+	.table-cell.last .lfr-icon-menu .dropdown-toggle {
 		text-align: center;
 
 		> img, .lfr-icon-menu-text {

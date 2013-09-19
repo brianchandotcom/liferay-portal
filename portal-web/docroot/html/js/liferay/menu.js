@@ -266,9 +266,9 @@ AUI.add(
 									triggerIcon.attr('class', selectedListItemIconClass);
 								}
 
-								var selectedListItemMessage = selectedListItem.one('.taglib-text-icon');
+								var selectedListItemMessage = selectedListItem.one('.lfr-icon-menu-text');
 
-								var triggerMessage = trigger.one('.taglib-text-icon');
+								var triggerMessage = trigger.one('.lfr-icon-menu-text');
 
 								if (selectedListItemMessage && triggerMessage) {
 									triggerMessage.setContent(selectedListItemMessage.text());

@@ -79,31 +79,27 @@
 
 @include respond-to(phone, tablet) {
 	.aui {
-		select,
-		textarea,
-		input[type="text"],
-		input[type="password"],
+		input[type="color"],
+		input[type="date"],
 		input[type="datetime"],
 		input[type="datetime-local"],
-		input[type="date"],
-		input[type="month"],
-		input[type="time"],
-		input[type="week"],
-		input[type="number"],
 		input[type="email"],
-		input[type="url"],
+		input[type="month"],
+		input[type="number"],
+		input[type="password"],
 		input[type="search"],
 		input[type="tel"],
-		input[type="color"],
-		.uneditable-input,
-		.navbar-search .search-query {
+		input[type="text"],
+		input[type="time"],
+		input[type="url"],
+		input[type="week"],
+		select,
+		textarea,
+		.navbar-search .search-query,
+		.uneditable-input {
 			font-size: 18px;
+			height: auto;
 			line-height: 20px;
-			padding: 12px 16px;
-		}
-
-		.navbar-search .search-query {
-			padding: 21px 16px;
 		}
 	}
 }

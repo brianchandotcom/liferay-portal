@@ -15,9 +15,9 @@
 package com.liferay.portal.kernel.monitoring.statistics;
 
 import com.liferay.portal.kernel.util.AutoResetThreadLocal;
+import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -27,10 +27,6 @@ import java.util.List;
 public class DataSampleThreadLocal implements Cloneable {
 
 	public static void addDataSample(DataSample dataSample) {
-		if (!_monitoringDataSampleThreadLocal) {
-			return;
-		}
-
 		_dataSampleThreadLocal.get()._addDataSample(dataSample);
 	}
 
@@ -39,21 +35,7 @@ public class DataSampleThreadLocal implements Cloneable {
 	}
 
 	public static List<DataSample> getDataSamples() {
-		if (!_monitoringDataSampleThreadLocal) {
-			return Collections.emptyList();
-		}
-
-		return _dataSampleThreadLocal.get()._getDataSamples();
-	}
-
-	public static boolean isMonitoringDataSampleThreadLocal() {
-		return _monitoringDataSampleThreadLocal;
-	}
-
-	public static void setMonitoringDataSampleThreadLocal(
-		boolean monitoringDataSampleThreadLocal) {
-
-		_monitoringDataSampleThreadLocal = monitoringDataSampleThreadLocal;
+		return ListUtil.copy(_dataSampleThreadLocal.get()._getDataSamples());
 	}
 
 	@Override
@@ -81,7 +63,6 @@ public class DataSampleThreadLocal implements Cloneable {
 		new AutoResetThreadLocal<DataSampleThreadLocal>(
 			DataSampleThreadLocal.class + "._dataSampleThreadLocal",
 			new DataSampleThreadLocal());
-	private static boolean _monitoringDataSampleThreadLocal;
 
 	private List<DataSample> _dataSamples = new ArrayList<DataSample>();
 	private long _monitorTime;

@@ -16,10 +16,6 @@
 
 <%@ include file="/html/common/init.jsp" %>
 
-<c:if test="<%= PropsValues.MONITORING_PORTAL_REQUEST %>">
-	<%@ include file="/html/common/themes/top_monitoring.jspf" %>
-</c:if>
-
 <%@ include file="/html/common/themes/top_meta.jspf" %>
 <%@ include file="/html/common/themes/top_meta-ext.jsp" %>
 

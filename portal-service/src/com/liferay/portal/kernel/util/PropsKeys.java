@@ -1697,8 +1697,6 @@ public interface PropsKeys {
 
 	public static final String MODULE_FRAMEWORK_SYSTEM_PACKAGES_EXTRA = "module.framework.system.packages.extra";
 
-	public static final String MONITORING_DATA_SAMPLE_THREAD_LOCAL = "monitoring.data.sample.thread.local";
-
 	public static final String MONITORING_PORTAL_REQUEST = "monitoring.portal.request";
 
 	public static final String MONITORING_PORTLET_ACTION_REQUEST = "monitoring.portlet.action.request";

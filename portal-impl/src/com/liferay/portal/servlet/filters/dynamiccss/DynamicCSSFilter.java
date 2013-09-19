@@ -14,8 +14,6 @@
 
 package com.liferay.portal.servlet.filters.dynamiccss;
 
-import com.liferay.portal.kernel.cache.key.CacheKeyGenerator;
-import com.liferay.portal.kernel.cache.key.CacheKeyGeneratorUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.BufferCacheServletResponse;
@@ -66,22 +64,6 @@ public class DynamicCSSFilter extends IgnoreModuleRequestFilter {
 		DynamicCSSUtil.init();
 	}
 
-	protected String getCacheFileName(HttpServletRequest request) {
-		CacheKeyGenerator cacheKeyGenerator =
-			CacheKeyGeneratorUtil.getCacheKeyGenerator(
-				DynamicCSSFilter.class.getName());
-
-		cacheKeyGenerator.append(request.getRequestURI());
-
-		String queryString = request.getQueryString();
-
-		if (queryString != null) {
-			cacheKeyGenerator.append(sterilizeQueryString(queryString));
-		}
-
-		return String.valueOf(cacheKeyGenerator.finish());
-	}
-
 	protected Object getDynamicContent(
 			HttpServletRequest request, HttpServletResponse response,
 			FilterChain filterChain)
@@ -114,14 +96,8 @@ public class DynamicCSSFilter extends IgnoreModuleRequestFilter {
 		File cacheDataFile = new File(
 			_tempDir, cacheCommonFileName + "_E_DATA" + cacheCDNHost);
 
-		if (cacheDataFile.exists() &&
-			(cacheDataFile.lastModified() >= urlConnection.getLastModified())) {
-
-			if (cacheContentTypeFile.exists()) {
-				String contentType = FileUtil.read(cacheContentTypeFile);
-
-				response.setContentType(contentType);
-			}
+		if (cacheDataFileExists(
+				response, cacheDataFile, urlConnection, cacheContentTypeFile)) {
 
 			return cacheDataFile;
 		}
@@ -215,12 +191,6 @@ public class DynamicCSSFilter extends IgnoreModuleRequestFilter {
 				ServletResponseUtil.write(response, (String)parsedContent);
 			}
 		}
-	}
-
-	protected String sterilizeQueryString(String queryString) {
-		return StringUtil.replace(
-			queryString, new String[] {StringPool.SLASH, StringPool.BACK_SLASH},
-			new String[] {StringPool.UNDERLINE, StringPool.UNDERLINE});
 	}
 
 	private static final String _CSS_EXTENSION = ".css";

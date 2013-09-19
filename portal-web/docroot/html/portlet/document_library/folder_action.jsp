@@ -327,7 +327,7 @@ String iconMenuId = null;
 					%>
 
 					<liferay-portlet:renderURL var="editFileEntryURL" windowState="<%= (((folder == null) || folder.isSupportsMetadata()) && (fileEntryTypesCount > 0)) ? LiferayWindowState.POP_UP.toString() : WindowState.NORMAL.toString() %>">
-						<portlet:param name="struts_action" value='<%= (((folder == null) || folder.isSupportsMetadata()) && (fileEntryTypesCount > 0)) ? "/document_library_display/select_file_entry_type" : "/document_library_display/edit_file_entry" %>' />
+						<portlet:param name="struts_action" value='<%= (((folder == null) || folder.isSupportsMetadata()) && (fileEntryTypesCount > 0)) ? "/document_library_display/select_add_file_entry_type" : "/document_library_display/edit_file_entry" %>' />
 						<portlet:param name="redirect" value="<%= currentURL %>" />
 						<portlet:param name="backURL" value="<%= currentURL %>" />
 						<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />

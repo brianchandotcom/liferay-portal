@@ -47,6 +47,12 @@
 		<execute function="AssertClick#assertTextClickAtAndWait" />
 	</command>
 
+	<command name="assertTextClickAtCKEditor">
+		<execute selenium="waitForVisible" argument1="//a[contains(@class,'cke_button cke_button__cut') and contains(@class,'cke_button_disabled')]" />
+
+		<execute function="AssertClick#assertTextClickAt" />
+	</command>
+
 	<command name="assertTextClickAtClickDockbar">
 		<execute selenium="clickAt" argument1="//div[@id='_145_dockbar']" argument2="" />
 

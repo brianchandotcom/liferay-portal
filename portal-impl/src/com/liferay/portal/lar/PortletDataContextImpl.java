@@ -470,74 +470,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 	public void addPermissions(String resourceName, long resourcePK)
 		throws PortalException, SystemException {
 
-		if (!MapUtil.getBoolean(
-				_parameterMap, PortletDataHandlerKeys.PERMISSIONS)) {
-
-			return;
-		}
-
-		List<KeyValuePair> permissions = new ArrayList<KeyValuePair>();
-
-		Group group = GroupLocalServiceUtil.getGroup(_groupId);
-
-		List<Role> roles = RoleLocalServiceUtil.getRoles(_companyId);
-
-		PrimitiveLongList roleIds = new PrimitiveLongList(roles.size());
-		Map<Long, String> roleIdsToNames = new HashMap<Long, String>();
-
-		for (Role role : roles) {
-			int type = role.getType();
-
-			if ((type == RoleConstants.TYPE_REGULAR) ||
-				((type == RoleConstants.TYPE_ORGANIZATION) &&
-				 group.isOrganization()) ||
-				((type == RoleConstants.TYPE_SITE) &&
-				 (group.isLayout() || group.isLayoutSetPrototype() ||
-				  group.isSite()))) {
-
-				String name = role.getName();
-
-				roleIds.add(role.getRoleId());
-				roleIdsToNames.put(role.getRoleId(), name);
-			}
-			else if ((type == RoleConstants.TYPE_PROVIDER) && role.isTeam()) {
-				Team team = TeamLocalServiceUtil.getTeam(role.getClassPK());
-
-				if (team.getGroupId() == _groupId) {
-					String name =
-						PermissionExporter.ROLE_TEAM_PREFIX + team.getName();
-
-					roleIds.add(role.getRoleId());
-					roleIdsToNames.put(role.getRoleId(), name);
-				}
-			}
-		}
-
-		List<String> actionIds = ResourceActionsUtil.getModelResourceActions(
-			resourceName);
-
-		Map<Long, Set<String>> roleIdsToActionIds = getActionIds(
-			_companyId, roleIds.getArray(), resourceName, resourcePK,
-			actionIds);
-
-		for (Map.Entry<Long, String> entry : roleIdsToNames.entrySet()) {
-			long roleId = entry.getKey();
-			String name = entry.getValue();
-
-			Set<String> availableActionIds = roleIdsToActionIds.get(roleId);
-
-			if (availableActionIds == null) {
-				availableActionIds = Collections.emptySet();
-			}
-
-			KeyValuePair permission = new KeyValuePair(
-				name, StringUtil.merge(availableActionIds));
-
-			permissions.add(permission);
-		}
-
-		_permissionsMap.put(
-			getPrimaryKeyString(resourceName, resourcePK), permissions);
+		doAddPermissions(resourceName, resourcePK);
 	}
 
 	@Override
@@ -2125,6 +2058,79 @@ public class PortletDataContextImpl implements PortletDataContext {
 		}
 
 		return serviceContext;
+	}
+
+	protected void doAddPermissions(String resourceName, long resourcePK)
+		throws PortalException, SystemException {
+
+		if (!MapUtil.getBoolean(
+				_parameterMap, PortletDataHandlerKeys.PERMISSIONS)) {
+
+			return;
+		}
+
+		List<KeyValuePair> permissions = new ArrayList<KeyValuePair>();
+
+		Group group = GroupLocalServiceUtil.getGroup(_groupId);
+
+		List<Role> roles = RoleLocalServiceUtil.getRoles(_companyId);
+
+		PrimitiveLongList roleIds = new PrimitiveLongList(roles.size());
+		Map<Long, String> roleIdsToNames = new HashMap<Long, String>();
+
+		for (Role role : roles) {
+			int type = role.getType();
+
+			if ((type == RoleConstants.TYPE_REGULAR) ||
+				((type == RoleConstants.TYPE_ORGANIZATION) &&
+				 group.isOrganization()) ||
+				((type == RoleConstants.TYPE_SITE) &&
+				 (group.isLayout() || group.isLayoutSetPrototype() ||
+				  group.isSite()))) {
+
+				String name = role.getName();
+
+				roleIds.add(role.getRoleId());
+				roleIdsToNames.put(role.getRoleId(), name);
+			}
+			else if ((type == RoleConstants.TYPE_PROVIDER) && role.isTeam()) {
+				Team team = TeamLocalServiceUtil.getTeam(role.getClassPK());
+
+				if (team.getGroupId() == _groupId) {
+					String name =
+						PermissionExporter.ROLE_TEAM_PREFIX + team.getName();
+
+					roleIds.add(role.getRoleId());
+					roleIdsToNames.put(role.getRoleId(), name);
+				}
+			}
+		}
+
+		List<String> actionIds = ResourceActionsUtil.getModelResourceActions(
+			resourceName);
+
+		Map<Long, Set<String>> roleIdsToActionIds = getActionIds(
+			_companyId, roleIds.getArray(), resourceName, resourcePK,
+			actionIds);
+
+		for (Map.Entry<Long, String> entry : roleIdsToNames.entrySet()) {
+			long roleId = entry.getKey();
+			String name = entry.getValue();
+
+			Set<String> availableActionIds = roleIdsToActionIds.get(roleId);
+
+			if (availableActionIds == null) {
+				availableActionIds = Collections.emptySet();
+			}
+
+			KeyValuePair permission = new KeyValuePair(
+				name, StringUtil.merge(availableActionIds));
+
+			permissions.add(permission);
+		}
+
+		_permissionsMap.put(
+			getPrimaryKeyString(resourceName, resourcePK), permissions);
 	}
 
 	protected Element doAddReferenceElement(

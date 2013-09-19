@@ -85,16 +85,7 @@ public class PwdGenerator {
 
 		// Shuffle
 
-		for (int i = length; i > 1; i--) {
-			int position = random.nextInt(i);
-
-			if (position != (i -1)) {
-				char c = sb.charAt(position);
-
-				sb.setCharAt(position, sb.charAt(i - 1));
-				sb.setCharAt(i - 1, c);
-			}
-		}
+		shuffle(random, sb);
 
 		return sb.toString();
 	}
@@ -159,6 +150,27 @@ public class PwdGenerator {
 
 	public static String getPinNumber() {
 		return getPassword(4, KEY1);
+	}
+
+	public static String shuffle(Random random, String s) {
+		StringBuilder sb = new StringBuilder(s);
+
+		shuffle(random, sb);
+
+		return sb.toString();
+	}
+
+	protected static void shuffle(Random random, StringBuilder sb) {
+		for (int i = sb.length(); i > 1; i--) {
+			int position = random.nextInt(i);
+
+			if (position != (i -1)) {
+				char c = sb.charAt(position);
+
+				sb.setCharAt(position, sb.charAt(i - 1));
+				sb.setCharAt(i - 1, c);
+			}
+		}
 	}
 
 	private static final String[] KEYS = {KEY1, KEY2, KEY3};

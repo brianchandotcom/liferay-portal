@@ -31,6 +31,7 @@ import com.liferay.util.PwdGenerator;
 
 import java.util.Arrays;
 import java.util.Date;
+import java.util.Random;
 
 /**
  * @author Scott Lee
@@ -229,7 +230,8 @@ public class PasswordPolicyToolkit extends BasicToolkit {
 					PropsValues.PASSWORDS_DEFAULT_POLICY_MIN_LENGTH));
 		}
 
-		return SecureRandomUtil.randomize(sb.toString());
+		return PwdGenerator.shuffle(
+			new Random(SecureRandomUtil.nextLong()), sb.toString());
 	}
 
 	protected String generateStatic(PasswordPolicy passwordPolicy) {
@@ -240,7 +242,7 @@ public class PasswordPolicyToolkit extends BasicToolkit {
 		StringBundler sb = new StringBundler(count);
 
 		for (int i = 0; i < count; i++) {
-			int index = SecureRandomUtil.nextInt(chars.length);
+			int index = Math.abs(SecureRandomUtil.nextInt()) % chars.length;
 
 			sb.append(chars[index]);
 		}

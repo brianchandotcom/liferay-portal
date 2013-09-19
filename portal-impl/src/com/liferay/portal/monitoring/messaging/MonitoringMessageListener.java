@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.monitoring.statistics.DataSample;
 import com.liferay.portal.kernel.monitoring.statistics.DataSampleProcessor;
 
+import java.util.List;
+
 /**
  * @author Michael C. Han
  * @author Brian Wing Shun Chan
@@ -33,10 +35,12 @@ public class MonitoringMessageListener extends BaseMessageListener {
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
-		DataSample dataSample = (DataSample)message.getPayload();
+		List<DataSample> dataSamples = (List<DataSample>)message.getPayload();
 
-		if (dataSample != null) {
-			_dataSampleProcessor.processDataSample(dataSample);
+		if ((dataSamples != null) && !dataSamples.isEmpty()) {
+			for (DataSample dataSample : dataSamples) {
+				_dataSampleProcessor.processDataSample(dataSample);
+			}
 		}
 	}
 

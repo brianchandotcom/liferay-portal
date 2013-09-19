@@ -18,10 +18,13 @@ import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.monitoring.RequestStatus;
 import com.liferay.portal.kernel.monitoring.statistics.DataSampleThreadLocal;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.monitoring.statistics.portal.PortalRequestDataSample;
+import com.liferay.portal.monitoring.statistics.service.ServiceMonitorAdvice;
 import com.liferay.portal.servlet.filters.BasePortalFilter;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.MonitoringPortlet;
 
 import java.io.IOException;
 
@@ -52,7 +55,13 @@ public class MonitoringFilter extends BasePortalFilter {
 			return false;
 		}
 
-		if (!_monitoringPortalRequest) {
+		if (!_monitoringPortalRequest &&
+			!MonitoringPortlet.isMonitoringPortletActionRequest() &&
+			!MonitoringPortlet.isMonitoringPortletEventRequest() &&
+			!MonitoringPortlet.isMonitoringPortletRenderRequest() &&
+			!MonitoringPortlet.isMonitoringPortletResourceRequest() &&
+			!ServiceMonitorAdvice.isActive()) {
+
 			return false;
 		}
 
@@ -67,21 +76,37 @@ public class MonitoringFilter extends BasePortalFilter {
 
 		long companyId = PortalUtil.getCompanyId(request);
 
-		PortalRequestDataSample portalRequestDataSample =
-			new PortalRequestDataSample(
+		PortalRequestDataSample portalRequestDataSample = null;
+
+		if (_monitoringPortalRequest) {
+
+			String requestURLString = StringPool.BLANK;
+
+			if (request.getRequestURL() != null) {
+				requestURLString = request.getRequestURL().toString();
+			}
+
+			portalRequestDataSample = new PortalRequestDataSample(
 				companyId, request.getRemoteUser(), request.getRequestURI(),
-				request.getRequestURL().toString());
+				requestURLString);
+		}
 
 		try {
-			portalRequestDataSample.prepare();
+			if (portalRequestDataSample != null) {
+				portalRequestDataSample.prepare();
+			}
 
 			processFilter(
 				MonitoringFilter.class, request, response, filterChain);
 
-			portalRequestDataSample.capture(RequestStatus.SUCCESS);
+			if (portalRequestDataSample != null) {
+				portalRequestDataSample.capture(RequestStatus.SUCCESS);
+			}
 		}
 		catch (Exception e) {
-			portalRequestDataSample.capture(RequestStatus.ERROR);
+			if (portalRequestDataSample != null) {
+				portalRequestDataSample.capture(RequestStatus.ERROR);
+			}
 
 			if (e instanceof IOException) {
 				throw (IOException)e;
@@ -94,10 +119,13 @@ public class MonitoringFilter extends BasePortalFilter {
 			}
 		}
 		finally {
-			MessageBusUtil.sendMessage(
-				DestinationNames.MONITORING, portalRequestDataSample);
+			if (portalRequestDataSample != null) {
+				DataSampleThreadLocal.addDataSample(portalRequestDataSample);
+			}
 
-			DataSampleThreadLocal.addDataSample(portalRequestDataSample);
+			MessageBusUtil.sendMessage(
+				DestinationNames.MONITORING,
+				DataSampleThreadLocal.getDataSamples());
 		}
 	}
 

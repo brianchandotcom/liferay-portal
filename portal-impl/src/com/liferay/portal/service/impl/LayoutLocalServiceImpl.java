@@ -110,6 +110,7 @@ import java.util.Set;
  * @author Bruno Farache
  * @author Vilmos Papp
  * @author James Lefeu
+ * @author Tibor Lipusz
  */
 public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
@@ -2741,6 +2742,55 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 
 		Layout layout = layoutPersistence.findByG_P_L(
 			groupId, privateLayout, layoutId);
+
+		return updatePriority(layout, priority);
+	}
+
+	/**
+	 * Updates the priority of the layout matching the group, layout ID and
+	 * privacy, setting the layout's priority based on the priorities of the
+	 * next and previous layouts.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  privateLayout whether the layout is private to the group
+	 * @param  layoutId the primary key of the layout
+	 * @param  nextLayoutId the primary key of the next layout
+	 * @param  previousLayoutId the primary key of the previos layout
+	 * @return the updated layout
+	 * @throws PortalException if a matching layout could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Layout updatePriority(
+			long groupId, boolean privateLayout, long layoutId,
+			long nextLayoutId, long previousLayoutId)
+		throws PortalException, SystemException {
+
+		Layout layout = getLayout(groupId, privateLayout, layoutId);
+
+		int priority = layout.getPriority();
+
+		Layout nextLayout = null;
+
+		if (nextLayoutId > -1) {
+			nextLayout = getLayout(groupId, privateLayout, nextLayoutId);
+		}
+
+		Layout previousLayout = null;
+
+		if (previousLayoutId > -1) {
+			previousLayout = getLayout(
+				groupId, privateLayout, previousLayoutId);
+		}
+
+		if ((nextLayout != null) && (priority > nextLayout.getPriority())) {
+			priority = nextLayout.getPriority();
+		}
+		else if ((previousLayout != null) &&
+				 (priority < previousLayout.getPriority())) {
+
+			priority = previousLayout.getPriority();
+		}
 
 		return updatePriority(layout, priority);
 	}

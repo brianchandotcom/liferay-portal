@@ -8,9 +8,9 @@ AUI.add(
 
 		var STATUS_CODE = Liferay.STATUS_CODE;
 
-		var STR_LAYOUT_ID = 'layoutId';
-
 		var STR_EMPTY = '';
+
+		var STR_LAYOUT_ID = 'layoutId';
 
 		var TPL_EDITOR = '<div class="add-page-editor"><div class="input-append"></div></div>';
 
@@ -838,27 +838,30 @@ AUI.add(
 			function(node) {
 				var instance = this;
 
-				var navItems = instance.get('navBlock').all('li');
+				var nextLayoutId = -1;
 
-				var priority = -1;
+				var nextNode = node.next();
 
-				navItems.some(
-					function(item, index, collection) {
-						if (!item.ancestor().hasClass('child-menu')) {
-							priority++;
-						}
+				if (nextNode) {
+					nextLayoutId = nextNode.getData(STR_LAYOUT_ID);
+				}
 
-						return item == node;
-					}
-				);
+				var previousLayoutId = -1;
+
+				var previousNode = node.previous();
+
+				if (previousNode) {
+					previousLayoutId = previousNode.getData(STR_LAYOUT_ID);
+				}
 
 				var data = {
 					cmd: 'priority',
 					doAsUserId: themeDisplay.getDoAsUserIdEncoded(),
 					groupId: themeDisplay.getSiteGroupId(),
 					layoutId: node.getData(STR_LAYOUT_ID),
+					nextLayoutId: nextLayoutId,
 					p_auth: Liferay.authToken,
-					priority: priority,
+					previousLayoutId: previousLayoutId,
 					privateLayout: themeDisplay.isPrivateLayout()
 				};
 

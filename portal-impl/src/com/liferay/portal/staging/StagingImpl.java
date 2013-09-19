@@ -521,16 +521,20 @@ public class StagingImpl implements Staging {
 				liveGroup.getFriendlyURL(), false, liveGroup.isActive(),
 				serviceContext);
 
-			if (liveGroup.hasPrivateLayouts()) {
-				Map<String, String[]> parameterMap = getStagingParameters();
+			Map<String, String[]> parameterMap = getStagingParameters();
 
+			// Private Pages
+
+			if (liveGroup.hasPrivateLayouts()) {
 				publishLayouts(
 					userId, liveGroup.getGroupId(), stagingGroup.getGroupId(),
 					true, parameterMap, null, null);
 			}
 
-			if (liveGroup.hasPublicLayouts()) {
-				Map<String, String[]> parameterMap = getStagingParameters();
+			// Public Pages and if there are no pages
+
+			if (liveGroup.hasPublicLayouts() ||
+				!liveGroup.hasPrivateLayouts()) {
 
 				publishLayouts(
 					userId, liveGroup.getGroupId(), stagingGroup.getGroupId(),

@@ -2647,11 +2647,21 @@ public class HookHotDeployListener
 		Map<String, LayoutSettings> layoutSettingsMap =
 			LayoutSettings.getLayoutSettingsMap();
 
-		for (String layoutType : layoutSettingsMap.keySet()) {
+		Set<Map.Entry<String, LayoutSettings>> entrySet =
+			layoutSettingsMap.entrySet();
+
+		Iterator<Map.Entry<String, LayoutSettings>> entrySetIterator =
+			entrySet.iterator();
+
+		while (entrySetIterator.hasNext()) {
+			Map.Entry<String, LayoutSettings> entry = entrySetIterator.next();
+
+			String layoutType = entry.getKey();
+
 			if (!layoutType.equals(LayoutConstants.TYPE_CONTROL_PANEL) &&
 				!ArrayUtil.contains(value, layoutType)) {
 
-				LayoutSettings.removeLayoutSetting(layoutType);
+				entrySetIterator.remove();
 			}
 		}
 

@@ -546,7 +546,7 @@
 			<forward name="portlet.document_library.view" path="portlet.document_library.select_file_entry" />
 		</action>
 
-		<action path="/document_library/select_file_entry_type" forward="portlet.document_library.select_file_entry_type" />
+		<action path="/document_library/select_restrict_file_entry_type" forward="portlet.document_library.select_restrict_file_entry_type" />
 
 		<action path="/document_library/select_folder" type="com.liferay.portlet.documentlibrary.action.EditFolderAction">
 			<forward name="portlet.document_library.edit_folder" path="portlet.document_library.select_folder" />
@@ -576,7 +576,7 @@
 
 		<action path="/document_library_display/search" forward="portlet.document_library_display.search" />
 
-		<action path="/document_library_display/select_file_entry_type" forward="portlet.document_library_display.select_file_entry_type" />
+		<action path="/document_library_display/select_add_file_entry_type" forward="portlet.document_library_display.select_add_file_entry_type" />
 
 		<action path="/document_library_display/view" type="com.liferay.portlet.documentlibrary.action.ViewAction">
 			<forward name="portlet.document_library.error" path="portlet.document_library.error" />

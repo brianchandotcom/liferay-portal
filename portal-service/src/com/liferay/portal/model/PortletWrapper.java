@@ -514,6 +514,16 @@ public class PortletWrapper implements Portlet, ModelWrapper<Portlet> {
 	}
 
 	/**
+	* Returns the servlet context name of the portlet.
+	*
+	* @return the servlet context name of the portlet
+	*/
+	@Override
+	public java.lang.String getContextName() {
+		return _portlet.getContextName();
+	}
+
+	/**
 	* Returns the servlet context path of the portlet.
 	*
 	* @return the servlet context path of the portlet

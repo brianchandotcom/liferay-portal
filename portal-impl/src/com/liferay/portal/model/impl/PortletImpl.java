@@ -645,6 +645,20 @@ public class PortletImpl extends PortletBaseImpl {
 	}
 
 	/**
+	 * Returns the servlet context name of the portlet.
+	 *
+	 * @return the servlet context name of the portlet
+	 */
+	@Override
+	public String getContextName() {
+		if (!_portletApp.isWARFile()) {
+			return PortalUtil.getServletContextName();
+		}
+
+		return _portletApp.getServletContextName();
+	}
+
+	/**
 	 * Returns the servlet context path of the portlet.
 	 *
 	 * @return the servlet context path of the portlet

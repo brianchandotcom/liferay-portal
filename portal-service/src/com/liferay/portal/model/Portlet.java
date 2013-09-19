@@ -184,6 +184,13 @@ public interface Portlet extends PortletModel, PersistedModel {
 	public com.liferay.portal.kernel.portlet.ConfigurationAction getConfigurationActionInstance();
 
 	/**
+	* Returns the servlet context name of the portlet.
+	*
+	* @return the servlet context name of the portlet
+	*/
+	public java.lang.String getContextName();
+
+	/**
 	* Returns the servlet context path of the portlet.
 	*
 	* @return the servlet context path of the portlet

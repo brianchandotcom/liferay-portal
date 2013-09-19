@@ -1,0 +1,4 @@
+<definition>
+	<execute test-case-command="CPRolesCPWebcontent#ViewWebContentPortletRegRole" />
+	<execute test-case-command="CPRolesCPWebcontent#ViewWebContentPortletSiteRole" />
+</definition>

@@ -342,30 +342,6 @@
 		<execute action="PGBlogs#assertElementNotPresent" locator-key1="ENTRY_PERMISSIONS" value1="Permissions" />
 	</command>
 
-	<command name="viewPortletNoPermissionPG">
-		<execute action="PGBlogs#assertTextEquals" locator-key1="PORTLET_TITLE" value1="Blogs"/>
-		<execute action="PGBlogs#assertElementNotPresent" locator-key1="ADD_ENTRY_BUTTON" value1="Add Blog Entry" />
-		<execute action="PGBlogs#assertElementNotPresent" locator-key1="PERMISSIONS_BUTTON" value1="Permissions" />
-		<execute action="PGBlogs#assertElementNotPresent" locator-key1="SUBSCRIBE_LINK" value1="Subscribe" />
-		<execute action="PGBlogs#assertTextEquals" locator-key1="RSS_LINK" value1="RSS" />
-	</command>
-
-	<command name="viewPortletPermissionsPG">
-		<execute action="PGBlogs#assertTextEquals" locator-key1="PERMISSIONS_BUTTON" value1="Permissions" />
-	</command>
-
-	<command name="viewPortletSubscribePG">
-		<execute action="PGBlogs#assertTextEquals" locator-key1="SUBSCRIBE_LINK" value1="Subscribe" />
-	</command>
-
-	<command name="viewPortletPG">
-		<execute action="PGBlogs#assertTextEquals" locator-key1="PORTLET_TITLE" value1="Blogs"/>
-		<execute action="PGBlogs#assertTextEquals" locator-key1="ADD_ENTRY_BUTTON" value1="Add Blog Entry"/>
-		<execute action="PGBlogs#assertTextEquals" locator-key1="PERMISSIONS_BUTTON" value1="Permissions" />
-		<execute action="PGBlogs#assertTextEquals" locator-key1="SUBSCRIBE_LINK" value1="Subscribe" />
-		<execute action="PGBlogs#assertTextEquals" locator-key1="RSS_LINK" value1="RSS" />
-	</command>
-
 	<command name="viewPGViaAP">
 		<var name="key_assetTitle" value="${entryTitle}" />
 

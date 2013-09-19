@@ -77,7 +77,12 @@
 			</then>
 		</if>
 
-		<execute action="Home#click" locator1="//ul[@class='category-portlets']/li[contains(.,'${portletName}')]/a" />
+		<if>
+			<condition action="Home#isElementPresent" locator1="//ul[@class='category-portlets']/li[contains(.,'${portletName}')]/a" />
+			<then>
+				<execute action="Home#click" locator1="//ul[@class='category-portlets']/li[contains(.,'${portletName}')]/a" />
+			</then>
+		</if>
 	</command>
 
 	<command name="gotoCP">

@@ -1,0 +1,4 @@
+<definition>
+	<execute test-case-command="CPRolesCPWiki#ViewWikiPortletRegRole" />
+	<execute test-case-command="CPRolesCPWiki#ViewWikiPortletSiteRole" />
+</definition>

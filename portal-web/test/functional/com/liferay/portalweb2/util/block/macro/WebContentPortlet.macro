@@ -1,0 +1,7 @@
+<definition>
+	<command name="viewNoPermissionCP">
+		<execute action="CPWebcontent#assertTextEquals" locator-key1="PORTLET_TITLE" value1="Web Content"/>
+		<execute action="CPWebcontent#assertElementPresent" locator-key1="NAVBAR_CONTAINER" />
+		<execute action="CPWebcontent#assertTextEquals" locator-key1="INFO_MESSAGE" value1="No web content was found" />
+	</command>
+</definition>

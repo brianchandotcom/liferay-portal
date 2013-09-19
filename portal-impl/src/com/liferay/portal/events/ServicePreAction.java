@@ -1319,7 +1319,7 @@ public class ServicePreAction extends Action {
 				}
 			}
 
-			if (controlPanelCategory.startsWith(
+			if (controlPanelCategory.equals(
 					PortletCategoryKeys.SITE_ADMINISTRATION)) {
 
 				Portlet firstPortlet =

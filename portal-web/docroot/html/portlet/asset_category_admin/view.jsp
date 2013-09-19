@@ -44,14 +44,14 @@
 			</aui:nav-item>
 		</aui:nav>
 
-		<div class="navbar-search pull-right">
+		<aui:nav-bar-search cssClass="pull-right">
 			<aui:select cssClass="categories-admin-select-search" label="" name="categoriesAdminSelectSearch">
 				<aui:option label="categories" />
 				<aui:option label="vocabularies" selected="<%= true %>" />
 			</aui:select>
 
 			<liferay-ui:input-search cssClass="form-search" id="categoriesAdminSearchInput" name="tagsAdminSearchInput" showButton="<%= false %>" />
-		</div>
+		</aui:nav-bar-search>
 	</aui:nav-bar>
 
 	<aui:row cssClass="categories-admin-content">

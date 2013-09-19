@@ -38,10 +38,10 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem");
 	</aui:nav>
 
 	<c:if test="<%= showBlogEntriesSearch %>">
-		<div class="navbar-search pull-right">
+		<aui:nav-bar-search cssClass="pull-right">
 			<div class="form-search">
 				<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" id="keywords1" name="keywords" placeholder='<%= LanguageUtil.get(locale, "keywords") %>' />
 			</div>
-		</div>
+		</aui:nav-bar-search>
 	</c:if>
 </aui:nav-bar>

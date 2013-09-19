@@ -1,3 +1,6 @@
+@import "compass";
+@import "mixins";
+
 .control-group-inline {
 	display: inline-block;
 	vertical-align: middle;
@@ -72,4 +75,31 @@
 	height: @model_hints_constants_textarea_display_height@px;
 	max-width: @model_hints_constants_textarea_display_width@px;
 	width: 100%;
+}
+
+@include respond-to(phone, tablet) {
+	.aui {
+		input[type="color"],
+		input[type="date"],
+		input[type="datetime"],
+		input[type="datetime-local"],
+		input[type="email"],
+		input[type="month"],
+		input[type="number"],
+		input[type="password"],
+		input[type="search"],
+		input[type="tel"],
+		input[type="text"],
+		input[type="time"],
+		input[type="url"],
+		input[type="week"],
+		select,
+		textarea,
+		.navbar-search .search-query,
+		.uneditable-input {
+			font-size: 18px;
+			height: auto;
+			line-height: 20px;
+		}
+	}
 }

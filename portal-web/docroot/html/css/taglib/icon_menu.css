@@ -39,7 +39,7 @@
 }
 
 @include respond-to(phone) {
-	.lfr-icon-menu .dropdown-toggle {
+	.table-cell.last .lfr-icon-menu .dropdown-toggle {
 		text-align: center;
 
 		> img, .lfr-icon-menu-text {

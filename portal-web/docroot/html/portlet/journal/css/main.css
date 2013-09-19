@@ -5,10 +5,6 @@
 }
 
 .portlet-journal {
-	.display-style-buttons-container {
-		margin-right: 10px;
-	}
-
 	.expand-folder-container {
 		position: absolute;
 		right: 0;

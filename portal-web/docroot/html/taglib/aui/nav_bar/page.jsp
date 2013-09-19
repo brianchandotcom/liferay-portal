@@ -33,31 +33,33 @@
 
 						var navbarCollapse = A.one('#' + navId + 'NavbarCollapse');
 
-						var handle = Liferay.Data['<%= id %>Handle'];
+						if (navbarCollapse) {
+							var handle = Liferay.Data['<%= id %>Handle'];
 
-						if (navbarCollapse.hasClass('open') && handle) {
-							handle.detach();
+							if (navbarCollapse.hasClass('open') && handle) {
+								handle.detach();
 
-							handle = null;
-						}
-						else {
-							handle = navbarCollapse.on(
-								'mousedownoutside',
-								function(event) {
-									if (!btnNavbar.contains(event.target)) {
-										Liferay.Data['<%= id %>Handle'] = null;
+								handle = null;
+							}
+							else {
+								handle = navbarCollapse.on(
+									'mousedownoutside',
+									function(event) {
+										if (!btnNavbar.contains(event.target)) {
+											Liferay.Data['<%= id %>Handle'] = null;
 
-										handle.detach();
+											handle.detach();
 
-										navbarCollapse.removeClass('open');
+											navbarCollapse.removeClass('open');
+										}
 									}
-								}
-							);
+								);
+							}
+
+							navbarCollapse.toggleClass('open');
+
+							Liferay.Data['<%= id %>Handle'] = handle;
 						}
-
-						navbarCollapse.toggleClass('open');
-
-						Liferay.Data['<%= id %>Handle'] = handle;
 					},
 					'.btn-navbar'
 				);

@@ -231,6 +231,10 @@
 	.dockbar {
 		.navbar-inner {
 			background: #333;
+
+			.container .btn-navbar {
+				color: #FFF;
+			}
 		}
 
 		.nav {
@@ -339,7 +343,7 @@
 	}
 
 	.navbar {
-		.container .btn-navbar {
+		.container .btn {
 			background: transparent;
 			border-color: #DDD;
 
@@ -819,7 +823,7 @@
 	}
 
 	.navbar {
-		.container .btn-navbar {
+		.container .btn {
 			&, .icon-bar {
 				@include box-shadow(0 1px 0 #FFF);
 			}
@@ -836,7 +840,7 @@
 		}
 	}
 
-	.dockbar .container .btn-navbar {
+	.dockbar .container .btn {
 		@include box-shadow(none);
 	}
 

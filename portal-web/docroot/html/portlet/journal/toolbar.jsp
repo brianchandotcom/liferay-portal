@@ -21,6 +21,16 @@ String strutsAction = ParamUtil.getString(request, "struts_action");
 %>
 
 <aui:nav-bar>
+	<aui:nav collapsible="<%= false %>" cssClass="nav-display-style-buttons pull-right" id="displayStyleButtons">
+		<aui:nav-item>
+			<span class="pull-left display-style-buttons-container" id="<portlet:namespace />displayStyleButtonsContainer">
+				<c:if test='<%= !strutsAction.equals("/journal/search") %>'>
+					<liferay-util:include page="/html/portlet/journal/display_style_buttons.jsp" />
+				</c:if>
+			</span>
+		</aui:nav-item>
+	</aui:nav>
+
 	<aui:nav id="toolbarContainer">
 		<aui:nav-item cssClass="hide" dropdown="<%= true %>" id="actionsButtonContainer" label="actions">
 
@@ -73,15 +83,7 @@ String strutsAction = ParamUtil.getString(request, "struts_action");
 		</c:if>
 	</aui:nav>
 
-	<div class="pull-right">
-		<span class="pull-left display-style-buttons-container" id="<portlet:namespace />displayStyleButtonsContainer">
-			<c:if test='<%= !strutsAction.equals("/journal/search") %>'>
-				<liferay-util:include page="/html/portlet/journal/display_style_buttons.jsp" />
-			</c:if>
-		</span>
-
-		<aui:nav-bar-search file="/html/portlet/journal/article_search.jsp" />
-	</div>
+	<aui:nav-bar-search cssClass="pull-right" file="/html/portlet/journal/article_search.jsp" />
 </aui:nav-bar>
 
 <aui:script>

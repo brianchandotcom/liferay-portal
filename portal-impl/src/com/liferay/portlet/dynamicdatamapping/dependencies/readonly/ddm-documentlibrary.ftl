@@ -15,7 +15,7 @@
 </#if>
 
 <@aui["field-wrapper"] label=escape(label)>
-	<a href="${fileEntryURL}">${fileEntryTitle}</a>
+	<a href="${fileEntryURL}">${escape(fileEntryTitle)}</a>
 </@>
 
 <@aui.input name=namespacedFieldName type="hidden" value=fieldRawValue />

@@ -23,6 +23,187 @@
 	<td>//iframe[contains(@src,'controlPanelCategory=my')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[@class='alert alert-success']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_NAME</td>
+	<td>//span[@class='user-name']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE_BUTTON</td>
+	<td>//button[contains(.,'Save')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--MENU_USER_INFORMATION-->
+<tr>
+	<td>MENU_USER_INFORMATION_DETAILS</td>
+	<td>//a[@id='_2_detailsLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENU_USER_INFORMATION_PASSWORD</td>
+	<td>//a[@id='_2_passwordLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENU_USER_INFORMATION_ORGANIZATIONS</td>
+	<td>//a[@id='_2_organizationsLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENU_USER_INFORMATION_SITES</td>
+	<td>//a[@id='_2_sitesLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENU_USER_INFORMATION_USER_GROUPS</td>
+	<td>//a[@id='_2_userGroupsLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENU_USER_INFORMATION_ROLES</td>
+	<td>//a[@id='_2_rolesLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENU_USER_INFORMATION_CATEGORIZATION</td>
+	<td>//a[@id='_2_categorizationLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--DETAILS-->
+<tr>
+	<td>DETAILS_SCREEN_NAME_FIELD</td>
+	<td>//input[@id='_2_screenName']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAILS_EMAIL_ADDRESS_FIELD</td>
+	<td>//input[@id='_2_emailAddress']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAILS_FIRST_NAME_FIELD</td>
+	<td>//input[@id='_2_firstName']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAILS_LAST_NAME_FIELD</td>
+	<td>//input[@id='_2_lastName']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--PASSWORD-->
+<tr>
+	<td>PASSWORD_NEW_PASSWORD_FIELD</td>
+	<td>//input[@id='_2_password1']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PASSWORD_ENTER_AGAIN_FIELD</td>
+	<td>//input[@id='_2_password2']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ORGANIZATIONS-->
+<tr>
+	<td>ORGANIZATIONS_TABLE_NAME</td>
+	<td>//tr[contains(.,'${key_orgName}')]/td[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ORGANIZATIONS_TABLE_TYPE</td>
+	<td>//tr[contains(.,'${key_orgName}')]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ORGANIZATIONS_TABLE_ROLES</td>
+	<td>//tr[contains(.,'${key_orgName}')]/td[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SITES-->
+<tr>
+	<td>SITES_TABLE_NAME</td>
+	<td>//tr[contains(.,'${key_siteName}')]/td[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITES_TABLE_ROLES</td>
+	<td>//tr[contains(.,'${key_siteName}')]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITES_TABLE</td>
+	<td>//tr[contains(.,'${key_siteName}')]/td[3]/a/span[contains(.,'Remove')]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--USER_GROUPS-->
+<tr>
+	<td>USER_GROUPS_TABLE_NAME</td>
+	<td>//tr[contains(.,'${key_userGroupName}')]/td[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ROLES_REGULAR_ROLES-->
+<tr>
+	<td>ROLES_REGULAR_ROLES_TABLE_TITLE</td>
+	<td>//tr[contains(.,'${key_roleName}')]/td[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--PERSONAL_SITE-->
+<!--CATEGORIZATION-->
+<!--ADDRESSES-->
+<!--PHONE_NUMBERS-->
+<!--ADDITIONAL_EMAIL_ADDRESSES-->
+<!--WEBSITES-->
+<!--INSTANT_MESSENGER-->
+<!--SOCIAL_NETWORK-->
+<!--SMS-->
+<!--OPENID-->
+<!--ANNOUNCEMENTS-->
+<!--DISPLAY_SETTINGS-->
+<!--COMMENTS-->
+<!--CUSTOM_FIELDS-->
 </tbody>
 </table>
 </body>

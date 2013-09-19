@@ -34,7 +34,7 @@
 			${test.ant.script.file.selenium.logger.enabled}
 			<property name="skip.rebuild-database" value="true" />
 			<property name="test.database.minimal" value="true" />
-			<property name="test.name" value="${test.ant.script.suite}" />
+			<property name="ui.test" value="${test.ant.script.suite}" />
 		</ant>
 	</target>
 </project>

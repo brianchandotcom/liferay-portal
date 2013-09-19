@@ -43,7 +43,7 @@
 		<antcall target="start-selenium" />
 
 		<antcall target="run-jboss-eap">
-			<param name="test.class" value="${test.name}" />
+			<param name="ui.test" value="${ui.test}" />
 		</antcall>
 
 		<antcall target="stop-selenium" />

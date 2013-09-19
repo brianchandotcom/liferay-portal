@@ -123,7 +123,7 @@ web.server.display.node=true</echo>
 		<antcall target="start-selenium" />
 
 		<antcall target="run-tomcat" inheritAll="false">
-			<param name="test.class" value="${test.name}" />
+			<param name="ui.test" value="${ui.test}" />
 		</antcall>
 
 		<antcall target="stop-selenium" />
@@ -230,7 +230,7 @@ web.server.display.node=true</echo>
 		<antcall target="start-selenium" />
 
 		<antcall target="run-tomcat" inheritAll="false">
-			<param name="test.class" value="${test.name}" />
+			<param name="ui.test" value="${ui.test}" />
 		</antcall>
 
 		<antcall target="stop-selenium" />

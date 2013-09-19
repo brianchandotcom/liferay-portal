@@ -222,7 +222,7 @@ $AdminConfig save</echo>
 		<antcall target="start-selenium" />
 
 		<antcall target="run-websphere-6.1">
-			<param name="test.class" value="${test.name}" />
+			<param name="ui.test" value="${ui.test}" />
 		</antcall>
 
 		<antcall target="stop-selenium" />

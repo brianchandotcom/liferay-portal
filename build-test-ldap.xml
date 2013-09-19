@@ -132,7 +132,7 @@ businessCategory: cn=janesmith,ou=users,dc=example,dc=com</echo>
 				<delete file="${tstamp.value}" />
 
 				<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
-					<property name="test.class" value="${test.name}" />
+					<property name="ui.test" value="${ui.test}" />
 				</ant>
 			</sequential>
 		</parallel>

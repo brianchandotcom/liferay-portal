@@ -14,7 +14,7 @@
 	<target name="run-smoke-test">
 		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat" inheritAll="false">
 			<property name="skip.rebuild-database" value="true" />
-			<property name="test.name" value="DBUpgradeSmokeTestSuite" />
+			<property name="ui.test" value="DBUpgradeSmokeTestSuite" />
 		</ant>
 	</target>
 

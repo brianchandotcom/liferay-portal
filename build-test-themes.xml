@@ -13,7 +13,7 @@
 		</exec>
 
 		<ant antfile="build-test-jboss.xml" target="run-selenium-jboss">
-			<property name="test.name" value="ThemesTestSuite" />
+			<property name="ui.test" value="ThemesTestSuite" />
 			<property name="theme.plugins.includes" value="08-gulona-theme,liferay-jedi-theme" />
 		</ant>
 	</target>
@@ -28,7 +28,7 @@
 		</exec>
 
 		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
-			<property name="test.name" value="ThemesTestSuite" />
+			<property name="ui.test" value="ThemesTestSuite" />
 			<property name="theme.plugins.includes" value="08-gulona-theme,liferay-jedi-theme" />
 		</ant>
 	</target>

@@ -27,7 +27,7 @@
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
 			${test.ant.script.file.selenium.logger.enabled}
-			<property name="test.name" value="${test.ant.script.suite.1}" />
+			<property name="ui.test" value="${test.ant.script.suite.1}" />
 		</ant>
 
 		<ant antfile="build-test-geronimo.xml" target="run-selenium-geronimo">
@@ -40,7 +40,7 @@
 			${test.ant.script.file.selenium.implementation}
 			${test.ant.script.file.selenium.logger.enabled}
 			<property name="skip.delete-selenium-output" value="true" />
-			<property name="test.name" value="${test.ant.script.suite.2}" />
+			<property name="ui.test" value="${test.ant.script.suite.2}" />
 		</ant>
 	</target>
 
@@ -68,7 +68,7 @@
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
 			${test.ant.script.file.selenium.logger.enabled}
-			<property name="test.name" value="${test.ant.script.suite.1}" />
+			<property name="ui.test" value="${test.ant.script.suite.1}" />
 		</ant>
 
 		<ant antfile="build-test-glassfish.xml" target="run-selenium-glassfish">
@@ -81,7 +81,7 @@
 			${test.ant.script.file.selenium.implementation}
 			${test.ant.script.file.selenium.logger.enabled}
 			<property name="skip.delete-selenium-output" value="true" />
-			<property name="test.name" value="${test.ant.script.suite.2}" />
+			<property name="ui.test" value="${test.ant.script.suite.2}" />
 		</ant>
 	</target>
 
@@ -109,7 +109,7 @@
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
 			${test.ant.script.file.selenium.logger.enabled}
-			<property name="test.name" value="${test.ant.script.suite.1}" />
+			<property name="ui.test" value="${test.ant.script.suite.1}" />
 		</ant>
 
 		<ant antfile="build-test-jboss.xml" target="run-selenium-jboss">
@@ -122,7 +122,7 @@
 			${test.ant.script.file.selenium.implementation}
 			${test.ant.script.file.selenium.logger.enabled}
 			<property name="skip.delete-selenium-output" value="true" />
-			<property name="test.name" value="${test.ant.script.suite.2}" />
+			<property name="ui.test" value="${test.ant.script.suite.2}" />
 		</ant>
 	</target>
 
@@ -150,7 +150,7 @@
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
 			${test.ant.script.file.selenium.logger.enabled}
-			<property name="test.name" value="${test.ant.script.suite.1}" />
+			<property name="ui.test" value="${test.ant.script.suite.1}" />
 		</ant>
 
 		<ant antfile="build-test-jetty.xml" target="run-selenium-jetty">
@@ -163,7 +163,7 @@
 			${test.ant.script.file.selenium.implementation}
 			${test.ant.script.file.selenium.logger.enabled}
 			<property name="skip.delete-selenium-output" value="true" />
-			<property name="test.name" value="${test.ant.script.suite.2}" />
+			<property name="ui.test" value="${test.ant.script.suite.2}" />
 		</ant>
 	</target>
 
@@ -191,7 +191,7 @@
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
 			${test.ant.script.file.selenium.logger.enabled}
-			<property name="test.name" value="${test.ant.script.suite.1}" />
+			<property name="ui.test" value="${test.ant.script.suite.1}" />
 		</ant>
 
 		<ant antfile="build-test-jonas.xml" target="run-selenium-jonas">
@@ -204,7 +204,7 @@
 			${test.ant.script.file.selenium.implementation}
 			${test.ant.script.file.selenium.logger.enabled}
 			<property name="skip.delete-selenium-output" value="true" />
-			<property name="test.name" value="${test.ant.script.suite.2}" />
+			<property name="ui.test" value="${test.ant.script.suite.2}" />
 		</ant>
 	</target>
 
@@ -239,7 +239,7 @@
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
 			${test.ant.script.file.selenium.logger.enabled}
-			<property name="test.name" value="${test.ant.script.suite.1}" />
+			<property name="ui.test" value="${test.ant.script.suite.1}" />
 		</ant>
 
 		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
@@ -252,7 +252,7 @@
 			${test.ant.script.file.selenium.implementation}
 			${test.ant.script.file.selenium.logger.enabled}
 			<property name="skip.delete-selenium-output" value="true" />
-			<property name="test.name" value="${test.ant.script.suite.2}" />
+			<property name="ui.test" value="${test.ant.script.suite.2}" />
 		</ant>
 
 		<antcall target="stop-vm">
@@ -291,7 +291,7 @@
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
 			${test.ant.script.file.selenium.logger.enabled}
-			<property name="test.name" value="${test.ant.script.suite.1}" />
+			<property name="ui.test" value="${test.ant.script.suite.1}" />
 		</ant>
 
 		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
@@ -304,7 +304,7 @@
 			${test.ant.script.file.selenium.implementation}
 			${test.ant.script.file.selenium.logger.enabled}
 			<property name="skip.delete-selenium-output" value="true" />
-			<property name="test.name" value="${test.ant.script.suite.2}" />
+			<property name="ui.test" value="${test.ant.script.suite.2}" />
 		</ant>
 
 		<antcall target="stop-vm">
@@ -336,7 +336,7 @@
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
 			${test.ant.script.file.selenium.logger.enabled}
-			<property name="test.name" value="${test.ant.script.suite.1}" />
+			<property name="ui.test" value="${test.ant.script.suite.1}" />
 		</ant>
 
 		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
@@ -349,7 +349,7 @@
 			${test.ant.script.file.selenium.implementation}
 			${test.ant.script.file.selenium.logger.enabled}
 			<property name="skip.delete-selenium-output" value="true" />
-			<property name="test.name" value="${test.ant.script.suite.2}" />
+			<property name="ui.test" value="${test.ant.script.suite.2}" />
 		</ant>
 	</target>
 
@@ -377,7 +377,7 @@
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
 			${test.ant.script.file.selenium.logger.enabled}
-			<property name="test.name" value="${test.ant.script.suite.1}" />
+			<property name="ui.test" value="${test.ant.script.suite.1}" />
 		</ant>
 
 		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
@@ -390,7 +390,7 @@
 			${test.ant.script.file.selenium.implementation}
 			${test.ant.script.file.selenium.logger.enabled}
 			<property name="skip.delete-selenium-output" value="true" />
-			<property name="test.name" value="${test.ant.script.suite.2}" />
+			<property name="ui.test" value="${test.ant.script.suite.2}" />
 		</ant>
 	</target>
 
@@ -419,7 +419,7 @@
 			${test.ant.script.file.selenium.implementation}
 			${test.ant.script.file.selenium.logger.enabled}
 			<property name="test.browser" value="googlechrome" />
-			<property name="test.name" value="${test.ant.script.suite.1}" />
+			<property name="ui.test" value="${test.ant.script.suite.1}" />
 		</ant>
 
 		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
@@ -433,7 +433,7 @@
 			${test.ant.script.file.selenium.logger.enabled}
 			<property name="skip.delete-selenium-output" value="true" />
 			<property name="test.browser" value="googlechrome" />
-			<property name="test.name" value="${test.ant.script.suite.2}" />
+			<property name="ui.test" value="${test.ant.script.suite.2}" />
 		</ant>
 	</target>
 
@@ -462,7 +462,7 @@
 			${test.ant.script.file.selenium.implementation}
 			${test.ant.script.file.selenium.logger.enabled}
 			<property name="test.browser" value="iehta" />
-			<property name="test.name" value="${test.ant.script.suite.1}" />
+			<property name="ui.test" value="${test.ant.script.suite.1}" />
 		</ant>
 
 		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
@@ -476,7 +476,7 @@
 			${test.ant.script.file.selenium.logger.enabled}
 			<property name="skip.delete-selenium-output" value="true" />
 			<property name="test.browser" value="iehta" />
-			<property name="test.name" value="${test.ant.script.suite.2}" />
+			<property name="ui.test" value="${test.ant.script.suite.2}" />
 		</ant>
 	</target>
 
@@ -511,7 +511,7 @@
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
 			${test.ant.script.file.selenium.logger.enabled}
-			<property name="test.name" value="${test.ant.script.suite.1}" />
+			<property name="ui.test" value="${test.ant.script.suite.1}" />
 		</ant>
 
 		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
@@ -524,7 +524,7 @@
 			${test.ant.script.file.selenium.implementation}
 			${test.ant.script.file.selenium.logger.enabled}
 			<property name="skip.delete-selenium-output" value="true" />
-			<property name="test.name" value="${test.ant.script.suite.2}" />
+			<property name="ui.test" value="${test.ant.script.suite.2}" />
 		</ant>
 
 		<antcall target="stop-vm">
@@ -563,7 +563,7 @@
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
 			${test.ant.script.file.selenium.logger.enabled}
-			<property name="test.name" value="${test.ant.script.suite.1}" />
+			<property name="ui.test" value="${test.ant.script.suite.1}" />
 		</ant>
 
 		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
@@ -576,7 +576,7 @@
 			${test.ant.script.file.selenium.implementation}
 			${test.ant.script.file.selenium.logger.enabled}
 			<property name="skip.delete-selenium-output" value="true" />
-			<property name="test.name" value="${test.ant.script.suite.2}" />
+			<property name="ui.test" value="${test.ant.script.suite.2}" />
 		</ant>
 
 		<antcall target="stop-vm">
@@ -615,7 +615,7 @@
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
 			${test.ant.script.file.selenium.logger.enabled}
-			<property name="test.name" value="${test.ant.script.suite.1}" />
+			<property name="ui.test" value="${test.ant.script.suite.1}" />
 		</ant>
 
 		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
@@ -628,7 +628,7 @@
 			${test.ant.script.file.selenium.implementation}
 			${test.ant.script.file.selenium.logger.enabled}
 			<property name="skip.delete-selenium-output" value="true" />
-			<property name="test.name" value="${test.ant.script.suite.2}" />
+			<property name="ui.test" value="${test.ant.script.suite.2}" />
 		</ant>
 
 		<antcall target="stop-vm">
@@ -667,7 +667,7 @@
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
 			${test.ant.script.file.selenium.logger.enabled}
-			<property name="test.name" value="${test.ant.script.suite.1}" />
+			<property name="ui.test" value="${test.ant.script.suite.1}" />
 		</ant>
 
 		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
@@ -680,7 +680,7 @@
 			${test.ant.script.file.selenium.implementation}
 			${test.ant.script.file.selenium.logger.enabled}
 			<property name="skip.delete-selenium-output" value="true" />
-			<property name="test.name" value="${test.ant.script.suite.2}" />
+			<property name="ui.test" value="${test.ant.script.suite.2}" />
 		</ant>
 
 		<antcall target="stop-vm">
@@ -719,7 +719,7 @@
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
 			${test.ant.script.file.selenium.logger.enabled}
-			<property name="test.name" value="${test.ant.script.suite.1}" />
+			<property name="ui.test" value="${test.ant.script.suite.1}" />
 		</ant>
 
 		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
@@ -732,7 +732,7 @@
 			${test.ant.script.file.selenium.implementation}
 			${test.ant.script.file.selenium.logger.enabled}
 			<property name="skip.delete-selenium-output" value="true" />
-			<property name="test.name" value="${test.ant.script.suite.2}" />
+			<property name="ui.test" value="${test.ant.script.suite.2}" />
 		</ant>
 
 		<antcall target="stop-vm">
@@ -771,7 +771,7 @@
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
 			${test.ant.script.file.selenium.logger.enabled}
-			<property name="test.name" value="${test.ant.script.suite.1}" />
+			<property name="ui.test" value="${test.ant.script.suite.1}" />
 		</ant>
 
 		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
@@ -784,7 +784,7 @@
 			${test.ant.script.file.selenium.implementation}
 			${test.ant.script.file.selenium.logger.enabled}
 			<property name="skip.delete-selenium-output" value="true" />
-			<property name="test.name" value="${test.ant.script.suite.2}" />
+			<property name="ui.test" value="${test.ant.script.suite.2}" />
 		</ant>
 	</target>
 
@@ -819,7 +819,7 @@
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
 			${test.ant.script.file.selenium.logger.enabled}
-			<property name="test.name" value="${test.ant.script.suite.1}" />
+			<property name="ui.test" value="${test.ant.script.suite.1}" />
 		</ant>
 
 		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
@@ -832,7 +832,7 @@
 			${test.ant.script.file.selenium.implementation}
 			${test.ant.script.file.selenium.logger.enabled}
 			<property name="skip.delete-selenium-output" value="true" />
-			<property name="test.name" value="${test.ant.script.suite.2}" />
+			<property name="ui.test" value="${test.ant.script.suite.2}" />
 		</ant>
 
 		<antcall target="stop-vm">
@@ -871,7 +871,7 @@
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
 			${test.ant.script.file.selenium.logger.enabled}
-			<property name="test.name" value="${test.ant.script.suite.1}" />
+			<property name="ui.test" value="${test.ant.script.suite.1}" />
 		</ant>
 
 		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
@@ -884,7 +884,7 @@
 			${test.ant.script.file.selenium.implementation}
 			${test.ant.script.file.selenium.logger.enabled}
 			<property name="skip.delete-selenium-output" value="true" />
-			<property name="test.name" value="${test.ant.script.suite.2}" />
+			<property name="ui.test" value="${test.ant.script.suite.2}" />
 		</ant>
 
 		<antcall target="stop-vm">
@@ -912,14 +912,14 @@
 		<ant antfile="build-test-weblogic.xml" target="run-selenium-weblogic" inheritAll="false">
 			${test.ant.script.file.selenium.implementation}
 			${test.ant.script.file.selenium.logger.enabled}
-			<property name="test.name" value="${test.ant.script.suite.1}" />
+			<property name="ui.test" value="${test.ant.script.suite.1}" />
 		</ant>
 
 		<ant antfile="build-test-weblogic.xml" target="run-selenium-weblogic" inheritAll="false">
 			${test.ant.script.file.selenium.implementation}
 			${test.ant.script.file.selenium.logger.enabled}
 			<property name="skip.delete-selenium-output" value="true" />
-			<property name="test.name" value="${test.ant.script.suite.2}" />
+			<property name="ui.test" value="${test.ant.script.suite.2}" />
 		</ant>
 	</target>
 
@@ -945,14 +945,14 @@ app.server.weblogic.version.build=1211</echo>
 		<ant antfile="build-test-weblogic.xml" target="run-selenium-weblogic" inheritAll="false">
 			${test.ant.script.file.selenium.implementation}
 			${test.ant.script.file.selenium.logger.enabled}
-			<property name="test.name" value="${test.ant.script.suite.1}" />
+			<property name="ui.test" value="${test.ant.script.suite.1}" />
 		</ant>
 
 		<ant antfile="build-test-weblogic.xml" target="run-selenium-weblogic" inheritAll="false">
 			${test.ant.script.file.selenium.implementation}
 			${test.ant.script.file.selenium.logger.enabled}
 			<property name="skip.delete-selenium-output" value="true" />
-			<property name="test.name" value="${test.ant.script.suite.2}" />
+			<property name="ui.test" value="${test.ant.script.suite.2}" />
 		</ant>
 	</target>
 
@@ -974,14 +974,14 @@ app.server.weblogic.version.build=1211</echo>
 		<ant antfile="build-test-websphere-6.1.xml" target="run-selenium-websphere-6.1">
 			${test.ant.script.file.selenium.implementation}
 			${test.ant.script.file.selenium.logger.enabled}
-			<property name="test.name" value="${test.ant.script.suite.1}" />
+			<property name="ui.test" value="${test.ant.script.suite.1}" />
 		</ant>
 
 		<ant antfile="build-test-websphere-6.1.xml" target="run-selenium-websphere-6.1">
 			${test.ant.script.file.selenium.implementation}
 			${test.ant.script.file.selenium.logger.enabled}
 			<property name="skip.delete-selenium-output" value="true" />
-			<property name="test.name" value="${test.ant.script.suite.2}" />
+			<property name="ui.test" value="${test.ant.script.suite.2}" />
 		</ant>
 	</target>
 
@@ -1003,14 +1003,14 @@ app.server.weblogic.version.build=1211</echo>
 		<ant antfile="build-test-websphere-7.0.xml" target="run-selenium-websphere-7.0">
 			${test.ant.script.file.selenium.implementation}
 			${test.ant.script.file.selenium.logger.enabled}
-			<property name="test.name" value="${test.ant.script.suite.1}" />
+			<property name="ui.test" value="${test.ant.script.suite.1}" />
 		</ant>
 
 		<ant antfile="build-test-websphere-7.0.xml" target="run-selenium-websphere-7.0">
 			${test.ant.script.file.selenium.implementation}
 			${test.ant.script.file.selenium.logger.enabled}
 			<property name="skip.delete-selenium-output" value="true" />
-			<property name="test.name" value="${test.ant.script.suite.2}" />
+			<property name="ui.test" value="${test.ant.script.suite.2}" />
 		</ant>
 	</target>
 
@@ -1032,14 +1032,14 @@ app.server.weblogic.version.build=1211</echo>
 		<ant antfile="build-test-websphere-8.0.xml" target="run-selenium-websphere-8.0">
 			${test.ant.script.file.selenium.implementation}
 			${test.ant.script.file.selenium.logger.enabled}
-			<property name="test.name" value="${test.ant.script.suite.1}" />
+			<property name="ui.test" value="${test.ant.script.suite.1}" />
 		</ant>
 
 		<ant antfile="build-test-websphere-8.0.xml" target="run-selenium-websphere-8.0">
 			${test.ant.script.file.selenium.implementation}
 			${test.ant.script.file.selenium.logger.enabled}
 			<property name="skip.delete-selenium-output" value="true" />
-			<property name="test.name" value="${test.ant.script.suite.2}" />
+			<property name="ui.test" value="${test.ant.script.suite.2}" />
 		</ant>
 	</target>
 </project>

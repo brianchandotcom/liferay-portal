@@ -59,8 +59,8 @@
 			<property name="lp.version" value="$${lp.version}" />
 			<property name="plugins.deployed" value="true" />
 			<property name="skip.rebuild-database" value="true" />
-			<property name="test.name" value="${test.ant.script.suite}" />
 			<property name="test.pacl" value="$${test.pacl}" />
+			<property name="ui.test" value="${test.ant.script.suite}" />
 		</ant>
 	</target>
 
@@ -100,8 +100,8 @@
 			<property name="lp.version" value="$${lp.version}" />
 			<property name="plugins.deployed" value="true" />
 			<property name="skip.rebuild-database" value="true" />
-			<property name="test.name" value="${test.ant.script.suite}" />
 			<property name="test.pacl" value="$${test.pacl}" />
+			<property name="ui.test" value="${test.ant.script.suite}" />
 		</ant>
 	</target>
 
@@ -141,8 +141,8 @@
 			<property name="lp.version" value="$${lp.version}" />
 			<property name="plugins.deployed" value="true" />
 			<property name="skip.rebuild-database" value="true" />
-			<property name="test.name" value="${test.ant.script.suite}" />
 			<property name="test.pacl" value="$${test.pacl}" />
+			<property name="ui.test" value="${test.ant.script.suite}" />
 		</ant>
 	</target>
 
@@ -189,8 +189,8 @@
 			<property name="lp.version" value="$${lp.version}" />
 			<property name="plugins.deployed" value="true" />
 			<property name="skip.rebuild-database" value="true" />
-			<property name="test.name" value="${test.ant.script.suite}" />
 			<property name="test.pacl" value="$${test.pacl}" />
+			<property name="ui.test" value="${test.ant.script.suite}" />
 		</ant>
 
 		<antcall target="stop-vm">
@@ -225,8 +225,8 @@
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
 			${test.ant.script.file.selenium.logger.enabled}
-			<property name="test.name" value="${test.ant.script.suite}" />
 			<property name="test.pacl" value="$${test.pacl}" />
+			<property name="ui.test" value="${test.ant.script.suite}" />
 		</ant>
 	</target>
 
@@ -257,8 +257,8 @@
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
 			${test.ant.script.file.selenium.logger.enabled}
-			<property name="test.name" value="${test.ant.script.suite}" />
 			<property name="test.pacl" value="$${test.pacl}" />
+			<property name="ui.test" value="${test.ant.script.suite}" />
 		</ant>
 	</target>
 
@@ -294,8 +294,8 @@ app.server.jboss.zip.name=jboss-eap-$$$${app.server.jboss.version}.zip</echo>
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
 			${test.ant.script.file.selenium.logger.enabled}
-			<property name="test.name" value="${test.ant.script.suite}" />
 			<property name="test.pacl" value="$${test.pacl}" />
+			<property name="ui.test" value="${test.ant.script.suite}" />
 		</ant>
 	</target>
 
@@ -326,8 +326,8 @@ app.server.jboss.zip.name=jboss-eap-$$$${app.server.jboss.version}.zip</echo>
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
 			${test.ant.script.file.selenium.logger.enabled}
-			<property name="test.name" value="${test.ant.script.suite}" />
 			<property name="test.pacl" value="$${test.pacl}" />
+			<property name="ui.test" value="${test.ant.script.suite}" />
 		</ant>
 	</target>
 
@@ -358,8 +358,8 @@ app.server.jboss.zip.name=jboss-eap-$$$${app.server.jboss.version}.zip</echo>
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
 			${test.ant.script.file.selenium.logger.enabled}
-			<property name="test.name" value="${test.ant.script.suite}" />
 			<property name="test.pacl" value="$${test.pacl}" />
+			<property name="ui.test" value="${test.ant.script.suite}" />
 		</ant>
 	</target>
 
@@ -390,8 +390,8 @@ app.server.jboss.zip.name=jboss-eap-$$$${app.server.jboss.version}.zip</echo>
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
 			${test.ant.script.file.selenium.logger.enabled}
-			<property name="test.name" value="${test.ant.script.suite}" />
 			<property name="test.pacl" value="$${test.pacl}" />
+			<property name="ui.test" value="${test.ant.script.suite}" />
 		</ant>
 	</target>
 
@@ -429,8 +429,8 @@ app.server.jboss.zip.name=jboss-eap-$$$${app.server.jboss.version}.zip</echo>
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
 			${test.ant.script.file.selenium.logger.enabled}
-			<property name="test.name" value="${test.ant.script.suite}" />
 			<property name="test.pacl" value="$${test.pacl}" />
+			<property name="ui.test" value="${test.ant.script.suite}" />
 		</ant>
 
 		<antcall target="stop-vm">
@@ -472,8 +472,8 @@ app.server.jboss.zip.name=jboss-eap-$$$${app.server.jboss.version}.zip</echo>
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
 			${test.ant.script.file.selenium.logger.enabled}
-			<property name="test.name" value="${test.ant.script.suite}" />
 			<property name="test.pacl" value="$${test.pacl}" />
+			<property name="ui.test" value="${test.ant.script.suite}" />
 		</ant>
 
 		<antcall target="stop-vm">
@@ -508,8 +508,8 @@ app.server.jboss.zip.name=jboss-eap-$$$${app.server.jboss.version}.zip</echo>
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
 			${test.ant.script.file.selenium.logger.enabled}
-			<property name="test.name" value="${test.ant.script.suite}" />
 			<property name="test.pacl" value="$${test.pacl}" />
+			<property name="ui.test" value="${test.ant.script.suite}" />
 		</ant>
 	</target>
 
@@ -540,8 +540,8 @@ app.server.jboss.zip.name=jboss-eap-$$$${app.server.jboss.version}.zip</echo>
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
 			${test.ant.script.file.selenium.logger.enabled}
-			<property name="test.name" value="${test.ant.script.suite}" />
 			<property name="test.pacl" value="$${test.pacl}" />
+			<property name="ui.test" value="${test.ant.script.suite}" />
 		</ant>
 	</target>
 
@@ -573,8 +573,8 @@ app.server.jboss.zip.name=jboss-eap-$$$${app.server.jboss.version}.zip</echo>
 			${test.ant.script.file.selenium.implementation}
 			${test.ant.script.file.selenium.logger.enabled}
 			<property name="test.browser" value="googlechrome" />
-			<property name="test.name" value="${test.ant.script.suite}" />
 			<property name="test.pacl" value="$${test.pacl}" />
+			<property name="ui.test" value="${test.ant.script.suite}" />
 		</ant>
 	</target>
 
@@ -606,8 +606,8 @@ app.server.jboss.zip.name=jboss-eap-$$$${app.server.jboss.version}.zip</echo>
 			${test.ant.script.file.selenium.implementation}
 			${test.ant.script.file.selenium.logger.enabled}
 			<property name="test.browser" value="iehta" />
-			<property name="test.name" value="${test.ant.script.suite}" />
 			<property name="test.pacl" value="$${test.pacl}" />
+			<property name="ui.test" value="${test.ant.script.suite}" />
 		</ant>
 	</target>
 
@@ -639,8 +639,8 @@ app.server.jboss.zip.name=jboss-eap-$$$${app.server.jboss.version}.zip</echo>
 			${test.ant.script.file.selenium.implementation}
 			${test.ant.script.file.selenium.logger.enabled}
 			<property name="test.browser" value="safari" />
-			<property name="test.name" value="${test.ant.script.suite}" />
 			<property name="test.pacl" value="$${test.pacl}" />
+			<property name="ui.test" value="${test.ant.script.suite}" />
 		</ant>
 	</target>
 
@@ -678,8 +678,8 @@ app.server.jboss.zip.name=jboss-eap-$$$${app.server.jboss.version}.zip</echo>
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
 			${test.ant.script.file.selenium.logger.enabled}
-			<property name="test.name" value="${test.ant.script.suite}" />
 			<property name="test.pacl" value="$${test.pacl}" />
+			<property name="ui.test" value="${test.ant.script.suite}" />
 		</ant>
 
 		<antcall target="stop-vm">
@@ -721,8 +721,8 @@ app.server.jboss.zip.name=jboss-eap-$$$${app.server.jboss.version}.zip</echo>
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
 			${test.ant.script.file.selenium.logger.enabled}
-			<property name="test.name" value="${test.ant.script.suite}" />
 			<property name="test.pacl" value="$${test.pacl}" />
+			<property name="ui.test" value="${test.ant.script.suite}" />
 		</ant>
 
 		<antcall target="stop-vm">
@@ -764,8 +764,8 @@ app.server.jboss.zip.name=jboss-eap-$$$${app.server.jboss.version}.zip</echo>
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
 			${test.ant.script.file.selenium.logger.enabled}
-			<property name="test.name" value="${test.ant.script.suite}" />
 			<property name="test.pacl" value="$${test.pacl}" />
+			<property name="ui.test" value="${test.ant.script.suite}" />
 		</ant>
 
 		<antcall target="stop-vm">
@@ -807,8 +807,8 @@ app.server.jboss.zip.name=jboss-eap-$$$${app.server.jboss.version}.zip</echo>
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
 			${test.ant.script.file.selenium.logger.enabled}
-			<property name="test.name" value="${test.ant.script.suite}" />
 			<property name="test.pacl" value="$${test.pacl}" />
+			<property name="ui.test" value="${test.ant.script.suite}" />
 		</ant>
 
 		<antcall target="stop-vm">
@@ -850,8 +850,8 @@ app.server.jboss.zip.name=jboss-eap-$$$${app.server.jboss.version}.zip</echo>
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
 			${test.ant.script.file.selenium.logger.enabled}
-			<property name="test.name" value="${test.ant.script.suite}" />
 			<property name="test.pacl" value="$${test.pacl}" />
+			<property name="ui.test" value="${test.ant.script.suite}" />
 		</ant>
 
 		<antcall target="stop-vm">
@@ -893,8 +893,8 @@ app.server.jboss.zip.name=jboss-eap-$$$${app.server.jboss.version}.zip</echo>
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
 			${test.ant.script.file.selenium.logger.enabled}
-			<property name="test.name" value="${test.ant.script.suite}" />
 			<property name="test.pacl" value="$${test.pacl}" />
+			<property name="ui.test" value="${test.ant.script.suite}" />
 		</ant>
 
 		<antcall target="stop-vm">
@@ -936,8 +936,8 @@ app.server.jboss.zip.name=jboss-eap-$$$${app.server.jboss.version}.zip</echo>
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
 			${test.ant.script.file.selenium.logger.enabled}
-			<property name="test.name" value="${test.ant.script.suite}" />
 			<property name="test.pacl" value="$${test.pacl}" />
+			<property name="ui.test" value="${test.ant.script.suite}" />
 		</ant>
 
 		<antcall target="stop-vm">
@@ -979,8 +979,8 @@ app.server.jboss.zip.name=jboss-eap-$$$${app.server.jboss.version}.zip</echo>
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
 			${test.ant.script.file.selenium.logger.enabled}
-			<property name="test.name" value="${test.ant.script.suite}" />
 			<property name="test.pacl" value="$${test.pacl}" />
+			<property name="ui.test" value="${test.ant.script.suite}" />
 		</ant>
 
 		<antcall target="stop-vm">
@@ -1017,8 +1017,8 @@ app.server.jboss.zip.name=jboss-eap-$$$${app.server.jboss.version}.zip</echo>
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
 			${test.ant.script.file.selenium.logger.enabled}
-			<property name="test.name" value="${test.ant.script.suite}" />
 			<property name="test.pacl" value="$${test.pacl}" />
+			<property name="ui.test" value="${test.ant.script.suite}" />
 		</ant>
 	</target>
 
@@ -1053,8 +1053,8 @@ app.server.weblogic.version.build=1211</echo>
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
 			${test.ant.script.file.selenium.logger.enabled}
-			<property name="test.name" value="${test.ant.script.suite}" />
 			<property name="test.pacl" value="$${test.pacl}" />
+			<property name="ui.test" value="${test.ant.script.suite}" />
 		</ant>
 	</target>
 
@@ -1086,8 +1086,8 @@ app.server.weblogic.version.build=1211</echo>
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
 			${test.ant.script.file.selenium.logger.enabled}
-			<property name="test.name" value="${test.ant.script.suite}" />
 			<property name="test.pacl" value="$${test.pacl}" />
+			<property name="ui.test" value="${test.ant.script.suite}" />
 		</ant>
 	</target>
 
@@ -1118,8 +1118,8 @@ app.server.weblogic.version.build=1211</echo>
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
 			${test.ant.script.file.selenium.logger.enabled}
-			<property name="test.name" value="${test.ant.script.suite}" />
 			<property name="test.pacl" value="$${test.pacl}" />
+			<property name="ui.test" value="${test.ant.script.suite}" />
 		</ant>
 	</target>
 
@@ -1151,8 +1151,8 @@ app.server.weblogic.version.build=1211</echo>
 			${test.ant.script.file.plugin.webs}
 			${test.ant.script.file.selenium.implementation}
 			${test.ant.script.file.selenium.logger.enabled}
-			<property name="test.name" value="${test.ant.script.suite}" />
 			<property name="test.pacl" value="$${test.pacl}" />
+			<property name="ui.test" value="${test.ant.script.suite}" />
 		</ant>
 	</target>
 </project>

@@ -39,7 +39,7 @@
 			<param name="bundled.file.name" value="${db-upgrade.bundled.tomcat.file.name}" />
 			<param name="legacy.theme.ids" value="classic,controlpanel" />
 			<param name="lp.version" value="${test.ant.script.version}" />
-			<param name="test.name" value="DBUpgrade${test.ant.script.suite}${db-upgrade.build}TestSuite" />
+			<param name="ui.test" value="DBUpgrade${test.ant.script.suite}${db-upgrade.build}TestSuite" />
 		</antcall>
 
 		<antcall target="prepare-versioned-db2-9.7">
@@ -53,7 +53,7 @@
 			${test.ant.script.file.plugin.portlets}
 			${test.ant.script.file.selenium.implementation}
 			${test.ant.script.file.selenium.logger.enabled}
-			<param name="test.name" value="DBUpgrade${test.ant.script.suite}${db-upgrade.build}LatestTestSuite" />
+			<param name="ui.test" value="DBUpgrade${test.ant.script.suite}${db-upgrade.build}LatestTestSuite" />
 		</antcall>
 
 		<antcall target="stop-vm">
@@ -93,7 +93,7 @@
 			<param name="bundled.file.name" value="${db-upgrade.bundled.tomcat.file.name}" />
 			<param name="legacy.theme.ids" value="classic,controlpanel" />
 			<param name="lp.version" value="${test.ant.script.version}" />
-			<param name="test.name" value="DBUpgrade${test.ant.script.suite}${db-upgrade.build}TestSuite" />
+			<param name="ui.test" value="DBUpgrade${test.ant.script.suite}${db-upgrade.build}TestSuite" />
 		</antcall>
 
 		<antcall target="prepare-versioned-db2-10.1">
@@ -107,7 +107,7 @@
 			${test.ant.script.file.plugin.portlets}
 			${test.ant.script.file.selenium.implementation}
 			${test.ant.script.file.selenium.logger.enabled}
-			<param name="test.name" value="DBUpgrade${test.ant.script.suite}${db-upgrade.build}LatestTestSuite" />
+			<param name="ui.test" value="DBUpgrade${test.ant.script.suite}${db-upgrade.build}LatestTestSuite" />
 		</antcall>
 
 		<antcall target="stop-vm">
@@ -140,7 +140,7 @@
 			<param name="bundled.file.name" value="${db-upgrade.bundled.tomcat.file.name}" />
 			<param name="legacy.theme.ids" value="classic,controlpanel" />
 			<param name="lp.version" value="${test.ant.script.version}" />
-			<param name="test.name" value="DBUpgrade${test.ant.script.suite}${db-upgrade.build}TestSuite" />
+			<param name="ui.test" value="DBUpgrade${test.ant.script.suite}${db-upgrade.build}TestSuite" />
 		</antcall>
 
 		<antcall target="prepare-versioned-mysql">
@@ -154,7 +154,7 @@
 			${test.ant.script.file.plugin.portlets}
 			${test.ant.script.file.selenium.implementation}
 			${test.ant.script.file.selenium.logger.enabled}
-			<param name="test.name" value="DBUpgrade${test.ant.script.suite}${db-upgrade.build}LatestTestSuite" />
+			<param name="ui.test" value="DBUpgrade${test.ant.script.suite}${db-upgrade.build}LatestTestSuite" />
 		</antcall>
 	</target>
 
@@ -190,7 +190,7 @@
 			<param name="bundled.file.name" value="${db-upgrade.bundled.tomcat.file.name}" />
 			<param name="legacy.theme.ids" value="classic,controlpanel" />
 			<param name="lp.version" value="${test.ant.script.version}" />
-			<param name="test.name" value="DBUpgrade${test.ant.script.suite}${db-upgrade.build}TestSuite" />
+			<param name="ui.test" value="DBUpgrade${test.ant.script.suite}${db-upgrade.build}TestSuite" />
 		</antcall>
 
 		<antcall target="prepare-versioned-oracle-10">
@@ -204,7 +204,7 @@
 			${test.ant.script.file.plugin.portlets}
 			${test.ant.script.file.selenium.implementation}
 			${test.ant.script.file.selenium.logger.enabled}
-			<param name="test.name" value="DBUpgrade${test.ant.script.suite}${db-upgrade.build}LatestTestSuite" />
+			<param name="ui.test" value="DBUpgrade${test.ant.script.suite}${db-upgrade.build}LatestTestSuite" />
 		</antcall>
 
 		<antcall target="stop-vm">
@@ -244,7 +244,7 @@
 			<param name="bundled.file.name" value="${db-upgrade.bundled.tomcat.file.name}" />
 			<param name="legacy.theme.ids" value="classic,controlpanel" />
 			<param name="lp.version" value="${test.ant.script.version}" />
-			<param name="test.name" value="DBUpgrade${test.ant.script.suite}${db-upgrade.build}TestSuite" />
+			<param name="ui.test" value="DBUpgrade${test.ant.script.suite}${db-upgrade.build}TestSuite" />
 		</antcall>
 
 		<antcall target="prepare-versioned-oracle-11">
@@ -258,7 +258,7 @@
 			${test.ant.script.file.plugin.portlets}
 			${test.ant.script.file.selenium.implementation}
 			${test.ant.script.file.selenium.logger.enabled}
-			<param name="test.name" value="DBUpgrade${test.ant.script.suite}${db-upgrade.build}LatestTestSuite" />
+			<param name="ui.test" value="DBUpgrade${test.ant.script.suite}${db-upgrade.build}LatestTestSuite" />
 		</antcall>
 
 		<antcall target="stop-vm">
@@ -298,7 +298,7 @@
 			<param name="bundled.file.name" value="${db-upgrade.bundled.tomcat.file.name}" />
 			<param name="legacy.theme.ids" value="classic,controlpanel" />
 			<param name="lp.version" value="${test.ant.script.version}" />
-			<param name="test.name" value="DBUpgrade${test.ant.script.suite}${db-upgrade.build}TestSuite" />
+			<param name="ui.test" value="DBUpgrade${test.ant.script.suite}${db-upgrade.build}TestSuite" />
 		</antcall>
 
 		<antcall target="prepare-versioned-postgresql-8.4">
@@ -312,7 +312,7 @@
 			${test.ant.script.file.plugin.portlets}
 			${test.ant.script.file.selenium.implementation}
 			${test.ant.script.file.selenium.logger.enabled}
-			<param name="test.name" value="DBUpgrade${test.ant.script.suite}${db-upgrade.build}LatestTestSuite" />
+			<param name="ui.test" value="DBUpgrade${test.ant.script.suite}${db-upgrade.build}LatestTestSuite" />
 		</antcall>
 
 		<antcall target="stop-vm">
@@ -352,7 +352,7 @@
 			<param name="bundled.file.name" value="${db-upgrade.bundled.tomcat.file.name}" />
 			<param name="legacy.theme.ids" value="classic,controlpanel" />
 			<param name="lp.version" value="${test.ant.script.version}" />
-			<param name="test.name" value="DBUpgrade${test.ant.script.suite}${db-upgrade.build}TestSuite" />
+			<param name="ui.test" value="DBUpgrade${test.ant.script.suite}${db-upgrade.build}TestSuite" />
 		</antcall>
 
 		<antcall target="prepare-versioned-postgresql-9.0">
@@ -366,7 +366,7 @@
 			${test.ant.script.file.plugin.portlets}
 			${test.ant.script.file.selenium.implementation}
 			${test.ant.script.file.selenium.logger.enabled}
-			<param name="test.name" value="DBUpgrade${test.ant.script.suite}${db-upgrade.build}LatestTestSuite" />
+			<param name="ui.test" value="DBUpgrade${test.ant.script.suite}${db-upgrade.build}LatestTestSuite" />
 		</antcall>
 
 		<antcall target="stop-vm">
@@ -406,7 +406,7 @@
 			<param name="bundled.file.name" value="${db-upgrade.bundled.tomcat.file.name}" />
 			<param name="legacy.theme.ids" value="classic,controlpanel" />
 			<param name="lp.version" value="${test.ant.script.version}" />
-			<param name="test.name" value="DBUpgrade${test.ant.script.suite}${db-upgrade.build}TestSuite" />
+			<param name="ui.test" value="DBUpgrade${test.ant.script.suite}${db-upgrade.build}TestSuite" />
 		</antcall>
 
 		<antcall target="prepare-versioned-postgresql-9.2">
@@ -420,7 +420,7 @@
 			${test.ant.script.file.plugin.portlets}
 			${test.ant.script.file.selenium.implementation}
 			${test.ant.script.file.selenium.logger.enabled}
-			<param name="test.name" value="DBUpgrade${test.ant.script.suite}${db-upgrade.build}LatestTestSuite" />
+			<param name="ui.test" value="DBUpgrade${test.ant.script.suite}${db-upgrade.build}LatestTestSuite" />
 		</antcall>
 
 		<antcall target="stop-vm">
@@ -460,7 +460,7 @@
 			<param name="bundled.file.name" value="${db-upgrade.bundled.tomcat.file.name}" />
 			<param name="legacy.theme.ids" value="classic,controlpanel" />
 			<param name="lp.version" value="${test.ant.script.version}" />
-			<param name="test.name" value="DBUpgrade${test.ant.script.suite}${db-upgrade.build}TestSuite" />
+			<param name="ui.test" value="DBUpgrade${test.ant.script.suite}${db-upgrade.build}TestSuite" />
 		</antcall>
 
 		<antcall target="prepare-versioned-sql-server-2005">
@@ -474,7 +474,7 @@
 			${test.ant.script.file.plugin.portlets}
 			${test.ant.script.file.selenium.implementation}
 			${test.ant.script.file.selenium.logger.enabled}
-			<param name="test.name" value="DBUpgrade${test.ant.script.suite}${db-upgrade.build}LatestTestSuite" />
+			<param name="ui.test" value="DBUpgrade${test.ant.script.suite}${db-upgrade.build}LatestTestSuite" />
 		</antcall>
 
 		<antcall target="stop-vm">
@@ -514,7 +514,7 @@
 			<param name="bundled.file.name" value="${db-upgrade.bundled.tomcat.file.name}" />
 			<param name="legacy.theme.ids" value="classic,controlpanel" />
 			<param name="lp.version" value="${test.ant.script.version}" />
-			<param name="test.name" value="DBUpgrade${test.ant.script.suite}${db-upgrade.build}TestSuite" />
+			<param name="ui.test" value="DBUpgrade${test.ant.script.suite}${db-upgrade.build}TestSuite" />
 		</antcall>
 
 		<antcall target="prepare-db-sql-server-2008-common">
@@ -528,7 +528,7 @@
 			${test.ant.script.file.plugin.portlets}
 			${test.ant.script.file.selenium.implementation}
 			${test.ant.script.file.selenium.logger.enabled}
-			<param name="test.name" value="DBUpgrade${test.ant.script.suite}${db-upgrade.build}LatestTestSuite" />
+			<param name="ui.test" value="DBUpgrade${test.ant.script.suite}${db-upgrade.build}LatestTestSuite" />
 		</antcall>
 
 		<antcall target="stop-vm">
@@ -568,7 +568,7 @@
 			<param name="bundled.file.name" value="${db-upgrade.bundled.tomcat.file.name}" />
 			<param name="legacy.theme.ids" value="classic,controlpanel" />
 			<param name="lp.version" value="${test.ant.script.version}" />
-			<param name="test.name" value="DBUpgrade${test.ant.script.suite}${db-upgrade.build}TestSuite" />
+			<param name="ui.test" value="DBUpgrade${test.ant.script.suite}${db-upgrade.build}TestSuite" />
 		</antcall>
 
 		<antcall target="prepare-versioned-sybase">
@@ -582,7 +582,7 @@
 			${test.ant.script.file.plugin.portlets}
 			${test.ant.script.file.selenium.implementation}
 			${test.ant.script.file.selenium.logger.enabled}
-			<param name="test.name" value="DBUpgrade${test.ant.script.suite}${db-upgrade.build}LatestTestSuite" />
+			<param name="ui.test" value="DBUpgrade${test.ant.script.suite}${db-upgrade.build}LatestTestSuite" />
 		</antcall>
 
 		<antcall target="stop-vm">

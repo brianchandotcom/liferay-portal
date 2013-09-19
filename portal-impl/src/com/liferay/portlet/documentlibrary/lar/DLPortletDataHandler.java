@@ -248,8 +248,7 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 			portletDataContext.addReferenceElement(
 				portlet, rootElement, folder, Folder.class,
 				PortletDataContext.REFERENCE_TYPE_DEPENDENCY,
-				!portletDataContext.getBooleanParameter(
-					NAMESPACE, "documents"));
+				!portletDataContext.getBooleanParameter(NAMESPACE, "folders"));
 		}
 
 		return portletPreferences;

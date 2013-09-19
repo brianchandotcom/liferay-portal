@@ -163,10 +163,25 @@ if (!selectableTree) {
 				json.layouts,
 				function(node) {
 					var childLayouts = [];
+					var cssIcons = {};
 					var total = 0;
+
+					var iconClassName = 'icon-link';
 
 					var hasChildren = node.hasChildren;
 					var nodeChildren = node.children;
+					var nodeType = node.type;
+
+					if ((nodeType === 'embedded') ||
+						(nodeType === 'link_to_layout') ||
+						(nodeType === 'url')) {
+
+						cssIcons.pages: {
+							iconCollapsed: iconClassName,
+							iconExpanded: iconClassName,
+							iconLeaf: iconClassName
+						};
+					}
 
 					if (nodeChildren) {
 						childLayouts = nodeChildren.layouts;
@@ -223,7 +238,7 @@ if (!selectableTree) {
 							checked: true,
 						</c:if>
 
-						cssClasses: TREE_CSS_CLASSES,
+						cssClasses: A.merge(TREE_CSS_CLASSES, cssIcons),
 						draggable: node.sortable,
 						expanded: expanded,
 						id: TreeUtil.createListItemId(node.groupId, node.layoutId, node.plid),

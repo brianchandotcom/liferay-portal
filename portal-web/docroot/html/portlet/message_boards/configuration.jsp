@@ -99,16 +99,16 @@ String emailSignature = PrefsParamUtil.getString(portletPreferences, request, em
 
 				<aui:select name="preferences--messageFormat--">
 					<c:choose>
-						<c:when test="<%= MBUtil.isConfigurableMessageFormat(portletPreferences) && false %>">
+						<c:when test="<%= MBUtil.isValidMessageFormat(messageFormat) %>">
 
 							<%
-								for (int i = 0; i < MBMessageConstants.FORMATS.length; i++) {
+							for (int i = 0; i < MBMessageConstants.FORMATS.length; i++) {
 							%>
 
-							<aui:option label='<%= LanguageUtil.get(pageContext, "message-boards.message-formats." + MBMessageConstants.FORMATS[i]) %>' selected="<%= messageFormat.equals(MBMessageConstants.FORMATS[i]) %>" value="<%= MBMessageConstants.FORMATS[i] %>" />
+								<aui:option label='<%= LanguageUtil.get(pageContext, "message-boards.message-formats." + MBMessageConstants.FORMATS[i]) %>' selected="<%= messageFormat.equals(MBMessageConstants.FORMATS[i]) %>" value="<%= MBMessageConstants.FORMATS[i] %>" />
 
 							<%
-								}
+							}
 							%>
 
 						</c:when>

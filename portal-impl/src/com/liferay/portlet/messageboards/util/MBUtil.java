@@ -566,9 +566,11 @@ public class MBUtil {
 	}
 
 	public static String getMessageFormat(PortletPreferences preferences) {
-		if (isConfigurableMessageFormat(preferences)) {
-			return preferences.getValue(
-				"messageFormat", MBMessageConstants.DEFAULT_FORMAT);
+		String messageFormat = preferences.getValue(
+			"messageFormat", MBMessageConstants.DEFAULT_FORMAT);
+
+		if (isValidMessageFormat(messageFormat)) {
+			return messageFormat;
 		}
 
 		return "html";
@@ -857,17 +859,12 @@ public class MBUtil {
 			PropsValues.MESSAGE_BOARDS_ANONYMOUS_POSTING_ENABLED);
 	}
 
-	public static boolean isConfigurableMessageFormat(
-		PortletPreferences preferences) {
-
-		String messageFormat = preferences.getValue(
-			"messageFormat", MBMessageConstants.DEFAULT_FORMAT);
-
+	public static boolean isValidMessageFormat(String messageFormat) {
 		String editorImpl = PropsUtil.get(BB_CODE_EDITOR_WYSIWYG_IMPL_KEY);
 
 		if (messageFormat.equals("bbcode") &&
 			!(editorImpl.equals("bbcode") ||
-				editorImpl.equals("ckeditor_bbcode"))) {
+			  editorImpl.equals("ckeditor_bbcode"))) {
 
 			return false;
 		}

@@ -3,4 +3,5 @@
 	<execute test-case-command="CPUsersandorganizations#EditOrganizationSite" />
 	<execute test-case-command="CPUsersandorganizations#LoginUser" />
 	<execute test-case-command="CPUsersandorganizations#RemoveMember" />
+	<execute test-case-command="CPUsersandorganizations#ViewBack" />
 </definition>

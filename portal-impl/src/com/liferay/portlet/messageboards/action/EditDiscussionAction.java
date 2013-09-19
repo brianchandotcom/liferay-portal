@@ -69,17 +69,21 @@ public class EditDiscussionAction extends PortletAction {
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
 				MBMessage message = updateMessage(actionRequest);
 
-				String randomNamespace = ParamUtil.getString(
-					actionRequest, "randomNamespace");
+				boolean ajax = ParamUtil.getBoolean(actionRequest, "ajax");
 
-				JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+				if (ajax) {
+					String randomNamespace = ParamUtil.getString(
+						actionRequest, "randomNamespace");
 
-				jsonObject.put("messageId", message.getMessageId());
-				jsonObject.put("randomNamespace", randomNamespace);
+					JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-				writeJSON(actionRequest, actionResponse, jsonObject);
+					jsonObject.put("messageId", message.getMessageId());
+					jsonObject.put("randomNamespace", randomNamespace);
 
-				return;
+					writeJSON(actionRequest, actionResponse, jsonObject);
+
+					return;
+				}
 			}
 			else if (cmd.equals(Constants.DELETE)) {
 				deleteMessage(actionRequest);

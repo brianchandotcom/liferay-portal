@@ -206,8 +206,6 @@ request.setAttribute(WebKeys.WORKFLOW_ASSET_PREVIEW, Boolean.TRUE);
 
 								editPortletURLString = HttpUtil.addParameter(editPortletURLString, "doAsGroupId", assetRenderer.getGroupId());
 								editPortletURLString = HttpUtil.addParameter(editPortletURLString, "refererPlid", plid);
-
-								editPortletURL.setParameter("redirect", currentURL);
 								%>
 
 								<c:choose>

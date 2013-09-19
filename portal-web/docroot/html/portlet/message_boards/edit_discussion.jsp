@@ -40,15 +40,6 @@ if (threadId > 0) {
 	}
 }
 
-if (Validator.isNull(redirect)) {
-	PortletURL viewMessageURL = renderResponse.createRenderURL();
-
-	viewMessageURL.setParameter("struts_action", "/message_boards/view_message");
-	viewMessageURL.setParameter("messageId", String.valueOf(messageId));
-
-	redirect = viewMessageURL.toString();
-}
-
 boolean pending = false;
 
 if (message != null) {

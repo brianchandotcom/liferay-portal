@@ -1499,7 +1499,9 @@ public class SitesImpl implements Sites {
 
 		long companyId = targetLayout.getCompanyId();
 
-		List<Role> roles = RoleLocalServiceUtil.getRoles(companyId);
+		long groupId = targetLayout.getGroupId();
+
+		List<Role> roles = RoleLocalServiceUtil.getGroupRelatedRoles(groupId);
 
 		LayoutTypePortlet sourceLayoutTypePortlet =
 			(LayoutTypePortlet)sourceLayout.getLayoutType();

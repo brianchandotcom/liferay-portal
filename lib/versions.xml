@@ -101,18 +101,6 @@
 		</licenses>
 	</library>
 	<library>
-		<file-name>lib/development/ckbuilder.jar</file-name>
-		<version>1.6</version>
-		<project-name>CKBuilder</project-name>
-		<project-url>http://download.cksource.com/CKBuilder/1.6</project-url>
-		<licenses>
-			<license>
-				<license-name>LGPL 2.1</license-name>
-				<license-url>http://www.gnu.org/licenses/lgpl-2.1.html</license-url>
-			</license>
-		</licenses>
-	</library>
-	<library>
 		<file-name>lib/development/cobertura.jar</file-name>
 		<version>1.9.4.1</version>
 		<project-name>Cobertura</project-name>

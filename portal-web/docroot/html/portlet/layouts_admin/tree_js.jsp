@@ -172,13 +172,14 @@ if (!selectableTree) {
 					var nodeChildren = node.children;
 					var nodeType = node.type;
 
-					if ((nodeType === "link_to_layout") || (nodeType === "url") || (nodeType === "embedded")) {
-						cssIcons = {
-							pages: {
-								iconCollapsed: iconClassName,
-								iconExpanded: iconClassName,
-								iconLeaf: iconClassName
-							}
+					if ((nodeType === 'embedded') ||
+						(nodeType === 'link_to_layout') ||
+						(nodeType === 'url')) {
+
+						cssIcons.pages: {
+							iconCollapsed: iconClassName,
+							iconExpanded: iconClassName,
+							iconLeaf: iconClassName
 						};
 					}
 

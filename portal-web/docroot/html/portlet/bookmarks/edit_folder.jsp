@@ -73,6 +73,7 @@ else {
 	<aui:fieldset>
 		<c:if test="<%= folder != null %>">
 			<aui:field-wrapper label="parent-folder">
+
 				<%
 				String parentFolderName = LanguageUtil.get(pageContext, "home");
 
@@ -124,7 +125,7 @@ else {
 					String taglibRemoveFolder = "Liferay.Util.removeFolderSelection('parentFolderId', 'parentFolderName', '" + renderResponse.getNamespace() + "');";
 					%>
 
-					<aui:button disabled="<%= parentFolderId <= 0 %>" name="removeFolderButton" onClick="<%= taglibRemoveFolder %>" value="remove" />
+					<aui:button disabled="<%= (parentFolderId <= 0) %>" name="removeFolderButton" onClick="<%= taglibRemoveFolder %>" value="remove" />
 				</div>
 
 				<aui:input disabled="<%= mergeWithParentFolderDisabled %>" label="merge-with-parent-folder" name="mergeWithParentFolder" type="checkbox" />

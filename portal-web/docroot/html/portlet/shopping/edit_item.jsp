@@ -572,7 +572,7 @@ int priceId = ParamUtil.getInteger(request, "priceId", -1);
 	function <portlet:namespace />removeCategory() {
 		document.<portlet:namespace />fm.<portlet:namespace />categoryId.value = "<%= ShoppingCategoryConstants.DEFAULT_PARENT_CATEGORY_ID %>";
 
-		document.getElementById("<portlet:namespace />categoryName").value = '';
+		document.getElementById('<portlet:namespace />categoryName').value = '';
 	}
 
 	function <portlet:namespace />saveItem() {
@@ -584,6 +584,6 @@ int priceId = ParamUtil.getInteger(request, "priceId", -1);
 	function <portlet:namespace />selectCategory(categoryId, categoryName) {
 		document.<portlet:namespace />fm.<portlet:namespace />categoryId.value = categoryId;
 
-		document.getElementById("<portlet:namespace />categoryName").value = categoryName;
+		document.getElementById('<portlet:namespace />categoryName').value = categoryName;
 	}
 </aui:script>

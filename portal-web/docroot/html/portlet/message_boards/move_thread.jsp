@@ -103,11 +103,11 @@ boolean splitThread = false;
 	}
 
 	function <portlet:namespace />toggleExplanationPost() {
-		if (document.getElementById("<portlet:namespace />addExplanationPostCheckbox").checked) {
-			document.getElementById("<portlet:namespace />explanationPost").style.display = "";
+		if (document.getElementById('<portlet:namespace />addExplanationPostCheckbox').checked) {
+			document.getElementById('<portlet:namespace />explanationPost').style.display = "";
 		}
 		else {
-			document.getElementById("<portlet:namespace />explanationPost").style.display = "none";
+			document.getElementById('<portlet:namespace />explanationPost').style.display = "none";
 		}
 	}
 </aui:script>
@@ -136,7 +136,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(pageContext, "mov
 				function(event) {
 					document.<portlet:namespace />fm.<portlet:namespace />mbCategoryId.value = event.categoryid;
 
-					document.getElementById("<portlet:namespace />categoryName").value = event.name;
+					document.getElementById('<portlet:namespace />categoryName').value = event.name;
 				}
 			);
 		}

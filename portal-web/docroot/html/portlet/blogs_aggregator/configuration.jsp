@@ -106,9 +106,9 @@ if (organizationId > 0) {
 	function <portlet:namespace />removeOrganization() {
 		document.<portlet:namespace />fm.<portlet:namespace />organizationId.value = "";
 
-		document.getElementById("<portlet:namespace />organizationName").value = "";
+		document.getElementById('<portlet:namespace />organizationName').value = "";
 
-		Liferay.Util.toggleDisabled("#<portlet:namespace />removeOrganizationButton", true);
+		Liferay.Util.toggleDisabled('#<portlet:namespace />removeOrganizationButton', true);
 	}
 </aui:script>
 
@@ -131,7 +131,7 @@ if (organizationId > 0) {
 
 					document.getElementById('<portlet:namespace />organizationName').value = event.name;
 
-					Liferay.Util.toggleDisabled("#<portlet:namespace />removeOrganizationButton", false);
+					Liferay.Util.toggleDisabled('#<portlet:namespace />removeOrganizationButton', false);
 				}
 			);
 		}

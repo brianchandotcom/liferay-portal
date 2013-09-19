@@ -170,7 +170,7 @@ portletURL.setParameter("fileShortcutId", String.valueOf(fileShortcutId));
 					document.<portlet:namespace />fm.<portlet:namespace />toGroupId.value = event.groupid;
 					document.<portlet:namespace />fm.<portlet:namespace />toFileEntryId.value = 0;
 
-					document.getElementById("<portlet:namespace />toGroupName").value = A.Escape.html(event.groupdescriptivename);
+					document.getElementById('<portlet:namespace />toGroupName').value = A.Escape.html(event.groupdescriptivename);
 
 					Liferay.Util.toggleDisabled(selectToFileEntryButton, false);
 				}
@@ -221,7 +221,7 @@ portletURL.setParameter("fileShortcutId", String.valueOf(fileShortcutId));
 	function <portlet:namespace />selectFileEntry(fileEntryId, title) {
 		document.<portlet:namespace />fm.<portlet:namespace />toFileEntryId.value = fileEntryId;
 
-		document.getElementById("<portlet:namespace />toFileEntryTitle").value = title;
+		document.getElementById('<portlet:namespace />toFileEntryTitle').value = title;
 	}
 </aui:script>
 

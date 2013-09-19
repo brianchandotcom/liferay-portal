@@ -120,7 +120,7 @@ else {
 
 			<c:if test="<%= category != null %>">
 				<aui:field-wrapper label="parent-category">
-					<liferay-ui:input-resource url="<%= parentCategoryName %>" />
+					<liferay-ui:input-resource id="parentCategoryName" url="<%= parentCategoryName %>" />
 				</aui:field-wrapper>
 			</c:if>
 		</c:if>

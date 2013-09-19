@@ -28,6 +28,6 @@ if (selLayout != null) {
 }
 %>
 
-<aui:input cssClass="lfr-input-text-container" label="url" name="TypeSettingsProperties--url--" type="text" value="<%= url %>" />
+<aui:input cssClass="lfr-input-text-container" id="url" label="url" name="TypeSettingsProperties--url--" type="text" value="<%= url %>" />
 
-<aui:input cssClass="layout-description" label="description" name="TypeSettingsProperties--description--" type="textarea" value="<%= description %>" wrap="soft" />
+<aui:input cssClass="layout-description" id="description" label="description" name="TypeSettingsProperties--description--" type="textarea" value="<%= description %>" wrap="soft" />

@@ -103,20 +103,6 @@ AUI.add(
 						instance._bindUI();
 					},
 
-					_bindUI: function() {
-						var instance = this;
-
-						instance._addForm.on('submit', instance._addPage, instance);
-
-						instance._cancelButton.on('click', instance._cancelAction, instance);
-
-						instance._hiddenCheckbox.on('change', instance._updateNavigationProxy, instance);
-
-						instance._nameInput.on('input', instance._updateNavigationProxy, instance);
-
-						instance._togglerDelegate.on('toggler:expandedChange', instance._updateActivePage, instance);
-					},
-
 					_addPage: function(event) {
 						var instance = this;
 
@@ -125,23 +111,13 @@ AUI.add(
 						var formValidator = instance._getFormValidator(addForm);
 
 						if (!formValidator.hasErrors()) {
+							instance._disableFormElements();
+
 							if (instance.get('refresh')) {
 								submitForm(addForm);
 							}
 							else {
 								event.preventDefault();
-
-								var nodes = instance.get(STR_NODES);
-
-								nodes.each(
-									function(item, index, collection) {
-										var header = item.one(SELECTOR_TOGGLER_HEADER);
-
-										var active = header.hasClass(CSS_ACTIVE);
-
-										item.all('input, select, textarea').attr('disabled', !active);
-									}
-								);
 
 								A.io.request(
 									addForm.get('action'),
@@ -186,6 +162,20 @@ AUI.add(
 						}
 					},
 
+					_bindUI: function() {
+						var instance = this;
+
+						instance._addForm.on('submit', instance._addPage, instance);
+
+						instance._cancelButton.on('click', instance._cancelAction, instance);
+
+						instance._hiddenCheckbox.on('change', instance._updateNavigationProxy, instance);
+
+						instance._nameInput.on('input', instance._updateNavigationProxy, instance);
+
+						instance._togglerDelegate.on('toggler:expandedChange', instance._updateActivePage, instance);
+					},
+
 					_cancelAction: function(event) {
 						var instance = this;
 
@@ -194,6 +184,22 @@ AUI.add(
 
 							Dockbar.toggleAddPanel();
 						}
+					},
+
+					_disableFormElements: function() {
+						var instance = this;
+
+						var nodes = instance.get(STR_NODES);
+
+						nodes.each(
+							function(item, index, collection) {
+								var header = item.one(SELECTOR_TOGGLER_HEADER);
+
+								var active = header.hasClass(CSS_ACTIVE);
+
+								item.all('input, select, textarea').attr('disabled', !active);
+							}
+						);
 					},
 
 					_getFormValidator: function(formNode) {

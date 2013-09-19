@@ -56,7 +56,6 @@
 
 	<!-- JMX -->
 
-	<bean id="com.liferay.portal.monitoring.jmx.DataSampleThreadLocalManager" class="com.liferay.portal.monitoring.jmx.DataSampleThreadLocalManager" />
 	<bean id="com.liferay.portal.monitoring.jmx.MonitoringProcessorManager" class="com.liferay.portal.monitoring.jmx.MonitoringProcessorManager">
 		<property name="monitoringProcessor" ref="com.liferay.portal.monitoring.MonitoringProcessor" />
 	</bean>
@@ -109,7 +108,6 @@
 	<bean id="monitoringMBeanExporter" class="org.springframework.jmx.export.MBeanExporter">
 		<property name="beans">
 			<map>
-				<entry key="com.liferay.portal.monitoring:classification=instrumentation,name=DataSampleThreadLocalManager" value-ref="com.liferay.portal.monitoring.jmx.DataSampleThreadLocalManager" />
 				<entry key="com.liferay.portal.monitoring:classification=instrumentation,name=MonitoringFilterManager" value-ref="com.liferay.portal.servlet.filters.monitoring.jmx.MonitoringFilterManager" />
 				<entry key="com.liferay.portal.monitoring:classification=instrumentation,name=MonitoringPortletManager" value-ref="com.liferay.portlet.MonitoringPortletManager" />
 				<entry key="com.liferay.portal.monitoring:classification=monitoring_service,name=MonitoringServiceManager" value-ref="com.liferay.portal.monitoring.jmx.MonitoringProcessorManager" />

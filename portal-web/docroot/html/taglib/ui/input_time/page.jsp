@@ -51,8 +51,10 @@ String placeholder = _PLACEHOLDER_DEFAULT;
 
 if (!DateUtil.isFormatAmPm(locale)) {
 	placeholder = _PLACEHOLDER_ISO;
+}
 
-	amPmValue = Calendar.AM;
+if (amPmValue > 0) {
+	calendar.set(Calendar.AM_PM, Calendar.PM);
 }
 
 Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(simpleDateFormatPattern, locale);
@@ -97,9 +99,6 @@ Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(simpleDateFormatPa
 							<c:if test="<%= DateUtil.isFormatAmPm(locale) %>">
 								if (hours > 11) {
 									amPm = 1;
-								}
-
-								if (hours > 12) {
 									hours -= 12;
 								}
 							</c:if>

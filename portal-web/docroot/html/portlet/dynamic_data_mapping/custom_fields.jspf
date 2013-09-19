@@ -168,7 +168,9 @@ int firstDayOfWeek = localeCal.getFirstDayOfWeek() - 1;
 									if (attributeName === 'predefinedValue') {
 										collection[index] = {
 											attributeName: attributeName,
-											editor: new A.DateCellEditor(),
+											editor: new A.DateCellEditor({
+												dateFormat: '%m/%d/%Y'
+											}),
 											name: '<%= UnicodeLanguageUtil.get(pageContext, "predefined-value") %>'
 										};
 									}

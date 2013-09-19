@@ -427,6 +427,8 @@ public class EditEntryAction extends PortletAction {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
 
+		serviceContext.setCommand(Constants.UPDATE);
+
 		try {
 			Calendar displayDateCal = CalendarFactoryUtil.getCalendar();
 

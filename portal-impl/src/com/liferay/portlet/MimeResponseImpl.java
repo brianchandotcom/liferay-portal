@@ -151,15 +151,18 @@ public abstract class MimeResponseImpl
 		String lifecycle = getLifecycle();
 		WindowState windowState = _portletRequestImpl.getWindowState();
 
-		if (contentType.startsWith(
-				_portletRequestImpl.getResponseContentType()) ||
-			lifecycle.equals(PortletRequest.RESOURCE_PHASE) ||
-			windowState.equals(LiferayWindowState.EXCLUSIVE)) {
+		if (!contentType.startsWith(
+				_portletRequestImpl.getResponseContentType()) &&
+			!lifecycle.equals(PortletRequest.RESOURCE_PHASE) &&
+			!windowState.equals(LiferayWindowState.EXCLUSIVE)) {
 
-			_contentType = contentType;
-
-			_response.setContentType(contentType);
+			throw new IllegalArgumentException(
+				contentType + " is not a supported mime type");
 		}
+
+		_contentType = contentType;
+
+		_response.setContentType(contentType);
 	}
 
 	@Override

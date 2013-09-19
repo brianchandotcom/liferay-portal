@@ -79,7 +79,6 @@ public class MonitoringFilter extends BasePortalFilter {
 		PortalRequestDataSample portalRequestDataSample = null;
 
 		if (_monitoringPortalRequest) {
-
 			String requestURLString = StringPool.BLANK;
 
 			if (request.getRequestURL() != null) {

@@ -19,10 +19,7 @@
 	<bean id="portletStatistics" class="com.liferay.portal.monitoring.statistics.portlet.ServerStatistics">
 		<property name="companyLocalService" ref="com.liferay.portal.service.CompanyLocalService" />
 	</bean>
-	<bean id="serviceMonitorAdvice" class="com.liferay.portal.monitoring.statistics.service.ServiceMonitorAdvice">
-		<property name="invokerPortletFactory" ref="com.liferay.portlet.InvokerPortletFactoryImpl" />
-		<property name="monitoringPortletFactoryImpl" ref="com.liferay.portlet.MonitoringPortletFactoryImpl" />
-	</bean>
+	<bean id="serviceMonitorAdvice" class="com.liferay.portal.monitoring.statistics.service.ServiceMonitorAdvice" />
 	<bean id="serviceStatistics" class="com.liferay.portal.monitoring.statistics.service.ServerStatistics" />
 	<bean id="com.liferay.portal.monitoring.MonitoringProcessor" class="com.liferay.portal.kernel.monitoring.DefaultMonitoringProcessor">
 		<property name="dataSampleProcessors">
@@ -59,7 +56,10 @@
 		<property name="monitoringProcessor" ref="com.liferay.portal.monitoring.MonitoringProcessor" />
 	</bean>
 	<bean id="com.liferay.portal.servlet.filters.monitoring.jmx.MonitoringFilterManager" class="com.liferay.portal.servlet.filters.monitoring.jmx.MonitoringFilterManager" />
-	<bean id="com.liferay.portlet.MonitoringPortletManager" class="com.liferay.portlet.MonitoringPortletManager" />
+	<bean id="com.liferay.portlet.MonitoringPortletManager" class="com.liferay.portlet.MonitoringPortletManager">
+		<property name="invokerPortletFactory" ref="com.liferay.portlet.InvokerPortletFactoryImpl" />
+		<property name="monitoringPortletFactoryImpl" ref="com.liferay.portlet.MonitoringPortletFactoryImpl" />
+	</bean>
 	<bean id="com.liferay.portal.monitoring.jmx.ActionRequestPortletContainerManager" class="com.liferay.portal.monitoring.jmx.PortletManager">
 		<property name="portletSummaryStatistics">
 			<bean class="com.liferay.portal.monitoring.statistics.portlet.ActionRequestSummaryStatistics">

@@ -505,4 +505,21 @@
 			<var name="password" value="test" />
 		</execute>
 	</command>
+
+	<command name="ViewBack">
+		<var name="orgName" value="Organization Name" />
+		<var name="orgType" value="Regular Organization" />
+		<var name="searchToken" value="Organization" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Organization#addCP">
+			<var name="orgName" value="${orgName}" />
+			<var name="orgType" value="${orgType}" />
+		</execute>
+
+		<execute action="CPUsersandorganizationsAddorganization#assertElementPresent" locator-key1="BACK" />
+	</command>
 </definition>

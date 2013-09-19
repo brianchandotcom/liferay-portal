@@ -34,6 +34,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>BACK</td>
+	<td>//a[@id='_125_TabsBack']</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

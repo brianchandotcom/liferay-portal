@@ -75,6 +75,9 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 			new StagedModelType(Folder.class));
 		setExportControls(
 			new PortletDataHandlerBoolean(
+				NAMESPACE, "folders", true, false, null,
+				Folder.class.getName()),
+			new PortletDataHandlerBoolean(
 				NAMESPACE, "documents", true, false,
 				new PortletDataHandlerControl[] {
 					new PortletDataHandlerBoolean(

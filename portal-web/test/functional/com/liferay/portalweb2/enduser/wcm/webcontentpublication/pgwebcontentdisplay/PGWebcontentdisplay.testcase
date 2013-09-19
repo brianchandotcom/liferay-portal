@@ -26,6 +26,34 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
+	<command name="AddNewWebContentViaAddContentPanel">
+		<var name="assetType" value="Web Content Article" />
+		<var name="pageName" value="Web Content Page" />
+		<var name="webContentContent" value="WC WebContent Content" />
+		<var name="webContentTitle" value="WC WebContent Title" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Content#addNewPG">
+			<var name="assetType" value="${assetType}" />
+		</execute>
+
+		<execute macro="WebContent#addPGViaPanel">
+			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute macro="WebContent#viewPGViaWCD">
+			<var name="webContentContent" value="${webContentContent}" />
+		</execute>
+	</command>
+
 	<command name="AddPortletWCDSite">
 		<var name="siteName" value="Site Name" />
 		<var name="sitePageName" value="Site Page" />
@@ -70,6 +98,39 @@
 			<var name="pageName" value="${pageName}" />
 			<var name="webContentContent" value="${webContentContent}" />
 			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+	</command>
+
+	<command name="AddWebContentViaAddContentPanel">
+		<var name="pageName" value="Web Content Page" />
+		<var name="webContentContent" value="WC WebContent Content" />
+		<var name="webContentTitle" value="WC WebContent Title" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Content#addPG">
+			<var name="assetTitle" value="${webContentTitle}" />
+			<var name="pageName" value="${pageName}" />
+			<var name="webContentContent" value="${webContentContent}" />
+		</execute>
+
+		<execute macro="WebContent#viewPGViaWCD">
+			<var name="webContentContent" value="${webContentContent}" />
 		</execute>
 	</command>
 

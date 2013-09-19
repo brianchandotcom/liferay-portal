@@ -71,6 +71,18 @@
 		<execute action="PGWebcontentdisplay#assertTextEquals" locator-key1="WEB_CONTENT_CONTENT" value1="${webContentContent}" />
 	</command>
 
+	<command name="addPGViaPanel">
+		<execute action="PGWebcontentdisplayAddwebcontent#selectFrame" locator-key1="NEW_WEB_CONTENT_ARTICLE_IFRAME" />
+		<execute action="PGWebcontentdisplayAddwebcontent#type" locator-key1="TITLE_FIELD" value1="${webContentTitle}" />
+		<execute action="PGWebcontentdisplayAddwebcontent#type" locator-key1="CONTENT_FIELD" value1="${webContentContent}" />
+		<execute action="PGWebcontentdisplayAddwebcontent#selectFrame" locator-key1="NEW_WEB_CONTENT_ARTICLE_IFRAME" />
+		<execute action="PGWebcontentdisplayAddwebcontent#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
+
+		<execute action="PGWebcontentdisplay#selectFrame" value1="relative=top" />
+
+		<execute action="PGWebcontentdisplay#assertTextEquals" locator-key1="WEB_CONTENT_CONTENT" value1="${webContentContent}" />
+	</command>
+
 	<command name="addTranslationPGViaWCD">
 		<execute action="PGWebcontentdisplay#click" locator-key1="EDIT_WEB_CONTENT" value1="Edit" />
 

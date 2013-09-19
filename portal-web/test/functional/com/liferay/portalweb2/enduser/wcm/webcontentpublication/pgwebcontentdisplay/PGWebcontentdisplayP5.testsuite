@@ -1,7 +1,9 @@
 <definition>
+	<execute test-case-command="PGWebcontentdisplay#AddNewWebContentViaAddContentPanel" />
 	<execute test-case-command="PGWebcontentdisplay#AddPortletWCDSite" />
-	<!--<execute test-case-command="PGWebcontentdisplay#AddWebContentPortalScopeCurrentPage" />-->
+	<execute test-case-command="PGWebcontentdisplay#AddWebContentPortalScopeCurrentPage" />
 	<execute test-case-command="PGWebcontentdisplay#LocalizeWebContent" />
+	<execute test-case-command="PGWebcontentdisplay#AddWebContentViaAddContentPanel" />
 	<execute test-case-command="PGWebcontentdisplay#SearchWebContent" />
 	<execute test-case-command="PGWebcontentdisplay#SelectWebContent" />
 	<execute test-case-command="PGWebcontentdisplay#SelectWebContentScopeGlobal" />

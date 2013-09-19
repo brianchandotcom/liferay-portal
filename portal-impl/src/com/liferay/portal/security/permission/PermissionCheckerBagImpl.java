@@ -17,10 +17,12 @@ package com.liferay.portal.security.permission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.OrganizationConstants;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.service.UserGroupRoleLocalServiceUtil;
 import com.liferay.portal.service.permission.LayoutPrototypePermissionUtil;
@@ -219,6 +221,16 @@ public class PermissionCheckerBagImpl implements PermissionCheckerBag {
 	protected boolean isGroupAdminImpl(
 			PermissionChecker permissionChecker, Group group)
 		throws PortalException, SystemException {
+
+		if (group.isLayout()) {
+			long parentGroupId = group.getParentGroupId();
+
+			if (parentGroupId == GroupConstants.DEFAULT_PARENT_GROUP_ID) {
+				return false;
+			}
+
+			group = GroupLocalServiceUtil.getGroup(parentGroupId);
+		}
 
 		if (group.isSite()) {
 			if (UserGroupRoleLocalServiceUtil.hasUserGroupRole(

@@ -1152,10 +1152,10 @@
 		<if>
 			<available file="portal-web/test/functional" type="dir" />
 			<then>
-				<resourcecount property="test.case.name.count">
+				<resourcecount property="test.case.count">
 					<fileset dir="portal-web/test/functional" includes="**/${test.case.name}.testcase" />
 				</resourcecount>
-				<resourcecount property="test.suite.name.count">
+				<resourcecount property="test.suite.count">
 					<fileset dir="portal-web/test/functional" includes="**/${test.suite.name}.testsuite" />
 				</resourcecount>
 			</then>
@@ -1166,15 +1166,15 @@
 		<if>
 			<or>
 				<and>
-					<isset property="test.case.name.count" />
+					<isset property="test.case.count" />
 					<not>
-						<equals arg1="${test.case.name.count}" arg2="0" />
+						<equals arg1="${test.case.count}" arg2="0" />
 					</not>
 				</and>
 				<and>
-					<isset property="test.suite.name.count" />
+					<isset property="test.suite.count" />
 					<not>
-						<equals arg1="${test.suite.name.count}" arg2="0" />
+						<equals arg1="${test.suite.count}" arg2="0" />
 					</not>
 				</and>
 			</or>
@@ -2369,7 +2369,7 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 	<target name="run-selenium-test">
 		<if>
 			<and>
-				<equals arg1="${test.name}" arg2="PortalWebTestSuite" />
+				<equals arg1="${ui.test}" arg2="PortalWebTestSuite" />
 				<not>
 					<equals arg1="${database}" arg2="hsql" />
 				</not>
@@ -2406,7 +2406,7 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 		<ant dir="portal-impl" target="compile-test" inheritAll="false" />
 
 		<if>
-			<contains string="${test.name}" substring="#" />
+			<contains string="${ui.test}" substring="#" />
 			<then>
 				<replace
 					file="portal-web/test/test-portal-web.properties"
@@ -2415,15 +2415,15 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 				/>
 
 				<script classpathref="project.classpath" language="beanshell">
-					String testName = project.getProperty("test.name");
+					String uiTest = project.getProperty("ui.test");
 
-					int x = testName.indexOf("#");
+					int x = uiTest.indexOf("#");
 
-					String testMethodName = testName.substring(x + 1);
+					String testMethodName = uiTest.substring(x + 1);
 
 					project.setProperty("test.method.name", testMethodName);
 
-					String testSimpleClassName = testName.substring(0, x);
+					String testSimpleClassName = uiTest.substring(0, x);
 
 					project.setProperty("test.simple.class.name", testSimpleClassName);
 				</script>
@@ -2477,11 +2477,11 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 			</then>
 			<else>
 				<antcall target="generate-tests" inheritAll="false">
-					<param name="test.simple.class.name" value="${test.name}" />
+					<param name="test.simple.class.name" value="${ui.test}" />
 				</antcall>
 
 				<ant dir="portal-web" target="test-class" inheritAll="false">
-					<property name="class" value="${test.name}" />
+					<property name="class" value="${ui.test}" />
 				</ant>
 			</else>
 		</if>
@@ -2893,7 +2893,7 @@ Please set "ie.driver.zip" in test.properties to point to "IEDriverServer_x64_2.
 		<ant antfile="build-test-plugins.xml" target="test-service-builder" inheritAll="false" />
 	</target>
 
-	<target name="test-selenium-test">
+	<target name="test-ui-test">
 		<antcall target="print-scm-revision" />
 
 		<antcall target="generate-test-properties">
@@ -2917,7 +2917,7 @@ Please set "ie.driver.zip" in test.properties to point to "IEDriverServer_x64_2.
 		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat" inheritAll="false">
 			<property name="test.database.minimal" value="true" />
 			<property name="test.evaluate.logs" value="true" />
-			<property name="test.name" value="${test.name}" />
+			<property name="ui.test" value="${ui.test}" />
 			<property name="test.selenium.logger.enabled" value="true" />
 		</ant>
 	</target>

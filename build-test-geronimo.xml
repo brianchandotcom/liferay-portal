@@ -42,7 +42,7 @@
 		<antcall target="start-selenium" />
 
 		<antcall target="run-geronimo">
-			<param name="test.name" value="${test.name}" />
+			<param name="ui.test" value="${ui.test}" />
 		</antcall>
 
 		<antcall target="stop-selenium" />

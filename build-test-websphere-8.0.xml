@@ -224,7 +224,7 @@ print AdminControl.invoke(appManager, 'startApplication', 'liferay-portal')</ech
 		<antcall target="start-selenium" />
 
 		<antcall target="run-websphere-8.0">
-			<param name="test.name" value="${test.name}" />
+			<param name="ui.test" value="${ui.test}" />
 		</antcall>
 
 		<antcall target="stop-selenium" />

@@ -25,7 +25,7 @@
 			${test.ant.script.file.legacy.version}
 			${test.ant.script.file.selenium.implementation}
 			${test.ant.script.file.selenium.logger.enabled}
-			<property name="test.name" value="${test.ant.script.suite}" />
+			<property name="ui.test" value="${test.ant.script.suite}" />
 		</ant>
 	</target>
 </project>

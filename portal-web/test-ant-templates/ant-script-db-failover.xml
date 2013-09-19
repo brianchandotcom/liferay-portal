@@ -20,7 +20,7 @@
 
 		<ant antfile="build-test-tomcat.xml" target="run-selenium-tomcat">
 			<property name="test.ant.script.actions" value="db-failover" />
-			<property name="test.name" value="${test.ant.script.suite}" />
+			<property name="ui.test" value="${test.ant.script.suite}" />
 		</ant>
 	</target>
 </project>

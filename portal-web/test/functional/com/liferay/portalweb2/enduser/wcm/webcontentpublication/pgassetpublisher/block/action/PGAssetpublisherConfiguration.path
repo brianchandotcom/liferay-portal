@@ -1,0 +1,169 @@
+<html>
+<head>
+<title>PGAssetpublisherConfiguration</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGAssetpublisherConfiguration</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGAssetpublisherConfiguration</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[@class='alert alert-success']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_PUBLISHER_IFRAME</td>
+	<td>//div[contains(@class,'dialog-iframe-bd')]/iframe[contains(@src,'portlet_configuration')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SETUP_LINK</td>
+	<td>//ul[@class='nav nav-tabs']/li[contains(.,'Setup')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PERMISSIONS_LINK</td>
+	<td>//ul[@class='nav nav-tabs']/li[contains(.,'Permissions')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMUNICATION_LINK</td>
+	<td>//ul[@class='nav nav-tabs']/li[contains(.,'Communication')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SHARING_LINK</td>
+	<td>//ul[@class='nav nav-tabs']/li[contains(.,'Sharing')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_SELECTION_LINK</td>
+	<td>//ul[@class='nav nav-tabs']/li[contains(.,'Asset Selection')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_SETTINGS_LINK</td>
+	<td>//ul[@class='nav nav-tabs']/li[contains(.,'Display Settings')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUBSCRIPTIONS_LINK</td>
+	<td>//ul[@class='nav nav-tabs']/li[contains(.,'Subscriptions')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE_BUTTON</td>
+	<td>//button[contains(.,'Save')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ASSET_SELECTION-->
+<tr>
+	<td>ASSET_SELECTION_DYNAMIC</td>
+	<td>//input[@id='_86_selectionStyleDynamic']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ASSET_SEELCTION_MANUAL</td>
+	<td>//input[@id='_86_selectionStyleManual']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SOURCE_SCOPE-->
+<tr>
+	<td>SOURCE_SCOPE_NAME</td>
+	<td>//div[@id='_86_groupsSearchContainer']//tbody/tr/td[1]/span/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SOURCE_SCOPE_TYPE</td>
+	<td>//div[@id='_86_groupsSearchContainer']//tbody/tr/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SOURCE_SCOPE_DELETE</td>
+	<td>//div[@id='_86_groupsSearchContainer']//tbody/tr/td[3]/span/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SOURCE_ASSET_TYPE_SELECT</td>
+	<td>//select[@id='_86_anyAssetType']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SOURCE_SELECTED_SELECT</td>
+	<td>//select[@id='_86_currentClassNameIds']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SOURCE_AVAILABLE_SELECT</td>
+	<td>//select[@id='_86_availableClassNameIds']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SOURCE_RIGHT_ARROW</td>
+	<td>//button[@title='Move selected items from Selected to Available.']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SOURCE_LEFT_ARROW</td>
+	<td>//button[@title='Move selected items from Available to Selected.']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--FILTER-->
+<tr>
+	<td>FILTER_ONLY_LAYOUT_ASSETS_CHECKBOX</td>
+	<td>//input[@id='_86_showOnlyLayoutAssetsCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILTER_URL_TAGS_CHECKBOX</td>
+	<td>//input[@id='_86_mergeUrlTagsCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILTER_LAYOUT_TAGS_CHECKBOX</td>
+	<td>//input[@id='_86_mergeLayoutTagsCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--CUSTOM_USER_ATTRIBUTES-->
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ORDERING_AND_GROUPING-->
+</tbody>
+</table>
+</body>
+</html>

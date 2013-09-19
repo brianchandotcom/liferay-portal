@@ -40,7 +40,7 @@
 </tr>
 <tr>
 	<td>ADD_NEW_DROPDOWN</td>
-	<td>//div[contains(@class,'lfr-meta-actions add-asset-selector')]//ul/li/a[contains(@class,'dropdown-toggle')]</td>
+	<td>//div[contains(@class,'lfr-meta-actions add-asset-selector')]//ul/li/a</td>
 	<td></td>
 </tr>
 <tr>

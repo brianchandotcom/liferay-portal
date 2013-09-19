@@ -134,6 +134,8 @@ import java.util.Set;
 
 import jodd.bean.BeanUtil;
 
+import org.apache.commons.lang.time.StopWatch;
+
 /**
  * <p>
  * Holds context information that is used during exporting and importing portlet
@@ -470,7 +472,25 @@ public class PortletDataContextImpl implements PortletDataContext {
 	public void addPermissions(String resourceName, long resourcePK)
 		throws PortalException, SystemException {
 
-		doAddPermissions(resourceName, resourcePK);
+		StopWatch stopWatch = null;
+
+		if (_log.isDebugEnabled()) {
+			stopWatch = new StopWatch();
+
+			stopWatch.start();
+		}
+
+		try {
+			doAddPermissions(resourceName, resourcePK);
+		}
+		finally {
+			if (stopWatch != null) {
+				stopWatch.stop();
+
+				_log.debug(
+					"doAddPermissions() took " + stopWatch.getTime() + " ms");
+			}
+		}
 	}
 
 	@Override

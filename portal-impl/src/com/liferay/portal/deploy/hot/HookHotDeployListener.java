@@ -67,6 +67,7 @@ import com.liferay.portal.kernel.servlet.taglib.FileAvailabilityUtil;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.struts.StrutsPortletAction;
 import com.liferay.portal.kernel.upgrade.UpgradeException;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -88,6 +89,7 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.model.BaseModel;
+import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.model.Release;
 import com.liferay.portal.repository.util.RepositoryFactory;
@@ -147,6 +149,7 @@ import com.liferay.portal.struts.StrutsActionRegistryUtil;
 import com.liferay.portal.upgrade.UpgradeProcessUtil;
 import com.liferay.portal.util.CustomJspRegistryUtil;
 import com.liferay.portal.util.JavaScriptBundleUtil;
+import com.liferay.portal.util.LayoutSettings;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsUtil;
@@ -2636,6 +2639,37 @@ public class HookHotDeployListener
 		value = stringArraysContainer.getStringArray();
 
 		field.set(null, value);
+
+		if (!key.equals(PropsKeys.LAYOUT_TYPES)) {
+			return;
+		}
+
+		Map<String, LayoutSettings> layoutSettingsMap =
+			LayoutSettings.getLayoutSettingsMap();
+
+		Set<Map.Entry<String, LayoutSettings>> entrySet =
+			layoutSettingsMap.entrySet();
+
+		Iterator<Map.Entry<String, LayoutSettings>> entrySetIterator =
+			entrySet.iterator();
+
+		while (entrySetIterator.hasNext()) {
+			Map.Entry<String, LayoutSettings> entry = entrySetIterator.next();
+
+			String layoutType = entry.getKey();
+
+			if (!layoutType.equals(LayoutConstants.TYPE_CONTROL_PANEL) &&
+				!ArrayUtil.contains(value, layoutType)) {
+
+				entrySetIterator.remove();
+			}
+		}
+
+		for (String type : value) {
+			if (!layoutSettingsMap.containsKey(type)) {
+				LayoutSettings.addLayoutSetting(type);
+			}
+		}
 	}
 
 	protected void updateRelease(

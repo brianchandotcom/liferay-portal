@@ -51,8 +51,6 @@ String placeholder = _PLACEHOLDER_DEFAULT;
 
 if (!DateUtil.isFormatAmPm(locale)) {
 	placeholder = _PLACEHOLDER_ISO;
-
-	amPmValue = Calendar.AM;
 }
 
 if (amPmValue > 0) {

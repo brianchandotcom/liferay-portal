@@ -47,6 +47,9 @@ import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
+import java.net.URL;
+import java.net.URLClassLoader;
+
 import java.nio.ByteBuffer;
 
 import java.util.Arrays;
@@ -59,7 +62,12 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
+
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -76,6 +84,16 @@ public class SPIAgentSerializableTest {
 	@ClassRule
 	public static CodeCoverageAssertor codeCoverageAssertor =
 		new CodeCoverageAssertor();
+
+	@Before
+	public void setUp() {
+		Thread currentThread = Thread.currentThread();
+
+		_classLoader = new URLClassLoader(
+			new URL[0], currentThread.getContextClassLoader());
+
+		ClassLoaderPool.register(_SERVLET_CONTEXT_NAME, _classLoader);
+	}
 
 	@Test
 	public void testExtractDistributedRequestAttributes() {
@@ -296,7 +314,7 @@ public class SPIAgentSerializableTest {
 	}
 
 	@AdviseWith(
-		adviceClasses = {PropsUtilAdvice.class}
+		adviceClasses = {DeserializerAdvice.class, PropsUtilAdvice.class}
 	)
 	@Test
 	public void testSerialization() throws IOException {
@@ -348,7 +366,8 @@ public class SPIAgentSerializableTest {
 
 		};
 
-		SPIAgentSerializable agentSerializable = new SPIAgentSerializable();
+		SPIAgentSerializable agentSerializable = new SPIAgentSerializable(
+			_SERVLET_CONTEXT_NAME);
 
 		try {
 			agentSerializable.writeTo(
@@ -475,6 +494,9 @@ public class SPIAgentSerializableTest {
 				new UnsyncByteArrayInputStream(receiptData));
 
 		Assert.assertNotNull(receivedAgentSerializable);
+
+		Assert.assertSame(
+			_classLoader, DeserializerAdvice.getContextClassLoader());
 	}
 
 	@Test
@@ -503,7 +525,8 @@ public class SPIAgentSerializableTest {
 
 		_threadLocal.set(threadLocalValue);
 
-		SPIAgentSerializable agentSerializable = new SPIAgentSerializable();
+		SPIAgentSerializable agentSerializable = new SPIAgentSerializable(
+			_SERVLET_CONTEXT_NAME);
 
 		Assert.assertNull(agentSerializable.threadLocalDistributors);
 
@@ -532,6 +555,34 @@ public class SPIAgentSerializableTest {
 		_threadLocal.remove();
 	}
 
+	@Aspect
+	public static class DeserializerAdvice {
+
+		public static ClassLoader getContextClassLoader() {
+			return _contextClassLoader;
+		}
+
+		@Around(
+			"execution(public * " +
+				"com.liferay.portal.kernel.io.Deserializer.readObject())")
+		public Object readObject(ProceedingJoinPoint proceedingJoinPoint)
+			throws Throwable {
+
+			Thread currentThread = Thread.currentThread();
+
+			_contextClassLoader = currentThread.getContextClassLoader();
+
+			return proceedingJoinPoint.proceed();
+		}
+
+		private static ClassLoader _contextClassLoader;
+
+	}
+
+	private static final String _SERVLET_CONTEXT_NAME = "SERVLET_CONTEXT_NAME";
+
 	private static ThreadLocal<String> _threadLocal = new ThreadLocal<String>();
+
+	private ClassLoader _classLoader;
 
 }

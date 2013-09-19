@@ -82,18 +82,32 @@ public class PortalResiliencyActionTest {
 
 		_mockHttpServletRequest.setAttribute(WebKeys.LAYOUT, _layout);
 
-		_portlet = new PortletImpl();
+		_portlet = new PortletImpl() {
+
+			@Override
+			public String getContextName() {
+				return _SERVLET_CONTEXT_NAME;
+			}
+
+		};
 
 		_portlet.setPortletId(_PORTLET_ID);
 
 		_mockHttpServletRequest.setAttribute(
 			WebKeys.SPI_AGENT_PORTLET, _portlet);
 
+		MockHttpServletRequest originalMockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		originalMockHttpServletRequest.setAttribute(
+			WebKeys.SPI_AGENT_PORTLET, _portlet);
+
 		_mockHttpServletRequest.setAttribute(
 			WebKeys.SPI_AGENT_REQUEST,
-			new SPIAgentRequest(new MockHttpServletRequest()));
+			new SPIAgentRequest(originalMockHttpServletRequest));
 		_mockHttpServletRequest.setAttribute(
-			WebKeys.SPI_AGENT_RESPONSE, new SPIAgentResponse());
+			WebKeys.SPI_AGENT_RESPONSE,
+			new SPIAgentResponse(_SERVLET_CONTEXT_NAME));
 
 		_response = new MockHttpServletResponse();
 
@@ -303,6 +317,8 @@ public class PortalResiliencyActionTest {
 		"_DEFAULT_LAYOUT_TYPE_SETTINGS";
 
 	private static final String _PORTLET_ID = "PORTLET_ID";
+
+	private static final String _SERVLET_CONTEXT_NAME = "SERVLET_CONTEXT_NAME";
 
 	private Layout _layout;
 	private MockHttpServletRequest _mockHttpServletRequest;

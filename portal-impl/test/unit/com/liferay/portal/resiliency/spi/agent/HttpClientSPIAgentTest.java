@@ -39,6 +39,8 @@ import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.SocketUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.model.Portlet;
+import com.liferay.portal.model.impl.PortletImpl;
 import com.liferay.portal.test.AdviseWith;
 import com.liferay.portal.test.AspectJMockingNewClassLoaderJUnitTestRunner;
 import com.liferay.portal.util.PropsImpl;
@@ -77,6 +79,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -93,6 +96,23 @@ public class HttpClientSPIAgentTest {
 	@ClassRule
 	public static CodeCoverageAssertor codeCoverageAssertor =
 		new CodeCoverageAssertor();
+
+	@Before
+	public void setUp() {
+		_mockHttpServletRequest = new MockHttpServletRequest();
+
+		_portlet = new PortletImpl() {
+
+			@Override
+			public String getContextName() {
+				return _SERVLET_CONTEXT_NAME;
+			}
+
+		};
+
+		_mockHttpServletRequest.setAttribute(
+			WebKeys.SPI_AGENT_PORTLET, _portlet);
+	}
 
 	@Test
 	public void testBorrowSocket() throws Exception {
@@ -494,8 +514,8 @@ public class HttpClientSPIAgentTest {
 
 		Serializer serializer = new Serializer();
 
-		serializer.writeObject(
-			new SPIAgentRequest(new MockHttpServletRequest()));
+		serializer.writeString(_SERVLET_CONTEXT_NAME);
+		serializer.writeObject(new SPIAgentRequest(_mockHttpServletRequest));
 
 		Method depositMailMethod = ReflectionUtil.getDeclaredMethod(
 			MailboxUtil.class, "depositMail", ByteBuffer.class);
@@ -531,6 +551,10 @@ public class HttpClientSPIAgentTest {
 
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.SPI_AGENT_PORTLET, _portlet);
+
 		MockHttpServletResponse mockHttpServletResponse =
 			new MockHttpServletResponse();
 
@@ -742,8 +766,14 @@ public class HttpClientSPIAgentTest {
 
 		socketBlockingQueue.add(socket);
 
+		MockHttpServletRequest mockHttpServletRequest =
+			new MockHttpServletRequest();
+
+		mockHttpServletRequest.setAttribute(
+			WebKeys.SPI_AGENT_PORTLET, _portlet);
+
 		try {
-			httpClientSPIAgent.service(new MockHttpServletRequest(), null);
+			httpClientSPIAgent.service(mockHttpServletRequest, null);
 
 			Assert.fail();
 		}
@@ -780,7 +810,7 @@ public class HttpClientSPIAgentTest {
 		socketBlockingQueue.add(socket);
 
 		try {
-			httpClientSPIAgent.service(new MockHttpServletRequest(), null);
+			httpClientSPIAgent.service(mockHttpServletRequest, null);
 
 			Assert.fail();
 		}
@@ -818,7 +848,7 @@ public class HttpClientSPIAgentTest {
 		socketBlockingQueue.add(socket);
 
 		try {
-			httpClientSPIAgent.service(new MockHttpServletRequest(), null);
+			httpClientSPIAgent.service(mockHttpServletRequest, null);
 
 			Assert.fail();
 		}
@@ -858,7 +888,8 @@ public class HttpClientSPIAgentTest {
 
 		Serializer serializer = new Serializer();
 
-		serializer.writeObject(new SPIAgentResponse());
+		serializer.writeString(_SERVLET_CONTEXT_NAME);
+		serializer.writeObject(new SPIAgentResponse(_SERVLET_CONTEXT_NAME));
 
 		Method depositMailMethod = ReflectionUtil.getDeclaredMethod(
 			MailboxUtil.class, "depositMail", ByteBuffer.class);
@@ -881,7 +912,7 @@ public class HttpClientSPIAgentTest {
 		outputStream.flush();
 
 		httpClientSPIAgent.service(
-			new MockHttpServletRequest(), new MockHttpServletResponse());
+			mockHttpServletRequest, new MockHttpServletResponse());
 
 		socket.close();
 		remoteSocket.close();
@@ -904,7 +935,7 @@ public class HttpClientSPIAgentTest {
 
 		mockHttpServletRequest.setAttribute(
 			WebKeys.SPI_AGENT_REQUEST,
-			new SPIAgentRequest(new MockHttpServletRequest()));
+			new SPIAgentRequest(_mockHttpServletRequest));
 
 		RecordSPIAgentResponse recordSPIAgentResponse =
 			new RecordSPIAgentResponse();
@@ -946,7 +977,7 @@ public class HttpClientSPIAgentTest {
 		// Response
 
 		SPIAgentRequest spiAgentRequest = new SPIAgentRequest(
-			new MockHttpServletRequest());
+			_mockHttpServletRequest);
 
 		File tempFile = File.createTempFile(
 			HttpClientSPIAgentTest.class.getName(), null);
@@ -998,7 +1029,7 @@ public class HttpClientSPIAgentTest {
 
 		// Undeletable request body file
 
-		spiAgentRequest = new SPIAgentRequest(new MockHttpServletRequest());
+		spiAgentRequest = new SPIAgentRequest(_mockHttpServletRequest);
 
 		tempFile = File.createTempFile(
 			HttpClientSPIAgentTest.class.getName(), null);
@@ -1089,6 +1120,10 @@ public class HttpClientSPIAgentTest {
 		return oldSocketImpl;
 	}
 
+	private static final String _SERVLET_CONTEXT_NAME = "SERVLET_CONTEXT_NAME";
+
+	private MockHttpServletRequest _mockHttpServletRequest;
+	private Portlet _portlet;
 	private SPIConfiguration _spiConfiguration = new SPIConfiguration(
 		null, null, 1234, "baseDir", null, null, null);
 
@@ -1132,6 +1167,10 @@ public class HttpClientSPIAgentTest {
 	}
 
 	private static class RecordSPIAgentResponse extends SPIAgentResponse {
+
+		public RecordSPIAgentResponse() {
+			super(_SERVLET_CONTEXT_NAME);
+		}
 
 		@Override
 		public void captureResponse(

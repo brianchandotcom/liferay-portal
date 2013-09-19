@@ -25,7 +25,9 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.ThreadLocalDistributor;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.impl.LayoutImpl;
+import com.liferay.portal.model.impl.PortletImpl;
 import com.liferay.portal.util.PortalImpl;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsImpl;
@@ -87,6 +89,17 @@ public class SPIAgentResponseTest {
 	public void setUp() throws IOException {
 		MockHttpServletRequest originalRequest = new MockHttpServletRequest();
 
+		Portlet portlet = new PortletImpl() {
+
+			@Override
+			public String getContextName() {
+				return _SERVLET_CONTEXT_NAME;
+			}
+
+		};
+
+		originalRequest.setAttribute(WebKeys.SPI_AGENT_PORTLET, portlet);
+
 		HttpSession session = originalRequest.getSession();
 
 		session.setAttribute(_SESSION_ATTRIBUTE_1, _SESSION_ATTRIBUTE_1);
@@ -102,7 +115,8 @@ public class SPIAgentResponseTest {
 
 	@Test
 	public void testCaptureRequestSessionAttributes() {
-		SPIAgentResponse spiAgentResponse = new SPIAgentResponse();
+		SPIAgentResponse spiAgentResponse = new SPIAgentResponse(
+			_SERVLET_CONTEXT_NAME);
 
 		String threadLocalValue = "threadLocalValue";
 
@@ -154,7 +168,8 @@ public class SPIAgentResponseTest {
 
 		// Not a portal resiliency action
 
-		SPIAgentResponse spiAgentResponse = new SPIAgentResponse();
+		SPIAgentResponse spiAgentResponse = new SPIAgentResponse(
+			_SERVLET_CONTEXT_NAME);
 
 		spiAgentResponse.captureResponse(
 			new MockHttpServletRequest(),
@@ -307,7 +322,8 @@ public class SPIAgentResponseTest {
 
 		// Exception
 
-		SPIAgentResponse spiAgentResponse = new SPIAgentResponse();
+		SPIAgentResponse spiAgentResponse = new SPIAgentResponse(
+			_SERVLET_CONTEXT_NAME);
 
 		Exception exception = new Exception();
 
@@ -482,6 +498,8 @@ public class SPIAgentResponseTest {
 			Assert.assertSame(ioException, pre.getCause());
 		}
 	}
+
+	private static final String _SERVLET_CONTEXT_NAME = "SERVLET_CONTEXT_NAME";
 
 	private static final String _SESSION_ATTRIBUTE_1 = "SESSION_ATTRIBUTE_1";
 

@@ -1250,6 +1250,21 @@ public class LayoutServiceWrapper implements LayoutService,
 			priority);
 	}
 
+	/**
+	* Updates the priority of the layout matching the group, layout ID, and
+	* privacy, setting the layout's priority based on the priorities of the
+	* next and previous layouts.
+	*
+	* @param groupId the primary key of the group
+	* @param privateLayout whether the layout is private to the group
+	* @param layoutId the primary key of the layout
+	* @param nextLayoutId the primary key of the next layout
+	* @param previousLayoutId the primary key of the previous layout
+	* @return the updated layout
+	* @throws PortalException if a matching layout could not be found or if the
+	user did not have permission to update the layout
+	* @throws SystemException if a system exception occurred
+	*/
 	@Override
 	public com.liferay.portal.model.Layout updatePriority(long groupId,
 		boolean privateLayout, long layoutId, long nextLayoutId,

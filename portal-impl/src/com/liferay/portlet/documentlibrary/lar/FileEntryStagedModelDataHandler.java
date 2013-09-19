@@ -28,6 +28,8 @@ import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.trash.TrashHandler;
+import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -498,6 +500,29 @@ public class FileEntryStagedModelDataHandler
 
 		fileEntryIds.put(
 			fileEntry.getFileEntryId(), importedFileEntry.getFileEntryId());
+	}
+
+	@Override
+	protected void doRestoreStagedModel(
+			PortletDataContext portletDataContext, FileEntry fileEntry)
+		throws Exception {
+
+		long userId = portletDataContext.getUserId(fileEntry.getUserUuid());
+
+		FileEntry existingFileEntry = FileEntryUtil.fetchByUUID_R(
+			fileEntry.getUuid(), portletDataContext.getScopeGroupId());
+
+		if ((existingFileEntry == null) || !existingFileEntry.isInTrash()) {
+			return;
+		}
+
+		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
+			DLFileEntry.class.getName());
+
+		if (trashHandler.isRestorable(existingFileEntry.getFileEntryId())) {
+			trashHandler.restoreTrashEntry(
+				userId, existingFileEntry.getFileEntryId());
+		}
 	}
 
 	protected void exportMetaData(

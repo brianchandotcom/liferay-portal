@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.trash.TrashHandler;
+import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -232,6 +234,37 @@ public class FolderStagedModelDataHandler
 			DLPortletDataHandler.NAMESPACE);
 
 		folderIds.put(folder.getFolderId(), importedFolder.getFolderId());
+	}
+
+	@Override
+	protected void doRestoreStagedModel(
+			PortletDataContext portletDataContext, Folder folder)
+		throws Exception {
+
+		long userId = portletDataContext.getUserId(folder.getUserUuid());
+
+		Folder existingFolder = FolderUtil.fetchByUUID_R(
+			folder.getUuid(), portletDataContext.getScopeGroupId());
+
+		if ((existingFolder == null) ||
+			!(existingFolder.getModel() instanceof DLFolder)) {
+
+			return;
+		}
+
+		DLFolder dlFolder = (DLFolder)existingFolder.getModel();
+
+		if (!dlFolder.isInTrash()) {
+			return;
+		}
+
+		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
+			DLFolder.class.getName());
+
+		if (trashHandler.isRestorable(existingFolder.getFolderId())) {
+			trashHandler.restoreTrashEntry(
+				userId, existingFolder.getFolderId());
+		}
 	}
 
 	protected void exportFolderFileEntryTypes(

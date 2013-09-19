@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.StagedModel;
+import com.liferay.portal.model.TrashedModel;
 import com.liferay.portal.model.WorkflowedModel;
 
 /**
@@ -111,10 +112,27 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 			PortletDataHandlerStatusMessageSenderUtil.sendStatusMessage(
 				"stagedModel", stagedModel, manifestSummary);
 
+			if (stagedModel instanceof TrashedModel) {
+				restoreStagedModel(portletDataContext, stagedModel);
+			}
+
 			doImportStagedModel(portletDataContext, stagedModel);
 
 			manifestSummary.incrementModelAdditionCount(
 				stagedModel.getStagedModelType());
+		}
+		catch (Exception e) {
+			throw new PortletDataException(e);
+		}
+	}
+
+	@Override
+	public void restoreStagedModel(
+			PortletDataContext portletDataContext, T stagedModel)
+		throws PortletDataException {
+
+		try {
+			doRestoreStagedModel(portletDataContext, stagedModel);
 		}
 		catch (Exception e) {
 			throw new PortletDataException(e);
@@ -172,6 +190,13 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 	protected abstract void doImportStagedModel(
 			PortletDataContext portletDataContext, T stagedModel)
 		throws Exception;
+
+	protected void doRestoreStagedModel(
+			PortletDataContext portletDataContext, T stagedModel)
+		throws Exception {
+
+		throw new UnsupportedOperationException();
+	}
 
 	protected boolean isExportable(
 		PortletDataContext portletDataContext, T stagedModel) {

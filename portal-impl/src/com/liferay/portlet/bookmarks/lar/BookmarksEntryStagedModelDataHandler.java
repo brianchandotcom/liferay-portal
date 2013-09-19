@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.service.ServiceContext;
@@ -148,6 +149,28 @@ public class BookmarksEntryStagedModelDataHandler
 
 		portletDataContext.importClassedModel(
 			entry, importedEntry, BookmarksPortletDataHandler.NAMESPACE);
+	}
+
+	@Override
+	protected void doRestoreStagedModel(
+			PortletDataContext portletDataContext, BookmarksEntry entry)
+		throws Exception {
+
+		long userId = portletDataContext.getUserId(entry.getUserUuid());
+
+		BookmarksEntry existingEntry =
+			BookmarksEntryLocalServiceUtil.fetchBookmarksEntryByUuidAndGroupId(
+				entry.getUuid(), portletDataContext.getScopeGroupId());
+
+		if ((existingEntry == null) || !existingEntry.isInTrash()) {
+			return;
+		}
+
+		TrashHandler trashHandler = existingEntry.getTrashHandler();
+
+		if (trashHandler.isRestorable(existingEntry.getEntryId())) {
+			trashHandler.restoreTrashEntry(userId, existingEntry.getEntryId());
+		}
 	}
 
 }

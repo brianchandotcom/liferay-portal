@@ -1,0 +1,4 @@
+<definition>
+	<execute test-case-command="Myaccount#ViewMyAccount" />
+	<execute test-case-command="Myaccount#ViewMyAccountViaSignInPortlet" />
+</definition>

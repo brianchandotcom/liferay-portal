@@ -16,4 +16,6 @@
 	<execute test-suite="CPUsergroupsP5" />
 
 	<execute test-suite="CPUsersandorganizationsP5" />
+
+	<execute test-suite="MyaccountP5" />
 </definition>

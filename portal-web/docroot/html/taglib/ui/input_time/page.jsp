@@ -57,6 +57,8 @@ if (amPmValue > 0) {
 	calendar.set(Calendar.AM_PM, Calendar.PM);
 }
 
+calendar.set(Calendar.AM_PM, amPmValue);
+
 Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(simpleDateFormatPattern, locale);
 %>
 

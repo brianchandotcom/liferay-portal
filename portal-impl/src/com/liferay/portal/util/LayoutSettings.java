@@ -32,7 +32,7 @@ import java.util.Map;
 public class LayoutSettings {
 
 	public static void addLayoutSetting(String type) {
-		new LayoutSettings(type);
+		_layoutSettingsMap.put(type, new LayoutSettings(type));
 	}
 
 	public static LayoutSettings getInstance(Layout layout) {
@@ -45,12 +45,6 @@ public class LayoutSettings {
 
 	public static Map<String, LayoutSettings> getLayoutSettingsMap() {
 		return _layoutSettingsMap;
-	}
-
-	public static void removeLayoutSetting(String type) {
-		if (_layoutSettingsMap.containsKey(type)) {
-			_layoutSettingsMap.remove(type);
-		}
 	}
 
 	public String[] getConfigurationActionDelete() {
@@ -126,25 +120,25 @@ public class LayoutSettings {
 			PropsUtil.get(PropsKeys.LAYOUT_URL_FRIENDLIABLE, filter), true);
 		_viewPage = GetterUtil.getString(
 			PropsUtil.get(PropsKeys.LAYOUT_VIEW_PAGE, filter));
-
-		_layoutSettingsMap.put(type, this);
-	}
-
-	private static Map<String, LayoutSettings> _layoutSettingsMap =
-		new HashMap<String, LayoutSettings>();
-
-	static {
-		new LayoutSettings(LayoutConstants.TYPE_CONTROL_PANEL);
-
-		for (String type : PropsValues.LAYOUT_TYPES) {
-			new LayoutSettings(type);
-		}
 	}
 
 	private String[] _configurationActionDelete;
 	private String[] _configurationActionUpdate;
 	private String _editPage;
 	private boolean _firstPageable;
+	private final static Map<String, LayoutSettings> _layoutSettingsMap =
+		new HashMap<String, LayoutSettings>();
+
+	static {
+		_layoutSettingsMap.put(
+			LayoutConstants.TYPE_CONTROL_PANEL,
+			new LayoutSettings(LayoutConstants.TYPE_CONTROL_PANEL));
+
+		for (String type : PropsValues.LAYOUT_TYPES) {
+			_layoutSettingsMap.put(type, new LayoutSettings(type));
+		}
+	}
+
 	private boolean _parentable;
 	private boolean _sitemapable;
 	private String _type;

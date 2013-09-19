@@ -42,11 +42,9 @@
 
 		<execute macro="Content#addNewPG">
 			<var name="assetType" value="${assetType}" />
-			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="WebContent#addPGViaPanel">
-			<var name="pageName" value="${pageName}" />
 			<var name="webContentContent" value="${webContentContent}" />
 			<var name="webContentTitle" value="${webContentTitle}" />
 		</execute>

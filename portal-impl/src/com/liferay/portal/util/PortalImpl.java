@@ -5226,11 +5226,18 @@ public class PortalImpl implements Portal {
 			request.setAttribute(WebKeys.USER, user);
 		}
 
-		for (Cookie cookie : request.getCookies()) {
-			String cookieName = cookie.getName();
+		Cookie[] cookies = request.getCookies();
 
-			if (cookieName.startsWith(CookieKeys.REMOTE_PREFERENCE_PREFIX)) {
-				user.addRemotePreference(new CookieRemotePreference(cookie));
+		if (cookies != null) {
+			for (Cookie cookie : cookies) {
+				String cookieName = cookie.getName();
+
+				if (cookieName.startsWith(
+						CookieKeys.REMOTE_PREFERENCE_PREFIX)) {
+
+					user.addRemotePreference(
+						new CookieRemotePreference(cookie));
+				}
 			}
 		}
 

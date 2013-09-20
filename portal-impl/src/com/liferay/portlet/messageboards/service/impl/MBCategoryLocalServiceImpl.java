@@ -36,6 +36,7 @@ import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.model.impl.MBCategoryImpl;
 import com.liferay.portlet.messageboards.service.base.MBCategoryLocalServiceBaseImpl;
+import com.liferay.portlet.messageboards.util.MBUtil;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.model.TrashVersion;
 
@@ -582,6 +583,11 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 
 			restoreDependentFromTrash(
 				user, categoriesAndThreads, trashEntry.getEntryId());
+
+			// Statistics
+
+			MBUtil.updateCategoryStatistics(
+				category.getCompanyId(), category.getCategoryId());
 		}
 
 		return moveCategory(categoryId, newCategoryId, false);
@@ -637,6 +643,11 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 
 		restoreDependentFromTrash(
 			user, categoriesAndThreads, trashEntry.getEntryId());
+
+		// Statistics
+
+		MBUtil.updateCategoryStatistics(
+			category.getCompanyId(), category.getCategoryId());
 
 		// Trash
 

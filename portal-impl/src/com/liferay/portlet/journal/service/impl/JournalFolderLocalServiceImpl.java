@@ -420,6 +420,14 @@ public class JournalFolderLocalServiceImpl
 		}
 		else {
 			updateStatus(userId, folder, WorkflowConstants.STATUS_APPROVED);
+
+			// Folders and entries
+
+			List<Object> foldersAndEntries =
+				journalFolderLocalService.getFoldersAndArticles(
+					folder.getGroupId(), folder.getFolderId());
+
+			restoreDependentFromTrash(foldersAndEntries);
 		}
 
 		return journalFolderLocalService.moveFolder(
@@ -438,12 +446,28 @@ public class JournalFolderLocalServiceImpl
 		folder = updateStatus(
 			userId, folder, WorkflowConstants.STATUS_IN_TRASH);
 
-		TrashEntry trashEntry = trashEntryLocalService.getEntry(
-			JournalFolder.class.getName(), folder.getFolderId());
+		// Trash
+
+		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
+
+		typeSettingsProperties.put("title", folder.getName());
+
+		TrashEntry trashEntry = trashEntryLocalService.addTrashEntry(
+			userId, folder.getGroupId(), JournalFolder.class.getName(),
+			folder.getFolderId(), folder.getUuid(), null,
+			WorkflowConstants.STATUS_APPROVED, null, typeSettingsProperties);
 
 		folder.setName(TrashUtil.getTrashTitle(trashEntry.getEntryId()));
 
 		journalFolderPersistence.update(folder);
+
+		// Folders and entries
+
+		List<Object> foldersAndEntries =
+			journalFolderLocalService.getFoldersAndArticles(
+				folder.getGroupId(), folder.getFolderId());
+
+		moveDependentToTrash(foldersAndEntries);
 
 		// Social
 
@@ -492,6 +516,19 @@ public class JournalFolderLocalServiceImpl
 			JournalFolder.class.getName(), folderId);
 
 		updateStatus(userId, folder, trashEntry.getStatus());
+
+		// Folders and entries
+
+		List<Object> foldersAndEntries =
+			journalFolderLocalService.getFoldersAndArticles(
+				folder.getGroupId(), folder.getFolderId());
+
+		restoreDependentFromTrash(foldersAndEntries);
+
+		// Trash
+
+		trashEntryLocalService.deleteEntry(
+			JournalFolder.class.getName(), folder.getFolderId());
 
 		// Social
 
@@ -576,8 +613,6 @@ public class JournalFolderLocalServiceImpl
 
 		User user = userPersistence.findByPrimaryKey(userId);
 
-		int oldStatus = folder.getStatus();
-
 		folder.setStatus(status);
 		folder.setStatusByUserId(userId);
 		folder.setStatusByUserName(user.getFullName());
@@ -585,44 +620,15 @@ public class JournalFolderLocalServiceImpl
 
 		journalFolderPersistence.update(folder);
 
-		// Folders and entries
-
-		List<Object> foldersAndEntries =
-			journalFolderLocalService.getFoldersAndArticles(
-				folder.getGroupId(), folder.getFolderId());
-
-		updateDependentStatus(foldersAndEntries, status);
+		// Asset
 
 		if (status == WorkflowConstants.STATUS_APPROVED) {
-
-			// Asset
-
 			assetEntryLocalService.updateVisible(
 				JournalFolder.class.getName(), folder.getFolderId(), true);
 		}
 		else if (status == WorkflowConstants.STATUS_IN_TRASH) {
-
-			// Asset
-
 			assetEntryLocalService.updateVisible(
 				JournalFolder.class.getName(), folder.getFolderId(), false);
-		}
-
-		// Trash
-
-		if (oldStatus == WorkflowConstants.STATUS_IN_TRASH) {
-			trashEntryLocalService.deleteEntry(
-				JournalFolder.class.getName(), folder.getFolderId());
-		}
-		else if (status == WorkflowConstants.STATUS_IN_TRASH) {
-			UnicodeProperties typeSettingsProperties = new UnicodeProperties();
-
-			typeSettingsProperties.put("title", folder.getName());
-
-			trashEntryLocalService.addTrashEntry(
-				userId, folder.getGroupId(), JournalFolder.class.getName(),
-				folder.getFolderId(), folder.getUuid(), null, oldStatus, null,
-				typeSettingsProperties);
 		}
 
 		// Index

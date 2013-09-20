@@ -172,7 +172,7 @@ public class DLFileEntryTypeLocalServiceImpl
 		serviceContext.setUserId(userId);
 
 		cascadeFileEntryTypes(
-			dlFolder.getGroupId(), dlFolder.getFolderId(),
+			userId, dlFolder.getGroupId(), dlFolder.getFolderId(),
 			defaultFileEntryTypeId, fileEntryTypeIds, serviceContext);
 	}
 
@@ -494,8 +494,9 @@ public class DLFileEntryTypeLocalServiceImpl
 	}
 
 	protected void cascadeFileEntryTypes(
-			long groupId, long folderId, long defaultFileEntryTypeId,
-			List<Long> fileEntryTypeIds, ServiceContext serviceContext)
+			long userId, long groupId, long folderId,
+			long defaultFileEntryTypeId, List<Long> fileEntryTypeIds,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		List<DLFileEntry> dlFileEntries = dlFileEntryPersistence.findByG_F(
@@ -519,9 +520,9 @@ public class DLFileEntryTypeLocalServiceImpl
 					dlFileVersion.getFileVersionId());
 			}
 
-			dlFileEntryService.updateFileEntry(
-				dlFileEntry.getFileEntryId(), null, null, null, null, null,
-				false, defaultFileEntryTypeId, null, null, null, 0,
+			dlFileEntryLocalService.updateFileEntry(
+				userId, dlFileEntry.getFileEntryId(), null, null, null, null,
+				null, false, defaultFileEntryTypeId, null, null, null, 0,
 				serviceContext);
 		}
 
@@ -536,8 +537,8 @@ public class DLFileEntryTypeLocalServiceImpl
 			}
 
 			cascadeFileEntryTypes(
-				groupId, subFolderId, defaultFileEntryTypeId, fileEntryTypeIds,
-				serviceContext);
+				userId, groupId, subFolderId, defaultFileEntryTypeId,
+				fileEntryTypeIds, serviceContext);
 		}
 	}
 

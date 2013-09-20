@@ -94,57 +94,55 @@ if (layout != null) {
 				<aui:nav-item cssClass="row-fluid">
 					<c:if test="<%= (layoutSetBranches != null) && (layoutSetBranches.size() >= 1) %>">
 						<div class="site-pages-variation-options span6">
-							<c:if test="<%= group.isStagingGroup() %>">
-								<h5>
-									<span class="site-pages-variation-label"><liferay-ui:message key="site-variations-for" /></span>
+							<h5>
+								<span class="site-pages-variation-label"><liferay-ui:message key="site-variations-for" /></span>
 
-									<span class="site-name"><%= HtmlUtil.escape(liveGroup.getDescriptiveName(locale)) %></span>
-								</h5>
+								<span class="site-name"><%= HtmlUtil.escape(liveGroup.getDescriptiveName(locale)) %></span>
+							</h5>
 
-								<aui:select cssClass="variation-options" label="" name="sitePageVariations">
+							<aui:select cssClass="variation-options" label="" name="sitePageVariations">
 
-									<%
-									for (int i = 0; i < layoutSetBranches.size(); i++) {
-										LayoutSetBranch curLayoutSetBranch = null;
+								<%
+								for (int i = 0; i < layoutSetBranches.size(); i++) {
+									LayoutSetBranch curLayoutSetBranch = null;
 
-										curLayoutSetBranch = layoutSetBranches.get(i);
+									curLayoutSetBranch = layoutSetBranches.get(i);
 
-										boolean selected = (group.isStagingGroup() || group.isStagedRemotely()) && (curLayoutSetBranch.getLayoutSetBranchId() == layoutRevision.getLayoutSetBranchId());
+									boolean selected = (group.isStagingGroup() || group.isStagedRemotely()) && (curLayoutSetBranch.getLayoutSetBranchId() == layoutRevision.getLayoutSetBranchId());
 
-										String sitePagesVariationLabel = "staging";
+									String sitePagesVariationLabel = "staging";
 
-										if (layoutSetBranches.size() != 1) {
-											 sitePagesVariationLabel = HtmlUtil.escape(curLayoutSetBranch.getName());
-										}
-
-										sitePagesVariationLabel = LanguageUtil.get(pageContext, sitePagesVariationLabel);
-									%>
-
-										<portlet:actionURL var="layoutSetBranchURL">
-											<portlet:param name="struts_action" value="/dockbar/edit_layouts" />
-											<portlet:param name="<%= Constants.CMD %>" value="select_layout_set_branch" />
-											<portlet:param name="redirect" value="<%= stagingFriendlyURL %>" />
-											<portlet:param name="groupId" value="<%= String.valueOf(curLayoutSetBranch.getGroupId()) %>" />
-											<portlet:param name="privateLayout" value="<%= String.valueOf(layout.isPrivateLayout()) %>" />
-											<portlet:param name="layoutSetBranchId" value="<%= String.valueOf(curLayoutSetBranch.getLayoutSetBranchId()) %>" />
-										</portlet:actionURL>
-
-										<aui:option selected="<%= selected %>" value="<%= layoutSetBranchURL %>">
-											<%= sitePagesVariationLabel %>
-
-											<c:if test="<%= selected %>">
-												(<liferay-ui:message arguments="<%= layouts.size() %>" key='<%= (layouts.size() == 1) ? "1-page" : "x-pages" %>' />)
-											</c:if>
-										</aui:option>
-
-									<%
+									if (layoutSetBranches.size() != 1) {
+										 sitePagesVariationLabel = HtmlUtil.escape(curLayoutSetBranch.getName());
 									}
-									%>
 
-								</aui:select>
+									sitePagesVariationLabel = LanguageUtil.get(pageContext, sitePagesVariationLabel);
+								%>
 
-								<i class="icon-angle-right"></i>
-							</c:if>
+									<portlet:actionURL var="layoutSetBranchURL">
+										<portlet:param name="struts_action" value="/dockbar/edit_layouts" />
+										<portlet:param name="<%= Constants.CMD %>" value="select_layout_set_branch" />
+										<portlet:param name="redirect" value="<%= stagingFriendlyURL %>" />
+										<portlet:param name="groupId" value="<%= String.valueOf(curLayoutSetBranch.getGroupId()) %>" />
+										<portlet:param name="privateLayout" value="<%= String.valueOf(layout.isPrivateLayout()) %>" />
+										<portlet:param name="layoutSetBranchId" value="<%= String.valueOf(curLayoutSetBranch.getLayoutSetBranchId()) %>" />
+									</portlet:actionURL>
+
+									<aui:option selected="<%= selected %>" value="<%= layoutSetBranchURL %>">
+										<%= sitePagesVariationLabel %>
+
+										<c:if test="<%= selected %>">
+											(<liferay-ui:message arguments="<%= layouts.size() %>" key='<%= (layouts.size() == 1) ? "1-page" : "x-pages" %>' />)
+										</c:if>
+									</aui:option>
+
+								<%
+								}
+								%>
+
+							</aui:select>
+
+							<i class="icon-angle-right"></i>
 
 							<portlet:renderURL var="layoutSetBranchesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 								<portlet:param name="struts_action" value="/staging_bar/view_layout_set_branches" />

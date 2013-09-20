@@ -14,8 +14,6 @@
 
 package com.liferay.portlet;
 
-import com.liferay.portal.kernel.messaging.sender.SingleDestinationMessageSender;
-
 import javax.portlet.Portlet;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletContext;
@@ -38,8 +36,7 @@ public class MonitoringPortletFactoryImpl extends InvokerPortletFactoryImpl {
 			portletModel, portlet, portletConfig, portletContext,
 			checkAuthToken, facesPortlet, strutsPortlet, strutsBridgePortlet);
 
-		return new MonitoringPortlet(
-			invokerPortlet, _singleDestinationMessageSender);
+		return new MonitoringPortlet(invokerPortlet);
 	}
 
 	@Override
@@ -51,16 +48,7 @@ public class MonitoringPortletFactoryImpl extends InvokerPortletFactoryImpl {
 		InvokerPortlet invokerPortlet = super.create(
 			portletModel, portlet, portletContext);
 
-		return new MonitoringPortlet(
-			invokerPortlet, _singleDestinationMessageSender);
+		return new MonitoringPortlet(invokerPortlet);
 	}
-
-	public void setSingleDestinationMessageSender(
-		SingleDestinationMessageSender singleDestinationMessageSender) {
-
-		_singleDestinationMessageSender = singleDestinationMessageSender;
-	}
-
-	private SingleDestinationMessageSender _singleDestinationMessageSender;
 
 }

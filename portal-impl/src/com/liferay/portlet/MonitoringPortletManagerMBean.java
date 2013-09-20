@@ -19,6 +19,8 @@ package com.liferay.portlet;
  */
 public interface MonitoringPortletManagerMBean {
 
+	public boolean isActive();
+
 	public boolean isMonitoringPortletActionRequest();
 
 	public boolean isMonitoringPortletEventRequest();
@@ -26,6 +28,8 @@ public interface MonitoringPortletManagerMBean {
 	public boolean isMonitoringPortletRenderRequest();
 
 	public boolean isMonitoringPortletResourceRequest();
+
+	public void setActive(boolean active);
 
 	public void setMonitoringPortletActionRequest(
 		boolean monitoringPortletActionRequest);

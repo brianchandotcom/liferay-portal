@@ -190,6 +190,8 @@ public class PortletExporter {
 
 		portletDataContext.setGroupId(portletDataContext.getScopeGroupId());
 
+		portletDataContext.clearScopedPrimaryKeys();
+
 		try {
 			data = portletDataHandler.exportData(
 				portletDataContext, portletId, jxPortletPreferences);
@@ -507,8 +509,6 @@ public class PortletExporter {
 		if (_log.isInfoEnabled()) {
 			_log.info("Exporting portlet took " + stopWatch.getTime() + " ms");
 		}
-
-		portletDataContext.clearScopedPrimaryKeys();
 
 		try {
 			portletDataContext.addZipEntry(

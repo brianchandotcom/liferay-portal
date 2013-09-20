@@ -126,7 +126,12 @@
 <!--EDIT-->
 <tr>
 	<td>EDIT</td>
-	<td>//li[@id='_145_manageContent']/a</td>
+	<td>//a[@id='_145_editLayoutPanel']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EDIT_NAVBAR_PERMISSIONS</td>
+	<td>//div[@class='navbar-inner']//span[@class='nav-item-label' and contains(.,'Permissions')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -45,6 +45,9 @@
 		<case locator-key1="ADMIN_SITE_ADMINISTRATION">
 			<execute function="Click#textClickAtAndWait" value1="Site Administration" />
 		</case>
+		<case locator-key1="EDIT">
+			<execute function="Click#clickAtSidebarClickAt" />
+		</case>
 		<case locator-key1="MY_SITES">
 			<execute function="Click#textClickAtClickDockbar" value1="My Sites" />
 		</case>

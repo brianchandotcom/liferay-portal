@@ -553,9 +553,9 @@ public class LayoutExporter {
 
 			_portletExporter.exportPortlet(
 				portletDataContext, layoutCache, portletId, layout,
-				portletsElement, defaultUserId, exportPermissions,
-				exportPortletControls[0], exportPortletControls[1],
-				exportPortletControls[2], exportPortletControls[3]);
+				portletsElement, exportPermissions, exportPortletControls[0],
+				exportPortletControls[1], exportPortletControls[2],
+				exportPortletControls[3]);
 		}
 
 		portletDataContext.setScopeGroupId(previousScopeGroupId);

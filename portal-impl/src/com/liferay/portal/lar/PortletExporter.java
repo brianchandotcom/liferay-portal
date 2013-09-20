@@ -482,9 +482,8 @@ public class PortletExporter {
 
 		exportPortlet(
 			portletDataContext, layoutCache, portletId, layout, rootElement,
-			defaultUserId, exportPermissions, exportPortletArchivedSetups,
-			exportPortletData, exportPortletSetup,
-			exportPortletUserPreferences);
+			exportPermissions, exportPortletArchivedSetups, exportPortletData,
+			exportPortletSetup, exportPortletUserPreferences);
 
 		exportAssetCategories(portletDataContext);
 		exportAssetLinks(portletDataContext);
@@ -976,9 +975,9 @@ public class PortletExporter {
 	protected void exportPortlet(
 			PortletDataContext portletDataContext, LayoutCache layoutCache,
 			String portletId, Layout layout, Element parentElement,
-			long defaultUserId, boolean exportPermissions,
-			boolean exportPortletArchivedSetups, boolean exportPortletData,
-			boolean exportPortletSetup, boolean exportPortletUserPreferences)
+			boolean exportPermissions, boolean exportPortletArchivedSetups,
+			boolean exportPortletData, boolean exportPortletSetup,
+			boolean exportPortletUserPreferences)
 		throws Exception {
 
 		long plid = PortletKeys.PREFS_OWNER_ID_DEFAULT;

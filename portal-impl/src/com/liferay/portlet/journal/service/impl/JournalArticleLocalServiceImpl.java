@@ -3243,13 +3243,37 @@ public class JournalArticleLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		if (article.isInTrash()) {
+		TrashEntry trashEntry = article.getTrashEntry();
+
+		if (trashEntry.isTrashEntry(
+				JournalArticle.class, article.getResourcePrimKey())) {
+
 			restoreArticleFromTrash(userId, article);
 		}
 		else {
+
+			// Article
+
+			TrashVersion trashVersion =
+				trashVersionLocalService.fetchVersion(
+					trashEntry.getEntryId(), JournalArticle.class.getName(),
+					article.getResourcePrimKey());
+
+			int status = WorkflowConstants.STATUS_APPROVED;
+
+			if (trashVersion != null) {
+				status = trashVersion.getStatus();
+			}
+
 			updateStatus(
-				userId, article, article.getStatus(), null,
+				userId, article, status, null,
 				new HashMap<String, Serializable>(), serviceContext);
+
+			// Trash
+
+			if (trashVersion != null) {
+				trashVersionLocalService.deleteTrashVersion(trashVersion);
+			}
 		}
 
 		return moveArticle(groupId, article.getArticleId(), newFolderId);

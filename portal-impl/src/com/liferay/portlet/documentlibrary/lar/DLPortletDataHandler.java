@@ -75,6 +75,9 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 			new StagedModelType(Folder.class));
 		setExportControls(
 			new PortletDataHandlerBoolean(
+				NAMESPACE, "folders", true, false, null,
+				Folder.class.getName()),
+			new PortletDataHandlerBoolean(
 				NAMESPACE, "documents", true, false,
 				new PortletDataHandlerControl[] {
 					new PortletDataHandlerBoolean(
@@ -117,16 +120,18 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 		rootElement.addAttribute(
 			"group-id", String.valueOf(portletDataContext.getScopeGroupId()));
 
+		if (portletDataContext.getBooleanParameter(NAMESPACE, "folders")) {
+			ActionableDynamicQuery folderActionableDynamicQuery =
+				getFolderActionableDynamicQuery(portletDataContext);
+
+			folderActionableDynamicQuery.performActions();
+		}
+
 		if (portletDataContext.getBooleanParameter(NAMESPACE, "documents")) {
 			ActionableDynamicQuery fileEntryTypeActionableDynamicQuery =
 				getDLFileEntryTypeActionableDynamicQuery(portletDataContext);
 
 			fileEntryTypeActionableDynamicQuery.performActions();
-
-			ActionableDynamicQuery folderActionableDynamicQuery =
-				getFolderActionableDynamicQuery(portletDataContext);
-
-			folderActionableDynamicQuery.performActions();
 
 			ActionableDynamicQuery fileEntryActionableDynamicQuery =
 				getFileEntryActionableDynamicQuery(portletDataContext);
@@ -162,7 +167,7 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 				portletDataContext, fileEntryTypeElement);
 		}
 
-		if (portletDataContext.getBooleanParameter(NAMESPACE, "documents")) {
+		if (portletDataContext.getBooleanParameter(NAMESPACE, "folders")) {
 			Element foldersElement =
 				portletDataContext.getImportDataGroupElement(Folder.class);
 
@@ -172,7 +177,9 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 				StagedModelDataHandlerUtil.importStagedModel(
 					portletDataContext, folderElement);
 			}
+		}
 
+		if (portletDataContext.getBooleanParameter(NAMESPACE, "documents")) {
 			Element fileEntriesElement =
 				portletDataContext.getImportDataGroupElement(FileEntry.class);
 
@@ -241,8 +248,7 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 			portletDataContext.addReferenceElement(
 				portlet, rootElement, folder, Folder.class,
 				PortletDataContext.REFERENCE_TYPE_DEPENDENCY,
-				!portletDataContext.getBooleanParameter(
-					NAMESPACE, "documents"));
+				!portletDataContext.getBooleanParameter(NAMESPACE, "folders"));
 		}
 
 		return portletPreferences;

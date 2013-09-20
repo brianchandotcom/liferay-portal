@@ -344,10 +344,11 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 
 		String cacheCommonFileName = getCacheFileName(request);
 
-		String cacheCDNHost = getCacheCDNHost(request, urlConnection);
-
 		File cacheContentTypeFile = new File(
 			_tempDir, cacheCommonFileName + "_E_CONTENT_TYPE");
+
+		String cacheCDNHost = getCacheCDNHost(request, urlConnection);
+
 		File cacheDataFile = new File(
 			_tempDir, cacheCommonFileName + "_E_DATA" + cacheCDNHost);
 

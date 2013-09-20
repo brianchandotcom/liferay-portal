@@ -16,11 +16,7 @@ package com.liferay.portal.util.mail;
 
 import com.dumbster.smtp.SmtpMessage;
 
-import com.liferay.portal.kernel.test.ExecutionTestListeners;
-import com.liferay.portal.test.EnvironmentExecutionTestListener;
 import com.liferay.portal.test.LiferayIntegrationJUnitTestRunner;
-import com.liferay.portal.test.Sync;
-import com.liferay.portal.test.SynchronousDestinationExecutionTestListener;
 import com.liferay.portal.util.MailServiceTestUtil;
 import com.liferay.util.mail.MailEngine;
 
@@ -35,13 +31,7 @@ import org.junit.runner.RunWith;
 /**
  * @author Manuel de la Peña
  */
-@ExecutionTestListeners(
-	listeners = {
-		EnvironmentExecutionTestListener.class,
-		SynchronousDestinationExecutionTestListener.class
-	})
 @RunWith(LiferayIntegrationJUnitTestRunner.class)
-@Sync
 public class MailEngineTest {
 
 	@Before

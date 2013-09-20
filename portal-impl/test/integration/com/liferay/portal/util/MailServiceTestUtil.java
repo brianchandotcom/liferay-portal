@@ -44,12 +44,13 @@ public class MailServiceTestUtil {
 	}
 
 	public static List<SmtpMessage> findMessagesByBody(String body) {
-		Iterator<SmtpMessage> emailIter = _server.getReceivedEmail();
+		Iterator<SmtpMessage> receivedEMail =
+			_simpleSmtpServer.getReceivedEmail();
 
 		List<SmtpMessage> messages = new ArrayList<SmtpMessage>();
 
-		while (emailIter.hasNext()) {
-			SmtpMessage email = emailIter.next();
+		while (receivedEMail.hasNext()) {
+			SmtpMessage email = receivedEMail.next();
 
 			if (email.getBody().equals(body)) {
 				messages.add(email);
@@ -68,37 +69,38 @@ public class MailServiceTestUtil {
 	}
 
 	public static int getInboxSize() {
-		return _server.getReceivedEmailSize();
+		return _simpleSmtpServer.getReceivedEmailSize();
 	}
 
 	public static void start() {
-		if (_server != null) {
+		if (_simpleSmtpServer != null) {
 			throw new IllegalStateException("Server is already running");
 		}
 
-		_server = SimpleSmtpServer.start(
+		_simpleSmtpServer = SimpleSmtpServer.start(
 			PropsValues.MAIL_SESSION_MAIL_SMTP_PORT);
 	}
 
 	public static void stop() {
-		if ((_server != null) && _server.isStopped()) {
+		if ((_simpleSmtpServer != null) && _simpleSmtpServer.isStopped()) {
 			throw new IllegalStateException("Server is already stopped");
 		}
 
-		_server.stop();
+		_simpleSmtpServer.stop();
 
-		_server = null;
+		_simpleSmtpServer = null;
 	}
 
 	protected static List<SmtpMessage> findMessagesByHeader(
 		String header, String value) {
 
-		Iterator<SmtpMessage> emailIter = _server.getReceivedEmail();
+		Iterator<SmtpMessage> receivedEMail =
+			_simpleSmtpServer.getReceivedEmail();
 
 		List<SmtpMessage> messages = new ArrayList<SmtpMessage>();
 
-		while (emailIter.hasNext()) {
-			SmtpMessage email = emailIter.next();
+		while (receivedEMail.hasNext()) {
+			SmtpMessage email = receivedEMail.next();
 
 			if (email.getHeaderValue(header).equals(value)) {
 				messages.add(email);
@@ -108,6 +110,6 @@ public class MailServiceTestUtil {
 		return messages;
 	}
 
-	private static SimpleSmtpServer _server;
+	private static SimpleSmtpServer _simpleSmtpServer;
 
 }

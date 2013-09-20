@@ -198,8 +198,8 @@ editFileEntryURL.setParameter("workflowAction", String.valueOf(WorkflowConstants
 
 <aui:form action="<%= editFileEntryURL %>" cssClass="lfr-dynamic-form" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveFileEntry(" + saveAsDraft + ");" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
-	<aui:input name="uploadProgressId" type="hidden" value="<%= uploadProgressId %>" />
 	<aui:input name="folderId" type="hidden" value="<%= folderId %>" />
+	<aui:input name="uploadProgressId" type="hidden" value="<%= uploadProgressId %>" />
 
 	<liferay-ui:error exception="<%= DuplicateFileException.class %>" message="please-enter-a-unique-document-name" />
 	<liferay-ui:error exception="<%= DuplicateFolderNameException.class %>" message="please-enter-a-unique-document-name" />

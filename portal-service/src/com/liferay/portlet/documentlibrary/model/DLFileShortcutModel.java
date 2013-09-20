@@ -373,6 +373,14 @@ public interface DLFileShortcutModel extends BaseModel<DLFileShortcut>,
 	public void setStatusDate(Date statusDate);
 
 	/**
+	 * Returns the classPK of this document library file shortcut
+	 *
+	 * @return the classPK of this document library file shortcut
+	 */
+	@Override
+	public long getTrashClassPK();
+
+	/**
 	 * Returns the trash entry created when this document library file shortcut was moved to the Recycle Bin. The trash entry may belong to one of the ancestors of this document library file shortcut.
 	 *
 	 * @return the trash entry created when this document library file shortcut was moved to the Recycle Bin

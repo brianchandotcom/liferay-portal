@@ -1323,6 +1323,16 @@ public class JournalArticleWrapper implements JournalArticle,
 	}
 
 	/**
+	* Returns the classPK of this journal article
+	*
+	* @return the classPK of this journal article
+	*/
+	@Override
+	public long getTrashClassPK() {
+		return _journalArticle.getTrashClassPK();
+	}
+
+	/**
 	* Returns the trash entry created when this journal article was moved to the Recycle Bin. The trash entry may belong to one of the ancestors of this journal article.
 	*
 	* @return the trash entry created when this journal article was moved to the Recycle Bin
@@ -1642,13 +1652,6 @@ public class JournalArticleWrapper implements JournalArticle,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _journalArticle.getSmallImageType();
-	}
-
-	@Override
-	public com.liferay.portlet.journal.model.JournalFolder getTrashContainer()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _journalArticle.getTrashContainer();
 	}
 
 	@Override

@@ -516,6 +516,14 @@ public interface MBMessageModel extends AttachedModel, BaseModel<MBMessage>,
 	public void setStatusDate(Date statusDate);
 
 	/**
+	 * Returns the classPK of this message-boards message
+	 *
+	 * @return the classPK of this message-boards message
+	 */
+	@Override
+	public long getTrashClassPK();
+
+	/**
 	 * Returns the trash entry created when this message-boards message was moved to the Recycle Bin. The trash entry may belong to one of the ancestors of this message-boards message.
 	 *
 	 * @return the trash entry created when this message-boards message was moved to the Recycle Bin

@@ -631,17 +631,18 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 	}
 
 	@Override
-	public String getContainerModelName() {
-		return String.valueOf(getName());
-	}
-
-	@Override
 	public long getParentContainerModelId() {
-		return 0;
+		return getParentFolderId();
 	}
 
 	@Override
 	public void setParentContainerModelId(long parentContainerModelId) {
+		_parentFolderId = parentContainerModelId;
+	}
+
+	@Override
+	public String getContainerModelName() {
+		return String.valueOf(getName());
 	}
 
 	@Override
@@ -651,13 +652,18 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 	}
 
 	@Override
+	public long getTrashClassPK() {
+		return getPrimaryKey();
+	}
+
+	@Override
 	public TrashEntry getTrashEntry() throws PortalException, SystemException {
 		if (!isInTrash() && !isInTrashContainer()) {
 			return null;
 		}
 
 		TrashEntry trashEntry = TrashEntryLocalServiceUtil.fetchEntry(getModelClassName(),
-				getPrimaryKey());
+				getTrashClassPK());
 
 		if (trashEntry != null) {
 			return trashEntry;

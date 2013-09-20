@@ -663,6 +663,16 @@ public class BookmarksEntryWrapper implements BookmarksEntry,
 	}
 
 	/**
+	* Returns the classPK of this bookmarks entry
+	*
+	* @return the classPK of this bookmarks entry
+	*/
+	@Override
+	public long getTrashClassPK() {
+		return _bookmarksEntry.getTrashClassPK();
+	}
+
+	/**
 	* Returns the trash entry created when this bookmarks entry was moved to the Recycle Bin. The trash entry may belong to one of the ancestors of this bookmarks entry.
 	*
 	* @return the trash entry created when this bookmarks entry was moved to the Recycle Bin

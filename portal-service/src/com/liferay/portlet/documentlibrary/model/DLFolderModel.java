@@ -460,6 +460,14 @@ public interface DLFolderModel extends BaseModel<DLFolder>, ContainerModel,
 	public void setStatusDate(Date statusDate);
 
 	/**
+	 * Returns the classPK of this document library folder
+	 *
+	 * @return the classPK of this document library folder
+	 */
+	@Override
+	public long getTrashClassPK();
+
+	/**
 	 * Returns the trash entry created when this document library folder was moved to the Recycle Bin. The trash entry may belong to one of the ancestors of this document library folder.
 	 *
 	 * @return the trash entry created when this document library folder was moved to the Recycle Bin

@@ -743,6 +743,16 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	}
 
 	/**
+	* Returns the classPK of this message boards thread
+	*
+	* @return the classPK of this message boards thread
+	*/
+	@Override
+	public long getTrashClassPK() {
+		return _mbThread.getTrashClassPK();
+	}
+
+	/**
 	* Returns the trash entry created when this message boards thread was moved to the Recycle Bin. The trash entry may belong to one of the ancestors of this message boards thread.
 	*
 	* @return the trash entry created when this message boards thread was moved to the Recycle Bin

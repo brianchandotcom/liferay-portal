@@ -820,6 +820,14 @@ public interface JournalArticleModel extends AttachedModel,
 	public void setStatusDate(Date statusDate);
 
 	/**
+	 * Returns the classPK of this journal article
+	 *
+	 * @return the classPK of this journal article
+	 */
+	@Override
+	public long getTrashClassPK();
+
+	/**
 	 * Returns the trash entry created when this journal article was moved to the Recycle Bin. The trash entry may belong to one of the ancestors of this journal article.
 	 *
 	 * @return the trash entry created when this journal article was moved to the Recycle Bin

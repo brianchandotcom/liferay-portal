@@ -475,6 +475,14 @@ public interface WikiPageModel extends BaseModel<WikiPage>, ResourcedModel,
 	public void setStatusDate(Date statusDate);
 
 	/**
+	 * Returns the classPK of this wiki page
+	 *
+	 * @return the classPK of this wiki page
+	 */
+	@Override
+	public long getTrashClassPK();
+
+	/**
 	 * Returns the trash entry created when this wiki page was moved to the Recycle Bin. The trash entry may belong to one of the ancestors of this wiki page.
 	 *
 	 * @return the trash entry created when this wiki page was moved to the Recycle Bin

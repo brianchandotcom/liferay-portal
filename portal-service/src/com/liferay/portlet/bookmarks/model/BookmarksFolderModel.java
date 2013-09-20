@@ -369,6 +369,14 @@ public interface BookmarksFolderModel extends BaseModel<BookmarksFolder>,
 	public void setStatusDate(Date statusDate);
 
 	/**
+	 * Returns the classPK of this bookmarks folder
+	 *
+	 * @return the classPK of this bookmarks folder
+	 */
+	@Override
+	public long getTrashClassPK();
+
+	/**
 	 * Returns the trash entry created when this bookmarks folder was moved to the Recycle Bin. The trash entry may belong to one of the ancestors of this bookmarks folder.
 	 *
 	 * @return the trash entry created when this bookmarks folder was moved to the Recycle Bin

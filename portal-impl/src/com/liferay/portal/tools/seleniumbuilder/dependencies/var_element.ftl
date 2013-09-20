@@ -27,5 +27,5 @@
 
 	${context}.put("${varName}", RuntimeVariables.evaluateVariable(${selenium}.${seleniumMethod}("${locatorValue}"), ${context}));
 <#else>
-	${context}.put("${varName}", RuntimeVariables.evaluateVariable("${varValue}", ${context}));
+	${context}.put("${varName}", RuntimeVariables.evaluateVariable("${seleniumBuilderFileUtil.escapeJava(varValue)}", ${context}));
 </#if>

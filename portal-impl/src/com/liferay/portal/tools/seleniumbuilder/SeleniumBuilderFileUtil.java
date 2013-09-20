@@ -45,6 +45,8 @@ import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang.StringEscapeUtils;
+
 /**
  * @author Michael Hashimoto
  */
@@ -52,6 +54,14 @@ public class SeleniumBuilderFileUtil {
 
 	public SeleniumBuilderFileUtil(String baseDir) {
 		_baseDir = baseDir;
+	}
+
+	public String escapeHtml(String input) {
+		return StringEscapeUtils.escapeHtml(input);
+	}
+
+	public String escapeJava(String input) {
+		return StringEscapeUtils.escapeJava(input);
 	}
 
 	public List<Element> getAllChildElements(

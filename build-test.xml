@@ -1131,6 +1131,12 @@
 
 			String testClass = project.getProperty("test.class");
 
+			if (testClass.contains("#")) {
+				int x = testClass.indexOf("#");
+
+				testClass =  testClass.substring(0, x);
+			}
+
 			if (testClass.endsWith("TestCase")) {
 				testCase = testClass.replaceAll("TestCase", "");
 			}

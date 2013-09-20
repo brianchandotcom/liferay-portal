@@ -1,8 +1,8 @@
 AUI.add(
 	'liferay-dockbar-add-page',
 	function(A) {
-		var Lang = A.Lang;
 		var AObject = A.Object;
+		var Lang = A.Lang;
 
 		var Dockbar = Liferay.Dockbar;
 
@@ -139,7 +139,7 @@ AUI.add(
 
 										var active = header.hasClass(CSS_ACTIVE);
 
-										item.all('input, select, textarea').set('disabled', !active);
+										item.all('input, select, textarea').attr('disabled', !active);
 									}
 								);
 
@@ -152,7 +152,7 @@ AUI.add(
 										},
 										after: {
 											success: function(event, id, obj) {
-												var response = this.get(STR_RESPONSE_DATA);
+												var responseData = this.get(STR_RESPONSE_DATA);
 
 												instance._loadingMask.hide();
 
@@ -162,7 +162,7 @@ AUI.add(
 
 												panel.plug(A.Plugin.ParseContent);
 
-												panel.setContent(response);
+												panel.setContent(responseData);
 											}
 										}
 									}
@@ -178,7 +178,6 @@ AUI.add(
 									var field = formValidator.getField(index);
 
 									field.scrollIntoView();
-
 									field.focus();
 
 									return true;

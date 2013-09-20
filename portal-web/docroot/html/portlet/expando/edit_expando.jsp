@@ -79,7 +79,7 @@ portletURL.setParameter("modelResource", modelResource);
 				<aui:field-wrapper helpMessage="custom-field-key-help" label="key">
 					<aui:input name="name" type="hidden" value="<%= column.getName() %>" />
 
-					<%= HtmlUtil.escape(column.getName()) %>
+					<liferay-ui:input-resource url="<%= column.getName() %>" />
 				</aui:field-wrapper>
 			</c:when>
 			<c:otherwise>
@@ -92,7 +92,7 @@ portletURL.setParameter("modelResource", modelResource);
 				<aui:field-wrapper label="type">
 					<aui:input name="type" type="hidden" value="<%= type %>" />
 
-					<liferay-ui:message key="<%= ExpandoColumnConstants.getTypeLabel(type) %>" />
+					<liferay-ui:input-resource url="<%= LanguageUtil.get(pageContext, ExpandoColumnConstants.getTypeLabel(type)) %>" />
 				</aui:field-wrapper>
 			</c:when>
 			<c:otherwise>

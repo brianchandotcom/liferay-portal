@@ -83,23 +83,19 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 		<c:if test="<%= ((entry != null) || (folderId <= 0) || Validator.isNotNull(referringPortletResource)) %>">
 			<aui:field-wrapper label="folder">
 
-					<%
-					String folderName = StringPool.BLANK;
+				<%
+				String folderName = StringPool.BLANK;
 
-					if (folderId > 0) {
-						BookmarksFolder folder = BookmarksFolderServiceUtil.getFolder(folderId);
+				if (folderId > 0) {
+					BookmarksFolder folder = BookmarksFolderServiceUtil.getFolder(folderId);
 
-						folderId = folder.getFolderId();
-						folderName = folder.getName();
-					}
-					%>
+					folderId = folder.getFolderId();
+					folderName = folder.getName();
+				}
+				%>
 
-					<portlet:renderURL var="viewFolderURL">
-						<portlet:param name="struts_action" value="/bookmarks/view" />
-						<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
-					</portlet:renderURL>
-
-					<aui:a href="<%= viewFolderURL %>" id="folderName"><%= HtmlUtil.escape(folderName) %></aui:a>
+				<div class="input-append">
+					<liferay-ui:input-resource id="folderName" url="<%= folderName %>" />
 
 					<aui:button name="selectFolderButton" value="select" />
 
@@ -126,7 +122,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 											nameValue: event.name
 										};
 
-										Liferay.Util.selectFolder(folderData, '<liferay-portlet:renderURL portletName="<%= portletResource %>"><portlet:param name="struts_action" value="/bookmarks/view" /></liferay-portlet:renderURL>', '<portlet:namespace />');
+										Liferay.Util.selectFolder(folderData, '<portlet:namespace />');
 									}
 								);
 							}
@@ -137,7 +133,8 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 					String taglibRemoveFolder = "Liferay.Util.removeFolderSelection('folderId', 'folderName', '" + renderResponse.getNamespace() + "');";
 					%>
 
-					<aui:button name="removeFolderButton" onClick="<%= taglibRemoveFolder %>" value="remove" />
+					<aui:button disabled="<%= (folderId <= 0) %>" name="removeFolderButton" onClick="<%= taglibRemoveFolder %>" value="remove" />
+				</div>
 			</aui:field-wrapper>
 		</c:if>
 

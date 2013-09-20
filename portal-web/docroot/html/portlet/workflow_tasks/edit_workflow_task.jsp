@@ -104,10 +104,10 @@ request.setAttribute(WebKeys.WORKFLOW_ASSET_PREVIEW, Boolean.TRUE);
 					<aui:field-wrapper label="assigned-to">
 						<c:choose>
 							<c:when test="<%= workflowTask.isAssignedToSingleUser() %>">
-								<%= HtmlUtil.escape(PortalUtil.getUserName(workflowTask.getAssigneeUserId(), StringPool.BLANK)) %>
+								<liferay-ui:input-resource url="<%= PortalUtil.getUserName(workflowTask.getAssigneeUserId(), StringPool.BLANK) %>" />
 							</c:when>
 							<c:otherwise>
-								<liferay-ui:message key="nobody" />
+								<liferay-ui:input-resource url='<%= LanguageUtil.get(pageContext, "nobody") %>' />
 							</c:otherwise>
 						</c:choose>
 
@@ -148,7 +148,7 @@ request.setAttribute(WebKeys.WORKFLOW_ASSET_PREVIEW, Boolean.TRUE);
 
 				<div class="lfr-asset-status">
 					<aui:field-wrapper label="state">
-						<%= LanguageUtil.get(pageContext, WorkflowInstanceLinkLocalServiceUtil.getState(companyId, groupId, className, classPK)) %>
+						<liferay-ui:input-resource url="<%= LanguageUtil.get(pageContext, WorkflowInstanceLinkLocalServiceUtil.getState(companyId, groupId, className, classPK)) %>" />
 					</aui:field-wrapper>
 				</div>
 			</aui:col>
@@ -156,13 +156,13 @@ request.setAttribute(WebKeys.WORKFLOW_ASSET_PREVIEW, Boolean.TRUE);
 			<aui:col>
 				<div class="lfr-asset-date">
 					<aui:field-wrapper label="create-date">
-						<%= dateFormatDateTime.format(workflowTask.getCreateDate()) %>
+						<liferay-ui:input-resource url="<%= dateFormatDateTime.format(workflowTask.getCreateDate()) %>" />
 					</aui:field-wrapper>
 				</div>
 
 				<div class="lfr-asset-due-date">
 					<aui:field-wrapper label="due-date">
-						<%= (workflowTask.getDueDate() == null) ? LanguageUtil.get(pageContext, "never") : dateFormatDateTime.format(workflowTask.getDueDate()) %>
+						<liferay-ui:input-resource url='<%= (workflowTask.getDueDate() == null) ? LanguageUtil.get(pageContext, "never") : dateFormatDateTime.format(workflowTask.getDueDate()) %>' />
 
 						<c:if test="<%= !workflowTask.isCompleted() %>">
 							<portlet:actionURL var="updateDueDateURL">

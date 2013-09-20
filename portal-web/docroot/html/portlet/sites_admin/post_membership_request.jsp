@@ -50,15 +50,15 @@ MembershipRequest membershipRequest = (MembershipRequest)request.getAttribute(We
 
 	<aui:model-context bean="<%= membershipRequest %>" model="<%= MembershipRequest.class %>" />
 
-	<aui:fieldset>
-		<c:if test="<%= Validator.isNotNull(group.getDescription()) %>">
-			<aui:field-wrapper label="description">
+	<c:if test="<%= Validator.isNotNull(group.getDescription()) %>">
+		<aui:field-wrapper label="description">
+			<p>
 				<%= HtmlUtil.escape(group.getDescription()) %>
-			</aui:field-wrapper>
-		</c:if>
+			</p>
+		</aui:field-wrapper>
+	</c:if>
 
-		<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="comments" />
-	</aui:fieldset>
+	<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="comments" />
 
 	<aui:button-row>
 		<aui:button type="submit" />

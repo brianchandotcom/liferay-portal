@@ -163,26 +163,28 @@ if (Validator.isNotNull(script)) {
 				<aui:field-wrapper label='<%= LanguageUtil.format(pageContext, "parent-x", ddmDisplay.getStructureName(locale)) %>'>
 					<aui:input name="parentStructureId" type="hidden" value="<%= parentStructureId %>" />
 
-					<c:choose>
-						<c:when test="<%= (structure == null) || Validator.isNotNull(parentStructureId) %>">
-							<portlet:renderURL var="parentStructureURL">
-								<portlet:param name="struts_action" value="/dynamic_data_mapping/edit_structure" />
-								<portlet:param name="redirect" value="<%= currentURL %>" />
-								<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
-								<portlet:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
-								<portlet:param name="classPK" value="<%= String.valueOf(parentStructureId) %>" />
-							</portlet:renderURL>
+					<div class="input-append">
+						<c:choose>
+							<c:when test="<%= (structure == null) || Validator.isNotNull(parentStructureId) %>">
+								<portlet:renderURL var="parentStructureURL">
+									<portlet:param name="struts_action" value="/dynamic_data_mapping/edit_structure" />
+									<portlet:param name="redirect" value="<%= currentURL %>" />
+									<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
+									<portlet:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
+									<portlet:param name="classPK" value="<%= String.valueOf(parentStructureId) %>" />
+								</portlet:renderURL>
 
-							<aui:a href="<%= parentStructureURL %>" id="parentStructureName" label="<%= HtmlUtil.escape(parentStructureName) %>" />
-						</c:when>
-						<c:otherwise>
-							<aui:a href="" id="parentStructureName" />
-						</c:otherwise>
-					</c:choose>
+								<liferay-ui:input-resource id="parentStructureName" url="<%= HtmlUtil.escape(parentStructureName) %>" />
+							</c:when>
+							<c:otherwise>
+								<liferay-ui:input-resource id="parentStructureName" url="" />
+							</c:otherwise>
+						</c:choose>
 
-					<aui:button onClick='<%= renderResponse.getNamespace() + "openParentStructureSelector();" %>' value="select" />
+						<aui:button onClick='<%= renderResponse.getNamespace() + "openParentStructureSelector();" %>' value="select" />
 
-					<aui:button name="removeParentStructureButton" onClick='<%= renderResponse.getNamespace() + "removeParentStructure();" %>' value="remove" />
+						<aui:button name="removeParentStructureButton" onClick='<%= renderResponse.getNamespace() + "removeParentStructure();" %>' value="remove" />
+					</div>
 				</aui:field-wrapper>
 
 				<c:if test="<%= structure != null %>">
@@ -230,7 +232,7 @@ if (Validator.isNotNull(script)) {
 				var nameEl = document.getElementById('<portlet:namespace />parentStructureName');
 
 				nameEl.href = '<portlet:renderURL><portlet:param name="struts_action" value="/dynamic_data_mapping/edit_structure" /><portlet:param name="redirect" value="<%= currentURL %>" /><portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" /><portlet:param name="classNameId" value="<%= String.valueOf(classNameId) %>" /></portlet:renderURL>&<portlet:namespace />classPK=' + event.ddmstructureid;
-				nameEl.innerHTML = event.name + '&nbsp;';
+				nameEl.value = event.name;
 
 				document.getElementById('<portlet:namespace />removeParentStructureButton').disabled = false;
 			}
@@ -243,7 +245,7 @@ if (Validator.isNotNull(script)) {
 		var nameEl = document.getElementById('<portlet:namespace />parentStructureName');
 
 		nameEl.href = '#';
-		nameEl.innerHTML = '';
+		nameEl.value = '';
 
 		document.getElementById('<portlet:namespace />removeParentStructureButton').disabled = true;
 	}

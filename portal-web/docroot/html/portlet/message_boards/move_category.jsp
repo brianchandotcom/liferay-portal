@@ -58,16 +58,13 @@ long parentCategoryId = BeanParamUtil.getLong(category, request, "parentCategory
 			}
 			%>
 
-			<portlet:renderURL var="viewCategoryURL">
-				<portlet:param name="struts_action" value="/message_boards/view" />
-				<portlet:param name="mbCategoryId" value="<%= String.valueOf(parentCategoryId) %>" />
-			</portlet:renderURL>
+			<div class="input-append">
+				<liferay-ui:input-resource id="parentCategoryName" url="<%= parentCategoryName %>" />
 
-			<aui:a href="<%= viewCategoryURL %>" id="parentCategoryName"><%= HtmlUtil.escape(parentCategoryName) %></aui:a>
+				<aui:button name="selectCategoryButton" value="select" />
 
-			<aui:button name="selectCategoryButton" value="select" />
-
-			<aui:button id="removeCategoryButton" onClick='<%= renderResponse.getNamespace() + "removeCategory();" %>' value="remove" />
+				<aui:button disabled="<%= (parentCategoryId <= 0) %>" name="removeCategoryButton" onClick='<%= renderResponse.getNamespace() + "removeCategory();" %>' value="remove" />
+			</div>
 
 			<aui:input label="merge-with-parent-category" name="mergeWithParentCategory" type="checkbox" />
 		</aui:field-wrapper>
@@ -84,10 +81,9 @@ long parentCategoryId = BeanParamUtil.getLong(category, request, "parentCategory
 	function <portlet:namespace />removeCategory() {
 		document.<portlet:namespace />fm.<portlet:namespace />parentCategoryId.value = "<%= MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID %>";
 
-		var nameEl = document.getElementById("<portlet:namespace />parentCategoryName");
+		document.getElementById('<portlet:namespace />parentCategoryName').value = "";
 
-		nameEl.href = "";
-		nameEl.innerHTML = "";
+		Liferay.Util.toggleDisabled('#<portlet:namespace />removeCategoryButton', true);
 	}
 </aui:script>
 
@@ -117,11 +113,9 @@ if (category != null) {
 				function(event) {
 					document.<portlet:namespace />fm.<portlet:namespace />parentCategoryId.value = event.categoryid;
 
-					var nameEl = document.getElementById("<portlet:namespace />parentCategoryName");
+					document.getElementById('<portlet:namespace />parentCategoryName').value = event.name;
 
-					nameEl.innerHTML = event.name + "&nbsp;";
-
-					nameEl.href = '<portlet:renderURL><portlet:param name="struts_action" value="/message_boards/view" /></portlet:renderURL>&<portlet:namespace />mbCategoryId=' + event.categoryid;
+					Liferay.Util.toggleDisabled('#<portlet:namespace />removeCategoryButton', false);
 				}
 			);
 		}

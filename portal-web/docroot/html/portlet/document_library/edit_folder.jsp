@@ -92,12 +92,7 @@ if (workflowEnabled) {
 
 			<c:if test="<%= folder != null %>">
 				<aui:field-wrapper label="parent-folder">
-					<portlet:renderURL var="viewFolderURL">
-						<portlet:param name="struts_action" value="/document_library/view" />
-						<portlet:param name="folderId" value="<%= String.valueOf(parentFolderId) %>" />
-					</portlet:renderURL>
-
-					<aui:a href="<%= viewFolderURL %>" id="parentFolderName"><%= parentFolderName %></aui:a>
+					<liferay-ui:input-resource url="<%= parentFolderName %>" />
 				</aui:field-wrapper>
 			</c:if>
 

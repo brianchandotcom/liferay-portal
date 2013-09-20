@@ -120,12 +120,7 @@ else {
 
 			<c:if test="<%= category != null %>">
 				<aui:field-wrapper label="parent-category">
-					<portlet:renderURL var="viewCategoryURL">
-						<portlet:param name="struts_action" value="/message_boards/view" />
-						<portlet:param name="mbCategoryId" value="<%= String.valueOf(parentCategoryId) %>" />
-					</portlet:renderURL>
-
-					<aui:a href="<%= viewCategoryURL %>" id="parentCategoryName"><%= HtmlUtil.escape(parentCategoryName) %></aui:a>
+					<liferay-ui:input-resource id="parentCategoryName" url="<%= parentCategoryName %>" />
 				</aui:field-wrapper>
 			</c:if>
 		</c:if>

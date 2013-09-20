@@ -75,7 +75,7 @@ String discountType = BeanParamUtil.getString(coupon, request, "discountType");
 			</c:when>
 			<c:otherwise>
 				<aui:field-wrapper label="code">
-					<%= HtmlUtil.escape(code) %>
+					<liferay-ui:input-resource url="<%= code %>" />
 				</aui:field-wrapper>
 			</c:otherwise>
 		</c:choose>

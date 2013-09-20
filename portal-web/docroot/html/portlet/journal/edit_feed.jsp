@@ -146,7 +146,7 @@ if (feed != null) {
 			</c:when>
 			<c:otherwise>
 				<aui:field-wrapper label="id">
-					<%= HtmlUtil.escape(feedId) %>
+					<liferay-ui:input-resource url="<%= feedId %>" />
 				</aui:field-wrapper>
 			</c:otherwise>
 		</c:choose>
@@ -193,11 +193,13 @@ if (feed != null) {
 				<aui:field-wrapper label="structure">
 					<aui:input name="structureId" type="hidden" value="<%= structureId %>" />
 
-					<%= HtmlUtil.escape(ddmStructureName) %>
+					<div class="input-append">
+						<liferay-ui:input-resource url="<%= ddmStructureName %>" />
 
-					<aui:button name="selectStructureButton" onClick='<%= renderResponse.getNamespace() + "openStructureSelector();" %>' value="select" />
+						<aui:button name="selectStructureButton" onClick='<%= renderResponse.getNamespace() + "openStructureSelector();" %>' value="select" />
 
-					<aui:button disabled="<%= Validator.isNull(structureId) %>" name="removeStructureButton" onClick='<%= renderResponse.getNamespace() + "removeStructure();" %>' value="remove" />
+						<aui:button disabled="<%= Validator.isNull(structureId) %>" name="removeStructureButton" onClick='<%= renderResponse.getNamespace() + "removeStructure();" %>' value="remove" />
+					</div>
 				</aui:field-wrapper>
 
 				<aui:field-wrapper label="template">

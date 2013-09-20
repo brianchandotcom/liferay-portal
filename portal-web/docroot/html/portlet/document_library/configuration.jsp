@@ -100,20 +100,17 @@ String emailBody = PrefsParamUtil.getString(portletPreferences, request, emailBo
 				<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="documentLibraryItemsListingPanel" persistState="<%= true %>" title="display-settings">
 					<aui:fieldset>
 						<aui:field-wrapper label="root-folder">
-							<portlet:renderURL var="viewFolderURL">
-								<portlet:param name="struts_action" value='<%= strutsAction + "/view" %>' />
-								<portlet:param name="folderId" value="<%= String.valueOf(rootFolderId) %>" />
-							</portlet:renderURL>
+							<div class="input-append">
+								<liferay-ui:input-resource id="rootFolderName" url="<%= rootFolderName %>" />
 
-							<aui:a href="<%= viewFolderURL %>" id="rootFolderName"><%= rootFolderName %></aui:a>
+								<aui:button name="selectFolderButton" value="select" />
 
-							<aui:button name="selectFolderButton" value="select" />
+								<%
+								String taglibRemoveFolder = "Liferay.Util.removeFolderSelection('rootFolderId', 'rootFolderName', '" + renderResponse.getNamespace() + "');";
+								%>
 
-							<%
-							String taglibRemoveFolder = "Liferay.Util.removeFolderSelection('rootFolderId', 'rootFolderName', '" + renderResponse.getNamespace() + "');";
-							%>
-
-							<aui:button disabled="<%= rootFolderId <= 0 %>" name="removeFolderButton" onClick="<%= taglibRemoveFolder %>" value="remove" />
+								<aui:button disabled="<%= rootFolderId <= 0 %>" name="removeFolderButton" onClick="<%= taglibRemoveFolder %>" value="remove" />
+							</div>
 						</aui:field-wrapper>
 
 						<aui:input label="show-search" name="preferences--showFoldersSearch--" type="checkbox" value="<%= showFoldersSearch %>" />
@@ -251,7 +248,7 @@ String emailBody = PrefsParamUtil.getString(portletPreferences, request, emailBo
 									nameValue: event.foldername
 								};
 
-								Liferay.Util.selectFolder(folderData, '<liferay-portlet:renderURL portletName="<%= portletResource %>"><portlet:param name="struts_action" value='<%= strutsAction + "/view" %>' /></liferay-portlet:renderURL>', '<portlet:namespace />');
+								Liferay.Util.selectFolder(folderData, '<portlet:namespace />');
 							}
 						);
 					}

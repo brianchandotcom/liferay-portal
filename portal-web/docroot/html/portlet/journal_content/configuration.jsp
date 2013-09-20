@@ -242,13 +242,11 @@ catch (NoSuchArticleException nsae) {
 	<aui:input name="preferences--articleId--" type="hidden" value="<%= articleId %>" />
 	<aui:input name="preferences--ddmTemplateKey--" type="hidden" value="<%= ddmTemplateKey %>" />
 
-	<aui:fieldset cssClass="hide">
+	<aui:fieldset>
 		<aui:field-wrapper label="portlet-id">
-			<%= HtmlUtil.escape(portletResource) %>
+			<liferay-ui:input-resource url="<%= portletResource %>" />
 		</aui:field-wrapper>
 	</aui:fieldset>
-
-	<br />
 
 	<aui:fieldset>
 		<aui:input name="preferences--showAvailableLocales--" type="checkbox" value="<%= showAvailableLocales %>" />

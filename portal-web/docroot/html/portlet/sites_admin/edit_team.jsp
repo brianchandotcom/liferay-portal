@@ -59,7 +59,7 @@ if (group.isOrganization()) {
 	<aui:fieldset>
 		<c:if test="<%= team != null %>">
 			<aui:field-wrapper label="team-id">
-				<%= team.getTeamId() %>
+				<liferay-ui:input-resource url="<%= team.getTeamId() %>" />
 			</aui:field-wrapper>
 		</c:if>
 

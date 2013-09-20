@@ -1528,11 +1528,7 @@
 		function(folderIdString, folderNameString, namespace) {
 			A.byIdNS(namespace, folderIdString).val(0);
 
-			var nameEl = A.byIdNS(namespace, folderNameString);
-
-			nameEl.attr('href', '');
-
-			nameEl.empty();
+			A.byIdNS(namespace, folderNameString).val('');
 
 			Liferay.Util.toggleDisabled(A.byIdNS(namespace, 'removeFolderButton'), true);
 		},
@@ -1771,23 +1767,15 @@
 	Liferay.provide(
 		Util,
 		'selectFolder',
-		function(folderData, folderHref, namespace) {
+		function(folderData, namespace) {
 			A.byIdNS(namespace, folderData.idString).val(folderData.idValue);
 
-			var nameEl = A.byIdNS(namespace, folderData.nameString);
-
-			Liferay.Util.addParams(namespace + 'folderId=' + folderData.idValue, folderHref);
-
-			nameEl.attr('href', folderHref);
-
-			nameEl.setContent(folderData.nameValue + '&nbsp;');
+			A.byIdNS(namespace, folderData.nameString).val(folderData.nameValue);
 
 			var button = A.byIdNS(namespace, 'removeFolderButton');
 
 			if (button) {
-				button.set('disabled', false);
-
-				button.removeClass('btn-disabled');
+				Liferay.Util.toggleDisabled(button, false);
 			}
 		},
 		['aui-base', 'liferay-node']

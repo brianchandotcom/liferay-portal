@@ -66,7 +66,7 @@ String newTitle = ParamUtil.get(request, "newTitle", StringPool.BLANK);
 
 			<aui:fieldset>
 				<aui:field-wrapper label="current-title">
-					<%= wikiPage.getTitle() %>
+					<liferay-ui:input-resource url="<%= wikiPage.getTitle() %>" />
 				</aui:field-wrapper>
 
 				<aui:input name="newTitle" value="<%= newTitle %>" />
@@ -118,7 +118,7 @@ String newTitle = ParamUtil.get(request, "newTitle", StringPool.BLANK);
 
 			<aui:fieldset>
 				<aui:field-wrapper label="current-parent">
-					<%= parentText %>
+					<liferay-ui:input-resource url="<%= parentText %>" />
 				</aui:field-wrapper>
 
 				<%

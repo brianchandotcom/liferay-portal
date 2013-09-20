@@ -87,19 +87,19 @@ groupId = ParamUtil.getLong(request, "groupId", groupId);
 					else {
 						ddmStructureName = LanguageUtil.get(pageContext, "any");
 					}
+
+					if (Validator.isNotNull(ddmStructureDescription)) {
+						ddmStructureName = ddmStructureName + " (" + ddmStructureDescription+ ")";
+					}
 					%>
 
-					<div id="<portlet:namespace />structure">
-						<%= ddmStructureName %>
+					<div class="input-append">
+						<liferay-ui:input-resource id="structure" url="<%= ddmStructureName %>" />
 
-						<c:if test="<%= Validator.isNotNull (ddmStructureDescription) %>">
-							<em>(<%= ddmStructureDescription %>)</em>
-						</c:if>
+						<aui:button onClick='<%= renderResponse.getNamespace() + "openStructureSelector();" %>' value="select" />
+
+						<aui:button name="removeStructureButton" onClick='<%= renderResponse.getNamespace() + "removeStructure();" %>' value="remove" />
 					</div>
-
-					<aui:button onClick='<%= renderResponse.getNamespace() + "openStructureSelector();" %>' value="select" />
-
-					<aui:button name="removeStructureButton" onClick='<%= renderResponse.getNamespace() + "removeStructure();" %>' value="remove" />
 				</aui:field-wrapper>
 			</aui:fieldset>
 		</liferay-ui:panel>
@@ -171,7 +171,7 @@ groupId = ParamUtil.getLong(request, "groupId", groupId);
 
 				document.<portlet:namespace />fm1.<portlet:namespace />ddmStructureKey.value = event.ddmstructurekey;
 
-				A.one('#<portlet:namespace />structure').html(event.name + ' <em>(' + event.ddmstructureid + ')</em>');
+				A.one('#<portlet:namespace />structure').val(event.name + ' (' + event.ddmstructureid + ')');
 			}
 		);
 	}
@@ -184,7 +184,7 @@ groupId = ParamUtil.getLong(request, "groupId", groupId);
 
 			document.<portlet:namespace />fm1.<portlet:namespace />ddmStructureKey.value = "";
 
-			A.one('#<portlet:namespace />structure').html('<%= UnicodeLanguageUtil.get(pageContext, "any") %>');
+			A.one('#<portlet:namespace />structure').val('<%= UnicodeLanguageUtil.get(pageContext, "any") %>');
 		},
 		['aui-base']
 	);

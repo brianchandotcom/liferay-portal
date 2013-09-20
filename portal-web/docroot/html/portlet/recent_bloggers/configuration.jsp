@@ -45,11 +45,13 @@ if (organizationId > 0) {
 
 		<div id="<portlet:namespace />UsersSelectionOptions">
 			<aui:field-wrapper label="organization">
-				<span id="<portlet:namespace />organizationName"><%= HtmlUtil.escape(organizationName) %></span>
+				<div class="input-append">
+					<liferay-ui:input-resource id="organizationName" url="<%= HtmlUtil.escape(organizationName) %>" />
 
-				<aui:button name="selectOrganizationButton" value="select" />
+					<aui:button name="selectOrganizationButton" value="select" />
 
-				<aui:button disabled="<%= organizationId <= 0 %>" name="removeOrganizationButton" onClick='<%= renderResponse.getNamespace() + "removeOrganization();" %>' value="remove" />
+					<aui:button disabled="<%= organizationId <= 0 %>" name="removeOrganizationButton" onClick='<%= renderResponse.getNamespace() + "removeOrganization();" %>' value="remove" />
+				</div>
 			</aui:field-wrapper>
 		</div>
 
@@ -101,11 +103,9 @@ if (organizationId > 0) {
 				function(event) {
 					document.<portlet:namespace />fm.<portlet:namespace />organizationId.value = event.organizationid;
 
-					var nameEl = document.getElementById('<portlet:namespace />organizationName');
+					document.getElementById('<portlet:namespace />organizationName').value = event.name;
 
-					nameEl.innerHTML = event.name + '&nbsp;';
-
-					document.getElementById('<portlet:namespace />removeOrganizationButton').disabled = false;
+					Liferay.Util.toggleDisabled('#<portlet:namespace />removeOrganizationButton', false);
 				}
 			);
 		}
@@ -116,11 +116,9 @@ if (organizationId > 0) {
 	function <portlet:namespace />removeOrganization() {
 		document.<portlet:namespace />fm.<portlet:namespace />organizationId.value = "";
 
-		var nameEl = document.getElementById("<portlet:namespace />organizationName");
+		document.getElementById('<portlet:namespace />organizationName').value = "";
 
-		nameEl.innerHTML = "";
-
-		document.getElementById("<portlet:namespace />removeOrganizationButton").disabled = true;
+		Liferay.Util.toggleDisabled('#<portlet:namespace />removeOrganizationButton', true);
 	}
 
 	Liferay.Util.toggleSelectBox('<portlet:namespace />selectionMethod', 'users', '<portlet:namespace />UsersSelectionOptions');

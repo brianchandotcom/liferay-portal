@@ -712,7 +712,121 @@ public class JournalFolderLocalServiceImpl
 		journalFolderLocalService.deleteFolder(fromFolder);
 	}
 
-	protected void updateDependentStatus(
+	protected void moveDependentsToTrash(
+			List<Object> foldersAndEntries, int status)
+		throws PortalException, SystemException {
+
+		for (Object object : foldersAndEntries) {
+			if (object instanceof JournalArticle) {
+				JournalArticle article = (JournalArticle)object;
+
+				if (status == WorkflowConstants.STATUS_IN_TRASH) {
+
+					// Asset
+
+					if (article.getStatus() ==
+							WorkflowConstants.STATUS_APPROVED) {
+
+						assetEntryLocalService.updateVisible(
+							JournalArticle.class.getName(),
+							article.getResourcePrimKey(), false);
+					}
+
+					if (article.getStatus() ==
+							WorkflowConstants.STATUS_PENDING) {
+
+						article.setStatus(WorkflowConstants.STATUS_DRAFT);
+
+						journalArticlePersistence.update(article);
+					}
+				}
+				else {
+
+					// Asset
+
+					if (article.getStatus() ==
+							WorkflowConstants.STATUS_APPROVED) {
+
+						assetEntryLocalService.updateVisible(
+							JournalArticle.class.getName(),
+							article.getResourcePrimKey(), true);
+					}
+				}
+
+				// Workflow
+
+				if (status != WorkflowConstants.STATUS_APPROVED) {
+					List<JournalArticle> articleVersions =
+						journalArticlePersistence.findByG_A(
+							article.getGroupId(), article.getArticleId());
+
+					for (JournalArticle curArticle : articleVersions) {
+						if (!curArticle.isPending()) {
+							continue;
+						}
+
+						curArticle.setStatus(WorkflowConstants.STATUS_DRAFT);
+
+						journalArticlePersistence.update(curArticle);
+
+						workflowInstanceLinkLocalService.
+							deleteWorkflowInstanceLink(
+								curArticle.getCompanyId(),
+								curArticle.getGroupId(),
+								JournalArticle.class.getName(),
+								curArticle.getId());
+					}
+				}
+
+				// Indexer
+
+				Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+					JournalArticle.class);
+
+				indexer.reindex(article);
+			}
+			else if (object instanceof JournalFolder) {
+				JournalFolder folder = (JournalFolder)object;
+
+				if (folder.isInTrash()) {
+					continue;
+				}
+
+				// Folders and articles
+
+				List<Object> curFoldersAndEntries = getFoldersAndArticles(
+					folder.getGroupId(), folder.getFolderId());
+
+				updateDependentStatus(curFoldersAndEntries, status);
+
+				if (status == WorkflowConstants.STATUS_IN_TRASH) {
+
+					// Asset
+
+					assetEntryLocalService.updateVisible(
+						JournalFolder.class.getName(), folder.getFolderId(),
+						false);
+				}
+				else {
+
+					// Asset
+
+					assetEntryLocalService.updateVisible(
+						JournalFolder.class.getName(), folder.getFolderId(),
+						true);
+				}
+
+				// Index
+
+				Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+					JournalFolder.class);
+
+				indexer.reindex(folder);
+			}
+		}
+	}
+
+	protected void restoreDependentsFromTrash(
 			List<Object> foldersAndEntries, int status)
 		throws PortalException, SystemException {
 

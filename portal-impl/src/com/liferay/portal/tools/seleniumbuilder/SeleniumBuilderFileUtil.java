@@ -56,6 +56,14 @@ public class SeleniumBuilderFileUtil {
 		_baseDir = baseDir;
 	}
 
+	public String escapeHtml(String input) {
+		return StringEscapeUtils.escapeHtml(input);
+	}
+
+	public String escapeJava(String input) {
+		return StringEscapeUtils.escapeJava(input);
+	}
+
 	public List<Element> getAllChildElements(
 		Element element, String elementName) {
 
@@ -154,10 +162,6 @@ public class SeleniumBuilderFileUtil {
 		String javaFileName = getJavaFileName(fileName);
 
 		return StringUtil.replace(javaFileName, ".java", ".html");
-	}
-
-	public String getHtmlVariableTranslated(String name) {
-		return StringEscapeUtils.escapeHtml(name);
 	}
 
 	public String getJavaFileName(String fileName) {
@@ -323,10 +327,6 @@ public class SeleniumBuilderFileUtil {
 
 	public String getVariableName(String name) {
 		return TextFormatter.format(name, TextFormatter.I);
-	}
-
-	public String getVariableTranslated(String name) {
-		return StringEscapeUtils.escapeJava(name);
 	}
 
 	public String normalizeFileName(String fileName) {

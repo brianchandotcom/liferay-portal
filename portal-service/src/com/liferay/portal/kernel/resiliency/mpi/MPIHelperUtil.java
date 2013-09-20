@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.messaging.config.MessagingConfigurator;
 import com.liferay.portal.kernel.messaging.config.MessagingConfiguratorRegistry;
 import com.liferay.portal.kernel.nio.intraband.Intraband;
 import com.liferay.portal.kernel.nio.intraband.IntrabandFactoryUtil;
+import com.liferay.portal.kernel.nio.intraband.SystemDataType;
+import com.liferay.portal.kernel.nio.intraband.rpc.BootstrapRPCDatagramReceiveHandler;
 import com.liferay.portal.kernel.resiliency.spi.SPI;
 import com.liferay.portal.kernel.resiliency.spi.SPIConfiguration;
 import com.liferay.portal.kernel.resiliency.spi.SPIRegistryUtil;
@@ -458,6 +460,10 @@ public class MPIHelperUtil {
 			}
 
 			_intraband = IntrabandFactoryUtil.createIntraband();
+
+			_intraband.registerDatagramReceiveHandler(
+				SystemDataType.RPC.getValue(),
+				new BootstrapRPCDatagramReceiveHandler());
 
 			_mpi = (MPI)UnicastRemoteObject.exportObject(_mpiImpl, 0);
 		}

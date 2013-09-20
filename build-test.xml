@@ -2425,24 +2425,39 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 					<param name="test.class" value="${test.simple.class.name}" />
 				</antcall>
 
-				<for param="file">
+				<for param="test.java.file">
 					<path>
 						<fileset dir="portal-web/test/functional-generated">
 							<include name="**/${test.simple.class.name}.java" />
 						</fileset>
 					</path>
 					<sequential>
-						<var name="file" value="@{file}" />
+						<var name="test.java.file" value="@{test.java.file}" />
 
 						<script classpathref="project.classpath" language="beanshell">
-							String file = project.getProperty("file");
+							import com.liferay.portal.kernel.util.OSDetector;
 
-							int x = file.lastIndexOf("\\com\\") + 1;
-							int y = file.lastIndexOf(".");
+							String testJavaFile = project.getProperty("test.java.file");
 
-							file = file.substring(x, y);
+							int x;
 
-							project.setProperty("test.class.name", file.replaceAll("\\\\", "."));
+							if (OSDetector.isWindows()) {
+								x = testJavaFile.indexOf("\\com\\") + 1;
+							}
+							else {
+								x = testJavaFile.indexOf("/com/") + 1;
+							}
+
+							int y = testJavaFile.lastIndexOf(".");
+
+							testJavaFile = testJavaFile.substring(x, y);
+
+							if (OSDetector.isWindows()) {
+								project.setProperty("test.class.name", testJavaFile.replaceAll("\\\\", "."));
+							}
+							else {
+								project.setProperty("test.class.name", testJavaFile.replaceAll("/", "."));
+							}
 						</script>
 					</sequential>
 				</for>

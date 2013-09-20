@@ -301,12 +301,13 @@ public class PortletExporter {
 			exportPortletData = true;
 		}
 		else if (parameterMap.containsKey(
-					PortletDataHandlerKeys.PORTLET_DATA + "_" +
+					PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE +
 						rootPortletId)) {
 
 			exportPortletData = MapUtil.getBoolean(
 				parameterMap,
-				PortletDataHandlerKeys.PORTLET_DATA + "_" + rootPortletId);
+				PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE +
+					rootPortletId);
 		}
 
 		boolean exportPortletArchivedSetups = exportPortletConfiguration;

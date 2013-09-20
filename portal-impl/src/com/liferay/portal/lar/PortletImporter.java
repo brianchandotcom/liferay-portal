@@ -360,12 +360,13 @@ public class PortletImporter {
 			importPortletData = true;
 		}
 		else if (parameterMap.containsKey(
-					PortletDataHandlerKeys.PORTLET_DATA + "_" +
+					PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE +
 						rootPortletId)) {
 
 			importPortletData = MapUtil.getBoolean(
 				parameterMap,
-				PortletDataHandlerKeys.PORTLET_DATA + "_" + rootPortletId);
+				PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE +
+					rootPortletId);
 		}
 
 		boolean importPortletArchivedSetups = importPortletConfiguration;

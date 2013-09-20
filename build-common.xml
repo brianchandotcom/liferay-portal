@@ -938,6 +938,23 @@ Please set the environment variable ANT_OPTS to the recommended value of
 		</junit>
 	</target>
 
+	<target name="test-package">
+		<if>
+			<not>
+				<isset property="package" />
+			</not>
+			<then>
+				<fail>Missing package argument. Use "ant test-package -Dpackage=com.liferay.package".</fail>
+			</then>
+		</if>
+
+		<propertyregex property="class" input="${package}" regexp="\." replace="/" global="true" />
+
+		<ant target="test-class">
+			<property name="class" value="${class}/**/*Test" />
+		</ant>
+	</target>
+
 	<target name="test-unit" depends="compile,compile-test-unit">
 		<property name="class" value="*Test" />
 

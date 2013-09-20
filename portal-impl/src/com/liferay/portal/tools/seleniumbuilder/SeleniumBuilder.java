@@ -15,6 +15,7 @@
 package com.liferay.portal.tools.seleniumbuilder;
 
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.tools.ArgumentsUtil;
@@ -128,6 +129,8 @@ public class SeleniumBuilder {
 		SeleniumBuilderFileUtil seleniumBuilderFileUtil =
 			new SeleniumBuilderFileUtil(baseDir);
 
+		StringBundler sb = new StringBundler();
+
 		int testCaseCount = 0;
 
 		Set<String> testCaseNames = seleniumBuilderContext.getTestCaseNames();
@@ -140,8 +143,22 @@ public class SeleniumBuilder {
 				seleniumBuilderFileUtil.getAllChildElements(
 					rootElement, "command");
 
+			for (Element commandElement : commandElements) {
+				sb.append(testCaseName);
+				sb.append("TestCase#test");
+				sb.append(commandElement.attributeValue("name"));
+				sb.append(" ");
+			}
+
 			testCaseCount += commandElements.size();
 		}
+
+		String content = sb.toString();
+
+		content = content.trim();
+
+		seleniumBuilderFileUtil.writeFile(
+			"../../../test-case-method-list", content, false);
 
 		System.out.println("\nThere are " + testCaseCount + " test cases.");
 	}

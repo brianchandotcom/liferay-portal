@@ -717,39 +717,51 @@ Please set the environment variable ANT_OPTS to the recommended value of
 
 	<target name="test-class" depends="compile,compile-test">
 		<if>
-			<available file="test/functional" type="dir" />
+			<not>
+				<isset property="type" />
+			</not>
 			<then>
-				<resourcecount property="test.functional.count">
-					<fileset dir="test-classes/functional" includes="**/${class}.class" />
-				</resourcecount>
-			</then>
-		</if>
+				<if>
+					<available file="test/functional" type="dir" />
+					<then>
+						<resourcecount property="test.functional.count">
+							<fileset dir="test-classes/functional" includes="**/${class}.class" />
+						</resourcecount>
+					</then>
+				</if>
 
-		<if>
-			<available file="test/functional-generated" type="dir" />
-			<then>
-				<resourcecount property="test.functional-generated.count">
-					<fileset dir="test-classes/functional-generated" includes="**/${class}.class" />
-				</resourcecount>
-			</then>
-		</if>
+				<if>
+					<available file="test/functional-generated" type="dir" />
+					<then>
+						<resourcecount property="test.functional-generated.count">
+							<fileset dir="test-classes/functional-generated" includes="**/${class}.class" />
+						</resourcecount>
+					</then>
+				</if>
 
-		<if>
-			<available file="test/integration" type="dir" />
-			<then>
-				<resourcecount property="test.integration.count">
-					<fileset dir="test-classes/integration" includes="**/${class}.class" />
-				</resourcecount>
-			</then>
-		</if>
+				<if>
+					<available file="test/integration" type="dir" />
+					<then>
+						<resourcecount property="test.integration.count">
+							<fileset dir="test-classes/integration" includes="**/${class}.class" />
+						</resourcecount>
+					</then>
+				</if>
 
-		<if>
-			<available file="test/unit" type="dir" />
-			<then>
-				<resourcecount property="test.unit.count">
-					<fileset dir="test-classes/unit" includes="**/${class}.class" />
-				</resourcecount>
+				<if>
+					<available file="test/unit" type="dir" />
+					<then>
+						<resourcecount property="test.unit.count">
+							<fileset dir="test-classes/unit" includes="**/${class}.class" />
+						</resourcecount>
+					</then>
+				</if>
 			</then>
+			<else>
+				<resourcecount property="test.${type}.count">
+					<fileset dir="test-classes/${type}" includes="**/${class}.class" />
+				</resourcecount>
+			</else>
 		</if>
 
 		<if>

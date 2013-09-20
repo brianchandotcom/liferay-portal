@@ -18,9 +18,12 @@ import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.config.AbstractMessagingConfigurator;
 import com.liferay.portal.kernel.messaging.config.MessagingConfigurator;
 import com.liferay.portal.kernel.messaging.config.MessagingConfiguratorRegistry;
+import com.liferay.portal.kernel.nio.intraband.DatagramReceiveHandler;
 import com.liferay.portal.kernel.nio.intraband.Intraband;
+import com.liferay.portal.kernel.nio.intraband.SystemDataType;
 import com.liferay.portal.kernel.nio.intraband.blocking.ExecutorIntraband;
 import com.liferay.portal.kernel.nio.intraband.nonblocking.SelectorIntraband;
+import com.liferay.portal.kernel.nio.intraband.rpc.BootstrapRPCDatagramReceiveHandler;
 import com.liferay.portal.kernel.nio.intraband.welder.socket.SocketWelder;
 import com.liferay.portal.kernel.resiliency.spi.MockSPI;
 import com.liferay.portal.kernel.resiliency.spi.SPI;
@@ -155,6 +158,13 @@ public class MPIHelperUtilTest {
 		Intraband intraband = MPIHelperUtil.getIntraband();
 
 		Assert.assertSame(ExecutorIntraband.class, intraband.getClass());
+
+		DatagramReceiveHandler[] datagramReceiveHandlers =
+			intraband.getDatagramReceiveHandlers();
+
+		Assert.assertSame(
+			BootstrapRPCDatagramReceiveHandler.class,
+			datagramReceiveHandlers[SystemDataType.RPC.getValue()].getClass());
 	}
 
 	@AdviseWith(adviceClasses = {PropsUtilAdvice.class})
@@ -179,6 +189,13 @@ public class MPIHelperUtilTest {
 		Intraband intraband = MPIHelperUtil.getIntraband();
 
 		Assert.assertSame(SelectorIntraband.class, intraband.getClass());
+
+		DatagramReceiveHandler[] datagramReceiveHandlers =
+			intraband.getDatagramReceiveHandlers();
+
+		Assert.assertSame(
+			BootstrapRPCDatagramReceiveHandler.class,
+			datagramReceiveHandlers[SystemDataType.RPC.getValue()].getClass());
 	}
 
 	@AdviseWith(adviceClasses = {PropsUtilAdvice.class})

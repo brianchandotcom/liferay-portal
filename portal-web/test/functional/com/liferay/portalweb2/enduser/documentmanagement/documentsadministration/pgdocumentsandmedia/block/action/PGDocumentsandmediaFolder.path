@@ -46,37 +46,48 @@
 </tr>
 <tr>
 	<td>TOOLBAR_ACTIONS</td>
-	<td>//div[@class='lfr-header-row-content']/div/div/div/div/ul/li[1]/a</td>
+	<td>//div[@class='navbar ']/div/div/div/ul/li[contains(.,'Actions')]/a</td>
 	<td>Actions</td>
 </tr>
 <tr>
 	<td>TOOLBAR_ADD</td>
-	<td>//div[@class='lfr-header-row-content']/div/div/div/div/ul/li[2]/a</td>
+	<td>//div[@class='navbar ']/div/div/div/ul/li[contains(.,'Add')]/a</td>
 	<td>Add</td>
 </tr>
 <tr>
 	<td>TOOLBAR_SORT_BY</td>
-	<td>//div[@class='lfr-header-row-content']/div/div/div/div/ul/li[3]/a</td>
+	<td>//div[@class='navbar ']/div/div/div/ul/li[contains(.,'Sort By')]/a</td>
 	<td>Sort By</td>
 </tr>
 <tr>
 	<td>TOOLBAR_MANAGE</td>
-	<td>//div[@class='lfr-header-row-content']/div/div/div/div/ul/li[4]/a</td>
+	<td>//div[@class='navbar ']/div/div/div/ul/li[contains(.,'Manage')]/a</td>
 	<td>Manage</td>
 </tr>
 <tr>
-	<td>TOOLBAR_DISPLAY_ICON</td>
-	<td>//button[@data-displaystyle='icon']</td>
+	<td>TOOLBAR_VIEW</td>
+	<td>//div[@id='_20_displayStyleButtons']/div/a/i</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--VIEW_MENULIST-->
+<tr>
+	<td>VIEW_MENULIST_DISPLAY_ICON</td>
+	<td>//a[@data-displaystyle='icon']</td>
 	<td>Icon Display</td>
 </tr>
 <tr>
-	<td>TOOLBAR_DISPLAY_DESCRIPTIVE</td>
-	<td>//button[@data-displaystyle='descriptive']</td>
+	<td>VIEW_MENULIST_DISPLAY_DESCRIPTIVE</td>
+	<td>//a[@data-displaystyle='descriptive']</td>
 	<td>Descriptive Display</td>
 </tr>
 <tr>
-	<td>TOOLBAR_DISPLAY_LIST</td>
-	<td>//button[@data-displaystyle='list']</td>
+	<td>VIEW_MENULIST_DISPLAY_LIST</td>
+	<td>//a[@data-displaystyle='list']</td>
 	<td>List Display</td>
 </tr>
 <tr>

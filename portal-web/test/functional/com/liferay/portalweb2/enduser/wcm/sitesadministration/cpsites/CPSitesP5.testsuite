@@ -1,4 +1,5 @@
 <definition>
+	<execute test-case-command="CPSites#AddChildSite" />
 	<execute test-case-command="CPSites#AddSitesMultiple" />
 	<execute test-case-command="CPSites#EditSite" />
 	<execute test-case-command="CPSites#SearchSite" />

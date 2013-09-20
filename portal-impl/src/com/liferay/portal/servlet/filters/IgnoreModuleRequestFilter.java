@@ -14,17 +14,7 @@
 
 package com.liferay.portal.servlet.filters;
 
-import com.liferay.portal.kernel.cache.key.CacheKeyGenerator;
-import com.liferay.portal.kernel.cache.key.CacheKeyGeneratorUtil;
-import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PortalUtil;
-
-import java.io.File;
-
-import java.net.URLConnection;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -45,67 +35,6 @@ public abstract class IgnoreModuleRequestFilter extends BasePortalFilter {
 		return super.isFilterEnabled(request, response);
 	}
 
-	protected boolean cacheDataFileExists(
-			HttpServletResponse response, File cacheDataFile,
-			URLConnection urlConnection, File cacheContentTypeFile)
-		throws Exception {
-
-		if (cacheDataFile.exists() &&
-			(cacheDataFile.lastModified() >= urlConnection.getLastModified())) {
-
-			if (cacheContentTypeFile.exists()) {
-				String contentType = FileUtil.read(cacheContentTypeFile);
-
-				response.setContentType(contentType);
-			}
-
-			return true;
-		}
-
-		return false;
-	}
-
-	protected String getCacheCDNHost(
-			HttpServletRequest request, URLConnection urlConnection)
-		throws Exception {
-
-		String cacheCDNHost = StringPool.BLANK;
-
-		String cdnHost = PortalUtil.getCDNHost(request);
-
-		if (Validator.isNotNull(cdnHost)) {
-			String content = StringUtil.read(urlConnection.getInputStream());
-
-			if (content.contains("@theme_image_path@")) {
-				if (request.isSecure()) {
-					cacheCDNHost = "_CDN_HTTPS";
-				}
-				else {
-					cacheCDNHost = "_CDN_HTTP";
-				}
-			}
-		}
-
-		return cacheCDNHost;
-	}
-
-	protected String getCacheFileName(HttpServletRequest request) {
-		Class<?> clazz = getClass();
-
-		CacheKeyGenerator cacheKeyGenerator =
-			CacheKeyGeneratorUtil.getCacheKeyGenerator(clazz.getName());
-
-		cacheKeyGenerator.append(request.getRequestURI());
-
-		String queryString = request.getQueryString();
-
-		if (queryString != null) {
-			cacheKeyGenerator.append(sterilizeQueryString(queryString));
-		}
-
-		return String.valueOf(cacheKeyGenerator.finish());
-	}
-
 	protected boolean isModuleRequest(HttpServletRequest request) {
 		String contextPath = request.getContextPath();
 		String requestURI = request.getRequestURI();
@@ -123,12 +52,6 @@ public abstract class IgnoreModuleRequestFilter extends BasePortalFilter {
 		}
 
 		return false;
-	}
-
-	protected String sterilizeQueryString(String queryString) {
-		return StringUtil.replace(
-			queryString, new String[] {StringPool.SLASH, StringPool.BACK_SLASH},
-			new String[] {StringPool.UNDERLINE, StringPool.UNDERLINE});
 	}
 
 }

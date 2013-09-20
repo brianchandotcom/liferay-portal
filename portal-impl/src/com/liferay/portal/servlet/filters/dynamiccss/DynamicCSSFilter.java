@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.servlet.filters.IgnoreModuleRequestFilter;
+import com.liferay.portal.servlet.filters.cache.CacheFileHelper;
 import com.liferay.portal.util.PropsUtil;
 
 import java.io.File;
@@ -87,17 +88,18 @@ public class DynamicCSSFilter extends IgnoreModuleRequestFilter {
 
 		URLConnection urlConnection = resourceURL.openConnection();
 
-		String cacheCommonFileName = getCacheFileName(request);
+		String cacheCommonFileName = _cacheFileHelper.getCacheFileName(request);
 
 		File cacheContentTypeFile = new File(
 			_tempDir, cacheCommonFileName + "_E_CONTENT_TYPE");
 
-		String cacheCDNHost = getCacheCDNHost(request, urlConnection);
+		String cacheCDNHost = _cacheFileHelper.getCacheCDNHost(
+			request, urlConnection);
 
 		File cacheDataFile = new File(
 			_tempDir, cacheCommonFileName + "_E_DATA" + cacheCDNHost);
 
-		if (cacheDataFileExists(
+		if (_cacheFileHelper.cacheDataFileExists(
 				response, cacheDataFile, urlConnection, cacheContentTypeFile)) {
 
 			return cacheDataFile;
@@ -202,6 +204,7 @@ public class DynamicCSSFilter extends IgnoreModuleRequestFilter {
 
 	private static Log _log = LogFactoryUtil.getLog(DynamicCSSFilter.class);
 
+	private CacheFileHelper _cacheFileHelper = new CacheFileHelper();
 	private ServletContext _servletContext;
 	private File _tempDir;
 

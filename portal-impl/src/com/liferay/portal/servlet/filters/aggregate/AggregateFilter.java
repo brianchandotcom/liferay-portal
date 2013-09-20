@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.servlet.filters.IgnoreModuleRequestFilter;
+import com.liferay.portal.servlet.filters.cache.CacheFileHelper;
 import com.liferay.portal.servlet.filters.dynamiccss.DynamicCSSUtil;
 import com.liferay.portal.util.AggregateUtil;
 import com.liferay.portal.util.JavaScriptBundleUtil;
@@ -342,17 +343,18 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 
 		URLConnection urlConnection = resourceURL.openConnection();
 
-		String cacheCommonFileName = getCacheFileName(request);
+		String cacheCommonFileName = _cacheFileHelper.getCacheFileName(request);
 
 		File cacheContentTypeFile = new File(
 			_tempDir, cacheCommonFileName + "_E_CONTENT_TYPE");
 
-		String cacheCDNHost = getCacheCDNHost(request, urlConnection);
+		String cacheCDNHost = _cacheFileHelper.getCacheCDNHost(
+			request, urlConnection);
 
 		File cacheDataFile = new File(
 			_tempDir, cacheCommonFileName + "_E_DATA" + cacheCDNHost);
 
-		if (cacheDataFileExists(
+		if (_cacheFileHelper.cacheDataFileExists(
 				response, cacheDataFile, urlConnection, cacheContentTypeFile)) {
 
 			return cacheDataFile;
@@ -526,6 +528,7 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 	private static Pattern _pattern = Pattern.compile(
 		"^(\\.ie|\\.js\\.ie)([^}]*)}", Pattern.MULTILINE);
 
+	private CacheFileHelper _cacheFileHelper = new CacheFileHelper();
 	private ServletContext _servletContext;
 	private File _tempDir;
 

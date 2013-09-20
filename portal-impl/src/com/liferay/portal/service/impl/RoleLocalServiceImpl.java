@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.spring.aop.Skip;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -1490,31 +1489,24 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 
 		Group group = groupLocalService.getGroup(groupId);
 
-		List<Team> teams = null;
-
 		if (group.isLayout()) {
-			teams = teamLocalService.getGroupTeams(group.getParentGroupId());
-		}
-		else {
-			teams = teamLocalService.getGroupTeams(groupId);
+			group = group.getParentGroup();
 		}
 
-		if ((teams == null) || teams.isEmpty()) {
+		List<Team> teams = teamLocalService.getGroupTeams(group.getGroupId());
+
+		if (teams.isEmpty()) {
 			return Collections.emptyMap();
 		}
 
-		Set<Long> roleIds = null;
-
-		if (ArrayUtil.isNotEmpty(skipRoleIds)) {
-			roleIds = SetUtil.fromArray(skipRoleIds);
-		}
+		Set<Long> roleIds = SetUtil.fromArray(skipRoleIds);
 
 		Map<Team, Role> teamRoleMap = new LinkedHashMap<Team, Role>();
 
 		for (Team team : teams) {
 			Role role = getTeamRole(team.getCompanyId(), team.getTeamId());
 
-			if ((roleIds != null) && roleIds.contains(role.getRoleId())) {
+			if (roleIds.contains(role.getRoleId())) {
 				continue;
 			}
 

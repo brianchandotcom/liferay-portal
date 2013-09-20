@@ -157,24 +157,6 @@ if ((liveGroup != null) && (liveGroup.getMembershipRestriction() == GroupConstan
 		<aui:input label="allow-manual-membership-management" name="manualMembership" value="<%= manualMembership %>" />
 	</c:if>
 
-	<c:if test="<%= (group != null) && !group.isCompany() %>">
-
-		<%
-		UnicodeProperties typeSettingsProperties = null;
-
-		if (liveGroup != null) {
-			typeSettingsProperties = liveGroup.getTypeSettingsProperties();
-		}
-		else {
-			typeSettingsProperties = group.getTypeSettingsProperties();
-		}
-
-		boolean directoryIndexingEnabled = PropertiesParamUtil.getBoolean(typeSettingsProperties, request, "directoryIndexingEnabled");
-		%>
-
-		<aui:input helpMessage='<%= LanguageUtil.format(pageContext, "directory-indexing-help", new Object[] {HtmlUtil.escape(group.getDescriptiveName(themeDisplay.getLocale())), themeDisplay.getPortalURL() + "/documents" + group.getFriendlyURL()}) %>' label="directory-indexing-enabled" name="TypeSettingsProperties--directoryIndexingEnabled--" type="checkbox" value="<%= directoryIndexingEnabled %>" />
-	</c:if>
-
 	<c:if test="<%= liveGroup != null %>">
 		<aui:field-wrapper label="site-id">
 			<%= liveGroup.getGroupId() %>

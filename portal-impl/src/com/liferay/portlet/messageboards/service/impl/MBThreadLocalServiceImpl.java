@@ -813,11 +813,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 		TrashEntry trashEntry = thread.getTrashEntry();
 
-		String className = trashEntry.getClassName();
-
-		if (className.equals(MBThread.class.getName()) &&
-			(trashEntry.getClassPK() == threadId)) {
-
+		if (trashEntry.isTrashEntry(MBThread.class, threadId)) {
 			restoreThreadFromTrash(userId, threadId);
 		}
 		else {
@@ -906,6 +902,11 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 		moveDependentsToTrash(
 			thread.getGroupId(), thread.getThreadId(), trashEntry.getEntryId());
+
+		// Statistics
+
+		MBUtil.updateCategoryStatistics(
+			thread.getCompanyId(), thread.getCategoryId());
 
 		// Social
 
@@ -1010,6 +1011,11 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 		restoreDependentsFromTrash(
 			thread.getGroupId(), threadId, trashEntry.getEntryId());
+
+		// Statistics
+
+		MBUtil.updateCategoryStatistics(
+			thread.getCompanyId(), thread.getCategoryId());
 
 		// Trash
 
@@ -1233,6 +1239,8 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 		Date now = new Date();
 
+		int oldStatus = thread.getStatus();
+
 		thread.setModifiedDate(now);
 		thread.setStatus(status);
 		thread.setStatusByUserId(user.getUserId());
@@ -1241,19 +1249,16 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 		mbThreadPersistence.update(thread);
 
-		// Messages
-
 		if (thread.getCategoryId() !=
 				MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
 
-			// Category
+			if ((oldStatus != WorkflowConstants.STATUS_IN_TRASH) &&
+				(status != WorkflowConstants.STATUS_IN_TRASH)) {
 
-			MBCategory category = mbCategoryPersistence.fetchByPrimaryKey(
-				thread.getCategoryId());
+				// Statistics
 
-			if (category != null) {
 				MBUtil.updateCategoryStatistics(
-					category.getCompanyId(), category.getCategoryId());
+					thread.getCompanyId(), thread.getCategoryId());
 			}
 		}
 

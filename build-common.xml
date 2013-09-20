@@ -948,10 +948,10 @@ Please set the environment variable ANT_OPTS to the recommended value of
 			</then>
 		</if>
 
-		<propertyregex property="class" input="${package}" regexp="\." replace="/" global="true" />
+		<propertyregex property="class" input="${package}." regexp="\." replace="/" global="true" />
 
 		<ant target="test-class">
-			<property name="class" value="${class}/**/*Test" />
+			<property name="class" value="${class}**/*Test" />
 		</ant>
 	</target>
 

@@ -437,7 +437,7 @@
 
 		<!-- Other fields -->
 
-		<column name="parentFolderId" type="long" />
+		<column name="parentFolderId" type="long" parent-container-model="true" />
 		<column name="treePath" type="String" />
 		<column name="name" type="String" />
 		<column name="description" type="String" />

@@ -23,6 +23,10 @@
 		<case locator-key1="SITE_MENULIST_DELETE">
 			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
+
+		<case locator-key1="SITE_TABLE_CHILD_SITE">
+			<execute function="AssertClick#pauseAssertTextClickAt" />
+		</case>
 	</command>
 	
 	<command name="assertTextEquals">

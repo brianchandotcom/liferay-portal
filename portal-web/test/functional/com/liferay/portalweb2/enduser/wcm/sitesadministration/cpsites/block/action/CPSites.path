@@ -168,8 +168,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SITE_TABLE_SUBSITE</td>
-	<td>//div[@class='subsites-count']</td>
+	<td>SITE_TABLE_CHILD_SITE</td>
+	<td>//table[@data-searchcontainerid='_134_groupsSearchContainer']//tr[contains(.,'${key_siteName}')]/td[2]/div/a[2]</td>
 	<td></td>
 </tr>
 <tr>

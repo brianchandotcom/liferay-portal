@@ -38,6 +38,17 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--PARENT_SITE_TABLE-->
+<tr>
+	<td>PARENT_SITE_TABLE_NAME</td>
+	<td>//div[@id='_134_parentGroupSearchContainerSearchContainer']/table/tbody/tr[contains(.,'${key_parentSiteName}')]/td/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--MENU_BASIC_INFORMATION-->
 <tr>
 	<td>MENU_BASIC_INFORMATION_DETAILS</td>

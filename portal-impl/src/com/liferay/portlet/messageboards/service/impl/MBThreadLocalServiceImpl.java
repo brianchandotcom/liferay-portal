@@ -1229,6 +1229,8 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 		Date now = new Date();
 
+		int oldStatus = thread.getStatus();
+
 		thread.setModifiedDate(now);
 		thread.setStatus(status);
 		thread.setStatusByUserId(user.getUserId());
@@ -1237,19 +1239,20 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 		mbThreadPersistence.update(thread);
 
-		// Messages
-
 		if (thread.getCategoryId() !=
 				MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
 
-			// Category
+			TrashEntry trashEntry = trashEntryLocalService.fetchEntry(
+				MBThread.class.getName(), threadId);
 
-			MBCategory category = mbCategoryPersistence.fetchByPrimaryKey(
-				thread.getCategoryId());
+			if ((trashEntry != null) ||
+				((oldStatus != WorkflowConstants.STATUS_IN_TRASH) &&
+				 (status != WorkflowConstants.STATUS_IN_TRASH))) {
 
-			if (category != null) {
+				// Statistics
+
 				MBUtil.updateCategoryStatistics(
-					category.getCompanyId(), category.getCategoryId());
+					thread.getCompanyId(), thread.getCategoryId());
 			}
 		}
 

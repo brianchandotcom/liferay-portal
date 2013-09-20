@@ -802,6 +802,10 @@
 						validator.validate();
 
 						hasErrors = validator.hasErrors();
+
+						if (hasErrors) {
+							validator.focusInvalidField();
+						}
 					}
 				}
 			}

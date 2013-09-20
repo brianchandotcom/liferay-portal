@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.trash.TrashActionKeys;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ContainerModel;
+import com.liferay.portal.model.TrashedModel;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
@@ -101,6 +102,15 @@ public class JournalArticleTrashHandler extends JournalBaseTrashHandler {
 	}
 
 	@Override
+	public ContainerModel getParentContainerModel(TrashedModel trashedModel)
+		throws PortalException, SystemException {
+
+		JournalArticle article = (JournalArticle)trashedModel;
+
+		return getContainerModel(article.getFolderId());
+	}
+
+	@Override
 	public String getRestoreContainerModelLink(
 			PortletRequest portletRequest, long classPK)
 		throws PortalException, SystemException {
@@ -121,6 +131,16 @@ public class JournalArticleTrashHandler extends JournalBaseTrashHandler {
 
 		return JournalUtil.getAbsolutePath(
 			portletRequest, article.getFolderId());
+	}
+
+	@Override
+	public TrashEntry getTrashEntry(long classPK)
+		throws PortalException, SystemException {
+
+		JournalArticle article =
+			JournalArticleLocalServiceUtil.getLatestArticle(classPK);
+
+		return article.getTrashEntry();
 	}
 
 	@Override

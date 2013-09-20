@@ -161,7 +161,7 @@ refererURL.setParameter("updateLayout", "true");
 				</li>
 			</ul>
 
-			<div class="alert alert-info">
+			<div class="alert alert-info lfr-drag-portlet-message">
 				<liferay-ui:message key="to-add-a-portlet-to-the-page-just-drag-it" />
 			</div>
 		</c:if>

@@ -1,4 +1,5 @@
 @import "compass";
+@import "mixins";
 
 .lfr-add-panel {
 	width: 330px;
@@ -360,5 +361,11 @@
 	.asset-title {
 		color: #369;
 		font-size: 14px;
+	}
+}
+
+@include respond-to(phone) {
+	.lfr-drag-portlet-message {
+		display: none;
 	}
 }

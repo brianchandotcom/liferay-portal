@@ -96,7 +96,10 @@ public class DLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 
 		modelAdditionCounters = manifestSummary.getModelAdditionCounters();
 
-		Assert.assertNull(modelAdditionCounters.get(Folder.class.getName()));
+		folderModelAdditionCounter = modelAdditionCounters.get(
+			Folder.class.getName());
+
+		Assert.assertEquals(0, folderModelAdditionCounter.getValue());
 
 		fileEntryModelAdditionCounter = modelAdditionCounters.get(
 			FileEntry.class.getName());

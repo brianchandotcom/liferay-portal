@@ -84,6 +84,17 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--MENU_MISCELLANEOUS-->
+<tr>
+	<td>MENU_MISCELLANEOUS_CUSTOM_FIELDS</td>
+	<td>//a[@id='_125_customFieldsLink']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--DETAILS-->
 <tr>
 	<td>DETAILS_SCREEN_NAME_FIELD</td>
@@ -238,7 +249,22 @@
 <!--ANNOUNCEMENTS-->
 <!--DISPLAY_SETTINGS-->
 <!--COMMENTS-->
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--CUSTOM_FIELDS-->
+<tr>
+	<td>CUSTOM_FIELDS_LABEL</td>
+	<td>//div/label[@class='control-label' and contains(.,'${customFieldName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CUSTOM_FIELDS_SELECT</td>
+	<td>//div[contains(.,'${customFieldName}')]/select</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

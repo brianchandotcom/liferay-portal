@@ -21,9 +21,11 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 Layout exportableLayout = ExportImportHelperUtil.getExportableLayout(themeDisplay);
 
-FileEntry fileEntry = ExportImportHelperUtil.getTempFileEntry(themeDisplay.getScopeGroupId(), themeDisplay.getUserId(), ExportImportHelper.TEMP_FOLDER_NAME + selPortlet.getPortletId());
+long groupId = ParamUtil.getLong(request, "groupId", scopeGroupId);
 
-ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user.getUserId(), themeDisplay.getSiteGroupId(), new HashMap<String, String[]>(), fileEntry);
+FileEntry fileEntry = ExportImportHelperUtil.getTempFileEntry(groupId, themeDisplay.getUserId(), ExportImportHelper.TEMP_FOLDER_NAME + selPortlet.getPortletId());
+
+ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(themeDisplay.getUserId(), groupId, new HashMap<String, String[]>(), fileEntry);
 %>
 
 <portlet:actionURL var="importPortletActionURL">
@@ -44,7 +46,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 	<aui:input name="tabs2" type="hidden" value="import" />
 	<aui:input name="redirect" type="hidden" value="<%= importPortletRenderURL %>" />
 	<aui:input name="plid" type="hidden" value="<%= exportableLayout.getPlid() %>" />
-	<aui:input name="groupId" type="hidden" value="<%= themeDisplay.getScopeGroupId() %>" />
+	<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
 	<aui:input name="portletResource" type="hidden" value="<%= portletResource %>" />
 
 	<div class="export-dialog-tree">

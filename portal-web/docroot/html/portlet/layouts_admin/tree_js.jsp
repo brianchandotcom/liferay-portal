@@ -176,7 +176,7 @@ if (!selectableTree) {
 						(nodeType === 'link_to_layout') ||
 						(nodeType === 'url')) {
 
-						cssIcons.pages: {
+						cssIcons.pages = {
 							iconCollapsed: iconClassName,
 							iconExpanded: iconClassName,
 							iconLeaf: iconClassName

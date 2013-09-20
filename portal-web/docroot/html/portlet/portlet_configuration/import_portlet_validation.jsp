@@ -109,6 +109,7 @@ Layout exportableLayout = ExportImportHelperUtil.getExportableLayout(themeDispla
 				<portlet:param name="redirect" value="<%= redirect %>" />
 				<portlet:param name="portletResource" value="<%= portletResource %>" />
 				<portlet:param name="validate" value="<%= String.valueOf(Boolean.FALSE) %>" />
+				<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
 			</liferay-portlet:resourceURL>
 
 			var exportImportOptions = A.one('#<portlet:namespace />exportImportOptions');

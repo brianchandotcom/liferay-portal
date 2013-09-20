@@ -161,6 +161,7 @@ configurationRenderURL.setParameter("portletResource", portletResource);
 							<div class="input-append">
 								<c:choose>
 									<c:when test="<%= Validator.isNotNull(headerArticleId) %>">
+
 										<%
 										JournalArticle headerArticle = JournalArticleLocalServiceUtil.getArticle(headerArticleGroupId, headerArticleId);
 										%>
@@ -182,6 +183,7 @@ configurationRenderURL.setParameter("portletResource", portletResource);
 							<div class="input-append">
 								<c:choose>
 									<c:when test="<%= Validator.isNotNull(footerArticleId) %>">
+
 										<%
 										JournalArticle footerArticle = JournalArticleLocalServiceUtil.getArticle(footerArticleGroupId, footerArticleId);
 										%>

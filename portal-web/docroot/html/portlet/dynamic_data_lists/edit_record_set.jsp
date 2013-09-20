@@ -82,7 +82,6 @@ if (ddmStructureId > 0) {
 		<aui:field-wrapper label="data-definition" required="<%= true %>">
 			<liferay-ui:input-resource id="ddmStructureNameDisplay" url="<%= ddmStructureName %>" />
 
-
 			<liferay-ui:icon
 				image="add"
 				label="<%= true %>"

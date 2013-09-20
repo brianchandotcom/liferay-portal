@@ -96,6 +96,7 @@ portletURL.setParameter("fileShortcutId", String.valueOf(fileShortcutId));
 		</div>
 
 		<aui:field-wrapper label="site">
+
 			<%
 			String toGroupName = BeanPropertiesUtil.getString(toGroup, "name");
 			%>
@@ -108,6 +109,7 @@ portletURL.setParameter("fileShortcutId", String.valueOf(fileShortcutId));
 		</aui:field-wrapper>
 
 		<aui:field-wrapper label="document">
+
 			<%
 			String toFileEntryTitle = BeanPropertiesUtil.getString(toFileEntry, "title");
 			%>

@@ -1,5 +1,5 @@
 <definition>
-	<command name="gotoBlogs">
+	<command name="gotoBlogsPG">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 			<var name="pageType" value="${pageTypeSite}" />
@@ -10,7 +10,21 @@
 		<execute action="Permissions#selectFrame" locator-key1="PERMISSIONS_IFRAME" />
 	</command>
 
-	<command name="gotoBlogsEntry">
+	<command name="gotoBlogsEntryCP">
+		<execute macro="Page#gotoContentCP">
+			<var name="pageName" value="${pageName}" />
+			<var name="pageType" value="${pageTypeSite}" />
+		</execute>
+
+		<var name="key_entryTitle" value="${entryTitle}" />
+
+		<execute action="CPBlogs#assertClick" locator-key1="ENTRY_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPBlogs#assertClick" locator-key1="ENTRY_MENULIST_PERMISSIONS" value1="Permissions" />
+
+		<execute action="Permissions#selectFrame" locator-key1="PERMISSIONS_IFRAME" />
+	</command>
+
+	<command name="gotoBlogsEntryPG">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 			<var name="pageType" value="${pageTypeSite}" />
@@ -19,6 +33,18 @@
 		<var name="key_entryTitle" value="${entryTitle}" />
 
 		<execute action="PGBlogs#assertClick" locator-key1="ENTRY_PERMISSIONS" value1="Permissions" />
+
+		<execute action="Permissions#selectFrame" locator-key1="PERMISSIONS_IFRAME" />
+	</command>
+
+	<command name="gotoPagePG">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="pageType" value="${pageTypeSite}" />
+		</execute>
+
+		<execute action="Dockbar#click" locator-key1="EDIT" />
+		<execute action="Dockbar#click" locator-key1="EDIT_NAVBAR_PERMISSIONS" />
 
 		<execute action="Permissions#selectFrame" locator-key1="PERMISSIONS_IFRAME" />
 	</command>

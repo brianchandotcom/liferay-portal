@@ -173,6 +173,18 @@
 		</licenses>
 	</library>
 	<library>
+		<file-name>lib/development/dumbster.jar</file-name>
+		<version>1.6</version>
+		<project-name>Dumbster</project-name>
+		<project-url>http://sourceforge.net/projects/dumbster</project-url>
+		<licenses>
+			<license>
+				<license-name>Apache License 2.0</license-name>
+				<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
+			</license>
+		</licenses>
+	</library>
+	<library>
 		<file-name>lib/development/ecj.jar</file-name>
 		<version>3.6.0</version>
 		<project-name>Eclipse JDT Core Batch Compiler</project-name>

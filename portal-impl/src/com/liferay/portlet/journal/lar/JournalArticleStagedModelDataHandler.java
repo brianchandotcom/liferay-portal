@@ -124,16 +124,9 @@ public class JournalArticleStagedModelDataHandler
 	protected boolean countStagedModel(
 		PortletDataContext portletDataContext, JournalArticle article) {
 
-		if (portletDataContext.isPathProcessed(
-				ExportImportPathUtil.getModelPath(
-					article.getGroupId(),
-					JournalArticleResource.class.getName(),
-					article.getResourcePrimKey()))) {
-
-			return false;
-		}
-
-		return true;
+		return !portletDataContext.isModelCounted(
+			JournalArticleResource.class.getName(),
+			article.getResourcePrimKey());
 	}
 
 	@Override

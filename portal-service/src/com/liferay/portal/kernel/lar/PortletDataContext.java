@@ -491,6 +491,8 @@ public interface PortletDataContext extends Serializable {
 
 	public boolean isDataStrategyMirrorWithOverwriting();
 
+	public boolean isModelCounted(String className, long classPK);
+
 	public boolean isPathExportedInScope(String path);
 
 	public boolean isPathNotExportedInScope(String path);
@@ -502,6 +504,8 @@ public interface PortletDataContext extends Serializable {
 	public boolean isPerformDirectBinaryImport();
 
 	public boolean isPrivateLayout();
+
+	public boolean isStagedModelCounted(StagedModel stagedModel);
 
 	public boolean isWithinDateRange(Date modifiedDate);
 

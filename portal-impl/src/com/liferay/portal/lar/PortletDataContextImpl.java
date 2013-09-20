@@ -1792,6 +1792,14 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	@Override
+	public boolean isModelCounted(String className, long classPK) {
+		String modelCountPrimaryKey = className.concat(
+			StringPool.POUND).concat(String.valueOf(classPK));
+
+		return addPrimaryKey(String.class, modelCountPrimaryKey);
+	}
+
+	@Override
 	public boolean isPathExportedInScope(String path) {
 		return addScopedPrimaryKey(String.class, path);
 	}
@@ -1822,6 +1830,15 @@ public class PortletDataContextImpl implements PortletDataContext {
 	@Override
 	public boolean isPrivateLayout() {
 		return _privateLayout;
+	}
+
+	@Override
+	public boolean isStagedModelCounted(StagedModel stagedModel) {
+		StagedModelType stagedModelType = stagedModel.getStagedModelType();
+
+		return isModelCounted(
+			stagedModelType.getClassName(),
+			(Long)stagedModel.getPrimaryKeyObj());
 	}
 
 	/**

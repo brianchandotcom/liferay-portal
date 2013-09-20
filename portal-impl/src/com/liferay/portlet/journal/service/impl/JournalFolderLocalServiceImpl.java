@@ -712,70 +712,46 @@ public class JournalFolderLocalServiceImpl
 		journalFolderLocalService.deleteFolder(fromFolder);
 	}
 
-	protected void moveDependentsToTrash(
-			List<Object> foldersAndEntries, int status)
+	protected void moveDependentsToTrash(List<Object> foldersAndEntries)
 		throws PortalException, SystemException {
 
 		for (Object object : foldersAndEntries) {
 			if (object instanceof JournalArticle) {
 				JournalArticle article = (JournalArticle)object;
 
-				if (status == WorkflowConstants.STATUS_IN_TRASH) {
+				// Asset
 
-					// Asset
-
-					if (article.getStatus() ==
-							WorkflowConstants.STATUS_APPROVED) {
-
-						assetEntryLocalService.updateVisible(
-							JournalArticle.class.getName(),
-							article.getResourcePrimKey(), false);
-					}
-
-					if (article.getStatus() ==
-							WorkflowConstants.STATUS_PENDING) {
-
-						article.setStatus(WorkflowConstants.STATUS_DRAFT);
-
-						journalArticlePersistence.update(article);
-					}
+				if (article.getStatus() == WorkflowConstants.STATUS_APPROVED) {
+					assetEntryLocalService.updateVisible(
+						JournalArticle.class.getName(),
+						article.getResourcePrimKey(), false);
 				}
-				else {
 
-					// Asset
+				if (article.getStatus() == WorkflowConstants.STATUS_PENDING) {
+					article.setStatus(WorkflowConstants.STATUS_DRAFT);
 
-					if (article.getStatus() ==
-							WorkflowConstants.STATUS_APPROVED) {
-
-						assetEntryLocalService.updateVisible(
-							JournalArticle.class.getName(),
-							article.getResourcePrimKey(), true);
-					}
+					journalArticlePersistence.update(article);
 				}
 
 				// Workflow
 
-				if (status != WorkflowConstants.STATUS_APPROVED) {
-					List<JournalArticle> articleVersions =
-						journalArticlePersistence.findByG_A(
-							article.getGroupId(), article.getArticleId());
+				List<JournalArticle> articleVersions =
+					journalArticlePersistence.findByG_A(
+						article.getGroupId(), article.getArticleId());
 
-					for (JournalArticle curArticle : articleVersions) {
-						if (!curArticle.isPending()) {
-							continue;
-						}
-
-						curArticle.setStatus(WorkflowConstants.STATUS_DRAFT);
-
-						journalArticlePersistence.update(curArticle);
-
-						workflowInstanceLinkLocalService.
-							deleteWorkflowInstanceLink(
-								curArticle.getCompanyId(),
-								curArticle.getGroupId(),
-								JournalArticle.class.getName(),
-								curArticle.getId());
+				for (JournalArticle curArticle : articleVersions) {
+					if (!curArticle.isPending()) {
+						continue;
 					}
+
+					curArticle.setStatus(WorkflowConstants.STATUS_DRAFT);
+
+					journalArticlePersistence.update(curArticle);
+
+					workflowInstanceLinkLocalService.
+						deleteWorkflowInstanceLink(
+							curArticle.getCompanyId(), curArticle.getGroupId(),
+							JournalArticle.class.getName(), curArticle.getId());
 				}
 
 				// Indexer
@@ -797,24 +773,10 @@ public class JournalFolderLocalServiceImpl
 				List<Object> curFoldersAndEntries = getFoldersAndArticles(
 					folder.getGroupId(), folder.getFolderId());
 
-				updateDependentStatus(curFoldersAndEntries, status);
+				moveDependentsToTrash(curFoldersAndEntries);
 
-				if (status == WorkflowConstants.STATUS_IN_TRASH) {
-
-					// Asset
-
-					assetEntryLocalService.updateVisible(
-						JournalFolder.class.getName(), folder.getFolderId(),
-						false);
-				}
-				else {
-
-					// Asset
-
-					assetEntryLocalService.updateVisible(
-						JournalFolder.class.getName(), folder.getFolderId(),
-						true);
-				}
+				assetEntryLocalService.updateVisible(
+					JournalFolder.class.getName(), folder.getFolderId(), false);
 
 				// Index
 
@@ -826,70 +788,19 @@ public class JournalFolderLocalServiceImpl
 		}
 	}
 
-	protected void restoreDependentsFromTrash(
-			List<Object> foldersAndEntries, int status)
+	protected void restoreDependentsFromTrash(List<Object> foldersAndEntries)
 		throws PortalException, SystemException {
 
 		for (Object object : foldersAndEntries) {
 			if (object instanceof JournalArticle) {
 				JournalArticle article = (JournalArticle)object;
 
-				if (status == WorkflowConstants.STATUS_IN_TRASH) {
+				// Asset
 
-					// Asset
-
-					if (article.getStatus() ==
-							WorkflowConstants.STATUS_APPROVED) {
-
-						assetEntryLocalService.updateVisible(
-							JournalArticle.class.getName(),
-							article.getResourcePrimKey(), false);
-					}
-
-					if (article.getStatus() ==
-							WorkflowConstants.STATUS_PENDING) {
-
-						article.setStatus(WorkflowConstants.STATUS_DRAFT);
-
-						journalArticlePersistence.update(article);
-					}
-				}
-				else {
-
-					// Asset
-
-					if (article.getStatus() ==
-							WorkflowConstants.STATUS_APPROVED) {
-
-						assetEntryLocalService.updateVisible(
-							JournalArticle.class.getName(),
-							article.getResourcePrimKey(), true);
-					}
-				}
-
-				// Workflow
-
-				if (status != WorkflowConstants.STATUS_APPROVED) {
-					List<JournalArticle> articleVersions =
-						journalArticlePersistence.findByG_A(
-							article.getGroupId(), article.getArticleId());
-
-					for (JournalArticle curArticle : articleVersions) {
-						if (!curArticle.isPending()) {
-							continue;
-						}
-
-						curArticle.setStatus(WorkflowConstants.STATUS_DRAFT);
-
-						journalArticlePersistence.update(curArticle);
-
-						workflowInstanceLinkLocalService.
-							deleteWorkflowInstanceLink(
-								curArticle.getCompanyId(),
-								curArticle.getGroupId(),
-								JournalArticle.class.getName(),
-								curArticle.getId());
-					}
+				if (article.getStatus() == WorkflowConstants.STATUS_APPROVED) {
+					assetEntryLocalService.updateVisible(
+						JournalArticle.class.getName(),
+						article.getResourcePrimKey(), true);
 				}
 
 				// Indexer
@@ -911,24 +822,12 @@ public class JournalFolderLocalServiceImpl
 				List<Object> curFoldersAndEntries = getFoldersAndArticles(
 					folder.getGroupId(), folder.getFolderId());
 
-				updateDependentStatus(curFoldersAndEntries, status);
+				restoreDependentsFromTrash(curFoldersAndEntries);
 
-				if (status == WorkflowConstants.STATUS_IN_TRASH) {
+				// Asset
 
-					// Asset
-
-					assetEntryLocalService.updateVisible(
-						JournalFolder.class.getName(), folder.getFolderId(),
-						false);
-				}
-				else {
-
-					// Asset
-
-					assetEntryLocalService.updateVisible(
-						JournalFolder.class.getName(), folder.getFolderId(),
-						true);
-				}
+				assetEntryLocalService.updateVisible(
+					JournalFolder.class.getName(), folder.getFolderId(), true);
 
 				// Index
 

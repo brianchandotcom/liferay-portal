@@ -231,6 +231,12 @@
 				line-height: 128px;
 			}
 		}
+
+		@include respond-to(phone) {
+			.lfr-drag-portlet-message {
+				display: none;
+			}
+		}
 	}
 }
 
@@ -361,11 +367,5 @@
 	.asset-title {
 		color: #369;
 		font-size: 14px;
-	}
-}
-
-@include respond-to(phone) {
-	.lfr-drag-portlet-message {
-		display: none;
 	}
 }

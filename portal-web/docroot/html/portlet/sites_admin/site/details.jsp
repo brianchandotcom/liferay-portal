@@ -141,6 +141,12 @@ if ((liveGroup != null) && (liveGroup.getMembershipRestriction() == GroupConstan
 
 	<aui:input name="description" />
 
+	<c:if test="<%= liveGroup != null %>">
+		<aui:field-wrapper label="site-id">
+			<%= liveGroup.getGroupId() %>
+		</aui:field-wrapper>
+	</c:if>
+
 	<c:if test="<%= (group == null) || !group.isCompany() %>">
 		<aui:input name="active" value="<%= true %>" />
 	</c:if>
@@ -155,12 +161,6 @@ if ((liveGroup != null) && (liveGroup.getMembershipRestriction() == GroupConstan
 		</aui:select>
 
 		<aui:input label="allow-manual-membership-management" name="manualMembership" value="<%= manualMembership %>" />
-	</c:if>
-
-	<c:if test="<%= liveGroup != null %>">
-		<aui:field-wrapper label="site-id">
-			<%= liveGroup.getGroupId() %>
-		</aui:field-wrapper>
 	</c:if>
 </aui:fieldset>
 

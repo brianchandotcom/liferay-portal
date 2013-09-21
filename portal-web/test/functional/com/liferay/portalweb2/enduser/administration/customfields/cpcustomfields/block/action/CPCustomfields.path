@@ -1,0 +1,45 @@
+<html>
+<head>
+<title>CPCustomfields</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CPCustomfields</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>CPCustomfields</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--RESOURCE_TABLE-->
+<tr>
+	<td>RESOURCE_TABLE_RESOURCE_LINK</td>
+	<td>//tr[contains(.,'${key_resourceName}')]/td[1]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESOURCE_TABLE_CUSTOM_FIELDS_LINK</td>
+	<td>//tr[contains(.,'${key_resourceName}')]/td[2]/a[contains(.,'${customFieldName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESOURCE_TABLE_CUSTOM_FIELDS_LINK_GENERIC</td>
+	<td>//tr/td[2]/a[.!='']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESOURCE_TABLE_EDIT_LINK</td>
+	<td>//tr[contains(.,'${key_resourceName}')]/td[3]/span/a/span</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

@@ -1,4 +1,6 @@
 <definition>
+	<execute test-suite="CPCustomfieldsP5" />
+
 	<execute test-suite="CPPortalSettingsP5" />
 
 	<execute test-suite="CPRolesCPBlogsP5" />

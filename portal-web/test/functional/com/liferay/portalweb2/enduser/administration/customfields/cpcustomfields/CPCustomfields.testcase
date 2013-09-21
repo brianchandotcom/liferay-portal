@@ -1,0 +1,212 @@
+<definition>
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<tear-down>
+		<execute macro="CustomFields#tearDownCP" />
+
+		<execute macro="User#tearDownCP" />
+	</tear-down>
+
+	<command name="AddCustomFieldsSmoke">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Custom Fields" />
+		</execute>
+
+		<execute macro="CustomFields#addCP">
+			<var name="customFieldName" value="Boolean" />
+			<var name="customFieldType" value="True/False" />
+			<var name="resourceName" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Custom Fields" />
+		</execute>
+
+		<execute macro="CustomFields#addCP">
+			<var name="customFieldName" value="Date" />
+			<var name="customFieldType" value="Date" />
+			<var name="resourceName" value="Bookmarks Entry" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Custom Fields" />
+		</execute>
+
+		<execute macro="CustomFields#addCP">
+			<var name="customFieldName" value="Decimal" />
+			<var name="customFieldType" value="Decimal Number (64-bit)" />
+			<var name="resourceName" value="Bookmarks Folder" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Custom Fields" />
+		</execute>
+
+		<execute macro="CustomFields#addCP">
+			<var name="customFieldName" value="Decimal" />
+			<var name="customFieldType" value="Group of Decimal Numbers (64-bit)" />
+			<var name="resourceName" value="Document" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Custom Fields" />
+		</execute>
+
+		<execute macro="CustomFields#addCP">
+			<var name="customFieldName" value="Decimal" />
+			<var name="customFieldType" value="Decimal Number (32-bit)" />
+			<var name="resourceName" value="Documents Folder" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Custom Fields" />
+		</execute>
+
+		<execute macro="CustomFields#addCP">
+			<var name="customFieldName" value="Integer" />
+			<var name="customFieldType" value="Integer (64-bit)" />
+			<var name="resourceName" value="Message Boards Category" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Custom Fields" />
+		</execute>
+
+		<execute macro="CustomFields#addCP">
+			<var name="customFieldName" value="Integer" />
+			<var name="customFieldType" value="Group of Integers (64-bit)" />
+			<var name="resourceName" value="Message Boards Message" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Custom Fields" />
+		</execute>
+
+		<execute macro="CustomFields#addCP">
+			<var name="customFieldName" value="Number" />
+			<var name="customFieldType" value="Decimal Number or Integer (64-bit)" />
+			<var name="resourceName" value="Organization" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Custom Fields" />
+		</execute>
+
+		<execute macro="CustomFields#addCP">
+			<var name="customFieldName" value="Integer" />
+			<var name="customFieldType" value="Integer (16-bit)" />
+			<var name="resourceName" value="Page" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Custom Fields" />
+		</execute>
+
+		<execute macro="CustomFields#addCP">
+			<var name="customFieldName" value="Integer" />
+			<var name="customFieldType" value="Group of Integers (16-bit)" />
+			<var name="resourceName" value="Role" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Custom Fields" />
+		</execute>
+
+		<execute macro="CustomFields#addCP">
+			<var name="customFieldName" value="Text" />
+			<var name="customFieldType" value="Text" />
+			<var name="resourceName" value="Site" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Custom Fields" />
+		</execute>
+
+		<execute macro="CustomFields#addCP">
+			<var name="customFieldName" value="Text" />
+			<var name="customFieldType" value="Group of Text Values" />
+			<var name="resourceName" value="User" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Custom Fields" />
+		</execute>
+
+		<execute macro="CustomFields#addCP">
+			<var name="customFieldName" value="Text" />
+			<var name="customFieldType" value="Group of Localized Text Values" />
+			<var name="resourceName" value="User Group" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Custom Fields" />
+		</execute>
+
+		<execute macro="CustomFields#addCP">
+			<var name="customFieldName" value="Text" />
+			<var name="customFieldType" value="Localized Text" />
+			<var name="resourceName" value="Web Content Article" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Custom Fields" />
+		</execute>
+
+		<execute macro="CustomFields#addCP">
+			<var name="customFieldName" value="Number" />
+			<var name="customFieldType" value="Group of Decimal Numbers or Integers (64-bit)" />
+			<var name="resourceName" value="Wiki Page" />
+		</execute>
+	</command>
+
+	<command name="AddCustomFieldUserBoolean">
+		<var name="customFieldName" value="Boolean" />
+		<var name="customFieldType" value="True/False" />
+		<var name="resourceName" value="User" />
+		<var name="userEmailAddress" value="userea@liferay.com" />
+		<var name="userFirstName" value="userfn" />
+		<var name="userLastName" value="userln" />
+		<var name="userScreenName" value="usersn" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Custom Fields" />
+		</execute>
+
+		<execute macro="CustomFields#addCP">
+			<var name="customFieldName" value="${customFieldName}" />
+			<var name="customFieldType" value="${customFieldType}" />
+			<var name="resourceName" value="${resourceName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#viewCP">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute action="CPUsersandorganizationsUser#assertClick" locator-key1="MENU_MISCELLANEOUS_CUSTOM_FIELDS" value1="Custom Fields" />
+
+		<var name="key_customFieldName" value="${customFieldName}" />
+
+		<execute action="CPUsersandorganizationsUser#assertTextEquals" locator-key1="CUSTOM_FIELDS_LABEL" value1="${customFieldName}" />
+		<execute action="CPUsersandorganizationsUser#assertSelectedLabel" locator-key1="CUSTOM_FIELDS_SELECT" value1="False" />
+	</command>
+</definition>

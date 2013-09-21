@@ -1,0 +1,4 @@
+<definition>
+	<execute test-case-command="CPCustomfields#AddCustomFieldsSmoke" />
+	<execute test-case-command="CPCustomfields#AddCustomFieldUserBoolean" />
+</definition>

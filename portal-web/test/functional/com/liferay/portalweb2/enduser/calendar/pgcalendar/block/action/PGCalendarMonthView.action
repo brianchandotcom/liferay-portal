@@ -1,0 +1,7 @@
+<definition>
+	<command name="assertTextEquals">
+		<case locator-key1="SCHEDULER_EVENT_GENERIC">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+	</command>
+</definition>

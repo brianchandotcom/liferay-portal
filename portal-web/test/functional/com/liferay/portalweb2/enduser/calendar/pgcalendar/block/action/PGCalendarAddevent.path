@@ -1,0 +1,283 @@
+<html>
+<head>
+<title>PGCalendarAddevent</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGCalendarAddevent</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGCalendarAddEvent</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_EVENT_IFRAME</td>
+	<td>//iframe[contains(@class,'dialog-iframe-node')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CLOSE_BUTTON</td>
+	<td>//button[contains(@class, 'btn close')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TITLE_FIELD</td>
+	<td>//input[contains(@id,'calendarportlet_title')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE_BUTTON</td>
+	<td>//button[@type='submit']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CANCEL_BUTTON</td>
+	<td>//div[@class='button-holder ']/button[contains(.,'Close')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[@class='alert alert-success']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INFO_MESSAGE</td>
+	<td>//div[@class='portlet-msg-info']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIRMATION</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--START_DATE-->
+<tr>
+	<td>START_DATE</td>
+	<td>//input[contains(@id,'calendarportlet_startTime') and @placeholder='mm/dd/yyyy']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>START_DATE_TIME</td>
+	<td>//input[contains(@id,'calendarportlet_startTime') and @placeholder='h:mm am/pm']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--END_DATE-->
+<tr>
+	<td>END_DATE</td>
+	<td>//input[contains(@id,'calendarportlet_endTime') and @placeholder='mm/dd/yyyy']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>END_DATE_TIME</td>
+	<td>//input[contains(@id,'calendarportlet_endTime') and @placeholder='h:mm am/pm']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--REPEAT-->
+<tr>
+	<td>ALL_DAY_CHECKBOX</td>
+	<td>//input[contains(@id,'calendarportlet_allDayCheckbox')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--REPEAT-->
+<tr>
+	<td>REPEAT_CHECKBOX</td>
+	<td>//input[contains(@id,'calendarportlet_repeatCheckbox')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REPEAT_REPEATS_DROPDOWN</td>
+	<td>//select[contains(@id,'calendarportlet_frequency')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REPEAT_REPEAT_EVERY_DROPDOWN</td>
+	<td>//select[contains(@id,'calendarportlet_interval')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REPEAT_ENDS_NEVER_CHECKBOX</td>
+	<td>//input[contains(@name,'calendarportlet_ends') and @value='never']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REPEAT_ENDS_AFTER_CHECKBOX</td>
+	<td>//input[contains(@name,'calendarportlet_ends') and @value='after']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REPEAT_ENDS_AFTER_FIELD</td>
+	<td>//input[contains(@id,'calendarportlet_count')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REPEAT_ENDS_ON</td>
+	<td>//input[contains(@name,'calendarportlet_ends') and @value='on']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REPEAT_ENDS_ON_FIELD</td>
+	<td>//input[contains(@id,'calendarportlet_untilDate')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REPEAT_SUMMARY</td>
+	<td>//span[@class='calendar-portlet-recurrence-summary']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REPEAT_DONE_BUTTON</td>
+	<td>//div[contains(@class,'widget-content-expanded')]/div/div/button[contains(.,'Done')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--DETAILS-->
+<tr>
+	<td>DETAILS_PANEL_COLLAPSED</td>
+	<td>//div[contains(@class,'toggler-header-collapsed') and @data-persist-id='calendarBookingDetailsPanel']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAILS_PANEL_EXPANDED</td>
+	<td>//div[contains(@class,'toggler-header-expanded') and @data-persist-id='calendarBookingDetailsPanel']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAILS_CALENDAR_SELECT</td>
+	<td>//select[contains(@id,'calendarId')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--REMINDERS-->
+<tr>
+	<td>REMINDERS_PANEL_COLLAPSED</td>
+	<td>//div[contains(@class,'toggler-header-collapsed') and @data-persist-id='calendarBookingReminderPanel']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REMINDERS_PANEL_EXPANDED</td>
+	<td>//div[contains(@class,'toggler-header-expanded') and @data-persist-id='calendarBookingReminderPanel']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--CATEGORIZATION-->
+<tr>
+	<td>CATEGORIZATION_PANEL_COLLAPSED</td>
+	<td>//div[contains(@class,'toggler-header-collapsed') and @data-persist-id='calendarBookingCategorizationPanel']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORIZATION_PANEL_EXPANDED</td>
+	<td>//div[contains(@class,'toggler-header-expanded') and @data-persist-id='calendarBookingCategorizationPanel']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORIZATION_TAG_FIELD</td>
+	<td>//input[contains(@id,'assetTagNames')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--RELATED_ASSETS-->
+<tr>
+	<td>RELATED_ASSETS_PANEL_COLLAPSED</td>
+	<td>//div[contains(@class,'toggler-header-collapsed') and @data-persist-id='calendarBookingAssetLinksPanel']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RELATED_ASSETS_PANEL_EXPANDED</td>
+	<td>//div[contains(@class,'toggler-header-expanded') and @data-persist-id='calendarBookingAssetLinksPanel']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--INVITATIONS-->
+<tr>
+	<td>INVITATIONS_PANEL_COLLAPSED</td>
+	<td>//div[contains(@class,'toggler-header-collapsed') and @data-persist-id='calendarBookingInvitationPanel']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INVITATIONS_PANEL_EXPANDED</td>
+	<td>//div[contains(@class,'toggler-header-expanded') and @data-persist-id='calendarBookingInvitationPanel']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INVITATIONS_INVITE_RESOURCE_FIELD</td>
+	<td>//input[contains(@id,'inviteResource')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INVITATIONS_INVITE_RESOURCE_FIELD_LIST</td>
+	<td>//ul[@role='listbox']/li[@data-text='${user}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INVITATIONS_PENDING</td>
+	<td>//div[contains(@id,'calendarListPending')]/div/div[contains(.,'${user}')]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INVITATIONS_ACCEPTED</td>
+	<td>//div[contains(@id,'calendarListAccepted')]/div/div[contains(.,'test test')]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INVITATIONS_DECLINED</td>
+	<td>//div[contains(@id,'calendarListDeclined')]/div/div[contains(.,'${user}')]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INVITATIONS_MAYBE</td>
+	<td>//div[contains(@id,'calendarListMaybe')]/div/div[contains(.,'${user}')]/span</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

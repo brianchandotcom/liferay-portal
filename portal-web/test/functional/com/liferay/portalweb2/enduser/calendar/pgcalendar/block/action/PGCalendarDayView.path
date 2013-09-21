@@ -1,0 +1,34 @@
+<html>
+<head>
+<title>PGCalendarDayView</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGCalendarDayView</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGCalendarDayView</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>EXTEND_ACTION_PATH</td>
+	<td>PGCalendar</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCHEDULER_VIEW_DAY</td>
+	<td>//div[@class='yui3-widget component scheduler-view scheduler-view-day']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

@@ -1938,6 +1938,21 @@ public class StagingImpl implements Staging {
 		}
 	}
 
+	protected void clearLastPublishDate(long groupId, boolean privateLayout)
+		throws Exception {
+
+		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+			groupId, privateLayout);
+
+		UnicodeProperties settingsProperties =
+			layoutSet.getSettingsProperties();
+
+		settingsProperties.remove("last-publish-date");
+
+		LayoutSetLocalServiceUtil.updateSettings(
+			groupId, privateLayout, settingsProperties.toString());
+	}
+
 	protected void deleteRecentLayoutRevisionId(
 		PortalPreferences portalPreferences, long layoutSetBranchId,
 		long plid) {
@@ -2436,8 +2451,8 @@ public class StagingImpl implements Staging {
 			ServiceContext serviceContext)
 		throws Exception {
 
-		updateLastPublishDate(liveGroup.getGroupId(), true, 0);
-		updateLastPublishDate(liveGroup.getGroupId(), false, 0);
+		clearLastPublishDate(liveGroup.getGroupId(), true);
+		clearLastPublishDate(liveGroup.getGroupId(), false);
 
 		Set<String> parameterNames = serviceContext.getAttributes().keySet();
 

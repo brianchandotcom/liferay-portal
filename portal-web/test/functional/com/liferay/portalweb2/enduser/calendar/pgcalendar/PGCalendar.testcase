@@ -1,0 +1,163 @@
+<definition>
+	<var name="pageName" value="Calendar Page" />
+	<var name="portletName" value="Calendar" />
+	<var name="user" value="Test Test" />
+
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="portletName" value="${portletName}" />
+		</execute>
+	</set-up>
+
+	<tear-down>
+		<execute macro="Calendar#tearDownPG" />
+
+		<execute macro="CalendarEvent#tearDownPG" />
+
+		<execute macro="Page#tearDownPG" />
+	</tear-down>
+
+	<command name="AddCalendarEvent">
+		<var name="eventTitle" value="Calendar Event Title" />
+		<var name="eventType" value="Regular" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarEvent#addPG">
+			<var name="eventTitle" value="${eventTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewPG">
+			<var name="eventTitle" value="${eventTitle}" />
+		</execute>
+	</command>
+
+	<command name="AddCalendarEventAllDay">
+		<var name="eventTitle" value="Calendar Event All Day Title" />
+		<var name="eventType" value="All Day" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarEvent#addPG">
+			<var name="eventTitle" value="${eventTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewPG">
+			<var name="eventTitle" value="${eventTitle}" />
+		</execute>
+	</command>
+
+	<command name="AddCalendarMyCalendars">
+		<var name="calendarName" value="Calendar Name" />
+		<var name="calendarType" value="My Calendars" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Calendar#addPG">
+			<var name="calendarName" value="${calendarName}" />
+			<var name="calendarType" value="${calendarType}" />
+		</execute>
+
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Calendar#viewPG">
+			<var name="calendarName" value="${calendarName}" />
+		</execute>
+	</command>
+
+	<command name="DeleteCalendarMyCalendars">
+		<var name="calendarName" value="Calendar Name" />
+		<var name="calendarType" value="My Calendars" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Calendar#addPG">
+			<var name="calendarName" value="${calendarName}" />
+			<var name="calendarType" value="${calendarType}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Calendar#deletePG">
+			<var name="calendarName" value="${calendarName}" />
+		</execute>
+	</command>
+
+
+	<command name="DeleteCalendarEvent">
+		<var name="eventTitle" value="Calendar Event Title" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarEvent#addPG">
+			<var name="eventTitle" value="${eventTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarEvent#deletePG">
+			<var name="eventTitle" value="${eventTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewDefaultPG">
+			<var name="eventTitle" value="${eventTitle}" />
+		</execute>
+	</command>
+
+	<command name="EditCalendarEvent">
+		<var name="eventTitle" value="Calendar Event Title" />
+		<var name="eventTitleEdit" value="Calendar Event Title Edit" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarEvent#addPG">
+			<var name="eventTitle" value="${eventTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarEvent#editPG">
+			<var name="eventTitle" value="${eventTitle}" />
+		</execute>
+	</command>
+</definition>

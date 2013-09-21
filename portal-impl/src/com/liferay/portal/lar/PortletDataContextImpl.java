@@ -240,8 +240,17 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 	@Override
 	public void addClassedModel(
+			Element element, String path, ClassedModel classedModel)
+		throws PortalException, SystemException {
+
+		addClassedModel(
+			element, path, classedModel, classedModel.getModelClass());
+	}
+
+	@Override
+	public void addClassedModel(
 			Element element, String path, ClassedModel classedModel,
-			Class<?> clazz, String namespace)
+			Class<?> clazz)
 		throws PortalException, SystemException {
 
 		element.addAttribute("path", path);
@@ -308,12 +317,19 @@ public class PortletDataContextImpl implements PortletDataContext {
 	@Override
 	public void addClassedModel(
 			Element element, String path, ClassedModel classedModel,
+			Class<?> clazz, String namespace)
+		throws PortalException, SystemException {
+
+		addClassedModel(element, path, classedModel, clazz);
+	}
+
+	@Override
+	public void addClassedModel(
+			Element element, String path, ClassedModel classedModel,
 			String namespace)
 		throws PortalException, SystemException {
 
-		addClassedModel(
-			element, path, classedModel, classedModel.getModelClass(),
-			namespace);
+		addClassedModel(element, path, classedModel);
 	}
 
 	@Override
@@ -1364,8 +1380,17 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 	@Override
 	public void importClassedModel(
+			ClassedModel classedModel, ClassedModel newClassedModel)
+		throws PortalException, SystemException {
+
+		importClassedModel(
+			classedModel, newClassedModel, classedModel.getModelClass());
+	}
+
+	@Override
+	public void importClassedModel(
 			ClassedModel classedModel, ClassedModel newClassedModel,
-			Class<?> clazz, String namespace)
+			Class<?> clazz)
 		throws PortalException, SystemException {
 
 		if (!isResourceMain(classedModel)) {
@@ -1405,12 +1430,20 @@ public class PortletDataContextImpl implements PortletDataContext {
 	@Override
 	public void importClassedModel(
 			ClassedModel classedModel, ClassedModel newClassedModel,
+			Class<?> clazz, String namespace)
+		throws PortalException, SystemException {
+
+		importClassedModel(classedModel, newClassedModel, clazz);
+	}
+
+	@Override
+	public void importClassedModel(
+			ClassedModel classedModel, ClassedModel newClassedModel,
 			String namespace)
 		throws PortalException, SystemException {
 
 		importClassedModel(
-			classedModel, newClassedModel, classedModel.getModelClass(),
-			namespace);
+			classedModel, newClassedModel, classedModel.getModelClass());
 	}
 
 	@Override

@@ -207,11 +207,14 @@ public class GetterUtil {
 		}
 
 		if (value instanceof String) {
-			if (Validator.isNull(value)) {
+			try {
+				String valueString = (String)value;
+
+				return new BigDecimal(valueString.trim());
+			}
+			catch (Exception e) {
 				return defaultValue;
 			}
-
-			return new BigDecimal((String)value);
 		}
 
 		Class<?> clazz = value.getClass();

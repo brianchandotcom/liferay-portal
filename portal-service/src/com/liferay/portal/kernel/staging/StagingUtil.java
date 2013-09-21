@@ -456,7 +456,7 @@ public class StagingUtil {
 	}
 
 	public static void updateLastPublishDate(
-		long sourceGroupId, boolean privateLayout, long lastPublishDate)
+		long sourceGroupId, boolean privateLayout, Date lastPublishDate)
 	throws Exception {
 
 		getStaging().updateLastPublishDate(

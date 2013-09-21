@@ -26,6 +26,12 @@
 		</case>
 	</command>
 
+	<command name="assertElementNotPresent">
+		<case comparator="startsWith" locator1="//span[@data-title='">
+			<execute function="AssertElementNotPresent#assertNotVisible" />
+		</case>
+	</command>
+
 	<command name="click">
 		<case locator-key1="ADD">
 			<execute function="Click#clickAtSidebarClickAt" />

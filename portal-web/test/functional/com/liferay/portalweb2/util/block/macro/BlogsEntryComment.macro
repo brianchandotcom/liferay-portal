@@ -16,14 +16,27 @@
 	</command>
 
 	<command name="addPG">
-		<execute action="PGBlogs#assertClick" locator-key1="ENTRY_TITLE_1" value1="${entryTitle}" />
+		<var name="key_entryTitle" value="${entryTitle}" />
 
-		<execute action="PGBlogsEntry#assertClick" locator-key1="COMMENTS_ADD" value1="Be the first." />
+		<execute action="PGBlogs#assertClick" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
+
+		<if>
+			<condition action="PGBlogsEntry#isElementPresent" locator-key1="COMMENTS_BE_THE_FIRST" />
+			<then>
+				<execute action="PGBlogsEntry#assertClick" locator-key1="COMMENTS_BE_THE_FIRST" value1="Be the first." />
+			</then>
+			<else>
+				<execute action="PGBlogsEntry#assertClick" locator-key1="COMMENTS_ADD" value1="Add Comment" />
+			</else>
+		</if>
+
 		<execute action="PGBlogsEntry#type" locator-key1="COMMENTS_BODY_FIELD" value1="${entryComment}" />
 		<execute action="PGBlogsEntry#assertClick" locator-key1="COMMENTS_REPLY_BUTTON" value1="Reply" />
-
 		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="COMMENTS_SUCCESS" value1="Your request processed successfully." />
-		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="COMMENT_1" value1="${entryComment}" />
+
+		<var name="key_entryComment" value="${entryComment}" />
+
+		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="COMMENT" value1="${entryComment}" />
 	</command>
 
 	<command name="deleteCP">
@@ -41,6 +54,19 @@
 		<execute action="CPBlogsEntry#assertTextNotPresent" value1="${entryComment}" />
 	</command>
 
+	<command name="deletePG">
+		<var name="key_entryTitle" value="${entryTitle}" />
+
+		<execute action="PGBlogs#assertClick" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
+
+		<var name="key_entryComment" value="${entryComment}" />
+
+		<execute action="PGBlogsEntry#assertClick" locator-key1="COMMENT_DELETE" value1="Delete" />
+		<execute action="PGBlogsEntry#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
+		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="COMMENTS_SUCCESS" value1="Your request processed successfully." />
+		<execute action="PGBlogsEntry#assertTextNotPresent" value1="${entryComment}" />
+	</command>
+
 	<command name="editCP">
 		<var name="key_entryTitle" value="${entryTitle}" />
 
@@ -56,6 +82,23 @@
 
 		<execute action="CPBlogsEntry#assertTextEquals" locator-key1="COMMENT_EDIT_SUCCESS" value1="Your request processed successfully." />
 		<execute action="CPBlogsEntry#assertTextEquals" locator-key1="COMMENT" value1="${entryCommentEdit}" />
+	</command>
+
+	<command name="editPG">
+		<var name="key_entryTitle" value="${entryTitle}" />
+
+		<execute action="PGBlogs#assertClick" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
+
+		<var name="key_entryComment" value="${entryComment}" />
+
+		<execute action="PGBlogsEntry#assertClick" locator-key1="COMMENT_EDIT" value1="Edit" />
+		<execute action="PGBlogsEntry#type" locator-key1="COMMENT_EDIT_BODY_FIELD" value1="${entryCommentEdit}" />
+		<execute action="PGBlogsEntry#assertClick" locator-key1="COMMENT_EDIT_PUBLISH_BUTTON" value1="Publish" />
+		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="COMMENTS_SUCCESS" value1="Your request processed successfully." />
+
+		<var name="key_entryComment" value="${entryCommentEdit}" />
+
+		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="COMMENT" value1="${entryCommentEdit}" />
 	</command>
 
 	<command name="viewCP">

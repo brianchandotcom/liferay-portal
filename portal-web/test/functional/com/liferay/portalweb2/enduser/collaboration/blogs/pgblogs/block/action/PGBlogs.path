@@ -14,13 +14,13 @@
 	<td>PGBlogs</td>
 </tr>
 <tr>
-	<td>EXTEND_ACTION_PATH</td>
-	<td>BasePortlet</td>
+	<td></td>
+	<td></td>
 	<td></td>
 </tr>
 <tr>
-	<td></td>
-	<td></td>
+	<td>EXTEND_ACTION_PATH</td>
+	<td>BasePortlet</td>
 	<td></td>
 </tr>
 <tr>
@@ -41,6 +41,16 @@
 <tr>
 	<td>PERMISSIONS_BUTTON</td>
 	<td>//li/a[contains(.,'Permissions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_FIELD</td>
+	<td>//input[@name='_33_keywords']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_BUTTON</td>
+	<td>//button[contains(.,'Search')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -96,6 +106,11 @@
 </tr>
 <!--ENTRY-->
 <tr>
+	<td>ENTRY_DRAFT_STATUS</td>
+	<td>//div[@class='entry draft']/div/h3</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ENTRY_TITLE</td>
 	<td>//div[@class='entry-title' and contains(.,'${key_entryTitle}')]/h2/a</td>
 	<td></td>
@@ -123,6 +138,11 @@
 <tr>
 	<td>ENTRY_CONTENT</td>
 	<td>//div[@class='entry approved' and contains(.,'${key_entryTitle}')]//div[@class='entry-body']/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_CONTENT_DRAFT</td>
+	<td>//div[@class='entry draft' and contains(.,'${key_entryTitle}')]//div[@class='entry-body']/div</td>
 	<td></td>
 </tr>
 <tr>

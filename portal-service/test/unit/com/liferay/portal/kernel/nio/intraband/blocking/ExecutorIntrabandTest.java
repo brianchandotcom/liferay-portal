@@ -14,14 +14,18 @@
 
 package com.liferay.portal.kernel.nio.intraband.blocking;
 
+import com.liferay.portal.kernel.nio.intraband.BaseIntraband;
 import com.liferay.portal.kernel.nio.intraband.ChannelContext;
+import com.liferay.portal.kernel.nio.intraband.CompletionHandler;
 import com.liferay.portal.kernel.nio.intraband.Datagram;
 import com.liferay.portal.kernel.nio.intraband.DatagramHelper;
 import com.liferay.portal.kernel.nio.intraband.IntrabandTestUtil;
 import com.liferay.portal.kernel.nio.intraband.MockRegistrationReference;
+import com.liferay.portal.kernel.nio.intraband.RecordCompletionHandler;
 import com.liferay.portal.kernel.nio.intraband.blocking.ExecutorIntraband.ReadingCallable;
 import com.liferay.portal.kernel.nio.intraband.blocking.ExecutorIntraband.WritingCallable;
 import com.liferay.portal.kernel.test.CodeCoverageAssertor;
+import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.util.Time;
 
 import java.io.File;
@@ -29,15 +33,18 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.RandomAccessFile;
 
+import java.nio.ByteBuffer;
 import java.nio.channels.Channel;
 import java.nio.channels.FileChannel;
 import java.nio.channels.GatheringByteChannel;
 import java.nio.channels.Pipe;
 import java.nio.channels.Pipe.SinkChannel;
 import java.nio.channels.Pipe.SourceChannel;
+import java.nio.channels.ScatteringByteChannel;
 import java.nio.channels.SocketChannel;
 import java.nio.charset.Charset;
 
+import java.util.EnumSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -47,6 +54,8 @@ import java.util.concurrent.FutureTask;
 import java.util.concurrent.SynchronousQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.LogRecord;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -438,6 +447,76 @@ public class ExecutorIntrabandTest {
 			readFileChannel.close();
 			writeFileChannel.close();
 		}
+	}
+
+	@Test
+	public void testSendDatagramWithCallback() throws Exception {
+
+		// Submitted callback
+
+		Pipe readPipe = Pipe.open();
+		Pipe writePipe = Pipe.open();
+
+		GatheringByteChannel gatheringByteChannel = writePipe.sink();
+		ScatteringByteChannel scatteringByteChannel = readPipe.source();
+
+		FutureRegistrationReference futureRegistrationReference =
+			(FutureRegistrationReference)_executorIntraband.registerChannel(
+				writePipe.source(), readPipe.sink());
+
+		Object attachment = new Object();
+
+		RecordCompletionHandler<Object> recordCompletionHandler =
+			new RecordCompletionHandler<Object>();
+
+		_executorIntraband.sendDatagram(
+			futureRegistrationReference,
+			Datagram.createRequestDatagram(_type, _data), attachment,
+			EnumSet.of(CompletionHandler.CompletionType.SUBMITTED),
+			recordCompletionHandler);
+
+		Datagram receiveDatagram = IntrabandTestUtil.readDatagramFully(
+			scatteringByteChannel);
+
+		recordCompletionHandler.waitUntilSubmitted();
+
+		Assert.assertSame(attachment, recordCompletionHandler.getAttachment());
+		Assert.assertEquals(_type, receiveDatagram.getType());
+
+		ByteBuffer dataByteBuffer = receiveDatagram.getDataByteBuffer();
+
+		Assert.assertArrayEquals(_data, dataByteBuffer.array());
+
+		// Callback timeout, with log
+
+		List<LogRecord> logRecords = JDKLoggerTestUtil.configureJDKLogger(
+			BaseIntraband.class.getName(), Level.WARNING);
+
+		recordCompletionHandler = new RecordCompletionHandler<Object>();
+
+		_executorIntraband.sendDatagram(
+			futureRegistrationReference,
+			Datagram.createRequestDatagram(_type, _data), attachment,
+			EnumSet.of(CompletionHandler.CompletionType.REPLIED),
+			recordCompletionHandler, 10, TimeUnit.MILLISECONDS);
+
+		Thread.sleep(20);
+
+		_executorIntraband.sendDatagram(
+			futureRegistrationReference,
+			Datagram.createRequestDatagram(_type, _data), attachment,
+			EnumSet.of(CompletionHandler.CompletionType.DELIVERED),
+			recordCompletionHandler, 10, TimeUnit.MILLISECONDS);
+
+		while (logRecords.isEmpty());
+
+		Assert.assertEquals(1, logRecords.size());
+
+		IntrabandTestUtil.assertMessageStartWith(
+			logRecords.get(0), "Removed timeout response waiting datagram");
+
+		gatheringByteChannel.close();
+		scatteringByteChannel.close();
 	}
 
 	@Test

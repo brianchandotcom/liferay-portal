@@ -226,8 +226,8 @@ public class JournalArticleStagedModelDataHandler
 		article.setContent(content);
 
 		portletDataContext.addClassedModel(
-			articleElement, ExportImportPathUtil.getModelPath(article), article,
-			JournalPortletDataHandler.NAMESPACE);
+			articleElement, ExportImportPathUtil.getModelPath(article),
+			article);
 	}
 
 	@Override
@@ -630,8 +630,7 @@ public class JournalArticleStagedModelDataHandler
 					smallFile, images, articleURL, serviceContext);
 			}
 
-			portletDataContext.importClassedModel(
-				article, importedArticle, JournalPortletDataHandler.NAMESPACE);
+			portletDataContext.importClassedModel(article, importedArticle);
 
 			if (Validator.isNull(newArticleId)) {
 				articleIds.put(

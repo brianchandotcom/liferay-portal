@@ -67,7 +67,7 @@ public class LayoutFriendlyURLStagedModelDataHandler
 		portletDataContext.addClassedModel(
 			layoutFriendlyURLElement,
 			ExportImportPathUtil.getModelPath(layoutFriendlyURL),
-			layoutFriendlyURL, LayoutPortletDataHandler.NAMESPACE);
+			layoutFriendlyURL);
 	}
 
 	@Override
@@ -135,8 +135,7 @@ public class LayoutFriendlyURLStagedModelDataHandler
 		}
 
 		portletDataContext.importClassedModel(
-			layoutFriendlyURL, importedLayoutFriendlyURL,
-			LayoutPortletDataHandler.NAMESPACE);
+			layoutFriendlyURL, importedLayoutFriendlyURL);
 	}
 
 	protected LayoutFriendlyURL getExistingLayoutFriendlyURL(

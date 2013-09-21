@@ -69,8 +69,7 @@ public class MBBanStagedModelDataHandler
 			PortletDataContext.REFERENCE_TYPE_DEPENDENCY_DISPOSABLE, true);
 
 		portletDataContext.addClassedModel(
-			userBanElement, ExportImportPathUtil.getModelPath(ban), ban,
-			MBPortletDataHandler.NAMESPACE);
+			userBanElement, ExportImportPathUtil.getModelPath(ban), ban);
 	}
 
 	@Override

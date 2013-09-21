@@ -64,8 +64,8 @@ public class AddressStagedModelDataHandler
 			address);
 
 		portletDataContext.addClassedModel(
-			addressElement, ExportImportPathUtil.getModelPath(address), address,
-			UsersAdminPortletDataHandler.NAMESPACE);
+			addressElement, ExportImportPathUtil.getModelPath(address),
+			address);
 	}
 
 	@Override
@@ -103,8 +103,7 @@ public class AddressStagedModelDataHandler
 				address.getTypeId(), address.getMailing(), address.isPrimary());
 		}
 
-		portletDataContext.importClassedModel(
-			address, importedAddress, UsersAdminPortletDataHandler.NAMESPACE);
+		portletDataContext.importClassedModel(address, importedAddress);
 	}
 
 }

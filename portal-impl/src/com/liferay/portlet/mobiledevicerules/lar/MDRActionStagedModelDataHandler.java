@@ -110,8 +110,7 @@ public class MDRActionStagedModelDataHandler
 		}
 
 		portletDataContext.addClassedModel(
-			actionElement, ExportImportPathUtil.getModelPath(action), action,
-			MDRPortletDataHandler.NAMESPACE);
+			actionElement, ExportImportPathUtil.getModelPath(action), action);
 	}
 
 	@Override
@@ -178,8 +177,7 @@ public class MDRActionStagedModelDataHandler
 				action.getTypeSettingsProperties(), serviceContext);
 		}
 
-		portletDataContext.importClassedModel(
-			action, importedAction, MDRPortletDataHandler.NAMESPACE);
+		portletDataContext.importClassedModel(action, importedAction);
 	}
 
 	protected void validateLayout(Element actionElement, MDRAction action) {

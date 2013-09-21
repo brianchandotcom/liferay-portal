@@ -62,8 +62,7 @@ public class PollsVoteStagedModelDataHandler
 		Element voteElement = portletDataContext.getExportDataElement(vote);
 
 		portletDataContext.addClassedModel(
-			voteElement, ExportImportPathUtil.getModelPath(vote), vote,
-			PollsPortletDataHandler.NAMESPACE);
+			voteElement, ExportImportPathUtil.getModelPath(vote), vote);
 	}
 
 	@Override

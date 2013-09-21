@@ -70,7 +70,7 @@ public class PollsQuestionStagedModelDataHandler
 
 		portletDataContext.addClassedModel(
 			questionElement, ExportImportPathUtil.getModelPath(question),
-			question, PollsPortletDataHandler.NAMESPACE);
+			question);
 	}
 
 	@Override
@@ -143,8 +143,7 @@ public class PollsQuestionStagedModelDataHandler
 				expirationMinute, neverExpire, null, serviceContext);
 		}
 
-		portletDataContext.importClassedModel(
-			question, importedQuestion, PollsPortletDataHandler.NAMESPACE);
+		portletDataContext.importClassedModel(question, importedQuestion);
 	}
 
 }

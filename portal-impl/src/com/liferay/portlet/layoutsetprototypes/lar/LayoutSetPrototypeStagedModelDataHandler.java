@@ -92,7 +92,7 @@ public class LayoutSetPrototypeStagedModelDataHandler
 		portletDataContext.addClassedModel(
 			layoutSetPrototypeElement,
 			ExportImportPathUtil.getModelPath(layoutSetPrototype),
-			layoutSetPrototype, LayoutSetPrototypePortletDataHandler.NAMESPACE);
+			layoutSetPrototype);
 
 		exportLayouts(layoutSetPrototype, portletDataContext);
 
@@ -166,8 +166,7 @@ public class LayoutSetPrototypeStagedModelDataHandler
 			serviceContext);
 
 		portletDataContext.importClassedModel(
-			layoutSetPrototype, importedLayoutSetPrototype,
-			LayoutSetPrototypePortletDataHandler.NAMESPACE);
+			layoutSetPrototype, importedLayoutSetPrototype);
 	}
 
 	protected void exportLayoutPrototypes(

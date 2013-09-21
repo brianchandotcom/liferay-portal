@@ -80,8 +80,7 @@ public class BookmarksEntryStagedModelDataHandler
 		Element entryElement = portletDataContext.getExportDataElement(entry);
 
 		portletDataContext.addClassedModel(
-			entryElement, ExportImportPathUtil.getModelPath(entry), entry,
-			BookmarksPortletDataHandler.NAMESPACE);
+			entryElement, ExportImportPathUtil.getModelPath(entry), entry);
 	}
 
 	@Override
@@ -147,8 +146,7 @@ public class BookmarksEntryStagedModelDataHandler
 				serviceContext);
 		}
 
-		portletDataContext.importClassedModel(
-			entry, importedEntry, BookmarksPortletDataHandler.NAMESPACE);
+		portletDataContext.importClassedModel(entry, importedEntry);
 	}
 
 	@Override

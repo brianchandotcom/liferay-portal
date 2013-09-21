@@ -139,8 +139,7 @@ public class FileEntryStagedModelDataHandler
 				Repository.class, PortletDataContext.REFERENCE_TYPE_STRONG);
 
 			portletDataContext.addClassedModel(
-				fileEntryElement, fileEntryPath, fileEntry,
-				DLPortletDataHandler.NAMESPACE);
+				fileEntryElement, fileEntryPath, fileEntry);
 
 			long liferayRepositoryClassNameId = PortalUtil.getClassNameId(
 				LiferayRepository.class.getName());
@@ -219,7 +218,7 @@ public class FileEntryStagedModelDataHandler
 
 		portletDataContext.addClassedModel(
 			fileEntryElement, fileEntryPath, liferayFileEntry,
-			DLFileEntry.class, DLPortletDataHandler.NAMESPACE);
+			DLFileEntry.class);
 	}
 
 	@Override
@@ -489,8 +488,7 @@ public class FileEntryStagedModelDataHandler
 		}
 
 		portletDataContext.importClassedModel(
-			fileEntry, importedFileEntry, DLFileEntry.class,
-			DLPortletDataHandler.NAMESPACE);
+			fileEntry, importedFileEntry, DLFileEntry.class);
 
 		Map<Long, Long> fileEntryIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(

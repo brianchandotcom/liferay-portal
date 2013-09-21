@@ -67,8 +67,7 @@ public class PasswordPolicyStagedModelDataHandler
 
 		portletDataContext.addClassedModel(
 			passwordPolicyElement,
-			ExportImportPathUtil.getModelPath(passwordPolicy), passwordPolicy,
-			PasswordPolicyPortletDataHandler.NAMESPACE);
+			ExportImportPathUtil.getModelPath(passwordPolicy), passwordPolicy);
 	}
 
 	@Override
@@ -152,8 +151,7 @@ public class PasswordPolicyStagedModelDataHandler
 		}
 
 		portletDataContext.importClassedModel(
-			passwordPolicy, importedPasswordPolicy,
-			PasswordPolicyPortletDataHandler.NAMESPACE);
+			passwordPolicy, importedPasswordPolicy);
 	}
 
 }

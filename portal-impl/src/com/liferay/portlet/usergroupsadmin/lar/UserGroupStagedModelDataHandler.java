@@ -70,7 +70,7 @@ public class UserGroupStagedModelDataHandler
 
 		portletDataContext.addClassedModel(
 			userGroupElement, ExportImportPathUtil.getModelPath(userGroup),
-			userGroup, UserGroupsAdminPortletDataHandler.NAMESPACE);
+			userGroup);
 	}
 
 	@Override
@@ -108,9 +108,7 @@ public class UserGroupStagedModelDataHandler
 				userGroup.getDescription(), serviceContext);
 		}
 
-		portletDataContext.importClassedModel(
-			userGroup, importedUserGroup,
-			UserGroupsAdminPortletDataHandler.NAMESPACE);
+		portletDataContext.importClassedModel(userGroup, importedUserGroup);
 	}
 
 }

@@ -150,8 +150,7 @@ public class RoleStagedModelDataHandler
 		Element roleElement = portletDataContext.getExportDataElement(role);
 
 		portletDataContext.addClassedModel(
-			roleElement, ExportImportPathUtil.getModelPath(role), role,
-			RolesAdminPortletDataHandler.NAMESPACE);
+			roleElement, ExportImportPathUtil.getModelPath(role), role);
 	}
 
 	@Override
@@ -210,8 +209,7 @@ public class RoleStagedModelDataHandler
 			}
 		}
 
-		portletDataContext.importClassedModel(
-			role, importedRole, RolesAdminPortletDataHandler.NAMESPACE);
+		portletDataContext.importClassedModel(role, importedRole);
 	}
 
 	protected List<ResourceTypePermission> getResourceTypePermissions(

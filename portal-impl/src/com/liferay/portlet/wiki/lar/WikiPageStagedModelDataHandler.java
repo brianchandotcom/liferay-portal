@@ -92,8 +92,7 @@ public class WikiPageStagedModelDataHandler
 		}
 
 		portletDataContext.addClassedModel(
-			pageElement, ExportImportPathUtil.getModelPath(page), page,
-			WikiPortletDataHandler.NAMESPACE);
+			pageElement, ExportImportPathUtil.getModelPath(page), page);
 	}
 
 	@Override
@@ -205,8 +204,7 @@ public class WikiPageStagedModelDataHandler
 			}
 		}
 
-		portletDataContext.importClassedModel(
-			page, importedPage, WikiPortletDataHandler.NAMESPACE);
+		portletDataContext.importClassedModel(page, importedPage);
 	}
 
 	@Override

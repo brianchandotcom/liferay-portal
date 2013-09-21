@@ -68,8 +68,7 @@ public class PollsChoiceStagedModelDataHandler
 		Element choiceElement = portletDataContext.getExportDataElement(choice);
 
 		portletDataContext.addClassedModel(
-			choiceElement, ExportImportPathUtil.getModelPath(choice), choice,
-			PollsPortletDataHandler.NAMESPACE);
+			choiceElement, ExportImportPathUtil.getModelPath(choice), choice);
 	}
 
 	@Override
@@ -125,8 +124,7 @@ public class PollsChoiceStagedModelDataHandler
 				serviceContext);
 		}
 
-		portletDataContext.importClassedModel(
-			choice, importedChoice, PollsPortletDataHandler.NAMESPACE);
+		portletDataContext.importClassedModel(choice, importedChoice);
 	}
 
 }

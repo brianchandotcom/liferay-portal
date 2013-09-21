@@ -65,7 +65,7 @@ public class MDRRuleGroupStagedModelDataHandler
 
 		portletDataContext.addClassedModel(
 			ruleGroupElement, ExportImportPathUtil.getModelPath(ruleGroup),
-			ruleGroup, MDRPortletDataHandler.NAMESPACE);
+			ruleGroup);
 	}
 
 	@Override
@@ -109,8 +109,7 @@ public class MDRRuleGroupStagedModelDataHandler
 				ruleGroup.getDescriptionMap(), serviceContext);
 		}
 
-		portletDataContext.importClassedModel(
-			ruleGroup, importedRuleGroup, MDRPortletDataHandler.NAMESPACE);
+		portletDataContext.importClassedModel(ruleGroup, importedRuleGroup);
 	}
 
 }

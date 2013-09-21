@@ -64,8 +64,8 @@ public class WebsiteStagedModelDataHandler
 			website);
 
 		portletDataContext.addClassedModel(
-			websiteElement, ExportImportPathUtil.getModelPath(website), website,
-			UsersAdminPortletDataHandler.NAMESPACE);
+			websiteElement, ExportImportPathUtil.getModelPath(website),
+			website);
 	}
 
 	@Override
@@ -98,8 +98,7 @@ public class WebsiteStagedModelDataHandler
 				website.getTypeId(), website.isPrimary());
 		}
 
-		portletDataContext.importClassedModel(
-			website, importedWebsite, UsersAdminPortletDataHandler.NAMESPACE);
+		portletDataContext.importClassedModel(website, importedWebsite);
 	}
 
 }

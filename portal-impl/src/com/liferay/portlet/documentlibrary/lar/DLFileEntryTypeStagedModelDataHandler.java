@@ -87,8 +87,7 @@ public class DLFileEntryTypeStagedModelDataHandler
 
 		portletDataContext.addClassedModel(
 			fileEntryTypeElement,
-			ExportImportPathUtil.getModelPath(fileEntryType), fileEntryType,
-			DLPortletDataHandler.NAMESPACE);
+			ExportImportPathUtil.getModelPath(fileEntryType), fileEntryType);
 	}
 
 	@Override
@@ -193,8 +192,7 @@ public class DLFileEntryTypeStagedModelDataHandler
 		}
 
 		portletDataContext.importClassedModel(
-			fileEntryType, importedDLFileEntryType,
-			DLPortletDataHandler.NAMESPACE);
+			fileEntryType, importedDLFileEntryType);
 
 		String importedDLFileEntryDDMStructureKey = DLUtil.getDDMStructureKey(
 			importedDLFileEntryType);

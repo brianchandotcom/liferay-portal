@@ -175,7 +175,7 @@ public class DDMTemplateStagedModelDataHandler
 
 		portletDataContext.addClassedModel(
 			templateElement, ExportImportPathUtil.getModelPath(template),
-			template, DDMPortletDataHandler.NAMESPACE);
+			template);
 	}
 
 	@Override
@@ -296,8 +296,7 @@ public class DDMTemplateStagedModelDataHandler
 					classPK, smallFile, serviceContext);
 			}
 
-			portletDataContext.importClassedModel(
-				template, importedTemplate, DDMPortletDataHandler.NAMESPACE);
+			portletDataContext.importClassedModel(template, importedTemplate);
 
 			Map<String, String> ddmTemplateKeys =
 				(Map<String, String>)portletDataContext.getNewPrimaryKeysMap(

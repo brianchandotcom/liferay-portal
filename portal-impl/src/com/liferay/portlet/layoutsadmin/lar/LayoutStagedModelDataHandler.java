@@ -224,8 +224,7 @@ public class LayoutStagedModelDataHandler
 		exportTheme(portletDataContext, layout);
 
 		portletDataContext.addClassedModel(
-			layoutElement, ExportImportPathUtil.getModelPath(layout), layout,
-			LayoutPortletDataHandler.NAMESPACE);
+			layoutElement, ExportImportPathUtil.getModelPath(layout), layout);
 	}
 
 	@Override
@@ -566,8 +565,7 @@ public class LayoutStagedModelDataHandler
 
 		importTheme(portletDataContext, layout);
 
-		portletDataContext.importClassedModel(
-			layout, importedLayout, LayoutPortletDataHandler.NAMESPACE);
+		portletDataContext.importClassedModel(layout, importedLayout);
 	}
 
 	protected void exportJournalArticle(

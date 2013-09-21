@@ -112,8 +112,7 @@ public class BlogsEntryStagedModelDataHandler
 		entry.setContent(content);
 
 		portletDataContext.addClassedModel(
-			entryElement, ExportImportPathUtil.getModelPath(entry), entry,
-			BlogsPortletDataHandler.NAMESPACE);
+			entryElement, ExportImportPathUtil.getModelPath(entry), entry);
 	}
 
 	@Override
@@ -225,8 +224,7 @@ public class BlogsEntryStagedModelDataHandler
 					smallImageFileName, smallImageInputStream, serviceContext);
 			}
 
-			portletDataContext.importClassedModel(
-				entry, importedEntry, BlogsPortletDataHandler.NAMESPACE);
+			portletDataContext.importClassedModel(entry, importedEntry);
 		}
 		finally {
 			StreamUtil.cleanUp(smallImageInputStream);

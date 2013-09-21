@@ -58,8 +58,8 @@ public class RepositoryEntryStagedModelDataHandler
 
 		portletDataContext.addClassedModel(
 			repositoryEntryElement,
-			ExportImportPathUtil.getModelPath(repositoryEntry), repositoryEntry,
-			DLPortletDataHandler.NAMESPACE);
+			ExportImportPathUtil.getModelPath(repositoryEntry),
+			repositoryEntry);
 	}
 
 	@Override
@@ -115,8 +115,7 @@ public class RepositoryEntryStagedModelDataHandler
 		}
 
 		portletDataContext.importClassedModel(
-			repositoryEntry, importedRepositoryEntry,
-			DLPortletDataHandler.NAMESPACE);
+			repositoryEntry, importedRepositoryEntry);
 	}
 
 }

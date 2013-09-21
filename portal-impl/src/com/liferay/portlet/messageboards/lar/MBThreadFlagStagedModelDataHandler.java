@@ -90,7 +90,7 @@ public class MBThreadFlagStagedModelDataHandler
 
 		portletDataContext.addClassedModel(
 			threadFlagElement, ExportImportPathUtil.getModelPath(threadFlag),
-			threadFlag, MBPortletDataHandler.NAMESPACE);
+			threadFlag);
 	}
 
 	@Override

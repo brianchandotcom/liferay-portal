@@ -62,8 +62,7 @@ public class PhoneStagedModelDataHandler
 		Element phoneElement = portletDataContext.getExportDataElement(phone);
 
 		portletDataContext.addClassedModel(
-			phoneElement, ExportImportPathUtil.getModelPath(phone), phone,
-			UsersAdminPortletDataHandler.NAMESPACE);
+			phoneElement, ExportImportPathUtil.getModelPath(phone), phone);
 	}
 
 	@Override
@@ -96,8 +95,7 @@ public class PhoneStagedModelDataHandler
 				phone.getExtension(), phone.getTypeId(), phone.isPrimary());
 		}
 
-		portletDataContext.importClassedModel(
-			phone, importedPhone, UsersAdminPortletDataHandler.NAMESPACE);
+		portletDataContext.importClassedModel(phone, importedPhone);
 	}
 
 }

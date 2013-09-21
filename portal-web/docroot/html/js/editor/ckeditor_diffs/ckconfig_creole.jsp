@@ -17,6 +17,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %>
+<%@ page import="com.liferay.portal.kernel.util.ContentTypes" %>
 <%@ page import="com.liferay.portal.kernel.util.HtmlUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.LocaleUtil" %>
 <%@ page import="com.liferay.portal.kernel.util.ParamUtil" %>
@@ -30,6 +31,8 @@ String languageId = ParamUtil.getString(request, "languageId");
 long wikiPageResourcePrimKey = ParamUtil.getLong(request, "wikiPageResourcePrimKey");
 String attachmentURLPrefix = ParamUtil.getString(request, "attachmentURLPrefix");
 boolean resizable = ParamUtil.getBoolean(request, "resizable");
+
+response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 %>
 
 CKEDITOR.config.attachmentURLPrefix = '<%= HtmlUtil.escapeJS(attachmentURLPrefix) %>';

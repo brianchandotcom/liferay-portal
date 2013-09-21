@@ -258,6 +258,8 @@ public class ExecutorIntraband extends BaseIntraband {
 							break;
 						}
 					}
+
+					cleanUpTimeoutResponseWaitingDatagrams();
 				}
 			}
 			catch (InterruptedException ie) {

@@ -5,6 +5,12 @@
 		</case>
 	</command>
 
+	<command name="assertTextEquals">
+		<case locator-key1="SAVE_STATUS">
+			<execute function="AssertTextEquals#assertPartialText" />
+		</case>
+	</command>
+
 	<command name="type">
 		<case locator-key1="CONTENT_FIELD">
 			<execute function="Type#typeFrameWaitForCKEditor" />

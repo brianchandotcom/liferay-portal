@@ -16,9 +16,9 @@
 			<elseif>
 				<equals arg1="${entryInvalidContent}" arg2="true" />
 				<then>
-					<execute action="CPBlogsEdit#assertTextEquals" locator-key1="ERROR_MESSAGE_1" value1="Your request failed to complete." />
-					<execute action="CPBlogsEdit#assertTextEquals" locator-key1="ERROR_MESSAGE_2" value1="Please enter valid content." />
-					<execute action="CPBlogsEdit#assertElementNotPresent" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+					<execute action="CPBlogsAdd#assertTextEquals" locator-key1="ERROR_MESSAGE_1" value1="Your request failed to complete." />
+					<execute action="CPBlogsAdd#assertTextEquals" locator-key1="ERROR_MESSAGE_2" value1="Please enter valid content." />
+					<execute action="CPBlogs#assertElementNotPresent" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 				</then>
 			</elseif>
 			<else>
@@ -42,6 +42,21 @@
 		<execute action="CPBlogsEdit#assertTextEquals" locator-key1="TITLE_FIELD" value1="${entryTitle}" />
 		<execute action="CPBlogsEdit#selectFrame" locator-key1="CONTENT_FIELD" />
 		<execute action="CPBlogsEdit#assertTextPresent" locator-key1="CONTENT_FIELD" value1="${entryContent}" />
+		<execute action="CPBlogsEdit#selectFrame" value1="relative=top" />
+	</command>
+
+	<command name="addDraftAutoPG">
+		<execute action="PGBlogs#assertClick" locator-key1="ADD_ENTRY_BUTTON" value1="Add Blog Entry" />
+
+		<execute action="PGBlogsAdd#type" locator-key1="TITLE_FIELD" value1="${entryTitle}" />
+		<execute action="PGBlogsAdd#type" locator-key1="CONTENT_FIELD" value1="${entryContent}" />
+		<execute action="PGBlogsAdd#pause" locator1="25000" />
+		<execute action="PGBlogsAdd#assertTextEquals" locator-key1="SAVE_STATUS" value1="Draft saved at" />
+
+		<execute action="PGBlogsEdit#assertTextEquals" locator-key1="TITLE_FIELD" value1="${entryTitle}" />
+		<execute action="PGBlogsEdit#selectFrame" locator-key1="CONTENT_FIELD" />
+		<execute action="PGBlogsEdit#assertTextPresent" locator-key1="CONTENT_FIELD" value1="${entryContent}" />
+		<execute action="PGBlogsEdit#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="addDraftCP">
@@ -58,6 +73,22 @@
 		<execute action="CPBlogsEdit#assertTextEquals" locator-key1="TITLE_FIELD" value1="${entryTitle}" />
 		<execute action="CPBlogsEdit#selectFrame" locator-key1="CONTENT_FIELD" />
 		<execute action="CPBlogsEdit#assertTextPresent" locator-key1="CONTENT_FIELD" value1="${entryContent}" />
+		<execute action="CPBlogsEdit#selectFrame" value1="relative=top" />
+	</command>
+
+	<command name="addDraftPG">
+		<execute action="PGBlogs#assertClick" locator-key1="ADD_ENTRY_BUTTON" value1="Add Blog Entry" />
+
+		<execute action="PGBlogsAdd#type" locator-key1="TITLE_FIELD" value1="${entryTitle}" />
+		<execute action="PGBlogsAdd#type" locator-key1="CONTENT_FIELD" value1="${entryContent}" />
+		<execute action="PGBlogsAdd#assertClick" locator-key1="SAVE_AS_DRAFT_BUTTON" value1="Save as Draft" />
+		<execute action="PGBlogs#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+
+		<execute action="PGBlogsEdit#assertTextEquals" locator-key1="DRAFT_STATUS" value1="Draft" />
+		<execute action="PGBlogsEdit#assertTextEquals" locator-key1="TITLE_FIELD" value1="${entryTitle}" />
+		<execute action="PGBlogsEdit#selectFrame" locator-key1="CONTENT_FIELD" />
+		<execute action="PGBlogsEdit#assertTextPresent" locator-key1="CONTENT_FIELD" value1="${entryContent}" />
+		<execute action="PGBlogsEdit#selectFrame" value1="relative=top" />
 	</command>
 
 	<command name="addNoPermissionPG">
@@ -71,12 +102,29 @@
 		<execute action="PGBlogsAdd#type" locator-key1="CONTENT_FIELD" value1="${entryContent}" />
 		<execute action="PGBlogsAdd#assertClick" locator-key1="PUBLISH_BUTTON" value1="Publish" />
 
-		<execute action="PGBlogs#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<if>
+			<equals arg1="${entryInvalidTitle}" arg2="true" />
+			<then>
+				<execute action="PGBlogsAdd#assertTextEquals" locator-key1="TITLE_REQUIRED" value1="(Required)" />
+				<execute action="PGBlogsAdd#assertTextEquals" locator-key1="FIELD_REQUIRED" value1="This field is required." />
+			</then>
+			<elseif>
+				<equals arg1="${entryInvalidContent}" arg2="true" />
+				<then>
+					<execute action="PGBlogsAdd#assertTextEquals" locator-key1="ERROR_MESSAGE_1" value1="Your request failed to complete." />
+					<execute action="PGBlogsAdd#assertTextEquals" locator-key1="ERROR_MESSAGE_2" value1="Please enter valid content." />
+					<execute action="PGBlogs#assertElementNotPresent" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+				</then>
+			</elseif>
+			<else>
+				<execute action="PGBlogs#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
-		<var name="key_entryTitle" value="${entryTitle}" />
+				<var name="key_entryTitle" value="${entryTitle}" />
 
-		<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
-		<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_CONTENT" value1="${entryContent}" />
+				<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
+				<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_CONTENT" value1="${entryContent}" />
+			</else>
+		</if>
 	</command>
 
 	<command name="addPGViaAP">
@@ -217,6 +265,17 @@
 		<execute action="PGBlogs#assertElementNotPresent" locator-key1="ENTRY_CONTENT" />
 	</command>
 
+	<command name="previewPG">
+		<execute action="PGBlogs#click" locator-key1="ADD_ENTRY_BUTTON" />
+
+		<execute action="PGBlogsAdd#type" locator-key1="TITLE_FIELD" value1="${entryTitle}" />
+		<execute action="PGBlogsAdd#type" locator-key1="CONTENT_FIELD" value1="${entryContent}" />
+		<execute action="PGBlogsAdd#assertClick" locator-key1="PREVIEW_BUTTON" value1="Preview" />
+
+		<execute action="PGBlogsEdit#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
+		<execute action="PGBlogsEdit#assertTextEquals" locator-key1="PREVIEW" value1="${entryContent}" />
+	</command>
+
 	<command name="publishDraftCP">
 		<var name="key_entryTitle" value="${entryTitle}" />
 
@@ -241,6 +300,14 @@
 		<execute action="CPBlogs#assertClick" locator-key1="ENTRY_TABLE_TITLE" value1="${entryTitle}" />
 
 		<execute action="CPBlogsEntry#click" locator-key1="YOUR_RATING_STAR_EMPTY_4" />
+	</command>
+
+	<command name="rate4StarsPG">
+		<var name="key_entryTitle" value="${entryTitle}" />
+
+		<execute action="PGBlogs#assertClick" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
+
+		<execute action="PGBlogsEntry#click" locator-key1="YOUR_RATING_STAR_EMPTY_4" />
 	</command>
 
 	<command name="searchCP">
@@ -327,6 +394,23 @@
 		<execute action="CPBlogsEntry#assertTextEquals" locator-key1="ENTRY_CONTENT" value1="${entryContent}" />
 	</command>
 
+	<command name="viewDraftPG">
+		<var name="key_entryTitle" value="${entryTitle}" />
+
+		<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_DRAFT_STATUS" value1="Draft" />
+		<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
+		<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_CONTENT_DRAFT" value1="${entryContent}" />
+		<execute action="PGBlogs#assertClick" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
+
+		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
+		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_DRAFT_STATUS" value1="Draft" />
+		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_BODY" value1="${entryContent}" />
+	</command>
+
+	<command name="viewNoPG">
+		<execute action="PGBlogs#assertTextNotPresent" value1="${entryTitle}" />
+	</command>
+
 	<command name="viewPermissionsPG">
 		<var name="key_entryTitle" value="${entryTitle}" />
 
@@ -340,6 +424,17 @@
 		<var name="key_entryTitle" value="${entryTitle}" />
 
 		<execute action="PGBlogs#assertElementNotPresent" locator-key1="ENTRY_PERMISSIONS" value1="Permissions" />
+	</command>
+
+	<command name="viewPG">
+		<var name="key_entryTitle" value="${entryTitle}" />
+
+		<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
+		<execute action="PGBlogs#assertTextEquals" locator-key1="ENTRY_CONTENT" value1="${entryContent}" />
+		<execute action="PGBlogs#assertClick" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
+
+		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
+		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_BODY" value1="${entryContent}" />
 	</command>
 
 	<command name="viewPGViaAP">
@@ -374,14 +469,56 @@
 		<execute action="CPBlogsEntry#assertElementNotPresent" locator-key1="AVERAGE_STAR_EMPTY_2" />
 	</command>
 
+	<command name="viewRate4StarsPG">
+		<execute action="PGBlogsEntry#assertTextEquals" locator-key1="AVERAGE" value1="Average (1 Vote)" />
+
+		<execute action="PGBlogsEntry#assertElementPresent" locator-key1="YOUR_RATING_STAR_1" />
+		<execute action="PGBlogsEntry#assertElementPresent" locator-key1="YOUR_RATING_STAR_2" />
+		<execute action="PGBlogsEntry#assertElementPresent" locator-key1="YOUR_RATING_STAR_3" />
+		<execute action="PGBlogsEntry#assertElementPresent" locator-key1="YOUR_RATING_STAR_4" />
+		<execute action="PGBlogsEntry#assertElementNotPresent" locator-key1="YOUR_RATING_STAR_5" />
+		<execute action="PGBlogsEntry#assertElementPresent" locator-key1="YOUR_RATING_STAR_EMPTY_1" />
+		<execute action="PGBlogsEntry#assertElementNotPresent" locator-key1="YOUR_RATING_STAR_EMPTY_2" />
+
+		<execute action="PGBlogsEntry#assertElementPresent" locator-key1="AVERAGE_STAR_1" />
+		<execute action="PGBlogsEntry#assertElementPresent" locator-key1="AVERAGE_STAR_2" />
+		<execute action="PGBlogsEntry#assertElementPresent" locator-key1="AVERAGE_STAR_3" />
+		<execute action="PGBlogsEntry#assertElementPresent" locator-key1="AVERAGE_STAR_4" />
+		<execute action="PGBlogsEntry#assertElementPresent" locator-key1="AVERAGE_STAR_4" />
+		<execute action="PGBlogsEntry#assertElementNotPresent" locator-key1="AVERAGE_STAR_5" />
+		<execute action="PGBlogsEntry#assertElementPresent" locator-key1="AVERAGE_STAR_EMPTY_1" />
+		<execute action="PGBlogsEntry#assertElementNotPresent" locator-key1="AVERAGE_STAR_EMPTY_2" />
+	</command>
+
+	<command name="viewRSS">
+		<execute action="Home#open" locator1="http://localhost:8080/web/guest/blogs-page/-/blogs/rss" />
+
+		<execute action="PGBlogsRSS#assertTextEquals" locator-key1="FEED_TITLE" value1="Liferay" />
+		<execute action="PGBlogsRSS#assertTextEquals" locator-key1="FEED_SUBTITLE" value1="Liferay" />
+		<execute action="PGBlogsRSS#assertTextEquals" locator-key1="ENTRY_TITLE" value1="${entryTitle}" />
+		<execute action="PGBlogsRSS#assertTextEquals" locator-key1="ENTRY_CONTENT" value1="${entryContent}" />
+	</command>
+
 	<command name="viewViewCountCP">
 		<if>
-			<equals arg1="${entryViewCount}" arg2="1" />\
+			<equals arg1="${entryViewCount}" arg2="1" />
 			<then>
 				<execute action="CPBlogsEntry#assertTextEquals" locator-key1="ENTRY_STATS_VIEW_COUNT" value1="${entryViewCount} View," />
 			</then>
 			<else>
 				<execute action="CPBlogsEntry#assertTextEquals" locator-key1="ENTRY_STATS_VIEW_COUNT" value1="${entryViewCount} Views," />
+			</else>
+		</if>
+	</command>
+
+	<command name="viewViewCountPG">
+		<if>
+			<equals arg1="${entryViewCount}" arg2="1" />
+			<then>
+				<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_STATS_VIEW_COUNT" value1="${entryViewCount} View," />
+			</then>
+			<else>
+				<execute action="PGBlogsEntry#assertTextEquals" locator-key1="ENTRY_STATS_VIEW_COUNT" value1="${entryViewCount} Views," />
 			</else>
 		</if>
 	</command>

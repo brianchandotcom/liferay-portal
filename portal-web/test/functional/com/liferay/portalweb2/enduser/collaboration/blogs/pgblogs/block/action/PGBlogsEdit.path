@@ -19,8 +19,33 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[@class='alert alert-success']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ERROR_MESSAGE_1</td>
+	<td>xPath=(//div[@class='alert alert-error'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ERROR_MESSAGE_2</td>
+	<td>xPath=(//div[@class='alert alert-error'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DRAFT_STATUS</td>
+	<td>//strong[@class='label workflow-status-draft label-info workflow-value']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TITLE_FIELD</td>
 	<td>//input[@id='_33_title']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PREVIEW</td>
+	<td>//div[@class='preview']</td>
 	<td></td>
 </tr>
 <tr>

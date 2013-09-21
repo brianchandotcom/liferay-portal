@@ -18,6 +18,173 @@
 	<td></td>
 	<td></td>
 </tr>
+<tr>
+	<td>ENTRY_TITLE</td>
+	<td>//h3[@class='header-title']/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_DRAFT_STATUS</td>
+	<td>//div[@class='entry draft']/div/h3</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_BODY</td>
+	<td>//div[@class='entry-body']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_AUTHOR</td>
+	<td>//div[@class='entry-author']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_STATS_VIEW_COUNT</td>
+	<td>//span[@class='view-count']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_STATS_COMMENTS</td>
+	<td>//span[@class='comments']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIRMATION</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--YOUR_RATING-->
+<tr>
+	<td>YOUR_RATING</td>
+	<td>xPath=(//div[@class='rating-label'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>YOUR_RATING_STAR</td>
+	<td>//div[contains(@id,'_ratingStar')]//a[@title='Rate this ${key_entryYourRating} stars out of 5.']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>YOUR_RATING_STAR_1</td>
+	<td>xPath=(//div[contains(@id,'_ratingStar')]//a[@class='rating-element icon-star'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>YOUR_RATING_STAR_2</td>
+	<td>xPath=(//div[contains(@id,'_ratingStar')]//a[@class='rating-element icon-star'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>YOUR_RATING_STAR_3</td>
+	<td>xPath=(//div[contains(@id,'_ratingStar')]//a[@class='rating-element icon-star'])[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>YOUR_RATING_STAR_4</td>
+	<td>xPath=(//div[contains(@id,'_ratingStar')]//a[@class='rating-element icon-star'])[4]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>YOUR_RATING_STAR_5</td>
+	<td>xPath=(//div[contains(@id,'_ratingStar')]//a[@class='rating-element icon-star'])[5]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>YOUR_RATING_STAR_EMPTY_1</td>
+	<td>xPath=(//div[contains(@id,'_ratingStar')]//a[@class='rating-element icon-star-empty'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>YOUR_RATING_STAR_EMPTY_2</td>
+	<td>xPath=(//div[contains(@id,'_ratingStar')]//a[@class='rating-element icon-star-empty'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>YOUR_RATING_STAR_EMPTY_3</td>
+	<td>xPath=(//div[contains(@id,'_ratingStar')]//a[@class='rating-element icon-star-empty'])[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>YOUR_RATING_STAR_EMPTY_4</td>
+	<td>xPath=(//div[contains(@id,'_ratingStar')]//a[@class='rating-element icon-star-empty'])[4]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>YOUR_RATING_STAR_EMPTY_5</td>
+	<td>xPath=(//div[contains(@id,'_ratingStar')]//a[@class='rating-element icon-star-empty'])[5]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--AVERAGE-->
+<tr>
+	<td>AVERAGE</td>
+	<td>xPath=(//div[@class='rating-label'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AVERAGE_STAR_1</td>
+	<td>xPath=(//div[contains(@id,'_ratingScore')]//a[@class='rating-element icon-star'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AVERAGE_STAR_2</td>
+	<td>xPath=(//div[contains(@id,'_ratingScore')]//a[@class='rating-element icon-star'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AVERAGE_STAR_3</td>
+	<td>xPath=(//div[contains(@id,'_ratingScore')]//a[@class='rating-element icon-star'])[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AVERAGE_STAR_4</td>
+	<td>xPath=(//div[contains(@id,'_ratingScore')]//a[@class='rating-element icon-star'])[4]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AVERAGE_STAR_5</td>
+	<td>xPath=(//div[contains(@id,'_ratingScore')]//a[@class='rating-element icon-star'])[5]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AVERAGE_STAR_EMPTY_1</td>
+	<td>xPath=(//div[contains(@id,'_ratingScore')]//a[@class='rating-element icon-star-empty'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AVERAGE_STAR_EMPTY_2</td>
+	<td>xPath=(//div[contains(@id,'_ratingScore')]//a[@class='rating-element icon-star-empty'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AVERAGE_STAR_EMPTY_3</td>
+	<td>xPath=(//div[contains(@id,'_ratingScore')]//a[@class='rating-element icon-star-empty'])[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AVERAGE_STAR_EMPTY_4</td>
+	<td>xPath=(//div[contains(@id,'_ratingScore')]//a[@class='rating-element icon-star-empty'])[4]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>AVERAGE_STAR_EMPTY_5</td>
+	<td>xPath=(//div[contains(@id,'_ratingScore')]//a[@class='rating-element icon-star-empty'])[5]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--COMMENTS-->
 <tr>
 	<td>COMMENTS_SUCCESS</td>
@@ -25,8 +192,13 @@
 	<td></td>
 </tr>
 <tr>
-	<td>COMMENTS_ADD</td>
+	<td>COMMENTS_BE_THE_FIRST</td>
 	<td>//fieldset/div/a[contains(.,'Be the first.')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENTS_ADD</td>
+	<td>//fieldset[@class='fieldset add-comment']/div/span/a/span</td>
 	<td></td>
 </tr>
 <tr>
@@ -46,6 +218,11 @@
 </tr>
 <!--COMMENT-->
 <tr>
+	<td>COMMENT</td>
+	<td>//div[@class='lfr-discussion-message' and contains(.,'${key_entryComment}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>COMMENT_1</td>
 	<td>xpath=(//div[@class='lfr-discussion-message'])[1]</td>
 	<td></td>
@@ -58,6 +235,31 @@
 <tr>
 	<td>COMMENT_3</td>
 	<td>xpath=(//div[@class='lfr-discussion-message'])[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENT_EDIT</td>
+	<td>//div[@class='lfr-discussion-message' and contains(.,'${key_entryComment}')]//..//li/span/a/span[contains(.,'Edit')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENT_DELETE</td>
+	<td>//div[@class='lfr-discussion-message' and contains(.,'${key_entryComment}')]//..//li/span/a/span[contains(.,'Delete')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENT_EDIT_BODY_FIELD</td>
+	<td>//div[@class='lfr-discussion-message' and contains(.,'${key_entryComment}')]//..//..//..//textarea[contains(@id,'editReplyBody')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENT_EDIT_PUBLISH_BUTTON</td>
+	<td>//div[@class='lfr-discussion-message' and contains(.,'${key_entryComment}')]//..//..//..//button[contains(.,'Publish')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENT_EDIT_CANCEL_BUTTON</td>
+	<td>//div[@class='lfr-discussion-message' and contains(.,'${key_entryComment}')]//..//..//..//button[@class='btn btn-cancel']</td>
 	<td></td>
 </tr>
 </tbody>

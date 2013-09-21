@@ -175,8 +175,7 @@ public class MBMessageStagedModelDataHandler
 
 		try {
 			ServiceContext serviceContext =
-				portletDataContext.createServiceContext(
-					message, MBPortletDataHandler.NAMESPACE);
+				portletDataContext.createServiceContext(message);
 
 			if ((parentCategoryId !=
 					MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) &&

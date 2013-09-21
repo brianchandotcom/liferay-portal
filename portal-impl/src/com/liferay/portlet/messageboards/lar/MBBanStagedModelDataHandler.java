@@ -93,7 +93,7 @@ public class MBBanStagedModelDataHandler
 		long userId = portletDataContext.getUserId(ban.getUserUuid());
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
-			ban, MBPortletDataHandler.NAMESPACE);
+			ban);
 
 		serviceContext.setUuid(ban.getUuid());
 

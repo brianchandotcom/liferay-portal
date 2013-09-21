@@ -124,7 +124,7 @@ public class DDLRecordSetStagedModelDataHandler
 		}
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
-			recordSet, DDLPortletDataHandler.NAMESPACE);
+			recordSet);
 
 		DDLRecordSet importedRecordSet = null;
 

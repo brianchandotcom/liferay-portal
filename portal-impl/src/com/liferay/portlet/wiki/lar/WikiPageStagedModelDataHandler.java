@@ -122,7 +122,7 @@ public class WikiPageStagedModelDataHandler
 		page.setContent(content);
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
-			page, WikiPortletDataHandler.NAMESPACE);
+			page);
 
 		Map<Long, Long> nodeIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(

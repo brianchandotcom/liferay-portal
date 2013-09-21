@@ -97,7 +97,7 @@ public class LayoutPrototypeStagedModelDataHandler
 			layoutPrototype.getUserUuid());
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
-			layoutPrototype, LayoutPrototypePortletDataHandler.NAMESPACE);
+			layoutPrototype);
 
 		serviceContext.setAttribute("addDefaultLayout", false);
 

@@ -146,7 +146,7 @@ public class MBCategoryStagedModelDataHandler
 		}
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
-			category, MBPortletDataHandler.NAMESPACE);
+			category);
 
 		MBCategory importedCategory = null;
 

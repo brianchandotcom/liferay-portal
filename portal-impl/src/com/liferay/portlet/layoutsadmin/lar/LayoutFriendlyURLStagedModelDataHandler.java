@@ -87,7 +87,7 @@ public class LayoutFriendlyURLStagedModelDataHandler
 			plids, layoutFriendlyURL.getPlid(), layoutFriendlyURL.getPlid());
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
-			layoutFriendlyURL, LayoutPortletDataHandler.NAMESPACE);
+			layoutFriendlyURL);
 
 		LayoutFriendlyURL importedLayoutFriendlyURL = null;
 

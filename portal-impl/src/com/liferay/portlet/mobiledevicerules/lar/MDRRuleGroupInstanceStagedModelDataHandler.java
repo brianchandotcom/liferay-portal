@@ -168,7 +168,7 @@ public class MDRRuleGroupInstanceStagedModelDataHandler
 		}
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
-			ruleGroupInstance, MDRPortletDataHandler.NAMESPACE);
+			ruleGroupInstance);
 
 		serviceContext.setUserId(userId);
 

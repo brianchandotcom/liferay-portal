@@ -95,7 +95,7 @@ public class PollsVoteStagedModelDataHandler
 			choiceIds, vote.getChoiceId(), vote.getChoiceId());
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
-			vote, PollsPortletDataHandler.NAMESPACE);
+			vote);
 
 		serviceContext.setCreateDate(vote.getVoteDate());
 

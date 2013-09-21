@@ -179,8 +179,7 @@ public class BlogsEntryStagedModelDataHandler
 			}
 
 			ServiceContext serviceContext =
-				portletDataContext.createServiceContext(
-					entry, BlogsPortletDataHandler.NAMESPACE);
+				portletDataContext.createServiceContext(entry);
 
 			BlogsEntry importedEntry = null;
 

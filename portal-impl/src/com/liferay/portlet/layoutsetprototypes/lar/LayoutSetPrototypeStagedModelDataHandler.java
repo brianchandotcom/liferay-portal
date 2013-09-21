@@ -116,7 +116,7 @@ public class LayoutSetPrototypeStagedModelDataHandler
 			settingsProperties.getProperty("layoutsUpdateable"), true);
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
-			layoutSetPrototype, LayoutSetPrototypePortletDataHandler.NAMESPACE);
+			layoutSetPrototype);
 
 		serviceContext.setAttribute("addDefaultLayout", false);
 

@@ -157,7 +157,7 @@ public class DDMStructureStagedModelDataHandler
 				DDMStructure.class + ".ddmStructureKey");
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
-			structure, DDMPortletDataHandler.NAMESPACE);
+			structure);
 
 		DDMStructure importedStructure = null;
 

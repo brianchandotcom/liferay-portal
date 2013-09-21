@@ -76,7 +76,7 @@ public class WebsiteStagedModelDataHandler
 		long userId = portletDataContext.getUserId(website.getUserUuid());
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
-			website, UsersAdminPortletDataHandler.NAMESPACE);
+			website);
 
 		Website existingWebsite =
 			WebsiteLocalServiceUtil.fetchWebsiteByUuidAndCompanyId(

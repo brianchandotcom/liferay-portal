@@ -156,7 +156,7 @@ public class OrganizationStagedModelDataHandler
 		}
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
-			organization, UsersAdminPortletDataHandler.NAMESPACE);
+			organization);
 
 		serviceContext.setUserId(userId);
 

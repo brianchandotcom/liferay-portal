@@ -112,7 +112,7 @@ public class RepositoryStagedModelDataHandler
 		long userId = portletDataContext.getUserId(repository.getUserUuid());
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
-			repository, DLPortletDataHandler.NAMESPACE);
+			repository);
 
 		Repository importedRepository = null;
 

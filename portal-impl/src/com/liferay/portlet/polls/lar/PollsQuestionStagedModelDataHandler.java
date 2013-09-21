@@ -107,7 +107,7 @@ public class PollsQuestionStagedModelDataHandler
 		}
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
-			question, PollsPortletDataHandler.NAMESPACE);
+			question);
 
 		PollsQuestion importedQuestion = null;
 

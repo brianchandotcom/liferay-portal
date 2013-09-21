@@ -529,8 +529,7 @@ public class JournalArticleStagedModelDataHandler
 				portletDataContext, article);
 
 			ServiceContext serviceContext =
-				portletDataContext.createServiceContext(
-					article, JournalPortletDataHandler.NAMESPACE);
+				portletDataContext.createServiceContext(article);
 
 			serviceContext.setAddGroupPermissions(addGroupPermissions);
 			serviceContext.setAddGuestPermissions(addGuestPermissions);

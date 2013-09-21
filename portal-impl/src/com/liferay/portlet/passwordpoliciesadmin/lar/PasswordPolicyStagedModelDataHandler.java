@@ -80,7 +80,7 @@ public class PasswordPolicyStagedModelDataHandler
 			passwordPolicy.getUserUuid());
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
-			passwordPolicy, PasswordPolicyPortletDataHandler.NAMESPACE);
+			passwordPolicy);
 
 		PasswordPolicy existingPasswordPolicy =
 			PasswordPolicyLocalServiceUtil.

@@ -76,7 +76,7 @@ public class AddressStagedModelDataHandler
 		long userId = portletDataContext.getUserId(address.getUserUuid());
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
-			address, UsersAdminPortletDataHandler.NAMESPACE);
+			address);
 
 		Address existingAddress =
 			AddressLocalServiceUtil.fetchAddressByUuidAndCompanyId(

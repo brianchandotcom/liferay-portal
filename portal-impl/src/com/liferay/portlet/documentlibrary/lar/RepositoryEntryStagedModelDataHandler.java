@@ -80,7 +80,7 @@ public class RepositoryEntryStagedModelDataHandler
 			repositoryEntry.getRepositoryId());
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
-			repositoryEntry, DLPortletDataHandler.NAMESPACE);
+			repositoryEntry);
 
 		RepositoryEntry importedRepositoryEntry = null;
 

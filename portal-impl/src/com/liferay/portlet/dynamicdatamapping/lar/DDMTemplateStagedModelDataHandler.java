@@ -258,8 +258,7 @@ public class DDMTemplateStagedModelDataHandler
 			}
 
 			ServiceContext serviceContext =
-				portletDataContext.createServiceContext(
-					template, DDMPortletDataHandler.NAMESPACE);
+				portletDataContext.createServiceContext(template);
 
 			DDMTemplate importedTemplate = null;
 

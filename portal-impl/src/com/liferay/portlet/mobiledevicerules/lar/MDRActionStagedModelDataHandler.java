@@ -138,7 +138,7 @@ public class MDRActionStagedModelDataHandler
 			action.getRuleGroupInstanceId());
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
-			action, MDRPortletDataHandler.NAMESPACE);
+			action);
 
 		serviceContext.setUserId(
 			portletDataContext.getUserId(action.getUserUuid()));

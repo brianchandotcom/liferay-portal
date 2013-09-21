@@ -181,7 +181,7 @@ public class FolderStagedModelDataHandler
 			folderIds, folder.getParentFolderId(), folder.getParentFolderId());
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
-			folder, DLFolder.class, DLPortletDataHandler.NAMESPACE);
+			folder, DLFolder.class);
 
 		serviceContext.setUserId(userId);
 

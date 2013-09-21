@@ -164,7 +164,7 @@ public class DLFileShortcutStagedModelDataHandler
 		}
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
-			fileShortcut, DLPortletDataHandler.NAMESPACE);
+			fileShortcut);
 
 		DLFileShortcut importedFileShortcut = null;
 

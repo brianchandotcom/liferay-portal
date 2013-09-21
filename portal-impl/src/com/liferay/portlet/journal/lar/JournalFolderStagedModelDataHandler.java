@@ -110,7 +110,7 @@ public class JournalFolderStagedModelDataHandler
 			folderIds, folder.getParentFolderId(), folder.getParentFolderId());
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
-			folder, JournalPortletDataHandler.NAMESPACE);
+			folder);
 
 		JournalFolder importedFolder = null;
 

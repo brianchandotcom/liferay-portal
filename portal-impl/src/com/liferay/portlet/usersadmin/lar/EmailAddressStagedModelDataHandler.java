@@ -74,7 +74,7 @@ public class EmailAddressStagedModelDataHandler
 		long userId = portletDataContext.getUserId(emailAddress.getUserUuid());
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
-			emailAddress, UsersAdminPortletDataHandler.NAMESPACE);
+			emailAddress);
 
 		EmailAddress existingEmailAddress =
 			EmailAddressLocalServiceUtil.fetchEmailAddressByUuidAndCompanyId(

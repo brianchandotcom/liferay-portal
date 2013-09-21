@@ -273,7 +273,7 @@ public class FileEntryStagedModelDataHandler
 			DLFileEntry.class, fileEntry.getFileEntryId());
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
-			fileEntry, DLFileEntry.class, DLPortletDataHandler.NAMESPACE);
+			fileEntry, DLFileEntry.class);
 
 		serviceContext.setAttribute(
 			"sourceFileName", "A." + fileEntry.getExtension());

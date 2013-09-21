@@ -113,7 +113,7 @@ public class BookmarksEntryStagedModelDataHandler
 			folderIds, entry.getFolderId(), entry.getFolderId());
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
-			entry, BookmarksPortletDataHandler.NAMESPACE);
+			entry);
 
 		BookmarksEntry importedEntry = null;
 

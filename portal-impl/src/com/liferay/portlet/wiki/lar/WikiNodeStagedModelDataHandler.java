@@ -73,7 +73,7 @@ public class WikiNodeStagedModelDataHandler
 		long userId = portletDataContext.getUserId(node.getUserUuid());
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
-			node, WikiPortletDataHandler.NAMESPACE);
+			node);
 
 		WikiNode importedNode = null;
 

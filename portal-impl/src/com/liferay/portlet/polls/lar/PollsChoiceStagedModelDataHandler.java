@@ -98,7 +98,7 @@ public class PollsChoiceStagedModelDataHandler
 		PollsChoice importedChoice = null;
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
-			choice, PollsPortletDataHandler.NAMESPACE);
+			choice);
 
 		if (portletDataContext.isDataStrategyMirror()) {
 			PollsChoice existingChoice =

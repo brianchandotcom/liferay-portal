@@ -275,7 +275,7 @@ public class JournalFeedStagedModelDataHandler
 		}
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
-			feed, JournalPortletDataHandler.NAMESPACE);
+			feed);
 
 		boolean addGroupPermissions = creationStrategy.addGroupPermissions(
 			portletDataContext, feed);

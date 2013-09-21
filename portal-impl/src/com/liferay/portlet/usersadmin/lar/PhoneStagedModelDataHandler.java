@@ -73,7 +73,7 @@ public class PhoneStagedModelDataHandler
 		long userId = portletDataContext.getUserId(phone.getUserUuid());
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
-			phone, UsersAdminPortletDataHandler.NAMESPACE);
+			phone);
 
 		Phone existingPhone =
 			PhoneLocalServiceUtil.fetchPhoneByUuidAndCompanyId(

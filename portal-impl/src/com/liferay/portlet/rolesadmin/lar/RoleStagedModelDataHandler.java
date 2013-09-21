@@ -161,7 +161,7 @@ public class RoleStagedModelDataHandler
 		long userId = portletDataContext.getUserId(role.getUserUuid());
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
-			role, RolesAdminPortletDataHandler.NAMESPACE);
+			role);
 
 		Role existingRole = RoleLocalServiceUtil.fetchRoleByUuidAndCompanyId(
 			role.getUuid(), portletDataContext.getCompanyId());

@@ -129,7 +129,7 @@ public class MBThreadFlagStagedModelDataHandler
 		long userId = portletDataContext.getUserId(threadFlag.getUserUuid());
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
-			threadFlag, MBPortletDataHandler.NAMESPACE);
+			threadFlag);
 
 		serviceContext.setUuid(threadFlag.getUuid());
 

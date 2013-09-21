@@ -151,7 +151,7 @@ public class DLFileEntryTypeStagedModelDataHandler
 		}
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
-			fileEntryType, DLPortletDataHandler.NAMESPACE);
+			fileEntryType);
 
 		DLFileEntryType importedDLFileEntryType = null;
 

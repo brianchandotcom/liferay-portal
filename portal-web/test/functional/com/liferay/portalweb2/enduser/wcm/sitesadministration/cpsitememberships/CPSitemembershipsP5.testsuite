@@ -4,4 +4,5 @@
 	<execute test-case-command="CPSitememberships#EditSiteTeam" />
 	<execute test-case-command="CPSitememberships#DeleteNoLiferaySite" />
 	<execute test-case-command="CPSitememberships#DeleteSiteTeam" />
+	<execute test-case-command="CPSitememberships#LimitMembershipParentSite" />
 </definition>

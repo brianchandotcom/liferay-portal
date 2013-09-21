@@ -63,10 +63,46 @@
 			</else>
 		</if>
 
+		<if>
+			<isset var="parentSiteName" />
+			<then>
+				<execute action="CPSitesAdd#assertClick" locator-key1="PARENT_SITE_SELECT" value1="Select" />
+
+				<var name="key_parentSiteName" value="${parentSiteName}" />
+
+				<execute action="CPSitesAddSelectSite#selectFrame" locator-key1="SELECT_SITE_IFRAME" />
+				<execute action="CPSitesAddSelectSite#type" locator-key1="BASIC_SEARCH_FIELD" value1="${parentSiteName}" />
+				<execute action="CPSitesAddSelectSite#assertClick" locator-key1="BASIC_SEARCH_BUTTON" value1="Search" />
+				<execute action="CPSitesAddSelectSite#assertTextEquals" locator-key1="SITES_TABLE_NAME" value1="${parentSiteName}" />
+				<execute action="CPSitesAddSelectSite#click" locator-key1="SITES_TABLE_CHOOSE_BUTTON" value1="Choose" />
+
+				<var name="key_parentSiteName" value="${parentSiteName}" />
+
+				<execute action="CPSitesAdd#selectFrame" value1="relative=top" />
+				<execute action="CPSitesAdd#assertTextEquals" locator-key1="PARENT_SITE_TABLE_NAME" value1="${parentSiteName}" />
+			</then>
+		</if>
+
 		<execute action="CPSitesAdd#type" locator-key1="DETAILS_NAME" value1="${siteName}" />
 		<execute action="CPSitesAdd#click" locator-key1="MENU_SAVE" />
 
 		<execute action="CPSitesEdit#assertTextEquals" locator-key1="SITE_TITLE" value1="${siteName}" />
+
+		<if>
+			<equals arg1="${siteLimitMembership}" arg2="Yes" />
+			<then>
+				<execute action="CPSitesEdit#check" locator-key1="PARENT_SITE_LIMIT_MEMBERSHIP_CHECKBOX" />
+			</then>
+			<elseif>
+				<equals arg1="${siteLimitMembership}" arg2="No" />
+					<then>
+						<execute action="CPSitesEdit#uncheck" locator-key1="PARENT_SITE_LIMIT_MEMBERSHIP_CHECKBOX" />
+					</then>
+			</elseif>
+		</if>
+
+		<execute action="CPSitesEdit#assertClick" locator-key1="SAVE_BUTTON" value1="Save" />
+		<execute action="CPSitesEdit#assertTextEquals" locator-key1="SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="addIntranetCP">
@@ -282,6 +318,39 @@
 				<execute action="CPSites#confirm" locator-key1="CONFIRMATION" value1="Are you sure you want to delete this? It will be deleted immediately." />
 			</then>
 		</while>
+	</command>
+
+	<command name="viewChildCP">
+		<var name="key_siteName" value="${siteName}" />
+
+		<execute action="CPSites#assertTextEquals" locator-key1="SITE_TABLE_NAME" value1="${siteName}" />
+		<execute action="CPSites#assertTextEquals" locator-key1="SITE_TABLE_TYPE" value1="${siteType}" />
+		<execute action="CPSites#assertTextEquals" locator-key1="SITE_TABLE_ACTIVE" value1="Yes" />
+		<execute action="CPSites#assertTextEquals" locator-key1="SITE_TABLE_PENDING_REQUESTS" value1="" />
+		<execute action="CPSites#assertTextEquals" locator-key1="SITE_TABLE_TAGS" value1="" />
+		<execute action="CPSites#assertTextEquals" locator-key1="SITE_TABLE_ACTIONS" value1="Actions" />
+		<execute action="CPSites#assertClick" locator-key1="SITE_TABLE_CHILD_SITE" value1="This site has 1 child site." />
+
+		<var name="key_childSiteName" value="${childSiteName}" />
+		<var name="key_siteName" value="${siteName}" />
+
+		<execute action="CPSitesChild#assertTextEquals" locator-key1="SITE_NAME" value1="${siteName}" />
+		<execute action="CPSitesChild#assertTextEquals" locator-key1="SITE_TABLE_NAME" value1="${childSiteName}" />
+		<execute action="CPSitesChild#assertTextEquals" locator-key1="SITE_TABLE_TYPE" value1="${siteType}" />
+		<execute action="CPSitesChild#assertTextEquals" locator-key1="SITE_TABLE_MEMBERS_USERS" value1="1 User" />
+		<execute action="CPSitesChild#assertTextEquals" locator-key1="SITE_TABLE_ACTIVE" value1="Yes" />
+		<execute action="CPSitesChild#assertTextEquals" locator-key1="SITE_TABLE_PENDING_REQUESTS" value1="" />
+		<execute action="CPSitesChild#assertTextEquals" locator-key1="SITE_TABLE_TAGS" value1="" />
+		<execute action="CPSitesChild#assertTextEquals" locator-key1="SITE_TABLE_ACTIONS" value1="Actions" />
+	</command>
+
+	<command name="viewLimitMembershipParentSiteCP">
+		<var name="key_userScreenName" value="${userScreenName}" />
+
+		<execute action="CPSitememberships#assertClick" locator-key1="TOOLBAR_ADD_MEMBERS" value1="Add Members" />
+		<execute action="CPSitememberships#assertClick" locator-key1="ADD_MEMBERS_MENULIST_USER" value1="User" />
+		<execute action="CPSitemembershipsAddmembers#assertTextNotPresent" locator-key1="USER_TABLE_NAME" value1="${userFirstName} ${userLastName}" />
+		<execute action="CPSitemembershipsAddmembers#assertTextNotPresent" locator-key1="USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 	</command>
 
 	<command name="viewMemberCP">

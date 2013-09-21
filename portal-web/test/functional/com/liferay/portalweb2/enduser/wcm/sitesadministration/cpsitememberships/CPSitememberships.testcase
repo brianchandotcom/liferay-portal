@@ -342,6 +342,134 @@
 		</execute>
 	</command>
 
+	<command name="LimitMembershipParentSite">
+		<var name="childSiteName" value="Child SiteName" />
+		<var name="siteName" value="Site Name" />
+		<var name="siteScopeName" value="Site Name" />
+		<var name="userEmailAddress" value="userea@liferay.com" />
+		<var name="userFirstName" value="userfn" />
+		<var name="userLastName" value="userln" />
+		<var name="userScreenName" value="usersn" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="parentSiteName" value="${siteName}" />
+			<var name="siteLimitMembership" value="Yes" />
+			<var name="siteName" value="${childSiteName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="portletName" value="Site Memberships" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="Site#addMemberCP">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteScopeName" value="${siteName}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="siteScopeName" value="Site Name" />
+			<var name="portletName" value="Site Memberships" />
+		</execute>
+
+		<execute macro="Site#viewMemberCP">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteScopeName" value="${siteName}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="siteScopeName" value="Child SiteName" />
+			<var name="portletName" value="Site Memberships" />
+		</execute>
+
+		<execute macro="Site#addMemberCP">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteScopeName" value="${childSiteName}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="siteScopeName" value="Child SiteName" />
+			<var name="portletName" value="Site Memberships" />
+		</execute>
+
+		<execute macro="Site#viewMemberCP">
+			<var name="childSiteName" value="${siteName}" />
+			<var name="siteScopeName" value="${childSiteName}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="siteScopeName" value="Child SiteName" />
+			<var name="portletName" value="Site Memberships" />
+		</execute>
+
+		<execute macro="Site#removeMemberCP">
+			<var name="siteName" value="${childSiteName}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="siteScopeName" value="Site Name" />
+			<var name="portletName" value="Site Memberships" />
+		</execute>
+
+		<execute macro="Site#removeMemberCP">
+			<var name="siteName" value="${siteName}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="siteScopeName" value="Child SiteName" />
+			<var name="portletName" value="Site Memberships" />
+		</execute>
+
+		<execute macro="Site#viewLimitMembershipParentSiteCP">
+			<var name="siteName" value="${siteName}" />
+			<var name="siteScopeName" value="${childSiteName}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+	</command>
+
 	<command name="RemoveMember">
 		<var name="siteName" value="Site Name" />
 		<var name="userEmailAddress" value="userea@liferay.com" />

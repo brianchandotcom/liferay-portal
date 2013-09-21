@@ -54,6 +54,17 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--PARENT_SITE-->
+<tr>
+	<td>PARENT_SITE_LIMIT_MEMBERSHIP_CHECKBOX</td>
+	<td>//input[@id='_165_membershipRestrictionCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--MENU-->
 <tr>
 	<td>MENU_SAVE</td>

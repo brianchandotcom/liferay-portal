@@ -1,0 +1,148 @@
+<html>
+<head>
+<title>PGDocumentsandmediaSearch</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGDocumentsandmediaSearch</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGDocumentsandmedia</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_MESSAGE</td>
+	<td>//div[contains(@class,'search-info')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SEARCH-->
+<tr>
+	<td>SEARCH_FIELD</td>
+	<td>//input[@class='search-query span9']</td>
+	<td>Search Field</td>
+</tr>
+<tr>
+	<td>SEARCH_BUTTON</td>
+	<td>//button[contains(.,'Search')]</td>
+	<td>Search Button</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SEARCH_RESULTS-->
+<tr>
+	<td>SEARCH_RESULTS_TITLE</td>
+	<td>//a[@class='entry-link']/div/span[@class='entry-title']</td>
+	<td>Search Result Title</td>
+</tr>
+<tr>
+	<td>SEARCH_RESULTS_WORD_HIGHLIGHT</td>
+	<td>//a[@class='entry-link']/div/span[@class='entry-title']/span</td>
+	<td>Search Result Word Highlight</td>
+</tr>
+<tr>
+	<td>SEARCH_RESULTS_PARENT_FOLDER</td>
+	<td>//dd</td>
+	<td>Search Result Parent Folder</td>
+</tr>
+<tr>
+	<td>SEARCH_RESULTS_DESCRIPTION</td>
+	<td>//a[@class='entry-link']/div/span[@class='entry-description']</td>
+	<td>Search Result Description</td>
+</tr>
+<tr>
+	<td>SEARCH_RESULTS_ACTIONS</td>
+	<td>xpath=(//span[@class='entry-action overlay']/div/a/i)[2]</td>
+	<td>Search Result Actions</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--FOLDER_MENULIST-->
+<tr>
+	<td>FOLDER_MENULIST_EDIT</td>
+	<td>//a[@role='menuitem' and contains(.,'Edit')]</td>
+	<td>Edit</td>
+</tr>
+<tr>
+	<td>FOLDER_MENULIST_MOVE</td>
+	<td>//a[@role='menuitem' and contains(.,'Move')]</td>
+	<td>Move</td>
+</tr>
+<tr>
+	<td>FOLDER_MENULIST_PERMISSIONS</td>
+	<td>//a[@role='menuitem' and contains(.,'Permissions')]</td>
+	<td>Permissions</td>
+</tr>
+<tr>
+	<td>FOLDER_MENULIST_MOVE_TO_THE_RECYCLE_BIN</td>
+	<td>//a[@role='menuitem' and contains(.,'Move to the Recycle Bin')]</td>
+	<td>Move to the Recycle Bin</td>
+</tr>
+<tr>
+	<td>FOLDER_MENULIST_ADD_SUBFOLDER</td>
+	<td>//a[@role='menuitem' and contains(.,'Add Subfolder')]</td>
+	<td>Add Subfolder</td>
+</tr>
+<tr>
+	<td>FOLDER_MENULIST_ACCESS_FROM_DESKTOP</td>
+	<td>//a[@role='menuitem' and contains(.,'Access from Desktop')]</td>
+	<td>Access from Desktop</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--DOCUMENT_MENULIST-->
+<tr>
+	<td>DOCUMENT_MENULIST_DOWNLOAD</td>
+	<td>//a[@role='menuitem' and contains(.,'Download')]</td>
+	<td>Download</td>
+</tr>
+<tr>
+	<td>DOCUMENT_MENULIST_EDIT</td>
+	<td>//a[@role='menuitem' and contains(.,'Edit')]</td>
+	<td>Edit</td>
+</tr>
+<tr>
+	<td>DOCUMENT_MENULIST_MOVE</td>
+	<td>//a[@role='menuitem' and contains(.,'Move')]</td>
+	<td>Move</td>
+</tr>
+<tr>
+	<td>DOCUMENT_MENULIST_CHECKOUT</td>
+	<td>//a[@role='menuitem' and contains(.,'Checkout')]</td>
+	<td>Checkout</td>
+</tr>
+<tr>
+	<td>DOCUMENT_MENULIST_PERMISSIONS</td>
+	<td>//a[@role='menuitem' and contains(.,'Permissions')]</td>
+	<td>Permissions</td>
+</tr>
+<tr>
+	<td>DOCUMENT_MENULIST_RECYCLE_BIN</td>
+	<td>//a[@role='menuitem' and contains(.,'Move to the Recycle Bin')]</td>
+	<td>Move to the Recycle Bin</td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

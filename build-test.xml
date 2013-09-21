@@ -475,7 +475,7 @@
 	</target>
 
 	<target name="build-test-ant-scripts">
-		<property name="build-test-ant-scripts.version" value="0" />
+		<property name="build-test-ant-scripts.version" value="1" />
 
 		<if>
 			<available file="portal-web/test-ant-scripts/version" />
@@ -554,6 +554,18 @@
 			<param name="test.ant.script.command" value="end-user-business-productivity-acceptance" />
 			<param name="test.ant.script.database.minimal" value="true" />
 			<param name="test.ant.script.suite" value="EndUserBusinessProductivityAcceptanceTestSuite" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="end-user-calendar-acceptance" />
+			<param name="test.ant.script.database.minimal" value="true" />
+			<param name="test.ant.script.suite" value="EndUserCalendarAcceptanceTestSuite" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="end-user-calendar-p5" />
+			<param name="test.ant.script.database.minimal" value="true" />
+			<param name="test.ant.script.suite" value="EndUserCalendarP5TestSuite" />
 		</antcall>
 
 		<antcall target="build-test-ant-script">

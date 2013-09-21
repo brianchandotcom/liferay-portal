@@ -1,0 +1,39 @@
+<definition>
+	<command name="assertClick">
+		<case locator-key1="CLOSE_BUTTON">
+			<execute function="AssertClick#assertTextClickAt" />
+		</case>
+
+		<case locator-key1="SAVE_BUTTON">
+			<execute function="AssertClick#assertValueClickAtAndWait" />
+		</case>
+	</command>
+
+	<command name="assertElementPresent">
+		<case locator-key1="END_DATE">
+			<execute function="AssertElementPresent#assertVisible" />
+		</case>
+
+		<case locator-key1="END_DATE_TIME">
+			<execute function="AssertElementPresent#assertVisible" />
+		</case>
+
+		<case locator-key1="START_DATE">
+			<execute function="AssertElementPresent#assertVisible" />
+		</case>
+
+		<case locator-key1="START_DATE_TIME">
+			<execute function="AssertElementPresent#assertVisible" />
+		</case>
+	</command>
+
+	<command name="assertElementNotPresent">
+		<case locator-key1="END_DATE_TIME">
+			<execute function="AssertElementNotPresent#assertNotVisible" />
+		</case>
+
+		<case locator-key1="START_DATE_TIME">
+			<execute function="AssertElementNotPresent#assertNotVisible" />
+		</case>
+	</command>
+</definition>

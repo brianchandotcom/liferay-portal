@@ -761,36 +761,47 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 	@Override
 	public ServiceContext createServiceContext(
-		Element element, ClassedModel classedModel, String namespace) {
+		Element element, ClassedModel classedModel) {
 
 		return createServiceContext(
-			element, null, classedModel, classedModel.getModelClass(),
-			namespace);
+			element, null, classedModel, classedModel.getModelClass());
 	}
 
 	@Override
 	public ServiceContext createServiceContext(
-		StagedModel stagedModel, Class<?> clazz, String namespace) {
+		Element element, ClassedModel classedModel, String namespace) {
+
+		return createServiceContext(element, classedModel);
+	}
+
+	@Override
+	public ServiceContext createServiceContext(StagedModel stagedModel) {
+
+		return createServiceContext(stagedModel, stagedModel.getModelClass());
+	}
+
+	@Override
+	public ServiceContext createServiceContext(
+		StagedModel stagedModel, Class<?> clazz) {
 
 		return createServiceContext(
 			null, ExportImportPathUtil.getModelPath(stagedModel), stagedModel,
-			clazz, namespace);
+			clazz);
 	}
 
 	@Override
 	public ServiceContext createServiceContext(
-		StagedModel stagedModel, String namespace) {
+		String path, ClassedModel classedModel) {
 
 		return createServiceContext(
-			stagedModel, stagedModel.getModelClass(), namespace);
+			null, path, classedModel, classedModel.getModelClass());
 	}
 
 	@Override
 	public ServiceContext createServiceContext(
 		String path, ClassedModel classedModel, String namespace) {
 
-		return createServiceContext(
-			null, path, classedModel, classedModel.getModelClass(), namespace);
+		return createServiceContext(path, classedModel);
 	}
 
 	@Override
@@ -1991,8 +2002,8 @@ public class PortletDataContextImpl implements PortletDataContext {
 	}
 
 	protected ServiceContext createServiceContext(
-		Element element, String path, ClassedModel classedModel, Class<?> clazz,
-		String namespace) {
+		Element element, String path, ClassedModel classedModel,
+		Class<?> clazz) {
 
 		long classPK = getClassPK(classedModel);
 

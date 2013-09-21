@@ -207,14 +207,28 @@ public interface PortletDataContext extends Serializable {
 	public void clearScopedPrimaryKeys();
 
 	public ServiceContext createServiceContext(
+		Element element, ClassedModel classedModel);
+
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link
+	 *             #createServiceContext(com.liferay.portal.kernel.xml.Element,
+	 *             com.liferay.portal.model.ClassedModel)}
+	 */
+	public ServiceContext createServiceContext(
 		Element element, ClassedModel classedModel, String namespace);
 
-	public ServiceContext createServiceContext(
-		StagedModel stagedModel, Class<?> clazz, String namespace);
+	public ServiceContext createServiceContext(StagedModel stagedModel);
 
 	public ServiceContext createServiceContext(
-		StagedModel stagedModel, String namespace);
+		StagedModel stagedModel, Class<?> clazz);
 
+	public ServiceContext createServiceContext(
+		String path, ClassedModel classedModel);
+
+	/**
+	 * @deprecated As of 6.2.0, replaced by {@link #createServiceContext(String,
+	 *             com.liferay.portal.model.ClassedModel)}
+	 */
 	public ServiceContext createServiceContext(
 		String path, ClassedModel classedModel, String namespace);
 

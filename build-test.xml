@@ -557,6 +557,18 @@
 		</antcall>
 
 		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="end-user-calendar-acceptance" />
+			<param name="test.ant.script.database.minimal" value="true" />
+			<param name="test.ant.script.suite" value="EndUserCalendarAcceptanceTestSuite" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
+			<param name="test.ant.script.command" value="end-user-calendar-p5" />
+			<param name="test.ant.script.database.minimal" value="true" />
+			<param name="test.ant.script.suite" value="EndUserCalendarP5TestSuite" />
+		</antcall>
+
+		<antcall target="build-test-ant-script">
 			<param name="test.ant.script.command" value="end-user-collaboration-acceptance" />
 			<param name="test.ant.script.database.minimal" value="true" />
 			<param name="test.ant.script.suite" value="EndUserCollaborationAcceptanceTestSuite" />

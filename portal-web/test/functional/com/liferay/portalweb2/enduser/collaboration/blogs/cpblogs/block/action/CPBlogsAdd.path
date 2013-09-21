@@ -24,6 +24,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ERROR_MESSAGE_1</td>
+	<td>xPath=(//div[@class='alert alert-error'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ERROR_MESSAGE_2</td>
+	<td>xPath=(//div[@class='alert alert-error'])[2]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SAVE_STATUS</td>
 	<td>//div[@class='alert alert-success save-status']</td>
 	<td></td>

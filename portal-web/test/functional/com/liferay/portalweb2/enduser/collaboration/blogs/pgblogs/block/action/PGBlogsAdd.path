@@ -19,13 +19,48 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ERROR_MESSAGE_1</td>
+	<td>xPath=(//div[@class='alert alert-error'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ERROR_MESSAGE_2</td>
+	<td>xPath=(//div[@class='alert alert-error'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE_STATUS</td>
+	<td>//div[@id='_33_saveStatus']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TITLE_FIELD</td>
 	<td>//input[@id='_33_title']</td>
 	<td></td>
 </tr>
 <tr>
+	<td>TITLE_REQUIRED</td>
+	<td>//span[@class='label-required']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIELD_REQUIRED</td>
+	<td>//div[@class='required']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONTENT_FIELD</td>
 	<td>//div[@id='cke_1_contents']/iframe</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SAVE_AS_DRAFT_BUTTON</td>
+	<td>//button[@id='_33_saveButton']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PREVIEW_BUTTON</td>
+	<td>//button[@id='_33_previewButton']</td>
 	<td></td>
 </tr>
 <tr>

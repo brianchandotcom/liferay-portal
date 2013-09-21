@@ -64,10 +64,10 @@ public class LayoutExportBackgroundTaskExecutor
 		Date startDate = (Date)taskContextMap.get("startDate");
 		Date endDate = (Date)taskContextMap.get("endDate");
 
-		long lastPublishDate = System.currentTimeMillis();
+		Date lastPublishDate = new Date();
 
 		if (endDate != null) {
-			lastPublishDate = endDate.getTime();
+			lastPublishDate = endDate;
 		}
 
 		File larFile = LayoutLocalServiceUtil.exportLayoutsAsFile(

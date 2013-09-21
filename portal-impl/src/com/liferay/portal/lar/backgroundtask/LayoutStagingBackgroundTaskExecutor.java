@@ -64,10 +64,10 @@ public class LayoutStagingBackgroundTaskExecutor
 		MissingReferences missingReferences = null;
 
 		try {
-			long lastPublishDate = System.currentTimeMillis();
+			Date lastPublishDate = new Date();
 
 			if (endDate != null) {
-				lastPublishDate = endDate.getTime();
+				lastPublishDate = endDate;
 			}
 
 			file = LayoutLocalServiceUtil.exportLayoutsAsFile(

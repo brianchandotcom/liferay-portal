@@ -252,7 +252,7 @@ public interface Staging {
 		throws Exception;
 
 	public void updateLastPublishDate(
-			long sourceGroupId, boolean privateLayout, long lastPublishDate)
+			long sourceGroupId, boolean privateLayout, Date lastPublishDate)
 		throws Exception;
 
 	public void updateStaging(PortletRequest PortletRequest, Group liveGroup)

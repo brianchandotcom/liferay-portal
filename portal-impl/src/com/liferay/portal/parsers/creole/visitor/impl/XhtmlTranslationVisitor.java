@@ -429,6 +429,10 @@ public class XhtmlTranslationVisitor implements ASTVisitor {
 	}
 
 	protected void traverse(List<ASTNode> astNodes, String open, String close) {
+		if (astNodes.size() == 0) {
+			return;
+		}
+
 		append(open);
 
 		traverse(astNodes);

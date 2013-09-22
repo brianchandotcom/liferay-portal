@@ -84,20 +84,20 @@ public class JSONWebServiceNaming {
 			return false;
 		}
 
-		if (excludedArgumentTypes != null) {
-			Class[] parameterTypes = method.getParameterTypes();
+		if (excludedArgumentTypes == null) {
+			return true;
+		}
 
-			for (Class parameterType : parameterTypes) {
-				if (excludedArgumentTypes.contains(parameterType)) {
-					return false;
-				}
-			}
+		Class<?>[] parameterTypes = method.getParameterTypes();
 
-			Class returnType = method.getReturnType();
-
-			if (excludedArgumentTypes.contains(returnType)) {
+		for (Class<?> parameterType : parameterTypes) {
+			if (excludedArgumentTypes.contains(parameterType)) {
 				return false;
 			}
+		}
+
+		if (excludedArgumentTypes.contains(method.getReturnType())) {
+			return false;
 		}
 
 		return true;
@@ -128,7 +128,7 @@ public class JSONWebServiceNaming {
 	protected Set<Class> excludedArgumentTypes = SetUtil.fromArray(
 		new Class[] {InputStream.class, OutputStream.class});
 	protected Set<String> excludedMethodNames = SetUtil.fromArray(
-			new String[] {"getBeanIdentifier", "setBeanIdentifier"});
+		new String[] {"getBeanIdentifier", "setBeanIdentifier"});
 	protected Set<String> invalidHttpMethods = SetUtil.fromArray(
 		PropsUtil.getArray(PropsKeys.JSONWS_WEB_SERVICE_INVALID_HTTP_METHODS));
 	protected Set<String> prefixes = SetUtil.fromArray(

@@ -66,9 +66,12 @@ public class EditPermissionsAction extends PortletAction {
 			ActionResponse actionResponse)
 		throws Exception {
 
-		actionRequest = ActionUtil.getWrappedActionRequest(actionRequest, null);
-
 		try {
+			ActionUtil.checkPortletConfigurationPermission(actionRequest);
+
+			actionRequest = ActionUtil.getWrappedActionRequest(
+				actionRequest, null);
+
 			updateRolePermissions(actionRequest);
 
 			addSuccessMessage(actionRequest, actionResponse);
@@ -92,6 +95,17 @@ public class EditPermissionsAction extends PortletAction {
 			PortletConfig portletConfig, RenderRequest renderRequest,
 			RenderResponse renderResponse)
 		throws Exception {
+
+		try {
+			ActionUtil.checkPortletConfigurationPermission(renderRequest);
+		}
+		catch (PrincipalException pe) {
+			SessionErrors.add(
+				renderRequest, PrincipalException.class.getName());
+
+			return actionMapping.findForward(
+				"portlet.portlet_configuration.error");
+		}
 
 		renderRequest = ActionUtil.getWrappedRenderRequest(renderRequest, null);
 
@@ -122,7 +136,8 @@ public class EditPermissionsAction extends PortletAction {
 			SessionErrors.add(
 				renderRequest, PrincipalException.class.getName());
 
-			setForward(renderRequest, "portlet.portlet_configuration.error");
+			return actionMapping.findForward(
+				"portlet.portlet_configuration.error");
 		}
 
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(

@@ -345,6 +345,14 @@ public interface ${entity.name}Model extends
 		</#if>
 
 		/**
+		 * Returns the classPK of this ${entity.humanName}
+		 *
+		 * @return the classPK of this ${entity.humanName}
+		 */
+		@Override
+		public long getTrashClassPK();
+
+		/**
 		 * Returns the trash entry created when this ${entity.humanName} was moved to the Recycle Bin. The trash entry may belong to one of the ancestors of this ${entity.humanName}.
 		 *
 		 * @return the trash entry created when this ${entity.humanName} was moved to the Recycle Bin

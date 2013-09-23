@@ -26,6 +26,8 @@ public interface TrashedModel {
 
 	public int getStatus();
 
+	public long getTrashClassPK();
+
 	public TrashEntry getTrashEntry() throws PortalException, SystemException;
 
 	public TrashHandler getTrashHandler();

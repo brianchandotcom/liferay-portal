@@ -182,7 +182,7 @@
 		}
 	}
 
-	/* ---------- Help Icon ---------- */
+	/* ---------- Help icon ---------- */
 
 	.taglib-icon-help {
 		img {
@@ -484,7 +484,7 @@
 		}
 	}
 
-	/* ---------- Hidden Accessible ---------- */
+	/* ---------- Hidden accessible ---------- */
 
 	#banner h2, #banner h3, .site-breadcrumbs h1, #skip-to-content {
 		clip: rect(0 0 0 0);
@@ -638,7 +638,7 @@
 		}
 	}
 
-	/* ---------- Side Accordion Navigations ---------- */
+	/* ---------- Side accordion navigations ---------- */
 
 	.add-content-menu, .lfr-edit-layout-panel, .panel-page-menu .portlet-borderless-container {
 		.accordion {

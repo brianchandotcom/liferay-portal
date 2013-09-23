@@ -209,7 +209,7 @@
 .menu-content li a.focus, .lfr-menu-expanded li a:focus {
 }
 
-/* ---------- Loading Mask ---------- */
+/* ---------- Loading mask ---------- */
 
 .loadingmask-content {
 }
@@ -217,12 +217,12 @@
 .loadingmask-message {
 }
 
-/* ---------- Tree View ---------- */
+/* ---------- Tree view ---------- */
 
 .tree-node-selected .tree-label {
 }
 
-/* ---------- Page Customization ---------- */
+/* ---------- Page customization ---------- */
 
 .dragging .portlet-column.customizable {
 }

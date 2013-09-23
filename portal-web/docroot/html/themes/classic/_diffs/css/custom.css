@@ -345,7 +345,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 		}
 	}
 
-	/* ---------- Set Password Reminder Portlet ---------- */
+	/* ---------- Set password reminder portlet ---------- */
 
 	.update-reminder-query {
 		.control-group {
@@ -362,7 +362,7 @@ $dockbarOpenGradientStart: #0EA6F9;
 		}
 	}
 
-	/* ---------- Staging Bar ---------- */
+	/* ---------- Staging bar ---------- */
 
 	.navbar-inner .nav.staging-bar {
 		border-top-width: 0;

@@ -356,7 +356,7 @@
 	text-shadow: -1px -1px #2C2F34;
 }
 
-/* ---------- Loading Mask ---------- */
+/* ---------- Loading mask ---------- */
 
 .loadingmask-content {
 	background: #CCC;
@@ -366,7 +366,7 @@
 	background: #D4D4D4 url(../images/portlet/header_bg.png) repeat-x 0 0;
 }
 
-/* ---------- Tree View ---------- */
+/* ---------- Tree view ---------- */
 
 .tree-node-content {
 	.tree-hitarea {
@@ -389,7 +389,7 @@
 	font-weight: bold;
 }
 
-/* ---------- Page Customization ---------- */
+/* ---------- Page customization ---------- */
 
 .dragging .portlet-column.customizable {
 	background-color: #CFFCCF;

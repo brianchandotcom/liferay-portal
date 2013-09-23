@@ -294,7 +294,7 @@ body.portlet {
 	}
 }
 
-/* ---------- Panel Page ---------- */
+/* ---------- Panel page ---------- */
 
 .lfr-panel-page {
 	width: 100%;
@@ -369,7 +369,7 @@ body.portlet {
 	color: #384F34;
 }
 
-/* ---------- Liferay Messages ---------- */
+/* ---------- Liferay messages ---------- */
 
 .lfr-message {
 	position: relative;
@@ -483,7 +483,7 @@ body.portlet {
 .portlet-icon-label {
 }
 
-/* ---------- Text that appears beside a 'standard' icon (e.g. Ok, or Cancel) ---------- */
+/* ---------- Text that appears beside a 'standard' icon (e.g. Ok, or cancel) ---------- */
 
 .portlet-dlg-icon-label {
 }

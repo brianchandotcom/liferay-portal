@@ -58,6 +58,8 @@ public class SourceFormatter {
 						new ArrayList<SourceProcessor>();
 
 					sourceProcessors.add(
+						CSSSourceProcessor.class.newInstance());
+					sourceProcessors.add(
 						FTLSourceProcessor.class.newInstance());
 					sourceProcessors.add(
 						JavaSourceProcessor.class.newInstance());

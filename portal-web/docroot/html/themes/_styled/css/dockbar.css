@@ -323,7 +323,7 @@ $editLayoutPanelWidth: 460px;
 		}
 	}
 
-	/* ---------- Staging Dockbar ---------- */
+	/* ---------- Staging dockbar ---------- */
 
 	.variation-selector {
 		display: block;
@@ -388,7 +388,7 @@ $editLayoutPanelWidth: 460px;
 		margin: 0;
 	}
 
-	/* ---------- Add Content ---------- */
+	/* ---------- Add content ---------- */
 
 	.lfr-admin-panel {
 		background-color: #FFF;
@@ -484,7 +484,7 @@ $editLayoutPanelWidth: 460px;
 		}
 	}
 
-	/* ---------- Customization Bar ---------- */
+	/* ---------- Customization bar ---------- */
 
 	.page-customization-bar {
 		background-color: #999;

@@ -601,7 +601,28 @@ public class EditArticleAction extends PortletAction {
 		String structureId = ParamUtil.getString(
 			uploadPortletRequest, "structureId");
 
+		DDMStructure ddmStructure = null;
+
 		if (Validator.isNotNull(structureId)) {
+			try {
+				ddmStructure =
+					DDMStructureLocalServiceUtil.getStructure(
+						PortalUtil.getSiteGroupId(groupId),
+						PortalUtil.getClassNameId(JournalArticle.class),
+						structureId);
+			}
+			catch (NoSuchStructureException nsse) {
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)actionRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
+
+				ddmStructure =
+					DDMStructureLocalServiceUtil.getStructure(
+						themeDisplay.getCompanyGroupId(),
+						PortalUtil.getClassNameId(JournalArticle.class),
+						structureId);
+			}
+
 			String languageId = toLanguageId;
 
 			if (Validator.isNull(languageId)) {
@@ -611,7 +632,7 @@ public class EditArticleAction extends PortletAction {
 			Locale locale = LocaleUtil.fromLanguageId(languageId);
 
 			Object[] contentAndImages = ActionUtil.getContentAndImages(
-				groupId, structureId, locale, serviceContext);
+				ddmStructure, locale, serviceContext);
 
 			content = (String)contentAndImages[0];
 			images = (HashMap<String, byte[]>)contentAndImages[1];
@@ -781,27 +802,6 @@ public class EditArticleAction extends PortletAction {
 			}
 			else {
 				if (curArticle.isTemplateDriven()) {
-					DDMStructure ddmStructure = null;
-
-					try {
-						ddmStructure =
-							DDMStructureLocalServiceUtil.getStructure(
-								groupId,
-								PortalUtil.getClassNameId(JournalArticle.class),
-								structureId);
-					}
-					catch (NoSuchStructureException nsse) {
-						ThemeDisplay themeDisplay =
-							(ThemeDisplay)actionRequest.getAttribute(
-								WebKeys.THEME_DISPLAY);
-
-						ddmStructure =
-							DDMStructureLocalServiceUtil.getStructure(
-								themeDisplay.getCompanyGroupId(),
-								PortalUtil.getClassNameId(JournalArticle.class),
-								structureId);
-					}
-
 					Fields newFields = DDMUtil.getFields(
 						ddmStructure.getStructureId(), serviceContext);
 

@@ -67,7 +67,7 @@
 <!--LANGUAGE_MENU-->
 <tr>
 	<td>LANGUAGE_MENU_CHINESE</td>
-	<td>//img[@title='中文']</td>
+	<td>//a[@lang='zh-CN']/img</td>
 	<td></td>
 </tr>
 <tr>

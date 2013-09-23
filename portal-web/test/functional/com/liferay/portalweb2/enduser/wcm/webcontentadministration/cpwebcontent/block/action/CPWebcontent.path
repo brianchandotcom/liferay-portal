@@ -87,6 +87,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TOOLBAR_DISPLAY_STYLE_BUTTON</td>
+	<td>//div[contains(@id,'displayStyleButtons')]/div/a</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TOOLBAR_ICON_VIEW_BUTTON</td>
 	<td>//button[@data-displaystyle='icon']</td>
 	<td></td>
@@ -187,6 +192,27 @@
 <tr>
 	<td>MANAGE_MENULIST_FEEDS</td>
 	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Feeds')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--DISPLAY_STYLE_MENULIST-->
+<tr>
+	<td>DISPLAY_STYLE_MENULIST_ICON</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Icon')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_STYLE_MENULIST_DESCRIPTIVE</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'Descriptive')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_STYLE_MENULIST_LIST</td>
+	<td>//ul[contains(@class,'dropdown-menu')]/li/a[contains(.,'List')]</td>
 	<td></td>
 </tr>
 <tr>

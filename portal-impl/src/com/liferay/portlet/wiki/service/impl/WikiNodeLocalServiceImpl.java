@@ -515,12 +515,7 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 			WikiNode.class);
 
-		if (status == WorkflowConstants.STATUS_IN_TRASH) {
-			indexer.reindex(node);
-		}
-		else {
-			indexer.delete(node);
-		}
+		indexer.reindex(node);
 
 		return node;
 	}

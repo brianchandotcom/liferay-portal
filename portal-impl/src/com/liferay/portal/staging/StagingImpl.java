@@ -133,6 +133,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
+import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 
 import javax.servlet.http.HttpServletRequest;
@@ -1757,6 +1758,31 @@ public class StagingImpl implements Staging {
 		LayoutSetLocalServiceUtil.updateSettings(
 			layoutSet.getGroupId(), layoutSet.isPrivateLayout(),
 			settingsProperties.toString());
+	}
+
+	@Override
+	public void updateLastPublishDate(
+			String portletId, PortletPreferences jxPreferences,
+			Date lastPublishDate)
+		throws Exception {
+
+		try {
+			jxPreferences.setValue(
+				"last-publish-date", String.valueOf(lastPublishDate.getTime()));
+
+			jxPreferences.store();
+		}
+		catch (UnsupportedOperationException uoe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Not updating the portlet setup for " + portletId +
+						" because no setup was returned for the current " +
+							"page");
+			}
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
 	}
 
 	@Override

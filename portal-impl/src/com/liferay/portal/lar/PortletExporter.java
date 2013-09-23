@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.lar.PortletDataHandler;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -225,23 +226,8 @@ public class PortletExporter {
 		Date endDate = portletDataContext.getEndDate();
 
 		if (endDate != null) {
-			try {
-				jxPortletPreferences.setValue(
-					"last-publish-date", String.valueOf(endDate.getTime()));
-
-				jxPortletPreferences.store();
-			}
-			catch (UnsupportedOperationException uoe) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"Not updating the portlet setup for " + portletId +
-							" because no setup was returned for the current " +
-								"page");
-				}
-			}
-			catch (Exception e) {
-				_log.error(e, e);
-			}
+			StagingUtil.updateLastPublishDate(
+				portletId, jxPortletPreferences, endDate);
 		}
 	}
 

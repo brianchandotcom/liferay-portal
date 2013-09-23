@@ -43,6 +43,7 @@ import com.liferay.portlet.dynamicdatamapping.util.DDMTemplateTestUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalFolder;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
+import com.liferay.portlet.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.portlet.journal.util.JournalTestUtil;
 
 import java.util.HashMap;
@@ -701,8 +702,8 @@ public class JournalIndexerTest {
 			searchCount(_group.getGroupId(), searchContext1));
 
 		if (moveToTrash) {
-			JournalArticleLocalServiceUtil.moveArticleToTrash(
-				TestPropsValues.getUserId(), article);
+			JournalFolderLocalServiceUtil.moveFolderToTrash(
+				TestPropsValues.getUserId(), folder1.getFolderId());
 
 			Assert.assertEquals(
 				initialSearchCount1,

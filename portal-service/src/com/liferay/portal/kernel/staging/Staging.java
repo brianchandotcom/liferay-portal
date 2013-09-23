@@ -36,6 +36,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 
 import javax.servlet.http.HttpServletRequest;
@@ -253,6 +254,11 @@ public interface Staging {
 
 	public void updateLastPublishDate(
 			long sourceGroupId, boolean privateLayout, Date lastPublishDate)
+		throws Exception;
+
+	public void updateLastPublishDate(
+			String portletId, PortletPreferences jxPreferences,
+			Date lastPublishDate)
 		throws Exception;
 
 	public void updateStaging(PortletRequest PortletRequest, Group liveGroup)

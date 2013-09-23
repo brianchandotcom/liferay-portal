@@ -1,0 +1,16 @@
+<definition>
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<command name="RemoveNoGuestInlineView">
+		<execute macro="PermissionsInline#gotoPagePG">
+			<var name="pageName" value="Welcome" />
+		</execute>
+
+		<var name="key_roleName" value="guest" />
+
+		<execute action="Permissions#click" locator-key1="INLINE_PERMISSIONS_VIEW" />
+		<execute action="Permissions#assertChecked" locator-key1="INLINE_PERMISSIONS_VIEW" />
+	</command>
+</definition>

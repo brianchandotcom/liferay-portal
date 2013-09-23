@@ -16,8 +16,115 @@
 
 		<execute macro="Site#tearDownCP" />
 
+		<execute macro="BlogsEntry#tearDownCP" />
+
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
+
+	<command name="ViewBlogsEntryGuestInline">
+		<var name="entryContent" value="Blogs Entry Content" />
+		<var name="entryTitle" value="Blogs Entry Title" />
+		<var name="inlinePermissionDefinitionKey" value="CONTENT_PERMISSIONS_VIEW" />
+		<var name="pageName" value="Blogs Page" />
+		<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_BLOGS_GENERAL_ACCESS_IN_SITE_ADMINISTRATION" />
+		<var name="permissionDefinitionValue" value="Access in Site Administration" />
+		<var name="permissionNavigationKey" value="SITE_ADMIN_CONTENT_BLOGS" />
+		<var name="permissionNavigationValue" value="Blogs" />
+		<var name="portletName" value="Blogs" />
+		<var name="roleName" value="Regrole Name" />
+		<var name="userEmailAddress" value="userea@liferay.com" />
+		<var name="userFirstName" value="userfn" />
+		<var name="userLastName" value="userln" />
+		<var name="userScreenName" value="usersn" />
+
+		<execute macro="Permissions#setUpRegRoleLoginUserCP">
+			<var name="portletName" value="${portletName}" />
+			<var name="roleName" value="${roleName}" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userLoginEmailAddress" value="test@liferay.com" />
+			<var name="userLoginFullName" value="Test Test" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Permissions#definePermissionLoginUserCP">
+			<var name="permissionDefinitionKey" value="${permissionDefinitionKey}" />
+			<var name="permissionDefinitionValue" value="${permissionDefinitionValue}" />
+			<var name="permissionNavigationKey" value="${permissionNavigationKey}" />
+			<var name="permissionNavigationValue" value="${permissionNavigationValue}" />
+			<var name="roleName" value="${roleName}" />
+			<var name="userLoginEmailAddress" value="test@liferay.com" />
+			<var name="userLoginFullName" value="Test Test" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="BlogsEntry#addCP">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="PermissionsInline#gotoBlogsEntryCP">
+			<var name="entryTitle" value="${entryTitle}" />
+			<var name="pageName" value="${pageName}" />
+			<var name="pageTypeSite" value="${pageTypeSite}" />
+		</execute>
+
+		<execute macro="Role#removePermissionPG">
+			<var name="roleName" value="Guest" />
+			<var name="permissionDefinitionKey" value="${inlinePermissionDefinitionKey}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewDefaultCP">
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="test@liferay.com" />
+			<var name="userLoginFullName" value="Test Test" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="${portletName}" />
+		</execute>
+
+		<execute macro="PermissionsInline#gotoBlogsEntryCP">
+			<var name="entryTitle" value="${entryTitle}" />
+			<var name="pageName" value="${pageName}" />
+			<var name="pageTypeSite" value="${pageTypeSite}" />
+		</execute>
+
+		<execute macro="Role#definePermissionPG">
+			<var name="roleName" value="Guest" />
+			<var name="permissionDefinitionKey" value="${inlinePermissionDefinitionKey}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="${userEmailAddress}" />
+			<var name="userLoginFullName" value="${userFirstName} ${userLastName}" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewCP">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+	</command>
 
 	<command name="ViewBlogsPortletRegRole">
 		<var name="permissionDefinitionKey" value="SITE_ADMIN_CONTENT_BLOGS_GENERAL_ACCESS_IN_SITE_ADMINISTRATION" />

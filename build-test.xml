@@ -2749,11 +2749,13 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 				</waitfor>
 
 				<if>
-					<or>
-						<contains string="${simple.server.dir}" substring="glassfish" />
-						<contains string="${simple.server.dir}" substring="jonas" />
+					<and>
+						<or>
+							<contains string="${simple.server.dir}" substring="glassfish" />
+							<contains string="${simple.server.dir}" substring="jonas" />
+						</or>
 						<isset property="plugins.deployed" />
-					</or>
+					</and>
 					<then>
 						<sleep seconds="60" />
 					</then>

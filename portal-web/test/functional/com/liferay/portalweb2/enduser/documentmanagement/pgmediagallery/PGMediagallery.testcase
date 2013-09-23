@@ -27,10 +27,9 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="DMFolder#tearDownPGViaMG">
-			<var name="pageName" value="${pageName}" />
-			<var name="mgFolderName" value="DM Folder Name" />
-		</execute>
+		<execute macro="DMDocument#tearDownCP" />
+
+		<execute macro="DMFolder#tearDownCP" />
 
 		<execute macro="Page#tearDownPG" />
 	</tear-down>

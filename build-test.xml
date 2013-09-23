@@ -1959,6 +1959,17 @@ svn --username ${svn.username} --password ${svn.password} update -r ${svn.info.r
 				/>
 			</then>
 		</if>
+
+		<if>
+			<equals arg1="${test.skip.tear.down}" arg2="true" />
+			<then>
+				<replace
+					file="portal-web/test/test-portal-web.properties"
+					token="test.skip.tear.down=false"
+					value="test.skip.tear.down=true"
+				/>
+			</then>
+		</if>
 	</target>
 
 	<target name="prepare-test-properties" depends="generate-test-properties">

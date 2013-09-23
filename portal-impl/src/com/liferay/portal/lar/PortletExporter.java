@@ -190,6 +190,8 @@ public class PortletExporter {
 
 		portletDataContext.setGroupId(portletDataContext.getScopeGroupId());
 
+		portletDataContext.clearScopedPrimaryKeys();
+
 		try {
 			data = portletDataHandler.exportData(
 				portletDataContext, portletId, jxPortletPreferences);
@@ -299,12 +301,13 @@ public class PortletExporter {
 			exportPortletData = true;
 		}
 		else if (parameterMap.containsKey(
-					PortletDataHandlerKeys.PORTLET_DATA + "_" +
+					PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE +
 						rootPortletId)) {
 
 			exportPortletData = MapUtil.getBoolean(
 				parameterMap,
-				PortletDataHandlerKeys.PORTLET_DATA + "_" + rootPortletId);
+				PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE +
+					rootPortletId);
 		}
 
 		boolean exportPortletArchivedSetups = exportPortletConfiguration;
@@ -480,9 +483,8 @@ public class PortletExporter {
 
 		exportPortlet(
 			portletDataContext, layoutCache, portletId, layout, rootElement,
-			defaultUserId, exportPermissions, exportPortletArchivedSetups,
-			exportPortletData, exportPortletSetup,
-			exportPortletUserPreferences);
+			exportPermissions, exportPortletArchivedSetups, exportPortletData,
+			exportPortletSetup, exportPortletUserPreferences);
 
 		exportAssetCategories(portletDataContext);
 		exportAssetLinks(portletDataContext);
@@ -507,8 +509,6 @@ public class PortletExporter {
 		if (_log.isInfoEnabled()) {
 			_log.info("Exporting portlet took " + stopWatch.getTime() + " ms");
 		}
-
-		portletDataContext.clearScopedPrimaryKeys();
 
 		try {
 			portletDataContext.addZipEntry(
@@ -976,9 +976,9 @@ public class PortletExporter {
 	protected void exportPortlet(
 			PortletDataContext portletDataContext, LayoutCache layoutCache,
 			String portletId, Layout layout, Element parentElement,
-			long defaultUserId, boolean exportPermissions,
-			boolean exportPortletArchivedSetups, boolean exportPortletData,
-			boolean exportPortletSetup, boolean exportPortletUserPreferences)
+			boolean exportPermissions, boolean exportPortletArchivedSetups,
+			boolean exportPortletData, boolean exportPortletSetup,
+			boolean exportPortletUserPreferences)
 		throws Exception {
 
 		long plid = PortletKeys.PREFS_OWNER_ID_DEFAULT;

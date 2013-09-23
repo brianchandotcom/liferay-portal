@@ -173,7 +173,7 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 	protected boolean countStagedModel(
 		PortletDataContext portletDataContext, T stagedModel) {
 
-		return true;
+		return !portletDataContext.isStagedModelCounted(stagedModel);
 	}
 
 	protected abstract void doExportStagedModel(

@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
@@ -139,13 +140,15 @@ public class StagingImplTest {
 			PortletDataHandlerKeys.PORTLET_CONFIGURATION_ALL,
 			new String[] {Boolean.FALSE.toString()});
 		parameters.put(
-			PortletDataHandlerKeys.PORTLET_DATA + "_" + PortletKeys.JOURNAL,
+			PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE +
+				PortletKeys.JOURNAL,
 			new String[] {String.valueOf(stageJournal)});
 		parameters.put(
 			PortletDataHandlerKeys.PORTLET_DATA_ALL,
 			new String[] {Boolean.FALSE.toString()});
 		parameters.put(
-			PortletDataHandlerKeys.PORTLET_SETUP + "_" + PortletKeys.JOURNAL,
+			PortletDataHandlerKeys.PORTLET_SETUP + StringPool.UNDERLINE +
+				PortletKeys.JOURNAL,
 			new String[] {String.valueOf(stageJournal)});
 
 		serviceContext.setAttribute(

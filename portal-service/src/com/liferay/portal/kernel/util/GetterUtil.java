@@ -207,12 +207,16 @@ public class GetterUtil {
 		}
 
 		if (value instanceof String) {
+			if (Validator.isNull(value)) {
+				return defaultValue;
+			}
+
 			try {
 				String valueString = (String)value;
 
 				return new BigDecimal(valueString.trim());
 			}
-			catch (Exception e) {
+			catch (NumberFormatException nfe) {
 				return defaultValue;
 			}
 		}

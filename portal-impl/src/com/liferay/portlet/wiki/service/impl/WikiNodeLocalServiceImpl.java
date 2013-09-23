@@ -402,27 +402,39 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 	public WikiNode moveNodeToTrash(long userId, WikiNode node)
 		throws PortalException, SystemException {
 
+		int oldStatus = node.getStatus();
+
 		node = updateStatus(
 			userId, node, WorkflowConstants.STATUS_IN_TRASH,
 			new ServiceContext());
 
-		TrashEntry trashEntry = trashEntryLocalService.getEntry(
-			WikiNode.class.getName(), node.getNodeId());
+		// Trash
 
-		String trashTitle = TrashUtil.getTrashTitle(trashEntry.getEntryId());
+		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
 
-		node.setName(trashTitle);
+		typeSettingsProperties.put("title", node.getName());
 
-		return wikiNodePersistence.update(node);
+		TrashEntry trashEntry = trashEntryLocalService.addTrashEntry(
+			userId, node.getGroupId(), WikiNode.class.getName(),
+			node.getNodeId(), node.getUuid(), null, oldStatus, null,
+			typeSettingsProperties);
+
+		node.setName(TrashUtil.getTrashTitle(trashEntry.getEntryId()));
+
+		wikiNodePersistence.update(node);
+
+		// Pages
+
+		moveDependentToTrash(node.getNodeId());
+
+		return node;
 	}
 
 	@Override
 	public void restoreNodeFromTrash(long userId, WikiNode node)
 		throws PortalException, SystemException {
 
-		String name = TrashUtil.getOriginalTitle(node.getName());
-
-		node.setName(name);
+		node.setName(TrashUtil.getOriginalTitle(node.getName()));
 
 		wikiNodePersistence.update(node);
 
@@ -431,6 +443,14 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 
 		updateStatus(
 			userId, node, trashEntry.getStatus(), new ServiceContext());
+
+		// Pages
+
+		restoreDependentFromTrash(node.getNodeId());
+
+		// Trash
+
+		trashEntryLocalService.deleteEntry(trashEntry);
 	}
 
 	@Override
@@ -478,8 +498,6 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 
 		// Node
 
-		int oldStatus = node.getStatus();
-
 		User user = userPersistence.findByPrimaryKey(userId);
 
 		Date now = new Date();
@@ -490,27 +508,6 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 		node.setStatusDate(now);
 
 		wikiNodePersistence.update(node);
-
-		// Pages
-
-		updateDependentStatus(node.getNodeId(), status);
-
-		// Trash
-
-		if (oldStatus == WorkflowConstants.STATUS_IN_TRASH) {
-			trashEntryLocalService.deleteEntry(
-				WikiNode.class.getName(), node.getNodeId());
-		}
-		else if (status == WorkflowConstants.STATUS_IN_TRASH) {
-			UnicodeProperties typeSettingsProperties = new UnicodeProperties();
-
-			typeSettingsProperties.put("title", node.getName());
-
-			trashEntryLocalService.addTrashEntry(
-				userId, node.getGroupId(), WikiNode.class.getName(),
-				node.getNodeId(), node.getUuid(), null, oldStatus, null,
-				typeSettingsProperties);
-		}
 
 		// Indexer
 
@@ -583,7 +580,13 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 
 		for (WikiPage page : pages) {
 
-			if (page.getStatus() == WorkflowConstants.STATUS_APPROVED) {
+			int oldStatus = page.getStatus();
+
+			if (oldStatus == WorkflowConstants.STATUS_IN_TRASH) {
+				continue;
+			}
+
+			if (oldStatus == WorkflowConstants.STATUS_APPROVED) {
 				assetEntryLocalService.updateVisible(
 					WikiPage.class.getName(), page.getResourcePrimKey(),
 					false);
@@ -602,7 +605,7 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 				WikiCacheUtil.clearCache(page.getNodeId());
 			}
 
-			if (page.getStatus() == WorkflowConstants.STATUS_PENDING) {
+			if (oldStatus == WorkflowConstants.STATUS_PENDING) {
 				page.setStatus(WorkflowConstants.STATUS_DRAFT);
 
 				wikiPagePersistence.update(page);

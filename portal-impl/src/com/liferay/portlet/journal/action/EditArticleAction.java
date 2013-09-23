@@ -607,7 +607,7 @@ public class EditArticleAction extends PortletAction {
 			try {
 				ddmStructure =
 					DDMStructureLocalServiceUtil.getStructure(
-						groupId,
+						PortalUtil.getSiteGroupId(groupId),
 						PortalUtil.getClassNameId(JournalArticle.class),
 						structureId);
 			}

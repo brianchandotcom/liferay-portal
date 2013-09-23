@@ -1851,7 +1851,7 @@ public class JournalArticleLocalServiceImpl
 
 				try {
 					ddmTemplate = ddmTemplatePersistence.findByG_C_T(
-						article.getGroupId(),
+						PortalUtil.getSiteGroupId(article.getGroupId()),
 						PortalUtil.getClassNameId(DDMStructure.class),
 						ddmTemplateKey);
 				}
@@ -1872,7 +1872,7 @@ public class JournalArticleLocalServiceImpl
 					catch (NoSuchTemplateException nste2) {
 						if (!defaultDDMTemplateKey.equals(ddmTemplateKey)) {
 							ddmTemplate = ddmTemplatePersistence.findByG_C_T(
-								article.getGroupId(),
+								PortalUtil.getSiteGroupId(article.getGroupId()),
 								PortalUtil.getClassNameId(DDMStructure.class),
 								defaultDDMTemplateKey);
 						}
@@ -5578,7 +5578,7 @@ public class JournalArticleLocalServiceImpl
 
 		try {
 			structure = ddmStructurePersistence.findByG_C_S(
-				article.getGroupId(),
+				PortalUtil.getSiteGroupId(article.getGroupId()),
 				PortalUtil.getClassNameId(JournalArticle.class),
 				article.getStructureId());
 		}
@@ -6507,7 +6507,8 @@ public class JournalArticleLocalServiceImpl
 
 			try {
 				ddmStructure = ddmStructurePersistence.findByG_C_S(
-					groupId, PortalUtil.getClassNameId(JournalArticle.class),
+					PortalUtil.getSiteGroupId(groupId),
+					PortalUtil.getClassNameId(JournalArticle.class),
 					ddmStructureKey);
 			}
 			catch (NoSuchStructureException nsse) {
@@ -6522,7 +6523,8 @@ public class JournalArticleLocalServiceImpl
 			if (Validator.isNotNull(ddmTemplateKey)) {
 				try {
 					ddmTemplate = ddmTemplatePersistence.findByG_C_T(
-						groupId, PortalUtil.getClassNameId(DDMStructure.class),
+						PortalUtil.getSiteGroupId(groupId),
+						PortalUtil.getClassNameId(DDMStructure.class),
 						ddmTemplateKey);
 				}
 				catch (NoSuchTemplateException nste) {

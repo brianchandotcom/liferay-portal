@@ -1455,6 +1455,10 @@ public class SeleniumBuilderFileUtil {
 		else {
 			String varValue = attributeMap.get("value");
 
+			if (Validator.isNotNull(varText)) {
+				varValue = varText;
+			}
+
 			Pattern pattern = Pattern.compile("\\$\\{([^\\}]*?)\\}");
 
 			Matcher matcher = pattern.matcher(varValue);
@@ -1551,7 +1555,8 @@ public class SeleniumBuilderFileUtil {
 	private static List<String> _allowedVarAttributes = ListUtil.fromArray(
 		new String[] {"line-number", "locator-key", "name", "path", "value"});
 	private static List<String> _methodNames = ListUtil.fromArray(
-		new String[] {"increment", "length", "lowercase", "replace"});
+		new String[] {"getFirstNumber", "increment", "length", "lowercase",
+			"replace"});
 	private static List<String> _reservedTags = ListUtil.fromArray(
 		new String[] {
 			"case", "command", "condition", "contains", "default", "definition",

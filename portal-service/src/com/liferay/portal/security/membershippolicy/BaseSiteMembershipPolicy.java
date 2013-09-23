@@ -28,7 +28,6 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.UserGroupRoleLocalServiceUtil;
 import com.liferay.portal.service.persistence.GroupActionableDynamicQuery;
-import com.liferay.portal.service.persistence.UserGroupRoleActionableDynamicQuery;
 import com.liferay.portal.service.persistence.UserGroupRolePK;
 
 import java.io.Serializable;
@@ -215,24 +214,25 @@ public abstract class BaseSiteMembershipPolicy implements SiteMembershipPolicy {
 
 				verifyPolicy(group);
 
-				ActionableDynamicQuery userGroupRoleActionableDynamicQuery =
-					new UserGroupRoleActionableDynamicQuery() {
+				int start = 0;
+				int end = 500;
 
-					@Override
-					protected void performAction(Object object)
-						throws PortalException, SystemException {
+				int total =
+					UserGroupRoleLocalServiceUtil.getUserGroupRolesByGroupCount(
+						group.getGroupId());
 
-						UserGroupRole userGroupRole = (UserGroupRole)object;
+				while (start <= total) {
+					List<UserGroupRole> userGroupRoles =
+						UserGroupRoleLocalServiceUtil.getUserGroupRolesByGroup(
+							group.getGroupId(), start, end);
 
+					for (UserGroupRole userGroupRole : userGroupRoles) {
 						verifyPolicy(userGroupRole.getRole());
 					}
 
-				};
-
-				userGroupRoleActionableDynamicQuery.setGroupId(
-					group.getGroupId());
-
-				userGroupRoleActionableDynamicQuery.performActions();
+					start = end;
+					end += end;
+				}
 			}
 
 		};

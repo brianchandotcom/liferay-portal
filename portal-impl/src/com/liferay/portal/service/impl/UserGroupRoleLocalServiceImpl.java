@@ -212,11 +212,26 @@ public class UserGroupRoleLocalServiceImpl
 	}
 
 	@Override
+	public List<UserGroupRole> getUserGroupRolesByGroup(
+			long groupId, int start, int end)
+		throws SystemException {
+
+		return userGroupRolePersistence.findByGroupId(groupId, start, end);
+	}
+
+	@Override
 	public List<UserGroupRole> getUserGroupRolesByGroupAndRole(
 			long groupId, long roleId)
 		throws SystemException {
 
 		return userGroupRolePersistence.findByG_R(groupId, roleId);
+	}
+
+	@Override
+	public int getUserGroupRolesByGroupCount(long groupId)
+		throws SystemException {
+
+		return userGroupRolePersistence.countByGroupId(groupId);
 	}
 
 	@Override

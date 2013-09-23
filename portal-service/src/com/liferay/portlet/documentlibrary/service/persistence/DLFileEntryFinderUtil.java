@@ -33,6 +33,15 @@ public class DLFileEntryFinderUtil {
 		return getFinder().countByG_F(groupId, folderIds, queryDefinition);
 	}
 
+	public static int countByG_M_R(long groupId,
+		com.liferay.portal.kernel.util.DateRange dateRange, long repositoryId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getFinder()
+				   .countByG_M_R(groupId, dateRange, repositoryId,
+			queryDefinition);
+	}
+
 	public static int countByG_U_F_M(long groupId, long userId,
 		java.util.List<java.lang.Long> folderIds, java.lang.String[] mimeTypes,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)

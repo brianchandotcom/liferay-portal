@@ -163,6 +163,7 @@ if (Validator.isNotNull(content)) {
 	<portlet:param name="struts_action" value="/journal/edit_article" />
 	<portlet:param name="articleId" value="<%= articleId %>" />
 	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+	<portlet:param name="structureId" value="<%= structureId %>" />
 </portlet:renderURL>
 
 <portlet:renderURL var="updateDefaultLanguageURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">

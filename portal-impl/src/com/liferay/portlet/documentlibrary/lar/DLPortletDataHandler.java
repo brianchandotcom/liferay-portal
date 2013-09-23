@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.util.DateRange;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -390,17 +389,10 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 				ManifestSummary manifestSummary =
 					portletDataContext.getManifestSummary();
 
-				DateRange dateRange = null;
-
-				if (portletDataContext.hasDateRange()) {
-					dateRange = new DateRange(
-						portletDataContext.getStartDate(),
-						portletDataContext.getEndDate());
-				}
-
 				long modelAdditionCount =
 					DLFileEntryLocalServiceUtil.getFileEntriesCount(
-						portletDataContext.getScopeGroupId(), dateRange,
+						portletDataContext.getScopeGroupId(),
+						portletDataContext.getDateRange(),
 						portletDataContext.getScopeGroupId(),
 						new QueryDefinition(WorkflowConstants.STATUS_APPROVED));
 

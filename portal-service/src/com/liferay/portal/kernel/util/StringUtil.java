@@ -3721,7 +3721,7 @@ public class StringUtil {
 				// Found non-ascii char, fallback to the slow unicode detection
 
 				if (locale == null) {
-					locale = Locale.getDefault();
+					locale = LocaleUtil.getDefault();
 				}
 
 				return s.toLowerCase(locale);
@@ -3758,7 +3758,7 @@ public class StringUtil {
 				// Found non-ascii char, fallback to the slow unicode detection
 
 				if (locale == null) {
-					locale = Locale.getDefault();
+					locale = LocaleUtil.getDefault();
 				}
 
 				return s.toLowerCase(locale);

@@ -601,7 +601,7 @@ public class Validator {
 					return false;
 				}
 
-				if (!isChar(c) && !isDigit(c) && (c != CharPool.DASH)) {
+				if (!Character.isLetterOrDigit(c) && (c != CharPool.DASH)) {
 					return false;
 				}
 			}

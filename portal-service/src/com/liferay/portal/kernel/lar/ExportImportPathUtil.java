@@ -96,19 +96,21 @@ public class ExportImportPathUtil {
 	public static String getModelPath(
 		StagedModel stagedModel, String dependentFileName) {
 
+		StagedModelType stagedModelType = stagedModel.getStagedModelType();
+
 		if (stagedModel instanceof StagedGroupedModel) {
 			StagedGroupedModel stagedGroupedModel =
 				(StagedGroupedModel)stagedModel;
 
 			return getModelPath(
 				PATH_PREFIX_GROUP, stagedGroupedModel.getGroupId(),
-				stagedModel.getModelClassName(), stagedModel.getPrimaryKeyObj(),
+				stagedModelType.getClassName(), stagedModel.getPrimaryKeyObj(),
 				dependentFileName);
 		}
 		else {
 			return getModelPath(
 				PATH_PREFIX_COMPANY, stagedModel.getCompanyId(),
-				stagedModel.getModelClassName(), stagedModel.getPrimaryKeyObj(),
+				stagedModelType.getClassName(), stagedModel.getPrimaryKeyObj(),
 				dependentFileName);
 		}
 	}

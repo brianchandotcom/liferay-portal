@@ -596,9 +596,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 						PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
 				}
 
-				String path = ExportImportPathUtil.getModelPath(
-					fileEntry.getGroupId(), FileEntry.class.getName(),
-					fileEntry.getFileEntryId());
+				String path = ExportImportPathUtil.getModelPath(fileEntry);
 
 				sb.replace(beginPos, endPos, "[$dl-reference=" + path + "$]");
 			}

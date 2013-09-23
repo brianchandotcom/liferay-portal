@@ -90,8 +90,7 @@ public class FolderStagedModelDataHandler
 		Element folderElement = portletDataContext.getExportDataElement(
 			folder, Folder.class);
 
-		String folderPath = ExportImportPathUtil.getModelPath(
-			folder.getGroupId(), Folder.class.getName(), folder.getFolderId());
+		String folderPath = ExportImportPathUtil.getModelPath(folder);
 
 		Repository repository = null;
 
@@ -104,8 +103,7 @@ public class FolderStagedModelDataHandler
 				Repository.class, PortletDataContext.REFERENCE_TYPE_STRONG);
 
 			portletDataContext.addClassedModel(
-				folderElement, folderPath, folder,
-				DLPortletDataHandler.NAMESPACE);
+				folderElement, folderPath, folder);
 		}
 
 		long liferayRepositoryClassNameId = PortalUtil.getClassNameId(
@@ -133,8 +131,7 @@ public class FolderStagedModelDataHandler
 		exportFolderFileEntryTypes(portletDataContext, folderElement, folder);
 
 		portletDataContext.addClassedModel(
-			folderElement, folderPath, folder, DLFolder.class,
-			DLPortletDataHandler.NAMESPACE);
+			folderElement, folderPath, folder, DLFolder.class);
 	}
 
 	@Override
@@ -184,7 +181,7 @@ public class FolderStagedModelDataHandler
 			folderIds, folder.getParentFolderId(), folder.getParentFolderId());
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
-			folder, DLFolder.class, DLPortletDataHandler.NAMESPACE);
+			folder, DLFolder.class);
 
 		serviceContext.setUserId(userId);
 
@@ -230,8 +227,7 @@ public class FolderStagedModelDataHandler
 			portletDataContext, folderElement, folder, serviceContext);
 
 		portletDataContext.importClassedModel(
-			folder, importedFolder, DLFolder.class,
-			DLPortletDataHandler.NAMESPACE);
+			folder, importedFolder, DLFolder.class);
 
 		folderIds.put(folder.getFolderId(), importedFolder.getFolderId());
 	}

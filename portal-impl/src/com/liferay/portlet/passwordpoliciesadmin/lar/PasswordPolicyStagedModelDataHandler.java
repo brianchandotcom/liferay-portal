@@ -67,8 +67,7 @@ public class PasswordPolicyStagedModelDataHandler
 
 		portletDataContext.addClassedModel(
 			passwordPolicyElement,
-			ExportImportPathUtil.getModelPath(passwordPolicy), passwordPolicy,
-			PasswordPolicyPortletDataHandler.NAMESPACE);
+			ExportImportPathUtil.getModelPath(passwordPolicy), passwordPolicy);
 	}
 
 	@Override
@@ -81,7 +80,7 @@ public class PasswordPolicyStagedModelDataHandler
 			passwordPolicy.getUserUuid());
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
-			passwordPolicy, PasswordPolicyPortletDataHandler.NAMESPACE);
+			passwordPolicy);
 
 		PasswordPolicy existingPasswordPolicy =
 			PasswordPolicyLocalServiceUtil.
@@ -152,8 +151,7 @@ public class PasswordPolicyStagedModelDataHandler
 		}
 
 		portletDataContext.importClassedModel(
-			passwordPolicy, importedPasswordPolicy,
-			PasswordPolicyPortletDataHandler.NAMESPACE);
+			passwordPolicy, importedPasswordPolicy);
 	}
 
 }

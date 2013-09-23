@@ -69,8 +69,7 @@ public class MBBanStagedModelDataHandler
 			PortletDataContext.REFERENCE_TYPE_DEPENDENCY_DISPOSABLE, true);
 
 		portletDataContext.addClassedModel(
-			userBanElement, ExportImportPathUtil.getModelPath(ban), ban,
-			MBPortletDataHandler.NAMESPACE);
+			userBanElement, ExportImportPathUtil.getModelPath(ban), ban);
 	}
 
 	@Override
@@ -94,7 +93,7 @@ public class MBBanStagedModelDataHandler
 		long userId = portletDataContext.getUserId(ban.getUserUuid());
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
-			ban, MBPortletDataHandler.NAMESPACE);
+			ban);
 
 		serviceContext.setUuid(ban.getUuid());
 

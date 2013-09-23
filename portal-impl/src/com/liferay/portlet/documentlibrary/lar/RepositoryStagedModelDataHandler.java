@@ -91,7 +91,7 @@ public class RepositoryStagedModelDataHandler
 
 		portletDataContext.addClassedModel(
 			repositoryElement, ExportImportPathUtil.getModelPath(repository),
-			repository, DLPortletDataHandler.NAMESPACE);
+			repository);
 
 		List<RepositoryEntry> repositoryEntries =
 			RepositoryEntryLocalServiceUtil.getRepositoryEntries(
@@ -112,7 +112,7 @@ public class RepositoryStagedModelDataHandler
 		long userId = portletDataContext.getUserId(repository.getUserUuid());
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
-			repository, DLPortletDataHandler.NAMESPACE);
+			repository);
 
 		Repository importedRepository = null;
 
@@ -187,8 +187,7 @@ public class RepositoryStagedModelDataHandler
 			}
 		}
 
-		portletDataContext.importClassedModel(
-			repository, importedRepository, DLPortletDataHandler.NAMESPACE);
+		portletDataContext.importClassedModel(repository, importedRepository);
 
 		List<Element> repositoryEntryElements =
 			portletDataContext.getReferenceDataElements(

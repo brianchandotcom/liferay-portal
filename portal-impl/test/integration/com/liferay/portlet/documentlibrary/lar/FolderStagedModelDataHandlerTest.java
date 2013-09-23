@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.documentlibrary.lar;
 
-import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.test.ExecutionTestListeners;
@@ -226,19 +225,6 @@ public class FolderStagedModelDataHandlerTest
 	@Override
 	protected Class<? extends StagedModel> getStagedModelClass() {
 		return Folder.class;
-	}
-
-	@Override
-	protected String getStagedModelPath(long groupId, StagedModel stagedModel) {
-		if (stagedModel instanceof Folder) {
-			Folder folder = (Folder)stagedModel;
-
-			return ExportImportPathUtil.getModelPath(
-				groupId, Folder.class.getName(), folder.getFolderId());
-		}
-		else {
-			return super.getStagedModelPath(groupId, stagedModel);
-		}
 	}
 
 	protected void validateCompanyDependenciesImport(

@@ -78,8 +78,7 @@ public class JournalFolderStagedModelDataHandler
 		Element folderElement = portletDataContext.getExportDataElement(folder);
 
 		portletDataContext.addClassedModel(
-			folderElement, ExportImportPathUtil.getModelPath(folder), folder,
-			JournalPortletDataHandler.NAMESPACE);
+			folderElement, ExportImportPathUtil.getModelPath(folder), folder);
 	}
 
 	@Override
@@ -111,7 +110,7 @@ public class JournalFolderStagedModelDataHandler
 			folderIds, folder.getParentFolderId(), folder.getParentFolderId());
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
-			folder, JournalPortletDataHandler.NAMESPACE);
+			folder);
 
 		JournalFolder importedFolder = null;
 
@@ -143,8 +142,7 @@ public class JournalFolderStagedModelDataHandler
 				folder.getDescription(), serviceContext);
 		}
 
-		portletDataContext.importClassedModel(
-			folder, importedFolder, JournalPortletDataHandler.NAMESPACE);
+		portletDataContext.importClassedModel(folder, importedFolder);
 	}
 
 	@Override

@@ -83,8 +83,8 @@ public class LayoutPrototypeStagedModelDataHandler
 
 		portletDataContext.addClassedModel(
 			layoutPrototypeElement,
-			ExportImportPathUtil.getModelPath(layoutPrototype), layoutPrototype,
-			LayoutPrototypePortletDataHandler.NAMESPACE);
+			ExportImportPathUtil.getModelPath(layoutPrototype),
+			layoutPrototype);
 	}
 
 	@Override
@@ -97,7 +97,7 @@ public class LayoutPrototypeStagedModelDataHandler
 			layoutPrototype.getUserUuid());
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
-			layoutPrototype, LayoutPrototypePortletDataHandler.NAMESPACE);
+			layoutPrototype);
 
 		serviceContext.setAttribute("addDefaultLayout", false);
 
@@ -143,8 +143,7 @@ public class LayoutPrototypeStagedModelDataHandler
 			importedLayoutPrototype.getGroupId());
 
 		portletDataContext.importClassedModel(
-			layoutPrototype, importedLayoutPrototype,
-			LayoutPrototypePortletDataHandler.NAMESPACE);
+			layoutPrototype, importedLayoutPrototype);
 	}
 
 	protected void exportLayouts(

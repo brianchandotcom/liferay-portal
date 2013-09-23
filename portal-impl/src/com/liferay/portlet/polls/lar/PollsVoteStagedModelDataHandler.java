@@ -62,8 +62,7 @@ public class PollsVoteStagedModelDataHandler
 		Element voteElement = portletDataContext.getExportDataElement(vote);
 
 		portletDataContext.addClassedModel(
-			voteElement, ExportImportPathUtil.getModelPath(vote), vote,
-			PollsPortletDataHandler.NAMESPACE);
+			voteElement, ExportImportPathUtil.getModelPath(vote), vote);
 	}
 
 	@Override
@@ -96,7 +95,7 @@ public class PollsVoteStagedModelDataHandler
 			choiceIds, vote.getChoiceId(), vote.getChoiceId());
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
-			vote, PollsPortletDataHandler.NAMESPACE);
+			vote);
 
 		serviceContext.setCreateDate(vote.getVoteDate());
 

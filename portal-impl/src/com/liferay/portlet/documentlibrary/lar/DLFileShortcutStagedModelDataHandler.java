@@ -95,8 +95,7 @@ public class DLFileShortcutStagedModelDataHandler
 
 		portletDataContext.addClassedModel(
 			fileShortcutElement,
-			ExportImportPathUtil.getModelPath(fileShortcut), fileShortcut,
-			DLPortletDataHandler.NAMESPACE);
+			ExportImportPathUtil.getModelPath(fileShortcut), fileShortcut);
 	}
 
 	@Override
@@ -165,7 +164,7 @@ public class DLFileShortcutStagedModelDataHandler
 		}
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
-			fileShortcut, DLPortletDataHandler.NAMESPACE);
+			fileShortcut);
 
 		DLFileShortcut importedFileShortcut = null;
 
@@ -196,7 +195,7 @@ public class DLFileShortcutStagedModelDataHandler
 		}
 
 		portletDataContext.importClassedModel(
-			fileShortcut, importedFileShortcut, DLPortletDataHandler.NAMESPACE);
+			fileShortcut, importedFileShortcut);
 	}
 
 	@Override

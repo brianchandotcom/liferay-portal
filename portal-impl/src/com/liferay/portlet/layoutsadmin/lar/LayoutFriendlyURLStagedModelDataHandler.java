@@ -67,7 +67,7 @@ public class LayoutFriendlyURLStagedModelDataHandler
 		portletDataContext.addClassedModel(
 			layoutFriendlyURLElement,
 			ExportImportPathUtil.getModelPath(layoutFriendlyURL),
-			layoutFriendlyURL, LayoutPortletDataHandler.NAMESPACE);
+			layoutFriendlyURL);
 	}
 
 	@Override
@@ -87,7 +87,7 @@ public class LayoutFriendlyURLStagedModelDataHandler
 			plids, layoutFriendlyURL.getPlid(), layoutFriendlyURL.getPlid());
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
-			layoutFriendlyURL, LayoutPortletDataHandler.NAMESPACE);
+			layoutFriendlyURL);
 
 		LayoutFriendlyURL importedLayoutFriendlyURL = null;
 
@@ -135,8 +135,7 @@ public class LayoutFriendlyURLStagedModelDataHandler
 		}
 
 		portletDataContext.importClassedModel(
-			layoutFriendlyURL, importedLayoutFriendlyURL,
-			LayoutPortletDataHandler.NAMESPACE);
+			layoutFriendlyURL, importedLayoutFriendlyURL);
 	}
 
 	protected LayoutFriendlyURL getExistingLayoutFriendlyURL(

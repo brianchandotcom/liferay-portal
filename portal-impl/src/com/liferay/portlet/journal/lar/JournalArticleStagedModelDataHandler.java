@@ -226,8 +226,8 @@ public class JournalArticleStagedModelDataHandler
 		article.setContent(content);
 
 		portletDataContext.addClassedModel(
-			articleElement, ExportImportPathUtil.getModelPath(article), article,
-			JournalPortletDataHandler.NAMESPACE);
+			articleElement, ExportImportPathUtil.getModelPath(article),
+			article);
 	}
 
 	@Override
@@ -529,8 +529,7 @@ public class JournalArticleStagedModelDataHandler
 				portletDataContext, article);
 
 			ServiceContext serviceContext =
-				portletDataContext.createServiceContext(
-					article, JournalPortletDataHandler.NAMESPACE);
+				portletDataContext.createServiceContext(article);
 
 			serviceContext.setAddGroupPermissions(addGroupPermissions);
 			serviceContext.setAddGuestPermissions(addGuestPermissions);
@@ -630,8 +629,7 @@ public class JournalArticleStagedModelDataHandler
 					smallFile, images, articleURL, serviceContext);
 			}
 
-			portletDataContext.importClassedModel(
-				article, importedArticle, JournalPortletDataHandler.NAMESPACE);
+			portletDataContext.importClassedModel(article, importedArticle);
 
 			if (Validator.isNull(newArticleId)) {
 				articleIds.put(

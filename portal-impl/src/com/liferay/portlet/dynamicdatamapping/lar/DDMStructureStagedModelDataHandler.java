@@ -120,7 +120,7 @@ public class DDMStructureStagedModelDataHandler
 
 		portletDataContext.addClassedModel(
 			structureElement, ExportImportPathUtil.getModelPath(structure),
-			structure, DDMPortletDataHandler.NAMESPACE);
+			structure);
 	}
 
 	@Override
@@ -157,7 +157,7 @@ public class DDMStructureStagedModelDataHandler
 				DDMStructure.class + ".ddmStructureKey");
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
-			structure, DDMPortletDataHandler.NAMESPACE);
+			structure);
 
 		DDMStructure importedStructure = null;
 
@@ -211,8 +211,7 @@ public class DDMStructureStagedModelDataHandler
 				structure.getType(), serviceContext);
 		}
 
-		portletDataContext.importClassedModel(
-			structure, importedStructure, DDMPortletDataHandler.NAMESPACE);
+		portletDataContext.importClassedModel(structure, importedStructure);
 
 		structureKeys.put(
 			structure.getStructureKey(), importedStructure.getStructureKey());

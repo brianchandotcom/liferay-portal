@@ -210,10 +210,6 @@ public abstract class BaseStagedModelDataHandlerTestCase extends PowerMockito {
 
 	protected abstract Class<? extends StagedModel> getStagedModelClass();
 
-	protected String getStagedModelPath(long groupId, StagedModel stagedModel) {
-		return ExportImportPathUtil.getModelPath(stagedModel);
-	}
-
 	protected Date getStartDate() {
 		return new Date(System.currentTimeMillis() - Time.HOUR);
 	}
@@ -261,8 +257,7 @@ public abstract class BaseStagedModelDataHandlerTestCase extends PowerMockito {
 	}
 
 	protected StagedModel readExportedStagedModel(StagedModel stagedModel) {
-		String stagedModelPath = getStagedModelPath(
-			stagingGroup.getGroupId(), stagedModel);
+		String stagedModelPath = ExportImportPathUtil.getModelPath(stagedModel);
 
 		StagedModel exportedStagedModel =
 			(StagedModel)portletDataContext.getZipEntryAsObject(
@@ -395,8 +390,8 @@ public abstract class BaseStagedModelDataHandlerTestCase extends PowerMockito {
 				while (iterator.hasNext()) {
 					StagedModel dependentStagedModel = iterator.next();
 
-					String dependentStagedModelPath = getStagedModelPath(
-						stagingGroup.getGroupId(), dependentStagedModel);
+					String dependentStagedModelPath =
+						ExportImportPathUtil.getModelPath(dependentStagedModel);
 
 					if (path.equals(dependentStagedModelPath)) {
 						iterator.remove();

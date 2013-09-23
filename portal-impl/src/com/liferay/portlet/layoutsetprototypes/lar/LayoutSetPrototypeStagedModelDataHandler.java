@@ -92,7 +92,7 @@ public class LayoutSetPrototypeStagedModelDataHandler
 		portletDataContext.addClassedModel(
 			layoutSetPrototypeElement,
 			ExportImportPathUtil.getModelPath(layoutSetPrototype),
-			layoutSetPrototype, LayoutSetPrototypePortletDataHandler.NAMESPACE);
+			layoutSetPrototype);
 
 		exportLayouts(layoutSetPrototype, portletDataContext);
 
@@ -116,7 +116,7 @@ public class LayoutSetPrototypeStagedModelDataHandler
 			settingsProperties.getProperty("layoutsUpdateable"), true);
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
-			layoutSetPrototype, LayoutSetPrototypePortletDataHandler.NAMESPACE);
+			layoutSetPrototype);
 
 		serviceContext.setAttribute("addDefaultLayout", false);
 
@@ -166,8 +166,7 @@ public class LayoutSetPrototypeStagedModelDataHandler
 			serviceContext);
 
 		portletDataContext.importClassedModel(
-			layoutSetPrototype, importedLayoutSetPrototype,
-			LayoutSetPrototypePortletDataHandler.NAMESPACE);
+			layoutSetPrototype, importedLayoutSetPrototype);
 	}
 
 	protected void exportLayoutPrototypes(

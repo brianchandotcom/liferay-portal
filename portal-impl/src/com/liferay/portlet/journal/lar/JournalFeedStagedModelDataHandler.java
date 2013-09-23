@@ -159,8 +159,7 @@ public class JournalFeedStagedModelDataHandler
 		}
 
 		portletDataContext.addClassedModel(
-			feedElement, ExportImportPathUtil.getModelPath(feed), feed,
-			JournalPortletDataHandler.NAMESPACE);
+			feedElement, ExportImportPathUtil.getModelPath(feed), feed);
 	}
 
 	@Override
@@ -276,7 +275,7 @@ public class JournalFeedStagedModelDataHandler
 		}
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
-			feed, JournalPortletDataHandler.NAMESPACE);
+			feed);
 
 		boolean addGroupPermissions = creationStrategy.addGroupPermissions(
 			portletDataContext, feed);
@@ -339,8 +338,7 @@ public class JournalFeedStagedModelDataHandler
 					serviceContext);
 			}
 
-			portletDataContext.importClassedModel(
-				feed, importedFeed, JournalPortletDataHandler.NAMESPACE);
+			portletDataContext.importClassedModel(feed, importedFeed);
 
 			if (!feedId.equals(importedFeed.getFeedId())) {
 				if (_log.isWarnEnabled()) {

@@ -62,8 +62,7 @@ public class WikiNodeStagedModelDataHandler
 		Element nodeElement = portletDataContext.getExportDataElement(node);
 
 		portletDataContext.addClassedModel(
-			nodeElement, ExportImportPathUtil.getModelPath(node), node,
-			WikiPortletDataHandler.NAMESPACE);
+			nodeElement, ExportImportPathUtil.getModelPath(node), node);
 	}
 
 	@Override
@@ -74,7 +73,7 @@ public class WikiNodeStagedModelDataHandler
 		long userId = portletDataContext.getUserId(node.getUserUuid());
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
-			node, WikiPortletDataHandler.NAMESPACE);
+			node);
 
 		WikiNode importedNode = null;
 
@@ -128,8 +127,7 @@ public class WikiNodeStagedModelDataHandler
 				userId, nodeName, node.getDescription(), serviceContext);
 		}
 
-		portletDataContext.importClassedModel(
-			node, importedNode, WikiPortletDataHandler.NAMESPACE);
+		portletDataContext.importClassedModel(node, importedNode);
 	}
 
 	@Override

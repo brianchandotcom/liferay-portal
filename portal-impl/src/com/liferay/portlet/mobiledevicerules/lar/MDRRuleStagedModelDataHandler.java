@@ -75,8 +75,7 @@ public class MDRRuleStagedModelDataHandler
 		Element ruleElement = portletDataContext.getExportDataElement(rule);
 
 		portletDataContext.addClassedModel(
-			ruleElement, ExportImportPathUtil.getModelPath(rule), rule,
-			MDRPortletDataHandler.NAMESPACE);
+			ruleElement, ExportImportPathUtil.getModelPath(rule), rule);
 	}
 
 	@Override
@@ -102,7 +101,7 @@ public class MDRRuleStagedModelDataHandler
 			ruleGroupIds, rule.getRuleGroupId(), rule.getRuleGroupId());
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
-			rule, MDRPortletDataHandler.NAMESPACE);
+			rule);
 
 		serviceContext.setUserId(
 			portletDataContext.getUserId(rule.getUserUuid()));
@@ -136,8 +135,7 @@ public class MDRRuleStagedModelDataHandler
 				serviceContext);
 		}
 
-		portletDataContext.importClassedModel(
-			rule, importedRule, MDRPortletDataHandler.NAMESPACE);
+		portletDataContext.importClassedModel(rule, importedRule);
 	}
 
 }

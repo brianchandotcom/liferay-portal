@@ -114,7 +114,7 @@ public class OrganizationStagedModelDataHandler
 			portletDataContext.addClassedModel(
 				organizationElement,
 				ExportImportPathUtil.getModelPath(exportedOrganization),
-				exportedOrganization, UsersAdminPortletDataHandler.NAMESPACE);
+				exportedOrganization);
 
 			organizations.addAll(exportedOrganization.getSuborganizations());
 		}
@@ -156,7 +156,7 @@ public class OrganizationStagedModelDataHandler
 		}
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
-			organization, UsersAdminPortletDataHandler.NAMESPACE);
+			organization);
 
 		serviceContext.setUserId(userId);
 
@@ -203,8 +203,7 @@ public class OrganizationStagedModelDataHandler
 		importWebsites(portletDataContext, organization, importedOrganization);
 
 		portletDataContext.importClassedModel(
-			organization, importedOrganization,
-			UsersAdminPortletDataHandler.NAMESPACE);
+			organization, importedOrganization);
 	}
 
 	protected void exportAddresses(

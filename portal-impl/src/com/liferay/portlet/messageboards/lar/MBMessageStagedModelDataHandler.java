@@ -133,8 +133,8 @@ public class MBMessageStagedModelDataHandler
 		}
 
 		portletDataContext.addClassedModel(
-			messageElement, ExportImportPathUtil.getModelPath(message), message,
-			MBPortletDataHandler.NAMESPACE);
+			messageElement, ExportImportPathUtil.getModelPath(message),
+			message);
 	}
 
 	@Override
@@ -175,8 +175,7 @@ public class MBMessageStagedModelDataHandler
 
 		try {
 			ServiceContext serviceContext =
-				portletDataContext.createServiceContext(
-					message, MBPortletDataHandler.NAMESPACE);
+				portletDataContext.createServiceContext(message);
 
 			if ((parentCategoryId !=
 					MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) &&
@@ -248,8 +247,7 @@ public class MBMessageStagedModelDataHandler
 
 			threadIds.put(message.getThreadId(), importedMessage.getThreadId());
 
-			portletDataContext.importClassedModel(
-				message, importedMessage, MBPortletDataHandler.NAMESPACE);
+			portletDataContext.importClassedModel(message, importedMessage);
 		}
 		finally {
 			for (ObjectValuePair<String, InputStream> inputStreamOVP :

@@ -86,7 +86,7 @@ public class MBCategoryStagedModelDataHandler
 
 		portletDataContext.addClassedModel(
 			categoryElement, ExportImportPathUtil.getModelPath(category),
-			category, MBPortletDataHandler.NAMESPACE);
+			category);
 	}
 
 	@Override
@@ -146,7 +146,7 @@ public class MBCategoryStagedModelDataHandler
 		}
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
-			category, MBPortletDataHandler.NAMESPACE);
+			category);
 
 		MBCategory importedCategory = null;
 
@@ -189,8 +189,7 @@ public class MBCategoryStagedModelDataHandler
 				outPassword, allowAnonymous, mailingListActive, serviceContext);
 		}
 
-		portletDataContext.importClassedModel(
-			category, importedCategory, MBPortletDataHandler.NAMESPACE);
+		portletDataContext.importClassedModel(category, importedCategory);
 	}
 
 	@Override

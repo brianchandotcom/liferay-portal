@@ -92,8 +92,7 @@ public class WikiPageStagedModelDataHandler
 		}
 
 		portletDataContext.addClassedModel(
-			pageElement, ExportImportPathUtil.getModelPath(page), page,
-			WikiPortletDataHandler.NAMESPACE);
+			pageElement, ExportImportPathUtil.getModelPath(page), page);
 	}
 
 	@Override
@@ -123,7 +122,7 @@ public class WikiPageStagedModelDataHandler
 		page.setContent(content);
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
-			page, WikiPortletDataHandler.NAMESPACE);
+			page);
 
 		Map<Long, Long> nodeIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
@@ -205,8 +204,7 @@ public class WikiPageStagedModelDataHandler
 			}
 		}
 
-		portletDataContext.importClassedModel(
-			page, importedPage, WikiPortletDataHandler.NAMESPACE);
+		portletDataContext.importClassedModel(page, importedPage);
 	}
 
 	@Override

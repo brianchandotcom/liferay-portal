@@ -31,12 +31,12 @@
 </tr>
 <tr>
 	<td>CURRENT_FOLDER</td>
-	<td>//div[@class='control-group field-wrapper']/span/a</td>
+	<td>//div[contains(.,'Current Folder') and @class='control-group field-wrapper']/input</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PARENT_FOLDER</td>
-	<td>//a[@id='_20_folderName']</td>
+	<td>//input[@id='_20_folderName']</td>
 	<td></td>
 </tr>
 <tr>
@@ -46,7 +46,7 @@
 </tr>
 <tr>
 	<td>REMOVE_PARENT_FOLDER_BUTTON</td>
-	<td>//input[@value='Remove']</td>
+	<td>//button[@id='_20_removeFolderButton']</td>
 	<td></td>
 </tr>
 <tr>

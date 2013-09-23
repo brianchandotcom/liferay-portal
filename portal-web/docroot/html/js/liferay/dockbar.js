@@ -47,9 +47,22 @@ AUI.add(
 					var eventHandle = dockBar.on(
 						['focus', 'mousemove', 'touchstart'],
 						function(event) {
+							var target = event.target;
+							var eventType = event.type;
+
 							Liferay.fire('initDockbar');
 
 							eventHandle.detach();
+
+							if (eventType === 'focus') {
+								if (target.ancestor('.nav-add-controls')) {
+									instance.refocus(target);
+								}
+
+								if (target.ancestor('.nav-account-controls')) {
+									instance.refocus(target.ancestor('.nav-account-controls').one('li a'));
+								}
+							}
 						}
 					);
 
@@ -91,6 +104,11 @@ AUI.add(
 				}
 
 				return panelNode;
+			},
+
+			refocus: function(node) {
+				node.blur();
+				node.focus();
 			},
 
 			togglePreviewPanel: function() {
@@ -286,7 +304,8 @@ AUI.add(
 				instance._registerPanels();
 
 				var btnNavigation = A.oneNS(namespace, '#navSiteNavigationNavbarBtn');
-
+				var navAccountControls = dockBar.one('.nav-account-controls');
+				var navAddControls = dockBar.one('.nav-add-controls');
 				var navigation = A.one(Liferay.Data.NAV_SELECTOR);
 
 				if (btnNavigation && navigation) {
@@ -298,6 +317,147 @@ AUI.add(
 						}
 					);
 				}
+
+				// create focus managers for nav-account-controls & nav-add-controls
+
+				navAccountControls.plug(
+					A.Plugin.NodeFocusManager,
+					{
+						descendants: 'li a',
+						keys: {
+							next: 'down:40',
+							previous: 'down:38'
+						}
+					}
+				);
+
+				navAddControls.plug(
+					A.Plugin.NodeFocusManager,
+					{
+						circular: true,
+						descendants: 'li a',
+						keys: {
+							next: 'down:39,40',
+							previous: 'down:37,38'
+						}
+					}
+				);
+
+				var navAccountControlsFM = navAccountControls.focusManager;
+				var navAddControlsFM = navAddControls.focusManager;
+
+				// reset focus to first element
+
+				navAccountControlsFM.after(
+					'focusedChange',
+					function (event) {
+						if (!event.newVal) {
+							this.set("activeDescendant", 0);
+						}
+					}
+				);
+
+				navAddControls.focusManager.after(
+					'focusedChange',
+					function (event) {
+						if (!event.newVal) {
+							this.set('activeDescendant', 0);
+						}
+					}
+				);
+
+				// move focus back when pressing up arrow
+
+				navAccountControls.delegate(
+					'key',
+					function(event) {
+						var currentTarget = event.currentTarget;
+						var dropdown = currentTarget.ancestor('li.dropdown');
+						var previousElement = dropdown.previous('li.dropdown');
+
+						event.preventDefault();
+
+						navAccountControls.all('li.dropdown').removeClass('open');
+
+						if (previousElement) {
+							previousElement.addClass('open');
+							navAccountControlsFM.focus(currentTarget);
+						}
+						else {
+							navAccountControls.one('li.dropdown:last-of-type').addClass('open');
+							navAccountControlsFM.focus(navAccountControls.one('li.dropdown:last-of-type a ul li:last-of-type a'));
+						}
+					},
+					'down:38',
+					'li.dropdown > a'
+				);
+
+				// open menu when pressing down arrow
+
+				navAccountControls.delegate(
+					'key',
+					function(event) {
+						var currentTarget = event.currentTarget;
+
+						event.preventDefault();
+
+						navAccountControls.all('li.dropdown').removeClass('open');
+
+						currentTarget.ancestor('li.dropdown').addClass('open');
+					},
+					'down:40',
+					'li.dropdown > a'
+				);
+
+				// when tab out of menu close dropdown
+
+				navAccountControls.on(
+					'key',
+					function(event) {
+						event.currentTarget.all('li.dropdown').removeClass('open');
+					},
+					'down:9'
+				);
+
+				// move focus using right and left arrow keys
+
+				navAccountControls.delegate(
+					'key',
+					function(event) {
+						var currentTarget = event.currentTarget;
+						var nextElement = currentTarget.ancestor('li.dropdown').next('.dropdown');
+
+						navAccountControls.all('li.dropdown').removeClass('open');
+
+						if (nextElement) {
+							navAccountControlsFM.focus(nextElement.one('a'));
+						}
+						else {
+							navAccountControlsFM.focus(navAccountControls.one('li a'));
+						}
+					},
+					'down:39',
+					'li a'
+				);
+
+				navAccountControls.delegate(
+					'key',
+					function(event) {
+						var currentTarget = event.currentTarget;
+						var previousElement = currentTarget.ancestor('li.dropdown').previous('.dropdown');
+
+						navAccountControls.all('li.dropdown').removeClass('open');
+
+						if (previousElement) {
+							navAccountControlsFM.focus(previousElement.one('a'));
+						}
+						else {
+							navAccountControlsFM.focus(navAccountControls.one('> li:last-of-type a'));
+						}
+					},
+					'down:37',
+					'li a'
+				);
 
 				Liferay.fire('dockbarLoaded');
 			},

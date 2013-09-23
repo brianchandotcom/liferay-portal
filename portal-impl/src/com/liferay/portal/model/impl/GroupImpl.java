@@ -833,7 +833,7 @@ public class GroupImpl extends GroupBaseImpl {
 		catch (Exception e) {
 		}
 
-		return true;
+		return false;
 	}
 
 	@Override

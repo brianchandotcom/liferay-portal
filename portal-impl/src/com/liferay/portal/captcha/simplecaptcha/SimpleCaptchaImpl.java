@@ -20,10 +20,10 @@ import com.liferay.portal.kernel.captcha.CaptchaMaxChallengesException;
 import com.liferay.portal.kernel.captcha.CaptchaTextException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.RandomUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.InstancePool;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Randomizer;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
@@ -206,9 +206,7 @@ public class SimpleCaptchaImpl implements Captcha {
 			return _backgroundProducers[0];
 		}
 
-		Randomizer randomizer = Randomizer.getInstance();
-
-		int pos = randomizer.nextInt(_backgroundProducers.length);
+		int pos = RandomUtil.nextInt(_backgroundProducers.length);
 
 		return _backgroundProducers[pos];
 	}
@@ -218,9 +216,7 @@ public class SimpleCaptchaImpl implements Captcha {
 			return _gimpyRenderers[0];
 		}
 
-		Randomizer randomizer = Randomizer.getInstance();
-
-		int pos = randomizer.nextInt(_gimpyRenderers.length);
+		int pos = RandomUtil.nextInt(_gimpyRenderers.length);
 
 		return _gimpyRenderers[pos];
 	}
@@ -234,9 +230,7 @@ public class SimpleCaptchaImpl implements Captcha {
 			return _noiseProducers[0];
 		}
 
-		Randomizer randomizer = Randomizer.getInstance();
-
-		int pos = randomizer.nextInt(_noiseProducers.length);
+		int pos = RandomUtil.nextInt(_noiseProducers.length);
 
 		return _noiseProducers[pos];
 	}
@@ -259,9 +253,7 @@ public class SimpleCaptchaImpl implements Captcha {
 			return _textProducers[0];
 		}
 
-		Randomizer randomizer = Randomizer.getInstance();
-
-		int pos = randomizer.nextInt(_textProducers.length);
+		int pos = RandomUtil.nextInt(_textProducers.length);
 
 		return _textProducers[pos];
 	}
@@ -275,9 +267,7 @@ public class SimpleCaptchaImpl implements Captcha {
 			return _wordRenderers[0];
 		}
 
-		Randomizer randomizer = Randomizer.getInstance();
-
-		int pos = randomizer.nextInt(_wordRenderers.length);
+		int pos = RandomUtil.nextInt(_wordRenderers.length);
 
 		return _wordRenderers[pos];
 	}

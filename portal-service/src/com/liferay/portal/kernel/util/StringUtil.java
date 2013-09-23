@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.RandomUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -1989,9 +1990,7 @@ public class StringUtil {
 	 *         string
 	 */
 	public static String randomize(String s) {
-		Randomizer randomizer = Randomizer.getInstance();
-
-		return randomizer.randomize(s);
+		return RandomUtil.shuffle(s);
 	}
 
 	public static String randomString() {

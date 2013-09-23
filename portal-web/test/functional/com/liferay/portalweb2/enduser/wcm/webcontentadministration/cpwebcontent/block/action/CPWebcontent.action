@@ -3,33 +3,47 @@
 		<case locator-key1="ACTION_MENULIST_MOVE_TO_THE_RECYCLE_BIN">
 			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
+
 		<case locator-key1="ADD_MENULIST_BASIC_WEB_CONTENT">
 			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
+
 		<case locator-key1="ADD_MENULIST_FOLDER">
 			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
+
 		<case locator-key1="ADD_MENULIST_SUBFOLDER">
 			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
+
+		<case locator-key1="DISPLAY_STYLE_MENULIST_DESCRIPTIVE">
+			<execute function="AssertClick#assertTextClickAtAndWait" />
+		</case>
+
 		<case locator-key1="ENTRY_DESCRIPTIVE_TITLE">
 			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
+
 		<case locator-key1="ENTRY_MENULIST_MOVE_TO_THE_RECYCLE_BIN">
 			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
+
 		<case locator-key1="ENTRY_MENULIST_MOVE">
 			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
+
 		<case locator-key1="MANAGE_MENULIST_STRUCTURES">
 			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
+
 		<case locator-key1="MANAGE_MENULIST_TEMPLATES">
 			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
+
 		<case locator-key1="TOOLBAR_ADD">
 			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
+
 		<case locator-key1="TOOLBAR_MANAGE">
 			<execute function="AssertClick#assertTextClickAtAndWait" />
 		</case>
@@ -39,9 +53,11 @@
 		<case locator-key1="ENTRY_DESCRIPTIVE_TITLE">
 			<execute function="AssertTextEquals#assertPartialText" />
 		</case>
+
 		<case locator-key1="SUCCESS_MESSAGE">
 			<execute function="AssertTextEquals#assertText" />
 		</case>
+
 		<case locator-key1="SUCCESS_MESSAGE_RECYCLE_BIN">
 			<execute function="AssertTextEquals#assertPartialText" />
 		</case>

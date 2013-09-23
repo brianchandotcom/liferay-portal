@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>DATA_DEFINITION_NAME</td>
-	<td>//span[@id='_167_ddmStructureNameDisplay']</td>
+	<td>//input[@id='_167_ddmStructureNameDisplay']</td>
 	<td></td>
 </tr>
 <tr>

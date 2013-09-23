@@ -64,6 +64,12 @@ public class LayoutStagingBackgroundTaskExecutor
 		MissingReferences missingReferences = null;
 
 		try {
+			long lastPublishDate = System.currentTimeMillis();
+
+			if (endDate != null) {
+				lastPublishDate = endDate.getTime();
+			}
+
 			file = LayoutLocalServiceUtil.exportLayoutsAsFile(
 				sourceGroupId, privateLayout, layoutIds, parameterMap,
 				startDate, endDate);
@@ -83,12 +89,6 @@ public class LayoutStagingBackgroundTaskExecutor
 				parameterMap, PortletDataHandlerKeys.UPDATE_LAST_PUBLISH_DATE);
 
 			if (updateLastPublishDate) {
-				long lastPublishDate = System.currentTimeMillis();
-
-				if (endDate != null) {
-					lastPublishDate = endDate.getTime();
-				}
-
 				StagingUtil.updateLastPublishDate(
 					sourceGroupId, privateLayout, lastPublishDate);
 			}

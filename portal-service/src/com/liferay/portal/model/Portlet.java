@@ -1378,6 +1378,15 @@ public interface Portlet extends PortletModel, PersistedModel {
 	public boolean isShowPortletInactive();
 
 	/**
+	* Returns <code>true</code> if staging is applicable to the portlet.
+	* Otherwise it returns <code>false</code>.
+	*
+	* @return <code>true</code> if the portlet can be staged. If not this
+	method returns <code>false</code>
+	*/
+	public boolean isStageable();
+
+	/**
 	* Returns <code>true</code> if the portlet is a static portlet that is
 	* cannot be moved.
 	*

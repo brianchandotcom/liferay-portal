@@ -196,6 +196,11 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 	}
 
 	@Override
+	public long getTrashEntryClassPK() {
+		return getResourcePrimKey();
+	}
+
+	@Override
 	public boolean hasApprovedVersion() throws SystemException {
 		JournalArticle article =
 			JournalArticleLocalServiceUtil.fetchLatestArticle(

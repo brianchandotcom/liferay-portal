@@ -289,6 +289,11 @@ public class WikiPageImpl extends WikiPageBaseImpl {
 	}
 
 	@Override
+	public long getTrashEntryClassPK() {
+		return getResourcePrimKey();
+	}
+
+	@Override
 	public List<WikiPage> getViewableChildPages() {
 		try {
 			return WikiPageServiceUtil.getChildren(

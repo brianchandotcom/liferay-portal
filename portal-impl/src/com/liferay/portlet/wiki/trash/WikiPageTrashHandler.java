@@ -204,16 +204,6 @@ public class WikiPageTrashHandler extends BaseTrashHandler {
 	}
 
 	@Override
-	public ContainerModel getTrashContainer(long classPK)
-		throws PortalException, SystemException {
-
-		WikiPage page = WikiPageLocalServiceUtil.getLatestPage(
-			classPK, WorkflowConstants.STATUS_ANY, false);
-
-		return page.getTrashContainer();
-	}
-
-	@Override
 	public TrashRenderer getTrashRenderer(long classPK)
 		throws PortalException, SystemException {
 

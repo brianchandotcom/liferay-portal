@@ -134,20 +134,6 @@ public class LayoutCache {
 		return entityMap;
 	}
 
-	protected List<Role> getGroupRoles_1to4(long groupId)
-		throws SystemException {
-
-		List<Role> roles = groupRolesMap.get(groupId);
-
-		if (roles == null) {
-			roles = RoleLocalServiceUtil.getGroupRoles(groupId);
-
-			groupRolesMap.put(groupId, roles);
-		}
-
-		return roles;
-	}
-
 	protected List<Role> getGroupRoles_5(long groupId, String resourceName)
 		throws PortalException, SystemException {
 

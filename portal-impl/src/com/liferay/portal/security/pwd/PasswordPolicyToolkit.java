@@ -239,10 +239,12 @@ public class PasswordPolicyToolkit extends BasicToolkit {
 	}
 
 	protected String getRandomString(int count, char[] chars) {
+		Random random = new Random(SecureRandomUtil.nextInt());
+
 		StringBundler sb = new StringBundler(count);
 
 		for (int i = 0; i < count; i++) {
-			int index = Math.abs(SecureRandomUtil.nextInt()) % chars.length;
+			int index = random.nextInt(chars.length);
 
 			sb.append(chars[index]);
 		}

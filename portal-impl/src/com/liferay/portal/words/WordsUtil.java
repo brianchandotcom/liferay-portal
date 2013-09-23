@@ -35,6 +35,7 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 /**
@@ -121,7 +122,9 @@ public class WordsUtil {
 	}
 
 	private String _getRandomWord() {
-		int pos = Math.abs(SecureRandomUtil.nextInt()) % _dictionaryList.size();
+		Random random = new Random(SecureRandomUtil.nextInt());
+
+		int pos = random.nextInt(_dictionaryList.size());
 
 		return _dictionaryList.get(pos);
 	}

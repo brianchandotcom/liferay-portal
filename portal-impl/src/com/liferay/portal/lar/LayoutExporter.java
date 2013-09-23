@@ -454,10 +454,6 @@ public class LayoutExporter {
 		for (Portlet portlet : portlets) {
 			String portletId = portlet.getRootPortletId();
 
-			if (!group.isStagedPortlet(portletId)) {
-				continue;
-			}
-
 			String key = PortletPermissionUtil.getPrimaryKey(0, portletId);
 
 			if (portletIds.get(key) == null) {

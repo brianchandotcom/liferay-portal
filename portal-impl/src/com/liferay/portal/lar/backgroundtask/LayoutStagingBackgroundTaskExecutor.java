@@ -15,6 +15,7 @@
 package com.liferay.portal.lar.backgroundtask;
 
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
+import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.lar.MissingReferences;
 import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -63,6 +64,8 @@ public class LayoutStagingBackgroundTaskExecutor
 		MissingReferences missingReferences = null;
 
 		try {
+			ExportImportThreadLocal.setStagingInProcess(true);
+
 			file = LayoutLocalServiceUtil.exportLayoutsAsFile(
 				sourceGroupId, privateLayout, layoutIds, parameterMap,
 				startDate, endDate);
@@ -82,6 +85,8 @@ public class LayoutStagingBackgroundTaskExecutor
 			FileUtil.delete(file);
 
 			StagingUtil.unlockGroup(targetGroupId);
+
+			ExportImportThreadLocal.setStagingInProcess(false);
 		}
 
 		return processMissingReferences(backgroundTask, missingReferences);

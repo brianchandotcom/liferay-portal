@@ -15,6 +15,7 @@
 package com.liferay.portal.model.impl;
 
 import com.liferay.portal.kernel.atom.AtomCollectionAdapter;
+import com.liferay.portal.kernel.lar.DefaultConfigurationPortletDataHandler;
 import com.liferay.portal.kernel.lar.PortletDataHandler;
 import com.liferay.portal.kernel.lar.StagedModelDataHandler;
 import com.liferay.portal.kernel.log.Log;
@@ -2524,6 +2525,27 @@ public class PortletImpl extends PortletBaseImpl {
 	@Override
 	public boolean isShowPortletInactive() {
 		return _showPortletInactive;
+	}
+
+	/**
+	 * Returns <code>true</code> if staging is applicable to the portlet.
+	 * Otherwise it returns <code>false</code>.
+	 *
+	 * @return <code>true</code> if the portlet can be staged. If not this
+	 *         method returns <code>false</code>
+	 */
+	@Override
+	public boolean isStageable() {
+		PortletDataHandler portletDataHandler = getPortletDataHandlerInstance();
+
+		if ((portletDataHandler == null) ||
+			portletDataHandler instanceof
+				DefaultConfigurationPortletDataHandler) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	/**

@@ -1095,6 +1095,8 @@
 	</command>
 
 	<command name="DeleteBlogsEntryNoGuestRole">
+		<var name="entryContent" value="Blogs Entry Content" />
+		<var name="entryTitle" value="Blogs Entry Title" />
 		<var name="pageName" value="Blogs Page" />
 		<var name="portletName" value="Blogs" />
 

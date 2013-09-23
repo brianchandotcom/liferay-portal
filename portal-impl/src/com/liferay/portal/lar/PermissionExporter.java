@@ -60,7 +60,7 @@ public class PermissionExporter {
 			Element permissionsElement, boolean portletActions)
 		throws Exception {
 
-		List<Role> roles = layoutCache.getGroupRoles_5(groupId, resourceName);
+		List<Role> roles = layoutCache.getGroupRoles(groupId, resourceName);
 
 		List<String> actionIds = null;
 

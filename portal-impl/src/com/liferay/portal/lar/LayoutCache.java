@@ -134,7 +134,7 @@ public class LayoutCache {
 		return entityMap;
 	}
 
-	protected List<Role> getGroupRoles_5(long groupId, String resourceName)
+	protected List<Role> getGroupRoles(long groupId, String resourceName)
 		throws PortalException, SystemException {
 
 		List<Role> roles = groupRolesMap.get(groupId);

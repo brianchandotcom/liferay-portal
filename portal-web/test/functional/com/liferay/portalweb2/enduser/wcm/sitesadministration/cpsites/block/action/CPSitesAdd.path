@@ -29,6 +29,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MANUAL_MEMBERSHIP_MANAGEMENT_CHECKBOX</td>
+	<td>//input[@id='_165_manualMembershipCheckbox']</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

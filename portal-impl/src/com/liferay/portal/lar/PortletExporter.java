@@ -60,6 +60,8 @@ import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.PortletItemLocalServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.PortletPreferencesLocalServiceUtil;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
@@ -390,6 +392,28 @@ public class PortletExporter {
 			throw new LayoutImportException(
 				"Layout type " + layout.getType() + " is not valid");
 		}
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		if (serviceContext == null) {
+			serviceContext = new ServiceContext();
+
+			serviceContext.setCompanyId(layout.getCompanyId());
+			serviceContext.setSignedIn(false);
+
+			long defaultUserId = UserLocalServiceUtil.getDefaultUserId(
+				layout.getCompanyId());
+
+			serviceContext.setUserId(defaultUserId);
+
+			ServiceContextThreadLocal.pushServiceContext(serviceContext);
+		}
+
+		long layoutSetBranchId = MapUtil.getLong(
+			parameterMap, "layoutSetBranchId");
+
+		serviceContext.setAttribute("layoutSetBranchId", layoutSetBranchId);
 
 		long defaultUserId = UserLocalServiceUtil.getDefaultUserId(
 			layout.getCompanyId());

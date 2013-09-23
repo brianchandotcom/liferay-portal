@@ -44,7 +44,7 @@ public class ${seleniumBuilderContext.getPathSimpleClassName(pathName)} {
 				(tdElements[0].getText() != "") &&
 				(tdElements[0].getText() != "EXTEND_ACTION_PATH")
 			>
-				paths.put("${tdElements[0].getText()}", "${tdElements[1].getText()}");
+				paths.put("${tdElements[0].getText()}", "${seleniumBuilderFileUtil.escapeJava(tdElements[1].getText())}");
 			</#if>
 		</#list>
 

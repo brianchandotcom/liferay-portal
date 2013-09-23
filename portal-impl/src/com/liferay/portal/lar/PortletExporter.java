@@ -116,14 +116,7 @@ public class PortletExporter {
 			Element parentElement)
 		throws Exception {
 
-		if (portlet == null) {
-			return;
-		}
-
-		PortletDataHandler portletDataHandler =
-			portlet.getPortletDataHandlerInstance();
-
-		if (portletDataHandler == null) {
+		if ((portlet == null) || !portlet.isStageable()) {
 			return;
 		}
 
@@ -137,7 +130,7 @@ public class PortletExporter {
 
 		boolean staged = liveGroup.isStagedPortlet(portlet.getRootPortletId());
 
-		if (!staged && ExportImportThreadLocal.isLayoutExportInProcess()) {
+		if (!staged && ExportImportThreadLocal.isStagingInProcess()) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"Not exporting data for " + portletId +
@@ -189,6 +182,9 @@ public class PortletExporter {
 		long groupId = portletDataContext.getGroupId();
 
 		portletDataContext.setGroupId(portletDataContext.getScopeGroupId());
+
+		PortletDataHandler portletDataHandler =
+			portlet.getPortletDataHandlerInstance();
 
 		try {
 			data = portletDataHandler.exportData(

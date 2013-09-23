@@ -1,0 +1,39 @@
+<html>
+<head>
+<title>PGBreadcrumb</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PGBreadcrumb</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>PAGE_NAME</td>
+	<td></td>
+	<td>PGBreadcrumb</td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>PORTLET_NAME</td>
+	<td>//header[@class='portlet-topper']/h1/span[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OPTIONS</td>
+	<td>//header[@class='portlet-topper']/menu/div/a[contains(.,'Options')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BREADCRUMB_ENTRY</td>
+	<td>//div[@class='portlet-body']/ul</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

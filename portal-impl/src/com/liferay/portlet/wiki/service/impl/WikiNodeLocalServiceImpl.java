@@ -576,115 +576,65 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 		return wikiImporter;
 	}
 
-	protected void moveDependentToTrash(long nodeId, int status)
+	protected void moveDependentToTrash(long nodeId)
 		throws PortalException, SystemException {
 
 		List<WikiPage> pages = wikiPagePersistence.findByNodeId(nodeId);
 
 		for (WikiPage page : pages) {
-			if (status == WorkflowConstants.STATUS_IN_TRASH) {
-				if (page.getStatus() == WorkflowConstants.STATUS_APPROVED) {
-					assetEntryLocalService.updateVisible(
-						WikiPage.class.getName(), page.getResourcePrimKey(),
-						false);
-				}
 
-				// Index
-
-				Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-					WikiPage.class);
-
-				indexer.reindex(page);
-
-				// Cache
-
-				if (WikiCacheThreadLocal.isClearCache()) {
-					WikiCacheUtil.clearCache(page.getNodeId());
-				}
-
-				if (page.getStatus() == WorkflowConstants.STATUS_PENDING) {
-					page.setStatus(WorkflowConstants.STATUS_DRAFT);
-
-					wikiPagePersistence.update(page);
-
-					workflowInstanceLinkLocalService.deleteWorkflowInstanceLink(
-						page.getCompanyId(), page.getGroupId(),
-						WikiPage.class.getName(), page.getResourcePrimKey());
-				}
+			if (page.getStatus() == WorkflowConstants.STATUS_APPROVED) {
+				assetEntryLocalService.updateVisible(
+					WikiPage.class.getName(), page.getResourcePrimKey(),
+					false);
 			}
-			else {
 
-				// Asset
+			// Index
 
-				if (page.getStatus() == WorkflowConstants.STATUS_APPROVED) {
-					assetEntryLocalService.updateVisible(
-						WikiPage.class.getName(), page.getResourcePrimKey(),
-						true);
-				}
+			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+				WikiPage.class);
 
-				// Index
+			indexer.reindex(page);
 
-				Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-					WikiPage.class);
+			// Cache
 
-				indexer.reindex(page);
+			if (WikiCacheThreadLocal.isClearCache()) {
+				WikiCacheUtil.clearCache(page.getNodeId());
+			}
+
+			if (page.getStatus() == WorkflowConstants.STATUS_PENDING) {
+				page.setStatus(WorkflowConstants.STATUS_DRAFT);
+
+				wikiPagePersistence.update(page);
+
+				workflowInstanceLinkLocalService.deleteWorkflowInstanceLink(
+					page.getCompanyId(), page.getGroupId(),
+					WikiPage.class.getName(), page.getResourcePrimKey());
 			}
 		}
 	}
 
-	protected void restoreDependentFromTrash(long nodeId, int status)
+	protected void restoreDependentFromTrash(long nodeId)
 		throws PortalException, SystemException {
 
 		List<WikiPage> pages = wikiPagePersistence.findByNodeId(nodeId);
 
 		for (WikiPage page : pages) {
-			if (status == WorkflowConstants.STATUS_IN_TRASH) {
-				if (page.getStatus() == WorkflowConstants.STATUS_APPROVED) {
-					assetEntryLocalService.updateVisible(
-						WikiPage.class.getName(), page.getResourcePrimKey(),
-						false);
-				}
 
-				// Index
+			// Asset
 
-				Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-					WikiPage.class);
-
-				indexer.reindex(page);
-
-				// Cache
-
-				if (WikiCacheThreadLocal.isClearCache()) {
-					WikiCacheUtil.clearCache(page.getNodeId());
-				}
-
-				if (page.getStatus() == WorkflowConstants.STATUS_PENDING) {
-					page.setStatus(WorkflowConstants.STATUS_DRAFT);
-
-					wikiPagePersistence.update(page);
-
-					workflowInstanceLinkLocalService.deleteWorkflowInstanceLink(
-						page.getCompanyId(), page.getGroupId(),
-						WikiPage.class.getName(), page.getResourcePrimKey());
-				}
+			if (page.getStatus() == WorkflowConstants.STATUS_APPROVED) {
+				assetEntryLocalService.updateVisible(
+					WikiPage.class.getName(), page.getResourcePrimKey(),
+					true);
 			}
-			else {
 
-				// Asset
+			// Index
 
-				if (page.getStatus() == WorkflowConstants.STATUS_APPROVED) {
-					assetEntryLocalService.updateVisible(
-						WikiPage.class.getName(), page.getResourcePrimKey(),
-						true);
-				}
+			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+				WikiPage.class);
 
-				// Index
-
-				Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-					WikiPage.class);
-
-				indexer.reindex(page);
-			}
+			indexer.reindex(page);
 		}
 	}
 

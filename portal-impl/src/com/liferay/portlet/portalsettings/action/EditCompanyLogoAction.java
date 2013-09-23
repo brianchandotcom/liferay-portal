@@ -15,6 +15,7 @@
 package com.liferay.portlet.portalsettings.action;
 
 import com.liferay.portal.ImageTypeException;
+import com.liferay.portal.NoSuchRepositoryException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.image.ImageBag;
@@ -268,6 +269,9 @@ public class EditCompanyLogoAction extends PortletAction {
 		}
 		catch (NoSuchFileEntryException nsfee) {
 			throw new UploadException(nsfee);
+		}
+		catch (NoSuchRepositoryException nsre) {
+			throw new UploadException(nsre);
 		}
 		finally {
 			StreamUtil.cleanUp(tempImageStream);

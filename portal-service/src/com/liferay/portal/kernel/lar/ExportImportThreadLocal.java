@@ -63,6 +63,10 @@ public class ExportImportThreadLocal {
 		return _portletValidationInProcess.get();
 	}
 
+	public static boolean isStagingInProcess() {
+		return _stagingInProcess.get();
+	}
+
 	public static void setLayoutExportInProcess(boolean layoutExportInProcess) {
 		_layoutExportInProcess.set(layoutExportInProcess);
 	}
@@ -95,6 +99,10 @@ public class ExportImportThreadLocal {
 		_portletValidationInProcess.set(portletValidationInProcess);
 	}
 
+	public static void setStagingInProcess(boolean stagingInProcess) {
+		_stagingInProcess.set(stagingInProcess);
+	}
+
 	private static ThreadLocal<Boolean> _layoutExportInProcess =
 		new AutoResetThreadLocal<Boolean>(
 			ExportImportThreadLocal.class + "._layoutExportInProcess", false);
@@ -115,5 +123,8 @@ public class ExportImportThreadLocal {
 		new AutoResetThreadLocal<Boolean>(
 			ExportImportThreadLocal.class + "._portletValidationInProcess",
 			false);
+	private static ThreadLocal<Boolean> _stagingInProcess =
+		new AutoResetThreadLocal<Boolean>(
+			ExportImportThreadLocal.class + "._stagingInProcess", false);
 
 }

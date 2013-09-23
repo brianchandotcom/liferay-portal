@@ -153,8 +153,7 @@ public class CalendarPortletDataHandler extends BasePortletDataHandler {
 
 		Element eventElement = rootElement.addElement("event");
 
-		portletDataContext.addClassedModel(
-			eventElement, path, event);
+		portletDataContext.addClassedModel(eventElement, path, event);
 	}
 
 	protected String getEventPath(

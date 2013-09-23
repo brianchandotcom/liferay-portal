@@ -115,11 +115,15 @@ public class ExportImportAction extends ImportLayoutsAction {
 							portlet.getPortletId());
 				}
 				else if (cmd.equals(Constants.EXPORT)) {
+					hideDefaultSuccessMessage(portletConfig, actionRequest);
+
 					exportData(actionRequest, actionResponse, portlet);
 
 					sendRedirect(actionRequest, actionResponse, redirect);
 				}
 				else if (cmd.equals(Constants.IMPORT)) {
+					hideDefaultSuccessMessage(portletConfig, actionRequest);
+
 					importData(
 						actionRequest, actionResponse,
 						ExportImportHelper.TEMP_FOLDER_NAME +
@@ -137,6 +141,8 @@ public class ExportImportAction extends ImportLayoutsAction {
 					sendRedirect(actionRequest, actionResponse, redirect);
 				}
 				else if (cmd.equals("publish_to_live")) {
+					hideDefaultSuccessMessage(portletConfig, actionRequest);
+
 					StagingUtil.publishToLive(actionRequest, portlet);
 
 					sendRedirect(actionRequest, actionResponse);

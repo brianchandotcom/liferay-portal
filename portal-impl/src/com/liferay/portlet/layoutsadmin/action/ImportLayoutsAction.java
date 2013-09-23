@@ -104,6 +104,8 @@ public class ImportLayoutsAction extends PortletAction {
 					ExportImportHelper.TEMP_FOLDER_NAME);
 			}
 			else if (cmd.equals(Constants.IMPORT)) {
+				hideDefaultSuccessMessage(portletConfig, actionRequest);
+
 				importData(
 					actionRequest, actionResponse,
 					ExportImportHelper.TEMP_FOLDER_NAME);

@@ -216,7 +216,16 @@
 
 		<execute action="PGWebcontentdisplayConfiguration#selectFrame" locator-key1="CONFIGURATION_IFRAME" />
 
-		<execute action="PGWebcontentdisplayConfiguration#type" locator-key1="SEARCH_FIELD" value1="${webContentTitle}" />
+		<if>
+			<isset var="webContentSearchValue" />
+			<then>
+					<execute action="PGWebcontentdisplayConfiguration#type" locator-key1="SEARCH_FIELD" value1="${webContentSearchValue}" />
+			</then>
+			<else>
+					<execute action="PGWebcontentdisplayConfiguration#type" locator-key1="SEARCH_FIELD" value1="${webContentTitle}" />
+			</else>
+		</if>
+
 		<execute action="PGWebcontentdisplayConfiguration#assertClick" locator-key1="SEARCH_BUTTON" value1="Search" />
 
 		<var name='key_webContentTitle' value="${webContentTitle}" />

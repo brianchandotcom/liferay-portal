@@ -88,7 +88,6 @@ if ((ddmTemplate == null) && !ddmTemplates.isEmpty()) {
 	templateId = ddmTemplate.getTemplateKey();
 }
 
-String languageId = (String)request.getAttribute("edit_article.jsp-languageId");
 String defaultLanguageId = (String)request.getAttribute("edit_article.jsp-defaultLanguageId");
 String toLanguageId = (String)request.getAttribute("edit_article.jsp-toLanguageId");
 

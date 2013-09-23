@@ -18,6 +18,7 @@ import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.RemoteExportException;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
 import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
+import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.lar.MissingReferences;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -75,6 +76,8 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 		MissingReferences missingReferences = null;
 
 		try {
+			ExportImportThreadLocal.setStagingInProcess(true);
+
 			file = exportLayoutsAsFile(
 				sourceGroupId, privateLayout, layoutIdMap, parameterMap,
 				remoteGroupId, startDate, endDate, httpPrincipal);
@@ -129,6 +132,8 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 				StagingServiceHttp.cleanUpStagingRequest(
 					httpPrincipal, stagingRequestId);
 			}
+
+			ExportImportThreadLocal.setStagingInProcess(false);
 		}
 
 		return processMissingReferences(backgroundTask, missingReferences);

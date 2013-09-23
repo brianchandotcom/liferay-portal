@@ -17,6 +17,7 @@ package com.liferay.portal.security.pwd;
 import com.liferay.portal.UserPasswordException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.security.RandomUtil;
 import com.liferay.portal.kernel.security.SecureRandomUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -230,7 +231,7 @@ public class PasswordPolicyToolkit extends BasicToolkit {
 					PropsValues.PASSWORDS_DEFAULT_POLICY_MIN_LENGTH));
 		}
 
-		return PwdGenerator.shuffle(
+		return RandomUtil.shuffle(
 			new Random(SecureRandomUtil.nextLong()), sb.toString());
 	}
 

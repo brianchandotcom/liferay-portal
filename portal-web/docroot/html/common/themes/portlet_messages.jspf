@@ -43,7 +43,7 @@ else if (group.isStagingGroup()) {
 }
 %>
 
-<c:if test="<%= liveGroup.isStaged() && !liveGroup.isStagedPortlet(portlet.getRootPortletId()) %>">
+<c:if test="<%= portlet.isStageable() && liveGroup.isStaged() && !liveGroup.isStagedPortlet(portlet.getRootPortletId()) %>">
 	<c:choose>
 		<c:when test="<%= !liveGroup.isStagedRemotely() && inStaging %>">
 			<div class="alert alert-block">

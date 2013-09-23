@@ -298,6 +298,17 @@ public class JournalFolderLocalServiceImpl
 
 	@Override
 	public List<Object> getFoldersAndArticles(
+			long groupId, long folderId, int status)
+		throws SystemException {
+
+		QueryDefinition queryDefinition = new QueryDefinition(status);
+
+		return journalFolderFinder.findF_A_ByG_F(
+			groupId, folderId, queryDefinition);
+	}
+
+	@Override
+	public List<Object> getFoldersAndArticles(
 			long groupId, long folderId, int start, int end,
 			OrderByComparator obc)
 		throws SystemException {
@@ -343,6 +354,15 @@ public class JournalFolderLocalServiceImpl
 		return journalFolderFinder.countF_A_ByG_F(
 			groupId, folderId,
 			new QueryDefinition(WorkflowConstants.STATUS_ANY));
+	}
+
+	@Override
+	public int getFoldersAndArticlesCount(
+			long groupId, long folderId, int status)
+		throws SystemException {
+
+		return journalFolderFinder.countF_A_ByG_F(
+			groupId, folderId, new QueryDefinition(status));
 	}
 
 	@Override

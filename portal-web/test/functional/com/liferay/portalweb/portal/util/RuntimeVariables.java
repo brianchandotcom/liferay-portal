@@ -77,7 +77,10 @@ public class RuntimeVariables {
 
 				String result = "";
 
-				if (method.startsWith("increment")) {
+				if (method.startsWith("getFirstNumber")) {
+					result = operandValue.replaceFirst("\\D*(\\d*).*", "$1");
+				}
+				else if (method.startsWith("increment")) {
 					int i = GetterUtil.getInteger(operandValue) + 1;
 
 					result = String.valueOf(i);

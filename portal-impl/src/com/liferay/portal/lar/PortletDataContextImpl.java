@@ -1793,10 +1793,10 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 	@Override
 	public boolean isModelCounted(String className, long classPK) {
-		String modelCountPrimaryKey = className.concat(
+		String modelCountedPrimaryKey = className.concat(
 			StringPool.POUND).concat(String.valueOf(classPK));
 
-		return addPrimaryKey(String.class, modelCountPrimaryKey);
+		return addPrimaryKey(String.class, modelCountedPrimaryKey);
 	}
 
 	@Override

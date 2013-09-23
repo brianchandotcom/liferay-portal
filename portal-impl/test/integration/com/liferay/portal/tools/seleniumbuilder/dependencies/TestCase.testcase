@@ -1,6 +1,9 @@
 <definition>
 	<var name="name" value="value" />
 	<var name="name" value="" />
+	<var name="name" value="&quot;value&quot;" />
+	<var name="name"><![CDATA["value"]]></var>
+	<var name="name">"value"</var>
 
 	<set-up>
 		<var name="name" value="value" />

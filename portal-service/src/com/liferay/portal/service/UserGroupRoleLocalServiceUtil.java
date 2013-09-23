@@ -339,10 +339,21 @@ public class UserGroupRoleLocalServiceUtil {
 		return getService().getUserGroupRolesByGroup(groupId);
 	}
 
+	public static java.util.List<com.liferay.portal.model.UserGroupRole> getUserGroupRolesByGroup(
+		long groupId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getUserGroupRolesByGroup(groupId, start, end);
+	}
+
 	public static java.util.List<com.liferay.portal.model.UserGroupRole> getUserGroupRolesByGroupAndRole(
 		long groupId, long roleId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getUserGroupRolesByGroupAndRole(groupId, roleId);
+	}
+
+	public static int getUserGroupRolesByGroupCount(long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getUserGroupRolesByGroupCount(groupId);
 	}
 
 	public static java.util.List<com.liferay.portal.model.UserGroupRole> getUserGroupRolesByUserUserGroupAndGroup(

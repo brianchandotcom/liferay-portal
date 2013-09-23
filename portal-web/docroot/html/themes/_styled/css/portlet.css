@@ -259,10 +259,10 @@ body.portlet {
 	&:hover {
 		.lfr-icon-actions {
 			@extend %portlet-action-bar-hover;
-		}
 
-		.taglib-text {
-			@extend %portlet-action-bar-hover-text;
+			.taglib-text {
+				@extend %portlet-action-bar-hover-text;
+			}
 		}
 	}
 

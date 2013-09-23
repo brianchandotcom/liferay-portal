@@ -15,7 +15,9 @@
 package com.liferay.portal.lar.backgroundtask;
 
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
+import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.lar.MissingReferences;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.model.BackgroundTask;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
@@ -51,28 +53,33 @@ public class PortletStagingBackgroundTaskExecutor
 		Date startDate = (Date)taskContextMap.get("startDate");
 		Date endDate = (Date)taskContextMap.get("endDate");
 
-		File larFile = LayoutLocalServiceUtil.exportPortletInfoAsFile(
-			sourcePlid, sourceGroupId, portletId, parameterMap, startDate,
-			endDate);
-
-		backgroundTask = markBackgroundTask(backgroundTask, "exported");
-
+		File file = null;
 		MissingReferences missingReferences = null;
 
 		try {
+			ExportImportThreadLocal.setStagingInProcess(true);
+
+			file = LayoutLocalServiceUtil.exportPortletInfoAsFile(
+				sourcePlid, sourceGroupId, portletId, parameterMap, startDate,
+				endDate);
+
+			backgroundTask = markBackgroundTask(backgroundTask, "exported");
+
 			missingReferences =
 				LayoutLocalServiceUtil.validateImportPortletInfo(
 					userId, targetGroupId, targetPlid, portletId, parameterMap,
-					larFile);
+					file);
 
 			backgroundTask = markBackgroundTask(backgroundTask, "validated");
 
 			LayoutLocalServiceUtil.importPortletInfo(
 				userId, targetPlid, targetGroupId, portletId, parameterMap,
-				larFile);
+				file);
 		}
 		finally {
-			larFile.delete();
+			FileUtil.delete(file);
+
+			ExportImportThreadLocal.setStagingInProcess(false);
 		}
 
 		return processMissingReferences(backgroundTask, missingReferences);

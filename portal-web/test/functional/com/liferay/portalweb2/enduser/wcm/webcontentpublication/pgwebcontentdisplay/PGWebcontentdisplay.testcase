@@ -328,6 +328,7 @@
 	<command name="SearchWebContent">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
+		<var name="webContentTitle2" value="WC2 WebContent2 Title2" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
@@ -346,16 +347,30 @@
 			<var name="webContentTitle" value="${webContentTitle}" />
 		</execute>
 
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
 		<execute macro="WebContentDisplayPortlet#searchWebContentNo">
-			<var name="webContentTitle" value="WC1 WebContent1 Title1" />
+			<var name="webContentTitle" value="${webContentTitle2}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="WebContentDisplayPortlet#searchWebContent">
-			<var name="webContentTitle" value="\&quot;${webContentTitle}\&quot;" />
+			<var name="webContentSearchValue" value="\&quot;${webContentTitle}\&quot;" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="WebContentDisplayPortlet#searchWebContentNo">
-			<var name="webContentTitle" value="\&quot;${webContentTitle}1\&quot;" />
+			<var name="webContentSearchValue" value="\&quot;${webContentTitle2}\&quot;" />
+			<var name="webContentTitle" value="${webContentTitle2}" />
 		</execute>
 	</command>
 

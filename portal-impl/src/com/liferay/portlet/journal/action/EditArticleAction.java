@@ -632,7 +632,7 @@ public class EditArticleAction extends PortletAction {
 			Locale locale = LocaleUtil.fromLanguageId(languageId);
 
 			Object[] contentAndImages = ActionUtil.getContentAndImages(
-				groupId, structureId, locale, serviceContext);
+				ddmStructure, locale, serviceContext);
 
 			content = (String)contentAndImages[0];
 			images = (HashMap<String, byte[]>)contentAndImages[1];

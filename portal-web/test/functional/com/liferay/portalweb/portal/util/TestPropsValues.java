@@ -76,6 +76,9 @@ public class TestPropsValues extends com.liferay.portal.util.TestPropsValues {
 	public static final boolean TEST_DATABASE_MINIMAL = GetterUtil.getBoolean(
 		TestPropsUtil.get("test.database.minimal"));
 
+	public static final boolean TEST_SKIP_TEAR_DOWN = GetterUtil.getBoolean(
+		TestPropsUtil.get("test.skip.tear.down"));
+
 	public static final boolean TESTING_CLASS_METHOD = GetterUtil.getBoolean(
 		TestPropsUtil.get("testing.class.method"));
 

@@ -1966,6 +1966,17 @@ svn --username ${svn.username} --password ${svn.password} update -r ${svn.info.r
 				/>
 			</then>
 		</if>
+
+		<if>
+			<equals arg1="${test.skip.tear.down}" arg2="true" />
+			<then>
+				<replace
+					file="portal-web/test/test-portal-web.properties"
+					token="test.skip.tear.down=false"
+					value="test.skip.tear.down=true"
+				/>
+			</then>
+		</if>
 	</target>
 
 	<target name="prepare-test-properties" depends="generate-test-properties">
@@ -2756,11 +2767,13 @@ custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
 				</waitfor>
 
 				<if>
-					<or>
-						<contains string="${simple.server.dir}" substring="glassfish" />
-						<contains string="${simple.server.dir}" substring="jonas" />
+					<and>
+						<or>
+							<contains string="${simple.server.dir}" substring="glassfish" />
+							<contains string="${simple.server.dir}" substring="jonas" />
+						</or>
 						<isset property="plugins.deployed" />
-					</or>
+					</and>
 					<then>
 						<sleep seconds="60" />
 					</then>

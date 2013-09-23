@@ -658,6 +658,15 @@ public class DLFileEntryLocalServiceWrapper implements DLFileEntryLocalService,
 	}
 
 	@Override
+	public int getFileEntriesCount(long groupId,
+		com.liferay.portal.kernel.util.DateRange dateRange, long repositoryId,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition queryDefinition)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _dlFileEntryLocalService.getFileEntriesCount(groupId, dateRange,
+			repositoryId, queryDefinition);
+	}
+
+	@Override
 	public com.liferay.portlet.documentlibrary.model.DLFileEntry getFileEntry(
 		long fileEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException,

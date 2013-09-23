@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.lar.UserIdStrategy;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.DateRange;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -922,6 +923,17 @@ public class PortletDataContextImpl implements PortletDataContext {
 	@Override
 	public String getDataStrategy() {
 		return _dataStrategy;
+	}
+
+	@Override
+	public DateRange getDateRange() {
+		DateRange dateRange = null;
+
+		if (hasDateRange()) {
+			dateRange = new DateRange(_startDate, _endDate);
+		}
+
+		return dateRange;
 	}
 
 	@Override

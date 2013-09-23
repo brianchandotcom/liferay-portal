@@ -28,7 +28,25 @@
 				[$FOLDER_ID$]
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryFinder.countByG_U_F">
+	<sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryFinder.countByG_M_R">
+		<![CDATA[
+			SELECT
+				COUNT(DLFileEntry.fileEntryId) AS COUNT_VALUE
+			FROM
+				DLFileEntry
+			INNER JOIN
+				DLFileVersion ON
+					(DLFileVersion.fileEntryId = DLFileEntry.fileEntryId) AND
+					(DLFileVersion.version = DLFileEntry.version)
+
+			WHERE
+				(DLFileEntry.groupId = ?) AND
+				(DLFileEntry.modifiedDate >= ?) AND
+				(DLFileEntry.modifiedDate <= ?) AND
+				(DLFileEntry.repositoryId = ?) AND
+				([$STATUS$])
+		]]>
+	</sql><sql id="com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryFinder.countByG_U_F">
 		<![CDATA[
 			SELECT
 				COUNT(DISTINCT DLFileEntry.fileEntryId) AS COUNT_VALUE

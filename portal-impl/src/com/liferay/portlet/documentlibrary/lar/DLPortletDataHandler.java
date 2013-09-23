@@ -18,10 +18,13 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.BasePortletDataHandler;
+import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
+import com.liferay.portal.kernel.lar.ManifestSummary;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.portal.kernel.lar.PortletDataHandlerControl;
@@ -31,6 +34,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.service.PortletLocalServiceUtil;
@@ -42,6 +46,7 @@ import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.permission.DLPermission;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryExportActionableDynamicQuery;
 import com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryTypeExportActionableDynamicQuery;
@@ -379,6 +384,32 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 					portletDataContext, fileEntry);
 			}
 
+			@Override
+			public long performCount() throws PortalException, SystemException {
+				ManifestSummary manifestSummary =
+					portletDataContext.getManifestSummary();
+
+				long modelAdditionCount =
+					DLFileEntryLocalServiceUtil.getFileEntriesCount(
+						portletDataContext.getScopeGroupId(),
+						portletDataContext.getDateRange(),
+						portletDataContext.getScopeGroupId(),
+						new QueryDefinition(WorkflowConstants.STATUS_APPROVED));
+
+				StagedModelType stagedModelType = getStagedModelType();
+
+				manifestSummary.addModelAdditionCount(
+					stagedModelType.toString(), modelAdditionCount);
+
+				long modelDeletionCount =
+					ExportImportHelperUtil.getModelDeletionCount(
+						portletDataContext, stagedModelType);
+
+				manifestSummary.addModelDeletionCount(
+					stagedModelType.toString(), modelDeletionCount);
+
+				return modelAdditionCount;
+			}
 		};
 	}
 

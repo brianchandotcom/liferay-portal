@@ -1108,7 +1108,9 @@
 		<if>
 			<isset property="test.evaluate.logs" />
 			<then>
-				<ant dir="portal-web" target="test-class" inheritAll="false">
+				<var name="test.class" unset="true" />
+
+				<ant dir="portal-web" target="test-class">
 					<property name="test.class" value="EvaluateLogTestSuite" />
 				</ant>
 			</then>

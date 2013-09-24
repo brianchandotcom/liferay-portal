@@ -92,13 +92,13 @@ public class TrackbackAction extends PortletAction {
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			actionRequest);
 
-		HttpServletRequest orginalRequest =
+		HttpServletRequest originalRequest =
 			PortalUtil.getOriginalServletRequest(request);
 
-		String title = ParamUtil.getString(orginalRequest, "title");
-		String excerpt = ParamUtil.getString(orginalRequest, "excerpt");
-		String url = ParamUtil.getString(orginalRequest, "url");
-		String blogName = ParamUtil.getString(orginalRequest, "blog_name");
+		String title = ParamUtil.getString(originalRequest, "title");
+		String excerpt = ParamUtil.getString(originalRequest, "excerpt");
+		String url = ParamUtil.getString(originalRequest, "url");
+		String blogName = ParamUtil.getString(originalRequest, "blog_name");
 
 		if (!isCommentsEnabled(actionRequest)) {
 			sendError(

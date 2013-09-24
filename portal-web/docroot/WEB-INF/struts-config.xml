@@ -793,7 +793,7 @@
 
 		<action path="/image_gallery_display/search" forward="portlet.image_gallery_display.search" />
 
-		<action path="/image_gallery_display/select_file_entry_type" forward="portlet.document_library_display.select_file_entry_type" />
+		<action path="/image_gallery_display/select_add_file_entry_type" forward="portlet.document_library_display.select_add_file_entry_type" />
 
 		<action path="/image_gallery_display/select_folder" type="com.liferay.portlet.documentlibrary.action.EditFolderAction">
 			<forward name="portlet.document_library.edit_folder" path="portlet.document_library.select_folder" />

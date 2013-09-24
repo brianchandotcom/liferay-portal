@@ -967,6 +967,11 @@ public class GroupWrapper implements Group, ModelWrapper<Group> {
 	}
 
 	@Override
+	public boolean isChild(long groupId) {
+		return _group.isChild(groupId);
+	}
+
+	@Override
 	public boolean isGuest() {
 		return _group.isGuest();
 	}

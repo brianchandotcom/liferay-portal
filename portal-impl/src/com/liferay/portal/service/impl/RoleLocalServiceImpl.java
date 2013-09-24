@@ -817,12 +817,13 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Returns a team to team role mapping for the group
+	 * Returns the team role map for the group.
 	 *
 	 * @param  groupId the primary key of the group
-	 * @return team to team role mapping for the group
-	 * @throws PortalException if a role could not be found for one of the teams
-	 *         within the given group
+	 * @return the team role map for the group
+	 * @throws PortalException if a group with the primary key could not be
+	 *         found, if a role could not be found in the team, or if a portal
+	 *         exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
@@ -833,12 +834,13 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Returns the team roles in the group
+	 * Returns the team roles in the group.
 	 *
 	 * @param  groupId the primary key of the group
-	 * @return the team roles in the given groupId
-	 * @throws PortalException if a role could not be found for one of the teams
-	 *         within the given group
+	 * @return the team roles in the group
+	 * @throws PortalException if a group with the primary key could not be
+	 *         found, if a role could not be found in the team, or if a portal
+	 *         exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
@@ -849,13 +851,15 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Returns the team roles in the group
+	 * Returns the team roles in the group, excluding the specified role IDs.
 	 *
 	 * @param  groupId the primary key of the group
-	 * @param  skipRoleIds array of roleIds to be skipped (optional)
-	 * @return the team roles in the given groupId
-	 * @throws PortalException if a role could not be found for one of the teams
-	 *         within the given group
+	 * @param  excludedRoleIds the roles' primary keys to be excluded
+	 *         (optionally <code>null</code>)
+	 * @return the team roles in the group, excluding the specified role IDs
+	 * @throws PortalException if a group with the primary key could not be
+	 *         found, if a role could not be found in the team, or if a portal
+	 *         exception occurred
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override

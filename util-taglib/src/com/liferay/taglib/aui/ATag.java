@@ -78,16 +78,17 @@ public class ATag extends BaseATag {
 	protected int processStartTag() throws Exception {
 		JspWriter jspWriter = pageContext.getOut();
 
-		String href = getHref();
+		String ariaRole = getAriaRole();
 		String cssClass = getCssClass();
+		Map<String, Object> data = getData();
+		String href = getHref();
 		String id = getId();
-		String namespace = _getNamespace();
+		String label = getLabel();
 		String lang = getLang();
+		String namespace = _getNamespace();
 		String onClick = getOnClick();
 		String target = getTarget();
 		String title = getTitle();
-		Map<String, Object> data = getData();
-		String label = getLabel();
 
 		if (Validator.isNotNull(href)) {
 			jspWriter.write("<a ");
@@ -128,6 +129,12 @@ public class ATag extends BaseATag {
 		if (Validator.isNotNull(onClick)) {
 			jspWriter.write("onClick=\"");
 			jspWriter.write(onClick);
+			jspWriter.write("\" ");
+		}
+
+		if (Validator.isNotNull(ariaRole)) {
+			jspWriter.write("role=\"");
+			jspWriter.write(ariaRole);
 			jspWriter.write("\" ");
 		}
 

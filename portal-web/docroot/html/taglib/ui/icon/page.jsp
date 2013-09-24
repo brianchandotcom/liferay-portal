@@ -141,10 +141,10 @@ boolean urlIsNotNull = Validator.isNotNull(url);
 
 <c:choose>
 	<c:when test="<%= (iconListIconCount != null) && ((iconListSingleIcon == null) || iconListShowWhenSingleIcon) %>">
-		<li class="<%= cssClass %>">
+		<li class="<%= cssClass %>" role="presentation">
 			<c:choose>
 				<c:when test="<%= urlIsNotNull %>">
-					<aui:a cssClass='<%= linkCssClass + " taglib-icon" %>' data="<%= data %>" href="<%= url %>" id="<%= id %>" lang="<%= lang %>" target="<%= target %>">
+					<aui:a ariaRole="menuitem" cssClass='<%= linkCssClass + " taglib-icon" %>' data="<%= data %>" href="<%= url %>" id="<%= id %>" lang="<%= lang %>" target="<%= target %>">
 						<%= linkContent %>
 					</aui:a>
 				</c:when>
@@ -155,10 +155,10 @@ boolean urlIsNotNull = Validator.isNotNull(url);
 		</li>
 	</c:when>
 	<c:when test="<%= (iconMenuIconCount != null) && ((iconMenuSingleIcon == null) || iconMenuShowWhenSingleIcon) %>">
-		<li class="<%= cssClass %>">
+		<li class="<%= cssClass %>" role="presentation">
 			<c:choose>
 				<c:when test="<%= urlIsNotNull %>">
-					<aui:a cssClass='<%= linkCssClass + " taglib-icon" %>' data="<%= data %>" href="<%= url %>" id="<%= id %>" lang="<%= lang %>" onClick='<%= Validator.isNotNull(onClick) ? onClick : "" %>' target="<%= target %>">
+					<aui:a ariaRole="menuitem" cssClass='<%= linkCssClass + " taglib-icon" %>' data="<%= data %>" href="<%= url %>" id="<%= id %>" lang="<%= lang %>" onClick='<%= Validator.isNotNull(onClick) ? onClick : "" %>' target="<%= target %>">
 						<%= linkContent %>
 					</aui:a>
 				</c:when>
@@ -172,7 +172,7 @@ boolean urlIsNotNull = Validator.isNotNull(url);
 		<span class="<%= cssClass %>">
 			<c:choose>
 				<c:when test="<%= urlIsNotNull %>">
-					<aui:a cssClass='<%= linkCssClass + " taglib-icon" %>' data="<%= data %>" href="<%= url %>" id="<%= id %>" lang="<%= lang %>" onClick='<%= Validator.isNotNull(onClick) ? onClick : "" %>' target="<%= target %>">
+					<aui:a ariaRole="<%= ariaRole %>" cssClass='<%= linkCssClass + " taglib-icon" %>' data="<%= data %>" href="<%= url %>" id="<%= id %>" lang="<%= lang %>" onClick='<%= Validator.isNotNull(onClick) ? onClick : "" %>' target="<%= target %>">
 						<%= linkContent %>
 					</aui:a>
 				</c:when>

@@ -46,9 +46,11 @@
 			String title = LanguageUtil.get(pageContext, "category." + siteAdministrationCategory);
 
 			List<Portlet> portlets = siteAdministrationCategoriesMap.get(siteAdministrationCategory);
+
+			String panelPageCategoryId = "panel-manage-" + siteAdministrationCategory;
 		%>
 
-			<liferay-ui:panel collapsible="<%= true %>" cssClass="panel-page-category unstyled" extended="<%= true %>" id='<%= "panel-manage-" + siteAdministrationCategory %>' persistState="<%= true %>" state='<%= siteAdministrationCategory.equals(portletCategory) ? "open" : "closed" %>' title="<%= title %>">
+			<liferay-ui:panel collapsible="<%= true %>" cssClass="panel-page-category unstyled" extended="<%= true %>" id="<%= panelPageCategoryId %>" persistState="<%= true %>" state='<%= siteAdministrationCategory.equals(portletCategory) ? "open" : "closed" %>' title="<%= title %>">
 				<c:if test="<%= siteAdministrationCategory.equals(PortletCategoryKeys.SITE_ADMINISTRATION_CONTENT) %>">
 
 					<%
@@ -103,14 +105,14 @@
 					</c:if>
 				</c:if>
 
-				<ul class="category-portlets">
+				<ul aria-labelledby="<%= panelPageCategoryId %>" class="category-portlets" role="menu">
 
 					<%
 					for (Portlet portlet : portlets) {
 						String portletId = portlet.getPortletId();
 					%>
 
-						<li class="<%= ppid.equals(portletId) ? "selected-portlet" : "" %>">
+						<li class="<%= ppid.equals(portletId) ? "selected-portlet" : "" %>" role="presentation">
 							<liferay-portlet:renderURL
 								doAsGroupId="<%= themeDisplay.getScopeGroupId() %>"
 								portletName="<%= portlet.getRootPortletId() %>"
@@ -118,7 +120,7 @@
 								windowState="<%= WindowState.MAXIMIZED.toString() %>"
 								/>
 
-							<a href="<%= portletURL %>" id="<portlet:namespace />portlet_<%= portletId %>">
+							<a href="<%= portletURL %>" id="<portlet:namespace />portlet_<%= portletId %>" role="menuitem">
 								<c:choose>
 									<c:when test="<%= Validator.isNull(portlet.getIcon()) %>">
 										<liferay-ui:icon src='<%= themeDisplay.getPathContext() + "/html/icons/default.png" %>' />

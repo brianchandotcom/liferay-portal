@@ -754,6 +754,21 @@ public class RoleLocalServiceUtil {
 		return getService().getDefaultGroupRole(groupId);
 	}
 
+	/**
+	* Returns all those roles which are related to the group.
+	*
+	* @param groupId the primary key of the group
+	* @return roles within the group
+	* @throws PortalException if a system exception occurred
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.portal.model.Role> getGroupRelatedRoles(
+		long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getGroupRelatedRoles(groupId);
+	}
+
 	public static java.util.List<com.liferay.portal.model.Role> getResourceBlockRoles(
 		long resourceBlockId, java.lang.String className,
 		java.lang.String actionId)
@@ -932,10 +947,10 @@ public class RoleLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.portal.model.Role> getTeamRoles(
-		long groupId, long[] skipRoleIds)
+		long groupId, long[] excludedRoleIds)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getTeamRoles(groupId, skipRoleIds);
+		return getService().getTeamRoles(groupId, excludedRoleIds);
 	}
 
 	/**

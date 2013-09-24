@@ -15,11 +15,13 @@
 package com.liferay.portlet.journal.template;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateVariableCodeHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalService;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureService;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalService;
@@ -58,6 +60,25 @@ public class JournalTemplateHandler extends BaseDDMTemplateHandler {
 	}
 
 	@Override
+	public String[] getRestrictedVariables(String language) {
+		String[] restrictedVariables;
+
+		if (language.equals(TemplateConstants.LANG_TYPE_FTL)) {
+			restrictedVariables =
+				PropsValues.JOURNAL_TEMPLATE_FREEMARKER_RESTRICTED_VARIABLES;
+		}
+		else if (language.equals(TemplateConstants.LANG_TYPE_VM)) {
+			restrictedVariables =
+				PropsValues.JOURNAL_TEMPLATE_VELOCITY_RESTRICTED_VARIABLES;
+		}
+		else {
+			restrictedVariables = new String[0];
+		}
+
+		return restrictedVariables;
+	}
+
+	@Override
 	public Map<String, TemplateVariableGroup> getTemplateVariableGroups(
 			long classPK, String language, Locale locale)
 		throws Exception {
@@ -65,8 +86,11 @@ public class JournalTemplateHandler extends BaseDDMTemplateHandler {
 		Map<String, TemplateVariableGroup> templateVariableGroups =
 			super.getTemplateVariableGroups(classPK, language, locale);
 
+		String[] restrictedVariables = getRestrictedVariables(language);
+
 		TemplateVariableGroup journalServicesTemplateVariableGroup =
-			new TemplateVariableGroup("web-content-services");
+			new TemplateVariableGroup(
+				"web-content-services", restrictedVariables);
 
 		journalServicesTemplateVariableGroup.setAutocompleteEnabled(false);
 

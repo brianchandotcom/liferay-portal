@@ -42,6 +42,9 @@ if (Validator.isNotNull(scriptContent)) {
 							Map<String, TemplateVariableGroup> templateVariableGroups = TemplateContextHelper.getTemplateVariableGroups(templateHandlerClassNameId, classPK, language, locale);
 
 							for (TemplateVariableGroup templateVariableGroup : templateVariableGroups.values()) {
+								if (templateVariableGroup.isEmpty()) {
+									continue;
+								}
 							%>
 
 								<div class="palette-section">

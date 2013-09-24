@@ -52,6 +52,11 @@ public abstract class BaseTemplateHandler implements TemplateHandler {
 	}
 
 	@Override
+	public String[] getRestrictedVariables(String language) {
+		return new String[0];
+	}
+
+	@Override
 	public String getTemplatesHelpPath(String language) {
 		return PropsUtil.get(
 			getTemplatesHelpPropertyKey(), new Filter(language));

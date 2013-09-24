@@ -60,6 +60,8 @@ public interface TemplateHandler {
 	 */
 	public String getResourceName();
 
+	public String[] getRestrictedVariables(String language);
+
 	/**
 	 * Returns the path to the help template.
 	 *

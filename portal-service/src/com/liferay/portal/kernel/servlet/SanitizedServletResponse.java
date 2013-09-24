@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.SortedProperties;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.util.PortalUtil;
 
 import java.io.IOException;
 
@@ -34,9 +35,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
+import javax.servlet.http.HttpSession;
 
 /**
  * @author László Csontos
@@ -44,6 +49,25 @@ import javax.servlet.http.HttpServletResponseWrapper;
  * @author Tomas Polesovsky
  */
 public class SanitizedServletResponse extends HttpServletResponseWrapper {
+
+	public static void disableXSSAuditor(HttpServletResponse response) {
+		response.setHeader(HttpHeaders.X_XSS_PROTECTION, "0");
+	}
+
+	public static void disableXSSAuditor(PortletResponse response) {
+		disableXSSAuditor(PortalUtil.getHttpServletResponse(response));
+	}
+
+	public static void disableXSSAuditorOnNextRequest(
+		HttpServletRequest request) {
+
+		request.getSession().setAttribute(_DISABLE_XSS_AUDITOR, Boolean.TRUE);
+	}
+
+	public static void disableXSSAuditorOnNextRequest(PortletRequest request) {
+		disableXSSAuditorOnNextRequest(
+			PortalUtil.getHttpServletRequest(request));
+	}
 
 	public static HttpServletResponse getSanitizedServletResponse(
 		HttpServletRequest request, HttpServletResponse response) {
@@ -136,6 +160,18 @@ public class SanitizedServletResponse extends HttpServletResponseWrapper {
 	protected static void setXXSSProtection(
 		HttpServletRequest request, HttpServletResponse response) {
 
+		HttpSession session = request.getSession(false);
+
+		if ((session != null) &&
+			(session.getAttribute(_DISABLE_XSS_AUDITOR) != null)) {
+
+			session.removeAttribute(_DISABLE_XSS_AUDITOR);
+
+			response.setHeader(HttpHeaders.X_XSS_PROTECTION, "0");
+
+			return;
+		}
+
 		if (Validator.isNull(_X_XSS_PROTECTION)) {
 			return;
 		}
@@ -146,6 +182,9 @@ public class SanitizedServletResponse extends HttpServletResponseWrapper {
 	private SanitizedServletResponse(HttpServletResponse response) {
 		super(response);
 	}
+
+	private static final String _DISABLE_XSS_AUDITOR =
+		SanitizedServletResponse.class.getName() + ".disableXSSAuditor";
 
 	private static final boolean _X_CONTENT_TYPE_OPTIONS =
 		GetterUtil.getBoolean(

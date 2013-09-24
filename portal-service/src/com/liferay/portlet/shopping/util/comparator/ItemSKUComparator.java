@@ -49,7 +49,10 @@ public class ItemSKUComparator extends OrderByComparator {
 		int value = categoryId1.compareTo(categoryId2);
 
 		if (value == 0) {
-			value = item1.getSku().compareTo(item2.getSku());
+			String sku1 = item1.getSku();
+			String sku2 = item2.getSku();
+
+			value = sku1.compareTo(sku2);
 		}
 
 		if (_ascending) {

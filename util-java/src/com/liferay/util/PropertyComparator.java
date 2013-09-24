@@ -68,28 +68,28 @@ public class PropertyComparator implements Comparator<Object> {
 				}
 
 				if (property1 instanceof String) {
-					int result = 0;
+					int value = 0;
 
 					if (_caseSensitive) {
-						result = property1.toString().compareTo(
+						value = property1.toString().compareTo(
 							property2.toString());
 					}
 					else {
-						result = property1.toString().compareToIgnoreCase(
+						value = property1.toString().compareToIgnoreCase(
 							property2.toString());
 					}
 
-					if (result != 0) {
-						return result;
+					if (value != 0) {
+						return value;
 					}
 				}
 
 				if (property1 instanceof Comparable<?>) {
-					int result = ((Comparable<Object>)property1).compareTo(
+					int value = ((Comparable<Object>)property1).compareTo(
 						property2);
 
-					if (result != 0) {
-						return result;
+					if (value != 0) {
+						return value;
 					}
 				}
 			}

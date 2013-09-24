@@ -25,7 +25,10 @@ public class JavaMethodComparator implements Comparator<JavaMethod> {
 
 	@Override
 	public int compare(JavaMethod method1, JavaMethod method2) {
-		return method1.getName().compareTo(method2.getName());
+		String name1 = method1.getName();
+		String name2 = method2.getName();
+
+		return name1.compareTo(name2);
 	}
 
 }

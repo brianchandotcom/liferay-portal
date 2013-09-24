@@ -42,8 +42,10 @@ public class EntryUserNameComparator extends OrderByComparator {
 		TrashEntry entry1 = (TrashEntry)obj1;
 		TrashEntry entry2 = (TrashEntry)obj2;
 
-		int value = StringUtil.toLowerCase(entry1.getUserName()).compareTo(
-			StringUtil.toLowerCase(entry2.getUserName()));
+		String name1 = StringUtil.toLowerCase(entry1.getUserName());
+		String name2 = StringUtil.toLowerCase(entry2.getUserName());
+
+		int value = name1.compareTo(name2);
 
 		if (_ascending) {
 			return value;

@@ -24,13 +24,19 @@ public class PluginPackageNameAndContextComparator
 
 	@Override
 	public int compare(PluginPackage package1, PluginPackage package2) {
-		int result = package1.getName().compareTo(package2.getName());
+		String name1 = package1.getName();
+		String name2 = package2.getName();
 
-		if (result == 0) {
-			result = package1.getContext().compareTo(package2.getContext());
+		int value = name1.compareTo(name2);
+
+		if (value == 0) {
+			String context1 = package1.getContext();
+			String context2 = package2.getContext();
+
+			value = context1.compareTo(context2);
 		}
 
-		return result;
+		return value;
 	}
 
 }

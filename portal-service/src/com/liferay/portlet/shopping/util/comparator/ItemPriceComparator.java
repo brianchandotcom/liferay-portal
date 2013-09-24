@@ -65,8 +65,10 @@ public class ItemPriceComparator extends OrderByComparator {
 		}
 
 		if (value == 0) {
-			value = StringUtil.toLowerCase(item1.getName()).compareTo(
-				StringUtil.toLowerCase(item2.getName()));
+			String name1 = StringUtil.toLowerCase(item1.getName());
+			String name2 = StringUtil.toLowerCase(item2.getName());
+
+			value = name1.compareTo(name2);
 		}
 
 		if (_ascending) {

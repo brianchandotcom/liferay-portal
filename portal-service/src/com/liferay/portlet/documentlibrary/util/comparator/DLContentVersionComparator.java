@@ -41,7 +41,10 @@ public class DLContentVersionComparator extends OrderByComparator {
 		DLContent content1 = (DLContent)obj1;
 		DLContent content2 = (DLContent)obj2;
 
-		int value = content1.getVersion().compareTo(content2.getVersion());
+		String version1 = content1.getVersion();
+		String version2 = content2.getVersion();
+
+		int value = version1.compareTo(version2);
 
 		if (_ascending) {
 			return value;

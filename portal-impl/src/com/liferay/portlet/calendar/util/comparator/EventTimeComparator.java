@@ -76,8 +76,10 @@ public class EventTimeComparator implements Comparator<CalEvent> {
 	}
 
 	protected int compareTitle(CalEvent event1, CalEvent event2) {
-		return StringUtil.toLowerCase(event1.getTitle()).compareTo(
-			StringUtil.toLowerCase(event2.getTitle()));
+		String title1 = StringUtil.toLowerCase(event1.getTitle());
+		String title2 = StringUtil.toLowerCase(event2.getTitle());
+
+		return title1.compareTo(title2);
 	}
 
 	protected Long getDuration(CalEvent event) {

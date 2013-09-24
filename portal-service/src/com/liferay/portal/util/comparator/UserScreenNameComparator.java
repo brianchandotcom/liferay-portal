@@ -41,7 +41,10 @@ public class UserScreenNameComparator extends OrderByComparator {
 		User user1 = (User)obj1;
 		User user2 = (User)obj2;
 
-		int value = user1.getScreenName().compareTo(user2.getScreenName());
+		String screenName1 = user1.getScreenName();
+		String screenName2 = user2.getScreenName();
+
+		int value = screenName1.compareTo(screenName2);
 
 		if (_ascending) {
 			return value;

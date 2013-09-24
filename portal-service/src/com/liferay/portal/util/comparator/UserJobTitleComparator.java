@@ -45,18 +45,30 @@ public class UserJobTitleComparator extends OrderByComparator {
 		User user1 = (User)obj1;
 		User user2 = (User)obj2;
 
-		int value = user1.getJobTitle().compareTo(user2.getJobTitle());
+		String jobTitle1 = user1.getJobTitle();
+		String jobTitle2 = user2.getJobTitle();
+
+		int value = jobTitle1.compareTo(jobTitle2);
 
 		if (value == 0) {
-			value = user1.getLastName().compareTo(user2.getLastName());
+			String lastName1 = user1.getLastName();
+			String lastName2 = user2.getLastName();
+
+			value = lastName1.compareTo(lastName2);
 		}
 
 		if (value == 0) {
-			value = user1.getFirstName().compareTo(user2.getFirstName());
+			String firstName1 = user1.getFirstName();
+			String firstName2 = user2.getFirstName();
+
+			value = firstName1.compareTo(firstName2);
 		}
 
 		if (value == 0) {
-			value = user1.getMiddleName().compareTo(user2.getMiddleName());
+			String middleName1 = user1.getMiddleName();
+			String middleName2 = user2.getMiddleName();
+
+			value = middleName1.compareTo(middleName2);
 		}
 
 		if (_ascending) {

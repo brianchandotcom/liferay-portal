@@ -51,7 +51,10 @@ public class GroupTypeComparator extends OrderByComparator {
 		}
 
 		if (value == 0) {
-			value = group1.getName().compareTo(group2.getName());
+			String name1 = group1.getName();
+			String name2 = group2.getName();
+
+			value = name1.compareTo(name2);
 		}
 
 		if (_ascending) {

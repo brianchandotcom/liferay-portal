@@ -41,7 +41,10 @@ public class GroupFriendlyURLComparator extends OrderByComparator {
 		Group group1 = (Group)obj1;
 		Group group2 = (Group)obj2;
 
-		int value = group1.getFriendlyURL().compareTo(group2.getFriendlyURL());
+		String friendlyURL1 = group1.getFriendlyURL();
+		String friendlyURL2 = group2.getFriendlyURL();
+
+		int value = friendlyURL1.compareTo(friendlyURL2);
 
 		if (_ascending) {
 			return value;

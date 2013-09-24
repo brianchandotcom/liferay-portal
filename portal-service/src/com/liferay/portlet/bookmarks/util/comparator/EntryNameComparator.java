@@ -42,8 +42,10 @@ public class EntryNameComparator extends OrderByComparator {
 		BookmarksEntry entry1 = (BookmarksEntry)obj1;
 		BookmarksEntry entry2 = (BookmarksEntry)obj2;
 
-		int value = StringUtil.toLowerCase(entry1.getName()).compareTo(
-			StringUtil.toLowerCase(entry2.getName()));
+		String name1 = StringUtil.toLowerCase(entry1.getName());
+		String name2 = StringUtil.toLowerCase(entry2.getName());
+
+		int value = name1.compareTo(name2);
 
 		if (_ascending) {
 			return value;

@@ -42,8 +42,10 @@ public class ArticleTitleComparator extends OrderByComparator {
 		JournalArticle article1 = (JournalArticle)obj1;
 		JournalArticle article2 = (JournalArticle)obj2;
 
-		int value = StringUtil.toLowerCase(article1.getTitle()).compareTo(
-			StringUtil.toLowerCase(article2.getTitle()));
+		String title1 = StringUtil.toLowerCase(article1.getTitle());
+		String title2 = StringUtil.toLowerCase(article2.getTitle());
+
+		int value = title1.compareTo(title2);
 
 		if (_ascending) {
 			return value;

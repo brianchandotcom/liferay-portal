@@ -44,8 +44,10 @@ public class ArticleIDComparator extends OrderByComparator {
 		JournalArticle article1 = (JournalArticle)obj1;
 		JournalArticle article2 = (JournalArticle)obj2;
 
-		int value = StringUtil.toLowerCase(article1.getArticleId()).compareTo(
-			StringUtil.toLowerCase(article2.getArticleId()));
+		String articleId1 = StringUtil.toLowerCase(article1.getArticleId());
+		String articleId2 = StringUtil.toLowerCase(article2.getArticleId());
+
+		int value = articleId1.compareTo(articleId2);
 
 		if (value == 0) {
 			if (article1.getVersion() < article2.getVersion()) {

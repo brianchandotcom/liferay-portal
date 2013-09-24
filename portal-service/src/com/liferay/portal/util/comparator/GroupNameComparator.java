@@ -41,7 +41,10 @@ public class GroupNameComparator extends OrderByComparator {
 		Group group1 = (Group)obj1;
 		Group group2 = (Group)obj2;
 
-		int value = group1.getName().compareTo(group2.getName());
+		String name1 = group1.getName();
+		String name2 = group2.getName();
+
+		int value = name1.compareTo(name2);
 
 		if (_ascending) {
 			return value;

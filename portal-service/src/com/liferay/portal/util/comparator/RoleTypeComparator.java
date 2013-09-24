@@ -52,7 +52,10 @@ public class RoleTypeComparator extends OrderByComparator {
 		}
 
 		if (value == 0) {
-			value = role1.getName().compareTo(role2.getName());
+			String name1 = role1.getName();
+			String name2 = role2.getName();
+
+			value = name1.compareTo(name2);
 		}
 
 		if (_ascending) {

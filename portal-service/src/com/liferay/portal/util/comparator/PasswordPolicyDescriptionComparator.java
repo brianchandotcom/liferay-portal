@@ -42,8 +42,10 @@ public class PasswordPolicyDescriptionComparator extends OrderByComparator {
 		PasswordPolicy passwordPolicy1 = (PasswordPolicy)obj1;
 		PasswordPolicy passwordPolicy2 = (PasswordPolicy)obj2;
 
-		int value = passwordPolicy1.getDescription().compareTo(
-			passwordPolicy2.getDescription());
+		String description1 = passwordPolicy1.getDescription();
+		String description2 = passwordPolicy2.getDescription();
+
+		int value = description1.compareTo(description2);
 
 		if (_ascending) {
 			return value;

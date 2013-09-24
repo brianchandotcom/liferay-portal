@@ -42,8 +42,10 @@ public class ProductEntryNameComparator extends OrderByComparator {
 		SCProductEntry productEntry1 = (SCProductEntry)obj1;
 		SCProductEntry productEntry2 = (SCProductEntry)obj2;
 
-		int value = StringUtil.toLowerCase(productEntry1.getName()).compareTo(
-			StringUtil.toLowerCase(productEntry2.getName()));
+		String name1 = StringUtil.toLowerCase(productEntry1.getName());
+		String name2 = StringUtil.toLowerCase(productEntry2.getName());
+
+		int value = name1.compareTo(name2);
 
 		if (_ascending) {
 			return value;

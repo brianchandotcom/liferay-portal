@@ -42,8 +42,10 @@ public class EntryURLComparator extends OrderByComparator {
 		BookmarksEntry entry1 = (BookmarksEntry)obj1;
 		BookmarksEntry entry2 = (BookmarksEntry)obj2;
 
-		int value = StringUtil.toLowerCase(entry1.getUrl()).compareTo(
-			StringUtil.toLowerCase(entry2.getUrl()));
+		String url1 = StringUtil.toLowerCase(entry1.getUrl());
+		String url2 = StringUtil.toLowerCase(entry2.getUrl());
+
+		int value = url1.compareTo(url2);
 
 		if (_ascending) {
 			return value;

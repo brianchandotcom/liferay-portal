@@ -41,7 +41,10 @@ public class UserEmailAddressComparator extends OrderByComparator {
 		User user1 = (User)obj1;
 		User user2 = (User)obj2;
 
-		int value = user1.getEmailAddress().compareTo(user2.getEmailAddress());
+		String emailAddress1 = user1.getEmailAddress();
+		String emailAddress2 = user2.getEmailAddress();
+
+		int value = emailAddress1.compareTo(emailAddress2);
 
 		if (_ascending) {
 			return value;

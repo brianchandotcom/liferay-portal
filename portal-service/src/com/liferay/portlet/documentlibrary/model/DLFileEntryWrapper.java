@@ -905,11 +905,6 @@ public class DLFileEntryWrapper implements DLFileEntry,
 		return _dlFileEntry.getTrashEntry();
 	}
 
-	/**
-	* Returns the classPK of this document library file entry
-	*
-	* @return the classPK of this document library file entry
-	*/
 	@Override
 	public long getTrashEntryClassPK() {
 		return _dlFileEntry.getTrashEntryClassPK();
@@ -1145,13 +1140,6 @@ public class DLFileEntryWrapper implements DLFileEntry,
 	@Override
 	public java.lang.String getLuceneProperties() {
 		return _dlFileEntry.getLuceneProperties();
-	}
-
-	@Override
-	public com.liferay.portlet.documentlibrary.model.DLFolder getTrashContainer()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _dlFileEntry.getTrashContainer();
 	}
 
 	/**

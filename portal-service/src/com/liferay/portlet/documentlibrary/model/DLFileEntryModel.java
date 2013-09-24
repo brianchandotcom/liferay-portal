@@ -538,11 +538,6 @@ public interface DLFileEntryModel extends AttachedModel, BaseModel<DLFileEntry>,
 	@Override
 	public TrashEntry getTrashEntry() throws PortalException, SystemException;
 
-	/**
-	 * Returns the classPK of this document library file entry
-	 *
-	 * @return the classPK of this document library file entry
-	 */
 	@Override
 	public long getTrashEntryClassPK();
 

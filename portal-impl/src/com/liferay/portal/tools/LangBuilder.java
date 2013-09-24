@@ -298,6 +298,10 @@ public class LangBuilder {
 					else if (languageId.equals("es") && key.equals("am")) {
 						translatedText = "";
 					}
+					else if (languageId.equals("fi") &&
+							 (key.equals("on") || key.equals("the"))) {
+						translatedText = "";
+					}
 					else if (languageId.equals("it") && key.equals("am")) {
 						translatedText = "";
 					}

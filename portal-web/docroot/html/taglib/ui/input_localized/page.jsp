@@ -248,7 +248,7 @@ String fieldName = HtmlUtil.escapeAttribute(name + fieldSuffix);
 
 <c:if test="<%= (availableLocales.length > 0) && Validator.isNull(languageId) %>">
 	<aui:script use="liferay-input-localized">
-		var defaultLanguageId = themeDisplay.getDefaultLanguageId();
+		var defaultLanguageId = '<%= defaultLanguageId %>';
 
 		var available = {};
 

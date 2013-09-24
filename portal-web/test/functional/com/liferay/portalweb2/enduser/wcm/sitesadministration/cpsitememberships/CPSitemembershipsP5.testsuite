@@ -5,4 +5,5 @@
 	<execute test-case-command="CPSitememberships#DeleteNoLiferaySite" />
 	<execute test-case-command="CPSitememberships#DeleteSiteTeam" />
 	<execute test-case-command="CPSitememberships#LimitMembershipParentSite" />
+	<execute test-case-command="CPSitememberships#ViewNoManualMembershipManagement" />
 </definition>

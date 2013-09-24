@@ -258,6 +258,23 @@
 		<execute action="PGMysitesAvailablesites#assertTextEquals" locator-key1="SITE_TABLE_JOIN_SITE_NAME" value1="Join" />
 	</command>
 
+	<command name="manualMembershipManagementCP">
+		<if>
+			<equals arg1="${manualMembershipManagement}" arg2="Yes" />
+			<then>
+				<execute action="CPSitesAdd#check" locator-key1="MANUAL_MEMBERSHIP_MANAGEMENT_CHECKBOX" />
+			</then>
+			<elseif>
+				<equals arg1="${manualMembershipManagement}" arg2="No" />
+					<then>
+						<execute action="CPSitesAdd#uncheck" locator-key1="MANUAL_MEMBERSHIP_MANAGEMENT_CHECKBOX" />
+					</then>
+			</elseif>
+		</if>
+
+		<execute action="CPSitesAdd#click" locator-key1="MENU_SAVE" />
+	</command>
+
 	<command name="removeMemberCP">
 		<var name="key_userScreenName" value="${userScreenName}" />
 

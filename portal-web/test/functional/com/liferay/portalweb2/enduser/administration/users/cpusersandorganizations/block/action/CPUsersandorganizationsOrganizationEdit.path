@@ -72,7 +72,7 @@
 </tr>
 <tr>
 	<td>DETAILS_TYPE</td>
-	<td>//div[@class='control-group field-wrapper']</td>
+	<td>//input[@value='${key_orgType}' and @type='text']</td>
 	<td></td>
 </tr>
 <tr>

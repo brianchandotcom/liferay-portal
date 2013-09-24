@@ -228,8 +228,16 @@ public interface DLAppService extends BaseService {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	public com.liferay.portal.kernel.repository.model.FileEntry addTempFileEntry(
+		long groupId, long folderId, java.lang.String fileName,
+		java.lang.String tempFolderName, java.io.File file,
+		java.lang.String mimeType)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	/**
-	* Adds a temporary file entry.
+	* Adds a temporary file entry. It is created based on the {@link
+	* java.io.InputStream} object.
 	*
 	* <p>
 	* This allows a client to upload a file into a temporary location and
@@ -242,20 +250,14 @@ public interface DLAppService extends BaseService {
 	eventually reside
 	* @param fileName the file's original name
 	* @param tempFolderName the temporary folder's name
-	* @param file Name the file's original name
+	* @param inputStream the file's data
 	* @param mimeType the file's MIME type
-	* @return the file's name
-	* @throws PortalException if the file name was invalid
+	* @return the temporary file entry
+	* @throws PortalException if the file name was invalid or if a portal
+	exception occurred
 	* @throws SystemException if a system exception occurred
 	* @see com.liferay.portal.kernel.util.TempFileUtil
 	*/
-	public com.liferay.portal.kernel.repository.model.FileEntry addTempFileEntry(
-		long groupId, long folderId, java.lang.String fileName,
-		java.lang.String tempFolderName, java.io.File file,
-		java.lang.String mimeType)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
-
 	public com.liferay.portal.kernel.repository.model.FileEntry addTempFileEntry(
 		long groupId, long folderId, java.lang.String fileName,
 		java.lang.String tempFolderName, java.io.InputStream inputStream,

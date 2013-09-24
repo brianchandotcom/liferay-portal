@@ -246,6 +246,19 @@
 			<var name="userLastName" value="${userLastName}" />
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="siteScopeName" value="Site Name" />
+			<var name="portletName" value="Site Memberships" />
+		</execute>
+
+		<execute macro="Team#viewMemberCP">
+			<var name="siteName" value="${siteName}" />
+			<var name="teamName" value="${teamName}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
 	</command>
 
 	<command name="DeleteNoLiferaySite">
@@ -519,5 +532,32 @@
 			<var name="userLastName" value="${userLastName}" />
 			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
+	</command>
+
+	<command name="ViewNoManualMembershipManagement">
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Site Settings" />
+		</execute>
+
+		<execute macro="Site#manualMembershipManagementCP">
+			<var name="manualMembershipManagement" value="Yes" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="portletName" value="Site Memberships" />
+		</execute>
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Site Settings" />
+		</execute>
+
+		<execute macro="Site#manualMembershipManagementCP">
+			<var name="manualMembershipManagement" value="No" />
+		</execute>
+
+		<execute macro="Page#openURL" />
+
+		<execute action="Dockbar#assertClick" locator-key1="ADMIN" value1="Admin" />
+		<execute action="Dockbar#assertElementNotPresent" locator-key1="ADMIN_SITE_ADMINISTRATION_USERS" value1="Users" />
 	</command>
 </definition>

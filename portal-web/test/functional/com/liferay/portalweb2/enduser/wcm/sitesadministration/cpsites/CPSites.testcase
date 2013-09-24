@@ -137,7 +137,6 @@
 		<var name="siteNameEdit" value="Site Name Edit" />
 		<var name="siteScopeName" value="Site Name" />
 
-
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>

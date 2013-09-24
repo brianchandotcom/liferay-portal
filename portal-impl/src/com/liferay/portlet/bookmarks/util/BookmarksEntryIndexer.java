@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.persistence.GroupActionableDynamicQuery;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portlet.bookmarks.asset.BookmarksEntryAssetRendererFactory;
 import com.liferay.portlet.bookmarks.model.BookmarksEntry;
 import com.liferay.portlet.bookmarks.model.BookmarksFolder;
 import com.liferay.portlet.bookmarks.model.BookmarksFolderConstants;
@@ -101,21 +100,6 @@ public class BookmarksEntryIndexer extends BaseIndexer {
 			Field.TREE_PATH,
 			StringUtil.split(entry.getTreePath(), CharPool.SLASH));
 		document.addText(Field.URL, entry.getUrl());
-
-		if (!entry.isInTrash() && entry.isInTrashContainer()) {
-			BookmarksFolder folder = entry.getTrashContainer();
-
-			addTrashFields(
-				document, BookmarksFolder.class.getName(), folder.getFolderId(),
-				null, null, BookmarksEntryAssetRendererFactory.TYPE);
-
-			document.addKeyword(
-				Field.ROOT_ENTRY_CLASS_NAME, BookmarksFolder.class.getName());
-			document.addKeyword(
-				Field.ROOT_ENTRY_CLASS_PK, folder.getFolderId());
-			document.addKeyword(
-				Field.STATUS, WorkflowConstants.STATUS_IN_TRASH);
-		}
 
 		return document;
 	}

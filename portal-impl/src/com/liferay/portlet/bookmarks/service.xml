@@ -59,6 +59,10 @@
 			<finder-column name="groupId" />
 			<finder-column name="status" />
 		</finder>
+		<finder name="G_NotS" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="status" comparator="!=" />
+		</finder>
 		<finder name="C_NotS" return-type="Collection">
 			<finder-column name="companyId" />
 			<finder-column name="status" comparator="!=" />
@@ -67,6 +71,11 @@
 			<finder-column name="groupId" />
 			<finder-column name="userId" />
 			<finder-column name="status" />
+		</finder>
+		<finder name="G_U_NotS" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="userId" />
+			<finder-column name="status" comparator="!=" />
 		</finder>
 		<finder name="G_F_S" return-type="Collection">
 			<finder-column name="groupId" />
@@ -96,6 +105,7 @@
 		<reference package-path="com.liferay.portlet.expando" entity="ExpandoRow" />
 		<reference package-path="com.liferay.portlet.social" entity="SocialActivity" />
 		<reference package-path="com.liferay.portlet.trash" entity="TrashEntry" />
+		<reference package-path="com.liferay.portlet.trash" entity="TrashVersion" />
 	</entity>
 	<entity name="BookmarksFolder" uuid="true" local-service="true" remote-service="true" trash-enabled="true">
 
@@ -173,6 +183,7 @@
 		<reference package-path="com.liferay.portlet.expando" entity="ExpandoRow" />
 		<reference package-path="com.liferay.portlet.social" entity="SocialActivity" />
 		<reference package-path="com.liferay.portlet.trash" entity="TrashEntry" />
+		<reference package-path="com.liferay.portlet.trash" entity="TrashVersion" />
 	</entity>
 	<exceptions>
 		<exception>EntryURL</exception>

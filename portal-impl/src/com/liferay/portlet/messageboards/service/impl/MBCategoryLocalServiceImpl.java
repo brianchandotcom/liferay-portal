@@ -547,11 +547,7 @@ public class MBCategoryLocalServiceImpl extends MBCategoryLocalServiceBaseImpl {
 
 		TrashEntry trashEntry = category.getTrashEntry();
 
-		String className = trashEntry.getClassName();
-
-		if (className.equals(MBCategory.class.getName()) &&
-			(trashEntry.getClassPK() == categoryId)) {
-
+		if (trashEntry.isTrashEntry(MBCategory.class, categoryId)) {
 			restoreCategoryFromTrash(userId, categoryId);
 		}
 		else {

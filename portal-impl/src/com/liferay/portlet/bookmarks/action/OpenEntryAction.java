@@ -47,7 +47,7 @@ public class OpenEntryAction extends Action {
 
 			BookmarksEntry entry = BookmarksEntryServiceUtil.getEntry(entryId);
 
-			if (entry.isInTrash() || entry.isInTrashContainer()) {
+			if (entry.isInTrash()) {
 				int status = ParamUtil.getInteger(
 					request, "status", WorkflowConstants.STATUS_APPROVED);
 

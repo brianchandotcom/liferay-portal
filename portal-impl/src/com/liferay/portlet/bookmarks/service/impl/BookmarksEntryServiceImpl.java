@@ -148,6 +148,19 @@ public class BookmarksEntryServiceImpl extends BookmarksEntryServiceBaseImpl {
 			long groupId, long userId, long rootFolderId, int start, int end)
 		throws PortalException, SystemException {
 
+		if (rootFolderId == BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			if (userId <= 0) {
+				return bookmarksEntryPersistence.filterFindByG_NotS(
+					groupId, WorkflowConstants.STATUS_IN_TRASH, start, end,
+					new EntryModifiedDateComparator());
+			}
+			else {
+				return bookmarksEntryPersistence.filterFindByG_U_NotS(
+					groupId, userId, WorkflowConstants.STATUS_IN_TRASH, start,
+					end, new EntryModifiedDateComparator());
+			}
+		}
+
 		List<Long> folderIds = bookmarksFolderService.getFolderIds(
 			groupId, rootFolderId);
 
@@ -187,6 +200,17 @@ public class BookmarksEntryServiceImpl extends BookmarksEntryServiceBaseImpl {
 	public int getGroupEntriesCount(
 			long groupId, long userId, long rootFolderId)
 		throws PortalException, SystemException {
+
+		if (rootFolderId == BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			if (userId <= 0) {
+				return bookmarksEntryPersistence.filterCountByG_NotS(
+					groupId, WorkflowConstants.STATUS_IN_TRASH);
+			}
+			else {
+				return bookmarksEntryPersistence.filterCountByG_U_NotS(
+					groupId, userId, WorkflowConstants.STATUS_IN_TRASH);
+			}
+		}
 
 		List<Long> folderIds = bookmarksFolderService.getFolderIds(
 			groupId, rootFolderId);

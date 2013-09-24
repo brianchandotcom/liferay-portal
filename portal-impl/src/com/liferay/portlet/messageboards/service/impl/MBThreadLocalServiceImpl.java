@@ -813,11 +813,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 
 		TrashEntry trashEntry = thread.getTrashEntry();
 
-		String className = trashEntry.getClassName();
-
-		if (className.equals(MBThread.class.getName()) &&
-			(trashEntry.getClassPK() == threadId)) {
-
+		if (trashEntry.isTrashEntry(MBThread.class, threadId)) {
 			restoreThreadFromTrash(userId, threadId);
 		}
 		else {

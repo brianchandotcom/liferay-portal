@@ -897,11 +897,6 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	}
 
 	@Override
-	public com.liferay.portlet.bookmarks.model.BookmarksFolder getTrashContainer() {
-		return _bookmarksFolder.getTrashContainer();
-	}
-
-	@Override
 	public boolean isRoot() {
 		return _bookmarksFolder.isRoot();
 	}

@@ -45,7 +45,7 @@ public class ActionUtil {
 		if (entryId > 0) {
 			entry = BookmarksEntryServiceUtil.getEntry(entryId);
 
-			if (entry.isInTrash() || entry.isInTrashContainer()) {
+			if (entry.isInTrash()) {
 				throw new NoSuchEntryException();
 			}
 		}
@@ -75,7 +75,7 @@ public class ActionUtil {
 
 			folder = BookmarksFolderServiceUtil.getFolder(folderId);
 
-			if (folder.isInTrash() || folder.isInTrashContainer()) {
+			if (folder.isInTrash()) {
 				throw new NoSuchFolderException();
 			}
 		}

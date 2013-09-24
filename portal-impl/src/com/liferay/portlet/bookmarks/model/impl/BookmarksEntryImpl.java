@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portlet.bookmarks.NoSuchFolderException;
 import com.liferay.portlet.bookmarks.model.BookmarksFolder;
 import com.liferay.portlet.bookmarks.service.BookmarksFolderLocalServiceUtil;
 
@@ -46,39 +45,6 @@ public class BookmarksEntryImpl extends BookmarksEntryBaseImpl {
 		}
 
 		return BookmarksFolderLocalServiceUtil.getFolder(getFolderId());
-	}
-
-	@Override
-	public BookmarksFolder getTrashContainer()
-		throws PortalException, SystemException {
-
-		BookmarksFolder folder = null;
-
-		try {
-			folder = getFolder();
-		}
-		catch (NoSuchFolderException nsfe) {
-			return null;
-		}
-
-		if (folder.isInTrash()) {
-			return folder;
-		}
-
-		return folder.getTrashContainer();
-	}
-
-	@Override
-	public boolean isInTrashContainer() {
-		try {
-			if (getTrashContainer() != null) {
-				return true;
-			}
-		}
-		catch (Exception e) {
-		}
-
-		return false;
 	}
 
 	protected void buildTreePath(StringBundler sb, BookmarksFolder folder)

@@ -38,8 +38,4 @@ public interface BookmarksEntry extends BookmarksEntryModel, PermissionedModel {
 	public com.liferay.portlet.bookmarks.model.BookmarksFolder getFolder()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
-
-	public com.liferay.portlet.bookmarks.model.BookmarksFolder getTrashContainer()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
 }

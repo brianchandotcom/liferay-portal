@@ -812,13 +812,18 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 	}
 
 	@Override
+	public long getTrashClassPK() {
+		return getPrimaryKey();
+	}
+
+	@Override
 	public TrashEntry getTrashEntry() throws PortalException, SystemException {
 		if (!isInTrash() && !isInTrashContainer()) {
 			return null;
 		}
 
 		TrashEntry trashEntry = TrashEntryLocalServiceUtil.fetchEntry(getModelClassName(),
-				getPrimaryKey());
+				getTrashClassPK());
 
 		if (trashEntry != null) {
 			return trashEntry;

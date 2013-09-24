@@ -3243,13 +3243,37 @@ public class JournalArticleLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		if (article.isInTrash()) {
+		TrashEntry trashEntry = article.getTrashEntry();
+
+		if (trashEntry.isTrashEntry(
+				JournalArticle.class, article.getResourcePrimKey())) {
+
 			restoreArticleFromTrash(userId, article);
 		}
 		else {
+
+			// Article
+
+			TrashVersion trashVersion =
+				trashVersionLocalService.fetchVersion(
+					trashEntry.getEntryId(), JournalArticle.class.getName(),
+					article.getResourcePrimKey());
+
+			int status = WorkflowConstants.STATUS_APPROVED;
+
+			if (trashVersion != null) {
+				status = trashVersion.getStatus();
+			}
+
 			updateStatus(
-				userId, article, article.getStatus(), null,
+				userId, article, status, null,
 				new HashMap<String, Serializable>(), serviceContext);
+
+			// Trash
+
+			if (trashVersion != null) {
+				trashVersionLocalService.deleteTrashVersion(trashVersion);
+			}
 		}
 
 		return moveArticle(groupId, article.getArticleId(), newFolderId);
@@ -3289,17 +3313,44 @@ public class JournalArticleLocalServiceImpl
 		articleVersions = ListUtil.sort(
 			articleVersions, new ArticleVersionComparator());
 
-		Map<String, Serializable> workflowContext =
-			new HashMap<String, Serializable>();
+		List<ObjectValuePair<Long, Integer>> articleVersionStatusOVPs =
+			new ArrayList<ObjectValuePair<Long, Integer>>();
 
-		workflowContext.put("articleVersions", (Serializable)articleVersions);
+		if ((articleVersions != null) && !articleVersions.isEmpty()) {
+			articleVersionStatusOVPs = getArticleVersionStatuses(
+				articleVersions);
+		}
 
 		article = updateStatus(
 			userId, article.getId(), WorkflowConstants.STATUS_IN_TRASH,
-			workflowContext, new ServiceContext());
+			new HashMap<String, Serializable>(), new ServiceContext());
 
-		TrashEntry trashEntry = trashEntryLocalService.getEntry(
-			JournalArticle.class.getName(), article.getResourcePrimKey());
+		// Asset
+
+		assetEntryLocalService.updateVisible(
+			JournalArticle.class.getName(), article.getResourcePrimKey(),
+			false);
+
+		// Trash
+
+		for (JournalArticle articleVersion : articleVersions) {
+			articleVersion.setStatus(WorkflowConstants.STATUS_IN_TRASH);
+
+			journalArticlePersistence.update(articleVersion);
+		}
+
+		JournalArticleResource articleResource =
+			journalArticleResourceLocalService.getArticleResource(
+				article.getResourcePrimKey());
+
+		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
+
+		typeSettingsProperties.put("title", article.getArticleId());
+
+		TrashEntry trashEntry = trashEntryLocalService.addTrashEntry(
+			userId, article.getGroupId(), JournalArticle.class.getName(),
+			article.getResourcePrimKey(), articleResource.getUuid(), null,
+			oldStatus, articleVersionStatusOVPs, typeSettingsProperties);
 
 		String trashArticleId = TrashUtil.getTrashTitle(
 			trashEntry.getEntryId());
@@ -3312,10 +3363,6 @@ public class JournalArticleLocalServiceImpl
 			}
 		}
 
-		JournalArticleResource articleResource =
-			journalArticleResourcePersistence.fetchByPrimaryKey(
-				article.getResourcePrimKey());
-
 		articleResource.setArticleId(trashArticleId);
 
 		journalArticleResourcePersistence.update(articleResource);
@@ -3323,6 +3370,8 @@ public class JournalArticleLocalServiceImpl
 		article.setArticleId(trashArticleId);
 
 		article = journalArticlePersistence.update(article);
+
+		// Social
 
 		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
 
@@ -3390,10 +3439,6 @@ public class JournalArticleLocalServiceImpl
 			companyId, WorkflowConstants.STATUS_IN_TRASH);
 
 		for (JournalArticle article : articles) {
-			if (article.isInTrashContainer()) {
-				continue;
-			}
-
 			article.setTreePath(article.buildTreePath());
 
 			journalArticlePersistence.update(article);
@@ -3501,21 +3546,33 @@ public class JournalArticleLocalServiceImpl
 		TrashEntry trashEntry = trashEntryLocalService.getEntry(
 			JournalArticle.class.getName(), article.getResourcePrimKey());
 
-		Map<String, Serializable> workflowContext =
-			new HashMap<String, Serializable>();
-
-		List<TrashVersion> trashVersions = trashVersionLocalService.getVersions(
-			trashEntry.getEntryId());
-
-		workflowContext.put("trashVersions", (Serializable)trashVersions);
-
 		ServiceContext serviceContext = new ServiceContext();
 
 		serviceContext.setScopeGroupId(article.getGroupId());
 
 		updateStatus(
-			userId, article, trashEntry.getStatus(), null, workflowContext,
-			serviceContext);
+			userId, article, trashEntry.getStatus(), null,
+			new HashMap<String, Serializable>(), serviceContext);
+
+		// Trash
+
+		List<TrashVersion> trashVersions = trashVersionLocalService.getVersions(
+			trashEntry.getEntryId());
+
+		for (TrashVersion trashVersion : trashVersions) {
+			JournalArticle trashArticleVersion =
+				journalArticlePersistence.findByPrimaryKey(
+					trashVersion.getClassPK());
+
+			trashArticleVersion.setStatus(trashVersion.getStatus());
+
+			journalArticlePersistence.update(trashArticleVersion);
+		}
+
+		trashEntryLocalService.deleteEntry(
+			JournalArticle.class.getName(), article.getResourcePrimKey());
+
+		// Social
 
 		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
 
@@ -5082,23 +5139,6 @@ public class JournalArticleLocalServiceImpl
 
 		int oldStatus = article.getStatus();
 
-		int oldArticleVersionStatus = WorkflowConstants.STATUS_ANY;
-
-		List<ObjectValuePair<Long, Integer>> articleVersionStatusOVPs =
-			new ArrayList<ObjectValuePair<Long, Integer>>();
-
-		List<JournalArticle> articleVersions =
-			(List<JournalArticle>)workflowContext.get("articleVersions");
-
-		if ((articleVersions != null) && !articleVersions.isEmpty()) {
-			JournalArticle oldArticleVersion = articleVersions.get(0);
-
-			oldArticleVersionStatus = oldArticleVersion.getStatus();
-
-			articleVersionStatusOVPs = getArticleVersionStatuses(
-				articleVersions);
-		}
-
 		article.setModifiedDate(serviceContext.getModifiedDate(now));
 
 		boolean neverExpire = false;
@@ -5241,54 +5281,6 @@ public class JournalArticleLocalServiceImpl
 			else if (oldStatus == WorkflowConstants.STATUS_APPROVED) {
 				updatePreviousApprovedArticle(article);
 			}
-		}
-
-		if (oldStatus == WorkflowConstants.STATUS_IN_TRASH) {
-
-			// Trash
-
-			List<TrashVersion> trashVersions =
-				(List<TrashVersion>)workflowContext.get("trashVersions");
-
-			for (TrashVersion trashVersion : trashVersions) {
-				JournalArticle trashArticleVersion =
-					journalArticlePersistence.findByPrimaryKey(
-						trashVersion.getClassPK());
-
-				trashArticleVersion.setStatus(trashVersion.getStatus());
-
-				journalArticlePersistence.update(trashArticleVersion);
-			}
-
-			trashEntryLocalService.deleteEntry(
-				JournalArticle.class.getName(), article.getResourcePrimKey());
-		}
-		else if (status == WorkflowConstants.STATUS_IN_TRASH) {
-			assetEntryLocalService.updateVisible(
-				JournalArticle.class.getName(), article.getResourcePrimKey(),
-				false);
-
-			// Trash
-
-			for (JournalArticle articleVersion : articleVersions) {
-				articleVersion.setStatus(WorkflowConstants.STATUS_IN_TRASH);
-
-				journalArticlePersistence.update(articleVersion);
-			}
-
-			JournalArticleResource articleResource =
-				journalArticleResourceLocalService.getArticleResource(
-					article.getResourcePrimKey());
-
-			UnicodeProperties typeSettingsProperties = new UnicodeProperties();
-
-			typeSettingsProperties.put("title", article.getArticleId());
-
-			trashEntryLocalService.addTrashEntry(
-				userId, article.getGroupId(), JournalArticle.class.getName(),
-				article.getResourcePrimKey(), articleResource.getUuid(), null,
-				oldArticleVersionStatus, articleVersionStatusOVPs,
-				typeSettingsProperties);
 		}
 
 		if ((article.getClassNameId() ==

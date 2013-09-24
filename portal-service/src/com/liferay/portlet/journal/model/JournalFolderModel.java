@@ -355,6 +355,14 @@ public interface JournalFolderModel extends BaseModel<JournalFolder>,
 	public void setStatusDate(Date statusDate);
 
 	/**
+	 * Returns the classPK of this journal folder
+	 *
+	 * @return the classPK of this journal folder
+	 */
+	@Override
+	public long getTrashClassPK();
+
+	/**
 	 * Returns the trash entry created when this journal folder was moved to the Recycle Bin. The trash entry may belong to one of the ancestors of this journal folder.
 	 *
 	 * @return the trash entry created when this journal folder was moved to the Recycle Bin

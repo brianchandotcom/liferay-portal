@@ -234,14 +234,11 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 			List<Long> folderIds, long groupId, long folderId)
 		throws SystemException {
 
-		List<JournalFolder> folders = journalFolderPersistence.filterFindByG_P(
-			groupId, folderId);
+		List<JournalFolder> folders =
+			journalFolderPersistence.filterFindByG_P_NotS(
+				groupId, folderId, WorkflowConstants.STATUS_IN_TRASH);
 
 		for (JournalFolder folder : folders) {
-			if (folder.isInTrash() || folder.isInTrashContainer()) {
-				continue;
-			}
-
 			folderIds.add(folder.getFolderId());
 
 			getSubfolderIds(

@@ -479,6 +479,11 @@ public class ${entity.name}Clp extends BaseModelImpl<${entity.name}> implements 
 		</#if>
 
 		@Override
+		public long getTrashClassPK() {
+			return getPrimaryKey();
+		}
+
+		@Override
 		public TrashEntry getTrashEntry() throws PortalException, SystemException {
 			if (!isInTrash() && !isInTrashContainer()) {
 				return null;

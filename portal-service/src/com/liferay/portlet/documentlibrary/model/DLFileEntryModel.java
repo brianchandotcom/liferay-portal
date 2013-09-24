@@ -530,6 +530,14 @@ public interface DLFileEntryModel extends AttachedModel, BaseModel<DLFileEntry>,
 	public int getStatus();
 
 	/**
+	 * Returns the classPK of this document library file entry
+	 *
+	 * @return the classPK of this document library file entry
+	 */
+	@Override
+	public long getTrashClassPK();
+
+	/**
 	 * Returns the trash entry created when this document library file entry was moved to the Recycle Bin. The trash entry may belong to one of the ancestors of this document library file entry.
 	 *
 	 * @return the trash entry created when this document library file entry was moved to the Recycle Bin

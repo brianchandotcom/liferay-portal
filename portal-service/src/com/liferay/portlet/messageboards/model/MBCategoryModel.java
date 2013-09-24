@@ -397,6 +397,14 @@ public interface MBCategoryModel extends BaseModel<MBCategory>, ContainerModel,
 	public void setStatusDate(Date statusDate);
 
 	/**
+	 * Returns the classPK of this message boards category
+	 *
+	 * @return the classPK of this message boards category
+	 */
+	@Override
+	public long getTrashClassPK();
+
+	/**
 	 * Returns the trash entry created when this message boards category was moved to the Recycle Bin. The trash entry may belong to one of the ancestors of this message boards category.
 	 *
 	 * @return the trash entry created when this message boards category was moved to the Recycle Bin

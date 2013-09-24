@@ -278,6 +278,11 @@ public class WikiPageImpl extends WikiPageBaseImpl {
 	}
 
 	@Override
+	public long getTrashClassPK() {
+		return getResourcePrimKey();
+	}
+
+	@Override
 	public WikiNode getTrashContainer() {
 		WikiNode node = getNode();
 

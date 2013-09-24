@@ -773,6 +773,16 @@ public class BlogsEntryWrapper implements BlogsEntry, ModelWrapper<BlogsEntry> {
 	}
 
 	/**
+	* Returns the classPK of this blogs entry
+	*
+	* @return the classPK of this blogs entry
+	*/
+	@Override
+	public long getTrashClassPK() {
+		return _blogsEntry.getTrashClassPK();
+	}
+
+	/**
 	* Returns the trash entry created when this blogs entry was moved to the Recycle Bin. The trash entry may belong to one of the ancestors of this blogs entry.
 	*
 	* @return the trash entry created when this blogs entry was moved to the Recycle Bin

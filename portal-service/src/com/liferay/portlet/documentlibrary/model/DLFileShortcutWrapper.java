@@ -592,6 +592,16 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	}
 
 	/**
+	* Returns the classPK of this document library file shortcut
+	*
+	* @return the classPK of this document library file shortcut
+	*/
+	@Override
+	public long getTrashClassPK() {
+		return _dlFileShortcut.getTrashClassPK();
+	}
+
+	/**
 	* Returns the trash entry created when this document library file shortcut was moved to the Recycle Bin. The trash entry may belong to one of the ancestors of this document library file shortcut.
 	*
 	* @return the trash entry created when this document library file shortcut was moved to the Recycle Bin

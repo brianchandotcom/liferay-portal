@@ -740,12 +740,17 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 		</#if>
 
 		@Override
+		public long getTrashClassPK() {
+			return getPrimaryKey();
+		}
+
+		@Override
 		public TrashEntry getTrashEntry() throws PortalException, SystemException {
 			if (!isInTrash() && !isInTrashContainer()) {
 				return null;
 			}
 
-			TrashEntry trashEntry = TrashEntryLocalServiceUtil.fetchEntry(getModelClassName(), getPrimaryKey());
+			TrashEntry trashEntry = TrashEntryLocalServiceUtil.fetchEntry(getModelClassName(), getTrashClassPK());
 
 			if (trashEntry != null) {
 				return trashEntry;

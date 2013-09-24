@@ -893,6 +893,16 @@ public class DLFileEntryWrapper implements DLFileEntry,
 	}
 
 	/**
+	* Returns the classPK of this document library file entry
+	*
+	* @return the classPK of this document library file entry
+	*/
+	@Override
+	public long getTrashClassPK() {
+		return _dlFileEntry.getTrashClassPK();
+	}
+
+	/**
 	* Returns the trash entry created when this document library file entry was moved to the Recycle Bin. The trash entry may belong to one of the ancestors of this document library file entry.
 	*
 	* @return the trash entry created when this document library file entry was moved to the Recycle Bin

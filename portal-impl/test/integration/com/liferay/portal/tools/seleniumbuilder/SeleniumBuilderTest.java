@@ -1590,6 +1590,30 @@ public class SeleniumBuilderTest {
 	}
 
 	@Test
+	public void testTestCaseAllowQuotes1004() throws Exception {
+		test(
+			"TestCaseAllowQuotes1004.testcase",
+			"Error 1004: Missing (value) attribute in " +
+				_DIR_NAME + "/TestCaseAllowQuotes1004.testcase:3");
+	}
+
+	@Test
+	public void testTestCaseAllowQuotes1006() throws Exception {
+		test(
+			"TestCaseAllowQuotes1006.testcase",
+			"Error 1006: Invalid macro attribute value in " + _DIR_NAME +
+				"/TestCaseAllowQuotes1006.testcase:3");
+	}
+
+	@Test
+	public void testTestCaseAllowQuotes1007() throws Exception {
+		test(
+			"TestCaseAllowQuotes1007.testcase",
+			"Error 1007: Poorly formed XML in " + _DIR_NAME +
+				"/TestCaseAllowQuotes1007.testcase");
+	}
+
+	@Test
 	public void testTestCaseCommandElement1001() throws Exception {
 		test(
 			"TestCaseCommandElement1001.testcase",

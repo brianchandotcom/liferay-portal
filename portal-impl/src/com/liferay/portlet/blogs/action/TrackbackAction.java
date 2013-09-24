@@ -89,10 +89,16 @@ public class TrackbackAction extends PortletAction {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String title = ParamUtil.getString(actionRequest, "title");
-		String excerpt = ParamUtil.getString(actionRequest, "excerpt");
-		String url = ParamUtil.getString(actionRequest, "url");
-		String blogName = ParamUtil.getString(actionRequest, "blog_name");
+		HttpServletRequest request = PortalUtil.getHttpServletRequest(
+			actionRequest);
+
+		HttpServletRequest orginalRequest =
+			PortalUtil.getOriginalServletRequest(request);
+
+		String title = ParamUtil.getString(orginalRequest, "title");
+		String excerpt = ParamUtil.getString(orginalRequest, "excerpt");
+		String url = ParamUtil.getString(orginalRequest, "url");
+		String blogName = ParamUtil.getString(orginalRequest, "blog_name");
 
 		if (!isCommentsEnabled(actionRequest)) {
 			sendError(
@@ -109,9 +115,6 @@ public class TrackbackAction extends PortletAction {
 
 			return;
 		}
-
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			actionRequest);
 
 		String remoteIp = request.getRemoteAddr();
 

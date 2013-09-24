@@ -105,7 +105,7 @@ Liferay = window.Liferay || {};
 					ioConfig.on.success = function(event) {
 						var responseData = this.get('responseData');
 
-						if (responseData && !owns(responseData, 'exception')) {
+						if ((responseData !== null) && !owns(responseData, 'exception')) {
 							if (callbackSuccess) {
 								callbackSuccess.call(this, responseData);
 							}

@@ -1420,7 +1420,7 @@ public class DLAppHelperLocalServiceImpl
 			}
 
 			if ((oldStatus != WorkflowConstants.STATUS_IN_TRASH) &&
-				!fileEntry.isInTrashContainer()) {
+				!fileEntry.isInTrash()) {
 
 				// Social
 

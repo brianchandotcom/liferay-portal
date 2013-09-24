@@ -91,9 +91,9 @@ public class TableMapperImpl<L extends BaseModel<L>, R extends BaseModel<R>>
 					leftColumnName + " = ?",
 				new int[] {Types.BIGINT}, RowMapper.PRIMARY_KEY);
 		leftToRightPortalCache = MultiVMPoolUtil.getCache(
-			tableName + "-LeftToRight");
+			TableMapper.class.getName() + "-" + tableName + "-LeftToRight");
 		rightToLeftPortalCache = MultiVMPoolUtil.getCache(
-			tableName + "-RightToLeft");
+			TableMapper.class.getName() + "-" + tableName + "-RightToLeft");
 	}
 
 	@Override

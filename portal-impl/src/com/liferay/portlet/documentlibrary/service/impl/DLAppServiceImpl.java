@@ -360,27 +360,6 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			parentFolderId, name, description, serviceContext);
 	}
 
-	/**
-	 * Adds a temporary file entry.
-	 *
-	 * <p>
-	 * This allows a client to upload a file into a temporary location and
-	 * manipulate its metadata prior to making it available for public usage.
-	 * This is different from checking in and checking out a file entry.
-	 * </p>
-	 *
-	 * @param  groupId the primary key of the group
-	 * @param  folderId the primary key of the folder where the file entry will
-	 *         eventually reside
-	 * @param  fileName the file's original name
-	 * @param  tempFolderName the temporary folder's name
-	 * @param  file the file's data
-	 * @param  mimeType the file's MIME type
-	 * @return the temporary file entry
-	 * @throws PortalException if the file name was invalid
-	 * @throws SystemException if a system exception occurred
-	 * @see    com.liferay.portal.kernel.util.TempFileUtil
-	 */
 	@Override
 	public FileEntry addTempFileEntry(
 			long groupId, long folderId, String fileName, String tempFolderName,

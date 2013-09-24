@@ -179,6 +179,10 @@ public class DLFileEntryTypeStagedModelDataHandler
 					fileEntryType.getNameMap(),
 					fileEntryType.getDescriptionMap(), ddmStructureIdsArray,
 					serviceContext);
+
+				importedDLFileEntryType =
+					DLFileEntryTypeLocalServiceUtil.fetchDLFileEntryType(
+						existingDLFileEntryType.getFileEntryTypeId());
 			}
 		}
 		else {

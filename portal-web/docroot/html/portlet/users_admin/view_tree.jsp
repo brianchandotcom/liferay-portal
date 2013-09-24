@@ -286,16 +286,6 @@ if (organization != null) {
 						</liferay-util:buffer>
 
 						<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="usersAdminOrganizationsPanel" persistState="<%= true %>" title="<%= organizationsPanelTitle %>">
-							<c:if test="<%= organization == null %>">
-								<portlet:renderURL var="viewOrgsURL">
-									<portlet:param name="struts_action" value="/users_admin/view" />
-									<portlet:param name="tabs1" value="users" />
-									<portlet:param name="usersListView" value="<%= UserConstants.LIST_VIEW_FLAT_ORGANIZATIONS %>" />
-									<portlet:param name="saveUsersListView" value="<%= Boolean.TRUE.toString() %>" />
-								</portlet:renderURL>
-
-								<div class="view-all-link"><a href="<%= viewOrgsURL %>" id="<portlet:namespace />allOrganizationsLink"><liferay-ui:message key="search-all-organizations" /></a></div>
-							</c:if>
 
 							<%
 							SearchContainer searchContainer = new OrganizationSearch(renderRequest, "cur1", currentURLObj);
@@ -403,14 +393,6 @@ if (organization != null) {
 					</c:if>
 
 					<c:if test="<%= showUsers %>">
-						<portlet:renderURL var="viewUsersURL">
-							<portlet:param name="struts_action" value="/users_admin/view" />
-							<portlet:param name="tabs1" value="users" />
-							<portlet:param name="status" value="<%= String.valueOf(status) %>" />
-							<portlet:param name="usersListView" value="<%= UserConstants.LIST_VIEW_FLAT_USERS %>" />
-							<portlet:param name="saveUsersListView" value="<%= Boolean.TRUE.toString() %>" />
-						</portlet:renderURL>
-
 						<liferay-util:buffer var="usersPanelTitle">
 
 							<%
@@ -444,30 +426,16 @@ if (organization != null) {
 							<%= usersTitle %>
 						</liferay-util:buffer>
 
-						<c:choose>
-							<c:when test="<%= (organization == null) && (usersCount == 0) && (inactiveUsersCount == 0) %>">
-								<liferay-ui:icon
-									image="group"
-									label="<%= true %>"
-									message="search-all-users"
-									url="<%= viewUsersURL %>"
-								/>
-							</c:when>
-							<c:otherwise>
+						<c:if test="<%= (organization != null) || (usersCount != 0) || (inactiveUsersCount == 0) %>">
 
-								<%
-								boolean organizationContextView = true;
-								%>
+							<%
+							boolean organizationContextView = true;
+							%>
 
-								<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="usersAdminUsersPanel" persistState="<%= true %>" title="<%= usersPanelTitle %>">
-									<c:if test="<%= organization == null %>">
-										<div class="view-all-link"><a href="<%= viewUsersURL %>" id="<portlet:namespace />allUsersLink"><liferay-ui:message key="search-all-users" /></a></div>
-									</c:if>
-
-									<%@ include file="/html/portlet/users_admin/view_flat_users.jspf" %>
-								</liferay-ui:panel>
-							</c:otherwise>
-						</c:choose>
+							<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="usersAdminUsersPanel" persistState="<%= true %>" title="<%= usersPanelTitle %>">
+								<%@ include file="/html/portlet/users_admin/view_flat_users.jspf" %>
+							</liferay-ui:panel>
+						</c:if>
 					</c:if>
 				</liferay-ui:panel-container>
 			</aui:col>

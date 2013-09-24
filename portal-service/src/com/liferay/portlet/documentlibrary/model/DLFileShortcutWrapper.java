@@ -865,13 +865,6 @@ public class DLFileShortcutWrapper implements DLFileShortcut,
 	}
 
 	@Override
-	public com.liferay.portlet.documentlibrary.model.DLFolder getTrashContainer()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _dlFileShortcut.getTrashContainer();
-	}
-
-	@Override
 	public boolean isInHiddenFolder() {
 		return _dlFileShortcut.isInHiddenFolder();
 	}

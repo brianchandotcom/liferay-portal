@@ -130,6 +130,12 @@ public interface DLAppHelperLocalService extends BaseLocalService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portal.kernel.repository.model.FileEntry> getNoAssetFileEntries();
 
+	public void moveDependentsToTrash(
+		java.util.List<java.lang.Object> dlFileEntriesAndDLFolders,
+		long trashEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	public void moveFileEntry(
 		com.liferay.portal.kernel.repository.model.FileEntry fileEntry)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -210,6 +216,12 @@ public interface DLAppHelperLocalService extends BaseLocalService {
 		java.lang.String type, long typePK)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	public void restoreDependentsFromTrash(
+		java.util.List<java.lang.Object> dlFileEntriesAndDLFolders,
+		long trashEntryId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	public void restoreFileEntryFromTrash(long userId,
 		com.liferay.portal.kernel.repository.model.FileEntry fileEntry)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -244,11 +256,6 @@ public interface DLAppHelperLocalService extends BaseLocalService {
 		com.liferay.portal.kernel.repository.model.Folder folder,
 		long[] assetCategoryIds, java.lang.String[] assetTagNames,
 		long[] assetLinkEntryIds)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	public void updateDependentStatus(com.liferay.portal.model.User user,
-		java.util.List<java.lang.Object> dlFileEntriesAndDLFolders, int status)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

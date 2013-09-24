@@ -772,10 +772,6 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 			companyId, WorkflowConstants.STATUS_IN_TRASH);
 
 		for (DLFolder dlFolder : dlFolders) {
-			if (dlFolder.isInTrashContainer()) {
-				continue;
-			}
-
 			dlFolder.setTreePath(dlFolder.buildTreePath());
 
 			dlFolderPersistence.update(dlFolder);

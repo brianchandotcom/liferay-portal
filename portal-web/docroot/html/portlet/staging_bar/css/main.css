@@ -17,12 +17,9 @@
 	.layout-actions .taglib-workflow-status {
 		margin: 0;
 
-		.workflow-id, .workflow-version {
+		.workflow-id, .workflow-version, .workflow-status {
 			color: inherit;
-		}
-
-		.workflow-status {
-			color: inherit;
+			display: block;
 			padding: 0;
 		}
 	}

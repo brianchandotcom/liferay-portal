@@ -630,6 +630,18 @@ public class GroupImpl extends GroupBaseImpl {
 	}
 
 	@Override
+	public boolean isChild(long groupId) {
+		String treePath = getTreePath();
+
+		if (treePath.contains(StringPool.SLASH + groupId + StringPool.SLASH)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
 	public boolean isGuest() {
 		String name = getName();
 

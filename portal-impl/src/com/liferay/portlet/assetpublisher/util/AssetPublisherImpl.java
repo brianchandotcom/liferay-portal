@@ -47,6 +47,7 @@ import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.User;
+import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -810,7 +811,15 @@ public class AssetPublisherImpl implements AssetPublisher {
 			String scopeIdSuffix = scopeId.substring(
 				SCOPE_ID_CHILD_GROUP_PREFIX.length());
 
-			return GetterUtil.getLong(scopeIdSuffix);
+			long childGroupId = GetterUtil.getLong(scopeIdSuffix);
+
+			Group childGroup = GroupLocalServiceUtil.getGroup(childGroupId);
+
+			if (!childGroup.isChild(siteGroupId)) {
+				throw new PrincipalException();
+			}
+
+			return childGroupId;
 		}
 		else if (scopeId.startsWith(SCOPE_ID_GROUP_PREFIX)) {
 			String scopeIdSuffix = scopeId.substring(
@@ -868,7 +877,21 @@ public class AssetPublisherImpl implements AssetPublisher {
 			String scopeIdSuffix = scopeId.substring(
 				SCOPE_ID_PARENT_GROUP_PREFIX.length());
 
-			return GetterUtil.getLong(scopeIdSuffix);
+			long parentGroupId = GetterUtil.getLong(scopeIdSuffix);
+
+			Group parentGroup = GroupLocalServiceUtil.getGroup(parentGroupId);
+
+			if (!SitesUtil.isContentSharingWithChildrenEnabled(parentGroup)) {
+				throw new PrincipalException();
+			}
+
+			Group group = GroupLocalServiceUtil.getGroup(siteGroupId);
+
+			if (!group.isChild(parentGroupId)) {
+				throw new PrincipalException();
+			}
+
+			return parentGroupId;
 		}
 		else {
 			throw new IllegalArgumentException("Invalid scope ID " + scopeId);
@@ -883,23 +906,21 @@ public class AssetPublisherImpl implements AssetPublisher {
 		String[] scopeIds = portletPreferences.getValues(
 			"scopeIds", new String[] {SCOPE_ID_GROUP_PREFIX + scopeGroupId});
 
-		long[] groupIds = new long[scopeIds.length];
-
-		int i = 0;
+		List<Long> groupIds = new ArrayList<Long>();
 
 		for (String scopeId : scopeIds) {
 			try {
-				groupIds[i] = getGroupIdFromScopeId(
+				long groupId = getGroupIdFromScopeId(
 					scopeId, scopeGroupId, layout.isPrivateLayout());
 
-				i++;
+				groupIds.add(groupId);
 			}
 			catch (Exception e) {
 				continue;
 			}
 		}
 
-		return groupIds;
+		return ArrayUtil.toArray(groupIds.toArray(new Long[groupIds.size()]));
 	}
 
 	@Override
@@ -936,7 +957,9 @@ public class AssetPublisherImpl implements AssetPublisher {
 		else {
 			Group scopeGroup = GroupLocalServiceUtil.getGroup(scopeGroupId);
 
-			if (scopeGroup.hasAncestor(group.getGroupId())) {
+			if (scopeGroup.hasAncestor(group.getGroupId()) &&
+				SitesUtil.isContentSharingWithChildrenEnabled(group)) {
+
 				key = SCOPE_ID_PARENT_GROUP_PREFIX + group.getGroupId();
 			}
 			else if (group.hasAncestor(scopeGroup.getGroupId())) {

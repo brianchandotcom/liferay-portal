@@ -477,6 +477,12 @@ public class ConfigurationActionImpl extends DefaultConfigurationAction {
 
 		scopeIds = ArrayUtil.remove(scopeIds, scopeId);
 
+		if (scopeId.startsWith(AssetPublisher.SCOPE_ID_PARENT_GROUP_PREFIX)) {
+			scopeId = scopeId.substring("Parent".length());
+
+			scopeIds = ArrayUtil.remove(scopeIds, scopeId);
+		}
+
 		preferences.setValues("scopeIds", scopeIds);
 	}
 

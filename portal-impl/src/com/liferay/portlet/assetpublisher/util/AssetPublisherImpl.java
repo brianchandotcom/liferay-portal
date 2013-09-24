@@ -815,11 +815,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 
 			Group childGroup = GroupLocalServiceUtil.getGroup(childGroupId);
 
-			String treePath = childGroup.getTreePath();
-
-			if (!treePath.contains(
-					StringPool.SLASH + siteGroupId + StringPool.SLASH)) {
-
+			if (!childGroup.isChild(siteGroupId)) {
 				throw new PrincipalException();
 			}
 
@@ -891,11 +887,7 @@ public class AssetPublisherImpl implements AssetPublisher {
 
 			Group group = GroupLocalServiceUtil.getGroup(siteGroupId);
 
-			String treePath = group.getTreePath();
-
-			if (!treePath.contains(
-					StringPool.SLASH + parentGroupId + StringPool.SLASH)) {
-
+			if (!group.isChild(parentGroupId)) {
 				throw new PrincipalException();
 			}
 

@@ -16,7 +16,6 @@ package com.liferay.portlet.rss.lar;
 
 import com.liferay.portal.kernel.lar.BasePortletDataHandler;
 import com.liferay.portal.kernel.lar.DataLevel;
-import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataException;
 import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
@@ -24,7 +23,6 @@ import com.liferay.portal.kernel.lar.PortletDataHandlerControl;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -34,9 +32,7 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.documentlibrary.lar.DLPortletDataHandler;
 import com.liferay.portlet.journal.NoSuchArticleException;
-import com.liferay.portlet.journal.lar.JournalPortletDataHandler;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalContentSearchLocalServiceUtil;
@@ -65,24 +61,6 @@ public class RSSPortletDataHandler extends BasePortletDataHandler {
 						NAMESPACE, "referenced-content")
 				},
 				JournalArticle.class.getName()));
-
-		JournalPortletDataHandler journalPortletDataHandler =
-			new JournalPortletDataHandler();
-		DLPortletDataHandler dlPortletDataHandler = new DLPortletDataHandler();
-
-		PortletDataHandlerControl[] exportMetadataControls = ArrayUtil.append(
-			journalPortletDataHandler.getExportMetadataControls(),
-			dlPortletDataHandler.getExportMetadataControls());
-
-		for (PortletDataHandlerControl portletDataHandlerControl :
-				exportMetadataControls) {
-
-			portletDataHandlerControl.setNamespace(NAMESPACE);
-		}
-
-		setExportMetadataControls(exportMetadataControls);
-
-		setImportControls(getExportControls()[0]);
 		setPublishToLiveByDefault(PropsValues.RSS_PUBLISH_TO_LIVE_BY_DEFAULT);
 	}
 
@@ -116,7 +94,7 @@ public class RSSPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	@Override
-	protected String doExportData(
+	protected PortletPreferences doProcessExportPortletPreferences(
 			PortletDataContext portletDataContext, String portletId,
 			PortletPreferences portletPreferences)
 		throws Exception {
@@ -138,7 +116,7 @@ public class RSSPortletDataHandler extends BasePortletDataHandler {
 						portletId);
 			}
 
-			return StringPool.BLANK;
+			return portletPreferences;
 		}
 
 		long footerArticleGroupId = GetterUtil.getLong(footerArticleValues[0]);
@@ -151,7 +129,7 @@ public class RSSPortletDataHandler extends BasePortletDataHandler {
 						portletId);
 			}
 
-			return StringPool.BLANK;
+			return portletPreferences;
 		}
 
 		List<JournalArticle> articles = new ArrayList<JournalArticle>(2);
@@ -192,48 +170,28 @@ public class RSSPortletDataHandler extends BasePortletDataHandler {
 			}
 		}
 
-		if ((footerArticle == null) && (headerArticle == null)) {
-			return StringPool.BLANK;
+		if (articles.isEmpty()) {
+			return portletPreferences;
 		}
-
-		Element rootElement = addExportDataRootElement(portletDataContext);
 
 		for (JournalArticle article : articles) {
-			String path = ExportImportPathUtil.getModelPath(article);
-
-			Element articleElement = null;
-
-			if (article == footerArticle) {
-				articleElement = rootElement.addElement("footer-article");
-			}
-			else {
-				articleElement = rootElement.addElement("header-article");
-			}
-
-			articleElement.addAttribute("path", path);
-
 			StagedModelDataHandlerUtil.exportReferenceStagedModel(
-				portletDataContext, article, article,
-				PortletDataContext.REFERENCE_TYPE_WEAK);
+				portletDataContext, portletId, article);
 		}
 
-		return getExportDataRootElementString(rootElement);
+		return portletPreferences;
 	}
 
 	@Override
-	protected PortletPreferences doImportData(
+	protected PortletPreferences doProcessImportPortletPreferences(
 			PortletDataContext portletDataContext, String portletId,
-			PortletPreferences portletPreferences, String data)
+			PortletPreferences portletPreferences)
 		throws Exception {
+
+		importReferenceArticle(portletDataContext);
 
 		Layout layout = LayoutLocalServiceUtil.getLayout(
 			portletDataContext.getPlid());
-
-		Element rootElement = portletDataContext.getImportDataRootElement();
-
-		Element footerArticleElement = rootElement.element("footer-article");
-
-		importReferenceArticle(portletDataContext, footerArticleElement);
 
 		Map<String, String> articleIds =
 			(Map<String, String>)portletDataContext.getNewPrimaryKeysMap(
@@ -263,10 +221,6 @@ public class RSSPortletDataHandler extends BasePortletDataHandler {
 				layout.getLayoutId(), portletId, footerArticleId, true);
 		}
 
-		Element headerArticleElement = rootElement.element("header-article");
-
-		importReferenceArticle(portletDataContext, headerArticleElement);
-
 		String[] headerArticleValues = portletPreferences.getValues(
 			"headerArticleValues", new String[] {"0", ""});
 
@@ -276,9 +230,6 @@ public class RSSPortletDataHandler extends BasePortletDataHandler {
 			articleIds, headerArticleId, headerArticleId);
 
 		if (Validator.isNotNull(headerArticleId)) {
-			headerArticleId = MapUtil.getString(
-				articleIds, headerArticleId, headerArticleId);
-
 			portletPreferences.setValues(
 				"headerArticleValues",
 				new String[] {
@@ -294,19 +245,20 @@ public class RSSPortletDataHandler extends BasePortletDataHandler {
 		return portletPreferences;
 	}
 
-	protected void importReferenceArticle(
-			PortletDataContext portletDataContext, Element parentElement)
+	protected void importReferenceArticle(PortletDataContext portletDataContext)
 		throws PortletDataException {
 
-		List<Element> referenceDataElements =
-			portletDataContext.getReferenceDataElements(
-				parentElement, JournalArticle.class);
+		Element journalArticlesElement =
+			portletDataContext.getImportDataGroupElement(JournalArticle.class);
 
-		if (referenceDataElements.isEmpty()) {
+		if (journalArticlesElement == null) {
 			return;
 		}
 
-		for (Element referenceDataElement : referenceDataElements) {
+		List<Element> journalArticleElements =
+			journalArticlesElement.elements();
+
+		for (Element referenceDataElement : journalArticleElements) {
 			StagedModelDataHandlerUtil.importReferenceStagedModel(
 				portletDataContext, referenceDataElement);
 		}

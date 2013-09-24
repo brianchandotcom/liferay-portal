@@ -16,18 +16,16 @@ package com.liferay.portlet.wiki.lar;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.lar.DataLevel;
-import com.liferay.portal.kernel.lar.ManifestSummary;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.portal.kernel.lar.PortletDataHandlerControl;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
-import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.wiki.model.WikiNode;
 import com.liferay.portlet.wiki.model.WikiPage;
 import com.liferay.portlet.wiki.service.WikiPageLocalServiceUtil;
@@ -75,7 +73,7 @@ public class WikiDisplayPortletDataHandler extends WikiPortletDataHandler {
 	}
 
 	@Override
-	protected String doExportData(
+	protected PortletPreferences doProcessExportPortletPreferences(
 			PortletDataContext portletDataContext, String portletId,
 			PortletPreferences portletPreferences)
 		throws Exception {
@@ -89,7 +87,7 @@ public class WikiDisplayPortletDataHandler extends WikiPortletDataHandler {
 					"No node id found in preferences of portlet " + portletId);
 			}
 
-			return StringPool.BLANK;
+			return portletPreferences;
 		}
 
 		String title = portletPreferences.getValue("title", null);
@@ -100,7 +98,7 @@ public class WikiDisplayPortletDataHandler extends WikiPortletDataHandler {
 					"No title found in preferences of portlet " + portletId);
 			}
 
-			return StringPool.BLANK;
+			return portletPreferences;
 		}
 
 		WikiNode node = WikiNodeUtil.fetchByPrimaryKey(nodeId);
@@ -110,15 +108,10 @@ public class WikiDisplayPortletDataHandler extends WikiPortletDataHandler {
 				_log.warn("Unable to find wiki node");
 			}
 
-			return StringPool.BLANK;
+			return portletPreferences;
 		}
 
 		portletDataContext.addPortletPermissions(WikiPermission.RESOURCE_NAME);
-
-		Element rootElement = addExportDataRootElement(portletDataContext);
-
-		rootElement.addAttribute(
-			"group-id", String.valueOf(portletDataContext.getScopeGroupId()));
 
 		StagedModelDataHandlerUtil.exportReferenceStagedModel(
 			portletDataContext, portletId, node);
@@ -131,20 +124,21 @@ public class WikiDisplayPortletDataHandler extends WikiPortletDataHandler {
 				portletDataContext, portletId, page);
 		}
 
-		return getExportDataRootElementString(rootElement);
+		return portletPreferences;
 	}
 
 	@Override
-	protected PortletPreferences doImportData(
+	protected PortletPreferences doProcessImportPortletPreferences(
 			PortletDataContext portletDataContext, String portletId,
-			PortletPreferences portletPreferences, String data)
+			PortletPreferences portletPreferences)
 		throws Exception {
 
 		portletDataContext.importPortletPermissions(
 			WikiPermission.RESOURCE_NAME);
 
 		super.importData(
-			portletDataContext, portletId, portletPreferences, data);
+			portletDataContext, portletId, portletPreferences,
+			PortletPreferencesFactoryUtil.toXML(portletPreferences));
 
 		long nodeId = GetterUtil.getLong(
 			portletPreferences.getValue("nodeId", StringPool.BLANK));
@@ -160,31 +154,6 @@ public class WikiDisplayPortletDataHandler extends WikiPortletDataHandler {
 		}
 
 		return portletPreferences;
-	}
-
-	@Override
-	protected void doPrepareManifestSummary(
-			PortletDataContext portletDataContext,
-			PortletPreferences portletPreferences)
-		throws Exception {
-
-		ManifestSummary manifestSummary =
-			portletDataContext.getManifestSummary();
-
-		if ((portletPreferences == null) ||
-			(manifestSummary.getModelAdditionCount(WikiPage.class) > -1)) {
-
-			return;
-		}
-
-		long nodeId = GetterUtil.getLong(
-			portletPreferences.getValue("nodeId", StringPool.BLANK));
-
-		if (nodeId > 0) {
-			manifestSummary.addModelAdditionCount(
-				new StagedModelType(WikiPage.class),
-				WikiPageLocalServiceUtil.getPagesCount(nodeId));
-		}
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

@@ -2537,18 +2537,18 @@ public class StagingImpl implements Staging {
 			remoteURL, user.getScreenName(), user.getPassword(),
 			user.getPasswordEncrypted());
 
-		List<String> stagedPortletIds = new ArrayList<String>();
+		Map<String, String> stagedPortletIds = new HashMap<String, String>();
 
 		for (String key : typeSettingsProperties.keySet()) {
 			if (key.startsWith(StagingConstants.STAGED_PORTLET)) {
-				stagedPortletIds.add(key);
+				stagedPortletIds.put(
+					key, typeSettingsProperties.getProperty(key));
 			}
 		}
 
 		try {
 			GroupServiceHttp.updateStagedPortlets(
-				httpPrincipal, remoteGroupId,
-				StringUtil.merge(stagedPortletIds));
+				httpPrincipal, remoteGroupId, stagedPortletIds);
 		}
 		catch (NoSuchGroupException nsge) {
 			RemoteExportException ree = new RemoteExportException(

@@ -1448,7 +1448,8 @@ public class GroupServiceHttp {
 	}
 
 	public static void updateStagedPortlets(HttpPrincipal httpPrincipal,
-		long groupId, java.lang.String stagedPortletIds)
+		long groupId,
+		java.util.Map<java.lang.String, java.lang.String> stagedPortletIds)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
@@ -1609,6 +1610,6 @@ public class GroupServiceHttp {
 			long.class, java.lang.String.class
 		};
 	private static final Class<?>[] _updateStagedPortletsParameterTypes38 = new Class[] {
-			long.class, java.lang.String.class
+			long.class, java.util.Map.class
 		};
 }

@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UniqueList;
 import com.liferay.portal.model.Group;
@@ -1177,7 +1176,8 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 	}
 
 	@Override
-	public void updateStagedPortlets(long groupId, String stagedPortletIds)
+	public void updateStagedPortlets(
+			long groupId, Map<String, String> stagedPortletIds)
 		throws PortalException, SystemException {
 
 		GroupPermissionUtil.check(
@@ -1185,12 +1185,13 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 
 		Group group = groupPersistence.findByPrimaryKey(groupId);
 
-		UnicodeProperties typeSettings = group.getTypeSettingsProperties();
+		UnicodeProperties typeSettingsProperties =
+			group.getTypeSettingsProperties();
 
-		for (String stagedPortletId : StringUtil.split(stagedPortletIds)) {
-			typeSettings.setProperty(
+		for (String stagedPortletId : stagedPortletIds.keySet()) {
+			typeSettingsProperties.setProperty(
 				StagingUtil.getStagedPortletId(stagedPortletId),
-				Boolean.TRUE.toString());
+				stagedPortletIds.get(stagedPortletId));
 		}
 
 		groupLocalService.updateGroup(group);

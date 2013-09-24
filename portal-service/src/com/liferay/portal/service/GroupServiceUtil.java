@@ -854,7 +854,7 @@ public class GroupServiceUtil {
 	}
 
 	public static void updateStagedPortlets(long groupId,
-		java.lang.String stagedPortletIds)
+		java.util.Map<java.lang.String, java.lang.String> stagedPortletIds)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		getService().updateStagedPortlets(groupId, stagedPortletIds);

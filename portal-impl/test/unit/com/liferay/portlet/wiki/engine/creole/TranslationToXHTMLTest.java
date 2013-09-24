@@ -46,11 +46,6 @@ import org.powermock.modules.junit4.PowerMockRunner;
  * @author Miguel Pastor
  * @author Manuel de la Peña
  */
-
-/**
- * @author Miguel Pastor
- * @author Manuel de la Peña
- */
 @PrepareForTest(HtmlUtil.class)
 @RunWith(PowerMockRunner.class)
 public class TranslationToXHTMLTest extends PowerMockito {
@@ -455,7 +450,7 @@ public class TranslationToXHTMLTest extends PowerMockito {
 
 	@Test
 	public void testParseLinkEmpty() {
-		Assert.assertEquals("<p> </p>", translate("link-8.creole"));
+		Assert.assertEquals("<p></p>", translate("link-8.creole"));
 	}
 
 	@Test

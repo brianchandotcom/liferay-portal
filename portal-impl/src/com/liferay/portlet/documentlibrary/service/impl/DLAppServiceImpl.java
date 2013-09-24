@@ -395,7 +395,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	}
 
 	/**
-	 * Adds a temporary file entry.
+	 * Adds a temporary file entry. It is created based on a {@link
+	 * java.io.InputStream} object.
 	 *
 	 * <p>
 	 * This allows a client to upload a file into a temporary location and
@@ -411,10 +412,12 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	 * @param  inputStream the file's data
 	 * @param  mimeType the file's MIME type
 	 * @return the temporary file entry
-	 * @throws PortalException if the file name was invalid
+	 * @throws PortalException if the file name was invalid or if a portal
+	 *         exception occurred
 	 * @throws SystemException if a system exception occurred
 	 * @see    com.liferay.portal.kernel.util.TempFileUtil
 	 */
+	@Override
 	public FileEntry addTempFileEntry(
 			long groupId, long folderId, String fileName, String tempFolderName,
 			InputStream inputStream, String mimeType)

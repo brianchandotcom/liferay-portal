@@ -107,18 +107,23 @@ long reportedUserId = ParamUtil.getLong(request, "reportedUserId");
 			dialog.setStdModContent('body', message);
 		};
 
+		var data = Liferay.Util.ns(
+			'<portlet:namespace />',
+			{
+				className: '<%= HtmlUtil.escape(className) %>',
+				classPK: '<%= classPK %>',
+				contentTitle: '<%= HtmlUtil.escape(contentTitle) %>',
+				contentURL: '<%= HtmlUtil.escape(contentURL) %>',
+				reason: reason,
+				reportedUserId: '<%= reportedUserId %>',
+				reporterEmailAddress: reporterEmailAddress
+			}
+		);
+
 		A.io.request(
 			'<liferay-portlet:actionURL portletName="<%= PortletKeys.FLAGS %>" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="struts_action" value="/flags/edit_entry" /></liferay-portlet:actionURL>',
 			{
-				data: {
-					className: '<%= HtmlUtil.escape(className) %>',
-					classPK: '<%= classPK %>',
-					contentTitle: '<%= HtmlUtil.escape(contentTitle) %>',
-					contentURL: '<%= HtmlUtil.escape(contentURL) %>',
-					reason: reason,
-					reportedUserId: '<%= reportedUserId %>',
-					reporterEmailAddress: reporterEmailAddress
-				},
+				data: data,
 				on: {
 					failure: function() {
 						setDialogContent(errorMessage);

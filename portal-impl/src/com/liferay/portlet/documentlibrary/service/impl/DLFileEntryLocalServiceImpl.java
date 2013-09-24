@@ -1966,30 +1966,6 @@ public class DLFileEntryLocalServiceImpl
 		}
 	}
 
-	protected List<ObjectValuePair<Long, Integer>> getDlFileVersionStatuses(
-		List<DLFileVersion> dlFileVersions) {
-
-		List<ObjectValuePair<Long, Integer>> dlFileVersionStatusOVPs =
-			new ArrayList<ObjectValuePair<Long, Integer>>(
-				dlFileVersions.size());
-
-		for (DLFileVersion dlFileVersion : dlFileVersions) {
-			int status = dlFileVersion.getStatus();
-
-			if (status == WorkflowConstants.STATUS_PENDING) {
-				status = WorkflowConstants.STATUS_DRAFT;
-			}
-
-			ObjectValuePair<Long, Integer> dlFileVersionStatusOVP =
-				new ObjectValuePair<Long, Integer>(
-					dlFileVersion.getFileVersionId(), status);
-
-			dlFileVersionStatusOVPs.add(dlFileVersionStatusOVP);
-		}
-
-		return dlFileVersionStatusOVPs;
-	}
-
 	protected String getNextVersion(
 			DLFileEntry dlFileEntry, boolean majorVersion, int workflowAction)
 		throws PortalException, SystemException {

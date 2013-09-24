@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackRegistryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -1635,6 +1636,30 @@ public class DLAppHelperLocalServiceImpl
 			extraDataJSONObject.toString(), 0);
 
 		return new LiferayFolder(dlFolder);
+	}
+
+	protected List<ObjectValuePair<Long, Integer>> getDlFileVersionStatuses(
+		List<DLFileVersion> dlFileVersions) {
+
+		List<ObjectValuePair<Long, Integer>> dlFileVersionStatusOVPs =
+			new ArrayList<ObjectValuePair<Long, Integer>>(
+				dlFileVersions.size());
+
+		for (DLFileVersion dlFileVersion : dlFileVersions) {
+			int status = dlFileVersion.getStatus();
+
+			if (status == WorkflowConstants.STATUS_PENDING) {
+				status = WorkflowConstants.STATUS_DRAFT;
+			}
+
+			ObjectValuePair<Long, Integer> dlFileVersionStatusOVP =
+				new ObjectValuePair<Long, Integer>(
+					dlFileVersion.getFileVersionId(), status);
+
+			dlFileVersionStatusOVPs.add(dlFileVersionStatusOVP);
+		}
+
+		return dlFileVersionStatusOVPs;
 	}
 
 	protected long getFileEntryTypeId(FileEntry fileEntry) {

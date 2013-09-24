@@ -32,6 +32,7 @@ import com.liferay.portal.service.RepositoryServiceUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
+import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +45,10 @@ public abstract class DLBaseTrashHandler extends BaseTrashHandler {
 	@Override
 	public ContainerModel getContainerModel(long containerModelId)
 		throws PortalException, SystemException {
+
+		if (containerModelId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			return null;
+		}
 
 		return getDLFolder(containerModelId);
 	}

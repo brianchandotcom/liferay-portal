@@ -18,7 +18,7 @@
 		margin: 0;
 
 		.workflow-id, .workflow-version {
-			display: none;
+			color: inherit;
 		}
 
 		.workflow-status {

@@ -426,20 +426,16 @@ if (organization != null) {
 							<%= usersTitle %>
 						</liferay-util:buffer>
 
-						<c:choose>
-							<c:when test="<%= (organization == null) && (usersCount == 0) && (inactiveUsersCount == 0) %>">
-							</c:when>
-							<c:otherwise>
+						<c:if test="<%= (organization != null) || (usersCount != 0) || (inactiveUsersCount == 0) %>">
 
-								<%
-								boolean organizationContextView = true;
-								%>
+							<%
+							boolean organizationContextView = true;
+							%>
 
-								<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="usersAdminUsersPanel" persistState="<%= true %>" title="<%= usersPanelTitle %>">
-									<%@ include file="/html/portlet/users_admin/view_flat_users.jspf" %>
-								</liferay-ui:panel>
-							</c:otherwise>
-						</c:choose>
+							<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="usersAdminUsersPanel" persistState="<%= true %>" title="<%= usersPanelTitle %>">
+								<%@ include file="/html/portlet/users_admin/view_flat_users.jspf" %>
+							</liferay-ui:panel>
+						</c:if>
 					</c:if>
 				</liferay-ui:panel-container>
 			</aui:col>

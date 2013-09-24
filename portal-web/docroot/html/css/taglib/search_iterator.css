@@ -1,6 +1,10 @@
 @import "compass";
 @import "mixins";
 
+.lfr-search-container {
+	overflow: auto;
+}
+
 .taglib-search-iterator {
 	border-collapse: collapse;
 	width: 100%;

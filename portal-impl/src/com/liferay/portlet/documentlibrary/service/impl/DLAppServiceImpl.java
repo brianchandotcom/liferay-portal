@@ -374,7 +374,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	}
 
 	/**
-	 * Adds a temporary file entry. It is created based on a {@link
+	 * Adds a temporary file entry. It is created based on the {@link
 	 * java.io.InputStream} object.
 	 *
 	 * <p>

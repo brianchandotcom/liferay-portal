@@ -491,15 +491,21 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 			int status, int start, int end, OrderByComparator obc)
 		throws PortalException, SystemException {
 
+		QueryDefinition queryDefinition = new QueryDefinition(
+			status, start, end, obc);
+
+		if (rootFolderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			return dlFileEntryFinder.findByG_U_F_M(
+				groupId, userId, new ArrayList<Long>(), mimeTypes,
+				queryDefinition);
+		}
+
 		List<Long> folderIds = dlFolderService.getFolderIds(
 			groupId, rootFolderId);
 
 		if (folderIds.size() == 0) {
 			return Collections.emptyList();
 		}
-
-		QueryDefinition queryDefinition = new QueryDefinition(
-			status, start, end, obc);
 
 		return dlFileEntryFinder.findByG_U_F_M(
 			groupId, userId, folderIds, mimeTypes, queryDefinition);
@@ -531,6 +537,12 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 			long groupId, long userId, long rootFolderId, String[] mimeTypes,
 			int status)
 		throws PortalException, SystemException {
+
+		if (rootFolderId == DLFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
+			return dlFileEntryFinder.countByG_U_F_M(
+				groupId, userId, new ArrayList<Long>(), mimeTypes,
+				new QueryDefinition(status));
+		}
 
 		List<Long> folderIds = dlFolderService.getFolderIds(
 			groupId, rootFolderId);

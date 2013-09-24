@@ -30,14 +30,6 @@
 		color: #999;
 	}
 
-	.workflow-id {
-		background: url(@theme_image_path@/common/history.png) no-repeat 0 50%;
-	}
-
-	.workflow-version {
-		background: url(@theme_image_path@/common/pages.png) no-repeat 0 50%;
-	}
-
 	.workflow-status-icon {
 		background: url(@theme_image_path@/common/recent_changes.png) no-repeat 0 50%;
 	}

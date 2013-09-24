@@ -393,7 +393,7 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 	@Override
 	public PortletPreferences processExportPortletPreferences(
 			PortletDataContext portletDataContext, String portletId,
-			PortletPreferences portletPreferences, Element rootElement)
+			PortletPreferences portletPreferences)
 		throws PortletDataException {
 
 		String displayStyle = getDisplayTemplate(
@@ -426,7 +426,7 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 
 		try {
 			return doProcessExportPortletPreferences(
-				portletDataContext, portletId, portletPreferences, rootElement);
+				portletDataContext, portletId, portletPreferences);
 		}
 		catch (Exception e) {
 			throw new PortletDataException(e);
@@ -630,7 +630,7 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 
 	protected PortletPreferences doProcessExportPortletPreferences(
 			PortletDataContext portletDataContext, String portletId,
-			PortletPreferences portletPreferences, Element rootElement)
+			PortletPreferences portletPreferences)
 		throws Exception {
 
 		return portletPreferences;

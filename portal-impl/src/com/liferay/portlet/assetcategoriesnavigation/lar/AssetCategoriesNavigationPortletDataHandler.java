@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.lar.DataLevel;
 import com.liferay.portal.kernel.lar.DefaultConfigurationPortletDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
-import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Portlet;
@@ -44,11 +43,11 @@ public class AssetCategoriesNavigationPortletDataHandler
 	@Override
 	protected PortletPreferences doProcessExportPortletPreferences(
 			PortletDataContext portletDataContext, String portletId,
-			PortletPreferences portletPreferences, Element rootElement)
+			PortletPreferences portletPreferences)
 		throws Exception {
 
 		return updateExportPortletPreferences(
-			portletDataContext, portletPreferences, portletId, rootElement);
+			portletDataContext, portletPreferences, portletId);
 	}
 
 	@Override
@@ -63,8 +62,7 @@ public class AssetCategoriesNavigationPortletDataHandler
 
 	protected PortletPreferences updateExportPortletPreferences(
 			PortletDataContext portletDataContext,
-			PortletPreferences portletPreferences, String portletId,
-			Element rootElement)
+			PortletPreferences portletPreferences, String portletId)
 		throws Exception {
 
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(
@@ -78,7 +76,8 @@ public class AssetCategoriesNavigationPortletDataHandler
 			if (name.equals("assetVocabularyIds")) {
 				ExportImportHelperUtil.updateExportPortletPreferencesClassPKs(
 					portletDataContext, portlet, portletPreferences, name,
-					AssetVocabulary.class.getName(), rootElement);
+					AssetVocabulary.class.getName(),
+					portletDataContext.getExportDataRootElement());
 			}
 		}
 

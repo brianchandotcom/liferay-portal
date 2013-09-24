@@ -468,6 +468,14 @@ public interface MBThreadModel extends BaseModel<MBThread>, ContainerModel,
 	public TrashEntry getTrashEntry() throws PortalException, SystemException;
 
 	/**
+	 * Returns the classPK of this message boards thread
+	 *
+	 * @return the classPK of this message boards thread
+	 */
+	@Override
+	public long getTrashEntryClassPK();
+
+	/**
 	 * Returns the trash handler for this message boards thread.
 	 *
 	 * @return the trash handler for this message boards thread

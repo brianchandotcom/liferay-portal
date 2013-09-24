@@ -168,7 +168,7 @@ public class MBThreadImpl extends MBThreadBaseImpl {
 	@Override
 	public boolean isLocked() {
 		try {
-			if (isInTrash() || isInTrashContainer()) {
+			if (isInTrash()) {
 				return true;
 			}
 

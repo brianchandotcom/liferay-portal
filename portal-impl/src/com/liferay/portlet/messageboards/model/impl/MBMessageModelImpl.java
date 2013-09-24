@@ -922,7 +922,7 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 		}
 
 		TrashEntry trashEntry = TrashEntryLocalServiceUtil.fetchEntry(getModelClassName(),
-				getPrimaryKey());
+				getTrashEntryClassPK());
 
 		if (trashEntry != null) {
 			return trashEntry;
@@ -951,6 +951,11 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 		}
 
 		return null;
+	}
+
+	@Override
+	public long getTrashEntryClassPK() {
+		return getPrimaryKey();
 	}
 
 	@Override

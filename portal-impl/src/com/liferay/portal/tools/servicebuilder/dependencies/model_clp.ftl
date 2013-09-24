@@ -484,7 +484,7 @@ public class ${entity.name}Clp extends BaseModelImpl<${entity.name}> implements 
 				return null;
 			}
 
-			TrashEntry trashEntry = TrashEntryLocalServiceUtil.fetchEntry(getModelClassName(), getPrimaryKey());
+			TrashEntry trashEntry = TrashEntryLocalServiceUtil.fetchEntry(getModelClassName(), getTrashEntryClassPK());
 
 			if (trashEntry != null) {
 				return trashEntry;
@@ -513,6 +513,11 @@ public class ${entity.name}Clp extends BaseModelImpl<${entity.name}> implements 
 			}
 
 			return null;
+		}
+
+		@Override
+		public long getTrashEntryClassPK() {
+			return getPrimaryKey();
 		}
 
 		@Override

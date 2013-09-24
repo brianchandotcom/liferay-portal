@@ -797,7 +797,7 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 		}
 
 		TrashEntry trashEntry = TrashEntryLocalServiceUtil.fetchEntry(getModelClassName(),
-				getPrimaryKey());
+				getTrashEntryClassPK());
 
 		if (trashEntry != null) {
 			return trashEntry;
@@ -826,6 +826,11 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 		}
 
 		return null;
+	}
+
+	@Override
+	public long getTrashEntryClassPK() {
+		return getPrimaryKey();
 	}
 
 	@Override

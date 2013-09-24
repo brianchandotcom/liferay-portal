@@ -619,7 +619,7 @@ public class WikiNodeModelImpl extends BaseModelImpl<WikiNode>
 		}
 
 		TrashEntry trashEntry = TrashEntryLocalServiceUtil.fetchEntry(getModelClassName(),
-				getPrimaryKey());
+				getTrashEntryClassPK());
 
 		if (trashEntry != null) {
 			return trashEntry;
@@ -648,6 +648,11 @@ public class WikiNodeModelImpl extends BaseModelImpl<WikiNode>
 		}
 
 		return null;
+	}
+
+	@Override
+	public long getTrashEntryClassPK() {
+		return getPrimaryKey();
 	}
 
 	@Override

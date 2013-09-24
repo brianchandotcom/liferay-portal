@@ -855,6 +855,16 @@ public class MBMessageWrapper implements MBMessage, ModelWrapper<MBMessage> {
 	}
 
 	/**
+	* Returns the classPK of this message-boards message
+	*
+	* @return the classPK of this message-boards message
+	*/
+	@Override
+	public long getTrashEntryClassPK() {
+		return _mbMessage.getTrashEntryClassPK();
+	}
+
+	/**
 	* Returns the trash handler for this message-boards message.
 	*
 	* @return the trash handler for this message-boards message

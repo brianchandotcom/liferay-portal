@@ -540,6 +540,16 @@ public class WikiNodeWrapper implements WikiNode, ModelWrapper<WikiNode> {
 	}
 
 	/**
+	* Returns the classPK of this wiki node
+	*
+	* @return the classPK of this wiki node
+	*/
+	@Override
+	public long getTrashEntryClassPK() {
+		return _wikiNode.getTrashEntryClassPK();
+	}
+
+	/**
 	* Returns the trash handler for this wiki node.
 	*
 	* @return the trash handler for this wiki node

@@ -165,6 +165,11 @@
 			<finder-column name="classNameId" />
 			<finder-column name="layoutUuid" />
 		</finder>
+		<finder name="G_C_NotST" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="classNameId" />
+			<finder-column name="status" comparator="!=" />
+		</finder>
 		<finder name="G_U_C" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="userId" />
@@ -189,6 +194,12 @@
 			<finder-column name="companyId" />
 			<finder-column name="version" />
 			<finder-column name="status" />
+		</finder>
+		<finder name="G_U_C_NotST" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="userId" />
+			<finder-column name="classNameId" />
+			<finder-column name="status" comparator="!=" />
 		</finder>
 
 		<!-- References -->
@@ -426,7 +437,7 @@
 
 		<!-- Other fields -->
 
-		<column name="parentFolderId" type="long" />
+		<column name="parentFolderId" type="long" parent-container-model="true" />
 		<column name="treePath" type="String" />
 		<column name="name" type="String" />
 		<column name="description" type="String" />
@@ -487,6 +498,7 @@
 		<reference package-path="com.liferay.portlet.expando" entity="ExpandoValue" />
 		<reference package-path="com.liferay.portlet.social" entity="SocialActivity" />
 		<reference package-path="com.liferay.portlet.trash" entity="TrashEntry" />
+		<reference package-path="com.liferay.portlet.trash" entity="TrashVersion" />
 	</entity>
 	<entity name="JournalStructure" local-service="true" remote-service="true" deprecated="true">
 

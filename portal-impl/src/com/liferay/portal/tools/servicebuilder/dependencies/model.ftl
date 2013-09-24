@@ -354,6 +354,14 @@ public interface ${entity.name}Model extends
 		public TrashEntry getTrashEntry() throws PortalException, SystemException;
 
 		/**
+		 * Returns the classPK of this ${entity.humanName}
+		 *
+		 * @return the classPK of this ${entity.humanName}
+		 */
+		@Override
+		public long getTrashEntryClassPK();
+
+		/**
 		 * Returns the trash handler for this ${entity.humanName}.
 		 *
 		 * @return the trash handler for this ${entity.humanName}

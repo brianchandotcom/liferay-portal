@@ -420,6 +420,14 @@ public interface BookmarksEntryModel extends BaseModel<BookmarksEntry>,
 	public TrashEntry getTrashEntry() throws PortalException, SystemException;
 
 	/**
+	 * Returns the classPK of this bookmarks entry
+	 *
+	 * @return the classPK of this bookmarks entry
+	 */
+	@Override
+	public long getTrashEntryClassPK();
+
+	/**
 	 * Returns the trash handler for this bookmarks entry.
 	 *
 	 * @return the trash handler for this bookmarks entry

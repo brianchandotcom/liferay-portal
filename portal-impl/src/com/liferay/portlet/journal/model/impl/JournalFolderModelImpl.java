@@ -631,17 +631,18 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 	}
 
 	@Override
-	public String getContainerModelName() {
-		return String.valueOf(getName());
-	}
-
-	@Override
 	public long getParentContainerModelId() {
-		return 0;
+		return getParentFolderId();
 	}
 
 	@Override
 	public void setParentContainerModelId(long parentContainerModelId) {
+		_parentFolderId = parentContainerModelId;
+	}
+
+	@Override
+	public String getContainerModelName() {
+		return String.valueOf(getName());
 	}
 
 	@Override
@@ -657,7 +658,7 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 		}
 
 		TrashEntry trashEntry = TrashEntryLocalServiceUtil.fetchEntry(getModelClassName(),
-				getPrimaryKey());
+				getTrashEntryClassPK());
 
 		if (trashEntry != null) {
 			return trashEntry;
@@ -686,6 +687,11 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 		}
 
 		return null;
+	}
+
+	@Override
+	public long getTrashEntryClassPK() {
+		return getPrimaryKey();
 	}
 
 	@Override

@@ -761,6 +761,16 @@ public class DLFolderWrapper implements DLFolder, ModelWrapper<DLFolder> {
 	}
 
 	/**
+	* Returns the classPK of this document library folder
+	*
+	* @return the classPK of this document library folder
+	*/
+	@Override
+	public long getTrashEntryClassPK() {
+		return _dlFolder.getTrashEntryClassPK();
+	}
+
+	/**
 	* Returns the trash handler for this document library folder.
 	*
 	* @return the trash handler for this document library folder

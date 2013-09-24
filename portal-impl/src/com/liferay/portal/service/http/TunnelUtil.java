@@ -60,7 +60,7 @@ public class TunnelUtil {
 
 		if (Validator.isNull(sharedSecret)) {
 			throw new InvalidKeyException(
-				"The tunneling servlet shared secret is not set");
+				"The tunneling servlet shared secret is not set.");
 		}
 
 		if ((sharedSecret.length() != 16) && (sharedSecret.length() != 32) &&
@@ -68,7 +68,7 @@ public class TunnelUtil {
 
 			throw new InvalidKeyException(
 				"The tunneling servlet shared secret must be 16, 32 or 64 " +
-					"characters long");
+					"characters long.");
 		}
 
 		return new SecretKeySpec(

@@ -177,11 +177,25 @@ AUI.add(
 					BODY.toggleClass(panel.css);
 
 					if (panelNode && BODY.hasClass(panel.css)) {
+						Liferay.fire(
+							'dockbarShowPanel',
+							{
+								id: panelId
+							}
+						);
+
 						panel.showFn(panelId);
 
 						panelNode.show();
 					}
 					else {
+						Liferay.fire(
+							'dockbarHidePanel',
+							{
+								id: panelId
+							}
+						);
+
 						panelNode.hide();
 					}
 				}

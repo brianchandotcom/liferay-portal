@@ -24,6 +24,8 @@ AUI.add(
 
 		var STR_HIDDEN_CHECKBOX = 'addLayoutHiddenCheckbox';
 
+		var STR_ID = 'id';
+
 		var STR_NAME = 'addLayoutName';
 
 		var STR_NODE_LIST = 'nodeList';
@@ -124,7 +126,7 @@ AUI.add(
 									{
 										dataType: 'json',
 										form: {
-											id: addForm.get('id')
+											id: addForm.get(STR_ID)
 										},
 										after: {
 											success: function(event, id, obj) {
@@ -174,6 +176,8 @@ AUI.add(
 						instance._nameInput.on('input', instance._updateNavigationProxy, instance);
 
 						instance._togglerDelegate.on('toggler:expandedChange', instance._updateActivePage, instance);
+
+						Liferay.once('dockbarHidePanel', instance._onHide, instance);
 					},
 
 					_cancelAction: function(event) {
@@ -210,6 +214,12 @@ AUI.add(
 						}
 
 						return instance._formValidator;
+					},
+
+					_onHide: function(event) {
+						var instance = this;
+
+						Liferay.InputLocalized.unregister(instance._nameInput.get(STR_ID));
 					},
 
 					_updateActivePage: function(event) {

@@ -30,12 +30,12 @@
 </tr>
 <tr>
 	<td>BACK</td>
-	<td>//span[@class='header-back-to']/a</td>
+	<td>//a[@id='_153_TabsBack']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ASSIGNED_TO</td>
-	<td>//div[@class='lfr-asset-assigned']/div</td>
+	<td>//div[@class='lfr-asset-assigned']//input</td>
 	<td></td>
 </tr>
 <tr>
@@ -45,17 +45,17 @@
 </tr>
 <tr>
 	<td>STATE</td>
-	<td>//div[@class='lfr-asset-status']/div</td>
+	<td>//div[@class='lfr-asset-status']//input</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CREATE_DATE</td>
-	<td>//div[@class='lfr-asset-date']/div</td>
+	<td>//div[@class='lfr-asset-date']//input</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DUE_DATE</td>
-	<td>//div[@class='lfr-asset-due-date']/div</td>
+	<td>//div[@class='lfr-asset-due-date']//input</td>
 	<td></td>
 </tr>
 <tr>

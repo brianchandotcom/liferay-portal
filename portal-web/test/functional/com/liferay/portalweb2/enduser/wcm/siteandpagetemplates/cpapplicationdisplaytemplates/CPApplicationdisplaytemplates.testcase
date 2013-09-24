@@ -10,7 +10,7 @@
 
 		<execute macro="BlogsEntry#tearDownCP" />
 
-		<execute macro="Page#gotoContentCP">
+		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Application Display Templates" />
 		</execute>
 
@@ -29,7 +29,7 @@
 		<var name="key_adtTitle" value="Blogs" />
 		<var name="portletName" value="Blogs" />
 
-		<execute macro="Page#gotoContentCP">
+		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Application Display Templates" />
 		</execute>
 
@@ -62,7 +62,7 @@
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="key_adtTitle" value="Blogs" />
 
-		<execute macro="Page#gotoContentCP">
+		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Application Display Templates" />
 		</execute>
 

@@ -1463,13 +1463,13 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 			long groupId, long[] excludedRoleIds)
 		throws PortalException, SystemException {
 
-		Group group = groupLocalService.getGroup(groupId);
+		Group group = groupPersistence.findByPrimaryKey(groupId);
 
 		if (group.isLayout()) {
 			group = group.getParentGroup();
 		}
 
-		List<Team> teams = teamLocalService.getGroupTeams(group.getGroupId());
+		List<Team> teams = teamPersistence.findByGroupId(group.getGroupId());
 
 		if (teams.isEmpty()) {
 			return Collections.emptyMap();

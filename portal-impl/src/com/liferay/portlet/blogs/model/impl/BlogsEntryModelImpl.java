@@ -818,7 +818,7 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 		}
 
 		TrashEntry trashEntry = TrashEntryLocalServiceUtil.fetchEntry(getModelClassName(),
-				getPrimaryKey());
+				getTrashEntryClassPK());
 
 		if (trashEntry != null) {
 			return trashEntry;
@@ -847,6 +847,11 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 		}
 
 		return null;
+	}
+
+	@Override
+	public long getTrashEntryClassPK() {
+		return getPrimaryKey();
 	}
 
 	@Override

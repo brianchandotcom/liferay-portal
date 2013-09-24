@@ -664,7 +664,7 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 		}
 
 		TrashEntry trashEntry = TrashEntryLocalServiceUtil.fetchEntry(getModelClassName(),
-				getPrimaryKey());
+				getTrashEntryClassPK());
 
 		if (trashEntry != null) {
 			return trashEntry;
@@ -693,6 +693,11 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 		}
 
 		return null;
+	}
+
+	@Override
+	public long getTrashEntryClassPK() {
+		return getPrimaryKey();
 	}
 
 	@Override

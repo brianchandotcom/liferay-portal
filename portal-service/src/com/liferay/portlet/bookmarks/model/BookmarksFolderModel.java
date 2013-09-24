@@ -378,6 +378,14 @@ public interface BookmarksFolderModel extends BaseModel<BookmarksFolder>,
 	public TrashEntry getTrashEntry() throws PortalException, SystemException;
 
 	/**
+	 * Returns the classPK of this bookmarks folder
+	 *
+	 * @return the classPK of this bookmarks folder
+	 */
+	@Override
+	public long getTrashEntryClassPK();
+
+	/**
 	 * Returns the trash handler for this bookmarks folder.
 	 *
 	 * @return the trash handler for this bookmarks folder

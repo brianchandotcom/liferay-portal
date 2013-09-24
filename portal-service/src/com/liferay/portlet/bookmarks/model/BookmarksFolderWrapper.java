@@ -595,6 +595,16 @@ public class BookmarksFolderWrapper implements BookmarksFolder,
 	}
 
 	/**
+	* Returns the classPK of this bookmarks folder
+	*
+	* @return the classPK of this bookmarks folder
+	*/
+	@Override
+	public long getTrashEntryClassPK() {
+		return _bookmarksFolder.getTrashEntryClassPK();
+	}
+
+	/**
 	* Returns the trash handler for this bookmarks folder.
 	*
 	* @return the trash handler for this bookmarks folder

@@ -781,6 +781,16 @@ public class WikiPageWrapper implements WikiPage, ModelWrapper<WikiPage> {
 	}
 
 	/**
+	* Returns the classPK of this wiki page
+	*
+	* @return the classPK of this wiki page
+	*/
+	@Override
+	public long getTrashEntryClassPK() {
+		return _wikiPage.getTrashEntryClassPK();
+	}
+
+	/**
 	* Returns the trash handler for this wiki page.
 	*
 	* @return the trash handler for this wiki page

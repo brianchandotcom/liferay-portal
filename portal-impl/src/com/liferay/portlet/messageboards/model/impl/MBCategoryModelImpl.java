@@ -710,7 +710,7 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 		}
 
 		TrashEntry trashEntry = TrashEntryLocalServiceUtil.fetchEntry(getModelClassName(),
-				getPrimaryKey());
+				getTrashEntryClassPK());
 
 		if (trashEntry != null) {
 			return trashEntry;
@@ -739,6 +739,11 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 		}
 
 		return null;
+	}
+
+	@Override
+	public long getTrashEntryClassPK() {
+		return getPrimaryKey();
 	}
 
 	@Override

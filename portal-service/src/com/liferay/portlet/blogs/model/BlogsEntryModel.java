@@ -485,6 +485,14 @@ public interface BlogsEntryModel extends BaseModel<BlogsEntry>,
 	public TrashEntry getTrashEntry() throws PortalException, SystemException;
 
 	/**
+	 * Returns the classPK of this blogs entry
+	 *
+	 * @return the classPK of this blogs entry
+	 */
+	@Override
+	public long getTrashEntryClassPK();
+
+	/**
 	 * Returns the trash handler for this blogs entry.
 	 *
 	 * @return the trash handler for this blogs entry

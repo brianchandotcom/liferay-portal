@@ -736,7 +736,7 @@ public class BookmarksEntryModelImpl extends BaseModelImpl<BookmarksEntry>
 		}
 
 		TrashEntry trashEntry = TrashEntryLocalServiceUtil.fetchEntry(getModelClassName(),
-				getPrimaryKey());
+				getTrashEntryClassPK());
 
 		if (trashEntry != null) {
 			return trashEntry;
@@ -765,6 +765,11 @@ public class BookmarksEntryModelImpl extends BaseModelImpl<BookmarksEntry>
 		}
 
 		return null;
+	}
+
+	@Override
+	public long getTrashEntryClassPK() {
+		return getPrimaryKey();
 	}
 
 	@Override

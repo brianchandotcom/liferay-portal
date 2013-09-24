@@ -648,6 +648,16 @@ public class MBCategoryWrapper implements MBCategory, ModelWrapper<MBCategory> {
 	}
 
 	/**
+	* Returns the classPK of this message boards category
+	*
+	* @return the classPK of this message boards category
+	*/
+	@Override
+	public long getTrashEntryClassPK() {
+		return _mbCategory.getTrashEntryClassPK();
+	}
+
+	/**
 	* Returns the trash handler for this message boards category.
 	*
 	* @return the trash handler for this message boards category

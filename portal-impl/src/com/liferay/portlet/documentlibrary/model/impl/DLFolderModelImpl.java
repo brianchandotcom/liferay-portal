@@ -845,7 +845,7 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 		}
 
 		TrashEntry trashEntry = TrashEntryLocalServiceUtil.fetchEntry(getModelClassName(),
-				getPrimaryKey());
+				getTrashEntryClassPK());
 
 		if (trashEntry != null) {
 			return trashEntry;
@@ -874,6 +874,11 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 		}
 
 		return null;
+	}
+
+	@Override
+	public long getTrashEntryClassPK() {
+		return getPrimaryKey();
 	}
 
 	@Override

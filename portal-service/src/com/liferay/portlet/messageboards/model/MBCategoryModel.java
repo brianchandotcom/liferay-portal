@@ -406,6 +406,14 @@ public interface MBCategoryModel extends BaseModel<MBCategory>, ContainerModel,
 	public TrashEntry getTrashEntry() throws PortalException, SystemException;
 
 	/**
+	 * Returns the classPK of this message boards category
+	 *
+	 * @return the classPK of this message boards category
+	 */
+	@Override
+	public long getTrashEntryClassPK();
+
+	/**
 	 * Returns the trash handler for this message boards category.
 	 *
 	 * @return the trash handler for this message boards category

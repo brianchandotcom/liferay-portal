@@ -568,6 +568,16 @@ public class JournalFolderWrapper implements JournalFolder,
 	}
 
 	/**
+	* Returns the classPK of this journal folder
+	*
+	* @return the classPK of this journal folder
+	*/
+	@Override
+	public long getTrashEntryClassPK() {
+		return _journalFolder.getTrashEntryClassPK();
+	}
+
+	/**
 	* Returns the trash handler for this journal folder.
 	*
 	* @return the trash handler for this journal folder
@@ -867,11 +877,6 @@ public class JournalFolderWrapper implements JournalFolder,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _journalFolder.getParentFolder();
-	}
-
-	@Override
-	public com.liferay.portlet.journal.model.JournalFolder getTrashContainer() {
-		return _journalFolder.getTrashContainer();
 	}
 
 	@Override
